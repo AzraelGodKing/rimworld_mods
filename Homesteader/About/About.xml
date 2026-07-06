@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Homesteader</name>
+  <author>AzraelGodKing</author>
+  <packageId>AzraelGodKing.Homesteader</packageId>
+  <supportedVersions>
+    <li>1.4</li>
+    <li>1.5</li>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>Everything a growing homestead needs: better storage, food preservation, and off-grid power.
+
+STORAGE
+- Storage crate: a cheap wooden crate that holds 3 stacks and protects them from deterioration.
+- Storage barrel: holds 3 stacks of food or drink, safe from the weather.
+- Pallet: a dirt-cheap outdoor pallet that holds 2 stacks of anything - including stone chunks - without deterioration.
+
+FOOD PRESERVATION
+- Drying rack: turn raw meat into long-lasting jerky, or fruit and vegetables into dried produce. No power or research needed - perfect for tribal starts and early colonies.
+- Smokehouse: a wood-fired smoker that preserves raw meat as smoked meat, which keeps for a month and can still be cooked into meals.
+
+POWER
+- Compact battery: a small 1x1 battery for tight bases and early setups.
+- Battery bank: a high-capacity, high-efficiency 2x2 power reserve.
+- Portable generator: a 1x1 chemfuel generator for outposts and workshops.
+
+Fully XML-based: no C# assembly, safe to add or remove from a save (remove mod items from the map first before uninstalling).</description>
+</ModMetaData>
