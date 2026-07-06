@@ -11,7 +11,9 @@
       <texPath>Homesteader/Items/Jerky</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
+    <tickerType>Rare</tickerType>
     <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
     <statBases>
       <MaxHitPoints>60</MaxHitPoints>
       <Flammability>1.0</Flammability>
@@ -46,7 +48,9 @@
       <texPath>Homesteader/Items/DriedProduce</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
+    <tickerType>Rare</tickerType>
     <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
     <statBases>
       <MaxHitPoints>60</MaxHitPoints>
       <Flammability>1.0</Flammability>
@@ -81,6 +85,7 @@
       <texPath>Homesteader/Items/SmokedMeat</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
+    <tickerType>Rare</tickerType>
     <stackLimit>75</stackLimit>
     <socialPropernessMatters>true</socialPropernessMatters>
     <statBases>
