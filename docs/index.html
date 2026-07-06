@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homesteader — a RimWorld mod by AzraelGodKing</title>
+<meta name="description" content="Homesteader: storage, food preservation, and power for your RimWorld colony. XML-only, save-safe, RimWorld 1.4–1.6.">
+<style>
+  :root {
+    --bg: #23281e;
+    --bg-panel: #2d3326;
+    --bg-card: #343b2c;
+    --border: #4a523e;
+    --text: #d8d4c4;
+    --text-dim: #a29d8a;
+    --accent: #e4d0a0;
+    --accent2: #6ee4eb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.6 Georgia, "Times New Roman", serif;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+  header {
+    text-align: center;
+    padding: 56px 0 32px;
+    background: linear-gradient(#2e3527, var(--bg));
+    border-bottom: 1px solid var(--border);
+  }
+  h1 {
+    font-size: clamp(2.4rem, 7vw, 4rem);
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-shadow: 2px 3px 0 #141711;
+  }
+  .tagline { color: var(--text-dim); margin-top: 8px; font-style: italic; }
+  .badges { margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .badge {
+    font: 13px/1 Verdana, sans-serif;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-dim);
+    background: var(--bg-panel);
+  }
+  .hero { margin: 32px auto 0; max-width: 640px; }
+  .hero img {
+    width: 100%; border: 1px solid var(--border); border-radius: 8px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.45);
+  }
+  .cta { margin: 26px 0 4px; }
+  .btn {
+    display: inline-block;
+    font: bold 16px/1 Verdana, sans-serif;
+    padding: 13px 26px;
+    margin: 6px;
+    border-radius: 8px;
+    text-decoration: none;
+  }
+  .btn-primary { background: var(--accent); color: #23281e; }
+  .btn-primary:hover { background: #f0e0b8; }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  section { padding: 44px 0 8px; }
+  h2 {
+    font-size: 1.7rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .sub { color: var(--text-dim); margin-bottom: 24px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .card img {
+    width: 72px; height: 72px;
+    object-fit: contain;
+    flex: none;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,.4));
+  }
+  .card.wide { grid-column: 1 / -1; }
+  .card.wide img { width: 180px; height: 72px; }
+  .card h3 { font-size: 1.1rem; color: var(--text); }
+  .card .stat {
+    font: 12px/1.5 Verdana, sans-serif;
+    color: var(--accent2);
+    letter-spacing: .03em;
+  }
+  .card p { font-size: .95rem; color: var(--text-dim); margin-top: 6px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font: 14px/1.5 Verdana, sans-serif;
+    margin-top: 8px;
+  }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { color: var(--accent); font-weight: bold; }
+  td { color: var(--text-dim); }
+  td b { color: var(--text); }
+  .best td { background: rgba(110, 228, 235, .06); }
+  .best td b { color: var(--accent2); }
+  .table-scroll { overflow-x: auto; }
+
+  ol { margin: 12px 0 0 22px; color: var(--text-dim); }
+  ol li { margin-bottom: 8px; }
+  code {
+    font: 14px/1 Consolas, Menlo, monospace;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+  }
+  .note {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: var(--bg-panel);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    font-size: .95rem;
+    color: var(--text-dim);
+  }
+
+  footer {
+    margin-top: 56px;
+    padding: 28px 0 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-dim);
+    font-size: .9rem;
+  }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>HOMESTEADER</h1>
+    <p class="tagline">Storage &bull; Food Preservation &bull; Power &mdash; everything a growing colony needs</p>
+    <div class="badges">
+      <span class="badge">RimWorld 1.4 / 1.5 / 1.6</span>
+      <span class="badge">XML-only &mdash; no C#</span>
+      <span class="badge">Save-safe to add</span>
+      <span class="badge">13 new things</span>
+    </div>
+    <div class="hero"><img src="assets/preview.png" alt="Homesteader mod preview showing all buildings and items"></div>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://github.com/AzraelGodKing/rimworld_mods/archive/refs/heads/main.zip">&#11015; Download</a>
+      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="storage">
+    <h2>Storage</h2>
+    <p class="sub">Every piece protects its contents from deterioration &mdash; even outdoors.</p>
+    <div class="grid">
+      <div class="card">
+        <img src="assets/StorageCrate.png" alt="Storage crate">
+        <div>
+          <h3>Storage crate</h3>
+          <div class="stat">3 stacks &middot; 35 wood</div>
+          <p>A sturdy lidded crate that holds anything. The workhorse of a tidy stockyard.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="assets/StorageBarrel.png" alt="Storage barrel">
+        <div>
+          <h3>Storage barrel</h3>
+          <div class="stat">3 stacks &middot; food &amp; drink &middot; 30 wood</div>
+          <p>Keeps food and drink out of the rain. It won't slow spoilage &mdash; preserve perishables first.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="assets/Pallet.png" alt="Pallet">
+        <div>
+          <h3>Pallet</h3>
+          <div class="stat">2 stacks &middot; 15 wood &middot; walkable</div>
+          <p>Dirt cheap ground storage for anything &mdash; including stone chunks. Line your whole yard with them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="food">
+    <h2>Food Preservation</h2>
+    <p class="sub">No research or power required &mdash; perfect for tribal starts and the first winter.</p>
+    <div class="grid">
+      <div class="card wide">
+        <img src="assets/DryingRack.png" alt="Drying rack">
+        <div>
+          <h3>Drying rack</h3>
+          <div class="stat">no power &middot; no research &middot; 60 wood</div>
+          <p>Air-dry raw meat into <b>jerky</b> or fruit and vegetables into <b>dried produce</b>. Both keep for 60 days, weigh almost nothing, and make ideal caravan rations.</p>
+        </div>
+      </div>
+      <div class="card wide">
+        <img src="assets/Smokehouse.png" alt="Smokehouse">
+        <div>
+          <h3>Smokehouse</h3>
+          <div class="stat">wood-fired &middot; 90 wood + 20 steel</div>
+          <p>Cure raw meat into <b>smoked meat</b> that keeps for a month with no freezer &mdash; and still cooks into meals like raw meat.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="assets/Jerky.png" alt="Jerky">
+        <div>
+          <h3>Jerky</h3>
+          <div class="stat">keeps 60 days &middot; ultralight</div>
+          <p>Tough, chewy, and it beats starving in a snowstorm.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="assets/DriedProduce.png" alt="Dried produce">
+        <div>
+          <h3>Dried produce</h3>
+          <div class="stat">keeps 60 days &middot; ultralight</div>
+          <p>Sun-dried harvest for the lean seasons.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="assets/SmokedMeat.png" alt="Smoked meat">
+        <div>
+          <h3>Smoked meat</h3>
+          <div class="stat">keeps 30 days &middot; cooks into meals</div>
+          <p>A month of freezer-free meat for your cooks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="power">
+    <h2>Power</h2>
+    <p class="sub">A full battery progression, from first wire to endgame vault.</p>
+    <div class="grid">
+      <div class="card">
+        <img src="assets/CompactBattery.png" alt="Compact battery">
+        <div>
+          <h3>Compact battery</h3>
+          <div class="stat">1x1 &middot; 200 Wd &middot; 50%</div>
+          <p>Fits anywhere. Your first buffer against a cloudy day.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="assets/BatteryBank.png" alt="Battery bank">
+        <div>
+          <h3>Battery bank</h3>
+          <div class="stat">2x2 &middot; 1600 Wd &middot; 70%</div>
+          <p>A rack of cells with a smarter charge controller.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="assets/AdvancedBattery.png" alt="Advanced battery">
+        <div>
+          <h3>Advanced battery</h3>
+          <div class="stat">1x2 &middot; 900 Wd &middot; 90% &middot; Fabrication</div>
+          <p>Laminated cells that waste a tenth of what vanilla batteries do.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="assets/UltratechBattery.png" alt="Ultratech battery">
+        <div>
+          <h3>Ultratech battery</h3>
+          <div class="stat">2x2 &middot; 4000 Wd &middot; 99% &middot; Adv. Fabrication</div>
+          <p>A glowing superconducting vault. The best of the best.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="assets/PortableGenerator.png" alt="Portable generator">
+        <div>
+          <h3>Portable generator</h3>
+          <div class="stat">1x1 &middot; 350W &middot; chemfuel</div>
+          <p>Power for outposts and workshops, one cell of floorspace.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <tr><th>Battery</th><th>Size</th><th>Capacity</th><th>Efficiency</th><th>Research</th></tr>
+        <tr><td><b>Compact battery</b></td><td>1x1</td><td>200 Wd</td><td>50%</td><td>Batteries</td></tr>
+        <tr><td>Vanilla battery</td><td>1x2</td><td>600 Wd</td><td>50%</td><td>Batteries</td></tr>
+        <tr><td><b>Battery bank</b></td><td>2x2</td><td>1,600 Wd</td><td>70%</td><td>Batteries</td></tr>
+        <tr><td><b>Advanced battery</b></td><td>1x2</td><td>900 Wd</td><td>90%</td><td>Fabrication</td></tr>
+        <tr class="best"><td><b>Ultratech battery</b></td><td>2x2</td><td>4,000 Wd</td><td>99%</td><td>Advanced Fabrication</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2>Installation</h2>
+    <ol>
+      <li>Download the mod using the button above (or clone the repository).</li>
+      <li>Copy the <code>Homesteader</code> folder into your RimWorld <code>Mods</code> directory:<br>
+        Windows: <code>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods</code><br>
+        Linux: <code>~/.steam/steam/steamapps/common/RimWorld/Mods</code><br>
+        macOS: <code>~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods</code></li>
+      <li>Enable <b>Homesteader</b> in the in-game mod list and restart.</li>
+    </ol>
+    <div class="note">
+      <b>Save compatibility:</b> safe to add to an existing save. Before removing it, deconstruct the mod's buildings and use up or sell its items.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    Homesteader &mdash; a RimWorld mod by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
+    &middot; <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">Report a bug</a>
+  </div>
+</footer>
+
+</body>
+</html>
