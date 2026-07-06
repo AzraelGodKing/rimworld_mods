@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Make jerky ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeJerky</defName>
+    <label>make jerky</label>
+    <description>Cut raw meat into thin strips and dry them into long-lasting jerky.</description>
+    <jobString>Making jerky.</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>MeatRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Homesteader_SmokedMeat</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Homesteader_SmokedMeat</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <defaultIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Meat_Human</li>
+      </disallowedThingDefs>
+    </defaultIngredientFilter>
+    <products>
+      <Homesteader_Jerky>10</Homesteader_Jerky>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Make dried produce ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeDriedProduce</defName>
+    <label>make dried produce</label>
+    <description>Slice fruit and vegetables thin and air-dry them for long-term storage.</description>
+    <jobString>Making dried produce.</jobString>
+    <workAmount>700</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>PlantFoodRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Hay</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Hay</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_DriedProduce>10</Homesteader_DriedProduce>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Smoke meat ============ -->
+  <RecipeDef>
+    <defName>Homesteader_SmokeMeat</defName>
+    <label>smoke meat</label>
+    <description>Cure raw meat in wood smoke so it keeps for around a month. Smoked meat can still be cooked into meals.</description>
+    <jobString>Smoking meat.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>MeatRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Homesteader_SmokedMeat</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Homesteader_SmokedMeat</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <defaultIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Meat_Human</li>
+      </disallowedThingDefs>
+    </defaultIngredientFilter>
+    <products>
+      <Homesteader_SmokedMeat>15</Homesteader_SmokedMeat>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+</Defs>
