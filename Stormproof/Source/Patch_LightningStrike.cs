@@ -6,27 +6,24 @@ using Verse;
 namespace Stormproof
 {
     // Storm spires attract lightning that would land within their radius.
-    // The bolt still strikes normally (authentic visuals, minor damage to the
-    // spire) - the postfix then lets the spire harvest it.
-    [HarmonyPatch(typeof(WeatherEvent_LightningStrike), nameof(WeatherEvent_LightningStrike.FireEvent))]
+    //
+    // Both WeatherEvent_LightningStrike and WeatherEvent_LightningStrikeDelayed
+    // (thunderstorms use the delayed variant - they are siblings, not
+    // parent/child) funnel into the shared static
+    // WeatherEvent_LightningStrike.DoStrike(strikeLoc, map, ref boltMesh),
+    // so this one patch catches every bolt in the game.
+    [HarmonyPatch(typeof(WeatherEvent_LightningStrike), nameof(WeatherEvent_LightningStrike.DoStrike))]
     public static class Patch_LightningStrike
     {
-        private static readonly AccessTools.FieldRef<WeatherEvent_LightningStrike, IntVec3> StrikeLocRef =
-            AccessTools.FieldRefAccess<WeatherEvent_LightningStrike, IntVec3>("strikeLoc");
-
-        private static readonly AccessTools.FieldRef<WeatherEvent, Map> MapRef =
-            AccessTools.FieldRefAccess<WeatherEvent, Map>("map");
-
-        public static void Prefix(WeatherEvent_LightningStrike __instance)
+        public static void Prefix(ref IntVec3 strikeLoc, Map map)
         {
-            Map map = MapRef(__instance);
             if (map == null || StormproofRegistry.Spires.Count == 0)
             {
                 return;
             }
-            IntVec3 loc = StrikeLocRef(__instance);
-            // Random ambient strike: pick the cell ourselves (same way vanilla
-            // does) so we can test it against spire radii.
+            IntVec3 loc = strikeLoc;
+            // Shouldn't normally happen (callers pick a cell first), but keep
+            // the vanilla fallback so an invalid loc can still be redirected.
             if (!loc.IsValid)
             {
                 loc = CellFinderLoose.RandomCellWith(
@@ -38,20 +35,18 @@ namespace Stormproof
                             s.parent.Position.DistanceTo(loc) <= s.Props.attractRadius)
                 .OrderBy(s => s.parent.Position.DistanceTo(loc))
                 .FirstOrDefault();
-            StrikeLocRef(__instance) = catcher != null ? catcher.parent.Position : loc;
+            strikeLoc = catcher != null ? catcher.parent.Position : loc;
         }
 
-        public static void Postfix(WeatherEvent_LightningStrike __instance)
+        public static void Postfix(IntVec3 strikeLoc, Map map)
         {
-            Map map = MapRef(__instance);
             if (map == null)
             {
                 return;
             }
-            IntVec3 loc = StrikeLocRef(__instance);
             CompStormSpire spire = StormproofRegistry
                 .On(StormproofRegistry.Spires, map)
-                .FirstOrDefault(s => s.parent.Position == loc);
+                .FirstOrDefault(s => s.parent.Position == strikeLoc);
             spire?.Notify_Struck();
         }
     }
