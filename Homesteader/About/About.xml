@@ -22,6 +22,8 @@ FOOD PRESERVATION
 POWER
 - Compact battery: a small 1x1 battery for tight bases and early setups.
 - Battery bank: a high-capacity, high-efficiency 2x2 power reserve.
+- Advanced battery: a precision-fabricated 1x2 battery with 90% charge efficiency (requires Fabrication).
+- Ultratech battery: the best of the best - a glowing 2x2 superconducting vault storing 4000 Wd at 99% efficiency (requires Advanced Fabrication).
 - Portable generator: a 1x1 chemfuel generator for outposts and workshops.
 
 Fully XML-based: no C# assembly, safe to add or remove from a save (remove mod items from the map first before uninstalling).</description>
