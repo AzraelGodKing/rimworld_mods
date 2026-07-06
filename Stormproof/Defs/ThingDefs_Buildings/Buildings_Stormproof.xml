@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Solar shield ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_SolarShield</defName>
+    <label>solar shield</label>
+    <description>A field generator that protects the colony's electronics from solar flares. Idles at trivial power draw, but while a flare is active it continuously drains 2,500W to keep every electrical device on the map running. If its power grid runs out of stored energy mid-flare, the shield collapses and electricity stays down until the flare ends. Stockpile battery charge before you need it.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/SolarShield</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>6000</WorkToBuild>
+      <Mass>60</Mass>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <Steel>150</Steel>
+      <Plasteel>40</Plasteel>
+      <ComponentIndustrial>6</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Stormproof.CompProperties_SolarShield">
+        <activePowerConsumption>2500</activePowerConsumption>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_FlareShielding</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Storm spire ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_StormSpire</defName>
+    <label>storm spire</label>
+    <description>A towering grounded spire that attracts lightning strikes within a wide radius, protecting your base from fires. If connected to a power grid, each caught strike feeds up to 1,500 Wd into your batteries - but has a 25% chance of overloading the grid and causing a "Zzzt!" power surge. Leave it unwired for safe, boring protection; wire it up to gamble.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/StormSpire</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,2.8)</drawSize>
+      <drawOffset>(0,0,0.9)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.35</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <specialDisplayRadius>30</specialDisplayRadius>
+    <statBases>
+      <MaxHitPoints>400</MaxHitPoints>
+      <WorkToBuild>1800</WorkToBuild>
+      <Mass>35</Mass>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <Steel>80</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>5</basePowerConsumption>
+      </li>
+      <li Class="Stormproof.CompProperties_StormSpire">
+        <attractRadius>30</attractRadius>
+        <energyPerStrike>1500</energyPerStrike>
+        <zzztChancePerStrike>0.25</zzztChancePerStrike>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_StormProtection</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Surge protector ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_SurgeProtector</defName>
+    <label>surge protector</label>
+    <description>A heavy-duty breaker cabinet that absorbs one "Zzzt!" short circuit event, sparing your batteries and conduits. Absorbing a surge damages it slightly and puts it on a one-day recharge. Only one is needed per map - but a spare doesn't hurt.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/SurgeProtector</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.45</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>1200</WorkToBuild>
+      <Mass>18</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>50</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>25</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="Stormproof.CompProperties_SurgeProtector">
+        <cooldownTicks>60000</cooldownTicks>
+        <selfDamagePerAbsorb>30</selfDamagePerAbsorb>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_StormProtection</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ EMP dampener ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_EmpDampener</defName>
+    <label>EMP dampener</label>
+    <description>Projects a dampening field that protects colony buildings within range from EMP stuns. Turrets keep firing through EMP mortar barrages and grenade throws. Does not protect pawns or mechanoids - only buildings.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/EmpDampener</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1.6)</drawSize>
+      <drawOffset>(0,0,0.3)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <specialDisplayRadius>14.9</specialDisplayRadius>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <WorkToBuild>2400</WorkToBuild>
+      <Mass>22</Mass>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <Steel>60</Steel>
+      <Gold>10</Gold>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Stormproof.CompProperties_EmpDampener">
+        <protectRadius>14.9</protectRadius>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_FlareShielding</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Armored conduit ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_ArmoredConduit</defName>
+    <label>armored conduit</label>
+    <description>A power conduit sheathed in riveted steel plate. Fireproof and far tougher than standard conduit - the wiring of choice for killboxes and exterior walls.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/ArmoredConduit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>SmallWire</altitudeLayer>
+    <passability>Standable</passability>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <rotatable>false</rotatable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>70</WorkToBuild>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <placingDraggableDimensions>1</placingDraggableDimensions>
+    <costList>
+      <Steel>3</Steel>
+    </costList>
+    <building>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+    </building>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTransmitter</compClass>
+        <transmitsPower>true</transmitsPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_StormProtection</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Storm vane ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_StormVane</defName>
+    <label>storm vane</label>
+    <description>A handsome copper weather vane. It doesn't predict anything, prevent anything, or power anything. But every proper homestead has one.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/StormVane</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,2)</drawSize>
+      <drawOffset>(0,0,0.5)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.2</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>800</WorkToBuild>
+      <Mass>8</Mass>
+      <Flammability>0.2</Flammability>
+      <Beauty>8</Beauty>
+    </statBases>
+    <costList>
+      <Steel>25</Steel>
+    </costList>
+    <designationCategory>Furniture</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsFurniture</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+</Defs>
