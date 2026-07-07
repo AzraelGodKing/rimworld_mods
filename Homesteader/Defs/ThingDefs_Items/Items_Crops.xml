@@ -191,6 +191,7 @@
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
     <statBases>
       <MaxHitPoints>60</MaxHitPoints>
       <Flammability>0.4</Flammability>

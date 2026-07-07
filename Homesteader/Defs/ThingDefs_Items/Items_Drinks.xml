@@ -49,9 +49,6 @@
         <listOrder>11</listOrder>
       </li>
     </comps>
-    <thingCategories>
-      <li>Drugs</li>
-    </thingCategories>
   </ThingDef>
 
   <!-- ============ Mead ============ -->
@@ -102,9 +99,6 @@
         <listOrder>12</listOrder>
       </li>
     </comps>
-    <thingCategories>
-      <li>Drugs</li>
-    </thingCategories>
   </ThingDef>
 
   <!-- ============ Herbal tea ============ -->

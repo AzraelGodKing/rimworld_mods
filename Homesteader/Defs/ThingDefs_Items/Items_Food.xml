@@ -417,7 +417,7 @@
   </ThingDef>
 
   <!-- ============ Bread ============ -->
-  <ThingDef ParentName="MealSimple">
+  <ThingDef ParentName="MealBase">
     <defName>Homesteader_Bread</defName>
     <label>bread</label>
     <description>A simple loaf baked from homestead flour. Warm, filling, and best eaten fresh.</description>
@@ -432,6 +432,8 @@
     </statBases>
     <ingestible>
       <preferability>MealSimple</preferability>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
     </ingestible>
     <comps>
       <li Class="CompProperties_Rottable">
@@ -516,7 +518,7 @@
   </ThingDef>
 
   <!-- ============ Porridge ============ -->
-  <ThingDef ParentName="MealSimple">
+  <ThingDef ParentName="MealBase">
     <defName>Homesteader_Porridge</defName>
     <label>porridge</label>
     <description>A warm bowl of barley porridge sweetened with whatever the pantry offers. Humble, hot, and filling.</description>
@@ -531,6 +533,8 @@
     </statBases>
     <ingestible>
       <preferability>MealSimple</preferability>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
     </ingestible>
     <comps>
       <li Class="CompProperties_Rottable">
@@ -541,7 +545,7 @@
   </ThingDef>
 
   <!-- ============ Trail stew ============ -->
-  <ThingDef ParentName="MealSimple">
+  <ThingDef ParentName="MealBase">
     <defName>Homesteader_TrailStew</defName>
     <label>trail stew</label>
     <description>A humble stew simmered from dried jerky and preserved produce. The taste of a well-stocked winter pantry.</description>
@@ -556,6 +560,8 @@
     </statBases>
     <ingestible>
       <preferability>MealSimple</preferability>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
     </ingestible>
     <comps>
       <li Class="CompProperties_Rottable">
@@ -566,7 +572,7 @@
   </ThingDef>
 
   <!-- ============ Hearty stew ============ -->
-  <ThingDef ParentName="MealFine">
+  <ThingDef ParentName="MealBase">
     <defName>Homesteader_HeartyStew</defName>
     <label>hearty stew</label>
     <description>A rich stew of smoked meat and pickled vegetables, slow-simmered at the homestead hearth. Comfort food from what the land provided.</description>
@@ -581,6 +587,9 @@
     </statBases>
     <ingestible>
       <preferability>MealFine</preferability>
+      <tasteThought>AteFineMeal</tasteThought>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
     </ingestible>
     <comps>
       <li Class="CompProperties_Rottable">
