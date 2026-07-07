@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Rock salt ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_RockSalt</defName>
+    <label>rock salt</label>
+    <description>Coarse salt crystals chipped from stone. Used to cure meat and fish for long-term storage.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/RockSalt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0.5</DeteriorationRate>
+      <Mass>0.01</Mass>
+      <MarketValue>0.4</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Flour ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Flour</defName>
+    <label>flour</label>
+    <description>Milled grain ready for baking. Keeps for about a month in a dry pantry.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/Flour</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <Mass>0.02</Mass>
+      <MarketValue>1.1</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>DesperateOnly</preferability>
+      <tasteThought>AteRawFood</tasteThought>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>30</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>Foods</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Butter ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Butter</defName>
+    <label>butter</label>
+    <description>Churned cream from fresh milk. A rich cooking ingredient that keeps for several weeks when cool.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/Butter</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <DeteriorationRate>3</DeteriorationRate>
+      <Mass>0.03</Mass>
+      <MarketValue>2.5</MarketValue>
+      <Nutrition>0.08</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>DesperateOnly</preferability>
+      <tasteThought>AteRawFood</tasteThought>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>45</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>Foods</li>
+    </thingCategories>
+  </ThingDef>
+
+</Defs>
