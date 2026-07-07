@@ -45,6 +45,14 @@ namespace Stormproof
             storedEnergy = UnityEngine.Mathf.Min(storedEnergy + amount, Props.storedEnergyMax);
         }
 
+        // Removes up to `amount` from storage and returns how much was taken.
+        public float DrainEnergy(float amount)
+        {
+            float taken = UnityEngine.Mathf.Min(amount, storedEnergy);
+            storedEnergy -= taken;
+            return taken;
+        }
+
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
