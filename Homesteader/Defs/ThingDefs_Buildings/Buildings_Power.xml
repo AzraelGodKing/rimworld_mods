@@ -264,4 +264,69 @@
     </researchPrerequisites>
   </ThingDef>
 
+  <!-- ============ Wood-burning generator ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_WoodGenerator</defName>
+    <label>wood-burning generator</label>
+    <description>A compact generator that burns wood logs instead of chemfuel. Produces 300W from a single cell - ideal for forest homesteads and off-grid workshops. Produces some heat.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/WoodGenerator</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <statBases>
+      <MaxHitPoints>140</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
+      <Mass>28</Mass>
+      <Flammability>0.7</Flammability>
+    </statBases>
+    <costList>
+      <Steel>90</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerPlant</compClass>
+        <basePowerConsumption>-300</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>3.0</fuelConsumptionRate>
+        <fuelCapacity>30.0</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>WoodLog</li>
+          </thingDefs>
+        </fuelFilter>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_HeatPusher">
+        <compClass>CompHeatPusherPowered</compClass>
+        <heatPerSecond>3</heatPerSecond>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_AdvancedHomestead</li>
+      <li>Electricity</li>
+    </researchPrerequisites>
+  </ThingDef>
+
 </Defs>
