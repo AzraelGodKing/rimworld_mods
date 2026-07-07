@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Straw hat ============ -->
+  <ThingDef ParentName="ApparelMakeableBase">
+    <defName>Homesteader_StrawHat</defName>
+    <label>straw hat</label>
+    <description>A wide-brimmed hat woven from straw. Keeps the sun off during long days in the field.</description>
+    <techLevel>Neolithic</techLevel>
+    <graphicData>
+      <texPath>Homesteader/Apparel/StrawHat</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <color>(222,197,120)</color>
+    </graphicData>
+    <recipeMaker>
+      <recipeUsers>
+        <li>CraftingSpot</li>
+        <li>HandTailoringBench</li>
+        <li>ElectricTailoringBench</li>
+      </recipeUsers>
+    </recipeMaker>
+    <costList>
+      <Hay>25</Hay>
+    </costList>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <WorkToMake>1600</WorkToMake>
+      <Mass>0.12</Mass>
+      <Flammability>1.4</Flammability>
+      <Insulation_Heat>2.5</Insulation_Heat>
+      <Insulation_Cold>0.5</Insulation_Cold>
+      <EquipDelay>1</EquipDelay>
+    </statBases>
+    <apparel>
+      <bodyPartGroups>
+        <li>UpperHead</li>
+      </bodyPartGroups>
+      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/CowboyHat/CowboyHat</wornGraphicPath>
+      <layers>
+        <li>Overhead</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+      <tags>
+        <li>Neolithic</li>
+      </tags>
+    </apparel>
+  </ThingDef>
+
+  <!-- ============ Work apron ============ -->
+  <ThingDef ParentName="ApparelMakeableBase">
+    <defName>Homesteader_WorkApron</defName>
+    <label>work apron</label>
+    <description>A tough apron worn over clothing. Pockets and heavy cloth make workshop and kitchen chores go a little faster.</description>
+    <techLevel>Neolithic</techLevel>
+    <graphicData>
+      <texPath>Homesteader/Apparel/WorkApron</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <recipeMaker>
+      <recipeUsers>
+        <li>CraftingSpot</li>
+        <li>HandTailoringBench</li>
+        <li>ElectricTailoringBench</li>
+      </recipeUsers>
+    </recipeMaker>
+    <stuffCategories>
+      <li>Fabric</li>
+      <li>Leathery</li>
+    </stuffCategories>
+    <costStuffCount>35</costStuffCount>
+    <statBases>
+      <MaxHitPoints>90</MaxHitPoints>
+      <WorkToMake>2200</WorkToMake>
+      <Mass>0.3</Mass>
+      <StuffEffectMultiplierArmor>0.1</StuffEffectMultiplierArmor>
+      <StuffEffectMultiplierInsulation_Cold>0.15</StuffEffectMultiplierInsulation_Cold>
+      <StuffEffectMultiplierInsulation_Heat>0.15</StuffEffectMultiplierInsulation_Heat>
+      <EquipDelay>1.5</EquipDelay>
+    </statBases>
+    <equippedStatOffsets>
+      <WorkSpeedGlobal>0.04</WorkSpeedGlobal>
+    </equippedStatOffsets>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+      </bodyPartGroups>
+      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/BasicShirt/BasicShirt</wornGraphicPath>
+      <layers>
+        <li>Middle</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+      <tags>
+        <li>Neolithic</li>
+        <li>IndustrialBasic</li>
+      </tags>
+    </apparel>
+  </ThingDef>
+
+  <!-- ============ Overalls ============ -->
+  <ThingDef ParentName="ApparelMakeableBase">
+    <defName>Homesteader_Overalls</defName>
+    <label>overalls</label>
+    <description>Hard-wearing bib overalls that cover torso and legs. The uniform of farmers everywhere; growing work comes a little easier in them.</description>
+    <techLevel>Neolithic</techLevel>
+    <graphicData>
+      <texPath>Homesteader/Apparel/Overalls</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <recipeMaker>
+      <recipeUsers>
+        <li>CraftingSpot</li>
+        <li>HandTailoringBench</li>
+        <li>ElectricTailoringBench</li>
+      </recipeUsers>
+    </recipeMaker>
+    <stuffCategories>
+      <li>Fabric</li>
+      <li>Leathery</li>
+    </stuffCategories>
+    <costStuffCount>50</costStuffCount>
+    <statBases>
+      <MaxHitPoints>110</MaxHitPoints>
+      <WorkToMake>3200</WorkToMake>
+      <Mass>0.35</Mass>
+      <StuffEffectMultiplierArmor>0.2</StuffEffectMultiplierArmor>
+      <StuffEffectMultiplierInsulation_Cold>0.5</StuffEffectMultiplierInsulation_Cold>
+      <StuffEffectMultiplierInsulation_Heat>0.35</StuffEffectMultiplierInsulation_Heat>
+      <EquipDelay>2.5</EquipDelay>
+    </statBases>
+    <equippedStatOffsets>
+      <PlantWorkSpeed>0.06</PlantWorkSpeed>
+    </equippedStatOffsets>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+        <li>Legs</li>
+      </bodyPartGroups>
+      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/Pants/Pants</wornGraphicPath>
+      <layers>
+        <li>OnSkin</li>
+      </layers>
+      <tags>
+        <li>Neolithic</li>
+        <li>IndustrialBasic</li>
+      </tags>
+    </apparel>
+  </ThingDef>
+
+  <!-- ============ Wool poncho ============ -->
+  <ThingDef ParentName="ApparelMakeableBase">
+    <defName>Homesteader_WoolPoncho</defName>
+    <label>poncho</label>
+    <description>A heavy woven poncho thrown over the shoulders. Cheap to make and remarkably warm on frosty mornings.</description>
+    <techLevel>Neolithic</techLevel>
+    <graphicData>
+      <texPath>Homesteader/Apparel/WoolPoncho</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <recipeMaker>
+      <recipeUsers>
+        <li>CraftingSpot</li>
+        <li>HandTailoringBench</li>
+        <li>ElectricTailoringBench</li>
+      </recipeUsers>
+    </recipeMaker>
+    <stuffCategories>
+      <li>Fabric</li>
+      <li>Leathery</li>
+    </stuffCategories>
+    <costStuffCount>55</costStuffCount>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToMake>2800</WorkToMake>
+      <Mass>0.5</Mass>
+      <StuffEffectMultiplierArmor>0.2</StuffEffectMultiplierArmor>
+      <StuffEffectMultiplierInsulation_Cold>1.1</StuffEffectMultiplierInsulation_Cold>
+      <StuffEffectMultiplierInsulation_Heat>0.4</StuffEffectMultiplierInsulation_Heat>
+      <EquipDelay>2</EquipDelay>
+    </statBases>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+        <li>Shoulders</li>
+        <li>Arms</li>
+      </bodyPartGroups>
+      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/Duster/Duster</wornGraphicPath>
+      <layers>
+        <li>Shell</li>
+      </layers>
+      <tags>
+        <li>Neolithic</li>
+      </tags>
+    </apparel>
+  </ThingDef>
+
+</Defs>
