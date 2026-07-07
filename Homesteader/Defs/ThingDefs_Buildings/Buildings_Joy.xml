@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Checkers table ============ -->
+  <ThingDef ParentName="FurnitureWithQualityBase">
+    <defName>Homesteader_CheckersTable</defName>
+    <label>checkers table</label>
+    <description>A small wooden table with a checkers board carved into the top. A quiet evening pastime for tired homesteaders. Players sit in chairs around the table.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/CheckersTable</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>90</MaxHitPoints>
+      <WorkToBuild>800</WorkToBuild>
+      <Mass>6</Mass>
+      <Flammability>1.0</Flammability>
+      <Beauty>4</Beauty>
+      <JoyGainFactor>1</JoyGainFactor>
+    </statBases>
+    <costList>
+      <WoodLog>50</WoodLog>
+    </costList>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <building>
+      <joyKind>Gaming_Cerebral</joyKind>
+    </building>
+    <designationCategory>Joy</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsJoy</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_HomesteadComforts</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Washer toss barrel ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_WasherTossBarrel</defName>
+    <label>washer toss barrel</label>
+    <description>An old barrel with a target ring. Colonists toss steel washers at it from a distance - a classic porch game for the whole homestead.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/WasherTossBarrel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <fillPercent>0.3</fillPercent>
+    <rotatable>true</rotatable>
+    <size>(1,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-4)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>400</WorkToBuild>
+      <Mass>10</Mass>
+      <Flammability>1.0</Flammability>
+      <JoyGainFactor>1</JoyGainFactor>
+    </statBases>
+    <costList>
+      <WoodLog>30</WoodLog>
+      <Steel>5</Steel>
+    </costList>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <building>
+      <joyKind>Gaming_Dexterity</joyKind>
+    </building>
+    <designationCategory>Joy</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsJoy</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+</Defs>
