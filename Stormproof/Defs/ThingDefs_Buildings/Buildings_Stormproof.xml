@@ -363,7 +363,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_StaticPylon</defName>
     <label>static discharge pylon</label>
-    <description>During a thunderstorm this pylon bleeds the sky's ambient charge into anything hostile that comes close, repeatedly shocking and stunning raiders and mechanoids in a small radius. In clear weather it is inert - it needs a charged sky to draw from.</description>
+    <description>A defensive pylon that runs exclusively on bottled lightning. Every shock drains 50 Wd of stored strike energy from a storm capacitor bank on the same power net, repeatedly stunning hostile raiders and mechanoids in a small radius. No capacitor charge, no zap - keep your storm spires fed.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Stormproof/Buildings/StaticPylon</texPath>
@@ -400,6 +400,7 @@
         <dischargeRadius>6.9</dischargeRadius>
         <dischargeIntervalTicks>180</dischargeIntervalTicks>
         <stunTicks>120</stunTicks>
+        <energyPerShock>50</energyPerShock>
       </li>
     </comps>
     <designationCategory>Power</designationCategory>
