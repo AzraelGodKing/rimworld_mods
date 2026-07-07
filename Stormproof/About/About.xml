@@ -23,7 +23,7 @@ SOLAR SHIELD
 A field generator that idles at 100W - until a solar flare hits, when it draws a massive 2,500W continuously to keep your colony's electronics alive through the whole event. Keep your batteries charged: if the grid runs dry mid-flare, the shield fails and everything goes dark until the flare passes.
 
 STORM SPIRE
-A grounded spire that attracts lightning strikes within its radius, keeping fires away from your base. Connect it to your power grid and it becomes a harvester: each caught strike dumps up to 1,500 Wd into your batteries - but carries a 25% chance of overloading the grid and triggering a "Zzzt!" power surge. Risk it, or keep it safely off-grid.
+A grounded spire that attracts lightning strikes within its radius, keeping fires away from your base. The spire cannot burn and snuffs out any flames a caught strike sparks around it. Connect it to your power grid and it becomes a harvester: each caught strike dumps up to 1,500 Wd into your batteries - but carries a 5% chance of overloading the grid and triggering a "Zzzt!" power surge. Late-game perfect grounding research eliminates the surge risk entirely.
 
 SURGE PROTECTOR
 Absorbs one "Zzzt!" short circuit event, then needs a day to recharge (and takes some internal damage). Pairs dangerously well with a grid-connected storm spire.

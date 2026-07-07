@@ -11,6 +11,8 @@ namespace Stormproof
     {
         public static GameConditionDef SolarFlare;
 
+        public static ResearchProjectDef Stormproof_PerfectGrounding;
+
         static StormproofDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StormproofDefOf));
