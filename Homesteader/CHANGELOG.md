@@ -4,6 +4,16 @@ All notable changes to Homesteader are documented here.
 
 ## [Unreleased]
 
+### Fixed
+- Bread, porridge, trail stew and hearty stew now inherit from the correct vanilla meal base (`MealBase` instead of the non-inheritable `MealSimple`/`MealFine` defNames), restoring their thingClass, food type, rot ticking and eat sounds/effects.
+- Homestead supplier caravan patch now targets the `OutlanderCivil` def node directly; the old xpath failed because `caravanTraderKinds` only exists on the abstract outlander base def.
+- Homesteaders scenario: corrected the starting pawns config page def name (`ConfigPage_ConfigureStartingPawns`) and added the RimWorld 1.6 `surfaceLayer` block. The scenario now ships as version-specific copies (`1.6` and `Legacy` load folders) so 1.4/1.5 remain supported.
+- Checkers and washer toss joy givers now declare the joy kind matching their vanilla jobs (Gaming_Cerebral / Gaming_Dexterity) and require manipulation.
+- Beehive uses the `Building` thing class so it can be deconstructed and minified without config errors.
+- Removed duplicate thing categories inherited from parents (log bench, rocking chair, quilted bed: BuildingsFurniture; cider, mead: Drugs).
+- Root cellar no longer lists thing categories, since it is intentionally not minifiable.
+- Honey is now flagged with `socialPropernessMatters`, preventing warden food-delivery loops in prison cells.
+
 ### Added
 
 #### Winter pantry (food preservation)
@@ -36,6 +46,7 @@ All notable changes to Homesteader are documented here.
 
 #### Furniture, floors & recreation
 - **Buildings:** log bench, rocking chair, quilted double bed, oil lamp (refuelable light), wood stove (refuelable heater).
+- **Diggo the plushie:** a small chonky hippo-dog plushie sewn from cloth, celebrating a dognamedKats reaching 1k followers. High beauty for its size (scales with quality), sittable for a bit of comfort, and colonists can cuddle it for a little meditative recreation. Buildable from the start and occasionally carried by the homestead supplier caravan.
 - **Floors:** wooden deck, straw matting, packed gravel.
 - **Joy:** checkers table and washer toss barrel recreation buildings.
 
