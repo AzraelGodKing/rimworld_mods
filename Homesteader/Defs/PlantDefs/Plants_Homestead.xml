@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Barley ============ -->
+  <ThingDef ParentName="PlantBase">
+    <defName>Homesteader_Plant_Barley</defName>
+    <label>barley plant</label>
+    <description>A hardy cereal grain that tolerates cool climates. Harvested barley can be milled into flour, cooked into porridge, or brewed.</description>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Flammability>1.3</Flammability>
+      <Nutrition>0.2</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Homesteader/Plants/BarleyPlant</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>14</pathCost>
+    <ingestible>
+      <foodType>Plant</foodType>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
+    <plant>
+      <fertilityMin>0.5</fertilityMin>
+      <fertilitySensitivity>0.6</fertilitySensitivity>
+      <growDays>7</growDays>
+      <sowMinSkill>3</sowMinSkill>
+      <sowTags>
+        <li>Ground</li>
+      </sowTags>
+      <visualSizeRange>0.3~1.05</visualSizeRange>
+      <topWindExposure>0.15</topWindExposure>
+      <harvestTag>Standard</harvestTag>
+      <harvestedThingDef>Homesteader_RawBarley</harvestedThingDef>
+      <harvestYield>11</harvestYield>
+      <dieIfLeafless>true</dieIfLeafless>
+      <maxMeshCount>4</maxMeshCount>
+      <blockAdjacentSow>false</blockAdjacentSow>
+      <wildOrder>2</wildOrder>
+      <purpose>Food</purpose>
+    </plant>
+  </ThingDef>
+
+  <!-- ============ Pumpkin ============ -->
+  <ThingDef ParentName="PlantBase">
+    <defName>Homesteader_Plant_Pumpkin</defName>
+    <label>pumpkin plant</label>
+    <description>A sprawling vine that produces large orange pumpkins. Slow to grow but each harvest is generous.</description>
+    <statBases>
+      <MaxHitPoints>90</MaxHitPoints>
+      <Flammability>1.2</Flammability>
+      <Nutrition>0.25</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Homesteader/Plants/PumpkinPlant</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>16</pathCost>
+    <ingestible>
+      <foodType>Plant</foodType>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
+    <plant>
+      <fertilityMin>0.6</fertilityMin>
+      <fertilitySensitivity>0.8</fertilitySensitivity>
+      <growDays>10</growDays>
+      <sowMinSkill>4</sowMinSkill>
+      <sowTags>
+        <li>Ground</li>
+      </sowTags>
+      <visualSizeRange>0.4~1.1</visualSizeRange>
+      <topWindExposure>0.1</topWindExposure>
+      <harvestTag>Standard</harvestTag>
+      <harvestedThingDef>Homesteader_RawPumpkin</harvestedThingDef>
+      <harvestYield>16</harvestYield>
+      <dieIfLeafless>true</dieIfLeafless>
+      <maxMeshCount>1</maxMeshCount>
+      <blockAdjacentSow>false</blockAdjacentSow>
+      <wildOrder>2</wildOrder>
+      <purpose>Food</purpose>
+    </plant>
+  </ThingDef>
+
+  <!-- ============ Herb bush ============ -->
+  <ThingDef ParentName="PlantBase">
+    <defName>Homesteader_Plant_Herbs</defName>
+    <label>herb bush</label>
+    <description>A fragrant bush of kitchen herbs. Harvested herbs are dried for cooking and brewing herbal tea.</description>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Flammability>1.2</Flammability>
+      <Nutrition>0.15</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Homesteader/Plants/HerbBush</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>14</pathCost>
+    <ingestible>
+      <foodType>Plant</foodType>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
+    <plant>
+      <fertilityMin>0.5</fertilityMin>
+      <fertilitySensitivity>0.5</fertilitySensitivity>
+      <growDays>5</growDays>
+      <sowMinSkill>4</sowMinSkill>
+      <sowTags>
+        <li>Ground</li>
+      </sowTags>
+      <visualSizeRange>0.3~0.9</visualSizeRange>
+      <topWindExposure>0.2</topWindExposure>
+      <harvestTag>Standard</harvestTag>
+      <harvestedThingDef>Homesteader_DriedHerbs</harvestedThingDef>
+      <harvestYield>7</harvestYield>
+      <dieIfLeafless>true</dieIfLeafless>
+      <maxMeshCount>4</maxMeshCount>
+      <blockAdjacentSow>false</blockAdjacentSow>
+      <wildOrder>2</wildOrder>
+      <purpose>Food</purpose>
+    </plant>
+  </ThingDef>
+
+  <!-- ============ Sugar beet ============ -->
+  <ThingDef ParentName="PlantBase">
+    <defName>Homesteader_Plant_SugarBeet</defName>
+    <label>sugar beet plant</label>
+    <description>A thick-rooted beet bred for its high sugar content. Milled at the grain mill to extract sugar.</description>
+    <statBases>
+      <MaxHitPoints>85</MaxHitPoints>
+      <Flammability>1.1</Flammability>
+      <Nutrition>0.2</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Homesteader/Plants/SugarBeetPlant</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>14</pathCost>
+    <ingestible>
+      <foodType>Plant</foodType>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
+    <plant>
+      <fertilityMin>0.6</fertilityMin>
+      <fertilitySensitivity>0.7</fertilitySensitivity>
+      <growDays>8</growDays>
+      <sowMinSkill>5</sowMinSkill>
+      <sowTags>
+        <li>Ground</li>
+      </sowTags>
+      <visualSizeRange>0.3~1.0</visualSizeRange>
+      <topWindExposure>0.1</topWindExposure>
+      <harvestTag>Standard</harvestTag>
+      <harvestedThingDef>Homesteader_SugarBeet</harvestedThingDef>
+      <harvestYield>9</harvestYield>
+      <dieIfLeafless>true</dieIfLeafless>
+      <maxMeshCount>4</maxMeshCount>
+      <blockAdjacentSow>false</blockAdjacentSow>
+      <wildOrder>2</wildOrder>
+      <purpose>Food</purpose>
+    </plant>
+  </ThingDef>
+
+</Defs>
