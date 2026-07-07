@@ -80,6 +80,7 @@ namespace Stormproof
             var targets = map.mapPawns.AllPawnsSpawned
                 .Where(p => p.HostileTo(Faction.OfPlayer) &&
                             !p.Dead &&
+                            !p.Downed &&
                             p.Position.DistanceTo(parent.Position) <= Props.dischargeRadius)
                 .ToList();
             foreach (Pawn pawn in targets)
