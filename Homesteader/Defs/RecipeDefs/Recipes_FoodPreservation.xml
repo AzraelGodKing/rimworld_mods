@@ -20,6 +20,9 @@
           </categories>
           <disallowedThingDefs>
             <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_SmokedFish</li>
+            <li>Homesteader_SaltedFish</li>
           </disallowedThingDefs>
         </filter>
         <count>10</count>
@@ -31,6 +34,9 @@
       </categories>
       <disallowedThingDefs>
         <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
       </disallowedThingDefs>
     </fixedIngredientFilter>
     <defaultIngredientFilter>
@@ -39,6 +45,9 @@
       </categories>
       <disallowedThingDefs>
         <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
         <li>Meat_Human</li>
       </disallowedThingDefs>
     </defaultIngredientFilter>
@@ -86,7 +95,251 @@
     <workSkill>Cooking</workSkill>
   </RecipeDef>
 
-  <!-- ============ Smoke meat ============ -->
+  <!-- ============ Make fruit leather ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeFruitLeather</defName>
+    <label>make fruit leather</label>
+    <description>Spread fruit pulp thin and dry it into sweet, chewy sheets for the trail.</description>
+    <jobString>Making fruit leather.</jobString>
+    <workAmount>750</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>PlantFoodRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Hay</li>
+            <li>RawFungus</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Hay</li>
+        <li>RawFungus</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_FruitLeather>10</Homesteader_FruitLeather>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Make dried mushrooms ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeDriedMushrooms</defName>
+    <label>make dried mushrooms</label>
+    <description>Slice foraged fungus thin and air-dry it for long-term storage.</description>
+    <jobString>Making dried mushrooms.</jobString>
+    <workAmount>650</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>RawFungus</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>RawFungus</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_DriedMushrooms>10</Homesteader_DriedMushrooms>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Make pemmican (no research required on rack) ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakePemmican</defName>
+    <label>make pemmican</label>
+    <description>Mix dried meat with plant matter into dense, long-lasting pemmican - without needing dedicated research.</description>
+    <jobString>Making pemmican.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>MeatRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_SmokedFish</li>
+            <li>Homesteader_SaltedFish</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+      <li>
+        <filter>
+          <categories>
+            <li>PlantFoodRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Hay</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
+        <li>Hay</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <defaultIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
+        <li>Hay</li>
+        <li>Meat_Human</li>
+      </disallowedThingDefs>
+    </defaultIngredientFilter>
+    <products>
+      <Pemmican>10</Pemmican>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Make rock salt ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeRockSalt</defName>
+    <label>make rock salt</label>
+    <description>Chip coarse salt crystals from stone chunks.</description>
+    <jobString>Making rock salt.</jobString>
+    <workAmount>600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>CutStone</effectWorking>
+    <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>StoneChunks</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>StoneChunks</li>
+      </categories>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_RockSalt>10</Homesteader_RockSalt>
+    </products>
+    <workSkill>Construction</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Cure meat ============ -->
+  <RecipeDef>
+    <defName>Homesteader_CureMeat</defName>
+    <label>cure meat with salt</label>
+    <description>Pack raw meat in rock salt until cured. Keeps longer than fresh meat and still cooks into meals.</description>
+    <jobString>Curing meat.</jobString>
+    <workAmount>850</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>MeatRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_SmokedFish</li>
+            <li>Homesteader_SaltedFish</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_RockSalt</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+      </categories>
+      <thingDefs>
+        <li>Homesteader_RockSalt</li>
+      </thingDefs>
+      <disallowedThingDefs>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <defaultIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+      </categories>
+      <thingDefs>
+        <li>Homesteader_RockSalt</li>
+      </thingDefs>
+      <disallowedThingDefs>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
+        <li>Meat_Human</li>
+      </disallowedThingDefs>
+    </defaultIngredientFilter>
+    <products>
+      <Homesteader_SaltedMeat>10</Homesteader_SaltedMeat>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Make pickled vegetables ============ -->
   <RecipeDef>
     <defName>Homesteader_SmokeMeat</defName>
     <label>smoke meat</label>
@@ -105,6 +358,9 @@
           </categories>
           <disallowedThingDefs>
             <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_SmokedFish</li>
+            <li>Homesteader_SaltedFish</li>
           </disallowedThingDefs>
         </filter>
         <count>15</count>
@@ -116,6 +372,9 @@
       </categories>
       <disallowedThingDefs>
         <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
       </disallowedThingDefs>
     </fixedIngredientFilter>
     <defaultIngredientFilter>
@@ -124,11 +383,105 @@
       </categories>
       <disallowedThingDefs>
         <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
         <li>Meat_Human</li>
       </disallowedThingDefs>
     </defaultIngredientFilter>
     <products>
       <Homesteader_SmokedMeat>15</Homesteader_SmokedMeat>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Make pickled vegetables ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakePickledVegetables</defName>
+    <label>make pickled vegetables</label>
+    <description>Ferment raw vegetables in brine for long-term pantry storage.</description>
+    <jobString>Pickling vegetables.</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>PlantFoodRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Hay</li>
+            <li>RawFungus</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_RockSalt</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <thingDefs>
+        <li>Homesteader_RockSalt</li>
+      </thingDefs>
+      <disallowedThingDefs>
+        <li>Hay</li>
+        <li>RawFungus</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_PickledVegetables>10</Homesteader_PickledVegetables>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Make jam ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeJam</defName>
+    <label>make jam</label>
+    <description>Boil fruit down into thick, sweet preserves that keep for months.</description>
+    <jobString>Making jam.</jobString>
+    <workAmount>1000</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>PlantFoodRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Hay</li>
+            <li>RawFungus</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Hay</li>
+        <li>RawFungus</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Jam>10</Homesteader_Jam>
     </products>
     <workSkill>Cooking</workSkill>
   </RecipeDef>

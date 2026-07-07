@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch MayRequire="Ludeon.RimWorld.Odyssey">
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="Homesteader_CuringRack"]/recipes</xpath>
+    <value>
+      <li>Homesteader_CureFish</li>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="Homesteader_Smokehouse"]/recipes</xpath>
+    <value>
+      <li>Homesteader_SmokeFish</li>
+    </value>
+  </Operation>
+
+</Patch>

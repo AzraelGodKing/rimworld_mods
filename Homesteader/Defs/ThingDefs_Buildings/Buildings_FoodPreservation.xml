@@ -5,7 +5,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_DryingRack</defName>
     <label>drying rack</label>
-    <description>A wooden rack for air-drying food. Raw meat can be dried into long-lasting jerky, and fruit or vegetables into dried produce. Requires no power or research.</description>
+    <description>A wooden rack for air-drying food. Raw meat can be dried into long-lasting jerky, fruit and vegetables into dried produce or fruit leather, and foraged fungus into dried mushrooms. Requires no power or research.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/DryingRack</texPath>
@@ -32,6 +32,54 @@
     <recipes>
       <li>Homesteader_MakeJerky</li>
       <li>Homesteader_MakeDriedProduce</li>
+      <li>Homesteader_MakeFruitLeather</li>
+      <li>Homesteader_MakeDriedMushrooms</li>
+      <li>Homesteader_MakePemmican</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <!-- ============ Curing rack ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_CuringRack</defName>
+    <label>curing rack</label>
+    <description>A slatted wooden rack for salting meat and fish, or chipping rock salt from stone chunks. Faster than smoking and needs no fuel.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/CuringRack</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>true</rotatable>
+    <size>(2,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>160</MaxHitPoints>
+      <WorkToBuild>900</WorkToBuild>
+      <Mass>14</Mass>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>40</WoodLog>
+    </costList>
+    <recipes>
+      <li>Homesteader_MakeRockSalt</li>
+      <li>Homesteader_CureMeat</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
@@ -50,7 +98,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_Smokehouse</defName>
     <label>smokehouse</label>
-    <description>A wood-fired smoker. Raw meat smoked here keeps for around a month and can still be cooked into meals. Consumes wood as fuel while in use.</description>
+    <description>A wood-fired smoker. Raw meat and fish smoked here keep for around a month and can still be cooked into meals. Consumes wood as fuel while in use.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/Smokehouse</texPath>
@@ -102,6 +150,174 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <!-- ============ Pickling crock ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_PicklingCrock</defName>
+    <label>pickling crock</label>
+    <description>A stoneware crock for fermenting vegetables in brine. No power needed - just salt, produce, and patience.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/PicklingCrock</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.35</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>700</WorkToBuild>
+      <Mass>12</Mass>
+      <Flammability>0.3</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>40</WoodLog>
+      <Steel>5</Steel>
+    </costList>
+    <recipes>
+      <li>Homesteader_MakePickledVegetables</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <!-- ============ Homestead hearth ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_HomesteadHearth</defName>
+    <label>homestead hearth</label>
+    <description>A brick-and-stone oven with a wood-fired hearth. Bakes bread, hardtack, and hearty homestead stews from milled flour and preserved ingredients.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/HomesteadHearth</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>true</rotatable>
+    <size>(2,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>1800</WorkToBuild>
+      <Mass>35</Mass>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>50</WoodLog>
+      <Steel>15</Steel>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>30.0</fuelConsumptionRate>
+        <fuelCapacity>30.0</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>WoodLog</li>
+          </thingDefs>
+        </fuelFilter>
+        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+      </li>
+    </comps>
+    <recipes>
+      <li>Homesteader_BakeBread</li>
+      <li>Homesteader_BakeHardtack</li>
+      <li>Homesteader_CookPorridge</li>
+      <li>Homesteader_CookTrailStew</li>
+      <li>Homesteader_CookHeartyStew</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <!-- ============ Jam cauldron ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_JamCauldron</defName>
+    <label>jam cauldron</label>
+    <description>A wide iron cauldron over a wood fire for boiling fruit into sweet, long-lasting jam.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/JamCauldron</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>1400</WorkToBuild>
+      <Mass>20</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>40</WoodLog>
+      <Steel>30</Steel>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>25.0</fuelConsumptionRate>
+        <fuelCapacity>25.0</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>WoodLog</li>
+          </thingDefs>
+        </fuelFilter>
+        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+      </li>
+    </comps>
+    <recipes>
+      <li>Homesteader_MakeJam</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_FoodPreservation</li>
+    </researchPrerequisites>
   </ThingDef>
 
 </Defs>
