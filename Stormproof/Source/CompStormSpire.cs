@@ -115,6 +115,23 @@ namespace Stormproof
                 return; // grounded rod: safe, but no harvest
             }
             float remaining = Props.energyPerStrike;
+            // Storm capacitors get first pick: they exist to store strike energy.
+            foreach (CompStormCapacitor capacitor in StormproofRegistry
+                         .On(StormproofRegistry.Capacitors, parent.Map)
+                         .Where(c => c.Net == powerComp.PowerNet)
+                         .OrderByDescending(c => c.AmountCanAccept))
+            {
+                if (remaining <= 0f)
+                {
+                    break;
+                }
+                float acceptCap = System.Math.Min(capacitor.AmountCanAccept, remaining);
+                if (acceptCap > 0f)
+                {
+                    capacitor.AddEnergy(acceptCap);
+                    remaining -= acceptCap;
+                }
+            }
             foreach (CompPowerBattery battery in powerComp.PowerNet.batteryComps
                          .OrderByDescending(b => b.AmountCanAccept))
             {

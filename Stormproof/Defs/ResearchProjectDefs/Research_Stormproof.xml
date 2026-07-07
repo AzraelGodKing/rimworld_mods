@@ -29,6 +29,19 @@
   </ResearchProjectDef>
 
   <ResearchProjectDef>
+    <defName>Stormproof_AtmosphericControl</defName>
+    <label>atmospheric control</label>
+    <description>Ionospheric agitation techniques that let a colony summon a thunderstorm on demand. Warning: side effects include dramatic weather, well-fed storm spires, and smug colonists.</description>
+    <baseCost>3500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>Stormproof_FlareShielding</li>
+    </prerequisites>
+    <researchViewX>17.40</researchViewX>
+    <researchViewY>3.20</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>Stormproof_PerfectGrounding</defName>
     <label>perfect grounding</label>
     <description>Superconducting earth anchors and self-balancing load regulators that let a storm spire dump an entire lightning strike into the grid without a single stray surge. Eliminates the risk of "Zzzt!" power surges from grid-connected storm spires.</description>
