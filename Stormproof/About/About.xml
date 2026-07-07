@@ -35,7 +35,7 @@ WEATHER FORECASTER
 A barometric console that shows how long the current weather will hold, announces incoming thunderstorms, and warns you an hour before the weather breaks.
 
 STATIC DISCHARGE PYLON
-Runs exclusively on bottled lightning: every shock drains 50 Wd from a storm capacitor bank on its power net to stun hostile raiders and mechanoids in a small radius. No capacitor charge, no zap.
+Runs exclusively on bottled lightning: every shock drains 50 Wd from a storm capacitor bank on its power net to stun and burn hostile raiders and mechanoids in a small radius. No capacitor charge, no zap.
 
 FALLOUT SCRUBBER
 Filters airborne toxins out of an enclosed room - pawns and animals inside slowly shed toxic buildup, faster than fallout adds it.
