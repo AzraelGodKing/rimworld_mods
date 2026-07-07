@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Mill flour ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MillFlour</defName>
+    <label>mill flour</label>
+    <description>Grind raw plants and grain into flour.</description>
+    <jobString>Milling flour.</jobString>
+    <workAmount>700</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>PlantFoodRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Hay</li>
+            <li>RawFungus</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Hay</li>
+        <li>RawFungus</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Flour>10</Homesteader_Flour>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Churn butter ============ -->
+  <RecipeDef>
+    <defName>Homesteader_ChurnButter</defName>
+    <label>churn butter</label>
+    <description>Agitate fresh milk until the cream separates into butter.</description>
+    <jobString>Churning butter.</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Milk</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Milk</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Butter>5</Homesteader_Butter>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Skim cream ============ -->
+  <RecipeDef>
+    <defName>Homesteader_SkimCream</defName>
+    <label>skim cream</label>
+    <description>Let fresh milk settle and skim off the rich cream.</description>
+    <jobString>Skimming cream.</jobString>
+    <workAmount>500</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Milk</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Milk</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Cream>6</Homesteader_Cream>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Press cheese ============ -->
+  <RecipeDef>
+    <defName>Homesteader_PressCheese</defName>
+    <label>press cheese</label>
+    <description>Curdle milk with salt and press it into a wheel of long-keeping farmhouse cheese.</description>
+    <jobString>Pressing cheese.</jobString>
+    <workAmount>1000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Milk</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_RockSalt</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Milk</li>
+        <li>Homesteader_RockSalt</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Cheese>8</Homesteader_Cheese>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Bake bread ============ -->
+  <RecipeDef>
+    <defName>Homesteader_BakeBread</defName>
+    <label>bake bread</label>
+    <description>Bake a simple loaf from homestead flour.</description>
+    <jobString>Baking bread.</jobString>
+    <workAmount>600</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Flour</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Flour</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Bread>1</Homesteader_Bread>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Bake hardtack ============ -->
+  <RecipeDef>
+    <defName>Homesteader_BakeHardtack</defName>
+    <label>bake hardtack</label>
+    <description>Bake flour into rock-hard biscuits that last for months.</description>
+    <jobString>Baking hardtack.</jobString>
+    <workAmount>700</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Flour</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Flour</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Hardtack>10</Homesteader_Hardtack>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Cook trail stew ============ -->
+  <RecipeDef>
+    <defName>Homesteader_CookTrailStew</defName>
+    <label>cook trail stew</label>
+    <description>Simmer jerky and dried produce into a filling homestead stew.</description>
+    <jobString>Cooking trail stew.</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Jerky</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_DriedProduce</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Jerky</li>
+        <li>Homesteader_DriedProduce</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_TrailStew>1</Homesteader_TrailStew>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Cook hearty stew ============ -->
+  <RecipeDef>
+    <defName>Homesteader_CookHeartyStew</defName>
+    <label>cook hearty stew</label>
+    <description>Simmer smoked meat and pickled vegetables into a rich, comforting stew.</description>
+    <jobString>Cooking hearty stew.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_SaltedMeat</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_PickledVegetables</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_PickledVegetables</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_HeartyStew>1</Homesteader_HeartyStew>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+</Defs>
