@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Childhood: farm kid ============ -->
+  <BackstoryDef>
+    <defName>Homesteader_FarmKid</defName>
+    <slot>Childhood</slot>
+    <title>farm kid</title>
+    <titleShort>farm kid</titleShort>
+    <description>[PAWN_nameDef] grew up on a remote farmstead, mucking stalls before sunrise and hauling feed until dark. The chores never ended, but neither did the fresh air and open sky.</description>
+    <skillGains>
+      <Plants>3</Plants>
+      <Animals>2</Animals>
+      <Intellectual>-1</Intellectual>
+    </skillGains>
+    <spawnCategories>
+      <li>Offworld</li>
+      <li>Civil</li>
+    </spawnCategories>
+  </BackstoryDef>
+
+  <!-- ============ Childhood: preserver's apprentice ============ -->
+  <BackstoryDef>
+    <defName>Homesteader_PreserversApprentice</defName>
+    <slot>Childhood</slot>
+    <title>preserver's apprentice</title>
+    <titleShort>apprentice</titleShort>
+    <description>[PAWN_nameDef] spent childhood in a smoky pantry-kitchen, learning to salt meat, seal jam jars, and judge a cellar's chill by feel. Nothing in the house was ever wasted.</description>
+    <skillGains>
+      <Cooking>3</Cooking>
+      <Crafting>2</Crafting>
+      <Social>-1</Social>
+    </skillGains>
+    <spawnCategories>
+      <li>Offworld</li>
+      <li>Civil</li>
+    </spawnCategories>
+  </BackstoryDef>
+
+  <!-- ============ Adulthood: homesteader ============ -->
+  <BackstoryDef>
+    <defName>Homesteader_Homesteader</defName>
+    <slot>Adulthood</slot>
+    <title>homesteader</title>
+    <titleShort>homesteader</titleShort>
+    <description>[PAWN_nameDef] carved a working farm out of raw wilderness, raising crops and livestock with little more than hand tools and stubbornness. Winters were survived, not enjoyed.</description>
+    <skillGains>
+      <Plants>4</Plants>
+      <Animals>3</Animals>
+      <Construction>2</Construction>
+      <Intellectual>-2</Intellectual>
+    </skillGains>
+    <spawnCategories>
+      <li>Offworld</li>
+      <li>Civil</li>
+    </spawnCategories>
+    <bodyTypeMale>Male</bodyTypeMale>
+    <bodyTypeFemale>Female</bodyTypeFemale>
+  </BackstoryDef>
+
+  <!-- ============ Adulthood: farmstead brewer ============ -->
+  <BackstoryDef>
+    <defName>Homesteader_FarmsteadBrewer</defName>
+    <slot>Adulthood</slot>
+    <title>farmstead brewer</title>
+    <titleShort>brewer</titleShort>
+    <description>[PAWN_nameDef] ran a small but beloved farm brewery, fermenting cider and mead for every market day within a day's ride. Everyone knew [PAWN_possessive] name; few remembered their evenings.</description>
+    <skillGains>
+      <Cooking>4</Cooking>
+      <Social>3</Social>
+      <Plants>2</Plants>
+      <Shooting>-2</Shooting>
+    </skillGains>
+    <spawnCategories>
+      <li>Offworld</li>
+      <li>Civil</li>
+    </spawnCategories>
+    <bodyTypeMale>Male</bodyTypeMale>
+    <bodyTypeFemale>Female</bodyTypeFemale>
+  </BackstoryDef>
+
+</Defs>
