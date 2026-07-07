@@ -58,7 +58,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_StormSpire</defName>
     <label>storm spire</label>
-    <description>A towering grounded spire that attracts lightning strikes within a wide radius, protecting your base from fires. If connected to a power grid, each caught strike feeds up to 1,500 Wd into your batteries - but has a 25% chance of overloading the grid and causing a "Zzzt!" power surge. Leave it unwired for safe, boring protection; wire it up to gamble.</description>
+    <description>A towering grounded spire that attracts lightning strikes within a wide radius, protecting your base from fires. The spire itself cannot burn, and its grounding snuffs out any flames a caught strike sparks around its base. If connected to a power grid, each caught strike feeds up to 1,500 Wd into your batteries - but has a 5% chance of overloading the grid and causing a "Zzzt!" power surge. Researching perfect grounding eliminates the surge risk entirely.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Stormproof/Buildings/StormSpire</texPath>
@@ -78,7 +78,7 @@
       <MaxHitPoints>400</MaxHitPoints>
       <WorkToBuild>1800</WorkToBuild>
       <Mass>35</Mass>
-      <Flammability>0.2</Flammability>
+      <Flammability>0</Flammability>
     </statBases>
     <costList>
       <Steel>80</Steel>
@@ -92,7 +92,7 @@
       <li Class="Stormproof.CompProperties_StormSpire">
         <attractRadius>30</attractRadius>
         <energyPerStrike>1500</energyPerStrike>
-        <zzztChancePerStrike>0.25</zzztChancePerStrike>
+        <zzztChancePerStrike>0.05</zzztChancePerStrike>
       </li>
     </comps>
     <designationCategory>Power</designationCategory>
@@ -235,7 +235,7 @@
       <Flammability>0</Flammability>
       <Beauty>-1</Beauty>
     </statBases>
-    <placingDraggableDimensions>1</placingDraggableDimensions>
+    <drawStyleCategory>Conduits</drawStyleCategory>
     <costList>
       <Steel>3</Steel>
     </costList>
