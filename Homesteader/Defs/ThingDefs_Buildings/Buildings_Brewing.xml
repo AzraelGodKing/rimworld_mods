@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Brewing bench ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_BrewingBench</defName>
+    <label>brewing bench</label>
+    <description>A sturdy bench of kegs, funnels, and copper tubing for small-batch homestead brewing. Ferments fruit into cider, honey into mead, and steeps herbal tea.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/BrewingBench</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <size>(2,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <WorkToBuild>1400</WorkToBuild>
+      <Mass>20</Mass>
+      <Flammability>0.7</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>60</WoodLog>
+      <Steel>15</Steel>
+    </costList>
+    <recipes>
+      <li>Homesteader_BrewCider</li>
+      <li>Homesteader_BrewMead</li>
+      <li>Homesteader_BrewHerbalTea</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_HomesteadBrewing</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>
