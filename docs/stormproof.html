@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stormproof — a RimWorld mod by AzraelGodKing</title>
+<meta name="description" content="Stormproof: defend your RimWorld colony from solar flares, lightning, power surges, and EMP. RimWorld 1.6, requires Harmony.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">RIMWORLD MODS</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="homesteader.html">Homesteader</a>
+      <a href="stormproof.html" class="active">Stormproof</a>
+      <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero storm">
+  <div class="wrap">
+    <h1 class="s">STORMPROOF</h1>
+    <p class="tagline">Solar flares &bull; Lightning &bull; Power surges &bull; EMP &mdash; your grid survives</p>
+    <div class="badges">
+      <span class="badge storm">RimWorld 1.6</span>
+      <span class="badge storm">Requires Harmony</span>
+      <span class="badge storm">C# mod</span>
+      <span class="badge storm">6 buildings</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-storm" href="https://github.com/AzraelGodKing/rimworld_mods/archive/refs/heads/main.zip">&#11015; Download</a>
+      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="overview">
+    <h2 class="s">Overview</h2>
+    <p class="sub">Custom C# components patch vanilla events to keep your power grid running through everything the Rim throws at it. Pairs naturally with <a href="homesteader.html">Homesteader</a> batteries and generators.</p>
+    <div class="note storm">
+      <b>Dependencies:</b> requires the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a> mod. Load Stormproof after Harmony in your mod list.
+    </div>
+  </section>
+
+  <section id="buildings">
+    <h2 class="s">Buildings</h2>
+    <p class="sub">Six tools for a hardened colony grid &mdash; plus one purely decorative weather vane.</p>
+    <div class="grid">
+
+      <div class="card storm wide">
+        <div class="icon">SS</div>
+        <div>
+          <h3>Solar shield</h3>
+          <div class="stat">2&times;2 &middot; Flare shielding research &middot; idles 100W</div>
+          <p>A field generator that keeps <b>every electrical device on the map running</b> during a solar flare by drawing 2,500W continuously. Stockpile battery charge before the sky goes red &mdash; if the grid runs dry mid-flare, the shield collapses and everything stays dark until the flare ends.</p>
+        </div>
+      </div>
+
+      <div class="card storm wide">
+        <div class="icon">SP</div>
+        <div>
+          <h3>Storm spire</h3>
+          <div class="stat">30-tile radius &middot; Storm protection research</div>
+          <p>Attracts lightning strikes within a wide radius, keeping fires away from your base. <b>Off-grid:</b> safe, boring protection. <b>Grid-connected:</b> each strike dumps up to 1,500 Wd into your batteries &mdash; with a 25% chance of overloading the grid and triggering a &ldquo;Zzzt!&rdquo; surge. Risk it, or keep it unwired.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <div class="icon">SU</div>
+        <div>
+          <h3>Surge protector</h3>
+          <div class="stat">Storm protection research &middot; 25W idle</div>
+          <p>Absorbs one &ldquo;Zzzt!&rdquo; short circuit, then needs a day to recharge and takes internal damage. Pairs dangerously well with a grid-connected storm spire.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <div class="icon">ED</div>
+        <div>
+          <h3>EMP dampener</h3>
+          <div class="stat">~15-tile radius &middot; Flare shielding research &middot; 150W</div>
+          <p>Colony <b>buildings</b> in range shrug off EMP stuns. Turrets keep firing through EMP mortar barrages. Does not protect pawns or mechanoids.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <div class="icon">AC</div>
+        <div>
+          <h3>Armored conduit</h3>
+          <div class="stat">Storm protection research &middot; fireproof</div>
+          <p>Power conduit sheathed in riveted steel. Fireproof and far tougher than standard conduit &mdash; the wiring of choice for killboxes and exterior walls.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <div class="icon">SV</div>
+        <div>
+          <h3>Storm vane</h3>
+          <div class="stat">no research &middot; +8 beauty</div>
+          <p>A handsome copper weather vane. It doesn't predict anything, prevent anything, or power anything. But every proper homestead has one.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="research">
+    <h2 class="s">Research</h2>
+    <p class="sub">Two industrial-era projects on the main research tree.</p>
+    <div class="research-tree">
+      <b>Electricity</b> (vanilla)<br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Storm protection</b> (1,200 pts)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Storm spire</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Surge protector</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472; <b>Armored conduit</b><br>
+      <br>
+      <b>Storm protection</b> + <b>Fabrication</b> (vanilla)<br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Flare shielding</b> (3,000 pts)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Solar shield</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472; <b>EMP dampener</b>
+    </div>
+    <div class="table-scroll" style="margin-top:24px">
+      <table>
+        <tr><th class="s">Building</th><th>Cost</th><th>Power</th><th>Research</th></tr>
+        <tr><td><b>Storm spire</b></td><td>80 steel, 1 component</td><td>5W idle</td><td>Storm protection</td></tr>
+        <tr><td><b>Surge protector</b></td><td>50 steel, 2 components</td><td>25W</td><td>Storm protection</td></tr>
+        <tr><td><b>Armored conduit</b></td><td>3 steel/tile</td><td>&mdash;</td><td>Storm protection</td></tr>
+        <tr><td><b>Solar shield</b></td><td>150 steel, 40 plasteel, 6 components, 1 advanced component</td><td>100W idle / 2,500W active</td><td>Flare shielding</td></tr>
+        <tr><td><b>EMP dampener</b></td><td>60 steel, 10 gold, 3 components</td><td>150W</td><td>Flare shielding</td></tr>
+        <tr><td><b>Storm vane</b></td><td>25 steel</td><td>&mdash;</td><td>None</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="how-it-works">
+    <h2 class="s">How it works</h2>
+    <p class="sub">Custom Harmony patches and components power the behaviors vanilla can't do in XML alone.</p>
+    <div class="grid">
+      <div class="card storm">
+        <div class="icon">&#9889;</div>
+        <div>
+          <h3>Solar flare bypass</h3>
+          <p>While active, the solar shield patches the global electricity-disabled flag so your colony keeps running &mdash; as long as the grid can feed 2,500W.</p>
+        </div>
+      </div>
+      <div class="card storm">
+        <div class="icon">&#9737;</div>
+        <div>
+          <h3>Lightning harvesting</h3>
+          <p>The storm spire intercepts lightning strikes in range. Wired spires charge your batteries; unwired spires simply ground the bolt safely.</p>
+        </div>
+      </div>
+      <div class="card storm">
+        <div class="icon">&#128737;</div>
+        <div>
+          <h3>Surge absorption</h3>
+          <p>The surge protector catches one short-circuit event per recharge cycle, saving your batteries from a cascade of explosions.</p>
+        </div>
+      </div>
+      <div class="card storm">
+        <div class="icon">&#128737;</div>
+        <div>
+          <h3>EMP immunity</h3>
+          <p>The EMP dampener patches building stun logic so turrets, doors, and production buildings inside its radius ignore EMP effects.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2 class="s">Installation</h2>
+    <ol>
+      <li>Install the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a> mod first.</li>
+      <li>Copy the <code>Stormproof</code> folder into your RimWorld <code>Mods</code> directory.</li>
+      <li>Enable <b>Harmony</b> then <b>Stormproof</b> in the mod list. Load Stormproof after Harmony.</li>
+      <li>Restart the game.</li>
+    </ol>
+    <div class="note storm">
+      <b>Save compatibility:</b> safe to add mid-save. Deconstruct all Stormproof buildings before removing the mod.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="index.html">All mods</a>
+    &middot; Stormproof by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
+    &middot; <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">Report a bug</a>
+  </div>
+</footer>
+
+</body>
+</html>
