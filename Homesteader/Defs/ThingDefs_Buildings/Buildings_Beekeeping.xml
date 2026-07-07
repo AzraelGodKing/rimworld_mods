@@ -6,7 +6,7 @@
     <defName>Homesteader_Beehive</defName>
     <label>beehive</label>
     <description>A wooden hive box for keeping honeybees. The colony slowly produces honey that can be harvested and hauled away. Best placed outdoors near growing plants.</description>
-    <thingClass>ThingWithComps</thingClass>
+    <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/Beehive</texPath>
       <graphicClass>Graphic_Single</graphicClass>

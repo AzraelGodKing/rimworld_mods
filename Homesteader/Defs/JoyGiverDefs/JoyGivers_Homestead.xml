@@ -11,6 +11,10 @@
       <li>Homesteader_CheckersTable</li>
     </thingDefs>
     <jobDef>Play_Chess</jobDef>
+    <joyKind>Gaming_Cerebral</joyKind>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
   </JoyGiverDef>
 
   <!-- Washer toss reuses the vanilla horseshoes job at our barrel -->
@@ -22,6 +26,23 @@
       <li>Homesteader_WasherTossBarrel</li>
     </thingDefs>
     <jobDef>Play_Horseshoes</jobDef>
+    <joyKind>Gaming_Dexterity</joyKind>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </JoyGiverDef>
+
+  <!-- Cuddling Diggo the plushie for a little meditative joy -->
+  <JoyGiverDef>
+    <defName>Homesteader_CuddleDiggo</defName>
+    <giverClass>JoyGiver_WatchBuilding</giverClass>
+    <baseChance>0.4</baseChance>
+    <desireSit>false</desireSit>
+    <thingDefs>
+      <li>Homesteader_DiggoPlushie</li>
+    </thingDefs>
+    <jobDef>Homesteader_CuddlePlushie</jobDef>
+    <joyKind>Meditative</joyKind>
   </JoyGiverDef>
 
 </Defs>
