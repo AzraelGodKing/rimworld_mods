@@ -29,7 +29,8 @@
       <span class="badge storm">RimWorld 1.6</span>
       <span class="badge storm">Requires Harmony</span>
       <span class="badge storm">C# mod</span>
-      <span class="badge storm">6 buildings</span>
+      <span class="badge storm">11 buildings</span>
+      <span class="badge storm">4 research projects</span>
     </div>
     <div class="cta">
       <a class="btn btn-storm" href="https://github.com/AzraelGodKing/rimworld_mods/archive/refs/heads/main.zip">&#11015; Download</a>
@@ -50,7 +51,7 @@
 
   <section id="buildings">
     <h2 class="s">Buildings</h2>
-    <p class="sub">Six tools for a hardened colony grid &mdash; plus one purely decorative weather vane.</p>
+    <p class="sub">Ten tools for a hardened colony grid &mdash; plus one purely decorative weather vane.</p>
     <div class="grid">
 
       <div class="card storm wide">
@@ -66,8 +67,8 @@
         <div class="icon">SP</div>
         <div>
           <h3>Storm spire</h3>
-          <div class="stat">30-tile radius &middot; Storm protection research</div>
-          <p>Attracts lightning strikes within a wide radius, keeping fires away from your base. <b>Off-grid:</b> safe, boring protection. <b>Grid-connected:</b> each strike dumps up to 1,500 Wd into your batteries &mdash; with a 25% chance of overloading the grid and triggering a &ldquo;Zzzt!&rdquo; surge. Risk it, or keep it unwired.</p>
+          <div class="stat">30-tile radius &middot; fireproof &middot; Storm protection research</div>
+          <p>Attracts lightning strikes within a wide radius, keeping fires away from your base. The spire cannot burn and snuffs out any flames a caught strike sparks around its base. <b>Off-grid:</b> safe, boring protection. <b>Grid-connected:</b> each strike dumps up to 1,500 Wd into your capacitors and batteries &mdash; with a 5% chance of triggering a &ldquo;Zzzt!&rdquo; surge, eliminated entirely by perfect grounding research.</p>
         </div>
       </div>
 
@@ -98,6 +99,51 @@
         </div>
       </div>
 
+      <div class="card storm wide">
+        <div class="icon">SC</div>
+        <div>
+          <h3>Storm capacitor bank</h3>
+          <div class="stat">2&times;1 &middot; 3,000 Wd &middot; Storm protection + Batteries research</div>
+          <p>A <b>lightning-only battery</b>. The grid can't charge it &mdash; only spire-caught strikes can &mdash; but in return it never self-discharges and &ldquo;Zzzt!&rdquo; surges can't drain it. When grid production falls short it automatically discharges up to 2,000W to cover the deficit. Spires fill capacitors before regular batteries.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <div class="icon">WF</div>
+        <div>
+          <h3>Weather forecaster</h3>
+          <div class="stat">100W &middot; Storm protection research</div>
+          <p>Shows how long the current weather will hold, announces incoming thunderstorms so you can ready your spires, and warns you an hour before the weather breaks.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <div class="icon">DP</div>
+        <div>
+          <h3>Static discharge pylon</h3>
+          <div class="stat">~7-tile radius &middot; 200W &middot; Flare shielding research</div>
+          <p>During a thunderstorm, bleeds the sky's charge into anything hostile nearby &mdash; repeatedly <b>stunning raiders and mechanoids</b> in its radius. Inert in clear weather.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <div class="icon">FS</div>
+        <div>
+          <h3>Fallout scrubber</h3>
+          <div class="stat">150W &middot; enclosed rooms only &middot; Flare shielding research</div>
+          <p>Strips airborne toxins from an enclosed room. Pawns and animals inside slowly <b>shed toxic buildup</b>, faster than serious fallout adds it.</p>
+        </div>
+      </div>
+
+      <div class="card storm wide">
+        <div class="icon">CL</div>
+        <div>
+          <h3>Storm caller</h3>
+          <div class="stat">2&times;2 &middot; 400W &middot; Atmospheric control research (Spacer)</div>
+          <p>An ionospheric agitator that <b>summons a rainy thunderstorm on demand</b>: lightning to feed your storm spires, rain to douse wildfires. Half-day storm, five-day recharge &mdash; a supplement to your grid, not a replacement for it.</p>
+        </div>
+      </div>
+
       <div class="card storm">
         <div class="icon">SV</div>
         <div>
@@ -112,18 +158,28 @@
 
   <section id="research">
     <h2 class="s">Research</h2>
-    <p class="sub">Two industrial-era projects on the main research tree.</p>
+    <p class="sub">Two industrial-era projects and two spacer-era capstones.</p>
     <div class="research-tree">
       <b>Electricity</b> (vanilla)<br>
       &nbsp;&nbsp;&#9492;&#9472; <b>Storm protection</b> (1,200 pts)<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Storm spire</b><br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Surge protector</b><br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472; <b>Armored conduit</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Armored conduit</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Weather forecaster</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472; <b>Storm capacitor bank</b> (also needs Batteries)<br>
       <br>
       <b>Storm protection</b> + <b>Fabrication</b> (vanilla)<br>
       &nbsp;&nbsp;&#9492;&#9472; <b>Flare shielding</b> (3,000 pts)<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Solar shield</b><br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472; <b>EMP dampener</b>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>EMP dampener</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Static discharge pylon</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472; <b>Fallout scrubber</b><br>
+      <br>
+      <b>Flare shielding</b><br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Atmospheric control</b> (3,500 pts, Spacer) &rarr; <b>Storm caller</b><br>
+      <br>
+      <b>Flare shielding</b> + <b>Advanced fabrication</b> (vanilla)<br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Perfect grounding</b> (4,000 pts, Spacer) &rarr; removes storm spire &ldquo;Zzzt!&rdquo; risk
     </div>
     <div class="table-scroll" style="margin-top:24px">
       <table>
@@ -131,8 +187,13 @@
         <tr><td><b>Storm spire</b></td><td>80 steel, 1 component</td><td>5W idle</td><td>Storm protection</td></tr>
         <tr><td><b>Surge protector</b></td><td>50 steel, 2 components</td><td>25W</td><td>Storm protection</td></tr>
         <tr><td><b>Armored conduit</b></td><td>3 steel/tile</td><td>&mdash;</td><td>Storm protection</td></tr>
+        <tr><td><b>Weather forecaster</b></td><td>40 steel, 2 components</td><td>100W</td><td>Storm protection</td></tr>
+        <tr><td><b>Storm capacitor bank</b></td><td>80 steel, 10 plasteel, 3 components</td><td>discharges up to 2,000W</td><td>Storm protection + Batteries</td></tr>
         <tr><td><b>Solar shield</b></td><td>150 steel, 40 plasteel, 6 components, 1 advanced component</td><td>100W idle / 2,500W active</td><td>Flare shielding</td></tr>
         <tr><td><b>EMP dampener</b></td><td>60 steel, 10 gold, 3 components</td><td>150W</td><td>Flare shielding</td></tr>
+        <tr><td><b>Static discharge pylon</b></td><td>50 steel, 5 gold, 2 components</td><td>200W</td><td>Flare shielding</td></tr>
+        <tr><td><b>Fallout scrubber</b></td><td>60 steel, 3 components</td><td>150W</td><td>Flare shielding</td></tr>
+        <tr><td><b>Storm caller</b></td><td>120 steel, 60 plasteel, 4 components, 2 advanced components</td><td>400W</td><td>Atmospheric control</td></tr>
         <tr><td><b>Storm vane</b></td><td>25 steel</td><td>&mdash;</td><td>None</td></tr>
       </table>
     </div>
@@ -153,7 +214,21 @@
         <div class="icon">&#9737;</div>
         <div>
           <h3>Lightning harvesting</h3>
-          <p>The storm spire intercepts lightning strikes in range. Wired spires charge your batteries; unwired spires simply ground the bolt safely.</p>
+          <p>The storm spire intercepts lightning strikes in range and sweeps its base clear of fire for a few seconds after each hit. Wired spires charge capacitors first, then batteries; unwired spires simply ground the bolt safely.</p>
+        </div>
+      </div>
+      <div class="card storm">
+        <div class="icon">&#9925;</div>
+        <div>
+          <h3>Weather awareness</h3>
+          <p>The forecaster reads the map's weather engine directly &mdash; its inspect panel shows exactly how long the current weather will last, and it pings you when storms roll in or the weather is about to break.</p>
+        </div>
+      </div>
+      <div class="card storm">
+        <div class="icon">&#9928;</div>
+        <div>
+          <h3>Storms on demand</h3>
+          <p>The storm caller transitions the map's weather to a rainy thunderstorm and pins it there for half a day &mdash; feeding every spire and pylon you own.</p>
         </div>
       </div>
       <div class="card storm">
