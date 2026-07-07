@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!-- Add the homestead supplier caravan to outlander factions -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/FactionDef[defName="OutlanderCivil"]/caravanTraderKinds</xpath>
+    <value>
+      <li>Homesteader_Caravan_HomesteadSupplier</li>
+    </value>
+  </Operation>
+
+</Patch>
