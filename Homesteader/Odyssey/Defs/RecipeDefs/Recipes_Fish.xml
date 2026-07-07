@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs MayRequire="Ludeon.RimWorld.Odyssey">
+
+  <RecipeDef>
+    <defName>Homesteader_CureFish</defName>
+    <label>cure fish with salt</label>
+    <description>Pack raw fish in rock salt until cured. Keeps for weeks and still cooks into meals.</description>
+    <jobString>Curing fish.</jobString>
+    <workAmount>850</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Fish</li>
+          </categories>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_RockSalt</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Fish</li>
+      </categories>
+      <thingDefs>
+        <li>Homesteader_RockSalt</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_SaltedFish>10</Homesteader_SaltedFish>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>Homesteader_SmokeFish</defName>
+    <label>smoke fish</label>
+    <description>Cure raw fish in wood smoke so it keeps for around a month. Smoked fish can still be cooked into meals.</description>
+    <jobString>Smoking fish.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Fish</li>
+          </categories>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Fish</li>
+      </categories>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_SmokedFish>15</Homesteader_SmokedFish>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+</Defs>

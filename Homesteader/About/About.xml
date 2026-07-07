@@ -8,23 +8,26 @@
     <li>1.5</li>
     <li>1.6</li>
   </supportedVersions>
-  <description>Everything a growing homestead needs: better storage, food preservation, and off-grid power.
+  <description>Everything a growing homestead needs: tribal survival, farm-to-table crafting, storage, food preservation, and off-grid power.
 
-STORAGE
-- Storage crate: a cheap wooden crate that holds 3 stacks and protects them from deterioration.
-- Storage barrel: holds 3 stacks of food or drink, safe from the weather.
-- Pallet: a dirt-cheap outdoor pallet that holds 2 stacks of anything - including stone chunks - without deterioration.
+TRIBAL SURVIVAL (no research)
+- Drying rack: jerky, dried produce, fruit leather, dried mushrooms, and pemmican without needing pemmican research.
+- Curing rack: rock salt from stone chunks, salted meat.
+- Smokehouse: wood-fired smoked meat that still cooks into meals.
+- Hayloft, ingredient barrel, and all original storage options.
 
-FOOD PRESERVATION
-- Drying rack: turn raw meat into long-lasting jerky, or fruit and vegetables into dried produce. No power or research needed - perfect for tribal starts and early colonies.
-- Smokehouse: a wood-fired smoker that preserves raw meat as smoked meat, which keeps for a month and can still be cooked into meals.
+FARM-TO-TABLE
+- Grain mill and butter churn for flour and butter.
+- Pickling crock and homestead hearth for pickled vegetables, bread, hardtack, trail stew, and hearty stew.
+
+RESEARCH &amp; PROGRESSION
+- Primitive homestead, food preservation, farmstead crafting, homestead storage, and advanced homestead research projects.
+- Root cellar, large storage crate, jam cauldron, and wood-burning generator.
 
 POWER
-- Compact battery: a small 1x1 battery for tight bases and early setups.
-- Battery bank: a high-capacity, high-efficiency 2x2 power reserve.
-- Advanced battery: a precision-fabricated 1x2 battery with 90% charge efficiency (requires Fabrication).
-- Ultratech battery: the best of the best - a glowing 2x2 superconducting vault storing 4000 Wd at 99% efficiency (requires Advanced Fabrication).
-- Portable generator: a 1x1 chemfuel generator for outposts and workshops.
+- Compact battery, battery bank, advanced battery, ultratech battery, portable chemfuel generator.
+
+Odyssey owners get salted and smoked fish recipes automatically.
 
 Fully XML-based: no C# assembly, safe to add or remove from a save (remove mod items from the map first before uninstalling).</description>
 </ModMetaData>
