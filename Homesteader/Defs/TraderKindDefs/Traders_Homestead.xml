@@ -51,6 +51,10 @@
         <countRange>40~120</countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
+        <thingDef>Homesteader_DiggoPlushie</thingDef>
+        <countRange>0~2</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
         <thingDef>Hay</thingDef>
         <countRange>100~300</countRange>
       </li>

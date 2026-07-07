@@ -36,9 +36,6 @@
     <designationCategory>Furniture</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
-    <thingCategories>
-      <li>BuildingsFurniture</li>
-    </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
   </ThingDef>
 
@@ -76,9 +73,6 @@
     <designationCategory>Furniture</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
-    <thingCategories>
-      <li>BuildingsFurniture</li>
-    </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Homesteader_HomesteadComforts</li>
@@ -123,13 +117,59 @@
     <designationCategory>Furniture</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
-    <thingCategories>
-      <li>BuildingsFurniture</li>
-    </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Homesteader_HomesteadComforts</li>
     </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Diggo the plushie ============ -->
+  <ThingDef ParentName="FurnitureWithQualityBase">
+    <defName>Homesteader_DiggoPlushie</defName>
+    <label>Diggo the plushie</label>
+    <description>A hopelessly round plushie sewn in the shape of... nobody is quite sure. Part hippo, part dog, entirely chonky. Its stitched smile and button eyes make any room feel more like home, and colonists can flop down against its belly to snuggle away their worries.
+
+Congrats to a dognamedKats for 1k followers!</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/HippoDogPlushie</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.8,0.8)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>10</pathCost>
+    <fillPercent>0.15</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <WorkToBuild>600</WorkToBuild>
+      <Mass>1.5</Mass>
+      <Flammability>1.0</Flammability>
+      <Beauty>20</Beauty>
+      <Comfort>0.6</Comfort>
+      <JoyGainFactor>1</JoyGainFactor>
+    </statBases>
+    <costList>
+      <Cloth>30</Cloth>
+    </costList>
+    <building>
+      <isSittable>true</isSittable>
+      <joyKind>Meditative</joyKind>
+      <watchBuildingStandDistanceRange>1~2</watchBuildingStandDistanceRange>
+      <watchBuildingStandRectWidth>3</watchBuildingStandRectWidth>
+      <watchBuildingInSameRoom>true</watchBuildingInSameRoom>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+    </building>
+    <placeWorkers>
+      <li>PlaceWorker_WatchArea</li>
+    </placeWorkers>
+    <designationCategory>Furniture</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
   </ThingDef>
 
   <!-- ============ Oil lamp ============ -->

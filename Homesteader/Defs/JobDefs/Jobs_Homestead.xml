@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Cuddling Diggo the plushie. Reuses the vanilla generic watch-building driver. -->
+  <JobDef>
+    <defName>Homesteader_CuddlePlushie</defName>
+    <driverClass>JobDriver_WatchBuilding</driverClass>
+    <reportString>cuddling Diggo.</reportString>
+    <joyDuration>4000</joyDuration>
+    <joyMaxParticipants>2</joyMaxParticipants>
+    <joyKind>Meditative</joyKind>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
+
+</Defs>

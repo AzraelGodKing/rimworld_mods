@@ -422,9 +422,6 @@
     <designationCategory>Furniture</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
-    <thingCategories>
-      <li>BuildingsFurniture</li>
-    </thingCategories>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Homesteader_HomesteadStorage</li>
