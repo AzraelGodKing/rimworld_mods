@@ -1,6 +1,7 @@
 using System.Linq;
 using RimWorld;
 using Verse;
+using Verse.Sound;
 
 namespace Stormproof
 {
@@ -96,13 +97,27 @@ namespace Stormproof
                     pawn.TakeDamage(new DamageInfo(
                         DamageDefOf.Burn, Props.damagePerShock, 0.5f, -1f, parent));
                 }
-                FleckMaker.ThrowMicroSparks(pawn.DrawPos, map);
+                PlayStrikeEffects(pawn, map);
                 discharged = true;
             }
             if (discharged)
             {
                 FleckMaker.ThrowLightningGlow(parent.DrawPos, map, 1.2f);
             }
+        }
+
+        // Visible arc from the pylon to the victim, sparks and a flash on the
+        // pawn, plus the EMP-disabled effecter (crackling electricity overlay)
+        // maintained on them for the stun duration.
+        private void PlayStrikeEffects(Pawn pawn, Map map)
+        {
+            FleckMaker.ConnectingLine(
+                parent.DrawPos, pawn.DrawPos, FleckDefOf.LineEMP, map, 1.4f);
+            FleckMaker.ThrowMicroSparks(pawn.DrawPos, map);
+            FleckMaker.ThrowLightningGlow(pawn.DrawPos, map, 0.6f);
+            Effecter effecter = EffecterDefOf.DisabledByEMP.Spawn();
+            map.effecterMaintainer.AddEffecterToMaintain(effecter, pawn, Props.stunTicks);
+            SoundDefOf.EnergyShield_AbsorbDamage.PlayOneShot(new TargetInfo(pawn.Position, map));
         }
 
         public override string CompInspectStringExtra()
