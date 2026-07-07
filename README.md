@@ -6,13 +6,18 @@ A collection of RimWorld mods by AzraelGodKing.
 
 ### Homesteader
 
-Everything a growing homestead needs: better storage, food preservation, and off-grid power. Supports RimWorld 1.4 / 1.5 / 1.6. Fully XML-based — no C# assembly.
+Everything a growing homestead needs: tribal survival, farm-to-table crafting, storage, food preservation, and off-grid power. Supports RimWorld 1.4 / 1.5 / 1.6. Fully XML-based — no C# assembly.
 
 | Category | Content |
 |---|---|
-| **Storage** | Storage crate (3 stacks), storage barrel (3 stacks, food & drink), pallet (2 stacks, cheap outdoor storage — even chunks) |
-| **Food preservation** | Drying rack (jerky & dried produce, no power/research), smokehouse (wood-fired; smoked meat keeps ~30 days and still cooks into meals) |
-| **Power** | Compact battery (1x1), battery bank (2x2), advanced battery (1x2, 90% efficiency), ultratech battery (2x2, 4000 Wd at 99% efficiency — endgame), portable generator (1x1 chemfuel, 350W) |
+| **Tribal survival** | Curing rack (rock salt, salted meat), drying rack (+ fruit leather, dried mushrooms, pemmican without research), smokehouse, hayloft, ingredient barrel |
+| **Farm-to-table** | Grain mill, butter churn, pickling crock, homestead hearth (bread, hardtack, trail stew, hearty stew) |
+| **Storage** | Storage crate, storage barrel, pallet, hayloft, ingredient barrel, root cellar, large storage crate |
+| **Food preservation** | Jerky, dried produce, fruit leather, salted/smoked meat, pickled vegetables, jam |
+| **Research** | Primitive homestead → food preservation / farmstead crafting / homestead storage → advanced homestead |
+| **Power** | Compact battery (1×1), battery bank (2×2), advanced battery (1×2), ultratech battery (2×2), portable generator (chemfuel), wood-burning generator (wood) |
+
+Odyssey DLC: salted fish and smoked fish recipes load automatically.
 
 ### Stormproof
 
@@ -32,10 +37,15 @@ Source lives in `Stormproof/Source`; the compiled `Stormproof.dll` ships in `Sto
 ## Installation
 
 1. Download / clone this repository.
-2. Copy the `Homesteader` folder into your RimWorld `Mods` directory:
+2. Copy the mod folder(s) into your RimWorld `Mods` directory:
    - Windows: `C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods`
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
-3. Enable **Homesteader** in the in-game mod list.
+3. Enable the mod(s) in the in-game mod list.
+4. **Stormproof** also requires the **Harmony** mod.
 
-Safe to add to an existing save. Before removing it from a save, deconstruct the mod's buildings and consume/sell its items first.
+Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first.
+
+## Website
+
+Browse the full mod catalog at the [GitHub Pages site](https://azraelgodking.github.io/rimworld_mods/).
