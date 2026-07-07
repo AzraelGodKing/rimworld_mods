@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Cook porridge (homestead hearth) ============ -->
+  <RecipeDef>
+    <defName>Homesteader_CookPorridge</defName>
+    <label>cook porridge</label>
+    <description>Simmer grain into a warm, filling porridge.</description>
+    <jobString>Cooking porridge.</jobString>
+    <workAmount>350</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_RawBarley</li>
+            <li>Homesteader_Flour</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_RawBarley</li>
+        <li>Homesteader_Flour</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Porridge>2</Homesteader_Porridge>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Mill sugar (grain mill) ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MillSugar</defName>
+    <label>mill sugar</label>
+    <description>Crush sugar beets and boil down the juice into crystallized sugar.</description>
+    <jobString>Milling sugar.</jobString>
+    <workAmount>700</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_SugarBeet</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_SugarBeet</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Sugar>12</Homesteader_Sugar>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+</Defs>
