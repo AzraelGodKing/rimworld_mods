@@ -75,6 +75,80 @@
     </thingCategories>
   </ThingDef>
 
+  <!-- ============ Fruit leather ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_FruitLeather</defName>
+    <label>fruit leather</label>
+    <description>Fruit pulp spread thin and sun-dried into chewy sheets. Sweet, light, and keeps for three months on the trail.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/FruitLeather</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <Mass>0.012</Mass>
+      <MarketValue>1.6</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>RawTasty</preferability>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>90</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>FoodMeals</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Dried mushrooms ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_DriedMushrooms</defName>
+    <label>dried mushrooms</label>
+    <description>Foraged mushrooms sliced and air-dried. Light, savory, and a welcome pantry staple through lean seasons.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/DriedMushrooms</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <Mass>0.012</Mass>
+      <MarketValue>1.3</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>RawTasty</preferability>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>60</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>FoodMeals</li>
+    </thingCategories>
+  </ThingDef>
+
   <!-- ============ Smoked meat ============ -->
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_SmokedMeat</defName>
@@ -112,6 +186,408 @@
     <thingCategories>
       <li>MeatRaw</li>
     </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Salted meat ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_SaltedMeat</defName>
+    <label>salted meat</label>
+    <description>Raw meat packed in salt until cured. Keeps for six weeks without a freezer and can still be cooked into meals. Salty and tough eaten plain.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/SaltedMeat</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.6</Flammability>
+      <DeteriorationRate>3</DeteriorationRate>
+      <Mass>0.024</Mass>
+      <MarketValue>1.1</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meat</foodType>
+      <preferability>RawBad</preferability>
+      <tasteThought>AteRawFood</tasteThought>
+      <ingestEffect>EatMeat</ingestEffect>
+      <ingestSound>RawMeat_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>45</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>MeatRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Smoked fish ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_SmokedFish</defName>
+    <label>smoked fish</label>
+    <description>Fish cured in wood smoke. Keeps for around a month and can be cooked into meals. Unappetizing eaten on its own.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/SmokedFish</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.7</Flammability>
+      <DeteriorationRate>4</DeteriorationRate>
+      <Mass>0.022</Mass>
+      <MarketValue>1.2</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meat</foodType>
+      <preferability>RawBad</preferability>
+      <tasteThought>AteRawFood</tasteThought>
+      <ingestEffect>EatMeat</ingestEffect>
+      <ingestSound>RawMeat_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>30</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>MeatRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Salted fish ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_SaltedFish</defName>
+    <label>salted fish</label>
+    <description>Fish packed in salt until cured. Keeps for six weeks and can be cooked into meals. Salty and stiff eaten plain.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/SaltedFish</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.6</Flammability>
+      <DeteriorationRate>3</DeteriorationRate>
+      <Mass>0.021</Mass>
+      <MarketValue>1.1</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meat</foodType>
+      <preferability>RawBad</preferability>
+      <tasteThought>AteRawFood</tasteThought>
+      <ingestEffect>EatMeat</ingestEffect>
+      <ingestSound>RawMeat_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>45</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>MeatRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Pickled vegetables ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_PickledVegetables</defName>
+    <label>pickled vegetables</label>
+    <description>Vegetables fermented in brine. Tangy, crunchy, and keeps for four months in a cool pantry.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/PickledVegetables</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.02</Mass>
+      <MarketValue>1.5</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>RawTasty</preferability>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>120</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>FoodMeals</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Hardtack ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Hardtack</defName>
+    <label>hardtack</label>
+    <description>Rock-hard biscuits baked until every drop of moisture is gone. Barely food, but it lasts for months and fills a belly in an emergency.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/Hardtack</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Flammability>0.8</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.01</Mass>
+      <MarketValue>0.8</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>MealAwful</preferability>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>120</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>FoodMeals</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Jam ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Jam</defName>
+    <label>jam</label>
+    <description>Fruit boiled with sugar into thick, sweet preserves. A bright taste of summer that keeps for half the year.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/Jam</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>50</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.4</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.03</Mass>
+      <MarketValue>2.2</MarketValue>
+      <Nutrition>0.08</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>RawTasty</preferability>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>180</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>FoodMeals</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Bread ============ -->
+  <ThingDef ParentName="MealSimple">
+    <defName>Homesteader_Bread</defName>
+    <label>bread</label>
+    <description>A simple loaf baked from homestead flour. Warm, filling, and best eaten fresh.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/Bread</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>5</MarketValue>
+      <Mass>0.08</Mass>
+      <Nutrition>0.9</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>14</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ============ Cream ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Cream</defName>
+    <label>cream</label>
+    <description>Rich cream skimmed from fresh milk at the churn. A luxurious cooking ingredient that spoils quickly.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/Cream</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0.3</Flammability>
+      <DeteriorationRate>4</DeteriorationRate>
+      <Mass>0.03</Mass>
+      <MarketValue>2.2</MarketValue>
+      <Nutrition>0.07</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>AnimalProduct, Fluid</foodType>
+      <preferability>DesperateOnly</preferability>
+      <tasteThought>AteRawFood</tasteThought>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>10</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>Foods</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Cheese ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Cheese</defName>
+    <label>cheese</label>
+    <description>A wheel of pressed farmhouse cheese. Keeps for months, travels well, and tastes far better than the milk it came from.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/Cheese</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <Mass>0.03</Mass>
+      <MarketValue>2.6</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>RawTasty</preferability>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>90</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>FoodMeals</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Porridge ============ -->
+  <ThingDef ParentName="MealSimple">
+    <defName>Homesteader_Porridge</defName>
+    <label>porridge</label>
+    <description>A warm bowl of barley porridge sweetened with whatever the pantry offers. Humble, hot, and filling.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/Porridge</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>10</MarketValue>
+      <Mass>0.3</Mass>
+      <Nutrition>0.85</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>4</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ============ Trail stew ============ -->
+  <ThingDef ParentName="MealSimple">
+    <defName>Homesteader_TrailStew</defName>
+    <label>trail stew</label>
+    <description>A humble stew simmered from dried jerky and preserved produce. The taste of a well-stocked winter pantry.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/TrailStew</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>12</MarketValue>
+      <Mass>0.35</Mass>
+      <Nutrition>0.9</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>10</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ============ Hearty stew ============ -->
+  <ThingDef ParentName="MealFine">
+    <defName>Homesteader_HeartyStew</defName>
+    <label>hearty stew</label>
+    <description>A rich stew of smoked meat and pickled vegetables, slow-simmered at the homestead hearth. Comfort food from what the land provided.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/HeartyStew</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>18</MarketValue>
+      <Mass>0.4</Mass>
+      <Nutrition>0.9</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealFine</preferability>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>7</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
   </ThingDef>
 
 </Defs>
