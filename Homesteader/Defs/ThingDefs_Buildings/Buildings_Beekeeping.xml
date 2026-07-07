@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Beehive ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_Beehive</defName>
+    <label>beehive</label>
+    <description>A wooden hive box for keeping honeybees. The colony slowly produces honey that can be harvested and hauled away. Best placed outdoors near growing plants.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Beehive</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <fillPercent>0.35</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>90</MaxHitPoints>
+      <WorkToBuild>1000</WorkToBuild>
+      <Mass>10</Mass>
+      <Flammability>0.9</Flammability>
+      <Beauty>4</Beauty>
+    </statBases>
+    <costList>
+      <WoodLog>50</WoodLog>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Spawner">
+        <thingToSpawn>Homesteader_Honey</thingToSpawn>
+        <spawnCount>10</spawnCount>
+        <spawnIntervalRange>180000~240000</spawnIntervalRange>
+        <spawnMaxAdjacent>40</spawnMaxAdjacent>
+        <spawnForbidden>false</spawnForbidden>
+        <writeTimeLeftToSpawn>true</writeTimeLeftToSpawn>
+        <showMessageIfOwned>true</showMessageIfOwned>
+        <saveKeysPrefix>honey</saveKeysPrefix>
+      </li>
+    </comps>
+    <designationCategory>Production</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_HomesteadBrewing</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>
