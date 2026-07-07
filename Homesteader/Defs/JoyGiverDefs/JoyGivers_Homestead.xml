@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Checkers reuses the vanilla chess job at our table -->
+  <JoyGiverDef>
+    <defName>Homesteader_PlayCheckers</defName>
+    <giverClass>JoyGiver_InteractBuildingSitAdjacent</giverClass>
+    <baseChance>0.6</baseChance>
+    <requireChair>true</requireChair>
+    <thingDefs>
+      <li>Homesteader_CheckersTable</li>
+    </thingDefs>
+    <jobDef>Play_Chess</jobDef>
+  </JoyGiverDef>
+
+  <!-- Washer toss reuses the vanilla horseshoes job at our barrel -->
+  <JoyGiverDef>
+    <defName>Homesteader_PlayWasherToss</defName>
+    <giverClass>JoyGiver_InteractBuildingInteractionCell</giverClass>
+    <baseChance>0.6</baseChance>
+    <thingDefs>
+      <li>Homesteader_WasherTossBarrel</li>
+    </thingDefs>
+    <jobDef>Play_Horseshoes</jobDef>
+  </JoyGiverDef>
+
+</Defs>

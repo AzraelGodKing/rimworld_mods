@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Wooden deck ============ -->
+  <TerrainDef ParentName="FloorBase">
+    <defName>Homesteader_WoodenDeck</defName>
+    <label>wooden deck</label>
+    <description>Wide weathered deck planks. Cozy underfoot and quick to lay, but flammable.</description>
+    <texturePath>Homesteader/Terrain/WoodenDeck</texturePath>
+    <renderPrecedence>230</renderPrecedence>
+    <statBases>
+      <WorkToBuild>400</WorkToBuild>
+      <Flammability>0.9</Flammability>
+      <Beauty>1</Beauty>
+    </statBases>
+    <costList>
+      <WoodLog>4</WoodLog>
+    </costList>
+    <designationHotKey>Misc3</designationHotKey>
+    <researchPrerequisites Inherit="False" />
+  </TerrainDef>
+
+  <!-- ============ Straw matting ============ -->
+  <TerrainDef ParentName="FloorBase">
+    <defName>Homesteader_StrawMatting</defName>
+    <label>straw matting</label>
+    <description>Woven straw mats laid over the ground. Cheap, warm-looking flooring for barns and rustic homes.</description>
+    <texturePath>Homesteader/Terrain/StrawMatting</texturePath>
+    <renderPrecedence>229</renderPrecedence>
+    <statBases>
+      <WorkToBuild>250</WorkToBuild>
+      <Flammability>1.2</Flammability>
+      <Beauty>0</Beauty>
+    </statBases>
+    <costList>
+      <Hay>7</Hay>
+    </costList>
+    <designationHotKey>Misc4</designationHotKey>
+    <researchPrerequisites Inherit="False" />
+  </TerrainDef>
+
+  <!-- ============ Packed gravel ============ -->
+  <TerrainDef ParentName="FloorBase">
+    <defName>Homesteader_PackedGravel</defName>
+    <label>packed gravel</label>
+    <description>Crushed stone tamped into a firm, clean path. Costs nothing but labor.</description>
+    <texturePath>Homesteader/Terrain/PackedGravel</texturePath>
+    <renderPrecedence>228</renderPrecedence>
+    <statBases>
+      <WorkToBuild>300</WorkToBuild>
+      <Flammability>0</Flammability>
+      <Beauty>0</Beauty>
+    </statBases>
+    <designationHotKey>Misc5</designationHotKey>
+    <researchPrerequisites Inherit="False" />
+  </TerrainDef>
+
+</Defs>
