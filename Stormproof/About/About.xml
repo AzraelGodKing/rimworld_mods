@@ -25,8 +25,23 @@ A field generator that idles at 100W - until a solar flare hits, when it draws a
 STORM SPIRE
 A grounded spire that attracts lightning strikes within its radius, keeping fires away from your base. The spire cannot burn and snuffs out any flames a caught strike sparks around it. Connect it to your power grid and it becomes a harvester: each caught strike dumps up to 1,500 Wd into your batteries - but carries a 5% chance of overloading the grid and triggering a "Zzzt!" power surge. Late-game perfect grounding research eliminates the surge risk entirely.
 
+STORM CAPACITOR BANK
+A lightning-only battery. Only spire-caught strikes can fill it, but it never self-discharges and "Zzzt!" surges can't touch it. Automatically discharges up to 2,000W when grid production falls short.
+
 SURGE PROTECTOR
 Absorbs one "Zzzt!" short circuit event, then needs a day to recharge (and takes some internal damage). Pairs dangerously well with a grid-connected storm spire.
+
+WEATHER FORECASTER
+A barometric console that shows how long the current weather will hold, announces incoming thunderstorms, and warns you an hour before the weather breaks.
+
+STATIC DISCHARGE PYLON
+During thunderstorms, repeatedly shocks and stuns hostile raiders and mechanoids in a small radius. Inert in clear weather.
+
+FALLOUT SCRUBBER
+Filters airborne toxins out of an enclosed room - pawns and animals inside slowly shed toxic buildup, faster than fallout adds it.
+
+STORM CALLER
+Late-game ionospheric agitator that summons a rainy thunderstorm on demand: lightning for your spires, rain for your wildfires. Five-day recharge.
 
 EMP DAMPENER
 Powered buildings near the dampener shrug off EMP stuns - turrets keep firing through EMP mortar barrages.
