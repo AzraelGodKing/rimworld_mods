@@ -10,6 +10,7 @@ namespace Stormproof
         public int dischargeIntervalTicks = 180; // every 3 seconds
         public int stunTicks = 120;              // 2 second stun
         public float energyPerShock = 50f;       // Wd drained from capacitors per pawn zapped
+        public float damagePerShock = 6f;        // burn damage dealt per zap
 
         public CompProperties_StaticPylon()
         {
@@ -74,22 +75,26 @@ namespace Stormproof
             }
             Map map = parent.Map;
             bool discharged = false;
-            foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
+            // Snapshot: dealing lethal damage can despawn a pawn and mutate the
+            // spawned-pawns list mid-iteration.
+            var targets = map.mapPawns.AllPawnsSpawned
+                .Where(p => p.HostileTo(Faction.OfPlayer) &&
+                            !p.Dead &&
+                            p.Position.DistanceTo(parent.Position) <= Props.dischargeRadius)
+                .ToList();
+            foreach (Pawn pawn in targets)
             {
-                if (!pawn.HostileTo(Faction.OfPlayer) || pawn.Dead)
-                {
-                    continue;
-                }
-                if (pawn.Position.DistanceTo(parent.Position) > Props.dischargeRadius)
-                {
-                    continue;
-                }
                 // Out of bottled lightning: stop mid-volley.
                 if (!TryDrainCapacitors(Props.energyPerShock))
                 {
                     break;
                 }
                 pawn.stances?.stunner?.StunFor(Props.stunTicks, parent, addBattleLog: false);
+                if (Props.damagePerShock > 0f)
+                {
+                    pawn.TakeDamage(new DamageInfo(
+                        DamageDefOf.Burn, Props.damagePerShock, 0.5f, -1f, parent));
+                }
                 FleckMaker.ThrowMicroSparks(pawn.DrawPos, map);
                 discharged = true;
             }
