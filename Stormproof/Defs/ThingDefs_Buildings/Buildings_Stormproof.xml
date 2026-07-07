@@ -256,6 +256,270 @@
     </researchPrerequisites>
   </ThingDef>
 
+  <!-- ============ Storm capacitor bank ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_StormCapacitor</defName>
+    <label>storm capacitor bank</label>
+    <description>A bank of heavy capacitors tuned to swallow the violent charge of a lightning strike. Only spire-caught lightning can fill it - the grid cannot charge it - but in return it never leaks a watt in storage, and "Zzzt!" surges can't touch it. When grid production falls short, it automatically discharges up to 2,000W to cover the deficit.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/StormCapacitor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>true</rotatable>
+    <size>(2,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>2500</WorkToBuild>
+      <Mass>40</Mass>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <Steel>80</Steel>
+      <Plasteel>10</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <transmitsPower>false</transmitsPower>
+      </li>
+      <li Class="Stormproof.CompProperties_StormCapacitor">
+        <storedEnergyMax>3000</storedEnergyMax>
+        <maxDischargeWatts>2000</maxDischargeWatts>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_StormProtection</li>
+      <li>Batteries</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Weather forecaster ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_WeatherForecaster</defName>
+    <label>weather forecaster</label>
+    <description>A barometric console that reads pressure fronts and static charge in the air. Its inspect panel shows how long the current weather will hold, it announces incoming thunderstorms so you can ready your spires, and it warns you an hour before the weather breaks.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/WeatherForecaster</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>1500</WorkToBuild>
+      <Mass>15</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>40</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="Stormproof.CompProperties_WeatherForecaster">
+        <warningLeadTicks>2500</warningLeadTicks>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_StormProtection</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Static discharge pylon ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_StaticPylon</defName>
+    <label>static discharge pylon</label>
+    <description>During a thunderstorm this pylon bleeds the sky's ambient charge into anything hostile that comes close, repeatedly shocking and stunning raiders and mechanoids in a small radius. In clear weather it is inert - it needs a charged sky to draw from.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/StaticPylon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,2)</drawSize>
+      <drawOffset>(0,0,0.5)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.35</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <specialDisplayRadius>6.9</specialDisplayRadius>
+    <statBases>
+      <MaxHitPoints>180</MaxHitPoints>
+      <WorkToBuild>2200</WorkToBuild>
+      <Mass>25</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>50</Steel>
+      <Gold>5</Gold>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>200</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="Stormproof.CompProperties_StaticPylon">
+        <dischargeRadius>6.9</dischargeRadius>
+        <dischargeIntervalTicks>180</dischargeIntervalTicks>
+        <stunTicks>120</stunTicks>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_FlareShielding</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Fallout scrubber ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_FalloutScrubber</defName>
+    <label>fallout scrubber</label>
+    <description>An industrial air filter that strips airborne toxins from an enclosed room. Pawns and animals sheltering in the room slowly shed toxic buildup - faster than a serious fallout adds it. Useless outdoors; it can't scrub an open sky.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/FalloutScrubber</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.45</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <WorkToBuild>2400</WorkToBuild>
+      <Mass>30</Mass>
+      <Flammability>0.3</Flammability>
+    </statBases>
+    <costList>
+      <Steel>60</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Stormproof.CompProperties_FalloutScrubber">
+        <severityPerRareTick>0.003</severityPerRareTick>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_FlareShielding</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Storm caller ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_StormCaller</defName>
+    <label>storm caller</label>
+    <description>An ionospheric agitator that fires charged particles into the upper atmosphere, dragging a rainy thunderstorm over the map on demand. The lightning feeds your storm spires and the rain douses wildfires. Recharges over five days - it supplements a power grid, it doesn't replace one.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/StormCaller</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2.6)</drawSize>
+      <drawOffset>(0,0,0.3)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>350</MaxHitPoints>
+      <WorkToBuild>8000</WorkToBuild>
+      <Mass>70</Mass>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <Steel>120</Steel>
+      <Plasteel>60</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>400</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Stormproof.CompProperties_StormCaller">
+        <cooldownTicks>300000</cooldownTicks>
+        <stormDurationTicks>30000</stormDurationTicks>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_AtmosphericControl</li>
+    </researchPrerequisites>
+  </ThingDef>
+
   <!-- ============ Storm vane ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_StormVane</defName>

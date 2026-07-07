@@ -13,6 +13,8 @@ namespace Stormproof
 
         public static ResearchProjectDef Stormproof_PerfectGrounding;
 
+        public static WeatherDef RainyThunderstorm;
+
         static StormproofDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StormproofDefOf));
@@ -35,6 +37,7 @@ namespace Stormproof
         public static readonly HashSet<CompSurgeProtector> SurgeProtectors = new HashSet<CompSurgeProtector>();
         public static readonly HashSet<CompStormSpire> Spires = new HashSet<CompStormSpire>();
         public static readonly HashSet<CompEmpDampener> Dampeners = new HashSet<CompEmpDampener>();
+        public static readonly HashSet<CompStormCapacitor> Capacitors = new HashSet<CompStormCapacitor>();
 
         public static IEnumerable<T> On<T>(HashSet<T> set, Map map) where T : ThingComp
         {
