@@ -245,6 +245,8 @@
       <li>Homesteader_CookPorridge</li>
       <li>Homesteader_CookTrailStew</li>
       <li>Homesteader_CookHeartyStew</li>
+      <li>Homesteader_BoilMapleSyrup</li>
+      <li>Homesteader_BakeFlapjacks</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
