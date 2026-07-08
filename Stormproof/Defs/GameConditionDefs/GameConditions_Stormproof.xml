@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Ion storm ============ -->
+  <GameConditionDef>
+    <defName>Stormproof_IonStorm</defName>
+    <conditionClass>Stormproof.GameCondition_IonStorm</conditionClass>
+    <label>ion storm</label>
+    <description>A wave of charged particles is saturating the atmosphere. Batteries bleed stored energy, random EMP bursts stun electronics, and overloaded circuits are popping extra short circuits. EMP dampeners shield nearby batteries and buildings, surge protectors absorb the extra surges, and storm capacitor banks are immune to the bleed.</description>
+    <endMessage>The ion storm has dissipated. The grid is stable again.</endMessage>
+  </GameConditionDef>
+
+</Defs>
