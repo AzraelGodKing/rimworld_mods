@@ -30,8 +30,9 @@
       <span class="badge storm">RimWorld 1.6</span>
       <span class="badge storm">Requires Harmony</span>
       <span class="badge storm">C# mod</span>
-      <span class="badge storm">11 buildings</span>
+      <span class="badge storm">13 buildings</span>
       <span class="badge storm">4 research projects</span>
+      <span class="badge storm">1 custom event</span>
     </div>
     <div class="cta">
       <a class="btn btn-storm" href="downloads/Stormproof.zip" download>&#11015; Download Stormproof</a>
@@ -52,7 +53,7 @@
 
   <section id="buildings">
     <h2 class="s">Buildings</h2>
-    <p class="sub">Ten tools for a hardened colony grid &mdash; plus one purely decorative weather vane.</p>
+    <p class="sub">Twelve tools for a hardened colony grid &mdash; plus one purely decorative weather vane.</p>
     <div class="grid">
 
       <div class="card storm wide">
@@ -146,6 +147,24 @@
       </div>
 
       <div class="card storm">
+        <img src="img/LoadShedder.png" alt="Load shedder">
+        <div>
+          <h3>Load shedder</h3>
+          <div class="stat">adjustable cutoff &middot; Storm protection research</div>
+          <p>An automatic breaker for wiring between the main grid and a low-priority sub-grid. Transmits like a conduit while supply batteries hold charge; <b>trips open and sheds the sub-grid</b> when they fall below the cutoff (default 20%), then reconnects on its own once they recover.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <img src="img/GridMonitor.png" alt="Grid monitor console">
+        <div>
+          <h3>Grid monitor console</h3>
+          <div class="stat">75W &middot; Storm protection research</div>
+          <p>Live production, consumption, battery charge, and <b>time until the batteries run dry</b> (or fill up) in its inspect panel. Warns at 25% stored charge, sounds the alarm at 10%.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
         <img src="img/StormVane.png" alt="Storm vane">
         <div>
           <h3>Storm vane</h3>
@@ -167,6 +186,8 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Surge protector</b><br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Armored conduit</b><br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Weather forecaster</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Load shedder</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Grid monitor console</b><br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472; <b>Storm capacitor bank</b> (also needs Batteries)<br>
       <br>
       <b>Storm protection</b> + <b>Fabrication</b> (vanilla)<br>
@@ -190,6 +211,8 @@
         <tr><td><b>Armored conduit</b></td><td>3 steel/tile</td><td>&mdash;</td><td>Storm protection</td></tr>
         <tr><td><b>Weather forecaster</b></td><td>40 steel, 2 components</td><td>100W</td><td>Storm protection</td></tr>
         <tr><td><b>Storm capacitor bank</b></td><td>80 steel, 10 plasteel, 3 components</td><td>discharges up to 2,000W</td><td>Storm protection + Batteries</td></tr>
+        <tr><td><b>Load shedder</b></td><td>40 steel, 1 component</td><td>&mdash;</td><td>Storm protection</td></tr>
+        <tr><td><b>Grid monitor console</b></td><td>40 steel, 2 components</td><td>75W</td><td>Storm protection</td></tr>
         <tr><td><b>Solar shield</b></td><td>150 steel, 40 plasteel, 6 components, 1 advanced component</td><td>100W idle / 2,500W active</td><td>Flare shielding</td></tr>
         <tr><td><b>EMP dampener</b></td><td>60 steel, 10 gold, 3 components</td><td>150W</td><td>Flare shielding</td></tr>
         <tr><td><b>Static discharge pylon</b></td><td>50 steel, 5 gold, 2 components</td><td>200W</td><td>Flare shielding</td></tr>
@@ -244,6 +267,20 @@
         <div>
           <h3>EMP immunity</h3>
           <p>The EMP dampener patches building stun logic so turrets, doors, and production buildings inside its radius ignore EMP effects.</p>
+        </div>
+      </div>
+      <div class="card storm">
+        <div class="icon">&#128268;</div>
+        <div>
+          <h3>Automatic load shedding</h3>
+          <p>The load shedder watches its supply grid's battery charge and rewires the power net on the fly &mdash; shedding the sub-grid below the cutoff, reconnecting once charge recovers past a hysteresis margin so it never chatters.</p>
+        </div>
+      </div>
+      <div class="card storm">
+        <div class="icon">&#9889;</div>
+        <div>
+          <h3>Ion storm event</h3>
+          <p>A new small-threat event (0.75&ndash;1.5 days): batteries bleed ~20% of stored charge per day, random EMP bursts pop at powered buildings, and extra &ldquo;Zzzt!&rdquo; surges fire. EMP dampeners, surge protectors, and storm capacitor banks are the counters.</p>
         </div>
       </div>
     </div>
