@@ -15,6 +15,8 @@ All notable changes to Stormproof are documented here.
 - Perfect grounding research (Spacer tech, requires flare shielding and advanced fabrication): eliminates the "Zzzt!" surge risk from grid-connected storm spires entirely.
 
 ### Changed
+- Armored conduit sprite redrawn as segmented steel armor over visible copper wire and a gold power core, reading as armored cable rather than a floor plate.
+- Batch alpha-cleaned all Stormproof building PNGs to strip baked white/gray backgrounds and edge halos.
 - Storm spire is now completely fireproof (flammability 0), and any fires ignited by a caught lightning strike within 3 cells of the spire are snuffed out. The spire keeps sweeping the area for 5 seconds after the strike, since the flame explosion expands over several ticks rather than instantly - a grounded rod shouldn't burn your base down.
 - Storm spire surge chance per caught strike lowered from 25% to 5%.
 
