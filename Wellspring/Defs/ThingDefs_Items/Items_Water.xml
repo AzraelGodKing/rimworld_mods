@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Water ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Wellspring_Water</defName>
+    <label>water</label>
+    <description>A heavy jug of fresh water drawn from a well or caught in a rain barrel. Trenched into cropland to irrigate it. Life on the Rim runs on the stuff.</description>
+    <graphicData>
+      <texPath>Wellspring/Items/Water</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <Mass>0.5</Mass>
+      <MarketValue>0.6</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+</Defs>

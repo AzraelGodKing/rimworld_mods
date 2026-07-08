@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>Wellspring_Wellcraft</defName>
+    <label>wellcraft</label>
+    <description>Digging and lining wells, coopering rain barrels, and building cisterns: the craft of finding water and keeping it.</description>
+    <baseCost>500</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>3.40</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Wellspring_Irrigation</defName>
+    <label>irrigation</label>
+    <description>Trenching drawn water into cropland to work it into rich, dark irrigated soil that grows anything faster.</description>
+    <baseCost>900</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <prerequisites>
+      <li>Wellspring_Wellcraft</li>
+    </prerequisites>
+    <researchViewX>1.20</researchViewX>
+    <researchViewY>3.40</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>

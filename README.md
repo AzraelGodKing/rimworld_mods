@@ -34,6 +34,20 @@ Defend your grid from everything the Rim throws at it. RimWorld 1.6. C# mod (req
 
 Source lives in `Stormproof/Source`; the compiled `Stormproof.dll` ships in `Stormproof/Assemblies` and is rebuilt by CI on every source change.
 
+### Wellspring
+
+Water for the Rim: dig wells, catch the rain, and irrigate your fields. Supports RimWorld 1.4 / 1.5 / 1.6. Fully XML-based — no C# assembly.
+
+| Content | What it does |
+|---|---|
+| **Hand-dug well** | Work bench where colonists draw 5 water per bill. |
+| **Rain barrel** | Passively collects 4 water every day or two. |
+| **Cistern** | 2×1 covered tank holding 8 stacks of water, protected from deterioration. |
+| **Irrigated soil** | Buildable terrain (+30% fertility, 3 water + labor per tile); only lays over ground that could already grow crops. |
+| **Research** | Wellcraft (well, barrel, cistern) → irrigation (irrigated soil) — both neolithic. |
+
+Pairs naturally with Homesteader and Stormproof, requires neither. Roadmap: powered pumps, sprinklers, drought and flash-flood events, drinking troughs.
+
 ## Installation
 
 1. Download / clone this repository.

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Wellspring</name>
+  <author>AzraelGodKing</author>
+  <packageId>AzraelGodKing.Wellspring</packageId>
+  <supportedVersions>
+    <li>1.4</li>
+    <li>1.5</li>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>Water for the Rim: dig wells, catch the rain, and irrigate your fields.
+
+RimWorld has always skipped the third pillar of frontier life. Homesteads grow food and burn fuel - Wellspring adds the water.
+
+HAND-DUG WELL
+A stone-lined well with a wooden windlass. Colonists draw jugs of water by hand - slow, honest labor that works anywhere with ground under it.
+
+RAIN BARREL
+A lidded barrel that slowly collects rainwater and dew. Cheap, passive, and every roofline should have one.
+
+CISTERN
+A wide, covered stone tank for stockpiling water where the buckets can't spill and the sun can't reach it.
+
+IRRIGATED SOIL
+Trench water into your fields to work it into rich, dark growing soil (+30% fertility). It can only be laid over ground that could already grow crops - you can't water a stone floor into a farm.
+
+RESEARCH
+Wellcraft (well, rain barrel, cistern) leads to irrigation (irrigated soil). Both are neolithic - tribes dig ditches too.
+
+Pairs naturally with Homesteader (water your orchard) and Stormproof (something for the pumps to protect) but requires neither.
+
+Fully XML-based: no C# assembly, safe to add to an existing save. Before removing the mod, deconstruct its buildings, use up its water, and remove any irrigated soil.</description>
+</ModMetaData>
