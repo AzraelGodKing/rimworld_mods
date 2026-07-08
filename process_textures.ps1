@@ -193,9 +193,16 @@ try {
     if ($NoTrim) {
         $w = if ($TargetW -gt 0) { $TargetW } else { $Size }
         $h = if ($TargetH -gt 0) { $TargetH } else { $Size }
-        $final = [TexProc]::ResizeExact($srcBmp, $w, $h)
+        $work = $srcBmp
+        $disposeWork = $false
+        if ($BackgroundOnly) {
+            $work = [TexProc]::RemoveBackground($srcBmp)
+            $disposeWork = $true
+        }
+        $final = [TexProc]::ResizeExact($work, $w, $h)
         $final.Save($Dest, [System.Drawing.Imaging.ImageFormat]::Png)
         $final.Dispose()
+        if ($disposeWork) { $work.Dispose() }
         Write-Output "OK (noTrim): $Dest"
     } else {
         $clean = [TexProc]::RemoveBackground($srcBmp)
