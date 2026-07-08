@@ -28,11 +28,20 @@ Defend your grid from everything the Rim throws at it. RimWorld 1.6. C# mod (req
 | Building | What it does |
 |---|---|
 | **Solar shield** | Idles at 100W; during a solar flare drains 2,500W continuously to keep all electronics running. If the grid runs dry mid-flare, everything goes dark until it ends. |
-| **Storm spire** | Attracts lightning within a wide radius. Grounded: safe fire protection. Grid-connected: each strike stores up to 1,500 Wd in batteries, with a 25% chance of a "Zzzt!" surge. |
+| **Storm spire** | Attracts lightning within a wide radius. Grounded: safe fire protection. Grid-connected: each strike stores up to 1,500 Wd, with a 5% chance of a "Zzzt!" surge (eliminated by perfect grounding research). |
+| **Storm capacitor bank** | Lightning-only battery: only spire-caught strikes charge it, it never self-discharges, and "Zzzt!" surges can't touch it. Discharges up to 2,000W to cover grid deficits. |
 | **Surge protector** | Absorbs one "Zzzt!" short circuit, then recharges for a day. |
+| **Weather forecaster** | Shows how long the current weather will hold, announces incoming thunderstorms, and warns an hour before the weather breaks. |
+| **Static discharge pylon** | Runs on bottled lightning from capacitor banks: stuns and burns hostiles in a small radius, 50 Wd per shock. |
+| **Fallout scrubber** | Strips toxic buildup from pawns and animals sheltering in its enclosed room. |
+| **Storm caller** | Summons a rainy thunderstorm on demand — lightning for your spires, rain for your wildfires. Five-day recharge. |
 | **EMP dampener** | Colony buildings in range are immune to EMP stuns. |
+| **Load shedder** | Automatic breaker: sheds a low-priority sub-grid when supply batteries drop below an adjustable cutoff, reconnects when they recover. |
+| **Grid monitor console** | Live production/consumption/storage readout with time-to-empty estimates; warns at 25% battery, alarms at 10%. |
 | **Armored conduit** | Fireproof, high-durability power conduit. |
 | **Storm vane** | Decorative copper weather vane. Pure class. |
+
+New event — **Ion storm**: batteries bleed charge, random EMP bursts stun powered buildings, and extra "Zzzt!" surges fire. EMP dampeners, surge protectors, and storm capacitor banks counter it.
 
 Source lives in `Stormproof/Source`; the compiled `Stormproof.dll` ships in `Stormproof/Assemblies` and is rebuilt by CI on every source change.
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Ion storm ============ -->
+  <IncidentDef>
+    <defName>Stormproof_IonStorm</defName>
+    <label>ion storm</label>
+    <category>ThreatSmall</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>IncidentWorker_MakeGameCondition</workerClass>
+    <gameCondition>Stormproof_IonStorm</gameCondition>
+    <durationDays>0.75~1.5</durationDays>
+    <baseChance>0.6</baseChance>
+    <minRefireDays>15</minRefireDays>
+    <letterLabel>Ion storm</letterLabel>
+    <letterText>A wave of charged particles is washing over the region. While it lasts, batteries will slowly bleed their stored energy, random EMP bursts will stun powered buildings, and circuits will pop extra "Zzzt!" short circuits.\n\nEMP dampeners shield batteries and buildings in their radius, surge protectors absorb the extra surges, and storm capacitor banks are immune to the bleed.</letterText>
+    <letterDef>NegativeEvent</letterDef>
+  </IncidentDef>
+
+</Defs>
