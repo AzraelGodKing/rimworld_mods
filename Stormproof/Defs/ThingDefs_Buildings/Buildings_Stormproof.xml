@@ -213,44 +213,36 @@
   </ThingDef>
 
   <!-- ============ Armored conduit ============ -->
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef ParentName="PowerConduit">
     <defName>Stormproof_ArmoredConduit</defName>
     <label>armored conduit</label>
     <description>A power conduit sheathed in riveted steel plate. Fireproof and far tougher than standard conduit - the wiring of choice for killboxes and exterior walls.</description>
-    <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Stormproof/Buildings/ArmoredConduit</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1,1)</drawSize>
+      <texPath>Stormproof/Buildings/ArmoredConduit_Atlas</texPath>
+      <graphicClass>Graphic_LinkedConduit</graphicClass>
+      <damageData>
+        <rect>(0,0.35,1,0.3)</rect>
+      </damageData>
     </graphicData>
-    <altitudeLayer>SmallWire</altitudeLayer>
-    <passability>Standable</passability>
-    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
-    <rotatable>false</rotatable>
-    <neverMultiSelect>true</neverMultiSelect>
-    <size>(1,1)</size>
+    <uiIconPath>Stormproof/Buildings/ArmoredConduit_MenuIcon</uiIconPath>
+    <uiIconScale>0.7</uiIconScale>
+    <altitudeLayer>Conduits</altitudeLayer>
     <statBases>
       <MaxHitPoints>250</MaxHitPoints>
       <WorkToBuild>70</WorkToBuild>
       <Flammability>0</Flammability>
       <Beauty>-1</Beauty>
     </statBases>
-    <drawStyleCategory>Conduits</drawStyleCategory>
     <costList>
       <Steel>3</Steel>
     </costList>
     <building>
       <isInert>true</isInert>
       <isEdifice>false</isEdifice>
+      <blueprintGraphicData>
+        <texPath>Stormproof/Buildings/ArmoredConduit_Atlas</texPath>
+      </blueprintGraphicData>
     </building>
-    <comps>
-      <li Class="CompProperties_Power">
-        <compClass>CompPowerTransmitter</compClass>
-        <transmitsPower>true</transmitsPower>
-      </li>
-    </comps>
-    <designationCategory>Power</designationCategory>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Stormproof_StormProtection</li>
     </researchPrerequisites>
