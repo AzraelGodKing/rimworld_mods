@@ -77,6 +77,126 @@ public static class TexProc
         return bmp;
     }
 
+    static int MinCh(Color c) { return Math.Min(c.R, Math.Min(c.G, c.B)); }
+    static int MaxCh(Color c) { return Math.Max(c.R, Math.Max(c.G, c.B)); }
+    static int Chroma(Color c) { return MaxCh(c) - MinCh(c); }
+
+    static bool IsNeutralBright(Color c, int minChannel, int maxChroma)
+    {
+        if (c.A <= 10) return false;
+        return MinCh(c) >= minChannel && Chroma(c) <= maxChroma;
+    }
+
+    static bool IsNearBlack(Color c)
+    {
+        return c.A > 10 && MaxCh(c) <= 28;
+    }
+
+    static void FloodBorderBackground(Bitmap bmp)
+    {
+        int w = bmp.Width, h = bmp.Height;
+        var visited = new bool[w, h];
+        var queue = new Queue<Point>();
+
+        Action<int,int> trySeed = (x, y) => {
+            if (visited[x,y]) return;
+            var c = bmp.GetPixel(x, y);
+            if (IsNearBlack(c) || IsNeutralBright(c, 190, 55))
+            {
+                visited[x,y] = true;
+                queue.Enqueue(new Point(x,y));
+            }
+        };
+
+        for (int x = 0; x < w; x++) { trySeed(x, 0); trySeed(x, h - 1); }
+        for (int y = 0; y < h; y++) { trySeed(0, y); trySeed(w - 1, y); }
+
+        while (queue.Count > 0)
+        {
+            var p = queue.Dequeue();
+            bmp.SetPixel(p.X, p.Y, Color.Transparent);
+            foreach (var d in new[] { new Point(1,0), new Point(-1,0), new Point(0,1), new Point(0,-1) })
+            {
+                int nx = p.X + d.X, ny = p.Y + d.Y;
+                if (nx < 0 || ny < 0 || nx >= w || ny >= h || visited[nx,ny]) continue;
+                var c = bmp.GetPixel(nx, ny);
+                if (IsNearBlack(c) || IsNeutralBright(c, 190, 55))
+                {
+                    visited[nx,ny] = true;
+                    queue.Enqueue(new Point(nx, ny));
+                }
+            }
+        }
+    }
+
+    static void RemoveInteriorNeutralBright(Bitmap bmp, int minChannel, int maxChroma)
+    {
+        for (int y = 0; y < bmp.Height; y++)
+            for (int x = 0; x < bmp.Width; x++)
+            {
+                var c = bmp.GetPixel(x, y);
+                if (IsNeutralBright(c, minChannel, maxChroma))
+                    bmp.SetPixel(x, y, Color.Transparent);
+            }
+    }
+
+    static void SpillFringeFromTransparent(Bitmap bmp, int passes, int minChannel, int maxChroma)
+    {
+        int w = bmp.Width, h = bmp.Height;
+        for (int pass = 0; pass < passes; pass++)
+        {
+            var toClear = new List<Point>();
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++)
+                {
+                    var c = bmp.GetPixel(x, y);
+                    if (c.A <= 10 || !IsNeutralBright(c, minChannel, maxChroma)) continue;
+                    bool adjTrans = false;
+                    foreach (var d in new[] { new Point(1,0), new Point(-1,0), new Point(0,1), new Point(0,-1) })
+                    {
+                        int nx = x + d.X, ny = y + d.Y;
+                        if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
+                        if (bmp.GetPixel(nx, ny).A <= 10) { adjTrans = true; break; }
+                    }
+                    if (adjTrans) toClear.Add(new Point(x, y));
+                }
+            if (toClear.Count == 0) break;
+            foreach (var p in toClear) bmp.SetPixel(p.X, p.Y, Color.Transparent);
+        }
+    }
+
+    public static Bitmap CleanAlpha(Bitmap src)
+    {
+        var bmp = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
+        using (var g = Graphics.FromImage(bmp)) g.DrawImage(src, 0, 0, src.Width, src.Height);
+        FloodBorderBackground(bmp);
+        RemoveInteriorNeutralBright(bmp, 208, 45);
+        SpillFringeFromTransparent(bmp, 16, 200, 55);
+        return bmp;
+    }
+
+    // AI sprites often leave a white rectangle inside the art (e.g. between
+    // frame posts) that border flood-fill cannot reach. Strip near-neutral
+    // near-white pixels so the game background shows through.
+    public static Bitmap RemoveInteriorWhite(Bitmap src)
+    {
+        var bmp = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
+        using (var g = Graphics.FromImage(bmp)) g.DrawImage(src, 0, 0, src.Width, src.Height);
+        for (int y = 0; y < bmp.Height; y++)
+        {
+            for (int x = 0; x < bmp.Width; x++)
+            {
+                Color c = bmp.GetPixel(x, y);
+                if (c.A <= 10) continue;
+                int min = Math.Min(c.R, Math.Min(c.G, c.B));
+                int max = Math.Max(c.R, Math.Max(c.G, c.B));
+                if (c.R >= 232 && c.G >= 232 && c.B >= 232 && (max - min) <= 35)
+                    bmp.SetPixel(x, y, Color.Transparent);
+            }
+        }
+        return bmp;
+    }
+
     public static Bitmap Trim(Bitmap bmp)
     {
         int minX = bmp.Width, minY = bmp.Height, maxX = -1, maxY = -1;
@@ -135,6 +255,7 @@ try {
         Write-Output "OK (noTrim): $Dest"
     } else {
         $clean = [TexProc]::RemoveBackground($srcBmp)
+        $clean = [TexProc]::CleanAlpha($clean)
         $trimmed = [TexProc]::Trim($clean)
         $w = if ($TargetW -gt 0) { $TargetW } else { $Size }
         $h = if ($TargetH -gt 0) { $TargetH } else { $Size }

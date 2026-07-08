@@ -94,7 +94,6 @@
       </categories>
       <commonality>0</commonality>
       <color>(150,113,80)</color>
-      <soundImpactStuff>BulletImpact_Ground</soundImpactStuff>
       <statFactors>
         <MaxHitPoints>0.85</MaxHitPoints>
         <Beauty>0.9</Beauty>

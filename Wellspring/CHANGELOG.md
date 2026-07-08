@@ -4,6 +4,12 @@ All notable changes to Wellspring are documented here.
 
 ## [Unreleased]
 
+### Fixed
+- Mud bricks: removed invalid `soundImpactStuff` from `stuffProps` (field removed in RimWorld 1.6).
+- Draw-water recipes: replaced missing `Recipe_BrewBeer` sound with `Recipe_CookMeal`.
+- Hand-dug well, deep well, water tower, and irrigated planter: removed `thingCategories` from non-minifiable buildings (config error on load).
+- Hand-dug well, deep well, and water tower building textures; boiled water and clean bandages item icons: removed white background halos.
+
 ### Added
 - Deep well: a reinforced work bench well that draws 12 water per bill. Requires new waterworks research.
 - Solar still: passively condenses 2 water every half-day to day, even where it never rains. Requires wellcraft research.

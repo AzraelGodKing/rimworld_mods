@@ -5,6 +5,8 @@ All notable changes to Homesteader are documented here.
 ## [Unreleased]
 
 ### Fixed
+- Curing rack, hayloft, rocking chair, work apron, cheese press, jam cauldron, large storage crate, wood generator, and washer toss barrel textures: removed baked white/gray backgrounds, interior voids, and edge halos.
+- Texture pipeline now runs full alpha cleanup (`fix_texture_alpha.ps1`) on new sprites.
 - Bread, porridge, trail stew and hearty stew now inherit from the correct vanilla meal base (`MealBase` instead of the non-inheritable `MealSimple`/`MealFine` defNames), restoring their thingClass, food type, rot ticking and eat sounds/effects.
 - Homestead supplier caravan patch now targets the `OutlanderCivil` def node directly; the old xpath failed because `caravanTraderKinds` only exists on the abstract outlander base def.
 - Homesteaders scenario: corrected the starting pawns config page def name (`ConfigPage_ConfigureStartingPawns`) and added the RimWorld 1.6 `surfaceLayer` block. The scenario now ships as version-specific copies (`1.6` and `Legacy` load folders) so 1.4/1.5 remain supported.

@@ -4,6 +4,9 @@ All notable changes to Stormproof are documented here.
 
 ## [Unreleased]
 
+### Fixed
+- Storm caller and static discharge pylon textures: removed baked white/gray backgrounds and edge halos.
+
 ### Added
 - Storm capacitor bank: a lightning-only battery. Only spire-caught strikes can charge it, it never self-discharges, and "Zzzt!" surges can't drain it. Automatically discharges up to 2,000W to cover grid deficits. Requires storm protection + batteries research.
 - Weather forecaster: shows how long the current weather will hold, announces incoming thunderstorms, and warns an hour before the weather breaks. Requires storm protection research.
