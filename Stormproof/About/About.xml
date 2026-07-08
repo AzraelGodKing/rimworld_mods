@@ -49,6 +49,15 @@ Powered buildings near the dampener shrug off EMP stuns - turrets keep firing th
 ARMORED CONDUIT
 A fireproof, high-durability conduit for hardened bases.
 
+LOAD SHEDDER
+An automatic breaker. Wire it between your main grid and a low-priority sub-grid: while the supply side's batteries hold charge it transmits like a conduit, but when they drop below the (adjustable) cutoff it trips open and sheds the sub-grid - so the freezer outlasts the television. Reconnects on its own once the batteries recover.
+
+GRID MONITOR CONSOLE
+A wall of dials wired into the power net: live production, consumption, battery charge, and time until the batteries run dry or fill up. Warns you at 25% stored charge and sounds the alarm at 10%.
+
+ION STORM (new event)
+A wave of charged particles that makes every Stormproof counter earn its keep at once: batteries bleed stored energy, random EMP bursts stun powered buildings, and circuits pop extra "Zzzt!" surges. EMP dampeners shield their radius from the bleed and bursts, surge protectors eat the extra Zzzts, and storm capacitor banks ride the whole event out untouched.
+
 STORM VANE
 A decorative copper weather vane. It doesn't do anything. It looks great.
 
