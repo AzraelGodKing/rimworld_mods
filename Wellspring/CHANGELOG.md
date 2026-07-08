@@ -17,6 +17,9 @@ All notable changes to Wellspring are documented here.
 
 ### Changed
 - Regenerated all five textures (hand-dug well, rain barrel, cistern, water jug, irrigated soil) in the painterly style used by Homesteader and Stormproof; irrigated soil tile upscaled to 512×512.
+- Batch alpha-cleaned all Wellspring PNGs (buildings and items) to strip baked white/gray backgrounds and edge halos. Seamless terrain tiles left untouched; boiled water and clean bandages used conservative cleanup to preserve intentional white subjects.
+- Regenerated boiled water and clean bandages icons using background-only alpha processing after aggressive cleanup punched holes in light stone and cream cloth surfaces.
+- Regenerated boiled water jug sprite with an open rope-handle loop so the interior gap stays transparent.
 
 ## [1.0.0] — Initial release
 
