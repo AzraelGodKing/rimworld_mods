@@ -19,6 +19,13 @@ All notable changes to Stormproof are documented here.
 
 ### Changed
 - Armored conduit sprite redrawn as segmented steel armor over visible copper wire and a gold power core, reading as armored cable rather than a floor plate.
+- Armored conduit sprite changed from cross junction to horizontal line segment to match vanilla conduit draw style.
+- Armored conduit redrawn as a thick continuous armored band (no segment gaps) so it stays visible on terrain and does not tile into a ladder pattern.
+- Fixed armored conduit alpha processing (white-only border flood after resize) so dark armor is preserved; docs and mod textures restored.
+- Armored conduit now uses a 16-cell linked atlas with Transmitter linkType (like vanilla) so corners and T-junctions bend correctly.
+- Armored conduit atlas: L-corners use closed outer armor and culled dead quadrants; T-junctions use flat center hubs and end nubs.
+- Regenerated armored conduit as atlas-native pixel art (16-cell linked sheet + segment/menu icon); removed composited segment-stitching approach.
+- Regenerated heavy armored conduit art: riveted segment + junction hub block at L/T/cross bends (matches in-game armored look).
 - Batch alpha-cleaned all Stormproof building PNGs to strip baked white/gray backgrounds and edge halos.
 - Storm spire is now completely fireproof (flammability 0), and any fires ignited by a caught lightning strike within 3 cells of the spire are snuffed out. The spire keeps sweeping the area for 5 seconds after the strike, since the flame explosion expands over several ticks rather than instantly - a grounded rod shouldn't burn your base down.
 - Storm spire surge chance per caught strike lowered from 25% to 5%.
