@@ -522,6 +522,110 @@
     </researchPrerequisites>
   </ThingDef>
 
+  <!-- ============ Load shedder ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_LoadShedder</defName>
+    <label>load shedder</label>
+    <description>An automatic breaker. Wire it between your main grid and a low-priority sub-grid (lamps, entertainment, spare coolers). While the supply side's batteries hold charge it transmits power like a conduit; when they drop below the cutoff it trips open and sheds the sub-grid, so the freezer outlasts the television. Reconnects on its own once the batteries recover. Cutoff threshold is adjustable.</description>
+    <thingClass>Stormproof.Building_LoadShedder</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/LoadShedder</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <fillPercent>0.3</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>1000</WorkToBuild>
+      <Mass>12</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>40</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTransmitter</compClass>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="Stormproof.CompProperties_LoadShedder">
+        <checkIntervalTicks>60</checkIntervalTicks>
+        <defaultCutoffFraction>0.20</defaultCutoffFraction>
+        <reconnectMargin>0.20</reconnectMargin>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_StormProtection</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Grid monitor console ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_GridMonitor</defName>
+    <label>grid monitor console</label>
+    <description>A wall of dials and gauges wired into the power net. Its inspect panel shows live production, consumption, battery charge, and how long until the batteries run dry or fill up. Raises a warning when stored charge drops below 25% and an urgent alert below 10%, so a slow overnight drain never surprises you again.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/GridMonitor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>1200</WorkToBuild>
+      <Mass>14</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>40</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>75</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Stormproof.CompProperties_GridMonitor">
+        <checkIntervalTicks>250</checkIntervalTicks>
+        <lowFraction>0.25</lowFraction>
+        <criticalFraction>0.10</criticalFraction>
+        <rearmFraction>0.35</rearmFraction>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_StormProtection</li>
+    </researchPrerequisites>
+  </ThingDef>
+
   <!-- ============ Storm vane ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_StormVane</defName>
