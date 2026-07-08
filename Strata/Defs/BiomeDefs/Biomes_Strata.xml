@@ -22,10 +22,7 @@
     <hasBedrock>true</hasBedrock>
     <constantOutdoorTemperature>10</constantOutdoorTemperature>
     <baseWeatherCommonalities>
-      <li>
-        <weather>Clear</weather>
-        <commonality>100</commonality>
-      </li>
+      <Clear>100</Clear>
     </baseWeatherCommonalities>
   </BiomeDef>
 
