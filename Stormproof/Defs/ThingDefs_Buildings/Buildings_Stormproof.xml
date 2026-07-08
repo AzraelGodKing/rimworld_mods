@@ -219,7 +219,11 @@
     <description>A power conduit sheathed in riveted steel plate. Fireproof and far tougher than standard conduit - the wiring of choice for killboxes and exterior walls.</description>
     <graphicData>
       <texPath>Stormproof/Buildings/ArmoredConduit_Atlas</texPath>
-      <graphicClass>Graphic_LinkedConduit</graphicClass>
+      <graphicClass>Graphic_Single</graphicClass>
+      <linkType>Transmitter</linkType>
+      <linkFlags Inherit="False">
+        <li>Custom1</li>
+      </linkFlags>
       <damageData>
         <rect>(0,0.35,1,0.3)</rect>
       </damageData>
@@ -555,9 +559,6 @@
     </comps>
     <designationCategory>Power</designationCategory>
     <canOverlapZones>false</canOverlapZones>
-    <thingCategories>
-      <li>BuildingsPower</li>
-    </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Stormproof_StormProtection</li>
