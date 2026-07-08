@@ -11,9 +11,11 @@ Everything a growing homestead needs: tribal survival, farm-to-table crafting, s
 | Category | Content |
 |---|---|
 | **Tribal survival** | Curing rack (rock salt, salted meat), drying rack (+ fruit leather, dried mushrooms, pemmican without research), smokehouse, hayloft, ingredient barrel |
-| **Farm-to-table** | Grain mill, butter churn, pickling crock, homestead hearth (bread, hardtack, trail stew, hearty stew) |
-| **Storage** | Storage crate, storage barrel, pallet, hayloft, ingredient barrel, root cellar, large storage crate |
+| **Farm-to-table** | Grain mill, butter churn, pickling crock, homestead hearth (bread, hardtack, trail stew, hearty stew, maple syrup, flapjacks) |
+| **Orchard & apiary** | Apple, cherry, and sugar maple trees (regrow after harvest); maple sap → syrup → flapjacks; beehives produce honey + beeswax; beeswax candle |
+| **Storage** | Storage crate, storage barrel, pallet, hayloft, ingredient barrel, root cellar, large storage crate, preserves shelf |
 | **Food preservation** | Jerky, dried produce, fruit leather, salted/smoked meat, pickled vegetables, jam |
+| **Around the farmhouse** | Nesting box (small-animal bed), harvest maypole (gathering spot), beeswax candle |
 | **Research** | Primitive homestead → food preservation / farmstead crafting / homestead storage → advanced homestead |
 | **Power** | Compact battery (1×1), battery bank (2×2), advanced battery (1×2), ultratech battery (2×2), portable generator (chemfuel), wood-burning generator (wood) |
 
