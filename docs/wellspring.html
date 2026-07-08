@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wellspring — a RimWorld mod by AzraelGodKing</title>
+<meta name="description" content="Wellspring: wells, rain barrels, cisterns, and irrigated soil for RimWorld. Water infrastructure for your colony. XML-only, RimWorld 1.4 / 1.5 / 1.6.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">RIMWORLD MODS</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="homesteader.html">Homesteader</a>
+      <a href="stormproof.html">Stormproof</a>
+      <a href="wellspring.html" class="active">Wellspring</a>
+      <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero water">
+  <div class="wrap">
+    <h1 class="w">WELLSPRING</h1>
+    <p class="tagline">Dig wells &bull; Catch the rain &bull; Irrigate your fields &mdash; water for the Rim</p>
+    <div class="badges">
+      <span class="badge water">RimWorld 1.4 / 1.5 / 1.6</span>
+      <span class="badge water">XML-only &mdash; no C#</span>
+      <span class="badge water">Save-safe to add</span>
+      <span class="badge water">3 buildings + irrigation</span>
+      <span class="badge water">2 research projects</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-water" href="downloads/Wellspring.zip" download>&#11015; Download Wellspring</a>
+      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="overview">
+    <h2 class="w">Overview</h2>
+    <p class="sub">RimWorld has always skipped the third pillar of frontier life. Homesteads grow food and burn fuel &mdash; Wellspring adds the <b>water</b>. Draw it, store it, and trench it into your fields for richer soil. Pairs naturally with <a href="homesteader.html">Homesteader</a> (water your orchard) and <a href="stormproof.html">Stormproof</a>, but requires neither.</p>
+    <div class="note water">
+      <b>No dependencies:</b> fully XML-based, no Harmony, no C#. Safe to add mid-save.
+    </div>
+  </section>
+
+  <section id="buildings">
+    <h2 class="w">Buildings &amp; terrain</h2>
+    <p class="sub">The full water cycle: draw it, catch it, store it, spend it.</p>
+    <div class="grid">
+
+      <div class="card water wide">
+        <img src="img/HandDugWell.png" alt="Hand-dug well">
+        <div>
+          <h3>Hand-dug well</h3>
+          <div class="stat">40 wood, 10 steel &middot; Wellcraft research</div>
+          <p>A stone-lined well with a wooden windlass. Colonists <b>draw 5 water per bill</b> of honest labor &mdash; slow, reliable, and it works anywhere with ground under it.</p>
+        </div>
+      </div>
+
+      <div class="card water">
+        <img src="img/RainBarrel.png" alt="Rain barrel">
+        <div>
+          <h3>Rain barrel</h3>
+          <div class="stat">30 wood &middot; Wellcraft research</div>
+          <p>Slowly collects rainwater and dew &mdash; <b>4 water every day or two</b>, no labor required. Every roofline should have one.</p>
+        </div>
+      </div>
+
+      <div class="card water">
+        <img src="img/Cistern.png" alt="Cistern">
+        <div>
+          <h3>Cistern</h3>
+          <div class="stat">2&times;1 &middot; 8 stacks of water &middot; Wellcraft research</div>
+          <p>A covered stone tank that stockpiles water where the buckets can't spill and the sun can't reach it. Contents never deteriorate.</p>
+        </div>
+      </div>
+
+      <div class="card water wide">
+        <img src="img/IrrigatedSoil.png" alt="Irrigated soil">
+        <div>
+          <h3>Irrigated soil</h3>
+          <div class="stat">3 water + labor per tile &middot; +30% fertility &middot; Irrigation research</div>
+          <p>Trench drawn water into cropland to work it into rich, dark growing soil. <b>Only lays over ground that could already grow crops</b> &mdash; you can't water a stone floor into a farm.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="research">
+    <h2 class="w">Research</h2>
+    <p class="sub">Two neolithic projects &mdash; tribes dig ditches too.</p>
+    <div class="research-tree">
+      <b>Wellcraft</b> (500 pts, Neolithic)<br>
+      &nbsp;&nbsp;&#9500;&#9472; <b>Hand-dug well</b><br>
+      &nbsp;&nbsp;&#9500;&#9472; <b>Rain barrel</b><br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Cistern</b><br>
+      <br>
+      <b>Wellcraft</b><br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Irrigation</b> (900 pts, Neolithic) &rarr; <b>irrigated soil</b>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <h2 class="w">Roadmap</h2>
+    <div class="grid">
+      <div class="card water">
+        <div class="icon">&#9881;</div>
+        <div>
+          <h3>Powered pump &amp; sprinkler</h3>
+          <p>Industrial-tier water at scale &mdash; and something new for your Stormproof-hardened grid to protect.</p>
+        </div>
+      </div>
+      <div class="card water">
+        <div class="icon">&#9748;</div>
+        <div>
+          <h3>Drought &amp; flash flood</h3>
+          <p>Weather events that make water infrastructure matter: crops wither without irrigation, storms overflow the ditches.</p>
+        </div>
+      </div>
+      <div class="card water">
+        <div class="icon">&#128004;</div>
+        <div>
+          <h3>Drinking troughs</h3>
+          <p>Watered animals are happy animals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2 class="w">Installation</h2>
+    <ol>
+      <li>Download with the button above and extract the <code>Wellspring</code> folder into your RimWorld <code>Mods</code> directory.</li>
+      <li>Enable <b>Wellspring</b> in the mod list and restart the game.</li>
+    </ol>
+    <div class="note water">
+      <b>Save compatibility:</b> safe to add mid-save. Before removing the mod, deconstruct its buildings, use up its water, and remove any irrigated soil.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="index.html">All mods</a>
+    &middot; Wellspring by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
+    &middot; <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">Report a bug</a>
+  </div>
+</footer>
+
+</body>
+</html>
