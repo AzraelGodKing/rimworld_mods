@@ -24,4 +24,17 @@
     <researchViewY>3.40</researchViewY>
   </ResearchProjectDef>
 
+  <ResearchProjectDef>
+    <defName>Wellspring_Waterworks</defName>
+    <label>waterworks</label>
+    <description>Deeper shafts, taller tanks: reinforced deep wells that tap the water table and elevated towers that stockpile serious reserves.</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Medieval</techLevel>
+    <prerequisites>
+      <li>Wellspring_Wellcraft</li>
+    </prerequisites>
+    <researchViewX>1.20</researchViewX>
+    <researchViewY>4.20</researchViewY>
+  </ResearchProjectDef>
+
 </Defs>

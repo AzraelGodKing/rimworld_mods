@@ -23,4 +23,113 @@
     </thingCategories>
   </ThingDef>
 
+  <!-- ============ Boiled water ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Wellspring_BoiledWater</defName>
+    <label>boiled water</label>
+    <description>Water boiled clean over a fire and jugged while still warm. Safe, faintly mineral, and strangely comforting - the frontier's humblest drink.</description>
+    <graphicData>
+      <texPath>Wellspring/Items/BoiledWater</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>25</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.5</Mass>
+      <MarketValue>1.5</MarketValue>
+      <Nutrition>0.01</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Fluid</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <joyKind>Gluttonous</joyKind>
+      <joy>0.10</joy>
+      <nurseable>true</nurseable>
+      <ingestSound>Ingest_Beer</ingestSound>
+      <ingestCommandString>Drink {0}</ingestCommandString>
+      <ingestReportString>Drinking {0}.</ingestReportString>
+      <useEatingSpeedStat>false</useEatingSpeedStat>
+      <chairSearchRadius>25</chairSearchRadius>
+    </ingestible>
+    <thingCategories>
+      <li>Foods</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Mud bricks ============ -->
+  <!-- Stony stuff: usable for walls, floors, furniture and anything else that takes stone blocks. -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Wellspring_MudBricks</defName>
+    <label>mud bricks</label>
+    <description>Adobe bricks of water-worked earth and straw, dried hard in the sun. Cheaper and quicker to build with than cut stone, though nowhere near as tough.</description>
+    <graphicData>
+      <texPath>Wellspring/Items/MudBricks</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <MarketValue>0.4</MarketValue>
+      <Mass>0.8</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0.5</DeteriorationRate>
+      <SharpDamageMultiplier>0.8</SharpDamageMultiplier>
+      <BluntDamageMultiplier>1.0</BluntDamageMultiplier>
+      <StuffPower_Armor_Sharp>0.6</StuffPower_Armor_Sharp>
+      <StuffPower_Armor_Blunt>0.3</StuffPower_Armor_Blunt>
+      <StuffPower_Armor_Heat>1.0</StuffPower_Armor_Heat>
+      <StuffPower_Insulation_Cold>3</StuffPower_Insulation_Cold>
+      <StuffPower_Insulation_Heat>3</StuffPower_Insulation_Heat>
+    </statBases>
+    <thingCategories>
+      <li>StoneBlocks</li>
+    </thingCategories>
+    <burnableByRecipe>false</burnableByRecipe>
+    <stuffProps>
+      <categories>
+        <li>Stony</li>
+      </categories>
+      <commonality>0</commonality>
+      <color>(150,113,80)</color>
+      <soundImpactStuff>BulletImpact_Ground</soundImpactStuff>
+      <statFactors>
+        <MaxHitPoints>0.85</MaxHitPoints>
+        <Beauty>0.9</Beauty>
+        <WorkToBuild>0.7</WorkToBuild>
+        <WorkToMake>0.8</WorkToMake>
+        <Flammability>0</Flammability>
+        <MarketValue>0.5</MarketValue>
+      </statFactors>
+    </stuffProps>
+  </ThingDef>
+
+  <!-- ============ Clean bandages ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Wellspring_CleanBandages</defName>
+    <label>clean bandages</label>
+    <description>Cloth strips boiled in clean water and rolled tight. Not true medicine, but a good deal better than pressing a dirty shirt against the wound.</description>
+    <thingClass>Medicine</thingClass>
+    <graphicData>
+      <texPath>Wellspring/Items/CleanBandages</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>25</stackLimit>
+    <techLevel>Neolithic</techLevel>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <MarketValue>10</MarketValue>
+      <Mass>0.35</Mass>
+      <Flammability>1.3</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <MedicalPotency>0.70</MedicalPotency>
+      <MedicalQualityMax>0.80</MedicalQualityMax>
+    </statBases>
+    <thingCategories>
+      <li>Medicine</li>
+    </thingCategories>
+  </ThingDef>
+
 </Defs>
