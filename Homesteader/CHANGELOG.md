@@ -16,6 +16,20 @@ All notable changes to Homesteader are documented here.
 
 ### Added
 
+#### The orchard
+- **Plants:** apple tree, cherry tree, and sugar maple - slow-growing sowable trees that regrow after each harvest instead of dying (sowing gated behind primitive homestead research).
+- **Items:** apples, cherries (raw fruit that feeds the existing cider, jam, and drying recipes), maple sap, maple syrup (never spoils), flapjacks (simple meal with a joy bonus).
+- **Recipes (homestead hearth):** boil maple syrup (8 sap → 2 syrup), bake flapjacks (4 flour + 1 syrup).
+
+#### The apiary
+- Beehives now also produce **beeswax** on a slow second cycle, alongside honey.
+- **Beeswax candle:** a refuelable, chemfuel-free light source built from and fueled by beeswax (homestead brewing research).
+
+#### Around the farmhouse
+- **Preserves shelf:** 2×1 display storage (3 stacks per cell, +8 beauty) fixed-filtered to preserved goods - jam, pickles, cheese, honey, syrup, jerky, dried goods, cured meats, sugar, hardtack (homestead storage research).
+- **Nesting box:** a straw-lined animal bed for small animals (body size ≤ 0.6, comfort 0.7).
+- **Harvest maypole:** a +12 beauty gathering spot - colonists hold parties and celebrations around it (homestead comforts research).
+
 #### Winter pantry (food preservation)
 - **Buildings:** curing rack, hayloft (bulk farm storage), ingredient barrel (meat, milk, eggs).
 - **Items:** rock salt, fruit leather, dried mushrooms, salted meat, smoked fish, salted fish, pemmican (via drying rack, no research).
