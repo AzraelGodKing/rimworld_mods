@@ -265,3 +265,20 @@ footer {
   .card { flex-direction: column; }
   .card .icon, .card img { width: 56px; height: 56px; }
 }
+
+/* Wellspring (water) theme */
+:root {
+  --accent-w: #6ecbe4;
+  --accent-w2: #a0e6c8;
+}
+header.hero.water { background: linear-gradient(180deg, #16222c 0%, #101a22 100%); }
+h1.w { color: var(--accent-w); }
+h2.w { color: var(--accent-w); }
+.badge.water { border-color: #2f5a6e; }
+.btn-water { background: var(--accent-w); color: #10202a; }
+.btn-water:hover { background: #9adcf0; color: #10202a; }
+.hub-card.water:hover { border-color: var(--accent-w); }
+.hub-card h2.w { color: var(--accent-w); }
+.hub-card.water .count { color: var(--accent-w2); }
+.card.water img { background: #12222c; }
+.note.water { border-left-color: var(--accent-w); }

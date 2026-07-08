@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Hand-dug well ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Wellspring_HandDugWell</defName>
+    <label>hand-dug well</label>
+    <description>A stone-lined well with a wooden windlass and bucket. Colonists draw jugs of fresh water by hand - slow, honest labor that works anywhere with ground under it.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Wellspring/Buildings/HandDugWell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,1.8)</drawSize>
+      <drawOffset>(0,0,0.3)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.45</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>180</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
+      <Mass>40</Mass>
+      <Flammability>0.3</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>40</WoodLog>
+      <Steel>10</Steel>
+    </costList>
+    <recipes>
+      <li>Wellspring_DrawWater</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Wellspring_Wellcraft</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Rain barrel ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Wellspring_RainBarrel</defName>
+    <label>rain barrel</label>
+    <description>A lidded wooden barrel that slowly collects rainwater and morning dew. Cheap, passive, and every roofline should have one. Works best left outdoors.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Wellspring/Buildings/RainBarrel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>90</MaxHitPoints>
+      <WorkToBuild>500</WorkToBuild>
+      <Mass>8</Mass>
+      <Flammability>0.8</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>30</WoodLog>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Spawner">
+        <thingToSpawn>Wellspring_Water</thingToSpawn>
+        <spawnCount>4</spawnCount>
+        <spawnIntervalRange>60000~120000</spawnIntervalRange>
+        <spawnMaxAdjacent>30</spawnMaxAdjacent>
+        <spawnForbidden>false</spawnForbidden>
+        <writeTimeLeftToSpawn>true</writeTimeLeftToSpawn>
+        <showMessageIfOwned>false</showMessageIfOwned>
+        <saveKeysPrefix>rainwater</saveKeysPrefix>
+      </li>
+    </comps>
+    <designationCategory>Production</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Wellspring_Wellcraft</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Cistern ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Wellspring_Cistern</defName>
+    <label>cistern</label>
+    <description>A wide, covered stone tank for stockpiling water where the buckets can't spill and the sun can't reach it. Holds eight stacks of water.</description>
+    <thingClass>Building_Storage</thingClass>
+    <graphicData>
+      <texPath>Wellspring/Buildings/Cistern</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.6</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,1)</size>
+    <statBases>
+      <MaxHitPoints>220</MaxHitPoints>
+      <WorkToBuild>1400</WorkToBuild>
+      <Mass>30</Mass>
+      <Flammability>0.1</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>25</WoodLog>
+      <Steel>25</Steel>
+    </costList>
+    <building>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <maxItemsInCell>4</maxItemsInCell>
+      <fixedStorageSettings>
+        <filter>
+          <thingDefs>
+            <li>Wellspring_Water</li>
+          </thingDefs>
+        </filter>
+      </fixedStorageSettings>
+      <defaultStorageSettings>
+        <priority>Important</priority>
+        <filter>
+          <thingDefs>
+            <li>Wellspring_Water</li>
+          </thingDefs>
+        </filter>
+      </defaultStorageSettings>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <designationCategory>Furniture</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsFurniture</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Wellspring_Wellcraft</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>
