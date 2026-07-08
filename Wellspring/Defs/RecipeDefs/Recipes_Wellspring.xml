@@ -9,7 +9,7 @@
     <jobString>Drawing water.</jobString>
     <workAmount>350</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <soundWorking>Recipe_BrewBeer</soundWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
     <products>
       <Wellspring_Water>5</Wellspring_Water>
     </products>
@@ -23,7 +23,7 @@
     <jobString>Drawing water.</jobString>
     <workAmount>600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <soundWorking>Recipe_BrewBeer</soundWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
     <products>
       <Wellspring_Water>12</Wellspring_Water>
     </products>

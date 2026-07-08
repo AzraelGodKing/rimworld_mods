@@ -13,6 +13,7 @@ All notable changes to Homesteader are documented here.
 - Regenerated flour icon after alpha-clean damaged the white powder surface.
 
 ### Fixed
+- Removed invalid `harvestDestroys` tag from apple, cherry and maple orchard plants (not a PlantProperties field in 1.6; regrowth is already handled by `harvestAfterGrowth`).
 - Bread, porridge, trail stew and hearty stew now inherit from the correct vanilla meal base (`MealBase` instead of the non-inheritable `MealSimple`/`MealFine` defNames), restoring their thingClass, food type, rot ticking and eat sounds/effects.
 - Homestead supplier caravan patch now targets the `OutlanderCivil` def node directly; the old xpath failed because `caravanTraderKinds` only exists on the abstract outlander base def.
 - Homesteaders scenario: corrected the starting pawns config page def name (`ConfigPage_ConfigureStartingPawns`) and added the RimWorld 1.6 `surfaceLayer` block. The scenario now ships as version-specific copies (`1.6` and `Legacy` load folders) so 1.4/1.5 remain supported.
