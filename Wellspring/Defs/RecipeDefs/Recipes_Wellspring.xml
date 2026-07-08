@@ -15,4 +15,140 @@
     </products>
   </RecipeDef>
 
+  <!-- ============ Draw water (deep well) ============ -->
+  <RecipeDef>
+    <defName>Wellspring_DrawWaterDeep</defName>
+    <label>draw water from the deep</label>
+    <description>Winch the wide bucket down past the shallow groundwater and haul up a heavy load of fresh water.</description>
+    <jobString>Drawing water.</jobString>
+    <workAmount>600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <soundWorking>Recipe_BrewBeer</soundWorking>
+    <products>
+      <Wellspring_Water>12</Wellspring_Water>
+    </products>
+  </RecipeDef>
+
+  <!-- ============ Boil water ============ -->
+  <RecipeDef>
+    <defName>Wellspring_BoilWater</defName>
+    <label>boil water</label>
+    <description>Boil jugged water clean over the fire.</description>
+    <jobString>Boiling water.</jobString>
+    <workAmount>250</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>FueledStove</li>
+      <li>ElectricStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Wellspring_Water</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Wellspring_Water</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Wellspring_BoiledWater>1</Wellspring_BoiledWater>
+    </products>
+  </RecipeDef>
+
+  <!-- ============ Make mud bricks ============ -->
+  <RecipeDef>
+    <defName>Wellspring_MakeMudBricks</defName>
+    <label>make mud bricks</label>
+    <description>Work water and straw into earth, shape it into bricks, and leave them to dry hard in the sun.</description>
+    <jobString>Making mud bricks.</jobString>
+    <workAmount>1000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Sculpt</effectWorking>
+    <soundWorking>Recipe_Sculpt</soundWorking>
+    <recipeUsers>
+      <li>CraftingSpot</li>
+      <li>TableStonecutter</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Wellspring_Water</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Hay</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Wellspring_Water</li>
+        <li>Hay</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Wellspring_MudBricks>15</Wellspring_MudBricks>
+    </products>
+  </RecipeDef>
+
+  <!-- ============ Make clean bandages ============ -->
+  <RecipeDef>
+    <defName>Wellspring_MakeCleanBandages</defName>
+    <label>make clean bandages</label>
+    <description>Boil cloth strips in clean water and roll them into tight bandages.</description>
+    <jobString>Making clean bandages.</jobString>
+    <workAmount>450</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <recipeUsers>
+      <li>CraftingSpot</li>
+      <li>HandTailoringBench</li>
+      <li>ElectricTailoringBench</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Wellspring_Water</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Cloth</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Wellspring_Water</li>
+        <li>Cloth</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Wellspring_CleanBandages>2</Wellspring_CleanBandages>
+    </products>
+  </RecipeDef>
+
 </Defs>
