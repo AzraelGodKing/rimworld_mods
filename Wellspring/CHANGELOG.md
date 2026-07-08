@@ -2,6 +2,22 @@
 
 All notable changes to Wellspring are documented here.
 
+## [Unreleased]
+
+### Added
+- Deep well: a reinforced work bench well that draws 12 water per bill. Requires new waterworks research.
+- Solar still: passively condenses 2 water every half-day to day, even where it never rains. Requires wellcraft research.
+- Water tower: 2×2 elevated storage holding 16 stacks of water, protected from deterioration. Requires waterworks research.
+- Stone fountain: a 2×2 stuffable stone centerpiece (+30 beauty) that costs 10 water to fill. Requires wellcraft research.
+- Irrigated planter: a 1×1 self-watering plant grower (130% fertility) for normal ground crops, works indoors. Requires irrigation research.
+- Boiled water: a humble hot drink boiled at any stove or campfire for a little joy.
+- Mud bricks: adobe made from water and hay at the crafting spot or stonecutter's table. A cheap stony stuff for walls, floors and furniture - quicker to build with than cut stone, but weaker.
+- Clean bandages: cloth boiled in water, giving 70% potency medicine craftable at the crafting spot or tailor benches.
+- Waterworks research project (medieval) gating the deep well and water tower.
+
+### Changed
+- Regenerated all five textures (hand-dug well, rain barrel, cistern, water jug, irrigated soil) in the painterly style used by Homesteader and Stormproof; irrigated soil tile upscaled to 512×512.
+
 ## [1.0.0] — Initial release
 
 ### Added
@@ -13,6 +29,6 @@ All notable changes to Wellspring are documented here.
 - Wellcraft and irrigation research projects (both neolithic).
 
 ### Roadmap
-- Powered pump and sprinkler (industrial tier).
+- Fluid pipe system: pipes, powered pump and sprinkler (industrial tier, will add a C# assembly).
 - Drought and flash-flood events that make water infrastructure matter.
 - Animal drinking troughs and hand-watering.
