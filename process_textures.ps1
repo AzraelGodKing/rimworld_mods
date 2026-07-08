@@ -9,7 +9,9 @@ param(
     [int]$TargetW = 0,
     [int]$TargetH = 0,
     [switch]$Multi,          # emit _south/_north/_east/_west
-    [switch]$NoTrim          # terrain tiles: keep full frame, just resize
+    [switch]$NoTrim,         # terrain tiles: keep full frame, just resize
+    [switch]$Conservative,    # keep intentional white subjects (salt, sugar, etc.)
+    [switch]$BackgroundOnly   # remove border-connected background only; no fringe/interior passes
 )
 
 Add-Type -AssemblyName System.Drawing
@@ -77,6 +79,68 @@ public static class TexProc
         return bmp;
     }
 
+    static int MinCh(Color c) { return Math.Min(c.R, Math.Min(c.G, c.B)); }
+    static int MaxCh(Color c) { return Math.Max(c.R, Math.Max(c.G, c.B)); }
+    static int Chroma(Color c) { return MaxCh(c) - MinCh(c); }
+    static bool IsNeutralBright(Color c, int minChannel, int maxChroma)
+    {
+        if (c.A <= 10) return false;
+        return MinCh(c) >= minChannel && Chroma(c) <= maxChroma;
+    }
+    static bool IsNearBlack(Color c) { return c.A > 10 && MaxCh(c) <= 28; }
+
+    public static Bitmap CleanAlpha(Bitmap src, bool conservative)
+    {
+        var bmp = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
+        using (var g = Graphics.FromImage(bmp)) g.DrawImage(src, 0, 0, src.Width, src.Height);
+        int w = bmp.Width, h = bmp.Height;
+        var visited = new bool[w, h];
+        var queue = new Queue<Point>();
+        Action<int,int> trySeed = (x, y) => {
+            if (visited[x,y]) return;
+            var c = bmp.GetPixel(x, y);
+            if (IsNearBlack(c) || IsNeutralBright(c, 190, 55)) { visited[x,y] = true; queue.Enqueue(new Point(x,y)); }
+        };
+        for (int x = 0; x < w; x++) { trySeed(x, 0); trySeed(x, h - 1); }
+        for (int y = 0; y < h; y++) { trySeed(0, y); trySeed(w - 1, y); }
+        while (queue.Count > 0) {
+            var p = queue.Dequeue();
+            bmp.SetPixel(p.X, p.Y, Color.Transparent);
+            foreach (var d in new[] { new Point(1,0), new Point(-1,0), new Point(0,1), new Point(0,-1) }) {
+                int nx = p.X + d.X, ny = p.Y + d.Y;
+                if (nx < 0 || ny < 0 || nx >= w || ny >= h || visited[nx,ny]) continue;
+                var c = bmp.GetPixel(nx, ny);
+                if (IsNearBlack(c) || IsNeutralBright(c, 190, 55)) { visited[nx,ny] = true; queue.Enqueue(new Point(nx, ny)); }
+            }
+        }
+        if (!conservative) {
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++)
+                    if (IsNeutralBright(bmp.GetPixel(x, y), 208, 45))
+                        bmp.SetPixel(x, y, Color.Transparent);
+        }
+        int fringePasses = conservative ? 6 : 16;
+        int fringeMin = conservative ? 215 : 200;
+        for (int pass = 0; pass < fringePasses; pass++) {
+            var toClear = new List<Point>();
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++) {
+                    var c = bmp.GetPixel(x, y);
+                    if (c.A <= 10 || !IsNeutralBright(c, fringeMin, 55)) continue;
+                    bool adjTrans = false;
+                    foreach (var d in new[] { new Point(1,0), new Point(-1,0), new Point(0,1), new Point(0,-1) }) {
+                        int nx = x + d.X, ny = y + d.Y;
+                        if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
+                        if (bmp.GetPixel(nx, ny).A <= 10) { adjTrans = true; break; }
+                    }
+                    if (adjTrans) toClear.Add(new Point(x, y));
+                }
+            if (toClear.Count == 0) break;
+            foreach (var p in toClear) bmp.SetPixel(p.X, p.Y, Color.Transparent);
+        }
+        return bmp;
+    }
+
     public static Bitmap Trim(Bitmap bmp)
     {
         int minX = bmp.Width, minY = bmp.Height, maxX = -1, maxY = -1;
@@ -135,6 +199,9 @@ try {
         Write-Output "OK (noTrim): $Dest"
     } else {
         $clean = [TexProc]::RemoveBackground($srcBmp)
+        if (-not $BackgroundOnly) {
+            $clean = [TexProc]::CleanAlpha($clean, [bool]$Conservative)
+        }
         $trimmed = [TexProc]::Trim($clean)
         $w = if ($TargetW -gt 0) { $TargetW } else { $Size }
         $h = if ($TargetH -gt 0) { $TargetH } else { $Size }
