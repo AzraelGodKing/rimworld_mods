@@ -15,6 +15,11 @@ All notable changes to Wellspring are documented here.
 - Clean bandages: cloth boiled in water, giving 70% potency medicine craftable at the crafting spot or tailor benches.
 - Waterworks research project (medieval) gating the deep well and water tower.
 
+### Fixed
+- Mud bricks: `soundImpactStuff` is not a valid StuffProperties field in RimWorld 1.6; replaced with `soundImpactBullet`.
+- Draw-water recipes now use the `Recipe_CookMeal` working sound (`Recipe_BrewBeer` no longer exists in 1.6).
+- Removed thing categories from non-minifiable buildings (hand-dug well, deep well, water tower, irrigated planter) to clear config errors.
+
 ### Changed
 - Regenerated all five textures (hand-dug well, rain barrel, cistern, water jug, irrigated soil) in the painterly style used by Homesteader and Stormproof; irrigated soil tile upscaled to 512×512.
 - Batch alpha-cleaned all Wellspring PNGs (buildings and items) to strip baked white/gray backgrounds and edge halos. Seamless terrain tiles left untouched; boiled water and clean bandages used conservative cleanup to preserve intentional white subjects.

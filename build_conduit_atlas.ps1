@@ -32,9 +32,10 @@ public static class HeavyConduitAtlas
         for (int i = 0; i < 16; i++)
         {
             var tile = RenderCell(segment, hub, cell, i);
-            // vanilla layout: index 0 (no links) at top-left, rows top-to-bottom
+            // Unity samples atlas cells with UV origin at bottom-left:
+            // link index i lives at column i%4, row i/4 counted from the BOTTOM of the PNG.
             using (var g = Graphics.FromImage(sheet))
-                g.DrawImage(tile, (i % 4) * cell, (i / 4) * cell);
+                g.DrawImage(tile, (i % 4) * cell, (3 - i / 4) * cell);
             tile.Dispose();
         }
         return sheet;

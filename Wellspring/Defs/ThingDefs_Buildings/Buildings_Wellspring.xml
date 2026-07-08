@@ -40,9 +40,6 @@
     <designationCategory>Production</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
-    <thingCategories>
-      <li>BuildingsProduction</li>
-    </thingCategories>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Wellspring_Wellcraft</li>
@@ -201,9 +198,6 @@
     <designationCategory>Production</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
-    <thingCategories>
-      <li>BuildingsProduction</li>
-    </thingCategories>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Wellspring_Waterworks</li>
@@ -315,9 +309,6 @@
     <designationCategory>Furniture</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
-    <thingCategories>
-      <li>BuildingsFurniture</li>
-    </thingCategories>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Wellspring_Waterworks</li>
@@ -401,9 +392,6 @@
     </building>
     <designationCategory>Production</designationCategory>
     <canOverlapZones>false</canOverlapZones>
-    <thingCategories>
-      <li>BuildingsProduction</li>
-    </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Wellspring_Irrigation</li>
