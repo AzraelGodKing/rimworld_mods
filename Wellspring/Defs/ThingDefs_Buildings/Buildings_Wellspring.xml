@@ -162,4 +162,252 @@
     </researchPrerequisites>
   </ThingDef>
 
+  <!-- ============ Deep well ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Wellspring_DeepWell</defName>
+    <label>deep well</label>
+    <description>A reinforced shaft sunk far past the shallow groundwater, with a heavy steel windlass and a wide bucket. Each haul brings up far more water than a hand-dug well.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Wellspring/Buildings/DeepWell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.5,1.9)</drawSize>
+      <drawOffset>(0,0,0.35)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>3500</WorkToBuild>
+      <Mass>60</Mass>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>30</WoodLog>
+      <Steel>60</Steel>
+    </costList>
+    <recipes>
+      <li>Wellspring_DrawWaterDeep</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Wellspring_Waterworks</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Solar still ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Wellspring_SolarStill</defName>
+    <label>solar still</label>
+    <description>A shallow pit lined with hide and glass that sweats moisture out of the ground and air, condensing it drop by drop. Slow, but it works even where it never rains.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Wellspring/Buildings/SolarStill</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>700</WorkToBuild>
+      <Mass>10</Mass>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>15</WoodLog>
+      <Steel>15</Steel>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Spawner">
+        <thingToSpawn>Wellspring_Water</thingToSpawn>
+        <spawnCount>2</spawnCount>
+        <spawnIntervalRange>30000~60000</spawnIntervalRange>
+        <spawnMaxAdjacent>30</spawnMaxAdjacent>
+        <spawnForbidden>false</spawnForbidden>
+        <writeTimeLeftToSpawn>true</writeTimeLeftToSpawn>
+        <showMessageIfOwned>false</showMessageIfOwned>
+        <saveKeysPrefix>solarstill</saveKeysPrefix>
+      </li>
+    </comps>
+    <designationCategory>Production</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Wellspring_Wellcraft</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Water tower ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Wellspring_WaterTower</defName>
+    <label>water tower</label>
+    <description>A tall timber-framed tank raised on stout legs, holding a serious reserve of water out of the sun and out of the mud. Holds sixteen stacks.</description>
+    <thingClass>Building_Storage</thingClass>
+    <graphicData>
+      <texPath>Wellspring/Buildings/WaterTower</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2.7)</drawSize>
+      <drawOffset>(0,0,0.35)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>70</pathCost>
+    <fillPercent>0.8</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <statBases>
+      <MaxHitPoints>350</MaxHitPoints>
+      <WorkToBuild>2800</WorkToBuild>
+      <Mass>70</Mass>
+      <Flammability>0.6</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>50</WoodLog>
+      <Steel>50</Steel>
+    </costList>
+    <building>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <maxItemsInCell>4</maxItemsInCell>
+      <fixedStorageSettings>
+        <filter>
+          <thingDefs>
+            <li>Wellspring_Water</li>
+          </thingDefs>
+        </filter>
+      </fixedStorageSettings>
+      <defaultStorageSettings>
+        <priority>Important</priority>
+        <filter>
+          <thingDefs>
+            <li>Wellspring_Water</li>
+          </thingDefs>
+        </filter>
+      </defaultStorageSettings>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <designationCategory>Furniture</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <thingCategories>
+      <li>BuildingsFurniture</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Wellspring_Waterworks</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Stone fountain ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Wellspring_StoneFountain</defName>
+    <label>stone fountain</label>
+    <description>A carved stone basin with a gentle plume of water at its center. It serves no purpose except to remind everyone that the colony has water to spare - which is exactly the point.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Wellspring/Buildings/StoneFountain</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <stuffCategories>
+      <li>Stony</li>
+    </stuffCategories>
+    <costStuffCount>120</costStuffCount>
+    <costList>
+      <Wellspring_Water>10</Wellspring_Water>
+    </costList>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>4000</WorkToBuild>
+      <Mass>45</Mass>
+      <Flammability>0</Flammability>
+      <Beauty>30</Beauty>
+    </statBases>
+    <designationCategory>Furniture</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsFurniture</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Wellspring_Wellcraft</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Irrigated planter ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Wellspring_IrrigatedPlanter</defName>
+    <label>irrigated planter</label>
+    <description>A deep wooden planter box with a water reservoir worked into its base. Grows a single crop in rich, constantly-moist soil - a little irrigated field you can put anywhere, even indoors.</description>
+    <thingClass>Building_PlantGrower</thingClass>
+    <graphicData>
+      <texPath>Wellspring/Buildings/IrrigatedPlanter</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <fillPercent>0.3</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <fertility>1.30</fertility>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>900</WorkToBuild>
+      <Mass>12</Mass>
+      <Flammability>0.6</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>25</WoodLog>
+      <Wellspring_Water>2</Wellspring_Water>
+    </costList>
+    <building>
+      <defaultPlantToGrow>Plant_Potato</defaultPlantToGrow>
+      <sowTag>Ground</sowTag>
+    </building>
+    <designationCategory>Production</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Wellspring_Irrigation</li>
+    </researchPrerequisites>
+  </ThingDef>
+
 </Defs>
