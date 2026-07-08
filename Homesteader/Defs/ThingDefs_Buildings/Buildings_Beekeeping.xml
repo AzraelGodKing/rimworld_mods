@@ -40,6 +40,16 @@
         <showMessageIfOwned>true</showMessageIfOwned>
         <saveKeysPrefix>honey</saveKeysPrefix>
       </li>
+      <li Class="CompProperties_Spawner">
+        <thingToSpawn>Homesteader_Beeswax</thingToSpawn>
+        <spawnCount>4</spawnCount>
+        <spawnIntervalRange>240000~360000</spawnIntervalRange>
+        <spawnMaxAdjacent>16</spawnMaxAdjacent>
+        <spawnForbidden>false</spawnForbidden>
+        <writeTimeLeftToSpawn>false</writeTimeLeftToSpawn>
+        <showMessageIfOwned>true</showMessageIfOwned>
+        <saveKeysPrefix>beeswax</saveKeysPrefix>
+      </li>
     </comps>
     <designationCategory>Production</designationCategory>
     <canOverlapZones>false</canOverlapZones>
