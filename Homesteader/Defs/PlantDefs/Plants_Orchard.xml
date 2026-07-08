@@ -42,7 +42,6 @@
       <harvestTag>Standard</harvestTag>
       <harvestedThingDef>Homesteader_RawApples</harvestedThingDef>
       <harvestYield>20</harvestYield>
-      <harvestDestroys>false</harvestDestroys>
       <harvestAfterGrowth>0.55</harvestAfterGrowth>
       <dieIfLeafless>false</dieIfLeafless>
       <maxMeshCount>1</maxMeshCount>
@@ -89,7 +88,6 @@
       <harvestTag>Standard</harvestTag>
       <harvestedThingDef>Homesteader_RawCherries</harvestedThingDef>
       <harvestYield>16</harvestYield>
-      <harvestDestroys>false</harvestDestroys>
       <harvestAfterGrowth>0.55</harvestAfterGrowth>
       <dieIfLeafless>false</dieIfLeafless>
       <maxMeshCount>1</maxMeshCount>
@@ -136,7 +134,6 @@
       <harvestTag>Standard</harvestTag>
       <harvestedThingDef>Homesteader_MapleSap</harvestedThingDef>
       <harvestYield>10</harvestYield>
-      <harvestDestroys>false</harvestDestroys>
       <harvestAfterGrowth>0.6</harvestAfterGrowth>
       <dieIfLeafless>false</dieIfLeafless>
       <maxMeshCount>1</maxMeshCount>
