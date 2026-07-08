@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wellspring — a RimWorld mod by AzraelGodKing</title>
-<meta name="description" content="Wellspring: wells, rain barrels, cisterns, and irrigated soil for RimWorld. Water infrastructure for your colony. XML-only, RimWorld 1.4 / 1.5 / 1.6.">
+<meta name="description" content="Wellspring: wells, rain barrels, cisterns, and irrigated soil for RimWorld. Water infrastructure for your colony. Currently XML-only, fluid pipe system planned. RimWorld 1.4 / 1.5 / 1.6.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,10 +28,10 @@
     <p class="tagline">Dig wells &bull; Catch the rain &bull; Irrigate your fields &mdash; water for the Rim</p>
     <div class="badges">
       <span class="badge water">RimWorld 1.4 / 1.5 / 1.6</span>
-      <span class="badge water">XML-only &mdash; no C#</span>
+      <span class="badge water">Currently XML-only &mdash; fluid system coming</span>
       <span class="badge water">Save-safe to add</span>
-      <span class="badge water">3 buildings + irrigation</span>
-      <span class="badge water">2 research projects</span>
+      <span class="badge water">8 buildings + irrigation</span>
+      <span class="badge water">3 research projects</span>
     </div>
     <div class="cta">
       <a class="btn btn-water" href="downloads/Wellspring.zip" download>&#11015; Download Wellspring</a>
@@ -46,7 +46,7 @@
     <h2 class="w">Overview</h2>
     <p class="sub">RimWorld has always skipped the third pillar of frontier life. Homesteads grow food and burn fuel &mdash; Wellspring adds the <b>water</b>. Draw it, store it, and trench it into your fields for richer soil. Pairs naturally with <a href="homesteader.html">Homesteader</a> (water your orchard) and <a href="stormproof.html">Stormproof</a>, but requires neither.</p>
     <div class="note water">
-      <b>No dependencies:</b> fully XML-based, no Harmony, no C#. Safe to add mid-save.
+      <b>No dependencies:</b> currently fully XML-based &mdash; no Harmony, no C#. Safe to add mid-save. Water moves by colonist hauling for now; a proper <b>fluid pipe system</b> (pipes, powered pumps, sprinklers) is planned for a later release.
     </div>
   </section>
 
@@ -82,6 +82,51 @@
         </div>
       </div>
 
+      <div class="card water">
+        <img src="img/DeepWell.png" alt="Deep well">
+        <div>
+          <h3>Deep well</h3>
+          <div class="stat">30 wood, 60 steel &middot; Waterworks research</div>
+          <p>A reinforced shaft sunk past the shallow groundwater. Each haul brings up <b>12 water per bill</b> &mdash; serious volume for a serious colony.</p>
+        </div>
+      </div>
+
+      <div class="card water">
+        <img src="img/SolarStill.png" alt="Solar still">
+        <div>
+          <h3>Solar still</h3>
+          <div class="stat">15 wood, 15 steel &middot; Wellcraft research</div>
+          <p>Sweats moisture out of the ground drop by drop &mdash; <b>2 water every half-day or so</b>, and it works even where it never rains. The desert colony's best friend.</p>
+        </div>
+      </div>
+
+      <div class="card water">
+        <img src="img/WaterTower.png" alt="Water tower">
+        <div>
+          <h3>Water tower</h3>
+          <div class="stat">2&times;2 &middot; 16 stacks of water &middot; Waterworks research</div>
+          <p>A tall timber tank on stout legs holding a serious reserve out of the sun and the mud. Contents never deteriorate.</p>
+        </div>
+      </div>
+
+      <div class="card water">
+        <img src="img/StoneFountain.png" alt="Stone fountain">
+        <div>
+          <h3>Stone fountain</h3>
+          <div class="stat">2&times;2 &middot; 120 stone + 10 water &middot; +30 beauty</div>
+          <p>A carved basin with a gentle plume at its center. Serves no purpose except to remind everyone the colony has water to spare &mdash; which is exactly the point.</p>
+        </div>
+      </div>
+
+      <div class="card water">
+        <img src="img/IrrigatedPlanter.png" alt="Irrigated planter">
+        <div>
+          <h3>Irrigated planter</h3>
+          <div class="stat">25 wood + 2 water &middot; 130% fertility &middot; Irrigation research</div>
+          <p>A deep planter box with a reservoir in its base &mdash; a little irrigated field you can put anywhere, <b>even indoors</b>.</p>
+        </div>
+      </div>
+
       <div class="card water wide">
         <img src="img/IrrigatedSoil.png" alt="Irrigated soil">
         <div>
@@ -94,17 +139,55 @@
     </div>
   </section>
 
+  <section id="items">
+    <h2 class="w">Made with water</h2>
+    <p class="sub">Water isn't just for the fields.</p>
+    <div class="grid">
+
+      <div class="card water">
+        <img src="img/BoiledWater.png" alt="Boiled water">
+        <div>
+          <h3>Boiled water</h3>
+          <div class="stat">1 water &middot; any stove or campfire</div>
+          <p>The frontier's humblest drink &mdash; boiled clean, jugged warm, and worth a little joy to anyone who drinks it.</p>
+        </div>
+      </div>
+
+      <div class="card water">
+        <img src="img/MudBricks.png" alt="Mud bricks">
+        <div>
+          <h3>Mud bricks</h3>
+          <div class="stat">2 water + 10 hay &rarr; 15 bricks &middot; crafting spot or stonecutter</div>
+          <p>Sun-dried adobe: a <b>cheap stony building material</b> for walls, floors and furniture. Fireproof and quick to lay, but weaker than cut stone.</p>
+        </div>
+      </div>
+
+      <div class="card water">
+        <img src="img/CleanBandages.png" alt="Clean bandages">
+        <div>
+          <h3>Clean bandages</h3>
+          <div class="stat">1 water + 3 cloth &rarr; 2 bandages &middot; 70% medical potency</div>
+          <p>Cloth strips boiled clean and rolled tight. Not true medicine, but a good deal better than a dirty shirt against the wound.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <section id="research">
     <h2 class="w">Research</h2>
-    <p class="sub">Two neolithic projects &mdash; tribes dig ditches too.</p>
+    <p class="sub">Two neolithic projects &mdash; tribes dig ditches too &mdash; and a medieval one for waterworks at scale.</p>
     <div class="research-tree">
       <b>Wellcraft</b> (500 pts, Neolithic)<br>
       &nbsp;&nbsp;&#9500;&#9472; <b>Hand-dug well</b><br>
       &nbsp;&nbsp;&#9500;&#9472; <b>Rain barrel</b><br>
-      &nbsp;&nbsp;&#9492;&#9472; <b>Cistern</b><br>
+      &nbsp;&nbsp;&#9500;&#9472; <b>Cistern</b><br>
+      &nbsp;&nbsp;&#9500;&#9472; <b>Solar still</b><br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Stone fountain</b><br>
       <br>
       <b>Wellcraft</b><br>
-      &nbsp;&nbsp;&#9492;&#9472; <b>Irrigation</b> (900 pts, Neolithic) &rarr; <b>irrigated soil</b>
+      &nbsp;&nbsp;&#9500;&#9472; <b>Irrigation</b> (900 pts, Neolithic) &rarr; <b>irrigated soil</b>, <b>irrigated planter</b><br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Waterworks</b> (1200 pts, Medieval) &rarr; <b>deep well</b>, <b>water tower</b>
     </div>
   </section>
 
@@ -114,8 +197,8 @@
       <div class="card water">
         <div class="icon">&#9881;</div>
         <div>
-          <h3>Powered pump &amp; sprinkler</h3>
-          <p>Industrial-tier water at scale &mdash; and something new for your Stormproof-hardened grid to protect.</p>
+          <h3>Fluid pipe system</h3>
+          <p>Pipes, powered pumps and sprinklers moving water from point A to point B &mdash; industrial-tier water at scale, and something new for your Stormproof-hardened grid to protect. Will ship with a C# assembly.</p>
         </div>
       </div>
       <div class="card water">
