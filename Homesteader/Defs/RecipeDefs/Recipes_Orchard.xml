@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Boil maple syrup ============ -->
+  <RecipeDef>
+    <defName>Homesteader_BoilMapleSyrup</defName>
+    <label>boil maple syrup</label>
+    <description>Boil maple sap down over the hearth until it thickens into rich amber syrup.</description>
+    <jobString>Boiling maple syrup.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_MapleSap</li>
+          </thingDefs>
+        </filter>
+        <count>8</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_MapleSap</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_MapleSyrup>2</Homesteader_MapleSyrup>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Bake flapjacks ============ -->
+  <RecipeDef>
+    <defName>Homesteader_BakeFlapjacks</defName>
+    <label>bake flapjacks</label>
+    <description>Griddle flour batter into flapjacks and drench them in maple syrup.</description>
+    <jobString>Baking flapjacks.</jobString>
+    <workAmount>700</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Flour</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_MapleSyrup</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Flour</li>
+        <li>Homesteader_MapleSyrup</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Flapjacks>1</Homesteader_Flapjacks>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+</Defs>
