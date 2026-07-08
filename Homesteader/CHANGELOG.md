@@ -4,6 +4,14 @@ All notable changes to Homesteader are documented here.
 
 ## [Unreleased]
 
+### Changed
+- Regenerated orchard and beeswax sprites (maple sap, maple syrup, raw apples, raw cherries, beeswax, beeswax candle) to match the painterly Homesteader art style with proper transparent backgrounds.
+- Regenerated flapjacks icon to match painterly homestead meal style (maple syrup stack with butter).
+- Regenerated salted meat, sugar, and sugar beet icons after batch alpha-clean damaged their white salt/crystal surfaces.
+- Regenerated smokehouse (all four facings) and storage barrel building sprites in painterly homestead style (stone foundation, wood walls, brick chimney).
+- Batch alpha-cleaned all Homesteader PNGs (buildings, items, apparel, plants) to strip baked white/gray backgrounds, interior voids, and edge halos. Seamless terrain tiles left untouched; flour, cream, porridge, rock salt, salted meat, sugar and ultratech battery used conservative cleanup to preserve intentional white subjects.
+- Regenerated flour icon after alpha-clean damaged the white powder surface.
+
 ### Fixed
 - Bread, porridge, trail stew and hearty stew now inherit from the correct vanilla meal base (`MealBase` instead of the non-inheritable `MealSimple`/`MealFine` defNames), restoring their thingClass, food type, rot ticking and eat sounds/effects.
 - Homestead supplier caravan patch now targets the `OutlanderCivil` def node directly; the old xpath failed because `caravanTraderKinds` only exists on the abstract outlander base def.
