@@ -21,6 +21,24 @@ Everything a growing homestead needs: tribal survival, farm-to-table crafting, s
 
 Odyssey DLC: salted fish and smoked fish recipes load automatically.
 
+### Strata (experimental)
+
+Dig down and build a true multistory base — one home, many floors. RimWorld 1.6. C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod).
+
+Build an **excavated stairwell** and a new underground level opens beneath your base: a solid stratum of mineable rock under a thick roof, ready to be carved into bedrooms, workshops, and freezers. Build another stairwell down there and keep going deeper.
+
+What makes it different from older multi-level mods is the **fluidity engine**: instead of treating each floor as an island, Strata relays colonists between levels on their own —
+
+| Relay | Behavior |
+|---|---|
+| **Work** | Idle colonists notice mining/plant designations, blueprints, hauling, and bills on other levels and commute down (or up) the stairs to do the work |
+| **Food** | Hungry pawns go find a meal on another level instead of starving next to a staircase |
+| **Rest** | Sleepy pawns walk home to their own bed, even three floors away |
+
+Design: each level is a real map linked by stairwell pairs (built on the vanilla 1.6 pocket-map/portal system), and the AI patches move the *pawn* to the level where it's needed rather than building fragile cross-map jobs — vanilla AI takes over the moment they arrive, so every failure mode degrades safely.
+
+Source lives in `Strata/Source`; the compiled `Strata.dll` ships in `Strata/Assemblies` and is rebuilt by CI on every source change.
+
 ### Stormproof
 
 Defend your grid from everything the Rim throws at it. RimWorld 1.6. C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod).
@@ -67,7 +85,7 @@ Pairs naturally with Homesteader and Stormproof, requires neither. Roadmap: powe
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Stormproof** also requires the **Harmony** mod.
+4. **Stormproof** and **Strata** also require the **Harmony** mod.
 
 Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first.
 

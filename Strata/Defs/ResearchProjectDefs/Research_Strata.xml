@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>Strata_Excavation</defName>
+    <label>deep excavation</label>
+    <description>Surveying, shoring, and stair-cutting techniques for excavating stable living space beneath a colony.</description>
+    <baseCost>800</baseCost>
+    <techLevel>Medieval</techLevel>
+    <researchViewX>6.00</researchViewX>
+    <researchViewY>4.40</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>
