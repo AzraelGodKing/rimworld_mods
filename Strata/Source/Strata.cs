@@ -1,6 +1,7 @@
 using HarmonyLib;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace Strata
 {
@@ -14,6 +15,8 @@ namespace Strata
         public static WorkTypeDef Cooking;
 
         public static WorkTypeDef Crafting;
+
+        public static JobDef Strata_HaulToLevel;
 
         static StrataDefOf()
         {

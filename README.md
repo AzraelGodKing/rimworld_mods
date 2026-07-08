@@ -33,7 +33,10 @@ What makes it different from older multi-level mods is the **fluidity engine**: 
 |---|---|
 | **Work** | Idle colonists notice mining/plant designations, blueprints, hauling, and bills on other levels and commute down (or up) the stairs to do the work |
 | **Food** | Hungry pawns go find a meal on another level instead of starving next to a staircase |
-| **Rest** | Sleepy pawns walk home to their own bed, even three floors away |
+| **Rest** | Sleepy pawns walk home to their own bed — or to any level with a free bed to claim |
+| **Haul** | Items with no storage on their level get carried through the stairwell to a level whose stockpiles accept them |
+
+And a touch of real physics: **heat rises, cold falls**. Stairwells exchange temperature between the rooms at their top and bottom — a warm level below convects heat upward quickly, while a warmer level above only bleeds down slowly. Put your freezer downstairs and your generators' heat will drift up, not in.
 
 Design: each level is a real map linked by stairwell pairs (built on the vanilla 1.6 pocket-map/portal system), and the AI patches move the *pawn* to the level where it's needed rather than building fragile cross-map jobs — vanilla AI takes over the moment they arrive, so every failure mode degrades safely.
 

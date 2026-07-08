@@ -27,9 +27,13 @@ Other multi-level mods make each floor an island. Strata's fluidity engine relay
 
 - Idle colonists notice mining designations, blueprints, hauling, and bills on other levels and head down (or up) the stairs to do the work.
 - Hungry pawns will go find a meal on another level instead of starving next to a staircase.
-- Sleepy pawns walk home to their own bed, even when it's three floors away.
+- Sleepy pawns walk home to their own bed - or to any level with a free bed to claim.
+- Haulers carry items through the stairwell to a level whose stockpiles accept them.
 
 No micromanagement: you designate, they commute.
+
+HEAT RISES, COLD FALLS
+Stairwells exchange temperature between the rooms at their top and bottom. A warm level below convects its heat upward quickly; a warmer level above only bleeds down slowly. Freezers belong downstairs - generator heat drifts up and out, and the cold pools where you put it.
 
 HOW IT WORKS
 Each underground level is a real RimWorld map linked by stairwell pairs. Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla - Strata's job relay teaches the colonist AI to move themselves to the level where they're needed, so everything degrades safely and stays mod-compatible.
