@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Apples ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_RawApples</defName>
+    <label>apples</label>
+    <description>Crisp orchard apples. Delicious fresh, and they press into cider, boil into jam, and dry for the trail.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/RawApples</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.7</Flammability>
+      <DeteriorationRate>5</DeteriorationRate>
+      <Mass>0.025</Mass>
+      <MarketValue>1.1</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>VegetableOrFruit</foodType>
+      <preferability>RawTasty</preferability>
+      <ingestSound>RawVegetable_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>30</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>PlantFoodRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Cherries ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_RawCherries</defName>
+    <label>cherries</label>
+    <description>Sweet dark orchard cherries. A treat eaten fresh - and the jam cauldron's favorite fruit.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/RawCherries</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.7</Flammability>
+      <DeteriorationRate>6</DeteriorationRate>
+      <Mass>0.02</Mass>
+      <MarketValue>1.3</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>VegetableOrFruit</foodType>
+      <preferability>RawTasty</preferability>
+      <ingestSound>RawVegetable_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>15</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>PlantFoodRaw</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Maple sap ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_MapleSap</defName>
+    <label>maple sap</label>
+    <description>Thin, faintly sweet sap tapped from a sugar maple. Boil it down at the hearth to make maple syrup before it sours.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/MapleSap</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <DeteriorationRate>4</DeteriorationRate>
+      <Mass>0.03</Mass>
+      <MarketValue>1.0</MarketValue>
+      <Nutrition>0.02</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Fluid</foodType>
+      <preferability>DesperateOnly</preferability>
+      <tasteThought>AteRawFood</tasteThought>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>12</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>Foods</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Maple syrup ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_MapleSyrup</defName>
+    <label>maple syrup</label>
+    <description>Maple sap boiled down to a rich amber syrup. Keeps indefinitely, sweetens homestead cooking, and turns flapjacks into a reason to get out of bed.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/MapleSyrup</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.4</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.02</Mass>
+      <MarketValue>2.6</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>RawTasty</preferability>
+      <ingestSound>Meal_Eat</ingestSound>
+      <joy>0.05</joy>
+      <joyKind>Gluttonous</joyKind>
+    </ingestible>
+    <thingCategories>
+      <li>Foods</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Flapjacks ============ -->
+  <ThingDef ParentName="MealBase">
+    <defName>Homesteader_Flapjacks</defName>
+    <label>flapjacks</label>
+    <description>A stack of griddle cakes drenched in maple syrup. The definitive homestead breakfast - warm, sweet, and worth waking up for.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/Flapjacks</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>9</MarketValue>
+      <Mass>0.07</Mass>
+      <Nutrition>0.9</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+      <joy>0.08</joy>
+      <joyKind>Gluttonous</joyKind>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>7</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ============ Beeswax ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Beeswax</defName>
+    <label>beeswax</label>
+    <description>Golden wax combs harvested from a beehive. Rendered into slow-burning candles that light a homestead without a drop of chemfuel.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/Beeswax</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.02</Mass>
+      <MarketValue>1.8</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+</Defs>
