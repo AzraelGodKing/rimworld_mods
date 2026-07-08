@@ -428,4 +428,90 @@
     </researchPrerequisites>
   </ThingDef>
 
+  <!-- ============ Preserves shelf ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_PreservesShelf</defName>
+    <label>preserves shelf</label>
+    <description>A handsome wooden shelf for displaying the pantry's pride: jars of jam and pickles, wheels of cheese, pots of honey and syrup. Half the point of preserving food is admiring it afterward.</description>
+    <thingClass>Building_Storage</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/PreservesShelf</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,1)</size>
+    <statBases>
+      <MaxHitPoints>110</MaxHitPoints>
+      <WorkToBuild>900</WorkToBuild>
+      <Mass>14</Mass>
+      <Flammability>0.9</Flammability>
+      <Beauty>8</Beauty>
+    </statBases>
+    <costList>
+      <WoodLog>45</WoodLog>
+    </costList>
+    <building>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <maxItemsInCell>3</maxItemsInCell>
+      <fixedStorageSettings>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Jam</li>
+            <li>Homesteader_PickledVegetables</li>
+            <li>Homesteader_Cheese</li>
+            <li>Homesteader_Honey</li>
+            <li>Homesteader_MapleSyrup</li>
+            <li>Homesteader_Jerky</li>
+            <li>Homesteader_DriedProduce</li>
+            <li>Homesteader_FruitLeather</li>
+            <li>Homesteader_DriedMushrooms</li>
+            <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_Sugar</li>
+            <li>Homesteader_Hardtack</li>
+          </thingDefs>
+        </filter>
+      </fixedStorageSettings>
+      <defaultStorageSettings>
+        <priority>Important</priority>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Jam</li>
+            <li>Homesteader_PickledVegetables</li>
+            <li>Homesteader_Cheese</li>
+            <li>Homesteader_Honey</li>
+            <li>Homesteader_MapleSyrup</li>
+            <li>Homesteader_Jerky</li>
+            <li>Homesteader_DriedProduce</li>
+            <li>Homesteader_FruitLeather</li>
+            <li>Homesteader_DriedMushrooms</li>
+            <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_Sugar</li>
+            <li>Homesteader_Hardtack</li>
+          </thingDefs>
+        </filter>
+      </defaultStorageSettings>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <designationCategory>Furniture</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsFurniture</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_HomesteadStorage</li>
+    </researchPrerequisites>
+  </ThingDef>
+
 </Defs>

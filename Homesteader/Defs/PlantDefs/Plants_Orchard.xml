@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Orchard trees reuse vanilla tree art with a color tint so they read as
+       trees at a glance; they behave like large regrowing bushes (no chop-wood
+       interference) and are harvested by growers like any crop. -->
+
+  <!-- ============ Apple tree ============ -->
+  <ThingDef ParentName="PlantBase">
+    <defName>Homesteader_Plant_AppleTree</defName>
+    <label>apple tree</label>
+    <description>A hardy orchard apple tree. Slow to mature, but once established it yields basket after basket of crisp apples - eat them fresh, press them into cider, or boil them down to jam.</description>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>0.8</Flammability>
+      <Nutrition>0.45</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/TreeOak</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <color>(0.85,1.0,0.8)</color>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>30</pathCost>
+    <ingestible>
+      <foodType>Plant</foodType>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
+    <plant>
+      <fertilityMin>0.5</fertilityMin>
+      <fertilitySensitivity>0.4</fertilitySensitivity>
+      <growDays>15</growDays>
+      <sowMinSkill>5</sowMinSkill>
+      <sowTags>
+        <li>Ground</li>
+      </sowTags>
+      <sowResearchPrerequisites>
+        <li>Homesteader_PrimitiveHomestead</li>
+      </sowResearchPrerequisites>
+      <visualSizeRange>1.0~1.9</visualSizeRange>
+      <topWindExposure>0.3</topWindExposure>
+      <harvestTag>Standard</harvestTag>
+      <harvestedThingDef>Homesteader_RawApples</harvestedThingDef>
+      <harvestYield>20</harvestYield>
+      <harvestDestroys>false</harvestDestroys>
+      <harvestAfterGrowth>0.55</harvestAfterGrowth>
+      <dieIfLeafless>false</dieIfLeafless>
+      <maxMeshCount>1</maxMeshCount>
+      <blockAdjacentSow>true</blockAdjacentSow>
+      <wildOrder>2</wildOrder>
+      <purpose>Food</purpose>
+    </plant>
+  </ThingDef>
+
+  <!-- ============ Cherry tree ============ -->
+  <ThingDef ParentName="PlantBase">
+    <defName>Homesteader_Plant_CherryTree</defName>
+    <label>cherry tree</label>
+    <description>An orchard cherry tree. Takes seasons of patience to establish, then rewards the homestead with heavy clusters of sweet dark cherries - a treat fresh off the branch, and jam cauldrons love them.</description>
+    <statBases>
+      <MaxHitPoints>140</MaxHitPoints>
+      <Flammability>0.8</Flammability>
+      <Nutrition>0.4</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/TreeBirch</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <color>(1.0,0.85,0.9)</color>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>30</pathCost>
+    <ingestible>
+      <foodType>Plant</foodType>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
+    <plant>
+      <fertilityMin>0.5</fertilityMin>
+      <fertilitySensitivity>0.4</fertilitySensitivity>
+      <growDays>14</growDays>
+      <sowMinSkill>6</sowMinSkill>
+      <sowTags>
+        <li>Ground</li>
+      </sowTags>
+      <sowResearchPrerequisites>
+        <li>Homesteader_PrimitiveHomestead</li>
+      </sowResearchPrerequisites>
+      <visualSizeRange>0.9~1.7</visualSizeRange>
+      <topWindExposure>0.3</topWindExposure>
+      <harvestTag>Standard</harvestTag>
+      <harvestedThingDef>Homesteader_RawCherries</harvestedThingDef>
+      <harvestYield>16</harvestYield>
+      <harvestDestroys>false</harvestDestroys>
+      <harvestAfterGrowth>0.55</harvestAfterGrowth>
+      <dieIfLeafless>false</dieIfLeafless>
+      <maxMeshCount>1</maxMeshCount>
+      <blockAdjacentSow>true</blockAdjacentSow>
+      <wildOrder>2</wildOrder>
+      <purpose>Food</purpose>
+    </plant>
+  </ThingDef>
+
+  <!-- ============ Sugar maple ============ -->
+  <ThingDef ParentName="PlantBase">
+    <defName>Homesteader_Plant_MapleTree</defName>
+    <label>sugar maple</label>
+    <description>A sugar maple grown for its sweet sap. Tap it each time it matures and boil the sap down at the hearth into rich maple syrup. The homestead breakfast is not complete without it.</description>
+    <statBases>
+      <MaxHitPoints>160</MaxHitPoints>
+      <Flammability>0.8</Flammability>
+      <Nutrition>0.45</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Things/Plant/TreePoplar</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <color>(1.0,0.8,0.55)</color>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>30</pathCost>
+    <ingestible>
+      <foodType>Plant</foodType>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
+    <plant>
+      <fertilityMin>0.5</fertilityMin>
+      <fertilitySensitivity>0.35</fertilitySensitivity>
+      <growDays>18</growDays>
+      <sowMinSkill>6</sowMinSkill>
+      <sowTags>
+        <li>Ground</li>
+      </sowTags>
+      <sowResearchPrerequisites>
+        <li>Homesteader_PrimitiveHomestead</li>
+      </sowResearchPrerequisites>
+      <visualSizeRange>1.1~2.0</visualSizeRange>
+      <topWindExposure>0.3</topWindExposure>
+      <harvestTag>Standard</harvestTag>
+      <harvestedThingDef>Homesteader_MapleSap</harvestedThingDef>
+      <harvestYield>10</harvestYield>
+      <harvestDestroys>false</harvestDestroys>
+      <harvestAfterGrowth>0.6</harvestAfterGrowth>
+      <dieIfLeafless>false</dieIfLeafless>
+      <maxMeshCount>1</maxMeshCount>
+      <blockAdjacentSow>true</blockAdjacentSow>
+      <wildOrder>2</wildOrder>
+      <purpose>Food</purpose>
+    </plant>
+  </ThingDef>
+
+</Defs>
