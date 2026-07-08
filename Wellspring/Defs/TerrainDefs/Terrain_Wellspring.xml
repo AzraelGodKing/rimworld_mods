@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Irrigated soil ============ -->
+  <!-- Buildable only over terrain that can already grow crops
+       (terrainAffordanceNeeded GrowSoil) - you can't water stone into a farm. -->
+  <TerrainDef>
+    <defName>Wellspring_IrrigatedSoil</defName>
+    <label>irrigated soil</label>
+    <description>Cropland trenched and soaked with drawn water until it turns rich and dark. Plants grow noticeably faster in it. Can only be laid over ground that could already grow crops.</description>
+    <texturePath>Wellspring/Terrain/IrrigatedSoil</texturePath>
+    <edgeType>FadeRough</edgeType>
+    <renderPrecedence>362</renderPrecedence>
+    <layerable>true</layerable>
+    <pathCost>3</pathCost>
+    <fertility>1.30</fertility>
+    <takeFootprints>true</takeFootprints>
+    <statBases>
+      <WorkToBuild>700</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <affordances>
+      <li>Light</li>
+      <li>Medium</li>
+      <li>Diggable</li>
+      <li>GrowSoil</li>
+    </affordances>
+    <costList>
+      <Wellspring_Water>3</Wellspring_Water>
+    </costList>
+    <designationCategory>Floors</designationCategory>
+    <terrainAffordanceNeeded>GrowSoil</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Wellspring_Irrigation</li>
+    </researchPrerequisites>
+  </TerrainDef>
+
+</Defs>
