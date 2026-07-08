@@ -147,6 +147,27 @@ namespace Strata
             return false;
         }
 
+        // A bed the pawn could walk downstairs and claim: colonist-type, not
+        // medical, with a free slot. Vanilla claims it once they arrive.
+        public static bool HasClaimableBedFor(Pawn pawn, Map map)
+        {
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
+            {
+                if (thing is Building_Bed bed
+                    && bed.Faction == Faction.OfPlayer
+                    && bed.def.building.bed_humanlike
+                    && !bed.Medical
+                    && !bed.ForPrisoners
+                    && bed.AnyUnownedSleepingSlot
+                    && !bed.IsForbidden(pawn)
+                    && !bed.IsBurning())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private static bool AnyPlayerThing(Map map, ThingRequestGroup group)
         {
             List<Thing> things = map.listerThings.ThingsInGroup(group);
