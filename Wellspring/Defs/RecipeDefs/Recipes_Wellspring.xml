@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Draw water ============ -->
+  <RecipeDef>
+    <defName>Wellspring_DrawWater</defName>
+    <label>draw water</label>
+    <description>Winch the bucket down and haul up jugs of fresh water.</description>
+    <jobString>Drawing water.</jobString>
+    <workAmount>350</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <soundWorking>Recipe_BrewBeer</soundWorking>
+    <products>
+      <Wellspring_Water>5</Wellspring_Water>
+    </products>
+  </RecipeDef>
+
+</Defs>
