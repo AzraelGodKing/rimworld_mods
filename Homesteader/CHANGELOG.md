@@ -74,6 +74,8 @@ All notable changes to Homesteader are documented here.
 
 #### Art
 - Hand-painted textures for all new content: 4 plants, 38 item sprites, 31 buildings (with directional variants for the curing rack, homestead hearth, hayloft, brewing bench, log bench, rocking chair and quilted bed), 4 apparel icons and 3 seamless terrain tiles.
+- Regenerated the drying rack (with directional variants), hayloft (with directional variants), preserves shelf, jerky, salted meat and smoked meat sprites in the newer painterly style; docs page images refreshed to match.
+- Regenerated the compact battery, battery bank, advanced battery, ultratech battery and portable generator sprites in the newer painterly style; docs page images refreshed to match.
 
 ## [1.0.0] — Initial release
 
