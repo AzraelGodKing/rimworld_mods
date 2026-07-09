@@ -22,12 +22,12 @@ namespace Strata
                 {
                     continue;
                 }
-                Job job = PawnRelay.MakeRelayJob(pawn, link.firstStep);
+                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Food, 3);
                 if (job != null)
                 {
                     __result = job;
+                    return;
                 }
-                return;
             }
         }
     }

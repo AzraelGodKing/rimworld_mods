@@ -55,7 +55,8 @@ namespace Strata
                 return false;
             }
 
-            ThingDef ore = WeightedOre();
+            // Deeper levels bias toward richer ores.
+            ThingDef ore = WeightedOre(StrataDepth.Of(map));
             int target = Rand.RangeInclusive(minCells, maxCells);
             int placed = 0;
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(root, 3.4f, useCenter: true))
@@ -86,17 +87,20 @@ namespace Strata
             return m != null && m.def.building != null && m.def.building.isNaturalRock && !c.Fogged(map);
         }
 
-        private static ThingDef WeightedOre()
+        // "Rich" ores (everything past the common steel/components entries) get
+        // a weight bonus that grows with depth.
+        private static ThingDef WeightedOre(int depth)
         {
+            float richBonus = 1f + 0.3f * depth;
             float total = 0f;
             foreach (OreOption o in Ores)
             {
-                total += o.weight;
+                total += o.weight <= 0.5f ? o.weight * richBonus : o.weight;
             }
             float roll = Rand.Value * total;
             foreach (OreOption o in Ores)
             {
-                roll -= o.weight;
+                roll -= o.weight <= 0.5f ? o.weight * richBonus : o.weight;
                 if (roll <= 0f)
                 {
                     return o.def;

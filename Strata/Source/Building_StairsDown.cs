@@ -27,6 +27,18 @@ namespace Strata
 
         public override string EnteringString => "going downstairs";
 
+        public bool Sealed => GetComp<CompStairwellControl>()?.Sealed ?? false;
+
+        public override bool IsEnterable(out string reason)
+        {
+            if (Sealed)
+            {
+                reason = "The stairwell is sealed.";
+                return false;
+            }
+            return base.IsEnterable(out reason);
+        }
+
         public override AcceptanceReport DeconstructibleBy(Faction faction)
         {
             if (PocketMapExists && PocketMap.mapPawns.AnyPawnBlockingMapRemoval)
@@ -59,7 +71,7 @@ namespace Strata
 
         private void ExchangeTemperature()
         {
-            if (!PocketMapExists || exit == null || !exit.Spawned)
+            if (!PocketMapExists || exit == null || !exit.Spawned || Sealed)
             {
                 return;
             }

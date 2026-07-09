@@ -27,12 +27,13 @@ namespace Strata
                 {
                     continue;
                 }
-                Job job = PawnRelay.MakeRelayJob(pawn, link.firstStep);
+                // Soft cap so a few pawns commute to a busy level, not all of them.
+                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Work, 3);
                 if (job != null)
                 {
                     __result = new ThinkResult(job, __instance, JobTag.MiscWork);
+                    return;
                 }
-                return;
             }
         }
     }

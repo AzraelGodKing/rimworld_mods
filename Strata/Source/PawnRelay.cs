@@ -57,6 +57,43 @@ namespace Strata
             return JobMaker.MakeJob(JobDefOf.EnterPortal, firstStep);
         }
 
+        // Relay toward a level only if fewer than 'cap' pawns are already headed
+        // there for the same reason - stops a whole colony stampeding to one job
+        // or one free bed. Registers the claim on success.
+        public static Job TryClaimAndRelay(Pawn pawn, LevelGraph.LevelLink link, RelayPurpose purpose, int cap)
+        {
+            if (!RelayClaims.CanClaim(pawn, link.map, purpose, cap))
+            {
+                return null;
+            }
+            Job job = MakeRelayJob(pawn, link.firstStep);
+            if (job != null)
+            {
+                RelayClaims.Register(pawn, link.map, purpose);
+            }
+            return job;
+        }
+
+        public static int ClaimableBedCount(Pawn pawn, Map map)
+        {
+            int count = 0;
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
+            {
+                if (thing is Building_Bed bed
+                    && bed.Faction == Faction.OfPlayer
+                    && bed.def.building.bed_humanlike
+                    && !bed.Medical
+                    && !bed.ForPrisoners
+                    && bed.AnyUnownedSleepingSlot
+                    && !bed.IsForbidden(pawn)
+                    && !bed.IsBurning())
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
         // Cheap, conservative "is there plausibly work for this pawn over there?"
         // checks. Deliberately approximate: a false positive just costs a walk
         // down the stairs, and the cooldown stops it from repeating.

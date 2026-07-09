@@ -79,6 +79,11 @@ namespace Strata
 
         public override bool IsEnterable(out string reason)
         {
+            if ((entrance as Building_StairsDown)?.Sealed == true)
+            {
+                reason = "The stairwell is sealed.";
+                return false;
+            }
             if (EntranceValid)
             {
                 return base.IsEnterable(out reason);

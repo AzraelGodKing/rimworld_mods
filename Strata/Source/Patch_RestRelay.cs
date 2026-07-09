@@ -40,12 +40,15 @@ namespace Strata
                 {
                     continue;
                 }
-                Job job = PawnRelay.MakeRelayJob(pawn, link.firstStep);
+                // Own bed: only the owner heads there. Shared barracks: cap by the
+                // number of free beds so pawns don't all chase the last one.
+                int cap = ownBedElsewhere ? 1 : PawnRelay.ClaimableBedCount(pawn, link.map);
+                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Rest, cap);
                 if (job != null)
                 {
                     __result = job;
+                    return;
                 }
-                return;
             }
         }
     }

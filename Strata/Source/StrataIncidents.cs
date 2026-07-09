@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace Strata
@@ -18,6 +19,8 @@ namespace Strata
 
         public static IncidentDef Strata_Tremor;
 
+        public static IncidentDef Strata_DeepRaid;
+
         static StrataIncidentDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataIncidentDefOf));
@@ -25,7 +28,8 @@ namespace Strata
 
         public static bool IsStrataUndergroundEvent(IncidentDef def)
         {
-            return def == Strata_CaveIn || def == Strata_GasPocket || def == Strata_DeepVein;
+            return def == Strata_CaveIn || def == Strata_GasPocket
+                || def == Strata_DeepVein || def == Strata_DeepRaid;
         }
     }
 
@@ -71,22 +75,36 @@ namespace Strata
             IncidentDef def = __instance.def;
 
             // Always allow: infestations (the signature underground threat) and
-            // Strata's own cave-in / gas / deep-vein events.
+            // Strata's own events (cave-in, gas, deep vein, deep raid).
             if (def.defName.Contains("Infestation") || StrataIncidentDefOf.IsStrataUndergroundEvent(def))
             {
                 return;
             }
 
-            // Raids, sieges, manhunter packs, mech clusters - nothing can reach a
-            // sealed rock level from the sky or a map edge.
-            if (def.category == IncidentCategoryDefOf.ThreatBig
-                || def.category == IncidentCategoryDefOf.ThreatSmall)
+            // Allow things that make sense in a buried, occupied level regardless
+            // of the sky: disease, deep-drill bugs, and abstract world quests.
+            IncidentCategoryDef cat = def.category;
+            if (cat == IncidentCategoryDefOf.DiseaseHuman
+                || cat == IncidentCategoryDefOf.DeepDrillInfestation
+                || cat == IncidentCategoryDefOf.GiveQuest)
+            {
+                return;
+            }
+
+            // Block everything that has to arrive from outside a sealed rock
+            // level: raids, sieges, mech clusters (ThreatBig/Small), and the
+            // sky/edge arrivals that live in Misc/Special - drop pods, crashing
+            // ship chunks, wanderers walking in, resource pods, etc.
+            if (cat == IncidentCategoryDefOf.ThreatBig
+                || cat == IncidentCategoryDefOf.ThreatSmall
+                || cat == IncidentCategoryDefOf.Misc
+                || cat == IncidentCategoryDefOf.Special)
             {
                 __result = false;
                 return;
             }
 
-            // Sky and weather conditions.
+            // Any remaining sky/weather condition.
             if (def.gameCondition != null && BlockedConditions.Contains(def.gameCondition.defName))
             {
                 __result = false;
@@ -108,7 +126,8 @@ namespace Strata
             }
             if (target is Map map && StrataMapUtility.IsUnderground(map))
             {
-                __result *= 1.6f;
+                // Deeper levels crawl with more bugs.
+                __result *= Mathf.Min(1.3f + 0.35f * StrataDepth.Of(map), 3f);
             }
         }
     }
