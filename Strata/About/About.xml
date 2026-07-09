@@ -35,6 +35,9 @@ No micromanagement: you designate, they commute.
 HEAT RISES, COLD FALLS
 Stairwells exchange temperature between the rooms at their top and bottom. A warm level below convects its heat upward quickly; a warmer level above only bleeds down slowly. Freezers belong downstairs - generator heat drifts up and out, and the cold pools where you put it.
 
+EVENTS THAT KNOW WHICH WAY IS UP
+Underground levels are sealed rock, so the sky can't reach them: solar flares, eclipses, toxic fallout, weather, and drop-pod or map-edge raids are all suppressed below ground. What can reach you is what lives in the dark - infestations become the signature threat of the deep, alongside cave-ins, breached gas pockets, and the occasional rich deep vein of ore. On the surface, a wandering prospector may point out a hidden seam, and ground tremors remind you the rock below is never quite still.
+
 HOW IT WORKS
 Each underground level is a real RimWorld map linked by stairwell pairs. Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla - Strata's job relay teaches the colonist AI to move themselves to the level where they're needed, so everything degrades safely and stays mod-compatible.
 

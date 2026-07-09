@@ -38,6 +38,8 @@ What makes it different from older multi-level mods is the **fluidity engine**: 
 
 And a touch of real physics: **heat rises, cold falls**. Stairwells exchange temperature between the rooms at their top and bottom — a warm level below convects heat upward quickly, while a warmer level above only bleeds down slowly. Put your freezer downstairs and your generators' heat will drift up, not in.
 
+**Events know which way is up.** Underground levels are sealed rock, so the sky can't touch them — solar flares, eclipses, toxic fallout, weather, and drop-pod/edge raids are all suppressed down there. What *can* reach you is what lives in the dark: infestations become the signature threat of the deep, alongside **cave-ins**, **gas pockets**, and the occasional lucky **deep vein** of ore. On the surface, a wandering **prospector** may tip you off to a rich seam, and **ground tremors** remind you the rock below is never quite still.
+
 Design: each level is a real map linked by stairwell pairs (built on the vanilla 1.6 pocket-map/portal system), and the AI patches move the *pawn* to the level where it's needed rather than building fragile cross-map jobs — vanilla AI takes over the moment they arrive, so every failure mode degrades safely.
 
 Source lives in `Strata/Source`; the compiled `Strata.dll` ships in `Strata/Assemblies` and is rebuilt by CI on every source change.
