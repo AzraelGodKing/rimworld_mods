@@ -61,7 +61,6 @@ namespace Strata
             Map sourceMap = importing ? other : Map;
             IntVec3 sourceCell = importing ? farLanding : Position;
             Map destMap = importing ? Map : other;
-            IntVec3 destCell = importing ? Position : farLanding;
 
             int moved = 0;
             foreach (Thing item in ItemsNear(sourceMap, sourceCell))
@@ -70,14 +69,26 @@ namespace Strata
                 {
                     break;
                 }
-                item.DeSpawn();
-                if (!GenPlace.TryPlaceThing(item, destCell, destMap, ThingPlaceMode.Near))
+                // Only move an item to storage that is strictly better than where
+                // it already sits. This is the same rule vanilla hauling uses, and
+                // it's what stops two lifts (or a lift and its own drop pile) from
+                // shuttling the same goods back and forth forever.
+                StoragePriority current = StoreUtility.CurrentStoragePriorityOf(item);
+                if (!StoreUtility.TryFindBestBetterStoreCellFor(item, null, destMap, current,
+                        Faction.OfPlayer, out IntVec3 storeCell))
                 {
-                    // No room at the destination - put it back where it was.
-                    GenPlace.TryPlaceThing(item, sourceCell, sourceMap, ThingPlaceMode.Near);
-                    break;
+                    continue;
                 }
-                moved++;
+                item.DeSpawn();
+                if (GenPlace.TryPlaceThing(item, storeCell, destMap, ThingPlaceMode.Near))
+                {
+                    moved++;
+                }
+                else
+                {
+                    // Couldn't place it after all - put it back where it came from.
+                    GenPlace.TryPlaceThing(item, sourceCell, sourceMap, ThingPlaceMode.Near);
+                }
             }
         }
 
@@ -94,7 +105,9 @@ namespace Strata
                 for (int i = 0; i < things.Count; i++)
                 {
                     Thing t = things[i];
-                    if (t.def.EverHaulable && !t.IsForbidden(Faction.OfPlayer))
+                    if (t.def.EverHaulable
+                        && !t.IsForbidden(Faction.OfPlayer)
+                        && !map.reservationManager.IsReservedByAnyoneOf(t, Faction.OfPlayer))
                     {
                         found.Add(t);
                     }
