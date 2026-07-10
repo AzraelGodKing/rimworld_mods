@@ -11,4 +11,18 @@
     <researchViewY>4.40</researchViewY>
   </ResearchProjectDef>
 
+  <ResearchProjectDef>
+    <defName>Strata_Elevators</defName>
+    <label>elevators</label>
+    <description>Powered elevator cars for moving colonists between levels in a compact shaft - faster and tidier than a cut stairwell, at the cost of a power hookup.</description>
+    <baseCost>1600</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Strata_Excavation</li>
+      <li>Electricity</li>
+    </prerequisites>
+    <researchViewX>7.50</researchViewX>
+    <researchViewY>4.40</researchViewY>
+  </ResearchProjectDef>
+
 </Defs>

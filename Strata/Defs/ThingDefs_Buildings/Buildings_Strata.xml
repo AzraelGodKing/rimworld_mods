@@ -49,49 +49,6 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </building>
   </ThingDef>
 
-  <!-- ============ Cargo lift ============ -->
-  <ThingDef ParentName="BuildingBase">
-    <defName>Strata_CargoLift</defName>
-    <label>cargo lift</label>
-    <description>A powered freight hoist. Built beside a stairwell, it automatically moves loose items between this level and the linked one - no colonist required. Toggle whether it hoists goods up to this level or sends them down. Needs power to run.</description>
-    <thingClass>Strata.Building_CargoLift</thingClass>
-    <graphicData>
-      <texPath>Strata/Buildings/CargoLift</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1,1)</drawSize>
-    </graphicData>
-    <altitudeLayer>Building</altitudeLayer>
-    <passability>PassThroughOnly</passability>
-    <pathCost>50</pathCost>
-    <fillPercent>0.5</fillPercent>
-    <rotatable>false</rotatable>
-    <size>(1,1)</size>
-    <tickerType>Normal</tickerType>
-    <statBases>
-      <MaxHitPoints>200</MaxHitPoints>
-      <WorkToBuild>4000</WorkToBuild>
-      <Flammability>0.4</Flammability>
-    </statBases>
-    <costList>
-      <Steel>80</Steel>
-      <ComponentIndustrial>3</ComponentIndustrial>
-    </costList>
-    <comps>
-      <li Class="CompProperties_Power">
-        <compClass>CompPowerTrader</compClass>
-        <basePowerConsumption>150</basePowerConsumption>
-      </li>
-      <li Class="CompProperties_Flickable"/>
-      <li Class="CompProperties_Breakdownable"/>
-    </comps>
-    <designationCategory>Structure</designationCategory>
-    <canOverlapZones>false</canOverlapZones>
-    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
-    <researchPrerequisites>
-      <li>Strata_Excavation</li>
-    </researchPrerequisites>
-  </ThingDef>
-
   <!-- ============ Stairwell up (spawned at the bottom of the stairs) ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_StairsUp</defName>
@@ -109,6 +66,85 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <fillPercent>0.4</fillPercent>
     <rotatable>false</rotatable>
     <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <building>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <!-- ============ Elevator (powered, compact) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_ElevatorDown</defName>
+    <label>elevator</label>
+    <description>A powered elevator that opens and links a level below, just like a stairwell - but compact, and it carries colonists in style. The car needs power to descend; if power fails, anyone below can still ride up to safety, so no one is ever trapped. Cannot be deconstructed while colonists are on the level below.</description>
+    <thingClass>Strata.Building_ElevatorDown</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ElevatorDown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>350</MaxHitPoints>
+      <WorkToBuild>9000</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>120</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+    </costList>
+    <portal>
+      <pocketMapGenerator>Strata_UndergroundLevel</pocketMapGenerator>
+      <exitDef>Strata_ElevatorUp</exitDef>
+      <pocketMapSize>75</pocketMapSize>
+    </portal>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>200</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_StairwellControl"/>
+    </comps>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_Elevators</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Elevator up (bottom landing) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_ElevatorUp</defName>
+    <label>elevator landing</label>
+    <description>The bottom landing of an elevator, leading back up to the level above. It cannot be deconstructed - it is the way home.</description>
+    <thingClass>Strata.Building_ElevatorUp</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ElevatorUp</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
     <tickerType>Normal</tickerType>
     <useHitPoints>false</useHitPoints>
     <destroyable>false</destroyable>

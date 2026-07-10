@@ -39,7 +39,9 @@ EVENTS THAT KNOW WHICH WAY IS UP
 Underground levels are sealed rock, so the sky can't reach them: solar flares, eclipses, toxic fallout, weather, and raids with no way in are all suppressed below ground. What can reach you is what lives in the dark - infestations become the signature threat of the deep, alongside cave-ins, breached gas pockets, the occasional rich deep vein of ore, and rare burrowing raiders who dig up through the stone. On the surface, a wandering prospector may point out a hidden seam, and ground tremors remind you the rock below is never quite still.
 
 THE DEEPER, THE STRANGER
-Levels sit on a geothermal gradient - the deeper you dig, the warmer the rock - and deeper levels crawl with more bugs and hide richer ore. Seal a stairwell to contain a gas pocket or an infestation on one level, and build a powered cargo lift to move goods between floors without a hauler. Empty levels quietly throttle their background simulation to protect framerate in a tall base.
+Levels sit on a geothermal gradient - the deeper you dig, the warmer the rock - and deeper levels crawl with more bugs and hide richer ore. Seal a stairwell to contain a gas pocket or an infestation on one level. For a tidier base, research the powered elevator: a compact 1x1 shaft that needs power to descend but always lets colonists ride up to safety if power fails, so no one is trapped below. Empty levels quietly throttle their background simulation to protect framerate in a tall base.
+
+To move goods between levels, keep a stockpile near the stairs on each floor - colonists haul up and down through the stairwell on their own.
 
 HOW IT WORKS
 Each underground level is a real RimWorld map linked by stairwell pairs. Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla - Strata's job relay teaches the colonist AI to move themselves to the level where they're needed, so everything degrades safely and stays mod-compatible.
