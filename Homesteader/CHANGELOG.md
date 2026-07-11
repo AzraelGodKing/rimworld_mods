@@ -6,10 +6,11 @@ All notable changes to Homesteader are documented here.
 
 ### Added
 - **27 monuments (two styles):** build either a golden or a harvest-stone statue of the number 27. Both share the same aura — colonists within range gain +27 mood — so you pick the look that fits your yard. Unlocked with homestead comforts research; golden costs gold and granite, harvest costs granite and hay.
+- **27 statue + grand 27 statue:** gilded dripping-27 sculptures on vanilla-style stone plinths (1×1 and 2×2). Quality-scaled beauty via `FurnitureWithQualityBase`; no aura — pure yard flex.
 - **Shark plushie:** a chonky stuffed shark sewn from cloth. Same comforts as Diggo — high beauty (scales with quality), sittable, and cuddling for meditative recreation. Buildable from the start; homestead supplier caravans occasionally carry one.
 
 ### Changed
-- Regenerated shark plushie and both 27 monument sprites in Homesteader's painterly isometric style (replacing high-res concept art that clashed in-game). Alpha-cleaned for transparent backgrounds; monuments scaled down slightly on the map.
+- Regenerated shark plushie, 27 statue pair, and both 27 monument sprites in Homesteader's painterly isometric style (replacing high-res concept art that clashed in-game). Alpha-cleaned for transparent backgrounds; monuments and statues scaled for proper in-map presence.
 - Regenerated orchard and beeswax sprites (maple sap, maple syrup, raw apples, raw cherries, beeswax, beeswax candle) to match the painterly Homesteader art style with proper transparent backgrounds.
 - Regenerated flapjacks icon to match painterly homestead meal style (maple syrup stack with butter).
 - Regenerated salted meat, sugar, and sugar beet icons after batch alpha-clean damaged their white salt/crystal surfaces.
