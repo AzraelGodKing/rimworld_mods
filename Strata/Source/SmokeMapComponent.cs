@@ -54,6 +54,26 @@ namespace Strata
             return room != null && clouds.TryGetValue(room.ID, out Cloud c) ? c.density : 0f;
         }
 
+        // Dev helpers.
+        public string DebugSummary()
+        {
+            if (clouds.Count == 0)
+            {
+                return "  (no active smoke)";
+            }
+            var sb = new System.Text.StringBuilder();
+            foreach (KeyValuePair<int, Cloud> kv in clouds)
+            {
+                sb.AppendLine($"  room {kv.Key}: density {kv.Value.density:F2} @ {kv.Value.sample}");
+            }
+            return sb.ToString().TrimEnd();
+        }
+
+        public void ClearAll()
+        {
+            clouds.Clear();
+        }
+
         public override void MapComponentTick()
         {
             if ((Find.TickManager.TicksGame + map.uniqueID) % CycleTicks != 0)
