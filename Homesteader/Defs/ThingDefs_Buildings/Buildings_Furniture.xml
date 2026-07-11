@@ -221,9 +221,9 @@ Congrats to a dognamedKats for 1k followers!</description>
 
   <!-- ============ 27 statue ============ -->
   <ThingDef ParentName="FurnitureWithQualityBase">
-    <defName>Homesteader_Statue27</defName>
+    <defName>Homesteader_StatueTwentySeven</defName>
     <label>27 statue</label>
-    <description>A gilded numeral 27 mounted on a carved stone plinth, molten gold frozen mid-drip down its strokes. Nobody remembers exactly what the 27 commemorates, but it feels important.</description>
+    <description>A gilded numeral 27 mounted on a carved stone plinth, molten gold frozen mid-drip down its strokes. Nobody remembers exactly what the 27 commemorates, but it feels important. Pawns within its reach feel inexplicably cheerful (+27 mood).</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/Statue27</texPath>
@@ -248,6 +248,17 @@ Congrats to a dognamedKats for 1k followers!</description>
       <Gold>15</Gold>
       <Steel>40</Steel>
     </costList>
+    <comps>
+      <li Class="CompProperties_CauseHediff_AoE">
+        <hediff>Homesteader_NearMonument27</hediff>
+        <range>8.9</range>
+        <ignoreMechs>true</ignoreMechs>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_ShowCauseHediffAoE</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <designationCategory>Furniture</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
@@ -258,7 +269,7 @@ Congrats to a dognamedKats for 1k followers!</description>
   <ThingDef ParentName="FurnitureWithQualityBase">
     <defName>Homesteader_Statue27Grand</defName>
     <label>grand 27 statue</label>
-    <description>A towering gilded 27 on a monumental stone plinth, gold dripping from every stroke. Whatever the 27 means, this version means it twice as hard.</description>
+    <description>A towering gilded 27 on a monumental stone plinth, gold dripping from every stroke. Whatever the 27 means, this version means it twice as hard. Pawns within its reach feel inexplicably cheerful (+27 mood).</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/Statue27Grand</texPath>
@@ -283,6 +294,17 @@ Congrats to a dognamedKats for 1k followers!</description>
       <Gold>40</Gold>
       <Steel>100</Steel>
     </costList>
+    <comps>
+      <li Class="CompProperties_CauseHediff_AoE">
+        <hediff>Homesteader_NearMonument27</hediff>
+        <range>8.9</range>
+        <ignoreMechs>true</ignoreMechs>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_ShowCauseHediffAoE</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <designationCategory>Furniture</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
