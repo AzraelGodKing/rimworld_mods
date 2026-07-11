@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
+  <!-- ============ DEPRECATED cargo lift (save-compat stub only) ============ -->
+  <!-- Not buildable (no designationCategory). Exists so saves made while the
+       cargo lift still existed load without errors; deconstruct any leftovers. -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_CargoLift</defName>
+    <label>cargo lift (deprecated)</label>
+    <description>This building has been removed from Strata. Deconstruct it - haulers plus a stockpile by the stairs move goods between levels now.</description>
+    <thingClass>Strata.Building_CargoLift</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/CargoLift</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <canOverlapZones>false</canOverlapZones>
+  </ThingDef>
+
   <!-- ============ Excavated stairwell (down) ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_StairsDown</defName>
