@@ -100,6 +100,13 @@ namespace Strata
             Find.CurrentMap?.GetComponent<SmokeMapComponent>()?.ClearAll();
         }
 
+        [DebugAction(Cat, "Saturate room with smoke", allowedGameStates = AllowedGameStates.PlayingOnMap,
+            actionType = DebugActionType.ToolMap)]
+        private static void SaturateSmoke()
+        {
+            Find.CurrentMap?.GetComponent<SmokeMapComponent>()?.DebugSaturate(UI.MouseCell());
+        }
+
         [DebugAction(Cat, "Log level depths", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void LogDepths()
         {

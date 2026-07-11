@@ -89,6 +89,23 @@ namespace Strata
         public void ClearAll()
         {
             clouds.Clear();
+            if (cellDensity != null)
+            {
+                System.Array.Clear(cellDensity, 0, cellDensity.Length);
+            }
+            drawer?.SetDirty();
+        }
+
+        // Dev: instantly fill the room containing a cell with smoke.
+        public void DebugSaturate(IntVec3 cell)
+        {
+            Room room = cell.InBounds(map) ? cell.GetRoom(map) : null;
+            if (room == null)
+            {
+                return;
+            }
+            clouds[room.ID] = new Cloud { density = 1f, sample = cell };
+            RebuildCellDensity();
         }
 
         public override void MapComponentTick()
