@@ -18,10 +18,10 @@ namespace Strata
     }
 
     // A lightweight, room-based combustion-smoke simulation. Burners add smoke
-    // to the room they sit in; it lingers in enclosed rooms and disperses fast
-    // where the room is open to the sky, has an open roof, or a powered exhaust
-    // fan. Colonists breathing thick smoke take on a worsening inhalation
-    // hediff. Deliberately room-scale (not per-cell) so a tall base stays cheap.
+    // to the room they sit in; it lingers in enclosed rooms and disperses where
+    // the room is open to the sky, has an open roof, an exterior door, a vent,
+    // or an unsealed stairwell shaft (smoke rises). Colonists breathing thick
+    // smoke take on a worsening inhalation hediff.
     public class SmokeMapComponent : MapComponent, ICellBoolGiver
     {
         private const int CycleTicks = 60;
@@ -35,6 +35,7 @@ namespace Strata
 
         public readonly HashSet<CompExhaust> Emitters = new HashSet<CompExhaust>();
         public readonly HashSet<CompExhaustVent> Vents = new HashSet<CompExhaustVent>();
+        public readonly HashSet<CompSmokeUpdraft> Updrafts = new HashSet<CompSmokeUpdraft>();
 
         private struct Cloud
         {
@@ -43,7 +44,6 @@ namespace Strata
         }
 
         private readonly Dictionary<int, Cloud> clouds = new Dictionary<int, Cloud>();
-        private readonly Dictionary<int, float> ventPower = new Dictionary<int, float>();
 
         // Per-cell density mirror for the drawn smog overlay (lazy-allocated).
         private float[] cellDensity;
@@ -115,22 +115,13 @@ namespace Strata
                 return;
             }
 
-            // 1. Tally powered vents by room.
-            ventPower.Clear();
-            foreach (CompExhaustVent vent in Vents)
-            {
-                if (!vent.parent.Spawned || !vent.Active)
-                {
-                    continue;
-                }
-                Room r = vent.parent.GetRoom();
-                if (r != null)
-                {
-                    ventPower[r.ID] = ventPower.TryGetValue(r.ID, out float v) ? v + vent.Props.ventPower : vent.Props.ventPower;
-                }
-            }
+            // 1. One-way wall vents (powered fans and passive louvers).
+            ProcessDirectionalVents();
 
-            // 2. Disperse / vent existing smoke.
+            // 2. Smoke rises through unsealed stairwell / elevator shafts.
+            SmokeRiseUtility.ProcessMap(this);
+
+            // 3. Disperse / vent existing smoke (open roof, doors, slow leak).
             foreach (int id in clouds.Keys.ToList())
             {
                 Cloud c = clouds[id];
@@ -143,7 +134,7 @@ namespace Strata
                 {
                     float vent = BaseLeak
                         + OpenRoofVent * Mathf.Min(r.OpenRoofCount, 5)
-                        + (ventPower.TryGetValue(r.ID, out float vp) ? vp : 0f);
+                        + SmokeVentUtility.DoorVentBonus(r);
                     c.density *= 1f - Mathf.Clamp01(vent);
                 }
                 if (c.density < 0.01f)
@@ -156,7 +147,7 @@ namespace Strata
                 }
             }
 
-            // 3. Emit from active burners in enclosed rooms.
+            // 4. Emit from active burners in enclosed rooms.
             foreach (CompExhaust emitter in Emitters)
             {
                 if (!emitter.parent.Spawned || !emitter.Active)
@@ -215,6 +206,106 @@ namespace Strata
             Vector2 mouse = Event.current.mousePosition;
             var rect = new Rect(mouse.x + 12f, mouse.y + 12f, 110f, 24f);
             Widgets.Label(rect, $"Smoke {Mathf.RoundToInt(density * 100f)}%");
+        }
+
+        private void ProcessDirectionalVents()
+        {
+            foreach (CompExhaustVent vent in Vents)
+            {
+                if (!vent.parent.Spawned || !vent.Active)
+                {
+                    continue;
+                }
+                Room intake = vent.IntakeRoom;
+                if (intake == null || intake.UsesOutdoorTemperature)
+                {
+                    continue;
+                }
+                if (!clouds.TryGetValue(intake.ID, out Cloud cloud))
+                {
+                    continue;
+                }
+                float rate = Mathf.Clamp01(vent.Props.ventPower);
+                if (rate <= 0f)
+                {
+                    continue;
+                }
+
+                if (SmokeVentUtility.ExhaustOpensIntoDuct(vent.parent, out HashSet<IntVec3> network))
+                {
+                    if (SmokeVentUtility.DuctNetworkReachesOutdoor(map, network))
+                    {
+                        cloud.density *= 1f - rate;
+                    }
+                }
+                else
+                {
+                    Room exhaust = vent.ExhaustRoom;
+                    if (exhaust != null && exhaust.UsesOutdoorTemperature)
+                    {
+                        cloud.density *= 1f - rate;
+                    }
+                    else if (SmokeVentUtility.CellIsOutdoor(map, SmokeVentUtility.ExhaustCell(vent.parent)))
+                    {
+                        cloud.density *= 1f - rate;
+                    }
+                    else if (exhaust != null)
+                    {
+                        float moved = cloud.density * rate;
+                        cloud.density -= moved;
+                        AddSmokeToRoom(exhaust, moved, vent.parent.Position);
+                    }
+                }
+
+                if (cloud.density < 0.01f)
+                {
+                    clouds.Remove(intake.ID);
+                }
+                else
+                {
+                    clouds[intake.ID] = cloud;
+                }
+            }
+        }
+
+        internal void TransferSmokeUp(Room sourceRoom, Room upperRoom, Map upperMap, float rate, IntVec3 sample)
+        {
+            if (sourceRoom == null || rate <= 0f || !clouds.TryGetValue(sourceRoom.ID, out Cloud cloud))
+            {
+                return;
+            }
+            float moved = cloud.density * Mathf.Clamp01(rate);
+            cloud.density -= moved;
+            if (cloud.density < 0.01f)
+            {
+                clouds.Remove(sourceRoom.ID);
+            }
+            else
+            {
+                clouds[sourceRoom.ID] = cloud;
+            }
+            if (moved <= 0f)
+            {
+                return;
+            }
+            if (upperRoom == null || upperRoom.UsesOutdoorTemperature)
+            {
+                return;
+            }
+            SmokeMapComponent upperSmoke = upperMap.GetComponent<SmokeMapComponent>();
+            upperSmoke?.AddSmokeToRoom(upperRoom, moved, sample);
+        }
+
+        private void AddSmokeToRoom(Room room, float amount, IntVec3 sample)
+        {
+            if (room == null || amount <= 0f)
+            {
+                return;
+            }
+            Cloud c = clouds.TryGetValue(room.ID, out Cloud existing) ? existing : new Cloud();
+            c.density = Mathf.Min(1f, c.density + amount);
+            c.sample = sample;
+            clouds[room.ID] = c;
         }
 
         private void RebuildCellDensity()

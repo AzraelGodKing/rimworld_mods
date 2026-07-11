@@ -47,7 +47,7 @@ POWER UP AND DOWN THE SHAFTS
 An elevator automatically ties the two levels' power grids together, and a researched shaft power conduit does the same beside any stairwell - so surface generators can light the deep, and a level's spare power can flow back up. Surplus flows to whichever level runs short, up to a cap; keep a battery on each level for it to pool across.
 
 BURNERS NEED TO BREATHE
-Wood-fired and chemfuel generators, campfires, torches, and open fires give off combustion fumes that pool in enclosed rooms as a visible black smog that thickens the longer they burn. Run one in a sealed room - or anywhere underground - and colonists start choking, a worsening smoke inhalation that turns fatal if ignored. Vent it: an open roof or a door outdoors clears it for free on the surface, and a powered exhaust fan extracts it even underground where there is no sky. Solar, wind, geothermal, and batteries burn nothing and stay clean - the safe way to power a deep base. Toggle "show smoke levels" in the play settings to read the exact smoke percentage under your cursor.
+Wood-fired and chemfuel generators, campfires, torches, and open fires give off combustion fumes that pool in enclosed rooms as a visible black smog that thickens the longer they burn. Run one in a sealed room - or anywhere underground - and colonists start choking, a worsening smoke inhalation that turns fatal if ignored. Vent it: open roofs, open exterior doors, passive smoke louvers, powered one-way exhaust fans (wall-mounted like vanilla vents), duct runs that reach outdoors, or let smoke ride the stairwell shaft upward — unsealed stairwells and elevators naturally pull fumes to the level above. Build an updraft filter in the landing room for a powered chimney boost. Solar, wind, geothermal, and batteries burn nothing and stay clean - the safe way to power a deep base. Toggle "show smoke levels" in the play settings to read the exact smoke percentage under your cursor.
 
 HOW IT WORKS
 Each underground level is a real RimWorld map linked by stairwell pairs. Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla - Strata's job relay teaches the colonist AI to move themselves to the level where they're needed, so everything degrades safely and stays mod-compatible.
@@ -55,7 +55,9 @@ Each underground level is a real RimWorld map linked by stairwell pairs. Pathfin
 TIPS
 - Thick rock roofs collapse when unsupported: leave pillars in big halls, just like mountain bases.
 - Stairwells cannot be deconstructed while colonists are still below.
-- Raiders who run out of targets on their level will find your stairwells and come down (or up) after you. A sealed stairwell stops them cold - but it stops your colonists too.
+- Raiders who run out of targets on their level will find your stairwells and come down (or up) after you. A sealed stairwell stops them cold - and blocks tox gas through the shaft - but it stops your colonists too.
+- Rename levels in the Levels tab so "Level -2" becomes something you'll actually remember.
+- Smoke rises through open stairwells — put generators in a room with a shaft, or duct fumes to the landing and let the stack carry them up.
 
 Requires the Harmony mod. RimWorld 1.6. Safe to add to existing saves. Before removing from a save: bring everyone to the surface, haul up anything you care about, and deconstruct all stairwells.</description>
 </ModMetaData>

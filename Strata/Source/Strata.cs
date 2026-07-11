@@ -29,6 +29,7 @@ namespace Strata
     {
         static StrataInit()
         {
+            ExhaustAutoPatch.Apply();
             new Harmony("azraelgodking.strata").PatchAll();
         }
     }

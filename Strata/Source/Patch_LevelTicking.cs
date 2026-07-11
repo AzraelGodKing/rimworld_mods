@@ -44,12 +44,6 @@ namespace Strata
         }
     }
 
-    [HarmonyPatch(typeof(Map), nameof(Map.MapPostTick))]
-    public static class Patch_MapPostTick
-    {
-        public static bool Prefix(Map __instance)
-        {
-            return !LevelTicking.ShouldThrottle(__instance);
-        }
-    }
+    // MapPostTick always runs so smoke, raid pursuit, and other MapComponents
+    // stay live on vacant underground levels.
 }

@@ -31,21 +31,5 @@ namespace Strata
             }
             return base.IsEnterable(out reason);
         }
-
-        protected override void Tick()
-        {
-            base.Tick();
-            // The elevator shaft also carries power: tie the two levels' grids.
-            if (Spawned && this.IsHashIntervalTick(60) && PocketMapExists
-                && exit != null && exit.Spawned)
-            {
-                CompPowerShaft top = GetComp<CompPowerShaft>();
-                CompPowerShaft bottom = exit.GetComp<CompPowerShaft>();
-                if (top != null && bottom != null)
-                {
-                    top.DriveTie(bottom, 2000f);
-                }
-            }
-        }
     }
 }

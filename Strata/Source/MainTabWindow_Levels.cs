@@ -44,6 +44,7 @@ namespace Strata
         private const float RowHeight = 30f;
         private const float HeaderHeight = 26f;
         private const float ViewButtonWidth = 64f;
+        private const float RenameButtonWidth = 72f;
 
         private readonly List<Row> rows = new List<Row>();
 
@@ -92,7 +93,7 @@ namespace Strata
             Widgets.Label(new Rect(header.x + colLevel + 4f, header.y, colColonists - 8f, HeaderHeight), "Level");
             Widgets.Label(new Rect(header.x + colColonists, header.y, colHostiles - colColonists, HeaderHeight), "Colonists");
             Widgets.Label(new Rect(header.x + colHostiles, header.y, colTemp - colHostiles, HeaderHeight), "Hostiles");
-            Widgets.Label(new Rect(header.x + colTemp, header.y, inRect.width - colTemp - ViewButtonWidth, HeaderHeight), "Temp");
+            Widgets.Label(new Rect(header.x + colTemp, header.y, inRect.width - colTemp - ViewButtonWidth - RenameButtonWidth, HeaderHeight), "Temp");
             GUI.color = Color.white;
             Widgets.DrawLineHorizontal(inRect.x, header.yMax - 2f, inRect.width);
 
@@ -124,16 +125,21 @@ namespace Strata
                 Widgets.Label(new Rect(rowRect.x + colHostiles, rowRect.y, colTemp - colHostiles, RowHeight),
                     hostiles.ToString());
                 GUI.color = Color.white;
-                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, inRect.width - colTemp - ViewButtonWidth, RowHeight),
+                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, inRect.width - colTemp - ViewButtonWidth - RenameButtonWidth, RowHeight),
                     row.map.mapTemperature.OutdoorTemp.ToStringTemperature("F0"));
                 Text.Anchor = TextAnchor.UpperLeft;
 
+                Rect renameRect = new Rect(rowRect.xMax - ViewButtonWidth - RenameButtonWidth, rowRect.y + 3f, RenameButtonWidth - 4f, RowHeight - 6f);
+                if (Widgets.ButtonText(renameRect, "Rename"))
+                {
+                    Find.WindowStack.Add(new Dialog_RenameLevel(row.map, StrataLevelLabels.Get?.GetLabel(row.map) ?? LevelLabel(row)));
+                }
                 Rect viewRect = new Rect(rowRect.xMax - ViewButtonWidth, rowRect.y + 3f, ViewButtonWidth - 4f, RowHeight - 6f);
                 if (row.map != Find.CurrentMap && Widgets.ButtonText(viewRect, "View"))
                 {
                     JumpTo(row.map);
                 }
-                if (Widgets.ButtonInvisible(new Rect(rowRect.x, rowRect.y, rowRect.width - ViewButtonWidth, RowHeight)))
+                if (Widgets.ButtonInvisible(new Rect(rowRect.x, rowRect.y, rowRect.width - ViewButtonWidth - RenameButtonWidth, RowHeight)))
                 {
                     JumpTo(row.map);
                 }
@@ -143,6 +149,11 @@ namespace Strata
 
         private static string LevelLabel(Row row)
         {
+            string custom = StrataLevelLabels.Get?.GetLabel(row.map);
+            if (!custom.NullOrEmpty())
+            {
+                return custom;
+            }
             if (row.depth == 0)
             {
                 string name = row.map.Parent?.LabelCap;
@@ -170,8 +181,11 @@ namespace Strata
             IntVec3 cell = map.Center;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                cell = thing.Position;
-                break;
+                if (thing.def.defName == "Strata_StairsDown" || thing.def.defName == "Strata_ElevatorDown")
+                {
+                    cell = thing.Position;
+                    break;
+                }
             }
             CameraJumper.TryJump(new GlobalTargetInfo(cell, map));
         }

@@ -21,6 +21,8 @@ namespace Strata
 
         private const float MinDelta = 0.25f;
 
+        private const float ShaftPowerCapWatts = 2000f;
+
         public override bool AutoDraftOnEnter => false;
 
         public override string EnterString => "Go downstairs";
@@ -63,9 +65,27 @@ namespace Strata
         protected override void Tick()
         {
             base.Tick();
-            if (this.IsHashIntervalTick(ExchangeInterval) && Spawned)
+            if (!Spawned)
+            {
+                return;
+            }
+            if (this.IsHashIntervalTick(ExchangeInterval))
             {
                 ExchangeTemperature();
+            }
+            if (this.IsHashIntervalTick(60) && PocketMapExists && exit != null && exit.Spawned)
+            {
+                TieShaftPower();
+            }
+        }
+
+        private void TieShaftPower()
+        {
+            CompPowerShaft top = GetComp<CompPowerShaft>();
+            CompPowerShaft bottom = exit.GetComp<CompPowerShaft>();
+            if (top != null && bottom != null)
+            {
+                top.DriveTie(bottom, ShaftPowerCapWatts);
             }
         }
 
@@ -131,8 +151,24 @@ namespace Strata
                         state += " (" + temp.ToStringTemperature("F0") + " at the landing)";
                     }
                 }
+                state += "\n" + SmokeRiseInspectLine();
+                state += "\n" + PowerShaftInspectLine();
             }
             return text.NullOrEmpty() ? state : text + "\n" + state;
+        }
+
+        private string SmokeRiseInspectLine()
+        {
+            if (Sealed)
+            {
+                return "Smoke shaft: sealed";
+            }
+            return "Smoke shaft: fumes rise to the level above";
+        }
+
+        private string PowerShaftInspectLine()
+        {
+            return "Power shaft: ties both levels' grids (wire each floor into the stairwell; keep batteries on each level)";
         }
     }
 }

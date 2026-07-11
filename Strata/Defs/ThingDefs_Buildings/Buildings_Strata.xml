@@ -33,7 +33,7 @@
     <label>excavated stairwell</label>
     <description>A broad staircase carved down into the rock beneath the colony. Completing it opens a new underground level: a solid stratum of stone that can be mined out into rooms, workshops, and vaults.
 
-Colonists will use the stairwell on their own to work, eat, and sleep across levels. It cannot be deconstructed while anyone is still below.</description>
+Colonists will use the stairwell on their own to work, eat, and sleep across levels. The shaft also ties both floors' power grids together when each level is wired into the stairwell — keep a battery on each level for surplus to pool across. It cannot be deconstructed while anyone is still below.</description>
     <thingClass>Strata.Building_StairsDown</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/StairsDown</texPath>
@@ -59,12 +59,16 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <portal>
       <pocketMapGenerator>Strata_UndergroundLevel</pocketMapGenerator>
       <exitDef>Strata_StairsUp</exitDef>
-      <pocketMapSize>75</pocketMapSize>
+      <pocketMapSize>200</pocketMapSize>
     </portal>
     <designationCategory>Structure</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>10</basePowerConsumption>
+      </li>
       <li Class="Strata.CompProperties_StairwellControl"/>
     </comps>
     <researchPrerequisites>
@@ -79,7 +83,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_StairsUp</defName>
     <label>stairwell up</label>
-    <description>The bottom landing of an excavated stairwell, leading back up to the level above. It cannot be deconstructed - it is the way home.</description>
+    <description>The bottom landing of an excavated stairwell — a broad staircase leading back up to the level above. Wire your local grid into the stairwell on this floor so power can pool with the level above. It cannot be deconstructed; it is the way home.</description>
     <thingClass>Strata.Building_StairsUp</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/StairsUp</texPath>
@@ -98,6 +102,12 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <statBases>
       <Flammability>0</Flammability>
     </statBases>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+      </li>
+    </comps>
     <building>
       <claimable>false</claimable>
       <deconstructible>false</deconstructible>
@@ -135,7 +145,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <portal>
       <pocketMapGenerator>Strata_UndergroundLevel</pocketMapGenerator>
       <exitDef>Strata_ElevatorUp</exitDef>
-      <pocketMapSize>75</pocketMapSize>
+      <pocketMapSize>200</pocketMapSize>
     </portal>
     <comps>
       <li Class="CompProperties_Power">
@@ -190,22 +200,24 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </building>
   </ThingDef>
 
-  <!-- ============ Exhaust fan ============ -->
+  <!-- ============ Exhaust fan (one-way wall vent) ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ExhaustFan</defName>
     <label>exhaust fan</label>
-    <description>A powered extractor that pulls combustion fumes out of an enclosed room. Essential for running wood or chemfuel generators indoors or underground, where there's no open sky to carry the smoke away. Keep it powered and in the same room as the burner.</description>
+    <description>A powered one-way wall vent. Mount it in a wall with the intake side facing the smoky room; fumes are pulled out the facing side into another room, a duct run, or the open air. Does not work in reverse. Essential for wood or chemfuel generators underground.</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Strata/Buildings/ExhaustFan</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Things/Building/Misc/TempControl/Vent</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
-    <passability>PassThroughOnly</passability>
-    <pathCost>14</pathCost>
-    <fillPercent>0.35</fillPercent>
-    <rotatable>false</rotatable>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <fillPercent>1</fillPercent>
+    <coversFloor>true</coversFloor>
+    <blockLight>true</blockLight>
+    <rotatable>true</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
     <statBases>
@@ -226,8 +238,16 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li Class="CompProperties_Breakdownable"/>
       <li Class="Strata.CompProperties_ExhaustVent">
         <ventPower>0.25</ventPower>
+        <requiresPower>true</requiresPower>
       </li>
     </comps>
+    <placeWorkers>
+      <li>PlaceWorker_Vent</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
     <designationCategory>Power</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
@@ -236,11 +256,161 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </researchPrerequisites>
   </ThingDef>
 
+  <!-- ============ Updraft filter (powered shaft vent) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_UpdraftFilter</defName>
+    <label>updraft filter</label>
+    <description>A powered fan mounted in a stairwell or elevator room. Smoke naturally rises through an open shaft; this filter actively pulls fumes from the landing room and pushes them up to the level above — like a chimney stack for your underground burners. Useless when the shaft is sealed.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>1800</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>40</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>80</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_SmokeUpdraft">
+        <risePower>0.25</risePower>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_UpdraftFilter</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Electricity</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Smoke louver (passive one-way wall vent) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_SmokeLouver</defName>
+    <label>smoke louver</label>
+    <description>A passive one-way wall louver. Mount it like a vent with the intake side facing the room to vent; it slowly bleeds fumes out the facing side without power. Weaker than an exhaust fan, but cheap and always on.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/TempControl/Vent</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <fillPercent>1</fillPercent>
+    <coversFloor>true</coversFloor>
+    <blockLight>true</blockLight>
+    <rotatable>true</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>600</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>20</Steel>
+    </costList>
+    <comps>
+      <li Class="Strata.CompProperties_ExhaustVent">
+        <ventPower>0.06</ventPower>
+        <requiresPower>false</requiresPower>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_Vent</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>ComplexFurniture</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Smoke duct ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_SmokeDuct</defName>
+    <label>smoke duct</label>
+    <description>A floor duct that routes exhaust from a fan or louver to a distant outdoor louver or open wall. Connect ducts in a line; the run must reach outdoors (or an outdoor-facing vent) to clear smoke from the intake room.</description>
+    <thingClass>Strata.Building_SmokeDuct</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/SmokeDuct_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <linkType>Transmitter</linkType>
+      <linkFlags>
+        <li>Custom7</li>
+      </linkFlags>
+      <damageData>
+        <rect>(0,0.35,1,0.3)</rect>
+      </damageData>
+    </graphicData>
+    <uiIconPath>Strata/Buildings/SmokeDuct_MenuIcon</uiIconPath>
+    <uiIconScale>0.7</uiIconScale>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <passability>Standable</passability>
+    <fillPercent>0</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>350</WorkToBuild>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <Steel>10</Steel>
+    </costList>
+    <building>
+      <isEdifice>false</isEdifice>
+      <blueprintGraphicData>
+        <texPath>Strata/Buildings/SmokeDuct_Blueprint_Atlas</texPath>
+      </blueprintGraphicData>
+    </building>
+    <comps>
+      <li Class="Strata.CompProperties_SmokeDuct"/>
+    </comps>
+    <constructEffect>ConstructMetal</constructEffect>
+    <clearBuildingArea>false</clearBuildingArea>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>ComplexFurniture</li>
+    </researchPrerequisites>
+  </ThingDef>
+
   <!-- ============ Shaft power conduit ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ShaftConduit</defName>
     <label>shaft power conduit</label>
-    <description>A power junction that carries electricity up and down a shaft. Build one beside a stairwell or elevator on each level and wire each into its local grid; the pair ties the two levels' power nets together, sharing surplus to whichever level runs short. Keep a battery on each level for it to pool across.</description>
+    <description>An optional power junction beside a stairwell when you want a dedicated tie point away from the stair footprint. Build one within a few tiles of the stairwell on each level and wire each into its local grid; the upper one drives the tie through the shaft. Stairwells and elevators already carry power on their own — use this when you need a separate hook-up.</description>
     <thingClass>Strata.Building_ShaftConduit</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/ShaftConduit</texPath>

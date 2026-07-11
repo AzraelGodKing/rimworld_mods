@@ -11,7 +11,7 @@ namespace Strata
     // stairwell landing (GenStep_PlaceCaveExit spawns the stairs there afterwards).
     public class GenStep_SolidRock : GenStep
     {
-        private const float ChamberRadius = 5.9f;
+        private const float ChamberRadius = 8f;
 
         public override int SeedPart => 762303921;
 
