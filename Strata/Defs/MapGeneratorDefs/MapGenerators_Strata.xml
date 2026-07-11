@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <MapGeneratorDef>
+    <defName>Strata_UndergroundLevel</defName>
+    <isUnderground>true</isUnderground>
+    <roofDef>RoofRockThick</roofDef>
+    <disableShadows>true</disableShadows>
+    <renderWorld>false</renderWorld>
+    <pocketMapProperties>
+      <biome>Strata_Underground</biome>
+      <temperature>10</temperature>
+      <destroyOnParentMapAbandoned>true</destroyOnParentMapAbandoned>
+      <canBeCleaned>true</canBeCleaned>
+    </pocketMapProperties>
+    <genSteps>
+      <li>Strata_SolidRock</li>
+      <li>Strata_PlaceCaveExit</li>
+    </genSteps>
+  </MapGeneratorDef>
+
+  <GenStepDef>
+    <defName>Strata_SolidRock</defName>
+    <order>100</order>
+    <genStep Class="Strata.GenStep_SolidRock"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_PlaceCaveExit</defName>
+    <order>500</order>
+    <genStep Class="GenStep_PlaceCaveExit"/>
+  </GenStepDef>
+
+</Defs>
