@@ -172,6 +172,145 @@ Congrats to a dognamedKats for 1k followers!</description>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
   </ThingDef>
 
+  <!-- ============ Shark plushie ============ -->
+  <ThingDef ParentName="FurnitureWithQualityBase">
+    <defName>Homesteader_SharkPlushie</defName>
+    <label>shark plushie</label>
+    <description>A huggably round shark sewn from soft felt, with button eyes, stubby fins, and a mouthful of harmless fabric teeth. Sits happily in a corner looking menacing to absolutely no one. Colonists can flop against it to snuggle away their worries - Diggo's favorite ocean friend.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/SharkPlushie</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.8,0.8)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>10</pathCost>
+    <fillPercent>0.15</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <WorkToBuild>600</WorkToBuild>
+      <Mass>1.5</Mass>
+      <Flammability>1.0</Flammability>
+      <Beauty>20</Beauty>
+      <Comfort>0.6</Comfort>
+      <JoyGainFactor>1</JoyGainFactor>
+    </statBases>
+    <costList>
+      <Cloth>30</Cloth>
+    </costList>
+    <building>
+      <isSittable>true</isSittable>
+      <joyKind>Meditative</joyKind>
+      <watchBuildingStandDistanceRange>1~2</watchBuildingStandDistanceRange>
+      <watchBuildingStandRectWidth>3</watchBuildingStandRectWidth>
+      <watchBuildingInSameRoom>true</watchBuildingInSameRoom>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+    </building>
+    <placeWorkers>
+      <li>PlaceWorker_WatchArea</li>
+    </placeWorkers>
+    <designationCategory>Furniture</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <!-- ============ 27 statue ============ -->
+  <ThingDef ParentName="FurnitureWithQualityBase">
+    <defName>Homesteader_StatueTwentySeven</defName>
+    <label>27 statue</label>
+    <description>A gilded numeral 27 mounted on a carved stone plinth, molten gold frozen mid-drip down its strokes. Nobody remembers exactly what the 27 commemorates, but it feels important. Pawns within its reach feel inexplicably cheerful (+27 mood).</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Statue27</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,1.4)</drawSize>
+      <drawOffset>(0,0,0.25)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>140</MaxHitPoints>
+      <WorkToBuild>8000</WorkToBuild>
+      <Mass>18</Mass>
+      <Flammability>0</Flammability>
+      <Beauty>50</Beauty>
+    </statBases>
+    <costList>
+      <Gold>15</Gold>
+      <Steel>40</Steel>
+    </costList>
+    <comps>
+      <li Class="CompProperties_CauseHediff_AoE">
+        <hediff>Homesteader_NearMonument27</hediff>
+        <range>8.9</range>
+        <ignoreMechs>true</ignoreMechs>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_ShowCauseHediffAoE</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <designationCategory>Furniture</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <!-- ============ Grand 27 statue ============ -->
+  <ThingDef ParentName="FurnitureWithQualityBase">
+    <defName>Homesteader_Statue27Grand</defName>
+    <label>grand 27 statue</label>
+    <description>A towering gilded 27 on a monumental stone plinth, gold dripping from every stroke. Whatever the 27 means, this version means it twice as hard. Pawns within its reach feel inexplicably cheerful (+27 mood).</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Statue27Grand</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.6,2.6)</drawSize>
+      <drawOffset>(0,0,0.35)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>70</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <statBases>
+      <MaxHitPoints>320</MaxHitPoints>
+      <WorkToBuild>18000</WorkToBuild>
+      <Mass>60</Mass>
+      <Flammability>0</Flammability>
+      <Beauty>125</Beauty>
+    </statBases>
+    <costList>
+      <Gold>40</Gold>
+      <Steel>100</Steel>
+    </costList>
+    <comps>
+      <li Class="CompProperties_CauseHediff_AoE">
+        <hediff>Homesteader_NearMonument27</hediff>
+        <range>8.9</range>
+        <ignoreMechs>true</ignoreMechs>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_ShowCauseHediffAoE</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <designationCategory>Furniture</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+  </ThingDef>
+
   <!-- ============ Oil lamp ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_OilLamp</defName>

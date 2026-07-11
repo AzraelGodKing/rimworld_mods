@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Only visible once at least one underground level exists
+       (Strata.MainButtonWorker_Levels hides it otherwise). -->
+  <MainButtonDef>
+    <defName>Strata_Levels</defName>
+    <label>levels</label>
+    <description>Overview of the colony's levels: who is on each floor, what the temperature is, and whether anything hostile is down there. Click a level to jump the camera to it.</description>
+    <workerClass>Strata.MainButtonWorker_Levels</workerClass>
+    <tabWindowClass>Strata.MainTabWindow_Levels</tabWindowClass>
+    <order>55</order>
+    <closesWorldView>true</closesWorldView>
+  </MainButtonDef>
+
+</Defs>

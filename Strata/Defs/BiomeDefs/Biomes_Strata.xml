@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <BiomeDef>
+    <defName>Strata_Underground</defName>
+    <label>underground</label>
+    <description>Living rock deep beneath the surface. No sky, no weather, no seasons - only stone.</description>
+    <generatesNaturally>false</generatesNaturally>
+    <canBuildBase>false</canBuildBase>
+    <canAutoChoose>false</canAutoChoose>
+    <implemented>true</implemented>
+    <allowRoads>false</allowRoads>
+    <allowRivers>false</allowRivers>
+    <allowPollution>false</allowPollution>
+    <animalDensity>0</animalDensity>
+    <plantDensity>0</plantDensity>
+    <wildAnimalsCanWanderInto>false</wildAnimalsCanWanderInto>
+    <hasVirtualPlants>false</hasVirtualPlants>
+    <disableSkyLighting>true</disableSkyLighting>
+    <noAmbientWind>true</noAmbientWind>
+    <canExitMap>false</canExitMap>
+    <hasBedrock>true</hasBedrock>
+    <constantOutdoorTemperature>10</constantOutdoorTemperature>
+    <baseWeatherCommonalities>
+      <Clear>100</Clear>
+    </baseWeatherCommonalities>
+  </BiomeDef>
+
+</Defs>

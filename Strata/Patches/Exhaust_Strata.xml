@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!-- Give combustion generators an exhaust comp. Each is guarded so a missing
+       def (mod not loaded) is silently skipped instead of erroring. -->
+
+  <!-- Homesteader wood-burning generator -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Homesteader_WoodGenerator"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Homesteader_WoodGenerator"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>3.5</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Homesteader portable (chemfuel) generator -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Homesteader_PortableGenerator"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Homesteader_PortableGenerator"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>4.5</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Vanilla chemfuel-powered generator -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="ChemfuelPoweredGenerator"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="ChemfuelPoweredGenerator"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>4.5</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Vanilla wood-fired generator -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="WoodFiredGenerator"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="WoodFiredGenerator"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>3.5</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Campfire -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Campfire"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Campfire"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>2.5</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Torch lamp -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="TorchLamp"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="TorchLamp"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>1.0</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Open fire (burning things fill a room with smoke). Fire has no comps
+       node by default, so create one if needed. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Fire"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Fire"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>1.5</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Fire"]</xpath>
+      <value>
+        <comps>
+          <li Class="Strata.CompProperties_Exhaust">
+            <emissionPerCycle>1.5</emissionPerCycle>
+          </li>
+        </comps>
+      </value>
+    </nomatch>
+  </Operation>
+
+</Patch>

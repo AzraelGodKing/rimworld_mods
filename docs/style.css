@@ -282,3 +282,23 @@ h2.w { color: var(--accent-w); }
 .hub-card.water .count { color: var(--accent-w2); }
 .card.water img { background: #12222c; }
 .note.water { border-left-color: var(--accent-w); }
+
+/* Strata (underground) theme */
+:root {
+  --accent-t: #e0a35c;
+  --accent-t2: #c9a6e8;
+}
+header.hero.strata { background: linear-gradient(180deg, #2c2118 0%, #1c1712 100%); }
+h1.t { color: var(--accent-t); }
+h2.t { color: var(--accent-t); }
+th.t { color: var(--accent-t); }
+.badge.strata { border-color: #6e5030; }
+.btn-strata { background: var(--accent-t); color: #241a10; }
+.btn-strata:hover { background: #f0c088; color: #241a10; }
+.hub-card.strata:hover { border-color: var(--accent-t); }
+.hub-card h2.t { color: var(--accent-t); }
+.hub-card.strata .count { color: var(--accent-t2); }
+.card.strata .icon { color: var(--accent-t); }
+.card.strata .stat { color: var(--accent-t2); }
+.card.strata img { background: #241c12; }
+.note.strata { border-left-color: var(--accent-t); }

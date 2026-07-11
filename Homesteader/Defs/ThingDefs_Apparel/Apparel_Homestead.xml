@@ -7,6 +7,9 @@
     <label>straw hat</label>
     <description>A wide-brimmed hat woven from straw. Keeps the sun off during long days in the field.</description>
     <techLevel>Neolithic</techLevel>
+    <thingCategories>
+      <li>Apparel</li>
+    </thingCategories>
     <graphicData>
       <texPath>Homesteader/Apparel/StrawHat</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -52,6 +55,9 @@
     <label>work apron</label>
     <description>A tough apron worn over clothing. Pockets and heavy cloth make workshop and kitchen chores go a little faster.</description>
     <techLevel>Neolithic</techLevel>
+    <thingCategories>
+      <li>Apparel</li>
+    </thingCategories>
     <graphicData>
       <texPath>Homesteader/Apparel/WorkApron</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -84,7 +90,8 @@
       <bodyPartGroups>
         <li>Torso</li>
       </bodyPartGroups>
-      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/BasicShirt/BasicShirt</wornGraphicPath>
+      <!-- Duster worn art: proven to resolve in 1.6 (the poncho uses it). -->
+      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/Duster/Duster</wornGraphicPath>
       <layers>
         <li>Middle</li>
       </layers>
@@ -102,6 +109,9 @@
     <label>overalls</label>
     <description>Hard-wearing bib overalls that cover torso and legs. The uniform of farmers everywhere; growing work comes a little easier in them.</description>
     <techLevel>Neolithic</techLevel>
+    <thingCategories>
+      <li>Apparel</li>
+    </thingCategories>
     <graphicData>
       <texPath>Homesteader/Apparel/Overalls</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -135,7 +145,10 @@
         <li>Torso</li>
         <li>Legs</li>
       </bodyPartGroups>
-      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/Pants/Pants</wornGraphicPath>
+      <!-- No pants worn art exists anywhere in vanilla/DLC (vanilla pants are
+           never drawn). TribalA is the only stuff-colored torso+legs worn
+           graphic, and tribalwear proves it renders on the OnSkin layer. -->
+      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/TribalA/TribalA</wornGraphicPath>
       <layers>
         <li>OnSkin</li>
       </layers>
@@ -152,6 +165,9 @@
     <label>poncho</label>
     <description>A heavy woven poncho thrown over the shoulders. Cheap to make and remarkably warm on frosty mornings.</description>
     <techLevel>Neolithic</techLevel>
+    <thingCategories>
+      <li>Apparel</li>
+    </thingCategories>
     <graphicData>
       <texPath>Homesteader/Apparel/WoolPoncho</texPath>
       <graphicClass>Graphic_Single</graphicClass>

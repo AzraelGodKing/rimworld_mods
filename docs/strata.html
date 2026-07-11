@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strata — a RimWorld mod by AzraelGodKing</title>
+<meta name="description" content="Strata: dig down and build a true multistory RimWorld base. Underground levels, colonist relays between floors, heat convection, and combustion smoke. RimWorld 1.6, requires Harmony.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">RIMWORLD MODS</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="homesteader.html">Homesteader</a>
+      <a href="stormproof.html">Stormproof</a>
+      <a href="wellspring.html">Wellspring</a>
+      <a href="strata.html" class="active">Strata</a>
+      <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero strata">
+  <div class="wrap">
+    <h1 class="t">STRATA</h1>
+    <p class="tagline">One home, many floors &mdash; dig down and build a true multistory base</p>
+    <div class="badges">
+      <span class="badge strata">RimWorld 1.6</span>
+      <span class="badge strata">Requires Harmony</span>
+      <span class="badge strata">C# mod</span>
+      <span class="badge strata">Experimental</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-strata" href="downloads/Strata.zip" download>&#11015; Download Strata</a>
+      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="overview">
+    <h2 class="t">Overview</h2>
+    <p class="sub">Build an <b>excavated stairwell</b> and a new underground level opens beneath your base: a solid stratum of mineable rock under a thick roof, ready to be carved into bedrooms, workshops, and freezers. Build another stairwell down there and keep going deeper.</p>
+    <div class="note strata">
+      <b>Dependencies:</b> requires the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a> mod. Load Strata after Harmony in your mod list. <b>Experimental:</b> back up saves you care about.
+    </div>
+  </section>
+
+  <section id="fluidity">
+    <h2 class="t">The fluidity engine</h2>
+    <p class="sub">What makes Strata different from older multi-level mods: instead of treating each floor as an island, colonists relay themselves between levels on their own. You designate, they commute.</p>
+    <div class="table-scroll">
+      <table>
+        <tr><th class="t">Relay</th><th>Behavior</th></tr>
+        <tr><td><b>Work</b></td><td>Idle colonists notice mining and plant designations, blueprints, hauling, and bills on other levels and commute down (or up) the stairs to do the work</td></tr>
+        <tr><td><b>Food</b></td><td>Hungry pawns go find a meal on another level instead of starving next to a staircase</td></tr>
+        <tr><td><b>Rest</b></td><td>Sleepy pawns walk home to their own bed &mdash; or to any level with a free bed to claim</td></tr>
+        <tr><td><b>Haul</b></td><td>Items with no storage on their level get carried through the stairwell to a level whose stockpiles accept them</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="buildings">
+    <h2 class="t">Buildings</h2>
+    <p class="sub">Four ways down, up, and out of trouble.</p>
+    <div class="grid">
+
+      <div class="card strata wide">
+        <img src="img/StairsDown.png" alt="Excavated stairwell">
+        <div>
+          <h3>Excavated stairwell</h3>
+          <div class="stat">2&times;2 &middot; 60 wood + 30 steel &middot; Deep excavation research</div>
+          <p>A broad staircase carved down into the rock. Completing it opens a <b>new underground level</b>: solid stone to mine into rooms, workshops, and vaults, protected by a thick rock roof &mdash; safe from drop pods, mortars, and weather. Colonists use it on their own to work, eat, and sleep across levels. <b>Seal it</b> to wall a gas pocket or infestation onto one level; it cannot be deconstructed while anyone is still below.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/ElevatorDown.png" alt="Elevator">
+        <div>
+          <h3>Elevator</h3>
+          <div class="stat">1&times;1 &middot; 200W &middot; Elevators research</div>
+          <p>Compact powered vertical transport that opens a level below, just like a stairwell. The car needs power to descend, but anyone below can always <b>ride back up if the power fails</b> &mdash; no one is ever stranded. Automatically ties the two levels' power grids together.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/ShaftConduit.png" alt="Shaft power conduit">
+        <div>
+          <h3>Shaft power conduit</h3>
+          <div class="stat">1&times;1 &middot; 10W &middot; Shaft power research</div>
+          <p>Build one beside a stairwell on each level and wire each into its local grid: the pair <b>ties the two levels' power nets together</b>, sharing surplus to whichever level runs short, up to a cap. Keep a battery on each level for it to pool across.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/ExhaustFan.png" alt="Exhaust fan">
+        <div>
+          <h3>Exhaust fan</h3>
+          <div class="stat">1&times;1 &middot; 100W &middot; Electricity research</div>
+          <p>A powered extractor that pulls <b>combustion fumes</b> out of an enclosed room. Essential for running wood or chemfuel generators indoors or underground, where there's no open sky to carry the smoke away.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="underground">
+    <h2 class="t">Life underground</h2>
+    <p class="sub">The deeper you dig, the stranger it gets.</p>
+    <div class="grid">
+      <div class="card strata">
+        <div class="icon">&#8645;</div>
+        <div>
+          <h3>Heat rises, cold falls</h3>
+          <p>Stairwells exchange temperature between the rooms at their top and bottom. A warm level below convects heat upward quickly; a warmer level above only bleeds down slowly. Put your freezer downstairs &mdash; generator heat drifts up, not in.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#9650;</div>
+        <div>
+          <h3>Events know which way is up</h3>
+          <p>Underground levels are sealed rock: solar flares, eclipses, toxic fallout, weather, and drop-pod raids are all suppressed down there. But hiding doesn't end a fight &mdash; raiders with nobody left to shoot at will <b>pursue your colonists through the stairwells</b>, unless you seal the hatch.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#128027;</div>
+        <div>
+          <h3>Threats of the deep</h3>
+          <p>Infestations are the signature danger below, alongside <b>cave-ins</b>, breached <b>gas pockets</b>, and rare <b>burrowing raiders</b> who tunnel up through the stone. On the surface, <b>ground tremors</b> rattle your structures.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#9935;</div>
+        <div>
+          <h3>Riches of the deep</h3>
+          <p>Levels sit on a geothermal gradient &mdash; deeper is warmer &mdash; and deeper levels hide richer ore. Miners can break into a lucky <b>deep vein</b>, and a wandering <b>prospector</b> may mark a hidden seam on the surface.</p>
+        </div>
+      </div>
+      <div class="card strata wide">
+        <div class="icon">&#9729;</div>
+        <div>
+          <h3>Burners breathe</h3>
+          <p>Wood-fired and chemfuel generators, campfires, torches, and open fires give off combustion fumes that pool in enclosed rooms as a visible <b>black smog</b>. Run one in a sealed room &mdash; or anywhere underground &mdash; and colonists start choking on a worsening <i>smoke inhalation</i> hediff that turns fatal if ignored. Vent it with an open roof, a door to the outdoors, or a powered exhaust fan. Solar, wind, geothermal, and batteries burn nothing and stay clean. Toggle <b>&ldquo;show smoke levels&rdquo;</b> in the play settings to read the exact smoke percentage under your cursor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="research">
+    <h2 class="t">Research</h2>
+    <p class="sub">One medieval project opens the underground; two industrial projects make it comfortable.</p>
+    <div class="research-tree">
+      <b>Deep excavation</b> (800 pts, Medieval)<br>
+      &nbsp;&nbsp;&#9500;&#9472; <b>Excavated stairwell</b><br>
+      &nbsp;&nbsp;&#9474;<br>
+      &nbsp;&nbsp;&#9500;&#9472; + <b>Electricity</b> (vanilla) &rarr; <b>Elevators</b> (1,600 pts) &rarr; powered elevator<br>
+      &nbsp;&nbsp;&#9492;&#9472; + <b>Electricity</b> (vanilla) &rarr; <b>Shaft power</b> (1,400 pts) &rarr; shaft power conduit
+    </div>
+    <div class="table-scroll" style="margin-top:24px">
+      <table>
+        <tr><th class="t">Building</th><th>Cost</th><th>Power</th><th>Research</th></tr>
+        <tr><td><b>Excavated stairwell</b></td><td>60 wood, 30 steel</td><td>&mdash;</td><td>Deep excavation</td></tr>
+        <tr><td><b>Elevator</b></td><td>120 steel, 4 components</td><td>200W</td><td>Elevators</td></tr>
+        <tr><td><b>Shaft power conduit</b></td><td>60 steel, 2 components</td><td>10W</td><td>Shaft power</td></tr>
+        <tr><td><b>Exhaust fan</b></td><td>50 steel, 1 component</td><td>100W</td><td>Electricity (vanilla)</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="how-it-works">
+    <h2 class="t">How it works</h2>
+    <p class="sub">Each level is a real RimWorld map linked by stairwell pairs, built on the vanilla 1.6 pocket-map/portal system.</p>
+    <div class="grid">
+      <div class="card strata">
+        <div class="icon">&#128506;</div>
+        <div>
+          <h3>Real maps, not fakes</h3>
+          <p>Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla. Every underground level is a genuine map with its own simulation.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#129517;</div>
+        <div>
+          <h3>Move the pawn, not the job</h3>
+          <p>The AI patches move the <i>colonist</i> to the level where they're needed rather than building fragile cross-map jobs &mdash; vanilla AI takes over the moment they arrive, so every failure mode degrades safely.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#128164;</div>
+        <div>
+          <h3>Framerate-friendly depth</h3>
+          <p>Empty levels quietly throttle their background simulation, so a tall base doesn't tank your framerate.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#128230;</div>
+        <div>
+          <h3>Logistics by stockpile</h3>
+          <p>To move goods between levels, keep a stockpile near the stairs on each floor &mdash; haulers carry items up and down through the stairwell on their own.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tips">
+    <h2 class="t">Tips</h2>
+    <ol>
+      <li>Thick rock roofs collapse when unsupported &mdash; leave pillars in big halls, just like mountain bases.</li>
+      <li>Stairwells cannot be deconstructed while colonists are still below.</li>
+      <li>Raiders who run out of targets on their level will find your stairwells and come down (or up) after you. A <b>sealed</b> stairwell stops them cold &mdash; but it stops your colonists too.</li>
+    </ol>
+  </section>
+
+  <section id="install">
+    <h2 class="t">Installation</h2>
+    <ol>
+      <li>Install the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a> mod first.</li>
+      <li>Download with the button above and extract the <code>Strata</code> folder into your RimWorld <code>Mods</code> directory.</li>
+      <li>Enable <b>Harmony</b> then <b>Strata</b> in the mod list. Load Strata after Harmony.</li>
+      <li>Restart the game.</li>
+    </ol>
+    <div class="note strata">
+      <b>Save compatibility:</b> safe to add mid-save. Before removing the mod: bring everyone to the surface, haul up anything you care about, and deconstruct all stairwells.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="index.html">All mods</a>
+    &middot; Strata by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
+    &middot; <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">Report a bug</a>
+  </div>
+</footer>
+
+</body>
+</html>

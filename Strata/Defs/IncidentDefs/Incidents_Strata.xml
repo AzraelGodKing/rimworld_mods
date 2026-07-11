@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Underground: cave-in ============ -->
+  <IncidentDef>
+    <defName>Strata_CaveIn</defName>
+    <label>cave-in</label>
+    <category>ThreatSmall</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_CaveIn</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <baseChance>0.55</baseChance>
+    <minRefireDays>7</minRefireDays>
+    <letterDef>NegativeEvent</letterDef>
+    <letterLabel>Cave-in</letterLabel>
+    <letterText>A slab of thick rock ceiling has given way, collapsing onto the level below. Shore up wide excavations with pillars or supporting walls before the whole roof comes down.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Underground: gas pocket ============ -->
+  <IncidentDef>
+    <defName>Strata_GasPocket</defName>
+    <label>gas pocket</label>
+    <category>ThreatSmall</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_GasPocket</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <baseChance>0.5</baseChance>
+    <minRefireDays>6</minRefireDays>
+    <letterDef>NegativeEvent</letterDef>
+    <letterLabel>Gas pocket breached</letterLabel>
+    <letterText>Digging has punctured a pocket of foul underground gas, and toxic vapour is spilling into the level. Get your colonists clear until it disperses.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Underground: deep vein (positive) ============ -->
+  <IncidentDef>
+    <defName>Strata_DeepVein</defName>
+    <label>deep vein</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_DeepVein</workerClass>
+    <baseChance>0.7</baseChance>
+    <minRefireDays>5</minRefireDays>
+    <letterDef>PositiveEvent</letterDef>
+    <letterLabel>Deep vein</letterLabel>
+    <letterText>Your miners have broken into a rich seam of ore running through the rock of this level. Send someone to dig it out.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Underground: burrowing raid ============ -->
+  <IncidentDef>
+    <defName>Strata_DeepRaid</defName>
+    <label>burrowing raiders</label>
+    <category>ThreatBig</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_DeepRaid</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <pointsScaleable>true</pointsScaleable>
+    <baseChance>0.35</baseChance>
+    <minRefireDays>12</minRefireDays>
+    <letterDef>ThreatBig</letterDef>
+    <letterLabel>Burrowing raiders</letterLabel>
+    <letterText>Something has been tunnelling toward you through the deep rock - and it wasn't friendly. Hostiles have broken through into the level and are attacking. The sky can't reach you down here, but the dark can.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Surface: prospector's tip (positive) ============ -->
+  <IncidentDef>
+    <defName>Strata_ProspectorTip</defName>
+    <label>prospector's tip</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_ProspectorTip</workerClass>
+    <baseChance>0.55</baseChance>
+    <minRefireDays>8</minRefireDays>
+    <letterDef>PositiveEvent</letterDef>
+    <letterLabel>Prospector's tip</letterLabel>
+    <letterText>A wandering prospector studied the stone around your colony and marked a rich seam hidden in the rock before moving on. It's yours to mine - and a sign of what deeper digging might turn up.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Surface: tremor ============ -->
+  <IncidentDef>
+    <defName>Strata_Tremor</defName>
+    <label>ground tremor</label>
+    <category>ThreatSmall</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_Tremor</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <baseChance>0.5</baseChance>
+    <minRefireDays>9</minRefireDays>
+    <letterDef>NegativeEvent</letterDef>
+    <letterLabel>Ground tremor</letterLabel>
+    <letterText>A deep tremor rolled through the ground, rattling the colony and cracking some of your structures. The rock below is never quite still.</letterText>
+  </IncidentDef>
+
+</Defs>
