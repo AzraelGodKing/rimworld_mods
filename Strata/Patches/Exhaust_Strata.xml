@@ -7,60 +7,52 @@
   <!-- Homesteader wood-burning generator -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="Homesteader_WoodGenerator"]/comps</xpath>
-    <match>
-      <Operation Class="PatchOperationAdd">
-        <xpath>Defs/ThingDef[defName="Homesteader_WoodGenerator"]/comps</xpath>
-        <value>
-          <li Class="Strata.CompProperties_Exhaust">
-            <emissionPerCycle>3.5</emissionPerCycle>
-          </li>
-        </value>
-      </Operation>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Homesteader_WoodGenerator"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>3.5</emissionPerCycle>
+        </li>
+      </value>
     </match>
   </Operation>
 
   <!-- Homesteader portable (chemfuel) generator -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="Homesteader_PortableGenerator"]/comps</xpath>
-    <match>
-      <Operation Class="PatchOperationAdd">
-        <xpath>Defs/ThingDef[defName="Homesteader_PortableGenerator"]/comps</xpath>
-        <value>
-          <li Class="Strata.CompProperties_Exhaust">
-            <emissionPerCycle>4.5</emissionPerCycle>
-          </li>
-        </value>
-      </Operation>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Homesteader_PortableGenerator"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>4.5</emissionPerCycle>
+        </li>
+      </value>
     </match>
   </Operation>
 
   <!-- Vanilla chemfuel-powered generator -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="ChemfuelPoweredGenerator"]/comps</xpath>
-    <match>
-      <Operation Class="PatchOperationAdd">
-        <xpath>Defs/ThingDef[defName="ChemfuelPoweredGenerator"]/comps</xpath>
-        <value>
-          <li Class="Strata.CompProperties_Exhaust">
-            <emissionPerCycle>4.5</emissionPerCycle>
-          </li>
-        </value>
-      </Operation>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="ChemfuelPoweredGenerator"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>4.5</emissionPerCycle>
+        </li>
+      </value>
     </match>
   </Operation>
 
   <!-- Vanilla wood-fired generator -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="WoodFiredGenerator"]/comps</xpath>
-    <match>
-      <Operation Class="PatchOperationAdd">
-        <xpath>Defs/ThingDef[defName="WoodFiredGenerator"]/comps</xpath>
-        <value>
-          <li Class="Strata.CompProperties_Exhaust">
-            <emissionPerCycle>3.5</emissionPerCycle>
-          </li>
-        </value>
-      </Operation>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="WoodFiredGenerator"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>3.5</emissionPerCycle>
+        </li>
+      </value>
     </match>
   </Operation>
 
