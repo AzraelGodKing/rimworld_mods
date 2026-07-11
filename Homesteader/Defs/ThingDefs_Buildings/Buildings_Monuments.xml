@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Shared aura: +27 mood to colonists in range (see Thoughts_Statue27.xml). -->
+  <ThingDef ParentName="BuildingBase" Name="Homesteader_Monument27Base" Abstract="True">
+    <thingClass>Building</thingClass>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.35</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>6000</WorkToBuild>
+      <Mass>80</Mass>
+      <Flammability>0</Flammability>
+      <Beauty>18</Beauty>
+    </statBases>
+    <graphicData>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.2,1.9)</drawSize>
+      <drawOffset>(0,0,0.45)</drawOffset>
+    </graphicData>
+    <comps>
+      <li Class="CompProperties_CauseHediff_AoE">
+        <hediff>Homesteader_NearMonument27</hediff>
+        <range>8.9</range>
+        <ignoreMechs>true</ignoreMechs>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_ShowCauseHediffAoE</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <designationCategory>Joy</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsJoy</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_HomesteadComforts</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ 27 monument (golden) ============ -->
+  <ThingDef ParentName="Homesteader_Monument27Base">
+    <defName>Homesteader_Monument27_Golden</defName>
+    <label>27 monument (golden)</label>
+    <description>A gleaming golden statue of the number 27 on a weathered stone plinth, dressed with wheat and wildflowers. Colonists within its reach feel inexplicably cheerful (+27 mood).</description>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Monument27Golden</texPath>
+    </graphicData>
+    <costList>
+      <Gold>50</Gold>
+      <BlocksGranite>60</BlocksGranite>
+    </costList>
+  </ThingDef>
+
+  <!-- ============ 27 monument (harvest) ============ -->
+  <ThingDef ParentName="Homesteader_Monument27Base">
+    <defName>Homesteader_Monument27_Harvest</defName>
+    <label>27 monument (harvest)</label>
+    <description>A carved stone statue of the number 27 wrapped in wheat sheaves and wildflowers — a harvest-festival monument for the yard. Colonists within its reach feel inexplicably cheerful (+27 mood).</description>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Monument27Harvest</texPath>
+    </graphicData>
+    <costList>
+      <BlocksGranite>75</BlocksGranite>
+      <Hay>40</Hay>
+    </costList>
+  </ThingDef>
+
+</Defs>

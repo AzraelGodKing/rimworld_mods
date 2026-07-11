@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Strata</name>
+  <author>AzraelGodKing</author>
+  <packageId>AzraelGodKing.Strata</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+  </loadAfter>
+  <description>Dig down and build a true multistory base - and let your colonists treat every level as one home.
+
+EXCAVATED STAIRWELL
+Build a stairwell and your colonists carve out a new underground level beneath your base: a solid slab of living rock, ready to be mined into bedrooms, workshops, freezers, and vaults. Build another stairwell down there and keep going deeper. Every level is protected by thick rock roof - safe from drop pods, mortars, and weather.
+
+ONE BASE, MANY FLOORS
+Other multi-level mods make each floor an island. Strata's fluidity engine relays your pawns between levels on their own:
+
+- Idle colonists notice mining designations, blueprints, hauling, and bills on other levels and head down (or up) the stairs to do the work.
+- Hungry pawns will go find a meal on another level instead of starving next to a staircase.
+- Sleepy pawns walk home to their own bed - or to any level with a free bed to claim.
+- Haulers carry items through the stairwell to a level whose stockpiles accept them.
+
+No micromanagement: you designate, they commute.
+
+HEAT RISES, COLD FALLS
+Stairwells exchange temperature between the rooms at their top and bottom. A warm level below convects its heat upward quickly; a warmer level above only bleeds down slowly. Freezers belong downstairs - generator heat drifts up and out, and the cold pools where you put it.
+
+EVENTS THAT KNOW WHICH WAY IS UP
+Underground levels are sealed rock, so the sky can't reach them: solar flares, eclipses, toxic fallout, weather, and raids with no way in are all suppressed below ground. What can reach you is what lives in the dark - infestations become the signature threat of the deep, alongside cave-ins, breached gas pockets, the occasional rich deep vein of ore, and rare burrowing raiders who dig up through the stone. On the surface, a wandering prospector may point out a hidden seam, and ground tremors remind you the rock below is never quite still.
+
+THE DEEPER, THE STRANGER
+Levels sit on a geothermal gradient - the deeper you dig, the warmer the rock - and deeper levels crawl with more bugs and hide richer ore. Seal a stairwell to contain a gas pocket or an infestation on one level. For a tidier base, research the powered elevator: a compact 1x1 shaft that needs power to descend but always lets colonists ride up to safety if power fails, so no one is trapped below. Empty levels quietly throttle their background simulation to protect framerate in a tall base.
+
+To move goods between levels, keep a stockpile near the stairs on each floor - colonists haul up and down through the stairwell on their own.
+
+POWER UP AND DOWN THE SHAFTS
+An elevator automatically ties the two levels' power grids together, and a researched shaft power conduit does the same beside any stairwell - so surface generators can light the deep, and a level's spare power can flow back up. Surplus flows to whichever level runs short, up to a cap; keep a battery on each level for it to pool across.
+
+BURNERS NEED TO BREATHE
+Wood-fired and chemfuel generators, campfires, torches, and open fires give off combustion fumes that pool in enclosed rooms as a visible black smog that thickens the longer they burn. Run one in a sealed room - or anywhere underground - and colonists start choking, a worsening smoke inhalation that turns fatal if ignored. Vent it: open roofs, open exterior doors, passive smoke louvers, powered one-way exhaust fans (wall-mounted like vanilla vents), duct runs that reach outdoors, or let smoke ride the stairwell shaft upward — unsealed stairwells and elevators naturally pull fumes to the level above. Build an updraft filter in the landing room for a powered chimney boost. Solar, wind, geothermal, and batteries burn nothing and stay clean - the safe way to power a deep base. Toggle "show smoke levels" in the play settings to read the exact smoke percentage under your cursor.
+
+HOW IT WORKS
+Each underground level is a real RimWorld map linked by stairwell pairs. Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla - Strata's job relay teaches the colonist AI to move themselves to the level where they're needed, so everything degrades safely and stays mod-compatible.
+
+TIPS
+- Thick rock roofs collapse when unsupported: leave pillars in big halls, just like mountain bases.
+- Stairwells cannot be deconstructed while colonists are still below.
+- Raiders who run out of targets on their level will find your stairwells and come down (or up) after you. A sealed stairwell stops them cold - and blocks tox gas through the shaft - but it stops your colonists too.
+- Rename levels in the Levels tab so "Level -2" becomes something you'll actually remember.
+- Smoke rises through open stairwells — put generators in a room with a shaft, or duct fumes to the landing and let the stack carry them up.
+
+Requires the Harmony mod. RimWorld 1.6. Safe to add to existing saves. Before removing from a save: bring everyone to the surface, haul up anything you care about, and deconstruct all stairwells.</description>
+</ModMetaData>
