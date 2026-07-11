@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <JobDef>
+    <defName>Strata_HaulToLevel</defName>
+    <driverClass>Strata.JobDriver_HaulToLevel</driverClass>
+    <reportString>hauling TargetA to another level.</reportString>
+    <carryThingAfterJob>true</carryThingAfterJob>
+  </JobDef>
+
+</Defs>
