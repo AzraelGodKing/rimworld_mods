@@ -113,7 +113,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </portal>
     <comps>
       <li Class="CompProperties_Power">
-        <compClass>CompPowerTrader</compClass>
+        <compClass>Strata.CompPowerShaft</compClass>
         <basePowerConsumption>200</basePowerConsumption>
       </li>
       <li Class="CompProperties_Flickable"/>
@@ -151,11 +151,60 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <statBases>
       <Flammability>0</Flammability>
     </statBases>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+      </li>
+    </comps>
     <building>
       <claimable>false</claimable>
       <deconstructible>false</deconstructible>
       <ai_chillDestination>false</ai_chillDestination>
     </building>
+  </ThingDef>
+
+  <!-- ============ Shaft power conduit ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_ShaftConduit</defName>
+    <label>shaft power conduit</label>
+    <description>A power junction that carries electricity up and down a shaft. Build one beside a stairwell or elevator on each level and wire each into its local grid; the pair ties the two levels' power nets together, sharing surplus to whichever level runs short. Keep a battery on each level for it to pool across.</description>
+    <thingClass>Strata.Building_ShaftConduit</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ShaftConduit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.3</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>3000</WorkToBuild>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <Steel>60</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>10</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_ShaftPower</li>
+    </researchPrerequisites>
   </ThingDef>
 
 </Defs>

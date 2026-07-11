@@ -44,6 +44,8 @@ And a touch of real physics: **heat rises, cold falls**. Stairwells exchange tem
 
 To move goods between levels, just put a stockpile near the stairs on each floor — your colonists haul up and down through the stairwell on their own.
 
+**Power runs up and down the shafts too.** An **elevator** automatically ties the two levels' power grids together, and a researched **shaft power conduit** does the same beside any stairwell — so your surface generators can light the deep (and a level's spare power can flow back up). It shares surplus to whichever level runs short, up to a cap; keep a battery on each level for it to pool across.
+
 Design: each level is a real map linked by stairwell pairs (built on the vanilla 1.6 pocket-map/portal system), and the AI patches move the *pawn* to the level where it's needed rather than building fragile cross-map jobs — vanilla AI takes over the moment they arrive, so every failure mode degrades safely.
 
 Source lives in `Strata/Source`; the compiled `Strata.dll` ships in `Strata/Assemblies` and is rebuilt by CI on every source change.

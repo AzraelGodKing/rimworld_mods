@@ -43,6 +43,9 @@ Levels sit on a geothermal gradient - the deeper you dig, the warmer the rock - 
 
 To move goods between levels, keep a stockpile near the stairs on each floor - colonists haul up and down through the stairwell on their own.
 
+POWER UP AND DOWN THE SHAFTS
+An elevator automatically ties the two levels' power grids together, and a researched shaft power conduit does the same beside any stairwell - so surface generators can light the deep, and a level's spare power can flow back up. Surplus flows to whichever level runs short, up to a cap; keep a battery on each level for it to pool across.
+
 HOW IT WORKS
 Each underground level is a real RimWorld map linked by stairwell pairs. Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla - Strata's job relay teaches the colonist AI to move themselves to the level where they're needed, so everything degrades safely and stays mod-compatible.
 
