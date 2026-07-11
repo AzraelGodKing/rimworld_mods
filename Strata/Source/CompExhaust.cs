@@ -25,8 +25,20 @@ namespace Strata
         {
             get
             {
+                // Generators: emit while actually producing power.
                 CompPowerTrader power = parent.GetComp<CompPowerTrader>();
-                return power != null && power.PowerOn && power.PowerOutput > 0f;
+                if (power != null)
+                {
+                    return power.PowerOn && power.PowerOutput > 0f;
+                }
+                // Campfires, torches, and other fuelled flames: emit while lit.
+                CompRefuelable refuelable = parent.GetComp<CompRefuelable>();
+                if (refuelable != null)
+                {
+                    return refuelable.HasFuel;
+                }
+                // Open flame with no power or fuel comp (a raw Fire): always smoking.
+                return true;
             }
         }
 

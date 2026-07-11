@@ -56,4 +56,54 @@
     </match>
   </Operation>
 
+  <!-- Campfire -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Campfire"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Campfire"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>2.5</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Torch lamp -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="TorchLamp"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="TorchLamp"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>1.0</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Open fire (burning things fill a room with smoke). Fire has no comps
+       node by default, so create one if needed. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Fire"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Fire"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>1.5</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Fire"]</xpath>
+      <value>
+        <comps>
+          <li Class="Strata.CompProperties_Exhaust">
+            <emissionPerCycle>1.5</emissionPerCycle>
+          </li>
+        </comps>
+      </value>
+    </nomatch>
+  </Operation>
+
 </Patch>

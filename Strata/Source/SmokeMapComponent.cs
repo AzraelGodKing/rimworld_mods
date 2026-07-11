@@ -22,7 +22,7 @@ namespace Strata
     // where the room is open to the sky, has an open roof, or a powered exhaust
     // fan. Colonists breathing thick smoke take on a worsening inhalation
     // hediff. Deliberately room-scale (not per-cell) so a tall base stays cheap.
-    public class SmokeMapComponent : MapComponent
+    public class SmokeMapComponent : MapComponent, ICellBoolGiver
     {
         private const int CycleTicks = 60;
         private const float BaseLeak = 0.02f;      // slow seepage from any enclosed room
@@ -45,8 +45,25 @@ namespace Strata
         private readonly Dictionary<int, Cloud> clouds = new Dictionary<int, Cloud>();
         private readonly Dictionary<int, float> ventPower = new Dictionary<int, float>();
 
+        // Per-cell density mirror for the drawn smog overlay (lazy-allocated).
+        private float[] cellDensity;
+        private CellBoolDrawer drawer;
+
         public SmokeMapComponent(Map map) : base(map)
         {
+        }
+
+        public Color Color => Color.white;
+
+        public bool GetCellBool(int index)
+        {
+            return cellDensity != null && cellDensity[index] > 0.05f;
+        }
+
+        public Color GetCellExtraColor(int index)
+        {
+            // Black smog that thickens with density.
+            return new Color(0.04f, 0.04f, 0.05f, Mathf.Clamp01(cellDensity[index]));
         }
 
         public float DensityInRoom(Room room)
@@ -141,8 +158,77 @@ namespace Strata
                 clouds[r.ID] = c;
             }
 
+            RebuildCellDensity();
             AffectPawns();
             ThrowMotes();
+        }
+
+        // Draw the smog overlay every frame while any smoke exists.
+        public override void MapComponentUpdate()
+        {
+            base.MapComponentUpdate();
+            if (cellDensity == null || clouds.Count == 0)
+            {
+                return;
+            }
+            drawer ??= new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.5f);
+            drawer.MarkForDraw();
+            drawer.CellBoolDrawerUpdate();
+        }
+
+        // Percentage readout under the cursor while the smoke toggle is on.
+        public override void MapComponentOnGUI()
+        {
+            base.MapComponentOnGUI();
+            if (!Patch_SmokeOverlay.ShowReadout || Find.CurrentMap != map)
+            {
+                return;
+            }
+            IntVec3 cell = UI.MouseCell();
+            if (!cell.InBounds(map))
+            {
+                return;
+            }
+            float density = DensityInRoom(cell.GetRoom(map));
+            if (density <= 0.001f)
+            {
+                return;
+            }
+            Text.Font = GameFont.Small;
+            Vector2 mouse = Event.current.mousePosition;
+            var rect = new Rect(mouse.x + 12f, mouse.y + 12f, 110f, 24f);
+            Widgets.Label(rect, $"Smoke {Mathf.RoundToInt(density * 100f)}%");
+        }
+
+        private void RebuildCellDensity()
+        {
+            if (clouds.Count == 0)
+            {
+                if (cellDensity != null)
+                {
+                    System.Array.Clear(cellDensity, 0, cellDensity.Length);
+                }
+                drawer?.SetDirty();
+                return;
+            }
+            cellDensity ??= new float[map.cellIndices.NumGridCells];
+            System.Array.Clear(cellDensity, 0, cellDensity.Length);
+            foreach (Cloud c in clouds.Values)
+            {
+                Room room = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
+                if (room == null || room.UsesOutdoorTemperature)
+                {
+                    continue;
+                }
+                foreach (IntVec3 cell in room.Cells)
+                {
+                    if (cell.InBounds(map))
+                    {
+                        cellDensity[map.cellIndices.CellToIndex(cell)] = c.density;
+                    }
+                }
+            }
+            drawer?.SetDirty();
         }
 
         private void AffectPawns()
@@ -178,9 +264,20 @@ namespace Strata
         {
             foreach (Cloud c in clouds.Values)
             {
-                if (c.density > MoteThreshold && c.sample.InBounds(map) && Rand.Value < 0.5f)
+                if (c.density <= MoteThreshold || !c.sample.InBounds(map))
                 {
-                    FleckMaker.ThrowSmoke(c.sample.ToVector3Shifted(), map, c.density * 1.6f);
+                    continue;
+                }
+                Room room = c.sample.GetRoom(map);
+                // Denser smoke: more, bigger puffs scattered across the room.
+                int puffs = Mathf.Clamp(Mathf.RoundToInt(c.density * 4f), 1, 5);
+                for (int i = 0; i < puffs; i++)
+                {
+                    IntVec3 cell = room != null && room.CellCount > 1 ? room.Cells.RandomElement() : c.sample;
+                    if (cell.InBounds(map) && Rand.Value < 0.6f)
+                    {
+                        FleckMaker.ThrowSmoke(cell.ToVector3Shifted(), map, 1f + c.density * 2f);
+                    }
                 }
             }
         }
