@@ -32,7 +32,7 @@
     </requiredCapacities>
   </JoyGiverDef>
 
-  <!-- Cuddling Diggo the plushie for a little meditative joy -->
+  <!-- Cuddling a homestead plushie for a little meditative joy -->
   <JoyGiverDef>
     <defName>Homesteader_CuddleDiggo</defName>
     <giverClass>JoyGiver_WatchBuilding</giverClass>
@@ -40,6 +40,7 @@
     <desireSit>false</desireSit>
     <thingDefs>
       <li>Homesteader_DiggoPlushie</li>
+      <li>Homesteader_SharkPlushie</li>
     </thingDefs>
     <jobDef>Homesteader_CuddlePlushie</jobDef>
     <joyKind>Meditative</joyKind>
