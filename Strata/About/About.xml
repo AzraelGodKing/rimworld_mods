@@ -55,7 +55,7 @@ Each underground level is a real RimWorld map linked by stairwell pairs. Pathfin
 TIPS
 - Thick rock roofs collapse when unsupported: leave pillars in big halls, just like mountain bases.
 - Stairwells cannot be deconstructed while colonists are still below.
-- Raids do not (yet) dig down after you. Enjoy the safest bedrooms on the Rim.
+- Raiders who run out of targets on their level will find your stairwells and come down (or up) after you. A sealed stairwell stops them cold - but it stops your colonists too.
 
 Requires the Harmony mod. RimWorld 1.6. Safe to add to existing saves. Before removing from a save: bring everyone to the surface, haul up anything you care about, and deconstruct all stairwells.</description>
 </ModMetaData>

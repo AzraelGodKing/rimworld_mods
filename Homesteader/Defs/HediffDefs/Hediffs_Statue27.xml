@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Applied while a colonist stands within a 27 monument's aura.
+       Hidden buff carrier; the linked thought supplies the +27 mood. -->
+  <HediffDef>
+    <defName>Homesteader_NearMonument27</defName>
+    <label>near 27 monument</label>
+    <description>Within reach of the homestead's 27 monument.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <maxSeverity>1</maxSeverity>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <stages>
+      <li>
+        <minSeverity>0</minSeverity>
+        <becomeVisible>false</becomeVisible>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

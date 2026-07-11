@@ -4,7 +4,12 @@ All notable changes to Homesteader are documented here.
 
 ## [Unreleased]
 
+### Added
+- **27 monuments (two styles):** build either a golden or a harvest-stone statue of the number 27. Both share the same aura — colonists within range gain +27 mood — so you pick the look that fits your yard. Unlocked with homestead comforts research; golden costs gold and granite, harvest costs granite and hay.
+- **Shark plushie:** a chonky stuffed shark sewn from cloth. Same comforts as Diggo — high beauty (scales with quality), sittable, and cuddling for meditative recreation. Buildable from the start; homestead supplier caravans occasionally carry one.
+
 ### Changed
+- Regenerated shark plushie and both 27 monument sprites in Homesteader's painterly isometric style (replacing high-res concept art that clashed in-game). Alpha-cleaned for transparent backgrounds; monuments scaled down slightly on the map.
 - Regenerated orchard and beeswax sprites (maple sap, maple syrup, raw apples, raw cherries, beeswax, beeswax candle) to match the painterly Homesteader art style with proper transparent backgrounds.
 - Regenerated flapjacks icon to match painterly homestead meal style (maple syrup stack with butter).
 - Regenerated salted meat, sugar, and sugar beet icons after batch alpha-clean damaged their white salt/crystal surfaces.
@@ -13,6 +18,7 @@ All notable changes to Homesteader are documented here.
 - Regenerated flour icon after alpha-clean damaged the white powder surface.
 
 ### Fixed
+- Overalls now draw on the pawn again. They previously pointed at the vanilla `Pants/Pants` worn texture, which doesn't exist (vanilla pants have never been rendered on pawns), so nothing was drawn and render errors were logged. Overalls now use the TribalA worn graphic - the only stuff-colored torso+legs worn art in the game - so they read as work clothes covering torso and legs in the fabric/leather they're made from.
 - Removed invalid `harvestDestroys` tag from apple, cherry and maple orchard plants (not a PlantProperties field in 1.6; regrowth is already handled by `harvestAfterGrowth`).
 - Bread, porridge, trail stew and hearty stew now inherit from the correct vanilla meal base (`MealBase` instead of the non-inheritable `MealSimple`/`MealFine` defNames), restoring their thingClass, food type, rot ticking and eat sounds/effects.
 - Homestead supplier caravan patch now targets the `OutlanderCivil` def node directly; the old xpath failed because `caravanTraderKinds` only exists on the abstract outlander base def.

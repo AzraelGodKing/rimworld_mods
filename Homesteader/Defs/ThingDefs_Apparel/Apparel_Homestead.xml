@@ -145,8 +145,10 @@
         <li>Torso</li>
         <li>Legs</li>
       </bodyPartGroups>
-      <!-- OnSkin layer: no worn graphic, like vanilla under-layer apparel.
-           (The old vanilla Pants worn path no longer resolves in 1.6.) -->
+      <!-- No pants worn art exists anywhere in vanilla/DLC (vanilla pants are
+           never drawn). TribalA is the only stuff-colored torso+legs worn
+           graphic, and tribalwear proves it renders on the OnSkin layer. -->
+      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/TribalA/TribalA</wornGraphicPath>
       <layers>
         <li>OnSkin</li>
       </layers>

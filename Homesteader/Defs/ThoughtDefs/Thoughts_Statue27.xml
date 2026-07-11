@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThoughtDef>
+    <defName>Homesteader_Monument27Mood</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>Homesteader_NearMonument27</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>monument of 27</label>
+        <description>There's something about that statue that just lifts the whole day.</description>
+        <baseMoodEffect>27</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>
