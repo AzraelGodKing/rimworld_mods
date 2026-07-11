@@ -46,6 +46,9 @@ To move goods between levels, keep a stockpile near the stairs on each floor - c
 POWER UP AND DOWN THE SHAFTS
 An elevator automatically ties the two levels' power grids together, and a researched shaft power conduit does the same beside any stairwell - so surface generators can light the deep, and a level's spare power can flow back up. Surplus flows to whichever level runs short, up to a cap; keep a battery on each level for it to pool across.
 
+BURNERS NEED TO BREATHE
+Wood-fired and chemfuel generators give off combustion fumes that pool in enclosed rooms. Run one in a sealed room - or anywhere underground - and the smoke thickens until colonists start choking, a worsening smoke inhalation that turns fatal if ignored. Vent it: an open roof or a door outdoors clears it for free on the surface, and a powered exhaust fan extracts it even underground where there is no sky. Solar, wind, geothermal, and batteries burn nothing and stay clean - the safe way to power a deep base.
+
 HOW IT WORKS
 Each underground level is a real RimWorld map linked by stairwell pairs. Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla - Strata's job relay teaches the colonist AI to move themselves to the level where they're needed, so everything degrades safely and stays mod-compatible.
 

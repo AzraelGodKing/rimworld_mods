@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!-- Give combustion generators an exhaust comp. Each is guarded so a missing
+       def (mod not loaded) is silently skipped instead of erroring. -->
+
+  <!-- Homesteader wood-burning generator -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Homesteader_WoodGenerator"]/comps</xpath>
+    <match>
+      <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="Homesteader_WoodGenerator"]/comps</xpath>
+        <value>
+          <li Class="Strata.CompProperties_Exhaust">
+            <emissionPerCycle>3.5</emissionPerCycle>
+          </li>
+        </value>
+      </Operation>
+    </match>
+  </Operation>
+
+  <!-- Homesteader portable (chemfuel) generator -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Homesteader_PortableGenerator"]/comps</xpath>
+    <match>
+      <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="Homesteader_PortableGenerator"]/comps</xpath>
+        <value>
+          <li Class="Strata.CompProperties_Exhaust">
+            <emissionPerCycle>4.5</emissionPerCycle>
+          </li>
+        </value>
+      </Operation>
+    </match>
+  </Operation>
+
+  <!-- Vanilla chemfuel-powered generator -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="ChemfuelPoweredGenerator"]/comps</xpath>
+    <match>
+      <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="ChemfuelPoweredGenerator"]/comps</xpath>
+        <value>
+          <li Class="Strata.CompProperties_Exhaust">
+            <emissionPerCycle>4.5</emissionPerCycle>
+          </li>
+        </value>
+      </Operation>
+    </match>
+  </Operation>
+
+  <!-- Vanilla wood-fired generator -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="WoodFiredGenerator"]/comps</xpath>
+    <match>
+      <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[defName="WoodFiredGenerator"]/comps</xpath>
+        <value>
+          <li Class="Strata.CompProperties_Exhaust">
+            <emissionPerCycle>3.5</emissionPerCycle>
+          </li>
+        </value>
+      </Operation>
+    </match>
+  </Operation>
+
+</Patch>

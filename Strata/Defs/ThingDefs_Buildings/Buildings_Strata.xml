@@ -164,6 +164,52 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </building>
   </ThingDef>
 
+  <!-- ============ Exhaust fan ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_ExhaustFan</defName>
+    <label>exhaust fan</label>
+    <description>A powered extractor that pulls combustion fumes out of an enclosed room. Essential for running wood or chemfuel generators indoors or underground, where there's no open sky to carry the smoke away. Keep it powered and in the same room as the burner.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.35</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>2500</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>50</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_ExhaustVent">
+        <ventPower>0.25</ventPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Electricity</li>
+    </researchPrerequisites>
+  </ThingDef>
+
   <!-- ============ Shaft power conduit ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ShaftConduit</defName>
