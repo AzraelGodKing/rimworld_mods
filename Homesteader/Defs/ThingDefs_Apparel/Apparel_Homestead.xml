@@ -7,6 +7,9 @@
     <label>straw hat</label>
     <description>A wide-brimmed hat woven from straw. Keeps the sun off during long days in the field.</description>
     <techLevel>Neolithic</techLevel>
+    <thingCategories>
+      <li>Apparel</li>
+    </thingCategories>
     <graphicData>
       <texPath>Homesteader/Apparel/StrawHat</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -52,6 +55,9 @@
     <label>work apron</label>
     <description>A tough apron worn over clothing. Pockets and heavy cloth make workshop and kitchen chores go a little faster.</description>
     <techLevel>Neolithic</techLevel>
+    <thingCategories>
+      <li>Apparel</li>
+    </thingCategories>
     <graphicData>
       <texPath>Homesteader/Apparel/WorkApron</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -102,6 +108,9 @@
     <label>overalls</label>
     <description>Hard-wearing bib overalls that cover torso and legs. The uniform of farmers everywhere; growing work comes a little easier in them.</description>
     <techLevel>Neolithic</techLevel>
+    <thingCategories>
+      <li>Apparel</li>
+    </thingCategories>
     <graphicData>
       <texPath>Homesteader/Apparel/Overalls</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -152,6 +161,9 @@
     <label>poncho</label>
     <description>A heavy woven poncho thrown over the shoulders. Cheap to make and remarkably warm on frosty mornings.</description>
     <techLevel>Neolithic</techLevel>
+    <thingCategories>
+      <li>Apparel</li>
+    </thingCategories>
     <graphicData>
       <texPath>Homesteader/Apparel/WoolPoncho</texPath>
       <graphicClass>Graphic_Single</graphicClass>
