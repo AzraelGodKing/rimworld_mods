@@ -17,6 +17,10 @@ namespace Strata
             {
                 return;
             }
+            if (StrataMod.Settings != null && !StrataMod.Settings.restRelayEnabled)
+            {
+                return;
+            }
             // Already found a real bed on this level (e.g. a medical bed)? Keep it.
             if (__result != null
                 && (__result.def != JobDefOf.LayDown || __result.targetA.Thing is Building_Bed))

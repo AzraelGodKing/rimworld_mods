@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <KeyBindingDef>
+    <defName>Strata_ViewLevelUp</defName>
+    <label>view level above</label>
+    <category>GameMapCamera</category>
+    <defaultKeyCodeA>PageUp</defaultKeyCodeA>
+  </KeyBindingDef>
+
+  <KeyBindingDef>
+    <defName>Strata_ViewLevelDown</defName>
+    <label>view level below</label>
+    <category>GameMapCamera</category>
+    <defaultKeyCodeA>PageDown</defaultKeyCodeA>
+  </KeyBindingDef>
+
+</Defs>
