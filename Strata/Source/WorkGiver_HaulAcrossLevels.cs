@@ -23,33 +23,39 @@ namespace Strata
             {
                 yield return t;
             }
-            // listerHaulables drops an item once it sits in storage with no
-            // better cell on its own map, so priority upgrades to another
-            // level have to scan stored things directly. Materialize the max
-            // linked priority before yielding: ReachableLevels reuses a shared
-            // buffer that HasJobOnThing clobbers between yields.
+            // Materialize both before yielding: ReachableLevels reuses a shared
+            // buffer that HasJobOnThing clobbers between yields. Demand must
+            // not be gated on maxLinked - a fresh level below with blueprints
+            // and no stockpiles yet is exactly when demand matters most.
             StoragePriority maxLinked = MaxStoragePriorityOnLinkedLevels(map);
-            if (maxLinked == StoragePriority.Unstored)
+            HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
+            if (maxLinked == StoragePriority.Unstored && wanted.Count == 0)
             {
                 yield break;
             }
-            List<SlotGroup> groups = map.haulDestinationManager.AllGroupsListForReading;
-            for (int i = 0; i < groups.Count; i++)
+            // listerHaulables drops an item once it sits in storage with no
+            // better cell on its own map, so priority upgrades to another
+            // level have to scan stored things directly.
+            if (maxLinked > StoragePriority.Unstored)
             {
-                SlotGroup group = groups[i];
-                if (group.Settings.Priority >= maxLinked)
+                List<SlotGroup> groups = map.haulDestinationManager.AllGroupsListForReading;
+                for (int i = 0; i < groups.Count; i++)
                 {
-                    continue;
-                }
-                foreach (Thing t in group.HeldThings)
-                {
-                    yield return t;
+                    SlotGroup group = groups[i];
+                    if (group.Settings.Priority >= maxLinked)
+                    {
+                        continue;
+                    }
+                    foreach (Thing t in group.HeldThings)
+                    {
+                        yield return t;
+                    }
                 }
             }
             // Materials another level's construction is short of - loose or in
             // storage at any priority, neither of which is guaranteed to appear
             // in the yields above.
-            foreach (ThingDef def in LevelDemand.DefsWantedByLinkedLevels(map))
+            foreach (ThingDef def in wanted)
             {
                 List<Thing> ofDef = map.listerThings.ThingsOfDef(def);
                 for (int i = 0; i < ofDef.Count; i++)
