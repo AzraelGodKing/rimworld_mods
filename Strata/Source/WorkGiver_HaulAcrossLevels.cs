@@ -46,6 +46,17 @@ namespace Strata
                     yield return t;
                 }
             }
+            // Materials another level's construction is short of - loose or in
+            // storage at any priority, neither of which is guaranteed to appear
+            // in the yields above.
+            foreach (ThingDef def in LevelDemand.DefsWantedByLinkedLevels(map))
+            {
+                List<Thing> ofDef = map.listerThings.ThingsOfDef(def);
+                for (int i = 0; i < ofDef.Count; i++)
+                {
+                    yield return ofDef[i];
+                }
+            }
         }
 
         private static StoragePriority MaxStoragePriorityOnLinkedLevels(Map from)
@@ -97,6 +108,26 @@ namespace Strata
             {
                 return null;
             }
+            // Construction demand outranks storage priority: a level short of
+            // materials for its blueprints pulls them like a temporary Critical
+            // stockpile. The pawn's own level keeps first claim - while local
+            // construction is short of this def, it never gets exported.
+            if (LevelDemand.MissingOn(pawn.Map, t.def) > 0)
+            {
+                return null;
+            }
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
+            {
+                if (LevelDemand.MissingOn(link.map, t.def) > 0
+                    && LevelDemand.AnySiteReachable(link.map, t.def, link.arrivalCell)
+                    && link.firstStep.Spawned
+                    && link.firstStep.IsEnterable(out _)
+                    && pawn.CanReach(link.firstStep, PathEndMode.Touch, Danger.Some))
+                {
+                    return link.firstStep;
+                }
+            }
+
             StoragePriority current = StoreUtility.CurrentStoragePriorityOf(t);
             // The best this level can offer; a linked level only gets the job
             // if it strictly beats it, so ties stay local (shorter trip) and
