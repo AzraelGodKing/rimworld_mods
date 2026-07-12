@@ -13,6 +13,10 @@ namespace Strata
             {
                 __instance.components.Add(new StrataLevelLabels(__instance));
             }
+            if (__instance.GetComponent<StrataRitualTravel>() == null)
+            {
+                __instance.components.Add(new StrataRitualTravel(__instance));
+            }
         }
     }
 }
