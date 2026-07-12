@@ -211,7 +211,7 @@ namespace Strata
             {
                 Lord lord = lords[i];
                 if (lord.faction == pawn.Faction && lord.LordJob is LordJob_StrataAssault
-                    && !(lord.CurLordToil is LordToil_ExitMap)
+                    && lord.CurLordToil is LordToil_AssaultColony
                     && lord.CanAddPawn(pawn))
                 {
                     lord.AddPawn(pawn);
