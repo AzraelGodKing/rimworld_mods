@@ -66,7 +66,7 @@
 
   <section id="buildings">
     <h2 class="t">Buildings</h2>
-    <p class="sub">Four ways down, up, and out of trouble.</p>
+    <p class="sub">Seven buildable structures for digging down, moving power, and venting smoke.</p>
     <div class="grid">
 
       <div class="card strata wide">
@@ -74,7 +74,16 @@
         <div>
           <h3>Excavated stairwell</h3>
           <div class="stat">2&times;2 &middot; 60 wood + 30 steel &middot; Deep excavation research</div>
-          <p>A broad staircase carved down into the rock. Completing it opens a <b>new underground level</b>: solid stone to mine into rooms, workshops, and vaults, protected by a thick rock roof &mdash; safe from drop pods, mortars, and weather. Colonists use it on their own to work, eat, and sleep across levels. <b>Seal it</b> to wall a gas pocket or infestation onto one level; it cannot be deconstructed while anyone is still below.</p>
+          <p>A broad staircase carved down into the rock. Completing it opens a <b>new 200&times;200 underground level</b>: solid stone to mine into rooms, workshops, and vaults, protected by a thick rock roof &mdash; safe from drop pods, mortars, and weather. Colonists use it on their own to work, eat, and sleep across levels. The shaft also <b>ties both floors&rsquo; power grids together</b> when each level is wired into the stairwell. <b>Seal it</b> to wall a gas pocket or infestation onto one level; it cannot be deconstructed while anyone is still below.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/StairsUp.png" alt="Stairwell landing">
+        <div>
+          <h3>Underground landing</h3>
+          <div class="stat">auto-spawned &middot; pairs with each stairwell</div>
+          <p>Every new level gets a matching stairwell landing at the bottom of the shaft &mdash; clearly a carved staircase, not a rope ladder. Raiders who pursue your colonists arrive here before spreading out underground.</p>
         </div>
       </div>
 
@@ -92,7 +101,7 @@
         <div>
           <h3>Shaft power conduit</h3>
           <div class="stat">1&times;1 &middot; 10W &middot; Shaft power research</div>
-          <p>Build one beside a stairwell on each level and wire each into its local grid: the pair <b>ties the two levels' power nets together</b>, sharing surplus to whichever level runs short, up to a cap. Keep a battery on each level for it to pool across.</p>
+          <p>An <b>optional</b> tie point beside a stairwell when you want a dedicated hook-up away from the stair footprint. Stairwells and elevators already pool power on their own &mdash; build one of these on each level only if you need a separate junction.</p>
         </div>
       </div>
 
@@ -100,11 +109,73 @@
         <img src="img/ExhaustFan.png" alt="Exhaust fan">
         <div>
           <h3>Exhaust fan</h3>
-          <div class="stat">1&times;1 &middot; 100W &middot; Electricity research</div>
-          <p>A powered extractor that pulls <b>combustion fumes</b> out of an enclosed room. Essential for running wood or chemfuel generators indoors or underground, where there's no open sky to carry the smoke away.</p>
+          <div class="stat">1&times;1 wall vent &middot; 100W &middot; Electricity research</div>
+          <p>A powered one-way wall vent. Mount it with the intake facing the smoky room; fumes exit the facing side into another room, a duct run, or the open air. Essential for wood or chemfuel generators indoors or underground.</p>
         </div>
       </div>
 
+      <div class="card strata">
+        <img src="img/ExhaustFan.png" alt="Updraft filter">
+        <div>
+          <h3>Updraft filter</h3>
+          <div class="stat">stairwell room &middot; 80W &middot; Electricity research</div>
+          <p>A powered fan built in a stairwell or elevator landing. Smoke naturally rises through an open shaft; this actively pulls fumes from the room and pushes them up to the level above &mdash; like a chimney stack for underground burners. Useless when the shaft is sealed.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <div class="icon">&#128168;</div>
+        <div>
+          <h3>Smoke louver</h3>
+          <div class="stat">passive wall vent &middot; no power &middot; Complex furniture research</div>
+          <p>A passive one-way wall louver. Mount it like a vent with the intake facing the room to bleed fumes out slowly &mdash; weaker than an exhaust fan, but cheap and always on.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/SmokeDuct.png" alt="Smoke duct">
+        <div>
+          <h3>Smoke duct</h3>
+          <div class="stat">floor emplacement &middot; linked tiles &middot; Complex furniture research</div>
+          <p>Floor ducts that route exhaust from a fan or louver to a distant outdoor vent. Connect ducts in a line; the run must reach outdoors (or an outdoor-facing louver) to clear smoke from the intake room.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="ventilation">
+    <h2 class="t">Smoke ventilation</h2>
+    <p class="sub">Underground burners need a path to the sky &mdash; or colonists choke.</p>
+    <div class="grid">
+      <div class="card strata wide">
+        <div class="icon">&#9729;</div>
+        <div>
+          <h3>Natural rise &amp; door venting</h3>
+          <p>Combustion smoke in an <b>unsealed stairwell or elevator</b> naturally convects upward to the level above, the same way heat does. Sealing the shaft stops it. Open doors to the outdoors also bleed smoke; sealed stairwells and elevators block tox gas through the portal footprint.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#9881;</div>
+        <div>
+          <h3>Mod burners auto-patched</h3>
+          <p>At load, fuel-fired and power-generating buildings from other mods get exhaust behavior when they look like burners &mdash; so third-party generators and stoves participate in the smoke system too.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="levels-tab">
+    <h2 class="t">Levels tab</h2>
+    <p class="sub">Once you excavate your first level, a new bottom-bar tab lists every floor of the colony.</p>
+    <div class="grid">
+      <div class="card strata wide">
+        <div class="icon">&#128506;</div>
+        <div>
+          <h3>Jump, rename, and read the floor</h3>
+          <p>Each row shows colonist count, hostile count, and temperature. Click a row to jump the camera to that level&rsquo;s stairwell. Use <b>Rename</b> to label floors (&ldquo;Freezer floor&rdquo;, &ldquo;Workshop B-2&rdquo;, and so on).</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -144,9 +215,25 @@
         <div class="icon">&#9729;</div>
         <div>
           <h3>Burners breathe</h3>
-          <p>Wood-fired and chemfuel generators, campfires, torches, and open fires give off combustion fumes that pool in enclosed rooms as a visible <b>black smog</b>. Run one in a sealed room &mdash; or anywhere underground &mdash; and colonists start choking on a worsening <i>smoke inhalation</i> hediff that turns fatal if ignored. Vent it with an open roof, a door to the outdoors, or a powered exhaust fan. Solar, wind, geothermal, and batteries burn nothing and stay clean. Toggle <b>&ldquo;show smoke levels&rdquo;</b> in the play settings to read the exact smoke percentage under your cursor.</p>
+          <p>Wood-fired and chemfuel generators, campfires, torches, and open fires give off combustion fumes that pool in enclosed rooms as visible <b>black smog</b>. Run one in a sealed room &mdash; or anywhere underground &mdash; and colonists start choking on a worsening <i>smoke inhalation</i> hediff that turns fatal if ignored. Vent with an open roof, a door to the outdoors, an exhaust fan, a smoke louver, a duct run, or an updraft filter in the stairwell. Solar, wind, geothermal, and batteries burn nothing and stay clean. Toggle <b>&ldquo;show smoke levels&rdquo;</b> in play settings to read the exact smoke percentage under your cursor.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="events">
+    <h2 class="t">Events</h2>
+    <p class="sub">Six threats and opportunities tied to depth.</p>
+    <div class="table-scroll">
+      <table>
+        <tr><th class="t">Event</th><th>Where</th><th>What happens</th></tr>
+        <tr><td><b>Cave-in</b></td><td>Underground</td><td>Unsupported rock roof collapses when mined too wide</td></tr>
+        <tr><td><b>Gas pocket</b></td><td>Underground</td><td>Miners breach a pocket of tox gas &mdash; seal the stairwell to isolate it</td></tr>
+        <tr><td><b>Deep vein</b></td><td>Underground</td><td>Miners break into a rich ore seam</td></tr>
+        <tr><td><b>Burrowing raiders</b></td><td>Underground</td><td>Raiders tunnel up through the stone</td></tr>
+        <tr><td><b>Prospector&rsquo;s tip</b></td><td>Surface</td><td>A wandering prospector marks a hidden seam on the map</td></tr>
+        <tr><td><b>Ground tremor</b></td><td>Surface</td><td>Deep digging rattles surface structures</td></tr>
+      </table>
     </div>
   </section>
 
@@ -163,10 +250,13 @@
     <div class="table-scroll" style="margin-top:24px">
       <table>
         <tr><th class="t">Building</th><th>Cost</th><th>Power</th><th>Research</th></tr>
-        <tr><td><b>Excavated stairwell</b></td><td>60 wood, 30 steel</td><td>&mdash;</td><td>Deep excavation</td></tr>
+        <tr><td><b>Excavated stairwell</b></td><td>60 wood, 30 steel</td><td>10W (ties grids)</td><td>Deep excavation</td></tr>
         <tr><td><b>Elevator</b></td><td>120 steel, 4 components</td><td>200W</td><td>Elevators</td></tr>
         <tr><td><b>Shaft power conduit</b></td><td>60 steel, 2 components</td><td>10W</td><td>Shaft power</td></tr>
         <tr><td><b>Exhaust fan</b></td><td>50 steel, 1 component</td><td>100W</td><td>Electricity (vanilla)</td></tr>
+        <tr><td><b>Updraft filter</b></td><td>40 steel, 1 component</td><td>80W</td><td>Electricity (vanilla)</td></tr>
+        <tr><td><b>Smoke louver</b></td><td>20 steel</td><td>&mdash;</td><td>Complex furniture (vanilla)</td></tr>
+        <tr><td><b>Smoke duct</b></td><td>10 steel/tile</td><td>&mdash;</td><td>Complex furniture (vanilla)</td></tr>
       </table>
     </div>
   </section>
