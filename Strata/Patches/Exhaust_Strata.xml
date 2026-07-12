@@ -76,7 +76,7 @@
       <xpath>Defs/ThingDef[defName="TorchLamp"]/comps</xpath>
       <value>
         <li Class="Strata.CompProperties_Exhaust">
-          <emissionPerCycle>1.0</emissionPerCycle>
+          <emissionPerCycle>0.1</emissionPerCycle>
         </li>
       </value>
     </match>
