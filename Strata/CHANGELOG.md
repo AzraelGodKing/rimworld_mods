@@ -4,6 +4,9 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Changed
+- GitHub Pages catalog (`docs/strata.html`) updated with smoke ventilation buildings, Levels tab, 200×200 levels, stairwell power pooling, and structured events list.
+
 ### Added
 - **Raid pursuit**: hiding downstairs no longer ends a fight. Raiders with nobody left to shoot at on their level find an unsealed stairwell or powered elevator and come down (or up) after your colonists, re-forming into an assault once they arrive - underground they fight to the end, since there's no map edge to flee across. Sealing a stairwell stops pursuit cold, making the seal toggle a real defensive decision. A warning message fires when pursuers start using a stairwell.
 - **Levels tab**: a new bottom-bar tab (appears once the first level is excavated) listing every floor of the colony with colonist count, hostile count, and temperature. Click a row to jump the camera to that level's stairwell; **Rename** assigns custom labels (e.g. "Freezer floor", "Workshop B-2").
