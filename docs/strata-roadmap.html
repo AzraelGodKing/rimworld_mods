@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strata V2 Roadmap — where the deep goes next</title>
+<meta name="description" content="The public roadmap for Strata V2: geothermal power, a living gas system, cross-level pipes, rival raiders, and building upward. Community-driven, not committed scope.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">RIMWORLD MODS</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="homesteader.html">Homesteader</a>
+      <a href="stormproof.html">Stormproof</a>
+      <a href="wellspring.html">Wellspring</a>
+      <a href="strata.html" class="active">Strata</a>
+      <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero strata">
+  <div class="wrap">
+    <h1 class="t">STRATA — V2 ROADMAP</h1>
+    <p class="tagline">Where the deep goes next</p>
+    <div class="badges">
+      <span class="badge strata">Community-driven</span>
+      <span class="badge strata">Not committed scope</span>
+      <span class="badge strata">Updated July 2026</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-strata" href="strata.html">&#8592; Back to Strata</a>
+      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods/issues">Suggest a feature</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="intro">
+    <div class="note strata">
+      <b>What this is:</b> the planning backlog for Strata's next major version, shaped directly by player feedback.
+      Nothing here is promised or dated &mdash; it's the honest list of what's being designed, in the order it's likely to land.
+      Ideas credited where they came from the community. Got one? Use the button above.
+    </div>
+  </section>
+
+  <!-- PILLAR 0 -->
+  <section id="pillar-0">
+    <span class="tier-label">Pillar 0</span>
+    <h2 class="t">Polish &amp; Hardening</h2>
+    <p class="sub">Smaller quality-of-life items carried forward from V1 &mdash; slotted in between the big pushes.</p>
+    <div class="grid">
+      <div class="card strata">
+        <div class="icon">&#128230;</div>
+        <div>
+          <h3>Smarter logistics</h3>
+          <p>Haulers prefer the powered elevator for heavy loads, relays pick the shortest shaft path instead of the first one found, and mid-haul seal changes are handled gracefully.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#9888;</div>
+        <div>
+          <h3>Threat telegraphing</h3>
+          <p>Tremors warn before a deep raid erupts, raiders besiege sealed shafts instead of shrugging, and a depth-scaled threat pass makes richer ore mean nastier bugs.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#128276;</div>
+        <div>
+          <h3>Alerts &amp; helpers</h3>
+          <p>Warnings for smoke building on an empty level and colonists stuck below a sealed shaft; placement arrows for fan intakes and duct exits; ritual support for prisoners and animals.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#128736;</div>
+        <div>
+          <h3>Under the hood</h3>
+          <p>Unit tests for the level graph and smoke math, a proper README, one raid = one story coordination for multi-level pursuits, and dedicated art for the smoke hole and updraft filter.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLAR 1 -->
+  <section id="pillar-1">
+    <span class="tier-label">Pillar 1 &mdash; idea credit: Thundercraft &amp; dognamedKats</span>
+    <h2 class="t">The Living Deep</h2>
+    <p class="sub">The deep becomes a place with resources and an atmosphere &mdash; not just rock to hollow out.</p>
+    <div class="grid">
+      <div class="card strata wide">
+        <div class="icon">&#9832;</div>
+        <div>
+          <h3>Hidden geothermal chambers</h3>
+          <div class="stat">deeper is richer &middot; found by mining</div>
+          <p>Steam geysers seeded in small fogged chambers sealed in the rock &mdash; your miners <i>discover</i> them the way they discover ore. The vanilla geothermal generator just works, and its heat pours into your tunnels through the existing temperature exchange.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#9762;</div>
+        <div>
+          <h3>A real gas system</h3>
+          <div class="stat">built on the smoke engine</div>
+          <p>The smoke simulation generalizes into a full atmosphere: toxic and flammable gases that pool, flow through doors and vents, and respect seals &mdash; every ventilation tool you already own works on them.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#128293;</div>
+        <div>
+          <h3>Flammable pockets</h3>
+          <div class="stat">torches become mining hazards</div>
+          <p>Crack into a gas pocket and the room fills. Bring an open flame into a saturated room and it <i>ignites</i> &mdash; electric lighting underground stops being a luxury and becomes safety equipment.</p>
+        </div>
+      </div>
+      <div class="card strata wide">
+        <div class="icon">&#9881;</div>
+        <div>
+          <h3>Gas as a resource</h3>
+          <div class="stat">vent it for safety, or tap it for power</div>
+          <p>A gas well on a deep vent feeds a deep-gas generator &mdash; no dependencies needed. Running <b>Vanilla Helixien Gas Expanded</b>? Deep vents can feed its pipe network instead. Venting a gas-filled room keeps your pawns safe but wastes the fuel: your call.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLAR 2 -->
+  <section id="pillar-2">
+    <span class="tier-label">Pillar 2 &mdash; idea credit: Hat</span>
+    <h2 class="t">Fluid Shafts</h2>
+    <p class="sub">Water, oil, gas, paste, and chemfuel between levels &mdash; without touching any pipe mod's network internals.</p>
+    <div class="grid">
+      <div class="card strata wide">
+        <div class="icon">&#128167;</div>
+        <div>
+          <h3>The power-shaft trick, applied to pipes</h3>
+          <div class="stat">no network merging &middot; no jank &middot; negligible performance cost</div>
+          <p>Strata never splices pipe networks across maps &mdash; that's the fragile approach. Instead: a paired shaft node on each level, each an ordinary member of its own network, with a demand-driven metered transfer between them. It's a pump through the shaft, not a spliced pipe &mdash; the same proven design as Strata's power ties.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#128295;</div>
+        <div>
+          <h3>Dubs Bad Hygiene</h3>
+          <p>Water and sewage across levels &mdash; plus groundwater seeded on Strata levels so underground wells work at all. Deeper digs tap richer aquifers.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#128295;</div>
+        <div>
+          <h3>Vanilla Expanded pipes</h3>
+          <p>One adapter covers the whole VE family: nutrient paste, Helixien gas, chemfuel pipes, and resource tanks.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#128295;</div>
+        <div>
+          <h3>Rimefeller</h3>
+          <p>Oil and the chem network, same treatment. All adapters are soft dependencies &mdash; nothing breaks without them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLAR 3 -->
+  <section id="pillar-3">
+    <span class="tier-label">Pillar 3</span>
+    <h2 class="t">Rival Raiders</h2>
+    <p class="sub">The deep remembers &mdash; and so do the people who crawled out of it.</p>
+    <div class="grid">
+      <div class="card strata wide">
+        <div class="icon">&#9876;</div>
+        <div>
+          <h3>Escaped raiders hold grudges</h3>
+          <p>A raider who escapes your colony is remembered. Seasons later they return leading their own raid &mdash; wearing the scar you gave them, named in the letter, and heading straight for the stairwell they escaped through. Kill them and the story closes; let them slip away again and the third visit is worse.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLAR 4 -->
+  <section id="pillar-4">
+    <span class="tier-label">Pillar 4 &mdash; the big one</span>
+    <h2 class="t">Building Up</h2>
+    <p class="sub">Above-ground floors. Sky is the new rock.</p>
+    <div class="grid">
+      <div class="card strata wide">
+        <div class="icon">&#127959;</div>
+        <div>
+          <h3>Floors that grow with your base</h3>
+          <div class="stat">rooftop solar &middot; tower greenhouses &middot; sky bedrooms</div>
+          <p>An upper level is a full map of open sky &mdash; unbuildable void except directly above supported structure. Just as mining expands a level below, <b>building expands the level above</b>: every wall you raise on the ground floor extends the buildable footprint upstairs. Cell-for-cell alignment with the floor below, real weather and sunlight up top, and floors that collapse if you demolish what holds them up.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#9728;</div>
+        <div>
+          <h3>Real sky</h3>
+          <p>Upper floors get genuine sunlight and surface weather: solar panels on the roof, greenhouses without sun lamps &mdash; and yes, drop pods can land on your rooftop.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#8645;</div>
+        <div>
+          <h3>Up and down, one base</h3>
+          <p>Combined with the underground levels, Strata becomes the complete vertical-base mod: sky gardens to deep vaults, one colony, many floors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="outro">
+    <div class="note strata">
+      <b>Have thoughts?</b> These pillars exist because players wrote in &mdash; Thundercraft's geothermal question, dognamedKats' gas pitch, and Hat's cross-level pipes analysis each became a pillar.
+      Feedback and ideas: <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">GitHub issues</a>, or wherever you found this page.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="strata.html">Strata</a>
+    &middot; <a href="index.html">All mods</a>
+    &middot; Strata by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
+  </div>
+</footer>
+
+</body>
+</html>
