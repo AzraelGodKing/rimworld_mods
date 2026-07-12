@@ -14,6 +14,8 @@ namespace Strata
         public bool foodRelayEnabled = true;
         public bool restRelayEnabled = true;
         public bool throttleVacantLevels = true;
+        public KeyCode viewLevelUpKey = KeyCode.PageUp;
+        public KeyCode viewLevelDownKey = KeyCode.PageDown;
 
         public override void ExposeData()
         {
@@ -25,12 +27,17 @@ namespace Strata
             Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref throttleVacantLevels, "throttleVacantLevels", defaultValue: true);
+            Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
+            Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
         }
     }
 
     public class StrataMod : Mod
     {
         public static StrataSettings Settings;
+
+        // Which key picker is waiting for a keypress ("up", "down", or null).
+        private static string listeningFor;
 
         public StrataMod(ModContentPack content) : base(content)
         {
@@ -41,8 +48,33 @@ namespace Strata
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            // Capture the next keypress for whichever picker is listening.
+            if (listeningFor != null && Event.current.type == EventType.KeyDown)
+            {
+                if (Event.current.keyCode != KeyCode.Escape && Event.current.keyCode != KeyCode.None)
+                {
+                    if (listeningFor == "up")
+                    {
+                        Settings.viewLevelUpKey = Event.current.keyCode;
+                    }
+                    else
+                    {
+                        Settings.viewLevelDownKey = Event.current.keyCode;
+                    }
+                }
+                listeningFor = null;
+                Event.current.Use();
+            }
+
             var listing = new Listing_Standard();
             listing.Begin(inRect);
+
+            Text.Font = GameFont.Medium;
+            listing.Label("Level view hotkeys");
+            Text.Font = GameFont.Small;
+            KeyPickerRow(listing, "View level above", ref Settings.viewLevelUpKey, "up", KeyCode.PageUp);
+            KeyPickerRow(listing, "View level below", ref Settings.viewLevelDownKey, "down", KeyCode.PageDown);
+            listing.Gap();
 
             Text.Font = GameFont.Medium;
             listing.Label("Colonist relays");
@@ -77,6 +109,25 @@ namespace Strata
                 "Levels with nobody on them run their ambient simulation at reduced rate to save performance.");
 
             listing.End();
+        }
+
+        private static void KeyPickerRow(Listing_Standard listing, string label, ref KeyCode key, string id, KeyCode defaultKey)
+        {
+            Rect rect = listing.GetRect(30f);
+            Widgets.Label(rect.LeftPart(0.5f), label);
+            Rect button = new Rect(rect.x + rect.width * 0.5f, rect.y, rect.width * 0.3f, 28f);
+            string text = listeningFor == id ? "Press a key..." : key.ToString();
+            if (Widgets.ButtonText(button, text))
+            {
+                listeningFor = listeningFor == id ? null : id;
+            }
+            Rect reset = new Rect(button.xMax + 6f, rect.y, rect.width * 0.2f - 6f, 28f);
+            if (key != defaultKey && Widgets.ButtonText(reset, "Reset"))
+            {
+                key = defaultKey;
+                listeningFor = null;
+            }
+            listing.Gap(2f);
         }
     }
 }
