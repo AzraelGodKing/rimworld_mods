@@ -30,6 +30,8 @@ namespace Strata
         private const float OutdoorDisperse = 0.6f; // fraction cleared per cycle in open air
         private const float ExteriorDoorDrain = 0.4f; // per open exterior door - a visible flush
         private const float InteriorDoorFlow = 0.25f; // fraction of the density gap that crosses an open interior door
+        private const float VentExteriorDrain = 0.3f; // per vanilla wall vent facing open air - near-complete emptying
+        private const float VentInteriorFlow = 0.15f; // room-to-room equalization through a vanilla wall vent
         private const float HarmThreshold = 0.15f;
         // Burners and inflows can never push a properly ventilated room past
         // this light haze, safely under HarmThreshold - ventilation is a
@@ -222,10 +224,33 @@ namespace Strata
                 float density = c.density;
                 // Doors are their own one-cell "doorway room" and never show
                 // up in the room's Regions - walk the border cells instead.
+                // Vanilla wall vents flow smoke the same way they flow heat.
                 foreach (IntVec3 borderCell in room.BorderCellsCached)
                 {
-                    Building_Door door = borderCell.InBounds(map) ? borderCell.GetDoor(map) : null;
-                    if (door == null || !door.Open || !countedDoors.Add(door))
+                    if (!borderCell.InBounds(map))
+                    {
+                        continue;
+                    }
+                    Building opening = null;
+                    bool isVent = false;
+                    Building_Door door = borderCell.GetDoor(map);
+                    if (door != null)
+                    {
+                        if (door.Open)
+                        {
+                            opening = door;
+                        }
+                    }
+                    else
+                    {
+                        Building edifice = borderCell.GetEdifice(map);
+                        if (edifice != null && SmokeVentUtility.IsOpenVent(edifice))
+                        {
+                            opening = edifice;
+                            isVent = true;
+                        }
+                    }
+                    if (opening == null || !countedDoors.Add(opening))
                     {
                         continue;
                     }
@@ -233,7 +258,7 @@ namespace Strata
                     bool exterior = false;
                     foreach (IntVec3 dir in GenAdj.CardinalDirections)
                     {
-                        IntVec3 beyond = door.Position + dir;
+                        IntVec3 beyond = opening.Position + dir;
                         if (!beyond.InBounds(map))
                         {
                             continue;
@@ -255,7 +280,7 @@ namespace Strata
                     if (exterior)
                     {
                         // Exits take priority: outdoors is a pure drain.
-                        density *= 1f - ExteriorDoorDrain;
+                        density *= 1f - (isVent ? VentExteriorDrain : ExteriorDoorDrain);
                     }
                     else if (neighbor != null && neighbor.CellCount > 0)
                     {
@@ -266,11 +291,11 @@ namespace Strata
                         float cellsThere = neighbor.CellCount;
                         float there = DensityInRoom(neighbor);
                         float equilibrium = (density * cellsHere + there * cellsThere) / (cellsHere + cellsThere);
-                        float drop = (density - equilibrium) * InteriorDoorFlow;
+                        float drop = (density - equilibrium) * (isVent ? VentInteriorFlow : InteriorDoorFlow);
                         if (drop > 0.005f)
                         {
                             density -= drop;
-                            AddSmokeToRoom(neighbor, drop * cellsHere / cellsThere, door.Position);
+                            AddSmokeToRoom(neighbor, drop * cellsHere / cellsThere, opening.Position);
                         }
                     }
                 }
@@ -289,12 +314,14 @@ namespace Strata
             }
         }
 
-        // A working smoke outlet: open sky, an open exterior door, a fan or
-        // louver whose exhaust side (or duct run) reaches outdoors, or a
-        // powered updraft filter beside an unsealed shaft.
+        // A working smoke outlet: open sky, an open exterior door, a vanilla
+        // wall vent facing open air, a fan or louver whose exhaust side (or
+        // duct run) reaches outdoors, or a powered updraft filter beside an
+        // unsealed shaft.
         private bool RoomIsProperlyVentilated(Room room)
         {
-            if (room.OpenRoofCount > 0 || SmokeVentUtility.RoomHasOpenExteriorDoor(room))
+            if (room.OpenRoofCount > 0 || SmokeVentUtility.RoomHasOpenExteriorDoor(room)
+                || RoomHasOutdoorWallVent(room))
             {
                 return true;
             }
@@ -324,6 +351,25 @@ namespace Strata
                 if (updraft.parent.Spawned && updraft.Active
                     && updraft.parent.GetRoom() == room
                     && RoomHasOpenShaftUp(room))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool RoomHasOutdoorWallVent(Room room)
+        {
+            Map roomMap = room.Map;
+            foreach (IntVec3 cell in room.BorderCellsCached)
+            {
+                if (!cell.InBounds(roomMap))
+                {
+                    continue;
+                }
+                Building edifice = cell.GetEdifice(roomMap);
+                if (edifice != null && SmokeVentUtility.IsOpenVent(edifice)
+                    && SmokeVentUtility.OpeningLeadsOutdoors(edifice, room))
                 {
                     return true;
                 }
