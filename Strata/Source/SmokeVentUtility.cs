@@ -76,10 +76,16 @@ namespace Strata
 
         public static bool DoorLeadsOutdoors(Building_Door door, Room from)
         {
-            Map map = door.Map;
+            return OpeningLeadsOutdoors(door, from);
+        }
+
+        // Whether the far side of a wall opening (door or vent) is open air.
+        public static bool OpeningLeadsOutdoors(Building opening, Room from)
+        {
+            Map map = opening.Map;
             foreach (IntVec3 dir in GenAdj.CardinalDirections)
             {
-                IntVec3 cell = door.Position + dir;
+                IntVec3 cell = opening.Position + dir;
                 if (!cell.InBounds(map))
                 {
                     continue;
@@ -95,6 +101,14 @@ namespace Strata
                 }
             }
             return false;
+        }
+
+        // A vanilla wall vent (or modded subclass) that isn't flicked off.
+        // Smoke follows the same path temperature does.
+        public static bool IsOpenVent(Building building)
+        {
+            return building is Building_Vent
+                && building.TryGetComp<CompFlickable>()?.SwitchIsOn != false;
         }
 
         public static void CollectDuctNetwork(Map map, IntVec3 start, HashSet<IntVec3> network)
