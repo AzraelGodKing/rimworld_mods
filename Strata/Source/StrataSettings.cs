@@ -14,6 +14,7 @@ namespace Strata
         public bool foodRelayEnabled = true;
         public bool restRelayEnabled = true;
         public bool throttleVacantLevels = true;
+        public bool crossLevelRitualsEnabled = true;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;
 
@@ -27,6 +28,7 @@ namespace Strata
             Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref throttleVacantLevels, "throttleVacantLevels", defaultValue: true);
+            Scribe_Values.Look(ref crossLevelRitualsEnabled, "crossLevelRitualsEnabled", defaultValue: true);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
             Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
         }
@@ -85,6 +87,8 @@ namespace Strata
                 "Hungry colonists go find a meal on another level.");
             listing.CheckboxLabeled("Rest relay", ref Settings.restRelayEnabled,
                 "Sleepy colonists walk home to their bed on another level.");
+            listing.CheckboxLabeled("Cross-level rituals", ref Settings.crossLevelRitualsEnabled,
+                "The ritual menu lists colonists from every linked level; those elsewhere walk to the ritual and join when they arrive.");
             listing.Gap();
 
             Text.Font = GameFont.Medium;
