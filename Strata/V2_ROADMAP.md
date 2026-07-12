@@ -67,16 +67,7 @@ nothing to desync, no patching of net internals (the source of MF-style jank).
   framework's own API, move min(cap, need, available). Same brownout-proof
   demand-driven shape as `CompPowerShaft.DriveTie`.
 
-## Pillar 3 — Rival system (nemesis-like, discussed)
-
-- Escaped raiders tracked in a world component; return in later raids with
-  their scars, a grudge, a name in the letter, and knowledge of the colony
-  (e.g. arrive already heading for the stairwell they escaped through).
-- Kill closes the storyline; repeat escapes escalate.
-- Deliberately NOT the patented ensemble: single rivals with memory, no
-  procedural promotion hierarchy, no faction-politics screen.
-
-## Pillar 4 — Building Up (above-ground floors)
+## Pillar 3 — Building Up (above-ground floors)
 
 Sky is the new rock: an up-level is a full-size pocket map that is open sky
 everywhere — impassable, unbuildable void — except above supported structure.
