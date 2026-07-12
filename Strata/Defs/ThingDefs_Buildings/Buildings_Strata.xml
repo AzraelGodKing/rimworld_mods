@@ -355,6 +355,52 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </researchPrerequisites>
   </ThingDef>
 
+  <!-- ============ Smoke hole (primitive passive vent, no research) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_SmokeHole</defName>
+    <label>smoke hole</label>
+    <description>A sod-and-wicker flue packed into a wall opening - the oldest chimney there is. Mount it with the intake side facing the smoky room and fumes slowly seep out the other side. Weaker than machined vents, but it needs no research and nothing but wood, and it keeps a fire-lit room breathable. One-way only.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/TempControl/Vent</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(133,109,78)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <fillPercent>1</fillPercent>
+    <coversFloor>true</coversFloor>
+    <blockLight>true</blockLight>
+    <rotatable>true</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <WorkToBuild>400</WorkToBuild>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>25</WoodLog>
+    </costList>
+    <comps>
+      <li Class="Strata.CompProperties_ExhaustVent">
+        <ventPower>0.05</ventPower>
+        <requiresPower>false</requiresPower>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_Vent</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
   <!-- ============ Smoke duct ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_SmokeDuct</defName>
