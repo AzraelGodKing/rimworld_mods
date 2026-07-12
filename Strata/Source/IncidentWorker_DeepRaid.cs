@@ -16,22 +16,49 @@ namespace Strata
         {
             if (!(parms.target is Map map) || !StrataMapUtility.IsUnderground(map))
             {
-                return false;
+                return Fail("target is not an underground level");
             }
             if (map.mapPawns.FreeColonistsSpawned.Count == 0)
             {
-                return false;
+                return Fail("no colonists on this level");
             }
-            Faction faction = parms.faction ?? Find.FactionManager.RandomEnemyFaction();
-            return faction != null;
+            if (parms.faction == null && PickFaction() == null)
+            {
+                return Fail("no enemy faction available");
+            }
+            return true;
+        }
+
+        // Dev-mode breadcrumb: "cannot fire" without a reason is undebuggable.
+        // If the debug menu refuses with NO such log line, the failure is in
+        // vanilla's base checks (big threats disabled, refire cooldown, ...).
+        private static bool Fail(string reason)
+        {
+            if (Prefs.DevMode)
+            {
+                Log.Message("[Strata] Deep raid can't fire: " + reason);
+            }
+            return false;
+        }
+
+        // Prefer a faction that can actually field a raid; fall back to any
+        // hostile faction.
+        private static Faction PickFaction()
+        {
+            return Find.FactionManager.RandomRaidableEnemyFaction()
+                ?? Find.FactionManager.RandomEnemyFaction();
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
             Map map = (Map)parms.target;
-            Faction faction = parms.faction ?? Find.FactionManager.RandomEnemyFaction();
+            Faction faction = parms.faction ?? PickFaction();
             if (faction == null)
             {
+                if (Prefs.DevMode)
+                {
+                    Log.Message("[Strata] Deep raid aborted: no enemy faction available.");
+                }
                 return false;
             }
 
@@ -48,6 +75,10 @@ namespace Strata
             List<Pawn> raiders = PawnGroupMakerUtility.GeneratePawns(groupParms).ToList();
             if (raiders.Count == 0)
             {
+                if (Prefs.DevMode)
+                {
+                    Log.Message($"[Strata] Deep raid aborted: {faction} generated no raiders at {points} points.");
+                }
                 return false;
             }
 
