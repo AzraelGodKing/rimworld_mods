@@ -23,6 +23,11 @@ namespace Strata
 
         private readonly List<Pawn> pursuerBuffer = new List<Pawn>();
 
+        // Hostiles that stepped off a portal this tick, enrolled next tick:
+        // vanilla's EnterPortal job strips the pawn's lord AFTER OnEntered
+        // runs, so enrolling during arrival gets silently undone.
+        private readonly List<Pawn> pendingArrivals = new List<Pawn>();
+
         public MapComponent_RaidPursuit(Map map) : base(map)
         {
         }
@@ -31,7 +36,12 @@ namespace Strata
         {
             if (StrataMod.Settings != null && !StrataMod.Settings.raidPursuitEnabled)
             {
+                pendingArrivals.Clear();
                 return;
+            }
+            if (pendingArrivals.Count > 0)
+            {
+                ProcessPendingArrivals();
             }
             // Stagger per map so tall bases don't pulse every level on one tick.
             int tick = Find.TickManager.TicksGame + map.uniqueID * 37;
@@ -42,6 +52,29 @@ namespace Strata
             if (tick % PursuitInterval == 0)
             {
                 TryPursue();
+            }
+        }
+
+        private void ProcessPendingArrivals()
+        {
+            for (int i = pendingArrivals.Count - 1; i >= 0; i--)
+            {
+                Pawn pawn = pendingArrivals[i];
+                pendingArrivals.RemoveAt(i);
+                if (pawn == null || pawn.Dead || pawn.Downed || !pawn.Spawned || pawn.Map != map)
+                {
+                    continue;
+                }
+                if (pawn.Faction == null || !pawn.Faction.HostileTo(Faction.OfPlayer)
+                    || pawn.GetLord() != null)
+                {
+                    continue;
+                }
+                EnrollIntoAssault(pawn, map);
+                // Vanilla's lordless AI may already have handed them a
+                // leave-the-map job (back up the stairs) - force a re-think
+                // now that they have assault duties.
+                pawn.jobs?.EndCurrentJob(JobCondition.InterruptForced);
             }
         }
 
@@ -141,10 +174,11 @@ namespace Strata
         // ---- Receiving raiders on the far side ----
 
         // Called from the stairs' OnEntered the moment a pawn steps off the
-        // portal. A lord-less hostile must be enrolled BEFORE its first think
-        // on the new map: vanilla's lordless AI is "leave the map", and on a
-        // pocket map the way out is the stairs it just came down - which read
-        // as raiders turning around and running straight back up.
+        // portal. The actual enrollment happens on the NEXT tick, because the
+        // vanilla EnterPortal job strips the pawn's lord a few lines after
+        // OnEntered returns - enrolling here would be silently undone, leaving
+        // the raider lordless, and vanilla's lordless AI walks them right back
+        // up the stairs they came down.
         public static void NotifyPortalArrival(Pawn pawn, Map map)
         {
             if (StrataMod.Settings != null && !StrataMod.Settings.raidPursuitEnabled)
@@ -159,12 +193,11 @@ namespace Strata
             {
                 return;
             }
-            if (pawn.Faction == null || !pawn.Faction.HostileTo(Faction.OfPlayer)
-                || pawn.GetLord() != null)
+            if (pawn.Faction == null || !pawn.Faction.HostileTo(Faction.OfPlayer))
             {
                 return;
             }
-            EnrollIntoAssault(pawn, map);
+            map.GetComponent<MapComponent_RaidPursuit>()?.pendingArrivals.Add(pawn);
         }
 
         private static void EnrollIntoAssault(Pawn pawn, Map map)
