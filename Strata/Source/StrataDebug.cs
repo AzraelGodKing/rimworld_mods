@@ -19,6 +19,10 @@ namespace Strata
                 return;
             }
             var parms = StorytellerUtility.DefaultParmsNow(def.category, map);
+            // Dev buttons bypass the storyteller's pacing gates (ThreatBig
+            // mercy windows, refire cooldowns, difficulty settings) - only the
+            // incident's own requirements still apply.
+            parms.forced = true;
             if (def.Worker.CanFireNow(parms))
             {
                 def.Worker.TryExecute(parms);
