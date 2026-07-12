@@ -248,19 +248,12 @@ namespace Strata
             {
                 return;
             }
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
+            MapPortal step = LevelGraph.BestFirstStep(pawn.Map, t.destination, pawn.Position);
+            if (step != null && step.Spawned && step.IsEnterable(out _)
+                && pawn.CanReach(step, PathEndMode.Touch, Danger.Some))
             {
-                if (link.map != t.destination)
-                {
-                    continue;
-                }
-                if (link.firstStep.Spawned && link.firstStep.IsEnterable(out _)
-                    && pawn.CanReach(link.firstStep, PathEndMode.Touch, Danger.Some))
-                {
-                    Job job = JobMaker.MakeJob(JobDefOf.EnterPortal, link.firstStep);
-                    pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-                }
-                return;
+                Job job = JobMaker.MakeJob(JobDefOf.EnterPortal, step);
+                pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
             }
         }
     }

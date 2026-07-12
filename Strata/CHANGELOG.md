@@ -4,6 +4,19 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Added
+- **Smarter shaft routing**: pawns heading to another level now take the portal nearest to *them* — powered elevators preferred — instead of the first shaft the level graph found. Applies to work/food/rest relays, cross-level hauling, ritual travel, and raid pursuit.
+- **Forced ventilation research** (700 pts, Industrial, after Electricity): the exhaust fan and updraft filter now sit behind a proper Strata research project instead of bare Electricity. Passive vents (louver, smoke hole) are unchanged.
+- **Placement guides**: one-way vents (exhaust fan, louver, smoke hole) show their intake side in orange and exhaust side in green while placing; smoke ducts highlight the network they'd join — green if the run reaches outdoors, red if it's a dead pipe.
+- **Alerts**: "Smoke building underground" when smoke accumulates on a level with nobody on it, and a high-priority "Colonists sealed below" when pawns are on a level whose every exit shaft is sealed.
+- **Sealed-shaft siege**: pursuing raiders who hit a sealed stairwell now batter it down instead of shrugging. Breaking the entrance removes the way down — sealing is still the counter-play, but it buys time now, not immunity.
+- **Deep raid telegraphing & depth scaling**: the screen shakes as the tunneler digs in, and swarm points scale up with level depth — richer ore, meaner bugs.
+- **Self-tests**: a dev-mode action that runs invariant checks over the live colony (component registration, level-graph consistency, routing) and reports pass/fail.
+- **README** with install, compatibility (including the Ancient Urban Ruins verdict), performance notes, and dev-tool docs.
+
+### Fixed
+- **Haul + seal race**: sealing a shaft mid-haul now cancels the haul job instead of the pawn walking cargo to a door that won't open.
+
 ## [1.1] — 2026-07-12
 
 One home, many floors — and now they behave like one home. This release makes storage priority, construction, rituals, the build menu, and the resource readout work across the whole level column; rebuilds the smoke system around real airflow with a hard safety guarantee for ventilated rooms; makes pursuing raids commit to the fight like proper raids; turns deep raids into the insect eruptions they were always meant to be; and fixes a batch of deep-rooted bugs — including several systems that had never actually worked (door venting, underground storyteller events, real stairwell landings).

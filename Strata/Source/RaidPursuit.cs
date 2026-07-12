@@ -107,17 +107,30 @@ namespace Strata
             }
 
             // Chase toward the nearest level that still has colonists on it.
-            MapPortal firstStep = null;
+            Map targetLevel = null;
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
             {
                 if (link.map.mapPawns.FreeColonistsSpawnedCount > 0)
                 {
-                    firstStep = link.firstStep;
+                    targetLevel = link.map;
                     break;
                 }
             }
-            if (firstStep == null || !firstStep.Spawned || !firstStep.IsEnterable(out _))
+            if (targetLevel == null)
             {
+                return;
+            }
+            MapPortal firstStep = LevelGraph.BestFirstStep(map, targetLevel, IntVec3.Invalid);
+            if (firstStep == null || !firstStep.Spawned)
+            {
+                return;
+            }
+            if (!firstStep.IsEnterable(out _))
+            {
+                // Sealed against them. Raiders don't shrug - they batter the
+                // shaft. Break the stairwell and the way down is gone for
+                // everyone; that is the price of hiding.
+                TrySiege(firstStep);
                 return;
             }
 
@@ -156,6 +169,41 @@ namespace Strata
                     "Raiders have found the " + firstStep.def.label + " and are coming " +
                     (goingDown ? "down" : "up") + " after your colonists!",
                     new LookTargets(firstStep), MessageTypeDefOf.ThreatBig);
+            }
+        }
+
+        // Send pursuers to batter a sealed portal. Vanilla melee handles the
+        // rest; stairwells have hit points, and destroying the entrance
+        // removes the way down (a level with colonists on it stays alive).
+        private void TrySiege(MapPortal sealedPortal)
+        {
+            if (!StrataPortalUtility.IsSealedPortal(sealedPortal))
+            {
+                return; // not sealed, just transiently unenterable
+            }
+            int sent = 0;
+            foreach (Pawn raider in pursuerBuffer)
+            {
+                if (sent >= MaxPerPulse)
+                {
+                    break;
+                }
+                if (raider.CurJobDef == JobDefOf.AttackMelee
+                    || !raider.CanReach(sealedPortal, PathEndMode.Touch, Danger.Deadly))
+                {
+                    continue;
+                }
+                Job job = JobMaker.MakeJob(JobDefOf.AttackMelee, sealedPortal);
+                job.expiryInterval = 2000;
+                raider.jobs.StartJob(job, JobCondition.InterruptForced);
+                sent++;
+            }
+            if (sent > 0 && Find.TickManager.TicksGame - lastMessageTick > MessageCooldown)
+            {
+                lastMessageTick = Find.TickManager.TicksGame;
+                Messages.Message(
+                    "Raiders are battering the sealed " + sealedPortal.def.label + "!",
+                    new LookTargets(sealedPortal), MessageTypeDefOf.ThreatBig);
             }
         }
 
