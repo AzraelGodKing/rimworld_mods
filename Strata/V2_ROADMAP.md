@@ -3,6 +3,27 @@
 Not committed scope — a backlog for planning. Updated after the 1.1 release
 with community suggestions (Thundercraft, dognamedKats, Hat).
 
+## Pillar 0 — V1 carry-over (polish & hardening)
+
+Smaller items inherited from the V1 backlog; good between-pillar work.
+
+- **Elevator haul priority** — prefer powered elevator over stairs for heavy hauls.
+- **Multi-shaft routing** — relay picks shortest portal path, not first BFS link.
+- **Haul + seal race fix** — re-check portal seal mid `JobDriver_HaulToLevel`.
+- **Burrower telegraph** — tremor warning before a deep raid erupts.
+- **Sealed-shaft siege** — raiders attempt to unseal or find alternate entry.
+- **Depth-scaled threat table** — richer ore ↔ more bugs tradeoff pass.
+- **Dedicated exhaust-fan research** — Strata gate instead of bare Electricity.
+- **Placement helpers** — fan intake arrow, duct outdoor-exit hint.
+- **Unit tests** — pure logic: `LevelGraph`, `StrataDepth`, smoke math, relays.
+- **In-repo README** — full install/compat doc beyond `About.xml`.
+- **Strata-specific alerts** — smoke on empty level, colonists below sealed shaft.
+- **Cross-level rituals: prisoners & animals** — currently colonists only.
+- **Raid coordinator** — surface lord's retreat/loot decision broadcast to
+  sub-level pursuit groups (one raid, one story). Build if playtests show
+  split-decision weirdness.
+- **Dedicated art** — smoke hole and updraft filter reuse other textures.
+
 ## Pillar 1 — The Living Deep (geothermal + gas)
 
 The deep becomes a place with resources and an atmosphere, not just rock.
@@ -81,25 +102,6 @@ usable area does, exactly like mining expands a down-level).
 - **Stairs up** are the existing portal tech pointed the other way.
 - Biggest pillar (~5-7 sessions) and the biggest payoff: up AND down makes
   Strata the complete vertical-base mod.
-
-## Carried over from the V1 backlog
-
-- **Elevator haul priority** — prefer powered elevator over stairs for heavy hauls.
-- **Multi-shaft routing** — relay picks shortest portal path, not first BFS link.
-- **Haul + seal race fix** — re-check portal seal mid `JobDriver_HaulToLevel`.
-- **Burrower telegraph** — tremor warning before a deep raid erupts.
-- **Sealed-shaft siege** — raiders attempt to unseal or find alternate entry.
-- **Depth-scaled threat table** — richer ore ↔ more bugs tradeoff pass.
-- **Dedicated exhaust-fan research** — Strata gate instead of bare Electricity.
-- **Placement helpers** — fan intake arrow, duct outdoor-exit hint.
-- **Unit tests** — pure logic: `LevelGraph`, `StrataDepth`, smoke math, relays.
-- **In-repo README** — full install/compat doc beyond `About.xml`.
-- **Strata-specific alerts** — smoke on empty level, colonists below sealed shaft.
-- **Cross-level rituals: prisoners & animals** — currently colonists only.
-- **Raid coordinator** — surface lord's retreat/loot decision broadcast to
-  sub-level pursuit groups (one raid, one story). Build if playtests show
-  split-decision weirdness.
-- **Dedicated art** — smoke hole and updraft filter reuse other textures.
 
 ## Done in 1.1 (removed from backlog)
 
