@@ -26,6 +26,19 @@
   </ResearchProjectDef>
 
   <ResearchProjectDef>
+    <defName>Strata_Ventilation</defName>
+    <label>forced ventilation</label>
+    <description>Powered fans and impellers for moving air where it will not move itself: one-way exhaust fans that pull smoke out of a room, and updraft filters that drive fumes up an excavated shaft like a chimney stack.</description>
+    <baseCost>700</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Electricity</li>
+    </prerequisites>
+    <researchViewX>7.50</researchViewX>
+    <researchViewY>3.60</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>Strata_ShaftPower</defName>
     <label>shaft power</label>
     <description>Armored power junctions that carry electricity up and down an excavated shaft, letting a surface grid feed the levels below (and the reverse).</description>

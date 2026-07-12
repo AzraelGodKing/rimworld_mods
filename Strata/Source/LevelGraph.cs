@@ -83,6 +83,84 @@ namespace Strata
             return resultBuffer;
         }
 
+        // The best portal on 'from' for a pawn heading toward 'target': among
+        // first steps whose subtree actually reaches the target, prefer the
+        // shortest walk for that pawn, with a bonus for powered elevators so
+        // haulers ride instead of taking the long stairs.
+        public static MapPortal BestFirstStep(Map from, Map target, IntVec3 pawnPos)
+        {
+            if (from == null || target == null)
+            {
+                return null;
+            }
+            MapPortal best = null;
+            float bestScore = float.MaxValue;
+            foreach (Thing thing in from.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (!(thing is MapPortal portal) || !portal.Spawned)
+                {
+                    continue;
+                }
+                Map other = OtherMapSafe(portal);
+                if (other == null || (other != target && !Reaches(other, target, from)))
+                {
+                    continue;
+                }
+                float score = pawnPos.IsValid ? pawnPos.DistanceTo(portal.Position) : 1f;
+                if (IsPoweredElevator(portal))
+                {
+                    score *= 0.6f;
+                }
+                if (score < bestScore)
+                {
+                    bestScore = score;
+                    best = portal;
+                }
+            }
+            return best;
+        }
+
+        private static bool IsPoweredElevator(MapPortal portal)
+        {
+            if (portal is Building_ElevatorUp)
+            {
+                return true; // riding up is always available
+            }
+            return portal is Building_ElevatorDown
+                && portal.TryGetComp<CompPowerTrader>()?.PowerOn == true;
+        }
+
+        // Whether 'target' is reachable from 'start' without passing back
+        // through 'exclude'. Small graphs; plain BFS.
+        private static bool Reaches(Map start, Map target, Map exclude)
+        {
+            if (start == target)
+            {
+                return true;
+            }
+            var visited = new HashSet<Map> { start, exclude };
+            var queue = new Queue<Map>();
+            queue.Enqueue(start);
+            while (queue.Count > 0)
+            {
+                Map current = queue.Dequeue();
+                foreach (Thing thing in current.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+                {
+                    Map other = thing is MapPortal portal ? OtherMapSafe(portal) : null;
+                    if (other == null || !visited.Add(other))
+                    {
+                        continue;
+                    }
+                    if (other == target)
+                    {
+                        return true;
+                    }
+                    queue.Enqueue(other);
+                }
+            }
+            return false;
+        }
+
         // The linked map on the far side of a portal, without ever triggering
         // pocket map generation.
         public static Map OtherMapSafe(MapPortal portal)
