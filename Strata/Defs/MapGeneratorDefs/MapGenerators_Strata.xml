@@ -28,7 +28,7 @@
   <GenStepDef>
     <defName>Strata_PlaceCaveExit</defName>
     <order>500</order>
-    <genStep Class="GenStep_PlaceCaveExit"/>
+    <genStep Class="Strata.GenStep_PlaceLevelExit"/>
   </GenStepDef>
 
 </Defs>

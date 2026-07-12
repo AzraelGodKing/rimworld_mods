@@ -6,16 +6,63 @@ using Verse.AI;
 
 namespace Strata
 {
-    // Hauls items that have no valid storage on their own level to a linked
-    // level whose storage accepts them. Runs below normal hauling priority, so
-    // same-level hauling always wins when it can.
+    // Hauls items to a linked level whose storage beats anything available on
+    // their own level, honoring storage priority across the whole level graph.
+    // Runs just above HaulGeneral (priorityInType 16 vs 15) so a Critical
+    // stockpile downstairs wins over a Low one here, exactly like vanilla
+    // priority does within one map. Only claims things whose best storage is
+    // on another level; everything else falls through to normal hauling.
     public class WorkGiver_HaulAcrossLevels : WorkGiver_Scanner
     {
         private const int MaxCellsScannedPerGroup = 120;
 
         public override IEnumerable<Thing> PotentialWorkThingsGlobal(Pawn pawn)
         {
-            return pawn.Map.listerHaulables.ThingsPotentiallyNeedingHauling();
+            Map map = pawn.Map;
+            foreach (Thing t in map.listerHaulables.ThingsPotentiallyNeedingHauling())
+            {
+                yield return t;
+            }
+            // listerHaulables drops an item once it sits in storage with no
+            // better cell on its own map, so priority upgrades to another
+            // level have to scan stored things directly. Materialize the max
+            // linked priority before yielding: ReachableLevels reuses a shared
+            // buffer that HasJobOnThing clobbers between yields.
+            StoragePriority maxLinked = MaxStoragePriorityOnLinkedLevels(map);
+            if (maxLinked == StoragePriority.Unstored)
+            {
+                yield break;
+            }
+            List<SlotGroup> groups = map.haulDestinationManager.AllGroupsListForReading;
+            for (int i = 0; i < groups.Count; i++)
+            {
+                SlotGroup group = groups[i];
+                if (group.Settings.Priority >= maxLinked)
+                {
+                    continue;
+                }
+                foreach (Thing t in group.HeldThings)
+                {
+                    yield return t;
+                }
+            }
+        }
+
+        private static StoragePriority MaxStoragePriorityOnLinkedLevels(Map from)
+        {
+            StoragePriority max = StoragePriority.Unstored;
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(from))
+            {
+                List<SlotGroup> groups = link.map.haulDestinationManager.AllGroupsListForReading;
+                for (int i = 0; i < groups.Count; i++)
+                {
+                    if (groups[i].Settings.Priority > max)
+                    {
+                        max = groups[i].Settings.Priority;
+                    }
+                }
+            }
+            return max;
         }
 
         public override bool ShouldSkip(Pawn pawn, bool forced = false)
@@ -51,34 +98,51 @@ namespace Strata
                 return null;
             }
             StoragePriority current = StoreUtility.CurrentStoragePriorityOf(t);
-            // If this level can store it, leave the job to normal hauling.
-            if (StoreUtility.TryFindBestBetterStoreCellFor(t, pawn, pawn.Map, current, pawn.Faction, out _, needAccurateResult: false))
+            // The best this level can offer; a linked level only gets the job
+            // if it strictly beats it, so ties stay local (shorter trip) and
+            // vanilla hauling handles them.
+            StoragePriority localBest = current;
+            if (StoreUtility.TryFindBestBetterStoreCellFor(t, pawn, pawn.Map, current, pawn.Faction, out IntVec3 localCell, needAccurateResult: false))
             {
-                return null;
+                localBest = localCell.GetSlotGroup(pawn.Map)?.Settings?.Priority ?? localBest;
             }
+            // Take the level with the highest accepting priority; BFS order is
+            // nearest-first, so ties go to the closest level.
+            MapPortal best = null;
+            StoragePriority bestPriority = localBest;
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
             {
-                if (StorageAccepts(link.map, t, current)
+                StoragePriority p = BestAcceptingPriority(link.map, t, bestPriority, link.arrivalCell);
+                if (p > bestPriority
                     && link.firstStep.Spawned
                     && link.firstStep.IsEnterable(out _)
                     && pawn.CanReach(link.firstStep, PathEndMode.Touch, Danger.Some))
                 {
-                    return link.firstStep;
+                    best = link.firstStep;
+                    bestPriority = p;
                 }
             }
-            return null;
+            return best;
         }
 
-        // Cheap destination check that never touches cross-map reachability:
-        // a higher-priority storage group that accepts the thing and has a cell
-        // with room. Final placement is vanilla hauling after arrival.
-        private static bool StorageAccepts(Map map, Thing t, StoragePriority currentPriority)
+        // The highest storage-group priority above 'above' that accepts the
+        // thing and has a cell with room that is walkable from the arrival
+        // landing - a freshly broken-through landing sits in a sealed rock
+        // bubble, and cargo must not be shipped somewhere it can only pile up.
+        // Final placement is vanilla hauling after arrival.
+        private static StoragePriority BestAcceptingPriority(Map map, Thing t, StoragePriority above, IntVec3 arrivalCell)
         {
+            if (!arrivalCell.IsValid || !arrivalCell.InBounds(map))
+            {
+                return StoragePriority.Unstored;
+            }
+            StoragePriority best = StoragePriority.Unstored;
             List<SlotGroup> groups = map.haulDestinationManager.AllGroupsListForReading;
             for (int i = 0; i < groups.Count; i++)
             {
                 SlotGroup group = groups[i];
-                if (group.Settings.Priority <= currentPriority || !group.Settings.AllowedToAccept(t))
+                StoragePriority priority = group.Settings.Priority;
+                if (priority <= above || priority <= best || !group.Settings.AllowedToAccept(t))
                 {
                     continue;
                 }
@@ -86,13 +150,16 @@ namespace Strata
                 int scan = Math.Min(cells.Count, MaxCellsScannedPerGroup);
                 for (int j = 0; j < scan; j++)
                 {
-                    if (CellHasRoomFor(cells[j], map, t))
+                    if (CellHasRoomFor(cells[j], map, t)
+                        && map.reachability.CanReach(arrivalCell, cells[j], PathEndMode.Touch,
+                            TraverseParms.For(TraverseMode.PassDoors)))
                     {
-                        return true;
+                        best = priority;
+                        break;
                     }
                 }
             }
-            return false;
+            return best;
         }
 
         private static bool CellHasRoomFor(IntVec3 cell, Map map, Thing t)
