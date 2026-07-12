@@ -202,24 +202,24 @@ namespace Strata
 
         private static void EnrollIntoAssault(Pawn pawn, Map map)
         {
-            // Join an assault already in progress from the same faction so
-            // arrivals fight as one group.
+            // Join a pursuit assault already in progress from the same faction
+            // so arrivals fight as one group. Only Strata's own lord qualifies:
+            // vanilla assault lords can decide to steal or give up and walk the
+            // whole group back up the stairs.
             List<Lord> lords = map.lordManager.lords;
             for (int i = 0; i < lords.Count; i++)
             {
                 Lord lord = lords[i];
-                if (lord.faction == pawn.Faction && lord.LordJob is LordJob_AssaultColony
-                    && !(lord.CurLordToil is LordToil_PanicFlee) && !(lord.CurLordToil is LordToil_ExitMap)
+                if (lord.faction == pawn.Faction && lord.LordJob is LordJob_StrataAssault
+                    && !(lord.CurLordToil is LordToil_ExitMap)
                     && lord.CanAddPawn(pawn))
                 {
                     lord.AddPawn(pawn);
                     return;
                 }
             }
-            bool underground = StrataMapUtility.IsUnderground(map);
-            var lordJob = new LordJob_AssaultColony(pawn.Faction,
-                canKidnap: !underground, canTimeoutOrFlee: !underground);
-            LordMaker.MakeNewLord(pawn.Faction, lordJob, map, new List<Pawn> { pawn });
+            LordMaker.MakeNewLord(pawn.Faction, new LordJob_StrataAssault(pawn.Faction), map,
+                new List<Pawn> { pawn });
         }
 
         // A pawn that walks through a portal leaves its lord behind on the old
