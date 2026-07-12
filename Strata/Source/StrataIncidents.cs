@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -48,12 +49,37 @@ namespace Strata
         }
     }
 
+    // Underground levels are pocket maps, and pocket maps have NO incident
+    // target tags in vanilla - the storyteller (and even the debug incident
+    // menu) never targets them with anything. Tag Strata levels as player-home
+    // incident targets so infestations, diseases, and Strata's own events can
+    // fire down there; the CanFireNow patch below filters out everything that
+    // can't physically reach sealed rock.
+    [HarmonyPatch(typeof(MapParent), nameof(MapParent.IncidentTargetTags))]
+    public static class Patch_UndergroundIncidentTargets
+    {
+        public static IEnumerable<IncidentTargetTagDef> Postfix(IEnumerable<IncidentTargetTagDef> values, MapParent __instance)
+        {
+            bool hasPlayerHome = false;
+            foreach (IncidentTargetTagDef tag in values)
+            {
+                hasPlayerHome |= tag == IncidentTargetTagDefOf.Map_PlayerHome;
+                yield return tag;
+            }
+            if (!hasPlayerHome && __instance is PocketMapParent && __instance.HasMap
+                && StrataMapUtility.IsUnderground(__instance.Map))
+            {
+                yield return IncidentTargetTagDefOf.Map_PlayerHome;
+            }
+        }
+    }
+
     // Enforces the "underground is sealed rock" fiction: sky and weather
     // conditions and raids/threats that can't physically reach a buried level
     // never fire down there. Infestations (which erupt from within) and
-    // Strata's own underground events are always allowed. Vanilla already
-    // treats a pocket map as a player home, so without this the storyteller
-    // would happily drop solar flares and mech clusters on a rock vault.
+    // Strata's own underground events are always allowed. Without this filter,
+    // the target tag above would let the storyteller drop solar flares and
+    // mech clusters on a rock vault.
     [HarmonyPatch(typeof(IncidentWorker), nameof(IncidentWorker.CanFireNow))]
     public static class Patch_UndergroundIncidents
     {
