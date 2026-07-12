@@ -55,6 +55,33 @@ nothing to desync, no patching of net internals (the source of MF-style jank).
 - Deliberately NOT the patented ensemble: single rivals with memory, no
   procedural promotion hierarchy, no faction-politics screen.
 
+## Pillar 4 — Building Up (above-ground floors)
+
+Sky is the new rock: an up-level is a full-size pocket map that is open sky
+everywhere — impassable, unbuildable void — except above supported structure.
+The buildable region grows as the base below grows (maps never resize; the
+usable area does, exactly like mining expands a down-level).
+
+- **1:1 spatial mapping**: generate the upper map at exactly the surface
+  map's size so cell (x,z) upstairs is directly above cell (x,z) downstairs.
+  Support checks, stair alignment, and collapse all become trivial cross-map
+  lookups. (Down-levels keep proportional mapping; rock forgives imprecision,
+  floors don't.)
+- **Support projection**: "upper floor" terrain placeable only where the map
+  below has a wall / constructed roof under that cell (PlaceWorker with a
+  cross-map read).
+- **Ceiling/floor bookkeeping**: laying floor on level N sets a "floor above"
+  roof on level N-1's cell (blocks sun/weather below), mirroring how
+  down-levels sit under thick rock roof. Cross-map writes on build/destroy.
+- **Collapse**: destroying the supporting wall below drops the floor above —
+  cave-in machinery is the template.
+- **Real sky**: mirror surface weather onto up-levels, sunlight works (solar,
+  greenhouses, sun lamps unnecessary), and drop-pod raids can hit rooftops —
+  the inverse of the underground incident suppression, not a reuse of it.
+- **Stairs up** are the existing portal tech pointed the other way.
+- Biggest pillar (~5-7 sessions) and the biggest payoff: up AND down makes
+  Strata the complete vertical-base mod.
+
 ## Carried over from the V1 backlog
 
 - **Elevator haul priority** — prefer powered elevator over stairs for heavy hauls.
