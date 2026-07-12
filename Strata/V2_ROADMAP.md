@@ -5,20 +5,11 @@ with community suggestions (Thundercraft, dognamedKats, Hat).
 
 ## Pillar 0 — V1 carry-over (polish & hardening)
 
-Smaller items inherited from the V1 backlog; good between-pillar work.
+Mostly SHIPPED post-1.1 (routing, seal race, siege, telegraph, depth scaling,
+ventilation research, placement guides, alerts, self-tests, README). Remaining:
 
-- **Elevator haul priority** — prefer powered elevator over stairs for heavy hauls.
-- **Multi-shaft routing** — relay picks shortest portal path, not first BFS link.
-- **Haul + seal race fix** — re-check portal seal mid `JobDriver_HaulToLevel`.
-- **Burrower telegraph** — tremor warning before a deep raid erupts.
-- **Sealed-shaft siege** — raiders attempt to unseal or find alternate entry.
-- **Depth-scaled threat table** — richer ore ↔ more bugs tradeoff pass.
-- **Dedicated exhaust-fan research** — Strata gate instead of bare Electricity.
-- **Placement helpers** — fan intake arrow, duct outdoor-exit hint.
-- **Unit tests** — pure logic: `LevelGraph`, `StrataDepth`, smoke math, relays.
-- **In-repo README** — full install/compat doc beyond `About.xml`.
-- **Strata-specific alerts** — smoke on empty level, colonists below sealed shaft.
-- **Cross-level rituals: prisoners & animals** — currently colonists only.
+- **Cross-level rituals: prisoners & animals** — needs a warden/handler escort
+  chain through portals; colonists only for now.
 - **Raid coordinator** — surface lord's retreat/loot decision broadcast to
   sub-level pursuit groups (one raid, one story). Build if playtests show
   split-decision weirdness.
