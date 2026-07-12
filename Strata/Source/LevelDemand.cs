@@ -90,11 +90,13 @@ namespace Strata
             {
                 return entry;
             }
-            // What the level already has counts against the shortage.
+            // What the level already has counts against the shortage. Raw
+            // per-level counts: the combined-readout toggle must never make a
+            // level look supplied by another level's stock.
             foreach (ThingDef def in new List<ThingDef>(entry.missing.Keys))
             {
                 int have = def.CountAsResource
-                    ? map.resourceCounter.GetCount(def)
+                    ? StrataResources.RawGetCount(map, def)
                     : CountOnMap(map, def);
                 int missing = entry.missing[def] - have;
                 if (missing > 0)
