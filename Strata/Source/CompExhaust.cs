@@ -1,5 +1,6 @@
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace Strata
 {
@@ -35,11 +36,32 @@ namespace Strata
                 CompRefuelable refuelable = parent.GetComp<CompRefuelable>();
                 if (refuelable != null)
                 {
-                    return refuelable.HasFuel;
+                    if (!refuelable.HasFuel)
+                    {
+                        return false;
+                    }
+                    // Benches that only burn fuel while worked (fueled stove,
+                    // smithy, smelter) only smoke while a pawn is at them.
+                    if (refuelable.Props.consumeFuelOnlyWhenUsed)
+                    {
+                        return BeingWorked();
+                    }
+                    return true;
                 }
                 // Open flame with no power or fuel comp (a raw Fire): always smoking.
                 return true;
             }
+        }
+
+        private bool BeingWorked()
+        {
+            if (!parent.def.hasInteractionCell)
+            {
+                return true;
+            }
+            Pawn pawn = parent.InteractionCell.GetFirstPawn(parent.Map);
+            return pawn != null && pawn.CurJob != null
+                && pawn.CurJob.GetTarget(TargetIndex.A).Thing == parent;
         }
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
