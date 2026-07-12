@@ -6,16 +6,16 @@
     <label>haul things to other levels</label>
     <giverClass>Strata.WorkGiver_HaulAcrossLevels</giverClass>
     <workType>Hauling</workType>
-    <verb>haul</verb>
-    <gerund>hauling</gerund>
+    <!-- Distinct verb/gerund matter: the right-click menu dedups options by
+         label, so with vanilla's plain "hauling" this option would SHADOW the
+         normal prioritize-haul (reported as "can't force haul dead bodies").
+         With its own wording, both options coexist - local haul stays vanilla,
+         and this one appears whenever a better level wants the item. -->
+    <verb>haul to another level</verb>
+    <gerund>hauling to another level:</gerund>
     <!-- Just above HaulGeneral (15): a strictly better stockpile on another
          level must win before normal hauling parks the item locally. -->
     <priorityInType>16</priorityInType>
-    <!-- Never in right-click orders: this giver shares vanilla hauling's
-         "hauling" label and, evaluated first, would shadow the normal
-         prioritize-haul option (reported as "can't force haul dead bodies").
-         Forced hauls stay local and vanilla; cross-level moves are automatic. -->
-    <directOrderable>false</directOrderable>
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
