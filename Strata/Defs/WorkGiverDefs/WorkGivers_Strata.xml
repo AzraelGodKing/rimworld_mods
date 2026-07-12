@@ -11,6 +11,11 @@
     <!-- Just above HaulGeneral (15): a strictly better stockpile on another
          level must win before normal hauling parks the item locally. -->
     <priorityInType>16</priorityInType>
+    <!-- Never in right-click orders: this giver shares vanilla hauling's
+         "hauling" label and, evaluated first, would shadow the normal
+         prioritize-haul option (reported as "can't force haul dead bodies").
+         Forced hauls stay local and vanilla; cross-level moves are automatic. -->
+    <directOrderable>false</directOrderable>
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
