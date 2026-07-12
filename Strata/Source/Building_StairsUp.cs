@@ -101,5 +101,11 @@ namespace Strata
         {
             return "It's the only way up.";
         }
+
+        public override void OnEntered(Pawn pawn)
+        {
+            base.OnEntered(pawn);
+            StrataPortalUtility.TransferHaulDesignation(this, pawn);
+        }
     }
 }

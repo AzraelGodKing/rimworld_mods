@@ -6,6 +6,46 @@ namespace Strata
 {
     public static class StrataPortalUtility
     {
+        // Haul designations live in each map's DesignationManager, so a thing
+        // that needs one to be haulable (stone chunks, mostly) arrives on
+        // another level undesignated and haulers there ignore it. Runs from
+        // OnEntered - after the pawn spawns on the destination map, before
+        // vanilla drops its cargo there. Things picked straight out of storage
+        // never had a designation, so this adds one rather than only moving an
+        // existing one.
+        public static void TransferHaulDesignation(MapPortal portal, Pawn pawn)
+        {
+            Thing carried = pawn?.carryTracker?.CarriedThing;
+            if (carried == null || !carried.def.designateHaulable || carried.def.alwaysHaulable)
+            {
+                return;
+            }
+            Map source = portal?.Map;
+            Map dest = pawn.Map;
+            source?.designationManager.TryRemoveDesignationOn(carried, DesignationDefOf.Haul);
+            if (dest != null && dest != source
+                && dest.designationManager.DesignationOn(carried, DesignationDefOf.Haul) == null)
+            {
+                dest.designationManager.AddDesignation(new Designation(carried, DesignationDefOf.Haul));
+            }
+        }
+
+        // Carves a small chamber out of the rock and spawns a portal's bottom
+        // landing there. Must run while PocketMapUtility.currentlyGeneratingPortal
+        // points at the entrance (during map generation or GeneratePocketMapInt):
+        // PocketMapExit.SpawnSetup uses it to wire entrance and exit together.
+        public static PocketMapExit SpawnLanding(ThingDef exitDef, IntVec3 cell, Map level)
+        {
+            foreach (IntVec3 c in GenRadial.RadialCellsAround(cell, 4.5f, useCenter: true))
+            {
+                if (c.InBounds(level))
+                {
+                    c.GetFirstMineable(level)?.Destroy(DestroyMode.Vanish);
+                }
+            }
+            return (PocketMapExit)GenSpawn.Spawn(ThingMaker.MakeThing(exitDef), cell, level);
+        }
+
         public static bool IsSealedPortal(Thing thing)
         {
             if (thing is Building_StairsDown stairsDown)
