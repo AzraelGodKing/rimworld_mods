@@ -66,7 +66,10 @@ namespace Strata
             {
                 return null;
             }
-            Job job = MakeRelayJob(pawn, link.firstStep);
+            // Take the best portal for THIS pawn (nearest, powered elevators
+            // preferred), not just the first one the level graph found.
+            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, link.map, pawn.Position) ?? link.firstStep;
+            Job job = MakeRelayJob(pawn, firstStep);
             if (job != null)
             {
                 RelayClaims.Register(pawn, link.map, purpose);

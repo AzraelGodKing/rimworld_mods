@@ -111,6 +111,57 @@ namespace Strata
             Find.CurrentMap?.GetComponent<SmokeMapComponent>()?.DebugSaturate(UI.MouseCell());
         }
 
+        // The honest version of unit tests for a mod whose types need a live
+        // game: invariant checks over the running colony, run from dev mode.
+        [DebugAction(Cat, "Run self-tests", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void RunSelfTests()
+        {
+            int passed = 0;
+            int failed = 0;
+            var sb = new System.Text.StringBuilder("[Strata] Self-tests:\n");
+
+            void Check(string name, bool ok)
+            {
+                if (ok) { passed++; } else { failed++; }
+                sb.AppendLine($"  {(ok ? "PASS" : "FAIL")}  {name}");
+            }
+
+            foreach (Map map in Find.Maps)
+            {
+                Check($"smoke component on {map}", map.GetComponent<SmokeMapComponent>() != null);
+                Check($"pursuit component on {map}", map.GetComponent<MapComponent_RaidPursuit>() != null);
+                if (!StrataMapUtility.IsUnderground(map))
+                {
+                    Check($"depth of surface {map} is 0", StrataDepth.Of(map) == 0);
+                }
+
+                var seen = new HashSet<Map>();
+                bool noDupes = true, stepsValid = true, depthsPositive = true;
+                foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
+                {
+                    if (link.map == map || !seen.Add(link.map)) { noDupes = false; }
+                    if (link.firstStep == null || !link.firstStep.Spawned || link.firstStep.Map != map) { stepsValid = false; }
+                    if (link.depth < 1) { depthsPositive = false; }
+                }
+                if (seen.Count > 0)
+                {
+                    Check($"level graph from {map}: no self/duplicate links", noDupes);
+                    Check($"level graph from {map}: first steps spawned on source map", stepsValid);
+                    Check($"level graph from {map}: depths start at 1", depthsPositive);
+                    foreach (Map target in seen)
+                    {
+                        Check($"BestFirstStep {map} -> {target} resolves",
+                            LevelGraph.BestFirstStep(map, target, map.Center) != null);
+                    }
+                }
+            }
+            Check("world ritual-travel component exists", StrataRitualTravel.Get != null);
+            Check("settings loaded", StrataMod.Settings != null);
+
+            sb.AppendLine($"Total: {passed} passed, {failed} failed.");
+            if (failed > 0) { Log.Warning(sb.ToString()); } else { Log.Message(sb.ToString()); }
+        }
+
         [DebugAction(Cat, "Log level depths", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void LogDepths()
         {

@@ -243,6 +243,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </comps>
     <placeWorkers>
       <li>PlaceWorker_Vent</li>
+      <li>Strata.PlaceWorker_OneWayVent</li>
     </placeWorkers>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <building>
@@ -252,7 +253,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <canOverlapZones>false</canOverlapZones>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <researchPrerequisites>
-      <li>Electricity</li>
+      <li>Strata_Ventilation</li>
     </researchPrerequisites>
   </ThingDef>
 
@@ -303,7 +304,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <canOverlapZones>false</canOverlapZones>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <researchPrerequisites>
-      <li>Electricity</li>
+      <li>Strata_Ventilation</li>
     </researchPrerequisites>
   </ThingDef>
 
@@ -342,6 +343,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </comps>
     <placeWorkers>
       <li>PlaceWorker_Vent</li>
+      <li>Strata.PlaceWorker_OneWayVent</li>
     </placeWorkers>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <building>
@@ -391,6 +393,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </comps>
     <placeWorkers>
       <li>PlaceWorker_Vent</li>
+      <li>Strata.PlaceWorker_OneWayVent</li>
     </placeWorkers>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <building>
@@ -442,6 +445,10 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <comps>
       <li Class="Strata.CompProperties_SmokeDuct"/>
     </comps>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_SmokeDuct</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <constructEffect>ConstructMetal</constructEffect>
     <clearBuildingArea>false</clearBuildingArea>
     <designationCategory>Structure</designationCategory>

@@ -50,6 +50,8 @@ namespace Strata
                 return false;
             }
             float points = parms.points > 0f ? parms.points : StorytellerUtility.DefaultThreatPointsNow(map);
+            // Deeper levels crawl with more bugs - the flip side of richer ore.
+            points *= 1f + 0.15f * StrataDepth.Of(map);
 
             IntVec3 anchor = map.mapPawns.FreeColonistsSpawned.RandomElement().Position;
             IntVec3 cell = CellFinder.FindNoWipeSpawnLocNear(anchor, map, ThingDefOf.TunnelHiveSpawner, Rot4.North, 14,
@@ -65,6 +67,12 @@ namespace Strata
             GenSpawn.Spawn(spawner, cell, map, WipeMode.FullRefund);
 
             SendStandardLetter(parms, new TargetInfo(cell, map));
+            // Telegraph: the ground shakes while the tunneler digs (the
+            // spawner's own delay is the reaction window).
+            if (Find.CurrentMap == map)
+            {
+                Find.CameraDriver.shaker.DoShake(1.5f);
+            }
             Find.TickManager.slower.SignalForceNormalSpeedShort();
             return true;
         }
