@@ -48,13 +48,32 @@ namespace Strata
 
         private readonly List<Row> rows = new List<Row>();
 
-        public override Vector2 RequestedTabSize =>
-            new Vector2(640f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
+        // Player-chosen size survives closing the tab (but not the session).
+        private static Vector2 savedSize = Vector2.zero;
+        private Vector2 openedSize;
+        private Vector2 scroll;
+
+        public MainTabWindow_Levels()
+        {
+            resizeable = true;
+        }
+
+        public override Vector2 RequestedTabSize
+        {
+            get
+            {
+                Vector2 computed = new Vector2(640f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
+                return savedSize == Vector2.zero
+                    ? computed
+                    : new Vector2(Mathf.Max(savedSize.x, 420f), Mathf.Max(savedSize.y, 120f));
+            }
+        }
 
         public override void PreOpen()
         {
             base.PreOpen();
             BuildRows();
+            openedSize = new Vector2(windowRect.width, windowRect.height);
         }
 
         private void BuildRows()
@@ -79,21 +98,31 @@ namespace Strata
 
         public override void DoWindowContents(Rect inRect)
         {
+            // Keep the tab glued to the bottom bar while the resize handle
+            // drags, and remember the size the player settles on.
+            Vector2 size = new Vector2(windowRect.width, windowRect.height);
+            if (size != openedSize)
+            {
+                savedSize = size;
+                windowRect.y = UI.screenHeight - 35f - windowRect.height;
+            }
+
             // Levels can open or collapse while the tab sits open.
             BuildRows();
 
             Text.Font = GameFont.Small;
+            float contentWidth = inRect.width - 16f; // leave room for a scrollbar
             float colLevel = 0f;
-            float colColonists = inRect.width * 0.42f;
-            float colHostiles = inRect.width * 0.58f;
-            float colTemp = inRect.width * 0.74f;
+            float colColonists = contentWidth * 0.42f;
+            float colHostiles = contentWidth * 0.58f;
+            float colTemp = contentWidth * 0.74f;
 
-            Rect header = new Rect(inRect.x, inRect.y, inRect.width, HeaderHeight);
+            Rect header = new Rect(inRect.x, inRect.y, contentWidth, HeaderHeight);
             GUI.color = Color.gray;
             Widgets.Label(new Rect(header.x + colLevel + 4f, header.y, colColonists - 8f, HeaderHeight), "Level");
             Widgets.Label(new Rect(header.x + colColonists, header.y, colHostiles - colColonists, HeaderHeight), "Colonists");
             Widgets.Label(new Rect(header.x + colHostiles, header.y, colTemp - colHostiles, HeaderHeight), "Hostiles");
-            Widgets.Label(new Rect(header.x + colTemp, header.y, inRect.width - colTemp - ViewButtonWidth - RenameButtonWidth, HeaderHeight), "Temp");
+            Widgets.Label(new Rect(header.x + colTemp, header.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth, HeaderHeight), "Temp");
             GUI.color = Color.white;
             Widgets.DrawLineHorizontal(inRect.x, header.yMax - 2f, inRect.width);
 
@@ -103,10 +132,13 @@ namespace Strata
                 return;
             }
 
-            float y = header.yMax + 2f;
+            Rect scrollOut = new Rect(inRect.x, header.yMax + 2f, inRect.width, inRect.yMax - header.yMax - 2f);
+            Rect scrollView = new Rect(0f, 0f, contentWidth, rows.Count * RowHeight);
+            Widgets.BeginScrollView(scrollOut, ref scroll, scrollView);
+            float y = 0f;
             foreach (Row row in rows)
             {
-                Rect rowRect = new Rect(inRect.x, y, inRect.width, RowHeight);
+                Rect rowRect = new Rect(0f, y, contentWidth, RowHeight);
                 if (row.map == Find.CurrentMap)
                 {
                     Widgets.DrawHighlightSelected(rowRect);
@@ -125,7 +157,7 @@ namespace Strata
                 Widgets.Label(new Rect(rowRect.x + colHostiles, rowRect.y, colTemp - colHostiles, RowHeight),
                     hostiles.ToString());
                 GUI.color = Color.white;
-                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, inRect.width - colTemp - ViewButtonWidth - RenameButtonWidth, RowHeight),
+                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth, RowHeight),
                     row.map.mapTemperature.OutdoorTemp.ToStringTemperature("F0"));
                 Text.Anchor = TextAnchor.UpperLeft;
 
@@ -145,6 +177,7 @@ namespace Strata
                 }
                 y += RowHeight;
             }
+            Widgets.EndScrollView();
         }
 
         private static string LevelLabel(Row row)

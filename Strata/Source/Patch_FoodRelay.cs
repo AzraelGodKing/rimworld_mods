@@ -16,6 +16,10 @@ namespace Strata
             {
                 return;
             }
+            if (StrataMod.Settings != null && !StrataMod.Settings.foodRelayEnabled)
+            {
+                return;
+            }
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
             {
                 if (!PawnRelay.HasFoodFor(pawn, link.map))

@@ -121,6 +121,14 @@ namespace Strata
             {
                 return;
             }
+            if (StrataMod.Settings != null && !StrataMod.Settings.smokeEnabled)
+            {
+                if (clouds.Count > 0)
+                {
+                    ClearAll();
+                }
+                return;
+            }
 
             // 1. One-way wall vents (powered fans and passive louvers).
             ProcessDirectionalVents();
@@ -441,8 +449,13 @@ namespace Strata
                 Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(StrataSmokeDefOf.Strata_SmokeInhalation);
                 if (density > HarmThreshold)
                 {
+                    float scale = StrataMod.Settings?.smokeSeverityScale ?? 1f;
+                    if (scale <= 0f)
+                    {
+                        continue;
+                    }
                     hediff ??= pawn.health.GetOrAddHediff(StrataSmokeDefOf.Strata_SmokeInhalation);
-                    hediff.Severity += (density - HarmThreshold) * SeverityGain;
+                    hediff.Severity += (density - HarmThreshold) * SeverityGain * scale;
                 }
                 else if (hediff != null)
                 {
