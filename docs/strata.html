@@ -59,7 +59,7 @@
         <tr><td><b>Work</b></td><td>Idle colonists notice mining and plant designations, blueprints, hauling, and bills on other levels and commute down (or up) the stairs to do the work</td></tr>
         <tr><td><b>Food</b></td><td>Hungry pawns go find a meal on another level instead of starving next to a staircase</td></tr>
         <tr><td><b>Rest</b></td><td>Sleepy pawns walk home to their own bed &mdash; or to any level with a free bed to claim</td></tr>
-        <tr><td><b>Haul</b></td><td>Items with no storage on their level get carried through the stairwell to a level whose stockpiles accept them</td></tr>
+        <tr><td><b>Haul</b></td><td>Storage priority works across the whole base: an item goes to whichever level's storage has the highest accepting priority &mdash; a Critical freezer two floors down outranks the Low pile by the door. Haul designations (stone chunks and the like) travel with the cargo, so nothing needs re-marking after the trip</td></tr>
       </table>
     </div>
   </section>
@@ -74,7 +74,7 @@
         <div>
           <h3>Excavated stairwell</h3>
           <div class="stat">2&times;2 &middot; 60 wood + 30 steel &middot; Deep excavation research</div>
-          <p>A broad staircase carved down into the rock. Completing it opens a <b>new 200&times;200 underground level</b>: solid stone to mine into rooms, workshops, and vaults, protected by a thick rock roof &mdash; safe from drop pods, mortars, and weather. Colonists use it on their own to work, eat, and sleep across levels. The shaft also <b>ties both floors&rsquo; power grids together</b> when each level is wired into the stairwell. <b>Seal it</b> to wall a gas pocket or infestation onto one level; it cannot be deconstructed while anyone is still below.</p>
+          <p>A broad staircase carved down into the rock. Completing it opens a <b>new 200&times;200 underground level</b>: solid stone to mine into rooms, workshops, and vaults, protected by a thick rock roof &mdash; safe from drop pods, mortars, and weather. Colonists use it on their own to work, eat, and sleep across levels. A <b>second stairwell or elevator on the same floor breaks through into the same level below</b> &mdash; its landing is carved roughly beneath where it stands; mine out to connect it to the rest of the floor. The shaft also <b>ties both floors&rsquo; power grids together</b> when each level is wired into the stairwell. <b>Seal it</b> to wall a gas pocket or infestation onto one level; it cannot be deconstructed while anyone is still below, and a shared level only collapses with its last entrance.</p>
         </div>
       </div>
 
@@ -92,7 +92,7 @@
         <div>
           <h3>Elevator</h3>
           <div class="stat">1&times;1 &middot; 200W &middot; Elevators research</div>
-          <p>Compact powered vertical transport that opens a level below, just like a stairwell. The car needs power to descend, but anyone below can always <b>ride back up if the power fails</b> &mdash; no one is ever stranded. Automatically ties the two levels' power grids together.</p>
+          <p>Compact powered vertical transport that opens a level below &mdash; or <b>joins the level a stairwell on the same floor already opened</b>. The car needs power to descend, but anyone below can always <b>ride back up if the power fails</b> &mdash; no one is ever stranded. Automatically ties the two levels' power grids together.</p>
         </div>
       </div>
 
@@ -101,7 +101,7 @@
         <div>
           <h3>Shaft power conduit</h3>
           <div class="stat">1&times;1 &middot; 10W &middot; Shaft power research</div>
-          <p>An <b>optional</b> tie point beside a stairwell when you want a dedicated hook-up away from the stair footprint. Stairwells and elevators already pool power on their own &mdash; build one of these on each level only if you need a separate junction.</p>
+          <p>An <b>optional</b> tie point when you want a dedicated hook-up away from the shaft footprint. Build <b>one</b> within a few tiles of a stairwell or elevator: it <b>automatically extends a matching junction down to the landing below</b> and drives the tie itself &mdash; wire each level to its junction and power flows both ways. The lower end lives and dies with the one you built, and gets replaced automatically if destroyed.</p>
         </div>
       </div>
 
@@ -289,8 +289,15 @@
       <div class="card strata">
         <div class="icon">&#128230;</div>
         <div>
-          <h3>Logistics by stockpile</h3>
-          <p>To move goods between levels, keep a stockpile near the stairs on each floor &mdash; haulers carry items up and down through the stairwell on their own.</p>
+          <h3>Logistics by priority</h3>
+          <p>Set stockpile priorities and haulers do the rest: goods flow through the stairwells to the highest-priority storage that accepts them, anywhere in the base. Cargo is only shipped to a level where the storage is actually walkable from the landing &mdash; nothing piles up in an unmined bubble.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#9889;</div>
+        <div>
+          <h3>Power that pools</h3>
+          <p>Shaft ties are demand-driven and flow both ways (up to 2,000W per shaft): a level draws what its grid actually needs, batteries equalize gradually across floors, and a tie that browns out recovers on its own. Batteries on each level are optional but smooth the transfer.</p>
         </div>
       </div>
     </div>
@@ -302,6 +309,7 @@
       <li>Thick rock roofs collapse when unsupported &mdash; leave pillars in big halls, just like mountain bases.</li>
       <li>Stairwells cannot be deconstructed while colonists are still below.</li>
       <li>Raiders who run out of targets on their level will find your stairwells and come down (or up) after you. A <b>sealed</b> stairwell stops them cold &mdash; but it stops your colonists too.</li>
+      <li>A second shaft that breaks through to an existing level lands in a sealed rock chamber &mdash; mine it out to connect it to the rest of the floor. Until then, pawns can always ride back up, and haulers won&rsquo;t ship cargo there.</li>
     </ol>
   </section>
 
