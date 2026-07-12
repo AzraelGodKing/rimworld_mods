@@ -51,10 +51,10 @@
     <letterText>Your miners have broken into a rich seam of ore running through the rock of this level. Send someone to dig it out.</letterText>
   </IncidentDef>
 
-  <!-- ============ Underground: burrowing raid ============ -->
+  <!-- ============ Underground: deep raid (insect eruption) ============ -->
   <IncidentDef>
     <defName>Strata_DeepRaid</defName>
-    <label>burrowing raiders</label>
+    <label>deep raid</label>
     <category>ThreatBig</category>
     <targetTags>
       <li>Map_PlayerHome</li>
@@ -65,8 +65,8 @@
     <baseChance>0.35</baseChance>
     <minRefireDays>12</minRefireDays>
     <letterDef>ThreatBig</letterDef>
-    <letterLabel>Burrowing raiders</letterLabel>
-    <letterText>Something has been tunnelling toward you through the deep rock - and it wasn't friendly. Hostiles have broken through into the level and are attacking. The sky can't reach you down here, but the dark can.</letterText>
+    <letterLabel>Deep raid</letterLabel>
+    <letterText>The rock has been whispering for days - scratching, chewing, coming closer. Now the floor of this level bursts open and insects boil up out of the deep. The sky can't reach you down here, but the dark can.</letterText>
   </IncidentDef>
 
   <!-- ============ Surface: prospector's tip (positive) ============ -->

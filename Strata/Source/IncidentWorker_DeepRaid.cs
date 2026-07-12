@@ -1,17 +1,18 @@
-using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.AI.Group;
 
 namespace Strata
 {
     // The deep is not entirely safe. Ordinary raids can't reach a sealed rock
-    // level - but something can dig. A hostile group tunnels up through the
-    // stone and emerges among your colonists. Underground levels only.
+    // level - but the deep belongs to the insects. A swarm tunnels up through
+    // the floor (vanilla's tunnel spawner: rubble, dust, then eruption) and
+    // emerges among your colonists. Underground levels only.
     public class IncidentWorker_DeepRaid : IncidentWorker
     {
+        private const float MinInsectPoints = 200f;
+        private const float MaxInsectPoints = 1000f;
+
         protected override bool CanFireNowSub(IncidentParms parms)
         {
             if (!(parms.target is Map map) || !StrataMapUtility.IsUnderground(map))
@@ -22,9 +23,9 @@ namespace Strata
             {
                 return Fail("no colonists on this level");
             }
-            if (parms.faction == null && PickFaction() == null)
+            if (Faction.OfInsects == null)
             {
-                return Fail("no enemy faction available");
+                return Fail("no insect faction in this game");
             }
             return true;
         }
@@ -41,78 +42,31 @@ namespace Strata
             return false;
         }
 
-        // Prefer a faction that can actually field a raid; fall back to any
-        // hostile faction.
-        private static Faction PickFaction()
-        {
-            return Find.FactionManager.RandomRaidableEnemyFaction()
-                ?? Find.FactionManager.RandomEnemyFaction();
-        }
-
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
             Map map = (Map)parms.target;
-            Faction faction = parms.faction ?? PickFaction();
-            if (faction == null)
+            if (Faction.OfInsects == null || map.mapPawns.FreeColonistsSpawned.Count == 0)
             {
-                if (Prefs.DevMode)
-                {
-                    Log.Message("[Strata] Deep raid aborted: no enemy faction available.");
-                }
                 return false;
             }
-
             float points = parms.points > 0f ? parms.points : StorytellerUtility.DefaultThreatPointsNow(map);
-            // A fresh dig has almost no wealth, so its threat points can fall
-            // below the cost of a single raider - and the group maker silently
-            // generates nobody. Clamp to the faction's minimum viable squad,
-            // exactly like vanilla raids do.
-            points = Mathf.Max(points, faction.def.MinPointsToGeneratePawnGroup(PawnGroupKindDefOf.Combat) * 1.05f);
-            var groupParms = new PawnGroupMakerParms
-            {
-                groupKind = PawnGroupKindDefOf.Combat,
-                tile = map.Tile,
-                faction = faction,
-                points = points,
-                generateFightersOnly = true,
-            };
-
-            List<Pawn> raiders = PawnGroupMakerUtility.GeneratePawns(groupParms).ToList();
-            if (raiders.Count == 0)
-            {
-                if (Prefs.DevMode)
-                {
-                    Log.Message($"[Strata] Deep raid aborted: {faction} generated no raiders at {points} points.");
-                }
-                return false;
-            }
 
             IntVec3 anchor = map.mapPawns.FreeColonistsSpawned.RandomElement().Position;
-            foreach (Pawn raider in raiders)
-            {
-                IntVec3 cell = EmergenceCell(map, anchor);
-                GenSpawn.Spawn(raider, cell, map);
-                FleckMaker.ThrowDustPuffThick(cell.ToVector3Shifted(), map, 2f, Color.white);
-            }
+            IntVec3 cell = CellFinder.FindNoWipeSpawnLocNear(anchor, map, ThingDefOf.TunnelHiveSpawner, Rot4.North, 14,
+                x => x.Walkable(map) && !x.Fogged(map)
+                    && x.GetFirstThing(map, ThingDefOf.Hive) == null
+                    && x.GetFirstThing(map, ThingDefOf.TunnelHiveSpawner) == null);
 
-            LordMaker.MakeNewLord(faction, new LordJob_AssaultColony(faction), map, raiders);
-            SendStandardLetter(parms, new LookTargets(raiders));
+            var spawner = (TunnelHiveSpawner)ThingMaker.MakeThing(ThingDefOf.TunnelHiveSpawner);
+            spawner.spawnHive = false;
+            // A fresh dig has almost no wealth; the floor guarantees a real
+            // swarm, the ceiling keeps a treasure vault from spawning an army.
+            spawner.insectsPoints = Mathf.Clamp(points, MinInsectPoints, MaxInsectPoints);
+            GenSpawn.Spawn(spawner, cell, map, WipeMode.FullRefund);
+
+            SendStandardLetter(parms, new TargetInfo(cell, map));
             Find.TickManager.slower.SignalForceNormalSpeedShort();
             return true;
-        }
-
-        private static IntVec3 EmergenceCell(Map map, IntVec3 anchor)
-        {
-            bool Valid(IntVec3 c) => c.Standable(map) && !c.Fogged(map) && c.GetRoom(map) != null;
-            if (CellFinder.TryFindRandomCellNear(anchor, map, 14, Valid, out IntVec3 near))
-            {
-                return near;
-            }
-            if (CellFinder.TryFindRandomCell(map, Valid, out IntVec3 any))
-            {
-                return any;
-            }
-            return anchor;
         }
     }
 }
