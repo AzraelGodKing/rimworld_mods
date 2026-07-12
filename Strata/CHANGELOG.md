@@ -4,6 +4,23 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Added
+- **Level sharing**: a second stairwell or elevator built on the same floor now breaks through into the *same* level below instead of opening a parallel pocket dimension. Its landing is carved roughly beneath where it stands (sealed in rock until mined out — pawns can always ride back up). A shared level only collapses when its last entrance is deconstructed.
+- **Cross-level storage priority**: hauling now honors stockpile priority across the whole level graph. Items go directly to whichever level's storage has the highest accepting priority (ties stay local), running just above vanilla `HaulGeneral` so a Critical freezer downstairs beats a Low pile by the door. Items already sitting in storage get upgraded to better storage on other levels too. Cargo is only shipped to a level where the storage is actually walkable from the arrival landing.
+- **Haul designations travel**: "Haul things" designations (stone chunks etc.) move with the cargo through stairwells and elevators, and items pulled out of storage for a cross-level upgrade get designated on arrival — nothing needs re-marking.
+- **Self-extending shaft conduit**: build one shaft power conduit within a few tiles of a stairwell or elevator and it automatically extends a matching junction down to the landing below and drives the tie itself. The lower end lives and dies with the one you built, is replaced automatically if destroyed, and existing hand-built pairs are adopted as-is.
+- **Legacy landing migration**: on load, old rope "cave exit" landings (from before Strata spawned its own) are swapped in place for the proper stairwell/elevator landing, complete with power shaft comp.
+
+### Fixed
+- **Landings were never Strata buildings**: vanilla's `GenStep_PlaceCaveExit` ignores `exitDef` and always spawns its 3×3 rope cave exit — so no level ever had a real stairwell/elevator landing, and the exit-side power shaft never existed. New `GenStep_PlaceLevelExit` spawns the entrance's actual `exitDef`.
+- **Power tie brownout death spiral**: the shaft tie used to push a flat 2,000W toward the emptier grid regardless of demand, draining the source, getting shed by vanilla brownout logic, and locking off until the grid could afford the full draw. The tie is now demand-driven (a grid asks for its running deficit plus a battery-equalization trickle that tapers to zero), flows both ways, respects the elevator's flick switch and breakdowns, and recovers on its own after a brownout. Batteries on each level are optional now.
+- **Stairwell-up texture** was an unprocessed 1536×1024 image with a fake checkerboard background baked into the pixels; it rendered squashed with the chevrons reading as a lightning bolt. Cropped to true 256×256 with real transparency.
+
+### Changed
+- GitHub Pages catalog (`docs/strata.html`) updated for level sharing, priority hauling, the demand-driven power tie, and the self-extending shaft conduit; download zip rebuilt.
+
+## [1.0] — Strata V1
+
 ### Changed
 - GitHub Pages catalog (`docs/strata.html`) updated with smoke ventilation buildings, Levels tab, 200×200 levels, stairwell power pooling, and structured events list.
 
