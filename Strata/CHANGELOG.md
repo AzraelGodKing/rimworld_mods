@@ -21,6 +21,7 @@ All notable changes to Strata are documented here.
 - **Stairwell-up texture** was an unprocessed 1536×1024 image with a fake checkerboard background baked into the pixels; it rendered squashed with the chevrons reading as a lightning bolt. Cropped to true 256×256 with real transparency.
 
 ### Changed
+- **Ventilation is now a guarantee**: a room with any working smoke outlet — open sky, an open exterior door, a fan or louver whose exhaust (or duct run) reaches outdoors, or a powered updraft filter beside an unsealed shaft — is hard-capped at a light haze below the harm threshold. No amount of burners can give pawns smoke inhalation in a properly ventilated room; lose the outlet (power cut, door closed, duct broken, shaft sealed) and smoke builds again.
 - **Emission retune**: torch lamps (and modded torches/candles) barely smoke now (1.0 → 0.1) — mood lighting, not a hazard. Braziers and other always-lit flames drop from generator level to below campfire level (3.5 → 2.0), so ideoligion rooms don't smoke themselves out.
 - GitHub Pages catalog (`docs/strata.html`) updated for level sharing, priority hauling, the demand-driven power tie, and the self-extending shaft conduit; download zip rebuilt.
 

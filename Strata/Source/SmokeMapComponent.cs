@@ -29,6 +29,10 @@ namespace Strata
         private const float OpenRoofVent = 0.06f;  // per open-roof cell (capped)
         private const float OutdoorDisperse = 0.6f; // fraction cleared per cycle in open air
         private const float HarmThreshold = 0.15f;
+        // A properly ventilated room is pinned at a light haze, safely under
+        // HarmThreshold - ventilation is a guarantee, not a race between the
+        // emission rate and the vent rate.
+        private const float VentilatedCap = 0.12f;
         // Tuned so a pawn in 100% smoke reaches "coughing" in roughly an
         // in-game hour and dies only after several - a hazard you can react
         // to, not an instant kill.
@@ -169,9 +173,89 @@ namespace Strata
                 clouds[r.ID] = c;
             }
 
+            // 5. A room with a working smoke outlet never builds past a light
+            // haze, no matter how much is burning in it.
+            foreach (int id in clouds.Keys.ToList())
+            {
+                Cloud c = clouds[id];
+                if (c.density <= VentilatedCap)
+                {
+                    continue;
+                }
+                Room r = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
+                if (r != null && !r.UsesOutdoorTemperature && RoomIsProperlyVentilated(r))
+                {
+                    c.density = VentilatedCap;
+                    clouds[id] = c;
+                }
+            }
+
             RebuildCellDensity();
             AffectPawns();
             ThrowMotes();
+        }
+
+        // A working smoke outlet: open sky, an open exterior door, a fan or
+        // louver whose exhaust side (or duct run) reaches outdoors, or a
+        // powered updraft filter beside an unsealed shaft.
+        private bool RoomIsProperlyVentilated(Room room)
+        {
+            if (room.OpenRoofCount > 0 || SmokeVentUtility.RoomHasOpenExteriorDoor(room))
+            {
+                return true;
+            }
+            foreach (CompExhaustVent vent in Vents)
+            {
+                if (!vent.parent.Spawned || !vent.Active || vent.IntakeRoom != room)
+                {
+                    continue;
+                }
+                if (SmokeVentUtility.ExhaustOpensIntoDuct(vent.parent, out HashSet<IntVec3> network))
+                {
+                    if (SmokeVentUtility.DuctNetworkReachesOutdoor(map, network))
+                    {
+                        return true;
+                    }
+                    continue;
+                }
+                Room exhaust = vent.ExhaustRoom;
+                if ((exhaust != null && exhaust.UsesOutdoorTemperature)
+                    || SmokeVentUtility.CellIsOutdoor(map, SmokeVentUtility.ExhaustCell(vent.parent)))
+                {
+                    return true;
+                }
+            }
+            foreach (CompSmokeUpdraft updraft in Updrafts)
+            {
+                if (updraft.parent.Spawned && updraft.Active
+                    && updraft.parent.GetRoom() == room
+                    && RoomHasOpenShaftUp(room))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool RoomHasOpenShaftUp(Room room)
+        {
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (!(thing is PocketMapExit exit) || thing is Building_StairsDown)
+                {
+                    continue;
+                }
+                if (exit.Position.GetRoom(map) != room)
+                {
+                    continue;
+                }
+                if (StrataPortalUtility.IsSealedPortal(exit.entrance ?? (Thing)exit))
+                {
+                    continue;
+                }
+                return true;
+            }
+            return false;
         }
 
         // Draw the smog overlay every frame while any smoke exists.
