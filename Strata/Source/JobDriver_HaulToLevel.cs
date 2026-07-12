@@ -25,6 +25,9 @@ namespace Strata
             this.FailOnDestroyedOrNull(TargetIndex.A);
             this.FailOnDestroyedOrNull(TargetIndex.B);
             this.FailOnForbidden(TargetIndex.A);
+            // The player can seal the shaft mid-haul; drop the job instead of
+            // walking cargo to a door that won't open.
+            this.FailOn(() => StrataPortalUtility.IsSealedPortal(Portal));
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch)
                 .FailOnSomeonePhysicallyInteracting(TargetIndex.A);
             yield return Toils_Haul.StartCarryThing(TargetIndex.A);

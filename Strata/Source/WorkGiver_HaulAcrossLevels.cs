@@ -125,12 +125,13 @@ namespace Strata
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
             {
                 if (LevelDemand.MissingOn(link.map, t.def) > 0
-                    && LevelDemand.AnySiteReachable(link.map, t.def, link.arrivalCell)
-                    && link.firstStep.Spawned
-                    && link.firstStep.IsEnterable(out _)
-                    && pawn.CanReach(link.firstStep, PathEndMode.Touch, Danger.Some))
+                    && LevelDemand.AnySiteReachable(link.map, t.def, link.arrivalCell))
                 {
-                    return link.firstStep;
+                    MapPortal step = UsableStep(pawn, link);
+                    if (step != null)
+                    {
+                        return step;
+                    }
                 }
             }
 
@@ -150,16 +151,30 @@ namespace Strata
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
             {
                 StoragePriority p = BestAcceptingPriority(link.map, t, bestPriority, link.arrivalCell);
-                if (p > bestPriority
-                    && link.firstStep.Spawned
-                    && link.firstStep.IsEnterable(out _)
-                    && pawn.CanReach(link.firstStep, PathEndMode.Touch, Danger.Some))
+                if (p > bestPriority)
                 {
-                    best = link.firstStep;
-                    bestPriority = p;
+                    MapPortal step = UsableStep(pawn, link);
+                    if (step != null)
+                    {
+                        best = step;
+                        bestPriority = p;
+                    }
                 }
             }
             return best;
+        }
+
+        // The best portal for this pawn toward the link's level - nearest,
+        // powered elevators preferred - that is actually usable right now.
+        private static MapPortal UsableStep(Pawn pawn, LevelGraph.LevelLink link)
+        {
+            MapPortal step = LevelGraph.BestFirstStep(pawn.Map, link.map, pawn.Position) ?? link.firstStep;
+            if (step.Spawned && step.IsEnterable(out _)
+                && pawn.CanReach(step, PathEndMode.Touch, Danger.Some))
+            {
+                return step;
+            }
+            return null;
         }
 
         // The highest storage-group priority above 'above' that accepts the
