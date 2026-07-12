@@ -17,6 +17,10 @@ namespace Strata
             {
                 return;
             }
+            if (StrataMod.Settings != null && !StrataMod.Settings.workRelayEnabled)
+            {
+                return;
+            }
             if (!PawnRelay.CanRelay(pawn))
             {
                 return;

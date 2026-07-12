@@ -1,0 +1,82 @@
+using UnityEngine;
+using Verse;
+
+namespace Strata
+{
+    // Mod options. Read as statics from hot paths, so everything is a plain
+    // field with a cheap default.
+    public class StrataSettings : ModSettings
+    {
+        public bool smokeEnabled = true;
+        public float smokeSeverityScale = 1f;
+        public bool raidPursuitEnabled = true;
+        public bool workRelayEnabled = true;
+        public bool foodRelayEnabled = true;
+        public bool restRelayEnabled = true;
+        public bool throttleVacantLevels = true;
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref smokeEnabled, "smokeEnabled", defaultValue: true);
+            Scribe_Values.Look(ref smokeSeverityScale, "smokeSeverityScale", 1f);
+            Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
+            Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref throttleVacantLevels, "throttleVacantLevels", defaultValue: true);
+        }
+    }
+
+    public class StrataMod : Mod
+    {
+        public static StrataSettings Settings;
+
+        public StrataMod(ModContentPack content) : base(content)
+        {
+            Settings = GetSettings<StrataSettings>();
+        }
+
+        public override string SettingsCategory() => "Strata";
+
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
+            var listing = new Listing_Standard();
+            listing.Begin(inRect);
+
+            Text.Font = GameFont.Medium;
+            listing.Label("Colonist relays");
+            Text.Font = GameFont.Small;
+            listing.CheckboxLabeled("Work relay", ref Settings.workRelayEnabled,
+                "Idle colonists commute to other levels that have work.");
+            listing.CheckboxLabeled("Food relay", ref Settings.foodRelayEnabled,
+                "Hungry colonists go find a meal on another level.");
+            listing.CheckboxLabeled("Rest relay", ref Settings.restRelayEnabled,
+                "Sleepy colonists walk home to their bed on another level.");
+            listing.Gap();
+
+            Text.Font = GameFont.Medium;
+            listing.Label("Combustion smoke");
+            Text.Font = GameFont.Small;
+            listing.CheckboxLabeled("Smoke simulation", ref Settings.smokeEnabled,
+                "Burners give off smoke that pools in unventilated rooms. Turning this off clears all existing smoke.");
+            if (Settings.smokeEnabled)
+            {
+                listing.Label("Smoke inhalation severity: " + Settings.smokeSeverityScale.ToStringPercent()
+                    + " (how fast pawns are harmed by thick smoke)");
+                Settings.smokeSeverityScale = listing.Slider(Settings.smokeSeverityScale, 0f, 2f);
+            }
+            listing.Gap();
+
+            Text.Font = GameFont.Medium;
+            listing.Label("Threats & performance");
+            Text.Font = GameFont.Small;
+            listing.CheckboxLabeled("Raid pursuit", ref Settings.raidPursuitEnabled,
+                "Raiders with nobody left to fight follow your colonists through unsealed stairwells.");
+            listing.CheckboxLabeled("Throttle vacant levels", ref Settings.throttleVacantLevels,
+                "Levels with nobody on them run their ambient simulation at reduced rate to save performance.");
+
+            listing.End();
+        }
+    }
+}

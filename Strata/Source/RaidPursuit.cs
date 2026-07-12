@@ -29,6 +29,10 @@ namespace Strata
 
         public override void MapComponentTick()
         {
+            if (StrataMod.Settings != null && !StrataMod.Settings.raidPursuitEnabled)
+            {
+                return;
+            }
             // Stagger per map so tall bases don't pulse every level on one tick.
             int tick = Find.TickManager.TicksGame + map.uniqueID * 37;
             if (tick % EnrollInterval == 0)

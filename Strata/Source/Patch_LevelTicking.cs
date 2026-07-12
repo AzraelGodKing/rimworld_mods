@@ -16,6 +16,10 @@ namespace Strata
 
         public static bool ShouldThrottle(Map map)
         {
+            if (StrataMod.Settings != null && !StrataMod.Settings.throttleVacantLevels)
+            {
+                return false;
+            }
             if (map == null || !StrataMapUtility.IsUnderground(map))
             {
                 return false;
