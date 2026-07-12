@@ -6,50 +6,42 @@ using Verse;
 
 namespace Strata
 {
-    [DefOf]
-    public static class StrataKeyDefOf
-    {
-        public static KeyBindingDef Strata_ViewLevelUp;
-
-        public static KeyBindingDef Strata_ViewLevelDown;
-
-        static StrataKeyDefOf()
-        {
-            DefOfHelper.EnsureInitializedInCtor(typeof(StrataKeyDefOf));
-        }
-    }
-
-    // Page Up / Page Down flip the camera one level up or down, keeping the
-    // same relative position so the view stays over the same part of the base.
+    // Page Up / Page Down (configurable in mod settings) flip the camera one
+    // level up or down, keeping the same relative position so the view stays
+    // over the same part of the base.
     [HarmonyPatch(typeof(UIRoot_Play), nameof(UIRoot_Play.UIRootOnGUI))]
     public static class Patch_LevelHotkeys
     {
         public static void Postfix()
         {
-            if (Find.CurrentMap == null
+            if (Event.current.type != EventType.KeyDown
+                || Find.CurrentMap == null
                 || Find.World?.renderer == null
                 || Find.World.renderer.wantedMode != WorldRenderMode.None
                 || Find.WindowStack.WindowsPreventCameraMotion)
             {
                 return;
             }
-            if (StrataKeyDefOf.Strata_ViewLevelDown.KeyDownEvent)
+            KeyCode pressed = Event.current.keyCode;
+            KeyCode down = StrataMod.Settings?.viewLevelDownKey ?? KeyCode.PageDown;
+            KeyCode up = StrataMod.Settings?.viewLevelUpKey ?? KeyCode.PageUp;
+            if (pressed == down && pressed != KeyCode.None)
             {
-                JumpOneLevel(down: true);
+                JumpOneLevel(goDown: true);
                 Event.current.Use();
             }
-            else if (StrataKeyDefOf.Strata_ViewLevelUp.KeyDownEvent)
+            else if (pressed == up && pressed != KeyCode.None)
             {
-                JumpOneLevel(down: false);
+                JumpOneLevel(goDown: false);
                 Event.current.Use();
             }
         }
 
-        private static void JumpOneLevel(bool down)
+        private static void JumpOneLevel(bool goDown)
         {
             Map current = Find.CurrentMap;
             Map target = null;
-            if (down)
+            if (goDown)
             {
                 foreach (Thing thing in current.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
                 {
