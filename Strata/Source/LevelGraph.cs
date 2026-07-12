@@ -17,6 +17,7 @@ namespace Strata
             public Map map;          // a level reachable from the start map
             public MapPortal firstStep; // the portal to take first from the start map
             public int depth;        // number of stairwells between here and there
+            public IntVec3 arrivalCell; // where a pawn lands on that level (last leg's exit)
         }
 
         public static bool AnyLinkFrom(Map map)
@@ -69,7 +70,13 @@ namespace Strata
                     MapPortal firstStep = current == from ? portal : firstSteps[current];
                     firstSteps[other] = firstStep;
                     depths[other] = depths[current] + 1;
-                    resultBuffer.Add(new LevelLink { map = other, firstStep = firstStep, depth = depths[other] });
+                    resultBuffer.Add(new LevelLink
+                    {
+                        map = other,
+                        firstStep = firstStep,
+                        depth = depths[other],
+                        arrivalCell = portal.GetDestinationLocation(),
+                    });
                     openQueue.Enqueue(other);
                 }
             }

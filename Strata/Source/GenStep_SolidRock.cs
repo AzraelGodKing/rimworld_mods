@@ -8,7 +8,7 @@ namespace Strata
 {
     // Fills a freshly opened underground level with solid mineable rock under a
     // thick rock roof, then carves a small arrival chamber in the middle for the
-    // stairwell landing (GenStep_PlaceCaveExit spawns the stairs there afterwards).
+    // stairwell landing (GenStep_PlaceLevelExit spawns the stairs there afterwards).
     public class GenStep_SolidRock : GenStep
     {
         private const float ChamberRadius = 8f;

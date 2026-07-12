@@ -8,7 +8,9 @@
     <workType>Hauling</workType>
     <verb>haul</verb>
     <gerund>hauling</gerund>
-    <priorityInType>-10</priorityInType>
+    <!-- Just above HaulGeneral (15): a strictly better stockpile on another
+         level must win before normal hauling parks the item locally. -->
+    <priorityInType>16</priorityInType>
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
