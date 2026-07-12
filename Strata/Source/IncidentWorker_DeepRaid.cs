@@ -63,6 +63,11 @@ namespace Strata
             }
 
             float points = parms.points > 0f ? parms.points : StorytellerUtility.DefaultThreatPointsNow(map);
+            // A fresh dig has almost no wealth, so its threat points can fall
+            // below the cost of a single raider - and the group maker silently
+            // generates nobody. Clamp to the faction's minimum viable squad,
+            // exactly like vanilla raids do.
+            points = Mathf.Max(points, faction.def.MinPointsToGeneratePawnGroup(PawnGroupKindDefOf.Combat) * 1.05f);
             var groupParms = new PawnGroupMakerParms
             {
                 groupKind = PawnGroupKindDefOf.Combat,
