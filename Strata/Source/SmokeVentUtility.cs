@@ -7,8 +7,10 @@ namespace Strata
 {
     public static class SmokeVentUtility
     {
-        public const float DoorVentPerOpenExterior = 0.12f;
-        public const float MaxDoorVentBonus = 0.24f;
+        // High enough that one open exterior door genuinely clears a worked
+        // bench's smoke - "open the door" must be a real answer.
+        public const float DoorVentPerOpenExterior = 0.2f;
+        public const float MaxDoorVentBonus = 0.5f;
 
         public static Room IntakeRoom(Thing thing)
         {
