@@ -61,17 +61,19 @@ namespace Strata
                 }
                 if (def.defName.Contains("Torch") || def.defName.Contains("Candle"))
                 {
-                    return 1f;
+                    return 0.1f;
                 }
                 if (def.defName.Contains("Campfire") || def.defName.Contains("Fire"))
                 {
                     return 2.5f;
                 }
                 // Anything else refuelable only smokes with evidence of actual
-                // combustion - a passive cooler burns nothing.
+                // combustion - a passive cooler burns nothing. Braziers and
+                // other always-lit flames sit at campfire level, not generator
+                // level, so an ideoligion room doesn't smoke itself out.
                 if (LooksLikeFlame(def))
                 {
-                    return 3.5f;
+                    return 2f;
                 }
                 return 0f;
             }
