@@ -138,6 +138,38 @@ namespace Strata
         }
     }
 
+    // Dev-mode diagnostics: deep raid is Strata's only ThreatBig incident, and
+    // vanilla gates ThreatBig behind checks that fail silently (big threats
+    // disabled in difficulty, post-wipe wanderer grace, refire cooldown).
+    // When it refuses to fire in dev mode, say which gate did it.
+    [HarmonyPatch(typeof(IncidentWorker), nameof(IncidentWorker.CanFireNow))]
+    public static class Patch_DeepRaidDiagnostics
+    {
+        public static void Postfix(IncidentWorker __instance, IncidentParms parms, bool __result)
+        {
+            if (__result || !Prefs.DevMode || __instance.def != StrataIncidentDefOf.Strata_DeepRaid)
+            {
+                return;
+            }
+            bool firedRecently = false;
+            try
+            {
+                firedRecently = (bool)AccessTools.Method(typeof(IncidentWorker), "FiredTooRecently")
+                    .Invoke(__instance, new object[] { parms.target });
+            }
+            catch
+            {
+            }
+            Log.Message("[Strata] Deep raid blocked. Vanilla gates: "
+                + $"targetAllowed={__instance.def.TargetAllowed(parms.target)}, "
+                + $"allowBigThreats={Find.Storyteller?.difficulty?.allowBigThreats}, "
+                + $"firedTooRecently={firedRecently}, "
+                + $"gameEnding={Find.GameEnder.gameEnding}, "
+                + $"wanderersGraceActive={Find.TickManager.TicksGame < Find.GameEnder.newWanderersCreatedTick + 300000}, "
+                + $"points={parms.points}");
+        }
+    }
+
     // With every other threat suppressed underground, lean into bugs as the
     // defining danger of the deep: infestations are meaningfully more likely on
     // a Strata level than they would be under an ordinary mountain.
