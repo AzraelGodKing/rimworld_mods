@@ -84,6 +84,22 @@ namespace Strata
             return room != null && clouds.TryGetValue(room.ID, out Cloud c) ? c.density : 0f;
         }
 
+        // The densest smoke cloud on this map, for alerts and dev tools.
+        public bool TryGetWorstCloud(out IntVec3 cell, out float density)
+        {
+            cell = IntVec3.Invalid;
+            density = 0f;
+            foreach (Cloud c in clouds.Values)
+            {
+                if (c.density > density && c.sample.IsValid)
+                {
+                    density = c.density;
+                    cell = c.sample;
+                }
+            }
+            return density > 0f;
+        }
+
         // Dev helpers.
         public string DebugSummary()
         {
