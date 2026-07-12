@@ -28,10 +28,14 @@ namespace Strata
         private const float BaseLeak = 0.02f;      // slow seepage from any enclosed room
         private const float OpenRoofVent = 0.06f;  // per open-roof cell (capped)
         private const float OutdoorDisperse = 0.6f; // fraction cleared per cycle in open air
+        private const float ExteriorDoorDrain = 0.4f; // per open exterior door - a visible flush
+        private const float InteriorDoorFlow = 0.25f; // fraction of the density gap that crosses an open interior door
         private const float HarmThreshold = 0.15f;
-        // A properly ventilated room is pinned at a light haze, safely under
-        // HarmThreshold - ventilation is a guarantee, not a race between the
-        // emission rate and the vent rate.
+        // Burners and inflows can never push a properly ventilated room past
+        // this light haze, safely under HarmThreshold - ventilation is a
+        // guarantee, not a race between the emission rate and the vent rate.
+        // Pre-existing thick smoke still drains through the outlets visibly
+        // instead of vanishing to the cap.
         private const float VentilatedCap = 0.12f;
         // Tuned so a pawn in 100% smoke reaches "coughing" in roughly an
         // in-game hour and dies only after several - a hazard you can react
@@ -136,7 +140,12 @@ namespace Strata
             // 2. Smoke rises through unsealed stairwell / elevator shafts.
             SmokeRiseUtility.ProcessMap(this);
 
-            // 3. Disperse / vent existing smoke (open roof, doors, slow leak).
+            // 3. Open doors move smoke: exterior doors flush it outside fast
+            // and visibly, interior doors spill it into the next room so it
+            // spreads toward an exit.
+            ProcessDoorFlow();
+
+            // 4. Disperse existing smoke (open roof, slow leak).
             foreach (int id in clouds.Keys.ToList())
             {
                 Cloud c = clouds[id];
@@ -147,9 +156,7 @@ namespace Strata
                 }
                 else
                 {
-                    float vent = BaseLeak
-                        + OpenRoofVent * Mathf.Min(r.OpenRoofCount, 5)
-                        + SmokeVentUtility.DoorVentBonus(r);
+                    float vent = BaseLeak + OpenRoofVent * Mathf.Min(r.OpenRoofCount, 5);
                     c.density *= 1f - Mathf.Clamp01(vent);
                 }
                 if (c.density < 0.01f)
@@ -162,7 +169,10 @@ namespace Strata
                 }
             }
 
-            // 4. Emit from active burners in enclosed rooms.
+            // 5. Emit from active burners in enclosed rooms. Ventilation is a
+            // guarantee: burners can never push a properly ventilated room
+            // past a light haze - but thick pre-existing smoke drains
+            // naturally (and visibly) rather than vanishing.
             foreach (CompExhaust emitter in Emitters)
             {
                 if (!emitter.parent.Spawned || !emitter.Active)
@@ -176,31 +186,93 @@ namespace Strata
                 }
                 float add = emitter.Props.emissionPerCycle / Mathf.Max(r.CellCount, 1);
                 Cloud c = clouds.TryGetValue(r.ID, out Cloud existing) ? existing : new Cloud();
-                c.density = Mathf.Min(1f, c.density + add);
+                float limit = RoomIsProperlyVentilated(r) ? Mathf.Max(VentilatedCap, c.density) : 1f;
+                c.density = Mathf.Min(limit, c.density + add);
                 c.sample = emitter.parent.Position;
                 clouds[r.ID] = c;
-            }
-
-            // 5. A room with a working smoke outlet never builds past a light
-            // haze, no matter how much is burning in it.
-            foreach (int id in clouds.Keys.ToList())
-            {
-                Cloud c = clouds[id];
-                if (c.density <= VentilatedCap)
-                {
-                    continue;
-                }
-                Room r = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
-                if (r != null && !r.UsesOutdoorTemperature && RoomIsProperlyVentilated(r))
-                {
-                    c.density = VentilatedCap;
-                    clouds[id] = c;
-                }
             }
 
             RebuildCellDensity();
             AffectPawns();
             ThrowMotes();
+        }
+
+        // Move smoke through open doors. Runs on a snapshot of the smoky
+        // rooms; smoke pushed into a fresh room joins the simulation next
+        // cycle.
+        private void ProcessDoorFlow()
+        {
+            if (clouds.Count == 0)
+            {
+                return;
+            }
+            var countedDoors = new HashSet<Building>();
+            foreach (int id in clouds.Keys.ToList())
+            {
+                if (!clouds.TryGetValue(id, out Cloud c))
+                {
+                    continue;
+                }
+                Room room = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
+                if (room == null || room.UsesOutdoorTemperature)
+                {
+                    continue;
+                }
+                countedDoors.Clear();
+                float density = c.density;
+                foreach (Region region in room.Regions)
+                {
+                    Building_Door door = region.door;
+                    if (door == null || !door.Open || !countedDoors.Add(door))
+                    {
+                        continue;
+                    }
+                    Room neighbor = null;
+                    bool exterior = false;
+                    foreach (RegionLink link in region.links)
+                    {
+                        Room other = link.GetOtherRegion(region)?.Room;
+                        if (other == null || other == room)
+                        {
+                            continue;
+                        }
+                        if (other.PsychologicallyOutdoors || other.UsesOutdoorTemperature)
+                        {
+                            exterior = true;
+                        }
+                        else
+                        {
+                            neighbor = other;
+                        }
+                    }
+                    if (exterior)
+                    {
+                        density *= 1f - ExteriorDoorDrain;
+                    }
+                    else if (neighbor != null)
+                    {
+                        float gap = density - DensityInRoom(neighbor);
+                        if (gap > 0.01f)
+                        {
+                            float moved = gap * InteriorDoorFlow;
+                            density -= moved;
+                            AddSmokeToRoom(neighbor, moved, door.Position);
+                        }
+                    }
+                }
+                if (density != c.density)
+                {
+                    if (density < 0.01f)
+                    {
+                        clouds.Remove(id);
+                    }
+                    else
+                    {
+                        c.density = density;
+                        clouds[id] = c;
+                    }
+                }
+            }
         }
 
         // A working smoke outlet: open sky, an open exterior door, a fan or
@@ -398,7 +470,9 @@ namespace Strata
                 return;
             }
             Cloud c = clouds.TryGetValue(room.ID, out Cloud existing) ? existing : new Cloud();
-            c.density = Mathf.Min(1f, c.density + amount);
+            // Inflows respect the ventilation guarantee the same way burners do.
+            float limit = RoomIsProperlyVentilated(room) ? Mathf.Max(VentilatedCap, c.density) : 1f;
+            c.density = Mathf.Min(limit, c.density + amount);
             c.sample = sample;
             clouds[room.ID] = c;
         }
