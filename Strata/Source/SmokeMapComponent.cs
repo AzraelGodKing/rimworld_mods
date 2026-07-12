@@ -220,19 +220,26 @@ namespace Strata
                 }
                 countedDoors.Clear();
                 float density = c.density;
-                foreach (Region region in room.Regions)
+                // Doors are their own one-cell "doorway room" and never show
+                // up in the room's Regions - walk the border cells instead.
+                foreach (IntVec3 borderCell in room.BorderCellsCached)
                 {
-                    Building_Door door = region.door;
+                    Building_Door door = borderCell.InBounds(map) ? borderCell.GetDoor(map) : null;
                     if (door == null || !door.Open || !countedDoors.Add(door))
                     {
                         continue;
                     }
                     Room neighbor = null;
                     bool exterior = false;
-                    foreach (RegionLink link in region.links)
+                    foreach (IntVec3 dir in GenAdj.CardinalDirections)
                     {
-                        Room other = link.GetOtherRegion(region)?.Room;
-                        if (other == null || other == room)
+                        IntVec3 beyond = door.Position + dir;
+                        if (!beyond.InBounds(map))
+                        {
+                            continue;
+                        }
+                        Room other = beyond.GetRoom(map);
+                        if (other == null || other == room || other.IsDoorway)
                         {
                             continue;
                         }

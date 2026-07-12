@@ -43,32 +43,58 @@ namespace Strata
             return DoorVentBonus(room) > 0f;
         }
 
+        // Doors form their own one-cell "doorway room" in RimWorld, so they
+        // never appear in a room's own Regions - find them by scanning the
+        // room's border cells instead.
         public static float DoorVentBonus(Room room)
         {
             if (room == null || room.PsychologicallyOutdoors)
             {
                 return 0f;
             }
+            Map map = room.Map;
             int doors = 0;
             HashSet<Building> counted = new HashSet<Building>();
-            foreach (Region region in room.Regions)
+            foreach (IntVec3 cell in room.BorderCellsCached)
             {
-                Building_Door door = region.door;
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+                Building_Door door = cell.GetDoor(map);
                 if (door == null || !door.Open || !counted.Add(door))
                 {
                     continue;
                 }
-                foreach (RegionLink link in region.links)
+                if (DoorLeadsOutdoors(door, room))
                 {
-                    Region other = link.GetOtherRegion(region);
-                    if (other?.Room != null && other.Room.PsychologicallyOutdoors)
-                    {
-                        doors++;
-                        break;
-                    }
+                    doors++;
                 }
             }
             return Mathf.Min(doors * DoorVentPerOpenExterior, MaxDoorVentBonus);
+        }
+
+        public static bool DoorLeadsOutdoors(Building_Door door, Room from)
+        {
+            Map map = door.Map;
+            foreach (IntVec3 dir in GenAdj.CardinalDirections)
+            {
+                IntVec3 cell = door.Position + dir;
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+                Room other = cell.GetRoom(map);
+                if (other == null || other == from || other.IsDoorway)
+                {
+                    continue;
+                }
+                if (other.PsychologicallyOutdoors || other.UsesOutdoorTemperature)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static void CollectDuctNetwork(Map map, IntVec3 start, HashSet<IntVec3> network)
