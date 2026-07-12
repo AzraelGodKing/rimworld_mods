@@ -247,16 +247,23 @@ namespace Strata
                     }
                     if (exterior)
                     {
+                        // Exits take priority: outdoors is a pure drain.
                         density *= 1f - ExteriorDoorDrain;
                     }
-                    else if (neighbor != null)
+                    else if (neighbor != null && neighbor.CellCount > 0)
                     {
-                        float gap = density - DensityInRoom(neighbor);
-                        if (gap > 0.01f)
+                        // Equalize toward the volume-weighted mix of the two
+                        // rooms, conserving smoke mass: what a small room
+                        // loses in density, a big hall gains as a thin haze.
+                        float cellsHere = Mathf.Max(room.CellCount, 1);
+                        float cellsThere = neighbor.CellCount;
+                        float there = DensityInRoom(neighbor);
+                        float equilibrium = (density * cellsHere + there * cellsThere) / (cellsHere + cellsThere);
+                        float drop = (density - equilibrium) * InteriorDoorFlow;
+                        if (drop > 0.005f)
                         {
-                            float moved = gap * InteriorDoorFlow;
-                            density -= moved;
-                            AddSmokeToRoom(neighbor, moved, door.Position);
+                            density -= drop;
+                            AddSmokeToRoom(neighbor, drop * cellsHere / cellsThere, door.Position);
                         }
                     }
                 }
@@ -468,6 +475,18 @@ namespace Strata
             if (room == null || amount <= 0f)
             {
                 return;
+            }
+            // The sample cell must sit INSIDE the room: it is how the cloud
+            // resolves its room each cycle and where the overlay paints.
+            // Callers often pass a door or vent cell, which belongs to its own
+            // one-cell room and would make the smoke invisible.
+            if (!sample.IsValid || !sample.InBounds(map) || sample.GetRoom(map) != room)
+            {
+                if (room.RegionCount == 0)
+                {
+                    return;
+                }
+                sample = room.Regions[0].AnyCell;
             }
             Cloud c = clouds.TryGetValue(room.ID, out Cloud existing) ? existing : new Cloud();
             // Inflows respect the ventilation guarantee the same way burners do.
