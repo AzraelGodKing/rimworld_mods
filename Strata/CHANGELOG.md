@@ -4,6 +4,10 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+## [1.1] — 2026-07-12
+
+One home, many floors — and now they behave like one home. This release makes storage priority, construction, rituals, the build menu, and the resource readout work across the whole level column; rebuilds the smoke system around real airflow with a hard safety guarantee for ventilated rooms; makes pursuing raids commit to the fight like proper raids; turns deep raids into the insect eruptions they were always meant to be; and fixes a batch of deep-rooted bugs — including several systems that had never actually worked (door venting, underground storyteller events, real stairwell landings).
+
 ### Added
 - **Level sharing**: a second stairwell or elevator built on the same floor now breaks through into the *same* level below instead of opening a parallel pocket dimension. Its landing is carved roughly beneath where it stands (sealed in rock until mined out — pawns can always ride back up). A shared level only collapses when its last entrance is deconstructed.
 - **Cross-level storage priority**: hauling now honors stockpile priority across the whole level graph. Items go directly to whichever level's storage has the highest accepting priority (ties stay local), running just above vanilla `HaulGeneral` so a Critical freezer downstairs beats a Low pile by the door. Items already sitting in storage get upgraded to better storage on other levels too. Cargo is only shipped to a level where the storage is actually walkable from the arrival landing.
