@@ -28,6 +28,11 @@ namespace Strata
         // runs, so enrolling during arrival gets silently undone.
         private readonly List<Pawn> pendingArrivals = new List<Pawn>();
 
+        // Assault time already served on the previous level, carried across the
+        // transit so a pursuit's give-up clock doesn't reset at every stairwell.
+        // Transient (transit takes seconds); keyed by pawn ID so nothing leaks.
+        private static readonly Dictionary<int, int> assaultCredit = new Dictionary<int, int>();
+
         public MapComponent_RaidPursuit(Map map) : base(map)
         {
         }
@@ -127,7 +132,17 @@ namespace Strata
                 {
                     continue;
                 }
-                raider.GetLord()?.Notify_PawnLost(raider, PawnLostCondition.ForcedToJoinOtherLord);
+                Lord sourceLord = raider.GetLord();
+                if (sourceLord != null
+                    && (sourceLord.LordJob is LordJob_AssaultColony || sourceLord.LordJob is LordJob_StrataAssault))
+                {
+                    if (assaultCredit.Count > 500)
+                    {
+                        assaultCredit.Clear(); // stale transit entries; bounded either way
+                    }
+                    assaultCredit[raider.thingIDNumber] = sourceLord.ticksInToil;
+                }
+                sourceLord?.Notify_PawnLost(raider, PawnLostCondition.ForcedToJoinOtherLord);
                 raider.jobs.StopAll();
                 raider.jobs.StartJob(JobMaker.MakeJob(JobDefOf.EnterPortal, firstStep), JobCondition.InterruptForced);
                 sent++;
@@ -202,10 +217,17 @@ namespace Strata
 
         private static void EnrollIntoAssault(Pawn pawn, Map map)
         {
+            int credit = 0;
+            if (assaultCredit.TryGetValue(pawn.thingIDNumber, out int stored))
+            {
+                credit = stored;
+                assaultCredit.Remove(pawn.thingIDNumber);
+            }
             // Join a pursuit assault already in progress from the same faction
-            // so arrivals fight as one group. Only Strata's own lord qualifies:
-            // vanilla assault lords can decide to steal or give up and walk the
-            // whole group back up the stairs.
+            // so arrivals fight as one group (its clock stands in for the
+            // credit). Only Strata's own lord qualifies: vanilla assault lords
+            // can decide to steal or give up and walk the whole group back up
+            // the stairs.
             List<Lord> lords = map.lordManager.lords;
             for (int i = 0; i < lords.Count; i++)
             {
@@ -218,7 +240,7 @@ namespace Strata
                     return;
                 }
             }
-            LordMaker.MakeNewLord(pawn.Faction, new LordJob_StrataAssault(pawn.Faction), map,
+            LordMaker.MakeNewLord(pawn.Faction, new LordJob_StrataAssault(pawn.Faction, credit), map,
                 new List<Pawn> { pawn });
         }
 

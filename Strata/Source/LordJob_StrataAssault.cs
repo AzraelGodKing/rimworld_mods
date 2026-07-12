@@ -1,4 +1,5 @@
 using RimWorld;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 using Verse.AI.Group;
@@ -21,7 +22,15 @@ namespace Strata
 
         private static readonly IntRange AssaultTimeBeforeGiveUp = new IntRange(26000, 38000);
 
+        // Never give up in under this once on a fresh level, even with a lot
+        // of inherited assault time - they did just march down the stairs.
+        private const int MinAssaultTicks = 2500;
+
         private Faction faction;
+
+        // Time already spent assaulting on previous levels: a pursuit is one
+        // raid, and its give-up clock must not reset at every stairwell.
+        private int inheritedAssaultTicks;
 
         public override bool GuiltyOnDowned => true;
 
@@ -29,9 +38,10 @@ namespace Strata
         {
         }
 
-        public LordJob_StrataAssault(Faction faction)
+        public LordJob_StrataAssault(Faction faction, int inheritedAssaultTicks = 0)
         {
             this.faction = faction;
+            this.inheritedAssaultTicks = inheritedAssaultTicks;
         }
 
         public override StateGraph CreateGraph()
@@ -45,9 +55,11 @@ namespace Strata
 
             if (faction != null && faction.def.humanlikeFaction)
             {
-                // Give up eventually, same window as a vanilla assault.
+                // Give up eventually - the same window as a vanilla assault,
+                // minus the time already spent assaulting on levels above.
                 var timeout = new Transition(assault, exit);
-                var ticksPassed = new Trigger_TicksPassed(AssaultTimeBeforeGiveUp.RandomInRange);
+                var ticksPassed = new Trigger_TicksPassed(
+                    Mathf.Max(MinAssaultTicks, AssaultTimeBeforeGiveUp.RandomInRange - inheritedAssaultTicks));
                 ticksPassed.WithFilter(new TriggerFilter_MapExitable());
                 timeout.AddTrigger(ticksPassed);
                 timeout.AddPreAction(new TransitionAction_Message(
@@ -98,6 +110,7 @@ namespace Strata
         public override void ExposeData()
         {
             Scribe_References.Look(ref faction, "faction");
+            Scribe_Values.Look(ref inheritedAssaultTicks, "inheritedAssaultTicks", 0);
         }
     }
 
