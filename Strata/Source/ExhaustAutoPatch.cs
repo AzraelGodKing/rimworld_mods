@@ -51,6 +51,14 @@ namespace Strata
         {
             if (def.GetCompProperties<CompProperties_Refuelable>() != null)
             {
+                // Fueled work benches (stove, smithy, smelter...) smoke gently,
+                // and only while a pawn works them (see CompExhaust.Active). A
+                // workshop without ventilation should be uncomfortable, not a
+                // death trap.
+                if (def.IsWorkTable)
+                {
+                    return 1.5f;
+                }
                 if (def.defName.Contains("Torch") || def.defName.Contains("Candle"))
                 {
                     return 1f;
@@ -59,7 +67,13 @@ namespace Strata
                 {
                     return 2.5f;
                 }
-                return 3.5f;
+                // Anything else refuelable only smokes with evidence of actual
+                // combustion - a passive cooler burns nothing.
+                if (LooksLikeFlame(def))
+                {
+                    return 3.5f;
+                }
+                return 0f;
             }
             CompProperties_Power power = def.GetCompProperties<CompProperties_Power>();
             if (power != null && power.PowerConsumption < 0f)
@@ -71,6 +85,16 @@ namespace Strata
                 return 3.5f;
             }
             return 0f;
+        }
+
+        private static bool LooksLikeFlame(ThingDef def)
+        {
+            if (def.GetCompProperties<CompProperties_FireOverlay>() != null)
+            {
+                return true;
+            }
+            CompProperties_HeatPusher heat = def.GetCompProperties<CompProperties_HeatPusher>();
+            return heat != null && heat.heatPerSecond > 0f;
         }
 
         private static bool HasExhaustComp(ThingDef def)

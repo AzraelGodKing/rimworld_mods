@@ -29,7 +29,10 @@ namespace Strata
         private const float OpenRoofVent = 0.06f;  // per open-roof cell (capped)
         private const float OutdoorDisperse = 0.6f; // fraction cleared per cycle in open air
         private const float HarmThreshold = 0.15f;
-        private const float SeverityGain = 0.02f;
+        // Tuned so a pawn in 100% smoke reaches "coughing" in roughly an
+        // in-game hour and dies only after several - a hazard you can react
+        // to, not an instant kill.
+        private const float SeverityGain = 0.006f;
         private const float SeverityDecay = 0.03f;
         private const float MoteThreshold = 0.2f;
 
