@@ -106,6 +106,7 @@ namespace Strata
         {
             base.OnEntered(pawn);
             StrataPortalUtility.TransferHaulDesignation(this, pawn);
+            MapComponent_RaidPursuit.NotifyPortalArrival(pawn, pawn.MapHeld);
         }
     }
 }

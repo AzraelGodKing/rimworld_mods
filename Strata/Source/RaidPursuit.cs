@@ -140,12 +140,63 @@ namespace Strata
 
         // ---- Receiving raiders on the far side ----
 
+        // Called from the stairs' OnEntered the moment a pawn steps off the
+        // portal. A lord-less hostile must be enrolled BEFORE its first think
+        // on the new map: vanilla's lordless AI is "leave the map", and on a
+        // pocket map the way out is the stairs it just came down - which read
+        // as raiders turning around and running straight back up.
+        public static void NotifyPortalArrival(Pawn pawn, Map map)
+        {
+            if (StrataMod.Settings != null && !StrataMod.Settings.raidPursuitEnabled)
+            {
+                return;
+            }
+            if (pawn == null || map == null || pawn.Dead || pawn.Downed || pawn.IsPrisoner)
+            {
+                return;
+            }
+            if (!pawn.RaceProps.Humanlike && !pawn.RaceProps.IsMechanoid)
+            {
+                return;
+            }
+            if (pawn.Faction == null || !pawn.Faction.HostileTo(Faction.OfPlayer)
+                || pawn.GetLord() != null)
+            {
+                return;
+            }
+            EnrollIntoAssault(pawn, map);
+        }
+
+        private static void EnrollIntoAssault(Pawn pawn, Map map)
+        {
+            // Join an assault already in progress from the same faction so
+            // arrivals fight as one group.
+            List<Lord> lords = map.lordManager.lords;
+            for (int i = 0; i < lords.Count; i++)
+            {
+                Lord lord = lords[i];
+                if (lord.faction == pawn.Faction && lord.LordJob is LordJob_AssaultColony
+                    && !(lord.CurLordToil is LordToil_PanicFlee) && !(lord.CurLordToil is LordToil_ExitMap)
+                    && lord.CanAddPawn(pawn))
+                {
+                    lord.AddPawn(pawn);
+                    return;
+                }
+            }
+            bool underground = StrataMapUtility.IsUnderground(map);
+            var lordJob = new LordJob_AssaultColony(pawn.Faction,
+                canKidnap: !underground, canTimeoutOrFlee: !underground);
+            LordMaker.MakeNewLord(pawn.Faction, lordJob, map, new List<Pawn> { pawn });
+        }
+
         // A pawn that walks through a portal leaves its lord behind on the old
-        // map. Any lord-less hostile on a level with colonists gets enrolled
-        // into a fresh assault lord so it fights instead of standing around.
+        // map. Any lord-less hostile gets enrolled into a fresh assault lord so
+        // it fights (or keeps pursuing via TryPursue) instead of standing
+        // around - even on a level with no colonists, since a lordless raider
+        // otherwise takes vanilla's leave-the-map job back up the stairs.
         private void EnrollStrays()
         {
-            if (!RelevantMap() || map.mapPawns.FreeColonistsSpawnedCount == 0)
+            if (!RelevantMap())
             {
                 return;
             }
@@ -185,12 +236,10 @@ namespace Strata
 
             foreach (KeyValuePair<Faction, List<Pawn>> group in strays)
             {
-                // Underground maps have no edge to flee across, so don't let the
-                // lord try - fight until beaten.
-                bool underground = StrataMapUtility.IsUnderground(map);
-                var lordJob = new LordJob_AssaultColony(group.Key,
-                    canKidnap: !underground, canTimeoutOrFlee: !underground);
-                LordMaker.MakeNewLord(group.Key, lordJob, map, group.Value);
+                for (int i = 0; i < group.Value.Count; i++)
+                {
+                    EnrollIntoAssault(group.Value[i], map);
+                }
             }
         }
 
