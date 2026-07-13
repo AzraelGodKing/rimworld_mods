@@ -17,6 +17,14 @@ namespace Strata
 
         private static readonly Dictionary<int, int> lastRelayTick = new Dictionary<int, int>();
 
+        // Tick-stamped and keyed by pawn ID, so entries from one save are
+        // garbage in another (loading an earlier save leaves future-dated
+        // cooldowns that silently suppress relays). Cleared on game load.
+        internal static void ResetSession()
+        {
+            lastRelayTick.Clear();
+        }
+
         public static bool CanRelay(Pawn pawn)
         {
             if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed)
