@@ -68,6 +68,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li Class="CompProperties_Power">
         <compClass>Strata.CompPowerShaft</compClass>
         <basePowerConsumption>10</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
       </li>
       <li Class="Strata.CompProperties_StairwellControl"/>
     </comps>
@@ -106,6 +107,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li Class="CompProperties_Power">
         <compClass>Strata.CompPowerShaft</compClass>
         <basePowerConsumption>0</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
       </li>
     </comps>
     <building>
@@ -151,6 +153,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li Class="CompProperties_Power">
         <compClass>Strata.CompPowerShaft</compClass>
         <basePowerConsumption>200</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
       </li>
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
@@ -191,6 +194,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li Class="CompProperties_Power">
         <compClass>Strata.CompPowerShaft</compClass>
         <basePowerConsumption>0</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
       </li>
     </comps>
     <building>
@@ -463,7 +467,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ShaftConduit</defName>
     <label>shaft power conduit</label>
-    <description>An optional power junction for running power through a shaft. Build one within a few tiles of a stairwell or elevator: it automatically extends a matching junction down to the landing below, and power flows between the two grids once each level is wired to its junction. Stairwells and elevators already carry power on their own — use this when you need a dedicated tie point away from the shaft footprint.</description>
+    <description>An optional power junction for running power through a shaft. Build one within a few tiles of a stairwell or elevator: it automatically extends a matching junction down to the landing below, and power flows between the two grids once each level is wired to its junction — active as soon as it is built and wired, no switch to flip. Stairwells and elevators already carry power on their own — use this when you need a dedicated tie point away from the shaft footprint.</description>
     <thingClass>Strata.Building_ShaftConduit</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/ShaftConduit</texPath>
@@ -492,7 +496,6 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
         <basePowerConsumption>10</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
       </li>
-      <li Class="CompProperties_Flickable"/>
     </comps>
     <designationCategory>Power</designationCategory>
     <canOverlapZones>false</canOverlapZones>
