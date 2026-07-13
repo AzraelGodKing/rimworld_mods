@@ -47,6 +47,38 @@ namespace Strata
         {
             return map != null && map.IsPlayerHome && !IsUnderground(map);
         }
+
+        // Same relative position on another level's grid — used for landings,
+        // shaft junctions, and camera jumps so things stack vertically.
+        public static IntVec3 ProportionalCell(IntVec3 pos, Map from, Map to)
+        {
+            if (from == null || to == null || from.Size.x <= 0 || from.Size.z <= 0)
+            {
+                return to?.Center ?? IntVec3.Invalid;
+            }
+            int x = Mathf.Clamp(Mathf.RoundToInt((float)pos.x / from.Size.x * to.Size.x), 0, to.Size.x - 1);
+            int z = Mathf.Clamp(Mathf.RoundToInt((float)pos.z / from.Size.z * to.Size.z), 0, to.Size.z - 1);
+            return new IntVec3(x, 0, z);
+        }
+
+        // Proportional alignment, nudging inward when the spot hugs the map edge.
+        public static IntVec3 VerticalAlign(IntVec3 pos, Map from, Map to, float searchRadius = 25f, int edgeMargin = 8)
+        {
+            IntVec3 target = ProportionalCell(pos, from, to);
+            if (target.InBounds(to) && target.DistanceToEdge(to) >= edgeMargin)
+            {
+                return target;
+            }
+            IntVec3 origin = target.IsValid ? target : to.Center;
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(origin, searchRadius, useCenter: true))
+            {
+                if (cell.InBounds(to) && cell.DistanceToEdge(to) >= edgeMargin)
+                {
+                    return cell;
+                }
+            }
+            return to.Center;
+        }
     }
 
     // Underground levels are pocket maps, and pocket maps have NO incident
