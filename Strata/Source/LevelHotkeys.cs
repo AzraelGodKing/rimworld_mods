@@ -60,15 +60,8 @@ namespace Strata
             {
                 return;
             }
-            IntVec3 look = ProportionalCell(Find.CameraDriver.MapPosition, current, target);
+            IntVec3 look = StrataMapUtility.ProportionalCell(Find.CameraDriver.MapPosition, current, target);
             CameraJumper.TryJump(new GlobalTargetInfo(look, target), CameraJumper.MovementMode.Cut);
-        }
-
-        private static IntVec3 ProportionalCell(IntVec3 pos, Map from, Map to)
-        {
-            int x = Mathf.Clamp(Mathf.RoundToInt((float)pos.x / from.Size.x * to.Size.x), 0, to.Size.x - 1);
-            int z = Mathf.Clamp(Mathf.RoundToInt((float)pos.z / from.Size.z * to.Size.z), 0, to.Size.z - 1);
-            return new IntVec3(x, 0, z);
         }
     }
 }

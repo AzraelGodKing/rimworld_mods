@@ -15,6 +15,8 @@ All notable changes to Strata are documented here.
 - **README** with install, compatibility (including the Ancient Urban Ruins verdict), performance notes, and dev-tool docs.
 
 ### Fixed
+- **Vertical alignment**: the first stairwell or elevator on a level now opens its landing directly beneath the shaft on the level above (same relative map position), instead of always at the center of the new underground map. Existing saves realign misplaced landings once on load — no repeated destroy/spawn loop. Shaft power conduits extend their lower junction to the same spot under where you built them, not beside the stairwell landing.
+- **Shaft power conduit bootstrap**: the cross-level tie no longer waits for both grids to already be powered before it can start moving watts — auto-spawned lower junctions draw 0W like stairwell landings, the flick switch is gone so the junction is live as soon as it is built and wired, and shaft comps stay on whenever they are connected to a grid. Fixed a partner check that was destroying and re-spawning the lower junction every few seconds (spamming the extension message and flickering power). Cross-level flow now matches each grid's live surplus and battery discharge headroom instead of a flat 2000W cap. Shaft conduit pairs now save by thing ID and re-link after reload — vanilla cross-map references were breaking the tie on every load. Stairwells and elevator landings now transmit power across their full footprint so a single wire hook-up actually joins the grid.
 - **Haul + seal race**: sealing a shaft mid-haul now cancels the haul job instead of the pawn walking cargo to a door that won't open.
 
 ## [1.1] — 2026-07-12

@@ -22,7 +22,18 @@ namespace Strata
 
         private const float MinDelta = 0.25f;
 
-        private const float ShaftPowerCapWatts = 2000f;
+        // How far a landing may sit from the spot directly below the shaft
+        // before we treat it as misaligned (matches shaft conduit tolerance).
+        private const float LandingAlignRadius = 4.5f;
+
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
+            if (respawningAfterLoad && PocketMapExists)
+            {
+                TryRealignLandingIfNeeded();
+            }
+        }
 
         public override bool AutoDraftOnEnter => false;
 
@@ -129,9 +140,9 @@ namespace Strata
             return null;
         }
 
-        private IntVec3 FindLandingCell(Map level)
+        internal IntVec3 FindLandingCell(Map level)
         {
-            IntVec3 target = ProportionalCell(Position, Map, level);
+            IntVec3 target = StrataMapUtility.VerticalAlign(Position, Map, level);
             if (LandingSpotClear(target, level))
             {
                 return target;
@@ -146,13 +157,42 @@ namespace Strata
             return IntVec3.Invalid;
         }
 
-        // The landing goes roughly under the new portal: same relative position
-        // on the (possibly smaller) level map.
-        private static IntVec3 ProportionalCell(IntVec3 pos, Map from, Map to)
+        // One-time fix for saves where the landing spawned at map center instead
+        // of beneath this shaft. Keeps a good landing; never re-runs once aligned.
+        internal void TryRealignLandingIfNeeded()
         {
-            int x = Mathf.RoundToInt((float)pos.x / from.Size.x * to.Size.x);
-            int z = Mathf.RoundToInt((float)pos.z / from.Size.z * to.Size.z);
-            return new IntVec3(x, 0, z);
+            if (exit == null || !exit.Spawned || !PocketMapExists)
+            {
+                return;
+            }
+            Map level = PocketMap;
+            float alignRadiusSq = LandingAlignRadius * LandingAlignRadius + 0.1f;
+            IntVec3 aligned = StrataMapUtility.ProportionalCell(Position, Map, level);
+            if (aligned.DistanceToSquared(exit.Position) <= alignRadiusSq)
+            {
+                return;
+            }
+            IntVec3 target = FindLandingCell(level);
+            if (!target.IsValid || target == exit.Position)
+            {
+                return;
+            }
+            ThingDef exitDef = def.portal?.exitDef;
+            if (exitDef == null)
+            {
+                return;
+            }
+            exit.DeSpawn();
+            PocketMapUtility.currentlyGeneratingPortal = this;
+            try
+            {
+                StrataPortalUtility.SpawnLanding(exitDef, target, level);
+            }
+            finally
+            {
+                PocketMapUtility.currentlyGeneratingPortal = null;
+            }
+            Messages.Message("Stairwell landing repositioned beneath the shaft above.", this, MessageTypeDefOf.NeutralEvent);
         }
 
         // Natural rock gets carved away, but never break through into another
@@ -209,7 +249,7 @@ namespace Strata
             CompPowerShaft bottom = exit.GetComp<CompPowerShaft>();
             if (top != null && bottom != null)
             {
-                top.DriveTie(bottom, ShaftPowerCapWatts);
+                top.DriveTie(bottom);
             }
         }
 
