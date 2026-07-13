@@ -23,7 +23,8 @@ namespace Strata
             {
                 return false;
             }
-            if (!pawn.IsFreeColonist || pawn.Drafted || pawn.InMentalState || pawn.IsBurning())
+            if (!StrataPawnUtility.CanUseLevelPortals(pawn)
+                || pawn.Drafted || pawn.InMentalState || pawn.IsBurning())
             {
                 return false;
             }
@@ -105,7 +106,8 @@ namespace Strata
             Pawn_WorkSettings work = pawn.workSettings;
             if (work == null || !work.EverWork)
             {
-                return false;
+                return StrataPawnUtility.IsMiscRobot(pawn)
+                    && StrataPawnUtility.MiscRobotHasWorkOn(pawn, map);
             }
 
             bool Active(WorkTypeDef type) => type != null && work.WorkIsActive(type);
@@ -145,21 +147,20 @@ namespace Strata
 
             foreach (Building building in map.listerBuildings.allBuildingsColonist)
             {
-                if (building is IBillGiver billGiver && billGiver.BillStack != null
-                    && billGiver.BillStack.AnyShouldDoNow)
+                if (building is not IBillGiver billGiver || billGiver.BillStack == null
+                    || !billGiver.BillStack.AnyShouldDoNow)
                 {
-                    foreach (Bill bill in billGiver.BillStack)
+                    continue;
+                }
+                foreach (Bill bill in billGiver.BillStack)
+                {
+                    if (!bill.ShouldDoNow() || !BillIngredientUtility.PawnCanDoBill(pawn, bill))
                     {
-                        if (!bill.ShouldDoNow())
-                        {
-                            continue;
-                        }
-                        WorkTypeDef required = bill.recipe?.requiredGiverWorkType;
-                        if (required != null ? Active(required)
-                            : (Active(StrataDefOf.Cooking) || Active(StrataDefOf.Crafting)))
-                        {
-                            return true;
-                        }
+                        continue;
+                    }
+                    if (BillIngredientUtility.CanStartOnMap(bill, building, map, pawn))
+                    {
+                        return true;
                     }
                 }
             }
