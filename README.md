@@ -105,3 +105,7 @@ Safe to add to an existing save. Before removing a mod from a save, deconstruct 
 ## Website
 
 Browse the full mod catalog at the [GitHub Pages site](https://azraelgodking.github.io/rimworld_mods/).
+
+## License
+
+Everything in this repository is released under the [MIT License](LICENSE).

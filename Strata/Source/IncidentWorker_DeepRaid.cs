@@ -17,15 +17,15 @@ namespace Strata
         {
             if (!(parms.target is Map map) || !StrataMapUtility.IsUnderground(map))
             {
-                return Fail("target is not an underground level");
+                return Fail(parms, "target is not an underground level");
             }
             if (map.mapPawns.FreeColonistsSpawned.Count == 0)
             {
-                return Fail("no colonists on this level");
+                return Fail(parms, "no colonists on this level");
             }
             if (Faction.OfInsects == null)
             {
-                return Fail("no insect faction in this game");
+                return Fail(parms, "no insect faction in this game");
             }
             return true;
         }
@@ -33,9 +33,11 @@ namespace Strata
         // Dev-mode breadcrumb: "cannot fire" without a reason is undebuggable.
         // If the debug menu refuses with NO such log line, the failure is in
         // vanilla's base checks (big threats disabled, refire cooldown, ...).
-        private static bool Fail(string reason)
+        // Only for deliberate attempts (forced = Strata's debug buttons); the
+        // storyteller probes CanFireNow constantly and would spam the log.
+        private static bool Fail(IncidentParms parms, string reason)
         {
-            if (Prefs.DevMode)
+            if (Prefs.DevMode && parms.forced)
             {
                 Log.Message("[Strata] Deep raid can't fire: " + reason);
             }

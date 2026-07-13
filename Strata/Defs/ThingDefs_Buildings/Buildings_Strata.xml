@@ -31,7 +31,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_StairsDown</defName>
     <label>excavated stairwell</label>
-    <description>A broad staircase carved down into the rock beneath the colony. Completing it opens a new underground level: a solid stratum of stone that can be mined out into rooms, workshops, and vaults.
+    <description>A broad staircase carved down into the rock beneath the colony. Completing it opens a new underground level: a solid stratum of stone the same size as this map, directly beneath it, that can be mined out into rooms, workshops, and vaults. Note: on large map sizes each opened level adds correspondingly more load.
 
 Colonists will use the stairwell on their own to work, eat, and sleep across levels. The shaft also ties both floors' power grids together when each level is wired into the stairwell — keep a battery on each level for surplus to pool across. It cannot be deconstructed while anyone is still below.</description>
     <thingClass>Strata.Building_StairsDown</thingClass>

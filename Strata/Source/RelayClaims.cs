@@ -30,6 +30,13 @@ namespace Strata
 
         private static readonly Dictionary<int, Claim> claims = new Dictionary<int, Claim>();
 
+        // Claims are tick-stamped per pawn ID; stale entries from a previous
+        // save would count against caps in the next one. Cleared on game load.
+        internal static void ResetSession()
+        {
+            claims.Clear();
+        }
+
         public static int ActiveCount(Map map, RelayPurpose purpose)
         {
             int now = Find.TickManager.TicksGame;
