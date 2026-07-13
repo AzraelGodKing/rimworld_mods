@@ -15,6 +15,13 @@ namespace Strata
     {
         public static void Postfix()
         {
+            // Session statics first: tick-stamped, pawn-ID-keyed state from a
+            // previously loaded save is garbage in this one.
+            PawnRelay.ResetSession();
+            RelayClaims.ResetSession();
+            MapComponent_RaidPursuit.ResetSession();
+            StrataResources.ClearCaches();
+
             UpgradeVanillaCaveExits();
             RealignAllStairLandings();
             Building_ShaftConduit.ReconcileAllAfterLoad();

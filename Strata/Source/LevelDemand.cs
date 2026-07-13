@@ -16,11 +16,22 @@ namespace Strata
     {
         private const int CacheTicks = 250;
 
-        private class Entry
+        internal class Entry
         {
             public int tick;
             public readonly Dictionary<ThingDef, int> missing = new Dictionary<ThingDef, int>();
             public readonly Dictionary<ThingDef, List<IntVec3>> sites = new Dictionary<ThingDef, List<IntVec3>>();
+
+            public void AddShortfall(ThingDef def, int amount, IntVec3 site)
+            {
+                missing.TryGetValue(def, out int total);
+                missing[def] = total + amount;
+                if (!sites.TryGetValue(def, out List<IntVec3> list))
+                {
+                    sites[def] = list = new List<IntVec3>();
+                }
+                list.Add(site);
+            }
         }
 
         private static readonly Dictionary<Map, Entry> cache = new Dictionary<Map, Entry>();
@@ -86,6 +97,7 @@ namespace Strata
             var entry = new Entry { tick = Find.TickManager.TicksGame };
             AddConstructibles(entry, map, map.listerThings.ThingsInGroup(ThingRequestGroup.Blueprint));
             AddConstructibles(entry, map, map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingFrame));
+            BillIngredientUtility.AddShortfalls(entry, map);
             if (entry.missing.Count == 0)
             {
                 return entry;
