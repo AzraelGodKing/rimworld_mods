@@ -27,7 +27,12 @@ namespace Strata
                 map.roofGrid.SetRoof(cell, RoofDefOf.RoofRockThick);
             }
 
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(map.Center, ChamberRadius, useCenter: true))
+            MapPortal entrance = PocketMapUtility.currentlyGeneratingPortal;
+            IntVec3 spot = entrance?.Map != null
+                ? StrataMapUtility.VerticalAlign(entrance.Position, entrance.Map, map)
+                : map.Center;
+
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(spot, ChamberRadius, useCenter: true))
             {
                 if (!cell.InBounds(map))
                 {
@@ -36,7 +41,7 @@ namespace Strata
                 cell.GetFirstMineable(map)?.Destroy(DestroyMode.Vanish);
             }
 
-            MapGenerator.PlayerStartSpot = map.Center;
+            MapGenerator.PlayerStartSpot = spot;
         }
 
         private static ThingDef RockForMap(Map map)
