@@ -5,6 +5,8 @@ All notable changes to Strata are documented here.
 ## [Unreleased]
 
 ### Added
+- **Raid coordinator**: when the surface raid lord gives up, loots, or kidnaps, pursuit groups on other levels mirror that decision instead of fighting on alone — one raid, one story across the whole column.
+- **Cross-level ritual escorts**: prisoners and colony animals assigned to a ritual on another level are listed in the dialog from every linked floor and escorted through stairwells by a warden, handler, or bonded master before joining the ceremony. Wardens walk to the prisoner in their cell and lead them to the stairwell — no prison beds at the landing required.
 - **Smarter shaft routing**: pawns heading to another level now take the portal nearest to *them* — powered elevators preferred — instead of the first shaft the level graph found. Applies to work/food/rest relays, cross-level hauling, ritual travel, and raid pursuit.
 - **Forced ventilation research** (700 pts, Industrial, after Electricity): the exhaust fan and updraft filter now sit behind a proper Strata research project instead of bare Electricity. Passive vents (louver, smoke hole) are unchanged.
 - **Placement guides**: one-way vents (exhaust fan, louver, smoke hole) show their intake side in orange and exhaust side in green while placing; smoke ducts highlight the network they'd join — green if the run reaches outdoors, red if it's a dead pipe.

@@ -65,6 +65,7 @@ namespace Strata
             {
                 TryPursue();
             }
+            RaidCoordinator.Tick(map);
         }
 
         private void ProcessPendingArrivals()
