@@ -18,7 +18,9 @@ namespace Strata
             IntVec3 spot = MapGenerator.PlayerStartSpot;
             if (!spot.IsValid || !spot.InBounds(map))
             {
-                spot = map.Center;
+                spot = entrance?.Map != null
+                    ? StrataMapUtility.VerticalAlign(entrance.Position, entrance.Map, map)
+                    : map.Center;
             }
             StrataPortalUtility.SpawnLanding(exitDef, spot, map);
             MapGenerator.PlayerStartSpot = spot;
