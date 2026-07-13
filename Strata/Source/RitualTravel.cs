@@ -14,23 +14,21 @@ namespace Strata
     // Cross-level rituals, in three pieces that keep the vanilla lord system
     // strictly one-map:
     //
-    // 1. The ritual dialog's candidate pool includes free colonists from every
-    //    linked level, so you don't have to gather the colony on one floor
-    //    before opening the menu.
+    // 1. The ritual dialog's candidate pool includes free colonists, prisoners,
+    //    and colony animals from every linked level.
     // 2. When the ritual starts, participants on other levels are kept OUT of
     //    the ritual lord (a lord with pawns on mixed maps breaks duties), but
     //    they keep their role assignments.
-    // 3. A world component walks them through the stairwells hop by hop and
-    //    joins them to the lord the moment they arrive - roles intact, since
-    //    the lord's assignments still list them.
+    // 3. A world component walks colonists through stairwells hop by hop;
+    //    prisoners and animals are escorted by a warden, handler, or bonded
+    //    master on the same map. Everyone joins the lord on arrival.
     public static class RitualTravelUtility
     {
         private static readonly AccessTools.FieldRef<MapPawns, Map> mapField =
             AccessTools.FieldRefAccess<MapPawns, Map>("map");
 
         // Swapped in for MapPawns.FreeColonistsAndPrisonersSpawned inside the
-        // ritual dialog's pool builder. Prisoners and animals stay same-map:
-        // nobody escorts them through a stairwell.
+        // ritual dialog's pool builder.
         public static List<Pawn> ColonistsAndPrisonersAcrossLevels(MapPawns mapPawns)
         {
             var result = new List<Pawn>(mapPawns.FreeColonistsAndPrisonersSpawned);
@@ -43,15 +41,44 @@ namespace Strata
             {
                 return result;
             }
+            AddLinkedPawns(home, result);
+            return result;
+        }
+
+        internal static void AddLinkedPawns(Map home, List<Pawn> result)
+        {
+            var seen = new HashSet<Pawn>(result);
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(home))
             {
-                List<Pawn> colonists = link.map.mapPawns.FreeColonistsSpawned;
+                Map map = link.map;
+                List<Pawn> colonists = map.mapPawns.FreeColonistsSpawned;
                 for (int i = 0; i < colonists.Count; i++)
                 {
-                    result.Add(colonists[i]);
+                    TryAdd(seen, result, colonists[i]);
+                }
+                List<Pawn> prisoners = map.mapPawns.PrisonersOfColony;
+                for (int i = 0; i < prisoners.Count; i++)
+                {
+                    TryAdd(seen, result, prisoners[i]);
+                }
+                List<Pawn> animals = map.mapPawns.SpawnedPawnsInFaction(Faction.OfPlayer);
+                for (int i = 0; i < animals.Count; i++)
+                {
+                    Pawn animal = animals[i];
+                    if (animal.RaceProps.Animal)
+                    {
+                        TryAdd(seen, result, animal);
+                    }
                 }
             }
-            return result;
+        }
+
+        private static void TryAdd(HashSet<Pawn> seen, List<Pawn> result, Pawn pawn)
+        {
+            if (pawn != null && seen.Add(pawn))
+            {
+                result.Add(pawn);
+            }
         }
     }
 
@@ -132,9 +159,17 @@ namespace Strata
             }
             foreach (Pawn pawn in assignments.Participants)
             {
-                if (pawn != null && pawn.Spawned && pawn.IsFreeColonist && pawn.MapHeld != target.Map)
+                if (pawn == null || !pawn.Spawned || pawn.MapHeld == target.Map)
                 {
-                    travel.Register(pawn, target.Map, lord);
+                    continue;
+                }
+                if (pawn.IsFreeColonist)
+                {
+                    travel.Register(pawn, target.Map, lord, assignments);
+                }
+                else if (RitualEscortUtility.NeedsEscort(pawn))
+                {
+                    travel.RegisterEscorted(pawn, target.Map, lord, assignments);
                 }
             }
         }
@@ -152,14 +187,18 @@ namespace Strata
             public Pawn pawn;
             public Map destination;
             public Lord lord;
+            public Pawn escort;
             public int started;
+            public bool escorted;
 
             public void ExposeData()
             {
                 Scribe_References.Look(ref pawn, "pawn");
                 Scribe_References.Look(ref destination, "destination");
                 Scribe_References.Look(ref lord, "lord");
+                Scribe_References.Look(ref escort, "escort");
                 Scribe_Values.Look(ref started, "started");
+                Scribe_Values.Look(ref escorted, "escorted");
             }
         }
 
@@ -167,6 +206,9 @@ namespace Strata
         private const int TimeoutTicks = 20000; // ~8 in-game hours
 
         private List<Traveler> travelers = new List<Traveler>();
+
+        // Transient: which ritual assignments an escorted pawn belongs to.
+        private readonly Dictionary<Pawn, RitualRoleAssignments> escortAssignments = new Dictionary<Pawn, RitualRoleAssignments>();
 
         public static StrataRitualTravel Get => Find.World?.GetComponent<StrataRitualTravel>();
 
@@ -182,10 +224,11 @@ namespace Strata
             {
                 travelers ??= new List<Traveler>();
                 travelers.RemoveAll(t => t?.pawn == null);
+                escortAssignments.Clear();
             }
         }
 
-        public void Register(Pawn pawn, Map destination, Lord lord)
+        public void Register(Pawn pawn, Map destination, Lord lord, RitualRoleAssignments assignments = null)
         {
             travelers.RemoveAll(t => t.pawn == pawn);
             var traveler = new Traveler
@@ -194,9 +237,33 @@ namespace Strata
                 destination = destination,
                 lord = lord,
                 started = Find.TickManager.TicksGame,
+                escorted = false,
             };
             travelers.Add(traveler);
+            if (assignments != null)
+            {
+                escortAssignments[pawn] = assignments;
+            }
             TryAdvance(traveler);
+        }
+
+        public void RegisterEscorted(Pawn pawn, Map destination, Lord lord, RitualRoleAssignments assignments)
+        {
+            travelers.RemoveAll(t => t.pawn == pawn);
+            var traveler = new Traveler
+            {
+                pawn = pawn,
+                destination = destination,
+                lord = lord,
+                started = Find.TickManager.TicksGame,
+                escorted = true,
+            };
+            travelers.Add(traveler);
+            if (assignments != null)
+            {
+                escortAssignments[pawn] = assignments;
+            }
+            TryAdvanceEscorted(traveler);
         }
 
         public override void WorldComponentTick()
@@ -214,6 +281,7 @@ namespace Strata
                     || Find.TickManager.TicksGame - t.started > TimeoutTicks
                     || !LordAlive(t))
                 {
+                    DropTraveler(t);
                     travelers.RemoveAt(i);
                     continue;
                 }
@@ -223,14 +291,35 @@ namespace Strata
                 }
                 if (t.pawn.Map == t.destination)
                 {
-                    if (!t.lord.ownedPawns.Contains(t.pawn) && t.lord.CanAddPawn(t.pawn))
-                    {
-                        t.lord.AddPawn(t.pawn);
-                    }
+                    JoinLord(t);
+                    DropTraveler(t);
                     travelers.RemoveAt(i);
                     continue;
                 }
-                TryAdvance(t);
+                if (t.escorted)
+                {
+                    TryAdvanceEscorted(t);
+                }
+                else
+                {
+                    TryAdvance(t);
+                }
+            }
+        }
+
+        private static void JoinLord(Traveler t)
+        {
+            if (!t.lord.ownedPawns.Contains(t.pawn) && t.lord.CanAddPawn(t.pawn))
+            {
+                t.lord.AddPawn(t.pawn);
+            }
+        }
+
+        private void DropTraveler(Traveler t)
+        {
+            if (t.pawn != null)
+            {
+                escortAssignments.Remove(t.pawn);
             }
         }
 
@@ -255,6 +344,66 @@ namespace Strata
                 Job job = JobMaker.MakeJob(JobDefOf.EnterPortal, step);
                 pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
             }
+        }
+
+        private void TryAdvanceEscorted(Traveler t)
+        {
+            Pawn escortee = t.pawn;
+            if (!escortee.Spawned)
+            {
+                return;
+            }
+            if (escortee.CurJobDef == JobDefOf.EnterPortal)
+            {
+                return;
+            }
+            escortAssignments.TryGetValue(escortee, out RitualRoleAssignments assignments);
+            if (t.escort == null || !t.escort.Spawned || t.escort.Dead || t.escort.Map != escortee.Map)
+            {
+                t.escort = RitualEscortUtility.FindEscort(escortee, escortee.Map, assignments);
+            }
+            if (t.escort == null)
+            {
+                return;
+            }
+            MapPortal step = LevelGraph.BestFirstStep(escortee.Map, t.destination, escortee.Position);
+            if (step == null || !step.Spawned || !step.IsEnterable(out _))
+            {
+                return;
+            }
+            if (TryEnterPortalTogether(t.escort, escortee, step))
+            {
+                return;
+            }
+            RitualEscortUtility.TryStartEscortHop(t.escort, escortee, step);
+        }
+
+        private static bool TryEnterPortalTogether(Pawn escort, Pawn escortee, MapPortal portal)
+        {
+            if (escort == null || escortee == null || portal == null || !portal.Spawned)
+            {
+                return false;
+            }
+            if (escort.Map != escortee.Map || escort.Map != portal.Map)
+            {
+                return false;
+            }
+            if (escort.CurJobDef == JobDefOf.EnterPortal || escortee.CurJobDef == JobDefOf.EnterPortal)
+            {
+                return true;
+            }
+            if (!escort.CanReach(portal, PathEndMode.Touch, Danger.Some))
+            {
+                return false;
+            }
+            if (!escort.Position.InHorDistOf(portal.Position, 2.5f)
+                || !escortee.Position.InHorDistOf(portal.Position, 3f))
+            {
+                return false;
+            }
+            escortee.jobs.StartJob(JobMaker.MakeJob(JobDefOf.EnterPortal, portal), JobCondition.InterruptForced);
+            escort.jobs.StartJob(JobMaker.MakeJob(JobDefOf.EnterPortal, portal), JobCondition.InterruptForced);
+            return true;
         }
     }
 }

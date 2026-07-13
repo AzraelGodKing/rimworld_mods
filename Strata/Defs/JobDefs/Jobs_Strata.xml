@@ -8,4 +8,11 @@
     <carryThingAfterJob>true</carryThingAfterJob>
   </JobDef>
 
+  <JobDef>
+    <defName>Strata_EscortToPortal</defName>
+    <driverClass>Strata.JobDriver_StrataEscortToPortal</driverClass>
+    <reportString>escorting TargetB to another level.</reportString>
+    <carryThingAfterJob>true</carryThingAfterJob>
+  </JobDef>
+
 </Defs>

@@ -16,6 +16,9 @@ namespace Strata
             "SolarGenerator",
             "WindTurbine",
             "GeothermalGenerator",
+            "WatermillGenerator",
+            "VanometricPowerCell",
+            "Ship_Reactor",
             "WoodFiredGenerator",
             "ChemfuelPoweredGenerator",
             "Campfire",
@@ -80,13 +83,30 @@ namespace Strata
             CompProperties_Power power = def.GetCompProperties<CompProperties_Power>();
             if (power != null && power.PowerConsumption < 0f)
             {
+                // Producing power is not evidence of combustion by itself -
+                // modded solar arrays, water wheels, and reactors land here
+                // too. Only tag producers that actually look like burners:
+                // a fuel-ish name, a flame overlay, or heat output (every
+                // vanilla combustion generator pushes heat; clean producers
+                // don't).
                 if (def.defName.Contains("Chemfuel") || def.defName.Contains("Portable"))
                 {
                     return 4.5f;
                 }
-                return 3.5f;
+                if (NameSuggestsCombustion(def) || LooksLikeFlame(def))
+                {
+                    return 3.5f;
+                }
+                return 0f;
             }
             return 0f;
+        }
+
+        private static bool NameSuggestsCombustion(ThingDef def)
+        {
+            string name = def.defName;
+            return name.Contains("Wood") || name.Contains("Coal") || name.Contains("Diesel")
+                || name.Contains("Fuel") || name.Contains("Burn");
         }
 
         private static bool LooksLikeFlame(ThingDef def)
