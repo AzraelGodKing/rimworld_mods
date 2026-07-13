@@ -31,7 +31,7 @@ stairwells (a level with pawns on it will not be deleted).
 
 | System | Short version |
 | --- | --- |
-| **Levels** | Build an excavated stairwell → a 200×200 solid-rock level opens below. Keep going deeper. A second shaft on the same floor joins the SAME level below. |
+| **Levels** | Build an excavated stairwell → a solid-rock level the size of the map above opens below, stacked exactly beneath it. Keep going deeper. A second shaft on the same floor joins the SAME level below. |
 | **Fluidity** | Colonists relay themselves between floors for work, food, rest, hauling, construction materials, and rituals. You designate; they commute. |
 | **Logistics** | Stockpile priority works across the whole column. Blueprints pull missing materials from other levels. The build menu and (optional) resource readout see the whole colony. |
 | **Power** | Stairwells and elevators tie the levels' grids (demand-driven, both directions). The shaft conduit gives a dedicated tie point and extends its own lower junction. |
@@ -61,11 +61,18 @@ raid pursuit, and the vacant-level performance throttle.
 
 ## Performance
 
-Each opened level costs roughly what a small extra map costs. Levels with
-nobody on them throttle their ambient simulation to 1-in-4 ticks (toggleable),
-so vacant storage floors cost less than a normal map. All cross-level systems
-run on slow periodic checks, not per-tick work, and there is no custom
-cross-map pathfinding anywhere in the mod.
+Each opened level is a full map **the same size as the map above it** — that
+is what makes true 1:1 vertical stacking possible, and it means the cost
+scales with your chosen map size. On large maps (300×300 and up) every level
+adds correspondingly more load; if you plan to dig many levels deep, prefer a
+smaller map size at world generation. Levels with nobody on them throttle
+their ambient simulation to 1-in-4 ticks (toggleable), so vacant storage
+floors cost much less than a live map. All cross-level systems run on slow
+periodic checks, not per-tick work, and there is no custom cross-map
+pathfinding anywhere in the mod.
+
+Levels opened before this change keep their old fixed 200×200 size; their
+landings stay aligned proportionally rather than exactly.
 
 ## Dev tools
 

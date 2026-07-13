@@ -126,8 +126,9 @@ namespace Strata
             {
                 return true; // riding up is always available
             }
-            return portal is Building_ElevatorDown
-                && portal.TryGetComp<CompPowerTrader>()?.PowerOn == true;
+            // Powered checks the grid's real energy state; the comp's PowerOn
+            // is forced true whenever wired (see Building_ElevatorDown).
+            return portal is Building_ElevatorDown elevator && elevator.Powered;
         }
 
         // Whether 'target' is reachable from 'start' without passing back

@@ -11,7 +11,11 @@ namespace Strata
     // stairwell landing (GenStep_PlaceLevelExit spawns the stairs there afterwards).
     public class GenStep_SolidRock : GenStep
     {
-        private const float ChamberRadius = 8f;
+        // Must stay under vanilla's thick-roof support distance (6.9 cells
+        // from the nearest roof holder): a wider chamber leaves its center
+        // unsupported, and any mining or construction near the landing could
+        // trigger a vanilla roof collapse right on the arrival point.
+        private const float ChamberRadius = 6.5f;
 
         public override int SeedPart => 762303921;
 

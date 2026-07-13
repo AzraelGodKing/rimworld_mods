@@ -32,6 +32,14 @@ namespace Strata
         private static readonly AccessTools.FieldRef<ResourceCounter, Map> mapField =
             AccessTools.FieldRefAccess<ResourceCounter, Map>("map");
 
+        // Per-tick caches. GetCount is HOT (resource readout every frame,
+        // "make until X" bills), so the cross-level sum must not re-walk the
+        // level graph per call; counts only change while ticking, so one
+        // rebuild per tick is exact. Keyed by map: pruned when maps die so a
+        // collapsed level's Map can't be retained forever.
+        private static readonly Dictionary<Map, Pair<int, Dictionary<ThingDef, int>>> extrasCache =
+            new Dictionary<Map, Pair<int, Dictionary<ThingDef, int>>>();
+
         private static readonly Dictionary<Map, Pair<int, Dictionary<ThingDef, int>>> mergedCache =
             new Dictionary<Map, Pair<int, Dictionary<ThingDef, int>>>();
 
@@ -55,21 +63,43 @@ namespace Strata
 
         public static int LinkedExtra(Map map, ThingDef def)
         {
-            int extra = 0;
+            return LinkedExtras(map).TryGetValue(def, out int extra) ? extra : 0;
+        }
+
+        // Everything the linked levels hold, summed per def, rebuilt at most
+        // once per tick per map.
+        private static Dictionary<ThingDef, int> LinkedExtras(Map map)
+        {
+            int tick = Find.TickManager.TicksGame;
+            if (extrasCache.TryGetValue(map, out Pair<int, Dictionary<ThingDef, int>> cached)
+                && cached.First == tick)
+            {
+                return cached.Second;
+            }
+            var extras = new Dictionary<ThingDef, int>();
             bool prev = aggregating;
             aggregating = true;
             try
             {
                 foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
                 {
-                    extra += link.map.resourceCounter.GetCount(def);
+                    foreach (KeyValuePair<ThingDef, int> kv in link.map.resourceCounter.AllCountedAmounts)
+                    {
+                        if (kv.Value > 0)
+                        {
+                            extras.TryGetValue(kv.Key, out int have);
+                            extras[kv.Key] = have + kv.Value;
+                        }
+                    }
                 }
             }
             finally
             {
                 aggregating = prev;
             }
-            return extra;
+            extrasCache[map] = new Pair<int, Dictionary<ThingDef, int>>(tick, extras);
+            PruneDeadMaps(extrasCache);
+            return extras;
         }
 
         public static Dictionary<ThingDef, int> MergedCounts(Map map, Dictionary<ThingDef, int> own)
@@ -81,28 +111,43 @@ namespace Strata
                 return cached.Second;
             }
             var merged = new Dictionary<ThingDef, int>(own);
-            bool prev = aggregating;
-            aggregating = true;
-            try
+            foreach (KeyValuePair<ThingDef, int> kv in LinkedExtras(map))
             {
-                foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
-                {
-                    foreach (KeyValuePair<ThingDef, int> kv in link.map.resourceCounter.AllCountedAmounts)
-                    {
-                        if (kv.Value > 0)
-                        {
-                            merged.TryGetValue(kv.Key, out int have);
-                            merged[kv.Key] = have + kv.Value;
-                        }
-                    }
-                }
-            }
-            finally
-            {
-                aggregating = prev;
+                merged.TryGetValue(kv.Key, out int have);
+                merged[kv.Key] = have + kv.Value;
             }
             mergedCache[map] = new Pair<int, Dictionary<ThingDef, int>>(tick, merged);
+            PruneDeadMaps(mergedCache);
             return merged;
+        }
+
+        internal static void ClearCaches()
+        {
+            extrasCache.Clear();
+            mergedCache.Clear();
+        }
+
+        private static void PruneDeadMaps(Dictionary<Map, Pair<int, Dictionary<ThingDef, int>>> cache)
+        {
+            if (cache.Count <= Find.Maps.Count)
+            {
+                return;
+            }
+            List<Map> dead = null;
+            foreach (Map key in cache.Keys)
+            {
+                if (!Find.Maps.Contains(key))
+                {
+                    (dead ??= new List<Map>()).Add(key);
+                }
+            }
+            if (dead != null)
+            {
+                for (int i = 0; i < dead.Count; i++)
+                {
+                    cache.Remove(dead[i]);
+                }
+            }
         }
 
         // The stuff dropdown's presence check, widened to the whole level

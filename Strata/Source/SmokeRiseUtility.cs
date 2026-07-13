@@ -76,7 +76,9 @@ namespace Strata
                 {
                     rate = Mathf.Clamp01(rate + bonusRate);
                 }
-                smoke.TransferSmokeUp(lowerRoom, upperRoom, upperEntrance.Map, rate, lowerExit.Position);
+                // Sample must be an UPPER-map cell (it anchors the receiving
+                // cloud there); the entrance's own cell resolves to its room.
+                smoke.TransferSmokeUp(lowerRoom, upperRoom, upperEntrance.Map, rate, upperEntrance.Position);
             }
         }
     }
