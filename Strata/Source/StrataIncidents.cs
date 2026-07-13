@@ -177,12 +177,23 @@ namespace Strata
     [HarmonyPatch(typeof(IncidentWorker), nameof(IncidentWorker.CanFireNow))]
     public static class Patch_DeepRaidDiagnostics
     {
+        // The storyteller probes CanFireNow for every candidate incident on a
+        // regular cadence; without a cooldown this line floods a dev-mode log.
+        private const int LogCooldownTicks = 2500;
+
+        private static int lastLogTick = -99999;
+
         public static void Postfix(IncidentWorker __instance, IncidentParms parms, bool __result)
         {
             if (__result || !Prefs.DevMode || __instance.def != StrataIncidentDefOf.Strata_DeepRaid)
             {
                 return;
             }
+            if (!parms.forced && Find.TickManager.TicksGame - lastLogTick < LogCooldownTicks)
+            {
+                return;
+            }
+            lastLogTick = Find.TickManager.TicksGame;
             bool firedRecently = false;
             try
             {

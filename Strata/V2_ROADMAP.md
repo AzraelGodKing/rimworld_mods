@@ -5,15 +5,14 @@ with community suggestions (Thundercraft, dognamedKats, Hat).
 
 ## Pillar 0 — V1 carry-over (polish & hardening)
 
-Mostly SHIPPED post-1.1 (routing, seal race, siege, telegraph, depth scaling,
-ventilation research, placement guides, alerts, self-tests, README). Remaining:
+SHIPPED post-1.1 (routing, seal race, siege, telegraph, depth scaling,
+ventilation research, placement guides, alerts, self-tests, README, raid
+coordinator, cross-level ritual escorts for prisoners and animals).
 
-- **Cross-level rituals: prisoners & animals** — needs a warden/handler escort
-  chain through portals; colonists only for now.
-- **Raid coordinator** — surface lord's retreat/loot decision broadcast to
-  sub-level pursuit groups (one raid, one story). Build if playtests show
-  split-decision weirdness.
-- **Dedicated art** — smoke hole and updraft filter reuse other textures.
+## Backlog (not Pillar 0)
+
+- **Dedicated art** — smoke hole and updraft filter reuse other textures until
+  custom assets exist.
 
 ## Pillar 1 — The Living Deep (geothermal + gas)
 

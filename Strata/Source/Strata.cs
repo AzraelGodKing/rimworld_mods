@@ -18,6 +18,8 @@ namespace Strata
 
         public static JobDef Strata_HaulToLevel;
 
+        public static JobDef Strata_EscortToPortal;
+
         static StrataDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataDefOf));
