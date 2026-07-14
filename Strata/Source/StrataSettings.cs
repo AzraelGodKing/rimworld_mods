@@ -9,6 +9,7 @@ namespace Strata
     {
         public bool smokeEnabled = true;
         public float smokeSeverityScale = 1f;
+        public bool gasEventsEnabled = true;
         public bool raidPursuitEnabled = true;
         public bool workRelayEnabled = true;
         public bool foodRelayEnabled = true;
@@ -24,6 +25,7 @@ namespace Strata
             base.ExposeData();
             Scribe_Values.Look(ref smokeEnabled, "smokeEnabled", defaultValue: true);
             Scribe_Values.Look(ref smokeSeverityScale, "smokeSeverityScale", 1f);
+            Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
             Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
@@ -94,7 +96,7 @@ namespace Strata
             listing.Gap();
 
             Text.Font = GameFont.Medium;
-            listing.Label("Combustion smoke");
+            listing.Label("Smoke & gas");
             Text.Font = GameFont.Small;
             listing.CheckboxLabeled("Smoke simulation", ref Settings.smokeEnabled,
                 "Burners give off smoke that pools in unventilated rooms. Turning this off clears all existing smoke.");
@@ -104,6 +106,8 @@ namespace Strata
                     + " (how fast pawns are harmed by thick smoke)");
                 Settings.smokeSeverityScale = listing.Slider(Settings.smokeSeverityScale, 0f, 2f);
             }
+            listing.CheckboxLabeled("Underground gas", ref Settings.gasEventsEnabled,
+                "Gas hazards of the deep: excavation can breach pockets of toxic gas. Future gas-system features will follow this switch too. Sealed stairwells always contain gas either way.");
             listing.Gap();
 
             Text.Font = GameFont.Medium;

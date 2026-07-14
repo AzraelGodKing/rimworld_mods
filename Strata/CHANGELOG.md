@@ -18,6 +18,7 @@ All notable changes to Strata are documented here.
 - **README** with install, compatibility (including the Ancient Urban Ruins verdict), performance notes, and dev-tool docs.
 
 ### Changed
+- **"Underground gas" mod option** (Smoke & gas section, default on): gates the gas pocket incident today and will be the master switch for the Pillar 1 gas system (persistent pockets, gas wells) as it lands. Sealed stairwells contain gas regardless of the setting. The smoke settings section is renamed "Smoke & gas" to hold it.
 - **Levels now match the parent map's size** (previously a fixed 200×200). Landings, shaft conduits, and the level hotkeys stack exactly 1:1 beneath the level above instead of proportionally squeezed toward the center of a smaller map. Applies to newly opened levels only — existing levels keep their size and the proportional alignment still handles them. **Heads-up on big maps**: each opened level now costs what another map of your chosen size costs, so 300×300+ colonies pay noticeably more per level (the vacant-level throttle softens it).
 
 ### Fixed

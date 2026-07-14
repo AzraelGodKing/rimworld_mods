@@ -12,6 +12,10 @@ namespace Strata
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
+            if (StrataMod.Settings?.gasEventsEnabled == false)
+            {
+                return false;
+            }
             return parms.target is Map map
                 && StrataMapUtility.IsUnderground(map)
                 && CellFinder.TryFindRandomCell(map, c => c.Standable(map) && !c.Fogged(map), out _);
