@@ -1,6 +1,6 @@
 # Pillar 1 integration merge plan
 
-Branch: **`feature/pillar1-integrated`**
+Branch: **`feature/pillar1-fluid-adapters`** (integrated with Claude [PR #21](https://github.com/AzraelGodKing/rimworld_mods/pull/21))
 
 Combines:
 
@@ -58,7 +58,7 @@ Combines:
 - [ ] DBH / DCH / VHGE shaft junctions (Cursor — already playtested)
 - [ ] Rimatomics coolant junction (community playtest)
 - [ ] Dev-mode self-tests pass
-- [ ] Open PR: `feature/pillar1-integrated` → `main`
+- [ ] Open PR: `feature/pillar1-fluid-adapters` → `main`
 
 ## Branch naming (for humans)
 

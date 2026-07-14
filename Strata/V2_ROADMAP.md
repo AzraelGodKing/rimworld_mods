@@ -17,7 +17,7 @@ coordinator, cross-level ritual escorts for prisoners and animals).
 
 ## Pillar 1 — The Living Deep (geothermal + gas)
 
-**Shipped (Claude Fable 5 — [PR #21](https://github.com/AzraelGodKing/rimworld_mods/pull/21)):**
+**Shipped on `feature/pillar1-fluid-adapters` (Claude + Cursor integrated):**
 
 - Multi-gas **AtmosphereMapComponent** (`StrataGasDef` channels; smoke unchanged)
 - Hidden **geothermal + gas chambers** (`GenStep_HiddenChambers`), level **fog**
@@ -26,7 +26,7 @@ coordinator, cross-level ritual escorts for prisoners and animals).
 - **GasNetAdapter** VHGE soft bridge on wells
 - Gas pocket incident recast as persistent-system breach
 
-**Shipped (Cursor — fluid shafts on same branch):**
+**Shipped (Cursor — same branch):**
 
 - Shaft fluid junctions: DBH, DCH heat/air, Rimatomics coolant, VHGE helixien
 - **DBH groundwater** genstep on new levels
@@ -53,7 +53,7 @@ dedicated fluid junction art; retroactive pocket seeding (out of scope).
 
 ## Pillar 2 — Fluid shafts (pipe mod compatibility)
 
-Core work **shipped on `feature/pillar1-integrated`**. Still planned:
+Core work **shipped on `feature/pillar1-fluid-adapters`**. Still planned:
 
 - **Rimefeller** oil/chemfuel
 - **VEF PipeSystem umbrella** beyond VHGE (VNPE, chemfuel, etc.)
