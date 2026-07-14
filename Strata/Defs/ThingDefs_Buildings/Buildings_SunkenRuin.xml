@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Ancient stairhead (sunken ruin sites only) ============ -->
+  <!-- Not buildable (no designationCategory). Spawned by the sunken ruin
+       site's surface genstep; leads down into the pre-carved warren. -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_RuinStairsDown</defName>
+    <label>ancient stairhead</label>
+    <description>A broad stone staircase sinking into the earth, far older than anything standing around it. The steps are worn smooth and the air rising from below is stale and faintly sweet - something has been living down there.</description>
+    <thingClass>Strata.Building_RuinStairsDown</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/StairsDown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+      <color>(158,168,148)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>1200</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <portal>
+      <pocketMapGenerator>Strata_SunkenRuinLevel</pocketMapGenerator>
+      <exitDef>Strata_StairsUp</exitDef>
+      <pocketMapSize>150</pocketMapSize>
+    </portal>
+    <canOverlapZones>false</canOverlapZones>
+    <building>
+      <isPlayerEjectable>false</isPlayerEjectable>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+</Defs>

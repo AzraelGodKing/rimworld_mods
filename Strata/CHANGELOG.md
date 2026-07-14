@@ -5,6 +5,7 @@ All notable changes to Strata are documented here.
 ## [Unreleased]
 
 ### Added
+- **Sunken ruin quest site** — the first multi-level exploration content (issue #19). A world incident (gated behind excavation research) reveals a ruin site whose collapsed floor opens onto an ancient stairhead. Descending it generates a pre-carved underground warren: winding tunnels and chambers held by insect hives, with a threat-scaled hoard in the deepest chamber. The site expires after ~20 days if unvisited. Includes a safety patch so a site's surface map can never despawn (destroying the level below) while pawns are still underground on any linked pocket map.
 - **Raid coordinator**: when the surface raid lord gives up, loots, or kidnaps, pursuit groups on other levels mirror that decision instead of fighting on alone — one raid, one story across the whole column.
 - **Cross-level ritual escorts**: prisoners and colony animals assigned to a ritual on another level are listed in the dialog from every linked floor and escorted through stairwells by a warden, handler, or bonded master before joining the ceremony. Wardens walk to the prisoner in their cell and lead them to the stairwell — no prison beds at the landing required.
 - **Smarter shaft routing**: pawns heading to another level now take the portal nearest to *them* — powered elevators preferred — instead of the first shaft the level graph found. Applies to work/food/rest relays, cross-level hauling, ritual travel, and raid pursuit.

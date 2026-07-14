@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Sunken ruin: a multi-level world site ============ -->
+  <!-- The surface map gets an ancient stairhead (via the linked genstep
+       below); the stairhead's pocket map generates a pre-carved warren of
+       insects guarding a hoard. Strata's first multi-level quest site. -->
+  <SitePartDef>
+    <defName>Strata_SunkenRuin</defName>
+    <label>sunken ruin</label>
+    <description>The collapsed floor of an ancient ruin, opening onto a stairhead that descends into the earth. Whatever hollowed out the levels below is long gone - but the tunnels are not empty, and old wealth is said to lie at the bottom.</description>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <wantsThreatPoints>true</wantsThreatPoints>
+    <badEvenIfNoMap>false</badEvenIfNoMap>
+  </SitePartDef>
+
+  <!-- Surface: place the ruin shell and stairhead on the site's map. -->
+  <GenStepDef>
+    <defName>Strata_SunkenRuinEntrance</defName>
+    <linkWithSite>Strata_SunkenRuin</linkWithSite>
+    <order>750</order>
+    <genStep Class="Strata.GenStep_SunkenRuinEntrance"/>
+  </GenStepDef>
+
+  <!-- Underground: the warren the stairhead opens into. Reuses Strata's
+       solid-rock fill and landing placement, with carving and infestation
+       steps between them. -->
+  <MapGeneratorDef>
+    <defName>Strata_SunkenRuinLevel</defName>
+    <isUnderground>true</isUnderground>
+    <roofDef>RoofRockThick</roofDef>
+    <disableShadows>true</disableShadows>
+    <renderWorld>false</renderWorld>
+    <pocketMapProperties>
+      <biome>Strata_Underground</biome>
+      <temperature>12</temperature>
+      <destroyOnParentMapAbandoned>true</destroyOnParentMapAbandoned>
+      <canBeCleaned>true</canBeCleaned>
+    </pocketMapProperties>
+    <genSteps>
+      <li>Strata_SolidRock</li>
+      <li>Strata_CarveWarren</li>
+      <li>Strata_WarrenInfestation</li>
+      <li>Strata_PlaceCaveExit</li>
+    </genSteps>
+  </MapGeneratorDef>
+
+  <GenStepDef>
+    <defName>Strata_CarveWarren</defName>
+    <order>200</order>
+    <genStep Class="Strata.GenStep_CarveWarren"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_WarrenInfestation</defName>
+    <order>300</order>
+    <genStep Class="Strata.GenStep_WarrenInfestation"/>
+  </GenStepDef>
+
+</Defs>

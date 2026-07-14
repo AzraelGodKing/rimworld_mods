@@ -102,4 +102,21 @@
     <letterText>A deep tremor rolled through the ground, rattling the colony and cracking some of your structures. The rock below is never quite still.</letterText>
   </IncidentDef>
 
+  <!-- ============ World: sunken ruin discovered ============ -->
+  <IncidentDef>
+    <defName>Strata_SunkenRuinDiscovered</defName>
+    <label>sunken ruin</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>World</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_SunkenRuin</workerClass>
+    <baseChance>0.35</baseChance>
+    <minRefireDays>22</minRefireDays>
+    <earliestDay>12</earliestDay>
+    <letterDef>PositiveEvent</letterDef>
+    <letterLabel>Sunken ruin discovered</letterLabel>
+    <letterText>A passing trader speaks of a ruin whose floor has collapsed onto an ancient stairhead, some distance from your colony. The levels beneath are said to crawl with insects - and to hold the hoard of whoever built the place.\n\nThe stairs descend into a warren below the site itself. Bring fighters; the depths will not be empty. The site will be lost to memory in about twenty days.</letterText>
+  </IncidentDef>
+
 </Defs>
