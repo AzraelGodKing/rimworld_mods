@@ -39,6 +39,19 @@
   </ResearchProjectDef>
 
   <ResearchProjectDef>
+    <defName>Strata_GasExtraction</defName>
+    <label>deep gas extraction</label>
+    <description>Wellheads and pressure canisters for capping the gas vents found in deep rock - turning a toxic, explosive seep into generator fuel that burns with no smoke at all.</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Strata_Ventilation</li>
+    </prerequisites>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>3.60</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>Strata_ShaftPower</defName>
     <label>shaft power</label>
     <description>Armored power junctions that carry electricity up and down an excavated shaft, letting a surface grid feed the levels below (and the reverse).</description>

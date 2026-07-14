@@ -5,8 +5,9 @@ using Verse;
 
 namespace Strata
 {
-    // Smoke piling up on a level with nobody on it - a generator left running
-    // in a sealed room downstairs kills the next colonist who walks in.
+    // Harmful gas piling up on a level with nobody on it - a generator left
+    // running in a sealed room downstairs, or a breached gas pocket, kills the
+    // next colonist who walks in.
     public class Alert_SmokeOnVacantLevel : Alert
     {
         private const float WorryThreshold = 0.35f;
@@ -15,10 +16,10 @@ namespace Strata
 
         public Alert_SmokeOnVacantLevel()
         {
-            defaultLabel = "Smoke building underground";
-            defaultExplanation = "Combustion smoke is accumulating on a level with no colonists on it. "
-                + "Something is burning down there with no working ventilation - the next person "
-                + "to walk in will be breathing it.";
+            defaultLabel = "Gas building underground";
+            defaultExplanation = "Harmful gas is accumulating on a level with no colonists on it. "
+                + "Something is burning or seeping down there with no working ventilation - the "
+                + "next person to walk in will be breathing it.";
         }
 
         public override AlertReport GetReport()
@@ -32,11 +33,47 @@ namespace Strata
                 {
                     continue;
                 }
-                SmokeMapComponent smoke = map.GetComponent<SmokeMapComponent>();
-                if (smoke != null && smoke.TryGetWorstCloud(out IntVec3 cell, out float density)
+                AtmosphereMapComponent atmosphere = map.GetComponent<AtmosphereMapComponent>();
+                if (atmosphere != null && atmosphere.TryGetWorstHarmfulCloud(out IntVec3 cell, out float density)
                     && density >= WorryThreshold)
                 {
                     targets.Add(new GlobalTargetInfo(cell, map));
+                }
+            }
+            return targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+        }
+    }
+
+    // Flammable gas pooling in a room that holds an open flame. The room
+    // explodes the moment the gas reaches ignition density - this is the
+    // window to douse the fire or get out.
+    public class Alert_FlammableGasNearFlame : Alert_Critical
+    {
+        private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+
+        public Alert_FlammableGasNearFlame()
+        {
+            defaultLabel = "Flammable gas near open flame";
+            defaultExplanation = "Flammable gas is pooling in a room that contains an open flame - a "
+                + "torch, a campfire, or a running fuel burner. When the gas thickens past ignition "
+                + "density the room will explode. Extinguish the flame, vent the room, or switch to "
+                + "electric light.";
+        }
+
+        public override AlertReport GetReport()
+        {
+            targets.Clear();
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                AtmosphereMapComponent atmosphere = maps[i].GetComponent<AtmosphereMapComponent>();
+                if (atmosphere == null)
+                {
+                    continue;
+                }
+                for (int j = 0; j < atmosphere.FlammableRiskCells.Count; j++)
+                {
+                    targets.Add(new GlobalTargetInfo(atmosphere.FlammableRiskCells[j], maps[i]));
                 }
             }
             return targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;

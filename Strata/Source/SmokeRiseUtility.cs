@@ -7,7 +7,8 @@ namespace Strata
 {
     public static class SmokeRiseUtility
     {
-        // Fraction of stairwell-room smoke that convects up each cycle (unsealed shaft).
+        // Fraction of a stairwell room's buoyant gas that convects up each
+        // cycle (unsealed shaft). Heavy gases stay down; smoke rises.
         public const float NaturalShaftRise = 0.15f;
 
         public static bool RoomContainsLevelExit(Room room, Map map)
@@ -38,11 +39,11 @@ namespace Strata
             return lowerExit?.entrance;
         }
 
-        public static void ProcessMap(SmokeMapComponent smoke)
+        public static void ProcessMap(AtmosphereMapComponent atmosphere)
         {
-            Map map = smoke.map;
+            Map map = atmosphere.map;
             float bonusRate = 0f;
-            foreach (CompSmokeUpdraft updraft in smoke.Updrafts)
+            foreach (CompSmokeUpdraft updraft in atmosphere.Updrafts)
             {
                 if (updraft.parent.Spawned && updraft.Active)
                 {
@@ -78,7 +79,7 @@ namespace Strata
                 }
                 // Sample must be an UPPER-map cell (it anchors the receiving
                 // cloud there); the entrance's own cell resolves to its room.
-                smoke.TransferSmokeUp(lowerRoom, upperRoom, upperEntrance.Map, rate, upperEntrance.Position);
+                atmosphere.TransferGasUp(lowerRoom, upperRoom, upperEntrance.Map, rate, upperEntrance.Position);
             }
         }
     }

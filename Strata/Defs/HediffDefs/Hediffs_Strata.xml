@@ -55,4 +55,58 @@
     </stages>
   </HediffDef>
 
+  <HediffDef>
+    <defName>Strata_GasInhalation</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>deep gas poisoning</label>
+    <description>Foul underground gas breathed in a flooded room. It clears with fresh air, but lingering in thick gas poisons the blood and dulls the mind - and enough of it is fatal.</description>
+    <lethalSeverity>1.0</lethalSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <isBad>true</isBad>
+    <stages>
+      <li>
+        <label>dizzy</label>
+        <minSeverity>0</minSeverity>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.05</offset>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <label>poisoned</label>
+        <minSeverity>0.3</minSeverity>
+        <painOffset>0.10</painOffset>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.20</offset>
+          </li>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>-0.15</offset>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <label>asphyxiating</label>
+        <minSeverity>0.6</minSeverity>
+        <lifeThreatening>true</lifeThreatening>
+        <painOffset>0.20</painOffset>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.45</offset>
+          </li>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>-0.45</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+
 </Defs>

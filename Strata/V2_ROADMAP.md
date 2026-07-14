@@ -16,25 +16,16 @@ coordinator, cross-level ritual escorts for prisoners and animals).
 
 ## Pillar 1 — The Living Deep (geothermal + gas)
 
-The deep becomes a place with resources and an atmosphere, not just rock.
+SHIPPED (see CHANGELOG "Pillar 1: The Living Deep"): multi-gas atmosphere
+sim (smoke = one channel, unchanged tuning), hidden geothermal chambers with
+working vanilla geothermal, persistent pressurized gas pockets with ignition
+explosions, deep vents + gas well + canisters + smokeless deep-gas generator,
+reflection-based Helixien pipe feed, and the gas pocket incident recast as a
+breach of the persistent system. Levels now generate fogged so chambers are
+discovered by mining.
 
-- **Hidden geothermal chambers**: steam geysers seeded per level in small
-  fogged chambers sealed in rock — discovered by mining, like ore. Chance and
-  count scale with depth. Vanilla geothermal generator just works; its heat
-  feeds the existing stairwell temperature exchange.
-- **Atmosphere generalization**: refactor the smoke sim into a multi-gas
-  room-density sim (smoke = one channel). Per-gas flags: harms pawns,
-  flammable, extractable. All existing ventilation tools (vents, louvers,
-  smoke holes, ducts, seals, the ventilation guarantee) apply to every gas
-  for free. Step must ship with zero behavior change for smoke.
-- **Persistent gas pockets**: hidden fogged chambers of toxic/flammable gas
-  found by mining. Flammable rooms above an ignition density explode from
-  open flames — torches become dangerous mining equipment; electric light
-  becomes a safety upgrade. Venting keeps pawns safe but wastes the resource.
-- **Gas extraction economy**: gas well on a deep vent + deep-gas generator
-  (self-contained, no dependencies). Guarded patch: with Vanilla Helixien Gas
-  Expanded loaded, deep vents can feed its pipe network instead.
-- **Recast the gas pocket incident** as a breach of the persistent system.
+Remaining polish (backlog): dedicated art for the vent/well/generator/canister
+(current art is generated placeholder in the mod's flat style).
 
 ## Pillar 2 — Fluid shafts (pipe mod compatibility)
 
