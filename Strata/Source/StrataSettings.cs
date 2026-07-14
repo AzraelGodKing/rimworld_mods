@@ -15,6 +15,7 @@ namespace Strata
         public bool restRelayEnabled = true;
         public bool throttleVacantLevels = true;
         public bool crossLevelRitualsEnabled = true;
+        public bool mergedAbandonWarning = true;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;
 
@@ -29,6 +30,7 @@ namespace Strata
             Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref throttleVacantLevels, "throttleVacantLevels", defaultValue: true);
             Scribe_Values.Look(ref crossLevelRitualsEnabled, "crossLevelRitualsEnabled", defaultValue: true);
+            Scribe_Values.Look(ref mergedAbandonWarning, "mergedAbandonWarning", defaultValue: true);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
             Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
         }
@@ -111,6 +113,13 @@ namespace Strata
                 "Raiders with nobody left to fight follow your colonists through unsealed stairwells.");
             listing.CheckboxLabeled("Throttle vacant levels", ref Settings.throttleVacantLevels,
                 "Levels with nobody on them run their ambient simulation at reduced rate to save performance.");
+            listing.Gap();
+
+            Text.Font = GameFont.Medium;
+            listing.Label("Interface");
+            Text.Font = GameFont.Small;
+            listing.CheckboxLabeled("Combined abandon warning", ref Settings.mergedAbandonWarning,
+                "When abandoning a settlement with pawns still on levels below, show one combined warning listing everyone left behind (surface and underground). Turn off for two separate prompts: Strata's underground warning first, then the vanilla surface warning.");
 
             listing.End();
         }
