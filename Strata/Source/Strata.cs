@@ -32,6 +32,7 @@ namespace Strata
         static StrataInit()
         {
             ExhaustAutoPatch.Apply();
+            GasNetAdapter.Inject();
             new Harmony("azraelgodking.strata").PatchAll();
         }
     }

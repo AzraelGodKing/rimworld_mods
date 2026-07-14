@@ -39,6 +39,19 @@
   </ResearchProjectDef>
 
   <ResearchProjectDef>
+    <defName>Strata_GasExtraction</defName>
+    <label>deep gas extraction</label>
+    <description>Wellheads and pressure canisters for capping the gas vents found in deep rock - turning a toxic, explosive seep into generator fuel that burns with no smoke at all.</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Strata_Ventilation</li>
+    </prerequisites>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>3.60</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>Strata_ShaftPower</defName>
     <label>shaft power</label>
     <description>Armored power junctions that carry electricity up and down an excavated shaft, letting a surface grid feed the levels below (and the reverse).</description>
@@ -62,20 +75,6 @@
       <li>Strata_ShaftPower</li>
     </prerequisites>
     <researchViewX>9.00</researchViewX>
-    <researchViewY>5.20</researchViewY>
-  </ResearchProjectDef>
-
-  <ResearchProjectDef>
-    <defName>Strata_DeepGasExtraction</defName>
-    <label>deep gas extraction</label>
-    <description>Tap natural gas pockets sealed in the deep rock with a gas well, then burn the harvest in a self-contained deep gas generator — or feed helixien pipes when that mod is loaded.</description>
-    <baseCost>900</baseCost>
-    <techLevel>Industrial</techLevel>
-    <prerequisites>
-      <li>Strata_Excavation</li>
-      <li>Electricity</li>
-    </prerequisites>
-    <researchViewX>6.00</researchViewX>
     <researchViewY>5.20</researchViewY>
   </ResearchProjectDef>
 

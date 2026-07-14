@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- The atmosphere simulation's channels. Every ventilation tool (vents,
+       louvers, smoke holes, ducts, fans, updraft filters, seals, and the
+       ventilation guarantee) applies to every gas automatically - these defs
+       only decide color, buoyancy, persistence, harm, fire, and extraction. -->
+
+  <!-- Combustion smoke: the original sim, unchanged numbers. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Smoke</defName>
+    <label>smoke</label>
+    <description>Combustion fumes from burners and open flames. Rises through unsealed shafts and chokes anyone lingering in it.</description>
+    <overlayColor>(0.04, 0.04, 0.05)</overlayColor>
+    <buoyant>true</buoyant>
+    <passiveLeak>0.02</passiveLeak>
+    <harmHediff>Strata_SmokeInhalation</harmHediff>
+    <harmThreshold>0.15</harmThreshold>
+    <severityGain>0.006</severityGain>
+    <severityDecay>0.03</severityDecay>
+    <throwsMotes>true</throwsMotes>
+    <moteThreshold>0.2</moteThreshold>
+  </Strata.StrataGasDef>
+
+  <!-- Foul deep gas: heavier than air, so it pools on the level it leaks
+       into instead of riding shafts upward. Persistent - a sealed pocket
+       keeps its pressure forever. Toxic, explosive, and worth money. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_DeepGas</defName>
+    <label>deep gas</label>
+    <description>Foul flammable gas trapped in the rock. It pools where it leaks, poisons anyone breathing it, and explodes on contact with open flame - but a capped vent will pump it into fuel.</description>
+    <overlayColor>(0.30, 0.44, 0.16)</overlayColor>
+    <buoyant>false</buoyant>
+    <passiveLeak>0</passiveLeak>
+    <harmHediff>Strata_GasInhalation</harmHediff>
+    <harmThreshold>0.12</harmThreshold>
+    <severityGain>0.008</severityGain>
+    <severityDecay>0.025</severityDecay>
+    <flammable>true</flammable>
+    <ignitionDensity>0.35</ignitionDensity>
+    <extractable>true</extractable>
+  </Strata.StrataGasDef>
+
+</Defs>

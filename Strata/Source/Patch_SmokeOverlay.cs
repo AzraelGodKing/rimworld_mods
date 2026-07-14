@@ -26,7 +26,7 @@ namespace Strata
             {
                 return;
             }
-            row.ToggleableIcon(ref ShowReadout, icon, "Strata: show smoke levels");
+            row.ToggleableIcon(ref ShowReadout, icon, "Strata: show gas levels");
         }
     }
 }

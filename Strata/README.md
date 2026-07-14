@@ -35,8 +35,9 @@ stairwells (a level with pawns on it will not be deleted).
 | **Fluidity** | Colonists relay themselves between floors for work, food, rest, hauling, construction materials, and rituals. You designate; they commute. |
 | **Logistics** | Stockpile priority works across the whole column. Blueprints pull missing materials from other levels. The build menu and (optional) resource readout see the whole colony. |
 | **Power** | Stairwells and elevators tie the levels' grids (demand-driven, both directions). The shaft conduit gives a dedicated tie point and extends its own lower junction. |
-| **Smoke** | Burners emit smoke that pools, flows through doors and vents, and chokes unventilated rooms. Any working outlet guarantees a room stays safe. Tribal-tech smoke hole included. |
-| **Threats** | Raiders pursue you through unsealed shafts and besiege sealed ones. Infestations scale with depth. Deep raids erupt insect swarms through the floor. Cave-ins, gas pockets, tremors. |
+| **Atmosphere** | A multi-gas room simulation. Burners emit smoke that pools, flows through doors and vents, and chokes unventilated rooms; foul deep gas seeps from breached pockets, pools where it leaks, poisons, and **explodes on open flame**. Any working outlet guarantees a room stays safe — every ventilation tool works on every gas. Tribal-tech smoke hole included. |
+| **The living deep** | New levels hide small chambers sealed in the rock, found by mining like ore: steam geysers (vanilla geothermal just works down there) and pressurized deep-gas pockets. Cap a gas vent with a **gas well** and burn the canisters in the smokeless **deep-gas generator** — or feed a Helixien gas pipe network directly. |
+| **Threats** | Raiders pursue you through unsealed shafts and besiege sealed ones. Infestations scale with depth. Deep raids erupt insect swarms through the floor. Cave-ins, gas-pocket breaches, tremors. |
 | **UI** | Levels tab (resizable) with jump/rename, Page Up/Down level hotkeys (rebindable), mod settings for every major system, placement guides for vents and ducts. |
 
 ## Mod settings
@@ -51,8 +52,12 @@ raid pursuit, and the vacant-level performance throttle.
   to Strata's level system by design. The only interaction: Strata's smoke also
   applies inside AUR buildings (disable the smoke simulation in mod settings if
   undesired).
-- **Pipe/fluid mods** (Dubs Bad Hygiene, Rimefeller, VE pipes) — no integration
-  yet; cross-level pipe ties are Pillar 2 of the V2 roadmap.
+- **Vanilla Helixien Gas Expanded** — soft integration: with VHGE loaded, a
+  Strata gas well gains a pipe connector and feeds the helixien gas network
+  directly instead of ejecting canisters. Reflection-based; nothing breaks
+  when VHGE is absent.
+- **Pipe/fluid mods** (Dubs Bad Hygiene, Rimefeller, VE pipes) — no cross-level
+  integration yet; cross-level pipe ties are Pillar 2 of the V2 roadmap.
 - Mods adding **fuel-burning buildings** are auto-detected and given exhaust
   behavior when they look like burners. Dev mode → Strata → "List smoke
   emitters" shows what got covered on your map.
@@ -77,9 +82,10 @@ landings stay aligned proportionally rather than exactly.
 ## Dev tools
 
 Development mode adds a **Strata** debug category: fire any Strata incident
-(bypassing storyteller pacing), saturate/clear/inspect smoke, list smoke
-emitters, log level depths, and **Run self-tests** — invariant checks over the
-live colony that catch registration and level-graph problems.
+(bypassing storyteller pacing), saturate/clear/inspect smoke and deep gas,
+list smoke emitters, list hidden chambers (geysers and gas vents, discovered
+or not), log level depths, and **Run self-tests** — invariant checks over the
+live colony that catch registration, gas-def, and level-graph problems.
 
 ## Building from source
 
