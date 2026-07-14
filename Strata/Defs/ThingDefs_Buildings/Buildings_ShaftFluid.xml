@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase" Name="Strata_ShaftFluidJunctionBase" Abstract="True">
+    <thingClass>Strata.Building_ShaftFluidJunction</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ShaftConduit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <uiIconPath>Strata/Buildings/ShaftConduit</uiIconPath>
+    <uiIconScale>0.85</uiIconScale>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.3</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <clearBuildingArea>false</clearBuildingArea>
+    <building>
+      <isEdifice>true</isEdifice>
+      <isInert>true</isInert>
+      <canConstructInCorner>true</canConstructInCorner>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>3500</WorkToBuild>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <Steel>50</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="Dubwise.DubsBadHygiene">
+    <defName>Strata_ShaftFluid_DBH</defName>
+    <label>shaft plumbing junction</label>
+    <description>Meters Dubs Bad Hygiene plumbing between levels. Build within reach of a stairwell or elevator and wire plumbing pipes to this junction; it extends a matching junction below and ties the two water/sewage networks without merging them.</description>
+    <designationCategory>Hygiene</designationCategory>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>dbh_plumbing</channel>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="Dubwise.DubsCentralHeating">
+    <defName>Strata_ShaftFluid_DCH_Heat</defName>
+    <label>shaft heating junction</label>
+    <description>Meters Dubs Central Heating hot-water pipes between levels. Build beside a shaft and connect heating pipes to this junction on each floor.</description>
+    <designationCategory>Temperature</designationCategory>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>dch_heating</channel>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="Dubwise.DubsCentralHeating">
+    <defName>Strata_ShaftFluid_DCH_Air</defName>
+    <label>shaft air-con junction</label>
+    <description>Meters Dubs Central Heating air-conditioning ducts between levels. Build beside a shaft and connect air-con pipes to this junction on each floor.</description>
+    <designationCategory>Temperature</designationCategory>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>dch_air</channel>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="Dubwise.Rimatomics">
+    <defName>Strata_ShaftFluid_Rimatomics</defName>
+    <label>shaft coolant junction</label>
+    <description>Meters Rimatomics reactor coolant between levels. Build beside a shaft and connect coolant pipes to this junction on each floor.</description>
+    <designationCategory>Rimatomics</designationCategory>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>rimatomics_coolant</channel>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="VanillaExpanded.HelixienGas">
+    <defName>Strata_ShaftFluid_VHGE</defName>
+    <label>shaft helixien junction</label>
+    <description>Meters Vanilla Helixien Gas Expanded pipe networks between levels. Build beside a shaft and wire helixien gas pipes to this junction on each floor.</description>
+    <designationCategory>VCHE_PipeNetworks</designationCategory>
+    <uiIconPath>Things/Building/Linked/GasPipe_MenuIcon</uiIconPath>
+    <uiIconScale>1</uiIconScale>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+      <li>VHGE_GasExtraction</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>vhge_helixien</channel>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

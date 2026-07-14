@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>VanillaExpanded.HelixienGas</li>
+    </mods>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="Strata_GasWell"]/comps</xpath>
+      <value>
+        <li Class="PipeSystem.CompProperties_ResourceTrader">
+          <pipeNet>VHGE_HelixienNet</pipeNet>
+          <consumptionPerTick>-0.25</consumptionPerTick>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+</Patch>

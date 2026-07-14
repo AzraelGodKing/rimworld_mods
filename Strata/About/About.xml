@@ -16,11 +16,17 @@
   </modDependencies>
   <loadAfter>
     <li>brrainz.harmony</li>
+    <!-- Optional integrations: when present, load Strata after them so pipe patches apply cleanly. Not required. -->
+    <li>OskarPotocki.VanillaFactionsExpanded.Core</li>
+    <li>VanillaExpanded.HelixienGas</li>
+    <li>Dubwise.DubsBadHygiene</li>
+    <li>Dubwise.DubsCentralHeating</li>
+    <li>Dubwise.Rimatomics</li>
   </loadAfter>
   <description>Dig down and build a true multistory base - and let your colonists treat every level as one home.
 
 EXCAVATED STAIRWELL
-Build a stairwell and your colonists carve out a new underground level beneath your base: a solid slab of living rock, ready to be mined into bedrooms, workshops, freezers, and vaults. Build another stairwell down there and keep going deeper. Every level is protected by thick rock roof - safe from drop pods, mortars, and weather.
+Build a stairwell and your colonists carve out a new underground level beneath your base: a solid slab of living rock the same size as the map above, stacked exactly beneath it, ready to be mined into bedrooms, workshops, freezers, and vaults. Build another stairwell down there and keep going deeper. Every level is protected by thick rock roof - safe from drop pods, mortars, and weather.
 
 ONE BASE, MANY FLOORS
 Other multi-level mods make each floor an island. Strata's fluidity engine relays your pawns between levels on their own:
@@ -40,6 +46,8 @@ Underground levels are sealed rock, so the sky can't reach them: solar flares, e
 
 THE DEEPER, THE STRANGER
 Levels sit on a geothermal gradient - the deeper you dig, the warmer the rock - and deeper levels crawl with more bugs and hide richer ore. Seal a stairwell to contain a gas pocket or an infestation on one level. For a tidier base, research the powered elevator: a compact 1x1 shaft that needs power to descend but always lets colonists ride up to safety if power fails, so no one is trapped below. Empty levels quietly throttle their background simulation to protect framerate in a tall base.
+
+PERFORMANCE NOTE: every level is a full map matching your map size, so on LARGE map sizes (300x300 and up) each opened level adds correspondingly more load. A deep base on a big map will cost real performance - the vacant-level throttle softens it, but if you dig many levels, consider a smaller map size when generating the world.
 
 To move goods between levels, keep a stockpile near the stairs on each floor - colonists haul up and down through the stairwell on their own.
 

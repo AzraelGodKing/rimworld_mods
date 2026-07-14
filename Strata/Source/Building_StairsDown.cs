@@ -108,6 +108,13 @@ namespace Strata
         // below instead of opening a parallel pocket dimension: adopt a sibling
         // portal's map and carve our own landing into it, roughly under where
         // this portal stands.
+        //
+        // A NEW level matches the footprint of the map it sits under (instead
+        // of the def's fixed pocketMapSize), so landings, shaft conduits, and
+        // the level hotkeys stack exactly 1:1 beneath the level above. On big
+        // maps each level costs what another map of that size costs; levels
+        // opened before this change keep their old size and the proportional
+        // alignment still handles them.
         protected override Map GeneratePocketMapInt()
         {
             Map existing = ExistingLevelBelow();
@@ -124,7 +131,9 @@ namespace Strata
                     return existing;
                 }
             }
-            return base.GeneratePocketMapInt();
+            return PocketMapUtility.GeneratePocketMap(
+                new IntVec3(Map.Size.x, 1, Map.Size.z),
+                def.portal.pocketMapGenerator, null, Map);
         }
 
         private Map ExistingLevelBelow()

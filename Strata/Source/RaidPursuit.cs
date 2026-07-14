@@ -33,6 +33,13 @@ namespace Strata
         // Transient (transit takes seconds); keyed by pawn ID so nothing leaks.
         private static readonly Dictionary<int, int> assaultCredit = new Dictionary<int, int>();
 
+        // Transit credit from one save means nothing in another (pawn IDs
+        // collide across saves). Cleared on game load.
+        internal static void ResetSession()
+        {
+            assaultCredit.Clear();
+        }
+
         public MapComponent_RaidPursuit(Map map) : base(map)
         {
         }
@@ -58,6 +65,7 @@ namespace Strata
             {
                 TryPursue();
             }
+            RaidCoordinator.Tick(map);
         }
 
         private void ProcessPendingArrivals()
@@ -180,6 +188,15 @@ namespace Strata
             if (!StrataPortalUtility.IsSealedPortal(sealedPortal))
             {
                 return; // not sealed, just transiently unenterable
+            }
+            // Bottom landings have no hit points and can't be destroyed -
+            // raiders sealed in from below would batter them forever (with a
+            // threat message promising progress that can never come). They
+            // are simply trapped until the player unseals; only the top-side
+            // entrance can be broken.
+            if (!sealedPortal.def.useHitPoints || !sealedPortal.def.destroyable)
+            {
+                return;
             }
             int sent = 0;
             foreach (Pawn raider in pursuerBuffer)

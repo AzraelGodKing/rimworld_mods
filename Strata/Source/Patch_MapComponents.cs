@@ -18,6 +18,10 @@ namespace Strata
             {
                 __instance.components.Add(new MapComponent_RaidPursuit(__instance));
             }
+            if (__instance.GetComponent<MapComponent_DeepPockets>() == null)
+            {
+                __instance.components.Add(new MapComponent_DeepPockets(__instance));
+            }
         }
     }
 }

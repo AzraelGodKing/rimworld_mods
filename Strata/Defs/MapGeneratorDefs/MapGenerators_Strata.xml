@@ -15,6 +15,8 @@
     </pocketMapProperties>
     <genSteps>
       <li>Strata_SolidRock</li>
+      <li>Strata_DeepPockets</li>
+      <li>Strata_DbhGroundwater</li>
       <li>Strata_PlaceCaveExit</li>
     </genSteps>
   </MapGeneratorDef>
@@ -23,6 +25,18 @@
     <defName>Strata_SolidRock</defName>
     <order>100</order>
     <genStep Class="Strata.GenStep_SolidRock"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_DeepPockets</defName>
+    <order>120</order>
+    <genStep Class="Strata.GenStep_DeepPockets"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_DbhGroundwater</defName>
+    <order>150</order>
+    <genStep Class="Strata.GenStep_DbhGroundwater"/>
   </GenStepDef>
 
   <GenStepDef>

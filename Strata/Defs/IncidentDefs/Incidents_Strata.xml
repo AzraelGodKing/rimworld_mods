@@ -32,7 +32,7 @@
     <minRefireDays>6</minRefireDays>
     <letterDef>NegativeEvent</letterDef>
     <letterLabel>Gas pocket breached</letterLabel>
-    <letterText>Digging has punctured a pocket of foul underground gas, and toxic vapour is spilling into the level. Get your colonists clear until it disperses.</letterText>
+    <letterText>A dormant gas pocket has ruptured under your colony, flooding a sealed chamber beneath this level. Toxic or natural gas is pouring into the rock — vent it, seal it, or tap it before someone walks in with an open flame.</letterText>
   </IncidentDef>
 
   <!-- ============ Underground: deep vein (positive) ============ -->

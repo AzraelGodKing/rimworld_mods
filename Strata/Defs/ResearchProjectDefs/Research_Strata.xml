@@ -52,4 +52,31 @@
     <researchViewY>5.20</researchViewY>
   </ResearchProjectDef>
 
+  <ResearchProjectDef>
+    <defName>Strata_FluidShafts</defName>
+    <label>fluid shafts</label>
+    <description>Build shaft fluid junctions that meter water, coolant, heating, and gas between levels without merging pipe networks across maps. Only junction types for your loaded pipe mods appear in the architect menu.</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Strata_ShaftPower</li>
+    </prerequisites>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>5.20</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Strata_DeepGasExtraction</defName>
+    <label>deep gas extraction</label>
+    <description>Tap natural gas pockets sealed in the deep rock with a gas well, then burn the harvest in a self-contained deep gas generator — or feed helixien pipes when that mod is loaded.</description>
+    <baseCost>900</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Strata_Excavation</li>
+      <li>Electricity</li>
+    </prerequisites>
+    <researchViewX>6.00</researchViewX>
+    <researchViewY>5.20</researchViewY>
+  </ResearchProjectDef>
+
 </Defs>

@@ -11,6 +11,8 @@ namespace Strata
     {
         public static HediffDef Strata_SmokeInhalation;
 
+        public static HediffDef Strata_ToxGasExposure;
+
         static StrataSmokeDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataSmokeDefOf));
@@ -50,7 +52,7 @@ namespace Strata
         public readonly HashSet<CompExhaustVent> Vents = new HashSet<CompExhaustVent>();
         public readonly HashSet<CompSmokeUpdraft> Updrafts = new HashSet<CompSmokeUpdraft>();
 
-        private struct Cloud
+        internal struct Cloud
         {
             public float density;
             public IntVec3 sample;
@@ -58,8 +60,13 @@ namespace Strata
 
         private readonly Dictionary<int, Cloud> clouds = new Dictionary<int, Cloud>();
 
+        private readonly Dictionary<int, Cloud> toxicClouds = new Dictionary<int, Cloud>();
+
+        private readonly Dictionary<int, Cloud> naturalGasClouds = new Dictionary<int, Cloud>();
+
         // Per-cell density mirror for the drawn smog overlay (lazy-allocated).
         private float[] cellDensity;
+        private Color[] cellColors;
         private CellBoolDrawer drawer;
 
         public SmokeMapComponent(Map map) : base(map)
@@ -75,8 +82,62 @@ namespace Strata
 
         public Color GetCellExtraColor(int index)
         {
-            // Black smog that thickens with density.
+            if (cellColors != null && index >= 0 && index < cellColors.Length && cellColors[index].a > 0.01f)
+            {
+                return cellColors[index];
+            }
             return new Color(0.04f, 0.04f, 0.05f, Mathf.Clamp01(cellDensity[index]));
+        }
+
+        public float DensityInRoom(Room room, AtmosphereChannel channel = AtmosphereChannel.Smoke)
+        {
+            Dictionary<int, Cloud> store = CloudStore(channel);
+            return room != null && store.TryGetValue(room.ID, out Cloud c) ? c.density : 0f;
+        }
+
+        public void AddGasToRoom(AtmosphereChannel channel, Room room, float amount, IntVec3 sample)
+        {
+            if (channel == AtmosphereChannel.Smoke)
+            {
+                AddSmokeToRoom(room, amount, sample);
+                return;
+            }
+            AddGasToRoomInternal(CloudStore(channel), room, amount, sample, channel);
+        }
+
+        internal void TransferGasUp(AtmosphereChannel channel, Room sourceRoom, Room upperRoom, Map upperMap, float rate, IntVec3 sample)
+        {
+            Dictionary<int, Cloud> store = CloudStore(channel);
+            if (sourceRoom == null || rate <= 0f || !store.TryGetValue(sourceRoom.ID, out Cloud cloud))
+            {
+                return;
+            }
+            float moved = cloud.density * Mathf.Clamp01(rate);
+            cloud.density -= moved;
+            if (cloud.density < 0.01f)
+            {
+                store.Remove(sourceRoom.ID);
+            }
+            else
+            {
+                store[sourceRoom.ID] = cloud;
+            }
+            if (moved <= 0f || upperRoom == null || upperRoom.UsesOutdoorTemperature)
+            {
+                return;
+            }
+            SmokeMapComponent upperSmoke = upperMap.GetComponent<SmokeMapComponent>();
+            upperSmoke?.AddGasToRoom(channel, upperRoom, moved, sample);
+        }
+
+        internal Dictionary<int, Cloud> CloudStore(AtmosphereChannel channel)
+        {
+            switch (channel)
+            {
+                case AtmosphereChannel.Toxic: return toxicClouds;
+                case AtmosphereChannel.NaturalGas: return naturalGasClouds;
+                default: return clouds;
+            }
         }
 
         public float DensityInRoom(Room room)
@@ -118,9 +179,15 @@ namespace Strata
         public void ClearAll()
         {
             clouds.Clear();
+            toxicClouds.Clear();
+            naturalGasClouds.Clear();
             if (cellDensity != null)
             {
                 System.Array.Clear(cellDensity, 0, cellDensity.Length);
+            }
+            if (cellColors != null)
+            {
+                System.Array.Clear(cellColors, 0, cellColors.Length);
             }
             drawer?.SetDirty();
         }
@@ -145,7 +212,7 @@ namespace Strata
             }
             if (StrataMod.Settings != null && !StrataMod.Settings.smokeEnabled)
             {
-                if (clouds.Count > 0)
+                if (clouds.Count > 0 || toxicClouds.Count > 0 || naturalGasClouds.Count > 0)
                 {
                     ClearAll();
                 }
@@ -213,6 +280,202 @@ namespace Strata
             RebuildCellDensity();
             AffectPawns();
             ThrowMotes();
+            ProcessAlternativeGasChannels();
+            CheckNaturalGasIgnition();
+        }
+
+        // Toxic and natural gas reuse the same ventilation model as smoke but
+        // have no burner emitters — pockets release them in one burst.
+        private void ProcessAlternativeGasChannels()
+        {
+            ProcessGasChannel(AtmosphereChannel.Toxic, toxicClouds);
+            ProcessGasChannel(AtmosphereChannel.NaturalGas, naturalGasClouds);
+            if (toxicClouds.Count > 0 || naturalGasClouds.Count > 0)
+            {
+                RebuildCellDensity();
+                AffectAlternativeGases();
+            }
+        }
+
+        private void ProcessGasChannel(AtmosphereChannel channel, Dictionary<int, Cloud> store)
+        {
+            if (store.Count == 0)
+            {
+                return;
+            }
+            ProcessDirectionalVentsFor(channel, store);
+            ProcessShaftRiseFor(channel, store);
+            ProcessDoorFlowFor(channel, store);
+            DisperseClouds(store);
+        }
+
+        private void ProcessShaftRiseFor(AtmosphereChannel channel, Dictionary<int, Cloud> store)
+        {
+            if (store.Count == 0)
+            {
+                return;
+            }
+            float bonusRate = 0f;
+            foreach (CompSmokeUpdraft updraft in Updrafts)
+            {
+                if (updraft.parent.Spawned && updraft.Active)
+                {
+                    bonusRate += updraft.Props.risePower;
+                }
+            }
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is not PocketMapExit lowerExit || thing is Building_StairsDown or Building_ElevatorDown)
+                {
+                    continue;
+                }
+                if (StrataPortalUtility.IsSealedPortal(lowerExit.entrance ?? lowerExit))
+                {
+                    continue;
+                }
+                MapPortal upperEntrance = SmokeRiseUtility.GetUpperEntrance(lowerExit);
+                if (upperEntrance == null || !upperEntrance.Spawned)
+                {
+                    continue;
+                }
+                Room lowerRoom = lowerExit.Position.GetRoom(map);
+                if (lowerRoom == null || lowerRoom.UsesOutdoorTemperature || !store.ContainsKey(lowerRoom.ID))
+                {
+                    continue;
+                }
+                Room upperRoom = upperEntrance.Position.GetRoom(upperEntrance.Map);
+                float rate = SmokeRiseUtility.NaturalShaftRise;
+                if (bonusRate > 0f && SmokeRiseUtility.RoomContainsLevelExit(lowerRoom, map))
+                {
+                    rate = Mathf.Clamp01(rate + bonusRate);
+                }
+                TransferGasUp(channel, lowerRoom, upperRoom, upperEntrance.Map, rate, upperEntrance.Position);
+            }
+        }
+
+        private void DisperseClouds(Dictionary<int, Cloud> store)
+        {
+            foreach (int id in store.Keys.ToList())
+            {
+                Cloud c = store[id];
+                Room r = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
+                if (r == null || r.UsesOutdoorTemperature)
+                {
+                    c.density *= 1f - OutdoorDisperse;
+                }
+                else
+                {
+                    float vent = BaseLeak + OpenRoofVent * Mathf.Min(r.OpenRoofCount, 5);
+                    c.density *= 1f - Mathf.Clamp01(vent);
+                }
+                if (c.density < 0.01f)
+                {
+                    store.Remove(id);
+                }
+                else
+                {
+                    store[id] = c;
+                }
+            }
+        }
+
+        private void CheckNaturalGasIgnition()
+        {
+            if (naturalGasClouds.Count == 0)
+            {
+                return;
+            }
+            foreach (KeyValuePair<int, Cloud> kv in naturalGasClouds.ToList())
+            {
+                Cloud c = kv.Value;
+                if (c.density < AtmosphereChannelUtility.IgnitionDensity(AtmosphereChannel.NaturalGas))
+                {
+                    continue;
+                }
+                Room room = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
+                if (room == null || !RoomHasIgnitionSource(room))
+                {
+                    continue;
+                }
+                naturalGasClouds.Remove(kv.Key);
+                GenExplosion.DoExplosion(c.sample, map, 2.9f, DamageDefOf.Flame, null, 12, 0.4f);
+                Messages.Message("Natural gas ignited!", new TargetInfo(c.sample, map), MessageTypeDefOf.NegativeEvent);
+            }
+        }
+
+        private bool RoomHasIgnitionSource(Room room)
+        {
+            foreach (CompExhaust emitter in Emitters)
+            {
+                if (emitter.parent.Spawned && emitter.Active && emitter.parent.GetRoom() == room)
+                {
+                    return true;
+                }
+            }
+            foreach (Region region in room.Regions)
+            {
+                foreach (IntVec3 cell in region.Cells)
+                {
+                    if (CellHasFire(cell))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool CellHasFire(IntVec3 cell)
+        {
+            List<Thing> things = cell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (things[i].def == ThingDefOf.Fire)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void AffectAlternativeGases()
+        {
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn.RaceProps == null || !pawn.RaceProps.IsFlesh || pawn.Dead)
+                {
+                    continue;
+                }
+                Room room = pawn.GetRoom();
+                ApplyGasHediff(pawn, room, AtmosphereChannel.Toxic, StrataSmokeDefOf.Strata_ToxGasExposure);
+                ApplyGasHediff(pawn, room, AtmosphereChannel.NaturalGas, StrataSmokeDefOf.Strata_ToxGasExposure, scale: 0.35f);
+            }
+        }
+
+        private static void ApplyGasHediff(Pawn pawn, Room room, AtmosphereChannel channel, HediffDef def, float scale = 1f)
+        {
+            if (def == null || room == null)
+            {
+                return;
+            }
+            float density = room.Map.GetComponent<SmokeMapComponent>()?.DensityInRoom(room, channel) ?? 0f;
+            float threshold = AtmosphereChannelUtility.HarmThreshold(channel);
+            Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(def);
+            if (density > threshold)
+            {
+                hediff ??= pawn.health.GetOrAddHediff(def);
+                hediff.Severity += (density - threshold) * AtmosphereChannelUtility.SeverityGain(channel) * scale;
+            }
+            else if (hediff != null && channel == AtmosphereChannel.Toxic)
+            {
+                hediff.Severity -= 0.03f;
+                if (hediff.Severity <= 0f)
+                {
+                    pawn.health.RemoveHediff(hediff);
+                }
+            }
         }
 
         // Move smoke through open doors. Runs on a snapshot of the smoky
@@ -441,14 +704,25 @@ namespace Strata
                 return;
             }
             float density = DensityInRoom(cell.GetRoom(map));
-            if (density <= 0.001f)
+            float toxic = DensityInRoom(cell.GetRoom(map), AtmosphereChannel.Toxic);
+            float gas = DensityInRoom(cell.GetRoom(map), AtmosphereChannel.NaturalGas);
+            if (density <= 0.001f && toxic <= 0.001f && gas <= 0.001f)
             {
                 return;
             }
             Text.Font = GameFont.Small;
             Vector2 mouse = Event.current.mousePosition;
-            var rect = new Rect(mouse.x + 12f, mouse.y + 12f, 110f, 24f);
-            Widgets.Label(rect, $"Smoke {Mathf.RoundToInt(density * 100f)}%");
+            var rect = new Rect(mouse.x + 12f, mouse.y + 12f, 150f, 48f);
+            string line = density > 0.001f ? $"Smoke {Mathf.RoundToInt(density * 100f)}%" : null;
+            if (toxic > 0.001f)
+            {
+                line = (line != null ? line + "\n" : "") + $"Toxic {Mathf.RoundToInt(toxic * 100f)}%";
+            }
+            if (gas > 0.001f)
+            {
+                line = (line != null ? line + "\n" : "") + $"Gas {Mathf.RoundToInt(gas * 100f)}%";
+            }
+            Widgets.Label(rect, line);
         }
 
         private void ProcessDirectionalVents()
@@ -541,14 +815,15 @@ namespace Strata
 
         private void AddSmokeToRoom(Room room, float amount, IntVec3 sample)
         {
+            AddGasToRoomInternal(clouds, room, amount, sample, AtmosphereChannel.Smoke);
+        }
+
+        private void AddGasToRoomInternal(Dictionary<int, Cloud> store, Room room, float amount, IntVec3 sample, AtmosphereChannel channel)
+        {
             if (room == null || amount <= 0f)
             {
                 return;
             }
-            // The sample cell must sit INSIDE the room: it is how the cloud
-            // resolves its room each cycle and where the overlay paints.
-            // Callers often pass a door or vent cell, which belongs to its own
-            // one-cell room and would make the smoke invisible.
             if (!sample.IsValid || !sample.InBounds(map) || sample.GetRoom(map) != room)
             {
                 if (room.RegionCount == 0)
@@ -557,28 +832,199 @@ namespace Strata
                 }
                 sample = room.Regions[0].AnyCell;
             }
-            Cloud c = clouds.TryGetValue(room.ID, out Cloud existing) ? existing : new Cloud();
-            // Inflows respect the ventilation guarantee the same way burners do.
-            float limit = RoomIsProperlyVentilated(room) ? Mathf.Max(VentilatedCap, c.density) : 1f;
-            c.density = Mathf.Min(limit, c.density + amount);
+            Cloud c = store.TryGetValue(room.ID, out Cloud existing) ? existing : new Cloud();
+            float cap = channel == AtmosphereChannel.Smoke
+                ? (RoomIsProperlyVentilated(room) ? Mathf.Max(VentilatedCap, c.density) : 1f)
+                : 1f;
+            c.density = Mathf.Min(cap, c.density + amount);
             c.sample = sample;
-            clouds[room.ID] = c;
+            store[room.ID] = c;
+        }
+
+        private void ProcessDirectionalVentsFor(AtmosphereChannel channel, Dictionary<int, Cloud> store)
+        {
+            foreach (CompExhaustVent vent in Vents)
+            {
+                if (!vent.parent.Spawned || !vent.Active)
+                {
+                    continue;
+                }
+                Room intake = vent.IntakeRoom;
+                if (intake == null || intake.UsesOutdoorTemperature || !store.TryGetValue(intake.ID, out Cloud cloud))
+                {
+                    continue;
+                }
+                float rate = Mathf.Clamp01(vent.Props.ventPower);
+                if (rate <= 0f)
+                {
+                    continue;
+                }
+                if (SmokeVentUtility.ExhaustOpensIntoDuct(vent.parent, out HashSet<IntVec3> network))
+                {
+                    if (SmokeVentUtility.DuctNetworkReachesOutdoor(map, network))
+                    {
+                        cloud.density *= 1f - rate;
+                    }
+                }
+                else
+                {
+                    Room exhaust = vent.ExhaustRoom;
+                    if (exhaust != null && exhaust.UsesOutdoorTemperature)
+                    {
+                        cloud.density *= 1f - rate;
+                    }
+                    else if (SmokeVentUtility.CellIsOutdoor(map, SmokeVentUtility.ExhaustCell(vent.parent)))
+                    {
+                        cloud.density *= 1f - rate;
+                    }
+                    else if (exhaust != null)
+                    {
+                        float moved = cloud.density * rate;
+                        cloud.density -= moved;
+                        AddGasToRoomInternal(store, exhaust, moved, vent.parent.Position, channel);
+                    }
+                }
+                if (cloud.density < 0.01f)
+                {
+                    store.Remove(intake.ID);
+                }
+                else
+                {
+                    store[intake.ID] = cloud;
+                }
+            }
+        }
+
+        private void ProcessDoorFlowFor(AtmosphereChannel channel, Dictionary<int, Cloud> store)
+        {
+            if (store.Count == 0)
+            {
+                return;
+            }
+            var countedDoors = new HashSet<Building>();
+            foreach (int id in store.Keys.ToList())
+            {
+                if (!store.TryGetValue(id, out Cloud c))
+                {
+                    continue;
+                }
+                Room room = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
+                if (room == null || room.UsesOutdoorTemperature)
+                {
+                    continue;
+                }
+                countedDoors.Clear();
+                float density = c.density;
+                foreach (IntVec3 borderCell in room.BorderCellsCached)
+                {
+                    if (!borderCell.InBounds(map))
+                    {
+                        continue;
+                    }
+                    Building opening = null;
+                    bool isVent = false;
+                    Building_Door door = borderCell.GetDoor(map);
+                    if (door != null && door.Open)
+                    {
+                        opening = door;
+                    }
+                    else
+                    {
+                        Building edifice = borderCell.GetEdifice(map);
+                        if (edifice != null && SmokeVentUtility.IsOpenVent(edifice))
+                        {
+                            opening = edifice;
+                            isVent = true;
+                        }
+                    }
+                    if (opening == null || !countedDoors.Add(opening))
+                    {
+                        continue;
+                    }
+                    Room neighbor = null;
+                    bool exterior = false;
+                    foreach (IntVec3 dir in GenAdj.CardinalDirections)
+                    {
+                        IntVec3 beyond = opening.Position + dir;
+                        if (!beyond.InBounds(map))
+                        {
+                            continue;
+                        }
+                        Room other = beyond.GetRoom(map);
+                        if (other == null || other == room || other.IsDoorway)
+                        {
+                            continue;
+                        }
+                        if (other.PsychologicallyOutdoors || other.UsesOutdoorTemperature)
+                        {
+                            exterior = true;
+                        }
+                        else
+                        {
+                            neighbor = other;
+                        }
+                    }
+                    if (exterior)
+                    {
+                        density *= 1f - (isVent ? VentExteriorDrain : ExteriorDoorDrain);
+                    }
+                    else if (neighbor != null && neighbor.CellCount > 0)
+                    {
+                        float cellsHere = Mathf.Max(room.CellCount, 1);
+                        float cellsThere = neighbor.CellCount;
+                        float there = store.TryGetValue(neighbor.ID, out Cloud nCloud) ? nCloud.density : 0f;
+                        float equilibrium = (density * cellsHere + there * cellsThere) / (cellsHere + cellsThere);
+                        float drop = (density - equilibrium) * (isVent ? VentInteriorFlow : InteriorDoorFlow);
+                        if (drop > 0.005f)
+                        {
+                            density -= drop;
+                            AddGasToRoomInternal(store, neighbor, drop * cellsHere / cellsThere, opening.Position, channel);
+                        }
+                    }
+                }
+                if (density != c.density)
+                {
+                    if (density < 0.01f)
+                    {
+                        store.Remove(id);
+                    }
+                    else
+                    {
+                        c.density = density;
+                        store[id] = c;
+                    }
+                }
+            }
         }
 
         private void RebuildCellDensity()
         {
-            if (clouds.Count == 0)
+            if (clouds.Count == 0 && toxicClouds.Count == 0 && naturalGasClouds.Count == 0)
             {
                 if (cellDensity != null)
                 {
                     System.Array.Clear(cellDensity, 0, cellDensity.Length);
                 }
+                if (cellColors != null)
+                {
+                    System.Array.Clear(cellColors, 0, cellColors.Length);
+                }
                 drawer?.SetDirty();
                 return;
             }
             cellDensity ??= new float[map.cellIndices.NumGridCells];
+            cellColors ??= new Color[map.cellIndices.NumGridCells];
             System.Array.Clear(cellDensity, 0, cellDensity.Length);
-            foreach (Cloud c in clouds.Values)
+            System.Array.Clear(cellColors, 0, cellColors.Length);
+            PaintChannel(clouds, AtmosphereChannel.Smoke);
+            PaintChannel(toxicClouds, AtmosphereChannel.Toxic);
+            PaintChannel(naturalGasClouds, AtmosphereChannel.NaturalGas);
+            drawer?.SetDirty();
+        }
+
+        private void PaintChannel(Dictionary<int, Cloud> store, AtmosphereChannel channel)
+        {
+            foreach (Cloud c in store.Values)
             {
                 Room room = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
                 if (room == null || room.UsesOutdoorTemperature)
@@ -587,13 +1033,19 @@ namespace Strata
                 }
                 foreach (IntVec3 cell in room.Cells)
                 {
-                    if (cell.InBounds(map))
+                    if (!cell.InBounds(map))
                     {
-                        cellDensity[map.cellIndices.CellToIndex(cell)] = c.density;
+                        continue;
+                    }
+                    int index = map.cellIndices.CellToIndex(cell);
+                    cellDensity[index] = Mathf.Max(cellDensity[index], c.density);
+                    Color layer = AtmosphereChannelUtility.OverlayColor(channel, c.density);
+                    if (layer.a > cellColors[index].a)
+                    {
+                        cellColors[index] = layer;
                     }
                 }
             }
-            drawer?.SetDirty();
         }
 
         private void AffectPawns()
