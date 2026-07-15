@@ -153,7 +153,7 @@ Congrats to a dognamedKats for 1k followers!</description>
       <JoyGainFactor>1</JoyGainFactor>
     </statBases>
     <costList>
-      <Cloth>30</Cloth>
+      <Cloth>20</Cloth>
     </costList>
     <building>
       <isSittable>true</isSittable>
@@ -172,10 +172,10 @@ Congrats to a dognamedKats for 1k followers!</description>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
   </ThingDef>
 
-  <!-- ============ Shark plushie ============ -->
+  <!-- ============ Sharkira the plushie ============ -->
   <ThingDef ParentName="FurnitureWithQualityBase">
     <defName>Homesteader_SharkPlushie</defName>
-    <label>shark plushie</label>
+    <label>Sharkira the plushie</label>
     <description>A huggably round shark sewn from soft felt, with button eyes, stubby fins, and a mouthful of harmless fabric teeth. Sits happily in a corner looking menacing to absolutely no one. Colonists can flop against it to snuggle away their worries - Diggo's favorite ocean friend.</description>
     <thingClass>Building</thingClass>
     <graphicData>
@@ -200,7 +200,7 @@ Congrats to a dognamedKats for 1k followers!</description>
       <JoyGainFactor>1</JoyGainFactor>
     </statBases>
     <costList>
-      <Cloth>30</Cloth>
+      <Cloth>20</Cloth>
     </costList>
     <building>
       <isSittable>true</isSittable>
