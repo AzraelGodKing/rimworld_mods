@@ -5,8 +5,9 @@ All notable changes to Strata are documented here.
 ## [Unreleased]
 
 ### Changed
+- **Mine canary art** — custom canary sprites (north/south/east + dessicated) replace the yellow-tinted chicken placeholder.
 - **Canary cage vs bird cage** — canary cages accept **mine canaries only** (assign or hay acquire). New **bird cage** furniture holds any tame vanilla bird. **Default feeding:** stock hay/kibble in the cage via **Stock food** gizmo; toggle **Sustain caged bird hunger** in mod settings to freeze hunger instead.
-- **Mine canary animal** — custom **mine canary** pawn kind (chicken-based, yellow) for cage acquire/spawn. Gas harm for caged birds uses canary thresholds instead of colonist hediffs.
+- **Mine canary animal** — custom **mine canary** pawn kind (chicken-based stats, dedicated canary art) for cage acquire/spawn. Gas harm for caged birds uses canary thresholds instead of colonist hediffs.
 
 ### Added
 - **Digging down** research (600 pts, Medieval): unlocks the first basement from the surface.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
-  <!-- Mine canary: vanilla chicken stats, separate kind for cage acquire/spawn. -->
+  <!-- Mine canary: vanilla chicken stats, custom canary art, separate kind for cage acquire/spawn. -->
   <ThingDef ParentName="Chicken">
     <defName>Strata_Canary</defName>
     <label>mine canary</label>
@@ -29,34 +29,31 @@
       <li>
         <label>canary chick</label>
         <bodyGraphicData>
-          <texPath>Things/Pawn/Animal/Chicken/Chicken</texPath>
+          <texPath>Things/Pawn/Animal/Canary/Canary</texPath>
           <drawSize>0.55</drawSize>
-          <color>(0.95, 0.88, 0.35)</color>
         </bodyGraphicData>
         <dessicatedBodyGraphicData>
-          <texPath>Things/Pawn/Animal/Chicken/Dessicated_Chicken</texPath>
+          <texPath>Things/Pawn/Animal/Canary/Dessicated_Canary</texPath>
           <drawSize>0.55</drawSize>
         </dessicatedBodyGraphicData>
       </li>
       <li>
         <bodyGraphicData>
-          <texPath>Things/Pawn/Animal/Chicken/Chicken</texPath>
+          <texPath>Things/Pawn/Animal/Canary/Canary</texPath>
           <drawSize>0.75</drawSize>
-          <color>(0.95, 0.88, 0.35)</color>
         </bodyGraphicData>
         <dessicatedBodyGraphicData>
-          <texPath>Things/Pawn/Animal/Chicken/Dessicated_Chicken</texPath>
+          <texPath>Things/Pawn/Animal/Canary/Dessicated_Canary</texPath>
           <drawSize>0.75</drawSize>
         </dessicatedBodyGraphicData>
       </li>
       <li>
         <bodyGraphicData>
-          <texPath>Things/Pawn/Animal/Chicken/Chicken</texPath>
+          <texPath>Things/Pawn/Animal/Canary/Canary</texPath>
           <drawSize>0.9</drawSize>
-          <color>(0.95, 0.88, 0.35)</color>
         </bodyGraphicData>
         <dessicatedBodyGraphicData>
-          <texPath>Things/Pawn/Animal/Chicken/Dessicated_Chicken</texPath>
+          <texPath>Things/Pawn/Animal/Canary/Dessicated_Canary</texPath>
           <drawSize>0.9</drawSize>
         </dessicatedBodyGraphicData>
       </li>

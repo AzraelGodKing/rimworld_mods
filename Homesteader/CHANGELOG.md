@@ -5,6 +5,7 @@ All notable changes to Homesteader are documented here.
 ## [Unreleased]
 
 ### Changed
+- **Diggo the plushie** — updated hippo-dog sprite art.
 - GitHub Pages catalog (`docs/homesteader.html`) updated with shark plushie, 27 monuments/statues, orchard pantry cards, and a full food item table.
 
 ### Added
