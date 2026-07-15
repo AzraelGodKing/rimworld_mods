@@ -35,6 +35,50 @@ namespace Strata
             }
         }
 
+        internal void TryOpenLevelAfterBuilt()
+        {
+            if (!Spawned || PocketMapExists)
+            {
+                return;
+            }
+            OpenLevelBelow();
+            if (def.defName == "Strata_DigDownShaft")
+            {
+                LinkNearbyLanding();
+            }
+        }
+
+        private void LinkNearbyLanding()
+        {
+            Map map = Map;
+            if (map == null)
+            {
+                return;
+            }
+            const float radiusSq = 8f * 8f;
+            Building_StairsUp best = null;
+            float bestDist = float.MaxValue;
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is not Building_StairsUp landing || !landing.Spawned)
+                {
+                    continue;
+                }
+                float dist = landing.Position.DistanceToSquared(Position);
+                if (dist <= radiusSq && dist < bestDist)
+                {
+                    best = landing;
+                    bestDist = dist;
+                }
+            }
+            if (best == null)
+            {
+                return;
+            }
+            best.SetDownEntrance(this);
+            StairwellPowerUtility.MaintainVerticalTie(best);
+        }
+
         public override bool AutoDraftOnEnter => false;
 
         public override string EnterString => "Go downstairs";
@@ -48,6 +92,10 @@ namespace Strata
             if (Sealed)
             {
                 reason = "The stairwell is sealed.";
+                return false;
+            }
+            if (!PocketMapExists && !LevelExcavationUtility.CanOpenNewLevelBelow(Map, out reason))
+            {
                 return false;
             }
             return base.IsEnterable(out reason);
@@ -130,6 +178,11 @@ namespace Strata
                     Messages.Message("Broke through to the existing level below.", this, MessageTypeDefOf.PositiveEvent);
                     return existing;
                 }
+            }
+            if (!LevelExcavationUtility.CanOpenNewLevelBelow(Map, out string reason))
+            {
+                Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
+                return null;
             }
             return PocketMapUtility.GeneratePocketMap(
                 new IntVec3(Map.Size.x, 1, Map.Size.z),
@@ -327,7 +380,61 @@ namespace Strata
                 state += "\n" + SmokeRiseInspectLine();
                 state += "\n" + PowerShaftInspectLine();
             }
+            else if (StrataMapUtility.IsUnderground(Map))
+            {
+                state += "\nSelect Dig down to designate a dig shaft; colonists must finish carving it before the level below opens.";
+            }
             return text.NullOrEmpty() ? state : text + "\n" + state;
+        }
+
+        // Force pocket-map generation (used by the underground Dig down gizmo).
+        public void OpenLevelBelow()
+        {
+            if (PocketMapExists)
+            {
+                return;
+            }
+            if (!LevelExcavationUtility.CanOpenNewLevelBelow(Map, out string reason))
+            {
+                if (!reason.NullOrEmpty())
+                {
+                    Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
+                }
+                return;
+            }
+            _ = PocketMap;
+        }
+
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            foreach (Gizmo gizmo in base.GetGizmos())
+            {
+                yield return gizmo;
+            }
+            if (!StrataMapUtility.IsUnderground(Map) || PocketMapExists)
+            {
+                yield break;
+            }
+            StairwellDigUtility.CanDigDownFromEntrance(this, out string reason);
+            yield return new Command_Action
+            {
+                defaultLabel = "Dig down",
+                defaultDesc = "Break through to the level below once this stairwell is fully built, or use it if construction finished before research was available.",
+                icon = ContentFinder<Texture2D>.Get("UI/Designators/Mine", reportFailure: false),
+                action = () =>
+                {
+                    if (StairwellDigUtility.TryDigDownFromEntrance(this, out string message))
+                    {
+                        return;
+                    }
+                    if (!message.NullOrEmpty())
+                    {
+                        Messages.Message(message, this, MessageTypeDefOf.RejectInput, historical: false);
+                    }
+                },
+                Disabled = !reason.NullOrEmpty(),
+                disabledReason = reason,
+            };
         }
 
         private string SmokeRiseInspectLine()

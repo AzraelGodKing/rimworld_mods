@@ -119,6 +119,30 @@ namespace Strata
                 ?.DebugSaturate(UI.MouseCell(), StrataGasDefOf.Strata_DeepGas);
         }
 
+        [DebugAction(Cat, "Saturate room with oxygen", allowedGameStates = AllowedGameStates.PlayingOnMap,
+            actionType = DebugActionType.ToolMap)]
+        private static void SaturateOxygen()
+        {
+            Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()
+                ?.DebugSaturate(UI.MouseCell(), StrataGasDefOf.Strata_Oxygen, AtmosphereMapComponent.AmbientOxygen);
+        }
+
+        [DebugAction(Cat, "Deplete oxygen in room", allowedGameStates = AllowedGameStates.PlayingOnMap,
+            actionType = DebugActionType.ToolMap)]
+        private static void DepleteOxygen()
+        {
+            Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()
+                ?.DebugSetGas(UI.MouseCell(), StrataGasDefOf.Strata_Oxygen, 0f);
+        }
+
+        [DebugAction(Cat, "Saturate room with CO₂", allowedGameStates = AllowedGameStates.PlayingOnMap,
+            actionType = DebugActionType.ToolMap)]
+        private static void SaturateCO2()
+        {
+            Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()
+                ?.DebugSaturate(UI.MouseCell(), StrataGasDefOf.Strata_CarbonDioxide, 0.5f);
+        }
+
         [DebugAction(Cat, "List hidden chambers", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ListHiddenChambers()
         {
@@ -190,9 +214,24 @@ namespace Strata
             Check("settings loaded", StrataMod.Settings != null);
 
             // Pillar 1: the living deep.
-            Check("gas defs loaded", StrataGasDefOf.Strata_Smoke != null && StrataGasDefOf.Strata_DeepGas != null);
+            Check("gas defs loaded",
+                StrataGasDefOf.Strata_Smoke != null && StrataGasDefOf.Strata_DeepGas != null
+                && StrataGasDefOf.Strata_Oxygen != null && StrataGasDefOf.Strata_CarbonDioxide != null);
             Check("smoke rises, deep gas pools",
                 StrataGasDefOf.Strata_Smoke.buoyant && !StrataGasDefOf.Strata_DeepGas.buoyant);
+            Check("O₂ rises, CO₂ sinks",
+                StrataGasDefOf.Strata_Oxygen.buoyant && !StrataGasDefOf.Strata_CarbonDioxide.buoyant);
+            Check("O₂ hypoxia and CO₂ harm defs",
+                StrataGasDefOf.Strata_Oxygen.harmWhenBelow
+                && StrataGasDefOf.Strata_Oxygen.harmHediff != null
+                && StrataGasDefOf.Strata_CarbonDioxide.harmHediff != null);
+            Check("life support defs loaded",
+                StrataThingDefOf.Strata_OxygenPump != null
+                && StrataThingDefOf.Strata_CO2Pump != null
+                && StrataThingDefOf.Strata_GasExchanger != null);
+            Check("canary cage loaded", StrataThingDefOf.Strata_CanaryCage != null);
+            Check("bird cage loaded", StrataThingDefOf.Strata_BirdCage != null);
+            Check("mine canary loaded", StrataPawnKindDefOf.Strata_Canary != null);
             Check("deep gas is persistent, flammable, extractable",
                 StrataGasDefOf.Strata_DeepGas.passiveLeak <= 0f
                 && StrataGasDefOf.Strata_DeepGas.flammable
@@ -206,6 +245,12 @@ namespace Strata
             Check("hidden chamber gensteps registered",
                 DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_HiddenChambers") != null
                 && DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_Fog") != null);
+            Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
+            Check("sunken ruin map generator loaded",
+                DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_SunkenRuinLevel") != null);
+            Check("rimefeller shaft junctions loaded",
+                DefDatabase<ThingDef>.GetNamedSilentFail("Strata_ShaftFluid_RimefellerCrude") != null
+                && DefDatabase<ThingDef>.GetNamedSilentFail("Strata_ShaftFluid_RimefellerFuel") != null);
             sb.AppendLine($"  INFO  gas pipe adapter: {GasNetAdapter.Status}");
 
             sb.AppendLine($"Total: {passed} passed, {failed} failed.");

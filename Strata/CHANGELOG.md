@@ -4,6 +4,43 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Changed
+- **Canary cage vs bird cage** — canary cages accept **mine canaries only** (assign or hay acquire). New **bird cage** furniture holds any tame vanilla bird. **Default feeding:** stock hay/kibble in the cage via **Stock food** gizmo; toggle **Sustain caged bird hunger** in mod settings to freeze hunger instead.
+- **Mine canary animal** — custom **mine canary** pawn kind (chicken-based, yellow) for cage acquire/spawn. Gas harm for caged birds uses canary thresholds instead of colonist hediffs.
+
+### Added
+- **Digging down** research (600 pts, Medieval): unlocks the first basement from the surface.
+- **Dig down** gizmo on underground stairwell landings and down-stair entrances: extend the shaft to the next level without placing a new stairwell elsewhere on the floor (surface excluded; B2+ requires deep excavation research).
+- **Rimefeller shaft junctions** — crude-oil and chemfuel pipe ties between levels when [Rimefeller](https://steamcommunity.com/sharedfiles/filedetails/?id=1321849735) is loaded.
+- **Sunken ruin quest sites** ([PR #20](https://github.com/AzraelGodKing/rimworld_mods/pull/20)) — world incident after deep excavation reveals an ancient stairhead and insect warren with a hoard below; pocket-map safety when abandoning settlements or despawning sites.
+- **Underground gas** mod option — master toggle for deep gas pockets and sunken ruin incidents (sealed stairwell gas containment stays on).
+- **Combined abandon warning** mod option — one dialog listing pawns left on surface and underground when abandoning a settlement.
+
+### Fixed
+- **Startup: stale `Buildings_DeepGas.xml`** — replaced the pre-merge stub with an empty deprecated file so old installs stop referencing removed types (`CompProperties_DeepGasVent`, `Strata_DeepGasExtraction`, etc.); gas defs live in `Buildings_StrataGas.xml`.
+- **Startup: `Strata_GasWell` config** — set `fillPercent` to 1 and `blockWind` so the impassable wellhead passes RimWorld's build validation.
+
+### Added — Atmosphere v2 (O₂ / CO₂)
+- **Breathable air on deep levels**: underground maps seed enclosed rooms with ambient oxygen when finalized. Colonists and animals consume O₂ and exhale CO₂ each atmosphere cycle.
+- **Gas stratification**: oxygen is buoyant and rises through unsealed stairwells and elevators; carbon dioxide is heavy and sinks to the level below. Surface stairwell landings and open-to-sky rooms stay topped up with fresh O₂.
+- **Hypoxia and CO₂ exposure** hediffs when O₂ falls too low or CO₂ builds up. Toggle in mod settings: *O₂ / CO₂ simulation* (clears both gases when off).
+- **Life support buildings**: powered **oxygen pump** (releases O₂ into a sealed room), **CO₂ pump** (scrubs exhaled carbon dioxide from a room), and **shaft gas exchanger** (boosts O₂ rise and CO₂ sink through an open stairwell). Unlocked by *deep life support* research (900 pts, after forced ventilation).
+- **Canary cage**: a furnished warning for sealed rooms — assign or acquire a **mine canary** only. The bird sickens or dies from smoke, deep gas, hypoxia, or CO₂ **before** colonists do, triggering a high-priority alert. Hunger is sustained while caged. Unlocked by *forced ventilation* research.
+- **Bird cage**: hold any tame bird for display; hunger is sustained while caged.
+- **Gas overlay**: play-settings toggle (bottom-right row) now drives the full Strata gas overlay — tinted room fill plus a cursor readout showing every active gas channel as a **mix ratio** (e.g. `Gas: O₂ 72% · CO₂ 18% · smoke 10% (load 21%)`) anchored to the map cell under the cursor.
+
+### Fixed
+- **Dig down power overlap** — dig-down now spawns a **`dig shaft`** extension with no power comp beside the landing; the landing remains the sole transmitter and ties power to the level below.
+- **Level excavation gating** — two-step research progression: **digging down** opens surface → B1; **deep excavation** (now requires digging down first) opens B2 and every level deeper. Applies to excavated stairwells and the **Dig down** gizmo; extra stairwells that join an already-open level below are still allowed.
+- **Stairwell build work** — excavated stairwells now take **12,000** work from the surface and **20,000** below B1 (+8,000 deep offset). **Dig down** designates a dig-shaft blueprint with the same work and materials; the level below opens only after colonists finish construction (matching architect-placed stairwells).
+
+### Fixed
+- **Startup: stairwell `statParts` XML** — removed invalid `statParts` nodes from stairwell defs; depth-scaled work is applied via a Harmony patch on `WorkToBuild` instead.
+- **Startup: stairwell work Harmony patch** — resolve `StatExtension.GetStatValue` overloads at patch time so RimWorld 1.6 no longer throws on mod init.
+- **Dig shaft blueprints ignored** — `Strata_DigDownShaft` now has the construction fields RimWorld requires (`designationCategory`, terrain affordance, place worker); it stays hidden from the architect menu and is only placed via **Dig down**.
+- **Gas overlay on world tab** — the room tint overlay no longer draws while the world map is open (it was sticking on screen after leaving the colony view).
+- **Gas overlay readout** — mix and load are one line at the map cursor position so text no longer stacks/overlaps when pawns are on the level.
+
 ### Added — Pillar 1: The Living Deep
 - **Multi-gas atmosphere simulation**: the smoke sim is now a general room-density simulation with per-gas channels (`StrataGasDef`). Each gas declares its own color, buoyancy, persistence, harm, flammability, and extractability; every existing ventilation tool — vents, louvers, smoke holes, ducts, fans, updraft filters, door flow, shaft seals, and the ventilation guarantee — applies to every gas automatically. Smoke keeps its exact tuning as one channel. Gas clouds now survive save/load, and clouds re-anchor mass-conservingly when rooms merge or grow (a breached pocket dilutes into the corridor that opened it).
 - **Hidden geothermal chambers**: freshly opened levels seed small fogged chambers sealed in the rock, discovered by mining like ore. Geothermal chambers hold a steam geyser — the vanilla geothermal generator just works underground, and its heat feeds the existing stairwell temperature exchange. Chance and count scale with depth.

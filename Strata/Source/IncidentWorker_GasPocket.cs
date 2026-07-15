@@ -13,6 +13,10 @@ namespace Strata
     {
         protected override bool CanFireNowSub(IncidentParms parms)
         {
+            if (StrataMod.Settings?.gasEventsEnabled == false)
+            {
+                return false;
+            }
             return parms.target is Map map
                 && StrataMapUtility.IsUnderground(map)
                 && map.GetComponent<AtmosphereMapComponent>() != null

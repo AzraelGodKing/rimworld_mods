@@ -56,7 +56,7 @@ raid pursuit, and the vacant-level performance throttle.
   Strata gas well gains a pipe connector and feeds the helixien gas network
   directly instead of ejecting canisters. Reflection-based; nothing breaks
   when VHGE is absent.
-- **Pipe/fluid mods** (Dubs Bad Hygiene, Rimefeller, VE pipes) — no cross-level
+- **Fluid shaft junctions** (optional): cross-level ties for **Dubs Bad Hygiene** plumbing, **Dubs Central Heating**, **Dubs Rimatomics** coolant, **Vanilla Helixien Gas Expanded**, and **Rimefeller** crude-oil / chemfuel pipes when those mods are loaded.
   integration yet; cross-level pipe ties are Pillar 2 of the V2 roadmap.
 - Mods adding **fuel-burning buildings** are auto-detected and given exhaust
   behavior when they look like burners. Dev mode → Strata → "List smoke

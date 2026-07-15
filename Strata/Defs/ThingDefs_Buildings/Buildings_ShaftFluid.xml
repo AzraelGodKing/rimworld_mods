@@ -120,4 +120,36 @@
     </comps>
   </ThingDef>
 
+  <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="Dubwise.Rimefeller">
+    <defName>Strata_ShaftFluid_RimefellerCrude</defName>
+    <label>shaft crude-oil junction</label>
+    <description>Meters Rimefeller crude-oil pipes between levels. Build beside a shaft and connect oil pipes to this junction on each floor.</description>
+    <designationCategory>Rimefeller</designationCategory>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>rimefeller_crude</channel>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="Dubwise.Rimefeller">
+    <defName>Strata_ShaftFluid_RimefellerFuel</defName>
+    <label>shaft chemfuel junction</label>
+    <description>Meters Rimefeller chemfuel pipes between levels. Build beside a shaft and connect fuel pipes to this junction on each floor.</description>
+    <designationCategory>Rimefeller</designationCategory>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>rimefeller_fuel</channel>
+      </li>
+    </comps>
+  </ThingDef>
+
 </Defs>

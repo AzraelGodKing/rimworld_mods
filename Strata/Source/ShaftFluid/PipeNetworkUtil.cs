@@ -30,6 +30,7 @@ namespace Strata
             TryInvoke(twc, "SetupPipe");
             VefPipeNetworkUtil.ReconnectJunction(thing);
             RimatomicsPipeNetworkUtil.ReconnectJunction(thing);
+            RimefellerPipeNetworkUtil.ReconnectJunction(thing);
         }
 
         public static void RebuildNeighbors(Thing thing)

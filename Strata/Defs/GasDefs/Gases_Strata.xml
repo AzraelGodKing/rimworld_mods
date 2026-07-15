@@ -10,6 +10,7 @@
   <Strata.StrataGasDef>
     <defName>Strata_Smoke</defName>
     <label>smoke</label>
+    <overlayLabel>smoke</overlayLabel>
     <description>Combustion fumes from burners and open flames. Rises through unsealed shafts and chokes anyone lingering in it.</description>
     <overlayColor>(0.04, 0.04, 0.05)</overlayColor>
     <buoyant>true</buoyant>
@@ -28,6 +29,7 @@
   <Strata.StrataGasDef>
     <defName>Strata_DeepGas</defName>
     <label>deep gas</label>
+    <overlayLabel>deep gas</overlayLabel>
     <description>Foul flammable gas trapped in the rock. It pools where it leaks, poisons anyone breathing it, and explodes on contact with open flame - but a capped vent will pump it into fuel.</description>
     <overlayColor>(0.30, 0.44, 0.16)</overlayColor>
     <buoyant>false</buoyant>
@@ -39,6 +41,38 @@
     <flammable>true</flammable>
     <ignitionDensity>0.35</ignitionDensity>
     <extractable>true</extractable>
+  </Strata.StrataGasDef>
+
+  <!-- Breathable air on deep levels: lighter than CO₂, rises through shafts.
+       Pawns consume it and suffocate when it falls too low. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Oxygen</defName>
+    <label>oxygen</label>
+    <overlayLabel>O₂</overlayLabel>
+    <description>Breathable air trapped in excavated levels. It rises through unsealed shafts; without ventilation, colonists slowly use it up.</description>
+    <overlayColor>(0.08, 0.14, 0.28)</overlayColor>
+    <buoyant>true</buoyant>
+    <passiveLeak>0</passiveLeak>
+    <harmHediff>Strata_Hypoxia</harmHediff>
+    <harmThreshold>0.12</harmThreshold>
+    <severityGain>0.007</severityGain>
+    <severityDecay>0.035</severityDecay>
+    <harmWhenBelow>true</harmWhenBelow>
+  </Strata.StrataGasDef>
+
+  <!-- Exhaled waste gas: heavier than air, pools low and sinks down shafts. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_CarbonDioxide</defName>
+    <label>carbon dioxide</label>
+    <overlayLabel>CO₂</overlayLabel>
+    <description>Exhaled breath and combustion waste. It pools on the floor, sinks through stairwells to deeper levels, and becomes toxic in concentration.</description>
+    <overlayColor>(0.18, 0.20, 0.22)</overlayColor>
+    <buoyant>false</buoyant>
+    <passiveLeak>0</passiveLeak>
+    <harmHediff>Strata_CO2Exposure</harmHediff>
+    <harmThreshold>0.18</harmThreshold>
+    <severityGain>0.006</severityGain>
+    <severityDecay>0.03</severityDecay>
   </Strata.StrataGasDef>
 
 </Defs>

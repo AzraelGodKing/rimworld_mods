@@ -20,6 +20,7 @@ namespace Strata
             {
                 __instance.components.Add(new MapComponent_RaidPursuit(__instance));
             }
+            __instance.GetComponent<AtmosphereMapComponent>()?.TrySeedBreathableAir();
         }
     }
 }

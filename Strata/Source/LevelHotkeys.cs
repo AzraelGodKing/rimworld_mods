@@ -16,8 +16,7 @@ namespace Strata
         {
             if (Event.current.type != EventType.KeyDown
                 || Find.CurrentMap == null
-                || Find.World?.renderer == null
-                || Find.World.renderer.wantedMode != WorldRenderMode.None
+                || !StrataMapViewUtility.IsColonyMapView()
                 || Find.WindowStack.WindowsPreventCameraMotion)
             {
                 return;

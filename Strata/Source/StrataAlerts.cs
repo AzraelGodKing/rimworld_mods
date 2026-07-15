@@ -136,4 +136,37 @@ namespace Strata
             return anyExit;
         }
     }
+
+    // A mine canary sick or dead from bad air — warns before colonists show hediffs.
+    public class Alert_CanaryWarning : Alert
+    {
+        private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+
+        public Alert_CanaryWarning()
+        {
+            defaultLabel = "Canary warning";
+            defaultExplanation = "A mine canary is distressed or dead from bad air in a cage. "
+                + "Canaries succumb sooner than colonists — ventilate the room or evacuate before "
+                + "people start coughing, suffocating, or worse.";
+            defaultPriority = AlertPriority.High;
+        }
+
+        public override AlertReport GetReport()
+        {
+            targets.Clear();
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                foreach (Thing thing in map.listerThings.AllThings)
+                {
+                    if (thing.TryGetComp<CompCanaryCage>() is CompCanaryCage cage && cage.NeedsAttention)
+                    {
+                        targets.Add(new GlobalTargetInfo(thing));
+                    }
+                }
+            }
+            return targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+        }
+    }
 }

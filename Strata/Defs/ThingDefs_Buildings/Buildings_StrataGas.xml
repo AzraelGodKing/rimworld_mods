@@ -53,8 +53,8 @@
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
-    <blockWind>false</blockWind>
-    <fillPercent>0.85</fillPercent>
+    <blockWind>true</blockWind>
+    <fillPercent>1</fillPercent>
     <rotatable>false</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>

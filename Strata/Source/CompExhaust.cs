@@ -13,6 +13,10 @@ namespace Strata
         // Which atmosphere channel this source emits. Null = combustion smoke.
         public StrataGasDef gas;
 
+        // Life-support pumps: emit while CompPowerTrader is on (not while
+        // generating power like a fueled generator).
+        public bool emitWhenPowered;
+
         public CompProperties_Exhaust()
         {
             compClass = typeof(CompExhaust);
@@ -32,6 +36,11 @@ namespace Strata
         {
             get
             {
+                if (Props.emitWhenPowered)
+                {
+                    CompPowerTrader powered = parent.GetComp<CompPowerTrader>();
+                    return powered != null && powered.PowerOn;
+                }
                 // Generators: emit while actually producing power.
                 CompPowerTrader power = parent.GetComp<CompPowerTrader>();
                 if (power != null)

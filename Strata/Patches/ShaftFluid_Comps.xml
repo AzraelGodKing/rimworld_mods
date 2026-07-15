@@ -90,4 +90,30 @@
     </match>
   </Operation>
 
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Dubwise.Rimefeller</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_RimefellerCrude"]/comps</xpath>
+          <value>
+            <li Class="Rimefeller.CompProperties_Pipe">
+              <mode>Crude</mode>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_RimefellerFuel"]/comps</xpath>
+          <value>
+            <li Class="Rimefeller.CompProperties_Pipe">
+              <mode>Fuel</mode>
+            </li>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+
 </Patch>

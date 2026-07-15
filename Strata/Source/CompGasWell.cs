@@ -14,6 +14,22 @@ namespace Strata
 
         public static ThingDef Strata_DeepGasCanister;
 
+        public static ThingDef Strata_OxygenPump;
+
+        public static ThingDef Strata_CO2Pump;
+
+        public static ThingDef Strata_GasExchanger;
+
+        public static ThingDef Strata_StairsDown;
+
+        public static ThingDef Strata_StairsUp;
+
+        public static ThingDef Strata_DigDownShaft;
+
+        public static ThingDef Strata_CanaryCage;
+
+        public static ThingDef Strata_BirdCage;
+
         static StrataThingDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataThingDefOf));

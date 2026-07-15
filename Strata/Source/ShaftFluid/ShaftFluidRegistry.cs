@@ -15,6 +15,8 @@ namespace Strata
             Register(new DchPlumbingBackend("dch_air", "DCH air-con", "Air"));
             Register(new RimatomicsCoolingBackend());
             Register(new VefPipeSystemBackend("vhge_helixien", "Helixien gas", "VHGE_HelixienNet"));
+            Register(new RimefellerPipelineBackend("rimefeller_crude", "Rimefeller crude", "Crude", fuelMode: false));
+            Register(new RimefellerPipelineBackend("rimefeller_fuel", "Rimefeller chemfuel", "Fuel", fuelMode: true));
         }
 
         public static IReadOnlyDictionary<string, ShaftFluidBackend> All => byChannel;

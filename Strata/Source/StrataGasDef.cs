@@ -13,6 +13,9 @@ namespace Strata
         // Tint of the drawn overlay where this gas fills a room.
         public Color overlayColor = new Color(0.04f, 0.04f, 0.05f);
 
+        // Short label for the gas overlay readout (e.g. O₂, CO₂).
+        public string overlayLabel;
+
         // Rises through unsealed stairwell / elevator shafts (and updraft
         // filters boost it). Heavy gases pool on the level they leak into.
         public bool buoyant;
@@ -21,11 +24,14 @@ namespace Strata
         // outlet. Zero = persistent: a sealed pocket keeps its gas forever.
         public float passiveLeak;
 
-        // Harm to fleshy pawns breathing it, if any.
+        // Harm to fleshy pawns breathing it, if any. Most gases harm when
+        // density rises above harmThreshold; oxygen harms when it falls below
+        // (hypoxia) via harmWhenBelow.
         public HediffDef harmHediff;
         public float harmThreshold = 0.15f;
         public float severityGain = 0.006f;
         public float severityDecay = 0.03f;
+        public bool harmWhenBelow;
 
         // Rooms above ignitionDensity explode when they contain an open
         // flame - torches become dangerous mining equipment.
@@ -47,6 +53,10 @@ namespace Strata
         public static StrataGasDef Strata_Smoke;
 
         public static StrataGasDef Strata_DeepGas;
+
+        public static StrataGasDef Strata_Oxygen;
+
+        public static StrataGasDef Strata_CarbonDioxide;
 
         static StrataGasDefOf()
         {
