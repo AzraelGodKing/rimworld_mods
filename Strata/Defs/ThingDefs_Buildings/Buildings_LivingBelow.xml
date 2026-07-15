@@ -350,4 +350,202 @@
     </researchPrerequisites>
   </ThingDef>
 
+  <!-- ============ Methane flare (safe firedamp burn-off) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_MethaneFlare</defName>
+    <label>methane flare</label>
+    <description>A controlled flare stack that burns buoyant firedamp out of a sealed room before it can flash on a torch. Powered; keep it away from deep-gas pockets you still want to extract.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.85,0.55,0.20)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>1800</WorkToBuild>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <Steel>40</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>80</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_GasScrubber">
+        <gas>Strata_Methane</gas>
+        <scrubPerCycle>0.012</scrubPerCycle>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_MineAtmosphere</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Black-damp scrubber ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_BlackDampScrubber</defName>
+    <label>black-damp scrubber</label>
+    <description>Pulls stale black damp out of a sealed room and meters a little oxygen back in. Use after gas fires, or in flooded pits where the air has gone dead.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/CO2Pump</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.35,0.35,0.40)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2200</WorkToBuild>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <Steel>55</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Strata_Lime>5</Strata_Lime>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>160</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_GasScrubber">
+        <gas>Strata_BlackDamp</gas>
+        <scrubPerCycle>0.010</scrubPerCycle>
+        <restoreOxygenPerCycle>0.004</restoreOxygenPerCycle>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_MineAtmosphere</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Spore filter ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_SporeFilter</defName>
+    <label>spore filter</label>
+    <description>Cloth and charcoal filters that scrub airborne fungal spores from a sealed room. Pair with fungus farms and fungal warren clearances so colonists keep their lungs.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/LimeScrubber</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.45,0.70,0.35)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.2</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>90</MaxHitPoints>
+      <WorkToBuild>1600</WorkToBuild>
+      <Flammability>0.6</Flammability>
+    </statBases>
+    <costList>
+      <Steel>25</Steel>
+      <Cloth>30</Cloth>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>60</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="Strata.CompProperties_GasScrubber">
+        <gas>Strata_Spores</gas>
+        <scrubPerCycle>0.009</scrubPerCycle>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_MineAtmosphere</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Steam condenser ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_SteamCondenser</defName>
+    <label>steam condenser</label>
+    <description>Cooled plates that condense geothermal steam out of a sealed room. Keeps geyser chambers and volcanic warrens from filling with scalding haze.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/OxygenPump</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.70,0.80,0.90)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
+      <Flammability>0.3</Flammability>
+    </statBases>
+    <costList>
+      <Steel>50</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>120</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_GasScrubber">
+        <gas>Strata_Steam</gas>
+        <scrubPerCycle>0.014</scrubPerCycle>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_MineAtmosphere</li>
+    </researchPrerequisites>
+  </ThingDef>
+
 </Defs>

@@ -4,6 +4,15 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Added — Mine atmosphere channels
+- **Methane (firedamp)** — buoyant, ignites earlier than deep gas; pockets in hidden chambers and geothermal sites.
+- **Black damp** — heavy, non-flammable; displaces oxygen; left after gas ignitions; pools in flooded warren pits.
+- **Fungal spores** — illness/mood channel from fungal warrens and fungus farms (not explosive).
+- **Steam** — buoyant scald haze from geysers and volcanic chambers.
+- **Counters** (research: *mine atmosphere*): methane flare, black-damp scrubber (+O₂ restore), spore filter, steam condenser.
+- Helixien room gas, refrigerant, and Anomaly miasma still deferred.
+- **Dedicated research tab** — all Strata projects live under their own *Strata* tab (no longer on Main).
+
 ### Added — Work relay coverage
 - **Broader work-relay signals** — growing/sowing & harvestable grow zones, cleaning, firefighting, hunting, research benches, warden (hungry/recruitable/injured prisoners), animal handling (tame/slaughter/training/hungry animals), flick designations, and childcare needs, in addition to construction/mining/plant-cut/hauling/bills.
 - **Mod extension API** — `PawnRelay.RegisterWorkProbe` / `UnregisterWorkProbe` for custom “has work on this map?” checks; `RegisterWorkSeekingJobGiverMarker` so mods with their own `JobGiver` (not `JobGiver_Work`) opt into cross-level work relay via `Patch_ExternalJobGiverRelay`.

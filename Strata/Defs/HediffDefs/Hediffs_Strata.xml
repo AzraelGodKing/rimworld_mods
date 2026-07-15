@@ -217,4 +217,195 @@
     </stages>
   </HediffDef>
 
+  <HediffDef>
+    <defName>Strata_MethaneExposure</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>methane exposure</label>
+    <description>Breathing thick firedamp. Mild dizziness only — the real danger is ignition, not poison.</description>
+    <lethalSeverity>1.0</lethalSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <isBad>true</isBad>
+    <stages>
+      <li>
+        <label>light-headed</label>
+        <minSeverity>0</minSeverity>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.03</offset>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <label>giddy</label>
+        <minSeverity>0.5</minSeverity>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.12</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>Strata_BlackDampExposure</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>black damp exposure</label>
+    <description>Stale air with little oxygen left. It clears with fresh air or a scrubber, but lingering in a black-damp pit quietly suffocates.</description>
+    <lethalSeverity>1.0</lethalSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <isBad>true</isBad>
+    <stages>
+      <li>
+        <label>stifled</label>
+        <minSeverity>0</minSeverity>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>-0.10</offset>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <label>choking</label>
+        <minSeverity>0.3</minSeverity>
+        <painOffset>0.08</painOffset>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>-0.30</offset>
+          </li>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.15</offset>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <label>suffocating</label>
+        <minSeverity>0.6</minSeverity>
+        <lifeThreatening>true</lifeThreatening>
+        <painOffset>0.18</painOffset>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>-0.55</offset>
+          </li>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.40</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>Strata_SporeSickness</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>spore sickness</label>
+    <description>Fungal spores in the lungs. Filters and scrubbers clear the air; untreated exposure brings feverish weakness and foul moods.</description>
+    <lethalSeverity>1.0</lethalSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <isBad>true</isBad>
+    <makesSickThought>true</makesSickThought>
+    <stages>
+      <li>
+        <label>itchy lungs</label>
+        <minSeverity>0</minSeverity>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>-0.05</offset>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <label>feverish</label>
+        <minSeverity>0.3</minSeverity>
+        <painOffset>0.08</painOffset>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>-0.15</offset>
+          </li>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.08</offset>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <label>racked</label>
+        <minSeverity>0.65</minSeverity>
+        <lifeThreatening>true</lifeThreatening>
+        <painOffset>0.20</painOffset>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>-0.35</offset>
+          </li>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.25</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>Strata_SteamScald</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>steam scald</label>
+    <description>Hot geothermal vapor burning skin and airways. It clears in cooler, ventilated air.</description>
+    <lethalSeverity>1.0</lethalSeverity>
+    <maxSeverity>1.0</maxSeverity>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <isBad>true</isBad>
+    <stages>
+      <li>
+        <label>hot</label>
+        <minSeverity>0</minSeverity>
+        <painOffset>0.05</painOffset>
+      </li>
+      <li>
+        <label>scalded</label>
+        <minSeverity>0.35</minSeverity>
+        <painOffset>0.18</painOffset>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.10</offset>
+          </li>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>-0.10</offset>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <label>badly burned</label>
+        <minSeverity>0.7</minSeverity>
+        <lifeThreatening>true</lifeThreatening>
+        <painOffset>0.35</painOffset>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.25</offset>
+          </li>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>-0.25</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+
 </Defs>

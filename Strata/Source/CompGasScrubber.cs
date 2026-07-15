@@ -13,6 +13,9 @@ namespace Strata
 
         public bool requiresPower = true;
 
+        // Optional O₂ top-up while scrubbing (black-damp scrubbers restore air).
+        public float restoreOxygenPerCycle;
+
         public CompProperties_GasScrubber()
         {
             compClass = typeof(CompGasScrubber);

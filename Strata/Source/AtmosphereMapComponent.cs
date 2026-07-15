@@ -418,6 +418,12 @@ namespace Strata
             // 7. Colonists breathe O₂ and exhale CO₂ on deep levels.
             ProcessBreathing();
 
+            // 7b. Black damp (and similar) displaces oxygen in the same room.
+            ProcessOxygenDisplacement();
+
+            // 7c. Geothermal geysers seep steam into their room.
+            ProcessGeyserSteam();
+
             // 8. Scrubbers pull CO₂ (and other configured gases) from enclosed rooms.
             ProcessScrubbers();
 
@@ -1086,6 +1092,67 @@ namespace Strata
             }
         }
 
+        private void ProcessOxygenDisplacement()
+        {
+            if (!BreathingActive() || clouds.Count == 0 || StrataGasDefOf.Strata_Oxygen == null)
+            {
+                return;
+            }
+            foreach (int id in clouds.Keys.ToList())
+            {
+                if (!clouds.TryGetValue(id, out Cloud c))
+                {
+                    continue;
+                }
+                Room room = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
+                if (room == null || room.UsesOutdoorTemperature)
+                {
+                    continue;
+                }
+                float displace = 0f;
+                foreach (StrataGasDef gas in Gases)
+                {
+                    if (gas.displacesOxygen <= 0f)
+                    {
+                        continue;
+                    }
+                    float density = c.density[gas.index];
+                    if (density >= gas.harmThreshold * 0.5f)
+                    {
+                        displace += gas.displacesOxygen * density;
+                    }
+                }
+                if (displace > 0f)
+                {
+                    ConsumeGasFromRoom(room, StrataGasDefOf.Strata_Oxygen, displace);
+                }
+            }
+        }
+
+        private void ProcessGeyserSteam()
+        {
+            if (StrataGasDefOf.Strata_Steam == null || !StrataMapUtility.IsUnderground(map))
+            {
+                return;
+            }
+            List<Thing> geysers = map.listerThings.ThingsOfDef(ThingDefOf.SteamGeyser);
+            if (geysers == null || geysers.Count == 0)
+            {
+                return;
+            }
+            for (int i = 0; i < geysers.Count; i++)
+            {
+                Thing geyser = geysers[i];
+                Room room = geyser.GetRoom();
+                if (room == null || room.UsesOutdoorTemperature)
+                {
+                    continue;
+                }
+                AddGasToRoom(room, StrataGasDefOf.Strata_Steam, 0.012f / Mathf.Max(room.CellCount, 1),
+                    geyser.Position);
+            }
+        }
+
         private void ProcessScrubbers()
         {
             if (Scrubbers.Count == 0)
@@ -1110,6 +1177,11 @@ namespace Strata
                 }
                 float remove = scrubber.Props.scrubPerCycle / Mathf.Max(room.CellCount, 1);
                 ConsumeGasFromRoom(room, gas, remove);
+                if (scrubber.Props.restoreOxygenPerCycle > 0f && StrataGasDefOf.Strata_Oxygen != null)
+                {
+                    float o2 = scrubber.Props.restoreOxygenPerCycle / Mathf.Max(room.CellCount, 1);
+                    AddGasToRoom(room, StrataGasDefOf.Strata_Oxygen, o2, scrubber.parent.Position, bypassCap: true);
+                }
             }
         }
 
@@ -1298,10 +1370,21 @@ namespace Strata
                     cloud.density[gas.index] = 0f;
                 }
             }
+            // After a burn, the room fills with black damp — oxygen-poor residue.
+            if (StrataGasDefOf.Strata_BlackDamp != null)
+            {
+                float residue = Mathf.Clamp(flammableTotal * 0.55f, 0.2f, 0.85f);
+                cloud.density[StrataGasDefOf.Strata_BlackDamp.index] =
+                    Mathf.Max(cloud.density[StrataGasDefOf.Strata_BlackDamp.index], residue);
+                if (StrataGasDefOf.Strata_Oxygen != null)
+                {
+                    cloud.density[StrataGasDefOf.Strata_Oxygen.index] *= 0.35f;
+                }
+            }
             Find.LetterStack.ReceiveLetter("Gas ignition",
                 $"A pocket of flammable gas has ignited on contact with {flame.LabelShort} and exploded. "
-                + "Keep open flames away from gas seeps, and vent gassy rooms before working in them - "
-                + "or mine by electric light.",
+                + "The blast leaves black damp in the room — ventilate and restore oxygen before sending people back. "
+                + "Keep open flames away from gas seeps, or mine by electric light.",
                 LetterDefOf.NegativeEvent, new TargetInfo(flame.Position, map));
         }
 

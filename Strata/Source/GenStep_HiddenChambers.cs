@@ -38,6 +38,8 @@ namespace Strata
                 {
                     CarveChamber(map, spot, Rand.Range(3.6f, 4.2f));
                     GenSpawn.Spawn(ThingDefOf.SteamGeyser, spot, map);
+                    AtmosphereMapComponent.QueueSeed(map, spot, StrataGasDefOf.Strata_Steam,
+                        Rand.Range(0.4f, 0.9f));
                     placed.Add(spot);
                 }
             }
@@ -57,10 +59,19 @@ namespace Strata
                 // Deeper pockets are pressurized well past one room-atmosphere:
                 // a breach floods more tunnel than the chamber's own volume.
                 float density = Mathf.Min(2.5f + 0.6f * depth + Rand.Value, 6f);
-                AtmosphereMapComponent.QueueSeed(map, spot, StrataGasDefOf.Strata_DeepGas, density);
-                if (Rand.Chance(0.6f))
+                // Mix foul deep gas with occasional buoyant methane pockets.
+                if (Rand.Chance(0.35f))
                 {
-                    GenSpawn.Spawn(StrataThingDefOf.Strata_DeepGasVent, spot, map);
+                    AtmosphereMapComponent.QueueSeed(map, spot, StrataGasDefOf.Strata_Methane,
+                        density * Rand.Range(0.45f, 0.85f));
+                }
+                else
+                {
+                    AtmosphereMapComponent.QueueSeed(map, spot, StrataGasDefOf.Strata_DeepGas, density);
+                    if (Rand.Chance(0.6f))
+                    {
+                        GenSpawn.Spawn(StrataThingDefOf.Strata_DeepGasVent, spot, map);
+                    }
                 }
                 placed.Add(spot);
             }

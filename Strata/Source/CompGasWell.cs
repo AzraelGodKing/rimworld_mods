@@ -20,6 +20,14 @@ namespace Strata
 
         public static ThingDef Strata_GasExchanger;
 
+        public static ThingDef Strata_MethaneFlare;
+
+        public static ThingDef Strata_BlackDampScrubber;
+
+        public static ThingDef Strata_SporeFilter;
+
+        public static ThingDef Strata_SteamCondenser;
+
         public static ThingDef Strata_StairsDown;
 
         public static ThingDef Strata_StairsUp;

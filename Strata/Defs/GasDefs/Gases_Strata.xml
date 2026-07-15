@@ -75,4 +75,67 @@
     <severityDecay>0.03</severityDecay>
   </Strata.StrataGasDef>
 
+  <!-- Firedamp: buoyant, highly flammable, little poison — shaft and ceiling risk. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Methane</defName>
+    <label>methane</label>
+    <overlayLabel>CH₄</overlayLabel>
+    <description>Light firedamp that gathers high in chambers and stairwell landings. Barely toxic, but it ignites at lower density than foul deep gas — electric light is the safe way to work where it seeps.</description>
+    <overlayColor>(0.55, 0.42, 0.12)</overlayColor>
+    <buoyant>true</buoyant>
+    <passiveLeak>0.01</passiveLeak>
+    <harmHediff>Strata_MethaneExposure</harmHediff>
+    <harmThreshold>0.55</harmThreshold>
+    <severityGain>0.003</severityGain>
+    <severityDecay>0.04</severityDecay>
+    <flammable>true</flammable>
+    <ignitionDensity>0.22</ignitionDensity>
+  </Strata.StrataGasDef>
+
+  <!-- Black damp: heavy, not flammable; displaces oxygen after fires and in low pits. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_BlackDamp</defName>
+    <label>black damp</label>
+    <overlayLabel>black damp</overlayLabel>
+    <description>Stale heavy air left after fires and gas explosions. It pools in pits, silently eats oxygen from the room, and suffocates without the warning of foul deep gas.</description>
+    <overlayColor>(0.08, 0.08, 0.10)</overlayColor>
+    <buoyant>false</buoyant>
+    <passiveLeak>0.005</passiveLeak>
+    <harmHediff>Strata_BlackDampExposure</harmHediff>
+    <harmThreshold>0.20</harmThreshold>
+    <severityGain>0.007</severityGain>
+    <severityDecay>0.028</severityDecay>
+    <displacesOxygen>0.004</displacesOxygen>
+  </Strata.StrataGasDef>
+
+  <!-- Fungal spores: slow illness, not explosive. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Spores</defName>
+    <label>fungal spores</label>
+    <overlayLabel>spores</overlayLabel>
+    <description>Airborne fungal spores from deep growths and fungus farms. They clog lungs and sour moods; cloth filters and scrubbers clear them.</description>
+    <overlayColor>(0.28, 0.48, 0.22)</overlayColor>
+    <buoyant>false</buoyant>
+    <passiveLeak>0.015</passiveLeak>
+    <harmHediff>Strata_SporeSickness</harmHediff>
+    <harmThreshold>0.14</harmThreshold>
+    <severityGain>0.005</severityGain>
+    <severityDecay>0.022</severityDecay>
+  </Strata.StrataGasDef>
+
+  <!-- Geothermal steam: buoyant heat, mild scald. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Steam</defName>
+    <label>steam</label>
+    <overlayLabel>steam</overlayLabel>
+    <description>Hot vapor from geothermal vents and geysers. It rises through shafts, scalds in thick clouds, and clears with condensers or open ventilation.</description>
+    <overlayColor>(0.55, 0.62, 0.70)</overlayColor>
+    <buoyant>true</buoyant>
+    <passiveLeak>0.04</passiveLeak>
+    <harmHediff>Strata_SteamScald</harmHediff>
+    <harmThreshold>0.25</harmThreshold>
+    <severityGain>0.008</severityGain>
+    <severityDecay>0.05</severityDecay>
+  </Strata.StrataGasDef>
+
 </Defs>

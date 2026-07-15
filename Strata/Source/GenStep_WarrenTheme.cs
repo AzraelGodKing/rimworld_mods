@@ -69,12 +69,30 @@ namespace Strata
                 AtmosphereMapComponent.QueueSeed(map, gasChamber, StrataGasDefOf.Strata_DeepGas,
                     Rand.Range(0.25f, 0.75f));
             }
+            // Fungal warrens always carry a spore haze in deeper chambers.
+            for (int i = 1; i < chambers.Count; i++)
+            {
+                if (Rand.Chance(0.55f))
+                {
+                    AtmosphereMapComponent.QueueSeed(map, chambers[i], StrataGasDefOf.Strata_Spores,
+                        Rand.Range(0.2f, 0.65f));
+                }
+            }
         }
 
         private static void ApplyFlooded(Map map, List<IntVec3> chambers)
         {
             TerrainDef shallow = TerrainDef.Named("WaterShallow");
             TerrainDef mud = TerrainDef.Named("Mud");
+            // Stale low pits pool black damp after long flooding.
+            for (int i = 1; i < chambers.Count; i++)
+            {
+                if (Rand.Chance(0.5f))
+                {
+                    AtmosphereMapComponent.QueueSeed(map, chambers[i], StrataGasDefOf.Strata_BlackDamp,
+                        Rand.Range(0.25f, 0.7f));
+                }
+            }
             if (shallow == null && mud == null)
             {
                 return;
@@ -138,6 +156,11 @@ namespace Strata
                 {
                     AtmosphereMapComponent.QueueSeed(map, chambers[i], StrataGasDefOf.Strata_DeepGas,
                         Rand.Range(0.8f, 2.2f));
+                }
+                if (Rand.Chance(0.4f))
+                {
+                    AtmosphereMapComponent.QueueSeed(map, chambers[i], StrataGasDefOf.Strata_Steam,
+                        Rand.Range(0.3f, 0.9f));
                 }
             }
         }

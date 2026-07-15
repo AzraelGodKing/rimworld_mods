@@ -231,11 +231,18 @@ namespace Strata
             // Pillar 1: the living deep.
             Check("gas defs loaded",
                 StrataGasDefOf.Strata_Smoke != null && StrataGasDefOf.Strata_DeepGas != null
-                && StrataGasDefOf.Strata_Oxygen != null && StrataGasDefOf.Strata_CarbonDioxide != null);
+                && StrataGasDefOf.Strata_Oxygen != null && StrataGasDefOf.Strata_CarbonDioxide != null
+                && StrataGasDefOf.Strata_Methane != null && StrataGasDefOf.Strata_BlackDamp != null
+                && StrataGasDefOf.Strata_Spores != null && StrataGasDefOf.Strata_Steam != null);
             Check("smoke rises, deep gas pools",
                 StrataGasDefOf.Strata_Smoke.buoyant && !StrataGasDefOf.Strata_DeepGas.buoyant);
             Check("O₂ rises, CO₂ sinks",
                 StrataGasDefOf.Strata_Oxygen.buoyant && !StrataGasDefOf.Strata_CarbonDioxide.buoyant);
+            Check("methane rises, black damp pools",
+                StrataGasDefOf.Strata_Methane.buoyant && !StrataGasDefOf.Strata_BlackDamp.buoyant
+                && StrataGasDefOf.Strata_Steam.buoyant && !StrataGasDefOf.Strata_Spores.buoyant);
+            Check("black damp displaces oxygen",
+                StrataGasDefOf.Strata_BlackDamp.displacesOxygen > 0f);
             Check("O₂ hypoxia and CO₂ harm defs",
                 StrataGasDefOf.Strata_Oxygen.harmWhenBelow
                 && StrataGasDefOf.Strata_Oxygen.harmHediff != null
@@ -244,6 +251,11 @@ namespace Strata
                 StrataThingDefOf.Strata_OxygenPump != null
                 && StrataThingDefOf.Strata_CO2Pump != null
                 && StrataThingDefOf.Strata_GasExchanger != null);
+            Check("mine atmosphere counters loaded",
+                StrataThingDefOf.Strata_MethaneFlare != null
+                && StrataThingDefOf.Strata_BlackDampScrubber != null
+                && StrataThingDefOf.Strata_SporeFilter != null
+                && StrataThingDefOf.Strata_SteamCondenser != null);
             Check("canary cage loaded", StrataThingDefOf.Strata_CanaryCage != null);
             Check("bird cage loaded", StrataThingDefOf.Strata_BirdCage != null);
             Check("mine canary loaded", StrataPawnKindDefOf.Strata_Canary != null);

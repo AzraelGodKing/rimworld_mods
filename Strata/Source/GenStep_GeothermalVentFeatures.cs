@@ -32,6 +32,8 @@ namespace Strata
                 if (TryFindStandable(map, chamber, out IntVec3 cell))
                 {
                     GenSpawn.Spawn(ThingDefOf.SteamGeyser, cell, map);
+                    AtmosphereMapComponent.QueueSeed(map, cell, StrataGasDefOf.Strata_Steam,
+                        Rand.Range(0.45f, 1.1f));
                 }
             }
 
@@ -39,8 +41,16 @@ namespace Strata
             for (int i = 0; i < gasPockets; i++)
             {
                 IntVec3 chamber = chambers[Rand.RangeInclusive(1, chambers.Count - 1)];
-                AtmosphereMapComponent.QueueSeed(map, chamber, StrataGasDefOf.Strata_DeepGas,
-                    Rand.Range(1.2f, 3.5f));
+                if (Rand.Chance(0.4f))
+                {
+                    AtmosphereMapComponent.QueueSeed(map, chamber, StrataGasDefOf.Strata_Methane,
+                        Rand.Range(0.8f, 2.4f));
+                }
+                else
+                {
+                    AtmosphereMapComponent.QueueSeed(map, chamber, StrataGasDefOf.Strata_DeepGas,
+                        Rand.Range(1.2f, 3.5f));
+                }
             }
         }
 

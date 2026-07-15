@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
+  <ResearchTabDef>
+    <defName>Strata</defName>
+    <label>Strata</label>
+    <generalTitle>Underground research</generalTitle>
+    <generalDescription>Excavation, shafts, ventilation, life support, and the fouler airs of the deep.</generalDescription>
+  </ResearchTabDef>
+
   <ResearchProjectDef>
     <defName>Strata_DiggingDown</defName>
     <label>digging down</label>
     <description>Basic shoring and stair-cutting to open the first basement beneath your colony — one full level of solid rock the same size as the map above.</description>
     <baseCost>600</baseCost>
     <techLevel>Medieval</techLevel>
-    <researchViewX>5.25</researchViewX>
-    <researchViewY>4.40</researchViewY>
+    <tab>Strata</tab>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>1.60</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -17,11 +25,12 @@
     <description>Surveying and reinforcement techniques for carving stable living space below the first basement — opening B2 and every level deeper.</description>
     <baseCost>800</baseCost>
     <techLevel>Medieval</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Strata_DiggingDown</li>
     </prerequisites>
-    <researchViewX>6.75</researchViewX>
-    <researchViewY>4.40</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>1.60</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -30,12 +39,13 @@
     <description>Powered elevator cars for moving colonists between levels in a compact shaft - faster and tidier than a cut stairwell, at the cost of a power hookup.</description>
     <baseCost>1600</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Strata_Excavation</li>
       <li>Electricity</li>
     </prerequisites>
-    <researchViewX>7.50</researchViewX>
-    <researchViewY>4.40</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>1.60</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -44,11 +54,12 @@
     <description>Powered fans and impellers for moving air where it will not move itself: one-way exhaust fans that pull smoke out of a room, and updraft filters that drive fumes up an excavated shaft like a chimney stack.</description>
     <baseCost>700</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Electricity</li>
     </prerequisites>
-    <researchViewX>7.50</researchViewX>
-    <researchViewY>3.60</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>0.40</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -57,11 +68,12 @@
     <description>Powered oxygen pumps for sealed rooms, CO₂ pumps that scrub exhaled waste from the air, and shaft gas exchangers that actively drive breathable air up a stairwell while pulling carbon dioxide down — the plumbing deep colonies need once colonists start living below the surface.</description>
     <baseCost>900</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Strata_Ventilation</li>
     </prerequisites>
-    <researchViewX>9.00</researchViewX>
-    <researchViewY>2.80</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -70,11 +82,12 @@
     <description>Wellheads and pressure canisters for capping the gas vents found in deep rock - turning a toxic, explosive seep into generator fuel that burns with no smoke at all.</description>
     <baseCost>1200</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Strata_Ventilation</li>
     </prerequisites>
-    <researchViewX>9.00</researchViewX>
-    <researchViewY>3.60</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>0.80</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -83,12 +96,13 @@
     <description>Armored power junctions that carry electricity up and down an excavated shaft, letting a surface grid feed the levels below (and the reverse).</description>
     <baseCost>1400</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Strata_Excavation</li>
       <li>Electricity</li>
     </prerequisites>
-    <researchViewX>7.50</researchViewX>
-    <researchViewY>5.20</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>2.40</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -97,11 +111,12 @@
     <description>Build shaft fluid junctions that meter water, coolant, heating, and gas between levels without merging pipe networks across maps. Only junction types for your loaded pipe mods appear in the architect menu.</description>
     <baseCost>1200</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Strata_ShaftPower</li>
     </prerequisites>
-    <researchViewX>9.00</researchViewX>
-    <researchViewY>5.20</researchViewY>
+    <researchViewX>4.50</researchViewX>
+    <researchViewY>2.40</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -110,11 +125,12 @@
     <description>Timber and stone pillars that brace excavated ceilings against cave-ins. Place them through wide chambers before the rock decides to come down on its own.</description>
     <baseCost>700</baseCost>
     <techLevel>Medieval</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Strata_DiggingDown</li>
     </prerequisites>
-    <researchViewX>5.25</researchViewX>
-    <researchViewY>5.00</researchViewY>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>2.40</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -123,11 +139,12 @@
     <description>Hand-cranked shaft bellows and lime scrubbers — low-tech ways to keep stale air moving and pull carbon dioxide out of sealed rooms without electricity.</description>
     <baseCost>500</baseCost>
     <techLevel>Medieval</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Strata_DiggingDown</li>
     </prerequisites>
-    <researchViewX>6.00</researchViewX>
-    <researchViewY>5.00</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>2.40</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -136,11 +153,12 @@
     <description>Gas airlocks, ore skips, sump pumps, and safe electric mine lamps — the industrial kit for living and working far below the surface.</description>
     <baseCost>1000</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Strata_Ventilation</li>
     </prerequisites>
-    <researchViewX>8.25</researchViewX>
-    <researchViewY>3.60</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>1.20</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -149,11 +167,26 @@
     <description>Dark fungus farms that grow edible mushrooms in sealed underground rooms, trading a little carbon dioxide for breathable oxygen.</description>
     <baseCost>900</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
     <prerequisites>
       <li>Strata_LifeSupport</li>
     </prerequisites>
-    <researchViewX>10.50</researchViewX>
-    <researchViewY>2.80</researchViewY>
+    <researchViewX>4.50</researchViewX>
+    <researchViewY>0.00</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Strata_MineAtmosphere</defName>
+    <label>mine atmosphere</label>
+    <description>Gear for the fouler airs of the deep: methane flares for buoyant firedamp, black-damp scrubbers that restore oxygen after fires, spore filters for fungal haze, and steam condensers for geothermal chambers.</description>
+    <baseCost>1000</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
+    <prerequisites>
+      <li>Strata_LifeSupport</li>
+    </prerequisites>
+    <researchViewX>4.50</researchViewX>
+    <researchViewY>0.80</researchViewY>
   </ResearchProjectDef>
 
 </Defs>

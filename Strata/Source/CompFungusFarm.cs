@@ -16,6 +16,8 @@ namespace Strata
 
         public float o2PerCycle = 0.0015f;
 
+        public float sporesPerCycle = 0.0008f;
+
         public CompProperties_FungusFarm()
         {
             compClass = typeof(CompFungusFarm);
@@ -30,6 +32,18 @@ namespace Strata
         public override void CompTick()
         {
             base.CompTick();
+            // Slow spore seep while the bed is actively growing.
+            if (parent.IsHashIntervalTick(250) && CanGrow()
+                && StrataGasDefOf.Strata_Spores != null && Props.sporesPerCycle > 0f)
+            {
+                Room sporeRoom = parent.GetRoom();
+                if (sporeRoom != null && !sporeRoom.UsesOutdoorTemperature)
+                {
+                    parent.Map.GetComponent<AtmosphereMapComponent>()
+                        ?.AddGasToRoomPublic(sporeRoom, StrataGasDefOf.Strata_Spores, Props.sporesPerCycle,
+                            parent.Position);
+                }
+            }
             if (!parent.IsHashIntervalTick(Props.produceIntervalTicks))
             {
                 return;

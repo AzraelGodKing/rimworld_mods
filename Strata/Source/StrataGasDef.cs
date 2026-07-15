@@ -41,6 +41,10 @@ namespace Strata
         // A gas well can pump it out of a deep vent.
         public bool extractable;
 
+        // When density is above harmThreshold, each cycle removes this much
+        // oxygen from the same room (black damp displacing breathable air).
+        public float displacesOxygen;
+
         // Throw vanilla smoke puffs in thick clouds (smoke only; other gases
         // read through the overlay instead).
         public bool throwsMotes;
@@ -57,6 +61,14 @@ namespace Strata
         public static StrataGasDef Strata_Oxygen;
 
         public static StrataGasDef Strata_CarbonDioxide;
+
+        public static StrataGasDef Strata_Methane;
+
+        public static StrataGasDef Strata_BlackDamp;
+
+        public static StrataGasDef Strata_Spores;
+
+        public static StrataGasDef Strata_Steam;
 
         static StrataGasDefOf()
         {
