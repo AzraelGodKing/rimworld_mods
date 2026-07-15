@@ -109,72 +109,20 @@ namespace Strata
         // Cheap, conservative "is there plausibly work for this pawn over there?"
         // checks. Deliberately approximate: a false positive just costs a walk
         // down the stairs, and the cooldown stops it from repeating.
-        public static bool HasWorkFor(Pawn pawn, Map map)
-        {
-            Pawn_WorkSettings work = pawn.workSettings;
-            if (work == null || !work.EverWork)
-            {
-                return StrataPawnUtility.IsMiscRobot(pawn)
-                    && StrataPawnUtility.MiscRobotHasWorkOn(pawn, map);
-            }
+        // Mods can extend via WorkRelaySignals.RegisterWorkProbe.
+        public static bool HasWorkFor(Pawn pawn, Map map) => WorkRelaySignals.HasWorkFor(pawn, map);
 
-            bool Active(WorkTypeDef type) => type != null && work.WorkIsActive(type);
+        /// <summary>Mods: see <see cref="WorkRelaySignals.RegisterWorkProbe"/>.</summary>
+        public static void RegisterWorkProbe(WorkRelaySignals.WorkProbe probe)
+            => WorkRelaySignals.RegisterWorkProbe(probe);
 
-            if (Active(WorkTypeDefOf.Construction))
-            {
-                if (AnyPlayerThing(map, ThingRequestGroup.Blueprint) || AnyPlayerThing(map, ThingRequestGroup.BuildingFrame))
-                {
-                    return true;
-                }
-                if (map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.Deconstruct)
-                    || map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.SmoothWall)
-                    || map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.SmoothFloor))
-                {
-                    return true;
-                }
-            }
+        /// <summary>Mods: see <see cref="WorkRelaySignals.UnregisterWorkProbe"/>.</summary>
+        public static void UnregisterWorkProbe(WorkRelaySignals.WorkProbe probe)
+            => WorkRelaySignals.UnregisterWorkProbe(probe);
 
-            if (Active(StrataDefOf.Mining)
-                && map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.Mine))
-            {
-                return true;
-            }
-
-            if (Active(StrataDefOf.PlantCutting)
-                && (map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.CutPlant)
-                    || map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.HarvestPlant)))
-            {
-                return true;
-            }
-
-            if (Active(WorkTypeDefOf.Hauling)
-                && map.listerHaulables.ThingsPotentiallyNeedingHauling().Count > 0)
-            {
-                return true;
-            }
-
-            foreach (Building building in map.listerBuildings.allBuildingsColonist)
-            {
-                if (building is not IBillGiver billGiver || billGiver.BillStack == null
-                    || !billGiver.BillStack.AnyShouldDoNow)
-                {
-                    continue;
-                }
-                foreach (Bill bill in billGiver.BillStack)
-                {
-                    if (!bill.ShouldDoNow() || !BillIngredientUtility.PawnCanDoBill(pawn, bill))
-                    {
-                        continue;
-                    }
-                    if (BillIngredientUtility.CanStartOnMap(bill, building, map, pawn))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
+        /// <summary>Mods: see <see cref="WorkRelaySignals.RegisterWorkSeekingJobGiverMarker"/>.</summary>
+        public static void RegisterWorkSeekingJobGiverMarker(string typeNameContains)
+            => WorkRelaySignals.RegisterWorkSeekingJobGiverMarker(typeNameContains);
 
         public static bool HasFoodFor(Pawn pawn, Map map)
         {
@@ -287,19 +235,6 @@ namespace Strata
                             return true;
                         }
                     }
-                }
-            }
-            return false;
-        }
-
-        private static bool AnyPlayerThing(Map map, ThingRequestGroup group)
-        {
-            List<Thing> things = map.listerThings.ThingsInGroup(group);
-            for (int i = 0; i < things.Count; i++)
-            {
-                if (things[i].Faction == Faction.OfPlayer)
-                {
-                    return true;
                 }
             }
             return false;

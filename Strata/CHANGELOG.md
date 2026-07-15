@@ -4,6 +4,12 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Added — Work relay coverage
+- **Broader work-relay signals** — growing/sowing & harvestable grow zones, cleaning, firefighting, hunting, research benches, warden (hungry/recruitable/injured prisoners), animal handling (tame/slaughter/training/hungry animals), flick designations, and childcare needs, in addition to construction/mining/plant-cut/hauling/bills.
+- **Mod extension API** — `PawnRelay.RegisterWorkProbe` / `UnregisterWorkProbe` for custom “has work on this map?” checks; `RegisterWorkSeekingJobGiverMarker` so mods with their own `JobGiver` (not `JobGiver_Work`) opt into cross-level work relay via `Patch_ExternalJobGiverRelay`.
+- **Misc. Robots** — broader work detection (farm/mine/construct/fire/omni) using the same signals.
+- **Escape through shafts** — when vanilla exit-map AI has no map edge (underground levels), prisoners, slaves, guests, and other flee jobs take unsealed stairwells/elevators toward the surface on their own — so prison breaks and slave escapes keep working without escorts. Sealed shafts still block them. Colony work relays stay closed to **prisoners**; **slaves** commute for work/food/rest like colonists.
+
 ### Added — Pillars 4–5 (Away Into the Dark / Living Below)
 - **Medical & joy relays** — patients and doctors commute to linked levels with medical beds or tending work; recreation-starved colonists seek joy food or recreation buildings elsewhere (cap 2, toggles in mod settings).
 - **Level roles** — assign Freezer, Barracks, Workshop, Hospital, or Storage per level in the Levels tab; relays softly prefer matching roles.

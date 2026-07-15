@@ -32,7 +32,7 @@ stairwells (a level with pawns on it will not be deleted).
 | System | Short version |
 | --- | --- |
 | **Levels** | Build an excavated stairwell → a solid-rock level the size of the map above opens below, stacked exactly beneath it. Keep going deeper. A second shaft on the same floor joins the SAME level below. |
-| **Fluidity** | Colonists relay themselves between floors for work, food, rest, hauling, construction materials, and rituals. You designate; they commute. |
+| **Fluidity** | Colonists relay themselves between floors for work, food, rest, medical, joy, hauling, construction materials, and rituals. Work relay covers growing, cleaning, firefighting, hunting, research, warden, handling, and bills — mods can register extra probes. You designate; they commute. |
 | **Logistics** | Stockpile priority works across the whole column. Blueprints pull missing materials from other levels. The build menu and (optional) resource readout see the whole colony. |
 | **Power** | Stairwells and elevators tie the levels' grids (demand-driven, both directions). The shaft conduit gives a dedicated tie point and extends its own lower junction. |
 | **Atmosphere** | A multi-gas room simulation. Burners emit smoke that pools, flows through doors and vents, and chokes unventilated rooms; foul deep gas seeps from breached pockets, pools where it leaks, poisons, and **explodes on open flame**. Any working outlet guarantees a room stays safe — every ventilation tool works on every gas. Tribal-tech smoke hole included. |
