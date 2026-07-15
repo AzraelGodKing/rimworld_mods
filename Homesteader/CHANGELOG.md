@@ -5,13 +5,14 @@ All notable changes to Homesteader are documented here.
 ## [Unreleased]
 
 ### Changed
-- **Diggo the plushie** — updated hippo-dog sprite art.
+- Renamed **shark plushie** to **Sharkira the plushie** (in-game label and docs).
+- **Diggo the plushie** — updated hippo-dog sprite art; docs page image refreshed to match. Build cost lowered to **20 cloth** (same as Sharkira).
 - GitHub Pages catalog (`docs/homesteader.html`) updated with shark plushie, 27 monuments/statues, orchard pantry cards, and a full food item table.
 
 ### Added
 - **27 monuments (two styles):** build either a golden or a harvest-stone statue of the number 27. Both share the same aura — colonists within range gain +27 mood — so you pick the look that fits your yard. Unlocked with homestead comforts research; golden costs gold and granite, harvest costs granite and hay.
 - **27 statue + grand 27 statue:** gilded dripping-27 sculptures on vanilla-style stone plinths (1×1 and 2×2). Quality-scaled beauty via `FurnitureWithQualityBase`; +27 mood aura to pawns in range (same reach as the monuments).
-- **Shark plushie:** a chonky stuffed shark sewn from cloth. Same comforts as Diggo — high beauty (scales with quality), sittable, and cuddling for meditative recreation. Buildable from the start; homestead supplier caravans occasionally carry one.
+- **Sharkira the plushie:** a chonky stuffed shark sewn from cloth. Same comforts as Diggo — high beauty (scales with quality), sittable, and cuddling for meditative recreation. Buildable from the start; homestead supplier caravans occasionally carry one.
 
 ### Changed
 - Regenerated orchard and beeswax sprites (maple sap, maple syrup, raw apples, raw cherries, beeswax, beeswax candle) to match the painterly Homesteader art style with proper transparent backgrounds.
