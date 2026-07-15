@@ -120,6 +120,25 @@
     </comps>
   </ThingDef>
 
+  <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="OskarPotocki.VanillaFactionsExpanded.Core,VanillaExpanded.VChemfuelE">
+    <defName>Strata_ShaftFluid_VefChemfuel</defName>
+    <label>shaft chemfuel junction</label>
+    <description>Meters Vanilla Chemfuel Expanded pipe networks between levels. Build beside a shaft and wire chemfuel pipes to this junction on each floor.</description>
+    <designationCategory>VCHE_PipeNetworks</designationCategory>
+    <uiIconPath>Things/Building/Linked/ChemfuelPipes_MenuIcon</uiIconPath>
+    <uiIconScale>1</uiIconScale>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+      <li>VCHE_ChemfuelProduction</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>vef_chemfuel</channel>
+      </li>
+    </comps>
+  </ThingDef>
+
   <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="Dubwise.Rimefeller">
     <defName>Strata_ShaftFluid_RimefellerCrude</defName>
     <label>shaft crude-oil junction</label>

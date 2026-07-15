@@ -116,13 +116,7 @@ namespace Strata
         // support distance of the surrounding rock - no collapse on discovery.
         private static void CarveChamber(Map map, IntVec3 center, float radius)
         {
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, radius, useCenter: true))
-            {
-                if (cell.InBounds(map))
-                {
-                    cell.GetFirstMineable(map)?.Destroy(DestroyMode.Vanish);
-                }
-            }
+            ChamberCarveUtility.CarveCircle(map, center, radius);
         }
     }
 

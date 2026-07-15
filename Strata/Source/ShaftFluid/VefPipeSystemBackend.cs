@@ -56,9 +56,9 @@ namespace Strata
         public override string Label { get; }
 
         public override bool IsActive =>
-            ModsConfig.IsActive("VanillaExpanded.HelixienGas")
-            && ModsConfig.IsActive("OskarPotocki.VanillaFactionsExpanded.Core")
-            && TryBind();
+            ModsConfig.IsActive("OskarPotocki.VanillaFactionsExpanded.Core")
+            && TryBind()
+            && GetNetDef() != null;
 
         public override object GetNetFromJunction(Thing junction)
         {

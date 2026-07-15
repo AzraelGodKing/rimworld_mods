@@ -45,6 +45,7 @@ namespace Strata
         private const float HeaderHeight = 26f;
         private const float ViewButtonWidth = 64f;
         private const float RenameButtonWidth = 72f;
+        private const float RoleButtonWidth = 72f;
 
         private readonly List<Row> rows = new List<Row>();
 
@@ -62,7 +63,7 @@ namespace Strata
         {
             get
             {
-                Vector2 computed = new Vector2(640f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
+                Vector2 computed = new Vector2(720f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
                 return savedSize == Vector2.zero
                     ? computed
                     : new Vector2(Mathf.Max(savedSize.x, 420f), Mathf.Max(savedSize.y, 120f));
@@ -122,7 +123,7 @@ namespace Strata
             Widgets.Label(new Rect(header.x + colLevel + 4f, header.y, colColonists - 8f, HeaderHeight), "Level");
             Widgets.Label(new Rect(header.x + colColonists, header.y, colHostiles - colColonists, HeaderHeight), "Colonists");
             Widgets.Label(new Rect(header.x + colHostiles, header.y, colTemp - colHostiles, HeaderHeight), "Hostiles");
-            Widgets.Label(new Rect(header.x + colTemp, header.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth, HeaderHeight), "Temp");
+            Widgets.Label(new Rect(header.x + colTemp, header.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, HeaderHeight), "Temp");
             GUI.color = Color.white;
             Widgets.DrawLineHorizontal(inRect.x, header.yMax - 2f, inRect.width);
 
@@ -150,6 +151,13 @@ namespace Strata
 
                 Text.Anchor = TextAnchor.MiddleLeft;
                 Widgets.Label(new Rect(rowRect.x + 4f, rowRect.y, colColonists - 8f, RowHeight), LevelLabel(row));
+                if (StrataMod.Settings?.showLevelPerfInTab == true)
+                {
+                    string perf = StrataLevelPerfUtility.IsHibernating(row.map)
+                        ? "hibernating"
+                        : StrataLevelPerfUtility.PawnCount(row.map) + " pawns";
+                    Widgets.Label(new Rect(rowRect.x + colColonists * 0.55f, rowRect.y, colColonists * 0.45f, RowHeight), perf);
+                }
                 Widgets.Label(new Rect(rowRect.x + colColonists, rowRect.y, colHostiles - colColonists, RowHeight),
                     row.map.mapPawns.FreeColonistsSpawnedCount.ToString());
                 int hostiles = HostileCount(row.map);
@@ -157,10 +165,16 @@ namespace Strata
                 Widgets.Label(new Rect(rowRect.x + colHostiles, rowRect.y, colTemp - colHostiles, RowHeight),
                     hostiles.ToString());
                 GUI.color = Color.white;
-                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth, RowHeight),
+                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, RowHeight),
                     row.map.mapTemperature.OutdoorTemp.ToStringTemperature("F0"));
                 Text.Anchor = TextAnchor.UpperLeft;
 
+                Rect roleRect = new Rect(rowRect.xMax - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, rowRect.y + 3f, RoleButtonWidth - 4f, RowHeight - 6f);
+                LevelRole role = LevelRoleUtility.GetRole(row.map);
+                if (Widgets.ButtonText(roleRect, LevelRoleUtility.Label(role)))
+                {
+                    LevelRoleUtility.SetRole(row.map, NextRole(role));
+                }
                 Rect renameRect = new Rect(rowRect.xMax - ViewButtonWidth - RenameButtonWidth, rowRect.y + 3f, RenameButtonWidth - 4f, RowHeight - 6f);
                 if (Widgets.ButtonText(renameRect, "Rename"))
                 {
@@ -171,13 +185,30 @@ namespace Strata
                 {
                     JumpTo(row.map);
                 }
-                if (Widgets.ButtonInvisible(new Rect(rowRect.x, rowRect.y, rowRect.width - ViewButtonWidth - RenameButtonWidth, RowHeight)))
+                if (Widgets.ButtonInvisible(new Rect(rowRect.x, rowRect.y, rowRect.width - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, RowHeight)))
                 {
                     JumpTo(row.map);
                 }
                 y += RowHeight;
             }
             Widgets.EndScrollView();
+        }
+
+        private static LevelRole NextRole(LevelRole role)
+        {
+            bool found = false;
+            foreach (LevelRole candidate in LevelRoleUtility.AllRolesInOrder())
+            {
+                if (found)
+                {
+                    return candidate;
+                }
+                if (candidate == role)
+                {
+                    found = true;
+                }
+            }
+            return LevelRole.None;
         }
 
         private static string LevelLabel(Row row)

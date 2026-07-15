@@ -44,6 +44,7 @@ namespace Strata
         public readonly HashSet<CompSmokeUpdraft> Updrafts = new HashSet<CompSmokeUpdraft>();
         public readonly HashSet<CompGasExchanger> GasExchangers = new HashSet<CompGasExchanger>();
         public readonly HashSet<CompGasScrubber> Scrubbers = new HashSet<CompGasScrubber>();
+        public readonly HashSet<CompGasAirlock> GasSeals = new HashSet<CompGasAirlock>();
 
         // Rooms holding flammable gas AND an open flame - refreshed each cycle
         // for the alert (imminent-ignition warning).
@@ -560,6 +561,10 @@ namespace Strata
                     {
                         continue;
                     }
+                    if (CellHasSealedGasAirlock(borderCell))
+                    {
+                        continue;
+                    }
                     Building opening = null;
                     bool isVent = false;
                     Building_Door door = borderCell.GetDoor(map);
@@ -778,6 +783,30 @@ namespace Strata
                 return true;
             }
             return false;
+        }
+
+        // Combined harmful-gas worry in a room (for sister-mod bridges).
+        public float TotalHarmfulLoad(Room room)
+        {
+            if (room == null)
+            {
+                return 0f;
+            }
+            float total = 0f;
+            List<StrataGasDef> gases = Gases;
+            for (int g = 0; g < gases.Count; g++)
+            {
+                StrataGasDef gas = gases[g];
+                if (gas.harmHediff == null)
+                {
+                    continue;
+                }
+                float density = DensityInRoom(room, gas);
+                total += gas.harmWhenBelow
+                    ? Mathf.Max(0f, gas.harmThreshold - density)
+                    : density;
+            }
+            return total;
         }
 
         // Draw the gas overlay while the play-settings toggle is on.
@@ -1092,6 +1121,23 @@ namespace Strata
             }
             cloud.density[gas.index] = Mathf.Max(0f, cloud.density[gas.index] - amount);
             CullOrStore(room.ID, cloud);
+        }
+
+        internal void ConsumeGasFromRoomPublic(Room room, StrataGasDef gas, float amount)
+        {
+            ConsumeGasFromRoom(room, gas, amount);
+        }
+
+        internal void AddGasToRoomPublic(Room room, StrataGasDef gas, float amount, IntVec3 sample)
+        {
+            AddGasToRoom(room, gas, amount, sample);
+        }
+
+        private bool CellHasSealedGasAirlock(IntVec3 cell)
+        {
+            Building building = cell.GetEdifice(map);
+            CompGasAirlock seal = building?.GetComp<CompGasAirlock>();
+            return seal != null && seal.IsSealed;
         }
 
         private void AddGasToRoom(Room room, StrataGasDef gas, float amount, IntVec3 sample, bool bypassCap = false)

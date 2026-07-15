@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Collapsed mine ============ -->
+  <SitePartDef>
+    <defName>Strata_CollapsedMine</defName>
+    <label>collapsed mine</label>
+    <description>An abandoned mine whose upper workings have caved in, leaving a weathered timber entrance over cold tunnels below. Scavengers and insects nest in the dark, and old ore carts still hold salvage.</description>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <wantsThreatPoints>true</wantsThreatPoints>
+    <badEvenIfNoMap>false</badEvenIfNoMap>
+  </SitePartDef>
+
+  <GenStepDef>
+    <defName>Strata_CollapsedMineEntrance</defName>
+    <linkWithSite>Strata_CollapsedMine</linkWithSite>
+    <order>750</order>
+    <genStep Class="Strata.GenStep_QuestSiteEntrance">
+      <stairsDef>Strata_MineStairsDown</stairsDef>
+      <shellBlocks>BlocksWoodLog</shellBlocks>
+      <shellFillChance>0.45</shellFillChance>
+      <rubbleCount>6</rubbleCount>
+    </genStep>
+  </GenStepDef>
+
+  <MapGeneratorDef>
+    <defName>Strata_CollapsedMineLevel</defName>
+    <isUnderground>true</isUnderground>
+    <roofDef>RoofRockThick</roofDef>
+    <disableShadows>true</disableShadows>
+    <renderWorld>false</renderWorld>
+    <pocketMapProperties>
+      <biome>Strata_Underground</biome>
+      <temperature>8</temperature>
+      <destroyOnParentMapAbandoned>true</destroyOnParentMapAbandoned>
+      <canBeCleaned>true</canBeCleaned>
+    </pocketMapProperties>
+    <genSteps>
+      <li>Strata_SolidRock</li>
+      <li>Strata_CarveWarren</li>
+      <li>Strata_WarrenTheme_Fungal</li>
+      <li>Strata_MineWarrenOccupants</li>
+      <li>Strata_PlaceCaveExit</li>
+    </genSteps>
+  </MapGeneratorDef>
+
+  <!-- ============ Sealed vault ============ -->
+  <SitePartDef>
+    <defName>Strata_SealedVault</defName>
+    <label>sealed vault</label>
+    <description>An ancient subterranean vault whose surface hatch has been exposed by erosion. Vast chambers lie frozen behind failing seals, guarded by dormant machines — or whatever moved in after the power died.</description>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <wantsThreatPoints>true</wantsThreatPoints>
+    <badEvenIfNoMap>false</badEvenIfNoMap>
+  </SitePartDef>
+
+  <GenStepDef>
+    <defName>Strata_SealedVaultEntrance</defName>
+    <linkWithSite>Strata_SealedVault</linkWithSite>
+    <order>750</order>
+    <genStep Class="Strata.GenStep_QuestSiteEntrance">
+      <stairsDef>Strata_VaultStairsDown</stairsDef>
+      <shellFillChance>0.75</shellFillChance>
+      <rubbleCount>3</rubbleCount>
+    </genStep>
+  </GenStepDef>
+
+  <MapGeneratorDef>
+    <defName>Strata_SealedVaultLevel</defName>
+    <isUnderground>true</isUnderground>
+    <roofDef>RoofRockThick</roofDef>
+    <disableShadows>true</disableShadows>
+    <renderWorld>false</renderWorld>
+    <pocketMapProperties>
+      <biome>Strata_Underground</biome>
+      <temperature>10</temperature>
+      <destroyOnParentMapAbandoned>true</destroyOnParentMapAbandoned>
+      <canBeCleaned>true</canBeCleaned>
+    </pocketMapProperties>
+    <genSteps>
+      <li>Strata_SolidRock</li>
+      <li>Strata_CarveVault</li>
+      <li>Strata_WarrenTheme_Frozen</li>
+      <li>Strata_VaultOccupants</li>
+      <li>Strata_PlaceCaveExit</li>
+    </genSteps>
+  </MapGeneratorDef>
+
+  <!-- ============ Geothermal vent ============ -->
+  <SitePartDef>
+    <defName>Strata_GeothermalVent</defName>
+    <label>geothermal vent</label>
+    <description>A steaming fissure in the ground marks a breach into hot geothermal workings below. Steam geysers and foul gas pockets churn through insect-held tunnels — dangerous, but the heat and pressure hint at rich salvage.</description>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <wantsThreatPoints>true</wantsThreatPoints>
+    <badEvenIfNoMap>false</badEvenIfNoMap>
+  </SitePartDef>
+
+  <GenStepDef>
+    <defName>Strata_GeothermalVentEntrance</defName>
+    <linkWithSite>Strata_GeothermalVent</linkWithSite>
+    <order>750</order>
+    <genStep Class="Strata.GenStep_QuestSiteEntrance">
+      <stairsDef>Strata_VentStairsDown</stairsDef>
+      <shellFillChance>0.25</shellFillChance>
+      <rubbleCount>5</rubbleCount>
+    </genStep>
+  </GenStepDef>
+
+  <MapGeneratorDef>
+    <defName>Strata_GeothermalVentLevel</defName>
+    <isUnderground>true</isUnderground>
+    <roofDef>RoofRockThick</roofDef>
+    <disableShadows>true</disableShadows>
+    <renderWorld>false</renderWorld>
+    <pocketMapProperties>
+      <biome>Strata_Underground</biome>
+      <temperature>28</temperature>
+      <destroyOnParentMapAbandoned>true</destroyOnParentMapAbandoned>
+      <canBeCleaned>true</canBeCleaned>
+    </pocketMapProperties>
+    <genSteps>
+      <li>Strata_SolidRock</li>
+      <li>Strata_CarveWarren</li>
+      <li>Strata_WarrenTheme_Volcanic</li>
+      <li>Strata_GeothermalVentFeatures</li>
+      <li>Strata_WarrenInfestation</li>
+      <li>Strata_PlaceCaveExit</li>
+    </genSteps>
+  </MapGeneratorDef>
+
+  <!-- ============ Shared quest-site gensteps ============ -->
+
+  <GenStepDef>
+    <defName>Strata_CarveVault</defName>
+    <order>200</order>
+    <genStep Class="Strata.GenStep_CarveVault"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_WarrenTheme_Fungal</defName>
+    <order>250</order>
+    <genStep Class="Strata.GenStep_WarrenTheme">
+      <theme>fungal</theme>
+    </genStep>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_WarrenTheme_Frozen</defName>
+    <order>250</order>
+    <genStep Class="Strata.GenStep_WarrenTheme">
+      <theme>frozen</theme>
+    </genStep>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_WarrenTheme_Volcanic</defName>
+    <order>250</order>
+    <genStep Class="Strata.GenStep_WarrenTheme">
+      <theme>volcanic</theme>
+    </genStep>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_WarrenTheme_Flooded</defName>
+    <order>250</order>
+    <genStep Class="Strata.GenStep_WarrenTheme">
+      <theme>flooded</theme>
+    </genStep>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_MineWarrenOccupants</defName>
+    <order>300</order>
+    <genStep Class="Strata.GenStep_MineWarrenOccupants"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_VaultOccupants</defName>
+    <order>300</order>
+    <genStep Class="Strata.GenStep_VaultOccupants"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_GeothermalVentFeatures</defName>
+    <order>275</order>
+    <genStep Class="Strata.GenStep_GeothermalVentFeatures"/>
+  </GenStepDef>
+
+</Defs>

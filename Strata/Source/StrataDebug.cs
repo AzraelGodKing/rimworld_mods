@@ -52,6 +52,21 @@ namespace Strata
         [DebugAction(Cat, "Fire: ground tremor", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireTremor() => Fire(StrataIncidentDefOf.Strata_Tremor);
 
+        [DebugAction(Cat, "Fire: gas firestorm", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireGasFirestorm() => Fire(StrataIncidentDefOf.Strata_GasFirestorm);
+
+        [DebugAction(Cat, "Fire: deep siege", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireDeepSiege() => Fire(StrataIncidentDefOf.Strata_DeepSiege);
+
+        [DebugAction(Cat, "Fire: cave breakthrough", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireCaveBreakthrough() => Fire(StrataIncidentDefOf.Strata_CaveBreakthrough);
+
+        [DebugAction(Cat, "Fire: prospector dig", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireProspectorDig() => Fire(StrataIncidentDefOf.Strata_ProspectorDig);
+
+        [DebugAction(Cat, "Fire: lost miners", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireLostMiners() => Fire(StrataIncidentDefOf.Strata_LostMiners);
+
         [DebugAction(Cat, "List smoke emitters", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ListSmokeEmitters()
         {
@@ -248,6 +263,21 @@ namespace Strata
             Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
             Check("sunken ruin map generator loaded",
                 DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_SunkenRuinLevel") != null);
+            Check("collapsed mine quest site loaded", QuestSiteDefOf.Strata_CollapsedMine != null);
+            Check("sealed vault quest site loaded", QuestSiteDefOf.Strata_SealedVault != null);
+            Check("geothermal vent quest site loaded", QuestSiteDefOf.Strata_GeothermalVent != null);
+            Check("quest site stairheads loaded",
+                QuestSiteDefOf.Strata_MineStairsDown != null
+                && QuestSiteDefOf.Strata_VaultStairsDown != null
+                && QuestSiteDefOf.Strata_VentStairsDown != null);
+            Check("quest site map generators loaded",
+                DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_CollapsedMineLevel") != null
+                && DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_SealedVaultLevel") != null
+                && DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_GeothermalVentLevel") != null);
+            Check("warren theme gensteps registered",
+                DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_WarrenTheme_Fungal") != null
+                && DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_WarrenTheme_Frozen") != null
+                && DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_WarrenTheme_Volcanic") != null);
             Check("rimefeller shaft junctions loaded",
                 DefDatabase<ThingDef>.GetNamedSilentFail("Strata_ShaftFluid_RimefellerCrude") != null
                 && DefDatabase<ThingDef>.GetNamedSilentFail("Strata_ShaftFluid_RimefellerFuel") != null);
@@ -255,6 +285,12 @@ namespace Strata
 
             sb.AppendLine($"Total: {passed} passed, {failed} failed.");
             if (failed > 0) { Log.Warning(sb.ToString()); } else { Log.Message(sb.ToString()); }
+        }
+
+        [DebugAction(Cat, "Force hibernate all empty levels", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceHibernateEmptyLevels()
+        {
+            StrataLevelPerfUtility.ForceHibernateAllEmptyLevels();
         }
 
         [DebugAction(Cat, "Log level depths", allowedGameStates = AllowedGameStates.PlayingOnMap)]

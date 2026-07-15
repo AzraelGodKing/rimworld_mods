@@ -217,6 +217,81 @@ namespace Strata
             return false;
         }
 
+        public static bool HasMedicalBedFor(Pawn pawn, Map map)
+        {
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
+            {
+                if (thing is Building_Bed bed
+                    && bed.Faction == Faction.OfPlayer
+                    && bed.def.building.bed_humanlike
+                    && bed.Medical
+                    && !bed.ForPrisoners
+                    && bed.AnyUnoccupiedSleepingSlot
+                    && !bed.IsForbidden(pawn)
+                    && !bed.IsBurning())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool HasPatientsNeedingTend(Map map)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn patient = pawns[i];
+                if (patient.IsColonist && HealthAIUtility.ShouldBeTendedNowByPlayer(patient))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool HasJoyFor(Pawn pawn, Map map)
+        {
+            if (map == null || pawn == null)
+            {
+                return false;
+            }
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree))
+            {
+                if (thing.IsForbidden(pawn) || thing.Position.Fogged(map))
+                {
+                    continue;
+                }
+                if (thing.def.IsIngestible && thing.def.ingestible?.joy > 0f && pawn.WillEat(thing))
+                {
+                    return true;
+                }
+            }
+            foreach (JoyGiverDef joyGiver in DefDatabase<JoyGiverDef>.AllDefsListForReading)
+            {
+                if (joyGiver.thingDefs == null)
+                {
+                    continue;
+                }
+                for (int i = 0; i < joyGiver.thingDefs.Count; i++)
+                {
+                    ThingDef joyThing = joyGiver.thingDefs[i];
+                    foreach (Thing thing in map.listerThings.ThingsOfDef(joyThing))
+                    {
+                        if (thing.Faction == Faction.OfPlayer && !thing.IsForbidden(pawn) && !thing.IsBurning())
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
         private static bool AnyPlayerThing(Map map, ThingRequestGroup group)
         {
             List<Thing> things = map.listerThings.ThingsInGroup(group);

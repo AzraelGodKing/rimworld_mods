@@ -4,6 +4,16 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Added — Pillars 4–5 (Away Into the Dark / Living Below)
+- **Medical & joy relays** — patients and doctors commute to linked levels with medical beds or tending work; recreation-starved colonists seek joy food or recreation buildings elsewhere (cap 2, toggles in mod settings).
+- **Level roles** — assign Freezer, Barracks, Workshop, Hospital, or Storage per level in the Levels tab; relays softly prefer matching roles.
+- **Caravan pull from below** — while forming a surface caravan, colonists haul high-value goods up from linked underground levels (toggle; alert when goods remain below).
+- **Threat incidents** — gas firestorm, enhanced tremors (unseal shafts, underground roof damage, gas seeps), deep siege (surface raiders batter stairwells), cave breakthrough, early prospector dig (after Digging Down), lost miners underground.
+- **Pillar 4 quest sites** — three new multi-level world sites gated behind deep excavation and the underground gas / exploration toggles: **collapsed mine** (fungal warren), **sealed vault** (frozen chambers, mechanoids or insects), **geothermal vent** (volcanic warren with geysers and deep gas). Sunken ruins now use the **flooded** warren theme. Shared `QuestSiteUtility` + `GenStep_WarrenTheme`.
+- **Living Below (Pillar 5)** — research for rock shoring, passive life support, deep infrastructure, and deep agriculture. Buildings: shoring pillar, gas airlock, ore skip hoist, fungus farm, sump pump, mine lamp, shaft bellows, lime scrubber. Items: cave fungus, lime. Flood seep incident + sump drainage.
+- **Compat & tools** — VEF chemfuel shaft junction (auto-discovery for VEF PipeSystem nets); sister-mod bridges (Homesteader / Wellspring / Stormproof); Royalty deep-bedroom thought; Levels-tab hibernation readout; exploration-sites and flood-events settings.
+- **Dedicated art pass** — new sprites for Living Below buildings, quest stairheads, life-support pumps, smoke hole, updraft filter, gas exchanger, fluid junctions, and lime.
+
 ### Changed
 - **Mine canary art** — custom canary sprites (north/south/east + dessicated) replace the yellow-tinted chicken placeholder.
 - **Canary cage vs bird cage** — canary cages accept **mine canaries only** (assign or hay acquire). New **bird cage** furniture holds any tame vanilla bird. **Default feeding:** stock hay/kibble in the cage via **Stock food** gizmo; toggle **Sustain caged bird hunger** in mod settings to freeze hunger instead.

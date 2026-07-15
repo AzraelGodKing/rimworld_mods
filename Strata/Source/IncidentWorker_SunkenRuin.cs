@@ -15,34 +15,16 @@ namespace Strata
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
-            if (StrataMod.Settings?.gasEventsEnabled == false)
-            {
-                return false;
-            }
-            if (Find.AnyPlayerHomeMap == null || Faction.OfInsects == null)
-            {
-                return false;
-            }
-            ResearchProjectDef excavation = DefDatabase<ResearchProjectDef>.GetNamedSilentFail("Strata_Excavation");
-            return excavation == null || excavation.IsFinished;
+            return QuestSiteUtility.CanFireQuestSite() && Faction.OfInsects != null;
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
-            if (!TileFinder.TryFindNewSiteTile(out PlanetTile tile))
-            {
-                return false;
-            }
-            Site site = SiteMaker.MakeSite(SunkenRuinDefOf.Strata_SunkenRuin, tile, Faction.OfInsects,
-                ifHostileThenMustRemainHostile: true,
-                threatPoints: StorytellerUtility.DefaultSiteThreatPointsNow());
+            Site site = QuestSiteUtility.TryMakeSite(SunkenRuinDefOf.Strata_SunkenRuin, Faction.OfInsects, TimeoutDays);
             if (site == null)
             {
                 return false;
             }
-            site.sitePartsKnown = true;
-            site.GetComponent<TimeoutComp>()?.StartTimeout(TimeoutDays * GenDate.TicksPerDay);
-            Find.WorldObjects.Add(site);
             SendStandardLetter(parms, site);
             return true;
         }

@@ -21,6 +21,8 @@ namespace Strata
 
         public bool Sealed => sealedShut;
 
+        public void Unseal() => sealedShut = false;
+
         public override void PostExposeData()
         {
             base.PostExposeData();

@@ -20,6 +20,14 @@ namespace Strata
             {
                 __instance.components.Add(new MapComponent_RaidPursuit(__instance));
             }
+            if (__instance.GetComponent<ShoringMapComponent>() == null)
+            {
+                __instance.components.Add(new ShoringMapComponent(__instance));
+            }
+            if (__instance.GetComponent<FloodMapComponent>() == null)
+            {
+                __instance.components.Add(new FloodMapComponent(__instance));
+            }
             __instance.GetComponent<AtmosphereMapComponent>()?.TrySeedBreathableAir();
         }
     }

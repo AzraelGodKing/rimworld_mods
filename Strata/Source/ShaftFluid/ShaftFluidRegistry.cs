@@ -17,6 +17,13 @@ namespace Strata
             Register(new VefPipeSystemBackend("vhge_helixien", "Helixien gas", "VHGE_HelixienNet"));
             Register(new RimefellerPipelineBackend("rimefeller_crude", "Rimefeller crude", "Crude", fuelMode: false));
             Register(new RimefellerPipelineBackend("rimefeller_fuel", "Rimefeller chemfuel", "Fuel", fuelMode: true));
+            foreach (VefPipeSystemBackend backend in VefPipeNetDiscovery.DiscoverBackends())
+            {
+                if (!byChannel.ContainsKey(backend.ChannelId))
+                {
+                    Register(backend);
+                }
+            }
         }
 
         public static IReadOnlyDictionary<string, ShaftFluidBackend> All => byChannel;

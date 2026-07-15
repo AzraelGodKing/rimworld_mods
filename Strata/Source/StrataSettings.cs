@@ -15,7 +15,14 @@ namespace Strata
         public bool workRelayEnabled = true;
         public bool foodRelayEnabled = true;
         public bool restRelayEnabled = true;
+        public bool medicalRelayEnabled = true;
+        public bool joyRelayEnabled = true;
+        public bool caravanPullEnabled = true;
         public bool throttleVacantLevels = true;
+        public bool hibernateEmptyLevels = true;
+        public bool showLevelPerfInTab = false;
+        public bool explorationSitesEnabled = true;
+        public bool floodEventsEnabled = true;
         public bool crossLevelRitualsEnabled = true;
         public bool mergedAbandonWarning = true;
         public bool cageSustainHunger = false;
@@ -33,7 +40,14 @@ namespace Strata
             Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref medicalRelayEnabled, "medicalRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref joyRelayEnabled, "joyRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref caravanPullEnabled, "caravanPullEnabled", defaultValue: true);
             Scribe_Values.Look(ref throttleVacantLevels, "throttleVacantLevels", defaultValue: true);
+            Scribe_Values.Look(ref hibernateEmptyLevels, "hibernateEmptyLevels", defaultValue: true);
+            Scribe_Values.Look(ref showLevelPerfInTab, "showLevelPerfInTab", defaultValue: false);
+            Scribe_Values.Look(ref explorationSitesEnabled, "explorationSitesEnabled", defaultValue: true);
+            Scribe_Values.Look(ref floodEventsEnabled, "floodEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelRitualsEnabled, "crossLevelRitualsEnabled", defaultValue: true);
             Scribe_Values.Look(ref mergedAbandonWarning, "mergedAbandonWarning", defaultValue: true);
             Scribe_Values.Look(ref cageSustainHunger, "cageSustainHunger", defaultValue: false);
@@ -95,6 +109,12 @@ namespace Strata
                 "Hungry colonists go find a meal on another level.");
             listing.CheckboxLabeled("Rest relay", ref Settings.restRelayEnabled,
                 "Sleepy colonists walk home to their bed on another level.");
+            listing.CheckboxLabeled("Medical relay", ref Settings.medicalRelayEnabled,
+                "Patients and doctors commute to linked levels with medical beds or tending work.");
+            listing.CheckboxLabeled("Joy relay", ref Settings.joyRelayEnabled,
+                "Recreation-starved colonists walk to another level with food joy or recreation buildings.");
+            listing.CheckboxLabeled("Caravan pull from below", ref Settings.caravanPullEnabled,
+                "While forming a caravan on the surface, colonists haul high-value goods up from linked underground levels.");
             listing.CheckboxLabeled("Cross-level rituals", ref Settings.crossLevelRitualsEnabled,
                 "The ritual menu lists colonists from every linked level; those elsewhere walk to the ritual and join when they arrive.");
             listing.CheckboxLabeled("Sustain caged bird hunger", ref Settings.cageSustainHunger,
@@ -131,8 +151,15 @@ namespace Strata
             Text.Font = GameFont.Small;
             listing.CheckboxLabeled("Raid pursuit", ref Settings.raidPursuitEnabled,
                 "Raiders with nobody left to fight follow your colonists through unsealed stairwells.");
-            listing.CheckboxLabeled("Throttle vacant levels", ref Settings.throttleVacantLevels,
+            listing.CheckboxLabeled("Hibernate empty levels", ref Settings.hibernateEmptyLevels,
                 "Levels with nobody on them run their ambient simulation at reduced rate to save performance.");
+            Settings.throttleVacantLevels = Settings.hibernateEmptyLevels;
+            listing.CheckboxLabeled("Show level performance in Levels tab", ref Settings.showLevelPerfInTab,
+                "List pawn counts and hibernation status for each level in the Levels tab.");
+            listing.CheckboxLabeled("Exploration quest sites", ref Settings.explorationSitesEnabled,
+                "World incidents that reveal sunken ruins, collapsed mines, sealed vaults, and geothermal vents.");
+            listing.CheckboxLabeled("Underground flood events", ref Settings.floodEventsEnabled,
+                "Groundwater seeps that flood patches of excavated levels.");
             listing.Gap();
 
             Text.Font = GameFont.Medium;

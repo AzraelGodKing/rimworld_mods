@@ -22,6 +22,18 @@ namespace Strata
 
         public static IncidentDef Strata_DeepRaid;
 
+        public static IncidentDef Strata_FloodSeep;
+
+        public static IncidentDef Strata_GasFirestorm;
+
+        public static IncidentDef Strata_DeepSiege;
+
+        public static IncidentDef Strata_CaveBreakthrough;
+
+        public static IncidentDef Strata_ProspectorDig;
+
+        public static IncidentDef Strata_LostMiners;
+
         static StrataIncidentDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataIncidentDefOf));
@@ -30,7 +42,9 @@ namespace Strata
         public static bool IsStrataUndergroundEvent(IncidentDef def)
         {
             return def == Strata_CaveIn || def == Strata_GasPocket
-                || def == Strata_DeepVein || def == Strata_DeepRaid;
+                || def == Strata_DeepVein || def == Strata_DeepRaid
+                || def == Strata_FloodSeep || def == Strata_GasFirestorm
+                || def == Strata_CaveBreakthrough || def == Strata_LostMiners;
         }
     }
 

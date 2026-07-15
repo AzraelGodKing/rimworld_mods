@@ -31,6 +31,11 @@ namespace Strata
         {
             get
             {
+                CompRefuelable refuel = parent.GetComp<CompRefuelable>();
+                if (refuel != null && !refuel.HasFuel)
+                {
+                    return false;
+                }
                 if (!Props.requiresPower)
                 {
                     return true;

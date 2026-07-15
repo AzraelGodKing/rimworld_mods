@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef ParentName="OrganicProductBase">
+    <defName>Strata_Fungus</defName>
+    <label>cave fungus</label>
+    <description>Edible mushrooms grown in dark underground farms. Bland but sustaining — a staple of deep colonies that cannot rely on sunlight.</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/PlantFoodRaw/RawFungus</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <Nutrition>0.05</Nutrition>
+      <MarketValue>1.2</MarketValue>
+      <Mass>0.03</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <ingestible>
+      <foodType>VegetableOrFruit</foodType>
+      <preferability>RawBad</preferability>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>RawVegetable_Eat</ingestSound>
+    </ingestible>
+    <thingCategories>
+      <li>Foods</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>Strata_Lime</defName>
+    <label>lime</label>
+    <description>Crushed limestone for lime scrubbers — absorbs carbon dioxide from stale mine air as it slowly consumes the charge.</description>
+    <graphicData>
+      <texPath>Strata/Items/Lime</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MarketValue>0.8</MarketValue>
+      <Mass>0.5</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+</Defs>

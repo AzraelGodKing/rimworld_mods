@@ -80,6 +80,35 @@ namespace Strata
         }
     }
 
+    // High-value goods still on linked underground levels while a surface
+    // caravan is being packed.
+    public class Alert_CaravanGoodsBelow : Alert
+    {
+        public Alert_CaravanGoodsBelow()
+        {
+            defaultLabel = "Caravan goods below";
+            defaultExplanation = "Valuable items remain on linked underground levels while a caravan is being formed on the surface. "
+                + "Enable caravan pull in Strata settings or haul them up manually before leaving.";
+            defaultPriority = AlertPriority.Medium;
+        }
+
+        public override AlertReport GetReport()
+        {
+            if (StrataMod.Settings?.caravanPullEnabled != true || !StrataCaravanUtility.CaravanDialogOpen)
+            {
+                return false;
+            }
+            Map surface = StrataCaravanUtility.CaravanFormingMap;
+            if (surface == null)
+            {
+                return false;
+            }
+            return StrataCaravanUtility.CountValuableBelow(surface) > 0
+                ? AlertReport.CulpritIs(new GlobalTargetInfo(surface.Center, surface))
+                : false;
+        }
+    }
+
     // Colonists on a level whose every way up is sealed. Deliberate bunkering
     // is fine; forgetting them down there is not.
     public class Alert_ColonistsBelowSealedShaft : Alert

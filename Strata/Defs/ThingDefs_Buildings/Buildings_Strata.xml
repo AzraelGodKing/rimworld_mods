@@ -324,7 +324,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <description>A powered fan mounted in a stairwell or elevator room. Smoke naturally rises through an open shaft; this filter actively pulls fumes from the landing room and pushes them up to the level above — like a chimney stack for your underground burners. Useless when the shaft is sealed.</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <texPath>Strata/Buildings/UpdraftFilter</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
@@ -424,10 +424,9 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <description>A sod-and-wicker flue packed into a wall opening - the oldest chimney there is. Mount it with the intake side facing the smoky room and fumes slowly seep out the other side. Weaker than machined vents, but it needs no research and nothing but wood, and it keeps a fire-lit room breathable. One-way only.</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Things/Building/Misc/TempControl/Vent</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
+      <texPath>Strata/Buildings/SmokeHole</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
-      <color>(133,109,78)</color>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
@@ -568,10 +567,9 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <description>A powered air enricher for sealed underground rooms. While running it slowly releases breathable oxygen into the room — enough to offset a few colonists, but not a substitute for shaft ventilation on a busy level.</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <texPath>Strata/Buildings/OxygenPump</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
-      <color>(120, 160, 220)</color>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
@@ -617,10 +615,9 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <description>A powered scrubber that pulls carbon dioxide out of the air in a sealed room and traps it in chemical filters. Pairs with an oxygen pump or shaft ventilation to keep deep workspaces breathable — colonists exhale faster than one unit can scrub, so busy rooms need more than one.</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <texPath>Strata/Buildings/CO2Pump</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
-      <color>(150, 165, 155)</color>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
@@ -666,10 +663,9 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <description>A powered fan mounted in a stairwell or elevator room. Oxygen naturally rises and carbon dioxide sinks through an open shaft; this exchanger actively drives both — pulling stale CO₂ down to deeper levels and pushing fresh O₂ up the column. Useless when the shaft is sealed.</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Strata/Buildings/ShaftConduit</texPath>
+      <texPath>Strata/Buildings/GasExchanger</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
-      <color>(140, 180, 210)</color>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>

@@ -102,6 +102,93 @@
     <letterText>A deep tremor rolled through the ground, rattling the colony and cracking some of your structures. The rock below is never quite still.</letterText>
   </IncidentDef>
 
+  </IncidentDef>
+
+  <!-- ============ Underground: gas firestorm ============ -->
+  <IncidentDef>
+    <defName>Strata_GasFirestorm</defName>
+    <label>gas firestorm</label>
+    <category>ThreatSmall</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_GasFirestorm</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <baseChance>0.35</baseChance>
+    <minRefireDays>10</minRefireDays>
+    <letterDef>NegativeEvent</letterDef>
+    <letterLabel>Gas firestorm</letterLabel>
+    <letterText>A pocket of deep gas has ignited underground — by open flame or a tremor-spark — and fire is spreading through the workings. Ventilate what you can and keep colonists clear until the gas burns off.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Underground: cave breakthrough ============ -->
+  <IncidentDef>
+    <defName>Strata_CaveBreakthrough</defName>
+    <label>cave breakthrough</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_CaveBreakthrough</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <baseChance>0.45</baseChance>
+    <minRefireDays>8</minRefireDays>
+    <letterDef>NegativeEvent</letterDef>
+    <letterLabel>Cave breakthrough</letterLabel>
+    <letterText>Excavation has broken into a hidden side cavern in the rock. It may hold fungus, foul gas, or the leftovers of whoever dug here before you.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Underground: lost miners ============ -->
+  <IncidentDef>
+    <defName>Strata_LostMiners</defName>
+    <label>lost miners</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_LostMiners</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <baseChance>0.4</baseChance>
+    <minRefireDays>11</minRefireDays>
+    <letterDef>NeutralEvent</letterDef>
+    <letterLabel>Lost miners</letterLabel>
+    <letterText>A small group of miners has wandered into your workings from some other tunnel. They may be grateful for rescue — or desperate enough to fight.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Surface: deep siege ============ -->
+  <IncidentDef>
+    <defName>Strata_DeepSiege</defName>
+    <label>deep siege</label>
+    <category>ThreatBig</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_DeepSiege</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <pointsScaleable>true</pointsScaleable>
+    <baseChance>0.25</baseChance>
+    <minRefireDays>14</minRefireDays>
+    <letterDef>ThreatBig</letterDef>
+    <letterLabel>Deep siege</letterLabel>
+    <letterText>Raiders have come for your mine. They are assaulting the colony and battering stairwell entrances — expect them to follow your colonists underground if the shafts stay open.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Surface: prospector dig (early) ============ -->
+  <IncidentDef>
+    <defName>Strata_ProspectorDig</defName>
+    <label>prospector dig</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_ProspectorDig</workerClass>
+    <baseChance>0.6</baseChance>
+    <minRefireDays>7</minRefireDays>
+    <letterDef>PositiveEvent</letterDef>
+    <letterLabel>Prospector dig</letterLabel>
+    <letterText>Your colonists have marked a promising ore pocket in the rock — a good first haul for a colony just starting to dig down.</letterText>
+  </IncidentDef>
+
   <!-- ============ World: sunken ruin discovered ============ -->
   <IncidentDef>
     <defName>Strata_SunkenRuinDiscovered</defName>
@@ -117,6 +204,91 @@
     <letterDef>PositiveEvent</letterDef>
     <letterLabel>Sunken ruin discovered</letterLabel>
     <letterText>A passing trader speaks of a ruin whose floor has collapsed onto an ancient stairhead, some distance from your colony. The levels beneath are said to crawl with insects - and to hold the hoard of whoever built the place.\n\nThe stairs descend into a warren below the site itself. Bring fighters; the depths will not be empty. The site will be lost to memory in about twenty days.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Underground: flood seep ============ -->
+  <IncidentDef>
+    <defName>Strata_FloodSeep</defName>
+    <label>flood seep</label>
+    <category>ThreatSmall</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_FloodSeep</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <baseChance>0.45</baseChance>
+    <minRefireDays>8</minRefireDays>
+    <letterDef>NegativeEvent</letterDef>
+    <letterLabel>Flood seep</letterLabel>
+    <letterText>Groundwater has broken through the floor of this level, flooding a patch of the workings with shallow water. Sump pumps will drain it — or mine around it before it spreads.</letterText>
+  </IncidentDef>
+
+  <!-- ============ World: collapsed mine discovered ============ -->
+  <IncidentDef>
+    <defName>Strata_CollapsedMineDiscovered</defName>
+    <label>collapsed mine</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>World</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_QuestSite</workerClass>
+    <baseChance>0.32</baseChance>
+    <minRefireDays>20</minRefireDays>
+    <earliestDay>14</earliestDay>
+    <letterDef>PositiveEvent</letterDef>
+    <letterLabel>Collapsed mine discovered</letterLabel>
+    <letterText>A prospector reports an old mine entrance, its timber headframe rotted but its adit still open, some distance from your colony. The tunnels below are said to crawl with scavengers and insects — and abandoned ore carts still hold salvage.\n\nThe shaft descends into workings beneath the site itself. Bring fighters and light; the cold dark will not be empty. The site will be lost to memory in about twenty days.</letterText>
+  </IncidentDef>
+
+  <!-- ============ World: sealed vault discovered ============ -->
+  <IncidentDef>
+    <defName>Strata_SealedVaultDiscovered</defName>
+    <label>sealed vault</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>World</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_QuestSite</workerClass>
+    <baseChance>0.28</baseChance>
+    <minRefireDays>24</minRefireDays>
+    <earliestDay>18</earliestDay>
+    <letterDef>PositiveEvent</letterDef>
+    <letterLabel>Sealed vault discovered</letterLabel>
+    <letterText>Surveyors have found the surface hatch of an ancient vault, its seals cracked by time and frost. The chambers below are vast and cold, and something still guards the hoard within — dormant machines, or insects that moved in after the power died.\n\nThe hatch opens onto frozen vault levels beneath the site. Bring heavy weapons and warm gear. The site will be lost to memory in about twenty days.</letterText>
+  </IncidentDef>
+
+  <!-- ============ World: geothermal vent discovered ============ -->
+  <IncidentDef>
+    <defName>Strata_GeothermalVentDiscovered</defName>
+    <label>geothermal vent</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>World</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_QuestSite</workerClass>
+    <baseChance>0.3</baseChance>
+    <minRefireDays>22</minRefireDays>
+    <earliestDay>16</earliestDay>
+    <letterDef>PositiveEvent</letterDef>
+    <letterLabel>Geothermal vent discovered</letterLabel>
+    <letterText>A steaming fissure has opened in the ground not far from your colony, venting hot air from geothermal workings below. Insects nest in the hot tunnels, and steam geysers churn through chambers choked with foul gas — dangerous ground, but the heat hints at rich salvage.\n\nRough steps beside the fissure descend into the pocket beneath the site. Bring fighters and ventilation; the depths will be hot and hostile. The site will be lost to memory in about twenty days.</letterText>
+  </IncidentDef>
+
+  <!-- ============ Underground: lost miners (Anomaly soft hook) ============ -->
+  <IncidentDef MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>Strata_LostMiners</defName>
+    <label>lost miners</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Strata.IncidentWorker_LostMiners</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <baseChance>0.2</baseChance>
+    <minRefireDays>18</minRefireDays>
+    <letterDef>NegativeEvent</letterDef>
+    <letterLabel>Lost miners</letterLabel>
+    <letterText>Radio static from a sealed tunnel far below — a mining crew that never came back. Something in the deep levels has been moving where no colonist should be.</letterText>
   </IncidentDef>
 
 </Defs>

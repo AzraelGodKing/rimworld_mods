@@ -116,4 +116,36 @@
     </match>
   </Operation>
 
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>VanillaExpanded.VChemfuelE</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_VefChemfuel"]/comps</xpath>
+          <value>
+            <li Class="PipeSystem.CompProperties_Resource">
+              <pipeNet>VCHE_ChemfuelNet</pipeNet>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_VefChemfuel"]/graphicData</xpath>
+          <value>
+            <linkFlags>
+              <li>Custom7</li>
+            </linkFlags>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/PipeSystem.PipeNetDef[defName="VCHE_ChemfuelNet"]/pipeDefs</xpath>
+          <value>
+            <li>Strata_ShaftFluid_VefChemfuel</li>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+
 </Patch>

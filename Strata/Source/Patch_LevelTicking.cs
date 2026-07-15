@@ -16,7 +16,7 @@ namespace Strata
 
         public static bool ShouldThrottle(Map map)
         {
-            if (StrataMod.Settings != null && !StrataMod.Settings.throttleVacantLevels)
+            if (!StrataLevelPerfUtility.HibernateEnabled())
             {
                 return false;
             }
@@ -24,15 +24,18 @@ namespace Strata
             {
                 return false;
             }
-            if (Find.CurrentMap == map)
+            if (Find.CurrentMap == map && !StrataLevelPerfUtility.IsForcedHibernate(map))
             {
                 return false;
             }
-            // Never throttle a level that has anyone on it - colonists, prisoners,
-            // bugs, or raiders mid-fight.
-            if (map.mapPawns.AllPawnsSpawned.Count > 0)
+            if (StrataLevelPerfUtility.PawnCount(map) > 0)
             {
+                StrataLevelPerfUtility.ClearForcedHibernate(map);
                 return false;
+            }
+            if (StrataLevelPerfUtility.IsForcedHibernate(map))
+            {
+                return true;
             }
             // Skip this tick unless it lands on the duty cycle.
             return (Find.TickManager.TicksGame + map.uniqueID) % Duty != 0;
