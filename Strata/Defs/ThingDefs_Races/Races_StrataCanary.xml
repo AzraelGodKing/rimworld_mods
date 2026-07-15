@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Mine canary: vanilla chicken stats, custom canary art, separate kind for cage acquire/spawn. -->
+  <ThingDef ParentName="Chicken">
+    <defName>Strata_Canary</defName>
+    <label>mine canary</label>
+    <description>A small yellow bird kept for underground work. Canaries succumb to smoke, deep gas, hypoxia, and carbon dioxide far sooner than humans — the classic miner's early warning.</description>
+    <statBases>
+      <MarketValue>35</MarketValue>
+      <Wildness>0.05</Wildness>
+    </statBases>
+    <race>
+      <wildBiomes Inherit="False" />
+    </race>
+    <tradeTags Inherit="False">
+      <li>AnimalCommon</li>
+    </tradeTags>
+  </ThingDef>
+
+  <PawnKindDef ParentName="Chicken">
+    <defName>Strata_Canary</defName>
+    <label>mine canary</label>
+    <race>Strata_Canary</race>
+    <combatPower>15</combatPower>
+    <ecoSystemWeight Inherit="False">0</ecoSystemWeight>
+    <wildGroupSize Inherit="False" />
+    <lifeStages Inherit="False">
+      <li>
+        <label>canary chick</label>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/Animal/Canary/Canary</texPath>
+          <drawSize>0.55</drawSize>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/Animal/Canary/Dessicated_Canary</texPath>
+          <drawSize>0.55</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/Animal/Canary/Canary</texPath>
+          <drawSize>0.75</drawSize>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/Animal/Canary/Dessicated_Canary</texPath>
+          <drawSize>0.75</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/Animal/Canary/Canary</texPath>
+          <drawSize>0.9</drawSize>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/Animal/Canary/Dessicated_Canary</texPath>
+          <drawSize>0.9</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+</Defs>

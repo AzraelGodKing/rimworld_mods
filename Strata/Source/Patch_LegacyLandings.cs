@@ -25,6 +25,7 @@ namespace Strata
             UpgradeVanillaCaveExits();
             RealignAllStairLandings();
             Building_ShaftConduit.ReconcileAllAfterLoad();
+            CompShaftFluidJunctionLink.ReconcileAllAfterLoad();
         }
 
         private static void UpgradeVanillaCaveExits()

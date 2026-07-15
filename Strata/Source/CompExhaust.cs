@@ -6,9 +6,16 @@ namespace Strata
 {
     public class CompProperties_Exhaust : CompProperties
     {
-        // Smoke density added to the room each cycle while the burner runs,
+        // Gas density added to the room each cycle while the source runs,
         // before dilution by room size.
         public float emissionPerCycle = 3.5f;
+
+        // Which atmosphere channel this source emits. Null = combustion smoke.
+        public StrataGasDef gas;
+
+        // Life-support pumps: emit while CompPowerTrader is on (not while
+        // generating power like a fueled generator).
+        public bool emitWhenPowered;
 
         public CompProperties_Exhaust()
         {
@@ -16,16 +23,24 @@ namespace Strata
         }
     }
 
-    // Attached to combustion generators. Registers with the level's smoke
-    // simulation and reports when it's actively burning (producing power).
+    // Attached to combustion generators (and, via subclasses, other gas
+    // sources like deep vents). Registers with the level's atmosphere
+    // simulation and reports when it's actively emitting.
     public class CompExhaust : ThingComp
     {
         public CompProperties_Exhaust Props => (CompProperties_Exhaust)props;
 
-        public bool Active
+        public StrataGasDef GasDef => Props.gas ?? StrataGasDefOf.Strata_Smoke;
+
+        public virtual bool Active
         {
             get
             {
+                if (Props.emitWhenPowered)
+                {
+                    CompPowerTrader powered = parent.GetComp<CompPowerTrader>();
+                    return powered != null && powered.PowerOn;
+                }
                 // Generators: emit while actually producing power.
                 CompPowerTrader power = parent.GetComp<CompPowerTrader>();
                 if (power != null)
@@ -67,12 +82,12 @@ namespace Strata
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            parent.Map.GetComponent<SmokeMapComponent>()?.Emitters.Add(this);
+            parent.Map.GetComponent<AtmosphereMapComponent>()?.Emitters.Add(this);
         }
 
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
-            map.GetComponent<SmokeMapComponent>()?.Emitters.Remove(this);
+            map.GetComponent<AtmosphereMapComponent>()?.Emitters.Remove(this);
             base.PostDeSpawn(map, mode);
         }
     }

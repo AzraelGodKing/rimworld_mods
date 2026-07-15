@@ -2,12 +2,25 @@
 <Defs>
 
   <ResearchProjectDef>
+    <defName>Strata_DiggingDown</defName>
+    <label>digging down</label>
+    <description>Basic shoring and stair-cutting to open the first basement beneath your colony — one full level of solid rock the same size as the map above.</description>
+    <baseCost>600</baseCost>
+    <techLevel>Medieval</techLevel>
+    <researchViewX>5.25</researchViewX>
+    <researchViewY>4.40</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>Strata_Excavation</defName>
     <label>deep excavation</label>
-    <description>Surveying, shoring, and stair-cutting techniques for excavating stable living space beneath a colony.</description>
+    <description>Surveying and reinforcement techniques for carving stable living space below the first basement — opening B2 and every level deeper.</description>
     <baseCost>800</baseCost>
     <techLevel>Medieval</techLevel>
-    <researchViewX>6.00</researchViewX>
+    <prerequisites>
+      <li>Strata_DiggingDown</li>
+    </prerequisites>
+    <researchViewX>6.75</researchViewX>
     <researchViewY>4.40</researchViewY>
   </ResearchProjectDef>
 
@@ -39,6 +52,32 @@
   </ResearchProjectDef>
 
   <ResearchProjectDef>
+    <defName>Strata_LifeSupport</defName>
+    <label>deep life support</label>
+    <description>Powered oxygen pumps for sealed rooms, CO₂ pumps that scrub exhaled waste from the air, and shaft gas exchangers that actively drive breathable air up a stairwell while pulling carbon dioxide down — the plumbing deep colonies need once colonists start living below the surface.</description>
+    <baseCost>900</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Strata_Ventilation</li>
+    </prerequisites>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>2.80</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Strata_GasExtraction</defName>
+    <label>deep gas extraction</label>
+    <description>Wellheads and pressure canisters for capping the gas vents found in deep rock - turning a toxic, explosive seep into generator fuel that burns with no smoke at all.</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Strata_Ventilation</li>
+    </prerequisites>
+    <researchViewX>9.00</researchViewX>
+    <researchViewY>3.60</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>Strata_ShaftPower</defName>
     <label>shaft power</label>
     <description>Armored power junctions that carry electricity up and down an excavated shaft, letting a surface grid feed the levels below (and the reverse).</description>
@@ -49,6 +88,19 @@
       <li>Electricity</li>
     </prerequisites>
     <researchViewX>7.50</researchViewX>
+    <researchViewY>5.20</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Strata_FluidShafts</defName>
+    <label>fluid shafts</label>
+    <description>Build shaft fluid junctions that meter water, coolant, heating, and gas between levels without merging pipe networks across maps. Only junction types for your loaded pipe mods appear in the architect menu.</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Strata_ShaftPower</li>
+    </prerequisites>
+    <researchViewX>9.00</researchViewX>
     <researchViewY>5.20</researchViewY>
   </ResearchProjectDef>
 

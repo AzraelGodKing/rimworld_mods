@@ -31,7 +31,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_StairsDown</defName>
     <label>excavated stairwell</label>
-    <description>A broad staircase carved down into the rock beneath the colony. Completing it opens a new underground level: a solid stratum of stone the same size as this map, directly beneath it, that can be mined out into rooms, workshops, and vaults. Note: on large map sizes each opened level adds correspondingly more load.
+    <description>A broad staircase carved down into the rock beneath the colony. Completing it opens a new underground level: a solid stratum of stone the same size as this map, directly beneath it, that can be mined out into rooms, workshops, and vaults. The first basement from the surface requires digging down research; every level below that requires deep excavation research. Note: on large map sizes each opened level adds correspondingly more load.
 
 Colonists will use the stairwell on their own to work, eat, and sleep across levels. The shaft also ties both floors' power grids together when each level is wired into the stairwell — keep a battery on each level for surplus to pool across. It cannot be deconstructed while anyone is still below.</description>
     <thingClass>Strata.Building_StairsDown</thingClass>
@@ -49,7 +49,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <tickerType>Normal</tickerType>
     <statBases>
       <MaxHitPoints>600</MaxHitPoints>
-      <WorkToBuild>8000</WorkToBuild>
+      <WorkToBuild>12000</WorkToBuild>
       <Flammability>0</Flammability>
     </statBases>
     <costList>
@@ -64,6 +64,9 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <designationCategory>Structure</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_LevelExcavation</li>
+    </placeWorkers>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>Strata.CompPowerShaft</compClass>
@@ -73,10 +76,63 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li Class="Strata.CompProperties_StairwellControl"/>
     </comps>
     <researchPrerequisites>
-      <li>Strata_Excavation</li>
+      <li>Strata_DiggingDown</li>
     </researchPrerequisites>
     <building>
       <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <!-- Dig-down extension beside a landing — same portal as a stairwell but no
+       power comp (the landing carries the shaft). Not in the architect menu;
+       designated only via the Dig down gizmo. -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_DigDownShaft</defName>
+    <label>dig shaft</label>
+    <description>An extension of the stairwell landing above, carved downward into the rock. Colonists use it to reach the next level once construction finishes; power runs through the landing, not this tile.</description>
+    <thingClass>Strata.Building_StairsDown</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/StairsDown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+      <color>(0.75, 0.75, 0.75)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>600</MaxHitPoints>
+      <WorkToBuild>12000</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>60</WoodLog>
+      <Steel>30</Steel>
+    </costList>
+    <portal>
+      <pocketMapGenerator>Strata_UndergroundLevel</pocketMapGenerator>
+      <exitDef>Strata_StairsUp</exitDef>
+      <pocketMapSize>200</pocketMapSize>
+    </portal>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_LevelExcavation</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>Strata_DiggingDown</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_StairwellControl"/>
+    </comps>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+      <deconstructible>false</deconstructible>
     </building>
   </ThingDef>
 
@@ -503,6 +559,250 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <researchPrerequisites>
       <li>Strata_ShaftPower</li>
     </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Oxygen pump (life support) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_OxygenPump</defName>
+    <label>oxygen pump</label>
+    <description>A powered air enricher for sealed underground rooms. While running it slowly releases breathable oxygen into the room — enough to offset a few colonists, but not a substitute for shaft ventilation on a busy level.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(120, 160, 220)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2200</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>50</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_Exhaust">
+        <gas>Strata_Oxygen</gas>
+        <emissionPerCycle>0.008</emissionPerCycle>
+        <emitWhenPowered>true</emitWhenPowered>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_LifeSupport</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ CO₂ pump (life support) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_CO2Pump</defName>
+    <label>CO₂ pump</label>
+    <description>A powered scrubber that pulls carbon dioxide out of the air in a sealed room and traps it in chemical filters. Pairs with an oxygen pump or shaft ventilation to keep deep workspaces breathable — colonists exhale faster than one unit can scrub, so busy rooms need more than one.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(150, 165, 155)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2200</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>50</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_GasScrubber">
+        <gas>Strata_CarbonDioxide</gas>
+        <scrubPerCycle>0.008</scrubPerCycle>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_LifeSupport</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Shaft gas exchanger (life support) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_GasExchanger</defName>
+    <label>shaft gas exchanger</label>
+    <description>A powered fan mounted in a stairwell or elevator room. Oxygen naturally rises and carbon dioxide sinks through an open shaft; this exchanger actively drives both — pulling stale CO₂ down to deeper levels and pushing fresh O₂ up the column. Useless when the shaft is sealed.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ShaftConduit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(140, 180, 210)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2400</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>55</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>120</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_GasExchanger">
+        <transferPower>0.20</transferPower>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_UpdraftFilter</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_LifeSupport</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Mine canary cage (gas warning) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_CanaryCage</defName>
+    <label>canary cage</label>
+    <description>A small cage for a live mine canary — the classic miner's gas alarm. Canaries succumb to smoke, deep gas, low oxygen, and CO₂ buildup sooner than colonists. When the bird falls silent or dies, ventilate the room before sending people in.\n\nOnly mine canaries can be placed here. Assign a nearby mine canary or acquire one with hay. Stock food in the cage (default) or enable hunger sustain in mod settings.</description>
+    <thingClass>Strata.Building_StrataCagedBird</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.92, 0.82, 0.35)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>800</WorkToBuild>
+      <Flammability>0.3</Flammability>
+      <Beauty>2</Beauty>
+    </statBases>
+    <costList>
+      <Steel>15</Steel>
+      <WoodLog>25</WoodLog>
+    </costList>
+    <comps>
+      <li Class="Strata.CompProperties_CanaryCage">
+        <hayCost>10</hayCost>
+        <assignRadius>12</assignRadius>
+      </li>
+      <li Class="Strata.CompProperties_CageFoodStorage">
+        <maxStacks>5</maxStacks>
+      </li>
+    </comps>
+    <designationCategory>Furniture</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_Ventilation</li>
+    </researchPrerequisites>
+    <building>
+      <isInert>true</isInert>
+    </building>
+  </ThingDef>
+
+  <!-- ============ Bird cage (display / holding tame birds) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_BirdCage</defName>
+    <label>bird cage</label>
+    <description>A decorative cage for tame birds — chickens, turkeys, and other avians. Stock food in the cage (default) or enable hunger sustain in mod settings.\n\nFor underground gas warning, use a canary cage with a mine canary instead.</description>
+    <thingClass>Strata.Building_StrataCagedBird</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.72, 0.58, 0.38)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>600</WorkToBuild>
+      <Flammability>0.3</Flammability>
+      <Beauty>3</Beauty>
+    </statBases>
+    <costList>
+      <Steel>10</Steel>
+      <WoodLog>30</WoodLog>
+    </costList>
+    <comps>
+      <li Class="Strata.CompProperties_BirdCage">
+        <assignRadius>12</assignRadius>
+      </li>
+      <li Class="Strata.CompProperties_CageFoodStorage">
+        <maxStacks>5</maxStacks>
+      </li>
+    </comps>
+    <designationCategory>Furniture</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <building>
+      <isInert>true</isInert>
+    </building>
   </ThingDef>
 
 </Defs>

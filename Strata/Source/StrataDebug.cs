@@ -60,7 +60,7 @@ namespace Strata
             {
                 return;
             }
-            SmokeMapComponent smoke = map.GetComponent<SmokeMapComponent>();
+            AtmosphereMapComponent smoke = map.GetComponent<AtmosphereMapComponent>();
             var sb = new System.Text.StringBuilder($"[Strata] Smoke emitters on {map}:\n");
             int emitters = 0;
             int unpatched = 0;
@@ -87,28 +87,83 @@ namespace Strata
             Log.Message(sb.ToString());
         }
 
-        [DebugAction(Cat, "Log room smoke", allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        private static void LogRoomSmoke()
+        [DebugAction(Cat, "Log room gases", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void LogRoomGases()
         {
             Map map = Find.CurrentMap;
-            SmokeMapComponent smoke = map?.GetComponent<SmokeMapComponent>();
-            if (smoke != null)
+            AtmosphereMapComponent atmosphere = map?.GetComponent<AtmosphereMapComponent>();
+            if (atmosphere != null)
             {
-                Log.Message($"[Strata] Active smoke on {map}:\n{smoke.DebugSummary()}");
+                Log.Message($"[Strata] Active gas on {map}:\n{atmosphere.DebugSummary()}");
             }
         }
 
-        [DebugAction(Cat, "Clear all smoke", allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        private static void ClearSmoke()
+        [DebugAction(Cat, "Clear all gas", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ClearGas()
         {
-            Find.CurrentMap?.GetComponent<SmokeMapComponent>()?.ClearAll();
+            Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()?.ClearAll();
         }
 
         [DebugAction(Cat, "Saturate room with smoke", allowedGameStates = AllowedGameStates.PlayingOnMap,
             actionType = DebugActionType.ToolMap)]
         private static void SaturateSmoke()
         {
-            Find.CurrentMap?.GetComponent<SmokeMapComponent>()?.DebugSaturate(UI.MouseCell());
+            Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()?.DebugSaturate(UI.MouseCell());
+        }
+
+        [DebugAction(Cat, "Saturate room with deep gas", allowedGameStates = AllowedGameStates.PlayingOnMap,
+            actionType = DebugActionType.ToolMap)]
+        private static void SaturateDeepGas()
+        {
+            Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()
+                ?.DebugSaturate(UI.MouseCell(), StrataGasDefOf.Strata_DeepGas);
+        }
+
+        [DebugAction(Cat, "Saturate room with oxygen", allowedGameStates = AllowedGameStates.PlayingOnMap,
+            actionType = DebugActionType.ToolMap)]
+        private static void SaturateOxygen()
+        {
+            Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()
+                ?.DebugSaturate(UI.MouseCell(), StrataGasDefOf.Strata_Oxygen, AtmosphereMapComponent.AmbientOxygen);
+        }
+
+        [DebugAction(Cat, "Deplete oxygen in room", allowedGameStates = AllowedGameStates.PlayingOnMap,
+            actionType = DebugActionType.ToolMap)]
+        private static void DepleteOxygen()
+        {
+            Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()
+                ?.DebugSetGas(UI.MouseCell(), StrataGasDefOf.Strata_Oxygen, 0f);
+        }
+
+        [DebugAction(Cat, "Saturate room with CO₂", allowedGameStates = AllowedGameStates.PlayingOnMap,
+            actionType = DebugActionType.ToolMap)]
+        private static void SaturateCO2()
+        {
+            Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()
+                ?.DebugSaturate(UI.MouseCell(), StrataGasDefOf.Strata_CarbonDioxide, 0.5f);
+        }
+
+        [DebugAction(Cat, "List hidden chambers", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ListHiddenChambers()
+        {
+            Map map = Find.CurrentMap;
+            if (map == null)
+            {
+                return;
+            }
+            var sb = new System.Text.StringBuilder($"[Strata] Hidden features on {map}:\n");
+            int found = 0;
+            foreach (Thing thing in map.listerThings.AllThings)
+            {
+                if (thing.def == ThingDefOf.SteamGeyser || thing.def == StrataThingDefOf.Strata_DeepGasVent)
+                {
+                    found++;
+                    sb.AppendLine($"  {thing.LabelCap} @ {thing.Position}"
+                        + (thing.Position.Fogged(map) ? " (still hidden in the rock)" : " (discovered)"));
+                }
+            }
+            sb.AppendLine(found == 0 ? "  (none on this level)" : $"Total: {found}.");
+            Log.Message(sb.ToString());
         }
 
         // The honest version of unit tests for a mod whose types need a live
@@ -128,7 +183,7 @@ namespace Strata
 
             foreach (Map map in Find.Maps)
             {
-                Check($"smoke component on {map}", map.GetComponent<SmokeMapComponent>() != null);
+                Check($"atmosphere component on {map}", map.GetComponent<AtmosphereMapComponent>() != null);
                 Check($"pursuit component on {map}", map.GetComponent<MapComponent_RaidPursuit>() != null);
                 if (!StrataMapUtility.IsUnderground(map))
                 {
@@ -157,6 +212,46 @@ namespace Strata
             }
             Check("world ritual-travel component exists", StrataRitualTravel.Get != null);
             Check("settings loaded", StrataMod.Settings != null);
+
+            // Pillar 1: the living deep.
+            Check("gas defs loaded",
+                StrataGasDefOf.Strata_Smoke != null && StrataGasDefOf.Strata_DeepGas != null
+                && StrataGasDefOf.Strata_Oxygen != null && StrataGasDefOf.Strata_CarbonDioxide != null);
+            Check("smoke rises, deep gas pools",
+                StrataGasDefOf.Strata_Smoke.buoyant && !StrataGasDefOf.Strata_DeepGas.buoyant);
+            Check("O₂ rises, CO₂ sinks",
+                StrataGasDefOf.Strata_Oxygen.buoyant && !StrataGasDefOf.Strata_CarbonDioxide.buoyant);
+            Check("O₂ hypoxia and CO₂ harm defs",
+                StrataGasDefOf.Strata_Oxygen.harmWhenBelow
+                && StrataGasDefOf.Strata_Oxygen.harmHediff != null
+                && StrataGasDefOf.Strata_CarbonDioxide.harmHediff != null);
+            Check("life support defs loaded",
+                StrataThingDefOf.Strata_OxygenPump != null
+                && StrataThingDefOf.Strata_CO2Pump != null
+                && StrataThingDefOf.Strata_GasExchanger != null);
+            Check("canary cage loaded", StrataThingDefOf.Strata_CanaryCage != null);
+            Check("bird cage loaded", StrataThingDefOf.Strata_BirdCage != null);
+            Check("mine canary loaded", StrataPawnKindDefOf.Strata_Canary != null);
+            Check("deep gas is persistent, flammable, extractable",
+                StrataGasDefOf.Strata_DeepGas.passiveLeak <= 0f
+                && StrataGasDefOf.Strata_DeepGas.flammable
+                && StrataGasDefOf.Strata_DeepGas.extractable);
+            Check("gas defs carry harm hediffs",
+                StrataGasDefOf.Strata_Smoke.harmHediff != null && StrataGasDefOf.Strata_DeepGas.harmHediff != null);
+            Check("gas economy defs loaded",
+                StrataThingDefOf.Strata_DeepGasVent != null
+                && StrataThingDefOf.Strata_GasWell != null
+                && StrataThingDefOf.Strata_DeepGasCanister != null);
+            Check("hidden chamber gensteps registered",
+                DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_HiddenChambers") != null
+                && DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_Fog") != null);
+            Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
+            Check("sunken ruin map generator loaded",
+                DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_SunkenRuinLevel") != null);
+            Check("rimefeller shaft junctions loaded",
+                DefDatabase<ThingDef>.GetNamedSilentFail("Strata_ShaftFluid_RimefellerCrude") != null
+                && DefDatabase<ThingDef>.GetNamedSilentFail("Strata_ShaftFluid_RimefellerFuel") != null);
+            sb.AppendLine($"  INFO  gas pipe adapter: {GasNetAdapter.Status}");
 
             sb.AppendLine($"Total: {passed} passed, {failed} failed.");
             if (failed > 0) { Log.Warning(sb.ToString()); } else { Log.Message(sb.ToString()); }

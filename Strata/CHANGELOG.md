@@ -4,8 +4,59 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Changed
+- **Mine canary art** — custom canary sprites (north/south/east + dessicated) replace the yellow-tinted chicken placeholder.
+- **Canary cage vs bird cage** — canary cages accept **mine canaries only** (assign or hay acquire). New **bird cage** furniture holds any tame vanilla bird. **Default feeding:** stock hay/kibble in the cage via **Stock food** gizmo; toggle **Sustain caged bird hunger** in mod settings to freeze hunger instead.
+- **Mine canary animal** — custom **mine canary** pawn kind (chicken-based stats, dedicated canary art) for cage acquire/spawn. Gas harm for caged birds uses canary thresholds instead of colonist hediffs.
+
 ### Added
-- **Raid coordinator**: when the surface raid lord gives up, loots, or kidnaps, pursuit groups on other levels mirror that decision instead of fighting on alone — one raid, one story across the whole column.
+- **Digging down** research (600 pts, Medieval): unlocks the first basement from the surface.
+- **Dig down** gizmo on underground stairwell landings and down-stair entrances: extend the shaft to the next level without placing a new stairwell elsewhere on the floor (surface excluded; B2+ requires deep excavation research).
+- **Rimefeller shaft junctions** — crude-oil and chemfuel pipe ties between levels when [Rimefeller](https://steamcommunity.com/sharedfiles/filedetails/?id=1321849735) is loaded.
+- **Sunken ruin quest sites** ([PR #20](https://github.com/AzraelGodKing/rimworld_mods/pull/20)) — world incident after deep excavation reveals an ancient stairhead and insect warren with a hoard below; pocket-map safety when abandoning settlements or despawning sites.
+- **Underground gas** mod option — master toggle for deep gas pockets and sunken ruin incidents (sealed stairwell gas containment stays on).
+- **Combined abandon warning** mod option — one dialog listing pawns left on surface and underground when abandoning a settlement.
+
+### Fixed
+- **Startup: stale `Buildings_DeepGas.xml`** — replaced the pre-merge stub with an empty deprecated file so old installs stop referencing removed types (`CompProperties_DeepGasVent`, `Strata_DeepGasExtraction`, etc.); gas defs live in `Buildings_StrataGas.xml`.
+- **Startup: `Strata_GasWell` config** — set `fillPercent` to 1 and `blockWind` so the impassable wellhead passes RimWorld's build validation.
+
+### Added — Atmosphere v2 (O₂ / CO₂)
+- **Breathable air on deep levels**: underground maps seed enclosed rooms with ambient oxygen when finalized. Colonists and animals consume O₂ and exhale CO₂ each atmosphere cycle.
+- **Gas stratification**: oxygen is buoyant and rises through unsealed stairwells and elevators; carbon dioxide is heavy and sinks to the level below. Surface stairwell landings and open-to-sky rooms stay topped up with fresh O₂.
+- **Hypoxia and CO₂ exposure** hediffs when O₂ falls too low or CO₂ builds up. Toggle in mod settings: *O₂ / CO₂ simulation* (clears both gases when off).
+- **Life support buildings**: powered **oxygen pump** (releases O₂ into a sealed room), **CO₂ pump** (scrubs exhaled carbon dioxide from a room), and **shaft gas exchanger** (boosts O₂ rise and CO₂ sink through an open stairwell). Unlocked by *deep life support* research (900 pts, after forced ventilation).
+- **Canary cage**: a furnished warning for sealed rooms — assign or acquire a **mine canary** only. The bird sickens or dies from smoke, deep gas, hypoxia, or CO₂ **before** colonists do, triggering a high-priority alert. Hunger is sustained while caged. Unlocked by *forced ventilation* research.
+- **Bird cage**: hold any tame bird for display; hunger is sustained while caged.
+- **Gas overlay**: play-settings toggle (bottom-right row) now drives the full Strata gas overlay — tinted room fill plus a cursor readout showing every active gas channel as a **mix ratio** (e.g. `Gas: O₂ 72% · CO₂ 18% · smoke 10% (load 21%)`) anchored to the map cell under the cursor.
+
+### Fixed
+- **Dig down power overlap** — dig-down now spawns a **`dig shaft`** extension with no power comp beside the landing; the landing remains the sole transmitter and ties power to the level below.
+- **Level excavation gating** — two-step research progression: **digging down** opens surface → B1; **deep excavation** (now requires digging down first) opens B2 and every level deeper. Applies to excavated stairwells and the **Dig down** gizmo; extra stairwells that join an already-open level below are still allowed.
+- **Stairwell build work** — excavated stairwells now take **12,000** work from the surface and **20,000** below B1 (+8,000 deep offset). **Dig down** designates a dig-shaft blueprint with the same work and materials; the level below opens only after colonists finish construction (matching architect-placed stairwells).
+
+### Fixed
+- **Startup: stairwell `statParts` XML** — removed invalid `statParts` nodes from stairwell defs; depth-scaled work is applied via a Harmony patch on `WorkToBuild` instead.
+- **Startup: stairwell work Harmony patch** — resolve `StatExtension.GetStatValue` overloads at patch time so RimWorld 1.6 no longer throws on mod init.
+- **Dig shaft blueprints ignored** — `Strata_DigDownShaft` now has the construction fields RimWorld requires (`designationCategory`, terrain affordance, place worker); it stays hidden from the architect menu and is only placed via **Dig down**.
+- **Gas overlay on world tab** — the room tint overlay no longer draws while the world map is open (it was sticking on screen after leaving the colony view).
+- **Gas overlay readout** — mix and load are one line at the map cursor position so text no longer stacks/overlaps when pawns are on the level.
+
+### Added — Pillar 1: The Living Deep
+- **Multi-gas atmosphere simulation**: the smoke sim is now a general room-density simulation with per-gas channels (`StrataGasDef`). Each gas declares its own color, buoyancy, persistence, harm, flammability, and extractability; every existing ventilation tool — vents, louvers, smoke holes, ducts, fans, updraft filters, door flow, shaft seals, and the ventilation guarantee — applies to every gas automatically. Smoke keeps its exact tuning as one channel. Gas clouds now survive save/load, and clouds re-anchor mass-conservingly when rooms merge or grow (a breached pocket dilutes into the corridor that opened it).
+- **Hidden geothermal chambers**: freshly opened levels seed small fogged chambers sealed in the rock, discovered by mining like ore. Geothermal chambers hold a steam geyser — the vanilla geothermal generator just works underground, and its heat feeds the existing stairwell temperature exchange. Chance and count scale with depth.
+- **Persistent gas pockets**: other hidden chambers hold pressurized foul deep gas (often with a **deep gas vent** that seeps forever). Deep gas is heavier than air — it pools on the level it leaks into instead of riding shafts up — poisons pawns who breathe it, and **explodes when a room past ignition density holds an open flame**: torches become dangerous mining equipment, electric light a safety upgrade. Venting keeps pawns safe but wastes the resource. New levels are now generated fogged outside the arrival chamber so discovery works.
+- **Gas extraction economy**: cap a deep vent with the powered **gas well** (stops the seep, pumps **deep gas canisters**) and burn them in the **deep-gas generator** — 1400W with no smoke at all, the natural power plant for sealed levels. New research: *deep gas extraction* (1200 pts, after forced ventilation). With **Vanilla Helixien Gas Expanded** loaded, the well gains a pipe connector and feeds the helixien gas network directly instead (reflection-based soft dependency; canister fallback if the network is full or absent).
+- **Gas pocket incident recast** as a breach of the persistent system: digging splits a seam at a real rock face and floods the adjacent workings with deep gas — the same gas the chambers hold, cleared by the same tools — instead of conjuring vanilla tox gas out of thin air.
+- **Alerts**: "Flammable gas near open flame" (critical) while gas pools around a lit flame below ignition density; "Smoke building underground" generalized to any harmful gas.
+- **Dev tools**: saturate rooms with deep gas, list hidden chambers, per-gas cloud logging, and self-test coverage for the gas defs, economy defs, and gensteps.
+
+### Added — Fluid shafts (Cursor)
+- **Fluid shaft junctions**: optional shaft-side ties for **Dubs Bad Hygiene** plumbing, **Dubs Central Heating** hot-water and air-con pipes, **Dubs Rimatomics** reactor coolant, and **Vanilla Helixien Gas Expanded** helixien gas — adapters bound against real Dub/VEF APIs (`PlumbingNet.PushWater`, `CompHeatStore.HeaterTemp`, `CoolingNet` capacity, VEF `PipeNet` storage).
+- **DBH groundwater on Strata levels**: new underground maps attempt to seed Dubs Bad Hygiene groundwater when that mod is loaded, scaling with depth so deep wells work downstairs.
+- **Fluid shafts research** (1,200 pts, Industrial, after Shaft power): unlocks shaft fluid junction buildings when a supported pipe mod is loaded (DBH, DCH, Rimatomics, or VHGE).
+
+### Added when the surface raid lord gives up, loots, or kidnaps, pursuit groups on other levels mirror that decision instead of fighting on alone — one raid, one story across the whole column.
 - **Cross-level ritual escorts**: prisoners and colony animals assigned to a ritual on another level are listed in the dialog from every linked floor and escorted through stairwells by a warden, handler, or bonded master before joining the ceremony. Wardens walk to the prisoner in their cell and lead them to the stairwell — no prison beds at the landing required.
 - **Smarter shaft routing**: pawns heading to another level now take the portal nearest to *them* — powered elevators preferred — instead of the first shaft the level graph found. Applies to work/food/rest relays, cross-level hauling, ritual travel, and raid pursuit.
 - **Forced ventilation research** (700 pts, Industrial, after Electricity): the exhaust fan and updraft filter now sit behind a proper Strata research project instead of bare Electricity. Passive vents (louver, smoke hole) are unchanged.
@@ -19,6 +70,18 @@ All notable changes to Strata are documented here.
 ### Changed
 - **Levels now match the parent map's size** (previously a fixed 200×200). Landings, shaft conduits, and the level hotkeys stack exactly 1:1 beneath the level above instead of proportionally squeezed toward the center of a smaller map. Applies to newly opened levels only — existing levels keep their size and the proportional alignment still handles them. **Heads-up on big maps**: each opened level now costs what another map of your chosen size costs, so 300×300+ colonies pay noticeably more per level (the vacant-level throttle softens it).
 
+### Fixed
+### Fixed — Fluid shafts (Cursor)
+- **Startup: `Strata_FluidShafts` cross-reference** — fluid shafts research now lives in core defs instead of a conditional patch, so junction `researchPrerequisites` always resolve.
+- **Startup: VEF helixien pipe bind** — PipeSystem exposes `pipeNet` and `parent` as fields; reflection bind no longer fails at startup (which disabled same-cell helixien linking).
+- **Helixien gas shaft transfer** — VEF nets meter stored gas and pipe overflow (not live production/consumption rates), resolve the local net from the pipe grid at the junction cell, and merge isolated junction nets into adjacent pipe nets reliably. Fixed reflection binds for VEF 1.6 (`DrawAmongStorage` is 4-parameter only; `DistributeAmongStorage` uses 2-parameter).
+- **Rimatomics coolant shaft transfer** — Rimatomics recomputes `CoolingCapacity` / `CoolingLoopRatio` every tick from connected coolers and turbines, so the tie now pools cross-level spare capacity in a junction buffer and reapplies it after `CoolingNet.Tick` instead of writing net fields that vanish on the next tick. Pipe-grid regen runs when coolant junctions spawn or load.
+- **Helixien pipe placement crash** — the VEF register hook no longer rewrites every helixien connector (which threw when reading props from the wrong type and could corrupt pipe nets); it only relinks shaft junctions and pulls junctions onto newly placed pipe segments.
+- **Shaft fluid junctions tap into pipe nets like shaft power conduits.** Each junction now gets the mod's pipe comp (`CompProperties_Pipe` / `CompProperties_Resource`) via conditional patches — the same role as `CompPowerShaft` + `transmitsPower` on shaft power conduits. VHGE helixien junctions also link same-cell gas pipes (VEF only checks cardinal neighbours by default) and transfer via pipe-net overflow, not just storage tanks.
+- **Fluid shafts research cross-reference** when no pipe mods loaded — prerequisite was on the abstract junction base; moved to each mod-gated junction def.
+- **Strata startup crash** from invalid Harmony patch on `Thing.PostSpawnSetup` (removed; pipe rebuild uses deferred comp tick instead).
+- **Shaft fluid junction graphic load crash** — junctions incorrectly used `Graphic_Linked` with a single-tile art file, which broke def init and placement ghosts; they now use `Graphic_Single` with pipe link flags (matching VEF PipeSystem convention).
+- **Helixien shaft junction** now appears in VHGE's **Pipe Networks** architect tab (not buried in Structure), uses the gas-pipe menu icon, and only loads when VHGE is active. Requires both **Fluid shafts** and **Gas extraction** research.
 ### Fixed
 - **Elevators never actually required power to descend.** The shaft comp is a power transmitter, so it always has a grid (its own, if unwired) and stays switched on so the tie can feed a dark level — which meant the "has power" check for the car was always true, and the advertised power gate never engaged. Descending now requires the elevator's grid to be genuinely live: producing at least what it consumes, or holding battery charge. Riding up is unchanged (always free, nobody gets trapped), and shaft routing's elevator preference now uses the same real check.
 - **Clean power producers no longer smoke.** The burner auto-detection tagged *every* non-refuelable power producer as a combustion generator — including vanilla's watermill, the vanometric power cell, and the ship reactor, plus modded solar arrays, reactors, and turbines. Wall one in and it would gas the room. Producers now need actual evidence of combustion (fuel-ish name, flame overlay, or heat output) before they get an exhaust comp, and the vanilla clean producers are explicitly excluded.
