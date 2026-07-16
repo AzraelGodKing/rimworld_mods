@@ -1,10 +1,9 @@
 # Strata V2 Roadmap
 
-Planning backlog for Strata. Last updated for **Pillars 4–5** on
-`feature/strata-v2-away-and-living` (art pass intentionally last).
+**Status: SHIPPED (2.0).** Historical pillar notes below.
 
-**Current focus:** **Pillar 3 — Building Up** on `Feat/Final_V2_Feature_Going_UP`
-(surface → A1 tower stairwell MVP). Pillars 4–5 remain code-complete / playtest.
+Next: [V3_ROADMAP.md](V3_ROADMAP.md) (empty stub) and
+[GitHub issues](https://github.com/AzraelGodKing/rimworld_mods/issues).
 
 ---
 
