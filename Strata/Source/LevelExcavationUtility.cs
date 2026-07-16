@@ -50,6 +50,11 @@ namespace Strata
                 reason = "Invalid map.";
                 return false;
             }
+            if (StrataMapUtility.IsUpperLevel(map))
+            {
+                reason = "Dig down from the surface or an underground level — not from an upper floor.";
+                return false;
+            }
             if (MapHasOpenLevelBelow(map, ignore))
             {
                 return true;

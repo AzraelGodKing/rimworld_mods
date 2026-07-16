@@ -109,17 +109,17 @@ namespace Strata
         }
     }
 
-    // Colonists on a level whose every way up is sealed. Deliberate bunkering
-    // is fine; forgetting them down there is not.
+    // Colonists on a linked level whose every way back to the surface is sealed.
+    // Deliberate bunkering is fine; forgetting them on B1 or A1 is not.
     public class Alert_ColonistsBelowSealedShaft : Alert
     {
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
 
         public Alert_ColonistsBelowSealedShaft()
         {
-            defaultLabel = "Colonists sealed below";
-            defaultExplanation = "Colonists are on an underground level whose every exit shaft is "
-                + "sealed. They cannot come up until a stairwell or elevator is unsealed.";
+            defaultLabel = "Colonists sealed off";
+            defaultExplanation = "Colonists are on a linked level whose every exit shaft is sealed. "
+                + "They cannot return until a stairwell or elevator is unsealed.";
             defaultPriority = AlertPriority.High;
         }
 
@@ -130,7 +130,8 @@ namespace Strata
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                if (!StrataMapUtility.IsUnderground(map) || map.mapPawns.FreeColonistsSpawnedCount == 0)
+                bool linked = StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map);
+                if (!linked || map.mapPawns.FreeColonistsSpawnedCount == 0)
                 {
                     continue;
                 }
@@ -159,7 +160,7 @@ namespace Strata
                 anyExit = true;
                 if (!StrataPortalUtility.IsSealedPortal(exit.entrance ?? (Thing)exit))
                 {
-                    return false; // at least one way up is open
+                    return false; // at least one way home is open
                 }
             }
             return anyExit;

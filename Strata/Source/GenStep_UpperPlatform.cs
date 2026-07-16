@@ -8,6 +8,10 @@ namespace Strata
     // sky, walkable floor, no rock roof — solar and weather work like surface.
     public class GenStep_UpperPlatform : GenStep
     {
+        private const int OuterRim = 5;
+        private const int DeckRing = 10;
+        private const float PlazaRadius = 8f;
+
         public override int SeedPart => 591837264;
 
         public override void Generate(Map map, GenStepParams parms)
@@ -17,26 +21,48 @@ namespace Strata
                 ? StrataMapUtility.VerticalAlign(entrance.Position, entrance.Map, map)
                 : map.Center;
 
-            TerrainDef floor = TerrainDefOf.Concrete;
+            TerrainDef pad = TerrainDefOf.Concrete;
+            TerrainDef deck = DefDatabase<TerrainDef>.GetNamedSilentFail("WoodPlankFloor")
+                ?? TerrainDefOf.PavedTile;
+            TerrainDef rim = TerrainDefOf.Gravel;
+
             foreach (IntVec3 cell in map.AllCells)
             {
-                map.terrainGrid.SetTerrain(cell, floor);
                 map.roofGrid.SetRoof(cell, null);
+                int distEdge = DistanceToEdge(cell, map);
+                if (distEdge < OuterRim)
+                {
+                    map.terrainGrid.SetTerrain(cell, rim);
+                }
+                else if (distEdge < DeckRing)
+                {
+                    map.terrainGrid.SetTerrain(cell, deck);
+                }
+                else
+                {
+                    map.terrainGrid.SetTerrain(cell, pad);
+                }
             }
 
-            // Soft edge: gravel rim so the pad reads as a built platform, not an
-            // infinite concrete world. Landing stays concrete.
-            int edge = 3;
-            foreach (IntVec3 cell in map.AllCells)
+            // Clear plaza around the shaft landing so the arrival reads as a pad.
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(spot, PlazaRadius, useCenter: true))
             {
-                if (cell.x < edge || cell.z < edge
-                    || cell.x >= map.Size.x - edge || cell.z >= map.Size.z - edge)
+                if (cell.InBounds(map))
                 {
-                    map.terrainGrid.SetTerrain(cell, TerrainDefOf.Gravel);
+                    map.terrainGrid.SetTerrain(cell, pad);
                 }
             }
 
             MapGenerator.PlayerStartSpot = spot;
         }
+
+        private static int DistanceToEdge(IntVec3 cell, Map map)
+        {
+            int dx = MathfMin(cell.x, map.Size.x - 1 - cell.x);
+            int dz = MathfMin(cell.z, map.Size.z - 1 - cell.z);
+            return dx < dz ? dx : dz;
+        }
+
+        private static int MathfMin(int a, int b) => a < b ? a : b;
     }
 }

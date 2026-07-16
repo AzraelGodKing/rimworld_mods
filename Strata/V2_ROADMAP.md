@@ -49,6 +49,13 @@ Shipped in this slice:
 - [x] Levels tab + hotkeys for Level +N
 - [x] Join existing upper level from a second tower
 
+Polish landed:
+- [x] Dig portals never join upper pockets; no excavate-from-A1
+- [x] Tower shaft gas direction (rise up / sink down)
+- [x] Raid pursuit, sealed-off alert, caravan pull, abandon copy for A+
+- [x] Upper pad deck/rim + outdoor weather; dig elevator PlaceWorker
+- [x] Docs / About / research tab mention building up
+
 Still open:
 - [ ] A2+ stacking playtest / balance
 - [ ] Upper-floor dedicated content (greenhouses, sky bedrooms fantasy)

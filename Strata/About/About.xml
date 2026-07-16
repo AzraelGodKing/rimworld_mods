@@ -32,10 +32,13 @@
     <li>BiomesTeam.BiomesCaverns</li>
     <li>m00nl1ght.GeologicalLandforms</li>
   </loadAfter>
-  <description>Dig down and build a true multistory base - and let your colonists treat every level as one home.
+  <description>Dig down and build up a true multistory base - and let your colonists treat every level as one home.
 
 EXCAVATED STAIRWELL
 Build a stairwell and your colonists carve out a new underground level beneath your base: a solid slab of living rock the same size as the map above, stacked exactly beneath it, ready to be mined into bedrooms, workshops, freezers, and vaults. Build another stairwell down there and keep going deeper. Every level is protected by thick rock roof - safe from drop pods, mortars, and weather.
+
+TOWER STAIRWELL
+Research building up, then frame a tower stairwell (or powered tower elevator) on the surface. Completing it opens an outdoor Level +1 above your colony - the same footprint, open sky for solar and rain, ready for rooftop rooms. A second tower joins that same upper floor. Smoke and heat rise into the floors above through unsealed shafts, just as they rise from the deep.
 
 ONE BASE, MANY FLOORS
 Other multi-level mods make each floor an island. Strata's fluidity engine relays your pawns between levels on their own:
@@ -73,7 +76,7 @@ TIPS
 - Thick rock roofs collapse when unsupported: leave pillars in big halls, just like mountain bases.
 - Stairwells cannot be deconstructed while colonists are still below.
 - Raiders who run out of targets on their level will find your stairwells and come down (or up) after you. A sealed stairwell stops them cold - and blocks tox gas through the shaft - but it stops your colonists too.
-- Rename levels in the Levels tab so "Level -2" becomes something you'll actually remember.
+- Rename levels in the Levels tab so "Level -2" or "Level +1" becomes something you'll actually remember.
 - Smoke rises through open stairwells — put generators in a room with a shaft, or duct fumes to the landing and let the stack carry them up.
 
 Requires the Harmony mod. RimWorld 1.6. Safe to add to existing saves. Before removing from a save: bring everyone to the surface, haul up anything you care about, and deconstruct all stairwells.</description>

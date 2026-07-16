@@ -368,6 +368,7 @@ namespace Strata
             // 2. Buoyant gases rise; heavy gases sink through unsealed shafts.
             SmokeRiseUtility.ProcessMap(this);
             SmokeRiseUtility.ProcessGasSink(this);
+            SmokeRiseUtility.ProcessTowerShafts(this);
 
             // 2b. Surface stairwells bleed fresh outdoor air; open underground
             // rooms exchange with the column above.

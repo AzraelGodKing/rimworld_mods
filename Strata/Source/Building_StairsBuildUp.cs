@@ -94,6 +94,7 @@ namespace Strata
                         state += " (" + temp.ToStringTemperature("F0") + " at the landing)";
                     }
                 }
+                state += "\nSmoke shaft: fumes rise into the floor above";
                 state += "\n" + PowerShaftInspectLine();
             }
             return state;

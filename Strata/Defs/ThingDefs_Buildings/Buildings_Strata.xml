@@ -406,6 +406,9 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <designationCategory>Structure</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_LevelExcavation</li>
+    </placeWorkers>
     <researchPrerequisites>
       <li>Strata_Elevators</li>
     </researchPrerequisites>

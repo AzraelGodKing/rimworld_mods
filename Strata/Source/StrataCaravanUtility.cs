@@ -65,7 +65,7 @@ namespace Strata
             int count = 0;
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(surface))
             {
-                if (!StrataMapUtility.IsUnderground(link.map))
+                if (!StrataMapUtility.IsUnderground(link.map) && !StrataMapUtility.IsUpperLevel(link.map))
                 {
                     continue;
                 }
@@ -98,15 +98,15 @@ namespace Strata
                 return;
             }
             lastPulseTick = now;
-            IssueUndergroundHaulJobs(surface);
+            IssueLinkedLevelHaulJobs(surface);
         }
 
-        private static void IssueUndergroundHaulJobs(Map surface)
+        private static void IssueLinkedLevelHaulJobs(Map surface)
         {
             int issued = 0;
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(surface))
             {
-                if (!StrataMapUtility.IsUnderground(link.map))
+                if (!StrataMapUtility.IsUnderground(link.map) && !StrataMapUtility.IsUpperLevel(link.map))
                 {
                     continue;
                 }

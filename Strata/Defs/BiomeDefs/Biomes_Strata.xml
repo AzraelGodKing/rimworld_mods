@@ -46,8 +46,14 @@
     <noAmbientWind>false</noAmbientWind>
     <canExitMap>false</canExitMap>
     <hasBedrock>false</hasBedrock>
+    <!-- Outdoor pad: rain/solar matter for rooftop living; inherits colony tile climate. -->
     <baseWeatherCommonalities>
-      <Clear>100</Clear>
+      <Clear>18</Clear>
+      <Fog>2</Fog>
+      <Rain>8</Rain>
+      <FoggyRain>2</FoggyRain>
+      <SnowGentle>2</SnowGentle>
+      <SnowHard>1</SnowHard>
     </baseWeatherCommonalities>
   </BiomeDef>
 

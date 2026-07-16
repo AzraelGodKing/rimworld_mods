@@ -207,10 +207,17 @@ namespace Strata
         {
             foreach (Thing thing in Map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing != this && thing is Building_StairsDown other
-                    && other.Spawned && other.PocketMapExists)
+                // Tower stairwells/elevators open UP — never treat their pocket as "below".
+                if (thing == this || thing is Building_StairsBuildUp
+                    || thing is not Building_StairsDown other
+                    || !other.Spawned || !other.PocketMapExists)
                 {
-                    return other.PocketMap;
+                    continue;
+                }
+                Map pocket = other.PocketMap;
+                if (pocket != null && !StrataMapUtility.IsUpperLevel(pocket))
+                {
+                    return pocket;
                 }
             }
             return null;

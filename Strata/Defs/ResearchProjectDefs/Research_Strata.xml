@@ -4,8 +4,8 @@
   <ResearchTabDef>
     <defName>Strata</defName>
     <label>Strata</label>
-    <generalTitle>Underground research</generalTitle>
-    <generalDescription>Excavation, shafts, ventilation, life support, and the fouler airs of the deep.</generalDescription>
+    <generalTitle>Vertical research</generalTitle>
+    <generalDescription>Building up, digging down, shafts, ventilation, life support, and the fouler airs of the deep.</generalDescription>
   </ResearchTabDef>
 
   <ResearchProjectDef>

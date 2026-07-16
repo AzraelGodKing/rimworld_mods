@@ -8,7 +8,7 @@ namespace Strata
 {
     // Bottom-bar "Levels" tab: one row per level of the colony with colonist,
     // hostile, and temperature readouts, and a one-click camera jump. The
-    // button stays hidden until at least one underground level exists.
+    // button stays hidden until at least one upper or underground level exists.
     public class MainButtonWorker_Levels : MainButtonWorker_ToggleTab
     {
         public override bool Visible
@@ -265,6 +265,9 @@ namespace Strata
                 if (thing.def.defName == "Strata_StairsDown"
                     || thing.def.defName == "Strata_AncientColonyStairsDown"
                     || thing.def.defName == "Strata_ElevatorDown"
+                    || thing.def.defName == "Strata_StairsUp"
+                    || thing.def.defName == "Strata_ElevatorUp"
+                    || thing.def.defName == "Strata_DigDownShaft"
                     || thing.def.defName == "Strata_StairsBuildUp"
                     || thing.def.defName == "Strata_BuildUpLanding"
                     || thing.def.defName == "Strata_ElevatorBuildUp"

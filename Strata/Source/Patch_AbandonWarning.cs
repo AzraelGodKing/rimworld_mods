@@ -72,7 +72,7 @@ namespace Strata
         private static string ChainedText(List<Pawn> below)
         {
             var text = new StringBuilder();
-            text.AppendLine("Abandoning this settlement will collapse every level beneath it, and these pawns are still underground:");
+            text.AppendLine("Abandoning this settlement will collapse every linked level (above and below), and these pawns are still on those floors:");
             text.AppendLine();
             AppendPawns(text, below);
             text.AppendLine();
@@ -83,7 +83,7 @@ namespace Strata
         private static string MergedText(Map surface, List<Pawn> below)
         {
             var text = new StringBuilder();
-            text.AppendLine("Abandoning this settlement will collapse every level beneath it.");
+            text.AppendLine("Abandoning this settlement will collapse every linked level (above and below).");
             List<Pawn> onSurface = LeftBehindOn(surface);
             if (onSurface.Count > 0)
             {
@@ -92,7 +92,7 @@ namespace Strata
                 AppendPawns(text, onSurface);
             }
             text.AppendLine();
-            text.AppendLine("Still underground:");
+            text.AppendLine("Still on linked levels:");
             AppendPawns(text, below);
             text.AppendLine();
             text.Append("They will all be lost forever. Abandon anyway?");

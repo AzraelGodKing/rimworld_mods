@@ -46,7 +46,11 @@ namespace Strata
 
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing is not PocketMapExit lowerExit || thing is Building_StairsDown or Building_ElevatorDown)
+                // Dig landings only: buoyant gas rises toward the entrance above.
+                // Tower landings are handled in ProcessTowerShafts (opposite stack).
+                if (thing is not PocketMapExit lowerExit
+                    || thing is Building_StairsDown
+                    || thing is Building_BuildUpLanding)
                 {
                     continue;
                 }
@@ -76,14 +80,16 @@ namespace Strata
             }
         }
 
-        // Heavy gases (CO₂, deep gas) sink through unsealed down-stairwell /
-        // elevator portals into the level below.
+        // Heavy gases (CO₂, deep gas) sink through unsealed dig stairwells /
+        // elevators into the level below — never through tower shafts (those open up).
         public static void ProcessGasSink(AtmosphereMapComponent atmosphere)
         {
             Map map = atmosphere.map;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing is not Building_StairsDown stairsDown || !stairsDown.Spawned || !stairsDown.PocketMapExists)
+                if (thing is Building_StairsBuildUp
+                    || thing is not Building_StairsDown stairsDown
+                    || !stairsDown.Spawned || !stairsDown.PocketMapExists)
                 {
                     continue;
                 }
@@ -92,11 +98,11 @@ namespace Strata
                     continue;
                 }
                 Map lowerMap = stairsDown.PocketMap;
-                if (lowerMap == null)
+                if (lowerMap == null || StrataMapUtility.IsUpperLevel(lowerMap))
                 {
                     continue;
                 }
-                MapPortal lowerLanding = FindLowerLanding(stairsDown, lowerMap);
+                MapPortal lowerLanding = FindLinkedLanding(stairsDown, lowerMap);
                 if (lowerLanding == null || !lowerLanding.Spawned)
                 {
                     continue;
@@ -113,11 +119,65 @@ namespace Strata
             }
         }
 
-        private static MapPortal FindLowerLanding(Building_StairsDown stairsDown, Map lowerMap)
+        // Tower shafts: pocket is ABOVE this portal. Buoyant gas rises into A+;
+        // heavy gas on the upper floor sinks back down to this floor.
+        public static void ProcessTowerShafts(AtmosphereMapComponent atmosphere)
         {
-            foreach (Thing thing in lowerMap.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            Map map = atmosphere.map;
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing is PocketMapExit exit && exit.entrance == stairsDown)
+                if (thing is not Building_StairsBuildUp tower || !tower.Spawned || !tower.PocketMapExists)
+                {
+                    continue;
+                }
+                if (StrataPortalUtility.IsSealedPortal(tower))
+                {
+                    continue;
+                }
+                Map upperMap = tower.PocketMap;
+                if (upperMap == null || !StrataMapUtility.IsUpperLevel(upperMap))
+                {
+                    continue;
+                }
+                MapPortal landing = FindLinkedLanding(tower, upperMap);
+                if (landing == null || !landing.Spawned)
+                {
+                    continue;
+                }
+
+                Room lowerRoom = tower.Position.GetRoom(map);
+                Room upperRoom = landing.Position.GetRoom(upperMap);
+
+                if (lowerRoom != null && !lowerRoom.UsesOutdoorTemperature)
+                {
+                    float rise = NaturalShaftRise;
+                    if (RoomContainsLevelExit(lowerRoom, map)
+                        || (upperRoom != null && RoomContainsLevelExit(upperRoom, upperMap)))
+                    {
+                        rise = Mathf.Clamp01(rise + atmosphere.ShaftRiseBoostForRoom(lowerRoom));
+                    }
+                    atmosphere.TransferGasUp(lowerRoom, upperRoom, upperMap, rise, landing.Position);
+                }
+
+                if (upperRoom != null && !upperRoom.UsesOutdoorTemperature)
+                {
+                    AtmosphereMapComponent upperAtmo = upperMap.GetComponent<AtmosphereMapComponent>();
+                    if (upperAtmo == null)
+                    {
+                        continue;
+                    }
+                    float sink = NaturalShaftSink;
+                    sink = Mathf.Clamp01(sink + upperAtmo.ShaftSinkBoostForRoom(upperRoom));
+                    upperAtmo.TransferGasDown(upperRoom, lowerRoom, map, sink, tower.Position);
+                }
+            }
+        }
+
+        private static MapPortal FindLinkedLanding(Building_StairsDown entrance, Map otherMap)
+        {
+            foreach (Thing thing in otherMap.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is PocketMapExit exit && exit.entrance == entrance)
                 {
                     return exit;
                 }
