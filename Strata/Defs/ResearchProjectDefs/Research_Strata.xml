@@ -11,7 +11,7 @@
   <ResearchProjectDef>
     <defName>Strata_BuildingUp</defName>
     <label>building up</label>
-    <description>Framing techniques for stacking a full outdoor floor above the colony — the same footprint as the map below, open to sky for solar, rain, and rooftop living. Extra tower stairwells can join the same upper level.</description>
+    <description>Framing techniques for stacking an outdoor roof deck above the colony. The upper floor matches this map's footprint, but you can only build where the floor below is roofed (plus the stair/elevator plaza). Expand roofs downstairs to grow the deck — open sky holds nothing. Extra tower stairwells can join the same upper level.</description>
     <baseCost>600</baseCost>
     <techLevel>Medieval</techLevel>
     <tab>Strata</tab>

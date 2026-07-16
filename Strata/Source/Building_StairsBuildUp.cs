@@ -49,6 +49,8 @@ namespace Strata
                 IntVec3 landing = FindLandingCell(existing);
                 if (landing.IsValid)
                 {
+                    // Shaft plaza is always buildable even if the floor below is unroofed.
+                    UpperDeckUtility.EnsurePlaza(existing, landing);
                     StrataPortalUtility.SpawnLanding(def.portal.exitDef, landing, existing);
                     Messages.Message("Connected to the existing level above.", this, MessageTypeDefOf.PositiveEvent);
                     return existing;
@@ -82,7 +84,7 @@ namespace Strata
             string state = "Level above: not yet opened";
             if (PocketMapExists)
             {
-                state = "Level above: framed";
+                state = "Level above: roof deck";
                 if (exit != null && exit.Spawned)
                 {
                     Room above = exit.Position.GetRoom(exit.Map);
@@ -94,6 +96,7 @@ namespace Strata
                         state += " (" + temp.ToStringTemperature("F0") + " at the landing)";
                     }
                 }
+                state += "\nBuildable only where this floor is roofed (plus the shaft plaza)";
                 state += "\nSmoke shaft: fumes rise into the floor above";
                 state += "\n" + PowerShaftInspectLine();
             }

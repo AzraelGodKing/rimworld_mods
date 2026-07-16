@@ -53,8 +53,9 @@ Polish landed:
 - [x] Dig portals never join upper pockets; no excavate-from-A1
 - [x] Tower shaft gas direction (rise up / sink down)
 - [x] Raid pursuit, sealed-off alert, caravan pull, abandon copy for A+
-- [x] Upper pad deck/rim + outdoor weather; dig elevator PlaceWorker
+- [x] Upper pad outdoor weather; dig elevator PlaceWorker
 - [x] Docs / About / research tab mention building up
+- [x] A+ buildable only on roof-supported deck (+ shaft plaza); open sky elsewhere; live roof sync
 
 Still open:
 - [ ] A2+ stacking playtest / balance

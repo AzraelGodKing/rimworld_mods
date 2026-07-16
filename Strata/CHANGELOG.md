@@ -9,11 +9,14 @@ All notable changes to Strata are documented here.
 - **Tower elevator** — after *building up* + *elevators*, a compact powered car opens/joins the same upper map. Ascending needs a live grid; riding down from the landing is always free. Elevators research now unlocks after *digging down* (not deep excavation) so B1/A1 elevators are not gated on B2.
 - **Levels tab / hotkeys** — upper floors show as Level +N; Page Up from the surface jumps to A1; Page Down from A1 returns to the surface. Relays and power shafts reuse the existing portal graph.
 
+### Changed — A+ roof decks
+- **Upper map gen** — Level +N is no longer a full concrete pad. Cells are **roof deck** (walk/build) only where the floor below is roofed, plus a plaza around the tower shaft; everywhere else is impassable **open sky**. Building a roof downstairs grows the deck above; removing an empty deck tile’s supporting roof turns it back to sky (buildings already placed are left alone).
+
 ### Fixed — Building Up polish
 - Dig stairwells no longer join an open A1 as “the level below”; excavating from upper floors is blocked.
 - Tower shafts move buoyant gas **up** into A+ and heavy gas **down** to the floor below (dig shafts unchanged).
 - Raid pursuit, sealed-shaft alerts, caravan pull, and abandon warnings treat upper floors as linked colony levels.
-- Dig elevators use the excavation place-worker; upper pads get a clearer deck/rim and real outdoor weather commons.
+- Dig elevators use the excavation place-worker; upper pads get outdoor weather commons.
 
 ### Added — Rich ore nodes (B1+)
 - **Map gen** — each underground level (colony B1+ and quest strata) seeds a few rare, large ore seams in the solid rock after carving. B1 usually gets 1–2 fat nodes (~18–32 cells, occasional motherlode); deeper levels place more and larger seams with a stronger rich-ore bias. Existing deep-vein / prospector incidents are unchanged.

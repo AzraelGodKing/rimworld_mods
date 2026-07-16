@@ -360,6 +360,9 @@ namespace Strata
             Check("tower elevator loaded",
                 StrataThingDefOf.Strata_ElevatorBuildUp != null
                 && StrataThingDefOf.Strata_ElevatorBuildUpLanding != null);
+            Check("upper roof-deck terrains loaded",
+                DefDatabase<TerrainDef>.GetNamedSilentFail(UpperDeckUtility.RoofDeckDefName) != null
+                && DefDatabase<TerrainDef>.GetNamedSilentFail(UpperDeckUtility.OpenSkyDefName) != null);
             Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
             Check("sunken ruin map generator loaded",
                 DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_SunkenRuinLevel") != null);

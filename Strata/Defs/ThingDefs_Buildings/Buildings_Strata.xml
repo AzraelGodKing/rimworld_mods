@@ -31,7 +31,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_StairsBuildUp</defName>
     <label>tower stairwell</label>
-    <description>A stair tower that opens a new outdoor floor above this map: the same footprint as this level, open to the sky for solar, weather, and rooftop rooms. Completing it frames Level +1 (or joins an upper floor already opened by another tower stairwell). Requires building up research.
+    <description>A stair tower that opens a new outdoor floor above this map. Completing it frames Level +1 (or joins an upper floor already opened by another tower stairwell). The upper map is a roof deck: you can only walk and build where this floor is roofed, plus a plaza around the shaft — open sky beyond the roof edge cannot hold structures. Expand roofs downstairs to grow the deck. Requires building up research.
 
 Colonists use the tower on their own to work across floors. Wire each level into the stairwell to pool power. It cannot be deconstructed while anyone is still above.</description>
     <thingClass>Strata.Building_StairsBuildUp</thingClass>
@@ -275,7 +275,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ElevatorBuildUp</defName>
     <label>tower elevator</label>
-    <description>A powered elevator that opens and links an outdoor floor above, just like a tower stairwell - but compact. The car needs power to ascend; if power fails, anyone above can still ride down to safety. Cannot be deconstructed while colonists are on the level above.</description>
+    <description>A powered elevator that opens and links an outdoor roof-deck floor above, just like a tower stairwell - but compact. Buildable area matches roofs on this floor (plus the shaft plaza). The car needs power to ascend; if power fails, anyone above can still ride down to safety. Cannot be deconstructed while colonists are on the level above.</description>
     <thingClass>Strata.Building_ElevatorBuildUp</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/ElevatorUp</texPath>

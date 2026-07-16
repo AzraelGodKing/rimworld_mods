@@ -31,7 +31,7 @@ stairwells (a level with pawns on it will not be deleted).
 
 | System | Short version |
 | --- | --- |
-| **Levels** | **Down:** excavated stairwell → solid-rock Level −N the size of the map above. **Up:** tower stairwell / tower elevator → outdoor Level +N with open sky (solar & weather). A second shaft on the same floor joins the SAME linked level. |
+| **Levels** | **Down:** excavated stairwell → solid-rock Level −N the size of the map above. **Up:** tower stairwell / tower elevator → outdoor Level +N roof deck (build only where the floor below is roofed, plus the shaft plaza; open sky elsewhere). A second shaft on the same floor joins the SAME linked level. |
 | **Fluidity** | Colonists relay themselves between floors for work, food, rest, medical, joy, hauling, construction materials, and rituals. Work relay covers growing, cleaning, firefighting, hunting, research, warden, handling, and bills — mods can register extra probes. You designate; they commute. |
 | **Logistics** | Stockpile priority works across the whole column. Blueprints pull missing materials from other levels. The build menu and (optional) resource readout see the whole colony. |
 | **Power** | Stairwells and elevators tie the levels' grids (demand-driven, both directions). The shaft conduit gives a dedicated tie point and extends its own lower junction. |
