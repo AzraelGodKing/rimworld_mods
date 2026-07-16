@@ -6,9 +6,9 @@ using Verse.AI;
 
 namespace Strata
 {
-    // Prisoners and ritual animals cannot use stairwells on their own. A warden,
-    // handler, or bonded master on the same map walks to them and leads them
-    // portal-to-portal toward the ritual.
+    // Ritual animals still need a handler escort for ceremonies. Prisoners and
+    // slaves climb shafts alone during prison breaks / escapes
+    // (EscapePortalUtility); escorts remain only for cross-level rituals.
     public static class RitualEscortUtility
     {
         public static bool NeedsEscort(Pawn pawn)

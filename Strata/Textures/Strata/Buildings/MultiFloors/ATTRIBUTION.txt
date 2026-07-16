@@ -1,0 +1,7 @@
+Optional alternate stair and elevator art for Strata's "Multifloor Stairs" mod setting.
+
+Textures in HandrailStairsMedium/ and ModernElevator/ are adapted from the
+MultiFloors mod by Telardo (Steam Workshop). Telardo may request removal.
+
+Strata does not require MultiFloors to be installed. These copies live under
+Strata/Buildings/MultiFloors/ and are only used when the setting is enabled.

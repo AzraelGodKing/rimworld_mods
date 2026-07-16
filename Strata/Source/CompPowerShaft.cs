@@ -42,6 +42,29 @@ namespace Strata
             }
         }
 
+        // Shaft transmitters are tie points, not appliances. Vanilla still
+        // toggles PowerOn during tight grids and draws the blinking NeedsPower
+        // bolt even while cross-level transfer keeps working.
+        public override void PostDraw()
+        {
+            if (ShouldSuppressNeedsPowerOverlay())
+            {
+                CompFlickable flick = parent.GetComp<CompFlickable>();
+                if (flick != null && !flick.SwitchIsOn && !parent.IsBrokenDown())
+                {
+                    parent.Map.overlayDrawer.DrawOverlay(parent, OverlayTypes.PowerOff);
+                }
+                return;
+            }
+            base.PostDraw();
+        }
+
+        private bool ShouldSuppressNeedsPowerOverlay()
+        {
+            return Props.transmitsPower && PowerNet != null
+                && FlickUtility.WantsToBeOn(parent) && !parent.IsBrokenDown();
+        }
+
         // Called on the TOP node with the bottom node. Sets both nodes' output
         // so energy flows to whichever grid needs it, limited by each side's
         // available surplus and battery discharge (not a fixed watt ceiling).

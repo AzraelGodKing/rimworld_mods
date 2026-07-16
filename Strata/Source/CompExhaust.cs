@@ -6,9 +6,17 @@ namespace Strata
 {
     public class CompProperties_Exhaust : CompProperties
     {
-        // Smoke density added to the room each cycle while the burner runs,
-        // before dilution by room size.
+        // Room concentration added each atmosphere cycle while active.
+        // Combustion sources (generators, campfires) divide this by room
+        // size; life-support pumps (emitWhenPowered) apply the full value.
         public float emissionPerCycle = 3.5f;
+
+        // Which atmosphere channel this source emits. Null = combustion smoke.
+        public StrataGasDef gas;
+
+        // Life-support pumps: emit while CompPowerTrader is on (not while
+        // generating power like a fueled generator).
+        public bool emitWhenPowered;
 
         public CompProperties_Exhaust()
         {
@@ -16,16 +24,24 @@ namespace Strata
         }
     }
 
-    // Attached to combustion generators. Registers with the level's smoke
-    // simulation and reports when it's actively burning (producing power).
+    // Attached to combustion generators (and, via subclasses, other gas
+    // sources like deep vents). Registers with the level's atmosphere
+    // simulation and reports when it's actively emitting.
     public class CompExhaust : ThingComp
     {
         public CompProperties_Exhaust Props => (CompProperties_Exhaust)props;
 
-        public bool Active
+        public StrataGasDef GasDef => Props.gas ?? StrataGasDefOf.Strata_Smoke;
+
+        public virtual bool Active
         {
             get
             {
+                if (Props.emitWhenPowered)
+                {
+                    CompPowerTrader powered = parent.GetComp<CompPowerTrader>();
+                    return powered != null && powered.PowerOn;
+                }
                 // Generators: emit while actually producing power.
                 CompPowerTrader power = parent.GetComp<CompPowerTrader>();
                 if (power != null)
@@ -64,15 +80,46 @@ namespace Strata
                 && pawn.CurJob.GetTarget(TargetIndex.A).Thing == parent;
         }
 
+        internal void RegisterWithAtmosphere(AtmosphereMapComponent atmosphere)
+        {
+            atmosphere?.Emitters.Add(this);
+        }
+
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            parent.Map.GetComponent<SmokeMapComponent>()?.Emitters.Add(this);
+            RegisterWithAtmosphere(parent.Map.GetComponent<AtmosphereMapComponent>());
+        }
+
+        public override string CompInspectStringExtra()
+        {
+            if (!Props.emitWhenPowered)
+            {
+                return null;
+            }
+            if (!Active)
+            {
+                return "Needs power to enrich the room with " + GasDef.label + ".";
+            }
+            Room room = parent.GetRoom();
+            if (room == null || room.UsesOutdoorTemperature)
+            {
+                return "Releasing " + GasDef.label + " (open air — no enrichment needed).";
+            }
+            AtmosphereMapComponent atmosphere = parent.Map.GetComponent<AtmosphereMapComponent>();
+            float density = atmosphere?.DensityAtCell(parent.Position, GasDef) ?? 0f;
+            if (GasDef == StrataGasDefOf.Strata_Oxygen)
+            {
+                return density >= AtmosphereMapComponent.AmbientOxygen - 0.01f
+                    ? "Room air is breathable."
+                    : "Enriching room with " + GasDef.label + " (" + density.ToStringPercent() + ").";
+            }
+            return "Releasing " + GasDef.label + " into the room.";
         }
 
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
-            map.GetComponent<SmokeMapComponent>()?.Emitters.Remove(this);
+            map.GetComponent<AtmosphereMapComponent>()?.Emitters.Remove(this);
             base.PostDeSpawn(map, mode);
         }
     }

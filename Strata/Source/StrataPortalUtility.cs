@@ -34,16 +34,11 @@ namespace Strata
         // landing there. Must run while PocketMapUtility.currentlyGeneratingPortal
         // points at the entrance (during map generation or GeneratePocketMapInt):
         // PocketMapExit.SpawnSetup uses it to wire entrance and exit together.
-        public static PocketMapExit SpawnLanding(ThingDef exitDef, IntVec3 cell, Map level)
+        public static PocketMapExit SpawnLanding(ThingDef exitDef, IntVec3 cell, Map level, Rot4? rot = null)
         {
-            foreach (IntVec3 c in GenRadial.RadialCellsAround(cell, 4.5f, useCenter: true))
-            {
-                if (c.InBounds(level))
-                {
-                    c.GetFirstMineable(level)?.Destroy(DestroyMode.Vanish);
-                }
-            }
-            return (PocketMapExit)GenSpawn.Spawn(ThingMaker.MakeThing(exitDef), cell, level);
+            ArrivalZoneUtility.PrepareLandingCell(level, cell);
+            Rot4 spawnRot = rot ?? PocketMapUtility.currentlyGeneratingPortal?.Rotation ?? Rot4.North;
+            return (PocketMapExit)GenSpawn.Spawn(ThingMaker.MakeThing(exitDef), cell, level, spawnRot);
         }
 
         public static bool IsSealedPortal(Thing thing)
@@ -63,6 +58,11 @@ namespace Strata
             if (thing is Building_ElevatorUp elevatorUp && elevatorUp.entrance is Building_ElevatorDown elevEntrance)
             {
                 return elevEntrance.Sealed;
+            }
+            if (thing is Building_ElevatorBuildUpLanding towerLanding
+                && towerLanding.entrance is Building_StairsBuildUp towerEntrance)
+            {
+                return towerEntrance.Sealed;
             }
             return false;
         }

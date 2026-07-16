@@ -4,6 +4,9 @@ All notable changes to Stormproof are documented here.
 
 ## [Unreleased]
 
+### Added
+- **Dedicated research tab** — all Stormproof projects live under their own *Stormproof* tab (no longer on Main).
+
 ### Changed
 - GitHub Pages hub (`docs/index.html`) building and research counts synced across all four mod pages.
 

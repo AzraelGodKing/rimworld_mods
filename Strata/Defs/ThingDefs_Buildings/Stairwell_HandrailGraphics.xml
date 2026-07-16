@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Shared handrail-stair graphics (MultiFloors-inspired layout). Child defs inherit
+       graphicData + size; buildable portals also set rotatable=true. -->
+
+  <ThingDef Name="Strata_HandrailStairsDownGraphic" ParentName="BuildingBase" Abstract="True">
+    <graphicData>
+      <texPath>Strata/Buildings/HandrailStairs/StairsDown/StairsDown</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2.2, 2.2)</drawSize>
+      <drawOffsetNorth>(0, 0, 0)</drawOffsetNorth>
+      <drawOffsetSouth>(0, 0, 0.2)</drawOffsetSouth>
+      <drawOffsetWest>(0.25, 0, 0)</drawOffsetWest>
+      <drawOffsetEast>(-0.3, 0, 0.06)</drawOffsetEast>
+    </graphicData>
+    <size>(2,2)</size>
+    <rotatable>true</rotatable>
+    <uiIconScale>0.9</uiIconScale>
+    <uiIconOffset>(0, -0.2)</uiIconOffset>
+  </ThingDef>
+
+  <ThingDef Name="Strata_HandrailStairsUpGraphic" ParentName="BuildingBase" Abstract="True">
+    <graphicData>
+      <texPath>Strata/Buildings/HandrailStairs/StairsUp/StairsUp</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3.3, 3.3)</drawSize>
+      <drawOffsetNorth>(0, 0, 0.76)</drawOffsetNorth>
+      <drawOffsetSouth>(0, 0, 0.4)</drawOffsetSouth>
+      <drawOffsetWest>(-0.25, 0, 0.55)</drawOffsetWest>
+      <drawOffsetEast>(0.25, 0, 0.55)</drawOffsetEast>
+    </graphicData>
+    <size>(2,2)</size>
+    <rotatable>true</rotatable>
+    <uiIconScale>0.9</uiIconScale>
+    <uiIconOffset>(0, -0.2)</uiIconOffset>
+  </ThingDef>
+
+</Defs>

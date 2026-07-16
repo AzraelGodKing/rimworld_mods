@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Shoring pillar (2× column roof support) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_ShoringPillar</defName>
+    <label>shoring pillar</label>
+    <description>A reinforced stone column that holds up excavated rock like a vanilla column, but braces twice as wide a span. Protects against cave-ins and roof collapse over a large chamber — wide workings still need several pillars.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <drawSize>(0.5,1.25)</drawSize>
+      <drawOffset>(0,0,0.2)</drawOffset>
+      <texPath>Things/Building/Furniture/Column</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shadowData>
+        <volume>(0.3, 0.5, 0.3)</volume>
+        <offset>(0,0,-0.23)</offset>
+      </shadowData>
+      <damageData>
+        <rect>(0.2,0.2,0.6,0.6)</rect>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>0</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <uiIconScale>1.2</uiIconScale>
+    <holdsRoof>true</holdsRoof>
+    <specialDisplayRadius>13.8</specialDisplayRadius>
+    <stuffCategories>
+      <li>Stony</li>
+    </stuffCategories>
+    <costStuffCount>25</costStuffCount>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>1400</WorkToBuild>
+      <Flammability>0.2</Flammability>
+      <Beauty>3</Beauty>
+    </statBases>
+    <building>
+      <isInert>true</isInert>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+    <comps>
+      <li Class="Strata.CompProperties_Shoring">
+        <protectionRadius>13.8</protectionRadius>
+      </li>
+    </comps>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_Shoring</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Gas airlock ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_GasAirlock</defName>
+    <label>gas airlock</label>
+    <description>A sealed wall fitting that blocks room-to-room gas equalization when engaged. Colonists can still walk through — only the atmosphere is stopped. Flick to open for ventilation or close to isolate a pocket of foul air.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/GasAirlock</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>20</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>true</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>180</MaxHitPoints>
+      <WorkToBuild>2200</WorkToBuild>
+      <Flammability>0.3</Flammability>
+    </statBases>
+    <costList>
+      <Steel>40</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="Strata.CompProperties_GasAirlock"/>
+    </comps>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_DeepInfrastructure</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Ore skip hoist ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_OreHoist</defName>
+    <label>ore skip hoist</label>
+    <description>A powered skip that hauls mined chunks and slag to a linked partner hoist on the level above or below. Build within five tiles of a stairwell or elevator — it extends a matching skip to the landing on the other level, like a shaft conduit.</description>
+    <thingClass>Strata.Building_OreHoist</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/OreHoist</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>3500</WorkToBuild>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <Steel>80</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>200</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_OreHoist"/>
+    </comps>
+    <designationCategory>Misc</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_DeepInfrastructure</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Fungus farm ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_FungusFarm</defName>
+    <label>fungus farm</label>
+    <description>A dark grow bed for edible cave fungus. Works underground or in unlit rooms, slowly consuming carbon dioxide and releasing a little oxygen while producing harvestable mushrooms.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/FungusFarm</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.2,2.2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.2</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>2800</WorkToBuild>
+      <Flammability>0.6</Flammability>
+    </statBases>
+    <costList>
+      <Steel>30</Steel>
+      <WoodLog>40</WoodLog>
+    </costList>
+    <comps>
+      <li Class="Strata.CompProperties_FungusFarm"/>
+    </comps>
+    <designationCategory>Production</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_DeepAgriculture</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Sump pump ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_SumpPump</defName>
+    <label>sump pump</label>
+    <description>A powered pump that drains groundwater seep from excavated floors. Clears shallow flood water in a radius while running — essential when a level starts taking on water from below.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/SumpPump</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>45</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>180</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_SumpPump">
+        <clearRadius>6</clearRadius>
+      </li>
+    </comps>
+    <designationCategory>Misc</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_DeepInfrastructure</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Mine lamp ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_MineLamp</defName>
+    <label>mine lamp</label>
+    <description>An enclosed electric lamp for deep workings. Provides bright light without an open flame — safe to run near gas seeps where torches would be suicide.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/MineLamp</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>0</pathCost>
+    <fillPercent>0.15</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>800</WorkToBuild>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <Steel>20</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>30</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Glower">
+        <glowRadius>12</glowRadius>
+        <glowColor>(255,230,160,0)</glowColor>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_DeepInfrastructure</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Shaft bellows (passive O₂ exchange) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_ShaftBellows</defName>
+    <label>shaft bellows</label>
+    <description>Hand-operated bellows beside a stairwell. No power required — they slowly boost oxygen rising and carbon dioxide sinking through an open shaft, weaker than a powered gas exchanger but enough for a small crew.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ShaftBellows</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>90</MaxHitPoints>
+      <WorkToBuild>900</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>30</WoodLog>
+      <Steel>10</Steel>
+    </costList>
+    <comps>
+      <li Class="Strata.CompProperties_GasExchanger">
+        <transferPower>0.08</transferPower>
+        <requiresPower>false</requiresPower>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_UpdraftFilter</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_PassiveLifeSupport</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Lime scrubber (passive CO₂) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_LimeScrubber</defName>
+    <label>lime scrubber</label>
+    <description>A tray of lime that slowly absorbs carbon dioxide from a sealed room. Consumes lime over time; no electricity needed — the oldest trick for keeping stale mine air breathable.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/LimeScrubber</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.2</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>700</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>15</Steel>
+      <Strata_Lime>10</Strata_Lime>
+    </costList>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>0.5</fuelConsumptionRate>
+        <fuelCapacity>20</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>Strata_Lime</li>
+          </thingDefs>
+        </fuelFilter>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+      </li>
+      <li Class="Strata.CompProperties_GasScrubber">
+        <gas>Strata_CarbonDioxide</gas>
+        <scrubPerCycle>0.004</scrubPerCycle>
+        <requiresPower>false</requiresPower>
+      </li>
+    </comps>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_PassiveLifeSupport</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Methane flare (safe firedamp burn-off) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_MethaneFlare</defName>
+    <label>methane flare</label>
+    <description>A controlled flare stack that burns buoyant firedamp out of a sealed room before it can flash on a torch. Powered; keep it away from deep-gas pockets you still want to extract.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.85,0.55,0.20)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>1800</WorkToBuild>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <Steel>40</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>80</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_GasScrubber">
+        <gas>Strata_Methane</gas>
+        <scrubPerCycle>0.012</scrubPerCycle>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_MineAtmosphere</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Black-damp scrubber ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_BlackDampScrubber</defName>
+    <label>black-damp scrubber</label>
+    <description>Pulls stale black damp out of a sealed room and meters a little oxygen back in. Use after gas fires, or in flooded pits where the air has gone dead.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/CO2Pump</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.35,0.35,0.40)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2200</WorkToBuild>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <Steel>55</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Strata_Lime>5</Strata_Lime>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>160</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_GasScrubber">
+        <gas>Strata_BlackDamp</gas>
+        <scrubPerCycle>0.010</scrubPerCycle>
+        <restoreOxygenPerCycle>0.004</restoreOxygenPerCycle>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_MineAtmosphere</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Spore filter ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_SporeFilter</defName>
+    <label>spore filter</label>
+    <description>Cloth and charcoal filters that scrub airborne fungal spores from a sealed room. Pair with fungus farms and fungal warren clearances so colonists keep their lungs.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/LimeScrubber</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.45,0.70,0.35)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.2</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>90</MaxHitPoints>
+      <WorkToBuild>1600</WorkToBuild>
+      <Flammability>0.6</Flammability>
+    </statBases>
+    <costList>
+      <Steel>25</Steel>
+      <Cloth>30</Cloth>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>60</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="Strata.CompProperties_GasScrubber">
+        <gas>Strata_Spores</gas>
+        <scrubPerCycle>0.009</scrubPerCycle>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_MineAtmosphere</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Steam condenser ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_SteamCondenser</defName>
+    <label>steam condenser</label>
+    <description>Cooled plates that condense geothermal steam out of a sealed room. Keeps geyser chambers and volcanic warrens from filling with scalding haze.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/OxygenPump</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.70,0.80,0.90)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
+      <Flammability>0.3</Flammability>
+    </statBases>
+    <costList>
+      <Steel>50</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>120</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_GasScrubber">
+        <gas>Strata_Steam</gas>
+        <scrubPerCycle>0.014</scrubPerCycle>
+        <requiresPower>true</requiresPower>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_MineAtmosphere</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>
