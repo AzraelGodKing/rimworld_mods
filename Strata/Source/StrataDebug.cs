@@ -363,6 +363,8 @@ namespace Strata
             Check("upper roof-deck terrains loaded",
                 DefDatabase<TerrainDef>.GetNamedSilentFail(UpperDeckUtility.RoofDeckDefName) != null
                 && DefDatabase<TerrainDef>.GetNamedSilentFail(UpperDeckUtility.OpenSkyDefName) != null);
+            Check("gravship APIs present for stack follow",
+                typeof(GravshipUtility) != null && typeof(Building_GravEngine) != null);
             Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
             Check("sunken ruin map generator loaded",
                 DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_SunkenRuinLevel") != null);

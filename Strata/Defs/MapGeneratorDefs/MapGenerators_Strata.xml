@@ -9,6 +9,8 @@
     <pocketMapProperties>
       <biome>Strata_Upper</biome>
       <destroyOnParentMapAbandoned>true</destroyOnParentMapAbandoned>
+      <!-- Odyssey: allow gravship launch from an upper deck if the engine is there. -->
+      <canLaunchGravship>true</canLaunchGravship>
       <canBeCleaned>true</canBeCleaned>
     </pocketMapProperties>
     <genSteps>

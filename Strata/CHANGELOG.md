@@ -9,6 +9,9 @@ All notable changes to Strata are documented here.
 - **Tower elevator** — after *building up* + *elevators*, a compact powered car opens/joins the same upper map. Ascending needs a live grid; riding down from the landing is always free. Elevators research now unlocks after *digging down* (not deep excavation) so B1/A1 elevators are not gated on B2.
 - **Levels tab / hotkeys** — upper floors show as Level +N; Page Up from the surface jumps to A1; Page Down from A1 returns to the surface. Relays and power shafts reuse the existing portal graph.
 
+### Added — Gravship stack follow (Odyssey)
+- **Linked floors travel with the ship** — when a gravship launches, Strata A+/B+ pocket maps whose stair/elevator portals sit on the ship’s substructure are kept alive for the flight and rebound to the new host map on landing (top and bottom of the stack). Quest-site pockets do not hitch a ride. Upper decks re-sync roof support after touchdown.
+
 ### Changed — A+ roof decks
 - **Upper map gen** — Level +N is no longer a full concrete pad. Cells are **roof deck** (walk/build) only where the floor below is roofed, plus a plaza around the tower shaft; everywhere else is impassable **open sky**. Building a roof downstairs grows the deck above; removing an empty deck tile’s supporting roof turns it back to sky (buildings already placed are left alone).
 

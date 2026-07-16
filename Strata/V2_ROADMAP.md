@@ -64,32 +64,21 @@ Still open:
 
 ---
 
-## Pillar / V3 — Gravship Strata (Odyssey) — INVESTIGATION
+## Pillar / V3 — Gravship Strata (Odyssey)
 
-**Status: DESIGN NOTES ONLY** (not in V2 ship scope; no code yet)
+**Status: STACK FOLLOW LANDED** on `Feat/Final_V2_Feature_Going_UP`
 
-Goal: let a multistory Strata colony ride with a gravship — or at least not explode when the player launches.
+Shipped:
+- [x] Collect A+/B+ pocket maps whose portals sit on gravship substructure
+- [x] Keep them alive across takeoff / `AbandonMap` / `DestroyPocketMap`
+- [x] Rebind `PocketMapParent.sourceMap` + tile on land (`PlaceGravshipInMap` / arrive / `PostSwapMap`)
+- [x] Upper roof-deck re-sync after land
+- [x] Quest-site pockets excluded
 
-### What Odyssey exposes (from 1.6 `Assembly-CSharp` strings)
-- Core types: `Building_GravEngine`, `GravshipUtility`, `GravshipController`, `CompGravshipFacility` / `Thruster` / `ShieldGenerator`, `GravshipComponentTypeDef`, `GravShipCanLandOn`, `GravAnchor`, `GravFieldExtender`, `GravlitePanel`.
-- Capture/launch pipeline names: `GravshipCapture`, `GravshipCapturer`, `GravshipCells`, launch/land audio + cutscene hooks.
-- Implication: the ship is a **captured cell set** around the grav engine / substructure, not a pocket-map stack. Strata B/A levels are **separate pocket maps** linked by `MapPortal` — they will **not** auto-travel with a capture unless we teach the capture pass about them.
-
-### Hard problems for Strata
-1. **Pocket maps are not on the ship footprint** — launching the surface map abandons / orphans linked B1+/A1+ unless we migrate or destroy them deliberately.
-2. **Size** — Strata levels match the full colony map; packing entire B1 into a gravship is almost never what Odyssey wants (ship is a sub-rect).
-3. **Atmosphere / shafts / fluid junctions** — cross-map comps assume a stable `sourceMap` parent chain; launch rewires world parents.
-4. **Landing** — after touchdown on a new tile, portals must rebind to the new surface map and re-align landings.
-
-### Recommended V3 slices (in order)
-1. **Safe launch policy (compat MVP)** — detect Gravship launch from a map that has Strata links; block launch with a clear message *or* auto-abandon empty linked levels and evacuate pawns to the ship map (player choice). Never silent orphan.
-2. **Ship cellar (small)** — optional compact underground pocket (fixed small size, e.g. 50×50) opened from a gravship-floor hatch, destroyed or hibernated cleanly on launch/land. Not full B1.
-3. **True stack migration (hard)** — serialize linked level maps with the ship, reparent on land; only if capture API allows attaching extra maps or we store them on `GravshipController` / custom WorldComponent.
-
-### Non-goals for first Gravship patch
-- Full A/B tower traveling at colony map size.
-- Quest-site pocket maps hitching a ride.
-- Gravship-only research tree until MVP #1 works in playtests with Odyssey loaded (`MayRequire` / LoadFolders).
+Still open:
+- [ ] Playtest with Odyssey (launch + land + Page Up/Down + relays)
+- [ ] Optional: block launch if unrecovered pawns on non-ship-footprint levels
+- [ ] Optional: compact “ship cellar” pocket sized to substructure
 
 ---
 
