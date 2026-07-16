@@ -128,6 +128,10 @@ namespace Strata
             {
                 return;
             }
+            if (StrataRoomUtility.IsStrataPocketLevel(__instance.Map))
+            {
+                return;
+            }
             if (!StrataMapUtility.IsUnderground(__instance.Map))
             {
                 return;

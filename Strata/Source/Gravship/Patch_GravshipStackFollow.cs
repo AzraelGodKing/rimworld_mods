@@ -11,13 +11,13 @@ namespace Strata
     [HarmonyPatch(typeof(WorldComponent_GravshipController), nameof(WorldComponent_GravshipController.InitiateTakeoff))]
     public static class Patch_Gravship_InitiateTakeoff
     {
-        public static void Prefix(Building_GravEngine eng)
+        public static void Prefix(Building_GravEngine engine)
         {
-            if (eng == null)
+            if (engine == null)
             {
                 return;
             }
-            List<Map> levels = StrataGravshipStackUtility.CollectTravellingLevels(eng);
+            List<Map> levels = StrataGravshipStackUtility.CollectTravellingLevels(engine);
             WorldComponent_StrataGravshipStacks.Get()?.MarkTravelling(levels);
         }
     }

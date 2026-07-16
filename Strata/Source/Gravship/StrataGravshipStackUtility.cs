@@ -61,6 +61,19 @@ namespace Strata
                 }
                 AddLevelAndStack(portal.PocketMap, result, seen);
             }
+
+            // Upper/lower pockets can also hang off ChildPocketMaps if portal lookup
+            // briefly fails during takeoff — sweep those tied to gravship shafts.
+            if (host.ChildPocketMaps != null)
+            {
+                foreach (Map child in host.ChildPocketMaps)
+                {
+                    if (child != null && StrataGravshipUtility.FindDirectGravshipPortalHost(child) != null)
+                    {
+                        AddLevelAndStack(child, result, seen);
+                    }
+                }
+            }
             return result;
         }
 
@@ -94,8 +107,11 @@ namespace Strata
                     AddLevelAndStack(child, result, seen);
                 }
             }
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
+            // ReachableLevels reuses a shared buffer; snapshot before recursion.
+            var links = new List<LevelGraph.LevelLink>(LevelGraph.ReachableLevels(map));
+            for (int i = 0; i < links.Count; i++)
             {
+                LevelGraph.LevelLink link = links[i];
                 if (IsStrataLinkedLevel(link.map))
                 {
                     AddLevelAndStack(link.map, result, seen);

@@ -9,35 +9,53 @@ namespace Strata
     // on sealed B1+ pocket maps. For Strata gas, every underground level is
     // enclosed rock — ventilation comes from doors, vents, shafts, and pipes,
     // not from "open sky".
+    //
+    // Strata pocket maps (especially A+ roof decks) can leave room districts in
+    // a bad state; vanilla PsychologicallyOutdoors / OpenRoofCount walk districts
+    // and NRE in the temperature HUD. Prefixes below skip that path on Strata
+    // levels and use roof/terrain heuristics instead.
     [HarmonyPatch(typeof(Room), "UsesOutdoorTemperature", MethodType.Getter)]
     public static class Patch_UndergroundUsesOutdoorTemperature
     {
-        public static void Postfix(Room __instance, ref bool __result)
+        public static bool Prefix(Room __instance, ref bool __result)
         {
-            if (!__result || __instance?.Map == null)
+            Map map = __instance?.Map;
+            if (map == null || !StrataRoomUtility.IsStrataPocketLevel(map))
             {
-                return;
+                return true;
             }
-            if (StrataRoomUtility.ShouldTreatAsEnclosedUnderground(__instance.Map))
-            {
-                __result = false;
-            }
+            __result = StrataRoomUtility.RoomUsesOutdoorTemperature(__instance);
+            return false;
         }
     }
 
     [HarmonyPatch(typeof(Room), "PsychologicallyOutdoors", MethodType.Getter)]
     public static class Patch_UndergroundPsychologicallyOutdoors
     {
-        public static void Postfix(Room __instance, ref bool __result)
+        public static bool Prefix(Room __instance, ref bool __result)
         {
-            if (!__result || __instance?.Map == null || __instance.CellCount <= 1)
+            Map map = __instance?.Map;
+            if (map == null || !StrataRoomUtility.IsStrataPocketLevel(map))
             {
-                return;
+                return true;
             }
-            if (StrataRoomUtility.ShouldTreatAsEnclosedUnderground(__instance.Map))
+            __result = StrataRoomUtility.RoomPsychologicallyOutdoors(__instance);
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(Room), "OpenRoofCount", MethodType.Getter)]
+    public static class Patch_StrataRoomOpenRoofCount
+    {
+        public static bool Prefix(Room __instance, ref int __result)
+        {
+            Map map = __instance?.Map;
+            if (map == null || !StrataRoomUtility.IsStrataPocketLevel(map))
             {
-                __result = false;
+                return true;
             }
+            __result = StrataRoomUtility.CountUnroofedCells(__instance);
+            return false;
         }
     }
 
@@ -48,6 +66,63 @@ namespace Strata
         public static bool ShouldTreatAsEnclosedUnderground(Map map)
         {
             return map != null && StrataMapUtility.IsUnderground(map) && StrataDepth.Of(map) >= 1;
+        }
+
+        public static bool IsStrataPocketLevel(Map map)
+        {
+            return ShouldTreatAsEnclosedUnderground(map) || StrataMapUtility.IsUpperLevel(map);
+        }
+
+        public static bool RoomUsesOutdoorTemperature(Room room)
+        {
+            if (room == null)
+            {
+                return false;
+            }
+            if (ShouldTreatAsEnclosedUnderground(room.Map))
+            {
+                return false;
+            }
+            return RoomPsychologicallyOutdoors(room);
+        }
+
+        public static bool RoomPsychologicallyOutdoors(Room room)
+        {
+            if (room == null)
+            {
+                return true;
+            }
+            if (room.CellCount <= 1 || !room.ProperRoom)
+            {
+                return true;
+            }
+            if (ShouldTreatAsEnclosedUnderground(room.Map))
+            {
+                return false;
+            }
+            if (StrataMapUtility.IsUpperLevel(room.Map))
+            {
+                return CountUnroofedCells(room) > 0;
+            }
+            return false;
+        }
+
+        public static int CountUnroofedCells(Room room)
+        {
+            if (room == null || room.Map == null)
+            {
+                return 0;
+            }
+            Map map = room.Map;
+            int open = 0;
+            foreach (IntVec3 cell in room.Cells)
+            {
+                if (cell.InBounds(map) && !map.roofGrid.Roofed(cell))
+                {
+                    open++;
+                }
+            }
+            return open;
         }
 
         // Player-walled, fully roofed rooms (workshops, bedrooms) share a

@@ -5,6 +5,22 @@ using Verse;
 
 namespace Strata
 {
+    internal static class StrataAlertScanCache
+    {
+        private const int ScanInterval = 250;
+
+        public static bool ShouldRescan(ref int lastScanTick)
+        {
+            int tick = Find.TickManager.TicksGame;
+            if (tick - lastScanTick < ScanInterval)
+            {
+                return false;
+            }
+            lastScanTick = tick;
+            return true;
+        }
+    }
+
     // Harmful gas piling up on a level with nobody on it - a generator left
     // running in a sealed room downstairs, or a breached gas pocket, kills the
     // next colonist who walks in.
@@ -13,6 +29,8 @@ namespace Strata
         private const float WorryThreshold = 0.35f;
 
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
 
         public Alert_SmokeOnVacantLevel()
         {
@@ -24,12 +42,17 @@ namespace Strata
 
         public override AlertReport GetReport()
         {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
             targets.Clear();
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                if (!StrataMapUtility.IsUnderground(map) || map.mapPawns.FreeColonistsSpawnedCount > 0)
+                if (!StrataLevelPerfUtility.IsStrataPocketLevel(map)
+                    || map.mapPawns.FreeColonistsSpawnedCount > 0)
                 {
                     continue;
                 }
@@ -40,7 +63,8 @@ namespace Strata
                     targets.Add(new GlobalTargetInfo(cell, map));
                 }
             }
-            return targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
         }
     }
 
@@ -50,6 +74,8 @@ namespace Strata
     public class Alert_FlammableGasNearFlame : Alert_Critical
     {
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
 
         public Alert_FlammableGasNearFlame()
         {
@@ -62,6 +88,10 @@ namespace Strata
 
         public override AlertReport GetReport()
         {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
             targets.Clear();
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
@@ -76,7 +106,8 @@ namespace Strata
                     targets.Add(new GlobalTargetInfo(atmosphere.FlammableRiskCells[j], maps[i]));
                 }
             }
-            return targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
         }
     }
 
@@ -114,6 +145,8 @@ namespace Strata
     public class Alert_ColonistsBelowSealedShaft : Alert
     {
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
 
         public Alert_ColonistsBelowSealedShaft()
         {
@@ -125,6 +158,10 @@ namespace Strata
 
         public override AlertReport GetReport()
         {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
             targets.Clear();
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
@@ -145,7 +182,8 @@ namespace Strata
                     targets.Add(colonists[j]);
                 }
             }
-            return targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
         }
 
         private static bool AllExitsSealed(Map map)
@@ -171,6 +209,8 @@ namespace Strata
     public class Alert_CanaryWarning : Alert
     {
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
 
         public Alert_CanaryWarning()
         {
@@ -183,20 +223,27 @@ namespace Strata
 
         public override AlertReport GetReport()
         {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
             targets.Clear();
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                foreach (Thing thing in map.listerThings.AllThings)
+                List<Building> buildings = map.listerBuildings.allBuildingsColonist;
+                for (int b = 0; b < buildings.Count; b++)
                 {
-                    if (thing.TryGetComp<CompCanaryCage>() is CompCanaryCage cage && cage.NeedsAttention)
+                    Building building = buildings[b];
+                    if (building.TryGetComp<CompCanaryCage>() is CompCanaryCage cage && cage.NeedsAttention)
                     {
-                        targets.Add(new GlobalTargetInfo(thing));
+                        targets.Add(new GlobalTargetInfo(building));
                     }
                 }
             }
-            return targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
         }
     }
 }

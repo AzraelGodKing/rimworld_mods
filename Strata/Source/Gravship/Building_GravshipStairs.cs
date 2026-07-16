@@ -129,6 +129,7 @@ namespace Strata
             state += IsOnGravship
                 ? "\nGravship shaft: linked floors will travel with the ship"
                 : "\nGravship shaft: not on substructure (build on the ship)";
+            state += "\nUpper deck grows with gravship substructure on this map";
             return state;
         }
 

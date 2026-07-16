@@ -359,6 +359,7 @@ namespace Strata
             {
                 return;
             }
+            EnsureArrays();
             int index = map.cellIndices.CellToIndex(cell);
             o2[index] = Mathf.Min(1f, o2[index] + amount);
         }
@@ -369,6 +370,7 @@ namespace Strata
             {
                 return;
             }
+            EnsureArrays();
             int index = map.cellIndices.CellToIndex(cell);
             co2[index] = Mathf.Min(1f, co2[index] + amount);
         }
@@ -379,6 +381,7 @@ namespace Strata
             {
                 return;
             }
+            EnsureArrays();
             int index = map.cellIndices.CellToIndex(cell);
             o2[index] = Mathf.Max(0f, o2[index] - amount);
         }
@@ -389,6 +392,7 @@ namespace Strata
             {
                 return;
             }
+            EnsureArrays();
             int index = map.cellIndices.CellToIndex(cell);
             co2[index] = Mathf.Max(0f, co2[index] - amount);
         }

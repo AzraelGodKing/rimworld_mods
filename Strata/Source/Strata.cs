@@ -34,6 +34,7 @@ namespace Strata
             ExhaustAutoPatch.Apply();
             GasNetAdapter.Inject();
             new Harmony("azraelgodking.strata").PatchAll();
+            LongEventHandler.ExecuteWhenFinished(StrataMultiFloorStairsUtility.ApplyFromSettings);
         }
     }
 }

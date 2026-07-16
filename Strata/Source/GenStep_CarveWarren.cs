@@ -60,6 +60,10 @@ namespace Strata
             }
 
             MapGenerator.SetVar(ChambersVar, chambers);
+            if (playerLevel && StrataCavernUtility.ShouldGenerateNativeCavernLayout(map))
+            {
+                GenStep_SolidRock.SpawnMineables(map);
+            }
         }
 
         private static int TargetChamberCount(int depth)

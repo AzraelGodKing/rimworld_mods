@@ -287,7 +287,7 @@ namespace Strata
             {
                 return false;
             }
-            foreach (IntVec3 c in GenAdj.OccupiedRect(cell, Rot4.North, def.portal.exitDef.size))
+            foreach (IntVec3 c in GenAdj.OccupiedRect(cell, Rotation, def.portal.exitDef.size))
             {
                 if (!c.InBounds(level))
                 {

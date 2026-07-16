@@ -62,22 +62,48 @@ namespace Strata
         public const string UndergroundBiome = "Strata_Underground";
         public const string UpperBiome = "Strata_Upper";
 
+        // Pocket maps can carry stale tile IDs during save load; map.Biome walks
+        // WorldGrid and throws before FinalizeLoading repairs the parent tile.
+        public static BiomeDef TryGetBiomeDef(Map map)
+        {
+            if (map == null)
+            {
+                return null;
+            }
+            if (IsWorldGridTile(map.Tile))
+            {
+                return map.Biome;
+            }
+            MapGeneratorDef gen = map.generatorDef;
+            if (gen?.pocketMapProperties?.biome != null)
+            {
+                return gen.pocketMapProperties.biome;
+            }
+            return null;
+        }
+
         public static bool IsUnderground(Map map)
         {
-            if (map?.Biome == null)
+            BiomeDef biome = TryGetBiomeDef(map);
+            if (biome != null)
             {
-                return false;
+                if (biome.defName == UndergroundBiome)
+                {
+                    return true;
+                }
+                return BiomesCavernsUtility.IsActive && BiomesCavernsUtility.IsStrataCavernBiome(biome);
             }
-            if (map.Biome.defName == UndergroundBiome)
-            {
-                return true;
-            }
-            return BiomesCavernsUtility.IsActive && BiomesCavernsUtility.IsStrataCavernBiome(map.Biome);
+            return map?.generatorDef?.defName == "Strata_UndergroundLevel";
         }
 
         public static bool IsUpperLevel(Map map)
         {
-            return map?.Biome != null && map.Biome.defName == UpperBiome;
+            BiomeDef biome = TryGetBiomeDef(map);
+            if (biome != null)
+            {
+                return biome.defName == UpperBiome;
+            }
+            return map?.generatorDef?.defName == "Strata_UpperLevel";
         }
 
         public static bool IsSurfacePlayerHome(Map map)

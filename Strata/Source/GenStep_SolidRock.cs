@@ -16,6 +16,11 @@ namespace Strata
         public override void Generate(Map map, GenStepParams parms)
         {
             MapPortal entrance = PocketMapUtility.currentlyGeneratingPortal;
+            if (entrance is IStrataGravshipPortal)
+            {
+                // Gravship underdecks use Strata_GravshipUnderdeckLevel instead.
+                return;
+            }
             IntVec3 spot = entrance?.Map != null
                 ? StrataMapUtility.VerticalAlign(entrance.Position, entrance.Map, map)
                 : map.Center;
@@ -36,7 +41,15 @@ namespace Strata
             }
             else
             {
-                FillSolidRock(map);
+                bool nativeCavern = StrataCavernUtility.ShouldGenerateNativeCavernLayout(map);
+                if (nativeCavern)
+                {
+                    FillShell(map);
+                }
+                else
+                {
+                    FillSolidRock(map);
+                }
                 ArrivalZoneUtility.PrepareLandingZone(map, spot, clearRoof: false);
             }
 
@@ -46,17 +59,33 @@ namespace Strata
 
         private static void FillSolidRock(Map map)
         {
+            FillShell(map);
+            SpawnMineables(map);
+        }
+
+        // Terrain + thick roof without mineables — used before native cavern
+        // carving so we do not spawn rock that is immediately destroyed.
+        internal static void FillShell(Map map)
+        {
             ThingDef rockDef = RockForMap(map);
             TerrainDef floor = rockDef.building?.naturalTerrain ?? TerrainDefOf.Gravel;
 
             foreach (IntVec3 cell in map.AllCells)
             {
                 map.terrainGrid.SetTerrain(cell, floor);
+                map.roofGrid.SetRoof(cell, RoofDefOf.RoofRockThick);
+            }
+        }
+
+        internal static void SpawnMineables(Map map)
+        {
+            ThingDef rockDef = RockForMap(map);
+            foreach (IntVec3 cell in map.AllCells)
+            {
                 if (cell.GetFirstMineable(map) == null)
                 {
                     GenSpawn.Spawn(rockDef, cell, map);
                 }
-                map.roofGrid.SetRoof(cell, RoofDefOf.RoofRockThick);
             }
         }
 

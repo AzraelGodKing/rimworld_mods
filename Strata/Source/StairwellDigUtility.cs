@@ -108,7 +108,7 @@ namespace Strata
                     message = "No room nearby to carve a downward stairwell.";
                     return false;
                 }
-                if (!TryPlaceDigShaftBlueprint(center, landing.Map, out message))
+                if (!TryPlaceDigShaftBlueprint(center, landing.Map, landing.Rotation, out message))
                 {
                     return false;
                 }
@@ -151,7 +151,7 @@ namespace Strata
             return true;
         }
 
-        private static bool TryPlaceDigShaftBlueprint(IntVec3 center, Map map, out string message)
+        private static bool TryPlaceDigShaftBlueprint(IntVec3 center, Map map, Rot4 rot, out string message)
         {
             message = null;
             ThingDef def = StrataThingDefOf.Strata_DigDownShaft ?? StrataThingDefOf.Strata_StairsDown;
@@ -160,21 +160,21 @@ namespace Strata
                 message = "Could not place a dig shaft.";
                 return false;
             }
-            PrepareSite(center, def, map);
-            AcceptanceReport report = GenConstruct.CanPlaceBlueprintAt(def, center, Rot4.North, map);
+            PrepareSite(center, def, map, rot);
+            AcceptanceReport report = GenConstruct.CanPlaceBlueprintAt(def, center, rot, map);
             if (!report.Accepted)
             {
                 message = report.Reason.CapitalizeFirst();
                 return false;
             }
-            GenConstruct.PlaceBlueprintForBuild(def, center, map, Rot4.North, Faction.OfPlayer, null, null, null, true);
+            GenConstruct.PlaceBlueprintForBuild(def, center, map, rot, Faction.OfPlayer, null, null, null, true);
             message = "Designated a dig shaft — colonists must finish carving it before the level below opens.";
             return true;
         }
 
-        private static void PrepareSite(IntVec3 center, ThingDef def, Map map)
+        private static void PrepareSite(IntVec3 center, ThingDef def, Map map, Rot4 rot)
         {
-            foreach (IntVec3 cell in GenAdj.OccupiedRect(center, Rot4.North, def.size))
+            foreach (IntVec3 cell in GenAdj.OccupiedRect(center, rot, def.size))
             {
                 if (!cell.InBounds(map))
                 {
@@ -319,7 +319,7 @@ namespace Strata
         private static bool SiteFitsDigShaft(IntVec3 center, ThingDef downDef, Map map, Building_StairsUp landing)
         {
             CellRect landingRect = landing.OccupiedRect();
-            CellRect downRect = GenAdj.OccupiedRect(center, Rot4.North, downDef.size);
+            CellRect downRect = GenAdj.OccupiedRect(center, landing.Rotation, downDef.size);
             if (SharesAnyCell(landingRect, downRect))
             {
                 return false;

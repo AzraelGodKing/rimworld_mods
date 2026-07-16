@@ -80,7 +80,7 @@ namespace Strata
 
         public override void Generate(Map map, GenStepParams parms)
         {
-            DbhGroundwaterUtility.SeedIfNeeded(map);
+            StrataDeferredGenUtility.ScheduleDbhGroundwater(map);
         }
     }
 }

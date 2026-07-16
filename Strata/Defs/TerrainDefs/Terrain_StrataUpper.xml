@@ -13,6 +13,7 @@
     <fertility>0</fertility>
     <passability>Standable</passability>
     <affordances>
+      <li>Walkable</li>
       <li>Light</li>
       <li>Medium</li>
       <li>Heavy</li>
@@ -34,7 +35,6 @@
     <pathCost>10000</pathCost>
     <fertility>0</fertility>
     <passability>Impassable</passability>
-    <holdSnow>false</holdSnow>
     <takeFootprints>false</takeFootprints>
     <burnedDef>Strata_OpenSky</burnedDef>
   </TerrainDef>

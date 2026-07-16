@@ -34,10 +34,11 @@ namespace Strata
         // landing there. Must run while PocketMapUtility.currentlyGeneratingPortal
         // points at the entrance (during map generation or GeneratePocketMapInt):
         // PocketMapExit.SpawnSetup uses it to wire entrance and exit together.
-        public static PocketMapExit SpawnLanding(ThingDef exitDef, IntVec3 cell, Map level)
+        public static PocketMapExit SpawnLanding(ThingDef exitDef, IntVec3 cell, Map level, Rot4? rot = null)
         {
             ArrivalZoneUtility.PrepareLandingCell(level, cell);
-            return (PocketMapExit)GenSpawn.Spawn(ThingMaker.MakeThing(exitDef), cell, level);
+            Rot4 spawnRot = rot ?? PocketMapUtility.currentlyGeneratingPortal?.Rotation ?? Rot4.North;
+            return (PocketMapExit)GenSpawn.Spawn(ThingMaker.MakeThing(exitDef), cell, level, spawnRot);
         }
 
         public static bool IsSealedPortal(Thing thing)

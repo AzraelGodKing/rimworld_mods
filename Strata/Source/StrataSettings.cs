@@ -21,6 +21,7 @@ namespace Strata
         public bool caravanPullEnabled = true;
         public bool throttleVacantLevels = true;
         public bool hibernateEmptyLevels = true;
+        public bool reduceBackgroundLevels = true;
         public bool showLevelPerfInTab = false;
         public bool explorationSitesEnabled = true;
         public bool floodEventsEnabled = true;
@@ -32,6 +33,7 @@ namespace Strata
         public bool ancientColonyStairwellEnabled = true;
         public float ancientColonyStairwellChance = 0.35f;
         public bool cageSustainHunger = false;
+        public bool multiFloorStairs = false;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;
 
@@ -52,6 +54,7 @@ namespace Strata
             Scribe_Values.Look(ref caravanPullEnabled, "caravanPullEnabled", defaultValue: true);
             Scribe_Values.Look(ref throttleVacantLevels, "throttleVacantLevels", defaultValue: true);
             Scribe_Values.Look(ref hibernateEmptyLevels, "hibernateEmptyLevels", defaultValue: true);
+            Scribe_Values.Look(ref reduceBackgroundLevels, "reduceBackgroundLevels", defaultValue: true);
             Scribe_Values.Look(ref showLevelPerfInTab, "showLevelPerfInTab", defaultValue: false);
             Scribe_Values.Look(ref explorationSitesEnabled, "explorationSitesEnabled", defaultValue: true);
             Scribe_Values.Look(ref floodEventsEnabled, "floodEventsEnabled", defaultValue: true);
@@ -63,6 +66,7 @@ namespace Strata
             Scribe_Values.Look(ref ancientColonyStairwellEnabled, "ancientColonyStairwellEnabled", defaultValue: true);
             Scribe_Values.Look(ref ancientColonyStairwellChance, "ancientColonyStairwellChance", 0.35f);
             Scribe_Values.Look(ref cageSustainHunger, "cageSustainHunger", defaultValue: false);
+            Scribe_Values.Look(ref multiFloorStairs, "multiFloorStairs", defaultValue: false);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
             Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
         }
@@ -81,6 +85,16 @@ namespace Strata
         }
 
         public override string SettingsCategory() => "Strata";
+
+        public override void WriteSettings()
+        {
+            bool wasMultiFloor = Settings.multiFloorStairs;
+            base.WriteSettings();
+            if (wasMultiFloor != Settings.multiFloorStairs)
+            {
+                StrataMultiFloorStairsUtility.Apply(Settings.multiFloorStairs);
+            }
+        }
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
@@ -168,8 +182,12 @@ namespace Strata
             listing.CheckboxLabeled("Raid pursuit", ref Settings.raidPursuitEnabled,
                 "Raiders with nobody left to fight follow your colonists through unsealed stairwells.");
             listing.CheckboxLabeled("Hibernate empty levels", ref Settings.hibernateEmptyLevels,
-                "Levels with nobody on them run their ambient simulation at reduced rate to save performance.");
+                "Vacant A+ and B+ pocket maps run vanilla ambient sims 1 tick in 4 and Strata gas 1 cycle in 8. "
+                + "Fully live on the map you are viewing or any level with pawns on it.");
             Settings.throttleVacantLevels = Settings.hibernateEmptyLevels;
+            listing.CheckboxLabeled("Reduce background levels", ref Settings.reduceBackgroundLevels,
+                "When colonists are on a linked level you are not viewing, Strata gas and O₂/CO₂ run 4× slower "
+                + "and skip overlay rebuilds. The map you are looking at stays full speed.");
             listing.CheckboxLabeled("Show level performance in Levels tab", ref Settings.showLevelPerfInTab,
                 "List pawn counts and hibernation status for each level in the Levels tab.");
             listing.CheckboxLabeled("Exploration quest sites", ref Settings.explorationSitesEnabled,
@@ -192,6 +210,24 @@ namespace Strata
                 listing.CheckboxLabeled("Biomes! Caverns layout", ref Settings.biomesCavernsCompatEnabled,
                     "When enabled and Biomes! Caverns is loaded, use Biomes! cavern generation instead of "
                     + "Strata's native cave layout (plants, fauna, stalagmites, and crystals).");
+            }
+            listing.Gap();
+
+            Text.Font = GameFont.Medium;
+            listing.Label("Appearance");
+            Text.Font = GameFont.Small;
+            bool previousMultiFloorStairs = Settings.multiFloorStairs;
+            listing.CheckboxLabeled("Multifloor Stairs", ref Settings.multiFloorStairs,
+                "Use bundled alternate art from Textures/Strata/Buildings/MultiFloors/ (handrail stairs + modern elevator). Does not require the MultiFloors mod.");
+            if (Settings.multiFloorStairs)
+            {
+                GUI.color = Color.yellow;
+                listing.Label("These Assets are from Multifloors, Telardo can ask for it to be removed.");
+                GUI.color = Color.white;
+            }
+            if (previousMultiFloorStairs != Settings.multiFloorStairs)
+            {
+                StrataMultiFloorStairsUtility.Apply(Settings.multiFloorStairs);
             }
             listing.Gap();
 

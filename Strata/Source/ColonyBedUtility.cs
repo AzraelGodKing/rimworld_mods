@@ -33,6 +33,11 @@ namespace Strata
             {
                 return from;
             }
+            Map gravshipRoot = StrataGravshipUtility.FindGravshipStackRoot(from);
+            if (gravshipRoot != null)
+            {
+                return gravshipRoot;
+            }
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {

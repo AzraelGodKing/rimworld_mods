@@ -94,6 +94,12 @@ namespace Strata
         // One-time O₂ seed for a freshly finalized underground map.
         private bool breathableAirSeeded;
         private int breathableSeedRetryTick = -1;
+        private int breathableSeedRoomCursor;
+        private const int BreathableSeedRoomsPerTick = 16;
+
+        // Skip heavy O₂ grid work briefly after a level is created.
+        private int atmosphereWarmupTick = -1;
+        private const int AtmosphereWarmupTicks = 120;
 
         // PostSpawnSetup can run before Patch_MapComponents adds us; rescan once.
         private bool buildingCompsRegistered;
@@ -112,6 +118,40 @@ namespace Strata
 
         public AtmosphereMapComponent(Map map) : base(map)
         {
+        }
+
+        public override void FinalizeInit()
+        {
+            base.FinalizeInit();
+            atmosphereWarmupTick = Find.TickManager.TicksGame;
+        }
+
+        private bool AtmosphereWarmingUp()
+        {
+            if (atmosphereWarmupTick < 0)
+            {
+                return false;
+            }
+            if (clouds.Count > 0 || map.mapPawns.AllPawnsSpawned.Count > 0)
+            {
+                atmosphereWarmupTick = -1;
+                return false;
+            }
+            return Find.TickManager.TicksGame - atmosphereWarmupTick < AtmosphereWarmupTicks;
+        }
+
+        private int AtmosphereCycleInterval()
+        {
+            return CycleTicks * StrataLevelPerfUtility.AtmosphereCycleMultiplier(map);
+        }
+
+        private bool ShouldSkipOverlayRebuild()
+        {
+            if (Find.CurrentMap == map || !StrataLevelPerfUtility.IsStrataPocketLevel(map))
+            {
+                return false;
+            }
+            return !Patch_GasOverlay.ShowGasOverlay;
         }
 
         public Color Color => Color.white;
@@ -337,7 +377,7 @@ namespace Strata
                 TrySeedBreathableAir();
             }
 
-            if ((Find.TickManager.TicksGame + map.uniqueID) % CycleTicks != 0)
+            if ((Find.TickManager.TicksGame + map.uniqueID) % AtmosphereCycleInterval() != 0)
             {
                 return;
             }
@@ -453,9 +493,16 @@ namespace Strata
             ProcessScrubbers();
 
             // 9. Per-cell O₂/CO₂: roof-column ambient, diffusion, plants, breathing.
-            if (BreathingActive() && StrataMapUtility.IsUnderground(map))
+            if (BreathingActive() && StrataMapUtility.IsUnderground(map) && !AtmosphereWarmingUp())
             {
                 EnsureBreathGrid()?.ProcessCycle(this);
+            }
+
+            if (!NeedsCellDensityRebuild() || ShouldSkipOverlayRebuild())
+            {
+                AffectPawns();
+                ThrowMotes();
+                return;
             }
 
             RebuildCellDensity();
@@ -1262,14 +1309,16 @@ namespace Strata
                 breathableSeedRetryTick = Find.TickManager.TicksGame;
             }
 
-            int seeded = SeedAllEnclosedRoomsWithAmbientOxygen();
-            if (seeded > 0 || Find.TickManager.TicksGame - breathableSeedRetryTick > 1200)
+            int seeded = SeedAllEnclosedRoomsWithAmbientOxygen(BreathableSeedRoomsPerTick);
+            int roomCount = map.regionGrid.AllRooms.Count;
+            if ((seeded > 0 && breathableSeedRoomCursor == 0 && roomCount > 0)
+                || Find.TickManager.TicksGame - breathableSeedRetryTick > 1200)
             {
                 breathableAirSeeded = true;
             }
         }
 
-        private int SeedAllEnclosedRoomsWithAmbientOxygen()
+        private int SeedAllEnclosedRoomsWithAmbientOxygen(int maxRooms = int.MaxValue)
         {
             StrataGasDef oxygen = StrataGasDefOf.Strata_Oxygen;
             if (oxygen == null)
@@ -1277,9 +1326,17 @@ namespace Strata
                 return 0;
             }
 
-            int count = 0;
-            foreach (Room room in map.regionGrid.AllRooms)
+            IReadOnlyList<Room> rooms = map.regionGrid.AllRooms;
+            if (rooms.Count == 0)
             {
+                return 0;
+            }
+
+            int count = 0;
+            int end = Mathf.Min(rooms.Count, breathableSeedRoomCursor + maxRooms);
+            for (int i = breathableSeedRoomCursor; i < end; i++)
+            {
+                Room room = rooms[i];
                 if (room == null || room.UsesOutdoorTemperature || !TryGetSampleCell(room, out IntVec3 sample))
                 {
                     continue;
@@ -1287,7 +1344,21 @@ namespace Strata
                 AddGasToRoom(room, oxygen, AmbientOxygen, sample, bypassCap: true);
                 count++;
             }
+            breathableSeedRoomCursor = end >= rooms.Count ? 0 : end;
             return count;
+        }
+
+        private bool NeedsCellDensityRebuild()
+        {
+            if (clouds.Count > 0)
+            {
+                return true;
+            }
+            if (BreathingActive() && StrataMapUtility.IsUnderground(map) && breathGrid != null && breathGridSeeded)
+            {
+                return !AtmosphereWarmingUp();
+            }
+            return Emitters.Count > 0;
         }
 
         private bool BreathingActive()

@@ -18,6 +18,17 @@ namespace Strata
                 : map.Center;
 
             UpperDeckUtility.PaintFromSourceRoofs(map, spot, UpperDeckUtility.DefaultPlazaRadius);
+            if (entrance is IStrataGravshipPortal)
+            {
+                Map host = UpperDeckUtility.SourceMapFor(map);
+                Building_GravEngine engine = host != null
+                    ? StrataGravshipUtility.FindGravEngineOnMap(host)
+                    : null;
+                if (engine != null)
+                {
+                    StrataGravshipSubstructureSync.SyncMap(map, host, engine);
+                }
+            }
             MapGenerator.PlayerStartSpot = spot;
 
             if (Prefs.DevMode)

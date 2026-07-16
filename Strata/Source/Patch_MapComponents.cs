@@ -28,7 +28,25 @@ namespace Strata
             {
                 __instance.components.Add(new FloodMapComponent(__instance));
             }
-            __instance.GetComponent<AtmosphereMapComponent>()?.TrySeedBreathableAir();
+            if (ModsConfig.IsActive("Ludeon.RimWorld.Odyssey")
+                && __instance.GetComponent<MapComponent_StrataGravshipUpperDeckSync>() == null)
+            {
+                __instance.components.Add(new MapComponent_StrataGravshipUpperDeckSync(__instance));
+            }
+            if (ModsConfig.IsActive("Ludeon.RimWorld.Odyssey")
+                && StrataGravshipUtility.IsGravshipLinkedLevel(__instance)
+                && __instance.GetComponent<MapComponent_StrataProjectedSubstructure>() == null)
+            {
+                __instance.components.Add(new MapComponent_StrataProjectedSubstructure(__instance));
+            }
+            if (__instance.GetComponent<MapComponent_StrataDeferredGen>() == null
+                && (StrataDeferredGenUtility.HasPending(__instance)
+                    || StrataMapUtility.IsUnderground(__instance)
+                    || StrataMapUtility.IsUpperLevel(__instance)))
+            {
+                __instance.components.Add(new MapComponent_StrataDeferredGen(__instance));
+            }
+            StrataDeferredGenUtility.AttachPending(__instance);
         }
     }
 }

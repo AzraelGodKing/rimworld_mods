@@ -48,6 +48,8 @@ namespace Strata
         private const float RoleButtonWidth = 72f;
 
         private readonly List<Row> rows = new List<Row>();
+        private int lastRowsBuildTick = -9999;
+        private int lastRowsMapCount = -1;
 
         // Player-chosen size survives closing the tab (but not the session).
         private static Vector2 savedSize = Vector2.zero;
@@ -77,36 +79,90 @@ namespace Strata
             openedSize = new Vector2(windowRect.width, windowRect.height);
         }
 
+        private void EnsureRowsFresh()
+        {
+            int tick = Find.TickManager.TicksGame;
+            int mapCount = Find.Maps.Count;
+            if (tick - lastRowsBuildTick < 60 && mapCount == lastRowsMapCount)
+            {
+                return;
+            }
+            lastRowsBuildTick = tick;
+            lastRowsMapCount = mapCount;
+            BuildRows();
+        }
+
         private void BuildRows()
         {
             rows.Clear();
+            var claimed = new HashSet<Map>();
+            var stackedSurfaces = new HashSet<Map>();
+
             foreach (Map surface in Find.Maps)
             {
-                if (!StrataMapUtility.IsSurfacePlayerHome(surface) || !LevelGraph.AnyLinkFrom(surface))
+                bool gravshipHost = StrataGravshipUtility.OdysseyActive
+                    && StrataGravshipUtility.IsGravshipHostMap(surface);
+                bool colonySurface = StrataMapUtility.IsSurfacePlayerHome(surface);
+                if (!LevelGraph.AnyLinkFrom(surface) || (!gravshipHost && !colonySurface))
                 {
                     continue;
                 }
-                int headerAt = rows.Count;
-                rows.Add(new Row { map = surface, altitude = 0, stackHeader = true });
-                foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(surface))
+                if (!stackedSurfaces.Add(surface))
                 {
-                    if (StrataMapUtility.IsUnderground(link.map) || StrataMapUtility.IsUpperLevel(link.map))
+                    continue;
+                }
+                AppendStack(surface, claimed, includeGravshipLevels: gravshipHost, includeColonyLevels: colonySurface);
+            }
+        }
+
+        private void AppendStack(
+            Map surface,
+            HashSet<Map> claimed,
+            bool includeGravshipLevels,
+            bool includeColonyLevels)
+        {
+            int headerAt = rows.Count;
+            rows.Add(new Row { map = surface, altitude = 0, stackHeader = true });
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(surface))
+            {
+                Map level = link.map;
+                if (!StrataMapUtility.IsUnderground(level) && !StrataMapUtility.IsUpperLevel(level))
+                {
+                    continue;
+                }
+                Map gravshipRoot = StrataGravshipUtility.FindGravshipStackRoot(level);
+                if (gravshipRoot != null)
+                {
+                    if (!includeGravshipLevels || gravshipRoot != surface)
                     {
-                        rows.Add(new Row { map = link.map, altitude = StrataDepth.Altitude(link.map) });
+                        continue;
                     }
                 }
-                // Highest floor first (A2, A1, surface, B1, B2…).
-                int count = rows.Count - headerAt;
-                if (count > 1)
+                else if (!includeColonyLevels)
                 {
-                    rows.Sort(headerAt, count, Comparer<Row>.Create((a, b) => b.altitude.CompareTo(a.altitude)));
-                    for (int i = headerAt; i < rows.Count; i++)
-                    {
-                        Row r = rows[i];
-                        r.stackHeader = i == headerAt;
-                        rows[i] = r;
-                    }
+                    continue;
                 }
+                if (!claimed.Add(level))
+                {
+                    continue;
+                }
+                rows.Add(new Row { map = level, altitude = StrataDepth.Altitude(level) });
+            }
+
+            int count = rows.Count - headerAt;
+            if (count > 1)
+            {
+                rows.Sort(headerAt, count, Comparer<Row>.Create((a, b) => b.altitude.CompareTo(a.altitude)));
+                for (int i = headerAt; i < rows.Count; i++)
+                {
+                    Row r = rows[i];
+                    r.stackHeader = i == headerAt;
+                    rows[i] = r;
+                }
+            }
+            else
+            {
+                rows.RemoveAt(headerAt);
             }
         }
 
@@ -122,7 +178,7 @@ namespace Strata
             }
 
             // Levels can open or collapse while the tab sits open.
-            BuildRows();
+            EnsureRowsFresh();
 
             Text.Font = GameFont.Small;
             float contentWidth = inRect.width - 16f; // leave room for a scrollbar
@@ -271,7 +327,11 @@ namespace Strata
                     || thing.def.defName == "Strata_StairsBuildUp"
                     || thing.def.defName == "Strata_BuildUpLanding"
                     || thing.def.defName == "Strata_ElevatorBuildUp"
-                    || thing.def.defName == "Strata_ElevatorBuildUpLanding")
+                    || thing.def.defName == "Strata_ElevatorBuildUpLanding"
+                    || thing.def.defName == "Strata_GravshipStairsDown"
+                    || thing.def.defName == "Strata_GravshipStairsUp"
+                    || thing.def.defName == "Strata_GravshipStairsBuildUp"
+                    || thing.def.defName == "Strata_GravshipBuildUpLanding")
                 {
                     cell = thing.Position;
                     break;

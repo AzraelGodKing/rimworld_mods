@@ -4,41 +4,13 @@ using Verse;
 namespace Strata
 {
     // A deep base is many full maps, and every one runs the ambient sims
-    // (temperature, gas, weather upkeep, wildlife) each tick. On a Strata
-    // underground level with nobody home, that work is almost entirely wasted -
-    // so we run it only every Nth tick. Buildings and any stray pawns still
-    // tick normally (that path is separate); only the per-map ambient upkeep is
-    // throttled, and it stays fully live on any level a colonist is standing on
-    // or the player is currently looking at.
+    // (temperature, gas, weather upkeep, wildlife) each tick. On a vacant Strata
+    // pocket level (A+ or B+) with nobody home, that work is throttled.
     public static class LevelTicking
     {
-        private const int Duty = 4; // run 1 in 4 ambient ticks on dormant levels
-
         public static bool ShouldThrottle(Map map)
         {
-            if (!StrataLevelPerfUtility.HibernateEnabled())
-            {
-                return false;
-            }
-            if (map == null || !StrataMapUtility.IsUnderground(map))
-            {
-                return false;
-            }
-            if (Find.CurrentMap == map && !StrataLevelPerfUtility.IsForcedHibernate(map))
-            {
-                return false;
-            }
-            if (StrataLevelPerfUtility.PawnCount(map) > 0)
-            {
-                StrataLevelPerfUtility.ClearForcedHibernate(map);
-                return false;
-            }
-            if (StrataLevelPerfUtility.IsForcedHibernate(map))
-            {
-                return true;
-            }
-            // Skip this tick unless it lands on the duty cycle.
-            return (Find.TickManager.TicksGame + map.uniqueID) % Duty != 0;
+            return StrataLevelPerfUtility.ShouldThrottleAmbient(map);
         }
     }
 

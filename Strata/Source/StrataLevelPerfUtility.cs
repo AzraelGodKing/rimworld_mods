@@ -7,6 +7,9 @@ namespace Strata
     // Tracks per-level hibernation for the Levels tab and dev tools.
     public static class StrataLevelPerfUtility
     {
+        public const int AtmosphereReducedMultiplier = 4;
+        public const int AtmosphereVacantMultiplier = 8;
+
         private static readonly HashSet<int> forcedHibernateMapIds = new HashSet<int>();
 
         public static int PawnCount(Map map)
@@ -24,14 +27,84 @@ namespace Strata
             return settings.throttleVacantLevels;
         }
 
+        public static bool ReduceBackgroundLevelsEnabled()
+        {
+            StrataSettings settings = StrataMod.Settings;
+            if (settings == null)
+            {
+                return true;
+            }
+            return settings.reduceBackgroundLevels;
+        }
+
         public static bool IsForcedHibernate(Map map)
         {
             return map != null && forcedHibernateMapIds.Contains(map.uniqueID);
         }
 
+        public static bool IsStrataPocketLevel(Map map)
+        {
+            return map != null
+                && (StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map));
+        }
+
+        // Vacant A+/B+ pocket maps run ambient sims at reduced rate (see LevelTicking).
+        public static bool ShouldThrottleAmbient(Map map)
+        {
+            if (!HibernateEnabled() || map == null || !IsStrataPocketLevel(map))
+            {
+                return false;
+            }
+            if (Find.CurrentMap == map && !IsForcedHibernate(map))
+            {
+                return false;
+            }
+            if (PawnCount(map) > 0)
+            {
+                ClearForcedHibernate(map);
+                return false;
+            }
+            if (IsForcedHibernate(map))
+            {
+                return true;
+            }
+            return (Find.TickManager.TicksGame + map.uniqueID) % 4 != 0;
+        }
+
+        // Occupied pocket level you are not viewing — slower gas/O₂ sim, no overlay rebuild.
+        public static bool ShouldReduceAtmosphere(Map map)
+        {
+            if (!ReduceBackgroundLevelsEnabled() || map == null || !IsStrataPocketLevel(map))
+            {
+                return false;
+            }
+            if (Find.CurrentMap == map && !IsForcedHibernate(map))
+            {
+                return false;
+            }
+            if (ShouldThrottleAmbient(map))
+            {
+                return false;
+            }
+            return PawnCount(map) > 0;
+        }
+
+        public static int AtmosphereCycleMultiplier(Map map)
+        {
+            if (ShouldThrottleAmbient(map))
+            {
+                return AtmosphereVacantMultiplier;
+            }
+            if (ShouldReduceAtmosphere(map))
+            {
+                return AtmosphereReducedMultiplier;
+            }
+            return 1;
+        }
+
         public static bool IsHibernating(Map map)
         {
-            if (map == null || !StrataMapUtility.IsUnderground(map))
+            if (map == null || !IsStrataPocketLevel(map))
             {
                 return false;
             }
@@ -55,7 +128,7 @@ namespace Strata
             forcedHibernateMapIds.Clear();
             foreach (Map map in Find.Maps)
             {
-                if (StrataMapUtility.IsUnderground(map) && PawnCount(map) == 0)
+                if (IsStrataPocketLevel(map) && PawnCount(map) == 0)
                 {
                     forcedHibernateMapIds.Add(map.uniqueID);
                 }

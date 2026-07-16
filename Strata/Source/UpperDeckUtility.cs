@@ -44,13 +44,44 @@ namespace Strata
 
         public static bool SourceHasRoofUnder(Map upper, IntVec3 upperCell, Map source = null)
         {
+            return SourceSupportsUpperDeck(upper, upperCell, source);
+        }
+
+        public static bool SourceSupportsUpperDeck(Map upper, IntVec3 upperCell, Map source = null)
+        {
             source ??= SourceMapFor(upper);
             if (source == null || !upperCell.InBounds(upper))
             {
                 return false;
             }
             IntVec3 below = StrataMapUtility.ProportionalCell(upperCell, upper, source);
-            return below.InBounds(source) && source.roofGrid.Roofed(below);
+            return SourceCellSupportsDeck(source, below, IsGravshipLinkedUpper(upper));
+        }
+
+        private static bool IsGravshipLinkedUpper(Map upper)
+        {
+            if (!StrataGravshipUtility.OdysseyActive)
+            {
+                return false;
+            }
+            if (upper != null && StrataGravshipUtility.IsInGravshipStack(upper))
+            {
+                return true;
+            }
+            return PocketMapUtility.currentlyGeneratingPortal is IStrataGravshipPortal;
+        }
+
+        private static bool SourceCellSupportsDeck(Map source, IntVec3 below, bool gravshipLinkedUpper)
+        {
+            if (!below.InBounds(source))
+            {
+                return false;
+            }
+            if (source.roofGrid.Roofed(below))
+            {
+                return true;
+            }
+            return gravshipLinkedUpper && StrataGravshipUtility.CellOnGravship(source, below);
         }
 
         // Full paint used by map gen (and rare rebuilds).
@@ -63,15 +94,26 @@ namespace Strata
             Map source = SourceMapFor(upper);
             TerrainDef deck = RoofDeck;
             TerrainDef sky = OpenSky;
+            bool gravshipLinked = IsGravshipLinkedUpper(upper);
 
             SuspendRoofSync = true;
             try
             {
-                foreach (IntVec3 cell in upper.AllCells)
+                if (source != null && source.Size == upper.Size)
                 {
-                    upper.roofGrid.SetRoof(cell, null);
-                    bool supported = source != null && SourceHasRoofUnder(upper, cell, source);
-                    upper.terrainGrid.SetTerrain(cell, supported ? deck : sky);
+                    PaintSameSize(upper, source, deck, sky, gravshipLinked);
+                }
+                else if (source != null)
+                {
+                    PaintProportional(upper, source, deck, sky, gravshipLinked);
+                }
+                else
+                {
+                    foreach (IntVec3 cell in upper.AllCells)
+                    {
+                        upper.roofGrid.SetRoof(cell, null);
+                        upper.terrainGrid.SetTerrain(cell, sky);
+                    }
                 }
 
                 EnsurePlaza(upper, landingSpot, plazaRadius);
@@ -79,6 +121,45 @@ namespace Strata
             finally
             {
                 SuspendRoofSync = false;
+            }
+        }
+
+        private static void PaintSameSize(Map upper, Map source, TerrainDef deck, TerrainDef sky, bool gravshipLinked)
+        {
+            foreach (IntVec3 cell in upper.AllCells)
+            {
+                upper.roofGrid.SetRoof(cell, null);
+                bool supported = SourceCellSupportsDeck(source, cell, gravshipLinked);
+                upper.terrainGrid.SetTerrain(cell, supported ? deck : sky);
+            }
+        }
+
+        private static void PaintProportional(Map upper, Map source, TerrainDef deck, TerrainDef sky, bool gravshipLinked)
+        {
+            int sourceCells = source.cellIndices.NumGridCells;
+            var sourceRoofs = new bool[sourceCells];
+            var sourceSubstructure = gravshipLinked ? new bool[sourceCells] : null;
+            foreach (IntVec3 below in source.AllCells)
+            {
+                int index = source.cellIndices.CellToIndex(below);
+                if (source.roofGrid.Roofed(below))
+                {
+                    sourceRoofs[index] = true;
+                }
+                else if (sourceSubstructure != null && StrataGravshipUtility.CellOnGravship(source, below))
+                {
+                    sourceSubstructure[index] = true;
+                }
+            }
+
+            foreach (IntVec3 cell in upper.AllCells)
+            {
+                upper.roofGrid.SetRoof(cell, null);
+                IntVec3 below = StrataMapUtility.ProportionalCell(cell, upper, source);
+                bool supported = below.InBounds(source)
+                    && (sourceRoofs[source.cellIndices.CellToIndex(below)]
+                        || (sourceSubstructure != null && sourceSubstructure[source.cellIndices.CellToIndex(below)]));
+                upper.terrainGrid.SetTerrain(cell, supported ? deck : sky);
             }
         }
 
@@ -107,7 +188,7 @@ namespace Strata
                 return;
             }
             TerrainDef current = upperCell.GetTerrain(upper);
-            bool supported = SourceHasRoofUnder(upper, upperCell);
+            bool supported = SourceSupportsUpperDeck(upper, upperCell);
 
             if (supported)
             {
@@ -143,6 +224,27 @@ namespace Strata
             }
         }
 
+        public static void SyncGravshipUpperDecksFromSource(Map source)
+        {
+            if (source == null || !StrataGravshipUtility.OdysseyActive)
+            {
+                return;
+            }
+            foreach (Thing thing in source.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is not IStrataGravshipPortal || thing is not MapPortal portal
+                    || !portal.PocketMapExists)
+                {
+                    continue;
+                }
+                Map upper = portal.PocketMap;
+                if (StrataMapUtility.IsUpperLevel(upper))
+                {
+                    SyncAllFromSource(upper);
+                }
+            }
+        }
+
         private static bool CellHasBlockingThing(IntVec3 cell, Map map)
         {
             List<Thing> things = cell.GetThingList(map);
@@ -169,7 +271,8 @@ namespace Strata
 
         public static void Postfix(RoofGrid __instance, IntVec3 c)
         {
-            if (UpperDeckUtility.SuspendRoofSync)
+            if (UpperDeckUtility.SuspendRoofSync
+                || Scribe.mode == LoadSaveMode.LoadingVars)
             {
                 return;
             }

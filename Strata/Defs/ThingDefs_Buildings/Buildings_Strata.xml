@@ -28,24 +28,18 @@
   </ThingDef>
 
   <!-- ============ Tower stairwell (up from surface / A-n) ============ -->
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef ParentName="Strata_HandrailStairsUpGraphic">
     <defName>Strata_StairsBuildUp</defName>
     <label>tower stairwell</label>
     <description>A stair tower that opens a new outdoor floor above this map. Completing it frames Level +1 (or joins an upper floor already opened by another tower stairwell). The upper map is a roof deck: you can only walk and build where this floor is roofed, plus a plaza around the shaft — open sky beyond the roof edge cannot hold structures. Expand roofs downstairs to grow the deck. Requires building up research.
 
 Colonists use the tower on their own to work across floors. Wire each level into the stairwell to pool power. It cannot be deconstructed while anyone is still above.</description>
     <thingClass>Strata.Building_StairsBuildUp</thingClass>
-    <graphicData>
-      <texPath>Strata/Buildings/StairsUp</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2,2)</drawSize>
-    </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>42</pathCost>
     <fillPercent>0.4</fillPercent>
-    <rotatable>false</rotatable>
-    <size>(2,2)</size>
+    <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
     <statBases>
       <MaxHitPoints>600</MaxHitPoints>
@@ -84,22 +78,16 @@ Colonists use the tower on their own to work across floors. Wire each level into
   </ThingDef>
 
   <!-- Landing on an upper floor — climb back down to the level below. -->
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef ParentName="Strata_HandrailStairsDownGraphic">
     <defName>Strata_BuildUpLanding</defName>
     <label>tower landing</label>
     <description>The upper landing of a tower stairwell — stairs leading back down to the floor below. Wire this floor into the stairwell so power can pool with the level beneath. It cannot be deconstructed; it is the way down.</description>
     <thingClass>Strata.Building_BuildUpLanding</thingClass>
-    <graphicData>
-      <texPath>Strata/Buildings/StairsDown</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2,2)</drawSize>
-    </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>42</pathCost>
     <fillPercent>0.4</fillPercent>
-    <rotatable>false</rotatable>
-    <size>(2,2)</size>
+    <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
     <useHitPoints>false</useHitPoints>
     <destroyable>false</destroyable>
@@ -121,24 +109,18 @@ Colonists use the tower on their own to work across floors. Wire each level into
   </ThingDef>
 
   <!-- ============ Excavated stairwell (down) ============ -->
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef ParentName="Strata_HandrailStairsDownGraphic">
     <defName>Strata_StairsDown</defName>
     <label>excavated stairwell</label>
     <description>A broad staircase carved down into the rock beneath the colony. Completing it opens a new underground level: a solid stratum of stone the same size as this map, directly beneath it, that can be mined out into rooms, workshops, and vaults. The first basement from the surface requires digging down research; every level below that requires deep excavation research. Note: on large map sizes each opened level adds correspondingly more load.
 
 Colonists will use the stairwell on their own to work, eat, and sleep across levels. The shaft also ties both floors' power grids together when each level is wired into the stairwell — keep a battery on each level for surplus to pool across. It cannot be deconstructed while anyone is still below.</description>
     <thingClass>Strata.Building_StairsDown</thingClass>
-    <graphicData>
-      <texPath>Strata/Buildings/StairsDown</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2,2)</drawSize>
-    </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>42</pathCost>
     <fillPercent>0.4</fillPercent>
-    <rotatable>false</rotatable>
-    <size>(2,2)</size>
+    <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
     <statBases>
       <MaxHitPoints>600</MaxHitPoints>
@@ -179,23 +161,19 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
   <!-- Dig-down extension beside a landing — same portal as a stairwell, with
        its own shaft transmitter so hub landings are not double-tied. Not in
        the architect menu; designated only via the Dig down gizmo. -->
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef ParentName="Strata_HandrailStairsDownGraphic">
     <defName>Strata_DigDownShaft</defName>
     <label>dig shaft</label>
     <description>An extension of the stairwell landing above, carved downward into the rock. Colonists use it to reach the next level once construction finishes. Wire the landing above (or this shaft once built) into your grid — it carries power to the level below the same way an excavated stairwell does.</description>
     <thingClass>Strata.Building_StairsDown</thingClass>
     <graphicData>
-      <texPath>Strata/Buildings/StairsDown</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2,2)</drawSize>
       <color>(0.75, 0.75, 0.75)</color>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>42</pathCost>
     <fillPercent>0.4</fillPercent>
-    <rotatable>false</rotatable>
-    <size>(2,2)</size>
+    <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
     <statBases>
       <MaxHitPoints>600</MaxHitPoints>
@@ -235,22 +213,16 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
   </ThingDef>
 
   <!-- ============ Stairwell up (spawned at the bottom of the stairs) ============ -->
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef ParentName="Strata_HandrailStairsUpGraphic">
     <defName>Strata_StairsUp</defName>
     <label>stairwell up</label>
     <description>The bottom landing of an excavated stairwell — a broad staircase leading back up to the level above. Wire your local grid into the stairwell on this floor so power can pool with the level above. It cannot be deconstructed; it is the way home.</description>
     <thingClass>Strata.Building_StairsUp</thingClass>
-    <graphicData>
-      <texPath>Strata/Buildings/StairsUp</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2,2)</drawSize>
-    </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>42</pathCost>
     <fillPercent>0.4</fillPercent>
-    <rotatable>false</rotatable>
-    <size>(2,2)</size>
+    <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
     <useHitPoints>false</useHitPoints>
     <destroyable>false</destroyable>
