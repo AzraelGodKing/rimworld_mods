@@ -113,50 +113,17 @@ namespace Strata
 
         public static void CollectDuctNetwork(Map map, IntVec3 start, HashSet<IntVec3> network)
         {
-            if (!start.InBounds(map) || !network.Add(start))
-            {
-                return;
-            }
-            foreach (IntVec3 dir in GenAdj.CardinalDirections)
-            {
-                IntVec3 next = start + dir;
-                if (!next.InBounds(map))
-                {
-                    continue;
-                }
-                if (next.GetFirstBuilding(map)?.TryGetComp<CompSmokeDuct>() != null)
-                {
-                    CollectDuctNetwork(map, next, network);
-                }
-            }
+            GasPipeUtility.CollectNetwork(map, start, network);
         }
 
         public static bool DuctNetworkReachesOutdoor(Map map, HashSet<IntVec3> network)
         {
-            foreach (IntVec3 cell in network)
-            {
-                foreach (IntVec3 dir in GenAdj.CardinalDirections)
-                {
-                    if (CellIsOutdoor(map, cell + dir))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return GasPipeUtility.NetworkReachesOutdoor(map, network);
         }
 
         public static bool ExhaustOpensIntoDuct(Thing vent, out HashSet<IntVec3> network)
         {
-            network = null;
-            IntVec3 exhaust = ExhaustCell(vent);
-            if (!exhaust.InBounds(vent.Map) || exhaust.GetFirstBuilding(vent.Map)?.TryGetComp<CompSmokeDuct>() == null)
-            {
-                return false;
-            }
-            network = new HashSet<IntVec3>();
-            CollectDuctNetwork(vent.Map, exhaust, network);
-            return network.Count > 0;
+            return GasPipeUtility.ExhaustOpensIntoPipe(vent, out network);
         }
     }
 }

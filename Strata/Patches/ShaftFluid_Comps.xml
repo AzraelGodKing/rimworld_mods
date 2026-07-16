@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!-- Like CompPowerShaft + transmitsPower on shaft power conduits: each junction
+       gets the mod's pipe comp so it is a first-class net member, not a passive reader. -->
+
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Dubwise.DubsBadHygiene</li>
+    </mods>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_DBH"]/comps</xpath>
+      <value>
+        <li Class="DubsBadHygiene.CompProperties_Pipe">
+          <mode>Sewage</mode>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Dubwise.DubsCentralHeating</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_DCH_Heat"]/comps</xpath>
+          <value>
+            <li Class="DubsCentralHeating.CompProperties_Pipe">
+              <mode>Heating</mode>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_DCH_Air"]/comps</xpath>
+          <value>
+            <li Class="DubsCentralHeating.CompProperties_Pipe">
+              <mode>Air</mode>
+            </li>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Dubwise.Rimatomics</li>
+    </mods>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Rimatomics"]/comps</xpath>
+      <value>
+        <li Class="Rimatomics.CompProperties_Pipe">
+          <mode>Cooling</mode>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>VanillaExpanded.HelixienGas</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_VHGE"]/comps</xpath>
+          <value>
+            <li Class="PipeSystem.CompProperties_Resource">
+              <pipeNet>VHGE_HelixienNet</pipeNet>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/PipeSystem.PipeNetDef[defName="VHGE_HelixienNet"]/pipeDefs</xpath>
+          <value>
+            <li>Strata_ShaftFluid_VHGE</li>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Dubwise.Rimefeller</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_RimefellerCrude"]/comps</xpath>
+          <value>
+            <li Class="Rimefeller.CompProperties_Pipe">
+              <mode>Crude</mode>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_RimefellerFuel"]/comps</xpath>
+          <value>
+            <li Class="Rimefeller.CompProperties_Pipe">
+              <mode>Fuel</mode>
+            </li>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>VanillaExpanded.VChemfuelE</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_VefChemfuel"]/comps</xpath>
+          <value>
+            <li Class="PipeSystem.CompProperties_Resource">
+              <pipeNet>VCHE_ChemfuelNet</pipeNet>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/PipeSystem.PipeNetDef[defName="VCHE_ChemfuelNet"]/pipeDefs</xpath>
+          <value>
+            <li>Strata_ShaftFluid_VefChemfuel</li>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+
+</Patch>

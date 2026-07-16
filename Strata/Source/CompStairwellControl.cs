@@ -21,6 +21,8 @@ namespace Strata
 
         public bool Sealed => sealedShut;
 
+        public void Unseal() => sealedShut = false;
+
         public override void PostExposeData()
         {
             base.PostExposeData();
@@ -31,7 +33,9 @@ namespace Strata
         {
             yield return new Command_Toggle
             {
-                defaultLabel = parent is Building_ElevatorDown ? "Seal elevator" : "Seal stairwell",
+                defaultLabel = parent is Building_ElevatorDown or Building_ElevatorBuildUp
+                    ? "Seal elevator"
+                    : "Seal stairwell",
                 defaultDesc = "Seal this passage shut. Nobody can pass, no air or gas moves between the levels — use it to contain tox gas, smoke, or an infestation on one level.",
                 icon = ContentFinder<UnityEngine.Texture2D>.Get("UI/Commands/ForbidOff", reportFailure: false),
                 isActive = () => sealedShut,

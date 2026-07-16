@@ -7,8 +7,15 @@ using Verse.AI;
 
 namespace Strata
 {
-    // Shared checks for who may use Strata stairwells/elevators. Colonists,
-    // Misc. Robots, and other player workers are included; raiders and guests are not.
+    // Shared checks for who may use Strata stairwells/elevators.
+    //
+    // Physical traversal (EnterPortal) is mostly unrestricted — vanilla prison
+    // breaks, slave escapes, guest departure, and panic flee must be able to
+    // climb shafts alone. See EscapePortalUtility / Patch_ExitMapThroughPortals.
+    //
+    // Colony work relays: free colonists, colony slaves (they have work
+    // assignments), Misc. Robots, and other player tool-user workers.
+    // Prisoners never get work/food/rest relay — only escape via ExitMap.
     public static class StrataPawnUtility
     {
         private static Type miscRobotType;
@@ -29,17 +36,29 @@ namespace Strata
             return miscRobotType != null && miscRobotType.IsInstanceOfType(pawn);
         }
 
+        // Who Strata may *relay* for work/food/rest/etc. Not the same as who
+        // may physically walk into a stairwell during an escape.
         public static bool CanUseLevelPortals(Pawn pawn)
         {
             if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed)
             {
                 return false;
             }
-            if (pawn.Faction != Faction.OfPlayer || pawn.IsPrisoner || pawn.IsSlave)
+            // Prisoners stay out of colony relays (escape uses EscapePortalUtility).
+            if (pawn.IsPrisoner)
+            {
+                return false;
+            }
+            if (pawn.Faction != Faction.OfPlayer)
             {
                 return false;
             }
             if (pawn.IsFreeColonist)
+            {
+                return true;
+            }
+            // Ideology slaves do colony jobs — let them commute like colonists.
+            if (pawn.IsSlave && pawn.workSettings?.EverWork == true)
             {
                 return true;
             }
@@ -61,23 +80,19 @@ namespace Strata
                 return false;
             }
             string defName = pawn.def.defName;
-            if (defName.IndexOf("Clean", StringComparison.OrdinalIgnoreCase) >= 0
-                && map.listerFilthInHomeArea.FilthInHomeArea.Count > 0)
+            bool omni = defName.IndexOf("Omni", StringComparison.OrdinalIgnoreCase) >= 0;
+
+            if ((omni || defName.IndexOf("Clean", StringComparison.OrdinalIgnoreCase) >= 0)
+                && WorkRelaySignals.HasCleaning(map))
             {
                 return true;
             }
-            if (defName.IndexOf("Craft", StringComparison.OrdinalIgnoreCase) >= 0
-                || defName.IndexOf("Cook", StringComparison.OrdinalIgnoreCase) >= 0
-                || defName.IndexOf("Farm", StringComparison.OrdinalIgnoreCase) >= 0
-                || defName.IndexOf("Mine", StringComparison.OrdinalIgnoreCase) >= 0
-                || defName.IndexOf("Omni", StringComparison.OrdinalIgnoreCase) >= 0)
+            if ((omni || defName.IndexOf("Haul", StringComparison.OrdinalIgnoreCase) >= 0)
+                && WorkRelaySignals.HasHauling(map))
             {
-                if (BillIngredientUtility.MapHasRunnableBill(pawn, map))
-                {
-                    return true;
-                }
+                return true;
             }
-            if (defName.IndexOf("Haul", StringComparison.OrdinalIgnoreCase) >= 0)
+            if ((omni || defName.IndexOf("Haul", StringComparison.OrdinalIgnoreCase) >= 0))
             {
                 HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
                 if (wanted.Count > 0)
@@ -91,27 +106,64 @@ namespace Strata
                     }
                 }
             }
-            if (map.listerHaulables.ThingsPotentiallyNeedingHauling().Count > 0
-                && (defName.IndexOf("Haul", StringComparison.OrdinalIgnoreCase) >= 0
-                    || defName.IndexOf("Omni", StringComparison.OrdinalIgnoreCase) >= 0))
+            if ((omni || defName.IndexOf("Mine", StringComparison.OrdinalIgnoreCase) >= 0)
+                && WorkRelaySignals.HasMining(map))
             {
                 return true;
             }
-            if (defName.IndexOf("Omni", StringComparison.OrdinalIgnoreCase) >= 0)
+            if ((omni || defName.IndexOf("Farm", StringComparison.OrdinalIgnoreCase) >= 0)
+                && (WorkRelaySignals.HasGrowing(map) || WorkRelaySignals.HasPlantCutting(map)))
             {
-                return map.listerFilthInHomeArea.FilthInHomeArea.Count > 0;
+                return true;
             }
-            return defName.IndexOf("Haul", StringComparison.OrdinalIgnoreCase) >= 0
-                && map.listerHaulables.ThingsPotentiallyNeedingHauling().Count > 0;
+            if ((omni || defName.IndexOf("Construct", StringComparison.OrdinalIgnoreCase) >= 0
+                    || defName.IndexOf("Build", StringComparison.OrdinalIgnoreCase) >= 0)
+                && WorkRelaySignals.HasConstruction(map))
+            {
+                return true;
+            }
+            if ((omni || defName.IndexOf("Fire", StringComparison.OrdinalIgnoreCase) >= 0)
+                && WorkRelaySignals.HasFirefighting(map))
+            {
+                return true;
+            }
+            if (omni || defName.IndexOf("Craft", StringComparison.OrdinalIgnoreCase) >= 0
+                || defName.IndexOf("Cook", StringComparison.OrdinalIgnoreCase) >= 0
+                || defName.IndexOf("Farm", StringComparison.OrdinalIgnoreCase) >= 0
+                || defName.IndexOf("Mine", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                if (BillIngredientUtility.MapHasRunnableBill(pawn, map))
+                {
+                    return true;
+                }
+            }
+            // Omni bots: any of the broad colony signals.
+            if (omni)
+            {
+                return WorkRelaySignals.HasConstruction(map)
+                    || WorkRelaySignals.HasHunting(map)
+                    || WorkRelaySignals.HasResearch(map)
+                    || WorkRelaySignals.HasFlickWork(map);
+            }
+            return false;
         }
 
         public static bool IsWorkSeekingJobGiver(ThinkNode_JobGiver giver)
         {
+            if (WorkRelaySignals.IsRegisteredWorkSeekingGiver(giver))
+            {
+                return true;
+            }
             string name = giver.GetType().FullName ?? giver.GetType().Name;
             return name.IndexOf("JobGiver_Work", StringComparison.Ordinal) >= 0
                 || name.IndexOf("AIRobot", StringComparison.OrdinalIgnoreCase) >= 0
                 || name.IndexOf("Haul", StringComparison.OrdinalIgnoreCase) >= 0
-                || name.IndexOf("Clean", StringComparison.OrdinalIgnoreCase) >= 0;
+                || name.IndexOf("Clean", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Mine", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Farm", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Construct", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Craft", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Fire", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private static bool MiscRobotNeedsRecharge(Pawn pawn)

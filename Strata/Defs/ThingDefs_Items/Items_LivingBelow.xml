@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef ParentName="PlantFoodRawBase">
+    <defName>Strata_Fungus</defName>
+    <label>cave fungus</label>
+    <description>Edible mushrooms grown in dark underground farms. Bland but sustaining — a staple of deep colonies that cannot rely on sunlight.</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/PlantFoodRaw/RawFungus</texPath>
+    </graphicData>
+    <statBases>
+      <MarketValue>1.2</MarketValue>
+    </statBases>
+    <ingestible>
+      <foodType>Fungus</foodType>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>30</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>Strata_Lime</defName>
+    <label>lime</label>
+    <description>Crushed limestone for lime scrubbers — absorbs carbon dioxide from stale mine air as it slowly consumes the charge.</description>
+    <graphicData>
+      <texPath>Strata/Items/Lime</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MarketValue>0.8</MarketValue>
+      <Mass>0.5</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+</Defs>
