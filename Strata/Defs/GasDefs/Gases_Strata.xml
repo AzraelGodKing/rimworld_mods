@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- The atmosphere simulation's channels. Every ventilation tool (vents,
+       louvers, smoke holes, ducts, fans, updraft filters, seals, and the
+       ventilation guarantee) applies to every gas automatically - these defs
+       only decide color, buoyancy, persistence, harm, fire, and extraction. -->
+
+  <!-- Combustion smoke: the original sim, unchanged numbers. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Smoke</defName>
+    <label>smoke</label>
+    <overlayLabel>smoke</overlayLabel>
+    <description>Combustion fumes from burners and open flames. Rises through unsealed shafts and chokes anyone lingering in it.</description>
+    <overlayColor>(0.22, 0.22, 0.28)</overlayColor>
+    <buoyant>true</buoyant>
+    <passiveLeak>0.02</passiveLeak>
+    <harmHediff>Strata_SmokeInhalation</harmHediff>
+    <harmThreshold>0.15</harmThreshold>
+    <severityGain>0.006</severityGain>
+    <severityDecay>0.03</severityDecay>
+    <throwsMotes>true</throwsMotes>
+    <moteThreshold>0.2</moteThreshold>
+  </Strata.StrataGasDef>
+
+  <!-- Foul deep gas: heavier than air, so it pools on the level it leaks
+       into instead of riding shafts upward. Persistent - a sealed pocket
+       keeps its pressure forever. Toxic, explosive, and worth money. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_DeepGas</defName>
+    <label>deep gas</label>
+    <overlayLabel>deep gas</overlayLabel>
+    <description>Foul flammable gas trapped in the rock. It pools where it leaks, poisons anyone breathing it, and explodes on contact with open flame - but a capped vent will pump it into fuel.</description>
+    <overlayColor>(0.45, 0.82, 0.18)</overlayColor>
+    <buoyant>false</buoyant>
+    <passiveLeak>0</passiveLeak>
+    <harmHediff>Strata_GasInhalation</harmHediff>
+    <harmThreshold>0.12</harmThreshold>
+    <severityGain>0.008</severityGain>
+    <severityDecay>0.025</severityDecay>
+    <flammable>true</flammable>
+    <ignitionDensity>0.35</ignitionDensity>
+    <extractable>true</extractable>
+    <throwsMotes>true</throwsMotes>
+    <moteThreshold>0.12</moteThreshold>
+  </Strata.StrataGasDef>
+
+  <!-- Breathable air on deep levels: lighter than CO₂, rises through shafts.
+       Pawns consume it and suffocate when it falls too low. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Oxygen</defName>
+    <label>oxygen</label>
+    <overlayLabel>O₂</overlayLabel>
+    <description>Breathable air trapped in excavated levels. It rises through unsealed shafts; without ventilation, colonists slowly use it up.</description>
+    <overlayColor>(0.20, 0.55, 0.95)</overlayColor>
+    <buoyant>true</buoyant>
+    <passiveLeak>0</passiveLeak>
+    <harmHediff>Strata_Hypoxia</harmHediff>
+    <harmThreshold>0.12</harmThreshold>
+    <severityGain>0.007</severityGain>
+    <severityDecay>0.035</severityDecay>
+    <harmWhenBelow>true</harmWhenBelow>
+  </Strata.StrataGasDef>
+
+  <!-- Exhaled waste gas: heavier than air, pools low and sinks down shafts. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_CarbonDioxide</defName>
+    <label>carbon dioxide</label>
+    <overlayLabel>CO₂</overlayLabel>
+    <description>Exhaled breath and combustion waste. It pools on the floor, sinks through stairwells to deeper levels, and becomes toxic in concentration.</description>
+    <overlayColor>(0.55, 0.58, 0.68)</overlayColor>
+    <buoyant>false</buoyant>
+    <passiveLeak>0</passiveLeak>
+    <harmHediff>Strata_CO2Exposure</harmHediff>
+    <harmThreshold>0.18</harmThreshold>
+    <severityGain>0.006</severityGain>
+    <severityDecay>0.03</severityDecay>
+  </Strata.StrataGasDef>
+
+  <!-- Firedamp: buoyant, highly flammable, little poison — shaft and ceiling risk. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Methane</defName>
+    <label>methane</label>
+    <overlayLabel>CH₄</overlayLabel>
+    <description>Light firedamp that gathers high in chambers and stairwell landings. Barely toxic, but it ignites at lower density than foul deep gas — electric light is the safe way to work where it seeps.</description>
+    <overlayColor>(0.95, 0.78, 0.15)</overlayColor>
+    <buoyant>true</buoyant>
+    <passiveLeak>0.01</passiveLeak>
+    <harmHediff>Strata_MethaneExposure</harmHediff>
+    <harmThreshold>0.55</harmThreshold>
+    <severityGain>0.003</severityGain>
+    <severityDecay>0.04</severityDecay>
+    <flammable>true</flammable>
+    <ignitionDensity>0.22</ignitionDensity>
+  </Strata.StrataGasDef>
+
+  <!-- Black damp: heavy, not flammable; displaces oxygen after fires and in low pits. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_BlackDamp</defName>
+    <label>black damp</label>
+    <overlayLabel>black damp</overlayLabel>
+    <description>Stale heavy air left after fires and gas explosions. It pools in pits, silently eats oxygen from the room, and suffocates without the warning of foul deep gas.</description>
+    <overlayColor>(0.42, 0.32, 0.55)</overlayColor>
+    <buoyant>false</buoyant>
+    <passiveLeak>0.005</passiveLeak>
+    <harmHediff>Strata_BlackDampExposure</harmHediff>
+    <harmThreshold>0.20</harmThreshold>
+    <severityGain>0.007</severityGain>
+    <severityDecay>0.028</severityDecay>
+    <displacesOxygen>0.004</displacesOxygen>
+  </Strata.StrataGasDef>
+
+  <!-- Fungal spores: slow illness, not explosive. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Spores</defName>
+    <label>fungal spores</label>
+    <overlayLabel>spores</overlayLabel>
+    <description>Airborne fungal spores from deep growths and fungus farms. They clog lungs and sour moods; cloth filters and scrubbers clear them.</description>
+    <overlayColor>(0.35, 0.92, 0.38)</overlayColor>
+    <buoyant>false</buoyant>
+    <passiveLeak>0.015</passiveLeak>
+    <harmHediff>Strata_SporeSickness</harmHediff>
+    <harmThreshold>0.14</harmThreshold>
+    <severityGain>0.005</severityGain>
+    <severityDecay>0.022</severityDecay>
+  </Strata.StrataGasDef>
+
+  <!-- Geothermal steam: buoyant heat, mild scald. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Steam</defName>
+    <label>steam</label>
+    <overlayLabel>steam</overlayLabel>
+    <description>Hot vapor from geothermal vents and geysers. It rises through shafts, scalds in thick clouds, and clears with condensers or open ventilation.</description>
+    <overlayColor>(0.82, 0.90, 0.98)</overlayColor>
+    <buoyant>true</buoyant>
+    <passiveLeak>0.04</passiveLeak>
+    <harmHediff>Strata_SteamScald</harmHediff>
+    <harmThreshold>0.25</harmThreshold>
+    <severityGain>0.008</severityGain>
+    <severityDecay>0.05</severityDecay>
+  </Strata.StrataGasDef>
+
+</Defs>

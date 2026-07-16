@@ -35,6 +35,50 @@ namespace Strata
             }
         }
 
+        internal void TryOpenLevelAfterBuilt()
+        {
+            if (!Spawned || PocketMapExists)
+            {
+                return;
+            }
+            OpenLevelBelow();
+            if (def.defName == "Strata_DigDownShaft")
+            {
+                LinkNearbyLanding();
+            }
+        }
+
+        private void LinkNearbyLanding()
+        {
+            Map map = Map;
+            if (map == null)
+            {
+                return;
+            }
+            const float radiusSq = 8f * 8f;
+            Building_StairsUp best = null;
+            float bestDist = float.MaxValue;
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is not Building_StairsUp landing || !landing.Spawned)
+                {
+                    continue;
+                }
+                float dist = landing.Position.DistanceToSquared(Position);
+                if (dist <= radiusSq && dist < bestDist)
+                {
+                    best = landing;
+                    bestDist = dist;
+                }
+            }
+            if (best == null)
+            {
+                return;
+            }
+            best.SetDownEntrance(this);
+            StairwellPowerUtility.MaintainVerticalTie(best);
+        }
+
         public override bool AutoDraftOnEnter => false;
 
         public override string EnterString => "Go downstairs";
@@ -43,6 +87,9 @@ namespace Strata
 
         public bool Sealed => GetComp<CompStairwellControl>()?.Sealed ?? false;
 
+        // Ancient colony stairwells open B1 without digging-down research.
+        protected virtual bool BypassFirstLevelResearch => false;
+
         public override bool IsEnterable(out string reason)
         {
             if (Sealed)
@@ -50,7 +97,17 @@ namespace Strata
                 reason = "The stairwell is sealed.";
                 return false;
             }
+            if (!PocketMapExists && !BypassFirstLevelResearch && !CanOpenPortalLevel(out reason))
+            {
+                return false;
+            }
             return base.IsEnterable(out reason);
+        }
+
+        // Dig-down stairwells gate on excavation research; tower stairwells override.
+        protected virtual bool CanOpenPortalLevel(out string reason)
+        {
+            return LevelExcavationUtility.CanOpenNewLevelBelow(Map, out reason, this);
         }
 
         public override void OnEntered(Pawn pawn)
@@ -64,9 +121,14 @@ namespace Strata
         {
             if (PocketMapExists && PocketMap.mapPawns.AnyPawnBlockingMapRemoval)
             {
-                return "Someone is still on the level below.";
+                return OccupiedOtherLevelMessage();
             }
             return base.DeconstructibleBy(faction);
+        }
+
+        protected virtual string OccupiedOtherLevelMessage()
+        {
+            return "Someone is still on the level below.";
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
@@ -131,6 +193,11 @@ namespace Strata
                     return existing;
                 }
             }
+            if (!BypassFirstLevelResearch && !LevelExcavationUtility.CanOpenNewLevelBelow(Map, out string reason))
+            {
+                Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
+                return null;
+            }
             return PocketMapUtility.GeneratePocketMap(
                 new IntVec3(Map.Size.x, 1, Map.Size.z),
                 def.portal.pocketMapGenerator, null, Map);
@@ -140,10 +207,18 @@ namespace Strata
         {
             foreach (Thing thing in Map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing != this && thing is Building_StairsDown other
-                    && other.Spawned && other.PocketMapExists)
+                // Tower / gravship shafts keep their own stacks — never join those.
+                if (thing == this || thing is Building_StairsBuildUp
+                    || thing is IStrataGravshipPortal
+                    || thing is not Building_StairsDown other
+                    || !other.Spawned || !other.PocketMapExists)
                 {
-                    return other.PocketMap;
+                    continue;
+                }
+                Map pocket = other.PocketMap;
+                if (pocket != null && !StrataMapUtility.IsUpperLevel(pocket))
+                {
+                    return pocket;
                 }
             }
             return null;
@@ -212,7 +287,7 @@ namespace Strata
             {
                 return false;
             }
-            foreach (IntVec3 c in GenAdj.OccupiedRect(cell, Rot4.North, def.portal.exitDef.size))
+            foreach (IntVec3 c in GenAdj.OccupiedRect(cell, Rotation, def.portal.exitDef.size))
             {
                 if (!c.InBounds(level))
                 {
@@ -245,20 +320,6 @@ namespace Strata
             if (this.IsHashIntervalTick(ExchangeInterval))
             {
                 ExchangeTemperature();
-            }
-            if (this.IsHashIntervalTick(60) && PocketMapExists && exit != null && exit.Spawned)
-            {
-                TieShaftPower();
-            }
-        }
-
-        private void TieShaftPower()
-        {
-            CompPowerShaft top = GetComp<CompPowerShaft>();
-            CompPowerShaft bottom = exit.GetComp<CompPowerShaft>();
-            if (top != null && bottom != null)
-            {
-                top.DriveTie(bottom);
             }
         }
 
@@ -309,6 +370,12 @@ namespace Strata
         public override string GetInspectString()
         {
             string text = base.GetInspectString();
+            string state = LevelInspectState();
+            return text.NullOrEmpty() ? state : text + "\n" + state;
+        }
+
+        protected virtual string LevelInspectState()
+        {
             string state = "Level below: not yet opened";
             if (PocketMapExists)
             {
@@ -327,7 +394,71 @@ namespace Strata
                 state += "\n" + SmokeRiseInspectLine();
                 state += "\n" + PowerShaftInspectLine();
             }
-            return text.NullOrEmpty() ? state : text + "\n" + state;
+            else if (StrataMapUtility.IsUnderground(Map))
+            {
+                state += "\nSelect Dig down to designate a dig shaft; colonists must finish carving it before the level below opens.";
+            }
+            return state;
+        }
+
+        // Force pocket-map generation (used by the underground Dig down gizmo).
+        // Virtual so tower stairwells can open an upper level with their own gates.
+        public virtual void OpenLevelBelow()
+        {
+            if (PocketMapExists)
+            {
+                return;
+            }
+            if (!BypassFirstLevelResearch && !LevelExcavationUtility.CanOpenNewLevelBelow(Map, out string reason))
+            {
+                if (!reason.NullOrEmpty())
+                {
+                    Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
+                }
+                return;
+            }
+            _ = PocketMap;
+        }
+
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            foreach (Gizmo gizmo in base.GetGizmos())
+            {
+                yield return gizmo;
+            }
+            foreach (Gizmo gizmo in ExtraGizmos())
+            {
+                yield return gizmo;
+            }
+        }
+
+        // Dig-down shaft gizmo for unfinished underground portals; tower stairs omit this.
+        protected virtual IEnumerable<Gizmo> ExtraGizmos()
+        {
+            if (!StrataMapUtility.IsUnderground(Map) || PocketMapExists)
+            {
+                yield break;
+            }
+            StairwellDigUtility.CanDigDownFromEntrance(this, out string reason);
+            yield return new Command_Action
+            {
+                defaultLabel = "Dig down",
+                defaultDesc = "Break through to the level below once this stairwell is fully built, or use it if construction finished before research was available.",
+                icon = ContentFinder<Texture2D>.Get("UI/Designators/Mine", reportFailure: false),
+                action = () =>
+                {
+                    if (StairwellDigUtility.TryDigDownFromEntrance(this, out string message))
+                    {
+                        return;
+                    }
+                    if (!message.NullOrEmpty())
+                    {
+                        Messages.Message(message, this, MessageTypeDefOf.RejectInput, historical: false);
+                    }
+                },
+                Disabled = !reason.NullOrEmpty(),
+                disabledReason = reason,
+            };
         }
 
         private string SmokeRiseInspectLine()
@@ -339,7 +470,7 @@ namespace Strata
             return "Smoke shaft: fumes rise to the level above";
         }
 
-        private string PowerShaftInspectLine()
+        protected string PowerShaftInspectLine()
         {
             return "Power shaft: ties both levels' grids (wire each floor into the stairwell; keep batteries on each level)";
         }

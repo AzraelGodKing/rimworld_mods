@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThoughtDef MayRequire="Ludeon.RimWorld.Royalty">
+    <defName>Strata_DeepBedroom</defName>
+    <thoughtClass>Thought_Situational</thoughtClass>
+    <workerClass>Strata.ThoughtWorker_StrataDeepBedroom</workerClass>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>deep impressive bedroom</label>
+        <description>My bedroom is far below the surface, and it is genuinely impressive down here.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+      <li>
+        <label>deep very impressive bedroom</label>
+        <description>I sleep in a remarkable chamber carved from the living rock. Few nobles could match this.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

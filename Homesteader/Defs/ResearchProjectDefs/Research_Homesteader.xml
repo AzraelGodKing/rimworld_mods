@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
+  <ResearchTabDef>
+    <defName>Homesteader</defName>
+    <label>Homesteader</label>
+    <generalTitle>Homestead research</generalTitle>
+    <generalDescription>Farm-to-table crafting, pantry storage, brewing, comforts, and electrified homestead infrastructure.</generalDescription>
+  </ResearchTabDef>
+
   <ResearchProjectDef>
     <defName>Homesteader_PrimitiveHomestead</defName>
     <label>primitive homestead</label>
     <description>Basic homesteading knowledge: salting food, bulk farm storage, and keeping kitchen ingredients organized.</description>
     <baseCost>400</baseCost>
     <techLevel>Neolithic</techLevel>
+    <tab>Homesteader</tab>
     <researchViewX>0.00</researchViewX>
-    <researchViewY>5.40</researchViewY>
+    <researchViewY>1.60</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -17,11 +25,12 @@
     <description>Advanced preserving techniques for boiling fruit into jam and other long-lasting pantry goods.</description>
     <baseCost>800</baseCost>
     <techLevel>Neolithic</techLevel>
+    <tab>Homesteader</tab>
     <prerequisites>
       <li>Homesteader_PrimitiveHomestead</li>
     </prerequisites>
-    <researchViewX>1.20</researchViewX>
-    <researchViewY>5.00</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>0.80</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -30,11 +39,12 @@
     <description>Milling grain, churning dairy, and baking from what the farm produces.</description>
     <baseCost>800</baseCost>
     <techLevel>Neolithic</techLevel>
+    <tab>Homesteader</tab>
     <prerequisites>
       <li>Homesteader_PrimitiveHomestead</li>
     </prerequisites>
-    <researchViewX>1.20</researchViewX>
-    <researchViewY>5.80</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>1.60</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -43,11 +53,12 @@
     <description>Root cellars and reinforced crates for serious pantry and stockpile management.</description>
     <baseCost>600</baseCost>
     <techLevel>Neolithic</techLevel>
+    <tab>Homesteader</tab>
     <prerequisites>
       <li>Homesteader_PrimitiveHomestead</li>
     </prerequisites>
-    <researchViewX>1.20</researchViewX>
-    <researchViewY>4.20</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>0.00</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -56,11 +67,12 @@
     <description>Fermenting cider and mead, steeping herbal tea, and keeping bees for a steady supply of honey.</description>
     <baseCost>700</baseCost>
     <techLevel>Neolithic</techLevel>
+    <tab>Homesteader</tab>
     <prerequisites>
       <li>Homesteader_FarmsteadCrafting</li>
     </prerequisites>
-    <researchViewX>2.40</researchViewX>
-    <researchViewY>6.20</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>2.40</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -69,11 +81,12 @@
     <description>The finer side of frontier life: quilted beds, rocking chairs, oil lamps, wood stoves, and games for the porch.</description>
     <baseCost>600</baseCost>
     <techLevel>Neolithic</techLevel>
+    <tab>Homesteader</tab>
     <prerequisites>
       <li>Homesteader_PrimitiveHomestead</li>
     </prerequisites>
-    <researchViewX>1.20</researchViewX>
-    <researchViewY>6.40</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>2.40</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -82,12 +95,13 @@
     <description>Bringing electricity to the homestead with wood-fired generators and mature farm-to-table infrastructure.</description>
     <baseCost>1200</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Homesteader</tab>
     <prerequisites>
       <li>Homesteader_FoodPreservation</li>
       <li>Homesteader_FarmsteadCrafting</li>
     </prerequisites>
-    <researchViewX>2.40</researchViewX>
-    <researchViewY>5.40</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>1.20</researchViewY>
   </ResearchProjectDef>
 
 </Defs>
