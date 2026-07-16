@@ -24,6 +24,7 @@ namespace Strata
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
                 if (thing == ignore || thing is not Building_StairsBuildUp up
+                    || thing is IStrataGravshipPortal
                     || !up.Spawned || !up.PocketMapExists)
                 {
                     continue;

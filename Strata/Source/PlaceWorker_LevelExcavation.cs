@@ -13,6 +13,11 @@ namespace Strata
             Thing thingToIgnore = null,
             Thing thing = null)
         {
+            AcceptanceReport gravship = StrataGravshipUtility.RejectColonyPortalOnGravship(def, center, rot, map);
+            if (!gravship.Accepted)
+            {
+                return gravship;
+            }
             if (!LevelExcavationUtility.CanOpenNewLevelBelow(map, out string reason, thingToIgnore))
             {
                 return reason;

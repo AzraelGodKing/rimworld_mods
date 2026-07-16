@@ -42,6 +42,18 @@ namespace Strata
 
         public static ThingDef Strata_DigDownShaft;
 
+        [MayRequire("Ludeon.RimWorld.Odyssey")]
+        public static ThingDef Strata_GravshipStairsDown;
+
+        [MayRequire("Ludeon.RimWorld.Odyssey")]
+        public static ThingDef Strata_GravshipStairsUp;
+
+        [MayRequire("Ludeon.RimWorld.Odyssey")]
+        public static ThingDef Strata_GravshipStairsBuildUp;
+
+        [MayRequire("Ludeon.RimWorld.Odyssey")]
+        public static ThingDef Strata_GravshipBuildUpLanding;
+
         public static ThingDef Strata_AncientColonyStairsDown;
 
         public static ThingDef Strata_AncientColonyStairsUp;

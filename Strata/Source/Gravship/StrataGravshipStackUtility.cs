@@ -5,8 +5,9 @@ using Verse;
 
 namespace Strata
 {
-    // Collects Strata A+/B+ pocket maps whose entrance portals sit on a
-    // gravship's substructure so those floors can travel with the ship.
+    // Collects Strata A+/B+ pocket maps that should travel with a gravship.
+    // Prefers dedicated gravship stairs (IStrataGravshipPortal); falls back to
+    // any dig/tower portal sitting on the ship substructure.
     public static class StrataGravshipStackUtility
     {
         public static bool IsStrataLinkedLevel(Map map)
@@ -15,7 +16,6 @@ namespace Strata
                 && (StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map));
         }
 
-        // Pocket maps opened under/over portals that are onboard the ship.
         public static List<Map> CollectTravellingLevels(Building_GravEngine engine)
         {
             var result = new List<Map>();
@@ -29,58 +29,39 @@ namespace Strata
             {
                 substructure = engine.AllConnectedSubstructure;
             }
-            if (substructure == null || substructure.Count == 0)
-            {
-                return result;
-            }
 
             var seen = new HashSet<Map>();
             foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing is not MapPortal portal || !portal.Spawned)
+                if (thing is not MapPortal portal || !portal.Spawned || !portal.PocketMapExists)
                 {
                     continue;
                 }
-                if (!PortalOnSubstructure(portal, substructure))
+
+                bool gravshipPortal = portal is IStrataGravshipPortal;
+                bool onShip = gravshipPortal
+                    ? ((IStrataGravshipPortal)portal).IsOnGravship
+                      || (substructure != null && PortalOnSubstructure(portal, substructure))
+                    : substructure != null && PortalOnSubstructure(portal, substructure);
+
+                if (!onShip && !gravshipPortal)
                 {
                     continue;
                 }
-                if (portal is Building_StairsDown down && down.PocketMapExists)
-                {
-                    AddLevelAndStack(down.PocketMap, result, seen);
-                }
-                else if (portal.PocketMapExists)
+                // Dedicated gravship stairs always travel once they have a pocket,
+                // even if substructure lookup briefly fails mid-takeoff.
+                if (!onShip && gravshipPortal && portal.PocketMapExists)
                 {
                     AddLevelAndStack(portal.PocketMap, result, seen);
+                    continue;
                 }
-            }
-
-            if (host.ChildPocketMaps != null)
-            {
-                foreach (Map child in host.ChildPocketMaps)
+                if (!onShip)
                 {
-                    // Only bring children whose stairhead is on the ship.
-                    if (HasPortalOnSubstructure(child, host, substructure))
-                    {
-                        AddLevelAndStack(child, result, seen);
-                    }
+                    continue;
                 }
+                AddLevelAndStack(portal.PocketMap, result, seen);
             }
             return result;
-        }
-
-        private static bool HasPortalOnSubstructure(Map child, Map host, HashSet<IntVec3> substructure)
-        {
-            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
-            {
-                if (thing is Building_StairsDown down && down.Spawned
-                    && down.PocketMapExists && down.PocketMap == child
-                    && PortalOnSubstructure(down, substructure))
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         private static bool PortalOnSubstructure(MapPortal portal, HashSet<IntVec3> substructure)

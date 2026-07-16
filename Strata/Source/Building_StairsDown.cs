@@ -207,8 +207,9 @@ namespace Strata
         {
             foreach (Thing thing in Map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                // Tower stairwells/elevators open UP — never treat their pocket as "below".
+                // Tower / gravship shafts keep their own stacks — never join those.
                 if (thing == this || thing is Building_StairsBuildUp
+                    || thing is IStrataGravshipPortal
                     || thing is not Building_StairsDown other
                     || !other.Spawned || !other.PocketMapExists)
                 {

@@ -70,6 +70,7 @@ Still open:
 
 Shipped:
 - [x] Collect A+/B+ pocket maps whose portals sit on gravship substructure
+- [x] Odyssey-only gravship stairwells (down + tower up) + `IsGravshipContext` API
 - [x] Keep them alive across takeoff / `AbandonMap` / `DestroyPocketMap`
 - [x] Rebind `PocketMapParent.sourceMap` + tile on land (`PlaceGravshipInMap` / arrive / `PostSwapMap`)
 - [x] Upper roof-deck re-sync after land

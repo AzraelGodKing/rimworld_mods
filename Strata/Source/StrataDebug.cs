@@ -365,6 +365,14 @@ namespace Strata
                 && DefDatabase<TerrainDef>.GetNamedSilentFail(UpperDeckUtility.OpenSkyDefName) != null);
             Check("gravship APIs present for stack follow",
                 typeof(GravshipUtility) != null && typeof(Building_GravEngine) != null);
+            if (StrataGravshipUtility.OdysseyActive)
+            {
+                Check("gravship stairs loaded (Odyssey)",
+                    StrataThingDefOf.Strata_GravshipStairsDown != null
+                    && StrataThingDefOf.Strata_GravshipStairsUp != null
+                    && StrataThingDefOf.Strata_GravshipStairsBuildUp != null
+                    && StrataThingDefOf.Strata_GravshipBuildUpLanding != null);
+            }
             Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
             Check("sunken ruin map generator loaded",
                 DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_SunkenRuinLevel") != null);

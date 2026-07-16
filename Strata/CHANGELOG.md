@@ -11,6 +11,7 @@ All notable changes to Strata are documented here.
 
 ### Added — Gravship stack follow (Odyssey)
 - **Linked floors travel with the ship** — when a gravship launches, Strata A+/B+ pocket maps whose stair/elevator portals sit on the ship’s substructure are kept alive for the flight and rebound to the new host map on landing (top and bottom of the stack). Quest-site pockets do not hitch a ride. Upper decks re-sync roof support after touchdown.
+- **Gravship stairwells** (Odyssey-only) — *gravship stairwell* (down) and *gravship tower stairwell* (up) place only on gravship substructure. They open normal Strata levels but mark the stack as ship-linked via `IStrataGravshipPortal` / `StrataGravshipUtility.IsGravshipContext`. Colony dig/tower stairs and elevators are **blocked on gravship tiles** (use the ship shafts instead) and never join these pockets.
 
 ### Changed — A+ roof decks
 - **Upper map gen** — Level +N is no longer a full concrete pad. Cells are **roof deck** (walk/build) only where the floor below is roofed, plus a plaza around the tower shaft; everywhere else is impassable **open sky**. Building a roof downstairs grows the deck above; removing an empty deck tile’s supporting roof turns it back to sky (buildings already placed are left alone).

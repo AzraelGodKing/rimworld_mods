@@ -1,0 +1,152 @@
+using System.Collections.Generic;
+using RimWorld;
+using Verse;
+
+namespace Strata
+{
+    // Odyssey-only stairwell that opens a Strata level under the gravship and
+    // marks the stack as ship-linked for takeoff/landing follow.
+    public class Building_GravshipStairsDown : Building_StairsDown, IStrataGravshipPortal
+    {
+        public bool IsGravshipPortal => true;
+
+        public bool IsOnGravship => Spawned && StrataGravshipUtility.CellOnGravship(Map, Position);
+
+        public override string EnterString => "Go below decks";
+
+        public override string EnteringString => "going below decks";
+
+        // Never join a colony dig pocket — only other gravship shafts.
+        protected override Map GeneratePocketMapInt()
+        {
+            Map existing = ExistingGravshipLevelBelow();
+            if (existing != null)
+            {
+                IntVec3 landing = FindLandingCell(existing);
+                if (landing.IsValid)
+                {
+                    StrataPortalUtility.SpawnLanding(def.portal.exitDef, landing, existing);
+                    Messages.Message("Broke through to the existing gravship deck below.", this, MessageTypeDefOf.PositiveEvent);
+                    return existing;
+                }
+            }
+            if (!BypassFirstLevelResearch && !LevelExcavationUtility.CanOpenNewLevelBelow(Map, out string reason, this))
+            {
+                Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
+                return null;
+            }
+            return PocketMapUtility.GeneratePocketMap(
+                new IntVec3(Map.Size.x, 1, Map.Size.z),
+                def.portal.pocketMapGenerator, null, Map);
+        }
+
+        private Map ExistingGravshipLevelBelow()
+        {
+            foreach (Thing thing in Map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing != this && thing is Building_GravshipStairsDown other
+                    && other.Spawned && other.PocketMapExists)
+                {
+                    return other.PocketMap;
+                }
+            }
+            return null;
+        }
+
+        protected override string LevelInspectState()
+        {
+            string state = base.LevelInspectState();
+            state += IsOnGravship
+                ? "\nGravship shaft: linked floors will travel with the ship"
+                : "\nGravship shaft: not on substructure (build on the ship)";
+            return state;
+        }
+    }
+
+    public class Building_GravshipStairsUp : Building_StairsUp, IStrataGravshipPortal
+    {
+        public bool IsGravshipPortal => true;
+
+        public bool IsOnGravship =>
+            entrance is IStrataGravshipPortal gp && gp.IsOnGravship;
+
+        public override string EnterString => "Go up to the ship";
+
+        public override string EnteringString => "returning to the ship";
+    }
+
+    // Opens an outdoor roof deck above the gravship (A+), ship-linked.
+    public class Building_GravshipStairsBuildUp : Building_StairsBuildUp, IStrataGravshipPortal
+    {
+        public bool IsGravshipPortal => true;
+
+        public bool IsOnGravship => Spawned && StrataGravshipUtility.CellOnGravship(Map, Position);
+
+        public override string EnterString => "Go to upper decks";
+
+        public override string EnteringString => "going to upper decks";
+
+        protected override Map GeneratePocketMapInt()
+        {
+            Map existing = ExistingGravshipLevelAbove();
+            if (existing != null)
+            {
+                IntVec3 landing = FindLandingCell(existing);
+                if (landing.IsValid)
+                {
+                    UpperDeckUtility.EnsurePlaza(existing, landing);
+                    StrataPortalUtility.SpawnLanding(def.portal.exitDef, landing, existing);
+                    Messages.Message("Connected to the existing gravship deck above.", this, MessageTypeDefOf.PositiveEvent);
+                    return existing;
+                }
+            }
+            if (!LevelBuildUpUtility.CanOpenNewLevelAbove(Map, out string reason, this))
+            {
+                Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
+                return null;
+            }
+            return PocketMapUtility.GeneratePocketMap(
+                new IntVec3(Map.Size.x, 1, Map.Size.z),
+                def.portal.pocketMapGenerator, null, Map);
+        }
+
+        private Map ExistingGravshipLevelAbove()
+        {
+            foreach (Thing thing in Map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing != this && thing is Building_GravshipStairsBuildUp other
+                    && other.Spawned && other.PocketMapExists)
+                {
+                    return other.PocketMap;
+                }
+            }
+            return null;
+        }
+
+        protected override string LevelInspectState()
+        {
+            string state = base.LevelInspectState();
+            state += IsOnGravship
+                ? "\nGravship shaft: linked floors will travel with the ship"
+                : "\nGravship shaft: not on substructure (build on the ship)";
+            return state;
+        }
+
+        protected override IEnumerable<Gizmo> ExtraGizmos()
+        {
+            yield break;
+        }
+    }
+
+    public class Building_GravshipBuildUpLanding : Building_BuildUpLanding, IStrataGravshipPortal
+    {
+        public bool IsGravshipPortal => true;
+
+        public bool IsOnGravship =>
+            entrance is IStrataGravshipPortal gp && gp.IsOnGravship;
+
+        public override string EnterString => "Go down to the ship";
+
+        public override string EnteringString => "returning to the ship";
+    }
+}

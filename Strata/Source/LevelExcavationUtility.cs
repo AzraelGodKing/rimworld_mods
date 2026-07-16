@@ -32,6 +32,7 @@ namespace Strata
             {
                 if (thing == ignore || thing is not Building_StairsDown down
                     || thing is Building_StairsBuildUp
+                    || thing is IStrataGravshipPortal
                     || thing is Building_AncientColonyStairsDown
                     || !down.Spawned || !down.PocketMapExists)
                 {

@@ -71,6 +71,7 @@ namespace Strata
             foreach (Thing thing in Map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
                 if (thing != this && thing is Building_StairsBuildUp other
+                    && other is not IStrataGravshipPortal
                     && other.Spawned && other.PocketMapExists)
                 {
                     return other.PocketMap;
