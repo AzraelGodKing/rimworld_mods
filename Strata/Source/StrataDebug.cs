@@ -220,6 +220,18 @@ namespace Strata
                 ?.DebugSaturate(UI.MouseCell(), StrataGasDefOf.Strata_CarbonDioxide, 0.5f);
         }
 
+        [DebugAction(Cat, "Place rich ore nodes", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void PlaceRichOreNodes()
+        {
+            Map map = Find.CurrentMap;
+            if (map == null)
+            {
+                return;
+            }
+            new GenStep_RichOreNodes().Generate(map, default);
+            Messages.Message("Strata: ran rich ore node placement on this map.", MessageTypeDefOf.TaskCompletion, false);
+        }
+
         [DebugAction(Cat, "List hidden chambers", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ListHiddenChambers()
         {
@@ -338,6 +350,8 @@ namespace Strata
             Check("hidden chamber gensteps registered",
                 DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_HiddenChambers") != null
                 && DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_Fog") != null);
+            Check("rich ore node genstep registered",
+                DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_RichOreNodes") != null);
             Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
             Check("sunken ruin map generator loaded",
                 DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_SunkenRuinLevel") != null);

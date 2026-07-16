@@ -4,6 +4,9 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Added — Rich ore nodes (B1+)
+- **Map gen** — each underground level (colony B1+ and quest strata) seeds a few rare, large ore seams in the solid rock after carving. B1 usually gets 1–2 fat nodes (~18–32 cells, occasional motherlode); deeper levels place more and larger seams with a stronger rich-ore bias. Existing deep-vein / prospector incidents are unchanged.
+
 ### Added — Ancient colony stairwell
 - **Surface scatter** — some new colony maps can spawn a pre-built *ancient stairwell* away from the landing zone (toggle and spawn chance in Strata mod settings). Descending opens a normal mineable B1 stratum **without digging-down research**. The shaft has **no power transmitter** — each level must be wired separately unless you later build an excavated stairwell or shaft power conduit for cross-level grids.
 

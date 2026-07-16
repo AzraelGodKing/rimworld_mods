@@ -18,6 +18,7 @@
       <li>Strata_CarveWarren</li>
       <li>Strata_HiddenChambers</li>
       <li>Strata_BiomesCavernFeatures</li>
+      <li>Strata_RichOreNodes</li>
       <li>Strata_DbhGroundwater</li>
       <li>Strata_PlaceCaveExit</li>
       <li>Strata_Fog</li>
@@ -41,6 +42,13 @@
     <defName>Strata_BiomesCavernFeatures</defName>
     <order>320</order>
     <genStep Class="Strata.GenStep_BiomesCavernFeatures"/>
+  </GenStepDef>
+
+  <!-- Rare large ore seams in fogged host rock; size/richness scale with depth. -->
+  <GenStepDef>
+    <defName>Strata_RichOreNodes</defName>
+    <order>330</order>
+    <genStep Class="Strata.GenStep_RichOreNodes"/>
   </GenStepDef>
 
   <GenStepDef>

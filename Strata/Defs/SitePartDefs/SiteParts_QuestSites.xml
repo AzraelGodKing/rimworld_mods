@@ -39,6 +39,7 @@
       <li>Strata_SolidRock</li>
       <li>Strata_CarveWarren</li>
       <li>Strata_WarrenTheme_Fungal</li>
+      <li>Strata_RichOreNodes</li>
       <li>Strata_MineWarrenOccupants</li>
       <li>Strata_PlaceCaveExit</li>
     </genSteps>
@@ -81,6 +82,7 @@
       <li>Strata_SolidRock</li>
       <li>Strata_CarveVault</li>
       <li>Strata_WarrenTheme_Frozen</li>
+      <li>Strata_RichOreNodes</li>
       <li>Strata_VaultOccupants</li>
       <li>Strata_PlaceCaveExit</li>
     </genSteps>
@@ -123,6 +125,7 @@
       <li>Strata_SolidRock</li>
       <li>Strata_CarveWarren</li>
       <li>Strata_WarrenTheme_Volcanic</li>
+      <li>Strata_RichOreNodes</li>
       <li>Strata_GeothermalVentFeatures</li>
       <li>Strata_WarrenInfestation</li>
       <li>Strata_PlaceCaveExit</li>
