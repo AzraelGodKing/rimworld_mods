@@ -13,6 +13,11 @@ namespace Strata
             "Strata_UpdraftFilter",
             "Strata_SmokeLouver",
             "Strata_SmokeDuct",
+            "Strata_HiddenGasPipe",
+            // Burns clean - that is its whole selling point underground.
+            "Strata_DeepGasGenerator",
+            "Strata_GasWell",
+            "Strata_DeepGasVent",
             "SolarGenerator",
             "WindTurbine",
             "GeothermalGenerator",
@@ -127,7 +132,7 @@ namespace Strata
             }
             for (int i = 0; i < def.comps.Count; i++)
             {
-                if (def.comps[i].compClass == typeof(CompExhaust))
+                if (typeof(CompExhaust).IsAssignableFrom(def.comps[i].compClass))
                 {
                     return true;
                 }

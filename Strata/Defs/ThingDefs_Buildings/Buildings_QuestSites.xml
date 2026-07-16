@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Quest site stairheads ============ -->
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_MineStairsDown</defName>
+    <label>weathered mine entrance</label>
+    <description>A timber-framed mine shaft sinking into the earth. The headframe is rotted and the rails below are rusted through, but the adit still breathes cold, damp air from deep workings.</description>
+    <thingClass>Strata.Building_RuinStairsDown</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/MineStairsDown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>900</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <portal>
+      <pocketMapGenerator>Strata_CollapsedMineLevel</pocketMapGenerator>
+      <exitDef>Strata_StairsUp</exitDef>
+      <pocketMapSize>150</pocketMapSize>
+    </portal>
+    <canOverlapZones>false</canOverlapZones>
+    <building>
+      <isPlayerEjectable>false</isPlayerEjectable>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_VaultStairsDown</defName>
+    <label>ancient vault door</label>
+    <description>A massive vault hatch set into broken stone, its seals cracked by time. Cold air and the faint hum of old machinery drift up from the chamber below.</description>
+    <thingClass>Strata.Building_RuinStairsDown</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/VaultStairsDown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>1600</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <portal>
+      <pocketMapGenerator>Strata_SealedVaultLevel</pocketMapGenerator>
+      <exitDef>Strata_StairsUp</exitDef>
+      <pocketMapSize>150</pocketMapSize>
+    </portal>
+    <canOverlapZones>false</canOverlapZones>
+    <building>
+      <isPlayerEjectable>false</isPlayerEjectable>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_VentStairsDown</defName>
+    <label>steaming fissure</label>
+    <description>A jagged crack in the ground vents scalding steam from a geothermal pocket below. Rough steps have been cut into the rock beside the fissure.</description>
+    <thingClass>Strata.Building_RuinStairsDown</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/VentStairsDown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.35</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>800</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <portal>
+      <pocketMapGenerator>Strata_GeothermalVentLevel</pocketMapGenerator>
+      <exitDef>Strata_StairsUp</exitDef>
+      <pocketMapSize>150</pocketMapSize>
+    </portal>
+    <canOverlapZones>false</canOverlapZones>
+    <building>
+      <isPlayerEjectable>false</isPlayerEjectable>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+</Defs>

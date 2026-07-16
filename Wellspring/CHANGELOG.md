@@ -4,6 +4,9 @@ All notable changes to Wellspring are documented here.
 
 ## [Unreleased]
 
+### Added
+- **Dedicated research tab** — all Wellspring projects live under their own *Wellspring* tab (no longer on Main).
+
 ### Changed
 - GitHub Pages catalog (`docs/wellspring.html`, `docs/index.html`) updated with the water resource card and corrected building/research counts.
 

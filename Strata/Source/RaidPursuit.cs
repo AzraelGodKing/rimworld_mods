@@ -365,7 +365,9 @@ namespace Strata
 
         private bool RelevantMap()
         {
-            return map.IsPlayerHome || StrataMapUtility.IsUnderground(map);
+            return map.IsPlayerHome
+                || StrataMapUtility.IsUnderground(map)
+                || StrataMapUtility.IsUpperLevel(map);
         }
     }
 }

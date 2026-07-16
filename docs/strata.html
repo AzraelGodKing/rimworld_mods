@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Strata — a RimWorld mod by AzraelGodKing</title>
-<meta name="description" content="Strata: dig down and build a true multistory RimWorld base. Underground levels, colonist relays between floors, heat convection, and combustion smoke. RimWorld 1.6, requires Harmony.">
+<meta name="description" content="Strata: dig down and build up a true multistory RimWorld base — roof decks, Odyssey gravship stacks, atmosphere, quest sites, and colonists who commute between floors. RimWorld 1.6, requires Harmony.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,10 +26,11 @@
 <header class="hero strata">
   <div class="wrap">
     <h1 class="t">STRATA</h1>
-    <p class="tagline">One home, many floors &mdash; dig down and build a true multistory base</p>
+    <p class="tagline">One home, many floors &mdash; dig down, build up, explore the dark, and live between</p>
     <div class="badges">
       <span class="badge strata">RimWorld 1.6</span>
       <span class="badge strata">Requires Harmony</span>
+      <span class="badge strata">Odyssey optional</span>
       <span class="badge strata">C# mod</span>
       <span class="badge strata">Experimental</span>
     </div>
@@ -45,9 +46,9 @@
 
   <section id="overview">
     <h2 class="t">Overview</h2>
-    <p class="sub">Build an <b>excavated stairwell</b> and a new underground level opens beneath your base: a solid stratum of mineable rock under a thick roof, ready to be carved into bedrooms, workshops, and freezers. Build another stairwell down there and keep going deeper.</p>
+    <p class="sub">Build an <b>excavated stairwell</b> and a new underground level opens beneath your base: a solid stratum of mineable rock under a thick roof, ready to be carved into bedrooms, workshops, and freezers. Research <b>building up</b> and a <b>tower stairwell</b> frames outdoor <b>Level +1</b> as a roof deck above. With <b>Odyssey</b>, dedicated <b>gravship stairwells</b> open ship-linked floors that travel with the launch.</p>
     <div class="note strata">
-      <b>Dependencies:</b> requires the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a> mod. Load Strata after Harmony in your mod list. <b>Experimental:</b> back up saves you care about.
+      <b>Dependencies:</b> requires the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a> mod. Load Strata after Harmony in your mod list. <b>Odyssey</b> is optional &mdash; gravship stairwells and stack-follow load only when that DLC is active. <b>Experimental:</b> back up saves you care about.
     </div>
   </section>
 
@@ -61,23 +62,27 @@
         <tr><td><b>Food</b></td><td>Hungry pawns go find a meal on another level instead of starving next to a staircase</td></tr>
         <tr><td><b>Rest</b></td><td>Sleepy pawns walk home to their own bed &mdash; or to any level with a free bed to claim</td></tr>
         <tr><td><b>Haul</b></td><td>Storage priority works across the whole base: an item goes to whichever level's storage has the highest accepting priority &mdash; a Critical freezer two floors down outranks the Low pile by the door. Haul designations (stone chunks and the like) travel with the cargo, so nothing needs re-marking after the trip</td></tr>
-        <tr><td><b>Rituals</b></td><td>The ritual menu lists colonists from every linked level; participants elsewhere walk to the ritual through the stairwells and join with their assigned role when they arrive</td></tr>
+        <tr><td><b>Rituals</b></td><td>The ritual menu lists colonists from every linked level; participants elsewhere walk to the ritual through the stairwells and join with their assigned role when they arrive. Prisoners and animals get escorted.</td></tr>
+        <tr><td><b>Medical</b></td><td>Patients head for free medical beds on other floors; doctors commute to tend the wounded downstairs</td></tr>
+        <tr><td><b>Joy</b></td><td>Recreation-starved colonists seek joy food or recreation buildings on linked levels instead of mood-spiraling in a workshop basement</td></tr>
         <tr><td><b>Build</b></td><td>A level short of construction materials pulls them from other levels automatically &mdash; place a blueprint downstairs and the steel comes down the stairs on its own, no stockpile setup needed. The build menu's material dropdown counts every linked level, so you can always place what the colony owns; a play-settings toggle extends the resource readout the same way</td></tr>
+        <tr><td><b>Caravans</b></td><td>While packing a surface caravan, haulers pull high-value goods up from linked underground levels</td></tr>
+        <tr><td><b>Work / Schedule</b></td><td>When the colony has excavated (or built-up) levels, both tabs show a <b>Strata Levels</b> checkbox. Enable it to list free colonists from every portal-linked floor, sorted surface-first then by depth. Default on; persists in the save and syncs with Strata mod settings.</td></tr>
       </table>
     </div>
   </section>
 
   <section id="buildings">
     <h2 class="t">Buildings</h2>
-    <p class="sub">Seven buildable structures for digging down, moving power, and venting smoke.</p>
+    <p class="sub">Shafts, power, ventilation, life support, and deep infrastructure.</p>
     <div class="grid">
 
       <div class="card strata wide">
         <img src="img/StairsDown.png" alt="Excavated stairwell">
         <div>
           <h3>Excavated stairwell</h3>
-          <div class="stat">2&times;2 &middot; 60 wood + 30 steel &middot; Deep excavation research</div>
-          <p>A broad staircase carved down into the rock. Completing it opens a <b>new 200&times;200 underground level</b>: solid stone to mine into rooms, workshops, and vaults, protected by a thick rock roof &mdash; safe from drop pods, mortars, and weather. Colonists use it on their own to work, eat, and sleep across levels. A <b>second stairwell or elevator on the same floor breaks through into the same level below</b> &mdash; its landing is carved roughly beneath where it stands; mine out to connect it to the rest of the floor. The shaft also <b>ties both floors&rsquo; power grids together</b> when each level is wired into the stairwell. <b>Seal it</b> to wall a gas pocket or infestation onto one level; it cannot be deconstructed while anyone is still below, and a shared level only collapses with its last entrance.</p>
+          <div class="stat">2&times;2 &middot; 60 wood + 30 steel &middot; Digging down research</div>
+          <p>A broad staircase carved down into the rock. Completing it opens a <b>new underground level the same size as the map above</b>: solid stone to mine into rooms, workshops, and vaults, protected by a thick rock roof &mdash; safe from drop pods, mortars, and weather. The first basement needs <b>digging down</b>; every level below that needs <b>deep excavation</b>. Colonists use it on their own to work, eat, and sleep across levels. A <b>second stairwell or elevator on the same floor breaks through into the same level below</b> &mdash; its landing is carved roughly beneath where it stands; mine out to connect it to the rest of the floor. The shaft also <b>ties both floors&rsquo; power grids together</b> when each level is wired into the stairwell. <b>Seal it</b> to wall a gas pocket or infestation onto one level; it cannot be deconstructed while anyone is still below, and a shared level only collapses with its last entrance.</p>
         </div>
       </div>
 
@@ -91,11 +96,38 @@
       </div>
 
       <div class="card strata">
+        <img src="img/StairsUp.png" alt="Tower stairwell">
+        <div>
+          <h3>Tower stairwell</h3>
+          <div class="stat">2&times;2 &middot; 80 wood + 40 steel &middot; Building up research</div>
+          <p>Frames outdoor <b>Level +1</b> (or joins an upper floor already opened by another tower). The upper map is a <b>roof deck</b>: walk and build only where the floor below is roofed, plus a plaza around the shaft &mdash; open sky beyond the roof edge holds nothing. Expand roofs downstairs to grow the deck. Wire each level into the stairwell to pool power; it cannot be deconstructed while anyone is still above.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
         <img src="img/ElevatorDown.png" alt="Elevator">
         <div>
           <h3>Elevator</h3>
           <div class="stat">1&times;1 &middot; 200W &middot; Elevators research</div>
-          <p>Compact powered vertical transport that opens a level below &mdash; or <b>joins the level a stairwell on the same floor already opened</b>. The car needs power to descend, but anyone below can always <b>ride back up if the power fails</b> &mdash; no one is ever stranded. Automatically ties the two levels' power grids together.</p>
+          <p>Compact powered vertical transport that opens a level below &mdash; or <b>joins the level a stairwell on the same floor already opened</b>. After <b>building up</b>, the tower elevator does the same for upper floors. Ascending a tower car or descending an excavated car needs a live grid; the return ride is always free so a blackout never traps anyone. Automatically ties the two levels' power grids together.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <div class="icon">&#9968;</div>
+        <div>
+          <h3>Ancient stairwell</h3>
+          <div class="stat">surface scatter &middot; no research to enter &middot; toggle in mod settings</div>
+          <p>Some new colony maps can spawn a pre-built shaft away from the landing zone. Descending opens a normal mineable B1 <b>without digging-down research</b>. The ancient shaft has <b>no power transmitter</b> &mdash; wire each level separately until you build an excavated stairwell or shaft power conduit.</p>
+        </div>
+      </div>
+
+      <div class="card strata wide">
+        <img src="img/StairsDown.png" alt="Gravship stairwell">
+        <div>
+          <h3>Gravship stairwell <span class="stat">(Odyssey)</span></h3>
+          <div class="stat">2&times;2 &middot; steel + components &middot; Digging down / Building up</div>
+          <p>Odyssey-only shafts that place only on <b>gravship substructure</b> (needs a grav engine). The <b>gravship stairwell</b> opens a Strata level below the deck; the <b>gravship tower stairwell</b> opens a roof deck above. Linked floors <b>travel with the launch</b> and reattach on landing. Colony dig/tower stairs and elevators <b>cannot be placed on the ship</b> &mdash; build them on the planet; they never join a gravship pocket stack. Quest-site pockets do not hitch a ride.</p>
         </div>
       </div>
 
@@ -118,10 +150,10 @@
       </div>
 
       <div class="card strata">
-        <img src="img/ExhaustFan.png" alt="Updraft filter">
+        <img src="img/UpdraftFilter.png" alt="Updraft filter">
         <div>
           <h3>Updraft filter</h3>
-          <div class="stat">stairwell room &middot; 80W &middot; Electricity research</div>
+          <div class="stat">stairwell room &middot; 80W &middot; Forced ventilation</div>
           <p>A powered fan built in a stairwell or elevator landing. Smoke naturally rises through an open shaft; this actively pulls fumes from the room and pushes them up to the level above &mdash; like a chimney stack for underground burners. Useless when the shaft is sealed.</p>
         </div>
       </div>
@@ -136,7 +168,7 @@
       </div>
 
       <div class="card strata">
-        <div class="icon">&#128293;</div>
+        <img src="img/SmokeHole.png" alt="Smoke hole">
         <div>
           <h3>Smoke hole</h3>
           <div class="stat">primitive wall vent &middot; no power &middot; <b>no research</b> &middot; 25 wood</div>
@@ -145,14 +177,150 @@
       </div>
 
       <div class="card strata">
-        <img src="img/SmokeDuct.png" alt="Smoke duct">
+        <img src="img/SmokeDuct.png" alt="Gas pipe">
         <div>
-          <h3>Smoke duct</h3>
-          <div class="stat">floor emplacement &middot; linked tiles &middot; Complex furniture research</div>
-          <p>Floor ducts that route exhaust from a fan or louver to a distant outdoor vent. Connect ducts in a line; the run must reach outdoors (or an outdoor-facing louver) to clear smoke from the intake room.</p>
+          <h3>Gas pipe</h3>
+          <div class="stat">conduit layer &middot; linked runs &middot; Complex furniture research</div>
+          <p>Linked metal pipe on the conduit layer (drag-to-lay, like power conduits). Carries <b>every Strata gas channel</b>, not just smoke: connected rooms equalize on the same run, outdoor terminals drain the network, and fans/louvers can push into dead-end runs. A nearly invisible <b>hidden gas pipe</b> variant links with ordinary pipe. (Existing saves keep the old smoke-duct buildings; the label is now gas pipe.)</p>
         </div>
       </div>
 
+      <div class="card strata">
+        <img src="img/OxygenPump.png" alt="Oxygen pump">
+        <div>
+          <h3>Oxygen pump</h3>
+          <div class="stat">life support &middot; Deep life support</div>
+          <p>Enriches breathable O₂ in a local radius with falloff in natural caverns; sealed colony-built rooms still pressurize more evenly. Pair with CO₂ scrubbing or a shaft exchanger for deep living quarters.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/CO2Pump.png" alt="CO2 pump">
+        <div>
+          <h3>CO₂ pump</h3>
+          <div class="stat">life support &middot; Deep life support</div>
+          <p>Scrubs exhaled carbon dioxide from sealed rooms before colonists feel it.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/GasExchanger.png" alt="Shaft gas exchanger">
+        <div>
+          <h3>Shaft gas exchanger</h3>
+          <div class="stat">stairwell room &middot; Deep life support</div>
+          <p>Actively drives O₂ up and CO₂ down an open shaft &mdash; faster than passive stratification alone.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/GasWell.png" alt="Gas well">
+        <div>
+          <h3>Gas well &amp; deep-gas generator</h3>
+          <div class="stat">Deep gas extraction</div>
+          <p>Cap a deep vent, fill canisters, burn them for smokeless power &mdash; or feed VHGE pipes when that mod is loaded.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/ShoringPillar.png" alt="Shoring pillar">
+        <div>
+          <h3>Shoring pillar</h3>
+          <div class="stat">Structure &middot; Rock shoring</div>
+          <p>Braces thick rock roof in a radius so wide halls stop inviting cave-ins.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/GasAirlock.png" alt="Gas airlock">
+        <div>
+          <h3>Gas airlock</h3>
+          <div class="stat">Structure &middot; Deep infrastructure</div>
+          <p>Blocks room-to-room gas equalization when sealed &mdash; isolate a pocket without sealing the whole stairwell.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/OreHoist.png" alt="Ore skip hoist">
+        <div>
+          <h3>Ore skip hoist</h3>
+          <div class="stat">200W &middot; Deep infrastructure</div>
+          <p>Powered skip that shuttles chunks and slag to a partner hoist on the linked level.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/FungusFarm.png" alt="Fungus farm">
+        <div>
+          <h3>Fungus farm</h3>
+          <div class="stat">Production &middot; Deep agriculture</div>
+          <p>Dark grow beds for edible cave fungus. Consumes a little CO₂ and releases a little O₂ while producing food.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/SumpPump.png" alt="Sump pump">
+        <div>
+          <h3>Sump pump</h3>
+          <div class="stat">Deep infrastructure</div>
+          <p>Drains groundwater seep from excavated floors when a level starts taking on water.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/MineLamp.png" alt="Mine lamp">
+        <div>
+          <h3>Mine lamp</h3>
+          <div class="stat">enclosed electric light &middot; Deep infrastructure</div>
+          <p>Bright light with no open flame &mdash; safe near deep gas where torches would be suicide.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/ShaftBellows.png" alt="Shaft bellows">
+        <div>
+          <h3>Shaft bellows &amp; lime scrubber</h3>
+          <div class="stat">Passive life support</div>
+          <p>Unpowered early-game air tools: bellows boost shaft exchange; lime trays scrub CO₂ slowly.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <img src="img/FluidJunction.png" alt="Fluid shaft junction">
+        <div>
+          <h3>Fluid shaft junctions</h3>
+          <div class="stat">Fluid shafts research &middot; soft deps</div>
+          <p>Meter water, heat, coolant, helixien, Rimefeller crude/chemfuel, and VEF chemfuel between levels when those mods are loaded.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="building-up">
+    <h2 class="t">Building up</h2>
+    <p class="sub">Above-ground floors as roof decks &mdash; sky is the new rock.</p>
+    <div class="grid">
+      <div class="card strata wide">
+        <div class="icon">&#127959;</div>
+        <div>
+          <h3>Roof decks &amp; open sky</h3>
+          <p>Level +N is not a full concrete pad. Cells are <b>roof deck</b> (walk/build) only where the floor below is roofed, plus a plaza around the tower shaft; everywhere else is impassable <b>open sky</b>. Building a roof downstairs grows the deck above; removing support under an empty deck tile turns it back to sky (buildings already placed are left alone). Solar and weather work outdoors. Dig stairwells never join an open A1 as &ldquo;the level below,&rdquo; and you cannot excavate downward from an upper floor.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#9650;</div>
+        <div>
+          <h3>Stack direction</h3>
+          <p>Tower shafts move buoyant gas <b>up</b> into A+ and heavy gas <b>down</b> to the floor below. Dig shafts keep their underground behavior. Relays, power, raid pursuit, and the Levels tab treat upper floors as linked colony levels.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#128640;</div>
+        <div>
+          <h3>Gravship stacks (Odyssey)</h3>
+          <p>Use <b>gravship stairwells</b> on the ship footprint so A+/B+ pockets hitch a ride on launch and rebind on landing. Planet-side dig and tower stairs do not mark a stack as ship-linked.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -164,7 +332,7 @@
         <div class="icon">&#9729;</div>
         <div>
           <h3>Natural rise &amp; door venting</h3>
-          <p>Combustion smoke in an <b>unsealed stairwell or elevator</b> naturally convects upward to the level above, the same way heat does. Sealing the shaft stops it. Open doors to the outdoors also bleed smoke; sealed stairwells and elevators block tox gas through the portal footprint.</p>
+          <p>Combustion smoke in an <b>unsealed stairwell, tower, or elevator</b> naturally convects upward to the level above, the same way heat does. Sealing the shaft stops it. Open doors to the outdoors also bleed smoke; sealed shafts block tox gas through the portal footprint.</p>
         </div>
       </div>
       <div class="card strata">
@@ -179,13 +347,13 @@
 
   <section id="levels-tab">
     <h2 class="t">Levels tab</h2>
-    <p class="sub">Once you excavate your first level, a new bottom-bar tab lists every floor of the colony.</p>
+    <p class="sub">Once you open your first basement or upper floor, a new bottom-bar tab lists every floor of the colony.</p>
     <div class="grid">
       <div class="card strata wide">
         <div class="icon">&#128506;</div>
         <div>
           <h3>Jump, rename, and read the floor</h3>
-          <p>Each row shows colonist count, hostile count, and temperature. Click a row to jump the camera to that level&rsquo;s stairwell, or press <b>Page Up / Page Down</b> anywhere to flip one level up or down without touching the mouse (rebindable). Use <b>Rename</b> to label floors (&ldquo;Freezer floor&rdquo;, &ldquo;Workshop B-2&rdquo;, and so on), and drag the corner to resize the tab. Mod settings let you toggle the relays, smoke, raid pursuit, and performance throttle.</p>
+          <p>Underground floors show as Level &minus;N (B1, B2&hellip;); upper floors as <b>Level +N</b>. Each row shows colonist count, hostile count, temperature, and optional hibernation/perf readout. Assign a <b>level role</b> (freezer, barracks, workshop, hospital, storage) so relays bias toward the right floor. Click a row to jump the camera, or press <b>Page Up / Page Down</b> anywhere to flip levels (rebindable) &mdash; Page Up from the surface jumps to A1; Page Down from A1 returns to the surface. Use <b>Rename</b> for memorable labels, and drag the corner to resize. Mod settings cover relays, atmosphere, exploration sites, flood events, raid pursuit, cave layout, ancient stairwells, and vacant-level throttle.</p>
         </div>
       </div>
     </div>
@@ -213,21 +381,77 @@
         <div class="icon">&#128027;</div>
         <div>
           <h3>Threats of the deep</h3>
-          <p>Infestations are the signature danger below, alongside <b>cave-ins</b>, breached <b>gas pockets</b>, and rare <b>deep raids</b> &mdash; insect swarms that tunnel up through the floor itself. On the surface, <b>ground tremors</b> rattle your structures.</p>
+          <p>Infestations are the signature danger below, alongside <b>cave-ins</b>, breached <b>gas pockets</b>, <b>gas firestorms</b>, <b>flood seeps</b>, <b>cave breakthroughs</b>, and rare <b>deep raids</b>. On the surface, <b>ground tremors</b> can crack seals downstairs, and <b>deep sieges</b> push raiders toward your shafts.</p>
         </div>
       </div>
       <div class="card strata">
         <div class="icon">&#9935;</div>
         <div>
           <h3>Riches of the deep</h3>
-          <p>Levels sit on a geothermal gradient &mdash; deeper is warmer &mdash; and deeper levels hide richer ore. Miners can break into a lucky <b>deep vein</b>, and a wandering <b>prospector</b> may mark a hidden seam on the surface.</p>
+          <p>Levels sit on a geothermal gradient &mdash; deeper is warmer &mdash; and deeper levels hide richer ore. Map gen seeds a few rare, large <b>rich ore nodes</b> in the solid rock after carving (fatter and more common on B2+). Miners can still break into a lucky <b>deep vein</b>, and a wandering <b>prospector</b> may mark a hidden seam on the surface.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <div class="icon">&#9978;</div>
+        <div>
+          <h3>Native cave networks</h3>
+          <p>When Biomes! Caverns is not providing layout (or its compat toggle is off), excavated B1+ levels generate chamber-and-tunnel warrens. Depth scales chamber count; hidden gas/geothermal pockets still generate in the surrounding rock. Toggle <b>Natural cave layout</b> in Strata settings.</p>
         </div>
       </div>
       <div class="card strata wide">
         <div class="icon">&#9729;</div>
         <div>
           <h3>Burners breathe</h3>
-          <p>Wood-fired and chemfuel generators, campfires, torches, and open fires give off combustion fumes that pool in enclosed rooms as visible <b>black smog</b>. Run one in a sealed room &mdash; or anywhere underground &mdash; and colonists start choking on a worsening <i>smoke inhalation</i> hediff that turns fatal if ignored. Vent with an open roof, a door to the outdoors, an exhaust fan, a smoke louver, a duct run, or an updraft filter in the stairwell &mdash; <b>a properly ventilated room is guaranteed safe</b>: with any working outlet, smoke never climbs past a light haze. Solar, wind, geothermal, and batteries burn nothing and stay clean. Toggle <b>&ldquo;show smoke levels&rdquo;</b> in play settings to read the exact smoke percentage under your cursor.</p>
+          <p>Wood-fired and chemfuel generators, campfires, torches, and open fires give off combustion fumes that pool in enclosed rooms as visible <b>black smog</b>. Run one in a sealed room &mdash; or anywhere underground &mdash; and colonists start choking on a worsening <i>smoke inhalation</i> hediff that turns fatal if ignored. Vent with an open roof, a door to the outdoors, an exhaust fan, a smoke louver, a gas-pipe run, or an updraft filter in the stairwell &mdash; <b>a properly ventilated room is guaranteed safe</b>: with any working outlet, smoke never climbs past a light haze. Solar, wind, geothermal, and batteries burn nothing and stay clean. Toggle <b>&ldquo;show smoke levels&rdquo;</b> in play settings to read the exact smoke percentage under your cursor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="atmosphere">
+    <h2 class="t">Atmosphere</h2>
+    <p class="sub">Smoke was the start &mdash; the deep now tracks a full multi-gas mix.</p>
+    <div class="grid">
+      <div class="card strata wide">
+        <div class="icon">&#9729;</div>
+        <div>
+          <h3>O₂ rises, CO₂ sinks, deep gas pools</h3>
+          <p>Colonists breathe oxygen and exhale carbon dioxide on underground levels. O₂ is buoyant through open shafts; CO₂ is heavy and sinks. Oxygen pumps enrich a local radius in caverns; sealed player rooms accumulate gas from pumps, pawns, and plants. Foul deep gas pools where it leaks, poisons, and <b>ignites near open flame</b>. Toggle the gas overlay in play settings for a cursor-following mix panel; optional per-room labels live in mod settings. Mine canaries in cages warn you before colonists drop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="exploration">
+    <h2 class="t">Away into the dark</h2>
+    <p class="sub">Quest sites and breakthroughs so depth is not only basements.</p>
+    <div class="grid">
+      <div class="card strata">
+        <img src="img/MineStairsDown.png" alt="Collapsed mine">
+        <div>
+          <h3>Collapsed mine</h3>
+          <p>A timber stairhead into a fungal warren of insects, scavengers, and mining loot.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <img src="img/VaultStairsDown.png" alt="Sealed vault">
+        <div>
+          <h3>Sealed vault</h3>
+          <p>Frozen ancient chambers guarded by mechanoids or insects &mdash; richer hoards at the tip.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <img src="img/VentStairsDown.png" alt="Geothermal vent">
+        <div>
+          <h3>Geothermal vent</h3>
+          <p>A steaming fissure into a volcanic warren with geysers, deep gas, and insects.</p>
+        </div>
+      </div>
+      <div class="card strata wide">
+        <div class="icon">&#128506;</div>
+        <div>
+          <h3>Sunken ruins &amp; home discoveries</h3>
+          <p>Sunken ruins remain the flooded-warren classic. At home: cave breakthroughs off rock faces, prospector digs, and the occasional band of lost miners.</p>
         </div>
       </div>
     </div>
@@ -235,42 +459,55 @@
 
   <section id="events">
     <h2 class="t">Events</h2>
-    <p class="sub">Six threats and opportunities tied to depth.</p>
+    <p class="sub">Threats and opportunities tied to depth and the world map.</p>
     <div class="table-scroll">
       <table>
         <tr><th class="t">Event</th><th>Where</th><th>What happens</th></tr>
-        <tr><td><b>Cave-in</b></td><td>Underground</td><td>Unsupported rock roof collapses when mined too wide</td></tr>
-        <tr><td><b>Gas pocket</b></td><td>Underground</td><td>Miners breach a pocket of tox gas &mdash; seal the stairwell to isolate it</td></tr>
+        <tr><td><b>Cave-in</b></td><td>Underground</td><td>Unsupported rock roof collapses &mdash; shoring pillars reduce the risk</td></tr>
+        <tr><td><b>Gas pocket</b></td><td>Underground</td><td>Miners breach foul deep gas &mdash; seal, vent, or ignite at your peril</td></tr>
+        <tr><td><b>Gas firestorm</b></td><td>Underground</td><td>Flammable gas meets open flame</td></tr>
+        <tr><td><b>Flood seep</b></td><td>Underground</td><td>Groundwater floods excavated floors; sump pumps clear it</td></tr>
+        <tr><td><b>Cave breakthrough</b></td><td>Underground</td><td>A natural side cave opens off a rock face</td></tr>
         <tr><td><b>Deep vein</b></td><td>Underground</td><td>Miners break into a rich ore seam</td></tr>
-        <tr><td><b>Deep raid</b></td><td>Underground</td><td>An insect swarm bursts up through the floor and erupts among your colonists</td></tr>
-        <tr><td><b>Prospector&rsquo;s tip</b></td><td>Surface</td><td>A wandering prospector marks a hidden seam on the map</td></tr>
-        <tr><td><b>Ground tremor</b></td><td>Surface</td><td>Deep digging rattles surface structures</td></tr>
+        <tr><td><b>Deep raid</b></td><td>Underground</td><td>An insect swarm bursts up through the floor</td></tr>
+        <tr><td><b>Lost miners</b></td><td>Underground</td><td>Survivors (or hostiles) appear in the dark</td></tr>
+        <tr><td><b>Prospector&rsquo;s tip / dig</b></td><td>Surface</td><td>A prospector marks a seam &mdash; later digs can follow</td></tr>
+        <tr><td><b>Ground tremor</b></td><td>Surface</td><td>Rattles structures; can unseal shafts and crack roofs below</td></tr>
+        <tr><td><b>Deep siege</b></td><td>Surface</td><td>Raiders push toward known stairwells</td></tr>
+        <tr><td><b>Quest sites</b></td><td>World</td><td>Sunken ruin, collapsed mine, sealed vault, geothermal vent</td></tr>
       </table>
     </div>
   </section>
 
   <section id="research">
     <h2 class="t">Research</h2>
-    <p class="sub">One medieval project opens the underground; two industrial projects make it comfortable.</p>
+    <p class="sub">Medieval opens the first basement or roof deck; industrial keeps the deep livable.</p>
     <div class="research-tree">
-      <b>Deep excavation</b> (800 pts, Medieval)<br>
-      &nbsp;&nbsp;&#9500;&#9472; <b>Excavated stairwell</b><br>
-      &nbsp;&nbsp;&#9474;<br>
-      &nbsp;&nbsp;&#9500;&#9472; + <b>Electricity</b> (vanilla) &rarr; <b>Elevators</b> (1,600 pts) &rarr; powered elevator<br>
-      &nbsp;&nbsp;&#9492;&#9472; + <b>Electricity</b> (vanilla) &rarr; <b>Shaft power</b> (1,400 pts) &rarr; shaft power conduit<br>
-      <b>Forced ventilation</b> (700 pts, needs Electricity) &rarr; exhaust fan, updraft filter
+      <b>Building up</b> (600 pts) &rarr; tower stairwell, Level +N roof decks<br>
+      <b>Digging down</b> (600 pts) &rarr; first basement<br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Deep excavation</b> (800 pts) &rarr; B2+, quest sites<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; + Electricity &rarr; <b>Elevators</b> (B1 or A1) / <b>Shaft power</b> &rarr; <b>Fluid shafts</b><br>
+      <b>Forced ventilation</b> &rarr; fans, updraft, canary cage<br>
+      &nbsp;&nbsp;&#9500;&#9472; <b>Deep life support</b> &rarr; O₂/CO₂ pumps, gas exchanger<br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Deep gas extraction</b> &rarr; wells &amp; generators<br>
+      <b>Rock shoring</b> / <b>Passive life support</b> (medieval)<br>
+      <b>Deep infrastructure</b> &rarr; airlock, hoist, sump, mine lamp<br>
+      <b>Deep agriculture</b> &rarr; fungus farm
     </div>
     <div class="table-scroll" style="margin-top:24px">
       <table>
         <tr><th class="t">Building</th><th>Cost</th><th>Power</th><th>Research</th></tr>
-        <tr><td><b>Excavated stairwell</b></td><td>60 wood, 30 steel</td><td>10W (ties grids)</td><td>Deep excavation</td></tr>
+        <tr><td><b>Excavated stairwell</b></td><td>60 wood, 30 steel</td><td>ties grids</td><td>Digging down (B2+ needs deep excavation)</td></tr>
+        <tr><td><b>Tower stairwell</b></td><td>80 wood, 40 steel</td><td>ties grids</td><td>Building up</td></tr>
+        <tr><td><b>Gravship stairwell</b></td><td>80 steel, 2 components</td><td>ties grids</td><td>Digging down (Odyssey)</td></tr>
+        <tr><td><b>Gravship tower stairwell</b></td><td>90 steel, 2 components</td><td>ties grids</td><td>Building up (Odyssey)</td></tr>
         <tr><td><b>Elevator</b></td><td>120 steel, 4 components</td><td>200W</td><td>Elevators</td></tr>
         <tr><td><b>Shaft power conduit</b></td><td>60 steel, 2 components</td><td>10W</td><td>Shaft power</td></tr>
         <tr><td><b>Exhaust fan</b></td><td>50 steel, 1 component</td><td>100W</td><td>Forced ventilation</td></tr>
         <tr><td><b>Updraft filter</b></td><td>40 steel, 1 component</td><td>80W</td><td>Forced ventilation</td></tr>
         <tr><td><b>Smoke hole</b></td><td>25 wood</td><td>&mdash;</td><td>None (neolithic)</td></tr>
         <tr><td><b>Smoke louver</b></td><td>20 steel</td><td>&mdash;</td><td>Complex furniture (vanilla)</td></tr>
-        <tr><td><b>Smoke duct</b></td><td>10 steel/tile</td><td>&mdash;</td><td>Complex furniture (vanilla)</td></tr>
+        <tr><td><b>Gas pipe</b></td><td>10 steel/tile</td><td>&mdash;</td><td>Complex furniture (vanilla)</td></tr>
       </table>
     </div>
   </section>
@@ -283,7 +520,7 @@
         <div class="icon">&#128506;</div>
         <div>
           <h3>Real maps, not fakes</h3>
-          <p>Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla. Every underground level is a genuine map with its own simulation.</p>
+          <p>Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla. Every basement and roof deck is a genuine map with its own simulation, linked by the vanilla 1.6 pocket-map/portal system.</p>
         </div>
       </div>
       <div class="card strata">
@@ -321,9 +558,11 @@
     <h2 class="t">Tips</h2>
     <ol>
       <li>Thick rock roofs collapse when unsupported &mdash; leave pillars in big halls, just like mountain bases.</li>
-      <li>Stairwells cannot be deconstructed while colonists are still below.</li>
+      <li>Stairwells cannot be deconstructed while colonists are still below (or still above a tower).</li>
       <li>Raiders who run out of targets on their level will find your stairwells and come down (or up) after you. A <b>sealed</b> stairwell stops them cold &mdash; but it stops your colonists too.</li>
       <li>A second shaft that breaks through to an existing level lands in a sealed rock chamber &mdash; mine it out to connect it to the rest of the floor. Until then, pawns can always ride back up, and haulers won&rsquo;t ship cargo there.</li>
+      <li>On Level +N, grow the roof deck by expanding roofs on the floor below &mdash; open sky never holds buildings.</li>
+      <li>With Odyssey, only <b>gravship stairwells</b> place on the ship footprint &mdash; colony dig/tower stairs are blocked there so ship-linked floors are unambiguous.</li>
     </ol>
   </section>
 

@@ -1,0 +1,6 @@
+Strata default handrail stair sprites (StairsDown/, StairsUp/).
+
+Layout and initial sprites follow the medium handrail stair style used in
+MultiFloors by Telardo. Edit these PNGs to give Strata its own look; the
+optional Multifloor Stairs mod setting swaps to the separate MultiFloors/
+folder instead.

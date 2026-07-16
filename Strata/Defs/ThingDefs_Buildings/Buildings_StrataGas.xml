@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Deep gas vent (natural, found by mining) ============ -->
+  <ThingDef>
+    <defName>Strata_DeepGasVent</defName>
+    <label>deep gas vent</label>
+    <description>A natural fissure seeping foul gas up from somewhere far below. Left open it slowly floods the room - toxic to breathe and explosive around open flame. Cap it with a gas well to turn the hazard into fuel; the seep never runs dry.</description>
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <graphicData>
+      <texPath>Strata/Buildings/DeepGasVent</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,1.4)</drawSize>
+    </graphicData>
+    <altitudeLayer>Floor</altitudeLayer>
+    <passability>Standable</passability>
+    <pathCost>10</pathCost>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <size>(1,1)</size>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="Strata.CompProperties_Exhaust">
+        <compClass>Strata.CompDeepGasVent</compClass>
+        <gas>Strata_DeepGas</gas>
+        <emissionPerCycle>2.5</emissionPerCycle>
+      </li>
+    </comps>
+    <building>
+      <isEdifice>false</isEdifice>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+    </building>
+  </ThingDef>
+
+  <!-- ============ Gas well (built over a deep vent) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_GasWell</defName>
+    <label>gas well</label>
+    <description>A powered wellhead built over a deep gas vent. It caps the seep - the room stops flooding - and pumps the gas into pressurized canisters for the deep-gas generator. With a gas pipe network mod loaded (Vanilla Helixien Gas Expanded), connect a pipe and the well feeds the network directly instead.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/GasWell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <fillPercent>1</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>4000</WorkToBuild>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <Steel>100</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>80</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_GasWell">
+        <ticksPerCanister>20000</ticksPerCanister>
+        <netUnitsPerCanister>15</netUnitsPerCanister>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_OnDeepGasVent</li>
+    </placeWorkers>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_GasExtraction</li>
+    </researchPrerequisites>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <!-- ============ Deep-gas generator ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_DeepGasGenerator</defName>
+    <label>deep-gas generator</label>
+    <description>A generator that burns pressurized deep-gas canisters. It burns clean - no smoke, no ventilation needed - which makes it the natural power plant for sealed underground levels. Keep it fueled from a gas well.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/DeepGasGenerator</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <fillPercent>1</fillPercent>
+    <blockLight>true</blockLight>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>5000</WorkToBuild>
+      <Flammability>0.7</Flammability>
+    </statBases>
+    <costList>
+      <Steel>120</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerPlant</compClass>
+        <basePowerConsumption>-1400</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>3.0</fuelConsumptionRate>
+        <fuelCapacity>20</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>Strata_DeepGasCanister</li>
+          </thingDefs>
+        </fuelFilter>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_HeatPusher">
+        <compClass>CompHeatPusherPowered</compClass>
+        <heatPerSecond>3</heatPerSecond>
+      </li>
+      <li Class="CompProperties_Glower">
+        <glowRadius>5</glowRadius>
+        <glowColor>(120,170,90,0)</glowColor>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_GasExtraction</li>
+    </researchPrerequisites>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+</Defs>

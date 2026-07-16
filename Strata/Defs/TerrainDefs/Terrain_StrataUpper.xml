@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Walkable/buildable pad on A+: only where the floor below is roofed. -->
+  <TerrainDef>
+    <defName>Strata_RoofDeck</defName>
+    <label>roof deck</label>
+    <description>Framing over a roof on the floor below. You can walk and build here. Open sky beyond the roof edge cannot hold structures — expand roofs downstairs to grow this deck.</description>
+    <texturePath>Terrain/Surfaces/Concrete</texturePath>
+    <edgeType>Hard</edgeType>
+    <renderPrecedence>351</renderPrecedence>
+    <pathCost>0</pathCost>
+    <fertility>0</fertility>
+    <passability>Standable</passability>
+    <affordances>
+      <li>Walkable</li>
+      <li>Light</li>
+      <li>Medium</li>
+      <li>Heavy</li>
+    </affordances>
+    <tags>
+      <li>Floor</li>
+    </tags>
+  </TerrainDef>
+
+  <!-- Void cells: impassable and no terrain affordances — nothing can be built. -->
+  <TerrainDef>
+    <defName>Strata_OpenSky</defName>
+    <label>open sky</label>
+    <description>Empty air with nothing underneath to build on. Roof the floor below to extend the deck into this space.</description>
+    <texturePath>Terrain/Surfaces/SoftSand</texturePath>
+    <color>(0.14, 0.18, 0.32, 1)</color>
+    <edgeType>Hard</edgeType>
+    <renderPrecedence>50</renderPrecedence>
+    <pathCost>10000</pathCost>
+    <fertility>0</fertility>
+    <passability>Impassable</passability>
+    <takeFootprints>false</takeFootprints>
+    <burnedDef>Strata_OpenSky</burnedDef>
+  </TerrainDef>
+
+</Defs>

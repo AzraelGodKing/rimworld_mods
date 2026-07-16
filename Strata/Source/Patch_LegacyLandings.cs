@@ -24,7 +24,10 @@ namespace Strata
 
             UpgradeVanillaCaveExits();
             RealignAllStairLandings();
+            RepairAllPocketMapTiles();
             Building_ShaftConduit.ReconcileAllAfterLoad();
+            Building_OreHoist.ReconcileAllAfterLoad();
+            CompShaftFluidJunctionLink.ReconcileAllAfterLoad();
         }
 
         private static void UpgradeVanillaCaveExits()
@@ -83,6 +86,15 @@ namespace Strata
                         entrance.TryRealignLandingIfNeeded();
                     }
                 }
+            }
+        }
+
+        private static void RepairAllPocketMapTiles()
+        {
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                PocketMapColonyTileUtility.TryAssign(maps[i]);
             }
         }
     }

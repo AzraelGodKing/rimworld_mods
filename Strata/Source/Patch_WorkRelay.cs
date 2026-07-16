@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -25,7 +26,9 @@ namespace Strata
             {
                 return;
             }
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
+            var links = new List<LevelGraph.LevelLink>(LevelGraph.ReachableLevels(pawn.Map));
+            LevelRoleUtility.SortLinksByRole(links, LevelRole.Workshop);
+            foreach (LevelGraph.LevelLink link in links)
             {
                 if (!PawnRelay.HasWorkFor(pawn, link.map))
                 {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -5,9 +6,9 @@ using Verse.AI;
 
 namespace Strata
 {
-    // A tired pawn who would otherwise sleep on the ground walks to another
-    // level instead: to their own bed if they have one, or to any level with a
-    // claimable free bed (vanilla auto-claims it once they arrive).
+    // A tired pawn on a floor without a usable bed walks to another level:
+    // home to their assigned bed, or to any linked level with a free colonist
+    // bed (vanilla auto-claims it once they arrive).
     [HarmonyPatch(typeof(JobGiver_GetRest), "TryGiveJob")]
     public static class Patch_RestRelay
     {
@@ -21,21 +22,38 @@ namespace Strata
             {
                 return;
             }
-            // Already found a real bed on this level (e.g. a medical bed)? Keep it.
-            if (__result != null
-                && (__result.def != JobDefOf.LayDown || __result.targetA.Thing is Building_Bed))
+
+            // Already heading to a reachable bed on this floor.
+            if (IsUsableBedRestJob(pawn, __result))
             {
                 return;
             }
+
+            // Some other rest job vanilla chose — keep it.
+            if (__result != null && __result.def != JobDefOf.LayDown)
+            {
+                return;
+            }
+
+            // Usable bed exists here but vanilla picked the floor anyway; only
+            // commute when this floor truly has nowhere to sleep.
+            if (__result?.def == JobDefOf.LayDown
+                && __result.targetA.Thing is not Building_Bed
+                && PawnRelay.HasUsableBedOnMap(pawn, pawn.Map))
+            {
+                return;
+            }
+
+            if (!PawnRelay.ShouldCommuteForRest(pawn, __result))
+            {
+                return;
+            }
+
             Building_Bed ownBed = pawn.ownership?.OwnedBed;
             bool ownBedElsewhere = ownBed != null && ownBed.Spawned && ownBed.Map != pawn.Map;
-            // Own bed on this level but vanilla still chose the floor: the bed
-            // is unreachable or unusable right now. Not a level problem - stay out.
-            if (ownBed != null && ownBed.Spawned && ownBed.Map == pawn.Map)
-            {
-                return;
-            }
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
+            var links = new List<LevelGraph.LevelLink>(LevelGraph.ReachableLevels(pawn.Map));
+            LevelRoleUtility.SortLinksByRole(links, LevelRole.Barracks);
+            foreach (LevelGraph.LevelLink link in links)
             {
                 bool isTarget = ownBedElsewhere
                     ? link.map == ownBed.Map
@@ -44,8 +62,6 @@ namespace Strata
                 {
                     continue;
                 }
-                // Own bed: only the owner heads there. Shared barracks: cap by the
-                // number of free beds so pawns don't all chase the last one.
                 int cap = ownBedElsewhere ? 1 : PawnRelay.ClaimableBedCount(pawn, link.map);
                 Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Rest, cap);
                 if (job != null)
@@ -54,6 +70,13 @@ namespace Strata
                     return;
                 }
             }
+        }
+
+        private static bool IsUsableBedRestJob(Pawn pawn, Job job)
+        {
+            return job?.def == JobDefOf.LayDown
+                && job.targetA.Thing is Building_Bed bed
+                && PawnRelay.IsUsableColonistBedJob(pawn, bed);
         }
     }
 }

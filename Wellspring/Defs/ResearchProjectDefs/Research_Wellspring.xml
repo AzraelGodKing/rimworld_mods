@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
+  <ResearchTabDef>
+    <defName>Wellspring</defName>
+    <label>Wellspring</label>
+    <generalTitle>Watercraft research</generalTitle>
+    <generalDescription>Wells, irrigation, cisterns, and the waterworks that keep a colony supplied.</generalDescription>
+  </ResearchTabDef>
+
   <ResearchProjectDef>
     <defName>Wellspring_Wellcraft</defName>
     <label>wellcraft</label>
     <description>Digging and lining wells, coopering rain barrels, and building cisterns: the craft of finding water and keeping it.</description>
     <baseCost>500</baseCost>
     <techLevel>Neolithic</techLevel>
+    <tab>Wellspring</tab>
     <researchViewX>0.00</researchViewX>
-    <researchViewY>3.40</researchViewY>
+    <researchViewY>0.80</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -17,11 +25,12 @@
     <description>Trenching drawn water into cropland to work it into rich, dark irrigated soil that grows anything faster.</description>
     <baseCost>900</baseCost>
     <techLevel>Neolithic</techLevel>
+    <tab>Wellspring</tab>
     <prerequisites>
       <li>Wellspring_Wellcraft</li>
     </prerequisites>
-    <researchViewX>1.20</researchViewX>
-    <researchViewY>3.40</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>0.40</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -30,11 +39,12 @@
     <description>Deeper shafts, taller tanks: reinforced deep wells that tap the water table and elevated towers that stockpile serious reserves.</description>
     <baseCost>1200</baseCost>
     <techLevel>Medieval</techLevel>
+    <tab>Wellspring</tab>
     <prerequisites>
       <li>Wellspring_Wellcraft</li>
     </prerequisites>
-    <researchViewX>1.20</researchViewX>
-    <researchViewY>4.20</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>1.20</researchViewY>
   </ResearchProjectDef>
 
 </Defs>

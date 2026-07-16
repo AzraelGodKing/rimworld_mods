@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Deep gas canister ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Strata_DeepGasCanister</defName>
+    <label>deep gas canister</label>
+    <description>A pressurized canister of foul deep gas pumped up by a gas well. Fuel for the deep-gas generator, and worth decent silver to industrial buyers. Very flammable.</description>
+    <graphicData>
+      <texPath>Strata/Items/DeepGasCanister</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.85,0.85)</drawSize>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <healthAffectsPrice>false</healthAffectsPrice>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <MarketValue>3.6</MarketValue>
+      <Mass>0.7</Mass>
+      <Flammability>1.6</Flammability>
+      <DeteriorationRate>1.0</DeteriorationRate>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <tradeTags>
+      <li>ExoticMisc</li>
+    </tradeTags>
+  </ThingDef>
+
+</Defs>
