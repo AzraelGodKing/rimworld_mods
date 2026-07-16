@@ -1,0 +1,94 @@
+﻿Strata art package — generated 2026-07-16
+
+Included: all PNG art under Strata/Textures except optional MultiFloors toggle assets.
+Excluded: Textures/Strata/Buildings/MultiFloors/ (Telardo / MultiFloors mod — optional in-game toggle only).
+
+Install back into mod: copy Textures/ to Strata/Textures/ and About/Preview.png to Strata/About/.
+
+File list (86 files):
+  About/Preview.png
+  Textures/Strata/Buildings/_cargolift_previews/CargoLift_A.png
+  Textures/Strata/Buildings/_cargolift_previews/CargoLift_B.png
+  Textures/Strata/Buildings/_cargolift_previews/CargoLift_C.png
+  Textures/Strata/Buildings/_sumppump_previews/SumpPump_B.png
+  Textures/Strata/Buildings/_sumppump_previews/SumpPump_C.png
+  Textures/Strata/Buildings/_sumppump_previews/SumpPump_D.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair00_Live_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair00_Live_Up.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair01_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair01_Up.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair02_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair02_Up.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair03_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair03_Up.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair04_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair04_Up.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair05_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair05_Up.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair06_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair06_Up.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair07_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair07_Up.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair08_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair08_Up.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair09_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair09_Up.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair10_Down.png
+  Textures/Strata/Buildings/_vault_previews/VaultPair10_Up.png
+  Textures/Strata/Buildings/BirdCage.png
+  Textures/Strata/Buildings/CargoLift.png
+  Textures/Strata/Buildings/CO2Pump.png
+  Textures/Strata/Buildings/DeepGasGenerator.png
+  Textures/Strata/Buildings/DeepGasVent.png
+  Textures/Strata/Buildings/ElevatorDown.png
+  Textures/Strata/Buildings/ElevatorUp.png
+  Textures/Strata/Buildings/ExhaustFan.png
+  Textures/Strata/Buildings/FluidJunction.png
+  Textures/Strata/Buildings/FungusFarm.png
+  Textures/Strata/Buildings/GasAirlock.png
+  Textures/Strata/Buildings/GasExchanger.png
+  Textures/Strata/Buildings/GasPipe_Atlas.png
+  Textures/Strata/Buildings/GasPipe_Blueprint_Atlas.png
+  Textures/Strata/Buildings/GasPipe_MenuIcon.png
+  Textures/Strata/Buildings/GasWell.png
+  Textures/Strata/Buildings/HandrailStairs/ATTRIBUTION.txt
+  Textures/Strata/Buildings/HandrailStairs/StairsDown/StairsDown_east.png
+  Textures/Strata/Buildings/HandrailStairs/StairsDown/StairsDown_north.png
+  Textures/Strata/Buildings/HandrailStairs/StairsDown/StairsDown_south.png
+  Textures/Strata/Buildings/HandrailStairs/StairsUp/StairsUp_east.png
+  Textures/Strata/Buildings/HandrailStairs/StairsUp/StairsUp_north.png
+  Textures/Strata/Buildings/HandrailStairs/StairsUp/StairsUp_south.png
+  Textures/Strata/Buildings/HiddenGasPipe_Atlas.png
+  Textures/Strata/Buildings/HiddenGasPipe_Blueprint_Atlas.png
+  Textures/Strata/Buildings/HiddenGasPipe_MenuIcon.png
+  Textures/Strata/Buildings/LimeScrubber.png
+  Textures/Strata/Buildings/MineLamp.png
+  Textures/Strata/Buildings/MineStairsDown.png
+  Textures/Strata/Buildings/MineStairsUp.png
+  Textures/Strata/Buildings/OreHoist.png
+  Textures/Strata/Buildings/OxygenPump.png
+  Textures/Strata/Buildings/ShaftBellows.png
+  Textures/Strata/Buildings/ShaftConduit.png
+  Textures/Strata/Buildings/ShoringPillar.png
+  Textures/Strata/Buildings/SmokeDuct.png
+  Textures/Strata/Buildings/SmokeDuct_Atlas.png
+  Textures/Strata/Buildings/SmokeDuct_Blueprint_Atlas.png
+  Textures/Strata/Buildings/SmokeDuct_MenuIcon.png
+  Textures/Strata/Buildings/SmokeHole.png
+  Textures/Strata/Buildings/StairsDown.png
+  Textures/Strata/Buildings/StairsUp.png
+  Textures/Strata/Buildings/SumpPump.png
+  Textures/Strata/Buildings/UpdraftFilter.png
+  Textures/Strata/Buildings/VaultStairsDown.png
+  Textures/Strata/Buildings/VaultStairsUp.png
+  Textures/Strata/Buildings/VentStairsDown.png
+  Textures/Strata/Buildings/VentStairsUp.png
+  Textures/Strata/Items/DeepGasCanister.png
+  Textures/Strata/Items/Lime.png
+  Textures/Things/Pawn/Animal/Canary/Canary_east.png
+  Textures/Things/Pawn/Animal/Canary/Canary_north.png
+  Textures/Things/Pawn/Animal/Canary/Canary_south.png
+  Textures/Things/Pawn/Animal/Canary/Dessicated_Canary_east.png
+  Textures/Things/Pawn/Animal/Canary/Dessicated_Canary_north.png
+  Textures/Things/Pawn/Animal/Canary/Dessicated_Canary_south.png
+  Textures/UI/Strata/SmokeToggle.png

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Ancient stairhead sometimes scattered on colony surface maps. Opens B1
+       without digging-down research; no cross-level power shaft. -->
+  <ThingDef ParentName="Strata_HandrailStairsDownGraphic">
+    <defName>Strata_AncientColonyStairsDown</defName>
+    <label>ancient stairwell</label>
+    <description>A broad stone staircase sinking into the earth, far older than the colony around it. The worn steps still lead down into solid rock that can be mined into rooms and workshops — but whatever power lines once ran through the shaft are long gone, so each level must be wired on its own unless you build a modern stairwell or shaft conduit nearby.</description>
+    <thingClass>Strata.Building_AncientColonyStairsDown</thingClass>
+    <graphicData>
+      <color>(148, 158, 138)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>900</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+    <portal>
+      <pocketMapGenerator>Strata_UndergroundLevel</pocketMapGenerator>
+      <exitDef>Strata_AncientColonyStairsUp</exitDef>
+      <pocketMapSize>200</pocketMapSize>
+    </portal>
+    <canOverlapZones>false</canOverlapZones>
+    <building>
+      <claimable>true</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <!-- Bottom landing for an ancient colony stairwell (no power shaft). -->
+  <ThingDef ParentName="Strata_HandrailStairsUpGraphic">
+    <defName>Strata_AncientColonyStairsUp</defName>
+    <label>ancient stairwell landing</label>
+    <description>The bottom landing of an ancient stairwell — worn steps leading back up to the surface. There is no power tie through the shaft; wire this level on its own.</description>
+    <thingClass>Strata.Building_AncientColonyStairsUp</thingClass>
+    <graphicData>
+      <color>(148, 158, 138)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <building>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+</Defs>

@@ -7,7 +7,7 @@ namespace Strata
 {
     // How far below the surface a level sits: 0 = surface, 1 = first excavated
     // level, 2 = the level below that, and so on. Derived from the pocket-map
-    // parent chain, so it needs nothing saved.
+    // parent chain, so it needs nothing saved. Upper floors use StrataAltitude.
     public static class StrataDepth
     {
         public static int Of(Map map)
@@ -16,6 +16,19 @@ namespace Strata
             {
                 return 0;
             }
+            return CountLevelsBelowSurface(map);
+        }
+
+        // B1 and any underground pocket without a parent chain (depth 0).
+        public static bool IsStarterLevel(Map map)
+        {
+            return StrataMapUtility.IsUnderground(map) && Of(map) <= 1;
+        }
+
+        // Same parent-chain walk as Of, but safe during map generation before
+        // the biome is fully wired (GenSteps use this for B1 vs B2+ rules).
+        public static int CountLevelsBelowSurface(Map map)
+        {
             int depth = 0;
             Map current = map;
             int guard = 0;
@@ -25,6 +38,45 @@ namespace Strata
                 current = parent.sourceMap;
             }
             return depth;
+        }
+
+        // Signed stack index: +N upper floors, 0 surface, -N underground.
+        public static int Altitude(Map map)
+        {
+            if (map == null)
+            {
+                return 0;
+            }
+            if (StrataMapUtility.IsUpperLevel(map))
+            {
+                return CountLevelsAboveSurface(map);
+            }
+            if (StrataMapUtility.IsUnderground(map))
+            {
+                return -CountLevelsBelowSurface(map);
+            }
+            return 0;
+        }
+
+        public static int CountLevelsAboveSurface(Map map)
+        {
+            if (!StrataMapUtility.IsUpperLevel(map))
+            {
+                return 0;
+            }
+            int height = 0;
+            Map current = map;
+            int guard = 0;
+            while (current?.Parent is PocketMapParent parent && parent.sourceMap != null && guard++ < 64)
+            {
+                height++;
+                current = parent.sourceMap;
+                if (!StrataMapUtility.IsUpperLevel(current))
+                {
+                    break;
+                }
+            }
+            return height;
         }
 
         // A geothermal gradient: the deeper you dig, the warmer the rock.

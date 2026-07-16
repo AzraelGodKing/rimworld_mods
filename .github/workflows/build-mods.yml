@@ -1,0 +1,95 @@
+name: Build mod DLLs
+
+# Builds Strata and Stormproof assemblies whenever Source changes.
+# On push / manual dispatch, commits updated DLLs back to the branch so
+# repo downloads always ship a matching binary. Pull requests only build
+# and upload artifacts (no commit).
+
+on:
+  push:
+    paths:
+      - "Strata/Source/**"
+      - "Stormproof/Source/**"
+      - ".github/workflows/build-mods.yml"
+  pull_request:
+    paths:
+      - "Strata/Source/**"
+      - "Stormproof/Source/**"
+      - ".github/workflows/build-mods.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-mods-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build ${{ matrix.mod }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - mod: Strata
+            project: Strata/Source/Strata.csproj
+            dll: Strata/Assemblies/Strata.dll
+          - mod: Stormproof
+            project: Stormproof/Source/Stormproof.csproj
+            dll: Stormproof/Assemblies/Stormproof.dll
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Build ${{ matrix.mod }}
+        run: dotnet build "${{ matrix.project }}" -c Release --nologo
+
+      - name: Upload ${{ matrix.mod }} DLL
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.mod }}-Assemblies
+          path: ${{ matrix.dll }}
+          if-no-files-found: error
+
+  commit-dlls:
+    name: Commit rebuilt DLLs
+    needs: build
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.ref_name }}
+
+      - name: Download Strata DLL
+        uses: actions/download-artifact@v4
+        with:
+          name: Strata-Assemblies
+          path: Strata/Assemblies
+
+      - name: Download Stormproof DLL
+        uses: actions/download-artifact@v4
+        with:
+          name: Stormproof-Assemblies
+          path: Stormproof/Assemblies
+
+      - name: Commit Assemblies if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Strata/Assemblies/Strata.dll Stormproof/Assemblies/Stormproof.dll
+          if git diff --staged --quiet; then
+            echo "DLLs unchanged — nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore: rebuild mod DLLs [skip ci]"
+          git push origin "HEAD:${{ github.ref_name }}"

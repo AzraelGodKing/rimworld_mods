@@ -4,6 +4,9 @@ All notable changes to Homesteader are documented here.
 
 ## [Unreleased]
 
+### Added
+- **Dedicated research tab** — all Homesteader projects live under their own *Homesteader* tab (no longer on Main).
+
 ### Changed
 - Renamed **shark plushie** to **Sharkira the plushie** (in-game label and docs).
 - **Diggo the plushie** — updated hippo-dog sprite art; docs page image refreshed to match. Build cost lowered to **20 cloth** (same as Sharkira).

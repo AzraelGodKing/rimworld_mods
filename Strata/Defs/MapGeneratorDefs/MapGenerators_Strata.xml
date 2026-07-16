@@ -2,6 +2,30 @@
 <Defs>
 
   <MapGeneratorDef>
+    <defName>Strata_UpperLevel</defName>
+    <isUnderground>false</isUnderground>
+    <disableShadows>false</disableShadows>
+    <renderWorld>false</renderWorld>
+    <pocketMapProperties>
+      <biome>Strata_Upper</biome>
+      <destroyOnParentMapAbandoned>true</destroyOnParentMapAbandoned>
+      <!-- Odyssey: allow gravship launch from an upper deck if the engine is there. -->
+      <canLaunchGravship>true</canLaunchGravship>
+      <canBeCleaned>true</canBeCleaned>
+    </pocketMapProperties>
+    <genSteps>
+      <li>Strata_UpperPlatform</li>
+      <li>Strata_PlaceCaveExit</li>
+    </genSteps>
+  </MapGeneratorDef>
+
+  <GenStepDef>
+    <defName>Strata_UpperPlatform</defName>
+    <order>100</order>
+    <genStep Class="Strata.GenStep_UpperPlatform"/>
+  </GenStepDef>
+
+  <MapGeneratorDef>
     <defName>Strata_UndergroundLevel</defName>
     <isUnderground>true</isUnderground>
     <roofDef>RoofRockThick</roofDef>
@@ -15,7 +39,13 @@
     </pocketMapProperties>
     <genSteps>
       <li>Strata_SolidRock</li>
+      <li>Strata_CarveWarren</li>
+      <li>Strata_HiddenChambers</li>
+      <li>Strata_BiomesCavernFeatures</li>
+      <li>Strata_RichOreNodes</li>
+      <li>Strata_DbhGroundwater</li>
       <li>Strata_PlaceCaveExit</li>
+      <li>Strata_Fog</li>
     </genSteps>
   </MapGeneratorDef>
 
@@ -25,10 +55,51 @@
     <genStep Class="Strata.GenStep_SolidRock"/>
   </GenStepDef>
 
+  <!-- Geothermal and gas chambers sealed in the rock, found by mining. -->
+  <GenStepDef>
+    <defName>Strata_HiddenChambers</defName>
+    <order>300</order>
+    <genStep Class="Strata.GenStep_HiddenChambers"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_BiomesCavernFeatures</defName>
+    <order>320</order>
+    <genStep Class="Strata.GenStep_BiomesCavernFeatures"/>
+  </GenStepDef>
+
+  <!-- Rare large ore seams in fogged host rock; size/richness scale with depth. -->
+  <GenStepDef>
+    <defName>Strata_RichOreNodes</defName>
+    <order>330</order>
+    <genStep Class="Strata.GenStep_RichOreNodes"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_DbhGroundwater</defName>
+    <order>350</order>
+    <genStep Class="Strata.GenStep_DbhGroundwater"/>
+  </GenStepDef>
+
   <GenStepDef>
     <defName>Strata_PlaceCaveExit</defName>
     <order>500</order>
     <genStep Class="Strata.GenStep_PlaceLevelExit"/>
+  </GenStepDef>
+
+  <!-- Fog everything but the arrival chamber so hidden chambers stay hidden
+       until a miner breaks through (vanilla unfogs on mineable despawn). -->
+  <GenStepDef>
+    <defName>Strata_Fog</defName>
+    <order>700</order>
+    <genStep Class="Strata.GenStep_StrataFog"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_AncientColonyStairwell</defName>
+    <!-- After vanilla FindPlayerStartSpot (850); was 650 and ran too early. -->
+    <order>880</order>
+    <genStep Class="Strata.GenStep_AncientColonyStairwell"/>
   </GenStepDef>
 
 </Defs>

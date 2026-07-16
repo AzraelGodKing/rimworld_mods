@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+
+
+
+  <!-- Odyssey-only: shaft into a Strata pocket under the gravship. -->
+
+  <ThingDef ParentName="Strata_HandrailStairsDownGraphic">
+
+    <defName>Strata_GravshipStairsDown</defName>
+
+    <label>gravship stairwell</label>
+
+    <description>A compact shaft cut through the gravship deck into a Strata level below. Only placeable on gravship substructure. Linked floors travel with the ship on launch and reattach on landing.\n\nRequires digging down research. A second gravship stairwell joins the same deck below.</description>
+
+    <thingClass>Strata.Building_GravshipStairsDown</thingClass>
+
+    <graphicData>
+
+      <color>(0.55, 0.75, 0.95)</color>
+
+    </graphicData>
+
+    <altitudeLayer>Building</altitudeLayer>
+
+    <passability>PassThroughOnly</passability>
+
+    <pathCost>42</pathCost>
+
+    <fillPercent>0.4</fillPercent>
+
+    <rotatable>true</rotatable>
+
+    <tickerType>Normal</tickerType>
+
+    <statBases>
+
+      <MaxHitPoints>500</MaxHitPoints>
+
+      <WorkToBuild>9000</WorkToBuild>
+
+      <Flammability>0</Flammability>
+
+    </statBases>
+
+    <costList>
+
+      <Steel>80</Steel>
+
+      <ComponentIndustrial>2</ComponentIndustrial>
+
+    </costList>
+
+    <portal>
+
+      <pocketMapGenerator>Strata_GravshipUnderdeckLevel</pocketMapGenerator>
+
+      <exitDef>Strata_GravshipStairsUp</exitDef>
+
+      <pocketMapSize>200</pocketMapSize>
+
+    </portal>
+
+    <designationCategory>Structure</designationCategory>
+
+    <canOverlapZones>false</canOverlapZones>
+
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+
+    <placeWorkers>
+
+      <li>Strata.PlaceWorker_GravshipStairwell</li>
+
+    </placeWorkers>
+
+    <comps>
+
+      <li Class="CompProperties_Power">
+
+        <compClass>Strata.CompPowerShaft</compClass>
+
+        <basePowerConsumption>0</basePowerConsumption>
+
+        <transmitsPower>true</transmitsPower>
+
+      </li>
+
+      <li Class="Strata.CompProperties_StairwellControl"/>
+
+    </comps>
+
+    <researchPrerequisites>
+
+      <li>Strata_DiggingDown</li>
+
+    </researchPrerequisites>
+
+    <building>
+
+      <ai_chillDestination>false</ai_chillDestination>
+
+    </building>
+
+  </ThingDef>
+
+
+
+  <ThingDef ParentName="Strata_HandrailStairsUpGraphic">
+
+    <defName>Strata_GravshipStairsUp</defName>
+
+    <label>gravship stairwell up</label>
+
+    <description>The landing below a gravship stairwell — climb back up to the ship deck. Cannot be deconstructed.</description>
+
+    <thingClass>Strata.Building_GravshipStairsUp</thingClass>
+
+    <graphicData>
+
+      <color>(0.55, 0.75, 0.95)</color>
+
+    </graphicData>
+
+    <altitudeLayer>Building</altitudeLayer>
+
+    <passability>PassThroughOnly</passability>
+
+    <pathCost>42</pathCost>
+
+    <fillPercent>0.4</fillPercent>
+
+    <tickerType>Normal</tickerType>
+
+    <useHitPoints>false</useHitPoints>
+
+    <destroyable>false</destroyable>
+
+    <statBases>
+
+      <Flammability>0</Flammability>
+
+    </statBases>
+
+    <comps>
+
+      <li Class="CompProperties_Power">
+
+        <compClass>Strata.CompPowerShaft</compClass>
+
+        <basePowerConsumption>0</basePowerConsumption>
+
+        <transmitsPower>true</transmitsPower>
+
+      </li>
+
+    </comps>
+
+    <building>
+
+      <claimable>false</claimable>
+
+      <deconstructible>false</deconstructible>
+
+      <ai_chillDestination>false</ai_chillDestination>
+
+    </building>
+
+  </ThingDef>
+
+
+
+  <!-- Odyssey-only: shaft to a roof deck above the gravship. -->
+
+  <ThingDef ParentName="Strata_HandrailStairsUpGraphic">
+
+    <defName>Strata_GravshipStairsBuildUp</defName>
+
+    <label>gravship tower stairwell</label>
+
+    <description>A shaft from the gravship deck into an outdoor Strata roof deck above. Only placeable on gravship substructure. Linked floors travel with the ship.\n\nBuildable area on the upper deck follows gravship substructure on the deck below (plus the shaft plaza). Extend substructure on the ship to grow the roof deck. Requires building up research.</description>
+
+    <thingClass>Strata.Building_GravshipStairsBuildUp</thingClass>
+
+    <graphicData>
+
+      <color>(0.55, 0.85, 0.75)</color>
+
+    </graphicData>
+
+    <altitudeLayer>Building</altitudeLayer>
+
+    <passability>PassThroughOnly</passability>
+
+    <pathCost>42</pathCost>
+
+    <fillPercent>0.4</fillPercent>
+
+    <rotatable>true</rotatable>
+
+    <tickerType>Normal</tickerType>
+
+    <statBases>
+
+      <MaxHitPoints>500</MaxHitPoints>
+
+      <WorkToBuild>9000</WorkToBuild>
+
+      <Flammability>0</Flammability>
+
+    </statBases>
+
+    <costList>
+
+      <Steel>90</Steel>
+
+      <ComponentIndustrial>2</ComponentIndustrial>
+
+    </costList>
+
+    <portal>
+
+      <pocketMapGenerator>Strata_UpperLevel</pocketMapGenerator>
+
+      <exitDef>Strata_GravshipBuildUpLanding</exitDef>
+
+      <pocketMapSize>200</pocketMapSize>
+
+    </portal>
+
+    <designationCategory>Structure</designationCategory>
+
+    <canOverlapZones>false</canOverlapZones>
+
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+
+    <placeWorkers>
+
+      <li>Strata.PlaceWorker_GravshipStairwell</li>
+
+    </placeWorkers>
+
+    <comps>
+
+      <li Class="CompProperties_Power">
+
+        <compClass>Strata.CompPowerShaft</compClass>
+
+        <basePowerConsumption>0</basePowerConsumption>
+
+        <transmitsPower>true</transmitsPower>
+
+      </li>
+
+      <li Class="Strata.CompProperties_StairwellControl"/>
+
+    </comps>
+
+    <researchPrerequisites>
+
+      <li>Strata_BuildingUp</li>
+
+    </researchPrerequisites>
+
+    <building>
+
+      <ai_chillDestination>false</ai_chillDestination>
+
+    </building>
+
+  </ThingDef>
+
+
+
+  <ThingDef ParentName="Strata_HandrailStairsDownGraphic">
+
+    <defName>Strata_GravshipBuildUpLanding</defName>
+
+    <label>gravship tower landing</label>
+
+    <description>Upper landing of a gravship tower stairwell — climb back down to the ship. Cannot be deconstructed.</description>
+
+    <thingClass>Strata.Building_GravshipBuildUpLanding</thingClass>
+
+    <graphicData>
+
+      <color>(0.55, 0.85, 0.75)</color>
+
+    </graphicData>
+
+    <altitudeLayer>Building</altitudeLayer>
+
+    <passability>PassThroughOnly</passability>
+
+    <pathCost>42</pathCost>
+
+    <fillPercent>0.4</fillPercent>
+
+    <tickerType>Normal</tickerType>
+
+    <useHitPoints>false</useHitPoints>
+
+    <destroyable>false</destroyable>
+
+    <statBases>
+
+      <Flammability>0</Flammability>
+
+    </statBases>
+
+    <comps>
+
+      <li Class="CompProperties_Power">
+
+        <compClass>Strata.CompPowerShaft</compClass>
+
+        <basePowerConsumption>0</basePowerConsumption>
+
+        <transmitsPower>true</transmitsPower>
+
+      </li>
+
+    </comps>
+
+    <building>
+
+      <claimable>false</claimable>
+
+      <deconstructible>false</deconstructible>
+
+      <ai_chillDestination>false</ai_chillDestination>
+
+    </building>
+
+  </ThingDef>
+
+
+
+</Defs>
+
+

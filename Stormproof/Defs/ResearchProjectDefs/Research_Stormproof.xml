@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
+  <ResearchTabDef>
+    <defName>Stormproof</defName>
+    <label>Stormproof</label>
+    <generalTitle>Storm & grid research</generalTitle>
+    <generalDescription>Lightning protection, flare shielding, atmospheric control, and hardened power infrastructure.</generalDescription>
+  </ResearchTabDef>
+
   <ResearchProjectDef>
     <defName>Stormproof_StormProtection</defName>
     <label>storm protection</label>
     <description>Grounding spires, circuit breakers, and hardened conduits to protect a power grid from lightning strikes and short circuits.</description>
     <baseCost>1200</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Stormproof</tab>
     <prerequisites>
       <li>Electricity</li>
     </prerequisites>
-    <researchViewX>15.00</researchViewX>
-    <researchViewY>2.20</researchViewY>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>0.80</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -20,12 +28,13 @@
     <description>Field generators that deflect solar flare radiation and dampen electromagnetic pulses, keeping electronics alive through the worst the sky can deliver.</description>
     <baseCost>3000</baseCost>
     <techLevel>Industrial</techLevel>
+    <tab>Stormproof</tab>
     <prerequisites>
       <li>Stormproof_StormProtection</li>
       <li>Fabrication</li>
     </prerequisites>
-    <researchViewX>16.20</researchViewX>
-    <researchViewY>2.20</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>0.80</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -34,11 +43,12 @@
     <description>Ionospheric agitation techniques that let a colony summon a thunderstorm on demand. Warning: side effects include dramatic weather, well-fed storm spires, and smug colonists.</description>
     <baseCost>3500</baseCost>
     <techLevel>Spacer</techLevel>
+    <tab>Stormproof</tab>
     <prerequisites>
       <li>Stormproof_FlareShielding</li>
     </prerequisites>
-    <researchViewX>17.40</researchViewX>
-    <researchViewY>3.20</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>1.60</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -47,12 +57,13 @@
     <description>Superconducting earth anchors and self-balancing load regulators that let a storm spire dump an entire lightning strike into the grid without a single stray surge. Eliminates the risk of "Zzzt!" power surges from grid-connected storm spires.</description>
     <baseCost>4000</baseCost>
     <techLevel>Spacer</techLevel>
+    <tab>Stormproof</tab>
     <prerequisites>
       <li>Stormproof_FlareShielding</li>
       <li>AdvancedFabrication</li>
     </prerequisites>
-    <researchViewX>17.40</researchViewX>
-    <researchViewY>2.20</researchViewY>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>0.80</researchViewY>
   </ResearchProjectDef>
 
 </Defs>

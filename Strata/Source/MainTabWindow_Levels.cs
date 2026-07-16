@@ -8,7 +8,7 @@ namespace Strata
 {
     // Bottom-bar "Levels" tab: one row per level of the colony with colonist,
     // hostile, and temperature readouts, and a one-click camera jump. The
-    // button stays hidden until at least one underground level exists.
+    // button stays hidden until at least one upper or underground level exists.
     public class MainButtonWorker_Levels : MainButtonWorker_ToggleTab
     {
         public override bool Visible
@@ -22,7 +22,7 @@ namespace Strata
                 List<Map> maps = Find.Maps;
                 for (int i = 0; i < maps.Count; i++)
                 {
-                    if (StrataMapUtility.IsUnderground(maps[i]))
+                    if (StrataMapUtility.IsUnderground(maps[i]) || StrataMapUtility.IsUpperLevel(maps[i]))
                     {
                         return true;
                     }
@@ -37,7 +37,7 @@ namespace Strata
         private struct Row
         {
             public Map map;
-            public int depth;
+            public int altitude; // +N upper, 0 surface, -N underground
             public bool stackHeader; // first row of a colony's level stack
         }
 
@@ -45,8 +45,11 @@ namespace Strata
         private const float HeaderHeight = 26f;
         private const float ViewButtonWidth = 64f;
         private const float RenameButtonWidth = 72f;
+        private const float RoleButtonWidth = 72f;
 
         private readonly List<Row> rows = new List<Row>();
+        private int lastRowsBuildTick = -9999;
+        private int lastRowsMapCount = -1;
 
         // Player-chosen size survives closing the tab (but not the session).
         private static Vector2 savedSize = Vector2.zero;
@@ -62,7 +65,7 @@ namespace Strata
         {
             get
             {
-                Vector2 computed = new Vector2(640f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
+                Vector2 computed = new Vector2(720f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
                 return savedSize == Vector2.zero
                     ? computed
                     : new Vector2(Mathf.Max(savedSize.x, 420f), Mathf.Max(savedSize.y, 120f));
@@ -76,23 +79,90 @@ namespace Strata
             openedSize = new Vector2(windowRect.width, windowRect.height);
         }
 
+        private void EnsureRowsFresh()
+        {
+            int tick = Find.TickManager.TicksGame;
+            int mapCount = Find.Maps.Count;
+            if (tick - lastRowsBuildTick < 60 && mapCount == lastRowsMapCount)
+            {
+                return;
+            }
+            lastRowsBuildTick = tick;
+            lastRowsMapCount = mapCount;
+            BuildRows();
+        }
+
         private void BuildRows()
         {
             rows.Clear();
+            var claimed = new HashSet<Map>();
+            var stackedSurfaces = new HashSet<Map>();
+
             foreach (Map surface in Find.Maps)
             {
-                if (!StrataMapUtility.IsSurfacePlayerHome(surface) || !LevelGraph.AnyLinkFrom(surface))
+                bool gravshipHost = StrataGravshipUtility.OdysseyActive
+                    && StrataGravshipUtility.IsGravshipHostMap(surface);
+                bool colonySurface = StrataMapUtility.IsSurfacePlayerHome(surface);
+                if (!LevelGraph.AnyLinkFrom(surface) || (!gravshipHost && !colonySurface))
                 {
                     continue;
                 }
-                rows.Add(new Row { map = surface, depth = 0, stackHeader = true });
-                foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(surface))
+                if (!stackedSurfaces.Add(surface))
                 {
-                    if (StrataMapUtility.IsUnderground(link.map))
+                    continue;
+                }
+                AppendStack(surface, claimed, includeGravshipLevels: gravshipHost, includeColonyLevels: colonySurface);
+            }
+        }
+
+        private void AppendStack(
+            Map surface,
+            HashSet<Map> claimed,
+            bool includeGravshipLevels,
+            bool includeColonyLevels)
+        {
+            int headerAt = rows.Count;
+            rows.Add(new Row { map = surface, altitude = 0, stackHeader = true });
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(surface))
+            {
+                Map level = link.map;
+                if (!StrataMapUtility.IsUnderground(level) && !StrataMapUtility.IsUpperLevel(level))
+                {
+                    continue;
+                }
+                Map gravshipRoot = StrataGravshipUtility.FindGravshipStackRoot(level);
+                if (gravshipRoot != null)
+                {
+                    if (!includeGravshipLevels || gravshipRoot != surface)
                     {
-                        rows.Add(new Row { map = link.map, depth = link.depth });
+                        continue;
                     }
                 }
+                else if (!includeColonyLevels)
+                {
+                    continue;
+                }
+                if (!claimed.Add(level))
+                {
+                    continue;
+                }
+                rows.Add(new Row { map = level, altitude = StrataDepth.Altitude(level) });
+            }
+
+            int count = rows.Count - headerAt;
+            if (count > 1)
+            {
+                rows.Sort(headerAt, count, Comparer<Row>.Create((a, b) => b.altitude.CompareTo(a.altitude)));
+                for (int i = headerAt; i < rows.Count; i++)
+                {
+                    Row r = rows[i];
+                    r.stackHeader = i == headerAt;
+                    rows[i] = r;
+                }
+            }
+            else
+            {
+                rows.RemoveAt(headerAt);
             }
         }
 
@@ -108,7 +178,7 @@ namespace Strata
             }
 
             // Levels can open or collapse while the tab sits open.
-            BuildRows();
+            EnsureRowsFresh();
 
             Text.Font = GameFont.Small;
             float contentWidth = inRect.width - 16f; // leave room for a scrollbar
@@ -122,13 +192,13 @@ namespace Strata
             Widgets.Label(new Rect(header.x + colLevel + 4f, header.y, colColonists - 8f, HeaderHeight), "Level");
             Widgets.Label(new Rect(header.x + colColonists, header.y, colHostiles - colColonists, HeaderHeight), "Colonists");
             Widgets.Label(new Rect(header.x + colHostiles, header.y, colTemp - colHostiles, HeaderHeight), "Hostiles");
-            Widgets.Label(new Rect(header.x + colTemp, header.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth, HeaderHeight), "Temp");
+            Widgets.Label(new Rect(header.x + colTemp, header.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, HeaderHeight), "Temp");
             GUI.color = Color.white;
             Widgets.DrawLineHorizontal(inRect.x, header.yMax - 2f, inRect.width);
 
             if (rows.Count == 0)
             {
-                Widgets.Label(new Rect(inRect.x + 4f, header.yMax + 4f, inRect.width, RowHeight), "No excavated levels.");
+                Widgets.Label(new Rect(inRect.x + 4f, header.yMax + 4f, inRect.width, RowHeight), "No linked levels.");
                 return;
             }
 
@@ -150,6 +220,13 @@ namespace Strata
 
                 Text.Anchor = TextAnchor.MiddleLeft;
                 Widgets.Label(new Rect(rowRect.x + 4f, rowRect.y, colColonists - 8f, RowHeight), LevelLabel(row));
+                if (StrataMod.Settings?.showLevelPerfInTab == true)
+                {
+                    string perf = StrataLevelPerfUtility.IsHibernating(row.map)
+                        ? "hibernating"
+                        : StrataLevelPerfUtility.PawnCount(row.map) + " pawns";
+                    Widgets.Label(new Rect(rowRect.x + colColonists * 0.55f, rowRect.y, colColonists * 0.45f, RowHeight), perf);
+                }
                 Widgets.Label(new Rect(rowRect.x + colColonists, rowRect.y, colHostiles - colColonists, RowHeight),
                     row.map.mapPawns.FreeColonistsSpawnedCount.ToString());
                 int hostiles = HostileCount(row.map);
@@ -157,10 +234,16 @@ namespace Strata
                 Widgets.Label(new Rect(rowRect.x + colHostiles, rowRect.y, colTemp - colHostiles, RowHeight),
                     hostiles.ToString());
                 GUI.color = Color.white;
-                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth, RowHeight),
+                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, RowHeight),
                     row.map.mapTemperature.OutdoorTemp.ToStringTemperature("F0"));
                 Text.Anchor = TextAnchor.UpperLeft;
 
+                Rect roleRect = new Rect(rowRect.xMax - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, rowRect.y + 3f, RoleButtonWidth - 4f, RowHeight - 6f);
+                LevelRole role = LevelRoleUtility.GetRole(row.map);
+                if (Widgets.ButtonText(roleRect, LevelRoleUtility.Label(role)))
+                {
+                    LevelRoleUtility.SetRole(row.map, NextRole(role));
+                }
                 Rect renameRect = new Rect(rowRect.xMax - ViewButtonWidth - RenameButtonWidth, rowRect.y + 3f, RenameButtonWidth - 4f, RowHeight - 6f);
                 if (Widgets.ButtonText(renameRect, "Rename"))
                 {
@@ -171,13 +254,30 @@ namespace Strata
                 {
                     JumpTo(row.map);
                 }
-                if (Widgets.ButtonInvisible(new Rect(rowRect.x, rowRect.y, rowRect.width - ViewButtonWidth - RenameButtonWidth, RowHeight)))
+                if (Widgets.ButtonInvisible(new Rect(rowRect.x, rowRect.y, rowRect.width - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, RowHeight)))
                 {
                     JumpTo(row.map);
                 }
                 y += RowHeight;
             }
             Widgets.EndScrollView();
+        }
+
+        private static LevelRole NextRole(LevelRole role)
+        {
+            bool found = false;
+            foreach (LevelRole candidate in LevelRoleUtility.AllRolesInOrder())
+            {
+                if (found)
+                {
+                    return candidate;
+                }
+                if (candidate == role)
+                {
+                    found = true;
+                }
+            }
+            return LevelRole.None;
         }
 
         private static string LevelLabel(Row row)
@@ -187,12 +287,16 @@ namespace Strata
             {
                 return custom;
             }
-            if (row.depth == 0)
+            if (row.altitude == 0)
             {
                 string name = row.map.Parent?.LabelCap;
                 return name.NullOrEmpty() ? "Surface" : "Surface \u2014 " + name;
             }
-            return "Level -" + row.depth;
+            if (row.altitude > 0)
+            {
+                return "Level +" + row.altitude;
+            }
+            return "Level " + row.altitude;
         }
 
         private static int HostileCount(Map map)
@@ -214,7 +318,20 @@ namespace Strata
             IntVec3 cell = map.Center;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing.def.defName == "Strata_StairsDown" || thing.def.defName == "Strata_ElevatorDown")
+                if (thing.def.defName == "Strata_StairsDown"
+                    || thing.def.defName == "Strata_AncientColonyStairsDown"
+                    || thing.def.defName == "Strata_ElevatorDown"
+                    || thing.def.defName == "Strata_StairsUp"
+                    || thing.def.defName == "Strata_ElevatorUp"
+                    || thing.def.defName == "Strata_DigDownShaft"
+                    || thing.def.defName == "Strata_StairsBuildUp"
+                    || thing.def.defName == "Strata_BuildUpLanding"
+                    || thing.def.defName == "Strata_ElevatorBuildUp"
+                    || thing.def.defName == "Strata_ElevatorBuildUpLanding"
+                    || thing.def.defName == "Strata_GravshipStairsDown"
+                    || thing.def.defName == "Strata_GravshipStairsUp"
+                    || thing.def.defName == "Strata_GravshipStairsBuildUp"
+                    || thing.def.defName == "Strata_GravshipBuildUpLanding")
                 {
                     cell = thing.Position;
                     break;
