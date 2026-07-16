@@ -50,7 +50,7 @@ To move goods between levels, just put a stockpile near the stairs on each floor
 
 Design: each level is a real map linked by stairwell pairs (built on the vanilla 1.6 pocket-map/portal system), and the AI patches move the *pawn* to the level where it's needed rather than building fragile cross-map jobs — vanilla AI takes over the moment they arrive, so every failure mode degrades safely.
 
-Source lives in `Strata/Source`; the compiled `Strata.dll` ships in `Strata/Assemblies` and is rebuilt by CI on every source change.
+Source lives in `Strata/Source`; the compiled `Strata.dll` ships in `Strata/Assemblies` and is rebuilt by the **Build mod DLLs** GitHub Action on every `Strata/Source` change (also available under Actions → workflow_dispatch).
 
 ### Stormproof
 
@@ -74,7 +74,7 @@ Defend your grid from everything the Rim throws at it. RimWorld 1.6. C# mod (req
 
 New event — **Ion storm**: batteries bleed charge, random EMP bursts stun powered buildings, and extra "Zzzt!" surges fire. EMP dampeners, surge protectors, and storm capacitor banks counter it.
 
-Source lives in `Stormproof/Source`; the compiled `Stormproof.dll` ships in `Stormproof/Assemblies` and is rebuilt by CI on every source change.
+Source lives in `Stormproof/Source`; the compiled `Stormproof.dll` ships in `Stormproof/Assemblies` and is rebuilt by the **Build mod DLLs** GitHub Action on every `Stormproof/Source` change.
 
 ### Wellspring
 

@@ -91,14 +91,7 @@ namespace Strata
             int count = 0;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
             {
-                if (thing is Building_Bed bed
-                    && bed.Faction == Faction.OfPlayer
-                    && bed.def.building.bed_humanlike
-                    && !bed.Medical
-                    && !bed.ForPrisoners
-                    && bed.AnyUnownedSleepingSlot
-                    && !bed.IsForbidden(pawn)
-                    && !bed.IsBurning())
+                if (thing is Building_Bed bed && IsClaimableColonistBed(pawn, bed))
                 {
                     count++;
                 }
@@ -109,72 +102,20 @@ namespace Strata
         // Cheap, conservative "is there plausibly work for this pawn over there?"
         // checks. Deliberately approximate: a false positive just costs a walk
         // down the stairs, and the cooldown stops it from repeating.
-        public static bool HasWorkFor(Pawn pawn, Map map)
-        {
-            Pawn_WorkSettings work = pawn.workSettings;
-            if (work == null || !work.EverWork)
-            {
-                return StrataPawnUtility.IsMiscRobot(pawn)
-                    && StrataPawnUtility.MiscRobotHasWorkOn(pawn, map);
-            }
+        // Mods can extend via WorkRelaySignals.RegisterWorkProbe.
+        public static bool HasWorkFor(Pawn pawn, Map map) => WorkRelaySignals.HasWorkFor(pawn, map);
 
-            bool Active(WorkTypeDef type) => type != null && work.WorkIsActive(type);
+        /// <summary>Mods: see <see cref="WorkRelaySignals.RegisterWorkProbe"/>.</summary>
+        public static void RegisterWorkProbe(WorkRelaySignals.WorkProbe probe)
+            => WorkRelaySignals.RegisterWorkProbe(probe);
 
-            if (Active(WorkTypeDefOf.Construction))
-            {
-                if (AnyPlayerThing(map, ThingRequestGroup.Blueprint) || AnyPlayerThing(map, ThingRequestGroup.BuildingFrame))
-                {
-                    return true;
-                }
-                if (map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.Deconstruct)
-                    || map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.SmoothWall)
-                    || map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.SmoothFloor))
-                {
-                    return true;
-                }
-            }
+        /// <summary>Mods: see <see cref="WorkRelaySignals.UnregisterWorkProbe"/>.</summary>
+        public static void UnregisterWorkProbe(WorkRelaySignals.WorkProbe probe)
+            => WorkRelaySignals.UnregisterWorkProbe(probe);
 
-            if (Active(StrataDefOf.Mining)
-                && map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.Mine))
-            {
-                return true;
-            }
-
-            if (Active(StrataDefOf.PlantCutting)
-                && (map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.CutPlant)
-                    || map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.HarvestPlant)))
-            {
-                return true;
-            }
-
-            if (Active(WorkTypeDefOf.Hauling)
-                && map.listerHaulables.ThingsPotentiallyNeedingHauling().Count > 0)
-            {
-                return true;
-            }
-
-            foreach (Building building in map.listerBuildings.allBuildingsColonist)
-            {
-                if (building is not IBillGiver billGiver || billGiver.BillStack == null
-                    || !billGiver.BillStack.AnyShouldDoNow)
-                {
-                    continue;
-                }
-                foreach (Bill bill in billGiver.BillStack)
-                {
-                    if (!bill.ShouldDoNow() || !BillIngredientUtility.PawnCanDoBill(pawn, bill))
-                    {
-                        continue;
-                    }
-                    if (BillIngredientUtility.CanStartOnMap(bill, building, map, pawn))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
+        /// <summary>Mods: see <see cref="WorkRelaySignals.RegisterWorkSeekingJobGiverMarker"/>.</summary>
+        public static void RegisterWorkSeekingJobGiverMarker(string typeNameContains)
+            => WorkRelaySignals.RegisterWorkSeekingJobGiverMarker(typeNameContains);
 
         public static bool HasFoodFor(Pawn pawn, Map map)
         {
@@ -202,12 +143,94 @@ namespace Strata
         {
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
             {
+                if (thing is Building_Bed bed && IsClaimableColonistBed(pawn, bed))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // A colonist bed on this map the pawn can actually reach right now.
+        public static bool HasUsableBedOnMap(Pawn pawn, Map map)
+        {
+            if (pawn == null || map == null)
+            {
+                return false;
+            }
+            Building_Bed ownBed = pawn.ownership?.OwnedBed;
+            if (ownBed != null && ownBed.Spawned && ownBed.Map == map && IsUsableColonistBed(pawn, ownBed))
+            {
+                return true;
+            }
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
+            {
+                if (thing is Building_Bed bed && IsUsableColonistBed(pawn, bed))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool ShouldCommuteForRest(Pawn pawn, Job vanillaResult)
+        {
+            if (vanillaResult?.def == JobDefOf.LayDown)
+            {
+                return true;
+            }
+            if (pawn?.CurJobDef == JobDefOf.LayDown)
+            {
+                return true;
+            }
+            if (pawn?.timetable?.CurrentAssignment == TimeAssignmentDefOf.Sleep)
+            {
+                return true;
+            }
+            Need rest = pawn?.needs?.rest;
+            return rest != null && rest.CurLevelPercentage < 0.35f;
+        }
+
+        private static bool IsClaimableColonistBed(Pawn pawn, Building_Bed bed)
+        {
+            return IsColonistBedCandidate(pawn, bed)
+                && (bed.OwnersForReading.Contains(pawn) || bed.AnyUnownedSleepingSlot);
+        }
+
+        private static bool IsUsableColonistBed(Pawn pawn, Building_Bed bed)
+        {
+            return IsClaimableColonistBed(pawn, bed)
+                && bed.Spawned
+                && bed.Map == pawn.Map
+                && pawn.CanReach(bed, PathEndMode.OnCell, Danger.Some);
+        }
+
+        internal static bool IsUsableColonistBedJob(Pawn pawn, Building_Bed bed)
+        {
+            return IsUsableColonistBed(pawn, bed);
+        }
+
+        private static bool IsColonistBedCandidate(Pawn pawn, Building_Bed bed)
+        {
+            return bed != null
+                && bed.Faction == Faction.OfPlayer
+                && bed.def.building.bed_humanlike
+                && !bed.Medical
+                && !bed.ForPrisoners
+                && !bed.IsForbidden(pawn)
+                && !bed.IsBurning();
+        }
+
+        public static bool HasMedicalBedFor(Pawn pawn, Map map)
+        {
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
+            {
                 if (thing is Building_Bed bed
                     && bed.Faction == Faction.OfPlayer
                     && bed.def.building.bed_humanlike
-                    && !bed.Medical
+                    && bed.Medical
                     && !bed.ForPrisoners
-                    && bed.AnyUnownedSleepingSlot
+                    && bed.AnyUnoccupiedSleepingSlot
                     && !bed.IsForbidden(pawn)
                     && !bed.IsBurning())
                 {
@@ -217,14 +240,57 @@ namespace Strata
             return false;
         }
 
-        private static bool AnyPlayerThing(Map map, ThingRequestGroup group)
+        public static bool HasPatientsNeedingTend(Map map)
         {
-            List<Thing> things = map.listerThings.ThingsInGroup(group);
-            for (int i = 0; i < things.Count; i++)
+            if (map == null)
             {
-                if (things[i].Faction == Faction.OfPlayer)
+                return false;
+            }
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn patient = pawns[i];
+                if (patient.IsColonist && HealthAIUtility.ShouldBeTendedNowByPlayer(patient))
                 {
                     return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool HasJoyFor(Pawn pawn, Map map)
+        {
+            if (map == null || pawn == null)
+            {
+                return false;
+            }
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree))
+            {
+                if (thing.IsForbidden(pawn) || thing.Position.Fogged(map))
+                {
+                    continue;
+                }
+                if (thing.def.IsIngestible && thing.def.ingestible?.joy > 0f && pawn.WillEat(thing))
+                {
+                    return true;
+                }
+            }
+            foreach (JoyGiverDef joyGiver in DefDatabase<JoyGiverDef>.AllDefsListForReading)
+            {
+                if (joyGiver.thingDefs == null)
+                {
+                    continue;
+                }
+                for (int i = 0; i < joyGiver.thingDefs.Count; i++)
+                {
+                    ThingDef joyThing = joyGiver.thingDefs[i];
+                    foreach (Thing thing in map.listerThings.ThingsOfDef(joyThing))
+                    {
+                        if (thing.Faction == Faction.OfPlayer && !thing.IsForbidden(pawn) && !thing.IsBurning())
+                        {
+                            return true;
+                        }
+                    }
                 }
             }
             return false;

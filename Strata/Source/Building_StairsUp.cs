@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 
 namespace Strata
@@ -11,6 +13,16 @@ namespace Strata
     public class Building_StairsUp : PocketMapExit
     {
         private IntVec3 lastKnownEntranceCell = IntVec3.Invalid;
+
+        // Dig-down extension on this level (no power comp — this landing is the shaft).
+        private Building_StairsDown downEntrance;
+
+        public Building_StairsDown DownEntrance => downEntrance;
+
+        internal void SetDownEntrance(Building_StairsDown entrance)
+        {
+            downEntrance = entrance;
+        }
 
         private Map SourceMap => (Map?.Parent as PocketMapParent)?.sourceMap;
 
@@ -27,6 +39,10 @@ namespace Strata
             {
                 SetFaction(Faction.OfPlayer);
             }
+            if (respawningAfterLoad)
+            {
+                StairwellDigUtility.ResolveDownEntrance(this);
+            }
         }
 
         public override void ExposeData()
@@ -37,6 +53,7 @@ namespace Strata
                 CacheEntranceCell();
             }
             Scribe_Values.Look(ref lastKnownEntranceCell, "strataLastKnownEntranceCell", IntVec3.Invalid);
+            Scribe_References.Look(ref downEntrance, "strataDownEntrance");
         }
 
         private void CacheEntranceCell()
@@ -107,6 +124,58 @@ namespace Strata
             base.OnEntered(pawn);
             StrataPortalUtility.TransferHaulDesignation(this, pawn);
             MapComponent_RaidPursuit.NotifyPortalArrival(pawn, pawn.MapHeld);
+        }
+
+        protected override void Tick()
+        {
+            base.Tick();
+            if ((Find.TickManager.TicksGame + Position.GetHashCode()) % 60 == 0)
+            {
+                StairwellPowerUtility.MaintainVerticalTie(this);
+            }
+        }
+
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            foreach (Gizmo gizmo in base.GetGizmos())
+            {
+                yield return gizmo;
+            }
+            if (!StrataMapUtility.IsUnderground(Map) || StairwellDigUtility.LandingHasDownwardShaft(this))
+            {
+                yield break;
+            }
+            StairwellDigUtility.CanDigDownFromLanding(this, out string reason);
+            yield return new Command_Action
+            {
+                defaultLabel = "Dig down",
+                defaultDesc = "Designate a dig shaft beside this landing. Colonists must finish carving it — same work as an excavated stairwell — before the next level opens. Below the first underground level requires deep excavation research.",
+                icon = ContentFinder<Texture2D>.Get("UI/Designators/Mine", reportFailure: false),
+                action = () =>
+                {
+                    if (StairwellDigUtility.TryDigDownFromLanding(this, out string message))
+                    {
+                        return;
+                    }
+                    if (!message.NullOrEmpty())
+                    {
+                        Messages.Message(message, this, MessageTypeDefOf.RejectInput, historical: false);
+                    }
+                },
+                Disabled = !reason.NullOrEmpty(),
+                disabledReason = reason,
+            };
+        }
+
+        public override string GetInspectString()
+        {
+            string text = base.GetInspectString();
+            if (!StrataMapUtility.IsUnderground(Map) || StairwellDigUtility.LandingHasDownwardShaft(this))
+            {
+                return text;
+            }
+            string hint = "Dig down to designate a dig shaft beside this landing; colonists must finish carving it before the level below opens.";
+            return text.NullOrEmpty() ? hint : text + "\n" + hint;
         }
     }
 }

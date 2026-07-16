@@ -9,6 +9,8 @@ namespace Strata
         Food,
         Rest,
         Haul,
+        Medical,
+        Joy,
     }
 
     // Lightweight coordination so a whole colony of idle pawns doesn't stampede

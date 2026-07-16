@@ -44,12 +44,12 @@ namespace Strata
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            parent.Map.GetComponent<SmokeMapComponent>()?.Vents.Add(this);
+            parent.Map.GetComponent<AtmosphereMapComponent>()?.Vents.Add(this);
         }
 
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
-            map.GetComponent<SmokeMapComponent>()?.Vents.Remove(this);
+            map.GetComponent<AtmosphereMapComponent>()?.Vents.Remove(this);
             base.PostDeSpawn(map, mode);
         }
 

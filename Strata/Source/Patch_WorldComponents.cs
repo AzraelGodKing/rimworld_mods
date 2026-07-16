@@ -17,6 +17,22 @@ namespace Strata
             {
                 __instance.components.Add(new StrataRitualTravel(__instance));
             }
+            if (__instance.GetComponent<WorldComponent_StrataLevelRoles>() == null)
+            {
+                __instance.components.Add(new WorldComponent_StrataLevelRoles(__instance));
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(TickManager), nameof(TickManager.DoSingleTick))]
+    public static class Patch_GameTick_CaravanHaul
+    {
+        public static void Postfix()
+        {
+            if (Find.TickManager.TicksGame % 250 == 0)
+            {
+                StrataCaravanUtility.TickCaravanPull();
+            }
         }
     }
 }
