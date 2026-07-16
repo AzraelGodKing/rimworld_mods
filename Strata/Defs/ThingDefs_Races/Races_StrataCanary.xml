@@ -1,31 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
-  <!-- Mine canary: vanilla chicken stats, custom canary art, separate kind for cage acquire/spawn. -->
-  <ThingDef ParentName="Chicken">
+  <!-- Mine canary: chicken-scale bird stats, custom canary art, separate kind for cage acquire/spawn. -->
+  <ThingDef ParentName="AnimalThingBase">
     <defName>Strata_Canary</defName>
     <label>mine canary</label>
     <description>A small yellow bird kept for underground work. Canaries succumb to smoke, deep gas, hypoxia, and carbon dioxide far sooner than humans — the classic miner's early warning.</description>
     <statBases>
+      <MoveSpeed>2.1</MoveSpeed>
       <MarketValue>35</MarketValue>
+      <LeatherAmount>0</LeatherAmount>
+      <ComfyTemperatureMin>-10</ComfyTemperatureMin>
+      <FilthRate>4</FilthRate>
+      <MaxFlightTime>3</MaxFlightTime>
+      <FlightCooldown>10</FlightCooldown>
       <Wildness>0.05</Wildness>
     </statBases>
     <race>
+      <body>Bird</body>
+      <baseHungerRate>0.14</baseHungerRate>
+      <baseBodySize>0.3</baseBodySize>
+      <baseHealthScale>0.35</baseHealthScale>
+      <foodType>VegetarianRoughAnimal</foodType>
+      <trainability>None</trainability>
+      <roamMtbDays>7</roamMtbDays>
+      <mateMtbHours>8</mateMtbHours>
+      <lifeExpectancy>6</lifeExpectancy>
+      <flightStartChanceOnJobStart>0.05</flightStartChanceOnJobStart>
+      <lifeStageAges>
+        <li>
+          <def>AnimalBabyTiny</def>
+          <minAge>0</minAge>
+          <soundWounded>Pawn_Chick_Call</soundWounded>
+          <soundDeath>Pawn_Chick_Call</soundDeath>
+          <soundCall>Pawn_Chick_Call</soundCall>
+          <soundAngry>Pawn_Chick_Call</soundAngry>
+        </li>
+        <li>
+          <def>AnimalJuvenile</def>
+          <minAge>0.12</minAge>
+        </li>
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0.2</minAge>
+          <soundWounded>Pawn_Chicken_Wounded</soundWounded>
+          <soundDeath>Pawn_Chicken_Death</soundDeath>
+          <soundCall>Pawn_Chicken_Call</soundCall>
+          <soundAngry>Pawn_Chicken_Angry</soundAngry>
+        </li>
+      </lifeStageAges>
+      <soundMeleeHitPawn>Pawn_Melee_SmallScratch_HitPawn</soundMeleeHitPawn>
+      <soundMeleeHitBuilding>Pawn_Melee_SmallScratch_HitBuilding</soundMeleeHitBuilding>
+      <soundMeleeMiss>Pawn_Melee_SmallScratch_Miss</soundMeleeMiss>
+      <soundEating>Bird_Eat</soundEating>
+      <headPosPerRotation>
+        <li>(0.0, 0, 0.24)</li>
+        <li>(0.25, 0, 0.18)</li>
+        <li>(0.0, 0, 0.07)</li>
+        <li>(-0.25, 0, 0.18)</li>
+      </headPosPerRotation>
       <wildBiomes Inherit="False" />
     </race>
     <tradeTags Inherit="False">
       <li>AnimalCommon</li>
     </tradeTags>
+    <tools>
+      <li>
+        <label>claws</label>
+        <capacities>
+          <li>Scratch</li>
+        </capacities>
+        <power>2</power>
+        <cooldownTime>1.5</cooldownTime>
+        <linkedBodyPartsGroup>Feet</linkedBodyPartsGroup>
+      </li>
+      <li>
+        <label>beak</label>
+        <capacities>
+          <li>Bite</li>
+        </capacities>
+        <power>3</power>
+        <cooldownTime>2</cooldownTime>
+        <linkedBodyPartsGroup>Beak</linkedBodyPartsGroup>
+      </li>
+      <li>
+        <label>head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>1</power>
+        <cooldownTime>1.5</cooldownTime>
+        <linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
+        <ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
+        <chanceFactor>0.2</chanceFactor>
+      </li>
+    </tools>
   </ThingDef>
 
-  <PawnKindDef ParentName="Chicken">
+  <PawnKindDef ParentName="AnimalKindBase">
     <defName>Strata_Canary</defName>
     <label>mine canary</label>
     <race>Strata_Canary</race>
     <combatPower>15</combatPower>
-    <ecoSystemWeight Inherit="False">0</ecoSystemWeight>
+    <ecoSystemWeight>0</ecoSystemWeight>
     <wildGroupSize Inherit="False" />
-    <lifeStages Inherit="False">
+    <lifeStages>
       <li>
         <label>canary chick</label>
         <bodyGraphicData>

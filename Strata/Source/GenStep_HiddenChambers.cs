@@ -24,11 +24,11 @@ namespace Strata
 
         public override void Generate(Map map, GenStepParams parms)
         {
-            int depth = DepthDuringGeneration(map);
+            int depth = StrataDepth.CountLevelsBelowSurface(map);
             var placed = new List<IntVec3>();
 
             int geoCount = 0;
-            if (Rand.Chance(Mathf.Min(0.4f + 0.15f * (depth - 1), 0.85f)))
+            if (depth > 1 && Rand.Chance(Mathf.Min(0.4f + 0.15f * (depth - 1), 0.85f)))
             {
                 geoCount = 1 + (Rand.Chance(0.25f * (depth - 1)) ? 1 : 0);
             }
@@ -45,7 +45,7 @@ namespace Strata
             }
 
             int gasCount = 0;
-            if (Rand.Chance(Mathf.Min(0.5f + 0.15f * (depth - 1), 0.95f)))
+            if (depth > 1 && Rand.Chance(Mathf.Min(0.5f + 0.15f * (depth - 1), 0.95f)))
             {
                 gasCount = Rand.RangeInclusive(1, Mathf.Min(1 + depth, 4));
             }
@@ -75,20 +75,6 @@ namespace Strata
                 }
                 placed.Add(spot);
             }
-        }
-
-        // The biome may not be resolved yet during generation, so walk the
-        // pocket-map parent chain directly instead of StrataDepth.Of.
-        private static int DepthDuringGeneration(Map map)
-        {
-            int depth = 0;
-            Map current = map;
-            while (current?.Parent is PocketMapParent parent && parent.sourceMap != null && depth < 64)
-            {
-                depth++;
-                current = parent.sourceMap;
-            }
-            return Mathf.Max(depth, 1);
         }
 
         private static bool TryFindChamberSpot(Map map, List<IntVec3> placed, out IntVec3 spot)

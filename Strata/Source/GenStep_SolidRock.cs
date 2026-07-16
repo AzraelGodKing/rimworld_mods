@@ -11,15 +11,40 @@ namespace Strata
     // stairwell landing (GenStep_PlaceLevelExit spawns the stairs there afterwards).
     public class GenStep_SolidRock : GenStep
     {
-        // Must stay under vanilla's thick-roof support distance (6.9 cells
-        // from the nearest roof holder): a wider chamber leaves its center
-        // unsupported, and any mining or construction near the landing could
-        // trigger a vanilla roof collapse right on the arrival point.
-        private const float ChamberRadius = 6.5f;
-
         public override int SeedPart => 762303921;
 
         public override void Generate(Map map, GenStepParams parms)
+        {
+            MapPortal entrance = PocketMapUtility.currentlyGeneratingPortal;
+            IntVec3 spot = entrance?.Map != null
+                ? StrataMapUtility.VerticalAlign(entrance.Position, entrance.Map, map)
+                : map.Center;
+
+            if (BiomesCavernsUtility.ShouldGenerateCavernLayout(map)
+                && BiomesCavernsUtility.PickProfileBiome(map) is BiomeDef profile)
+            {
+                if (BiomesCavernsUtility.TryGenerateCavernLayout(map, parms, profile))
+                {
+                    ArrivalZoneUtility.PrepareLandingZone(map, spot, clearRoof: true);
+                }
+                else
+                {
+                    ClearGeneratedMap(map);
+                    FillSolidRock(map);
+                    ArrivalZoneUtility.PrepareLandingZone(map, spot, clearRoof: false);
+                }
+            }
+            else
+            {
+                FillSolidRock(map);
+                ArrivalZoneUtility.PrepareLandingZone(map, spot, clearRoof: false);
+            }
+
+            MapGenerator.PlayerStartSpot = spot;
+            SeedStarterOxygen(map, spot);
+        }
+
+        private static void FillSolidRock(Map map)
         {
             ThingDef rockDef = RockForMap(map);
             TerrainDef floor = rockDef.building?.naturalTerrain ?? TerrainDefOf.Gravel;
@@ -27,25 +52,38 @@ namespace Strata
             foreach (IntVec3 cell in map.AllCells)
             {
                 map.terrainGrid.SetTerrain(cell, floor);
-                GenSpawn.Spawn(rockDef, cell, map);
+                if (cell.GetFirstMineable(map) == null)
+                {
+                    GenSpawn.Spawn(rockDef, cell, map);
+                }
                 map.roofGrid.SetRoof(cell, RoofDefOf.RoofRockThick);
             }
+        }
 
-            MapPortal entrance = PocketMapUtility.currentlyGeneratingPortal;
-            IntVec3 spot = entrance?.Map != null
-                ? StrataMapUtility.VerticalAlign(entrance.Position, entrance.Map, map)
-                : map.Center;
-
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(spot, ChamberRadius, useCenter: true))
+        private static void ClearGeneratedMap(Map map)
+        {
+            foreach (IntVec3 cell in map.AllCells)
             {
-                if (!cell.InBounds(map))
+                List<Thing> things = cell.GetThingList(map);
+                for (int i = things.Count - 1; i >= 0; i--)
                 {
-                    continue;
+                    things[i].Destroy(DestroyMode.Vanish);
                 }
-                cell.GetFirstMineable(map)?.Destroy(DestroyMode.Vanish);
+                map.roofGrid.SetRoof(cell, null);
             }
+        }
 
-            MapGenerator.PlayerStartSpot = spot;
+        private static void SeedStarterOxygen(Map map, IntVec3 spot)
+        {
+            if (!StrataDepth.IsStarterLevel(map))
+            {
+                return;
+            }
+            StrataGasDef oxygen = DefDatabase<StrataGasDef>.GetNamedSilentFail("Strata_Oxygen");
+            if (oxygen != null)
+            {
+                AtmosphereMapComponent.QueueSeed(map, spot, oxygen, AtmosphereMapComponent.AmbientOxygen);
+            }
         }
 
         private static ThingDef RockForMap(Map map)

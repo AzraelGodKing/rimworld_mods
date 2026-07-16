@@ -27,6 +27,10 @@
     <li>AzraelGodKing.Homesteader</li>
     <li>AzraelGodKing.Wellspring</li>
     <li>AzraelGodKing.Stormproof</li>
+    <li>BiomesTeam.BiomesCore</li>
+    <li>BiomesTeam.CoreFramework</li>
+    <li>BiomesTeam.BiomesCaverns</li>
+    <li>m00nl1ght.GeologicalLandforms</li>
   </loadAfter>
   <description>Dig down and build a true multistory base - and let your colonists treat every level as one home.
 

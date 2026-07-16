@@ -30,7 +30,8 @@ namespace Strata
             }
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing == ignore || thing is not Building_StairsDown down || !down.Spawned || !down.PocketMapExists)
+                if (thing == ignore || thing is not Building_StairsDown down || thing is Building_AncientColonyStairsDown
+                    || !down.Spawned || !down.PocketMapExists)
                 {
                     continue;
                 }

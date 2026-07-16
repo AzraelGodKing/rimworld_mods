@@ -6,8 +6,9 @@ namespace Strata
 {
     public class CompProperties_Exhaust : CompProperties
     {
-        // Gas density added to the room each cycle while the source runs,
-        // before dilution by room size.
+        // Room concentration added each atmosphere cycle while active.
+        // Combustion sources (generators, campfires) divide this by room
+        // size; life-support pumps (emitWhenPowered) apply the full value.
         public float emissionPerCycle = 3.5f;
 
         // Which atmosphere channel this source emits. Null = combustion smoke.
@@ -79,10 +80,41 @@ namespace Strata
                 && pawn.CurJob.GetTarget(TargetIndex.A).Thing == parent;
         }
 
+        internal void RegisterWithAtmosphere(AtmosphereMapComponent atmosphere)
+        {
+            atmosphere?.Emitters.Add(this);
+        }
+
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            parent.Map.GetComponent<AtmosphereMapComponent>()?.Emitters.Add(this);
+            RegisterWithAtmosphere(parent.Map.GetComponent<AtmosphereMapComponent>());
+        }
+
+        public override string CompInspectStringExtra()
+        {
+            if (!Props.emitWhenPowered)
+            {
+                return null;
+            }
+            if (!Active)
+            {
+                return "Needs power to enrich the room with " + GasDef.label + ".";
+            }
+            Room room = parent.GetRoom();
+            if (room == null || room.UsesOutdoorTemperature)
+            {
+                return "Releasing " + GasDef.label + " (open air — no enrichment needed).";
+            }
+            AtmosphereMapComponent atmosphere = parent.Map.GetComponent<AtmosphereMapComponent>();
+            float density = atmosphere?.DensityAtCell(parent.Position, GasDef) ?? 0f;
+            if (GasDef == StrataGasDefOf.Strata_Oxygen)
+            {
+                return density >= AtmosphereMapComponent.AmbientOxygen - 0.01f
+                    ? "Room air is breathable."
+                    : "Enriching room with " + GasDef.label + " (" + density.ToStringPercent() + ").";
+            }
+            return "Releasing " + GasDef.label + " into the room.";
         }
 
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)

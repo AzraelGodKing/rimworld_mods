@@ -15,7 +15,9 @@
     </pocketMapProperties>
     <genSteps>
       <li>Strata_SolidRock</li>
+      <li>Strata_CarveWarren</li>
       <li>Strata_HiddenChambers</li>
+      <li>Strata_BiomesCavernFeatures</li>
       <li>Strata_DbhGroundwater</li>
       <li>Strata_PlaceCaveExit</li>
       <li>Strata_Fog</li>
@@ -36,6 +38,12 @@
   </GenStepDef>
 
   <GenStepDef>
+    <defName>Strata_BiomesCavernFeatures</defName>
+    <order>320</order>
+    <genStep Class="Strata.GenStep_BiomesCavernFeatures"/>
+  </GenStepDef>
+
+  <GenStepDef>
     <defName>Strata_DbhGroundwater</defName>
     <order>350</order>
     <genStep Class="Strata.GenStep_DbhGroundwater"/>
@@ -53,6 +61,13 @@
     <defName>Strata_Fog</defName>
     <order>700</order>
     <genStep Class="Strata.GenStep_StrataFog"/>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>Strata_AncientColonyStairwell</defName>
+    <!-- After vanilla FindPlayerStartSpot (850); was 650 and ran too early. -->
+    <order>880</order>
+    <genStep Class="Strata.GenStep_AncientColonyStairwell"/>
   </GenStepDef>
 
 </Defs>

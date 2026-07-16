@@ -87,6 +87,9 @@ namespace Strata
 
         public bool Sealed => GetComp<CompStairwellControl>()?.Sealed ?? false;
 
+        // Ancient colony stairwells open B1 without digging-down research.
+        protected virtual bool BypassFirstLevelResearch => false;
+
         public override bool IsEnterable(out string reason)
         {
             if (Sealed)
@@ -94,7 +97,8 @@ namespace Strata
                 reason = "The stairwell is sealed.";
                 return false;
             }
-            if (!PocketMapExists && !LevelExcavationUtility.CanOpenNewLevelBelow(Map, out reason))
+            if (!PocketMapExists && !BypassFirstLevelResearch
+                && !LevelExcavationUtility.CanOpenNewLevelBelow(Map, out reason))
             {
                 return false;
             }
@@ -179,7 +183,7 @@ namespace Strata
                     return existing;
                 }
             }
-            if (!LevelExcavationUtility.CanOpenNewLevelBelow(Map, out string reason))
+            if (!BypassFirstLevelResearch && !LevelExcavationUtility.CanOpenNewLevelBelow(Map, out string reason))
             {
                 Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
                 return null;
@@ -299,20 +303,6 @@ namespace Strata
             {
                 ExchangeTemperature();
             }
-            if (this.IsHashIntervalTick(60) && PocketMapExists && exit != null && exit.Spawned)
-            {
-                TieShaftPower();
-            }
-        }
-
-        private void TieShaftPower()
-        {
-            CompPowerShaft top = GetComp<CompPowerShaft>();
-            CompPowerShaft bottom = exit.GetComp<CompPowerShaft>();
-            if (top != null && bottom != null)
-            {
-                top.DriveTie(bottom);
-            }
         }
 
         private void ExchangeTemperature()
@@ -394,7 +384,7 @@ namespace Strata
             {
                 return;
             }
-            if (!LevelExcavationUtility.CanOpenNewLevelBelow(Map, out string reason))
+            if (!BypassFirstLevelResearch && !LevelExcavationUtility.CanOpenNewLevelBelow(Map, out string reason))
             {
                 if (!reason.NullOrEmpty())
                 {

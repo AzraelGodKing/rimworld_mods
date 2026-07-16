@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
@@ -34,6 +35,14 @@ namespace Strata
 
         public static IncidentDef Strata_LostMiners;
 
+        public static IncidentDef Strata_SunkenRuinDiscovered;
+
+        public static IncidentDef Strata_CollapsedMineDiscovered;
+
+        public static IncidentDef Strata_SealedVaultDiscovered;
+
+        public static IncidentDef Strata_GeothermalVentDiscovered;
+
         static StrataIncidentDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataIncidentDefOf));
@@ -54,12 +63,112 @@ namespace Strata
 
         public static bool IsUnderground(Map map)
         {
-            return map?.Biome != null && map.Biome.defName == UndergroundBiome;
+            if (map?.Biome == null)
+            {
+                return false;
+            }
+            if (map.Biome.defName == UndergroundBiome)
+            {
+                return true;
+            }
+            return BiomesCavernsUtility.IsActive && BiomesCavernsUtility.IsStrataCavernBiome(map.Biome);
         }
 
         public static bool IsSurfacePlayerHome(Map map)
         {
             return map != null && map.IsPlayerHome && !IsUnderground(map);
+        }
+
+        // Valid alone is not enough: pocket maps can carry stale tile IDs that
+        // are out of WorldGrid bounds and crash TileTemperaturesComp on load.
+        public static bool IsWorldGridTile(PlanetTile tile)
+        {
+            return tile.Valid && tile.tileId >= 0
+                && Find.WorldGrid != null && tile.tileId < Find.WorldGrid.TilesCount;
+        }
+
+        // Pocket maps inherit an invalid world tile; plant growth and some
+        // incidents need the surface colony tile from the portal chain.
+        public static PlanetTile ResolveColonyPlanetTile(Map map)
+        {
+            Map current = map;
+            int guard = 0;
+            while (current != null && guard++ < 64)
+            {
+                if (IsWorldGridTile(current.Tile))
+                {
+                    return current.Tile;
+                }
+                if (current.Parent is PocketMapParent pocket)
+                {
+                    if (pocket.sourceMap != null)
+                    {
+                        current = pocket.sourceMap;
+                        continue;
+                    }
+                    Map linkedHome = ColonyBedUtility.FindSurfacePlayerHome(current);
+                    if (linkedHome != null && IsWorldGridTile(linkedHome.Tile))
+                    {
+                        return linkedHome.Tile;
+                    }
+                }
+                Map home = ColonyBedUtility.FindSurfacePlayerHome(current);
+                if (home != null && IsWorldGridTile(home.Tile))
+                {
+                    return home.Tile;
+                }
+                break;
+            }
+            if (map != null && (IsUnderground(map) || map.IsPocketMap))
+            {
+                List<Map> maps = Find.Maps;
+                for (int i = 0; i < maps.Count; i++)
+                {
+                    Map surface = maps[i];
+                    if (IsSurfacePlayerHome(surface) && IsWorldGridTile(surface.Tile))
+                    {
+                        return surface.Tile;
+                    }
+                }
+                PlanetTile fromWorld = ResolvePlayerHomePlanetTileFromWorld();
+                if (IsWorldGridTile(fromWorld))
+                {
+                    return fromWorld;
+                }
+            }
+            return PlanetTile.Invalid;
+        }
+
+        private static PlanetTile ResolvePlayerHomePlanetTileFromWorld()
+        {
+            World world = Find.World;
+            if (world?.worldObjects == null)
+            {
+                return PlanetTile.Invalid;
+            }
+            List<MapParent> mapParents = world.worldObjects.MapParents;
+            for (int i = 0; i < mapParents.Count; i++)
+            {
+                MapParent parent = mapParents[i];
+                if (parent?.Faction != Faction.OfPlayer || !parent.HasMap)
+                {
+                    continue;
+                }
+                if (IsSurfacePlayerHome(parent.Map) && IsWorldGridTile(parent.Tile))
+                {
+                    return parent.Tile;
+                }
+            }
+            List<Settlement> settlements = world.worldObjects.Settlements;
+            for (int i = 0; i < settlements.Count; i++)
+            {
+                Settlement settlement = settlements[i];
+                if (settlement?.Faction == Faction.OfPlayer && IsWorldGridTile(settlement.Tile))
+                {
+                    return settlement.Tile;
+                }
+            }
+            return PlanetTile.Invalid;
         }
 
         // Same relative position on another level's grid — used for landings,
@@ -120,6 +229,62 @@ namespace Strata
         }
     }
 
+    // Pocket maps can carry a Valid but out-of-range PlanetTile; vanilla
+    // CanFireNow indexes WorldGrid unconditionally and throws during
+    // storyteller ticks. Repair the parent tile when possible; otherwise run
+    // the non-WorldGrid gates and CanFireNowSub only.
+    internal static class IncidentCanFireUtility
+    {
+        private static readonly MethodInfo FiredTooRecentlyMethod =
+            AccessTools.Method(typeof(IncidentWorker), "FiredTooRecently");
+
+        private static readonly MethodInfo CanFireNowSubMethod =
+            AccessTools.Method(typeof(IncidentWorker), "CanFireNowSub", new[] { typeof(IncidentParms) });
+
+        public static bool CanFireNowBypassingWorldGrid(IncidentWorker worker, IncidentParms parms)
+        {
+            if (!worker.def.TargetAllowed(parms.target))
+            {
+                return false;
+            }
+            if (Find.GameEnder.gameEnding)
+            {
+                return false;
+            }
+            Storyteller storyteller = Find.Storyteller;
+            if (storyteller == null)
+            {
+                return false;
+            }
+            if (worker.def.category == IncidentCategoryDefOf.ThreatBig
+                && storyteller.difficulty != null
+                && !storyteller.difficulty.allowBigThreats)
+            {
+                return false;
+            }
+            if (Find.TickManager.TicksGame < Find.GameEnder.newWanderersCreatedTick + 300000)
+            {
+                return false;
+            }
+            try
+            {
+                if (FiredTooRecentlyMethod != null
+                    && (bool)FiredTooRecentlyMethod.Invoke(worker, new object[] { parms.target }))
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+            }
+            if (CanFireNowSubMethod == null)
+            {
+                return false;
+            }
+            return (bool)CanFireNowSubMethod.Invoke(worker, new object[] { parms });
+        }
+    }
+
     // Enforces the "underground is sealed rock" fiction: sky and weather
     // conditions and raids/threats that can't physically reach a buried level
     // never fire down there. Infestations (which erupt from within) and
@@ -138,46 +303,68 @@ namespace Strata
             "UnnaturalDarkness",
         };
 
+        private static bool ShouldBlockUndergroundIncident(IncidentDef def)
+        {
+            if (def.defName.Contains("Infestation") || StrataIncidentDefOf.IsStrataUndergroundEvent(def))
+            {
+                return false;
+            }
+
+            IncidentCategoryDef cat = def.category;
+            if (cat == IncidentCategoryDefOf.DiseaseHuman
+                || cat == IncidentCategoryDefOf.DeepDrillInfestation
+                || cat == IncidentCategoryDefOf.GiveQuest)
+            {
+                return false;
+            }
+
+            if (cat == IncidentCategoryDefOf.ThreatBig
+                || cat == IncidentCategoryDefOf.ThreatSmall
+                || cat == IncidentCategoryDefOf.Misc
+                || cat == IncidentCategoryDefOf.Special)
+            {
+                return true;
+            }
+
+            return def.gameCondition != null && BlockedConditions.Contains(def.gameCondition.defName);
+        }
+
+        public static bool Prefix(IncidentWorker __instance, IncidentParms parms, ref bool __result)
+        {
+            if (!(parms.target is Map map))
+            {
+                return true;
+            }
+
+            bool underground = StrataMapUtility.IsUnderground(map);
+            if (PocketMapColonyTileUtility.IsStrataPocketOrUnderground(map))
+            {
+                PocketMapColonyTileUtility.TryAssign(map);
+            }
+
+            if (underground && ShouldBlockUndergroundIncident(__instance.def))
+            {
+                __result = false;
+                return false;
+            }
+
+            if (!StrataMapUtility.IsWorldGridTile(map.Tile)
+                && PocketMapColonyTileUtility.IsStrataPocketOrUnderground(map))
+            {
+                __result = IncidentCanFireUtility.CanFireNowBypassingWorldGrid(__instance, parms);
+                return false;
+            }
+
+            return true;
+        }
+
         public static void Postfix(IncidentWorker __instance, IncidentParms parms, ref bool __result)
         {
             if (!__result || !(parms.target is Map map) || !StrataMapUtility.IsUnderground(map))
             {
                 return;
             }
-            IncidentDef def = __instance.def;
-
-            // Always allow: infestations (the signature underground threat) and
-            // Strata's own events (cave-in, gas, deep vein, deep raid).
-            if (def.defName.Contains("Infestation") || StrataIncidentDefOf.IsStrataUndergroundEvent(def))
-            {
-                return;
-            }
-
-            // Allow things that make sense in a buried, occupied level regardless
-            // of the sky: disease, deep-drill bugs, and abstract world quests.
-            IncidentCategoryDef cat = def.category;
-            if (cat == IncidentCategoryDefOf.DiseaseHuman
-                || cat == IncidentCategoryDefOf.DeepDrillInfestation
-                || cat == IncidentCategoryDefOf.GiveQuest)
-            {
-                return;
-            }
-
-            // Block everything that has to arrive from outside a sealed rock
-            // level: raids, sieges, mech clusters (ThreatBig/Small), and the
-            // sky/edge arrivals that live in Misc/Special - drop pods, crashing
-            // ship chunks, wanderers walking in, resource pods, etc.
-            if (cat == IncidentCategoryDefOf.ThreatBig
-                || cat == IncidentCategoryDefOf.ThreatSmall
-                || cat == IncidentCategoryDefOf.Misc
-                || cat == IncidentCategoryDefOf.Special)
-            {
-                __result = false;
-                return;
-            }
-
-            // Any remaining sky/weather condition.
-            if (def.gameCondition != null && BlockedConditions.Contains(def.gameCondition.defName))
+            if (ShouldBlockUndergroundIncident(__instance.def))
             {
                 __result = false;
             }

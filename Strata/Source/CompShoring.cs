@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using HarmonyLib;
 using RimWorld;
 using Verse;
 
@@ -5,8 +7,8 @@ namespace Strata
 {
     public class CompProperties_Shoring : CompProperties
     {
-        // Cells within this radius are protected from cave-in collapse.
-        public float protectionRadius = 4.5f;
+        // Cave-in protection radius — twice vanilla column roof support (6.9 → 13.8).
+        public float protectionRadius = 13.8f;
 
         public CompProperties_Shoring()
         {
@@ -80,6 +82,98 @@ namespace Strata
                     }
                 }
                 return n;
+            }
+        }
+
+        // Twice vanilla RoofCollapseUtility.RoofMaxSupportDistance for shoring pillars.
+        public const float RoofSupportRadius = 13.8f;
+
+        public static bool WithinRangeOfShoringRoofHolder(IntVec3 c, Map map, bool assumeNonNoRoofCellsAreRoofed)
+        {
+            ThingDef shoring = StrataThingDefOf.Strata_ShoringPillar;
+            if (map == null || shoring == null)
+            {
+                return false;
+            }
+            bool connected = false;
+            map.floodFiller.FloodFill(
+                c,
+                x => (x.Roofed(map) || x == c
+                    || (assumeNonNoRoofCellsAreRoofed && !map.areaManager.NoRoof[x]))
+                    && x.InHorDistOf(c, RoofSupportRadius),
+                x =>
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        IntVec3 adj = x + GenAdj.CardinalDirectionsAndInside[i];
+                        if (!adj.InBounds(map) || !adj.InHorDistOf(c, RoofSupportRadius))
+                        {
+                            continue;
+                        }
+                        Building edifice = adj.GetEdifice(map);
+                        if (edifice != null && edifice.def == shoring)
+                        {
+                            connected = true;
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+            return connected;
+        }
+
+        public static bool ConnectedToShoringRoofHolder(IntVec3 c, Map map, bool assumeRoofAtRoot)
+        {
+            ThingDef shoring = StrataThingDefOf.Strata_ShoringPillar;
+            if (map == null || shoring == null)
+            {
+                return false;
+            }
+            bool connected = false;
+            map.floodFiller.FloodFill(
+                c,
+                x => (x.Roofed(map) || (x == c && assumeRoofAtRoot)) && !connected,
+                x =>
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        IntVec3 adj = x + GenAdj.CardinalDirectionsAndInside[i];
+                        if (!adj.InBounds(map))
+                        {
+                            continue;
+                        }
+                        Building edifice = adj.GetEdifice(map);
+                        if (edifice != null && edifice.def == shoring)
+                        {
+                            connected = true;
+                            break;
+                        }
+                    }
+                });
+            return connected;
+        }
+    }
+
+    [HarmonyPatch(typeof(RoofCollapseUtility), nameof(RoofCollapseUtility.WithinRangeOfRoofHolder))]
+    public static class Patch_ShoringWithinRangeOfRoofHolder
+    {
+        public static void Postfix(IntVec3 c, Map map, bool assumeNonNoRoofCellsAreRoofed, ref bool __result)
+        {
+            if (!__result)
+            {
+                __result = ShoringMapComponent.WithinRangeOfShoringRoofHolder(c, map, assumeNonNoRoofCellsAreRoofed);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(RoofCollapseUtility), nameof(RoofCollapseUtility.ConnectedToRoofHolder))]
+    public static class Patch_ShoringConnectedToRoofHolder
+    {
+        public static void Postfix(IntVec3 c, Map map, bool assumeRoofAtRoot, ref bool __result)
+        {
+            if (!__result)
+            {
+                __result = ShoringMapComponent.ConnectedToShoringRoofHolder(c, map, assumeRoofAtRoot);
             }
         }
     }

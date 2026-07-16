@@ -13,6 +13,7 @@ namespace Strata
             "Strata_UpdraftFilter",
             "Strata_SmokeLouver",
             "Strata_SmokeDuct",
+            "Strata_HiddenGasPipe",
             // Burns clean - that is its whole selling point underground.
             "Strata_DeepGasGenerator",
             "Strata_GasWell",

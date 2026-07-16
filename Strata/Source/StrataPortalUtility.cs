@@ -36,13 +36,7 @@ namespace Strata
         // PocketMapExit.SpawnSetup uses it to wire entrance and exit together.
         public static PocketMapExit SpawnLanding(ThingDef exitDef, IntVec3 cell, Map level)
         {
-            foreach (IntVec3 c in GenRadial.RadialCellsAround(cell, 4.5f, useCenter: true))
-            {
-                if (c.InBounds(level))
-                {
-                    c.GetFirstMineable(level)?.Destroy(DestroyMode.Vanish);
-                }
-            }
+            ArrivalZoneUtility.PrepareLandingCell(level, cell);
             return (PocketMapExit)GenSpawn.Spawn(ThingMaker.MakeThing(exitDef), cell, level);
         }
 

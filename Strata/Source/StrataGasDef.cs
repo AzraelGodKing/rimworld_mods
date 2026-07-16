@@ -13,6 +13,9 @@ namespace Strata
         // Tint of the drawn overlay where this gas fills a room.
         public Color overlayColor = new Color(0.04f, 0.04f, 0.05f);
 
+        // Minimum room density before this gas contributes to the overlay tint.
+        public float overlayThreshold = 0.03f;
+
         // Short label for the gas overlay readout (e.g. O₂, CO₂).
         public string overlayLabel;
 

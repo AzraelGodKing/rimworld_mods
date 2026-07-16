@@ -34,9 +34,15 @@ namespace Strata
 
         public static ThingDef Strata_DigDownShaft;
 
+        public static ThingDef Strata_AncientColonyStairsDown;
+
+        public static ThingDef Strata_AncientColonyStairsUp;
+
         public static ThingDef Strata_CanaryCage;
 
         public static ThingDef Strata_BirdCage;
+
+        public static ThingDef Strata_ShoringPillar;
 
         static StrataThingDefOf()
         {

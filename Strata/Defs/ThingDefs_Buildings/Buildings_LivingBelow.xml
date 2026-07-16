@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
-  <!-- ============ Shoring pillar ============ -->
+  <!-- ============ Shoring pillar (2× column roof support) ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ShoringPillar</defName>
     <label>shoring pillar</label>
-    <description>A stone-and-timber pillar that braces the rock ceiling against cave-ins. Protects excavated floor within a few tiles — wide chambers need several pillars before the roof is truly safe.</description>
+    <description>A reinforced stone column that holds up excavated rock like a vanilla column, but braces twice as wide a span. Protects against cave-ins and roof collapse over a large chamber — wide workings still need several pillars.</description>
     <thingClass>Building</thingClass>
     <graphicData>
-      <texPath>Strata/Buildings/ShoringPillar</texPath>
+      <drawSize>(0.5,1.25)</drawSize>
+      <drawOffset>(0,0,0.2)</drawOffset>
+      <texPath>Things/Building/Furniture/Column</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1,1)</drawSize>
+      <shadowData>
+        <volume>(0.3, 0.5, 0.3)</volume>
+        <offset>(0,0,-0.23)</offset>
+      </shadowData>
+      <damageData>
+        <rect>(0.2,0.2,0.6,0.6)</rect>
+      </damageData>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
-    <pathCost>42</pathCost>
-    <fillPercent>0.35</fillPercent>
+    <pathCost>0</pathCost>
+    <fillPercent>0.25</fillPercent>
     <rotatable>false</rotatable>
     <size>(1,1)</size>
+    <uiIconScale>1.2</uiIconScale>
+    <holdsRoof>true</holdsRoof>
+    <specialDisplayRadius>13.8</specialDisplayRadius>
+    <stuffCategories>
+      <li>Stony</li>
+    </stuffCategories>
+    <costStuffCount>25</costStuffCount>
     <statBases>
       <MaxHitPoints>250</MaxHitPoints>
-      <WorkToBuild>1200</WorkToBuild>
+      <WorkToBuild>1400</WorkToBuild>
       <Flammability>0.2</Flammability>
+      <Beauty>3</Beauty>
     </statBases>
-    <costList>
-      <Steel>15</Steel>
-      <BlocksGranite>20</BlocksGranite>
-    </costList>
+    <building>
+      <isInert>true</isInert>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
     <comps>
       <li Class="Strata.CompProperties_Shoring">
-        <protectionRadius>4.5</protectionRadius>
+        <protectionRadius>13.8</protectionRadius>
       </li>
     </comps>
     <designationCategory>Structure</designationCategory>
@@ -242,7 +258,6 @@
       </li>
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Glower">
-        <compClass>CompGlowerPowered</compClass>
         <glowRadius>12</glowRadius>
         <glowColor>(255,230,160,0)</glowColor>
       </li>
@@ -325,6 +340,7 @@
       <Steel>15</Steel>
       <Strata_Lime>10</Strata_Lime>
     </costList>
+    <tickerType>Normal</tickerType>
     <comps>
       <li Class="CompProperties_Refuelable">
         <fuelConsumptionRate>0.5</fuelConsumptionRate>

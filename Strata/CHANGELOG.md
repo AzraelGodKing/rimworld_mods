@@ -4,6 +4,94 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Added — Ancient colony stairwell
+- **Surface scatter** — some new colony maps can spawn a pre-built *ancient stairwell* away from the landing zone (toggle and spawn chance in Strata mod settings). Descending opens a normal mineable B1 stratum **without digging-down research**. The shaft has **no power transmitter** — each level must be wired separately unless you later build an excavated stairwell or shaft power conduit for cross-level grids.
+
+### Added — Work / Schedule cross-level colonists
+- **Strata Levels toggle** — Work and Schedule tabs show a *Strata Levels* checkbox when the colony has excavated levels. When enabled, both tabs list free colonists (and schedule subhumans) from every portal-linked level, sorted surface-first then by depth. Default on; persists in save and syncs with Strata mod settings.
+
+### Added — Native cave generation
+- **Strata cave networks (B1+)** — excavated colony levels generate native chamber-and-tunnel layouts via `GenStep_CarveWarren` when Biomes! Caverns is not loaded (or its compat toggle is off). Depth scales chamber count; hidden gas/geothermal pockets still generate in the surrounding rock. Toggle: *Natural cave layout* in Strata settings.
+
+### Changed — Underground O₂ / CO₂ simulation
+- **Localized oxygen pumps** — life-support emitters enrich air in a 16-tile radius with falloff in natural caverns; sealed colony-built rooms still pressurize uniformly.
+- **Roof-column ambient** — natural map (non-colony) cells under thick roof supported by rock columns drift toward 21% O₂; farther from pumps or unsupported roof, levels drop until diffusion or ventilation catches up.
+- **B2+ breathing** — removed the B1-wide perpetual O₂ top-up; sealed player rooms accumulate gas from pumps, pawns, and plants. Colonists and animals consume O₂ and exhale CO₂; living plants slowly restore O₂ and scrub CO₂.
+- **Overlay** — O₂ and CO₂ tints now follow per-cell density in caverns instead of a flat room average.
+
+### Fixed — Underground gas open-air classification
+- **B1+ enclosed rock** — rooms on underground Strata levels (B1 and deeper) no longer inherit Biomes! cavern `UsesOutdoorTemperature` / psychologically-outdoors flags, so the gas system treats them as sealed chambers (dispersion, overlay, breathing, and vent routing) instead of open sky.
+
+### Fixed — Ancient colony stairwell entry
+- **EnterPortal crash** — ancient stairwells bypass digging-down research for entry, but pocket-map generation still enforced that gate and returned no B1 map, so `JobDriver_EnterPortal` hit a null map and crashed. Generation and `OpenLevelBelow` now honor the same research bypass as `IsEnterable`.
+
+### Fixed — Biomes! arrival landing safety
+- **Lava/magma near stairwell** — after Biomes! Caverns terrain generation, Strata now replaces lava, magma (Deep Lava), and impassable water in a 14-tile disc around the vertically aligned stair landing with walkable stone floor, and clears mineables in the arrival chamber. Applies on new B1+ pocket maps and when spawning landings on existing levels.
+
+### Fixed — Ancient colony stairwell generation
+- **Player start spot timing** — the ancient stairwell scatter step now runs after vanilla `FindPlayerStartSpot` (order 880, was 650) and uses `PlayerStartSpotValid` before reading the landing cell, fixing `Accessing player start spot before setting it` on new colony maps.
+
+### Fixed — Cross-level construction haul spam
+- **Install blueprints** — `LevelDemand` no longer calls `TotalMaterialCost` on `Blueprint_Install` (reinstall/move blueprints), which vanilla rejects and logged every storyteller/haul tick. Construction shortfalls still track build blueprints and frames only.
+
+### Fixed — Underground storyteller crashes
+- **Invalid pocket map tiles** — storyteller `CanFireNow` no longer crashes on `WorldGrid` when an underground level still carries a stale `PlanetTile` after load. Tile repair runs before each check; if the tile cannot be resolved, Strata skips the vanilla world-tile lookup and evaluates incident gates plus `CanFireNowSub` only (fixes repeated `ArgumentOutOfRangeException` during `StorytellerTick` on multi-level saves).
+
+### Fixed — B2 power and life support
+- **Dig-down shaft power** — dig-down extensions now include a `CompPowerShaft` transmitter so B1→B2 ties run through the shaft instead of the hub landing (which was fighting the surface↔B1 tie). Wire the B1 landing or the dig shaft into your local grid.
+- **Stairwell power overlay** — stair shaft transmitters no longer flash the blinking unpowered lightning bolt when cross-level power is working. Consolidated tie updates to landings only (no duplicate drive from both StairsDown and StairsUp), set excavated stairwell draw to 0W like landings, and suppress the NeedsPower overlay on wired shaft nodes.
+- **Oxygen pumps in ventilated rooms** — life-support emitters (oxygen pump) bypass the smoke ventilation cap so O₂ can reach breathable levels (0.21) in rooms with open shafts or vents.
+- **Oxygen pump emission rate** — life-support pumps now apply their full per-cycle concentration gain instead of dividing by room size (which made O₂ gains vanishingly small in normal rooms and could not offset colonist breathing). CO₂ scrubbers use the same concentration model. Inspect text reports enrichment status while powered.
+- **Oxygen pump registration** — pumps placed before the atmosphere component initializes on a map are picked up on the first simulation tick.
+
+### Changed — Gas overlay readout
+- **Cursor-attached gas panel** — with the gas overlay on, move the mouse over any room to see O₂, CO₂, and other gas percentages in a panel that follows the cursor and stays on screen.
+- **Gas overlay room labels (mod option)** — optional per-room percentage labels on the map (off by default). Enable under Strata mod settings → Deep-level breathing → *Gas overlay room labels*.
+
+### Changed — Gas pipe (formerly smoke duct)
+- **Conduit-layer pipe** — gas pipe now renders as a linked metal pipe on the conduit layer (like power conduits), with drag-to-lay placement and corner/split auto-linking. Carries every Strata gas channel, not just smoke: connected rooms equalize all gases on the same run, outdoor terminals drain the network, and fans/louvers can push into dead-end runs toward other hooked-up rooms.
+- **Hidden gas pipe** — nearly invisible variant (`Strata_HiddenGasPipe`) links with ordinary gas pipe for the same all-gas routing. Existing saves keep `Strata_SmokeDuct` buildings; the label is now *gas pipe*.
+- **Pipe linking fix** — child defs now specify full `graphicData` (`linkType: Basic`, `Custom10` link flag). Partial overrides had cleared link metadata, so every segment drew as a standalone cap instead of joining into runs.
+- **Gas pipe XML** — removed obsolete `placingDraggableDimensions` (not used in RimWorld 1.6; drag placement comes from `drawStyleCategory: Conduits`). Fixed hidden gas pipe inheriting a duplicate `CompGasPipe`.
+
+### Fixed — Smoke ducts
+- **Cross-links with other pipe mods** — smoke ducts used `Custom7`, the same link flag as VEF chemfuel/helixien pipes, so adjacent runs visually merged and routing looked broken. Ducts now use an exclusive `Custom10` flag and only link to other smoke ducts.
+- **Paintable** — smoke ducts can be painted like other structures.
+- **Conduit-style placement** — drag-to-lay line placement (`drawStyleCategory: Conduits`), can overlap zones, and duct graph traversal ignores unrelated buildings sharing the same tile (power/gas conduits on other layers).
+
+- **Startup crash without Biomes! loaded** — lazy-bind `Map.Biome` for cavern generation instead of a static `FieldRefAccess` on the removed `Map.biome` field (RimWorld 1.6). Fixes `TypeInitializationException` poisoning `StrataMapUtility.IsUnderground` during surface map generation and every tick.
+- **Cavern layout with Biomes! loaded** — swap biome via `Map.pocketTileInfo.PrimaryBiome` (RimWorld 1.6 read-only `Map.Biome`). Successful cavern generation keeps the picked BMT profile so later feature scatter (plants, fauna, crystals) runs correctly.
+- **Cavern rock placement** — resolve `GenStep_CavernRocksFromGrid` from `BiomesCore.MapGeneration` (Biomes! Framework 1.6 moved it out of `BiomesCore.GenSteps`).
+- **B2+ pocket map generation crash** — copy the surface colony `PlanetTile` onto pocket `MapParent` before map generation and again during `Map.FinalizeInit` so existing saves load. Plant-growth fallback still runs when a pocket tile cannot be resolved (broken portal refs). Underground incident checks short-circuit blocked events before `CanFireNowSub` runs (fixes Polux tree / `WorldGrid` index errors).
+- **Existing save load (New Arrivals7)** — pocket maps could keep a `Valid` but out-of-range world tile after broken `MapParent` cross-refs, crashing `MapPlantGrowthRateCalculator.BuildFor` during `FinalizeLoading`. Tile repair now checks `WorldGrid` bounds (not just `PlanetTile.Valid`), runs at `FinalizeLoading`, and the plant-growth fallback applies to any map with a bad tile. Colony tile resolution falls back to player settlements on the world layer when portal chains are broken mid-load.
+
+### Added — Biomes! Caverns compatibility
+- **Natural cave generation (B1+)** — when Biomes! Caverns, Biomes! Core/Framework, and Geological Landforms are loaded, excavated underground levels generate Biomes! cavern layouts (tunnel networks, chambers, and tubes) instead of Strata's native warren. Depth picks the cavern profile: earthen depths near the top, fungal forest mid-deep, crystal caverns deeper down. Without Biomes!, Strata's own warren carving runs instead.
+- **Cave content** — carved levels spawn Biomes! Caverns wild plants and animals, stalagmites, and crystal scatter in open cave space. Hidden Strata chambers (geothermal / gas pockets) still generate in the surrounding rock.
+- **Strata systems preserved** — arrival chamber, B1 oxygen seed, fog-of-war, stairwell landings, atmosphere, incidents, and relay logic still treat these levels as Strata underground maps.
+- **Mod option** — *Biomes! Caverns layout* toggle in Strata settings (shown only when the mod stack is present).
+
+### Fixed — Startup / config errors
+- **Incidents XML** — removed stray `</IncidentDef>` that prevented all Strata incidents from loading; renamed duplicate Anomaly lost-miners def to `Strata_LostMinersAnomaly`.
+- **Harmony** — caravan pull tick patch now targets `TickManager.DoSingleTick` (RimWorld 1.6 removed `Game.GameTick`).
+- **Mine canary** — inherits from `AnimalThingBase` / `AnimalKindBase` instead of missing `Chicken` parent.
+- **Mine lamp** — dropped invalid `CompGlowerPowered` comp class (uses vanilla powered glower behavior).
+- **Lime scrubber** — added `tickerType` Normal so refuelable fuel consumption works.
+- **Collapsed mine site** — shell blocks reference `BlocksLimestone` instead of nonexistent `BlocksWoodLog`.
+- **Cave fungus** — inherits from `PlantFoodRawBase` with vanilla fungus graphics and ingestible rules (concrete `RawFungus` parent was unreliable in some load orders).
+- **Homesteader root-cellar bridge** — rot slowdown patch retargeted to `CompRottable.TickInterval` for RimWorld 1.6 (`RotProgressPerInterval` removed).
+- **Ambient O₂ replenish** — skip rooms with no regions during new-game init (fixes `ArgumentOutOfRangeException` in `ReplenishAmbientOxygen`).
+- **Gas pocket incident** — stronger initial burst, immediate overlay refresh, spawns a deep gas vent at the breach, and deep gas now throws visible motes like smoke.
+- **Dev mode menu** — Strata debug actions now use `Strata/Incidents` and `Strata/Gas` category paths with ASCII-only labels, fixing `DebugActionNode.LabelNow` index errors when opening the debug menu. `ToolMap` gas tools use parameterless methods with `UI.MouseCell()` (RimWorld 1.6 binds `ToolMap` as `Action`, not `Action<IntVec3>`).
+- **Dev mode incidents** — every Strata incident (including world quest sites, flood seep, and Anomaly lost miners) is spawnable from `Strata/Incidents`; world-target incidents resolve `Find.World` automatically and dev mode can force past settings gates when `TryExecute` is blocked. World quest-site buttons no longer use `WorldRenderedNow` (that flag requires a world-tile method signature and crashed the debug menu).
+- **Deep gas ignition** — uncapped deep gas vents and other non-combustion emitters no longer count as open flames; gas only detonates when a real fire or fuel burner is in the **same room**.
+- **Gas overlay labels** — labels now average the on-screen projection of the room's **visible** bounds (fixes long tunnels where one room spans off-screen) and clamp the full label box inside the viewport. On-map labels use readable line spacing (`GameFont.Small`, 20px rows) instead of vertically squished tiny text.
+- **Shoring pillar** — uses the vanilla stone column art (build from marble or any stone blocks), sets `holdsRoof`, and supports **13.8 tiles** (2× vanilla column) for both roof collapse and cave-in protection.
+- **B1 oxygen** — the first underground level always starts with ambient O₂ in every enclosed room (arrival chamber seeded at generation, ongoing top-up each atmosphere cycle after shaft/door transfer, no hidden gas pockets on B1). Deeper levels still use one-time seeding and can roll gas chambers. Overlay percentages now show absolute density (21% O₂ at ambient fill, not 100% of a near-empty mix).
+- **Pending gas seeds** — generation-time gas pockets retry until their room exists instead of being discarded on the first tick.
+- **Rest relay on bedless floors** — colonists on a level with no reachable bed now commute to their assigned bed or a free bed elsewhere when they need sleep, instead of giving up when an unreachable bed exists on the current floor.
+- **Need colonist beds alert** — counts beds and colonists across linked Strata levels (patches vanilla's per-map surface-only check; RimWorld 1.6 returns a boolean alert with no culprit list).
+
 ### Added — Mine atmosphere channels
 - **Methane (firedamp)** — buoyant, ignites earlier than deep gas; pockets in hidden chambers and geothermal sites.
 - **Black damp** — heavy, non-flammable; displaces oxygen; left after gas ignitions; pools in flooded warren pits.
@@ -30,6 +118,9 @@ All notable changes to Strata are documented here.
 - **Dedicated art pass** — new sprites for Living Below buildings, quest stairheads, life-support pumps, smoke hole, updraft filter, gas exchanger, fluid junctions, and lime.
 
 ### Changed
+- **Gas overlay differentiation** — rooms tint by dominant hazardous gas (smoke gray, deep gas green, CO₂ blue-gray, methane amber, spores lime, steam pale cyan, etc.) instead of averaging all channels into one muddy color; normal O₂ is suppressed on the tint. **On-map labels** at each room center list the top three gases with color-coded percentages plus total load; cursor readout shows the full mix for the hovered room.
+- **Stairs up art** — redrawn to match the industrial stairwell frame style (riveted square border, ascending steps, up chevrons) consistent with StairsDown, elevators, and exhaust fan buildings.
+- **Lime item art** — redrawn as a burlap sack of white crushed limestone (matches lime scrubber / Strata item style).
 - **Mine canary art** — custom canary sprites (north/south/east + dessicated) replace the yellow-tinted chicken placeholder.
 - **Canary cage vs bird cage** — canary cages accept **mine canaries only** (assign or hay acquire). New **bird cage** furniture holds any tame vanilla bird. **Default feeding:** stock hay/kibble in the cage via **Stock food** gizmo; toggle **Sustain caged bird hunger** in mod settings to freeze hunger instead.
 - **Mine canary animal** — custom **mine canary** pawn kind (chicken-based stats, dedicated canary art) for cage acquire/spawn. Gas harm for caged birds uses canary thresholds instead of colonist hediffs.
@@ -53,7 +144,7 @@ All notable changes to Strata are documented here.
 - **Life support buildings**: powered **oxygen pump** (releases O₂ into a sealed room), **CO₂ pump** (scrubs exhaled carbon dioxide from a room), and **shaft gas exchanger** (boosts O₂ rise and CO₂ sink through an open stairwell). Unlocked by *deep life support* research (900 pts, after forced ventilation).
 - **Canary cage**: a furnished warning for sealed rooms — assign or acquire a **mine canary** only. The bird sickens or dies from smoke, deep gas, hypoxia, or CO₂ **before** colonists do, triggering a high-priority alert. Hunger is sustained while caged. Unlocked by *forced ventilation* research.
 - **Bird cage**: hold any tame bird for display; hunger is sustained while caged.
-- **Gas overlay**: play-settings toggle (bottom-right row) now drives the full Strata gas overlay — tinted room fill plus a cursor readout showing every active gas channel as a **mix ratio** (e.g. `Gas: O₂ 72% · CO₂ 18% · smoke 10% (load 21%)`) anchored to the map cell under the cursor.
+- **Gas overlay**: play-settings toggle (bottom-right row) now drives the full Strata gas overlay — each room tints by its **dominant visible gas** (not a muddy average), with a secondary gas blended in when present. Normal breathable O₂ is hidden; depleted O₂ shifts blue → red. Cursor readout uses matching **color-coded** gas labels and percentages.
 
 ### Fixed
 - **Dig down power overlap** — dig-down now spawns a **`dig shaft`** extension with no power comp beside the landing; the landing remains the sole transmitter and ties power to the level below.

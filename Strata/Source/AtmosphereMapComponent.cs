@@ -36,8 +36,8 @@ namespace Strata
         public const float AmbientOxygen = 0.21f;
 
         // Per pawn per atmosphere cycle (~1 second at 1× speed).
-        private const float OxygenPerBreath = 0.0025f;
-        private const float CarbonDioxidePerBreath = 0.0022f;
+        internal const float OxygenPerBreath = 0.0025f;
+        internal const float CarbonDioxidePerBreath = 0.0022f;
 
         public readonly HashSet<CompExhaust> Emitters = new HashSet<CompExhaust>();
         public readonly HashSet<CompExhaustVent> Vents = new HashSet<CompExhaustVent>();
@@ -93,11 +93,17 @@ namespace Strata
 
         // One-time O₂ seed for a freshly finalized underground map.
         private bool breathableAirSeeded;
+        private int breathableSeedRetryTick = -1;
+
+        // PostSpawnSetup can run before Patch_MapComponents adds us; rescan once.
+        private bool buildingCompsRegistered;
 
         // Per-cell density mirror for the drawn overlay (lazy-allocated),
         // one plane per gas.
         private float[][] cellDensity;
         private CellBoolDrawer drawer;
+        private AtmosphereBreathGrid breathGrid;
+        private bool breathGridSeeded;
 
         private static List<StrataGasDef> gasesCached;
 
@@ -126,54 +132,34 @@ namespace Strata
             list.Add(new PendingSeed { cell = cell, gas = gas, density = density });
         }
 
-        public bool GetCellBool(int index)
-        {
-            if (cellDensity == null)
-            {
-                return false;
-            }
-            for (int g = 0; g < cellDensity.Length; g++)
-            {
-                if (cellDensity[g] != null && cellDensity[g][index] > 0.05f)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        public bool GetCellBool(int index) =>
+            GasOverlayUtility.CellHasOverlayGas(cellDensity, index);
 
-        public Color GetCellExtraColor(int index)
-        {
-            // Density-weighted blend of the gases in the cell, thickening
-            // with total density.
-            float total = 0f;
-            Color mix = Color.clear;
-            List<StrataGasDef> gases = Gases;
-            for (int g = 0; g < gases.Count; g++)
-            {
-                float d = cellDensity[gases[g].index]?[index] ?? 0f;
-                if (d <= 0f)
-                {
-                    continue;
-                }
-                Color c = gases[g].overlayColor;
-                mix.r += c.r * d;
-                mix.g += c.g * d;
-                mix.b += c.b * d;
-                total += d;
-            }
-            if (total <= 0f)
-            {
-                return Color.clear;
-            }
-            return new Color(mix.r / total, mix.g / total, mix.b / total, Mathf.Clamp01(total));
-        }
+        public Color GetCellExtraColor(int index) =>
+            GasOverlayUtility.GetCellOverlayColor(cellDensity, index);
 
         public float DensityInRoom(Room room, StrataGasDef gas)
         {
+            if (room != null && gas != null && breathGrid != null && BreathingActive()
+                && StrataMapUtility.IsUnderground(map)
+                && (gas == StrataGasDefOf.Strata_Oxygen || gas == StrataGasDefOf.Strata_CarbonDioxide))
+            {
+                return breathGrid.AverageInRoom(room, gas);
+            }
             return room != null && gas != null && clouds.TryGetValue(room.ID, out Cloud c)
                 ? c.density[gas.index]
                 : 0f;
+        }
+
+        public float DensityAtCell(IntVec3 cell, StrataGasDef gas)
+        {
+            if (breathGrid != null && BreathingActive() && StrataMapUtility.IsUnderground(map)
+                && (gas == StrataGasDefOf.Strata_Oxygen || gas == StrataGasDefOf.Strata_CarbonDioxide))
+            {
+                return breathGrid.DensityAt(cell, gas);
+            }
+            Room room = cell.IsValid && cell.InBounds(map) ? cell.GetRoom(map) : null;
+            return DensityInRoom(room, gas);
         }
 
         // Smoke density, kept for the original callers.
@@ -281,7 +267,7 @@ namespace Strata
                 {
                     density = new float[DefDatabase<StrataGasDef>.DefCount],
                     cells = Mathf.Max(room.CellCount, 1),
-                    sample = room.Regions[0].AnyCell,
+                    sample = cell,
                 };
                 clouds[room.ID] = c;
             }
@@ -296,7 +282,21 @@ namespace Strata
         // following cycles.
         public void AddGasBurst(Room room, StrataGasDef gas, float density, IntVec3 sample)
         {
+            if (room == null || gas == null || density <= 0f)
+            {
+                return;
+            }
             AddGasToRoom(room, gas, density, sample, bypassCap: true);
+            if (clouds.TryGetValue(room.ID, out Cloud c))
+            {
+                // Pressurized pocket: reach at least this density, not just add a trickle.
+                c.density[gas.index] = Mathf.Max(c.density[gas.index], density);
+                c.sample = sample.IsValid && sample.InBounds(map) && sample.GetRoom(map) == room
+                    ? sample
+                    : c.sample;
+                clouds[room.ID] = c;
+            }
+            RebuildCellDensity();
         }
 
         public override void ExposeData()
@@ -325,6 +325,18 @@ namespace Strata
 
         public override void MapComponentTick()
         {
+            EnsureBuildingCompsRegistered();
+
+            if (pendingSeedsByMap.ContainsKey(map.uniqueID))
+            {
+                DrainPendingSeeds();
+            }
+
+            if (!breathableAirSeeded && StrataMapUtility.IsUnderground(map) && !StrataDepth.IsStarterLevel(map))
+            {
+                TrySeedBreathableAir();
+            }
+
             if ((Find.TickManager.TicksGame + map.uniqueID) % CycleTicks != 0)
             {
                 return;
@@ -348,6 +360,10 @@ namespace Strata
 
             // 1. One-way wall vents (powered fans and passive louvers).
             ProcessDirectionalVents();
+
+            // 1b. Conduit-layer gas pipes equalize every Strata gas channel
+            // between connected rooms and bleed to outdoor pipe terminals.
+            ProcessGasPipeNetworks();
 
             // 2. Buoyant gases rise; heavy gases sink through unsealed shafts.
             SmokeRiseUtility.ProcessMap(this);
@@ -408,17 +424,25 @@ namespace Strata
                 {
                     continue; // vents straight to open air
                 }
-                float add = emitter.Props.emissionPerCycle / Mathf.Max(r.CellCount, 1);
-                AddGasToRoom(r, gas, add, emitter.parent.Position);
+                if (BreathingActive() && gas == StrataGasDefOf.Strata_Oxygen && emitter.Props.emitWhenPowered)
+                {
+                    EnsureBreathGrid()?.EmitOxygenPump(emitter.parent.Position, emitter.Props.emissionPerCycle, r, this);
+                    continue;
+                }
+                // Life-support pumps raise uniform room concentration; combustion
+                // smoke is total mass diluted across the chamber volume.
+                float add = emitter.Props.emitWhenPowered
+                    ? emitter.Props.emissionPerCycle
+                    : emitter.Props.emissionPerCycle / Mathf.Max(r.CellCount, 1);
+                bool bypassCap = emitter.Props.emitWhenPowered
+                    || gas == StrataGasDefOf.Strata_Oxygen || gas == StrataGasDefOf.Strata_CarbonDioxide;
+                AddGasToRoom(r, gas, add, emitter.parent.Position, bypassCap: bypassCap);
             }
 
             // 6. Flammable gas meets open flame.
             CheckIgnition();
 
-            // 7. Colonists breathe O₂ and exhale CO₂ on deep levels.
-            ProcessBreathing();
-
-            // 7b. Black damp (and similar) displaces oxygen in the same room.
+            // 7. Black damp (and similar) displaces oxygen in the same room.
             ProcessOxygenDisplacement();
 
             // 7c. Geothermal geysers seep steam into their room.
@@ -427,9 +451,135 @@ namespace Strata
             // 8. Scrubbers pull CO₂ (and other configured gases) from enclosed rooms.
             ProcessScrubbers();
 
+            // 9. Per-cell O₂/CO₂: roof-column ambient, diffusion, plants, breathing.
+            if (BreathingActive() && StrataMapUtility.IsUnderground(map))
+            {
+                EnsureBreathGrid()?.ProcessCycle(this);
+            }
+
             RebuildCellDensity();
             AffectPawns();
             ThrowMotes();
+        }
+
+        // CompExhaust.PostSpawnSetup can run before this MapComponent exists
+        // (FinalizeInit adds us later). One scan picks up anything missed.
+        private AtmosphereBreathGrid EnsureBreathGrid()
+        {
+            if (!BreathingActive() || !StrataMapUtility.IsUnderground(map))
+            {
+                return null;
+            }
+            breathGrid ??= new AtmosphereBreathGrid(map);
+            if (!breathGridSeeded)
+            {
+                breathGridSeeded = true;
+                SeedBreathGridFromClouds();
+            }
+            return breathGrid;
+        }
+
+        private void SeedBreathGridFromClouds()
+        {
+            if (breathGrid == null)
+            {
+                return;
+            }
+            foreach (Room room in map.regionGrid.AllRooms)
+            {
+                if (room == null || room.IsDoorway)
+                {
+                    continue;
+                }
+                float o2 = GetBreathRoomDensity(room, StrataGasDefOf.Strata_Oxygen);
+                float co2 = GetBreathRoomDensity(room, StrataGasDefOf.Strata_CarbonDioxide);
+                if (o2 <= 0f && co2 <= 0f)
+                {
+                    continue;
+                }
+                foreach (IntVec3 cell in room.Cells)
+                {
+                    if (!cell.InBounds(map))
+                    {
+                        continue;
+                    }
+                    if (o2 > 0f)
+                    {
+                        breathGrid.AddO2(cell, o2);
+                    }
+                    if (co2 > 0f)
+                    {
+                        breathGrid.AddCo2(cell, co2);
+                    }
+                }
+            }
+        }
+
+        internal float GetBreathRoomDensity(Room room, StrataGasDef gas)
+        {
+            return room != null && gas != null && clouds.TryGetValue(room.ID, out Cloud c)
+                ? c.density[gas.index]
+                : 0f;
+        }
+
+        internal void AddBreathGasToRoom(Room room, StrataGasDef gas, float amount, IntVec3 sample, bool bypassCap = false)
+        {
+            AddGasToRoom(room, gas, amount, sample, bypassCap);
+        }
+
+        internal void ConsumeBreathGasFromRoom(Room room, StrataGasDef gas, float amount)
+        {
+            ConsumeGasFromRoom(room, gas, amount);
+        }
+
+        internal void SetBreathRoomDensity(Room room, StrataGasDef gas, float density, IntVec3 sample)
+        {
+            if (room == null || gas == null)
+            {
+                return;
+            }
+            if (!clouds.TryGetValue(room.ID, out Cloud c))
+            {
+                c = new Cloud
+                {
+                    density = new float[DefDatabase<StrataGasDef>.DefCount],
+                    cells = Mathf.Max(room.CellCount, 1),
+                };
+                clouds[room.ID] = c;
+            }
+            c.density[gas.index] = density;
+            c.sample = sample.IsValid ? sample : c.sample;
+            c.cells = Mathf.Max(room.CellCount, 1);
+            CullOrStore(room.ID, c);
+        }
+
+        internal void ProcessBreathPlants(AtmosphereBreathGrid grid)
+        {
+            List<Thing> plants = map.listerThings.ThingsInGroup(ThingRequestGroup.Plant);
+            for (int i = 0; i < plants.Count; i++)
+            {
+                if (plants[i] is Plant plant)
+                {
+                    grid.ProcessPlant(plant, this);
+                }
+            }
+        }
+
+        private void EnsureBuildingCompsRegistered()
+        {
+            if (buildingCompsRegistered)
+            {
+                return;
+            }
+            buildingCompsRegistered = true;
+            foreach (Thing thing in map.listerThings.AllThings)
+            {
+                if (thing is not ThingWithComps twc || !thing.Spawned)
+                {
+                    continue;
+                }
+                twc.GetComp<CompExhaust>()?.RegisterWithAtmosphere(this);
+            }
         }
 
         private void DrainLoadedClouds()
@@ -451,15 +601,26 @@ namespace Strata
             {
                 return;
             }
-            pendingSeedsByMap.Remove(map.uniqueID);
+
+            var remaining = new List<PendingSeed>();
             foreach (PendingSeed seed in seeds)
             {
                 Room room = seed.cell.InBounds(map) ? seed.cell.GetRoom(map) : null;
                 if (room == null)
                 {
+                    remaining.Add(seed);
                     continue;
                 }
                 AddGasToRoom(room, seed.gas, seed.density, seed.cell, bypassCap: true);
+            }
+
+            if (remaining.Count > 0)
+            {
+                pendingSeedsByMap[map.uniqueID] = remaining;
+            }
+            else
+            {
+                pendingSeedsByMap.Remove(map.uniqueID);
             }
         }
 
@@ -827,7 +988,7 @@ namespace Strata
             {
                 return;
             }
-            drawer ??= new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.5f);
+            drawer ??= new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.62f);
             drawer.MarkForDraw();
             drawer.CellBoolDrawerUpdate();
         }
@@ -840,20 +1001,17 @@ namespace Strata
             {
                 return;
             }
+            if (StrataMod.Settings != null && StrataMod.Settings.gasOverlayRoomLabels)
+            {
+                GasOverlayUtility.DrawRoomLabelsOnMap(map, this);
+            }
             IntVec3 cell = UI.MouseCell();
-            if (!cell.InBounds(map) || cell.Fogged(map))
+            if (!cell.InBounds(map))
             {
                 return;
             }
-            Room room = cell.GetRoom(map);
-            if (!GasOverlayUtility.TryFormatRoomMix(this, room, out string line))
-            {
-                return;
-            }
-            Vector2 drawPos = UI.MouseMapPosition();
-            Text.Anchor = TextAnchor.UpperLeft;
-            Widgets.Label(new Rect(drawPos.x + 8f, drawPos.y - 32f, 420f, 48f), line);
-            Text.Anchor = TextAnchor.UpperLeft;
+            Room room = cell.Fogged(map) ? null : cell.GetRoom(map);
+            GasOverlayUtility.DrawCursorMixReadout(this, room);
         }
 
         private void ProcessDirectionalVents()
@@ -885,6 +1043,28 @@ namespace Strata
                     {
                         Scale(cloud, 1f - rate);
                     }
+                    else
+                    {
+                        HashSet<Room> pipeRooms = GasPipeUtility.RoomsOnNetwork(map, network);
+                        pipeRooms.Remove(intake);
+                        if (pipeRooms.Count > 0)
+                        {
+                            foreach (StrataGasDef gas in Gases)
+                            {
+                                float moved = cloud.density[gas.index] * rate;
+                                if (moved <= 0f)
+                                {
+                                    continue;
+                                }
+                                float perRoom = moved / pipeRooms.Count;
+                                cloud.density[gas.index] -= moved;
+                                foreach (Room pipeRoom in pipeRooms)
+                                {
+                                    AddGasToRoom(pipeRoom, gas, perRoom, vent.parent.Position);
+                                }
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -914,6 +1094,77 @@ namespace Strata
 
                 CullOrStore(intake.ID, cloud);
             }
+        }
+
+        private void ProcessGasPipeNetworks()
+        {
+            if (clouds.Count == 0)
+            {
+                return;
+            }
+            GasPipeUtility.ForEachNetwork(map, network =>
+            {
+                HashSet<Room> rooms = GasPipeUtility.RoomsOnNetwork(map, network);
+                if (rooms.Count == 0)
+                {
+                    return;
+                }
+                if (GasPipeUtility.NetworkReachesOutdoor(map, network))
+                {
+                    float keep = 1f - GasPipeUtility.PipeOutdoorDrain;
+                    foreach (Room room in rooms)
+                    {
+                        if (!clouds.TryGetValue(room.ID, out Cloud cloud))
+                        {
+                            continue;
+                        }
+                        for (int g = 0; g < cloud.density.Length; g++)
+                        {
+                            cloud.density[g] *= keep;
+                        }
+                        CullOrStore(room.ID, cloud);
+                    }
+                }
+                if (rooms.Count < 2)
+                {
+                    return;
+                }
+                List<Room> roomList = new List<Room>(rooms);
+                foreach (StrataGasDef gas in Gases)
+                {
+                    float sum = 0f;
+                    int count = 0;
+                    for (int i = 0; i < roomList.Count; i++)
+                    {
+                        Room room = roomList[i];
+                        if (clouds.TryGetValue(room.ID, out Cloud sample))
+                        {
+                            sum += sample.density[gas.index];
+                            count++;
+                        }
+                    }
+                    if (count < 2)
+                    {
+                        continue;
+                    }
+                    float average = sum / count;
+                    for (int i = 0; i < roomList.Count; i++)
+                    {
+                        Room room = roomList[i];
+                        if (!clouds.TryGetValue(room.ID, out Cloud cloud))
+                        {
+                            continue;
+                        }
+                        float delta = (average - cloud.density[gas.index]) * GasPipeUtility.PipeInteriorFlow;
+                        if (delta == 0f)
+                        {
+                            continue;
+                        }
+                        cloud.density[gas.index] += delta;
+                        CullOrStore(room.ID, cloud);
+                    }
+                }
+            });
         }
 
         private static void Scale(Cloud cloud, float factor)
@@ -986,26 +1237,56 @@ namespace Strata
 
         // Seed breathable O₂ in every enclosed room when an underground map
         // first finalizes (or once after load if a pre-breathing save had none).
+        // B1 keeps ambient O₂ via ReplenishAmbientOxygen every cycle instead.
         public void TrySeedBreathableAir()
         {
-            if (breathableAirSeeded || !BreathingActive() || !StrataMapUtility.IsUnderground(map))
+            if (!BreathingActive() || !StrataMapUtility.IsUnderground(map))
             {
                 return;
             }
+
+            if (StrataDepth.IsStarterLevel(map))
+            {
+                SeedAllEnclosedRoomsWithAmbientOxygen();
+                return;
+            }
+
+            if (breathableAirSeeded)
+            {
+                return;
+            }
+
+            if (breathableSeedRetryTick < 0)
+            {
+                breathableSeedRetryTick = Find.TickManager.TicksGame;
+            }
+
+            int seeded = SeedAllEnclosedRoomsWithAmbientOxygen();
+            if (seeded > 0 || Find.TickManager.TicksGame - breathableSeedRetryTick > 1200)
+            {
+                breathableAirSeeded = true;
+            }
+        }
+
+        private int SeedAllEnclosedRoomsWithAmbientOxygen()
+        {
             StrataGasDef oxygen = StrataGasDefOf.Strata_Oxygen;
             if (oxygen == null)
             {
-                return;
+                return 0;
             }
+
+            int count = 0;
             foreach (Room room in map.regionGrid.AllRooms)
             {
-                if (room == null || room.UsesOutdoorTemperature || room.RegionCount == 0)
+                if (room == null || room.UsesOutdoorTemperature || !TryGetSampleCell(room, out IntVec3 sample))
                 {
                     continue;
                 }
-                AddGasToRoom(room, oxygen, AmbientOxygen, room.Regions[0].AnyCell, bypassCap: true);
+                AddGasToRoom(room, oxygen, AmbientOxygen, sample, bypassCap: true);
+                count++;
             }
-            breathableAirSeeded = true;
+            return count;
         }
 
         private bool BreathingActive()
@@ -1041,10 +1322,11 @@ namespace Strata
             }
             foreach (Room room in map.regionGrid.AllRooms)
             {
-                if (room != null && room.UsesOutdoorTemperature)
+                if (room == null || !room.UsesOutdoorTemperature || !TryGetSampleCell(room, out IntVec3 sample))
                 {
-                    TopUpOxygen(room, oxygen, room.Regions[0].AnyCell);
+                    continue;
                 }
+                TopUpOxygen(room, oxygen, sample);
             }
         }
 
@@ -1058,38 +1340,20 @@ namespace Strata
             AddGasToRoom(room, oxygen, AmbientOxygen - current, sample, bypassCap: true);
         }
 
-        // Flesh pawns in enclosed underground rooms consume O₂ and exhale CO₂.
-        private void ProcessBreathing()
+        private static bool TryGetSampleCell(Room room, out IntVec3 cell)
         {
-            if (!BreathingActive() || !StrataMapUtility.IsUnderground(map))
+            cell = IntVec3.Invalid;
+            if (room == null || room.RegionCount <= 0)
             {
-                return;
+                return false;
             }
-            StrataGasDef oxygen = StrataGasDefOf.Strata_Oxygen;
-            StrataGasDef co2 = StrataGasDefOf.Strata_CarbonDioxide;
-            if (oxygen == null || co2 == null)
+            Region region = room.FirstRegion;
+            if (region == null)
             {
-                return;
+                return false;
             }
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn pawn = pawns[i];
-                if (pawn.RaceProps == null || !pawn.RaceProps.IsFlesh || pawn.Dead)
-                {
-                    continue;
-                }
-                Room room = pawn.GetRoom();
-                if (room == null || room.UsesOutdoorTemperature)
-                {
-                    continue;
-                }
-                float bodyScale = pawn.BodySize;
-                float o2Need = OxygenPerBreath * bodyScale;
-                float co2Out = CarbonDioxidePerBreath * bodyScale;
-                ConsumeGasFromRoom(room, oxygen, o2Need);
-                AddGasToRoom(room, co2, co2Out, pawn.Position);
-            }
+            cell = region.AnyCell;
+            return cell.IsValid;
         }
 
         private void ProcessOxygenDisplacement()
@@ -1175,12 +1439,11 @@ namespace Strata
                 {
                     continue;
                 }
-                float remove = scrubber.Props.scrubPerCycle / Mathf.Max(room.CellCount, 1);
-                ConsumeGasFromRoom(room, gas, remove);
+                ConsumeGasFromRoom(room, gas, scrubber.Props.scrubPerCycle);
                 if (scrubber.Props.restoreOxygenPerCycle > 0f && StrataGasDefOf.Strata_Oxygen != null)
                 {
-                    float o2 = scrubber.Props.restoreOxygenPerCycle / Mathf.Max(room.CellCount, 1);
-                    AddGasToRoom(room, StrataGasDefOf.Strata_Oxygen, o2, scrubber.parent.Position, bypassCap: true);
+                    AddGasToRoom(room, StrataGasDefOf.Strata_Oxygen, scrubber.Props.restoreOxygenPerCycle,
+                        scrubber.parent.Position, bypassCap: true);
                 }
             }
         }
@@ -1224,11 +1487,10 @@ namespace Strata
             // one-cell room and would make the gas invisible.
             if (!sample.IsValid || !sample.InBounds(map) || sample.GetRoom(map) != room)
             {
-                if (room.RegionCount == 0)
+                if (!TryGetSampleCell(room, out sample))
                 {
                     return;
                 }
-                sample = room.Regions[0].AnyCell;
             }
             if (!clouds.TryGetValue(room.ID, out Cloud c))
             {
@@ -1325,28 +1587,70 @@ namespace Strata
 
         public static Thing FindOpenFlame(Room room)
         {
+            if (room == null)
+            {
+                return null;
+            }
             foreach (Thing thing in room.ContainedAndAdjacentThings)
             {
-                if (thing is Fire)
+                if (thing == null || !thing.Spawned || thing.GetRoom() != room)
+                {
+                    continue;
+                }
+                if (IsIgnitionSource(thing))
                 {
                     return thing;
                 }
-                if (thing is ThingWithComps twc)
-                {
-                    CompExhaust exhaust = twc.GetComp<CompExhaust>();
-                    if (exhaust != null && exhaust.Active)
-                    {
-                        return thing;
-                    }
-                    if (twc.GetComp<CompFireOverlay>() != null
-                        && twc.GetComp<CompRefuelable>()?.HasFuel != false
-                        && twc.GetComp<CompFlickable>()?.SwitchIsOn != false)
-                    {
-                        return thing;
-                    }
-                }
             }
             return null;
+        }
+
+        // Open flame or fuel-burning combustion — not gas vents, pumps, or scrubbers.
+        public static bool IsIgnitionSource(Thing thing)
+        {
+            if (thing is Fire)
+            {
+                return true;
+            }
+            if (thing is not ThingWithComps twc)
+            {
+                return false;
+            }
+            if (twc.GetComp<CompDeepGasVent>() != null)
+            {
+                return false;
+            }
+            CompExhaust exhaust = twc.GetComp<CompExhaust>();
+            if (exhaust != null && exhaust.Active)
+            {
+                if (exhaust.Props.emitWhenPowered)
+                {
+                    return false;
+                }
+                StrataGasDef gas = exhaust.GasDef;
+                if (gas != null && gas != StrataGasDefOf.Strata_Smoke)
+                {
+                    return false;
+                }
+                CompPowerTrader power = twc.GetComp<CompPowerTrader>();
+                if (power != null && power.PowerOn && power.PowerOutput > 0f)
+                {
+                    return true;
+                }
+                CompRefuelable refuel = twc.GetComp<CompRefuelable>();
+                if (refuel != null && refuel.HasFuel)
+                {
+                    return true;
+                }
+                return false;
+            }
+            if (twc.GetComp<CompFireOverlay>() != null
+                && twc.GetComp<CompRefuelable>()?.HasFuel != false
+                && twc.GetComp<CompFlickable>()?.SwitchIsOn != false)
+            {
+                return true;
+            }
+            return false;
         }
 
         private void Ignite(Room room, Cloud cloud, Thing flame, float flammableTotal)
@@ -1405,14 +1709,11 @@ namespace Strata
 
         private void RebuildCellDensity()
         {
-            if (clouds.Count == 0)
-            {
-                ClearCellDensity();
-                drawer?.SetDirty();
-                return;
-            }
             cellDensity ??= new float[DefDatabase<StrataGasDef>.DefCount][];
             ClearCellDensity();
+            StrataGasDef oxygen = StrataGasDefOf.Strata_Oxygen;
+            StrataGasDef co2 = StrataGasDefOf.Strata_CarbonDioxide;
+            bool useBreathGrid = breathGrid != null && BreathingActive() && StrataMapUtility.IsUnderground(map);
             foreach (Cloud c in clouds.Values)
             {
                 Room room = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
@@ -1422,6 +1723,10 @@ namespace Strata
                 }
                 foreach (StrataGasDef gas in Gases)
                 {
+                    if (useBreathGrid && (gas == oxygen || gas == co2))
+                    {
+                        continue;
+                    }
                     float d = c.density[gas.index];
                     if (d <= 0f)
                     {
@@ -1431,14 +1736,17 @@ namespace Strata
                     float[] plane = cellDensity[gas.index];
                     foreach (IntVec3 cell in room.Cells)
                     {
-                        // Never paint into the fog: a hidden pocket must not
-                        // advertise itself through the overlay.
                         if (cell.InBounds(map) && !cell.Fogged(map))
                         {
                             plane[map.cellIndices.CellToIndex(cell)] = d;
                         }
                     }
                 }
+            }
+            if (useBreathGrid)
+            {
+                breathGrid.PaintCellDensity(cellDensity, oxygen);
+                breathGrid.PaintCellDensity(cellDensity, co2);
             }
             drawer?.SetDirty();
         }
@@ -1493,7 +1801,11 @@ namespace Strata
                     {
                         continue;
                     }
-                    float density = DensityInRoom(room, gas);
+                    float density = (breathGrid != null && BreathingActive()
+                        && StrataMapUtility.IsUnderground(map)
+                        && (gas == StrataGasDefOf.Strata_Oxygen || gas == StrataGasDefOf.Strata_CarbonDioxide))
+                        ? breathGrid.DensityAt(pawn.Position, gas)
+                        : DensityInRoom(room, gas);
                     Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(gas.harmHediff);
                     if (gas.harmWhenBelow)
                     {

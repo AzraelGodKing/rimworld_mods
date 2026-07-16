@@ -72,31 +72,53 @@ namespace Strata
     }
 
     // Root cellars stay cool; underground Strata levels add another chill layer.
-    [HarmonyPatch(typeof(CompRottable), "RotProgressPerInterval", MethodType.Getter)]
+    // RimWorld 1.6 removed RotProgressPerInterval; rot now advances in TickInterval.
+    [HarmonyPatch(typeof(CompRottable), "TickInterval")]
     public static class Patch_HomesteaderRootCellarRot
     {
         private const float UndergroundRootCellarFactor = 0.5f;
 
-        public static void Postfix(CompRottable __instance, ref float __result)
+        private static float rotBefore;
+
+        private static bool applyFactor;
+
+        public static void Prefix(CompRottable __instance)
         {
-            if (__result <= 0f || !SisterModBridges.RootCellarPresent)
+            rotBefore = __instance.RotProgress;
+            applyFactor = ShouldSlow(__instance);
+        }
+
+        public static void Postfix(CompRottable __instance)
+        {
+            if (!applyFactor)
             {
                 return;
             }
-            Thing parent = __instance.parent;
+            float added = __instance.RotProgress - rotBefore;
+            if (added > 0f)
+            {
+                __instance.RotProgress = rotBefore + added * UndergroundRootCellarFactor;
+            }
+        }
+
+        private static bool ShouldSlow(CompRottable instance)
+        {
+            if (!SisterModBridges.RootCellarPresent)
+            {
+                return false;
+            }
+            Thing parent = instance.parent;
             if (parent?.Map == null || !StrataMapUtility.IsUnderground(parent.Map))
             {
-                return;
+                return false;
             }
-            if (!SisterModBridges.IsOnRootCellar(parent))
-            {
-                return;
-            }
-            __result *= UndergroundRootCellarFactor;
+            return SisterModBridges.IsOnRootCellar(parent);
         }
     }
 
     // Stormproof fallout scrubbers treat enclosed underground rooms as indoor.
+    // StrataRoomUtility also forces B1+ rooms enclosed for gas; this remains
+    // for Stormproof when UsesOutdoorTemperature was already false.
     [HarmonyPatch(typeof(Room), "PsychologicallyOutdoors", MethodType.Getter)]
     public static class Patch_StormproofUndergroundRooms
     {

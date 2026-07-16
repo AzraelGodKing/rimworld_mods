@@ -129,7 +129,11 @@ namespace Strata
             for (int i = 0; i < things.Count; i++)
             {
                 Thing thing = things[i];
-                if (thing.Faction != Faction.OfPlayer || !(thing is IConstructible constructible))
+                // Install/reinstall blueprints reference a specific minified
+                // building; TotalMaterialCost logs an error and returns nothing.
+                // Cross-level haul for those uses vanilla install hauling.
+                if (thing.Faction != Faction.OfPlayer || thing is Blueprint_Install
+                    || !(thing is IConstructible constructible))
                 {
                     continue;
                 }

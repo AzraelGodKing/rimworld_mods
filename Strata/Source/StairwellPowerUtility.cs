@@ -3,8 +3,9 @@ using Verse;
 
 namespace Strata
 {
-    // Extends the landing's power shaft down through the portal — the landing
-    // is the only transmitter on its cells; dig extensions have no power comp.
+    // Each stairwell landing drives shaft power ties once per cycle: upward
+    // through the portal above (entrance StairsDown -> this landing) and
+    // downward through an optional dig shaft (DownEntrance -> level below).
     public static class StairwellPowerUtility
     {
         public static void MaintainVerticalTie(Building_StairsUp landing)
@@ -13,18 +14,33 @@ namespace Strata
             {
                 return;
             }
-            Building_StairsDown down = landing.DownEntrance;
-            if (down == null || !down.Spawned || !down.PocketMapExists || down.exit == null || !down.exit.Spawned)
+
+            if (landing.entrance is Building_StairsDown stairsAbove
+                && stairsAbove.Spawned && stairsAbove.exit == landing)
+            {
+                DriveShaftTie(stairsAbove, landing);
+            }
+
+            Building_StairsDown digDown = landing.DownEntrance;
+            if (digDown != null && digDown.Spawned && digDown.PocketMapExists
+                && digDown.exit is Building_StairsUp lower && lower.Spawned)
+            {
+                DriveShaftTie(digDown, lower);
+            }
+        }
+
+        private static void DriveShaftTie(Building_StairsDown topPortal, Building_StairsUp bottomLanding)
+        {
+            if (topPortal is Building_AncientColonyStairsDown || bottomLanding is Building_AncientColonyStairsUp)
             {
                 return;
             }
-            CompPowerShaft top = landing.GetComp<CompPowerShaft>();
-            CompPowerShaft bottom = down.exit.GetComp<CompPowerShaft>();
-            if (top == null || bottom == null)
+            CompPowerShaft top = topPortal.GetComp<CompPowerShaft>();
+            CompPowerShaft bottom = bottomLanding.GetComp<CompPowerShaft>();
+            if (top != null && bottom != null)
             {
-                return;
+                top.DriveTie(bottom);
             }
-            top.DriveTie(bottom);
         }
     }
 }

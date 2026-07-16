@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using HarmonyLib;
 using LudeonTK;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace Strata
@@ -10,62 +12,122 @@ namespace Strata
     public static class StrataDebug
     {
         private const string Cat = "Strata";
+        private const string IncidentsCat = "Strata/Incidents";
+        private const string GasCat = "Strata/Gas";
+
+        private static IIncidentTarget ResolveIncidentTarget(IncidentDef def)
+        {
+            if (def?.targetTags != null)
+            {
+                foreach (IncidentTargetTagDef tag in def.targetTags)
+                {
+                    if (tag == IncidentTargetTagDefOf.World)
+                    {
+                        return Find.World;
+                    }
+                }
+            }
+            return Find.CurrentMap;
+        }
 
         private static void Fire(IncidentDef def)
         {
-            Map map = Find.CurrentMap;
-            if (map == null || def == null)
+            if (def == null)
+            {
+                Messages.Message("[Strata] Incident def not loaded.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+            IIncidentTarget target = ResolveIncidentTarget(def);
+            if (target == null)
+            {
+                Messages.Message("[Strata] No valid target for this incident (open a colony map or world view).",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+            IncidentParms parms = StorytellerUtility.DefaultParmsNow(def.category, target);
+            // Dev buttons bypass the storyteller's pacing gates (ThreatBig
+            // mercy windows, refire cooldowns, difficulty settings).
+            parms.forced = true;
+            if (def.Worker.TryExecute(parms))
             {
                 return;
             }
-            var parms = StorytellerUtility.DefaultParmsNow(def.category, map);
-            // Dev buttons bypass the storyteller's pacing gates (ThreatBig
-            // mercy windows, refire cooldowns, difficulty settings) - only the
-            // incident's own requirements still apply.
-            parms.forced = true;
-            if (def.Worker.CanFireNow(parms))
+            // Settings gates and refire cooldowns can still block TryExecute; in
+            // dev mode fall back to the worker body so every Strata incident is
+            // exercisable from the menu.
+            if (Prefs.DevMode && DevTryExecuteWorker(def.Worker, parms))
             {
-                def.Worker.TryExecute(parms);
+                return;
             }
-            else
+            Messages.Message($"[Strata] {def.defName} can't fire right now — check map type, research, factions, and mod settings.",
+                MessageTypeDefOf.RejectInput, historical: false);
+        }
+
+        private static bool DevTryExecuteWorker(IncidentWorker worker, IncidentParms parms)
+        {
+            try
             {
-                Messages.Message($"[Strata] {def.defName} can't fire on this map right now.",
-                    MessageTypeDefOf.RejectInput, historical: false);
+                return (bool)AccessTools.Method(worker.GetType(), "TryExecuteWorker")
+                    .Invoke(worker, new object[] { parms });
+            }
+            catch
+            {
+                return false;
             }
         }
 
-        [DebugAction(Cat, "Fire: cave-in", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Cave-in", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireCaveIn() => Fire(StrataIncidentDefOf.Strata_CaveIn);
 
-        [DebugAction(Cat, "Fire: gas pocket", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Gas pocket", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireGasPocket() => Fire(StrataIncidentDefOf.Strata_GasPocket);
 
-        [DebugAction(Cat, "Fire: deep vein", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Deep vein", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireDeepVein() => Fire(StrataIncidentDefOf.Strata_DeepVein);
 
-        [DebugAction(Cat, "Fire: deep raid", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Deep raid", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireDeepRaid() => Fire(StrataIncidentDefOf.Strata_DeepRaid);
 
-        [DebugAction(Cat, "Fire: prospector's tip", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Prospector tip", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireProspector() => Fire(StrataIncidentDefOf.Strata_ProspectorTip);
 
-        [DebugAction(Cat, "Fire: ground tremor", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Ground tremor", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireTremor() => Fire(StrataIncidentDefOf.Strata_Tremor);
 
-        [DebugAction(Cat, "Fire: gas firestorm", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Gas firestorm", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireGasFirestorm() => Fire(StrataIncidentDefOf.Strata_GasFirestorm);
 
-        [DebugAction(Cat, "Fire: deep siege", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Deep siege", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireDeepSiege() => Fire(StrataIncidentDefOf.Strata_DeepSiege);
 
-        [DebugAction(Cat, "Fire: cave breakthrough", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Cave breakthrough", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireCaveBreakthrough() => Fire(StrataIncidentDefOf.Strata_CaveBreakthrough);
 
-        [DebugAction(Cat, "Fire: prospector dig", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Prospector dig", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireProspectorDig() => Fire(StrataIncidentDefOf.Strata_ProspectorDig);
 
-        [DebugAction(Cat, "Fire: lost miners", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(IncidentsCat, "Lost miners", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireLostMiners() => Fire(StrataIncidentDefOf.Strata_LostMiners);
+
+        [DebugAction(IncidentsCat, "Flood seep", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireFloodSeep() => Fire(StrataIncidentDefOf.Strata_FloodSeep);
+
+        [DebugAction(IncidentsCat, "Lost miners Anomaly", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireLostMinersAnomaly() =>
+            Fire(DefDatabase<IncidentDef>.GetNamedSilentFail("Strata_LostMinersAnomaly"));
+
+        [DebugAction(IncidentsCat, "Sunken ruin", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireSunkenRuin() => Fire(StrataIncidentDefOf.Strata_SunkenRuinDiscovered);
+
+        [DebugAction(IncidentsCat, "Collapsed mine", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireCollapsedMine() => Fire(StrataIncidentDefOf.Strata_CollapsedMineDiscovered);
+
+        [DebugAction(IncidentsCat, "Sealed vault", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireSealedVault() => Fire(StrataIncidentDefOf.Strata_SealedVaultDiscovered);
+
+        [DebugAction(IncidentsCat, "Geothermal vent", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void FireGeothermalVent() => Fire(StrataIncidentDefOf.Strata_GeothermalVentDiscovered);
 
         [DebugAction(Cat, "List smoke emitters", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ListSmokeEmitters()
@@ -102,7 +164,7 @@ namespace Strata
             Log.Message(sb.ToString());
         }
 
-        [DebugAction(Cat, "Log room gases", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(GasCat, "Log room gases", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void LogRoomGases()
         {
             Map map = Find.CurrentMap;
@@ -113,20 +175,20 @@ namespace Strata
             }
         }
 
-        [DebugAction(Cat, "Clear all gas", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        [DebugAction(GasCat, "Clear all gas", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ClearGas()
         {
             Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()?.ClearAll();
         }
 
-        [DebugAction(Cat, "Saturate room with smoke", allowedGameStates = AllowedGameStates.PlayingOnMap,
+        [DebugAction(GasCat, "Saturate room with smoke", allowedGameStates = AllowedGameStates.PlayingOnMap,
             actionType = DebugActionType.ToolMap)]
         private static void SaturateSmoke()
         {
             Find.CurrentMap?.GetComponent<AtmosphereMapComponent>()?.DebugSaturate(UI.MouseCell());
         }
 
-        [DebugAction(Cat, "Saturate room with deep gas", allowedGameStates = AllowedGameStates.PlayingOnMap,
+        [DebugAction(GasCat, "Saturate room with deep gas", allowedGameStates = AllowedGameStates.PlayingOnMap,
             actionType = DebugActionType.ToolMap)]
         private static void SaturateDeepGas()
         {
@@ -134,7 +196,7 @@ namespace Strata
                 ?.DebugSaturate(UI.MouseCell(), StrataGasDefOf.Strata_DeepGas);
         }
 
-        [DebugAction(Cat, "Saturate room with oxygen", allowedGameStates = AllowedGameStates.PlayingOnMap,
+        [DebugAction(GasCat, "Saturate room with oxygen", allowedGameStates = AllowedGameStates.PlayingOnMap,
             actionType = DebugActionType.ToolMap)]
         private static void SaturateOxygen()
         {
@@ -142,7 +204,7 @@ namespace Strata
                 ?.DebugSaturate(UI.MouseCell(), StrataGasDefOf.Strata_Oxygen, AtmosphereMapComponent.AmbientOxygen);
         }
 
-        [DebugAction(Cat, "Deplete oxygen in room", allowedGameStates = AllowedGameStates.PlayingOnMap,
+        [DebugAction(GasCat, "Deplete oxygen in room", allowedGameStates = AllowedGameStates.PlayingOnMap,
             actionType = DebugActionType.ToolMap)]
         private static void DepleteOxygen()
         {
@@ -150,7 +212,7 @@ namespace Strata
                 ?.DebugSetGas(UI.MouseCell(), StrataGasDefOf.Strata_Oxygen, 0f);
         }
 
-        [DebugAction(Cat, "Saturate room with CO₂", allowedGameStates = AllowedGameStates.PlayingOnMap,
+        [DebugAction(GasCat, "Saturate room with CO2", allowedGameStates = AllowedGameStates.PlayingOnMap,
             actionType = DebugActionType.ToolMap)]
         private static void SaturateCO2()
         {
@@ -251,6 +313,10 @@ namespace Strata
                 StrataThingDefOf.Strata_OxygenPump != null
                 && StrataThingDefOf.Strata_CO2Pump != null
                 && StrataThingDefOf.Strata_GasExchanger != null);
+            Check("ancient colony stairwell defs",
+                StrataThingDefOf.Strata_AncientColonyStairsDown != null
+                && StrataThingDefOf.Strata_AncientColonyStairsUp != null
+                && DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_AncientColonyStairwell") != null);
             Check("mine atmosphere counters loaded",
                 StrataThingDefOf.Strata_MethaneFlare != null
                 && StrataThingDefOf.Strata_BlackDampScrubber != null

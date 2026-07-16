@@ -37,11 +37,11 @@ namespace Strata
             {
                 return false;
             }
-            // Deeper levels split richer seams. A burst ignores the ventilated
-            // cap - it is pressure, not a steady inflow - but drains through
-            // outlets over the following cycles like any other gas.
-            float density = Mathf.Min(0.45f + 0.1f * StrataDepth.Of(map) + Rand.Range(0f, 0.25f), 1.2f);
+            // Deeper levels split richer seams. Match hidden-chamber pockets:
+            // a heavy initial burst plus an uncapped fissure that keeps seeping.
+            float density = Mathf.Min(1.2f + 0.25f * StrataDepth.Of(map) + Rand.Range(0f, 0.35f), 3f);
             atmosphere.AddGasBurst(room, StrataGasDefOf.Strata_DeepGas, density, inside);
+            TrySpawnBreachedVent(map, inside, breach);
 
             for (int i = 0; i < 6; i++)
             {
@@ -51,6 +51,31 @@ namespace Strata
 
             SendStandardLetter(parms, new TargetInfo(inside, map));
             return true;
+        }
+
+        // Leave a natural fissure in the breach so the pocket keeps seeping
+        // like a discovered deep gas vent, not a one-tick puff.
+        private static void TrySpawnBreachedVent(Map map, IntVec3 inside, IntVec3 breach)
+        {
+            if (StrataThingDefOf.Strata_DeepGasVent == null)
+            {
+                return;
+            }
+            foreach (IntVec3 cell in new[] { inside, breach })
+            {
+                if (!cell.InBounds(map) || !cell.Standable(map))
+                {
+                    continue;
+                }
+                if (cell.GetFirstThing(map, StrataThingDefOf.Strata_DeepGasVent) != null)
+                {
+                    return;
+                }
+                if (GenSpawn.Spawn(StrataThingDefOf.Strata_DeepGasVent, cell, map, WipeMode.Vanish) != null)
+                {
+                    return;
+                }
+            }
         }
 
         // A natural rock face with a walkable, discovered room cell beside it:

@@ -102,8 +102,6 @@
     <letterText>A deep tremor rolled through the ground, rattling the colony and cracking some of your structures. The rock below is never quite still.</letterText>
   </IncidentDef>
 
-  </IncidentDef>
-
   <!-- ============ Underground: gas firestorm ============ -->
   <IncidentDef>
     <defName>Strata_GasFirestorm</defName>
@@ -276,7 +274,7 @@
 
   <!-- ============ Underground: lost miners (Anomaly soft hook) ============ -->
   <IncidentDef MayRequire="Ludeon.RimWorld.Anomaly">
-    <defName>Strata_LostMiners</defName>
+    <defName>Strata_LostMinersAnomaly</defName>
     <label>lost miners</label>
     <category>Misc</category>
     <targetTags>

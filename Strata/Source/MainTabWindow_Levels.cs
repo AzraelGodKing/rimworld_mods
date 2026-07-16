@@ -245,7 +245,9 @@ namespace Strata
             IntVec3 cell = map.Center;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing.def.defName == "Strata_StairsDown" || thing.def.defName == "Strata_ElevatorDown")
+                if (thing.def.defName == "Strata_StairsDown"
+                    || thing.def.defName == "Strata_AncientColonyStairsDown"
+                    || thing.def.defName == "Strata_ElevatorDown")
                 {
                     cell = thing.Position;
                     break;

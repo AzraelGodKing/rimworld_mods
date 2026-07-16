@@ -10,6 +10,7 @@ namespace Strata
         public bool smokeEnabled = true;
         public float smokeSeverityScale = 1f;
         public bool breathingEnabled = true;
+        public bool gasOverlayRoomLabels = false;
         public bool gasEventsEnabled = true;
         public bool raidPursuitEnabled = true;
         public bool workRelayEnabled = true;
@@ -25,6 +26,11 @@ namespace Strata
         public bool floodEventsEnabled = true;
         public bool crossLevelRitualsEnabled = true;
         public bool mergedAbandonWarning = true;
+        public bool showLinkedColonistsInWorkScheduleTabs = true;
+        public bool nativeCavernLayoutEnabled = true;
+        public bool biomesCavernsCompatEnabled = true;
+        public bool ancientColonyStairwellEnabled = true;
+        public float ancientColonyStairwellChance = 0.35f;
         public bool cageSustainHunger = false;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;
@@ -35,6 +41,7 @@ namespace Strata
             Scribe_Values.Look(ref smokeEnabled, "smokeEnabled", defaultValue: true);
             Scribe_Values.Look(ref smokeSeverityScale, "smokeSeverityScale", 1f);
             Scribe_Values.Look(ref breathingEnabled, "breathingEnabled", defaultValue: true);
+            Scribe_Values.Look(ref gasOverlayRoomLabels, "gasOverlayRoomLabels", defaultValue: false);
             Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
             Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: true);
@@ -50,6 +57,11 @@ namespace Strata
             Scribe_Values.Look(ref floodEventsEnabled, "floodEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelRitualsEnabled, "crossLevelRitualsEnabled", defaultValue: true);
             Scribe_Values.Look(ref mergedAbandonWarning, "mergedAbandonWarning", defaultValue: true);
+            Scribe_Values.Look(ref showLinkedColonistsInWorkScheduleTabs, "showLinkedColonistsInWorkScheduleTabs", defaultValue: true);
+            Scribe_Values.Look(ref nativeCavernLayoutEnabled, "nativeCavernLayoutEnabled", defaultValue: true);
+            Scribe_Values.Look(ref biomesCavernsCompatEnabled, "biomesCavernsCompatEnabled", defaultValue: true);
+            Scribe_Values.Look(ref ancientColonyStairwellEnabled, "ancientColonyStairwellEnabled", defaultValue: true);
+            Scribe_Values.Look(ref ancientColonyStairwellChance, "ancientColonyStairwellChance", 0.35f);
             Scribe_Values.Look(ref cageSustainHunger, "cageSustainHunger", defaultValue: false);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
             Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
@@ -108,7 +120,8 @@ namespace Strata
             listing.CheckboxLabeled("Food relay", ref Settings.foodRelayEnabled,
                 "Hungry colonists go find a meal on another level.");
             listing.CheckboxLabeled("Rest relay", ref Settings.restRelayEnabled,
-                "Sleepy colonists walk home to their bed on another level.");
+                "Sleepy colonists on a floor without beds walk to their assigned bed "
+                + "or a free bed on another linked level (Barracks role preferred).");
             listing.CheckboxLabeled("Medical relay", ref Settings.medicalRelayEnabled,
                 "Patients and doctors commute to linked levels with medical beds or tending work.");
             listing.CheckboxLabeled("Joy relay", ref Settings.joyRelayEnabled,
@@ -144,6 +157,9 @@ namespace Strata
             listing.CheckboxLabeled("O₂ / CO₂ simulation", ref Settings.breathingEnabled,
                 "Underground levels track oxygen and carbon dioxide: colonists breathe O₂, exhale CO₂, "
                 + "O₂ rises through shafts, and CO₂ sinks. Turning this off clears both gases.");
+            listing.CheckboxLabeled("Gas overlay room labels", ref Settings.gasOverlayRoomLabels,
+                "While the play-settings gas overlay is on, draw color-coded percentage labels on each "
+                + "enclosed room (top three gases + load). The cursor panel is always available when the overlay is on.");
             listing.Gap();
 
             Text.Font = GameFont.Medium;
@@ -160,11 +176,31 @@ namespace Strata
                 "World incidents that reveal sunken ruins, collapsed mines, sealed vaults, and geothermal vents.");
             listing.CheckboxLabeled("Underground flood events", ref Settings.floodEventsEnabled,
                 "Groundwater seeps that flood patches of excavated levels.");
+            listing.CheckboxLabeled("Natural cave layout", ref Settings.nativeCavernLayoutEnabled,
+                "Excavated levels (B1 and deeper) generate Strata cave networks — chambers and tunnels "
+                + "carved from the solid rock instead of leaving the whole level unmined.");
+            listing.CheckboxLabeled("Ancient colony stairwell", ref Settings.ancientColonyStairwellEnabled,
+                "Some new colony maps spawn a pre-built ancient stairwell on the surface. "
+                + "It opens the first underground level without digging-down research, but does not carry power between levels.");
+            if (Settings.ancientColonyStairwellEnabled)
+            {
+                listing.Label("Ancient stairwell spawn chance: " + Settings.ancientColonyStairwellChance.ToStringPercent());
+                Settings.ancientColonyStairwellChance = listing.Slider(Settings.ancientColonyStairwellChance, 0.05f, 1f);
+            }
+            if (BiomesCavernsUtility.IsActive)
+            {
+                listing.CheckboxLabeled("Biomes! Caverns layout", ref Settings.biomesCavernsCompatEnabled,
+                    "When enabled and Biomes! Caverns is loaded, use Biomes! cavern generation instead of "
+                    + "Strata's native cave layout (plants, fauna, stalagmites, and crystals).");
+            }
             listing.Gap();
 
             Text.Font = GameFont.Medium;
             listing.Label("Interface");
             Text.Font = GameFont.Small;
+            listing.CheckboxLabeled("Strata Levels on Work / Schedule", ref Settings.showLinkedColonistsInWorkScheduleTabs,
+                "Work and Schedule tabs show a Strata Levels checkbox (when your colony has excavated levels). "
+                + "When checked, both tabs list colonists from every linked level, not only the map you are viewing.");
             listing.CheckboxLabeled("Combined abandon warning", ref Settings.mergedAbandonWarning,
                 "When abandoning a settlement with pawns still on levels below, show one combined warning listing everyone left behind (surface and underground). Turn off for two separate prompts.");
 

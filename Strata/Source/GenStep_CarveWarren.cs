@@ -25,6 +25,12 @@ namespace Strata
 
         public override void Generate(Map map, GenStepParams parms)
         {
+            bool playerLevel = map.generatorDef?.defName == "Strata_UndergroundLevel";
+            if (playerLevel && !StrataCavernUtility.ShouldGenerateNativeCavernLayout(map))
+            {
+                return;
+            }
+
             IntVec3 start = MapGenerator.PlayerStartSpot;
             if (!start.IsValid || !start.InBounds(map))
             {
@@ -32,7 +38,9 @@ namespace Strata
             }
 
             var chambers = new List<IntVec3> { start };
-            int target = Rand.RangeInclusive(5, 8);
+            int target = playerLevel
+                ? TargetChamberCount(StrataDepth.CountLevelsBelowSurface(map))
+                : Rand.RangeInclusive(5, 8);
             int attempts = 0;
             while (chambers.Count <= target && attempts++ < 40)
             {
@@ -52,6 +60,19 @@ namespace Strata
             }
 
             MapGenerator.SetVar(ChambersVar, chambers);
+        }
+
+        private static int TargetChamberCount(int depth)
+        {
+            if (depth <= 2)
+            {
+                return Rand.RangeInclusive(4, 6);
+            }
+            if (depth <= 4)
+            {
+                return Rand.RangeInclusive(5, 8);
+            }
+            return Rand.RangeInclusive(6, 10);
         }
 
         private static IntVec3 NextChamberSpot(Map map, IntVec3 anchor, List<IntVec3> existing)

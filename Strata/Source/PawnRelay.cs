@@ -91,14 +91,7 @@ namespace Strata
             int count = 0;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
             {
-                if (thing is Building_Bed bed
-                    && bed.Faction == Faction.OfPlayer
-                    && bed.def.building.bed_humanlike
-                    && !bed.Medical
-                    && !bed.ForPrisoners
-                    && bed.AnyUnownedSleepingSlot
-                    && !bed.IsForbidden(pawn)
-                    && !bed.IsBurning())
+                if (thing is Building_Bed bed && IsClaimableColonistBed(pawn, bed))
                 {
                     count++;
                 }
@@ -150,19 +143,82 @@ namespace Strata
         {
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
             {
-                if (thing is Building_Bed bed
-                    && bed.Faction == Faction.OfPlayer
-                    && bed.def.building.bed_humanlike
-                    && !bed.Medical
-                    && !bed.ForPrisoners
-                    && bed.AnyUnownedSleepingSlot
-                    && !bed.IsForbidden(pawn)
-                    && !bed.IsBurning())
+                if (thing is Building_Bed bed && IsClaimableColonistBed(pawn, bed))
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        // A colonist bed on this map the pawn can actually reach right now.
+        public static bool HasUsableBedOnMap(Pawn pawn, Map map)
+        {
+            if (pawn == null || map == null)
+            {
+                return false;
+            }
+            Building_Bed ownBed = pawn.ownership?.OwnedBed;
+            if (ownBed != null && ownBed.Spawned && ownBed.Map == map && IsUsableColonistBed(pawn, ownBed))
+            {
+                return true;
+            }
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
+            {
+                if (thing is Building_Bed bed && IsUsableColonistBed(pawn, bed))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool ShouldCommuteForRest(Pawn pawn, Job vanillaResult)
+        {
+            if (vanillaResult?.def == JobDefOf.LayDown)
+            {
+                return true;
+            }
+            if (pawn?.CurJobDef == JobDefOf.LayDown)
+            {
+                return true;
+            }
+            if (pawn?.timetable?.CurrentAssignment == TimeAssignmentDefOf.Sleep)
+            {
+                return true;
+            }
+            Need rest = pawn?.needs?.rest;
+            return rest != null && rest.CurLevelPercentage < 0.35f;
+        }
+
+        private static bool IsClaimableColonistBed(Pawn pawn, Building_Bed bed)
+        {
+            return IsColonistBedCandidate(pawn, bed)
+                && (bed.OwnersForReading.Contains(pawn) || bed.AnyUnownedSleepingSlot);
+        }
+
+        private static bool IsUsableColonistBed(Pawn pawn, Building_Bed bed)
+        {
+            return IsClaimableColonistBed(pawn, bed)
+                && bed.Spawned
+                && bed.Map == pawn.Map
+                && pawn.CanReach(bed, PathEndMode.OnCell, Danger.Some);
+        }
+
+        internal static bool IsUsableColonistBedJob(Pawn pawn, Building_Bed bed)
+        {
+            return IsUsableColonistBed(pawn, bed);
+        }
+
+        private static bool IsColonistBedCandidate(Pawn pawn, Building_Bed bed)
+        {
+            return bed != null
+                && bed.Faction == Faction.OfPlayer
+                && bed.def.building.bed_humanlike
+                && !bed.Medical
+                && !bed.ForPrisoners
+                && !bed.IsForbidden(pawn)
+                && !bed.IsBurning();
         }
 
         public static bool HasMedicalBedFor(Pawn pawn, Map map)

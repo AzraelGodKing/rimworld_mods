@@ -16,6 +16,19 @@ namespace Strata
             {
                 return 0;
             }
+            return CountLevelsBelowSurface(map);
+        }
+
+        // B1 and any underground pocket without a parent chain (depth 0).
+        public static bool IsStarterLevel(Map map)
+        {
+            return StrataMapUtility.IsUnderground(map) && Of(map) <= 1;
+        }
+
+        // Same parent-chain walk as Of, but safe during map generation before
+        // the biome is fully wired (GenSteps use this for B1 vs B2+ rules).
+        public static int CountLevelsBelowSurface(Map map)
+        {
             int depth = 0;
             Map current = map;
             int guard = 0;

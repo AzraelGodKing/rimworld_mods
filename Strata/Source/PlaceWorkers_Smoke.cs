@@ -38,10 +38,10 @@ namespace Strata
         }
     }
 
-    // Ghost overlay for smoke ducts: highlights the duct network this tile
+    // Ghost overlay for gas pipes: highlights the pipe network this tile
     // would join - green when the run reaches outdoors (it will vent), red
     // when it doesn't (dead pipe).
-    public class PlaceWorker_SmokeDuct : PlaceWorker
+    public class PlaceWorker_GasPipe : PlaceWorker
     {
         private static readonly Color ReachesColor = new Color(0.3f, 0.9f, 0.35f);
         private static readonly Color DeadColor = new Color(0.95f, 0.3f, 0.25f);
@@ -61,12 +61,12 @@ namespace Strata
             foreach (IntVec3 dir in GenAdj.CardinalDirections)
             {
                 IntVec3 next = center + dir;
-                if (next.InBounds(map) && next.GetFirstBuilding(map)?.TryGetComp<CompSmokeDuct>() != null)
+                if (next.InBounds(map) && Building_GasPipe.At(map, next) != null)
                 {
-                    SmokeVentUtility.CollectDuctNetwork(map, next, network);
+                    GasPipeUtility.CollectNetwork(map, next, network);
                 }
             }
-            bool reaches = SmokeVentUtility.DuctNetworkReachesOutdoor(map, network);
+            bool reaches = GasPipeUtility.NetworkReachesOutdoor(map, network);
             drawBuffer.Clear();
             drawBuffer.AddRange(network);
             GenDraw.DrawFieldEdges(drawBuffer, reaches ? ReachesColor : DeadColor);

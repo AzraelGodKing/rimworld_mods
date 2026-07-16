@@ -24,7 +24,7 @@ namespace Strata
         }
     }
 
-    [HarmonyPatch(typeof(Game), "GameTick")]
+    [HarmonyPatch(typeof(TickManager), nameof(TickManager.DoSingleTick))]
     public static class Patch_GameTick_CaravanHaul
     {
         public static void Postfix()

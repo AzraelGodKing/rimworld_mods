@@ -17,7 +17,7 @@
     <order>750</order>
     <genStep Class="Strata.GenStep_QuestSiteEntrance">
       <stairsDef>Strata_MineStairsDown</stairsDef>
-      <shellBlocks>BlocksWoodLog</shellBlocks>
+      <shellBlocks>BlocksLimestone</shellBlocks>
       <shellFillChance>0.45</shellFillChance>
       <rubbleCount>6</rubbleCount>
     </genStep>

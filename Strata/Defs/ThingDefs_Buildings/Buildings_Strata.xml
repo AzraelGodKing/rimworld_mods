@@ -70,7 +70,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <comps>
       <li Class="CompProperties_Power">
         <compClass>Strata.CompPowerShaft</compClass>
-        <basePowerConsumption>10</basePowerConsumption>
+        <basePowerConsumption>0</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
       </li>
       <li Class="Strata.CompProperties_StairwellControl"/>
@@ -83,13 +83,13 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </building>
   </ThingDef>
 
-  <!-- Dig-down extension beside a landing — same portal as a stairwell but no
-       power comp (the landing carries the shaft). Not in the architect menu;
-       designated only via the Dig down gizmo. -->
+  <!-- Dig-down extension beside a landing — same portal as a stairwell, with
+       its own shaft transmitter so hub landings are not double-tied. Not in
+       the architect menu; designated only via the Dig down gizmo. -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_DigDownShaft</defName>
     <label>dig shaft</label>
-    <description>An extension of the stairwell landing above, carved downward into the rock. Colonists use it to reach the next level once construction finishes; power runs through the landing, not this tile.</description>
+    <description>An extension of the stairwell landing above, carved downward into the rock. Colonists use it to reach the next level once construction finishes. Wire the landing above (or this shaft once built) into your grid — it carries power to the level below the same way an excavated stairwell does.</description>
     <thingClass>Strata.Building_StairsDown</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/StairsDown</texPath>
@@ -128,6 +128,11 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li>Strata_DiggingDown</li>
     </researchPrerequisites>
     <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
       <li Class="Strata.CompProperties_StairwellControl"/>
     </comps>
     <building>
@@ -463,59 +468,114 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
   </ThingDef>
 
-  <!-- ============ Smoke duct ============ -->
-  <ThingDef ParentName="BuildingBase">
-    <defName>Strata_SmokeDuct</defName>
-    <label>smoke duct</label>
-    <description>A floor duct that routes exhaust from a fan or louver to a distant outdoor louver or open wall. Connect ducts in a line; the run must reach outdoors (or an outdoor-facing vent) to clear smoke from the intake room.</description>
-    <thingClass>Strata.Building_SmokeDuct</thingClass>
-    <graphicData>
-      <texPath>Strata/Buildings/SmokeDuct_Atlas</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <linkType>Transmitter</linkType>
-      <linkFlags>
-        <li>Custom7</li>
-      </linkFlags>
-      <damageData>
-        <rect>(0,0.35,1,0.3)</rect>
-      </damageData>
-    </graphicData>
-    <uiIconPath>Strata/Buildings/SmokeDuct_MenuIcon</uiIconPath>
+  <!-- ============ Gas pipe (Strata atmosphere routing) ============ -->
+  <ThingDef Name="Strata_GasPipeBase" Abstract="True" ParentName="BuildingBase">
+    <thingClass>Strata.Building_GasPipe</thingClass>
+    <description>A metal pipe run on the conduit layer. Connects like power conduits and moves every Strata gas (smoke, oxygen, deep gas, and the rest) between rooms on the same run. Fans and louvers can exhaust into a pipe; the run must reach open air to vent outside.</description>
     <uiIconScale>0.7</uiIconScale>
-    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <drawerType>MapMeshOnly</drawerType>
+    <drawStyleCategory>Conduits</drawStyleCategory>
+    <altitudeLayer>Conduits</altitudeLayer>
     <passability>Standable</passability>
     <fillPercent>0</fillPercent>
     <rotatable>false</rotatable>
+    <neverMultiSelect>true</neverMultiSelect>
     <size>(1,1)</size>
     <statBases>
       <MaxHitPoints>80</MaxHitPoints>
       <WorkToBuild>350</WorkToBuild>
       <Flammability>0.4</Flammability>
+      <Beauty>-2</Beauty>
     </statBases>
     <costList>
       <Steel>10</Steel>
     </costList>
     <building>
       <isEdifice>false</isEdifice>
-      <blueprintGraphicData>
-        <texPath>Strata/Buildings/SmokeDuct_Blueprint_Atlas</texPath>
-      </blueprintGraphicData>
+      <isInert>true</isInert>
+      <paintable>true</paintable>
     </building>
-    <comps>
-      <li Class="Strata.CompProperties_SmokeDuct"/>
-    </comps>
     <placeWorkers>
-      <li>Strata.PlaceWorker_SmokeDuct</li>
+      <li>Strata.PlaceWorker_GasPipe</li>
     </placeWorkers>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <constructEffect>ConstructMetal</constructEffect>
     <clearBuildingArea>false</clearBuildingArea>
     <designationCategory>Structure</designationCategory>
-    <canOverlapZones>false</canOverlapZones>
+    <canOverlapZones>true</canOverlapZones>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>ComplexFurniture</li>
     </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef ParentName="Strata_GasPipeBase">
+    <defName>Strata_SmokeDuct</defName>
+    <label>gas pipe</label>
+    <graphicData>
+      <texPath>Strata/Buildings/GasPipe_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <linkType>Basic</linkType>
+      <linkFlags Inherit="False">
+        <li>Custom10</li>
+      </linkFlags>
+      <damageData>
+        <rect>(0,0.35,1,0.3)</rect>
+      </damageData>
+    </graphicData>
+    <uiIconPath>Strata/Buildings/GasPipe_MenuIcon</uiIconPath>
+    <comps>
+      <li Class="Strata.CompProperties_GasPipe"/>
+    </comps>
+    <building>
+      <blueprintGraphicData>
+        <texPath>Strata/Buildings/GasPipe_Blueprint_Atlas</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+        <linkType>Basic</linkType>
+        <linkFlags Inherit="False">
+          <li>Custom10</li>
+        </linkFlags>
+      </blueprintGraphicData>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="Strata_GasPipeBase">
+    <defName>Strata_HiddenGasPipe</defName>
+    <label>hidden gas pipe</label>
+    <description>A nearly invisible gas pipe on the conduit layer. Links with ordinary gas pipe and carries every Strata gas the same way, but stays out of sight under floors.</description>
+    <graphicData>
+      <texPath>Strata/Buildings/HiddenGasPipe_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <linkType>Basic</linkType>
+      <linkFlags Inherit="False">
+        <li>Custom10</li>
+      </linkFlags>
+      <damageData>
+        <rect>(0,0.35,1,0.3)</rect>
+      </damageData>
+    </graphicData>
+    <uiIconPath>Strata/Buildings/HiddenGasPipe_MenuIcon</uiIconPath>
+    <statBases>
+      <WorkToBuild>450</WorkToBuild>
+    </statBases>
+    <costList>
+      <Steel>12</Steel>
+    </costList>
+    <comps>
+      <li Class="Strata.CompProperties_GasPipe">
+        <hidden>true</hidden>
+      </li>
+    </comps>
+    <building>
+      <blueprintGraphicData>
+        <texPath>Strata/Buildings/HiddenGasPipe_Blueprint_Atlas</texPath>
+        <graphicClass>Graphic_Single</graphicClass>
+        <linkType>Basic</linkType>
+        <linkFlags Inherit="False">
+          <li>Custom10</li>
+        </linkFlags>
+      </blueprintGraphicData>
+    </building>
   </ThingDef>
 
   <!-- ============ Shaft power conduit ============ -->

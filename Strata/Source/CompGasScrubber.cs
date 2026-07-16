@@ -5,8 +5,7 @@ namespace Strata
 {
     public class CompProperties_GasScrubber : CompProperties
     {
-        // Gas density removed from the room each cycle while active, before
-        // dilution by room size.
+        // Room concentration removed each atmosphere cycle while active.
         public float scrubPerCycle = 0.008f;
 
         public StrataGasDef gas;

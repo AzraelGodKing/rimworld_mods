@@ -73,14 +73,6 @@
           </value>
         </li>
         <li Class="PatchOperationAdd">
-          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_VHGE"]/graphicData</xpath>
-          <value>
-            <linkFlags>
-              <li>Custom7</li>
-            </linkFlags>
-          </value>
-        </li>
-        <li Class="PatchOperationAdd">
           <xpath>/Defs/PipeSystem.PipeNetDef[defName="VHGE_HelixienNet"]/pipeDefs</xpath>
           <value>
             <li>Strata_ShaftFluid_VHGE</li>
@@ -128,14 +120,6 @@
             <li Class="PipeSystem.CompProperties_Resource">
               <pipeNet>VCHE_ChemfuelNet</pipeNet>
             </li>
-          </value>
-        </li>
-        <li Class="PatchOperationAdd">
-          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_VefChemfuel"]/graphicData</xpath>
-          <value>
-            <linkFlags>
-              <li>Custom7</li>
-            </linkFlags>
           </value>
         </li>
         <li Class="PatchOperationAdd">
