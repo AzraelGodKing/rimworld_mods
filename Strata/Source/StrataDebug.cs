@@ -352,6 +352,11 @@ namespace Strata
                 && DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_Fog") != null);
             Check("rich ore node genstep registered",
                 DefDatabase<GenStepDef>.GetNamedSilentFail("Strata_RichOreNodes") != null);
+            Check("building-up tower stairwell loaded",
+                StrataThingDefOf.Strata_StairsBuildUp != null
+                && StrataThingDefOf.Strata_BuildUpLanding != null
+                && DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_UpperLevel") != null
+                && DefDatabase<ResearchProjectDef>.GetNamedSilentFail("Strata_BuildingUp") != null);
             Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
             Check("sunken ruin map generator loaded",
                 DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_SunkenRuinLevel") != null);

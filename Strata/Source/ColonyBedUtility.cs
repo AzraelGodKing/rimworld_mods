@@ -16,7 +16,7 @@ namespace Strata
             {
                 return false;
             }
-            if (StrataMapUtility.IsUnderground(map))
+            if (StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map))
             {
                 return true;
             }

@@ -42,18 +42,39 @@ namespace Strata
             Map target = null;
             if (goDown)
             {
+                // Underground shaft first; from an upper floor, step toward surface.
                 foreach (Thing thing in current.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
                 {
+                    if (thing is Building_StairsBuildUp)
+                    {
+                        continue;
+                    }
                     if (thing is Building_StairsDown stairs && stairs.Spawned && stairs.PocketMapExists)
                     {
                         target = stairs.PocketMap;
                         break;
                     }
                 }
+                if (target == null && StrataMapUtility.IsUpperLevel(current))
+                {
+                    target = (current.Parent as PocketMapParent)?.sourceMap;
+                }
             }
             else
             {
-                target = (current.Parent as PocketMapParent)?.sourceMap;
+                // Tower stairwell to A1+; otherwise climb the pocket parent (B→surface).
+                foreach (Thing thing in current.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+                {
+                    if (thing is Building_StairsBuildUp up && up.Spawned && up.PocketMapExists)
+                    {
+                        target = up.PocketMap;
+                        break;
+                    }
+                }
+                if (target == null)
+                {
+                    target = (current.Parent as PocketMapParent)?.sourceMap;
+                }
             }
             if (target == null || !Find.Maps.Contains(target))
             {

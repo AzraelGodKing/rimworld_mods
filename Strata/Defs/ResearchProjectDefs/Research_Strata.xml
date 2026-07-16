@@ -9,6 +9,17 @@
   </ResearchTabDef>
 
   <ResearchProjectDef>
+    <defName>Strata_BuildingUp</defName>
+    <label>building up</label>
+    <description>Framing techniques for stacking a full outdoor floor above the colony — the same footprint as the map below, open to sky for solar, rain, and rooftop living. Extra tower stairwells can join the same upper level.</description>
+    <baseCost>600</baseCost>
+    <techLevel>Medieval</techLevel>
+    <tab>Strata</tab>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>Strata_DiggingDown</defName>
     <label>digging down</label>
     <description>Basic shoring and stair-cutting to open the first basement beneath your colony — one full level of solid rock the same size as the map above.</description>

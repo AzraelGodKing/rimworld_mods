@@ -27,6 +27,99 @@
     <canOverlapZones>false</canOverlapZones>
   </ThingDef>
 
+  <!-- ============ Tower stairwell (up from surface / A-n) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_StairsBuildUp</defName>
+    <label>tower stairwell</label>
+    <description>A stair tower that opens a new outdoor floor above this map: the same footprint as this level, open to the sky for solar, weather, and rooftop rooms. Completing it frames Level +1 (or joins an upper floor already opened by another tower stairwell). Requires building up research.
+
+Colonists use the tower on their own to work across floors. Wire each level into the stairwell to pool power. It cannot be deconstructed while anyone is still above.</description>
+    <thingClass>Strata.Building_StairsBuildUp</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/StairsUp</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>600</MaxHitPoints>
+      <WorkToBuild>12000</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>80</WoodLog>
+      <Steel>40</Steel>
+    </costList>
+    <portal>
+      <pocketMapGenerator>Strata_UpperLevel</pocketMapGenerator>
+      <exitDef>Strata_BuildUpLanding</exitDef>
+      <pocketMapSize>200</pocketMapSize>
+    </portal>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_LevelBuildUp</li>
+    </placeWorkers>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="Strata.CompProperties_StairwellControl"/>
+    </comps>
+    <researchPrerequisites>
+      <li>Strata_BuildingUp</li>
+    </researchPrerequisites>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <!-- Landing on an upper floor — climb back down to the level below. -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_BuildUpLanding</defName>
+    <label>tower landing</label>
+    <description>The upper landing of a tower stairwell — stairs leading back down to the floor below. Wire this floor into the stairwell so power can pool with the level beneath. It cannot be deconstructed; it is the way down.</description>
+    <thingClass>Strata.Building_BuildUpLanding</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/StairsDown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>42</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+    </comps>
+    <building>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
   <!-- ============ Excavated stairwell (down) ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_StairsDown</defName>

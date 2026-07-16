@@ -2,6 +2,28 @@
 <Defs>
 
   <MapGeneratorDef>
+    <defName>Strata_UpperLevel</defName>
+    <isUnderground>false</isUnderground>
+    <disableShadows>false</disableShadows>
+    <renderWorld>false</renderWorld>
+    <pocketMapProperties>
+      <biome>Strata_Upper</biome>
+      <destroyOnParentMapAbandoned>true</destroyOnParentMapAbandoned>
+      <canBeCleaned>true</canBeCleaned>
+    </pocketMapProperties>
+    <genSteps>
+      <li>Strata_UpperPlatform</li>
+      <li>Strata_PlaceCaveExit</li>
+    </genSteps>
+  </MapGeneratorDef>
+
+  <GenStepDef>
+    <defName>Strata_UpperPlatform</defName>
+    <order>100</order>
+    <genStep Class="Strata.GenStep_UpperPlatform"/>
+  </GenStepDef>
+
+  <MapGeneratorDef>
     <defName>Strata_UndergroundLevel</defName>
     <isUnderground>true</isUnderground>
     <roofDef>RoofRockThick</roofDef>

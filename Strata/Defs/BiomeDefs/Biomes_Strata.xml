@@ -26,4 +26,29 @@
     </baseWeatherCommonalities>
   </BiomeDef>
 
+  <!-- Outdoor upper floors (A1+). Open sky so solar/weather work; no map-edge exit. -->
+  <BiomeDef>
+    <defName>Strata_Upper</defName>
+    <label>upper floor</label>
+    <description>A framed floor above the colony — open to sky and weather, tied to the levels below by stairwells and shafts.</description>
+    <generatesNaturally>false</generatesNaturally>
+    <canBuildBase>false</canBuildBase>
+    <canAutoChoose>false</canAutoChoose>
+    <implemented>true</implemented>
+    <allowRoads>false</allowRoads>
+    <allowRivers>false</allowRivers>
+    <allowPollution>false</allowPollution>
+    <animalDensity>0</animalDensity>
+    <plantDensity>0</plantDensity>
+    <wildAnimalsCanWanderInto>false</wildAnimalsCanWanderInto>
+    <hasVirtualPlants>false</hasVirtualPlants>
+    <disableSkyLighting>false</disableSkyLighting>
+    <noAmbientWind>false</noAmbientWind>
+    <canExitMap>false</canExitMap>
+    <hasBedrock>false</hasBedrock>
+    <baseWeatherCommonalities>
+      <Clear>100</Clear>
+    </baseWeatherCommonalities>
+  </BiomeDef>
+
 </Defs>

@@ -4,6 +4,10 @@ All notable changes to Strata are documented here.
 
 ## [Unreleased]
 
+### Added — Building Up (Pillar 3 MVP)
+- **Tower stairwell** — research *building up*, then build a tower stairwell on the surface (or an upper floor). Completing it opens an outdoor **Level +1** pocket map the same size as the parent, with open sky (solar/weather) and a concrete pad. A second tower on the same floor joins that upper level.
+- **Levels tab / hotkeys** — upper floors show as Level +N; Page Up from the surface jumps to A1; Page Down from A1 returns to the surface. Relays and power shafts reuse the existing portal graph.
+
 ### Added — Rich ore nodes (B1+)
 - **Map gen** — each underground level (colony B1+ and quest strata) seeds a few rare, large ore seams in the solid rock after carving. B1 usually gets 1–2 fat nodes (~18–32 cells, occasional motherlode); deeper levels place more and larger seams with a stronger rich-ore bias. Existing deep-vein / prospector incidents are unchanged.
 

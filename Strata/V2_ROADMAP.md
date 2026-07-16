@@ -3,9 +3,8 @@
 Planning backlog for Strata. Last updated for **Pillars 4–5** on
 `feature/strata-v2-away-and-living` (art pass intentionally last).
 
-**Current focus:** **Pillar 4 — Away Into the Dark** and **Pillar 5 — Living
-Below**, plus fluidity / threats / compat that support both. **Pillar 3 —
-Building Up** remains a separate planning target (not in this branch's scope).
+**Current focus:** **Pillar 3 — Building Up** on `Feat/Final_V2_Feature_Going_UP`
+(surface → A1 tower stairwell MVP). Pillars 4–5 remain code-complete / playtest.
 
 ---
 
@@ -40,7 +39,20 @@ umbrella (VNPE / chemfuel / other nets) continues under Compat.
 
 ## Pillar 3 — Building Up (above-ground floors)
 
-**Status: NOT STARTED — deferred** (explicitly out of scope for this slice)
+**Status: MVP IN PROGRESS** (`Feat/Final_V2_Feature_Going_UP`)
+
+Shipped in this slice:
+- [x] Research `Strata_BuildingUp`
+- [x] Tower stairwell (`Strata_StairsBuildUp`) + upper landing
+- [x] `Strata_UpperLevel` outdoor map gen (concrete pad, open sky)
+- [x] Levels tab + hotkeys for Level +N
+- [x] Join existing upper level from a second tower
+
+Still open:
+- [ ] A2+ stacking playtest / balance
+- [ ] Upper-floor dedicated content (greenhouses, sky bedrooms fantasy)
+- [ ] Art pass for tower stairwell / landing
+- [ ] Elevator-up variant
 
 ---
 

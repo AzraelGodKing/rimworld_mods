@@ -22,7 +22,7 @@ namespace Strata
                 List<Map> maps = Find.Maps;
                 for (int i = 0; i < maps.Count; i++)
                 {
-                    if (StrataMapUtility.IsUnderground(maps[i]))
+                    if (StrataMapUtility.IsUnderground(maps[i]) || StrataMapUtility.IsUpperLevel(maps[i]))
                     {
                         return true;
                     }
@@ -37,7 +37,7 @@ namespace Strata
         private struct Row
         {
             public Map map;
-            public int depth;
+            public int altitude; // +N upper, 0 surface, -N underground
             public bool stackHeader; // first row of a colony's level stack
         }
 
@@ -86,12 +86,25 @@ namespace Strata
                 {
                     continue;
                 }
-                rows.Add(new Row { map = surface, depth = 0, stackHeader = true });
+                int headerAt = rows.Count;
+                rows.Add(new Row { map = surface, altitude = 0, stackHeader = true });
                 foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(surface))
                 {
-                    if (StrataMapUtility.IsUnderground(link.map))
+                    if (StrataMapUtility.IsUnderground(link.map) || StrataMapUtility.IsUpperLevel(link.map))
                     {
-                        rows.Add(new Row { map = link.map, depth = link.depth });
+                        rows.Add(new Row { map = link.map, altitude = StrataDepth.Altitude(link.map) });
+                    }
+                }
+                // Highest floor first (A2, A1, surface, B1, B2…).
+                int count = rows.Count - headerAt;
+                if (count > 1)
+                {
+                    rows.Sort(headerAt, count, Comparer<Row>.Create((a, b) => b.altitude.CompareTo(a.altitude)));
+                    for (int i = headerAt; i < rows.Count; i++)
+                    {
+                        Row r = rows[i];
+                        r.stackHeader = i == headerAt;
+                        rows[i] = r;
                     }
                 }
             }
@@ -129,7 +142,7 @@ namespace Strata
 
             if (rows.Count == 0)
             {
-                Widgets.Label(new Rect(inRect.x + 4f, header.yMax + 4f, inRect.width, RowHeight), "No excavated levels.");
+                Widgets.Label(new Rect(inRect.x + 4f, header.yMax + 4f, inRect.width, RowHeight), "No linked levels.");
                 return;
             }
 
@@ -218,12 +231,16 @@ namespace Strata
             {
                 return custom;
             }
-            if (row.depth == 0)
+            if (row.altitude == 0)
             {
                 string name = row.map.Parent?.LabelCap;
                 return name.NullOrEmpty() ? "Surface" : "Surface \u2014 " + name;
             }
-            return "Level -" + row.depth;
+            if (row.altitude > 0)
+            {
+                return "Level +" + row.altitude;
+            }
+            return "Level " + row.altitude;
         }
 
         private static int HostileCount(Map map)
@@ -247,7 +264,9 @@ namespace Strata
             {
                 if (thing.def.defName == "Strata_StairsDown"
                     || thing.def.defName == "Strata_AncientColonyStairsDown"
-                    || thing.def.defName == "Strata_ElevatorDown")
+                    || thing.def.defName == "Strata_ElevatorDown"
+                    || thing.def.defName == "Strata_StairsBuildUp"
+                    || thing.def.defName == "Strata_BuildUpLanding")
                 {
                     cell = thing.Position;
                     break;

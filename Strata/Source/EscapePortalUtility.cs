@@ -28,7 +28,7 @@ namespace Strata
                 return null;
             }
 
-            int depth = StrataDepth.Of(map);
+                int altitude = StrataDepth.Altitude(map);
             MapPortal best = null;
             float bestScore = float.MinValue;
 
@@ -54,10 +54,10 @@ namespace Strata
                     continue;
                 }
 
-                int otherDepth = StrataDepth.Of(other);
-                // Strongly prefer climbing toward the surface (lower depth).
-                float score = (depth - otherDepth) * 10000f;
-                if (otherDepth == 0)
+                int otherAltitude = StrataDepth.Altitude(other);
+                // Prefer stepping toward the surface (altitude 0) from above or below.
+                float score = (System.Math.Abs(altitude) - System.Math.Abs(otherAltitude)) * 10000f;
+                if (otherAltitude == 0)
                 {
                     score += 50000f;
                 }

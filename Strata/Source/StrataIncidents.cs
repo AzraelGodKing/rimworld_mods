@@ -60,6 +60,7 @@ namespace Strata
     public static class StrataMapUtility
     {
         public const string UndergroundBiome = "Strata_Underground";
+        public const string UpperBiome = "Strata_Upper";
 
         public static bool IsUnderground(Map map)
         {
@@ -74,9 +75,14 @@ namespace Strata
             return BiomesCavernsUtility.IsActive && BiomesCavernsUtility.IsStrataCavernBiome(map.Biome);
         }
 
+        public static bool IsUpperLevel(Map map)
+        {
+            return map?.Biome != null && map.Biome.defName == UpperBiome;
+        }
+
         public static bool IsSurfacePlayerHome(Map map)
         {
-            return map != null && map.IsPlayerHome && !IsUnderground(map);
+            return map != null && map.IsPlayerHome && !IsUnderground(map) && !IsUpperLevel(map);
         }
 
         // Valid alone is not enough: pocket maps can carry stale tile IDs that

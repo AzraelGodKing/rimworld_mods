@@ -97,12 +97,17 @@ namespace Strata
                 reason = "The stairwell is sealed.";
                 return false;
             }
-            if (!PocketMapExists && !BypassFirstLevelResearch
-                && !LevelExcavationUtility.CanOpenNewLevelBelow(Map, out reason))
+            if (!PocketMapExists && !BypassFirstLevelResearch && !CanOpenPortalLevel(out reason))
             {
                 return false;
             }
             return base.IsEnterable(out reason);
+        }
+
+        // Dig-down stairwells gate on excavation research; tower stairwells override.
+        protected virtual bool CanOpenPortalLevel(out string reason)
+        {
+            return LevelExcavationUtility.CanOpenNewLevelBelow(Map, out reason, this);
         }
 
         public override void OnEntered(Pawn pawn)
@@ -116,9 +121,14 @@ namespace Strata
         {
             if (PocketMapExists && PocketMap.mapPawns.AnyPawnBlockingMapRemoval)
             {
-                return "Someone is still on the level below.";
+                return OccupiedOtherLevelMessage();
             }
             return base.DeconstructibleBy(faction);
+        }
+
+        protected virtual string OccupiedOtherLevelMessage()
+        {
+            return "Someone is still on the level below.";
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
@@ -352,6 +362,12 @@ namespace Strata
         public override string GetInspectString()
         {
             string text = base.GetInspectString();
+            string state = LevelInspectState();
+            return text.NullOrEmpty() ? state : text + "\n" + state;
+        }
+
+        protected virtual string LevelInspectState()
+        {
             string state = "Level below: not yet opened";
             if (PocketMapExists)
             {
@@ -374,11 +390,12 @@ namespace Strata
             {
                 state += "\nSelect Dig down to designate a dig shaft; colonists must finish carving it before the level below opens.";
             }
-            return text.NullOrEmpty() ? state : text + "\n" + state;
+            return state;
         }
 
         // Force pocket-map generation (used by the underground Dig down gizmo).
-        public void OpenLevelBelow()
+        // Virtual so tower stairwells can open an upper level with their own gates.
+        public virtual void OpenLevelBelow()
         {
             if (PocketMapExists)
             {
@@ -401,6 +418,15 @@ namespace Strata
             {
                 yield return gizmo;
             }
+            foreach (Gizmo gizmo in ExtraGizmos())
+            {
+                yield return gizmo;
+            }
+        }
+
+        // Dig-down shaft gizmo for unfinished underground portals; tower stairs omit this.
+        protected virtual IEnumerable<Gizmo> ExtraGizmos()
+        {
             if (!StrataMapUtility.IsUnderground(Map) || PocketMapExists)
             {
                 yield break;
@@ -436,7 +462,7 @@ namespace Strata
             return "Smoke shaft: fumes rise to the level above";
         }
 
-        private string PowerShaftInspectLine()
+        protected string PowerShaftInspectLine()
         {
             return "Power shaft: ties both levels' grids (wire each floor into the stairwell; keep batteries on each level)";
         }
