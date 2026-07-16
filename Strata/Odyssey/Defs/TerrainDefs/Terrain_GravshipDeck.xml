@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <TerrainDef>
+    <defName>Strata_GravshipDeck</defName>
+    <label>gravship deck</label>
+    <description>Walkable gravship flooring projected from the deck above.</description>
+    <texturePath>Terrain/Surfaces/Concrete</texturePath>
+    <color>(0.42, 0.46, 0.52, 1)</color>
+    <edgeType>Hard</edgeType>
+    <renderPrecedence>352</renderPrecedence>
+    <pathCost>0</pathCost>
+    <fertility>0</fertility>
+    <passability>Standable</passability>
+    <affordances>
+      <li>Walkable</li>
+      <li>Light</li>
+      <li>Medium</li>
+      <li>Heavy</li>
+    </affordances>
+    <tags>
+      <li>Floor</li>
+    </tags>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>Strata_GravshipHull</defName>
+    <label>gravship hull</label>
+    <description>Sealed outer hull beyond the ship footprint. Impassable.</description>
+    <texturePath>Terrain/Surfaces/Concrete</texturePath>
+    <color>(0.12, 0.12, 0.14, 1)</color>
+    <edgeType>Hard</edgeType>
+    <renderPrecedence>50</renderPrecedence>
+    <pathCost>10000</pathCost>
+    <fertility>0</fertility>
+    <passability>Impassable</passability>
+    <takeFootprints>false</takeFootprints>
+  </TerrainDef>
+
+  <MapGeneratorDef>
+    <defName>Strata_GravshipUnderdeckLevel</defName>
+    <isUnderground>true</isUnderground>
+    <disableShadows>true</disableShadows>
+    <renderWorld>false</renderWorld>
+    <pocketMapProperties>
+      <biome>Strata_Underground</biome>
+      <temperature>18</temperature>
+      <destroyOnParentMapAbandoned>true</destroyOnParentMapAbandoned>
+      <canLaunchGravship>true</canLaunchGravship>
+      <canBeCleaned>true</canBeCleaned>
+    </pocketMapProperties>
+    <genSteps>
+      <li>Strata_GravshipUnderdeck</li>
+      <li>Strata_PlaceCaveExit</li>
+    </genSteps>
+  </MapGeneratorDef>
+
+  <GenStepDef>
+    <defName>Strata_GravshipUnderdeck</defName>
+    <order>100</order>
+    <genStep Class="Strata.GenStep_GravshipUnderdeck"/>
+  </GenStepDef>
+
+</Defs>
