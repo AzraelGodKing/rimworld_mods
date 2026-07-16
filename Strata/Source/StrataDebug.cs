@@ -357,6 +357,9 @@ namespace Strata
                 && StrataThingDefOf.Strata_BuildUpLanding != null
                 && DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_UpperLevel") != null
                 && DefDatabase<ResearchProjectDef>.GetNamedSilentFail("Strata_BuildingUp") != null);
+            Check("tower elevator loaded",
+                StrataThingDefOf.Strata_ElevatorBuildUp != null
+                && StrataThingDefOf.Strata_ElevatorBuildUpLanding != null);
             Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
             Check("sunken ruin map generator loaded",
                 DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Strata_SunkenRuinLevel") != null);

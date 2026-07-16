@@ -58,6 +58,11 @@ namespace Strata
             {
                 return elevEntrance.Sealed;
             }
+            if (thing is Building_ElevatorBuildUpLanding towerLanding
+                && towerLanding.entrance is Building_StairsBuildUp towerEntrance)
+            {
+                return towerEntrance.Sealed;
+            }
             return false;
         }
 

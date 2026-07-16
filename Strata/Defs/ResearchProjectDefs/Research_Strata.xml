@@ -47,16 +47,16 @@
   <ResearchProjectDef>
     <defName>Strata_Elevators</defName>
     <label>elevators</label>
-    <description>Powered elevator cars for moving colonists between levels in a compact shaft - faster and tidier than a cut stairwell, at the cost of a power hookup.</description>
+    <description>Powered elevator cars for moving colonists between levels in a compact shaft — downstairs into excavated rock or upstairs into a framed outdoor floor. Faster and tidier than a cut stairwell, at the cost of a power hookup. Ascending a tower elevator or descending an excavated elevator needs power; the return ride is always free so a blackout never traps anyone.</description>
     <baseCost>1600</baseCost>
     <techLevel>Industrial</techLevel>
     <tab>Strata</tab>
     <prerequisites>
-      <li>Strata_Excavation</li>
+      <li>Strata_DiggingDown</li>
       <li>Electricity</li>
     </prerequisites>
-    <researchViewX>3.00</researchViewX>
-    <researchViewY>1.60</researchViewY>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>0.80</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>

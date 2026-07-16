@@ -36,6 +36,10 @@ namespace Strata
 
         public static ThingDef Strata_BuildUpLanding;
 
+        public static ThingDef Strata_ElevatorBuildUp;
+
+        public static ThingDef Strata_ElevatorBuildUpLanding;
+
         public static ThingDef Strata_DigDownShaft;
 
         public static ThingDef Strata_AncientColonyStairsDown;

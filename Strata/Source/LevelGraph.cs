@@ -122,13 +122,18 @@ namespace Strata
 
         private static bool IsPoweredElevator(MapPortal portal)
         {
-            if (portal is Building_ElevatorUp)
+            // Return landings are always free (nobody gets trapped).
+            if (portal is Building_ElevatorUp || portal is Building_ElevatorBuildUpLanding)
             {
-                return true; // riding up is always available
+                return true;
             }
-            // Powered checks the grid's real energy state; the comp's PowerOn
-            // is forced true whenever wired (see Building_ElevatorDown).
-            return portal is Building_ElevatorDown elevator && elevator.Powered;
+            // Powered checks the grid's real energy state; the shaft transmitter's
+            // PowerOn is forced true whenever wired.
+            if (portal is Building_ElevatorDown elevator && elevator.Powered)
+            {
+                return true;
+            }
+            return portal is Building_ElevatorBuildUp tower && tower.Powered;
         }
 
         // Whether 'target' is reachable from 'start' without passing back

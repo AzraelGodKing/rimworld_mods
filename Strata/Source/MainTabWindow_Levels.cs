@@ -266,7 +266,9 @@ namespace Strata
                     || thing.def.defName == "Strata_AncientColonyStairsDown"
                     || thing.def.defName == "Strata_ElevatorDown"
                     || thing.def.defName == "Strata_StairsBuildUp"
-                    || thing.def.defName == "Strata_BuildUpLanding")
+                    || thing.def.defName == "Strata_BuildUpLanding"
+                    || thing.def.defName == "Strata_ElevatorBuildUp"
+                    || thing.def.defName == "Strata_ElevatorBuildUpLanding")
                 {
                     cell = thing.Position;
                     break;

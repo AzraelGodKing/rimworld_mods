@@ -6,6 +6,7 @@ All notable changes to Strata are documented here.
 
 ### Added — Building Up (Pillar 3 MVP)
 - **Tower stairwell** — research *building up*, then build a tower stairwell on the surface (or an upper floor). Completing it opens an outdoor **Level +1** pocket map the same size as the parent, with open sky (solar/weather) and a concrete pad. A second tower on the same floor joins that upper level.
+- **Tower elevator** — after *building up* + *elevators*, a compact powered car opens/joins the same upper map. Ascending needs a live grid; riding down from the landing is always free. Elevators research now unlocks after *digging down* (not deep excavation) so B1/A1 elevators are not gated on B2.
 - **Levels tab / hotkeys** — upper floors show as Level +N; Page Up from the surface jumps to A1; Page Down from A1 returns to the surface. Relays and power shafts reuse the existing portal graph.
 
 ### Added — Rich ore nodes (B1+)

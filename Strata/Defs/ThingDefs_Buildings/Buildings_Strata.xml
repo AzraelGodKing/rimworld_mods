@@ -271,6 +271,96 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </building>
   </ThingDef>
 
+  <!-- ============ Tower elevator (powered, up) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_ElevatorBuildUp</defName>
+    <label>tower elevator</label>
+    <description>A powered elevator that opens and links an outdoor floor above, just like a tower stairwell - but compact. The car needs power to ascend; if power fails, anyone above can still ride down to safety. Cannot be deconstructed while colonists are on the level above.</description>
+    <thingClass>Strata.Building_ElevatorBuildUp</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ElevatorUp</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>350</MaxHitPoints>
+      <WorkToBuild>9000</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>120</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+    </costList>
+    <portal>
+      <pocketMapGenerator>Strata_UpperLevel</pocketMapGenerator>
+      <exitDef>Strata_ElevatorBuildUpLanding</exitDef>
+      <pocketMapSize>200</pocketMapSize>
+    </portal>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>200</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_StairwellControl"/>
+    </comps>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_LevelBuildUp</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>Strata_BuildingUp</li>
+      <li>Strata_Elevators</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_ElevatorBuildUpLanding</defName>
+    <label>tower elevator landing</label>
+    <description>The upper landing of a tower elevator, leading back down to the floor below. It cannot be deconstructed — it is the way down. Riding down works even without power.</description>
+    <thingClass>Strata.Building_ElevatorBuildUpLanding</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ElevatorDown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+    </comps>
+    <building>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
   <!-- ============ Elevator (powered, compact) ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ElevatorDown</defName>
