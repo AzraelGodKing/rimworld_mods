@@ -7,6 +7,7 @@ namespace Strata
     // A section of thick rock ceiling gives way over an excavated space,
     // crushing whatever is beneath. Only fires on Strata underground levels and
     // only where there is open floor still capped by heavy rock roof.
+    // Shoring pillars protect nearby cells and reduce how often cave-ins occur.
     public class IncidentWorker_CaveIn : IncidentWorker
     {
         private const int MinBlobCells = 3;
@@ -15,9 +16,16 @@ namespace Strata
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
-            return parms.target is Map map
-                && StrataMapUtility.IsUnderground(map)
-                && TryFindCollapseCell(map, out _);
+            if (parms.target is not Map map || !StrataMapUtility.IsUnderground(map))
+            {
+                return false;
+            }
+            ShoringMapComponent shoring = map.GetComponent<ShoringMapComponent>();
+            if (shoring != null && shoring.ActivePillarCount > 0 && Rand.Chance(0.35f))
+            {
+                return false;
+            }
+            return TryFindCollapseCell(map, out _);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -54,11 +62,15 @@ namespace Strata
 
         private static bool IsCollapsible(IntVec3 c, Map map)
         {
-            // Open, walkable floor still directly under thick rock roof.
-            return c.Standable(map)
-                && map.roofGrid.RoofAt(c) == RoofDefOf.RoofRockThick
-                && c.GetEdifice(map) == null
-                && !c.Fogged(map);
+            if (!c.Standable(map)
+                || map.roofGrid.RoofAt(c) != RoofDefOf.RoofRockThick
+                || c.GetEdifice(map) != null
+                || c.Fogged(map))
+            {
+                return false;
+            }
+            ShoringMapComponent shoring = map.GetComponent<ShoringMapComponent>();
+            return shoring == null || !shoring.CellIsProtected(c);
         }
     }
 }

@@ -5,66 +5,170 @@ using Verse;
 
 namespace Strata
 {
-    // Smoke piling up on a level with nobody on it - a generator left running
-    // in a sealed room downstairs kills the next colonist who walks in.
+    internal static class StrataAlertScanCache
+    {
+        private const int ScanInterval = 250;
+
+        public static bool ShouldRescan(ref int lastScanTick)
+        {
+            int tick = Find.TickManager.TicksGame;
+            if (tick - lastScanTick < ScanInterval)
+            {
+                return false;
+            }
+            lastScanTick = tick;
+            return true;
+        }
+    }
+
+    // Harmful gas piling up on a level with nobody on it - a generator left
+    // running in a sealed room downstairs, or a breached gas pocket, kills the
+    // next colonist who walks in.
     public class Alert_SmokeOnVacantLevel : Alert
     {
         private const float WorryThreshold = 0.35f;
 
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
 
         public Alert_SmokeOnVacantLevel()
         {
-            defaultLabel = "Smoke building underground";
-            defaultExplanation = "Combustion smoke is accumulating on a level with no colonists on it. "
-                + "Something is burning down there with no working ventilation - the next person "
-                + "to walk in will be breathing it.";
+            defaultLabel = "Gas building underground";
+            defaultExplanation = "Harmful gas is accumulating on a level with no colonists on it. "
+                + "Something is burning or seeping down there with no working ventilation - the "
+                + "next person to walk in will be breathing it.";
         }
 
         public override AlertReport GetReport()
         {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
             targets.Clear();
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                if (!StrataMapUtility.IsUnderground(map) || map.mapPawns.FreeColonistsSpawnedCount > 0)
+                if (!StrataLevelPerfUtility.IsStrataPocketLevel(map)
+                    || map.mapPawns.FreeColonistsSpawnedCount > 0)
                 {
                     continue;
                 }
-                SmokeMapComponent smoke = map.GetComponent<SmokeMapComponent>();
-                if (smoke != null && smoke.TryGetWorstCloud(out IntVec3 cell, out float density)
+                AtmosphereMapComponent atmosphere = map.GetComponent<AtmosphereMapComponent>();
+                if (atmosphere != null && atmosphere.TryGetWorstHarmfulCloud(out IntVec3 cell, out float density)
                     && density >= WorryThreshold)
                 {
                     targets.Add(new GlobalTargetInfo(cell, map));
                 }
             }
-            return targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
         }
     }
 
-    // Colonists on a level whose every way up is sealed. Deliberate bunkering
-    // is fine; forgetting them down there is not.
+    // Flammable gas pooling in a room that holds an open flame. The room
+    // explodes the moment the gas reaches ignition density - this is the
+    // window to douse the fire or get out.
+    public class Alert_FlammableGasNearFlame : Alert_Critical
+    {
+        private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
+
+        public Alert_FlammableGasNearFlame()
+        {
+            defaultLabel = "Flammable gas near open flame";
+            defaultExplanation = "Flammable gas is pooling in a room that contains an open flame - a "
+                + "torch, a campfire, or a running fuel burner. When the gas thickens past ignition "
+                + "density the room will explode. Extinguish the flame, vent the room, or switch to "
+                + "electric light.";
+        }
+
+        public override AlertReport GetReport()
+        {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
+            targets.Clear();
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                AtmosphereMapComponent atmosphere = maps[i].GetComponent<AtmosphereMapComponent>();
+                if (atmosphere == null)
+                {
+                    continue;
+                }
+                for (int j = 0; j < atmosphere.FlammableRiskCells.Count; j++)
+                {
+                    targets.Add(new GlobalTargetInfo(atmosphere.FlammableRiskCells[j], maps[i]));
+                }
+            }
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
+        }
+    }
+
+    // High-value goods still on linked underground levels while a surface
+    // caravan is being packed.
+    public class Alert_CaravanGoodsBelow : Alert
+    {
+        public Alert_CaravanGoodsBelow()
+        {
+            defaultLabel = "Caravan goods below";
+            defaultExplanation = "Valuable items remain on linked underground levels while a caravan is being formed on the surface. "
+                + "Enable caravan pull in Strata settings or haul them up manually before leaving.";
+            defaultPriority = AlertPriority.Medium;
+        }
+
+        public override AlertReport GetReport()
+        {
+            if (StrataMod.Settings?.caravanPullEnabled != true || !StrataCaravanUtility.CaravanDialogOpen)
+            {
+                return false;
+            }
+            Map surface = StrataCaravanUtility.CaravanFormingMap;
+            if (surface == null)
+            {
+                return false;
+            }
+            return StrataCaravanUtility.CountValuableBelow(surface) > 0
+                ? AlertReport.CulpritIs(new GlobalTargetInfo(surface.Center, surface))
+                : false;
+        }
+    }
+
+    // Colonists on a linked level whose every way back to the surface is sealed.
+    // Deliberate bunkering is fine; forgetting them on B1 or A1 is not.
     public class Alert_ColonistsBelowSealedShaft : Alert
     {
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
 
         public Alert_ColonistsBelowSealedShaft()
         {
-            defaultLabel = "Colonists sealed below";
-            defaultExplanation = "Colonists are on an underground level whose every exit shaft is "
-                + "sealed. They cannot come up until a stairwell or elevator is unsealed.";
+            defaultLabel = "Colonists sealed off";
+            defaultExplanation = "Colonists are on a linked level whose every exit shaft is sealed. "
+                + "They cannot return until a stairwell or elevator is unsealed.";
             defaultPriority = AlertPriority.High;
         }
 
         public override AlertReport GetReport()
         {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
             targets.Clear();
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                if (!StrataMapUtility.IsUnderground(map) || map.mapPawns.FreeColonistsSpawnedCount == 0)
+                bool linked = StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map);
+                if (!linked || map.mapPawns.FreeColonistsSpawnedCount == 0)
                 {
                     continue;
                 }
@@ -78,7 +182,8 @@ namespace Strata
                     targets.Add(colonists[j]);
                 }
             }
-            return targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
         }
 
         private static bool AllExitsSealed(Map map)
@@ -93,10 +198,52 @@ namespace Strata
                 anyExit = true;
                 if (!StrataPortalUtility.IsSealedPortal(exit.entrance ?? (Thing)exit))
                 {
-                    return false; // at least one way up is open
+                    return false; // at least one way home is open
                 }
             }
             return anyExit;
+        }
+    }
+
+    // A mine canary sick or dead from bad air — warns before colonists show hediffs.
+    public class Alert_CanaryWarning : Alert
+    {
+        private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
+
+        public Alert_CanaryWarning()
+        {
+            defaultLabel = "Canary warning";
+            defaultExplanation = "A mine canary is distressed or dead from bad air in a cage. "
+                + "Canaries succumb sooner than colonists — ventilate the room or evacuate before "
+                + "people start coughing, suffocating, or worse.";
+            defaultPriority = AlertPriority.High;
+        }
+
+        public override AlertReport GetReport()
+        {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
+            targets.Clear();
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                List<Building> buildings = map.listerBuildings.allBuildingsColonist;
+                for (int b = 0; b < buildings.Count; b++)
+                {
+                    Building building = buildings[b];
+                    if (building.TryGetComp<CompCanaryCage>() is CompCanaryCage cage && cage.NeedsAttention)
+                    {
+                        targets.Add(new GlobalTargetInfo(building));
+                    }
+                }
+            }
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
         }
     }
 }
