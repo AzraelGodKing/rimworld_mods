@@ -13,9 +13,11 @@ namespace Strata
         public bool gasOverlayRoomLabels = false;
         public bool gasEventsEnabled = true;
         public bool raidPursuitEnabled = true;
-        public bool workRelayEnabled = true;
+        public bool workRelayEnabled = false;
         public bool robotSoftCompatEnabled = true;
         public bool robotWorkRelayEnabled = false;
+        public bool performanceModeEnabled = false;
+        public bool logRobotDiagnostics = false;
         public bool foodRelayEnabled = true;
         public bool restRelayEnabled = true;
         public bool medicalRelayEnabled = true;
@@ -39,6 +41,10 @@ namespace Strata
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;
 
+        public bool WorkRelayActive => workRelayEnabled && !performanceModeEnabled;
+
+        public bool RobotSoftCompatActive => robotSoftCompatEnabled && !performanceModeEnabled;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -48,9 +54,11 @@ namespace Strata
             Scribe_Values.Look(ref gasOverlayRoomLabels, "gasOverlayRoomLabels", defaultValue: false);
             Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
-            Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: false);
             Scribe_Values.Look(ref robotSoftCompatEnabled, "robotSoftCompatEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotWorkRelayEnabled, "robotWorkRelayEnabled", defaultValue: false);
+            Scribe_Values.Look(ref performanceModeEnabled, "performanceModeEnabled", defaultValue: false);
+            Scribe_Values.Look(ref logRobotDiagnostics, "logRobotDiagnostics", defaultValue: false);
             Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref medicalRelayEnabled, "medicalRelayEnabled", defaultValue: true);
@@ -188,6 +196,14 @@ namespace Strata
             Settings.throttleVacantLevels = Settings.hibernateEmptyLevels;
             listing.CheckboxLabeled("Strata_Settings_ReduceBackground".Translate(), ref Settings.reduceBackgroundLevels,
                 "Strata_Settings_ReduceBackgroundDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_PerformanceMode".Translate(), ref Settings.performanceModeEnabled,
+                "Strata_Settings_PerformanceModeDesc".Translate());
+            if (Settings.performanceModeEnabled)
+            {
+                GUI.color = Color.yellow;
+                listing.Label("Strata_Settings_PerformanceModeActive".Translate());
+                GUI.color = Color.white;
+            }
             listing.CheckboxLabeled("Strata_Settings_ShowLevelPerf".Translate(), ref Settings.showLevelPerfInTab,
                 "Strata_Settings_ShowLevelPerfDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_ExplorationSites".Translate(), ref Settings.explorationSitesEnabled,
@@ -208,6 +224,14 @@ namespace Strata
                 listing.CheckboxLabeled("Strata_Settings_BiomesCaverns".Translate(), ref Settings.biomesCavernsCompatEnabled,
                     "Strata_Settings_BiomesCavernsDesc".Translate());
             }
+            listing.Gap();
+
+            Text.Font = GameFont.Medium;
+            listing.Label("Strata_Settings_RobotDiagnostics".Translate());
+            Text.Font = GameFont.Small;
+            listing.CheckboxLabeled("Strata_Settings_LogRobotDiagnostics".Translate(), ref Settings.logRobotDiagnostics,
+                "Strata_Settings_LogRobotDiagnosticsDesc".Translate());
+            DrawRobotDiagnostics(listing);
             listing.Gap();
 
             Text.Font = GameFont.Medium;
@@ -256,6 +280,21 @@ namespace Strata
                 listeningFor = null;
             }
             listing.Gap(2f);
+        }
+
+        private static void DrawRobotDiagnostics(Listing_Standard listing)
+        {
+            foreach (StrataRobotDiagnostics.Counter counter in System.Enum.GetValues(typeof(StrataRobotDiagnostics.Counter)))
+            {
+                listing.Label("Strata_Settings_RobotDiagLine".Translate(
+                    StrataRobotDiagnostics.Label(counter),
+                    StrataRobotDiagnostics.Total(counter).ToString(),
+                    StrataRobotDiagnostics.RatePer60Seconds(counter).ToString()));
+            }
+            if (listing.ButtonText("Strata_Settings_RobotDiagReset".Translate()))
+            {
+                StrataRobotDiagnostics.ResetCounters();
+            }
         }
     }
 }

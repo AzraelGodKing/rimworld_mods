@@ -33,7 +33,7 @@ namespace Strata
             {
                 return;
             }
-            if (StrataMod.Settings != null && !StrataMod.Settings.workRelayEnabled)
+            if (StrataMod.Settings != null && !StrataMod.Settings.WorkRelayActive)
             {
                 return;
             }

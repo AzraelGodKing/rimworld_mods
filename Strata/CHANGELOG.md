@@ -5,13 +5,14 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 ## [Unreleased]
 
 ### Added
+- **Misc. Robots diagnostics** — mod settings section under Threats & performance lists live session counters (total + rate per 60s) for Return2Base prefix, work JobGiver calls, work-relay scans/jobs, EnterPortal relay jobs, and ReachableLevels/BestFirstStep on robot paths; reset button and optional log every 600 ticks (`logRobotDiagnostics`, off by default).
+- **Performance mode** master kill-switch: disables colonist work relay, Misc. Robots soft-compat, external JobGiver relay; atmosphere cycles run 4× slower and skip gas motes on non-viewed pocket levels.
 - `Languages/English/Keyed/Strata.xml` — C# player strings (mod settings, alerts, messages, gizmos, inspect text, letters) with `.Translate()` wiring.
 - `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
 
 ### Changed
+- Colonist **work relay off by default** (`workRelayEnabled`); 7500-tick scan cooldown when enabled so idle colonists do not run expensive cross-level work probes every think pass.
 - Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
-
-### Changed
 - Compressed `About/Preview.png` for smaller Workshop/About footprint.
 
 ### Fixed

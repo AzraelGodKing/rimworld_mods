@@ -30,19 +30,21 @@ namespace Strata
 
         public static void Postfix(ThinkNode_JobGiver __instance, Pawn pawn, ref ThinkResult __result)
         {
+            if (!StrataPawnUtility.IsMiscRobot(pawn))
+            {
+                return;
+            }
+            StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.WorkSeekingGiverCall);
             if (__result.Job != null)
             {
                 return;
             }
             if (StrataMod.Settings != null
-                && (!StrataMod.Settings.robotSoftCompatEnabled || !StrataMod.Settings.robotWorkRelayEnabled))
+                && (!StrataMod.Settings.RobotSoftCompatActive || !StrataMod.Settings.robotWorkRelayEnabled))
             {
                 return;
             }
-            if (!StrataPawnUtility.IsMiscRobot(pawn))
-            {
-                return;
-            }
+            StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.WorkRelayPostfixHit);
             if (PawnRelay.IsRobotWorkScanCooldown(pawn))
             {
                 return;
@@ -58,15 +60,19 @@ namespace Strata
                 return;
             }
             PawnRelay.TouchRobotWorkScan(pawn);
+            StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.ReachableLevelsCall);
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
             {
                 if (!StrataPawnUtility.MiscRobotHasWorkOn(pawn, link.map))
                 {
                     continue;
                 }
+                StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.BestFirstStepCall);
                 Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Work, 2);
                 if (job != null)
                 {
+                    StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.WorkRelayJobIssued);
+                    StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.EnterPortalRobotJob);
                     __result = new ThinkResult(job, __instance, JobTag.MiscWork);
                     return;
                 }

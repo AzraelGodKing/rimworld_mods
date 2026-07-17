@@ -10,7 +10,7 @@
   <Strata_Settings_Reset>Reset</Strata_Settings_Reset>
   <Strata_Settings_ColonistRelays>Colonist relays</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Work relay</Strata_Settings_WorkRelay>
-  <Strata_Settings_WorkRelayDesc>Idle colonists commute to other levels that have work.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_WorkRelayDesc>Idle colonists commute to other levels that have work. Off by default — enable only if you want cross-floor work routing.</Strata_Settings_WorkRelayDesc>
   <Strata_Settings_RobotSoftCompat>Misc. Robots soft-compat</Strata_Settings_RobotSoftCompat>
   <Strata_Settings_RobotSoftCompatDesc>Cross-level portal routing for Misc. Robots (return-to-base when recharge is on another level). Turn off to A/B test whether Strata robot hooks cause lag.</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Misc. Robots work relay</Strata_Settings_RobotWorkRelay>
@@ -47,6 +47,22 @@
   <Strata_Settings_HibernateEmptyDesc>Vacant A+ and B+ pocket maps run vanilla ambient sims 1 tick in 4 and Strata gas 1 cycle in 8. Fully live on the map you are viewing or any level with pawns on it.</Strata_Settings_HibernateEmptyDesc>
   <Strata_Settings_ReduceBackground>Reduce background levels</Strata_Settings_ReduceBackground>
   <Strata_Settings_ReduceBackgroundDesc>When colonists are on a linked level you are not viewing, Strata gas and O₂/CO₂ run 4× slower and skip overlay rebuilds. The map you are looking at stays full speed.</Strata_Settings_ReduceBackgroundDesc>
+  <Strata_Settings_PerformanceMode>Performance mode (master kill-switch)</Strata_Settings_PerformanceMode>
+  <Strata_Settings_PerformanceModeDesc>Disables colonist work relay, Misc. Robots soft-compat, and external JobGiver work relay. Also runs atmosphere sims 4× slower on every level and skips gas motes on levels you are not viewing. Use to A/B test Strata lag.</Strata_Settings_PerformanceModeDesc>
+  <Strata_Settings_PerformanceModeActive>Performance mode is ON — cross-level work relays and robot soft-compat are suppressed.</Strata_Settings_PerformanceModeActive>
+  <Strata_Settings_RobotDiagnostics>Misc. Robots diagnostics</Strata_Settings_RobotDiagnostics>
+  <Strata_Settings_LogRobotDiagnostics>Log robot diagnostics every 600 ticks</Strata_Settings_LogRobotDiagnostics>
+  <Strata_Settings_LogRobotDiagnosticsDesc>Writes session counter totals and 60-second rates to the log. Off by default.</Strata_Settings_LogRobotDiagnosticsDesc>
+  <Strata_Settings_RobotDiagLine>{0}: {1} total, {2}/60s</Strata_Settings_RobotDiagLine>
+  <Strata_Settings_RobotDiagReset>Reset robot diagnostic counters</Strata_Settings_RobotDiagReset>
+  <Strata_RobotDiag_ReturnBasePrefix>Return2Base prefix hits</Strata_RobotDiag_ReturnBasePrefix>
+  <Strata_RobotDiag_ReturnBasePortal>Return2Base portal jobs</Strata_RobotDiag_ReturnBasePortal>
+  <Strata_RobotDiag_WorkSeekingCall>Work JobGiver TryIssueJobPackage (robots)</Strata_RobotDiag_WorkSeekingCall>
+  <Strata_RobotDiag_WorkRelayHit>Work relay postfix scans</Strata_RobotDiag_WorkRelayHit>
+  <Strata_RobotDiag_WorkRelayJob>Work relay jobs issued</Strata_RobotDiag_WorkRelayJob>
+  <Strata_RobotDiag_EnterPortalJob>EnterPortal relay jobs (robots)</Strata_RobotDiag_EnterPortalJob>
+  <Strata_RobotDiag_ReachableLevels>ReachableLevels calls (robot paths)</Strata_RobotDiag_ReachableLevels>
+  <Strata_RobotDiag_BestFirstStep>BestFirstStep calls (robot paths)</Strata_RobotDiag_BestFirstStep>
   <Strata_Settings_ShowLevelPerf>Show level performance in Levels tab</Strata_Settings_ShowLevelPerf>
   <Strata_Settings_ShowLevelPerfDesc>List pawn counts and hibernation status for each level in the Levels tab.</Strata_Settings_ShowLevelPerfDesc>
   <Strata_Settings_ExplorationSites>Exploration quest sites</Strata_Settings_ExplorationSites>

@@ -9,6 +9,7 @@ namespace Strata
     {
         public const int AtmosphereReducedMultiplier = 4;
         public const int AtmosphereVacantMultiplier = 8;
+        public const int AtmospherePerformanceMultiplier = 4;
 
         private static readonly HashSet<int> forcedHibernateMapIds = new HashSet<int>();
 
@@ -115,15 +116,20 @@ namespace Strata
 
         public static int AtmosphereCycleMultiplier(Map map)
         {
+            int multiplier = 1;
             if (ShouldThrottleAmbient(map))
             {
-                return AtmosphereVacantMultiplier;
+                multiplier = AtmosphereVacantMultiplier;
             }
-            if (ShouldReduceAtmosphere(map))
+            else if (ShouldReduceAtmosphere(map))
             {
-                return AtmosphereReducedMultiplier;
+                multiplier = AtmosphereReducedMultiplier;
             }
-            return 1;
+            if (StrataMod.Settings?.performanceModeEnabled == true)
+            {
+                multiplier *= AtmospherePerformanceMultiplier;
+            }
+            return multiplier;
         }
 
         public static bool IsHibernating(Map map)

@@ -20,6 +20,7 @@ namespace Strata
             PawnRelay.ResetSession();
             RelayClaims.ResetSession();
             MapComponent_RaidPursuit.ResetSession();
+            StrataRobotDiagnostics.ResetSession();
             StrataResources.ClearCaches();
 
             UpgradeVanillaCaveExits();

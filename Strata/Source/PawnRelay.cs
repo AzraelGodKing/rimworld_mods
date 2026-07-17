@@ -19,15 +19,19 @@ namespace Strata
         // recharge room is on another level — throttle pathfinding retries.
         private const int ReturnBaseRetryCooldownTicks = 6000;
 
-        // Idle Misc. Robots with null work jobs scan linked levels every think
+        // Idle colonists with null work jobs scan linked levels every think
         // pass; throttle that BFS/work probe separately from relay cooldown.
         private const int RobotWorkScanCooldownTicks = 7500;
+
+        private const int ColonistWorkScanCooldownTicks = 7500;
 
         private static readonly Dictionary<int, int> lastRelayTick = new Dictionary<int, int>();
 
         private static readonly Dictionary<int, int> lastReturnBaseAttemptTick = new Dictionary<int, int>();
 
         private static readonly Dictionary<int, int> lastRobotWorkScanTick = new Dictionary<int, int>();
+
+        private static readonly Dictionary<int, int> lastColonistWorkScanTick = new Dictionary<int, int>();
 
         // Tick-stamped and keyed by pawn ID, so entries from one save are
         // garbage in another (loading an earlier save leaves future-dated
@@ -37,6 +41,7 @@ namespace Strata
             lastRelayTick.Clear();
             lastReturnBaseAttemptTick.Clear();
             lastRobotWorkScanTick.Clear();
+            lastColonistWorkScanTick.Clear();
             StrataPawnUtility.ResetMiscRobotCaches();
             LevelGraph.InvalidateCache();
         }
@@ -83,6 +88,21 @@ namespace Strata
             if (pawn != null)
             {
                 lastRobotWorkScanTick[pawn.thingIDNumber] = Find.TickManager.TicksGame;
+            }
+        }
+
+        internal static bool IsColonistWorkScanCooldown(Pawn pawn)
+        {
+            return pawn != null
+                && lastColonistWorkScanTick.TryGetValue(pawn.thingIDNumber, out int tick)
+                && Find.TickManager.TicksGame - tick < ColonistWorkScanCooldownTicks;
+        }
+
+        internal static void TouchColonistWorkScan(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                lastColonistWorkScanTick[pawn.thingIDNumber] = Find.TickManager.TicksGame;
             }
         }
 

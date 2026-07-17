@@ -506,12 +506,23 @@ namespace Strata
             if (!NeedsCellDensityRebuild() || ShouldSkipOverlayRebuild())
             {
                 AffectPawns();
-                ThrowMotes();
+                MaybeThrowMotes();
                 return;
             }
 
             RebuildCellDensity();
             AffectPawns();
+            MaybeThrowMotes();
+        }
+
+        private void MaybeThrowMotes()
+        {
+            if (StrataMod.Settings?.performanceModeEnabled == true
+                && Find.CurrentMap != map
+                && StrataLevelPerfUtility.IsStrataPocketLevel(map))
+            {
+                return;
+            }
             ThrowMotes();
         }
 

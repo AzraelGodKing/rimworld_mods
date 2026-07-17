@@ -28,7 +28,7 @@ namespace Strata
         // job giver pathfinds toward an unreachable room every think pass.
         public static bool Prefix(ThinkNode __instance, Pawn pawn, ref ThinkResult __result)
         {
-            if (StrataMod.Settings != null && !StrataMod.Settings.robotSoftCompatEnabled)
+            if (StrataMod.Settings != null && !StrataMod.Settings.RobotSoftCompatActive)
             {
                 return true;
             }
@@ -36,6 +36,7 @@ namespace Strata
             {
                 return true;
             }
+            StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.ReturnBasePrefixHit);
             if (pawn.CurJobDef == JobDefOf.EnterPortal)
             {
                 return true;
@@ -58,6 +59,8 @@ namespace Strata
                 __result = ThinkResult.NoJob;
                 return false;
             }
+            StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.ReachableLevelsCall);
+            StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.BestFirstStepCall);
             MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, rechargeMap, pawn.Position);
             if (firstStep == null)
             {
@@ -68,6 +71,8 @@ namespace Strata
             Job portalJob = PawnRelay.MakeReturnBasePortalJob(pawn, firstStep);
             if (portalJob != null)
             {
+                StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.ReturnBasePortalJob);
+                StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.EnterPortalRobotJob);
                 PawnRelay.TouchReturnBaseRetry(pawn);
                 __result = new ThinkResult(portalJob, __instance, JobTag.Misc);
             }
