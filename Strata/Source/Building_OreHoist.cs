@@ -69,7 +69,7 @@ namespace Strata
         {
             if (IsAutoSpawned && parentAbove is { Spawned: true })
             {
-                return "It is driven by the ore hoist on the level above.";
+                return "Strata_OreHoistDriven".Translate();
             }
             return base.DeconstructibleBy(faction);
         }
@@ -239,7 +239,7 @@ namespace Strata
             cell.GetFirstMineable(other)?.Destroy(DestroyMode.Vanish);
             var child = (Building_OreHoist)GenSpawn.Spawn(ThingMaker.MakeThing(def), cell, other);
             child.SetFaction(Faction.OfPlayer);
-            Messages.Message("Ore hoist extended a skip to the linked level.", child, MessageTypeDefOf.PositiveEvent);
+            Messages.Message("Strata_OreHoistExtended".Translate(), child, MessageTypeDefOf.PositiveEvent);
             return child;
         }
 

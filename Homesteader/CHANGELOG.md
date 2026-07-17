@@ -6,7 +6,8 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ### Added
 - **Kats Effect** — rare Misc storyteller event that only fires when a finished 27 statue/monument is on the home map. Hybrid anomalous-broadcast letter (with a short Foundation addendum), temporary heat dome (~+10°C), short brain-rot hediff, small silver Super Chat drain (27–81), and a personal Kats directive mood (+12, ~1 day). Min refire 27 days.
-- `Languages/English/` folder scaffolding for future translations.
+- `Languages/English/Keyed/Homesteader.xml` — all C# player strings (wash tub, passive cooling, favorite food inspect, Kats Effect letter body) with `.Translate()` wiring.
+- `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
 - **Homestead livestock:** chicken coop (periodic eggs) and goat pen (periodic milk); animal mash recipe at the hearth (barley/pumpkin/hay).
 - **Charcuterie:** render lard or tallow from meat; stuff sausage from salted/smoked meat or jerky + fat + herbs (hearth).
 - **Homestead textiles:** flax crop, spinning wheel (flax/wool → homespun cloth), loom (quilt); quilted bed now costs a homestead quilt (comforts + textiles).
@@ -16,6 +17,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - Soap can render with lard or tallow as well as butter. Preserves shelf accepts sausage, canned goods, juice, and rendered fats.
 
 ### Changed
+- Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
 - Organized Homesteader sources: C# merged into `PassiveCooling.cs`, `WashEffects.cs`, and `FavoriteFood.cs`; expansion XML renamed into domain files (livestock/soil/textiles/pantry/yard-and-pantry); hediffs/thoughts consolidated; composted soil lives under homestead terrain.
 - Passive coolers (root cellar / icehouse / springhouse) now apply the **coolest** overlapping ceiling to a cell instead of an arbitrary cooler’s temp.
 - Docs: full item catalog moved to its own page (`docs/homesteader-catalog.html`).

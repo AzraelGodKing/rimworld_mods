@@ -58,12 +58,12 @@ namespace Strata
             Room intake = IntakeRoom;
             if (intake == null)
             {
-                return "Intake side must face an enclosed room.";
+                return "Strata_ExhaustVentIntake".Translate();
             }
             if (SmokeVentUtility.ExhaustOpensIntoDuct(parent, out HashSet<IntVec3> network)
                 && !SmokeVentUtility.DuctNetworkReachesOutdoor(parent.Map, network))
             {
-                return "Duct run does not reach outdoors — fan cannot vent.";
+                return "Strata_ExhaustVentNoOutdoors".Translate();
             }
             return null;
         }

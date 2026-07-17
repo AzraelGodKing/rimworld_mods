@@ -35,8 +35,7 @@ namespace Homesteader
 
         public override string CompInspectStringExtra()
         {
-            return "Passive cool storage: items (and adjacent indoor cells) stay at or below "
-                + Props.maxTemperature.ToStringTemperature();
+            return "Homesteader_PassiveCoolStorage".Translate(Props.maxTemperature.ToStringTemperature());
         }
     }
 

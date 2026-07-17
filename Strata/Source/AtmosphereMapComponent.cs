@@ -1757,10 +1757,8 @@ namespace Strata
                     cloud.density[StrataGasDefOf.Strata_Oxygen.index] *= 0.35f;
                 }
             }
-            Find.LetterStack.ReceiveLetter("Gas ignition",
-                $"A pocket of flammable gas has ignited on contact with {flame.LabelShort} and exploded. "
-                + "The blast leaves black damp in the room — ventilate and restore oxygen before sending people back. "
-                + "Keep open flames away from gas seeps, or mine by electric light.",
+            Find.LetterStack.ReceiveLetter("Strata_GasIgnitionLetterTitle".Translate(),
+                "Strata_GasIgnitionLetterText".Translate(flame.LabelShort),
                 LetterDefOf.NegativeEvent, new TargetInfo(flame.Position, map));
         }
 

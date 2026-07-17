@@ -5,7 +5,11 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 ## [Unreleased]
 
 ### Added
-- `Languages/English/` folder scaffolding for future translations.
+- `Languages/English/Keyed/Strata.xml` — C# player strings (mod settings, alerts, messages, gizmos, inspect text, letters) with `.Translate()` wiring.
+- `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
+
+### Changed
+- Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
 
 ### Changed
 - Compressed `About/Preview.png` for smaller Workshop/About footprint.

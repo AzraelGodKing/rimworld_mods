@@ -78,23 +78,22 @@ namespace Homesteader
         private static string BuildLetterText(int silverTaken)
         {
             var sb = new StringBuilder();
-            sb.Append("An anomalous broadcast has locked onto your colony's 27 monument frequency. ");
-            sb.Append("A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — \"brain rot,\" they call it.");
+            sb.Append("Homesteader_KatsLetter_Open".Translate());
             sb.AppendLine();
             sb.AppendLine();
             if (silverTaken > 0)
             {
-                sb.Append("Colony accounts show ").Append(silverTaken).Append(" silver diverted as a \"Super Chat.\"");
+                sb.Append("Homesteader_KatsLetter_SilverTaken".Translate(silverTaken));
             }
             else
             {
-                sb.Append("The broadcast asked for a Super Chat, but the colony had no silver to spare.");
+                sb.Append("Homesteader_KatsLetter_NoSilver".Translate());
             }
             sb.AppendLine();
             sb.AppendLine();
             sb.AppendLine("---");
-            sb.AppendLine("Foundation addendum // Item # SCP-27272727 // Keter (Adorable)");
-            sb.Append("Containment note: hydrate / medicate / masticate. Do not look away from the number.");
+            sb.AppendLine("Homesteader_KatsLetter_FoundationHeader".Translate());
+            sb.Append("Homesteader_KatsLetter_ContainmentNote".Translate());
             return sb.ToString();
         }
 

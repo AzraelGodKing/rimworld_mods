@@ -16,15 +16,15 @@ namespace Strata
         {
             if (!StrataGravshipUtility.OdysseyActive)
             {
-                return "Requires the Odyssey DLC.";
+                return "Strata_Place_RequiresOdyssey".Translate();
             }
             if (StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map))
             {
-                return "Build gravship stairs on the ship deck, not on a linked Strata level.";
+                return "Strata_Place_GravshipNotLinkedLevel".Translate();
             }
             if (StrataGravshipUtility.FindGravEngine(map) == null)
             {
-                return "Needs a grav engine on this map.";
+                return "Strata_Place_NeedsGravEngine".Translate();
             }
             ThingDef thingDef = def as ThingDef;
             IntVec2 size = thingDef?.size ?? IntVec2.One;
@@ -32,7 +32,7 @@ namespace Strata
             {
                 if (!StrataGravshipUtility.CellOnGravship(map, cell))
                 {
-                    return "Must be built on the gravship substructure.";
+                    return "Strata_Place_MustBeSubstructure".Translate();
                 }
             }
 

@@ -261,7 +261,7 @@ namespace Homesteader
                 sb.AppendLine();
             }
 
-            sb.Append("Favorite food: ").Append(fav.label);
+            sb.Append("Homesteader_FavoriteFoodInspect".Translate(fav.label));
             __result = sb.ToString().TrimEnd();
         }
     }

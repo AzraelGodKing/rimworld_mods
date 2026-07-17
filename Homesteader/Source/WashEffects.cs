@@ -56,7 +56,7 @@ namespace Homesteader
             CompRefuelable fuel = parent.TryGetComp<CompRefuelable>();
             if (fuel == null || fuel.Fuel < Props.soapFuelPerWash)
             {
-                return "Needs soap in the wash tub.";
+                return "Homesteader_NeedsSoapInWashTub".Translate();
             }
 
             return true;

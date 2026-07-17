@@ -137,7 +137,7 @@ namespace Strata
             if (room <= 0)
             {
                 Messages.Message(
-                    $"{parent.LabelShort} food storage is full.",
+                    "Strata_CageFood_Full".Translate(parent.LabelShort),
                     parent,
                     MessageTypeDefOf.RejectInput,
                     historical: false);
@@ -154,7 +154,7 @@ namespace Strata
             if (source == null)
             {
                 Messages.Message(
-                    $"No bird food within reach to stock {parent.LabelShort}.",
+                    "Strata_CageFood_NoFood".Translate(parent.LabelShort),
                     parent,
                     MessageTypeDefOf.RejectInput,
                     historical: false);
@@ -172,7 +172,7 @@ namespace Strata
                 return false;
             }
             Messages.Message(
-                $"Stocked {parent.LabelShort} with {chunk.Label}.",
+                "Strata_CageFood_Stocked".Translate(parent.LabelShort, chunk.Label),
                 parent,
                 MessageTypeDefOf.PositiveEvent);
             return true;
@@ -213,9 +213,8 @@ namespace Strata
             }
             yield return new Command_Action
             {
-                defaultLabel = "Stock food",
-                defaultDesc =
-                    $"Load up to {Props.maxStacks} stacks of hay or other bird food from nearby into this cage.",
+                defaultLabel = "Strata_CageFood_StockLabel".Translate(),
+                defaultDesc = "Strata_CageFood_StockDesc".Translate(Props.maxStacks),
                 icon = ContentFinder<Texture2D>.Get("UI/Commands/LoadTransporter", reportFailure: false),
                 action = () => TryStockFromNearby(Props.maxStacks),
             };
@@ -225,13 +224,13 @@ namespace Strata
         {
             if (UsesSustainMode)
             {
-                return "Cage feeding: hunger sustained (mod setting).";
+                return "Strata_CageFood_SustainMode".Translate();
             }
             if (!HasFood)
             {
-                return "Cage food empty — stock hay or kibble.";
+                return "Strata_CageFood_Empty".Translate();
             }
-            return "Cage food: " + innerContainer.TotalStackCount + " / " + Props.maxStacks;
+            return "Strata_CageFood_Count".Translate(innerContainer.TotalStackCount, Props.maxStacks);
         }
     }
 }
