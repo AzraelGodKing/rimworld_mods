@@ -943,25 +943,49 @@ namespace Strata
                     }
                     Room neighbor = null;
                     bool exterior = false;
-                    foreach (IntVec3 dir in GenAdj.CardinalDirections)
+                    if (isVent)
                     {
-                        IntVec3 beyond = opening.Position + dir;
-                        if (!beyond.InBounds(map))
-                        {
-                            continue;
-                        }
-                        Room other = beyond.GetRoom(map);
-                        if (other == null || other == room || other.IsDoorway)
-                        {
-                            continue;
-                        }
-                        if (other.PsychologicallyOutdoors || other.UsesOutdoorTemperature)
+                        if (SmokeVentUtility.VentLeadsOutdoors(opening, room))
                         {
                             exterior = true;
                         }
                         else
                         {
-                            neighbor = other;
+                            Room exhaustRoom = SmokeVentUtility.ExhaustRoom(opening);
+                            if (exhaustRoom != null && exhaustRoom != room && !exhaustRoom.IsDoorway
+                                && !exhaustRoom.UsesOutdoorTemperature && exhaustRoom.CellCount > 0)
+                            {
+                                neighbor = exhaustRoom;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (IntVec3 dir in GenAdj.CardinalDirections)
+                        {
+                            IntVec3 beyond = opening.Position + dir;
+                            if (!beyond.InBounds(map))
+                            {
+                                continue;
+                            }
+                            if (SmokeVentUtility.CellIsOutdoor(map, beyond))
+                            {
+                                exterior = true;
+                                continue;
+                            }
+                            Room other = beyond.GetRoom(map);
+                            if (other == null || other == room || other.IsDoorway)
+                            {
+                                continue;
+                            }
+                            if (other.PsychologicallyOutdoors || other.UsesOutdoorTemperature)
+                            {
+                                exterior = true;
+                            }
+                            else
+                            {
+                                neighbor = other;
+                            }
                         }
                     }
                     if (exterior)
@@ -1155,7 +1179,7 @@ namespace Strata
                 }
                 // Includes non-edifice wall-mounted vents (e.g. VTE_WallMountedVent).
                 Building vent = SmokeVentUtility.FindOpenVentAt(roomMap, cell);
-                if (vent != null && SmokeVentUtility.OpeningLeadsOutdoors(vent, room))
+                if (vent != null && SmokeVentUtility.VentLeadsOutdoors(vent, room))
                 {
                     return true;
                 }

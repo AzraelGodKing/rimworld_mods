@@ -68,7 +68,7 @@ namespace Strata
                     continue;
                 }
                 Building vent = FindOpenVentAt(map, cell);
-                if (vent != null && OpeningLeadsOutdoors(vent, room))
+                if (vent != null && VentLeadsOutdoors(vent, room))
                 {
                     return true;
                 }
@@ -209,6 +209,10 @@ namespace Strata
                 {
                     continue;
                 }
+                if (CellIsOutdoor(map, cell))
+                {
+                    return true;
+                }
                 Room other = cell.GetRoom(map);
                 if (other == null || other == from || other.IsDoorway)
                 {
@@ -220,6 +224,24 @@ namespace Strata
                 }
             }
             return false;
+        }
+
+        // Wall vents bridge through the wall: the exhaust side (+FacingCell) may
+        // be open air even when the room footprint only touches the intake cell.
+        public static bool VentLeadsOutdoors(Building vent, Room from)
+        {
+            if (!IsOpenVent(vent))
+            {
+                return false;
+            }
+            Map map = vent.Map;
+            if (CellIsOutdoor(map, ExhaustCell(vent)))
+            {
+                return true;
+            }
+            Room exhaustRoom = ExhaustRoom(vent);
+            return exhaustRoom != null && exhaustRoom != from && !exhaustRoom.IsDoorway
+                && (exhaustRoom.PsychologicallyOutdoors || exhaustRoom.UsesOutdoorTemperature);
         }
 
         // A vanilla wall vent, VTE-style wall-mounted vent, or similarly named
