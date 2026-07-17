@@ -50,6 +50,8 @@
   <Strata_Settings_PerformanceMode>Performance mode (master kill-switch)</Strata_Settings_PerformanceMode>
   <Strata_Settings_PerformanceModeDesc>Disables colonist work relay, Misc. Robots soft-compat, and external JobGiver work relay. Also runs atmosphere sims 4× slower on every level and skips gas motes on levels you are not viewing. Use to A/B test Strata lag.</Strata_Settings_PerformanceModeDesc>
   <Strata_Settings_PerformanceModeActive>Performance mode is ON — cross-level work relays and robot soft-compat are suppressed.</Strata_Settings_PerformanceModeActive>
+  <Strata_Settings_OffThreadAtmosphere>Off-thread O₂/CO₂ diffusion</Strata_Settings_OffThreadAtmosphere>
+  <Strata_Settings_OffThreadAtmosphereDesc>Runs the per-cell cavern diffusion pass on a background thread (snapshot on main thread, apply on main thread). Reduces hitching on large underground maps. On by default; turn off if you suspect atmosphere oddities.</Strata_Settings_OffThreadAtmosphereDesc>
   <Strata_Settings_RobotDiagnostics>Misc. Robots diagnostics</Strata_Settings_RobotDiagnostics>
   <Strata_Settings_LogRobotDiagnostics>Log robot diagnostics every 600 ticks</Strata_Settings_LogRobotDiagnostics>
   <Strata_Settings_LogRobotDiagnosticsDesc>Writes session counter totals and 60-second rates to the log. Off by default.</Strata_Settings_LogRobotDiagnosticsDesc>

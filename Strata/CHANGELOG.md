@@ -5,6 +5,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 ## [Unreleased]
 
 ### Added
+- **Off-thread atmosphere work** — O₂/CO₂ cavern diffusion (the per-cell cardinal pass over open chambers) snapshots gas arrays and skip masks on the main thread, computes on a background worker, and applies results on the next atmosphere cycle. Setting: `Off-thread O₂/CO₂ diffusion` under Threats & performance (default ON; requires breathing sim). Startup log: `[Strata] Off-thread work: enabled=...`.
 - **Misc. Robots diagnostics** — mod settings section under Threats & performance lists live session counters (total + rate per 60s) for recharge/return relay prefix/postfix fixes, work JobGiver calls, work-relay scans/jobs, EnterPortal relay jobs, and ReachableLevels/BestFirstStep on robot paths; reset button and optional log every 600 ticks (`logRobotDiagnostics`, off by default).
 - **Performance mode** master kill-switch: disables colonist work relay, Misc. Robots soft-compat, external JobGiver relay; atmosphere cycles run 4× slower and skip gas motes on non-viewed pocket levels.
 - `Languages/English/Keyed/Strata.xml` — C# player strings (mod settings, alerts, messages, gizmos, inspect text, letters) with `.Translate()` wiring.

@@ -8,7 +8,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "30bf5d8+relay-migrate";
+        public const string BuildStamp = "offthread-atmosphere";
 
         public static void LogStartup()
         {
@@ -31,6 +31,7 @@ namespace Strata
 
             Log.Message("[Strata] Soft-compat build " + BuildStamp + " loaded from "
                 + path + " (modified " + writeTime + "); " + relaySummary + ".");
+            StrataOffThreadWork.LogStartup();
         }
     }
 }

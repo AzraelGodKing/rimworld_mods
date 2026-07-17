@@ -20,6 +20,7 @@ namespace Strata
         public bool robotSoftCompatEnabled = true;
         public bool robotWorkRelayEnabled = false;
         public bool performanceModeEnabled = false;
+        public bool offThreadAtmosphere = true;
         public bool logRobotDiagnostics = false;
         public bool foodRelayEnabled = true;
         public bool restRelayEnabled = true;
@@ -62,6 +63,7 @@ namespace Strata
             Scribe_Values.Look(ref robotSoftCompatEnabled, "robotSoftCompatEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotWorkRelayEnabled, "robotWorkRelayEnabled", defaultValue: false);
             Scribe_Values.Look(ref performanceModeEnabled, "performanceModeEnabled", defaultValue: false);
+            Scribe_Values.Look(ref offThreadAtmosphere, "offThreadAtmosphere", defaultValue: true);
             Scribe_Values.Look(ref logRobotDiagnostics, "logRobotDiagnostics", defaultValue: false);
             Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
@@ -235,6 +237,8 @@ namespace Strata
                 listing.Label("Strata_Settings_PerformanceModeActive".Translate());
                 GUI.color = Color.white;
             }
+            listing.CheckboxLabeled("Strata_Settings_OffThreadAtmosphere".Translate(), ref Settings.offThreadAtmosphere,
+                "Strata_Settings_OffThreadAtmosphereDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_ShowLevelPerf".Translate(), ref Settings.showLevelPerfInTab,
                 "Strata_Settings_ShowLevelPerfDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_ExplorationSites".Translate(), ref Settings.explorationSitesEnabled,

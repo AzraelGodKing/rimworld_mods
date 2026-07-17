@@ -22,6 +22,7 @@ namespace Strata
         private float[] co2;
         private float[] scratchO2;
         private float[] scratchCo2;
+        private bool[] skipDiffusionCell;
 
         public AtmosphereBreathGrid(Map map)
         {
@@ -35,12 +36,68 @@ namespace Strata
                 return;
             }
             EnsureArrays();
+            bool appliedDiff = false;
+            if (StrataOffThreadWork.OffThreadAtmosphereEnabled)
+            {
+                int tick = Find.TickManager?.TicksGame ?? 0;
+                StrataOffThreadWork.TryDrainBreathDiffusion(map, o2, co2, tick, out appliedDiff);
+            }
             ApplyNaturalRoofAmbient();
-            DiffuseOpenCavern();
+            if (StrataOffThreadWork.OffThreadAtmosphereEnabled)
+            {
+                if (!TryEnqueueOffThreadDiffusion())
+                {
+                    if (!appliedDiff && StrataOffThreadWork.HasPendingBreathDiffusion(map.uniqueID))
+                    {
+                        StrataOffThreadWork.CancelMap(map.uniqueID);
+                        DiffuseOpenCavern();
+                    }
+                }
+            }
+            else
+            {
+                DiffuseOpenCavern();
+            }
             atmosphere.ProcessBreathPlants(this);
             ProcessBreathing(atmosphere);
             EqualizeColonySealedRooms(atmosphere);
             SyncRoomClouds(atmosphere);
+        }
+
+        private bool TryEnqueueOffThreadDiffusion()
+        {
+            if (StrataOffThreadWork.HasPendingBreathDiffusion(map.uniqueID))
+            {
+                return false;
+            }
+            EnsureSkipDiffusionMask();
+            return StrataOffThreadWork.TryEnqueueBreathDiffusion(
+                map, o2, co2, skipDiffusionCell, Find.TickManager.TicksGame);
+        }
+
+        private void EnsureSkipDiffusionMask()
+        {
+            int cells = map.cellIndices.NumGridCells;
+            if (skipDiffusionCell == null || skipDiffusionCell.Length != cells)
+            {
+                skipDiffusionCell = new bool[cells];
+            }
+            else
+            {
+                System.Array.Clear(skipDiffusionCell, 0, cells);
+            }
+            foreach (IntVec3 cell in map.AllCells)
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+                Room room = cell.GetRoom(map);
+                if (room != null && StrataRoomUtility.RoomIsColonyBuiltEnclosure(room))
+                {
+                    skipDiffusionCell[map.cellIndices.CellToIndex(cell)] = true;
+                }
+            }
         }
 
         public void EmitOxygenPump(IntVec3 center, float emissionPerCycle, Room room, AtmosphereMapComponent atmosphere)
@@ -346,6 +403,7 @@ namespace Strata
                 co2 = new float[cells];
                 scratchO2 = null;
                 scratchCo2 = null;
+                skipDiffusionCell = null;
             }
         }
 
