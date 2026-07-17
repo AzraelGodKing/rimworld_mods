@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    WorkGiver_DoBill only starts jobs on buildings listed in fixedBillGiverDefs.
+    Without this, homestead worktables accept bills in the UI but pawns never work them.
+  -->
+  <WorkGiverDef>
+    <defName>Homesteader_DoBillsCook</defName>
+    <label>do bills at homestead production</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Cooking</workType>
+    <priorityInType>95</priorityInType>
+    <fixedBillGiverDefs>
+      <li>Homesteader_GrainMill</li>
+      <li>Homesteader_ButterChurn</li>
+      <li>Homesteader_CheesePress</li>
+      <li>Homesteader_DryingRack</li>
+      <li>Homesteader_CuringRack</li>
+      <li>Homesteader_Smokehouse</li>
+      <li>Homesteader_PicklingCrock</li>
+      <li>Homesteader_HomesteadHearth</li>
+      <li>Homesteader_JamCauldron</li>
+      <li>Homesteader_BrewingBench</li>
+    </fixedBillGiverDefs>
+    <verb>work at</verb>
+    <gerund>working at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+</Defs>
