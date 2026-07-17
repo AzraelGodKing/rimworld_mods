@@ -7,8 +7,12 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 ### Added
 - `Languages/English/` folder scaffolding for future translations.
 
+### Changed
+- Compressed `About/Preview.png` for smaller Workshop/About footprint.
+
 ### Fixed
 - Smoke/gas ventilation recognizes wall-mounted vents that sit on walls (`isEdifice=false`), including Vanilla Temperature Expanded `VTE_WallMountedVent` and similarly named wall vents (soft-compat, no VTE dependency). Surface rooms vented that way clear smoke like vanilla vents; underground outdoor rules unchanged.
+- Misc. Robots hauler/cleaner bots no longer spam `started 10 Goto jobs/tick` when `Return2BaseRoom` targets a recharge-station room on another Strata level — soft-compat routes via `EnterPortal` instead (no AIRobot assembly reference).
 
 - Irrigation bridge uses Homesteader water defs (`Wellspring_*`); standalone Wellspring retired.
 

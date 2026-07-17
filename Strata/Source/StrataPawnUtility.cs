@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -22,6 +23,10 @@ namespace Strata
 
         private static bool miscRobotTypeResolved;
 
+        private static FieldInfo miscRobotRechargeField;
+
+        private static bool miscRobotRechargeFieldResolved;
+
         public static bool IsMiscRobot(Pawn pawn)
         {
             if (pawn == null)
@@ -34,6 +39,28 @@ namespace Strata
                 miscRobotTypeResolved = true;
             }
             return miscRobotType != null && miscRobotType.IsInstanceOfType(pawn);
+        }
+
+        public static Thing GetMiscRobotRechargeStation(Pawn pawn)
+        {
+            if (!IsMiscRobot(pawn))
+            {
+                return null;
+            }
+            if (!miscRobotRechargeFieldResolved)
+            {
+                miscRobotRechargeField = miscRobotType != null
+                    ? AccessTools.Field(miscRobotType, "rechargeStation")
+                    : null;
+                miscRobotRechargeFieldResolved = true;
+            }
+            return miscRobotRechargeField?.GetValue(pawn) as Thing;
+        }
+
+        public static Map GetMiscRobotRechargeMap(Pawn pawn)
+        {
+            Thing station = GetMiscRobotRechargeStation(pawn);
+            return station is { Spawned: true } ? station.Map : null;
         }
 
         // Who Strata may *relay* for work/food/rest/etc. Not the same as who
