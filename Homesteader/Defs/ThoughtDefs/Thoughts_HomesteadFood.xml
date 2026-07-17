@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThoughtDef>
+    <defName>Homesteader_AteHomesteadTreat</defName>
+    <durationDays>0.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>homestead treat</label>
+        <description>That tasted like home — the good kind of home.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Homesteader_AteFineCheese</defName>
+    <durationDays>0.4</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>fine cheese</label>
+        <description>Proper farmhouse cheese. Worth the wait.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Homesteader_AteFavoriteFood</defName>
+    <durationDays>1.0</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>favorite homestead food</label>
+        <description>That was my favorite. Nothing else quite hits the same.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Homesteader_FreshlyWashed</defName>
+    <durationDays>1.0</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>freshly washed</label>
+        <description>A proper wash with homestead soap. Feeling clean and human again.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- Situational mood while near a harvest maypole. -->
+  <ThoughtDef>
+    <defName>Homesteader_MaypoleCheerMood</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>Homesteader_NearMaypole</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>harvest cheer</label>
+        <description>The maypole ribbons make the whole yard feel like a celebration.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

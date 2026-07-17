@@ -159,7 +159,7 @@
         <div>
           <h3>Homestead hearth</h3>
           <div class="stat">wood-fired oven &middot; 50 wood + 15 steel &middot; Farmstead crafting</div>
-          <p>Bake <b>bread</b> (flour + butter) and <b>hardtack</b>. Assemble <b>toast and jam</b> and <b>ploughman's lunch</b>. Simmer <b>porridge</b>, <b>honey porridge</b>, herb-seasoned stews. Boil maple syrup and griddle <b>flapjacks</b>.</p>
+          <p>Bake <b>bread</b>, <b>hardtack</b>, <b>pumpkin pie</b>, and <b>buttermilk biscuits</b>. Assemble <b>toast and jam</b> and <b>ploughman's lunch</b>. Simmer porridges and herb-seasoned stews. Boil maple syrup and griddle <b>flapjacks</b>.</p>
         </div>
       </div>
       <div class="card">
@@ -184,6 +184,37 @@
           <h3>Honey porridge</h3>
           <div class="stat">grain + honey &middot; joy bonus</div>
           <p>A sweeter bowl than everyday porridge — the apiary's breakfast.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/PumpkinPie.png" alt="Pumpkin pie">
+        <div>
+          <h3>Pumpkin pie</h3>
+          <div class="stat">pumpkin + flour + butter + sweetener</div>
+          <p>The harvest crop's signature dish.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/ButtermilkBiscuits.png" alt="Buttermilk biscuits">
+        <div>
+          <h3>Buttermilk biscuits</h3>
+          <div class="stat">flour + buttermilk + butter</div>
+          <p>Soft biscuits from the cream→butter byproduct.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="favorites">
+    <h2>Favorite homestead food</h2>
+    <p class="sub">Each player colonist secretly (then not-so-secretly) loves one Homesteader food.</p>
+    <div class="grid">
+      <div class="card wide">
+        <img src="img/Flapjacks.png" alt="Favorite food">
+        <div>
+          <h3>Personal favorites</h3>
+          <div class="stat">C# &middot; auto-assigned &middot; +8 mood when eaten</div>
+          <p>Shown on the pawn inspect pane. Colonists prefer their favorite when choosing meals, and getting it grants a strong moodlet. Favorites are drawn from Homesteader pantry foods — flapjacks, pie, ploughman's, mead, and more.</p>
         </div>
       </div>
     </div>
@@ -303,7 +334,7 @@
         <div>
           <h3>Brewing bench</h3>
           <div class="stat">60 wood + 15 steel &middot; Homestead brewing research</div>
-          <p>Ferment <b>cider</b> from fruit and sugar, <b>mead</b> from honey, and steep soothing <b>herbal tea</b> from dried herbs.</p>
+          <p>Ferment <b>cider</b> (including proper <b>apple cider</b>), <b>mead</b>, and <b>herbal tea</b>. Sour cider into <b>vinegar</b>, and render <b>soap</b> from beeswax and butter.</p>
         </div>
       </div>
       <div class="card">
@@ -358,8 +389,8 @@
         <img src="img/RootCellar.png" alt="Root cellar">
         <div>
           <h3>Root cellar</h3>
-          <div class="stat">6 stacks &middot; 2&times;2 &middot; cools to ≤5°C &middot; Homestead storage research</div>
-          <p>Buried pantry that passively chills stored food for spoilage and shelters it from the weather.</p>
+          <div class="stat">6 stacks &middot; 2&times;2 &middot; cools to ≤5°C (+ adjacent indoor cells)</div>
+          <p>Buried pantry that passively chills stored food on the cellar and nearby indoor stock for spoilage.</p>
         </div>
       </div>
       <div class="card">
@@ -665,9 +696,16 @@
         <tr><td><b>Trail stew</b></td><td>Homestead hearth</td><td>Jerky + dried produce + herbs</td></tr>
         <tr><td><b>Hearty stew</b></td><td>Homestead hearth</td><td>Smoked meat + pickles + herbs</td></tr>
         <tr><td><b>Flapjacks</b></td><td>Homestead hearth</td><td>Flour + butter + maple syrup, joy bonus</td></tr>
+        <tr><td><b>Pumpkin pie</b></td><td>Homestead hearth</td><td>Pumpkin signature dish, fine meal</td></tr>
+        <tr><td><b>Buttermilk</b></td><td>Butter churn</td><td>Byproduct of churning cream</td></tr>
+        <tr><td><b>Buttermilk biscuits</b></td><td>Homestead hearth</td><td>Flour + buttermilk + butter</td></tr>
         <tr><td><b>Maple syrup</b></td><td>Homestead hearth</td><td>Never spoils</td></tr>
         <tr><td><b>Honey</b></td><td>Beehive</td><td>Eat, cook, or ferment</td></tr>
-        <tr><td><b>Cider</b></td><td>Brewing bench</td><td>Social drink from fruit + sugar</td></tr>
+        <tr><td><b>Cider</b></td><td>Brewing bench</td><td>Fruit cider or dedicated apple cider</td></tr>
+        <tr><td><b>Cider vinegar</b></td><td>Brewing bench</td><td>From cider; vinegar pickles</td></tr>
+        <tr><td><b>Waxed cheese</b></td><td>Cheese press</td><td>Cheese + beeswax, 240 days</td></tr>
+        <tr><td><b>Smoked cheese</b></td><td>Smokehouse</td><td>Smoked wheel, 150 days</td></tr>
+        <tr><td><b>Soap</b></td><td>Brewing bench</td><td>Use for freshly washed mood</td></tr>
         <tr><td><b>Mead</b></td><td>Brewing bench</td><td>Social drink from honey</td></tr>
         <tr><td><b>Herbal tea</b></td><td>Brewing bench</td><td>Non-alcoholic comfort</td></tr>
       </table>

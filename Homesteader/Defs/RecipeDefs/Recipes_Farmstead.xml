@@ -45,7 +45,7 @@
   <RecipeDef>
     <defName>Homesteader_ChurnButter</defName>
     <label>churn butter</label>
-    <description>Agitate skimmed cream until it separates into butter.</description>
+    <description>Agitate skimmed cream until it separates into butter and buttermilk.</description>
     <jobString>Churning butter.</jobString>
     <workAmount>800</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -68,6 +68,7 @@
     </fixedIngredientFilter>
     <products>
       <Homesteader_Butter>5</Homesteader_Butter>
+      <Homesteader_Buttermilk>4</Homesteader_Buttermilk>
     </products>
     <workSkill>Cooking</workSkill>
   </RecipeDef>

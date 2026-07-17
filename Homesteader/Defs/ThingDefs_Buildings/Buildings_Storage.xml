@@ -379,7 +379,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_RootCellar</defName>
     <label>root cellar</label>
-    <description>A buried cellar lined with stone and earth. Holds six stacks of food and drink in cool, stable conditions - contents stay at or below 5°C for spoilage, and are sheltered from outdoor weather.</description>
+    <description>A buried cellar lined with stone and earth. Holds six stacks of food and drink. Contents on the cellar — and food in adjacent indoor cells — stay at or below 5°C for spoilage, and are sheltered from outdoor weather.</description>
     <thingClass>Building_Storage</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/RootCellar</texPath>
@@ -495,6 +495,13 @@
             <li>Homesteader_ToastAndJam</li>
             <li>Homesteader_PloughmansLunch</li>
             <li>Homesteader_HoneyPorridge</li>
+            <li>Homesteader_PumpkinPie</li>
+            <li>Homesteader_ButtermilkBiscuits</li>
+            <li>Homesteader_Buttermilk</li>
+            <li>Homesteader_WaxedCheese</li>
+            <li>Homesteader_SmokedCheese</li>
+            <li>Homesteader_CiderVinegar</li>
+            <li>Homesteader_Soap</li>
           </thingDefs>
         </filter>
       </fixedStorageSettings>
@@ -525,6 +532,13 @@
             <li>Homesteader_ToastAndJam</li>
             <li>Homesteader_PloughmansLunch</li>
             <li>Homesteader_HoneyPorridge</li>
+            <li>Homesteader_PumpkinPie</li>
+            <li>Homesteader_ButtermilkBiscuits</li>
+            <li>Homesteader_Buttermilk</li>
+            <li>Homesteader_WaxedCheese</li>
+            <li>Homesteader_SmokedCheese</li>
+            <li>Homesteader_CiderVinegar</li>
+            <li>Homesteader_Soap</li>
           </thingDefs>
         </filter>
       </defaultStorageSettings>

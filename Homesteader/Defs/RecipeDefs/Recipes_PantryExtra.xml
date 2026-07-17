@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Bake pumpkin pie ============ -->
+  <RecipeDef>
+    <defName>Homesteader_BakePumpkinPie</defName>
+    <label>bake pumpkin pie</label>
+    <description>Bake a sweet pumpkin pie from mash, flour, butter, and a sweetener.</description>
+    <jobString>Baking pumpkin pie.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_RawPumpkin</li>
+          </thingDefs>
+        </filter>
+        <count>8</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Flour</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Butter</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Sugar</li>
+            <li>Homesteader_Honey</li>
+            <li>Homesteader_MapleSyrup</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_RawPumpkin</li>
+        <li>Homesteader_Flour</li>
+        <li>Homesteader_Butter</li>
+        <li>Homesteader_Sugar</li>
+        <li>Homesteader_Honey</li>
+        <li>Homesteader_MapleSyrup</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_PumpkinPie>1</Homesteader_PumpkinPie>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Bake buttermilk biscuits ============ -->
+  <RecipeDef>
+    <defName>Homesteader_BakeButtermilkBiscuits</defName>
+    <label>bake buttermilk biscuits</label>
+    <description>Bake soft biscuits from flour, buttermilk, and butter.</description>
+    <jobString>Baking buttermilk biscuits.</jobString>
+    <workAmount>700</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Flour</li>
+          </thingDefs>
+        </filter>
+        <count>6</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Buttermilk</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Butter</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Flour</li>
+        <li>Homesteader_Buttermilk</li>
+        <li>Homesteader_Butter</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_ButtermilkBiscuits>2</Homesteader_ButtermilkBiscuits>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Brew cider vinegar ============ -->
+  <RecipeDef>
+    <defName>Homesteader_BrewCiderVinegar</defName>
+    <label>brew cider vinegar</label>
+    <description>Let cider sour into sharp cider vinegar for pickling and cooking.</description>
+    <jobString>Brewing cider vinegar.</jobString>
+    <workAmount>1000</workAmount>
+    <workSpeedStat>DrugCookingSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Cider</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Cider</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_CiderVinegar>8</Homesteader_CiderVinegar>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Brew apple cider ============ -->
+  <RecipeDef>
+    <defName>Homesteader_BrewAppleCider</defName>
+    <label>brew apple cider</label>
+    <description>Press orchard apples with a sweetener into a proper apple cider — no barley mash pretending to be fruit.</description>
+    <jobString>Brewing apple cider.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>DrugCookingSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_RawApples</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Sugar</li>
+            <li>Homesteader_Honey</li>
+            <li>Homesteader_MapleSyrup</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_RawApples</li>
+        <li>Homesteader_Sugar</li>
+        <li>Homesteader_Honey</li>
+        <li>Homesteader_MapleSyrup</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Cider>6</Homesteader_Cider>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Vinegar pickles ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeVinegarPickles</defName>
+    <label>make vinegar pickles</label>
+    <description>Pack vegetables in cider vinegar for a sharper, longer-keeping pickle than salt brine alone.</description>
+    <jobString>Making vinegar pickles.</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>PlantFoodRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Hay</li>
+            <li>RawFungus</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_CiderVinegar</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>PlantFoodRaw</li>
+      </categories>
+      <thingDefs>
+        <li>Homesteader_CiderVinegar</li>
+      </thingDefs>
+      <disallowedThingDefs>
+        <li>Hay</li>
+        <li>RawFungus</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_PickledVegetables>12</Homesteader_PickledVegetables>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Wax cheese ============ -->
+  <RecipeDef>
+    <defName>Homesteader_WaxCheese</defName>
+    <label>wax cheese</label>
+    <description>Seal a wheel of cheese in beeswax so it keeps much longer on the shelf.</description>
+    <jobString>Waxing cheese.</jobString>
+    <workAmount>600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Cheese</li>
+          </thingDefs>
+        </filter>
+        <count>8</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Beeswax</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Cheese</li>
+        <li>Homesteader_Beeswax</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_WaxedCheese>8</Homesteader_WaxedCheese>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Smoke cheese ============ -->
+  <RecipeDef>
+    <defName>Homesteader_SmokeCheese</defName>
+    <label>smoke cheese</label>
+    <description>Cold-smoke farmhouse cheese until it takes on a rich, smoky rind.</description>
+    <jobString>Smoking cheese.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Cheese</li>
+            <li>Homesteader_WaxedCheese</li>
+          </thingDefs>
+        </filter>
+        <count>8</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Cheese</li>
+        <li>Homesteader_WaxedCheese</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_SmokedCheese>8</Homesteader_SmokedCheese>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Render soap ============ -->
+  <RecipeDef>
+    <defName>Homesteader_RenderSoap</defName>
+    <label>render soap</label>
+    <description>Render beeswax with butter into bars of homestead soap for a proper wash.</description>
+    <jobString>Rendering soap.</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Beeswax</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Butter</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Beeswax</li>
+        <li>Homesteader_Butter</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Soap>5</Homesteader_Soap>
+    </products>
+    <workSkill>Crafting</workSkill>
+  </RecipeDef>
+
+</Defs>

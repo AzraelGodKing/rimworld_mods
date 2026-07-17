@@ -141,6 +141,7 @@
     </comps>
     <recipes>
       <li>Homesteader_SmokeMeat</li>
+      <li>Homesteader_SmokeCheese</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
@@ -189,6 +190,7 @@
     </costList>
     <recipes>
       <li>Homesteader_MakePickledVegetables</li>
+      <li>Homesteader_MakeVinegarPickles</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
@@ -257,6 +259,8 @@
       <li>Homesteader_CookHeartyStew</li>
       <li>Homesteader_MakeToastAndJam</li>
       <li>Homesteader_MakePloughmansLunch</li>
+      <li>Homesteader_BakePumpkinPie</li>
+      <li>Homesteader_BakeButtermilkBiscuits</li>
       <li>Homesteader_BoilMapleSyrup</li>
       <li>Homesteader_BakeFlapjacks</li>
     </recipes>

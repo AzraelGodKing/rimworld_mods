@@ -129,6 +129,7 @@
     </costList>
     <recipes>
       <li>Homesteader_PressCheese</li>
+      <li>Homesteader_WaxCheese</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>

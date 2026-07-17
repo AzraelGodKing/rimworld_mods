@@ -118,7 +118,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_HarvestMaypole</defName>
     <label>harvest maypole</label>
-    <description>A tall carved pole hung with bright ribbons, raised in celebration of a good harvest. Colonists gather around it for parties and celebrations, and it lifts the spirit of any yard it stands in.</description>
+    <description>A tall carved pole hung with bright ribbons, raised in celebration of a good harvest. Colonists gather around it for parties, and anyone nearby feels a little harvest cheer (+6 mood).</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/HarvestMaypole</texPath>
@@ -146,7 +146,16 @@
       <li>
         <compClass>CompGatherSpot</compClass>
       </li>
+      <li Class="CompProperties_CauseHediff_AoE">
+        <hediff>Homesteader_NearMaypole</hediff>
+        <range>7.9</range>
+        <ignoreMechs>true</ignoreMechs>
+      </li>
     </comps>
+    <placeWorkers>
+      <li>PlaceWorker_ShowCauseHediffAoE</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <designationCategory>Joy</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
