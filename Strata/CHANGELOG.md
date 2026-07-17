@@ -21,6 +21,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 - Compressed `About/Preview.png` for smaller Workshop/About footprint.
 
 ### Fixed
+- **Surface sealed-building oxygen** — closed surface buildings (non-pocket maps) now receive ambient O₂ replenishment each atmosphere cycle instead of reading as 0% / hypoxic like underground voids. Underground and upper-level pocket sim unchanged.
 - **Surface smoke venting** — one open exterior door now vents every room reachable through open interior doors (not just the entrance). Direct outdoor openings drain **58%/cycle**; linked rooms **42%/cycle** (~60 ticks). Kitchens and workshops in that cluster respect the **12%** ventilated emission cap again. Sealed underground rooms unchanged.
 - **Smoke inhalation pacing** — harm threshold **0.15 → 0.18**, severity gain **0.006 → 0.0035** per atmosphere tick (still scaled by the Smoke inhalation severity setting). Same smoke % builds hediff roughly half as fast at default 100%.
 - **Settings migration v1** — one-time upgrade for existing mod profiles turns off colonist work relay and Misc. Robots work relay (old saves kept them enabled despite new defaults); return/recharge soft-compat unchanged. Startup log includes build stamp, DLL path, file modified time, and relay flags.

@@ -1550,8 +1550,8 @@ namespace Strata
             return StrataMod.Settings == null || StrataMod.Settings.breathingEnabled;
         }
 
-        // Surface stairwell landings and open-to-sky underground rooms stay
-        // topped up with fresh O₂ so shafts can feed the column.
+        // Surface sealed buildings and stairwell landings stay topped up with
+        // Earth-like ambient O₂; open-to-sky underground rooms feed the column.
         private void ReplenishAmbientOxygen()
         {
             if (!BreathingActive() || StrataGasDefOf.Strata_Oxygen == null)
@@ -1574,6 +1574,17 @@ namespace Strata
                     }
                     TopUpOxygen(room, oxygen, stairsDown.Position);
                 }
+                if (SurfaceMapHasAmbientAir())
+                {
+                    foreach (Room room in map.regionGrid.AllRooms)
+                    {
+                        if (room == null || room.UsesOutdoorTemperature || !TryGetSampleCell(room, out IntVec3 sample))
+                        {
+                            continue;
+                        }
+                        TopUpOxygen(room, oxygen, sample);
+                    }
+                }
                 return;
             }
             foreach (Room room in map.regionGrid.AllRooms)
@@ -1584,6 +1595,11 @@ namespace Strata
                 }
                 TopUpOxygen(room, oxygen, sample);
             }
+        }
+
+        private bool SurfaceMapHasAmbientAir()
+        {
+            return !StrataLevelPerfUtility.IsStrataPocketLevel(map);
         }
 
         private void TopUpOxygen(Room room, StrataGasDef oxygen, IntVec3 sample)
