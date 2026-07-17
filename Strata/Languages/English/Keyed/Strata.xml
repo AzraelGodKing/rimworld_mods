@@ -55,7 +55,8 @@
   <Strata_Settings_LogRobotDiagnosticsDesc>Writes session counter totals and 60-second rates to the log. Off by default.</Strata_Settings_LogRobotDiagnosticsDesc>
   <Strata_Settings_RobotDiagLine>{0}: {1} total, {2}/60s</Strata_Settings_RobotDiagLine>
   <Strata_Settings_RobotDiagReset>Reset robot diagnostic counters</Strata_Settings_RobotDiagReset>
-  <Strata_RobotDiag_ReturnBasePrefix>Return2Base prefix hits</Strata_RobotDiag_ReturnBasePrefix>
+  <Strata_RobotDiag_RechargeRelayPrefix>Recharge/return relay prefix hits</Strata_RobotDiag_RechargeRelayPrefix>
+  <Strata_RobotDiag_RechargeRelayPostfix>Recharge/return relay postfix fixes</Strata_RobotDiag_RechargeRelayPostfix>
   <Strata_RobotDiag_ReturnBasePortal>Return2Base portal jobs</Strata_RobotDiag_ReturnBasePortal>
   <Strata_RobotDiag_WorkSeekingCall>Work JobGiver TryIssueJobPackage (robots)</Strata_RobotDiag_WorkSeekingCall>
   <Strata_RobotDiag_WorkRelayHit>Work relay postfix scans</Strata_RobotDiag_WorkRelayHit>

@@ -11,7 +11,8 @@ namespace Strata
     {
         public enum Counter
         {
-            ReturnBasePrefixHit,
+            RechargeRelayPrefixHit,
+            RechargeRelayPostfixFix,
             ReturnBasePortalJob,
             WorkSeekingGiverCall,
             WorkRelayPostfixHit,
@@ -90,8 +91,10 @@ namespace Strata
         {
             switch (counter)
             {
-                case Counter.ReturnBasePrefixHit:
-                    return "Strata_RobotDiag_ReturnBasePrefix".Translate();
+                case Counter.RechargeRelayPrefixHit:
+                    return "Strata_RobotDiag_RechargeRelayPrefix".Translate();
+                case Counter.RechargeRelayPostfixFix:
+                    return "Strata_RobotDiag_RechargeRelayPostfix".Translate();
                 case Counter.ReturnBasePortalJob:
                     return "Strata_RobotDiag_ReturnBasePortal".Translate();
                 case Counter.WorkSeekingGiverCall:

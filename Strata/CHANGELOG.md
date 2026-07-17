@@ -5,7 +5,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 ## [Unreleased]
 
 ### Added
-- **Misc. Robots diagnostics** — mod settings section under Threats & performance lists live session counters (total + rate per 60s) for Return2Base prefix, work JobGiver calls, work-relay scans/jobs, EnterPortal relay jobs, and ReachableLevels/BestFirstStep on robot paths; reset button and optional log every 600 ticks (`logRobotDiagnostics`, off by default).
+- **Misc. Robots diagnostics** — mod settings section under Threats & performance lists live session counters (total + rate per 60s) for recharge/return relay prefix/postfix fixes, work JobGiver calls, work-relay scans/jobs, EnterPortal relay jobs, and ReachableLevels/BestFirstStep on robot paths; reset button and optional log every 600 ticks (`logRobotDiagnostics`, off by default).
 - **Performance mode** master kill-switch: disables colonist work relay, Misc. Robots soft-compat, external JobGiver relay; atmosphere cycles run 4× slower and skip gas motes on non-viewed pocket levels.
 - `Languages/English/Keyed/Strata.xml` — C# player strings (mod settings, alerts, messages, gizmos, inspect text, letters) with `.Translate()` wiring.
 - `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
@@ -17,6 +17,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ### Fixed
 - Smoke/gas ventilation recognizes wall-mounted vents that sit on walls (`isEdifice=false`), including Vanilla Temperature Expanded `VTE_WallMountedVent` and similarly named wall vents (soft-compat, no VTE dependency). Surface rooms vented that way clear smoke like vanilla vents; underground outdoor rules unchanged.
+- **Misc. Robots cross-level recharge (follow-up):** soft-compat now patches `Return2BaseRoom`, `RechargeEnergyIdle` (`TryIssueJobPackage`), and `RechargeEnergy` / `Return2BaseAndWait` / `Return2BaseDespawn` (`TryGiveJob`) with a shared relay — cross-map recharge never falls through to vanilla Goto/GoAndWait/GoRecharge (fixes 10-Goto/tick spam and cross-map `Could not reserve` on recharge stations). Startup log lines confirm each patch group. Prefix/postfix safety net when vanilla still emits a foreign-map job.
 - Misc. Robots hauler/cleaner bots no longer spam `started 10 Goto jobs/tick` when `Return2BaseRoom` targets a recharge-station room on another Strata level — soft-compat routes via `EnterPortal` instead (no AIRobot assembly reference).
 - Misc. Robots return-to-base portal relay no longer hitches every few seconds: cross-level routing uses a prefix (skips vanilla cross-map Goto), 6000-tick per-bot retry cooldown, cached cross-map recharge lookups, shared `BestFirstStep` route cache, and pooled level-graph BFS buffers.
 - Misc. Robots work relay throttled (5000-tick scan cooldown) and no longer runs on `Return2BaseRoom`/recharge job givers; low-charge bots skip work scans and prioritize return-to-base. Return-to-base portal jobs no longer consume the general relay cooldown.
