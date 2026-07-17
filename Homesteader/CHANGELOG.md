@@ -27,7 +27,7 @@ All notable changes to Homesteader are documented here.
 - **Homestead soap** (beeswax + butter) — use a bar for a freshly washed moodlet.
 - **Harvest maypole** grants nearby harvest cheer (+6 mood).
 - Taste thoughts for jam, cheese, flapjacks, toast, pie, and biscuits.
-- **Favorite homestead food** (C#): each player colonist gets a random Homesteader favorite (shown on inspect). Eating it gives +8 mood and a food-preference bonus.
+- **Favorite food** (C#): every humanlike with a mood (colonists, guests, raiders, etc.) rolls a favorite from Homesteader foods plus vanilla meals/treats. Shown on inspect; eating it gives +8 mood and a food-preference bonus.
 - Root cellar cooling now also chills spoilables in adjacent indoor cells.
 
 ### Changed

@@ -12,7 +12,7 @@ Everything a growing homestead needs: tribal survival, farm-to-table crafting, s
 |---|---|
 | **Tribal survival** | Curing rack (rock salt, salted meat), drying rack (+ fruit leather, dried mushrooms, pemmican without research), smokehouse, hayloft, ingredient barrel |
 | **Farm-to-table** | Grain mill, butter churn (+ buttermilk), pickling crock, homestead hearth (bread, pantry meals, pumpkin pie, biscuits, stews, flapjacks) |
-| **Favorites** | Each colonist gets a favorite Homesteader food (+mood when eaten) |
+| **Favorites** | Every humanlike rolls a favorite from Homesteader + vanilla foods (+mood when eaten) |
 | **Orchard & apiary** | Apple, cherry, and sugar maple trees (regrow after harvest); maple sap → syrup → flapjacks; beehives produce honey + beeswax; beeswax candle |
 | **Storage** | Storage crate, storage barrel, pallet, hayloft, ingredient barrel, root cellar (passive cool ≤5°C), large storage crate, preserves shelf |
 | **Food preservation** | Jerky, dried produce, fruit leather, salted/smoked meat, pickled vegetables, jam |
