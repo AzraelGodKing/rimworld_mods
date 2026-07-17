@@ -20,10 +20,22 @@ namespace Homesteader
     {
         public CompProperties_RootCellarCooling Props => (CompProperties_RootCellarCooling)props;
 
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            base.PostSpawnSetup(respawningAfterLoad);
+            parent.Map?.GetComponent<RootCellarCoolingMapComponent>()?.Rebuild();
+        }
+
+        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
+        {
+            base.PostDeSpawn(map, mode);
+            map?.GetComponent<RootCellarCoolingMapComponent>()?.Rebuild();
+        }
+
         public override string CompInspectStringExtra()
         {
-            return "Root cellar: keeps stored food at or below "
-                + Props.maxTemperature.ToStringTemperature();
+            return "Root cellar: cools stored food (and adjacent indoor cells) to "
+                + Props.maxTemperature.ToStringTemperature() + " or below";
         }
     }
 }

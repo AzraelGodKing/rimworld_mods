@@ -20,7 +20,15 @@ All notable changes to Homesteader are documented here.
 - **Pantry meals** at the hearth: toast and jam (bread + jam), ploughman's lunch (bread + cheese + pickles), and honey porridge (grain + honey, joy bonus).
 - **Honey and maple syrup** can stand in for sugar in jam, porridge, and cider.
 - Dried herbs now season trail stew and hearty stew.
-- Homestead supplier also stocks butter, maple syrup, and bread.
+- Homestead supplier also stocks butter, maple syrup, bread, soap, waxed cheese, and cider vinegar.
+- **Pumpkin pie** and **buttermilk biscuits** at the hearth; churning butter now also yields **buttermilk**.
+- **Cider vinegar** (from cider) and **vinegar pickles**; dedicated **apple cider** brew from orchard apples.
+- **Waxed cheese** (cheese + beeswax) and **smoked cheese** (smokehouse).
+- **Homestead soap** (beeswax + butter) — use a bar for a freshly washed moodlet.
+- **Harvest maypole** grants nearby harvest cheer (+6 mood).
+- Taste thoughts for jam, cheese, flapjacks, toast, pie, and biscuits.
+- **Favorite homestead food** (C#): each player colonist gets a random Homesteader favorite (shown on inspect). Eating it gives +8 mood and a food-preference bonus.
+- Root cellar cooling now also chills spoilables in adjacent indoor cells.
 
 ### Changed
 - Renamed **shark plushie** to **Sharkira the plushie** (in-game label and docs).

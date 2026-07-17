@@ -403,6 +403,7 @@
     <ingestible>
       <foodType>Meal</foodType>
       <preferability>RawTasty</preferability>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
       <ingestSound>Meal_Eat</ingestSound>
     </ingestible>
     <comps>
@@ -504,6 +505,7 @@
     <ingestible>
       <foodType>Meal</foodType>
       <preferability>RawTasty</preferability>
+      <tasteThought>Homesteader_AteFineCheese</tasteThought>
       <ingestSound>Meal_Eat</ingestSound>
     </ingestible>
     <comps>
@@ -615,6 +617,7 @@
     </statBases>
     <ingestible>
       <preferability>MealSimple</preferability>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
       <ingestEffect>EatVegetarian</ingestEffect>
       <ingestSound>Meal_Eat</ingestSound>
       <joy>0.06</joy>

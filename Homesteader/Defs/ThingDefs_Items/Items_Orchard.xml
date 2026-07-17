@@ -159,6 +159,7 @@
     </statBases>
     <ingestible>
       <preferability>MealSimple</preferability>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
       <ingestEffect>EatVegetarian</ingestEffect>
       <ingestSound>Meal_Eat</ingestSound>
       <joy>0.08</joy>
