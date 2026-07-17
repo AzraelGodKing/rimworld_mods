@@ -15,23 +15,31 @@ namespace Strata
     // pawns, explodes on open flame, or can be extracted - the movement
     // machinery is shared by all channels, so every ventilation tool works on
     // every gas.
+    //
+    // Cycle order (~60 ticks): prep/normalize → transport (vents, ducts, shafts,
+    // door flow + outdoor cluster drain, passive disperse) → sources (emitters,
+    // ignition, scrubbers) → overlay refresh. Drains always run before emission
+    // so vented kitchens decay toward the ventilated cap instead of climbing.
     public class AtmosphereMapComponent : MapComponent, ICellBoolGiver
     {
         private const int CycleTicks = 60;
         private const float OpenRoofVent = 0.06f;  // per open-roof cell (capped)
         private const float OutdoorDisperse = 0.6f; // fraction cleared per cycle in open air
-        private const float ExteriorDoorDrain = 0.70f; // direct outdoor opening - strong flush to open air
-        private const float InteriorOutdoorDrain = 0.54f; // rooms linked by open doors to an exterior opening
+        private const float ExteriorDoorDrain = 0.80f; // direct outdoor opening - strong flush to open air
+        private const float InteriorOutdoorDrain = 0.65f; // rooms linked by open doors to an exterior opening
         private const float InteriorDoorFlow = 0.25f; // fraction of the density gap that crosses an open interior door
-        private const float VentExteriorDrain = 0.20f; // extra flush per outdoor-facing wall vent (stacks with cluster drain)
+        private const float VentExteriorDrain = 0.25f; // extra flush per outdoor-facing wall vent (stacks with cluster drain)
         private const float VentInteriorFlow = 0.15f; // room-to-room equalization through a vanilla wall vent
         // Burners and inflows can never push a properly ventilated room past
         // this light haze, safely under harm thresholds - ventilation is a
         // guarantee, not a race between the emission rate and the vent rate.
         // Pre-existing thick gas still drains through the outlets visibly
         // instead of vanishing to the cap.
-        private const float VentilatedCap = 0.08f;
+        private const float VentilatedCap = 0.05f;
         private const float CullThreshold = 0.01f;
+        // Per-gas room density ceiling (load = sum of channels, capped in overlay).
+        private const float MaxNormalDensity = 1f;
+        private const float MaxDeepGasDensity = 3f;
 
         // Roughly atmospheric O₂ fraction for newly opened deep levels.
         public const float AmbientOxygen = 0.21f;
@@ -318,7 +326,7 @@ namespace Strata
                 };
                 clouds[room.ID] = c;
             }
-            c.density[gas.index] = Mathf.Max(0f, density);
+            c.density[gas.index] = ClampGasDensity(gas, Mathf.Max(0f, density));
             c.sample = cell;
             CullOrStore(room.ID, c);
             MarkCellDensityDirty();
@@ -338,11 +346,11 @@ namespace Strata
             if (clouds.TryGetValue(room.ID, out Cloud c))
             {
                 // Pressurized pocket: reach at least this density, not just add a trickle.
-                c.density[gas.index] = Mathf.Max(c.density[gas.index], density);
+                c.density[gas.index] = ClampGasDensity(gas, Mathf.Max(c.density[gas.index], density));
                 c.sample = sample.IsValid && sample.InBounds(map) && sample.GetRoom(map) == room
                     ? sample
                     : c.sample;
-                clouds[room.ID] = c;
+                CullOrStore(room.ID, c);
             }
             RebuildCellDensity();
         }
@@ -858,6 +866,7 @@ namespace Strata
                     {
                         other.density[g] += c.density[g];
                     }
+                    ClampCloudDensities(other);
                     other.cells = newCells;
                 }
                 else
@@ -1808,12 +1817,33 @@ namespace Strata
             float limit = bypassCap ? float.MaxValue
                 : RoomIsProperlyVentilated(room) ? Mathf.Max(VentilatedCap, c.density[gas.index])
                 : 1f;
-            c.density[gas.index] = Mathf.Min(limit, c.density[gas.index] + amount);
+            c.density[gas.index] = ClampGasDensity(gas, Mathf.Min(limit, c.density[gas.index] + amount));
             c.sample = sample;
+        }
+
+        private float ClampGasDensity(StrataGasDef gas, float density)
+        {
+            if (density <= 0f)
+            {
+                return 0f;
+            }
+            float max = gas == StrataGasDefOf.Strata_DeepGas ? MaxDeepGasDensity : MaxNormalDensity;
+            return Mathf.Min(density, max);
+        }
+
+        private void ClampCloudDensities(Cloud cloud)
+        {
+            List<StrataGasDef> gases = Gases;
+            for (int i = 0; i < gases.Count; i++)
+            {
+                StrataGasDef gas = gases[i];
+                cloud.density[gas.index] = ClampGasDensity(gas, cloud.density[gas.index]);
+            }
         }
 
         private void CullOrStore(int id, Cloud cloud)
         {
+            ClampCloudDensities(cloud);
             bool anyLeft = false;
             for (int g = 0; g < cloud.density.Length; g++)
             {

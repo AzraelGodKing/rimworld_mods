@@ -159,6 +159,7 @@ namespace Strata
                 sb.Append(FormatSliceLabel(slices[i], total));
             }
             sb.Append("  (load ");
+            total = Mathf.Min(total, 1f);
             sb.Append(total >= 0.001f ? Mathf.RoundToInt(total * 100f).ToString() : total.ToStringPercent());
             sb.Append(')');
             line = sb.ToString();
@@ -441,6 +442,7 @@ namespace Strata
 
         private static string FormatLoadLabel(float total)
         {
+            total = Mathf.Min(total, 1f);
             return "load "
                 + (total >= 0.001f ? Mathf.RoundToInt(total * 100f).ToString() : total.ToStringPercent())
                 + "%";
@@ -567,6 +569,7 @@ namespace Strata
             {
                 return false;
             }
+            total = Mathf.Min(total, 1f);
             slices.Sort((a, b) => b.density.CompareTo(a.density));
             return true;
         }
