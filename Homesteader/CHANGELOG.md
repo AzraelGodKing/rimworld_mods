@@ -1,8 +1,11 @@
 # Changelog
 
-All notable changes to Homesteader are documented here.
+Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
 
 ## [Unreleased]
+
+### Changed
+- **Merged Wellspring into Homesteader.** Wells, rain barrels, cisterns, solar stills, water towers, irrigated soil/planters, boiled water, mud bricks, and clean bandages now ship with Homesteader. Research (wellcraft / irrigation / waterworks) lives on the Homesteader tab. Hand-dug and deep wells are on the homestead cooking workgiver. `Wellspring_*` defNames are preserved for save continuity — disable any old standalone Wellspring mod.
 
 ### Fixed
 - Pawns can work homestead production stations again (jam cauldron, hearth, drying rack, mill, brewery, etc.). Stations had bills and recipes but no `WorkGiverDef` with `fixedBillGiverDefs`, so `WorkGiver_DoBill` never considered them — colonists could build and set "do forever" bills but would not interact. Note: wood-fired stations (jam cauldron, hearth, smokehouse) still need fuel before work starts.
@@ -11,9 +14,10 @@ All notable changes to Homesteader are documented here.
 - **Research gates match the tree:** curing rack, smokehouse, hayloft, and ingredient barrel need Primitive homestead; mill, churn, pickling crock, and hearth need Farmstead crafting; washer toss, log bench, and 27 statues need Homestead comforts.
 - **Root cellar** now passively cools stored food (C#): items on the cellar use ambient temperature capped at 5°C for spoilage, so summer heat no longer cooks the pantry. Requires Harmony.
 - **Advanced battery** can be rotated; **washer toss barrel** is no longer rotatable (single graphic).
-- Docs, About, and research blurbs updated for dairy/sugar pipelines, costs, and unlocks.
+- About and research blurbs updated for dairy/sugar pipelines, costs, and unlocks.
 
 ### Added
+- **Dubs Bad Hygiene soft-compat** — when DBH is loaded, rain barrel / cistern / water tower gain plumbing pipe + water storage (caps 100 / 2000 / 8000); hand-dug well acts as a primitive groundwater source; deep well is a piped deep inlet. Jug water for irrigation is unchanged. Optional only (soft `loadAfter`).
 - **Dedicated research tab** — all Homesteader projects live under their own *Homesteader* tab (no longer on Main).
 - Preserves shelf now also accepts butter, cream, beeswax, bread, flapjacks, pantry meals, and Odyssey salted/smoked fish.
 - Homesteader C# assembly (`Homesteader.dll`) for root cellar cooling; requires the Harmony mod.
@@ -31,9 +35,8 @@ All notable changes to Homesteader are documented here.
 - Root cellar cooling now also chills spoilables in adjacent indoor cells.
 
 ### Changed
-- Renamed **shark plushie** to **Sharkira the plushie** (in-game label and docs).
-- **Diggo the plushie** — updated hippo-dog sprite art; docs page image refreshed to match. Build cost lowered to **20 cloth** (same as Sharkira).
-- GitHub Pages catalog (`docs/homesteader.html`) updated with shark plushie, 27 monuments/statues, orchard pantry cards, and a full food item table.
+- Renamed **shark plushie** to **Sharkira the plushie** (in-game label).
+- **Diggo the plushie** — updated hippo-dog sprite art; build cost lowered to **20 cloth** (same as Sharkira).
 
 ### Added
 - **27 monuments (two styles):** build either a golden or a harvest-stone statue of the number 27. Both share the same aura — colonists within range gain +27 mood — so you pick the look that fits your yard. Unlocked with homestead comforts research; golden costs gold and granite, harvest costs granite and hay.

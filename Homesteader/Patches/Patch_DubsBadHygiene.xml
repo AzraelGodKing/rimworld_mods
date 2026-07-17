@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!-- Soft-dep: when Dubs Bad Hygiene is loaded, Homesteader water buildings
+       join its plumbing (pipe + storage / groundwater inlets). Jug stacks for
+       irrigation remain. Capacities mirror DBH WaterButt / WaterTankSmall /
+       WaterTowerS and PrimitiveWell / DeepWaterWellInlet. -->
+
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Dubwise.DubsBadHygiene</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+
+        <!-- Rain barrel: rain-filling plumbing tank (WaterButt-sized) -->
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Wellspring_RainBarrel"]/comps</xpath>
+          <value>
+            <li Class="DubsBadHygiene.CompProperties_Pipe">
+              <mode>Sewage</mode>
+            </li>
+            <li Class="DubsBadHygiene.CompProperties_WaterStorage">
+              <AutoOnRain>true</AutoOnRain>
+              <AutoGenRate>1</AutoGenRate>
+              <WaterStorageCap>100</WaterStorageCap>
+            </li>
+          </value>
+        </li>
+
+        <!-- Cistern: mid-size plumbing tank -->
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Wellspring_Cistern"]/comps</xpath>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Wellspring_Cistern"]</xpath>
+            <value>
+              <comps />
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Wellspring_Cistern"]/comps</xpath>
+          <value>
+            <li Class="DubsBadHygiene.CompProperties_Pipe">
+              <mode>Sewage</mode>
+            </li>
+            <li Class="DubsBadHygiene.CompProperties_WaterStorage">
+              <WaterStorageCap>2000</WaterStorageCap>
+            </li>
+          </value>
+        </li>
+
+        <!-- Water tower: WaterTowerS-sized plumbing tank -->
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Wellspring_WaterTower"]/comps</xpath>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Wellspring_WaterTower"]</xpath>
+            <value>
+              <comps />
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Wellspring_WaterTower"]/comps</xpath>
+          <value>
+            <li Class="DubsBadHygiene.CompProperties_Pipe">
+              <mode>Sewage</mode>
+            </li>
+            <li Class="DubsBadHygiene.CompProperties_WaterStorage">
+              <WaterStorageCap>8000</WaterStorageCap>
+            </li>
+          </value>
+        </li>
+
+        <!-- Hand-dug well: primitive groundwater (haul to tubs), not piped -->
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Wellspring_HandDugWell"]/comps</xpath>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Wellspring_HandDugWell"]</xpath>
+            <value>
+              <comps />
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Wellspring_HandDugWell"]/comps</xpath>
+          <value>
+            <li Class="DubsBadHygiene.CompProperties_WaterInlet">
+              <compClass>DubsBadHygiene.CompBaseWell</compClass>
+              <Radius>7.9</Radius>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Wellspring_HandDugWell"]/placeWorkers</xpath>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Wellspring_HandDugWell"]</xpath>
+            <value>
+              <placeWorkers />
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Wellspring_HandDugWell"]/placeWorkers</xpath>
+          <value>
+            <li>DubsBadHygiene.PlaceWorker_WaterGrid</li>
+            <li>DubsBadHygiene.PlaceWorker_SewageGrid</li>
+            <li>PlaceWorker_InvalidOverSubstructure</li>
+          </value>
+        </li>
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Wellspring_HandDugWell"]/drawPlaceWorkersWhileSelected</xpath>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Wellspring_HandDugWell"]</xpath>
+            <value>
+              <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+            </value>
+          </nomatch>
+        </li>
+
+        <!-- Deep well: piped deep groundwater inlet -->
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Wellspring_DeepWell"]/comps</xpath>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Wellspring_DeepWell"]</xpath>
+            <value>
+              <comps />
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Wellspring_DeepWell"]/comps</xpath>
+          <value>
+            <li Class="DubsBadHygiene.CompProperties_Pipe">
+              <mode>Sewage</mode>
+            </li>
+            <li Class="DubsBadHygiene.CompProperties_WaterInlet">
+              <Deep>true</Deep>
+              <Radius>13.7</Radius>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Wellspring_DeepWell"]/placeWorkers</xpath>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Wellspring_DeepWell"]</xpath>
+            <value>
+              <placeWorkers />
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Wellspring_DeepWell"]/placeWorkers</xpath>
+          <value>
+            <li>DubsBadHygiene.PlaceWorker_DeepWaterGrid</li>
+            <li>DubsBadHygiene.PlaceWorker_SewageGrid</li>
+            <li>DubsBadHygiene.PlaceWorker_UserGrid</li>
+            <li>PlaceWorker_InvalidOverSubstructure</li>
+          </value>
+        </li>
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Wellspring_DeepWell"]/drawPlaceWorkersWhileSelected</xpath>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Wellspring_DeepWell"]</xpath>
+            <value>
+              <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+            </value>
+          </nomatch>
+        </li>
+
+      </operations>
+    </match>
+  </Operation>
+
+</Patch>

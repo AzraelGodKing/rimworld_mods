@@ -22,6 +22,8 @@
       <li>Homesteader_HomesteadHearth</li>
       <li>Homesteader_JamCauldron</li>
       <li>Homesteader_BrewingBench</li>
+      <li>Wellspring_HandDugWell</li>
+      <li>Wellspring_DeepWell</li>
     </fixedBillGiverDefs>
     <verb>work at</verb>
     <gerund>working at</gerund>
