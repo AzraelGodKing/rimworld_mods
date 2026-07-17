@@ -20,7 +20,8 @@ namespace Strata
         private const int CycleTicks = 60;
         private const float OpenRoofVent = 0.06f;  // per open-roof cell (capped)
         private const float OutdoorDisperse = 0.6f; // fraction cleared per cycle in open air
-        private const float ExteriorDoorDrain = 0.4f; // per open exterior door - a visible flush
+        private const float ExteriorDoorDrain = 0.58f; // direct outdoor opening - strong flush to open air
+        private const float InteriorOutdoorDrain = 0.42f; // rooms linked by open doors to an exterior opening
         private const float InteriorDoorFlow = 0.25f; // fraction of the density gap that crosses an open interior door
         private const float VentExteriorDrain = 0.3f; // per vanilla wall vent facing open air - near-complete emptying
         private const float VentInteriorFlow = 0.15f; // room-to-room equalization through a vanilla wall vent
@@ -113,6 +114,9 @@ namespace Strata
         private int atmosphereCyclePhase = -1;
         private int pawnAffectCooldown;
         private bool cellDensityDirty = true;
+        private int outdoorVentCacheCycle = -1;
+        private readonly HashSet<int> outdoorVentRoomIds = new HashSet<int>();
+        private readonly HashSet<int> outdoorVentDirectRoomIds = new HashSet<int>();
 
         private static List<StrataGasDef> gasesCached;
 
@@ -450,6 +454,7 @@ namespace Strata
             {
                 case 0:
                     RunAtmospherePrep();
+                    RefreshOutdoorVentCache();
                     ProcessDirectionalVents();
                     ProcessGasPipeNetworks();
                     break;
@@ -496,6 +501,7 @@ namespace Strata
 
         private void RunAtmosphereTransport()
         {
+            RefreshOutdoorVentCache();
             ProcessDirectionalVents();
             ProcessGasPipeNetworks();
             SmokeRiseUtility.ProcessMap(this);
@@ -884,6 +890,7 @@ namespace Strata
             {
                 return;
             }
+            RefreshOutdoorVentCache();
             var countedDoors = new HashSet<Building>();
             foreach (int id in clouds.Keys.ToList())
             {
@@ -959,15 +966,10 @@ namespace Strata
                     }
                     if (exterior)
                     {
-                        // Exits take priority: outdoors is a pure drain.
-                        float keep = 1f - (isVent ? VentExteriorDrain : ExteriorDoorDrain);
-                        for (int g = 0; g < c.density.Length; g++)
-                        {
-                            c.density[g] *= keep;
-                        }
-                        changed = true;
+                        // Outdoor drain runs once per room below via the vent cluster.
+                        continue;
                     }
-                    else if (neighbor != null && neighbor.CellCount > 0)
+                    if (neighbor != null && neighbor.CellCount > 0)
                     {
                         // Equalize toward the volume-weighted mix of the two
                         // rooms, conserving gas mass: what a small room
@@ -990,9 +992,51 @@ namespace Strata
                         }
                     }
                 }
+                float outdoorDrain = 0f;
+                if (outdoorVentDirectRoomIds.Contains(id))
+                {
+                    outdoorDrain = ExteriorDoorDrain;
+                }
+                else if (outdoorVentRoomIds.Contains(id))
+                {
+                    outdoorDrain = InteriorOutdoorDrain;
+                }
+                if (outdoorDrain > 0f)
+                {
+                    float keep = 1f - outdoorDrain;
+                    for (int g = 0; g < c.density.Length; g++)
+                    {
+                        c.density[g] *= keep;
+                    }
+                    changed = true;
+                }
                 if (changed)
                 {
                     CullOrStore(id, c);
+                }
+            }
+        }
+
+        private void RefreshOutdoorVentCache()
+        {
+            int cycle = Find.TickManager.TicksGame / Mathf.Max(AtmosphereCycleInterval(), 1);
+            if (outdoorVentCacheCycle == cycle)
+            {
+                return;
+            }
+            outdoorVentCacheCycle = cycle;
+            outdoorVentRoomIds.Clear();
+            outdoorVentDirectRoomIds.Clear();
+            SmokeVentUtility.CollectOutdoorVentCluster(map, outdoorVentRoomIds, CellHasSealedGasAirlock);
+            foreach (Room room in map.regionGrid.AllRooms)
+            {
+                if (room == null || room.IsDoorway || !outdoorVentRoomIds.Contains(room.ID))
+                {
+                    continue;
+                }
+                if (SmokeVentUtility.RoomHasDirectOutdoorOpening(room))
+                {
+                    outdoorVentDirectRoomIds.Add(room.ID);
                 }
             }
         }
@@ -1003,6 +1047,15 @@ namespace Strata
         // unsealed shaft.
         public bool RoomIsProperlyVentilated(Room room)
         {
+            if (room == null)
+            {
+                return false;
+            }
+            RefreshOutdoorVentCache();
+            if (outdoorVentRoomIds.Contains(room.ID))
+            {
+                return true;
+            }
             if (room.OpenRoofCount > 0 || SmokeVentUtility.RoomHasOpenExteriorDoor(room)
                 || RoomHasOutdoorWallVent(room))
             {

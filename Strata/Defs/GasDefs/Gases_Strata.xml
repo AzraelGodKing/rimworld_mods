@@ -16,8 +16,8 @@
     <buoyant>true</buoyant>
     <passiveLeak>0.02</passiveLeak>
     <harmHediff>Strata_SmokeInhalation</harmHediff>
-    <harmThreshold>0.15</harmThreshold>
-    <severityGain>0.006</severityGain>
+    <harmThreshold>0.18</harmThreshold>
+    <severityGain>0.0035</severityGain>
     <severityDecay>0.03</severityDecay>
     <throwsMotes>true</throwsMotes>
     <moteThreshold>0.2</moteThreshold>

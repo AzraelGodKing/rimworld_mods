@@ -48,6 +48,120 @@ namespace Strata
             return DoorVentBonus(room) > 0f;
         }
 
+        // A room that directly touches open air: open roof, an open exterior
+        // door, or a wall vent facing outdoors. Seeds the outdoor-vent cluster.
+        public static bool RoomHasDirectOutdoorOpening(Room room)
+        {
+            if (room == null || room.PsychologicallyOutdoors || room.UsesOutdoorTemperature)
+            {
+                return false;
+            }
+            if (room.OpenRoofCount > 0 || DoorVentBonus(room) > 0f)
+            {
+                return true;
+            }
+            Map map = room.Map;
+            foreach (IntVec3 cell in room.BorderCellsCached)
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+                Building vent = FindOpenVentAt(map, cell);
+                if (vent != null && OpeningLeadsOutdoors(vent, room))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Rooms reachable through open doors from any direct outdoor opening.
+        // One open exterior door vents the whole connected building.
+        public static void CollectOutdoorVentCluster(Map map, HashSet<int> roomIds, Func<IntVec3, bool> borderIsSealed = null)
+        {
+            roomIds.Clear();
+            if (map == null)
+            {
+                return;
+            }
+            var queue = new Queue<Room>();
+            var visited = new HashSet<int>();
+            foreach (Room room in map.regionGrid.AllRooms)
+            {
+                if (room == null || room.IsDoorway || room.PsychologicallyOutdoors
+                    || room.UsesOutdoorTemperature || !RoomHasDirectOutdoorOpening(room))
+                {
+                    continue;
+                }
+                if (visited.Add(room.ID))
+                {
+                    queue.Enqueue(room);
+                }
+            }
+            while (queue.Count > 0)
+            {
+                Room room = queue.Dequeue();
+                roomIds.Add(room.ID);
+                foreach (Room neighbor in OpenDoorNeighbors(room, map, borderIsSealed))
+                {
+                    if (neighbor != null && visited.Add(neighbor.ID))
+                    {
+                        queue.Enqueue(neighbor);
+                    }
+                }
+            }
+        }
+
+        // Interior rooms in the cluster (connected to outdoors but no direct opening).
+        public static IEnumerable<Room> OpenDoorNeighbors(Room room, Map map, Func<IntVec3, bool> borderIsSealed = null)
+        {
+            if (room == null || map == null)
+            {
+                yield break;
+            }
+            HashSet<Building> counted = new HashSet<Building>();
+            foreach (IntVec3 borderCell in room.BorderCellsCached)
+            {
+                if (!borderCell.InBounds(map) || borderIsSealed?.Invoke(borderCell) == true)
+                {
+                    continue;
+                }
+                Building_Door door = borderCell.GetDoor(map);
+                if (door == null || !door.Open || !counted.Add(door))
+                {
+                    continue;
+                }
+                Room neighbor = null;
+                bool exterior = false;
+                foreach (IntVec3 dir in GenAdj.CardinalDirections)
+                {
+                    IntVec3 beyond = door.Position + dir;
+                    if (!beyond.InBounds(map))
+                    {
+                        continue;
+                    }
+                    Room other = beyond.GetRoom(map);
+                    if (other == null || other == room || other.IsDoorway)
+                    {
+                        continue;
+                    }
+                    if (other.PsychologicallyOutdoors || other.UsesOutdoorTemperature)
+                    {
+                        exterior = true;
+                    }
+                    else
+                    {
+                        neighbor = other;
+                    }
+                }
+                if (!exterior && neighbor != null)
+                {
+                    yield return neighbor;
+                }
+            }
+        }
+
         // Doors form their own one-cell "doorway room" in RimWorld, so they
         // never appear in a room's own Regions - find them by scanning the
         // room's border cells instead.
