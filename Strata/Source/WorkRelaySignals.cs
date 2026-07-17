@@ -18,6 +18,8 @@ namespace Strata
 
         private static readonly List<string> workSeekingGiverMarkers = new List<string>();
 
+        internal static int RegisteredWorkSeekingGiverMarkerCount => workSeekingGiverMarkers.Count;
+
         /// <summary>
         /// Mods: register a probe so cross-level work relay notices your jobs.
         /// Return true when <paramref name="map"/> has work this pawn could do.

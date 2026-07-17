@@ -132,7 +132,7 @@ namespace Strata
             {
                 return false;
             }
-            if (clouds.Count > 0 || map.mapPawns.AllPawnsSpawned.Count > 0)
+            if (clouds.Count > 0 || StrataLevelPerfUtility.ColonyPresenceCount(map) > 0)
             {
                 atmosphereWarmupTick = -1;
                 return false;
@@ -377,6 +377,11 @@ namespace Strata
                 TrySeedBreathableAir();
             }
 
+            if (ShouldSkipHeavyAtmosphereCycle())
+            {
+                return;
+            }
+
             if ((Find.TickManager.TicksGame + map.uniqueID) % AtmosphereCycleInterval() != 0)
             {
                 return;
@@ -611,6 +616,20 @@ namespace Strata
                     grid.ProcessPlant(plant, this);
                 }
             }
+        }
+
+        private bool ShouldSkipHeavyAtmosphereCycle()
+        {
+            if (!StrataLevelPerfUtility.IsHibernating(map))
+            {
+                return false;
+            }
+            if (clouds.Count > 0 || loadedClouds != null || pendingSeedsByMap.ContainsKey(map.uniqueID))
+            {
+                return false;
+            }
+            return Emitters.Count == 0 && Vents.Count == 0 && Updrafts.Count == 0
+                && GasExchangers.Count == 0 && Scrubbers.Count == 0;
         }
 
         private void EnsureBuildingCompsRegistered()

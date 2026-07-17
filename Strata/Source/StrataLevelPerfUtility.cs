@@ -17,6 +17,30 @@ namespace Strata
             return map?.mapPawns.AllPawnsSpawned.Count ?? 0;
         }
 
+        // Colonists plus Misc. Robots — wild animals and raiders should not
+        // keep a vacant pocket level from hibernating.
+        public static int ColonyPresenceCount(Map map)
+        {
+            if (map == null)
+            {
+                return 0;
+            }
+            int count = map.mapPawns.FreeColonistsSpawnedCount;
+            if (count > 0)
+            {
+                return count;
+            }
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (StrataPawnUtility.IsMiscRobot(pawns[i]))
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
         public static bool HibernateEnabled()
         {
             StrataSettings settings = StrataMod.Settings;
@@ -59,7 +83,7 @@ namespace Strata
             {
                 return false;
             }
-            if (PawnCount(map) > 0)
+            if (ColonyPresenceCount(map) > 0)
             {
                 ClearForcedHibernate(map);
                 return false;
@@ -86,7 +110,7 @@ namespace Strata
             {
                 return false;
             }
-            return PawnCount(map) > 0;
+            return ColonyPresenceCount(map) > 0;
         }
 
         public static int AtmosphereCycleMultiplier(Map map)
@@ -110,7 +134,7 @@ namespace Strata
             }
             if (IsForcedHibernate(map))
             {
-                return PawnCount(map) == 0;
+                return ColonyPresenceCount(map) == 0;
             }
             if (!HibernateEnabled())
             {
@@ -120,7 +144,7 @@ namespace Strata
             {
                 return false;
             }
-            return PawnCount(map) == 0;
+            return ColonyPresenceCount(map) == 0;
         }
 
         public static void ForceHibernateAllEmptyLevels()
@@ -128,7 +152,7 @@ namespace Strata
             forcedHibernateMapIds.Clear();
             foreach (Map map in Find.Maps)
             {
-                if (IsStrataPocketLevel(map) && PawnCount(map) == 0)
+                if (IsStrataPocketLevel(map) && ColonyPresenceCount(map) == 0)
                 {
                     forcedHibernateMapIds.Add(map.uniqueID);
                 }

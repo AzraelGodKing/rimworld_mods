@@ -5,7 +5,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 ## Unreleased
 
 - **Homesteader** — Kats Effect event (27 statue heat dome / brain rot / Super Chat); Languages/English scaffolding; yard & pantry expansion; production workgiver fix; source cleanup. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
-- **Strata** — VTE wall-vent soft-compat for smoke/gas; Misc. Robots cross-level return-to-base portal routing; Languages/English scaffolding; irrigation bridge uses Homesteader water defs. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — VTE wall-vent soft-compat for smoke/gas; Misc. Robots cross-level return-to-base portal routing; robot work-relay hitch fix and broader Harmony/MapComponent perf pass; Languages/English scaffolding; irrigation bridge uses Homesteader water defs. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Stormproof** — Languages/English scaffolding; research tab; load shedder, grid monitor, ion storm, and related buildings. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
 
 ## Released
