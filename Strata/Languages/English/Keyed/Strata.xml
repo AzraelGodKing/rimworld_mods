@@ -11,6 +11,10 @@
   <Strata_Settings_ColonistRelays>Colonist relays</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Work relay</Strata_Settings_WorkRelay>
   <Strata_Settings_WorkRelayDesc>Idle colonists commute to other levels that have work.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_RobotSoftCompat>Misc. Robots soft-compat</Strata_Settings_RobotSoftCompat>
+  <Strata_Settings_RobotSoftCompatDesc>Cross-level portal routing for Misc. Robots (return-to-base when recharge is on another level). Turn off to A/B test whether Strata robot hooks cause lag.</Strata_Settings_RobotSoftCompatDesc>
+  <Strata_Settings_RobotWorkRelay>Misc. Robots work relay</Strata_Settings_RobotWorkRelay>
+  <Strata_Settings_RobotWorkRelayDesc>When a bot finds no local haul/clean work, send it through stairwells toward linked levels that have work. Off by default — enable if you want bots to commute across floors.</Strata_Settings_RobotWorkRelayDesc>
   <Strata_Settings_FoodRelay>Food relay</Strata_Settings_FoodRelay>
   <Strata_Settings_FoodRelayDesc>Hungry colonists go find a meal on another level.</Strata_Settings_FoodRelayDesc>
   <Strata_Settings_RestRelay>Rest relay</Strata_Settings_RestRelay>

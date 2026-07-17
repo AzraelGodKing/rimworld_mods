@@ -21,7 +21,7 @@ namespace Strata
 
         // Idle Misc. Robots with null work jobs scan linked levels every think
         // pass; throttle that BFS/work probe separately from relay cooldown.
-        private const int RobotWorkScanCooldownTicks = 5000;
+        private const int RobotWorkScanCooldownTicks = 7500;
 
         private static readonly Dictionary<int, int> lastRelayTick = new Dictionary<int, int>();
 

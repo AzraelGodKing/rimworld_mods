@@ -25,6 +25,12 @@ namespace Strata
         private static int graphEpoch;
         private static readonly Dictionary<long, RouteCacheEntry> routeCache = new Dictionary<long, RouteCacheEntry>();
 
+        // ReachableLevels is called from many relay paths in the same tick;
+        // cache the BFS result per map until portal topology changes.
+        private static Map cachedReachableFrom;
+        private static int cachedReachableEpoch = -1;
+        private static readonly List<LevelLink> reachableCache = new List<LevelLink>();
+
         private struct RouteCacheEntry
         {
             public int epoch;
@@ -44,6 +50,9 @@ namespace Strata
         {
             graphEpoch++;
             routeCache.Clear();
+            cachedReachableFrom = null;
+            cachedReachableEpoch = -1;
+            reachableCache.Clear();
         }
 
         public static bool AnyLinkFrom(Map map)
@@ -69,6 +78,11 @@ namespace Strata
             resultBuffer.Clear();
             if (from == null)
             {
+                return resultBuffer;
+            }
+            if (cachedReachableFrom == from && cachedReachableEpoch == graphEpoch)
+            {
+                resultBuffer.AddRange(reachableCache);
                 return resultBuffer;
             }
 
@@ -108,6 +122,10 @@ namespace Strata
                     openQueue.Enqueue(other);
                 }
             }
+            reachableCache.Clear();
+            reachableCache.AddRange(resultBuffer);
+            cachedReachableFrom = from;
+            cachedReachableEpoch = graphEpoch;
             return resultBuffer;
         }
 

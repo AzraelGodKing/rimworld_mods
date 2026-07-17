@@ -19,6 +19,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 - Misc. Robots hauler/cleaner bots no longer spam `started 10 Goto jobs/tick` when `Return2BaseRoom` targets a recharge-station room on another Strata level — soft-compat routes via `EnterPortal` instead (no AIRobot assembly reference).
 - Misc. Robots return-to-base portal relay no longer hitches every few seconds: cross-level routing uses a prefix (skips vanilla cross-map Goto), 6000-tick per-bot retry cooldown, cached cross-map recharge lookups, shared `BestFirstStep` route cache, and pooled level-graph BFS buffers.
 - Misc. Robots work relay throttled (5000-tick scan cooldown) and no longer runs on `Return2BaseRoom`/recharge job givers; low-charge bots skip work scans and prioritize return-to-base. Return-to-base portal jobs no longer consume the general relay cooldown.
+- **Robot hitch follow-up:** work relay no longer patches every `ThinkNode_JobGiver.TryIssueJobPackage` in the game (Harmony postfix on all colonist/animal/raider think passes was the remaining periodic hitch). It now targets only AIRobot work JobGivers via dynamic `TargetMethods`. `ReachableLevels` BFS is cached per map until portal topology changes. Robot work relay is **off by default** (`robotWorkRelayEnabled`); master A/B toggle `robotSoftCompatEnabled` disables all Misc. Robots soft-compat (return-base + work relay).
 - Irrigation bridge uses Homesteader water defs (`Wellspring_*`); standalone Wellspring retired.
 
 ## [2.0] — 2026-07-16

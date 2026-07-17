@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -8,28 +11,35 @@ namespace Strata
     // Misc. Robots use their own JobGivers instead of JobGiver_Work, so the
     // normal work relay never fires. When a bot finds nothing locally, send it
     // through a portal toward a linked level that has haul/clean work waiting.
-    [HarmonyPatch(typeof(ThinkNode_JobGiver), nameof(ThinkNode_JobGiver.TryIssueJobPackage))]
+    //
+    // Patches only AIRobot work-seeking JobGivers (dynamic TargetMethods), not
+    // every ThinkNode_JobGiver in the game — the old blanket postfix ran on
+    // every colonist/animal/raider think pass and caused periodic hitches.
+    [HarmonyPatch]
     public static class Patch_RobotWorkRelay
     {
+        private static bool Prepare()
+        {
+            return DiscoverTargetMethods().Count > 0;
+        }
+
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            return DiscoverTargetMethods();
+        }
+
         public static void Postfix(ThinkNode_JobGiver __instance, Pawn pawn, ref ThinkResult __result)
         {
             if (__result.Job != null)
             {
                 return;
             }
-            if (pawn.IsFreeColonist)
+            if (StrataMod.Settings != null
+                && (!StrataMod.Settings.robotSoftCompatEnabled || !StrataMod.Settings.robotWorkRelayEnabled))
             {
                 return;
             }
             if (!StrataPawnUtility.IsMiscRobot(pawn))
-            {
-                return;
-            }
-            if (!StrataPawnUtility.IsWorkSeekingJobGiver(__instance))
-            {
-                return;
-            }
-            if (StrataMod.Settings != null && !StrataMod.Settings.workRelayEnabled)
             {
                 return;
             }
@@ -61,6 +71,38 @@ namespace Strata
                     return;
                 }
             }
+        }
+
+        private static List<MethodBase> DiscoverTargetMethods()
+        {
+            var methods = new List<MethodBase>();
+            Type robotType = AccessTools.TypeByName("AIRobot.X2_AIRobot");
+            if (robotType == null)
+            {
+                return methods;
+            }
+            Type jobGiverBase = typeof(ThinkNode_JobGiver);
+            foreach (Type type in robotType.Assembly.GetTypes())
+            {
+                if (type.IsAbstract || !jobGiverBase.IsAssignableFrom(type))
+                {
+                    continue;
+                }
+                if (!StrataPawnUtility.IsWorkSeekingJobGiverType(type))
+                {
+                    continue;
+                }
+                MethodInfo method = AccessTools.DeclaredMethod(type, "TryIssueJobPackage");
+                if (method != null)
+                {
+                    methods.Add(method);
+                }
+            }
+            if (methods.Count > 0)
+            {
+                Log.Message("[Strata] Robot work relay: patched " + methods.Count + " AIRobot JobGiver(s).");
+            }
+            return methods;
         }
     }
 }

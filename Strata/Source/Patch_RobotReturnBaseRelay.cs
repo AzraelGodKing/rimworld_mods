@@ -28,6 +28,10 @@ namespace Strata
         // job giver pathfinds toward an unreachable room every think pass.
         public static bool Prefix(ThinkNode __instance, Pawn pawn, ref ThinkResult __result)
         {
+            if (StrataMod.Settings != null && !StrataMod.Settings.robotSoftCompatEnabled)
+            {
+                return true;
+            }
             if (!StrataPawnUtility.IsMiscRobot(pawn))
             {
                 return true;

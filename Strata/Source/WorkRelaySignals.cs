@@ -72,11 +72,16 @@ namespace Strata
 
         public static bool IsRegisteredWorkSeekingGiver(ThinkNode_JobGiver giver)
         {
-            if (giver == null || workSeekingGiverMarkers.Count == 0)
+            return IsRegisteredWorkSeekingGiverType(giver?.GetType());
+        }
+
+        public static bool IsRegisteredWorkSeekingGiverType(Type type)
+        {
+            if (type == null || workSeekingGiverMarkers.Count == 0)
             {
                 return false;
             }
-            string name = giver.GetType().FullName ?? giver.GetType().Name;
+            string name = type.FullName ?? type.Name;
             for (int i = 0; i < workSeekingGiverMarkers.Count; i++)
             {
                 if (name.IndexOf(workSeekingGiverMarkers[i], StringComparison.OrdinalIgnoreCase) >= 0)

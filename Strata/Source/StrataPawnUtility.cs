@@ -226,7 +226,28 @@ namespace Strata
             {
                 return true;
             }
-            string name = giver.GetType().FullName ?? giver.GetType().Name;
+            return IsWorkSeekingJobGiverType(giver?.GetType());
+        }
+
+        public static bool IsWorkSeekingJobGiverType(Type type)
+        {
+            if (type == null)
+            {
+                return false;
+            }
+            if (WorkRelaySignals.IsRegisteredWorkSeekingGiverType(type))
+            {
+                return true;
+            }
+            return IsWorkSeekingJobGiverTypeName(type.FullName ?? type.Name);
+        }
+
+        private static bool IsWorkSeekingJobGiverTypeName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return false;
+            }
             // Return/recharge/shutdown givers are not work seekers — the old
             // broad AIRobot match caught Return2BaseRoom and ran BFS every think.
             if (name.IndexOf("Return2Base", StringComparison.OrdinalIgnoreCase) >= 0

@@ -14,6 +14,8 @@ namespace Strata
         public bool gasEventsEnabled = true;
         public bool raidPursuitEnabled = true;
         public bool workRelayEnabled = true;
+        public bool robotSoftCompatEnabled = true;
+        public bool robotWorkRelayEnabled = false;
         public bool foodRelayEnabled = true;
         public bool restRelayEnabled = true;
         public bool medicalRelayEnabled = true;
@@ -47,6 +49,8 @@ namespace Strata
             Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
             Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref robotSoftCompatEnabled, "robotSoftCompatEnabled", defaultValue: true);
+            Scribe_Values.Look(ref robotWorkRelayEnabled, "robotWorkRelayEnabled", defaultValue: false);
             Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref medicalRelayEnabled, "medicalRelayEnabled", defaultValue: true);
@@ -131,6 +135,10 @@ namespace Strata
             Text.Font = GameFont.Small;
             listing.CheckboxLabeled("Strata_Settings_WorkRelay".Translate(), ref Settings.workRelayEnabled,
                 "Strata_Settings_WorkRelayDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_RobotSoftCompat".Translate(), ref Settings.robotSoftCompatEnabled,
+                "Strata_Settings_RobotSoftCompatDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_RobotWorkRelay".Translate(), ref Settings.robotWorkRelayEnabled,
+                "Strata_Settings_RobotWorkRelayDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_FoodRelay".Translate(), ref Settings.foodRelayEnabled,
                 "Strata_Settings_FoodRelayDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_RestRelay".Translate(), ref Settings.restRelayEnabled,
