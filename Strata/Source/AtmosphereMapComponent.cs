@@ -195,10 +195,10 @@ namespace Strata
         }
 
         public bool GetCellBool(int index) =>
-            GasOverlayUtility.CellHasOverlayGas(cellDensity, index);
+            GasOverlayUtility.CellHasOverlayGas(cellDensity, index, map);
 
         public Color GetCellExtraColor(int index) =>
-            GasOverlayUtility.GetCellOverlayColor(cellDensity, index);
+            GasOverlayUtility.GetCellOverlayColor(cellDensity, index, map);
 
         public float DensityInRoom(Room room, StrataGasDef gas)
         {
@@ -1278,7 +1278,7 @@ namespace Strata
             {
                 return;
             }
-            drawer ??= new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.62f);
+            drawer ??= new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.55f);
             drawer.MarkForDraw();
             drawer.CellBoolDrawerUpdate();
         }

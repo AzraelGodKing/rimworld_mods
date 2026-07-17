@@ -17,6 +17,11 @@ namespace Strata
         }
 
         private static readonly Color LowOxygenAlarm = new Color(0.92f, 0.28f, 0.12f);
+        private static readonly Color LabelTextFill = new Color(0.94f, 0.96f, 0.99f);
+
+        private const float AmbientOverlayTolerance = 0.035f;
+        private const float MaxOverlayAlpha = 0.42f;
+        private const float MinOverlayAlpha = 0.04f;
 
         public static string OverlayLabel(StrataGasDef gas)
         {
@@ -27,18 +32,88 @@ namespace Strata
             return gas.overlayLabel.NullOrEmpty() ? gas.label : gas.overlayLabel;
         }
 
-        // Normal breathable O₂ is hidden; depleted O₂ and toxic gases tint.
-        public static bool VisibleInOverlay(StrataGasDef gas, float density)
+        // 0–1 visual weight: ambient N₂/Ar/CO₂ near the depth mix are skipped;
+        // hypoxic O₂ and pollutants ramp up toward MaxOverlayAlpha.
+        public static float OverlayContributionWeight(StrataGasDef gas, float density, Map map)
         {
-            if (gas == null || density <= gas.overlayThreshold)
+            if (gas == null || density <= 0f)
             {
-                return false;
+                return 0f;
             }
+
             if (gas.harmWhenBelow)
             {
-                return density < gas.harmThreshold;
+                if (density >= gas.harmThreshold)
+                {
+                    return 0f;
+                }
+                float t = 1f - Mathf.Clamp01(density / gas.harmThreshold);
+                return Mathf.Sqrt(t);
             }
-            return true;
+
+            if (AtmosphericMix.IsAtmosphericComponent(gas))
+            {
+                float target = TargetFraction(gas, map);
+                if (gas == StrataGasDefOf.Strata_CarbonDioxide)
+                {
+                    float excess = density - target;
+                    if (excess <= gas.overlayThreshold)
+                    {
+                        return 0f;
+                    }
+                    float span = Mathf.Max(0.08f, gas.harmThreshold - target);
+                    return Mathf.Clamp01(excess / span);
+                }
+
+                float delta = Mathf.Abs(density - target);
+                if (delta <= AmbientOverlayTolerance)
+                {
+                    return 0f;
+                }
+                return Mathf.Clamp01((delta - AmbientOverlayTolerance) / 0.2f);
+            }
+
+            if (density <= gas.overlayThreshold)
+            {
+                return 0f;
+            }
+
+            float reference = gas.harmHediff != null
+                ? Mathf.Max(gas.harmThreshold, gas.overlayThreshold + 0.05f)
+                : 0.55f;
+            float pollutantSpan = reference - gas.overlayThreshold;
+            if (pollutantSpan <= 0.001f)
+            {
+                return 1f;
+            }
+            return Mathf.Clamp01((density - gas.overlayThreshold) / pollutantSpan);
+        }
+
+        public static bool VisibleInOverlay(StrataGasDef gas, float density, Map map = null)
+        {
+            return OverlayContributionWeight(gas, density, map ?? Find.CurrentMap) > 0.001f;
+        }
+
+        private static float TargetFraction(StrataGasDef gas, Map map)
+        {
+            AtmosphericMix.TargetMix target = AtmosphericMix.TargetForMap(map);
+            if (gas == StrataGasDefOf.Strata_Nitrogen)
+            {
+                return target.nitrogen;
+            }
+            if (gas == StrataGasDefOf.Strata_Oxygen)
+            {
+                return target.oxygen;
+            }
+            if (gas == StrataGasDefOf.Strata_Argon)
+            {
+                return target.argon;
+            }
+            if (gas == StrataGasDefOf.Strata_CarbonDioxide)
+            {
+                return target.carbonDioxide;
+            }
+            return 0f;
         }
 
         public static Color ResolveOverlayColor(StrataGasDef gas, float density)
@@ -62,7 +137,7 @@ namespace Strata
             return boosted;
         }
 
-        public static bool CellHasOverlayGas(float[][] cellDensity, int cellIndex)
+        public static bool CellHasOverlayGas(float[][] cellDensity, int cellIndex, Map map)
         {
             if (cellDensity == null)
             {
@@ -73,7 +148,7 @@ namespace Strata
             {
                 StrataGasDef gas = gases[i];
                 float[] plane = cellDensity[gas.index];
-                if (plane != null && VisibleInOverlay(gas, plane[cellIndex]))
+                if (plane != null && VisibleInOverlay(gas, plane[cellIndex], map))
                 {
                     return true;
                 }
@@ -82,7 +157,7 @@ namespace Strata
         }
 
         // Dominant visible gas tints the cell; a strong secondary gas blends in.
-        public static Color GetCellOverlayColor(float[][] cellDensity, int cellIndex)
+        public static Color GetCellOverlayColor(float[][] cellDensity, int cellIndex, Map map)
         {
             if (cellDensity == null)
             {
@@ -90,8 +165,8 @@ namespace Strata
             }
             StrataGasDef primary = null;
             StrataGasDef secondary = null;
-            float primaryDensity = 0f;
-            float secondaryDensity = 0f;
+            float primaryWeight = 0f;
+            float secondaryWeight = 0f;
             List<StrataGasDef> gases = AtmosphereMapComponent.Gases;
             for (int i = 0; i < gases.Count; i++)
             {
@@ -102,34 +177,41 @@ namespace Strata
                     continue;
                 }
                 float density = plane[cellIndex];
-                if (!VisibleInOverlay(gas, density))
+                float weight = OverlayContributionWeight(gas, density, map);
+                if (weight <= 0.001f)
                 {
                     continue;
                 }
-                if (density > primaryDensity)
+                if (weight > primaryWeight)
                 {
                     secondary = primary;
-                    secondaryDensity = primaryDensity;
+                    secondaryWeight = primaryWeight;
                     primary = gas;
-                    primaryDensity = density;
+                    primaryWeight = weight;
                 }
-                else if (density > secondaryDensity)
+                else if (weight > secondaryWeight)
                 {
                     secondary = gas;
-                    secondaryDensity = density;
+                    secondaryWeight = weight;
                 }
             }
             if (primary == null)
             {
                 return Color.clear;
             }
+            float primaryDensity = cellDensity[primary.index][cellIndex];
             Color color = ResolveOverlayColor(primary, primaryDensity);
-            if (secondary != null && secondaryDensity >= primaryDensity * 0.2f)
+            if (secondary != null && secondaryWeight >= primaryWeight * 0.2f)
             {
-                float mix = secondaryDensity / (primaryDensity + secondaryDensity);
+                float secondaryDensity = cellDensity[secondary.index][cellIndex];
+                float mix = secondaryWeight / (primaryWeight + secondaryWeight);
                 color = Color.Lerp(color, ResolveOverlayColor(secondary, secondaryDensity), mix * 0.45f);
             }
-            float alpha = Mathf.Clamp01(Mathf.Sqrt(primaryDensity + secondaryDensity * 0.35f) * 1.35f);
+            float blendWeight = primaryWeight + secondaryWeight * 0.35f;
+            float alpha = Mathf.Lerp(
+                MinOverlayAlpha,
+                MaxOverlayAlpha,
+                Mathf.Clamp01(Mathf.Sqrt(blendWeight)));
             return new Color(color.r, color.g, color.b, alpha);
         }
 
@@ -471,12 +553,12 @@ namespace Strata
             for (int i = 0; i < gasLines; i++)
             {
                 texts.Add(FormatSliceLabel(slices[i], total));
-                colors.Add(ReadoutColor(slices[i].gas, slices[i].density));
+                colors.Add(LabelTextColor(slices[i].gas, slices[i].density));
             }
             if (showLoadLine)
             {
                 texts.Add(FormatLoadLabel(total));
-                colors.Add(new Color(0.75f, 0.75f, 0.75f));
+                colors.Add(LabelTextFill);
             }
 
             float maxWidth = 0f;
@@ -508,11 +590,24 @@ namespace Strata
                     x = area.x + padH;
                     y += lineHeight;
                 }
-                GUI.color = colors[i];
-                Widgets.Label(new Rect(x, y + i * lineHeight, blockWidth + 2f, lineHeight), texts[i]);
+                DrawOutlinedLabel(new Rect(x, y + i * lineHeight, blockWidth + 2f, lineHeight), texts[i], colors[i]);
             }
             GUI.color = saved;
             Text.Anchor = savedAnchor;
+        }
+
+        private static void DrawOutlinedLabel(Rect rect, string text, Color fill)
+        {
+            Color saved = GUI.color;
+            const float outline = 1f;
+            GUI.color = new Color(0f, 0f, 0f, 0.88f);
+            Widgets.Label(new Rect(rect.x - outline, rect.y, rect.width, rect.height), text);
+            Widgets.Label(new Rect(rect.x + outline, rect.y, rect.width, rect.height), text);
+            Widgets.Label(new Rect(rect.x, rect.y - outline, rect.width, rect.height), text);
+            Widgets.Label(new Rect(rect.x, rect.y + outline, rect.width, rect.height), text);
+            GUI.color = fill;
+            Widgets.Label(rect, text);
+            GUI.color = saved;
         }
 
         private static string FormatSliceLabel(GasSlice slice, float total)
@@ -521,13 +616,15 @@ namespace Strata
             return OverlayLabel(slice.gas) + " " + Mathf.RoundToInt(slice.density * 100f) + "%";
         }
 
-        private static Color ReadoutColor(StrataGasDef gas, float density)
+        private static Color LabelTextColor(StrataGasDef gas, float density)
         {
-            if (gas.harmWhenBelow && density >= gas.harmThreshold)
-            {
-                return new Color(0.72f, 0.82f, 0.95f);
-            }
-            return ResolveOverlayColor(gas, density);
+            Color tint = ResolveOverlayColor(gas, density);
+            Color.RGBToHSV(tint, out float h, out float s, out float v);
+            s = Mathf.Clamp01(s * 0.55f);
+            v = Mathf.Clamp01(v * 0.35f + 0.72f);
+            Color light = Color.HSVToRGB(h, s, v);
+            light.a = 1f;
+            return Color.Lerp(LabelTextFill, light, 0.35f);
         }
 
         // Full room composition for labels and readouts (includes normal O₂ and trace gases).

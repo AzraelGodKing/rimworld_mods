@@ -23,6 +23,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 - Compressed `About/Preview.png` for smaller Workshop/About footprint.
 
 ### Fixed
+- **Gas overlay opaque room fill** — ambient N₂/O₂/Ar near the depth mix no longer paint solid cells (overlay weight skips atmospheric baseline; pollutant alpha capped ~0.04–0.42 with CellBoolDrawer opacity 0.55). Room/cursor labels use light outlined text for contrast on smoke tints.
 - **N₂/Ar gas defs missing from deployed mod** — `Gases_Strata.xml` now ships `Strata_Nitrogen` and `Strata_Argon` alongside the atmospheric-mix DefOf fields; sync Defs + DLL together (build stamp `gas-mix-n2-ar-defsync`).
 - **Gas load cap** — room overlay load (sum of gas channel densities) and stored per-gas density now clamp at **100%** / **1.0** so merged rooms and stacked gases never show or persist above full load. Deep-gas pressurized pockets still allow up to **3.0** on the deep-gas channel only.
 - **Vented kitchen smoke (follow-up)** — outdoor cluster drain **80%/65%** per cycle (was 70%/54%), outdoor wall vents add **25%** extra flush (was 20%), ventilated emission cap **5%** (was 8%), fueled workbench auto-smoke **1.0/cycle** divided by room size (was 1.5). Drain runs before emit each cycle; vented steady-state should stay at or below the cap.
