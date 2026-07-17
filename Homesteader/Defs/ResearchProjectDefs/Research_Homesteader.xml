@@ -11,7 +11,7 @@
   <ResearchProjectDef>
     <defName>Homesteader_PrimitiveHomestead</defName>
     <label>primitive homestead</label>
-    <description>Basic homesteading knowledge: salting food, bulk farm storage, and keeping kitchen ingredients organized.</description>
+    <description>Basic homesteading knowledge: curing and smoking meat, haylofts and ingredient barrels, and sowing orchard trees.</description>
     <baseCost>400</baseCost>
     <techLevel>Neolithic</techLevel>
     <tab>Homesteader</tab>
@@ -36,7 +36,7 @@
   <ResearchProjectDef>
     <defName>Homesteader_FarmsteadCrafting</defName>
     <label>farmstead crafting</label>
-    <description>Milling grain, churning dairy, and baking from what the farm produces.</description>
+    <description>Unlocks the grain mill, butter churn, cheese press, pickling crock, and homestead hearth for milling, dairy, pickling, and baking.</description>
     <baseCost>800</baseCost>
     <techLevel>Neolithic</techLevel>
     <tab>Homesteader</tab>
@@ -50,7 +50,7 @@
   <ResearchProjectDef>
     <defName>Homesteader_HomesteadStorage</defName>
     <label>homestead storage</label>
-    <description>Root cellars and reinforced crates for serious pantry and stockpile management.</description>
+    <description>Cool root cellars (passive chill for stored food), preserves shelves, and reinforced crates for serious pantry and stockpile management.</description>
     <baseCost>600</baseCost>
     <techLevel>Neolithic</techLevel>
     <tab>Homesteader</tab>
@@ -78,7 +78,7 @@
   <ResearchProjectDef>
     <defName>Homesteader_HomesteadComforts</defName>
     <label>homestead comforts</label>
-    <description>The finer side of frontier life: quilted beds, rocking chairs, oil lamps, wood stoves, and games for the porch.</description>
+    <description>The finer side of frontier life: quilted beds, log benches, rocking chairs, oil lamps, wood stoves, porch games, and 27 monuments and statues.</description>
     <baseCost>600</baseCost>
     <techLevel>Neolithic</techLevel>
     <tab>Homesteader</tab>

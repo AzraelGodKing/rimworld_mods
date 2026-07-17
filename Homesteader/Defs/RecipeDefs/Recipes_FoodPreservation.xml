@@ -266,7 +266,7 @@
     <products>
       <Homesteader_RockSalt>10</Homesteader_RockSalt>
     </products>
-    <workSkill>Construction</workSkill>
+    <workSkill>Cooking</workSkill>
   </RecipeDef>
 
   <!-- ============ Cure meat ============ -->
@@ -450,7 +450,7 @@
   <RecipeDef>
     <defName>Homesteader_MakeJam</defName>
     <label>make jam</label>
-    <description>Boil fruit down into thick, sweet preserves that keep for months.</description>
+    <description>Boil fruit with sugar into thick, sweet preserves that keep for months.</description>
     <jobString>Making jam.</jobString>
     <workAmount>1000</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
@@ -470,11 +470,22 @@
         </filter>
         <count>15</count>
       </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Sugar</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
     </ingredients>
     <fixedIngredientFilter>
       <categories>
         <li>PlantFoodRaw</li>
       </categories>
+      <thingDefs>
+        <li>Homesteader_Sugar</li>
+      </thingDefs>
       <disallowedThingDefs>
         <li>Hay</li>
         <li>RawFungus</li>

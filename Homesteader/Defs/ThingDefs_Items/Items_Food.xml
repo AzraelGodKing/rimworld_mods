@@ -447,7 +447,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_Cream</defName>
     <label>cream</label>
-    <description>Rich cream skimmed from fresh milk at the churn. A luxurious cooking ingredient that spoils quickly.</description>
+    <description>Rich cream skimmed from fresh milk at the churn. Churn it into butter or press it with rock salt into cheese.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
       <texPath>Homesteader/Items/Cream</texPath>
@@ -484,7 +484,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_Cheese</defName>
     <label>cheese</label>
-    <description>A wheel of pressed farmhouse cheese. Keeps for months, travels well, and tastes far better than the milk it came from.</description>
+    <description>A wheel of pressed farmhouse cheese made from cream and rock salt. Keeps for months and travels well.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
       <texPath>Homesteader/Items/Cheese</texPath>

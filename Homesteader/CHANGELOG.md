@@ -6,9 +6,17 @@ All notable changes to Homesteader are documented here.
 
 ### Fixed
 - Pawns can work homestead production stations again (jam cauldron, hearth, drying rack, mill, brewery, etc.). Stations had bills and recipes but no `WorkGiverDef` with `fixedBillGiverDefs`, so `WorkGiver_DoBill` never considered them — colonists could build and set "do forever" bills but would not interact. Note: wood-fired stations (jam cauldron, hearth, smokehouse) still need fuel before work starts.
+- **Sugar, butter, and cream are used in recipes again.** Jam needs sugar; bread and flapjacks need butter; cheese is pressed from cream + rock salt; butter is churned from cream (skim milk first); porridge and cider use sugar. Cider no longer accepts hay or fungus.
+- **Rock salt** now trains Cooking (matches the Cooking workgiver) instead of Construction.
+- **Research gates match the tree:** curing rack, smokehouse, hayloft, and ingredient barrel need Primitive homestead; mill, churn, pickling crock, and hearth need Farmstead crafting; washer toss, log bench, and 27 statues need Homestead comforts.
+- **Root cellar** now passively cools stored food (C#): items on the cellar use ambient temperature capped at 5°C for spoilage, so summer heat no longer cooks the pantry. Requires Harmony.
+- **Advanced battery** can be rotated; **washer toss barrel** is no longer rotatable (single graphic).
+- Docs, About, and research blurbs updated for dairy/sugar pipelines, costs, and unlocks.
 
 ### Added
 - **Dedicated research tab** — all Homesteader projects live under their own *Homesteader* tab (no longer on Main).
+- Preserves shelf now also accepts butter, cream, beeswax, bread, flapjacks, and Odyssey salted/smoked fish.
+- Homesteader C# assembly (`Homesteader.dll`) for root cellar cooling; requires the Harmony mod.
 
 ### Changed
 - Renamed **shark plushie** to **Sharkira the plushie** (in-game label and docs).
