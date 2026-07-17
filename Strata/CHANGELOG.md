@@ -24,6 +24,7 @@ All notable changes to Strata are documented here.
 - A+ maps are **roof decks** (buildable only where roofed below + shaft plaza), not full concrete pads.
 - **Performance** — background occupied levels, vacant hibernation, throttled alerts and gravship deck sync (settings toggles).
 - Elevators research gates on *digging down*, not deep excavation.
+- **Steam / About description** — V2 copy with Discord, website, and roadmap links; building up, gravship, living below, atmosphere, fluid shafts, and quest content.
 
 ### Fixed
 - Gravship launch UI collection-modified crash, landing/onboard NREs, and empty-substructure placement preview.
