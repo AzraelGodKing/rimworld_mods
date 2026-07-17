@@ -24,38 +24,55 @@ namespace Strata
                 "TryIssueJobPackage");
         }
 
-        public static void Postfix(ThinkNode __instance, Pawn pawn, ref ThinkResult __result)
+        // Prefix skips vanilla cross-map Goto construction entirely — the original
+        // job giver pathfinds toward an unreachable room every think pass.
+        public static bool Prefix(ThinkNode __instance, Pawn pawn, ref ThinkResult __result)
         {
-            Job job = __result.Job;
-            if (job?.def != JobDefOf.Goto || !StrataPawnUtility.IsMiscRobot(pawn))
+            if (!StrataPawnUtility.IsMiscRobot(pawn))
             {
-                return;
+                return true;
+            }
+            if (pawn.CurJobDef == JobDefOf.EnterPortal)
+            {
+                return true;
+            }
+            if (!StrataPawnUtility.IsMiscRobotRechargeCrossMap(pawn))
+            {
+                return true;
             }
             Map rechargeMap = StrataPawnUtility.GetMiscRobotRechargeMap(pawn);
-            if (rechargeMap == null || rechargeMap == pawn.Map)
+            if (rechargeMap == null)
             {
-                return;
+                return true;
             }
             if (!CanPortalToRecharge(pawn))
             {
-                return;
+                return true;
+            }
+            if (PawnRelay.IsReturnBaseRetryCooldown(pawn))
+            {
+                __result = ThinkResult.NoJob;
+                return false;
             }
             MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, rechargeMap, pawn.Position);
             if (firstStep == null)
             {
-                // No route — drop the bad Goto so the think tree does not spam.
+                PawnRelay.TouchReturnBaseRetry(pawn);
                 __result = ThinkResult.NoJob;
-                return;
+                return false;
             }
-            Job portalJob = PawnRelay.MakeRelayJob(pawn, firstStep);
+            Job portalJob = PawnRelay.MakeReturnBasePortalJob(pawn, firstStep);
             if (portalJob != null)
             {
+                PawnRelay.TouchReturnBaseRetry(pawn);
                 __result = new ThinkResult(portalJob, __instance, JobTag.Misc);
             }
             else
             {
+                PawnRelay.TouchReturnBaseRetry(pawn);
                 __result = ThinkResult.NoJob;
             }
+            return false;
         }
 
         // Return-to-base is allowed even when the work relay would block a bot
@@ -70,11 +87,8 @@ namespace Strata
             {
                 return false;
             }
-            if (pawn.CurJobDef == JobDefOf.EnterPortal)
-            {
-                return false;
-            }
             return LevelGraph.AnyLinkFrom(pawn.Map);
         }
     }
 }
+

@@ -33,10 +33,21 @@ namespace Strata
             {
                 return;
             }
+            if (PawnRelay.IsRobotWorkScanCooldown(pawn))
+            {
+                return;
+            }
+            // Low-charge bots on the wrong level should return home, not scan for work.
+            if (StrataPawnUtility.IsMiscRobotRechargeCrossMap(pawn)
+                && StrataPawnUtility.MiscRobotNeedsRecharge(pawn))
+            {
+                return;
+            }
             if (!PawnRelay.CanRelay(pawn))
             {
                 return;
             }
+            PawnRelay.TouchRobotWorkScan(pawn);
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
             {
                 if (!StrataPawnUtility.MiscRobotHasWorkOn(pawn, link.map))

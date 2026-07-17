@@ -11,6 +11,26 @@ namespace Strata
         // Reusable buffers; game logic is single-threaded.
         private static readonly Queue<Map> openQueue = new Queue<Map>();
         private static readonly List<LevelLink> resultBuffer = new List<LevelLink>();
+        private static readonly HashSet<Map> reachesVisited = new HashSet<Map>();
+        private static readonly Queue<Map> reachesQueue = new Queue<Map>();
+
+        // ReachableLevels scratch (not reentrant-safe; do not call ReachableLevels
+        // from inside a ReachableLevels iteration).
+        private static readonly HashSet<Map> bfsVisited = new HashSet<Map>();
+        private static readonly Dictionary<Map, MapPortal> bfsFirstSteps = new Dictionary<Map, MapPortal>();
+        private static readonly Dictionary<Map, int> bfsDepths = new Dictionary<Map, int>();
+
+        // Cached first-step portal lists per (from, target). Pawn position still
+        // picks the nearest candidate at call time; topology is shared by all bots.
+        private static int graphEpoch;
+        private static readonly Dictionary<long, RouteCacheEntry> routeCache = new Dictionary<long, RouteCacheEntry>();
+
+        private struct RouteCacheEntry
+        {
+            public int epoch;
+            public int fromPortalHash;
+            public List<MapPortal> portals;
+        }
 
         public struct LevelLink
         {
@@ -18,6 +38,12 @@ namespace Strata
             public MapPortal firstStep; // the portal to take first from the start map
             public int depth;        // number of stairwells between here and there
             public IntVec3 arrivalCell; // where a pawn lands on that level (last leg's exit)
+        }
+
+        internal static void InvalidateCache()
+        {
+            graphEpoch++;
+            routeCache.Clear();
         }
 
         public static bool AnyLinkFrom(Map map)
@@ -46,9 +72,11 @@ namespace Strata
                 return resultBuffer;
             }
 
-            var visited = new HashSet<Map> { from };
-            var firstSteps = new Dictionary<Map, MapPortal>();
-            var depths = new Dictionary<Map, int> { { from, 0 } };
+            bfsVisited.Clear();
+            bfsVisited.Add(from);
+            bfsFirstSteps.Clear();
+            bfsDepths.Clear();
+            bfsDepths[from] = 0;
             openQueue.Clear();
             openQueue.Enqueue(from);
 
@@ -62,19 +90,19 @@ namespace Strata
                         continue;
                     }
                     Map other = OtherMapSafe(portal);
-                    if (other == null || visited.Contains(other))
+                    if (other == null || bfsVisited.Contains(other))
                     {
                         continue;
                     }
-                    visited.Add(other);
-                    MapPortal firstStep = current == from ? portal : firstSteps[current];
-                    firstSteps[other] = firstStep;
-                    depths[other] = depths[current] + 1;
+                    bfsVisited.Add(other);
+                    MapPortal firstStep = current == from ? portal : bfsFirstSteps[current];
+                    bfsFirstSteps[other] = firstStep;
+                    bfsDepths[other] = bfsDepths[current] + 1;
                     resultBuffer.Add(new LevelLink
                     {
                         map = other,
                         firstStep = firstStep,
-                        depth = depths[other],
+                        depth = bfsDepths[other],
                         arrivalCell = portal.GetDestinationLocation(),
                     });
                     openQueue.Enqueue(other);
@@ -93,16 +121,17 @@ namespace Strata
             {
                 return null;
             }
+            List<MapPortal> candidates = GetRouteCandidates(from, target);
+            if (candidates == null || candidates.Count == 0)
+            {
+                return null;
+            }
             MapPortal best = null;
             float bestScore = float.MaxValue;
-            foreach (Thing thing in from.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            for (int i = 0; i < candidates.Count; i++)
             {
-                if (!(thing is MapPortal portal) || !portal.Spawned)
-                {
-                    continue;
-                }
-                Map other = OtherMapSafe(portal);
-                if (other == null || (other != target && !Reaches(other, target, from)))
+                MapPortal portal = candidates[i];
+                if (portal == null || !portal.Spawned || portal.Map != from)
                 {
                     continue;
                 }
@@ -118,6 +147,60 @@ namespace Strata
                 }
             }
             return best;
+        }
+
+        private static List<MapPortal> GetRouteCandidates(Map from, Map target)
+        {
+            long key = RouteKey(from, target);
+            int portalHash = PortalTopologyHash(from);
+            if (routeCache.TryGetValue(key, out RouteCacheEntry entry)
+                && entry.epoch == graphEpoch
+                && entry.fromPortalHash == portalHash
+                && entry.portals != null)
+            {
+                return entry.portals;
+            }
+
+            var candidates = new List<MapPortal>();
+            foreach (Thing thing in from.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (!(thing is MapPortal portal) || !portal.Spawned)
+                {
+                    continue;
+                }
+                Map other = OtherMapSafe(portal);
+                if (other == null || (other != target && !Reaches(other, target, from)))
+                {
+                    continue;
+                }
+                candidates.Add(portal);
+            }
+
+            routeCache[key] = new RouteCacheEntry
+            {
+                epoch = graphEpoch,
+                fromPortalHash = portalHash,
+                portals = candidates,
+            };
+            return candidates;
+        }
+
+        private static long RouteKey(Map from, Map target)
+        {
+            return ((long)from.uniqueID << 32) | (uint)target.uniqueID;
+        }
+
+        private static int PortalTopologyHash(Map map)
+        {
+            int hash = map.uniqueID;
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is MapPortal portal && portal.Spawned)
+                {
+                    hash = Gen.HashCombineInt(hash, portal.thingIDNumber);
+                }
+            }
+            return hash;
         }
 
         private static bool IsPoweredElevator(MapPortal portal)
@@ -144,16 +227,18 @@ namespace Strata
             {
                 return true;
             }
-            var visited = new HashSet<Map> { start, exclude };
-            var queue = new Queue<Map>();
-            queue.Enqueue(start);
-            while (queue.Count > 0)
+            reachesVisited.Clear();
+            reachesVisited.Add(start);
+            reachesVisited.Add(exclude);
+            reachesQueue.Clear();
+            reachesQueue.Enqueue(start);
+            while (reachesQueue.Count > 0)
             {
-                Map current = queue.Dequeue();
+                Map current = reachesQueue.Dequeue();
                 foreach (Thing thing in current.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
                 {
                     Map other = thing is MapPortal portal ? OtherMapSafe(portal) : null;
-                    if (other == null || !visited.Add(other))
+                    if (other == null || !reachesVisited.Add(other))
                     {
                         continue;
                     }
@@ -161,7 +246,7 @@ namespace Strata
                     {
                         return true;
                     }
-                    queue.Enqueue(other);
+                    reachesQueue.Enqueue(other);
                 }
             }
             return false;

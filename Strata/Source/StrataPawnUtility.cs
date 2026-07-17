@@ -27,6 +27,9 @@ namespace Strata
 
         private static bool miscRobotRechargeFieldResolved;
 
+        private static readonly Dictionary<int, (Thing station, Map map, bool crossMap, Map cachedAtMap)> miscRobotRechargeCache
+            = new Dictionary<int, (Thing station, Map map, bool crossMap, Map cachedAtMap)>();
+
         public static bool IsMiscRobot(Pawn pawn)
         {
             if (pawn == null)
@@ -57,10 +60,52 @@ namespace Strata
             return miscRobotRechargeField?.GetValue(pawn) as Thing;
         }
 
+        internal static void ResetMiscRobotCaches()
+        {
+            miscRobotRechargeCache.Clear();
+        }
+
         public static Map GetMiscRobotRechargeMap(Pawn pawn)
         {
+            if (!IsMiscRobot(pawn))
+            {
+                return null;
+            }
+            RefreshMiscRobotRechargeCache(pawn, out _, out Map map);
+            return map;
+        }
+
+        // Cached per bot; invalidates when the station despawns or the bot changes maps.
+        public static bool IsMiscRobotRechargeCrossMap(Pawn pawn)
+        {
+            if (!IsMiscRobot(pawn) || pawn?.Map == null)
+            {
+                return false;
+            }
+            RefreshMiscRobotRechargeCache(pawn, out bool crossMap, out _);
+            return crossMap;
+        }
+
+        private static void RefreshMiscRobotRechargeCache(Pawn pawn, out bool crossMap, out Map rechargeMap)
+        {
+            crossMap = false;
+            rechargeMap = null;
+            int pawnId = pawn.thingIDNumber;
+            Map pawnMap = pawn.Map;
+            if (miscRobotRechargeCache.TryGetValue(pawnId, out (Thing station, Map map, bool crossMap, Map cachedAtMap) cached))
+            {
+                if (cached.station != null && cached.station.Spawned && cached.cachedAtMap == pawnMap)
+                {
+                    crossMap = cached.crossMap;
+                    rechargeMap = cached.map;
+                    return;
+                }
+                miscRobotRechargeCache.Remove(pawnId);
+            }
             Thing station = GetMiscRobotRechargeStation(pawn);
-            return station is { Spawned: true } ? station.Map : null;
+            rechargeMap = station is { Spawned: true } ? station.Map : null;
+            crossMap = rechargeMap != null && rechargeMap != pawnMap;
+            miscRobotRechargeCache[pawnId] = (station, rechargeMap, crossMap, pawnMap);
         }
 
         // Who Strata may *relay* for work/food/rest/etc. Not the same as who
@@ -182,8 +227,15 @@ namespace Strata
                 return true;
             }
             string name = giver.GetType().FullName ?? giver.GetType().Name;
+            // Return/recharge/shutdown givers are not work seekers — the old
+            // broad AIRobot match caught Return2BaseRoom and ran BFS every think.
+            if (name.IndexOf("Return2Base", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Recharge", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Shutdown", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return false;
+            }
             return name.IndexOf("JobGiver_Work", StringComparison.Ordinal) >= 0
-                || name.IndexOf("AIRobot", StringComparison.OrdinalIgnoreCase) >= 0
                 || name.IndexOf("Haul", StringComparison.OrdinalIgnoreCase) >= 0
                 || name.IndexOf("Clean", StringComparison.OrdinalIgnoreCase) >= 0
                 || name.IndexOf("Mine", StringComparison.OrdinalIgnoreCase) >= 0
@@ -193,7 +245,7 @@ namespace Strata
                 || name.IndexOf("Fire", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        private static bool MiscRobotNeedsRecharge(Pawn pawn)
+        internal static bool MiscRobotNeedsRecharge(Pawn pawn)
         {
             JobDef job = pawn.CurJobDef;
             if (job?.defName != null
