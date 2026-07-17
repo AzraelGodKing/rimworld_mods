@@ -92,6 +92,9 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_PrimitiveHomestead</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Smokehouse ============ -->
@@ -150,6 +153,9 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_PrimitiveHomestead</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Pickling crock ============ -->
@@ -195,6 +201,9 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_FarmsteadCrafting</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Homestead hearth ============ -->
@@ -259,13 +268,16 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_FarmsteadCrafting</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Jam cauldron ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_JamCauldron</defName>
     <label>jam cauldron</label>
-    <description>A wide iron cauldron over a wood fire for boiling fruit into sweet, long-lasting jam.</description>
+    <description>A wide iron cauldron over a wood fire for boiling fruit with sugar into sweet, long-lasting jam.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/JamCauldron</texPath>

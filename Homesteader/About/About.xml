@@ -8,36 +8,51 @@
     <li>1.5</li>
     <li>1.6</li>
   </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+  </loadAfter>
   <description>Everything a growing homestead needs: tribal survival, farm-to-table crafting, storage, food preservation, and off-grid power.
 
 TRIBAL SURVIVAL (no research)
 - Drying rack: jerky, dried produce, fruit leather, dried mushrooms, and pemmican without needing pemmican research.
-- Curing rack: rock salt from stone chunks, salted meat.
-- Smokehouse: wood-fired smoked meat that still cooks into meals.
-- Hayloft, ingredient barrel, and all original storage options.
+- Field crops, basic storage crates, barrels, and pallets.
 
-FARM-TO-TABLE
-- Grain mill and butter churn for flour and butter.
-- Pickling crock and homestead hearth for pickled vegetables, bread, hardtack, trail stew, and hearty stew.
+PRIMITIVE HOMESTEAD
+- Curing rack and smokehouse for salted and smoked meat.
+- Hayloft and ingredient barrel for bulk farm storage.
+- Orchard trees (apple, cherry, sugar maple).
+
+FARMSTEAD CRAFTING
+- Grain mill, butter churn, cheese press, pickling crock, and homestead hearth.
+- Dairy pipeline: skim cream → churn butter or press cheese.
+- Sugar for jam, porridge, and cider; butter for bread and flapjacks.
 
 ORCHARD &amp; APIARY
 - Apple and cherry trees: slow-growing, regrowing orchard fruit for cider, jam, and eating fresh.
-- Sugar maple: tap for maple sap and boil it into maple syrup at the hearth - then griddle flapjacks, the definitive homestead breakfast.
-- Beehives now produce beeswax alongside honey; render it into slow-burning beeswax candles.
+- Sugar maple: tap for maple sap and boil it into maple syrup at the hearth - then griddle flapjacks.
+- Beehives produce beeswax alongside honey; render it into slow-burning beeswax candles.
 
 AROUND THE FARMHOUSE
-- Preserves shelf: beautiful display storage for jams, pickles, cheese, honey, and syrup.
+- Preserves shelf: beautiful display storage for jams, pickles, cheese, dairy, honey, and syrup.
 - Nesting box: a snug straw-lined bed for small animals.
 - Harvest maypole: a ribboned gathering spot colonists celebrate around.
 
 RESEARCH &amp; PROGRESSION
-- Primitive homestead, food preservation, farmstead crafting, homestead storage, and advanced homestead research projects.
-- Root cellar, large storage crate, jam cauldron, and wood-burning generator.
+- Primitive homestead, food preservation, farmstead crafting, homestead storage, brewing, comforts, and advanced homestead.
+- Root cellar (passive cool storage ≤5°C), large storage crate, jam cauldron, and wood-burning generator.
 
 POWER
 - Compact battery, battery bank, advanced battery, ultratech battery, portable chemfuel generator.
 
 Odyssey owners get salted and smoked fish recipes automatically.
 
-Fully XML-based: no C# assembly, safe to add or remove from a save (remove mod items from the map first before uninstalling).</description>
+Requires the Harmony mod (C# for root cellar cooling). Safe to add to a save. Before removing it, deconstruct the mod's buildings and use up or sell its items.</description>
 </ModMetaData>

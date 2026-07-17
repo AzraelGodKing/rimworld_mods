@@ -5,7 +5,7 @@
   <RecipeDef>
     <defName>Homesteader_CookPorridge</defName>
     <label>cook porridge</label>
-    <description>Simmer grain into a warm, filling porridge.</description>
+    <description>Simmer grain into a warm, filling porridge sweetened with a pinch of sugar.</description>
     <jobString>Cooking porridge.</jobString>
     <workAmount>350</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
@@ -22,11 +22,20 @@
         </filter>
         <count>10</count>
       </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Sugar</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
         <li>Homesteader_RawBarley</li>
         <li>Homesteader_Flour</li>
+        <li>Homesteader_Sugar</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>

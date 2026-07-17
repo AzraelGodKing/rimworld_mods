@@ -45,7 +45,7 @@
   <RecipeDef>
     <defName>Homesteader_ChurnButter</defName>
     <label>churn butter</label>
-    <description>Agitate fresh milk until the cream separates into butter.</description>
+    <description>Agitate skimmed cream until it separates into butter.</description>
     <jobString>Churning butter.</jobString>
     <workAmount>800</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -55,15 +55,15 @@
       <li>
         <filter>
           <thingDefs>
-            <li>Milk</li>
+            <li>Homesteader_Cream</li>
           </thingDefs>
         </filter>
-        <count>10</count>
+        <count>6</count>
       </li>
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>Milk</li>
+        <li>Homesteader_Cream</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>
@@ -107,7 +107,7 @@
   <RecipeDef>
     <defName>Homesteader_PressCheese</defName>
     <label>press cheese</label>
-    <description>Curdle milk with salt and press it into a wheel of long-keeping farmhouse cheese.</description>
+    <description>Curdle cream with salt and press it into a wheel of long-keeping farmhouse cheese.</description>
     <jobString>Pressing cheese.</jobString>
     <workAmount>1000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -117,10 +117,10 @@
       <li>
         <filter>
           <thingDefs>
-            <li>Milk</li>
+            <li>Homesteader_Cream</li>
           </thingDefs>
         </filter>
-        <count>10</count>
+        <count>8</count>
       </li>
       <li>
         <filter>
@@ -133,7 +133,7 @@
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>Milk</li>
+        <li>Homesteader_Cream</li>
         <li>Homesteader_RockSalt</li>
       </thingDefs>
     </fixedIngredientFilter>
@@ -147,7 +147,7 @@
   <RecipeDef>
     <defName>Homesteader_BakeBread</defName>
     <label>bake bread</label>
-    <description>Bake a simple loaf from homestead flour.</description>
+    <description>Bake a simple loaf from homestead flour and a knob of butter.</description>
     <jobString>Baking bread.</jobString>
     <workAmount>600</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
@@ -162,10 +162,19 @@
         </filter>
         <count>5</count>
       </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Butter</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
         <li>Homesteader_Flour</li>
+        <li>Homesteader_Butter</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>
