@@ -112,7 +112,7 @@
     </statBases>
     <costList>
       <WoodLog>35</WoodLog>
-      <Cloth>25</Cloth>
+      <Homesteader_HomesteadQuilt>1</Homesteader_HomesteadQuilt>
     </costList>
     <building>
       <bed_showSleeperBody>false</bed_showSleeperBody>
@@ -123,6 +123,7 @@
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Homesteader_HomesteadComforts</li>
+      <li>Homesteader_Textiles</li>
     </researchPrerequisites>
   </ThingDef>
 

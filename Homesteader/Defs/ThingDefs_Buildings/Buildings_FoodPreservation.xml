@@ -263,6 +263,10 @@
       <li>Homesteader_BakeButtermilkBiscuits</li>
       <li>Homesteader_BoilMapleSyrup</li>
       <li>Homesteader_BakeFlapjacks</li>
+      <li>Homesteader_RenderLard</li>
+      <li>Homesteader_RenderTallow</li>
+      <li>Homesteader_MakeSausage</li>
+      <li>Homesteader_MakeAnimalMash</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>

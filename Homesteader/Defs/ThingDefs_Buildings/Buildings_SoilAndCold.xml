@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Compost heap ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_CompostHeap</defName>
+    <label>compost heap</label>
+    <description>A steaming pile of plant waste and manure turned into compost. Bills turn hay and plant matter into compost, then into fertilizer for composted soil.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/CompostHeap</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>600</WorkToBuild>
+      <Mass>15</Mass>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>20</WoodLog>
+      <Hay>15</Hay>
+    </costList>
+    <recipes>
+      <li>Homesteader_MakeCompost</li>
+      <li>Homesteader_ScreenFertilizer</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_SoilAndCold</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Icehouse ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_Icehouse</defName>
+    <label>icehouse</label>
+    <description>A thick-walled ice cellar packed with sawdust and winter cold. Holds four stacks and keeps food near freezing without power - colder than a root cellar, smaller footprint.</description>
+    <thingClass>Building_Storage</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Icehouse</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.7</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <statBases>
+      <MaxHitPoints>260</MaxHitPoints>
+      <WorkToBuild>2400</WorkToBuild>
+      <Mass>0</Mass>
+      <Flammability>0.15</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>50</WoodLog>
+      <Steel>50</Steel>
+    </costList>
+    <comps>
+      <li Class="Homesteader.CompProperties_RootCellarCooling">
+        <maxTemperature>0</maxTemperature>
+      </li>
+    </comps>
+    <building>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <maxItemsInCell>4</maxItemsInCell>
+      <fixedStorageSettings>
+        <filter>
+          <categories>
+            <li>Foods</li>
+            <li>Drugs</li>
+          </categories>
+        </filter>
+      </fixedStorageSettings>
+      <defaultStorageSettings>
+        <priority>Important</priority>
+        <filter>
+          <categories>
+            <li>Foods</li>
+          </categories>
+        </filter>
+      </defaultStorageSettings>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <designationCategory>Furniture</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_SoilAndCold</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Springhouse ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_Springhouse</defName>
+    <label>springhouse</label>
+    <description>A water-cooled shed built over a cold spring feel. Holds three stacks and keeps dairy and produce cool (≤8°C) without electricity - the farmhouse companion to the root cellar.</description>
+    <thingClass>Building_Storage</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Springhouse</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.55</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,1)</size>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>1800</WorkToBuild>
+      <Mass>0</Mass>
+      <Flammability>0.25</Flammability>
+      <Beauty>4</Beauty>
+    </statBases>
+    <costList>
+      <WoodLog>45</WoodLog>
+      <Steel>20</Steel>
+    </costList>
+    <comps>
+      <li Class="Homesteader.CompProperties_RootCellarCooling">
+        <maxTemperature>8</maxTemperature>
+      </li>
+    </comps>
+    <building>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <maxItemsInCell>3</maxItemsInCell>
+      <fixedStorageSettings>
+        <filter>
+          <categories>
+            <li>Foods</li>
+            <li>Drugs</li>
+          </categories>
+        </filter>
+      </fixedStorageSettings>
+      <defaultStorageSettings>
+        <priority>Preferred</priority>
+        <filter>
+          <categories>
+            <li>Foods</li>
+          </categories>
+        </filter>
+      </defaultStorageSettings>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <designationCategory>Furniture</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_SoilAndCold</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>

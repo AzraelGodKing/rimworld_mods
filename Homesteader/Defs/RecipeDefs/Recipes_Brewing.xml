@@ -120,4 +120,35 @@
     <workSkill>Cooking</workSkill>
   </RecipeDef>
 
+  <!-- ============ Ferment pressed apple juice ============ -->
+  <RecipeDef>
+    <defName>Homesteader_FermentAppleJuice</defName>
+    <label>ferment apple juice</label>
+    <description>Ferment cider-press juice into a clean orchard cider. Faster than crushing fruit at the bench.</description>
+    <jobString>Fermenting apple juice.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>DrugCookingSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_AppleJuice</li>
+          </thingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_AppleJuice</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Cider>6</Homesteader_Cider>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
 </Defs>

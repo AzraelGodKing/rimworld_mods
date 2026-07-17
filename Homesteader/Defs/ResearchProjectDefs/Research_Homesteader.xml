@@ -5,7 +5,7 @@
     <defName>Homesteader</defName>
     <label>Homesteader</label>
     <generalTitle>Homestead research</generalTitle>
-    <generalDescription>Farm-to-table crafting, pantry storage, brewing, wells and irrigation, comforts, and electrified homestead infrastructure.</generalDescription>
+    <generalDescription>Farm-to-table crafting, livestock, textiles, pantry storage, brewing, wells and irrigation, comforts, and electrified homestead infrastructure.</generalDescription>
   </ResearchTabDef>
 
   <ResearchProjectDef>
@@ -142,6 +142,63 @@
     </prerequisites>
     <researchViewX>1.50</researchViewX>
     <researchViewY>-0.40</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Homesteader_Livestock</defName>
+    <label>homestead livestock</label>
+    <description>Chicken coops for steady eggs, goat pens for dairy milk, and mash recipes to keep the yard flock productive.</description>
+    <baseCost>700</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>Homesteader</tab>
+    <prerequisites>
+      <li>Homesteader_PrimitiveHomestead</li>
+    </prerequisites>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>3.20</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Homesteader_Textiles</defName>
+    <label>homestead textiles</label>
+    <description>Grow flax, spin fiber or wool into homespun cloth, and weave farmhouse quilts for quilted beds.</description>
+    <baseCost>800</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>Homesteader</tab>
+    <prerequisites>
+      <li>Homesteader_FarmsteadCrafting</li>
+    </prerequisites>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>3.20</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Homesteader_SoilAndCold</defName>
+    <label>soil and cold storage</label>
+    <description>Compost heaps and composted soil for richer fields, plus icehouses and springhouses for passive cold pantry space.</description>
+    <baseCost>900</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>Homesteader</tab>
+    <prerequisites>
+      <li>Homesteader_HomesteadStorage</li>
+    </prerequisites>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Homesteader_PantryCraft</defName>
+    <label>pantry craft</label>
+    <description>Canning kitchens and mason jars for sealed stew and jam, a cider press for orchard juice, and a soap wash tub for a proper scrub.</description>
+    <baseCost>900</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>Homesteader</tab>
+    <prerequisites>
+      <li>Homesteader_FoodPreservation</li>
+      <li>Homesteader_FarmsteadCrafting</li>
+    </prerequisites>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>0.80</researchViewY>
   </ResearchProjectDef>
 
 </Defs>

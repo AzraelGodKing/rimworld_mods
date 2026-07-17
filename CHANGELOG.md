@@ -4,7 +4,7 @@ Short repo highlights. Detailed notes live in each mod’s own `CHANGELOG.md`.
 
 ## Unreleased
 
-- **Homesteader** — Wellspring water merged in; Dubs Bad Hygiene soft-compat; pantry, favorites, workgiver, and root-cellar fixes. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
+- **Homesteader** — Yard & pantry expansion (livestock, textiles, compost/cold storage, canning); production workgiver fix; source cleanup. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
 - **Strata** — Irrigation bridge uses Homesteader water defs (`Wellspring_*`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Stormproof** — Research tab; load shedder, grid monitor, ion storm, and related buildings. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
 

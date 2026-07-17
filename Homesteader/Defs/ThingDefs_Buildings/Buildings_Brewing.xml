@@ -32,6 +32,7 @@
     <recipes>
       <li>Homesteader_BrewCider</li>
       <li>Homesteader_BrewAppleCider</li>
+      <li>Homesteader_FermentAppleJuice</li>
       <li>Homesteader_BrewMead</li>
       <li>Homesteader_BrewHerbalTea</li>
       <li>Homesteader_BrewCiderVinegar</li>
