@@ -460,7 +460,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
       <li Class="Strata.CompProperties_ExhaustVent">
-        <ventPower>0.25</ventPower>
+        <ventPower>0.35</ventPower>
         <requiresPower>true</requiresPower>
       </li>
     </comps>
@@ -560,7 +560,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </costList>
     <comps>
       <li Class="Strata.CompProperties_ExhaustVent">
-        <ventPower>0.06</ventPower>
+        <ventPower>0.12</ventPower>
         <requiresPower>false</requiresPower>
       </li>
     </comps>

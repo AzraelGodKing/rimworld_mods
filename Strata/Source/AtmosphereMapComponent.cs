@@ -20,17 +20,17 @@ namespace Strata
         private const int CycleTicks = 60;
         private const float OpenRoofVent = 0.06f;  // per open-roof cell (capped)
         private const float OutdoorDisperse = 0.6f; // fraction cleared per cycle in open air
-        private const float ExteriorDoorDrain = 0.58f; // direct outdoor opening - strong flush to open air
-        private const float InteriorOutdoorDrain = 0.42f; // rooms linked by open doors to an exterior opening
+        private const float ExteriorDoorDrain = 0.70f; // direct outdoor opening - strong flush to open air
+        private const float InteriorOutdoorDrain = 0.54f; // rooms linked by open doors to an exterior opening
         private const float InteriorDoorFlow = 0.25f; // fraction of the density gap that crosses an open interior door
-        private const float VentExteriorDrain = 0.3f; // per vanilla wall vent facing open air - near-complete emptying
+        private const float VentExteriorDrain = 0.20f; // extra flush per outdoor-facing wall vent (stacks with cluster drain)
         private const float VentInteriorFlow = 0.15f; // room-to-room equalization through a vanilla wall vent
         // Burners and inflows can never push a properly ventilated room past
         // this light haze, safely under harm thresholds - ventilation is a
         // guarantee, not a race between the emission rate and the vent rate.
         // Pre-existing thick gas still drains through the outlets visibly
         // instead of vanishing to the cap.
-        private const float VentilatedCap = 0.12f;
+        private const float VentilatedCap = 0.08f;
         private const float CullThreshold = 0.01f;
 
         // Roughly atmospheric O₂ fraction for newly opened deep levels.
@@ -905,6 +905,7 @@ namespace Strata
                 }
                 countedDoors.Clear();
                 bool changed = false;
+                bool hasOutdoorWallVent = false;
                 // Doors are their own one-cell "doorway room" and never show
                 // up in the room's Regions - walk the border cells instead.
                 // Vanilla wall vents flow gas the same way they flow heat.
@@ -948,6 +949,7 @@ namespace Strata
                         if (SmokeVentUtility.VentLeadsOutdoors(opening, room))
                         {
                             exterior = true;
+                            hasOutdoorWallVent = true;
                         }
                         else
                         {
@@ -1025,9 +1027,13 @@ namespace Strata
                 {
                     outdoorDrain = InteriorOutdoorDrain;
                 }
-                if (outdoorDrain > 0f)
+                if (outdoorDrain > 0f || hasOutdoorWallVent)
                 {
                     float keep = 1f - outdoorDrain;
+                    if (hasOutdoorWallVent)
+                    {
+                        keep *= 1f - VentExteriorDrain;
+                    }
                     for (int g = 0; g < c.density.Length; g++)
                     {
                         c.density[g] *= keep;
