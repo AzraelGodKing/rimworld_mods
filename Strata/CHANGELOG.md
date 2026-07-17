@@ -5,6 +5,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 ## [Unreleased]
 
 ### Added
+- **Atmospheric mix rework** — room-averaged N₂ (78.08%), O₂ (20.95%), Ar (0.93%), and CO₂ (0.04%) baseline; surface and A+ enclosed rooms hard-lock to ambient each cycle; B1+ depth-scarce natural O₂ with weaker replenishment deeper down; room breathing on surface/A+; plant and plant-creature CO₂↔O₂ exchange; animal methane (cows/boomalopes); cavern O₂/CO₂ buoyancy bias; legacy O₂-only saves migrate to full mix on load.
 - **Off-thread atmosphere work** — O₂/CO₂ cavern diffusion (the per-cell cardinal pass over open chambers) snapshots gas arrays and skip masks on the main thread, computes on a background worker, and applies results on the next atmosphere cycle. Setting: `Off-thread O₂/CO₂ diffusion` under Threats & performance (default ON; requires breathing sim). Startup log: `[Strata] Off-thread work: enabled=...`.
 - **Misc. Robots diagnostics** — mod settings section under Threats & performance lists live session counters (total + rate per 60s) for recharge/return relay prefix/postfix fixes, work JobGiver calls, work-relay scans/jobs, EnterPortal relay jobs, and ReachableLevels/BestFirstStep on robot paths; reset button and optional log every 600 ticks (`logRobotDiagnostics`, off by default).
 - **Performance mode** master kill-switch: disables colonist work relay, Misc. Robots soft-compat, external JobGiver relay; atmosphere cycles run 4× slower and skip gas motes on non-viewed pocket levels.
@@ -12,6 +13,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 - `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
 
 ### Changed
+- **Gas simulation** — `ReplenishAmbientOxygen` replaced with full atmospheric mix replenishment; methane pockets from hidden chambers and geothermal gensteps use the CH₄ channel; atmospheric components hidden from overlay until depleted (high threshold).
 - **Atmosphere hitch reduction** — gas/O₂/CO₂ cycles spread across multiple ticks (prep → transport → sources → breath → finish) instead of one spike; background levels use lite batched room/plant/sync passes; colony-built room cache avoids rescanning thing lists every diffusion tick; overlay rebuild skipped when density unchanged on non-viewed maps; pawn gas harm throttled on background levels (animals skipped unless already affected on Low/performance mode).
 - **Atmosphere quality setting** — Low / Medium / High under Threats & performance controls cycle multipliers on background levels (Low: 8× slower off-screen; High: full fidelity everywhere).
 - Background **reduce-background** multiplier raised 4× → 8×; multi-level non-viewed multiplier 2× → 4×.

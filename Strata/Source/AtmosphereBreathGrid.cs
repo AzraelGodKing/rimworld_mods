@@ -21,9 +21,10 @@ namespace Strata
         private const float O2PumpRadius = 16f;
         private const float DiffusionRate = 0.11f;
         private const float RoofAmbientRate = 0.2f;
-        private const float PlantO2PerCycle = 0.00018f;
-        private const float PlantCo2PerCycle = 0.00014f;
-        private const float MinPlantGrowth = 0.12f;
+        private const float PlantO2PerCycle = AtmosphereMapComponent.PlantO2PerCycle;
+        private const float PlantCo2PerCycle = AtmosphereMapComponent.PlantCo2PerCycle;
+        private const float MinPlantGrowth = AtmosphereMapComponent.MinPlantGrowth;
+        private const float BuoyancyBias = 0.045f;
 
         private readonly Map map;
         private float[] o2;
@@ -208,11 +209,12 @@ namespace Strata
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];
-                if (pawn.RaceProps == null || !pawn.RaceProps.IsFlesh || pawn.Dead || !pawn.Spawned)
+                if (pawn.RaceProps == null || pawn.Dead || !pawn.Spawned)
                 {
                     continue;
                 }
-                if (!StrataLevelPerfUtility.ShouldAffectAnimalGasHarm(pawn, map))
+                if (!StrataPawnUtility.IsPlantBreather(pawn)
+                    && (!pawn.RaceProps.IsFlesh || !StrataLevelPerfUtility.ShouldAffectAnimalGasHarm(pawn, map)))
                 {
                     continue;
                 }
@@ -229,7 +231,20 @@ namespace Strata
                 float bodyScale = pawn.BodySize;
                 float o2Need = AtmosphereMapComponent.OxygenPerBreath * bodyScale;
                 float co2Out = AtmosphereMapComponent.CarbonDioxidePerBreath * bodyScale;
-                if (room != null && RoomIsColonyBuiltCached(room))
+                if (StrataPawnUtility.IsPlantBreather(pawn))
+                {
+                    if (room != null && RoomIsColonyBuiltCached(room))
+                    {
+                        atmosphere.ConsumeBreathGasFromRoom(room, co2, PlantCo2PerCycle * bodyScale);
+                        atmosphere.AddBreathGasToRoom(room, oxygen, PlantO2PerCycle * bodyScale, cell, bypassCap: true);
+                    }
+                    else
+                    {
+                        ConsumeCellCo2(cell, PlantCo2PerCycle * bodyScale);
+                        AddCellO2(cell, PlantO2PerCycle * bodyScale);
+                    }
+                }
+                else if (room != null && RoomIsColonyBuiltCached(room))
                 {
                     atmosphere.ConsumeBreathGasFromRoom(room, oxygen, o2Need);
                     atmosphere.AddBreathGasToRoom(room, co2, co2Out, cell);
@@ -386,8 +401,9 @@ namespace Strata
                         continue;
                     }
                     int index = map.cellIndices.CellToIndex(cell);
-                    o2[index] = Mathf.Lerp(o2[index], AtmosphereMapComponent.AmbientOxygen, RoofAmbientRate);
-                    co2[index] = Mathf.Lerp(co2[index], 0f, RoofAmbientRate * 0.35f);
+                    AtmosphericMix.TargetMix target = AtmosphericMix.TargetForMap(map);
+                    o2[index] = Mathf.Lerp(o2[index], target.oxygen, RoofAmbientRate);
+                    co2[index] = Mathf.Lerp(co2[index], target.carbonDioxide, RoofAmbientRate * 0.35f);
                 }
             }
             roomBatchCursor = end >= rooms.Count ? 0 : end;
@@ -435,6 +451,58 @@ namespace Strata
                 neighborCo2 /= neighbors;
                 o2[index] = Mathf.Lerp(scratchO2[index], neighborO2, DiffusionRate);
                 co2[index] = Mathf.Lerp(scratchCo2[index], neighborCo2, DiffusionRate);
+            }
+            ApplyBuoyancyBias();
+        }
+
+        // O₂ rises, CO₂ sinks — cheap vertical nudge in open caverns only.
+        private void ApplyBuoyancyBias()
+        {
+            RefreshColonyBuiltCacheIfNeeded();
+            foreach (IntVec3 cell in map.AllCells)
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+                Room room = cell.GetRoom(map);
+                if (room != null && colonyBuiltRoomIds.Contains(room.ID))
+                {
+                    continue;
+                }
+                int index = map.cellIndices.CellToIndex(cell);
+                float upO2 = 0f;
+                float downCo2 = 0f;
+                int upCount = 0;
+                int downCount = 0;
+                foreach (IntVec3 offset in GenAdj.CardinalDirections)
+                {
+                    IntVec3 next = cell + offset;
+                    if (!next.InBounds(map))
+                    {
+                        continue;
+                    }
+                    if (next.z > cell.z)
+                    {
+                        int nextIndex = map.cellIndices.CellToIndex(next);
+                        upO2 += o2[nextIndex];
+                        upCount++;
+                    }
+                    else if (next.z < cell.z)
+                    {
+                        int nextIndex = map.cellIndices.CellToIndex(next);
+                        downCo2 += co2[nextIndex];
+                        downCount++;
+                    }
+                }
+                if (upCount > 0)
+                {
+                    o2[index] = Mathf.Lerp(o2[index], upO2 / upCount, BuoyancyBias);
+                }
+                if (downCount > 0)
+                {
+                    co2[index] = Mathf.Lerp(co2[index], downCo2 / downCount, BuoyancyBias);
+                }
             }
         }
 

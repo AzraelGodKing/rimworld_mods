@@ -278,5 +278,23 @@ namespace Strata
             Need rest = pawn.needs?.rest;
             return rest != null && rest.CurLevelPercentage < 0.08f;
         }
+
+        // Dryads, anima-linked plant pawns, and similar breathe CO₂ / exhale O₂.
+        public static bool IsPlantBreather(Pawn pawn)
+        {
+            if (pawn?.def == null)
+            {
+                return false;
+            }
+            if (pawn.def.plant != null)
+            {
+                return true;
+            }
+            string defName = pawn.def.defName;
+            return defName != null
+                && (defName.IndexOf("Dryad", StringComparison.OrdinalIgnoreCase) >= 0
+                    || (defName.IndexOf("Plant", StringComparison.OrdinalIgnoreCase) >= 0
+                        && pawn.RaceProps?.Animal == true));
+        }
     }
 }

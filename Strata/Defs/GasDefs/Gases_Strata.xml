@@ -45,6 +45,18 @@
     <moteThreshold>0.12</moteThreshold>
   </Strata.StrataGasDef>
 
+  <!-- Dry air components — inert baseline; hidden in overlay at normal levels. -->
+  <Strata.StrataGasDef>
+    <defName>Strata_Nitrogen</defName>
+    <label>nitrogen</label>
+    <overlayLabel>N₂</overlayLabel>
+    <description>The bulk of breathable air. It dilutes oxygen when vented away and fills sealed rooms back toward the surface mix.</description>
+    <overlayColor>(0.62, 0.68, 0.78)</overlayColor>
+    <overlayThreshold>0.55</overlayThreshold>
+    <buoyant>false</buoyant>
+    <passiveLeak>0</passiveLeak>
+  </Strata.StrataGasDef>
+
   <!-- Breathable air on deep levels: lighter than CO₂, rises through shafts.
        Pawns consume it and suffocate when it falls too low. -->
   <Strata.StrataGasDef>
@@ -60,6 +72,17 @@
     <severityGain>0.007</severityGain>
     <severityDecay>0.035</severityDecay>
     <harmWhenBelow>true</harmWhenBelow>
+  </Strata.StrataGasDef>
+
+  <Strata.StrataGasDef>
+    <defName>Strata_Argon</defName>
+    <label>argon</label>
+    <overlayLabel>Ar</overlayLabel>
+    <description>A trace noble gas in surface air. It is heavier than nitrogen and pools low in pits alongside carbon dioxide.</description>
+    <overlayColor>(0.72, 0.55, 0.88)</overlayColor>
+    <overlayThreshold>0.55</overlayThreshold>
+    <buoyant>false</buoyant>
+    <passiveLeak>0</passiveLeak>
   </Strata.StrataGasDef>
 
   <!-- Exhaled waste gas: heavier than air, pools low and sinks down shafts. -->
