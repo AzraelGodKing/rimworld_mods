@@ -10,8 +10,11 @@ namespace Strata
         public const int AtmosphereReducedMultiplier = 4;
         public const int AtmosphereVacantMultiplier = 8;
         public const int AtmospherePerformanceMultiplier = 4;
+        public const int AtmosphereMultiLevelMultiplier = 2;
 
         private static readonly HashSet<int> forcedHibernateMapIds = new HashSet<int>();
+        private static int cachedPocketLevelCount = -1;
+        private static int cachedPocketLevelCountTick = -1;
 
         public static int PawnCount(Map map)
         {
@@ -114,6 +117,34 @@ namespace Strata
             return ColonyPresenceCount(map) > 0;
         }
 
+        public static int StrataPocketLevelCount()
+        {
+            int tick = Find.TickManager?.TicksGame ?? 0;
+            if (cachedPocketLevelCount >= 0 && tick - cachedPocketLevelCountTick < 250)
+            {
+                return cachedPocketLevelCount;
+            }
+
+            int count = 0;
+            IReadOnlyList<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (IsStrataPocketLevel(maps[i]))
+                {
+                    count++;
+                }
+            }
+
+            cachedPocketLevelCount = count;
+            cachedPocketLevelCountTick = tick;
+            return count;
+        }
+
+        public static bool HasMultipleStrataPocketLevels()
+        {
+            return StrataPocketLevelCount() > 1;
+        }
+
         public static int AtmosphereCycleMultiplier(Map map)
         {
             int multiplier = 1;
@@ -128,6 +159,13 @@ namespace Strata
             if (StrataMod.Settings?.performanceModeEnabled == true)
             {
                 multiplier *= AtmospherePerformanceMultiplier;
+            }
+            if (HasMultipleStrataPocketLevels()
+                && map != null
+                && map != Find.CurrentMap
+                && IsStrataPocketLevel(map))
+            {
+                multiplier *= AtmosphereMultiLevelMultiplier;
             }
             return multiplier;
         }

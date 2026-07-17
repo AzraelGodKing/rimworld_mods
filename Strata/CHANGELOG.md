@@ -16,6 +16,8 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 - Compressed `About/Preview.png` for smaller Workshop/About footprint.
 
 ### Fixed
+- **Settings migration v1** — one-time upgrade for existing mod profiles turns off colonist work relay and Misc. Robots work relay (old saves kept them enabled despite new defaults); return/recharge soft-compat unchanged. Startup log includes build stamp, DLL path, file modified time, and relay flags.
+- **Multi-level atmosphere throttle** — when the colony has more than one Strata pocket level, non-viewed levels run atmosphere cycles 2× slower (stacks with reduce-background and performance mode).
 - Smoke/gas ventilation recognizes wall-mounted vents that sit on walls (`isEdifice=false`), including Vanilla Temperature Expanded `VTE_WallMountedVent` and similarly named wall vents (soft-compat, no VTE dependency). Surface rooms vented that way clear smoke like vanilla vents; underground outdoor rules unchanged.
 - **Misc. Robots cross-level recharge (follow-up):** soft-compat now patches `Return2BaseRoom`, `RechargeEnergyIdle` (`TryIssueJobPackage`), and `RechargeEnergy` / `Return2BaseAndWait` / `Return2BaseDespawn` (`TryGiveJob`) with a shared relay — cross-map recharge never falls through to vanilla Goto/GoAndWait/GoRecharge (fixes 10-Goto/tick spam and cross-map `Could not reserve` on recharge stations). Startup log lines confirm each patch group. Prefix/postfix safety net when vanilla still emits a foreign-map job.
 - Misc. Robots hauler/cleaner bots no longer spam `started 10 Goto jobs/tick` when `Return2BaseRoom` targets a recharge-station room on another Strata level — soft-compat routes via `EnterPortal` instead (no AIRobot assembly reference).

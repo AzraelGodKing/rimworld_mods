@@ -13,6 +13,9 @@ namespace Strata
         public bool gasOverlayRoomLabels = false;
         public bool gasEventsEnabled = true;
         public bool raidPursuitEnabled = true;
+        public const int CurrentSettingsVersion = 1;
+
+        public int settingsVersion = CurrentSettingsVersion;
         public bool workRelayEnabled = false;
         public bool robotSoftCompatEnabled = true;
         public bool robotWorkRelayEnabled = false;
@@ -54,6 +57,7 @@ namespace Strata
             Scribe_Values.Look(ref gasOverlayRoomLabels, "gasOverlayRoomLabels", defaultValue: false);
             Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
+            Scribe_Values.Look(ref settingsVersion, "settingsVersion", defaultValue: 0);
             Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: false);
             Scribe_Values.Look(ref robotSoftCompatEnabled, "robotSoftCompatEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotWorkRelayEnabled, "robotWorkRelayEnabled", defaultValue: false);
@@ -81,6 +85,33 @@ namespace Strata
             Scribe_Values.Look(ref multiFloorStairs, "multiFloorStairs", defaultValue: false);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
             Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                MigrateSettings();
+            }
+        }
+
+        private void MigrateSettings()
+        {
+            if (settingsVersion >= CurrentSettingsVersion)
+            {
+                return;
+            }
+
+            bool hadWorkRelay = workRelayEnabled;
+            bool hadRobotWorkRelay = robotWorkRelayEnabled;
+            workRelayEnabled = false;
+            robotWorkRelayEnabled = false;
+            settingsVersion = CurrentSettingsVersion;
+
+            if (hadWorkRelay || hadRobotWorkRelay)
+            {
+                Log.Message("[Strata] Settings migration v" + CurrentSettingsVersion
+                    + ": disabled colonist work relay and Misc. Robots work relay"
+                    + " (old profiles kept them on; return/recharge soft-compat stays "
+                    + (robotSoftCompatEnabled ? "enabled" : "disabled") + ").");
+            }
         }
     }
 
