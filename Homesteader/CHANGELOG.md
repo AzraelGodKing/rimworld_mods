@@ -4,6 +4,9 @@ All notable changes to Homesteader are documented here.
 
 ## [Unreleased]
 
+### Fixed
+- Pawns can work homestead production stations again (jam cauldron, hearth, drying rack, mill, brewery, etc.). Stations had bills and recipes but no `WorkGiverDef` with `fixedBillGiverDefs`, so `WorkGiver_DoBill` never considered them — colonists could build and set "do forever" bills but would not interact. Note: wood-fired stations (jam cauldron, hearth, smokehouse) still need fuel before work starts.
+
 ### Added
 - **Dedicated research tab** — all Homesteader projects live under their own *Homesteader* tab (no longer on Main).
 
