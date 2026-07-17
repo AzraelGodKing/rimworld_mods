@@ -3,6 +3,15 @@ using Verse;
 
 namespace Strata
 {
+    // Atmosphere sim fidelity vs CPU. Low spreads work and throttles background
+    // levels; High keeps the viewed level snappy.
+    public enum AtmosphereQualityLevel
+    {
+        Low = 0,
+        Medium = 1,
+        High = 2,
+    }
+
     // Mod options. Read as statics from hot paths, so everything is a plain
     // field with a cheap default.
     public class StrataSettings : ModSettings
@@ -21,6 +30,7 @@ namespace Strata
         public bool robotWorkRelayEnabled = false;
         public bool performanceModeEnabled = false;
         public bool offThreadAtmosphere = true;
+        public AtmosphereQualityLevel atmosphereQuality = AtmosphereQualityLevel.Medium;
         public bool logRobotDiagnostics = false;
         public bool foodRelayEnabled = true;
         public bool restRelayEnabled = true;
@@ -64,6 +74,7 @@ namespace Strata
             Scribe_Values.Look(ref robotWorkRelayEnabled, "robotWorkRelayEnabled", defaultValue: false);
             Scribe_Values.Look(ref performanceModeEnabled, "performanceModeEnabled", defaultValue: false);
             Scribe_Values.Look(ref offThreadAtmosphere, "offThreadAtmosphere", defaultValue: true);
+            Scribe_Values.Look(ref atmosphereQuality, "atmosphereQuality", AtmosphereQualityLevel.Medium);
             Scribe_Values.Look(ref logRobotDiagnostics, "logRobotDiagnostics", defaultValue: false);
             Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
@@ -239,6 +250,9 @@ namespace Strata
             }
             listing.CheckboxLabeled("Strata_Settings_OffThreadAtmosphere".Translate(), ref Settings.offThreadAtmosphere,
                 "Strata_Settings_OffThreadAtmosphereDesc".Translate());
+            listing.Label("Strata_Settings_AtmosphereQuality".Translate());
+            DrawAtmosphereQualitySelector(listing);
+            listing.GapLine();
             listing.CheckboxLabeled("Strata_Settings_ShowLevelPerf".Translate(), ref Settings.showLevelPerfInTab,
                 "Strata_Settings_ShowLevelPerfDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_ExplorationSites".Translate(), ref Settings.explorationSitesEnabled,
@@ -315,6 +329,26 @@ namespace Strata
                 listeningFor = null;
             }
             listing.Gap(2f);
+        }
+
+        private static void DrawAtmosphereQualitySelector(Listing_Standard listing)
+        {
+            listing.Label("Strata_Settings_AtmosphereQualityDesc".Translate());
+            if (listing.RadioButton("Strata_Settings_AtmosphereQualityLow".Translate(),
+                    Settings.atmosphereQuality == AtmosphereQualityLevel.Low, tooltip: "Strata_Settings_AtmosphereQualityLowDesc".Translate()))
+            {
+                Settings.atmosphereQuality = AtmosphereQualityLevel.Low;
+            }
+            if (listing.RadioButton("Strata_Settings_AtmosphereQualityMedium".Translate(),
+                    Settings.atmosphereQuality == AtmosphereQualityLevel.Medium, tooltip: "Strata_Settings_AtmosphereQualityMediumDesc".Translate()))
+            {
+                Settings.atmosphereQuality = AtmosphereQualityLevel.Medium;
+            }
+            if (listing.RadioButton("Strata_Settings_AtmosphereQualityHigh".Translate(),
+                    Settings.atmosphereQuality == AtmosphereQualityLevel.High, tooltip: "Strata_Settings_AtmosphereQualityHighDesc".Translate()))
+            {
+                Settings.atmosphereQuality = AtmosphereQualityLevel.High;
+            }
         }
 
         private static void DrawRobotDiagnostics(Listing_Standard listing)

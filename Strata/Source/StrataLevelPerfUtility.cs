@@ -7,10 +7,10 @@ namespace Strata
     // Tracks per-level hibernation for the Levels tab and dev tools.
     public static class StrataLevelPerfUtility
     {
-        public const int AtmosphereReducedMultiplier = 4;
+        public const int AtmosphereReducedMultiplier = 8;
         public const int AtmosphereVacantMultiplier = 8;
         public const int AtmospherePerformanceMultiplier = 4;
-        public const int AtmosphereMultiLevelMultiplier = 2;
+        public const int AtmosphereMultiLevelMultiplier = 4;
 
         private static readonly HashSet<int> forcedHibernateMapIds = new HashSet<int>();
         private static int cachedPocketLevelCount = -1;
@@ -167,7 +167,160 @@ namespace Strata
             {
                 multiplier *= AtmosphereMultiLevelMultiplier;
             }
+            multiplier *= AtmosphereQualityCycleMultiplier(map);
             return multiplier;
+        }
+
+        // Viewed level stays snappy on Medium/High; background levels run much
+        // less often on Low or when performance mode is on.
+        public static int AtmosphereQualityCycleMultiplier(Map map)
+        {
+            StrataSettings settings = StrataMod.Settings;
+            if (settings == null || map == null)
+            {
+                return 1;
+            }
+            bool viewed = Find.CurrentMap == map;
+            if (settings.performanceModeEnabled && !viewed)
+            {
+                return 2;
+            }
+            switch (settings.atmosphereQuality)
+            {
+                case AtmosphereQualityLevel.Low:
+                    return viewed ? 2 : 8;
+                case AtmosphereQualityLevel.High:
+                    return 1;
+                default:
+                    return viewed ? 1 : 4;
+            }
+        }
+
+        // Lite breath grid: batched room/plant passes and less frequent sync.
+        public static bool LiteAtmosphereOnMap(Map map)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+            if (StrataMod.Settings?.performanceModeEnabled == true)
+            {
+                return true;
+            }
+            if (StrataMod.Settings?.atmosphereQuality == AtmosphereQualityLevel.Low
+                && Find.CurrentMap != map)
+            {
+                return true;
+            }
+            return ShouldReduceAtmosphere(map) || ShouldThrottleAmbient(map);
+        }
+
+        public static int AtmospherePhaseCount(Map map)
+        {
+            if (LiteAtmosphereOnMap(map))
+            {
+                return 3;
+            }
+            return Find.CurrentMap == map ? 4 : 5;
+        }
+
+        public static int PawnGasAffectInterval(Map map)
+        {
+            if (map == null || Find.CurrentMap == map)
+            {
+                return 1;
+            }
+            if (StrataMod.Settings?.performanceModeEnabled == true)
+            {
+                return 4;
+            }
+            if (StrataMod.Settings?.atmosphereQuality == AtmosphereQualityLevel.Low)
+            {
+                return 3;
+            }
+            if (ShouldReduceAtmosphere(map))
+            {
+                return 2;
+            }
+            return 1;
+        }
+
+        public static bool ShouldAffectAnimalGasHarm(Pawn pawn, Map map)
+        {
+            if (pawn == null || map == null || !pawn.RaceProps.Animal)
+            {
+                return true;
+            }
+            if (Find.CurrentMap == map)
+            {
+                return StrataMod.Settings?.atmosphereQuality != AtmosphereQualityLevel.Low;
+            }
+            if (StrataMod.Settings?.atmosphereQuality == AtmosphereQualityLevel.High)
+            {
+                return true;
+            }
+            if (StrataMod.Settings?.performanceModeEnabled == true)
+            {
+                return false;
+            }
+            List<Hediff> hediffs = pawn.health?.hediffSet?.hediffs;
+            if (hediffs == null)
+            {
+                return false;
+            }
+            for (int i = 0; i < hediffs.Count; i++)
+            {
+                Hediff h = hediffs[i];
+                if (h?.def?.defName == null)
+                {
+                    continue;
+                }
+                string name = h.def.defName;
+                if (name.Contains("Hypox") || name.Contains("CO2") || name.Contains("Smoke")
+                    || h.Severity > 0.01f)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static int BreathRoomsPerBatch(Map map)
+        {
+            if (LiteAtmosphereOnMap(map))
+            {
+                return 12;
+            }
+            return Find.CurrentMap == map ? 48 : 24;
+        }
+
+        public static int BreathPlantsPerBatch(Map map)
+        {
+            if (LiteAtmosphereOnMap(map))
+            {
+                return 8;
+            }
+            return Find.CurrentMap == map ? 64 : 24;
+        }
+
+        public static bool ShouldThrowGasMotes(Map map)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+            if (Find.CurrentMap != map && StrataLevelPerfUtility.IsStrataPocketLevel(map))
+            {
+                if (StrataMod.Settings?.performanceModeEnabled == true)
+                {
+                    return false;
+                }
+                if (StrataMod.Settings?.atmosphereQuality == AtmosphereQualityLevel.Low)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static bool IsHibernating(Map map)

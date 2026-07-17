@@ -10,6 +10,14 @@ namespace Strata
     // share a uniform mix that pressurizes evenly.
     internal sealed class AtmosphereBreathGrid
     {
+        internal enum BreathWorkPhase
+        {
+            Diffusion = 0,
+            Ambient = 1,
+            Exchange = 2,
+            RoomSync = 3,
+        }
+
         private const float O2PumpRadius = 16f;
         private const float DiffusionRate = 0.11f;
         private const float RoofAmbientRate = 0.2f;
@@ -23,6 +31,10 @@ namespace Strata
         private float[] scratchO2;
         private float[] scratchCo2;
         private bool[] skipDiffusionCell;
+        private HashSet<int> colonyBuiltRoomIds;
+        private int colonyBuiltCacheTick = -1;
+        private int roomBatchCursor;
+        private int plantBatchCursor;
 
         public AtmosphereBreathGrid(Map map)
         {
@@ -31,18 +43,46 @@ namespace Strata
 
         public void ProcessCycle(AtmosphereMapComponent atmosphere)
         {
+            ProcessCyclePhase(atmosphere, BreathWorkPhase.Diffusion);
+            ProcessCyclePhase(atmosphere, BreathWorkPhase.Ambient);
+            ProcessCyclePhase(atmosphere, BreathWorkPhase.Exchange);
+            ProcessCyclePhase(atmosphere, BreathWorkPhase.RoomSync);
+        }
+
+        public void ProcessCyclePhase(AtmosphereMapComponent atmosphere, BreathWorkPhase phase)
+        {
             if (map == null || atmosphere == null || !StrataMapUtility.IsUnderground(map))
             {
                 return;
             }
             EnsureArrays();
+            switch (phase)
+            {
+                case BreathWorkPhase.Diffusion:
+                    ProcessDiffusionPhase();
+                    break;
+                case BreathWorkPhase.Ambient:
+                    ApplyNaturalRoofAmbientBatched();
+                    break;
+                case BreathWorkPhase.Exchange:
+                    ProcessBreathPlantsBatched(atmosphere);
+                    ProcessBreathing(atmosphere);
+                    break;
+                case BreathWorkPhase.RoomSync:
+                    EqualizeColonySealedRoomsBatched(atmosphere);
+                    SyncRoomCloudsBatched(atmosphere);
+                    break;
+            }
+        }
+
+        private void ProcessDiffusionPhase()
+        {
             bool appliedDiff = false;
             if (StrataOffThreadWork.OffThreadAtmosphereEnabled)
             {
                 int tick = Find.TickManager?.TicksGame ?? 0;
                 StrataOffThreadWork.TryDrainBreathDiffusion(map, o2, co2, tick, out appliedDiff);
             }
-            ApplyNaturalRoofAmbient();
             if (StrataOffThreadWork.OffThreadAtmosphereEnabled)
             {
                 if (!TryEnqueueOffThreadDiffusion())
@@ -58,10 +98,6 @@ namespace Strata
             {
                 DiffuseOpenCavern();
             }
-            atmosphere.ProcessBreathPlants(this);
-            ProcessBreathing(atmosphere);
-            EqualizeColonySealedRooms(atmosphere);
-            SyncRoomClouds(atmosphere);
         }
 
         private bool TryEnqueueOffThreadDiffusion()
@@ -75,6 +111,36 @@ namespace Strata
                 map, o2, co2, skipDiffusionCell, Find.TickManager.TicksGame);
         }
 
+        private void RefreshColonyBuiltCacheIfNeeded()
+        {
+            int tick = Find.TickManager.TicksGame;
+            int ttl = StrataLevelPerfUtility.LiteAtmosphereOnMap(map) ? 600 : 240;
+            if (colonyBuiltRoomIds != null && tick - colonyBuiltCacheTick < ttl)
+            {
+                return;
+            }
+            colonyBuiltRoomIds ??= new HashSet<int>();
+            colonyBuiltRoomIds.Clear();
+            foreach (Room room in map.regionGrid.AllRooms)
+            {
+                if (room != null && StrataRoomUtility.RoomIsColonyBuiltEnclosure(room))
+                {
+                    colonyBuiltRoomIds.Add(room.ID);
+                }
+            }
+            colonyBuiltCacheTick = tick;
+        }
+
+        private bool RoomIsColonyBuiltCached(Room room)
+        {
+            if (room == null)
+            {
+                return false;
+            }
+            RefreshColonyBuiltCacheIfNeeded();
+            return colonyBuiltRoomIds.Contains(room.ID);
+        }
+
         private void EnsureSkipDiffusionMask()
         {
             int cells = map.cellIndices.NumGridCells;
@@ -86,6 +152,7 @@ namespace Strata
             {
                 System.Array.Clear(skipDiffusionCell, 0, cells);
             }
+            RefreshColonyBuiltCacheIfNeeded();
             foreach (IntVec3 cell in map.AllCells)
             {
                 if (!cell.InBounds(map))
@@ -93,7 +160,7 @@ namespace Strata
                     continue;
                 }
                 Room room = cell.GetRoom(map);
-                if (room != null && StrataRoomUtility.RoomIsColonyBuiltEnclosure(room))
+                if (room != null && colonyBuiltRoomIds.Contains(room.ID))
                 {
                     skipDiffusionCell[map.cellIndices.CellToIndex(cell)] = true;
                 }
@@ -107,7 +174,7 @@ namespace Strata
                 return;
             }
             EnsureArrays();
-            if (room != null && StrataRoomUtility.RoomIsColonyBuiltEnclosure(room))
+            if (room != null && RoomIsColonyBuiltCached(room))
             {
                 atmosphere.AddBreathGasToRoom(room, StrataGasDefOf.Strata_Oxygen, emissionPerCycle, center, bypassCap: true);
                 return;
@@ -145,6 +212,10 @@ namespace Strata
                 {
                     continue;
                 }
+                if (!StrataLevelPerfUtility.ShouldAffectAnimalGasHarm(pawn, map))
+                {
+                    continue;
+                }
                 IntVec3 cell = pawn.Position;
                 if (!cell.InBounds(map))
                 {
@@ -158,7 +229,7 @@ namespace Strata
                 float bodyScale = pawn.BodySize;
                 float o2Need = AtmosphereMapComponent.OxygenPerBreath * bodyScale;
                 float co2Out = AtmosphereMapComponent.CarbonDioxidePerBreath * bodyScale;
-                if (room != null && StrataRoomUtility.RoomIsColonyBuiltEnclosure(room))
+                if (room != null && RoomIsColonyBuiltCached(room))
                 {
                     atmosphere.ConsumeBreathGasFromRoom(room, oxygen, o2Need);
                     atmosphere.AddBreathGasToRoom(room, co2, co2Out, cell);
@@ -191,7 +262,7 @@ namespace Strata
             float o2 = PlantO2PerCycle * scale;
             float co2 = PlantCo2PerCycle * scale;
             IntVec3 cell = plant.Position;
-            if (StrataRoomUtility.RoomIsColonyBuiltEnclosure(room))
+            if (RoomIsColonyBuiltCached(room))
             {
                 atmosphere.ConsumeBreathGasFromRoom(room, StrataGasDefOf.Strata_CarbonDioxide, co2);
                 atmosphere.AddBreathGasToRoom(room, StrataGasDefOf.Strata_Oxygen, o2, cell);
@@ -201,6 +272,25 @@ namespace Strata
                 ConsumeCellCo2(cell, co2);
                 AddCellO2(cell, o2);
             }
+        }
+
+        private void ProcessBreathPlantsBatched(AtmosphereMapComponent atmosphere)
+        {
+            List<Thing> plants = map.listerThings.ThingsInGroup(ThingRequestGroup.Plant);
+            if (plants == null || plants.Count == 0)
+            {
+                return;
+            }
+            int batch = StrataLevelPerfUtility.BreathPlantsPerBatch(map);
+            int end = Mathf.Min(plants.Count, plantBatchCursor + batch);
+            for (int i = plantBatchCursor; i < end; i++)
+            {
+                if (plants[i] is Plant plant)
+                {
+                    ProcessPlant(plant, atmosphere);
+                }
+            }
+            plantBatchCursor = end >= plants.Count ? 0 : end;
         }
 
         public float DensityAt(IntVec3 cell, StrataGasDef gas)
@@ -269,11 +359,19 @@ namespace Strata
             }
         }
 
-        private void ApplyNaturalRoofAmbient()
+        private void ApplyNaturalRoofAmbientBatched()
         {
-            foreach (Room room in map.regionGrid.AllRooms)
+            IReadOnlyList<Room> rooms = map.regionGrid.AllRooms;
+            if (rooms.Count == 0)
             {
-                if (room == null || room.IsDoorway || StrataRoomUtility.RoomIsColonyBuiltEnclosure(room))
+                return;
+            }
+            int batch = StrataLevelPerfUtility.BreathRoomsPerBatch(map);
+            int end = Mathf.Min(rooms.Count, roomBatchCursor + batch);
+            for (int i = roomBatchCursor; i < end; i++)
+            {
+                Room room = rooms[i];
+                if (room == null || room.IsDoorway || RoomIsColonyBuiltCached(room))
                 {
                     continue;
                 }
@@ -292,6 +390,7 @@ namespace Strata
                     co2[index] = Mathf.Lerp(co2[index], 0f, RoofAmbientRate * 0.35f);
                 }
             }
+            roomBatchCursor = end >= rooms.Count ? 0 : end;
         }
 
         private void DiffuseOpenCavern()
@@ -300,6 +399,7 @@ namespace Strata
             scratchCo2 ??= new float[co2.Length];
             System.Array.Copy(o2, scratchO2, o2.Length);
             System.Array.Copy(co2, scratchCo2, co2.Length);
+            RefreshColonyBuiltCacheIfNeeded();
             foreach (IntVec3 cell in map.AllCells)
             {
                 if (!cell.InBounds(map))
@@ -307,7 +407,7 @@ namespace Strata
                     continue;
                 }
                 Room room = cell.GetRoom(map);
-                if (room != null && StrataRoomUtility.RoomIsColonyBuiltEnclosure(room))
+                if (room != null && colonyBuiltRoomIds.Contains(room.ID))
                 {
                     continue;
                 }
@@ -338,13 +438,17 @@ namespace Strata
             }
         }
 
-        private void EqualizeColonySealedRooms(AtmosphereMapComponent atmosphere)
+        private void EqualizeColonySealedRoomsBatched(AtmosphereMapComponent atmosphere)
         {
             StrataGasDef oxygenDef = StrataGasDefOf.Strata_Oxygen;
             StrataGasDef co2Def = StrataGasDefOf.Strata_CarbonDioxide;
-            foreach (Room room in map.regionGrid.AllRooms)
+            IReadOnlyList<Room> rooms = map.regionGrid.AllRooms;
+            int batch = StrataLevelPerfUtility.BreathRoomsPerBatch(map);
+            int end = Mathf.Min(rooms.Count, roomBatchCursor + batch);
+            for (int i = roomBatchCursor; i < end; i++)
             {
-                if (!StrataRoomUtility.RoomIsColonyBuiltEnclosure(room))
+                Room room = rooms[i];
+                if (!RoomIsColonyBuiltCached(room))
                 {
                     continue;
                 }
@@ -361,12 +465,17 @@ namespace Strata
                     co2[index] = avgCo2;
                 }
             }
+            roomBatchCursor = end >= rooms.Count ? 0 : end;
         }
 
-        private void SyncRoomClouds(AtmosphereMapComponent atmosphere)
+        private void SyncRoomCloudsBatched(AtmosphereMapComponent atmosphere)
         {
-            foreach (Room room in map.regionGrid.AllRooms)
+            IReadOnlyList<Room> rooms = map.regionGrid.AllRooms;
+            int batch = StrataLevelPerfUtility.BreathRoomsPerBatch(map);
+            int end = Mathf.Min(rooms.Count, roomBatchCursor + batch);
+            for (int i = roomBatchCursor; i < end; i++)
             {
+                Room room = rooms[i];
                 if (room == null || room.IsDoorway)
                 {
                     continue;
@@ -380,6 +489,7 @@ namespace Strata
                 atmosphere.SetBreathRoomDensity(room, StrataGasDefOf.Strata_Oxygen, avgO2, sample);
                 atmosphere.SetBreathRoomDensity(room, StrataGasDefOf.Strata_CarbonDioxide, avgCo2, sample);
             }
+            roomBatchCursor = end >= rooms.Count ? 0 : end;
         }
 
         private static bool TryGetSampleCell(Room room, out IntVec3 cell)
@@ -404,6 +514,8 @@ namespace Strata
                 scratchO2 = null;
                 scratchCo2 = null;
                 skipDiffusionCell = null;
+                colonyBuiltRoomIds = null;
+                colonyBuiltCacheTick = -1;
             }
         }
 

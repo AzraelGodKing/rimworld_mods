@@ -12,6 +12,10 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 - `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
 
 ### Changed
+- **Atmosphere hitch reduction** — gas/O₂/CO₂ cycles spread across multiple ticks (prep → transport → sources → breath → finish) instead of one spike; background levels use lite batched room/plant/sync passes; colony-built room cache avoids rescanning thing lists every diffusion tick; overlay rebuild skipped when density unchanged on non-viewed maps; pawn gas harm throttled on background levels (animals skipped unless already affected on Low/performance mode).
+- **Atmosphere quality setting** — Low / Medium / High under Threats & performance controls cycle multipliers on background levels (Low: 8× slower off-screen; High: full fidelity everywhere).
+- Background **reduce-background** multiplier raised 4× → 8×; multi-level non-viewed multiplier 2× → 4×.
+- Performance mode now enables **lite atmosphere** on all levels (batched breath grid, throttled pawn checks, no motes off-screen).
 - Colonist **work relay off by default** (`workRelayEnabled`); 7500-tick scan cooldown when enabled so idle colonists do not run expensive cross-level work probes every think pass.
 - Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
 - Compressed `About/Preview.png` for smaller Workshop/About footprint.

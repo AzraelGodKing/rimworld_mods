@@ -46,12 +46,20 @@
   <Strata_Settings_HibernateEmpty>Hibernate empty levels</Strata_Settings_HibernateEmpty>
   <Strata_Settings_HibernateEmptyDesc>Vacant A+ and B+ pocket maps run vanilla ambient sims 1 tick in 4 and Strata gas 1 cycle in 8. Fully live on the map you are viewing or any level with pawns on it.</Strata_Settings_HibernateEmptyDesc>
   <Strata_Settings_ReduceBackground>Reduce background levels</Strata_Settings_ReduceBackground>
-  <Strata_Settings_ReduceBackgroundDesc>When colonists are on a linked level you are not viewing, Strata gas and O₂/CO₂ run 4× slower and skip overlay rebuilds. The map you are looking at stays full speed.</Strata_Settings_ReduceBackgroundDesc>
+  <Strata_Settings_ReduceBackgroundDesc>When colonists are on a linked level you are not viewing, Strata gas and O₂/CO₂ run 8× slower and skip overlay rebuilds. The map you are looking at stays full speed.</Strata_Settings_ReduceBackgroundDesc>
   <Strata_Settings_PerformanceMode>Performance mode (master kill-switch)</Strata_Settings_PerformanceMode>
-  <Strata_Settings_PerformanceModeDesc>Disables colonist work relay, Misc. Robots soft-compat, and external JobGiver work relay. Also runs atmosphere sims 4× slower on every level and skips gas motes on levels you are not viewing. Use to A/B test Strata lag.</Strata_Settings_PerformanceModeDesc>
+  <Strata_Settings_PerformanceModeDesc>Disables colonist work relay, Misc. Robots soft-compat, and external JobGiver work relay. Also runs atmosphere sims 4× slower, uses lite batched O₂/CO₂ on all levels, throttles pawn gas harm checks, and skips gas motes on levels you are not viewing. Use to A/B test Strata lag.</Strata_Settings_PerformanceModeDesc>
   <Strata_Settings_PerformanceModeActive>Performance mode is ON — cross-level work relays and robot soft-compat are suppressed.</Strata_Settings_PerformanceModeActive>
   <Strata_Settings_OffThreadAtmosphere>Off-thread O₂/CO₂ diffusion</Strata_Settings_OffThreadAtmosphere>
   <Strata_Settings_OffThreadAtmosphereDesc>Runs the per-cell cavern diffusion pass on a background thread (snapshot on main thread, apply on main thread). Reduces hitching on large underground maps. On by default; turn off if you suspect atmosphere oddities.</Strata_Settings_OffThreadAtmosphereDesc>
+  <Strata_Settings_AtmosphereQuality>Atmosphere quality</Strata_Settings_AtmosphereQuality>
+  <Strata_Settings_AtmosphereQualityDesc>Controls how often gas and O₂/CO₂ sim runs on background levels. Low is cheapest; High keeps the viewed level snappy.</Strata_Settings_AtmosphereQualityDesc>
+  <Strata_Settings_AtmosphereQualityLow>Low (background lite)</Strata_Settings_AtmosphereQualityLow>
+  <Strata_Settings_AtmosphereQualityLowDesc>Background levels run atmosphere 8× slower with batched room/plant passes. Animals skip gas harm unless already affected.</Strata_Settings_AtmosphereQualityLowDesc>
+  <Strata_Settings_AtmosphereQualityMedium>Medium (default)</Strata_Settings_AtmosphereQualityMedium>
+  <Strata_Settings_AtmosphereQualityMediumDesc>Viewed level full speed; background occupied levels 4× slower with phased work spread across ticks.</Strata_Settings_AtmosphereQualityMediumDesc>
+  <Strata_Settings_AtmosphereQualityHigh>High (full fidelity)</Strata_Settings_AtmosphereQualityHigh>
+  <Strata_Settings_AtmosphereQualityHighDesc>All levels run atmosphere at full rate; use if you notice delayed O₂ equalization on distant floors.</Strata_Settings_AtmosphereQualityHighDesc>
   <Strata_Settings_RobotDiagnostics>Misc. Robots diagnostics</Strata_Settings_RobotDiagnostics>
   <Strata_Settings_LogRobotDiagnostics>Log robot diagnostics every 600 ticks</Strata_Settings_LogRobotDiagnostics>
   <Strata_Settings_LogRobotDiagnosticsDesc>Writes session counter totals and 60-second rates to the log. Off by default.</Strata_Settings_LogRobotDiagnosticsDesc>
