@@ -4,7 +4,19 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ## [Unreleased]
 
+### Added
+- **Homestead livestock:** chicken coop (periodic eggs) and goat pen (periodic milk); animal mash recipe at the hearth (barley/pumpkin/hay).
+- **Charcuterie:** render lard or tallow from meat; stuff sausage from salted/smoked meat or jerky + fat + herbs (hearth).
+- **Homestead textiles:** flax crop, spinning wheel (flax/wool → homespun cloth), loom (quilt); quilted bed now costs a homestead quilt (comforts + textiles).
+- **Soil & cold storage:** compost heap (compost → fertilizer), composted soil terrain (1.45 fertility), icehouse (≤0°C), springhouse (≤8°C) — reuse root-cellar cooling.
+- **Pantry craft:** canning kitchen (mason jars, canned stew/jam), cider press (apple juice) + ferment juice at the brewing bench, wash tub (refuel with soap, use for freshly washed mood).
+- Research: livestock, textiles, soil and cold storage, pantry craft. Crafting workgiver covers spinning wheel, loom, and compost heap.
+- Soap can render with lard or tallow as well as butter. Preserves shelf accepts sausage, canned goods, juice, and rendered fats.
+
 ### Changed
+- Organized Homesteader sources: C# merged into `PassiveCooling.cs`, `WashEffects.cs`, and `FavoriteFood.cs`; expansion XML renamed into domain files (livestock/soil/textiles/pantry/yard-and-pantry); hediffs/thoughts consolidated; composted soil lives under homestead terrain.
+- Passive coolers (root cellar / icehouse / springhouse) now apply the **coolest** overlapping ceiling to a cell instead of an arbitrary cooler’s temp.
+- Docs: full item catalog moved to its own page (`docs/homesteader-catalog.html`).
 - **Merged Wellspring into Homesteader.** Wells, rain barrels, cisterns, solar stills, water towers, irrigated soil/planters, boiled water, mud bricks, and clean bandages now ship with Homesteader. Research (wellcraft / irrigation / waterworks) lives on the Homesteader tab. Hand-dug and deep wells are on the homestead cooking workgiver. `Wellspring_*` defNames are preserved for save continuity — disable any old standalone Wellspring mod.
 
 ### Fixed

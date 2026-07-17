@@ -502,6 +502,12 @@
             <li>Homesteader_SmokedCheese</li>
             <li>Homesteader_CiderVinegar</li>
             <li>Homesteader_Soap</li>
+            <li>Homesteader_Sausage</li>
+            <li>Homesteader_CannedJam</li>
+            <li>Homesteader_CannedStew</li>
+            <li>Homesteader_AppleJuice</li>
+            <li>Homesteader_Lard</li>
+            <li>Homesteader_Tallow</li>
           </thingDefs>
         </filter>
       </fixedStorageSettings>
@@ -539,6 +545,12 @@
             <li>Homesteader_SmokedCheese</li>
             <li>Homesteader_CiderVinegar</li>
             <li>Homesteader_Soap</li>
+            <li>Homesteader_Sausage</li>
+            <li>Homesteader_CannedJam</li>
+            <li>Homesteader_CannedStew</li>
+            <li>Homesteader_AppleJuice</li>
+            <li>Homesteader_Lard</li>
+            <li>Homesteader_Tallow</li>
           </thingDefs>
         </filter>
       </defaultStorageSettings>

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
-  <!--
-    WorkGiver_DoBill only starts jobs on buildings listed in fixedBillGiverDefs.
-    Without this, homestead worktables accept bills in the UI but pawns never work them.
-  -->
+  <!-- WorkGiver_DoBill only jobs buildings listed in fixedBillGiverDefs. -->
   <WorkGiverDef>
     <defName>Homesteader_DoBillsCook</defName>
     <label>do bills at homestead production</label>
@@ -22,11 +19,32 @@
       <li>Homesteader_HomesteadHearth</li>
       <li>Homesteader_JamCauldron</li>
       <li>Homesteader_BrewingBench</li>
+      <li>Homesteader_CanningKitchen</li>
+      <li>Homesteader_CiderPress</li>
       <li>Wellspring_HandDugWell</li>
       <li>Wellspring_DeepWell</li>
     </fixedBillGiverDefs>
     <verb>work at</verb>
     <gerund>working at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>Homesteader_DoBillsCraft</defName>
+    <label>do bills at homestead crafting</label>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Crafting</workType>
+    <priorityInType>90</priorityInType>
+    <fixedBillGiverDefs>
+      <li>Homesteader_SpinningWheel</li>
+      <li>Homesteader_Loom</li>
+      <li>Homesteader_CompostHeap</li>
+    </fixedBillGiverDefs>
+    <verb>craft at</verb>
+    <gerund>crafting at</gerund>
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>

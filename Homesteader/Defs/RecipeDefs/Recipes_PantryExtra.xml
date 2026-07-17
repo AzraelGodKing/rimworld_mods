@@ -317,12 +317,13 @@
   <RecipeDef>
     <defName>Homesteader_RenderSoap</defName>
     <label>render soap</label>
-    <description>Render beeswax with butter into bars of homestead soap for a proper wash.</description>
+    <description>Render beeswax with butter, lard, or tallow into bars of homestead soap for a proper wash.</description>
     <jobString>Rendering soap.</jobString>
     <workAmount>800</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <effectWorking>Cook</effectWorking>
     <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
     <ingredients>
       <li>
         <filter>
@@ -336,6 +337,8 @@
         <filter>
           <thingDefs>
             <li>Homesteader_Butter</li>
+            <li>Homesteader_Lard</li>
+            <li>Homesteader_Tallow</li>
           </thingDefs>
         </filter>
         <count>2</count>
@@ -345,6 +348,8 @@
       <thingDefs>
         <li>Homesteader_Beeswax</li>
         <li>Homesteader_Butter</li>
+        <li>Homesteader_Lard</li>
+        <li>Homesteader_Tallow</li>
       </thingDefs>
     </fixedIngredientFilter>
     <products>

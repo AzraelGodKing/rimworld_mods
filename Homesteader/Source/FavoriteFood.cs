@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using HarmonyLib;
 using RimWorld;
 using Verse;
 
@@ -40,7 +42,6 @@ namespace Homesteader
 
         public void EnsureFavorite(Pawn pawn)
         {
-            // Any humanlike with a mood can have a favorite — colonists, guests, raiders, etc.
             if (pawn?.RaceProps?.Humanlike != true || pawn.needs?.mood == null)
             {
                 return;
@@ -74,10 +75,12 @@ namespace Homesteader
 
     public static class FavoriteFoodUtility
     {
-        // Always offered when present (Homesteader pantry + common vanilla favorites).
         private static readonly string[] PriorityFavoriteDefNames =
         {
-            // Homesteader
+            "Homesteader_Sausage",
+            "Homesteader_CannedStew",
+            "Homesteader_CannedJam",
+            "Homesteader_AppleJuice",
             "Homesteader_Flapjacks",
             "Homesteader_ToastAndJam",
             "Homesteader_PloughmansLunch",
@@ -96,7 +99,6 @@ namespace Homesteader
             "Homesteader_Cider",
             "Homesteader_MapleSyrup",
             "Homesteader_Honey",
-            // Vanilla staples / treats
             "MealSimple",
             "MealFine",
             "MealLavish",
@@ -136,7 +138,6 @@ namespace Homesteader
                 }
             }
 
-            // All meal-preferability foods (vanilla + mods), excluding corpses / paste weirdness filters.
             foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
             {
                 if (!IsValidFavoriteCandidate(def))
@@ -160,13 +161,7 @@ namespace Homesteader
 
         private static bool IsValidFavoriteCandidate(ThingDef def)
         {
-            if (def?.ingestible == null)
-            {
-                return false;
-            }
-
-            // Skip corpses and humanlike meat.
-            if (def.IsCorpse)
+            if (def?.ingestible == null || def.IsCorpse)
             {
                 return false;
             }
@@ -176,7 +171,6 @@ namespace Homesteader
                 return false;
             }
 
-            // Skip non-concrete defs (no label / *Base abstracts).
             if (def.label.NullOrEmpty() || def.defName.EndsWith("Base"))
             {
                 return false;
@@ -188,12 +182,7 @@ namespace Homesteader
         public static ThingDef PickRandomFavorite()
         {
             List<ThingDef> pool = GetFavoritePool();
-            if (pool.Count == 0)
-            {
-                return null;
-            }
-
-            return pool.RandomElement();
+            return pool.Count == 0 ? null : pool.RandomElement();
         }
 
         public static ThingDef GetFavorite(Pawn pawn) => Comp?.GetFavorite(pawn);
@@ -207,6 +196,82 @@ namespace Homesteader
 
             ThingDef fav = GetFavorite(pawn);
             return fav != null && fav == foodDef;
+        }
+    }
+
+    [HarmonyPatch(typeof(FoodUtility), nameof(FoodUtility.ThoughtsFromIngesting))]
+    public static class Patch_FavoriteFoodThoughts
+    {
+        public static void Postfix(Pawn ingester, Thing foodSource, ThingDef foodDef, List<ThoughtDef> __result)
+        {
+            if (ingester?.needs?.mood == null || __result == null || foodDef == null)
+            {
+                return;
+            }
+
+            if (!FavoriteFoodUtility.IsFavorite(ingester, foodDef))
+            {
+                return;
+            }
+
+            ThoughtDef thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_AteFavoriteFood");
+            if (thought != null && !__result.Contains(thought))
+            {
+                __result.Add(thought);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(FoodUtility), nameof(FoodUtility.FoodOptimality))]
+    public static class Patch_FavoriteFoodOptimality
+    {
+        public static void Postfix(Pawn eater, Thing foodSource, ThingDef foodDef, ref float __result)
+        {
+            if (eater == null || foodDef == null)
+            {
+                return;
+            }
+
+            if (FavoriteFoodUtility.IsFavorite(eater, foodDef))
+            {
+                __result += 40f;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.GetInspectString))]
+    public static class Patch_FavoriteFoodInspectString
+    {
+        public static void Postfix(Pawn __instance, ref string __result)
+        {
+            if (__instance?.RaceProps?.Humanlike != true || __instance.needs?.mood == null)
+            {
+                return;
+            }
+
+            ThingDef fav = FavoriteFoodUtility.GetFavorite(__instance);
+            if (fav == null)
+            {
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder(__result);
+            if (!string.IsNullOrEmpty(__result))
+            {
+                sb.AppendLine();
+            }
+
+            sb.Append("Favorite food: ").Append(fav.label);
+            __result = sb.ToString().TrimEnd();
+        }
+    }
+
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.SpawnSetup))]
+    public static class Patch_FavoriteFoodOnSpawn
+    {
+        public static void Postfix(Pawn __instance)
+        {
+            FavoriteFoodUtility.Comp?.EnsureFavorite(__instance);
         }
     }
 }

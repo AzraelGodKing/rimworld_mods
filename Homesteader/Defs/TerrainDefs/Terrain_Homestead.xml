@@ -55,4 +55,36 @@
     <researchPrerequisites Inherit="False" />
   </TerrainDef>
 
+  <!-- ============ Composted soil ============ -->
+  <TerrainDef>
+    <defName>Homesteader_CompostedSoil</defName>
+    <label>composted soil</label>
+    <description>Cropland worked with compost fertilizer until it turns rich and dark. Plants grow even faster than on irrigated soil alone.</description>
+    <texturePath>Wellspring/Terrain/IrrigatedSoil</texturePath>
+    <edgeType>FadeRough</edgeType>
+    <renderPrecedence>363</renderPrecedence>
+    <layerable>true</layerable>
+    <pathCost>3</pathCost>
+    <fertility>1.45</fertility>
+    <takeFootprints>true</takeFootprints>
+    <statBases>
+      <WorkToBuild>500</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <affordances>
+      <li>Light</li>
+      <li>Medium</li>
+      <li>Diggable</li>
+      <li>GrowSoil</li>
+    </affordances>
+    <costList>
+      <Homesteader_CompostFertilizer>2</Homesteader_CompostFertilizer>
+    </costList>
+    <designationCategory>Floors</designationCategory>
+    <terrainAffordanceNeeded>GrowSoil</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_SoilAndCold</li>
+    </researchPrerequisites>
+  </TerrainDef>
+
 </Defs>
