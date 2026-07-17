@@ -15,8 +15,12 @@ All notable changes to Homesteader are documented here.
 
 ### Added
 - **Dedicated research tab** — all Homesteader projects live under their own *Homesteader* tab (no longer on Main).
-- Preserves shelf now also accepts butter, cream, beeswax, bread, flapjacks, and Odyssey salted/smoked fish.
+- Preserves shelf now also accepts butter, cream, beeswax, bread, flapjacks, pantry meals, and Odyssey salted/smoked fish.
 - Homesteader C# assembly (`Homesteader.dll`) for root cellar cooling; requires the Harmony mod.
+- **Pantry meals** at the hearth: toast and jam (bread + jam), ploughman's lunch (bread + cheese + pickles), and honey porridge (grain + honey, joy bonus).
+- **Honey and maple syrup** can stand in for sugar in jam, porridge, and cider.
+- Dried herbs now season trail stew and hearty stew.
+- Homestead supplier also stocks butter, maple syrup, and bread.
 
 ### Changed
 - Renamed **shark plushie** to **Sharkira the plushie** (in-game label and docs).

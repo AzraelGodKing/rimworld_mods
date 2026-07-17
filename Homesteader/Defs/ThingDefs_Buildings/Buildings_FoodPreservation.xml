@@ -210,7 +210,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_HomesteadHearth</defName>
     <label>homestead hearth</label>
-    <description>A brick-and-stone oven with a wood-fired hearth. Bakes bread, hardtack, and hearty homestead stews from milled flour and preserved ingredients.</description>
+    <description>A brick-and-stone oven with a wood-fired hearth. Bakes bread and hardtack, assembles pantry meals like toast and jam or ploughman's lunch, and simmers stews, porridge, and flapjacks.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/HomesteadHearth</texPath>
@@ -252,8 +252,11 @@
       <li>Homesteader_BakeBread</li>
       <li>Homesteader_BakeHardtack</li>
       <li>Homesteader_CookPorridge</li>
+      <li>Homesteader_CookHoneyPorridge</li>
       <li>Homesteader_CookTrailStew</li>
       <li>Homesteader_CookHeartyStew</li>
+      <li>Homesteader_MakeToastAndJam</li>
+      <li>Homesteader_MakePloughmansLunch</li>
       <li>Homesteader_BoilMapleSyrup</li>
       <li>Homesteader_BakeFlapjacks</li>
     </recipes>

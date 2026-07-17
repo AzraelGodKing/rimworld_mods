@@ -450,7 +450,7 @@
   <RecipeDef>
     <defName>Homesteader_MakeJam</defName>
     <label>make jam</label>
-    <description>Boil fruit with sugar into thick, sweet preserves that keep for months.</description>
+    <description>Boil fruit with sugar, honey, or maple syrup into thick, sweet preserves that keep for months.</description>
     <jobString>Making jam.</jobString>
     <workAmount>1000</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
@@ -474,6 +474,8 @@
         <filter>
           <thingDefs>
             <li>Homesteader_Sugar</li>
+            <li>Homesteader_Honey</li>
+            <li>Homesteader_MapleSyrup</li>
           </thingDefs>
         </filter>
         <count>5</count>
@@ -485,6 +487,8 @@
       </categories>
       <thingDefs>
         <li>Homesteader_Sugar</li>
+        <li>Homesteader_Honey</li>
+        <li>Homesteader_MapleSyrup</li>
       </thingDefs>
       <disallowedThingDefs>
         <li>Hay</li>
