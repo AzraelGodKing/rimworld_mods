@@ -51,7 +51,7 @@ namespace Homesteader
     {
         public static void Postfix(Pawn __instance, ref string __result)
         {
-            if (__instance?.Faction != Faction.OfPlayer || __instance.RaceProps?.Humanlike != true)
+            if (__instance?.RaceProps?.Humanlike != true || __instance.needs?.mood == null)
             {
                 return;
             }
@@ -68,12 +68,12 @@ namespace Homesteader
                 sb.AppendLine();
             }
 
-            sb.Append("Favorite homestead food: ").Append(fav.label);
+            sb.Append("Favorite food: ").Append(fav.label);
             __result = sb.ToString().TrimEnd();
         }
     }
 
-    // Assign favorites when player pawns spawn into a map.
+    // Assign favorites when any humanlike pawn spawns (colonists, guests, raiders, etc.).
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.SpawnSetup))]
     public static class Patch_FavoriteFoodOnSpawn
     {

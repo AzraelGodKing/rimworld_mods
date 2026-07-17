@@ -40,7 +40,8 @@ namespace Homesteader
 
         public void EnsureFavorite(Pawn pawn)
         {
-            if (pawn?.RaceProps?.Humanlike != true || pawn.Faction != Faction.OfPlayer)
+            // Any humanlike with a mood can have a favorite — colonists, guests, raiders, etc.
+            if (pawn?.RaceProps?.Humanlike != true || pawn.needs?.mood == null)
             {
                 return;
             }
@@ -73,8 +74,10 @@ namespace Homesteader
 
     public static class FavoriteFoodUtility
     {
-        public static readonly string[] FavoriteDefNames =
+        // Always offered when present (Homesteader pantry + common vanilla favorites).
+        private static readonly string[] PriorityFavoriteDefNames =
         {
+            // Homesteader
             "Homesteader_Flapjacks",
             "Homesteader_ToastAndJam",
             "Homesteader_PloughmansLunch",
@@ -93,17 +96,97 @@ namespace Homesteader
             "Homesteader_Cider",
             "Homesteader_MapleSyrup",
             "Homesteader_Honey",
+            // Vanilla staples / treats
+            "MealSimple",
+            "MealFine",
+            "MealLavish",
+            "MealSurvivalPack",
+            "Pemmican",
+            "Chocolate",
+            "Beer",
+            "Wine",
+            "Milk",
+            "RawBerries",
+            "InsectJelly",
+            "Ambrosia",
+            "MealNutrientPaste",
         };
+
+        private static List<ThingDef> cachedPool;
 
         public static GameComponent_HomesteaderFavorites Comp =>
             Current.Game?.GetComponent<GameComponent_HomesteaderFavorites>();
 
+        public static List<ThingDef> GetFavoritePool()
+        {
+            if (cachedPool != null)
+            {
+                return cachedPool;
+            }
+
+            var set = new HashSet<ThingDef>();
+
+            foreach (string defName in PriorityFavoriteDefNames)
+            {
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+                if (IsValidFavoriteCandidate(def))
+                {
+                    set.Add(def);
+                }
+            }
+
+            // All meal-preferability foods (vanilla + mods), excluding corpses / paste weirdness filters.
+            foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
+            {
+                if (!IsValidFavoriteCandidate(def))
+                {
+                    continue;
+                }
+
+                FoodPreferability pref = def.ingestible.preferability;
+                if (pref == FoodPreferability.MealAwful
+                    || pref == FoodPreferability.MealSimple
+                    || pref == FoodPreferability.MealFine
+                    || pref == FoodPreferability.MealLavish)
+                {
+                    set.Add(def);
+                }
+            }
+
+            cachedPool = set.ToList();
+            return cachedPool;
+        }
+
+        private static bool IsValidFavoriteCandidate(ThingDef def)
+        {
+            if (def?.ingestible == null)
+            {
+                return false;
+            }
+
+            // Skip corpses and humanlike meat.
+            if (def.IsCorpse)
+            {
+                return false;
+            }
+
+            if (def.ingestible.sourceDef?.race?.Humanlike == true)
+            {
+                return false;
+            }
+
+            // Skip non-concrete defs (no label / *Base abstracts).
+            if (def.label.NullOrEmpty() || def.defName.EndsWith("Base"))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static ThingDef PickRandomFavorite()
         {
-            List<ThingDef> pool = FavoriteDefNames
-                .Select(DefDatabase<ThingDef>.GetNamedSilentFail)
-                .Where(d => d?.ingestible != null)
-                .ToList();
+            List<ThingDef> pool = GetFavoritePool();
             if (pool.Count == 0)
             {
                 return null;

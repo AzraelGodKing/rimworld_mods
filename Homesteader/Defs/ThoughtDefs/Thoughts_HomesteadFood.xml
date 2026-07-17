@@ -33,7 +33,7 @@
     <stackLimit>1</stackLimit>
     <stages>
       <li>
-        <label>favorite homestead food</label>
+        <label>favorite food</label>
         <description>That was my favorite. Nothing else quite hits the same.</description>
         <baseMoodEffect>8</baseMoodEffect>
       </li>
