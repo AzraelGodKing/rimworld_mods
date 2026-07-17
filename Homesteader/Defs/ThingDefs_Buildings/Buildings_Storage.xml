@@ -492,6 +492,9 @@
             <li>Homesteader_Hardtack</li>
             <li>Homesteader_Bread</li>
             <li>Homesteader_Flapjacks</li>
+            <li>Homesteader_ToastAndJam</li>
+            <li>Homesteader_PloughmansLunch</li>
+            <li>Homesteader_HoneyPorridge</li>
           </thingDefs>
         </filter>
       </fixedStorageSettings>
@@ -519,6 +522,9 @@
             <li>Homesteader_Hardtack</li>
             <li>Homesteader_Bread</li>
             <li>Homesteader_Flapjacks</li>
+            <li>Homesteader_ToastAndJam</li>
+            <li>Homesteader_PloughmansLunch</li>
+            <li>Homesteader_HoneyPorridge</li>
           </thingDefs>
         </filter>
       </defaultStorageSettings>
