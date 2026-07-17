@@ -6,18 +6,19 @@ A collection of RimWorld mods by AzraelGodKing.
 
 ### Homesteader
 
-Everything a growing homestead needs: tribal survival, farm-to-table crafting, storage, food preservation, and off-grid power. Supports RimWorld 1.4 / 1.5 / 1.6. C# assembly for root cellar cooling (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
+Everything a growing homestead needs: tribal survival, farm-to-table crafting, wells and irrigation, storage, food preservation, and off-grid power. Supports RimWorld 1.4 / 1.5 / 1.6. C# assembly for root cellar cooling and favorite foods (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
 
 | Category | Content |
 |---|---|
 | **Tribal survival** | Curing rack (rock salt, salted meat), drying rack (+ fruit leather, dried mushrooms, pemmican without research), smokehouse, hayloft, ingredient barrel |
 | **Farm-to-table** | Grain mill, butter churn (+ buttermilk), pickling crock, homestead hearth (bread, pantry meals, pumpkin pie, biscuits, stews, flapjacks) |
+| **Water & irrigation** | Hand-dug / deep wells, rain barrel, cistern, solar still, water tower, irrigated soil & planter, boiled water, mud bricks, clean bandages; optional [Dubs Bad Hygiene](https://steamcommunity.com/sharedfiles/filedetails/?id=836308268) plumbing bridge |
 | **Favorites** | Every humanlike rolls a favorite from Homesteader + vanilla foods (+mood when eaten) |
 | **Orchard & apiary** | Apple, cherry, and sugar maple trees (regrow after harvest); maple sap → syrup → flapjacks; beehives produce honey + beeswax; beeswax candle |
 | **Storage** | Storage crate, storage barrel, pallet, hayloft, ingredient barrel, root cellar (passive cool ≤5°C), large storage crate, preserves shelf |
 | **Food preservation** | Jerky, dried produce, fruit leather, salted/smoked meat, pickled vegetables, jam |
 | **Around the farmhouse** | Nesting box (small-animal bed), harvest maypole (gathering spot), beeswax candle |
-| **Research** | Primitive homestead → food preservation / farmstead crafting / homestead storage → advanced homestead |
+| **Research** | Homestead tree + wellcraft → irrigation / waterworks |
 | **Power** | Compact battery (1×1), battery bank (2×2), advanced battery (1×2), ultratech battery (2×2), portable generator (chemfuel), wood-burning generator (wood) |
 
 Odyssey DLC: salted fish and smoked fish recipes load automatically.
@@ -79,20 +80,6 @@ New event — **Ion storm**: batteries bleed charge, random EMP bursts stun powe
 
 Source lives in `Stormproof/Source`; the compiled `Stormproof.dll` ships in `Stormproof/Assemblies` and is rebuilt by the **Build mod DLLs** GitHub Action on every `Stormproof/Source` change.
 
-### Wellspring
-
-Water for the Rim: dig wells, catch the rain, and irrigate your fields. Supports RimWorld 1.4 / 1.5 / 1.6. Fully XML-based — no C# assembly.
-
-| Content | What it does |
-|---|---|
-| **Hand-dug well** | Work bench where colonists draw 5 water per bill. |
-| **Rain barrel** | Passively collects 4 water every day or two. |
-| **Cistern** | 2×1 covered tank holding 8 stacks of water, protected from deterioration. |
-| **Irrigated soil** | Buildable terrain (+30% fertility, 3 water + labor per tile); only lays over ground that could already grow crops. |
-| **Research** | Wellcraft (well, barrel, cistern) → irrigation (irrigated soil) — both neolithic. |
-
-Pairs naturally with Homesteader and Stormproof, requires neither. Roadmap: powered pumps, sprinklers, drought and flash-flood events, drinking troughs.
-
 ## Installation
 
 1. Download / clone this repository.
@@ -101,9 +88,13 @@ Pairs naturally with Homesteader and Stormproof, requires neither. Roadmap: powe
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Stormproof** and **Strata** also require the **Harmony** mod.
+4. **Homesteader**, **Stormproof**, and **Strata** require the **Harmony** mod.
 
 Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first.
+
+## Changelogs
+
+Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md).
 
 ## Website
 

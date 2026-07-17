@@ -1,10 +1,14 @@
 # Changelog
 
-All notable changes to Strata are documented here.
+Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
+
+## [Unreleased]
+
+- Irrigation bridge uses Homesteader water defs (`Wellspring_*`); standalone Wellspring retired.
 
 ## [2.0] — 2026-07-16
 
-**Strata V2** — dig down, build up, breathe deep, and (with Odyssey) take linked floors with your gravship.
+**Strata V2** — dig down, build up, breathe deep; Odyssey gravship stacks.
 
 ### Added
 - **Building Up** — tower stairwells and elevators open outdoor **Level +N** roof decks; Page Up/Down and Levels tab support upper floors.
@@ -41,7 +45,7 @@ All notable changes to Strata are documented here.
 
 ## [1.1] — 2026-07-12
 
-Level sharing, cross-level storage and construction, smoke ventilation overhaul, pursuing raids, deep insect eruptions, shaft power and legacy landing migration. See git history for full 1.1 notes.
+Level sharing, cross-level storage/construction, smoke ventilation, pursuing raids, deep insect eruptions, shaft power, legacy landing migration.
 
 ## [1.0] — Strata V1
 

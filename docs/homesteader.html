@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Homesteader — a RimWorld mod by AzraelGodKing</title>
-<meta name="description" content="Homesteader: tribal survival, farm-to-table crafting, storage, food preservation, and power. Requires Harmony. RimWorld 1.4–1.6.">
+<meta name="description" content="Homesteader: tribal survival, farm-to-table crafting, wells and irrigation, storage, food preservation, and power. Requires Harmony. RimWorld 1.4–1.6.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +16,6 @@
       <a href="index.html">Home</a>
       <a href="homesteader.html" class="active">Homesteader</a>
       <a href="stormproof.html">Stormproof</a>
-      <a href="wellspring.html">Wellspring</a>
       <a href="strata.html">Strata</a>
       <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
     </div>
@@ -26,7 +25,7 @@
 <header class="hero">
   <div class="wrap">
     <h1 class="h">HOMESTEADER</h1>
-    <p class="tagline">Tribal survival &bull; Farm-to-table &bull; Storage &bull; Preservation &bull; Power</p>
+    <p class="tagline">Tribal survival &bull; Farm-to-table &bull; Water &bull; Storage &bull; Power</p>
     <div class="badges">
       <span class="badge">RimWorld 1.4 / 1.5 / 1.6</span>
       <span class="badge">Requires Harmony</span>
@@ -601,6 +600,78 @@
           <h3>Wood-burning generator</h3>
           <div class="stat">1&times;1 &middot; 300W &middot; Advanced homestead research</div>
           <p>Forest-friendly power for homesteads that run on wood.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WATER (merged from Wellspring) -->
+  <section id="water">
+    <h2>Water &amp; irrigation</h2>
+    <p class="sub">Draw it, store it, and trench it into your fields. Former Wellspring content now ships inside Homesteader (<code>Wellspring_*</code> defNames kept for save continuity). With <b>Dubs Bad Hygiene</b>, tanks join the plumbing net and wells act as groundwater sources; jug water for irrigation still works.</p>
+    <div class="grid">
+      <div class="card">
+        <img src="img/HandDugWell.png" alt="Hand-dug well">
+        <div>
+          <h3>Hand-dug well</h3>
+          <div class="stat">bill station &middot; wellcraft</div>
+          <p>Colonists draw jugs of fresh water by hand with a windlass and bucket.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/RainBarrel.png" alt="Rain barrel">
+        <div>
+          <h3>Rain barrel</h3>
+          <div class="stat">passive catch &middot; wellcraft</div>
+          <p>Catches rainfall and slowly fills with water when the weather cooperates.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/Cistern.png" alt="Cistern">
+        <div>
+          <h3>Cistern</h3>
+          <div class="stat">bulk storage &middot; wellcraft</div>
+          <p>Stockpile drawn water for dry seasons and irrigation pushes.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/DeepWell.png" alt="Deep well">
+        <div>
+          <h3>Deep well</h3>
+          <div class="stat">faster draw &middot; waterworks</div>
+          <p>A reinforced shaft that taps the water table harder than a hand-dug well.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/SolarStill.png" alt="Solar still">
+        <div>
+          <h3>Solar still</h3>
+          <div class="stat">passive &middot; wellcraft</div>
+          <p>Condenses drinkable water from heat and air when the sun is out.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/WaterTower.png" alt="Water tower">
+        <div>
+          <h3>Water tower</h3>
+          <div class="stat">elevated reserve &middot; waterworks</div>
+          <p>Serious elevated storage for colonies that run thirsty farms.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/IrrigatedSoil.png" alt="Irrigated soil">
+        <div>
+          <h3>Irrigated soil &amp; planter</h3>
+          <div class="stat">+30% fertility &middot; irrigation</div>
+          <p>Spend water to trench rich irrigated soil, or build an irrigated planter for indoor crops.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/WellspringWater.png" alt="Water">
+        <div>
+          <h3>Crafted from water</h3>
+          <div class="stat">boiled water &middot; mud bricks &middot; clean bandages</div>
+          <p>Boil water at a fire, press mud bricks, and rinse bandages clean for the medicine shelf.</p>
         </div>
       </div>
     </div>

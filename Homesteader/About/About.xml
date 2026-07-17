@@ -18,8 +18,10 @@
   </modDependencies>
   <loadAfter>
     <li>brrainz.harmony</li>
+    <!-- Optional: when Dubs Bad Hygiene is present, Homesteader water buildings join its plumbing. -->
+    <li>Dubwise.DubsBadHygiene</li>
   </loadAfter>
-  <description>Everything a growing homestead needs: tribal survival, farm-to-table crafting, storage, food preservation, and off-grid power.
+  <description>Everything a growing homestead needs: tribal survival, farm-to-table crafting, wells and irrigation, storage, food preservation, and off-grid power.
 
 TRIBAL SURVIVAL (no research)
 - Drying rack: jerky, dried produce, fruit leather, dried mushrooms, and pemmican without needing pemmican research.
@@ -38,6 +40,13 @@ FARMSTEAD CRAFTING
 - Cider vinegar, vinegar pickles, apple cider, and homestead soap.
 - Favorite food mood for every humanlike (Homesteader + vanilla pool); maypole harvest cheer.
 
+WATER &amp; IRRIGATION
+- Hand-dug well, rain barrel, cistern, solar still, and stone fountain (wellcraft research).
+- Deep well and water tower (waterworks research).
+- Irrigated soil and irrigated planter (+30% fertility) (irrigation research).
+- Boiled water, mud bricks, and clean bandages crafted from water.
+- Optional Dubs Bad Hygiene: rain barrel / cistern / water tower store plumbing water; hand-dug well acts as a primitive groundwater source; deep well is a piped deep inlet. Jug water for irrigation still works.
+
 ORCHARD &amp; APIARY
 - Apple and cherry trees: slow-growing, regrowing orchard fruit for cider, jam, and eating fresh.
 - Sugar maple: tap for maple sap and boil it into maple syrup at the hearth - then griddle flapjacks.
@@ -50,6 +59,7 @@ AROUND THE FARMHOUSE
 
 RESEARCH &amp; PROGRESSION
 - Primitive homestead, food preservation, farmstead crafting, homestead storage, brewing, comforts, and advanced homestead.
+- Wellcraft → irrigation / waterworks.
 - Root cellar (passive cool storage ≤5°C), large storage crate, jam cauldron, and wood-burning generator.
 
 POWER
@@ -57,5 +67,9 @@ POWER
 
 Odyssey owners get salted and smoked fish recipes automatically.
 
-Requires the Harmony mod (C# for root cellar cooling). Safe to add to a save. Before removing it, deconstruct the mod's buildings and use up or sell its items.</description>
+Requires the Harmony mod (C# for root cellar cooling and favorite foods). Safe to add to a save. Before removing it, deconstruct the mod's buildings and use up or sell its items.
+
+Note: former Wellspring water content now ships inside Homesteader (Wellspring_* defNames preserved). Disable any old standalone Wellspring mod.
+
+Optional: Dubs Bad Hygiene soft-compat patches Homesteader water buildings into its plumbing when that mod is present.</description>
 </ModMetaData>

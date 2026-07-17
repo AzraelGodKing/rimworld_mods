@@ -110,6 +110,7 @@ namespace Homesteader
             "InsectJelly",
             "Ambrosia",
             "MealNutrientPaste",
+            "Wellspring_BoiledWater",
         };
 
         private static List<ThingDef> cachedPool;
