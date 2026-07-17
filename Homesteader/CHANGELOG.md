@@ -5,6 +5,8 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
+- **Kats Effect** — rare Misc storyteller event that only fires when a finished 27 statue/monument is on the home map. Hybrid anomalous-broadcast letter (with a short Foundation addendum), temporary heat dome (~+10°C), short brain-rot hediff, small silver Super Chat drain (27–81), and a personal Kats directive mood (+12, ~1 day). Min refire 27 days.
+- `Languages/English/` folder scaffolding for future translations.
 - **Homestead livestock:** chicken coop (periodic eggs) and goat pen (periodic milk); animal mash recipe at the hearth (barley/pumpkin/hay).
 - **Charcuterie:** render lard or tallow from meat; stuff sausage from salted/smoked meat or jerky + fat + herbs (hearth).
 - **Homestead textiles:** flax crop, spinning wheel (flax/wool → homespun cloth), loom (quilt); quilted bed now costs a homestead quilt (comforts + textiles).

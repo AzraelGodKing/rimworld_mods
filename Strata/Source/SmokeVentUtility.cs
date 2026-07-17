@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -11,6 +12,10 @@ namespace Strata
         // bench's smoke - "open the door" must be a real answer.
         public const float DoorVentPerOpenExterior = 0.2f;
         public const float MaxDoorVentBonus = 0.5f;
+
+        // Soft-compat: Vanilla Temperature Expanded wall-mounted vent (and
+        // similarly named wall vents). No hard dependency on VTE.
+        public const string VteWallMountedVentDefName = "VTE_WallMountedVent";
 
         public static Room IntakeRoom(Thing thing)
         {
@@ -103,12 +108,65 @@ namespace Strata
             return false;
         }
 
-        // A vanilla wall vent (or modded subclass) that isn't flicked off.
-        // Smoke follows the same path temperature does.
+        // A vanilla wall vent, VTE-style wall-mounted vent, or similarly named
+        // outdoor-facing wall vent that isn't flicked off. Smoke follows the
+        // same path temperature does.
         public static bool IsOpenVent(Building building)
         {
-            return building is Building_Vent
-                && building.TryGetComp<CompFlickable>()?.SwitchIsOn != false;
+            if (building == null || building.TryGetComp<CompFlickable>()?.SwitchIsOn == false)
+            {
+                return false;
+            }
+            return building is Building_Vent || LooksLikeWallVent(building.def);
+        }
+
+        // Wall-mounted vents (VTE_WallMountedVent) sit on a wall with
+        // isEdifice=false, so GetEdifice returns the Wall. Scan the cell's
+        // things as well so surface rooms vented that way count as ventilated.
+        public static Building FindOpenVentAt(Map map, IntVec3 cell)
+        {
+            if (map == null || !cell.InBounds(map))
+            {
+                return null;
+            }
+            Building edifice = cell.GetEdifice(map);
+            if (IsOpenVent(edifice))
+            {
+                return edifice;
+            }
+            List<Thing> things = map.thingGrid.ThingsListAtFast(cell);
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (things[i] is Building building && building != edifice && IsOpenVent(building))
+                {
+                    return building;
+                }
+            }
+            return null;
+        }
+
+        public static bool LooksLikeWallVent(ThingDef def)
+        {
+            if (def?.defName == null)
+            {
+                return false;
+            }
+            string name = def.defName;
+            if (name == VteWallMountedVentDefName)
+            {
+                return true;
+            }
+            // Soft patterns for VTE / Simple Utilities: Wall / similar mounts.
+            // Avoid matching heaters, coolers, or valves.
+            if (name.IndexOf("Heater", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Cooler", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Valve", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return false;
+            }
+            return name.IndexOf("WallMountedVent", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.EndsWith("WallVent", StringComparison.OrdinalIgnoreCase)
+                || name.EndsWith("_WallVent", StringComparison.OrdinalIgnoreCase);
         }
 
         public static void CollectDuctNetwork(Map map, IntVec3 start, HashSet<IntVec3> network)

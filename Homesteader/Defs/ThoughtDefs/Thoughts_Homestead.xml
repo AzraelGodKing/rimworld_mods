@@ -85,4 +85,19 @@
     </stages>
   </ThoughtDef>
 
+  <!-- Personal "Kats directive" memory after the Kats Effect incident. -->
+  <ThoughtDef>
+    <defName>Homesteader_KatsDirective</defName>
+    <durationDays>1.0</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>Kats directive</label>
+        <description>That broadcast had my name on it. Hydrate. Medicate. Masticate. Somehow that feels… clarifying.</description>
+        <baseMoodEffect>12</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>
+

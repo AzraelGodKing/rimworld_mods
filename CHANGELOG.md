@@ -1,12 +1,12 @@
 # Changelog
 
-Short repo highlights. Detailed notes live in each mod’s own `CHANGELOG.md`.
+Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
-- **Homesteader** — Yard & pantry expansion (livestock, textiles, compost/cold storage, canning); production workgiver fix; source cleanup. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
-- **Strata** — Irrigation bridge uses Homesteader water defs (`Wellspring_*`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
-- **Stormproof** — Research tab; load shedder, grid monitor, ion storm, and related buildings. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
+- **Homesteader** — Kats Effect event (27 statue heat dome / brain rot / Super Chat); Languages/English scaffolding; yard & pantry expansion; production workgiver fix; source cleanup. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
+- **Strata** — VTE wall-vent soft-compat for smoke/gas; Languages/English scaffolding; irrigation bridge uses Homesteader water defs. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Stormproof** — Languages/English scaffolding; research tab; load shedder, grid monitor, ion storm, and related buildings. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
 
 ## Released
 

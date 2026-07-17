@@ -5,6 +5,7 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 ## [Unreleased]
 
 ### Added
+- `Languages/English/` folder scaffolding for future translations.
 - **Dedicated research tab** — all Stormproof projects live under their own *Stormproof* tab (no longer on Main).
 - Load shedder: an automatic breaker for wiring between the main grid and a low-priority sub-grid. Transmits like a conduit while the supply side's batteries hold charge; trips open and sheds the sub-grid when they fall below an adjustable cutoff (default 20%, gizmo-adjustable 5–45%), then reconnects on its own once charge recovers past the cutoff plus a 20-point margin. Requires storm protection research.
 - Grid monitor console: inspect panel shows the power net's live production, consumption, net gain, battery charge, and an estimate of time until batteries run empty (or full). Sends a caution message when stored charge drops below 25% and a negative alert below 10%, re-arming once charge recovers above 35%. Requires storm protection research.

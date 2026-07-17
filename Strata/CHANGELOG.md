@@ -4,6 +4,12 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
+### Added
+- `Languages/English/` folder scaffolding for future translations.
+
+### Fixed
+- Smoke/gas ventilation recognizes wall-mounted vents that sit on walls (`isEdifice=false`), including Vanilla Temperature Expanded `VTE_WallMountedVent` and similarly named wall vents (soft-compat, no VTE dependency). Surface rooms vented that way clear smoke like vanilla vents; underground outdoor rules unchanged.
+
 - Irrigation bridge uses Homesteader water defs (`Wellspring_*`); standalone Wellspring retired.
 
 ## [2.0] — 2026-07-16

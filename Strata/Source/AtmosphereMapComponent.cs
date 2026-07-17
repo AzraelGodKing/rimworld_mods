@@ -792,10 +792,10 @@ namespace Strata
                     }
                     else
                     {
-                        Building edifice = borderCell.GetEdifice(map);
-                        if (edifice != null && SmokeVentUtility.IsOpenVent(edifice))
+                        Building vent = SmokeVentUtility.FindOpenVentAt(map, borderCell);
+                        if (vent != null)
                         {
-                            opening = edifice;
+                            opening = vent;
                             isVent = true;
                         }
                     }
@@ -969,9 +969,9 @@ namespace Strata
                 {
                     continue;
                 }
-                Building edifice = cell.GetEdifice(roomMap);
-                if (edifice != null && SmokeVentUtility.IsOpenVent(edifice)
-                    && SmokeVentUtility.OpeningLeadsOutdoors(edifice, room))
+                // Includes non-edifice wall-mounted vents (e.g. VTE_WallMountedVent).
+                Building vent = SmokeVentUtility.FindOpenVentAt(roomMap, cell);
+                if (vent != null && SmokeVentUtility.OpeningLeadsOutdoors(vent, room))
                 {
                     return true;
                 }
