@@ -54,7 +54,7 @@ namespace Strata
                 result = ThinkResult.NoJob;
                 return true;
             }
-            Job portalJob = PawnRelay.MakeReturnBasePortalJob(pawn, firstStep);
+            Job portalJob = PawnRelay.MakeReturnBasePortalJob(pawn, firstStep, rechargeMap);
             PawnRelay.TouchReturnBaseRetry(pawn);
             if (portalJob != null)
             {
