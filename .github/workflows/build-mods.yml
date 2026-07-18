@@ -1,63 +1,85 @@
 name: Build mod DLLs
 
-# Builds Homesteader, Strata, and Stormproof assemblies whenever Source changes.
-# Uploads DLLs as workflow artifacts. Assemblies are gitignored (build locally or
-# download from Actions).
+# On main only: rebuild Homesteader / Strata / Stormproof assemblies and refresh
+# docs/downloads/*.zip for the GitHub Pages download buttons. Assemblies/*.dll
+# stay gitignored — only the download zips are committed.
 
 on:
   push:
+    branches: [main]
     paths:
       - "Homesteader/Source/**"
       - "Strata/Source/**"
       - "Stormproof/Source/**"
-      - ".github/workflows/build-mods.yml"
-  pull_request:
-    paths:
-      - "Homesteader/Source/**"
-      - "Strata/Source/**"
-      - "Stormproof/Source/**"
+      - "build_downloads.ps1"
       - ".github/workflows/build-mods.yml"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
-  group: build-mods-${{ github.ref }}
+  group: build-mods-main
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build ${{ matrix.mod }}
+  build-and-pack:
+    name: Build DLLs and pack site downloads
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - mod: Homesteader
-            project: Homesteader/Source/Homesteader.csproj
-            dll: Homesteader/Assemblies/Homesteader.dll
-          - mod: Strata
-            project: Strata/Source/Strata.csproj
-            dll: Strata/Assemblies/Strata.dll
-          - mod: Stormproof
-            project: Stormproof/Source/Stormproof.csproj
-            dll: Stormproof/Assemblies/Stormproof.dll
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "8.0.x"
 
-      - name: Build ${{ matrix.mod }}
-        run: dotnet build "${{ matrix.project }}" -c Release --nologo
+      - name: Build Homesteader
+        run: dotnet build Homesteader/Source/Homesteader.csproj -c Release --nologo
 
-      - name: Upload ${{ matrix.mod }} DLL
+      - name: Build Strata
+        run: dotnet build Strata/Source/Strata.csproj -c Release --nologo
+
+      - name: Build Stormproof
+        run: dotnet build Stormproof/Source/Stormproof.csproj -c Release --nologo
+
+      - name: Pack docs/downloads zips (with DLLs)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p docs/downloads
+          for mod in Homesteader Stormproof Strata; do
+            zip_path="docs/downloads/${mod}.zip"
+            git archive --format=zip -o "$zip_path" HEAD "$mod"
+            dll="${mod}/Assemblies/${mod}.dll"
+            if [[ ! -f "$dll" ]]; then
+              echo "Missing $dll" >&2
+              exit 1
+            fi
+            # Inject / replace assembly inside the archive (paths use forward slashes).
+            zip -u "$zip_path" "$dll"
+            echo "${mod}: $(du -h "$zip_path" | cut -f1)"
+          done
+
+      - name: Upload download zips
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.mod }}-Assemblies
-          path: ${{ matrix.dll }}
+          name: site-downloads
+          path: docs/downloads/*.zip
           if-no-files-found: error
+
+      - name: Commit download zips if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/downloads/Homesteader.zip docs/downloads/Stormproof.zip docs/downloads/Strata.zip
+          if git diff --staged --quiet; then
+            echo "Download zips unchanged — nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore: refresh site download zips [skip ci]"
+          git push origin HEAD:main
