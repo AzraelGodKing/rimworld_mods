@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Заброшенная шахта ============ -->
+  <Strata_CollapsedMine.label>заброшенная шахта</Strata_CollapsedMine.label>
+  <Strata_CollapsedMine.description>Заброшенная шахта, чьи верхние выработки обрушились, оставив обветшалый деревянный вход над холодными туннелями внизу. Падальщики и насекомые гнездятся в темноте, а в старых рудных вагонетках всё ещё есть добыча.</Strata_CollapsedMine.description>
+
+  <Strata_CollapsedMineEntrance.label>вход в заброшенную шахту</Strata_CollapsedMineEntrance.label>
+  <Strata_CollapsedMineEntrance.description>Вход в заброшенную шахту с обветшалой деревянной крепью.</Strata_CollapsedMineEntrance.description>
+
+  <Strata_CollapsedMineLevel.label>уровень заброшенной шахты</Strata_CollapsedMineLevel.label>
+  <Strata_CollapsedMineLevel.description>Подземный уровень заброшенной шахты с туннелями и камерами.</Strata_CollapsedMineLevel.description>
+
+  <!-- ============ Запечатанное хранилище ============ -->
+  <Strata_SealedVault.label>запечатанное хранилище</Strata_SealedVault.label>
+  <Strata_SealedVault.description>Древнее подземное хранилище, чей наземный люк был обнажён эрозией. Огромные камеры лежат застывшими за разрушающимися печатями, охраняемые дремлющими машинами — или тем, что поселилось там после отключения питания.</Strata_SealedVault.description>
+
+  <Strata_SealedVaultEntrance.label>вход в запечатанное хранилище</Strata_SealedVaultEntrance.label>
+  <Strata_SealedVaultEntrance.description>Вход в запечатанное хранилище с древним люком.</Strata_SealedVaultEntrance.description>
+
+  <Strata_SealedVaultLevel.label>уровень запечатанного хранилища</Strata_SealedVaultLevel.label>
+  <Strata_SealedVaultLevel.description>Подземный уровень запечатанного хранилища с огромными камерами.</Strata_SealedVaultLevel.description>
+
+  <!-- ============ Геотермальная трещина ============ -->
+  <Strata_GeothermalVent.label>геотермальная трещина</Strata_GeothermalVent.label>
+  <Strata_GeothermalVent.description>Парящая трещина в земле отмечает прорыв в горячие геотермальные выработки внизу. Паровые гейзеры и карманы ядовитого газа бурлят в туннелях, населённых насекомыми — опасно, но жар и давление намекают на богатую добычу.</Strata_GeothermalVent.description>
+
+  <Strata_GeothermalVentEntrance.label>вход в геотермальную трещину</Strata_GeothermalVentEntrance.label>
+  <Strata_GeothermalVentEntrance.description>Вход в геотермальную трещину с парящими ступенями.</Strata_GeothermalVentEntrance.description>
+
+  <Strata_GeothermalVentLevel.label>уровень геотермальной трещины</Strata_GeothermalVentLevel.label>
+  <Strata_GeothermalVentLevel.description>Подземный уровень геотермальной трещины с горячими туннелями.</Strata_GeothermalVentLevel.description>
+
+  <!-- ============ Общие шаги генерации ============ -->
+  <Strata_CarveVault.label>вырезание хранилища</Strata_CarveVault.label>
+  <Strata_CarveVault.description>Вырезает камеры хранилища в скале.</Strata_CarveVault.description>
+
+  <Strata_WarrenTheme_Fungal.label>грибная тема</Strata_WarrenTheme_Fungal.label>
+  <Strata_WarrenTheme_Fungal.description>Добавляет грибную растительность и споры.</Strata_WarrenTheme_Fungal.description>
+
+  <Strata_WarrenTheme_Frozen.label>замороженная тема</Strata_WarrenTheme_Frozen.label>
+  <Strata_WarrenTheme_Frozen.description>Добавляет ледяные образования и холод.</Strata_WarrenTheme_Frozen.description>
+
+  <Strata_WarrenTheme_Volcanic.label>вулканическая тема</Strata_WarrenTheme_Volcanic.label>
+  <Strata_WarrenTheme_Volcanic.description>Добавляет вулканические образования и пар.</Strata_WarrenTheme_Volcanic.description>
+
+  <Strata_WarrenTheme_Flooded.label>затопленная тема</Strata_WarrenTheme_Flooded.label>
+  <Strata_WarrenTheme_Flooded.description>Добавляет воду и влажную среду.</Strata_WarrenTheme_Flooded.description>
+
+  <Strata_MineWarrenOccupants.label>обитатели шахты</Strata_MineWarrenOccupants.label>
+  <Strata_MineWarrenOccupants.description>Размещает падальщиков и насекомых в шахте.</Strata_MineWarrenOccupants.description>
+
+  <Strata_VaultOccupants.label>обитатели хранилища</Strata_VaultOccupants.label>
+  <Strata_VaultOccupants.description>Размещает дремлющие машины или насекомых в хранилище.</Strata_VaultOccupants.description>
+
+  <Strata_GeothermalVentFeatures.label>особенности геотермальной трещины</Strata_GeothermalVentFeatures.label>
+  <Strata_GeothermalVentFeatures.description>Добавляет гейзеры и паровые карманы.</Strata_GeothermalVentFeatures.description>
+
+</LanguageData>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- CompShaftFluidTie -->
+  <Strata_FluidTie_ModNotLoaded>Жидкостная связь ({0}): мод не загружен</Strata_FluidTie_ModNotLoaded>
+  <Strata_FluidTie_NotConnected>Жидкостная связь ({0}): не подключена — подключите трубы к этому узлу</Strata_FluidTie_NotConnected>
+  <Strata_FluidTie_Linked>Жидкостная связь ({0}): подключена к локальной сети {0}</Strata_FluidTie_Linked>
+
+  <!-- CompShaftFluidJunctionLink -->
+  <Strata_FluidLink_DrivenAbove>Связь: управляется узлом на уровне выше</Strata_FluidLink_DrivenAbove>
+  <Strata_FluidLink_LinkedBelow>Связь: соединена с узлом на уровне ниже</Strata_FluidLink_LinkedBelow>
+  <Strata_FluidLink_NoShaft>Связь: нет шахты в пределах досягаемости — постройте рядом с лестницей или лифтом</Strata_FluidLink_NoShaft>
+  <Strata_FluidLink_Waiting>Связь: ожидает открытия уровня ниже</Strata_FluidLink_Waiting>
+
+  <!-- Patch_ShaftFluidDeconstruct -->
+  <Strata_FluidLink_DeconstructBlocked>Он управляется узлом на уровне выше.</Strata_FluidLink_DeconstructBlocked>
+
+</LanguageData>

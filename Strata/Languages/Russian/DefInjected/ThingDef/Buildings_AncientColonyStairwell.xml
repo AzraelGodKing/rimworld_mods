@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_AncientColonyStairsDown.label>древняя лестница</Strata_AncientColonyStairsDown.label>
+  <Strata_AncientColonyStairsDown.description>Широкая каменная лестница, уходящая вглубь земли, намного старше колонии вокруг неё. Стёртые ступени всё ещё ведут вниз, в сплошную скалу, которую можно выкопать в комнаты и мастерские — но линии электропередач, когда-то проходившие через шахту, давно исчезли, поэтому каждый уровень должен быть запитан отдельно, если только вы не построите современную лестницу или шахтный силовой кабель поблизости.</Strata_AncientColonyStairsDown.description>
+
+  <Strata_AncientColonyStairsUp.label>посадочная площадка древней лестницы</Strata_AncientColonyStairsUp.label>
+  <Strata_AncientColonyStairsUp.description>Нижняя посадочная площадка древней лестницы — стёртые ступени, ведущие обратно на поверхность. Через шахту нет передачи энергии; запитывайте этот уровень самостоятельно.</Strata_AncientColonyStairsUp.description>
+
+</LanguageData>

@@ -7,8 +7,33 @@
   <!-- Passive cooling (root cellar / icehouse / springhouse) -->
   <Homesteader_PassiveCoolStorage>Passive cool storage: items (and adjacent indoor cells) stay at or below {0}</Homesteader_PassiveCoolStorage>
 
-  <!-- Favorite food (pawn inspect) -->
-  <Homesteader_FavoriteFoodInspect>Favorite food: {0}</Homesteader_FavoriteFoodInspect>
+  <!-- Favorite foods / tastes tab -->
+  <Homesteader_FavoriteFoodInspect>Favorites: {0}</Homesteader_FavoriteFoodInspect>
+  <Homesteader_TabTastes>Tastes</Homesteader_TabTastes>
+  <Homesteader_TastesFavoritesHeader>Favorite foods</Homesteader_TastesFavoritesHeader>
+  <Homesteader_TastesAllergiesHeader>Allergies</Homesteader_TastesAllergiesHeader>
+  <Homesteader_TastesAllergyHidden>Unknown sensitivity</Homesteader_TastesAllergyHidden>
+  <Homesteader_TastesNone>None</Homesteader_TastesNone>
+  <Homesteader_TastesRerollDev>DEV: Reroll tastes</Homesteader_TastesRerollDev>
+  <Homesteader_AllergyDiscovered>{0} had an allergic reaction to {1}.</Homesteader_AllergyDiscovered>
+  <Homesteader_Allergy_Milk>milk</Homesteader_Allergy_Milk>
+  <Homesteader_Allergy_Eggs>eggs</Homesteader_Allergy_Eggs>
+  <Homesteader_Allergy_Peanuts>peanuts</Homesteader_Allergy_Peanuts>
+  <Homesteader_Allergy_TreeNuts>tree nuts</Homesteader_Allergy_TreeNuts>
+  <Homesteader_Allergy_Wheat>wheat</Homesteader_Allergy_Wheat>
+  <Homesteader_Allergy_Soy>soy</Homesteader_Allergy_Soy>
+  <Homesteader_Allergy_Fish>fish</Homesteader_Allergy_Fish>
+  <Homesteader_Allergy_Shellfish>shellfish</Homesteader_Allergy_Shellfish>
+  <Homesteader_Allergy_Sesame>sesame</Homesteader_Allergy_Sesame>
+  <Homesteader_Allergy_Pollen>pollen (hay fever)</Homesteader_Allergy_Pollen>
+  <Homesteader_Allergy_DustMites>dust mites</Homesteader_Allergy_DustMites>
+  <Homesteader_Allergy_PetDander>pet dander</Homesteader_Allergy_PetDander>
+  <Homesteader_Allergy_Mold>mold</Homesteader_Allergy_Mold>
+  <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
+  <Homesteader_SettingsDevHeader>Developer</Homesteader_SettingsDevHeader>
+  <Homesteader_SettingsRevealAllergies>Reveal allergies</Homesteader_SettingsRevealAllergies>
+  <Homesteader_SettingsRevealAllergiesTip>Tastes tab shows allergy names before discovery (eating the food or environmental exposure). For testing only.</Homesteader_SettingsRevealAllergiesTip>
+  <Homesteader_SettingsDevModeHint>Enable Development mode to show Homesteader developer options.</Homesteader_SettingsDevModeHint>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>An anomalous broadcast has locked onto your colony's 27 monument frequency. A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — "brain rot," they call it.</Homesteader_KatsLetter_Open>

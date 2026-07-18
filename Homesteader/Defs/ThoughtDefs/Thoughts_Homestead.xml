@@ -41,6 +41,19 @@
   </ThoughtDef>
 
   <ThoughtDef>
+    <defName>Homesteader_AteAllergen</defName>
+    <durationDays>0.6</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>allergic reaction</label>
+        <description>Something set off an allergy. Itchy, queasy, and miserable for a while.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
     <defName>Homesteader_FreshlyWashed</defName>
     <durationDays>1.0</durationDays>
     <stackLimit>1</stackLimit>

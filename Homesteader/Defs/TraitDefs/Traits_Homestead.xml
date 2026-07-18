@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <TraitDef>
+    <defName>Homesteader_Polyarmory</defName>
+    <commonality>0.55</commonality>
+    <degreeDatas>
+      <li>
+        <label>polyarmory</label>
+        <description>{PAWN_nameDef} is comfortable in a polycule. {PAWN_pronoun} does not mind sharing a bed with lovers — or with their lovers' partners — and will happily pile into multi-person beds with the whole group.</description>
+      </li>
+    </degreeDatas>
+    <exclusionTags>
+      <li>HomesteaderPolyarmory</li>
+    </exclusionTags>
+  </TraitDef>
+
+</Defs>

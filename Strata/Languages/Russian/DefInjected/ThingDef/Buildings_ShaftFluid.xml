@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Жидкостные шахтные узлы ============ -->
+
+  <Strata_ShaftFluid_DBH.label>шахтный водопроводный узел</Strata_ShaftFluid_DBH.label>
+  <Strata_ShaftFluid_DBH.description>Передаёт водопровод Dubs Bad Hygiene между уровнями. Постройте рядом с лестницей или лифтом и подключите водопроводные трубы к этому узлу на каждом этаже; он создаёт ответный узел внизу и связывает две водные/канализационные сети, не объединяя их.</Strata_ShaftFluid_DBH.description>
+
+  <Strata_ShaftFluid_DCH_Heat.label>шахтный отопительный узел</Strata_ShaftFluid_DCH_Heat.label>
+  <Strata_ShaftFluid_DCH_Heat.description>Передаёт трубы горячего водоснабжения Dubs Central Heating между уровнями. Постройте рядом с шахтой и подключите отопительные трубы к этому узлу на каждом этаже.</Strata_ShaftFluid_DCH_Heat.description>
+
+  <Strata_ShaftFluid_DCH_Air.label>шахтный кондиционерный узел</Strata_ShaftFluid_DCH_Air.label>
+  <Strata_ShaftFluid_DCH_Air.description>Передаёт воздуховоды кондиционирования Dubs Central Heating между уровнями. Постройте рядом с шахтой и подключите кондиционерные трубы к этому узлу на каждом этаже.</Strata_ShaftFluid_DCH_Air.description>
+
+  <Strata_ShaftFluid_Rimatomics.label>шахтный охлаждающий узел</Strata_ShaftFluid_Rimatomics.label>
+  <Strata_ShaftFluid_Rimatomics.description>Передаёт охлаждающую жидкость реакторов Rimatomics между уровнями. Постройте рядом с шахтой и подключите охлаждающие трубы к этому узлу на каждом этаже.</Strata_ShaftFluid_Rimatomics.description>
+
+  <Strata_ShaftFluid_VHGE.label>шахтный газовый узел Helixien</Strata_ShaftFluid_VHGE.label>
+  <Strata_ShaftFluid_VHGE.description>Передаёт трубопроводные сети Vanilla Helixien Gas Expanded между уровнями. Постройте рядом с шахтой и подключите газовые трубы Helixien к этому узлу на каждом этаже.</Strata_ShaftFluid_VHGE.description>
+
+  <Strata_ShaftFluid_VefChemfuel.label>шахтный химтопливный узел</Strata_ShaftFluid_VefChemfuel.label>
+  <Strata_ShaftFluid_VefChemfuel.description>Передаёт трубопроводные сети Vanilla Chemfuel Expanded между уровнями. Постройте рядом с шахтой и подключите химтопливные трубы к этому узлу на каждом этаже.</Strata_ShaftFluid_VefChemfuel.description>
+
+  <Strata_ShaftFluid_RimefellerCrude.label>шахтный нефтяной узел</Strata_ShaftFluid_RimefellerCrude.label>
+  <Strata_ShaftFluid_RimefellerCrude.description>Передаёт нефтепроводы Rimefeller между уровнями. Постройте рядом с шахтой и подключите нефтяные трубы к этому узлу на каждом этаже.</Strata_ShaftFluid_RimefellerCrude.description>
+
+  <Strata_ShaftFluid_RimefellerFuel.label>шахтный химтопливный узел</Strata_ShaftFluid_RimefellerFuel.label>
+  <Strata_ShaftFluid_RimefellerFuel.description>Передаёт химтопливные трубы Rimefeller между уровнями. Постройте рядом с шахтой и подключите топливные трубы к этому узлу на каждом этаже.</Strata_ShaftFluid_RimefellerFuel.description>
+
+</LanguageData>
