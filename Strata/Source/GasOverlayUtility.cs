@@ -697,7 +697,8 @@ namespace Strata
                         continue;
                     }
                 }
-                if (!AtmosphericMix.SignificantForReadout(gas, d, map))
+                if (!AtmosphericMix.SignificantForReadout(gas, d, map)
+                    && !ShouldForceAmbientReadout(gas, d, map))
                 {
                     continue;
                 }
@@ -712,8 +713,66 @@ namespace Strata
             {
                 return false;
             }
+            AppendSurfaceAmbientReadout(map, density, slices);
             slices.Sort((a, b) => b.density.CompareTo(a.density));
             return true;
+        }
+
+        // Surface/A+: always list O₂ in readout when natural gases are on — even
+        // at ~21% beside heavy smoke (SignificantForReadout hides on-target O₂).
+        private static bool ShouldForceAmbientReadout(StrataGasDef gas, float density, Map map)
+        {
+            if (gas == null || map == null || density <= 0.001f)
+            {
+                return false;
+            }
+            if (StrataMod.Settings != null && !StrataMod.Settings.NaturalGasesActive)
+            {
+                return false;
+            }
+            if (!AtmosphericMix.ForcesAmbientInEnclosedRooms(map))
+            {
+                return false;
+            }
+            return gas == StrataGasDefOf.Strata_Oxygen;
+        }
+
+        private static void AppendSurfaceAmbientReadout(Map map, float[] density, List<GasSlice> slices)
+        {
+            if (map == null || density == null || slices == null)
+            {
+                return;
+            }
+            if (StrataMod.Settings != null && !StrataMod.Settings.NaturalGasesActive)
+            {
+                return;
+            }
+            if (!AtmosphericMix.ForcesAmbientInEnclosedRooms(map))
+            {
+                return;
+            }
+            StrataGasDef o2 = StrataGasDefOf.Strata_Oxygen;
+            if (o2 == null)
+            {
+                return;
+            }
+            for (int i = 0; i < slices.Count; i++)
+            {
+                if (slices[i].gas == o2)
+                {
+                    return;
+                }
+            }
+            float o2Density = density[o2.index];
+            if (o2Density <= 0.001f)
+            {
+                o2Density = AtmosphericMix.TargetForMap(map).oxygen;
+            }
+            if (o2Density <= 0.001f)
+            {
+                return;
+            }
+            slices.Add(new GasSlice { gas = o2, density = o2Density });
         }
 
         private static bool TrySynthesizeAmbientDensity(

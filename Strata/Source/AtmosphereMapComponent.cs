@@ -335,7 +335,7 @@ namespace Strata
                 clouds[room.ID] = c;
             }
             c.density[gas.index] = ClampGasDensity(gas, Mathf.Max(0f, density));
-            AtmosphericMix.EnsureNormalized(c.density);
+            AtmosphericMix.FinalizeMix(c.density, map);
             c.sample = cell;
             CullOrStore(room.ID, c);
             MarkCellDensityDirty();
@@ -356,7 +356,7 @@ namespace Strata
             {
                 // Pressurized pocket: reach at least this density, not just add a trickle.
                 c.density[gas.index] = ClampGasDensity(gas, Mathf.Max(c.density[gas.index], density));
-                AtmosphericMix.EnsureNormalized(c.density);
+                AtmosphericMix.FinalizeMix(c.density, map);
                 c.sample = sample.IsValid && sample.InBounds(map) && sample.GetRoom(map) == room
                     ? sample
                     : c.sample;
@@ -794,7 +794,7 @@ namespace Strata
                 return;
             }
             c.density[gas.index] = ClampGasDensity(gas, density);
-            AtmosphericMix.EnsureNormalized(c.density);
+            AtmosphericMix.FinalizeMix(c.density, map);
             c.sample = sample.IsValid ? sample : c.sample;
             c.cells = Mathf.Max(room.CellCount, 1);
             CullOrStore(room.ID, c);
@@ -1562,7 +1562,7 @@ namespace Strata
                 {
                     cloud.density[g] *= factor;
                 }
-                AtmosphericMix.EnsureNormalized(cloud.density);
+                AtmosphericMix.FinalizeMix(cloud.density, map);
                 return;
             }
             AtmosphericMix.ApplyOutdoorVentDrain(cloud.density, map, 1f - Mathf.Clamp01(factor));
@@ -2116,7 +2116,7 @@ namespace Strata
                 StrataGasDef gas = gases[i];
                 cloud.density[gas.index] = ClampGasDensity(gas, cloud.density[gas.index]);
             }
-            AtmosphericMix.EnsureNormalized(cloud.density);
+            AtmosphericMix.FinalizeMix(cloud.density, map);
         }
 
         private void CullOrStore(int id, Cloud cloud)

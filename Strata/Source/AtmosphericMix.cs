@@ -283,7 +283,7 @@ namespace Strata
                 DisplaceOthers(density, idx, delta);
             }
 
-            EnsureNormalized(density);
+            FinalizeMix(density, map);
             return delta;
         }
 
@@ -302,7 +302,7 @@ namespace Strata
             }
             density[idx] -= removed;
             RefillWithAmbient(density, map, removed);
-            EnsureNormalized(density);
+            FinalizeMix(density, map);
         }
 
         public static void RefillWithAmbient(float[] density, Map map, float volume)
@@ -395,7 +395,7 @@ namespace Strata
             RefillWithAmbient(density, map, removed);
             float intakeStrength = Mathf.Clamp01(drainRate * 0.82f + 0.15f);
             IntakeFreshAir(density, map, intakeStrength);
-            EnsureNormalized(density);
+            FinalizeMix(density, map);
         }
 
         // Active ambient intake for outdoor-vent paths: push breathables toward the
@@ -455,6 +455,17 @@ namespace Strata
             }
         }
 
+        // Scale oversum mixes, then hard-lock surface/A+ breathables so O₂ is
+        // never scaled down by smoke + ambient exceeding 1.0.
+        public static void FinalizeMix(float[] density, Map map)
+        {
+            EnsureNormalized(density);
+            if (map != null && ForcesAmbientInEnclosedRooms(map))
+            {
+                EnforceAmbientBreathables(density, map);
+            }
+        }
+
         public static void ApplyToRoom(
             AtmosphereMapComponent atmosphere,
             Room room,
@@ -500,7 +511,7 @@ namespace Strata
                 ApplyAmbientChannel(density, StrataGasDefOf.Strata_CarbonDioxide, goalCo2, strength, hardLock);
             }
 
-            EnsureNormalized(density);
+            FinalizeMix(density, map);
             atmosphere.WriteRoomDensity(room, density, sample);
         }
 
