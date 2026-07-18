@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_Underground.label>подземелье</Strata_Underground.label>
+  <Strata_Underground.description>Живая скала глубоко под поверхностью. Ни неба, ни погоды, ни времён года — только камень.</Strata_Underground.description>
+
+  <Strata_Upper.label>верхний этаж</Strata_Upper.label>
+  <Strata_Upper.description>Каркасный этаж над колонией — открытый небу и погоде, связанный с уровнями внизу лестницами и шахтами.</Strata_Upper.description>
+
+</LanguageData>

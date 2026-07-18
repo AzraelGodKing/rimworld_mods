@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Вкладка исследований ============ -->
+  <Strata.label>Strata</Strata.label>
+  <Strata.generalTitle>Вертикальные исследования</Strata.generalTitle>
+  <Strata.generalDescription>Строительство вверх, копка вниз, шахты, вентиляция, жизнеобеспечение и ядовитые газы глубин.</Strata.generalDescription>
+
+  <!-- ============ Исследования ============ -->
+  <Strata_BuildingUp.label>строительство вверх</Strata_BuildingUp.label>
+  <Strata_BuildingUp.description>Технологии каркасного строительства для возведения открытой крышной террасы над колонией. Верхний этаж соответствует размеру этой карты, но вы можете строить только там, где этаж внизу перекрыт крышей (плюс площадь у лестницы/лифта). Расширяйте крыши внизу, чтобы увеличить террасу — открытое небо ничего не держит. Дополнительные башенные лестницы могут соединяться с тем же верхним уровнем.</Strata_BuildingUp.description>
+
+  <Strata_DiggingDown.label>копка вниз</Strata_DiggingDown.label>
+  <Strata_DiggingDown.description>Базовые технологии крепления и вырубки лестниц для открытия первого подвала под вашей колонией — один полный уровень сплошной скалы того же размера, что и карта сверху.</Strata_DiggingDown.description>
+
+  <Strata_Excavation.label>глубокая выемка</Strata_Excavation.label>
+  <Strata_Excavation.description>Методы разведки и укрепления для создания стабильного жилого пространства ниже первого подвала — открытие B2 и каждого следующего уровня.</Strata_Excavation.description>
+
+  <Strata_Elevators.label>лифты</Strata_Elevators.label>
+  <Strata_Elevators.description>Электрические лифтовые кабины для перемещения колонистов между уровнями в компактной шахте — вниз в вырытую скалу или вверх на каркасный надземный этаж. Быстрее и аккуратнее вырубленной лестницы, но требует подключения к энергии. Подъём на башенном лифте или спуск на вырытом лифте требует энергии; обратный путь всегда бесплатен, поэтому отключение электричества никого не застанет в ловушке.</Strata_Elevators.description>
+
+  <Strata_Ventilation.label>принудительная вентиляция</Strata_Ventilation.label>
+  <Strata_Ventilation.description>Электрические вентиляторы и импеллеры для перемещения воздуха там, где он не движется сам: односторонние вытяжные вентиляторы, вытягивающие дым из комнаты, и восходящие фильтры, направляющие дым вверх по вырытой шахте, как дымоход.</Strata_Ventilation.description>
+
+  <Strata_LifeSupport.label>глубинное жизнеобеспечение</Strata_LifeSupport.label>
+  <Strata_LifeSupport.description>Электрические кислородные насосы для герметичных помещений, CO₂-насосы, очищающие выдыхаемый воздух, и шахтные газообменники, активно направляющие пригодный для дыхания воздух вверх по лестнице, одновременно отводя углекислый газ вниз — инфраструктура, необходимая глубоким колониям, когда колонисты начинают жить под землёй.</Strata_LifeSupport.description>
+
+  <Strata_GasExtraction.label>добыча глубинного газа</Strata_GasExtraction.label>
+  <Strata_GasExtraction.description>Устьевые устройства и напорные баллоны для герметизации газовых выходов, найденных в глубинной скале — превращение ядовитого взрывоопасного выброса в топливо для генераторов, которое горит без дыма.</Strata_GasExtraction.description>
+
+  <Strata_ShaftPower.label>шахтное энергоснабжение</Strata_ShaftPower.label>
+  <Strata_ShaftPower.description>Бронированные силовые узлы, передающие энергию вверх и вниз по вырытой шахте, позволяя наземной сети питать уровни внизу (и наоборот).</Strata_ShaftPower.description>
+
+  <Strata_FluidShafts.label>жидкостные шахты</Strata_FluidShafts.label>
+  <Strata_FluidShafts.description>Строит шахтные жидкостные узлы для передачи воды, охлаждающей жидкости, тепла и газа между уровнями без объединения трубопроводных сетей между картами. В меню архитектора отображаются только узлы для установленных модов на трубы.</Strata_FluidShafts.description>
+
+  <Strata_Shoring.label>крепление скалы</Strata_Shoring.label>
+  <Strata_Shoring.description>Деревянные и каменные колонны, укрепляющие вырытые потолки против обвалов. Устанавливайте их в широких камерах, прежде чем скала решит обрушиться сама.</Strata_Shoring.description>
+
+  <Strata_PassiveLifeSupport.label>пассивное жизнеобеспечение</Strata_PassiveLifeSupport.label>
+  <Strata_PassiveLifeSupport.description>Ручные шахтные мехи и известковые скрубберы — низкотехнологичные способы поддерживать движение застоявшегося воздуха и удалять углекислый газ из герметичных помещений без электричества.</Strata_PassiveLifeSupport.description>
+
+  <Strata_DeepInfrastructure.label>глубинная инфраструктура</Strata_DeepInfrastructure.label>
+  <Strata_DeepInfrastructure.description>Газовые шлюзы, рудные бадьи, дренажные насосы и безопасные электрические шахтёрские лампы — промышленный набор для жизни и работы глубоко под поверхностью.</Strata_DeepInfrastructure.description>
+
+  <Strata_DeepAgriculture.label>глубинное земледелие</Strata_DeepAgriculture.label>
+  <Strata_DeepAgriculture.description>Тёмные грибные фермы, выращивающие съедобные грибы в герметичных подземных помещениях, обменивая немного углекислого газа на пригодный для дыхания кислород.</Strata_DeepAgriculture.description>
+
+  <Strata_MineAtmosphere.label>шахтная атмосфера</Strata_MineAtmosphere.label>
+  <Strata_MineAtmosphere.description>Снаряжение для ядовитых газов глубин: метановые факелы для лёгкого рудничного газа, скрубберы чёрного газа, восстанавливающие кислород после пожаров, споровые фильтры для грибной взвеси и паровые конденсаторы для геотермальных камер.</Strata_MineAtmosphere.description>
+
+</LanguageData>
