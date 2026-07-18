@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Пещерный гриб ============ -->
+  <Strata_Fungus.label>пещерный гриб</Strata_Fungus.label>
+  <Strata_Fungus.description>Съедобные грибы, выращенные в тёмных подземных фермах. Пресные, но сытные — основной продукт глубоких колоний, не имеющих доступа к солнечному свету.</Strata_Fungus.description>
+
+  <!-- ============ Известь ============ -->
+  <Strata_Lime.label>известь</Strata_Lime.label>
+  <Strata_Lime.description>Известняк, измельчённый для известковых скрубберов — поглощает углекислый газ из спёртого шахтного воздуха, постепенно расходуя заряд.</Strata_Lime.description>
+
+</LanguageData>

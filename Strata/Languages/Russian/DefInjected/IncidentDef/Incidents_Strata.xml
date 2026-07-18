@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Подземелье: обвал ============ -->
+  <Strata_CaveIn.label>обвал</Strata_CaveIn.label>
+  <Strata_CaveIn.letterLabel>Обвал</Strata_CaveIn.letterLabel>
+  <Strata_CaveIn.letterText>Массивная плита каменного потолка обрушилась, обвалившись на уровень ниже. Укрепите широкие выработки колоннами или опорными стенами, пока не обрушилась вся кровля.</Strata_CaveIn.letterText>
+
+  <!-- ============ Подземелье: газовый карман ============ -->
+  <Strata_GasPocket.label>газовый карман</Strata_GasPocket.label>
+  <Strata_GasPocket.letterLabel>Прорыв газового кармана</Strata_GasPocket.letterLabel>
+  <Strata_GasPocket.letterText>Копка вскрыла трещину и прорвала карман зловонного глубинного газа. Он заполняет ближайшие выработки — ядовит для дыхания и взрывоопасен, если скапливается у открытого огня. Вентилируйте вентиляторами и жалюзи, запечатайте зону или уведите колонистов; потушите все факелы на его пути.</Strata_GasPocket.letterText>
+
+  <!-- ============ Подземелье: глубокая жила (положительное) ============ -->
+  <Strata_DeepVein.label>глубокая жила</Strata_DeepVein.label>
+  <Strata_DeepVein.letterLabel>Глубокая жила</Strata_DeepVein.letterLabel>
+  <Strata_DeepVein.letterText>Ваши шахтёры вскрыли богатую жилу руды, проходящую через породу этого уровня. Пошлите кого-нибудь, чтобы выкопать её.</Strata_DeepVein.letterText>
+
+  <!-- ============ Подземелье: глубокий рейд (нашествие насекомых) ============ -->
+  <Strata_DeepRaid.label>глубокий рейд</Strata_DeepRaid.label>
+  <Strata_DeepRaid.letterLabel>Глубокий рейд</Strata_DeepRaid.letterLabel>
+  <Strata_DeepRaid.letterText>Скала шептала несколько дней — царапанье, жевание, приближение. Теперь пол этого уровня разверзается, и насекомые хлынут из глубин. Небо не достанет вас здесь, внизу, но тьма сможет.</Strata_DeepRaid.letterText>
+
+  <!-- ============ Поверхность: подсказка старателя (положительное) ============ -->
+  <Strata_ProspectorTip.label>подсказка старателя</Strata_ProspectorTip.label>
+  <Strata_ProspectorTip.letterLabel>Подсказка старателя</Strata_ProspectorTip.letterLabel>
+  <Strata_ProspectorTip.letterText>Бродячий старатель изучил породу вокруг вашей колонии и отметил богатую жилу, скрытую в скале, перед тем как уйти. Она ваша — и знак того, что может открыть более глубокая копка.</Strata_ProspectorTip.letterText>
+
+  <!-- ============ Поверхность: подземный толчок ============ -->
+  <Strata_Tremor.label>подземный толчок</Strata_Tremor.label>
+  <Strata_Tremor.letterLabel>Подземный толчок</Strata_Tremor.letterLabel>
+  <Strata_Tremor.letterText>Глубокий толчок прокатился по земле, сотрясая колонию и растрескивая некоторые из ваших построек. Порода внизу никогда не бывает совсем неподвижна.</Strata_Tremor.letterText>
+
+  <!-- ============ Подземелье: газовая огненная буря ============ -->
+  <Strata_GasFirestorm.label>газовая огненная буря</Strata_GasFirestorm.label>
+  <Strata_GasFirestorm.letterLabel>Газовая огненная буря</Strata_GasFirestorm.letterLabel>
+  <Strata_GasFirestorm.letterText>Карман глубинного газа воспламенился под землёй — от открытого пламени или искры от толчка — и огонь распространяется по выработкам. Вентилируйте, что можете, и держите колонистов подальше, пока газ не выгорит.</Strata_GasFirestorm.letterText>
+
+  <!-- ============ Подземелье: прорыв в пещеру ============ -->
+  <Strata_CaveBreakthrough.label>прорыв в пещеру</Strata_CaveBreakthrough.label>
+  <Strata_CaveBreakthrough.letterLabel>Прорыв в пещеру</Strata_CaveBreakthrough.letterLabel>
+  <Strata_CaveBreakthrough.letterText>Выемка вскрыла скрытую боковую пещеру в скале. В ней могут быть грибы, ядовитый газ или остатки того, кто копал здесь до вас.</Strata_CaveBreakthrough.letterText>
+
+  <!-- ============ Подземелье: потерянные шахтёры ============ -->
+  <Strata_LostMiners.label>потерянные шахтёры</Strata_LostMiners.label>
+  <Strata_LostMiners.letterLabel>Потерянные шахтёры</Strata_LostMiners.letterLabel>
+  <Strata_LostMiners.letterText>Небольшая группа шахтёров забрела в ваши выработки из какого-то другого туннеля. Они могут быть благодарны за спасение — или достаточно отчаянны, чтобы сражаться.</Strata_LostMiners.letterText>
+
+  <!-- ============ Поверхность: глубокая осада ============ -->
+  <Strata_DeepSiege.label>глубокая осада</Strata_DeepSiege.label>
+  <Strata_DeepSiege.letterLabel>Глубокая осада</Strata_DeepSiege.letterLabel>
+  <Strata_DeepSiege.letterText>Рейдеры пришли за вашей шахтой. Они атакуют колонию и взламывают входы в лестницы — ожидайте, что они последуют за вашими колонистами под землю, если шахты останутся открытыми.</Strata_DeepSiege.letterText>
+
+  <!-- ============ Поверхность: копка старателя (ранняя) ============ -->
+  <Strata_ProspectorDig.label>копка старателя</Strata_ProspectorDig.label>
+  <Strata_ProspectorDig.letterLabel>Копка старателя</Strata_ProspectorDig.letterLabel>
+  <Strata_ProspectorDig.letterText>Ваши колонисты отметили многообещающий рудный карман в скале — хорошая первая добыча для колонии, только начинающей копать вглубь.</Strata_ProspectorDig.letterText>
+
+  <!-- ============ Мир: обнаружена затонувшая руина ============ -->
+  <Strata_SunkenRuinDiscovered.label>затонувшая руина</Strata_SunkenRuinDiscovered.label>
+  <Strata_SunkenRuinDiscovered.letterLabel>Обнаружена затонувшая руина</Strata_SunkenRuinDiscovered.letterLabel>
+  <Strata_SunkenRuinDiscovered.letterText>Проходящий торговец рассказывает о руине, чей пол обрушился на древнюю лестничную площадку, недалеко от вашей колонии. Говорят, что уровни под ней кишат насекомыми — и хранят сокровища тех, кто построил это место.\n\nЛестница уходит в лабиринт под самим местом. Возьмите бойцов; глубины не будут пусты. Место будет забыто примерно через двадцать дней.</Strata_SunkenRuinDiscovered.letterText>
+
+  <!-- ============ Подземелье: просачивание воды ============ -->
+  <Strata_FloodSeep.label>просачивание воды</Strata_FloodSeep.label>
+  <Strata_FloodSeep.letterLabel>Просачивание воды</Strata_FloodSeep.letterLabel>
+  <Strata_FloodSeep.letterText>Грунтовые воды прорвались через пол этого уровня, затопив участок выработок мелкой водой. Дренажные насосы откачают её — или ведите копку в обход, пока она не распространилась.</Strata_FloodSeep.letterText>
+
+  <!-- ============ Мир: обнаружена заброшенная шахта ============ -->
+  <Strata_CollapsedMineDiscovered.label>заброшенная шахта</Strata_CollapsedMineDiscovered.label>
+  <Strata_CollapsedMineDiscovered.letterLabel>Обнаружена заброшенная шахта</Strata_CollapsedMineDiscovered.letterLabel>
+  <Strata_CollapsedMineDiscovered.letterText>Старатель сообщает о старом входе в шахту, чья деревянная крепь сгнила, но штольня всё ещё открыта, недалеко от вашей колонии. Говорят, что туннели внизу кишат падальщиками и насекомыми — а в брошенных вагонетках всё ещё есть добыча.\n\nШахта уходит в выработки под самим местом. Возьмите бойцов и свет; холодная тьма не будет пуста. Место будет забыто примерно через двадцать дней.</Strata_CollapsedMineDiscovered.letterText>
+
+  <!-- ============ Мир: обнаружено запечатанное хранилище ============ -->
+  <Strata_SealedVaultDiscovered.label>запечатанное хранилище</Strata_SealedVaultDiscovered.label>
+  <Strata_SealedVaultDiscovered.letterLabel>Обнаружено запечатанное хранилище</Strata_SealedVaultDiscovered.letterLabel>
+  <Strata_SealedVaultDiscovered.letterText>Изыскатели нашли наземный люк древнего хранилища, чьи печати разрушены временем и морозом. Камеры внизу огромны и холодны, и что-то всё ещё охраняет сокровища внутри — дремлющие машины или насекомые, которые поселились там после отключения питания.\n\nЛюк открывается в промёрзшие уровни хранилища под местом. Возьмите тяжёлое оружие и тёплую экипировку. Место будет забыто примерно через двадцать дней.</Strata_SealedVaultDiscovered.letterText>
+
+  <!-- ============ Мир: обнаружена геотермальная трещина ============ -->
+  <Strata_GeothermalVentDiscovered.label>геотермальная трещина</Strata_GeothermalVentDiscovered.label>
+  <Strata_GeothermalVentDiscovered.letterLabel>Обнаружена геотермальная трещина</Strata_GeothermalVentDiscovered.letterLabel>
+  <Strata_GeothermalVentDiscovered.letterText>Недалеко от вашей колонии открылась парящая трещина в земле, выпускающая горячий воздух из геотермальных выработок внизу. Насекомые гнездятся в горячих туннелях, а паровые гейзеры бурлят в камерах, заполненных ядовитым газом — опасная земля, но жар намекает на богатую добычу.\n\nГрубые ступени рядом с трещиной спускаются в карман под местом. Возьмите бойцов и средства вентиляции; глубины будут горячи и враждебны. Место будет забыто примерно через двадцать дней.</Strata_GeothermalVentDiscovered.letterText>
+
+  <!-- ============ Подземелье: потерянные шахтёры (аномалия) ============ -->
+  <Strata_LostMinersAnomaly.label>потерянные шахтёры</Strata_LostMinersAnomaly.label>
+  <Strata_LostMinersAnomaly.letterLabel>Потерянные шахтёры</Strata_LostMinersAnomaly.letterLabel>
+  <Strata_LostMinersAnomaly.letterText>Радиостатика из запечатанного туннеля глубоко внизу — шахтёрская бригада, которая так и не вернулась. Что-то в глубинах двигалось там, где не должно быть колонистов.</Strata_LostMinersAnomaly.letterText>
+
+</LanguageData>

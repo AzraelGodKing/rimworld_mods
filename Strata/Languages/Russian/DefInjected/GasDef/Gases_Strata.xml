@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Дым ============ -->
+  <Strata_Smoke.label>дым</Strata_Smoke.label>
+  <Strata_Smoke.overlayLabel>дым</Strata_Smoke.overlayLabel>
+  <Strata_Smoke.description>Выхлопные газы от печей и открытого огня. Поднимается через незапечатанные шахты и душит всех, кто задерживается в нём.</Strata_Smoke.description>
+
+  <!-- ============ Глубинный газ ============ -->
+  <Strata_DeepGas.label>глубинный газ</Strata_DeepGas.label>
+  <Strata_DeepGas.overlayLabel>глубинный газ</Strata_DeepGas.overlayLabel>
+  <Strata_DeepGas.description>Зловонный горючий газ, запертый в скале. Скапливается там, где просачивается, отравляет всех, кто им дышит, и взрывается при контакте с открытым пламенем — но перекрытый вентиль может перекачивать его в топливо.</Strata_DeepGas.description>
+
+  <!-- ============ Кислород ============ -->
+  <Strata_Oxygen.label>кислород</Strata_Oxygen.label>
+  <Strata_Oxygen.overlayLabel>O₂</Strata_Oxygen.overlayLabel>
+  <Strata_Oxygen.description>Пригодный для дыхания воздух в вырытых уровнях. Поднимается через незапечатанные шахты; без вентиляции колоники постепенно расходуют его.</Strata_Oxygen.description>
+
+  <!-- ============ Углекислый газ ============ -->
+  <Strata_CarbonDioxide.label>углекислый газ</Strata_CarbonDioxide.label>
+  <Strata_CarbonDioxide.overlayLabel>CO₂</Strata_CarbonDioxide.overlayLabel>
+  <Strata_CarbonDioxide.description>Выдыхаемый воздух и отходы горения. Скапливается на полу, опускается по лестницам на более глубокие уровни и становится токсичным в высокой концентрации.</Strata_CarbonDioxide.description>
+
+  <!-- ============ Метан ============ -->
+  <Strata_Methane.label>метан</Strata_Methane.label>
+  <Strata_Methane.overlayLabel>CH₄</Strata_Methane.overlayLabel>
+  <Strata_Methane.description>Лёгкий рудничный газ, скапливающийся под потолками камер и на лестничных площадках. Слабо токсичен, но воспламеняется при меньшей плотности, чем глубинный газ — электрическое освещение безопаснее для работы там, где он просачивается.</Strata_Methane.description>
+
+  <!-- ============ Чёрный рудничный газ ============ -->
+  <Strata_BlackDamp.label>чёрный рудничный газ</Strata_BlackDamp.label>
+  <Strata_BlackDamp.overlayLabel>чёрный рудничный газ</Strata_BlackDamp.overlayLabel>
+  <Strata_BlackDamp.description>Застойный тяжёлый воздух, остающийся после пожаров и газовых взрывов. Скапливается в низинах, бесшумно вытесняет кислород из помещения и вызывает удушье без предупреждения, как у глубинного газа.</Strata_BlackDamp.description>
+
+  <!-- ============ Споры ============ -->
+  <Strata_Spores.label>грибковые споры</Strata_Spores.label>
+  <Strata_Spores.overlayLabel>споры</Strata_Spores.overlayLabel>
+  <Strata_Spores.description>Воздушные грибковые споры из глубоких зарослей и грибных ферм. Забивают лёгкие и портят настроение; тканевые фильтры и скрубберы очищают их.</Strata_Spores.description>
+
+  <!-- ============ Пар ============ -->
+  <Strata_Steam.label>пар</Strata_Steam.label>
+  <Strata_Steam.overlayLabel>пар</Strata_Steam.overlayLabel>
+  <Strata_Steam.description>Горячий пар из геотермальных трещин и гейзеров. Поднимается через шахты, обжигает в густых облаках и рассеивается конденсаторами или открытой вентиляцией.</Strata_Steam.description>
+
+</LanguageData>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Входы в квестовые локации ============ -->
+
+  <Strata_MineStairsDown.label>обветшалый вход в шахту</Strata_MineStairsDown.label>
+  <Strata_MineStairsDown.description>Деревянный каркас шахты, уходящей вглубь земли. Крепь сгнила, рельсы внизу проржавели, но штольня всё ещё дышит холодным влажным воздухом из глубоких выработок.</Strata_MineStairsDown.description>
+
+  <Strata_VaultStairsDown.label>древняя дверь хранилища</Strata_VaultStairsDown.label>
+  <Strata_VaultStairsDown.description>Массивный люк хранилища, вделанный в разбитый камень, его печати разрушены временем. Холодный воздух и слабый гул старых машин поднимаются из камеры внизу.</Strata_VaultStairsDown.description>
+
+  <Strata_VentStairsDown.label>парная трещина</Strata_VentStairsDown.label>
+  <Strata_VentStairsDown.description>Зигзагообразная трещина в земле, выпускающая обжигающий пар из геотермального кармана внизу. Рядом с трещиной в скале вырезаны грубые ступени.</Strata_VentStairsDown.description>
+
+</LanguageData>

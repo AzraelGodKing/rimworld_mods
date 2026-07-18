@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Лестница гравикорабля (вниз, в подпалубу) ============ -->
+  <Strata_GravshipStairsDown.label>лестница гравикорабля</Strata_GravshipStairsDown.label>
+  <Strata_GravshipStairsDown.description>Компактная шахта, прорезанная через палубу гравикорабля в уровень Strata внизу. Устанавливается только на подконструкции гравикорабля. Связанные этажи путешествуют с кораблём при взлёте и переподключаются при посадке.
+
+Требует исследования "Копание вниз". Вторая лестница гравикорабля соединяется с той же палубой внизу.</Strata_GravshipStairsDown.description>
+
+  <!-- ============ Лестница гравикорабля (вверх, на палубу) ============ -->
+  <Strata_GravshipStairsUp.label>лестница гравикорабля вверх</Strata_GravshipStairsUp.label>
+  <Strata_GravshipStairsUp.description>Посадочная площадка под лестницей гравикорабля — поднимитесь обратно на палубу корабля. Не подлежит разборке.</Strata_GravshipStairsUp.description>
+
+  <!-- ============ Башенная лестница гравикорабля (вверх, на крышную террасу) ============ -->
+  <Strata_GravshipStairsBuildUp.label>башенная лестница гравикорабля</Strata_GravshipStairsBuildUp.label>
+  <Strata_GravshipStairsBuildUp.description>Шахта с палубы гравикорабля на открытую крышную террасу Strata наверху. Устанавливается только на подконструкции гравикорабля. Связанные этажи путешествуют с кораблём.
+
+Строимая площадь на верхней палубе соответствует подконструкции гравикорабля на палубе внизу (плюс площадь у шахты). Расширяйте подконструкцию на корабле, чтобы увеличить крышную террасу. Требует исследования "Строительство вверх".</Strata_GravshipStairsBuildUp.description>
+
+  <!-- ============ Посадочная площадка башенной лестницы гравикорабля ============ -->
+  <Strata_GravshipBuildUpLanding.label>посадочная площадка башни гравикорабля</Strata_GravshipBuildUpLanding.label>
+  <Strata_GravshipBuildUpLanding.description>Верхняя посадочная площадка башенной лестницы гравикорабля — спуститесь обратно на корабль. Не подлежит разборке.</Strata_GravshipBuildUpLanding.description>
+
+</LanguageData>

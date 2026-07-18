@@ -4,15 +4,12 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ## [Unreleased]
 
-### Fixed
-- Favorite-food Harmony patch updated for RimWorld 1.6 (`FoodUtility.ThoughtsFromIngesting` now returns `List<ThoughtFromIngesting>` instead of `List<ThoughtDef>`), stopping the Homesteader static-constructor crash.
-- Wellspring research nodes use non-negative `researchViewY` (negative coords are treated as unset by the game).
-- Lard no longer has Nutrition without ingestible properties; apple juice sets `socialPropernessMatters` to avoid warden prison-cell food loops.
-
-### Changed
-- **Kats Effect Super Chat** is a flat **27 silver** (was 27–81). Pay in full or the colony gets nothing taken — unpaid manifests hostile **Kats** (SCP-27272727) at the map edge on an assault lord. Prefers Wolfein race/xenotype when that mod is loaded; otherwise any humanlike pawn (villager/colonist fallback) with orange hair named Kats.
-
 ### Added
+- **Polyarmory trait** — pawns with it treat their polycule (lovers and polyarmory metamours) as fine bedmates: no SharedBed jealousy, and `WillingToShareBed` allows multi-person / Polyamory Beds setups.
+- **Tastes tab** on humanlike pawns — lists **5 favorite foods** and allergies. Allergies stay hidden as “Unknown sensitivity” until discovery.
+- **Rare allergies** — roll heavily favors **None**; otherwise Big-9 style food (milk, eggs, peanuts, tree nuts, wheat, soy, fish, shellfish, sesame) or environmental (pollen/hay fever, dust mites, pet dander, mold). Soft-medium flare (mood −10 + short hediff); food AI avoids discovered food allergens. Never lethal.
+- Mod settings (DevMode): **Reveal allergies** — show names on the Tastes tab before discovery.
+- Tastes tab **DEV: Reroll tastes** only appears when God mode is on.
 - **Kats Effect** — rare Misc storyteller event that only fires when a finished 27 statue/monument is on the home map. Hybrid anomalous-broadcast letter (with a short Foundation addendum), temporary heat dome (~+10°C), short brain-rot hediff, 27-silver Super Chat (or hostile Kats if unpaid), and a personal Kats directive mood (+12, ~1 day). Min refire 27 days.
 - `Languages/English/Keyed/Homesteader.xml` — all C# player strings (wash tub, passive cooling, favorite food inspect, Kats Effect letter body) with `.Translate()` wiring.
 - `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
@@ -25,6 +22,9 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - Soap can render with lard or tallow as well as butter. Preserves shelf accepts sausage, canned goods, juice, and rendered fats.
 
 ### Changed
+- Favorites expanded from 1 to **5** per pawn (legacy single favorite migrates and fills remaining slots).
+- **Docs site redo** — Homesteader overview and item catalog rebuilt with a dedicated orchard-dusk layout (`docs/homesteader.css`): full-bleed hearth hero, lean feature sections, catalog for the full item list. Shared hub `style.css` left alone for other mods. Site `docs/img` assets for the Homesteader page refreshed from current Homesteader/Wellspring textures (south-facing buildings where available).
+- **Kats Effect Super Chat** is a flat **27 silver** (was 27–81). Pay in full or the colony gets nothing taken — unpaid manifests hostile **Kats** (SCP-27272727) at the map edge on an assault lord. Prefers Wolfein race/xenotype when that mod is loaded; otherwise any humanlike pawn (villager/colonist fallback) with orange hair named Kats.
 - Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
 - Organized Homesteader sources: C# merged into `PassiveCooling.cs`, `WashEffects.cs`, and `FavoriteFood.cs`; expansion XML renamed into domain files (livestock/soil/textiles/pantry/yard-and-pantry); hediffs/thoughts consolidated; composted soil lives under homestead terrain.
 - Passive coolers (root cellar / icehouse / springhouse) now apply the **coolest** overlapping ceiling to a cell instead of an arbitrary cooler’s temp.
@@ -32,6 +32,9 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Merged Wellspring into Homesteader.** Wells, rain barrels, cisterns, solar stills, water towers, irrigated soil/planters, boiled water, mud bricks, and clean bandages now ship with Homesteader. Research (wellcraft / irrigation / waterworks) lives on the Homesteader tab. Hand-dug and deep wells are on the homestead cooking workgiver. `Wellspring_*` defNames are preserved for save continuity — disable any old standalone Wellspring mod.
 
 ### Fixed
+- Favorite-food Harmony patch updated for RimWorld 1.6 (`FoodUtility.ThoughtsFromIngesting` now returns `List<ThoughtFromIngesting>` instead of `List<ThoughtDef>`), stopping the Homesteader static-constructor crash.
+- Wellspring research nodes use non-negative `researchViewY` (negative coords are treated as unset by the game).
+- Lard no longer has Nutrition without ingestible properties; apple juice sets `socialPropernessMatters` to avoid warden prison-cell food loops.
 - Pawns can work homestead production stations again (jam cauldron, hearth, drying rack, mill, brewery, etc.). Stations had bills and recipes but no `WorkGiverDef` with `fixedBillGiverDefs`, so `WorkGiver_DoBill` never considered them — colonists could build and set "do forever" bills but would not interact. Note: wood-fired stations (jam cauldron, hearth, smokehouse) still need fuel before work starts.
 - **Sugar, butter, and cream are used in recipes again.** Jam needs sugar; bread and flapjacks need butter; cheese is pressed from cream + rock salt; butter is churned from cream (skim milk first); porridge and cider use sugar. Cider no longer accepts hay or fungus.
 - **Rock salt** now trains Cooking (matches the Cooking workgiver) instead of Construction.
