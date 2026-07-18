@@ -198,6 +198,40 @@ namespace Strata
         }
     }
 
+    // SleepRelay scanned every linked floor and found no unowned/reachable bed.
+    public class Alert_SleepBedNotFound : Alert
+    {
+        private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
+
+        public Alert_SleepBedNotFound()
+        {
+            defaultLabel = "Strata_Alert_SleepBedNotFound_Label".Translate();
+            defaultExplanation = "Strata_Alert_SleepBedNotFound_Explanation".Translate();
+            defaultPriority = AlertPriority.High;
+        }
+
+        public override AlertReport GetReport()
+        {
+            if (StrataMod.Settings != null && !StrataMod.Settings.restRelayEnabled)
+            {
+                cachedReport = false;
+                return cachedReport;
+            }
+
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
+
+            targets.Clear();
+            SleepRelay.CollectBedNotFoundCulprits(targets);
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
+        }
+    }
+
     // A mine canary sick or dead from bad air — warns before colonists show hediffs.
     public class Alert_CanaryWarning : Alert
     {

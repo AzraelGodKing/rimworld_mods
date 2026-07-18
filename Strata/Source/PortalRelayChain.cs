@@ -51,6 +51,13 @@ namespace Strata
             return pawn != null && intents.ContainsKey(pawn.thingIDNumber);
         }
 
+        public static bool HasIntent(Pawn pawn, RelayPurpose purpose)
+        {
+            return pawn != null
+                && intents.TryGetValue(pawn.thingIDNumber, out Intent intent)
+                && intent.purpose == purpose;
+        }
+
         public static void NotifyPortalArrival(Pawn pawn)
         {
             if (pawn == null || !intents.ContainsKey(pawn.thingIDNumber))
@@ -140,58 +147,30 @@ namespace Strata
 
         private static void FinishRest(Pawn pawn, int preferredBedId)
         {
-            Building_Bed bed = ResolveBed(pawn, preferredBedId);
+            Building_Bed bed = ResolveRestArrivalBed(pawn, preferredBedId);
             if (bed == null || !pawn.CanReach(bed, PathEndMode.OnCell, Danger.Deadly))
             {
                 return;
             }
 
-            if (bed.CompAssignableToPawn != null
-                && !bed.OwnersForReading.Contains(pawn)
-                && bed.CompAssignableToPawn.HasFreeSlot)
-            {
-                pawn.ownership?.ClaimBedIfNonMedical(bed);
-            }
-
+            // Never claim a different bed on arrival — ownership was decided
+            // before the commute (owned bed or homeless claim).
             pawn.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, bed), JobCondition.InterruptForced);
         }
 
-        private static Building_Bed ResolveBed(Pawn pawn, int preferredBedId)
+        private static Building_Bed ResolveRestArrivalBed(Pawn pawn, int preferredBedId)
         {
-            Building_Bed preferred = FindBedById(pawn.Map, preferredBedId);
-            if (preferred != null)
-            {
-                return preferred;
-            }
-
+            // Owned bed on this map first — never land in a random double.
             Building_Bed owned = pawn.ownership?.OwnedBed;
             if (owned != null && owned.Spawned && owned.Map == pawn.Map)
             {
                 return owned;
             }
 
-            Building_Bed found = RestUtility.FindBedFor(pawn);
-            if (found != null)
+            Building_Bed preferred = FindBedById(pawn.Map, preferredBedId);
+            if (preferred != null)
             {
-                return found;
-            }
-
-            foreach (Thing thing in pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
-            {
-                if (thing is not Building_Bed bed
-                    || bed.Faction != Faction.OfPlayer
-                    || !bed.def.building.bed_humanlike
-                    || bed.Medical
-                    || bed.ForPrisoners
-                    || bed.IsForbidden(pawn)
-                    || bed.CompAssignableToPawn == null
-                    || !bed.CompAssignableToPawn.HasFreeSlot
-                    || !pawn.CanReach(bed, PathEndMode.OnCell, Danger.Deadly))
-                {
-                    continue;
-                }
-
-                return bed;
+                return preferred;
             }
 
             return null;

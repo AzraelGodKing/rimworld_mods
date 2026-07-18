@@ -113,6 +113,8 @@
   <Strata_Alert_SealedColonists_Explanation>Colonists are on a linked level whose every exit shaft is sealed. They cannot return until a stairwell or elevator is unsealed.</Strata_Alert_SealedColonists_Explanation>
   <Strata_Alert_Canary_Label>Canary warning</Strata_Alert_Canary_Label>
   <Strata_Alert_Canary_Explanation>A mine canary is distressed or dead from bad air in a cage. Canaries succumb sooner than colonists — ventilate the room or evacuate before people start coughing, suffocating, or worse.</Strata_Alert_Canary_Explanation>
+  <Strata_Alert_SleepBedNotFound_Label>Bed not found</Strata_Alert_SleepBedNotFound_Label>
+  <Strata_Alert_SleepBedNotFound_Explanation>A colonist needs to sleep, but Strata found no free bed on their floor or any linked level (ground, above, or below). Build or free a colonist bed, or assign one manually.</Strata_Alert_SleepBedNotFound_Explanation>
 
   <!-- Levels tab / roles -->
   <Strata_RenameLevelPrompt>Rename this level:</Strata_RenameLevelPrompt>

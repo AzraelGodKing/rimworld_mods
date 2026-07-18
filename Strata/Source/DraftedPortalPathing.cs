@@ -25,6 +25,9 @@ namespace Strata
         {
             GotoCell,
             LayDownBed,
+            // After bunker bypass, enter the (previously unreachable) stair to
+            // the bed's map — G1 → B1 → G1 near A1 stair → A1 → bed.
+            EnterPortalToBedMap,
         }
 
         private class Route
@@ -35,6 +38,8 @@ namespace Strata
             public Stage stage;
             public FinishMode finish;
             public int bedId;
+            public int destPortalId; // stair toward bed map (EnterPortalToBedMap)
+            public int bedMapId;
             public bool requireDrafted;
         }
 
@@ -54,6 +59,86 @@ namespace Strata
         public static bool HasDetour(Pawn pawn, IntVec3 destCell)
         {
             return TryFindDetour(pawn, destCell, out _, out _);
+        }
+
+        public static bool HasActiveRoute(Pawn pawn)
+        {
+            return pawn != null && routes.ContainsKey(pawn.thingIDNumber);
+        }
+
+        // Bed on another floor, but the stair to that floor is sealed off on this
+        // map (closed room). Detour underground to a return stair that can reach
+        // the upstairs entrance, then EnterPortal + PortalRelayChain to the bed.
+        public static Job TryMakeCrossMapRestDetourJob(Pawn pawn, Building_Bed bed)
+        {
+            if (pawn == null || bed == null || !bed.Spawned || bed.Map == pawn.Map
+                || !StrataPawnUtility.CanUseLevelPortals(pawn) || pawn.Drafted)
+            {
+                return null;
+            }
+
+            List<MapPortal> stairs = LevelGraph.FirstStepCandidates(pawn.Map, bed.Map);
+            if (stairs == null || stairs.Count == 0)
+            {
+                return null;
+            }
+
+            MapPortal bestStair = null;
+            MapPortal bestExit = null;
+            MapPortal bestReturn = null;
+            float bestScore = float.MaxValue;
+
+            for (int i = 0; i < stairs.Count; i++)
+            {
+                MapPortal stair = stairs[i];
+                if (stair == null || !stair.Spawned || stair.Map != pawn.Map
+                    || StrataPortalUtility.IsSealedPortal(stair)
+                    || !stair.IsEnterable(out _))
+                {
+                    continue;
+                }
+
+                // Reachable stairs are handled by TryRelayToMap.
+                if (pawn.CanReach(stair, PathEndMode.Touch, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                if (!TryFindDetour(pawn, stair.Position, out MapPortal exit, out MapPortal ret))
+                {
+                    continue;
+                }
+
+                float score = pawn.Position.DistanceTo(exit.Position)
+                    + ret.Position.DistanceTo(stair.Position);
+                if (score < bestScore)
+                {
+                    bestScore = score;
+                    bestStair = stair;
+                    bestExit = exit;
+                    bestReturn = ret;
+                }
+            }
+
+            if (bestStair == null || bestExit == null || bestReturn == null)
+            {
+                return null;
+            }
+
+            routes[pawn.thingIDNumber] = new Route
+            {
+                destMap = pawn.Map,
+                destCell = bestStair.Position,
+                returnPortalId = bestReturn.thingIDNumber,
+                stage = Stage.EnterFirst,
+                finish = FinishMode.EnterPortalToBedMap,
+                bedId = bed.thingIDNumber,
+                destPortalId = bestStair.thingIDNumber,
+                bedMapId = bed.Map.uniqueID,
+                requireDrafted = false,
+            };
+
+            return MakeForcedJob(JobDefOf.EnterPortal, bestExit, pawn);
         }
 
         // Float-menu Goto snaps unreachable clicks to the nearest walkable cell
@@ -234,6 +319,30 @@ namespace Strata
                     return;
                 }
 
+                if (route.finish == FinishMode.EnterPortalToBedMap)
+                {
+                    MapPortal stair = FindPortalById(pawn.Map, route.destPortalId);
+                    Map bedMap = FindMapById(route.bedMapId);
+                    Building_Bed bed = bedMap != null
+                        ? FindBedById(bedMap, route.bedId)
+                        : null;
+                    bed ??= pawn.ownership?.OwnedBed;
+
+                    if (stair == null || !stair.Spawned || !stair.IsEnterable(out _)
+                        || StrataPortalUtility.IsSealedPortal(stair)
+                        || !pawn.CanReach(stair, PathEndMode.Touch, Danger.Deadly)
+                        || bedMap == null || bed == null)
+                    {
+                        return;
+                    }
+
+                    PortalRelayChain.Mark(pawn, bedMap, RelayPurpose.Rest, bed);
+                    pawn.jobs.StartJob(
+                        MakeForcedJob(JobDefOf.EnterPortal, stair, pawn),
+                        JobCondition.InterruptForced);
+                    return;
+                }
+
                 if (!ReachabilityUtility.CanReach(pawn, route.destCell, PathEndMode.OnCell, Danger.Deadly))
                 {
                     return;
@@ -242,6 +351,20 @@ namespace Strata
                 Job go = MakeForcedJob(JobDefOf.Goto, route.destCell, pawn);
                 pawn.jobs.StartJob(go, JobCondition.InterruptForced);
             }
+        }
+
+        private static Map FindMapById(int uniqueId)
+        {
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (maps[i].uniqueID == uniqueId)
+                {
+                    return maps[i];
+                }
+            }
+
+            return null;
         }
 
         private static Building_Bed FindBedById(Map map, int thingId)
