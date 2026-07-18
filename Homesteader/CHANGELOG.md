@@ -4,8 +4,16 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ## [Unreleased]
 
+### Fixed
+- Favorite-food Harmony patch updated for RimWorld 1.6 (`FoodUtility.ThoughtsFromIngesting` now returns `List<ThoughtFromIngesting>` instead of `List<ThoughtDef>`), stopping the Homesteader static-constructor crash.
+- Wellspring research nodes use non-negative `researchViewY` (negative coords are treated as unset by the game).
+- Lard no longer has Nutrition without ingestible properties; apple juice sets `socialPropernessMatters` to avoid warden prison-cell food loops.
+
+### Changed
+- **Kats Effect Super Chat** is a flat **27 silver** (was 27–81). Pay in full or the colony gets nothing taken — unpaid manifests hostile **Kats** (SCP-27272727) at the map edge on an assault lord. Prefers Wolfein race/xenotype when that mod is loaded; otherwise any humanlike pawn (villager/colonist fallback) with orange hair named Kats.
+
 ### Added
-- **Kats Effect** — rare Misc storyteller event that only fires when a finished 27 statue/monument is on the home map. Hybrid anomalous-broadcast letter (with a short Foundation addendum), temporary heat dome (~+10°C), short brain-rot hediff, small silver Super Chat drain (27–81), and a personal Kats directive mood (+12, ~1 day). Min refire 27 days.
+- **Kats Effect** — rare Misc storyteller event that only fires when a finished 27 statue/monument is on the home map. Hybrid anomalous-broadcast letter (with a short Foundation addendum), temporary heat dome (~+10°C), short brain-rot hediff, 27-silver Super Chat (or hostile Kats if unpaid), and a personal Kats directive mood (+12, ~1 day). Min refire 27 days.
 - `Languages/English/Keyed/Homesteader.xml` — all C# player strings (wash tub, passive cooling, favorite food inspect, Kats Effect letter body) with `.Translate()` wiring.
 - `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
 - **Homestead livestock:** chicken coop (periodic eggs) and goat pen (periodic milk); animal mash recipe at the hearth (barley/pumpkin/hay).

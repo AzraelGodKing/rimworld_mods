@@ -16,7 +16,7 @@
     <durationDays>0.75~1.25</durationDays>
     <letterDef>NeutralEvent</letterDef>
     <letterLabel>Kats Effect</letterLabel>
-    <letterText>An anomalous broadcast has locked onto your colony's 27 monument frequency. A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — "brain rot," they call it.\n\nColony accounts show silver diverted as a "Super Chat."\n\n---\nFoundation addendum // Item # SCP-27272727 // Keter (Adorable)\nContainment note: hydrate / medicate / masticate. Do not look away from the number.</letterText>
+    <letterText>An anomalous broadcast has locked onto your colony's 27 monument frequency. A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — "brain rot," they call it.\n\nPay the 27-silver Super Chat, or SCP-27272727 may manifest as a hostile pawn named Kats (Wolfein race preferred when available).\n\n---\nFoundation addendum // Item # SCP-27272727 // Keter (Adorable)\nContainment note: hydrate / medicate / masticate. Do not look away from the number.</letterText>
   </IncidentDef>
 
 </Defs>
