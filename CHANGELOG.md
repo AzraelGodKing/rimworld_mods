@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Repo** — `*.dll` gitignored; CI builds still upload assembly artifacts (no longer commits DLLs back to the branch).
 - **Homesteader** — Polyarmory trait (polycule bed-sharing); Tastes tab + rare allergies; docs site redo; Kats Effect Super Chat / hostile Kats; 1.6 favorite-food Harmony fix. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
 - **Strata** — Geological Landforms plant-growth patch no longer destructive; Russian community translation; outdoor vent / VTE / Misc. Robots soft-compat; gas-system defaults/perf. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Stormproof** — research tab XML entity fix (`Storm & grid`); Languages/English scaffolding; load shedder, grid monitor, ion storm, and related buildings. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
