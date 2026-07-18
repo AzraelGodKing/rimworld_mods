@@ -18,17 +18,17 @@ namespace Strata
             reason = null;
             if (landing == null || !landing.Spawned)
             {
-                reason = "Invalid stairwell.";
+                reason = "Strata_Dig_InvalidStairwell".Translate();
                 return false;
             }
             if (!StrataMapUtility.IsUnderground(landing.Map))
             {
-                reason = "Dig down is only available below the surface.";
+                reason = "Strata_Dig_OnlyUnderground".Translate();
                 return false;
             }
             if (landing.Faction != Faction.OfPlayer)
             {
-                reason = "Must belong to the colony.";
+                reason = "Strata_Dig_MustBeColony".Translate();
                 return false;
             }
             if (!LevelExcavationUtility.CanOpenNewLevelBelow(landing.Map, out reason))
@@ -37,12 +37,12 @@ namespace Strata
             }
             if (LandingHasDownwardShaft(landing))
             {
-                reason = "This stairwell already reaches a level below.";
+                reason = "Strata_Dig_AlreadyBelow".Translate();
                 return false;
             }
             if (FindNearbyDigShaftConstruction(landing, out _))
             {
-                reason = "A dig shaft is still under construction.";
+                reason = "Strata_Dig_ShaftUnderConstruction".Translate();
                 return false;
             }
             Building_StairsDown existing = landing.DownEntrance ?? FindNearbyDigShaft(landing);
@@ -52,7 +52,7 @@ namespace Strata
             }
             if (!TryFindDigShaftSite(landing, out _))
             {
-                reason = "No room nearby to carve a downward stairwell.";
+                reason = "Strata_Dig_NoRoomNearby".Translate();
                 return false;
             }
             return true;
@@ -63,27 +63,27 @@ namespace Strata
             reason = null;
             if (entrance == null || !entrance.Spawned)
             {
-                reason = "Invalid stairwell.";
+                reason = "Strata_Dig_InvalidStairwell".Translate();
                 return false;
             }
             if (!StrataMapUtility.IsUnderground(entrance.Map))
             {
-                reason = "Dig down is only available below the surface.";
+                reason = "Strata_Dig_OnlyUnderground".Translate();
                 return false;
             }
             if (entrance.Faction != Faction.OfPlayer)
             {
-                reason = "Must belong to the colony.";
+                reason = "Strata_Dig_MustBeColony".Translate();
                 return false;
             }
             if (entrance.PocketMapExists)
             {
-                reason = "The level below is already open.";
+                reason = "Strata_Dig_LevelAlreadyOpen".Translate();
                 return false;
             }
             if (entrance.Sealed)
             {
-                reason = "Unseal the stairwell first.";
+                reason = "Strata_Dig_UnsealFirst".Translate();
                 return false;
             }
             if (!LevelExcavationUtility.CanOpenNewLevelBelow(entrance.Map, out reason))
@@ -105,7 +105,7 @@ namespace Strata
             {
                 if (!TryFindDigShaftSite(landing, out IntVec3 center))
                 {
-                    message = "No room nearby to carve a downward stairwell.";
+                    message = "Strata_Dig_NoRoomNearby".Translate();
                     return false;
                 }
                 if (!TryPlaceDigShaftBlueprint(center, landing.Map, landing.Rotation, out message))
@@ -124,7 +124,7 @@ namespace Strata
                 StairwellPowerUtility.MaintainVerticalTie(landing);
                 return true;
             }
-            message = "The level below is already open.";
+            message = "Strata_Dig_LevelAlreadyOpen".Translate();
             return false;
         }
 
@@ -143,10 +143,10 @@ namespace Strata
             entrance.OpenLevelBelow();
             if (!entrance.PocketMapExists)
             {
-                message = "Failed to open the level below.";
+                message = "Strata_Dig_FailedOpen".Translate();
                 return false;
             }
-            message = "Broke through to a new level below.";
+            message = "Strata_Dig_BrokeThroughNew".Translate();
             Messages.Message(message, landing ?? (Thing)entrance, MessageTypeDefOf.PositiveEvent);
             return true;
         }
@@ -157,7 +157,7 @@ namespace Strata
             ThingDef def = StrataThingDefOf.Strata_DigDownShaft ?? StrataThingDefOf.Strata_StairsDown;
             if (def == null)
             {
-                message = "Could not place a dig shaft.";
+                message = "Strata_Dig_CouldNotPlaceShaft".Translate();
                 return false;
             }
             PrepareSite(center, def, map, rot);

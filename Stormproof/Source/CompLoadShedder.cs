@@ -155,9 +155,8 @@ namespace Stormproof
                 {
                     Messages.Message(
                         closed
-                            ? parent.LabelShort + ": batteries recovered, sub-grid reconnected."
-                            : parent.LabelShort + ": batteries below " +
-                              cutoffFraction.ToStringPercent() + ", sub-grid shed.",
+                            ? "Stormproof_LoadShedder_Reconnected".Translate(parent.LabelShort)
+                            : "Stormproof_LoadShedder_Shed".Translate(parent.LabelShort, cutoffFraction.ToStringPercent()),
                         parent,
                         closed ? MessageTypeDefOf.SilentInput : MessageTypeDefOf.CautionInput);
                 }
@@ -172,15 +171,15 @@ namespace Stormproof
             }
             yield return new Command_Action
             {
-                defaultLabel = "Cutoff -5%",
-                defaultDesc = "Trip the breaker when supply batteries fall below a lower charge level.",
+                defaultLabel = "Stormproof_LoadShedder_CutoffLowerLabel".Translate(),
+                defaultDesc = "Stormproof_LoadShedder_CutoffLowerDesc".Translate(),
                 icon = LoadShedderTex.CutoffLower,
                 action = () => cutoffFraction = Mathf.Max(0.05f, cutoffFraction - 0.05f),
             };
             yield return new Command_Action
             {
-                defaultLabel = "Cutoff +5%",
-                defaultDesc = "Trip the breaker when supply batteries fall below a higher charge level.",
+                defaultLabel = "Stormproof_LoadShedder_CutoffRaiseLabel".Translate(),
+                defaultDesc = "Stormproof_LoadShedder_CutoffRaiseDesc".Translate(),
                 icon = LoadShedderTex.CutoffRaise,
                 action = () => cutoffFraction = Mathf.Min(0.45f, cutoffFraction + 0.05f),
             };
@@ -196,17 +195,18 @@ namespace Stormproof
         public override string CompInspectStringExtra()
         {
             string state = breakerClosed
-                ? "Breaker closed: transmitting."
-                : "Breaker OPEN: sub-grid shed.";
+                ? "Stormproof_LoadShedder_Closed".Translate()
+                : "Stormproof_LoadShedder_Open".Translate();
             PowerNet supply = parent.Spawned ? SupplyNet() : null;
             if (supply != null)
             {
                 float fraction = StoredFraction(supply);
                 state += fraction < 0f
-                    ? "\nNo batteries on the supply grid."
-                    : "\nSupply batteries: " + fraction.ToStringPercent() +
-                      " (trips below " + cutoffFraction.ToStringPercent() +
-                      ", reconnects at " + ReconnectFraction.ToStringPercent() + ").";
+                    ? "\n" + "Stormproof_LoadShedder_NoSupplyBatteries".Translate()
+                    : "\n" + "Stormproof_LoadShedder_SupplyStatus".Translate(
+                        fraction.ToStringPercent(),
+                        cutoffFraction.ToStringPercent(),
+                        ReconnectFraction.ToStringPercent());
             }
             return state;
         }

@@ -84,12 +84,12 @@ namespace Strata
         {
             switch (role)
             {
-                case LevelRole.Freezer: return "Freezer";
-                case LevelRole.Barracks: return "Barracks";
-                case LevelRole.Workshop: return "Workshop";
-                case LevelRole.Hospital: return "Hospital";
-                case LevelRole.Storage: return "Storage";
-                default: return "None";
+                case LevelRole.Freezer: return "Strata_Role_Freezer".Translate();
+                case LevelRole.Barracks: return "Strata_Role_Barracks".Translate();
+                case LevelRole.Workshop: return "Strata_Role_Workshop".Translate();
+                case LevelRole.Hospital: return "Strata_Role_Hospital".Translate();
+                case LevelRole.Storage: return "Strata_Role_Storage".Translate();
+                default: return "Strata_Role_None".Translate();
             }
         }
 

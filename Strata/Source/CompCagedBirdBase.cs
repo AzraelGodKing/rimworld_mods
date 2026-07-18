@@ -143,7 +143,7 @@ namespace Strata
             if (HasLiveBird)
             {
                 Messages.Message(
-                    $"{parent.LabelShort} already holds a {OccupantNoun}.",
+                    "Strata_Cage_AlreadyHolds".Translate(parent.LabelShort, OccupantNoun),
                     parent,
                     MessageTypeDefOf.RejectInput,
                     historical: false);
@@ -170,7 +170,7 @@ namespace Strata
             pawn.Position = parent.Position;
             StrataCagedBirdUtility.FeedCagedBird(parent, pawn);
             Messages.Message(
-                $"{pawn.LabelShort} is now in {parent.LabelShort}.",
+                "Strata_Cage_Assigned".Translate(pawn.LabelShort, parent.LabelShort),
                 parent,
                 MessageTypeDefOf.PositiveEvent);
         }
@@ -197,12 +197,12 @@ namespace Strata
                 any = true;
                 Pawn local = pawn;
                 yield return new FloatMenuOption(
-                    "Assign " + pawn.LabelShort,
+                    "Strata_Cage_Assign".Translate(pawn.LabelShort),
                     () => TryAssign(local));
             }
             if (!any)
             {
-                yield return new FloatMenuOption($"No {OccupantNoun}s nearby", null);
+                yield return new FloatMenuOption("Strata_Cage_NoNearby".Translate(OccupantNoun), null);
             }
         }
 
@@ -212,15 +212,15 @@ namespace Strata
             {
                 yield return new Command_Action
                 {
-                    defaultLabel = "Release " + OccupantNoun,
-                    defaultDesc = $"Let the {OccupantNoun} out of the cage. It will stay on this tile.",
+                    defaultLabel = "Strata_Cage_Release".Translate(OccupantNoun),
+                    defaultDesc = "Strata_Cage_ReleaseDesc".Translate(OccupantNoun),
                     icon = ContentFinder<Texture2D>.Get("UI/Commands/ReleaseAnimalToWild", reportFailure: false),
                     action = () =>
                     {
                         Pawn released = contained;
                         ReleaseContained();
                         Messages.Message(
-                            $"{released.LabelShort} left {parent.LabelShort}.",
+                            "Strata_Cage_Released".Translate(released.LabelShort, parent.LabelShort),
                             parent,
                             MessageTypeDefOf.NeutralEvent);
                     },
@@ -233,10 +233,10 @@ namespace Strata
             }
             yield return new Command_Action
             {
-                defaultLabel = "Assign " + OccupantNoun,
+                defaultLabel = "Strata_Cage_AssignLabel".Translate(OccupantNoun),
                 defaultDesc = UsesSustainMode
-                    ? $"Place a tame {OccupantNoun} from nearby into this cage. Hunger is sustained while caged (mod setting)."
-                    : $"Place a tame {OccupantNoun} from nearby into this cage. Stock food in the cage to feed it.",
+                    ? "Strata_Cage_AssignDescSustain".Translate(OccupantNoun)
+                    : "Strata_Cage_AssignDescFeed".Translate(OccupantNoun),
                 icon = ContentFinder<Texture2D>.Get("UI/Commands/ReleaseAnimalToWild", reportFailure: false),
                 action = () => Find.WindowStack.Add(new FloatMenu(AssignOptions().ToList())),
             };
@@ -252,7 +252,7 @@ namespace Strata
             {
                 if (contained != null && contained.Dead)
                 {
-                    return $"Dead {OccupantNoun} — remove the body and assign or acquire another.";
+                    return "Strata_Cage_DeadBody".Translate(OccupantNoun);
                 }
                 return EmptyInspectExtra();
             }

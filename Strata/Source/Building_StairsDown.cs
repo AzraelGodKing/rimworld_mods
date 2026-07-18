@@ -128,7 +128,7 @@ namespace Strata
 
         protected virtual string OccupiedOtherLevelMessage()
         {
-            return "Someone is still on the level below.";
+            return "Strata_SomeoneBelow".Translate();
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
@@ -189,7 +189,7 @@ namespace Strata
                     // MapPortal.GeneratePocketMap), so the landing wires
                     // itself to this entrance exactly like during map gen.
                     StrataPortalUtility.SpawnLanding(def.portal.exitDef, landing, existing);
-                    Messages.Message("Broke through to the existing level below.", this, MessageTypeDefOf.PositiveEvent);
+                    Messages.Message("Strata_StairsConnectedBelow".Translate(), this, MessageTypeDefOf.PositiveEvent);
                     return existing;
                 }
             }
@@ -266,17 +266,17 @@ namespace Strata
             {
                 return;
             }
-            exit.DeSpawn();
             PocketMapUtility.currentlyGeneratingPortal = this;
             try
             {
+                exit.DeSpawn();
                 StrataPortalUtility.SpawnLanding(exitDef, target, level);
             }
             finally
             {
                 PocketMapUtility.currentlyGeneratingPortal = null;
             }
-            Messages.Message("Stairwell landing repositioned beneath the shaft above.", this, MessageTypeDefOf.NeutralEvent);
+            Messages.Message("Strata_LandingRepositioned".Translate(), this, MessageTypeDefOf.NeutralEvent);
         }
 
         // Natural rock gets carved away, but never break through into another
@@ -442,8 +442,8 @@ namespace Strata
             StairwellDigUtility.CanDigDownFromEntrance(this, out string reason);
             yield return new Command_Action
             {
-                defaultLabel = "Dig down",
-                defaultDesc = "Break through to the level below once this stairwell is fully built, or use it if construction finished before research was available.",
+                defaultLabel = "Strata_DigDownLabel".Translate(),
+                defaultDesc = "Strata_DigDownFromEntranceDesc".Translate(),
                 icon = ContentFinder<Texture2D>.Get("UI/Designators/Mine", reportFailure: false),
                 action = () =>
                 {
@@ -465,14 +465,14 @@ namespace Strata
         {
             if (Sealed)
             {
-                return "Smoke shaft: sealed";
+                return "Strata_SmokeShaftSealed".Translate();
             }
-            return "Smoke shaft: fumes rise to the level above";
+            return "Strata_SmokeShaftOpen".Translate();
         }
 
         protected string PowerShaftInspectLine()
         {
-            return "Power shaft: ties both levels' grids (wire each floor into the stairwell; keep batteries on each level)";
+            return "Strata_PowerShaft".Translate();
         }
     }
 }

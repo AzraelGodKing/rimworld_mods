@@ -47,11 +47,8 @@ namespace Strata
             Thing stairs = GenSpawn.Spawn(StrataThingDefOf.Strata_AncientColonyStairsDown, spot, map);
             SpawnRubble(map, spot);
             Find.LetterStack.ReceiveLetter(
-                "Ancient stairwell",
-                "Carved steps sink into the rock not far from your landing zone. "
-                + "They look stable enough to descend — and the stone below can be mined out into rooms — "
-                + "but there is no power tie through the shaft. Wire each level on its own, "
-                + "or build a modern stairwell or shaft conduit if you want grids to pool.",
+                "Strata_AncientStairwellLetterTitle".Translate(),
+                "Strata_AncientStairwellLetterText".Translate(),
                 LetterDefOf.NeutralEvent,
                 new TargetInfo(spot, map));
         }

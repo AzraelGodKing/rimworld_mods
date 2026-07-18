@@ -6,6 +6,151 @@ namespace Strata
 {
     public static class StrataPortalUtility
     {
+        // Shafts, stairs, elevators, and dig extensions — never valid for
+        // infestation hives, roof collapse, or event damage.
+        public static bool IsProtectedPortal(Thing thing)
+        {
+            if (thing == null || !thing.Spawned)
+            {
+                return false;
+            }
+            if (thing is MapPortal)
+            {
+                string name = thing.def?.defName;
+                return !name.NullOrEmpty() && name.StartsWith("Strata_");
+            }
+            return false;
+        }
+
+        public static bool CellBlockedByProtectedPortal(Map map, IntVec3 cell)
+        {
+            if (!cell.InBounds(map))
+            {
+                return false;
+            }
+            List<Thing> things = cell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (IsProtectedPortal(things[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool RectBlockedByProtectedPortal(Map map, IntVec3 center, Rot4 rot, IntVec2 size)
+        {
+            foreach (IntVec3 cell in GenAdj.OccupiedRect(center, rot, size))
+            {
+                if (CellBlockedByProtectedPortal(map, cell))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool ShouldBlockPortalDestroy(Thing thing, DestroyMode mode)
+        {
+            if (!IsProtectedPortal(thing))
+            {
+                return false;
+            }
+            return mode != DestroyMode.Vanish && mode != DestroyMode.WillReplace;
+        }
+
+        // Entrance has a pocket map but the landing is missing — restore it.
+        public static void RepairMissingLandings()
+        {
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                var entrances = new List<Thing>(map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal));
+                for (int j = 0; j < entrances.Count; j++)
+                {
+                    if (entrances[j] is not Building_StairsDown entrance || !entrance.Spawned || !entrance.PocketMapExists)
+                    {
+                        continue;
+                    }
+                    Map level = entrance.PocketMap;
+                    if (level == null)
+                    {
+                        continue;
+                    }
+                    PocketMapExit exit = entrance.exit;
+                    if (exit != null && !exit.Destroyed && exit.Spawned)
+                    {
+                        continue;
+                    }
+                    ThingDef exitDef = entrance.def.portal?.exitDef;
+                    if (exitDef == null)
+                    {
+                        continue;
+                    }
+                    IntVec3 spot = entrance.FindLandingCell(level);
+                    if (!spot.IsValid)
+                    {
+                        spot = StrataMapUtility.VerticalAlign(entrance.Position, entrance.Map, level);
+                    }
+                    if (!spot.IsValid)
+                    {
+                        continue;
+                    }
+                    PocketMapUtility.currentlyGeneratingPortal = entrance;
+                    try
+                    {
+                        StrataPortalUtility.SpawnLanding(exitDef, spot, level);
+                    }
+                    finally
+                    {
+                        PocketMapUtility.currentlyGeneratingPortal = null;
+                    }
+                    Log.Message("[Strata] Restored missing portal landing under " + entrance.LabelCap + ".");
+                }
+
+                // Elevator pairs use Building_ElevatorDown as entrance.
+                for (int j = 0; j < entrances.Count; j++)
+                {
+                    if (entrances[j] is not Building_ElevatorDown elevator || !elevator.Spawned || !elevator.PocketMapExists)
+                    {
+                        continue;
+                    }
+                    PocketMapExit exit = elevator.exit;
+                    if (exit != null && !exit.Destroyed && exit.Spawned)
+                    {
+                        continue;
+                    }
+                    ThingDef exitDef = elevator.def.portal?.exitDef;
+                    if (exitDef == null)
+                    {
+                        continue;
+                    }
+                    Map level = elevator.PocketMap;
+                    IntVec3 spot = elevator.FindLandingCell(level);
+                    if (!spot.IsValid)
+                    {
+                        spot = StrataMapUtility.VerticalAlign(elevator.Position, elevator.Map, level);
+                    }
+                    if (!spot.IsValid)
+                    {
+                        continue;
+                    }
+                    PocketMapUtility.currentlyGeneratingPortal = elevator;
+                    try
+                    {
+                        SpawnLanding(exitDef, spot, level);
+                    }
+                    finally
+                    {
+                        PocketMapUtility.currentlyGeneratingPortal = null;
+                    }
+                    Log.Message("[Strata] Restored missing elevator landing under " + elevator.LabelCap + ".");
+                }
+            }
+        }
+
         // Haul designations live in each map's DesignationManager, so a thing
         // that needs one to be haulable (stone chunks, mostly) arrives on
         // another level undesignated and haulers there ignore it. Runs from

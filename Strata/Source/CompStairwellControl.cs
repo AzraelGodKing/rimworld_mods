@@ -34,9 +34,9 @@ namespace Strata
             yield return new Command_Toggle
             {
                 defaultLabel = parent is Building_ElevatorDown or Building_ElevatorBuildUp
-                    ? "Seal elevator"
-                    : "Seal stairwell",
-                defaultDesc = "Seal this passage shut. Nobody can pass, no air or gas moves between the levels — use it to contain tox gas, smoke, or an infestation on one level.",
+                    ? "Strata_SealElevator".Translate()
+                    : "Strata_SealStairwell".Translate(),
+                defaultDesc = "Strata_SealDesc".Translate(),
                 icon = ContentFinder<UnityEngine.Texture2D>.Get("UI/Commands/ForbidOff", reportFailure: false),
                 isActive = () => sealedShut,
                 toggleAction = () => sealedShut = !sealedShut,
@@ -45,7 +45,7 @@ namespace Strata
 
         public override string CompInspectStringExtra()
         {
-            return sealedShut ? "Sealed" : null;
+            return sealedShut ? "Strata_Sealed".Translate() : null;
         }
     }
 }

@@ -46,8 +46,8 @@ namespace Stormproof
         public override string CompInspectStringExtra()
         {
             return Active
-                ? "Active: colony buildings in range are immune to EMP stuns."
-                : "Inactive: needs power.";
+                ? "Stormproof_EmpDampener_Active".Translate()
+                : "Stormproof_EmpDampener_Inactive".Translate();
         }
     }
 }

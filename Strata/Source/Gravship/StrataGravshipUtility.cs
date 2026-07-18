@@ -90,7 +90,7 @@ namespace Strata
             {
                 if (CellOnGravship(map, cell))
                 {
-                    return "Cannot build colony stairs on the gravship. Use a gravship stairwell instead.";
+                    return "Strata_Place_NoColonyStairsOnGravship".Translate();
                 }
             }
             return true;

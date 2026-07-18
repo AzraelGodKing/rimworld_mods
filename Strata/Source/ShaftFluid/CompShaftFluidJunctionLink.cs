@@ -126,17 +126,17 @@ namespace Strata
         {
             if (IsAutoSpawned)
             {
-                return "Tie: driven by the junction on the level above";
+                return "Strata_FluidTie_DrivenAbove".Translate();
             }
             if (PartnerValid())
             {
-                return "Tie: linked to the junction on the level below";
+                return "Strata_FluidTie_LinkedBelow".Translate();
             }
             if (NearestDownPortal() == null)
             {
-                return "Tie: no shaft within reach - build within a few tiles of a stairwell or elevator";
+                return "Strata_FluidTie_NoShaft".Translate();
             }
-            return "Tie: waiting for the level below to be opened";
+            return "Strata_FluidTie_WaitingBelow".Translate();
         }
 
         internal void ReconcilePartnerLinks()
@@ -384,7 +384,7 @@ namespace Strata
             child.SetFaction(Faction.OfPlayer);
             PipeNetworkUtil.RebuildFor(child);
             PipeNetworkUtil.RebuildNeighbors(child);
-            Messages.Message("Shaft fluid junction extended a junction to the level below.", child, MessageTypeDefOf.PositiveEvent);
+            Messages.Message("Strata_FluidJunctionExtended".Translate(), child, MessageTypeDefOf.PositiveEvent);
             return child;
         }
 
