@@ -108,6 +108,14 @@ namespace Strata
 
         public static bool CanRelay(Pawn pawn)
         {
+            return CanRelayBasics(pawn) && !IsOnRelayCooldown(pawn);
+        }
+
+        // Portal-capable and linked, ignoring the general relay cooldown.
+        // Used for owned-bed home commute so a recent food/work trip can't leave
+        // someone sleeping on the floor of the wrong level all night.
+        public static bool CanRelayBasics(Pawn pawn)
+        {
             if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed)
             {
                 return false;
@@ -121,7 +129,9 @@ namespace Strata
             {
                 return false;
             }
-            if (IsOnRelayCooldown(pawn))
+            // Mid multi-hop commute (food/work/rest/etc.) — don't pick a new
+            // destination until PortalRelayChain finishes the trip.
+            if (PortalRelayChain.HasIntent(pawn))
             {
                 return false;
             }
@@ -135,9 +145,41 @@ namespace Strata
 
         // Return-to-base must not consume the general relay cooldown — bots still
         // need to commute for work while heading home on low charge.
-        internal static Job MakeReturnBasePortalJob(Pawn pawn, MapPortal firstStep)
+        // destMap is the recharge home so multi-hop chains keep going after each stair.
+        internal static Job MakeReturnBasePortalJob(Pawn pawn, MapPortal firstStep, Map destMap)
         {
-            return MakePortalJob(pawn, firstStep, touchRelayCooldown: false);
+            Job job = MakePortalJob(pawn, firstStep, touchRelayCooldown: false);
+            if (job != null && destMap != null)
+            {
+                PortalRelayChain.Mark(pawn, destMap, RelayPurpose.Work);
+            }
+
+            return job;
+        }
+
+        // Walk the first portal toward destMap. No stampede claim (each pawn's
+        // owned bed is personal). Optional cooldown so home-to-bed can ignore it.
+        // Marks PortalRelayChain so multi-hop destinations keep commuting.
+        public static Job TryRelayToMap(
+            Pawn pawn,
+            Map destMap,
+            bool touchCooldown,
+            RelayPurpose purpose = RelayPurpose.Work,
+            Building_Bed preferredBed = null)
+        {
+            if (pawn == null || destMap == null || destMap == pawn.Map)
+            {
+                return null;
+            }
+
+            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, destMap, pawn.Position);
+            Job job = MakePortalJob(pawn, firstStep, touchCooldown);
+            if (job != null)
+            {
+                PortalRelayChain.Mark(pawn, destMap, purpose, preferredBed);
+            }
+
+            return job;
         }
 
         private static Job MakePortalJob(Pawn pawn, MapPortal firstStep, bool touchRelayCooldown)
@@ -150,7 +192,8 @@ namespace Strata
             {
                 return null;
             }
-            if (!pawn.CanReach(firstStep, PathEndMode.Touch, Danger.Some))
+            // Deadly: exhausted colonists still need to reach a sealed-off stair.
+            if (!pawn.CanReach(firstStep, PathEndMode.Touch, Danger.Deadly))
             {
                 return null;
             }
@@ -163,7 +206,7 @@ namespace Strata
 
         // Relay toward a level only if fewer than 'cap' pawns are already headed
         // there for the same reason - stops a whole colony stampeding to one job
-        // or one free bed. Registers the claim on success.
+        // or one free bed. Registers the claim on success and chains multi-hop.
         public static Job TryClaimAndRelay(Pawn pawn, LevelGraph.LevelLink link, RelayPurpose purpose, int cap)
         {
             if (!RelayClaims.CanClaim(pawn, link.map, purpose, cap))
@@ -177,6 +220,7 @@ namespace Strata
             if (job != null)
             {
                 RelayClaims.Register(pawn, link.map, purpose);
+                PortalRelayChain.Mark(pawn, link.map, purpose);
             }
             return job;
         }
@@ -286,7 +330,8 @@ namespace Strata
             return rest != null && rest.CurLevelPercentage < 0.35f;
         }
 
-        private static bool IsClaimableColonistBed(Pawn pawn, Building_Bed bed)
+        // Owned by this pawn, or any free sleeping slot (unowned).
+        internal static bool IsClaimableColonistBed(Pawn pawn, Building_Bed bed)
         {
             return IsColonistBedCandidate(pawn, bed)
                 && (bed.OwnersForReading.Contains(pawn) || bed.AnyUnownedSleepingSlot);
@@ -309,6 +354,7 @@ namespace Strata
         {
             return bed != null
                 && bed.Faction == Faction.OfPlayer
+                && bed.ForColonists
                 && bed.def.building.bed_humanlike
                 && !bed.Medical
                 && !bed.ForPrisoners

@@ -114,6 +114,9 @@ namespace Strata
         {
             base.OnEntered(pawn);
             StrataPortalUtility.TransferHaulDesignation(this, pawn);
+            StrataPortalUtility.TryDeliverConstructionCargo(pawn);
+            DraftedPortalPathing.NotifyPortalArrival(pawn);
+            PortalRelayChain.NotifyPortalArrival(pawn);
             MapComponent_RaidPursuit.NotifyPortalArrival(pawn, pawn.MapHeld);
         }
 
