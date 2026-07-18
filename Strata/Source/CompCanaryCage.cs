@@ -43,9 +43,9 @@ namespace Strata
             if (pawn != null && StrataCanaryBirdUtility.IsAssignableBird(pawn)
                 && !StrataCanaryBirdUtility.IsMineCanary(pawn))
             {
-                return "Only mine canaries belong in a canary cage — use a bird cage for other birds.";
+                return "Strata_Canary_WrongBirdCage".Translate();
             }
-            return "Not a mine canary.";
+            return "Strata_Canary_NotMineCanary".Translate();
         }
 
         protected override IEnumerable<Pawn> EnumerateAssignCandidates()
@@ -162,7 +162,7 @@ namespace Strata
             victim.Kill(null);
             contained = null;
             Messages.Message(
-                $"The canary in {parent.LabelShort} has died from {gasLabel} — the air is lethal.",
+                "Strata_Canary_Died".Translate(parent.LabelShort, gasLabel),
                 parent,
                 MessageTypeDefOf.NegativeEvent);
         }
@@ -179,7 +179,7 @@ namespace Strata
                 if (!silent)
                 {
                     Messages.Message(
-                        $"Need {CanaryProps.hayCost} hay within reach to acquire a canary for {parent.LabelShort}.",
+                        "Strata_Canary_NeedHay".Translate(CanaryProps.hayCost, parent.LabelShort),
                         parent,
                         MessageTypeDefOf.RejectInput,
                         historical: false);
@@ -192,7 +192,7 @@ namespace Strata
                 if (!silent)
                 {
                     Messages.Message(
-                        "Mine canary kind is not loaded.",
+                        "Strata_Canary_KindMissing".Translate(),
                         parent,
                         MessageTypeDefOf.RejectInput,
                         historical: false);
@@ -218,7 +218,7 @@ namespace Strata
             if (!silent)
             {
                 Messages.Message(
-                    $"A mine canary is now in {parent.LabelShort}.",
+                    "Strata_Canary_Acquired".Translate(parent.LabelShort),
                     parent,
                     MessageTypeDefOf.PositiveEvent);
             }
@@ -244,12 +244,13 @@ namespace Strata
 
         protected override IEnumerable<Gizmo> ExtraEmptyGizmos()
         {
-            string acquireLabel = contained != null && contained.Dead ? "Replace canary" : "Acquire canary";
+            string acquireLabel = contained != null && contained.Dead
+                ? "Strata_Canary_ReplaceLabel".Translate()
+                : "Strata_Canary_AcquireLabel".Translate();
             yield return new Command_Action
             {
                 defaultLabel = acquireLabel,
-                defaultDesc =
-                    $"Spawn a mine canary ({CanaryProps.hayCost} hay). Only mine canaries belong in this cage.",
+                defaultDesc = "Strata_Canary_AcquireDesc".Translate(CanaryProps.hayCost),
                 icon = ContentFinder<Texture2D>.Get("UI/Commands/ReleaseAnimalToWild", reportFailure: false),
                 action = () => AcquireCanary(),
             };
@@ -260,9 +261,9 @@ namespace Strata
             if (contained != null && contained.Dead)
             {
                 string cause = threatGas != null ? $" ({threatGas.label})" : "";
-                return "Canary dead" + cause + $". Replace with {CanaryProps.hayCost} hay or assign another mine canary.";
+                return "Strata_Canary_DeadInspect".Translate(cause, CanaryProps.hayCost);
             }
-            return $"Empty — assign a nearby mine canary or acquire one ({CanaryProps.hayCost} hay).";
+            return "Strata_Canary_EmptyInspect".Translate(CanaryProps.hayCost);
         }
 
         protected override string OccupiedInspectExtra()
@@ -270,13 +271,13 @@ namespace Strata
             if (distressed)
             {
                 string gas = threatGas?.label ?? "bad air";
-                return "Canary distressed — " + gas + " (ventilate before colonists sicken).";
+                return "Strata_Canary_Distressed".Translate(gas);
             }
             string feeding = StrataCagedBirdUtility.FeedingInspectHint(parent, contained);
             Room room = parent.Position.GetRoom(parent.Map);
             if (room != null && !room.PsychologicallyOutdoors)
             {
-                return feeding + " Air looks safe for now.";
+                return feeding + "Strata_Canary_AirSafe".Translate();
             }
             return feeding;
         }

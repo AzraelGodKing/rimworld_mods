@@ -37,6 +37,9 @@
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_HomesteadComforts</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Rocking chair ============ -->
@@ -109,7 +112,7 @@
     </statBases>
     <costList>
       <WoodLog>35</WoodLog>
-      <Cloth>25</Cloth>
+      <Homesteader_HomesteadQuilt>1</Homesteader_HomesteadQuilt>
     </costList>
     <building>
       <bed_showSleeperBody>false</bed_showSleeperBody>
@@ -120,6 +123,7 @@
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <researchPrerequisites>
       <li>Homesteader_HomesteadComforts</li>
+      <li>Homesteader_Textiles</li>
     </researchPrerequisites>
   </ThingDef>
 
@@ -263,6 +267,9 @@ Congrats to a dognamedKats for 1k followers!</description>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_HomesteadComforts</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Grand 27 statue ============ -->
@@ -309,6 +316,9 @@ Congrats to a dognamedKats for 1k followers!</description>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_HomesteadComforts</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Oil lamp ============ -->

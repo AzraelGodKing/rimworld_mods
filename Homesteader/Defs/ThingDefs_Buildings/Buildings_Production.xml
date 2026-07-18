@@ -45,13 +45,16 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_FarmsteadCrafting</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Butter churn ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_ButterChurn</defName>
     <label>butter churn</label>
-    <description>A wooden churn for turning fresh milk into butter. Simple farm-to-table craftsmanship.</description>
+    <description>A wooden churn for skimming cream from milk and turning that cream into butter. Simple farm-to-table craftsmanship.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/ButterChurn</texPath>
@@ -90,13 +93,16 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_FarmsteadCrafting</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Cheese press ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_CheesePress</defName>
     <label>cheese press</label>
-    <description>A weighted wooden press for turning salted milk curds into wheels of long-keeping farmhouse cheese.</description>
+    <description>A weighted wooden press for turning salted cream curds into wheels of long-keeping farmhouse cheese.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/CheesePress</texPath>
@@ -123,6 +129,7 @@
     </costList>
     <recipes>
       <li>Homesteader_PressCheese</li>
+      <li>Homesteader_WaxCheese</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>

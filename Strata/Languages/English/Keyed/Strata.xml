@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Mod settings -->
+  <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
+  <Strata_Settings_LevelHotkeys>Level view hotkeys</Strata_Settings_LevelHotkeys>
+  <Strata_Settings_ViewLevelAbove>View level above</Strata_Settings_ViewLevelAbove>
+  <Strata_Settings_ViewLevelBelow>View level below</Strata_Settings_ViewLevelBelow>
+  <Strata_Settings_PressKey>Press a key...</Strata_Settings_PressKey>
+  <Strata_Settings_Reset>Reset</Strata_Settings_Reset>
+  <Strata_Settings_ColonistRelays>Colonist relays</Strata_Settings_ColonistRelays>
+  <Strata_Settings_WorkRelay>Work relay</Strata_Settings_WorkRelay>
+  <Strata_Settings_WorkRelayDesc>Idle colonists commute to other levels that have work. Off by default — enable only if you want cross-floor work routing.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_RobotSoftCompat>Misc. Robots soft-compat</Strata_Settings_RobotSoftCompat>
+  <Strata_Settings_RobotSoftCompatDesc>Cross-level portal routing for Misc. Robots (return-to-base when recharge is on another level). Turn off to A/B test whether Strata robot hooks cause lag.</Strata_Settings_RobotSoftCompatDesc>
+  <Strata_Settings_RobotWorkRelay>Misc. Robots work relay</Strata_Settings_RobotWorkRelay>
+  <Strata_Settings_RobotWorkRelayDesc>When a bot finds no local haul/clean work, send it through stairwells toward linked levels that have work. Off by default — enable if you want bots to commute across floors.</Strata_Settings_RobotWorkRelayDesc>
+  <Strata_Settings_FoodRelay>Food relay</Strata_Settings_FoodRelay>
+  <Strata_Settings_FoodRelayDesc>Hungry colonists go find a meal on another level.</Strata_Settings_FoodRelayDesc>
+  <Strata_Settings_RestRelay>Rest relay</Strata_Settings_RestRelay>
+  <Strata_Settings_RestRelayDesc>Sleepy colonists on a floor without beds walk to their assigned bed or a free bed on another linked level (Barracks role preferred).</Strata_Settings_RestRelayDesc>
+  <Strata_Settings_MedicalRelay>Medical relay</Strata_Settings_MedicalRelay>
+  <Strata_Settings_MedicalRelayDesc>Patients and doctors commute to linked levels with medical beds or tending work.</Strata_Settings_MedicalRelayDesc>
+  <Strata_Settings_JoyRelay>Joy relay</Strata_Settings_JoyRelay>
+  <Strata_Settings_JoyRelayDesc>Recreation-starved colonists walk to another level with food joy or recreation buildings.</Strata_Settings_JoyRelayDesc>
+  <Strata_Settings_CaravanPull>Caravan pull from below</Strata_Settings_CaravanPull>
+  <Strata_Settings_CaravanPullDesc>While forming a caravan on the surface, colonists haul high-value goods up from linked underground levels.</Strata_Settings_CaravanPullDesc>
+  <Strata_Settings_CrossLevelRituals>Cross-level rituals</Strata_Settings_CrossLevelRituals>
+  <Strata_Settings_CrossLevelRitualsDesc>The ritual menu lists colonists from every linked level; those elsewhere walk to the ritual and join when they arrive.</Strata_Settings_CrossLevelRitualsDesc>
+  <Strata_Settings_CageSustainHunger>Sustain caged bird hunger</Strata_Settings_CageSustainHunger>
+  <Strata_Settings_CageSustainHungerDesc>When off (default), canary and bird cages feed occupants from stocked hay or kibble. When on, hunger is frozen while a bird is caged — no food storage needed.</Strata_Settings_CageSustainHungerDesc>
+  <Strata_Settings_SmokeGas>Smoke &amp; gas</Strata_Settings_SmokeGas>
+  <Strata_Settings_GasSystemWarning>Warning: the gas system can cause lag on large or multi-level colonies. Enable only if you want atmospheric/smoke simulation.</Strata_Settings_GasSystemWarning>
+  <Strata_Settings_PollutantGases>Pollutant gases</Strata_Settings_PollutantGases>
+  <Strata_Settings_PollutantGasesDesc>Smoke, methane, deep gas pockets, spores, steam, black damp, and other harmful extras. Turning this off clears them, skips emit/drain/harm, and hides them on the gas overlay. Smoke inhalation severity below applies when this is on.</Strata_Settings_PollutantGasesDesc>
+  <Strata_Settings_SmokeSimulation>Smoke simulation</Strata_Settings_SmokeSimulation>
+  <Strata_Settings_SmokeSimulationDesc>Burners give off smoke that pools in unventilated rooms. Turning this off clears all existing smoke.</Strata_Settings_SmokeSimulationDesc>
+  <Strata_Settings_SmokeSeverity>Smoke inhalation severity: {0} (how fast pawns are harmed by thick smoke)</Strata_Settings_SmokeSeverity>
+  <Strata_Settings_UndergroundGas>Underground gas</Strata_Settings_UndergroundGas>
+  <Strata_Settings_UndergroundGasDesc>Gas hazards of the deep: excavation can breach pockets of foul deep gas, and sunken ruin sites can appear. Sealed stairwells always contain gas either way.</Strata_Settings_UndergroundGasDesc>
+  <Strata_Settings_DeepBreathing>Deep-level breathing</Strata_Settings_DeepBreathing>
+  <Strata_Settings_NaturalGases>Natural gases</Strata_Settings_NaturalGases>
+  <Strata_Settings_NaturalGasesDesc>Atmospheric breathing mix (N₂, O₂, Ar, ambient CO₂): surface lock, depth O₂ scarcity, hypoxia, plant CO₂↔O₂ exchange, and natural-gas overlay tints. Off treats air as fully breathable with no O₂ simulation.</Strata_Settings_NaturalGasesDesc>
+  <Strata_Settings_BreathingSimulation>O₂ / CO₂ simulation</Strata_Settings_BreathingSimulation>
+  <Strata_Settings_BreathingSimulationDesc>Underground levels track oxygen and carbon dioxide: colonists breathe O₂, exhale CO₂, O₂ rises through shafts, and CO₂ sinks. Turning this off clears both gases.</Strata_Settings_BreathingSimulationDesc>
+  <Strata_Settings_GasOverlayLabels>Gas overlay room labels</Strata_Settings_GasOverlayLabels>
+  <Strata_Settings_GasOverlayLabelsDesc>While the play-settings gas overlay is on, draw color-coded percentage labels on each enclosed room (top three gases + load). The cursor panel is always available when the overlay is on.</Strata_Settings_GasOverlayLabelsDesc>
+  <Strata_Settings_ThreatsPerf>Threats &amp; performance</Strata_Settings_ThreatsPerf>
+  <Strata_Settings_RaidPursuit>Raid pursuit</Strata_Settings_RaidPursuit>
+  <Strata_Settings_RaidPursuitDesc>Raiders with nobody left to fight follow your colonists through unsealed stairwells.</Strata_Settings_RaidPursuitDesc>
+  <Strata_Settings_HibernateEmpty>Hibernate empty levels</Strata_Settings_HibernateEmpty>
+  <Strata_Settings_HibernateEmptyDesc>Vacant A+ and B+ pocket maps run vanilla ambient sims 1 tick in 4 and Strata gas 1 cycle in 8. Fully live on the map you are viewing or any level with pawns on it.</Strata_Settings_HibernateEmptyDesc>
+  <Strata_Settings_ReduceBackground>Reduce background levels</Strata_Settings_ReduceBackground>
+  <Strata_Settings_ReduceBackgroundDesc>When colonists are on a linked level you are not viewing, Strata gas and O₂/CO₂ run 8× slower and skip overlay rebuilds. The map you are looking at stays full speed.</Strata_Settings_ReduceBackgroundDesc>
+  <Strata_Settings_PerformanceMode>Performance mode (master kill-switch)</Strata_Settings_PerformanceMode>
+  <Strata_Settings_PerformanceModeDesc>Disables colonist work relay, Misc. Robots soft-compat, and external JobGiver work relay. Also runs atmosphere sims 4× slower, uses lite batched O₂/CO₂ on all levels, throttles pawn gas harm checks, and skips gas motes on levels you are not viewing. Use to A/B test Strata lag.</Strata_Settings_PerformanceModeDesc>
+  <Strata_Settings_PerformanceModeActive>Performance mode is ON — cross-level work relays and robot soft-compat are suppressed.</Strata_Settings_PerformanceModeActive>
+  <Strata_Settings_OffThreadAtmosphere>Off-thread O₂/CO₂ diffusion</Strata_Settings_OffThreadAtmosphere>
+  <Strata_Settings_OffThreadAtmosphereDesc>Runs the per-cell cavern diffusion pass on a background thread (snapshot on main thread, apply on main thread). Reduces hitching on large underground maps. On by default; requires Natural gases. Turn off if you suspect atmosphere oddities.</Strata_Settings_OffThreadAtmosphereDesc>
+  <Strata_Settings_AtmosphereQuality>Atmosphere quality</Strata_Settings_AtmosphereQuality>
+  <Strata_Settings_AtmosphereQualityDesc>Controls how often gas and O₂/CO₂ sim runs on background levels. Low is cheapest; High keeps the viewed level snappy.</Strata_Settings_AtmosphereQualityDesc>
+  <Strata_Settings_AtmosphereQualityLow>Low (background lite)</Strata_Settings_AtmosphereQualityLow>
+  <Strata_Settings_AtmosphereQualityLowDesc>Background levels run atmosphere 8× slower with batched room/plant passes. Animals skip gas harm unless already affected.</Strata_Settings_AtmosphereQualityLowDesc>
+  <Strata_Settings_AtmosphereQualityMedium>Medium (default)</Strata_Settings_AtmosphereQualityMedium>
+  <Strata_Settings_AtmosphereQualityMediumDesc>Viewed level full speed; background occupied levels 4× slower with phased work spread across ticks.</Strata_Settings_AtmosphereQualityMediumDesc>
+  <Strata_Settings_AtmosphereQualityHigh>High (full fidelity)</Strata_Settings_AtmosphereQualityHigh>
+  <Strata_Settings_AtmosphereQualityHighDesc>All levels run atmosphere at full rate; use if you notice delayed O₂ equalization on distant floors.</Strata_Settings_AtmosphereQualityHighDesc>
+  <Strata_Settings_RobotDiagnostics>Misc. Robots diagnostics</Strata_Settings_RobotDiagnostics>
+  <Strata_Settings_LogRobotDiagnostics>Log robot diagnostics every 600 ticks</Strata_Settings_LogRobotDiagnostics>
+  <Strata_Settings_LogRobotDiagnosticsDesc>Writes session counter totals and 60-second rates to the log. Off by default.</Strata_Settings_LogRobotDiagnosticsDesc>
+  <Strata_Settings_RobotDiagLine>{0}: {1} total, {2}/60s</Strata_Settings_RobotDiagLine>
+  <Strata_Settings_RobotDiagReset>Reset robot diagnostic counters</Strata_Settings_RobotDiagReset>
+  <Strata_RobotDiag_RechargeRelayPrefix>Recharge/return relay prefix hits</Strata_RobotDiag_RechargeRelayPrefix>
+  <Strata_RobotDiag_RechargeRelayPostfix>Recharge/return relay postfix fixes</Strata_RobotDiag_RechargeRelayPostfix>
+  <Strata_RobotDiag_ReturnBasePortal>Return2Base portal jobs</Strata_RobotDiag_ReturnBasePortal>
+  <Strata_RobotDiag_WorkSeekingCall>Work JobGiver TryIssueJobPackage (robots)</Strata_RobotDiag_WorkSeekingCall>
+  <Strata_RobotDiag_WorkRelayHit>Work relay postfix scans</Strata_RobotDiag_WorkRelayHit>
+  <Strata_RobotDiag_WorkRelayJob>Work relay jobs issued</Strata_RobotDiag_WorkRelayJob>
+  <Strata_RobotDiag_EnterPortalJob>EnterPortal relay jobs (robots)</Strata_RobotDiag_EnterPortalJob>
+  <Strata_RobotDiag_ReachableLevels>ReachableLevels calls (robot paths)</Strata_RobotDiag_ReachableLevels>
+  <Strata_RobotDiag_BestFirstStep>BestFirstStep calls (robot paths)</Strata_RobotDiag_BestFirstStep>
+  <Strata_Settings_ShowLevelPerf>Show level performance in Levels tab</Strata_Settings_ShowLevelPerf>
+  <Strata_Settings_ShowLevelPerfDesc>List pawn counts and hibernation status for each level in the Levels tab.</Strata_Settings_ShowLevelPerfDesc>
+  <Strata_Settings_ExplorationSites>Exploration quest sites</Strata_Settings_ExplorationSites>
+  <Strata_Settings_ExplorationSitesDesc>World incidents that reveal sunken ruins, collapsed mines, sealed vaults, and geothermal vents.</Strata_Settings_ExplorationSitesDesc>
+  <Strata_Settings_FloodEvents>Underground flood events</Strata_Settings_FloodEvents>
+  <Strata_Settings_FloodEventsDesc>Groundwater seeps that flood patches of excavated levels.</Strata_Settings_FloodEventsDesc>
+  <Strata_Settings_NativeCavern>Natural cave layout</Strata_Settings_NativeCavern>
+  <Strata_Settings_NativeCavernDesc>Excavated levels (B1 and deeper) generate Strata cave networks — chambers and tunnels carved from the solid rock instead of leaving the whole level unmined.</Strata_Settings_NativeCavernDesc>
+  <Strata_Settings_AncientStairwell>Ancient colony stairwell</Strata_Settings_AncientStairwell>
+  <Strata_Settings_AncientStairwellDesc>Some new colony maps spawn a pre-built ancient stairwell on the surface. It opens the first underground level without digging-down research, but does not carry power between levels.</Strata_Settings_AncientStairwellDesc>
+  <Strata_Settings_AncientStairwellChance>Ancient stairwell spawn chance: {0}</Strata_Settings_AncientStairwellChance>
+  <Strata_Settings_BiomesCaverns>Biomes! Caverns layout</Strata_Settings_BiomesCaverns>
+  <Strata_Settings_BiomesCavernsDesc>When enabled and Biomes! Caverns is loaded, use Biomes! cavern generation instead of Strata's native cave layout (plants, fauna, stalagmites, and crystals).</Strata_Settings_BiomesCavernsDesc>
+  <Strata_Settings_Appearance>Appearance</Strata_Settings_Appearance>
+  <Strata_Settings_MultiFloorStairs>Multifloor Stairs</Strata_Settings_MultiFloorStairs>
+  <Strata_Settings_MultiFloorStairsDesc>Use bundled alternate art from Textures/Strata/Buildings/MultiFloors/ (handrail stairs + modern elevator). Does not require the MultiFloors mod.</Strata_Settings_MultiFloorStairsDesc>
+  <Strata_Settings_MultiFloorCredit>These Assets are from Multifloors, Telardo can ask for it to be removed.</Strata_Settings_MultiFloorCredit>
+  <Strata_Settings_Interface>Interface</Strata_Settings_Interface>
+  <Strata_Settings_LinkedColonistsTabs>Strata Levels on Work / Schedule</Strata_Settings_LinkedColonistsTabs>
+  <Strata_Settings_LinkedColonistsTabsDesc>Work and Schedule tabs show a Strata Levels checkbox (when your colony has excavated levels). When checked, both tabs list colonists from every linked level, not only the map you are viewing.</Strata_Settings_LinkedColonistsTabsDesc>
+  <Strata_Settings_MergedAbandonWarning>Combined abandon warning</Strata_Settings_MergedAbandonWarning>
+  <Strata_Settings_MergedAbandonWarningDesc>When abandoning a settlement with pawns still on levels below, show one combined warning listing everyone left behind (surface and underground). Turn off for two separate prompts.</Strata_Settings_MergedAbandonWarningDesc>
+
+  <!-- Alerts -->
+  <Strata_Alert_SmokeVacant_Label>Gas building underground</Strata_Alert_SmokeVacant_Label>
+  <Strata_Alert_SmokeVacant_Explanation>Harmful gas is accumulating on a level with no colonists on it. Something is burning or seeping down there with no working ventilation - the next person to walk in will be breathing it.</Strata_Alert_SmokeVacant_Explanation>
+  <Strata_Alert_FlammableGas_Label>Flammable gas near open flame</Strata_Alert_FlammableGas_Label>
+  <Strata_Alert_FlammableGas_Explanation>Flammable gas is pooling in a room that contains an open flame - a torch, a campfire, or a running fuel burner. When the gas thickens past ignition density the room will explode. Extinguish the flame, vent the room, or switch to electric light.</Strata_Alert_FlammableGas_Explanation>
+  <Strata_Alert_CaravanGoods_Label>Caravan goods below</Strata_Alert_CaravanGoods_Label>
+  <Strata_Alert_CaravanGoods_Explanation>Valuable items remain on linked underground levels while a caravan is being formed on the surface. Enable caravan pull in Strata settings or haul them up manually before leaving.</Strata_Alert_CaravanGoods_Explanation>
+  <Strata_Alert_SealedColonists_Label>Colonists sealed off</Strata_Alert_SealedColonists_Label>
+  <Strata_Alert_SealedColonists_Explanation>Colonists are on a linked level whose every exit shaft is sealed. They cannot return until a stairwell or elevator is unsealed.</Strata_Alert_SealedColonists_Explanation>
+  <Strata_Alert_Canary_Label>Canary warning</Strata_Alert_Canary_Label>
+  <Strata_Alert_Canary_Explanation>A mine canary is distressed or dead from bad air in a cage. Canaries succumb sooner than colonists — ventilate the room or evacuate before people start coughing, suffocating, or worse.</Strata_Alert_Canary_Explanation>
+
+  <!-- Levels tab / roles -->
+  <Strata_RenameLevelPrompt>Rename this level:</Strata_RenameLevelPrompt>
+  <Strata_LevelSurface>Surface</Strata_LevelSurface>
+  <Strata_LevelSurfaceNamed>Surface — {0}</Strata_LevelSurfaceNamed>
+  <Strata_LevelAbove>Level +{0}</Strata_LevelAbove>
+  <Strata_LevelBelow>Level {0}</Strata_LevelBelow>
+  <Strata_Role_None>None</Strata_Role_None>
+  <Strata_Role_Freezer>Freezer</Strata_Role_Freezer>
+  <Strata_Role_Barracks>Barracks</Strata_Role_Barracks>
+  <Strata_Role_Workshop>Workshop</Strata_Role_Workshop>
+  <Strata_Role_Hospital>Hospital</Strata_Role_Hospital>
+  <Strata_Role_Storage>Storage</Strata_Role_Storage>
+
+  <!-- Stairwells / shafts -->
+  <Strata_StairsConnectedBelow>Broke through to the existing level below.</Strata_StairsConnectedBelow>
+  <Strata_StairsConnectedAbove>Connected to the existing level above.</Strata_StairsConnectedAbove>
+  <Strata_GravshipConnectedBelow>Broke through to the existing gravship deck below.</Strata_GravshipConnectedBelow>
+  <Strata_GravshipConnectedAbove>Connected to the existing gravship deck above.</Strata_GravshipConnectedAbove>
+  <Strata_LandingRepositioned>Stairwell landing repositioned beneath the shaft above.</Strata_LandingRepositioned>
+  <Strata_OnlyWayUp>It's the only way up.</Strata_OnlyWayUp>
+  <Strata_OnlyWayDown>It's the only way down.</Strata_OnlyWayDown>
+  <Strata_SomeoneBelow>Someone is still on the level below.</Strata_SomeoneBelow>
+  <Strata_SomeoneAbove>Someone is still on the level above.</Strata_SomeoneAbove>
+  <Strata_SmokeShaftSealed>Smoke shaft: sealed</Strata_SmokeShaftSealed>
+  <Strata_SmokeShaftOpen>Smoke shaft: fumes rise to the level above</Strata_SmokeShaftOpen>
+  <Strata_PowerShaft>Power shaft: ties both levels' grids (wire each floor into the stairwell; keep batteries on each level)</Strata_PowerShaft>
+  <Strata_OreHoistDriven>It is driven by the ore hoist on the level above.</Strata_OreHoistDriven>
+  <Strata_OreHoistExtended>Ore hoist extended a skip to the linked level.</Strata_OreHoistExtended>
+  <Strata_ShaftConduitDriven>It is driven by the conduit on the level above.</Strata_ShaftConduitDriven>
+  <Strata_ShaftConduitExtended>Shaft conduit extended a junction to the level below.</Strata_ShaftConduitExtended>
+  <Strata_FluidJunctionExtended>Shaft fluid junction extended a junction to the level below.</Strata_FluidJunctionExtended>
+  <Strata_SealStairwell>Seal stairwell</Strata_SealStairwell>
+  <Strata_SealElevator>Seal elevator</Strata_SealElevator>
+  <Strata_SealDesc>Seal this passage shut. Nobody can pass, no air or gas moves between the levels — use it to contain tox gas, smoke, or an infestation on one level.</Strata_SealDesc>
+  <Strata_Sealed>Sealed</Strata_Sealed>
+  <Strata_DigDownLabel>Dig down</Strata_DigDownLabel>
+  <Strata_DigDownFromLandingDesc>Designate a dig shaft beside this landing. Colonists must finish carving it — same work as an excavated stairwell — before the next level opens. Below the first underground level requires deep excavation research.</Strata_DigDownFromLandingDesc>
+  <Strata_DigDownFromEntranceDesc>Break through to the level below once this stairwell is fully built, or use it if construction finished before research was available.</Strata_DigDownFromEntranceDesc>
+
+  <!-- Dig-down utility -->
+  <Strata_Dig_InvalidStairwell>Invalid stairwell.</Strata_Dig_InvalidStairwell>
+  <Strata_Dig_OnlyUnderground>Dig down is only available below the surface.</Strata_Dig_OnlyUnderground>
+  <Strata_Dig_MustBeColony>Must belong to the colony.</Strata_Dig_MustBeColony>
+  <Strata_Dig_AlreadyBelow>This stairwell already reaches a level below.</Strata_Dig_AlreadyBelow>
+  <Strata_Dig_ShaftUnderConstruction>A dig shaft is still under construction.</Strata_Dig_ShaftUnderConstruction>
+  <Strata_Dig_NoRoomNearby>No room nearby to carve a downward stairwell.</Strata_Dig_NoRoomNearby>
+  <Strata_Dig_LevelAlreadyOpen>The level below is already open.</Strata_Dig_LevelAlreadyOpen>
+  <Strata_Dig_UnsealFirst>Unseal the stairwell first.</Strata_Dig_UnsealFirst>
+  <Strata_Dig_FailedOpen>Failed to open the level below.</Strata_Dig_FailedOpen>
+  <Strata_Dig_BrokeThroughNew>Broke through to a new level below.</Strata_Dig_BrokeThroughNew>
+  <Strata_Dig_CouldNotPlaceShaft>Could not place a dig shaft.</Strata_Dig_CouldNotPlaceShaft>
+
+  <!-- Place workers -->
+  <Strata_Place_MustBeIndoors>Must be built indoors.</Strata_Place_MustBeIndoors>
+  <Strata_Place_MustBeShaftRoom>Must be built in a stairwell or elevator room.</Strata_Place_MustBeShaftRoom>
+  <Strata_Place_RequiresOdyssey>Requires the Odyssey DLC.</Strata_Place_RequiresOdyssey>
+  <Strata_Place_GravshipNotLinkedLevel>Build gravship stairs on the ship deck, not on a linked Strata level.</Strata_Place_GravshipNotLinkedLevel>
+  <Strata_Place_NeedsGravEngine>Needs a grav engine on this map.</Strata_Place_NeedsGravEngine>
+  <Strata_Place_MustBeSubstructure>Must be built on the gravship substructure.</Strata_Place_MustBeSubstructure>
+  <Strata_Place_NoColonyStairsOnGravship>Cannot build colony stairs on the gravship. Use a gravship stairwell instead.</Strata_Place_NoColonyStairsOnGravship>
+  <Strata_Place_MustBeOnGasVent>Must be placed on a deep gas vent.</Strata_Place_MustBeOnGasVent>
+
+  <!-- Gas / atmosphere -->
+  <Strata_GasIgnitionLetterTitle>Gas ignition</Strata_GasIgnitionLetterTitle>
+  <Strata_GasIgnitionLetterText>A pocket of flammable gas has ignited on contact with {0} and exploded. The blast leaves black damp in the room — ventilate and restore oxygen before sending people back. Keep open flames away from gas seeps, or mine by electric light.</Strata_GasIgnitionLetterText>
+  <Strata_GasScrubberNeedsPower>Needs power to scrub {0}.</Strata_GasScrubberNeedsPower>
+  <Strata_ExhaustNeedsPower>Needs power to enrich the room with {0}.</Strata_ExhaustNeedsPower>
+  <Strata_ExhaustOpenAir>Releasing {0} (open air — no enrichment needed).</Strata_ExhaustOpenAir>
+  <Strata_ExhaustIntoRoom>Releasing {0} into the room.</Strata_ExhaustIntoRoom>
+  <Strata_ExhaustVentIntake>Intake side must face an enclosed room.</Strata_ExhaustVentIntake>
+  <Strata_ExhaustVentNoOutdoors>Duct run does not reach outdoors — fan cannot vent.</Strata_ExhaustVentNoOutdoors>
+  <Strata_GasExchangerShaft>Must be in a stairwell or elevator room to exchange gases between levels.</Strata_GasExchangerShaft>
+  <Strata_GasExchangerActive>Driving O₂ up and CO₂ down the shaft.</Strata_GasExchangerActive>
+  <Strata_GasExchangerNeedsPower>Needs power to boost gas exchange.</Strata_GasExchangerNeedsPower>
+  <Strata_SmokeUpdraftShaft>Must be in a stairwell or elevator room to vent smoke upward.</Strata_SmokeUpdraftShaft>
+  <Strata_SmokeUpdraftActive>Pulling smoke up the shaft.</Strata_SmokeUpdraftActive>
+  <Strata_SmokeUpdraftNeedsPower>Needs power to boost updraft.</Strata_SmokeUpdraftNeedsPower>
+  <Strata_GasWellNoVent>No deep gas vent below - producing nothing.</Strata_GasWellNoVent>
+  <Strata_ShoringInspect>Reinforces rock ceiling within {0} tiles.</Strata_ShoringInspect>
+  <Strata_OreHoistNeedsPartner>Needs a linked partner hoist on another level.</Strata_OreHoistNeedsPartner>
+  <Strata_OreHoistPowered>Powered — shuttling ore chunks to partner level.</Strata_OreHoistPowered>
+  <Strata_OreHoistNeedsPowerSkip>Needs power to run the skip.</Strata_OreHoistNeedsPowerSkip>
+  <Strata_GasScrubberScrubbing>Scrubbing {0} from the room.</Strata_GasScrubberScrubbing>
+  <Strata_GasScrubberNone>No {0} to scrub.</Strata_GasScrubberNone>
+  <Strata_TremorOpenedStairwell>A tremor jarred a sealed stairwell open.</Strata_TremorOpenedStairwell>
+
+  <!-- Shaft fluid ties -->
+  <Strata_FluidTie_DrivenAbove>Tie: driven by the junction on the level above</Strata_FluidTie_DrivenAbove>
+  <Strata_FluidTie_LinkedBelow>Tie: linked to the junction on the level below</Strata_FluidTie_LinkedBelow>
+  <Strata_FluidTie_NoShaft>Tie: no shaft within reach - build within a few tiles of a stairwell or elevator</Strata_FluidTie_NoShaft>
+  <Strata_FluidTie_WaitingBelow>Tie: waiting for the level below to be opened</Strata_FluidTie_WaitingBelow>
+
+  <!-- Caged birds / canaries -->
+  <Strata_Cage_AlreadyHolds>{0} already holds a {1}.</Strata_Cage_AlreadyHolds>
+  <Strata_Cage_Assigned>{0} is now in {1}.</Strata_Cage_Assigned>
+  <Strata_Cage_Released>{0} left {1}.</Strata_Cage_Released>
+  <Strata_Cage_Assign>Assign {0}</Strata_Cage_Assign>
+  <Strata_Cage_Release>Release {0}</Strata_Cage_Release>
+  <Strata_Cage_ReleaseDesc>Let the {0} out of the cage. It will stay on this tile.</Strata_Cage_ReleaseDesc>
+  <Strata_Cage_AssignLabel>Assign {0}</Strata_Cage_AssignLabel>
+  <Strata_Cage_AssignDescSustain>Place a tame {0} from nearby into this cage. Hunger is sustained while caged (mod setting).</Strata_Cage_AssignDescSustain>
+  <Strata_Cage_AssignDescFeed>Place a tame {0} from nearby into this cage. Stock food in the cage to feed it.</Strata_Cage_AssignDescFeed>
+  <Strata_Cage_NoNearby>No {0}s nearby</Strata_Cage_NoNearby>
+  <Strata_Cage_DeadBody>Dead {0} — remove the body and assign or acquire another.</Strata_Cage_DeadBody>
+  <Strata_Canary_WrongBirdCage>Only mine canaries belong in a canary cage — use a bird cage for other birds.</Strata_Canary_WrongBirdCage>
+  <Strata_Canary_NotMineCanary>Not a mine canary.</Strata_Canary_NotMineCanary>
+  <Strata_Canary_Died>The canary in {0} has died from {1} — the air is lethal.</Strata_Canary_Died>
+  <Strata_Canary_NeedHay>Need {0} hay within reach to acquire a canary for {1}.</Strata_Canary_NeedHay>
+  <Strata_Canary_KindMissing>Mine canary kind is not loaded.</Strata_Canary_KindMissing>
+  <Strata_Canary_Acquired>A mine canary is now in {0}.</Strata_Canary_Acquired>
+  <Strata_Canary_ReplaceLabel>Replace canary</Strata_Canary_ReplaceLabel>
+  <Strata_Canary_AcquireLabel>Acquire canary</Strata_Canary_AcquireLabel>
+  <Strata_Canary_AcquireDesc>Spawn a mine canary ({0} hay). Only mine canaries belong in this cage.</Strata_Canary_AcquireDesc>
+  <Strata_Canary_DeadInspect>Canary dead{0}. Replace with {1} hay or assign another mine canary.</Strata_Canary_DeadInspect>
+  <Strata_Canary_EmptyInspect>Empty — assign a nearby mine canary or acquire one ({0} hay).</Strata_Canary_EmptyInspect>
+  <Strata_Canary_Distressed>Canary distressed — {0} (ventilate before colonists sicken).</Strata_Canary_Distressed>
+  <Strata_Canary_AirSafe> Air looks safe for now.</Strata_Canary_AirSafe>
+  <Strata_CageFood_Full>{0} food storage is full.</Strata_CageFood_Full>
+  <Strata_CageFood_NoFood>No bird food within reach to stock {0}.</Strata_CageFood_NoFood>
+  <Strata_CageFood_Stocked>Stocked {0} with {1}.</Strata_CageFood_Stocked>
+  <Strata_CageFood_StockLabel>Stock food</Strata_CageFood_StockLabel>
+  <Strata_CageFood_StockDesc>Load up to {0} stacks of hay or other bird food from nearby into this cage.</Strata_CageFood_StockDesc>
+  <Strata_CageFood_SustainMode>Cage feeding: hunger sustained (mod setting).</Strata_CageFood_SustainMode>
+  <Strata_CageFood_Empty>Cage food empty — stock hay or kibble.</Strata_CageFood_Empty>
+  <Strata_CageFood_Count>Cage food: {0} / {1}</Strata_CageFood_Count>
+
+  <!-- Raids / gravship -->
+  <Strata_RaidersFoundPortal>Raiders have found the {0} and are coming {1} after your colonists!</Strata_RaidersFoundPortal>
+  <Strata_RaidersDirectionDown>down</Strata_RaidersDirectionDown>
+  <Strata_RaidersDirectionUp>up</Strata_RaidersDirectionUp>
+  <Strata_RaidersBatteringPortal>Raiders are battering the sealed {0}!</Strata_RaidersBatteringPortal>
+  <Strata_GravshipLevelsTravel>Strata: {0} linked level(s) will travel with the gravship.</Strata_GravshipLevelsTravel>
+  <Strata_GravshipLevelsDocked>Strata: {0} linked level(s) docked with the gravship.</Strata_GravshipLevelsDocked>
+
+  <!-- Letters -->
+  <Strata_AncientStairwellLetterTitle>Ancient stairwell</Strata_AncientStairwellLetterTitle>
+  <Strata_AncientStairwellLetterText>Carved steps sink into the rock not far from your landing zone. They look stable enough to descend — and the stone below can be mined out into rooms — but there is no power tie through the shaft. Wire each level on its own, or build a modern stairwell or shaft conduit if you want grids to pool.</Strata_AncientStairwellLetterText>
+
+</LanguageData>

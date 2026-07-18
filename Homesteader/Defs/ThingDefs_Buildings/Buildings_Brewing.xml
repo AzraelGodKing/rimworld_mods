@@ -5,7 +5,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_BrewingBench</defName>
     <label>brewing bench</label>
-    <description>A sturdy bench of kegs, funnels, and copper tubing for small-batch homestead brewing. Ferments fruit into cider, honey into mead, and steeps herbal tea.</description>
+    <description>A sturdy bench of kegs, funnels, and copper tubing for small-batch homestead brewing. Ferments fruit into cider (including proper apple cider), honey into mead, steeps herbal tea, sours cider into vinegar, and renders soap.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/BrewingBench</texPath>
@@ -31,8 +31,12 @@
     </costList>
     <recipes>
       <li>Homesteader_BrewCider</li>
+      <li>Homesteader_BrewAppleCider</li>
+      <li>Homesteader_FermentAppleJuice</li>
       <li>Homesteader_BrewMead</li>
       <li>Homesteader_BrewHerbalTea</li>
+      <li>Homesteader_BrewCiderVinegar</li>
+      <li>Homesteader_RenderSoap</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>

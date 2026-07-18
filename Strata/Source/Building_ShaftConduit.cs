@@ -79,7 +79,7 @@ namespace Strata
         {
             if (IsAutoSpawned && parentAbove is { Spawned: true })
             {
-                return "It is driven by the conduit on the level above.";
+                return "Strata_ShaftConduitDriven".Translate();
             }
             return base.DeconstructibleBy(faction);
         }
@@ -355,7 +355,7 @@ namespace Strata
             cell.GetFirstMineable(below)?.Destroy(DestroyMode.Vanish);
             var child = (Building_ShaftConduit)GenSpawn.Spawn(ThingMaker.MakeThing(def), cell, below);
             child.SetFaction(Faction.OfPlayer);
-            Messages.Message("Shaft conduit extended a junction to the level below.", child, MessageTypeDefOf.PositiveEvent);
+            Messages.Message("Strata_ShaftConduitExtended".Translate(), child, MessageTypeDefOf.PositiveEvent);
             return child;
         }
 

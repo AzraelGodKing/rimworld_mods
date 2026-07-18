@@ -110,7 +110,7 @@ namespace Strata
             }
             CompStairwellControl pick = sealedControls.RandomElement();
             pick.Unseal();
-            Messages.Message("A tremor jarred a sealed stairwell open.", pick.parent, MessageTypeDefOf.NegativeEvent);
+            Messages.Message("Strata_TremorOpenedStairwell".Translate(), pick.parent, MessageTypeDefOf.NegativeEvent);
         }
 
         private static void DamageUndergroundRoof(Map map)

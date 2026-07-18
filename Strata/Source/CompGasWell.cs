@@ -171,7 +171,7 @@ namespace Strata
         {
             if (!OnVent)
             {
-                return "No deep gas vent below - producing nothing.";
+                return "Strata_GasWellNoVent".Translate();
             }
             string line = $"Extraction: {Mathf.FloorToInt(progress / Props.ticksPerCanister * 100f)}%";
             if (GasNetAdapter.IsConnected(parent))
@@ -203,7 +203,7 @@ namespace Strata
                     return true;
                 }
             }
-            return "Must be placed on a deep gas vent.";
+            return "Strata_Place_MustBeOnGasVent".Translate();
         }
 
         public override bool ForceAllowPlaceOver(BuildableDef otherDef)

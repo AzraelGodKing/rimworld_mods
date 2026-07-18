@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <GameConditionDef>
+    <defName>Homesteader_KatsHeatDome</defName>
+    <conditionClass>Homesteader.GameCondition_KatsHeatDome</conditionClass>
+    <label>heat dome</label>
+    <description>A brief, unnatural heat dome hangs over the region — the air feels a few degrees warmer than it should.</description>
+    <endMessage>The heat dome has lifted. Temperatures are returning to normal.</endMessage>
+  </GameConditionDef>
+
+</Defs>

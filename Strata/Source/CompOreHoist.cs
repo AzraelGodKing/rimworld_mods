@@ -107,11 +107,11 @@ namespace Strata
             }
             if (hoist.Partner == null)
             {
-                return "Needs a linked partner hoist on another level.";
+                return "Strata_OreHoistNeedsPartner".Translate();
             }
             return Active
-                ? "Powered — shuttling ore chunks to partner level."
-                : "Needs power to run the skip.";
+                ? "Strata_OreHoistPowered".Translate()
+                : "Strata_OreHoistNeedsPowerSkip".Translate();
         }
     }
 }

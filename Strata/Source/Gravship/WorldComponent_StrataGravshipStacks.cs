@@ -88,7 +88,7 @@ namespace Strata
             stacks.Add(stack);
             Log.Message($"[Strata] Gravship takeoff: {levels.Count} linked level(s) will follow the ship.");
             Messages.Message(
-                $"Strata: {levels.Count} linked level(s) will travel with the gravship.",
+                "Strata_GravshipLevelsTravel".Translate(levels.Count),
                 MessageTypeDefOf.PositiveEvent,
                 historical: false);
         }
@@ -127,7 +127,7 @@ namespace Strata
             StrataGravshipStackUtility.RebindAll(maps, newHost);
             Log.Message($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}.");
             Messages.Message(
-                $"Strata: {maps.Count} linked level(s) docked with the gravship.",
+                "Strata_GravshipLevelsDocked".Translate(maps.Count),
                 MessageTypeDefOf.PositiveEvent,
                 historical: false);
         }
@@ -156,7 +156,7 @@ namespace Strata
             StrataGravshipStackUtility.RebindAll(maps, newHost);
             Log.Message($"[Strata] Gravship landing: rebound {maps.Count} orphan travelling level(s) to {newHost}.");
             Messages.Message(
-                $"Strata: {maps.Count} linked level(s) docked with the gravship.",
+                "Strata_GravshipLevelsDocked".Translate(maps.Count),
                 MessageTypeDefOf.PositiveEvent,
                 historical: false);
         }
