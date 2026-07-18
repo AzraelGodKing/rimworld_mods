@@ -23,12 +23,12 @@ namespace Strata
     public class AtmosphereMapComponent : MapComponent, ICellBoolGiver
     {
         private const int CycleTicks = 60;
-        private const float OpenRoofVent = 0.06f;  // per open-roof cell (capped)
-        private const float OutdoorDisperse = 0.6f; // fraction cleared per cycle in open air
-        private const float ExteriorDoorDrain = 0.80f; // direct outdoor opening - strong flush to open air
-        private const float InteriorOutdoorDrain = 0.65f; // rooms linked by open doors to an exterior opening
+        private const float OpenRoofVent = 0.35f;  // per open-roof cell (capped) — pollutants flush fast to sky
+        private const float OutdoorDisperse = 0.92f; // fraction cleared per cycle in open air
+        private const float ExteriorDoorDrain = 0.95f; // direct outdoor opening - near-clear each cycle
+        private const float InteriorOutdoorDrain = 0.88f; // rooms linked by open doors to an exterior opening
         private const float InteriorDoorFlow = 0.25f; // fraction of the density gap that crosses an open interior door
-        private const float VentExteriorDrain = 0.25f; // extra flush per outdoor-facing wall vent (stacks with cluster drain)
+        private const float VentExteriorDrain = 0.40f; // extra flush per outdoor-facing wall vent (stacks with cluster drain)
         private const float VentInteriorFlow = 0.15f; // room-to-room equalization through a vanilla wall vent
         // Burners and inflows can never push a properly ventilated room past
         // this light haze, safely under harm thresholds - ventilation is a
@@ -599,21 +599,18 @@ namespace Strata
                 Room r = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
                 if (r == null || r.UsesOutdoorTemperature)
                 {
-                    float keep = 1f - OutdoorDisperse;
-                    float removed = 1f - keep;
-                    for (int g = 0; g < c.density.Length; g++)
-                    {
-                        c.density[g] *= keep;
-                    }
-                    AtmosphericMix.RefillWithAmbient(c.density, map, removed);
-                    AtmosphericMix.EnsureNormalized(c.density);
+                    AtmosphericMix.ApplyOutdoorVentDrain(c.density, map, OutdoorDisperse);
+                }
+                else if (r.OpenRoofCount > 0)
+                {
+                    float roofDrain = Mathf.Clamp01(OpenRoofVent * Mathf.Min(r.OpenRoofCount, 5));
+                    AtmosphericMix.ApplyOutdoorVentDrain(c.density, map, roofDrain);
                 }
                 else
                 {
-                    float roofVent = OpenRoofVent * Mathf.Min(r.OpenRoofCount, 5);
                     foreach (StrataGasDef gas in Gases)
                     {
-                        c.density[gas.index] *= 1f - Mathf.Clamp01(gas.passiveLeak + roofVent);
+                        c.density[gas.index] *= 1f - Mathf.Clamp01(gas.passiveLeak);
                     }
                 }
                 CullOrStore(id, c);
@@ -1145,18 +1142,12 @@ namespace Strata
                 }
                 if (outdoorDrain > 0f || hasOutdoorWallVent)
                 {
-                    float keep = 1f - outdoorDrain;
+                    float drain = outdoorDrain;
                     if (hasOutdoorWallVent)
                     {
-                        keep *= 1f - VentExteriorDrain;
+                        drain = 1f - (1f - drain) * (1f - VentExteriorDrain);
                     }
-                    float removed = 1f - keep;
-                    for (int g = 0; g < c.density.Length; g++)
-                    {
-                        c.density[g] *= keep;
-                    }
-                    AtmosphericMix.RefillWithAmbient(c.density, map, removed);
-                    AtmosphericMix.EnsureNormalized(c.density);
+                    AtmosphericMix.ApplyOutdoorVentDrain(c.density, map, drain);
                     changed = true;
                 }
                 if (changed)
@@ -1547,17 +1538,17 @@ namespace Strata
 
         private static void Scale(Cloud cloud, float factor, Map map)
         {
-            factor = Mathf.Clamp01(factor);
-            float removed = 1f - factor;
-            for (int g = 0; g < cloud.density.Length; g++)
+            if (map == null)
             {
-                cloud.density[g] *= factor;
-            }
-            if (removed > 0.001f && map != null)
-            {
-                AtmosphericMix.RefillWithAmbient(cloud.density, map, removed);
+                factor = Mathf.Clamp01(factor);
+                for (int g = 0; g < cloud.density.Length; g++)
+                {
+                    cloud.density[g] *= factor;
+                }
                 AtmosphericMix.EnsureNormalized(cloud.density);
+                return;
             }
+            AtmosphericMix.ApplyOutdoorVentDrain(cloud.density, map, 1f - Mathf.Clamp01(factor));
         }
 
         // Move every buoyant gas up an unsealed shaft.

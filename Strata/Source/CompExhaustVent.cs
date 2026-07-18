@@ -7,7 +7,7 @@ namespace Strata
     public class CompProperties_ExhaustVent : CompProperties
     {
         // Fraction of intake-room smoke cleared per cycle while active.
-        public float ventPower = 0.35f;
+        public float ventPower = 0.55f;
 
         // When true, requires CompPowerTrader to be on (exhaust fan). Louvers leave this false.
         public bool requiresPower;

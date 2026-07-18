@@ -334,6 +334,53 @@ namespace Strata
             }
         }
 
+        // Outdoor / vent flush: pollutants and load-relevant excess leave fast;
+        // removed volume backfills with ambient mix so O₂ recovers as smoke exits.
+        // Baseline N₂/O₂/Ar/CO₂ drain lightly — sealed-room danger unchanged.
+        public static void ApplyOutdoorVentDrain(float[] density, Map map, float drainRate)
+        {
+            if (density == null || drainRate <= NormalizeEpsilon)
+            {
+                return;
+            }
+            drainRate = Mathf.Clamp01(drainRate);
+            TargetMix target = TargetForMap(map);
+            float removed = 0f;
+            float ambientDrain = drainRate * 0.35f;
+            List<StrataGasDef> gases = AtmosphereMapComponent.Gases;
+            for (int i = 0; i < gases.Count; i++)
+            {
+                StrataGasDef gas = gases[i];
+                float d = density[gas.index];
+                if (d <= NormalizeEpsilon)
+                {
+                    continue;
+                }
+                float rate;
+                if (!IsAtmosphericComponent(gas) || IsPollutantForLoad(gas, d, target))
+                {
+                    rate = drainRate;
+                }
+                else if (gas == StrataGasDefOf.Strata_Nitrogen || gas == StrataGasDefOf.Strata_Argon)
+                {
+                    rate = ambientDrain;
+                }
+                else
+                {
+                    rate = ambientDrain * 0.5f;
+                }
+                float drop = d * rate;
+                if (drop <= NormalizeEpsilon)
+                {
+                    continue;
+                }
+                density[gas.index] = d - drop;
+                removed += drop;
+            }
+            RefillWithAmbient(density, map, removed);
+            EnsureNormalized(density);
+        }
+
         public static void EnsureNormalized(float[] density)
         {
             if (density == null)
