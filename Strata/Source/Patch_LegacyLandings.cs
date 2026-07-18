@@ -23,6 +23,7 @@ namespace Strata
             StrataRobotDiagnostics.ResetSession();
             DraftedPortalPathing.ResetSession();
             PortalRelayChain.ResetSession();
+            SleepRelay.ResetSession();
             StrataResources.ClearCaches();
 
             UpgradeVanillaCaveExits();

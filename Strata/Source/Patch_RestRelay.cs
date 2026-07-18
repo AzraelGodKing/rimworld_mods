@@ -10,7 +10,7 @@ namespace Strata
     {
         public static void Postfix(Pawn pawn, ref Job __result)
         {
-            if (RestBedCommute.ShouldYieldToCommute(pawn))
+            if (SleepRelay.ShouldYieldToCommute(pawn))
             {
                 // Do not replace an in-progress stair commute with floor sleep.
                 if (__result != null
@@ -23,7 +23,7 @@ namespace Strata
                 return;
             }
 
-            Job commute = RestBedCommute.TryMakeJob(pawn, __result);
+            Job commute = SleepRelay.TryMakeJob(pawn, __result);
             if (commute != null)
             {
                 __result = commute;
@@ -39,13 +39,13 @@ namespace Strata
     {
         public static void Postfix(Pawn pawn, ref Job __result)
         {
-            if (RestBedCommute.ShouldYieldToCommute(pawn))
+            if (SleepRelay.ShouldYieldToCommute(pawn))
             {
                 __result = null;
                 return;
             }
 
-            Job commute = RestBedCommute.TryMakeJob(pawn, __result);
+            Job commute = SleepRelay.TryMakeJob(pawn, __result);
             if (commute != null)
             {
                 __result = commute;
