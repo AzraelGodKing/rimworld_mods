@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -613,13 +612,16 @@ namespace Homesteader
             listing.Label("Homesteader_TastesAllergiesHeader".Translate());
             Text.Font = GameFont.Small;
             listing.GapLine();
+            bool revealHidden = HomesteaderMod.Settings != null && HomesteaderMod.Settings.revealAllergies;
             if (allergies.Count == 0)
             {
-                listing.Label("Homesteader_TastesNone".Translate());
+                // "None" stays hidden too — otherwise empty list spoils that they have no allergy.
+                listing.Label(revealHidden
+                    ? "Homesteader_TastesNone".Translate()
+                    : "  • " + "Homesteader_TastesAllergyHidden".Translate());
             }
             else
             {
-                bool revealHidden = HomesteaderMod.Settings != null && HomesteaderMod.Settings.revealAllergies;
                 for (int i = 0; i < allergies.Count; i++)
                 {
                     string allergyId = allergies[i];
@@ -749,34 +751,6 @@ namespace Homesteader
             {
                 __result -= 80f;
             }
-        }
-    }
-
-    [HarmonyPatch(typeof(Pawn), nameof(Pawn.GetInspectString))]
-    public static class Patch_FavoriteFoodInspectString
-    {
-        public static void Postfix(Pawn __instance, ref string __result)
-        {
-            if (__instance?.RaceProps?.Humanlike != true || __instance.needs?.mood == null)
-            {
-                return;
-            }
-
-            List<ThingDef> favs = FavoriteFoodUtility.GetFavorites(__instance);
-            if (favs.Count == 0)
-            {
-                return;
-            }
-
-            string list = string.Join(", ", favs.Select(f => f.label));
-            StringBuilder sb = new StringBuilder(__result);
-            if (!string.IsNullOrEmpty(__result))
-            {
-                sb.AppendLine();
-            }
-
-            sb.Append("Homesteader_FavoriteFoodInspect".Translate(list));
-            __result = sb.ToString().TrimEnd();
         }
     }
 

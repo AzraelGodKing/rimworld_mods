@@ -8,7 +8,6 @@
   <Homesteader_PassiveCoolStorage>Passive cool storage: items (and adjacent indoor cells) stay at or below {0}</Homesteader_PassiveCoolStorage>
 
   <!-- Favorite foods / tastes tab -->
-  <Homesteader_FavoriteFoodInspect>Favorites: {0}</Homesteader_FavoriteFoodInspect>
   <Homesteader_TabTastes>Tastes</Homesteader_TabTastes>
   <Homesteader_TastesFavoritesHeader>Favorite foods</Homesteader_TastesFavoritesHeader>
   <Homesteader_TastesAllergiesHeader>Allergies</Homesteader_TastesAllergiesHeader>
