@@ -16,13 +16,13 @@ namespace Strata
     // field with a cheap default.
     public class StrataSettings : ModSettings
     {
-        public bool naturalGasesEnabled = true;
-        public bool pollutantGasesEnabled = true;
+        public bool naturalGasesEnabled = false;
+        public bool pollutantGasesEnabled = false;
         public float smokeSeverityScale = 1f;
         public bool gasOverlayRoomLabels = false;
-        public bool gasEventsEnabled = true;
+        public bool gasEventsEnabled = false;
         public bool raidPursuitEnabled = true;
-        public const int CurrentSettingsVersion = 2;
+        public const int CurrentSettingsVersion = 3;
 
         public int settingsVersion = CurrentSettingsVersion;
         public bool workRelayEnabled = false;
@@ -66,15 +66,15 @@ namespace Strata
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look(ref naturalGasesEnabled, "naturalGasesEnabled", defaultValue: true);
-            Scribe_Values.Look(ref pollutantGasesEnabled, "pollutantGasesEnabled", defaultValue: true);
+            Scribe_Values.Look(ref naturalGasesEnabled, "naturalGasesEnabled", defaultValue: false);
+            Scribe_Values.Look(ref pollutantGasesEnabled, "pollutantGasesEnabled", defaultValue: false);
             Scribe_Values.Look(ref smokeSeverityScale, "smokeSeverityScale", 1f);
             bool legacySmokeEnabled = true;
             bool legacyBreathingEnabled = true;
             Scribe_Values.Look(ref legacySmokeEnabled, "smokeEnabled", defaultValue: true);
             Scribe_Values.Look(ref legacyBreathingEnabled, "breathingEnabled", defaultValue: true);
             Scribe_Values.Look(ref gasOverlayRoomLabels, "gasOverlayRoomLabels", defaultValue: false);
-            Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: true);
+            Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: false);
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
             Scribe_Values.Look(ref settingsVersion, "settingsVersion", defaultValue: 0);
             Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: false);
@@ -135,6 +135,13 @@ namespace Strata
             {
                 naturalGasesEnabled = legacyBreathingEnabled;
                 pollutantGasesEnabled = legacySmokeEnabled;
+            }
+
+            if (settingsVersion < 3)
+            {
+                naturalGasesEnabled = false;
+                pollutantGasesEnabled = false;
+                Log.Message("[Strata] Settings migration: gas systems disabled by default (can cause lag).");
             }
 
             if (settingsVersion >= CurrentSettingsVersion)
@@ -228,6 +235,9 @@ namespace Strata
             Text.Font = GameFont.Medium;
             listing.Label("Strata_Settings_SmokeGas".Translate());
             Text.Font = GameFont.Small;
+            GUI.color = Color.yellow;
+            listing.Label("Strata_Settings_GasSystemWarning".Translate());
+            GUI.color = Color.white;
             listing.CheckboxLabeled("Strata_Settings_PollutantGases".Translate(), ref Settings.pollutantGasesEnabled,
                 "Strata_Settings_PollutantGasesDesc".Translate());
             if (Settings.pollutantGasesEnabled)

@@ -30,6 +30,7 @@
   <Strata_Settings_CageSustainHunger>Sustain caged bird hunger</Strata_Settings_CageSustainHunger>
   <Strata_Settings_CageSustainHungerDesc>When off (default), canary and bird cages feed occupants from stocked hay or kibble. When on, hunger is frozen while a bird is caged — no food storage needed.</Strata_Settings_CageSustainHungerDesc>
   <Strata_Settings_SmokeGas>Smoke &amp; gas</Strata_Settings_SmokeGas>
+  <Strata_Settings_GasSystemWarning>Warning: the gas system can cause lag on large or multi-level colonies. Enable only if you want atmospheric/smoke simulation.</Strata_Settings_GasSystemWarning>
   <Strata_Settings_PollutantGases>Pollutant gases</Strata_Settings_PollutantGases>
   <Strata_Settings_PollutantGasesDesc>Smoke, methane, deep gas pockets, spores, steam, black damp, and other harmful extras. Turning this off clears them, skips emit/drain/harm, and hides them on the gas overlay. Smoke inhalation severity below applies when this is on.</Strata_Settings_PollutantGasesDesc>
   <Strata_Settings_SmokeSimulation>Smoke simulation</Strata_Settings_SmokeSimulation>
