@@ -7,8 +7,11 @@ namespace Strata
 {
     // Earth-like atmospheric baseline and depth-scarce O₂ for underground levels.
     // Every tracked gas is a volume / mole fraction of one room atmosphere that
-    // normally sums to ≈1.0 (100%). Adding smoke or methane displaces other
-    // gases (N₂ first); ambient replenishment fills the remaining budget.
+    // normally sums to ≈1.0 (100%). Pollutant injection (smoke, methane, deep
+    // gas, …) displaces inert buffer only (N₂ first, then Ar) — never O₂ or
+    // ambient CO₂. At pollutant load ≈100% or with no inert left, emitters
+    // stall instead of stealing breathables. Metabolism (O₂→CO₂) uses separate
+    // consume/refill paths. Ambient replenishment fills the remaining budget.
     // Pressurized deep-gas pockets may exceed 1.0 on that channel only.
     public static class AtmosphericMix
     {
@@ -26,6 +29,8 @@ namespace Strata
         private const float NormalizeEpsilon = 0.0005f;
         private const float OversumMigrateThreshold = 1.05f;
         private const float MaxDeepGasDensity = 3f;
+        // Pollutant load at or above this fraction blocks new pollutant emission.
+        private const float PollutantLoadFullThreshold = 0.99f;
 
         public struct TargetMix
         {
@@ -232,7 +237,8 @@ namespace Strata
             return density > gas.overlayThreshold;
         }
 
-        public static void InjectGas(
+        // Returns the pollutant fraction actually injected (0 if refused).
+        public static float InjectGas(
             float[] density,
             StrataGasDef gas,
             float amount,
@@ -242,14 +248,14 @@ namespace Strata
         {
             if (density == null || gas == null || amount <= 0f)
             {
-                return;
+                return 0f;
             }
 
             int idx = gas.index;
             if (bypassCap && IsPressurizedGas(gas))
             {
                 density[idx] = Mathf.Min(MaxDeepGasDensity, density[idx] + amount);
-                return;
+                return amount;
             }
 
             float current = density[idx];
@@ -258,12 +264,27 @@ namespace Strata
             float delta = target - current;
             if (delta <= NormalizeEpsilon)
             {
-                return;
+                return 0f;
             }
 
-            density[idx] = target;
-            DisplaceOthers(density, idx, delta);
+            if (IsPollutantGas(gas))
+            {
+                delta = ClampPollutantInjection(density, map, delta);
+                if (delta <= NormalizeEpsilon)
+                {
+                    return 0f;
+                }
+                density[idx] = current + delta;
+                DisplaceInertsOnly(density, idx, delta);
+            }
+            else
+            {
+                density[idx] = target;
+                DisplaceOthers(density, idx, delta);
+            }
+
             EnsureNormalized(density);
+            return delta;
         }
 
         public static void ConsumeGas(float[] density, StrataGasDef gas, float amount, Map map)
@@ -467,6 +488,64 @@ namespace Strata
             if (Mathf.Abs(next - current) > NormalizeEpsilon * 0.5f)
             {
                 density[gas.index] = Mathf.Max(0f, next);
+            }
+        }
+
+        // Pollutant inflow budget: respect load cap, fill composable headroom
+        // without displacement, then consume N₂ then Ar only — never O₂/CO₂.
+        private static float ClampPollutantInjection(float[] density, Map map, float requested)
+        {
+            float pollutantLoad = PollutantFraction(density, map);
+            if (pollutantLoad >= PollutantLoadFullThreshold)
+            {
+                return 0f;
+            }
+
+            float byLoad = PollutantLoadFullThreshold - pollutantLoad;
+            float delta = Mathf.Min(requested, byLoad);
+
+            float headroom = Mathf.Max(0f, 1f - ComposableTotal(density));
+            float withoutDisplace = Mathf.Min(delta, headroom);
+            float needsInert = delta - withoutDisplace;
+            if (needsInert > NormalizeEpsilon)
+            {
+                needsInert = Mathf.Min(needsInert, AvailableInertBuffer(density));
+            }
+            return withoutDisplace + needsInert;
+        }
+
+        private static float AvailableInertBuffer(float[] density)
+        {
+            int n2 = IndexOf(StrataGasDefOf.Strata_Nitrogen);
+            int ar = IndexOf(StrataGasDefOf.Strata_Argon);
+            float avail = 0f;
+            if (n2 >= 0)
+            {
+                avail += density[n2];
+            }
+            if (ar >= 0)
+            {
+                avail += density[ar];
+            }
+            return avail;
+        }
+
+        // N₂ first, then Ar. O₂ and CO₂ are life-support — never touched here.
+        private static void DisplaceInertsOnly(float[] density, int exceptIdx, float amount)
+        {
+            int n2 = IndexOf(StrataGasDefOf.Strata_Nitrogen);
+            if (n2 >= 0 && n2 != exceptIdx && amount > NormalizeEpsilon)
+            {
+                float take = Mathf.Min(density[n2], amount);
+                density[n2] -= take;
+                amount -= take;
+            }
+            int ar = IndexOf(StrataGasDefOf.Strata_Argon);
+            if (ar >= 0 && ar != exceptIdx && amount > NormalizeEpsilon)
+            {
+                float take = Mathf.Min(density[ar], amount);
+                density[ar] -= take;
+                amount -= take;
             }
         }
 
