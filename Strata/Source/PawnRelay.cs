@@ -108,6 +108,14 @@ namespace Strata
 
         public static bool CanRelay(Pawn pawn)
         {
+            return CanRelayBasics(pawn) && !IsOnRelayCooldown(pawn);
+        }
+
+        // Portal-capable and linked, ignoring the general relay cooldown.
+        // Used for owned-bed home commute so a recent food/work trip can't leave
+        // someone sleeping on the floor of the wrong level all night.
+        public static bool CanRelayBasics(Pawn pawn)
+        {
             if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed)
             {
                 return false;
@@ -118,10 +126,6 @@ namespace Strata
                 return false;
             }
             if (pawn.CurJobDef == JobDefOf.EnterPortal)
-            {
-                return false;
-            }
-            if (IsOnRelayCooldown(pawn))
             {
                 return false;
             }
@@ -138,6 +142,19 @@ namespace Strata
         internal static Job MakeReturnBasePortalJob(Pawn pawn, MapPortal firstStep)
         {
             return MakePortalJob(pawn, firstStep, touchRelayCooldown: false);
+        }
+
+        // Walk the first portal toward destMap. No stampede claim (each pawn's
+        // owned bed is personal). Optional cooldown so home-to-bed can ignore it.
+        public static Job TryRelayToMap(Pawn pawn, Map destMap, bool touchCooldown)
+        {
+            if (pawn == null || destMap == null || destMap == pawn.Map)
+            {
+                return null;
+            }
+
+            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, destMap, pawn.Position);
+            return MakePortalJob(pawn, firstStep, touchCooldown);
         }
 
         private static Job MakePortalJob(Pawn pawn, MapPortal firstStep, bool touchRelayCooldown)

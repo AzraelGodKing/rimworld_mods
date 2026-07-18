@@ -21,6 +21,7 @@ namespace Strata
             RelayClaims.ResetSession();
             MapComponent_RaidPursuit.ResetSession();
             StrataRobotDiagnostics.ResetSession();
+            DraftedPortalPathing.ResetSession();
             StrataResources.ClearCaches();
 
             UpgradeVanillaCaveExits();

@@ -14,11 +14,29 @@ namespace Strata
     {
         public static void Postfix(Pawn pawn, ref Job __result)
         {
-            if (!PawnRelay.CanRelay(pawn))
+            if (StrataMod.Settings != null && !StrataMod.Settings.restRelayEnabled)
             {
                 return;
             }
-            if (StrataMod.Settings != null && !StrataMod.Settings.restRelayEnabled)
+
+            Building_Bed ownBed = pawn.ownership?.OwnedBed;
+            bool ownBedElsewhere = ownBed != null && ownBed.Spawned && ownBed.Map != pawn.Map;
+
+            // Assigned bedroom on another level: always prefer commuting home over
+            // floor sleep or a random free bed on this floor (apartment blocks).
+            if (ownBedElsewhere
+                && PawnRelay.ShouldCommuteForRest(pawn, __result)
+                && PawnRelay.CanRelayBasics(pawn))
+            {
+                Job home = PawnRelay.TryRelayToMap(pawn, ownBed.Map, touchCooldown: false);
+                if (home != null)
+                {
+                    __result = home;
+                    return;
+                }
+            }
+
+            if (!PawnRelay.CanRelay(pawn))
             {
                 return;
             }
@@ -36,7 +54,8 @@ namespace Strata
             }
 
             // Usable bed exists here but vanilla picked the floor anyway; only
-            // commute when this floor truly has nowhere to sleep.
+            // commute for free beds when this floor truly has nowhere to sleep.
+            // (Owned-bed home is handled above and must not be blocked by this.)
             if (__result?.def == JobDefOf.LayDown
                 && __result.targetA.Thing is not Building_Bed
                 && PawnRelay.HasUsableBedOnMap(pawn, pawn.Map))
@@ -49,20 +68,17 @@ namespace Strata
                 return;
             }
 
-            Building_Bed ownBed = pawn.ownership?.OwnedBed;
-            bool ownBedElsewhere = ownBed != null && ownBed.Spawned && ownBed.Map != pawn.Map;
+            // Opportunistic free colonist beds on linked levels.
             var links = new List<LevelGraph.LevelLink>(LevelGraph.ReachableLevels(pawn.Map));
             LevelRoleUtility.SortLinksByRole(links, LevelRole.Barracks);
             foreach (LevelGraph.LevelLink link in links)
             {
-                bool isTarget = ownBedElsewhere
-                    ? link.map == ownBed.Map
-                    : PawnRelay.HasClaimableBedFor(pawn, link.map);
-                if (!isTarget)
+                if (!PawnRelay.HasClaimableBedFor(pawn, link.map))
                 {
                     continue;
                 }
-                int cap = ownBedElsewhere ? 1 : PawnRelay.ClaimableBedCount(pawn, link.map);
+
+                int cap = PawnRelay.ClaimableBedCount(pawn, link.map);
                 Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Rest, cap);
                 if (job != null)
                 {
