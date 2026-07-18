@@ -1912,7 +1912,8 @@ namespace Strata
         private void ProcessOxygenDisplacement()
         {
             if (!NaturalGasesActive() || !PollutantGasesActive() || clouds.Count == 0
-                || StrataGasDefOf.Strata_Oxygen == null)
+                || StrataGasDefOf.Strata_Oxygen == null
+                || AtmosphericMix.ForcesAmbientInEnclosedRooms(map))
             {
                 return;
             }

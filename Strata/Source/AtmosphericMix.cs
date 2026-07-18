@@ -337,6 +337,7 @@ namespace Strata
         // Outdoor / vent flush: pollutants and load-relevant excess leave fast;
         // removed volume backfills with ambient mix so O₂ recovers as smoke exits.
         // Baseline N₂/O₂/Ar/CO₂ drain lightly — sealed-room danger unchanged.
+        // Surface / A+: O₂, CO₂, and Ar never drain; breathables clamp after flush.
         public static void ApplyOutdoorVentDrain(float[] density, Map map, float drainRate)
         {
             if (density == null || drainRate <= NormalizeEpsilon)
@@ -344,6 +345,7 @@ namespace Strata
                 return;
             }
             drainRate = Mathf.Clamp01(drainRate);
+            bool surfaceAmbient = ForcesAmbientInEnclosedRooms(map);
             TargetMix target = TargetForMap(map);
             float removed = 0f;
             float ambientDrain = drainRate * 0.35f;
@@ -353,6 +355,13 @@ namespace Strata
                 StrataGasDef gas = gases[i];
                 float d = density[gas.index];
                 if (d <= NormalizeEpsilon)
+                {
+                    continue;
+                }
+                if (surfaceAmbient
+                    && (gas == StrataGasDefOf.Strata_Oxygen
+                        || gas == StrataGasDefOf.Strata_CarbonDioxide
+                        || gas == StrataGasDefOf.Strata_Argon))
                 {
                     continue;
                 }
@@ -378,6 +387,10 @@ namespace Strata
                 removed += drop;
             }
             RefillWithAmbient(density, map, removed);
+            if (surfaceAmbient)
+            {
+                EnforceAmbientBreathables(density, map);
+            }
             EnsureNormalized(density);
         }
 
@@ -424,18 +437,34 @@ namespace Strata
             TargetMix target = TargetForMap(map);
             strength = Mathf.Clamp01(strength);
             bool hardLock = strength >= 0.98f;
+            bool surfaceAmbient = ForcesAmbientInEnclosedRooms(map);
 
-            float reserved = ReservedFraction(density, target);
-            float ambientBudget = Mathf.Max(0f, 1f - reserved);
-            float goalN2 = target.nitrogen * ambientBudget;
-            float goalO2 = target.oxygen * ambientBudget;
-            float goalAr = target.argon * ambientBudget;
-            float goalCo2 = target.carbonDioxide * ambientBudget;
+            if (surfaceAmbient && hardLock)
+            {
+                // Infinite outdoor air: O₂/CO₂/Ar stay at ambient; pollutants
+                // reserve volume from N₂ only (never steal breathables).
+                float reserved = PollutantReservedFraction(density, target);
+                float goalN2 = Mathf.Max(0f, 1f - reserved
+                    - target.oxygen - target.argon - target.carbonDioxide);
+                ApplyAmbientChannel(density, StrataGasDefOf.Strata_Oxygen, target.oxygen, strength, hardLock: true);
+                ApplyAmbientChannel(density, StrataGasDefOf.Strata_Argon, target.argon, strength, hardLock: true);
+                ApplyAmbientChannel(density, StrataGasDefOf.Strata_CarbonDioxide, target.carbonDioxide, strength, hardLock: true);
+                ApplyAmbientChannel(density, StrataGasDefOf.Strata_Nitrogen, goalN2, strength, hardLock: true);
+            }
+            else
+            {
+                float reserved = ReservedFraction(density, target);
+                float ambientBudget = Mathf.Max(0f, 1f - reserved);
+                float goalN2 = target.nitrogen * ambientBudget;
+                float goalO2 = target.oxygen * ambientBudget;
+                float goalAr = target.argon * ambientBudget;
+                float goalCo2 = target.carbonDioxide * ambientBudget;
 
-            ApplyAmbientChannel(density, StrataGasDefOf.Strata_Nitrogen, goalN2, strength, hardLock);
-            ApplyAmbientChannel(density, StrataGasDefOf.Strata_Oxygen, goalO2, strength, hardLock);
-            ApplyAmbientChannel(density, StrataGasDefOf.Strata_Argon, goalAr, strength, hardLock);
-            ApplyAmbientChannel(density, StrataGasDefOf.Strata_CarbonDioxide, goalCo2, strength, hardLock);
+                ApplyAmbientChannel(density, StrataGasDefOf.Strata_Nitrogen, goalN2, strength, hardLock);
+                ApplyAmbientChannel(density, StrataGasDefOf.Strata_Oxygen, goalO2, strength, hardLock);
+                ApplyAmbientChannel(density, StrataGasDefOf.Strata_Argon, goalAr, strength, hardLock);
+                ApplyAmbientChannel(density, StrataGasDefOf.Strata_CarbonDioxide, goalCo2, strength, hardLock);
+            }
 
             EnsureNormalized(density);
             atmosphere.WriteRoomDensity(room, density, sample);
@@ -488,7 +517,38 @@ namespace Strata
             EnsureNormalized(into);
         }
 
-        private static float ReservedFraction(float[] density, TargetMix target)
+        public static void EnforceAmbientBreathables(float[] density, Map map)
+        {
+            if (density == null || !ForcesAmbientInEnclosedRooms(map))
+            {
+                return;
+            }
+            TargetMix target = TargetForMap(map);
+            int o2 = IndexOf(StrataGasDefOf.Strata_Oxygen);
+            int ar = IndexOf(StrataGasDefOf.Strata_Argon);
+            int co2 = IndexOf(StrataGasDefOf.Strata_CarbonDioxide);
+            if (o2 >= 0)
+            {
+                density[o2] = target.oxygen;
+            }
+            if (ar >= 0)
+            {
+                density[ar] = target.argon;
+            }
+            if (co2 >= 0)
+            {
+                density[co2] = target.carbonDioxide;
+            }
+            float reserved = PollutantReservedFraction(density, target);
+            int n2 = IndexOf(StrataGasDefOf.Strata_Nitrogen);
+            if (n2 >= 0)
+            {
+                density[n2] = Mathf.Max(0f, 1f - reserved - target.oxygen - target.argon - target.carbonDioxide);
+            }
+        }
+
+        // Pollutants + pressurized overage + excess CO₂ — never O₂ deficit.
+        private static float PollutantReservedFraction(float[] density, TargetMix target)
         {
             float reserved = 0f;
             List<StrataGasDef> gases = AtmosphereMapComponent.Gases;
@@ -511,6 +571,12 @@ namespace Strata
             {
                 reserved += Mathf.Max(0f, density[co2Idx] - target.carbonDioxide);
             }
+            return Mathf.Clamp(reserved, 0f, 1f);
+        }
+
+        private static float ReservedFraction(float[] density, TargetMix target)
+        {
+            float reserved = PollutantReservedFraction(density, target);
             int o2Idx = IndexOf(StrataGasDefOf.Strata_Oxygen);
             if (o2Idx >= 0)
             {

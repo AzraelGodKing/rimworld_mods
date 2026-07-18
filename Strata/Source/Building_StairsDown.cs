@@ -266,10 +266,10 @@ namespace Strata
             {
                 return;
             }
-            exit.DeSpawn();
             PocketMapUtility.currentlyGeneratingPortal = this;
             try
             {
+                exit.DeSpawn();
                 StrataPortalUtility.SpawnLanding(exitDef, target, level);
             }
             finally

@@ -25,6 +25,7 @@ namespace Strata
 
             UpgradeVanillaCaveExits();
             RealignAllStairLandings();
+            StrataPortalUtility.RepairMissingLandings();
             RepairAllPocketMapTiles();
             Building_ShaftConduit.ReconcileAllAfterLoad();
             Building_OreHoist.ReconcileAllAfterLoad();
@@ -53,10 +54,10 @@ namespace Strata
                     {
                         continue;
                     }
-                    exit.DeSpawn();
                     PocketMapUtility.currentlyGeneratingPortal = entrance;
                     try
                     {
+                        exit.DeSpawn();
                         IntVec3 spot = entrance.FindLandingCell(map);
                         if (!spot.IsValid)
                         {
