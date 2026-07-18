@@ -30,12 +30,16 @@
   <Strata_Settings_CageSustainHunger>Sustain caged bird hunger</Strata_Settings_CageSustainHunger>
   <Strata_Settings_CageSustainHungerDesc>When off (default), canary and bird cages feed occupants from stocked hay or kibble. When on, hunger is frozen while a bird is caged — no food storage needed.</Strata_Settings_CageSustainHungerDesc>
   <Strata_Settings_SmokeGas>Smoke &amp; gas</Strata_Settings_SmokeGas>
+  <Strata_Settings_PollutantGases>Pollutant gases</Strata_Settings_PollutantGases>
+  <Strata_Settings_PollutantGasesDesc>Smoke, methane, deep gas pockets, spores, steam, black damp, and other harmful extras. Turning this off clears them, skips emit/drain/harm, and hides them on the gas overlay. Smoke inhalation severity below applies when this is on.</Strata_Settings_PollutantGasesDesc>
   <Strata_Settings_SmokeSimulation>Smoke simulation</Strata_Settings_SmokeSimulation>
   <Strata_Settings_SmokeSimulationDesc>Burners give off smoke that pools in unventilated rooms. Turning this off clears all existing smoke.</Strata_Settings_SmokeSimulationDesc>
   <Strata_Settings_SmokeSeverity>Smoke inhalation severity: {0} (how fast pawns are harmed by thick smoke)</Strata_Settings_SmokeSeverity>
   <Strata_Settings_UndergroundGas>Underground gas</Strata_Settings_UndergroundGas>
   <Strata_Settings_UndergroundGasDesc>Gas hazards of the deep: excavation can breach pockets of foul deep gas, and sunken ruin sites can appear. Sealed stairwells always contain gas either way.</Strata_Settings_UndergroundGasDesc>
   <Strata_Settings_DeepBreathing>Deep-level breathing</Strata_Settings_DeepBreathing>
+  <Strata_Settings_NaturalGases>Natural gases</Strata_Settings_NaturalGases>
+  <Strata_Settings_NaturalGasesDesc>Atmospheric breathing mix (N₂, O₂, Ar, ambient CO₂): surface lock, depth O₂ scarcity, hypoxia, plant CO₂↔O₂ exchange, and natural-gas overlay tints. Off treats air as fully breathable with no O₂ simulation.</Strata_Settings_NaturalGasesDesc>
   <Strata_Settings_BreathingSimulation>O₂ / CO₂ simulation</Strata_Settings_BreathingSimulation>
   <Strata_Settings_BreathingSimulationDesc>Underground levels track oxygen and carbon dioxide: colonists breathe O₂, exhale CO₂, O₂ rises through shafts, and CO₂ sinks. Turning this off clears both gases.</Strata_Settings_BreathingSimulationDesc>
   <Strata_Settings_GasOverlayLabels>Gas overlay room labels</Strata_Settings_GasOverlayLabels>
@@ -51,7 +55,7 @@
   <Strata_Settings_PerformanceModeDesc>Disables colonist work relay, Misc. Robots soft-compat, and external JobGiver work relay. Also runs atmosphere sims 4× slower, uses lite batched O₂/CO₂ on all levels, throttles pawn gas harm checks, and skips gas motes on levels you are not viewing. Use to A/B test Strata lag.</Strata_Settings_PerformanceModeDesc>
   <Strata_Settings_PerformanceModeActive>Performance mode is ON — cross-level work relays and robot soft-compat are suppressed.</Strata_Settings_PerformanceModeActive>
   <Strata_Settings_OffThreadAtmosphere>Off-thread O₂/CO₂ diffusion</Strata_Settings_OffThreadAtmosphere>
-  <Strata_Settings_OffThreadAtmosphereDesc>Runs the per-cell cavern diffusion pass on a background thread (snapshot on main thread, apply on main thread). Reduces hitching on large underground maps. On by default; turn off if you suspect atmosphere oddities.</Strata_Settings_OffThreadAtmosphereDesc>
+  <Strata_Settings_OffThreadAtmosphereDesc>Runs the per-cell cavern diffusion pass on a background thread (snapshot on main thread, apply on main thread). Reduces hitching on large underground maps. On by default; requires Natural gases. Turn off if you suspect atmosphere oddities.</Strata_Settings_OffThreadAtmosphereDesc>
   <Strata_Settings_AtmosphereQuality>Atmosphere quality</Strata_Settings_AtmosphereQuality>
   <Strata_Settings_AtmosphereQualityDesc>Controls how often gas and O₂/CO₂ sim runs on background levels. Low is cheapest; High keeps the viewed level snappy.</Strata_Settings_AtmosphereQualityDesc>
   <Strata_Settings_AtmosphereQualityLow>Low (background lite)</Strata_Settings_AtmosphereQualityLow>

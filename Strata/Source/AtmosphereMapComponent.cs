@@ -477,9 +477,12 @@ namespace Strata
                     ProcessGasPipeNetworks();
                     break;
                 case 1:
-                    SmokeRiseUtility.ProcessMap(this);
-                    SmokeRiseUtility.ProcessGasSink(this);
-                    SmokeRiseUtility.ProcessTowerShafts(this);
+                    if (PollutantGasesActive())
+                    {
+                        SmokeRiseUtility.ProcessMap(this);
+                        SmokeRiseUtility.ProcessGasSink(this);
+                        SmokeRiseUtility.ProcessTowerShafts(this);
+                    }
                     ProcessDoorFlow();
                     RunDisperseClouds();
                     RunEmittersAndHazards(skipReplenishOxygen: StrataLevelPerfUtility.IsHibernating(map));
@@ -509,16 +512,29 @@ namespace Strata
 
         private void ApplyGasToggleZeros()
         {
-            if (StrataMod.Settings != null && !StrataMod.Settings.smokeEnabled)
-            {
-                ZeroGasEverywhere(StrataGasDefOf.Strata_Smoke);
-            }
-            if (StrataMod.Settings != null && !StrataMod.Settings.breathingEnabled)
+            if (StrataMod.Settings != null && !StrataMod.Settings.NaturalGasesActive)
             {
                 ZeroGasEverywhere(StrataGasDefOf.Strata_Oxygen);
                 ZeroGasEverywhere(StrataGasDefOf.Strata_CarbonDioxide);
                 ZeroGasEverywhere(StrataGasDefOf.Strata_Nitrogen);
                 ZeroGasEverywhere(StrataGasDefOf.Strata_Argon);
+            }
+            if (StrataMod.Settings != null && !StrataMod.Settings.PollutantGasesActive)
+            {
+                ZeroPollutantGasesEverywhere();
+            }
+        }
+
+        private void ZeroPollutantGasesEverywhere()
+        {
+            List<StrataGasDef> gases = Gases;
+            for (int i = 0; i < gases.Count; i++)
+            {
+                StrataGasDef gas = gases[i];
+                if (AtmosphericMix.IsPollutantGas(gas))
+                {
+                    ZeroGasEverywhere(gas);
+                }
             }
         }
 
@@ -527,9 +543,12 @@ namespace Strata
             RefreshOutdoorVentCache();
             ProcessDirectionalVents();
             ProcessGasPipeNetworks();
-            SmokeRiseUtility.ProcessMap(this);
-            SmokeRiseUtility.ProcessGasSink(this);
-            SmokeRiseUtility.ProcessTowerShafts(this);
+            if (PollutantGasesActive())
+            {
+                SmokeRiseUtility.ProcessMap(this);
+                SmokeRiseUtility.ProcessGasSink(this);
+                SmokeRiseUtility.ProcessTowerShafts(this);
+            }
             ReplenishAmbientAtmosphere();
             ProcessDoorFlow();
             RunDisperseClouds();
@@ -603,7 +622,7 @@ namespace Strata
 
         private void RunEmitters()
         {
-            bool smokeOff = StrataMod.Settings != null && !StrataMod.Settings.smokeEnabled;
+            bool pollutantOff = StrataMod.Settings != null && !StrataMod.Settings.PollutantGasesActive;
             foreach (CompExhaust emitter in Emitters)
             {
                 if (!emitter.parent.Spawned || !emitter.Active)
@@ -611,7 +630,7 @@ namespace Strata
                     continue;
                 }
                 StrataGasDef gas = emitter.GasDef;
-                if (smokeOff && gas == StrataGasDefOf.Strata_Smoke)
+                if (pollutantOff && AtmosphericMix.IsPollutantGas(gas))
                 {
                     continue;
                 }
@@ -1678,9 +1697,19 @@ namespace Strata
             return Emitters.Count > 0;
         }
 
+        private bool NaturalGasesActive()
+        {
+            return StrataMod.Settings == null || StrataMod.Settings.NaturalGasesActive;
+        }
+
+        private bool PollutantGasesActive()
+        {
+            return StrataMod.Settings == null || StrataMod.Settings.PollutantGasesActive;
+        }
+
         private bool BreathingActive()
         {
-            return StrataMod.Settings == null || StrataMod.Settings.breathingEnabled;
+            return NaturalGasesActive();
         }
 
         // Surface, A+, and open underground columns stay topped up toward the
@@ -1816,6 +1845,10 @@ namespace Strata
 
         private void ProcessAnimalMethane()
         {
+            if (!PollutantGasesActive())
+            {
+                return;
+            }
             StrataGasDef methane = StrataGasDefOf.Strata_Methane;
             if (methane == null)
             {
@@ -1887,7 +1920,8 @@ namespace Strata
 
         private void ProcessOxygenDisplacement()
         {
-            if (!BreathingActive() || clouds.Count == 0 || StrataGasDefOf.Strata_Oxygen == null)
+            if (!NaturalGasesActive() || !PollutantGasesActive() || clouds.Count == 0
+                || StrataGasDefOf.Strata_Oxygen == null)
             {
                 return;
             }
@@ -1924,7 +1958,7 @@ namespace Strata
 
         private void ProcessGeyserSteam()
         {
-            if (StrataGasDefOf.Strata_Steam == null || !StrataMapUtility.IsUnderground(map))
+            if (!PollutantGasesActive() || StrataGasDefOf.Strata_Steam == null || !StrataMapUtility.IsUnderground(map))
             {
                 return;
             }
@@ -2010,6 +2044,14 @@ namespace Strata
             {
                 return;
             }
+            if (AtmosphericMix.IsAtmosphericComponent(gas) && !NaturalGasesActive())
+            {
+                return;
+            }
+            if (AtmosphericMix.IsPollutantGas(gas) && !PollutantGasesActive())
+            {
+                return;
+            }
             // The sample cell must sit INSIDE the room: it is how the cloud
             // resolves its room each cycle and where the overlay paints.
             // Callers often pass a door or vent cell, which belongs to its own
@@ -2092,6 +2134,10 @@ namespace Strata
         // burning smoke emitter (a running wood generator is an open firebox).
         private void CheckIgnition()
         {
+            if (!PollutantGasesActive())
+            {
+                return;
+            }
             FlammableRiskCells.Clear();
             if (clouds.Count == 0)
             {
@@ -2351,8 +2397,14 @@ namespace Strata
                     {
                         continue;
                     }
-                    if (!BreathingActive()
-                        && (gas == StrataGasDefOf.Strata_Oxygen || gas == StrataGasDefOf.Strata_CarbonDioxide))
+                    if (!NaturalGasesActive()
+                        && (gas.harmWhenBelow
+                            || gas == StrataGasDefOf.Strata_Oxygen
+                            || gas == StrataGasDefOf.Strata_CarbonDioxide))
+                    {
+                        continue;
+                    }
+                    if (!PollutantGasesActive() && AtmosphericMix.IsPollutantGas(gas))
                     {
                         continue;
                     }
@@ -2381,6 +2433,10 @@ namespace Strata
                     }
                     if (density > gas.harmThreshold)
                     {
+                        if (!PollutantGasesActive())
+                        {
+                            continue;
+                        }
                         float scale = gas == StrataGasDefOf.Strata_Smoke
                             ? StrataMod.Settings?.smokeSeverityScale ?? 1f
                             : 1f;

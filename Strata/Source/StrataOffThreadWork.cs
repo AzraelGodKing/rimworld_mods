@@ -20,7 +20,7 @@ namespace Strata
 
         public static bool OffThreadAtmosphereEnabled =>
             StrataMod.Settings?.offThreadAtmosphere != false
-            && StrataMod.Settings?.breathingEnabled != false;
+            && StrataMod.Settings?.NaturalGasesActive != false;
 
         public static void LogStartup()
         {

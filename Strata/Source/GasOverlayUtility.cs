@@ -41,6 +41,19 @@ namespace Strata
                 return 0f;
             }
 
+            StrataSettings settings = StrataMod.Settings;
+            if (settings != null)
+            {
+                if (!settings.NaturalGasesActive && AtmosphericMix.IsAtmosphericComponent(gas))
+                {
+                    return 0f;
+                }
+                if (!settings.PollutantGasesActive && AtmosphericMix.IsPollutantGas(gas))
+                {
+                    return 0f;
+                }
+            }
+
             if (gas.harmWhenBelow)
             {
                 if (density >= gas.harmThreshold)
@@ -672,6 +685,17 @@ namespace Strata
             {
                 StrataGasDef gas = gases[i];
                 float d = density[gas.index];
+                if (StrataMod.Settings != null)
+                {
+                    if (!StrataMod.Settings.NaturalGasesActive && AtmosphericMix.IsAtmosphericComponent(gas))
+                    {
+                        continue;
+                    }
+                    if (!StrataMod.Settings.PollutantGasesActive && AtmosphericMix.IsPollutantGas(gas))
+                    {
+                        continue;
+                    }
+                }
                 if (!AtmosphericMix.SignificantForReadout(gas, d, map))
                 {
                     continue;

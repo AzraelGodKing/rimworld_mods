@@ -16,13 +16,13 @@ namespace Strata
     // field with a cheap default.
     public class StrataSettings : ModSettings
     {
-        public bool smokeEnabled = true;
+        public bool naturalGasesEnabled = true;
+        public bool pollutantGasesEnabled = true;
         public float smokeSeverityScale = 1f;
-        public bool breathingEnabled = true;
         public bool gasOverlayRoomLabels = false;
         public bool gasEventsEnabled = true;
         public bool raidPursuitEnabled = true;
-        public const int CurrentSettingsVersion = 1;
+        public const int CurrentSettingsVersion = 2;
 
         public int settingsVersion = CurrentSettingsVersion;
         public bool workRelayEnabled = false;
@@ -59,12 +59,20 @@ namespace Strata
 
         public bool RobotSoftCompatActive => robotSoftCompatEnabled && !performanceModeEnabled;
 
+        public bool NaturalGasesActive => naturalGasesEnabled;
+
+        public bool PollutantGasesActive => pollutantGasesEnabled;
+
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look(ref smokeEnabled, "smokeEnabled", defaultValue: true);
+            Scribe_Values.Look(ref naturalGasesEnabled, "naturalGasesEnabled", defaultValue: true);
+            Scribe_Values.Look(ref pollutantGasesEnabled, "pollutantGasesEnabled", defaultValue: true);
             Scribe_Values.Look(ref smokeSeverityScale, "smokeSeverityScale", 1f);
-            Scribe_Values.Look(ref breathingEnabled, "breathingEnabled", defaultValue: true);
+            bool legacySmokeEnabled = true;
+            bool legacyBreathingEnabled = true;
+            Scribe_Values.Look(ref legacySmokeEnabled, "smokeEnabled", defaultValue: true);
+            Scribe_Values.Look(ref legacyBreathingEnabled, "breathingEnabled", defaultValue: true);
             Scribe_Values.Look(ref gasOverlayRoomLabels, "gasOverlayRoomLabels", defaultValue: false);
             Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
@@ -101,30 +109,40 @@ namespace Strata
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                MigrateSettings();
+                MigrateSettings(legacySmokeEnabled, legacyBreathingEnabled);
             }
         }
 
-        private void MigrateSettings()
+        private void MigrateSettings(bool legacySmokeEnabled, bool legacyBreathingEnabled)
         {
+            if (settingsVersion < 1)
+            {
+                bool hadWorkRelay = workRelayEnabled;
+                bool hadRobotWorkRelay = robotWorkRelayEnabled;
+                workRelayEnabled = false;
+                robotWorkRelayEnabled = false;
+
+                if (hadWorkRelay || hadRobotWorkRelay)
+                {
+                    Log.Message("[Strata] Settings migration v1"
+                        + ": disabled colonist work relay and Misc. Robots work relay"
+                        + " (old profiles kept them on; return/recharge soft-compat stays "
+                        + (robotSoftCompatEnabled ? "enabled" : "disabled") + ").");
+                }
+            }
+
+            if (settingsVersion < 2)
+            {
+                naturalGasesEnabled = legacyBreathingEnabled;
+                pollutantGasesEnabled = legacySmokeEnabled;
+            }
+
             if (settingsVersion >= CurrentSettingsVersion)
             {
                 return;
             }
 
-            bool hadWorkRelay = workRelayEnabled;
-            bool hadRobotWorkRelay = robotWorkRelayEnabled;
-            workRelayEnabled = false;
-            robotWorkRelayEnabled = false;
             settingsVersion = CurrentSettingsVersion;
-
-            if (hadWorkRelay || hadRobotWorkRelay)
-            {
-                Log.Message("[Strata] Settings migration v" + CurrentSettingsVersion
-                    + ": disabled colonist work relay and Misc. Robots work relay"
-                    + " (old profiles kept them on; return/recharge soft-compat stays "
-                    + (robotSoftCompatEnabled ? "enabled" : "disabled") + ").");
-            }
         }
     }
 
@@ -210,9 +228,9 @@ namespace Strata
             Text.Font = GameFont.Medium;
             listing.Label("Strata_Settings_SmokeGas".Translate());
             Text.Font = GameFont.Small;
-            listing.CheckboxLabeled("Strata_Settings_SmokeSimulation".Translate(), ref Settings.smokeEnabled,
-                "Strata_Settings_SmokeSimulationDesc".Translate());
-            if (Settings.smokeEnabled)
+            listing.CheckboxLabeled("Strata_Settings_PollutantGases".Translate(), ref Settings.pollutantGasesEnabled,
+                "Strata_Settings_PollutantGasesDesc".Translate());
+            if (Settings.pollutantGasesEnabled)
             {
                 listing.Label("Strata_Settings_SmokeSeverity".Translate(Settings.smokeSeverityScale.ToStringPercent()));
                 Settings.smokeSeverityScale = listing.Slider(Settings.smokeSeverityScale, 0f, 2f);
@@ -224,8 +242,8 @@ namespace Strata
             Text.Font = GameFont.Medium;
             listing.Label("Strata_Settings_DeepBreathing".Translate());
             Text.Font = GameFont.Small;
-            listing.CheckboxLabeled("Strata_Settings_BreathingSimulation".Translate(), ref Settings.breathingEnabled,
-                "Strata_Settings_BreathingSimulationDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_NaturalGases".Translate(), ref Settings.naturalGasesEnabled,
+                "Strata_Settings_NaturalGasesDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_GasOverlayLabels".Translate(), ref Settings.gasOverlayRoomLabels,
                 "Strata_Settings_GasOverlayLabelsDesc".Translate());
             listing.Gap();

@@ -99,6 +99,11 @@ namespace Strata
                 || gas == StrataGasDefOf.Strata_CarbonDioxide;
         }
 
+        public static bool IsPollutantGas(StrataGasDef gas)
+        {
+            return gas != null && !IsAtmosphericComponent(gas);
+        }
+
         public static bool IsPressurizedGas(StrataGasDef gas)
         {
             return gas == StrataGasDefOf.Strata_DeepGas;
