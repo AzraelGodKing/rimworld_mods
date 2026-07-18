@@ -383,7 +383,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_Jam</defName>
     <label>jam</label>
-    <description>Fruit boiled with sugar into thick, sweet preserves. A bright taste of summer that keeps for half the year.</description>
+    <description>Fruit boiled with sugar, honey, or maple syrup into thick, sweet preserves. Spread on toast, or stock the pantry for half the year.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
       <texPath>Homesteader/Items/Jam</texPath>
@@ -403,6 +403,7 @@
     <ingestible>
       <foodType>Meal</foodType>
       <preferability>RawTasty</preferability>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
       <ingestSound>Meal_Eat</ingestSound>
     </ingestible>
     <comps>
@@ -447,7 +448,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_Cream</defName>
     <label>cream</label>
-    <description>Rich cream skimmed from fresh milk at the churn. A luxurious cooking ingredient that spoils quickly.</description>
+    <description>Rich cream skimmed from fresh milk at the churn. Churn it into butter or press it with rock salt into cheese.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
       <texPath>Homesteader/Items/Cream</texPath>
@@ -484,7 +485,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_Cheese</defName>
     <label>cheese</label>
-    <description>A wheel of pressed farmhouse cheese. Keeps for months, travels well, and tastes far better than the milk it came from.</description>
+    <description>A wheel of pressed farmhouse cheese made from cream and rock salt. Keeps for months and travels well.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
       <texPath>Homesteader/Items/Cheese</texPath>
@@ -504,6 +505,7 @@
     <ingestible>
       <foodType>Meal</foodType>
       <preferability>RawTasty</preferability>
+      <tasteThought>Homesteader_AteFineCheese</tasteThought>
       <ingestSound>Meal_Eat</ingestSound>
     </ingestible>
     <comps>
@@ -594,6 +596,95 @@
     <comps>
       <li Class="CompProperties_Rottable">
         <daysToRotStart>7</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ============ Toast and jam ============ -->
+  <ThingDef ParentName="MealBase">
+    <defName>Homesteader_ToastAndJam</defName>
+    <label>toast and jam</label>
+    <description>Warm toasted bread spread thick with pantry jam. A quick farmhouse breakfast that tastes like summer.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/ToastAndJam</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>8</MarketValue>
+      <Mass>0.1</Mass>
+      <Nutrition>0.9</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+      <joy>0.06</joy>
+      <joyKind>Gluttonous</joyKind>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>6</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ============ Ploughman's lunch ============ -->
+  <ThingDef ParentName="MealBase">
+    <defName>Homesteader_PloughmansLunch</defName>
+    <label>ploughman's lunch</label>
+    <description>Bread, cheese, and pickles assembled into a classic farmhouse plate. Hearty enough for a long afternoon in the fields.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/PloughmansLunch</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>16</MarketValue>
+      <Mass>0.25</Mass>
+      <Nutrition>0.95</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealFine</preferability>
+      <tasteThought>AteFineMeal</tasteThought>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+      <joy>0.05</joy>
+      <joyKind>Gluttonous</joyKind>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>5</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ============ Honey porridge ============ -->
+  <ThingDef ParentName="MealBase">
+    <defName>Homesteader_HoneyPorridge</defName>
+    <label>honey porridge</label>
+    <description>A warm bowl of grain porridge finished with a generous pour of honey. Sweeter and more comforting than the everyday porridge.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/HoneyPorridge</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>14</MarketValue>
+      <Mass>0.3</Mass>
+      <Nutrition>0.9</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+      <joy>0.1</joy>
+      <joyKind>Gluttonous</joyKind>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>4</daysToRotStart>
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>

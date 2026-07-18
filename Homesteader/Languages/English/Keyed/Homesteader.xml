@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Wash tub -->
+  <Homesteader_NeedsSoapInWashTub>Needs soap in the wash tub.</Homesteader_NeedsSoapInWashTub>
+
+  <!-- Passive cooling (root cellar / icehouse / springhouse) -->
+  <Homesteader_PassiveCoolStorage>Passive cool storage: items (and adjacent indoor cells) stay at or below {0}</Homesteader_PassiveCoolStorage>
+
+  <!-- Favorite food (pawn inspect) -->
+  <Homesteader_FavoriteFoodInspect>Favorite food: {0}</Homesteader_FavoriteFoodInspect>
+
+  <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
+  <Homesteader_KatsLetter_Open>An anomalous broadcast has locked onto your colony's 27 monument frequency. A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — "brain rot," they call it.</Homesteader_KatsLetter_Open>
+  <Homesteader_KatsLetter_SilverTaken>Colony accounts show {0} silver diverted as a "Super Chat."</Homesteader_KatsLetter_SilverTaken>
+  <Homesteader_KatsLetter_NoSilver>The broadcast asked for a Super Chat, but the colony had no silver to spare.</Homesteader_KatsLetter_NoSilver>
+  <Homesteader_KatsLetter_FoundationHeader>Foundation addendum // Item # SCP-27272727 // Keter (Adorable)</Homesteader_KatsLetter_FoundationHeader>
+  <Homesteader_KatsLetter_ContainmentNote>Containment note: hydrate / medicate / masticate. Do not look away from the number.</Homesteader_KatsLetter_ContainmentNote>
+
+</LanguageData>

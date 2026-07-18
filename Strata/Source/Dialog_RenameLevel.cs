@@ -23,7 +23,7 @@ namespace Strata
         public override void DoWindowContents(Rect inRect)
         {
             Text.Font = GameFont.Small;
-            Widgets.Label(new Rect(0f, 0f, inRect.width, 28f), "Rename this level:");
+            Widgets.Label(new Rect(0f, 0f, inRect.width, 28f), "Strata_RenameLevelPrompt".Translate());
             curName = Widgets.TextField(new Rect(0f, 36f, inRect.width, 30f), curName);
             if (Widgets.ButtonText(new Rect(0f, inRect.height - 35f, 120f, 35f), "OK".Translate()))
             {

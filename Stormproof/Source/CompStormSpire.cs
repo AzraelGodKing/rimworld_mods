@@ -150,8 +150,7 @@ namespace Stormproof
             if (harvested > 0f)
             {
                 Messages.Message(
-                    parent.LabelShort + " caught a lightning strike: +" +
-                    harvested.ToString("F0") + " Wd stored.",
+                    "Stormproof_StormSpire_StrikeHarvested".Translate(parent.LabelShort, harvested.ToString("F0")),
                     parent, MessageTypeDefOf.PositiveEvent);
             }
             if (!SurgeRiskEliminated && Rand.Chance(Props.zzztChancePerStrike))
@@ -175,13 +174,13 @@ namespace Stormproof
         {
             if (!GridConnected)
             {
-                return "Grounded: attracts lightning safely. Connect to a power grid to harvest strikes.";
+                return "Stormproof_StormSpire_Grounded".Translate();
             }
             string surge = SurgeRiskEliminated
-                ? "no surge risk (perfect grounding)"
-                : (Props.zzztChancePerStrike * 100f).ToString("F0") + "% surge risk per strike";
-            return "Grid-connected: strikes charge batteries (+" + Props.energyPerStrike.ToString("F0") +
-                   " Wd), " + surge + ".";
+                ? "Stormproof_StormSpire_SurgeRiskNone".Translate()
+                : "Stormproof_StormSpire_SurgeRiskPercent".Translate((Props.zzztChancePerStrike * 100f).ToString("F0"));
+            return "Stormproof_StormSpire_GridConnected".Translate(
+                Props.energyPerStrike.ToString("F0"), surge);
         }
     }
 }

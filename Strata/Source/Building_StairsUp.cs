@@ -116,7 +116,7 @@ namespace Strata
 
         public override AcceptanceReport DeconstructibleBy(Faction faction)
         {
-            return "It's the only way up.";
+            return "Strata_OnlyWayUp".Translate();
         }
 
         public override void OnEntered(Pawn pawn)
@@ -148,8 +148,8 @@ namespace Strata
             StairwellDigUtility.CanDigDownFromLanding(this, out string reason);
             yield return new Command_Action
             {
-                defaultLabel = "Dig down",
-                defaultDesc = "Designate a dig shaft beside this landing. Colonists must finish carving it — same work as an excavated stairwell — before the next level opens. Below the first underground level requires deep excavation research.",
+                defaultLabel = "Strata_DigDownLabel".Translate(),
+                defaultDesc = "Strata_DigDownFromLandingDesc".Translate(),
                 icon = ContentFinder<Texture2D>.Get("UI/Designators/Mine", reportFailure: false),
                 action = () =>
                 {

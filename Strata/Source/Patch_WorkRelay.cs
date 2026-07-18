@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -18,7 +17,11 @@ namespace Strata
             {
                 return;
             }
-            if (StrataMod.Settings != null && !StrataMod.Settings.workRelayEnabled)
+            if (StrataMod.Settings == null || !StrataMod.Settings.WorkRelayActive)
+            {
+                return;
+            }
+            if (pawn == null || !pawn.IsFreeColonist)
             {
                 return;
             }
@@ -26,7 +29,12 @@ namespace Strata
             {
                 return;
             }
-            var links = new List<LevelGraph.LevelLink>(LevelGraph.ReachableLevels(pawn.Map));
+            if (PawnRelay.IsColonistWorkScanCooldown(pawn))
+            {
+                return;
+            }
+            PawnRelay.TouchColonistWorkScan(pawn);
+            var links = LevelGraph.ReachableLevels(pawn.Map);
             LevelRoleUtility.SortLinksByRole(links, LevelRole.Workshop);
             foreach (LevelGraph.LevelLink link in links)
             {

@@ -99,12 +99,12 @@ namespace Strata
             }
             if (!Active)
             {
-                return "Needs power to enrich the room with " + GasDef.label + ".";
+                return "Strata_ExhaustNeedsPower".Translate(GasDef.label);
             }
             Room room = parent.GetRoom();
             if (room == null || room.UsesOutdoorTemperature)
             {
-                return "Releasing " + GasDef.label + " (open air — no enrichment needed).";
+                return "Strata_ExhaustOpenAir".Translate(GasDef.label);
             }
             AtmosphereMapComponent atmosphere = parent.Map.GetComponent<AtmosphereMapComponent>();
             float density = atmosphere?.DensityAtCell(parent.Position, GasDef) ?? 0f;
@@ -114,7 +114,7 @@ namespace Strata
                     ? "Room air is breathable."
                     : "Enriching room with " + GasDef.label + " (" + density.ToStringPercent() + ").";
             }
-            return "Releasing " + GasDef.label + " into the room.";
+            return "Strata_ExhaustIntoRoom".Translate(GasDef.label);
         }
 
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)

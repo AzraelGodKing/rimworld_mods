@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Canning kitchen ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_CanningKitchen</defName>
+    <label>canning kitchen</label>
+    <description>A wood-fired canning setup with a water bath and jar rack. Seals stew and jam into mason jars for years of shelf life.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/CanningKitchen</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>55</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>true</rotatable>
+    <size>(2,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>160</MaxHitPoints>
+      <WorkToBuild>1600</WorkToBuild>
+      <Mass>28</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>40</WoodLog>
+      <Steel>35</Steel>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>25.0</fuelConsumptionRate>
+        <fuelCapacity>25.0</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>WoodLog</li>
+          </thingDefs>
+        </fuelFilter>
+        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+      </li>
+    </comps>
+    <recipes>
+      <li>Homesteader_MakeMasonJars</li>
+      <li>Homesteader_CanStew</li>
+      <li>Homesteader_CanJam</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_PantryCraft</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Cider press ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_CiderPress</defName>
+    <label>cider press</label>
+    <description>A screw press for crushing orchard apples into fresh juice. Press juice here, then ferment at the brewing bench.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/CiderPress</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>45</pathCost>
+    <fillPercent>0.35</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>110</MaxHitPoints>
+      <WorkToBuild>1000</WorkToBuild>
+      <Mass>14</Mass>
+      <Flammability>0.6</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>45</WoodLog>
+      <Steel>15</Steel>
+    </costList>
+    <recipes>
+      <li>Homesteader_PressAppleJuice</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_PantryCraft</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Wash tub ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_WashTub</defName>
+    <label>wash tub</label>
+    <description>A wooden tub and washboard for a proper scrub with homestead soap. Keep the tub fueled with soap bars, then use it for a freshly washed mood boost.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/WashTub</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <fillPercent>0.3</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>700</WorkToBuild>
+      <Mass>10</Mass>
+      <Flammability>0.7</Flammability>
+      <Beauty>3</Beauty>
+    </statBases>
+    <costList>
+      <WoodLog>35</WoodLog>
+      <Steel>5</Steel>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>0</fuelConsumptionRate>
+        <fuelCapacity>10.0</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>Homesteader_Soap</li>
+          </thingDefs>
+        </fuelFilter>
+        <initialFuelPercent>0</initialFuelPercent>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+      </li>
+      <li Class="CompProperties_Usable">
+        <useJob>UseItem</useJob>
+        <useLabel>Wash at tub</useLabel>
+        <compClass>CompUsable</compClass>
+      </li>
+      <li Class="Homesteader.CompProperties_UseEffectWashAtTub" />
+    </comps>
+    <designationCategory>Furniture</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsFurniture</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_PantryCraft</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>
