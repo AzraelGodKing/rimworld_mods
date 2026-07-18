@@ -34,22 +34,21 @@ namespace Strata
     [HarmonyPatch(typeof(FloatMenuOptionProvider_DraftedMove), nameof(FloatMenuOptionProvider_DraftedMove.PawnGotoAction))]
     public static class Patch_DraftedMove_PawnGotoAction
     {
-        public static bool Prefix(Pawn pawn, IntVec3 gotoLoc)
+        // clickCell = player's click; gotoLoc = BestOrderedGotoDestNear snap, which
+        // for a sealed bunker is the wall (reachable) — that was making us fall
+        // through to vanilla Goto. Prefer a stair detour to the click instead.
+        public static bool Prefix(IntVec3 clickCell, Pawn pawn, IntVec3 gotoLoc)
         {
             if (pawn == null || !pawn.Spawned || !pawn.Drafted)
             {
                 return true;
             }
 
-            // Vanilla Goto when the cell is already walkable on this map.
-            if (pawn.CanReach(gotoLoc, PathEndMode.OnCell, Danger.Deadly))
+            IntVec3 intended = DraftedPortalPathing.ResolveIntendedDest(pawn, clickCell, gotoLoc);
+            if (!ReachabilityUtility.CanReach(pawn, intended, PathEndMode.OnCell, Danger.Deadly)
+                && DraftedPortalPathing.TryOrderDetour(pawn, intended))
             {
-                return true;
-            }
-
-            if (DraftedPortalPathing.TryOrderDetour(pawn, gotoLoc))
-            {
-                FleckMaker.Static(gotoLoc, pawn.Map, FleckDefOf.FeedbackGoto);
+                FleckMaker.Static(intended, pawn.Map, FleckDefOf.FeedbackGoto);
                 return false;
             }
 

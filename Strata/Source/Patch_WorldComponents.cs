@@ -30,6 +30,8 @@ namespace Strata
         public static void Postfix()
         {
             StrataRobotDiagnostics.Tick();
+            DraftedPortalPathing.Tick();
+            PortalRelayChain.Tick();
             if (Find.TickManager.TicksGame % 250 == 0)
             {
                 StrataCaravanUtility.TickCaravanPull();
