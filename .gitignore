@@ -1,3 +1,5 @@
+*.dll
+
 Homesteader/Source/obj/
 Homesteader/Source/bin/
 Stormproof/Source/obj/
