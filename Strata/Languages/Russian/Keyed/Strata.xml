@@ -119,6 +119,8 @@
   <Strata_Alert_SealedColonists_Explanation>Колонисты на связанном уровне, у которого все выходные шахты запечатаны. Они не смогут вернуться, пока лестница или лифт не будут распечатаны.</Strata_Alert_SealedColonists_Explanation>
   <Strata_Alert_Canary_Label>Предупреждение канарейки</Strata_Alert_Canary_Label>
   <Strata_Alert_Canary_Explanation>Шахтная канарейка страдает или мертва от плохого воздуха в клетке. Канарейки гибнут раньше колонистов — проветрите комнату или эвакуируйтесь, пока люди не начали кашлять, задыхаться или хуже.</Strata_Alert_Canary_Explanation>
+  <Strata_Alert_SleepBedNotFound_Label>Кровать не найдена</Strata_Alert_SleepBedNotFound_Label>
+  <Strata_Alert_SleepBedNotFound_Explanation>Колонисту нужен сон, но на его этаже и связанных уровнях (земля, выше или ниже) нет свободной кровати. Постройте или освободите кровать колониста либо назначьте её вручную.</Strata_Alert_SleepBedNotFound_Explanation>
 
   <!-- Levels tab / roles -->
   <Strata_RenameLevelPrompt>Переименовать этот уровень:</Strata_RenameLevelPrompt>
