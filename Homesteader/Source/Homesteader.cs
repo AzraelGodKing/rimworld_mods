@@ -4,9 +4,9 @@ using Verse;
 namespace Homesteader
 {
     [StaticConstructorOnStartup]
-    public static class HomesteaderMod
+    public static class HomesteaderHarmony
     {
-        static HomesteaderMod()
+        static HomesteaderHarmony()
         {
             new Harmony("azraelgodking.homesteader").PatchAll();
         }
