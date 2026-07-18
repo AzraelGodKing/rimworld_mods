@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Homesteader — a RimWorld mod by AzraelGodKing</title>
-<meta name="description" content="Homesteader: tribal survival, farm-to-table crafting, wells and irrigation, storage, food preservation, and power. Requires Harmony. RimWorld 1.4–1.6.">
-<link rel="stylesheet" href="style.css">
+<meta name="description" content="Homesteader: tribal survival, farm-to-table crafting, wells and irrigation, cool storage, comforts, and off-grid power. Requires Harmony. RimWorld 1.4–1.6.">
+<link rel="stylesheet" href="homesteader.css">
 </head>
-<body>
+<body class="hs">
 
-<nav class="site-nav">
-  <div class="wrap">
-    <a class="brand" href="index.html">RIMWORLD MODS</a>
-    <div class="nav-links">
+<nav class="hs-nav">
+  <div class="hs-wrap hs-nav-inner">
+    <a class="hs-nav-brand" href="index.html">RimWorld Mods</a>
+    <div class="hs-nav-links">
       <a href="index.html">Home</a>
       <a href="homesteader.html" class="active">Homesteader</a>
       <a href="stormproof.html">Stormproof</a>
@@ -22,749 +22,187 @@
   </div>
 </nav>
 
-<header class="hero">
-  <div class="wrap">
-    <h1 class="h">HOMESTEADER</h1>
-    <p class="tagline">Tribal survival &bull; Farm-to-table &bull; Water &bull; Storage &bull; Power</p>
-    <div class="badges">
-      <span class="badge">RimWorld 1.4 / 1.5 / 1.6</span>
-      <span class="badge">Requires Harmony</span>
-      <span class="badge">Save-safe to add</span>
-      <span class="badge">90+ new things</span>
-      <span class="badge">Custom scenario &amp; trader</span>
-    </div>
-    <div class="cta">
-      <a class="btn btn-primary" href="downloads/Homesteader.zip" download>&#11015; Download Homesteader</a>
-      <a class="btn btn-ghost" href="homesteader-catalog.html">Item catalog</a>
-      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+<header class="hs-hero">
+  <div class="hs-hero-media" aria-hidden="true">
+    <img src="img/HomesteadHearth.png" alt="">
+  </div>
+  <div class="hs-hero-copy">
+    <h1 class="hs-brand">Homesteader</h1>
+    <p class="hs-hero-line">Grow it, put it by, live off the land.</p>
+    <p class="hs-hero-sub">A farmstead mod for RimWorld — pantry craft, wells, cool cellars, and wood-fired power.</p>
+    <div class="hs-cta">
+      <a class="hs-btn hs-btn-primary" href="downloads/Homesteader.zip" download>Download</a>
+      <a class="hs-btn hs-btn-ghost" href="homesteader-catalog.html">Item catalog</a>
     </div>
   </div>
 </header>
 
-<div class="wrap">
+<main class="hs-main">
+  <div class="hs-wrap">
 
-  <!-- RELEASE A -->
-  <section id="tribal">
-    <span class="tier-label">Release A &mdash; Winter pantry</span>
-    <h2>Tribal Survival</h2>
-    <p class="sub">The drying rack needs no research. Curing, smoking, and farm storage unlock with <b>Primitive homestead</b> (included in the Homesteaders scenario).</p>
-    <div class="grid">
-      <div class="card wide">
-        <img src="img/DryingRack.png" alt="Drying rack">
-        <div>
-          <h3>Drying rack</h3>
-          <div class="stat">no power &middot; no research &middot; 60 wood</div>
-          <p>Air-dry meat into <b>jerky</b>, plants into <b>dried produce</b>, fruit into <b>fruit leather</b>, fungus into <b>dried mushrooms</b>, or mix meat and plants into <b>pemmican</b> &mdash; without needing pemmican research.</p>
+    <section class="hs-section" id="preserve">
+      <span class="hs-kicker">Winter pantry</span>
+      <h2>Preserve without a freezer</h2>
+      <p class="hs-lead">Dry, salt, and smoke from day one of a tribal start. The drying rack needs no research; curing and smoking unlock with Primitive homestead.</p>
+      <div class="hs-feature">
+        <div class="hs-feature-visual">
+          <img src="img/DryingRack.png" alt="Drying rack">
+        </div>
+        <div class="hs-feature-copy">
+          <h3>Racks, smoke, and trail food</h3>
+          <p>Turn surplus into stores that survive the caravan and the cold snap.</p>
+          <ul class="hs-points">
+            <li>Drying rack — jerky, fruit leather, dried produce, pemmican</li>
+            <li>Curing rack — rock salt and salted meat</li>
+            <li>Smokehouse — smoked meat (and smoked fish with Odyssey)</li>
+            <li>Hayloft and ingredient barrel for bulk farm storage</li>
+          </ul>
         </div>
       </div>
-      <div class="card wide">
-        <img src="img/CuringRack.png" alt="Curing rack">
-        <div>
-          <h3>Curing rack</h3>
-          <div class="stat">no power &middot; Primitive homestead &middot; 40 wood</div>
-          <p>Chip <b>rock salt</b> from stone chunks, then salt-cure raw meat into <b>salted meat</b> that keeps for six weeks and still cooks into meals.</p>
-        </div>
-      </div>
-      <div class="card wide">
-        <img src="img/Smokehouse.png" alt="Smokehouse">
-        <div>
-          <h3>Smokehouse</h3>
-          <div class="stat">wood-fired &middot; Primitive homestead &middot; 90 wood + 20 steel</div>
-          <p>Cure raw meat into <b>smoked meat</b> that keeps for a month with no freezer. Odyssey owners also get <b>smoked fish</b>.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/IngredientBarrel.png" alt="Ingredient barrel">
-        <div>
-          <h3>Ingredient barrel</h3>
-          <div class="stat">3 stacks &middot; meat, milk, eggs &middot; Primitive homestead</div>
-          <p>Kitchen staples, sheltered from the weather.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/Hayloft.png" alt="Hayloft">
-        <div>
-          <h3>Hayloft</h3>
-          <div class="stat">4 stacks &middot; hay &amp; plants &middot; Primitive homestead</div>
-          <p>Bulk farm storage for hay, raw plants, and smokeleaf.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/Jerky.png" alt="Jerky">
-        <div>
-          <h3>Jerky</h3>
-          <div class="stat">60 days &middot; ultralight</div>
-          <p>Trail food and emergency rations.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/FruitLeather.png" alt="Fruit leather">
-        <div>
-          <h3>Fruit leather</h3>
-          <div class="stat">90 days &middot; ultralight</div>
-          <p>Sweet dried fruit sheets for caravans.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/SmokedMeat.png" alt="Smoked meat">
-        <div>
-          <h3>Salted / smoked meat</h3>
-          <div class="stat">30&ndash;45 days &middot; cooks into meals</div>
-          <p>Freezer-free protein for your cooks.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- RELEASE B -->
-  <section id="farm">
-    <span class="tier-label">Release B &mdash; From the field</span>
-    <h2>Farm-to-Table</h2>
-    <p class="sub">Turn harvest into storable ingredients and comfort meals. Unlocked by <b>Farmstead crafting</b> research.</p>
-    <div class="grid">
-      <div class="card">
-        <img src="img/GrainMill.png" alt="Grain mill">
-        <div>
-          <h3>Grain mill</h3>
-          <div class="stat">hand-cranked &middot; 45 wood + 10 steel &middot; Farmstead crafting</div>
-          <p>Grind plants into <b>flour</b> and sugar beets into <b>sugar</b>. No power needed.</p>
+    <section class="hs-section" id="kitchen">
+      <span class="hs-kicker">Farm to table</span>
+      <h2>A kitchen that earns its keep</h2>
+      <p class="hs-lead">Mill grain, churn butter, press cheese, brew cider, and plate pantry meals at the homestead hearth.</p>
+      <div class="hs-feature reverse">
+        <div class="hs-feature-copy">
+          <h3>Dairy, jam, and hearth meals</h3>
+          <p>Recipes lean on what you grew — cream, sugar, fruit, and smoked leftovers — not a chemfuel factory.</p>
+          <ul class="hs-points">
+            <li>Grain mill, butter churn, cheese press, pickling crock</li>
+            <li>Jam cauldron and brewing bench</li>
+            <li>Toast and jam, ploughman’s lunch, honey porridge, pie</li>
+            <li>Favorite foods — pawns remember what they love</li>
+          </ul>
+        </div>
+        <div class="hs-feature-visual">
+          <img src="img/JamCauldron.png" alt="Jam cauldron">
         </div>
       </div>
-      <div class="card">
-        <img src="img/ButterChurn.png" alt="Butter churn">
-        <div>
-          <h3>Butter churn</h3>
-          <div class="stat">35 wood &middot; Farmstead crafting</div>
-          <p>Skim milk into <b>cream</b>, then churn cream into <b>butter</b> for baking.</p>
-        </div>
+      <div class="hs-strip" aria-label="Pantry highlights">
+        <figure>
+          <img src="img/ToastAndJam.png" alt="Toast and jam">
+          <figcaption>Toast and jam</figcaption>
+        </figure>
+        <figure>
+          <img src="img/WaxedCheese.png" alt="Waxed cheese">
+          <figcaption>Waxed cheese</figcaption>
+        </figure>
+        <figure>
+          <img src="img/Cider.png" alt="Cider">
+          <figcaption>Homestead cider</figcaption>
+        </figure>
       </div>
-      <div class="card">
-        <img src="img/PicklingCrock.png" alt="Pickling crock">
-        <div>
-          <h3>Pickling crock</h3>
-          <div class="stat">40 wood + 5 steel &middot; Farmstead crafting</div>
-          <p>Ferment vegetables into <b>pickled vegetables</b> (120 days).</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/CheesePress.png" alt="Cheese press">
-        <div>
-          <h3>Cheese press</h3>
-          <div class="stat">40 wood + 5 steel &middot; Farmstead crafting</div>
-          <p>Press <b>cream</b> with rock salt into <b>cheese</b> that keeps for two months.</p>
-        </div>
-      </div>
-      <div class="card wide">
-        <img src="img/HomesteadHearth.png" alt="Homestead hearth">
-        <div>
-          <h3>Homestead hearth</h3>
-          <div class="stat">wood-fired oven &middot; 50 wood + 15 steel &middot; Farmstead crafting</div>
-          <p>Bake <b>bread</b>, <b>hardtack</b>, <b>pumpkin pie</b>, and <b>buttermilk biscuits</b>. Assemble <b>toast and jam</b> and <b>ploughman's lunch</b>. Simmer porridges and herb-seasoned stews. Boil maple syrup and griddle <b>flapjacks</b>.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/ToastAndJam.png" alt="Toast and jam">
-        <div>
-          <h3>Toast and jam</h3>
-          <div class="stat">bread + jam &middot; joy snack</div>
-          <p>Pantry breakfast that finally spends your jam jars.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/PloughmansLunch.png" alt="Ploughman's lunch">
-        <div>
-          <h3>Ploughman's lunch</h3>
-          <div class="stat">bread + cheese + pickles &middot; fine meal</div>
-          <p>The classic farmhouse plate from a stocked preserves shelf.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/HoneyPorridge.png" alt="Honey porridge">
-        <div>
-          <h3>Honey porridge</h3>
-          <div class="stat">grain + honey &middot; joy bonus</div>
-          <p>A sweeter bowl than everyday porridge — the apiary's breakfast.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/PumpkinPie.png" alt="Pumpkin pie">
-        <div>
-          <h3>Pumpkin pie</h3>
-          <div class="stat">pumpkin + flour + butter + sweetener</div>
-          <p>The harvest crop's signature dish.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/ButtermilkBiscuits.png" alt="Buttermilk biscuits">
-        <div>
-          <h3>Buttermilk biscuits</h3>
-          <div class="stat">flour + buttermilk + butter</div>
-          <p>Soft biscuits from the cream→butter byproduct.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="favorites">
-    <h2>Favorite food</h2>
-    <p class="sub">Every humanlike with a mood — colonists, guests, and raiders alike — rolls a personal favorite.</p>
-    <div class="grid">
-      <div class="card wide">
-        <img src="img/Flapjacks.png" alt="Favorite food">
-        <div>
-          <h3>Personal favorites</h3>
-          <div class="stat">C# &middot; auto-assigned &middot; +8 mood when eaten</div>
-          <p>Shown on the pawn inspect pane. Pawns prefer their favorite when choosing meals, and getting it grants a strong moodlet. The pool includes Homesteader pantry foods plus vanilla meals and treats (fine meals, chocolate, beer, pemmican, and more).</p>
+    <section class="hs-section" id="water">
+      <span class="hs-kicker">Wellcraft</span>
+      <h2>Water that feeds the fields</h2>
+      <p class="hs-lead">Former Wellspring content ships inside Homesteader. Draw, catch, store, and trench water into irrigated soil. With Dubs Bad Hygiene, tanks join the plumbing net.</p>
+      <div class="hs-feature">
+        <div class="hs-feature-visual">
+          <img src="img/HandDugWell.png" alt="Hand-dug well">
+        </div>
+        <div class="hs-feature-copy">
+          <h3>Wells, barrels, and irrigation</h3>
+          <ul class="hs-points">
+            <li>Hand-dug and deep wells, rain barrels, cisterns, solar stills</li>
+            <li>Water towers for elevated reserve</li>
+            <li>Irrigated soil and planters for richer crops</li>
+            <li>Boiled water, mud bricks, and clean bandages</li>
+          </ul>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CROPS -->
-  <section id="crops">
-    <h2>Crops &amp; Beekeeping</h2>
-    <p class="sub">Four field crops, a three-tree orchard, and an apiary, all feeding the homestead kitchen.</p>
-    <div class="grid">
-      <div class="card">
-        <img src="img/RawBarley.png" alt="Barley">
-        <div>
-          <h3>Barley</h3>
-          <div class="stat">hardy grain</div>
-          <p>Mills into flour and cooks into porridge at the homestead hearth.</p>
+    <section class="hs-section" id="settle">
+      <span class="hs-kicker">Settle in</span>
+      <h2>Cool storage, comforts, and power</h2>
+      <p class="hs-lead">Root cellars keep the pantry cold. Quilted beds and maypoles make the yard feel like home. Batteries and a wood generator keep the lights on without a reactor.</p>
+      <div class="hs-feature reverse">
+        <div class="hs-feature-copy">
+          <h3>From cellar to generator</h3>
+          <ul class="hs-points">
+            <li>Root cellar, icehouse, and springhouse passive cooling</li>
+            <li>Quilted beds, rocking chairs, harvest maypole, 27 statues</li>
+            <li>Compact through ultratech batteries</li>
+            <li>Wood-burning and portable generators</li>
+          </ul>
+        </div>
+        <div class="hs-feature-visual">
+          <img src="img/RootCellar.png" alt="Root cellar">
         </div>
       </div>
-      <div class="card">
-        <img src="img/RawPumpkin.png" alt="Pumpkin">
-        <div>
-          <h3>Pumpkin</h3>
-          <div class="stat">big autumn harvests</div>
-          <p>A heavy vegetable for stews, pickling, and drying.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/DriedHerbs.png" alt="Herbs">
-        <div>
-          <h3>Herbs</h3>
-          <div class="stat">dries into dried herbs</div>
-          <p>Seasoning for the kitchen and leaves for <b>herbal tea</b>.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/SugarBeet.png" alt="Sugar beet">
-        <div>
-          <h3>Sugar beet</h3>
-          <div class="stat">mills into sugar</div>
-          <p>The homestead's sweetener for jam and brewing.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/RawApples.png" alt="Apples">
-        <div>
-          <h3>Apple tree</h3>
-          <div class="stat">regrows after harvest &middot; Primitive homestead research</div>
-          <p>Slow to establish, then baskets of crisp apples for <b>cider</b>, <b>jam</b>, and the fruit bowl.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/RawCherries.png" alt="Cherries">
-        <div>
-          <h3>Cherry tree</h3>
-          <div class="stat">regrows after harvest &middot; Primitive homestead research</div>
-          <p>Heavy clusters of sweet dark cherries &mdash; the jam cauldron's favorite fruit.</p>
-        </div>
-      </div>
-      <div class="card wide">
-        <img src="img/MapleSyrup.png" alt="Maple syrup">
-        <div>
-          <h3>Sugar maple</h3>
-          <div class="stat">taps for maple sap &middot; boils into syrup at the hearth</div>
-          <p>Harvest <b>maple sap</b> each time the tree matures, boil it down into never-spoiling <b>maple syrup</b>, then griddle up <b>flapjacks</b> &mdash; the definitive homestead breakfast.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/MapleSap.png" alt="Maple sap">
-        <div>
-          <h3>Maple sap</h3>
-          <div class="stat">from sugar maple harvest</div>
-          <p>Boil eight sap at the hearth into two syrup &mdash; or trade the raw buckets while you wait.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/Flapjacks.png" alt="Flapjacks">
-        <div>
-          <h3>Flapjacks</h3>
-          <div class="stat">simple meal &middot; joy bonus</div>
-          <p>Four flour and one syrup at the hearth. Stack them high for breakfast morale.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/Beeswax.png" alt="Beeswax">
-        <div>
-          <h3>Beeswax</h3>
-          <div class="stat">from the apiary</div>
-          <p>Craft into slow-burning <b>beeswax candles</b> or save it for trade.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/Sugar.png" alt="Sugar">
-        <div>
-          <h3>Sugar</h3>
-          <div class="stat">milled from sugar beets</div>
-          <p>Sweetens <b>jam</b> and <b>porridge</b>, and helps ferment <b>cider</b>. Honey and maple syrup can stand in.</p>
-        </div>
-      </div>
-      <div class="card wide">
-        <img src="img/Beehive.png" alt="Beehive">
-        <div>
-          <h3>Beehive</h3>
-          <div class="stat">no power &middot; Homestead brewing research</div>
-          <p>A managed hive that steadily produces <b>honey</b> and <b>beeswax</b> &mdash; eat it straight, sweeten meals with it, or ferment it into <b>mead</b>.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- BREWING -->
-  <section id="brewing">
-    <h2>Brewing</h2>
-    <p class="sub">Homestead brewing research unlocks the brewing bench and three drinks.</p>
-    <div class="grid">
-      <div class="card wide">
-        <img src="img/BrewingBench.png" alt="Brewing bench">
-        <div>
-          <h3>Brewing bench</h3>
-          <div class="stat">60 wood + 15 steel &middot; Homestead brewing research</div>
-          <p>Ferment <b>cider</b> (including proper <b>apple cider</b>), <b>mead</b>, and <b>herbal tea</b>. Sour cider into <b>vinegar</b>, and render <b>soap</b> from beeswax and butter.</p>
-        </div>
+    <section class="hs-section" id="research">
+      <span class="hs-kicker">Progression</span>
+      <h2>Homestead research tree</h2>
+      <p class="hs-lead">Neolithic to industrial — drying racks and basic crates stay available with no research.</p>
+      <div class="hs-tree">
+        <strong>Primitive homestead</strong> → curing, smoking, orchard, farm storage<br>
+        → <strong>Food preservation</strong> → jam cauldron<br>
+        → <strong>Farmstead crafting</strong> → mill, dairy, hearth → <strong>Brewing</strong><br>
+        → <strong>Storage</strong> → root cellar &amp; preserves shelf<br>
+        → <strong>Comforts</strong> → furniture, maypole, 27 monuments<br>
+        → <strong>Advanced homestead</strong> → wood-burning generator<br>
+        → <strong>Wellcraft / Irrigation / Waterworks</strong> → wells and irrigated land
       </div>
-      <div class="card">
-        <img src="img/Cider.png" alt="Cider">
-        <div>
-          <h3>Cider &amp; mead</h3>
-          <div class="stat">social drinks</div>
-          <p>Frontier alcohol with milder edges than go-juice.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/HerbalTea.png" alt="Herbal tea">
-        <div>
-          <h3>Herbal tea</h3>
-          <div class="stat">non-alcoholic comfort</div>
-          <p>A warm mood boost with no hangover.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- STORAGE -->
-  <section id="storage">
-    <h2>Storage</h2>
-    <p class="sub">Every piece protects its contents from deterioration &mdash; even outdoors.</p>
-    <div class="grid">
-      <div class="card">
-        <img src="img/StorageCrate.png" alt="Storage crate">
-        <div>
-          <h3>Storage crate</h3>
-          <div class="stat">3 stacks &middot; 35 wood</div>
-          <p>General-purpose lidded crate.</p>
-        </div>
+    <section class="hs-section" id="scenario">
+      <span class="hs-kicker">Start here</span>
+      <h2>Homesteaders scenario</h2>
+      <p class="hs-lead">Three settlers, livestock, and hand tools — far from the glitterworld supply chain. A homestead supplier caravan visits with preserves, seeds, and the occasional Diggo plushie.</p>
+      <div class="hs-cta">
+        <a class="hs-btn hs-btn-ink" href="homesteader-catalog.html">Browse every item</a>
+        <a class="hs-btn hs-btn-line" href="downloads/Homesteader.zip" download>Download Homesteader</a>
       </div>
-      <div class="card">
-        <img src="img/StorageBarrel.png" alt="Storage barrel">
-        <div>
-          <h3>Storage barrel</h3>
-          <div class="stat">3 stacks &middot; food &amp; drink &middot; 30 wood</div>
-          <p>Weatherproof food storage. Won't slow spoilage &mdash; preserve first.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/Pallet.png" alt="Pallet">
-        <div>
-          <h3>Pallet</h3>
-          <div class="stat">2 stacks &middot; 15 wood &middot; walkable</div>
-          <p>Cheap outdoor storage for anything, including stone chunks.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/RootCellar.png" alt="Root cellar">
-        <div>
-          <h3>Root cellar</h3>
-          <div class="stat">6 stacks &middot; 2&times;2 &middot; cools to ≤5°C (+ adjacent indoor cells)</div>
-          <p>Buried pantry that passively chills stored food on the cellar and nearby indoor stock for spoilage.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/LargeStorageCrate.png" alt="Large storage crate">
-        <div>
-          <h3>Large storage crate</h3>
-          <div class="stat">6 stacks &middot; 2&times;2 &middot; Homestead storage research</div>
-          <p>Reinforced double-wide crate for serious stockpiles.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/PreservesShelf.png" alt="Preserves shelf">
-        <div>
-          <h3>Preserves shelf</h3>
-          <div class="stat">3 stacks/cell &middot; +8 beauty &middot; Homestead storage research</div>
-          <p>Display shelving for jams, pickles, cheese, dairy, honey, syrup, bread, and other pantry pride.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- COMFORTS -->
-  <section id="comforts">
-    <h2>Comforts &amp; Recreation</h2>
-    <p class="sub">Homestead comforts research furnishes the farmhouse. Apparel and floors need no research.</p>
-    <div class="grid">
-      <div class="card">
-        <img src="img/QuiltedBed.png" alt="Quilted bed">
-        <div>
-          <h3>Quilted bed</h3>
-          <div class="stat">cozy rest &middot; Homestead comforts</div>
-          <p>A hand-stitched quilt over a solid frame.</p>
-        </div>
+    <section class="hs-section" id="install">
+      <span class="hs-kicker">Install</span>
+      <h2>Get it running</h2>
+      <ol class="hs-install">
+        <li>Download the zip (or clone the repository).</li>
+        <li>Copy the <code>Homesteader</code> folder into your RimWorld <code>Mods</code> directory.</li>
+        <li>Enable <strong>Homesteader</strong> and <strong>Harmony</strong> in the mod list, then restart.</li>
+      </ol>
+      <div class="hs-note">
+        <strong>Save compatibility:</strong> safe to add to an existing save. Before removing it, deconstruct Homesteader buildings and use up or sell its items. RimWorld 1.4–1.6.
       </div>
-      <div class="card">
-        <img src="img/RockingChair.png" alt="Rocking chair">
-        <div>
-          <h3>Rocking chair &amp; log bench</h3>
-          <div class="stat">comfy seating &middot; Homestead comforts</div>
-          <p>Porch furniture for tired farmers.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/OilLamp.png" alt="Oil lamp">
-        <div>
-          <h3>Oil lamp &amp; wood stove</h3>
-          <div class="stat">no electricity needed</div>
-          <p>Warm light and warm rooms, fueled the old way.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/BeeswaxCandle.png" alt="Beeswax candle">
-        <div>
-          <h3>Beeswax candle</h3>
-          <div class="stat">burns beeswax &middot; Homestead brewing research</div>
-          <p>Soft, slow-burning light straight from the apiary &mdash; no chemfuel, no grid.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/NestingBox.png" alt="Nesting box">
-        <div>
-          <h3>Nesting box</h3>
-          <div class="stat">animal bed &middot; small animals</div>
-          <p>A straw-lined box that small animals sleep soundly in. The hens approve.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/HarvestMaypole.png" alt="Harvest maypole">
-        <div>
-          <h3>Harvest maypole</h3>
-          <div class="stat">gathering spot &middot; +12 beauty &middot; Homestead comforts</div>
-          <p>A ribboned pole colonists gather around for parties and celebrations.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/CheckersTable.png" alt="Checkers table">
-        <div>
-          <h3>Checkers table &amp; washer toss</h3>
-          <div class="stat">recreation &middot; Homestead comforts</div>
-          <p>Cerebral checkers indoors, dexterous washer toss in the yard.</p>
-        </div>
-      </div>
-      <div class="card wide">
-        <img src="img/DiggoPlushie.png" alt="Diggo the plushie">
-        <div>
-          <h3>Diggo the plushie</h3>
-          <div class="stat">+20 beauty &middot; cuddly &middot; 20 cloth &middot; homestead supplier caravan</div>
-          <p>A hopelessly round plushie &mdash; part hippo, part dog, entirely chonky. Colonists flop against its belly to snuggle away their worries. <i>Congrats to a dognamedKats for 1k followers!</i></p>
-        </div>
-      </div>
-      <div class="card wide">
-        <img src="img/SharkPlushie.png" alt="Sharkira the plushie">
-        <div>
-          <h3>Sharkira the plushie</h3>
-          <div class="stat">+20 beauty &middot; cuddly &middot; 20 cloth &middot; homestead supplier caravan</div>
-          <p>A huggably round shark with button eyes and harmless fabric teeth. Menacing to absolutely no one. Same meditative cuddling as Diggo &mdash; Diggo&rsquo;s favorite ocean friend.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/StrawHat.png" alt="Straw hat">
-        <div>
-          <h3>Farm apparel</h3>
-          <div class="stat">straw hat, work apron, overalls, wool poncho</div>
-          <p>Practical clothing with work and weather bonuses.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/WoodenDeck.png" alt="Wooden deck">
-        <div>
-          <h3>Homestead floors</h3>
-          <div class="stat">wooden deck, straw matting, packed gravel</div>
-          <p>Cheap rustic flooring for barns, porches, and paths.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- MONUMENTS -->
-  <section id="monuments">
-    <h2>Monuments of 27</h2>
-    <p class="sub">Four celebratory sculptures that grant +27 mood to colonists within range. Nobody remembers what the 27 commemorates, but it feels important.</p>
-    <div class="grid">
-      <div class="card">
-        <img src="img/Monument27Golden.png" alt="27 monument golden">
-        <div>
-          <h3>27 monument (golden)</h3>
-          <div class="stat">Homestead comforts research &middot; 50 gold + 60 granite</div>
-          <p>A gleaming golden 27 on a weathered stone plinth, dressed with wheat and wildflowers.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/Monument27Harvest.png" alt="27 monument harvest">
-        <div>
-          <h3>27 monument (harvest)</h3>
-          <div class="stat">Homestead comforts research &middot; 75 granite + 40 hay</div>
-          <p>A carved stone 27 wrapped in wheat sheaves and wildflowers &mdash; a harvest-festival yard piece.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/Statue27.png" alt="27 statue">
-        <div>
-          <h3>27 statue</h3>
-          <div class="stat">1&times;1 &middot; quality-scaled beauty &middot; 15 gold + 40 steel</div>
-          <p>A gilded numeral 27 on a carved stone plinth, molten gold frozen mid-drip down its strokes.</p>
-        </div>
-      </div>
-      <div class="card wide">
-        <img src="img/Statue27Grand.png" alt="Grand 27 statue">
-        <div>
-          <h3>Grand 27 statue</h3>
-          <div class="stat">2&times;2 &middot; quality-scaled beauty &middot; 40 gold + 100 steel</div>
-          <p>A towering gilded 27 on a monumental plinth. Whatever the 27 means, this version means it twice as hard.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  </div>
+</main>
 
-  <!-- SCENARIO -->
-  <section id="scenario">
-    <h2>Scenario &amp; Trader</h2>
-    <div class="grid">
-      <div class="card wide">
-        <img src="img/BarleyPlant.png" alt="Homesteaders scenario">
-        <div>
-          <h3>Homesteaders scenario</h3>
-          <div class="stat">3 settlers &middot; livestock &middot; hand tools</div>
-          <p>Strike out to build a self-sufficient farmstead far from civilization. No fancy technology &mdash; just animals, sowable crops, and the knowledge to live off the land.</p>
-        </div>
-      </div>
-      <div class="card wide">
-        <img src="img/Honey.png" alt="Homestead supplier caravan">
-        <div>
-          <h3>Homestead supplier caravan</h3>
-          <div class="stat">visits outlander towns' allies</div>
-          <p>A trader stocked with preserved foods, farm goods, seeds, and the occasional <b>Diggo</b> or <b>Sharkira</b> plushie.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RELEASE C -->
-  <section id="research">
-    <span class="tier-label">Release C &mdash; Growing settlement</span>
-    <h2>Research &amp; Progression</h2>
-    <p class="sub">A neolithic-to-industrial homestead research tree. The drying rack and basic crates stay available without research.</p>
-    <div class="research-tree">
-      <b>Primitive homestead</b> (400 pts, neolithic) &rarr; curing rack, smokehouse, hayloft, ingredient barrel, orchard trees<br>
-      &nbsp;&nbsp;&#9500;&#9472; <b>Homestead food preservation</b> (800) &rarr; <b>Jam cauldron</b><br>
-      &nbsp;&nbsp;&#9500;&#9472; <b>Farmstead crafting</b> (800) &rarr; grain mill, butter churn, cheese press, pickling crock, hearth<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472; <b>Homestead brewing</b> (700) &rarr; <b>Brewing bench</b>, <b>beehive</b>, beeswax candle<br>
-      &nbsp;&nbsp;&#9500;&#9472; <b>Homestead storage</b> (600) &rarr; <b>Root cellar</b> (cool ≤5°C), <b>large storage crate</b>, <b>preserves shelf</b><br>
-      &nbsp;&nbsp;&#9500;&#9472; <b>Homestead comforts</b> (600) &rarr; quilted bed, log bench, rocking chair, oil lamp, wood stove, checkers, washer toss, 27 monuments &amp; statues<br>
-      &nbsp;&nbsp;&#9492;&#9472; <b>Advanced homestead</b> (1200, needs food preservation + farmstead crafting)<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; <b>Wood-burning generator</b> (300W, burns wood)
-    </div>
-    <div class="grid" style="margin-top:24px">
-      <div class="card">
-        <img src="img/JamCauldron.png" alt="Jam cauldron">
-        <div>
-          <h3>Jam cauldron</h3>
-          <div class="stat">wood-fired &middot; Food preservation research</div>
-          <p>Boil fruit with <b>sugar</b> into <b>jam</b> that keeps for 180 days.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/WoodGenerator.png" alt="Wood-burning generator">
-        <div>
-          <h3>Wood-burning generator</h3>
-          <div class="stat">1&times;1 &middot; 300W &middot; Advanced homestead research</div>
-          <p>Forest-friendly power for homesteads that run on wood.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WATER (merged from Wellspring) -->
-  <section id="water">
-    <h2>Water &amp; irrigation</h2>
-    <p class="sub">Draw it, store it, and trench it into your fields. Former Wellspring content now ships inside Homesteader (<code>Wellspring_*</code> defNames kept for save continuity). With <b>Dubs Bad Hygiene</b>, tanks join the plumbing net and wells act as groundwater sources; jug water for irrigation still works.</p>
-    <div class="grid">
-      <div class="card">
-        <img src="img/HandDugWell.png" alt="Hand-dug well">
-        <div>
-          <h3>Hand-dug well</h3>
-          <div class="stat">bill station &middot; wellcraft</div>
-          <p>Colonists draw jugs of fresh water by hand with a windlass and bucket.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/RainBarrel.png" alt="Rain barrel">
-        <div>
-          <h3>Rain barrel</h3>
-          <div class="stat">passive catch &middot; wellcraft</div>
-          <p>Catches rainfall and slowly fills with water when the weather cooperates.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/Cistern.png" alt="Cistern">
-        <div>
-          <h3>Cistern</h3>
-          <div class="stat">bulk storage &middot; wellcraft</div>
-          <p>Stockpile drawn water for dry seasons and irrigation pushes.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/DeepWell.png" alt="Deep well">
-        <div>
-          <h3>Deep well</h3>
-          <div class="stat">faster draw &middot; waterworks</div>
-          <p>A reinforced shaft that taps the water table harder than a hand-dug well.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/SolarStill.png" alt="Solar still">
-        <div>
-          <h3>Solar still</h3>
-          <div class="stat">passive &middot; wellcraft</div>
-          <p>Condenses drinkable water from heat and air when the sun is out.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/WaterTower.png" alt="Water tower">
-        <div>
-          <h3>Water tower</h3>
-          <div class="stat">elevated reserve &middot; waterworks</div>
-          <p>Serious elevated storage for colonies that run thirsty farms.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/IrrigatedSoil.png" alt="Irrigated soil">
-        <div>
-          <h3>Irrigated soil &amp; planter</h3>
-          <div class="stat">+30% fertility &middot; irrigation</div>
-          <p>Spend water to trench rich irrigated soil, or build an irrigated planter for indoor crops.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/WellspringWater.png" alt="Water">
-        <div>
-          <h3>Crafted from water</h3>
-          <div class="stat">boiled water &middot; mud bricks &middot; clean bandages</div>
-          <p>Boil water at a fire, press mud bricks, and rinse bandages clean for the medicine shelf.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- POWER -->
-  <section id="power">
-    <h2>Power</h2>
-    <p class="sub">A full battery progression, from first wire to endgame vault.</p>
-    <div class="grid">
-      <div class="card">
-        <img src="img/CompactBattery.png" alt="Compact battery">
-        <div>
-          <h3>Compact battery</h3>
-          <div class="stat">1&times;1 &middot; 200 Wd &middot; 50%</div>
-          <p>Fits anywhere. Your first buffer against a cloudy day.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/BatteryBank.png" alt="Battery bank">
-        <div>
-          <h3>Battery bank</h3>
-          <div class="stat">2&times;2 &middot; 1600 Wd &middot; 70%</div>
-          <p>A rack of cells with a smarter charge controller.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/AdvancedBattery.png" alt="Advanced battery">
-        <div>
-          <h3>Advanced battery</h3>
-          <div class="stat">1&times;2 &middot; 900 Wd &middot; 90% &middot; Fabrication</div>
-          <p>Laminated cells that waste a tenth of what vanilla batteries do.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/UltratechBattery.png" alt="Ultratech battery">
-        <div>
-          <h3>Ultratech battery</h3>
-          <div class="stat">2&times;2 &middot; 4000 Wd &middot; 99% &middot; Adv. Fabrication</div>
-          <p>A glowing superconducting vault. The best of the best.</p>
-        </div>
-      </div>
-      <div class="card">
-        <img src="img/PortableGenerator.png" alt="Portable generator">
-        <div>
-          <h3>Portable generator</h3>
-          <div class="stat">1&times;1 &middot; 350W &middot; chemfuel</div>
-          <p>Power for outposts and workshops, one cell of floorspace.</p>
-        </div>
-      </div>
-    </div>
-    <div class="table-scroll">
-      <table>
-        <tr><th>Battery</th><th>Size</th><th>Capacity</th><th>Efficiency</th><th>Research</th></tr>
-        <tr><td><b>Compact battery</b></td><td>1&times;1</td><td>200 Wd</td><td>50%</td><td>Batteries</td></tr>
-        <tr><td>Vanilla battery</td><td>1&times;2</td><td>600 Wd</td><td>50%</td><td>Batteries</td></tr>
-        <tr><td><b>Battery bank</b></td><td>2&times;2</td><td>1,600 Wd</td><td>70%</td><td>Batteries</td></tr>
-        <tr><td><b>Advanced battery</b></td><td>1&times;2</td><td>900 Wd</td><td>90%</td><td>Fabrication</td></tr>
-        <tr class="best"><td><b>Ultratech battery</b></td><td>2&times;2</td><td>4,000 Wd</td><td>99%</td><td>Advanced Fabrication</td></tr>
-      </table>
-    </div>
-  </section>
-
-  <section id="catalog">
-    <h2>Full item catalog</h2>
-    <p class="sub">Every food, ingredient, pantry good, and water craftable — on its own page.</p>
-    <div class="cta" style="justify-content:flex-start;margin-top:12px">
-      <a class="btn btn-primary" href="homesteader-catalog.html">Browse the item catalog &#8594;</a>
-    </div>
-  </section>
-
-  <section id="install">
-    <h2>Installation</h2>
-    <ol>
-      <li>Download the mod using the button above (or clone the repository).</li>
-      <li>Copy the <code>Homesteader</code> folder into your RimWorld <code>Mods</code> directory.</li>
-      <li>Enable <b>Homesteader</b> in the in-game mod list and restart.</li>
-    </ol>
-    <div class="note">
-      <b>Save compatibility:</b> safe to add to an existing save. Before removing it, deconstruct the mod's buildings and use up or sell its items.
-    </div>
-  </section>
-
-</div>
-
-<footer>
-  <div class="wrap">
+<footer class="hs-footer">
+  <div class="hs-wrap">
     <a href="index.html">All mods</a>
-    &middot; Homesteader by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
-    &middot; <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">Report a bug</a>
+    · Homesteader by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
+    · <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">Report a bug</a>
   </div>
 </footer>
+
+<script>
+(() => {
+  const sections = document.querySelectorAll(".hs-section");
+  if (!("IntersectionObserver" in window)) {
+    sections.forEach((el) => el.classList.add("is-in"));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-in");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+  sections.forEach((el) => io.observe(el));
+})();
+</script>
 
 </body>
 </html>

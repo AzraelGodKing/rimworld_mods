@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Генераторы карт ============ -->
+
+  <!-- Верхний уровень (надземный этаж) -->
+  <Strata_UpperLevel.label>верхний этаж</Strata_UpperLevel.label>
+  <Strata_UpperLevel.description>Каркасный этаж над колонией, открытый небу и погоде. Связан с нижними уровнями лестницами и шахтами.</Strata_UpperLevel.description>
+
+  <!-- Подземный уровень -->
+  <Strata_UndergroundLevel.label>подземный уровень</Strata_UndergroundLevel.label>
+  <Strata_UndergroundLevel.description>Живая скала глубоко под поверхностью. Ни неба, ни погоды, ни времён года — только камень.</Strata_UndergroundLevel.description>
+
+  <!-- ============ Шаги генерации ============ -->
+
+  <Strata_UpperPlatform.label>верхняя платформа</Strata_UpperPlatform.label>
+  <Strata_UpperPlatform.description>Создаёт каркасную платформу для верхнего этажа.</Strata_UpperPlatform.description>
+
+  <Strata_SolidRock.label>сплошная скала</Strata_SolidRock.label>
+  <Strata_SolidRock.description>Заполняет уровень сплошной скалой.</Strata_SolidRock.description>
+
+  <Strata_CarveWarren.label>вырезание лабиринта</Strata_CarveWarren.label>
+  <Strata_CarveWarren.description>Вырезает систему туннелей и камер.</Strata_CarveWarren.description>
+
+  <Strata_HiddenChambers.label>скрытые камеры</Strata_HiddenChambers.label>
+  <Strata_HiddenChambers.description>Создаёт геотермальные и газовые камеры, запечатанные в скале.</Strata_HiddenChambers.description>
+
+  <Strata_BiomesCavernFeatures.label>особенности пещер биомов</Strata_BiomesCavernFeatures.label>
+  <Strata_BiomesCavernFeatures.description>Добавляет особенности пещер из других биомов.</Strata_BiomesCavernFeatures.description>
+
+  <Strata_RichOreNodes.label>богатые рудные узлы</Strata_RichOreNodes.label>
+  <Strata_RichOreNodes.description>Создаёт редкие крупные рудные жилы в скрытой породе.</Strata_RichOreNodes.description>
+
+  <Strata_DbhGroundwater.label>грунтовые воды</Strata_DbhGroundwater.label>
+  <Strata_DbhGroundwater.description>Добавляет грунтовые воды в выработки.</Strata_DbhGroundwater.description>
+
+  <Strata_PlaceCaveExit.label>размещение выхода из пещеры</Strata_PlaceCaveExit.label>
+  <Strata_PlaceCaveExit.description>Размещает выход с уровня (лестницу или лифт).</Strata_PlaceCaveExit.description>
+
+  <Strata_Fog.label>туман войны</Strata_Fog.label>
+  <Strata_Fog.description>Затуманивает всё, кроме прибывшей камеры.</Strata_Fog.description>
+
+  <Strata_AncientColonyStairwell.label>древняя лестница колонии</Strata_AncientColonyStairwell.label>
+  <Strata_AncientColonyStairwell.description>Размещает древнюю лестницу колонии для квестовых локаций.</Strata_AncientColonyStairwell.description>
+
+</LanguageData>
