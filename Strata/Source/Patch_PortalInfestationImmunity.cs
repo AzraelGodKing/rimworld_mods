@@ -1,3 +1,4 @@
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -9,6 +10,23 @@ namespace Strata
     [HarmonyPatch(typeof(InfestationCellFinder), "GetScoreAt")]
     public static class Patch_InfestationScoreAtPortalBlock
     {
+        private static bool Prepare()
+        {
+            MethodInfo method = AccessTools.Method(typeof(InfestationCellFinder), "GetScoreAt");
+            if (method == null)
+            {
+                Log.Warning("[Strata] InfestationCellFinder.GetScoreAt not found; skipping portal infestation patch.");
+                return false;
+            }
+            ParameterInfo[] ps = method.GetParameters();
+            if (ps.Length != 2 || ps[0].ParameterType != typeof(IntVec3) || ps[1].ParameterType != typeof(Map))
+            {
+                Log.Warning("[Strata] Unexpected InfestationCellFinder.GetScoreAt signature; skipping portal infestation patch.");
+                return false;
+            }
+            return true;
+        }
+
         public static void Postfix(IntVec3 cell, Map map, ref float __result)
         {
             if (__result > 0f && StrataPortalUtility.CellBlockedByProtectedPortal(map, cell))
@@ -21,18 +39,54 @@ namespace Strata
     [HarmonyPatch(typeof(CompSpawnerHives), "CanSpawnHiveAt")]
     public static class Patch_CanSpawnHiveAtPortalBlock
     {
-        public static void Postfix(IntVec3 loc, Map map, ref bool __result)
+        private static bool Prepare()
         {
-            if (__result && StrataPortalUtility.CellBlockedByProtectedPortal(map, loc))
+            MethodInfo method = AccessTools.Method(typeof(CompSpawnerHives), "CanSpawnHiveAt");
+            if (method == null)
+            {
+                Log.Warning("[Strata] CompSpawnerHives.CanSpawnHiveAt not found; skipping portal hive patch.");
+                return false;
+            }
+            ParameterInfo[] ps = method.GetParameters();
+            if (ps.Length < 2 || ps[0].Name != "c")
+            {
+                Log.Warning("[Strata] Unexpected CompSpawnerHives.CanSpawnHiveAt signature; skipping portal hive patch.");
+                return false;
+            }
+            return true;
+        }
+
+        public static void Postfix(IntVec3 c, Map map, ref bool __result)
+        {
+            if (__result && StrataPortalUtility.CellBlockedByProtectedPortal(map, c))
             {
                 __result = false;
             }
         }
     }
 
-    [HarmonyPatch(typeof(GenSpawn), nameof(GenSpawn.Spawn), new[] { typeof(Thing), typeof(IntVec3), typeof(Map), typeof(Rot4) })]
+    [HarmonyPatch(typeof(GenSpawn), nameof(GenSpawn.Spawn), new[]
+    {
+        typeof(Thing), typeof(IntVec3), typeof(Map), typeof(Rot4),
+        typeof(WipeMode), typeof(bool), typeof(bool)
+    })]
     public static class Patch_GenSpawnHiveOnPortalBlock
     {
+        private static bool Prepare()
+        {
+            MethodInfo method = AccessTools.Method(typeof(GenSpawn), nameof(GenSpawn.Spawn), new[]
+            {
+                typeof(Thing), typeof(IntVec3), typeof(Map), typeof(Rot4),
+                typeof(WipeMode), typeof(bool), typeof(bool)
+            });
+            if (method == null)
+            {
+                Log.Warning("[Strata] GenSpawn.Spawn hive overload not found; skipping portal hive spawn patch.");
+                return false;
+            }
+            return true;
+        }
+
         public static bool Prefix(Thing newThing, IntVec3 loc, Map map, Rot4 rot, ref Thing __result)
         {
             if (newThing == null || map == null)
