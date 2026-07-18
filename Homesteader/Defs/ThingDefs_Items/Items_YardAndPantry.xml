@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Lard ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Lard</defName>
+    <label>lard</label>
+    <description>Soft rendered fat from meat. Used for sausage, soap, and rich cooking.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/Lard</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>1.2</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <Mass>0.03</Mass>
+      <MarketValue>1.5</MarketValue>
+      <Nutrition>0.04</Nutrition>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Tallow ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Tallow</defName>
+    <label>tallow</label>
+    <description>Hard rendered fat. Excellent for soap and long-keeping pantry craft.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/Tallow</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>55</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.03</Mass>
+      <MarketValue>1.6</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Sausage ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Sausage</defName>
+    <label>homestead sausage</label>
+    <description>Salted or smoked meat stuffed with fat and dried herbs. Keeps well and eats like a trail meal.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/Sausage</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.8</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <Mass>0.025</Mass>
+      <MarketValue>2.4</MarketValue>
+      <Nutrition>0.07</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>MealSimple</preferability>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>45</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>FoodMeals</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Animal mash ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_AnimalMash</defName>
+    <label>animal mash</label>
+    <description>Crushed barley and pumpkin cooked into a soft mash. Keeps livestock productive when left near coops and pens.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/AnimalMash</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>150</stackLimit>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0.8</Flammability>
+      <DeteriorationRate>4</DeteriorationRate>
+      <Mass>0.04</Mass>
+      <MarketValue>0.8</MarketValue>
+      <Nutrition>0.12</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Processed</foodType>
+      <preferability>NeverForNutrition</preferability>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>20</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>Foods</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Flax fiber ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_FlaxFiber</defName>
+    <label>flax fiber</label>
+    <description>Retting flax stalks broken into soft fiber. Spin it into homespun cloth at a spinning wheel.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/FlaxFiber</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>150</stackLimit>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <Flammability>1.4</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <Mass>0.02</Mass>
+      <MarketValue>0.9</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Homespun cloth ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_HomespunCloth</defName>
+    <label>homespun cloth</label>
+    <description>Coarse cloth spun from flax or wool. Used for quilts and homestead sewing when you lack industrial fabric.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/HomespunCloth</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>1.2</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.03</Mass>
+      <MarketValue>2.2</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Textiles</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Fabric</li>
+      </categories>
+      <commonality>0.4</commonality>
+      <color>(210,195,160)</color>
+      <statFactors>
+        <MaxHitPoints>0.7</MaxHitPoints>
+        <Beauty>0.7</Beauty>
+        <Flammability>1.1</Flammability>
+      </statFactors>
+    </stuffProps>
+  </ThingDef>
+
+  <!-- ============ Homestead quilt ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_HomesteadQuilt</defName>
+    <label>homestead quilt</label>
+    <description>A thick pieced quilt from the loom. Soft bedding comfort for quilted beds, or a warm gift from the farmhouse.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/HomesteadQuilt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>25</stackLimit>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>1.2</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.8</Mass>
+      <MarketValue>12</MarketValue>
+      <Beauty>4</Beauty>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Compost ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Compost</defName>
+    <label>compost</label>
+    <description>Rotted plant matter and manure worked into dark compost. Finish it into fertilizer for rich cropland.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/Compost</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>150</stackLimit>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <Flammability>0.3</Flammability>
+      <DeteriorationRate>0.5</DeteriorationRate>
+      <Mass>0.05</Mass>
+      <MarketValue>0.5</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Compost fertilizer ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_CompostFertilizer</defName>
+    <label>compost fertilizer</label>
+    <description>Screened compost ready to work into the soil. Used to lay composted soil for faster crop growth.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/CompostFertilizer</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <DeteriorationRate>0.5</DeteriorationRate>
+      <Mass>0.06</Mass>
+      <MarketValue>1.2</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Mason jar ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_MasonJar</defName>
+    <label>mason jar</label>
+    <description>Empty glass-and-steel jars for canning. Reusable pantry packaging for sealed jam and stew.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/MasonJar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0.2</DeteriorationRate>
+      <Mass>0.08</Mass>
+      <MarketValue>2</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Canned stew ============ -->
+  <ThingDef ParentName="MealBase">
+    <defName>Homesteader_CannedStew</defName>
+    <label>canned stew</label>
+    <description>Hearty stew sealed in a mason jar. Keeps for years on the shelf - the homestead answer to emergency rations.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/CannedStew</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>16</MarketValue>
+      <Mass>0.35</Mass>
+      <Nutrition>0.9</Nutrition>
+      <FoodPoisonChanceFixedHuman>0.005</FoodPoisonChanceFixedHuman>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>MealFine</preferability>
+      <maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>720</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ============ Canned jam ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_CannedJam</defName>
+    <label>canned jam</label>
+    <description>Jam sealed under a mason lid. Sweeter and longer-keeping than an open pot.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/CannedJam</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>50</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0.3</Flammability>
+      <DeteriorationRate>0.5</DeteriorationRate>
+      <Mass>0.08</Mass>
+      <MarketValue>4</MarketValue>
+      <Nutrition>0.08</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>RawTasty</preferability>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>540</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>FoodMeals</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Apple juice ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_AppleJuice</defName>
+    <label>apple juice</label>
+    <description>Fresh-pressed orchard juice. Drink it sweet, or ferment it into cider and vinegar.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/AppleJuice</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <DeteriorationRate>6</DeteriorationRate>
+      <Mass>0.04</Mass>
+      <MarketValue>1.5</MarketValue>
+      <Nutrition>0.06</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Fluid</foodType>
+      <preferability>RawTasty</preferability>
+      <ingestSound>Ingest_Beer</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>12</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>Foods</li>
+    </thingCategories>
+  </ThingDef>
+
+</Defs>

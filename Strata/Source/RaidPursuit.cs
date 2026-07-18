@@ -174,8 +174,9 @@ namespace Strata
                 lastMessageTick = Find.TickManager.TicksGame;
                 bool goingDown = StrataDepth.Of(LevelGraph.OtherMapSafe(firstStep)) > StrataDepth.Of(map);
                 Messages.Message(
-                    "Raiders have found the " + firstStep.def.label + " and are coming " +
-                    (goingDown ? "down" : "up") + " after your colonists!",
+                    "Strata_RaidersFoundPortal".Translate(
+                        firstStep.def.label,
+                        goingDown ? "Strata_RaidersDirectionDown".Translate() : "Strata_RaidersDirectionUp".Translate()),
                     new LookTargets(firstStep), MessageTypeDefOf.ThreatBig);
             }
         }
@@ -219,7 +220,7 @@ namespace Strata
             {
                 lastMessageTick = Find.TickManager.TicksGame;
                 Messages.Message(
-                    "Raiders are battering the sealed " + sealedPortal.def.label + "!",
+                    "Strata_RaidersBatteringPortal".Translate(sealedPortal.def.label),
                     new LookTargets(sealedPortal), MessageTypeDefOf.ThreatBig);
             }
         }

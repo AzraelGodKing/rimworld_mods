@@ -27,7 +27,10 @@ namespace Strata
         static SisterModBridges()
         {
             HomesteaderLoaded = ModsConfig.IsActive("AzraelGodKing.Homesteader");
-            WellspringLoaded = ModsConfig.IsActive("AzraelGodKing.Wellspring");
+            // Water infrastructure now ships inside Homesteader (Wellspring_* defs).
+            // Keep WellspringLoaded as an alias for irrigation bridges.
+            WellspringLoaded = HomesteaderLoaded
+                || ModsConfig.IsActive("AzraelGodKing.Wellspring");
             StormproofLoaded = ModsConfig.IsActive("AzraelGodKing.Stormproof");
 
             RootCellarPresent = DefDatabase<ThingDef>.GetNamedSilentFail("Homesteader_RootCellar") != null;
@@ -40,11 +43,16 @@ namespace Strata
             var parts = new List<string>();
             if (HomesteaderLoaded)
             {
-                parts.Add("Homesteader" + (RootCellarPresent ? " (root cellar)" : ""));
-            }
-            if (WellspringLoaded)
-            {
-                parts.Add("Wellspring" + (HandDugWellPresent ? " (hand-dug well)" : ""));
+                var extras = new List<string>();
+                if (RootCellarPresent)
+                {
+                    extras.Add("root cellar");
+                }
+                if (HandDugWellPresent)
+                {
+                    extras.Add("wells");
+                }
+                parts.Add("Homesteader" + (extras.Count > 0 ? " (" + string.Join(", ", extras) + ")" : ""));
             }
             if (StormproofLoaded)
             {

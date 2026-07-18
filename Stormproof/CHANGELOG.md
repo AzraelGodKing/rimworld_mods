@@ -1,16 +1,16 @@
 # Changelog
 
-All notable changes to Stormproof are documented here.
+Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
 
 ## [Unreleased]
 
 ### Added
-- **Dedicated research tab** — all Stormproof projects live under their own *Stormproof* tab (no longer on Main).
+- `Languages/English/Keyed/Stormproof.xml` — all C# player strings (messages, gizmos, inspect panels) with `.Translate()` wiring.
+- `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
 
 ### Changed
-- GitHub Pages hub (`docs/index.html`) building and research counts synced across all four mod pages.
-
-### Added
+- Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
+- **Dedicated research tab** — all Stormproof projects live under their own *Stormproof* tab (no longer on Main).
 - Load shedder: an automatic breaker for wiring between the main grid and a low-priority sub-grid. Transmits like a conduit while the supply side's batteries hold charge; trips open and sheds the sub-grid when they fall below an adjustable cutoff (default 20%, gizmo-adjustable 5–45%), then reconnects on its own once charge recovers past the cutoff plus a 20-point margin. Requires storm protection research.
 - Grid monitor console: inspect panel shows the power net's live production, consumption, net gain, battery charge, and an estimate of time until batteries run empty (or full). Sends a caution message when stored charge drops below 25% and a negative alert below 10%, re-arming once charge recovers above 35%. Requires storm protection research.
 - Ion storm: a new small-threat event (0.75–1.5 days). While active, batteries bleed roughly 20% of their stored charge per day, random EMP bursts pop at powered colony buildings (~3/day), and extra "Zzzt!" short circuits fire through the vanilla incident (~1.5/day). EMP dampeners shield batteries and buildings in their radius from the bleed and bursts, surge protectors absorb the extra surges, and storm capacitor banks are immune to the bleed.

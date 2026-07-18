@@ -290,13 +290,13 @@ namespace Strata
             if (row.altitude == 0)
             {
                 string name = row.map.Parent?.LabelCap;
-                return name.NullOrEmpty() ? "Surface" : "Surface \u2014 " + name;
+                return name.NullOrEmpty() ? "Strata_LevelSurface".Translate() : "Strata_LevelSurfaceNamed".Translate(name);
             }
             if (row.altitude > 0)
             {
-                return "Level +" + row.altitude;
+                return "Strata_LevelAbove".Translate(row.altitude);
             }
-            return "Level " + row.altitude;
+            return "Strata_LevelBelow".Translate(row.altitude);
         }
 
         private static int HostileCount(Map map)

@@ -17,11 +17,11 @@ namespace Strata
             Room room = center.GetRoom(map);
             if (room == null || room.PsychologicallyOutdoors)
             {
-                return "Must be built indoors.";
+                return "Strata_Place_MustBeIndoors".Translate();
             }
             if (!SmokeRiseUtility.RoomContainsLevelExit(room, map))
             {
-                return "Must be built in a stairwell or elevator room.";
+                return "Strata_Place_MustBeShaftRoom".Translate();
             }
             return true;
         }

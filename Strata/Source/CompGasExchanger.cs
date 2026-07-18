@@ -52,11 +52,11 @@ namespace Strata
         {
             if (!SmokeRiseUtility.RoomContainsLevelExit(parent.GetRoom(), parent.Map))
             {
-                return "Must be in a stairwell or elevator room to exchange gases between levels.";
+                return "Strata_GasExchangerShaft".Translate();
             }
             return Active
-                ? "Driving O₂ up and CO₂ down the shaft."
-                : "Needs power to boost gas exchange.";
+                ? "Strata_GasExchangerActive".Translate()
+                : "Strata_GasExchangerNeedsPower".Translate();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Strata
                 if (landing.IsValid)
                 {
                     StrataPortalUtility.SpawnLanding(def.portal.exitDef, landing, existing);
-                    Messages.Message("Broke through to the existing gravship deck below.", this, MessageTypeDefOf.PositiveEvent);
+                    Messages.Message("Strata_GravshipConnectedBelow".Translate(), this, MessageTypeDefOf.PositiveEvent);
                     return existing;
                 }
             }
@@ -96,7 +96,7 @@ namespace Strata
                 {
                     UpperDeckUtility.EnsurePlaza(existing, landing);
                     StrataPortalUtility.SpawnLanding(def.portal.exitDef, landing, existing);
-                    Messages.Message("Connected to the existing gravship deck above.", this, MessageTypeDefOf.PositiveEvent);
+                    Messages.Message("Strata_GravshipConnectedAbove".Translate(), this, MessageTypeDefOf.PositiveEvent);
                     return existing;
                 }
             }

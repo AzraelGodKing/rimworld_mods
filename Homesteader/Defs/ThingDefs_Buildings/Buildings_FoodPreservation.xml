@@ -92,6 +92,9 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_PrimitiveHomestead</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Smokehouse ============ -->
@@ -138,6 +141,7 @@
     </comps>
     <recipes>
       <li>Homesteader_SmokeMeat</li>
+      <li>Homesteader_SmokeCheese</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
@@ -150,6 +154,9 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_PrimitiveHomestead</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Pickling crock ============ -->
@@ -183,6 +190,7 @@
     </costList>
     <recipes>
       <li>Homesteader_MakePickledVegetables</li>
+      <li>Homesteader_MakeVinegarPickles</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
@@ -195,13 +203,16 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_FarmsteadCrafting</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Homestead hearth ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_HomesteadHearth</defName>
     <label>homestead hearth</label>
-    <description>A brick-and-stone oven with a wood-fired hearth. Bakes bread, hardtack, and hearty homestead stews from milled flour and preserved ingredients.</description>
+    <description>A brick-and-stone oven with a wood-fired hearth. Bakes bread and hardtack, assembles pantry meals like toast and jam or ploughman's lunch, and simmers stews, porridge, and flapjacks.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/HomesteadHearth</texPath>
@@ -243,10 +254,19 @@
       <li>Homesteader_BakeBread</li>
       <li>Homesteader_BakeHardtack</li>
       <li>Homesteader_CookPorridge</li>
+      <li>Homesteader_CookHoneyPorridge</li>
       <li>Homesteader_CookTrailStew</li>
       <li>Homesteader_CookHeartyStew</li>
+      <li>Homesteader_MakeToastAndJam</li>
+      <li>Homesteader_MakePloughmansLunch</li>
+      <li>Homesteader_BakePumpkinPie</li>
+      <li>Homesteader_BakeButtermilkBiscuits</li>
       <li>Homesteader_BoilMapleSyrup</li>
       <li>Homesteader_BakeFlapjacks</li>
+      <li>Homesteader_RenderLard</li>
+      <li>Homesteader_RenderTallow</li>
+      <li>Homesteader_MakeSausage</li>
+      <li>Homesteader_MakeAnimalMash</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
@@ -259,13 +279,16 @@
       <li>BuildingsProduction</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_FarmsteadCrafting</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Jam cauldron ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_JamCauldron</defName>
     <label>jam cauldron</label>
-    <description>A wide iron cauldron over a wood fire for boiling fruit into sweet, long-lasting jam.</description>
+    <description>A wide iron cauldron over a wood fire for boiling fruit with sugar into sweet, long-lasting jam.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/JamCauldron</texPath>

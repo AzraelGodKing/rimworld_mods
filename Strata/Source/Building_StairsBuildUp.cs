@@ -21,7 +21,7 @@ namespace Strata
 
         protected override string OccupiedOtherLevelMessage()
         {
-            return "Someone is still on the level above.";
+            return "Strata_SomeoneAbove".Translate();
         }
 
         public override void OpenLevelBelow()
@@ -52,7 +52,7 @@ namespace Strata
                     // Shaft plaza is always buildable even if the floor below is unroofed.
                     UpperDeckUtility.EnsurePlaza(existing, landing);
                     StrataPortalUtility.SpawnLanding(def.portal.exitDef, landing, existing);
-                    Messages.Message("Connected to the existing level above.", this, MessageTypeDefOf.PositiveEvent);
+                    Messages.Message("Strata_StairsConnectedAbove".Translate(), this, MessageTypeDefOf.PositiveEvent);
                     return existing;
                 }
             }

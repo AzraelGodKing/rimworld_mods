@@ -60,7 +60,7 @@
     <passability>PassThroughOnly</passability>
     <pathCost>40</pathCost>
     <fillPercent>0.3</fillPercent>
-    <rotatable>true</rotatable>
+    <rotatable>false</rotatable>
     <size>(1,1)</size>
     <hasInteractionCell>true</hasInteractionCell>
     <interactionCellOffset>(0,0,-4)</interactionCellOffset>
@@ -86,6 +86,9 @@
       <li>BuildingsJoy</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_HomesteadComforts</li>
+    </researchPrerequisites>
   </ThingDef>
 
 </Defs>

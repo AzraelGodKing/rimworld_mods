@@ -133,7 +133,9 @@ namespace Strata
 
         private static bool TryFindStandable(Map map, IntVec3 near, out IntVec3 cell)
         {
-            return CellFinder.TryFindRandomCellNear(near, map, 5, c => c.Standable(map), out cell);
+            return CellFinder.TryFindRandomCellNear(near, map, 5,
+                c => c.Standable(map) && !StrataPortalUtility.CellBlockedByProtectedPortal(map, c),
+                out cell);
         }
     }
 }

@@ -64,8 +64,7 @@ namespace Stormproof
                 if (BringsLightning(cur))
                 {
                     Messages.Message(
-                        parent.LabelShort + ": " + cur.label +
-                        " moving in - lightning expected. Storm spires will catch strikes.",
+                        "Stormproof_WeatherForecaster_LightningIncoming".Translate(parent.LabelShort, cur.label),
                         parent, MessageTypeDefOf.NeutralEvent);
                 }
             }
@@ -74,8 +73,7 @@ namespace Stormproof
             {
                 warnedThisCycle = true;
                 Messages.Message(
-                    parent.LabelShort + ": current weather (" + cur.label +
-                    ") will break within the hour.",
+                    "Stormproof_WeatherForecaster_BreakingSoon".Translate(parent.LabelShort, cur.label),
                     parent, MessageTypeDefOf.SilentInput);
             }
         }
@@ -101,15 +99,15 @@ namespace Stormproof
         {
             if (!Active)
             {
-                return "Offline: needs power.";
+                return "Stormproof_OfflineNeedsPower".Translate();
             }
             Map map = parent.Map;
             WeatherDef cur = map.weatherManager.curWeather;
             int remaining = RemainingTicks(map);
-            string s = "Current weather: " + cur.label;
+            string s = "Stormproof_WeatherForecaster_Current".Translate(cur.label);
             s += remaining > 0
-                ? "\nForecast: holds for about " + remaining.ToStringTicksToPeriod() + "."
-                : "\nForecast: about to change.";
+                ? "\n" + "Stormproof_WeatherForecaster_HoldsFor".Translate(remaining.ToStringTicksToPeriod())
+                : "\n" + "Stormproof_WeatherForecaster_AboutToChange".Translate();
             return s;
         }
     }

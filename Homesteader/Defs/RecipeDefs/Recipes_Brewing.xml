@@ -5,7 +5,7 @@
   <RecipeDef>
     <defName>Homesteader_BrewCider</defName>
     <label>brew cider</label>
-    <description>Press and ferment raw fruit and vegetables into a small batch of cider.</description>
+    <description>Press and ferment raw fruit with a little sugar, honey, or maple syrup into a small batch of cider.</description>
     <jobString>Brewing cider.</jobString>
     <workAmount>1200</workAmount>
     <workSpeedStat>DrugCookingSpeed</workSpeedStat>
@@ -18,14 +18,37 @@
           <categories>
             <li>PlantFoodRaw</li>
           </categories>
+          <disallowedThingDefs>
+            <li>Hay</li>
+            <li>RawFungus</li>
+          </disallowedThingDefs>
         </filter>
         <count>20</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Sugar</li>
+            <li>Homesteader_Honey</li>
+            <li>Homesteader_MapleSyrup</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
       </li>
     </ingredients>
     <fixedIngredientFilter>
       <categories>
         <li>PlantFoodRaw</li>
       </categories>
+      <thingDefs>
+        <li>Homesteader_Sugar</li>
+        <li>Homesteader_Honey</li>
+        <li>Homesteader_MapleSyrup</li>
+      </thingDefs>
+      <disallowedThingDefs>
+        <li>Hay</li>
+        <li>RawFungus</li>
+      </disallowedThingDefs>
     </fixedIngredientFilter>
     <products>
       <Homesteader_Cider>5</Homesteader_Cider>
@@ -93,6 +116,37 @@
     </fixedIngredientFilter>
     <products>
       <Homesteader_HerbalTea>3</Homesteader_HerbalTea>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Ferment pressed apple juice ============ -->
+  <RecipeDef>
+    <defName>Homesteader_FermentAppleJuice</defName>
+    <label>ferment apple juice</label>
+    <description>Ferment cider-press juice into a clean orchard cider. Faster than crushing fruit at the bench.</description>
+    <jobString>Fermenting apple juice.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>DrugCookingSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_AppleJuice</li>
+          </thingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_AppleJuice</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Cider>6</Homesteader_Cider>
     </products>
     <workSkill>Cooking</workSkill>
   </RecipeDef>
