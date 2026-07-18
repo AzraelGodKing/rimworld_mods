@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Крышная терраса ============ -->
+  <Strata_RoofDeck.label>крышная терраса</Strata_RoofDeck.label>
+  <Strata_RoofDeck.description>Каркас над крышей на этаже внизу. Здесь можно ходить и строить. Открытое небо за пределами крыши не может удерживать строения — расширяйте крыши внизу, чтобы увеличить эту террасу.</Strata_RoofDeck.description>
+
+  <!-- ============ Открытое небо ============ -->
+  <Strata_OpenSky.label>открытое небо</Strata_OpenSky.label>
+  <Strata_OpenSky.description>Пустой воздух без опоры внизу для строительства. Перекройте крышей этаж внизу, чтобы расширить террасу в это пространство.</Strata_OpenSky.description>
+
+</LanguageData>

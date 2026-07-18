@@ -55,6 +55,12 @@ Nested fields use dot notation (`defName.field`). For `description` with multipl
 
 Package id: `AzraelGodKing.Strata`
 
+## Current community packs
+
+| Language | DefInjected | Keyed |
+|----------|-------------|-------|
+| **Russian** | Yes (community) | Community: `GravshipStrings.xml`, `ShaftFluidStrings.xml` (do not overwrite). Fill-in: `Strata.xml` for remaining English Keyed keys. |
+
 ## Why an empty English folder did not work
 
 RimWorld loads `Languages/&lt;LanguageName&gt;/` for the **active game language**. Translators need:
