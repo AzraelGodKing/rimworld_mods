@@ -6,9 +6,10 @@ using Verse;
 namespace Strata
 {
     // Earth-like atmospheric baseline and depth-scarce O₂ for underground levels.
-    // Room clouds store each channel as a volume fraction; ambient supply tops
-    // them toward the targets below. Pollutants (smoke, deep gas, spores) stay
-    // additive on their own channels.
+    // Every tracked gas is a volume / mole fraction of one room atmosphere that
+    // normally sums to ≈1.0 (100%). Adding smoke or methane displaces other
+    // gases (N₂ first); ambient replenishment fills the remaining budget.
+    // Pressurized deep-gas pockets may exceed 1.0 on that channel only.
     public static class AtmosphericMix
     {
         // Mole / volume fractions (sum ≈ 1.0).
@@ -22,6 +23,9 @@ namespace Strata
 
         private const float MinDeepOxygenFraction = 0.07f;
         private const float DepthOxygenFalloff = 0.11f;
+        private const float NormalizeEpsilon = 0.0005f;
+        private const float OversumMigrateThreshold = 1.05f;
+        private const float MaxDeepGasDensity = 3f;
 
         public struct TargetMix
         {
@@ -87,6 +91,250 @@ namespace Strata
             return Mathf.Max(0.06f, 0.32f - depth * 0.05f);
         }
 
+        public static bool IsAtmosphericComponent(StrataGasDef gas)
+        {
+            return gas == StrataGasDefOf.Strata_Nitrogen
+                || gas == StrataGasDefOf.Strata_Oxygen
+                || gas == StrataGasDefOf.Strata_Argon
+                || gas == StrataGasDefOf.Strata_CarbonDioxide;
+        }
+
+        public static bool IsPressurizedGas(StrataGasDef gas)
+        {
+            return gas == StrataGasDefOf.Strata_DeepGas;
+        }
+
+        // Sum of composable fractions (deep gas above 1.0 counts only its first unit).
+        public static float ComposableTotal(float[] density)
+        {
+            if (density == null)
+            {
+                return 0f;
+            }
+            int deepIdx = DeepGasIndex();
+            float total = 0f;
+            for (int i = 0; i < density.Length; i++)
+            {
+                if (i == deepIdx && density[i] > 1f)
+                {
+                    total += 1f;
+                }
+                else
+                {
+                    total += density[i];
+                }
+            }
+            return total;
+        }
+
+        // Deep-gas overpressure above 1.0 (pressurized pockets only).
+        public static float PressurizedOverage(float[] density)
+        {
+            int deepIdx = DeepGasIndex();
+            if (deepIdx < 0 || density == null)
+            {
+                return 0f;
+            }
+            return Mathf.Max(0f, density[deepIdx] - 1f);
+        }
+
+        public static float DisplayTotal(float[] density)
+        {
+            return ComposableTotal(density) + PressurizedOverage(density);
+        }
+
+        // Pollutant / non-breathable share for overlay "load" (smoke, deep gas,
+        // excess CO₂, methane, etc. — not baseline N₂/O₂/Ar at ambient levels).
+        public static float PollutantFraction(float[] density, Map map)
+        {
+            if (density == null)
+            {
+                return 0f;
+            }
+            TargetMix target = TargetForMap(map);
+            float sum = 0f;
+            List<StrataGasDef> gases = AtmosphereMapComponent.Gases;
+            for (int i = 0; i < gases.Count; i++)
+            {
+                StrataGasDef gas = gases[i];
+                float d = density[gas.index];
+                if (d <= NormalizeEpsilon)
+                {
+                    continue;
+                }
+                if (IsPollutantForLoad(gas, d, target))
+                {
+                    sum += d;
+                }
+            }
+            return sum;
+        }
+
+        public static bool IsPollutantForLoad(StrataGasDef gas, float density, TargetMix target)
+        {
+            if (gas == null || density <= NormalizeEpsilon)
+            {
+                return false;
+            }
+            if (!IsAtmosphericComponent(gas))
+            {
+                return true;
+            }
+            if (gas == StrataGasDefOf.Strata_CarbonDioxide)
+            {
+                return density > target.carbonDioxide + 0.008f;
+            }
+            if (gas == StrataGasDefOf.Strata_Oxygen)
+            {
+                return density < target.oxygen - 0.02f;
+            }
+            if (gas == StrataGasDefOf.Strata_Nitrogen)
+            {
+                return density < target.nitrogen - 0.05f;
+            }
+            if (gas == StrataGasDefOf.Strata_Argon)
+            {
+                return density > target.argon + 0.008f;
+            }
+            return false;
+        }
+
+        public static bool SignificantForReadout(StrataGasDef gas, float density, Map map)
+        {
+            if (gas == null || density <= 0.001f)
+            {
+                return false;
+            }
+            if (IsAtmosphericComponent(gas))
+            {
+                TargetMix target = TargetForMap(map);
+                if (gas == StrataGasDefOf.Strata_CarbonDioxide || gas == StrataGasDefOf.Strata_Argon)
+                {
+                    float targetFrac = gas == StrataGasDefOf.Strata_CarbonDioxide
+                        ? target.carbonDioxide
+                        : target.argon;
+                    return density > targetFrac + 0.008f;
+                }
+                if (gas == StrataGasDefOf.Strata_Oxygen)
+                {
+                    return density < target.oxygen - 0.015f || density > target.oxygen + 0.03f;
+                }
+                if (gas == StrataGasDefOf.Strata_Nitrogen)
+                {
+                    return density < target.nitrogen - 0.04f || density > target.nitrogen + 0.05f;
+                }
+            }
+            return density > gas.overlayThreshold;
+        }
+
+        public static void InjectGas(
+            float[] density,
+            StrataGasDef gas,
+            float amount,
+            Map map,
+            float maxFraction,
+            bool bypassCap)
+        {
+            if (density == null || gas == null || amount <= 0f)
+            {
+                return;
+            }
+
+            int idx = gas.index;
+            if (bypassCap && IsPressurizedGas(gas))
+            {
+                density[idx] = Mathf.Min(MaxDeepGasDensity, density[idx] + amount);
+                return;
+            }
+
+            float current = density[idx];
+            float cap = bypassCap ? 1f : Mathf.Clamp01(maxFraction);
+            float target = Mathf.Min(cap, current + amount);
+            float delta = target - current;
+            if (delta <= NormalizeEpsilon)
+            {
+                return;
+            }
+
+            density[idx] = target;
+            DisplaceOthers(density, idx, delta);
+            EnsureNormalized(density);
+        }
+
+        public static void ConsumeGas(float[] density, StrataGasDef gas, float amount, Map map)
+        {
+            if (density == null || gas == null || amount <= 0f)
+            {
+                return;
+            }
+
+            int idx = gas.index;
+            float removed = Mathf.Min(density[idx], amount);
+            if (removed <= NormalizeEpsilon)
+            {
+                return;
+            }
+            density[idx] -= removed;
+            RefillWithAmbient(density, map, removed);
+            EnsureNormalized(density);
+        }
+
+        public static void RefillWithAmbient(float[] density, Map map, float volume)
+        {
+            if (density == null || volume <= NormalizeEpsilon)
+            {
+                return;
+            }
+            TargetMix target = TargetForMap(map);
+            int n2 = IndexOf(StrataGasDefOf.Strata_Nitrogen);
+            int o2 = IndexOf(StrataGasDefOf.Strata_Oxygen);
+            int ar = IndexOf(StrataGasDefOf.Strata_Argon);
+            int co2 = IndexOf(StrataGasDefOf.Strata_CarbonDioxide);
+            if (n2 >= 0)
+            {
+                density[n2] += volume * target.nitrogen;
+            }
+            if (o2 >= 0)
+            {
+                density[o2] += volume * target.oxygen;
+            }
+            if (ar >= 0)
+            {
+                density[ar] += volume * target.argon;
+            }
+            if (co2 >= 0)
+            {
+                density[co2] += volume * target.carbonDioxide;
+            }
+        }
+
+        public static void EnsureNormalized(float[] density)
+        {
+            if (density == null)
+            {
+                return;
+            }
+            float total = ComposableTotal(density);
+            if (total <= 1f + NormalizeEpsilon)
+            {
+                return;
+            }
+            int deepIdx = DeepGasIndex();
+            float scale = 1f / total;
+            for (int i = 0; i < density.Length; i++)
+            {
+                if (i == deepIdx && density[i] > 1f)
+                {
+                    float over = density[i] - 1f;
+                    density[i] = 1f + over * scale;
+                }
+                else
+                {
+                    density[i] *= scale;
+                }
+            }
+        }
+
         public static void ApplyToRoom(
             AtmosphereMapComponent atmosphere,
             Room room,
@@ -94,24 +342,112 @@ namespace Strata
             Map map,
             float strength)
         {
-            if (atmosphere == null || room == null || strength <= 0f)
+            if (atmosphere == null || room == null || strength <= 0f
+                || !atmosphere.TryGetRoomDensity(room, out float[] density))
             {
                 return;
             }
+
             TargetMix target = TargetForMap(map);
             strength = Mathf.Clamp01(strength);
             bool hardLock = strength >= 0.98f;
 
-            ApplyChannel(atmosphere, room, sample, StrataGasDefOf.Strata_Nitrogen, target.nitrogen, strength, hardLock);
-            ApplyChannel(atmosphere, room, sample, StrataGasDefOf.Strata_Oxygen, target.oxygen, strength, hardLock);
-            ApplyChannel(atmosphere, room, sample, StrataGasDefOf.Strata_Argon, target.argon, strength, hardLock);
-            ApplyChannel(atmosphere, room, sample, StrataGasDefOf.Strata_CarbonDioxide, target.carbonDioxide, strength, hardLock);
+            float reserved = ReservedFraction(density, target);
+            float ambientBudget = Mathf.Max(0f, 1f - reserved);
+            float goalN2 = target.nitrogen * ambientBudget;
+            float goalO2 = target.oxygen * ambientBudget;
+            float goalAr = target.argon * ambientBudget;
+            float goalCo2 = target.carbonDioxide * ambientBudget;
+
+            ApplyAmbientChannel(density, StrataGasDefOf.Strata_Nitrogen, goalN2, strength, hardLock);
+            ApplyAmbientChannel(density, StrataGasDefOf.Strata_Oxygen, goalO2, strength, hardLock);
+            ApplyAmbientChannel(density, StrataGasDefOf.Strata_Argon, goalAr, strength, hardLock);
+            ApplyAmbientChannel(density, StrataGasDefOf.Strata_CarbonDioxide, goalCo2, strength, hardLock);
+
+            EnsureNormalized(density);
+            atmosphere.WriteRoomDensity(room, density, sample);
         }
 
-        private static void ApplyChannel(
-            AtmosphereMapComponent atmosphere,
-            Room room,
-            IntVec3 sample,
+        // Old saves: O₂-only backfill, or dual-channel smoke+ambient oversum → normalize.
+        public static void MigrateLegacyRoomMix(AtmosphereMapComponent atmosphere, Room room, IntVec3 sample, Map map)
+        {
+            if (atmosphere == null || room == null || !atmosphere.TryGetRoomDensity(room, out float[] density))
+            {
+                return;
+            }
+
+            float total = ComposableTotal(density);
+            if (total > OversumMigrateThreshold)
+            {
+                float scale = 1f / total;
+                for (int i = 0; i < density.Length; i++)
+                {
+                    density[i] *= scale;
+                }
+                atmosphere.WriteRoomDensity(room, density, sample);
+                return;
+            }
+
+            if (StrataGasDefOf.Strata_Nitrogen == null)
+            {
+                return;
+            }
+            float o2 = density[StrataGasDefOf.Strata_Oxygen.index];
+            float n2 = density[StrataGasDefOf.Strata_Nitrogen.index];
+            if (o2 <= 0.05f || n2 > 0.01f)
+            {
+                return;
+            }
+            ApplyToRoom(atmosphere, room, sample, map, strength: 1f);
+        }
+
+        public static void MergeRoomMix(float[] into, float[] other, int intoCells, int otherCells)
+        {
+            if (into == null || other == null || intoCells <= 0 || otherCells <= 0)
+            {
+                return;
+            }
+            float totalCells = intoCells + otherCells;
+            for (int i = 0; i < into.Length && i < other.Length; i++)
+            {
+                into[i] = (into[i] * intoCells + other[i] * otherCells) / totalCells;
+            }
+            EnsureNormalized(into);
+        }
+
+        private static float ReservedFraction(float[] density, TargetMix target)
+        {
+            float reserved = 0f;
+            List<StrataGasDef> gases = AtmosphereMapComponent.Gases;
+            for (int i = 0; i < gases.Count; i++)
+            {
+                StrataGasDef gas = gases[i];
+                if (IsAtmosphericComponent(gas))
+                {
+                    continue;
+                }
+                float d = density[gas.index];
+                if (d > NormalizeEpsilon)
+                {
+                    reserved += d;
+                }
+            }
+            reserved += PressurizedOverage(density);
+            int co2Idx = IndexOf(StrataGasDefOf.Strata_CarbonDioxide);
+            if (co2Idx >= 0)
+            {
+                reserved += Mathf.Max(0f, density[co2Idx] - target.carbonDioxide);
+            }
+            int o2Idx = IndexOf(StrataGasDefOf.Strata_Oxygen);
+            if (o2Idx >= 0)
+            {
+                reserved += Mathf.Max(0f, target.oxygen - density[o2Idx]);
+            }
+            return Mathf.Clamp(reserved, 0f, 1f);
+        }
+
+        private static void ApplyAmbientChannel(
+            float[] density,
             StrataGasDef gas,
             float goal,
             float strength,
@@ -121,44 +457,72 @@ namespace Strata
             {
                 return;
             }
-            float current = atmosphere.DensityInRoom(room, gas);
-            if (hardLock)
+            float current = density[gas.index];
+            float next = hardLock ? goal : Mathf.Lerp(current, goal, strength);
+            if (Mathf.Abs(next - current) > NormalizeEpsilon * 0.5f)
             {
-                if (Mathf.Abs(current - goal) > 0.002f)
+                density[gas.index] = Mathf.Max(0f, next);
+            }
+        }
+
+        private static void DisplaceOthers(float[] density, int exceptIdx, float amount)
+        {
+            int n2 = IndexOf(StrataGasDefOf.Strata_Nitrogen);
+            if (n2 >= 0 && n2 != exceptIdx && amount > NormalizeEpsilon)
+            {
+                float take = Mathf.Min(density[n2], amount);
+                density[n2] -= take;
+                amount -= take;
+            }
+            if (amount <= NormalizeEpsilon)
+            {
+                return;
+            }
+
+            float sum = 0f;
+            for (int i = 0; i < density.Length; i++)
+            {
+                if (i == exceptIdx)
                 {
-                    atmosphere.SetRoomGasDensity(room, gas, goal, sample);
+                    continue;
                 }
+                if (i == DeepGasIndex() && density[i] > 1f)
+                {
+                    continue;
+                }
+                sum += density[i];
+            }
+            if (sum <= NormalizeEpsilon)
+            {
                 return;
             }
-            float next = Mathf.Lerp(current, goal, strength);
-            if (Mathf.Abs(next - current) > 0.0005f)
+            for (int i = 0; i < density.Length; i++)
             {
-                atmosphere.SetRoomGasDensity(room, gas, next, sample);
+                if (i == exceptIdx)
+                {
+                    continue;
+                }
+                if (i == DeepGasIndex() && density[i] > 1f)
+                {
+                    continue;
+                }
+                float share = density[i] / sum;
+                density[i] -= amount * share;
+                if (density[i] < 0f)
+                {
+                    density[i] = 0f;
+                }
             }
         }
 
-        // Old saves that only stored O₂ at ~21%: backfill N₂/Ar/CO₂ once.
-        public static void MigrateLegacyRoomMix(AtmosphereMapComponent atmosphere, Room room, IntVec3 sample, Map map)
+        private static int DeepGasIndex()
         {
-            if (atmosphere == null || room == null || StrataGasDefOf.Strata_Nitrogen == null)
-            {
-                return;
-            }
-            float o2 = atmosphere.DensityInRoom(room, StrataGasDefOf.Strata_Oxygen);
-            float n2 = atmosphere.DensityInRoom(room, StrataGasDefOf.Strata_Nitrogen);
-            if (o2 <= 0.05f || n2 > 0.01f)
-            {
-                return;
-            }
-            ApplyToRoom(atmosphere, room, sample, map, strength: 1f);
+            return StrataGasDefOf.Strata_DeepGas?.index ?? -1;
         }
 
-        public static bool IsAtmosphericComponent(StrataGasDef gas)
+        private static int IndexOf(StrataGasDef gas)
         {
-            return gas == StrataGasDefOf.Strata_Nitrogen
-                || gas == StrataGasDefOf.Strata_Oxygen
-                || gas == StrataGasDefOf.Strata_Argon
-                || gas == StrataGasDefOf.Strata_CarbonDioxide;
+            return gas?.index ?? -1;
         }
     }
 }

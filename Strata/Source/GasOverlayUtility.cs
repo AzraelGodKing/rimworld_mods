@@ -221,7 +221,7 @@ namespace Strata
             out string line)
         {
             line = null;
-            if (!TryCollectRoomSlices(atmosphere, room, out List<GasSlice> slices, out float total, out bool openAir))
+            if (!TryCollectRoomSlices(atmosphere, room, out List<GasSlice> slices, out float pollutantLoad, out bool openAir))
             {
                 return false;
             }
@@ -238,12 +238,11 @@ namespace Strata
                 {
                     sb.Append(" · ");
                 }
-                sb.Append(FormatSliceLabel(slices[i], total));
+                sb.Append(FormatSliceLabel(slices[i]));
             }
             sb.Append("  (load ");
-            total = Mathf.Min(total, 1f);
-            sb.Append(total >= 0.001f ? Mathf.RoundToInt(total * 100f).ToString() : total.ToStringPercent());
-            sb.Append(')');
+            sb.Append(FormatLoadPercent(pollutantLoad));
+            sb.Append("%)");
             line = sb.ToString();
             return true;
         }
@@ -251,7 +250,7 @@ namespace Strata
         // Gas mix panel that follows the mouse so percentages stay on screen.
         public static bool DrawCursorMixReadout(AtmosphereMapComponent atmosphere, Room room)
         {
-            if (!TryCollectRoomSlices(atmosphere, room, out List<GasSlice> slices, out float total, out bool openAir))
+            if (!TryCollectRoomSlices(atmosphere, room, out List<GasSlice> slices, out float pollutantLoad, out bool openAir))
             {
                 return false;
             }
@@ -282,7 +281,7 @@ namespace Strata
                 return true;
             }
 
-            if (!TryMeasureMixLabel(slices, total, ReadoutLineHeight, padH, padV,
+            if (!TryMeasureMixLabel(slices, pollutantLoad, ReadoutLineHeight, padH, padV,
                 maxGasLines: 99, showLoadLine: true, out float width, out float height))
             {
                 Text.Font = savedFont;
@@ -299,7 +298,7 @@ namespace Strata
             DrawMixLines(
                 labelRect,
                 slices,
-                total,
+                pollutantLoad,
                 ReadoutLineHeight,
                 maxGasLines: 99,
                 showLoadLine: true,
@@ -352,7 +351,7 @@ namespace Strata
                 {
                     continue;
                 }
-                if (!TryCollectRoomSlices(atmosphere, room, out List<GasSlice> slices, out float total, out bool openAir))
+                if (!TryCollectRoomSlices(atmosphere, room, out List<GasSlice> slices, out float pollutantLoad, out bool openAir))
                 {
                     continue;
                 }
@@ -364,7 +363,7 @@ namespace Strata
                 {
                     continue;
                 }
-                if (!TryMeasureMixLabel(slices, total, MapLabelLineHeight, MapLabelPadH, MapLabelPadV,
+                if (!TryMeasureMixLabel(slices, pollutantLoad, MapLabelLineHeight, MapLabelPadH, MapLabelPadV,
                     maxGasLines: 3, showLoadLine: true, out float width, out float height))
                 {
                     continue;
@@ -377,7 +376,7 @@ namespace Strata
                 DrawMixLines(
                     labelRect,
                     slices,
-                    total,
+                    pollutantLoad,
                     MapLabelLineHeight,
                     maxGasLines: 3,
                     showLoadLine: true,
@@ -491,7 +490,7 @@ namespace Strata
 
         private static bool TryMeasureMixLabel(
             List<GasSlice> slices,
-            float total,
+            float pollutantLoad,
             float lineHeight,
             float padH,
             float padV,
@@ -510,11 +509,11 @@ namespace Strata
             int lineCount = gasLines + (showLoadLine ? 1 : 0);
             for (int i = 0; i < gasLines; i++)
             {
-                width = Mathf.Max(width, Text.CalcSize(FormatSliceLabel(slices[i], total)).x);
+                width = Mathf.Max(width, Text.CalcSize(FormatSliceLabel(slices[i])).x);
             }
             if (showLoadLine)
             {
-                string load = FormatLoadLabel(total);
+                string load = FormatLoadLabel(pollutantLoad);
                 width = Mathf.Max(width, Text.CalcSize(load).x);
             }
             width += padH * 2f;
@@ -522,18 +521,23 @@ namespace Strata
             return width > 0f;
         }
 
-        private static string FormatLoadLabel(float total)
+        private static string FormatLoadLabel(float pollutantLoad)
         {
-            total = Mathf.Min(total, 1f);
-            return "load "
-                + (total >= 0.001f ? Mathf.RoundToInt(total * 100f).ToString() : total.ToStringPercent())
-                + "%";
+            return "load " + FormatLoadPercent(pollutantLoad) + "%";
+        }
+
+        private static string FormatLoadPercent(float pollutantLoad)
+        {
+            pollutantLoad = Mathf.Clamp01(pollutantLoad);
+            return pollutantLoad >= 0.001f
+                ? Mathf.RoundToInt(pollutantLoad * 100f).ToString()
+                : pollutantLoad.ToStringPercent().TrimEnd('%');
         }
 
         private static void DrawMixLines(
             Rect area,
             List<GasSlice> slices,
-            float total,
+            float pollutantLoad,
             float lineHeight,
             int maxGasLines = 99,
             bool showLoadLine = true,
@@ -552,12 +556,12 @@ namespace Strata
             var colors = new List<Color>(lineCount);
             for (int i = 0; i < gasLines; i++)
             {
-                texts.Add(FormatSliceLabel(slices[i], total));
+                texts.Add(FormatSliceLabel(slices[i]));
                 colors.Add(LabelTextColor(slices[i].gas, slices[i].density));
             }
             if (showLoadLine)
             {
-                texts.Add(FormatLoadLabel(total));
+                texts.Add(FormatLoadLabel(pollutantLoad));
                 colors.Add(LabelTextFill);
             }
 
@@ -610,9 +614,8 @@ namespace Strata
             GUI.color = saved;
         }
 
-        private static string FormatSliceLabel(GasSlice slice, float total)
+        private static string FormatSliceLabel(GasSlice slice)
         {
-            // Absolute density (0.21 → 21%) matches ambient-O₂ expectations on B1.
             return OverlayLabel(slice.gas) + " " + Mathf.RoundToInt(slice.density * 100f) + "%";
         }
 
@@ -627,16 +630,17 @@ namespace Strata
             return Color.Lerp(LabelTextFill, light, 0.35f);
         }
 
-        // Full room composition for labels and readouts (includes normal O₂ and trace gases).
+        // Room composition for labels and readouts — significant fractions only;
+        // load = pollutant / non-breathable share (smoke, deep gas, excess CO₂, …).
         private static bool TryCollectRoomSlices(
             AtmosphereMapComponent atmosphere,
             Room room,
             out List<GasSlice> slices,
-            out float total,
+            out float pollutantLoad,
             out bool openAir)
         {
             slices = null;
-            total = 0f;
+            pollutantLoad = 0f;
             openAir = false;
             if (atmosphere == null || room == null)
             {
@@ -649,24 +653,35 @@ namespace Strata
                 return true;
             }
 
+            if (!atmosphere.TryGetRoomDensity(room, out float[] density))
+            {
+                return false;
+            }
+
+            Map map = atmosphere.map;
+            pollutantLoad = AtmosphericMix.PollutantFraction(density, map);
+            float composableTotal = AtmosphericMix.ComposableTotal(density);
+            if (composableTotal <= 0.001f && pollutantLoad <= 0.001f)
+            {
+                return false;
+            }
+
             List<StrataGasDef> gases = AtmosphereMapComponent.Gases;
             slices = new List<GasSlice>();
             for (int i = 0; i < gases.Count; i++)
             {
                 StrataGasDef gas = gases[i];
-                float density = atmosphere.DensityInRoom(room, gas);
-                if (density <= 0.001f)
+                float d = density[gas.index];
+                if (!AtmosphericMix.SignificantForReadout(gas, d, map))
                 {
                     continue;
                 }
-                slices.Add(new GasSlice { gas = gas, density = density });
-                total += density;
+                slices.Add(new GasSlice { gas = gas, density = d });
             }
-            if (slices.Count == 0 || total <= 0f)
+            if (slices.Count == 0)
             {
                 return false;
             }
-            total = Mathf.Min(total, 1f);
             slices.Sort((a, b) => b.density.CompareTo(a.density));
             return true;
         }
