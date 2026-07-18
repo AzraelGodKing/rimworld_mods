@@ -463,7 +463,7 @@ namespace Strata
             float strength)
         {
             if (atmosphere == null || room == null || strength <= 0f
-                || !atmosphere.TryGetRoomDensity(room, out float[] density))
+                || !atmosphere.EnsureRoomDensity(room, sample, out float[] density))
             {
                 return;
             }

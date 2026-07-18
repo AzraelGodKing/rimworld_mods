@@ -811,6 +811,23 @@ namespace Strata
             return true;
         }
 
+        // Ambient replenishment must seed enclosed rooms that never received
+        // smoke or other gas — TryGetRoomDensity alone skips empty rooms.
+        internal bool EnsureRoomDensity(Room room, IntVec3 sample, out float[] density)
+        {
+            density = null;
+            if (room == null)
+            {
+                return false;
+            }
+            if (!TryGetOrCreateCloud(room, sample, out Cloud c))
+            {
+                return false;
+            }
+            density = c.density;
+            return true;
+        }
+
         internal void WriteRoomDensity(Room room, float[] density, IntVec3 sample)
         {
             if (room == null || density == null)
@@ -1748,6 +1765,12 @@ namespace Strata
                     continue;
                 }
                 if (room.UsesOutdoorTemperature && StrataMapUtility.IsUnderground(map))
+                {
+                    AtmosphericMix.ApplyToRoom(this, room, sample, map, rate);
+                    continue;
+                }
+                if (!forceEnclosed && !room.UsesOutdoorTemperature && rate > 0f
+                    && StrataMapUtility.IsUnderground(map))
                 {
                     AtmosphericMix.ApplyToRoom(this, room, sample, map, rate);
                 }

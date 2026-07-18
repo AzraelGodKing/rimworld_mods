@@ -666,12 +666,13 @@ namespace Strata
                 return true;
             }
 
-            if (!atmosphere.TryGetRoomDensity(room, out float[] density))
+            Map map = atmosphere.map;
+            if (!atmosphere.TryGetRoomDensity(room, out float[] density)
+                && !TrySynthesizeAmbientDensity(atmosphere, room, out density))
             {
                 return false;
             }
 
-            Map map = atmosphere.map;
             pollutantLoad = AtmosphericMix.PollutantFraction(density, map);
             float composableTotal = AtmosphericMix.ComposableTotal(density);
             if (composableTotal <= 0.001f && pollutantLoad <= 0.001f)
@@ -702,12 +703,89 @@ namespace Strata
                 }
                 slices.Add(new GasSlice { gas = gas, density = d });
             }
-            if (slices.Count == 0)
+            if (slices.Count == 0 && TryAppendAmbientBaselineSlices(map, density, slices))
+            {
+                // Healthy ambient mix: SignificantForReadout hides ~21% O₂ until
+                // something deviates — still show the baseline for sealed rooms.
+            }
+            else if (slices.Count == 0)
             {
                 return false;
             }
             slices.Sort((a, b) => b.density.CompareTo(a.density));
             return true;
+        }
+
+        private static bool TrySynthesizeAmbientDensity(
+            AtmosphereMapComponent atmosphere,
+            Room room,
+            out float[] density)
+        {
+            density = null;
+            Map map = atmosphere?.map;
+            if (map == null || room == null || room.UsesOutdoorTemperature)
+            {
+                return false;
+            }
+            if (!AtmosphericMix.ForcesAmbientInEnclosedRooms(map)
+                && (!StrataMapUtility.IsUnderground(map)
+                    || AtmosphericMix.NaturalReplenishRate(map) <= 0f))
+            {
+                return false;
+            }
+            AtmosphericMix.TargetMix target = AtmosphericMix.TargetForMap(map);
+            density = new float[DefDatabase<StrataGasDef>.DefCount];
+            if (StrataGasDefOf.Strata_Oxygen != null)
+            {
+                density[StrataGasDefOf.Strata_Oxygen.index] = target.oxygen;
+            }
+            if (StrataGasDefOf.Strata_Nitrogen != null)
+            {
+                density[StrataGasDefOf.Strata_Nitrogen.index] = target.nitrogen;
+            }
+            if (StrataGasDefOf.Strata_Argon != null)
+            {
+                density[StrataGasDefOf.Strata_Argon.index] = target.argon;
+            }
+            if (StrataGasDefOf.Strata_CarbonDioxide != null)
+            {
+                density[StrataGasDefOf.Strata_CarbonDioxide.index] = target.carbonDioxide;
+            }
+            return true;
+        }
+
+        private static bool TryAppendAmbientBaselineSlices(
+            Map map,
+            float[] density,
+            List<GasSlice> slices)
+        {
+            if (map == null || density == null || slices == null
+                || AtmosphericMix.PollutantFraction(density, map) > 0.02f)
+            {
+                return false;
+            }
+            AtmosphericMix.TargetMix target = AtmosphericMix.TargetForMap(map);
+            StrataGasDef o2 = StrataGasDefOf.Strata_Oxygen;
+            StrataGasDef n2 = StrataGasDefOf.Strata_Nitrogen;
+            if (o2 == null || n2 == null)
+            {
+                return false;
+            }
+            float o2Density = density[o2.index] > 0.001f ? density[o2.index] : target.oxygen;
+            float n2Density = density[n2.index] > 0.001f ? density[n2.index] : target.nitrogen;
+            if (o2Density <= 0.001f && n2Density <= 0.001f)
+            {
+                return false;
+            }
+            if (o2Density > 0.001f)
+            {
+                slices.Add(new GasSlice { gas = o2, density = o2Density });
+            }
+            if (n2Density > 0.001f)
+            {
+                slices.Add(new GasSlice { gas = n2, density = n2Density });
+            }
+            return slices.Count > 0;
         }
     }
 }
