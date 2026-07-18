@@ -17,7 +17,6 @@
       <DeteriorationRate>2</DeteriorationRate>
       <Mass>0.03</Mass>
       <MarketValue>1.5</MarketValue>
-      <Nutrition>0.04</Nutrition>
     </statBases>
     <thingCategories>
       <li>Manufactured</li>
@@ -344,6 +343,7 @@
     </graphicData>
     <tickerType>Rare</tickerType>
     <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
     <statBases>
       <MaxHitPoints>40</MaxHitPoints>
       <Flammability>0.2</Flammability>

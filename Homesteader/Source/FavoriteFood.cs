@@ -202,7 +202,7 @@ namespace Homesteader
     [HarmonyPatch(typeof(FoodUtility), nameof(FoodUtility.ThoughtsFromIngesting))]
     public static class Patch_FavoriteFoodThoughts
     {
-        public static void Postfix(Pawn ingester, Thing foodSource, ThingDef foodDef, List<ThoughtDef> __result)
+        public static void Postfix(Pawn ingester, Thing foodSource, ThingDef foodDef, List<FoodUtility.ThoughtFromIngesting> __result)
         {
             if (ingester?.needs?.mood == null || __result == null || foodDef == null)
             {
@@ -215,10 +215,24 @@ namespace Homesteader
             }
 
             ThoughtDef thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_AteFavoriteFood");
-            if (thought != null && !__result.Contains(thought))
+            if (thought == null)
             {
-                __result.Add(thought);
+                return;
             }
+
+            for (int i = 0; i < __result.Count; i++)
+            {
+                if (__result[i].thought == thought)
+                {
+                    return;
+                }
+            }
+
+            __result.Add(new FoodUtility.ThoughtFromIngesting
+            {
+                thought = thought,
+                fromPrecept = null
+            });
         }
     }
 
