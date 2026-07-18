@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Баллон с глубинным газом ============ -->
+  <Strata_DeepGasCanister.label>баллон с глубинным газом</Strata_DeepGasCanister.label>
+  <Strata_DeepGasCanister.description>Баллон под давлением с ядовитым глубинным газом, добытым газовой скважиной. Топливо для газогенератора, представляющее ценность для промышленных покупателей. Очень горюч.</Strata_DeepGasCanister.description>
+
+</LanguageData>

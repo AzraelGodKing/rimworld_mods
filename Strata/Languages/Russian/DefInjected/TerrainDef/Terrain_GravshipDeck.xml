@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Палуба гравикорабля ============ -->
+  <Strata_GravshipDeck.label>палуба гравикорабля</Strata_GravshipDeck.label>
+  <Strata_GravshipDeck.description>Проходимый настил гравикорабля, спроецированный с палубы сверху.</Strata_GravshipDeck.description>
+
+  <!-- ============ Корпус гравикорабля ============ -->
+  <Strata_GravshipHull.label>корпус гравикорабля</Strata_GravshipHull.label>
+  <Strata_GravshipHull.description>Герметичный внешний корпус за пределами корабля. Непроходим.</Strata_GravshipHull.description>
+
+  <!-- ============ Генератор уровня под палубой гравикорабля ============ -->
+  <Strata_GravshipUnderdeckLevel.label>уровень под палубой гравикорабля</Strata_GravshipUnderdeckLevel.label>
+  <Strata_GravshipUnderdeckLevel.description>Подпалубное пространство гравикорабля.</Strata_GravshipUnderdeckLevel.description>
+
+  <!-- ============ Шаг генерации: подпалуба гравикорабля ============ -->
+  <Strata_GravshipUnderdeck.label>подпалуба гравикорабля</Strata_GravshipUnderdeck.label>
+  <Strata_GravshipUnderdeck.description>Генерирует подпалубное пространство гравикорабля.</Strata_GravshipUnderdeck.description>
+
+</LanguageData>
