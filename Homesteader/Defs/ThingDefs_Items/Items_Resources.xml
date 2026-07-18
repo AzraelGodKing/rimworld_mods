@@ -63,7 +63,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_Butter</defName>
     <label>butter</label>
-    <description>Churned cream from fresh milk. A rich cooking ingredient that keeps for several weeks when cool.</description>
+    <description>Churned from skimmed cream (with buttermilk left over). A rich cooking ingredient for bread, flapjacks, biscuits, and other homestead baking.</description>
     <graphicData>
       <texPath>Homesteader/Items/Butter</texPath>
       <graphicClass>Graphic_Single</graphicClass>

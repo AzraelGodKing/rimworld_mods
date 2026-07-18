@@ -15,7 +15,23 @@ namespace Strata
         // it turns out it can't actually do) can't ping-pong it between levels.
         private const int CooldownTicks = 1500;
 
+        // Misc. Robots return-to-base can re-fire Goto every think pass when the
+        // recharge room is on another level — throttle pathfinding retries.
+        private const int ReturnBaseRetryCooldownTicks = 6000;
+
+        // Idle colonists with null work jobs scan linked levels every think
+        // pass; throttle that BFS/work probe separately from relay cooldown.
+        private const int RobotWorkScanCooldownTicks = 7500;
+
+        private const int ColonistWorkScanCooldownTicks = 7500;
+
         private static readonly Dictionary<int, int> lastRelayTick = new Dictionary<int, int>();
+
+        private static readonly Dictionary<int, int> lastReturnBaseAttemptTick = new Dictionary<int, int>();
+
+        private static readonly Dictionary<int, int> lastRobotWorkScanTick = new Dictionary<int, int>();
+
+        private static readonly Dictionary<int, int> lastColonistWorkScanTick = new Dictionary<int, int>();
 
         // Tick-stamped and keyed by pawn ID, so entries from one save are
         // garbage in another (loading an earlier save leaves future-dated
@@ -23,6 +39,71 @@ namespace Strata
         internal static void ResetSession()
         {
             lastRelayTick.Clear();
+            lastReturnBaseAttemptTick.Clear();
+            lastRobotWorkScanTick.Clear();
+            lastColonistWorkScanTick.Clear();
+            StrataPawnUtility.ResetMiscRobotCaches();
+            LevelGraph.InvalidateCache();
+        }
+
+        internal static bool IsOnRelayCooldown(Pawn pawn)
+        {
+            return pawn != null
+                && lastRelayTick.TryGetValue(pawn.thingIDNumber, out int tick)
+                && Find.TickManager.TicksGame - tick < CooldownTicks;
+        }
+
+        internal static void TouchRelayCooldown(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                lastRelayTick[pawn.thingIDNumber] = Find.TickManager.TicksGame;
+            }
+        }
+
+        internal static bool IsReturnBaseRetryCooldown(Pawn pawn)
+        {
+            return pawn != null
+                && lastReturnBaseAttemptTick.TryGetValue(pawn.thingIDNumber, out int tick)
+                && Find.TickManager.TicksGame - tick < ReturnBaseRetryCooldownTicks;
+        }
+
+        internal static void TouchReturnBaseRetry(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                lastReturnBaseAttemptTick[pawn.thingIDNumber] = Find.TickManager.TicksGame;
+            }
+        }
+
+        internal static bool IsRobotWorkScanCooldown(Pawn pawn)
+        {
+            return pawn != null
+                && lastRobotWorkScanTick.TryGetValue(pawn.thingIDNumber, out int tick)
+                && Find.TickManager.TicksGame - tick < RobotWorkScanCooldownTicks;
+        }
+
+        internal static void TouchRobotWorkScan(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                lastRobotWorkScanTick[pawn.thingIDNumber] = Find.TickManager.TicksGame;
+            }
+        }
+
+        internal static bool IsColonistWorkScanCooldown(Pawn pawn)
+        {
+            return pawn != null
+                && lastColonistWorkScanTick.TryGetValue(pawn.thingIDNumber, out int tick)
+                && Find.TickManager.TicksGame - tick < ColonistWorkScanCooldownTicks;
+        }
+
+        internal static void TouchColonistWorkScan(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                lastColonistWorkScanTick[pawn.thingIDNumber] = Find.TickManager.TicksGame;
+            }
         }
 
         public static bool CanRelay(Pawn pawn)
@@ -40,8 +121,7 @@ namespace Strata
             {
                 return false;
             }
-            if (lastRelayTick.TryGetValue(pawn.thingIDNumber, out int tick)
-                && Find.TickManager.TicksGame - tick < CooldownTicks)
+            if (IsOnRelayCooldown(pawn))
             {
                 return false;
             }
@@ -49,6 +129,18 @@ namespace Strata
         }
 
         public static Job MakeRelayJob(Pawn pawn, MapPortal firstStep)
+        {
+            return MakePortalJob(pawn, firstStep, touchRelayCooldown: true);
+        }
+
+        // Return-to-base must not consume the general relay cooldown — bots still
+        // need to commute for work while heading home on low charge.
+        internal static Job MakeReturnBasePortalJob(Pawn pawn, MapPortal firstStep)
+        {
+            return MakePortalJob(pawn, firstStep, touchRelayCooldown: false);
+        }
+
+        private static Job MakePortalJob(Pawn pawn, MapPortal firstStep, bool touchRelayCooldown)
         {
             if (firstStep == null || !firstStep.Spawned || firstStep.Map != pawn.Map)
             {
@@ -62,7 +154,10 @@ namespace Strata
             {
                 return null;
             }
-            lastRelayTick[pawn.thingIDNumber] = Find.TickManager.TicksGame;
+            if (touchRelayCooldown)
+            {
+                TouchRelayCooldown(pawn);
+            }
             return JobMaker.MakeJob(JobDefOf.EnterPortal, firstStep);
         }
 

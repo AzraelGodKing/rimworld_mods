@@ -63,7 +63,7 @@ namespace Strata
         {
             if (!Active)
             {
-                return "Needs power to scrub " + GasDef.label + ".";
+                return "Strata_GasScrubberNeedsPower".Translate(GasDef.label);
             }
             Room room = parent.GetRoom();
             if (room == null || room.UsesOutdoorTemperature)
@@ -73,8 +73,8 @@ namespace Strata
             AtmosphereMapComponent atmosphere = parent.Map.GetComponent<AtmosphereMapComponent>();
             float density = atmosphere?.DensityInRoom(room, GasDef) ?? 0f;
             return density > 0.01f
-                ? "Scrubbing " + GasDef.label + " from the room."
-                : "No " + GasDef.label + " to scrub.";
+                ? "Strata_GasScrubberScrubbing".Translate(GasDef.label)
+                : "Strata_GasScrubberNone".Translate(GasDef.label);
         }
     }
 }

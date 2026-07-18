@@ -1,16 +1,58 @@
 # Changelog
 
-All notable changes to Homesteader are documented here.
+Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
 
 ## [Unreleased]
 
 ### Added
-- **Dedicated research tab** — all Homesteader projects live under their own *Homesteader* tab (no longer on Main).
+- **Kats Effect** — rare Misc storyteller event that only fires when a finished 27 statue/monument is on the home map. Hybrid anomalous-broadcast letter (with a short Foundation addendum), temporary heat dome (~+10°C), short brain-rot hediff, small silver Super Chat drain (27–81), and a personal Kats directive mood (+12, ~1 day). Min refire 27 days.
+- `Languages/English/Keyed/Homesteader.xml` — all C# player strings (wash tub, passive cooling, favorite food inspect, Kats Effect letter body) with `.Translate()` wiring.
+- `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
+- **Homestead livestock:** chicken coop (periodic eggs) and goat pen (periodic milk); animal mash recipe at the hearth (barley/pumpkin/hay).
+- **Charcuterie:** render lard or tallow from meat; stuff sausage from salted/smoked meat or jerky + fat + herbs (hearth).
+- **Homestead textiles:** flax crop, spinning wheel (flax/wool → homespun cloth), loom (quilt); quilted bed now costs a homestead quilt (comforts + textiles).
+- **Soil & cold storage:** compost heap (compost → fertilizer), composted soil terrain (1.45 fertility), icehouse (≤0°C), springhouse (≤8°C) — reuse root-cellar cooling.
+- **Pantry craft:** canning kitchen (mason jars, canned stew/jam), cider press (apple juice) + ferment juice at the brewing bench, wash tub (refuel with soap, use for freshly washed mood).
+- Research: livestock, textiles, soil and cold storage, pantry craft. Crafting workgiver covers spinning wheel, loom, and compost heap.
+- Soap can render with lard or tallow as well as butter. Preserves shelf accepts sausage, canned goods, juice, and rendered fats.
 
 ### Changed
-- Renamed **shark plushie** to **Sharkira the plushie** (in-game label and docs).
-- **Diggo the plushie** — updated hippo-dog sprite art; docs page image refreshed to match. Build cost lowered to **20 cloth** (same as Sharkira).
-- GitHub Pages catalog (`docs/homesteader.html`) updated with shark plushie, 27 monuments/statues, orchard pantry cards, and a full food item table.
+- Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
+- Organized Homesteader sources: C# merged into `PassiveCooling.cs`, `WashEffects.cs`, and `FavoriteFood.cs`; expansion XML renamed into domain files (livestock/soil/textiles/pantry/yard-and-pantry); hediffs/thoughts consolidated; composted soil lives under homestead terrain.
+- Passive coolers (root cellar / icehouse / springhouse) now apply the **coolest** overlapping ceiling to a cell instead of an arbitrary cooler’s temp.
+- Docs: full item catalog moved to its own page (`docs/homesteader-catalog.html`).
+- **Merged Wellspring into Homesteader.** Wells, rain barrels, cisterns, solar stills, water towers, irrigated soil/planters, boiled water, mud bricks, and clean bandages now ship with Homesteader. Research (wellcraft / irrigation / waterworks) lives on the Homesteader tab. Hand-dug and deep wells are on the homestead cooking workgiver. `Wellspring_*` defNames are preserved for save continuity — disable any old standalone Wellspring mod.
+
+### Fixed
+- Pawns can work homestead production stations again (jam cauldron, hearth, drying rack, mill, brewery, etc.). Stations had bills and recipes but no `WorkGiverDef` with `fixedBillGiverDefs`, so `WorkGiver_DoBill` never considered them — colonists could build and set "do forever" bills but would not interact. Note: wood-fired stations (jam cauldron, hearth, smokehouse) still need fuel before work starts.
+- **Sugar, butter, and cream are used in recipes again.** Jam needs sugar; bread and flapjacks need butter; cheese is pressed from cream + rock salt; butter is churned from cream (skim milk first); porridge and cider use sugar. Cider no longer accepts hay or fungus.
+- **Rock salt** now trains Cooking (matches the Cooking workgiver) instead of Construction.
+- **Research gates match the tree:** curing rack, smokehouse, hayloft, and ingredient barrel need Primitive homestead; mill, churn, pickling crock, and hearth need Farmstead crafting; washer toss, log bench, and 27 statues need Homestead comforts.
+- **Root cellar** now passively cools stored food (C#): items on the cellar use ambient temperature capped at 5°C for spoilage, so summer heat no longer cooks the pantry. Requires Harmony.
+- **Advanced battery** can be rotated; **washer toss barrel** is no longer rotatable (single graphic).
+- About and research blurbs updated for dairy/sugar pipelines, costs, and unlocks.
+
+### Added
+- **Dubs Bad Hygiene soft-compat** — when DBH is loaded, rain barrel / cistern / water tower gain plumbing pipe + water storage (caps 100 / 2000 / 8000); hand-dug well acts as a primitive groundwater source; deep well is a piped deep inlet. Jug water for irrigation is unchanged. Optional only (soft `loadAfter`).
+- **Dedicated research tab** — all Homesteader projects live under their own *Homesteader* tab (no longer on Main).
+- Preserves shelf now also accepts butter, cream, beeswax, bread, flapjacks, pantry meals, and Odyssey salted/smoked fish.
+- Homesteader C# assembly (`Homesteader.dll`) for root cellar cooling; requires the Harmony mod.
+- **Pantry meals** at the hearth: toast and jam (bread + jam), ploughman's lunch (bread + cheese + pickles), and honey porridge (grain + honey, joy bonus).
+- **Honey and maple syrup** can stand in for sugar in jam, porridge, and cider.
+- Dried herbs now season trail stew and hearty stew.
+- Homestead supplier also stocks butter, maple syrup, bread, soap, waxed cheese, and cider vinegar.
+- **Pumpkin pie** and **buttermilk biscuits** at the hearth; churning butter now also yields **buttermilk**.
+- **Cider vinegar** (from cider) and **vinegar pickles**; dedicated **apple cider** brew from orchard apples.
+- **Waxed cheese** (cheese + beeswax) and **smoked cheese** (smokehouse).
+- **Homestead soap** (beeswax + butter) — use a bar for a freshly washed moodlet.
+- **Harvest maypole** grants nearby harvest cheer (+6 mood).
+- Taste thoughts for jam, cheese, flapjacks, toast, pie, and biscuits.
+- **Favorite food** (C#): every humanlike with a mood (colonists, guests, raiders, etc.) rolls a favorite from Homesteader foods plus vanilla meals/treats. Shown on inspect; eating it gives +8 mood and a food-preference bonus.
+- Root cellar cooling now also chills spoilables in adjacent indoor cells.
+
+### Changed
+- Renamed **shark plushie** to **Sharkira the plushie** (in-game label).
+- **Diggo the plushie** — updated hippo-dog sprite art; build cost lowered to **20 cloth** (same as Sharkira).
 
 ### Added
 - **27 monuments (two styles):** build either a golden or a harvest-stone statue of the number 27. Both share the same aura — colonists within range gain +27 mood — so you pick the look that fits your yard. Unlocked with homestead comforts research; golden costs gold and granite, harvest costs granite and hay.

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Rare Misc event: only fires when a finished 27 statue/monument is on the home map. -->
+  <IncidentDef>
+    <defName>Homesteader_KatsEffect</defName>
+    <label>Kats Effect</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>Homesteader.IncidentWorker_KatsEffect</workerClass>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <baseChance>0.25</baseChance>
+    <minRefireDays>27</minRefireDays>
+    <durationDays>0.75~1.25</durationDays>
+    <letterDef>NeutralEvent</letterDef>
+    <letterLabel>Kats Effect</letterLabel>
+    <letterText>An anomalous broadcast has locked onto your colony's 27 monument frequency. A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — "brain rot," they call it.\n\nColony accounts show silver diverted as a "Super Chat."\n\n---\nFoundation addendum // Item # SCP-27272727 // Keter (Adorable)\nContainment note: hydrate / medicate / masticate. Do not look away from the number.</letterText>
+  </IncidentDef>
+
+</Defs>

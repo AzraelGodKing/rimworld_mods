@@ -156,7 +156,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_Sugar</defName>
     <label>sugar</label>
-    <description>Crystallized sugar extracted from sugar beets. A prized sweetener for jams, baking, and brewing.</description>
+    <description>Crystallized sugar extracted from sugar beets. Used to make jam, sweeten porridge, and ferment cider — honey and maple syrup can stand in for it.</description>
     <graphicData>
       <texPath>Homesteader/Items/Sugar</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -185,7 +185,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_Honey</defName>
     <label>honey</label>
-    <description>Golden honey gathered from a beehive. Never spoils, sweetens cooking, and ferments into mead.</description>
+    <description>Golden honey gathered from a beehive. Never spoils. Sweetens jam, porridge, and cider, cooks into honey porridge, and ferments into mead.</description>
     <graphicData>
       <texPath>Homesteader/Items/Honey</texPath>
       <graphicClass>Graphic_Single</graphicClass>

@@ -12,7 +12,7 @@ namespace Strata
 
         public override AcceptanceReport DeconstructibleBy(Faction faction)
         {
-            return "It's the only way down.";
+            return "Strata_OnlyWayDown".Translate();
         }
     }
 }

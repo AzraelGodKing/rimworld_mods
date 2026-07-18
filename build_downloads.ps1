@@ -4,7 +4,7 @@ $repo = $PSScriptRoot
 $out = Join-Path $repo 'docs\downloads'
 New-Item -ItemType Directory -Force -Path $out | Out-Null
 
-foreach ($mod in @('Homesteader', 'Stormproof', 'Wellspring', 'Strata')) {
+foreach ($mod in @('Homesteader', 'Stormproof', 'Strata')) {
     $zip = Join-Path $out "$mod.zip"
     git -C $repo archive --format=zip -o $zip HEAD $mod
     if ($LASTEXITCODE -ne 0) { throw "git archive failed for $mod" }
