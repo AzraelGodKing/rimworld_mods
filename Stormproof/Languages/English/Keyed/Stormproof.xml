@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Shared -->
+  <Stormproof_OfflineNeedsPower>Offline: needs power.</Stormproof_OfflineNeedsPower>
+  <Stormproof_NotConnectedPowerNet>Not connected to a power net.</Stormproof_NotConnectedPowerNet>
+  <Stormproof_RechargingReadyIn>Recharging: ready in {0}.</Stormproof_RechargingReadyIn>
+
+  <!-- Grid monitor -->
+  <Stormproof_GridMonitor_Critical>{0}: grid batteries CRITICAL at {1}.</Stormproof_GridMonitor_Critical>
+  <Stormproof_GridMonitor_Low>{0}: grid batteries low at {1}.</Stormproof_GridMonitor_Low>
+  <Stormproof_GridMonitor_Header>Production: {0} W  |  Consumption: {1} W  (net {2} W)</Stormproof_GridMonitor_Header>
+  <Stormproof_GridMonitor_NoBatteries>No batteries on this grid.</Stormproof_GridMonitor_NoBatteries>
+  <Stormproof_GridMonitor_Stored>Stored: {0} / {1} Wd ({2})</Stormproof_GridMonitor_Stored>
+  <Stormproof_GridMonitor_EmptyIn>At current drain, batteries empty in {0}.</Stormproof_GridMonitor_EmptyIn>
+  <Stormproof_GridMonitor_FullIn>At current surplus, batteries full in {0}.</Stormproof_GridMonitor_FullIn>
+
+  <!-- Surge protector -->
+  <Stormproof_SurgeProtector_Absorbed>A power surge hit the grid, but {0} absorbed it. It needs a day to recharge (and took some internal damage).</Stormproof_SurgeProtector_Absorbed>
+  <Stormproof_SurgeProtector_Ready>Ready: will absorb the next short circuit on this grid.</Stormproof_SurgeProtector_Ready>
+
+  <!-- Storm spire -->
+  <Stormproof_StormSpire_StrikeHarvested>{0} caught a lightning strike: +{1} Wd stored.</Stormproof_StormSpire_StrikeHarvested>
+  <Stormproof_StormSpire_Grounded>Grounded: attracts lightning safely. Connect to a power grid to harvest strikes.</Stormproof_StormSpire_Grounded>
+  <Stormproof_StormSpire_SurgeRiskNone>no surge risk (perfect grounding)</Stormproof_StormSpire_SurgeRiskNone>
+  <Stormproof_StormSpire_SurgeRiskPercent>{0}% surge risk per strike</Stormproof_StormSpire_SurgeRiskPercent>
+  <Stormproof_StormSpire_GridConnected>Grid-connected: strikes charge batteries (+{0} Wd), {1}.</Stormproof_StormSpire_GridConnected>
+
+  <!-- Storm caller -->
+  <Stormproof_StormCaller_Label>Call storm</Stormproof_StormCaller_Label>
+  <Stormproof_StormCaller_Desc>Agitate the ionosphere to summon a rainy thunderstorm over this map. Lightning feeds storm spires and the rain douses fires. Recharges over five days.</Stormproof_StormCaller_Desc>
+  <Stormproof_StormCaller_NoPower>No power.</Stormproof_StormCaller_NoPower>
+  <Stormproof_StormCaller_Discharging>{0} discharges into the sky. A thunderstorm is forming.</Stormproof_StormCaller_Discharging>
+  <Stormproof_StormCaller_Charged>Charged: ready to call a storm.</Stormproof_StormCaller_Charged>
+
+  <!-- Weather forecaster -->
+  <Stormproof_WeatherForecaster_LightningIncoming>{0}: {1} moving in - lightning expected. Storm spires will catch strikes.</Stormproof_WeatherForecaster_LightningIncoming>
+  <Stormproof_WeatherForecaster_BreakingSoon>{0}: current weather ({1}) will break within the hour.</Stormproof_WeatherForecaster_BreakingSoon>
+  <Stormproof_WeatherForecaster_Current>Current weather: {0}</Stormproof_WeatherForecaster_Current>
+  <Stormproof_WeatherForecaster_HoldsFor>Forecast: holds for about {0}.</Stormproof_WeatherForecaster_HoldsFor>
+  <Stormproof_WeatherForecaster_AboutToChange>Forecast: about to change.</Stormproof_WeatherForecaster_AboutToChange>
+
+  <!-- Ion storm -->
+  <Stormproof_IonStorm_EmpBurst>Ion storm: EMP burst near {0}.</Stormproof_IonStorm_EmpBurst>
+
+  <!-- Load shedder -->
+  <Stormproof_LoadShedder_CutoffLowerLabel>Cutoff -5%</Stormproof_LoadShedder_CutoffLowerLabel>
+  <Stormproof_LoadShedder_CutoffLowerDesc>Trip the breaker when supply batteries fall below a lower charge level.</Stormproof_LoadShedder_CutoffLowerDesc>
+  <Stormproof_LoadShedder_CutoffRaiseLabel>Cutoff +5%</Stormproof_LoadShedder_CutoffRaiseLabel>
+  <Stormproof_LoadShedder_CutoffRaiseDesc>Trip the breaker when supply batteries fall below a higher charge level.</Stormproof_LoadShedder_CutoffRaiseDesc>
+  <Stormproof_LoadShedder_Reconnected>{0}: batteries recovered, sub-grid reconnected.</Stormproof_LoadShedder_Reconnected>
+  <Stormproof_LoadShedder_Shed>{0}: batteries below {1}, sub-grid shed.</Stormproof_LoadShedder_Shed>
+  <Stormproof_LoadShedder_Closed>Breaker closed: transmitting.</Stormproof_LoadShedder_Closed>
+  <Stormproof_LoadShedder_Open>Breaker OPEN: sub-grid shed.</Stormproof_LoadShedder_Open>
+  <Stormproof_LoadShedder_NoSupplyBatteries>No batteries on the supply grid.</Stormproof_LoadShedder_NoSupplyBatteries>
+  <Stormproof_LoadShedder_SupplyStatus>Supply batteries: {0} (trips below {1}, reconnects at {2}).</Stormproof_LoadShedder_SupplyStatus>
+
+  <!-- Solar shield -->
+  <Stormproof_SolarShield_Standby>Standby. During a solar flare this shield will draw {0} W.</Stormproof_SolarShield_Standby>
+  <Stormproof_SolarShield_Protecting>PROTECTING: solar flare deflected, drawing {0} W.</Stormproof_SolarShield_Protecting>
+  <Stormproof_SolarShield_Down>SHIELD DOWN: needs power (switched on, connected, stored energy in grid).</Stormproof_SolarShield_Down>
+
+  <!-- EMP dampener -->
+  <Stormproof_EmpDampener_Active>Active: colony buildings in range are immune to EMP stuns.</Stormproof_EmpDampener_Active>
+  <Stormproof_EmpDampener_Inactive>Inactive: needs power.</Stormproof_EmpDampener_Inactive>
+
+  <!-- Static pylon -->
+  <Stormproof_StaticPylon_Armed>Armed: {0} Wd of stored lightning available ({1} Wd per shock).</Stormproof_StaticPylon_Armed>
+  <Stormproof_StaticPylon_Standby>Standby: no stored lightning. Needs a charged storm capacitor bank on this power net.</Stormproof_StaticPylon_Standby>
+
+  <!-- Fallout scrubber -->
+  <Stormproof_FalloutScrubber_Scrubbing>Scrubbing: toxic buildup of pawns in this room slowly decreases.</Stormproof_FalloutScrubber_Scrubbing>
+  <Stormproof_FalloutScrubber_Idle>Idle: must be placed in an enclosed room to scrub the air.</Stormproof_FalloutScrubber_Idle>
+
+  <!-- Storm capacitor -->
+  <Stormproof_StormCapacitor_Stored>Stored: {0} / {1} Wd (lightning only, no self-discharge)</Stormproof_StormCapacitor_Stored>
+  <Stormproof_StormCapacitor_Discharging>Discharging: {0} W to cover grid deficit.</Stormproof_StormCapacitor_Discharging>
+
+</LanguageData>

@@ -69,12 +69,11 @@ namespace Stormproof
         {
             if (!FlareActive)
             {
-                return "Standby. During a solar flare this shield will draw " +
-                       Props.activePowerConsumption.ToString("F0") + " W.";
+                return "Stormproof_SolarShield_Standby".Translate(Props.activePowerConsumption.ToString("F0"));
             }
             return Protecting
-                ? "PROTECTING: solar flare deflected, drawing " + Props.activePowerConsumption.ToString("F0") + " W."
-                : "SHIELD DOWN: needs power (switched on, connected, stored energy in grid).";
+                ? "Stormproof_SolarShield_Protecting".Translate(Props.activePowerConsumption.ToString("F0"))
+                : "Stormproof_SolarShield_Down".Translate();
         }
     }
 }

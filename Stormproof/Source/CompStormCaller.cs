@@ -45,20 +45,18 @@ namespace Stormproof
         {
             Command_Action cmd = new Command_Action
             {
-                defaultLabel = "Call storm",
-                defaultDesc = "Agitate the ionosphere to summon a rainy thunderstorm over this map. " +
-                              "Lightning feeds storm spires and the rain douses fires. " +
-                              "Recharges over five days.",
+                defaultLabel = "Stormproof_StormCaller_Label".Translate(),
+                defaultDesc = "Stormproof_StormCaller_Desc".Translate(),
                 icon = ContentFinder<Texture2D>.Get("Stormproof/Buildings/StormCaller"),
                 action = CallStorm,
             };
             if (!Powered)
             {
-                cmd.Disable("No power.");
+                cmd.Disable("Stormproof_StormCaller_NoPower".Translate());
             }
             else if (CooldownRemaining > 0)
             {
-                cmd.Disable("Recharging: ready in " + CooldownRemaining.ToStringTicksToPeriod() + ".");
+                cmd.Disable("Stormproof_RechargingReadyIn".Translate(CooldownRemaining.ToStringTicksToPeriod()));
             }
             yield return cmd;
         }
@@ -72,7 +70,7 @@ namespace Stormproof
             lastCallTick = Find.TickManager.TicksGame;
             FleckMaker.ThrowLightningGlow(parent.DrawPos, map, 3f);
             Messages.Message(
-                parent.LabelShort + " discharges into the sky. A thunderstorm is forming.",
+                "Stormproof_StormCaller_Discharging".Translate(parent.LabelShort),
                 parent, MessageTypeDefOf.NeutralEvent);
         }
 
@@ -86,11 +84,11 @@ namespace Stormproof
         {
             if (!Powered)
             {
-                return "Offline: needs power.";
+                return "Stormproof_OfflineNeedsPower".Translate();
             }
             return CooldownRemaining > 0
-                ? "Recharging: ready in " + CooldownRemaining.ToStringTicksToPeriod() + "."
-                : "Charged: ready to call a storm.";
+                ? "Stormproof_RechargingReadyIn".Translate(CooldownRemaining.ToStringTicksToPeriod())
+                : "Stormproof_StormCaller_Charged".Translate();
         }
     }
 }

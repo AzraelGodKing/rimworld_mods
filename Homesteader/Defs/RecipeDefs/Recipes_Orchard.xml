@@ -36,7 +36,7 @@
   <RecipeDef>
     <defName>Homesteader_BakeFlapjacks</defName>
     <label>bake flapjacks</label>
-    <description>Griddle flour batter into flapjacks and drench them in maple syrup.</description>
+    <description>Griddle flour batter with butter into flapjacks and drench them in maple syrup.</description>
     <jobString>Baking flapjacks.</jobString>
     <workAmount>700</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
@@ -54,6 +54,14 @@
       <li>
         <filter>
           <thingDefs>
+            <li>Homesteader_Butter</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
             <li>Homesteader_MapleSyrup</li>
           </thingDefs>
         </filter>
@@ -63,6 +71,7 @@
     <fixedIngredientFilter>
       <thingDefs>
         <li>Homesteader_Flour</li>
+        <li>Homesteader_Butter</li>
         <li>Homesteader_MapleSyrup</li>
       </thingDefs>
     </fixedIngredientFilter>

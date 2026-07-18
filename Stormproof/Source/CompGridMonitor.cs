@@ -79,16 +79,14 @@ namespace Stormproof
                 warnedCritical = true;
                 warnedLow = true;
                 Messages.Message(
-                    parent.LabelShort + ": grid batteries CRITICAL at " +
-                    fraction.ToStringPercent() + ".",
+                    "Stormproof_GridMonitor_Critical".Translate(parent.LabelShort, fraction.ToStringPercent()),
                     parent, MessageTypeDefOf.NegativeEvent);
             }
             else if (!warnedLow && fraction < Props.lowFraction)
             {
                 warnedLow = true;
                 Messages.Message(
-                    parent.LabelShort + ": grid batteries low at " +
-                    fraction.ToStringPercent() + ".",
+                    "Stormproof_GridMonitor_Low".Translate(parent.LabelShort, fraction.ToStringPercent()),
                     parent, MessageTypeDefOf.CautionInput);
             }
         }
@@ -104,12 +102,12 @@ namespace Stormproof
         {
             if (!Active)
             {
-                return "Offline: needs power.";
+                return "Stormproof_OfflineNeedsPower".Translate();
             }
             PowerNet net = powerComp.PowerNet;
             if (net == null)
             {
-                return "Not connected to a power net.";
+                return "Stormproof_NotConnectedPowerNet".Translate();
             }
             float production = net.powerComps
                 .Where(c => c.PowerOn && c.PowerOutput > 0f)
@@ -122,27 +120,24 @@ namespace Stormproof
             float stored = StoredEnergy(net);
             float capacity = StorageCapacity(net);
 
-            string s = "Production: " + production.ToString("F0") + " W  |  Consumption: " +
-                       consumption.ToString("F0") + " W  (net " +
-                       (gainWatts >= 0f ? "+" : "") + gainWatts.ToString("F0") + " W)";
+            string netGain = (gainWatts >= 0f ? "+" : "") + gainWatts.ToString("F0") + " W";
+            string s = "Stormproof_GridMonitor_Header".Translate(
+                production.ToString("F0"), consumption.ToString("F0"), netGain);
             if (capacity <= 0f)
             {
-                return s + "\nNo batteries on this grid.";
+                return s + "\n" + "Stormproof_GridMonitor_NoBatteries".Translate();
             }
-            s += "\nStored: " + stored.ToString("F0") + " / " + capacity.ToString("F0") +
-                 " Wd (" + (stored / capacity).ToStringPercent() + ")";
+            s += "\n" + "Stormproof_GridMonitor_Stored".Translate(
+                stored.ToString("F0"), capacity.ToString("F0"), (stored / capacity).ToStringPercent());
             if (gainWdPerTick < 0f && stored > 0f)
             {
                 int ticksToEmpty = (int)(stored / -gainWdPerTick);
-                s += "\nAt current drain, batteries empty in " +
-                     ticksToEmpty.ToStringTicksToPeriod() + ".";
+                s += "\n" + "Stormproof_GridMonitor_EmptyIn".Translate(ticksToEmpty.ToStringTicksToPeriod());
             }
             else if (gainWdPerTick > 0f && stored < capacity)
             {
-                // Batteries only bank half of what's fed into them.
                 int ticksToFull = (int)((capacity - stored) / (gainWdPerTick * 0.5f));
-                s += "\nAt current surplus, batteries full in " +
-                     ticksToFull.ToStringTicksToPeriod() + ".";
+                s += "\n" + "Stormproof_GridMonitor_FullIn".Translate(ticksToFull.ToStringTicksToPeriod());
             }
             return s;
         }

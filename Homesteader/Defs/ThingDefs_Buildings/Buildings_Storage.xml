@@ -240,6 +240,9 @@
       <li>BuildingsFurniture</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_PrimitiveHomestead</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Hayloft ============ -->
@@ -305,6 +308,9 @@
       <li>BuildingsFurniture</li>
     </thingCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_PrimitiveHomestead</li>
+    </researchPrerequisites>
   </ThingDef>
 
   <!-- ============ Large storage crate ============ -->
@@ -373,7 +379,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_RootCellar</defName>
     <label>root cellar</label>
-    <description>A buried cellar lined with stone and earth. Holds six stacks of food and drink in cool, stable conditions - ideal for a homestead pantry through the hot months.</description>
+    <description>A buried cellar lined with stone and earth. Holds six stacks of food and drink. Contents on the cellar — and food in adjacent indoor cells — stay at or below 5°C for spoilage, and are sheltered from outdoor weather.</description>
     <thingClass>Building_Storage</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/RootCellar</texPath>
@@ -396,6 +402,11 @@
       <WoodLog>60</WoodLog>
       <Steel>40</Steel>
     </costList>
+    <comps>
+      <li Class="Homesteader.CompProperties_RootCellarCooling">
+        <maxTemperature>5</maxTemperature>
+      </li>
+    </comps>
     <building>
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
       <maxItemsInCell>6</maxItemsInCell>
@@ -464,16 +475,39 @@
             <li>Homesteader_Jam</li>
             <li>Homesteader_PickledVegetables</li>
             <li>Homesteader_Cheese</li>
+            <li>Homesteader_Butter</li>
+            <li>Homesteader_Cream</li>
             <li>Homesteader_Honey</li>
             <li>Homesteader_MapleSyrup</li>
+            <li>Homesteader_Beeswax</li>
             <li>Homesteader_Jerky</li>
             <li>Homesteader_DriedProduce</li>
             <li>Homesteader_FruitLeather</li>
             <li>Homesteader_DriedMushrooms</li>
             <li>Homesteader_SmokedMeat</li>
             <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_SmokedFish</li>
+            <li>Homesteader_SaltedFish</li>
             <li>Homesteader_Sugar</li>
             <li>Homesteader_Hardtack</li>
+            <li>Homesteader_Bread</li>
+            <li>Homesteader_Flapjacks</li>
+            <li>Homesteader_ToastAndJam</li>
+            <li>Homesteader_PloughmansLunch</li>
+            <li>Homesteader_HoneyPorridge</li>
+            <li>Homesteader_PumpkinPie</li>
+            <li>Homesteader_ButtermilkBiscuits</li>
+            <li>Homesteader_Buttermilk</li>
+            <li>Homesteader_WaxedCheese</li>
+            <li>Homesteader_SmokedCheese</li>
+            <li>Homesteader_CiderVinegar</li>
+            <li>Homesteader_Soap</li>
+            <li>Homesteader_Sausage</li>
+            <li>Homesteader_CannedJam</li>
+            <li>Homesteader_CannedStew</li>
+            <li>Homesteader_AppleJuice</li>
+            <li>Homesteader_Lard</li>
+            <li>Homesteader_Tallow</li>
           </thingDefs>
         </filter>
       </fixedStorageSettings>
@@ -484,16 +518,39 @@
             <li>Homesteader_Jam</li>
             <li>Homesteader_PickledVegetables</li>
             <li>Homesteader_Cheese</li>
+            <li>Homesteader_Butter</li>
+            <li>Homesteader_Cream</li>
             <li>Homesteader_Honey</li>
             <li>Homesteader_MapleSyrup</li>
+            <li>Homesteader_Beeswax</li>
             <li>Homesteader_Jerky</li>
             <li>Homesteader_DriedProduce</li>
             <li>Homesteader_FruitLeather</li>
             <li>Homesteader_DriedMushrooms</li>
             <li>Homesteader_SmokedMeat</li>
             <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_SmokedFish</li>
+            <li>Homesteader_SaltedFish</li>
             <li>Homesteader_Sugar</li>
             <li>Homesteader_Hardtack</li>
+            <li>Homesteader_Bread</li>
+            <li>Homesteader_Flapjacks</li>
+            <li>Homesteader_ToastAndJam</li>
+            <li>Homesteader_PloughmansLunch</li>
+            <li>Homesteader_HoneyPorridge</li>
+            <li>Homesteader_PumpkinPie</li>
+            <li>Homesteader_ButtermilkBiscuits</li>
+            <li>Homesteader_Buttermilk</li>
+            <li>Homesteader_WaxedCheese</li>
+            <li>Homesteader_SmokedCheese</li>
+            <li>Homesteader_CiderVinegar</li>
+            <li>Homesteader_Soap</li>
+            <li>Homesteader_Sausage</li>
+            <li>Homesteader_CannedJam</li>
+            <li>Homesteader_CannedStew</li>
+            <li>Homesteader_AppleJuice</li>
+            <li>Homesteader_Lard</li>
+            <li>Homesteader_Tallow</li>
           </thingDefs>
         </filter>
       </defaultStorageSettings>
