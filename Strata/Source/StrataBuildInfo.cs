@@ -8,7 +8,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "gas-system-default-off-v3";
+        public const string BuildStamp = "relay-multi-hop-chain-v1";
 
         public static void LogStartup()
         {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace Strata
 {
@@ -172,6 +173,112 @@ namespace Strata
                 && dest.designationManager.DesignationOn(carried, DesignationDefOf.Haul) == null)
             {
                 dest.designationManager.AddDesignation(new Designation(carried, DesignationDefOf.Haul));
+            }
+        }
+
+        // Cross-level haul dumps cargo at the landing; finish the job by walking
+        // carried (or just-dropped) materials straight to a blueprint/frame that
+        // needs them on this floor instead of leaving a pile at the stairs.
+        public static void TryDeliverConstructionCargo(Pawn pawn)
+        {
+            if (pawn?.Map == null || !pawn.Spawned || pawn.Downed || pawn.Dead || pawn.Drafted)
+            {
+                return;
+            }
+
+            // Do not gate on LevelDemand.MissingOn: piles already on this map
+            // count as "have", which is exactly the stuck-at-stairs case.
+            Thing cargo = pawn.carryTracker?.CarriedThing;
+            if (cargo == null)
+            {
+                cargo = FindNearbyConstructionCargo(pawn);
+            }
+
+            if (cargo == null)
+            {
+                return;
+            }
+
+            Thing site = FindConstructibleNeeding(pawn, cargo.def);
+            if (site == null)
+            {
+                return;
+            }
+
+            if (!pawn.CanReserveAndReach(site, PathEndMode.Touch, Danger.Deadly)
+                || (cargo.Spawned && !pawn.CanReserve(cargo)))
+            {
+                return;
+            }
+
+            Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, site);
+            job.count = cargo.stackCount;
+            job.haulMode = HaulMode.ToContainer;
+            pawn.jobs.jobQueue.EnqueueFirst(job, JobTag.Misc);
+        }
+
+        private static Thing FindNearbyConstructionCargo(Pawn pawn)
+        {
+            Map map = pawn.Map;
+            foreach (Thing thing in GenRadial.RadialDistinctThingsAround(pawn.Position, map, 2.9f, true))
+            {
+                if (thing.def.category != ThingCategory.Item || thing.IsForbidden(pawn))
+                {
+                    continue;
+                }
+
+                if (FindConstructibleNeeding(pawn, thing.def) != null
+                    && pawn.CanReserveAndReach(thing, PathEndMode.ClosestTouch, Danger.Deadly))
+                {
+                    return thing;
+                }
+            }
+
+            return null;
+        }
+
+        private static Thing FindConstructibleNeeding(Pawn pawn, ThingDef material)
+        {
+            Map map = pawn.Map;
+            Thing best = null;
+            float bestDist = float.MaxValue;
+            AppendNearestConstructible(pawn, map.listerThings.ThingsInGroup(ThingRequestGroup.Blueprint), material, ref best, ref bestDist);
+            AppendNearestConstructible(pawn, map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingFrame), material, ref best, ref bestDist);
+            return best;
+        }
+
+        private static void AppendNearestConstructible(
+            Pawn pawn,
+            List<Thing> things,
+            ThingDef material,
+            ref Thing best,
+            ref float bestDist)
+        {
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing.Faction != Faction.OfPlayer || thing is Blueprint_Install
+                    || thing is not IConstructible constructible)
+                {
+                    continue;
+                }
+
+                if (constructible.ThingCountNeeded(material) <= 0)
+                {
+                    continue;
+                }
+
+                if (!pawn.CanReach(thing, PathEndMode.Touch, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                float dist = pawn.Position.DistanceToSquared(thing.Position);
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    best = thing;
+                }
             }
         }
 
