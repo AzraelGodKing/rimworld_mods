@@ -1,7 +1,6 @@
 using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
-using UnityEngine;
 using Verse;
 
 namespace Strata
@@ -71,49 +70,27 @@ namespace Strata
         }
     }
 
-    // Fallback when parent tile repair failed (broken save refs, load order).
+    // Repair invalid pocket/underground tiles before plant-growth calc runs.
+    // Non-destructive (void Prefix): vanilla + Geological Landforms BuildFor still execute.
+    // Parent tile is also repaired on Map.FinalizeLoading / FinalizeInit above.
     [HarmonyPatch(typeof(MapPlantGrowthRateCalculator), nameof(MapPlantGrowthRateCalculator.BuildFor), new[] { typeof(Map) })]
     public static class Patch_UndergroundPlantGrowthCalculator
     {
-        private static readonly AccessTools.FieldRef<MapPlantGrowthRateCalculator, PlanetTile> TileRef =
-            AccessTools.FieldRefAccess<MapPlantGrowthRateCalculator, PlanetTile>("tile");
-
-        private static readonly AccessTools.FieldRef<MapPlantGrowthRateCalculator, Vector2> LongLatRef =
-            AccessTools.FieldRefAccess<MapPlantGrowthRateCalculator, Vector2>("longLat");
-
-        private static readonly AccessTools.FieldRef<MapPlantGrowthRateCalculator, BiomeDef> BiomeRef =
-            AccessTools.FieldRefAccess<MapPlantGrowthRateCalculator, BiomeDef>("biome");
-
-        private static readonly AccessTools.FieldRef<MapPlantGrowthRateCalculator, bool> DirtyRef =
-            AccessTools.FieldRefAccess<MapPlantGrowthRateCalculator, bool>("dirty");
-
-        private static readonly System.Reflection.MethodInfo ComputeIfDirtyMethod =
-            AccessTools.Method(typeof(MapPlantGrowthRateCalculator), "ComputeIfDirty");
-
         [HarmonyPriority(Priority.First)]
-        public static bool Prefix(Map map, MapPlantGrowthRateCalculator __instance)
+        public static void Prefix(Map map)
         {
             if (map == null || StrataMapUtility.IsWorldGridTile(map.Tile))
             {
-                return true;
+                return;
+            }
+
+            if (!PocketMapColonyTileUtility.IsStrataPocketOrUnderground(map))
+            {
+                return;
             }
 
             PocketMapColonyTileUtility.TryAssign(map);
-            PlanetTile planetTile = StrataMapUtility.IsWorldGridTile(map.Tile)
-                ? map.Tile
-                : StrataMapUtility.ResolveColonyPlanetTile(map);
-            if (!StrataMapUtility.IsWorldGridTile(planetTile))
-            {
-                return true;
-            }
-
-            TileRef(__instance) = planetTile;
-            LongLatRef(__instance) = Find.WorldGrid.LongLatOf(planetTile);
-            BiomeRef(__instance) = StrataMapUtility.TryGetBiomeDef(map) ?? map.Biome;
-            DirtyRef(__instance) = true;
-            ComputeIfDirtyMethod.Invoke(__instance, null);
-            return false;
         }
     }
 }
-
+
