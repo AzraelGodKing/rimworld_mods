@@ -56,6 +56,40 @@
     </stages>
   </HediffDef>
 
+  <!-- Soft-medium allergy flare (food or environmental): uncomfortable, not life-threatening. -->
+  <HediffDef>
+    <defName>Homesteader_AllergicReaction</defName>
+    <label>allergic reaction</label>
+    <description>A short-lived allergy flare — itchy eyes or throat, mild queasiness, foggy focus. Clears on its own.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <initialSeverity>1</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>8000~14000</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <label>itchy</label>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.05</offset>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.03</offset>
+          </li>
+        </capMods>
+        <vomitMtbDays>2</vomitMtbDays>
+      </li>
+    </stages>
+  </HediffDef>
+
   <!-- Short-lived "brain rot" from the Kats Effect broadcast. Mild fog, not a break. -->
   <HediffDef>
     <defName>Homesteader_KatsBrainRot</defName>

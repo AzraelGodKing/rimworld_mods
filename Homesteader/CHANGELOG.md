@@ -4,13 +4,22 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ## [Unreleased]
 
+### Added
+- **Polyarmory trait** — pawns with it treat their polycule (lovers and polyarmory metamours) as fine bedmates: no SharedBed jealousy, and `WillingToShareBed` allows multi-person / Polyamory Beds setups.
+- **Tastes tab** on humanlike pawns — lists **5 favorite foods** and allergies. Allergies stay hidden as “Unknown sensitivity” until discovery.
+- **Rare allergies** — roll heavily favors **None**; otherwise Big-9 style food (milk, eggs, peanuts, tree nuts, wheat, soy, fish, shellfish, sesame) or environmental (pollen/hay fever, dust mites, pet dander, mold). Soft-medium flare (mood −10 + short hediff); food AI avoids discovered food allergens. Never lethal.
+- Mod settings (DevMode): **Reveal allergies** — show names on the Tastes tab before discovery.
+- Tastes tab **DEV: Reroll tastes** only appears when God mode is on.
+
+### Changed
+- Favorites expanded from 1 to **5** per pawn (legacy single favorite migrates and fills remaining slots).
+- **Docs site redo** — Homesteader overview and item catalog rebuilt with a dedicated orchard-dusk layout (`docs/homesteader.css`): full-bleed hearth hero, lean feature sections, catalog for the full item list. Shared hub `style.css` left alone for other mods. Site `docs/img` assets for the Homesteader page refreshed from current Homesteader/Wellspring textures (south-facing buildings where available).
+- **Kats Effect Super Chat** is a flat **27 silver** (was 27–81). Pay in full or the colony gets nothing taken — unpaid manifests hostile **Kats** (SCP-27272727) at the map edge on an assault lord. Prefers Wolfein race/xenotype when that mod is loaded; otherwise any humanlike pawn (villager/colonist fallback) with orange hair named Kats.
+
 ### Fixed
 - Favorite-food Harmony patch updated for RimWorld 1.6 (`FoodUtility.ThoughtsFromIngesting` now returns `List<ThoughtFromIngesting>` instead of `List<ThoughtDef>`), stopping the Homesteader static-constructor crash.
 - Wellspring research nodes use non-negative `researchViewY` (negative coords are treated as unset by the game).
 - Lard no longer has Nutrition without ingestible properties; apple juice sets `socialPropernessMatters` to avoid warden prison-cell food loops.
-
-### Changed
-- **Kats Effect Super Chat** is a flat **27 silver** (was 27–81). Pay in full or the colony gets nothing taken — unpaid manifests hostile **Kats** (SCP-27272727) at the map edge on an assault lord. Prefers Wolfein race/xenotype when that mod is loaded; otherwise any humanlike pawn (villager/colonist fallback) with orange hair named Kats.
 
 ### Added
 - **Kats Effect** — rare Misc storyteller event that only fires when a finished 27 statue/monument is on the home map. Hybrid anomalous-broadcast letter (with a short Foundation addendum), temporary heat dome (~+10°C), short brain-rot hediff, 27-silver Super Chat (or hostile Kats if unpaid), and a personal Kats directive mood (+12, ~1 day). Min refire 27 days.

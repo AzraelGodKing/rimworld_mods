@@ -4,8 +4,8 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
-- **Homesteader** — Kats Effect unpaid Super Chat spawns hostile Kats (Wolfein preferred, any pawn fallback); 27-silver flat cost; 1.6 favorite-food Harmony fix; Wellspring research view coords; lard/apple-juice config fixes. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
-- **Strata** — outdoor vent fresh-air intake (O₂ import on every outdoor exhaust path); VTE wall-vent soft-compat for smoke/gas; Misc. Robots cross-level return-to-base portal routing; robot work-relay hitch fix and broader Harmony/MapComponent perf pass; settings migration v1 (force-off old work relays); startup build-stamp log; multi-level atmosphere throttle; Languages/English scaffolding; irrigation bridge uses Homesteader water defs. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Homesteader** — Polyarmory trait (polycule bed-sharing); Tastes tab + rare allergies; docs site redo; Kats Effect. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
+- **Strata** — Russian community translation (`Languages/Russian`); outdoor vent fresh-air intake; VTE wall-vent soft-compat; Misc. Robots portal routing; gas-system defaults/perf; Languages/English scaffolding. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Stormproof** — research tab XML entity fix (`Storm & grid`); Languages/English scaffolding; load shedder, grid monitor, ion storm, and related buildings. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
 
 ## Released

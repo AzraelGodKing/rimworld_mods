@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!--
+    AI-assisted fill-in for keys not covered by the community Keyed pack.
+    Do not overwrite GravshipStrings.xml / ShaftFluidStrings.xml (community).
+    Terminology aligned with community DefInjected (уровень, лестница, шахта, гравикорабль).
+  -->
+
+  <!-- Mod settings -->
+  <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
+  <Strata_Settings_LevelHotkeys>Горячие клавиши уровней</Strata_Settings_LevelHotkeys>
+  <Strata_Settings_ViewLevelAbove>Смотреть уровень выше</Strata_Settings_ViewLevelAbove>
+  <Strata_Settings_ViewLevelBelow>Смотреть уровень ниже</Strata_Settings_ViewLevelBelow>
+  <Strata_Settings_PressKey>Нажмите клавишу...</Strata_Settings_PressKey>
+  <Strata_Settings_Reset>Сброс</Strata_Settings_Reset>
+  <Strata_Settings_ColonistRelays>Маршруты колонистов</Strata_Settings_ColonistRelays>
+  <Strata_Settings_WorkRelay>Маршрут работы</Strata_Settings_WorkRelay>
+  <Strata_Settings_WorkRelayDesc>Простаивающие колонисты ходят на другие уровни, где есть работа. По умолчанию выключено — включайте только если нужен поиск работы между этажами.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_RobotSoftCompat>Совместимость с Misc. Robots</Strata_Settings_RobotSoftCompat>
+  <Strata_Settings_RobotSoftCompatDesc>Межуровневая маршрутизация роботов Misc. Robots через порталы (возврат на базу, если зарядка на другом уровне). Выключите для проверки, не вызывают ли хуки Strata лаги.</Strata_Settings_RobotSoftCompatDesc>
+  <Strata_Settings_RobotWorkRelay>Маршрут работы Misc. Robots</Strata_Settings_RobotWorkRelay>
+  <Strata_Settings_RobotWorkRelayDesc>Если у робота нет локальной работы по переноске/уборке, отправить его через лестницы к связанным уровням с работой. По умолчанию выключено.</Strata_Settings_RobotWorkRelayDesc>
+  <Strata_Settings_FoodRelay>Маршрут еды</Strata_Settings_FoodRelay>
+  <Strata_Settings_FoodRelayDesc>Голодные колонисты ищут еду на другом уровне.</Strata_Settings_FoodRelayDesc>
+  <Strata_Settings_RestRelay>Маршрут отдыха</Strata_Settings_RestRelay>
+  <Strata_Settings_RestRelayDesc>Сонные колонисты на этаже без кроватей идут к своей назначенной кровати или к свободной на связанном уровне (предпочтительно роль «Казарма»).</Strata_Settings_RestRelayDesc>
+  <Strata_Settings_MedicalRelay>Маршрут медицины</Strata_Settings_MedicalRelay>
+  <Strata_Settings_MedicalRelayDesc>Пациенты и врачи ходят на связанные уровни с медицинскими кроватями или работой по лечению.</Strata_Settings_MedicalRelayDesc>
+  <Strata_Settings_JoyRelay>Маршрут отдыха/развлечений</Strata_Settings_JoyRelay>
+  <Strata_Settings_JoyRelayDesc>Колонисты без отдыха идут на другой уровень с едой для радости или зданиями отдыха.</Strata_Settings_JoyRelayDesc>
+  <Strata_Settings_CaravanPull>Подъём товаров каравана снизу</Strata_Settings_CaravanPull>
+  <Strata_Settings_CaravanPullDesc>При формировании каравана на поверхности колонисты поднимают ценные товары с связанных подземных уровней.</Strata_Settings_CaravanPullDesc>
+  <Strata_Settings_CrossLevelRituals>Ритуалы между уровнями</Strata_Settings_CrossLevelRituals>
+  <Strata_Settings_CrossLevelRitualsDesc>Меню ритуала показывает колонистов со всех связанных уровней; остальные идут к ритуалу и присоединяются по прибытии.</Strata_Settings_CrossLevelRitualsDesc>
+  <Strata_Settings_CageSustainHunger>Поддерживать голод птиц в клетке</Strata_Settings_CageSustainHunger>
+  <Strata_Settings_CageSustainHungerDesc>Если выключено (по умолчанию), клетки канареек и птиц кормят из запаса сена или комбикорма. Если включено, голод заморожен, пока птица в клетке — запас еды не нужен.</Strata_Settings_CageSustainHungerDesc>
+  <Strata_Settings_SmokeGas>Дым и газ</Strata_Settings_SmokeGas>
+  <Strata_Settings_GasSystemWarning>Внимание: газовая система может вызывать лаги на больших или многоуровневых колониях. Включайте только если нужна симуляция атмосферы/дыма.</Strata_Settings_GasSystemWarning>
+  <Strata_Settings_PollutantGases>Загрязняющие газы</Strata_Settings_PollutantGases>
+  <Strata_Settings_PollutantGasesDesc>Дым, метан, карманы глубинного газа, споры, пар, чёрная сырость и прочие вредные примеси. Выключение очищает их, отключает выброс/сток/вред и скрывает на оверлее газа. Ниже — сила отравления дымом, когда это включено.</Strata_Settings_PollutantGasesDesc>
+  <Strata_Settings_SmokeSimulation>Симуляция дыма</Strata_Settings_SmokeSimulation>
+  <Strata_Settings_SmokeSimulationDesc>Горелки выделяют дым, который скапливается в непроветриваемых комнатах. Выключение очищает весь существующий дым.</Strata_Settings_SmokeSimulationDesc>
+  <Strata_Settings_SmokeSeverity>Сила отравления дымом: {0} (как быстро густой дым вредит пешкам)</Strata_Settings_SmokeSeverity>
+  <Strata_Settings_UndergroundGas>Подземный газ</Strata_Settings_UndergroundGas>
+  <Strata_Settings_UndergroundGasDesc>Газовые угрозы глубин: при копке могут вскрыться карманы зловонного глубинного газа, возможны руины. Запечатанные лестницы всё равно содержат газ.</Strata_Settings_UndergroundGasDesc>
+  <Strata_Settings_DeepBreathing>Дыхание на глубоких уровнях</Strata_Settings_DeepBreathing>
+  <Strata_Settings_NaturalGases>Природные газы</Strata_Settings_NaturalGases>
+  <Strata_Settings_NaturalGasesDesc>Дыхательная смесь атмосферы (N₂, O₂, Ar, фоновый CO₂): фиксация на поверхности, нехватка O₂ на глубине, гипоксия, обмен CO₂↔O₂ у растений и оттенки оверлея. Выключено — воздух полностью пригоден для дыхания без симуляции O₂.</Strata_Settings_NaturalGasesDesc>
+  <Strata_Settings_BreathingSimulation>Симуляция O₂ / CO₂</Strata_Settings_BreathingSimulation>
+  <Strata_Settings_BreathingSimulationDesc>Подземные уровни отслеживают кислород и углекислый газ: колонисты дышат O₂, выдыхают CO₂, O₂ поднимается по шахтам, CO₂ оседает. Выключение очищает оба газа.</Strata_Settings_BreathingSimulationDesc>
+  <Strata_Settings_GasOverlayLabels>Подписи комнат на оверлее газа</Strata_Settings_GasOverlayLabels>
+  <Strata_Settings_GasOverlayLabelsDesc>При включённом оверлее газа в настройках игры рисует цветные процентные подписи на каждой закрытой комнате (топ-3 газа + нагрузка). Панель у курсора доступна всегда, когда оверлей включён.</Strata_Settings_GasOverlayLabelsDesc>
+  <Strata_Settings_ThreatsPerf>Угрозы и производительность</Strata_Settings_ThreatsPerf>
+  <Strata_Settings_RaidPursuit>Преследование рейдеров</Strata_Settings_RaidPursuit>
+  <Strata_Settings_RaidPursuitDesc>Рейдеры без целей для боя идут за колонистами через незапечатанные лестницы.</Strata_Settings_RaidPursuitDesc>
+  <Strata_Settings_HibernateEmpty>Гибернация пустых уровней</Strata_Settings_HibernateEmpty>
+  <Strata_Settings_HibernateEmptyDesc>Пустые карты карманов A+ и B+ крутят ванильные фоновые симы 1 тик из 4, а газ Strata — 1 цикл из 8. Полная жизнь на просматриваемой карте или на любом уровне с пешками.</Strata_Settings_HibernateEmptyDesc>
+  <Strata_Settings_ReduceBackground>Ослабить фоновые уровни</Strata_Settings_ReduceBackground>
+  <Strata_Settings_ReduceBackgroundDesc>Когда колонисты на связанном уровне, который вы не смотрите, газ Strata и O₂/CO₂ идут в 8× медленнее и пропускают перестройку оверлея. Просматриваемая карта остаётся полной скоростью.</Strata_Settings_ReduceBackgroundDesc>
+  <Strata_Settings_PerformanceMode>Режим производительности (главный выключатель)</Strata_Settings_PerformanceMode>
+  <Strata_Settings_PerformanceModeDesc>Отключает маршрут работы колонистов, совместимость Misc. Robots и внешний маршрут JobGiver. Также атмосфера идёт в 4× медленнее, используется облегчённый пакетный O₂/CO₂ на всех уровнях, реже проверяется вред газа и пропускаются моты газа на невидимых уровнях. Для A/B-теста лагов Strata.</Strata_Settings_PerformanceModeDesc>
+  <Strata_Settings_PerformanceModeActive>Режим производительности ВКЛ — межуровневые маршруты работы и совместимость роботов подавлены.</Strata_Settings_PerformanceModeActive>
+  <Strata_Settings_OffThreadAtmosphere>Диффузия O₂/CO₂ вне основного потока</Strata_Settings_OffThreadAtmosphere>
+  <Strata_Settings_OffThreadAtmosphereDesc>Проход диффузии по ячейкам пещеры считается в фоновом потоке (снимок на главном, применение на главном). Меньше подвисаний на больших подземных картах. По умолчанию вкл.; нужны природные газы. Выключите при странностях атмосферы.</Strata_Settings_OffThreadAtmosphereDesc>
+  <Strata_Settings_AtmosphereQuality>Качество атмосферы</Strata_Settings_AtmosphereQuality>
+  <Strata_Settings_AtmosphereQualityDesc>Как часто симуляция газа и O₂/CO₂ идёт на фоновых уровнях. Низкое — дешевле; Высокое — просматриваемый уровень отзывчивее.</Strata_Settings_AtmosphereQualityDesc>
+  <Strata_Settings_AtmosphereQualityLow>Низкое (облегчённый фон)</Strata_Settings_AtmosphereQualityLow>
+  <Strata_Settings_AtmosphereQualityLowDesc>Фоновые уровни крутят атмосферу в 8× медленнее пакетными проходами комнат/растений. Животные пропускают вред газа, пока уже не поражены.</Strata_Settings_AtmosphereQualityLowDesc>
+  <Strata_Settings_AtmosphereQualityMedium>Среднее (по умолчанию)</Strata_Settings_AtmosphereQualityMedium>
+  <Strata_Settings_AtmosphereQualityMediumDesc>Просматриваемый уровень на полной скорости; занятые фоновые уровни в 4× медленнее с работой, разнесённой по тикам.</Strata_Settings_AtmosphereQualityMediumDesc>
+  <Strata_Settings_AtmosphereQualityHigh>Высокое (полная точность)</Strata_Settings_AtmosphereQualityHigh>
+  <Strata_Settings_AtmosphereQualityHighDesc>Все уровни крутят атмосферу на полной скорости; используйте, если O₂ на дальних этажах выравнивается с задержкой.</Strata_Settings_AtmosphereQualityHighDesc>
+  <Strata_Settings_RobotDiagnostics>Диагностика Misc. Robots</Strata_Settings_RobotDiagnostics>
+  <Strata_Settings_LogRobotDiagnostics>Писать диагностику роботов каждые 600 тиков</Strata_Settings_LogRobotDiagnostics>
+  <Strata_Settings_LogRobotDiagnosticsDesc>Пишет в лог итоги счётчиков сессии и скорость за 60 секунд. По умолчанию выкл.</Strata_Settings_LogRobotDiagnosticsDesc>
+  <Strata_Settings_RobotDiagLine>{0}: {1} всего, {2}/60с</Strata_Settings_RobotDiagLine>
+  <Strata_Settings_RobotDiagReset>Сбросить счётчики диагностики роботов</Strata_Settings_RobotDiagReset>
+  <Strata_RobotDiag_RechargeRelayPrefix>Срабатывания префикса маршрута зарядки/возврата</Strata_RobotDiag_RechargeRelayPrefix>
+  <Strata_RobotDiag_RechargeRelayPostfix>Исправления постфикса маршрута зарядки/возврата</Strata_RobotDiag_RechargeRelayPostfix>
+  <Strata_RobotDiag_ReturnBasePortal>Задания Return2Base через портал</Strata_RobotDiag_ReturnBasePortal>
+  <Strata_RobotDiag_WorkSeekingCall>Work JobGiver TryIssueJobPackage (роботы)</Strata_RobotDiag_WorkSeekingCall>
+  <Strata_RobotDiag_WorkRelayHit>Сканы постфикса маршрута работы</Strata_RobotDiag_WorkRelayHit>
+  <Strata_RobotDiag_WorkRelayJob>Выданные задания маршрута работы</Strata_RobotDiag_WorkRelayJob>
+  <Strata_RobotDiag_EnterPortalJob>Задания EnterPortal маршрута (роботы)</Strata_RobotDiag_EnterPortalJob>
+  <Strata_RobotDiag_ReachableLevels>Вызовы ReachableLevels (пути роботов)</Strata_RobotDiag_ReachableLevels>
+  <Strata_RobotDiag_BestFirstStep>Вызовы BestFirstStep (пути роботов)</Strata_RobotDiag_BestFirstStep>
+  <Strata_Settings_ShowLevelPerf>Показывать производительность уровней во вкладке «Уровни»</Strata_Settings_ShowLevelPerf>
+  <Strata_Settings_ShowLevelPerfDesc>Список числа пешек и статуса гибернации для каждого уровня во вкладке «Уровни».</Strata_Settings_ShowLevelPerfDesc>
+  <Strata_Settings_ExplorationSites>Места заданий исследования</Strata_Settings_ExplorationSites>
+  <Strata_Settings_ExplorationSitesDesc>Мировые инциденты, открывающие затопленные руины, обрушенные шахты, запечатанные хранилища и геотермальные жерла.</Strata_Settings_ExplorationSitesDesc>
+  <Strata_Settings_FloodEvents>События подземного затопления</Strata_Settings_FloodEvents>
+  <Strata_Settings_FloodEventsDesc>Просачивание грунтовых вод, затапливающее участки выкопанных уровней.</Strata_Settings_FloodEventsDesc>
+  <Strata_Settings_NativeCavern>Естественная пещерная планировка</Strata_Settings_NativeCavern>
+  <Strata_Settings_NativeCavernDesc>Выкопанные уровни (B1 и глубже) генерируют пещерные сети Strata — камеры и туннели в скале вместо полностью невыкопанного уровня.</Strata_Settings_NativeCavernDesc>
+  <Strata_Settings_AncientStairwell>Древняя колониальная лестница</Strata_Settings_AncientStairwell>
+  <Strata_Settings_AncientStairwellDesc>На некоторых картах колонии на поверхности появляется готовая древняя лестница. Она открывает первый подземный уровень без исследования копки вниз, но не передаёт энергию между уровнями.</Strata_Settings_AncientStairwellDesc>
+  <Strata_Settings_AncientStairwellChance>Шанс появления древней лестницы: {0}</Strata_Settings_AncientStairwellChance>
+  <Strata_Settings_BiomesCaverns>Планировка Biomes! Caverns</Strata_Settings_BiomesCaverns>
+  <Strata_Settings_BiomesCavernsDesc>Если включено и загружен Biomes! Caverns, используется генерация пещер Biomes! вместо родной пещерной планировки Strata (растения, фауна, сталагмиты и кристаллы).</Strata_Settings_BiomesCavernsDesc>
+  <Strata_Settings_Appearance>Внешний вид</Strata_Settings_Appearance>
+  <Strata_Settings_MultiFloorStairs>Лестницы Multifloor</Strata_Settings_MultiFloorStairs>
+  <Strata_Settings_MultiFloorStairsDesc>Использовать альтернативную графику из Textures/Strata/Buildings/MultiFloors/ (лестницы с перилами + современный лифт). Мод MultiFloors не требуется.</Strata_Settings_MultiFloorStairsDesc>
+  <Strata_Settings_MultiFloorCredit>Эти ресурсы из Multifloors; Telardo может попросить их удалить.</Strata_Settings_MultiFloorCredit>
+  <Strata_Settings_Interface>Интерфейс</Strata_Settings_Interface>
+  <Strata_Settings_LinkedColonistsTabs>Уровни Strata на вкладках «Работа» / «Расписание»</Strata_Settings_LinkedColonistsTabs>
+  <Strata_Settings_LinkedColonistsTabsDesc>На вкладках «Работа» и «Расписание» появляется флажок «Уровни Strata» (когда у колонии есть выкопанные уровни). Если включён, обе вкладки показывают колонистов со всех связанных уровней, а не только с просматриваемой карты.</Strata_Settings_LinkedColonistsTabsDesc>
+  <Strata_Settings_MergedAbandonWarning>Объединённое предупреждение об оставлении</Strata_Settings_MergedAbandonWarning>
+  <Strata_Settings_MergedAbandonWarningDesc>При оставлении поселения с пешками на нижних уровнях показывать одно общее предупреждение со всеми оставшимися (поверхность и подземелье). Выключите для двух отдельных запросов.</Strata_Settings_MergedAbandonWarningDesc>
+
+  <!-- Alerts -->
+  <Strata_Alert_SmokeVacant_Label>Газ в здании под землёй</Strata_Alert_SmokeVacant_Label>
+  <Strata_Alert_SmokeVacant_Explanation>Вредный газ скапливается на уровне без колонистов. Там что-то горит или сочится без вентиляции — следующий, кто войдёт, будет этим дышать.</Strata_Alert_SmokeVacant_Explanation>
+  <Strata_Alert_FlammableGas_Label>Горючий газ у открытого огня</Strata_Alert_FlammableGas_Label>
+  <Strata_Alert_FlammableGas_Explanation>Горючий газ скапливается в комнате с открытым огнём — факелом, костром или работающей топливной горелкой. Когда газ превысит плотность воспламенения, комната взорвётся. Погасите огонь, проветрите комнату или перейдите на электрический свет.</Strata_Alert_FlammableGas_Explanation>
+  <Strata_Alert_CaravanGoods_Label>Товары каравана внизу</Strata_Alert_CaravanGoods_Label>
+  <Strata_Alert_CaravanGoods_Explanation>Ценные предметы остаются на связанных подземных уровнях, пока на поверхности формируется караван. Включите подъём товаров в настройках Strata или поднимите их вручную перед уходом.</Strata_Alert_CaravanGoods_Explanation>
+  <Strata_Alert_SealedColonists_Label>Колонисты отрезаны</Strata_Alert_SealedColonists_Label>
+  <Strata_Alert_SealedColonists_Explanation>Колонисты на связанном уровне, у которого все выходные шахты запечатаны. Они не смогут вернуться, пока лестница или лифт не будут распечатаны.</Strata_Alert_SealedColonists_Explanation>
+  <Strata_Alert_Canary_Label>Предупреждение канарейки</Strata_Alert_Canary_Label>
+  <Strata_Alert_Canary_Explanation>Шахтная канарейка страдает или мертва от плохого воздуха в клетке. Канарейки гибнут раньше колонистов — проветрите комнату или эвакуируйтесь, пока люди не начали кашлять, задыхаться или хуже.</Strata_Alert_Canary_Explanation>
+
+  <!-- Levels tab / roles -->
+  <Strata_RenameLevelPrompt>Переименовать этот уровень:</Strata_RenameLevelPrompt>
+  <Strata_LevelSurface>Поверхность</Strata_LevelSurface>
+  <Strata_LevelSurfaceNamed>Поверхность — {0}</Strata_LevelSurfaceNamed>
+  <Strata_LevelAbove>Уровень +{0}</Strata_LevelAbove>
+  <Strata_LevelBelow>Уровень {0}</Strata_LevelBelow>
+  <Strata_Role_None>Нет</Strata_Role_None>
+  <Strata_Role_Freezer>Морозилка</Strata_Role_Freezer>
+  <Strata_Role_Barracks>Казарма</Strata_Role_Barracks>
+  <Strata_Role_Workshop>Мастерская</Strata_Role_Workshop>
+  <Strata_Role_Hospital>Госпиталь</Strata_Role_Hospital>
+  <Strata_Role_Storage>Склад</Strata_Role_Storage>
+
+  <!-- Stairwells / shafts -->
+  <Strata_StairsConnectedBelow>Пробились к существующему уровню ниже.</Strata_StairsConnectedBelow>
+  <Strata_StairsConnectedAbove>Соединились с существующим уровнем выше.</Strata_StairsConnectedAbove>
+  <Strata_GravshipConnectedBelow>Пробились к существующей палубе гравикорабля ниже.</Strata_GravshipConnectedBelow>
+  <Strata_GravshipConnectedAbove>Соединились с существующей палубой гравикорабля выше.</Strata_GravshipConnectedAbove>
+  <Strata_LandingRepositioned>Посадочная площадка лестницы перенесена под шахту выше.</Strata_LandingRepositioned>
+  <Strata_OnlyWayUp>Это единственный путь вверх.</Strata_OnlyWayUp>
+  <Strata_OnlyWayDown>Это единственный путь вниз.</Strata_OnlyWayDown>
+  <Strata_SomeoneBelow>Кто-то всё ещё на уровне ниже.</Strata_SomeoneBelow>
+  <Strata_SomeoneAbove>Кто-то всё ещё на уровне выше.</Strata_SomeoneAbove>
+  <Strata_SmokeShaftSealed>Дымовая шахта: запечатана</Strata_SmokeShaftSealed>
+  <Strata_SmokeShaftOpen>Дымовая шахта: пары поднимаются на уровень выше</Strata_SmokeShaftOpen>
+  <Strata_PowerShaft>Энергошахта: связывает сети обоих уровней (подведите проводку каждого этажа к лестнице; держите батареи на каждом уровне)</Strata_PowerShaft>
+  <Strata_OreHoistDriven>Им управляет рудный подъёмник на уровне выше.</Strata_OreHoistDriven>
+  <Strata_OreHoistExtended>Рудный подъёмник опустил бадью на связанный уровень.</Strata_OreHoistExtended>
+  <Strata_ShaftConduitDriven>Им управляет проводник на уровне выше.</Strata_ShaftConduitDriven>
+  <Strata_ShaftConduitExtended>Шахтный проводник протянул узел на уровень ниже.</Strata_ShaftConduitExtended>
+  <Strata_FluidJunctionExtended>Жидкостный узел шахты протянул узел на уровень ниже.</Strata_FluidJunctionExtended>
+  <Strata_SealStairwell>Запечатать лестницу</Strata_SealStairwell>
+  <Strata_SealElevator>Запечатать лифт</Strata_SealElevator>
+  <Strata_SealDesc>Запечатать этот проход. Никто не пройдёт, воздух и газ не движутся между уровнями — чтобы сдержать токсичный газ, дым или заражение на одном уровне.</Strata_SealDesc>
+  <Strata_Sealed>Запечатано</Strata_Sealed>
+  <Strata_DigDownLabel>Копать вниз</Strata_DigDownLabel>
+  <Strata_DigDownFromLandingDesc>Назначьте шахту копки рядом с этой площадкой. Колонисты должны закончить её — та же работа, что у вырытой лестницы — прежде чем откроется следующий уровень. Ниже первого подземного уровня нужно исследование глубокой выемки.</Strata_DigDownFromLandingDesc>
+  <Strata_DigDownFromEntranceDesc>Пробейтесь на уровень ниже, когда эта лестница полностью построена, или используйте её, если строительство закончилось до доступности исследования.</Strata_DigDownFromEntranceDesc>
+
+  <!-- Dig-down utility -->
+  <Strata_Dig_InvalidStairwell>Недействительная лестница.</Strata_Dig_InvalidStairwell>
+  <Strata_Dig_OnlyUnderground>Копка вниз доступна только ниже поверхности.</Strata_Dig_OnlyUnderground>
+  <Strata_Dig_MustBeColony>Должно принадлежать колонии.</Strata_Dig_MustBeColony>
+  <Strata_Dig_AlreadyBelow>Эта лестница уже достигает уровня ниже.</Strata_Dig_AlreadyBelow>
+  <Strata_Dig_ShaftUnderConstruction>Шахта копки ещё строится.</Strata_Dig_ShaftUnderConstruction>
+  <Strata_Dig_NoRoomNearby>Рядом нет места, чтобы вырезать лестницу вниз.</Strata_Dig_NoRoomNearby>
+  <Strata_Dig_LevelAlreadyOpen>Уровень ниже уже открыт.</Strata_Dig_LevelAlreadyOpen>
+  <Strata_Dig_UnsealFirst>Сначала распечатайте лестницу.</Strata_Dig_UnsealFirst>
+  <Strata_Dig_FailedOpen>Не удалось открыть уровень ниже.</Strata_Dig_FailedOpen>
+  <Strata_Dig_BrokeThroughNew>Пробились к новому уровню ниже.</Strata_Dig_BrokeThroughNew>
+  <Strata_Dig_CouldNotPlaceShaft>Не удалось разместить шахту копки.</Strata_Dig_CouldNotPlaceShaft>
+
+  <!-- Place workers -->
+  <Strata_Place_MustBeIndoors>Должно быть построено в помещении.</Strata_Place_MustBeIndoors>
+  <Strata_Place_MustBeShaftRoom>Должно быть построено в комнате лестницы или лифта.</Strata_Place_MustBeShaftRoom>
+  <Strata_Place_RequiresOdyssey>Требуется дополнение Odyssey.</Strata_Place_RequiresOdyssey>
+  <Strata_Place_GravshipNotLinkedLevel>Стройте лестницы гравикорабля на палубе корабля, а не на связанном уровне Strata.</Strata_Place_GravshipNotLinkedLevel>
+  <Strata_Place_NeedsGravEngine>Требуется гравитационный двигатель на этой карте.</Strata_Place_NeedsGravEngine>
+  <Strata_Place_MustBeSubstructure>Должно быть построено на подконструкции гравикорабля.</Strata_Place_MustBeSubstructure>
+  <Strata_Place_NoColonyStairsOnGravship>Нельзя строить колониальные лестницы на гравикорабле. Используйте лестницу гравикорабля.</Strata_Place_NoColonyStairsOnGravship>
+  <Strata_Place_MustBeOnGasVent>Должно быть размещено на жерле глубинного газа.</Strata_Place_MustBeOnGasVent>
+
+  <!-- Gas / atmosphere -->
+  <Strata_GasIgnitionLetterTitle>Воспламенение газа</Strata_GasIgnitionLetterTitle>
+  <Strata_GasIgnitionLetterText>Карман горючего газа воспламенился от контакта с {0} и взорвался. Взрыв оставляет в комнате чёрную сырость — проветрите и восстановите кислород, прежде чем снова посылать людей. Держите открытый огонь подальше от газовых просачиваний или работайте при электрическом свете.</Strata_GasIgnitionLetterText>
+  <Strata_GasScrubberNeedsPower>Нужно питание, чтобы очищать {0}.</Strata_GasScrubberNeedsPower>
+  <Strata_ExhaustNeedsPower>Нужно питание, чтобы насыщать комнату {0}.</Strata_ExhaustNeedsPower>
+  <Strata_ExhaustOpenAir>Выпуск {0} (открытый воздух — насыщение не нужно).</Strata_ExhaustOpenAir>
+  <Strata_ExhaustIntoRoom>Выпуск {0} в комнату.</Strata_ExhaustIntoRoom>
+  <Strata_ExhaustVentIntake>Сторона забора должна смотреть в закрытую комнату.</Strata_ExhaustVentIntake>
+  <Strata_ExhaustVentNoOutdoors>Воздуховод не выходит наружу — вентилятор не может вытягивать.</Strata_ExhaustVentNoOutdoors>
+  <Strata_GasExchangerShaft>Должен быть в комнате лестницы или лифта, чтобы обменивать газы между уровнями.</Strata_GasExchangerShaft>
+  <Strata_GasExchangerActive>Гонит O₂ вверх и CO₂ вниз по шахте.</Strata_GasExchangerActive>
+  <Strata_GasExchangerNeedsPower>Нужно питание для ускорения обмена газов.</Strata_GasExchangerNeedsPower>
+  <Strata_SmokeUpdraftShaft>Должен быть в комнате лестницы или лифта, чтобы вытягивать дым вверх.</Strata_SmokeUpdraftShaft>
+  <Strata_SmokeUpdraftActive>Тянет дым вверх по шахте.</Strata_SmokeUpdraftActive>
+  <Strata_SmokeUpdraftNeedsPower>Нужно питание для усиления тяги.</Strata_SmokeUpdraftNeedsPower>
+  <Strata_GasWellNoVent>Нет жерла глубинного газа внизу — ничего не производится.</Strata_GasWellNoVent>
+  <Strata_ShoringInspect>Укрепляет каменный потолок в радиусе {0} клеток.</Strata_ShoringInspect>
+  <Strata_OreHoistNeedsPartner>Нужен связанный парный подъёмник на другом уровне.</Strata_OreHoistNeedsPartner>
+  <Strata_OreHoistPowered>Под питанием — переправляет куски руды на парный уровень.</Strata_OreHoistPowered>
+  <Strata_OreHoistNeedsPowerSkip>Нужно питание для работы бадьи.</Strata_OreHoistNeedsPowerSkip>
+  <Strata_GasScrubberScrubbing>Очищает {0} из комнаты.</Strata_GasScrubberScrubbing>
+  <Strata_GasScrubberNone>Нет {0} для очистки.</Strata_GasScrubberNone>
+  <Strata_TremorOpenedStairwell>Толчок расшатал и открыл запечатанную лестницу.</Strata_TremorOpenedStairwell>
+
+  <!-- Shaft fluid ties (current code keys; community FluidLink_* left untouched) -->
+  <Strata_FluidTie_DrivenAbove>Связь: управляется узлом на уровне выше</Strata_FluidTie_DrivenAbove>
+  <Strata_FluidTie_LinkedBelow>Связь: соединена с узлом на уровне ниже</Strata_FluidTie_LinkedBelow>
+  <Strata_FluidTie_NoShaft>Связь: нет шахты в пределах досягаемости — постройте рядом с лестницей или лифтом</Strata_FluidTie_NoShaft>
+  <Strata_FluidTie_WaitingBelow>Связь: ожидает открытия уровня ниже</Strata_FluidTie_WaitingBelow>
+
+  <!-- Caged birds / canaries -->
+  <Strata_Cage_AlreadyHolds>{0} уже содержит {1}.</Strata_Cage_AlreadyHolds>
+  <Strata_Cage_Assigned>{0} теперь в {1}.</Strata_Cage_Assigned>
+  <Strata_Cage_Released>{0} покинул(а) {1}.</Strata_Cage_Released>
+  <Strata_Cage_Assign>Посадить {0}</Strata_Cage_Assign>
+  <Strata_Cage_Release>Выпустить {0}</Strata_Cage_Release>
+  <Strata_Cage_ReleaseDesc>Выпустить {0} из клетки. Останется на этой клетке.</Strata_Cage_ReleaseDesc>
+  <Strata_Cage_AssignLabel>Посадить {0}</Strata_Cage_AssignLabel>
+  <Strata_Cage_AssignDescSustain>Посадить ручную {0} поблизости в эту клетку. Голод поддерживается, пока в клетке (настройка мода).</Strata_Cage_AssignDescSustain>
+  <Strata_Cage_AssignDescFeed>Посадить ручную {0} поблизости в эту клетку. Запас еды в клетке нужен для кормления.</Strata_Cage_AssignDescFeed>
+  <Strata_Cage_NoNearby>Рядом нет {0}</Strata_Cage_NoNearby>
+  <Strata_Cage_DeadBody>Мёртв(а) {0} — уберите тело и посадите или приобретите другую.</Strata_Cage_DeadBody>
+  <Strata_Canary_WrongBirdCage>В клетку канарейки сажают только шахтных канареек — для других птиц используйте птичью клетку.</Strata_Canary_WrongBirdCage>
+  <Strata_Canary_NotMineCanary>Это не шахтная канарейка.</Strata_Canary_NotMineCanary>
+  <Strata_Canary_Died>Канарейка в {0} погибла от {1} — воздух смертелен.</Strata_Canary_Died>
+  <Strata_Canary_NeedHay>Нужно {0} сена в досягаемости, чтобы приобрести канарейку для {1}.</Strata_Canary_NeedHay>
+  <Strata_Canary_KindMissing>Вид шахтной канарейки не загружен.</Strata_Canary_KindMissing>
+  <Strata_Canary_Acquired>Шахтная канарейка теперь в {0}.</Strata_Canary_Acquired>
+  <Strata_Canary_ReplaceLabel>Заменить канарейку</Strata_Canary_ReplaceLabel>
+  <Strata_Canary_AcquireLabel>Приобрести канарейку</Strata_Canary_AcquireLabel>
+  <Strata_Canary_AcquireDesc>Создать шахтную канарейку ({0} сена). В эту клетку сажают только шахтных канареек.</Strata_Canary_AcquireDesc>
+  <Strata_Canary_DeadInspect>Канарейка мертва{0}. Замените за {1} сена или посадите другую шахтную канарейку.</Strata_Canary_DeadInspect>
+  <Strata_Canary_EmptyInspect>Пусто — посадите ближайшую шахтную канарейку или приобретите ({0} сена).</Strata_Canary_EmptyInspect>
+  <Strata_Canary_Distressed>Канарейка в бедствии — {0} (проветрите, пока колонисты не заболели).</Strata_Canary_Distressed>
+  <Strata_Canary_AirSafe> Пока воздух выглядит безопасным.</Strata_Canary_AirSafe>
+  <Strata_CageFood_Full>Запас еды {0} полон.</Strata_CageFood_Full>
+  <Strata_CageFood_NoFood>Рядом нет корма для птиц, чтобы пополнить {0}.</Strata_CageFood_NoFood>
+  <Strata_CageFood_Stocked>{0} пополнено: {1}.</Strata_CageFood_Stocked>
+  <Strata_CageFood_StockLabel>Пополнить корм</Strata_CageFood_StockLabel>
+  <Strata_CageFood_StockDesc>Загрузить до {0} стопок сена или другого корма для птиц поблизости в эту клетку.</Strata_CageFood_StockDesc>
+  <Strata_CageFood_SustainMode>Кормление клетки: голод поддерживается (настройка мода).</Strata_CageFood_SustainMode>
+  <Strata_CageFood_Empty>Корм в клетке пуст — положите сено или комбикорм.</Strata_CageFood_Empty>
+  <Strata_CageFood_Count>Корм в клетке: {0} / {1}</Strata_CageFood_Count>
+
+  <!-- Raids / gravship -->
+  <Strata_RaidersFoundPortal>Рейдеры нашли {0} и идут {1} за вашими колонистами!</Strata_RaidersFoundPortal>
+  <Strata_RaidersDirectionDown>вниз</Strata_RaidersDirectionDown>
+  <Strata_RaidersDirectionUp>вверх</Strata_RaidersDirectionUp>
+  <Strata_RaidersBatteringPortal>Рейдеры ломают запечатанный {0}!</Strata_RaidersBatteringPortal>
+  <Strata_GravshipLevelsTravel>Strata: {0} связанный(х) уровень(ней) отправится с гравикораблём.</Strata_GravshipLevelsTravel>
+  <Strata_GravshipLevelsDocked>Strata: {0} связанный(х) уровень(ней) пристыкован(о) к гравикораблю.</Strata_GravshipLevelsDocked>
+
+  <!-- Letters -->
+  <Strata_AncientStairwellLetterTitle>Древняя лестница</Strata_AncientStairwellLetterTitle>
+  <Strata_AncientStairwellLetterText>Недалеко от зоны высадки в скалу уходят вырезанные ступени. Они выглядят достаточно устойчивыми, чтобы спуститься — камень внизу можно выкопать в комнаты — но через шахту нет энергосвязи. Проведите проводку на каждом уровне отдельно или постройте современную лестницу или шахтный проводник, если хотите объединять сети.</Strata_AncientStairwellLetterText>
+
+</LanguageData>
