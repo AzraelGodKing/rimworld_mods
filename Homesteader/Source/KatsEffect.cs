@@ -3,12 +3,14 @@ using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI.Group;
 
 namespace Homesteader
 {
     // Rare Misc incident keyed to finished 27 statues/monuments. Hybrid letter
     // (RimWorld anomalous broadcast + short Foundation addendum), heat dome,
     // short brain-rot hediff, silver Super Chat drain, and a personal Kats mood.
+    // Unpaid Super Chat materializes hostile orange Wolfein "Kats" (soft-compat).
     public class IncidentWorker_KatsEffect : IncidentWorker
     {
         private static readonly string[] StatueDefNames =
@@ -19,8 +21,10 @@ namespace Homesteader
             "Homesteader_Statue27Grand",
         };
 
-        private const int SuperChatMin = 27;
-        private const int SuperChatMax = 81;
+        // Low early-game Super Chat; thematic 27.
+        private const int SuperChatCost = 27;
+
+        private static readonly Color KatsOrangeHair = new Color(1.00f, 0.45f, 0.08f);
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
@@ -44,7 +48,17 @@ namespace Homesteader
                 durationTicks);
             map.gameConditionManager.RegisterCondition(condition);
 
-            int silverTaken = DrainSuperChatSilver(map);
+            int silverTaken = 0;
+            Pawn kats = null;
+            if (map.resourceCounter.GetCount(ThingDefOf.Silver) >= SuperChatCost)
+            {
+                TradeUtility.LaunchSilver(map, SuperChatCost);
+                silverTaken = SuperChatCost;
+            }
+            else
+            {
+                kats = TrySpawnHostileKats(map);
+            }
 
             HediffDef brainRot = DefDatabase<HediffDef>.GetNamedSilentFail("Homesteader_KatsBrainRot");
             ThoughtDef directive = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_KatsDirective");
@@ -63,19 +77,25 @@ namespace Homesteader
                 }
             }
 
-            string letterText = BuildLetterText(silverTaken);
+            string letterText = BuildLetterText(silverTaken, kats);
+            LookTargets look = kats != null
+                ? new LookTargets(kats)
+                : new LookTargets(statue);
+            LetterDef letterDef = kats != null
+                ? LetterDefOf.ThreatSmall
+                : (def.letterDef ?? LetterDefOf.NeutralEvent);
             Find.LetterStack.ReceiveLetter(
                 def.letterLabel,
                 letterText,
-                def.letterDef ?? LetterDefOf.NeutralEvent,
-                new TargetInfo(statue),
+                letterDef,
+                look,
                 parms.faction,
                 parms.quest,
                 parms.letterHyperlinkThingDefs);
             return true;
         }
 
-        private static string BuildLetterText(int silverTaken)
+        private static string BuildLetterText(int silverTaken, Pawn kats)
         {
             var sb = new StringBuilder();
             sb.Append("Homesteader_KatsLetter_Open".Translate());
@@ -85,9 +105,14 @@ namespace Homesteader
             {
                 sb.Append("Homesteader_KatsLetter_SilverTaken".Translate(silverTaken));
             }
+            else if (kats != null)
+            {
+                string raceLabel = kats.def?.label ?? "pawn";
+                sb.Append("Homesteader_KatsLetter_KatsSpawned".Translate(SuperChatCost, raceLabel));
+            }
             else
             {
-                sb.Append("Homesteader_KatsLetter_NoSilver".Translate());
+                sb.Append("Homesteader_KatsLetter_NoSilver".Translate(SuperChatCost));
             }
             sb.AppendLine();
             sb.AppendLine();
@@ -97,16 +122,178 @@ namespace Homesteader
             return sb.ToString();
         }
 
-        private static int DrainSuperChatSilver(Map map)
+        private static Pawn TrySpawnHostileKats(Map map)
         {
-            int want = Rand.RangeInclusive(SuperChatMin, SuperChatMax);
-            int available = map.resourceCounter.GetCount(ThingDefOf.Silver);
-            int take = Mathf.Min(want, available);
-            if (take > 0)
+            if (!RCellFinder.TryFindRandomPawnEntryCell(out IntVec3 entry, map, CellFinder.EdgeRoadChance_Hostile))
             {
-                TradeUtility.LaunchSilver(map, take);
+                if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map), map, CellFinder.EdgeRoadChance_Hostile, out entry))
+                {
+                    return null;
+                }
             }
-            return take;
+
+            Faction faction = Faction.OfAncientsHostile ?? Faction.OfPirates;
+            if (faction == null)
+            {
+                return null;
+            }
+
+            // Prefer Wolfein when that race mod is loaded; any humanlike pawn kind is fine otherwise.
+            PawnKindDef kind = ResolveKatsPawnKind(out bool wolfein);
+            XenotypeDef xenotype = wolfein ? ResolveOrangeWolfeinXenotype() : null;
+
+            var request = new PawnGenerationRequest(
+                kind,
+                faction,
+                PawnGenerationContext.NonPlayer,
+                -1,
+                forceGenerateNewPawn: true,
+                canGeneratePawnRelations: false,
+                mustBeCapableOfViolence: true,
+                allowFood: true,
+                allowAddictions: false,
+                forceNoIdeo: true,
+                forcedXenotype: xenotype);
+
+            Pawn kats = PawnGenerator.GeneratePawn(request);
+            kats.Name = new NameTriple("Kats", "Kats", "Kats");
+            ApplyOrangeLook(kats);
+
+            GenSpawn.Spawn(kats, entry, map);
+
+            // Keep her hostile and hunting the colony rather than milling at the edge.
+            LordMaker.MakeNewLord(
+                faction,
+                new LordJob_AssaultColony(faction, canKidnap: false, canTimeoutOrFlee: false),
+                map,
+                new[] { kats });
+
+            return kats;
+        }
+
+        private static void ApplyOrangeLook(Pawn pawn)
+        {
+            if (pawn?.story == null)
+            {
+                return;
+            }
+
+            pawn.story.HairColor = KatsOrangeHair;
+        }
+
+        private static PawnKindDef ResolveKatsPawnKind(out bool wolfein)
+        {
+            wolfein = false;
+            string[] preferred =
+            {
+                "Wolfein_Colonist",
+                "Wolfein_Trader",
+                "Wolfein_Pirate",
+                "Wolfein_Soldier",
+                "Alien_Wolfein",
+                "Wolfein",
+            };
+
+            for (int i = 0; i < preferred.Length; i++)
+            {
+                PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(preferred[i]);
+                if (IsUsableKatsKind(kind))
+                {
+                    wolfein = true;
+                    return kind;
+                }
+            }
+
+            List<PawnKindDef> all = DefDatabase<PawnKindDef>.AllDefsListForReading;
+            for (int i = 0; i < all.Count; i++)
+            {
+                PawnKindDef kind = all[i];
+                if (!IsUsableKatsKind(kind) || !IsWolfeinRace(kind.race))
+                {
+                    continue;
+                }
+
+                wolfein = true;
+                return kind;
+            }
+
+            // No Wolfein mod — any combat-capable humanlike kind works.
+            if (IsUsableKatsKind(PawnKindDefOf.Villager))
+            {
+                return PawnKindDefOf.Villager;
+            }
+
+            if (IsUsableKatsKind(PawnKindDefOf.Colonist))
+            {
+                return PawnKindDefOf.Colonist;
+            }
+
+            for (int i = 0; i < all.Count; i++)
+            {
+                PawnKindDef kind = all[i];
+                if (IsUsableKatsKind(kind) && kind.RaceProps.Humanlike)
+                {
+                    return kind;
+                }
+            }
+
+            return PawnKindDefOf.Villager;
+        }
+
+        private static bool IsUsableKatsKind(PawnKindDef kind)
+        {
+            return kind?.race != null && kind.RaceProps.Humanlike && kind.combatPower > 0f;
+        }
+
+        private static bool IsWolfeinRace(ThingDef race)
+        {
+            if (race == null)
+            {
+                return false;
+            }
+
+            string raceName = race.defName ?? string.Empty;
+            string raceLabel = race.label ?? string.Empty;
+            return raceName.IndexOf("Wolfein", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || raceLabel.IndexOf("Wolfein", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || raceName.IndexOf("Wolfin", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || raceLabel.IndexOf("Wolfin", System.StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private static XenotypeDef ResolveOrangeWolfeinXenotype()
+        {
+            if (!ModsConfig.BiotechActive)
+            {
+                return null;
+            }
+
+            XenotypeDef orangeWolfein = null;
+            XenotypeDef anyWolfein = null;
+            List<XenotypeDef> all = DefDatabase<XenotypeDef>.AllDefsListForReading;
+            for (int i = 0; i < all.Count; i++)
+            {
+                XenotypeDef xeno = all[i];
+                string name = xeno.defName ?? string.Empty;
+                string label = xeno.label ?? string.Empty;
+                bool wolfein = name.IndexOf("Wolfein", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || label.IndexOf("Wolfein", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || name.IndexOf("Wolfin", System.StringComparison.OrdinalIgnoreCase) >= 0;
+                if (!wolfein)
+                {
+                    continue;
+                }
+
+                anyWolfein ??= xeno;
+                bool orange = name.IndexOf("Orange", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || label.IndexOf("Orange", System.StringComparison.OrdinalIgnoreCase) >= 0;
+                if (orange)
+                {
+                    orangeWolfein = xeno;
+                    break;
+                }
+            }
+
+            return orangeWolfein ?? anyWolfein;
         }
 
         private static Building FindAnyStatue(Map map)
