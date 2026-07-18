@@ -113,7 +113,7 @@
     <techLevel>Neolithic</techLevel>
     <tab>Homesteader</tab>
     <researchViewX>0.00</researchViewX>
-    <researchViewY>-0.80</researchViewY>
+    <researchViewY>4.00</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -127,7 +127,7 @@
       <li>Wellspring_Wellcraft</li>
     </prerequisites>
     <researchViewX>1.50</researchViewX>
-    <researchViewY>-1.20</researchViewY>
+    <researchViewY>4.40</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -141,7 +141,7 @@
       <li>Wellspring_Wellcraft</li>
     </prerequisites>
     <researchViewX>1.50</researchViewX>
-    <researchViewY>-0.40</researchViewY>
+    <researchViewY>3.60</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
