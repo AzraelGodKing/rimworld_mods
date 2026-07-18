@@ -2,7 +2,7 @@
 
 English text for **items, buildings, recipes, research, plants, incidents, and thoughts** is in `Homesteader/Defs/` (and versioned scenario defs under `1.5/` / `1.6/`).
 
-C# strings (wash tub rejection, passive cooler inspect, favorite-food inspect, Kats Effect letter body) are in `Languages/English/Keyed/Homesteader.xml`.
+C# strings (wash tub rejection, passive cooler inspect, Tastes tab, Kats Effect letter body) are in `Languages/English/Keyed/Homesteader.xml`.
 
 ## Add a language (example: Russian)
 

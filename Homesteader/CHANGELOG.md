@@ -8,6 +8,8 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Polyarmory trait** — pawns with it treat their polycule (lovers and polyarmory metamours) as fine bedmates: no SharedBed jealousy, and `WillingToShareBed` allows multi-person / Polyamory Beds setups.
 - **Tastes tab** on humanlike pawns — lists **5 favorite foods** and allergies. Allergies stay hidden as “Unknown sensitivity” until discovery.
 - **Rare allergies** — roll heavily favors **None**; otherwise Big-9 style food (milk, eggs, peanuts, tree nuts, wheat, soy, fish, shellfish, sesame) or environmental (pollen/hay fever, dust mites, pet dander, mold). Soft-medium flare (mood −10 + short hediff); food AI avoids discovered food allergens. Never lethal.
+- Allergy **None** stays hidden as “Unknown sensitivity” (same as real allergies) so an empty list does not reveal immunity; DevMode reveal still shows None.
+- Favorites list removed from the pawn inspect/basic info string; favorites only appear on the **Tastes** tab.
 - Mod settings (DevMode): **Reveal allergies** — show names on the Tastes tab before discovery.
 - Tastes tab **DEV: Reroll tastes** only appears when God mode is on.
 - **Kats Effect** — rare Misc storyteller event that only fires when a finished 27 statue/monument is on the home map. Hybrid anomalous-broadcast letter (with a short Foundation addendum), temporary heat dome (~+10°C), short brain-rot hediff, 27-silver Super Chat (or hostile Kats if unpaid), and a personal Kats directive mood (+12, ~1 day). Min refire 27 days.
