@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Отравление дымом ============ -->
+  <Strata_SmokeInhalation.label>отравление дымом</Strata_SmokeInhalation.label>
+  <Strata_SmokeInhalation.description>Выхлопные газы, вдыхаемые в непроветриваемом помещении. Проходит на свежем воздухе, но длительное пребывание в густом дыму душит лёгкие — и в больших количествах смертельно.</Strata_SmokeInhalation.description>
+  <Strata_SmokeInhalation.stages_0.label>лёгкое</Strata_SmokeInhalation.stages_0.label>
+  <Strata_SmokeInhalation.stages_1.label>кашель</Strata_SmokeInhalation.stages_1.label>
+  <Strata_SmokeInhalation.stages_2.label>удушье</Strata_SmokeInhalation.stages_2.label>
+
+  <!-- ============ Отравление глубинным газом ============ -->
+  <Strata_GasInhalation.label>отравление глубинным газом</Strata_GasInhalation.label>
+  <Strata_GasInhalation.description>Зловонный подземный газ, вдыхаемый в заполненном им помещении. Проходит на свежем воздухе, но длительное пребывание в густом газе отравляет кровь и притупляет разум — и в больших количествах смертельно.</Strata_GasInhalation.description>
+  <Strata_GasInhalation.stages_0.label>головокружение</Strata_GasInhalation.stages_0.label>
+  <Strata_GasInhalation.stages_1.label>отравление</Strata_GasInhalation.stages_1.label>
+  <Strata_GasInhalation.stages_2.label>асфиксия</Strata_GasInhalation.stages_2.label>
+
+  <!-- ============ Гипоксия ============ -->
+  <Strata_Hypoxia.label>гипоксия</Strata_Hypoxia.label>
+  <Strata_Hypoxia.description>Недостаток кислорода в воздухе. Проходит, когда свежий воздух поступает в помещение, но длительное пребывание в герметичном глубоком уровне медленно душит лёгкие.</Strata_Hypoxia.description>
+  <Strata_Hypoxia.stages_0.label>одышка</Strata_Hypoxia.stages_0.label>
+  <Strata_Hypoxia.stages_1.label>хриплое дыхание</Strata_Hypoxia.stages_1.label>
+  <Strata_Hypoxia.stages_2.label>удушье</Strata_Hypoxia.stages_2.label>
+
+  <!-- ============ Воздействие CO₂ ============ -->
+  <Strata_CO2Exposure.label>воздействие CO₂</Strata_CO2Exposure.label>
+  <Strata_CO2Exposure.description>Слишком много углекислого газа в воздухе. Проходит при вентиляции, но тяжёлый газ, скапливающийся в герметичном помещении, вызывает головные боли, спутанность сознания и в конечном итоге потерю сознания.</Strata_CO2Exposure.description>
+  <Strata_CO2Exposure.stages_0.label>головная боль</Strata_CO2Exposure.stages_0.label>
+  <Strata_CO2Exposure.stages_1.label>сонливость</Strata_CO2Exposure.stages_1.label>
+  <Strata_CO2Exposure.stages_2.label>бессознательное состояние</Strata_CO2Exposure.stages_2.label>
+
+  <!-- ============ Воздействие метана ============ -->
+  <Strata_MethaneExposure.label>воздействие метана</Strata_MethaneExposure.label>
+  <Strata_MethaneExposure.description>Вдыхание густого рудничного газа. Лёгкое головокружение — настоящая опасность в воспламенении, а не в отравлении.</Strata_MethaneExposure.description>
+  <Strata_MethaneExposure.stages_0.label>лёгкое головокружение</Strata_MethaneExposure.stages_0.label>
+  <Strata_MethaneExposure.stages_1.label>головокружение</Strata_MethaneExposure.stages_1.label>
+
+  <!-- ============ Воздействие чёрного рудничного газа ============ -->
+  <Strata_BlackDampExposure.label>воздействие чёрного рудничного газа</Strata_BlackDampExposure.label>
+  <Strata_BlackDampExposure.description>Застойный воздух с малым содержанием кислорода. Проходит на свежем воздухе или с помощью скруббера, но длительное пребывание в яме с чёрным газом тихо душит.</Strata_BlackDampExposure.description>
+  <Strata_BlackDampExposure.stages_0.label>удушье</Strata_BlackDampExposure.stages_0.label>
+  <Strata_BlackDampExposure.stages_1.label>хриплое дыхание</Strata_BlackDampExposure.stages_1.label>
+  <Strata_BlackDampExposure.stages_2.label>удушье</Strata_BlackDampExposure.stages_2.label>
+
+  <!-- ============ Споровая болезнь ============ -->
+  <Strata_SporeSickness.label>споровая болезнь</Strata_SporeSickness.label>
+  <Strata_SporeSickness.description>Грибковые споры в лёгких. Фильтры и скрубберы очищают воздух; при отсутствии лечения воздействие вызывает лихорадочную слабость и дурное настроение.</Strata_SporeSickness.description>
+  <Strata_SporeSickness.stages_0.label>зуд в лёгких</Strata_SporeSickness.stages_0.label>
+  <Strata_SporeSickness.stages_1.label>лихорадка</Strata_SporeSickness.stages_1.label>
+  <Strata_SporeSickness.stages_2.label>изнурение</Strata_SporeSickness.stages_2.label>
+
+  <!-- ============ Ожог паром ============ -->
+  <Strata_SteamScald.label>ожог паром</Strata_SteamScald.label>
+  <Strata_SteamScald.description>Горячий геотермальный пар, обжигающий кожу и дыхательные пути. Проходит в более прохладном, проветриваемом воздухе.</Strata_SteamScald.description>
+  <Strata_SteamScald.stages_0.label>жарко</Strata_SteamScald.stages_0.label>
+  <Strata_SteamScald.stages_1.label>ошпарен</Strata_SteamScald.stages_1.label>
+  <Strata_SteamScald.stages_2.label>тяжёлый ожог</Strata_SteamScald.stages_2.label>
+
+</LanguageData>

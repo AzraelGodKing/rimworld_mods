@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Затонувшая руина ============ -->
+  <Strata_SunkenRuin.label>затонувшая руина</Strata_SunkenRuin.label>
+  <Strata_SunkenRuin.description>Обрушившийся пол древней руины, открывающий лестничную площадку, уходящую вглубь земли. Те, кто выдолбил уровни внизу, давно исчезли — но туннели не пусты, и говорят, что внизу лежат древние сокровища.</Strata_SunkenRuin.description>
+
+  <Strata_SunkenRuinEntrance.label>вход в затонувшую руину</Strata_SunkenRuinEntrance.label>
+  <Strata_SunkenRuinEntrance.description>Обрушившийся вход в древнюю руину с лестницей вниз.</Strata_SunkenRuinEntrance.description>
+
+  <Strata_SunkenRuinLevel.label>уровень затонувшей руины</Strata_SunkenRuinLevel.label>
+  <Strata_SunkenRuinLevel.description>Подземный уровень затонувшей руины с лабиринтом туннелей.</Strata_SunkenRuinLevel.description>
+
+  <!-- ============ Общие шаги генерации ============ -->
+  <Strata_CarveWarren.label>вырезание лабиринта</Strata_CarveWarren.label>
+  <Strata_CarveWarren.description>Вырезает систему туннелей и камер в скале.</Strata_CarveWarren.description>
+
+  <Strata_WarrenInfestation.label>заражение лабиринта</Strata_WarrenInfestation.label>
+  <Strata_WarrenInfestation.description>Заселяет лабиринт насекомыми.</Strata_WarrenInfestation.description>
+
+</LanguageData>

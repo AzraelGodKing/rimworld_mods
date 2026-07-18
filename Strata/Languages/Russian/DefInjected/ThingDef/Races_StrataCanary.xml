@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ Шахтёрская канарейка ============ -->
+  <Strata_Canary.label>шахтёрская канарейка</Strata_Canary.label>
+  <Strata_Canary.description>Маленькая жёлтая птичка, используемая для подземных работ. Канарейки чувствительны к дыму, глубинному газу, гипоксии и углекислому газу намного быстрее, чем люди — классическое раннее предупреждение горняков.</Strata_Canary.description>
+
+  <!-- ============ Вид канарейки ============ -->
+  <Strata_Canary.label>шахтёрская канарейка</Strata_Canary.label>
+  <Strata_Canary.lifeStages_0.label>птенец канарейки</Strata_Canary.lifeStages_0.label>
+
+</LanguageData>
