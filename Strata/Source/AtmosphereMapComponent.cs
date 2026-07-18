@@ -24,18 +24,18 @@ namespace Strata
     {
         private const int CycleTicks = 60;
         private const float OpenRoofVent = 0.35f;  // per open-roof cell (capped) — pollutants flush fast to sky
-        private const float OutdoorDisperse = 0.92f; // fraction cleared per cycle in open air
-        private const float ExteriorDoorDrain = 0.95f; // direct outdoor opening - near-clear each cycle
-        private const float InteriorOutdoorDrain = 0.88f; // rooms linked by open doors to an exterior opening
+        private const float OutdoorDisperse = 0.95f; // fraction cleared per cycle in open air
+        private const float ExteriorDoorDrain = 0.99f; // direct outdoor opening - near-clear each cycle
+        private const float InteriorOutdoorDrain = 0.95f; // rooms linked by open doors/vents to an exterior opening
         private const float InteriorDoorFlow = 0.25f; // fraction of the density gap that crosses an open interior door
-        private const float VentExteriorDrain = 0.40f; // extra flush per outdoor-facing wall vent (stacks with cluster drain)
+        private const float VentExteriorDrain = 0.55f; // extra flush per outdoor-facing wall vent (stacks with cluster drain)
         private const float VentInteriorFlow = 0.15f; // room-to-room equalization through a vanilla wall vent
         // Burners and inflows can never push a properly ventilated room past
         // this light haze, safely under harm thresholds - ventilation is a
         // guarantee, not a race between the emission rate and the vent rate.
         // Pre-existing thick gas still drains through the outlets visibly
         // instead of vanishing to the cap.
-        private const float VentilatedCap = 0.05f;
+        private const float VentilatedCap = 0.025f;
         private const float CullThreshold = 0.01f;
         // Per-gas ceiling; composable fractions normally sum to 1.0. Deep gas
         // alone may exceed 1.0 in pressurized pockets (up to 3.0).
@@ -1392,14 +1392,16 @@ namespace Strata
             }
             if (StrataMod.Settings != null && StrataMod.Settings.gasOverlayRoomLabels)
             {
-                GasOverlayUtility.DrawRoomLabelsOnMap(map, this);
+                IntVec3 cell = UI.MouseCell();
+                Room cursorRoom = cell.InBounds(map) && !cell.Fogged(map) ? cell.GetRoom(map) : null;
+                GasOverlayUtility.DrawRoomLabelsOnMap(map, this, cursorRoom);
             }
-            IntVec3 cell = UI.MouseCell();
-            if (!cell.InBounds(map))
+            IntVec3 mouseCell = UI.MouseCell();
+            if (!mouseCell.InBounds(map))
             {
                 return;
             }
-            Room room = cell.Fogged(map) ? null : cell.GetRoom(map);
+            Room room = mouseCell.Fogged(map) ? null : mouseCell.GetRoom(map);
             GasOverlayUtility.DrawCursorMixReadout(this, room);
         }
 

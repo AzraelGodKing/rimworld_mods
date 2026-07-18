@@ -110,6 +110,45 @@ namespace Strata
                         queue.Enqueue(neighbor);
                     }
                 }
+                foreach (Room neighbor in OpenVentInteriorNeighbors(room, map, borderIsSealed))
+                {
+                    if (neighbor != null && visited.Add(neighbor.ID))
+                    {
+                        queue.Enqueue(neighbor);
+                    }
+                }
+            }
+        }
+
+        // Interior rooms reachable through open wall vents (kitchen → corridor
+        // → outdoor vent chains count as ventilated even without a door path).
+        public static IEnumerable<Room> OpenVentInteriorNeighbors(
+            Room room,
+            Map map,
+            Func<IntVec3, bool> borderIsSealed = null)
+        {
+            if (room == null || map == null)
+            {
+                yield break;
+            }
+            HashSet<Building> counted = new HashSet<Building>();
+            foreach (IntVec3 borderCell in room.BorderCellsCached)
+            {
+                if (!borderCell.InBounds(map) || borderIsSealed?.Invoke(borderCell) == true)
+                {
+                    continue;
+                }
+                Building vent = FindOpenVentAt(map, borderCell);
+                if (vent == null || !counted.Add(vent) || VentLeadsOutdoors(vent, room))
+                {
+                    continue;
+                }
+                Room exhaustRoom = ExhaustRoom(vent);
+                if (exhaustRoom != null && exhaustRoom != room && !exhaustRoom.IsDoorway
+                    && !exhaustRoom.UsesOutdoorTemperature && exhaustRoom.CellCount > 0)
+                {
+                    yield return exhaustRoom;
+                }
             }
         }
 
