@@ -61,7 +61,11 @@ namespace Strata
 
         public static StrataGasDef Strata_DeepGas;
 
+        public static StrataGasDef Strata_Nitrogen;
+
         public static StrataGasDef Strata_Oxygen;
+
+        public static StrataGasDef Strata_Argon;
 
         public static StrataGasDef Strata_CarbonDioxide;
 

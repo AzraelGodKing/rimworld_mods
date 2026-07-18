@@ -165,4 +165,48 @@
     </plant>
   </ThingDef>
 
+  <!-- ============ Flax ============ -->
+  <ThingDef ParentName="PlantBase">
+    <defName>Homesteader_Plant_Flax</defName>
+    <label>flax plant</label>
+    <description>A blue-flowered fiber crop. Harvested stalks are broken into flax fiber for the spinning wheel. Grows best after orchard craft or textiles research.</description>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Flammability>1.3</Flammability>
+      <Nutrition>0.15</Nutrition>
+    </statBases>
+    <graphicData>
+      <texPath>Homesteader/Plants/FlaxPlant</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <selectable>true</selectable>
+    <pathCost>14</pathCost>
+    <ingestible>
+      <foodType>Plant</foodType>
+      <preferability>NeverForNutrition</preferability>
+    </ingestible>
+    <plant>
+      <fertilityMin>0.5</fertilityMin>
+      <fertilitySensitivity>0.55</fertilitySensitivity>
+      <growDays>6</growDays>
+      <sowMinSkill>4</sowMinSkill>
+      <sowTags>
+        <li>Ground</li>
+      </sowTags>
+      <sowResearchPrerequisites>
+        <li>Homesteader_Textiles</li>
+      </sowResearchPrerequisites>
+      <visualSizeRange>0.3~1.0</visualSizeRange>
+      <topWindExposure>0.2</topWindExposure>
+      <harvestTag>Standard</harvestTag>
+      <harvestedThingDef>Homesteader_FlaxFiber</harvestedThingDef>
+      <harvestYield>12</harvestYield>
+      <dieIfLeafless>true</dieIfLeafless>
+      <maxMeshCount>4</maxMeshCount>
+      <blockAdjacentSow>false</blockAdjacentSow>
+      <wildOrder>2</wildOrder>
+      <purpose>Misc</purpose>
+    </plant>
+  </ThingDef>
+
 </Defs>

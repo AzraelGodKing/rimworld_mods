@@ -112,7 +112,7 @@
     <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>
     <fillPercent>0.50</fillPercent>
-    <rotatable>false</rotatable>
+    <rotatable>true</rotatable>
     <size>(1,2)</size>
     <tickerType>Normal</tickerType>
     <drawerType>MapMeshAndRealTime</drawerType>

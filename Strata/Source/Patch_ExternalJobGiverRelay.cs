@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -8,25 +11,42 @@ namespace Strata
     // Colonists (and other portal-capable pawns) whose mod uses a custom
     // JobGiver instead of JobGiver_Work. Markers registered via
     // WorkRelaySignals.RegisterWorkSeekingJobGiverMarker opt the giver in.
-    [HarmonyPatch(typeof(ThinkNode_JobGiver), nameof(ThinkNode_JobGiver.TryIssueJobPackage))]
+    //
+    // Patches only registered JobGiver types (dynamic TargetMethods), not every
+    // ThinkNode_JobGiver in the game — same hitch pattern as the old robot relay.
+    [HarmonyPatch]
     public static class Patch_ExternalJobGiverRelay
     {
+        private static bool Prepare()
+        {
+            return DiscoverTargetMethods().Count > 0;
+        }
+
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            return DiscoverTargetMethods();
+        }
+
         public static void Postfix(ThinkNode_JobGiver __instance, Pawn pawn, ref ThinkResult __result)
         {
             if (__result.Job != null)
             {
                 return;
             }
-            if (!WorkRelaySignals.IsRegisteredWorkSeekingGiver(__instance))
+            if (StrataMod.Settings != null && !StrataMod.Settings.WorkRelayActive)
+            {
+                return;
+            }
+            if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed)
+            {
+                return;
+            }
+            if (!pawn.IsFreeColonist)
             {
                 return;
             }
             // Robots already handled by Patch_RobotWorkRelay.
             if (StrataPawnUtility.IsMiscRobot(pawn))
-            {
-                return;
-            }
-            if (StrataMod.Settings != null && !StrataMod.Settings.workRelayEnabled)
             {
                 return;
             }
@@ -47,6 +67,54 @@ namespace Strata
                     return;
                 }
             }
+        }
+
+        private static List<MethodBase> DiscoverTargetMethods()
+        {
+            var methods = new List<MethodBase>();
+            if (WorkRelaySignals.RegisteredWorkSeekingGiverMarkerCount == 0)
+            {
+                return methods;
+            }
+            Type jobGiverBase = typeof(ThinkNode_JobGiver);
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                Type[] types;
+                try
+                {
+                    types = assembly.GetTypes();
+                }
+                catch (ReflectionTypeLoadException e)
+                {
+                    types = e.Types;
+                }
+                if (types == null)
+                {
+                    continue;
+                }
+                for (int t = 0; t < types.Length; t++)
+                {
+                    Type type = types[t];
+                    if (type == null || type.IsAbstract || !jobGiverBase.IsAssignableFrom(type))
+                    {
+                        continue;
+                    }
+                    if (!WorkRelaySignals.IsRegisteredWorkSeekingGiverType(type))
+                    {
+                        continue;
+                    }
+                    MethodInfo method = AccessTools.DeclaredMethod(type, "TryIssueJobPackage");
+                    if (method != null)
+                    {
+                        methods.Add(method);
+                    }
+                }
+            }
+            if (methods.Count > 0)
+            {
+                Log.Message("[Strata] External work relay: patched " + methods.Count + " registered JobGiver(s).");
+            }
+            return methods;
         }
     }
 }

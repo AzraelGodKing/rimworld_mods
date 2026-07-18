@@ -103,11 +103,11 @@ namespace Stormproof
 
         public override string CompInspectStringExtra()
         {
-            string s = "Stored: " + storedEnergy.ToString("F0") + " / " +
-                       Props.storedEnergyMax.ToString("F0") + " Wd (lightning only, no self-discharge)";
+            string s = "Stormproof_StormCapacitor_Stored".Translate(
+                storedEnergy.ToString("F0"), Props.storedEnergyMax.ToString("F0"));
             if (powerComp != null && powerComp.PowerOutput > 0f)
             {
-                s += "\nDischarging: " + powerComp.PowerOutput.ToString("F0") + " W to cover grid deficit.";
+                s += "\n" + "Stormproof_StormCapacitor_Discharging".Translate(powerComp.PowerOutput.ToString("F0"));
             }
             return s;
         }

@@ -65,7 +65,7 @@ namespace Strata
                 // death trap.
                 if (def.IsWorkTable)
                 {
-                    return 1.5f;
+                    return 1f;
                 }
                 if (def.defName.Contains("Torch") || def.defName.Contains("Candle"))
                 {

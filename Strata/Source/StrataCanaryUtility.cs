@@ -21,8 +21,11 @@ namespace Strata
             Lethal = 2,
         }
 
-        public static bool BreathingGasesActive =>
-            StrataMod.Settings == null || StrataMod.Settings.breathingEnabled;
+        public static bool NaturalGasesActive =>
+            StrataMod.Settings == null || StrataMod.Settings.NaturalGasesActive;
+
+        public static bool PollutantGasesActive =>
+            StrataMod.Settings == null || StrataMod.Settings.PollutantGasesActive;
 
         public static ThreatLevel EvaluateRoom(AtmosphereMapComponent atmosphere, Room room, out StrataGasDef worstGas)
         {
@@ -38,8 +41,14 @@ namespace Strata
                 {
                     continue;
                 }
-                if (!BreathingGasesActive
-                    && (gas == StrataGasDefOf.Strata_Oxygen || gas == StrataGasDefOf.Strata_CarbonDioxide))
+                if (!NaturalGasesActive
+                    && (gas.harmWhenBelow
+                        || gas == StrataGasDefOf.Strata_Oxygen
+                        || gas == StrataGasDefOf.Strata_CarbonDioxide))
+                {
+                    continue;
+                }
+                if (!PollutantGasesActive && AtmosphericMix.IsPollutantGas(gas))
                 {
                     continue;
                 }

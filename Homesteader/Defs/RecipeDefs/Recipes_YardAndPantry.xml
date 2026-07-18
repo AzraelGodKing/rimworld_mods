@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Render lard ============ -->
+  <RecipeDef>
+    <defName>Homesteader_RenderLard</defName>
+    <label>render lard</label>
+    <description>Render soft fat from raw meat into cooking lard.</description>
+    <jobString>Rendering lard.</jobString>
+    <workAmount>700</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>MeatRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_SmokedFish</li>
+            <li>Homesteader_SaltedFish</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Lard>8</Homesteader_Lard>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Render tallow ============ -->
+  <RecipeDef>
+    <defName>Homesteader_RenderTallow</defName>
+    <label>render tallow</label>
+    <description>Slow-render meat into hard tallow for soap and pantry craft.</description>
+    <jobString>Rendering tallow.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>MeatRaw</li>
+          </categories>
+          <disallowedThingDefs>
+            <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_SmokedFish</li>
+            <li>Homesteader_SaltedFish</li>
+          </disallowedThingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>MeatRaw</li>
+      </categories>
+      <disallowedThingDefs>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
+      </disallowedThingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Tallow>10</Homesteader_Tallow>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Make sausage ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeSausage</defName>
+    <label>make sausage</label>
+    <description>Stuff salted or smoked meat with rendered fat and dried herbs into homestead sausage.</description>
+    <jobString>Making sausage.</jobString>
+    <workAmount>1000</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_Jerky</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Lard</li>
+            <li>Homesteader_Tallow</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_DriedHerbs</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_Jerky</li>
+        <li>Homesteader_Lard</li>
+        <li>Homesteader_Tallow</li>
+        <li>Homesteader_DriedHerbs</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Sausage>12</Homesteader_Sausage>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Make animal mash ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeAnimalMash</defName>
+    <label>make animal mash</label>
+    <description>Cook barley and pumpkin into soft mash for coops, pens, and other livestock.</description>
+    <jobString>Making animal mash.</jobString>
+    <workAmount>500</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_RawBarley</li>
+            <li>Homesteader_RawPumpkin</li>
+            <li>Hay</li>
+          </thingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_RawBarley</li>
+        <li>Homesteader_RawPumpkin</li>
+        <li>Hay</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_AnimalMash>20</Homesteader_AnimalMash>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Compost ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeCompost</defName>
+    <label>make compost</label>
+    <description>Turn hay and plant food into dark compost.</description>
+    <jobString>Making compost.</jobString>
+    <workAmount>600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Sow</effectWorking>
+    <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Hay</li>
+          </thingDefs>
+          <categories>
+            <li>PlantFoodRaw</li>
+          </categories>
+        </filter>
+        <count>20</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Hay</li>
+      </thingDefs>
+      <categories>
+        <li>PlantFoodRaw</li>
+      </categories>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_Compost>15</Homesteader_Compost>
+    </products>
+    <workSkill>Plants</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Screen fertilizer ============ -->
+  <RecipeDef>
+    <defName>Homesteader_ScreenFertilizer</defName>
+    <label>screen fertilizer</label>
+    <description>Screen finished compost into fertilizer for composted soil.</description>
+    <jobString>Screening fertilizer.</jobString>
+    <workAmount>400</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Sow</effectWorking>
+    <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Compost</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Compost</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_CompostFertilizer>10</Homesteader_CompostFertilizer>
+    </products>
+    <workSkill>Plants</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Spin flax ============ -->
+  <RecipeDef>
+    <defName>Homesteader_SpinFlax</defName>
+    <label>spin flax cloth</label>
+    <description>Spin flax fiber into coarse homespun cloth.</description>
+    <jobString>Spinning flax.</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Tailor</effectWorking>
+    <soundWorking>Recipe_Tailor</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_FlaxFiber</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_FlaxFiber</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_HomespunCloth>10</Homesteader_HomespunCloth>
+    </products>
+    <workSkill>Crafting</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Spin wool ============ -->
+  <RecipeDef>
+    <defName>Homesteader_SpinWool</defName>
+    <label>spin wool cloth</label>
+    <description>Spin wool into coarse homespun cloth.</description>
+    <jobString>Spinning wool.</jobString>
+    <workAmount>700</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Tailor</effectWorking>
+    <soundWorking>Recipe_Tailor</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>WoolSheep</li>
+            <li>WoolMuffalo</li>
+          </thingDefs>
+        </filter>
+        <count>25</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>WoolSheep</li>
+        <li>WoolMuffalo</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_HomespunCloth>12</Homesteader_HomespunCloth>
+    </products>
+    <workSkill>Crafting</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Weave quilt ============ -->
+  <RecipeDef>
+    <defName>Homesteader_WeaveQuilt</defName>
+    <label>weave homestead quilt</label>
+    <description>Weave homespun cloth into a thick farmhouse quilt.</description>
+    <jobString>Weaving a quilt.</jobString>
+    <workAmount>1400</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Tailor</effectWorking>
+    <soundWorking>Recipe_Tailor</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_HomespunCloth</li>
+            <li>Cloth</li>
+          </thingDefs>
+        </filter>
+        <count>30</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_HomespunCloth</li>
+        <li>Cloth</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_HomesteadQuilt>1</Homesteader_HomesteadQuilt>
+    </products>
+    <workSkill>Crafting</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Mason jars ============ -->
+  <RecipeDef>
+    <defName>Homesteader_MakeMasonJars</defName>
+    <label>make mason jars</label>
+    <description>Form steel into reusable canning jars.</description>
+    <jobString>Making mason jars.</jobString>
+    <workAmount>600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Steel</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_MasonJar>10</Homesteader_MasonJar>
+    </products>
+    <workSkill>Crafting</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Can stew ============ -->
+  <RecipeDef>
+    <defName>Homesteader_CanStew</defName>
+    <label>can stew</label>
+    <description>Seal hearty or trail stew into mason jars for years of shelf life.</description>
+    <jobString>Canning stew.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_HeartyStew</li>
+            <li>Homesteader_TrailStew</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_MasonJar</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_HeartyStew</li>
+        <li>Homesteader_TrailStew</li>
+        <li>Homesteader_MasonJar</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_CannedStew>2</Homesteader_CannedStew>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Can jam ============ -->
+  <RecipeDef>
+    <defName>Homesteader_CanJam</defName>
+    <label>can jam</label>
+    <description>Seal jam into mason jars for a much longer pantry life.</description>
+    <jobString>Canning jam.</jobString>
+    <workAmount>700</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Jam</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_MasonJar</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Jam</li>
+        <li>Homesteader_MasonJar</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_CannedJam>5</Homesteader_CannedJam>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+  <!-- ============ Press apple juice ============ -->
+  <RecipeDef>
+    <defName>Homesteader_PressAppleJuice</defName>
+    <label>press apple juice</label>
+    <description>Crush orchard apples into fresh juice.</description>
+    <jobString>Pressing apple juice.</jobString>
+    <workAmount>600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_RawApples</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_RawApples</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_AppleJuice>15</Homesteader_AppleJuice>
+    </products>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+</Defs>

@@ -1,6 +1,6 @@
-# Batch alpha-fix every Wellspring PNG except seamless terrain tiles.
+# Batch alpha-fix Homesteader Wellspring PNGs except seamless terrain tiles.
 $repo = $PSScriptRoot
-$root = Join-Path $repo 'Wellspring\Textures'
+$root = Join-Path $repo 'Homesteader\Textures\Wellspring'
 $conservative = @(
     'CleanBandages.png',
     'BoiledWater.png'

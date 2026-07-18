@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Spinning wheel ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_SpinningWheel</defName>
+    <label>spinning wheel</label>
+    <description>A treadle spinning wheel for turning flax fiber or wool into homespun cloth.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/SpinningWheel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <fillPercent>0.3</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>90</MaxHitPoints>
+      <WorkToBuild>900</WorkToBuild>
+      <Mass>8</Mass>
+      <Flammability>0.8</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>40</WoodLog>
+    </costList>
+    <recipes>
+      <li>Homesteader_SpinFlax</li>
+      <li>Homesteader_SpinWool</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_Textiles</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Loom ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_Loom</defName>
+    <label>homestead loom</label>
+    <description>A frame loom for weaving homespun into thick quilts for the quilted bed and farmhouse comforts.</description>
+    <thingClass>Building_WorkTable</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Loom</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.45</fillPercent>
+    <rotatable>true</rotatable>
+    <size>(2,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>1400</WorkToBuild>
+      <Mass>18</Mass>
+      <Flammability>0.7</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>55</WoodLog>
+      <Steel>10</Steel>
+    </costList>
+    <recipes>
+      <li>Homesteader_WeaveQuilt</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <designationCategory>Production</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_Textiles</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>

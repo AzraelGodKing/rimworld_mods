@@ -124,13 +124,12 @@ namespace Stormproof
         {
             if (!Active)
             {
-                return "Offline: needs power.";
+                return "Stormproof_OfflineNeedsPower".Translate();
             }
             float charge = CapacitorCharge;
             return charge >= Props.energyPerShock
-                ? "Armed: " + charge.ToString("F0") + " Wd of stored lightning available (" +
-                  Props.energyPerShock.ToString("F0") + " Wd per shock)."
-                : "Standby: no stored lightning. Needs a charged storm capacitor bank on this power net.";
+                ? "Stormproof_StaticPylon_Armed".Translate(charge.ToString("F0"), Props.energyPerShock.ToString("F0"))
+                : "Stormproof_StaticPylon_Standby".Translate();
         }
     }
 }
