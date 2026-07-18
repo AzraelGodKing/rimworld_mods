@@ -172,7 +172,7 @@ namespace Strata
                 return null;
             }
 
-            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, destMap, pawn.Position);
+            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, destMap, pawn.Position, pawn);
             Job job = MakePortalJob(pawn, firstStep, touchCooldown);
             if (job != null)
             {
@@ -215,7 +215,7 @@ namespace Strata
             }
             // Take the best portal for THIS pawn (nearest, powered elevators
             // preferred), not just the first one the level graph found.
-            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, link.map, pawn.Position) ?? link.firstStep;
+            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, link.map, pawn.Position, pawn) ?? link.firstStep;
             Job job = MakeRelayJob(pawn, firstStep);
             if (job != null)
             {

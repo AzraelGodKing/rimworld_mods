@@ -47,7 +47,7 @@ namespace Strata
             }
             StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.ReachableLevelsCall);
             StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.BestFirstStepCall);
-            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, rechargeMap, pawn.Position);
+            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, rechargeMap, pawn.Position, pawn);
             if (firstStep == null)
             {
                 PawnRelay.TouchReturnBaseRetry(pawn);

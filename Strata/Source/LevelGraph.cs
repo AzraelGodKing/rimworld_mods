@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace Strata
 {
@@ -133,7 +134,9 @@ namespace Strata
         // first steps whose subtree actually reaches the target, prefer the
         // shortest walk for that pawn, with a bonus for powered elevators so
         // haulers ride instead of taking the long stairs.
-        public static MapPortal BestFirstStep(Map from, Map target, IntVec3 pawnPos)
+        // When 'pawn' is set, only portals that pawn can reach are returned
+        // (sealed-off A1 stairs behind a closed room are skipped).
+        public static MapPortal BestFirstStep(Map from, Map target, IntVec3 pawnPos, Pawn pawn = null)
         {
             if (from == null || target == null)
             {
@@ -153,6 +156,10 @@ namespace Strata
                 {
                     continue;
                 }
+                if (pawn != null && !pawn.CanReach(portal, PathEndMode.Touch, Danger.Deadly))
+                {
+                    continue;
+                }
                 float score = pawnPos.IsValid ? pawnPos.DistanceTo(portal.Position) : 1f;
                 if (IsPoweredElevator(portal))
                 {
@@ -165,6 +172,13 @@ namespace Strata
                 }
             }
             return best;
+        }
+
+        // All first-step portals toward target (reachable or not). Used when a
+        // sealed room blocks the A1 stair and we need a B1 detour to reach it.
+        public static List<MapPortal> FirstStepCandidates(Map from, Map target)
+        {
+            return GetRouteCandidates(from, target) ?? new List<MapPortal>();
         }
 
         private static List<MapPortal> GetRouteCandidates(Map from, Map target)
