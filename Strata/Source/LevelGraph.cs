@@ -283,7 +283,25 @@ namespace Strata
                 Map other = exit.GetOtherMap();
                 return other != null && Find.Maps.Contains(other) ? other : null;
             }
-            return portal.PocketMapExists ? portal.PocketMap : null;
+
+            if (portal.PocketMapExists)
+            {
+                Map pocket = portal.PocketMap;
+                if (pocket != null && Find.Maps.Contains(pocket))
+                {
+                    return pocket;
+                }
+            }
+
+            // Fallback when pocket bookkeeping lags but the landing still exists
+            // (common on A+ towers after join-to-existing-upper-level).
+            if (portal.exit != null && portal.exit.Spawned && portal.exit.Map != null
+                && Find.Maps.Contains(portal.exit.Map))
+            {
+                return portal.exit.Map;
+            }
+
+            return null;
         }
     }
 }
