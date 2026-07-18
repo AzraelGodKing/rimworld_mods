@@ -334,10 +334,11 @@ namespace Strata
             }
         }
 
-        // Outdoor / vent flush: pollutants and load-relevant excess leave fast;
-        // removed volume backfills with ambient mix so O₂ recovers as smoke exits.
-        // Baseline N₂/O₂/Ar/CO₂ drain lightly — sealed-room danger unchanged.
-        // Surface / A+: O₂, CO₂, and Ar never drain; breathables clamp after flush.
+        // Outdoor / vent flush: pollutants leave fast; removed volume backfills with
+        // ambient mix and active intake pulls O₂ (and other breathables) toward the
+        // depth-adjusted target. O₂ is never drained here — only imported. Sealed
+        // rooms never call this; every outdoor exhaust path does (doors, vents,
+        // open roof, fans, ducts, gas-pipe terminals, open-air disperse).
         public static void ApplyOutdoorVentDrain(float[] density, Map map, float drainRate)
         {
             if (density == null || drainRate <= NormalizeEpsilon)
@@ -345,7 +346,6 @@ namespace Strata
                 return;
             }
             drainRate = Mathf.Clamp01(drainRate);
-            bool surfaceAmbient = ForcesAmbientInEnclosedRooms(map);
             TargetMix target = TargetForMap(map);
             float removed = 0f;
             float ambientDrain = drainRate * 0.35f;
@@ -358,27 +358,33 @@ namespace Strata
                 {
                     continue;
                 }
-                if (surfaceAmbient
-                    && (gas == StrataGasDefOf.Strata_Oxygen
-                        || gas == StrataGasDefOf.Strata_CarbonDioxide
-                        || gas == StrataGasDefOf.Strata_Argon))
+                if (IsPollutantGas(gas))
+                {
+                    float pollutantDrop = d * drainRate;
+                    if (pollutantDrop <= NormalizeEpsilon)
+                    {
+                        continue;
+                    }
+                    density[gas.index] = d - pollutantDrop;
+                    removed += pollutantDrop;
+                    continue;
+                }
+                if (!IsAtmosphericComponent(gas))
                 {
                     continue;
                 }
-                float rate;
-                if (!IsAtmosphericComponent(gas) || IsPollutantForLoad(gas, d, target))
+                // Life-support: vent paths intake O₂, never exhaust it.
+                if (gas == StrataGasDefOf.Strata_Oxygen)
                 {
-                    rate = drainRate;
+                    continue;
                 }
-                else if (gas == StrataGasDefOf.Strata_Nitrogen || gas == StrataGasDefOf.Strata_Argon)
+                float targetFrac = TargetFraction(gas, target);
+                if (d <= targetFrac + NormalizeEpsilon)
                 {
-                    rate = ambientDrain;
+                    continue;
                 }
-                else
-                {
-                    rate = ambientDrain * 0.5f;
-                }
-                float drop = d * rate;
+                float excess = d - targetFrac;
+                float drop = excess * ambientDrain;
                 if (drop <= NormalizeEpsilon)
                 {
                     continue;
@@ -387,11 +393,39 @@ namespace Strata
                 removed += drop;
             }
             RefillWithAmbient(density, map, removed);
-            if (surfaceAmbient)
+            float intakeStrength = Mathf.Clamp01(drainRate * 0.82f + 0.15f);
+            IntakeFreshAir(density, map, intakeStrength);
+            EnsureNormalized(density);
+        }
+
+        // Active ambient intake for outdoor-vent paths: push breathables toward the
+        // map target (surface ~21% O₂, B1+ depth-scarce mix). O₂ lerps faster than
+        // other channels so a vented smoky kitchen gains O₂ as smoke leaves.
+        public static void IntakeFreshAir(float[] density, Map map, float strength)
+        {
+            if (density == null || map == null || strength <= NormalizeEpsilon)
+            {
+                return;
+            }
+            strength = Mathf.Clamp01(strength);
+            if (ForcesAmbientInEnclosedRooms(map))
             {
                 EnforceAmbientBreathables(density, map);
+                return;
             }
-            EnsureNormalized(density);
+
+            TargetMix target = TargetForMap(map);
+            float reserved = PollutantReservedFraction(density, target);
+            float ambientBudget = Mathf.Max(0f, 1f - reserved);
+            float goalO2 = target.oxygen * ambientBudget;
+            float goalN2 = target.nitrogen * ambientBudget;
+            float goalAr = target.argon * ambientBudget;
+            float goalCo2 = target.carbonDioxide * ambientBudget;
+            float o2Strength = Mathf.Clamp01(strength * 1.4f);
+            ApplyAmbientChannel(density, StrataGasDefOf.Strata_Oxygen, goalO2, o2Strength, hardLock: false);
+            ApplyAmbientChannel(density, StrataGasDefOf.Strata_Nitrogen, goalN2, strength, hardLock: false);
+            ApplyAmbientChannel(density, StrataGasDefOf.Strata_Argon, goalAr, strength, hardLock: false);
+            ApplyAmbientChannel(density, StrataGasDefOf.Strata_CarbonDioxide, goalCo2, strength, hardLock: false);
         }
 
         public static void EnsureNormalized(float[] density)
@@ -715,6 +749,27 @@ namespace Strata
         private static int DeepGasIndex()
         {
             return StrataGasDefOf.Strata_DeepGas?.index ?? -1;
+        }
+
+        private static float TargetFraction(StrataGasDef gas, TargetMix target)
+        {
+            if (gas == StrataGasDefOf.Strata_Nitrogen)
+            {
+                return target.nitrogen;
+            }
+            if (gas == StrataGasDefOf.Strata_Oxygen)
+            {
+                return target.oxygen;
+            }
+            if (gas == StrataGasDefOf.Strata_Argon)
+            {
+                return target.argon;
+            }
+            if (gas == StrataGasDefOf.Strata_CarbonDioxide)
+            {
+                return target.carbonDioxide;
+            }
+            return 0f;
         }
 
         private static int IndexOf(StrataGasDef gas)

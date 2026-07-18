@@ -8,7 +8,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "surface-o2-portal-infest-immunity";
+        public const string BuildStamp = "outdoor-vent-fresh-air-intake";
 
         public static void LogStartup()
         {
