@@ -35,6 +35,30 @@
         <countRange>15~40</countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
+        <thingDef>Homesteader_Butter</thingDef>
+        <countRange>10~25</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Homesteader_MapleSyrup</thingDef>
+        <countRange>8~20</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Homesteader_Bread</thingDef>
+        <countRange>5~15</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Homesteader_Soap</thingDef>
+        <countRange>5~15</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Homesteader_WaxedCheese</thingDef>
+        <countRange>5~15</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Homesteader_CiderVinegar</thingDef>
+        <countRange>8~20</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
         <thingDef>Homesteader_Cider</thingDef>
         <countRange>10~30</countRange>
       </li>

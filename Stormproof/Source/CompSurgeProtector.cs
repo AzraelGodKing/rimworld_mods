@@ -48,8 +48,7 @@ namespace Stormproof
             FleckMaker.ThrowSmoke(parent.DrawPos, parent.Map, 1.2f);
             parent.TakeDamage(new DamageInfo(DamageDefOf.Blunt, Props.selfDamagePerAbsorb));
             Messages.Message(
-                "A power surge hit the grid, but " + parent.LabelShort +
-                " absorbed it. It needs a day to recharge (and took some internal damage).",
+                "Stormproof_SurgeProtector_Absorbed".Translate(parent.LabelShort),
                 parent, MessageTypeDefOf.PositiveEvent);
         }
 
@@ -63,14 +62,14 @@ namespace Stormproof
         {
             if (ReadyToAbsorb)
             {
-                return "Ready: will absorb the next short circuit on this grid.";
+                return "Stormproof_SurgeProtector_Ready".Translate();
             }
             int remaining = lastAbsorbTick + Props.cooldownTicks - Find.TickManager.TicksGame;
             if (remaining > 0)
             {
-                return "Recharging: ready in " + remaining.ToStringTicksToPeriod() + ".";
+                return "Stormproof_RechargingReadyIn".Translate(remaining.ToStringTicksToPeriod());
             }
-            return "Inactive: needs power.";
+            return "Stormproof_OfflineNeedsPower".Translate();
         }
     }
 }

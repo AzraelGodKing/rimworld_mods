@@ -50,11 +50,11 @@ namespace Strata
         {
             if (!SmokeRiseUtility.RoomContainsLevelExit(parent.GetRoom(), parent.Map))
             {
-                return "Must be in a stairwell or elevator room to vent smoke upward.";
+                return "Strata_SmokeUpdraftShaft".Translate();
             }
             return Active
-                ? "Pulling smoke up the shaft."
-                : "Needs power to boost updraft.";
+                ? "Strata_SmokeUpdraftActive".Translate()
+                : "Strata_SmokeUpdraftNeedsPower".Translate();
         }
     }
 }

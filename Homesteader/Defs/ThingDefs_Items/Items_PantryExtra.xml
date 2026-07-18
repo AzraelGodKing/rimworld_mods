@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Buttermilk ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Buttermilk</defName>
+    <label>buttermilk</label>
+    <description>Tangy liquid left after churning cream into butter. Perfect for soft buttermilk biscuits.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/Buttermilk</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <DeteriorationRate>4</DeteriorationRate>
+      <Mass>0.03</Mass>
+      <MarketValue>1.4</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>AnimalProduct, Fluid</foodType>
+      <preferability>DesperateOnly</preferability>
+      <tasteThought>AteRawFood</tasteThought>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>8</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>Foods</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Cider vinegar ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_CiderVinegar</defName>
+    <label>cider vinegar</label>
+    <description>Sharp vinegar fermented from cider. Used to pickle vegetables for a brighter, longer-keeping pantry jar.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/CiderVinegar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <DeteriorationRate>0.5</DeteriorationRate>
+      <Mass>0.04</Mass>
+      <MarketValue>1.8</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Waxed cheese ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_WaxedCheese</defName>
+    <label>waxed cheese</label>
+    <description>Farmhouse cheese sealed in beeswax. Keeps far longer than an open wheel and still tastes like the dairy it came from.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/WaxedCheese</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>70</MaxHitPoints>
+      <Flammability>0.4</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.035</Mass>
+      <MarketValue>3.2</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>RawTasty</preferability>
+      <tasteThought>Homesteader_AteFineCheese</tasteThought>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>240</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>FoodMeals</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Smoked cheese ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_SmokedCheese</defName>
+    <label>smoked cheese</label>
+    <description>Cheese cold-smoked until the rind turns deep gold. A luxury from the smokehouse that keeps well and tastes like autumn.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/SmokedCheese</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <socialPropernessMatters>true</socialPropernessMatters>
+    <statBases>
+      <MaxHitPoints>65</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <DeteriorationRate>1.5</DeteriorationRate>
+      <Mass>0.03</Mass>
+      <MarketValue>3.8</MarketValue>
+      <Nutrition>0.05</Nutrition>
+    </statBases>
+    <ingestible>
+      <foodType>Meal</foodType>
+      <preferability>RawTasty</preferability>
+      <tasteThought>Homesteader_AteFineCheese</tasteThought>
+      <ingestSound>Meal_Eat</ingestSound>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>150</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>FoodMeals</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Soap ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_Soap</defName>
+    <label>homestead soap</label>
+    <description>Bars of soap rendered from beeswax and butter. Colonists can wash with a bar for a fresh, clean mood boost.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/Soap</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>50</stackLimit>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <Flammability>0.8</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+      <Mass>0.05</Mass>
+      <MarketValue>4</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>UseItem</useJob>
+        <useLabel>Wash with soap</useLabel>
+        <compClass>CompUsable</compClass>
+      </li>
+      <li Class="Homesteader.CompProperties_UseEffectWashWithSoap" />
+    </comps>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+  <!-- ============ Pumpkin pie ============ -->
+  <ThingDef ParentName="MealBase">
+    <defName>Homesteader_PumpkinPie</defName>
+    <label>pumpkin pie</label>
+    <description>A golden pie of mashed pumpkin, butter, and sweetener. The harvest season on a plate.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/PumpkinPie</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>18</MarketValue>
+      <Mass>0.2</Mass>
+      <Nutrition>0.95</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealFine</preferability>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+      <joy>0.12</joy>
+      <joyKind>Gluttonous</joyKind>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>8</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <!-- ============ Buttermilk biscuits ============ -->
+  <ThingDef ParentName="MealBase">
+    <defName>Homesteader_ButtermilkBiscuits</defName>
+    <label>buttermilk biscuits</label>
+    <description>Soft, flaky biscuits baked with buttermilk and butter. Best warm from the hearth.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/ButtermilkBiscuits</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>12</MarketValue>
+      <Mass>0.12</Mass>
+      <Nutrition>0.9</Nutrition>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
+      <joy>0.08</joy>
+      <joyKind>Gluttonous</joyKind>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>6</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

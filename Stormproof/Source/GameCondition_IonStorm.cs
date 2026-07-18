@@ -107,7 +107,7 @@ namespace Stormproof
             GenExplosion.DoExplosion(
                 target.Position, map, EmpBurstRadius, DamageDefOf.EMP, null);
             Messages.Message(
-                "Ion storm: EMP burst near " + target.LabelShort + ".",
+                "Stormproof_IonStorm_EmpBurst".Translate(target.LabelShort),
                 target, MessageTypeDefOf.CautionInput);
         }
 

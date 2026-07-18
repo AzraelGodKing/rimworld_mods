@@ -35,7 +35,7 @@ namespace Strata
 
         public override string CompInspectStringExtra()
         {
-            return "Reinforces rock ceiling within " + Props.protectionRadius.ToString("0.#") + " tiles.";
+            return "Strata_ShoringInspect".Translate(Props.protectionRadius.ToString("0.#"));
         }
     }
 

@@ -79,11 +79,11 @@ namespace Stormproof
         {
             if (!PoweredOn)
             {
-                return "Offline: needs power.";
+                return "Stormproof_OfflineNeedsPower".Translate();
             }
             return ScrubbableRoom != null
-                ? "Scrubbing: toxic buildup of pawns in this room slowly decreases."
-                : "Idle: must be placed in an enclosed room to scrub the air.";
+                ? "Stormproof_FalloutScrubber_Scrubbing".Translate()
+                : "Stormproof_FalloutScrubber_Idle".Translate();
         }
     }
 }

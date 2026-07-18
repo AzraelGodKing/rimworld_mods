@@ -41,8 +41,9 @@ Colonists use the tower on their own to work across floors. Wire each level into
     <fillPercent>0.4</fillPercent>
     <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
     <statBases>
-      <MaxHitPoints>600</MaxHitPoints>
       <WorkToBuild>12000</WorkToBuild>
       <Flammability>0</Flammability>
     </statBases>
@@ -122,8 +123,9 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <fillPercent>0.4</fillPercent>
     <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
     <statBases>
-      <MaxHitPoints>600</MaxHitPoints>
       <WorkToBuild>12000</WorkToBuild>
       <Flammability>0</Flammability>
     </statBases>
@@ -175,8 +177,9 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <fillPercent>0.4</fillPercent>
     <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
     <statBases>
-      <MaxHitPoints>600</MaxHitPoints>
       <WorkToBuild>12000</WorkToBuild>
       <Flammability>0</Flammability>
     </statBases>
@@ -261,8 +264,9 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <rotatable>false</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
     <statBases>
-      <MaxHitPoints>350</MaxHitPoints>
       <WorkToBuild>9000</WorkToBuild>
       <Flammability>0</Flammability>
     </statBases>
@@ -351,8 +355,9 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <rotatable>false</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
     <statBases>
-      <MaxHitPoints>350</MaxHitPoints>
       <WorkToBuild>9000</WorkToBuild>
       <Flammability>0</Flammability>
     </statBases>
@@ -460,7 +465,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
       <li Class="Strata.CompProperties_ExhaustVent">
-        <ventPower>0.25</ventPower>
+        <ventPower>0.35</ventPower>
         <requiresPower>true</requiresPower>
       </li>
     </comps>
@@ -560,7 +565,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     </costList>
     <comps>
       <li Class="Strata.CompProperties_ExhaustVent">
-        <ventPower>0.06</ventPower>
+        <ventPower>0.12</ventPower>
         <requiresPower>false</requiresPower>
       </li>
     </comps>

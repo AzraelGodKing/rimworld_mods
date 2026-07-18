@@ -7,37 +7,52 @@ using Verse;
 namespace Strata
 {
     // A lightweight, room-based multi-gas atmosphere simulation. Every gas is a
-    // StrataGasDef channel in the same per-room cloud: combustion smoke from
-    // burners, foul deep gas seeping from breached pockets, and whatever comes
-    // later. Gas lingers in enclosed rooms and disperses where the room is open
+    // volume fraction of one room mix (normally ≈100% total): combustion smoke
+    // displaces N₂/O₂, foul deep gas can overpressure its channel, and ambient
+    // replenishment fills the remaining budget. Gas lingers in enclosed rooms and disperses where the room is open
     // to the sky, has an open roof, an exterior door, a vent, or (for buoyant
     // gases) an unsealed stairwell shaft. Per-gas flags decide whether it harms
     // pawns, explodes on open flame, or can be extracted - the movement
     // machinery is shared by all channels, so every ventilation tool works on
     // every gas.
+    //
+    // Cycle order (~60 ticks): prep/normalize → transport (vents, ducts, shafts,
+    // door flow + outdoor cluster drain, passive disperse) → sources (emitters,
+    // ignition, scrubbers) → overlay refresh. Drains always run before emission
+    // so vented kitchens decay toward the ventilated cap instead of climbing.
     public class AtmosphereMapComponent : MapComponent, ICellBoolGiver
     {
         private const int CycleTicks = 60;
-        private const float OpenRoofVent = 0.06f;  // per open-roof cell (capped)
-        private const float OutdoorDisperse = 0.6f; // fraction cleared per cycle in open air
-        private const float ExteriorDoorDrain = 0.4f; // per open exterior door - a visible flush
+        private const float OpenRoofVent = 0.35f;  // per open-roof cell (capped) — pollutants flush fast to sky
+        private const float OutdoorDisperse = 0.95f; // fraction cleared per cycle in open air
+        private const float ExteriorDoorDrain = 0.99f; // direct outdoor opening - near-clear each cycle
+        private const float InteriorOutdoorDrain = 0.95f; // rooms linked by open doors/vents to an exterior opening
         private const float InteriorDoorFlow = 0.25f; // fraction of the density gap that crosses an open interior door
-        private const float VentExteriorDrain = 0.3f; // per vanilla wall vent facing open air - near-complete emptying
+        private const float VentExteriorDrain = 0.55f; // extra flush per outdoor-facing wall vent (stacks with cluster drain)
         private const float VentInteriorFlow = 0.15f; // room-to-room equalization through a vanilla wall vent
         // Burners and inflows can never push a properly ventilated room past
         // this light haze, safely under harm thresholds - ventilation is a
         // guarantee, not a race between the emission rate and the vent rate.
         // Pre-existing thick gas still drains through the outlets visibly
         // instead of vanishing to the cap.
-        private const float VentilatedCap = 0.12f;
+        private const float VentilatedCap = 0.025f;
         private const float CullThreshold = 0.01f;
+        // Per-gas ceiling; composable fractions normally sum to 1.0. Deep gas
+        // alone may exceed 1.0 in pressurized pockets (up to 3.0).
+        private const float MaxNormalDensity = 1f;
+        private const float MaxDeepGasDensity = 3f;
 
-        // Roughly atmospheric O₂ fraction for newly opened deep levels.
-        public const float AmbientOxygen = 0.21f;
+        // Roughly atmospheric O₂ fraction — see AtmosphericMix for full baseline.
+        public const float AmbientOxygen = AtmosphericMix.AmbientOxygen;
 
         // Per pawn per atmosphere cycle (~1 second at 1× speed).
         internal const float OxygenPerBreath = 0.0025f;
         internal const float CarbonDioxidePerBreath = 0.0022f;
+        internal const float PlantCo2PerCycle = 0.00018f;
+        internal const float PlantO2PerCycle = 0.00014f;
+        internal const float MinPlantGrowth = 0.12f;
+        internal const float MethanePerAnimalCycle = 0.00075f;
+        internal const float CowMethaneMultiplier = 3.5f;
 
         public readonly HashSet<CompExhaust> Emitters = new HashSet<CompExhaust>();
         public readonly HashSet<CompExhaustVent> Vents = new HashSet<CompExhaustVent>();
@@ -110,6 +125,14 @@ namespace Strata
         private CellBoolDrawer drawer;
         private AtmosphereBreathGrid breathGrid;
         private bool breathGridSeeded;
+        private int atmosphereCyclePhase = -1;
+        private int animalMethaneCursor;
+        private int plantBatchCursor;
+        private int pawnAffectCooldown;
+        private bool cellDensityDirty = true;
+        private int outdoorVentCacheCycle = -1;
+        private readonly HashSet<int> outdoorVentRoomIds = new HashSet<int>();
+        private readonly HashSet<int> outdoorVentDirectRoomIds = new HashSet<int>();
 
         private static List<StrataGasDef> gasesCached;
 
@@ -132,7 +155,7 @@ namespace Strata
             {
                 return false;
             }
-            if (clouds.Count > 0 || map.mapPawns.AllPawnsSpawned.Count > 0)
+            if (clouds.Count > 0 || StrataLevelPerfUtility.ColonyPresenceCount(map) > 0)
             {
                 atmosphereWarmupTick = -1;
                 return false;
@@ -173,10 +196,10 @@ namespace Strata
         }
 
         public bool GetCellBool(int index) =>
-            GasOverlayUtility.CellHasOverlayGas(cellDensity, index);
+            GasOverlayUtility.CellHasOverlayGas(cellDensity, index, map);
 
         public Color GetCellExtraColor(int index) =>
-            GasOverlayUtility.GetCellOverlayColor(cellDensity, index);
+            GasOverlayUtility.GetCellOverlayColor(cellDensity, index, map);
 
         public float DensityInRoom(Room room, StrataGasDef gas)
         {
@@ -311,9 +334,11 @@ namespace Strata
                 };
                 clouds[room.ID] = c;
             }
-            c.density[gas.index] = Mathf.Max(0f, density);
+            c.density[gas.index] = ClampGasDensity(gas, Mathf.Max(0f, density));
+            AtmosphericMix.FinalizeMix(c.density, map);
             c.sample = cell;
             CullOrStore(room.ID, c);
+            MarkCellDensityDirty();
             RebuildCellDensity();
         }
 
@@ -330,11 +355,12 @@ namespace Strata
             if (clouds.TryGetValue(room.ID, out Cloud c))
             {
                 // Pressurized pocket: reach at least this density, not just add a trickle.
-                c.density[gas.index] = Mathf.Max(c.density[gas.index], density);
+                c.density[gas.index] = ClampGasDensity(gas, Mathf.Max(c.density[gas.index], density));
+                AtmosphericMix.FinalizeMix(c.density, map);
                 c.sample = sample.IsValid && sample.InBounds(map) && sample.GetRoom(map) == room
                     ? sample
                     : c.sample;
-                clouds[room.ID] = c;
+                CullOrStore(room.ID, c);
             }
             RebuildCellDensity();
         }
@@ -377,78 +403,223 @@ namespace Strata
                 TrySeedBreathableAir();
             }
 
+            if (ShouldSkipHeavyAtmosphereCycle())
+            {
+                return;
+            }
+
+            if (atmosphereCyclePhase >= 0)
+            {
+                RunAtmospherePhase(atmosphereCyclePhase);
+                atmosphereCyclePhase++;
+                if (atmosphereCyclePhase >= StrataLevelPerfUtility.AtmospherePhaseCount(map))
+                {
+                    atmosphereCyclePhase = -1;
+                }
+                return;
+            }
+
             if ((Find.TickManager.TicksGame + map.uniqueID) % AtmosphereCycleInterval() != 0)
             {
                 return;
             }
 
+            atmosphereCyclePhase = 1;
+            RunAtmospherePhase(0);
+        }
+
+        private void RunAtmospherePhase(int phase)
+        {
+            bool lite = StrataLevelPerfUtility.LiteAtmosphereOnMap(map);
+            if (lite)
+            {
+                RunLiteAtmospherePhase(phase);
+                return;
+            }
+
+            switch (phase)
+            {
+                case 0:
+                    RunAtmospherePrep();
+                    break;
+                case 1:
+                    RunAtmosphereTransport();
+                    break;
+                case 2:
+                    RunAtmosphereSources();
+                    break;
+                case 3:
+                    RunBreathPhase(AtmosphereBreathGrid.BreathWorkPhase.Diffusion);
+                    RunBreathPhase(AtmosphereBreathGrid.BreathWorkPhase.Ambient);
+                    if (StrataLevelPerfUtility.AtmospherePhaseCount(map) <= 4)
+                    {
+                        RunBreathPhase(AtmosphereBreathGrid.BreathWorkPhase.Exchange);
+                        RunBreathPhase(AtmosphereBreathGrid.BreathWorkPhase.RoomSync);
+                        FinishAtmosphereCycle();
+                    }
+                    break;
+                case 4:
+                    RunBreathPhase(AtmosphereBreathGrid.BreathWorkPhase.Exchange);
+                    RunBreathPhase(AtmosphereBreathGrid.BreathWorkPhase.RoomSync);
+                    FinishAtmosphereCycle();
+                    break;
+            }
+        }
+
+        private void RunLiteAtmospherePhase(int phase)
+        {
+            switch (phase)
+            {
+                case 0:
+                    RunAtmospherePrep();
+                    RefreshOutdoorVentCache();
+                    ProcessDirectionalVents();
+                    ProcessGasPipeNetworks();
+                    break;
+                case 1:
+                    if (PollutantGasesActive())
+                    {
+                        SmokeRiseUtility.ProcessMap(this);
+                        SmokeRiseUtility.ProcessGasSink(this);
+                        SmokeRiseUtility.ProcessTowerShafts(this);
+                    }
+                    ProcessDoorFlow();
+                    RunDisperseClouds();
+                    RunEmittersAndHazards(skipReplenishOxygen: StrataLevelPerfUtility.IsHibernating(map));
+                    ProcessRoomBreathingAndPlants();
+                    ProcessAnimalMethane();
+                    break;
+                case 2:
+                    if (BreathingActive() && StrataMapUtility.IsUnderground(map) && !AtmosphereWarmingUp())
+                    {
+                        EnsureBreathGrid()?.ProcessCycle(this);
+                    }
+                    FinishAtmosphereCycle();
+                    break;
+            }
+        }
+
+        private void RunAtmospherePrep()
+        {
             DrainLoadedClouds();
             DrainPendingSeeds();
             NormalizeClouds();
+            MigrateLoadedMixes();
+            ApplyGasToggleZeros();
+            cellDensityDirty = clouds.Count > 0
+                || (BreathingActive() && StrataMapUtility.IsUnderground(map) && breathGridSeeded);
+        }
 
-            // The smoke toggle only silences the smoke channel; deep gas is
-            // world content, not an optional overlay.
-            if (StrataMod.Settings != null && !StrataMod.Settings.smokeEnabled)
-            {
-                ZeroGasEverywhere(StrataGasDefOf.Strata_Smoke);
-            }
-            if (StrataMod.Settings != null && !StrataMod.Settings.breathingEnabled)
+        private void ApplyGasToggleZeros()
+        {
+            if (StrataMod.Settings != null && !StrataMod.Settings.NaturalGasesActive)
             {
                 ZeroGasEverywhere(StrataGasDefOf.Strata_Oxygen);
                 ZeroGasEverywhere(StrataGasDefOf.Strata_CarbonDioxide);
+                ZeroGasEverywhere(StrataGasDefOf.Strata_Nitrogen);
+                ZeroGasEverywhere(StrataGasDefOf.Strata_Argon);
             }
+            if (StrataMod.Settings != null && !StrataMod.Settings.PollutantGasesActive)
+            {
+                ZeroPollutantGasesEverywhere();
+            }
+        }
 
-            // 1. One-way wall vents (powered fans and passive louvers).
+        private void ZeroPollutantGasesEverywhere()
+        {
+            List<StrataGasDef> gases = Gases;
+            for (int i = 0; i < gases.Count; i++)
+            {
+                StrataGasDef gas = gases[i];
+                if (AtmosphericMix.IsPollutantGas(gas))
+                {
+                    ZeroGasEverywhere(gas);
+                }
+            }
+        }
+
+        private void RunAtmosphereTransport()
+        {
+            RefreshOutdoorVentCache();
             ProcessDirectionalVents();
-
-            // 1b. Conduit-layer gas pipes equalize every Strata gas channel
-            // between connected rooms and bleed to outdoor pipe terminals.
             ProcessGasPipeNetworks();
-
-            // 2. Buoyant gases rise; heavy gases sink through unsealed shafts.
-            SmokeRiseUtility.ProcessMap(this);
-            SmokeRiseUtility.ProcessGasSink(this);
-            SmokeRiseUtility.ProcessTowerShafts(this);
-
-            // 2b. Surface stairwells bleed fresh outdoor air; open underground
-            // rooms exchange with the column above.
-            ReplenishAmbientOxygen();
-
-            // 3. Open doors move gas: exterior doors flush it outside fast
-            // and visibly, interior doors spill it into the next room so it
-            // spreads toward an exit.
+            if (PollutantGasesActive())
+            {
+                SmokeRiseUtility.ProcessMap(this);
+                SmokeRiseUtility.ProcessGasSink(this);
+                SmokeRiseUtility.ProcessTowerShafts(this);
+            }
+            ReplenishAmbientAtmosphere();
             ProcessDoorFlow();
+            RunDisperseClouds();
+        }
 
-            // 4. Disperse existing gas (open roof, per-gas seepage). Persistent
-            // gases (passiveLeak 0) keep a sealed pocket pressurized forever.
+        private void RunAtmosphereSources()
+        {
+            RunEmittersAndHazards(skipReplenishOxygen: false);
+        }
+
+        private void RunEmittersAndHazards(bool skipReplenishOxygen)
+        {
+            if (!skipReplenishOxygen)
+            {
+                ReplenishAmbientAtmosphere();
+            }
+            RunEmitters();
+            ProcessRoomBreathingAndPlants();
+            ProcessAnimalMethane();
+            CheckIgnition();
+            ProcessOxygenDisplacement();
+            ProcessGeyserSteam();
+            ProcessScrubbers();
+        }
+
+        private void MigrateLoadedMixes()
+        {
+            foreach (int id in clouds.Keys.ToList())
+            {
+                if (!clouds.TryGetValue(id, out Cloud c))
+                {
+                    continue;
+                }
+                Room room = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
+                if (room == null)
+                {
+                    continue;
+                }
+                AtmosphericMix.MigrateLegacyRoomMix(this, room, c.sample, map);
+            }
+        }
+
+        private void RunDisperseClouds()
+        {
             foreach (int id in clouds.Keys.ToList())
             {
                 Cloud c = clouds[id];
                 Room r = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
                 if (r == null || r.UsesOutdoorTemperature)
                 {
-                    for (int g = 0; g < c.density.Length; g++)
-                    {
-                        c.density[g] *= 1f - OutdoorDisperse;
-                    }
+                    AtmosphericMix.ApplyOutdoorVentDrain(c.density, map, OutdoorDisperse);
+                }
+                else if (r.OpenRoofCount > 0)
+                {
+                    float roofDrain = Mathf.Clamp01(OpenRoofVent * Mathf.Min(r.OpenRoofCount, 5));
+                    AtmosphericMix.ApplyOutdoorVentDrain(c.density, map, roofDrain);
                 }
                 else
                 {
-                    float roofVent = OpenRoofVent * Mathf.Min(r.OpenRoofCount, 5);
                     foreach (StrataGasDef gas in Gases)
                     {
-                        c.density[gas.index] *= 1f - Mathf.Clamp01(gas.passiveLeak + roofVent);
+                        c.density[gas.index] *= 1f - Mathf.Clamp01(gas.passiveLeak);
                     }
                 }
                 CullOrStore(id, c);
             }
+        }
 
-            // 5. Emit from active sources in enclosed rooms (burners smoking,
-            // deep vents seeping). Ventilation is a guarantee: emitters can
-            // never push a properly ventilated room past a light haze - but
-            // thick pre-existing gas drains naturally (and visibly) rather
-            // than vanishing.
-            bool smokeOff = StrataMod.Settings != null && !StrataMod.Settings.smokeEnabled;
+        private void RunEmitters()
+        {
+            bool pollutantOff = StrataMod.Settings != null && !StrataMod.Settings.PollutantGasesActive;
             foreach (CompExhaust emitter in Emitters)
             {
                 if (!emitter.parent.Spawned || !emitter.Active)
@@ -456,22 +627,20 @@ namespace Strata
                     continue;
                 }
                 StrataGasDef gas = emitter.GasDef;
-                if (smokeOff && gas == StrataGasDefOf.Strata_Smoke)
+                if (pollutantOff && AtmosphericMix.IsPollutantGas(gas))
                 {
                     continue;
                 }
                 Room r = emitter.parent.GetRoom();
                 if (r == null || r.UsesOutdoorTemperature)
                 {
-                    continue; // vents straight to open air
+                    continue;
                 }
                 if (BreathingActive() && gas == StrataGasDefOf.Strata_Oxygen && emitter.Props.emitWhenPowered)
                 {
                     EnsureBreathGrid()?.EmitOxygenPump(emitter.parent.Position, emitter.Props.emissionPerCycle, r, this);
                     continue;
                 }
-                // Life-support pumps raise uniform room concentration; combustion
-                // smoke is total mass diluted across the chamber volume.
                 float add = emitter.Props.emitWhenPowered
                     ? emitter.Props.emissionPerCycle
                     : emitter.Props.emissionPerCycle / Mathf.Max(r.CellCount, 1);
@@ -479,34 +648,62 @@ namespace Strata
                     || gas == StrataGasDefOf.Strata_Oxygen || gas == StrataGasDefOf.Strata_CarbonDioxide;
                 AddGasToRoom(r, gas, add, emitter.parent.Position, bypassCap: bypassCap);
             }
+        }
 
-            // 6. Flammable gas meets open flame.
-            CheckIgnition();
-
-            // 7. Black damp (and similar) displaces oxygen in the same room.
-            ProcessOxygenDisplacement();
-
-            // 7c. Geothermal geysers seep steam into their room.
-            ProcessGeyserSteam();
-
-            // 8. Scrubbers pull CO₂ (and other configured gases) from enclosed rooms.
-            ProcessScrubbers();
-
-            // 9. Per-cell O₂/CO₂: roof-column ambient, diffusion, plants, breathing.
-            if (BreathingActive() && StrataMapUtility.IsUnderground(map) && !AtmosphereWarmingUp())
+        private void RunBreathPhase(AtmosphereBreathGrid.BreathWorkPhase phase)
+        {
+            if (!BreathingActive() || !StrataMapUtility.IsUnderground(map) || AtmosphereWarmingUp())
             {
-                EnsureBreathGrid()?.ProcessCycle(this);
+                return;
             }
+            EnsureBreathGrid()?.ProcessCyclePhase(this, phase);
+        }
 
+        private void FinishAtmosphereCycle()
+        {
             if (!NeedsCellDensityRebuild() || ShouldSkipOverlayRebuild())
             {
-                AffectPawns();
-                ThrowMotes();
+                MaybeAffectPawns();
+                MaybeThrowMotes();
+                return;
+            }
+
+            if (!cellDensityDirty && Find.CurrentMap != map)
+            {
+                MaybeAffectPawns();
+                MaybeThrowMotes();
                 return;
             }
 
             RebuildCellDensity();
+            cellDensityDirty = false;
+            MaybeAffectPawns();
+            MaybeThrowMotes();
+        }
+
+        private void MaybeAffectPawns()
+        {
+            int interval = StrataLevelPerfUtility.PawnGasAffectInterval(map);
+            pawnAffectCooldown++;
+            if (pawnAffectCooldown < interval)
+            {
+                return;
+            }
+            pawnAffectCooldown = 0;
             AffectPawns();
+        }
+
+        internal void MarkCellDensityDirty()
+        {
+            cellDensityDirty = true;
+        }
+
+        private void MaybeThrowMotes()
+        {
+            if (!StrataLevelPerfUtility.ShouldThrowGasMotes(map))
+            {
+                return;
+            }
             ThrowMotes();
         }
 
@@ -580,13 +777,82 @@ namespace Strata
             ConsumeGasFromRoom(room, gas, amount);
         }
 
+        internal void SetRoomGasDensity(Room room, StrataGasDef gas, float density, IntVec3 sample)
+        {
+            SetBreathRoomDensity(room, gas, density, sample);
+            MarkCellDensityDirty();
+        }
+
         internal void SetBreathRoomDensity(Room room, StrataGasDef gas, float density, IntVec3 sample)
         {
             if (room == null || gas == null)
             {
                 return;
             }
-            if (!clouds.TryGetValue(room.ID, out Cloud c))
+            if (!TryGetOrCreateCloud(room, sample, out Cloud c))
+            {
+                return;
+            }
+            c.density[gas.index] = ClampGasDensity(gas, density);
+            AtmosphericMix.FinalizeMix(c.density, map);
+            c.sample = sample.IsValid ? sample : c.sample;
+            c.cells = Mathf.Max(room.CellCount, 1);
+            CullOrStore(room.ID, c);
+        }
+
+        internal bool TryGetRoomDensity(Room room, out float[] density)
+        {
+            density = null;
+            if (room == null || !clouds.TryGetValue(room.ID, out Cloud c))
+            {
+                return false;
+            }
+            density = c.density;
+            return true;
+        }
+
+        // Ambient replenishment must seed enclosed rooms that never received
+        // smoke or other gas — TryGetRoomDensity alone skips empty rooms.
+        internal bool EnsureRoomDensity(Room room, IntVec3 sample, out float[] density)
+        {
+            density = null;
+            if (room == null)
+            {
+                return false;
+            }
+            if (!TryGetOrCreateCloud(room, sample, out Cloud c))
+            {
+                return false;
+            }
+            density = c.density;
+            return true;
+        }
+
+        internal void WriteRoomDensity(Room room, float[] density, IntVec3 sample)
+        {
+            if (room == null || density == null)
+            {
+                return;
+            }
+            if (!TryGetOrCreateCloud(room, sample, out Cloud c))
+            {
+                return;
+            }
+            System.Array.Copy(density, c.density, density.Length);
+            ClampCloudDensities(c);
+            c.sample = sample.IsValid ? sample : c.sample;
+            c.cells = Mathf.Max(room.CellCount, 1);
+            CullOrStore(room.ID, c);
+        }
+
+        private bool TryGetOrCreateCloud(Room room, IntVec3 sample, out Cloud c)
+        {
+            c = null;
+            if (room == null)
+            {
+                return false;
+            }
+            if (!clouds.TryGetValue(room.ID, out c))
             {
                 c = new Cloud
                 {
@@ -595,22 +861,26 @@ namespace Strata
                 };
                 clouds[room.ID] = c;
             }
-            c.density[gas.index] = density;
+            if (!sample.IsValid || !sample.InBounds(map) || sample.GetRoom(map) != room)
+            {
+                TryGetSampleCell(room, out sample);
+            }
             c.sample = sample.IsValid ? sample : c.sample;
-            c.cells = Mathf.Max(room.CellCount, 1);
-            CullOrStore(room.ID, c);
+            return true;
         }
 
-        internal void ProcessBreathPlants(AtmosphereBreathGrid grid)
+        private bool ShouldSkipHeavyAtmosphereCycle()
         {
-            List<Thing> plants = map.listerThings.ThingsInGroup(ThingRequestGroup.Plant);
-            for (int i = 0; i < plants.Count; i++)
+            if (!StrataLevelPerfUtility.IsHibernating(map))
             {
-                if (plants[i] is Plant plant)
-                {
-                    grid.ProcessPlant(plant, this);
-                }
+                return false;
             }
+            if (clouds.Count > 0 || loadedClouds != null || pendingSeedsByMap.ContainsKey(map.uniqueID))
+            {
+                return false;
+            }
+            return Emitters.Count == 0 && Vents.Count == 0 && Updrafts.Count == 0
+                && GasExchangers.Count == 0 && Scrubbers.Count == 0;
         }
 
         private void EnsureBuildingCompsRegistered()
@@ -715,13 +985,10 @@ namespace Strata
                 clouds.Remove(id);
                 if (clouds.TryGetValue(room.ID, out Cloud other))
                 {
-                    // Two clouds landed in the same merged room; both are
-                    // already on the merged room's volume basis, so add.
-                    for (int g = 0; g < c.density.Length; g++)
-                    {
-                        other.density[g] += c.density[g];
-                    }
+                    // Two clouds merged: volume-weighted mix, not stacked channels.
+                    AtmosphericMix.MergeRoomMix(other.density, c.density, other.cells, c.cells);
                     other.cells = newCells;
+                    ClampCloudDensities(other);
                 }
                 else
                 {
@@ -753,6 +1020,7 @@ namespace Strata
             {
                 return;
             }
+            RefreshOutdoorVentCache();
             var countedDoors = new HashSet<Building>();
             foreach (int id in clouds.Keys.ToList())
             {
@@ -767,6 +1035,7 @@ namespace Strata
                 }
                 countedDoors.Clear();
                 bool changed = false;
+                bool hasOutdoorWallVent = false;
                 // Doors are their own one-cell "doorway room" and never show
                 // up in the room's Regions - walk the border cells instead.
                 // Vanilla wall vents flow gas the same way they flow heat.
@@ -792,10 +1061,10 @@ namespace Strata
                     }
                     else
                     {
-                        Building edifice = borderCell.GetEdifice(map);
-                        if (edifice != null && SmokeVentUtility.IsOpenVent(edifice))
+                        Building vent = SmokeVentUtility.FindOpenVentAt(map, borderCell);
+                        if (vent != null)
                         {
-                            opening = edifice;
+                            opening = vent;
                             isVent = true;
                         }
                     }
@@ -805,38 +1074,58 @@ namespace Strata
                     }
                     Room neighbor = null;
                     bool exterior = false;
-                    foreach (IntVec3 dir in GenAdj.CardinalDirections)
+                    if (isVent)
                     {
-                        IntVec3 beyond = opening.Position + dir;
-                        if (!beyond.InBounds(map))
-                        {
-                            continue;
-                        }
-                        Room other = beyond.GetRoom(map);
-                        if (other == null || other == room || other.IsDoorway)
-                        {
-                            continue;
-                        }
-                        if (other.PsychologicallyOutdoors || other.UsesOutdoorTemperature)
+                        if (SmokeVentUtility.VentLeadsOutdoors(opening, room))
                         {
                             exterior = true;
+                            hasOutdoorWallVent = true;
                         }
                         else
                         {
-                            neighbor = other;
+                            Room exhaustRoom = SmokeVentUtility.ExhaustRoom(opening);
+                            if (exhaustRoom != null && exhaustRoom != room && !exhaustRoom.IsDoorway
+                                && !exhaustRoom.UsesOutdoorTemperature && exhaustRoom.CellCount > 0)
+                            {
+                                neighbor = exhaustRoom;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (IntVec3 dir in GenAdj.CardinalDirections)
+                        {
+                            IntVec3 beyond = opening.Position + dir;
+                            if (!beyond.InBounds(map))
+                            {
+                                continue;
+                            }
+                            if (SmokeVentUtility.CellIsOutdoor(map, beyond))
+                            {
+                                exterior = true;
+                                continue;
+                            }
+                            Room other = beyond.GetRoom(map);
+                            if (other == null || other == room || other.IsDoorway)
+                            {
+                                continue;
+                            }
+                            if (other.PsychologicallyOutdoors || other.UsesOutdoorTemperature)
+                            {
+                                exterior = true;
+                            }
+                            else
+                            {
+                                neighbor = other;
+                            }
                         }
                     }
                     if (exterior)
                     {
-                        // Exits take priority: outdoors is a pure drain.
-                        float keep = 1f - (isVent ? VentExteriorDrain : ExteriorDoorDrain);
-                        for (int g = 0; g < c.density.Length; g++)
-                        {
-                            c.density[g] *= keep;
-                        }
-                        changed = true;
+                        // Outdoor drain runs once per room below via the vent cluster.
+                        continue;
                     }
-                    else if (neighbor != null && neighbor.CellCount > 0)
+                    if (neighbor != null && neighbor.CellCount > 0)
                     {
                         // Equalize toward the volume-weighted mix of the two
                         // rooms, conserving gas mass: what a small room
@@ -859,9 +1148,52 @@ namespace Strata
                         }
                     }
                 }
+                float outdoorDrain = 0f;
+                if (outdoorVentDirectRoomIds.Contains(id))
+                {
+                    outdoorDrain = ExteriorDoorDrain;
+                }
+                else if (outdoorVentRoomIds.Contains(id))
+                {
+                    outdoorDrain = InteriorOutdoorDrain;
+                }
+                if (outdoorDrain > 0f || hasOutdoorWallVent)
+                {
+                    float drain = outdoorDrain;
+                    if (hasOutdoorWallVent)
+                    {
+                        drain = 1f - (1f - drain) * (1f - VentExteriorDrain);
+                    }
+                    AtmosphericMix.ApplyOutdoorVentDrain(c.density, map, drain);
+                    changed = true;
+                }
                 if (changed)
                 {
                     CullOrStore(id, c);
+                }
+            }
+        }
+
+        private void RefreshOutdoorVentCache()
+        {
+            int cycle = Find.TickManager.TicksGame / Mathf.Max(AtmosphereCycleInterval(), 1);
+            if (outdoorVentCacheCycle == cycle)
+            {
+                return;
+            }
+            outdoorVentCacheCycle = cycle;
+            outdoorVentRoomIds.Clear();
+            outdoorVentDirectRoomIds.Clear();
+            SmokeVentUtility.CollectOutdoorVentCluster(map, outdoorVentRoomIds, CellHasSealedGasAirlock);
+            foreach (Room room in map.regionGrid.AllRooms)
+            {
+                if (room == null || room.IsDoorway || !outdoorVentRoomIds.Contains(room.ID))
+                {
+                    continue;
+                }
+                if (SmokeVentUtility.RoomHasDirectOutdoorOpening(room))
+                {
+                    outdoorVentDirectRoomIds.Add(room.ID);
                 }
             }
         }
@@ -872,6 +1204,15 @@ namespace Strata
         // unsealed shaft.
         public bool RoomIsProperlyVentilated(Room room)
         {
+            if (room == null)
+            {
+                return false;
+            }
+            RefreshOutdoorVentCache();
+            if (outdoorVentRoomIds.Contains(room.ID))
+            {
+                return true;
+            }
             if (room.OpenRoofCount > 0 || SmokeVentUtility.RoomHasOpenExteriorDoor(room)
                 || RoomHasOutdoorWallVent(room))
             {
@@ -969,9 +1310,9 @@ namespace Strata
                 {
                     continue;
                 }
-                Building edifice = cell.GetEdifice(roomMap);
-                if (edifice != null && SmokeVentUtility.IsOpenVent(edifice)
-                    && SmokeVentUtility.OpeningLeadsOutdoors(edifice, room))
+                // Includes non-edifice wall-mounted vents (e.g. VTE_WallMountedVent).
+                Building vent = SmokeVentUtility.FindOpenVentAt(roomMap, cell);
+                if (vent != null && SmokeVentUtility.VentLeadsOutdoors(vent, room))
                 {
                     return true;
                 }
@@ -1036,7 +1377,7 @@ namespace Strata
             {
                 return;
             }
-            drawer ??= new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.62f);
+            drawer ??= new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.55f);
             drawer.MarkForDraw();
             drawer.CellBoolDrawerUpdate();
         }
@@ -1051,14 +1392,16 @@ namespace Strata
             }
             if (StrataMod.Settings != null && StrataMod.Settings.gasOverlayRoomLabels)
             {
-                GasOverlayUtility.DrawRoomLabelsOnMap(map, this);
+                IntVec3 cell = UI.MouseCell();
+                Room cursorRoom = cell.InBounds(map) && !cell.Fogged(map) ? cell.GetRoom(map) : null;
+                GasOverlayUtility.DrawRoomLabelsOnMap(map, this, cursorRoom);
             }
-            IntVec3 cell = UI.MouseCell();
-            if (!cell.InBounds(map))
+            IntVec3 mouseCell = UI.MouseCell();
+            if (!mouseCell.InBounds(map))
             {
                 return;
             }
-            Room room = cell.Fogged(map) ? null : cell.GetRoom(map);
+            Room room = mouseCell.Fogged(map) ? null : mouseCell.GetRoom(map);
             GasOverlayUtility.DrawCursorMixReadout(this, room);
         }
 
@@ -1089,7 +1432,7 @@ namespace Strata
                 {
                     if (SmokeVentUtility.DuctNetworkReachesOutdoor(map, network))
                     {
-                        Scale(cloud, 1f - rate);
+                        Scale(cloud, 1f - rate, map);
                     }
                     else
                     {
@@ -1119,11 +1462,11 @@ namespace Strata
                     Room exhaust = vent.ExhaustRoom;
                     if (exhaust != null && exhaust.UsesOutdoorTemperature)
                     {
-                        Scale(cloud, 1f - rate);
+                        Scale(cloud, 1f - rate, map);
                     }
                     else if (SmokeVentUtility.CellIsOutdoor(map, SmokeVentUtility.ExhaustCell(vent.parent)))
                     {
-                        Scale(cloud, 1f - rate);
+                        Scale(cloud, 1f - rate, map);
                     }
                     else if (exhaust != null)
                     {
@@ -1166,10 +1509,7 @@ namespace Strata
                         {
                             continue;
                         }
-                        for (int g = 0; g < cloud.density.Length; g++)
-                        {
-                            cloud.density[g] *= keep;
-                        }
+                        Scale(cloud, keep, map);
                         CullOrStore(room.ID, cloud);
                     }
                 }
@@ -1215,12 +1555,19 @@ namespace Strata
             });
         }
 
-        private static void Scale(Cloud cloud, float factor)
+        private static void Scale(Cloud cloud, float factor, Map map)
         {
-            for (int g = 0; g < cloud.density.Length; g++)
+            if (map == null)
             {
-                cloud.density[g] *= factor;
+                factor = Mathf.Clamp01(factor);
+                for (int g = 0; g < cloud.density.Length; g++)
+                {
+                    cloud.density[g] *= factor;
+                }
+                AtmosphericMix.FinalizeMix(cloud.density, map);
+                return;
             }
+            AtmosphericMix.ApplyOutdoorVentDrain(cloud.density, map, 1f - Mathf.Clamp01(factor));
         }
 
         // Move every buoyant gas up an unsealed shaft.
@@ -1285,7 +1632,7 @@ namespace Strata
 
         // Seed breathable O₂ in every enclosed room when an underground map
         // first finalizes (or once after load if a pre-breathing save had none).
-        // B1 keeps ambient O₂ via ReplenishAmbientOxygen every cycle instead.
+        // B1 keeps a weak ambient column via ReplenishAmbientAtmosphere each cycle.
         public void TrySeedBreathableAir()
         {
             if (!BreathingActive() || !StrataMapUtility.IsUnderground(map))
@@ -1295,7 +1642,7 @@ namespace Strata
 
             if (StrataDepth.IsStarterLevel(map))
             {
-                SeedAllEnclosedRoomsWithAmbientOxygen();
+                SeedAllEnclosedRoomsWithAmbientMix();
                 return;
             }
 
@@ -1309,7 +1656,7 @@ namespace Strata
                 breathableSeedRetryTick = Find.TickManager.TicksGame;
             }
 
-            int seeded = SeedAllEnclosedRoomsWithAmbientOxygen(BreathableSeedRoomsPerTick);
+            int seeded = SeedAllEnclosedRoomsWithAmbientMix(BreathableSeedRoomsPerTick);
             int roomCount = map.regionGrid.AllRooms.Count;
             if ((seeded > 0 && breathableSeedRoomCursor == 0 && roomCount > 0)
                 || Find.TickManager.TicksGame - breathableSeedRetryTick > 1200)
@@ -1318,10 +1665,9 @@ namespace Strata
             }
         }
 
-        private int SeedAllEnclosedRoomsWithAmbientOxygen(int maxRooms = int.MaxValue)
+        private int SeedAllEnclosedRoomsWithAmbientMix(int maxRooms = int.MaxValue)
         {
-            StrataGasDef oxygen = StrataGasDefOf.Strata_Oxygen;
-            if (oxygen == null)
+            if (StrataGasDefOf.Strata_Oxygen == null)
             {
                 return 0;
             }
@@ -1341,7 +1687,7 @@ namespace Strata
                 {
                     continue;
                 }
-                AddGasToRoom(room, oxygen, AmbientOxygen, sample, bypassCap: true);
+                AtmosphericMix.ApplyToRoom(this, room, sample, map, strength: 1f);
                 count++;
             }
             breathableSeedRoomCursor = end >= rooms.Count ? 0 : end;
@@ -1361,20 +1707,36 @@ namespace Strata
             return Emitters.Count > 0;
         }
 
-        private bool BreathingActive()
+        private bool NaturalGasesActive()
         {
-            return StrataMod.Settings == null || StrataMod.Settings.breathingEnabled;
+            return StrataMod.Settings == null || StrataMod.Settings.NaturalGasesActive;
         }
 
-        // Surface stairwell landings and open-to-sky underground rooms stay
-        // topped up with fresh O₂ so shafts can feed the column.
-        private void ReplenishAmbientOxygen()
+        private bool PollutantGasesActive()
         {
-            if (!BreathingActive() || StrataGasDefOf.Strata_Oxygen == null)
+            return StrataMod.Settings == null || StrataMod.Settings.PollutantGasesActive;
+        }
+
+        private bool BreathingActive()
+        {
+            return NaturalGasesActive();
+        }
+
+        // Surface, A+, and open underground columns stay topped up toward the
+        // depth-adjusted atmospheric mix; sealed deep rooms rely on ventilation.
+        private void ReplenishAmbientAtmosphere()
+        {
+            if (!BreathingActive())
             {
                 return;
             }
-            StrataGasDef oxygen = StrataGasDefOf.Strata_Oxygen;
+            bool forceEnclosed = AtmosphericMix.ForcesAmbientInEnclosedRooms(map);
+            float rate = AtmosphericMix.NaturalReplenishRate(map);
+            if (!forceEnclosed && rate <= 0f)
+            {
+                return;
+            }
+
             if (!StrataMapUtility.IsUnderground(map))
             {
                 foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
@@ -1384,32 +1746,176 @@ namespace Strata
                         continue;
                     }
                     Room room = stairsDown.Position.GetRoom(map);
-                    if (room == null)
+                    if (room == null || !TryGetSampleCell(room, out IntVec3 stairSample))
                     {
                         continue;
                     }
-                    TopUpOxygen(room, oxygen, stairsDown.Position);
+                    AtmosphericMix.ApplyToRoom(this, room, stairSample, map, rate);
                 }
-                return;
             }
+
             foreach (Room room in map.regionGrid.AllRooms)
             {
-                if (room == null || !room.UsesOutdoorTemperature || !TryGetSampleCell(room, out IntVec3 sample))
+                if (room == null || !TryGetSampleCell(room, out IntVec3 sample))
                 {
                     continue;
                 }
-                TopUpOxygen(room, oxygen, sample);
+                AtmosphericMix.MigrateLegacyRoomMix(this, room, sample, map);
+                if (forceEnclosed && !room.UsesOutdoorTemperature)
+                {
+                    AtmosphericMix.ApplyToRoom(this, room, sample, map, strength: 1f);
+                    continue;
+                }
+                if (room.UsesOutdoorTemperature && StrataMapUtility.IsUnderground(map))
+                {
+                    AtmosphericMix.ApplyToRoom(this, room, sample, map, rate);
+                    continue;
+                }
+                if (!forceEnclosed && !room.UsesOutdoorTemperature && rate > 0f
+                    && StrataMapUtility.IsUnderground(map))
+                {
+                    AtmosphericMix.ApplyToRoom(this, room, sample, map, rate);
+                }
             }
         }
 
-        private void TopUpOxygen(Room room, StrataGasDef oxygen, IntVec3 sample)
+        // Room-averaged breathing on surface/A+ and anywhere the cell grid is off.
+        private void ProcessRoomBreathingAndPlants()
         {
-            float current = DensityInRoom(room, oxygen);
-            if (current >= AmbientOxygen - 0.01f)
+            if (!BreathingActive())
             {
                 return;
             }
-            AddGasToRoom(room, oxygen, AmbientOxygen - current, sample, bypassCap: true);
+            bool underground = StrataMapUtility.IsUnderground(map);
+            if (underground && breathGrid != null && breathGridSeeded && !AtmosphereWarmingUp())
+            {
+                return;
+            }
+
+            StrataGasDef oxygen = StrataGasDefOf.Strata_Oxygen;
+            StrataGasDef co2 = StrataGasDefOf.Strata_CarbonDioxide;
+            if (oxygen == null || co2 == null)
+            {
+                return;
+            }
+
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn.RaceProps == null || pawn.Dead || !pawn.Spawned)
+                {
+                    continue;
+                }
+                if (!StrataPawnUtility.IsPlantBreather(pawn)
+                    && (!pawn.RaceProps.IsFlesh || !StrataLevelPerfUtility.ShouldAffectAnimalGasHarm(pawn, map)))
+                {
+                    continue;
+                }
+                Room room = pawn.GetRoom();
+                if (room == null || room.UsesOutdoorTemperature)
+                {
+                    continue;
+                }
+                float bodyScale = pawn.BodySize;
+                if (StrataPawnUtility.IsPlantBreather(pawn))
+                {
+                    ConsumeGasFromRoom(room, co2, PlantCo2PerCycle * bodyScale);
+                    AddGasToRoom(room, oxygen, PlantO2PerCycle * bodyScale, pawn.Position, bypassCap: true);
+                    continue;
+                }
+                float o2Need = OxygenPerBreath * bodyScale;
+                float co2Out = CarbonDioxidePerBreath * bodyScale;
+                ConsumeGasFromRoom(room, oxygen, o2Need);
+                AddGasToRoom(room, co2, co2Out, pawn.Position);
+            }
+
+            List<Thing> plants = map.listerThings.ThingsInGroup(ThingRequestGroup.Plant);
+            if (plants == null || plants.Count == 0)
+            {
+                return;
+            }
+            int batch = StrataLevelPerfUtility.BreathPlantsPerBatch(map);
+            int end = Mathf.Min(plants.Count, plantBatchCursor + batch);
+            for (int i = plantBatchCursor; i < end; i++)
+            {
+                if (plants[i] is not Plant plant || !plant.Spawned || plant.Destroyed || plant.def?.plant == null)
+                {
+                    continue;
+                }
+                if (plant.LifeStage == PlantLifeStage.Sowing || plant.Growth < MinPlantGrowth)
+                {
+                    continue;
+                }
+                Room room = plant.GetRoom();
+                if (room == null || room.UsesOutdoorTemperature)
+                {
+                    continue;
+                }
+                float scale = plant.Growth;
+                ConsumeGasFromRoom(room, co2, PlantCo2PerCycle * scale);
+                AddGasToRoom(room, oxygen, PlantO2PerCycle * scale, plant.Position, bypassCap: true);
+            }
+            plantBatchCursor = end >= plants.Count ? 0 : end;
+        }
+
+        private void ProcessAnimalMethane()
+        {
+            if (!PollutantGasesActive())
+            {
+                return;
+            }
+            StrataGasDef methane = StrataGasDefOf.Strata_Methane;
+            if (methane == null)
+            {
+                return;
+            }
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            if (pawns.Count == 0)
+            {
+                return;
+            }
+            int batch = StrataLevelPerfUtility.LiteAtmosphereOnMap(map) ? 8 : 16;
+            int end = Mathf.Min(pawns.Count, animalMethaneCursor + batch);
+            for (int i = animalMethaneCursor; i < end; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn.RaceProps == null || !pawn.RaceProps.Animal || pawn.Dead || !pawn.Spawned)
+                {
+                    continue;
+                }
+                if ((pawn.thingIDNumber + Find.TickManager.TicksGame) % 5 != 0)
+                {
+                    continue;
+                }
+                Room room = pawn.GetRoom();
+                if (room == null || room.UsesOutdoorTemperature)
+                {
+                    continue;
+                }
+                float rate = MethanePerAnimalCycle * pawn.BodySize;
+                if (IsMethaneHeavyAnimal(pawn))
+                {
+                    rate *= CowMethaneMultiplier;
+                }
+                AddGasToRoom(room, methane, rate, pawn.Position);
+            }
+            animalMethaneCursor = end >= pawns.Count ? 0 : end;
+        }
+
+        private static bool IsMethaneHeavyAnimal(Pawn pawn)
+        {
+            if (pawn?.def == null)
+            {
+                return false;
+            }
+            string name = pawn.def.defName;
+            return name == "Cow" || name == "Boomalope" || name.Contains("Cow");
+        }
+
+        private bool SurfaceMapHasAmbientAir()
+        {
+            return !StrataLevelPerfUtility.IsStrataPocketLevel(map) || AtmosphericMix.ForcesAmbientInEnclosedRooms(map);
         }
 
         private static bool TryGetSampleCell(Room room, out IntVec3 cell)
@@ -1430,7 +1936,9 @@ namespace Strata
 
         private void ProcessOxygenDisplacement()
         {
-            if (!BreathingActive() || clouds.Count == 0 || StrataGasDefOf.Strata_Oxygen == null)
+            if (!NaturalGasesActive() || !PollutantGasesActive() || clouds.Count == 0
+                || StrataGasDefOf.Strata_Oxygen == null
+                || AtmosphericMix.ForcesAmbientInEnclosedRooms(map))
             {
                 return;
             }
@@ -1467,7 +1975,7 @@ namespace Strata
 
         private void ProcessGeyserSteam()
         {
-            if (StrataGasDefOf.Strata_Steam == null || !StrataMapUtility.IsUnderground(map))
+            if (!PollutantGasesActive() || StrataGasDefOf.Strata_Steam == null || !StrataMapUtility.IsUnderground(map))
             {
                 return;
             }
@@ -1526,7 +2034,7 @@ namespace Strata
             {
                 return;
             }
-            cloud.density[gas.index] = Mathf.Max(0f, cloud.density[gas.index] - amount);
+            AtmosphericMix.ConsumeGas(cloud.density, gas, amount, map);
             CullOrStore(room.ID, cloud);
         }
 
@@ -1553,6 +2061,14 @@ namespace Strata
             {
                 return;
             }
+            if (AtmosphericMix.IsAtmosphericComponent(gas) && !NaturalGasesActive())
+            {
+                return;
+            }
+            if (AtmosphericMix.IsPollutantGas(gas) && !PollutantGasesActive())
+            {
+                return;
+            }
             // The sample cell must sit INSIDE the room: it is how the cloud
             // resolves its room each cycle and where the overlay paints.
             // Callers often pass a door or vent cell, which belongs to its own
@@ -1573,17 +2089,41 @@ namespace Strata
                 };
                 clouds[room.ID] = c;
             }
-            // Inflows respect the ventilation guarantee the same way burners
-            // do; pressurized bursts (breached pockets, incidents) do not.
-            float limit = bypassCap ? float.MaxValue
-                : RoomIsProperlyVentilated(room) ? Mathf.Max(VentilatedCap, c.density[gas.index])
+            // Inflows respect the ventilation guarantee (smoke fraction cap);
+            // pressurized bursts (breached pockets, incidents) do not.
+            float maxFraction = bypassCap ? 1f
+                : RoomIsProperlyVentilated(room) ? VentilatedCap
                 : 1f;
-            c.density[gas.index] = Mathf.Min(limit, c.density[gas.index] + amount);
+            AtmosphericMix.InjectGas(c.density, gas, amount, map, maxFraction, bypassCap);
+            ClampCloudDensities(c);
             c.sample = sample;
+            CullOrStore(room.ID, c);
+        }
+
+        private float ClampGasDensity(StrataGasDef gas, float density)
+        {
+            if (density <= 0f)
+            {
+                return 0f;
+            }
+            float max = gas == StrataGasDefOf.Strata_DeepGas ? MaxDeepGasDensity : MaxNormalDensity;
+            return Mathf.Min(density, max);
+        }
+
+        private void ClampCloudDensities(Cloud cloud)
+        {
+            List<StrataGasDef> gases = Gases;
+            for (int i = 0; i < gases.Count; i++)
+            {
+                StrataGasDef gas = gases[i];
+                cloud.density[gas.index] = ClampGasDensity(gas, cloud.density[gas.index]);
+            }
+            AtmosphericMix.FinalizeMix(cloud.density, map);
         }
 
         private void CullOrStore(int id, Cloud cloud)
         {
+            ClampCloudDensities(cloud);
             bool anyLeft = false;
             for (int g = 0; g < cloud.density.Length; g++)
             {
@@ -1611,6 +2151,10 @@ namespace Strata
         // burning smoke emitter (a running wood generator is an open firebox).
         private void CheckIgnition()
         {
+            if (!PollutantGasesActive())
+            {
+                return;
+            }
             FlammableRiskCells.Clear();
             if (clouds.Count == 0)
             {
@@ -1757,10 +2301,8 @@ namespace Strata
                     cloud.density[StrataGasDefOf.Strata_Oxygen.index] *= 0.35f;
                 }
             }
-            Find.LetterStack.ReceiveLetter("Gas ignition",
-                $"A pocket of flammable gas has ignited on contact with {flame.LabelShort} and exploded. "
-                + "The blast leaves black damp in the room — ventilate and restore oxygen before sending people back. "
-                + "Keep open flames away from gas seeps, or mine by electric light.",
+            Find.LetterStack.ReceiveLetter("Strata_GasIgnitionLetterTitle".Translate(),
+                "Strata_GasIgnitionLetterText".Translate(flame.LabelShort),
                 LetterDefOf.NegativeEvent, new TargetInfo(flame.Position, map));
         }
 
@@ -1838,6 +2380,10 @@ namespace Strata
                 {
                     continue;
                 }
+                if (!StrataLevelPerfUtility.ShouldAffectAnimalGasHarm(pawn, map))
+                {
+                    continue;
+                }
                 Room room = pawn.GetRoom();
                 if (room != null && room.UsesOutdoorTemperature)
                 {
@@ -1868,8 +2414,14 @@ namespace Strata
                     {
                         continue;
                     }
-                    if (!BreathingActive()
-                        && (gas == StrataGasDefOf.Strata_Oxygen || gas == StrataGasDefOf.Strata_CarbonDioxide))
+                    if (!NaturalGasesActive()
+                        && (gas.harmWhenBelow
+                            || gas == StrataGasDefOf.Strata_Oxygen
+                            || gas == StrataGasDefOf.Strata_CarbonDioxide))
+                    {
+                        continue;
+                    }
+                    if (!PollutantGasesActive() && AtmosphericMix.IsPollutantGas(gas))
                     {
                         continue;
                     }
@@ -1898,6 +2450,10 @@ namespace Strata
                     }
                     if (density > gas.harmThreshold)
                     {
+                        if (!PollutantGasesActive())
+                        {
+                            continue;
+                        }
                         float scale = gas == StrataGasDefOf.Strata_Smoke
                             ? StrataMod.Settings?.smokeSeverityScale ?? 1f
                             : 1f;

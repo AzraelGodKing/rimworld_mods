@@ -1,6 +1,6 @@
 name: Build mod DLLs
 
-# Builds Strata and Stormproof assemblies whenever Source changes.
+# Builds Homesteader, Strata, and Stormproof assemblies whenever Source changes.
 # On push / manual dispatch, commits updated DLLs back to the branch so
 # repo downloads always ship a matching binary. Pull requests only build
 # and upload artifacts (no commit).
@@ -8,11 +8,13 @@ name: Build mod DLLs
 on:
   push:
     paths:
+      - "Homesteader/Source/**"
       - "Strata/Source/**"
       - "Stormproof/Source/**"
       - ".github/workflows/build-mods.yml"
   pull_request:
     paths:
+      - "Homesteader/Source/**"
       - "Strata/Source/**"
       - "Stormproof/Source/**"
       - ".github/workflows/build-mods.yml"
@@ -33,6 +35,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - mod: Homesteader
+            project: Homesteader/Source/Homesteader.csproj
+            dll: Homesteader/Assemblies/Homesteader.dll
           - mod: Strata
             project: Strata/Source/Strata.csproj
             dll: Strata/Assemblies/Strata.dll
@@ -70,6 +75,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: ${{ github.ref_name }}
 
+      - name: Download Homesteader DLL
+        uses: actions/download-artifact@v4
+        with:
+          name: Homesteader-Assemblies
+          path: Homesteader/Assemblies
+
       - name: Download Strata DLL
         uses: actions/download-artifact@v4
         with:
@@ -86,7 +97,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Strata/Assemblies/Strata.dll Stormproof/Assemblies/Stormproof.dll
+          git add Homesteader/Assemblies/Homesteader.dll Strata/Assemblies/Strata.dll Stormproof/Assemblies/Stormproof.dll
           if git diff --staged --quiet; then
             echo "DLLs unchanged — nothing to commit."
             exit 0

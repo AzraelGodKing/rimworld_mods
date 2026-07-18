@@ -116,7 +116,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_MapleSyrup</defName>
     <label>maple syrup</label>
-    <description>Maple sap boiled down to a rich amber syrup. Keeps indefinitely, sweetens homestead cooking, and turns flapjacks into a reason to get out of bed.</description>
+    <description>Maple sap boiled down to a rich amber syrup. Keeps indefinitely. Sweetens jam, porridge, and cider, and turns flapjacks into a reason to get out of bed.</description>
     <graphicData>
       <texPath>Homesteader/Items/MapleSyrup</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -159,6 +159,7 @@
     </statBases>
     <ingestible>
       <preferability>MealSimple</preferability>
+      <tasteThought>Homesteader_AteHomesteadTreat</tasteThought>
       <ingestEffect>EatVegetarian</ingestEffect>
       <ingestSound>Meal_Eat</ingestSound>
       <joy>0.08</joy>

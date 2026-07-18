@@ -34,10 +34,8 @@ namespace Strata
 
         public Alert_SmokeOnVacantLevel()
         {
-            defaultLabel = "Gas building underground";
-            defaultExplanation = "Harmful gas is accumulating on a level with no colonists on it. "
-                + "Something is burning or seeping down there with no working ventilation - the "
-                + "next person to walk in will be breathing it.";
+            defaultLabel = "Strata_Alert_SmokeVacant_Label".Translate();
+            defaultExplanation = "Strata_Alert_SmokeVacant_Explanation".Translate();
         }
 
         public override AlertReport GetReport()
@@ -79,11 +77,8 @@ namespace Strata
 
         public Alert_FlammableGasNearFlame()
         {
-            defaultLabel = "Flammable gas near open flame";
-            defaultExplanation = "Flammable gas is pooling in a room that contains an open flame - a "
-                + "torch, a campfire, or a running fuel burner. When the gas thickens past ignition "
-                + "density the room will explode. Extinguish the flame, vent the room, or switch to "
-                + "electric light.";
+            defaultLabel = "Strata_Alert_FlammableGas_Label".Translate();
+            defaultExplanation = "Strata_Alert_FlammableGas_Explanation".Translate();
         }
 
         public override AlertReport GetReport()
@@ -117,9 +112,8 @@ namespace Strata
     {
         public Alert_CaravanGoodsBelow()
         {
-            defaultLabel = "Caravan goods below";
-            defaultExplanation = "Valuable items remain on linked underground levels while a caravan is being formed on the surface. "
-                + "Enable caravan pull in Strata settings or haul them up manually before leaving.";
+            defaultLabel = "Strata_Alert_CaravanGoods_Label".Translate();
+            defaultExplanation = "Strata_Alert_CaravanGoods_Explanation".Translate();
             defaultPriority = AlertPriority.Medium;
         }
 
@@ -150,9 +144,8 @@ namespace Strata
 
         public Alert_ColonistsBelowSealedShaft()
         {
-            defaultLabel = "Colonists sealed off";
-            defaultExplanation = "Colonists are on a linked level whose every exit shaft is sealed. "
-                + "They cannot return until a stairwell or elevator is unsealed.";
+            defaultLabel = "Strata_Alert_SealedColonists_Label".Translate();
+            defaultExplanation = "Strata_Alert_SealedColonists_Explanation".Translate();
             defaultPriority = AlertPriority.High;
         }
 
@@ -214,10 +207,8 @@ namespace Strata
 
         public Alert_CanaryWarning()
         {
-            defaultLabel = "Canary warning";
-            defaultExplanation = "A mine canary is distressed or dead from bad air in a cage. "
-                + "Canaries succumb sooner than colonists — ventilate the room or evacuate before "
-                + "people start coughing, suffocating, or worse.";
+            defaultLabel = "Strata_Alert_Canary_Label".Translate();
+            defaultExplanation = "Strata_Alert_Canary_Explanation".Translate();
             defaultPriority = AlertPriority.High;
         }
 

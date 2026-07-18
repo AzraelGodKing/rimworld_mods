@@ -7,7 +7,7 @@ namespace Strata
     public static class GasPipeUtility
     {
         public const float PipeInteriorFlow = 0.3f;
-        public const float PipeOutdoorDrain = 0.35f;
+        public const float PipeOutdoorDrain = 0.50f;
 
         public static void CollectNetwork(Map map, IntVec3 start, HashSet<IntVec3> network)
         {
