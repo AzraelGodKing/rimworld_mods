@@ -4,6 +4,10 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ## [Unreleased]
 
+### Fixed
+- **Passive cooling performance** — root cellar / icehouse / springhouse cell cache rebuilds only when a cooler spawns or despawns (dirty flag), not every 250 ticks; `AmbientTemperature` early-outs when the map has no cooled cells.
+- **Environmental allergy scans** — check one colonist per pulse (rotated) so Mold/PetDander map scans no longer hit everyone on the same tick.
+
 ### Added
 - **Polyarmory trait** — pawns with it treat their polycule (lovers and polyarmory metamours) as fine bedmates: no SharedBed jealousy, and `WillingToShareBed` allows multi-person / Polyamory Beds setups.
 - **Tastes tab** on humanlike pawns — lists **5 favorite foods** and allergies. Allergies stay hidden as “Unknown sensitivity” until discovery.

@@ -15,9 +15,9 @@ namespace Strata
         {
             public int destMapId;
             public RelayPurpose purpose;
-            public int preferredBedId; // Rest / warden / childcare; -1 = any
+            public int preferredBedId; // Rest / warden / childcare / platform; -1 = any
             public int returnMapId; // Haul: go back for another load; -1 = none
-            public int carriedPawnId; // Warden / childcare captive; -1 = none
+            public int carriedPawnId; // Warden / childcare / containment captive; -1 = none
             public IntVec3 preferArrivalNear; // pick stair landing that can reach this
         }
 
@@ -36,7 +36,8 @@ namespace Strata
             RelayPurpose purpose,
             Building_Bed preferredBed = null,
             Map returnMap = null,
-            IntVec3 preferArrivalNear = default)
+            IntVec3 preferArrivalNear = default,
+            Thing preferredThing = null)
         {
             if (pawn == null || destMap == null)
             {
@@ -49,17 +50,20 @@ namespace Strata
                 carriedId = carried.thingIDNumber;
             }
 
+            Thing anchor = (Thing)preferredBed ?? preferredThing;
             if ((!preferArrivalNear.IsValid || !preferArrivalNear.InBounds(destMap))
-                && preferredBed != null && preferredBed.Spawned && preferredBed.Map == destMap)
+                && anchor != null && anchor.Spawned && anchor.Map == destMap)
             {
-                preferArrivalNear = preferredBed.Position;
+                preferArrivalNear = anchor.Position;
             }
 
             intents[pawn.thingIDNumber] = new Intent
             {
                 destMapId = destMap.uniqueID,
                 purpose = purpose,
-                preferredBedId = preferredBed?.thingIDNumber ?? -1,
+                preferredBedId = preferredBed?.thingIDNumber
+                    ?? preferredThing?.thingIDNumber
+                    ?? -1,
                 returnMapId = returnMap?.uniqueID ?? -1,
                 carriedPawnId = carriedId,
                 preferArrivalNear = preferArrivalNear,
@@ -153,7 +157,8 @@ namespace Strata
                 // Childcare / warden hops need the captive — re-grab if vanilla
                 // EnterPortal dropped them on a mid landing.
                 if (intent.purpose == RelayPurpose.Childcare
-                    || intent.purpose == RelayPurpose.Warden)
+                    || intent.purpose == RelayPurpose.Warden
+                    || intent.purpose == RelayPurpose.Containment)
                 {
                     if (pawn.carryTracker?.CarriedThing is not Pawn)
                     {
@@ -167,9 +172,17 @@ namespace Strata
                     }
                 }
 
-                Building_Bed bed = intent.preferredBedId > 0
+                Building_Bed bed = intent.purpose != RelayPurpose.Containment && intent.preferredBedId > 0
                     ? FindBedById(destMap, intent.preferredBedId)
                     : null;
+                if (intent.purpose == RelayPurpose.Containment && intent.preferredBedId > 0)
+                {
+                    Thing platform = FindThingById(destMap, intent.preferredBedId);
+                    if (platform != null)
+                    {
+                        intent.preferArrivalNear = platform.Position;
+                    }
+                }
                 Job hop = PawnRelay.TryRelayToMap(
                     pawn,
                     destMap,
@@ -214,6 +227,12 @@ namespace Strata
             if (intent.purpose == RelayPurpose.Warden)
             {
                 FinishWarden(pawn, intent.preferredBedId, intent.carriedPawnId);
+                return;
+            }
+
+            if (intent.purpose == RelayPurpose.Containment)
+            {
+                FinishContainment(pawn, intent.preferredBedId, intent.carriedPawnId);
                 return;
             }
 
@@ -361,6 +380,51 @@ namespace Strata
                 keepCarryingThingOverride: true);
         }
 
+        private static void FinishContainment(Pawn hauler, int preferredPlatformId, int carriedPawnId)
+        {
+            if (!ModsConfig.AnomalyActive)
+            {
+                return;
+            }
+            Pawn entity = ResolveCarriedOrNearbyPawn(hauler, carriedPawnId);
+            if (entity == null)
+            {
+                return;
+            }
+            Thing platform = preferredPlatformId > 0
+                ? FindThingById(hauler.Map, preferredPlatformId)
+                : null;
+            if (platform == null || !platform.Spawned || platform.Map != hauler.Map
+                || !hauler.CanReach(platform, PathEndMode.ClosestTouch, Danger.Deadly))
+            {
+                return;
+            }
+            CompEntityHolder holder = platform.TryGetComp<CompEntityHolder>();
+            if (holder == null || !holder.Available)
+            {
+                return;
+            }
+
+            // Vanilla CompHoldingPlatformTarget clears targetHolder when maps differ;
+            // only assign once we are on the platform's floor.
+            CompHoldingPlatformTarget target = entity.TryGetComp<CompHoldingPlatformTarget>();
+            if (target != null)
+            {
+                target.targetHolder = platform;
+            }
+
+            // TargetA = platform, TargetB = entity (same as vanilla CaptureEntity).
+            JobDef def = hauler.carryTracker?.CarriedThing == entity
+                ? JobDefOf.CarryToEntityHolderAlreadyHolding
+                : JobDefOf.CarryToEntityHolder;
+            Job job = JobMaker.MakeJob(def, platform, entity);
+            job.count = 1;
+            hauler.jobs.StartJob(
+                job,
+                JobCondition.InterruptForced,
+                keepCarryingThingOverride: true);
+        }
+
         private static Pawn ResolveCarriedOrNearbyPawn(Pawn carrier, int carriedPawnId)
         {
             if (carrier.carryTracker?.CarriedThing is Pawn carried)
@@ -422,6 +486,23 @@ namespace Strata
                 }
             }
 
+            return null;
+        }
+
+        private static Thing FindThingById(Map map, int thingId)
+        {
+            if (map == null || thingId <= 0)
+            {
+                return null;
+            }
+            List<Thing> all = map.listerThings.AllThings;
+            for (int i = 0; i < all.Count; i++)
+            {
+                if (all[i] != null && all[i].thingIDNumber == thingId)
+                {
+                    return all[i];
+                }
+            }
             return null;
         }
 

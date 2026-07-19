@@ -27,6 +27,9 @@ namespace Strata
 
         public static JobDef Strata_CaptureToLevel;
 
+        [MayRequire("Ludeon.RimWorld.Anomaly")]
+        public static JobDef Strata_BringEntityToLevel;
+
         static StrataDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataDefOf));

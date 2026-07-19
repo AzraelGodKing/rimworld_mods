@@ -16,7 +16,7 @@
   <Strata_Settings_Reset>Сброс</Strata_Settings_Reset>
   <Strata_Settings_ColonistRelays>Маршруты колонистов</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Маршрут работы</Strata_Settings_WorkRelay>
-  <Strata_Settings_WorkRelayDesc>Простаивающие колонисты ходят на другие уровни, где есть работа. По умолчанию выключено — включайте только если нужен поиск работы между этажами.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_WorkRelayDesc>Простаивающие колонисты и колониальные механоиды ходят на другие уровни, где есть работа. По умолчанию выключено — включайте только если нужен поиск работы между этажами.</Strata_Settings_WorkRelayDesc>
   <Strata_Settings_RobotSoftCompat>Совместимость с Misc. Robots</Strata_Settings_RobotSoftCompat>
   <Strata_Settings_RobotSoftCompatDesc>Межуровневая маршрутизация роботов Misc. Robots через порталы (возврат на базу, если зарядка на другом уровне). Выключите для проверки, не вызывают ли хуки Strata лаги.</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Маршрут работы Misc. Robots</Strata_Settings_RobotWorkRelay>

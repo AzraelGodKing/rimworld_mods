@@ -13,6 +13,7 @@ namespace Strata
         Joy,
         Childcare,
         Warden,
+        Containment,
         ForcedOrder,
     }
 

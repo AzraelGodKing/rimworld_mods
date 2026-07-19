@@ -249,12 +249,35 @@ namespace Strata
             // Probe reservations before StartJob — several haulers can land on the
             // same tick and all pick one frame (HaulToContainer reserves maxPawns=1).
             // Starting without a probe spam-logs and EndCurrentJob(Errored).
+            // Billgivers first (cellar food → surface stove), then stockpile, then frames.
+            if (TryStartJobIfReservable(pawn, TryMakeBillJob(pawn, cargo)))
+            {
+                return true;
+            }
+
             if (TryStartJobIfReservable(pawn, TryMakeStorageJob(pawn, cargo)))
             {
                 return true;
             }
 
             return TryStartJobIfReservable(pawn, TryMakeConstructionJob(pawn, cargo));
+        }
+
+        private static Job TryMakeBillJob(Pawn pawn, Thing cargo)
+        {
+            Thing billGiver = BillIngredientUtility.FindBillGiverNeeding(pawn, cargo.def);
+            if (billGiver == null)
+            {
+                return null;
+            }
+            if (cargo.Spawned && !pawn.CanReserve(cargo))
+            {
+                return null;
+            }
+            Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, billGiver);
+            job.count = cargo.stackCount;
+            job.haulMode = HaulMode.ToContainer;
+            return job;
         }
 
         private static bool TryStartJobIfReservable(Pawn pawn, Job job)
