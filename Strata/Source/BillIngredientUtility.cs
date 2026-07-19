@@ -146,26 +146,74 @@ namespace Strata
                 {
                     continue;
                 }
-                foreach (ThingDef def in MatchingDefs(bill, ing))
-                {
-                    int have = CountOf(map, def);
-                    if (have >= needed)
-                    {
-                        needed = 0;
-                        break;
-                    }
-                    needed -= have;
-                }
-                if (needed <= 0)
-                {
-                    continue;
-                }
+                // Record full recipe need — LevelDemand.Build subtracts on-map
+                // stock once. Subtracting here too double-counted and cancelled
+                // cellar→surface pulls when the stove map already had a little food.
                 foreach (ThingDef def in MatchingDefs(bill, ing))
                 {
                     entry.AddShortfall(def, needed, billGiver.Position);
                     break;
                 }
             }
+        }
+
+        // After a cross-level haul lands, prefer delivering to a billgiver that
+        // still needs this def (tavern stove) over dumping into a stockpile.
+        public static Thing FindBillGiverNeeding(Pawn pawn, ThingDef def)
+        {
+            if (pawn?.Map == null || def == null)
+            {
+                return null;
+            }
+            Map map = pawn.Map;
+            Thing best = null;
+            float bestDist = float.MaxValue;
+            foreach (Building building in map.listerBuildings.allBuildingsColonist)
+            {
+                if (building is not IBillGiver billGiver || billGiver.BillStack == null)
+                {
+                    continue;
+                }
+                if (!BillGiverNeeds(building, billGiver, def))
+                {
+                    continue;
+                }
+                if (!pawn.CanReserveAndReach(building, PathEndMode.Touch, Danger.Deadly, 1, 1))
+                {
+                    continue;
+                }
+                float dist = pawn.Position.DistanceToSquared(building.Position);
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    best = building;
+                }
+            }
+            return best;
+        }
+
+        private static bool BillGiverNeeds(Thing building, IBillGiver billGiver, ThingDef def)
+        {
+            foreach (Bill bill in billGiver.BillStack)
+            {
+                if (bill.suspended || !bill.ShouldDoNow() || !UsesStandardIngredients(bill))
+                {
+                    continue;
+                }
+                RecipeDef recipe = bill.recipe;
+                for (int i = 0; i < recipe.ingredients.Count; i++)
+                {
+                    IngredientCount ing = recipe.ingredients[i];
+                    foreach (ThingDef match in MatchingDefs(bill, ing))
+                    {
+                        if (match == def)
+                        {
+                            return CountOf(building.Map, def) < NeededCount(ing);
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         private static bool HasShortfall(Bill bill, Map map)

@@ -21,7 +21,8 @@ namespace Strata
             {
                 return;
             }
-            if (pawn == null || !pawn.IsFreeColonist)
+            // Colonists + colony mechs (Biotech). Work relay is off by default.
+            if (pawn == null || !StrataPawnUtility.CanWorkRelay(pawn))
             {
                 return;
             }
