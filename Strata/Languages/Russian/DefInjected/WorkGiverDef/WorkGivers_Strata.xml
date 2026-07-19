@@ -5,4 +5,12 @@
   <Strata_HaulAcrossLevels.verb>переместить на другой уровень</Strata_HaulAcrossLevels.verb>
   <Strata_HaulAcrossLevels.gerund>перемещение на другой уровень:</Strata_HaulAcrossLevels.gerund>
 
+  <Strata_BringBabyToCribAcrossLevels.label>относить младенцев в кроватки на других уровнях</Strata_BringBabyToCribAcrossLevels.label>
+  <Strata_BringBabyToCribAcrossLevels.verb>отнести в кроватку на другом уровне</Strata_BringBabyToCribAcrossLevels.verb>
+  <Strata_BringBabyToCribAcrossLevels.gerund>отнесение в кроватку на другом уровне:</Strata_BringBabyToCribAcrossLevels.gerund>
+
+  <Strata_BringPrisonerToBedAcrossLevels.label>относить заключённых к кроватям на других уровнях</Strata_BringPrisonerToBedAcrossLevels.label>
+  <Strata_BringPrisonerToBedAcrossLevels.verb>отнести к кровати на другом уровне</Strata_BringPrisonerToBedAcrossLevels.verb>
+  <Strata_BringPrisonerToBedAcrossLevels.gerund>отнесение к кровати на другом уровне:</Strata_BringPrisonerToBedAcrossLevels.gerund>
+
 </LanguageData>

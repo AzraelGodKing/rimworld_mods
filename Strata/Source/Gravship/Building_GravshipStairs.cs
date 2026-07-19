@@ -19,7 +19,7 @@ namespace Strata
         // Never join a colony dig pocket — only other gravship shafts.
         protected override Map GeneratePocketMapInt()
         {
-            Map existing = ExistingGravshipLevelBelow();
+            Map existing = StrataGravshipUtility.ExistingGravshipLevelBelow(Map, this);
             if (existing != null)
             {
                 IntVec3 landing = FindLandingCell(existing);
@@ -38,19 +38,6 @@ namespace Strata
             return PocketMapUtility.GeneratePocketMap(
                 new IntVec3(Map.Size.x, 1, Map.Size.z),
                 def.portal.pocketMapGenerator, null, Map);
-        }
-
-        private Map ExistingGravshipLevelBelow()
-        {
-            foreach (Thing thing in Map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
-            {
-                if (thing != this && thing is Building_GravshipStairsDown other
-                    && other.Spawned && other.PocketMapExists)
-                {
-                    return other.PocketMap;
-                }
-            }
-            return null;
         }
 
         protected override string LevelInspectState()
@@ -73,6 +60,30 @@ namespace Strata
         public override string EnterString => "Go up to the ship";
 
         public override string EnteringString => "returning to the ship";
+
+        // Prefer the landed ship host when entrance still points at a left-behind
+        // shaft (GravAnchor) or a discarded departure map cell.
+        public override Map GetOtherMap()
+        {
+            if (StrataGravshipPortalTravel.EntranceOnCurrentStack(entrance, Map))
+            {
+                return base.GetOtherMap();
+            }
+
+            return StrataGravshipPortalTravel.ResolveGravshipHostForLanding(Map)
+                ?? base.GetOtherMap();
+        }
+
+        public override IntVec3 GetDestinationLocation()
+        {
+            if (StrataGravshipPortalTravel.EntranceOnCurrentStack(entrance, Map))
+            {
+                return base.GetDestinationLocation();
+            }
+
+            Map host = StrataGravshipPortalTravel.ResolveGravshipHostForLanding(Map);
+            return StrataGravshipPortalTravel.ResolveExitCell(host, entrance);
+        }
     }
 
     // Opens an outdoor roof deck above the gravship (A+), ship-linked.
@@ -88,13 +99,13 @@ namespace Strata
 
         protected override Map GeneratePocketMapInt()
         {
-            Map existing = ExistingGravshipLevelAbove();
+            Map existing = StrataGravshipUtility.ExistingGravshipLevelAbove(Map, this);
             if (existing != null)
             {
                 IntVec3 landing = FindLandingCell(existing);
                 if (landing.IsValid)
                 {
-                    UpperDeckUtility.EnsurePlaza(existing, landing);
+                    // Exact ship footprint — no colony-style plaza beyond the hull.
                     StrataPortalUtility.SpawnLanding(def.portal.exitDef, landing, existing);
                     Messages.Message("Strata_GravshipConnectedAbove".Translate(), this, MessageTypeDefOf.PositiveEvent);
                     return existing;
@@ -108,19 +119,6 @@ namespace Strata
             return PocketMapUtility.GeneratePocketMap(
                 new IntVec3(Map.Size.x, 1, Map.Size.z),
                 def.portal.pocketMapGenerator, null, Map);
-        }
-
-        private Map ExistingGravshipLevelAbove()
-        {
-            foreach (Thing thing in Map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
-            {
-                if (thing != this && thing is Building_GravshipStairsBuildUp other
-                    && other.Spawned && other.PocketMapExists)
-                {
-                    return other.PocketMap;
-                }
-            }
-            return null;
         }
 
         protected override string LevelInspectState()
@@ -149,5 +147,27 @@ namespace Strata
         public override string EnterString => "Go down to the ship";
 
         public override string EnteringString => "returning to the ship";
+
+        public override Map GetOtherMap()
+        {
+            if (StrataGravshipPortalTravel.EntranceOnCurrentStack(entrance, Map))
+            {
+                return base.GetOtherMap();
+            }
+
+            return StrataGravshipPortalTravel.ResolveGravshipHostForLanding(Map)
+                ?? base.GetOtherMap();
+        }
+
+        public override IntVec3 GetDestinationLocation()
+        {
+            if (StrataGravshipPortalTravel.EntranceOnCurrentStack(entrance, Map))
+            {
+                return base.GetDestinationLocation();
+            }
+
+            Map host = StrataGravshipPortalTravel.ResolveGravshipHostForLanding(Map);
+            return StrataGravshipPortalTravel.ResolveExitCell(host, entrance);
+        }
     }
 }

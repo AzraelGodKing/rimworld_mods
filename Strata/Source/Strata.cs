@@ -20,6 +20,13 @@ namespace Strata
 
         public static JobDef Strata_EscortToPortal;
 
+        [MayRequire("Ludeon.RimWorld.Biotech")]
+        public static JobDef Strata_BringBabyToLevel;
+
+        public static JobDef Strata_BringPrisonerToLevel;
+
+        public static JobDef Strata_CaptureToLevel;
+
         static StrataDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataDefOf));

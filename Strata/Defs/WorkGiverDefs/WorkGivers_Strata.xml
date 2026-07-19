@@ -21,4 +21,36 @@
     </requiredCapacities>
   </WorkGiverDef>
 
+  <WorkGiverDef MayRequire="Ludeon.RimWorld.Biotech">
+    <defName>Strata_BringBabyToCribAcrossLevels</defName>
+    <label>bring babies to cribs on other levels</label>
+    <giverClass>Strata.WorkGiver_BringBabyToCribAcrossLevels</giverClass>
+    <workType>Childcare</workType>
+    <verb>carry to crib on another level</verb>
+    <gerund>carrying to crib on another level:</gerund>
+    <!-- Above BringBabyToSafety (200): assigned cross-level cribs beat
+         same-map "safe temperature" parking when the crib is upstairs. -->
+    <priorityInType>210</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>Strata_BringPrisonerToBedAcrossLevels</defName>
+    <label>take prisoners to beds on other levels</label>
+    <giverClass>Strata.WorkGiver_BringPrisonerToBedAcrossLevels</giverClass>
+    <workType>Warden</workType>
+    <!-- Distinct from vanilla "take to bed" so right-click prioritize
+         does not shadow the same-map Warden option. -->
+    <verb>take to bed on another level</verb>
+    <gerund>taking to bed on another level:</gerund>
+    <!-- Above TakePrisonerToBed (90). -->
+    <priorityInType>95</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
 </Defs>
