@@ -89,30 +89,38 @@ namespace Strata
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            return FindTargetPortal(pawn, t, forced) != null;
+            return TryFindHaulTarget(pawn, t, forced, out _, out _);
         }
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            MapPortal portal = FindTargetPortal(pawn, t, forced);
-            if (portal == null)
+            if (!TryFindHaulTarget(pawn, t, forced, out MapPortal portal, out Map destMap))
             {
                 return null;
             }
+
+            HaulToLevelTargets.Remember(pawn, destMap, pawn.Map);
             Job job = JobMaker.MakeJob(StrataDefOf.Strata_HaulToLevel, t, portal);
             job.count = t.stackCount;
             return job;
         }
 
-        private static MapPortal FindTargetPortal(Pawn pawn, Thing t, bool forced)
+        private static bool TryFindHaulTarget(
+            Pawn pawn,
+            Thing t,
+            bool forced,
+            out MapPortal portal,
+            out Map destMap)
         {
+            portal = null;
+            destMap = null;
             if (t == null || !t.Spawned || t.Map != pawn.Map)
             {
-                return null;
+                return false;
             }
             if (!HaulAIUtility.PawnCanAutomaticallyHaulFast(pawn, t, forced))
             {
-                return null;
+                return false;
             }
             // Construction demand outranks storage priority: a level short of
             // materials for its blueprints pulls them like a temporary Critical
@@ -120,7 +128,7 @@ namespace Strata
             // construction is short of this def, it never gets exported.
             if (LevelDemand.MissingOn(pawn.Map, t.def) > 0)
             {
-                return null;
+                return false;
             }
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
             {
@@ -130,7 +138,9 @@ namespace Strata
                     MapPortal step = UsableStep(pawn, link);
                     if (step != null)
                     {
-                        return step;
+                        portal = step;
+                        destMap = link.map;
+                        return true;
                     }
                 }
             }
@@ -147,6 +157,7 @@ namespace Strata
             // Take the level with the highest accepting priority; BFS order is
             // nearest-first, so ties go to the closest level.
             MapPortal best = null;
+            Map bestMap = null;
             StoragePriority bestPriority = localBest;
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
             {
@@ -157,11 +168,20 @@ namespace Strata
                     if (step != null)
                     {
                         best = step;
+                        bestMap = link.map;
                         bestPriority = p;
                     }
                 }
             }
-            return best;
+
+            if (best == null)
+            {
+                return false;
+            }
+
+            portal = best;
+            destMap = bestMap;
+            return true;
         }
 
         // The best portal for this pawn toward the link's level - nearest,
@@ -181,7 +201,7 @@ namespace Strata
         // thing and has a cell with room that is walkable from the arrival
         // landing - a freshly broken-through landing sits in a sealed rock
         // bubble, and cargo must not be shipped somewhere it can only pile up.
-        // Final placement is vanilla hauling after arrival.
+        // Final placement is deferred haul delivery after portal arrival.
         private static StoragePriority BestAcceptingPriority(Map map, Thing t, StoragePriority above, IntVec3 arrivalCell)
         {
             if (!arrivalCell.IsValid || !arrivalCell.InBounds(map))
