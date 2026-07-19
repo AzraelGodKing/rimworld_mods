@@ -15,4 +15,32 @@
     <carryThingAfterJob>true</carryThingAfterJob>
   </JobDef>
 
+  <JobDef MayRequire="Ludeon.RimWorld.Biotech">
+    <defName>Strata_BringBabyToLevel</defName>
+    <driverClass>Strata.JobDriver_BringBabyToLevel</driverClass>
+    <reportString>carrying TargetA to their crib on another level.</reportString>
+    <carryThingAfterJob>true</carryThingAfterJob>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+
+  <JobDef>
+    <defName>Strata_BringPrisonerToLevel</defName>
+    <driverClass>Strata.JobDriver_BringPrisonerToLevel</driverClass>
+    <reportString>carrying prisoner TargetA to bed on another level.</reportString>
+    <carryThingAfterJob>true</carryThingAfterJob>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+
+  <JobDef>
+    <defName>Strata_CaptureToLevel</defName>
+    <driverClass>Strata.JobDriver_BringPrisonerToLevel</driverClass>
+    <reportString>capturing TargetA to a prison bed on another level.</reportString>
+    <carryThingAfterJob>true</carryThingAfterJob>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <casualInterruptible>false</casualInterruptible>
+    <alwaysShowWeapon>true</alwaysShowWeapon>
+  </JobDef>
+
 </Defs>

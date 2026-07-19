@@ -8,12 +8,20 @@ using Verse;
 namespace Strata
 {
     // VEF PipeSystem only links cardinal neighbours (not same-cell pipes on another
-    // layer). Shaft helixien junctions sit on Building; gas pipes use Conduits.
+    // layer). Shaft fluid junctions sit on Building; ducts/pipes use Conduits.
     internal static class VefPipeNetworkUtil
     {
-        private const string HelixienChannel = "vhge_helixien";
+        private static readonly string[] ShaftChannels =
+        {
+            "vhge_helixien",
+            VteAcPipeBackend.Channel,
+        };
 
-        private const string HelixienNetDefName = "VHGE_HelixienNet";
+        private static readonly string[] ShaftNetDefNames =
+        {
+            "VHGE_HelixienNet",
+            VteAcPipeBackend.PipeNetDefName,
+        };
 
         private static Type compResourceType;
 
@@ -39,11 +47,11 @@ namespace Strata
 
         internal static void ReconnectJunction(Thing thing)
         {
-            if (!TryBind() || thing?.Spawned != true || !IsShaftHelixienJunction(thing))
+            if (!TryBind() || thing?.Spawned != true || !IsShaftVefJunction(thing))
             {
                 return;
             }
-            object comp = GetHelixienComp(thing);
+            object comp = GetMatchingResourceComp(thing);
             if (comp != null)
             {
                 TryJoinTouchingNets(comp);
@@ -56,7 +64,7 @@ namespace Strata
             {
                 return;
             }
-            if (!IsHelixienComp(comp))
+            if (!IsShaftManagedComp(comp))
             {
                 return;
             }
@@ -67,14 +75,14 @@ namespace Strata
                 return;
             }
 
-            // Junction placed/loaded: join same-cell or adjacent helixien nets.
-            if (IsShaftHelixienJunction(parent))
+            // Junction placed/loaded: join same-cell or adjacent pipe nets.
+            if (IsShaftVefJunction(parent))
             {
                 TryJoinTouchingNets(comp);
                 return;
             }
 
-            // Ordinary helixien pipe segment: pull a same-cell shaft junction into this net.
+            // Ordinary pipe segment: pull a same-cell shaft junction into this net.
             object net = GetPipeNet(comp);
             if (net == null)
             {
@@ -83,16 +91,28 @@ namespace Strata
             Map map = parent.Map;
             foreach (IntVec3 cell in parent.OccupiedRect())
             {
-                PullSameCellJunctions(map, cell, net);
+                PullSameCellJunctions(map, cell, net, GetCompPipeNetDef(comp));
             }
         }
 
-        private static bool IsShaftHelixienJunction(Thing thing)
+        private static bool IsShaftVefJunction(Thing thing)
         {
-            return thing.TryGetComp<CompShaftFluidTie>()?.Props.channel == HelixienChannel;
+            string channel = thing.TryGetComp<CompShaftFluidTie>()?.Props.channel;
+            if (channel.NullOrEmpty())
+            {
+                return false;
+            }
+            for (int i = 0; i < ShaftChannels.Length; i++)
+            {
+                if (channel == ShaftChannels[i])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        private static void PullSameCellJunctions(Map map, IntVec3 cell, object sourceNet)
+        private static void PullSameCellJunctions(Map map, IntVec3 cell, object sourceNet, object expectedNetDef)
         {
             if (map == null || sourceNet == null || !cell.InBounds(map))
             {
@@ -100,11 +120,11 @@ namespace Strata
             }
             foreach (Thing thing in cell.GetThingList(map))
             {
-                if (thing == null || !thing.Spawned || !IsShaftHelixienJunction(thing))
+                if (thing == null || !thing.Spawned || !IsShaftVefJunction(thing))
                 {
                     continue;
                 }
-                object junctionComp = GetHelixienComp(thing);
+                object junctionComp = GetMatchingResourceComp(thing, expectedNetDef);
                 if (junctionComp != null)
                 {
                     JoinCompToNet(junctionComp, sourceNet);
@@ -147,12 +167,8 @@ namespace Strata
                     {
                         continue;
                     }
-                    foreach (object other in GetHelixienComps(twc))
+                    foreach (object other in GetMatchingResourceComps(twc, pipeNetDef))
                     {
-                        if (!PipeNetDefMatches(GetCompPipeNetDef(other), pipeNetDef))
-                        {
-                            continue;
-                        }
                         object net = GetPipeNet(other);
                         if (net == null || ReferenceEquals(net, ownNet))
                         {
@@ -197,33 +213,46 @@ namespace Strata
             }
         }
 
-        private static IEnumerable GetHelixienComps(ThingWithComps thing)
+        private static IEnumerable GetMatchingResourceComps(ThingWithComps thing, object expectedNetDef = null)
         {
             foreach (ThingComp comp in thing.AllComps)
             {
-                if (comp != null && compResourceType.IsInstanceOfType(comp) && IsHelixienComp(comp))
+                if (comp == null || !compResourceType.IsInstanceOfType(comp) || !IsShaftManagedComp(comp))
                 {
-                    yield return comp;
+                    continue;
                 }
+                if (expectedNetDef != null && !PipeNetDefMatches(GetCompPipeNetDef(comp), expectedNetDef))
+                {
+                    continue;
+                }
+                yield return comp;
             }
         }
 
-        private static object GetHelixienComp(Thing thing)
+        private static object GetMatchingResourceComp(Thing thing, object expectedNetDef = null)
         {
             if (thing is not ThingWithComps twc)
             {
                 return null;
             }
-            foreach (object comp in GetHelixienComps(twc))
+            foreach (object comp in GetMatchingResourceComps(twc, expectedNetDef))
             {
                 return comp;
             }
             return null;
         }
 
-        private static bool IsHelixienComp(object comp)
+        private static bool IsShaftManagedComp(object comp)
         {
-            return PipeNetDefMatches(GetCompPipeNetDef(comp), HelixienNetDefName);
+            object pipeNetDef = GetCompPipeNetDef(comp);
+            for (int i = 0; i < ShaftNetDefNames.Length; i++)
+            {
+                if (PipeNetDefMatches(pipeNetDef, ShaftNetDefNames[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static object GetCompPipeNetDef(object comp)
