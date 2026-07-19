@@ -145,6 +145,35 @@ namespace Strata
             return false;
         }
 
+        // Idle work-relay seekers: free colonists/slaves and Biotech colony mechs.
+        // Misc. Robots use Patch_RobotWorkRelay instead.
+        public static bool CanWorkRelay(Pawn pawn)
+        {
+            if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed)
+            {
+                return false;
+            }
+
+            if (pawn.IsFreeColonist)
+            {
+                return true;
+            }
+
+            if (pawn.IsSlave && pawn.workSettings?.EverWork == true)
+            {
+                return true;
+            }
+
+            if (ModsConfig.BiotechActive && pawn.IsColonyMech
+                && pawn.Faction == Faction.OfPlayer
+                && pawn.workSettings?.EverWork == true)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool MiscRobotHasWorkOn(Pawn pawn, Map map)
         {
             if (map == null || pawn?.def?.defName == null)

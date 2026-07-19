@@ -10,7 +10,7 @@
   <Strata_Settings_Reset>Reset</Strata_Settings_Reset>
   <Strata_Settings_ColonistRelays>Colonist relays</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Work relay</Strata_Settings_WorkRelay>
-  <Strata_Settings_WorkRelayDesc>Idle colonists commute to other levels that have work. Off by default — enable only if you want cross-floor work routing.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_WorkRelayDesc>Idle colonists and colony mechanoids commute to other levels that have work. Off by default — enable only if you want cross-floor work routing.</Strata_Settings_WorkRelayDesc>
   <Strata_Settings_RobotSoftCompat>Misc. Robots soft-compat</Strata_Settings_RobotSoftCompat>
   <Strata_Settings_RobotSoftCompatDesc>Cross-level portal routing for Misc. Robots (return-to-base when recharge is on another level). Turn off to A/B test whether Strata robot hooks cause lag.</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Misc. Robots work relay</Strata_Settings_RobotWorkRelay>
