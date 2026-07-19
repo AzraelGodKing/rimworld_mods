@@ -246,12 +246,32 @@ namespace Strata
                 return false;
             }
 
-            Job job = TryMakeStorageJob(pawn, cargo) ?? TryMakeConstructionJob(pawn, cargo);
+            // Probe reservations before StartJob — several haulers can land on the
+            // same tick and all pick one frame (HaulToContainer reserves maxPawns=1).
+            // Starting without a probe spam-logs and EndCurrentJob(Errored).
+            if (TryStartJobIfReservable(pawn, TryMakeStorageJob(pawn, cargo)))
+            {
+                return true;
+            }
+
+            return TryStartJobIfReservable(pawn, TryMakeConstructionJob(pawn, cargo));
+        }
+
+        private static bool TryStartJobIfReservable(Pawn pawn, Job job)
+        {
             if (job == null)
             {
                 return false;
             }
 
+            if (!job.TryMakePreToilReservations(pawn, errorOnFailed: false))
+            {
+                pawn.ClearReservationsForJob(job);
+                return false;
+            }
+
+            // Probe held the slots; StartJob re-reserves via a fresh driver.
+            pawn.ClearReservationsForJob(job);
             pawn.jobs.StartJob(job, JobCondition.InterruptForced);
             return true;
         }
@@ -285,8 +305,7 @@ namespace Strata
                 return null;
             }
 
-            if (!pawn.CanReserveAndReach(site, PathEndMode.Touch, Danger.Deadly)
-                || (cargo.Spawned && !pawn.CanReserve(cargo)))
+            if (cargo.Spawned && !pawn.CanReserve(cargo))
             {
                 return null;
             }
@@ -377,7 +396,8 @@ namespace Strata
                     continue;
                 }
 
-                if (!pawn.CanReach(thing, PathEndMode.Touch, Danger.Deadly))
+                // Match JobDriver_HaulToContainer (non-enroute): maxPawns=1, stackCount=1.
+                if (!pawn.CanReserveAndReach(thing, PathEndMode.Touch, Danger.Deadly, 1, 1))
                 {
                     continue;
                 }

@@ -8,7 +8,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "vte-shaft-ac-junction-v1";
+        public const string BuildStamp = "gravship-footprint-snap-v2";
 
         public static void LogStartup()
         {

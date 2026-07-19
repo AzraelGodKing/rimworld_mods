@@ -76,6 +76,8 @@ namespace Strata
             snapshots.Clear();
         }
 
+        public static IReadOnlyList<PortalSnapshot> PeekSnapshots() => snapshots;
+
         // Pack a host shaft into the Gravship.Things dictionary even when
         // OnValidSubstructure would reject it (GravAnchor leftovers).
         public static bool TryForcePackHostShaft(Gravship ship, Thing thing, IntVec3 offset)
@@ -225,7 +227,13 @@ namespace Strata
 
         // After pockets rebind to the landed host: reconnect exits, or respawn
         // missing shafts from takeoff snapshots.
-        public static void ReconnectOrRestore(Map hostMap, List<Map> pockets)
+        // restoreMissingShafts: false while the packed ship is still spawning
+        // (PostSwapMap) so we do not place temporary shafts that get replaced
+        // and drop the pocketMap link.
+        public static void ReconnectOrRestore(
+            Map hostMap,
+            List<Map> pockets,
+            bool restoreMissingShafts = true)
         {
             if (hostMap == null)
             {
@@ -238,9 +246,15 @@ namespace Strata
                 return;
             }
 
-            EnsureHostShafts(hostMap, engine);
+            if (restoreMissingShafts)
+            {
+                EnsureHostShafts(hostMap, engine);
+            }
             WirePocketsToHostShafts(hostMap, pockets ?? CollectPocketsOnHost(hostMap));
-            snapshots.Clear();
+            if (restoreMissingShafts)
+            {
+                snapshots.Clear();
+            }
         }
 
         // Re-wire after pocket contents have been shifted under the host shafts.
@@ -367,10 +381,36 @@ namespace Strata
                 }
             }
 
+            Building_GravEngine engine = StrataGravshipUtility.FindGravEngineOnMap(host);
+            var wiredPockets = new HashSet<Map>();
+
+            // Prefer takeoff pocketMapId so the furnished travelling floor wins
+            // over a freshly generated empty underdeck.
+            if (engine != null)
+            {
+                for (int i = 0; i < snapshots.Count; i++)
+                {
+                    PortalSnapshot snap = snapshots[i];
+                    Map pocket = StrataGravshipOrphanLevels.FindMapById(snap.pocketMapId);
+                    if (pocket == null || !Find.Maps.Contains(pocket))
+                    {
+                        continue;
+                    }
+                    MapPortal shaft = FindHostShaftMatching(host, engine, snap);
+                    MapPortal landing = FindLandingOn(pocket);
+                    if (shaft == null || landing == null)
+                    {
+                        continue;
+                    }
+                    ConnectPortalPair(shaft, landing);
+                    wiredPockets.Add(pocket);
+                }
+            }
+
             for (int i = 0; i < pockets.Count; i++)
             {
                 Map pocket = pockets[i];
-                if (pocket == null || !Find.Maps.Contains(pocket))
+                if (pocket == null || !Find.Maps.Contains(pocket) || wiredPockets.Contains(pocket))
                 {
                     continue;
                 }

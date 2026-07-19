@@ -135,7 +135,9 @@ namespace Strata
                     return portal.PocketMap;
                 }
             }
-            return null;
+            // Land race: travelling underdeck still exists but no shaft holds
+            // PocketMapExists — adopt it instead of spawning a second empty floor.
+            return StrataGravshipOrphanLevels.FindAdoptableUnderdeck(host);
         }
 
         public static Map ExistingGravshipLevelAbove(Map host, Thing self)
@@ -155,7 +157,7 @@ namespace Strata
                     return portal.PocketMap;
                 }
             }
-            return null;
+            return StrataGravshipOrphanLevels.FindAdoptableUpperDeck(host);
         }
 
         // Pocket level opened by a gravship stair, or currently travelling with a ship.
@@ -278,42 +280,84 @@ namespace Strata
             return sub != null && sub.Count > 0;
         }
 
-        // Vanilla IsOnboardGravship* NREs when substructure is still empty after landing.
-        // Return false to skip vanilla; true to run it normally.
+        // Always replace vanilla IsOnboardGravship*: it NREs on
+        // cell.GetRoom(engine.Map).PsychologicallyOutdoors when Room is null
+        // (underdeck cells, mid-land maps) and on ValidSubstructure.Contains when
+        // that set is null but AllConnectedSubstructure is not.
         public static bool AllowVanillaOnboardCheck(IntVec3 cell, Building_GravEngine engine, ref bool __result)
+        {
+            return AllowVanillaOnboardCheck(
+                cell, engine, pawn: null, desperate: false, respectAllowedAreas: true, ref __result);
+        }
+
+        public static bool AllowVanillaOnboardCheck(
+            IntVec3 cell,
+            Building_GravEngine engine,
+            Pawn pawn,
+            bool desperate,
+            bool respectAllowedAreas,
+            ref bool __result)
         {
             if (!OdysseyActive)
             {
                 return true;
             }
-            if (engine == null)
+            __result = SafeIsOnboardGravship(cell, engine, pawn, desperate, respectAllowedAreas);
+            return false;
+        }
+
+        public static bool SafeIsOnboardGravship(
+            IntVec3 cell,
+            Building_GravEngine engine,
+            Pawn pawn = null,
+            bool desperate = false,
+            bool respectAllowedAreas = true)
+        {
+            if (engine == null || engine.Destroyed || !engine.Spawned || engine.Map == null)
             {
-                __result = false;
                 return false;
             }
-            if (!engine.Spawned || engine.Destroyed || engine.Map == null)
+            if (respectAllowedAreas && pawn != null)
             {
-                __result = false;
-                return false;
+                Map pawnMap = pawn.MapHeld;
+                if (pawnMap != null && cell.InBounds(pawnMap) && !cell.InAllowedArea(pawn))
+                {
+                    return false;
+                }
             }
-            if (EngineHasSubstructure(engine))
+
+            // Linked underdeck / tower deck cells (launch ritual reach from below).
+            if (TryStrataOnboardCell(cell, engine))
             {
                 return true;
             }
-            __result = TryStrataOnboardCell(cell, engine);
-            return false;
+
+            Map host = engine.Map;
+            if (!cell.InBounds(host))
+            {
+                return false;
+            }
+            if (!desperate)
+            {
+                Room room = cell.GetRoom(host);
+                if (room == null || room.PsychologicallyOutdoors)
+                {
+                    return false;
+                }
+            }
+
+            HashSet<IntVec3> sub = engine.ValidSubstructure;
+            if (sub != null && sub.Count > 0)
+            {
+                return sub.Contains(cell);
+            }
+            sub = engine.AllConnectedSubstructure;
+            return sub != null && sub.Contains(cell);
         }
 
         public static void ApplyOnboardPostfix(IntVec3 cell, Building_GravEngine engine, ref bool __result)
         {
-            if (__result || !OdysseyActive || engine == null)
-            {
-                return;
-            }
-            if (TryStrataOnboardCell(cell, engine))
-            {
-                __result = true;
-            }
+            // Prefix fully replaces vanilla — Postfix is a no-op keep for Harmony wiring.
         }
 
         private static bool TryStrataOnboardCell(IntVec3 cell, Building_GravEngine engine)
@@ -354,6 +398,15 @@ namespace Strata
             if (StrataGravshipSubstructureSync.HasSubstructure(map, cell))
             {
                 return true;
+            }
+            var tracker = map.GetComponent<MapComponent_StrataProjectedSubstructure>();
+            if (tracker != null && tracker.IsProjected(cell))
+            {
+                return true;
+            }
+            if (StrataMapUtility.IsUpperLevel(map))
+            {
+                return cell.GetTerrain(map)?.defName == UpperDeckUtility.RoofDeckDefName;
             }
             return GravshipDeckUtility.IsWalkableDeckCell(map, cell);
         }
