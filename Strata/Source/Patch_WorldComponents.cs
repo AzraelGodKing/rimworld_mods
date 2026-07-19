@@ -21,6 +21,10 @@ namespace Strata
             {
                 __instance.components.Add(new WorldComponent_StrataLevelRoles(__instance));
             }
+            if (__instance.GetComponent<WorldComponent_StrataGravshipStacks>() == null)
+            {
+                __instance.components.Add(new WorldComponent_StrataGravshipStacks(__instance));
+            }
         }
     }
 
@@ -31,6 +35,9 @@ namespace Strata
         {
             StrataRobotDiagnostics.Tick();
             DraftedPortalPathing.Tick();
+            // Before PortalRelayChain: haul-intent arrivals skip here and finish
+            // in FinishHaul; construction-only arrivals deliver immediately.
+            StrataPortalUtility.TickHaulDeliveries();
             PortalRelayChain.Tick();
             if (Find.TickManager.TicksGame % 250 == 0)
             {

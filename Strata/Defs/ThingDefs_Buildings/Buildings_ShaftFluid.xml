@@ -120,6 +120,25 @@
     </comps>
   </ThingDef>
 
+  <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="VanillaExpanded.Temperature">
+    <defName>Strata_ShaftFluid_VTE</defName>
+    <label>shaft AC duct junction</label>
+    <description>Meters Vanilla Temperature Expanded air ducts between levels. Build beside a shaft and connect air ducts to this junction on each floor so outdoor compressors and the AC control unit on the surface can run AC units underground. Efficiency and the single-controller rule are shared across the paired floors.</description>
+    <designationCategory>Temperature</designationCategory>
+    <uiIconPath>Things/Building/Linked/ACDuct_MenuIcon</uiIconPath>
+    <uiIconScale>0.7</uiIconScale>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+      <li>VTE_HVAC</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>vte_efficiency</channel>
+      </li>
+    </comps>
+  </ThingDef>
+
   <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="OskarPotocki.VanillaFactionsExpanded.Core,VanillaExpanded.VChemfuelE">
     <defName>Strata_ShaftFluid_VefChemfuel</defName>
     <label>shaft chemfuel junction</label>

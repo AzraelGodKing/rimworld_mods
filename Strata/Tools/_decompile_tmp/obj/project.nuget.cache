@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "n+xVcaFzD3A=",
+  "success": true,
+  "projectFilePath": "F:\\Repositories\\rimworld_mods\\Strata\\Tools\\_decompile_tmp\\d.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Myleek\\AppData\\Local\\Temp\\cursor-sandbox-cache\\bf5f3a0fe10b9efbe8fd2ba2162643dd\\nuget\\icsharpcode.decompiler\\8.2.0.7535\\icsharpcode.decompiler.8.2.0.7535.nupkg.sha512",
+    "C:\\Users\\Myleek\\AppData\\Local\\Temp\\cursor-sandbox-cache\\bf5f3a0fe10b9efbe8fd2ba2162643dd\\nuget\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
+    "C:\\Users\\Myleek\\AppData\\Local\\Temp\\cursor-sandbox-cache\\bf5f3a0fe10b9efbe8fd2ba2162643dd\\nuget\\system.reflection.metadata\\6.0.0\\system.reflection.metadata.6.0.0.nupkg.sha512",
+    "C:\\Users\\Myleek\\AppData\\Local\\Temp\\cursor-sandbox-cache\\bf5f3a0fe10b9efbe8fd2ba2162643dd\\nuget\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

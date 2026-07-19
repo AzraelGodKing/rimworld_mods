@@ -15,7 +15,10 @@ namespace Strata
         {
             public int destMapId;
             public RelayPurpose purpose;
-            public int preferredBedId; // Rest only; -1 = any
+            public int preferredBedId; // Rest / warden / childcare; -1 = any
+            public int returnMapId; // Haul: go back for another load; -1 = none
+            public int carriedPawnId; // Warden / childcare captive; -1 = none
+            public IntVec3 preferArrivalNear; // pick stair landing that can reach this
         }
 
         private static readonly Dictionary<int, Intent> intents = new Dictionary<int, Intent>();
@@ -31,11 +34,25 @@ namespace Strata
             Pawn pawn,
             Map destMap,
             RelayPurpose purpose,
-            Building_Bed preferredBed = null)
+            Building_Bed preferredBed = null,
+            Map returnMap = null,
+            IntVec3 preferArrivalNear = default)
         {
             if (pawn == null || destMap == null)
             {
                 return;
+            }
+
+            int carriedId = -1;
+            if (pawn.carryTracker?.CarriedThing is Pawn carried)
+            {
+                carriedId = carried.thingIDNumber;
+            }
+
+            if ((!preferArrivalNear.IsValid || !preferArrivalNear.InBounds(destMap))
+                && preferredBed != null && preferredBed.Spawned && preferredBed.Map == destMap)
+            {
+                preferArrivalNear = preferredBed.Position;
             }
 
             intents[pawn.thingIDNumber] = new Intent
@@ -43,6 +60,9 @@ namespace Strata
                 destMapId = destMap.uniqueID,
                 purpose = purpose,
                 preferredBedId = preferredBed?.thingIDNumber ?? -1,
+                returnMapId = returnMap?.uniqueID ?? -1,
+                carriedPawnId = carriedId,
+                preferArrivalNear = preferArrivalNear,
             };
         }
 
@@ -56,6 +76,20 @@ namespace Strata
             return pawn != null
                 && intents.TryGetValue(pawn.thingIDNumber, out Intent intent)
                 && intent.purpose == purpose;
+        }
+
+        public static bool HasIntent(int pawnId, RelayPurpose purpose)
+        {
+            return intents.TryGetValue(pawnId, out Intent intent)
+                && intent.purpose == purpose;
+        }
+
+        public static void ClearIntent(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                intents.Remove(pawn.thingIDNumber);
+            }
         }
 
         public static void NotifyPortalArrival(Pawn pawn)
@@ -116,6 +150,23 @@ namespace Strata
 
             if (pawn.Map != destMap)
             {
+                // Childcare / warden hops need the captive — re-grab if vanilla
+                // EnterPortal dropped them on a mid landing.
+                if (intent.purpose == RelayPurpose.Childcare
+                    || intent.purpose == RelayPurpose.Warden)
+                {
+                    if (pawn.carryTracker?.CarriedThing is not Pawn)
+                    {
+                        Pawn captive = ResolveCarriedOrNearbyPawn(pawn, intent.carriedPawnId);
+                        if (captive == null || !captive.Spawned || captive.Map != pawn.Map
+                            || !pawn.carryTracker.TryStartCarry(captive))
+                        {
+                            intents.Remove(pawnId);
+                            return;
+                        }
+                    }
+                }
+
                 Building_Bed bed = intent.preferredBedId > 0
                     ? FindBedById(destMap, intent.preferredBedId)
                     : null;
@@ -124,10 +175,14 @@ namespace Strata
                     destMap,
                     touchCooldown: false,
                     intent.purpose,
-                    bed);
+                    bed,
+                    intent.preferArrivalNear);
                 if (hop != null)
                 {
-                    pawn.jobs.StartJob(hop, JobCondition.InterruptForced);
+                    pawn.jobs.StartJob(
+                        hop,
+                        JobCondition.InterruptForced,
+                        keepCarryingThingOverride: true);
                     return;
                 }
 
@@ -135,14 +190,69 @@ namespace Strata
                 return;
             }
 
+            int returnMapId = intent.returnMapId;
             intents.Remove(pawnId);
 
             if (intent.purpose == RelayPurpose.Rest)
             {
                 FinishRest(pawn, intent.preferredBedId);
+                return;
             }
-            // Food / work / medical / joy / haul: idle on the destination map so
-            // the next think pass runs vanilla jobgivers where the need is.
+
+            if (intent.purpose == RelayPurpose.Haul)
+            {
+                FinishHaul(pawn, returnMapId);
+                return;
+            }
+
+            if (intent.purpose == RelayPurpose.Childcare)
+            {
+                FinishChildcare(pawn, intent.preferredBedId, intent.carriedPawnId);
+                return;
+            }
+
+            if (intent.purpose == RelayPurpose.Warden)
+            {
+                FinishWarden(pawn, intent.preferredBedId, intent.carriedPawnId);
+                return;
+            }
+
+            if (intent.purpose == RelayPurpose.ForcedOrder)
+            {
+                CrossLevelOrderedJobs.Finish(pawn);
+                return;
+            }
+
+            // Food / work / medical / joy: idle so vanilla jobgivers take over.
+        }
+
+        private static void FinishHaul(Pawn pawn, int returnMapId)
+        {
+            bool delivering = StrataPortalUtility.TryStartHaulDelivery(pawn);
+            Map returnMap = returnMapId > 0 ? FindMap(returnMapId) : null;
+            if (returnMap == null || returnMap == pawn.Map)
+            {
+                return;
+            }
+
+            Job home = PawnRelay.TryRelayToMap(
+                pawn,
+                returnMap,
+                touchCooldown: false,
+                RelayPurpose.Haul);
+            if (home == null)
+            {
+                return;
+            }
+
+            if (delivering)
+            {
+                pawn.jobs.jobQueue.EnqueueLast(home, JobTag.Misc);
+            }
+            else
+            {
+                pawn.jobs.StartJob(home, JobCondition.InterruptForced);
+            }
         }
 
         private static void FinishRest(Pawn pawn, int preferredBedId)
@@ -156,6 +266,127 @@ namespace Strata
             // Never claim a different bed on arrival — ownership was decided
             // before the commute (owned bed or homeless claim).
             pawn.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, bed), JobCondition.InterruptForced);
+        }
+
+        private static void FinishChildcare(Pawn hauler, int preferredBedId, int carriedPawnId)
+        {
+            if (!ModsConfig.BiotechActive)
+            {
+                return;
+            }
+
+            Pawn baby = ResolveCarriedOrNearbyPawn(hauler, carriedPawnId);
+            if (baby == null || !ChildcareUtility.CanSuckle(baby, out _))
+            {
+                return;
+            }
+
+            Building_Bed crib = preferredBedId > 0
+                ? FindBedById(hauler.Map, preferredBedId)
+                : null;
+            if (crib == null)
+            {
+                crib = baby.ownership?.OwnedBed;
+            }
+
+            if (crib == null || !crib.Spawned || crib.Map != hauler.Map
+                || !hauler.CanReach(crib, PathEndMode.OnCell, Danger.Deadly))
+            {
+                // Crib missing/unreachable — let vanilla childcare reassess.
+                Job fallback = JobMaker.MakeJob(JobDefOf.BringBabyToSafetyUnforced, baby);
+                fallback.count = 1;
+                hauler.jobs.StartJob(
+                    fallback,
+                    JobCondition.InterruptForced,
+                    keepCarryingThingOverride: true);
+                return;
+            }
+
+            // Same-map tuck: Rescue/TakeToBed keeps the carried infant and
+            // places them in the assigned crib (BringBabyToSafety would also
+            // work, but Rescue targets the crib directly).
+            Job job = JobMaker.MakeJob(JobDefOf.Rescue, baby, crib);
+            job.count = 1;
+            hauler.jobs.StartJob(
+                job,
+                JobCondition.InterruptForced,
+                keepCarryingThingOverride: true);
+        }
+
+        private static void FinishWarden(Pawn warden, int preferredBedId, int carriedPawnId)
+        {
+            Pawn prisoner = ResolveCarriedOrNearbyPawn(warden, carriedPawnId);
+            if (prisoner == null)
+            {
+                return;
+            }
+
+            Building_Bed bed = preferredBedId > 0
+                ? FindBedById(warden.Map, preferredBedId)
+                : null;
+            if (bed == null)
+            {
+                bed = prisoner.ownership?.OwnedBed;
+            }
+
+            if (bed == null || !bed.Spawned || bed.Map != warden.Map
+                || !bed.ForPrisoners
+                || !warden.CanReach(bed, PathEndMode.OnCell, Danger.Deadly))
+            {
+                return;
+            }
+
+            JobDef def;
+            if (!prisoner.IsPrisonerOfColony)
+            {
+                // Capture / arrest finish — makeTargetPrisoner tucks them in.
+                def = prisoner.CanBeCaptured() || prisoner.Downed
+                    ? JobDefOf.Capture
+                    : JobDefOf.Arrest;
+            }
+            else if (prisoner.Downed && HealthAIUtility.ShouldSeekMedicalRest(prisoner))
+            {
+                def = JobDefOf.TakeWoundedPrisonerToBed;
+            }
+            else
+            {
+                def = JobDefOf.EscortPrisonerToBed;
+            }
+
+            Job job = JobMaker.MakeJob(def, prisoner, bed);
+            job.count = 1;
+            warden.jobs.StartJob(
+                job,
+                JobCondition.InterruptForced,
+                keepCarryingThingOverride: true);
+        }
+
+        private static Pawn ResolveCarriedOrNearbyPawn(Pawn carrier, int carriedPawnId)
+        {
+            if (carrier.carryTracker?.CarriedThing is Pawn carried)
+            {
+                return carried;
+            }
+
+            if (carriedPawnId <= 0 || carrier.Map == null)
+            {
+                return null;
+            }
+
+            // Vanilla EnterPortal may have dropped them on the landing.
+            foreach (Thing thing in GenRadial.RadialDistinctThingsAround(
+                         carrier.Position,
+                         carrier.Map,
+                         2.9f,
+                         true))
+            {
+                if (thing is Pawn p && p.thingIDNumber == carriedPawnId)
+                {
+                    return p;
+                }
+            }
+
+            return FindPawn(carriedPawnId);
         }
 
         private static Building_Bed ResolveRestArrivalBed(Pawn pawn, int preferredBedId)

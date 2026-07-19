@@ -372,6 +372,11 @@ namespace Strata
                     && StrataThingDefOf.Strata_GravshipStairsUp != null
                     && StrataThingDefOf.Strata_GravshipStairsBuildUp != null
                     && StrataThingDefOf.Strata_GravshipBuildUpLanding != null);
+                Check("gravship elevators loaded (Odyssey)",
+                    StrataThingDefOf.Strata_GravshipElevatorDown != null
+                    && StrataThingDefOf.Strata_GravshipElevatorUp != null
+                    && StrataThingDefOf.Strata_GravshipElevatorBuildUp != null
+                    && StrataThingDefOf.Strata_GravshipElevatorBuildUpLanding != null);
             }
             Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
             Check("sunken ruin map generator loaded",
@@ -418,6 +423,166 @@ namespace Strata
                     + $"pawns {map.mapPawns.AllPawnsSpawned.Count}");
             }
             Log.Message(sb.ToString());
+        }
+
+        [DebugAction(Cat, "Teleport selected to surface", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void TeleportSelectedToSurface()
+        {
+            List<Pawn> pawns = SelectedPawns();
+            if (pawns.Count == 0)
+            {
+                Messages.Message("[Strata] Select one or more pawns first.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            Map from = Find.CurrentMap ?? pawns[0].MapHeld;
+            Map surface = ColonyBedUtility.FindSurfacePlayerHome(from);
+            if (surface == null)
+            {
+                List<Map> maps = Find.Maps;
+                for (int i = 0; i < maps.Count; i++)
+                {
+                    if (StrataMapUtility.IsSurfacePlayerHome(maps[i]))
+                    {
+                        surface = maps[i];
+                        break;
+                    }
+                }
+            }
+            if (surface == null)
+            {
+                Messages.Message("[Strata] No surface player-home map found.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            IntVec3 dest = FindSurfaceTeleportCell(surface, from);
+            int moved = 0;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (TeleportPawnTo(pawns[i], surface, dest))
+                {
+                    moved++;
+                }
+            }
+
+            CameraJumper.TryJump(dest, surface);
+            Messages.Message($"[Strata] Teleported {moved} pawn(s) to surface near {dest}.",
+                MessageTypeDefOf.TaskCompletion, historical: false);
+        }
+
+        [DebugAction(Cat, "Teleport selected to current map center", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void TeleportSelectedToCurrentMap()
+        {
+            Map map = Find.CurrentMap;
+            List<Pawn> pawns = SelectedPawns();
+            if (map == null || pawns.Count == 0)
+            {
+                Messages.Message("[Strata] Open a map and select one or more pawns.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            IntVec3 dest = CellFinder.RandomClosewalkCellNear(map.Center, map, 12);
+            if (!dest.IsValid)
+            {
+                dest = map.Center;
+            }
+            int moved = 0;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (TeleportPawnTo(pawns[i], map, dest))
+                {
+                    moved++;
+                }
+            }
+            Messages.Message($"[Strata] Teleported {moved} pawn(s) to {map}.",
+                MessageTypeDefOf.TaskCompletion, historical: false);
+        }
+
+        private static List<Pawn> SelectedPawns()
+        {
+            var result = new List<Pawn>();
+            foreach (object obj in Find.Selector.SelectedObjectsListForReading)
+            {
+                if (obj is Pawn pawn && !pawn.Destroyed)
+                {
+                    result.Add(pawn);
+                }
+            }
+            return result;
+        }
+
+        private static IntVec3 FindSurfaceTeleportCell(Map surface, Map from)
+        {
+            // Prefer a surface stair that links back toward the pawn's floor.
+            if (from != null && from != surface)
+            {
+                MapPortal best = LevelGraph.BestFirstStep(surface, from, surface.Center);
+                if (best != null && best.Spawned)
+                {
+                    IntVec3 nearStair = CellFinder.RandomClosewalkCellNear(best.Position, surface, 6);
+                    if (nearStair.IsValid)
+                    {
+                        return nearStair;
+                    }
+                    return best.Position;
+                }
+            }
+
+            foreach (Thing thing in surface.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is MapPortal portal && portal.Spawned
+                    && LevelGraph.OtherMapSafe(portal) != null)
+                {
+                    IntVec3 near = CellFinder.RandomClosewalkCellNear(portal.Position, surface, 6);
+                    if (near.IsValid)
+                    {
+                        return near;
+                    }
+                }
+            }
+
+            IntVec3 fallback = CellFinder.RandomClosewalkCellNear(surface.Center, surface, 12);
+            return fallback.IsValid ? fallback : surface.Center;
+        }
+
+        private static bool TeleportPawnTo(Pawn pawn, Map map, IntVec3 cell)
+        {
+            if (pawn == null || map == null || !cell.IsValid)
+            {
+                return false;
+            }
+
+            IntVec3 stand = cell;
+            if (!stand.Standable(map) || stand.GetFirstPawn(map) != null)
+            {
+                stand = CellFinder.RandomClosewalkCellNear(cell, map, 8);
+            }
+            if (!stand.IsValid)
+            {
+                stand = cell;
+            }
+
+            if (pawn.Spawned)
+            {
+                if (pawn.Map == map)
+                {
+                    pawn.Position = stand;
+                    pawn.Notify_Teleported(endCurrentJob: true, resetTweenedPos: true);
+                    return true;
+                }
+                pawn.DeSpawn(DestroyMode.Vanish);
+            }
+            else if (pawn.holdingOwner != null)
+            {
+                pawn.holdingOwner.Remove(pawn);
+            }
+
+            GenSpawn.Spawn(pawn, stand, map, WipeMode.Vanish);
+            pawn.Notify_Teleported(endCurrentJob: true, resetTweenedPos: true);
+            return true;
         }
     }
 }
