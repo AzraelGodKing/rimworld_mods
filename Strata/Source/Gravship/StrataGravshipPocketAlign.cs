@@ -5,8 +5,9 @@ using Verse;
 
 namespace Strata
 {
-    // Keeps gravship-linked pocket maps 1:1 with the ship when it moves:
-    // shift pocket contents by (landEngine - takeoffEngine), then repaint decks.
+    // Keeps gravship-linked pocket maps 1:1 with the ship when it moves.
+    // Primary: snap each pocket's landing under its host shaft (self-heals drift).
+    // Fallback: shift by grav-engine takeoff→land delta.
     public static class StrataGravshipPocketAlign
     {
         public static void AlignPocketsToLandedShip(
@@ -14,7 +15,7 @@ namespace Strata
             Map newHost,
             IntVec3 takeoffEnginePos)
         {
-            if (pockets == null || newHost == null || !takeoffEnginePos.IsValid)
+            if (pockets == null || newHost == null)
             {
                 return;
             }
@@ -25,12 +26,10 @@ namespace Strata
                 return;
             }
 
-            IntVec3 delta = engine.Position - takeoffEnginePos;
-            if (delta == IntVec3.Zero)
-            {
-                RepaintAll(pockets, newHost, engine);
-                return;
-            }
+            var hostShafts = CollectHostShafts(newHost);
+            IntVec3 engineDelta = takeoffEnginePos.IsValid
+                ? engine.Position - takeoffEnginePos
+                : IntVec3.Zero;
 
             int shifted = 0;
             for (int i = 0; i < pockets.Count; i++)
@@ -40,14 +39,116 @@ namespace Strata
                 {
                     continue;
                 }
+
+                IntVec3 delta = ComputeSnapDelta(pocket, hostShafts, engine, engineDelta);
+                if (delta == IntVec3.Zero)
+                {
+                    continue;
+                }
+
                 shifted += TranslateMapContents(pocket, delta);
             }
 
             RepaintAll(pockets, newHost, engine);
+            StrataGravshipPortalTravel.RewireHostShafts(newHost, pockets);
 
-            Log.Message("[Strata] Gravship land align: delta " + delta
+            Log.Message("[Strata] Gravship land align: engineDelta " + engineDelta
                 + ", moved " + shifted + " thing(s) on "
                 + pockets.Count + " linked level(s).");
+        }
+
+        private static IntVec3 ComputeSnapDelta(
+            Map pocket,
+            List<MapPortal> hostShafts,
+            Building_GravEngine engine,
+            IntVec3 engineDelta)
+        {
+            MapPortal landing = FindPocketLanding(pocket);
+            MapPortal shaft = FindMatchingHostShaft(hostShafts, pocket, landing);
+            if (landing != null && shaft != null && landing.Spawned && shaft.Spawned)
+            {
+                // Exact 1:1: move pocket so the landing sits under the ship shaft.
+                IntVec3 snap = shaft.Position - landing.Position;
+                if (snap != IntVec3.Zero)
+                {
+                    Log.Message("[Strata] Gravship land align: shaft-snap "
+                        + landing.LabelCap + " " + landing.Position
+                        + " -> " + shaft.Position + " (delta " + snap + ")");
+                }
+                return snap;
+            }
+
+            // No shaft pair yet — fall back to whole-ship engine movement.
+            return engineDelta;
+        }
+
+        private static List<MapPortal> CollectHostShafts(Map host)
+        {
+            var list = new List<MapPortal>();
+            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is MapPortal portal && portal.Spawned
+                    && StrataGravshipUtility.IsGravshipHostShaft(portal))
+                {
+                    list.Add(portal);
+                }
+            }
+            return list;
+        }
+
+        private static MapPortal FindPocketLanding(Map pocket)
+        {
+            foreach (Thing thing in pocket.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (StrataGravshipUtility.IsGravshipLanding(thing) && thing is MapPortal portal)
+                {
+                    return portal;
+                }
+            }
+            foreach (Thing thing in pocket.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is PocketMapExit exit && exit.Spawned)
+                {
+                    return exit;
+                }
+            }
+            return null;
+        }
+
+        private static MapPortal FindMatchingHostShaft(
+            List<MapPortal> hostShafts,
+            Map pocket,
+            MapPortal landing)
+        {
+            if (hostShafts == null || hostShafts.Count == 0)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < hostShafts.Count; i++)
+            {
+                MapPortal shaft = hostShafts[i];
+                if (shaft.PocketMapExists && shaft.PocketMap == pocket)
+                {
+                    return shaft;
+                }
+                if (landing is PocketMapExit exit && exit.entrance == shaft)
+                {
+                    return shaft;
+                }
+            }
+
+            bool wantTower = landing is Building_BuildUpLanding
+                || StrataMapUtility.IsUpperLevel(pocket);
+            for (int i = 0; i < hostShafts.Count; i++)
+            {
+                if (StrataGravshipUtility.IsGravshipTowerShaft(hostShafts[i]) == wantTower)
+                {
+                    return hostShafts[i];
+                }
+            }
+
+            return hostShafts[0];
         }
 
         private static void RepaintAll(List<Map> pockets, Map host, Building_GravEngine engine)
@@ -97,17 +198,14 @@ namespace Strata
                 {
                     continue;
                 }
-                // Skip natural rock / filth that paint will replace; keep player stuff + pawns.
                 if (thing.def.category == ThingCategory.Ethereal && thing is not Blueprint && thing is not Frame)
                 {
                     continue;
                 }
 
-                IntVec3 dest = thing.Position + delta;
-                moves.Add((thing, dest, thing.Rotation));
+                moves.Add((thing, thing.Position + delta, thing.Rotation));
             }
 
-            // Despawn largest buildings first so multi-cell clears cleanly.
             moves.Sort((a, b) =>
                 (b.thing.def.size.x * b.thing.def.size.z).CompareTo(a.thing.def.size.x * a.thing.def.size.z));
 
@@ -121,7 +219,6 @@ namespace Strata
             }
 
             int placed = 0;
-            // Respawn small things first (floors/substructure), then buildings, then pawns.
             moves.Sort((a, b) => SpawnOrder(a.thing).CompareTo(SpawnOrder(b.thing)));
 
             for (int i = 0; i < moves.Count; i++)
@@ -132,15 +229,13 @@ namespace Strata
                     continue;
                 }
 
-                if (!TrySpawnNear(thing, dest, map, rot))
+                if (!TrySpawnAt(thing, dest, map, rot)
+                    && !TrySpawnNear(thing, dest, map, rot)
+                    && !TrySpawnNear(thing, map.Center, map, rot))
                 {
-                    // Last resort: drop at map center so contents are not lost mid-flight.
-                    if (!TrySpawnNear(thing, map.Center, map, rot))
-                    {
-                        Log.Warning("[Strata] Gravship align: could not place "
-                            + thing.LabelCap + " after shift " + delta);
-                        continue;
-                    }
+                    Log.Warning("[Strata] Gravship align: could not place "
+                        + thing.LabelCap + " after shift " + delta);
+                    continue;
                 }
                 placed++;
             }
@@ -165,23 +260,26 @@ namespace Strata
             return 1;
         }
 
+        private static bool TrySpawnAt(Thing thing, IntVec3 dest, Map map, Rot4 rot)
+        {
+            if (!dest.InBounds(map) || !CanAccept(thing, dest, map, rot))
+            {
+                return false;
+            }
+            return GenSpawn.Spawn(thing, dest, map, rot) != null;
+        }
+
         private static bool TrySpawnNear(Thing thing, IntVec3 dest, Map map, Rot4 rot)
         {
-            if (dest.InBounds(map) && CanAccept(thing, dest, map, rot))
-            {
-                return GenSpawn.Spawn(thing, dest, map, rot) != null;
-            }
-
             if (CellFinder.TryFindRandomCellNear(
                     dest.ClampInsideMap(map),
                     map,
-                    8,
+                    12,
                     c => CanAccept(thing, c, map, rot),
                     out IntVec3 near))
             {
                 return GenSpawn.Spawn(thing, near, map, rot) != null;
             }
-
             return false;
         }
 
@@ -195,13 +293,7 @@ namespace Strata
             {
                 return cell.Standable(map);
             }
-            CellRect rect = GenAdj.OccupiedRect(cell, rot, thing.def.Size);
-            if (!rect.InBounds(map))
-            {
-                return false;
-            }
-            // Allow wipe of projected substructure / filth; GenSpawn VanishOrMoveAside handles rest.
-            return true;
+            return GenAdj.OccupiedRect(cell, rot, thing.def.Size).InBounds(map);
         }
 
         private static void TranslateZones(Map map, IntVec3 delta)
@@ -246,7 +338,6 @@ namespace Strata
                 Designation des = all[i];
                 if (des == null || des.target.HasThing)
                 {
-                    // Thing designations move with the thing.
                     continue;
                 }
                 IntVec3 cell = des.target.Cell;

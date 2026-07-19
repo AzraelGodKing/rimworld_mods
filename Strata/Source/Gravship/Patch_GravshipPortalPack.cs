@@ -243,6 +243,16 @@ namespace Strata
             snapshots.Clear();
         }
 
+        // Re-wire after pocket contents have been shifted under the host shafts.
+        public static void RewireHostShafts(Map hostMap, List<Map> pockets)
+        {
+            if (hostMap == null)
+            {
+                return;
+            }
+            WirePocketsToHostShafts(hostMap, pockets ?? CollectPocketsOnHost(hostMap));
+        }
+
         private static List<Map> CollectPocketsOnHost(Map host)
         {
             var list = new List<Map>();

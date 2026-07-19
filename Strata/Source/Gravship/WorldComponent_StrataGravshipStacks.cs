@@ -142,8 +142,9 @@ namespace Strata
                 return;
             }
             StrataGravshipStackUtility.RebindAll(maps, newHost);
-            StrataGravshipPocketAlign.AlignPocketsToLandedShip(maps, newHost, takeoffPos);
+            // Restore host shafts first so shaft-snap align can lock landings under them.
             StrataGravshipPortalTravel.ReconnectOrRestore(newHost, maps);
+            StrataGravshipPocketAlign.AlignPocketsToLandedShip(maps, newHost, takeoffPos);
             Log.Message($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}.");
             Messages.Message(
                 "Strata_GravshipLevelsDocked".Translate(maps.Count),
@@ -175,8 +176,8 @@ namespace Strata
                 return;
             }
             StrataGravshipStackUtility.RebindAll(maps, newHost);
-            StrataGravshipPocketAlign.AlignPocketsToLandedShip(maps, newHost, takeoffPos);
             StrataGravshipPortalTravel.ReconnectOrRestore(newHost, maps);
+            StrataGravshipPocketAlign.AlignPocketsToLandedShip(maps, newHost, takeoffPos);
             Log.Message($"[Strata] Gravship landing: rebound {maps.Count} orphan travelling level(s) to {newHost}.");
             Messages.Message(
                 "Strata_GravshipLevelsDocked".Translate(maps.Count),
