@@ -5,8 +5,9 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 ## Unreleased
 
 - **Repo** — `*.dll` gitignored. CI rebuilds assemblies **on main only** and refreshes `docs/downloads/*.zip` for the site download buttons (no loose Assemblies committed).
+- **Strata / Homesteader / Stormproof** — mod-local performance (FPS+-inspired, no global FPS+ clones): idle raid skips, gas overlay/motes on viewed map only, dirty-flag root cellar cooling, staggered allergy scans, ion-storm LINQ removal.
 - **Homesteader** — Polyarmory trait (polycule bed-sharing); Tastes tab + rare allergies; docs site redo; Kats Effect Super Chat / hostile Kats; 1.6 favorite-food Harmony fix. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
-- **Strata** — gravship underdeck land keeps walkable deck (no impassable hull islands); reuses travelling underdeck; takeoff rescues prisoners/babies; cross-level float menus + childbirth doctor + capture/arrest + prisoner/infant beds; portal haul reservation fix; VTE shaft AC; stockpile haul; sleep/work relays; sealed-stair detours; bedrooms (#31); Geological Landforms compat; Russian; gas defaults/perf. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — mech work/charge across floors; sleep/baby bed ownership harden; cross-level bill ingredient pull + Anomaly platforms; gravship underdeck land; takeoff rescues; float menus + childbirth doctor + capture/arrest + prisoner/infant beds; VTE shaft AC; stockpile haul; sleep/work relays; bedrooms (#31); Russian; gas defaults/perf. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Stormproof** — research tab XML entity fix (`Storm & grid`); Languages/English scaffolding; load shedder, grid monitor, ion storm, and related buildings. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
 
 ## Released

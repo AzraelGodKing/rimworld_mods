@@ -43,4 +43,13 @@
     <alwaysShowWeapon>true</alwaysShowWeapon>
   </JobDef>
 
+  <JobDef MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>Strata_BringEntityToLevel</defName>
+    <driverClass>Strata.JobDriver_BringEntityToLevel</driverClass>
+    <reportString>carrying TargetA to a holding platform on another level.</reportString>
+    <carryThingAfterJob>true</carryThingAfterJob>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+
 </Defs>
