@@ -11,7 +11,7 @@ namespace Homesteader
     public class GameComponent_HomesteaderFavorites : GameComponent
     {
         public const int FavoriteCount = 5;
-        private const int EnvironmentalAllergyCheckInterval = 2500;
+        private const int EnvironmentalAllergyCheckInterval = 250;
 
         // Packed "DefA|DefB|..." per pawn. Legacy favoritesByPawnId (single def) migrates on load.
         // Allergies pack AllergyCatalog ids (or empty = rolled None). Key present means rolled.
@@ -19,6 +19,7 @@ namespace Homesteader
         private Dictionary<int, string> favoriteListsPacked = new Dictionary<int, string>();
         private Dictionary<int, string> allergiesPacked = new Dictionary<int, string>();
         private Dictionary<int, string> discoveredAllergiesPacked = new Dictionary<int, string>();
+        private int envAllergyCursor;
 
         public GameComponent_HomesteaderFavorites(Game game)
         {
@@ -51,14 +52,34 @@ namespace Homesteader
                 return;
             }
 
+            // One colonist per pulse — spreads Mold/PetDander map scans (FPS+-style).
+            Pawn chosen = null;
+            int seen = 0;
+            int target = envAllergyCursor;
             List<Map> maps = Find.Maps;
             for (int m = 0; m < maps.Count; m++)
             {
                 List<Pawn> free = maps[m].mapPawns.FreeColonistsSpawned;
                 for (int i = 0; i < free.Count; i++)
                 {
-                    CheckEnvironmentalAllergies(free[i]);
+                    if (seen == target)
+                    {
+                        chosen = free[i];
+                    }
+                    seen++;
                 }
+            }
+
+            if (seen == 0)
+            {
+                envAllergyCursor = 0;
+                return;
+            }
+
+            envAllergyCursor = (target + 1) % seen;
+            if (chosen != null)
+            {
+                CheckEnvironmentalAllergies(chosen);
             }
         }
 

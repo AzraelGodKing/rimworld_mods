@@ -186,6 +186,13 @@ namespace Strata
                 return owned;
             }
 
+            // Babies never auto-claim — childcare / assign UI own cribs. Spare
+            // beds on every floor used to reassign infants every sleep tick.
+            if (pawn.RaceProps.Humanlike && pawn.DevelopmentalStage.Baby())
+            {
+                return null;
+            }
+
             // Homeless only — never claim over an existing assignment.
             Building_Bed free = FindFreeBedToClaim(pawn);
             if (free == null)
@@ -265,8 +272,8 @@ namespace Strata
             return nearest;
         }
 
-        // Fully free colonist beds only. Do not auto-claim the empty half of a
-        // double bed someone else already owns (that caused upstairs sharing).
+        // Prefer a fully free bed; else the empty half of a love-partner's double
+        // (so couples can share across floors without random upstairs stealing).
         private static Building_Bed FindFreeBedOnMap(Pawn pawn, Map map)
         {
             if (map == null)
@@ -274,12 +281,14 @@ namespace Strata
                 return null;
             }
 
-            Building_Bed best = null;
-            float bestDist = float.MaxValue;
+            Building_Bed bestEmpty = null;
+            Building_Bed bestPartner = null;
+            float bestEmptyDist = float.MaxValue;
+            float bestPartnerDist = float.MaxValue;
 
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
             {
-                if (thing is not Building_Bed bed || !IsClaimableEmptyBed(pawn, bed))
+                if (thing is not Building_Bed bed || !IsBaseClaimableBed(pawn, bed))
                 {
                     continue;
                 }
@@ -287,17 +296,27 @@ namespace Strata
                 float dist = map == pawn.Map
                     ? pawn.Position.DistanceToSquared(bed.Position)
                     : 0f;
-                if (best == null || dist < bestDist)
+
+                if (bed.OwnersForReading.Count == 0 && bed.AnyUnownedSleepingSlot)
                 {
-                    bestDist = dist;
-                    best = bed;
+                    if (bestEmpty == null || dist < bestEmptyDist)
+                    {
+                        bestEmptyDist = dist;
+                        bestEmpty = bed;
+                    }
+                }
+                else if (IsLovePartnerHalfSlot(pawn, bed)
+                    && (bestPartner == null || dist < bestPartnerDist))
+                {
+                    bestPartnerDist = dist;
+                    bestPartner = bed;
                 }
             }
 
-            return best;
+            return bestEmpty ?? bestPartner;
         }
 
-        private static bool IsClaimableEmptyBed(Pawn pawn, Building_Bed bed)
+        private static bool IsBaseClaimableBed(Pawn pawn, Building_Bed bed)
         {
             if (bed == null
                 || !bed.Spawned
@@ -313,13 +332,32 @@ namespace Strata
                 return false;
             }
 
-            // Must be completely unassigned — not a lover's half-filled double.
-            if (bed.OwnersForReading.Count > 0 || !bed.AnyUnownedSleepingSlot)
+            // Adults never auto-claim cribs; babies never reach claim (ResolveBed).
+            if (bed.ForHumanBabies)
             {
                 return false;
             }
 
             return true;
+        }
+
+        private static bool IsLovePartnerHalfSlot(Pawn pawn, Building_Bed bed)
+        {
+            if (!bed.AnyUnownedSleepingSlot || bed.OwnersForReading.Count == 0)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < bed.OwnersForReading.Count; i++)
+            {
+                Pawn owner = bed.OwnersForReading[i];
+                if (owner != null && LovePartnerRelationUtility.LovePartnerRelationExists(pawn, owner))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static Job JobOnSameMap(Pawn pawn, Building_Bed bed)
