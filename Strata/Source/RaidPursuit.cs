@@ -55,17 +55,47 @@ namespace Strata
             {
                 ProcessPendingArrivals();
             }
-            // Stagger per map so tall bases don't pulse every level on one tick.
+
+            // Idle maps: skip enroll/pursue when no hostile raid lords.
+            // Rare stray enroll (lordless hostiles) runs at 1/4 rate.
             int tick = Find.TickManager.TicksGame + map.uniqueID * 37;
-            if (tick % EnrollInterval == 0)
+            bool enrollPulse = tick % EnrollInterval == 0;
+            bool pursuePulse = tick % PursuitInterval == 0;
+            if (enrollPulse || pursuePulse)
             {
-                EnrollStrays();
-            }
-            if (tick % PursuitInterval == 0)
-            {
-                TryPursue();
+                if (HasHostileRaidLords())
+                {
+                    if (enrollPulse)
+                    {
+                        EnrollStrays();
+                    }
+                    if (pursuePulse)
+                    {
+                        TryPursue();
+                    }
+                }
+                else if (enrollPulse && tick % (EnrollInterval * 4) == 0)
+                {
+                    EnrollStrays();
+                }
             }
             RaidCoordinator.Tick(map);
+        }
+
+        private bool HasHostileRaidLords()
+        {
+            List<Lord> lords = map.lordManager.lords;
+            for (int i = 0; i < lords.Count; i++)
+            {
+                Lord lord = lords[i];
+                if (lord?.faction != null
+                    && lord.faction.HostileTo(Faction.OfPlayer)
+                    && lord.ownedPawns.Count > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void ProcessPendingArrivals()

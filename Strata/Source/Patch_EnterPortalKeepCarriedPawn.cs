@@ -35,7 +35,8 @@ namespace Strata
             }
 
             if (PortalRelayChain.HasIntent(pawn, RelayPurpose.Warden)
-                || PortalRelayChain.HasIntent(pawn, RelayPurpose.Childcare))
+                || PortalRelayChain.HasIntent(pawn, RelayPurpose.Childcare)
+                || PortalRelayChain.HasIntent(pawn, RelayPurpose.Containment))
             {
                 __result = false;
                 return false;

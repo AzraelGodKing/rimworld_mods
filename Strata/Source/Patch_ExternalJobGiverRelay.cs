@@ -41,7 +41,7 @@ namespace Strata
             {
                 return;
             }
-            if (!pawn.IsFreeColonist)
+            if (!StrataPawnUtility.CanWorkRelay(pawn))
             {
                 return;
             }

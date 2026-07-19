@@ -6,6 +6,7 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 
 ### Fixed
 - Research tab XML parse failure: escaped `&` in `Storm & grid research` (`&amp;`) so `Research_Stormproof.xml` loads again (was breaking all Stormproof research defs and prerequisites).
+- **Ion storm tick cost** — dampener shield checks and EMP candidate picks use plain loops instead of LINQ allocations.
 
 ### Added
 - `Languages/English/Keyed/Stormproof.xml` — all C# player strings (messages, gizmos, inspect panels) with `.Translate()` wiring.
