@@ -24,13 +24,13 @@ namespace Homesteader
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            parent.Map?.GetComponent<RootCellarCoolingMapComponent>()?.Rebuild();
+            parent.Map?.GetComponent<RootCellarCoolingMapComponent>()?.MarkDirty();
         }
 
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             base.PostDeSpawn(map, mode);
-            map?.GetComponent<RootCellarCoolingMapComponent>()?.Rebuild();
+            map?.GetComponent<RootCellarCoolingMapComponent>()?.MarkDirty();
         }
 
         public override string CompInspectStringExtra()
@@ -47,18 +47,25 @@ namespace Homesteader
     {
         private readonly Dictionary<IntVec3, float> cooledCellTemps = new Dictionary<IntVec3, float>();
 
-        private int lastRebuildTick = -99999;
+        private bool dirty = true;
 
         public RootCellarCoolingMapComponent(Map map) : base(map)
         {
         }
 
+        public bool HasAnyCooling => cooledCellTemps.Count > 0;
+
         public bool TryGetCoolingCeiling(IntVec3 cell, out float maxTemperature) =>
             cooledCellTemps.TryGetValue(cell, out maxTemperature);
 
+        public void MarkDirty()
+        {
+            dirty = true;
+        }
+
         public override void MapComponentTick()
         {
-            if (Find.TickManager.TicksGame - lastRebuildTick < 250)
+            if (!dirty)
             {
                 return;
             }
@@ -68,7 +75,7 @@ namespace Homesteader
 
         public void Rebuild()
         {
-            lastRebuildTick = Find.TickManager.TicksGame;
+            dirty = false;
             cooledCellTemps.Clear();
 
             List<Thing> buildings = map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
@@ -134,7 +141,12 @@ namespace Homesteader
             }
 
             RootCellarCoolingMapComponent comp = thing.Map.GetComponent<RootCellarCoolingMapComponent>();
-            return comp != null && comp.TryGetCoolingCeiling(thing.Position, out maxTemperature);
+            if (comp == null || !comp.HasAnyCooling)
+            {
+                return false;
+            }
+
+            return comp.TryGetCoolingCeiling(thing.Position, out maxTemperature);
         }
     }
 
@@ -143,12 +155,25 @@ namespace Homesteader
     {
         public static void Postfix(Thing __instance, ref float __result)
         {
-            if (__instance.TryGetComp<CompRottable>() == null || __instance.Map == null || !__instance.Spawned)
+            // Cheap map-level early-out before CompRottable / cooler lookup.
+            Map map = __instance.Map;
+            if (map == null || !__instance.Spawned)
             {
                 return;
             }
 
-            if (!RootCellarUtility.TryGetCoolingCeiling(__instance, out float ceiling))
+            RootCellarCoolingMapComponent cooling = map.GetComponent<RootCellarCoolingMapComponent>();
+            if (cooling == null || !cooling.HasAnyCooling)
+            {
+                return;
+            }
+
+            if (__instance.TryGetComp<CompRottable>() == null)
+            {
+                return;
+            }
+
+            if (!cooling.TryGetCoolingCeiling(__instance.Position, out float ceiling))
             {
                 return;
             }

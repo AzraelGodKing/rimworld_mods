@@ -45,6 +45,11 @@ namespace Strata
             {
                 return;
             }
+            // No gravship shafts / elevators on this host → nothing to sync.
+            if (!forced && !AnyGravshipPortal())
+            {
+                return;
+            }
             Building_GravEngine engine = StrataGravshipUtility.FindGravEngine(map);
             if (engine == null)
             {
@@ -109,6 +114,18 @@ namespace Strata
             StrataGravshipSubstructureSync.SyncAllLinkedFromHost(map);
             // Snap contents onto footprint + rebuild projected substructure / clear orphans.
             StrataGravshipFootprintSnapshot.RebuildLinkedFloors(map, null);
+        }
+
+        private bool AnyGravshipPortal()
+        {
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is IStrataGravshipPortal)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static int SubstructureFingerprint(System.Collections.Generic.HashSet<IntVec3> sub, int count)
