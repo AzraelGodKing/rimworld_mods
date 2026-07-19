@@ -5,4 +5,10 @@
 
   <Strata_EscortToPortal.reportString>сопровождает TargetB на другой уровень.</Strata_EscortToPortal.reportString>
 
+  <Strata_BringBabyToLevel.reportString>несёт TargetA в кроватку на другом уровне.</Strata_BringBabyToLevel.reportString>
+
+  <Strata_BringPrisonerToLevel.reportString>несёт заключённого TargetA к кровати на другом уровне.</Strata_BringPrisonerToLevel.reportString>
+
+  <Strata_CaptureToLevel.reportString>захватывает TargetA и несёт к тюремной кровати на другом уровне.</Strata_CaptureToLevel.reportString>
+
 </LanguageData>

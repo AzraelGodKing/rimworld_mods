@@ -77,11 +77,12 @@ namespace Strata
             {
                 return false;
             }
-            if (source.roofGrid.Roofed(below))
+            // Gravship A+: exact ship silhouette only — never colony roofs beyond the hull.
+            if (gravshipLinkedUpper)
             {
-                return true;
+                return StrataGravshipUtility.CellOnGravship(source, below);
             }
-            return gravshipLinkedUpper && StrataGravshipUtility.CellOnGravship(source, below);
+            return source.roofGrid.Roofed(below);
         }
 
         // Full paint used by map gen (and rare rebuilds).
@@ -95,6 +96,12 @@ namespace Strata
             TerrainDef deck = RoofDeck;
             TerrainDef sky = OpenSky;
             bool gravshipLinked = IsGravshipLinkedUpper(upper);
+            if (gravshipLinked && source != null
+                && !StrataGravshipUtility.EngineHasSubstructure(
+                    StrataGravshipUtility.FindGravEngineOnMap(source)))
+            {
+                return;
+            }
 
             SuspendRoofSync = true;
             try
@@ -116,7 +123,12 @@ namespace Strata
                     }
                 }
 
-                EnsurePlaza(upper, landingSpot, plazaRadius);
+                // Colony towers get a plaza around the shaft. Gravship decks stay
+                // exactly the ValidSubstructure footprint — no extra pad.
+                if (!gravshipLinked)
+                {
+                    EnsurePlaza(upper, landingSpot, plazaRadius);
+                }
             }
             finally
             {
@@ -137,18 +149,21 @@ namespace Strata
         private static void PaintProportional(Map upper, Map source, TerrainDef deck, TerrainDef sky, bool gravshipLinked)
         {
             int sourceCells = source.cellIndices.NumGridCells;
-            var sourceRoofs = new bool[sourceCells];
+            var sourceRoofs = gravshipLinked ? null : new bool[sourceCells];
             var sourceSubstructure = gravshipLinked ? new bool[sourceCells] : null;
             foreach (IntVec3 below in source.AllCells)
             {
                 int index = source.cellIndices.CellToIndex(below);
-                if (source.roofGrid.Roofed(below))
+                if (gravshipLinked)
+                {
+                    if (StrataGravshipUtility.CellOnGravship(source, below))
+                    {
+                        sourceSubstructure[index] = true;
+                    }
+                }
+                else if (source.roofGrid.Roofed(below))
                 {
                     sourceRoofs[index] = true;
-                }
-                else if (sourceSubstructure != null && StrataGravshipUtility.CellOnGravship(source, below))
-                {
-                    sourceSubstructure[index] = true;
                 }
             }
 
@@ -157,8 +172,9 @@ namespace Strata
                 upper.roofGrid.SetRoof(cell, null);
                 IntVec3 below = StrataMapUtility.ProportionalCell(cell, upper, source);
                 bool supported = below.InBounds(source)
-                    && (sourceRoofs[source.cellIndices.CellToIndex(below)]
-                        || (sourceSubstructure != null && sourceSubstructure[source.cellIndices.CellToIndex(below)]));
+                    && (gravshipLinked
+                        ? sourceSubstructure[source.cellIndices.CellToIndex(below)]
+                        : sourceRoofs[source.cellIndices.CellToIndex(below)]);
                 upper.terrainGrid.SetTerrain(cell, supported ? deck : sky);
             }
         }
@@ -181,7 +197,7 @@ namespace Strata
         }
 
         // Live sync when a roof is added/removed on the floor below.
-        public static void SyncCell(Map upper, IntVec3 upperCell)
+        public static void SyncCell(Map upper, IntVec3 upperCell, bool allowShrink = true)
         {
             if (upper == null || !upperCell.InBounds(upper) || !StrataMapUtility.IsUpperLevel(upper))
             {
@@ -189,13 +205,27 @@ namespace Strata
             }
             TerrainDef current = upperCell.GetTerrain(upper);
             bool supported = SourceSupportsUpperDeck(upper, upperCell);
+            bool gravship = IsGravshipLinkedUpper(upper);
 
             if (supported)
             {
                 if (current == OpenSky || current == null)
                 {
+                    // Land misalignment: don't seed empty silhouette islands far
+                    // from the travelling room — only grow from existing deck.
+                    if (gravship && !allowShrink && !AdjacentToRoofDeck(upper, upperCell)
+                        && !CellHasPreservableStuff(upperCell, upper))
+                    {
+                        return;
+                    }
                     upper.terrainGrid.SetTerrain(upperCell, RoofDeck);
                 }
+                return;
+            }
+
+            // Gravship land/sync: never convert travelling deck to open sky.
+            if (!allowShrink || gravship)
+            {
                 return;
             }
 
@@ -218,9 +248,27 @@ namespace Strata
             {
                 return;
             }
+            bool gravship = IsGravshipLinkedUpper(upper);
+            if (gravship)
+            {
+                Map source = SourceMapFor(upper);
+                if (source != null
+                    && !StrataGravshipUtility.EngineHasSubstructure(
+                        StrataGravshipUtility.FindGravEngine(source)
+                        ?? StrataGravshipUtility.FindGravEngineOnMap(source)))
+                {
+                    return;
+                }
+            }
+            bool allowShrink = !gravship;
             foreach (IntVec3 cell in upper.AllCells)
             {
-                SyncCell(upper, cell);
+                SyncCell(upper, cell, allowShrink);
+            }
+            if (gravship)
+            {
+                RestoreRoofDeckUnderBuildings(upper);
+                CleanupEmptySilhouetteIslands(upper);
             }
         }
 
@@ -230,6 +278,7 @@ namespace Strata
             {
                 return;
             }
+            var seen = new HashSet<Map>();
             foreach (Thing thing in source.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
                 if (thing is not IStrataGravshipPortal || thing is not MapPortal portal
@@ -238,11 +287,204 @@ namespace Strata
                     continue;
                 }
                 Map upper = portal.PocketMap;
-                if (StrataMapUtility.IsUpperLevel(upper))
+                if (StrataMapUtility.IsUpperLevel(upper) && seen.Add(upper))
                 {
                     SyncAllFromSource(upper);
                 }
             }
+            Map orphan = StrataGravshipOrphanLevels.FindAdoptableUpperDeck(source);
+            if (orphan != null && seen.Add(orphan))
+            {
+                SyncAllFromSource(orphan);
+            }
+        }
+
+        // Land paint can leave beds/shelves on OpenSky — restore walkable roof deck.
+        public static void RestoreRoofDeckUnderBuildings(Map upper)
+        {
+            if (upper == null || !StrataMapUtility.IsUpperLevel(upper))
+            {
+                return;
+            }
+            TerrainDef deck = RoofDeck;
+            int restored = 0;
+            List<Thing> things = upper.listerThings?.AllThings;
+            if (things == null)
+            {
+                return;
+            }
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed || !thing.Spawned)
+                {
+                    continue;
+                }
+                if (thing.def.category != ThingCategory.Building
+                    && thing.def.category != ThingCategory.Item
+                    && thing is not Pawn)
+                {
+                    continue;
+                }
+                if (thing.def.defName == StrataGravshipSubstructureSync.SubstructureDefName)
+                {
+                    continue;
+                }
+                foreach (IntVec3 cell in thing.OccupiedRect())
+                {
+                    if (!cell.InBounds(upper))
+                    {
+                        continue;
+                    }
+                    TerrainDef terrain = cell.GetTerrain(upper);
+                    if (terrain?.defName == RoofDeckDefName)
+                    {
+                        continue;
+                    }
+                    // Heal open-sky / impassable gaps under travelling contents.
+                    if (terrain != null
+                        && terrain.defName != OpenSkyDefName
+                        && terrain.passability != Traversability.Impassable)
+                    {
+                        continue;
+                    }
+                    upper.terrainGrid.SetTerrain(cell, deck);
+                    restored++;
+                }
+            }
+            if (restored > 0)
+            {
+                Log.Message("[Strata] Gravship upper deck: restored roof deck under "
+                    + restored + " cell(s).");
+            }
+        }
+
+        // Remove empty RoofDeck islands that aren't connected to landings/buildings
+        // (leftover host-silhouette pads after a misaligned land).
+        public static void CleanupEmptySilhouetteIslands(Map upper)
+        {
+            if (upper == null || !StrataMapUtility.IsUpperLevel(upper) || !IsGravshipLinkedUpper(upper))
+            {
+                return;
+            }
+            var keep = new HashSet<IntVec3>();
+            var queue = new Queue<IntVec3>();
+
+            void Seed(IntVec3 cell)
+            {
+                if (!cell.InBounds(upper) || !keep.Add(cell))
+                {
+                    return;
+                }
+                if (cell.GetTerrain(upper)?.defName == RoofDeckDefName)
+                {
+                    queue.Enqueue(cell);
+                }
+            }
+
+            List<Thing> things = upper.listerThings?.AllThings;
+            if (things != null)
+            {
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Thing thing = things[i];
+                    if (thing == null || thing.Destroyed || !thing.Spawned)
+                    {
+                        continue;
+                    }
+                    bool seed = thing is Pawn
+                        || StrataGravshipUtility.IsGravshipLanding(thing)
+                        || (thing.def.category == ThingCategory.Building
+                            && thing.def.defName != StrataGravshipSubstructureSync.SubstructureDefName)
+                        || thing.def.category == ThingCategory.Item;
+                    if (!seed)
+                    {
+                        continue;
+                    }
+                    foreach (IntVec3 cell in thing.OccupiedRect())
+                    {
+                        Seed(cell);
+                    }
+                }
+            }
+
+            while (queue.Count > 0)
+            {
+                IntVec3 cell = queue.Dequeue();
+                for (int i = 0; i < 4; i++)
+                {
+                    IntVec3 next = cell + GenAdj.CardinalDirections[i];
+                    if (!next.InBounds(upper) || keep.Contains(next))
+                    {
+                        continue;
+                    }
+                    if (next.GetTerrain(upper)?.defName != RoofDeckDefName)
+                    {
+                        continue;
+                    }
+                    keep.Add(next);
+                    queue.Enqueue(next);
+                }
+            }
+
+            int removed = 0;
+            foreach (IntVec3 cell in upper.AllCells)
+            {
+                if (cell.GetTerrain(upper)?.defName != RoofDeckDefName || keep.Contains(cell))
+                {
+                    continue;
+                }
+                Thing sub = StrataGravshipSubstructureSync.SubstructureAt(upper, cell);
+                if (sub != null && !sub.Destroyed)
+                {
+                    sub.Destroy(DestroyMode.Vanish);
+                }
+                upper.GetComponent<MapComponent_StrataProjectedSubstructure>()?.UnmarkProjected(cell);
+                upper.terrainGrid.SetTerrain(cell, OpenSky);
+                removed++;
+            }
+            if (removed > 0)
+            {
+                Log.Message("[Strata] Gravship upper deck: cleared " + removed
+                    + " empty silhouette cell(s) not connected to the travelling room.");
+            }
+        }
+
+        private static bool AdjacentToRoofDeck(Map map, IntVec3 cell)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                IntVec3 next = cell + GenAdj.CardinalDirections[i];
+                if (next.InBounds(map) && next.GetTerrain(map)?.defName == RoofDeckDefName)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool CellHasPreservableStuff(IntVec3 cell, Map map)
+        {
+            List<Thing> things = cell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed)
+                {
+                    continue;
+                }
+                if (thing.def.defName == StrataGravshipSubstructureSync.SubstructureDefName)
+                {
+                    continue;
+                }
+                if (thing.def.category == ThingCategory.Building
+                    || thing.def.category == ThingCategory.Item
+                    || thing is Pawn)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static bool CellHasBlockingThing(IntVec3 cell, Map map)

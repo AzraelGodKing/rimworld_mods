@@ -331,6 +331,10 @@ namespace Strata
                     || thing.def.defName == "Strata_GravshipStairsDown"
                     || thing.def.defName == "Strata_GravshipStairsUp"
                     || thing.def.defName == "Strata_GravshipStairsBuildUp"
+                    || thing.def.defName == "Strata_GravshipElevatorDown"
+                    || thing.def.defName == "Strata_GravshipElevatorUp"
+                    || thing.def.defName == "Strata_GravshipElevatorBuildUp"
+                    || thing.def.defName == "Strata_GravshipElevatorBuildUpLanding"
                     || thing.def.defName == "Strata_GravshipBuildUpLanding")
                 {
                     cell = thing.Position;

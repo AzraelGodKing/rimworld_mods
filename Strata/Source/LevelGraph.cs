@@ -136,7 +136,15 @@ namespace Strata
         // haulers ride instead of taking the long stairs.
         // When 'pawn' is set, only portals that pawn can reach are returned
         // (sealed-off A1 stairs behind a closed room are skipped).
-        public static MapPortal BestFirstStep(Map from, Map target, IntVec3 pawnPos, Pawn pawn = null)
+        // When preferArrivalNear is set on 'target', prefer stairs whose landing
+        // can actually walk to that cell — otherwise a nearer entrance can dump
+        // the pawn into a disconnected dig (empty "new" shaft vs the real room).
+        public static MapPortal BestFirstStep(
+            Map from,
+            Map target,
+            IntVec3 pawnPos,
+            Pawn pawn = null,
+            IntVec3 preferArrivalNear = default)
         {
             if (from == null || target == null)
             {
@@ -147,6 +155,32 @@ namespace Strata
             {
                 return null;
             }
+
+            bool prefer = preferArrivalNear.IsValid && preferArrivalNear.InBounds(target);
+            if (prefer)
+            {
+                MapPortal reachableLanding = PickBestFirstStep(
+                    candidates, from, target, pawnPos, pawn, preferArrivalNear, requireArrivalReach: true);
+                if (reachableLanding != null)
+                {
+                    return reachableLanding;
+                }
+            }
+
+            return PickBestFirstStep(
+                candidates, from, target, pawnPos, pawn, preferArrivalNear, requireArrivalReach: false);
+        }
+
+        private static MapPortal PickBestFirstStep(
+            List<MapPortal> candidates,
+            Map from,
+            Map target,
+            IntVec3 pawnPos,
+            Pawn pawn,
+            IntVec3 preferArrivalNear,
+            bool requireArrivalReach)
+        {
+            bool prefer = preferArrivalNear.IsValid && preferArrivalNear.InBounds(target);
             MapPortal best = null;
             float bestScore = float.MaxValue;
             for (int i = 0; i < candidates.Count; i++)
@@ -160,11 +194,41 @@ namespace Strata
                 {
                     continue;
                 }
-                float score = pawnPos.IsValid ? pawnPos.DistanceTo(portal.Position) : 1f;
+
+                float walk = pawnPos.IsValid ? pawnPos.DistanceTo(portal.Position) : 1f;
                 if (IsPoweredElevator(portal))
                 {
-                    score *= 0.6f;
+                    walk *= 0.6f;
                 }
+
+                float score = walk;
+                Map other = OtherMapSafe(portal);
+                if (prefer && other == target)
+                {
+                    IntVec3 arrival = portal.GetDestinationLocation();
+                    if (!arrival.IsValid || !arrival.InBounds(target))
+                    {
+                        continue;
+                    }
+
+                    bool landsWithPath = target.reachability.CanReach(
+                        arrival,
+                        preferArrivalNear,
+                        PathEndMode.OnCell,
+                        TraverseParms.For(TraverseMode.PassDoors, Danger.Deadly, canBashDoors: false));
+                    if (requireArrivalReach && !landsWithPath)
+                    {
+                        continue;
+                    }
+
+                    // Landing next to the real job site beats a short walk to the wrong shaft.
+                    score = preferArrivalNear.DistanceTo(arrival) + walk * 0.25f;
+                    if (!landsWithPath)
+                    {
+                        score += 10000f;
+                    }
+                }
+
                 if (score < bestScore)
                 {
                     bestScore = score;

@@ -36,28 +36,31 @@ namespace Strata
     [HarmonyPatch(typeof(GravshipUtility), nameof(GravshipUtility.IsOnboardGravship))]
     public static class Patch_Gravship_IsOnboardGravship
     {
-        public static bool Prefix(IntVec3 cell, Building_GravEngine engine, ref bool __result)
+        public static bool Prefix(
+            IntVec3 cell,
+            Building_GravEngine engine,
+            Pawn pawn,
+            bool desperate,
+            ref bool __result)
         {
-            return StrataGravshipUtility.AllowVanillaOnboardCheck(cell, engine, ref __result);
-        }
-
-        public static void Postfix(IntVec3 cell, Building_GravEngine engine, ref bool __result)
-        {
-            StrataGravshipUtility.ApplyOnboardPostfix(cell, engine, ref __result);
+            return StrataGravshipUtility.AllowVanillaOnboardCheck(
+                cell, engine, pawn, desperate, respectAllowedAreas: true, ref __result);
         }
     }
 
     [HarmonyPatch(typeof(GravshipUtility), nameof(GravshipUtility.IsOnboardGravship_NewTemp))]
     public static class Patch_Gravship_IsOnboardGravshipNewTemp
     {
-        public static bool Prefix(IntVec3 cell, Building_GravEngine engine, ref bool __result)
+        public static bool Prefix(
+            IntVec3 cell,
+            Building_GravEngine engine,
+            Pawn pawn,
+            bool desperate,
+            bool respectAllowedAreas,
+            ref bool __result)
         {
-            return StrataGravshipUtility.AllowVanillaOnboardCheck(cell, engine, ref __result);
-        }
-
-        public static void Postfix(IntVec3 cell, Building_GravEngine engine, ref bool __result)
-        {
-            StrataGravshipUtility.ApplyOnboardPostfix(cell, engine, ref __result);
+            return StrataGravshipUtility.AllowVanillaOnboardCheck(
+                cell, engine, pawn, desperate, respectAllowedAreas, ref __result);
         }
     }
 
@@ -108,6 +111,17 @@ namespace Strata
             }
             if (thing.Map != __instance.Map
                 && StrataGravshipUtility.IsLinkedDeckCell(thing.Map, thing.Position, __instance))
+            {
+                __result = true;
+                return;
+            }
+
+            // Host shafts: accept if the origin cell is on Valid substructure even
+            // when OccupiedRect has a fringe cell Odyssey rejects (2x2 stairs).
+            if (thing.Map == __instance.Map
+                && StrataGravshipUtility.IsGravshipHostShaft(thing)
+                && thing.def.bringAlongOnGravship
+                && __instance.ValidSubstructureAt(thing.Position))
             {
                 __result = true;
             }
