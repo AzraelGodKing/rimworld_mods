@@ -16,6 +16,7 @@ namespace Strata
             public int destMapId;
             public RelayPurpose purpose;
             public int preferredBedId; // Rest only; -1 = any
+            public int returnMapId; // Haul: go back for another load; -1 = none
         }
 
         private static readonly Dictionary<int, Intent> intents = new Dictionary<int, Intent>();
@@ -31,7 +32,8 @@ namespace Strata
             Pawn pawn,
             Map destMap,
             RelayPurpose purpose,
-            Building_Bed preferredBed = null)
+            Building_Bed preferredBed = null,
+            Map returnMap = null)
         {
             if (pawn == null || destMap == null)
             {
@@ -43,6 +45,7 @@ namespace Strata
                 destMapId = destMap.uniqueID,
                 purpose = purpose,
                 preferredBedId = preferredBed?.thingIDNumber ?? -1,
+                returnMapId = returnMap?.uniqueID ?? -1,
             };
         }
 
@@ -55,6 +58,12 @@ namespace Strata
         {
             return pawn != null
                 && intents.TryGetValue(pawn.thingIDNumber, out Intent intent)
+                && intent.purpose == purpose;
+        }
+
+        public static bool HasIntent(int pawnId, RelayPurpose purpose)
+        {
+            return intents.TryGetValue(pawnId, out Intent intent)
                 && intent.purpose == purpose;
         }
 
@@ -135,14 +144,51 @@ namespace Strata
                 return;
             }
 
+            int returnMapId = intent.returnMapId;
             intents.Remove(pawnId);
 
             if (intent.purpose == RelayPurpose.Rest)
             {
                 FinishRest(pawn, intent.preferredBedId);
+                return;
             }
-            // Food / work / medical / joy / haul: idle on the destination map so
-            // the next think pass runs vanilla jobgivers where the need is.
+
+            if (intent.purpose == RelayPurpose.Haul)
+            {
+                FinishHaul(pawn, returnMapId);
+                return;
+            }
+
+            // Food / work / medical / joy: idle so vanilla jobgivers take over.
+        }
+
+        private static void FinishHaul(Pawn pawn, int returnMapId)
+        {
+            bool delivering = StrataPortalUtility.TryStartHaulDelivery(pawn);
+            Map returnMap = returnMapId > 0 ? FindMap(returnMapId) : null;
+            if (returnMap == null || returnMap == pawn.Map)
+            {
+                return;
+            }
+
+            Job home = PawnRelay.TryRelayToMap(
+                pawn,
+                returnMap,
+                touchCooldown: false,
+                RelayPurpose.Haul);
+            if (home == null)
+            {
+                return;
+            }
+
+            if (delivering)
+            {
+                pawn.jobs.jobQueue.EnqueueLast(home, JobTag.Misc);
+            }
+            else
+            {
+                pawn.jobs.StartJob(home, JobCondition.InterruptForced);
+            }
         }
 
         private static void FinishRest(Pawn pawn, int preferredBedId)

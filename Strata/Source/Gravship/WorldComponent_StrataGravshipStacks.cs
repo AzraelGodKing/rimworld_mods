@@ -14,6 +14,9 @@ namespace Strata
         // Maps currently protected from destroyOnParentMapAbandoned cascades.
         private HashSet<int> travellingMapIds = new HashSet<int>();
 
+        // Engine cell at InitiateTakeoff — used to 1:1-shift pockets on land.
+        private IntVec3 pendingTakeoffEnginePos = IntVec3.Invalid;
+
         public WorldComponent_StrataGravshipStacks(World world) : base(world)
         {
         }
@@ -26,6 +29,14 @@ namespace Strata
         public bool IsTravelling(Map map)
         {
             return map != null && travellingMapIds.Contains(map.uniqueID);
+        }
+
+        public void RememberTakeoffEngine(Building_GravEngine engine)
+        {
+            if (engine != null && engine.Position.IsValid)
+            {
+                pendingTakeoffEnginePos = engine.Position;
+            }
         }
 
         // Early mark + detach before the Gravship WorldObject exists.
@@ -76,10 +87,14 @@ namespace Strata
             }
             UnregisterShip(ship);
             MarkTravelling(levels);
+            IntVec3 takeoffPos = pendingTakeoffEnginePos.IsValid
+                ? pendingTakeoffEnginePos
+                : engine.Position;
             var stack = new TravellingStack
             {
                 ship = ship,
                 mapIds = new List<int>(),
+                takeoffEnginePos = takeoffPos,
             };
             for (int i = 0; i < levels.Count; i++)
             {
@@ -119,12 +134,16 @@ namespace Strata
                 }
                 travellingMapIds.Remove(stack.mapIds[i]);
             }
+            IntVec3 takeoffPos = stack.takeoffEnginePos;
             stacks.Remove(stack);
+            pendingTakeoffEnginePos = IntVec3.Invalid;
             if (maps.Count == 0)
             {
                 return;
             }
             StrataGravshipStackUtility.RebindAll(maps, newHost);
+            StrataGravshipPocketAlign.AlignPocketsToLandedShip(maps, newHost, takeoffPos);
+            StrataGravshipPortalTravel.ReconnectOrRestore(newHost, maps);
             Log.Message($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}.");
             Messages.Message(
                 "Strata_GravshipLevelsDocked".Translate(maps.Count),
@@ -148,12 +167,16 @@ namespace Strata
                 }
                 travellingMapIds.Remove(id);
             }
+            IntVec3 takeoffPos = pendingTakeoffEnginePos;
             stacks.Clear();
+            pendingTakeoffEnginePos = IntVec3.Invalid;
             if (maps.Count == 0)
             {
                 return;
             }
             StrataGravshipStackUtility.RebindAll(maps, newHost);
+            StrataGravshipPocketAlign.AlignPocketsToLandedShip(maps, newHost, takeoffPos);
+            StrataGravshipPortalTravel.ReconnectOrRestore(newHost, maps);
             Log.Message($"[Strata] Gravship landing: rebound {maps.Count} orphan travelling level(s) to {newHost}.");
             Messages.Message(
                 "Strata_GravshipLevelsDocked".Translate(maps.Count),
@@ -204,6 +227,13 @@ namespace Strata
         {
             base.ExposeData();
             Scribe_Collections.Look(ref stacks, "strataGravshipStacks", LookMode.Deep);
+            Scribe_Values.Look(ref pendingTakeoffEnginePos, "strataPendingTakeoffEnginePos", IntVec3.Invalid);
+            List<StrataGravshipPortalTravel.PortalSnapshot> portalSnaps = null;
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                portalSnaps = StrataGravshipPortalTravel.TakeSnapshotsForSave();
+            }
+            Scribe_Collections.Look(ref portalSnaps, "strataGravshipPortalSnaps", LookMode.Deep);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 travellingMapIds.Clear();
@@ -223,6 +253,7 @@ namespace Strata
                         travellingMapIds.Add(stacks[i].mapIds[j]);
                     }
                 }
+                StrataGravshipPortalTravel.RestoreSnapshotsFromSave(portalSnaps);
             }
         }
 
@@ -230,11 +261,13 @@ namespace Strata
         {
             public Gravship ship;
             public List<int> mapIds;
+            public IntVec3 takeoffEnginePos = IntVec3.Invalid;
 
             public void ExposeData()
             {
                 Scribe_References.Look(ref ship, "ship");
                 Scribe_Collections.Look(ref mapIds, "mapIds", LookMode.Value);
+                Scribe_Values.Look(ref takeoffEnginePos, "takeoffEnginePos", IntVec3.Invalid);
                 if (Scribe.mode == LoadSaveMode.PostLoadInit && mapIds == null)
                 {
                     mapIds = new List<int>();

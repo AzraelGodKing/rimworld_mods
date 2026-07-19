@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- Odyssey-only: powered elevator into a Strata pocket under the gravship. -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_GravshipElevatorDown</defName>
+    <label>gravship elevator</label>
+    <description>A powered elevator shaft through the gravship deck into a Strata level below. Only placeable on gravship substructure. The underdeck opening matches the ship footprint exactly. Linked floors travel with the ship on launch and reattach on landing.\n\nNeeds power to ride down; anyone below can still ride up without power. Requires elevators and digging down research. A second gravship shaft (stair or elevator) joins the same deck below.</description>
+    <thingClass>Strata.Building_GravshipElevatorDown</thingClass>
+    <bringAlongOnGravship>true</bringAlongOnGravship>
+    <graphicData>
+      <texPath>Strata/Buildings/ElevatorDown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.55, 0.75, 0.95)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <statBases>
+      <WorkToBuild>9000</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>120</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+    </costList>
+    <portal>
+      <pocketMapGenerator>Strata_GravshipUnderdeckLevel</pocketMapGenerator>
+      <exitDef>Strata_GravshipElevatorUp</exitDef>
+      <pocketMapSize>200</pocketMapSize>
+    </portal>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>200</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_StairwellControl"/>
+    </comps>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_GravshipStairwell</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>Strata_DiggingDown</li>
+      <li>Strata_Elevators</li>
+    </researchPrerequisites>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_GravshipElevatorUp</defName>
+    <label>gravship elevator landing</label>
+    <description>The landing below a gravship elevator — ride back up to the ship deck. Cannot be deconstructed. Ascending works even without power.</description>
+    <thingClass>Strata.Building_GravshipElevatorUp</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ElevatorUp</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.55, 0.75, 0.95)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+    </comps>
+    <building>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <!-- Odyssey-only: powered elevator to a roof deck above the gravship. -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_GravshipElevatorBuildUp</defName>
+    <label>gravship tower elevator</label>
+    <description>A powered elevator from the gravship deck into an outdoor Strata roof deck above. Only placeable on gravship substructure. The upper deck matches the ship footprint exactly. Linked floors travel with the ship.\n\nNeeds power to ride up; anyone above can still ride down without power. Extend substructure on the ship to grow the roof deck. Requires elevators and building up research.</description>
+    <thingClass>Strata.Building_GravshipElevatorBuildUp</thingClass>
+    <bringAlongOnGravship>true</bringAlongOnGravship>
+    <graphicData>
+      <texPath>Strata/Buildings/ElevatorUp</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.55, 0.85, 0.75)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <statBases>
+      <WorkToBuild>9000</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>120</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+    </costList>
+    <portal>
+      <pocketMapGenerator>Strata_UpperLevel</pocketMapGenerator>
+      <exitDef>Strata_GravshipElevatorBuildUpLanding</exitDef>
+      <pocketMapSize>200</pocketMapSize>
+    </portal>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>200</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_StairwellControl"/>
+    </comps>
+    <designationCategory>Structure</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_GravshipStairwell</li>
+    </placeWorkers>
+    <researchPrerequisites>
+      <li>Strata_BuildingUp</li>
+      <li>Strata_Elevators</li>
+    </researchPrerequisites>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_GravshipElevatorBuildUpLanding</defName>
+    <label>gravship tower elevator landing</label>
+    <description>Upper landing of a gravship tower elevator — ride back down to the ship. Cannot be deconstructed. Descending works even without power.</description>
+    <thingClass>Strata.Building_GravshipElevatorBuildUpLanding</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ElevatorDown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.55, 0.85, 0.75)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>0</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+    </comps>
+    <building>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <Strata_GravshipElevatorDown.label>лифт гравикорабля</Strata_GravshipElevatorDown.label>
+  <Strata_GravshipElevatorDown.description>Электрическая шахта лифта через палубу гравикорабля в уровень Strata внизу. Устанавливается только на подконструкции гравикорабля. Связанные этажи путешествуют с кораблём при взлёте и переподключаются при посадке.
+
+Для спуска нужно питание; снизу можно подняться и без питания. Требует исследования лифтов и копания вниз. Вторая шахта гравикорабля (лестница или лифт) соединяется с той же палубой внизу.</Strata_GravshipElevatorDown.description>
+
+  <Strata_GravshipElevatorUp.label>посадочная площадка лифта гравикорабля</Strata_GravshipElevatorUp.label>
+  <Strata_GravshipElevatorUp.description>Посадочная площадка под лифтом гравикорабля — поднимитесь обратно на палубу корабля. Не подлежит разборке. Подъём работает даже без питания.</Strata_GravshipElevatorUp.description>
+
+  <Strata_GravshipElevatorBuildUp.label>башенный лифт гравикорабля</Strata_GravshipElevatorBuildUp.label>
+  <Strata_GravshipElevatorBuildUp.description>Электрический лифт с палубы гравикорабля на открытую крышную террасу Strata наверху. Устанавливается только на подконструкции гравикорабля. Связанные этажи путешествуют с кораблём.
+
+Для подъёма нужно питание; сверху можно спуститься и без питания. Строимая площадь на верхней палубе соответствует подконструкции гравикорабля. Требует исследования лифтов и строительства вверх.</Strata_GravshipElevatorBuildUp.description>
+
+  <Strata_GravshipElevatorBuildUpLanding.label>посадочная площадка башенного лифта гравикорабля</Strata_GravshipElevatorBuildUpLanding.label>
+  <Strata_GravshipElevatorBuildUpLanding.description>Верхняя посадочная площадка башенного лифта гравикорабля — спуститесь обратно на корабль. Не подлежит разборке. Спуск работает даже без питания.</Strata_GravshipElevatorBuildUpLanding.description>
+
+</LanguageData>

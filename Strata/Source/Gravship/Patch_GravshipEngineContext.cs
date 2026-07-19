@@ -110,6 +110,17 @@ namespace Strata
                 && StrataGravshipUtility.IsLinkedDeckCell(thing.Map, thing.Position, __instance))
             {
                 __result = true;
+                return;
+            }
+
+            // Host shafts: accept if the origin cell is on Valid substructure even
+            // when OccupiedRect has a fringe cell Odyssey rejects (2x2 stairs).
+            if (thing.Map == __instance.Map
+                && StrataGravshipUtility.IsGravshipHostShaft(thing)
+                && thing.def.bringAlongOnGravship
+                && __instance.ValidSubstructureAt(thing.Position))
+            {
+                __result = true;
             }
         }
     }

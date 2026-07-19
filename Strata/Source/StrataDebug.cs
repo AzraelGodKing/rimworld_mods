@@ -372,6 +372,11 @@ namespace Strata
                     && StrataThingDefOf.Strata_GravshipStairsUp != null
                     && StrataThingDefOf.Strata_GravshipStairsBuildUp != null
                     && StrataThingDefOf.Strata_GravshipBuildUpLanding != null);
+                Check("gravship elevators loaded (Odyssey)",
+                    StrataThingDefOf.Strata_GravshipElevatorDown != null
+                    && StrataThingDefOf.Strata_GravshipElevatorUp != null
+                    && StrataThingDefOf.Strata_GravshipElevatorBuildUp != null
+                    && StrataThingDefOf.Strata_GravshipElevatorBuildUpLanding != null);
             }
             Check("sunken ruin site loaded", SunkenRuinDefOf.Strata_SunkenRuin != null);
             Check("sunken ruin map generator loaded",

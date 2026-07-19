@@ -17,8 +17,11 @@ namespace Strata
             {
                 return;
             }
+            StrataGravshipPortalTravel.SnapshotHostPortals(engine);
             List<Map> levels = StrataGravshipStackUtility.CollectTravellingLevels(engine);
-            WorldComponent_StrataGravshipStacks.Get()?.MarkTravelling(levels);
+            var stacks = WorldComponent_StrataGravshipStacks.Get();
+            stacks?.RememberTakeoffEngine(engine);
+            stacks?.MarkTravelling(levels);
         }
     }
 
@@ -32,6 +35,9 @@ namespace Strata
             {
                 return;
             }
+            // Must run after vanilla packs+despawns: GravAnchor keeps the map, so
+            // any shaft Odyssey skipped would otherwise stay visible on the old site.
+            StrataGravshipPortalTravel.SweepLeftBehindHostShafts(__result, engine);
             WorldComponent_StrataGravshipStacks.Get()?.RegisterTakeoff(__result, engine);
         }
     }
@@ -142,7 +148,7 @@ namespace Strata
             {
                 return;
             }
-            Map host = FindHostMap();
+            Map host = FindHostMap(gravship);
             if (host == null)
             {
                 return;
@@ -150,24 +156,22 @@ namespace Strata
             WorldComponent_StrataGravshipStacks.Get()?.CompleteLanding(gravship, host);
         }
 
-        private static Map FindHostMap()
+        // Prefer the packed ship's engine map — never the first GravEngine on any map
+        // (GravAnchor / multi-colony can leave an engine behind on the departure site).
+        private static Map FindHostMap(Gravship gravship)
         {
-            List<Map> maps = Find.Maps;
-            for (int i = 0; i < maps.Count; i++)
+            Building_GravEngine engine = gravship?.Engine;
+            if (engine?.Map != null
+                && !StrataMapUtility.IsUnderground(engine.Map)
+                && !StrataMapUtility.IsUpperLevel(engine.Map))
             {
-                Map map = maps[i];
-                if (map == null || StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map))
-                {
-                    continue;
-                }
-                if (map.listerBuildings.AllBuildingsColonistOfClass<Building_GravEngine>().Any())
-                {
-                    return map;
-                }
+                return engine.Map;
             }
+
             return Find.CurrentMap != null
                 && !StrataMapUtility.IsUnderground(Find.CurrentMap)
                 && !StrataMapUtility.IsUpperLevel(Find.CurrentMap)
+                && StrataGravshipUtility.FindGravEngineOnMap(Find.CurrentMap) != null
                 ? Find.CurrentMap
                 : null;
         }

@@ -101,6 +101,63 @@ namespace Strata
             return thing is IStrataGravshipPortal;
         }
 
+        // Host shaft on the ship deck (not a pocket landing).
+        public static bool IsGravshipHostShaft(Thing thing)
+        {
+            return thing is IStrataGravshipPortal && thing is MapPortal && thing is not PocketMapExit;
+        }
+
+        public static bool IsGravshipTowerShaft(Thing thing)
+        {
+            return thing is Building_StairsBuildUp;
+        }
+
+        public static bool IsGravshipLanding(Thing thing)
+        {
+            return thing is IStrataGravshipPortal && thing is PocketMapExit;
+        }
+
+        // Shared underdeck / upper deck for any gravship shaft on this host.
+        public static Map ExistingGravshipLevelBelow(Map host, Thing self)
+        {
+            if (host == null)
+            {
+                return null;
+            }
+            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing == self || !IsGravshipHostShaft(thing) || IsGravshipTowerShaft(thing))
+                {
+                    continue;
+                }
+                if (thing is MapPortal portal && portal.Spawned && portal.PocketMapExists)
+                {
+                    return portal.PocketMap;
+                }
+            }
+            return null;
+        }
+
+        public static Map ExistingGravshipLevelAbove(Map host, Thing self)
+        {
+            if (host == null)
+            {
+                return null;
+            }
+            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing == self || !IsGravshipHostShaft(thing) || !IsGravshipTowerShaft(thing))
+                {
+                    continue;
+                }
+                if (thing is MapPortal portal && portal.Spawned && portal.PocketMapExists)
+                {
+                    return portal.PocketMap;
+                }
+            }
+            return null;
+        }
+
         // Pocket level opened by a gravship stair, or currently travelling with a ship.
         public static bool IsGravshipLinkedLevel(Map map)
         {

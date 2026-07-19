@@ -77,11 +77,12 @@ namespace Strata
             {
                 return false;
             }
-            if (source.roofGrid.Roofed(below))
+            // Gravship A+: exact ship silhouette only — never colony roofs beyond the hull.
+            if (gravshipLinkedUpper)
             {
-                return true;
+                return StrataGravshipUtility.CellOnGravship(source, below);
             }
-            return gravshipLinkedUpper && StrataGravshipUtility.CellOnGravship(source, below);
+            return source.roofGrid.Roofed(below);
         }
 
         // Full paint used by map gen (and rare rebuilds).
@@ -116,7 +117,12 @@ namespace Strata
                     }
                 }
 
-                EnsurePlaza(upper, landingSpot, plazaRadius);
+                // Colony towers get a plaza around the shaft. Gravship decks stay
+                // exactly the ValidSubstructure footprint — no extra pad.
+                if (!gravshipLinked)
+                {
+                    EnsurePlaza(upper, landingSpot, plazaRadius);
+                }
             }
             finally
             {
@@ -137,18 +143,21 @@ namespace Strata
         private static void PaintProportional(Map upper, Map source, TerrainDef deck, TerrainDef sky, bool gravshipLinked)
         {
             int sourceCells = source.cellIndices.NumGridCells;
-            var sourceRoofs = new bool[sourceCells];
+            var sourceRoofs = gravshipLinked ? null : new bool[sourceCells];
             var sourceSubstructure = gravshipLinked ? new bool[sourceCells] : null;
             foreach (IntVec3 below in source.AllCells)
             {
                 int index = source.cellIndices.CellToIndex(below);
-                if (source.roofGrid.Roofed(below))
+                if (gravshipLinked)
+                {
+                    if (StrataGravshipUtility.CellOnGravship(source, below))
+                    {
+                        sourceSubstructure[index] = true;
+                    }
+                }
+                else if (source.roofGrid.Roofed(below))
                 {
                     sourceRoofs[index] = true;
-                }
-                else if (sourceSubstructure != null && StrataGravshipUtility.CellOnGravship(source, below))
-                {
-                    sourceSubstructure[index] = true;
                 }
             }
 
@@ -157,8 +166,9 @@ namespace Strata
                 upper.roofGrid.SetRoof(cell, null);
                 IntVec3 below = StrataMapUtility.ProportionalCell(cell, upper, source);
                 bool supported = below.InBounds(source)
-                    && (sourceRoofs[source.cellIndices.CellToIndex(below)]
-                        || (sourceSubstructure != null && sourceSubstructure[source.cellIndices.CellToIndex(below)]));
+                    && (gravshipLinked
+                        ? sourceSubstructure[source.cellIndices.CellToIndex(below)]
+                        : sourceRoofs[source.cellIndices.CellToIndex(below)]);
                 upper.terrainGrid.SetTerrain(cell, supported ? deck : sky);
             }
         }

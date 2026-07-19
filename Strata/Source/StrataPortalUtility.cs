@@ -176,48 +176,128 @@ namespace Strata
             }
         }
 
-        // Cross-level haul dumps cargo at the landing; finish the job by walking
-        // carried (or just-dropped) materials straight to a blueprint/frame that
-        // needs them on this floor instead of leaving a pile at the stairs.
-        public static void TryDeliverConstructionCargo(Pawn pawn)
+        // Vanilla EnterPortal clears the job queue AFTER OnEntered, so any
+        // EnqueueFirst here is wiped. Defer storage/construction finish to the
+        // next tick (same pattern as PortalRelayChain / DraftedPortalPathing).
+        private static readonly List<int> pendingHaulDeliver = new List<int>();
+
+        internal static void ResetHaulDeliverSession()
         {
-            if (pawn?.Map == null || !pawn.Spawned || pawn.Downed || pawn.Dead || pawn.Drafted)
+            pendingHaulDeliver.Clear();
+        }
+
+        public static void NotifyHaulArrival(Pawn pawn)
+        {
+            if (pawn == null)
             {
                 return;
             }
 
-            // Do not gate on LevelDemand.MissingOn: piles already on this map
-            // count as "have", which is exactly the stuck-at-stairs case.
+            if (!pendingHaulDeliver.Contains(pawn.thingIDNumber))
+            {
+                pendingHaulDeliver.Add(pawn.thingIDNumber);
+            }
+        }
+
+        internal static void TickHaulDeliveries()
+        {
+            if (pendingHaulDeliver.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = pendingHaulDeliver.Count - 1; i >= 0; i--)
+            {
+                int id = pendingHaulDeliver[i];
+                pendingHaulDeliver.RemoveAt(i);
+                // Haul chain FinishHaul already delivered on dest; skip mid-hop.
+                if (PortalRelayChain.HasIntent(id, RelayPurpose.Haul))
+                {
+                    continue;
+                }
+
+                Pawn pawn = FindPawnById(id);
+                if (pawn != null)
+                {
+                    TryStartHaulDelivery(pawn);
+                }
+            }
+        }
+
+        // Stockpile first, then blueprint/frame. Returns true if a job started.
+        // Prefer carried cargo — vanilla drop at crowded landings often fails and
+        // left pawns wandering while still holding meals/steel.
+        public static bool TryStartHaulDelivery(Pawn pawn)
+        {
+            if (pawn?.jobs == null || pawn.Map == null || !pawn.Spawned
+                || pawn.Downed || pawn.Dead || pawn.Drafted)
+            {
+                return false;
+            }
+
             Thing cargo = pawn.carryTracker?.CarriedThing;
             if (cargo == null)
             {
-                cargo = FindNearbyConstructionCargo(pawn);
+                cargo = FindNearbyHaulCargo(pawn);
             }
 
             if (cargo == null)
             {
-                return;
+                return false;
             }
 
+            Job job = TryMakeStorageJob(pawn, cargo) ?? TryMakeConstructionJob(pawn, cargo);
+            if (job == null)
+            {
+                return false;
+            }
+
+            pawn.jobs.StartJob(job, JobCondition.InterruptForced);
+            return true;
+        }
+
+        private static Job TryMakeStorageJob(Pawn pawn, Thing cargo)
+        {
+            if (!StoreUtility.TryFindBestBetterStoreCellFor(
+                    cargo,
+                    pawn,
+                    pawn.Map,
+                    StoragePriority.Unstored,
+                    pawn.Faction,
+                    out IntVec3 cell))
+            {
+                return null;
+            }
+
+            if (cargo.Spawned && !pawn.CanReserve(cargo))
+            {
+                return null;
+            }
+
+            return HaulAIUtility.HaulToCellStorageJob(pawn, cargo, cell, fitInStoreCell: true);
+        }
+
+        private static Job TryMakeConstructionJob(Pawn pawn, Thing cargo)
+        {
             Thing site = FindConstructibleNeeding(pawn, cargo.def);
             if (site == null)
             {
-                return;
+                return null;
             }
 
             if (!pawn.CanReserveAndReach(site, PathEndMode.Touch, Danger.Deadly)
                 || (cargo.Spawned && !pawn.CanReserve(cargo)))
             {
-                return;
+                return null;
             }
 
             Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, site);
             job.count = cargo.stackCount;
             job.haulMode = HaulMode.ToContainer;
-            pawn.jobs.jobQueue.EnqueueFirst(job, JobTag.Misc);
+            return job;
         }
 
-        private static Thing FindNearbyConstructionCargo(Pawn pawn)
+        private static Thing FindNearbyHaulCargo(Pawn pawn)
         {
             Map map = pawn.Map;
             foreach (Thing thing in GenRadial.RadialDistinctThingsAround(pawn.Position, map, 2.9f, true))
@@ -227,10 +307,39 @@ namespace Strata
                     continue;
                 }
 
-                if (FindConstructibleNeeding(pawn, thing.def) != null
-                    && pawn.CanReserveAndReach(thing, PathEndMode.ClosestTouch, Danger.Deadly))
+                if (!pawn.CanReserveAndReach(thing, PathEndMode.ClosestTouch, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                if (StoreUtility.TryFindBestBetterStoreCellFor(
+                        thing,
+                        pawn,
+                        map,
+                        StoragePriority.Unstored,
+                        pawn.Faction,
+                        out _)
+                    || FindConstructibleNeeding(pawn, thing.def) != null)
                 {
                     return thing;
+                }
+            }
+
+            return null;
+        }
+
+        private static Pawn FindPawnById(int thingId)
+        {
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                IReadOnlyList<Pawn> pawns = maps[i].mapPawns.AllPawnsSpawned;
+                for (int j = 0; j < pawns.Count; j++)
+                {
+                    if (pawns[j].thingIDNumber == thingId)
+                    {
+                        return pawns[j];
+                    }
                 }
             }
 
@@ -333,7 +442,9 @@ namespace Strata
                 {
                     continue;
                 }
-                if (thing.def.defName.StartsWith("Strata_Stairs") || thing.def.defName.StartsWith("Strata_Elevator"))
+                if (thing.def.defName.StartsWith("Strata_Stairs")
+                    || thing.def.defName.StartsWith("Strata_Elevator")
+                    || thing.def.defName.StartsWith("Strata_Gravship"))
                 {
                     if (IsSealedPortal(thing))
                     {

@@ -24,6 +24,8 @@ namespace Strata
             DraftedPortalPathing.ResetSession();
             PortalRelayChain.ResetSession();
             SleepRelay.ResetSession();
+            HaulToLevelTargets.ResetSession();
+            StrataPortalUtility.ResetHaulDeliverSession();
             StrataResources.ClearCaches();
 
             UpgradeVanillaCaveExits();

@@ -133,6 +133,10 @@ namespace Strata
             yield return "Strata_GravshipStairsUp";
             yield return "Strata_GravshipStairsBuildUp";
             yield return "Strata_GravshipBuildUpLanding";
+            yield return "Strata_GravshipElevatorDown";
+            yield return "Strata_GravshipElevatorUp";
+            yield return "Strata_GravshipElevatorBuildUp";
+            yield return "Strata_GravshipElevatorBuildUpLanding";
         }
 
         private static void ApplyMultiFloorGraphic(StairGraphicSnapshot original, string defName, GraphicData graphic)
