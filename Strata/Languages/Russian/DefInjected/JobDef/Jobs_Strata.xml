@@ -11,4 +11,6 @@
 
   <Strata_CaptureToLevel.reportString>захватывает TargetA и несёт к тюремной кровати на другом уровне.</Strata_CaptureToLevel.reportString>
 
+  <Strata_BringEntityToLevel.reportString>несёт TargetA к платформе содержания на другом уровне.</Strata_BringEntityToLevel.reportString>
+
 </LanguageData>

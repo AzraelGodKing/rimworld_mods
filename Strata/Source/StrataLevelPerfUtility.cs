@@ -305,20 +305,9 @@ namespace Strata
 
         public static bool ShouldThrowGasMotes(Map map)
         {
-            if (map == null)
+            if (map == null || Find.CurrentMap != map)
             {
                 return false;
-            }
-            if (Find.CurrentMap != map && StrataLevelPerfUtility.IsStrataPocketLevel(map))
-            {
-                if (StrataMod.Settings?.performanceModeEnabled == true)
-                {
-                    return false;
-                }
-                if (StrataMod.Settings?.atmosphereQuality == AtmosphereQualityLevel.Low)
-                {
-                    return false;
-                }
             }
             return true;
         }
