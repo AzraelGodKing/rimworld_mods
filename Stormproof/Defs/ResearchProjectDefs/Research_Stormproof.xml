@@ -5,7 +5,7 @@
     <defName>Stormproof</defName>
     <label>Stormproof</label>
     <generalTitle>Storm &amp; grid research</generalTitle>
-    <generalDescription>Lightning protection, flare shielding, atmospheric control, and hardened power infrastructure.</generalDescription>
+    <generalDescription>Lightning protection, flare shielding, atmospheric control, and late-game natural hazard hardening.</generalDescription>
   </ResearchTabDef>
 
   <ResearchProjectDef>
@@ -64,6 +64,21 @@
     </prerequisites>
     <researchViewX>3.00</researchViewX>
     <researchViewY>0.80</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Stormproof_HazardHardening</defName>
+    <label>hazard hardening</label>
+    <description>Colony-scale atmospheric and climate hardening: toxic barriers, temperature stabilizers, sky restorers, flashstorm firebreak emitters, and drought condensers. Late-game infrastructure that lets a well-powered base weather most natural disasters the Rim throws at it.</description>
+    <baseCost>5000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>Stormproof</tab>
+    <prerequisites>
+      <li>Stormproof_AtmosphericControl</li>
+      <li>Stormproof_PerfectGrounding</li>
+    </prerequisites>
+    <researchViewX>4.50</researchViewX>
+    <researchViewY>1.20</researchViewY>
   </ResearchProjectDef>
 
 </Defs>
