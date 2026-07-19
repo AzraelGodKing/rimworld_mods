@@ -302,3 +302,118 @@ th.t { color: var(--accent-t); }
 .card.strata .stat { color: var(--accent-t2); }
 .card.strata img { background: #241c12; }
 .note.strata { border-left-color: var(--accent-t); }
+
+/* Incoming signal (mystery / classified) theme */
+:root {
+  --accent-x: #c47868;
+  --accent-x2: #8a7a72;
+}
+header.hero.signal {
+  background: linear-gradient(180deg, #2a1e1c 0%, #1a1714 55%, var(--bg) 100%);
+}
+h1.x { color: var(--accent-x); }
+h2.x { color: var(--accent-x); }
+.badge.signal { border-color: #5a4038; color: var(--accent-x2); }
+.nav-links a.signal-link {
+  color: var(--accent-x2);
+  font-family: Consolas, Menlo, monospace;
+  letter-spacing: 0.12em;
+}
+.nav-links a.signal-link:hover,
+.nav-links a.signal-link.active {
+  color: var(--accent-x);
+  border-color: #5a4038;
+  background: #2a2220;
+}
+.hub-card.signal {
+  border-style: dashed;
+  border-color: #5a4038;
+  background:
+    repeating-linear-gradient(
+      -12deg,
+      transparent,
+      transparent 6px,
+      rgba(0, 0, 0, 0.08) 6px,
+      rgba(0, 0, 0, 0.08) 7px
+    ),
+    var(--bg-card);
+  opacity: 0.92;
+}
+.hub-card.signal:hover {
+  border-color: var(--accent-x);
+  border-style: dashed;
+  opacity: 1;
+}
+.hub-card h2.x {
+  color: var(--accent-x);
+  font-family: Consolas, Menlo, monospace;
+  letter-spacing: 0.2em;
+}
+.hub-card.signal p { color: var(--accent-x2); font-style: italic; }
+.hub-card.signal .count {
+  color: var(--accent-x);
+  font-family: Consolas, Menlo, monospace;
+  letter-spacing: 0.08em;
+}
+.hub-card.signal .redact {
+  display: inline-block;
+  background: #3a2e2a;
+  color: transparent;
+  user-select: none;
+  border-radius: 2px;
+  padding: 0 0.35em;
+  margin: 0 0.1em;
+  vertical-align: baseline;
+}
+.signal-log {
+  background: #1c1816;
+  border: 1px solid #5a4038;
+  border-radius: 10px;
+  padding: 22px 24px;
+  font: 14px/1.85 Consolas, Menlo, monospace;
+  color: var(--accent-x2);
+  margin: 20px 0;
+  overflow-x: auto;
+}
+.signal-log .ts { color: #6a5a52; }
+.signal-log .ok { color: var(--text-dim); }
+.signal-log .warn { color: var(--accent-x); }
+.signal-log .redact {
+  display: inline-block;
+  background: #3a2e2a;
+  color: transparent;
+  user-select: none;
+  border-radius: 2px;
+  padding: 0 0.4em;
+}
+.signal-frag {
+  margin: 28px 0;
+  padding: 18px 20px;
+  background: var(--bg-panel);
+  border-left: 3px solid var(--accent-x);
+  border-radius: 0 8px 8px 0;
+  color: var(--text-dim);
+  font-style: italic;
+}
+.signal-frag .attrib {
+  display: block;
+  margin-top: 10px;
+  font: 12px/1 Verdana, sans-serif;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  color: var(--accent-x2);
+  text-transform: uppercase;
+}
+.note.signal { border-left-color: var(--accent-x); }
+.locked-stamp {
+  display: inline-block;
+  font: bold 11px/1 Consolas, Menlo, monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  margin-bottom: 14px;
+  border: 2px solid var(--accent-x);
+  color: var(--accent-x);
+  transform: rotate(-2deg);
+  opacity: 0.85;
+}
