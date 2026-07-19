@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -26,6 +25,8 @@ namespace Stormproof
             new Color(0.92f, 0.92f, 1.00f),
             new Color(0.66f, 0.62f, 0.88f),
             0.85f);
+
+        private static readonly List<Building> empCandidates = new List<Building>();
 
         public override SkyTarget? SkyTarget(Map map)
         {
@@ -56,10 +57,29 @@ namespace Stormproof
             }
         }
 
-        private static bool Shielded(Thing t) =>
-            StormproofRegistry
-                .On(StormproofRegistry.Dampeners, t.Map)
-                .Any(d => d.Covers(t));
+        private static bool Shielded(Thing t)
+        {
+            if (t?.Map == null)
+            {
+                return false;
+            }
+
+            foreach (CompEmpDampener dampener in StormproofRegistry.Dampeners)
+            {
+                if (dampener?.parent == null || !dampener.parent.Spawned
+                    || dampener.parent.Map != t.Map)
+                {
+                    continue;
+                }
+
+                if (dampener.Covers(t))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         // Static bleed: every charged battery on the map slowly leaks unless an
         // EMP dampener covers it. Storm capacitors aren't CompPowerBattery, so
@@ -92,18 +112,22 @@ namespace Stormproof
         // EMP dampener patch protects covered buildings from the stun.
         private void EmpBurst(Map map)
         {
-            List<Building> candidates = map.listerBuildings.allBuildingsColonist
-                .Where(b =>
+            empCandidates.Clear();
+            List<Building> buildings = map.listerBuildings.allBuildingsColonist;
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                Building b = buildings[i];
+                CompPowerTrader power = b.TryGetComp<CompPowerTrader>();
+                if (power != null && power.PowerOn)
                 {
-                    CompPowerTrader power = b.TryGetComp<CompPowerTrader>();
-                    return power != null && power.PowerOn;
-                })
-                .ToList();
-            if (candidates.Count == 0)
+                    empCandidates.Add(b);
+                }
+            }
+            if (empCandidates.Count == 0)
             {
                 return;
             }
-            Building target = candidates.RandomElement();
+            Building target = empCandidates.RandomElement();
             GenExplosion.DoExplosion(
                 target.Position, map, EmpBurstRadius, DamageDefOf.EMP, null);
             Messages.Message(

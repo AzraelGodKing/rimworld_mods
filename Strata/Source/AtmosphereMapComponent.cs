@@ -170,11 +170,8 @@ namespace Strata
 
         private bool ShouldSkipOverlayRebuild()
         {
-            if (Find.CurrentMap == map || !StrataLevelPerfUtility.IsStrataPocketLevel(map))
-            {
-                return false;
-            }
-            return !Patch_GasOverlay.ShowGasOverlay;
+            // Non-viewed maps: never rebuild the cell overlay (FPS+-style local skip).
+            return Find.CurrentMap != map;
         }
 
         public Color Color => Color.white;
