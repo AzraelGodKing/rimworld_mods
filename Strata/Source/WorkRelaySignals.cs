@@ -316,6 +316,15 @@ namespace Strata
                 {
                     return true;
                 }
+
+                // Assigned bed on another linked floor — needs a warden commute.
+                Building_Bed owned = p.ownership?.OwnedBed;
+                if (owned != null && owned.Spawned && owned.ForPrisoners
+                    && owned.Map != map && p.CurrentBed() != owned
+                    && LevelGraph.AnyLinkFrom(map))
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -375,6 +384,18 @@ namespace Strata
                     {
                         return true;
                     }
+                }
+
+                // Infant on this floor with an assigned crib on a linked floor.
+                if (ModsConfig.BiotechActive
+                    && p.DevelopmentalStage.Baby()
+                    && p.CurrentBed() == null
+                    && p.ownership?.OwnedBed != null
+                    && p.ownership.OwnedBed.Spawned
+                    && p.ownership.OwnedBed.Map != map
+                    && LevelGraph.AnyLinkFrom(map))
+                {
+                    return true;
                 }
             }
             return false;

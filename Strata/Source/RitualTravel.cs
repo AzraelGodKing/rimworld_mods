@@ -27,6 +27,8 @@ namespace Strata
         private static readonly AccessTools.FieldRef<MapPawns, Map> mapField =
             AccessTools.FieldRefAccess<MapPawns, Map>("map");
 
+        private static readonly List<Map> tmpNetworkMaps = new List<Map>();
+
         // Swapped in for MapPawns.FreeColonistsAndPrisonersSpawned inside the
         // ritual dialog's pool builder.
         public static List<Pawn> ColonistsAndPrisonersAcrossLevels(MapPawns mapPawns)
@@ -48,9 +50,14 @@ namespace Strata
         internal static void AddLinkedPawns(Map home, List<Pawn> result)
         {
             var seen = new HashSet<Pawn>(result);
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(home))
+            ColonyBedUtility.GetColonyNetworkMaps(home, tmpNetworkMaps);
+            for (int m = 0; m < tmpNetworkMaps.Count; m++)
             {
-                Map map = link.map;
+                Map map = tmpNetworkMaps[m];
+                if (map == null || map == home)
+                {
+                    continue;
+                }
                 List<Pawn> colonists = map.mapPawns.FreeColonistsSpawned;
                 for (int i = 0; i < colonists.Count; i++)
                 {
@@ -61,14 +68,10 @@ namespace Strata
                 {
                     TryAdd(seen, result, prisoners[i]);
                 }
-                List<Pawn> animals = map.mapPawns.SpawnedPawnsInFaction(Faction.OfPlayer);
+                List<Pawn> animals = map.mapPawns.SpawnedColonyAnimals;
                 for (int i = 0; i < animals.Count; i++)
                 {
-                    Pawn animal = animals[i];
-                    if (animal.RaceProps.Animal)
-                    {
-                        TryAdd(seen, result, animal);
-                    }
+                    TryAdd(seen, result, animals[i]);
                 }
             }
         }
@@ -80,6 +83,144 @@ namespace Strata
                 result.Add(pawn);
             }
         }
+
+        // Name-based match: MethodInfo reference equality fails across some
+        // Harmony / ref-assembly setups even when the IL call is present.
+        internal static bool IsFreeColonistsAndPrisonersSpawnedCall(CodeInstruction instruction)
+        {
+            if (instruction.opcode != OpCodes.Call && instruction.opcode != OpCodes.Callvirt)
+            {
+                return false;
+            }
+            var method = instruction.operand as MethodInfo;
+            return method != null
+                && method.DeclaringType == typeof(MapPawns)
+                && method.Name == "get_FreeColonistsAndPrisonersSpawned";
+        }
+
+        // Shared by the ritual dialog transpiler.
+        internal static IEnumerable<CodeInstruction> TranspileFreeColonistsAndPrisoners(
+            IEnumerable<CodeInstruction> instructions,
+            string missWarning)
+        {
+            MethodInfo replacement = AccessTools.Method(
+                typeof(RitualTravelUtility),
+                nameof(ColonistsAndPrisonersAcrossLevels));
+            bool patched = false;
+            foreach (CodeInstruction instruction in instructions)
+            {
+                if (!patched && IsFreeColonistsAndPrisonersSpawnedCall(instruction))
+                {
+                    patched = true;
+                    yield return new CodeInstruction(OpCodes.Call, replacement)
+                        .WithLabels(instruction.labels)
+                        .WithBlocks(instruction.blocks);
+                    continue;
+                }
+
+                yield return instruction;
+            }
+
+            if (!patched)
+            {
+                Log.Warning(missWarning);
+            }
+        }
+
+        // Re-run the required-role gate with the across-level pool. Used when
+        // CanStartRitualNow fails with "You need a doctor…" (etc.).
+        internal static bool HasRequiredRolesAcrossLevels(
+            TargetInfo target,
+            Precept_Ritual ritual,
+            Dictionary<string, Pawn> forcedForRole)
+        {
+            if (target.Map == null || ritual?.behavior?.def?.roles == null)
+            {
+                return false;
+            }
+            List<Pawn> list = ColonistsAndPrisonersAcrossLevels(target.Map.mapPawns);
+            // Local animals are added by vanilla after the colonist list; mirror that
+            // for the home map, then linked animals are already in AddLinkedPawns.
+            list.AddRange(target.Map.mapPawns.SpawnedColonyAnimals);
+
+            foreach (RitualRole role in ritual.behavior.def.roles)
+            {
+                if (!role.required || role.substitutable)
+                {
+                    continue;
+                }
+                IEnumerable<RitualRole> source = role.mergeId == null
+                    ? Gen.YieldSingle(role)
+                    : ritual.behavior.def.roles.Where(r => r.mergeId == role.mergeId);
+                int needed = source.Count();
+                int found = 0;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (role.AppliesToPawn(list[i], out _, target, null, null, null, skipReason: true))
+                    {
+                        found++;
+                        if (found >= needed)
+                        {
+                            break;
+                        }
+                    }
+                }
+                if (found < needed
+                    && (forcedForRole == null || !forcedForRole.ContainsKey(role.id)))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        internal static bool LooksLikeMissingRequiredRole(string reason, Precept_Ritual ritual)
+        {
+            if (reason.NullOrEmpty() || ritual?.behavior?.def?.roles == null)
+            {
+                return false;
+            }
+            foreach (RitualRole role in ritual.behavior.def.roles)
+            {
+                if (!role.required || role.substitutable)
+                {
+                    continue;
+                }
+                if (!role.noCandidatesGizmoDesc.NullOrEmpty()
+                    && reason == role.noCandidatesGizmoDesc)
+                {
+                    return true;
+                }
+                string article = role.missingDesc
+                    ?? Find.ActiveLanguageWorker.WithIndefiniteArticle(role.Label);
+                string expected = "MessageNoRequiredRolePawnToBeginRitual"
+                    .Translate(article, ritual.Label);
+                if (reason == expected || reason == (string)expected)
+                {
+                    return true;
+                }
+                Precept precept = ritual.ideo?.PreceptsListForReading
+                    ?.FirstOrDefault(p => p.def == role.precept);
+                if (precept != null)
+                {
+                    string needRole = "MessageNeedAssignedRoleToBeginRitual".Translate(
+                        role.missingDesc
+                            ?? Find.ActiveLanguageWorker.WithIndefiniteArticle(precept.LabelCap),
+                        ritual.Label);
+                    if (reason == needRole || reason == (string)needRole)
+                    {
+                        return true;
+                    }
+                }
+                // Loose match for plural/merge-id wording and translation variants.
+                if (reason.IndexOf(role.Label, System.StringComparison.OrdinalIgnoreCase) >= 0
+                    && reason.IndexOf(ritual.Label, System.StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     // Widen the ritual dialog's candidate pool to the whole level graph.
@@ -88,23 +229,43 @@ namespace Strata
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            MethodInfo original = AccessTools.PropertyGetter(typeof(MapPawns), nameof(MapPawns.FreeColonistsAndPrisonersSpawned));
-            MethodInfo replacement = AccessTools.Method(typeof(RitualTravelUtility), nameof(RitualTravelUtility.ColonistsAndPrisonersAcrossLevels));
-            bool patched = false;
-            foreach (CodeInstruction instruction in instructions)
+            return RitualTravelUtility.TranspileFreeColonistsAndPrisoners(
+                instructions,
+                "[Strata] Could not widen the ritual dialog to other levels (candidate pool call not found).");
+        }
+    }
+
+    // Gather-for-childbirth (and other ritual gizmos) call CanStartRitualNow,
+    // which only scans the target map for required roles (e.g. doctor). A
+    // Postfix re-check is more reliable than IL matching here — when the
+    // failure is "need a doctor", clear it if a capable colonist exists on a
+    // linked floor. RitualTravel still walks them in after start.
+    [HarmonyPatch(typeof(RitualBehaviorWorker), nameof(RitualBehaviorWorker.CanStartRitualNow))]
+    public static class Patch_CanStartRitualNow_AcrossLevels
+    {
+        public static void Postfix(
+            TargetInfo target,
+            Precept_Ritual ritual,
+            Dictionary<string, Pawn> forcedForRole,
+            ref string __result)
+        {
+            if (__result == null
+                || target.Map == null
+                || ritual?.behavior?.def?.roles == null)
             {
-                if (!patched && instruction.Calls(original))
-                {
-                    patched = true;
-                    yield return new CodeInstruction(OpCodes.Call, replacement)
-                        .WithLabels(instruction.labels).WithBlocks(instruction.blocks);
-                    continue;
-                }
-                yield return instruction;
+                return;
             }
-            if (!patched)
+            if (StrataMod.Settings != null && !StrataMod.Settings.crossLevelRitualsEnabled)
             {
-                Log.Warning("[Strata] Could not widen the ritual dialog to other levels (candidate pool call not found).");
+                return;
+            }
+            if (!RitualTravelUtility.LooksLikeMissingRequiredRole(__result, ritual))
+            {
+                return;
+            }
+            if (RitualTravelUtility.HasRequiredRolesAcrossLevels(target, ritual, forcedForRole))
+            {
+                __result = null;
             }
         }
     }
@@ -157,19 +318,34 @@ namespace Strata
             {
                 return;
             }
-            foreach (Pawn pawn in assignments.Participants)
+            var sent = new HashSet<Pawn>();
+            void TrySend(Pawn pawn)
             {
-                if (pawn == null || !pawn.Spawned || pawn.MapHeld == target.Map)
+                if (pawn == null || !sent.Add(pawn) || !pawn.Spawned || pawn.MapHeld == target.Map)
                 {
-                    continue;
+                    return;
                 }
                 if (pawn.IsFreeColonist)
                 {
-                    travel.Register(pawn, target.Map, lord, assignments);
+                    travel.Register(pawn, target.Map, lord, assignments, target.Cell);
                 }
                 else if (RitualEscortUtility.NeedsEscort(pawn))
                 {
-                    travel.RegisterEscorted(pawn, target.Map, lord, assignments);
+                    travel.RegisterEscorted(pawn, target.Map, lord, assignments, target.Cell);
+                }
+            }
+
+            foreach (Pawn pawn in assignments.Participants)
+            {
+                TrySend(pawn);
+            }
+            // Childbirth doctor/mother use countsAsParticipant=false but are still
+            // in Participants via RoleForPawn; also pull AssignedPawns explicitly.
+            foreach (RitualRole role in assignments.AllRolesForReading)
+            {
+                foreach (Pawn pawn in assignments.AssignedPawns(role))
+                {
+                    TrySend(pawn);
                 }
             }
         }
@@ -190,6 +366,7 @@ namespace Strata
             public Pawn escort;
             public int started;
             public bool escorted;
+            public IntVec3 preferArrivalNear;
 
             public void ExposeData()
             {
@@ -199,6 +376,7 @@ namespace Strata
                 Scribe_References.Look(ref escort, "escort");
                 Scribe_Values.Look(ref started, "started");
                 Scribe_Values.Look(ref escorted, "escorted");
+                Scribe_Values.Look(ref preferArrivalNear, "preferArrivalNear");
             }
         }
 
@@ -228,7 +406,12 @@ namespace Strata
             }
         }
 
-        public void Register(Pawn pawn, Map destination, Lord lord, RitualRoleAssignments assignments = null)
+        public void Register(
+            Pawn pawn,
+            Map destination,
+            Lord lord,
+            RitualRoleAssignments assignments = null,
+            IntVec3 preferArrivalNear = default)
         {
             travelers.RemoveAll(t => t.pawn == pawn);
             var traveler = new Traveler
@@ -238,6 +421,7 @@ namespace Strata
                 lord = lord,
                 started = Find.TickManager.TicksGame,
                 escorted = false,
+                preferArrivalNear = preferArrivalNear,
             };
             travelers.Add(traveler);
             if (assignments != null)
@@ -247,7 +431,12 @@ namespace Strata
             TryAdvance(traveler);
         }
 
-        public void RegisterEscorted(Pawn pawn, Map destination, Lord lord, RitualRoleAssignments assignments)
+        public void RegisterEscorted(
+            Pawn pawn,
+            Map destination,
+            Lord lord,
+            RitualRoleAssignments assignments,
+            IntVec3 preferArrivalNear = default)
         {
             travelers.RemoveAll(t => t.pawn == pawn);
             var traveler = new Traveler
@@ -257,6 +446,7 @@ namespace Strata
                 lord = lord,
                 started = Find.TickManager.TicksGame,
                 escorted = true,
+                preferArrivalNear = preferArrivalNear,
             };
             travelers.Add(traveler);
             if (assignments != null)
@@ -337,7 +527,8 @@ namespace Strata
             {
                 return;
             }
-            MapPortal step = LevelGraph.BestFirstStep(pawn.Map, t.destination, pawn.Position);
+            MapPortal step = LevelGraph.BestFirstStep(
+                pawn.Map, t.destination, pawn.Position, pawn, t.preferArrivalNear);
             if (step != null && step.Spawned && step.IsEnterable(out _)
                 && pawn.CanReach(step, PathEndMode.Touch, Danger.Some))
             {
@@ -366,7 +557,8 @@ namespace Strata
             {
                 return;
             }
-            MapPortal step = LevelGraph.BestFirstStep(escortee.Map, t.destination, escortee.Position);
+            MapPortal step = LevelGraph.BestFirstStep(
+                escortee.Map, t.destination, escortee.Position, escortee, t.preferArrivalNear);
             if (step == null || !step.Spawned || !step.IsEnterable(out _))
             {
                 return;

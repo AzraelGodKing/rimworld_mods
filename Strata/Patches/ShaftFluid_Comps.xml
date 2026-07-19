@@ -84,6 +84,30 @@
 
   <Operation Class="PatchOperationFindMod">
     <mods>
+      <li>VanillaExpanded.Temperature</li>
+    </mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_VTE"]/comps</xpath>
+          <value>
+            <li Class="PipeSystem.CompProperties_Resource">
+              <pipeNet>VTE_EfficiencyNet</pipeNet>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/PipeSystem.PipeNetDef[defName="VTE_EfficiencyNet"]/pipeDefs</xpath>
+          <value>
+            <li>Strata_ShaftFluid_VTE</li>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationFindMod">
+    <mods>
       <li>Dubwise.Rimefeller</li>
     </mods>
     <match Class="PatchOperationSequence">

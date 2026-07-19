@@ -58,6 +58,16 @@ namespace Strata
                     {
                         merged.Add(colonists[j]);
                     }
+
+                    // Prison beds need prisoners from every linked floor too.
+                    if (parent is Building_Bed bed && bed.ForPrisoners)
+                    {
+                        List<Pawn> prisoners = other.mapPawns.PrisonersOfColony;
+                        for (int j = 0; j < prisoners.Count; j++)
+                        {
+                            merged.Add(prisoners[j]);
+                        }
+                    }
                 }
                 else
                 {

@@ -4,14 +4,19 @@ using Verse;
 
 namespace Strata
 {
-    // After VEF registers a pipe connector, link same-cell shaft helixien junctions too.
+    // After VEF registers a pipe connector, link same-cell shaft junctions too
+    // (Helixien gas, VTE air ducts, etc.).
     [HarmonyPatch]
     internal static class Patch_VefShaftFluidPipeNet
     {
         private static bool Prepare()
         {
+            if (!ModsConfig.IsActive("OskarPotocki.VanillaFactionsExpanded.Core"))
+            {
+                return false;
+            }
             return ModsConfig.IsActive("VanillaExpanded.HelixienGas")
-                && ModsConfig.IsActive("OskarPotocki.VanillaFactionsExpanded.Core");
+                || ModsConfig.IsActive("VanillaExpanded.Temperature");
         }
 
         private static MethodBase TargetMethod()

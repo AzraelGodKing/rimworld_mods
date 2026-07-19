@@ -11,6 +11,9 @@ namespace Strata
         Haul,
         Medical,
         Joy,
+        Childcare,
+        Warden,
+        ForcedOrder,
     }
 
     // Lightweight coordination so a whole colony of idle pawns doesn't stampede

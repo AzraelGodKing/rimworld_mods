@@ -38,7 +38,9 @@ namespace Strata
 
             // Direction-specific research / stack rules.
             if (thingDef?.defName == "Strata_GravshipStairsBuildUp"
-                || thingDef?.thingClass == typeof(Building_GravshipStairsBuildUp))
+                || thingDef?.defName == "Strata_GravshipElevatorBuildUp"
+                || thingDef?.thingClass == typeof(Building_GravshipStairsBuildUp)
+                || thingDef?.thingClass == typeof(Building_GravshipElevatorBuildUp))
             {
                 if (!LevelBuildUpUtility.CanOpenNewLevelAbove(map, out string upReason, thingToIgnore))
                 {

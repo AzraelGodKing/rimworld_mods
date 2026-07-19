@@ -5,10 +5,10 @@ using Verse.AI;
 
 namespace Strata
 {
-    // Pick up a thing, carry it to a stairwell, then hand off to the vanilla
-    // EnterPortal job. carryThingAfterJob keeps the load in the pawn's hands
-    // through the handoff; vanilla drops it at the far landing when the enter
-    // job finishes, and normal hauling on that level puts it into storage.
+    // Pick up a thing, carry it to a stairwell, then EnterPortal. Dest map +
+    // return map are remembered so PortalRelayChain can multi-hop and finish
+    // into a stockpile (vanilla clears jobs after OnEntered and often fails to
+    // drop cargo at crowded landings).
     public class JobDriver_HaulToLevel : JobDriver
     {
         private Thing Item => job.GetTarget(TargetIndex.A).Thing;
@@ -35,14 +35,87 @@ namespace Strata
             Toil enter = ToilMaker.MakeToil("EnterStairs");
             enter.initAction = delegate
             {
-                if (Portal.Spawned && Portal.IsEnterable(out _))
+                if (Portal == null || !Portal.Spawned || !Portal.IsEnterable(out _))
                 {
-                    Job enterJob = JobMaker.MakeJob(JobDefOf.EnterPortal, Portal);
-                    pawn.jobs.jobQueue.EnqueueFirst(enterJob, JobTag.Misc);
+                    return;
                 }
+
+                if (HaulToLevelTargets.TryTake(pawn, out Map destMap, out Map sourceMap)
+                    && destMap != null)
+                {
+                    PortalRelayChain.Mark(
+                        pawn,
+                        destMap,
+                        RelayPurpose.Haul,
+                        preferredBed: null,
+                        returnMap: sourceMap);
+                }
+
+                Job enterJob = JobMaker.MakeJob(JobDefOf.EnterPortal, Portal);
+                pawn.jobs.jobQueue.EnqueueFirst(enterJob, JobTag.Misc);
             };
             enter.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return enter;
+        }
+    }
+
+    // Final dest map for HaulToLevel (may be multi-hop past the first stair).
+    internal static class HaulToLevelTargets
+    {
+        private struct Target
+        {
+            public int destMapId;
+            public int sourceMapId;
+        }
+
+        private static readonly Dictionary<int, Target> pending = new Dictionary<int, Target>();
+
+        internal static void Remember(Pawn pawn, Map destMap, Map sourceMap)
+        {
+            if (pawn == null || destMap == null || sourceMap == null)
+            {
+                return;
+            }
+
+            pending[pawn.thingIDNumber] = new Target
+            {
+                destMapId = destMap.uniqueID,
+                sourceMapId = sourceMap.uniqueID,
+            };
+        }
+
+        internal static bool TryTake(Pawn pawn, out Map destMap, out Map sourceMap)
+        {
+            destMap = null;
+            sourceMap = null;
+            if (pawn == null || !pending.TryGetValue(pawn.thingIDNumber, out Target t))
+            {
+                return false;
+            }
+
+            pending.Remove(pawn.thingIDNumber);
+            destMap = FindMap(t.destMapId);
+            sourceMap = FindMap(t.sourceMapId);
+            return destMap != null;
+        }
+
+        internal static void ResetSession()
+        {
+            pending.Clear();
+        }
+
+        private static Map FindMap(int uniqueId)
+        {
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (maps[i].uniqueID == uniqueId)
+                {
+                    return maps[i];
+                }
+            }
+
+            return null;
         }
     }
 }
