@@ -165,18 +165,26 @@ namespace Strata
             Map destMap,
             bool touchCooldown,
             RelayPurpose purpose = RelayPurpose.Work,
-            Building_Bed preferredBed = null)
+            Building_Bed preferredBed = null,
+            IntVec3 preferArrivalNear = default)
         {
             if (pawn == null || destMap == null || destMap == pawn.Map)
             {
                 return null;
             }
 
-            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, destMap, pawn.Position, pawn);
+            if ((!preferArrivalNear.IsValid || !preferArrivalNear.InBounds(destMap))
+                && preferredBed != null && preferredBed.Spawned && preferredBed.Map == destMap)
+            {
+                preferArrivalNear = preferredBed.Position;
+            }
+
+            MapPortal firstStep = LevelGraph.BestFirstStep(
+                pawn.Map, destMap, pawn.Position, pawn, preferArrivalNear);
             Job job = MakePortalJob(pawn, firstStep, touchCooldown);
             if (job != null)
             {
-                PortalRelayChain.Mark(pawn, destMap, purpose, preferredBed);
+                PortalRelayChain.Mark(pawn, destMap, purpose, preferredBed, preferArrivalNear: preferArrivalNear);
             }
 
             return job;

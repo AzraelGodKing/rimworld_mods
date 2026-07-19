@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "7QxQFdNjU5o=",
+  "success": true,
+  "projectFilePath": "F:\\Repositories\\rimworld_mods\\Strata\\Tools\\_reflect_tmp\\r.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Myleek\\AppData\\Local\\Temp\\cursor-sandbox-cache\\bf5f3a0fe10b9efbe8fd2ba2162643dd\\nuget\\system.collections.immutable\\8.0.0\\system.collections.immutable.8.0.0.nupkg.sha512",
+    "C:\\Users\\Myleek\\AppData\\Local\\Temp\\cursor-sandbox-cache\\bf5f3a0fe10b9efbe8fd2ba2162643dd\\nuget\\system.reflection.metadata\\8.0.0\\system.reflection.metadata.8.0.0.nupkg.sha512",
+    "C:\\Users\\Myleek\\AppData\\Local\\Temp\\cursor-sandbox-cache\\bf5f3a0fe10b9efbe8fd2ba2162643dd\\nuget\\system.reflection.metadataloadcontext\\8.0.0\\system.reflection.metadataloadcontext.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

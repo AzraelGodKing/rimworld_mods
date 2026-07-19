@@ -144,10 +144,7 @@ namespace Strata
                 parent.Tile = newHost.Tile;
             }
             PocketMapColonyTileUtility.TryAssign(pocket);
-            if (StrataMapUtility.IsUpperLevel(pocket))
-            {
-                UpperDeckUtility.SyncAllFromSource(pocket);
-            }
+            // Footprint repaint runs in AlignPocketsToLandedShip after content shift.
         }
 
         public static void RebindAll(IEnumerable<Map> pockets, Map newHost)

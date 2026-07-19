@@ -24,6 +24,7 @@
     <li>Dubwise.Rimatomics</li>
     <li>Dubwise.Rimefeller</li>
     <li>VanillaExpanded.VChemfuelE</li>
+    <li>VanillaExpanded.Temperature</li>
     <li>AzraelGodKing.Homesteader</li>
     <li>AzraelGodKing.Stormproof</li>
     <li>BiomesTeam.BiomesCore</li>
@@ -71,7 +72,7 @@ MINE ATMOSPHERE
 Methane, black damp, fungal spores, and steam each behave differently underground, with counter buildings once you research mine atmosphere.
 
 FLUID SHAFTS
-Optional cross-level junctions beside stairwells tie pipe networks between floors when the matching mods are loaded: Dubs Bad Hygiene plumbing, Dubs Central Heating, Rimatomics coolant, helixien gas, chemfuel, and crude oil.
+Optional cross-level junctions beside stairwells tie pipe networks between floors when the matching mods are loaded: Dubs Bad Hygiene plumbing, Dubs Central Heating, Rimatomics coolant, helixien gas, Vanilla Temperature Expanded air ducts, chemfuel, and crude oil.
 
 EVENTS THAT KNOW WHICH WAY IS UP
 Underground levels are sealed rock, so the sky cannot reach them: solar flares, eclipses, toxic fallout, weather, and raids with no way in are suppressed below ground. What can reach you lives in the dark - infestations, cave-ins, breached gas pockets, gas firestorms, deep sieges, cave breakthroughs, rich ore nodes, and rare burrowing raiders. World quest sites (collapsed mine, sealed vault, geothermal vent) and optional ancient colony stairheads on the surface open multi-level adventures. Seal a stairwell to contain gas or bugs on one level.

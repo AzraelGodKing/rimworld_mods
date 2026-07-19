@@ -18,6 +18,9 @@
   <Strata_ShaftFluid_VHGE.label>шахтный газовый узел Helixien</Strata_ShaftFluid_VHGE.label>
   <Strata_ShaftFluid_VHGE.description>Передаёт трубопроводные сети Vanilla Helixien Gas Expanded между уровнями. Постройте рядом с шахтой и подключите газовые трубы Helixien к этому узлу на каждом этаже.</Strata_ShaftFluid_VHGE.description>
 
+  <Strata_ShaftFluid_VTE.label>шахтный воздуховодный узел AC</Strata_ShaftFluid_VTE.label>
+  <Strata_ShaftFluid_VTE.description>Передаёт воздуховоды Vanilla Temperature Expanded между уровнями. Постройте рядом с шахтой и подключите воздуховоды к этому узлу на каждом этаже — наружные компрессоры и блок управления AC на поверхности смогут питать кондиционеры под землёй. КПД и правило одного контроллера общие для связанных этажей.</Strata_ShaftFluid_VTE.description>
+
   <Strata_ShaftFluid_VefChemfuel.label>шахтный химтопливный узел</Strata_ShaftFluid_VefChemfuel.label>
   <Strata_ShaftFluid_VefChemfuel.description>Передаёт трубопроводные сети Vanilla Chemfuel Expanded между уровнями. Постройте рядом с шахтой и подключите химтопливные трубы к этому узлу на каждом этаже.</Strata_ShaftFluid_VefChemfuel.description>
 

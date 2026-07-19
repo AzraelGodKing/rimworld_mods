@@ -249,6 +249,8 @@
   <Strata_RaidersBatteringPortal>Raiders are battering the sealed {0}!</Strata_RaidersBatteringPortal>
   <Strata_GravshipLevelsTravel>Strata: {0} linked level(s) will travel with the gravship.</Strata_GravshipLevelsTravel>
   <Strata_GravshipLevelsDocked>Strata: {0} linked level(s) docked with the gravship.</Strata_GravshipLevelsDocked>
+  <Strata_GravshipRescuedPawns>Strata: moved {0} prisoner(s)/baby(ies) onto the gravship so they would not be left behind.</Strata_GravshipRescuedPawns>
+  <Strata_GravshipLinkedLeftBehindWarn>Strata: these pawns are off the ship deck or on a linked floor that will not travel (prisoners/babies will be pulled aboard at launch): {0}</Strata_GravshipLinkedLeftBehindWarn>
 
   <!-- Letters -->
   <Strata_AncientStairwellLetterTitle>Ancient stairwell</Strata_AncientStairwellLetterTitle>

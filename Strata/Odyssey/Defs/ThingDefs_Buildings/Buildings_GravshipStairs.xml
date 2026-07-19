@@ -12,9 +12,11 @@
 
     <label>gravship stairwell</label>
 
-    <description>A compact shaft cut through the gravship deck into a Strata level below. Only placeable on gravship substructure. Linked floors travel with the ship on launch and reattach on landing.\n\nRequires digging down research. A second gravship stairwell joins the same deck below.</description>
+    <description>A compact shaft cut through the gravship deck into a Strata level below. Only placeable on gravship substructure. The underdeck opening matches the ship footprint exactly. Linked floors travel with the ship on launch and reattach on landing.\n\nRequires digging down research. A second gravship stairwell joins the same deck below.</description>
 
     <thingClass>Strata.Building_GravshipStairsDown</thingClass>
+
+    <bringAlongOnGravship>true</bringAlongOnGravship>
 
     <graphicData>
 
@@ -178,9 +180,11 @@
 
     <label>gravship tower stairwell</label>
 
-    <description>A shaft from the gravship deck into an outdoor Strata roof deck above. Only placeable on gravship substructure. Linked floors travel with the ship.\n\nBuildable area on the upper deck follows gravship substructure on the deck below (plus the shaft plaza). Extend substructure on the ship to grow the roof deck. Requires building up research.</description>
+    <description>A shaft from the gravship deck into an outdoor Strata roof deck above. Only placeable on gravship substructure. The upper deck matches the ship footprint exactly (extend substructure on the ship to grow it). Linked floors travel with the ship.\n\nRequires building up research.</description>
 
     <thingClass>Strata.Building_GravshipStairsBuildUp</thingClass>
+
+    <bringAlongOnGravship>true</bringAlongOnGravship>
 
     <graphicData>
 
