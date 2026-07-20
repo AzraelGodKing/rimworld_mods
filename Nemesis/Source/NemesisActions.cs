@@ -762,6 +762,7 @@ namespace Nemesis
         /// <summary>
         /// "Nobody kills you but me" — spawn nemesis allied against raiders briefly.
         /// Does not increment escapeCount / does not trip colony hostility.
+        /// Temporarily sets a non-hostile faction so player turrets do not auto-target.
         /// </summary>
         public static bool TryStartRivalCameo(NemesisData data, Map map, Faction raidFaction)
         {
@@ -781,6 +782,15 @@ namespace Nemesis
             {
                 if (nemesis.IsWorldPawn())
                     Find.WorldPawns.RemovePawn(nemesis);
+
+                // Scribe original faction, then park on a non-hostile one so turrets ignore them.
+                data.rivalCameoOriginalFaction = nemesis.Faction;
+                Faction tempFaction = FindCameoTempFaction(raidFaction);
+                if (tempFaction != null && tempFaction != nemesis.Faction)
+                {
+                    try { nemesis.SetFaction(tempFaction); }
+                    catch { /* fail-open — keep original faction */ }
+                }
 
                 if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out IntVec3 edge))
                     edge = CellFinder.RandomEdgeCell(map);
@@ -812,9 +822,10 @@ namespace Nemesis
             }
             catch
             {
-                // Fail-open — leave nemesis world-pinned if spawn failed mid-way.
+                // Fail-open — restore faction and leave nemesis world-pinned if spawn failed mid-way.
                 data.rivalCameoActive = false;
                 data.rivalCameoUntilTick = -1;
+                RestoreCameoFaction(data, nemesis);
                 return false;
             }
         }
@@ -824,6 +835,9 @@ namespace Nemesis
             if (data == null) return;
             data.rivalCameoActive = false;
             data.rivalCameoUntilTick = -1;
+
+            // Always restore faction first — EndHunt / mid-cameo cleanup may call this on any path.
+            RestoreCameoFaction(data, nemesis);
 
             if (nemesis == null || nemesis.Destroyed || nemesis.Dead || nemesis.IsPrisonerOfColony)
                 return;
@@ -835,6 +849,47 @@ namespace Nemesis
 
             NemesisRegistry.CachedNemesis = nemesis;
             NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
+        }
+
+        /// <summary>Non-hostile-to-player faction for cameo (prefer Ancients). Null if none available.</summary>
+        private static Faction FindCameoTempFaction(Faction raidFaction)
+        {
+            Faction ancients = Faction.OfAncients;
+            if (ancients != null && !ancients.IsPlayer && !ancients.HostileTo(Faction.OfPlayer)
+                && ancients != raidFaction)
+                return ancients;
+
+            List<Faction> all = Find.FactionManager.AllFactionsListForReading;
+            for (int i = 0; i < all.Count; i++)
+            {
+                Faction f = all[i];
+                if (f == null || f.IsPlayer || f.defeated) continue;
+                if (f.HostileTo(Faction.OfPlayer)) continue;
+                if (raidFaction != null && f == raidFaction) continue;
+                return f;
+            }
+
+            // Last resort: Ancients even if relation check failed; null faction is less stable.
+            return ancients;
+        }
+
+        /// <summary>Restore scribed pre-cameo faction. Fail-open; clears the scribe field either way.</summary>
+        public static void RestoreCameoFaction(NemesisData data, Pawn nemesis)
+        {
+            if (data == null) return;
+            Faction original = data.rivalCameoOriginalFaction;
+            data.rivalCameoOriginalFaction = null;
+            if (original == null) return;
+            if (nemesis == null || nemesis.Destroyed || nemesis.Dead) return;
+            try
+            {
+                if (nemesis.Faction != original)
+                    nemesis.SetFaction(original);
+            }
+            catch
+            {
+                // Fail-open — leave whatever faction they have.
+            }
         }
 
         private static void GraveDesecration(NemesisData data, Map map)

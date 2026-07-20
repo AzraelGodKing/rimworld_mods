@@ -830,6 +830,13 @@ namespace Nemesis
         {
             if (_data == null) return;
 
+            // Mid-cameo hunt end must restore the scribed original faction before despawn/release.
+            if (_data.rivalCameoActive || _data.rivalCameoOriginalFaction != null)
+            {
+                Pawn cameoPawn = FindNemesisPawn();
+                NemesisActions.EndRivalCameo(_data, cameoPawn);
+            }
+
             string name = _data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
             RecordTrophy(reason);
             NemesisMood.NotifyHuntEnded(_data, reason);

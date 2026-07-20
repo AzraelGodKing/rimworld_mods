@@ -91,6 +91,8 @@
   <Nemesis_Letter_DeadAnimalBody>A small animal lies dead near the colony edge, a note pinned beside it. {0} is thinking about {1}.</Nemesis_Letter_DeadAnimalBody>
   <Nemesis_Letter_TrophyStolenTitle>{0}: Trophy</Nemesis_Letter_TrophyStolenTitle>
   <Nemesis_Letter_TrophyStolenBody>{0} took {1}. Not for money — for spite. Aimed at {2}.</Nemesis_Letter_TrophyStolenBody>
+  <Nemesis_UseLabel_CallingCard>Read calling card...</Nemesis_UseLabel_CallingCard>
+  <Nemesis_UseLabel_Journal>Read journal...</Nemesis_UseLabel_Journal>
   <Nemesis_Note_CardTitle>Calling card</Nemesis_Note_CardTitle>
   <Nemesis_Note_JournalTitle>Nemesis journal</Nemesis_Note_JournalTitle>
   <Nemesis_Note_DefaultBody>The ink is smeared. Whoever wrote this wanted you afraid.</Nemesis_Note_DefaultBody>

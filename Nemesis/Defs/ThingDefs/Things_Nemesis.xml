@@ -6,7 +6,8 @@
     <label>calling card</label>
     <description>A scrap of paper, cloth, or bone marked with a personal message. Someone wanted you to know they were here.</description>
     <graphicData>
-      <texPath>Things/Item/Special/Harddrive</texPath>
+      <!-- Core resource path (Harddrive is not a confirmed Core texture). Cloth matches "scrap of cloth". -->
+      <texPath>Things/Item/Resource/Cloth</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>0.6</drawSize>
     </graphicData>
@@ -22,6 +23,11 @@
     <stackLimit>1</stackLimit>
     <tradeability>None</tradeability>
     <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>UseItem</useJob>
+        <useLabel>Nemesis_UseLabel_CallingCard</useLabel>
+        <compClass>CompUsable</compClass>
+      </li>
       <li Class="CompProperties_UseEffect">
         <compClass>Nemesis.CompUseEffect_NemesisNote</compClass>
       </li>
@@ -33,7 +39,8 @@
     <label>nemesis journal</label>
     <description>A battered notebook filled with obsessive notes about a colony and a single person. Reading it feels like being watched.</description>
     <graphicData>
-      <texPath>Things/Item/Book/Textbook</texPath>
+      <!-- Core Graphic_Single path. Textbook book textures are multi-dir; avoid pink squares. -->
+      <texPath>Things/Item/Resource/ComponentIndustrial</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>0.7</drawSize>
     </graphicData>
@@ -49,6 +56,11 @@
     <stackLimit>1</stackLimit>
     <tradeability>None</tradeability>
     <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>UseItem</useJob>
+        <useLabel>Nemesis_UseLabel_Journal</useLabel>
+        <compClass>CompUsable</compClass>
+      </li>
       <li Class="CompProperties_UseEffect">
         <compClass>Nemesis.CompUseEffect_NemesisNote</compClass>
       </li>

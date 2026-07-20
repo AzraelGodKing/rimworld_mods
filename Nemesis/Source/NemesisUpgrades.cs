@@ -67,10 +67,40 @@ namespace Nemesis
                 Apparel apparel = (Apparel)ThingMaker.MakeThing(pick, pick.MadeFromStuff ? GenStuff.DefaultStuffFor(pick) : null);
                 if (apparel == null) return null;
                 if (nemesis.apparel == null) return null;
-                // Force-wear; drop conflicting pieces into inventory if needed.
-                if (nemesis.apparel.WornApparelCount > 0)
-                    ApparelUtility.HasPartsToWear(nemesis, pick);
-                nemesis.apparel.Wear(apparel, dropReplacedApparel: true);
+                // Spawned: drop replaced. Unspawned: destroy replaced — drop needs a map.
+                if (nemesis.Spawned)
+                {
+                    nemesis.apparel.Wear(apparel, dropReplacedApparel: true);
+                }
+                else
+                {
+                    List<Apparel> toDestroy = null;
+                    List<Apparel> worn = nemesis.apparel.WornApparel;
+                    if (worn != null)
+                    {
+                        for (int i = 0; i < worn.Count; i++)
+                        {
+                            Apparel w = worn[i];
+                            if (w == null) continue;
+                            if (!ApparelUtility.CanWearTogether(pick, w.def, nemesis.RaceProps.body))
+                            {
+                                toDestroy ??= new List<Apparel>();
+                                toDestroy.Add(w);
+                            }
+                        }
+                    }
+                    if (toDestroy != null)
+                    {
+                        for (int i = 0; i < toDestroy.Count; i++)
+                        {
+                            Apparel w = toDestroy[i];
+                            nemesis.apparel.Remove(w);
+                            if (!w.Destroyed)
+                                w.Destroy(DestroyMode.Vanish);
+                        }
+                    }
+                    nemesis.apparel.Wear(apparel, dropReplacedApparel: false);
+                }
                 return "Nemesis_Upgrade_Armor".Translate(apparel.LabelNoCount);
             }
             catch
@@ -105,6 +135,10 @@ namespace Nemesis
                 Thing weapon = ThingMaker.MakeThing(pick, pick.MadeFromStuff ? GenStuff.DefaultStuffFor(pick) : null);
                 if (weapon == null) return null;
                 if (nemesis.equipment == null) return null;
+                // AddEquipment errors if a primary already exists — destroy it first.
+                ThingWithComps primary = nemesis.equipment.Primary;
+                if (primary != null)
+                    nemesis.equipment.DestroyEquipment(primary);
                 nemesis.equipment.AddEquipment((ThingWithComps)weapon);
                 return "Nemesis_Upgrade_Weapon".Translate(weapon.LabelNoCount);
             }

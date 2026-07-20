@@ -175,6 +175,8 @@ namespace Nemesis
         // --- Rival cameo (Phase 2) — dedicated bools; do NOT reuse lastActionKind=-2 ---
         public bool rivalCameoActive;
         public int rivalCameoUntilTick = -1;
+        /// <summary>Faction before cameo SetFaction; restored on cameo end / hunt end. Null = legacy / no change.</summary>
+        public Faction rivalCameoOriginalFaction;
 
         // --- Physical evidence (Phase 3) ---
         public int stolenTrophyThingId = -1;
@@ -346,6 +348,7 @@ namespace Nemesis
             Scribe_Values.Look(ref archetype, "archetype", NemesisArchetype.Stalker);
             Scribe_Values.Look(ref rivalCameoActive, "rivalCameoActive", false);
             Scribe_Values.Look(ref rivalCameoUntilTick, "rivalCameoUntilTick", -1);
+            Scribe_References.Look(ref rivalCameoOriginalFaction, "rivalCameoOriginalFaction");
             Scribe_Values.Look(ref stolenTrophyThingId, "stolenTrophyThingId", -1);
             Scribe_Values.Look(ref stolenTrophyDefName, "stolenTrophyDefName", null);
             Scribe_Values.Look(ref stolenTrophyLabel, "stolenTrophyLabel", null);
