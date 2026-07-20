@@ -315,6 +315,18 @@ namespace Nemesis
             if (raidFaction == null || raidFaction.IsPlayer) return;
             Faction nemesisFaction = NemesisActions.FindFaction(comp.Data);
             if (nemesisFaction != null && raidFaction == nemesisFaction) return;
+
+            Map map = parms.target as Map;
+            if (map == null) map = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+
+            // Rival cameo first (Obsessed+, setting chance) — else credit letter.
+            if (comp.Data.Phase >= NemesisHuntPhase.Obsessed
+                && !comp.Data.rivalCameoActive
+                && Rand.Chance(NemesisMod.Settings?.rivalCameoChance ?? 0.12f)
+                && map != null
+                && NemesisActions.TryStartRivalCameo(comp.Data, map, raidFaction))
+                return;
+
             if (!Rand.Chance(NemesisMod.Settings?.raidCreditChance ?? 0.15f)) return;
 
             Find.LetterStack.ReceiveLetter(

@@ -169,6 +169,10 @@ namespace Nemesis
         // --- Personality (Phase 1) ---
         public NemesisArchetype archetype = NemesisArchetype.Stalker;
 
+        // --- Rival cameo (Phase 2) — dedicated bools; do NOT reuse lastActionKind=-2 ---
+        public bool rivalCameoActive;
+        public int rivalCameoUntilTick = -1;
+
         public float EffectiveAggression
         {
             get
@@ -295,6 +299,8 @@ namespace Nemesis
             Scribe_Values.Look(ref graveVisitTick, "graveVisitTick", -1);
             Scribe_Values.Look(ref graveVisitDone, "graveVisitDone", false);
             Scribe_Values.Look(ref archetype, "archetype", NemesisArchetype.Stalker);
+            Scribe_Values.Look(ref rivalCameoActive, "rivalCameoActive", false);
+            Scribe_Values.Look(ref rivalCameoUntilTick, "rivalCameoUntilTick", -1);
         }
     }
 }

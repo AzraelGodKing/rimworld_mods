@@ -46,6 +46,9 @@ namespace Nemesis
         /// <summary>Consecutive ignored actions before the "you're not answering" escalation.</summary>
         public int ignoredActionsThreshold = 3;
 
+        /// <summary>Chance a foreign raid gets a "nobody kills you but me" cameo (Obsessed+).</summary>
+        public float rivalCameoChance = 0.12f;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -75,6 +78,7 @@ namespace Nemesis
             Scribe_Values.Look(ref actionWeightInformant, "actionWeightInformant", 0.05f);
             Scribe_Values.Look(ref raidCreditChance, "raidCreditChance", 0.15f);
             Scribe_Values.Look(ref ignoredActionsThreshold, "ignoredActionsThreshold", 3);
+            Scribe_Values.Look(ref rivalCameoChance, "rivalCameoChance", 0.12f);
         }
 
         public void ResetToDefaults()
@@ -111,6 +115,7 @@ namespace Nemesis
             actionWeightInformant = 0.05f;
             raidCreditChance = 0.15f;
             ignoredActionsThreshold = 3;
+            rivalCameoChance = 0.12f;
 
             if (preset == NemesisDifficultyPreset.Subtle)
             {

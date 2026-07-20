@@ -87,6 +87,10 @@ namespace Nemesis
             if (_data.sniperActive && tick % 60 == 0)
                 TickSniperTerror(tick);
 
+            // Rival cameo leave window (does not use sniper plumbing for hostility).
+            if (_data.rivalCameoActive && tick % 60 == 0)
+                TickRivalCameo(tick);
+
             // Food tampering delayed reveal.
             if (_data.taintedFoodThingId > 0 && !_data.taintedRevealed
                 && _data.taintedRevealTick > 0 && tick >= _data.taintedRevealTick)
@@ -375,6 +379,12 @@ namespace Nemesis
 
         public void HandleLethalDamage(Pawn nemesis)
         {
+            // Rival cameo is a cameo — leave without counting as an escape.
+            if (_data.rivalCameoActive)
+            {
+                NemesisActions.EndRivalCameo(_data, nemesis);
+                return;
+            }
             TelegraphImmortality(nemesis);
             if (_data.escapeCount >= MaxEscapes)
                 SubdueNemesis(nemesis, fromLethalDamage: true);
@@ -419,11 +429,16 @@ namespace Nemesis
             _data.lastEscapeTick = Find.TickManager.TicksGame;
             _data.nextActionTick = Find.TickManager.TicksGame + 120000;
 
+            string upgradeLine = NemesisUpgrades.TryApplyEscapeUpgrade(nemesis);
+            string body = NemesisTaunts.EscapeLetterBody(_data);
+            if (!string.IsNullOrEmpty(upgradeLine))
+                body += "\n\n" + upgradeLine;
+
             GlobalTargetInfo lookTarget = map != null ? new GlobalTargetInfo(pos, map) : GlobalTargetInfo.Invalid;
 
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_EscapeTitle".Translate(_data.nemesisName),
-                NemesisTaunts.EscapeLetterBody(_data),
+                body,
                 LetterDefOf.NeutralEvent,
                 lookTarget);
 
@@ -752,6 +767,16 @@ namespace Nemesis
                     }
                 }
                 _data.sniperShotsLeft--;
+            }
+        }
+
+        private void TickRivalCameo(int tick)
+        {
+            Pawn nemesis = FindNemesisPawn();
+            if (nemesis == null || !nemesis.Spawned || nemesis.Dead || nemesis.IsPrisonerOfColony
+                || tick >= _data.rivalCameoUntilTick)
+            {
+                NemesisActions.EndRivalCameo(_data, nemesis);
             }
         }
 

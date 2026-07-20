@@ -42,6 +42,7 @@
   <Nemesis_Settings_WeightFoodTamper>Food tampering: {0}</Nemesis_Settings_WeightFoodTamper>
   <Nemesis_Settings_WeightInformant>Informant reveal: {0}</Nemesis_Settings_WeightInformant>
   <Nemesis_Settings_RaidCredit>Raid credit-taking chance: {0}%</Nemesis_Settings_RaidCredit>
+  <Nemesis_Settings_RivalCameo>Rival cameo chance: {0}%</Nemesis_Settings_RivalCameo>
   <Nemesis_Settings_IgnoredThreshold>Ignored-action threshold: {0}</Nemesis_Settings_IgnoredThreshold>
   <Nemesis_Settings_Status>Active hunt: {0} — {3} / phase {1} (aggression {2})</Nemesis_Settings_Status>
   <Nemesis_Settings_TrophyLedger>Trophy ledger</Nemesis_Settings_TrophyLedger>
@@ -71,6 +72,12 @@
   <Nemesis_Letter_CaravanStolenBody>{0} hit the caravan {1} and took what they wanted. Not ruined — taken.</Nemesis_Letter_CaravanStolenBody>
   <Nemesis_Letter_FireTitle>{0}: Fire</Nemesis_Letter_FireTitle>
   <Nemesis_Letter_FireBody>Flames near the crops or wood. {0} left no signature but the heat — and a message for {1}.</Nemesis_Letter_FireBody>
+
+  <Nemesis_Upgrade_Armor>They left better prepared — wearing {0}.</Nemesis_Upgrade_Armor>
+  <Nemesis_Upgrade_Weapon>They left better armed — now carrying {0}.</Nemesis_Upgrade_Weapon>
+  <Nemesis_Upgrade_Bionic>They left changed — a {0} where their {1} used to be.</Nemesis_Upgrade_Bionic>
+  <Nemesis_Letter_RivalCameoTitle>{0}: Nobody Else</Nemesis_Letter_RivalCameoTitle>
+  <Nemesis_Letter_RivalCameoBody>{0} appears on the edge of the fight against {1}.\n\n"Nobody kills {2} but me."\n\nThey are not here for your walls.</Nemesis_Letter_RivalCameoBody>
 
   <Nemesis_Phase_Watching>Watching</Nemesis_Phase_Watching>
   <Nemesis_Phase_Testing>Testing</Nemesis_Phase_Testing>

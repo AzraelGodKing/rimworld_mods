@@ -172,6 +172,7 @@ namespace Nemesis
             Weight(listing, "Nemesis_Settings_WeightFoodTamper", ref Settings.actionWeightFoodTamper);
             Weight(listing, "Nemesis_Settings_WeightInformant", ref Settings.actionWeightInformant);
             Slider(listing, "Nemesis_Settings_RaidCredit", ref Settings.raidCreditChance, 0f, 1f, pct: true);
+            Slider(listing, "Nemesis_Settings_RivalCameo", ref Settings.rivalCameoChance, 0f, 1f, pct: true);
 
             listing.Label("Nemesis_Settings_IgnoredThreshold".Translate(Settings.ignoredActionsThreshold));
             float ign = listing.Slider(Settings.ignoredActionsThreshold, 2f, 8f);

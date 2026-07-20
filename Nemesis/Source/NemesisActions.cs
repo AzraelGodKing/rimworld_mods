@@ -707,6 +707,84 @@ namespace Nemesis
             }
         }
 
+        /// <summary>
+        /// "Nobody kills you but me" — spawn nemesis allied against raiders briefly.
+        /// Does not increment escapeCount / does not trip colony hostility.
+        /// </summary>
+        public static bool TryStartRivalCameo(NemesisData data, Map map, Faction raidFaction)
+        {
+            if (data == null || !data.active || data.rivalCameoActive || data.sniperActive) return false;
+            if (data.Phase < NemesisHuntPhase.Obsessed) return false;
+            if (map == null || raidFaction == null) return false;
+
+            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            Pawn nemesis = comp?.FindNemesisPawn();
+            if (nemesis == null || nemesis.Spawned || nemesis.Dead || nemesis.IsPrisonerOfColony)
+                return false;
+
+            Faction home = FindFaction(data);
+            if (home != null && raidFaction == home) return false;
+
+            try
+            {
+                if (nemesis.IsWorldPawn())
+                    Find.WorldPawns.RemovePawn(nemesis);
+
+                if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out IntVec3 edge))
+                    edge = CellFinder.RandomEdgeCell(map);
+
+                GenSpawn.Spawn(nemesis, edge, map);
+                NemesisRegistry.CachedNemesis = nemesis;
+                NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
+
+                // AssistColony fights map hostiles (raiders) without treating the colony as the target.
+                if (nemesis.Faction != null && !nemesis.Faction.IsPlayer)
+                {
+                    LordMaker.MakeNewLord(
+                        nemesis.Faction,
+                        new LordJob_AssistColony(nemesis.Faction, edge),
+                        map,
+                        new[] { nemesis });
+                }
+
+                data.rivalCameoActive = true;
+                data.rivalCameoUntilTick = Find.TickManager.TicksGame + Rand.RangeInclusive(1800, 3500);
+
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_RivalCameoTitle".Translate(data.nemesisName),
+                    "Nemesis_Letter_RivalCameoBody".Translate(
+                        data.nemesisName, raidFaction.Name, NemesisTaunts.TargetPhrase(data)),
+                    LetterDefOf.ThreatSmall,
+                    nemesis);
+                return true;
+            }
+            catch
+            {
+                // Fail-open — leave nemesis world-pinned if spawn failed mid-way.
+                data.rivalCameoActive = false;
+                data.rivalCameoUntilTick = -1;
+                return false;
+            }
+        }
+
+        public static void EndRivalCameo(NemesisData data, Pawn nemesis)
+        {
+            if (data == null) return;
+            data.rivalCameoActive = false;
+            data.rivalCameoUntilTick = -1;
+
+            if (nemesis == null || nemesis.Destroyed || nemesis.Dead || nemesis.IsPrisonerOfColony)
+                return;
+
+            if (nemesis.Spawned)
+                nemesis.DeSpawn(DestroyMode.WillReplace);
+            if (!nemesis.IsWorldPawn())
+                Find.WorldPawns.PassToWorld(nemesis, PawnDiscardDecideMode.KeepForever);
+
+            NemesisRegistry.CachedNemesis = nemesis;
+            NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
+        }
+
         private static void GraveDesecration(NemesisData data, Map map)
         {
             List<Thing> targets = new List<Thing>();
