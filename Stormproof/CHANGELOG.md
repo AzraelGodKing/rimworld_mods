@@ -7,6 +7,8 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 ### Fixed
 - Research tab XML parse failure: escaped `&` in `Storm & grid research` (`&amp;`) so `Research_Stormproof.xml` loads again (was breaking all Stormproof research defs and prerequisites).
 - **Ion storm tick cost** — dampener shield checks and EMP candidate picks use plain loops instead of LINQ allocations.
+- Solar shield's electricity patch now targets `GameConditionManager.ElectricityDisabled(Map)`, which RimWorld 1.6 changed from a property to a method. The previous getter patch failed to apply and aborted the whole mod's Harmony initialization on startup.
+- Armored conduit: replaced the removed-in-1.6 `placingDraggableDimensions` field with `drawStyleCategory` (Conduits), keeping drag placement.
 
 ### Added
 - **Hazard hardening** (Spacer research) — late-game natural-incident defense layer:
@@ -34,8 +36,6 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 - Atmospheric control research project gating the storm caller.
 - Spire-caught lightning now charges storm capacitor banks first, then batteries.
 - Perfect grounding research (Spacer tech, requires flare shielding and advanced fabrication): eliminates the "Zzzt!" surge risk from grid-connected storm spires entirely.
-
-### Changed
 - Armored conduit sprite redrawn as segmented steel armor over visible copper wire and a gold power core, reading as armored cable rather than a floor plate.
 - Armored conduit sprite changed from cross junction to horizontal line segment to match vanilla conduit draw style.
 - Armored conduit redrawn as a thick continuous armored band (no segment gaps) so it stays visible on terrain and does not tile into a ladder pattern.
@@ -51,10 +51,6 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 - Batch alpha-cleaned all Stormproof building PNGs to strip baked white/gray backgrounds and edge halos.
 - Storm spire is now completely fireproof (flammability 0), and any fires ignited by a caught lightning strike within 3 cells of the spire are snuffed out. The spire keeps sweeping the area for 5 seconds after the strike, since the flame explosion expands over several ticks rather than instantly - a grounded rod shouldn't burn your base down.
 - Storm spire surge chance per caught strike lowered from 25% to 5%.
-
-### Fixed
-- Solar shield's electricity patch now targets `GameConditionManager.ElectricityDisabled(Map)`, which RimWorld 1.6 changed from a property to a method. The previous getter patch failed to apply and aborted the whole mod's Harmony initialization on startup.
-- Armored conduit: replaced the removed-in-1.6 `placingDraggableDimensions` field with `drawStyleCategory` (Conduits), keeping drag placement.
 
 ## [1.0.0] — Initial release
 

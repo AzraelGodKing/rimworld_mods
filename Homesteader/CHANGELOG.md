@@ -7,6 +7,29 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 ### Fixed
 - **Passive cooling performance** — root cellar / icehouse / springhouse cell cache rebuilds only when a cooler spawns or despawns (dirty flag), not every 250 ticks; `AmbientTemperature` early-outs when the map has no cooled cells.
 - **Environmental allergy scans** — check one colonist per pulse (rotated) so Mold/PetDander map scans no longer hit everyone on the same tick.
+- Favorite-food Harmony patch updated for RimWorld 1.6 (`FoodUtility.ThoughtsFromIngesting` now returns `List<ThoughtFromIngesting>` instead of `List<ThoughtDef>`), stopping the Homesteader static-constructor crash.
+- Wellspring research nodes use non-negative `researchViewY` (negative coords are treated as unset by the game).
+- Lard no longer has Nutrition without ingestible properties; apple juice sets `socialPropernessMatters` to avoid warden prison-cell food loops.
+- Pawns can work homestead production stations again (jam cauldron, hearth, drying rack, mill, brewery, etc.). Stations had bills and recipes but no `WorkGiverDef` with `fixedBillGiverDefs`, so `WorkGiver_DoBill` never considered them — colonists could build and set "do forever" bills but would not interact. Note: wood-fired stations (jam cauldron, hearth, smokehouse) still need fuel before work starts.
+- **Sugar, butter, and cream are used in recipes again.** Jam needs sugar; bread and flapjacks need butter; cheese is pressed from cream + rock salt; butter is churned from cream (skim milk first); porridge and cider use sugar. Cider no longer accepts hay or fungus.
+- **Rock salt** now trains Cooking (matches the Cooking workgiver) instead of Construction.
+- **Research gates match the tree:** curing rack, smokehouse, hayloft, and ingredient barrel need Primitive homestead; mill, churn, pickling crock, and hearth need Farmstead crafting; washer toss, log bench, and 27 statues need Homestead comforts.
+- **Root cellar** now passively cools stored food (C#): items on the cellar use ambient temperature capped at 5°C for spoilage, so summer heat no longer cooks the pantry. Requires Harmony.
+- **Advanced battery** can be rotated; **washer toss barrel** is no longer rotatable (single graphic).
+- About and research blurbs updated for dairy/sugar pipelines, costs, and unlocks.
+- 27 monument/statue aura now grants a visible **statue of 27** moodlet (+27) in the Mood tab. The aura hediff includes `HediffCompProperties_Disappears` (required by vanilla `CompCauseHediff_AoE` to refresh while in range), and the mood uses Core `ThoughtWorker_Hediff` like joywire.
+- Renamed `Homesteader_Statue27` to `Homesteader_StatueTwentySeven` — RimWorld rejects ThingDef names ending in a digit (blueprint/frame/install defs inherit the suffix and fail validation too).
+- Restored shark plushie and 27 monument/statue sprites from the original concept art references (replacing the tiny regenerated placeholders that lost the intended look).
+- Overalls now draw on the pawn again. They previously pointed at the vanilla `Pants/Pants` worn texture, which doesn't exist (vanilla pants have never been rendered on pawns), so nothing was drawn and render errors were logged. Overalls now use the TribalA worn graphic - the only stuff-colored torso+legs worn art in the game - so they read as work clothes covering torso and legs in the fabric/leather they're made from.
+- Removed invalid `harvestDestroys` tag from apple, cherry and maple orchard plants (not a PlantProperties field in 1.6; regrowth is already handled by `harvestAfterGrowth`).
+- Bread, porridge, trail stew and hearty stew now inherit from the correct vanilla meal base (`MealBase` instead of the non-inheritable `MealSimple`/`MealFine` defNames), restoring their thingClass, food type, rot ticking and eat sounds/effects.
+- Homestead supplier caravan patch now targets the `OutlanderCivil` def node directly; the old xpath failed because `caravanTraderKinds` only exists on the abstract outlander base def.
+- Homesteaders scenario: corrected the starting pawns config page def name (`ConfigPage_ConfigureStartingPawns`) and added the RimWorld 1.6 `surfaceLayer` block. The scenario now ships as version-specific copies (`1.6` and `Legacy` load folders) so 1.4/1.5 remain supported.
+- Checkers and washer toss joy givers now declare the joy kind matching their vanilla jobs (Gaming_Cerebral / Gaming_Dexterity) and require manipulation.
+- Beehive uses the `Building` thing class so it can be deconstructed and minified without config errors.
+- Removed duplicate thing categories inherited from parents (log bench, rocking chair, quilted bed: BuildingsFurniture; cider, mead: Drugs).
+- Root cellar no longer lists thing categories, since it is intentionally not minifiable.
+- Honey is now flagged with `socialPropernessMatters`, preventing warden food-delivery loops in prison cells.
 
 ### Added
 - **Polyarmory trait** — pawns with it treat their polycule (lovers and polyarmory metamours) as fine bedmates: no SharedBed jealousy, and `WillingToShareBed` allows multi-person / Polyamory Beds setups.
@@ -26,31 +49,6 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Pantry craft:** canning kitchen (mason jars, canned stew/jam), cider press (apple juice) + ferment juice at the brewing bench, wash tub (refuel with soap, use for freshly washed mood).
 - Research: livestock, textiles, soil and cold storage, pantry craft. Crafting workgiver covers spinning wheel, loom, and compost heap.
 - Soap can render with lard or tallow as well as butter. Preserves shelf accepts sausage, canned goods, juice, and rendered fats.
-
-### Changed
-- **Workshop preview makeover** — cinematic painted `About/Preview.png` in the Strata style (farmstead + root-cellar cutaway; Grow • Preserve • Power), replacing the old sprite-collage banner.
-- Favorites expanded from 1 to **5** per pawn (legacy single favorite migrates and fills remaining slots).
-- **Docs site redo** — Homesteader overview and item catalog rebuilt with a dedicated orchard-dusk layout (`docs/homesteader.css`): full-bleed hearth hero, lean feature sections, catalog for the full item list. Shared hub `style.css` left alone for other mods. Site `docs/img` assets for the Homesteader page refreshed from current Homesteader/Wellspring textures (south-facing buildings where available).
-- **Kats Effect Super Chat** is a flat **27 silver** (was 27–81). Pay in full or the colony gets nothing taken — unpaid manifests hostile **Kats** (SCP-27272727) at the map edge on an assault lord. Prefers Wolfein race/xenotype when that mod is loaded; otherwise any humanlike pawn (villager/colonist fallback) with orange hair named Kats.
-- Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
-- Organized Homesteader sources: C# merged into `PassiveCooling.cs`, `WashEffects.cs`, and `FavoriteFood.cs`; expansion XML renamed into domain files (livestock/soil/textiles/pantry/yard-and-pantry); hediffs/thoughts consolidated; composted soil lives under homestead terrain.
-- Passive coolers (root cellar / icehouse / springhouse) now apply the **coolest** overlapping ceiling to a cell instead of an arbitrary cooler’s temp.
-- Docs: full item catalog moved to its own page (`docs/homesteader-catalog.html`).
-- **Merged Wellspring into Homesteader.** Wells, rain barrels, cisterns, solar stills, water towers, irrigated soil/planters, boiled water, mud bricks, and clean bandages now ship with Homesteader. Research (wellcraft / irrigation / waterworks) lives on the Homesteader tab. Hand-dug and deep wells are on the homestead cooking workgiver. `Wellspring_*` defNames are preserved for save continuity — disable any old standalone Wellspring mod.
-
-### Fixed
-- Favorite-food Harmony patch updated for RimWorld 1.6 (`FoodUtility.ThoughtsFromIngesting` now returns `List<ThoughtFromIngesting>` instead of `List<ThoughtDef>`), stopping the Homesteader static-constructor crash.
-- Wellspring research nodes use non-negative `researchViewY` (negative coords are treated as unset by the game).
-- Lard no longer has Nutrition without ingestible properties; apple juice sets `socialPropernessMatters` to avoid warden prison-cell food loops.
-- Pawns can work homestead production stations again (jam cauldron, hearth, drying rack, mill, brewery, etc.). Stations had bills and recipes but no `WorkGiverDef` with `fixedBillGiverDefs`, so `WorkGiver_DoBill` never considered them — colonists could build and set "do forever" bills but would not interact. Note: wood-fired stations (jam cauldron, hearth, smokehouse) still need fuel before work starts.
-- **Sugar, butter, and cream are used in recipes again.** Jam needs sugar; bread and flapjacks need butter; cheese is pressed from cream + rock salt; butter is churned from cream (skim milk first); porridge and cider use sugar. Cider no longer accepts hay or fungus.
-- **Rock salt** now trains Cooking (matches the Cooking workgiver) instead of Construction.
-- **Research gates match the tree:** curing rack, smokehouse, hayloft, and ingredient barrel need Primitive homestead; mill, churn, pickling crock, and hearth need Farmstead crafting; washer toss, log bench, and 27 statues need Homestead comforts.
-- **Root cellar** now passively cools stored food (C#): items on the cellar use ambient temperature capped at 5°C for spoilage, so summer heat no longer cooks the pantry. Requires Harmony.
-- **Advanced battery** can be rotated; **washer toss barrel** is no longer rotatable (single graphic).
-- About and research blurbs updated for dairy/sugar pipelines, costs, and unlocks.
-
-### Added
 - **Dubs Bad Hygiene soft-compat** — when DBH is loaded, rain barrel / cistern / water tower gain plumbing pipe + water storage (caps 100 / 2000 / 8000); hand-dug well acts as a primitive groundwater source; deep well is a piped deep inlet. Jug water for irrigation is unchanged. Optional only (soft `loadAfter`).
 - **Dedicated research tab** — all Homesteader projects live under their own *Homesteader* tab (no longer on Main).
 - Preserves shelf now also accepts butter, cream, beeswax, bread, flapjacks, pantry meals, and Odyssey salted/smoked fish.
@@ -67,40 +65,9 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - Taste thoughts for jam, cheese, flapjacks, toast, pie, and biscuits.
 - **Favorite food** (C#): every humanlike with a mood (colonists, guests, raiders, etc.) rolls a favorite from Homesteader foods plus vanilla meals/treats. Shown on inspect; eating it gives +8 mood and a food-preference bonus.
 - Root cellar cooling now also chills spoilables in adjacent indoor cells.
-
-### Changed
-- Renamed **shark plushie** to **Sharkira the plushie** (in-game label).
-- **Diggo the plushie** — updated hippo-dog sprite art; build cost lowered to **20 cloth** (same as Sharkira).
-
-### Added
 - **27 monuments (two styles):** build either a golden or a harvest-stone statue of the number 27. Both share the same aura — colonists within range gain +27 mood — so you pick the look that fits your yard. Unlocked with homestead comforts research; golden costs gold and granite, harvest costs granite and hay.
 - **27 statue + grand 27 statue:** gilded dripping-27 sculptures on vanilla-style stone plinths (1×1 and 2×2). Quality-scaled beauty via `FurnitureWithQualityBase`; +27 mood aura to pawns in range (same reach as the monuments).
 - **Sharkira the plushie:** a chonky stuffed shark sewn from cloth. Same comforts as Diggo — high beauty (scales with quality), sittable, and cuddling for meditative recreation. Buildable from the start; homestead supplier caravans occasionally carry one.
-
-### Changed
-- Regenerated orchard and beeswax sprites (maple sap, maple syrup, raw apples, raw cherries, beeswax, beeswax candle) to match the painterly Homesteader art style with proper transparent backgrounds.
-- Regenerated flapjacks icon to match painterly homestead meal style (maple syrup stack with butter).
-- Regenerated salted meat, sugar, and sugar beet icons after batch alpha-clean damaged their white salt/crystal surfaces.
-- Regenerated smokehouse (all four facings) and storage barrel building sprites in painterly homestead style (stone foundation, wood walls, brick chimney).
-- Batch alpha-cleaned all Homesteader PNGs (buildings, items, apparel, plants) to strip baked white/gray backgrounds, interior voids, and edge halos. Seamless terrain tiles left untouched; flour, cream, porridge, rock salt, salted meat, sugar and ultratech battery used conservative cleanup to preserve intentional white subjects.
-- Regenerated flour icon after alpha-clean damaged the white powder surface.
-
-### Fixed
-- 27 monument/statue aura now grants a visible **statue of 27** moodlet (+27) in the Mood tab. The aura hediff includes `HediffCompProperties_Disappears` (required by vanilla `CompCauseHediff_AoE` to refresh while in range), and the mood uses Core `ThoughtWorker_Hediff` like joywire.
-- Renamed `Homesteader_Statue27` to `Homesteader_StatueTwentySeven` — RimWorld rejects ThingDef names ending in a digit (blueprint/frame/install defs inherit the suffix and fail validation too).
-- Restored shark plushie and 27 monument/statue sprites from the original concept art references (replacing the tiny regenerated placeholders that lost the intended look).
-- Overalls now draw on the pawn again. They previously pointed at the vanilla `Pants/Pants` worn texture, which doesn't exist (vanilla pants have never been rendered on pawns), so nothing was drawn and render errors were logged. Overalls now use the TribalA worn graphic - the only stuff-colored torso+legs worn art in the game - so they read as work clothes covering torso and legs in the fabric/leather they're made from.
-- Removed invalid `harvestDestroys` tag from apple, cherry and maple orchard plants (not a PlantProperties field in 1.6; regrowth is already handled by `harvestAfterGrowth`).
-- Bread, porridge, trail stew and hearty stew now inherit from the correct vanilla meal base (`MealBase` instead of the non-inheritable `MealSimple`/`MealFine` defNames), restoring their thingClass, food type, rot ticking and eat sounds/effects.
-- Homestead supplier caravan patch now targets the `OutlanderCivil` def node directly; the old xpath failed because `caravanTraderKinds` only exists on the abstract outlander base def.
-- Homesteaders scenario: corrected the starting pawns config page def name (`ConfigPage_ConfigureStartingPawns`) and added the RimWorld 1.6 `surfaceLayer` block. The scenario now ships as version-specific copies (`1.6` and `Legacy` load folders) so 1.4/1.5 remain supported.
-- Checkers and washer toss joy givers now declare the joy kind matching their vanilla jobs (Gaming_Cerebral / Gaming_Dexterity) and require manipulation.
-- Beehive uses the `Building` thing class so it can be deconstructed and minified without config errors.
-- Removed duplicate thing categories inherited from parents (log bench, rocking chair, quilted bed: BuildingsFurniture; cider, mead: Drugs).
-- Root cellar no longer lists thing categories, since it is intentionally not minifiable.
-- Honey is now flagged with `socialPropernessMatters`, preventing warden food-delivery loops in prison cells.
-
-### Added
 
 #### The orchard
 - **Plants:** apple tree, cherry tree, and sugar maple - slow-growing sowable trees that regrow after each harvest instead of dying (sowing gated behind primitive homestead research).
@@ -162,6 +129,25 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - Hand-painted textures for all new content: 4 plants, 38 item sprites, 31 buildings (with directional variants for the curing rack, homestead hearth, hayloft, brewing bench, log bench, rocking chair and quilted bed), 4 apparel icons and 3 seamless terrain tiles.
 - Regenerated the drying rack (with directional variants), hayloft (with directional variants), preserves shelf, jerky, salted meat and smoked meat sprites in the newer painterly style; docs page images refreshed to match.
 - Regenerated the compact battery, battery bank, advanced battery, ultratech battery and portable generator sprites in the newer painterly style; docs page images refreshed to match.
+
+### Changed
+- **Workshop preview makeover** — cinematic painted `About/Preview.png` in the Strata style (farmstead + root-cellar cutaway; Grow • Preserve • Power), replacing the old sprite-collage banner.
+- Favorites expanded from 1 to **5** per pawn (legacy single favorite migrates and fills remaining slots).
+- **Docs site redo** — Homesteader overview and item catalog rebuilt with a dedicated orchard-dusk layout (`docs/homesteader.css`): full-bleed hearth hero, lean feature sections, catalog for the full item list. Shared hub `style.css` left alone for other mods. Site `docs/img` assets for the Homesteader page refreshed from current Homesteader/Wellspring textures (south-facing buildings where available).
+- **Kats Effect Super Chat** is a flat **27 silver** (was 27–81). Pay in full or the colony gets nothing taken — unpaid manifests hostile **Kats** (SCP-27272727) at the map edge on an assault lord. Prefers Wolfein race/xenotype when that mod is loaded; otherwise any humanlike pawn (villager/colonist fallback) with orange hair named Kats.
+- Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
+- Organized Homesteader sources: C# merged into `PassiveCooling.cs`, `WashEffects.cs`, and `FavoriteFood.cs`; expansion XML renamed into domain files (livestock/soil/textiles/pantry/yard-and-pantry); hediffs/thoughts consolidated; composted soil lives under homestead terrain.
+- Passive coolers (root cellar / icehouse / springhouse) now apply the **coolest** overlapping ceiling to a cell instead of an arbitrary cooler’s temp.
+- Docs: full item catalog moved to its own page (`docs/homesteader-catalog.html`).
+- **Merged Wellspring into Homesteader.** Wells, rain barrels, cisterns, solar stills, water towers, irrigated soil/planters, boiled water, mud bricks, and clean bandages now ship with Homesteader. Research (wellcraft / irrigation / waterworks) lives on the Homesteader tab. Hand-dug and deep wells are on the homestead cooking workgiver. `Wellspring_*` defNames are preserved for save continuity — disable any old standalone Wellspring mod.
+- Renamed **shark plushie** to **Sharkira the plushie** (in-game label).
+- **Diggo the plushie** — updated hippo-dog sprite art; build cost lowered to **20 cloth** (same as Sharkira).
+- Regenerated orchard and beeswax sprites (maple sap, maple syrup, raw apples, raw cherries, beeswax, beeswax candle) to match the painterly Homesteader art style with proper transparent backgrounds.
+- Regenerated flapjacks icon to match painterly homestead meal style (maple syrup stack with butter).
+- Regenerated salted meat, sugar, and sugar beet icons after batch alpha-clean damaged their white salt/crystal surfaces.
+- Regenerated smokehouse (all four facings) and storage barrel building sprites in painterly homestead style (stone foundation, wood walls, brick chimney).
+- Batch alpha-cleaned all Homesteader PNGs (buildings, items, apparel, plants) to strip baked white/gray backgrounds, interior voids, and edge halos. Seamless terrain tiles left untouched; flour, cream, porridge, rock salt, salted meat, sugar and ultratech battery used conservative cleanup to preserve intentional white subjects.
+- Regenerated flour icon after alpha-clean damaged the white powder surface.
 
 ## [1.0.0] — Initial release
 
