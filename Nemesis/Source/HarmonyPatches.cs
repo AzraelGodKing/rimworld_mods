@@ -337,6 +337,29 @@ namespace Nemesis
         }
     }
 
+    /// <summary>Track whether the fixation target was killed by the nemesis (satisfied win vs robbed).</summary>
+    [HarmonyPatch]
+    public static class Patch_Pawn_Kill_TargetAttribution
+    {
+        [HarmonyTargetMethod]
+        static MethodBase TargetMethod() =>
+            AccessTools.Method(typeof(Pawn), "Kill", new[] { typeof(DamageInfo?), typeof(Hediff) });
+
+        [HarmonyPrefix]
+        static void Prefix(Pawn __instance, DamageInfo? dinfo)
+        {
+            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            if (comp?.Data == null || !comp.Data.active) return;
+            if (!comp.IsTargetPawn(__instance)) return;
+
+            Pawn killer = dinfo?.Instigator as Pawn;
+            if (killer != null && comp.IsNemesisPawn(killer))
+                comp.Data.targetKilledByNemesis = true;
+            else
+                comp.Data.targetKilledByNemesis = false;
+        }
+    }
+
     /// <summary>Track when trade/visitor lords clean up so InformantReveal can fire soon after.</summary>
     [HarmonyPatch(typeof(Lord), nameof(Lord.Cleanup))]
     public static class Patch_LordCleanup_VisitorLeave

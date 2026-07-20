@@ -149,6 +149,10 @@ namespace Nemesis
                 && _data.Phase >= NemesisHuntPhase.Obsessed
                 && tick % 2500 == 0)
                 TickNightmares(tick);
+
+            // Endgame crasher — ship countdown / gravship launch probe.
+            if (tick % 2500 == 0)
+                TickEndgameCrasher();
         }
 
         public void CreateNemesis(Pawn sourcePawn, NemesisTargetMode mode, NemesisTrigger trigger,
@@ -372,6 +376,79 @@ namespace Nemesis
         {
             ReleaseNemesisWorldPawn();
             NemesisRegistry.Clear();
+        }
+
+        /// <summary>Spouse/lover/best friend gains vengeance thought; hunt stays closed with a remember letter.</summary>
+        private void ApplyVendettaInheritance()
+        {
+            Pawn dead = FindTargetPawn();
+            // Target may already be dead — still find relations from corpse/pawn record.
+            Pawn heir = FindVendettaHeir(dead);
+            if (heir?.needs?.mood?.thoughts?.memories != null)
+            {
+                ThoughtDef vengeance = DefDatabase<ThoughtDef>.GetNamedSilentFail("Nemesis_Vengeance");
+                if (vengeance != null)
+                    heir.needs.mood.thoughts.memories.TryGainMemory(vengeance);
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_VendettaTitle".Translate(heir.LabelShort),
+                    "Nemesis_Letter_VendettaBody".Translate(
+                        heir.LabelShort, _data.nemesisName,
+                        _data.targetPawnName ?? "Nemesis_Phrase_Someone".Translate()),
+                    LetterDefOf.NeutralEvent,
+                    heir);
+            }
+            else
+            {
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_TheyRememberTitle".Translate(_data.nemesisName),
+                    "Nemesis_Letter_TheyRememberBody".Translate(_data.nemesisName),
+                    LetterDefOf.NeutralEvent);
+            }
+        }
+
+        private static Pawn FindVendettaHeir(Pawn dead)
+        {
+            if (dead?.relations?.DirectRelations == null)
+            {
+                // Try any colonist who shared a relation via world — fail-open null.
+                return null;
+            }
+
+            PawnRelationDef spouseDef = DefDatabase<PawnRelationDef>.GetNamedSilentFail("Spouse");
+            PawnRelationDef loverDef = DefDatabase<PawnRelationDef>.GetNamedSilentFail("Lover");
+            PawnRelationDef fianceDef = DefDatabase<PawnRelationDef>.GetNamedSilentFail("Fiance");
+            List<DirectPawnRelation> rels = dead.relations.DirectRelations;
+
+            for (int i = 0; i < rels.Count; i++)
+            {
+                DirectPawnRelation r = rels[i];
+                if (r?.otherPawn == null || r.otherPawn.Dead) continue;
+                if (!r.otherPawn.IsColonist) continue;
+                if (r.def == spouseDef || r.def == loverDef || r.def == fianceDef)
+                    return r.otherPawn;
+            }
+
+            // Best friend: highest opinion among colonists.
+            Pawn best = null;
+            int bestOpinion = 40;
+            List<Map> maps = Find.Maps;
+            for (int m = 0; m < maps.Count; m++)
+            {
+                List<Pawn> colonists = maps[m]?.mapPawns?.FreeColonistsSpawned;
+                if (colonists == null) continue;
+                for (int i = 0; i < colonists.Count; i++)
+                {
+                    Pawn p = colonists[i];
+                    if (p == null || p.Dead || p == dead) continue;
+                    int op = p.relations?.OpinionOf(dead) ?? 0;
+                    if (op > bestOpinion)
+                    {
+                        bestOpinion = op;
+                        best = p;
+                    }
+                }
+            }
+            return best;
         }
 
         public void NotifySniperDespawnedAfterGraveVisit()
@@ -768,20 +845,44 @@ namespace Nemesis
                         look);
                     break;
                 case NemesisEndReason.TargetDied:
-                    Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_EndedTargetDiedTitle".Translate(name),
-                        "Nemesis_Letter_EndedTargetDiedBody".Translate(name, _data.targetPawnName ?? "Nemesis_Phrase_Someone".Translate()),
-                        LetterDefOf.NegativeEvent);
-                    // Grief visit near the grave, then close — or close immediately if nothing to show.
-                    if (!_data.graveVisitDone && FindTargetGrave(out _) != null)
+                    if (_data.targetKilledByNemesis)
                     {
-                        _data.graveVisitPending = true;
-                        _data.graveVisitTick = Find.TickManager.TicksGame + Rand.RangeInclusive(8000, 20000);
-                        // Keep world pawn pinned until visit; do not Clear registry yet.
-                        return;
+                        // Satisfied win — nemesis walks away; no robbed grave visit.
+                        _data.sniperActive = false;
+                        _data.graveVisitPending = false;
+                        Find.LetterStack.ReceiveLetter(
+                            "Nemesis_Letter_SatisfiedWinTitle".Translate(name),
+                            "Nemesis_Letter_SatisfiedWinBody".Translate(
+                                name, _data.targetPawnName ?? "Nemesis_Phrase_Someone".Translate()),
+                            LetterDefOf.NegativeEvent);
+                        ApplyVendettaInheritance();
+                        ReleaseNemesisWorldPawn();
+                        // Despawn living nemesis quietly if still around.
+                        Pawn n = FindNemesisPawn();
+                        if (n != null && !n.Dead && n.Spawned)
+                        {
+                            n.DeSpawn(DestroyMode.WillReplace);
+                            if (!n.IsWorldPawn())
+                                Find.WorldPawns.PassToWorld(n, PawnDiscardDecideMode.Decide);
+                        }
                     }
-                    _data.sniperActive = false;
-                    ReleaseNemesisWorldPawn();
+                    else
+                    {
+                        Find.LetterStack.ReceiveLetter(
+                            "Nemesis_Letter_EndedTargetDiedTitle".Translate(name),
+                            "Nemesis_Letter_EndedTargetDiedBody".Translate(name, _data.targetPawnName ?? "Nemesis_Phrase_Someone".Translate()),
+                            LetterDefOf.NegativeEvent);
+                        // Grief visit near the grave, then close — or close immediately if nothing to show.
+                        if (!_data.graveVisitDone && FindTargetGrave(out _) != null)
+                        {
+                            _data.graveVisitPending = true;
+                            _data.graveVisitTick = Find.TickManager.TicksGame + Rand.RangeInclusive(8000, 20000);
+                            // Keep world pawn pinned until visit; do not Clear registry yet.
+                            return;
+                        }
+                        _data.sniperActive = false;
+                        ReleaseNemesisWorldPawn();
+                    }
                     break;
                 case NemesisEndReason.TargetHandedOver:
                     _data.sniperActive = false;
@@ -914,6 +1015,27 @@ namespace Nemesis
             }
 
             NemesisAction action = PickAction();
+
+            // Soft DLC seasoning before execute.
+            if (action == NemesisAction.CommsTaunt
+                && SoftCompat.NemesisHasRoyalTitle(nemesisPawn)
+                && !_data.royaltyDuelFormalized
+                && Rand.Chance(0.35f))
+            {
+                _data.royaltyDuelFormalized = true;
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_RoyalDuelTitle".Translate(_data.nemesisName),
+                    "Nemesis_Letter_RoyalDuelBody".Translate(
+                        _data.nemesisName, NemesisTaunts.TargetPhrase(_data)),
+                    LetterDefOf.ThreatSmall);
+            }
+            if ((action == NemesisAction.TrophyTheft || action == NemesisAction.GraveDesecration)
+                && SoftCompat.TryFireRelicTheftLetter(_data))
+            {
+                _data.nextActionTick = Find.TickManager.TicksGame + ActionInterval();
+                return;
+            }
+
             NemesisActions.Execute(action, _data, map);
             _data.nextActionTick = Find.TickManager.TicksGame + ActionInterval();
         }
@@ -958,6 +1080,22 @@ namespace Nemesis
                 "Nemesis_Message_Nightmare".Translate(target.LabelShort, _data.nemesisName),
                 target,
                 MessageTypeDefOf.NegativeEvent);
+        }
+
+        private void TickEndgameCrasher()
+        {
+            if (_data.endgameFinaleScheduled) return;
+            if (!SoftCompat.IsEndgameCountdownActive()) return;
+            _data.endgameFinaleScheduled = true;
+            Map map = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+            if (map == null) return;
+
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_EndgameTitle".Translate(_data.nemesisName),
+                "Nemesis_Letter_EndgameBody".Translate(_data.nemesisName, NemesisTaunts.TargetPhrase(_data)),
+                LetterDefOf.ThreatBig);
+
+            NemesisActions.ExecuteFinaleAssault(_data, map);
         }
 
         private void TickSniperTerror(int tick)

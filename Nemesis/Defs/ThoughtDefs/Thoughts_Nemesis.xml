@@ -107,4 +107,17 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>Nemesis_Vengeance</defName>
+    <durationDays>20</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>vengeance</label>
+        <description>They took someone from me. If I see that face again, I will not hesitate.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

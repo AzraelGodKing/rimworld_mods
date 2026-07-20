@@ -193,6 +193,12 @@ namespace Nemesis
         public int moleColonistId = -1;
         public int moleSabotageTick = -1;
 
+        // --- Endings (Phase 6) ---
+        public bool targetKilledByNemesis;
+        public bool endgameFinaleScheduled;
+        public bool royaltyDuelFormalized;
+        public bool ideologyRelicStolen;
+
         public float EffectiveAggression
         {
             get
@@ -333,6 +339,10 @@ namespace Nemesis
             Scribe_Values.Look(ref moleLetterSent, "moleLetterSent", false);
             Scribe_Values.Look(ref moleColonistId, "moleColonistId", -1);
             Scribe_Values.Look(ref moleSabotageTick, "moleSabotageTick", -1);
+            Scribe_Values.Look(ref targetKilledByNemesis, "targetKilledByNemesis", false);
+            Scribe_Values.Look(ref endgameFinaleScheduled, "endgameFinaleScheduled", false);
+            Scribe_Values.Look(ref royaltyDuelFormalized, "royaltyDuelFormalized", false);
+            Scribe_Values.Look(ref ideologyRelicStolen, "ideologyRelicStolen", false);
         }
     }
 }

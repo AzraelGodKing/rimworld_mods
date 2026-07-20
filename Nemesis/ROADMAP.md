@@ -1,6 +1,6 @@
 # Nemesis — ROADMAP
 
-Depth pass on `feature/nemesis-depth` shipped the personal-identity / harassment / arc / resolution / polish / soft-compat items below. Remaining fantasy for later passes:
+Personality & evidence pass on `feature/nemesis-personality` (merged into `feature/nemesis-depth`) shipped archetypes, escape upgrades, physical evidence, timing, captivity aftermath, and ending/DLC seasoning below. Remaining fantasy for later passes:
 
 ## Shipped (depth pass)
 - [x] Scar-referencing + escalating intimacy taunts
@@ -10,6 +10,14 @@ Depth pass on `feature/nemesis-depth` shipped the personal-identity / harassment
 - [x] Recruit / ransom / bounty / living truce / grave visit
 - [x] Immortality telegraph, variety guard, waste pods, presets + resolve hunt
 - [x] Homesteader / Strata / Stormproof soft-compat depth
+
+## Shipped (personality & evidence pass)
+- [x] Archetypes + trait bias + taunt voices
+- [x] Escape upgrades + rival cameo
+- [x] Calling cards, trophy theft, death journal
+- [x] Opportunist timing, killbox edges, anniversary, nightmares
+- [x] Captivity pin, jailbreak, cellmate aura, mole
+- [x] Kill attribution, vendetta, reputation ripples, endgame crasher, DLC seasoning
 
 ## Hunt base / false-lead arc
 - Optional world site at higher aggression: “nemesis camp” quest that may be real **or** a false lead.

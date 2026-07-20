@@ -1031,6 +1031,8 @@ namespace Nemesis
                 raidDef.Worker.TryExecute(parms);
             }
 
+            SoftCompat.TrySpawnReckoningMechs(map, faction);
+
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_FinaleAssaultTitle".Translate(data.nemesisName),
                 "Nemesis_Letter_FinaleAssaultBody".Translate(data.nemesisName, NemesisTaunts.TargetPhrase(data)),

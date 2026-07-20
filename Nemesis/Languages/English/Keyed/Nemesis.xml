@@ -108,6 +108,19 @@
   <Nemesis_Letter_MoleActTitle>{0} crossed a line</Nemesis_Letter_MoleActTitle>
   <Nemesis_Letter_MoleActBody>{0} did this for {1}. Not forced — chosen. A door left ajar. A watchman's schedule shared. Small. Enough.</Nemesis_Letter_MoleActBody>
 
+  <Nemesis_Letter_SatisfiedWinTitle>{0}: Satisfied</Nemesis_Letter_SatisfiedWinTitle>
+  <Nemesis_Letter_SatisfiedWinBody>{0} killed {1}. The hunt is over — they walk away. No grave visit. No more letters.\n\nThey got what they came for.</Nemesis_Letter_SatisfiedWinBody>
+  <Nemesis_Letter_VendettaTitle>{0} will remember</Nemesis_Letter_VendettaTitle>
+  <Nemesis_Letter_VendettaBody>{0} watched {2} die to {1}. Something hard settled behind their eyes. The hunt is closed — but vengeance is not.</Nemesis_Letter_VendettaBody>
+  <Nemesis_Letter_TheyRememberTitle>{0}: They Will Remember</Nemesis_Letter_TheyRememberTitle>
+  <Nemesis_Letter_TheyRememberBody>{0} walks away from a finished hunt. Somewhere, someone will remember what they did.</Nemesis_Letter_TheyRememberBody>
+  <Nemesis_Letter_EndgameTitle>{0}: Before You Leave</Nemesis_Letter_EndgameTitle>
+  <Nemesis_Letter_EndgameBody>The end is in sight — and so is {0}. They will not let {1} escape into the black without one last strike.</Nemesis_Letter_EndgameBody>
+  <Nemesis_Letter_RoyalDuelTitle>{0}: A Formal Challenge</Nemesis_Letter_RoyalDuelTitle>
+  <Nemesis_Letter_RoyalDuelBody>{0}'s title demands ceremony. This next confrontation with {1} will be personal — and recorded.</Nemesis_Letter_RoyalDuelBody>
+  <Nemesis_Letter_RelicTitle>{0}: Sacrilege</Nemesis_Letter_RelicTitle>
+  <Nemesis_Letter_RelicBody>{0} claims to have taken {1}. Whether true or not, the message was for {2}.</Nemesis_Letter_RelicBody>
+
   <Nemesis_Phase_Watching>Watching</Nemesis_Phase_Watching>
   <Nemesis_Phase_Testing>Testing</Nemesis_Phase_Testing>
   <Nemesis_Phase_Obsessed>Obsessed</Nemesis_Phase_Obsessed>

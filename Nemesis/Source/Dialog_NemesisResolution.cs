@@ -143,6 +143,40 @@ namespace Nemesis
         private int BountySilver() =>
             Mathf.Clamp(400 + (int)(_data.EffectiveAggression * 120f), 400, 2000);
 
+        /// <summary>Goodwill hit with peaceful factions; small bump with permanent enemies / pirates.</summary>
+        private void ApplyReputationRipples(Faction homeFaction)
+        {
+            try
+            {
+                foreach (Faction f in Find.FactionManager.AllFactions)
+                {
+                    if (f == null || f.IsPlayer || f.defeated || f.Hidden) continue;
+                    if (f == homeFaction) continue;
+                    if (f.def == null) continue;
+
+                    if (f.def.permanentEnemy || IsRoughFaction(f))
+                        f.TryAffectGoodwillWith(Faction.OfPlayer, Rand.RangeInclusive(3, 8),
+                            canSendMessage: false, canSendHostilityLetter: false);
+                    else if (!f.HostileTo(Faction.OfPlayer) && f.def.techLevel >= TechLevel.Neolithic)
+                        f.TryAffectGoodwillWith(Faction.OfPlayer, Rand.RangeInclusive(-8, -3),
+                            canSendMessage: false, canSendHostilityLetter: false);
+                }
+            }
+            catch
+            {
+                // Fail-open.
+            }
+        }
+
+        private static bool IsRoughFaction(Faction f)
+        {
+            string dn = f.def?.defName ?? "";
+            if (dn.IndexOf("Pirate", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
+            if (dn.IndexOf("Bandit", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
+            if (dn.IndexOf("Cannibal", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
+            return false;
+        }
+
         private void ApplyOutcome(NemesisOutcome outcome)
         {
             Faction faction = ResolveHomeFaction();
@@ -159,6 +193,7 @@ namespace Nemesis
                     }
 
                     faction?.TryAffectGoodwillWith(Faction.OfPlayer, -30, canSendMessage: true, canSendHostilityLetter: true);
+                    ApplyReputationRipples(faction);
 
                     Find.LetterStack.ReceiveLetter(
                         "Nemesis_Letter_ExecutedTitle".Translate(_data.nemesisName),

@@ -4,6 +4,15 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased
 
+### Personality & evidence pass
+- Archetypes (Stalker / Butcher / Saboteur / Trickster) rolled at hunt create; bias PickAction + distinct taunt voices; surface in settings status.
+- Trait leak: Pyromaniac fire branch, Bloodlust assault bias, Greedy steal flavor on food/caravan.
+- Escape upgrades (armor / weapon / bionic) + calling-card drops; Obsessed+ rival cameo (“nobody kills you but me”) via dedicated bools.
+- ThingDefs: calling card + journal; TrophyTheft; journal/trophy restore on kill/execute.
+- Opportunist timing, killbox-aware raid edges, 60-day anniversary, Obsessed+ nightmares.
+- KeepPrisoner captivity arc: jailbreak raids, cellmate aura, agency-safe mole (warn → attributed sabotage).
+- Kill attribution satisfied-win vs robbed grave path; vendetta thought on spouse/lover/friend; Execute reputation ripples; endgame crasher (ship/grav probe); soft Royalty/Ideology/Biotech seasoning.
+
 ### Personal identity
 - Scar / missing-part / prosthetic taunts from the nemesis pawn's hediffs (injuries the colony inflicted).
 - Escalating intimacy lines (bedroom, highest skill, spouse/lover, bonded animal) gated by hunt age.
@@ -11,7 +20,7 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 - Ignored-action counter: consecutive unanswered harassment escalates aggression and fires a dedicated taunt.
 
 ### New harassment
-- KidnapAttempt, SniperTerror, GraveDesecration, FoodTampering, InformantReveal (append-only enum).
+- KidnapAttempt, SniperTerror, GraveDesecration, FoodTampering, InformantReveal, TrophyTheft (append-only enum).
 - Raid credit-taking letter (~15% default) when a different hostile faction raids during a hunt.
 
 ### Arc / pacing / finale
@@ -23,7 +32,7 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 ### Resolution depth
 - Recruit (resistance broken), ransom to faction, hand to enemies (when a third faction is hostile to theirs).
 - Living truce: odd gift pods and raid-warning letters.
-- TargetDied grief letter + optional grave visit (spawn / pause / leave).
+- TargetDied grief letter + optional grave visit (spawn / pause / leave); satisfied-win path when nemesis is the killer.
 
 ### Polish
 - Immortality telegraph (fleck + message) on kill-intercept.
@@ -34,7 +43,8 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 ### Soft compat (fail-open)
 - Homesteader: prefer favorite-food stacks; beehive vandalism; well-fouling.
 - Strata: rare burrow-attributed deep raid when `Strata_DeepRaid` probe succeeds (underground only).
-- Stormproof: EMP sabotage prefers LoadShedder / GridMonitor ("went for the brain"); dampener/surge protections unchanged.
+- Stormproof: EMP sabotage prefers LoadShedder / GridMonitor ("went for the brain"); dampener/surge protections unchanged; ion-storm opportunist bias.
+- Royalty titled duel letter; Ideology relic theft letter; Biotech mechs on Reckoning assault; Odyssey/ship countdown endgame probe.
 
 ### Monorepo notes
 - **No public download zip** — CI still compiles Nemesis, but `Nemesis.zip` is not published on the rolling GitHub Release.

@@ -424,5 +424,126 @@ namespace Nemesis
             catch { /* fail-open */ }
             return false;
         }
+
+        /// <summary>
+        /// Soft probe for ship countdown / Odyssey gravship launch. Fail-open false.
+        /// </summary>
+        public static bool IsEndgameCountdownActive()
+        {
+            try
+            {
+                // Royalty/vanilla ship countdown via ShipCountdown reflection.
+                Type shipType = GenTypes.GetTypeInAnyAssembly("RimWorld.ShipCountdown", "RimWorld");
+                if (shipType != null)
+                {
+                    var prop = shipType.GetProperty("CountingDown",
+                        BindingFlags.Public | BindingFlags.Static);
+                    if (prop != null && prop.GetValue(null) is bool counting && counting)
+                        return true;
+                    var field = shipType.GetField("timeLeft", BindingFlags.NonPublic | BindingFlags.Static);
+                    if (field != null)
+                    {
+                        object val = field.GetValue(null);
+                        if (val is float f && f > 0f) return true;
+                        if (val is int i && i > 0) return true;
+                    }
+                }
+
+                // Odyssey / gravship — soft ModsConfig + def probe.
+                if (ModsConfig.IsActive("Ludeon.RimWorld.Odyssey")
+                    || ModLister.GetActiveModWithIdentifier("Ludeon.RimWorld.Odyssey") != null)
+                {
+                    GameConditionDef grav = DefDatabase<GameConditionDef>.GetNamedSilentFail("Odyssey_GravshipLaunch")
+                        ?? DefDatabase<GameConditionDef>.GetNamedSilentFail("GravshipLaunch");
+                    if (grav != null)
+                    {
+                        List<Map> maps = Find.Maps;
+                        for (int i = 0; i < maps.Count; i++)
+                        {
+                            if (maps[i]?.GameConditionManager?.ConditionIsActive(grav) == true)
+                                return true;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return false;
+        }
+
+        /// <summary>Royalty: titled nemesis formalizes duel letter weight. Fail-open false.</summary>
+        public static bool NemesisHasRoyalTitle(Pawn nemesis)
+        {
+            if (!ModsConfig.RoyaltyActive || nemesis == null) return false;
+            try
+            {
+                return nemesis.royalty != null && nemesis.royalty.AllTitlesInEffectForReading != null
+                    && nemesis.royalty.AllTitlesInEffectForReading.Count > 0;
+            }
+            catch { return false; }
+        }
+
+        /// <summary>Ideology: rare relic theft letter if a relic exists. Fail-open false.</summary>
+        public static bool TryFireRelicTheftLetter(NemesisData data)
+        {
+            if (!ModsConfig.IdeologyActive || data == null || data.ideologyRelicStolen) return false;
+            try
+            {
+                Ideo ideo = Faction.OfPlayer?.ideos?.PrimaryIdeo;
+                if (ideo == null) return false;
+
+                // 1.6 API differs — probe via reflection for relic precepts.
+                string relicLabel = null;
+                List<Precept> precepts = ideo.PreceptsListForReading;
+                if (precepts != null)
+                {
+                    for (int i = 0; i < precepts.Count; i++)
+                    {
+                        Precept p = precepts[i];
+                        if (p == null) continue;
+                        string typeName = p.GetType().Name ?? "";
+                        if (typeName.IndexOf("Relic", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            relicLabel = p.Label;
+                            break;
+                        }
+                    }
+                }
+                if (string.IsNullOrEmpty(relicLabel)) return false;
+
+                data.ideologyRelicStolen = true;
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_RelicTitle".Translate(data.nemesisName),
+                    "Nemesis_Letter_RelicBody".Translate(
+                        data.nemesisName, relicLabel, NemesisTaunts.TargetPhrase(data)),
+                    LetterDefOf.ThreatSmall);
+                return true;
+            }
+            catch { return false; }
+        }
+
+        /// <summary>Biotech: spawn 1–2 mechs if mechanitor-capable. Fail-open.</summary>
+        public static void TrySpawnReckoningMechs(Map map, Faction faction)
+        {
+            if (!ModsConfig.BiotechActive || map == null) return;
+            try
+            {
+                PawnKindDef mech = DefDatabase<PawnKindDef>.GetNamedSilentFail("Mech_Militia")
+                    ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("Mech_Scyther")
+                    ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("Mech_Pikeman");
+                if (mech == null) return;
+                int count = Rand.RangeInclusive(1, 2);
+                IntVec3 edge = CellFinder.RandomEdgeCell(map);
+                for (int i = 0; i < count; i++)
+                {
+                    Pawn p = PawnGenerator.GeneratePawn(mech, faction);
+                    if (p == null) continue;
+                    GenSpawn.Spawn(p, CellFinder.RandomClosewalkCellNear(edge, map, 4), map);
+                }
+            }
+            catch { /* fail-open */ }
+        }
     }
 }
