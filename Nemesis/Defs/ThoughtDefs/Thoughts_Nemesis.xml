@@ -54,4 +54,18 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>Nemesis_Nightmare</defName>
+    <durationDays>1.2</durationDays>
+    <stackLimit>2</stackLimit>
+    <stackedEffectMultiplier>0.7</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>nemesis nightmare</label>
+        <description>I dreamed they were already inside the walls. I woke up tasting copper.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

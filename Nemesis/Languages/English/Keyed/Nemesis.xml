@@ -43,6 +43,8 @@
   <Nemesis_Settings_WeightInformant>Informant reveal: {0}</Nemesis_Settings_WeightInformant>
   <Nemesis_Settings_RaidCredit>Raid credit-taking chance: {0}%</Nemesis_Settings_RaidCredit>
   <Nemesis_Settings_RivalCameo>Rival cameo chance: {0}%</Nemesis_Settings_RivalCameo>
+  <Nemesis_Settings_Anniversary>Hunt anniversary taunts (every 60 days)</Nemesis_Settings_Anniversary>
+  <Nemesis_Settings_Nightmares>Nightmares for fixation target (Obsessed+)</Nemesis_Settings_Nightmares>
   <Nemesis_Settings_IgnoredThreshold>Ignored-action threshold: {0}</Nemesis_Settings_IgnoredThreshold>
   <Nemesis_Settings_Status>Active hunt: {0} — {3} / phase {1} (aggression {2})</Nemesis_Settings_Status>
   <Nemesis_Settings_TrophyLedger>Trophy ledger</Nemesis_Settings_TrophyLedger>
@@ -92,6 +94,10 @@
   <Nemesis_Note_DefaultBody>The ink is smeared. Whoever wrote this wanted you afraid.</Nemesis_Note_DefaultBody>
   <Nemesis_Letter_JournalTitle>{0}'s journal</Nemesis_Letter_JournalTitle>
   <Nemesis_Journal_Body>Journal of {0} ({2}).\n\nObsession: {1}.\nHarassment events: {3}. Escapes: {4}. Days of hunt: {5}.\n\nThe last page is blank. They never finished the sentence.</Nemesis_Journal_Body>
+
+  <Nemesis_Letter_AnniversaryTitle>{0}: Day {1}</Nemesis_Letter_AnniversaryTitle>
+  <Nemesis_Letter_AnniversaryBody>{1} days since {0} started hunting {2}.\n\nThey remember. They always remember.</Nemesis_Letter_AnniversaryBody>
+  <Nemesis_Message_Nightmare>{0} wakes from a nightmare about {1}.</Nemesis_Message_Nightmare>
 
   <Nemesis_Phase_Watching>Watching</Nemesis_Phase_Watching>
   <Nemesis_Phase_Testing>Testing</Nemesis_Phase_Testing>

@@ -49,6 +49,12 @@ namespace Nemesis
         /// <summary>Chance a foreign raid gets a "nobody kills you but me" cameo (Obsessed+).</summary>
         public float rivalCameoChance = 0.12f;
 
+        /// <summary>Enable hunt-anniversary taunts every 60 days.</summary>
+        public bool anniversaryEnabled = true;
+
+        /// <summary>Nightmares on fixation target during Obsessed+.</summary>
+        public bool nightmaresEnabled = true;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -79,6 +85,8 @@ namespace Nemesis
             Scribe_Values.Look(ref raidCreditChance, "raidCreditChance", 0.15f);
             Scribe_Values.Look(ref ignoredActionsThreshold, "ignoredActionsThreshold", 3);
             Scribe_Values.Look(ref rivalCameoChance, "rivalCameoChance", 0.12f);
+            Scribe_Values.Look(ref anniversaryEnabled, "anniversaryEnabled", true);
+            Scribe_Values.Look(ref nightmaresEnabled, "nightmaresEnabled", true);
         }
 
         public void ResetToDefaults()
@@ -116,6 +124,8 @@ namespace Nemesis
             raidCreditChance = 0.15f;
             ignoredActionsThreshold = 3;
             rivalCameoChance = 0.12f;
+            anniversaryEnabled = true;
+            nightmaresEnabled = true;
 
             if (preset == NemesisDifficultyPreset.Subtle)
             {

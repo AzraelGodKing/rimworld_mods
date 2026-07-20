@@ -368,5 +368,61 @@ namespace Nemesis
             }
             return any;
         }
+
+        /// <summary>True when a harsh game condition or many colonists on caravan favors firing now.</summary>
+        public static bool IsOpportunistWindow(Map map)
+        {
+            if (map?.GameConditionManager == null) return false;
+            try
+            {
+                GameConditionManager gcm = map.GameConditionManager;
+                if (gcm.ConditionIsActive(GameConditionDefOf.Eclipse)) return true;
+                GameConditionDef solar = DefDatabase<GameConditionDef>.GetNamedSilentFail("SolarFlare");
+                if (solar != null && gcm.ConditionIsActive(solar)) return true;
+                GameConditionDef coldSnap = DefDatabase<GameConditionDef>.GetNamedSilentFail("ColdSnap");
+                if (coldSnap != null && gcm.ConditionIsActive(coldSnap)) return true;
+                GameConditionDef toxic = DefDatabase<GameConditionDef>.GetNamedSilentFail("ToxicFallout");
+                if (toxic != null && gcm.ConditionIsActive(toxic)) return true;
+                GameConditionDef blizzard = DefDatabase<GameConditionDef>.GetNamedSilentFail("VolcanicWinter");
+                if (blizzard != null && gcm.ConditionIsActive(blizzard)) return true;
+            }
+            catch { /* fail-open */ }
+
+            // Many colonists away on caravans.
+            int away = 0;
+            int home = map.mapPawns?.FreeColonistsSpawnedCount ?? 0;
+            List<RimWorld.Planet.Caravan> caravans = Find.WorldObjects?.Caravans;
+            if (caravans != null)
+            {
+                for (int i = 0; i < caravans.Count; i++)
+                {
+                    RimWorld.Planet.Caravan c = caravans[i];
+                    if (c == null || c.Faction != Faction.OfPlayer) continue;
+                    away += c.PawnsListForReading?.Count ?? 0;
+                }
+            }
+            if (away >= 3 && away >= home) return true;
+
+            // Soft Stormproof ion-storm / forecast.
+            if (HasStormproofThreatCondition(map)) return true;
+            return false;
+        }
+
+        public static bool HasStormproofThreatCondition(Map map)
+        {
+            if (!StormproofActive || map?.GameConditionManager == null) return false;
+            try
+            {
+                string[] names = { "Stormproof_IonStorm", "Stormproof_ForecastAlert", "IonStorm" };
+                for (int i = 0; i < names.Length; i++)
+                {
+                    GameConditionDef def = DefDatabase<GameConditionDef>.GetNamedSilentFail(names[i]);
+                    if (def != null && map.GameConditionManager.ConditionIsActive(def))
+                        return true;
+                }
+            }
+            catch { /* fail-open */ }
+            return false;
+        }
     }
 }

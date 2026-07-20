@@ -181,6 +181,10 @@ namespace Nemesis
         public string stolenTrophyLabel;
         public int stolenTrophyQuality = -1;
 
+        // --- Timing (Phase 4) ---
+        public int lastAnniversaryDay = -1;
+        public int nextNightmareCheckTick = -1;
+
         public float EffectiveAggression
         {
             get
@@ -313,6 +317,8 @@ namespace Nemesis
             Scribe_Values.Look(ref stolenTrophyDefName, "stolenTrophyDefName", null);
             Scribe_Values.Look(ref stolenTrophyLabel, "stolenTrophyLabel", null);
             Scribe_Values.Look(ref stolenTrophyQuality, "stolenTrophyQuality", -1);
+            Scribe_Values.Look(ref lastAnniversaryDay, "lastAnniversaryDay", -1);
+            Scribe_Values.Look(ref nextNightmareCheckTick, "nextNightmareCheckTick", -1);
         }
     }
 }

@@ -158,6 +158,7 @@ namespace Nemesis
             parms.points = Mathf.Max(250f, parms.points * AggressionRaidFactor(data.EffectiveAggression));
             parms.customLetterLabel = "Nemesis_Letter_RaidTitle".Translate(data.nemesisName);
             parms.customLetterText = "Nemesis_Letter_RaidBody".Translate(data.nemesisName, NemesisTaunts.TargetPhrase(data));
+            ApplyKillboxAwareSpawn(parms, map);
 
             if (!raidDef.Worker.TryExecute(parms))
                 CommsTaunt(data, map);
@@ -177,8 +178,12 @@ namespace Nemesis
             if (nemesis.IsWorldPawn())
                 Find.WorldPawns.RemovePawn(nemesis);
 
-            if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out IntVec3 spawnCell))
-                spawnCell = CellFinder.RandomEdgeCell(map);
+            IntVec3 spawnCell = FindKillboxAwareEdgeCell(map);
+            if (!spawnCell.IsValid)
+            {
+                if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out spawnCell))
+                    spawnCell = CellFinder.RandomEdgeCell(map);
+            }
 
             GenSpawn.Spawn(nemesis, spawnCell, map);
             NemesisRegistry.CachedNemesis = nemesis;
@@ -603,6 +608,8 @@ namespace Nemesis
 
             if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out IntVec3 edge))
                 edge = CellFinder.RandomEdgeCell(map);
+            IntVec3 killboxEdge = FindKillboxAwareEdgeCell(map);
+            if (killboxEdge.IsValid) edge = killboxEdge;
 
             for (int i = 0; i < squad.Count; i++)
                 GenSpawn.Spawn(squad[i], CellFinder.RandomClosewalkCellNear(edge, map, 4), map);
@@ -1051,6 +1058,92 @@ namespace Nemesis
             TraitDef def = DefDatabase<TraitDef>.GetNamedSilentFail(traitDefName);
             if (def == null) return false;
             return pawn.story.traits.HasTrait(def);
+        }
+
+        /// <summary>
+        /// Score map edges by nearby turret density; return an edge cell farthest from densest defenses.
+        /// </summary>
+        public static IntVec3 FindKillboxAwareEdgeCell(Map map)
+        {
+            if (map == null) return IntVec3.Invalid;
+            try
+            {
+                List<Building> turrets = new List<Building>();
+                List<Building> all = map.listerBuildings?.allBuildingsColonist;
+                if (all != null)
+                {
+                    for (int i = 0; i < all.Count; i++)
+                    {
+                        Building b = all[i];
+                        if (b == null || b.Destroyed) continue;
+                        if (b is Building_Turret) turrets.Add(b);
+                    }
+                }
+
+                IntVec3 best = IntVec3.Invalid;
+                float bestScore = -1f;
+                // Sample four mid-edges + a few random edges.
+                IntVec3[] seeds =
+                {
+                    new IntVec3(0, 0, map.Size.z / 2),
+                    new IntVec3(map.Size.x - 1, 0, map.Size.z / 2),
+                    new IntVec3(map.Size.x / 2, 0, 0),
+                    new IntVec3(map.Size.x / 2, 0, map.Size.z - 1),
+                };
+                for (int s = 0; s < seeds.Length; s++)
+                {
+                    IntVec3 seed = seeds[s];
+                    if (!seed.InBounds(map)) continue;
+                    IntVec3 cell = CellFinder.RandomClosewalkCellNear(seed, map, 8);
+                    if (!cell.IsValid || !cell.Standable(map) || cell.Fogged(map)) continue;
+                    float score = ScoreEdgeAwayFromTurrets(cell, turrets);
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        best = cell;
+                    }
+                }
+                for (int r = 0; r < 6; r++)
+                {
+                    IntVec3 cell = CellFinder.RandomEdgeCell(map);
+                    if (!cell.Standable(map) || cell.Fogged(map)) continue;
+                    float score = ScoreEdgeAwayFromTurrets(cell, turrets);
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        best = cell;
+                    }
+                }
+                return best;
+            }
+            catch
+            {
+                return IntVec3.Invalid;
+            }
+        }
+
+        private static float ScoreEdgeAwayFromTurrets(IntVec3 cell, List<Building> turrets)
+        {
+            if (turrets == null || turrets.Count == 0) return 100f;
+            float nearest = 9999f;
+            int nearCount = 0;
+            for (int i = 0; i < turrets.Count; i++)
+            {
+                float d = cell.DistanceTo(turrets[i].Position);
+                if (d < nearest) nearest = d;
+                if (d < 35f) nearCount++;
+            }
+            // Prefer far from turrets and few turrets nearby.
+            return nearest - nearCount * 8f;
+        }
+
+        private static void ApplyKillboxAwareSpawn(IncidentParms parms, Map map)
+        {
+            IntVec3 edge = FindKillboxAwareEdgeCell(map);
+            if (!edge.IsValid) return;
+            parms.spawnCenter = edge;
+            try { parms.spawnRotation = Rot4.FromAngleFlat((map.Center - edge).AngleFlat); }
+            catch { /* fail-open */ }
         }
 
         /// <summary>Pyromaniac: start a small fire near crops or wood stockpiles. Fail-open false.</summary>

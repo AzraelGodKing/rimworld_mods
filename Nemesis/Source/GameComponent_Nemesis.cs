@@ -138,6 +138,12 @@ namespace Nemesis
             }
             else if (tick >= _data.nextActionTick)
                 FireNextAction();
+
+            // Nightmares — staggered, Obsessed+.
+            if ((NemesisMod.Settings?.nightmaresEnabled ?? true)
+                && _data.Phase >= NemesisHuntPhase.Obsessed
+                && tick % 2500 == 0)
+                TickNightmares(tick);
         }
 
         public void CreateNemesis(Pawn sourcePawn, NemesisTargetMode mode, NemesisTrigger trigger,
@@ -717,9 +723,65 @@ namespace Nemesis
                 return;
             }
 
+            // Opportunist bias: if conditions are calm, sometimes wait for a better window.
+            if (!SoftCompat.IsOpportunistWindow(map) && Rand.Chance(0.35f))
+            {
+                _data.nextActionTick = Find.TickManager.TicksGame + Rand.RangeInclusive(7500, 20000);
+                return;
+            }
+
+            // Anniversary: every 60 hunt-days force a commemorative taunt / light strike.
+            if ((NemesisMod.Settings?.anniversaryEnabled ?? true) && TryFireAnniversary(map))
+            {
+                _data.nextActionTick = Find.TickManager.TicksGame + ActionInterval();
+                return;
+            }
+
             NemesisAction action = PickAction();
             NemesisActions.Execute(action, _data, map);
             _data.nextActionTick = Find.TickManager.TicksGame + ActionInterval();
+        }
+
+        private bool TryFireAnniversary(Map map)
+        {
+            if (_data.huntStartTick <= 0) return false;
+            int days = _data.HuntDays;
+            if (days < 60 || days % 60 != 0) return false;
+            if (_data.lastAnniversaryDay == days) return false;
+            _data.lastAnniversaryDay = days;
+
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_AnniversaryTitle".Translate(_data.nemesisName, days),
+                "Nemesis_Letter_AnniversaryBody".Translate(
+                    _data.nemesisName, NemesisTaunts.TargetPhrase(_data), days),
+                LetterDefOf.ThreatSmall);
+
+            if (Rand.Chance(0.55f))
+                NemesisActions.CommsTaunt(_data, map);
+            else if (_data.Phase >= NemesisHuntPhase.Testing)
+                NemesisActions.Execute(NemesisAction.PowerSabotage, _data, map);
+            else
+                NemesisActions.CommsTaunt(_data, map);
+            return true;
+        }
+
+        private void TickNightmares(int tick)
+        {
+            if (_data.targetMode != NemesisTargetMode.Pawn) return;
+            if (_data.nextNightmareCheckTick > 0 && tick < _data.nextNightmareCheckTick) return;
+            _data.nextNightmareCheckTick = tick + Rand.RangeInclusive(60000, 120000);
+
+            Pawn target = FindTargetPawn();
+            if (target?.needs?.mood?.thoughts?.memories == null) return;
+            if (!Rand.Chance(0.4f)) return;
+
+            ThoughtDef nightmare = DefDatabase<ThoughtDef>.GetNamedSilentFail("Nemesis_Nightmare");
+            if (nightmare == null) return;
+            target.needs.mood.thoughts.memories.TryGainMemory(nightmare);
+            Messages.Message(
+                "Nemesis_Message_Nightmare".Translate(target.LabelShort, _data.nemesisName),
+                target,
+                MessageTypeDefOf.NegativeEvent);
         }
 
         private void TickSniperTerror(int tick)

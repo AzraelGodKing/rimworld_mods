@@ -174,6 +174,13 @@ namespace Nemesis
             Slider(listing, "Nemesis_Settings_RaidCredit", ref Settings.raidCreditChance, 0f, 1f, pct: true);
             Slider(listing, "Nemesis_Settings_RivalCameo", ref Settings.rivalCameoChance, 0f, 1f, pct: true);
 
+            bool anniv = Settings.anniversaryEnabled;
+            listing.CheckboxLabeled("Nemesis_Settings_Anniversary".Translate(), ref anniv);
+            if (anniv != Settings.anniversaryEnabled) { Settings.anniversaryEnabled = anniv; Settings.MarkCustom(); }
+            bool night = Settings.nightmaresEnabled;
+            listing.CheckboxLabeled("Nemesis_Settings_Nightmares".Translate(), ref night);
+            if (night != Settings.nightmaresEnabled) { Settings.nightmaresEnabled = night; Settings.MarkCustom(); }
+
             listing.Label("Nemesis_Settings_IgnoredThreshold".Translate(Settings.ignoredActionsThreshold));
             float ign = listing.Slider(Settings.ignoredActionsThreshold, 2f, 8f);
             if ((int)ign != Settings.ignoredActionsThreshold) { Settings.ignoredActionsThreshold = (int)ign; Settings.MarkCustom(); }
