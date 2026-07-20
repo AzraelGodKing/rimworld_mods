@@ -37,6 +37,49 @@ namespace Strata
             Building_ShaftConduit.ReconcileAllAfterLoad();
             Building_OreHoist.ReconcileAllAfterLoad();
             CompShaftFluidJunctionLink.ReconcileAllAfterLoad();
+            RebindGravshipOrphansAfterLoad();
+        }
+
+        // A bad gravship land can leave furnished levels detached and shafts
+        // unwired; saves carry that damage forward. Re-adopt and re-wire once
+        // per load — quiet no-op on healthy saves.
+        private static void RebindGravshipOrphansAfterLoad()
+        {
+            var stacks = WorldComponent_StrataGravshipStacks.Get();
+            if (stacks == null)
+            {
+                return;
+            }
+            // Snapshot hosts first: RebindOrphans can destroy duplicate pocket
+            // maps, which mutates Find.Maps mid-iteration.
+            var hosts = new List<Map>();
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (map == null || !map.IsPlayerHome)
+                {
+                    continue;
+                }
+                if (StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map))
+                {
+                    continue;
+                }
+                if (StrataGravshipUtility.FindGravEngineOnMap(map) == null)
+                {
+                    continue;
+                }
+                if (StrataGravshipOrphanLevels.HasRepairWork(map))
+                {
+                    hosts.Add(map);
+                }
+            }
+            for (int i = 0; i < hosts.Count; i++)
+            {
+                Log.Message("[Strata] Load repair: rebinding gravship levels on map "
+                    + hosts[i].uniqueID + ".");
+                stacks.RebindOrphans(hosts[i]);
+            }
         }
 
         private static void UpgradeVanillaCaveExits()
