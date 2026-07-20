@@ -28,6 +28,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - Soap can render with lard or tallow as well as butter. Preserves shelf accepts sausage, canned goods, juice, and rendered fats.
 
 ### Changed
+- **Workshop preview makeover** — cinematic painted `About/Preview.png` in the Strata style (farmstead + root-cellar cutaway; Grow • Preserve • Power), replacing the old sprite-collage banner.
 - Favorites expanded from 1 to **5** per pawn (legacy single favorite migrates and fills remaining slots).
 - **Docs site redo** — Homesteader overview and item catalog rebuilt with a dedicated orchard-dusk layout (`docs/homesteader.css`): full-bleed hearth hero, lean feature sections, catalog for the full item list. Shared hub `style.css` left alone for other mods. Site `docs/img` assets for the Homesteader page refreshed from current Homesteader/Wellspring textures (south-facing buildings where available).
 - **Kats Effect Super Chat** is a flat **27 silver** (was 27–81). Pay in full or the colony gets nothing taken — unpaid manifests hostile **Kats** (SCP-27272727) at the map edge on an assault lord. Prefers Wolfein race/xenotype when that mod is loaded; otherwise any humanlike pawn (villager/colonist fallback) with orange hair named Kats.
