@@ -100,6 +100,24 @@ namespace Nemesis
             listing.Gap(4f);
             listing.Label("Nemesis_Settings_WeightFood".Translate(Settings.actionWeightFood.ToString("F2")));
             Settings.actionWeightFood = listing.Slider(Settings.actionWeightFood, 0f, 1f);
+            listing.Gap(4f);
+            listing.Label("Nemesis_Settings_WeightKidnap".Translate(Settings.actionWeightKidnap.ToString("F2")));
+            Settings.actionWeightKidnap = listing.Slider(Settings.actionWeightKidnap, 0f, 1f);
+            listing.Gap(4f);
+            listing.Label("Nemesis_Settings_WeightSniper".Translate(Settings.actionWeightSniper.ToString("F2")));
+            Settings.actionWeightSniper = listing.Slider(Settings.actionWeightSniper, 0f, 1f);
+            listing.Gap(4f);
+            listing.Label("Nemesis_Settings_WeightGrave".Translate(Settings.actionWeightGrave.ToString("F2")));
+            Settings.actionWeightGrave = listing.Slider(Settings.actionWeightGrave, 0f, 1f);
+            listing.Gap(4f);
+            listing.Label("Nemesis_Settings_WeightFoodTamper".Translate(Settings.actionWeightFoodTamper.ToString("F2")));
+            Settings.actionWeightFoodTamper = listing.Slider(Settings.actionWeightFoodTamper, 0f, 1f);
+            listing.Gap(4f);
+            listing.Label("Nemesis_Settings_WeightInformant".Translate(Settings.actionWeightInformant.ToString("F2")));
+            Settings.actionWeightInformant = listing.Slider(Settings.actionWeightInformant, 0f, 1f);
+            listing.Gap(4f);
+            listing.Label("Nemesis_Settings_RaidCredit".Translate((int)(Settings.raidCreditChance * 100f)));
+            Settings.raidCreditChance = listing.Slider(Settings.raidCreditChance, 0f, 1f);
             listing.Gap(8f);
 
             listing.Label("Nemesis_Settings_IgnoredThreshold".Translate(Settings.ignoredActionsThreshold));

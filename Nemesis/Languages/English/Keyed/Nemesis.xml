@@ -23,6 +23,12 @@
   <Nemesis_Settings_WeightCaravan>Caravan harassment: {0}</Nemesis_Settings_WeightCaravan>
   <Nemesis_Settings_WeightSabotage>Power sabotage: {0}</Nemesis_Settings_WeightSabotage>
   <Nemesis_Settings_WeightFood>Food store raid: {0}</Nemesis_Settings_WeightFood>
+  <Nemesis_Settings_WeightKidnap>Kidnap attempt: {0}</Nemesis_Settings_WeightKidnap>
+  <Nemesis_Settings_WeightSniper>Sniper terror: {0}</Nemesis_Settings_WeightSniper>
+  <Nemesis_Settings_WeightGrave>Grave desecration: {0}</Nemesis_Settings_WeightGrave>
+  <Nemesis_Settings_WeightFoodTamper>Food tampering: {0}</Nemesis_Settings_WeightFoodTamper>
+  <Nemesis_Settings_WeightInformant>Informant reveal: {0}</Nemesis_Settings_WeightInformant>
+  <Nemesis_Settings_RaidCredit>Raid credit-taking chance: {0}%</Nemesis_Settings_RaidCredit>
   <Nemesis_Settings_IgnoredThreshold>Ignored-action threshold: {0}</Nemesis_Settings_IgnoredThreshold>
   <Nemesis_Settings_Reset>Reset</Nemesis_Settings_Reset>
 
@@ -102,6 +108,20 @@
   <Nemesis_Letter_FoodFavoriteNote>{0} left a note for {1}: "No more {2} for you."</Nemesis_Letter_FoodFavoriteNote>
   <Nemesis_Letter_AnomalyTitle>Wrong Kind of Attention: {0}</Nemesis_Letter_AnomalyTitle>
   <Nemesis_Letter_AnomalyBody>{0} stirred something that should have stayed buried. Whatever is coming may not be entirely their doing — but they wanted you busy.</Nemesis_Letter_AnomalyBody>
+  <Nemesis_Letter_KidnapTitle>Kidnap Attempt: {0}</Nemesis_Letter_KidnapTitle>
+  <Nemesis_Letter_KidnapBody>{0} sent a small team. They are not here to burn the place down — they want {1}. Alive, if they can manage it.</Nemesis_Letter_KidnapBody>
+  <Nemesis_Letter_SniperTitle>Distant Shots: {0}</Nemesis_Letter_SniperTitle>
+  <Nemesis_Letter_SniperBody>{0} is on the horizon. The shots are not meant to kill — not yet. They want {1} to flinch.</Nemesis_Letter_SniperBody>
+  <Nemesis_Letter_SniperFleeTitle>{0} Withdraws</Nemesis_Letter_SniperFleeTitle>
+  <Nemesis_Letter_SniperFleeBody>The sniper is gone before anyone closes the gap. {0} left dust and a message in the dirt.</Nemesis_Letter_SniperFleeBody>
+  <Nemesis_Letter_GraveTitle>Desecration: {0}</Nemesis_Letter_GraveTitle>
+  <Nemesis_Letter_GraveBody>{0} found your dead — and made sure you would notice ({1} sites damaged).\n\nMemory is a soft target.</Nemesis_Letter_GraveBody>
+  <Nemesis_Letter_FoodTamperTitle>Spoiled Trust: {0}</Nemesis_Letter_FoodTamperTitle>
+  <Nemesis_Letter_FoodTamperBody>Someone has been in the stores.\n\n{0} admits it now — one stack was treated. Anyone who ate from it may already know. {1} was the point.</Nemesis_Letter_FoodTamperBody>
+  <Nemesis_Letter_InformantTitle>An Informant: {0}</Nemesis_Letter_InformantTitle>
+  <Nemesis_Letter_InformantBody>A transmission from {0}:\n\n"Those guests who just left? They talked. About doors. About watches. About {1}.\n\nI pay well for honesty."</Nemesis_Letter_InformantBody>
+  <Nemesis_Letter_RaidCreditTitle>Sold Out: {0}</Nemesis_Letter_RaidCreditTitle>
+  <Nemesis_Letter_RaidCreditBody>{0} claims credit for the {1} raid.\n\n"I sold them your layout. Cheap. {2} should thank me for the company."\n\nWhether that is true or not, the guns are real.</Nemesis_Letter_RaidCreditBody>
 
   <!-- Escape / corner / rogue / end -->
   <Nemesis_Letter_EscapeTitle>{0} Escapes</Nemesis_Letter_EscapeTitle>

@@ -24,6 +24,14 @@ namespace Nemesis
         public float actionWeightCaravan = 0.07f;
         public float actionWeightSabotage = 0.05f;
         public float actionWeightFood = 0.05f;
+        public float actionWeightKidnap = 0.08f;
+        public float actionWeightSniper = 0.04f;
+        public float actionWeightGrave = 0.05f;
+        public float actionWeightFoodTamper = 0.06f;
+        public float actionWeightInformant = 0.05f;
+
+        /// <summary>Chance a non-nemesis hostile raid gets a "I sold your layout" credit letter.</summary>
+        public float raidCreditChance = 0.15f;
 
         /// <summary>Consecutive ignored actions before the "you're not answering" escalation.</summary>
         public int ignoredActionsThreshold = 3;
@@ -49,6 +57,12 @@ namespace Nemesis
             Scribe_Values.Look(ref actionWeightCaravan, "actionWeightCaravan", 0.07f);
             Scribe_Values.Look(ref actionWeightSabotage, "actionWeightSabotage", 0.05f);
             Scribe_Values.Look(ref actionWeightFood, "actionWeightFood", 0.05f);
+            Scribe_Values.Look(ref actionWeightKidnap, "actionWeightKidnap", 0.08f);
+            Scribe_Values.Look(ref actionWeightSniper, "actionWeightSniper", 0.04f);
+            Scribe_Values.Look(ref actionWeightGrave, "actionWeightGrave", 0.05f);
+            Scribe_Values.Look(ref actionWeightFoodTamper, "actionWeightFoodTamper", 0.06f);
+            Scribe_Values.Look(ref actionWeightInformant, "actionWeightInformant", 0.05f);
+            Scribe_Values.Look(ref raidCreditChance, "raidCreditChance", 0.15f);
             Scribe_Values.Look(ref ignoredActionsThreshold, "ignoredActionsThreshold", 3);
         }
 
@@ -72,6 +86,12 @@ namespace Nemesis
             actionWeightCaravan = 0.07f;
             actionWeightSabotage = 0.05f;
             actionWeightFood = 0.05f;
+            actionWeightKidnap = 0.08f;
+            actionWeightSniper = 0.04f;
+            actionWeightGrave = 0.05f;
+            actionWeightFoodTamper = 0.06f;
+            actionWeightInformant = 0.05f;
+            raidCreditChance = 0.15f;
             ignoredActionsThreshold = 3;
         }
     }

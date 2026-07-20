@@ -32,6 +32,12 @@ namespace Nemesis
         PowerSabotage,
         FoodStoreRaid,
         AnomalyBait,
+        // Append-only: new actions below so scribed lastActionKind ints stay valid.
+        KidnapAttempt,
+        SniperTerror,
+        GraveDesecration,
+        FoodTampering,
+        InformantReveal,
     }
 
     public enum NemesisOutcome
@@ -86,6 +92,20 @@ namespace Nemesis
         /// <summary>True if a colonist damaged/arrested the nemesis since the last harassment action.</summary>
         public bool engagedSinceLastAction;
 
+        // --- SniperTerror runtime (despawn via FireEscape-like pattern) ---
+        public bool sniperActive;
+        public int sniperUntilTick = -1;
+        public int sniperShotsLeft;
+
+        // --- FoodTampering (scribed stack id + windows) ---
+        public int taintedFoodThingId = -1;
+        public int taintedUntilTick = -1;
+        public int taintedRevealTick = -1;
+        public bool taintedRevealed;
+
+        // --- InformantReveal timing (set when traders/visitors leave) ---
+        public int lastVisitorLeaveTick = -1;
+
         public float EffectiveAggression
         {
             get
@@ -136,6 +156,14 @@ namespace Nemesis
             Scribe_Values.Look(ref huntStartTick, "huntStartTick", 0);
             Scribe_Values.Look(ref ignoredActionsCount, "ignoredActionsCount", 0);
             Scribe_Values.Look(ref engagedSinceLastAction, "engagedSinceLastAction", false);
+            Scribe_Values.Look(ref sniperActive, "sniperActive", false);
+            Scribe_Values.Look(ref sniperUntilTick, "sniperUntilTick", -1);
+            Scribe_Values.Look(ref sniperShotsLeft, "sniperShotsLeft", 0);
+            Scribe_Values.Look(ref taintedFoodThingId, "taintedFoodThingId", -1);
+            Scribe_Values.Look(ref taintedUntilTick, "taintedUntilTick", -1);
+            Scribe_Values.Look(ref taintedRevealTick, "taintedRevealTick", -1);
+            Scribe_Values.Look(ref taintedRevealed, "taintedRevealed", false);
+            Scribe_Values.Look(ref lastVisitorLeaveTick, "lastVisitorLeaveTick", -1);
         }
     }
 }

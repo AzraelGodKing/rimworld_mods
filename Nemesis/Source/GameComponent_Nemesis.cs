@@ -69,6 +69,21 @@ namespace Nemesis
                 }
             }
 
+            // Sniper terror: limited shots / approach / timeout → despawn.
+            if (_data.sniperActive && tick % 60 == 0)
+                TickSniperTerror(tick);
+
+            // Food tampering delayed reveal.
+            if (_data.taintedFoodThingId > 0 && !_data.taintedRevealed
+                && _data.taintedRevealTick > 0 && tick >= _data.taintedRevealTick)
+            {
+                _data.taintedRevealed = true;
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_FoodTamperTitle".Translate(_data.nemesisName),
+                    "Nemesis_Letter_FoodTamperBody".Translate(_data.nemesisName, NemesisTaunts.TargetPhrase(_data)),
+                    LetterDefOf.ThreatSmall);
+            }
+
             // Stagger health / end-condition work. Faster on the viewed map.
             Map home = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
             int healthInterval = NemesisRegistry.MapIsViewed(home) ? 120 : 300;
@@ -438,6 +453,60 @@ namespace Nemesis
             _data.nextActionTick = Find.TickManager.TicksGame + ActionInterval();
         }
 
+        private void TickSniperTerror(int tick)
+        {
+            Pawn nemesis = FindNemesisPawn();
+            if (nemesis == null || !nemesis.Spawned || nemesis.Dead || nemesis.IsPrisonerOfColony)
+            {
+                _data.sniperActive = false;
+                return;
+            }
+
+            bool approached = false;
+            List<Pawn> colonists = nemesis.Map?.mapPawns?.FreeColonistsSpawned;
+            if (colonists != null)
+            {
+                for (int i = 0; i < colonists.Count; i++)
+                {
+                    Pawn c = colonists[i];
+                    if (c != null && c.Position.DistanceTo(nemesis.Position) <= 20f)
+                    {
+                        approached = true;
+                        break;
+                    }
+                }
+            }
+
+            if (approached || tick >= _data.sniperUntilTick || _data.sniperShotsLeft <= 0)
+            {
+                NemesisActions.EndSniperTerror(_data, nemesis, approached);
+                return;
+            }
+
+            // Occasional non-lethal dread shot toward the fixation target / colony center.
+            if (tick % 400 == 0 && _data.sniperShotsLeft > 0)
+            {
+                IntVec3 aim = nemesis.Map.Center;
+                Pawn target = FindTargetPawn();
+                if (target != null && target.Spawned && target.Map == nemesis.Map)
+                    aim = target.Position;
+                else if (aim.DistanceTo(nemesis.Position) < 8f)
+                    aim = CellFinder.RandomClosewalkCellNear(nemesis.Position, nemesis.Map, 20);
+
+                Verb verb = nemesis.CurrentEffectiveVerb;
+                if (verb != null && verb.verbProps != null && verb.verbProps.range >= 12f)
+                {
+                    // Missed shot near the aim cell — dread, not a kill.
+                    IntVec3 splash = aim + GenRadial.RadialPattern[Rand.Range(1, 8)];
+                    if (splash.InBounds(nemesis.Map))
+                    {
+                        FleckMaker.ThrowDustPuffThick(splash.ToVector3Shifted(), nemesis.Map, 1.2f, Color.white);
+                    }
+                }
+                _data.sniperShotsLeft--;
+            }
+        }
+
         private NemesisAction PickAction()
         {
             float agg = _data.EffectiveAggression;
@@ -451,19 +520,33 @@ namespace Nemesis
             float sabotage = agg >= 2f ? (s?.actionWeightSabotage ?? 0.05f) : 0f;
             float food = s?.actionWeightFood ?? 0.05f;
             float anomaly = ModsConfig.AnomalyActive && agg >= 4f ? 0.06f : 0f;
+            float kidnap = agg >= 3f ? (s?.actionWeightKidnap ?? 0.08f) : 0f;
+            float sniper = s?.actionWeightSniper ?? 0.04f;
+            float grave = s?.actionWeightGrave ?? 0.05f;
+            float tamper = s?.actionWeightFoodTamper ?? 0.06f;
+            float informant = 0f;
+            if (_data.lastVisitorLeaveTick > 0)
+            {
+                int age = Find.TickManager.TicksGame - _data.lastVisitorLeaveTick;
+                if (age >= 0 && age <= 60000 * 4)
+                    informant = s?.actionWeightInformant ?? 0.05f;
+            }
 
             if (_data.rogue)
             {
                 raid *= 0.35f;
                 assault *= 1.6f;
                 sabotage *= 1.3f;
+                kidnap *= 1.2f;
             }
 
             // Soft Strata: slight bias toward food/sabotage when harassing multi-level bases (surface map).
             if (SoftCompat.StrataActive)
                 food *= 1.15f;
 
-            float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly;
+            float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly
+                + kidnap + sniper + grave + tamper + informant;
+            if (total <= 0f) return NemesisAction.CommsTaunt;
             float roll = Rand.Value * total;
 
             if ((roll -= taunt) < 0f) return NemesisAction.CommsTaunt;
@@ -474,7 +557,13 @@ namespace Nemesis
             if ((roll -= caravan) < 0f) return NemesisAction.CaravanHarass;
             if ((roll -= sabotage) < 0f) return NemesisAction.PowerSabotage;
             if ((roll -= food) < 0f) return NemesisAction.FoodStoreRaid;
-            return NemesisAction.AnomalyBait;
+            if ((roll -= anomaly) < 0f) return NemesisAction.AnomalyBait;
+            if ((roll -= kidnap) < 0f) return NemesisAction.KidnapAttempt;
+            if ((roll -= sniper) < 0f) return NemesisAction.SniperTerror;
+            if ((roll -= grave) < 0f) return NemesisAction.GraveDesecration;
+            if ((roll -= tamper) < 0f) return NemesisAction.FoodTampering;
+            if ((roll -= informant) < 0f) return NemesisAction.InformantReveal;
+            return NemesisAction.CommsTaunt;
         }
 
         private int ActionInterval() => Mathf.Max(
