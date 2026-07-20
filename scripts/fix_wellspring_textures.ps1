@@ -1,5 +1,5 @@
 # Batch alpha-fix Homesteader Wellspring PNGs except seamless terrain tiles.
-$repo = $PSScriptRoot
+$repo = Split-Path $PSScriptRoot -Parent
 $root = Join-Path $repo 'Homesteader\Textures\Wellspring'
 $conservative = @(
     'CleanBandages.png',
@@ -15,5 +15,5 @@ foreach ($f in $files) {
 }
 
 Write-Output "Processing $($full.Count) Wellspring textures (full clean), $($gentle.Count) conservative, skipping terrain."
-& (Join-Path $repo 'fix_texture_alpha.ps1') -Paths $full
-& (Join-Path $repo 'fix_texture_alpha.ps1') -Paths $gentle -Conservative
+& (Join-Path $PSScriptRoot 'fix_texture_alpha.ps1') -Paths $full
+& (Join-Path $PSScriptRoot 'fix_texture_alpha.ps1') -Paths $gentle -Conservative
