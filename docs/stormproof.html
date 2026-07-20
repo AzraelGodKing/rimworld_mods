@@ -26,14 +26,14 @@
 <header class="hero storm">
   <div class="wrap">
     <h1 class="s">STORMPROOF</h1>
-    <p class="tagline">Solar flares &bull; Lightning &bull; Power surges &bull; EMP &mdash; your grid survives</p>
+    <p class="tagline">Natural disasters &bull; Grid defense &bull; Late-game hazard hardening</p>
     <div class="badges">
       <span class="badge storm">RimWorld 1.6</span>
       <span class="badge storm">Requires Harmony</span>
       <span class="badge storm">C# mod</span>
-      <span class="badge storm">13 buildings</span>
-      <span class="badge storm">4 research projects</span>
-      <span class="badge storm">1 custom event</span>
+      <span class="badge storm">18 buildings</span>
+      <span class="badge storm">5 research projects</span>
+      <span class="badge storm">5 custom events</span>
     </div>
     <div class="cta">
       <a class="btn btn-storm" href="downloads/Stormproof.zip" download>&#11015; Download Stormproof</a>
@@ -54,7 +54,7 @@
 
   <section id="buildings">
     <h2 class="s">Buildings</h2>
-    <p class="sub">Twelve tools for a hardened colony grid &mdash; plus one purely decorative weather vane.</p>
+    <p class="sub">Seventeen tools for a disaster-hardened colony &mdash; plus one purely decorative weather vane.</p>
     <div class="grid">
 
       <div class="card storm wide">
@@ -165,6 +165,51 @@
         </div>
       </div>
 
+      <div class="card storm wide">
+        <img src="img/AtmosphericBarrier.png" alt="Atmospheric barrier">
+        <div>
+          <h3>Atmospheric barrier</h3>
+          <div class="stat">2&times;2 &middot; Hazard hardening &middot; 200W idle / 2,000W active</div>
+          <p>Map-wide toxin hardener. Suppresses toxic fallout, toxic surge, volcanic ash, and noxious haze while the grid holds charge. Pair with fallout scrubbers to clear buildup already in the blood.</p>
+        </div>
+      </div>
+
+      <div class="card storm wide">
+        <img src="img/ClimateStabilizer.png" alt="Climate stabilizer">
+        <div>
+          <h3>Climate stabilizer</h3>
+          <div class="stat">2&times;2 &middot; Hazard hardening &middot; 150W idle / 1,800W active</div>
+          <p>Cancels temperature offsets from heat waves, cold snaps, volcanic winters, heat domes, and polar fronts &mdash; as long as batteries can feed it.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <img src="img/SkyRestorer.png" alt="Sky restorer">
+        <div>
+          <h3>Sky restorer</h3>
+          <div class="stat">2&times;2 &middot; Hazard hardening &middot; 150W idle / 1,500W active</div>
+          <p>Restores usable daylight during eclipses, volcanic winters/ash, and darkened skies so crops and colonists aren't stuck in permanent dusk.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <img src="img/FireSuppressor.png" alt="Fire suppressor">
+        <div>
+          <h3>Fire suppressor</h3>
+          <div class="stat">~25-tile radius &middot; Hazard hardening &middot; 50W / 800W in flashstorm</div>
+          <p>Extinguishes fires in a wide radius while powered. Pairs with storm spires during flashstorms and dry lightning fronts.</p>
+        </div>
+      </div>
+
+      <div class="card storm">
+        <img src="img/DroughtCondenser.png" alt="Drought condenser">
+        <div>
+          <h3>Drought condenser</h3>
+          <div class="stat">2&times;2 &middot; Hazard hardening &middot; 100W idle / 1,200W active</div>
+          <p>Cancels drought plant-growth penalties map-wide while powered. Most useful with Odyssey grasslands droughts.</p>
+        </div>
+      </div>
+
       <div class="card storm">
         <img src="img/StormVane.png" alt="Storm vane">
         <div>
@@ -179,7 +224,7 @@
 
   <section id="research">
     <h2 class="s">Research</h2>
-    <p class="sub">Two industrial-era projects and two spacer-era capstones.</p>
+    <p class="sub">Industrial grid tools, spacer storm control, and a late-game hazard hardening capstone.</p>
     <div class="research-tree">
       <b>Electricity</b> (vanilla)<br>
       &nbsp;&nbsp;&#9492;&#9472; <b>Storm protection</b> (1,200 pts)<br>
@@ -202,7 +247,15 @@
       &nbsp;&nbsp;&#9492;&#9472; <b>Atmospheric control</b> (3,500 pts, Spacer) &rarr; <b>Storm caller</b><br>
       <br>
       <b>Flare shielding</b> + <b>Advanced fabrication</b> (vanilla)<br>
-      &nbsp;&nbsp;&#9492;&#9472; <b>Perfect grounding</b> (4,000 pts, Spacer) &rarr; removes storm spire &ldquo;Zzzt!&rdquo; risk
+      &nbsp;&nbsp;&#9492;&#9472; <b>Perfect grounding</b> (4,000 pts, Spacer) &rarr; removes storm spire &ldquo;Zzzt!&rdquo; risk<br>
+      <br>
+      <b>Atmospheric control</b> + <b>Perfect grounding</b><br>
+      &nbsp;&nbsp;&#9492;&#9472; <b>Hazard hardening</b> (5,000 pts, Spacer)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Atmospheric barrier</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Climate stabilizer</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Sky restorer</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472; <b>Fire suppressor</b><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472; <b>Drought condenser</b>
     </div>
     <div class="table-scroll" style="margin-top:24px">
       <table>
@@ -219,6 +272,11 @@
         <tr><td><b>Static discharge pylon</b></td><td>50 steel, 5 gold, 2 components</td><td>200W</td><td>Flare shielding</td></tr>
         <tr><td><b>Fallout scrubber</b></td><td>60 steel, 3 components</td><td>150W</td><td>Flare shielding</td></tr>
         <tr><td><b>Storm caller</b></td><td>120 steel, 60 plasteel, 4 components, 2 advanced components</td><td>400W</td><td>Atmospheric control</td></tr>
+        <tr><td><b>Atmospheric barrier</b></td><td>180 steel, 80 plasteel, 6 components, 3 advanced</td><td>200W / 2,000W</td><td>Hazard hardening</td></tr>
+        <tr><td><b>Climate stabilizer</b></td><td>160 steel, 70 plasteel, 5 components, 2 advanced</td><td>150W / 1,800W</td><td>Hazard hardening</td></tr>
+        <tr><td><b>Sky restorer</b></td><td>140 steel, 60 plasteel, 80 silver, 4+2 components</td><td>150W / 1,500W</td><td>Hazard hardening</td></tr>
+        <tr><td><b>Fire suppressor</b></td><td>90 steel, 30 plasteel, 4+1 components</td><td>50W / 800W</td><td>Hazard hardening</td></tr>
+        <tr><td><b>Drought condenser</b></td><td>100 steel, 25 plasteel, 4+1 components</td><td>100W / 1,200W</td><td>Hazard hardening</td></tr>
         <tr><td><b>Storm vane</b></td><td>25 steel</td><td>&mdash;</td><td>None</td></tr>
       </table>
     </div>
@@ -282,6 +340,20 @@
         <div>
           <h3>Ion storm event</h3>
           <p>A new small-threat event (0.75&ndash;1.5 days): batteries bleed ~20% of stored charge per day, random EMP bursts pop at powered buildings, and extra &ldquo;Zzzt!&rdquo; surges fire. EMP dampeners, surge protectors, and storm capacitor banks are the counters.</p>
+        </div>
+      </div>
+      <div class="card storm">
+        <div class="icon">&#127786;</div>
+        <div>
+          <h3>Natural hazard hardening</h3>
+          <p>Late-game buildings cancel toxic fallout, extreme heat/cold, eclipses, flashstorm fires, and drought growth penalties while they have grid power &mdash; the same solar-shield fantasy applied to most natural incidents.</p>
+        </div>
+      </div>
+      <div class="card storm">
+        <div class="icon">&#9928;</div>
+        <div>
+          <h3>More events to earn the kit</h3>
+          <p>Heat dome, polar front, toxic surge, and dry lightning front each pressure a different counter. Vanilla fallout, heat/cold, eclipse, volcanic winter, flashstorm, and drought are covered too once hazard hardening is online.</p>
         </div>
       </div>
     </div>

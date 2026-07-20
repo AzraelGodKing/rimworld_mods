@@ -619,6 +619,275 @@
     </researchPrerequisites>
   </ThingDef>
 
+  <!-- ============ Atmospheric barrier ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_AtmosphericBarrier</defName>
+    <label>atmospheric barrier</label>
+    <description>A colony-scale atmospheric hardener. Idles at modest draw until toxic fallout, a toxic surge, noxious haze, or volcanic ash hits - then it pulls hard from the grid to suppress outdoor poison and corrosion map-wide. Keep batteries charged: if the net runs dry mid-event, the barrier collapses. Pair with fallout scrubbers to clear toxic buildup already in colonists' blood.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/AtmosphericBarrier</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>350</MaxHitPoints>
+      <WorkToBuild>8000</WorkToBuild>
+      <Mass>75</Mass>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <Steel>180</Steel>
+      <Plasteel>80</Plasteel>
+      <ComponentIndustrial>6</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>200</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Stormproof.CompProperties_AtmosphericBarrier">
+        <activePowerConsumption>2000</activePowerConsumption>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_HazardHardening</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Climate stabilizer ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_ClimateStabilizer</defName>
+    <label>climate stabilizer</label>
+    <description>A thermal field regulator that cancels map-wide temperature offsets from heat waves, cold snaps, volcanic winters, heat domes, and polar fronts. Idle draw is light; during an extreme climate event it drains heavily. No stored energy, no protection.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/ClimateStabilizer</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.5</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>320</MaxHitPoints>
+      <WorkToBuild>7500</WorkToBuild>
+      <Mass>70</Mass>
+      <Flammability>0.25</Flammability>
+    </statBases>
+    <costList>
+      <Steel>160</Steel>
+      <Plasteel>70</Plasteel>
+      <ComponentIndustrial>5</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Stormproof.CompProperties_ClimateStabilizer">
+        <activePowerConsumption>1800</activePowerConsumption>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_HazardHardening</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Sky restorer ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_SkyRestorer</defName>
+    <label>sky restorer</label>
+    <description>An orbital-mirror / ionospheric illuminator that restores usable daylight during eclipses, volcanic winters, volcanic ash, and darkened skies. Crops and colonists stop living in permanent dusk while the grid holds charge.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/SkyRestorer</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2.4)</drawSize>
+      <drawOffset>(0,0,0.2)</drawOffset>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <fillPercent>0.45</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>300</MaxHitPoints>
+      <WorkToBuild>7000</WorkToBuild>
+      <Mass>65</Mass>
+      <Flammability>0.2</Flammability>
+    </statBases>
+    <costList>
+      <Steel>140</Steel>
+      <Plasteel>60</Plasteel>
+      <Silver>80</Silver>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Stormproof.CompProperties_SkyRestorer">
+        <activePowerConsumption>1500</activePowerConsumption>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_HazardHardening</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Fire suppressor ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_FireSuppressor</defName>
+    <label>fire suppressor</label>
+    <description>A foam / inert-gas emitter that extinguishes fires within a wide radius while powered. During flashstorms and dry lightning fronts it ramps power draw and works with storm spires to keep a lightning-blasted base from burning down.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/FireSuppressor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.6,1.6)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <specialDisplayRadius>25</specialDisplayRadius>
+    <statBases>
+      <MaxHitPoints>220</MaxHitPoints>
+      <WorkToBuild>4500</WorkToBuild>
+      <Mass>40</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>90</Steel>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>50</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Stormproof.CompProperties_FireSuppressor">
+        <suppressRadius>24.9</suppressRadius>
+        <activePowerConsumption>800</activePowerConsumption>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_HazardHardening</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Drought condenser ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Stormproof_DroughtCondenser</defName>
+    <label>drought condenser</label>
+    <description>An atmospheric moisture condenser that cancels drought plant-growth penalties map-wide while powered. Idle until a drought begins, then drinks deep from the grid. Most useful with Odyssey grasslands droughts; harmless furniture if those never arrive.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Stormproof/Buildings/DroughtCondenser</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.8,1.8)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>5000</WorkToBuild>
+      <Mass>55</Mass>
+      <Flammability>0.3</Flammability>
+    </statBases>
+    <costList>
+      <Steel>100</Steel>
+      <Plasteel>25</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Stormproof.CompProperties_DroughtCondenser">
+        <activePowerConsumption>1200</activePowerConsumption>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Stormproof_HazardHardening</li>
+    </researchPrerequisites>
+  </ThingDef>
+
   <!-- ============ Storm vane ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_StormVane</defName>
