@@ -138,6 +138,13 @@ namespace Strata
             {
                 return !MiscRobotNeedsRecharge(pawn);
             }
+            // Biotech colony mechs commute stairs for work/charge like colonists.
+            if (ModsConfig.BiotechActive && pawn.IsColonyMech
+                && pawn.Faction == Faction.OfPlayer
+                && pawn.workSettings?.EverWork == true)
+            {
+                return true;
+            }
             if (pawn.RaceProps.ToolUser && pawn.workSettings?.EverWork == true)
             {
                 return true;
