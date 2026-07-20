@@ -26,6 +26,7 @@ namespace Strata
             SleepRelay.ResetSession();
             HaulToLevelTargets.ResetSession();
             CrossLevelOrderedJobs.ResetSession();
+            CaravanTravelUtility.ResetSession();
             StrataPortalUtility.ResetHaulDeliverSession();
             StrataResources.ClearCaches();
 
