@@ -10,4 +10,69 @@
     <endMessage>The ion storm has dissipated. The grid is stable again.</endMessage>
   </GameConditionDef>
 
+  <!-- ============ Heat dome ============ -->
+  <GameConditionDef>
+    <defName>Stormproof_HeatDome</defName>
+    <conditionClass>Stormproof.GameCondition_HeatDome</conditionClass>
+    <label>heat dome</label>
+    <description>A crushing high-pressure heat dome is baking the region far beyond a normal heat wave. A powered climate stabilizer cancels the temperature spike.</description>
+    <endMessage>The heat dome has broken.</endMessage>
+    <letterText>A severe heat dome has settled over the region.\n\nTemperatures will spike dangerously (+28°C). Uncooled spaces will cook colonists and crops.\n\nA Stormproof climate stabilizer can cancel the entire offset while it has grid power.</letterText>
+    <letterDef>NegativeEvent</letterDef>
+    <exclusiveConditions>
+      <li>ColdSnap</li>
+      <li>Stormproof_PolarFront</li>
+      <li>VolcanicWinter</li>
+      <li>HeatWave</li>
+    </exclusiveConditions>
+    <allowUnderground>false</allowUnderground>
+  </GameConditionDef>
+
+  <!-- ============ Polar front ============ -->
+  <GameConditionDef>
+    <defName>Stormproof_PolarFront</defName>
+    <conditionClass>Stormproof.GameCondition_PolarFront</conditionClass>
+    <label>polar front</label>
+    <description>An arctic air mass is slamming the region. Far colder than a normal cold snap. A powered climate stabilizer cancels the temperature plunge.</description>
+    <endMessage>The polar front has moved on.</endMessage>
+    <letterText>A polar front is freezing the region.\n\nTemperatures will plunge (-28°C). Unheated spaces and outdoor crops are at extreme risk.\n\nA Stormproof climate stabilizer can cancel the entire offset while it has grid power.</letterText>
+    <letterDef>NegativeEvent</letterDef>
+    <exclusiveConditions>
+      <li>HeatWave</li>
+      <li>Stormproof_HeatDome</li>
+    </exclusiveConditions>
+    <allowUnderground>false</allowUnderground>
+  </GameConditionDef>
+
+  <!-- ============ Toxic surge ============ -->
+  <GameConditionDef>
+    <defName>Stormproof_ToxicSurge</defName>
+    <conditionClass>GameCondition_ToxicFallout</conditionClass>
+    <label>toxic surge</label>
+    <description>A dense chemical plume is dumping toxins faster than ordinary fallout. Outdoor life is poisoned quickly. A powered atmospheric barrier suppresses the poison map-wide; fallout scrubbers still help recover anyone already contaminated.</description>
+    <endMessage>The toxic surge has thinned out.</endMessage>
+    <letterText>A toxic surge plume is settling over the region.\n\nThis is worse than ordinary fallout: outdoor exposure will poison living things quickly, and unprotected outdoor goods will corrode.\n\nA Stormproof atmospheric barrier can suppress the poison while it has grid power. Keep fallout scrubbers running indoors to clear existing toxic buildup.</letterText>
+    <letterDef>NegativeEvent</letterDef>
+    <exclusiveConditions>
+      <li>ToxicFallout</li>
+    </exclusiveConditions>
+    <canBePermanent>true</canBePermanent>
+    <allowUnderground>false</allowUnderground>
+    <pennedAnimalsSeekShelter>true</pennedAnimalsSeekShelter>
+  </GameConditionDef>
+
+  <!-- ============ Dry lightning front ============ -->
+  <GameConditionDef>
+    <defName>Stormproof_DryLightning</defName>
+    <conditionClass>Stormproof.GameCondition_DryLightning</conditionClass>
+    <label>dry lightning front</label>
+    <description>A dry thunderstorm is locked over the map: repeated lightning with no rain to put fires out. Storm spires harvest the bolts; fire suppressors snuff the blazes; a storm caller can force rain if you need it.</description>
+    <endMessage>The dry lightning front has moved on.</endMessage>
+    <letterText>A dry lightning front is hammering the region.\n\nExpect repeated lightning strikes without rain - perfect fuel for wildfires.\n\nStorm spires will catch nearby bolts. Fire suppressors extinguish fires in their radius. A storm caller can still force a rainy thunderstorm if you need water more than watts.</letterText>
+    <letterDef>NegativeEvent</letterDef>
+    <preventRain>true</preventRain>
+    <canBePermanent>true</canBePermanent>
+    <allowUnderground>false</allowUnderground>
+  </GameConditionDef>
+
 </Defs>
