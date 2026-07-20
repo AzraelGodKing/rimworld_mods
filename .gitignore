@@ -1,8 +1,15 @@
 *.dll
 
-Homesteader/Source/obj/
-Homesteader/Source/bin/
-Stormproof/Source/obj/
-Stormproof/Source/bin/
-Strata/Source/obj/
-Strata/Source/bin/
+# Build outputs (mods + tools)
+**/obj/
+**/bin/
+
+# Site download zips — published via GitHub Release, not committed
+docs/downloads/*.zip
+
+# One-off art package duplicate (canonical copy lives under Strata/ArtPackage/)
+/Strata_Art_Package.zip
+
+# Local decompile / reflect scratch (must never re-enter the repo)
+Strata/Tools/_decompile_tmp/
+Strata/Tools/_reflect_tmp/
