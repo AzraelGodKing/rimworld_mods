@@ -190,4 +190,88 @@
     </comps>
   </ThingDef>
 
+  <!-- Omni: power + every fluid channel Strata supports. Soft-skips unloaded mod
+       networks; pipe comps are patched in only when those mods are present. -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_ShaftFluid_Omni</defName>
+    <label>omni inter-floor connector</label>
+    <description>An all-in-one shaft junction that ties power and every supported pipe network between levels — water, heating, air-con, coolant, helixien gas, chemfuel, crude, and VTE AC ducts when those mods are loaded. Build within a few tiles of a stairwell or elevator; it extends a matching connector below. Placeable inside walls and on the same tile as pipes. Inactive networks for missing mods are skipped automatically.</description>
+    <thingClass>Strata.Building_ShaftFluidJunction</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ShaftConduit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.45,0.82,1.0)</color>
+    </graphicData>
+    <uiIconPath>Strata/Buildings/ShaftConduit</uiIconPath>
+    <uiIconScale>0.85</uiIconScale>
+    <altitudeLayer>BuildingOnTop</altitudeLayer>
+    <passability>Standable</passability>
+    <pathCost>0</pathCost>
+    <fillPercent>0.15</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <clearBuildingArea>false</clearBuildingArea>
+    <building>
+      <isEdifice>false</isEdifice>
+      <isInert>true</isInert>
+      <canPlaceOverWall>true</canPlaceOverWall>
+      <canConstructInCorner>true</canConstructInCorner>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>5500</WorkToBuild>
+      <Flammability>0.25</Flammability>
+    </statBases>
+    <costList>
+      <Steel>80</Steel>
+      <Plasteel>40</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+      <li Class="CompProperties_Power">
+        <compClass>Strata.CompPowerShaft</compClass>
+        <basePowerConsumption>10</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>dbh_plumbing</channel>
+      </li>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>dch_heating</channel>
+      </li>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>dch_air</channel>
+      </li>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>rimatomics_coolant</channel>
+      </li>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>vhge_helixien</channel>
+      </li>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>vte_efficiency</channel>
+      </li>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>vef_chemfuel</channel>
+      </li>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>rimefeller_crude</channel>
+      </li>
+      <li Class="Strata.CompProperties_ShaftFluidTie">
+        <channel>rimefeller_fuel</channel>
+      </li>
+    </comps>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+    </researchPrerequisites>
+  </ThingDef>
+
 </Defs>
