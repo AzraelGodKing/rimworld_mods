@@ -23,12 +23,7 @@ namespace Strata
 
         private static bool IsRimefellerJunction(Thing thing)
         {
-            CompShaftFluidTie tie = thing.TryGetComp<CompShaftFluidTie>();
-            if (tie?.Props.channel == null)
-            {
-                return false;
-            }
-            return tie.Props.channel.StartsWith("rimefeller_");
+            return CompShaftFluidTie.HasChannelPrefix(thing, "rimefeller_");
         }
 
         private static Type mapCompType;
