@@ -2,8 +2,9 @@
 
 **Status: SHIPPED (2.0).** Historical pillar notes below.
 
-Next: [V3_ROADMAP.md](V3_ROADMAP.md) (empty stub) and
+Next: [V3_ROADMAP.md](V3_ROADMAP.md) (future vision) and
 [GitHub issues](https://github.com/AzraelGodKing/rimworld_mods/issues).
+Series: [../ROADMAP.md](../ROADMAP.md).
 
 ---
 
