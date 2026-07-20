@@ -27,6 +27,10 @@ namespace Strata
                 {
                     return 0f;
                 }
+                if (parent.TryGetComp<CompShaftFluidJunctionLink>()?.IsAutoSpawned == true)
+                {
+                    return 0f;
+                }
                 return Props.PowerConsumption;
             }
         }
