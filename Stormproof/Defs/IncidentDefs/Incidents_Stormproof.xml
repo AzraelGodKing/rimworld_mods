@@ -19,4 +19,76 @@
     <letterDef>NegativeEvent</letterDef>
   </IncidentDef>
 
+  <!-- ============ Heat dome ============ -->
+  <IncidentDef>
+    <defName>Stormproof_HeatDome</defName>
+    <label>heat dome</label>
+    <category>ThreatBig</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>IncidentWorker_MakeGameCondition</workerClass>
+    <gameCondition>Stormproof_HeatDome</gameCondition>
+    <durationDays>2~4</durationDays>
+    <baseChance>0.35</baseChance>
+    <minRefireDays>25</minRefireDays>
+    <letterLabel>Heat dome</letterLabel>
+    <letterText>A severe heat dome has settled over the region.\n\nTemperatures will spike dangerously (+28°C). Uncooled spaces will cook colonists and crops.\n\nA Stormproof climate stabilizer can cancel the entire offset while it has grid power.</letterText>
+    <letterDef>NegativeEvent</letterDef>
+  </IncidentDef>
+
+  <!-- ============ Polar front ============ -->
+  <IncidentDef>
+    <defName>Stormproof_PolarFront</defName>
+    <label>polar front</label>
+    <category>ThreatBig</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>IncidentWorker_MakeGameCondition</workerClass>
+    <gameCondition>Stormproof_PolarFront</gameCondition>
+    <durationDays>2~4</durationDays>
+    <baseChance>0.35</baseChance>
+    <minRefireDays>25</minRefireDays>
+    <letterLabel>Polar front</letterLabel>
+    <letterText>A polar front is freezing the region.\n\nTemperatures will plunge (-28°C). Unheated spaces and outdoor crops are at extreme risk.\n\nA Stormproof climate stabilizer can cancel the entire offset while it has grid power.</letterText>
+    <letterDef>NegativeEvent</letterDef>
+  </IncidentDef>
+
+  <!-- ============ Toxic surge ============ -->
+  <IncidentDef>
+    <defName>Stormproof_ToxicSurge</defName>
+    <label>toxic surge</label>
+    <category>ThreatBig</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>IncidentWorker_MakeGameCondition</workerClass>
+    <gameCondition>Stormproof_ToxicSurge</gameCondition>
+    <durationDays>4~10</durationDays>
+    <baseChance>0.30</baseChance>
+    <minRefireDays>30</minRefireDays>
+    <letterLabel>Toxic surge</letterLabel>
+    <letterText>A toxic surge plume is settling over the region.\n\nThis is worse than ordinary fallout: outdoor exposure will poison living things quickly, and unprotected outdoor goods will corrode.\n\nA Stormproof atmospheric barrier can suppress the poison while it has grid power. Keep fallout scrubbers running indoors to clear existing toxic buildup.</letterText>
+    <letterDef>NegativeEvent</letterDef>
+  </IncidentDef>
+
+  <!-- ============ Dry lightning front ============ -->
+  <IncidentDef>
+    <defName>Stormproof_DryLightning</defName>
+    <label>dry lightning front</label>
+    <category>ThreatSmall</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>IncidentWorker_MakeGameCondition</workerClass>
+    <gameCondition>Stormproof_DryLightning</gameCondition>
+    <durationDays>0.75~1.5</durationDays>
+    <baseChance>0.55</baseChance>
+    <minRefireDays>18</minRefireDays>
+    <letterLabel>Dry lightning front</letterLabel>
+    <letterText>A dry lightning front is hammering the region.\n\nExpect repeated lightning strikes without rain - perfect fuel for wildfires.\n\nStorm spires will catch nearby bolts. Fire suppressors extinguish fires in their radius. A storm caller can still force a rainy thunderstorm if you need water more than watts.</letterText>
+    <letterDef>NegativeEvent</letterDef>
+  </IncidentDef>
+
 </Defs>
