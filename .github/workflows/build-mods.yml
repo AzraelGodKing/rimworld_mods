@@ -100,3 +100,5 @@ jobs:
             docs/downloads/Nemesis.zip
           make_latest: true
           fail_on_unmatched_files: true
+          # Replace assets when the rolling `latest` tag is republished.
+          overwrite_files: true

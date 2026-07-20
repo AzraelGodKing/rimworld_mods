@@ -23,7 +23,7 @@ Everything a growing homestead needs: tribal survival, farm-to-table crafting, w
 
 Odyssey DLC: salted fish and smoked fish recipes load automatically.
 
-Source lives in `Homesteader/Source`; the compiled `Homesteader.dll` ships in `Homesteader/Assemblies` and is rebuilt by the **Build mod DLLs** GitHub Action on every `Homesteader/Source` change.
+Source lives in `Homesteader/Source`. The compiled `Homesteader.dll` is produced by the **Build mod DLLs** GitHub Action and included in the [release download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip) (Assemblies are gitignored).
 
 ### Strata (experimental)
 
@@ -54,7 +54,7 @@ To move goods between levels, just put a stockpile near the stairs on each floor
 
 Design: each level is a real map linked by stairwell pairs (built on the vanilla 1.6 pocket-map/portal system), and the AI patches move the *pawn* to the level where it's needed rather than building fragile cross-map jobs — vanilla AI takes over the moment they arrive, so every failure mode degrades safely.
 
-Source lives in `Strata/Source`; the compiled `Strata.dll` ships in `Strata/Assemblies` and is rebuilt by the **Build mod DLLs** GitHub Action on every `Strata/Source` change (also available under Actions → workflow_dispatch).
+Source lives in `Strata/Source`. The compiled `Strata.dll` is produced by the **Build mod DLLs** GitHub Action and included in the [release download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Strata.zip) (Assemblies are gitignored; also available under Actions → workflow_dispatch).
 
 ### Stormproof
 
@@ -78,23 +78,31 @@ Defend your grid from everything the Rim throws at it. RimWorld 1.6. C# mod (req
 
 New event — **Ion storm**: batteries bleed charge, random EMP bursts stun powered buildings, and extra "Zzzt!" surges fire. EMP dampeners, surge protectors, and storm capacitor banks counter it.
 
-Source lives in `Stormproof/Source`; the compiled `Stormproof.dll` ships in `Stormproof/Assemblies` and is rebuilt by the **Build mod DLLs** GitHub Action on every `Stormproof/Source` change.
+Source lives in `Stormproof/Source`. The compiled `Stormproof.dll` is produced by the **Build mod DLLs** GitHub Action and included in the [release download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Stormproof.zip) (Assemblies are gitignored).
+
+### Nemesis (in progress)
+
+A named hostile becomes a personal antagonist — taunts, false leads, and targeted harassment. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Source lives in `Nemesis/Source`; the DLL is built by CI and shipped in the [release download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Nemesis.zip). Site teaser: [signal.html](https://azraelgodking.github.io/rimworld_mods/signal.html).
 
 ## Installation
 
-1. Download / clone this repository.
-2. Copy the mod folder(s) into your RimWorld `Mods` directory:
+A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a packaged zip:
+
+1. Download a mod zip from the [latest GitHub Release](https://github.com/AzraelGodKing/rimworld_mods/releases/latest) or the [GitHub Pages site](https://azraelgodking.github.io/rimworld_mods/).
+2. Extract the mod folder into your RimWorld `Mods` directory:
    - Windows: `C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods`
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, and **Strata** require the **Harmony** mod.
+4. **Homesteader**, **Stormproof**, **Strata**, and **Nemesis** require the **Harmony** mod.
+
+Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally.
 
 Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first.
 
 ## Changelogs
 
-Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md).
+Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md), [Nemesis](Nemesis/CHANGELOG.md).
 
 ## Website
 
