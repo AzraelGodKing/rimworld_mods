@@ -780,6 +780,11 @@ namespace Nemesis
                 if (age >= 0 && age <= 60000 * 4)
                     informant = s?.actionWeightInformant ?? 0.05f;
             }
+            // Soft Strata burrow — only when probe succeeds and phase is Obsessed+.
+            float burrow = 0f;
+            if (SoftCompat.StrataBurrowAvailable && phase >= NemesisHuntPhase.Obsessed
+                && _data.EffectiveAggression >= 3.5f)
+                burrow = 0.04f;
 
             if (_data.rogue)
             {
@@ -812,10 +817,11 @@ namespace Nemesis
                 else if (lastKind == NemesisAction.GraveDesecration) grave = 0f;
                 else if (lastKind == NemesisAction.FoodTampering) tamper = 0f;
                 else if (lastKind == NemesisAction.InformantReveal) informant = 0f;
+                else if (lastKind == NemesisAction.StrataBurrow) burrow = 0f;
             }
 
             float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly
-                + kidnap + sniper + grave + tamper + informant;
+                + kidnap + sniper + grave + tamper + informant + burrow;
             if (total <= 0f) return NemesisAction.CommsTaunt;
             float roll = Rand.Value * total;
 
@@ -833,6 +839,7 @@ namespace Nemesis
             if ((roll -= grave) < 0f) return NemesisAction.GraveDesecration;
             if ((roll -= tamper) < 0f) return NemesisAction.FoodTampering;
             if ((roll -= informant) < 0f) return NemesisAction.InformantReveal;
+            if ((roll -= burrow) < 0f) return NemesisAction.StrataBurrow;
             return NemesisAction.CommsTaunt;
         }
 

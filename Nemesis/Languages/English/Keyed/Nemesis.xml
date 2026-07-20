@@ -135,6 +135,13 @@
   <Nemesis_Letter_SabotageBody>{0} pulsed EMP through your grid. {1} buildings took the hit.</Nemesis_Letter_SabotageBody>
   <Nemesis_Letter_SabotageBlocked>{0} tried to fry your electronics — but EMP dampeners held the line. A frustrated hiss crackled on the open channel.</Nemesis_Letter_SabotageBlocked>
   <Nemesis_Letter_SabotageSurgeBlocked>{0} hit {1} buildings with EMP. A surge protector ate the follow-up short circuit.</Nemesis_Letter_SabotageSurgeBlocked>
+  <Nemesis_Letter_SabotageBrain>{0} went for the brain — load shedders and grid monitors took the EMP first ({1} hits).</Nemesis_Letter_SabotageBrain>
+  <Nemesis_Letter_BeehiveTitle>Hive Smash: {0}</Nemesis_Letter_BeehiveTitle>
+  <Nemesis_Letter_BeehiveBody>{0} kicked over {1} beehive(s). The bees are not amused. Neither should you be.</Nemesis_Letter_BeehiveBody>
+  <Nemesis_Letter_WellFoulTitle>Fouled Water: {0}</Nemesis_Letter_WellFoulTitle>
+  <Nemesis_Letter_WellFoulBody>{0} left something in the well.\n\nAnyone who drank nearby may already feel it. {1} was the joke.</Nemesis_Letter_WellFoulBody>
+  <Nemesis_Letter_StrataBurrowTitle>From Below: {0}</Nemesis_Letter_StrataBurrowTitle>
+  <Nemesis_Letter_StrataBurrowBody>{0} claims the tunnels.\n\n"I paid the things under your floor to visit {1}."\n\nWhether that is true or not, something is digging.</Nemesis_Letter_StrataBurrowBody>
   <Nemesis_Letter_FoodTitle>Food Stores Hit: {0}</Nemesis_Letter_FoodTitle>
   <Nemesis_Letter_FoodBody>{0} spoiled or stole from your food stores ({1} stacks damaged). Hunger is a weapon.</Nemesis_Letter_FoodBody>
   <Nemesis_Letter_FoodCellar>{0} found their way into your stores — including near the root cellar. {1} stacks were ruined.</Nemesis_Letter_FoodCellar>

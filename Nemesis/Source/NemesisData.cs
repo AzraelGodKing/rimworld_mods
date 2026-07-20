@@ -38,6 +38,7 @@ namespace Nemesis
         GraveDesecration,
         FoodTampering,
         InformantReveal,
+        StrataBurrow, // SoftCompat only — never fires if Strata probe fails
     }
 
     public enum NemesisOutcome

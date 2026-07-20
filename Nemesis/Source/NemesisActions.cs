@@ -78,6 +78,10 @@ namespace Nemesis
                 case NemesisAction.InformantReveal:
                     InformantReveal(data, map);
                     break;
+                case NemesisAction.StrataBurrow:
+                    if (!SoftCompat.TryFireStrataBurrow(data, map))
+                        CommsTaunt(data, map);
+                    break;
                 default:
                     CommsTaunt(data, map);
                     break;
@@ -335,6 +339,9 @@ namespace Nemesis
         private static void PowerSabotage(NemesisData data, Map map)
         {
             List<Building> candidates = new List<Building>();
+            List<Building> brains = new List<Building>();
+            SoftCompat.CollectStormproofBrainTargets(map, brains);
+
             List<Building> all = map.listerBuildings.allBuildingsColonist;
             for (int i = 0; i < all.Count; i++)
             {
@@ -343,10 +350,16 @@ namespace Nemesis
                 CompPowerTrader power = b.TryGetComp<CompPowerTrader>();
                 if (power == null || !power.PowerOn) continue;
                 if (SoftCompat.IsBuildingEmpProtected(b)) continue;
-                candidates.Add(b);
+                // Avoid duplicating brain targets in the general pool.
+                bool isBrain = false;
+                for (int j = 0; j < brains.Count; j++)
+                {
+                    if (brains[j] == b) { isBrain = true; break; }
+                }
+                if (!isBrain) candidates.Add(b);
             }
 
-            if (candidates.Count == 0)
+            if (brains.Count == 0 && candidates.Count == 0)
             {
                 string dampenNote = SoftCompat.StormproofActive
                     ? "Nemesis_Letter_SabotageBlocked".Translate(data.nemesisName)
@@ -363,26 +376,39 @@ namespace Nemesis
 
             int hits = Mathf.Clamp(1 + (int)(data.EffectiveAggression / 4f), 1, 4);
             int applied = 0;
-            for (int i = 0; i < hits && candidates.Count > 0; i++)
+            bool hitBrain = false;
+
+            // Prefer Stormproof load shedder / grid monitor first ("he went for the brain").
+            while (applied < hits && brains.Count > 0)
+            {
+                Building b = brains[Rand.Range(0, brains.Count)];
+                brains.Remove(b);
+                b.TakeDamage(new DamageInfo(DamageDefOf.EMP, 50f));
+                applied++;
+                hitBrain = true;
+            }
+            while (applied < hits && candidates.Count > 0)
             {
                 Building b = candidates[Rand.Range(0, candidates.Count)];
                 candidates.Remove(b);
-                DamageInfo dinfo = new DamageInfo(DamageDefOf.EMP, 50f);
-                b.TakeDamage(dinfo);
+                b.TakeDamage(new DamageInfo(DamageDefOf.EMP, 50f));
                 applied++;
             }
 
             bool surgeBlocked = SoftCompat.MapHasReadySurgeProtector(map);
             if (!surgeBlocked && Rand.Chance(0.35f))
             {
-                // Extra "Zzzt!" flavor when unprotected.
                 IncidentDef zzzt = DefDatabase<IncidentDef>.GetNamedSilentFail("ShortCircuit");
                 zzzt?.Worker.TryExecute(StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.Misc, map));
             }
 
-            string body = surgeBlocked
-                ? "Nemesis_Letter_SabotageSurgeBlocked".Translate(data.nemesisName, applied)
-                : "Nemesis_Letter_SabotageBody".Translate(data.nemesisName, applied);
+            string body;
+            if (hitBrain)
+                body = "Nemesis_Letter_SabotageBrain".Translate(data.nemesisName, applied);
+            else if (surgeBlocked)
+                body = "Nemesis_Letter_SabotageSurgeBlocked".Translate(data.nemesisName, applied);
+            else
+                body = "Nemesis_Letter_SabotageBody".Translate(data.nemesisName, applied);
 
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_SabotageTitle".Translate(data.nemesisName),
@@ -392,8 +418,27 @@ namespace Nemesis
 
         private static void FoodStoreRaid(NemesisData data, Map map)
         {
+            // Low-weight Homesteader flavor branches (fail-open if defs missing).
+            if (SoftCompat.HomesteaderActive && Rand.Chance(0.22f))
+            {
+                int hives = SoftCompat.TryVandalizeBeehives(map, Rand.RangeInclusive(1, 2));
+                if (hives > 0)
+                {
+                    Find.LetterStack.ReceiveLetter(
+                        "Nemesis_Letter_BeehiveTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_BeehiveBody".Translate(data.nemesisName, hives),
+                        LetterDefOf.NegativeEvent);
+                    return;
+                }
+                if (SoftCompat.TryFoulWell(map, data))
+                    return;
+            }
+
             List<Thing> foods = new List<Thing>();
             List<Thing> candidates = map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
+            Pawn victim = GameComponent_Nemesis.Instance?.FindTargetPawn();
+            ThingDef favDef = SoftCompat.TryFavoriteFoodDef(victim);
+
             if (candidates != null)
             {
                 for (int i = 0; i < candidates.Count; i++)
@@ -402,17 +447,25 @@ namespace Nemesis
                     if (t == null || t.Destroyed || t.Faction != Faction.OfPlayer) continue;
                     if (!t.def.IsNutritionGivingIngestible) continue;
                     if (t.stackCount < 5) continue;
-                    foods.Add(t);
+                    // Prefer exact favorite-food def stacks when Homesteader resolves one.
+                    if (favDef != null && t.def == favDef)
+                        foods.Insert(0, t);
+                    else
+                        foods.Add(t);
                 }
             }
 
-            // Prefer cellar-adjacent stacks when Homesteader is present.
             bool cellar = SoftCompat.MapHasRootCellar(map);
             int ruined = 0;
             int targetCount = Rand.RangeInclusive(1, 3);
             for (int i = 0; i < foods.Count && ruined < targetCount; i++)
             {
-                Thing t = foods[Rand.Range(0, foods.Count)];
+                // Bias toward front of list (favorites).
+                int pick = favDef != null && ruined == 0
+                    ? 0
+                    : Rand.Range(0, foods.Count);
+                Thing t = foods[pick];
+                foods.RemoveAt(pick);
                 if (t == null || t.Destroyed) continue;
                 int lose = Mathf.Clamp(t.stackCount / 3, 1, 25);
                 t.SplitOff(lose).Destroy(DestroyMode.Vanish);
@@ -429,9 +482,8 @@ namespace Nemesis
                 ? "Nemesis_Letter_FoodCellar".Translate(data.nemesisName, ruined)
                 : "Nemesis_Letter_FoodBody".Translate(data.nemesisName, ruined);
 
-            Pawn victim = GameComponent_Nemesis.Instance?.FindTargetPawn();
             string fav = SoftCompat.TryFavoriteFoodLabel(victim);
-            if (fav != null)
+            if (fav != null && victim != null)
                 body += "\n\n" + "Nemesis_Letter_FoodFavoriteNote".Translate(data.nemesisName, victim.LabelShort, fav);
 
             Find.LetterStack.ReceiveLetter(
@@ -743,8 +795,14 @@ namespace Nemesis
 
         private static void FoodTampering(NemesisData data, Map map)
         {
+            if (SoftCompat.HomesteaderActive && Rand.Chance(0.18f) && SoftCompat.TryFoulWell(map, data))
+                return;
+
             List<Thing> foods = new List<Thing>();
             List<Thing> candidates = map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
+            Pawn victim = GameComponent_Nemesis.Instance?.FindTargetPawn();
+            ThingDef favDef = SoftCompat.TryFavoriteFoodDef(victim);
+
             if (candidates != null)
             {
                 for (int i = 0; i < candidates.Count; i++)
@@ -763,12 +821,25 @@ namespace Nemesis
                 return;
             }
 
-            // Prefer largest stack.
-            Thing best = foods[0];
-            for (int i = 1; i < foods.Count; i++)
+            // Prefer exact favorite def; else largest stack.
+            Thing best = null;
+            if (favDef != null)
             {
-                if (foods[i].stackCount > best.stackCount)
-                    best = foods[i];
+                for (int i = 0; i < foods.Count; i++)
+                {
+                    if (foods[i].def == favDef
+                        && (best == null || foods[i].stackCount > best.stackCount))
+                        best = foods[i];
+                }
+            }
+            if (best == null)
+            {
+                best = foods[0];
+                for (int i = 1; i < foods.Count; i++)
+                {
+                    if (foods[i].stackCount > best.stackCount)
+                        best = foods[i];
+                }
             }
 
             data.taintedFoodThingId = best.thingIDNumber;

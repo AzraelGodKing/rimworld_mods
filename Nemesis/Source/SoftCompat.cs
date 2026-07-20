@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace Nemesis
@@ -25,6 +26,9 @@ namespace Nemesis
         private static MethodInfo _strataIsUnderground;
         private static MethodInfo _strataIsUpper;
         private static MethodInfo _homeGetFavorites;
+        private static bool _strataBurrowProbed;
+        private static bool _strataBurrowAvailable;
+        private static IncidentDef _strataDeepRaidDef;
 
         public static bool StormproofActive
         {
@@ -79,12 +83,52 @@ namespace Nemesis
             }
         }
 
+        /// <summary>True when Strata's deep/burrowing raid incident can be resolved by defName.</summary>
+        public static bool StrataBurrowAvailable
+        {
+            get
+            {
+                EnsureStrataBurrowProbe();
+                return _strataBurrowAvailable;
+            }
+        }
+
         public static void ResetCaches()
         {
             _stormChecked = _strataChecked = _homeChecked = false;
             _stormActive = _strataActive = _homeActive = false;
             _strataIsUnderground = _strataIsUpper = null;
             _homeGetFavorites = null;
+            _strataBurrowProbed = false;
+            _strataBurrowAvailable = false;
+            _strataDeepRaidDef = null;
+        }
+
+        private static void EnsureStrataBurrowProbe()
+        {
+            if (_strataBurrowProbed) return;
+            _strataBurrowProbed = true;
+            _strataBurrowAvailable = false;
+            _strataDeepRaidDef = null;
+            if (!StrataActive) return;
+            try
+            {
+                // Prefer known defName; also accept a worker type probe for fail-open depth.
+                IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail("Strata_DeepRaid");
+                if (def?.Worker == null)
+                {
+                    Type worker = GenTypes.GetTypeInAnyAssembly("Strata.IncidentWorker_DeepRaid", "Strata");
+                    if (worker == null) return;
+                    // Worker type exists but def missing — still not fireable.
+                    return;
+                }
+                _strataDeepRaidDef = def;
+                _strataBurrowAvailable = true;
+            }
+            catch
+            {
+                _strataBurrowAvailable = false;
+            }
         }
 
         public static bool IsStrataUnderground(Map map)
@@ -160,12 +204,18 @@ namespace Nemesis
 
         public static string TryFavoriteFoodLabel(Pawn pawn)
         {
+            ThingDef def = TryFavoriteFoodDef(pawn);
+            return def?.label;
+        }
+
+        public static ThingDef TryFavoriteFoodDef(Pawn pawn)
+        {
             if (pawn == null || !HomesteaderActive || _homeGetFavorites == null) return null;
             try
             {
                 if (_homeGetFavorites.Invoke(null, new object[] { pawn }) is List<ThingDef> list
                     && list.Count > 0 && list[0] != null)
-                    return list[0].label;
+                    return list[0];
             }
             catch { /* fail open */ }
             return null;
@@ -178,6 +228,145 @@ namespace Nemesis
             if (def == null) return false;
             List<Thing> things = map.listerThings.ThingsOfDef(def);
             return things != null && things.Count > 0;
+        }
+
+        /// <summary>Damage Homesteader beehives if present. Returns how many hit.</summary>
+        public static int TryVandalizeBeehives(Map map, int maxHits)
+        {
+            if (map == null || !HomesteaderActive || maxHits <= 0) return 0;
+            ThingDef hive = DefDatabase<ThingDef>.GetNamedSilentFail("Homesteader_Beehive");
+            if (hive == null) return 0;
+            List<Thing> things = map.listerThings.ThingsOfDef(hive);
+            if (things == null || things.Count == 0) return 0;
+
+            List<Thing> candidates = new List<Thing>();
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing t = things[i];
+                if (t != null && !t.Destroyed && t.Faction == Faction.OfPlayer)
+                    candidates.Add(t);
+            }
+            int hit = 0;
+            while (candidates.Count > 0 && hit < maxHits)
+            {
+                int idx = Rand.Range(0, candidates.Count);
+                Thing t = candidates[idx];
+                candidates.RemoveAt(idx);
+                t.TakeDamage(new DamageInfo(DamageDefOf.Blunt, t.MaxHitPoints * Rand.Range(0.4f, 0.9f)));
+                hit++;
+            }
+            return hit;
+        }
+
+        /// <summary>
+        /// Foul a Homesteader/Wellspring well if present: taunt letter + brief gut-churn hediff on nearby colonists.
+        /// </summary>
+        public static bool TryFoulWell(Map map, NemesisData data)
+        {
+            if (map == null || !HomesteaderActive || data == null) return false;
+            ThingDef wellDef = DefDatabase<ThingDef>.GetNamedSilentFail("Wellspring_HandDugWell");
+            if (wellDef == null)
+                wellDef = DefDatabase<ThingDef>.GetNamedSilentFail("Homesteader_Well");
+            if (wellDef == null) return false;
+
+            List<Thing> wells = map.listerThings.ThingsOfDef(wellDef);
+            if (wells == null || wells.Count == 0) return false;
+
+            Thing well = wells[Rand.Range(0, wells.Count)];
+            HediffDef gut = DefDatabase<HediffDef>.GetNamedSilentFail("FoodPoisoning");
+            if (gut != null)
+            {
+                List<Pawn> colonists = map.mapPawns.FreeColonistsSpawned;
+                for (int i = 0; i < colonists.Count; i++)
+                {
+                    Pawn p = colonists[i];
+                    if (p == null || p.Dead) continue;
+                    if (p.Position.DistanceTo(well.Position) > 25f) continue;
+                    if (Rand.Chance(0.55f))
+                        p.health.AddHediff(gut);
+                }
+            }
+
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_WellFoulTitle".Translate(data.nemesisName),
+                "Nemesis_Letter_WellFoulBody".Translate(data.nemesisName, NemesisTaunts.TargetPhrase(data)),
+                LetterDefOf.NegativeEvent,
+                well);
+            return true;
+        }
+
+        /// <summary>
+        /// Fire Strata deep/burrow raid via incident worker reflection. Fail-open: never throws.
+        /// Prefers an underground Strata map when available.
+        /// </summary>
+        public static bool TryFireStrataBurrow(NemesisData data, Map surfaceFallback)
+        {
+            EnsureStrataBurrowProbe();
+            if (!_strataBurrowAvailable || _strataDeepRaidDef?.Worker == null || data == null)
+                return false;
+
+            Map map = null;
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map m = maps[i];
+                if (m != null && m.IsPlayerHome && IsStrataUnderground(m))
+                {
+                    map = m;
+                    break;
+                }
+            }
+            if (map == null)
+                return false; // Deep raid requires underground — do not fire on surface.
+
+            try
+            {
+                IncidentParms parms = StorytellerUtility.DefaultParmsNow(
+                    _strataDeepRaidDef.category ?? IncidentCategoryDefOf.ThreatBig, map);
+                parms.forced = true;
+                parms.points = Mathf.Max(250f, parms.points * 0.7f);
+                if (!_strataDeepRaidDef.Worker.TryExecute(parms))
+                    return false;
+
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_StrataBurrowTitle".Translate(data.nemesisName),
+                    "Nemesis_Letter_StrataBurrowBody".Translate(data.nemesisName, NemesisTaunts.TargetPhrase(data)),
+                    LetterDefOf.ThreatBig);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Prefer Stormproof brain buildings (LoadShedder / GridMonitor) as first EMP targets.
+        /// Appends unprotected matches to <paramref name="priority"/>; returns true if any found.
+        /// </summary>
+        public static bool CollectStormproofBrainTargets(Map map, List<Building> priority)
+        {
+            if (map == null || !StormproofActive || priority == null) return false;
+            string[] names = { "Stormproof_LoadShedder", "Stormproof_GridMonitor" };
+            bool any = false;
+            for (int n = 0; n < names.Length; n++)
+            {
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(names[n]);
+                if (def == null) continue;
+                List<Thing> things = map.listerThings.ThingsOfDef(def);
+                if (things == null) continue;
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Building b = things[i] as Building;
+                    if (b == null || b.Destroyed) continue;
+                    CompPowerTrader power = b.TryGetComp<CompPowerTrader>();
+                    if (power == null || !power.PowerOn) continue;
+                    if (IsBuildingEmpProtected(b)) continue;
+                    priority.Add(b);
+                    any = true;
+                }
+            }
+            return any;
         }
     }
 }
