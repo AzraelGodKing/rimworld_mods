@@ -15,12 +15,14 @@ namespace Strata
         {
             "vhge_helixien",
             VteAcPipeBackend.Channel,
+            "vef_chemfuel",
         };
 
         private static readonly string[] ShaftNetDefNames =
         {
             "VHGE_HelixienNet",
             VteAcPipeBackend.PipeNetDefName,
+            "VCHE_ChemfuelNet",
         };
 
         private static Type compResourceType;
@@ -51,8 +53,11 @@ namespace Strata
             {
                 return;
             }
-            object comp = GetMatchingResourceComp(thing);
-            if (comp != null)
+            if (thing is not ThingWithComps twc)
+            {
+                return;
+            }
+            foreach (object comp in GetMatchingResourceComps(twc))
             {
                 TryJoinTouchingNets(comp);
             }
@@ -97,16 +102,22 @@ namespace Strata
 
         private static bool IsShaftVefJunction(Thing thing)
         {
-            string channel = thing.TryGetComp<CompShaftFluidTie>()?.Props.channel;
-            if (channel.NullOrEmpty())
+            if (thing is not ThingWithComps twc)
             {
                 return false;
             }
-            for (int i = 0; i < ShaftChannels.Length; i++)
+            for (int i = 0; i < twc.AllComps.Count; i++)
             {
-                if (channel == ShaftChannels[i])
+                if (twc.AllComps[i] is not CompShaftFluidTie tie || tie.Props.channel.NullOrEmpty())
                 {
-                    return true;
+                    continue;
+                }
+                for (int c = 0; c < ShaftChannels.Length; c++)
+                {
+                    if (tie.Props.channel == ShaftChannels[c])
+                    {
+                        return true;
+                    }
                 }
             }
             return false;

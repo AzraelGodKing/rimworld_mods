@@ -108,18 +108,43 @@ namespace Strata
                 }
                 EnsurePartnerBelow();
             }
-            if (!parent.IsHashIntervalTick(BalanceInterval))
+            if (!parent.IsHashIntervalTick(BalanceInterval) || !PartnerValid())
             {
                 return;
             }
-            CompShaftFluidTie node = parent.TryGetComp<CompShaftFluidTie>();
-            CompShaftFluidTie partner = PartnerValid()
-                ? partnerBelow.TryGetComp<CompShaftFluidTie>()
-                : null;
+            DriveAllTies();
+            DrivePowerTie();
+        }
+
+        private void DriveAllTies()
+        {
+            for (int i = 0; i < parent.AllComps.Count; i++)
+            {
+                if (parent.AllComps[i] is not CompShaftFluidTie node)
+                {
+                    continue;
+                }
+                CompShaftFluidTie partner = CompShaftFluidTie.FindOn(partnerBelow, node.Props.channel);
+                if (partner != null)
+                {
+                    node.DriveTie(partner);
+                }
+            }
+        }
+
+        private void DrivePowerTie()
+        {
+            CompPowerShaft node = parent.TryGetComp<CompPowerShaft>();
+            CompPowerShaft partner = partnerBelow?.TryGetComp<CompPowerShaft>();
             if (node != null && partner != null)
             {
                 node.DriveTie(partner);
             }
+        }
+
+        public override string CompInspectStringExtra()
+        {
+            return LinkInspectString();
         }
 
         public string LinkInspectString()
@@ -374,7 +399,7 @@ namespace Strata
 
         private Building SpawnPartner(Map below, IntVec3 aligned)
         {
-            IntVec3 cell = FindPartnerCell(below, aligned);
+            IntVec3 cell = FindPartnerCell(below, aligned, parent.def);
             if (!cell.IsValid)
             {
                 return null;
@@ -388,20 +413,21 @@ namespace Strata
             return child;
         }
 
-        private static IntVec3 FindPartnerCell(Map below, IntVec3 aligned)
+        private static IntVec3 FindPartnerCell(Map below, IntVec3 aligned, ThingDef spawnDef)
         {
-            if (TryPartnerCell(below, aligned, carveRock: true, out IntVec3 exact))
+            if (TryPartnerCell(below, aligned, carveRock: true, spawnDef, out IntVec3 exact))
             {
                 return exact;
             }
             IntVec3 carveFallback = IntVec3.Invalid;
+            IntVec3 wallFallback = IntVec3.Invalid;
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(aligned, LandingSearchRadius, useCenter: false))
             {
                 if (!cell.InBounds(below) || cell.DistanceToEdge(below) < 2)
                 {
                     continue;
                 }
-                if (TryPartnerCell(below, cell, carveRock: false, out IntVec3 open))
+                if (TryPartnerCell(below, cell, carveRock: false, spawnDef, out IntVec3 open))
                 {
                     return open;
                 }
@@ -410,16 +436,41 @@ namespace Strata
                 {
                     carveFallback = cell;
                 }
+                if (!wallFallback.IsValid && CanPlaceOverWall(spawnDef) && IsWallLike(edifice))
+                {
+                    wallFallback = cell;
+                }
             }
             if (carveFallback.IsValid)
             {
                 carveFallback.GetFirstMineable(below)?.Destroy(DestroyMode.Vanish);
                 return carveFallback;
             }
-            return IntVec3.Invalid;
+            return wallFallback;
         }
 
-        private static bool TryPartnerCell(Map below, IntVec3 cell, bool carveRock, out IntVec3 result)
+        private static bool CanPlaceOverWall(ThingDef spawnDef)
+        {
+            return spawnDef?.building != null
+                && spawnDef.building.canPlaceOverWall
+                && !spawnDef.building.isEdifice;
+        }
+
+        private static bool IsWallLike(Building edifice)
+        {
+            if (edifice?.def?.building == null)
+            {
+                return false;
+            }
+            if (edifice.def.building.isNaturalRock)
+            {
+                return false;
+            }
+            return edifice.def.passability == Traversability.Impassable
+                && edifice.def.fillPercent >= 0.7f;
+        }
+
+        private static bool TryPartnerCell(Map below, IntVec3 cell, bool carveRock, ThingDef spawnDef, out IntVec3 result)
         {
             result = IntVec3.Invalid;
             if (!cell.InBounds(below) || cell.DistanceToEdge(below) < 2)
@@ -439,6 +490,11 @@ namespace Strata
                     return true;
                 }
                 return false;
+            }
+            if (CanPlaceOverWall(spawnDef) && IsWallLike(edifice))
+            {
+                result = cell;
+                return true;
             }
             if (carveRock && edifice.def.building?.isNaturalRock == true)
             {
