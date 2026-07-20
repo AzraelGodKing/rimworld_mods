@@ -100,6 +100,10 @@ namespace Nemesis
             listing.Gap(4f);
             listing.Label("Nemesis_Settings_WeightFood".Translate(Settings.actionWeightFood.ToString("F2")));
             Settings.actionWeightFood = listing.Slider(Settings.actionWeightFood, 0f, 1f);
+            listing.Gap(8f);
+
+            listing.Label("Nemesis_Settings_IgnoredThreshold".Translate(Settings.ignoredActionsThreshold));
+            Settings.ignoredActionsThreshold = (int)listing.Slider(Settings.ignoredActionsThreshold, 2f, 8f);
             listing.Gap(12f);
 
             if (listing.ButtonText("Nemesis_Settings_Reset".Translate(), null, 0.25f))

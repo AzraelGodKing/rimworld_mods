@@ -46,12 +46,14 @@ namespace Nemesis
                 return;
             }
 
-            // Daily aggression climb — exact day boundary.
+            // Daily aggression climb — exact day boundary. Faster when the colony ignores the nemesis.
             if (tick % 60000 == 0)
             {
-                _data.aggressionLevel = Mathf.Min(
-                    _data.aggressionLevel + (NemesisMod.Settings?.escalationRatePerDay ?? 0.06f),
-                    10f);
+                float rate = NemesisMod.Settings?.escalationRatePerDay ?? 0.06f;
+                int ignoreThresh = NemesisMod.Settings?.ignoredActionsThreshold ?? 3;
+                if (_data.ignoredActionsCount >= ignoreThresh)
+                    rate *= 1.5f;
+                _data.aggressionLevel = Mathf.Min(_data.aggressionLevel + rate, 10f);
             }
 
             // Pending fake-signal ambush resolves on its own timer.
@@ -141,8 +143,12 @@ namespace Nemesis
                 targetPawnName = targetPawn?.LabelShort,
                 aggressionLevel = 1f,
                 nextActionTick = Find.TickManager.TicksGame + 120000,
+                huntStartTick = Find.TickManager.TicksGame,
+                ignoredActionsCount = 0,
+                engagedSinceLastAction = false,
             };
 
+            // Hunted mood is ThoughtWorker-driven for the fixation target; spike/relief are memories.
             SendIntroLetter(targetPawn);
         }
 
@@ -300,6 +306,7 @@ namespace Nemesis
             if (nemesis == null || !nemesis.IsPrisonerOfColony) return;
 
             _data.active = false;
+            NemesisMood.NotifyHuntEnded(_data, NemesisEndReason.Captured);
             Find.WindowStack.Add(new Dialog_NemesisResolution(_data, nemesis));
         }
 
@@ -308,6 +315,7 @@ namespace Nemesis
             if (_data == null) return;
 
             string name = _data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
+            NemesisMood.NotifyHuntEnded(_data, reason);
             _data.active = false;
             _data.pendingFakeAmbush = false;
             _data.truceUntilTick = -1;

@@ -23,14 +23,26 @@
   <Nemesis_Settings_WeightCaravan>Caravan harassment: {0}</Nemesis_Settings_WeightCaravan>
   <Nemesis_Settings_WeightSabotage>Power sabotage: {0}</Nemesis_Settings_WeightSabotage>
   <Nemesis_Settings_WeightFood>Food store raid: {0}</Nemesis_Settings_WeightFood>
+  <Nemesis_Settings_IgnoredThreshold>Ignored-action threshold: {0}</Nemesis_Settings_IgnoredThreshold>
   <Nemesis_Settings_Reset>Reset</Nemesis_Settings_Reset>
 
   <!-- Phrases -->
   <Nemesis_Phrase_YourColony>your colony</Nemesis_Phrase_YourColony>
   <Nemesis_Phrase_Someone>Someone</Nemesis_Phrase_Someone>
   <Nemesis_Phrase_TheirFaction>their faction</Nemesis_Phrase_TheirFaction>
+  <Nemesis_Phrase_Bedroom>bedroom</Nemesis_Phrase_Bedroom>
 
   <!-- Taunts -->
+  <Nemesis_Taunt_Scar>{0}: "That mark on my {2}? Every time I touch it I think of {1}."</Nemesis_Taunt_Scar>
+  <Nemesis_Taunt_MissingPart>{0}: "You took my {2}. I am going to take something from {1}."</Nemesis_Taunt_MissingPart>
+  <Nemesis_Taunt_Prosthetic>{0}: "This {2} is a reminder. {1} put it there. I put the next one."</Nemesis_Taunt_Prosthetic>
+  <Nemesis_Taunt_Lover>{0}: "Tell {2} to keep {1} warm. I am coming for the one they love."</Nemesis_Taunt_Lover>
+  <Nemesis_Taunt_Bonded>{0}: "Cute little {2}. Does {1} know I have been watching them both?"</Nemesis_Taunt_Bonded>
+  <Nemesis_Taunt_Skill>{0}: "{1}'s {2} at level {3}. Impressive. Useless against me."</Nemesis_Taunt_Skill>
+  <Nemesis_Taunt_Bedroom>{0}: "I know which {2} is {1}'s. The door never looked that heavy."</Nemesis_Taunt_Bedroom>
+  <Nemesis_Taunt_Ignored>{0}: "Not even answering. Fine. I will make {1} listen."</Nemesis_Taunt_Ignored>
+  <Nemesis_Letter_IgnoredTitle>{0}: Silence Cuts Both Ways</Nemesis_Letter_IgnoredTitle>
+  <Nemesis_Letter_IgnoredBody>You have not answered {0}. No arrests. No fight. Nothing.\n\nThe next message is shorter. The next strike will not be.\n\n"{1} will hear me whether you want them to or not."</Nemesis_Letter_IgnoredBody>
   <Nemesis_Taunt_Low0>{0}: "Enjoy the quiet. It won't last."</Nemesis_Taunt_Low0>
   <Nemesis_Taunt_Low1>{0}: "I know where {1} sleeps."</Nemesis_Taunt_Low1>
   <Nemesis_Taunt_Low2>{0}: "I have your coordinates. All of them."</Nemesis_Taunt_Low2>

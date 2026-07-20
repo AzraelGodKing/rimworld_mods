@@ -25,6 +25,9 @@ namespace Nemesis
         public float actionWeightSabotage = 0.05f;
         public float actionWeightFood = 0.05f;
 
+        /// <summary>Consecutive ignored actions before the "you're not answering" escalation.</summary>
+        public int ignoredActionsThreshold = 3;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -46,6 +49,7 @@ namespace Nemesis
             Scribe_Values.Look(ref actionWeightCaravan, "actionWeightCaravan", 0.07f);
             Scribe_Values.Look(ref actionWeightSabotage, "actionWeightSabotage", 0.05f);
             Scribe_Values.Look(ref actionWeightFood, "actionWeightFood", 0.05f);
+            Scribe_Values.Look(ref ignoredActionsThreshold, "ignoredActionsThreshold", 3);
         }
 
         public void ResetToDefaults()
@@ -68,6 +72,7 @@ namespace Nemesis
             actionWeightCaravan = 0.07f;
             actionWeightSabotage = 0.05f;
             actionWeightFood = 0.05f;
+            ignoredActionsThreshold = 3;
         }
     }
 }

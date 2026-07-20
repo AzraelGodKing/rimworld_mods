@@ -11,8 +11,25 @@ namespace Nemesis
     {
         public static void Execute(NemesisAction action, NemesisData data, Map map)
         {
+            // Consecutive ignored actions (no arrest / damage on the nemesis since last fire).
+            if (data.harassmentCount > 0 && !data.engagedSinceLastAction)
+            {
+                data.ignoredActionsCount++;
+                int thresh = NemesisMod.Settings?.ignoredActionsThreshold ?? 3;
+                if (data.ignoredActionsCount == thresh)
+                {
+                    data.aggressionLevel = Mathf.Min(data.aggressionLevel + 0.35f, 10f);
+                    Find.LetterStack.ReceiveLetter(
+                        "Nemesis_Letter_IgnoredTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_IgnoredBody".Translate(
+                            data.nemesisName, NemesisTaunts.TargetPhrase(data)),
+                        LetterDefOf.ThreatSmall);
+                }
+            }
+
             data.lastActionKind = (int)action;
             data.harassmentCount++;
+            data.engagedSinceLastAction = false;
 
             switch (action)
             {
@@ -47,6 +64,8 @@ namespace Nemesis
                     CommsTaunt(data, map);
                     break;
             }
+
+            NemesisMood.NotifyActionStruck(data);
         }
 
         public static void CommsTaunt(NemesisData data, Map map)

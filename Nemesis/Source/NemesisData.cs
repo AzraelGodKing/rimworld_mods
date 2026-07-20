@@ -77,6 +77,15 @@ namespace Nemesis
         public bool pendingFakeAmbush;
         public int fakeAmbushTick = -1;
 
+        /// <summary>TicksGame when the current hunt started. 0 = legacy save (treat as unknown).</summary>
+        public int huntStartTick;
+
+        /// <summary>Consecutive actions with no player engagement against the nemesis pawn.</summary>
+        public int ignoredActionsCount;
+
+        /// <summary>True if a colonist damaged/arrested the nemesis since the last harassment action.</summary>
+        public bool engagedSinceLastAction;
+
         public float EffectiveAggression
         {
             get
@@ -85,6 +94,21 @@ namespace Nemesis
                 float capValue = Mathf.Lerp(1f, 10f, fraction);
                 return Mathf.Min(aggressionLevel, capValue);
             }
+        }
+
+        public int HuntDays
+        {
+            get
+            {
+                if (huntStartTick <= 0) return harassmentCount; // rough legacy fallback
+                return Mathf.Max(0, (Find.TickManager.TicksGame - huntStartTick) / 60000);
+            }
+        }
+
+        public void NotifyPlayerEngagedNemesis()
+        {
+            ignoredActionsCount = 0;
+            engagedSinceLastAction = true;
         }
 
         public void ExposeData()
@@ -109,6 +133,9 @@ namespace Nemesis
             Scribe_Values.Look(ref harassmentCount, "harassmentCount", 0);
             Scribe_Values.Look(ref pendingFakeAmbush, "pendingFakeAmbush", false);
             Scribe_Values.Look(ref fakeAmbushTick, "fakeAmbushTick", -1);
+            Scribe_Values.Look(ref huntStartTick, "huntStartTick", 0);
+            Scribe_Values.Look(ref ignoredActionsCount, "ignoredActionsCount", 0);
+            Scribe_Values.Look(ref engagedSinceLastAction, "engagedSinceLastAction", false);
         }
     }
 }

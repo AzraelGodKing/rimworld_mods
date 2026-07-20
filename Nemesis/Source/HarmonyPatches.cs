@@ -229,7 +229,29 @@ namespace Nemesis
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
             if (comp == null || !comp.IsEngaged) return;
             if (___pawn != null && comp.IsNemesisPawn(___pawn))
+            {
                 NemesisRegistry.ResolutionDirty = true;
+                // Arrest / guest-status change counts as engagement with the nemesis.
+                if (___pawn.IsPrisonerOfColony)
+                    comp.Data?.NotifyPlayerEngagedNemesis();
+            }
+        }
+    }
+
+    /// <summary>Colonist damage on the nemesis pawn resets the "ignored" streak.</summary>
+    [HarmonyPatch(typeof(Thing), nameof(Thing.TakeDamage))]
+    public static class Patch_TakeDamage_NemesisEngagement
+    {
+        [HarmonyPostfix]
+        static void Postfix(Thing __instance, DamageInfo dinfo)
+        {
+            Pawn pawn = __instance as Pawn;
+            if (pawn == null) return;
+            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            if (comp == null || !comp.IsEngaged || !comp.IsNemesisPawn(pawn)) return;
+            Pawn instigator = dinfo.Instigator as Pawn;
+            if (instigator == null || !instigator.IsColonist) return;
+            comp.Data?.NotifyPlayerEngagedNemesis();
         }
     }
 }
