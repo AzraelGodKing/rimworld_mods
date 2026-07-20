@@ -1,8 +1,9 @@
 name: Build mod DLLs
 
-# On main only: rebuild Homesteader / Strata / Stormproof assemblies and refresh
-# docs/downloads/*.zip for the GitHub Pages download buttons. Assemblies/*.dll
-# stay gitignored — only the download zips are committed.
+# Build Homesteader / Strata / Stormproof / Nemesis on push to main and on PRs.
+# On main (and workflow_dispatch): pack download zips with injected DLLs and publish
+# them to the rolling "latest" GitHub Release for the docs site buttons.
+# Assemblies/*.dll stay gitignored — zips are never committed.
 
 on:
   push:
@@ -11,7 +12,16 @@ on:
       - "Homesteader/Source/**"
       - "Strata/Source/**"
       - "Stormproof/Source/**"
-      - "build_downloads.ps1"
+      - "Nemesis/Source/**"
+      - "scripts/build_downloads.ps1"
+      - ".github/workflows/build-mods.yml"
+  pull_request:
+    paths:
+      - "Homesteader/Source/**"
+      - "Strata/Source/**"
+      - "Stormproof/Source/**"
+      - "Nemesis/Source/**"
+      - "scripts/build_downloads.ps1"
       - ".github/workflows/build-mods.yml"
   workflow_dispatch:
 
@@ -19,19 +29,16 @@ permissions:
   contents: write
 
 concurrency:
-  group: build-mods-main
+  group: build-mods-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build-and-pack:
-    name: Build DLLs and pack site downloads
+    name: Build DLLs${{ github.event_name == 'pull_request' && '' || ' and publish downloads' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: main
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -47,12 +54,16 @@ jobs:
       - name: Build Stormproof
         run: dotnet build Stormproof/Source/Stormproof.csproj -c Release --nologo
 
+      - name: Build Nemesis
+        run: dotnet build Nemesis/Source/Nemesis.csproj -c Release --nologo
+
       - name: Pack docs/downloads zips (with DLLs)
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p docs/downloads
-          for mod in Homesteader Stormproof Strata; do
+          for mod in Homesteader Stormproof Strata Nemesis; do
             zip_path="docs/downloads/${mod}.zip"
             git archive --format=zip -o "$zip_path" HEAD "$mod"
             dll="${mod}/Assemblies/${mod}.dll"
@@ -65,21 +76,27 @@ jobs:
             echo "${mod}: $(du -h "$zip_path" | cut -f1)"
           done
 
-      - name: Upload download zips
+      - name: Upload download zips (artifact)
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: site-downloads
           path: docs/downloads/*.zip
           if-no-files-found: error
 
-      - name: Commit download zips if changed
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/downloads/Homesteader.zip docs/downloads/Stormproof.zip docs/downloads/Strata.zip
-          if git diff --staged --quiet; then
-            echo "Download zips unchanged — nothing to commit."
-            exit 0
-          fi
-          git commit -m "chore: refresh site download zips [skip ci]"
-          git push origin HEAD:main
+      - name: Publish download zips to GitHub Release
+        if: github.event_name != 'pull_request'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest mod downloads
+          body: |
+            Packaged mod folders with CI-built assemblies for the docs site download buttons.
+            Rebuilt on each relevant push to `main` (rolling tag — assets are overwritten).
+          files: |
+            docs/downloads/Homesteader.zip
+            docs/downloads/Stormproof.zip
+            docs/downloads/Strata.zip
+            docs/downloads/Nemesis.zip
+          make_latest: true
+          fail_on_unmatched_files: true
