@@ -41,6 +41,7 @@ namespace Nemesis
         StrataBurrow, // SoftCompat only — never fires if Strata probe fails
         // Append-only
         TrophyTheft,
+        CampIntel,
     }
 
     public enum NemesisOutcome
@@ -199,6 +200,24 @@ namespace Nemesis
         public bool royaltyDuelFormalized;
         public bool ideologyRelicStolen;
 
+        // --- Hunt base / intel ---
+        public int intelLevel;
+        public int lastKnownTile = -1;
+        public int campWorldObjectId = -1;
+        public bool campIsReal;
+        public bool campIsTrap;
+        public bool campResolved;
+        public int nextCaravanTrackTick = -1;
+
+        // --- Identity tint (RGB; -1 = unset) ---
+        public float tintR = -1f;
+        public float tintG = -1f;
+        public float tintB = -1f;
+        public bool socialSeeded;
+
+        // --- Balance: suppress storyteller raids briefly after nemesis threat ---
+        public int lastNemesisThreatTick = -1;
+
         public float EffectiveAggression
         {
             get
@@ -343,6 +362,18 @@ namespace Nemesis
             Scribe_Values.Look(ref endgameFinaleScheduled, "endgameFinaleScheduled", false);
             Scribe_Values.Look(ref royaltyDuelFormalized, "royaltyDuelFormalized", false);
             Scribe_Values.Look(ref ideologyRelicStolen, "ideologyRelicStolen", false);
+            Scribe_Values.Look(ref intelLevel, "intelLevel", 0);
+            Scribe_Values.Look(ref lastKnownTile, "lastKnownTile", -1);
+            Scribe_Values.Look(ref campWorldObjectId, "campWorldObjectId", -1);
+            Scribe_Values.Look(ref campIsReal, "campIsReal", false);
+            Scribe_Values.Look(ref campIsTrap, "campIsTrap", false);
+            Scribe_Values.Look(ref campResolved, "campResolved", false);
+            Scribe_Values.Look(ref nextCaravanTrackTick, "nextCaravanTrackTick", -1);
+            Scribe_Values.Look(ref tintR, "tintR", -1f);
+            Scribe_Values.Look(ref tintG, "tintG", -1f);
+            Scribe_Values.Look(ref tintB, "tintB", -1f);
+            Scribe_Values.Look(ref socialSeeded, "socialSeeded", false);
+            Scribe_Values.Look(ref lastNemesisThreatTick, "lastNemesisThreatTick", -1);
         }
     }
 }

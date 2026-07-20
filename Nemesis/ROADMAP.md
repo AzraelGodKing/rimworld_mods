@@ -1,6 +1,6 @@
 # Nemesis — ROADMAP
 
-Personality & evidence pass on `feature/nemesis-personality` (merged into `feature/nemesis-depth`) shipped archetypes, escape upgrades, physical evidence, timing, captivity aftermath, and ending/DLC seasoning below. Remaining fantasy for later passes:
+Personality & evidence pass on `feature/nemesis-personality` (merged into `feature/nemesis-depth`) shipped archetypes, escape upgrades, physical evidence, timing, captivity aftermath, and ending/DLC seasoning. Hunt-base / personal / assault / UX pass below is implemented on this branch.
 
 ## Shipped (depth pass)
 - [x] Scar-referencing + escalating intimacy taunts
@@ -19,31 +19,23 @@ Personality & evidence pass on `feature/nemesis-personality` (merged into `featu
 - [x] Captivity pin, jailbreak, cellmate aura, mole
 - [x] Kill attribution, vendetta, reputation ripples, endgame crasher, DLC seasoning
 
-## Hunt base / false-lead arc
-- Optional world site at higher aggression: “nemesis camp” quest that may be real **or** a false lead.
-- Tracking encounters on caravan routes (ambush maps, abandoned caches with taunt notes).
-- Progressive intel: scraps → last known tile → confront / empty camp / trap.
+## Shipped (hunt base / polish pass)
+- [x] Hunt base / false-lead arc (intel scraps → world camp; real / empty / trap)
+- [x] Caravan route tracking (abandoned caches + soft ambushes)
+- [x] Progressive intel action + Obsessed auto-drip
+- [x] Rivalry social memory + social-fight bias
+- [x] Archetype gear tint across raids/escapes
+- [x] Comms reply dialog (taunt / truce / surrender) + console float menu
+- [x] `LordJob_NemesisHunt` prioritizes fixation, flees when collapsing
+- [x] Soft drop-pod / shuttle-style arrival (Odyssey-biased, fail-open)
+- [x] Stormproof ion-storm bait; Strata stairs-aware map pick; Homesteader pantry lists
+- [x] Preview.png, Marked scenario, tip set, Steam blurb (`STEAM.md`)
+- [x] DevMode debug actions (`NemesisDebug`)
+- [x] Storyteller threat soft-cap after nemesis raids (~1 day)
+- [x] Playtest checklist (`PLAYTEST.md`)
 
-## More personal systems
-- Nemesis relationship / social memory with the fixation target (opinion, social fight chance).
-- Unique weapon / apparel tint so the antagonist is visually recognizable across raids.
-- Comms console interaction: reply options (taunt back / offer truce / demand surrender).
-
-## Assault polish
-- Dedicated `LordJob` that prioritizes the fixation pawn, then flees to map edge when raid points collapse.
-- Shuttle drop + extract when Odyssey present (soft).
-
-## Soft compat (further)
-- Stormproof: optional ion-storm baiting when aggression is high (still fail-open).
-- Strata: harassment routing that prefers stairs awareness without breaking pocket maps.
-- Homesteader: smokehouse / pantry defName preference lists beyond favorite food.
-
-## Content / UX
-- Preview.png art pass.
-- Scenario / storyteller hints.
-- Dev mode force-spawn / force-end debug actions.
-- Steam description + screenshots.
-
-## Balance
-- Playtest trigger rates mid-game vs late.
-- Cap concurrent storyteller threat when nemesis raid just fired.
+## Later / polish backlog
+- Full encounter maps for camp visits (currently caravan-resolved, no map gen)
+- Dedicated Odyssey shuttle extract (beyond drop-pod soft)
+- Preview / Steam screenshot pack from real play sessions
+- Trigger-rate tuning after playtest data

@@ -292,17 +292,32 @@ namespace Nemesis
                 new[] { typeof(IncidentParms) });
 
         [HarmonyPrefix]
-        static void Prefix(IncidentParms parms)
+        static bool Prefix(IncidentParms parms)
         {
-            // Living truce: warn before a genuine hostile raid fires.
             NemesisData data = GameComponent_Nemesis.Instance?.Data;
-            if (data == null || data.active || data.truceUntilTick <= 0) return;
-            if (parms?.faction == null || parms.faction.IsPlayer) return;
-            if (!parms.faction.HostileTo(Faction.OfPlayer)) return;
+
+            // Balance: after a nemesis raid/assault, soft concurrent storyteller ThreatBig raids briefly.
+            if (data != null && data.active && data.lastNemesisThreatTick > 0
+                && parms != null && !parms.forced)
+            {
+                int age = Find.TickManager.TicksGame - data.lastNemesisThreatTick;
+                if (age >= 0 && age < 60000)
+                {
+                    Faction nemesisFaction = NemesisActions.FindFaction(data);
+                    if (nemesisFaction == null || parms.faction != nemesisFaction)
+                        return false;
+                }
+            }
+
+            // Living truce: warn before a genuine hostile raid fires.
+            if (data == null || data.active || data.truceUntilTick <= 0) return true;
+            if (parms?.faction == null || parms.faction.IsPlayer) return true;
+            if (!parms.faction.HostileTo(Faction.OfPlayer)) return true;
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_TruceWarnTitle".Translate(data.nemesisName),
                 "Nemesis_Letter_TruceWarnBody".Translate(data.nemesisName),
                 LetterDefOf.ThreatSmall);
+            return true;
         }
 
         [HarmonyPostfix]
@@ -374,6 +389,48 @@ namespace Nemesis
             NemesisData data = GameComponent_Nemesis.Instance?.Data;
             if (data == null || !data.active) return;
             data.lastVisitorLeaveTick = Find.TickManager.TicksGame;
+        }
+    }
+
+    /// <summary>Boost social-fight chance between nemesis and fixation target.</summary>
+    [HarmonyPatch]
+    public static class Patch_SocialFightChance
+    {
+        static bool Prepare() =>
+            AccessTools.Method(typeof(Pawn_InteractionsTracker), "SocialFightChance",
+                new[] { typeof(InteractionDef), typeof(Pawn) }) != null;
+
+        [HarmonyTargetMethod]
+        static MethodBase TargetMethod() =>
+            AccessTools.Method(typeof(Pawn_InteractionsTracker), "SocialFightChance",
+                new[] { typeof(InteractionDef), typeof(Pawn) });
+
+        [HarmonyPostfix]
+        static void Postfix(Pawn ___pawn, Pawn otherPawn, ref float __result)
+        {
+            if (__result <= 0f || ___pawn == null || otherPawn == null) return;
+            __result *= NemesisSocial.SocialFightMultiplier(___pawn, otherPawn);
+        }
+    }
+
+    /// <summary>Comms console: open reply dialog while a hunt is active.</summary>
+    [HarmonyPatch(typeof(Building_CommsConsole), nameof(Building_CommsConsole.GetFloatMenuOptions))]
+    public static class Patch_CommsConsole_NemesisReply
+    {
+        [HarmonyPostfix]
+        static void Postfix(Building_CommsConsole __instance, Pawn myPawn, ref IEnumerable<FloatMenuOption> __result)
+        {
+            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            if (comp?.Data == null || !comp.Data.active) return;
+            CompPowerTrader power = __instance.TryGetComp<CompPowerTrader>();
+            if (power != null && !power.PowerOn) return;
+
+            List<FloatMenuOption> list = new List<FloatMenuOption>(__result);
+            NemesisData data = comp.Data;
+            list.Add(new FloatMenuOption(
+                "Nemesis_Comms_FloatMenu".Translate(data.nemesisName),
+                () => Find.WindowStack.Add(new Dialog_NemesisComms(data))));
+            __result = list;
         }
     }
 }

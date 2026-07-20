@@ -144,6 +144,15 @@ namespace Nemesis
             else if (tick >= _data.nextActionTick)
                 FireNextAction();
 
+            // Caravan route tracking (caches / soft ambushes) while Testing+.
+            if (tick % 2500 == 0)
+                NemesisCampUtility.TickCaravanTracking(_data);
+
+            // Auto-drip intel scraps at Obsessed+ if the player hasn't investigated.
+            if (tick % 60000 == 0 && _data.Phase >= NemesisHuntPhase.Obsessed
+                && _data.intelLevel < NemesisCampUtility.MaxIntel && Rand.Chance(0.28f))
+                NemesisCampUtility.TryAdvanceIntel(_data);
+
             // Nightmares — staggered, Obsessed+.
             if ((NemesisMod.Settings?.nightmaresEnabled ?? true)
                 && _data.Phase >= NemesisHuntPhase.Obsessed
@@ -213,7 +222,12 @@ namespace Nemesis
                 ignoredActionsCount = 0,
                 engagedSinceLastAction = false,
                 archetype = NemesisData.RollArchetype(),
+                nextCaravanTrackTick = Find.TickManager.TicksGame + Rand.RangeInclusive(90000, 150000),
             };
+
+            NemesisIdentity.RollAndStore(_data);
+            NemesisIdentity.Apply(nemesis, _data);
+            NemesisSocial.EnsureRivalry(_data, nemesis, targetPawn);
 
             // Hunted mood is ThoughtWorker-driven for the fixation target; spike/relief are memories.
             SendIntroLetter(targetPawn);
@@ -819,6 +833,7 @@ namespace Nemesis
             string name = _data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
             RecordTrophy(reason);
             NemesisMood.NotifyHuntEnded(_data, reason);
+            NemesisCampUtility.ClearCamp(_data);
             _data.active = false;
             _data.pendingFakeAmbush = false;
             _data.truceUntilTick = -1;
@@ -1212,6 +1227,13 @@ namespace Nemesis
                     trophy = 0.04f;
             }
 
+            // Progressive camp intel — Testing+, until camp placed.
+            float intel = 0f;
+            if (phase >= NemesisHuntPhase.Testing && _data.intelLevel < NemesisCampUtility.MaxIntel)
+                intel = 0.07f;
+            else if (phase >= NemesisHuntPhase.Obsessed && _data.campWorldObjectId < 0 && !_data.campResolved)
+                intel = 0.05f;
+
             if (_data.rogue)
             {
                 raid *= 0.35f;
@@ -1222,7 +1244,16 @@ namespace Nemesis
 
             // Soft Strata: slight bias toward food/sabotage when harassing multi-level bases (surface map).
             if (SoftCompat.StrataActive)
+            {
                 food *= 1.15f;
+                if (SoftCompat.MapHasStrataStairs(SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap)))
+                    sabotage *= 1.1f;
+            }
+
+            // Stormproof ion bait: push sabotage while ion conditions are active.
+            Map baitMap = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+            if (SoftCompat.ShouldIonStormBait(_data, baitMap))
+                sabotage *= 1.75f;
 
             // Archetype personality bias (Phase 1).
             ApplyArchetypeBias(_data.archetype, ref taunt, ref raid, ref assault, ref fake,
@@ -1252,10 +1283,11 @@ namespace Nemesis
                 else if (lastKind == NemesisAction.InformantReveal) informant = 0f;
                 else if (lastKind == NemesisAction.StrataBurrow) burrow = 0f;
                 else if (lastKind == NemesisAction.TrophyTheft) trophy = 0f;
+                else if (lastKind == NemesisAction.CampIntel) intel = 0f;
             }
 
             float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly
-                + kidnap + sniper + grave + tamper + informant + burrow + trophy;
+                + kidnap + sniper + grave + tamper + informant + burrow + trophy + intel;
             if (total <= 0f) return NemesisAction.CommsTaunt;
             float roll = Rand.Value * total;
 
@@ -1275,6 +1307,7 @@ namespace Nemesis
             if ((roll -= informant) < 0f) return NemesisAction.InformantReveal;
             if ((roll -= burrow) < 0f) return NemesisAction.StrataBurrow;
             if ((roll -= trophy) < 0f) return NemesisAction.TrophyTheft;
+            if ((roll -= intel) < 0f) return NemesisAction.CampIntel;
             return NemesisAction.CommsTaunt;
         }
 

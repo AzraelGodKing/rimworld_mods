@@ -294,4 +294,45 @@
   <Nemesis_Letter_TruceWarnTitle>{0}: A Warning</Nemesis_Letter_TruceWarnTitle>
   <Nemesis_Letter_TruceWarnBody>{0} cuts in over the raid channel:\n\n"Not them. I get to do it.\n\nStay alive — this one is not mine."</Nemesis_Letter_TruceWarnBody>
 
+  <!-- Camp / intel / caravan tracking -->
+  <Nemesis_Camp_Label>{0}'s camp?</Nemesis_Camp_Label>
+  <Nemesis_Camp_LabelGeneric>suspected camp</Nemesis_Camp_LabelGeneric>
+  <Nemesis_Camp_Inspect>Recent tracks. Someone camped here — or wants you to think they did.</Nemesis_Camp_Inspect>
+  <Nemesis_Camp_Investigate>Investigate {0}</Nemesis_Camp_Investigate>
+  <Nemesis_Camp_Investigating>Investigating the camp.</Nemesis_Camp_Investigating>
+  <Nemesis_Letter_Intel1Title>{0}: Scrap of Intel</Nemesis_Letter_Intel1Title>
+  <Nemesis_Letter_Intel1Body>A torn map scrap turns up. {0} has a hole somewhere. Aimed at {1}.</Nemesis_Letter_Intel1Body>
+  <Nemesis_Letter_Intel2Title>{0}: Last Known Ground</Nemesis_Letter_Intel2Title>
+  <Nemesis_Letter_Intel2Body>Better intel. {0} was spotted near {2}. Still thinking about {1}.</Nemesis_Letter_Intel2Body>
+  <Nemesis_Letter_Intel3Title>{0}: Camp Pin</Nemesis_Letter_Intel3Title>
+  <Nemesis_Letter_Intel3Body>A world marker appears near {2}. {0}'s nest — or a lie meant for {1}. Send a caravan to investigate.</Nemesis_Letter_Intel3Body>
+  <Nemesis_Letter_CampRealTitle>{0}: Nest Found</Nemesis_Letter_CampRealTitle>
+  <Nemesis_Letter_CampRealBody>The camp was real. Fresh ashes, a stash, a note for {1}. {0} knows you walked through their home.</Nemesis_Letter_CampRealBody>
+  <Nemesis_Letter_CampEmptyTitle>{0}: Empty Lead</Nemesis_Letter_CampEmptyTitle>
+  <Nemesis_Letter_CampEmptyBody>Cold ashes. Wrong tile. {0} left a laugh for {1} and nothing else.</Nemesis_Letter_CampEmptyBody>
+  <Nemesis_Letter_CampTrapTitle>{0}: Ambush</Nemesis_Letter_CampTrapTitle>
+  <Nemesis_Letter_CampTrapBody>The "camp" was bait. Shots from the brush. {0} was never staying — they were waiting for {1}'s people.</Nemesis_Letter_CampTrapBody>
+  <Nemesis_Letter_CacheTitle>{0}: Abandoned Cache</Nemesis_Letter_CacheTitle>
+  <Nemesis_Letter_CacheBody>Along the route of {2}, a small cache and a note. {0} is tracking roads as carefully as they track {1}.</Nemesis_Letter_CacheBody>
+  <Nemesis_Letter_TrackAmbushTitle>{0}: Road Ambush</Nemesis_Letter_TrackAmbushTitle>
+  <Nemesis_Letter_TrackAmbushBody>Distant shots hit the caravan {2}. Not a full raid — a reminder. {0} still wants {1} afraid of the open road.</Nemesis_Letter_TrackAmbushBody>
+
+  <!-- Comms replies -->
+  <Nemesis_Comms_Title>Channel: {0}</Nemesis_Comms_Title>
+  <Nemesis_Comms_Body>They are listening. {0} has been thinking about {1}. How do you answer?</Nemesis_Comms_Body>
+  <Nemesis_Comms_TauntBack>Taunt back</Nemesis_Comms_TauntBack>
+  <Nemesis_Comms_OfferTruce>Offer a temporary truce</Nemesis_Comms_OfferTruce>
+  <Nemesis_Comms_DemandSurrender>Demand surrender</Nemesis_Comms_DemandSurrender>
+  <Nemesis_Comms_Ignore>Close channel</Nemesis_Comms_Ignore>
+  <Nemesis_Comms_FloatMenu>Reply to {0}…</Nemesis_Comms_FloatMenu>
+  <Nemesis_Letter_CommsReplyTitle>{0}: Reply</Nemesis_Letter_CommsReplyTitle>
+  <Nemesis_Letter_CommsTauntBackBody>You answered {0}. The channel hissed. They will not forget that {1}'s colony has teeth.</Nemesis_Letter_CommsTauntBackBody>
+  <Nemesis_Letter_CommsSurrenderBody>{0} laughed. Surrender was never on the table. Expect them sooner — especially around {1}.</Nemesis_Letter_CommsSurrenderBody>
+
+  <!-- Assault polish -->
+  <Nemesis_Message_HuntFlee>{0} breaks contact and runs for the rim.</Nemesis_Message_HuntFlee>
+  <Nemesis_Letter_ShuttleDrop>{0} came in hard — drop pods instead of walking the edge.</Nemesis_Letter_ShuttleDrop>
+  <Nemesis_Letter_IonBaitTitle>{0}: Bad Weather</Nemesis_Letter_IonBaitTitle>
+  <Nemesis_Letter_IonBaitBody>The sky is already wrong. {0} chooses now to cut the grid — they wanted {1} blind in the storm.</Nemesis_Letter_IonBaitBody>
+
 </LanguageData>

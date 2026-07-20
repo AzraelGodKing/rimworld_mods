@@ -4,6 +4,17 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased
 
+### Hunt base / polish pass
+- Progressive intel (`CampIntel`): scraps → last-known tile → world camp marker (real stash / empty false lead / trap).
+- Caravan route tracking: abandoned caches with calling cards, soft road ambushes; CaravanHarass can force a track beat.
+- `LordJob_NemesisHunt`: prioritizes fixation target, flees on heavy losses / critical HP / timeout (finale duel stays no-flee).
+- Soft drop-pod arrival (Odyssey-biased) on personal assaults.
+- Gear tint by archetype (persists across upgrades); rivalry social thought + social-fight bias with fixation target.
+- Comms reply dialog after taunts (taunt back / offer truce / demand surrender) + console float menu.
+- Soft compat: Stormproof ion-storm sabotage bait; Strata stairs-aware harassment map; Homesteader pantry/smokehouse food preference.
+- Balance: soft-suppress concurrent foreign storyteller raids for ~1 day after a nemesis threat.
+- UX: `About/Preview.png`, **Marked** scenario, tip set, `STEAM.md` blurb, DevMode debug actions, `PLAYTEST.md` checklist.
+
 ### Personality & evidence pass
 - Archetypes (Stalker / Butcher / Saboteur / Trickster) rolled at hunt create; bias PickAction + distinct taunt voices; surface in settings status.
 - Trait leak: Pyromaniac fire branch, Bloodlust assault bias, Greedy steal flavor on food/caravan.

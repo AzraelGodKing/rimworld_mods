@@ -82,6 +82,7 @@ namespace Nemesis
                     cell = near;
             }
 
+            NemesisIdentity.Apply(nemesis, _data);
             GenSpawn.Spawn(nemesis, cell, map);
             NemesisRegistry.CachedNemesis = nemesis;
             NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
@@ -90,10 +91,11 @@ namespace Nemesis
             {
                 LordMaker.MakeNewLord(
                     nemesis.Faction,
-                    new LordJob_AssaultColony(nemesis.Faction, canKidnap: false, canTimeoutOrFlee: false),
+                    NemesisActions.MakeHuntLord(nemesis.Faction, _data, canKidnap: false, canFlee: false),
                     map,
                     new[] { nemesis });
             }
+            NemesisActions.MarkThreat(_data);
 
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_DuelTitle".Translate(_data.nemesisName),

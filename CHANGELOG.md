@@ -4,7 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
-- **Nemesis (in progress)** — personal-antagonist mod foundation landed under `Nemesis/` (`AzraelGodKing.Nemesis`). Core hunt loop, multi-type harassment, soft compat stubs with Stormproof / Strata / Homesteader. Original foundation by Dredd (Misakabob); expanded here. Public site teaser remains mysterious at `docs/signal.html`. **No public `Nemesis.zip` download** for now (CI still compiles). → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
+- **Nemesis (in progress)** — personal-antagonist mod under `Nemesis/` (`AzraelGodKing.Nemesis`): hunt loop, depth/personality passes, plus hunt-base intel camps, comms replies, hunt LordJob, DevMode tools, and playtest checklist. Soft compat with Stormproof / Strata / Homesteader. Foundation by Dredd (Misakabob). Teaser at `docs/signal.html`. **No public `Nemesis.zip` yet** (CI still compiles). → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md) · [PLAYTEST.md](Nemesis/PLAYTEST.md)
 - **Docs** — mysterious hub teaser + `docs/signal.html` for the personal-antagonist idea (classified / incoming-signal framing).
 - **Homesteader / Stormproof** — cinematic Workshop preview makeover (Strata-style painted scenes) + docs hub cards use the new banners.
 - **Repo** — Removed decompiled RimWorld scratch under `Strata/Tools/`. Download zips no longer committed; CI builds all four mods (incl. Nemesis), publishes zips to the rolling `latest` GitHub Release (PR runs stay read-only; `latest` tag force-moved to the build SHA), and PRs get compile-only checks. Root PowerShell utilities moved to `scripts/`. Dropped leftover `docs/wellspring.html` and `scripts/fix_wellspring_textures.ps1`.

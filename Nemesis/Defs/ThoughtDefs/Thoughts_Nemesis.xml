@@ -120,4 +120,19 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>Nemesis_PersonalRivalry</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>60</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>personal nemesis</label>
+        <description>This is not politics. This is personal.</description>
+        <baseMoodEffect>-2</baseMoodEffect>
+        <baseOpinionOffset>-40</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

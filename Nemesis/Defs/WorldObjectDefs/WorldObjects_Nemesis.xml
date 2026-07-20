@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <WorldObjectDef ParentName="StaticWorldObjectBase">
+    <defName>Nemesis_CampSite</defName>
+    <label>suspected camp</label>
+    <description>Intel places a personal antagonist's camp — or a trap — somewhere near here.</description>
+    <worldObjectClass>Nemesis.WorldObject_NemesisCamp</worldObjectClass>
+    <texture>World/WorldObjects/AbandonedCamp</texture>
+    <expandingIcon>true</expandingIcon>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/Outpost</expandingIconTexture>
+    <expandingIconPriority>70</expandingIconPriority>
+    <canHaveMap>false</canHaveMap>
+    <comps>
+      <li Class="WorldObjectCompProperties_Timeout" />
+    </comps>
+  </WorldObjectDef>
+
+</Defs>

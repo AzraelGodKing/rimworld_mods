@@ -150,20 +150,119 @@ namespace Nemesis
         {
             if (!StrataActive) return fallback;
             Map best = null;
+            Map stairsSurface = null;
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {
                 Map m = maps[i];
                 if (m == null || !m.IsPlayerHome) continue;
                 if (IsStrataUnderground(m) || IsStrataUpper(m)) continue;
-                return m;
+                if (stairsSurface == null && MapHasStrataStairs(m))
+                    stairsSurface = m;
+                if (best == null) best = m;
             }
+            // Prefer a surface home that actually connects downstairs (stairs-aware routing).
+            if (stairsSurface != null) return stairsSurface;
+            if (best != null) return best;
             for (int i = 0; i < maps.Count; i++)
             {
                 Map m = maps[i];
                 if (m != null && m.IsPlayerHome) { best = m; break; }
             }
             return best ?? fallback;
+        }
+
+        /// <summary>True when a Strata stair/shaft building exists on the map (reflection / defName, fail-open).</summary>
+        public static bool MapHasStrataStairs(Map map)
+        {
+            if (map == null || !StrataActive) return false;
+            string[] names =
+            {
+                "Strata_StairsDown", "Strata_StairsUp", "Strata_StairsBuildUp",
+                "Strata_DigDownShaft",
+            };
+            for (int n = 0; n < names.Length; n++)
+            {
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(names[n]);
+                if (def == null) continue;
+                List<Thing> things = map.listerThings.ThingsOfDef(def);
+                if (things != null && things.Count > 0) return true;
+            }
+            return false;
+        }
+
+        /// <summary>Homesteader pantry / smokehouse food defNames preferred after favorites.</summary>
+        public static bool IsHomesteaderPantryFood(ThingDef def)
+        {
+            if (def == null || !HomesteaderActive) return false;
+            string n = def.defName ?? "";
+            return n == "Homesteader_SmokedMeat"
+                || n == "Homesteader_SmokedFish"
+                || n == "Homesteader_SmokedCheese"
+                || n == "Homesteader_WaxedCheese"
+                || n == "Homesteader_Cheese"
+                || n == "Homesteader_MapleSyrup"
+                || n == "Homesteader_Flapjacks"
+                || n.StartsWith("Homesteader_Raw");
+        }
+
+        /// <summary>True when food is near a Homesteader smokehouse / root cellar (storage preference).</summary>
+        public static bool IsNearHomesteaderPantry(Thing food)
+        {
+            if (food?.Map == null || !HomesteaderActive) return false;
+            string[] buildings = { "Homesteader_Smokehouse", "Homesteader_RootCellar", "Homesteader_CheesePress" };
+            for (int n = 0; n < buildings.Length; n++)
+            {
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(buildings[n]);
+                if (def == null) continue;
+                List<Thing> things = food.Map.listerThings.ThingsOfDef(def);
+                if (things == null) continue;
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Thing t = things[i];
+                    if (t != null && !t.Destroyed && t.Position.DistanceTo(food.Position) <= 12f)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Soft Odyssey / transporter-style drop-pod arrival. Spawns the pawn near <paramref name="near"/>.
+        /// Fail-open: false means caller should edge-spawn normally.
+        /// </summary>
+        public static bool TryShuttleDrop(Pawn pawn, Map map, IntVec3 near)
+        {
+            if (pawn == null || map == null || pawn.Spawned) return false;
+            bool odyssey = ModsConfig.IsActive("Ludeon.RimWorld.Odyssey")
+                || ModLister.GetActiveModWithIdentifier("Ludeon.RimWorld.Odyssey") != null;
+            // Soft: Odyssey preferred; Royalty/Biotech drop pods still look like extract/insert.
+            if (!odyssey && !Rand.Chance(0.2f)) return false;
+
+            try
+            {
+                IntVec3 drop = near.IsValid ? near : DropCellFinder.TradeDropSpot(map);
+                if (!drop.IsValid)
+                    drop = DropCellFinder.RandomDropSpot(map);
+                if (!drop.IsValid) return false;
+
+                List<Thing> contents = new List<Thing> { pawn };
+                DropPodUtility.DropThingsNear(drop, map, contents, 110,
+                    canInstaDropDuringInit: false, leaveSlag: false);
+                return pawn.Spawned;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>High-aggression ion-storm bait: prefer sabotage while Stormproof ion condition is active.</summary>
+        public static bool ShouldIonStormBait(NemesisData data, Map map)
+        {
+            if (data == null || map == null) return false;
+            if (data.EffectiveAggression < 3f) return false;
+            return HasStormproofThreatCondition(map);
         }
 
         public static bool IsBuildingEmpProtected(Building building)

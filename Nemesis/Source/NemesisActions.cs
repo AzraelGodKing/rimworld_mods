@@ -93,6 +93,10 @@ namespace Nemesis
                                 "Nemesis_Letter_CallingCardTitle", "Nemesis_Letter_CallingCardBody");
                     }
                     break;
+                case NemesisAction.CampIntel:
+                    if (!NemesisCampUtility.TryAdvanceIntel(data))
+                        CommsTaunt(data, map);
+                    break;
                 default:
                     CommsTaunt(data, map);
                     break;
@@ -121,6 +125,10 @@ namespace Nemesis
                 title,
                 body + "\n\n" + "Nemesis_Letter_PhaseFooter".Translate(data.PhaseLabelKeyed()),
                 LetterDefOf.NeutralEvent);
+
+            // Offer reply options when a powered console exists.
+            if (HasCommsConsole(map) && data.active)
+                Find.WindowStack.Add(new Dialog_NemesisComms(data));
         }
 
         private static bool HasCommsConsole(Map map)
@@ -162,6 +170,8 @@ namespace Nemesis
 
             if (!raidDef.Worker.TryExecute(parms))
                 CommsTaunt(data, map);
+            else
+                MarkThreat(data);
         }
 
         private static void NemesisAssault(NemesisData data, Map map)
@@ -185,16 +195,18 @@ namespace Nemesis
                     spawnCell = CellFinder.RandomEdgeCell(map);
             }
 
-            GenSpawn.Spawn(nemesis, spawnCell, map);
+            NemesisIdentity.Apply(nemesis, data);
+            bool shuttled = SoftCompat.TryShuttleDrop(nemesis, map, spawnCell);
+            if (!shuttled)
+                GenSpawn.Spawn(nemesis, spawnCell, map);
             NemesisRegistry.CachedNemesis = nemesis;
             NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
 
-            // canTimeoutOrFlee: true so they pull back when losing; Kill intercept still handles "death".
             if (nemesis.Faction != null && !nemesis.Faction.IsPlayer)
             {
                 LordMaker.MakeNewLord(
                     nemesis.Faction,
-                    new LordJob_AssaultColony(nemesis.Faction, canKidnap: false, canTimeoutOrFlee: true),
+                    MakeHuntLord(nemesis.Faction, data, canKidnap: false, canFlee: true),
                     map,
                     new[] { nemesis });
             }
@@ -212,9 +224,13 @@ namespace Nemesis
                 }
             }
 
+            MarkThreat(data);
+
             string body = data.targetMode == NemesisTargetMode.Pawn && data.targetPawnName != null
                 ? "Nemesis_Letter_AssaultPawn".Translate(data.nemesisName, data.targetPawnName)
                 : "Nemesis_Letter_AssaultColony".Translate(data.nemesisName);
+            if (shuttled)
+                body += "\n\n" + "Nemesis_Letter_ShuttleDrop".Translate(data.nemesisName);
 
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_AssaultTitle".Translate(data.nemesisName),
@@ -326,7 +342,10 @@ namespace Nemesis
                 return;
             }
 
-            // Soft hit: minor inventory loss if the caravan carries haulables.
+            // Soft hit: inventory loss, or abandoned-cache / track ambush flavor.
+            if (Rand.Chance(0.4f) && NemesisCampUtility.TryTrackEncounter(data))
+                return;
+
             bool greedy = HasTrait(GameComponent_Nemesis.Instance?.FindNemesisPawn(), "Greedy");
             List<Thing> inventory = new List<Thing>();
             foreach (Thing t in target.AllThings)
@@ -355,10 +374,22 @@ namespace Nemesis
                 caravanBody,
                 LetterDefOf.NegativeEvent,
                 target);
+
+            if (Rand.Chance(0.35f))
+                NemesisCampUtility.TryAdvanceIntel(data, forceLetter: false);
         }
 
         private static void PowerSabotage(NemesisData data, Map map)
         {
+            // Stormproof ion-storm bait — they strike the grid while the sky is already angry.
+            if (SoftCompat.ShouldIonStormBait(data, map) && Rand.Chance(0.4f))
+            {
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_IonBaitTitle".Translate(data.nemesisName),
+                    "Nemesis_Letter_IonBaitBody".Translate(data.nemesisName, NemesisTaunts.TargetPhrase(data)),
+                    LetterDefOf.ThreatSmall);
+            }
+
             // Pyromaniac leak: prefer a crop/wood fire over EMP when the trait is present.
             Pawn nemesis = GameComponent_Nemesis.Instance?.FindNemesisPawn();
             if (HasTrait(nemesis, "Pyromaniac") && Rand.Chance(0.55f)
@@ -474,9 +505,11 @@ namespace Nemesis
                     if (t == null || t.Destroyed || t.Faction != Faction.OfPlayer) continue;
                     if (!t.def.IsNutritionGivingIngestible) continue;
                     if (t.stackCount < 5) continue;
-                    // Prefer exact favorite-food def stacks when Homesteader resolves one.
+                    // Prefer favorites, then Homesteader pantry/smokehouse stacks.
                     if (favDef != null && t.def == favDef)
                         foods.Insert(0, t);
+                    else if (SoftCompat.IsHomesteaderPantryFood(t.def) || SoftCompat.IsNearHomesteaderPantry(t))
+                        foods.Insert(foods.Count > 0 ? 1 : 0, t);
                     else
                         foods.Add(t);
                 }
@@ -614,12 +647,12 @@ namespace Nemesis
             for (int i = 0; i < squad.Count; i++)
                 GenSpawn.Spawn(squad[i], CellFinder.RandomClosewalkCellNear(edge, map, 4), map);
 
-            // Kidnap-capable assault — vanilla downed-kidnap flow creates the rescue arc on success.
             LordMaker.MakeNewLord(
                 faction,
-                new LordJob_AssaultColony(faction, canKidnap: true, canTimeoutOrFlee: true),
+                MakeHuntLord(faction, data, canKidnap: true, canFlee: true),
                 map,
                 squad);
+            MarkThreat(data);
 
             string mark = NemesisTaunts.TargetPhrase(data);
             Find.LetterStack.ReceiveLetter(
@@ -655,6 +688,7 @@ namespace Nemesis
             if (!spawnCell.IsValid)
                 spawnCell = CellFinder.RandomEdgeCell(map);
 
+            NemesisIdentity.Apply(nemesis, data);
             GenSpawn.Spawn(nemesis, spawnCell, map);
             NemesisRegistry.CachedNemesis = nemesis;
             NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
@@ -668,7 +702,7 @@ namespace Nemesis
             {
                 LordMaker.MakeNewLord(
                     nemesis.Faction,
-                    new LordJob_AssaultColony(nemesis.Faction, canKidnap: false, canTimeoutOrFlee: true),
+                    MakeHuntLord(nemesis.Faction, data, canKidnap: false, canFlee: true),
                     map,
                     new[] { nemesis });
             }
@@ -1008,11 +1042,12 @@ namespace Nemesis
                 GenSpawn.Spawn(nemesis, spawnCell, map);
                 NemesisRegistry.CachedNemesis = nemesis;
                 NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
+                NemesisIdentity.Apply(nemesis, data);
                 if (nemesis.Faction != null && !nemesis.Faction.IsPlayer)
                 {
                     LordMaker.MakeNewLord(
                         nemesis.Faction,
-                        new LordJob_AssaultColony(nemesis.Faction, canKidnap: false, canTimeoutOrFlee: false),
+                        MakeHuntLord(nemesis.Faction, data, canKidnap: false, canFlee: false),
                         map,
                         new[] { nemesis });
                 }
@@ -1032,12 +1067,27 @@ namespace Nemesis
             }
 
             SoftCompat.TrySpawnReckoningMechs(map, faction);
+            MarkThreat(data);
 
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_FinaleAssaultTitle".Translate(data.nemesisName),
                 "Nemesis_Letter_FinaleAssaultBody".Translate(data.nemesisName, NemesisTaunts.TargetPhrase(data)),
                 LetterDefOf.ThreatBig,
                 nemesis);
+        }
+
+        public static LordJob MakeHuntLord(Faction faction, NemesisData data, bool canKidnap, bool canFlee)
+        {
+            int focusId = data != null && data.targetMode == NemesisTargetMode.Pawn
+                ? data.targetPawnId
+                : -1;
+            return new LordJob_NemesisHunt(faction, focusId, canKidnap, canFlee);
+        }
+
+        public static void MarkThreat(NemesisData data)
+        {
+            if (data == null) return;
+            data.lastNemesisThreatTick = Find.TickManager.TicksGame;
         }
 
         public static void ScheduleSilenceAfter(NemesisData data, Map map)
@@ -1184,9 +1234,10 @@ namespace Nemesis
 
             LordMaker.MakeNewLord(
                 faction,
-                new LordJob_AssaultColony(faction, canKidnap: true, canTimeoutOrFlee: true),
+                MakeHuntLord(faction, data, canKidnap: true, canFlee: true),
                 map,
                 squad);
+            MarkThreat(data);
 
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_JailbreakTitle".Translate(data.nemesisName),

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <TipSetDef>
+    <defName>NemesisTips</defName>
+    <tips>
+      <li TKey="NemesisTipHunt">A Nemesis is a named antagonist, not a faceless raid. Capture, kill, or outlast them — or they win if their fixation target dies.</li>
+      <li TKey="NemesisTipComms">When they taunt over the comms console, you can reply: taunt back, offer a temporary truce, or demand surrender.</li>
+      <li TKey="NemesisTipIntel">As the hunt escalates, intel scraps can reveal a camp site on the world map. It may be real, empty, or a trap.</li>
+      <li TKey="NemesisTipResolve">Before removing Nemesis mid-save, use Mod Settings → Resolve current hunt now so WorldPawn pins are released.</li>
+    </tips>
+  </TipSetDef>
+
+</Defs>

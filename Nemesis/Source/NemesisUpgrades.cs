@@ -14,23 +14,21 @@ namespace Nemesis
         {
             if (nemesis == null || nemesis.Dead) return null;
 
+            string result = null;
             int roll = Rand.RangeInclusive(0, 2);
             if (roll == 0)
-            {
-                string armor = TryUpgradeArmor(nemesis);
-                if (armor != null) return armor;
-            }
-            if (roll <= 1)
-            {
-                string weapon = TryUpgradeWeapon(nemesis);
-                if (weapon != null) return weapon;
-            }
+                result = TryUpgradeArmor(nemesis);
+            if (result == null && roll <= 1)
+                result = TryUpgradeWeapon(nemesis);
+            if (result == null)
+                result = TryAddBionic(nemesis);
+            if (result == null)
+                result = TryUpgradeWeapon(nemesis) ?? TryUpgradeArmor(nemesis);
 
-            string bionic = TryAddBionic(nemesis);
-            if (bionic != null) return bionic;
-
-            // Fallbacks in other order.
-            return TryUpgradeWeapon(nemesis) ?? TryUpgradeArmor(nemesis);
+            NemesisData data = GameComponent_Nemesis.Instance?.Data;
+            if (data != null)
+                NemesisIdentity.Apply(nemesis, data);
+            return result;
         }
 
         private static string TryUpgradeArmor(Pawn nemesis)
