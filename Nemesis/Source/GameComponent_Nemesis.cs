@@ -531,8 +531,8 @@ namespace Nemesis
             if (nemesis == null || !nemesis.IsPrisonerOfColony) return;
 
             _data.active = false;
-            RecordTrophy(NemesisEndReason.Captured);
-            NemesisMood.NotifyHuntEnded(_data, NemesisEndReason.Captured);
+            // Trophy + hunt-end moods fire from Dialog_NemesisResolution.ApplyOutcome
+            // (skipped for Truce so a resumed hunt still records exactly once later).
             Find.WindowStack.Add(new Dialog_NemesisResolution(_data, nemesis));
         }
 
@@ -720,7 +720,11 @@ namespace Nemesis
                 }
             }
 
-            if (approached || tick >= _data.sniperUntilTick || _data.sniperShotsLeft <= 0)
+            // Grave visits reuse sniper despawn with sniperShotsLeft = 0; do not treat
+            // that as "shots exhausted" or the presence ends on the first tick.
+            bool graveLeave = _data.lastActionKind == -2;
+            bool shotsExhausted = !graveLeave && _data.sniperShotsLeft <= 0;
+            if (approached || tick >= _data.sniperUntilTick || shotsExhausted)
             {
                 NemesisActions.EndSniperTerror(_data, nemesis, approached);
                 return;

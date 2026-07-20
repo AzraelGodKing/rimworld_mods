@@ -220,6 +220,6 @@
   <Nemesis_Letter_TruceGiftTitle>Odd Gift: {0}</Nemesis_Letter_TruceGiftTitle>
   <Nemesis_Letter_TruceGiftBody>A drop pod during the truce. Inside: {1}.\n\nA note from {0}: "Not a bribe. A reminder I am still thinking."</Nemesis_Letter_TruceGiftBody>
   <Nemesis_Letter_TruceWarnTitle>{0}: A Warning</Nemesis_Letter_TruceWarnTitle>
-  <Nemesis_Letter_TruceWarnBody>{0} on an open channel:\n\n"Not them. I get to do it.\n\nStay alive until I say otherwise."</Nemesis_Letter_TruceWarnBody>
+  <Nemesis_Letter_TruceWarnBody>{0} cuts in over the raid channel:\n\n"Not them. I get to do it.\n\nStay alive — this one is not mine."</Nemesis_Letter_TruceWarnBody>
 
 </LanguageData>

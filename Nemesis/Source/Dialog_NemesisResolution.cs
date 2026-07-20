@@ -204,8 +204,7 @@ namespace Nemesis
                         // Attempt: high chance when resistance is broken; failure keeps prisoner.
                         if (Rand.Chance(0.65f))
                         {
-                            _nemesis.SetFaction(Faction.OfPlayer);
-                            _nemesis.guest?.SetGuestStatus(null);
+                            TryRecruitNemesis();
                             Find.LetterStack.ReceiveLetter(
                                 "Nemesis_Letter_RecruitedTitle".Translate(_data.nemesisName),
                                 "Nemesis_Letter_RecruitedBody".Translate(_data.nemesisName),
@@ -275,7 +274,28 @@ namespace Nemesis
                     break;
             }
 
+            // Permanent resolutions only — Truce resumes later and must not trophy/mood yet.
+            if (outcome != NemesisOutcome.Truce)
+            {
+                GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+                comp?.RecordTrophy(NemesisEndReason.Captured);
+                NemesisMood.NotifyHuntEnded(_data, NemesisEndReason.Captured);
+            }
+
             NemesisRegistry.Clear();
+        }
+
+        private void TryRecruitNemesis()
+        {
+            try
+            {
+                RecruitUtility.Recruit(_nemesis, Faction.OfPlayer);
+            }
+            catch
+            {
+                _nemesis.SetFaction(Faction.OfPlayer);
+                _nemesis.guest?.SetGuestStatus(null);
+            }
         }
 
         private static void DeliverSilver(int amount)
