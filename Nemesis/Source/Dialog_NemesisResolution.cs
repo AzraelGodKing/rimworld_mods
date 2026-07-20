@@ -151,7 +151,12 @@ namespace Nemesis
             {
                 case NemesisOutcome.Execute:
                     if (_nemesis != null && !_nemesis.Dead)
+                    {
+                        Map map = _nemesis.Map ?? SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+                        IntVec3 pos = _nemesis.Spawned ? _nemesis.Position : IntVec3.Invalid;
+                        NemesisEvidence.DropJournalOnDeath(_data, map, pos);
                         _nemesis.Kill(null);
+                    }
 
                     faction?.TryAffectGoodwillWith(Faction.OfPlayer, -30, canSendMessage: true, canSendHostilityLetter: true);
 

@@ -442,6 +442,11 @@ namespace Nemesis
                 LetterDefOf.NeutralEvent,
                 lookTarget);
 
+            // Calling card left behind on escape (physical evidence).
+            if (map != null && Rand.Chance(0.65f))
+                NemesisEvidence.DropCallingCard(_data, map,
+                    "Nemesis_Letter_CallingCardTitle", "Nemesis_Letter_CallingCardBody");
+
             // Staged finale when escape cap is hit — challenge instead of quiet cornering wait.
             if (_data.escapeCount >= MaxEscapes && !_data.finaleOffered)
             {
@@ -569,6 +574,11 @@ namespace Nemesis
             {
                 case NemesisEndReason.Killed:
                     _data.sniperActive = false;
+                    {
+                        Map deathMap = look?.MapHeld ?? SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+                        IntVec3 deathPos = look != null && look.Spawned ? look.Position : IntVec3.Invalid;
+                        NemesisEvidence.DropJournalOnDeath(_data, deathMap, deathPos);
+                    }
                     Find.LetterStack.ReceiveLetter(
                         "Nemesis_Letter_EndedKilledTitle".Translate(name),
                         "Nemesis_Letter_EndedKilledBody".Translate(name),
@@ -816,6 +826,16 @@ namespace Nemesis
                 && _data.EffectiveAggression >= 3.5f)
                 burrow = 0.04f;
 
+            // Trophy theft — Saboteur/Trickster Obsessed+, or any archetype at high agg.
+            float trophy = 0f;
+            if (phase >= NemesisHuntPhase.Obsessed && _data.stolenTrophyThingId < 0)
+            {
+                if (_data.archetype == NemesisArchetype.Saboteur || _data.archetype == NemesisArchetype.Trickster)
+                    trophy = 0.08f;
+                else if (_data.EffectiveAggression >= 4f)
+                    trophy = 0.04f;
+            }
+
             if (_data.rogue)
             {
                 raid *= 0.35f;
@@ -855,10 +875,11 @@ namespace Nemesis
                 else if (lastKind == NemesisAction.FoodTampering) tamper = 0f;
                 else if (lastKind == NemesisAction.InformantReveal) informant = 0f;
                 else if (lastKind == NemesisAction.StrataBurrow) burrow = 0f;
+                else if (lastKind == NemesisAction.TrophyTheft) trophy = 0f;
             }
 
             float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly
-                + kidnap + sniper + grave + tamper + informant + burrow;
+                + kidnap + sniper + grave + tamper + informant + burrow + trophy;
             if (total <= 0f) return NemesisAction.CommsTaunt;
             float roll = Rand.Value * total;
 
@@ -877,6 +898,7 @@ namespace Nemesis
             if ((roll -= tamper) < 0f) return NemesisAction.FoodTampering;
             if ((roll -= informant) < 0f) return NemesisAction.InformantReveal;
             if ((roll -= burrow) < 0f) return NemesisAction.StrataBurrow;
+            if ((roll -= trophy) < 0f) return NemesisAction.TrophyTheft;
             return NemesisAction.CommsTaunt;
         }
 

@@ -82,6 +82,17 @@ namespace Nemesis
                     if (!SoftCompat.TryFireStrataBurrow(data, map))
                         CommsTaunt(data, map);
                     break;
+                case NemesisAction.TrophyTheft:
+                    if (!NemesisEvidence.TryStealTrophy(data, map))
+                    {
+                        // Saboteur/Trickster flavor fallback: calling card.
+                        if (Rand.Chance(0.5f))
+                            NemesisEvidence.DropDeadAnimalCard(data, map);
+                        else
+                            NemesisEvidence.DropCallingCard(data, map,
+                                "Nemesis_Letter_CallingCardTitle", "Nemesis_Letter_CallingCardBody");
+                    }
+                    break;
                 default:
                     CommsTaunt(data, map);
                     break;

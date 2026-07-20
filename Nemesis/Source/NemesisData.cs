@@ -39,6 +39,8 @@ namespace Nemesis
         FoodTampering,
         InformantReveal,
         StrataBurrow, // SoftCompat only — never fires if Strata probe fails
+        // Append-only
+        TrophyTheft,
     }
 
     public enum NemesisOutcome
@@ -173,6 +175,12 @@ namespace Nemesis
         public bool rivalCameoActive;
         public int rivalCameoUntilTick = -1;
 
+        // --- Physical evidence (Phase 3) ---
+        public int stolenTrophyThingId = -1;
+        public string stolenTrophyDefName;
+        public string stolenTrophyLabel;
+        public int stolenTrophyQuality = -1;
+
         public float EffectiveAggression
         {
             get
@@ -301,6 +309,10 @@ namespace Nemesis
             Scribe_Values.Look(ref archetype, "archetype", NemesisArchetype.Stalker);
             Scribe_Values.Look(ref rivalCameoActive, "rivalCameoActive", false);
             Scribe_Values.Look(ref rivalCameoUntilTick, "rivalCameoUntilTick", -1);
+            Scribe_Values.Look(ref stolenTrophyThingId, "stolenTrophyThingId", -1);
+            Scribe_Values.Look(ref stolenTrophyDefName, "stolenTrophyDefName", null);
+            Scribe_Values.Look(ref stolenTrophyLabel, "stolenTrophyLabel", null);
+            Scribe_Values.Look(ref stolenTrophyQuality, "stolenTrophyQuality", -1);
         }
     }
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>Nemesis_CallingCard</defName>
+    <label>calling card</label>
+    <description>A scrap of paper, cloth, or bone marked with a personal message. Someone wanted you to know they were here.</description>
+    <graphicData>
+      <texPath>Things/Item/Special/Harddrive</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.6</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>20</MaxHitPoints>
+      <MarketValue>5</MarketValue>
+      <Mass>0.05</Mass>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>Items</li>
+    </thingCategories>
+    <stackLimit>1</stackLimit>
+    <tradeability>None</tradeability>
+    <comps>
+      <li Class="CompProperties_UseEffect">
+        <compClass>Nemesis.CompUseEffect_NemesisNote</compClass>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>Nemesis_Journal</defName>
+    <label>nemesis journal</label>
+    <description>A battered notebook filled with obsessive notes about a colony and a single person. Reading it feels like being watched.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Textbook</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.7</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <MarketValue>40</MarketValue>
+      <Mass>0.3</Mass>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <thingCategories>
+      <li>Items</li>
+    </thingCategories>
+    <stackLimit>1</stackLimit>
+    <tradeability>None</tradeability>
+    <comps>
+      <li Class="CompProperties_UseEffect">
+        <compClass>Nemesis.CompUseEffect_NemesisNote</compClass>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

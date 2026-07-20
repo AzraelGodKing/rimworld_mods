@@ -79,6 +79,20 @@
   <Nemesis_Letter_RivalCameoTitle>{0}: Nobody Else</Nemesis_Letter_RivalCameoTitle>
   <Nemesis_Letter_RivalCameoBody>{0} appears on the edge of the fight against {1}.\n\n"Nobody kills {2} but me."\n\nThey are not here for your walls.</Nemesis_Letter_RivalCameoBody>
 
+  <Nemesis_CallingCard_Body>{0} ({2}) left this for {1}. The handwriting is careful. The threat is not.</Nemesis_CallingCard_Body>
+  <Nemesis_CallingCard_LetterOnly>(The physical note could not be placed — the message still arrived.)</Nemesis_CallingCard_LetterOnly>
+  <Nemesis_Letter_CallingCardTitle>{0}: Calling Card</Nemesis_Letter_CallingCardTitle>
+  <Nemesis_Letter_CallingCardBody>A marked scrap appears near the edge of the colony. {0} wants {1} to know they walked away alive.</Nemesis_Letter_CallingCardBody>
+  <Nemesis_Letter_DeadAnimalTitle>{0}: At the Door</Nemesis_Letter_DeadAnimalTitle>
+  <Nemesis_Letter_DeadAnimalBody>A small animal lies dead near the colony edge, a note pinned beside it. {0} is thinking about {1}.</Nemesis_Letter_DeadAnimalBody>
+  <Nemesis_Letter_TrophyStolenTitle>{0}: Trophy</Nemesis_Letter_TrophyStolenTitle>
+  <Nemesis_Letter_TrophyStolenBody>{0} took {1}. Not for money — for spite. Aimed at {2}.</Nemesis_Letter_TrophyStolenBody>
+  <Nemesis_Note_CardTitle>Calling card</Nemesis_Note_CardTitle>
+  <Nemesis_Note_JournalTitle>Nemesis journal</Nemesis_Note_JournalTitle>
+  <Nemesis_Note_DefaultBody>The ink is smeared. Whoever wrote this wanted you afraid.</Nemesis_Note_DefaultBody>
+  <Nemesis_Letter_JournalTitle>{0}'s journal</Nemesis_Letter_JournalTitle>
+  <Nemesis_Journal_Body>Journal of {0} ({2}).\n\nObsession: {1}.\nHarassment events: {3}. Escapes: {4}. Days of hunt: {5}.\n\nThe last page is blank. They never finished the sentence.</Nemesis_Journal_Body>
+
   <Nemesis_Phase_Watching>Watching</Nemesis_Phase_Watching>
   <Nemesis_Phase_Testing>Testing</Nemesis_Phase_Testing>
   <Nemesis_Phase_Obsessed>Obsessed</Nemesis_Phase_Obsessed>
