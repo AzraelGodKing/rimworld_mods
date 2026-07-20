@@ -2,13 +2,20 @@
 # Arms are drawn as one continuous band per axis and clipped to connected directions,
 # so wires stay seamless across tiles and through junctions.
 param(
-    [string]$SegmentPath = "$PSScriptRoot\assets\ArmoredConduit_segment_proc.png",
-    [string]$HubPath = "$PSScriptRoot\assets\ArmoredConduit_hub_proc.png",
-    [string]$OutAtlas = "$PSScriptRoot\Stormproof\Textures\Stormproof\Buildings\ArmoredConduit_Atlas.png",
-    [string]$OutSegment = "$PSScriptRoot\Stormproof\Textures\Stormproof\Buildings\ArmoredConduit.png",
-    [string]$OutMenu = "$PSScriptRoot\Stormproof\Textures\Stormproof\Buildings\ArmoredConduit_MenuIcon.png",
+    [string]$SegmentPath = "",
+    [string]$HubPath = "",
+    [string]$OutAtlas = "",
+    [string]$OutSegment = "",
+    [string]$OutMenu = "",
     [int]$Cell = 128
 )
+
+$repo = Split-Path $PSScriptRoot -Parent
+if (-not $SegmentPath) { $SegmentPath = Join-Path $repo 'assets\ArmoredConduit_segment_proc.png' }
+if (-not $HubPath) { $HubPath = Join-Path $repo 'assets\ArmoredConduit_hub_proc.png' }
+if (-not $OutAtlas) { $OutAtlas = Join-Path $repo 'Stormproof\Textures\Stormproof\Buildings\ArmoredConduit_Atlas.png' }
+if (-not $OutSegment) { $OutSegment = Join-Path $repo 'Stormproof\Textures\Stormproof\Buildings\ArmoredConduit.png' }
+if (-not $OutMenu) { $OutMenu = Join-Path $repo 'Stormproof\Textures\Stormproof\Buildings\ArmoredConduit_MenuIcon.png' }
 
 Add-Type -AssemblyName System.Drawing
 $code = @"
@@ -153,8 +160,8 @@ $menu.Save($OutMenu, [Drawing.Imaging.ImageFormat]::Png)
 
 $atlas.Dispose(); $segment.Dispose(); $menu.Dispose(); $seg.Dispose(); $hub.Dispose()
 
-Copy-Item $OutSegment "$PSScriptRoot\docs\img\ArmoredConduit.png" -Force
-Copy-Item $OutAtlas "$PSScriptRoot\docs\img\ArmoredConduit_Atlas.png" -Force
+Copy-Item $OutSegment (Join-Path $repo 'docs\img\ArmoredConduit.png') -Force
+Copy-Item $OutAtlas (Join-Path $repo 'docs\img\ArmoredConduit_Atlas.png') -Force
 
 Write-Output "Atlas:   $OutAtlas"
 Write-Output "Segment: $OutSegment"
