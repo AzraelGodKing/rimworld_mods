@@ -11,10 +11,12 @@ namespace Strata
     [HarmonyPatch(typeof(FloatMenuOptionProvider_CaptureEntity), nameof(FloatMenuOptionProvider_CaptureEntity.GetOptionsFor))]
     public static class Patch_CaptureEntity_AcrossLevels
     {
+        // Harmony pass-through postfixes require __result as the first parameter
+        // when the postfix itself returns IEnumerable (same as the original).
         public static IEnumerable<FloatMenuOption> Postfix(
+            IEnumerable<FloatMenuOption> __result,
             Thing clickedThing,
-            FloatMenuContext context,
-            IEnumerable<FloatMenuOption> __result)
+            FloatMenuContext context)
         {
             bool anyEnabled = false;
             FloatMenuOption disabledNoPlatform = null;
