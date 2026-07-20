@@ -300,6 +300,7 @@ namespace Strata
                 }
             }
             Check("world ritual-travel component exists", StrataRitualTravel.Get != null);
+            Check("world caravan-travel component exists", StrataCaravanTravel.Get != null);
             Check("settings loaded", StrataMod.Settings != null);
 
             // Pillar 1: the living deep.
