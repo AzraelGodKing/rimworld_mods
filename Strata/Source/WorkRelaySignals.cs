@@ -130,7 +130,7 @@ namespace Strata
             {
                 return true;
             }
-            if (Active(WorkTypeDefOf.Hauling) && HasHauling(map))
+            if (Active(WorkTypeDefOf.Hauling) && (HasHauling(map) || HasCrossLevelHaulExports(map)))
             {
                 return true;
             }
@@ -260,6 +260,29 @@ namespace Strata
         public static bool HasHauling(Map map)
         {
             return map.listerHaulables.ThingsPotentiallyNeedingHauling().Count > 0;
+        }
+
+        // Items on this map that a linked floor is pulling (refuel, higher-priority
+        // storage, construction/bills). Lets work-relay send haulers to the source
+        // floor even when local listerHaulables is empty.
+        public static bool HasCrossLevelHaulExports(Map map)
+        {
+            HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
+            if (wanted.Count == 0)
+            {
+                return false;
+            }
+
+            foreach (ThingDef def in wanted)
+            {
+                List<Thing> things = map.listerThings.ThingsOfDef(def);
+                if (things != null && things.Count > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static bool HasCleaning(Map map)
