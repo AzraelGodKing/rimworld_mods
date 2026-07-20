@@ -72,6 +72,30 @@
   <Stormproof_FalloutScrubber_Scrubbing>Scrubbing: toxic buildup of pawns in this room slowly decreases.</Stormproof_FalloutScrubber_Scrubbing>
   <Stormproof_FalloutScrubber_Idle>Idle: must be placed in an enclosed room to scrub the air.</Stormproof_FalloutScrubber_Idle>
 
+  <!-- Atmospheric barrier -->
+  <Stormproof_AtmosphericBarrier_Standby>Standby. During toxic fallout / surge / ash / haze this barrier will draw {0} W.</Stormproof_AtmosphericBarrier_Standby>
+  <Stormproof_AtmosphericBarrier_Protecting>PROTECTING: atmospheric toxins suppressed map-wide, drawing {0} W.</Stormproof_AtmosphericBarrier_Protecting>
+  <Stormproof_AtmosphericBarrier_Down>BARRIER DOWN: needs power (switched on, connected, stored energy in grid).</Stormproof_AtmosphericBarrier_Down>
+
+  <!-- Climate stabilizer -->
+  <Stormproof_ClimateStabilizer_Standby>Standby. During extreme climate events this stabilizer will draw {0} W.</Stormproof_ClimateStabilizer_Standby>
+  <Stormproof_ClimateStabilizer_Protecting>PROTECTING: temperature offsets cancelled map-wide, drawing {0} W.</Stormproof_ClimateStabilizer_Protecting>
+  <Stormproof_ClimateStabilizer_Down>STABILIZER DOWN: needs power (switched on, connected, stored energy in grid).</Stormproof_ClimateStabilizer_Down>
+
+  <!-- Sky restorer -->
+  <Stormproof_SkyRestorer_Standby>Standby. During eclipse / ash / volcanic winter this restorer will draw {0} W.</Stormproof_SkyRestorer_Standby>
+  <Stormproof_SkyRestorer_Protecting>PROTECTING: usable daylight restored, drawing {0} W.</Stormproof_SkyRestorer_Protecting>
+  <Stormproof_SkyRestorer_Down>RESTORER DOWN: needs power (switched on, connected, stored energy in grid).</Stormproof_SkyRestorer_Down>
+
+  <!-- Fire suppressor -->
+  <Stormproof_FireSuppressor_Active>Active: extinguishing fires within {0} tiles.</Stormproof_FireSuppressor_Active>
+  <Stormproof_FireSuppressor_Flashstorm>FLASHSTORM MODE: extinguishing fires, drawing {0} W.</Stormproof_FireSuppressor_Flashstorm>
+
+  <!-- Drought condenser -->
+  <Stormproof_DroughtCondenser_Standby>Standby. During drought this condenser will draw {0} W.</Stormproof_DroughtCondenser_Standby>
+  <Stormproof_DroughtCondenser_Protecting>PROTECTING: drought plant penalties cancelled, drawing {0} W.</Stormproof_DroughtCondenser_Protecting>
+  <Stormproof_DroughtCondenser_Down>CONDENSER DOWN: needs power (switched on, connected, stored energy in grid).</Stormproof_DroughtCondenser_Down>
+
   <!-- Storm capacitor -->
   <Stormproof_StormCapacitor_Stored>Stored: {0} / {1} Wd (lightning only, no self-discharge)</Stormproof_StormCapacitor_Stored>
   <Stormproof_StormCapacitor_Discharging>Discharging: {0} W to cover grid deficit.</Stormproof_StormCapacitor_Discharging>
