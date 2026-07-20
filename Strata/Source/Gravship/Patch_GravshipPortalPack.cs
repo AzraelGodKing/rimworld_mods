@@ -307,19 +307,27 @@ namespace Strata
                     continue;
                 }
 
-                IntVec3 cell = engine.Position + snap.offsetFromEngine;
+                // Restore into the landed engine's frame — a rotated landing
+                // rotates both the offset and the shaft's own facing.
+                IntVec3 cell = engine.Position + OffsetForLandedEngine(engine, snap);
+                Rot4 spawnRot = snap.rotation;
+                if (snap.engineRotationAtTakeoff.IsValid)
+                {
+                    int rotDelta = (engine.Rotation.AsInt - snap.engineRotationAtTakeoff.AsInt + 4) % 4;
+                    spawnRot = new Rot4((snap.rotation.AsInt + rotDelta) % 4);
+                }
                 if (!cell.InBounds(host))
                 {
                     cell = engine.Position;
                 }
 
-                if (!CanPlaceShaft(host, def, cell, snap.rotation))
+                if (!CanPlaceShaft(host, def, cell, spawnRot))
                 {
                     if (!CellFinder.TryFindRandomCellNear(
                             engine.Position,
                             host,
                             8,
-                            c => CanPlaceShaft(host, def, c, snap.rotation),
+                            c => CanPlaceShaft(host, def, c, spawnRot),
                             out cell))
                     {
                         Log.Warning("[Strata] Gravship land: could not place restored shaft "
@@ -329,7 +337,7 @@ namespace Strata
                 }
 
                 Thing shaft = ThingMaker.MakeThing(def);
-                GenSpawn.Spawn(shaft, cell, host, snap.rotation);
+                GenSpawn.Spawn(shaft, cell, host, spawnRot);
                 Log.Message("[Strata] Gravship land: restored missing shaft "
                     + def.defName + " at " + cell);
             }
@@ -466,7 +474,7 @@ namespace Strata
             }
         }
 
-        private static MapPortal FindLandingOn(Map pocket)
+        internal static MapPortal FindLandingOn(Map pocket)
         {
             foreach (Thing thing in pocket.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
