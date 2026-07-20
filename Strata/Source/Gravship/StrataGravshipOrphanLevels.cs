@@ -132,6 +132,18 @@ namespace Strata
                 return null;
             }
 
+            // Never hijack a level another live shaft still owns — re-pointing
+            // its landing would break that shaft's return trip. Multi-shaft
+            // sharing goes through ExistingGravshipLevel* (second landing).
+            foreach (Thing thing in shaft.Map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing != shaft && thing is MapPortal other && other.Spawned
+                    && other.PocketMapExists && other.PocketMap == orphan)
+                {
+                    return null;
+                }
+            }
+
             MapPortal landing = StrataGravshipPortalTravel.FindLandingOn(orphan);
             if (landing is PocketMapExit exitLanding)
             {
@@ -164,21 +176,14 @@ namespace Strata
         }
 
         // True when this host carries gravship relink damage worth repairing on
-        // load: an unwired gravship shaft, or a detached travelling level.
+        // load: a detached level that still looks gravship-linked. An unwired
+        // shaft alone is NOT damage — freshly built, never-used shafts have no
+        // pocket either, and flagging them would rerun repair on every load.
         public static bool HasRepairWork(Map host)
         {
             if (host == null)
             {
                 return false;
-            }
-            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
-            {
-                if (thing is MapPortal portal && portal.Spawned
-                    && StrataGravshipUtility.IsGravshipHostShaft(portal)
-                    && !portal.PocketMapExists)
-                {
-                    return true;
-                }
             }
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
@@ -229,11 +234,13 @@ namespace Strata
             {
                 return false;
             }
-            // Stride-sample the whole grid (~2048 probes) — scanning only the
-            // first 2048 cells of AllCells covers a few edge rows and misses
-            // centrally-placed deck terrain, wrongly rejecting real orphans.
+            // Stride-sample the whole grid (~16k probes ≈ every 4th cell on a
+            // 250x250 map) — scanning only the first 2048 cells of AllCells
+            // covers a few edge rows and misses centrally-placed deck terrain,
+            // wrongly rejecting real orphans; a sparse stride could still slip
+            // past a small deck footprint.
             int total = map.cellIndices.NumGridCells;
-            int stride = total > 2048 ? total / 2048 : 1;
+            int stride = total > 16384 ? total / 16384 : 1;
             for (int i = 0; i < total; i += stride)
             {
                 TerrainDef terrain = map.terrainGrid.TerrainAt(i);
