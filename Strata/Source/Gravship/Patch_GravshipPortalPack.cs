@@ -58,6 +58,8 @@ namespace Strata
             public Rot4 rotation;
             public int pocketMapId;
             public bool isTower;
+            // Takeoff engine facing; Invalid = legacy save (skip rotation delta).
+            public Rot4 engineRotationAtTakeoff = Rot4.Invalid;
 
             public void ExposeData()
             {
@@ -66,6 +68,7 @@ namespace Strata
                 Scribe_Values.Look(ref rotation, "rotation", Rot4.North);
                 Scribe_Values.Look(ref pocketMapId, "pocketMapId", -1);
                 Scribe_Values.Look(ref isTower, "isTower", false);
+                Scribe_Values.Look(ref engineRotationAtTakeoff, "engineRotationAtTakeoff", Rot4.Invalid);
             }
         }
 
@@ -199,6 +202,7 @@ namespace Strata
                     rotation = portal.Rotation,
                     pocketMapId = pocketId,
                     isTower = StrataGravshipUtility.IsGravshipTowerShaft(portal),
+                    engineRotationAtTakeoff = engine.Rotation,
                 });
             }
 
@@ -337,18 +341,44 @@ namespace Strata
                 && GenConstruct.CanPlaceBlueprintAt(def, cell, rot, map).Accepted;
         }
 
-        private static MapPortal FindHostShaftMatching(
-            Map host,
+        private static IntVec3 OffsetForLandedEngine(
             Building_GravEngine engine,
             PortalSnapshot snap)
         {
-            IntVec3 expected = engine.Position + snap.offsetFromEngine;
+            IntVec3 offset = snap.offsetFromEngine;
+            // Legacy snapshots lack takeoff engine facing — keep un-rotated match.
+            if (!snap.engineRotationAtTakeoff.IsValid || engine == null)
+            {
+                return offset;
+            }
+
+            int delta = (engine.Rotation.AsInt - snap.engineRotationAtTakeoff.AsInt + 4) % 4;
+            if (delta != 0)
+            {
+                offset = offset.RotatedBy(new Rot4(delta));
+            }
+
+            return offset;
+        }
+
+        private static MapPortal FindHostShaftMatching(
+            Map host,
+            Building_GravEngine engine,
+            PortalSnapshot snap,
+            HashSet<MapPortal> claimedShafts = null)
+        {
+            IntVec3 expected = engine.Position + OffsetForLandedEngine(engine, snap);
             MapPortal byDef = null;
             foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
                 if (thing is not MapPortal portal || !portal.Spawned
                     || portal.def.defName != snap.defName
                     || portal is not IStrataGravshipPortal)
+                {
+                    continue;
+                }
+
+                if (claimedShafts != null && claimedShafts.Contains(portal))
                 {
                     continue;
                 }
@@ -383,6 +413,7 @@ namespace Strata
 
             Building_GravEngine engine = StrataGravshipUtility.FindGravEngineOnMap(host);
             var wiredPockets = new HashSet<Map>();
+            var claimedShafts = new HashSet<MapPortal>();
 
             // Prefer takeoff pocketMapId so the furnished travelling floor wins
             // over a freshly generated empty underdeck.
@@ -396,13 +427,14 @@ namespace Strata
                     {
                         continue;
                     }
-                    MapPortal shaft = FindHostShaftMatching(host, engine, snap);
+                    MapPortal shaft = FindHostShaftMatching(host, engine, snap, claimedShafts);
                     MapPortal landing = FindLandingOn(pocket);
                     if (shaft == null || landing == null)
                     {
                         continue;
                     }
                     ConnectPortalPair(shaft, landing);
+                    claimedShafts.Add(shaft);
                     wiredPockets.Add(pocket);
                 }
             }
@@ -421,13 +453,16 @@ namespace Strata
                     continue;
                 }
 
-                MapPortal shaft = FindBestShaftForPocket(hostShafts, pocket, landing);
+                MapPortal shaft = FindBestShaftForPocket(hostShafts, pocket, landing, claimedShafts);
                 if (shaft == null)
                 {
+                    Log.Message("[Strata] Gravship land: left pocket unwired (no unclaimed matching shaft) "
+                        + pocket);
                     continue;
                 }
 
                 ConnectPortalPair(shaft, landing);
+                claimedShafts.Add(shaft);
             }
         }
 
@@ -455,12 +490,18 @@ namespace Strata
         private static MapPortal FindBestShaftForPocket(
             List<MapPortal> hostShafts,
             Map pocket,
-            MapPortal landing)
+            MapPortal landing,
+            HashSet<MapPortal> claimedShafts)
         {
             // Prefer shaft already linked to this pocket, then matching direction.
             for (int i = 0; i < hostShafts.Count; i++)
             {
                 MapPortal shaft = hostShafts[i];
+                if (claimedShafts != null && claimedShafts.Contains(shaft))
+                {
+                    continue;
+                }
+
                 if (shaft.PocketMapExists && shaft.PocketMap == pocket)
                 {
                     return shaft;
@@ -473,13 +514,19 @@ namespace Strata
             for (int i = 0; i < hostShafts.Count; i++)
             {
                 MapPortal shaft = hostShafts[i];
+                if (claimedShafts != null && claimedShafts.Contains(shaft))
+                {
+                    continue;
+                }
+
                 if (StrataGravshipUtility.IsGravshipTowerShaft(shaft) == wantTower)
                 {
                     return shaft;
                 }
             }
 
-            return hostShafts.Count > 0 ? hostShafts[0] : null;
+            // No cross-type last resort — leave unwired for EnsureHostShafts.
+            return null;
         }
 
         private static void ConnectPortalPair(MapPortal hostShaft, MapPortal landing)
@@ -492,6 +539,18 @@ namespace Strata
             // MapPortal.exit / PocketMapExit.entrance are the bidirectional link.
             if (landing is PocketMapExit exitLanding)
             {
+                if (exitLanding.entrance == hostShaft && hostShaft.exit == exitLanding)
+                {
+                    return;
+                }
+
+                // Drop the old landing's entrance so rewiring leaves no one-way link.
+                if (hostShaft.exit != null && hostShaft.exit != exitLanding
+                    && hostShaft.exit.entrance == hostShaft)
+                {
+                    hostShaft.exit.entrance = null;
+                }
+
                 exitLanding.entrance = hostShaft;
                 hostShaft.exit = exitLanding;
             }
