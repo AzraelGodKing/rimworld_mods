@@ -380,9 +380,6 @@ namespace Strata
             }
         }
 
-        private const int CheckInterval = 60;
-        private const int TimeoutTicks = 20000; // ~8 in-game hours
-
         private List<Traveler> travelers = new List<Traveler>();
 
         // Transient: which ritual assignments an escorted pawn belongs to.
@@ -428,7 +425,7 @@ namespace Strata
             {
                 escortAssignments[pawn] = assignments;
             }
-            TryAdvance(traveler);
+            PortalTravelWalker.TryAdvance(pawn, destination, preferArrivalNear);
         }
 
         public void RegisterEscorted(
@@ -453,23 +450,24 @@ namespace Strata
             {
                 escortAssignments[pawn] = assignments;
             }
-            TryAdvanceEscorted(traveler);
+            Pawn escort = traveler.escort;
+            PortalTravelWalker.TryAdvanceEscorted(
+                pawn, ref escort, destination, preferArrivalNear, assignments);
+            traveler.escort = escort;
         }
 
         public override void WorldComponentTick()
         {
             base.WorldComponentTick();
-            if (travelers.Count == 0 || Find.TickManager.TicksGame % CheckInterval != 0)
+            if (travelers.Count == 0
+                || Find.TickManager.TicksGame % PortalTravelWalker.CheckInterval != 0)
             {
                 return;
             }
             for (int i = travelers.Count - 1; i >= 0; i--)
             {
                 Traveler t = travelers[i];
-                if (t.pawn == null || t.pawn.Dead || t.pawn.Destroyed
-                    || t.pawn.Drafted
-                    || Find.TickManager.TicksGame - t.started > TimeoutTicks
-                    || !LordAlive(t))
+                if (PortalTravelWalker.ShouldAbandon(t.pawn, t.destination, t.lord, t.started))
                 {
                     DropTraveler(t);
                     travelers.RemoveAt(i);
@@ -488,11 +486,15 @@ namespace Strata
                 }
                 if (t.escorted)
                 {
-                    TryAdvanceEscorted(t);
+                    escortAssignments.TryGetValue(t.pawn, out RitualRoleAssignments assignments);
+                    Pawn escort = t.escort;
+                    PortalTravelWalker.TryAdvanceEscorted(
+                        t.pawn, ref escort, t.destination, t.preferArrivalNear, assignments);
+                    t.escort = escort;
                 }
                 else
                 {
-                    TryAdvance(t);
+                    PortalTravelWalker.TryAdvance(t.pawn, t.destination, t.preferArrivalNear);
                 }
             }
         }
@@ -511,91 +513,6 @@ namespace Strata
             {
                 escortAssignments.Remove(t.pawn);
             }
-        }
-
-        private static bool LordAlive(Traveler t)
-        {
-            return t.destination != null && t.lord != null
-                && Find.Maps.Contains(t.destination)
-                && t.destination.lordManager.lords.Contains(t.lord);
-        }
-
-        private static void TryAdvance(Traveler t)
-        {
-            Pawn pawn = t.pawn;
-            if (!pawn.Spawned || pawn.CurJobDef == JobDefOf.EnterPortal)
-            {
-                return;
-            }
-            MapPortal step = LevelGraph.BestFirstStep(
-                pawn.Map, t.destination, pawn.Position, pawn, t.preferArrivalNear);
-            if (step != null && step.Spawned && step.IsEnterable(out _)
-                && pawn.CanReach(step, PathEndMode.Touch, Danger.Some))
-            {
-                Job job = JobMaker.MakeJob(JobDefOf.EnterPortal, step);
-                pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
-            }
-        }
-
-        private void TryAdvanceEscorted(Traveler t)
-        {
-            Pawn escortee = t.pawn;
-            if (!escortee.Spawned)
-            {
-                return;
-            }
-            if (escortee.CurJobDef == JobDefOf.EnterPortal)
-            {
-                return;
-            }
-            escortAssignments.TryGetValue(escortee, out RitualRoleAssignments assignments);
-            if (t.escort == null || !t.escort.Spawned || t.escort.Dead || t.escort.Map != escortee.Map)
-            {
-                t.escort = RitualEscortUtility.FindEscort(escortee, escortee.Map, assignments);
-            }
-            if (t.escort == null)
-            {
-                return;
-            }
-            MapPortal step = LevelGraph.BestFirstStep(
-                escortee.Map, t.destination, escortee.Position, escortee, t.preferArrivalNear);
-            if (step == null || !step.Spawned || !step.IsEnterable(out _))
-            {
-                return;
-            }
-            if (TryEnterPortalTogether(t.escort, escortee, step))
-            {
-                return;
-            }
-            RitualEscortUtility.TryStartEscortHop(t.escort, escortee, step);
-        }
-
-        private static bool TryEnterPortalTogether(Pawn escort, Pawn escortee, MapPortal portal)
-        {
-            if (escort == null || escortee == null || portal == null || !portal.Spawned)
-            {
-                return false;
-            }
-            if (escort.Map != escortee.Map || escort.Map != portal.Map)
-            {
-                return false;
-            }
-            if (escort.CurJobDef == JobDefOf.EnterPortal || escortee.CurJobDef == JobDefOf.EnterPortal)
-            {
-                return true;
-            }
-            if (!escort.CanReach(portal, PathEndMode.Touch, Danger.Some))
-            {
-                return false;
-            }
-            if (!escort.Position.InHorDistOf(portal.Position, 2.5f)
-                || !escortee.Position.InHorDistOf(portal.Position, 3f))
-            {
-                return false;
-            }
-            escortee.jobs.StartJob(JobMaker.MakeJob(JobDefOf.EnterPortal, portal), JobCondition.InterruptForced);
-            escort.jobs.StartJob(JobMaker.MakeJob(JobDefOf.EnterPortal, portal), JobCondition.InterruptForced);
-            return true;
         }
     }
 }
