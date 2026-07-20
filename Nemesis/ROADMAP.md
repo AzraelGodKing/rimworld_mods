@@ -39,3 +39,8 @@ Personality & evidence pass on `feature/nemesis-personality` (merged into `featu
 - Dedicated Odyssey shuttle extract (beyond drop-pod soft)
 - Preview / Steam screenshot pack from real play sessions
 - Trigger-rate tuning after playtest data
+
+## Series / further vision
+Later Strata / Homesteader / Stormproof ideas and series-wide soft-compat live outside this file:
+- [Series roadmap](../ROADMAP.md) — soft-compat web, Azrael storyteller, “The Deep Homestead”
+- [Strata V3](../Strata/V3_ROADMAP.md) · [Homesteader](../Homesteader/ROADMAP.md) · [Stormproof](../Stormproof/ROADMAP.md)
