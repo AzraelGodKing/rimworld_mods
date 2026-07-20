@@ -116,11 +116,29 @@ h1.s { color: var(--accent-s); }
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 28px;
+  padding: 0;
+  overflow: hidden;
   text-decoration: none;
   color: inherit;
   transition: border-color 0.15s, transform 0.15s;
 }
+.hub-card-preview {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center top;
+  border-bottom: 1px solid var(--border);
+}
+.hub-card h2,
+.hub-card p,
+.hub-card .count {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+.hub-card h2 { padding-top: 22px; }
+.hub-card .count { padding-bottom: 28px; }
 .hub-card:hover { border-color: var(--accent-h); transform: translateY(-2px); }
 .hub-card.storm:hover { border-color: var(--accent-s); }
 .hub-card h2 {
