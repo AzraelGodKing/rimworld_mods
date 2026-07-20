@@ -4,6 +4,7 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
+- **No public download zip** — CI still compiles Nemesis, but `Nemesis.zip` is not published on the rolling GitHub Release.
 - **Brought into** `rimworld_mods/Nemesis` as `AzraelGodKing.Nemesis` (Harmony 1.6, sibling csproj pattern).
 - **Credit** — Dredd / Misakabob named in About + this changelog as original author of the foundation.
 - **New harassment** — fake signal → delayed ambush; caravan harassment; EMP / grid sabotage; food-store raids; Anomaly bait (DLC, fail-open).

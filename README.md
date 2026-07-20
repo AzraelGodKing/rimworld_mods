@@ -82,7 +82,7 @@ Source lives in `Stormproof/Source`. The compiled `Stormproof.dll` is produced b
 
 ### Nemesis (in progress)
 
-A named hostile becomes a personal antagonist — taunts, false leads, and targeted harassment. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Source lives in `Nemesis/Source`; the DLL is built by CI and shipped in the [release download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Nemesis.zip). Site teaser: [signal.html](https://azraelgodking.github.io/rimworld_mods/signal.html).
+A named hostile becomes a personal antagonist — taunts, false leads, and targeted harassment. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Source lives in `Nemesis/Source`; CI still compiles it, but there is **no public download zip** yet. Site teaser: [signal.html](https://azraelgodking.github.io/rimworld_mods/signal.html).
 
 ## Installation
 
