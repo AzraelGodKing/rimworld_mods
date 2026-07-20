@@ -2,6 +2,19 @@
 <LanguageData>
 
   <!-- Settings -->
+  <Nemesis_Settings_Preset>Difficulty preset</Nemesis_Settings_Preset>
+  <Nemesis_Settings_PresetCurrent>Current: {0}</Nemesis_Settings_PresetCurrent>
+  <Nemesis_Settings_PresetPick>Change…</Nemesis_Settings_PresetPick>
+  <Nemesis_Preset_Subtle>Subtle</Nemesis_Preset_Subtle>
+  <Nemesis_Preset_Classic>Classic</Nemesis_Preset_Classic>
+  <Nemesis_Preset_Relentless>Relentless</Nemesis_Preset_Relentless>
+  <Nemesis_Preset_Custom>Custom</Nemesis_Preset_Custom>
+  <Nemesis_Settings_AdvancedShow>Show advanced</Nemesis_Settings_AdvancedShow>
+  <Nemesis_Settings_AdvancedHide>Hide advanced</Nemesis_Settings_AdvancedHide>
+  <Nemesis_Settings_ResolveHunt>Resolve current hunt now</Nemesis_Settings_ResolveHunt>
+  <Nemesis_Settings_ResolveHuntConfirm>End the hunt against {0} immediately? Use this before uninstalling Nemesis.</Nemesis_Settings_ResolveHuntConfirm>
+  <Nemesis_Settings_ResolveHuntDone>Nemesis hunt cleared.</Nemesis_Settings_ResolveHuntDone>
+  <Nemesis_Message_Immortal>{0} should have died — and didn't.</Nemesis_Message_Immortal>
   <Nemesis_Settings_Triggers>Trigger chances</Nemesis_Settings_Triggers>
   <Nemesis_Settings_KilledAlly>Killed ally chance: {0}%</Nemesis_Settings_KilledAlly>
   <Nemesis_Settings_PrisonerEscaped>Prisoner escaped chance: {0}%</Nemesis_Settings_PrisonerEscaped>

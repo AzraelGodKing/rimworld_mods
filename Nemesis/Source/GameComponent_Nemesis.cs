@@ -374,10 +374,29 @@ namespace Nemesis
 
         public void HandleLethalDamage(Pawn nemesis)
         {
+            TelegraphImmortality(nemesis);
             if (_data.escapeCount >= MaxEscapes)
                 SubdueNemesis(nemesis, fromLethalDamage: true);
             else
                 FireEscape(nemesis);
+        }
+
+        private static void TelegraphImmortality(Pawn nemesis)
+        {
+            if (nemesis == null || !nemesis.Spawned || nemesis.Map == null) return;
+            try
+            {
+                FleckMaker.Static(nemesis.Position, nemesis.Map, FleckDefOf.ExplosionFlash, 3f);
+                FleckMaker.ThrowDustPuffThick(nemesis.DrawPos, nemesis.Map, 2f, new Color(0.7f, 0.15f, 0.15f));
+            }
+            catch
+            {
+                // Fail-open if fleck defs differ.
+            }
+            Messages.Message(
+                "Nemesis_Message_Immortal".Translate(nemesis.LabelShort),
+                nemesis,
+                MessageTypeDefOf.ThreatSmall);
         }
 
         private void FireEscape(Pawn nemesis)
@@ -773,6 +792,27 @@ namespace Nemesis
             // Soft Strata: slight bias toward food/sabotage when harassing multi-level bases (surface map).
             if (SoftCompat.StrataActive)
                 food *= 1.15f;
+
+            // Variety guard: heavily downweight the last action so it never fires twice in a row.
+            int last = _data.lastActionKind;
+            if (last >= 0)
+            {
+                NemesisAction lastKind = (NemesisAction)last;
+                if (lastKind == NemesisAction.CommsTaunt) taunt = 0f;
+                else if (lastKind == NemesisAction.DirectRaid) raid = 0f;
+                else if (lastKind == NemesisAction.NemesisAssault) assault = 0f;
+                else if (lastKind == NemesisAction.WastePackDrop) waste = 0f;
+                else if (lastKind == NemesisAction.FakeSignalAmbush) fake = 0f;
+                else if (lastKind == NemesisAction.CaravanHarass) caravan = 0f;
+                else if (lastKind == NemesisAction.PowerSabotage) sabotage = 0f;
+                else if (lastKind == NemesisAction.FoodStoreRaid) food = 0f;
+                else if (lastKind == NemesisAction.AnomalyBait) anomaly = 0f;
+                else if (lastKind == NemesisAction.KidnapAttempt) kidnap = 0f;
+                else if (lastKind == NemesisAction.SniperTerror) sniper = 0f;
+                else if (lastKind == NemesisAction.GraveDesecration) grave = 0f;
+                else if (lastKind == NemesisAction.FoodTampering) tamper = 0f;
+                else if (lastKind == NemesisAction.InformantReveal) informant = 0f;
+            }
 
             float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly
                 + kidnap + sniper + grave + tamper + informant;

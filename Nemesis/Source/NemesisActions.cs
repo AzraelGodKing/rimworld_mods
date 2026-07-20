@@ -212,20 +212,28 @@ namespace Nemesis
                 return;
             }
 
-            IntVec3 center = map.Center;
+            IntVec3 dropSpot = DropCellFinder.TradeDropSpot(map);
+            if (!dropSpot.IsValid)
+                dropSpot = DropCellFinder.RandomDropSpot(map);
+            if (!dropSpot.IsValid)
+                dropSpot = CellFinder.RandomClosewalkCellNear(map.Center, map, 18);
+
+            List<Thing> pods = new List<Thing>();
             int count = Rand.RangeInclusive(3, 6);
             for (int i = 0; i < count; i++)
             {
-                IntVec3 cell = CellFinder.RandomClosewalkCellNear(center, map, 18);
-                if (cell.IsValid)
-                    GenSpawn.Spawn(ThingMaker.MakeThing(wasteDef), cell, map);
+                Thing pack = ThingMaker.MakeThing(wasteDef);
+                pack.stackCount = 1;
+                pods.Add(pack);
             }
+
+            DropPodUtility.DropThingsNear(dropSpot, map, pods, 110, canInstaDropDuringInit: false, leaveSlag: true);
 
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_WasteTitle".Translate(data.nemesisName),
                 "Nemesis_Letter_WasteBody".Translate(data.nemesisName),
                 LetterDefOf.NegativeEvent,
-                new GlobalTargetInfo(center, map));
+                new GlobalTargetInfo(dropSpot, map));
         }
 
         private static void FakeSignalAmbush(NemesisData data, Map map)

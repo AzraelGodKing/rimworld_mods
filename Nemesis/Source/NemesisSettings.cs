@@ -2,8 +2,18 @@ using Verse;
 
 namespace Nemesis
 {
+    public enum NemesisDifficultyPreset
+    {
+        Custom,
+        Subtle,
+        Classic,
+        Relentless,
+    }
+
     public class NemesisSettings : ModSettings
     {
+        public NemesisDifficultyPreset difficultyPreset = NemesisDifficultyPreset.Classic;
+
         public float killedAllyChance = 0.15f;
         public float prisonerEscapedChance = 0.10f;
         public float slaveEscapedChance = 0.12f;
@@ -39,6 +49,7 @@ namespace Nemesis
         public override void ExposeData()
         {
             base.ExposeData();
+            Scribe_Values.Look(ref difficultyPreset, "difficultyPreset", NemesisDifficultyPreset.Classic);
             Scribe_Values.Look(ref killedAllyChance, "killedAllyChance", 0.15f);
             Scribe_Values.Look(ref prisonerEscapedChance, "prisonerEscapedChance", 0.10f);
             Scribe_Values.Look(ref slaveEscapedChance, "slaveEscapedChance", 0.12f);
@@ -68,6 +79,13 @@ namespace Nemesis
 
         public void ResetToDefaults()
         {
+            ApplyPreset(NemesisDifficultyPreset.Classic);
+        }
+
+        public void ApplyPreset(NemesisDifficultyPreset preset)
+        {
+            difficultyPreset = preset;
+            // Shared baseline, then diverge.
             killedAllyChance = 0.15f;
             prisonerEscapedChance = 0.10f;
             slaveEscapedChance = 0.12f;
@@ -93,6 +111,53 @@ namespace Nemesis
             actionWeightInformant = 0.05f;
             raidCreditChance = 0.15f;
             ignoredActionsThreshold = 3;
+
+            if (preset == NemesisDifficultyPreset.Subtle)
+            {
+                killedAllyChance = 0.08f;
+                prisonerEscapedChance = 0.05f;
+                slaveEscapedChance = 0.06f;
+                fixationChance = 0.05f;
+                woundedEscapeChance = 0.06f;
+                maxAggressionCap = 0.45f;
+                escalationRatePerDay = 0.03f;
+                minActionCooldownTicks = 120000;
+                actionWeightTaunt = 0.50f;
+                actionWeightRaid = 0.08f;
+                actionWeightAssault = 0.06f;
+                actionWeightKidnap = 0.04f;
+                actionWeightSniper = 0.06f;
+                raidCreditChance = 0.08f;
+                ignoredActionsThreshold = 4;
+            }
+            else if (preset == NemesisDifficultyPreset.Relentless)
+            {
+                killedAllyChance = 0.25f;
+                prisonerEscapedChance = 0.18f;
+                slaveEscapedChance = 0.20f;
+                fixationChance = 0.18f;
+                woundedEscapeChance = 0.20f;
+                maxEscapes = 5;
+                maxAggressionCap = 0.85f;
+                escalationRatePerDay = 0.10f;
+                minActionCooldownTicks = 60000;
+                actionWeightTaunt = 0.20f;
+                actionWeightRaid = 0.22f;
+                actionWeightAssault = 0.22f;
+                actionWeightKidnap = 0.12f;
+                actionWeightSabotage = 0.10f;
+                actionWeightFoodTamper = 0.10f;
+                raidCreditChance = 0.25f;
+                ignoredActionsThreshold = 2;
+            }
+            // Classic / Custom: baseline already applied.
+            if (preset == NemesisDifficultyPreset.Custom)
+                difficultyPreset = NemesisDifficultyPreset.Custom;
+        }
+
+        public void MarkCustom()
+        {
+            difficultyPreset = NemesisDifficultyPreset.Custom;
         }
     }
 }
