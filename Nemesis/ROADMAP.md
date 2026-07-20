@@ -30,3 +30,8 @@ Playable core is in. Remaining fantasy for later passes:
 ## Balance
 - Playtest trigger rates mid-game vs late.
 - Cap concurrent storyteller threat when nemesis raid just fired.
+
+## Series / further vision
+Later Strata / Homesteader / Stormproof ideas and series-wide soft-compat live outside this file:
+- [Series roadmap](../ROADMAP.md) — soft-compat web, Azrael storyteller, “The Deep Homestead”
+- [Strata V3](../Strata/V3_ROADMAP.md) · [Homesteader](../Homesteader/ROADMAP.md) · [Stormproof](../Stormproof/ROADMAP.md)
