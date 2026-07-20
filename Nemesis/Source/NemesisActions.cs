@@ -582,11 +582,17 @@ namespace Nemesis
         public static void EndSniperTerror(NemesisData data, Pawn nemesis, bool approached)
         {
             if (data == null) return;
+            bool graveLeave = data.lastActionKind == -2;
             data.sniperActive = false;
             data.sniperUntilTick = -1;
             data.sniperShotsLeft = 0;
 
-            if (nemesis == null || nemesis.Destroyed || nemesis.Dead) return;
+            if (nemesis == null || nemesis.Destroyed || nemesis.Dead)
+            {
+                if (graveLeave)
+                    GameComponent_Nemesis.Instance?.NotifySniperDespawnedAfterGraveVisit();
+                return;
+            }
             if (nemesis.IsPrisonerOfColony) return;
 
             Map map = nemesis.Map;
@@ -599,6 +605,13 @@ namespace Nemesis
 
             NemesisRegistry.CachedNemesis = nemesis;
             NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
+
+            if (graveLeave)
+            {
+                data.lastActionKind = -1;
+                GameComponent_Nemesis.Instance?.NotifySniperDespawnedAfterGraveVisit();
+                return;
+            }
 
             if (approached && map != null && pos.IsValid)
             {

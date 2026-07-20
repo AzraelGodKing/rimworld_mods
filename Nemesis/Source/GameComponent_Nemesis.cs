@@ -43,8 +43,20 @@ namespace Nemesis
 
             if (!_data.active)
             {
-                if (_data.truceUntilTick > 0 && tick >= _data.truceUntilTick)
-                    ResumeFromTruce();
+                if (_data.graveVisitPending && tick >= _data.graveVisitTick)
+                    FireGraveVisit();
+
+                // Grave-visit leave reuses sniper despawn while hunt is already inactive.
+                if (_data.sniperActive && tick % 60 == 0)
+                    TickSniperTerror(tick);
+
+                if (_data.truceUntilTick > 0)
+                {
+                    if (_data.nextTruceEventTick > 0 && tick >= _data.nextTruceEventTick)
+                        TickTruceEvent();
+                    if (tick >= _data.truceUntilTick)
+                        ResumeFromTruce();
+                }
                 return;
             }
 
@@ -191,12 +203,164 @@ namespace Nemesis
         {
             _data.active = true;
             _data.truceUntilTick = -1;
+            _data.nextTruceEventTick = -1;
             _data.nextActionTick = Find.TickManager.TicksGame + 120000;
 
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_TruceBrokenTitle".Translate(_data.nemesisName),
                 "Nemesis_Letter_TruceBrokenBody".Translate(_data.nemesisName),
                 LetterDefOf.ThreatBig);
+        }
+
+        private void TickTruceEvent()
+        {
+            // Stagger ~every 2 days with a chance of gift or (state for) raid warning.
+            _data.nextTruceEventTick = Find.TickManager.TicksGame + 120000;
+            if (!Rand.Chance(0.45f)) return;
+
+            Map map = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+            if (map == null) return;
+
+            if (Rand.Bool)
+                DropTruceGift(map);
+            else
+            {
+                // Warning letter is flavor; actual raid prefix checks truce state separately.
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_TruceWarnTitle".Translate(_data.nemesisName),
+                    "Nemesis_Letter_TruceWarnBody".Translate(_data.nemesisName),
+                    LetterDefOf.NeutralEvent);
+            }
+        }
+
+        private void DropTruceGift(Map map)
+        {
+            ThingDef[] weird =
+            {
+                ThingDefOf.Beer,
+                ThingDefOf.Chocolate,
+                DefDatabase<ThingDef>.GetNamedSilentFail("Apparel_Parka"),
+                DefDatabase<ThingDef>.GetNamedSilentFail("SculptureSmall"),
+                DefDatabase<ThingDef>.GetNamedSilentFail("ComponentIndustrial"),
+            };
+            ThingDef pick = null;
+            for (int i = 0; i < 8; i++)
+            {
+                ThingDef d = weird[Rand.Range(0, weird.Length)];
+                if (d != null) { pick = d; break; }
+            }
+            if (pick == null) pick = ThingDefOf.Silver;
+
+            Thing gift = ThingMaker.MakeThing(pick, pick.MadeFromStuff ? GenStuff.DefaultStuffFor(pick) : null);
+            gift.stackCount = pick.stackLimit > 1 ? Rand.RangeInclusive(1, Mathf.Min(5, pick.stackLimit)) : 1;
+            IntVec3 spot = DropCellFinder.TradeDropSpot(map);
+            if (!spot.IsValid) spot = DropCellFinder.RandomDropSpot(map);
+            DropPodUtility.DropThingsNear(spot, map, new List<Thing> { gift }, 110, canInstaDropDuringInit: false, leaveSlag: false);
+
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_TruceGiftTitle".Translate(_data.nemesisName),
+                "Nemesis_Letter_TruceGiftBody".Translate(_data.nemesisName, gift.LabelNoCount),
+                LetterDefOf.PositiveEvent,
+                new GlobalTargetInfo(spot, map));
+        }
+
+        private void FireGraveVisit()
+        {
+            _data.graveVisitPending = false;
+            _data.graveVisitDone = true;
+
+            Map map = null;
+            IntVec3 gravePos = IntVec3.Invalid;
+            Thing grave = FindTargetGrave(out map);
+            if (grave != null)
+                gravePos = grave.Position;
+
+            Pawn nemesis = FindNemesisPawn();
+            if (map == null || nemesis == null || nemesis.Dead)
+            {
+                FinalizeTargetDiedClose();
+                return;
+            }
+
+            if (nemesis.Spawned)
+                nemesis.DeSpawn(DestroyMode.WillReplace);
+            if (nemesis.IsWorldPawn())
+                Find.WorldPawns.RemovePawn(nemesis);
+
+            IntVec3 spawn = gravePos.IsValid
+                ? CellFinder.RandomClosewalkCellNear(gravePos, map, 6)
+                : CellFinder.RandomEdgeCell(map);
+            GenSpawn.Spawn(nemesis, spawn, map);
+            NemesisRegistry.CachedNemesis = nemesis;
+            NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
+
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_GraveVisitTitle".Translate(_data.nemesisName),
+                "Nemesis_Letter_GraveVisitBody".Translate(
+                    _data.nemesisName, _data.targetPawnName ?? "Nemesis_Phrase_Someone".Translate()),
+                LetterDefOf.NegativeEvent,
+                nemesis);
+
+            // Brief presence then leave (SniperTerror despawn plumbing).
+            _data.sniperActive = true;
+            _data.sniperUntilTick = Find.TickManager.TicksGame + 900;
+            _data.sniperShotsLeft = 0;
+            // After sniper end, FinalizeTargetDiedClose is called from EndSniperTerror hook.
+            _data.graveVisitPending = false;
+            // Mark so EndSniperTerror knows to close the hunt.
+            _data.lastActionKind = -2; // sentinel: grave visit leave
+        }
+
+        private Thing FindTargetGrave(out Map map)
+        {
+            map = null;
+            string targetName = _data.targetPawnName;
+            List<Map> maps = Find.Maps;
+            for (int m = 0; m < maps.Count; m++)
+            {
+                Map candidate = maps[m];
+                if (candidate?.IsPlayerHome != true) continue;
+                List<Thing> graves = candidate.listerThings.ThingsOfDef(ThingDefOf.Grave);
+                if (graves == null) continue;
+                for (int i = 0; i < graves.Count; i++)
+                {
+                    Thing g = graves[i];
+                    Building_Grave bg = g as Building_Grave;
+                    if (bg?.Corpse?.InnerPawn == null) continue;
+                    Pawn inner = bg.Corpse.InnerPawn;
+                    if (inner.thingIDNumber == _data.targetPawnId
+                        || (!string.IsNullOrEmpty(targetName) && inner.LabelShort == targetName))
+                    {
+                        map = candidate;
+                        return g;
+                    }
+                }
+            }
+            // Any player grave as fallback atmosphere.
+            for (int m = 0; m < maps.Count; m++)
+            {
+                Map candidate = maps[m];
+                if (candidate?.IsPlayerHome != true) continue;
+                List<Thing> graves = candidate.listerThings.ThingsOfDef(ThingDefOf.Grave);
+                if (graves != null && graves.Count > 0)
+                {
+                    map = candidate;
+                    return graves[0];
+                }
+            }
+            map = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+            return null;
+        }
+
+        private void FinalizeTargetDiedClose()
+        {
+            ReleaseNemesisWorldPawn();
+            NemesisRegistry.Clear();
+        }
+
+        public void NotifySniperDespawnedAfterGraveVisit()
+        {
+            FinalizeTargetDiedClose();
         }
 
         public bool IsNemesisPawn(Pawn pawn) =>
@@ -363,13 +527,13 @@ namespace Nemesis
             _data.active = false;
             _data.pendingFakeAmbush = false;
             _data.truceUntilTick = -1;
-            _data.sniperActive = false;
             _data.finaleDuelActive = false;
             _data.silenceUntilTick = -1;
 
             switch (reason)
             {
                 case NemesisEndReason.Killed:
+                    _data.sniperActive = false;
                     Find.LetterStack.ReceiveLetter(
                         "Nemesis_Letter_EndedKilledTitle".Translate(name),
                         "Nemesis_Letter_EndedKilledBody".Translate(name),
@@ -381,9 +545,19 @@ namespace Nemesis
                         "Nemesis_Letter_EndedTargetDiedTitle".Translate(name),
                         "Nemesis_Letter_EndedTargetDiedBody".Translate(name, _data.targetPawnName ?? "Nemesis_Phrase_Someone".Translate()),
                         LetterDefOf.NegativeEvent);
+                    // Grief visit near the grave, then close — or close immediately if nothing to show.
+                    if (!_data.graveVisitDone && FindTargetGrave(out _) != null)
+                    {
+                        _data.graveVisitPending = true;
+                        _data.graveVisitTick = Find.TickManager.TicksGame + Rand.RangeInclusive(8000, 20000);
+                        // Keep world pawn pinned until visit; do not Clear registry yet.
+                        return;
+                    }
+                    _data.sniperActive = false;
                     ReleaseNemesisWorldPawn();
                     break;
                 case NemesisEndReason.TargetHandedOver:
+                    _data.sniperActive = false;
                     Find.LetterStack.ReceiveLetter(
                         "Nemesis_Letter_EndedHandedTitle".Translate(name),
                         "Nemesis_Letter_EndedHandedBody".Translate(name, _data.targetPawnName ?? "Nemesis_Phrase_Someone".Translate()),
@@ -392,6 +566,7 @@ namespace Nemesis
                     ReleaseNemesisWorldPawn();
                     break;
                 case NemesisEndReason.Cleared:
+                    _data.sniperActive = false;
                     ReleaseNemesisWorldPawn();
                     break;
             }

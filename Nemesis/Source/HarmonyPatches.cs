@@ -276,7 +276,7 @@ namespace Nemesis
         }
     }
 
-    /// <summary>Credit-taking: unrelated hostile raid while a hunt is active may get a nemesis letter.</summary>
+    /// <summary>Credit-taking + living-truce raid warning on hostile raid execution.</summary>
     [HarmonyPatch]
     public static class Patch_RaidEnemy_CreditTaking
     {
@@ -290,6 +290,20 @@ namespace Nemesis
         static MethodBase TargetMethod() =>
             AccessTools.Method(typeof(IncidentWorker_RaidEnemy), "TryExecuteWorker",
                 new[] { typeof(IncidentParms) });
+
+        [HarmonyPrefix]
+        static void Prefix(IncidentParms parms)
+        {
+            // Living truce: warn before a genuine hostile raid fires.
+            NemesisData data = GameComponent_Nemesis.Instance?.Data;
+            if (data == null || data.active || data.truceUntilTick <= 0) return;
+            if (parms?.faction == null || parms.faction.IsPlayer) return;
+            if (!parms.faction.HostileTo(Faction.OfPlayer)) return;
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_TruceWarnTitle".Translate(data.nemesisName),
+                "Nemesis_Letter_TruceWarnBody".Translate(data.nemesisName),
+                LetterDefOf.ThreatSmall);
+        }
 
         [HarmonyPostfix]
         static void Postfix(bool __result, IncidentParms parms)

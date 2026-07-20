@@ -45,7 +45,11 @@ namespace Nemesis
         Execute,
         Release,
         KeepPrisoner,
-        Truce
+        Truce,
+        // Append-only
+        Recruit,
+        Ransom,
+        HandToEnemies,
     }
 
     public enum NemesisEndReason
@@ -143,6 +147,14 @@ namespace Nemesis
         // --- Staged finale ---
         public bool finaleOffered;
         public bool finaleDuelActive;
+
+        // --- Living truce pacing ---
+        public int nextTruceEventTick = -1;
+
+        // --- TargetDied grave visit (robbed nemesis) ---
+        public bool graveVisitPending;
+        public int graveVisitTick = -1;
+        public bool graveVisitDone;
 
         public float EffectiveAggression
         {
@@ -244,6 +256,10 @@ namespace Nemesis
             Scribe_Values.Look(ref silenceLetterSent, "silenceLetterSent", false);
             Scribe_Values.Look(ref finaleOffered, "finaleOffered", false);
             Scribe_Values.Look(ref finaleDuelActive, "finaleDuelActive", false);
+            Scribe_Values.Look(ref nextTruceEventTick, "nextTruceEventTick", -1);
+            Scribe_Values.Look(ref graveVisitPending, "graveVisitPending", false);
+            Scribe_Values.Look(ref graveVisitTick, "graveVisitTick", -1);
+            Scribe_Values.Look(ref graveVisitDone, "graveVisitDone", false);
         }
     }
 }
