@@ -45,6 +45,8 @@
   <Nemesis_Settings_RivalCameo>Rival cameo chance: {0}%</Nemesis_Settings_RivalCameo>
   <Nemesis_Settings_Anniversary>Hunt anniversary taunts (every 60 days)</Nemesis_Settings_Anniversary>
   <Nemesis_Settings_Nightmares>Nightmares for fixation target (Obsessed+)</Nemesis_Settings_Nightmares>
+  <Nemesis_Settings_Mole>Prisoner mole event (agency-safe)</Nemesis_Settings_Mole>
+  <Nemesis_Settings_MoleChance>Mole chance while holding prisoner: {0}%</Nemesis_Settings_MoleChance>
   <Nemesis_Settings_IgnoredThreshold>Ignored-action threshold: {0}</Nemesis_Settings_IgnoredThreshold>
   <Nemesis_Settings_Status>Active hunt: {0} — {3} / phase {1} (aggression {2})</Nemesis_Settings_Status>
   <Nemesis_Settings_TrophyLedger>Trophy ledger</Nemesis_Settings_TrophyLedger>
@@ -98,6 +100,13 @@
   <Nemesis_Letter_AnniversaryTitle>{0}: Day {1}</Nemesis_Letter_AnniversaryTitle>
   <Nemesis_Letter_AnniversaryBody>{1} days since {0} started hunting {2}.\n\nThey remember. They always remember.</Nemesis_Letter_AnniversaryBody>
   <Nemesis_Message_Nightmare>{0} wakes from a nightmare about {1}.</Nemesis_Message_Nightmare>
+
+  <Nemesis_Letter_JailbreakTitle>Jailbreak: {0}</Nemesis_Letter_JailbreakTitle>
+  <Nemesis_Letter_JailbreakBody>{0}'s people came to take them back. They know exactly which cell.</Nemesis_Letter_JailbreakBody>
+  <Nemesis_Letter_MoleWarnTitle>{0}: A Weak Link</Nemesis_Letter_MoleWarnTitle>
+  <Nemesis_Letter_MoleWarnBody>{0} has been spending too much time near the prisoner. Something about {1} is getting under their skin.</Nemesis_Letter_MoleWarnBody>
+  <Nemesis_Letter_MoleActTitle>{0} crossed a line</Nemesis_Letter_MoleActTitle>
+  <Nemesis_Letter_MoleActBody>{0} did this for {1}. Not forced — chosen. A door left ajar. A watchman's schedule shared. Small. Enough.</Nemesis_Letter_MoleActBody>
 
   <Nemesis_Phase_Watching>Watching</Nemesis_Phase_Watching>
   <Nemesis_Phase_Testing>Testing</Nemesis_Phase_Testing>
@@ -256,7 +265,7 @@
   <Nemesis_Letter_ReleasedTitle>{0}: Released</Nemesis_Letter_ReleasedTitle>
   <Nemesis_Letter_ReleasedBody>You let them walk. {0} left without a word.\n\n{1}</Nemesis_Letter_ReleasedBody>
   <Nemesis_Letter_KeptTitle>{0}: Remains</Nemesis_Letter_KeptTitle>
-  <Nemesis_Letter_KeptBody>{0} stays in your prison. The hunt is over. What you do with them is your business.</Nemesis_Letter_KeptBody>
+  <Nemesis_Letter_KeptBody>{0} stays in your prison. The hunt is paused — not over. Their people may still come. Colonists near the cell will feel it.</Nemesis_Letter_KeptBody>
   <Nemesis_Letter_TruceTitle>{0}: Truce</Nemesis_Letter_TruceTitle>
   <Nemesis_Letter_TruceBody>You struck a temporary peace with {0}. They walk away, for now.\n\nIn {1} in-game days the hunt resumes. They never truly stop.</Nemesis_Letter_TruceBody>
   <Nemesis_Letter_RecruitedTitle>{0}: Joined</Nemesis_Letter_RecruitedTitle>

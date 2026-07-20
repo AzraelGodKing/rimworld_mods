@@ -20,7 +20,8 @@ namespace Nemesis
         public NemesisData Data => _data;
         public List<NemesisTrophyEntry> Trophies => _trophies;
 
-        public bool IsEngaged => _data != null && (_data.active || _data.truceUntilTick > 0);
+        public bool IsEngaged => _data != null
+            && (_data.active || _data.truceUntilTick > 0 || _data.captivityActive);
 
         private static int MaxEscapes => NemesisMod.Settings?.maxEscapes ?? 4;
 
@@ -57,6 +58,10 @@ namespace Nemesis
                     if (tick >= _data.truceUntilTick)
                         ResumeFromTruce();
                 }
+
+                // Prisoner arc while hunt is inactive but captivity pin is held.
+                if (_data.captivityActive)
+                    TickCaptivity(tick);
                 return;
             }
 
@@ -556,11 +561,178 @@ namespace Nemesis
         {
             Pawn nemesis = FindNemesisPawn();
             if (nemesis == null || !nemesis.IsPrisonerOfColony) return;
+            // Already in KeepPrisoner aftermath — do not reopen the dialog.
+            if (_data.captivityActive) return;
 
             _data.active = false;
             // Trophy + hunt-end moods fire from Dialog_NemesisResolution.ApplyOutcome
             // (skipped for Truce so a resumed hunt still records exactly once later).
             Find.WindowStack.Add(new Dialog_NemesisResolution(_data, nemesis));
+        }
+
+        /// <summary>Start KeepPrisoner aftermath — hunt inactive but pin retained.</summary>
+        public void BeginCaptivity(Pawn nemesis)
+        {
+            if (_data == null) return;
+            _data.active = false;
+            _data.captivityActive = true;
+            _data.captivityStartTick = Find.TickManager.TicksGame;
+            _data.nextJailbreakCheckTick = Find.TickManager.TicksGame + Rand.RangeInclusive(60000, 180000);
+            _data.moleLetterSent = false;
+            _data.moleColonistId = -1;
+            _data.moleSabotageTick = -1;
+            // Keep registry pin so FindNemesisPawn still works.
+            if (nemesis != null)
+            {
+                NemesisRegistry.CachedNemesis = nemesis;
+                NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
+            }
+        }
+
+        public void ClearCaptivityAndEnd(NemesisEndReason reason, Thing look = null)
+        {
+            if (_data == null) return;
+            _data.captivityActive = false;
+            _data.moleLetterSent = false;
+            _data.moleColonistId = -1;
+            _data.moleSabotageTick = -1;
+            EndHunt(reason, look);
+        }
+
+        private void TickCaptivity(int tick)
+        {
+            Pawn nemesis = FindNemesisPawn();
+            if (nemesis == null || nemesis.Dead)
+            {
+                ClearCaptivityAndEnd(NemesisEndReason.Killed, nemesis);
+                return;
+            }
+
+            // Cleared via normal prisoner UI (released / recruited / sold).
+            if (!nemesis.IsPrisonerOfColony)
+            {
+                ClearCaptivityAndEnd(NemesisEndReason.Cleared, nemesis);
+                return;
+            }
+
+            if (tick % 500 == 0)
+                NemesisMood.NotifyCellmateAura(_data, nemesis);
+
+            if (_data.nextJailbreakCheckTick > 0 && tick >= _data.nextJailbreakCheckTick)
+            {
+                _data.nextJailbreakCheckTick = tick + Rand.RangeInclusive(90000, 180000);
+                TryJailbreak(nemesis);
+            }
+
+            TickMole(tick, nemesis);
+        }
+
+        private void TryJailbreak(Pawn nemesis)
+        {
+            if (nemesis == null || !nemesis.Spawned || nemesis.Map == null) return;
+            int heldDays = _data.captivityStartTick > 0
+                ? (Find.TickManager.TicksGame - _data.captivityStartTick) / 60000
+                : 0;
+            if (heldDays < 2 && _data.EffectiveAggression < 3f) return;
+            if (!Rand.Chance(0.35f + Mathf.Min(0.35f, _data.EffectiveAggression * 0.05f))) return;
+
+            Map map = SoftCompat.PreferHarassmentMap(nemesis.Map);
+            Faction faction = NemesisActions.FindFaction(_data);
+            if (map == null || faction == null || faction.IsPlayer) return;
+
+            IncidentDef raidDef = DefDatabase<IncidentDef>.GetNamedSilentFail("RaidEnemy");
+            if (raidDef == null) return;
+
+            IncidentParms parms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.ThreatBig, map);
+            parms.faction = faction;
+            parms.points = Mathf.Max(200f, parms.points * 0.45f);
+            parms.customLetterLabel = "Nemesis_Letter_JailbreakTitle".Translate(_data.nemesisName);
+            parms.customLetterText = "Nemesis_Letter_JailbreakBody".Translate(_data.nemesisName);
+            NemesisActions.ApplyKillboxAwareSpawnPublic(parms, map);
+
+            // Prefer kidnap-capable small squad via Lord if raid worker fails soft.
+            if (!raidDef.Worker.TryExecute(parms))
+            {
+                NemesisActions.FireJailbreakSquad(_data, map, faction, nemesis);
+            }
+            else
+            {
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_JailbreakTitle".Translate(_data.nemesisName),
+                    "Nemesis_Letter_JailbreakBody".Translate(_data.nemesisName),
+                    LetterDefOf.ThreatBig,
+                    nemesis);
+            }
+        }
+
+        private void TickMole(int tick, Pawn nemesis)
+        {
+            if (!(NemesisMod.Settings?.moleEnabled ?? true)) return;
+
+            // Start window: name a miserable colonist.
+            if (!_data.moleLetterSent && _data.moleColonistId < 0
+                && tick > _data.captivityStartTick + 30000
+                && Rand.Chance(NemesisMod.Settings?.moleChance ?? 0.08f))
+            {
+                Pawn mole = PickMiserableColonist(nemesis?.Map);
+                if (mole == null) return;
+                _data.moleLetterSent = true;
+                _data.moleColonistId = mole.thingIDNumber;
+                _data.moleSabotageTick = tick + Rand.RangeInclusive(15000, 40000);
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_MoleWarnTitle".Translate(_data.nemesisName),
+                    "Nemesis_Letter_MoleWarnBody".Translate(mole.LabelShort, _data.nemesisName),
+                    LetterDefOf.ThreatSmall,
+                    mole);
+                return;
+            }
+
+            // Sabotage letter — attributed, agency-safe (no forced job).
+            if (_data.moleColonistId > 0 && _data.moleSabotageTick > 0 && tick >= _data.moleSabotageTick)
+            {
+                _data.moleSabotageTick = -1;
+                Pawn mole = FindPawnById(_data.moleColonistId);
+                string moleName = mole?.LabelShort ?? "Nemesis_Phrase_Someone".Translate();
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_MoleActTitle".Translate(moleName),
+                    "Nemesis_Letter_MoleActBody".Translate(moleName, _data.nemesisName),
+                    LetterDefOf.NegativeEvent,
+                    mole);
+
+                if (mole?.needs?.mood?.thoughts?.memories != null)
+                {
+                    ThoughtDef guilt = DefDatabase<ThoughtDef>.GetNamedSilentFail("Nemesis_MoleGuilt");
+                    if (guilt != null)
+                        mole.needs.mood.thoughts.memories.TryGainMemory(guilt);
+                }
+                // Tiny goodwill sting if faction exists — optional.
+                Faction f = NemesisActions.FindFaction(_data);
+                f?.TryAffectGoodwillWith(Faction.OfPlayer, -3, canSendMessage: false, canSendHostilityLetter: false);
+                _data.moleColonistId = -1;
+            }
+        }
+
+        private static Pawn PickMiserableColonist(Map map)
+        {
+            map = SoftCompat.PreferHarassmentMap(map ?? Find.AnyPlayerHomeMap);
+            if (map?.mapPawns?.FreeColonistsSpawned == null) return null;
+            List<Pawn> colonists = map.mapPawns.FreeColonistsSpawned;
+            Pawn worst = null;
+            float worstMood = 999f;
+            for (int i = 0; i < colonists.Count; i++)
+            {
+                Pawn p = colonists[i];
+                if (p?.needs?.mood == null || p.Dead) continue;
+                float m = p.needs.mood.CurLevelPercentage;
+                if (m < worstMood)
+                {
+                    worstMood = m;
+                    worst = p;
+                }
+            }
+            // Prefer miserable; otherwise any colonist with lowish mood.
+            if (worst != null && worstMood < 0.55f) return worst;
+            return colonists.Count > 0 ? colonists[Rand.Range(0, colonists.Count)] : null;
         }
 
         public void EndHunt(NemesisEndReason reason, Thing look = null)
@@ -575,6 +747,10 @@ namespace Nemesis
             _data.truceUntilTick = -1;
             _data.finaleDuelActive = false;
             _data.silenceUntilTick = -1;
+            _data.captivityActive = false;
+            _data.moleLetterSent = false;
+            _data.moleColonistId = -1;
+            _data.moleSabotageTick = -1;
 
             switch (reason)
             {

@@ -53,5 +53,28 @@ namespace Nemesis
                 }
             }
         }
+
+        /// <summary>Short-range cellmate aura while nemesis is imprisoned (stronger on fixation target).</summary>
+        public static void NotifyCellmateAura(NemesisData data, Pawn nemesis)
+        {
+            if (data == null || nemesis == null || !nemesis.Spawned || nemesis.Map == null) return;
+            ThoughtDef aura = DefDatabase<ThoughtDef>.GetNamedSilentFail("Nemesis_CellmateAura");
+            ThoughtDef auraTarget = DefDatabase<ThoughtDef>.GetNamedSilentFail("Nemesis_CellmateAuraTarget");
+            if (aura == null && auraTarget == null) return;
+
+            List<Pawn> colonists = nemesis.Map.mapPawns?.FreeColonistsSpawned;
+            if (colonists == null) return;
+            for (int i = 0; i < colonists.Count; i++)
+            {
+                Pawn p = colonists[i];
+                if (p?.needs?.mood?.thoughts?.memories == null) continue;
+                if (p.Position.DistanceTo(nemesis.Position) > 12f) continue;
+                bool isTarget = data.targetMode == NemesisTargetMode.Pawn
+                    && p.thingIDNumber == data.targetPawnId;
+                ThoughtDef use = isTarget && auraTarget != null ? auraTarget : aura;
+                if (use != null)
+                    p.needs.mood.thoughts.memories.TryGainMemory(use);
+            }
+        }
     }
 }

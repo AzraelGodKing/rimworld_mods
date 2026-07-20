@@ -185,6 +185,14 @@ namespace Nemesis
         public int lastAnniversaryDay = -1;
         public int nextNightmareCheckTick = -1;
 
+        // --- Captivity arc (Phase 5) ---
+        public bool captivityActive;
+        public int captivityStartTick = -1;
+        public int nextJailbreakCheckTick = -1;
+        public bool moleLetterSent;
+        public int moleColonistId = -1;
+        public int moleSabotageTick = -1;
+
         public float EffectiveAggression
         {
             get
@@ -319,6 +327,12 @@ namespace Nemesis
             Scribe_Values.Look(ref stolenTrophyQuality, "stolenTrophyQuality", -1);
             Scribe_Values.Look(ref lastAnniversaryDay, "lastAnniversaryDay", -1);
             Scribe_Values.Look(ref nextNightmareCheckTick, "nextNightmareCheckTick", -1);
+            Scribe_Values.Look(ref captivityActive, "captivityActive", false);
+            Scribe_Values.Look(ref captivityStartTick, "captivityStartTick", -1);
+            Scribe_Values.Look(ref nextJailbreakCheckTick, "nextJailbreakCheckTick", -1);
+            Scribe_Values.Look(ref moleLetterSent, "moleLetterSent", false);
+            Scribe_Values.Look(ref moleColonistId, "moleColonistId", -1);
+            Scribe_Values.Look(ref moleSabotageTick, "moleSabotageTick", -1);
         }
     }
 }

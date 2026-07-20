@@ -1139,11 +1139,58 @@ namespace Nemesis
 
         private static void ApplyKillboxAwareSpawn(IncidentParms parms, Map map)
         {
+            ApplyKillboxAwareSpawnPublic(parms, map);
+        }
+
+        public static void ApplyKillboxAwareSpawnPublic(IncidentParms parms, Map map)
+        {
             IntVec3 edge = FindKillboxAwareEdgeCell(map);
             if (!edge.IsValid) return;
             parms.spawnCenter = edge;
             try { parms.spawnRotation = Rot4.FromAngleFlat((map.Center - edge).AngleFlat); }
             catch { /* fail-open */ }
+        }
+
+        /// <summary>Small kidnap-capable jailbreak squad aimed at freeing the imprisoned nemesis.</summary>
+        public static void FireJailbreakSquad(NemesisData data, Map map, Faction faction, Pawn prisoner)
+        {
+            if (map == null || faction == null) return;
+            PawnKindDef kind = faction.RandomPawnKind();
+            if (kind == null || !kind.RaceProps.Humanlike)
+                kind = PawnKindDefOf.SpaceRefugee;
+
+            List<Pawn> squad = new List<Pawn>();
+            int count = Rand.RangeInclusive(2, 4);
+            for (int i = 0; i < count; i++)
+            {
+                Pawn p = PawnGenerator.GeneratePawn(new PawnGenerationRequest(
+                    kind, faction, PawnGenerationContext.NonPlayer,
+                    forceGenerateNewPawn: true, canGeneratePawnRelations: false, allowDead: false));
+                if (p != null) squad.Add(p);
+            }
+            if (squad.Count == 0) return;
+
+            IntVec3 edge = FindKillboxAwareEdgeCell(map);
+            if (!edge.IsValid)
+            {
+                if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out edge))
+                    edge = CellFinder.RandomEdgeCell(map);
+            }
+
+            for (int i = 0; i < squad.Count; i++)
+                GenSpawn.Spawn(squad[i], CellFinder.RandomClosewalkCellNear(edge, map, 4), map);
+
+            LordMaker.MakeNewLord(
+                faction,
+                new LordJob_AssaultColony(faction, canKidnap: true, canTimeoutOrFlee: true),
+                map,
+                squad);
+
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_JailbreakTitle".Translate(data.nemesisName),
+                "Nemesis_Letter_JailbreakBody".Translate(data.nemesisName),
+                LetterDefOf.ThreatBig,
+                prisoner ?? (Thing)squad[0]);
         }
 
         /// <summary>Pyromaniac: start a small fire near crops or wood stockpiles. Fail-open false.</summary>

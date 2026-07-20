@@ -178,12 +178,14 @@ namespace Nemesis
                     break;
 
                 case NemesisOutcome.KeepPrisoner:
+                    GameComponent_Nemesis.Instance?.BeginCaptivity(_nemesis);
                     Find.LetterStack.ReceiveLetter(
                         "Nemesis_Letter_KeptTitle".Translate(_data.nemesisName),
                         "Nemesis_Letter_KeptBody".Translate(_data.nemesisName),
                         LetterDefOf.NeutralEvent,
                         _nemesis);
-                    break;
+                    // Captivity keeps the pin — no trophy / mood / registry clear yet.
+                    return;
 
                 case NemesisOutcome.Truce:
                     SendNemesisAway(PawnDiscardDecideMode.KeepForever);
@@ -280,6 +282,7 @@ namespace Nemesis
             }
 
             // Permanent resolutions only — Truce resumes later and must not trophy/mood yet.
+            // KeepPrisoner returns early above.
             if (outcome != NemesisOutcome.Truce)
             {
                 GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;

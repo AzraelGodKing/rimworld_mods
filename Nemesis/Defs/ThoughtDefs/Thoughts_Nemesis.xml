@@ -68,4 +68,43 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>Nemesis_CellmateAura</defName>
+    <durationDays>0.25</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>uneasy near the prisoner</label>
+        <description>Keeping that hunter in a cell feels like storing a lit fuse.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Nemesis_CellmateAuraTarget</defName>
+    <durationDays>0.35</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>their eyes through the bars</label>
+        <description>They look at me like the hunt never stopped.</description>
+        <baseMoodEffect>-7</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Nemesis_MoleGuilt</defName>
+    <durationDays>3</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>helped the nemesis</label>
+        <description>I did something for them. I told myself it was small.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

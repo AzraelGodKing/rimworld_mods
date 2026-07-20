@@ -55,6 +55,12 @@ namespace Nemesis
         /// <summary>Nightmares on fixation target during Obsessed+.</summary>
         public bool nightmaresEnabled = true;
 
+        /// <summary>Agency-safe mole event while nemesis is kept prisoner.</summary>
+        public bool moleEnabled = true;
+
+        /// <summary>Low chance to start a mole window after KeepPrisoner.</summary>
+        public float moleChance = 0.08f;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -87,6 +93,8 @@ namespace Nemesis
             Scribe_Values.Look(ref rivalCameoChance, "rivalCameoChance", 0.12f);
             Scribe_Values.Look(ref anniversaryEnabled, "anniversaryEnabled", true);
             Scribe_Values.Look(ref nightmaresEnabled, "nightmaresEnabled", true);
+            Scribe_Values.Look(ref moleEnabled, "moleEnabled", true);
+            Scribe_Values.Look(ref moleChance, "moleChance", 0.08f);
         }
 
         public void ResetToDefaults()
@@ -126,6 +134,8 @@ namespace Nemesis
             rivalCameoChance = 0.12f;
             anniversaryEnabled = true;
             nightmaresEnabled = true;
+            moleEnabled = true;
+            moleChance = 0.08f;
 
             if (preset == NemesisDifficultyPreset.Subtle)
             {

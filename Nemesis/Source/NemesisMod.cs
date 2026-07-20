@@ -180,6 +180,11 @@ namespace Nemesis
             bool night = Settings.nightmaresEnabled;
             listing.CheckboxLabeled("Nemesis_Settings_Nightmares".Translate(), ref night);
             if (night != Settings.nightmaresEnabled) { Settings.nightmaresEnabled = night; Settings.MarkCustom(); }
+            bool mole = Settings.moleEnabled;
+            listing.CheckboxLabeled("Nemesis_Settings_Mole".Translate(), ref mole);
+            if (mole != Settings.moleEnabled) { Settings.moleEnabled = mole; Settings.MarkCustom(); }
+            if (Settings.moleEnabled)
+                Slider(listing, "Nemesis_Settings_MoleChance", ref Settings.moleChance, 0f, 0.4f, pct: true);
 
             listing.Label("Nemesis_Settings_IgnoredThreshold".Translate(Settings.ignoredActionsThreshold));
             float ign = listing.Slider(Settings.ignoredActionsThreshold, 2f, 8f);
