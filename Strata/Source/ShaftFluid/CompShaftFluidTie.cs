@@ -22,6 +22,45 @@ namespace Strata
 
         public float ShaftCoolingBuffer => shaftCoolingBuffer;
 
+        public static CompShaftFluidTie FindOn(Thing thing, string channel)
+        {
+            if (thing is not ThingWithComps twc || channel.NullOrEmpty())
+            {
+                return null;
+            }
+            for (int i = 0; i < twc.AllComps.Count; i++)
+            {
+                if (twc.AllComps[i] is CompShaftFluidTie tie && tie.Props.channel == channel)
+                {
+                    return tie;
+                }
+            }
+            return null;
+        }
+
+        public static bool HasChannel(Thing thing, string channel)
+        {
+            return FindOn(thing, channel) != null;
+        }
+
+        public static bool HasChannelPrefix(Thing thing, string prefix)
+        {
+            if (thing is not ThingWithComps twc || prefix.NullOrEmpty())
+            {
+                return false;
+            }
+            for (int i = 0; i < twc.AllComps.Count; i++)
+            {
+                if (twc.AllComps[i] is CompShaftFluidTie tie
+                    && tie.Props.channel != null
+                    && tie.Props.channel.StartsWith(prefix))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void DriveTie(CompShaftFluidTie partner)
         {
             ShaftFluidBackend backend = Backend;
@@ -57,32 +96,18 @@ namespace Strata
 
         public override string CompInspectStringExtra()
         {
-            var sb = new System.Text.StringBuilder();
-            string link = parent.TryGetComp<CompShaftFluidJunctionLink>()?.LinkInspectString();
-            if (!link.NullOrEmpty())
-            {
-                sb.AppendLine(link);
-            }
             ShaftFluidBackend backend = Backend;
-            if (backend == null)
+            // Soft-skip inactive optional networks (Omni carries every channel).
+            if (backend == null || !backend.IsActive)
             {
-                return sb.Length > 0 ? sb.ToString().TrimEnd() : null;
-            }
-            if (!backend.IsActive)
-            {
-                sb.Append($"Fluid tie ({backend.Label}): mod not loaded");
-                return sb.ToString().TrimEnd();
+                return null;
             }
             object net = backend.GetNetFromJunction(parent);
             if (net == null)
             {
-                sb.Append($"Fluid tie ({backend.Label}): not connected — wire pipes to this junction");
+                return $"Fluid tie ({backend.Label}): not connected — wire pipes to this junction";
             }
-            else
-            {
-                sb.Append($"Fluid tie ({backend.Label}): linked to local {backend.Label} network");
-            }
-            return sb.ToString().TrimEnd();
+            return $"Fluid tie ({backend.Label}): linked to local {backend.Label} network";
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Strata
 
         private static bool IsRimatomicsJunction(Thing thing)
         {
-            return thing.TryGetComp<CompShaftFluidTie>()?.Props.channel == RimatomicsChannel;
+            return CompShaftFluidTie.HasChannel(thing, RimatomicsChannel);
         }
 
         private static bool TryBind()

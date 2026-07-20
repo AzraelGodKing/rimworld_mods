@@ -136,8 +136,8 @@ namespace Strata
             {
                 if (pipedThings[i] is Thing thing)
                 {
-                    CompShaftFluidTie tie = thing.TryGetComp<CompShaftFluidTie>();
-                    if (tie != null && tie.Props.channel == RimatomicsChannel)
+                    CompShaftFluidTie tie = CompShaftFluidTie.FindOn(thing, RimatomicsChannel);
+                    if (tie != null)
                     {
                         sum += tie.ShaftCoolingBuffer;
                     }
