@@ -37,8 +37,9 @@ jobs:
   build-and-pack:
     name: Build DLLs${{ github.event_name == 'pull_request' && '' || ' and publish downloads' }}
     runs-on: ubuntu-latest
+    # Job elevates for release/tag push on main; publish steps stay gated off pull_request.
     permissions:
-      contents: ${{ github.event_name == 'pull_request' && 'read' || 'write' }}
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
