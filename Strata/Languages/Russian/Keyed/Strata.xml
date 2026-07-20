@@ -33,6 +33,8 @@
   <Strata_Settings_CaravanPullDesc>При формировании каравана на поверхности колонисты поднимают ценные товары с связанных подземных уровней.</Strata_Settings_CaravanPullDesc>
   <Strata_Settings_CrossLevelRituals>Ритуалы между уровнями</Strata_Settings_CrossLevelRituals>
   <Strata_Settings_CrossLevelRitualsDesc>Меню ритуала показывает колонистов со всех связанных уровней; остальные идут к ритуалу и присоединяются по прибытии.</Strata_Settings_CrossLevelRitualsDesc>
+  <Strata_Settings_CrossLevelCaravans>Cross-level caravans</Strata_Settings_CrossLevelCaravans>
+  <Strata_Settings_CrossLevelCaravansDesc>The form-caravan dialog lists colonists, prisoners, and colony animals from every linked level; those elsewhere walk to the surface gathering and join when they arrive. Downed pawns on other levels cannot climb and are left out.</Strata_Settings_CrossLevelCaravansDesc>
   <Strata_Settings_CageSustainHunger>Поддерживать голод птиц в клетке</Strata_Settings_CageSustainHunger>
   <Strata_Settings_CageSustainHungerDesc>Если выключено (по умолчанию), клетки канареек и птиц кормят из запаса сена или комбикорма. Если включено, голод заморожен, пока птица в клетке — запас еды не нужен.</Strata_Settings_CageSustainHungerDesc>
   <Strata_Settings_SmokeGas>Дым и газ</Strata_Settings_SmokeGas>
@@ -115,6 +117,7 @@
   <Strata_Alert_FlammableGas_Explanation>Горючий газ скапливается в комнате с открытым огнём — факелом, костром или работающей топливной горелкой. Когда газ превысит плотность воспламенения, комната взорвётся. Погасите огонь, проветрите комнату или перейдите на электрический свет.</Strata_Alert_FlammableGas_Explanation>
   <Strata_Alert_CaravanGoods_Label>Товары каравана внизу</Strata_Alert_CaravanGoods_Label>
   <Strata_Alert_CaravanGoods_Explanation>Ценные предметы остаются на связанных подземных уровнях, пока на поверхности формируется караван. Включите подъём товаров в настройках Strata или поднимите их вручную перед уходом.</Strata_Alert_CaravanGoods_Explanation>
+  <Strata_MessageCaravanDownedExcluded>Cannot bring downed pawns from other levels into the caravan (they cannot climb): {0}</Strata_MessageCaravanDownedExcluded>
   <Strata_Alert_SealedColonists_Label>Колонисты отрезаны</Strata_Alert_SealedColonists_Label>
   <Strata_Alert_SealedColonists_Explanation>Колонисты на связанном уровне, у которого все выходные шахты запечатаны. Они не смогут вернуться, пока лестница или лифт не будут распечатаны.</Strata_Alert_SealedColonists_Explanation>
   <Strata_Alert_Canary_Label>Предупреждение канарейки</Strata_Alert_Canary_Label>
