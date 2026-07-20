@@ -17,6 +17,10 @@ namespace Strata
             {
                 __instance.components.Add(new StrataRitualTravel(__instance));
             }
+            if (__instance.GetComponent<StrataCaravanTravel>() == null)
+            {
+                __instance.components.Add(new StrataCaravanTravel(__instance));
+            }
             if (__instance.GetComponent<WorldComponent_StrataLevelRoles>() == null)
             {
                 __instance.components.Add(new WorldComponent_StrataLevelRoles(__instance));
