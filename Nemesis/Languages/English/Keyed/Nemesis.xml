@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Settings -->
+  <Nemesis_Settings_Triggers>Trigger chances</Nemesis_Settings_Triggers>
+  <Nemesis_Settings_KilledAlly>Killed ally chance: {0}%</Nemesis_Settings_KilledAlly>
+  <Nemesis_Settings_PrisonerEscaped>Prisoner escaped chance: {0}%</Nemesis_Settings_PrisonerEscaped>
+  <Nemesis_Settings_SlaveEscaped>Slave rebellion chance: {0}%</Nemesis_Settings_SlaveEscaped>
+  <Nemesis_Settings_Fixation>Fixation chance: {0}%</Nemesis_Settings_Fixation>
+  <Nemesis_Settings_WoundedEscape>Wounded-and-escaped chance: {0}%</Nemesis_Settings_WoundedEscape>
+  <Nemesis_Settings_TruceDays>Truce duration: {0} days</Nemesis_Settings_TruceDays>
+  <Nemesis_Settings_MaxEscapes>Escapes before cornered: {0}</Nemesis_Settings_MaxEscapes>
+  <Nemesis_Settings_Pacing>Nemesis pacing</Nemesis_Settings_Pacing>
+  <Nemesis_Settings_MaxAggression>Maximum aggression intensity: {0}%</Nemesis_Settings_MaxAggression>
+  <Nemesis_Settings_Escalation>Escalation rate: {0} per day</Nemesis_Settings_Escalation>
+  <Nemesis_Settings_MinCooldown>Minimum time between actions: {0} days</Nemesis_Settings_MinCooldown>
+  <Nemesis_Settings_ActionMix>Action mix</Nemesis_Settings_ActionMix>
+  <Nemesis_Settings_WeightTaunt>Comms taunt: {0}</Nemesis_Settings_WeightTaunt>
+  <Nemesis_Settings_WeightRaid>Direct raid: {0}</Nemesis_Settings_WeightRaid>
+  <Nemesis_Settings_WeightAssault>Nemesis assault: {0}</Nemesis_Settings_WeightAssault>
+  <Nemesis_Settings_WeightWaste>Waste pack drop: {0}</Nemesis_Settings_WeightWaste>
+  <Nemesis_Settings_WeightFakeSignal>Fake signal / ambush: {0}</Nemesis_Settings_WeightFakeSignal>
+  <Nemesis_Settings_WeightCaravan>Caravan harassment: {0}</Nemesis_Settings_WeightCaravan>
+  <Nemesis_Settings_WeightSabotage>Power sabotage: {0}</Nemesis_Settings_WeightSabotage>
+  <Nemesis_Settings_WeightFood>Food store raid: {0}</Nemesis_Settings_WeightFood>
+  <Nemesis_Settings_Reset>Reset</Nemesis_Settings_Reset>
+
+  <!-- Phrases -->
+  <Nemesis_Phrase_YourColony>your colony</Nemesis_Phrase_YourColony>
+  <Nemesis_Phrase_Someone>Someone</Nemesis_Phrase_Someone>
+  <Nemesis_Phrase_TheirFaction>their faction</Nemesis_Phrase_TheirFaction>
+
+  <!-- Taunts -->
+  <Nemesis_Taunt_Low0>{0}: "Enjoy the quiet. It won't last."</Nemesis_Taunt_Low0>
+  <Nemesis_Taunt_Low1>{0}: "I know where {1} sleeps."</Nemesis_Taunt_Low1>
+  <Nemesis_Taunt_Low2>{0}: "I have your coordinates. All of them."</Nemesis_Taunt_Low2>
+  <Nemesis_Taunt_Low3>{0}: "Tell {1} I said hello."</Nemesis_Taunt_Low3>
+  <Nemesis_Taunt_Low4>{0}: "Still here. Still watching."</Nemesis_Taunt_Low4>
+  <Nemesis_Taunt_Low5>{0}: "This is personal now. {1} will learn that."</Nemesis_Taunt_Low5>
+  <Nemesis_Taunt_High0>{0}: "You should have finished me when you had the chance."</Nemesis_Taunt_High0>
+  <Nemesis_Taunt_High1>{0}: "Every escape makes me more certain. {1} dies last."</Nemesis_Taunt_High1>
+  <Nemesis_Taunt_High2>{0}: "I'm not done. Not nearly."</Nemesis_Taunt_High2>
+  <Nemesis_Taunt_High3>{0}: "I've survived {2} times. What makes you think this time will be different?"</Nemesis_Taunt_High3>
+  <Nemesis_Taunt_High4>{0}: "I want {1} to see me coming."</Nemesis_Taunt_High4>
+  <Nemesis_Taunt_High5>{0}: "Pray {1} is ready. I am."</Nemesis_Taunt_High5>
+  <Nemesis_Taunt_FavoriteFood>{0}: "I know what {1} likes to eat. {2}. Cute."</Nemesis_Taunt_FavoriteFood>
+  <Nemesis_Taunt_Cellar>{0}: "Nice cellar. Shame if something spoiled."</Nemesis_Taunt_Cellar>
+  <Nemesis_Taunt_Ion>{0}: "I like dry lightning. Your grid will too, {1}."</Nemesis_Taunt_Ion>
+
+  <!-- Intro -->
+  <Nemesis_Intro_Title>A Nemesis Emerges</Nemesis_Intro_Title>
+  <Nemesis_Intro_KilledAlly>{0} killed someone who mattered.\n\nA {1} named {2} has made it personal. They will not stop coming until {0} answers for it, or until they are taken alive.</Nemesis_Intro_KilledAlly>
+  <Nemesis_Intro_Wounded>{0} left a wound that didn't heal.\n\n{1} of {2} survived, and they remember who did it. They are coming back.</Nemesis_Intro_Wounded>
+  <Nemesis_Intro_Fixation>Someone from {0} killed one of yours — and for them, that wasn't enough.\n\n{1} has developed an unhealthy fixation on {2}. They're coming, and they're not interested in anyone else.</Nemesis_Intro_Fixation>
+  <Nemesis_Intro_PawnDefault>Someone from {0} has decided that {1} is worth hunting.\n\n{2} will not stop until they have what they came for.</Nemesis_Intro_PawnDefault>
+  <Nemesis_Intro_Prisoner>A prisoner slipped out, and someone noticed.\n\n{0} of {1} has taken it as an insult. Your colony will hear from them.</Nemesis_Intro_Prisoner>
+  <Nemesis_Intro_Slave>A slave rebellion made the wrong enemies.\n\n{0} of {1} has decided your colony owes a debt in blood.</Nemesis_Intro_Slave>
+  <Nemesis_Intro_Retaliation>{0} has had enough.\n\n{1} has been given authority to make your colony pay for it.</Nemesis_Intro_Retaliation>
+  <Nemesis_Intro_ColonyDefault>Something your colony did drew the wrong kind of attention.\n\n{0} of {1} has made your destruction a personal mission.</Nemesis_Intro_ColonyDefault>
+
+  <!-- Letters: harassment -->
+  <Nemesis_Letter_CommsTitle>Message from Comms Console</Nemesis_Letter_CommsTitle>
+  <Nemesis_Letter_CommsBody>Your comms console catches an unscheduled transmission.\n\n{0}</Nemesis_Letter_CommsBody>
+  <Nemesis_Letter_NoteTitle>A Note from {0}</Nemesis_Letter_NoteTitle>
+  <Nemesis_Letter_NoteBody>A note was left where your colonists would find it. No one saw who left it.\n\n{0}</Nemesis_Letter_NoteBody>
+  <Nemesis_Letter_RaidTitle>Raid: {0}</Nemesis_Letter_RaidTitle>
+  <Nemesis_Letter_RaidBody>{0} sent this raid. They want {1} to know who ordered it.</Nemesis_Letter_RaidBody>
+  <Nemesis_Letter_AssaultTitle>{0} Arrives</Nemesis_Letter_AssaultTitle>
+  <Nemesis_Letter_AssaultPawn>{0} has come for {1} personally. They will pull back if things turn, but they will be back.</Nemesis_Letter_AssaultPawn>
+  <Nemesis_Letter_AssaultColony>{0} is leading this assault in person. They won't stay if the odds turn against them.</Nemesis_Letter_AssaultColony>
+  <Nemesis_Letter_WasteTitle>Waste Drop: {0}</Nemesis_Letter_WasteTitle>
+  <Nemesis_Letter_WasteBody>Chemical waste has been airdropped near your colony.\n\nA short message accompanied it: "{0} sends their regards."</Nemesis_Letter_WasteBody>
+  <Nemesis_Fake_Trader>a trade caravan requesting docking clearance</Nemesis_Fake_Trader>
+  <Nemesis_Fake_Distress>a distress beacon claiming survivors need extraction</Nemesis_Fake_Distress>
+  <Nemesis_Letter_FakeSignalTitle>Incoming Signal</Nemesis_Letter_FakeSignalTitle>
+  <Nemesis_Letter_FakeSignalBody>Your console picks up what looks like {0}.\n\nSomething about the handshake feels wrong — but the channel is open.\n\n(If this is {1}, it will not be a friendly visit.)</Nemesis_Letter_FakeSignalBody>
+  <Nemesis_Letter_AmbushTitle>Ambush: {0}</Nemesis_Letter_AmbushTitle>
+  <Nemesis_Letter_AmbushBody>The signal was a lie.\n\n{0} used it to walk a strike team onto your doorstep.</Nemesis_Letter_AmbushBody>
+  <Nemesis_Letter_CaravanWatchTitle>{0} Watches the Roads</Nemesis_Letter_CaravanWatchTitle>
+  <Nemesis_Letter_CaravanWatchBody>{0} left a marker on the trade routes. Your caravans are being watched.</Nemesis_Letter_CaravanWatchBody>
+  <Nemesis_Letter_CaravanHitTitle>Caravan Harassed: {0}</Nemesis_Letter_CaravanHitTitle>
+  <Nemesis_Letter_CaravanHitBody>{0} hit {1} on the road. Supplies went missing in the chaos. A scrap of cloth was left with a name on it.</Nemesis_Letter_CaravanHitBody>
+  <Nemesis_Letter_SabotageTitle>Sabotage: {0}</Nemesis_Letter_SabotageTitle>
+  <Nemesis_Letter_SabotageBody>{0} pulsed EMP through your grid. {1} buildings took the hit.</Nemesis_Letter_SabotageBody>
+  <Nemesis_Letter_SabotageBlocked>{0} tried to fry your electronics — but EMP dampeners held the line. A frustrated hiss crackled on the open channel.</Nemesis_Letter_SabotageBlocked>
+  <Nemesis_Letter_SabotageSurgeBlocked>{0} hit {1} buildings with EMP. A surge protector ate the follow-up short circuit.</Nemesis_Letter_SabotageSurgeBlocked>
+  <Nemesis_Letter_FoodTitle>Food Stores Hit: {0}</Nemesis_Letter_FoodTitle>
+  <Nemesis_Letter_FoodBody>{0} spoiled or stole from your food stores ({1} stacks damaged). Hunger is a weapon.</Nemesis_Letter_FoodBody>
+  <Nemesis_Letter_FoodCellar>{0} found their way into your stores — including near the root cellar. {1} stacks were ruined.</Nemesis_Letter_FoodCellar>
+  <Nemesis_Letter_FoodFavoriteNote>{0} left a note for {1}: "No more {2} for you."</Nemesis_Letter_FoodFavoriteNote>
+  <Nemesis_Letter_AnomalyTitle>Wrong Kind of Attention: {0}</Nemesis_Letter_AnomalyTitle>
+  <Nemesis_Letter_AnomalyBody>{0} stirred something that should have stayed buried. Whatever is coming may not be entirely their doing — but they wanted you busy.</Nemesis_Letter_AnomalyBody>
+
+  <!-- Escape / corner / rogue / end -->
+  <Nemesis_Letter_EscapeTitle>{0} Escapes</Nemesis_Letter_EscapeTitle>
+  <Nemesis_Letter_Escape1>{0} slipped away before you could finish it. They'll be back.</Nemesis_Letter_Escape1>
+  <Nemesis_Letter_Escape2>You had them. And then you didn't. {0} is still out there, and angrier for it.</Nemesis_Letter_Escape2>
+  <Nemesis_Letter_EscapeN>A figure in the smoke. Gone before the dust settled. Escape #{1} for {0}.</Nemesis_Letter_EscapeN>
+  <Nemesis_Letter_EscapeMany>{0} has survived this {1} times now. They are not going to stop.</Nemesis_Letter_EscapeMany>
+  <Nemesis_Letter_CorneredTitle>{0} Cornered</Nemesis_Letter_CorneredTitle>
+  <Nemesis_Letter_CorneredBody>{0} has run out of escapes. They've gone down — and this time they cannot slip away.\n\nArrest them and take them alive to end the hunt for good.</Nemesis_Letter_CorneredBody>
+  <Nemesis_Letter_TruceBrokenTitle>{0}: Truce Broken</Nemesis_Letter_TruceBrokenTitle>
+  <Nemesis_Letter_TruceBrokenBody>The truce with {0} has expired.\n\nThey never forgot. They were always coming back.</Nemesis_Letter_TruceBrokenBody>
+  <Nemesis_Letter_RogueTitle>{0} Goes Rogue</Nemesis_Letter_RogueTitle>
+  <Nemesis_Letter_RogueBodyFaction>You made peace with {1}. {0} did not.\n\nThey have abandoned their own people and thrown in with {2}. A treaty does not end a vendetta.</Nemesis_Letter_RogueBodyFaction>
+  <Nemesis_Letter_RogueBodyAlone>You made peace with {1}. {0} did not.\n\nThey hunt you alone now. A treaty does not end a vendetta.</Nemesis_Letter_RogueBodyAlone>
+  <Nemesis_Letter_EndedKilledTitle>{0}: Hunt Over</Nemesis_Letter_EndedKilledTitle>
+  <Nemesis_Letter_EndedKilledBody>{0} is dead. The channel goes quiet.</Nemesis_Letter_EndedKilledBody>
+  <Nemesis_Letter_EndedTargetDiedTitle>{0}: Loses Interest</Nemesis_Letter_EndedTargetDiedTitle>
+  <Nemesis_Letter_EndedTargetDiedBody>{1} is dead. {0} got what they came for — in a way.\n\nThe hunt ends. They do not celebrate. They simply stop.</Nemesis_Letter_EndedTargetDiedBody>
+  <Nemesis_Letter_EndedHandedTitle>{0}: Claimed Their Prize</Nemesis_Letter_EndedHandedTitle>
+  <Nemesis_Letter_EndedHandedBody>{1} is no longer yours. {0} considers the debt paid.\n\nThe taunts stop. The raids stop. They won.</Nemesis_Letter_EndedHandedBody>
+
+  <!-- Resolution dialog -->
+  <Nemesis_Dialog_Title>{0} is in your hands.</Nemesis_Dialog_Title>
+  <Nemesis_Dialog_Body_KilledAlly>They came for vengeance. Now they sit in your prison.\n\nThree choices. None of them clean.</Nemesis_Dialog_Body_KilledAlly>
+  <Nemesis_Dialog_Body_Prisoner>The one who made your colony their mission is behind bars.\n\nDecide what happens next.</Nemesis_Dialog_Body_Prisoner>
+  <Nemesis_Dialog_Body_Slave>The hunter who answered a slave rebellion sits in your cells.\n\nEnd it — or postpone it.</Nemesis_Dialog_Body_Slave>
+  <Nemesis_Dialog_Body_Fixation>The one who fixated on your colonist is captured.\n\nObsession does not survive a locked door. Usually.</Nemesis_Dialog_Body_Fixation>
+  <Nemesis_Dialog_Body_Wounded>The one who refused to die is finally still.\n\nWhat you do next decides whether this story ends.</Nemesis_Dialog_Body_Wounded>
+  <Nemesis_Dialog_Body_Default>{0} is captured. The hunt is over.\n\nWhat you do now shapes what comes after.</Nemesis_Dialog_Body_Default>
+  <Nemesis_Dialog_Execute>Execute: End it permanently. They won't come back. Neither will the goodwill.</Nemesis_Dialog_Execute>
+  <Nemesis_Dialog_Release>Release: Let them go. It costs you nothing now. Maybe more later.</Nemesis_Dialog_Release>
+  <Nemesis_Dialog_Keep>Keep Prisoner: They stay in your cells. The hunt is over. For now.</Nemesis_Dialog_Keep>
+  <Nemesis_Dialog_Truce>Truce: Pause the hunt for {0} days. The game never truly stops.</Nemesis_Dialog_Truce>
+
+  <Nemesis_Letter_ExecutedTitle>{0}: Executed</Nemesis_Letter_ExecutedTitle>
+  <Nemesis_Letter_ExecutedBody>Done. {0} won't be coming back.\n\n{1}</Nemesis_Letter_ExecutedBody>
+  <Nemesis_Letter_ReleasedTitle>{0}: Released</Nemesis_Letter_ReleasedTitle>
+  <Nemesis_Letter_ReleasedBody>You let them walk. {0} left without a word.\n\n{1}</Nemesis_Letter_ReleasedBody>
+  <Nemesis_Letter_KeptTitle>{0}: Remains</Nemesis_Letter_KeptTitle>
+  <Nemesis_Letter_KeptBody>{0} stays in your prison. The hunt is over. What you do with them is your business.</Nemesis_Letter_KeptBody>
+  <Nemesis_Letter_TruceTitle>{0}: Truce</Nemesis_Letter_TruceTitle>
+  <Nemesis_Letter_TruceBody>You struck a temporary peace with {0}. They walk away, for now.\n\nIn {1} in-game days the hunt resumes. They never truly stop.</Nemesis_Letter_TruceBody>
+
+</LanguageData>
