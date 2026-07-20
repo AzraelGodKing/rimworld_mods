@@ -5,13 +5,10 @@ using Verse.AI;
 
 namespace Strata
 {
-    // What a level is short of for its construction: blueprints and frames
-    // wanting materials the level doesn't have. The cross-level haul workgiver
-    // treats another level's shortage as a pull, so builders stop idling next
-    // to a stairwell while the steel sits one floor up. Cached per map and
-    // refreshed on a slow cadence; over-shipping self-corrects on the next
-    // refresh once the delivered goods land and count toward the level's
-    // inventory.
+    // What a level is short of: construction materials, bill ingredients,
+    // auto-refuel fuel, and items that would upgrade into higher-priority
+    // storage here from a linked floor. The cross-level haul workgiver treats
+    // another level's shortage as a pull. Cached per map on a slow cadence.
     public static class LevelDemand
     {
         private const int CacheTicks = 250;
@@ -98,30 +95,202 @@ namespace Strata
             AddConstructibles(entry, map, map.listerThings.ThingsInGroup(ThingRequestGroup.Blueprint));
             AddConstructibles(entry, map, map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingFrame));
             BillIngredientUtility.AddShortfalls(entry, map);
-            if (entry.missing.Count == 0)
+            if (entry.missing.Count > 0)
             {
-                return entry;
-            }
-            // What the level already has counts against the shortage. Raw
-            // per-level counts: the combined-readout toggle must never make a
-            // level look supplied by another level's stock.
-            foreach (ThingDef def in new List<ThingDef>(entry.missing.Keys))
-            {
-                int have = def.CountAsResource
-                    ? StrataResources.RawGetCount(map, def)
-                    : CountOnMap(map, def);
-                int missing = entry.missing[def] - have;
-                if (missing > 0)
+                // What the level already has counts against construction/bill
+                // shortage. Raw per-level counts: the combined-readout toggle
+                // must never make a level look supplied by another level's stock.
+                // Refuel/storage pulls are added after this so stockpiled fuel
+                // on the reactor floor does not hide empty reactors, and apparel
+                // sitting in a Normal dump does not hide a Critical armory.
+                foreach (ThingDef def in new List<ThingDef>(entry.missing.Keys))
                 {
-                    entry.missing[def] = missing;
-                }
-                else
-                {
-                    entry.missing.Remove(def);
-                    entry.sites.Remove(def);
+                    int have = def.CountAsResource
+                        ? StrataResources.RawGetCount(map, def)
+                        : CountOnMap(map, def);
+                    int missing = entry.missing[def] - have;
+                    if (missing > 0)
+                    {
+                        entry.missing[def] = missing;
+                    }
+                    else
+                    {
+                        entry.missing.Remove(def);
+                        entry.sites.Remove(def);
+                    }
                 }
             }
+
+            AddRefuelShortfalls(entry, map);
+            AddStorageUpgradePulls(entry, map);
             return entry;
+        }
+
+        // Auto-refuel buildings (reactors, generators, etc.) pull their fuel
+        // filter defs from linked floors. Added after inventory subtract so
+        // uranium in a local stockpile does not cancel the reactor's need.
+        private static void AddRefuelShortfalls(Entry entry, Map map)
+        {
+            List<Thing> buildings = map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                Thing thing = buildings[i];
+                if (thing.Faction != Faction.OfPlayer || thing is not ThingWithComps twc)
+                {
+                    continue;
+                }
+
+                CompRefuelable refuel = twc.GetComp<CompRefuelable>();
+                if (refuel == null || !refuel.ShouldAutoRefuelNow)
+                {
+                    continue;
+                }
+
+                int need = refuel.GetFuelCountToFullyRefuel();
+                if (need <= 0)
+                {
+                    continue;
+                }
+
+                ThingFilter filter = refuel.Props?.fuelFilter;
+                if (filter == null)
+                {
+                    continue;
+                }
+
+                foreach (ThingDef def in filter.AllowedThingDefs)
+                {
+                    if (def == null || def.IsCorpse)
+                    {
+                        continue;
+                    }
+
+                    entry.AddShortfall(def, need, thing.Position);
+                }
+            }
+        }
+
+        // Higher-priority stockpiles on this map pull matching items that sit
+        // in worse (or no) storage on linked floors — e.g. Critical armory on
+        // A0 pulling weapons/clothes from a Normal crafting dump on A+.
+        private static void AddStorageUpgradePulls(Entry entry, Map map)
+        {
+            const int MaxThingsPerLinkedMap = 100;
+            List<SlotGroup> localGroups = map.haulDestinationManager.AllGroupsListForReading;
+            if (localGroups.Count == 0)
+            {
+                return;
+            }
+
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
+            {
+                Map other = link.map;
+                if (other == null || other == map)
+                {
+                    continue;
+                }
+
+                int scanned = 0;
+                ICollection<Thing> haulables = other.listerHaulables.ThingsPotentiallyNeedingHauling();
+                foreach (Thing haulable in haulables)
+                {
+                    if (scanned >= MaxThingsPerLinkedMap)
+                    {
+                        break;
+                    }
+
+                    scanned++;
+                    ConsiderOneStorageCandidate(entry, map, localGroups, haulable);
+                }
+
+                List<SlotGroup> otherGroups = other.haulDestinationManager.AllGroupsListForReading;
+                for (int g = 0; g < otherGroups.Count && scanned < MaxThingsPerLinkedMap; g++)
+                {
+                    foreach (Thing t in otherGroups[g].HeldThings)
+                    {
+                        if (scanned >= MaxThingsPerLinkedMap)
+                        {
+                            break;
+                        }
+
+                        scanned++;
+                        ConsiderOneStorageCandidate(entry, map, localGroups, t);
+                    }
+                }
+            }
+        }
+
+        private static void ConsiderOneStorageCandidate(
+            Entry entry,
+            Map destMap,
+            List<SlotGroup> destGroups,
+            Thing t)
+        {
+            if (t == null || !t.Spawned || t.def.category != ThingCategory.Item)
+            {
+                return;
+            }
+
+            StoragePriority current = StoreUtility.CurrentStoragePriorityOf(t);
+            if (!TryBestAcceptingCell(destMap, destGroups, t, current, out IntVec3 cell, out _))
+            {
+                return;
+            }
+
+            entry.AddShortfall(t.def, t.stackCount, cell);
+        }
+
+        private static bool TryBestAcceptingCell(
+            Map map,
+            List<SlotGroup> groups,
+            Thing t,
+            StoragePriority above,
+            out IntVec3 cell,
+            out StoragePriority priority)
+        {
+            cell = IntVec3.Invalid;
+            priority = StoragePriority.Unstored;
+            for (int i = 0; i < groups.Count; i++)
+            {
+                SlotGroup group = groups[i];
+                StoragePriority p = group.Settings.Priority;
+                if (p <= above || p <= priority || !group.Settings.AllowedToAccept(t))
+                {
+                    continue;
+                }
+
+                List<IntVec3> cells = group.CellsList;
+                int scan = System.Math.Min(cells.Count, 120);
+                for (int j = 0; j < scan; j++)
+                {
+                    IntVec3 c = cells[j];
+                    if (!CellHasStackRoom(c, map, t))
+                    {
+                        continue;
+                    }
+
+                    cell = c;
+                    priority = p;
+                    break;
+                }
+            }
+
+            return cell.IsValid;
+        }
+
+        private static bool CellHasStackRoom(IntVec3 cell, Map map, Thing t)
+        {
+            List<Thing> things = cell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing other = things[i];
+                if (other.def.EverStorable(willMinifyIfPossible: false))
+                {
+                    return other.CanStackWith(t) && other.stackCount < other.def.stackLimit;
+                }
+            }
+
+            return true;
         }
 
         private static void AddConstructibles(Entry entry, Map map, List<Thing> things)

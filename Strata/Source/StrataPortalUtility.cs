@@ -249,8 +249,14 @@ namespace Strata
             // Probe reservations before StartJob — several haulers can land on the
             // same tick and all pick one frame (HaulToContainer reserves maxPawns=1).
             // Starting without a probe spam-logs and EndCurrentJob(Errored).
-            // Billgivers first (cellar food → surface stove), then stockpile, then frames.
+            // Billgivers first (cellar food → surface stove), then refuel
+            // (uranium → reactors), then stockpile, then frames.
             if (TryStartJobIfReservable(pawn, TryMakeBillJob(pawn, cargo)))
+            {
+                return true;
+            }
+
+            if (TryStartJobIfReservable(pawn, TryMakeRefuelJob(pawn, cargo)))
             {
                 return true;
             }
@@ -261,6 +267,65 @@ namespace Strata
             }
 
             return TryStartJobIfReservable(pawn, TryMakeConstructionJob(pawn, cargo));
+        }
+
+        private static Job TryMakeRefuelJob(Pawn pawn, Thing cargo)
+        {
+            ThingWithComps target = FindRefuelableNeeding(pawn, cargo);
+            if (target == null)
+            {
+                return null;
+            }
+
+            if (cargo.Spawned && !pawn.CanReserve(cargo))
+            {
+                return null;
+            }
+
+            Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, target);
+            job.count = cargo.stackCount;
+            job.haulMode = HaulMode.ToContainer;
+            return job;
+        }
+
+        private static ThingWithComps FindRefuelableNeeding(Pawn pawn, Thing cargo)
+        {
+            Map map = pawn.Map;
+            List<Thing> buildings = map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
+            ThingWithComps best = null;
+            float bestDist = float.MaxValue;
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                if (buildings[i] is not ThingWithComps twc)
+                {
+                    continue;
+                }
+
+                CompRefuelable refuel = twc.GetComp<CompRefuelable>();
+                if (refuel == null || !refuel.ShouldAutoRefuelNow)
+                {
+                    continue;
+                }
+
+                if (refuel.Props?.fuelFilter == null || !refuel.Props.fuelFilter.Allows(cargo))
+                {
+                    continue;
+                }
+
+                if (!pawn.CanReserveAndReach(twc, PathEndMode.Touch, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                float dist = twc.Position.DistanceToSquared(pawn.Position);
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    best = twc;
+                }
+            }
+
+            return best;
         }
 
         private static Job TryMakeBillJob(Pawn pawn, Thing cargo)
@@ -361,7 +426,8 @@ namespace Strata
                         StoragePriority.Unstored,
                         pawn.Faction,
                         out _)
-                    || FindConstructibleNeeding(pawn, thing.def) != null)
+                    || FindConstructibleNeeding(pawn, thing.def) != null
+                    || FindRefuelableNeeding(pawn, thing) != null)
                 {
                     return thing;
                 }
