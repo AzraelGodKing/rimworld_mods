@@ -25,8 +25,9 @@ on:
       - ".github/workflows/build-mods.yml"
   workflow_dispatch:
 
+# Default read-only; publishing job elevates to write only off PRs.
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: build-mods-${{ github.event_name }}-${{ github.ref }}
@@ -36,9 +37,14 @@ jobs:
   build-and-pack:
     name: Build DLLs${{ github.event_name == 'pull_request' && '' || ' and publish downloads' }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: ${{ github.event_name == 'pull_request' && 'read' || 'write' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Needed so we can force-move the rolling `latest` tag.
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -83,6 +89,16 @@ jobs:
           name: site-downloads
           path: docs/downloads/*.zip
           if-no-files-found: error
+
+      - name: Point latest tag at this SHA
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -f latest
+          git push -f origin latest
 
       - name: Publish download zips to GitHub Release
         if: github.event_name != 'pull_request'
