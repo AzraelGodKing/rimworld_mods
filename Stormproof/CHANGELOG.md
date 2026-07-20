@@ -9,10 +9,18 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 - **Ion storm tick cost** — dampener shield checks and EMP candidate picks use plain loops instead of LINQ allocations.
 
 ### Added
+- **Hazard hardening** (Spacer research) — late-game natural-incident defense layer:
+  - Atmospheric barrier — map-wide toxic fallout / toxic surge / volcanic ash / noxious haze suppression while powered
+  - Climate stabilizer — cancels heat wave, cold snap, volcanic winter, heat dome, and polar front temperature offsets
+  - Sky restorer — restores usable daylight during eclipse, volcanic winter/ash, and darkened skies
+  - Fire suppressor — extinguishes fires in radius; ramps draw during flashstorms
+  - Drought condenser — cancels drought plant-growth penalties (Odyssey)
+- **New events:** dry lightning front, heat dome (+28°C), polar front (−28°C), toxic surge — each countered by the matching hazard building (plus existing spires / scrubbers / storm caller).
 - `Languages/English/Keyed/Stormproof.xml` — all C# player strings (messages, gizmos, inspect panels) with `.Translate()` wiring.
 - `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
 
 ### Changed
+- **Workshop preview makeover** — cinematic painted `About/Preview.png` in the Strata style (thunderstorm grid defense scene; Flares • Lightning • Surges • EMP), replacing the old icon-row banner.
 - Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
 - **Dedicated research tab** — all Stormproof projects live under their own *Stormproof* tab (no longer on Main).
 - Load shedder: an automatic breaker for wiring between the main grid and a low-priority sub-grid. Transmits like a conduit while the supply side's batteries hold charge; trips open and sheds the sub-grid when they fall below an adjustable cutoff (default 20%, gizmo-adjustable 5–45%), then reconnects on its own once charge recovers past the cutoff plus a 20-point margin. Requires storm protection research.
