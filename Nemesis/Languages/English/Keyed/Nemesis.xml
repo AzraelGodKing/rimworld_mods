@@ -30,7 +30,27 @@
   <Nemesis_Settings_WeightInformant>Informant reveal: {0}</Nemesis_Settings_WeightInformant>
   <Nemesis_Settings_RaidCredit>Raid credit-taking chance: {0}%</Nemesis_Settings_RaidCredit>
   <Nemesis_Settings_IgnoredThreshold>Ignored-action threshold: {0}</Nemesis_Settings_IgnoredThreshold>
+  <Nemesis_Settings_Status>Active hunt: {0} — phase {1} (aggression {2})</Nemesis_Settings_Status>
+  <Nemesis_Settings_TrophyLedger>Trophy ledger</Nemesis_Settings_TrophyLedger>
+  <Nemesis_Settings_TrophyEmpty>No completed hunts recorded yet.</Nemesis_Settings_TrophyEmpty>
+  <Nemesis_Settings_TrophyLine>{0} ({1}) — {2} → {3}</Nemesis_Settings_TrophyLine>
   <Nemesis_Settings_Reset>Reset</Nemesis_Settings_Reset>
+
+  <Nemesis_Phase_Watching>Watching</Nemesis_Phase_Watching>
+  <Nemesis_Phase_Testing>Testing</Nemesis_Phase_Testing>
+  <Nemesis_Phase_Obsessed>Obsessed</Nemesis_Phase_Obsessed>
+  <Nemesis_Phase_Reckoning>Reckoning</Nemesis_Phase_Reckoning>
+  <Nemesis_Letter_PhaseFooter>Phase: {0}</Nemesis_Letter_PhaseFooter>
+  <Nemesis_Letter_SilenceTitle>{0}: The Quiet</Nemesis_Letter_SilenceTitle>
+  <Nemesis_Letter_SilenceBody>Nothing from {0}. No raids. No taunts.\n\nThat is worse.\n\n({2} — they are still thinking about {1}.)</Nemesis_Letter_SilenceBody>
+  <Nemesis_Finale_Title>{0}: Reckoning</Nemesis_Finale_Title>
+  <Nemesis_Finale_Body>{0} has run out of places to run.\n\nThey offer a challenge: face {1} alone, or refuse and watch everything burn.\n\nPhase: {2}</Nemesis_Finale_Body>
+  <Nemesis_Finale_AcceptDuel>Accept the duel — one on one</Nemesis_Finale_AcceptDuel>
+  <Nemesis_Finale_Refuse>Refuse — bring everything</Nemesis_Finale_Refuse>
+  <Nemesis_Letter_DuelTitle>Duel: {0}</Nemesis_Letter_DuelTitle>
+  <Nemesis_Letter_DuelBody>{0} stands alone for {1}. No backup. No escape left after this.</Nemesis_Letter_DuelBody>
+  <Nemesis_Letter_FinaleAssaultTitle>Reckoning Assault: {0}</Nemesis_Letter_FinaleAssaultTitle>
+  <Nemesis_Letter_FinaleAssaultBody>You refused the duel. {0} answered with everything they could buy, steal, or threaten — aimed at {1}.</Nemesis_Letter_FinaleAssaultBody>
 
   <!-- Phrases -->
   <Nemesis_Phrase_YourColony>your colony</Nemesis_Phrase_YourColony>

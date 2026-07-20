@@ -57,6 +57,35 @@ namespace Nemesis
         Cleared
     }
 
+    /// <summary>Named hunt phases mapped from aggression (thresholds match prior float gates).</summary>
+    public enum NemesisHuntPhase
+    {
+        Watching,   // under 2
+        Testing,    // 2+ (sabotage)
+        Obsessed,   // 3+ (assault / kidnap)
+        Reckoning,  // 5+ or escape cap / finale
+    }
+
+    public class NemesisTrophyEntry : IExposable
+    {
+        public string nemesisName;
+        public string factionName;
+        public NemesisTrigger trigger;
+        public NemesisEndReason endReason;
+        public int startTick;
+        public int endTick;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref nemesisName, "nemesisName", null);
+            Scribe_Values.Look(ref factionName, "factionName", null);
+            Scribe_Values.Look(ref trigger, "trigger", NemesisTrigger.KilledAlly);
+            Scribe_Values.Look(ref endReason, "endReason", NemesisEndReason.Cleared);
+            Scribe_Values.Look(ref startTick, "startTick", 0);
+            Scribe_Values.Look(ref endTick, "endTick", 0);
+        }
+    }
+
     /// <summary>
     /// Persistent hunt state. Foundation by Dredd (Misakabob); fields extended for new actions / end reasons.
     /// </summary>
@@ -106,6 +135,15 @@ namespace Nemesis
         // --- InformantReveal timing (set when traders/visitors leave) ---
         public int lastVisitorLeaveTick = -1;
 
+        // --- Deliberate silence window ---
+        public int silenceUntilTick = -1;
+        public int silenceLetterTick = -1;
+        public bool silenceLetterSent;
+
+        // --- Staged finale ---
+        public bool finaleOffered;
+        public bool finaleDuelActive;
+
         public float EffectiveAggression
         {
             get
@@ -114,6 +152,34 @@ namespace Nemesis
                 float capValue = Mathf.Lerp(1f, 10f, fraction);
                 return Mathf.Min(aggressionLevel, capValue);
             }
+        }
+
+        /// <summary>
+        /// Watching under 2, Testing 2+, Obsessed 3+ (assault), Reckoning 5+ or escape cap.
+        /// </summary>
+        public NemesisHuntPhase Phase
+        {
+            get
+            {
+                float a = EffectiveAggression;
+                int maxEsc = NemesisMod.Settings?.maxEscapes ?? 4;
+                if (finaleOffered || finaleDuelActive || escapeCount >= maxEsc || a >= 5f)
+                    return NemesisHuntPhase.Reckoning;
+                if (a >= 3f) return NemesisHuntPhase.Obsessed;
+                if (a >= 2f) return NemesisHuntPhase.Testing;
+                return NemesisHuntPhase.Watching;
+            }
+        }
+
+        public string PhaseLabelKeyed()
+        {
+            return Phase switch
+            {
+                NemesisHuntPhase.Watching => "Nemesis_Phase_Watching".Translate(),
+                NemesisHuntPhase.Testing => "Nemesis_Phase_Testing".Translate(),
+                NemesisHuntPhase.Obsessed => "Nemesis_Phase_Obsessed".Translate(),
+                _ => "Nemesis_Phase_Reckoning".Translate(),
+            };
         }
 
         public int HuntDays
@@ -129,6 +195,15 @@ namespace Nemesis
         {
             ignoredActionsCount = 0;
             engagedSinceLastAction = true;
+        }
+
+        public void ScheduleSilence(int normalInterval)
+        {
+            int quiet = (int)(normalInterval * Rand.Range(1.5f, 2f));
+            silenceUntilTick = Find.TickManager.TicksGame + quiet;
+            silenceLetterTick = Find.TickManager.TicksGame + quiet / 2;
+            silenceLetterSent = false;
+            nextActionTick = Mathf.Max(nextActionTick, silenceUntilTick);
         }
 
         public void ExposeData()
@@ -164,6 +239,11 @@ namespace Nemesis
             Scribe_Values.Look(ref taintedRevealTick, "taintedRevealTick", -1);
             Scribe_Values.Look(ref taintedRevealed, "taintedRevealed", false);
             Scribe_Values.Look(ref lastVisitorLeaveTick, "lastVisitorLeaveTick", -1);
+            Scribe_Values.Look(ref silenceUntilTick, "silenceUntilTick", -1);
+            Scribe_Values.Look(ref silenceLetterTick, "silenceLetterTick", -1);
+            Scribe_Values.Look(ref silenceLetterSent, "silenceLetterSent", false);
+            Scribe_Values.Look(ref finaleOffered, "finaleOffered", false);
+            Scribe_Values.Look(ref finaleDuelActive, "finaleDuelActive", false);
         }
     }
 }

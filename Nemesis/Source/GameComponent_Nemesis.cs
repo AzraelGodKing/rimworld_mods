@@ -15,8 +15,10 @@ namespace Nemesis
         public static GameComponent_Nemesis Instance => Current.Game?.GetComponent<GameComponent_Nemesis>();
 
         private NemesisData _data;
+        private List<NemesisTrophyEntry> _trophies = new List<NemesisTrophyEntry>();
 
         public NemesisData Data => _data;
+        public List<NemesisTrophyEntry> Trophies => _trophies;
 
         public bool IsEngaged => _data != null && (_data.active || _data.truceUntilTick > 0);
 
@@ -84,6 +86,20 @@ namespace Nemesis
                     LetterDefOf.ThreatSmall);
             }
 
+            // Deliberate silence — mid-window ominous letter.
+            if (_data.silenceUntilTick > 0 && !_data.silenceLetterSent
+                && _data.silenceLetterTick > 0 && tick >= _data.silenceLetterTick)
+            {
+                _data.silenceLetterSent = true;
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_SilenceTitle".Translate(_data.nemesisName),
+                    "Nemesis_Letter_SilenceBody".Translate(
+                        _data.nemesisName, NemesisTaunts.TargetPhrase(_data), _data.PhaseLabelKeyed()),
+                    LetterDefOf.ThreatSmall);
+            }
+            if (_data.silenceUntilTick > 0 && tick >= _data.silenceUntilTick)
+                _data.silenceUntilTick = -1;
+
             // Stagger health / end-condition work. Faster on the viewed map.
             Map home = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
             int healthInterval = NemesisRegistry.MapIsViewed(home) ? 120 : 300;
@@ -100,7 +116,11 @@ namespace Nemesis
             if (tick % 2500 == 0 && !_data.rogue)
                 CheckRogue();
 
-            if (tick >= _data.nextActionTick)
+            if (_data.silenceUntilTick > 0 && tick < _data.silenceUntilTick)
+            {
+                // Quiet window — no harassment actions.
+            }
+            else if (tick >= _data.nextActionTick)
                 FireNextAction();
         }
 
@@ -222,6 +242,13 @@ namespace Nemesis
                 NemesisTaunts.EscapeLetterBody(_data),
                 LetterDefOf.NeutralEvent,
                 lookTarget);
+
+            // Staged finale when escape cap is hit — challenge instead of quiet cornering wait.
+            if (_data.escapeCount >= MaxEscapes && !_data.finaleOffered)
+            {
+                _data.finaleOffered = true;
+                Find.WindowStack.Add(new Dialog_NemesisFinale(_data));
+            }
         }
 
         private void SubdueNemesis(Pawn nemesis, bool fromLethalDamage)
@@ -321,6 +348,7 @@ namespace Nemesis
             if (nemesis == null || !nemesis.IsPrisonerOfColony) return;
 
             _data.active = false;
+            RecordTrophy(NemesisEndReason.Captured);
             NemesisMood.NotifyHuntEnded(_data, NemesisEndReason.Captured);
             Find.WindowStack.Add(new Dialog_NemesisResolution(_data, nemesis));
         }
@@ -330,10 +358,14 @@ namespace Nemesis
             if (_data == null) return;
 
             string name = _data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
+            RecordTrophy(reason);
             NemesisMood.NotifyHuntEnded(_data, reason);
             _data.active = false;
             _data.pendingFakeAmbush = false;
             _data.truceUntilTick = -1;
+            _data.sniperActive = false;
+            _data.finaleDuelActive = false;
+            _data.silenceUntilTick = -1;
 
             switch (reason)
             {
@@ -365,6 +397,23 @@ namespace Nemesis
             }
 
             NemesisRegistry.Clear();
+        }
+
+        public void RecordTrophy(NemesisEndReason reason)
+        {
+            if (_data == null) return;
+            if (_trophies == null) _trophies = new List<NemesisTrophyEntry>();
+            _trophies.Add(new NemesisTrophyEntry
+            {
+                nemesisName = _data.nemesisName,
+                factionName = _data.factionName,
+                trigger = _data.trigger,
+                endReason = reason,
+                startTick = _data.huntStartTick > 0 ? _data.huntStartTick : Find.TickManager.TicksGame,
+                endTick = Find.TickManager.TicksGame,
+            });
+            while (_trophies.Count > 20)
+                _trophies.RemoveAt(0);
         }
 
         private void ReleaseNemesisWorldPawn()
@@ -509,18 +558,24 @@ namespace Nemesis
 
         private NemesisAction PickAction()
         {
-            float agg = _data.EffectiveAggression;
+            NemesisHuntPhase phase = _data.Phase;
             NemesisSettings s = NemesisMod.Settings;
             float taunt = s?.actionWeightTaunt ?? 0.35f;
             float raid = s?.actionWeightRaid ?? 0.15f;
-            float assault = agg >= 3f ? (s?.actionWeightAssault ?? 0.15f) : 0f;
+            // Obsessed+ : assault / kidnap (was aggression >= 3).
+            float assault = phase >= NemesisHuntPhase.Obsessed ? (s?.actionWeightAssault ?? 0.15f) : 0f;
             float waste = ModsConfig.BiotechActive ? (s?.actionWeightWaste ?? 0.08f) : 0f;
             float fake = s?.actionWeightFakeSignal ?? 0.10f;
             float caravan = s?.actionWeightCaravan ?? 0.07f;
-            float sabotage = agg >= 2f ? (s?.actionWeightSabotage ?? 0.05f) : 0f;
+            // Testing+ : sabotage (was aggression >= 2).
+            float sabotage = phase >= NemesisHuntPhase.Testing ? (s?.actionWeightSabotage ?? 0.05f) : 0f;
             float food = s?.actionWeightFood ?? 0.05f;
-            float anomaly = ModsConfig.AnomalyActive && agg >= 4f ? 0.06f : 0f;
-            float kidnap = agg >= 3f ? (s?.actionWeightKidnap ?? 0.08f) : 0f;
+            // Reckoning (or Obsessed with high raw agg): anomaly was >= 4 — allow in Obsessed if EffectiveAggression >= 4.
+            float anomaly = 0f;
+            if (ModsConfig.AnomalyActive
+                && (phase >= NemesisHuntPhase.Reckoning || _data.EffectiveAggression >= 4f))
+                anomaly = 0.06f;
+            float kidnap = phase >= NemesisHuntPhase.Obsessed ? (s?.actionWeightKidnap ?? 0.08f) : 0f;
             float sniper = s?.actionWeightSniper ?? 0.04f;
             float grave = s?.actionWeightGrave ?? 0.05f;
             float tamper = s?.actionWeightFoodTamper ?? 0.06f;
@@ -669,6 +724,9 @@ namespace Nemesis
             Scribe_Deep.Look(ref _data, "nemesisData");
             if (_data == null)
                 _data = new NemesisData();
+            Scribe_Collections.Look(ref _trophies, "nemesisTrophies", LookMode.Deep);
+            if (_trophies == null)
+                _trophies = new List<NemesisTrophyEntry>();
         }
     }
 }

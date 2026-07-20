@@ -38,9 +38,11 @@ namespace Nemesis
                     break;
                 case NemesisAction.DirectRaid:
                     DirectRaid(data, map);
+                    ScheduleSilenceAfter(data, map);
                     break;
                 case NemesisAction.NemesisAssault:
                     NemesisAssault(data, map);
+                    ScheduleSilenceAfter(data, map);
                     break;
                 case NemesisAction.WastePackDrop:
                     WastePackDrop(data, map);
@@ -62,6 +64,7 @@ namespace Nemesis
                     break;
                 case NemesisAction.KidnapAttempt:
                     KidnapAttempt(data, map);
+                    ScheduleSilenceAfter(data, map);
                     break;
                 case NemesisAction.SniperTerror:
                     SniperTerror(data, map);
@@ -99,7 +102,10 @@ namespace Nemesis
                 body = "Nemesis_Letter_NoteBody".Translate(taunt);
             }
 
-            Find.LetterStack.ReceiveLetter(title, body, LetterDefOf.NeutralEvent);
+            Find.LetterStack.ReceiveLetter(
+                title,
+                body + "\n\n" + "Nemesis_Letter_PhaseFooter".Translate(data.PhaseLabelKeyed()),
+                LetterDefOf.NeutralEvent);
         }
 
         private static bool HasCommsConsole(Map map)
@@ -259,6 +265,8 @@ namespace Nemesis
 
             if (!raidDef.Worker.TryExecute(parms))
                 CommsTaunt(data, map);
+            else
+                ScheduleSilenceAfter(data, map);
         }
 
         private static void CaravanHarass(NemesisData data, Map map)
@@ -463,7 +471,7 @@ namespace Nemesis
 
         private static void KidnapAttempt(NemesisData data, Map map)
         {
-            if (data.EffectiveAggression < 3f)
+            if (data.Phase < NemesisHuntPhase.Obsessed)
             {
                 CommsTaunt(data, map);
                 return;
@@ -771,6 +779,61 @@ namespace Nemesis
                 "Nemesis_Letter_InformantTitle".Translate(data.nemesisName),
                 "Nemesis_Letter_InformantBody".Translate(data.nemesisName, NemesisTaunts.TargetPhrase(data)),
                 LetterDefOf.ThreatSmall);
+        }
+
+        /// <summary>Reckoning refuse path — heaviest personal + faction assault.</summary>
+        public static void ExecuteFinaleAssault(NemesisData data, Map map)
+        {
+            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            Pawn nemesis = comp?.FindNemesisPawn();
+
+            if (nemesis != null && !nemesis.Dead && !nemesis.Spawned && !nemesis.IsPrisonerOfColony)
+            {
+                if (nemesis.IsWorldPawn())
+                    Find.WorldPawns.RemovePawn(nemesis);
+                if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out IntVec3 spawnCell))
+                    spawnCell = CellFinder.RandomEdgeCell(map);
+                GenSpawn.Spawn(nemesis, spawnCell, map);
+                NemesisRegistry.CachedNemesis = nemesis;
+                NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
+                if (nemesis.Faction != null && !nemesis.Faction.IsPlayer)
+                {
+                    LordMaker.MakeNewLord(
+                        nemesis.Faction,
+                        new LordJob_AssaultColony(nemesis.Faction, canKidnap: false, canTimeoutOrFlee: false),
+                        map,
+                        new[] { nemesis });
+                }
+            }
+
+            Faction faction = FindFaction(data);
+            IncidentDef raidDef = DefDatabase<IncidentDef>.GetNamedSilentFail("RaidEnemy");
+            if (faction != null && raidDef != null)
+            {
+                IncidentParms parms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.ThreatBig, map);
+                parms.faction = faction;
+                parms.points = Mathf.Max(500f, parms.points * AggressionRaidFactor(10f) * 1.35f);
+                parms.customLetterLabel = "Nemesis_Letter_FinaleAssaultTitle".Translate(data.nemesisName);
+                parms.customLetterText = "Nemesis_Letter_FinaleAssaultBody".Translate(
+                    data.nemesisName, NemesisTaunts.TargetPhrase(data));
+                raidDef.Worker.TryExecute(parms);
+            }
+
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_FinaleAssaultTitle".Translate(data.nemesisName),
+                "Nemesis_Letter_FinaleAssaultBody".Translate(data.nemesisName, NemesisTaunts.TargetPhrase(data)),
+                LetterDefOf.ThreatBig,
+                nemesis);
+        }
+
+        public static void ScheduleSilenceAfter(NemesisData data, Map map)
+        {
+            if (data == null) return;
+            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            int interval = Mathf.Max(
+                NemesisMod.Settings?.minActionCooldownTicks ?? 90000,
+                (int)(300000f / Mathf.Max(1f, data.EffectiveAggression)));
+            data.ScheduleSilence(interval);
         }
 
         private static float AggressionRaidFactor(float aggressionLevel) =>

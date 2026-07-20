@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 using Verse;
@@ -7,6 +8,8 @@ namespace Nemesis
     public class NemesisMod : Mod
     {
         public static NemesisSettings Settings;
+        private Vector2 _settingsScroll;
+        private float _settingsViewHeight;
 
         public NemesisMod(ModContentPack content) : base(content)
         {
@@ -18,8 +21,20 @@ namespace Nemesis
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            Rect view = new Rect(0f, 0f, inRect.width - 16f, _settingsViewHeight > 0f ? _settingsViewHeight : 1200f);
+            Widgets.BeginScrollView(inRect, ref _settingsScroll, view);
             var listing = new Listing_Standard();
-            listing.Begin(inRect);
+            listing.Begin(view);
+
+            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            if (comp?.Data != null && (comp.Data.active || comp.Data.truceUntilTick > 0))
+            {
+                listing.Label("Nemesis_Settings_Status".Translate(
+                    comp.Data.nemesisName ?? "?",
+                    comp.Data.PhaseLabelKeyed(),
+                    comp.Data.EffectiveAggression.ToString("F1")));
+                listing.Gap(8f);
+            }
 
             listing.Label("Nemesis_Settings_Triggers".Translate());
             listing.Gap(4f);
@@ -127,7 +142,35 @@ namespace Nemesis
             if (listing.ButtonText("Nemesis_Settings_Reset".Translate(), null, 0.25f))
                 Settings.ResetToDefaults();
 
+            listing.Gap(12f);
+            listing.GapLine();
+            Text.Font = GameFont.Medium;
+            listing.Label("Nemesis_Settings_TrophyLedger".Translate());
+            Text.Font = GameFont.Small;
+            listing.Gap(4f);
+
+            List<NemesisTrophyEntry> trophies = GameComponent_Nemesis.Instance?.Trophies;
+            if (trophies == null || trophies.Count == 0)
+            {
+                listing.Label("Nemesis_Settings_TrophyEmpty".Translate());
+            }
+            else
+            {
+                for (int i = trophies.Count - 1; i >= 0; i--)
+                {
+                    NemesisTrophyEntry t = trophies[i];
+                    if (t == null) continue;
+                    listing.Label("Nemesis_Settings_TrophyLine".Translate(
+                        t.nemesisName ?? "?",
+                        t.factionName ?? "?",
+                        t.trigger.ToString(),
+                        t.endReason.ToString()));
+                }
+            }
+
             listing.End();
+            _settingsViewHeight = listing.CurHeight + 24f;
+            Widgets.EndScrollView();
         }
     }
 }
