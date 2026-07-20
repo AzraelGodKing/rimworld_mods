@@ -8,13 +8,25 @@
     <mods>
       <li>Dubwise.DubsBadHygiene</li>
     </mods>
-    <match Class="PatchOperationAdd">
-      <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_DBH"]/comps</xpath>
-      <value>
-        <li Class="DubsBadHygiene.CompProperties_Pipe">
-          <mode>Sewage</mode>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_DBH"]/comps</xpath>
+          <value>
+            <li Class="DubsBadHygiene.CompProperties_Pipe">
+              <mode>Sewage</mode>
+            </li>
+          </value>
         </li>
-      </value>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Omni"]/comps</xpath>
+          <value>
+            <li Class="DubsBadHygiene.CompProperties_Pipe">
+              <mode>Sewage</mode>
+            </li>
+          </value>
+        </li>
+      </operations>
     </match>
   </Operation>
 
@@ -40,6 +52,17 @@
             </li>
           </value>
         </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Omni"]/comps</xpath>
+          <value>
+            <li Class="DubsCentralHeating.CompProperties_Pipe">
+              <mode>Heating</mode>
+            </li>
+            <li Class="DubsCentralHeating.CompProperties_Pipe">
+              <mode>Air</mode>
+            </li>
+          </value>
+        </li>
       </operations>
     </match>
   </Operation>
@@ -48,13 +71,25 @@
     <mods>
       <li>Dubwise.Rimatomics</li>
     </mods>
-    <match Class="PatchOperationAdd">
-      <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Rimatomics"]/comps</xpath>
-      <value>
-        <li Class="Rimatomics.CompProperties_Pipe">
-          <mode>Cooling</mode>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Rimatomics"]/comps</xpath>
+          <value>
+            <li Class="Rimatomics.CompProperties_Pipe">
+              <mode>Cooling</mode>
+            </li>
+          </value>
         </li>
-      </value>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Omni"]/comps</xpath>
+          <value>
+            <li Class="Rimatomics.CompProperties_Pipe">
+              <mode>Cooling</mode>
+            </li>
+          </value>
+        </li>
+      </operations>
     </match>
   </Operation>
 
@@ -76,6 +111,15 @@
           <xpath>/Defs/PipeSystem.PipeNetDef[defName="VHGE_HelixienNet"]/pipeDefs</xpath>
           <value>
             <li>Strata_ShaftFluid_VHGE</li>
+            <li>Strata_ShaftFluid_Omni</li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Omni"]/comps</xpath>
+          <value>
+            <li Class="PipeSystem.CompProperties_Resource">
+              <pipeNet>VHGE_HelixienNet</pipeNet>
+            </li>
           </value>
         </li>
       </operations>
@@ -100,6 +144,15 @@
           <xpath>/Defs/PipeSystem.PipeNetDef[defName="VTE_EfficiencyNet"]/pipeDefs</xpath>
           <value>
             <li>Strata_ShaftFluid_VTE</li>
+            <li>Strata_ShaftFluid_Omni</li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Omni"]/comps</xpath>
+          <value>
+            <li Class="PipeSystem.CompProperties_Resource">
+              <pipeNet>VTE_EfficiencyNet</pipeNet>
+            </li>
           </value>
         </li>
       </operations>
@@ -128,6 +181,17 @@
             </li>
           </value>
         </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Omni"]/comps</xpath>
+          <value>
+            <li Class="Rimefeller.CompProperties_Pipe">
+              <mode>Crude</mode>
+            </li>
+            <li Class="Rimefeller.CompProperties_Pipe">
+              <mode>Fuel</mode>
+            </li>
+          </value>
+        </li>
       </operations>
     </match>
   </Operation>
@@ -150,6 +214,15 @@
           <xpath>/Defs/PipeSystem.PipeNetDef[defName="VCHE_ChemfuelNet"]/pipeDefs</xpath>
           <value>
             <li>Strata_ShaftFluid_VefChemfuel</li>
+            <li>Strata_ShaftFluid_Omni</li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Omni"]/comps</xpath>
+          <value>
+            <li Class="PipeSystem.CompProperties_Resource">
+              <pipeNet>VCHE_ChemfuelNet</pipeNet>
+            </li>
           </value>
         </li>
       </operations>
