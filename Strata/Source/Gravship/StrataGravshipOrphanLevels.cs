@@ -113,6 +113,93 @@ namespace Strata
             return best;
         }
 
+        // Adopt a detached travelling floor for an unwired gravship shaft
+        // instead of generating a fresh empty level. Called from the gravship
+        // shaft GeneratePocketMapInt overrides (currentlyGeneratingPortal ==
+        // shaft there, so a freshly spawned landing self-wires). Returns the
+        // adopted map, or null when there is nothing suitable to adopt.
+        public static Map TryAdoptOrphanFor(Building_StairsDown shaft, bool wantUpper)
+        {
+            if (shaft?.Map == null)
+            {
+                return null;
+            }
+            Map orphan = wantUpper
+                ? FindAdoptableUpperDeck(shaft.Map)
+                : FindAdoptableUnderdeck(shaft.Map);
+            if (orphan == null)
+            {
+                return null;
+            }
+
+            MapPortal landing = StrataGravshipPortalTravel.FindLandingOn(orphan);
+            if (landing is PocketMapExit exitLanding)
+            {
+                exitLanding.entrance = shaft;
+                shaft.exit = exitLanding;
+                if (orphan.Parent is PocketMapParent parent)
+                {
+                    parent.sourceMap = shaft.Map;
+                }
+                Log.Message("[Strata] Gravship shaft adopted orphaned "
+                    + (wantUpper ? "upper deck" : "underdeck") + " " + orphan.uniqueID + ".");
+                return orphan;
+            }
+
+            IntVec3 cell = shaft.FindLandingCell(orphan);
+            if (cell.IsValid)
+            {
+                StrataPortalUtility.SpawnLanding(shaft.def.portal.exitDef, cell, orphan);
+                if (orphan.Parent is PocketMapParent parent)
+                {
+                    parent.sourceMap = shaft.Map;
+                }
+                Log.Message("[Strata] Gravship shaft adopted orphaned "
+                    + (wantUpper ? "upper deck" : "underdeck") + " " + orphan.uniqueID
+                    + " (spawned new landing).");
+                return orphan;
+            }
+
+            return null;
+        }
+
+        // True when this host carries gravship relink damage worth repairing on
+        // load: an unwired gravship shaft, or a detached travelling level.
+        public static bool HasRepairWork(Map host)
+        {
+            if (host == null)
+            {
+                return false;
+            }
+            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is MapPortal portal && portal.Spawned
+                    && StrataGravshipUtility.IsGravshipHostShaft(portal)
+                    && !portal.PocketMapExists)
+                {
+                    return true;
+                }
+            }
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (map?.Parent is not PocketMapParent pocket || pocket.sourceMap != null)
+                {
+                    continue;
+                }
+                if (!StrataMapUtility.IsUnderground(map) && !StrataMapUtility.IsUpperLevel(map))
+                {
+                    continue;
+                }
+                if (LooksLikeGravshipLinkedLevel(map, host))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private static bool LooksLikeGravshipLinkedLevel(Map map, Map host)
         {
             if (StrataGravshipUtility.IsGravshipLinkedLevel(map))
@@ -142,18 +229,18 @@ namespace Strata
             {
                 return false;
             }
-            int checkedCells = 0;
-            foreach (IntVec3 cell in map.AllCells)
+            // Stride-sample the whole grid (~2048 probes) — scanning only the
+            // first 2048 cells of AllCells covers a few edge rows and misses
+            // centrally-placed deck terrain, wrongly rejecting real orphans.
+            int total = map.cellIndices.NumGridCells;
+            int stride = total > 2048 ? total / 2048 : 1;
+            for (int i = 0; i < total; i += stride)
             {
-                TerrainDef terrain = cell.GetTerrain(map);
+                TerrainDef terrain = map.terrainGrid.TerrainAt(i);
                 if (GravshipDeckUtility.IsManagedDeckTerrain(terrain)
                     || UpperDeckUtility.IsManagedUpperTerrain(terrain))
                 {
                     return true;
-                }
-                if (++checkedCells > 2048)
-                {
-                    break;
                 }
             }
             return false;
