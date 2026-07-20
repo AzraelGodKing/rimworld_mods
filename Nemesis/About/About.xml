@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Nemesis</name>
+  <author>AzraelGodKing</author>
+  <packageId>AzraelGodKing.Nemesis</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>Ludeon.RimWorld</li>
+    <!-- Soft-compat: optional siblings; Nemesis never hard-requires these. -->
+    <li>AzraelGodKing.Stormproof</li>
+    <li>AzraelGodKing.Strata</li>
+    <li>AzraelGodKing.Homesteader</li>
+  </loadAfter>
+  <description>A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. They harass your colony with taunts, false leads, waste drops, power sabotage, and personal assaults that flee when the fight turns. The hunt ends when you capture or kill them… or when they get what they came for.
+
+FOUNDATION
+Original design and core runtime by Dredd (Misakabob). Expanded and packaged here with credit.
+
+HOW IT STARTS
+- A colonist kills an enemy's ally or kin (chance).
+- A prisoner (or slave) breaks out and someone takes it personally.
+- An enemy wounds-and-escapes, then comes back for the one who cut them.
+- An enemy who killed one of yours fixates on a surviving colonist.
+
+WHAT THEY DO
+- Comms taunts and paper notes that name your people.
+- Faction raids, personal on-map assaults that pull back when losing.
+- Biotech waste drops, fake distress / trader signals that become ambushes.
+- Caravan harassment, food-store vandalism, EMP / grid sabotage.
+- Optional Anomaly baiting when that DLC is active.
+
+HOW IT ENDS
+- Capture them alive (execute / release / keep / truce).
+- Corner them after enough escapes, then kill or arrest.
+- If they hunt a specific colonist: the hunt also ends if that pawn dies or is handed over — they win, and lose interest.
+
+SOFT COMPAT (optional, fail-open)
+- Stormproof: EMP sabotage respects EMP dampeners; surge protectors blunt grid sabotage; ion flavor when present.
+- Strata: prefers surface home maps; aware of underground / upper levels when choosing harassment targets.
+- Homesteader: food raids and taunts can reference root cellars and favorite foods when those systems exist.
+
+Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: resolve or dismiss any active nemesis (capture/truce/end) so WorldPawn refs are cleaned up.</description>
+</ModMetaData>
