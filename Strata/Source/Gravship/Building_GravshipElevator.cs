@@ -18,6 +18,14 @@ namespace Strata
 
         protected override Map GeneratePocketMapInt()
         {
+            // A bad land can leave the furnished travelling floor detached —
+            // adopt it before ever generating a fresh empty level.
+            Map orphan = StrataGravshipOrphanLevels.TryAdoptOrphanFor(this, wantUpper: false);
+            if (orphan != null)
+            {
+                Messages.Message("Strata_GravshipConnectedBelow".Translate(), this, MessageTypeDefOf.PositiveEvent);
+                return orphan;
+            }
             Map existing = StrataGravshipUtility.ExistingGravshipLevelBelow(Map, this);
             if (existing != null)
             {
@@ -95,6 +103,12 @@ namespace Strata
 
         protected override Map GeneratePocketMapInt()
         {
+            Map orphan = StrataGravshipOrphanLevels.TryAdoptOrphanFor(this, wantUpper: true);
+            if (orphan != null)
+            {
+                Messages.Message("Strata_GravshipConnectedAbove".Translate(), this, MessageTypeDefOf.PositiveEvent);
+                return orphan;
+            }
             Map existing = StrataGravshipUtility.ExistingGravshipLevelAbove(Map, this);
             if (existing != null)
             {
