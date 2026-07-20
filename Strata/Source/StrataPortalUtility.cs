@@ -269,6 +269,8 @@ namespace Strata
             return TryStartJobIfReservable(pawn, TryMakeConstructionJob(pawn, cargo));
         }
 
+        // CompRefuelable is not a HaulToContainer destination — use the vanilla
+        // Refuel / RefuelAtomic jobs (targetA = building, targetB = fuel).
         private static Job TryMakeRefuelJob(Pawn pawn, Thing cargo)
         {
             ThingWithComps target = FindRefuelableNeeding(pawn, cargo);
@@ -282,9 +284,22 @@ namespace Strata
                 return null;
             }
 
-            Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, target);
-            job.count = cargo.stackCount;
-            job.haulMode = HaulMode.ToContainer;
+            CompRefuelable refuel = target.GetComp<CompRefuelable>();
+            if (refuel?.Props == null)
+            {
+                return null;
+            }
+
+            if (refuel.Props.atomicFueling)
+            {
+                Job atomic = JobMaker.MakeJob(JobDefOf.RefuelAtomic, target);
+                atomic.targetQueueB = new List<LocalTargetInfo> { cargo };
+                atomic.count = cargo.stackCount;
+                return atomic;
+            }
+
+            Job job = JobMaker.MakeJob(JobDefOf.Refuel, target, cargo);
+            job.count = System.Math.Min(cargo.stackCount, refuel.GetFuelCountToFullyRefuel());
             return job;
         }
 

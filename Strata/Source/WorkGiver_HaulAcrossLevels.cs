@@ -188,7 +188,7 @@ namespace Strata
         // powered elevators preferred - that is actually usable right now.
         private static MapPortal UsableStep(Pawn pawn, LevelGraph.LevelLink link)
         {
-            MapPortal step = LevelGraph.BestFirstStep(pawn.Map, link.map, pawn.Position) ?? link.firstStep;
+            MapPortal step = LevelGraph.BestFirstStep(pawn.Map, link.map, pawn.Position, pawn) ?? link.firstStep;
             if (step.Spawned && step.IsEnterable(out _)
                 && pawn.CanReach(step, PathEndMode.Touch, Danger.Some))
             {

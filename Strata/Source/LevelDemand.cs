@@ -60,15 +60,17 @@ namespace Strata
             return false;
         }
 
-        // Every def any level linked to 'from' is short of. Materialized into
-        // a fresh set because callers iterate it while LevelGraph's shared
-        // buffer gets reused underneath them.
+        // Every def any level linked to 'from' is short of. Snapshot the
+        // ReachableLevels buffer first: Get → Build → AddStorageUpgradePulls
+        // also calls ReachableLevels, which clears the shared list mid-foreach
+        // (Collection was modified).
         public static HashSet<ThingDef> DefsWantedByLinkedLevels(Map from)
         {
             var wanted = new HashSet<ThingDef>();
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(from))
+            var links = new List<LevelGraph.LevelLink>(LevelGraph.ReachableLevels(from));
+            for (int i = 0; i < links.Count; i++)
             {
-                foreach (KeyValuePair<ThingDef, int> kv in Get(link.map).missing)
+                foreach (KeyValuePair<ThingDef, int> kv in Get(links[i].map).missing)
                 {
                     wanted.Add(kv.Key);
                 }
@@ -182,9 +184,11 @@ namespace Strata
                 return;
             }
 
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
+            // Snapshot: nested demand Get/Build must not clobber this walk.
+            var links = new List<LevelGraph.LevelLink>(LevelGraph.ReachableLevels(map));
+            for (int i = 0; i < links.Count; i++)
             {
-                Map other = link.map;
+                Map other = links[i].map;
                 if (other == null || other == map)
                 {
                     continue;
