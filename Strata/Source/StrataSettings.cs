@@ -44,6 +44,7 @@ namespace Strata
         public bool explorationSitesEnabled = true;
         public bool floodEventsEnabled = true;
         public bool crossLevelRitualsEnabled = true;
+        public bool crossLevelCaravansEnabled = true;
         public bool mergedAbandonWarning = true;
         public bool showLinkedColonistsInWorkScheduleTabs = true;
         public bool nativeCavernLayoutEnabled = true;
@@ -96,6 +97,7 @@ namespace Strata
             Scribe_Values.Look(ref explorationSitesEnabled, "explorationSitesEnabled", defaultValue: true);
             Scribe_Values.Look(ref floodEventsEnabled, "floodEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelRitualsEnabled, "crossLevelRitualsEnabled", defaultValue: true);
+            Scribe_Values.Look(ref crossLevelCaravansEnabled, "crossLevelCaravansEnabled", defaultValue: true);
             Scribe_Values.Look(ref mergedAbandonWarning, "mergedAbandonWarning", defaultValue: true);
             Scribe_Values.Look(ref showLinkedColonistsInWorkScheduleTabs, "showLinkedColonistsInWorkScheduleTabs", defaultValue: true);
             Scribe_Values.Look(ref nativeCavernLayoutEnabled, "nativeCavernLayoutEnabled", defaultValue: true);
@@ -228,6 +230,8 @@ namespace Strata
                 "Strata_Settings_CaravanPullDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_CrossLevelRituals".Translate(), ref Settings.crossLevelRitualsEnabled,
                 "Strata_Settings_CrossLevelRitualsDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_CrossLevelCaravans".Translate(), ref Settings.crossLevelCaravansEnabled,
+                "Strata_Settings_CrossLevelCaravansDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_CageSustainHunger".Translate(), ref Settings.cageSustainHunger,
                 "Strata_Settings_CageSustainHungerDesc".Translate());
             listing.Gap();
