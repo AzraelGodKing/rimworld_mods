@@ -1,5 +1,5 @@
 # Batch alpha-fix every Homesteader PNG except seamless terrain tiles.
-$repo = $PSScriptRoot
+$repo = Split-Path $PSScriptRoot -Parent
 $root = Join-Path $repo 'Homesteader\Textures'
 $conservative = @(
     'UltratechBattery.png',
@@ -20,5 +20,5 @@ foreach ($f in $files) {
 }
 
 Write-Output "Processing $($full.Count) textures (full clean), $($gentle.Count) conservative, skipping terrain."
-& (Join-Path $repo 'fix_texture_alpha.ps1') -Paths $full
-& (Join-Path $repo 'fix_texture_alpha.ps1') -Paths $gentle -Conservative
+& (Join-Path $PSScriptRoot 'fix_texture_alpha.ps1') -Paths $full
+& (Join-Path $PSScriptRoot 'fix_texture_alpha.ps1') -Paths $gentle -Conservative
