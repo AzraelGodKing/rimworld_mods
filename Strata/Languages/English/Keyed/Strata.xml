@@ -27,6 +27,8 @@
   <Strata_Settings_CaravanPullDesc>While forming a caravan on the surface, colonists haul high-value goods up from linked underground levels.</Strata_Settings_CaravanPullDesc>
   <Strata_Settings_CrossLevelRituals>Cross-level rituals</Strata_Settings_CrossLevelRituals>
   <Strata_Settings_CrossLevelRitualsDesc>The ritual menu lists colonists from every linked level; those elsewhere walk to the ritual and join when they arrive.</Strata_Settings_CrossLevelRitualsDesc>
+  <Strata_Settings_CrossLevelCaravans>Cross-level caravans</Strata_Settings_CrossLevelCaravans>
+  <Strata_Settings_CrossLevelCaravansDesc>The form-caravan dialog lists colonists, prisoners, and colony animals from every linked level; those elsewhere walk to the surface gathering and join when they arrive. Downed pawns on other levels cannot climb and are left out.</Strata_Settings_CrossLevelCaravansDesc>
   <Strata_Settings_CageSustainHunger>Sustain caged bird hunger</Strata_Settings_CageSustainHunger>
   <Strata_Settings_CageSustainHungerDesc>When off (default), canary and bird cages feed occupants from stocked hay or kibble. When on, hunger is frozen while a bird is caged — no food storage needed.</Strata_Settings_CageSustainHungerDesc>
   <Strata_Settings_SmokeGas>Smoke &amp; gas</Strata_Settings_SmokeGas>
@@ -109,6 +111,7 @@
   <Strata_Alert_FlammableGas_Explanation>Flammable gas is pooling in a room that contains an open flame - a torch, a campfire, or a running fuel burner. When the gas thickens past ignition density the room will explode. Extinguish the flame, vent the room, or switch to electric light.</Strata_Alert_FlammableGas_Explanation>
   <Strata_Alert_CaravanGoods_Label>Caravan goods below</Strata_Alert_CaravanGoods_Label>
   <Strata_Alert_CaravanGoods_Explanation>Valuable items remain on linked underground levels while a caravan is being formed on the surface. Enable caravan pull in Strata settings or haul them up manually before leaving.</Strata_Alert_CaravanGoods_Explanation>
+  <Strata_MessageCaravanDownedExcluded>Cannot bring downed pawns from other levels into the caravan (they cannot climb): {0}</Strata_MessageCaravanDownedExcluded>
   <Strata_Alert_SealedColonists_Label>Colonists sealed off</Strata_Alert_SealedColonists_Label>
   <Strata_Alert_SealedColonists_Explanation>Colonists are on a linked level whose every exit shaft is sealed. They cannot return until a stairwell or elevator is unsealed.</Strata_Alert_SealedColonists_Explanation>
   <Strata_Alert_Canary_Label>Canary warning</Strata_Alert_Canary_Label>

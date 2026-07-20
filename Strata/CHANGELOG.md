@@ -5,6 +5,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 ## [Unreleased]
 
 ### Added
+- **Cross-level caravans** — form-caravan on a Strata surface root lists colonists, prisoners, and colony animals from every linked level (`crossLevelCaravansEnabled`, default ON). Off-map members walk/escort through stairwells and join the forming lord on arrival; departure waits for them (timeouts never block forever). Off-map downed pawns are excluded with a message. Items still use existing caravan-pull / stairhead haul. Build stamp `cross-level-caravans-v1`.
 - **VTE shaft AC duct junction** — soft-compat `Strata_ShaftFluid_VTE` bridges Vanilla Temperature Expanded air ducts between floors (surface compressors + control unit feed underground AC). Shares combined efficiency / single-controller rules across paired nets. Build stamp `vte-shaft-ac-junction-v1`.
 - **Gravship elevators (Odyssey)** — powered 1×1 shafts for underdeck and tower decks (`Strata_GravshipElevatorDown` / `BuildUp`), same substructure-only placement and takeoff travel as gravship stairs; shares underdeck/upper pockets with those stairs. Needs Elevators + Digging down / Building up. Build stamp `gravship-elevator-v1`.
 - **Russian translation** — community DefInjected pack under `Languages/Russian/` (buildings, research, incidents, jobs, gases, terrain, thoughts, etc.) plus community Keyed gravship/shaft-fluid files (untouched). AI fill-in `Keyed/Strata.xml` covers remaining C# strings in the same terminology (уровень, лестница, шахта, гравикорабль).
