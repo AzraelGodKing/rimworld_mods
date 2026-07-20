@@ -32,7 +32,8 @@ function Set-ZipEntryFile {
     }
 }
 
-foreach ($mod in @('Homesteader', 'Stormproof', 'Strata', 'Nemesis')) {
+# Nemesis is intentionally not packaged for public download yet.
+foreach ($mod in @('Homesteader', 'Stormproof', 'Strata')) {
     $zip = Join-Path $out "$mod.zip"
     git -C $repo archive --format=zip -o $zip HEAD $mod
     if ($LASTEXITCODE -ne 0) { throw "git archive failed for $mod" }
