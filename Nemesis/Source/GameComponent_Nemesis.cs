@@ -193,6 +193,7 @@ namespace Nemesis
                 huntStartTick = Find.TickManager.TicksGame,
                 ignoredActionsCount = 0,
                 engagedSinceLastAction = false,
+                archetype = NemesisData.RollArchetype(),
             };
 
             // Hunted mood is ThoughtWorker-driven for the fixation target; spike/relief are memories.
@@ -802,6 +803,13 @@ namespace Nemesis
             if (SoftCompat.StrataActive)
                 food *= 1.15f;
 
+            // Archetype personality bias (Phase 1).
+            ApplyArchetypeBias(_data.archetype, ref taunt, ref raid, ref assault, ref fake,
+                ref sabotage, ref food, ref kidnap, ref sniper, ref grave, ref tamper, ref informant);
+
+            // Live trait leak — no LINQ; fail-open if pawn/traits missing.
+            ApplyTraitBias(FindNemesisPawn(), ref assault, ref sabotage);
+
             // Variety guard: heavily downweight the last action so it never fires twice in a row.
             int last = _data.lastActionKind;
             if (last >= 0)
@@ -845,6 +853,48 @@ namespace Nemesis
             if ((roll -= informant) < 0f) return NemesisAction.InformantReveal;
             if ((roll -= burrow) < 0f) return NemesisAction.StrataBurrow;
             return NemesisAction.CommsTaunt;
+        }
+
+        private static void ApplyArchetypeBias(NemesisArchetype arch,
+            ref float taunt, ref float raid, ref float assault, ref float fake,
+            ref float sabotage, ref float food, ref float kidnap, ref float sniper,
+            ref float grave, ref float tamper, ref float informant)
+        {
+            switch (arch)
+            {
+                case NemesisArchetype.Stalker:
+                    taunt *= 1.45f;
+                    informant *= 1.5f;
+                    sniper *= 1.55f;
+                    break;
+                case NemesisArchetype.Butcher:
+                    raid *= 1.4f;
+                    assault *= 1.55f;
+                    kidnap *= 1.5f;
+                    break;
+                case NemesisArchetype.Saboteur:
+                    sabotage *= 1.55f;
+                    food *= 1.4f;
+                    tamper *= 1.5f;
+                    break;
+                case NemesisArchetype.Trickster:
+                    fake *= 1.5f;
+                    informant *= 1.4f;
+                    grave *= 1.45f;
+                    break;
+            }
+        }
+
+        /// <summary>Read live pawn traits once — Bloodlust bumps assault; Pyromaniac bumps sabotage.</summary>
+        private static void ApplyTraitBias(Pawn nemesis, ref float assault, ref float sabotage)
+        {
+            if (nemesis?.story?.traits == null) return;
+            TraitSet traits = nemesis.story.traits;
+            if (traits.HasTrait(TraitDefOf.Bloodlust))
+                assault *= 1.45f;
+            TraitDef pyro = DefDatabase<TraitDef>.GetNamedSilentFail("Pyromaniac");
+            if (pyro != null && traits.HasTrait(pyro))
+                sabotage *= 1.35f;
         }
 
         private int ActionInterval() => Mathf.Max(

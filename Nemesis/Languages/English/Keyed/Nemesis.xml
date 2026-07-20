@@ -43,11 +43,34 @@
   <Nemesis_Settings_WeightInformant>Informant reveal: {0}</Nemesis_Settings_WeightInformant>
   <Nemesis_Settings_RaidCredit>Raid credit-taking chance: {0}%</Nemesis_Settings_RaidCredit>
   <Nemesis_Settings_IgnoredThreshold>Ignored-action threshold: {0}</Nemesis_Settings_IgnoredThreshold>
-  <Nemesis_Settings_Status>Active hunt: {0} — phase {1} (aggression {2})</Nemesis_Settings_Status>
+  <Nemesis_Settings_Status>Active hunt: {0} — {3} / phase {1} (aggression {2})</Nemesis_Settings_Status>
   <Nemesis_Settings_TrophyLedger>Trophy ledger</Nemesis_Settings_TrophyLedger>
   <Nemesis_Settings_TrophyEmpty>No completed hunts recorded yet.</Nemesis_Settings_TrophyEmpty>
   <Nemesis_Settings_TrophyLine>{0} ({1}) — {2} → {3}</Nemesis_Settings_TrophyLine>
   <Nemesis_Settings_Reset>Reset</Nemesis_Settings_Reset>
+
+  <Nemesis_Archetype_Stalker>Stalker</Nemesis_Archetype_Stalker>
+  <Nemesis_Archetype_Butcher>Butcher</Nemesis_Archetype_Butcher>
+  <Nemesis_Archetype_Saboteur>Saboteur</Nemesis_Archetype_Saboteur>
+  <Nemesis_Archetype_Trickster>Trickster</Nemesis_Archetype_Trickster>
+
+  <Nemesis_Taunt_Stalker_0>{0}: "I counted the steps from the gate to {1}'s bed. Twice."</Nemesis_Taunt_Stalker_0>
+  <Nemesis_Taunt_Stalker_1>{0}: "You never look up. I always do. Especially at {1}."</Nemesis_Taunt_Stalker_1>
+  <Nemesis_Taunt_Stalker_2>{0}: "Shadows suit me. {1} looks better in them."</Nemesis_Taunt_Stalker_2>
+  <Nemesis_Taunt_Butcher_0>{0}: "I don't write letters. I write wounds. {1} is next."</Nemesis_Taunt_Butcher_0>
+  <Nemesis_Taunt_Butcher_1>{0}: "Soft people. Soft walls. {1} will break first."</Nemesis_Taunt_Butcher_1>
+  <Nemesis_Taunt_Butcher_2>{0}: "Save the bandages. You will need them for {1}."</Nemesis_Taunt_Butcher_2>
+  <Nemesis_Taunt_Saboteur_0>{0}: "Your grid hums like a heartbeat. I know where to cut it for {1}."</Nemesis_Taunt_Saboteur_0>
+  <Nemesis_Taunt_Saboteur_1>{0}: "Lights out. Locks open. {1} alone in the dark."</Nemesis_Taunt_Saboteur_1>
+  <Nemesis_Taunt_Saboteur_2>{0}: "I don't need an army. I need a fuse and {1}'s schedule."</Nemesis_Taunt_Saboteur_2>
+  <Nemesis_Taunt_Trickster_0>{0}: "Believe the next signal. Or don't. {1} loses either way."</Nemesis_Taunt_Trickster_0>
+  <Nemesis_Taunt_Trickster_1>{0}: "I left a gift. Or a trap. Ask {1} which."</Nemesis_Taunt_Trickster_1>
+  <Nemesis_Taunt_Trickster_2>{0}: "Truth is a tool. Lies are sharper. {1} will learn both."</Nemesis_Taunt_Trickster_2>
+
+  <Nemesis_Letter_FoodStolen>{0} stole from your stores — {1} piles gone into their pack, not the dirt.</Nemesis_Letter_FoodStolen>
+  <Nemesis_Letter_CaravanStolenBody>{0} hit the caravan {1} and took what they wanted. Not ruined — taken.</Nemesis_Letter_CaravanStolenBody>
+  <Nemesis_Letter_FireTitle>{0}: Fire</Nemesis_Letter_FireTitle>
+  <Nemesis_Letter_FireBody>Flames near the crops or wood. {0} left no signature but the heat — and a message for {1}.</Nemesis_Letter_FireBody>
 
   <Nemesis_Phase_Watching>Watching</Nemesis_Phase_Watching>
   <Nemesis_Phase_Testing>Testing</Nemesis_Phase_Testing>

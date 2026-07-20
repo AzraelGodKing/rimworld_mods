@@ -71,6 +71,15 @@ namespace Nemesis
         Reckoning,  // 5+ or escape cap / finale
     }
 
+    /// <summary>Personality rolled at hunt creation. Append-only; default Stalker for old saves.</summary>
+    public enum NemesisArchetype
+    {
+        Stalker,
+        Butcher,
+        Saboteur,
+        Trickster,
+    }
+
     public class NemesisTrophyEntry : IExposable
     {
         public string nemesisName;
@@ -157,6 +166,9 @@ namespace Nemesis
         public int graveVisitTick = -1;
         public bool graveVisitDone;
 
+        // --- Personality (Phase 1) ---
+        public NemesisArchetype archetype = NemesisArchetype.Stalker;
+
         public float EffectiveAggression
         {
             get
@@ -193,6 +205,27 @@ namespace Nemesis
                 NemesisHuntPhase.Obsessed => "Nemesis_Phase_Obsessed".Translate(),
                 _ => "Nemesis_Phase_Reckoning".Translate(),
             };
+        }
+
+        public string ArchetypeLabelKeyed()
+        {
+            return archetype switch
+            {
+                NemesisArchetype.Butcher => "Nemesis_Archetype_Butcher".Translate(),
+                NemesisArchetype.Saboteur => "Nemesis_Archetype_Saboteur".Translate(),
+                NemesisArchetype.Trickster => "Nemesis_Archetype_Trickster".Translate(),
+                _ => "Nemesis_Archetype_Stalker".Translate(),
+            };
+        }
+
+        /// <summary>Roll a personality at hunt creation. Equal weight; fail-open Stalker.</summary>
+        public static NemesisArchetype RollArchetype()
+        {
+            int roll = Rand.RangeInclusive(0, 3);
+            if (roll == 1) return NemesisArchetype.Butcher;
+            if (roll == 2) return NemesisArchetype.Saboteur;
+            if (roll == 3) return NemesisArchetype.Trickster;
+            return NemesisArchetype.Stalker;
         }
 
         public int HuntDays
@@ -261,6 +294,7 @@ namespace Nemesis
             Scribe_Values.Look(ref graveVisitPending, "graveVisitPending", false);
             Scribe_Values.Look(ref graveVisitTick, "graveVisitTick", -1);
             Scribe_Values.Look(ref graveVisitDone, "graveVisitDone", false);
+            Scribe_Values.Look(ref archetype, "archetype", NemesisArchetype.Stalker);
         }
     }
 }

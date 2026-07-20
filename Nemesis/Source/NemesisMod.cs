@@ -34,7 +34,8 @@ namespace Nemesis
                 listing.Label("Nemesis_Settings_Status".Translate(
                     comp.Data.nemesisName ?? "?",
                     comp.Data.PhaseLabelKeyed(),
-                    comp.Data.EffectiveAggression.ToString("F1")));
+                    comp.Data.EffectiveAggression.ToString("F1"),
+                    comp.Data.ArchetypeLabelKeyed()));
                 listing.Gap(6f);
 
                 if (comp.Data.active)

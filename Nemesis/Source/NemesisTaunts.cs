@@ -31,6 +31,14 @@ namespace Nemesis
             if (identity != null)
                 return identity;
 
+            // Archetype voice — prefer when present (~50%).
+            if (Rand.Chance(0.5f))
+            {
+                string voice = TryArchetypeVoice(data, name, target);
+                if (voice != null)
+                    return voice;
+            }
+
             if (agg < 3f)
             {
                 return Rand.RangeInclusive(0, 5) switch
@@ -54,6 +62,38 @@ namespace Nemesis
                 4 => "Nemesis_Taunt_High4".Translate(name, target),
                 _ => SoftStormFlavor(data, name, target)
                     ?? "Nemesis_Taunt_High5".Translate(name, target),
+            };
+        }
+
+        private static string TryArchetypeVoice(NemesisData data, string name, string target)
+        {
+            int line = Rand.RangeInclusive(0, 2);
+            return data.archetype switch
+            {
+                NemesisArchetype.Butcher => line switch
+                {
+                    0 => "Nemesis_Taunt_Butcher_0".Translate(name, target),
+                    1 => "Nemesis_Taunt_Butcher_1".Translate(name, target),
+                    _ => "Nemesis_Taunt_Butcher_2".Translate(name, target),
+                },
+                NemesisArchetype.Saboteur => line switch
+                {
+                    0 => "Nemesis_Taunt_Saboteur_0".Translate(name, target),
+                    1 => "Nemesis_Taunt_Saboteur_1".Translate(name, target),
+                    _ => "Nemesis_Taunt_Saboteur_2".Translate(name, target),
+                },
+                NemesisArchetype.Trickster => line switch
+                {
+                    0 => "Nemesis_Taunt_Trickster_0".Translate(name, target),
+                    1 => "Nemesis_Taunt_Trickster_1".Translate(name, target),
+                    _ => "Nemesis_Taunt_Trickster_2".Translate(name, target),
+                },
+                _ => line switch
+                {
+                    0 => "Nemesis_Taunt_Stalker_0".Translate(name, target),
+                    1 => "Nemesis_Taunt_Stalker_1".Translate(name, target),
+                    _ => "Nemesis_Taunt_Stalker_2".Translate(name, target),
+                },
             };
         }
 

@@ -311,6 +311,7 @@ namespace Nemesis
             }
 
             // Soft hit: minor inventory loss if the caravan carries haulables.
+            bool greedy = HasTrait(GameComponent_Nemesis.Instance?.FindNemesisPawn(), "Greedy");
             List<Thing> inventory = new List<Thing>();
             foreach (Thing t in target.AllThings)
             {
@@ -329,15 +330,25 @@ namespace Nemesis
                 ruined++;
             }
 
+            string caravanBody = greedy
+                ? "Nemesis_Letter_CaravanStolenBody".Translate(data.nemesisName, target.LabelCap)
+                : "Nemesis_Letter_CaravanHitBody".Translate(data.nemesisName, target.LabelCap);
+
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_CaravanHitTitle".Translate(data.nemesisName),
-                "Nemesis_Letter_CaravanHitBody".Translate(data.nemesisName, target.LabelCap),
+                caravanBody,
                 LetterDefOf.NegativeEvent,
                 target);
         }
 
         private static void PowerSabotage(NemesisData data, Map map)
         {
+            // Pyromaniac leak: prefer a crop/wood fire over EMP when the trait is present.
+            Pawn nemesis = GameComponent_Nemesis.Instance?.FindNemesisPawn();
+            if (HasTrait(nemesis, "Pyromaniac") && Rand.Chance(0.55f)
+                && TryPyromaniacFire(data, map))
+                return;
+
             List<Building> candidates = new List<Building>();
             List<Building> brains = new List<Building>();
             SoftCompat.CollectStormproofBrainTargets(map, brains);
@@ -456,7 +467,9 @@ namespace Nemesis
             }
 
             bool cellar = SoftCompat.MapHasRootCellar(map);
+            bool greedy = HasTrait(GameComponent_Nemesis.Instance?.FindNemesisPawn(), "Greedy");
             int ruined = 0;
+            int stolen = 0;
             int targetCount = Rand.RangeInclusive(1, 3);
             for (int i = 0; i < foods.Count && ruined < targetCount; i++)
             {
@@ -468,7 +481,14 @@ namespace Nemesis
                 foods.RemoveAt(pick);
                 if (t == null || t.Destroyed) continue;
                 int lose = Mathf.Clamp(t.stackCount / 3, 1, 25);
-                t.SplitOff(lose).Destroy(DestroyMode.Vanish);
+                if (greedy)
+                {
+                    // Steal instead of destroy — vanish from colony stores (no drop).
+                    t.SplitOff(lose).Destroy(DestroyMode.Vanish);
+                    stolen += lose;
+                }
+                else
+                    t.SplitOff(lose).Destroy(DestroyMode.Vanish);
                 ruined++;
             }
 
@@ -478,9 +498,13 @@ namespace Nemesis
                 return;
             }
 
-            string body = cellar
-                ? "Nemesis_Letter_FoodCellar".Translate(data.nemesisName, ruined)
-                : "Nemesis_Letter_FoodBody".Translate(data.nemesisName, ruined);
+            string body;
+            if (greedy && stolen > 0)
+                body = "Nemesis_Letter_FoodStolen".Translate(data.nemesisName, ruined);
+            else if (cellar)
+                body = "Nemesis_Letter_FoodCellar".Translate(data.nemesisName, ruined);
+            else
+                body = "Nemesis_Letter_FoodBody".Translate(data.nemesisName, ruined);
 
             string fav = SoftCompat.TryFavoriteFoodLabel(victim);
             if (fav != null && victim != null)
@@ -930,6 +954,69 @@ namespace Nemesis
 
         private static float AggressionRaidFactor(float aggressionLevel) =>
             Mathf.Lerp(0.55f, 2.2f, (aggressionLevel - 1f) / 9f);
+
+        /// <summary>Trait check without LINQ. Fail-open false if pawn/traits missing.</summary>
+        public static bool HasTrait(Pawn pawn, string traitDefName)
+        {
+            if (pawn?.story?.traits == null || string.IsNullOrEmpty(traitDefName)) return false;
+            TraitDef def = DefDatabase<TraitDef>.GetNamedSilentFail(traitDefName);
+            if (def == null) return false;
+            return pawn.story.traits.HasTrait(def);
+        }
+
+        /// <summary>Pyromaniac: start a small fire near crops or wood stockpiles. Fail-open false.</summary>
+        private static bool TryPyromaniacFire(NemesisData data, Map map)
+        {
+            if (map == null) return false;
+            IntVec3 cell = IntVec3.Invalid;
+
+            // Prefer growing zones / plant cells.
+            List<Zone> zones = map.zoneManager?.AllZones;
+            if (zones != null)
+            {
+                for (int i = 0; i < zones.Count && !cell.IsValid; i++)
+                {
+                    Zone_Growing grow = zones[i] as Zone_Growing;
+                    if (grow == null || grow.cells.Count == 0) continue;
+                    cell = grow.cells[Rand.Range(0, grow.cells.Count)];
+                }
+            }
+
+            if (!cell.IsValid)
+            {
+                // Fallback: wood / flammable haulables.
+                List<Thing> things = map.listerThings?.ThingsInGroup(ThingRequestGroup.HaulableEver);
+                if (things != null)
+                {
+                    for (int i = 0; i < things.Count; i++)
+                    {
+                        Thing t = things[i];
+                        if (t == null || t.Destroyed || t.Faction != Faction.OfPlayer) continue;
+                        if (t.def != ThingDefOf.WoodLog && (t.def.BaseFlammability < 0.5f)) continue;
+                        cell = t.Position;
+                        break;
+                    }
+                }
+            }
+
+            if (!cell.IsValid || !cell.InBounds(map)) return false;
+
+            try
+            {
+                FireUtility.TryStartFireIn(cell, map, Rand.Range(0.4f, 0.85f), null);
+            }
+            catch
+            {
+                return false;
+            }
+
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_FireTitle".Translate(data.nemesisName),
+                "Nemesis_Letter_FireBody".Translate(data.nemesisName, NemesisTaunts.TargetPhrase(data)),
+                LetterDefOf.ThreatSmall,
+                new GlobalTargetInfo(cell, map));
+            return true;
+        }
 
         public static Faction FindFaction(NemesisData data)
         {
