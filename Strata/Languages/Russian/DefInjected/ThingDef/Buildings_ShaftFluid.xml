@@ -30,4 +30,7 @@
   <Strata_ShaftFluid_RimefellerFuel.label>шахтный химтопливный узел</Strata_ShaftFluid_RimefellerFuel.label>
   <Strata_ShaftFluid_RimefellerFuel.description>Передаёт химтопливные трубы Rimefeller между уровнями. Постройте рядом с шахтой и подключите топливные трубы к этому узлу на каждом этаже.</Strata_ShaftFluid_RimefellerFuel.description>
 
+  <Strata_ShaftFluid_Omni.label>омни межэтажный соединитель</Strata_ShaftFluid_Omni.label>
+  <Strata_ShaftFluid_Omni.description>Универсальный шахтный узел, передающий энергию и все поддерживаемые трубопроводные сети между уровнями — воду, отопление, кондиционирование, охлаждение, газ Helixien, химтопливо, нефть и воздуховоды VTE при наличии соответствующих модов. Постройте рядом с лестницей или лифтом; он создаёт ответный соединитель внизу. Можно ставить внутрь стен и на одну клетку с трубами. Сети отсутствующих модов пропускаются автоматически.</Strata_ShaftFluid_Omni.description>
+
 </LanguageData>

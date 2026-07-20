@@ -119,7 +119,7 @@
   <ResearchProjectDef>
     <defName>Strata_FluidShafts</defName>
     <label>fluid shafts</label>
-    <description>Build shaft fluid junctions that meter water, coolant, heating, and gas between levels without merging pipe networks across maps. Only junction types for your loaded pipe mods appear in the architect menu.</description>
+    <description>Build shaft fluid junctions that meter water, coolant, heating, and gas between levels without merging pipe networks across maps. Only junction types for your loaded pipe mods appear in the architect menu. Also unlocks the omni inter-floor connector — one wall-mountable junction for power and every supported pipe network.</description>
     <baseCost>1200</baseCost>
     <techLevel>Industrial</techLevel>
     <tab>Strata</tab>
