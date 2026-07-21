@@ -64,9 +64,14 @@ namespace Strata
         }
 
         // Surface and upper (A+) decks: infinite ambient even in sealed rooms.
+        // Gravship-linked life-support decks are excluded (pumps / tanks / umbilical).
         public static bool ForcesAmbientInEnclosedRooms(Map map)
         {
             if (map == null)
+            {
+                return false;
+            }
+            if (StrataGravshipLifeSupport.IsLifeSupportDeck(map))
             {
                 return false;
             }
@@ -77,6 +82,11 @@ namespace Strata
         public static float NaturalReplenishRate(Map map)
         {
             if (map == null)
+            {
+                return 0f;
+            }
+            // VGE-style: gravship underdecks / ship towers do not free-replenish O₂.
+            if (StrataGravshipLifeSupport.IsLifeSupportDeck(map))
             {
                 return 0f;
             }

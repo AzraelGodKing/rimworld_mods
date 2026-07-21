@@ -323,7 +323,22 @@ namespace Strata
             if (this.IsHashIntervalTick(ExchangeInterval))
             {
                 ExchangeTemperature();
+                ExchangeGravshipAtmosphere();
             }
+        }
+
+        /// <summary>Open gravship shafts act as an O₂ umbilical (VGE-style life support bridge).</summary>
+        private void ExchangeGravshipAtmosphere()
+        {
+            if (!PocketMapExists || exit == null || !exit.Spawned || Sealed)
+            {
+                return;
+            }
+            if (this is not IStrataGravshipPortal)
+            {
+                return;
+            }
+            StrataGravshipLifeSupport.ExchangeAtmosphereAcrossShaft(Map, Position, exit.Map, exit.Position);
         }
 
         private void ExchangeTemperature()

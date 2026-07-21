@@ -29,6 +29,25 @@ namespace Strata
         }
     }
 
+    // VGE-style launch heat → Strata heatsinks (skipped when VGE CompHeatManager is present).
+    [HarmonyPatch(typeof(Building_GravEngine), nameof(Building_GravEngine.ConsumeFuel))]
+    public static class Patch_Gravship_ConsumeFuel_Heat
+    {
+        public static void Postfix(Building_GravEngine __instance, PlanetTile tile)
+        {
+            if (__instance?.Map == null)
+            {
+                return;
+            }
+            float cost = 50f;
+            if (GravshipUtility.TryGetPathFuelCost(__instance.Map.Tile, tile, out float pathCost, out _))
+            {
+                cost = pathCost;
+            }
+            StrataGravshipHeat.AddLaunchHeat(__instance, cost);
+        }
+    }
+
     // Vanilla only warns about pawns on the engine map. Flag colony digs /
     // linked floors that will not travel (RescueAtTakeoff still pulls
     // prisoners/babies when launch actually starts).

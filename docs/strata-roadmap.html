@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Strata V3 Roadmap — coming later</title>
-<meta name="description" content="Strata V3 roadmap placeholder. Track ideas and bugs on GitHub issues until a full roadmap is published.">
+<title>Strata V3 Roadmap</title>
+<meta name="description" content="Strata V3 backlog: AASB-inspired polish ideas and future work. Track bugs on GitHub issues.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,10 +26,10 @@
 <header class="hero strata">
   <div class="wrap">
     <h1 class="t">STRATA — V3</h1>
-    <p class="tagline">Roadmap coming later</p>
+    <p class="tagline">Polish backlog (AASB-inspired) + deep-base future work</p>
     <div class="badges">
       <span class="badge strata">V2 shipped</span>
-      <span class="badge strata">V3 TBD</span>
+      <span class="badge strata">Backlog draft</span>
     </div>
     <div class="cta">
       <a class="btn btn-strata" href="strata.html">&#8592; Back to Strata</a>
@@ -40,11 +40,66 @@
 
 <div class="wrap">
 
-  <section id="v3">
-    <h2 class="t">V3 Roadmap</h2>
-    <p class="sub">Nothing here yet. We&rsquo;ll publish a real roadmap after V2 settles.</p>
+  <section id="aasb-polish">
+    <h2 class="t">AASB-inspired polish (parked)</h2>
+    <p class="sub">Ideas from comparing Strata to <em>As above, So below</em>. Steal polish, not the 3-level hard cap. Do not run Strata alongside AASB or MultiFloors.</p>
+
+    <h3 class="t">High value</h3>
+    <ol>
+      <li><b>Live see-through roof view</b> — From A+/sky decks, render the surface through open roof holes (live pawns, weather, water).</li>
+      <li><b>Mental breaks that cross stairs</b> — Binges find other-level stash; berserkers chase victims through shafts.</li>
+      <li><b>Raider divert polish</b> — Tighten existing raid pursuit so fights don’t die on the wrong floor.</li>
+      <li><b>Vertical utilities as one net</b> — Shaft junctions feel tankless/battery-free where the host net allows (DBH/VTE especially).</li>
+      <li><b>Per-system kill-switches</b> — Auto-disable haul relay / atmosphere / shaft fluid / robot soft-compat on repeated errors (beyond the master performance kill-switch).</li>
+    </ol>
+
+    <h3 class="t">Medium value</h3>
+    <ol start="6">
+      <li><b>Hospitality / guest / trader pathing</b> across levels.</li>
+      <li><b>Vehicle Framework</b> soft-compat (roof-deck park/land rules).</li>
+      <li><b>Modder API</b> — reachable levels, first stair step, register vertical link, underground incident policy.</li>
+      <li><b>Depth dim / mood slider</b> for looking down from upper decks.</li>
+    </ol>
+
     <div class="note strata">
-      <b>For now:</b> suggest features, report bugs, and track work on
+      <b>Explicitly not copying:</b> hard cap at 1 up + 1 down; flat 12°C basement instead of geothermal + atmosphere.
+      Optional later: a “shallow colony” settings preset (max ±1) without gutting deep play.
+    </div>
+  </section>
+
+  <section id="multifloors-gravship">
+    <h2 class="t">MultiFloors-inspired (parked)</h2>
+    <p class="sub">Steal reliability and UX ideas — especially for Odyssey gravship linking. Do not adopt Prepatcher or MultiFloors’ amplifier as a hard dependency model without rewriting Strata’s pocket-stack follow.</p>
+
+    <h3 class="t">Gravship — priority (linking pain)</h3>
+    <ol>
+      <li><b>Explicit travel entitlement (Amplifier-like)</b> — Gate which floors/cells follow launch with a clear host-side building or shaft flag, instead of only “any IStrataGravshipPortal pocket”. Reduces orphan ambiguity and GravAnchor leftovers.</li>
+      <li><b>Ship ladder as grav-extender spine</b> — Gravship shaft/elevator should expand / own vertical substructure range the way MultiFloors ladders act as extenders, so A+/B+ placement is not only projected silhouette + Harmony.</li>
+      <li><b>Stable shaft identity across land</b> — Persist a stack GUID + per-shaft ID (not just pocketMapId heuristics) so land never spawns a second “New” underdeck when packed stairs replace temp shafts.</li>
+      <li><b>Substructure-ready gate before paint/rewire</b> — Never CompleteLanding footprint rebuild until host ValidSubstructure (or VGE foundation proxy) is non-empty; single deferred sync path, not multi-hook races.</li>
+      <li><b>One engine of record</b> — Pin travelling stack to the packed ship’s engine thingID at takeoff; never PreferBestEngine / CurrentMap fallback during land rebind.</li>
+      <li><b>Multi-shaft wiring table</b> — Snapshot engine-relative offset → pocketMapId → under/tower for every host shaft; restore by table, not “first matching type wins”.</li>
+    </ol>
+
+    <h3 class="t">General MultiFloors UX worth stealing</h3>
+    <ul>
+      <li>Per-level work-type toggles (turn off hauling on a floor).</li>
+      <li>Medical bed preference across levels (already partly there — finish).</li>
+      <li>Reinstall buildings across levels.</li>
+      <li>Upper-level top-down / see-through renderer (overlaps AASB #1).</li>
+      <li>Float-menu / caravan selection that sees other levels (MultiFloors’ stated gaps — beat them).</li>
+    </ul>
+
+    <div class="note strata">
+      <b>Do not copy blindly:</b> Prepatcher requirement; “everything on upper substructure in amplifier range packs as cargo” without a migration plan from pocket maps; no-cross-level-combat as a permanent Strata limit.
+    </div>
+  </section>
+
+  <section id="v3">
+    <h2 class="t">Already Strata’s lane</h2>
+    <p class="sub">Keep owning these vs MultiFloors / AASB: unlimited digs &amp; towers, mine atmosphere, Odyssey/VGE gravship stacks, deep events, Biomes! cavern layouts, soft fluid shaft suite.</p>
+    <div class="note strata">
+      Suggest features and report bugs on
       <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">GitHub issues</a>.
     </div>
   </section>
