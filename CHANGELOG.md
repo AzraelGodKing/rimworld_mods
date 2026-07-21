@@ -7,11 +7,19 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 - **Repo** — `art/brought/` convention + Cursor rule: brought sprites may be installed as-is, never used as generation / style references.
 - **Repo** — ignore `Homesteader/Textures.rar` (local texture dump).
 - **Docs** — Strata V3 roadmap: drop “Out of V3” exclusion note. → [docs/strata-roadmap.html](docs/strata-roadmap.html)
-- **Strata** — V3 level depth cap: ±4 default, Unlimited levels setting off. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — V3 level depth cap: ±2 default (was ±4), Unlimited levels setting off; large gravship underdeck sync hitch reduced. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — V3 G1: pin takeoff grav engine thingID for land rebind (no PreferBestEngine/CurrentMap). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — gravship land: stop double-snapping underdeck contents (walls/beds drifting into rock). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — gravship land: reclaim packed shafts / prefer engineDelta so furniture stays on the pad. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — gravship takeoff: despawn host stairs on GravAnchor-kept maps (not only on abandon). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — gravship land: stop periodic content snaps (RGB / HiddenConduit spam after bad shaft restore). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — gravship land: shaft-snap to on-ship stairs + exact deck paint (fix Venn offset). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — gravship land: clear orphan ghost pads (no deck restore under off-ship stragglers). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — gravship underdeck: MultiFloors-style pad-only silhouette (engineDelta + void off-pad). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — soft-compat with **Vanilla Gravship Expanded - Chapter 1** plus VGE-inspired **gravship life support**; VGE new-game crash fix; `Strata_HaulAcrossLevels` “Collection was modified” (ReachableLevels reentrancy). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Nemesis (in progress)** — personal-antagonist mod foundation landed under `Nemesis/` (`AzraelGodKing.Nemesis`). Core hunt loop, multi-type harassment, soft compat stubs with Stormproof / Strata / Homesteader. Original foundation by Dredd (Misakabob); expanded here. Public site teaser remains mysterious at `docs/signal.html`. **No public `Nemesis.zip` download** for now (CI still compiles). → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
 - **Docs** — mysterious hub teaser + `docs/signal.html` for the personal-antagonist idea (classified / incoming-signal framing).
-- **Docs** — Strata V3 target locked (`feature/strata-v3`, includes VGE Chapter 1 compat): New Gravship Linking / Polish / More UX changes, ±4 cap. → [docs/strata-roadmap.html](docs/strata-roadmap.html)
+- **Docs** — Strata V3 target locked (`feature/strata-v3`, includes VGE Chapter 1 compat): New Gravship Linking / Polish / More UX changes, ±2 cap. → [docs/strata-roadmap.html](docs/strata-roadmap.html)
 - **Homesteader / Stormproof** — cinematic Workshop preview makeover (Strata-style painted scenes) + docs hub cards use the new banners.
 - **Repo** — Removed decompiled RimWorld scratch under `Strata/Tools/`. Download zips no longer committed; CI builds all four mods (incl. Nemesis), publishes zips to the rolling `latest` GitHub Release (PR runs stay read-only; `latest` tag force-moved to the build SHA), and PRs get compile-only checks. Root PowerShell utilities moved to `scripts/`. Dropped leftover `docs/wellspring.html` and `scripts/fix_wellspring_textures.ps1`.
 - **Strata / Homesteader / Stormproof** — mod-local performance (FPS+-inspired, no global FPS+ clones): idle raid skips, gas overlay/motes on viewed map only, dirty-flag root cellar cooling, staggered allergy scans, ion-storm LINQ removal.

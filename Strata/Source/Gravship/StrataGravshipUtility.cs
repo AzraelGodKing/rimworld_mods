@@ -34,6 +34,61 @@ namespace Strata
             return null;
         }
 
+        /// <summary>G1: exact thingID lookup — never PreferBestEngine.</summary>
+        public static Building_GravEngine FindGravEngineByThingId(Map map, int thingId)
+        {
+            if (map?.listerBuildings == null || thingId < 0)
+            {
+                return null;
+            }
+            foreach (Building_GravEngine engine in map.listerBuildings.AllBuildingsColonistOfClass<Building_GravEngine>())
+            {
+                if (engine != null && engine.Spawned && engine.thingIDNumber == thingId)
+                {
+                    return engine;
+                }
+            }
+            return null;
+        }
+
+        public static Building_GravEngine FindGravEngineByThingIdAnywhere(int thingId)
+        {
+            if (thingId < 0 || Find.Maps == null)
+            {
+                return null;
+            }
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Building_GravEngine engine = FindGravEngineByThingId(maps[i], thingId);
+                if (engine != null)
+                {
+                    return engine;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// G1 land rebind: when <paramref name="pinnedThingId"/> is set, resolve only that engine.
+        /// No PreferBestEngine / first-engine fallback while a pin is active.
+        /// </summary>
+        public static Building_GravEngine FindGravEngineForLandRebind(Map host, int pinnedThingId)
+        {
+            if (pinnedThingId >= 0)
+            {
+                Building_GravEngine pinned = FindGravEngineByThingId(host, pinnedThingId);
+                if (pinned != null)
+                {
+                    return pinned;
+                }
+                Log.Warning("[Strata] G1: pinned takeoff engine thingID " + pinnedThingId
+                    + " not found on host map — skipping PreferBestEngine fallback.");
+                return null;
+            }
+            return FindGravEngineOnMap(host);
+        }
+
         // Host engine, or the engine on the gravship stack root when map is a linked B+/A+ floor.
         public static Building_GravEngine FindGravEngine(Map map)
         {
