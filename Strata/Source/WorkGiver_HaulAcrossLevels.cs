@@ -68,14 +68,15 @@ namespace Strata
         private static StoragePriority MaxStoragePriorityOnLinkedLevels(Map from)
         {
             StoragePriority max = StoragePriority.Unstored;
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(from))
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(from);
+            for (int i = 0; i < links.Count; i++)
             {
-                List<SlotGroup> groups = link.map.haulDestinationManager.AllGroupsListForReading;
-                for (int i = 0; i < groups.Count; i++)
+                List<SlotGroup> groups = links[i].map.haulDestinationManager.AllGroupsListForReading;
+                for (int g = 0; g < groups.Count; g++)
                 {
-                    if (groups[i].Settings.Priority > max)
+                    if (groups[g].Settings.Priority > max)
                     {
-                        max = groups[i].Settings.Priority;
+                        max = groups[g].Settings.Priority;
                     }
                 }
             }
@@ -130,8 +131,13 @@ namespace Strata
             {
                 return false;
             }
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
+            // Snapshot once: MissingOn → Build → AddStorageUpgradePulls used to
+            // call ReachableLevels and clear the shared buffer mid-foreach
+            // (Collection was modified on Mech_Lifter / Strata_HaulAcrossLevels).
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(pawn.Map);
+            for (int i = 0; i < links.Count; i++)
             {
+                LevelGraph.LevelLink link = links[i];
                 if (LevelDemand.MissingOn(link.map, t.def) > 0
                     && LevelDemand.AnySiteReachable(link.map, t.def, link.arrivalCell))
                 {
@@ -159,8 +165,9 @@ namespace Strata
             MapPortal best = null;
             Map bestMap = null;
             StoragePriority bestPriority = localBest;
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
+            for (int i = 0; i < links.Count; i++)
             {
+                LevelGraph.LevelLink link = links[i];
                 StoragePriority p = BestAcceptingPriority(link.map, t, bestPriority, link.arrivalCell);
                 if (p > bestPriority)
                 {
