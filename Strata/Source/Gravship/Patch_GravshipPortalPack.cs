@@ -60,6 +60,9 @@ namespace Strata
             public bool isTower;
             // Takeoff engine facing; Invalid = legacy save (skip rotation delta).
             public Rot4 engineRotationAtTakeoff = Rot4.Invalid;
+            // G2 stable identity
+            public string shaftId;
+            public string stackGuid;
 
             public void ExposeData()
             {
@@ -69,6 +72,8 @@ namespace Strata
                 Scribe_Values.Look(ref pocketMapId, "pocketMapId", -1);
                 Scribe_Values.Look(ref isTower, "isTower", false);
                 Scribe_Values.Look(ref engineRotationAtTakeoff, "engineRotationAtTakeoff", Rot4.Invalid);
+                Scribe_Values.Look(ref shaftId, "shaftId");
+                Scribe_Values.Look(ref stackGuid, "stackGuid");
             }
         }
 
@@ -247,21 +252,36 @@ namespace Strata
                 }
 
                 int pocketId = portal.PocketMapExists ? portal.PocketMap.uniqueID : -1;
+                CompStrataGravshipShaft identity = StrataGravshipShaftIdentity.CompOf(portal);
+                string shaftId = StrataGravshipShaftIdentity.GetOrMintShaftId(portal);
+                string stackGuid = WorldComponent_StrataGravshipStacks.Get()?.PeekOrMintStackGuid();
+                if (identity != null)
+                {
+                    identity.BindStack(stackGuid);
+                    if (pocketId >= 0)
+                    {
+                        identity.RememberPocket(portal.PocketMap);
+                    }
+                }
                 snapshots.Add(new PortalSnapshot
                 {
                     defName = portal.def.defName,
                     offsetFromEngine = portal.Position - engine.Position,
                     rotation = portal.Rotation,
-                    pocketMapId = pocketId,
+                    pocketMapId = pocketId >= 0
+                        ? pocketId
+                        : (identity?.lastPocketMapId ?? -1),
                     isTower = StrataGravshipUtility.IsGravshipTowerShaft(portal),
                     engineRotationAtTakeoff = engine.Rotation,
+                    shaftId = shaftId,
+                    stackGuid = stackGuid,
                 });
             }
 
             if (snapshots.Count > 0)
             {
                 Log.Message("[Strata] Gravship takeoff: snapshot "
-                    + snapshots.Count + " host shaft(s) for land reconnect.");
+                    + snapshots.Count + " host shaft(s) for land reconnect (G2 shaft IDs).");
             }
         }
 
@@ -410,6 +430,11 @@ namespace Strata
             for (int i = 0; i < snapshots.Count; i++)
             {
                 PortalSnapshot snap = snapshots[i];
+                if (!snap.shaftId.NullOrEmpty()
+                    && StrataGravshipShaftIdentity.FindHostShaftById(host, snap.shaftId) != null)
+                {
+                    continue;
+                }
                 if (FindHostShaftMatching(host, engine, snap) != null)
                 {
                     continue;
@@ -459,9 +484,10 @@ namespace Strata
                     }
                 }
 
-                // Prefer the packed cargo Thing (may be Spawned with Map==null).
-                // Never MakeThing a duplicate — that is what shaft-snaps furniture off-pad.
-                MapPortal existing = FindPackedShaft(landShip, snap.defName)
+                // G2: reclaim by shaftId from cargo first — never MakeThing a twin.
+                MapPortal existing = StrataGravshipShaftIdentity.FindPackedShaftById(
+                        landShip, snap.shaftId)
+                    ?? FindPackedShaft(landShip, snap.defName)
                     ?? FindShaftThingAnywhere(snap.defName);
                 if (existing != null)
                 {
@@ -472,8 +498,23 @@ namespace Strata
 
                     ForceUnspawn(existing);
                     GenSpawn.Spawn(existing, cell, host, spawnRot);
+                    CompStrataGravshipShaft id = StrataGravshipShaftIdentity.CompOf(existing);
+                    if (id != null)
+                    {
+                        if (!snap.shaftId.NullOrEmpty())
+                        {
+                            id.shaftId = snap.shaftId;
+                        }
+                        id.BindStack(snap.stackGuid);
+                        if (snap.pocketMapId >= 0)
+                        {
+                            Map pocket = StrataGravshipOrphanLevels.FindMapById(snap.pocketMapId);
+                            id.RememberPocket(pocket);
+                        }
+                    }
                     Log.Message("[Strata] Gravship land: reclaimed packed shaft "
-                        + def.defName + " at " + cell);
+                        + def.defName + " at " + cell
+                        + (snap.shaftId.NullOrEmpty() ? "" : " (shaftId " + snap.shaftId + ")"));
                     continue;
                 }
 
@@ -736,8 +777,7 @@ namespace Strata
             var wiredPockets = new HashSet<Map>();
             var claimedShafts = new HashSet<MapPortal>();
 
-            // Prefer takeoff pocketMapId so the furnished travelling floor wins
-            // over a freshly generated empty underdeck.
+            // G2: wire by shaftId → pocketMapId first (furnished travelling floor).
             if (engine != null)
             {
                 for (int i = 0; i < snapshots.Count; i++)
@@ -748,7 +788,16 @@ namespace Strata
                     {
                         continue;
                     }
-                    MapPortal shaft = FindHostShaftMatching(host, engine, snap, claimedShafts);
+                    MapPortal shaft = null;
+                    if (!snap.shaftId.NullOrEmpty())
+                    {
+                        shaft = StrataGravshipShaftIdentity.FindHostShaftById(host, snap.shaftId);
+                        if (shaft != null && claimedShafts.Contains(shaft))
+                        {
+                            shaft = null;
+                        }
+                    }
+                    shaft ??= FindHostShaftMatching(host, engine, snap, claimedShafts);
                     MapPortal landing = FindLandingOn(pocket);
                     if (shaft == null || landing == null)
                     {
@@ -898,6 +947,7 @@ namespace Strata
             if (landing.Map != null)
             {
                 AccessTools.Field(typeof(MapPortal), "pocketMap").SetValue(hostShaft, landing.Map);
+                StrataGravshipShaftIdentity.CompOf(hostShaft)?.RememberPocket(landing.Map);
             }
 
             // Ensure pocket parenting points at the shaft's host map.
