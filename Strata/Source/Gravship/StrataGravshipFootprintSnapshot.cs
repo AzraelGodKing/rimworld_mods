@@ -177,6 +177,19 @@ namespace Strata
                     }
                 }
             }
+            // VGE: pull in scaffold/damaged foundation cells near the engine when
+            // Odyssey sets are thin right after land.
+            if (StrataVgeCompat.Active && host != null && (live == null || live.Count == 0))
+            {
+                CellRect around = CellRect.CenteredOn(origin, 24).ClipInsideMap(host);
+                foreach (IntVec3 cell in around)
+                {
+                    if (StrataVgeCompat.CellHasShipFoundation(host, cell))
+                    {
+                        cells.Add(cell);
+                    }
+                }
+            }
             return cells;
         }
 

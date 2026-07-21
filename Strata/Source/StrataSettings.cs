@@ -53,6 +53,8 @@ namespace Strata
         public float ancientColonyStairwellChance = 0.35f;
         public bool cageSustainHunger = false;
         public bool multiFloorStairs = false;
+        /// <summary>Gravship underdecks need pumps/tanks/heatsinks (VGE-inspired). Default ON.</summary>
+        public bool gravshipLifeSupportEnabled = true;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;
 
@@ -106,6 +108,7 @@ namespace Strata
             Scribe_Values.Look(ref ancientColonyStairwellChance, "ancientColonyStairwellChance", 0.35f);
             Scribe_Values.Look(ref cageSustainHunger, "cageSustainHunger", defaultValue: false);
             Scribe_Values.Look(ref multiFloorStairs, "multiFloorStairs", defaultValue: false);
+            Scribe_Values.Look(ref gravshipLifeSupportEnabled, "gravshipLifeSupportEnabled", defaultValue: true);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
             Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
 
@@ -258,6 +261,8 @@ namespace Strata
             Text.Font = GameFont.Small;
             listing.CheckboxLabeled("Strata_Settings_NaturalGases".Translate(), ref Settings.naturalGasesEnabled,
                 "Strata_Settings_NaturalGasesDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_GravshipLifeSupport".Translate(), ref Settings.gravshipLifeSupportEnabled,
+                "Strata_Settings_GravshipLifeSupportDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_GasOverlayLabels".Translate(), ref Settings.gasOverlayRoomLabels,
                 "Strata_Settings_GasOverlayLabelsDesc".Translate());
             listing.Gap();
