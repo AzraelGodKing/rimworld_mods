@@ -5,6 +5,11 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 ## Unreleased
 
 - **Repo** — `art/brought/` convention + Cursor rule: brought sprites may be installed as-is, never used as generation / style references.
+- **Repo** — ignore `Homesteader/Textures.rar` (local texture dump).
+- **Strata** — soft-compat with **Vanilla Gravship Expanded - Chapter 1** plus VGE-inspired **gravship life support**; VGE new-game crash fix; `Strata_HaulAcrossLevels` “Collection was modified” (ReachableLevels reentrancy). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Nemesis (in progress)** — personal-antagonist mod foundation landed under `Nemesis/` (`AzraelGodKing.Nemesis`). Core hunt loop, multi-type harassment, soft compat stubs with Stormproof / Strata / Homesteader. Original foundation by Dredd (Misakabob); expanded here. Public site teaser remains mysterious at `docs/signal.html`. **No public `Nemesis.zip` download** for now (CI still compiles). → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
+- **Docs** — mysterious hub teaser + `docs/signal.html` for the personal-antagonist idea (classified / incoming-signal framing).
+- **Docs** — Strata V3 target locked (`feature/strata-v3`, includes VGE Chapter 1 compat): New Gravship Linking / Polish / More UX changes, ±4 cap. → [docs/strata-roadmap.html](docs/strata-roadmap.html)
 - **Strata** — soft-compat with **Vanilla Gravship Expanded - Chapter 1** plus VGE-inspired **gravship life support**; VGE new-game crash fix; `Strata_HaulAcrossLevels` “Collection was modified” (ReachableLevels reentrancy). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Nemesis (in progress)** — personal-antagonist mod foundation landed under `Nemesis/` (`AzraelGodKing.Nemesis`). Core hunt loop, multi-type harassment, soft compat stubs with Stormproof / Strata / Homesteader. Original foundation by Dredd (Misakabob); expanded here. Public site teaser remains mysterious at `docs/signal.html`. **No public `Nemesis.zip` download** for now (CI still compiles). → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
 - **Docs** — mysterious hub teaser + `docs/signal.html` for the personal-antagonist idea (classified / incoming-signal framing).
