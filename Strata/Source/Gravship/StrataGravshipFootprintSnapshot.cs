@@ -51,13 +51,17 @@ namespace Strata
             }
         }
 
-        public static void RebuildLinkedFloors(Map host, List<Map> pockets)
+        public static void RebuildLinkedFloors(
+            Map host,
+            List<Map> pockets,
+            Building_GravEngine landEngine = null,
+            bool snapContents = true)
         {
             if (host == null || !StrataGravshipUtility.OdysseyActive)
             {
                 return;
             }
-            Building_GravEngine engine = StrataGravshipUtility.FindGravEngineOnMap(host);
+            Building_GravEngine engine = landEngine ?? StrataGravshipUtility.FindGravEngineOnMap(host);
             if (engine == null || !StrataGravshipUtility.EngineHasSubstructure(engine))
             {
                 return;
@@ -81,14 +85,21 @@ namespace Strata
                     continue;
                 }
 
-                // 1) Move the furnished room onto the ship footprint / under shaft
-                //    BEFORE painting — otherwise we get an empty Gravship pad + old room.
-                snapped += StrataGravshipPocketAlign.SnapContentsToHostFootprint(
-                    pocket, host, deckCells);
+                // Align already shaft-snapped during CompleteLanding — skipping avoids
+                // re-applying the same delta when the landing portal fails to move.
+                if (snapContents)
+                {
+                    snapped += StrataGravshipPocketAlign.SnapContentsToHostFootprint(
+                        pocket, host, deckCells);
+                }
 
                 // 2) Grow deck onto footprint at the (now aligned) coords.
                 painted += ApplyDeckFootprint(pocket, host, deckCells);
-                GravshipDeckUtility.RestoreDeckUnderBuildings(pocket);
+                if (!StrataMapUtility.IsUpperLevel(pocket))
+                {
+                    GravshipDeckUtility.PullStragglersOntoFootprint(pocket, host);
+                }
+                GravshipDeckUtility.RestoreDeckUnderBuildings(pocket, host);
                 if (StrataMapUtility.IsUpperLevel(pocket))
                 {
                     UpperDeckUtility.RestoreRoofDeckUnderBuildings(pocket);
@@ -104,7 +115,7 @@ namespace Strata
                 }
                 else
                 {
-                    GravshipDeckUtility.CleanupEmptySilhouetteIslands(pocket);
+                    GravshipDeckUtility.CleanupEmptySilhouetteIslands(pocket, host);
                 }
             }
 
@@ -113,6 +124,34 @@ namespace Strata
             Log.Message("[Strata] Gravship land rebuild: " + targets.Count + " floor(s), snapped "
                 + snapped + " thing(s), " + painted + " deck cell(s), " + subCells
                 + " projected substructure cell(s).");
+        }
+
+        /// <summary>Paint deck/roof onto linked pockets before content shift (walkable dest).</summary>
+        public static void PrePaintLinkedDecks(Map host, List<Map> pockets, Building_GravEngine landEngine = null)
+        {
+            if (host == null || pockets == null)
+            {
+                return;
+            }
+            Building_GravEngine engine = landEngine ?? StrataGravshipUtility.FindGravEngineOnMap(host);
+            if (engine == null)
+            {
+                return;
+            }
+            var deckCells = BuildDeckCellSet(engine);
+            if (deckCells.Count == 0)
+            {
+                return;
+            }
+            for (int i = 0; i < pockets.Count; i++)
+            {
+                Map pocket = pockets[i];
+                if (pocket == null || !StrataGravshipStackUtility.IsStrataLinkedLevel(pocket))
+                {
+                    continue;
+                }
+                ApplyDeckFootprint(pocket, host, deckCells);
+            }
         }
 
         private static List<Map> CollectTargetFloors(Map host, List<Map> pockets)

@@ -74,15 +74,21 @@ namespace Strata
 
         private static readonly List<PortalSnapshot> snapshots = new List<PortalSnapshot>();
 
+        // Launch map while engine may already be despawned during GenerateGravship.
+        private static Map launchMapAtTakeoff;
+
         public static void ResetSession()
         {
             snapshots.Clear();
+            launchMapAtTakeoff = null;
         }
 
         public static IReadOnlyList<PortalSnapshot> PeekSnapshots() => snapshots;
 
         // Pack a host shaft into the Gravship.Things dictionary even when
         // OnValidSubstructure would reject it (GravAnchor leftovers).
+        // Must despawn here: skipping vanilla AddThing also skips its DeSpawn,
+        // which otherwise leaves stairs on GravAnchor-kept maps.
         public static bool TryForcePackHostShaft(Gravship ship, Thing thing, IntVec3 offset)
         {
             if (ship == null || thing == null || !StrataGravshipUtility.IsGravshipHostShaft(thing))
@@ -97,24 +103,34 @@ namespace Strata
                 return false;
             }
 
-            if (things.ContainsKey(thing))
+            if (!things.ContainsKey(thing))
             {
-                return true;
-            }
+                things.Add(thing, new PositionData(offset, thing.Rotation));
 
-            things.Add(thing, new PositionData(offset, thing.Rotation));
-
-            if (thing.TryGetComp(out CompPowerTrader power))
-            {
-                var powerOn = AccessTools.Field(typeof(Gravship), "powerOn")
-                    .GetValue(ship) as Dictionary<Thing, bool>;
-                if (powerOn != null && !powerOn.ContainsKey(thing))
+                if (thing.TryGetComp(out CompPowerTrader power))
                 {
-                    powerOn.Add(thing, power.PowerOn);
+                    var powerOn = AccessTools.Field(typeof(Gravship), "powerOn")
+                        .GetValue(ship) as Dictionary<Thing, bool>;
+                    if (powerOn != null && !powerOn.ContainsKey(thing))
+                    {
+                        powerOn.Add(thing, power.PowerOn);
+                    }
                 }
             }
 
+            DespawnPackedHostShaft(thing);
             return true;
+        }
+
+        private static void DespawnPackedHostShaft(Thing shaft)
+        {
+            if (shaft == null || shaft.Destroyed || !shaft.Spawned)
+            {
+                return;
+            }
+
+            shaft.PreSwapMap();
+            shaft.DeSpawn(DestroyMode.WillReplace);
         }
 
         // After Odyssey GenerateGravship: any host shaft still sitting on the
@@ -122,45 +138,62 @@ namespace Strata
         // despawned like vanilla packed buildings.
         public static void SweepLeftBehindHostShafts(Gravship ship, Building_GravEngine engine)
         {
-            if (ship == null || engine?.Map == null)
-            {
-                return;
-            }
-
-            Map map = engine.Map;
-            var remaining = new List<Thing>();
-            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
-            {
-                if (thing != null && thing.Spawned
-                    && StrataGravshipUtility.IsGravshipHostShaft(thing)
-                    && thing.def.bringAlongOnGravship)
-                {
-                    remaining.Add(thing);
-                }
-            }
-
-            if (remaining.Count == 0)
+            if (ship == null)
             {
                 return;
             }
 
             int swept = 0;
-            for (int i = 0; i < remaining.Count; i++)
+
+            // Packed but still Spawned (force-pack skipped vanilla DeSpawn, or
+            // engine.Map was already null when an earlier sweep ran).
+            var packed = AccessTools.Field(typeof(Gravship), "things")
+                .GetValue(ship) as Dictionary<Thing, PositionData>;
+            if (packed != null)
             {
-                Thing shaft = remaining[i];
-                if (shaft == null || shaft.Destroyed)
+                var packedList = new List<Thing>(packed.Keys);
+                for (int i = 0; i < packedList.Count; i++)
                 {
-                    continue;
+                    Thing thing = packedList[i];
+                    if (thing == null || !thing.Spawned
+                        || !StrataGravshipUtility.IsGravshipHostShaft(thing))
+                    {
+                        continue;
+                    }
+
+                    DespawnPackedHostShaft(thing);
+                    swept++;
+                }
+            }
+
+            Map map = engine?.Map ?? launchMapAtTakeoff;
+            if (map != null && Find.Maps.Contains(map))
+            {
+                var remaining = new List<Thing>();
+                foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+                {
+                    if (thing != null && thing.Spawned
+                        && StrataGravshipUtility.IsGravshipHostShaft(thing)
+                        && thing.def.bringAlongOnGravship)
+                    {
+                        remaining.Add(thing);
+                    }
                 }
 
-                IntVec3 offset = shaft.Position - engine.Position;
-                TryForcePackHostShaft(ship, shaft, offset);
-
-                if (shaft.Spawned)
+                for (int i = 0; i < remaining.Count; i++)
                 {
-                    shaft.PreSwapMap();
-                    shaft.DeSpawn(DestroyMode.WillReplace);
-                    swept++;
+                    Thing shaft = remaining[i];
+                    if (shaft == null || shaft.Destroyed || !shaft.Spawned)
+                    {
+                        continue;
+                    }
+
+                    IntVec3 offset = ResolvePackOffset(shaft, engine);
+                    TryForcePackHostShaft(ship, shaft, offset);
+                    if (!shaft.Spawned)
+                    {
+                        swept++;
+                    }
                 }
             }
 
@@ -171,9 +204,28 @@ namespace Strata
             }
         }
 
+        private static IntVec3 ResolvePackOffset(Thing shaft, Building_GravEngine engine)
+        {
+            if (engine != null && engine.Spawned)
+            {
+                return shaft.Position - engine.Position;
+            }
+
+            for (int s = 0; s < snapshots.Count; s++)
+            {
+                if (snapshots[s].defName == shaft.def.defName)
+                {
+                    return snapshots[s].offsetFromEngine;
+                }
+            }
+
+            return IntVec3.Zero;
+        }
+
         public static void SnapshotHostPortals(Building_GravEngine engine)
         {
             snapshots.Clear();
+            launchMapAtTakeoff = engine?.Map;
             if (engine?.Map == null)
             {
                 return;
@@ -237,14 +289,16 @@ namespace Strata
         public static void ReconnectOrRestore(
             Map hostMap,
             List<Map> pockets,
-            bool restoreMissingShafts = true)
+            bool restoreMissingShafts = true,
+            Building_GravEngine landEngine = null,
+            Gravship landShip = null)
         {
             if (hostMap == null)
             {
                 return;
             }
 
-            Building_GravEngine engine = StrataGravshipUtility.FindGravEngineOnMap(hostMap);
+            Building_GravEngine engine = landEngine ?? StrataGravshipUtility.FindGravEngineOnMap(hostMap);
             if (engine == null)
             {
                 return;
@@ -252,13 +306,74 @@ namespace Strata
 
             if (restoreMissingShafts)
             {
-                EnsureHostShafts(hostMap, engine);
+                EnsureHostShafts(hostMap, engine, landShip);
             }
-            WirePocketsToHostShafts(hostMap, pockets ?? CollectPocketsOnHost(hostMap));
+            WirePocketsToHostShafts(hostMap, pockets ?? CollectPocketsOnHost(hostMap), engine);
             if (restoreMissingShafts)
             {
                 snapshots.Clear();
             }
+        }
+
+        // Call before Odyssey places cargo: packed stairs can keep Spawned=true
+        // with no map (or still on the GravAnchor site) → "already spawned".
+        public static void EnsurePackedHostShaftsUnspawned(Gravship ship)
+        {
+            if (ship == null)
+            {
+                return;
+            }
+
+            var packed = AccessTools.Field(typeof(Gravship), "things")
+                .GetValue(ship) as Dictionary<Thing, PositionData>;
+            if (packed == null)
+            {
+                return;
+            }
+
+            int cleared = 0;
+            var keys = new List<Thing>(packed.Keys);
+            for (int i = 0; i < keys.Count; i++)
+            {
+                Thing thing = keys[i];
+                if (thing == null || thing.Destroyed
+                    || !StrataGravshipUtility.IsGravshipHostShaft(thing))
+                {
+                    continue;
+                }
+
+                if (ForceUnspawn(thing))
+                {
+                    cleared++;
+                }
+            }
+
+            if (cleared > 0)
+            {
+                Log.Message("[Strata] Gravship land: unspawned " + cleared
+                    + " packed host shaft(s) before PlaceGravship.");
+            }
+        }
+
+        private static bool ForceUnspawn(Thing thing)
+        {
+            if (thing == null || thing.Destroyed || !thing.Spawned)
+            {
+                return false;
+            }
+
+            if (thing.Map != null)
+            {
+                thing.PreSwapMap();
+                thing.DeSpawn(DestroyMode.WillReplace);
+            }
+
+            if (thing.Spawned)
+            {
+                thing.ForceSetStateToUnspawned();
+            }
+
+            return !thing.Spawned;
         }
 
         // Re-wire after pocket contents have been shifted under the host shafts.
@@ -290,7 +405,7 @@ namespace Strata
             return list;
         }
 
-        private static void EnsureHostShafts(Map host, Building_GravEngine engine)
+        private static void EnsureHostShafts(Map host, Building_GravEngine engine, Gravship landShip)
         {
             for (int i = 0; i < snapshots.Count; i++)
             {
@@ -321,9 +436,17 @@ namespace Strata
                     cell = engine.Position;
                 }
 
+                // Prefer a cell on the live ship footprint when offset lands off-substructure.
+                if (!StrataGravshipUtility.CellOnGravship(host, cell)
+                    && !TryFindShipCellNear(host, engine, def, spawnRot, out cell))
+                {
+                    // Keep offset cell; CanPlaceShaft may still accept it.
+                }
+
                 if (!CanPlaceShaft(host, def, cell, spawnRot))
                 {
-                    if (!CellFinder.TryFindRandomCellNear(
+                    if (!TryFindShipCellNear(host, engine, def, spawnRot, out cell)
+                        && !CellFinder.TryFindRandomCellNear(
                             engine.Position,
                             host,
                             8,
@@ -336,10 +459,193 @@ namespace Strata
                     }
                 }
 
-                Thing shaft = ThingMaker.MakeThing(def);
-                GenSpawn.Spawn(shaft, cell, host, spawnRot);
-                Log.Message("[Strata] Gravship land: restored missing shaft "
-                    + def.defName + " at " + cell);
+                // Prefer the packed cargo Thing (may be Spawned with Map==null).
+                // Never MakeThing a duplicate — that is what shaft-snaps furniture off-pad.
+                MapPortal existing = FindPackedShaft(landShip, snap.defName)
+                    ?? FindShaftThingAnywhere(snap.defName);
+                if (existing != null)
+                {
+                    if (existing.Spawned && existing.Map == host)
+                    {
+                        continue;
+                    }
+
+                    ForceUnspawn(existing);
+                    GenSpawn.Spawn(existing, cell, host, spawnRot);
+                    Log.Message("[Strata] Gravship land: reclaimed packed shaft "
+                        + def.defName + " at " + cell);
+                    continue;
+                }
+
+                Log.Warning("[Strata] Gravship land: no packed shaft for "
+                    + snap.defName + " — skipping MakeThing restore (avoids duplicate off-pad).");
+            }
+
+            CullOffShipDuplicateShafts(host, engine);
+        }
+
+        private static MapPortal FindPackedShaft(Gravship ship, string defName)
+        {
+            if (ship == null || string.IsNullOrEmpty(defName))
+            {
+                return null;
+            }
+
+            var packed = AccessTools.Field(typeof(Gravship), "things")
+                .GetValue(ship) as Dictionary<Thing, PositionData>;
+            if (packed == null)
+            {
+                return null;
+            }
+
+            foreach (Thing thing in packed.Keys)
+            {
+                if (thing is MapPortal portal
+                    && portal.def.defName == defName
+                    && portal is IStrataGravshipPortal
+                    && StrataGravshipUtility.IsGravshipHostShaft(portal))
+                {
+                    return portal;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool TryFindShipCellNear(
+            Map host,
+            Building_GravEngine engine,
+            ThingDef def,
+            Rot4 rot,
+            out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (host == null || engine == null || def == null)
+            {
+                return false;
+            }
+
+            if (CellFinder.TryFindRandomCellNear(
+                    engine.Position,
+                    host,
+                    12,
+                    c => CanPlaceShaft(host, def, c, rot)
+                        && StrataGravshipUtility.CellOnGravship(host, c),
+                    out cell))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static MapPortal FindShaftThingAnywhere(string defName)
+        {
+            if (string.IsNullOrEmpty(defName) || Find.Maps == null)
+            {
+                return null;
+            }
+
+            for (int m = 0; m < Find.Maps.Count; m++)
+            {
+                Map map = Find.Maps[m];
+                if (map == null)
+                {
+                    continue;
+                }
+
+                foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+                {
+                    if (thing is MapPortal portal && portal.Spawned
+                        && portal.def.defName == defName
+                        && portal is IStrataGravshipPortal
+                        && StrataGravshipUtility.IsGravshipHostShaft(portal))
+                    {
+                        return portal;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        // Drop extra host shafts of the same def that sit off the ship after a bad restore.
+        private static void CullOffShipDuplicateShafts(Map host, Building_GravEngine engine)
+        {
+            if (host == null)
+            {
+                return;
+            }
+
+            var byDef = new Dictionary<string, List<MapPortal>>();
+            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is not MapPortal portal || !portal.Spawned
+                    || portal is not IStrataGravshipPortal
+                    || !StrataGravshipUtility.IsGravshipHostShaft(portal))
+                {
+                    continue;
+                }
+
+                string key = portal.def.defName;
+                if (!byDef.TryGetValue(key, out List<MapPortal> list))
+                {
+                    list = new List<MapPortal>();
+                    byDef[key] = list;
+                }
+
+                list.Add(portal);
+            }
+
+            foreach (KeyValuePair<string, List<MapPortal>> pair in byDef)
+            {
+                List<MapPortal> list = pair.Value;
+                if (list.Count < 2)
+                {
+                    continue;
+                }
+
+                MapPortal keep = null;
+                int bestScore = int.MinValue;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    MapPortal shaft = list[i];
+                    int score = 0;
+                    if (StrataGravshipUtility.CellOnGravship(host, shaft.Position))
+                    {
+                        score += 1000;
+                    }
+
+                    if (engine != null)
+                    {
+                        score -= (shaft.Position - engine.Position).LengthManhattan;
+                    }
+
+                    if (shaft.PocketMapExists)
+                    {
+                        score += 50;
+                    }
+
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        keep = shaft;
+                    }
+                }
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    MapPortal shaft = list[i];
+                    if (shaft == keep || shaft.Destroyed)
+                    {
+                        continue;
+                    }
+
+                    Log.Message("[Strata] Gravship land: culled duplicate shaft "
+                        + shaft.LabelCap + " at " + shaft.Position
+                        + " (kept " + keep.Position + ")");
+                    shaft.Destroy(DestroyMode.Vanish);
+                }
             }
         }
 
@@ -377,6 +683,7 @@ namespace Strata
         {
             IntVec3 expected = engine.Position + OffsetForLandedEngine(engine, snap);
             MapPortal byDef = null;
+            MapPortal onShip = null;
             foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
                 if (thing is not MapPortal portal || !portal.Spawned
@@ -396,13 +703,19 @@ namespace Strata
                     return portal;
                 }
 
+                if (onShip == null
+                    && StrataGravshipUtility.CellOnGravship(host, portal.Position))
+                {
+                    onShip = portal;
+                }
+
                 byDef ??= portal;
             }
 
-            return byDef;
+            return onShip ?? byDef;
         }
 
-        private static void WirePocketsToHostShafts(Map host, List<Map> pockets)
+        private static void WirePocketsToHostShafts(Map host, List<Map> pockets, Building_GravEngine engine = null)
         {
             if (pockets == null)
             {
@@ -419,7 +732,7 @@ namespace Strata
                 }
             }
 
-            Building_GravEngine engine = StrataGravshipUtility.FindGravEngineOnMap(host);
+            engine ??= StrataGravshipUtility.FindGravEngineOnMap(host);
             var wiredPockets = new HashSet<Map>();
             var claimedShafts = new HashSet<MapPortal>();
 
@@ -519,6 +832,8 @@ namespace Strata
             bool wantTower = StrataGravshipUtility.IsGravshipTowerShaft(landing)
                 || landing is Building_BuildUpLanding
                 || StrataMapUtility.IsUpperLevel(pocket);
+            MapPortal best = null;
+            int bestScore = int.MinValue;
             for (int i = 0; i < hostShafts.Count; i++)
             {
                 MapPortal shaft = hostShafts[i];
@@ -527,14 +842,31 @@ namespace Strata
                     continue;
                 }
 
-                if (StrataGravshipUtility.IsGravshipTowerShaft(shaft) == wantTower)
+                if (StrataGravshipUtility.IsGravshipTowerShaft(shaft) != wantTower)
                 {
-                    return shaft;
+                    continue;
+                }
+
+                int score = 0;
+                if (StrataGravshipUtility.CellOnGravship(shaft.Map, shaft.Position))
+                {
+                    score += 1000;
+                }
+
+                if (landing != null && landing.Spawned)
+                {
+                    score -= (shaft.Position - landing.Position).LengthManhattan;
+                }
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    best = shaft;
                 }
             }
 
             // No cross-type last resort — leave unwired for EnsureHostShafts.
-            return null;
+            return best;
         }
 
         private static void ConnectPortalPair(MapPortal hostShaft, MapPortal landing)

@@ -20,6 +20,8 @@ namespace Strata
 
         public void UnmarkProjected(IntVec3 cell) => projectedCells.Remove(cell);
 
+        public IEnumerable<IntVec3> SnapshotProjectedCells() => projectedCells.ToList();
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -80,7 +82,8 @@ namespace Strata
                 }
                 SyncMap(portal.PocketMap, host, engine);
             }
-            engine.ForceSubstructureDirty();
+            // Do not ForceSubstructureDirty here — periodic sync would regen the
+            // host mask every interval and hitch large VGE ships.
         }
 
         public static void SyncMap(Map pocket, Map host, Building_GravEngine engine)
@@ -97,26 +100,23 @@ namespace Strata
             }
 
             var tracker = GetOrAddTracker(pocket);
-            bool upper = StrataMapUtility.IsUpperLevel(pocket);
-            foreach (IntVec3 cell in pocket.AllCells)
+            HashSet<IntVec3> want = CollectProjectedDeckCells(pocket, host, engine);
+            // Drop stale projections first (tracker + host delta), then ensure wanted.
+            var stale = new List<IntVec3>();
+            foreach (IntVec3 cell in tracker.SnapshotProjectedCells())
             {
-                bool onDeck = upper
-                    ? UpperDeckUtility.SourceSupportsUpperDeck(pocket, cell, host)
-                    : HostSubstructureProjectsTo(pocket, host, cell);
-                // Also keep anything that is already local walkable deck after a
-                // footprint rebuild (grow-only may leave travelling deck offline).
-                if (!onDeck)
+                if (!want.Contains(cell))
                 {
-                    onDeck = IsLocalWalkableDeck(pocket, cell);
+                    stale.Add(cell);
                 }
-                if (onDeck)
-                {
-                    EnsureProjectedSubstructure(pocket, cell, tracker);
-                }
-                else
-                {
-                    RemoveProjectedSubstructure(pocket, cell, tracker);
-                }
+            }
+            for (int i = 0; i < stale.Count; i++)
+            {
+                RemoveProjectedSubstructure(pocket, stale[i], tracker);
+            }
+            foreach (IntVec3 cell in want)
+            {
+                EnsureProjectedSubstructure(pocket, cell, tracker);
             }
         }
 
@@ -129,22 +129,52 @@ namespace Strata
                 return 0;
             }
             var tracker = GetOrAddTracker(pocket);
+            Map host = engine.Map;
+            HashSet<IntVec3> want = host != null
+                ? CollectProjectedDeckCells(pocket, host, engine)
+                : new HashSet<IntVec3>();
+            // Include already-walkable local deck (travelling room) without AllCells scan:
+            // host projection covers the ship; RestoreDeckUnderBuildings already healed furniture.
             int count = 0;
-            foreach (IntVec3 cell in pocket.AllCells)
+            foreach (IntVec3 cell in want)
             {
-                if (!IsLocalWalkableDeck(pocket, cell)
-                    && !StrataGravshipUtility.IsLinkedDeckCell(pocket, cell, engine))
-                {
-                    continue;
-                }
                 EnsureProjectedSubstructure(pocket, cell, tracker, markWhenBlocked: true);
                 if (tracker.IsProjected(cell) || SubstructureAt(pocket, cell) != null)
                 {
                     count++;
                 }
             }
-            engine.ForceSubstructureDirty();
             return count;
+        }
+
+        private static HashSet<IntVec3> CollectProjectedDeckCells(
+            Map pocket,
+            Map host,
+            Building_GravEngine engine)
+        {
+            var want = new HashSet<IntVec3>();
+            HashSet<IntVec3> sub = engine?.ValidSubstructure;
+            if (sub == null || sub.Count == 0)
+            {
+                sub = engine?.AllConnectedSubstructure;
+            }
+            if (sub != null)
+            {
+                bool sameSize = pocket.Size == host.Size;
+                foreach (IntVec3 hostCell in sub)
+                {
+                    IntVec3 pocketCell = sameSize
+                        ? hostCell
+                        : StrataMapUtility.ProportionalCell(hostCell, host, pocket);
+                    if (!pocketCell.InBounds(pocket))
+                    {
+                        continue;
+                    }
+                    // Host substructure cell projects 1:1 (or proportionally) onto the pocket.
+                    want.Add(pocketCell);
+                }
+            }
+            return want;
         }
 
         private static MapComponent_StrataProjectedSubstructure GetOrAddTracker(Map pocket)

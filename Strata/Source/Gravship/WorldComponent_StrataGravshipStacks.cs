@@ -14,8 +14,9 @@ namespace Strata
         // Maps currently protected from destroyOnParentMapAbandoned cascades.
         private HashSet<int> travellingMapIds = new HashSet<int>();
 
-        // Engine cell at InitiateTakeoff — used to 1:1-shift pockets on land.
+        // Engine cell + thingID at InitiateTakeoff — shift pockets on land; G1 engine of record.
         private IntVec3 pendingTakeoffEnginePos = IntVec3.Invalid;
+        private int pendingTakeoffEngineThingId = -1;
 
         public WorldComponent_StrataGravshipStacks(World world) : base(world)
         {
@@ -33,10 +34,37 @@ namespace Strata
 
         public void RememberTakeoffEngine(Building_GravEngine engine)
         {
-            if (engine != null && engine.Position.IsValid)
+            if (engine == null)
+            {
+                return;
+            }
+            if (engine.Position.IsValid)
             {
                 pendingTakeoffEnginePos = engine.Position;
             }
+            pendingTakeoffEngineThingId = engine.thingIDNumber;
+            StrataGravshipPocketAlign.ClearLandAlignState();
+        }
+
+        /// <summary>G1: pinned takeoff engine thingID for the active travelling stack (or pending).</summary>
+        public int PeekTakeoffEngineThingId(Gravship ship = null)
+        {
+            if (ship != null)
+            {
+                TravellingStack stack = FindStack(ship);
+                if (stack != null && stack.takeoffEngineThingId >= 0)
+                {
+                    return stack.takeoffEngineThingId;
+                }
+            }
+            for (int i = 0; i < stacks.Count; i++)
+            {
+                if (stacks[i].takeoffEngineThingId >= 0)
+                {
+                    return stacks[i].takeoffEngineThingId;
+                }
+            }
+            return pendingTakeoffEngineThingId;
         }
 
         // Early mark + detach before the Gravship WorldObject exists.
@@ -90,18 +118,22 @@ namespace Strata
             IntVec3 takeoffPos = pendingTakeoffEnginePos.IsValid
                 ? pendingTakeoffEnginePos
                 : engine.Position;
+            int takeoffThingId = pendingTakeoffEngineThingId >= 0
+                ? pendingTakeoffEngineThingId
+                : engine.thingIDNumber;
             var stack = new TravellingStack
             {
                 ship = ship,
                 mapIds = new List<int>(),
                 takeoffEnginePos = takeoffPos,
+                takeoffEngineThingId = takeoffThingId,
             };
             for (int i = 0; i < levels.Count; i++)
             {
                 stack.mapIds.Add(levels[i].uniqueID);
             }
             stacks.Add(stack);
-            Log.Message($"[Strata] Gravship takeoff: {levels.Count} linked level(s) will follow the ship.");
+            Log.Message($"[Strata] Gravship takeoff: {levels.Count} linked level(s) will follow the ship (engine thingID {takeoffThingId}).");
             Messages.Message(
                 "Strata_GravshipLevelsTravel".Translate(levels.Count),
                 MessageTypeDefOf.PositiveEvent,
@@ -122,9 +154,11 @@ namespace Strata
             {
                 return;
             }
+            int pinnedId = PeekTakeoffEngineThingId();
+            Building_GravEngine landEngine = StrataGravshipUtility.FindGravEngineForLandRebind(newHost, pinnedId);
             StrataGravshipStackUtility.RebindAll(maps, newHost);
             StrataGravshipPortalTravel.ReconnectOrRestore(
-                newHost, maps, restoreMissingShafts: false);
+                newHost, maps, restoreMissingShafts: false, landEngine: landEngine);
             Log.Message($"[Strata] Gravship landing prepare: rebound {maps.Count} linked level(s) to {newHost} (shaft restore deferred).");
         }
 
@@ -136,12 +170,17 @@ namespace Strata
             }
             TravellingStack stack = ship != null ? FindStack(ship) : null;
             IntVec3 takeoffPos = pendingTakeoffEnginePos;
+            int pinnedThingId = pendingTakeoffEngineThingId;
             var maps = new List<Map>();
             if (stack != null)
             {
                 takeoffPos = stack.takeoffEnginePos.IsValid
                     ? stack.takeoffEnginePos
                     : takeoffPos;
+                if (stack.takeoffEngineThingId >= 0)
+                {
+                    pinnedThingId = stack.takeoffEngineThingId;
+                }
                 for (int i = 0; i < stack.mapIds.Count; i++)
                 {
                     Map map = FindMapById(stack.mapIds[i]);
@@ -161,13 +200,18 @@ namespace Strata
             // (PrepareLanding may have rebound them before the stack cleared).
             AddHostChildLevels(newHost, maps);
 
+            Building_GravEngine landEngine = StrataGravshipUtility.FindGravEngineForLandRebind(
+                newHost, pinnedThingId);
+
             if (maps.Count == 0)
             {
                 // Idempotent re-wire: early hook cleared travelling but shafts
                 // may still be unwired after packed stairs replaced restores.
-                StrataGravshipPortalTravel.ReconnectOrRestore(newHost, null);
+                StrataGravshipPortalTravel.ReconnectOrRestore(
+                    newHost, null, landEngine: landEngine, landShip: ship);
                 StrataGravshipOrphanLevels.CleanupDuplicateLevels(newHost);
-                StrataGravshipFootprintSnapshot.RebuildLinkedFloors(newHost, null);
+                StrataGravshipFootprintSnapshot.RebuildLinkedFloors(
+                    newHost, null, landEngine, snapContents: false);
                 return;
             }
 
@@ -176,15 +220,23 @@ namespace Strata
                 travellingMapIds.Remove(maps[i].uniqueID);
             }
             pendingTakeoffEnginePos = IntVec3.Invalid;
+            pendingTakeoffEngineThingId = -1;
 
             StrataGravshipStackUtility.RebindAll(maps, newHost);
+            // Block deferred UpperDeckSync content snaps for the rest of this land.
+            StrataGravshipPocketAlign.MarkLandAlignComplete();
             // Packed shafts should exist now — restore only truly missing ones.
-            StrataGravshipPortalTravel.ReconnectOrRestore(newHost, maps);
-            StrataGravshipPocketAlign.AlignPocketsToLandedShip(maps, newHost, takeoffPos);
+            StrataGravshipPortalTravel.ReconnectOrRestore(
+                newHost, maps, landEngine: landEngine, landShip: ship);
+            // Paint destination deck before shifting furniture onto it.
+            StrataGravshipFootprintSnapshot.PrePaintLinkedDecks(newHost, maps, landEngine);
+            StrataGravshipPocketAlign.AlignPocketsToLandedShip(maps, newHost, takeoffPos, landEngine);
             StrataGravshipOrphanLevels.CleanupDuplicateLevels(newHost);
-            // Snapshot footprint ∪ live ValidSubstructure → deck + projected tiles.
-            StrataGravshipFootprintSnapshot.RebuildLinkedFloors(newHost, maps);
-            Log.Message($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}.");
+            // Align already snapped — rebuild paints/substructure only (no second shift).
+            StrataGravshipFootprintSnapshot.RebuildLinkedFloors(
+                newHost, maps, landEngine, snapContents: false);
+            Log.Message($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}"
+                + (pinnedThingId >= 0 ? $" (engine thingID {pinnedThingId})." : "."));
             Messages.Message(
                 "Strata_GravshipLevelsDocked".Translate(maps.Count),
                 MessageTypeDefOf.PositiveEvent,
@@ -292,6 +344,7 @@ namespace Strata
             base.ExposeData();
             Scribe_Collections.Look(ref stacks, "strataGravshipStacks", LookMode.Deep);
             Scribe_Values.Look(ref pendingTakeoffEnginePos, "strataPendingTakeoffEnginePos", IntVec3.Invalid);
+            Scribe_Values.Look(ref pendingTakeoffEngineThingId, "strataPendingTakeoffEngineThingId", -1);
             List<StrataGravshipPortalTravel.PortalSnapshot> portalSnaps = null;
             if (Scribe.mode == LoadSaveMode.Saving)
             {
@@ -333,12 +386,14 @@ namespace Strata
             public Gravship ship;
             public List<int> mapIds;
             public IntVec3 takeoffEnginePos = IntVec3.Invalid;
+            public int takeoffEngineThingId = -1;
 
             public void ExposeData()
             {
                 Scribe_References.Look(ref ship, "ship");
                 Scribe_Collections.Look(ref mapIds, "mapIds", LookMode.Value);
                 Scribe_Values.Look(ref takeoffEnginePos, "takeoffEnginePos", IntVec3.Invalid);
+                Scribe_Values.Look(ref takeoffEngineThingId, "takeoffEngineThingId", -1);
                 if (Scribe.mode == LoadSaveMode.PostLoadInit && mapIds == null)
                 {
                     mapIds = new List<int>();
