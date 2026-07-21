@@ -10,6 +10,10 @@
   <!-- Mod settings -->
   <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
   <Strata_Settings_LevelHotkeys>Горячие клавиши уровней</Strata_Settings_LevelHotkeys>
+  <Strata_Settings_UnlimitedLevels>Безлимитные уровни</Strata_Settings_UnlimitedLevels>
+  <Strata_Settings_UnlimitedLevelsDesc>Если выключено (по умолчанию), новые шахты вниз и башни вверх останавливаются на {0} этажах ниже и {0} выше корня стека (поверхность колонии или палуба гравикорабля). Дополнительные шахты всё ещё могут присоединиться к уже открытому этажу. Уже существующие более глубокие/высокие стеки продолжают работать.</Strata_Settings_UnlimitedLevelsDesc>
+  <Strata_LevelCap_MaxBelow>Лимит уровней: нельзя копать ниже B{0}. Включите «Безлимитные уровни» в настройках Strata или копайте с более мелкого этажа.</Strata_LevelCap_MaxBelow>
+  <Strata_LevelCap_MaxAbove>Лимит уровней: нельзя строить выше A{0}. Включите «Безлимитные уровни» в настройках Strata или стройте с более низкого этажа.</Strata_LevelCap_MaxAbove>
   <Strata_Settings_ViewLevelAbove>Смотреть уровень выше</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>Смотреть уровень ниже</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>Нажмите клавишу...</Strata_Settings_PressKey>

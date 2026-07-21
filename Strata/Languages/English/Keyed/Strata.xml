@@ -4,6 +4,10 @@
   <!-- Mod settings -->
   <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
   <Strata_Settings_LevelHotkeys>Level view hotkeys</Strata_Settings_LevelHotkeys>
+  <Strata_Settings_UnlimitedLevels>Unlimited levels</Strata_Settings_UnlimitedLevels>
+  <Strata_Settings_UnlimitedLevelsDesc>When off (default), new digs and towers stop at {0} floors below and {0} floors above the stack root (colony surface or gravship host). Extra shafts can still join an already-open floor. Existing deeper/taller stacks keep working.</Strata_Settings_UnlimitedLevelsDesc>
+  <Strata_LevelCap_MaxBelow>Level cap: cannot dig below B{0}. Enable Unlimited levels in Strata settings, or dig from a shallower floor.</Strata_LevelCap_MaxBelow>
+  <Strata_LevelCap_MaxAbove>Level cap: cannot build above A{0}. Enable Unlimited levels in Strata settings, or build from a lower floor.</Strata_LevelCap_MaxAbove>
   <Strata_Settings_ViewLevelAbove>View level above</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>View level below</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>Press a key...</Strata_Settings_PressKey>
