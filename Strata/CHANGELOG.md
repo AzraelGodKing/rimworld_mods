@@ -7,6 +7,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 ### Changed
 - **Docs** — V3 roadmap: drop “Out of V3” exclusion note. → [docs/strata-roadmap.html](../docs/strata-roadmap.html)
 - **Docs** — V3 target locked on `feature/strata-v3` (from VGE Chapter 1 compat): New Gravship Linking (G1–G7), Polish (A1–A5), More UX changes (M1–M8 except M5), ±4 hard cap / Unlimited default off. → [docs/strata-roadmap.html](../docs/strata-roadmap.html)
+- **Level depth cap** — new digs/towers default to ±4 from the stack root (colony surface or gravship host). Settings: **Unlimited levels** (default OFF). Extra shafts may still join an already-open floor; existing deeper stacks are not removed. Build stamp `level-cap-pm4-v1`.
 - **Docs** — V3 roadmap parks AASB-inspired polish and MultiFloors-inspired gravship linking backlog (travel entitlement, shaft identity table, substructure-ready land gate).
 
 ### Fixed
