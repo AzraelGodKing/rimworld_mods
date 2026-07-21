@@ -10,6 +10,9 @@ docs/downloads/*.zip
 # One-off art package duplicate (canonical copy lives under Strata/ArtPackage/)
 /Strata_Art_Package.zip
 
+# Local Homesteader texture dump (not for the repo)
+Homesteader/Textures.rar
+
 # Local decompile / reflect scratch (must never re-enter the repo)
 Strata/Tools/_decompile_tmp/
 Strata/Tools/_reflect_tmp/
