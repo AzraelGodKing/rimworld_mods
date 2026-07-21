@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -17,6 +18,8 @@ namespace Strata
         // Engine cell + thingID at InitiateTakeoff — shift pockets on land; G1 engine of record.
         private IntVec3 pendingTakeoffEnginePos = IntVec3.Invalid;
         private int pendingTakeoffEngineThingId = -1;
+        // G2: stack identity for the pending / active flight.
+        private string pendingStackGuid;
 
         public WorldComponent_StrataGravshipStacks(World world) : base(world)
         {
@@ -43,7 +46,18 @@ namespace Strata
                 pendingTakeoffEnginePos = engine.Position;
             }
             pendingTakeoffEngineThingId = engine.thingIDNumber;
+            pendingStackGuid = Guid.NewGuid().ToString("N");
             StrataGravshipPocketAlign.ClearLandAlignState();
+        }
+
+        /// <summary>G2: mint or return the stack GUID for the active takeoff.</summary>
+        public string PeekOrMintStackGuid()
+        {
+            if (pendingStackGuid.NullOrEmpty())
+            {
+                pendingStackGuid = Guid.NewGuid().ToString("N");
+            }
+            return pendingStackGuid;
         }
 
         /// <summary>G1: pinned takeoff engine thingID for the active travelling stack (or pending).</summary>
@@ -121,19 +135,21 @@ namespace Strata
             int takeoffThingId = pendingTakeoffEngineThingId >= 0
                 ? pendingTakeoffEngineThingId
                 : engine.thingIDNumber;
+            string stackGuid = PeekOrMintStackGuid();
             var stack = new TravellingStack
             {
                 ship = ship,
                 mapIds = new List<int>(),
                 takeoffEnginePos = takeoffPos,
                 takeoffEngineThingId = takeoffThingId,
+                stackGuid = stackGuid,
             };
             for (int i = 0; i < levels.Count; i++)
             {
                 stack.mapIds.Add(levels[i].uniqueID);
             }
             stacks.Add(stack);
-            Log.Message($"[Strata] Gravship takeoff: {levels.Count} linked level(s) will follow the ship (engine thingID {takeoffThingId}).");
+            Log.Message($"[Strata] Gravship takeoff: {levels.Count} linked level(s) will follow the ship (engine thingID {takeoffThingId}, stack {stackGuid}).");
             Messages.Message(
                 "Strata_GravshipLevelsTravel".Translate(levels.Count),
                 MessageTypeDefOf.PositiveEvent,
@@ -221,6 +237,7 @@ namespace Strata
             }
             pendingTakeoffEnginePos = IntVec3.Invalid;
             pendingTakeoffEngineThingId = -1;
+            pendingStackGuid = null;
 
             StrataGravshipStackUtility.RebindAll(maps, newHost);
             // Block deferred UpperDeckSync content snaps for the rest of this land.
@@ -345,6 +362,7 @@ namespace Strata
             Scribe_Collections.Look(ref stacks, "strataGravshipStacks", LookMode.Deep);
             Scribe_Values.Look(ref pendingTakeoffEnginePos, "strataPendingTakeoffEnginePos", IntVec3.Invalid);
             Scribe_Values.Look(ref pendingTakeoffEngineThingId, "strataPendingTakeoffEngineThingId", -1);
+            Scribe_Values.Look(ref pendingStackGuid, "strataPendingStackGuid");
             List<StrataGravshipPortalTravel.PortalSnapshot> portalSnaps = null;
             if (Scribe.mode == LoadSaveMode.Saving)
             {
@@ -387,6 +405,7 @@ namespace Strata
             public List<int> mapIds;
             public IntVec3 takeoffEnginePos = IntVec3.Invalid;
             public int takeoffEngineThingId = -1;
+            public string stackGuid;
 
             public void ExposeData()
             {
@@ -394,6 +413,7 @@ namespace Strata
                 Scribe_Collections.Look(ref mapIds, "mapIds", LookMode.Value);
                 Scribe_Values.Look(ref takeoffEnginePos, "takeoffEnginePos", IntVec3.Invalid);
                 Scribe_Values.Look(ref takeoffEngineThingId, "takeoffEngineThingId", -1);
+                Scribe_Values.Look(ref stackGuid, "stackGuid");
                 if (Scribe.mode == LoadSaveMode.PostLoadInit && mapIds == null)
                 {
                     mapIds = new List<int>();

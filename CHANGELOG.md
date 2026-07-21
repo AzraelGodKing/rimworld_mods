@@ -16,6 +16,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 - **Strata** — gravship land: shaft-snap to on-ship stairs + exact deck paint (fix Venn offset). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — gravship land: clear orphan ghost pads (no deck restore under off-ship stragglers). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — gravship underdeck: MultiFloors-style pad-only silhouette (engineDelta + void off-pad). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — V3 G2: stable gravship shaft identity (shaftId / stack GUID) for land reconnect. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — soft-compat with **Vanilla Gravship Expanded - Chapter 1** plus VGE-inspired **gravship life support**; VGE new-game crash fix; `Strata_HaulAcrossLevels` “Collection was modified” (ReachableLevels reentrancy). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Nemesis (in progress)** — personal-antagonist mod foundation landed under `Nemesis/` (`AzraelGodKing.Nemesis`). Core hunt loop, multi-type harassment, soft compat stubs with Stormproof / Strata / Homesteader. Original foundation by Dredd (Misakabob); expanded here. Public site teaser remains mysterious at `docs/signal.html`. **No public `Nemesis.zip` download** for now (CI still compiles). → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
 - **Docs** — mysterious hub teaser + `docs/signal.html` for the personal-antagonist idea (classified / incoming-signal framing).
