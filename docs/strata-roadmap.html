@@ -46,14 +46,11 @@
 
     <h3 class="t">Build order</h3>
     <ol>
-      <li><b>Cap setting</b> (±2 / Unlimited off) — on <code>V3-G1</code> (was ±4)</li>
-      <li><b>G1</b> One engine of record — merged into <code>V3</code></li>
-      <li><b>G2</b> Stable shaft identity — on <code>V3-G2</code></li>
-      <li>G3 → G5 → G4 → G6</li>
+      <li><b>Cap setting</b> (±2 / Unlimited off) — merged into <code>V3</code></li>
+      <li><b>G1–G7</b> Gravship linking — on <code>V3-G2</code> (stamp <code>g3-g7-gravship-link-v1</code>)</li>
       <li>A4 (must)</li>
       <li>A1, A2, A3, A5</li>
       <li>M6, M8, M7, M1, M4, M3, M2</li>
-      <li>G7 last (Phase B pack)</li>
     </ol>
   </section>
 
@@ -61,13 +58,13 @@
     <h2 class="t">New Gravship Linking (G1–G7)</h2>
     <p class="sub">MultiFloors lesson: explicit travel entitlement + deterministic shaft identity — not endless orphan heuristics.</p>
     <ol>
-      <li><b>G1 One engine of record</b> — Pin travelling stack to the packed ship’s engine thingID at takeoff; never PreferBestEngine / CurrentMap fallback during land rebind.</li>
-      <li><b>G2 Stable shaft identity</b> — Persist stack GUID + per-shaft ID so land never spawns a second “New” underdeck when packed stairs replace temp shafts.</li>
-      <li><b>G3 Substructure-ready land gate</b> — Never CompleteLanding footprint rebuild until host ValidSubstructure (or VGE foundation proxy) is non-empty; single deferred sync path.</li>
-      <li><b>G4 Explicit travel entitlement</b> — Gate which floors/cells follow launch with a clear host-side flag, instead of only “any IStrataGravshipPortal pocket”.</li>
-      <li><b>G5 Multi-shaft wiring table</b> — Snapshot engine-relative offset → pocketMapId → under/tower; restore by table, not “first matching type wins”.</li>
-      <li><b>G6 Shaft as grav-extender</b> — Gravship shaft/elevator expands / owns vertical substructure range so A+/B+ placement is not only projected silhouette + Harmony.</li>
-      <li><b>G7 Pack A+/B+ into Gravship cargo</b> — Phase B last, after G1–G6.</li>
+      <li><b>G1 One engine of record</b> — ✅ Pin travelling stack to the packed ship’s engine thingID at takeoff; never PreferBestEngine / CurrentMap fallback during land rebind.</li>
+      <li><b>G2 Stable shaft identity</b> — ✅ Persist stack GUID + per-shaft ID so land never spawns a second “New” underdeck when packed stairs replace temp shafts.</li>
+      <li><b>G3 Substructure-ready land gate</b> — ✅ Never CompleteLanding footprint rebuild until host ValidSubstructure (or VGE foundation proxy) is non-empty; single deferred sync path.</li>
+      <li><b>G4 Explicit travel entitlement</b> — ✅ Host shaft Comp “Travel with ship” toggle gates launch follow.</li>
+      <li><b>G5 Multi-shaft wiring table</b> — ✅ Restore by shaftId table; no best-match salvage when ID present.</li>
+      <li><b>G6 Shaft as grav-extender</b> — ✅ Shaft footprint + rim owns the vertical pocket column for linked placement.</li>
+      <li><b>G7 Pack A+/B+ into Gravship cargo</b> — ✅ MVP: pack buildings/items engine-relative at takeoff; place at land root (skip live-pocket align when cargo placed).</li>
     </ol>
   </section>
 

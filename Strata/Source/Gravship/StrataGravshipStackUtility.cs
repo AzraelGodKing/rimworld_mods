@@ -39,6 +39,12 @@ namespace Strata
                 }
 
                 bool gravshipPortal = portal is IStrataGravshipPortal;
+                // G4: host shaft Comp.travelsWithShip gates launch follow.
+                CompStrataGravshipShaft identity = StrataGravshipShaftIdentity.CompOf(portal);
+                if (identity != null && !identity.travelsWithShip)
+                {
+                    continue;
+                }
                 bool onShip = gravshipPortal
                     ? ((IStrataGravshipPortal)portal).IsOnGravship
                       || (substructure != null && PortalOnSubstructure(portal, substructure))

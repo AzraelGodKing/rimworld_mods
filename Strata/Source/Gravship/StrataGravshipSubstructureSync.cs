@@ -158,9 +158,9 @@ namespace Strata
             {
                 sub = engine?.AllConnectedSubstructure;
             }
+            bool sameSize = pocket.Size == host.Size;
             if (sub != null)
             {
-                bool sameSize = pocket.Size == host.Size;
                 foreach (IntVec3 hostCell in sub)
                 {
                     IntVec3 pocketCell = sameSize
@@ -172,6 +172,30 @@ namespace Strata
                     }
                     // Host substructure cell projects 1:1 (or proportionally) onto the pocket.
                     want.Add(pocketCell);
+                }
+            }
+            // G6: wired host shaft footprint + rim always projects onto this pocket.
+            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is not MapPortal shaft || !shaft.Spawned
+                    || !StrataGravshipUtility.IsGravshipHostShaft(shaft)
+                    || !shaft.PocketMapExists || shaft.PocketMap != pocket)
+                {
+                    continue;
+                }
+                foreach (IntVec3 hostCell in shaft.OccupiedRect().ExpandedBy(1))
+                {
+                    if (!hostCell.InBounds(host))
+                    {
+                        continue;
+                    }
+                    IntVec3 pocketCell = sameSize
+                        ? hostCell
+                        : StrataMapUtility.ProportionalCell(hostCell, host, pocket);
+                    if (pocketCell.InBounds(pocket))
+                    {
+                        want.Add(pocketCell);
+                    }
                 }
             }
             return want;
