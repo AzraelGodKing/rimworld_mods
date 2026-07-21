@@ -1206,9 +1206,11 @@ namespace Nemesis
             float anomaly = 0f;
             if (ModsConfig.AnomalyActive
                 && (phase >= NemesisHuntPhase.Reckoning || _data.EffectiveAggression >= 4f))
-                anomaly = 0.06f;
+                anomaly = s?.actionWeightAnomaly ?? 0.06f;
             float kidnap = phase >= NemesisHuntPhase.Obsessed ? (s?.actionWeightKidnap ?? 0.08f) : 0f;
             float sniper = s?.actionWeightSniper ?? 0.04f;
+            if (s != null && !s.kidnapEnabled) kidnap = 0f;
+            if (s != null && !s.sniperEnabled) sniper = 0f;
             float grave = s?.actionWeightGrave ?? 0.05f;
             float tamper = s?.actionWeightFoodTamper ?? 0.06f;
             float informant = 0f;
@@ -1222,24 +1224,26 @@ namespace Nemesis
             float burrow = 0f;
             if (SoftCompat.StrataBurrowAvailable && phase >= NemesisHuntPhase.Obsessed
                 && _data.EffectiveAggression >= 3.5f)
-                burrow = 0.04f;
+                burrow = s?.actionWeightBurrow ?? 0.04f;
 
             // Trophy theft — Saboteur/Trickster Obsessed+, or any archetype at high agg.
             float trophy = 0f;
             if (phase >= NemesisHuntPhase.Obsessed && _data.stolenTrophyThingId < 0)
             {
+                float trophyW = s?.actionWeightTrophy ?? 0.08f;
                 if (_data.archetype == NemesisArchetype.Saboteur || _data.archetype == NemesisArchetype.Trickster)
-                    trophy = 0.08f;
+                    trophy = trophyW;
                 else if (_data.EffectiveAggression >= 4f)
-                    trophy = 0.04f;
+                    trophy = trophyW * 0.5f;
             }
 
             // Progressive camp intel — Testing+, until camp placed.
             float intel = 0f;
+            float intelW = s?.actionWeightIntel ?? 0.07f;
             if (phase >= NemesisHuntPhase.Testing && _data.intelLevel < NemesisCampUtility.MaxIntel)
-                intel = 0.07f;
+                intel = intelW;
             else if (phase >= NemesisHuntPhase.Obsessed && _data.campWorldObjectId < 0 && !_data.campResolved)
-                intel = 0.05f;
+                intel = intelW * (5f / 7f);
 
             if (_data.rogue)
             {

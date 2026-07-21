@@ -34,6 +34,13 @@ Personality & evidence pass on `feature/nemesis-personality` (merged into `featu
 - [x] Storyteller threat soft-cap after nemesis raids (~1 day)
 - [x] Playtest checklist (`PLAYTEST.md`)
 
+## Shipped (V1 readiness)
+- [x] Hunt alert (`Alert_NemesisHunt`) with phase priority + fixation culprit
+- [x] Settings for trophy / intel / burrow / anomaly weights + kidnap/sniper toggles
+- [x] `About.xml` modVersion 1.0.0 + repo url
+- [x] CI publishes `Nemesis.zip` on rolling GitHub Release
+- [x] Calling card Core-safe texture (`Cloth`)
+
 ## Later / polish backlog
 - Full encounter maps for camp visits (currently caravan-resolved, no map gen)
 - Dedicated Odyssey shuttle extract (beyond drop-pod soft)

@@ -4,7 +4,12 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased
 
-<<<<<<< HEAD
+### V1 readiness
+- Hunt alert (`Alert_NemesisHunt`): name + phase label; explanation with target / escapes / days hunted; High priority at Reckoning; culprit is fixation target when available.
+- Settings: trophy / intel / burrow / anomaly action weights + kidnap/sniper enable toggles (scribed, Advanced UI, wired into `PickAction`).
+- `About.xml`: `modVersion` 1.0.0 + repo `url`.
+- CI publishes `Nemesis.zip` (About / Defs / Languages + injected assembly) on the rolling GitHub Release.
+
 ### Hunt base / polish pass
 - Progressive intel (`CampIntel`): scraps → last-known tile → world camp marker (real stash / empty false lead / trap).
 - Caravan route tracking: abandoned caches with calling cards, soft road ambushes; CaravanHarass can force a track beat.
@@ -15,13 +20,12 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 - Soft compat: Stormproof ion-storm sabotage bait; Strata stairs-aware harassment map; Homesteader pantry/smokehouse food preference.
 - Balance: soft-suppress concurrent foreign storyteller raids for ~1 day after a nemesis threat.
 - UX: `About/Preview.png`, **Marked** scenario, tip set, `STEAM.md` blurb, DevMode debug actions, `PLAYTEST.md` checklist.
-=======
+
 ### Review fixes (depth pass)
 - Rival cameo: scribe original faction, temporarily SetFaction to a non-hostile faction (prefer Ancients) so player turrets do not auto-kill; restore on EndRivalCameo and EndHunt mid-cameo.
 - Escape upgrades: destroy existing primary before AddEquipment; remove no-op HasPartsToWear; Wear replaces apparel by destroy when unspawned.
 - Calling card / journal: add CompProperties_Usable (UseItem + keyed Read… labels) so float-menu use reaches CompUseEffect_NemesisNote.
 - Calling card texture: switch from unverified Harddrive path to Core `Things/Item/Resource/Cloth`; journal from Textbook (multi-dir) to Core `Things/Item/Resource/ComponentIndustrial`.
->>>>>>> 4b3e3a1 (fix(nemesis): cameo faction, upgrades, usable notes, Core textures)
 
 ### Personality & evidence pass
 - Archetypes (Stalker / Butcher / Saboteur / Trickster) rolled at hunt create; bias PickAction + distinct taunt voices; surface in settings status.
@@ -66,8 +70,8 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 - Royalty titled duel letter; Ideology relic theft letter; Biotech mechs on Reckoning assault; Odyssey/ship countdown endgame probe.
 
 ### Monorepo notes
-- **No public download zip** — CI still compiles Nemesis, but `Nemesis.zip` is not published on the rolling GitHub Release.
-- Package id `AzraelGodKing.Nemesis` (Harmony 1.6).
+- CI publishes `Nemesis.zip` (About / Defs / Languages + injected assembly) on the rolling GitHub Release alongside Homesteader / Stormproof / Strata.
+- Package id `AzraelGodKing.Nemesis` (Harmony 1.6); `modVersion` 1.0.0.
 
 ### Inherited from Dredd 1.4.x (summary)
 

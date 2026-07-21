@@ -39,6 +39,16 @@ namespace Nemesis
         public float actionWeightGrave = 0.05f;
         public float actionWeightFoodTamper = 0.06f;
         public float actionWeightInformant = 0.05f;
+        public float actionWeightTrophy = 0.08f;
+        public float actionWeightIntel = 0.07f;
+        public float actionWeightBurrow = 0.04f;
+        public float actionWeightAnomaly = 0.06f;
+
+        /// <summary>When false, KidnapAttempt weight is forced to 0 in PickAction.</summary>
+        public bool kidnapEnabled = true;
+
+        /// <summary>When false, SniperTerror weight is forced to 0 in PickAction.</summary>
+        public bool sniperEnabled = true;
 
         /// <summary>Chance a non-nemesis hostile raid gets a "I sold your layout" credit letter.</summary>
         public float raidCreditChance = 0.15f;
@@ -88,6 +98,12 @@ namespace Nemesis
             Scribe_Values.Look(ref actionWeightGrave, "actionWeightGrave", 0.05f);
             Scribe_Values.Look(ref actionWeightFoodTamper, "actionWeightFoodTamper", 0.06f);
             Scribe_Values.Look(ref actionWeightInformant, "actionWeightInformant", 0.05f);
+            Scribe_Values.Look(ref actionWeightTrophy, "actionWeightTrophy", 0.08f);
+            Scribe_Values.Look(ref actionWeightIntel, "actionWeightIntel", 0.07f);
+            Scribe_Values.Look(ref actionWeightBurrow, "actionWeightBurrow", 0.04f);
+            Scribe_Values.Look(ref actionWeightAnomaly, "actionWeightAnomaly", 0.06f);
+            Scribe_Values.Look(ref kidnapEnabled, "kidnapEnabled", true);
+            Scribe_Values.Look(ref sniperEnabled, "sniperEnabled", true);
             Scribe_Values.Look(ref raidCreditChance, "raidCreditChance", 0.15f);
             Scribe_Values.Look(ref ignoredActionsThreshold, "ignoredActionsThreshold", 3);
             Scribe_Values.Look(ref rivalCameoChance, "rivalCameoChance", 0.12f);
@@ -129,6 +145,13 @@ namespace Nemesis
             actionWeightGrave = 0.05f;
             actionWeightFoodTamper = 0.06f;
             actionWeightInformant = 0.05f;
+            // Trophy / intel / burrow / anomaly baselines are shared across all presets.
+            actionWeightTrophy = 0.08f;
+            actionWeightIntel = 0.07f;
+            actionWeightBurrow = 0.04f;
+            actionWeightAnomaly = 0.06f;
+            kidnapEnabled = true;
+            sniperEnabled = true;
             raidCreditChance = 0.15f;
             ignoredActionsThreshold = 3;
             rivalCameoChance = 0.12f;

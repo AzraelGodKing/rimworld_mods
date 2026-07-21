@@ -171,6 +171,18 @@ namespace Nemesis
             Weight(listing, "Nemesis_Settings_WeightGrave", ref Settings.actionWeightGrave);
             Weight(listing, "Nemesis_Settings_WeightFoodTamper", ref Settings.actionWeightFoodTamper);
             Weight(listing, "Nemesis_Settings_WeightInformant", ref Settings.actionWeightInformant);
+            Weight(listing, "Nemesis_Settings_WeightTrophy", ref Settings.actionWeightTrophy);
+            Weight(listing, "Nemesis_Settings_WeightIntel", ref Settings.actionWeightIntel);
+            Weight(listing, "Nemesis_Settings_WeightBurrow", ref Settings.actionWeightBurrow);
+            Weight(listing, "Nemesis_Settings_WeightAnomaly", ref Settings.actionWeightAnomaly);
+
+            bool kidnapOn = Settings.kidnapEnabled;
+            listing.CheckboxLabeled("Nemesis_Settings_KidnapEnabled".Translate(), ref kidnapOn);
+            if (kidnapOn != Settings.kidnapEnabled) { Settings.kidnapEnabled = kidnapOn; Settings.MarkCustom(); }
+            bool sniperOn = Settings.sniperEnabled;
+            listing.CheckboxLabeled("Nemesis_Settings_SniperEnabled".Translate(), ref sniperOn);
+            if (sniperOn != Settings.sniperEnabled) { Settings.sniperEnabled = sniperOn; Settings.MarkCustom(); }
+
             Slider(listing, "Nemesis_Settings_RaidCredit", ref Settings.raidCreditChance, 0f, 1f, pct: true);
             Slider(listing, "Nemesis_Settings_RivalCameo", ref Settings.rivalCameoChance, 0f, 1f, pct: true);
 

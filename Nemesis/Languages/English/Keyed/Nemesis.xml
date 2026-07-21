@@ -41,6 +41,12 @@
   <Nemesis_Settings_WeightGrave>Grave desecration: {0}</Nemesis_Settings_WeightGrave>
   <Nemesis_Settings_WeightFoodTamper>Food tampering: {0}</Nemesis_Settings_WeightFoodTamper>
   <Nemesis_Settings_WeightInformant>Informant reveal: {0}</Nemesis_Settings_WeightInformant>
+  <Nemesis_Settings_WeightTrophy>Trophy theft: {0}</Nemesis_Settings_WeightTrophy>
+  <Nemesis_Settings_WeightIntel>Camp intel: {0}</Nemesis_Settings_WeightIntel>
+  <Nemesis_Settings_WeightBurrow>Strata burrow: {0}</Nemesis_Settings_WeightBurrow>
+  <Nemesis_Settings_WeightAnomaly>Anomaly bait: {0}</Nemesis_Settings_WeightAnomaly>
+  <Nemesis_Settings_KidnapEnabled>Allow kidnap attempts</Nemesis_Settings_KidnapEnabled>
+  <Nemesis_Settings_SniperEnabled>Allow sniper terror</Nemesis_Settings_SniperEnabled>
   <Nemesis_Settings_RaidCredit>Raid credit-taking chance: {0}%</Nemesis_Settings_RaidCredit>
   <Nemesis_Settings_RivalCameo>Rival cameo chance: {0}%</Nemesis_Settings_RivalCameo>
   <Nemesis_Settings_Anniversary>Hunt anniversary taunts (every 60 days)</Nemesis_Settings_Anniversary>
@@ -53,6 +59,10 @@
   <Nemesis_Settings_TrophyEmpty>No completed hunts recorded yet.</Nemesis_Settings_TrophyEmpty>
   <Nemesis_Settings_TrophyLine>{0} ({1}) — {2} → {3}</Nemesis_Settings_TrophyLine>
   <Nemesis_Settings_Reset>Reset</Nemesis_Settings_Reset>
+
+  <Nemesis_Alert_Hunt_Label>{0} — {1}</Nemesis_Alert_Hunt_Label>
+  <Nemesis_Alert_Hunt_Explanation>{0} is hunting your colony ({1}).\n\nTarget: {2}\nEscapes: {3} / {4}\nDays hunted: {5}</Nemesis_Alert_Hunt_Explanation>
+  <Nemesis_Alert_Hunt_TargetColony>the colony</Nemesis_Alert_Hunt_TargetColony>
 
   <Nemesis_Archetype_Stalker>Stalker</Nemesis_Archetype_Stalker>
   <Nemesis_Archetype_Butcher>Butcher</Nemesis_Archetype_Butcher>
