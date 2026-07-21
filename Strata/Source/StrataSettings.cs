@@ -55,6 +55,8 @@ namespace Strata
         public bool multiFloorStairs = false;
         /// <summary>Gravship underdecks need pumps/tanks/heatsinks (VGE-inspired). Default ON.</summary>
         public bool gravshipLifeSupportEnabled = true;
+        /// <summary>When false (default), new digs/towers stop at ±4 from the stack root. Existing floors keep working.</summary>
+        public bool unlimitedLevelsEnabled = false;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;
 
@@ -109,6 +111,7 @@ namespace Strata
             Scribe_Values.Look(ref cageSustainHunger, "cageSustainHunger", defaultValue: false);
             Scribe_Values.Look(ref multiFloorStairs, "multiFloorStairs", defaultValue: false);
             Scribe_Values.Look(ref gravshipLifeSupportEnabled, "gravshipLifeSupportEnabled", defaultValue: true);
+            Scribe_Values.Look(ref unlimitedLevelsEnabled, "unlimitedLevelsEnabled", defaultValue: false);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
             Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
 
@@ -210,6 +213,8 @@ namespace Strata
             Text.Font = GameFont.Small;
             KeyPickerRow(listing, "Strata_Settings_ViewLevelAbove".Translate(), ref Settings.viewLevelUpKey, "up", KeyCode.PageUp);
             KeyPickerRow(listing, "Strata_Settings_ViewLevelBelow".Translate(), ref Settings.viewLevelDownKey, "down", KeyCode.PageDown);
+            listing.CheckboxLabeled("Strata_Settings_UnlimitedLevels".Translate(), ref Settings.unlimitedLevelsEnabled,
+                "Strata_Settings_UnlimitedLevelsDesc".Translate(StrataLevelCap.HardMaxOffset));
             listing.Gap();
 
             Text.Font = GameFont.Medium;
