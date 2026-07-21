@@ -55,7 +55,7 @@ namespace Strata
         public bool multiFloorStairs = false;
         /// <summary>Gravship underdecks need pumps/tanks/heatsinks (VGE-inspired). Default ON.</summary>
         public bool gravshipLifeSupportEnabled = true;
-        /// <summary>When false (default), new digs/towers stop at ±4 from the stack root. Existing floors keep working.</summary>
+        /// <summary>When false (default), new digs/towers stop at ±2 from the stack root. Existing floors keep working.</summary>
         public bool unlimitedLevelsEnabled = false;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;

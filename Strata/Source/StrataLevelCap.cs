@@ -3,12 +3,12 @@ using Verse;
 namespace Strata
 {
     /// <summary>
-    /// V3 hard cap: ±4 from the stack root (colony surface or gravship host) unless Unlimited is on.
+    /// V3 hard cap: ±2 from the stack root (colony surface or gravship host) unless Unlimited is on.
     /// Extra shafts that join an already-open floor skip this (handled by callers before calling).
     /// </summary>
     public static class StrataLevelCap
     {
-        public const int HardMaxOffset = 4;
+        public const int HardMaxOffset = 2;
 
         public static bool Unlimited =>
             StrataMod.Settings != null && StrataMod.Settings.unlimitedLevelsEnabled;

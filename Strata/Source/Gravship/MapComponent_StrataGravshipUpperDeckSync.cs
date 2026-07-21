@@ -41,7 +41,8 @@ namespace Strata
                 return;
             }
             bool forced = forceSyncNext;
-            if (!forced && !map.IsHashIntervalTick(60))
+            int interval = SyncIntervalTicks(lastSubstructureCount);
+            if (!forced && !map.IsHashIntervalTick(interval))
             {
                 return;
             }
@@ -67,7 +68,7 @@ namespace Strata
                 return;
             }
             forceSyncNext = false;
-            if (!forced && count == lastSubstructureCount && !map.IsHashIntervalTick(300))
+            if (!forced && count == lastSubstructureCount && !map.IsHashIntervalTick(interval * 4))
             {
                 return;
             }
@@ -80,8 +81,8 @@ namespace Strata
             lastSubstructureFingerprint = fingerprint;
             if (forced)
             {
-                // Land deferred sync: snap landings under shafts again, then
-                // grow-only deck paint (keeps travelling rooms off impassable hull).
+                // Land deferred sync: snap only if landing is still off the host shaft,
+                // then grow-only deck paint (keeps travelling rooms off impassable hull).
                 var pockets = new System.Collections.Generic.List<Map>();
                 foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
                 {
@@ -101,19 +102,49 @@ namespace Strata
                 {
                     pockets.Add(upper);
                 }
-                if (pockets.Count > 0)
+                bool needAlign = false;
+                if (!StrataGravshipPocketAlign.ShouldSuppressPostLandContentSnap())
+                {
+                    for (int i = 0; i < pockets.Count; i++)
+                    {
+                        if (!StrataGravshipPocketAlign.IsLandingAlignedToHostShaft(pockets[i], map))
+                        {
+                            needAlign = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (needAlign && pockets.Count > 0)
                 {
                     StrataGravshipPocketAlign.AlignPocketsToLandedShip(
                         pockets, map, IntVec3.Invalid);
                 }
-                StrataGravshipFootprintSnapshot.RebuildLinkedFloors(map, pockets);
+
+                StrataGravshipFootprintSnapshot.RebuildLinkedFloors(
+                    map, pockets, snapContents: needAlign);
                 return;
             }
+
+            // Periodic: grow deck / projections only. Full RebuildLinkedFloors walks
+            // huge underdecks and was hitching ~1k-cell VGE ships every minute.
             UpperDeckUtility.SyncGravshipUpperDecksFromSource(map);
             GravshipDeckUtility.SyncUnderdecksFromHost(map);
             StrataGravshipSubstructureSync.SyncAllLinkedFromHost(map);
-            // Snap contents onto footprint + rebuild projected substructure / clear orphans.
-            StrataGravshipFootprintSnapshot.RebuildLinkedFloors(map, null);
+        }
+
+        // Large ships: sync less often (substructure set + underdeck paint is heavy).
+        private static int SyncIntervalTicks(int substructureCount)
+        {
+            if (substructureCount >= 1000)
+            {
+                return 1200;
+            }
+            if (substructureCount >= 500)
+            {
+                return 600;
+            }
+            return 180;
         }
 
         private bool AnyGravshipPortal()
@@ -134,10 +165,15 @@ namespace Strata
             {
                 return 0;
             }
+            // Sample instead of hashing every cell — 1k+ ships were paying this each poll.
             int hash = count;
+            int i = 0;
             foreach (IntVec3 cell in sub)
             {
-                hash = unchecked(hash * 31 + cell.GetHashCode());
+                if ((i++ & 7) == 0)
+                {
+                    hash = unchecked(hash * 31 + cell.GetHashCode());
+                }
             }
             return hash;
         }
