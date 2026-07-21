@@ -15,8 +15,9 @@ namespace Strata
         private static readonly HashSet<Map> reachesVisited = new HashSet<Map>();
         private static readonly Queue<Map> reachesQueue = new Queue<Map>();
 
-        // ReachableLevels scratch (not reentrant-safe; do not call ReachableLevels
-        // from inside a ReachableLevels iteration).
+        // ReachableLevels BFS scratch. The public API returns a fresh list so
+        // nested callers (e.g. LevelDemand.Build → AddStorageUpgradePulls while
+        // HaulAcrossLevels is still walking links) cannot clear a live enumerator.
         private static readonly HashSet<Map> bfsVisited = new HashSet<Map>();
         private static readonly Dictionary<Map, MapPortal> bfsFirstSteps = new Dictionary<Map, MapPortal>();
         private static readonly Dictionary<Map, int> bfsDepths = new Dictionary<Map, int>();
@@ -73,20 +74,20 @@ namespace Strata
         }
 
         // All levels reachable from 'from', nearest first, each paired with the
-        // first portal to walk into. The buffer is reused; do not store it.
+        // first portal to walk into. Returns a new list each call (safe to nest
+        // or store for the current tick); topology is cached until InvalidateCache.
         public static List<LevelLink> ReachableLevels(Map from)
         {
-            resultBuffer.Clear();
             if (from == null)
             {
-                return resultBuffer;
+                return new List<LevelLink>();
             }
             if (cachedReachableFrom == from && cachedReachableEpoch == graphEpoch)
             {
-                resultBuffer.AddRange(reachableCache);
-                return resultBuffer;
+                return new List<LevelLink>(reachableCache);
             }
 
+            resultBuffer.Clear();
             bfsVisited.Clear();
             bfsVisited.Add(from);
             bfsFirstSteps.Clear();
@@ -127,7 +128,7 @@ namespace Strata
             reachableCache.AddRange(resultBuffer);
             cachedReachableFrom = from;
             cachedReachableEpoch = graphEpoch;
-            return resultBuffer;
+            return new List<LevelLink>(resultBuffer);
         }
 
         // The best portal on 'from' for a pawn heading toward 'target': among

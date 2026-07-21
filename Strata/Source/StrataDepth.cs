@@ -98,7 +98,17 @@ namespace Strata
         public static void Postfix(MapTemperature __instance, ref float __result)
         {
             Map map = MapRef(__instance);
-            if (map != null && StrataMapUtility.IsUnderground(map))
+            if (map == null)
+            {
+                return;
+            }
+            // Gravship underdecks: host outdoor / vacuum cold — not rock geothermal.
+            if (StrataGravshipLifeSupport.ShouldSkipGeothermalOutdoor(map))
+            {
+                __result = StrataGravshipLifeSupport.OutdoorTempForLifeSupportDeck(map, __result);
+                return;
+            }
+            if (StrataMapUtility.IsUnderground(map))
             {
                 __result = StrataDepth.GeothermalOutdoorTemp(StrataDepth.Of(map));
             }

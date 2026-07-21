@@ -4,7 +4,16 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
+### Changed
+- **Docs** — V3 roadmap parks AASB-inspired polish and MultiFloors-inspired gravship linking backlog (travel entitlement, shaft identity table, substructure-ready land gate).
+
+### Fixed
+- **`Strata_HaulAcrossLevels` “Collection was modified”** — `LevelGraph.ReachableLevels` now returns a fresh list each call (topology still cached), and `TryFindHaulTarget` snapshots links before nested `LevelDemand` rebuilds. Fixes Mech_Lifter / haul workgiver spam when demand cache cold-builds mid-scan. Build stamp `haul-reachablelevels-reentrant-v1`.
+- **Crash with Vanilla Gravship Expanded on new game** — VGE engine scoring no longer reads `ValidSubstructure` during `Game.FinalizeInit` (LongEvent worker thread). That getter regenerates GravshipMask graphics off-thread and hard-crashed Unity. Scoring now uses def priority + terrain foundation counts only.
+
 ### Added
+- **Gravship life support (VGE-inspired)** — linked underdecks/ship towers no longer free-replenish O₂ (toggle in settings; needs Natural gases). Open gravship shafts act as an O₂ umbilical to the host; vacuum hosts drain underdeck air. New Odyssey buildings: oxygen tank, oxygen reclaimer, heatsink / large heatsink. Launches add heat to Strata heatsinks (or ship rooms); skipped when VGE's `CompHeatManager` is already on the engine. Underdeck outdoor temp uses host/vacuum cold, not rock geothermal.
+- **Vanilla Gravship Expanded - Chapter 1 soft-compat** — detect `vanillaexpanded.gravship`, `loadAfter` VGE, prefer the best engine (vanilla / Gravjumper / Gravhulk), and treat VGE scaffold/damaged/mechanoid substructure terrains as ship deck when Odyssey cell sets are empty mid-land. Startup log when VGE is present.
 - **Omni inter-floor connector** — `Strata_ShaftFluid_Omni`: one junction ties power plus every supported fluid shaft channel (DBH, DCH heat/air, Rimatomics coolant, VHGE, VTE AC, VEF chemfuel, Rimefeller crude/fuel). Soft-skips unloaded mod networks; placeable in walls / same tile as pipes. Costs plasteel + spacer components; unlocked by Fluid shafts. Existing single-type junctions unchanged. Build stamp `omni-shaft-connector-v1`.
 - **Cross-level caravans** — form-caravan on a Strata surface root lists colonists, prisoners, and colony animals from every linked level (`crossLevelCaravansEnabled`, default ON). Off-map members walk/escort through stairwells and join the forming lord on arrival; departure waits for them (timeouts never block forever). Off-map downed pawns are excluded with a message. Items still use existing caravan-pull / stairhead haul. Build stamp `cross-level-caravans-v1`.
 - **VTE shaft AC duct junction** — soft-compat `Strata_ShaftFluid_VTE` bridges Vanilla Temperature Expanded air ducts between floors (surface compressors + control unit feed underground AC). Shares combined efficiency / single-controller rules across paired nets. Build stamp `vte-shaft-ac-junction-v1`.
