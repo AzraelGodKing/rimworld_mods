@@ -9,6 +9,8 @@ namespace Strata
     {
         public static void Postfix(World __instance)
         {
+            StrataVgeCompat.ResetCaches();
+            StrataGravshipHeat.Clear();
             if (__instance.GetComponent<StrataLevelLabels>() == null)
             {
                 __instance.components.Add(new StrataLevelLabels(__instance));
