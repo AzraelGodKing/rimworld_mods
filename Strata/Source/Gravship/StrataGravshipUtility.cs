@@ -11,11 +11,18 @@ namespace Strata
         public static bool OdysseyActive => ModsConfig.IsActive("Ludeon.RimWorld.Odyssey");
 
         // Grav engine physically on this map (ship deck / host surface).
+        // With Vanilla Gravship Expanded, prefer the engine that actually owns substructure
+        // (jumper / hulk / vanilla are all Building_GravEngine).
         public static Building_GravEngine FindGravEngineOnMap(Map map)
         {
             if (map?.listerBuildings == null)
             {
                 return null;
+            }
+            if (StrataVgeCompat.Active)
+            {
+                return StrataVgeCompat.PreferBestEngine(
+                    map.listerBuildings.AllBuildingsColonistOfClass<Building_GravEngine>());
             }
             foreach (Building_GravEngine engine in map.listerBuildings.AllBuildingsColonistOfClass<Building_GravEngine>())
             {
@@ -66,6 +73,12 @@ namespace Strata
             if (sub != null && sub.Count > 0)
             {
                 return sub.Contains(cell);
+            }
+            // VGE: scaffold / damaged substructure terrains still count as ship deck
+            // while engine cell sets are rebuilding after land.
+            if (StrataVgeCompat.Active && StrataVgeCompat.CellHasShipFoundation(map, cell))
+            {
+                return true;
             }
             // Substructure is empty while Odyssey wires the ship up after
             // ArriveNewMap; IsOnboardGravship NREs in that window.
@@ -352,7 +365,12 @@ namespace Strata
                 return sub.Contains(cell);
             }
             sub = engine.AllConnectedSubstructure;
-            return sub != null && sub.Contains(cell);
+            if (sub != null && sub.Count > 0)
+            {
+                return sub.Contains(cell);
+            }
+            // VGE scaffold / damaged foundation while ValidSubstructure is rebuilding.
+            return StrataVgeCompat.Active && StrataVgeCompat.CellHasShipFoundation(host, cell);
         }
 
         public static void ApplyOnboardPostfix(IntVec3 cell, Building_GravEngine engine, ref bool __result)

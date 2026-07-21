@@ -43,6 +43,10 @@
   <Strata_Settings_DeepBreathing>Deep-level breathing</Strata_Settings_DeepBreathing>
   <Strata_Settings_NaturalGases>Natural gases</Strata_Settings_NaturalGases>
   <Strata_Settings_NaturalGasesDesc>Atmospheric breathing mix (N₂, O₂, Ar, ambient CO₂): surface lock, depth O₂ scarcity, hypoxia, plant CO₂↔O₂ exchange, and natural-gas overlay tints. Off treats air as fully breathable with no O₂ simulation.</Strata_Settings_NaturalGasesDesc>
+  <Strata_Settings_GravshipLifeSupport>Gravship life support (O₂ + heat)</Strata_Settings_GravshipLifeSupport>
+  <Strata_Settings_GravshipLifeSupportDesc>When on (default), gravship-linked underdecks and ship towers do not free-replenish oxygen. Use oxygen tanks/reclaimers, ordinary O₂ pumps, or an open stair umbilical to the host. Launches dump heat into gravship heatsinks (or ship rooms). Skips Strata launch heat when Vanilla Gravship Expanded already manages heat. Requires Natural gases for the O₂ half.</Strata_Settings_GravshipLifeSupportDesc>
+  <Strata_GravshipOxygenStored>Oxygen stored: {0} / {1}</Strata_GravshipOxygenStored>
+  <Strata_GravshipHeatsinkStored>Heat stored: {0} / {1}</Strata_GravshipHeatsinkStored>
   <Strata_Settings_BreathingSimulation>O₂ / CO₂ simulation</Strata_Settings_BreathingSimulation>
   <Strata_Settings_BreathingSimulationDesc>Underground levels track oxygen and carbon dioxide: colonists breathe O₂, exhale CO₂, O₂ rises through shafts, and CO₂ sinks. Turning this off clears both gases.</Strata_Settings_BreathingSimulationDesc>
   <Strata_Settings_GasOverlayLabels>Gas overlay room labels</Strata_Settings_GasOverlayLabels>

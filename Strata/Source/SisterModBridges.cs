@@ -16,6 +16,8 @@ namespace Strata
 
         public static bool StormproofLoaded { get; private set; }
 
+        public static bool VanillaGravshipExpandedLoaded { get; private set; }
+
         public static bool RootCellarPresent { get; private set; }
 
         public static bool HandDugWellPresent { get; private set; }
@@ -32,6 +34,13 @@ namespace Strata
             WellspringLoaded = HomesteaderLoaded
                 || ModsConfig.IsActive("AzraelGodKing.Wellspring");
             StormproofLoaded = ModsConfig.IsActive("AzraelGodKing.Stormproof");
+            VanillaGravshipExpandedLoaded = ModsConfig.IsActive(StrataVgeCompat.PackageId)
+                || ModLister.GetActiveModWithIdentifier(StrataVgeCompat.PackageId) != null;
+            if (VanillaGravshipExpandedLoaded)
+            {
+                Log.Message("[Strata] Soft-compat: Vanilla Gravship Expanded - Chapter 1 detected ("
+                    + StrataVgeCompat.PackageId + "). Gravship underdeck follow uses VGE engine/scaffold awareness.");
+            }
 
             RootCellarPresent = DefDatabase<ThingDef>.GetNamedSilentFail("Homesteader_RootCellar") != null;
             HandDugWellPresent = DefDatabase<ThingDef>.GetNamedSilentFail("Wellspring_HandDugWell") != null;
