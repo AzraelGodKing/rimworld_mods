@@ -10,9 +10,24 @@ namespace Strata
         private int lastSubstructureFingerprint;
         private int lastSubstructureCount = -1;
         private bool forceSyncNext;
+        private StrataGravshipLandGate.PendingLand pendingLand;
 
         public MapComponent_StrataGravshipUpperDeckSync(Map map) : base(map)
         {
+        }
+
+        public void ArmPendingLand(StrataGravshipLandGate.PendingLand pending)
+        {
+            pendingLand = pending;
+            forceSyncNext = true;
+            lastSubstructureCount = -1;
+            lastSubstructureFingerprint = 0;
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Deep.Look(ref pendingLand, "strataPendingLand");
         }
 
         // Land path: Odyssey may still be wiring ValidSubstructure — force a
@@ -63,7 +78,7 @@ namespace Strata
             }
             int count = sub?.Count ?? 0;
             // Do not paint/sync while empty — that wipes travelling underdeck decks.
-            if (count == 0)
+            if (count == 0 && !StrataGravshipLandGate.HostDeckReady(engine, map))
             {
                 return;
             }
@@ -73,12 +88,28 @@ namespace Strata
                 return;
             }
             int fingerprint = SubstructureFingerprint(sub, count);
-            if (!forced && fingerprint == lastSubstructureFingerprint && count == lastSubstructureCount)
+            if (!forced && fingerprint == lastSubstructureFingerprint && count == lastSubstructureCount
+                && pendingLand == null)
             {
                 return;
             }
             lastSubstructureCount = count;
             lastSubstructureFingerprint = fingerprint;
+
+            // G3: finish deferred CompleteLanding once the pad exists.
+            if (pendingLand != null)
+            {
+                if (!StrataGravshipLandGate.HostDeckReady(engine, map))
+                {
+                    forceSyncNext = true;
+                    return;
+                }
+                StrataGravshipLandGate.PendingLand land = pendingLand;
+                pendingLand = null;
+                WorldComponent_StrataGravshipStacks.Get()?.FinishDeferredLanding(map, land);
+                return;
+            }
+
             if (forced)
             {
                 // Land deferred sync: snap only if landing is still off the host shaft,

@@ -22,6 +22,8 @@ namespace Strata
         public string shaftId;
         public string stackGuid;
         public int lastPocketMapId = -1;
+        // G4: when false, pocket does not follow launch (host-side entitlement).
+        public bool travelsWithShip = true;
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
@@ -35,10 +37,34 @@ namespace Strata
             Scribe_Values.Look(ref shaftId, "strataShaftId");
             Scribe_Values.Look(ref stackGuid, "strataStackGuid");
             Scribe_Values.Look(ref lastPocketMapId, "strataLastPocketMapId", -1);
+            Scribe_Values.Look(ref travelsWithShip, "strataTravelsWithShip", true);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 EnsureShaftId();
             }
+        }
+
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            foreach (Gizmo g in base.CompGetGizmosExtra())
+            {
+                yield return g;
+            }
+            if (parent is not IStrataGravshipPortal
+                || !StrataGravshipUtility.IsGravshipHostShaft(parent))
+            {
+                yield break;
+            }
+            yield return new Command_Toggle
+            {
+                defaultLabel = travelsWithShip
+                    ? "Strata_TravelWithShipOn".Translate()
+                    : "Strata_TravelWithShipOff".Translate(),
+                defaultDesc = "Strata_TravelWithShipDesc".Translate(),
+                isActive = () => travelsWithShip,
+                toggleAction = () => travelsWithShip = !travelsWithShip,
+                icon = TexCommand.ForbidOff,
+            };
         }
 
         public void EnsureShaftId()

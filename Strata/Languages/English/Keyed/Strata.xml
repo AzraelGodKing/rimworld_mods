@@ -260,6 +260,9 @@
   <Strata_RaidersBatteringPortal>Raiders are battering the sealed {0}!</Strata_RaidersBatteringPortal>
   <Strata_GravshipLevelsTravel>Strata: {0} linked level(s) will travel with the gravship.</Strata_GravshipLevelsTravel>
   <Strata_GravshipLevelsDocked>Strata: {0} linked level(s) docked with the gravship.</Strata_GravshipLevelsDocked>
+  <Strata_TravelWithShipOn>Travel with ship: ON</Strata_TravelWithShipOn>
+  <Strata_TravelWithShipOff>Travel with ship: OFF</Strata_TravelWithShipOff>
+  <Strata_TravelWithShipDesc>When ON, this shaft's linked floor follows gravship launch. Turn OFF to leave the floor behind on the current world tile.</Strata_TravelWithShipDesc>
   <Strata_GravshipRescuedPawns>Strata: moved {0} prisoner(s)/baby(ies) onto the gravship so they would not be left behind.</Strata_GravshipRescuedPawns>
   <Strata_GravshipLinkedLeftBehindWarn>Strata: these pawns are off the ship deck or on a linked floor that will not travel (prisoners/babies will be pulled aboard at launch): {0}</Strata_GravshipLinkedLeftBehindWarn>
 

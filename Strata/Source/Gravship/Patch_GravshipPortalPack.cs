@@ -491,12 +491,22 @@ namespace Strata
                     ?? FindShaftThingAnywhere(snap.defName);
                 if (existing != null)
                 {
+                    if (existing.Destroyed)
+                    {
+                        Log.Warning("[Strata] Gravship land: packed shaft " + snap.defName
+                            + " is destroyed — skipping reclaim (PlaceGravship may already own it).");
+                        continue;
+                    }
                     if (existing.Spawned && existing.Map == host)
                     {
                         continue;
                     }
 
                     ForceUnspawn(existing);
+                    if (existing.Destroyed || existing.Spawned)
+                    {
+                        continue;
+                    }
                     GenSpawn.Spawn(existing, cell, host, spawnRot);
                     CompStrataGravshipShaft id = StrataGravshipShaftIdentity.CompOf(existing);
                     if (id != null)
@@ -777,7 +787,8 @@ namespace Strata
             var wiredPockets = new HashSet<Map>();
             var claimedShafts = new HashSet<MapPortal>();
 
-            // G2: wire by shaftId → pocketMapId first (furnished travelling floor).
+            // G2/G5: wire by shaftId → pocketMapId table first (furnished travelling floor).
+            var tableOnlyPockets = new HashSet<Map>();
             if (engine != null)
             {
                 for (int i = 0; i < snapshots.Count; i++)
@@ -788,18 +799,32 @@ namespace Strata
                     {
                         continue;
                     }
-                    MapPortal shaft = null;
+                    MapPortal landing = FindLandingOn(pocket);
+                    if (landing == null)
+                    {
+                        continue;
+                    }
+
+                    // G5: when shaftId is present, never fall back to defName / best-match.
                     if (!snap.shaftId.NullOrEmpty())
                     {
-                        shaft = StrataGravshipShaftIdentity.FindHostShaftById(host, snap.shaftId);
-                        if (shaft != null && claimedShafts.Contains(shaft))
+                        tableOnlyPockets.Add(pocket);
+                        MapPortal byId = StrataGravshipShaftIdentity.FindHostShaftById(
+                            host, snap.shaftId);
+                        if (byId == null || claimedShafts.Contains(byId))
                         {
-                            shaft = null;
+                            Log.Message("[Strata] G5 wiring table: no host shaft for shaftId "
+                                + snap.shaftId + " → " + pocket);
+                            continue;
                         }
+                        ConnectPortalPair(byId, landing);
+                        claimedShafts.Add(byId);
+                        wiredPockets.Add(pocket);
+                        continue;
                     }
-                    shaft ??= FindHostShaftMatching(host, engine, snap, claimedShafts);
-                    MapPortal landing = FindLandingOn(pocket);
-                    if (shaft == null || landing == null)
+
+                    MapPortal shaft = FindHostShaftMatching(host, engine, snap, claimedShafts);
+                    if (shaft == null)
                     {
                         continue;
                     }
@@ -813,6 +838,11 @@ namespace Strata
             {
                 Map pocket = pockets[i];
                 if (pocket == null || !Find.Maps.Contains(pocket) || wiredPockets.Contains(pocket))
+                {
+                    continue;
+                }
+                // G5: pockets listed with a shaftId stay table-only (no best-match salvage).
+                if (tableOnlyPockets.Contains(pocket))
                 {
                     continue;
                 }
