@@ -6,6 +6,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ### Changed
 - **Docs** — V3 target locked on `feature/strata-v3` (from VGE Chapter 1 compat): New Gravship Linking (G1–G7), Polish (A1–A5), More UX changes (M1–M8 except M5), ±4 hard cap / Unlimited default off. → [docs/strata-roadmap.html](../docs/strata-roadmap.html)
+- **Docs** — V3 roadmap parks AASB-inspired polish and MultiFloors-inspired gravship linking backlog (travel entitlement, shaft identity table, substructure-ready land gate).
 
 ### Fixed
 - **`Strata_HaulAcrossLevels` “Collection was modified”** — `LevelGraph.ReachableLevels` now returns a fresh list each call (topology still cached), and `TryFindHaulTarget` snapshots links before nested `LevelDemand` rebuilds. Fixes Mech_Lifter / haul workgiver spam when demand cache cold-builds mid-scan. Build stamp `haul-reachablelevels-reentrant-v1`.
