@@ -266,6 +266,9 @@
   <Strata_RaidersBatteringPortal>Рейдеры ломают запечатанный {0}!</Strata_RaidersBatteringPortal>
   <Strata_GravshipLevelsTravel>Strata: {0} связанный(х) уровень(ней) отправится с гравикораблём.</Strata_GravshipLevelsTravel>
   <Strata_GravshipLevelsDocked>Strata: {0} связанный(х) уровень(ней) пристыкован(о) к гравикораблю.</Strata_GravshipLevelsDocked>
+  <Strata_TravelWithShipOn>Полёт с кораблём: ВКЛ</Strata_TravelWithShipOn>
+  <Strata_TravelWithShipOff>Полёт с кораблём: ВЫКЛ</Strata_TravelWithShipOff>
+  <Strata_TravelWithShipDesc>Когда ВКЛ, связанный этаж этой шахты следует за запуском гравикорабля. Выключите, чтобы оставить этаж на текущей клетке мира.</Strata_TravelWithShipDesc>
   <Strata_GravshipRescuedPawns>Strata: {0} заключённый(х)/младенец(ев) перенесены на гравикорабль, чтобы их не оставили.</Strata_GravshipRescuedPawns>
   <Strata_GravshipLinkedLeftBehindWarn>Strata: эти пешки вне палубы корабля или на связанном этаже, который не полетит (заключённых/младенцев заберут на борт при старте): {0}</Strata_GravshipLinkedLeftBehindWarn>
 

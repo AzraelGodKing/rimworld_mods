@@ -224,6 +224,11 @@ namespace Strata
             {
                 return 0;
             }
+            // G7 already placed engine-relative — do not DeSpawn/respawn landings.
+            if (StrataGravshipDeckCargo.PlacedThisLand)
+            {
+                return 0;
+            }
 
             Building_GravEngine engine = StrataGravshipUtility.FindGravEngineOnMap(host);
             HashSet<IntVec3> deck = engine.ValidSubstructure;
@@ -263,6 +268,13 @@ namespace Strata
                 {
                     continue;
                 }
+                // Never pull portals — DeSpawn/Spawn races "already spawned" / destroys links.
+                if (thing is MapPortal
+                    || StrataGravshipUtility.IsGravshipLanding(thing)
+                    || StrataGravshipUtility.IsGravshipHostShaft(thing))
+                {
+                    continue;
+                }
                 if (thing.def.defName == StrataGravshipSubstructureSync.SubstructureDefName)
                 {
                     continue;
@@ -285,6 +297,10 @@ namespace Strata
 
                 Rot4 rot = thing.Rotation;
                 thing.DeSpawn(DestroyMode.WillReplace);
+                if (thing.Destroyed || thing.Spawned)
+                {
+                    continue;
+                }
                 if (GenSpawn.Spawn(thing, dest, pocket, rot, WipeMode.Vanish) != null)
                 {
                     moved++;
@@ -619,9 +635,9 @@ namespace Strata
             }
         }
 
-        // Empty Gravship deck pads left after a misaligned land (no furniture/landing).
-        // When host is set, only seed from things on the live ship — left-behind
-        // wall fragments must not preserve an orphan pad.
+        // Strip managed deck/hull that sits OFF the live host pad.
+        // Never AllCells-nuke tens of thousands of tiles in one tick — that dirties
+        // every section and RGB-corrupts the view (esp. with -disable-compute-shaders).
         public static void CleanupEmptySilhouetteIslands(Map under, Map host = null)
         {
             if (under == null || !StrataMapUtility.IsUnderground(under)
@@ -629,123 +645,87 @@ namespace Strata
             {
                 return;
             }
-            var keep = new HashSet<IntVec3>();
-            var queue = new Queue<IntVec3>();
-            bool sameSize = host != null && under.Size == host.Size;
-
-            void Seed(IntVec3 cell)
+            // G7 place + exact pad paint already own the silhouette.
+            if (StrataGravshipDeckCargo.PlacedThisLand)
             {
-                if (!cell.InBounds(under) || !keep.Add(cell))
-                {
-                    return;
-                }
-                if (cell.GetTerrain(under)?.defName == DeckDefName)
-                {
-                    queue.Enqueue(cell);
-                }
+                return;
+            }
+            if (host == null || under.Size != host.Size)
+            {
+                return;
             }
 
-            List<Thing> things = under.listerThings?.AllThings;
-            if (things != null)
+            Building_GravEngine engine = StrataGravshipUtility.FindGravEngineOnMap(host);
+            if (!StrataGravshipUtility.EngineHasSubstructure(engine))
             {
-                for (int i = 0; i < things.Count; i++)
-                {
-                    Thing thing = things[i];
-                    if (thing == null || thing.Destroyed || !thing.Spawned)
-                    {
-                        continue;
-                    }
-                    bool seed = thing is Pawn
-                        || StrataGravshipUtility.IsGravshipLanding(thing)
-                        || (thing.def.category == ThingCategory.Building
-                            && thing.def.defName != StrataGravshipSubstructureSync.SubstructureDefName)
-                        || thing.def.category == ThingCategory.Item;
-                    if (!seed)
-                    {
-                        continue;
-                    }
-                    if (sameSize && !StrataGravshipUtility.CellOnGravship(host, thing.Position))
-                    {
-                        continue;
-                    }
-                    foreach (IntVec3 cell in thing.OccupiedRect())
-                    {
-                        Seed(cell);
-                    }
-                }
+                return;
             }
 
-            // Always keep the live host silhouette even if temporarily empty.
-            if (sameSize)
-            {
-                Building_GravEngine engine = StrataGravshipUtility.FindGravEngineOnMap(host);
-                HashSet<IntVec3> sub = engine?.ValidSubstructure;
-                if (sub == null || sub.Count == 0)
-                {
-                    sub = engine?.AllConnectedSubstructure;
-                }
-                if (sub != null)
-                {
-                    foreach (IntVec3 cell in sub)
-                    {
-                        Seed(cell);
-                    }
-                }
-            }
-
-            while (queue.Count > 0)
-            {
-                IntVec3 cell = queue.Dequeue();
-                for (int i = 0; i < 4; i++)
-                {
-                    IntVec3 next = cell + GenAdj.CardinalDirections[i];
-                    if (!next.InBounds(under) || keep.Contains(next))
-                    {
-                        continue;
-                    }
-                    if (next.GetTerrain(under)?.defName != DeckDefName)
-                    {
-                        continue;
-                    }
-                    keep.Add(next);
-                    queue.Enqueue(next);
-                }
-            }
-
-            int removed = 0;
-            TerrainDef voidT = VoidTerrain;
+            const int MaxClearPerCall = 2048;
+            var toClear = new List<IntVec3>(256);
             foreach (IntVec3 cell in under.AllCells)
             {
-                if (keep.Contains(cell))
+                if (StrataGravshipUtility.CellOnGravship(host, cell))
                 {
                     continue;
                 }
                 TerrainDef terrain = cell.GetTerrain(under);
-                bool managed = terrain?.defName == DeckDefName || terrain?.defName == HullDefName;
-                if (!managed)
+                if (!IsManagedDeckTerrain(terrain))
                 {
                     continue;
                 }
-                // Drop empty deck islands, and any managed ghost pad outside the live ship.
-                bool offPad = sameSize && !StrataGravshipUtility.CellOnGravship(host, cell);
-                if (!offPad && terrain?.defName != DeckDefName)
+                toClear.Add(cell);
+                if (toClear.Count >= MaxClearPerCall * 4)
                 {
-                    continue;
+                    break;
                 }
-                Thing sub = StrataGravshipSubstructureSync.SubstructureAt(under, cell);
-                if (sub != null && !sub.Destroyed)
+            }
+            if (toClear.Count == 0)
+            {
+                return;
+            }
+            if (toClear.Count > MaxClearPerCall)
+            {
+                Log.Warning("[Strata] Gravship underdeck: skipping mass silhouette clear ("
+                    + toClear.Count + " off-pad managed cell(s) > " + MaxClearPerCall
+                    + ") to avoid section RGB corruption. Pad paint left as-is.");
+                return;
+            }
+
+            TerrainDef voidT = VoidTerrain;
+            bool regionsWereEnabled = under.regionAndRoomUpdater?.Enabled ?? false;
+            if (under.regionAndRoomUpdater != null)
+            {
+                under.regionAndRoomUpdater.Enabled = false;
+            }
+            int removed = 0;
+            try
+            {
+                for (int i = 0; i < toClear.Count; i++)
                 {
-                    sub.Destroy(DestroyMode.Vanish);
+                    IntVec3 cell = toClear[i];
+                    Thing sub = StrataGravshipSubstructureSync.SubstructureAt(under, cell);
+                    if (sub != null && !sub.Destroyed)
+                    {
+                        sub.Destroy(DestroyMode.Vanish);
+                    }
+                    under.GetComponent<MapComponent_StrataProjectedSubstructure>()?.UnmarkProjected(cell);
+                    under.terrainGrid.SetTerrain(cell, voidT);
+                    under.roofGrid.SetRoof(cell, null);
+                    removed++;
                 }
-                under.GetComponent<MapComponent_StrataProjectedSubstructure>()?.UnmarkProjected(cell);
-                under.terrainGrid.SetTerrain(cell, voidT);
-                under.roofGrid.SetRoof(cell, null);
-                removed++;
+            }
+            finally
+            {
+                if (under.regionAndRoomUpdater != null)
+                {
+                    under.regionAndRoomUpdater.Enabled = regionsWereEnabled;
+                }
             }
             if (removed > 0)
             {
                 Log.Message("[Strata] Gravship underdeck: cleared " + removed
-                    + " empty/orphan silhouette cell(s) (MultiFloors-style pad only).");
+                    + " off-pad silhouette cell(s).");
             }
         }
     }

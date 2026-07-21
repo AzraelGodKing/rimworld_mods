@@ -477,11 +477,41 @@ namespace Strata
             {
                 return true;
             }
+            // G6: wired host shaft projects vertical ownership onto the pocket cell
+            // at the same absolute coords (shaft as grav-extender).
+            if (CellOwnedByWiredHostShaft(map, cell, engine.Map))
+            {
+                return true;
+            }
             if (StrataMapUtility.IsUpperLevel(map))
             {
                 return cell.GetTerrain(map)?.defName == UpperDeckUtility.RoofDeckDefName;
             }
             return GravshipDeckUtility.IsWalkableDeckCell(map, cell);
+        }
+
+        private static bool CellOwnedByWiredHostShaft(Map pocket, IntVec3 cell, Map host)
+        {
+            if (host == null || pocket.Size != host.Size || !cell.InBounds(host))
+            {
+                return false;
+            }
+            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is not MapPortal shaft || !shaft.Spawned
+                    || !IsGravshipHostShaft(shaft)
+                    || !shaft.PocketMapExists || shaft.PocketMap != pocket)
+                {
+                    continue;
+                }
+                // Shaft footprint + 1-cell rim owns the vertical column on the pocket.
+                CellRect rect = shaft.OccupiedRect().ExpandedBy(1);
+                if (rect.Contains(cell))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static IEnumerable<Map> EnumerateStackDeckMaps(Building_GravEngine engine)
