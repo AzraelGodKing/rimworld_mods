@@ -96,7 +96,8 @@ namespace Strata
                 bool ghostDeck = upper
                     ? terrain?.defName == UpperDeckUtility.RoofDeckDefName
                     : terrain?.defName == GravshipDeckUtility.DeckDefName;
-                if (!ghostDeck || CellHasPawn(map, cell))
+                Thing sub = StrataGravshipSubstructureSync.SubstructureAt(map, cell);
+                if ((!ghostDeck && sub == null) || CellHasPawn(map, cell))
                 {
                     continue;
                 }
@@ -115,14 +116,18 @@ namespace Strata
                         continue;
                     }
                 }
-                Thing sub = StrataGravshipSubstructureSync.SubstructureAt(map, cell);
                 if (sub != null && !sub.Destroyed)
                 {
                     sub.Destroy(DestroyMode.Vanish);
                 }
                 tracker?.UnmarkProjected(cell);
-                map.terrainGrid.SetTerrain(cell, ReplacementFor(map, cell, upper));
-                map.roofGrid.SetRoof(cell, null);
+                // Terrain/roof only revert on managed ghost deck — a cell that
+                // only carried a stale substructure thing keeps its floor.
+                if (ghostDeck)
+                {
+                    map.terrainGrid.SetTerrain(cell, ReplacementFor(map, cell, upper));
+                    map.roofGrid.SetRoof(cell, null);
+                }
                 done++;
             }
 

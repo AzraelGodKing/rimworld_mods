@@ -659,8 +659,11 @@ namespace Strata
                 return;
             }
 
-            // Ghost DECK circles only — hull is the pocket's background rock and
-            // clearing it map-wide (60k+ cells) is what corrupted map sections.
+            // Ghost DECK circles and stale projected-substructure things only —
+            // hull is the pocket's background and clearing it map-wide (60k+
+            // cells) is what corrupted map sections. Stale GravshipSubstructure
+            // things render as a grey circle even on plain terrain, so they are
+            // swept independently of the terrain def.
             var toClear = new List<IntVec3>(256);
             foreach (IntVec3 cell in under.AllCells)
             {
@@ -668,8 +671,9 @@ namespace Strata
                 {
                     continue;
                 }
-                TerrainDef terrain = cell.GetTerrain(under);
-                if (terrain?.defName != DeckDefName)
+                bool ghostDeck = cell.GetTerrain(under)?.defName == DeckDefName;
+                bool staleSub = StrataGravshipSubstructureSync.SubstructureAt(under, cell) != null;
+                if (!ghostDeck && !staleSub)
                 {
                     continue;
                 }
@@ -705,9 +709,14 @@ namespace Strata
                         sub.Destroy(DestroyMode.Vanish);
                     }
                     under.GetComponent<MapComponent_StrataProjectedSubstructure>()?.UnmarkProjected(cell);
-                    under.terrainGrid.SetTerrain(
-                        cell, StrataDeferredCellClear.ReplacementFor(under, cell, upper: false));
-                    under.roofGrid.SetRoof(cell, null);
+                    // Terrain/roof only revert on managed ghost deck — cells that
+                    // merely carried a stale substructure thing keep their floor.
+                    if (cell.GetTerrain(under)?.defName == DeckDefName)
+                    {
+                        under.terrainGrid.SetTerrain(
+                            cell, StrataDeferredCellClear.ReplacementFor(under, cell, upper: false));
+                        under.roofGrid.SetRoof(cell, null);
+                    }
                     removed++;
                 }
             }

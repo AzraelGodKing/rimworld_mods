@@ -332,7 +332,9 @@ namespace Strata
             var toClear = new List<IntVec3>(64);
             foreach (IntVec3 cell in upper.AllCells)
             {
-                if (cell.GetTerrain(upper)?.defName != RoofDeckDefName)
+                bool ghostDeck = cell.GetTerrain(upper)?.defName == RoofDeckDefName;
+                bool staleSub = StrataGravshipSubstructureSync.SubstructureAt(upper, cell) != null;
+                if (!ghostDeck && !staleSub)
                 {
                     continue;
                 }
@@ -364,8 +366,11 @@ namespace Strata
                     sub.Destroy(DestroyMode.Vanish);
                 }
                 upper.GetComponent<MapComponent_StrataProjectedSubstructure>()?.UnmarkProjected(cell);
-                upper.terrainGrid.SetTerrain(cell, OpenSky);
-                upper.roofGrid.SetRoof(cell, null);
+                if (cell.GetTerrain(upper)?.defName == RoofDeckDefName)
+                {
+                    upper.terrainGrid.SetTerrain(cell, OpenSky);
+                    upper.roofGrid.SetRoof(cell, null);
+                }
             }
             Log.Message("[Strata] Upper deck: cleared " + toClear.Count
                 + " unsupported deck cell(s) on " + upper.uniqueID + ".");
