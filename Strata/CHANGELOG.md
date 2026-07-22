@@ -156,12 +156,8 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 - Cross-level haul spam, bill ingredients, Misc. Robots on shafts, relay session state on load, sealed-shaft siege on indestructible landings.
 - Dozens of startup/XML/Harmony 1.6 compat fixes across incidents, canary, mine lamp, lime scrubber, and dev tools.
 
----
-
-## [1.1] — 2026-07-12
-
-Level sharing, cross-level storage/construction, smoke ventilation, pursuing raids, deep insect eruptions, shaft power, legacy landing migration.
-
 ## [1.0] — Strata V1
 
 Initial release: excavated levels, relays, smoke sim, Levels tab, elevators, shaft power, raid pursuit.
+Level sharing, cross-level storage/construction, smoke ventilation, pursuing raids, deep insect eruptions, shaft power, legacy landing migration.
+
