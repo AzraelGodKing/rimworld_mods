@@ -659,11 +659,6 @@ namespace Strata
                 return;
             }
 
-            // Batch: clear up to the cap per call and request another sync pass
-            // for the rest — skipping entirely left multi-flight ghost pads
-            // (8k+ managed cells) on the pocket forever.
-            const int MaxClearPerCall = 4096;
-            bool more = false;
             var toClear = new List<IntVec3>(256);
             foreach (IntVec3 cell in under.AllCells)
             {
@@ -676,22 +671,19 @@ namespace Strata
                 {
                     continue;
                 }
-                if (toClear.Count >= MaxClearPerCall)
-                {
-                    more = true;
-                    break;
-                }
                 toClear.Add(cell);
             }
             if (toClear.Count == 0)
             {
                 return;
             }
-            if (more)
+            // Mass same-tick clears RGB-corrupt map sections; large ghost pads
+            // drain a small slice per tick instead. Small counts stay inline so
+            // a fresh land looks right immediately.
+            if (toClear.Count > 256)
             {
-                MapComponent_StrataGravshipUpperDeckSync.RequestSync(host);
-                Log.Message("[Strata] Gravship underdeck: clearing silhouette in batches ("
-                    + MaxClearPerCall + " cell(s) this pass; more remain).");
+                StrataDeferredCellClear.Enqueue(under, toClear);
+                return;
             }
 
             TerrainDef voidT = VoidTerrain;
