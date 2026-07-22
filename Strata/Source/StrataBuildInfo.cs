@@ -8,7 +8,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "g8-raw11-landing-snap-v2";
+        public const string BuildStamp = "g8-defer-clear-v3";
 
         public static void LogStartup()
         {
