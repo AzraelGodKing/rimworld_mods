@@ -252,6 +252,14 @@ namespace Strata
             {
                 return;
             }
+            // Gravship shafts are strictly 1:1 with their pocket — proportional
+            // realign on a different-size host map would drag the landing off the
+            // ship footprint. Snap to the exact shaft cell instead.
+            if (this is IStrataGravshipPortal)
+            {
+                StrataGravshipPortalTravel.SnapLandingUnderShaft(this);
+                return;
+            }
             Map level = PocketMap;
             float alignRadiusSq = LandingAlignRadius * LandingAlignRadius + 0.1f;
             IntVec3 aligned = StrataMapUtility.ProportionalCell(Position, Map, level);

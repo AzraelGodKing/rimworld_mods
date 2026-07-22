@@ -158,20 +158,16 @@ namespace Strata
             {
                 sub = engine?.AllConnectedSubstructure;
             }
-            bool sameSize = pocket.Size == host.Size;
+            // Always raw 1:1 — a new host map of a different size must not scale
+            // the projection (cargo/vanilla place things at raw coordinates).
             if (sub != null)
             {
                 foreach (IntVec3 hostCell in sub)
                 {
-                    IntVec3 pocketCell = sameSize
-                        ? hostCell
-                        : StrataMapUtility.ProportionalCell(hostCell, host, pocket);
-                    if (!pocketCell.InBounds(pocket))
+                    if (hostCell.InBounds(pocket))
                     {
-                        continue;
+                        want.Add(hostCell);
                     }
-                    // Host substructure cell projects 1:1 (or proportionally) onto the pocket.
-                    want.Add(pocketCell);
                 }
             }
             // G6: wired host shaft footprint + rim always projects onto this pocket.
@@ -185,16 +181,9 @@ namespace Strata
                 }
                 foreach (IntVec3 hostCell in shaft.OccupiedRect().ExpandedBy(1))
                 {
-                    if (!hostCell.InBounds(host))
+                    if (hostCell.InBounds(host) && hostCell.InBounds(pocket))
                     {
-                        continue;
-                    }
-                    IntVec3 pocketCell = sameSize
-                        ? hostCell
-                        : StrataMapUtility.ProportionalCell(hostCell, host, pocket);
-                    if (pocketCell.InBounds(pocket))
-                    {
-                        want.Add(pocketCell);
+                        want.Add(hostCell);
                     }
                 }
             }
@@ -208,6 +197,7 @@ namespace Strata
             {
                 tracker = new MapComponent_StrataProjectedSubstructure(pocket);
                 pocket.components.Add(tracker);
+                StrataGravshipCache.Invalidate();
             }
             return tracker;
         }
@@ -227,10 +217,8 @@ namespace Strata
             {
                 return false;
             }
-            IntVec3 hostCell = pocket.Size == host.Size
-                ? pocketCell
-                : StrataMapUtility.ProportionalCell(pocketCell, pocket, host);
-            return StrataGravshipUtility.CellOnGravship(host, hostCell);
+            // Raw 1:1 — never proportional on gravship pockets.
+            return StrataGravshipUtility.CellOnGravship(host, pocketCell);
         }
 
         private static void EnsureProjectedSubstructure(

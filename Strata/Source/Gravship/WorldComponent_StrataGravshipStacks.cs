@@ -325,6 +325,8 @@ namespace Strata
             StrataGravshipOrphanLevels.CleanupDuplicateLevels(newHost);
             StrataGravshipFootprintSnapshot.RebuildLinkedFloors(
                 newHost, maps, landEngine, snapContents: false);
+            // Hard invariant after everything settles: landing cell == shaft cell.
+            StrataGravshipPortalTravel.SnapAllLandingsUnderShafts(newHost);
             Log.Message($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}"
                 + (pinnedThingId >= 0 ? $" (engine thingID {pinnedThingId})." : "."));
             Messages.Message(

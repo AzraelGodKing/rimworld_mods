@@ -431,9 +431,19 @@ namespace Strata
                 IntVec3 dest = (root + adjusted).ClampInsideMap(pocket);
                 if (ct.moveOnly)
                 {
-                    if (MoveSpawnedThing(ct.thing, dest, pocket, rot))
+                    bool movedOk = MoveSpawnedThing(ct.thing, dest, pocket, rot);
+                    if (movedOk)
                     {
                         placed++;
+                    }
+                    else if (ct.thing is MapPortal
+                        && (!ct.thing.Spawned || ct.thing.Map != pocket || ct.thing.Position != dest))
+                    {
+                        Log.Warning("[Strata] G8 deck cargo: landing " + ct.thing.LabelCap
+                            + " (" + ct.thing.ThingID + ") not moved to " + dest
+                            + " (spawned=" + ct.thing.Spawned
+                            + " map=" + (ct.thing.Map?.uniqueID.ToString() ?? "null")
+                            + " pos=" + ct.thing.Position + ").");
                     }
                     continue;
                 }
@@ -506,14 +516,35 @@ namespace Strata
                     }
                 }
             }
-            if (GenSpawn.Spawn(thing, dest, pocket, rot, WipeMode.VanishOrMoveAside) != null)
+            // PocketMapExit.SpawnSetup rewires from currentlyGeneratingPortal;
+            // without it the respawn errors and drops the entrance link.
+            MapPortal entrance = (thing as PocketMapExit)?.entrance;
+            PocketMapUtility.currentlyGeneratingPortal = entrance;
+            bool ok;
+            try
+            {
+                ok = GenSpawn.Spawn(thing, dest, pocket, rot, WipeMode.VanishOrMoveAside) != null;
+            }
+            finally
+            {
+                PocketMapUtility.currentlyGeneratingPortal = null;
+            }
+            if (ok)
             {
                 return true;
             }
             // Never leave a landing unspawned — fall back to its old cell.
             if (!thing.Spawned && !thing.Destroyed)
             {
-                GenSpawn.Spawn(thing, originalPos, pocket, originalRot, WipeMode.VanishOrMoveAside);
+                PocketMapUtility.currentlyGeneratingPortal = entrance;
+                try
+                {
+                    GenSpawn.Spawn(thing, originalPos, pocket, originalRot, WipeMode.VanishOrMoveAside);
+                }
+                finally
+                {
+                    PocketMapUtility.currentlyGeneratingPortal = null;
+                }
                 Log.Warning("[Strata] G8 deck cargo: could not move " + thing.LabelCap
                     + " to " + dest + " — restored at " + originalPos + ".");
             }

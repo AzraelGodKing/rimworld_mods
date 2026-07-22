@@ -352,12 +352,33 @@ namespace Strata
             }
 
             int cleared = 0;
+            int stripped = 0;
             var keys = new List<Thing>(packed.Keys);
             for (int i = 0; i < keys.Count; i++)
             {
                 Thing thing = keys[i];
-                if (thing == null || thing.Destroyed
-                    || !StrataGravshipUtility.IsGravshipHostShaft(thing))
+                if (thing == null || thing.Destroyed)
+                {
+                    continue;
+                }
+
+                // Pocket-side things must never ride the vanilla ship — spawning
+                // them on the host errors ("already spawned") or teleports the
+                // landing off its level.
+                bool pocketSide = thing is PocketMapExit
+                    || (thing.Spawned && thing.Map != null
+                        && StrataGravshipStackUtility.IsStrataLinkedLevel(thing.Map));
+                if (pocketSide)
+                {
+                    packed.Remove(thing);
+                    stripped++;
+                    Log.Warning("[Strata] Gravship land: stripped pocket-side "
+                        + thing.LabelCap + " (" + thing.ThingID
+                        + ") from packed ship — it stays on its linked level.");
+                    continue;
+                }
+
+                if (!StrataGravshipUtility.IsGravshipHostShaft(thing))
                 {
                     continue;
                 }
@@ -368,10 +389,11 @@ namespace Strata
                 }
             }
 
-            if (cleared > 0)
+            if (cleared > 0 || stripped > 0)
             {
                 Log.Message("[Strata] Gravship land: unspawned " + cleared
-                    + " packed host shaft(s) before PlaceGravship.");
+                    + " packed host shaft(s), stripped " + stripped
+                    + " pocket-side thing(s) before PlaceGravship.");
             }
         }
 
@@ -394,6 +416,111 @@ namespace Strata
             }
 
             return !thing.Spawned;
+        }
+
+        // Deterministic land invariant: a gravship pocket landing sits at EXACTLY
+        // its host shaft's cell (raw 1:1 — never proportional; a new host map of
+        // a different size must not scale the pocket). Self-heals whatever else
+        // moved or failed to move the landing during the land.
+        public static int SnapAllLandingsUnderShafts(Map host)
+        {
+            if (host == null)
+            {
+                return 0;
+            }
+            int moved = 0;
+            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is MapPortal shaft && shaft.Spawned
+                    && StrataGravshipUtility.IsGravshipHostShaft(shaft)
+                    && shaft.PocketMapExists
+                    && SnapLandingUnderShaft(shaft))
+                {
+                    moved++;
+                }
+            }
+            return moved;
+        }
+
+        public static bool SnapLandingUnderShaft(MapPortal shaft)
+        {
+            if (shaft == null || !shaft.Spawned || !shaft.PocketMapExists)
+            {
+                return false;
+            }
+            Map pocket = shaft.PocketMap;
+            MapPortal landing = shaft.exit != null && shaft.exit.Spawned && shaft.exit.Map == pocket
+                ? shaft.exit
+                : FindLandingOn(pocket);
+            if (landing == null || !landing.Spawned || landing.Map != pocket)
+            {
+                return false;
+            }
+            IntVec3 dest = shaft.Position;
+            if (!dest.InBounds(pocket) || landing.Position == dest)
+            {
+                return false;
+            }
+            CellRect rect = GenAdj.OccupiedRect(dest, shaft.Rotation, landing.def.Size);
+            if (!rect.InBounds(pocket))
+            {
+                return false;
+            }
+
+            IntVec3 oldPos = landing.Position;
+            Rot4 oldRot = landing.Rotation;
+            landing.DeSpawn(DestroyMode.WillReplace);
+            foreach (IntVec3 cell in rect)
+            {
+                List<Thing> at = cell.GetThingList(pocket);
+                for (int i = at.Count - 1; i >= 0; i--)
+                {
+                    Thing blocker = at[i];
+                    if (blocker == null || blocker == landing || blocker.Destroyed)
+                    {
+                        continue;
+                    }
+                    if (blocker.def.category == ThingCategory.Building
+                        || blocker.def.category == ThingCategory.Item)
+                    {
+                        blocker.Destroy(DestroyMode.Vanish);
+                    }
+                }
+            }
+            // currentlyGeneratingPortal keeps PocketMapExit.SpawnSetup wiring the
+            // pair instead of erroring "could not find map portal to connect to".
+            PocketMapUtility.currentlyGeneratingPortal = shaft;
+            bool ok;
+            try
+            {
+                ArrivalZoneUtility.PrepareLandingCell(pocket, dest);
+                ok = GenSpawn.Spawn(landing, dest, pocket, shaft.Rotation, WipeMode.VanishOrMoveAside) != null;
+            }
+            finally
+            {
+                PocketMapUtility.currentlyGeneratingPortal = null;
+            }
+            if (!ok && !landing.Spawned && !landing.Destroyed)
+            {
+                PocketMapUtility.currentlyGeneratingPortal = shaft;
+                try
+                {
+                    GenSpawn.Spawn(landing, oldPos, pocket, oldRot, WipeMode.VanishOrMoveAside);
+                }
+                finally
+                {
+                    PocketMapUtility.currentlyGeneratingPortal = null;
+                }
+                Log.Warning("[Strata] Landing snap: could not place " + landing.LabelCap
+                    + " at " + dest + " — restored at " + oldPos + ".");
+                return false;
+            }
+            if (ok)
+            {
+                Log.Message("[Strata] Landing snap: " + landing.LabelCap + " " + oldPos
+                    + " -> " + dest + " (under " + shaft.LabelCap + ").");
+            }
+            return ok;
         }
 
         // Re-wire after pocket contents have been shifted under the host shafts.

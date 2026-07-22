@@ -54,8 +54,12 @@ namespace Strata
             {
                 return false;
             }
-            IntVec3 below = StrataMapUtility.ProportionalCell(upperCell, upper, source);
-            return SourceCellSupportsDeck(source, below, IsGravshipLinkedUpper(upper));
+            bool gravship = IsGravshipLinkedUpper(upper);
+            // Gravship decks are raw 1:1 with the host regardless of map size.
+            IntVec3 below = gravship
+                ? upperCell
+                : StrataMapUtility.ProportionalCell(upperCell, upper, source);
+            return SourceCellSupportsDeck(source, below, gravship);
         }
 
         private static bool IsGravshipLinkedUpper(Map upper)
@@ -106,7 +110,8 @@ namespace Strata
             SuspendRoofSync = true;
             try
             {
-                if (source != null && source.Size == upper.Size)
+                // Gravship decks: raw 1:1 even when the host map size differs.
+                if (source != null && (gravshipLinked || source.Size == upper.Size))
                 {
                     PaintSameSize(upper, source, deck, sky, gravshipLinked);
                 }
@@ -540,7 +545,13 @@ namespace Strata
                 {
                     continue;
                 }
-                IntVec3 upperCell = StrataMapUtility.ProportionalCell(c, source, upper);
+                IntVec3 upperCell = StrataGravshipUtility.IsGravshipLinkedLevel(upper)
+                    ? c
+                    : StrataMapUtility.ProportionalCell(c, source, upper);
+                if (!upperCell.InBounds(upper))
+                {
+                    continue;
+                }
                 UpperDeckUtility.SyncCell(upper, upperCell);
             }
         }

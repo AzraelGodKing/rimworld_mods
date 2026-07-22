@@ -34,10 +34,56 @@ namespace Strata
         private static readonly Dictionary<int, StackEntry> stackByMap =
             new Dictionary<int, StackEntry>();
 
+        // Find.World.GetComponent / Map.GetComponent are linear scans — too slow
+        // for per-cell callers.
+        private static RimWorld.Planet.World stacksWorld;
+        private static WorldComponent_StrataGravshipStacks stacksComp;
+
+        private static readonly Dictionary<int, MapComponent_StrataProjectedSubstructure> trackerByMap =
+            new Dictionary<int, MapComponent_StrataProjectedSubstructure>();
+
         public static void Invalidate()
         {
             engineByMap.Clear();
             stackByMap.Clear();
+            trackerByMap.Clear();
+        }
+
+        public static WorldComponent_StrataGravshipStacks StacksComp
+        {
+            get
+            {
+                RimWorld.Planet.World world = Find.World;
+                if (world == null)
+                {
+                    return null;
+                }
+                if (!ReferenceEquals(world, stacksWorld) || stacksComp == null)
+                {
+                    stacksWorld = world;
+                    stacksComp = world.GetComponent<WorldComponent_StrataGravshipStacks>();
+                }
+                return stacksComp;
+            }
+        }
+
+        public static MapComponent_StrataProjectedSubstructure TrackerOf(Map map)
+        {
+            if (map == null)
+            {
+                return null;
+            }
+            int id = map.uniqueID;
+            // Negative results cached too (most maps have no tracker); adding a
+            // tracker invalidates via GetOrAddTracker.
+            if (trackerByMap.TryGetValue(id, out var tracker)
+                && (tracker == null || tracker.map == map))
+            {
+                return tracker;
+            }
+            tracker = map.GetComponent<MapComponent_StrataProjectedSubstructure>();
+            trackerByMap[id] = tracker;
+            return tracker;
         }
 
         private static int Now => Find.TickManager?.TicksGame ?? 0;
