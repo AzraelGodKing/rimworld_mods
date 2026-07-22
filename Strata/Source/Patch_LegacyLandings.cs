@@ -43,7 +43,16 @@ namespace Strata
         // A bad gravship land can leave furnished levels detached and shafts
         // unwired; saves carry that damage forward. Re-adopt and re-wire once
         // per load — quiet no-op on healthy saves.
+        // MUST run on the main thread: FinalizeInit executes on the LongEvent
+        // worker thread, and this path reads engine.ValidSubstructure, which
+        // regenerates the GravshipMask section mesh — creating a UnityEngine.Mesh
+        // off-thread hard-crashes.
         private static void RebindGravshipOrphansAfterLoad()
+        {
+            LongEventHandler.ExecuteWhenFinished(RebindGravshipOrphansOnMainThread);
+        }
+
+        private static void RebindGravshipOrphansOnMainThread()
         {
             var stacks = WorldComponent_StrataGravshipStacks.Get();
             if (stacks == null)
@@ -83,6 +92,7 @@ namespace Strata
 
             // Even on healthy saves: snap landings under their shafts and clear
             // orphaned duplicate landings + ghost deck left by old versions.
+            maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
