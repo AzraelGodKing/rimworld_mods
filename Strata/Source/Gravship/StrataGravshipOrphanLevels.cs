@@ -26,6 +26,10 @@ namespace Strata
                 return null;
             }
             List<Map> maps = Find.Maps;
+            if (maps == null)
+            {
+                return null;
+            }
             for (int i = 0; i < maps.Count; i++)
             {
                 if (maps[i] != null && maps[i].uniqueID == uniqueId)

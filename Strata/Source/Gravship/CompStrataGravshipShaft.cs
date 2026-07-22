@@ -29,6 +29,13 @@ namespace Strata
         {
             base.PostSpawnSetup(respawningAfterLoad);
             EnsureShaftId();
+            StrataGravshipCache.Invalidate();
+        }
+
+        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
+        {
+            base.PostDeSpawn(map, mode);
+            StrataGravshipCache.Invalidate();
         }
 
         public override void PostExposeData()

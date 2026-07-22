@@ -985,6 +985,7 @@ namespace Strata
             {
                 parent.sourceMap = hostShaft.Map;
             }
+            StrataGravshipCache.Invalidate();
 
             Log.Message("[Strata] Gravship land: wired "
                 + landing.LabelCap + " <-> " + hostShaft.LabelCap
