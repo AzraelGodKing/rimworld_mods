@@ -96,8 +96,18 @@ namespace Strata
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                if (map == null || StrataMapUtility.IsUnderground(map)
-                    || StrataMapUtility.IsUpperLevel(map)
+                if (map == null)
+                {
+                    continue;
+                }
+                // Upper decks (colony towers and ship decks): shrink deck whose
+                // support below vanished while the SetRoof hook was bypassed.
+                if (StrataMapUtility.IsUpperLevel(map))
+                {
+                    UpperDeckUtility.SweepUnsupportedDeck(map);
+                    continue;
+                }
+                if (StrataMapUtility.IsUnderground(map)
                     || StrataGravshipUtility.FindGravEngineOnMap(map) == null)
                 {
                     continue;
