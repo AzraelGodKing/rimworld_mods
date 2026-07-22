@@ -80,6 +80,21 @@ namespace Strata
                     + hosts[i].uniqueID + ".");
                 stacks.RebindOrphans(hosts[i]);
             }
+
+            // Even on healthy saves: snap landings under their shafts and clear
+            // orphaned duplicate landings + ghost deck left by old versions.
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (map == null || StrataMapUtility.IsUnderground(map)
+                    || StrataMapUtility.IsUpperLevel(map)
+                    || StrataGravshipUtility.FindGravEngineOnMap(map) == null)
+                {
+                    continue;
+                }
+                StrataGravshipPortalTravel.SnapAllLandingsUnderShafts(map);
+                StrataGravshipPortalTravel.CleanupPocketLeftovers(map);
+            }
         }
 
         private static void UpgradeVanillaCaveExits()

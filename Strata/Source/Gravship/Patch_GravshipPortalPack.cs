@@ -541,6 +541,82 @@ namespace Strata
             return false;
         }
 
+        // Cull orphaned duplicate landings on gravship pockets (left by old
+        // versions that spawned fresh landings instead of moving them) and queue
+        // the ghost deck around them for the deferred clear. A landing is live
+        // iff its entrance is a spawned host shaft that points back at it.
+        public static int CleanupPocketLeftovers(Map host)
+        {
+            if (host == null)
+            {
+                return 0;
+            }
+            int culled = 0;
+            var pockets = new HashSet<Map>();
+            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is MapPortal shaft && shaft.Spawned
+                    && StrataGravshipUtility.IsGravshipHostShaft(shaft)
+                    && shaft.PocketMapExists)
+                {
+                    pockets.Add(shaft.PocketMap);
+                }
+            }
+            foreach (Map pocket in pockets)
+            {
+                var landings = new List<PocketMapExit>();
+                foreach (Thing thing in pocket.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+                {
+                    if (thing is PocketMapExit landing && landing.Spawned)
+                    {
+                        landings.Add(landing);
+                    }
+                }
+                bool anyLive = false;
+                for (int i = 0; i < landings.Count; i++)
+                {
+                    if (IsLiveLanding(landings[i], pocket))
+                    {
+                        anyLive = true;
+                        break;
+                    }
+                }
+                // Never cull the last way out of a level.
+                if (!anyLive)
+                {
+                    continue;
+                }
+                for (int i = 0; i < landings.Count; i++)
+                {
+                    PocketMapExit landing = landings[i];
+                    if (IsLiveLanding(landing, pocket))
+                    {
+                        continue;
+                    }
+                    Log.Message("[Strata] Gravship pocket cleanup: removed orphaned landing "
+                        + landing.LabelCap + " at " + landing.Position
+                        + " on " + pocket.uniqueID + ".");
+                    landing.Destroy(DestroyMode.Vanish);
+                    culled++;
+                }
+                // Ghost deck around removed landings drains via the deferred clear.
+                GravshipDeckUtility.CleanupEmptySilhouetteIslands(pocket, host);
+                if (StrataMapUtility.IsUpperLevel(pocket))
+                {
+                    UpperDeckUtility.CleanupEmptySilhouetteIslands(pocket);
+                }
+            }
+            return culled;
+        }
+
+        private static bool IsLiveLanding(PocketMapExit landing, Map pocket)
+        {
+            MapPortal entrance = landing.entrance;
+            return entrance != null && !entrance.Destroyed && entrance.Spawned
+                && entrance.exit == landing
+                && entrance.PocketMapExists && entrance.PocketMap == pocket;
+        }
+
         // Re-wire after pocket contents have been shifted under the host shafts.
         public static void RewireHostShafts(Map hostMap, List<Map> pockets)
         {
