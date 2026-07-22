@@ -333,6 +333,7 @@ namespace Strata
                 newHost, maps, landEngine, snapContents: false);
             // Hard invariant after everything settles: landing cell == shaft cell.
             StrataGravshipPortalTravel.SnapAllLandingsUnderShafts(newHost);
+            StrataGravshipPortalTravel.CleanupPocketLeftovers(newHost);
             Log.Message($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}"
                 + (pinnedThingId >= 0 ? $" (engine thingID {pinnedThingId})." : "."));
             Messages.Message(
