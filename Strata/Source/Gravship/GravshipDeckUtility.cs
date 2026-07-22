@@ -659,6 +659,8 @@ namespace Strata
                 return;
             }
 
+            // Ghost DECK circles only — hull is the pocket's background rock and
+            // clearing it map-wide (60k+ cells) is what corrupted map sections.
             var toClear = new List<IntVec3>(256);
             foreach (IntVec3 cell in under.AllCells)
             {
@@ -667,7 +669,7 @@ namespace Strata
                     continue;
                 }
                 TerrainDef terrain = cell.GetTerrain(under);
-                if (!IsManagedDeckTerrain(terrain))
+                if (terrain?.defName != DeckDefName)
                 {
                     continue;
                 }
@@ -686,7 +688,6 @@ namespace Strata
                 return;
             }
 
-            TerrainDef voidT = VoidTerrain;
             bool regionsWereEnabled = under.regionAndRoomUpdater?.Enabled ?? false;
             if (under.regionAndRoomUpdater != null)
             {
@@ -704,7 +705,8 @@ namespace Strata
                         sub.Destroy(DestroyMode.Vanish);
                     }
                     under.GetComponent<MapComponent_StrataProjectedSubstructure>()?.UnmarkProjected(cell);
-                    under.terrainGrid.SetTerrain(cell, voidT);
+                    under.terrainGrid.SetTerrain(
+                        cell, StrataDeferredCellClear.ReplacementFor(under, cell, upper: false));
                     under.roofGrid.SetRoof(cell, null);
                     removed++;
                 }

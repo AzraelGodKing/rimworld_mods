@@ -134,8 +134,16 @@ namespace Strata
                 return;
             }
 
-            shaft.PreSwapMap();
-            shaft.DeSpawn(DestroyMode.WillReplace);
+            StrataPortalUtility.BeginPortalMove();
+            try
+            {
+                shaft.PreSwapMap();
+                shaft.DeSpawn(DestroyMode.WillReplace);
+            }
+            finally
+            {
+                StrataPortalUtility.EndPortalMove();
+            }
         }
 
         // After Odyssey GenerateGravship: any host shaft still sitting on the
@@ -404,10 +412,18 @@ namespace Strata
                 return false;
             }
 
-            if (thing.Map != null)
+            StrataPortalUtility.BeginPortalMove();
+            try
             {
-                thing.PreSwapMap();
-                thing.DeSpawn(DestroyMode.WillReplace);
+                if (thing.Map != null)
+                {
+                    thing.PreSwapMap();
+                    thing.DeSpawn(DestroyMode.WillReplace);
+                }
+            }
+            finally
+            {
+                StrataPortalUtility.EndPortalMove();
             }
 
             if (thing.Spawned)
@@ -469,58 +485,60 @@ namespace Strata
 
             IntVec3 oldPos = landing.Position;
             Rot4 oldRot = landing.Rotation;
-            landing.DeSpawn(DestroyMode.WillReplace);
-            foreach (IntVec3 cell in rect)
-            {
-                List<Thing> at = cell.GetThingList(pocket);
-                for (int i = at.Count - 1; i >= 0; i--)
-                {
-                    Thing blocker = at[i];
-                    if (blocker == null || blocker == landing || blocker.Destroyed)
-                    {
-                        continue;
-                    }
-                    if (blocker.def.category == ThingCategory.Building
-                        || blocker.def.category == ThingCategory.Item)
-                    {
-                        blocker.Destroy(DestroyMode.Vanish);
-                    }
-                }
-            }
-            // currentlyGeneratingPortal keeps PocketMapExit.SpawnSetup wiring the
-            // pair instead of erroring "could not find map portal to connect to".
-            PocketMapUtility.currentlyGeneratingPortal = shaft;
+            // currentlyGeneratingPortal + move scope: the despawn-immunity patch
+            // otherwise swallows the DeSpawn and the respawn no-ops with an
+            // "already spawned" error.
             bool ok;
+            StrataPortalUtility.BeginPortalMove();
+            PocketMapUtility.currentlyGeneratingPortal = shaft;
             try
             {
+                landing.DeSpawn(DestroyMode.WillReplace);
+                foreach (IntVec3 cell in rect)
+                {
+                    List<Thing> at = cell.GetThingList(pocket);
+                    for (int i = at.Count - 1; i >= 0; i--)
+                    {
+                        Thing blocker = at[i];
+                        if (blocker == null || blocker == landing || blocker.Destroyed)
+                        {
+                            continue;
+                        }
+                        if (blocker.def.category == ThingCategory.Building
+                            || blocker.def.category == ThingCategory.Item)
+                        {
+                            blocker.Destroy(DestroyMode.Vanish);
+                        }
+                    }
+                }
                 ArrivalZoneUtility.PrepareLandingCell(pocket, dest);
-                ok = GenSpawn.Spawn(landing, dest, pocket, shaft.Rotation, WipeMode.VanishOrMoveAside) != null;
+                ok = landing.Spawned
+                    || GenSpawn.Spawn(landing, dest, pocket, shaft.Rotation, WipeMode.VanishOrMoveAside) != null;
+                if (!ok && !landing.Spawned && !landing.Destroyed)
+                {
+                    GenSpawn.Spawn(landing, oldPos, pocket, oldRot, WipeMode.VanishOrMoveAside);
+                    Log.Warning("[Strata] Landing snap: could not place " + landing.LabelCap
+                        + " at " + dest + " — restored at " + oldPos + ".");
+                    return false;
+                }
             }
             finally
             {
                 PocketMapUtility.currentlyGeneratingPortal = null;
+                StrataPortalUtility.EndPortalMove();
             }
-            if (!ok && !landing.Spawned && !landing.Destroyed)
-            {
-                PocketMapUtility.currentlyGeneratingPortal = shaft;
-                try
-                {
-                    GenSpawn.Spawn(landing, oldPos, pocket, oldRot, WipeMode.VanishOrMoveAside);
-                }
-                finally
-                {
-                    PocketMapUtility.currentlyGeneratingPortal = null;
-                }
-                Log.Warning("[Strata] Landing snap: could not place " + landing.LabelCap
-                    + " at " + dest + " — restored at " + oldPos + ".");
-                return false;
-            }
-            if (ok)
+            // Verify the move actually landed where we asked (despawn immunity
+            // used to fake success here).
+            if (landing.Spawned && landing.Position == dest)
             {
                 Log.Message("[Strata] Landing snap: " + landing.LabelCap + " " + oldPos
                     + " -> " + dest + " (under " + shaft.LabelCap + ").");
+                return true;
             }
-            return ok;
+            Log.Warning("[Strata] Landing snap: " + landing.LabelCap
+                + " did not move (" + oldPos + " -> wanted " + dest
+                + ", actual " + (landing.Spawned ? landing.Position.ToString() : "unspawned") + ").");
+            return false;
         }
 
         // Re-wire after pocket contents have been shifted under the host shafts.
