@@ -498,44 +498,54 @@ namespace Strata
                     .CompareTo(a.thing.def.size.x * a.thing.def.size.z);
             });
 
-            for (int i = 0; i < moves.Count; i++)
+            // Move scope lifts the portal despawn-immunity patch for the whole
+            // despawn+respawn cycle (portals silently refused to move before).
+            int placed = 0;
+            StrataPortalUtility.BeginPortalMove();
+            try
             {
-                Thing thing = moves[i].thing;
-                if (thing.Spawned)
+                for (int i = 0; i < moves.Count; i++)
                 {
-                    thing.DeSpawn(DestroyMode.WillReplace);
+                    Thing thing = moves[i].thing;
+                    if (thing.Spawned)
+                    {
+                        thing.DeSpawn(DestroyMode.WillReplace);
+                    }
+                }
+
+                for (int i = 0; i < moves.Count; i++)
+                {
+                    (Thing thing, IntVec3 dest, Rot4 rot) = moves[i];
+                    if (thing.Destroyed || thing.Spawned)
+                    {
+                        continue;
+                    }
+
+                    bool ok = thing is MapPortal
+                        ? ForceSpawnAt(thing, dest, map, rot)
+                        : TrySpawnAt(thing, dest, map, rot)
+                            || TrySpawnNear(thing, dest, map, rot)
+                            || TrySpawnNear(thing, map.Center, map, rot);
+                    if (!ok)
+                    {
+                        Log.Warning("[Strata] Gravship align: could not place "
+                            + thing.LabelCap + " after shift " + delta);
+                        // Last resort: put back at original cell so we do not void the thing.
+                        IntVec3 back = dest - delta;
+                        if (!ForceSpawnAt(thing, back.ClampInsideMap(map), map, rot)
+                            && !TrySpawnNear(thing, back, map, rot))
+                        {
+                            Log.Error("[Strata] Gravship align: lost " + thing.LabelCap
+                                + " during land shift " + delta);
+                        }
+                        continue;
+                    }
+                    placed++;
                 }
             }
-
-            int placed = 0;
-            for (int i = 0; i < moves.Count; i++)
+            finally
             {
-                (Thing thing, IntVec3 dest, Rot4 rot) = moves[i];
-                if (thing.Destroyed || thing.Spawned)
-                {
-                    continue;
-                }
-
-                bool ok = thing is MapPortal
-                    ? ForceSpawnAt(thing, dest, map, rot)
-                    : TrySpawnAt(thing, dest, map, rot)
-                        || TrySpawnNear(thing, dest, map, rot)
-                        || TrySpawnNear(thing, map.Center, map, rot);
-                if (!ok)
-                {
-                    Log.Warning("[Strata] Gravship align: could not place "
-                        + thing.LabelCap + " after shift " + delta);
-                    // Last resort: put back at original cell so we do not void the thing.
-                    IntVec3 back = dest - delta;
-                    if (!ForceSpawnAt(thing, back.ClampInsideMap(map), map, rot)
-                        && !TrySpawnNear(thing, back, map, rot))
-                    {
-                        Log.Error("[Strata] Gravship align: lost " + thing.LabelCap
-                            + " during land shift " + delta);
-                    }
-                    continue;
-                }
-                placed++;
+                StrataPortalUtility.EndPortalMove();
             }
 
             if (placed > 0)
