@@ -645,11 +645,6 @@ namespace Strata
             {
                 return;
             }
-            // G7 place + exact pad paint already own the silhouette.
-            if (StrataGravshipDeckCargo.PlacedThisLand)
-            {
-                return;
-            }
             if (host == null || under.Size != host.Size)
             {
                 return;

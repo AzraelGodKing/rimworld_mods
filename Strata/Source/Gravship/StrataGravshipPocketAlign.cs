@@ -635,6 +635,18 @@ namespace Strata
 
         private static void TranslateZones(Map map, IntVec3 delta)
         {
+            RemapZones(map, cell => cell + delta);
+        }
+
+        private static void TranslateDesignations(Map map, IntVec3 delta)
+        {
+            RemapDesignations(map, cell => cell + delta);
+        }
+
+        // Shared by the land-shift path (plain delta) and the deck cargo path
+        // (engine-relative rotation transform).
+        internal static void RemapZones(Map map, System.Func<IntVec3, IntVec3> transform)
+        {
             if (map.zoneManager == null)
             {
                 return;
@@ -654,7 +666,7 @@ namespace Strata
                 }
                 for (int c = 0; c < cells.Count; c++)
                 {
-                    IntVec3 next = cells[c] + delta;
+                    IntVec3 next = transform(cells[c]);
                     if (next.InBounds(map))
                     {
                         zone.AddCell(next);
@@ -663,7 +675,7 @@ namespace Strata
             }
         }
 
-        private static void TranslateDesignations(Map map, IntVec3 delta)
+        internal static void RemapDesignations(Map map, System.Func<IntVec3, IntVec3> transform)
         {
             if (map.designationManager == null)
             {
@@ -684,7 +696,7 @@ namespace Strata
                 }
                 DesignationDef def = des.def;
                 map.designationManager.RemoveDesignation(des);
-                IntVec3 next = cell + delta;
+                IntVec3 next = transform(cell);
                 if (next.InBounds(map))
                 {
                     map.designationManager.AddDesignation(new Designation(next, def));

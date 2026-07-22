@@ -145,6 +145,7 @@ namespace Strata
                 return;
             }
             parent.sourceMap = newHost;
+            StrataGravshipCache.Invalidate();
             if (StrataMapUtility.IsWorldGridTile(newHost.Tile))
             {
                 parent.Tile = newHost.Tile;
