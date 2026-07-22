@@ -132,7 +132,9 @@ namespace Strata
             {
                 return;
             }
-            if (host != null && pocket.Size == host.Size)
+            // Gravship pockets are strictly raw 1:1 with the host — a new host map
+            // of a different size must not scale the silhouette.
+            if (host != null && (gravshipLinked || pocket.Size == host.Size))
             {
                 PaintSameSize(
                     pocket, host, deck, offDeck, gravshipLinked, ceilingOnDeck, preserveExistingDeck);
@@ -169,7 +171,7 @@ namespace Strata
             {
                 return;
             }
-            bool sameSize = host != null && pocket.Size == host.Size;
+            bool hostFilter = host != null;
             for (int i = 0; i < things.Count; i++)
             {
                 Thing thing = things[i];
@@ -193,7 +195,8 @@ namespace Strata
                     {
                         continue;
                     }
-                    if (sameSize && !StrataGravshipUtility.CellOnGravship(host, cell))
+                    // Raw 1:1 on-pad check regardless of host map size.
+                    if (hostFilter && !StrataGravshipUtility.CellOnGravship(host, cell))
                     {
                         continue;
                     }
@@ -645,7 +648,7 @@ namespace Strata
             {
                 return;
             }
-            if (host == null || under.Size != host.Size)
+            if (host == null)
             {
                 return;
             }
@@ -656,7 +659,11 @@ namespace Strata
                 return;
             }
 
-            const int MaxClearPerCall = 2048;
+            // Batch: clear up to the cap per call and request another sync pass
+            // for the rest — skipping entirely left multi-flight ghost pads
+            // (8k+ managed cells) on the pocket forever.
+            const int MaxClearPerCall = 4096;
+            bool more = false;
             var toClear = new List<IntVec3>(256);
             foreach (IntVec3 cell in under.AllCells)
             {
@@ -669,22 +676,22 @@ namespace Strata
                 {
                     continue;
                 }
-                toClear.Add(cell);
-                if (toClear.Count >= MaxClearPerCall * 4)
+                if (toClear.Count >= MaxClearPerCall)
                 {
+                    more = true;
                     break;
                 }
+                toClear.Add(cell);
             }
             if (toClear.Count == 0)
             {
                 return;
             }
-            if (toClear.Count > MaxClearPerCall)
+            if (more)
             {
-                Log.Warning("[Strata] Gravship underdeck: skipping mass silhouette clear ("
-                    + toClear.Count + " off-pad managed cell(s) > " + MaxClearPerCall
-                    + ") to avoid section RGB corruption. Pad paint left as-is.");
-                return;
+                MapComponent_StrataGravshipUpperDeckSync.RequestSync(host);
+                Log.Message("[Strata] Gravship underdeck: clearing silhouette in batches ("
+                    + MaxClearPerCall + " cell(s) this pass; more remain).");
             }
 
             TerrainDef voidT = VoidTerrain;

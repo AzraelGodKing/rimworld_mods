@@ -241,14 +241,13 @@ namespace Strata
 
             bool upper = StrataMapUtility.IsUpperLevel(pocket);
             TerrainDef deck = upper ? UpperDeckUtility.RoofDeck : GravshipDeckUtility.DeckTerrain;
-            bool sameSize = pocket.Size == host.Size;
             int painted = 0;
 
+            // Raw 1:1 — cargo and vanilla place at raw coordinates; painting must
+            // not scale when the new host map size differs from the pocket.
             foreach (IntVec3 hostCell in hostDeckCells)
             {
-                IntVec3 pocketCell = sameSize
-                    ? hostCell
-                    : StrataMapUtility.ProportionalCell(hostCell, host, pocket);
+                IntVec3 pocketCell = hostCell;
                 if (!pocketCell.InBounds(pocket))
                 {
                     continue;

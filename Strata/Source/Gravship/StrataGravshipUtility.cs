@@ -220,7 +220,7 @@ namespace Strata
             {
                 return false;
             }
-            var travelling = WorldComponent_StrataGravshipStacks.Get();
+            var travelling = StrataGravshipCache.StacksComp;
             if (travelling != null && travelling.IsTravelling(map))
             {
                 return true;
@@ -404,38 +404,16 @@ namespace Strata
                 }
             }
 
-            // Linked underdeck / tower deck cells (launch ritual reach from below).
-            if (TryStrataOnboardCell(cell, engine))
+            // Host deck first — cheap set lookup; this answers the vast majority
+            // of calls (vanilla region sweeps during launch run this per cell).
+            Map host = engine.Map;
+            if (cell.InBounds(host) && CellOnGravship(host, cell))
             {
                 return true;
             }
 
-            Map host = engine.Map;
-            if (!cell.InBounds(host))
-            {
-                return false;
-            }
-            if (!desperate)
-            {
-                Room room = cell.GetRoom(host);
-                if (room == null || room.PsychologicallyOutdoors)
-                {
-                    return false;
-                }
-            }
-
-            HashSet<IntVec3> sub = engine.ValidSubstructure;
-            if (sub != null && sub.Count > 0)
-            {
-                return sub.Contains(cell);
-            }
-            sub = engine.AllConnectedSubstructure;
-            if (sub != null && sub.Count > 0)
-            {
-                return sub.Contains(cell);
-            }
-            // VGE scaffold / damaged foundation while ValidSubstructure is rebuilding.
-            return StrataVgeCompat.Active && StrataVgeCompat.CellHasShipFoundation(host, cell);
+            // Linked underdeck / tower deck cells (launch ritual reach from below).
+            return TryStrataOnboardCell(cell, engine, skipHost: true);
         }
 
         public static void ApplyOnboardPostfix(IntVec3 cell, Building_GravEngine engine, ref bool __result)
@@ -443,10 +421,14 @@ namespace Strata
             // Prefix fully replaces vanilla — Postfix is a no-op keep for Harmony wiring.
         }
 
-        private static bool TryStrataOnboardCell(IntVec3 cell, Building_GravEngine engine)
+        private static bool TryStrataOnboardCell(
+            IntVec3 cell,
+            Building_GravEngine engine,
+            bool skipHost = false)
         {
             Map host = engine.Map;
-            if (host != null && cell.InBounds(host) && IsLinkedDeckCell(host, cell, engine))
+            if (!skipHost && host != null && cell.InBounds(host)
+                && IsLinkedDeckCell(host, cell, engine))
             {
                 return true;
             }
@@ -482,27 +464,32 @@ namespace Strata
             {
                 return true;
             }
-            var tracker = map.GetComponent<MapComponent_StrataProjectedSubstructure>();
+            var tracker = StrataGravshipCache.TrackerOf(map);
             if (tracker != null && tracker.IsProjected(cell))
+            {
+                return true;
+            }
+            // Cheap grid checks before the per-cell shaft-rect scan.
+            if (StrataMapUtility.IsUpperLevel(map))
+            {
+                if (cell.GetTerrain(map)?.defName == UpperDeckUtility.RoofDeckDefName)
+                {
+                    return true;
+                }
+            }
+            else if (GravshipDeckUtility.IsWalkableDeckCell(map, cell))
             {
                 return true;
             }
             // G6: wired host shaft projects vertical ownership onto the pocket cell
             // at the same absolute coords (shaft as grav-extender).
-            if (CellOwnedByWiredHostShaft(map, cell, engine.Map))
-            {
-                return true;
-            }
-            if (StrataMapUtility.IsUpperLevel(map))
-            {
-                return cell.GetTerrain(map)?.defName == UpperDeckUtility.RoofDeckDefName;
-            }
-            return GravshipDeckUtility.IsWalkableDeckCell(map, cell);
+            return CellOwnedByWiredHostShaft(map, cell, engine.Map);
         }
 
         private static bool CellOwnedByWiredHostShaft(Map pocket, IntVec3 cell, Map host)
         {
-            if (host == null || pocket.Size != host.Size || !cell.InBounds(host))
+            // Raw 1:1 — valid regardless of host map size.
+            if (host == null || !cell.InBounds(host))
             {
                 return false;
             }
