@@ -13,25 +13,10 @@ namespace Strata
         // Grav engine physically on this map (ship deck / host surface).
         // With Vanilla Gravship Expanded, prefer the engine that actually owns substructure
         // (jumper / hulk / vanilla are all Building_GravEngine).
+        // Cached: this runs per cell in vanilla region sweeps around launch.
         public static Building_GravEngine FindGravEngineOnMap(Map map)
         {
-            if (map?.listerBuildings == null)
-            {
-                return null;
-            }
-            if (StrataVgeCompat.Active)
-            {
-                return StrataVgeCompat.PreferBestEngine(
-                    map.listerBuildings.AllBuildingsColonistOfClass<Building_GravEngine>());
-            }
-            foreach (Building_GravEngine engine in map.listerBuildings.AllBuildingsColonistOfClass<Building_GravEngine>())
-            {
-                if (engine != null && engine.Spawned)
-                {
-                    return engine;
-                }
-            }
-            return null;
+            return StrataGravshipCache.EngineOnMap(map);
         }
 
         /// <summary>G1: exact thingID lookup — never PreferBestEngine.</summary>
@@ -244,6 +229,7 @@ namespace Strata
         }
 
         // Surface map that owns this gravship-linked floor (engine map), or null.
+        // Cached: called from per-cell patches (IsOnboardGravship, InsideFootprint).
         public static Map FindGravshipStackRoot(Map map)
         {
             if (!OdysseyActive || map == null)
@@ -254,7 +240,20 @@ namespace Strata
             {
                 return map;
             }
-            Map portalHost = FindDirectGravshipPortalHost(map);
+            return StrataGravshipCache.StackRootOf(map);
+        }
+
+        internal static Map ComputeGravshipStackRoot(Map map, Map directPortalHost)
+        {
+            if (!OdysseyActive || map == null)
+            {
+                return null;
+            }
+            if (IsGravshipHostMap(map))
+            {
+                return map;
+            }
+            Map portalHost = directPortalHost;
             if (portalHost != null)
             {
                 return ResolveGravshipHost(portalHost);
@@ -279,7 +278,18 @@ namespace Strata
         }
 
         // Map that holds the gravship shaft opening this pocket, if any.
+        // Cached: the all-maps × all-portals scan below was the hot path.
         public static Map FindDirectGravshipPortalHost(Map level)
+        {
+            if (!OdysseyActive || level == null
+                || (!StrataMapUtility.IsUnderground(level) && !StrataMapUtility.IsUpperLevel(level)))
+            {
+                return null;
+            }
+            return StrataGravshipCache.PortalHostOf(level);
+        }
+
+        internal static Map ComputeDirectGravshipPortalHost(Map level)
         {
             if (!OdysseyActive || level == null
                 || (!StrataMapUtility.IsUnderground(level) && !StrataMapUtility.IsUpperLevel(level)))

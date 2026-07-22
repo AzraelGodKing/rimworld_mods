@@ -10,6 +10,23 @@ namespace Strata
     {
         public const int HardMaxOffset = 2;
 
+        // Gravship stacks are hard-capped at ±1 (one underdeck, one tower deck):
+        // deeper stacks multiply takeoff packing / landing rebuild work and were
+        // the fragile path in travel bugs. Not affected by the Unlimited setting.
+        public const int GravshipMaxOffset = 1;
+
+        private static bool BlockedByGravshipCap(Map map, out string reason)
+        {
+            reason = null;
+            if (!StrataGravshipUtility.OdysseyActive
+                || !StrataGravshipUtility.IsGravshipLinkedLevel(map))
+            {
+                return false;
+            }
+            reason = "Strata_LevelCap_GravshipMax".Translate(GravshipMaxOffset);
+            return true;
+        }
+
         public static bool Unlimited =>
             StrataMod.Settings != null && StrataMod.Settings.unlimitedLevelsEnabled;
 
@@ -19,7 +36,15 @@ namespace Strata
         public static bool AllowsNewLevelBelow(Map map, out string reason)
         {
             reason = null;
-            if (Unlimited || map == null)
+            if (map == null)
+            {
+                return true;
+            }
+            if (BlockedByGravshipCap(map, out reason))
+            {
+                return false;
+            }
+            if (Unlimited)
             {
                 return true;
             }
@@ -36,7 +61,15 @@ namespace Strata
         public static bool AllowsNewLevelAbove(Map map, out string reason)
         {
             reason = null;
-            if (Unlimited || map == null)
+            if (map == null)
+            {
+                return true;
+            }
+            if (BlockedByGravshipCap(map, out reason))
+            {
+                return false;
+            }
+            if (Unlimited)
             {
                 return true;
             }
