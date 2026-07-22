@@ -97,6 +97,28 @@ namespace Strata
             // any shaft Odyssey skipped would otherwise stay visible on the old site.
             StrataGravshipPortalTravel.SweepLeftBehindHostShafts(__result, engine);
             WorldComponent_StrataGravshipStacks.Get()?.RegisterTakeoff(__result, engine);
+            // Ship roofs were stripped via RemoveRoofUnsafe (bypasses the SetRoof
+            // hook) — shrink colony L1 decks that sat above the parked ship.
+            SweepUppersOfLaunchMap(engine);
+        }
+
+        private static void SweepUppersOfLaunchMap(Building_GravEngine engine)
+        {
+            Map launch = engine?.MapHeld ?? engine?.Map;
+            if (launch == null || Find.Maps == null)
+            {
+                return;
+            }
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map upper = maps[i];
+                if (upper != null && StrataMapUtility.IsUpperLevel(upper)
+                    && (upper.Parent as PocketMapParent)?.sourceMap == launch)
+                {
+                    UpperDeckUtility.SweepUnsupportedDeck(upper);
+                }
+            }
         }
     }
 

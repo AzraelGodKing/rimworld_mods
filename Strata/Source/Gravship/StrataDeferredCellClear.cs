@@ -90,8 +90,8 @@ namespace Strata
                 {
                     continue;
                 }
-                // Re-check: the pad may have grown over this cell since the sweep,
-                // or a pawn may be standing here (skip; a later sweep re-queues).
+                // Re-check: the pad/roof support may have returned since the
+                // sweep, or something may occupy the cell (skip; re-swept later).
                 TerrainDef terrain = cell.GetTerrain(map);
                 bool ghostDeck = upper
                     ? terrain?.defName == UpperDeckUtility.RoofDeckDefName
@@ -100,10 +100,20 @@ namespace Strata
                 {
                     continue;
                 }
-                Map host = (map.Parent as PocketMapParent)?.sourceMap;
-                if (host != null && StrataGravshipUtility.CellOnGravship(host, cell))
+                if (upper)
                 {
-                    continue;
+                    if (UpperDeckUtility.SourceSupportsUpperDeck(map, cell))
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    Map host = (map.Parent as PocketMapParent)?.sourceMap;
+                    if (host != null && StrataGravshipUtility.CellOnGravship(host, cell))
+                    {
+                        continue;
+                    }
                 }
                 Thing sub = StrataGravshipSubstructureSync.SubstructureAt(map, cell);
                 if (sub != null && !sub.Destroyed)
