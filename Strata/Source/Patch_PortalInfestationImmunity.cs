@@ -131,6 +131,13 @@ namespace Strata
             {
                 return true;
             }
+            // Allow explicit portal moves (gravship cargo, landing snap, align).
+            // Without this every mover's DeSpawn was silently swallowed: the
+            // respawn then errored "already spawned" and the portal never moved.
+            if (StrataPortalUtility.PortalMoveInProgress)
+            {
+                return true;
+            }
             return false;
         }
     }

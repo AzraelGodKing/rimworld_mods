@@ -498,57 +498,47 @@ namespace Strata
             }
             IntVec3 originalPos = thing.Position;
             Rot4 originalRot = thing.Rotation;
-            thing.DeSpawn(DestroyMode.WillReplace);
-            foreach (IntVec3 cell in rect)
-            {
-                List<Thing> at = cell.GetThingList(pocket);
-                for (int i = at.Count - 1; i >= 0; i--)
-                {
-                    Thing blocker = at[i];
-                    if (blocker == null || blocker == thing || blocker.Destroyed)
-                    {
-                        continue;
-                    }
-                    if (blocker.def.category == ThingCategory.Building
-                        || blocker.def.category == ThingCategory.Item)
-                    {
-                        blocker.Destroy(DestroyMode.Vanish);
-                    }
-                }
-            }
-            // PocketMapExit.SpawnSetup rewires from currentlyGeneratingPortal;
-            // without it the respawn errors and drops the entrance link.
+            // Move scope lifts the portal despawn-immunity patch;
+            // currentlyGeneratingPortal keeps PocketMapExit.SpawnSetup wiring.
             MapPortal entrance = (thing as PocketMapExit)?.entrance;
+            StrataPortalUtility.BeginPortalMove();
             PocketMapUtility.currentlyGeneratingPortal = entrance;
-            bool ok;
             try
             {
-                ok = GenSpawn.Spawn(thing, dest, pocket, rot, WipeMode.VanishOrMoveAside) != null;
+                thing.DeSpawn(DestroyMode.WillReplace);
+                foreach (IntVec3 cell in rect)
+                {
+                    List<Thing> at = cell.GetThingList(pocket);
+                    for (int i = at.Count - 1; i >= 0; i--)
+                    {
+                        Thing blocker = at[i];
+                        if (blocker == null || blocker == thing || blocker.Destroyed)
+                        {
+                            continue;
+                        }
+                        if (blocker.def.category == ThingCategory.Building
+                            || blocker.def.category == ThingCategory.Item)
+                        {
+                            blocker.Destroy(DestroyMode.Vanish);
+                        }
+                    }
+                }
+                if (!thing.Spawned
+                    && GenSpawn.Spawn(thing, dest, pocket, rot, WipeMode.VanishOrMoveAside) == null
+                    && !thing.Spawned && !thing.Destroyed)
+                {
+                    // Never leave a landing unspawned — fall back to its old cell.
+                    GenSpawn.Spawn(thing, originalPos, pocket, originalRot, WipeMode.VanishOrMoveAside);
+                    Log.Warning("[Strata] G8 deck cargo: could not move " + thing.LabelCap
+                        + " to " + dest + " — restored at " + originalPos + ".");
+                }
             }
             finally
             {
                 PocketMapUtility.currentlyGeneratingPortal = null;
+                StrataPortalUtility.EndPortalMove();
             }
-            if (ok)
-            {
-                return true;
-            }
-            // Never leave a landing unspawned — fall back to its old cell.
-            if (!thing.Spawned && !thing.Destroyed)
-            {
-                PocketMapUtility.currentlyGeneratingPortal = entrance;
-                try
-                {
-                    GenSpawn.Spawn(thing, originalPos, pocket, originalRot, WipeMode.VanishOrMoveAside);
-                }
-                finally
-                {
-                    PocketMapUtility.currentlyGeneratingPortal = null;
-                }
-                Log.Warning("[Strata] G8 deck cargo: could not move " + thing.LabelCap
-                    + " to " + dest + " — restored at " + originalPos + ".");
-            }
-            return false;
+            return thing.Spawned && thing.Map == pocket && thing.Position == dest;
         }
 
         private static void ClearOldTerrain(

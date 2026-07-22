@@ -7,6 +7,22 @@ namespace Strata
 {
     public static class StrataPortalUtility
     {
+        // Escape hatch for Patch_PortalDeSpawnImmunity: intentional portal
+        // despawn/respawn cycles (moves) raise this around the whole cycle.
+        private static int portalMoveDepth;
+
+        public static bool PortalMoveInProgress => portalMoveDepth > 0;
+
+        public static void BeginPortalMove() => portalMoveDepth++;
+
+        public static void EndPortalMove()
+        {
+            if (portalMoveDepth > 0)
+            {
+                portalMoveDepth--;
+            }
+        }
+
         // Shafts, stairs, elevators, and dig extensions — never valid for
         // infestation hives, roof collapse, or event damage.
         public static bool IsProtectedPortal(Thing thing)

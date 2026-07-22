@@ -79,9 +79,6 @@ namespace Strata
             }
 
             bool upper = StrataMapUtility.IsUpperLevel(map);
-            TerrainDef voidT = upper
-                ? UpperDeckUtility.OpenSky
-                : GravshipDeckUtility.VoidTerrain;
             var tracker = map.GetComponent<MapComponent_StrataProjectedSubstructure>();
 
             int done = 0;
@@ -96,10 +93,10 @@ namespace Strata
                 // Re-check: the pad may have grown over this cell since the sweep,
                 // or a pawn may be standing here (skip; a later sweep re-queues).
                 TerrainDef terrain = cell.GetTerrain(map);
-                bool managed = upper
+                bool ghostDeck = upper
                     ? terrain?.defName == UpperDeckUtility.RoofDeckDefName
-                    : GravshipDeckUtility.IsManagedDeckTerrain(terrain);
-                if (!managed || CellHasPawn(map, cell))
+                    : terrain?.defName == GravshipDeckUtility.DeckDefName;
+                if (!ghostDeck || CellHasPawn(map, cell))
                 {
                     continue;
                 }
@@ -114,7 +111,7 @@ namespace Strata
                     sub.Destroy(DestroyMode.Vanish);
                 }
                 tracker?.UnmarkProjected(cell);
-                map.terrainGrid.SetTerrain(cell, voidT);
+                map.terrainGrid.SetTerrain(cell, ReplacementFor(map, cell, upper));
                 map.roofGrid.SetRoof(cell, null);
                 done++;
             }
@@ -124,6 +121,26 @@ namespace Strata
                 queues.RemoveAt(0);
                 Log.Message("[Strata] Deferred clear: map " + queue.mapId + " drained.");
             }
+        }
+
+        // Ghost deck inside a hull field becomes hull (seamless); in open void it
+        // becomes void. Upper decks always revert to open sky.
+        internal static TerrainDef ReplacementFor(Map map, IntVec3 cell, bool upper)
+        {
+            if (upper)
+            {
+                return UpperDeckUtility.OpenSky;
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                IntVec3 adj = cell + GenAdj.CardinalDirections[i];
+                if (adj.InBounds(map)
+                    && adj.GetTerrain(map)?.defName == GravshipDeckUtility.HullDefName)
+                {
+                    return GravshipDeckUtility.HullTerrain;
+                }
+            }
+            return GravshipDeckUtility.VoidTerrain;
         }
 
         private static bool CellHasPawn(Map map, IntVec3 cell)
