@@ -304,6 +304,74 @@ namespace Strata
             }
         }
 
+        // Deck that lost its support below (ship took off / moved, roof removed
+        // via RemoveRoofUnsafe which bypasses the SetRoof hook) never shrank.
+        // Collect unsupported, unoccupied RoofDeck and clear it — inline when
+        // small, deferred drain when large (section-corruption guard).
+        public static int SweepUnsupportedDeck(Map upper)
+        {
+            if (upper == null || !StrataMapUtility.IsUpperLevel(upper))
+            {
+                return 0;
+            }
+            Map source = SourceMapFor(upper);
+            if (source == null)
+            {
+                return 0;
+            }
+            // Gravship uppers: never shrink while the host footprint is still
+            // rebuilding — an empty substructure set would wipe the whole deck.
+            if (IsGravshipLinkedUpper(upper)
+                && !StrataGravshipUtility.EngineHasSubstructure(
+                    StrataGravshipUtility.FindGravEngine(source)
+                    ?? StrataGravshipUtility.FindGravEngineOnMap(source)))
+            {
+                return 0;
+            }
+
+            var toClear = new List<IntVec3>(64);
+            foreach (IntVec3 cell in upper.AllCells)
+            {
+                if (cell.GetTerrain(upper)?.defName != RoofDeckDefName)
+                {
+                    continue;
+                }
+                if (SourceSupportsUpperDeck(upper, cell, source))
+                {
+                    continue;
+                }
+                if (CellHasPreservableStuff(cell, upper))
+                {
+                    continue;
+                }
+                toClear.Add(cell);
+            }
+            if (toClear.Count == 0)
+            {
+                return 0;
+            }
+            if (toClear.Count > 256)
+            {
+                StrataDeferredCellClear.Enqueue(upper, toClear);
+                return toClear.Count;
+            }
+            for (int i = 0; i < toClear.Count; i++)
+            {
+                IntVec3 cell = toClear[i];
+                Thing sub = StrataGravshipSubstructureSync.SubstructureAt(upper, cell);
+                if (sub != null && !sub.Destroyed)
+                {
+                    sub.Destroy(DestroyMode.Vanish);
+                }
+                upper.GetComponent<MapComponent_StrataProjectedSubstructure>()?.UnmarkProjected(cell);
+                upper.terrainGrid.SetTerrain(cell, OpenSky);
+                upper.roofGrid.SetRoof(cell, null);
+            }
+            Log.Message("[Strata] Upper deck: cleared " + toClear.Count
+                + " unsupported deck cell(s) on " + upper.uniqueID + ".");
+            return toClear.Count;
+        }
+
         // Land paint can leave beds/shelves on OpenSky — restore walkable roof deck.
         public static void RestoreRoofDeckUnderBuildings(Map upper)
         {

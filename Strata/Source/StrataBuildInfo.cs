@@ -8,7 +8,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "g8-mainthread-load-repair-v6";
+        public const string BuildStamp = "g8-unsupported-deck-sweep-v7";
 
         public static void LogStartup()
         {
