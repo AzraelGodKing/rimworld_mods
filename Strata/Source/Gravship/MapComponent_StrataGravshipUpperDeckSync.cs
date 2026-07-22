@@ -154,6 +154,7 @@ namespace Strata
 
                 StrataGravshipFootprintSnapshot.RebuildLinkedFloors(
                     map, pockets, snapContents: needAlign);
+                StrataGravshipPortalTravel.SnapAllLandingsUnderShafts(map);
                 return;
             }
 
