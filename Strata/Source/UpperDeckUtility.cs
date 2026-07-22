@@ -432,13 +432,30 @@ namespace Strata
                 }
             }
 
-            int removed = 0;
+            var toClear = new List<IntVec3>(64);
             foreach (IntVec3 cell in upper.AllCells)
             {
                 if (cell.GetTerrain(upper)?.defName != RoofDeckDefName || keep.Contains(cell))
                 {
                     continue;
                 }
+                toClear.Add(cell);
+            }
+            if (toClear.Count == 0)
+            {
+                return;
+            }
+            // Same section-corruption guard as the underdeck: big clears drain
+            // a slice per tick.
+            if (toClear.Count > 256)
+            {
+                StrataDeferredCellClear.Enqueue(upper, toClear);
+                return;
+            }
+            int removed = 0;
+            for (int i = 0; i < toClear.Count; i++)
+            {
+                IntVec3 cell = toClear[i];
                 Thing sub = StrataGravshipSubstructureSync.SubstructureAt(upper, cell);
                 if (sub != null && !sub.Destroyed)
                 {

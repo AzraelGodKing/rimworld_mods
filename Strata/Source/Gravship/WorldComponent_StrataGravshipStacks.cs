@@ -31,6 +31,12 @@ namespace Strata
             return Find.World?.GetComponent<WorldComponent_StrataGravshipStacks>();
         }
 
+        public override void WorldComponentTick()
+        {
+            base.WorldComponentTick();
+            StrataDeferredCellClear.DrainTick();
+        }
+
         public bool IsTravelling(Map map)
         {
             return map != null && travellingMapIds.Contains(map.uniqueID);
