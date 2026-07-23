@@ -7,6 +7,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 - **Repo** — `art/brought/` convention + Cursor rule: brought sprites may be installed as-is, never used as generation / style references.
 - **Repo** — ignore `Homesteader/Textures.rar` (local texture dump).
 - **Docs** — Strata V3 roadmap: G1–G7 merged; More UX on `V3-M-ux` (+ M9 pilot seat, M10 level-switch OOR). → [docs/strata-roadmap.html](docs/strata-roadmap.html)
+- **Strata** — merged `V3-M-ux` into `V3` (M9/M10, G9 land polish, Chinese pack, hostile lost-miners letter).
 - **Strata** — hostile lost miners now get a raid-style threat letter. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — Simplified Chinese (简体中文) language pack. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — gravship: clear B1 ghost hull rings after land + force-cull non-destroyable duplicate elevators (no debug-log pop). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
