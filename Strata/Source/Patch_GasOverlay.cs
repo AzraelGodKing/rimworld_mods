@@ -23,10 +23,7 @@ namespace Strata
                 return;
             }
             row.ToggleableIcon(ref ShowGasOverlay, icon,
-                "Strata: show gas overlay\n"
-                + "Tints each room by its dominant hazardous gas. "
-                + "Move the mouse over a room for a cursor-attached gas mix panel. "
-                + "Optional per-room labels: Strata mod settings → Gas overlay room labels.");
+                "Strata_PlaySettings_GasOverlayTip".Translate());
         }
     }
 }

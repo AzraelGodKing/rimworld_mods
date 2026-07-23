@@ -439,7 +439,7 @@ namespace Strata
                     else if (ct.thing is MapPortal
                         && (!ct.thing.Spawned || ct.thing.Map != pocket || ct.thing.Position != dest))
                     {
-                        Log.Warning("[Strata] G8 deck cargo: landing " + ct.thing.LabelCap
+                        StrataLog.Warning("[Strata] G8 deck cargo: landing " + ct.thing.LabelCap
                             + " (" + ct.thing.ThingID + ") not moved to " + dest
                             + " (spawned=" + ct.thing.Spawned
                             + " map=" + (ct.thing.Map?.uniqueID.ToString() ?? "null")
@@ -529,7 +529,7 @@ namespace Strata
                 {
                     // Never leave a landing unspawned — fall back to its old cell.
                     GenSpawn.Spawn(thing, originalPos, pocket, originalRot, WipeMode.VanishOrMoveAside);
-                    Log.Warning("[Strata] G8 deck cargo: could not move " + thing.LabelCap
+                    StrataLog.Warning("[Strata] G8 deck cargo: could not move " + thing.LabelCap
                         + " to " + dest + " — restored at " + originalPos + ".");
                 }
             }
@@ -579,6 +579,51 @@ namespace Strata
                 pocket.terrainGrid.SetTerrain(old, voidT);
                 pocket.roofGrid.SetRoof(old, null);
                 cleared++;
+            }
+            // Hull rim is not packed (only deck/floors) — void the ring around
+            // the old pad so leftover circles don't linger until the deferred sweep.
+            if (!cargo.isTower && cargo.terrain.Count > 0)
+            {
+                var rimCandidates = new HashSet<IntVec3>();
+                for (int t = 0; t < cargo.terrain.Count; t++)
+                {
+                    CargoTerrain ct = cargo.terrain[t];
+                    if (ct == null)
+                    {
+                        continue;
+                    }
+                    IntVec3 old = cargo.origin + ct.local;
+                    if (!old.InBounds(pocket))
+                    {
+                        continue;
+                    }
+                    for (int i = 0; i < 4; i++)
+                    {
+                        IntVec3 adj = old + GenAdj.CardinalDirections[i];
+                        if (adj.InBounds(pocket)
+                            && !newTerrainCells.Contains(adj)
+                            && adj.GetTerrain(pocket)?.defName == GravshipDeckUtility.HullDefName)
+                        {
+                            rimCandidates.Add(adj);
+                        }
+                    }
+                }
+                foreach (IntVec3 adj in rimCandidates)
+                {
+                    if (CellHasSpawnedContent(pocket, adj))
+                    {
+                        continue;
+                    }
+                    Thing sub = StrataGravshipSubstructureSync.SubstructureAt(pocket, adj);
+                    if (sub != null && !sub.Destroyed)
+                    {
+                        sub.Destroy(DestroyMode.Vanish);
+                    }
+                    pocket.GetComponent<MapComponent_StrataProjectedSubstructure>()?.UnmarkProjected(adj);
+                    pocket.terrainGrid.SetTerrain(adj, voidT);
+                    pocket.roofGrid.SetRoof(adj, null);
+                    cleared++;
+                }
             }
             if (cleared > 0)
             {

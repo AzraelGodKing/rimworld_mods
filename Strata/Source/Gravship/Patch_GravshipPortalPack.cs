@@ -380,7 +380,7 @@ namespace Strata
                 {
                     packed.Remove(thing);
                     stripped++;
-                    Log.Warning("[Strata] Gravship land: stripped pocket-side "
+                    StrataLog.Warning("[Strata] Gravship land: stripped pocket-side "
                         + thing.LabelCap + " (" + thing.ThingID
                         + ") from packed ship — it stays on its linked level.");
                     continue;
@@ -517,7 +517,7 @@ namespace Strata
                 if (!ok && !landing.Spawned && !landing.Destroyed)
                 {
                     GenSpawn.Spawn(landing, oldPos, pocket, oldRot, WipeMode.VanishOrMoveAside);
-                    Log.Warning("[Strata] Landing snap: could not place " + landing.LabelCap
+                    StrataLog.Warning("[Strata] Landing snap: could not place " + landing.LabelCap
                         + " at " + dest + " — restored at " + oldPos + ".");
                     return false;
                 }
@@ -535,7 +535,7 @@ namespace Strata
                     + " -> " + dest + " (under " + shaft.LabelCap + ").");
                 return true;
             }
-            Log.Warning("[Strata] Landing snap: " + landing.LabelCap
+            StrataLog.Warning("[Strata] Landing snap: " + landing.LabelCap
                 + " did not move (" + oldPos + " -> wanted " + dest
                 + ", actual " + (landing.Spawned ? landing.Position.ToString() : "unspawned") + ").");
             return false;
@@ -596,7 +596,7 @@ namespace Strata
                     Log.Message("[Strata] Gravship pocket cleanup: removed orphaned landing "
                         + landing.LabelCap + " at " + landing.Position
                         + " on " + pocket.uniqueID + ".");
-                    landing.Destroy(DestroyMode.Vanish);
+                    StrataPortalUtility.ForceDestroyPortal(landing, DestroyMode.Vanish);
                     culled++;
                 }
                 // Ghost deck around removed landings drains via the deferred clear.
@@ -664,7 +664,7 @@ namespace Strata
                 ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(snap.defName);
                 if (def == null)
                 {
-                    Log.Warning("[Strata] Gravship land: missing shaft def " + snap.defName);
+                    StrataLog.Warning("[Strata] Gravship land: missing shaft def " + snap.defName);
                     continue;
                 }
 
@@ -699,7 +699,7 @@ namespace Strata
                             c => CanPlaceShaft(host, def, c, spawnRot),
                             out cell))
                     {
-                        Log.Warning("[Strata] Gravship land: could not place restored shaft "
+                        StrataLog.Warning("[Strata] Gravship land: could not place restored shaft "
                             + snap.defName);
                         continue;
                     }
@@ -714,7 +714,7 @@ namespace Strata
                 {
                     if (existing.Destroyed)
                     {
-                        Log.Warning("[Strata] Gravship land: packed shaft " + snap.defName
+                        StrataLog.Warning("[Strata] Gravship land: packed shaft " + snap.defName
                             + " is destroyed — skipping reclaim (PlaceGravship may already own it).");
                         continue;
                     }
@@ -749,7 +749,7 @@ namespace Strata
                     continue;
                 }
 
-                Log.Warning("[Strata] Gravship land: no packed shaft for "
+                StrataLog.Warning("[Strata] Gravship land: no packed shaft for "
                     + snap.defName + " — skipping MakeThing restore (avoids duplicate off-pad).");
             }
 
@@ -916,7 +916,7 @@ namespace Strata
                     Log.Message("[Strata] Gravship land: culled duplicate shaft "
                         + shaft.LabelCap + " at " + shaft.Position
                         + " (kept " + keep.Position + ")");
-                    shaft.Destroy(DestroyMode.Vanish);
+                    StrataPortalUtility.ForceDestroyPortal(shaft, DestroyMode.Vanish);
                 }
             }
         }

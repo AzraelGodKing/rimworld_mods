@@ -77,6 +77,28 @@ namespace Strata
             return mode != DestroyMode.Vanish && mode != DestroyMode.WillReplace;
         }
 
+        // Stairs/elevators are def.destroyable=false; vanilla Thing.Destroy then
+        // Log.Errors and leaves the duplicate spawned (ghost shaft + debug log pop).
+        public static void ForceDestroyPortal(Thing portal, DestroyMode mode = DestroyMode.Vanish)
+        {
+            if (portal == null || portal.Destroyed)
+            {
+                return;
+            }
+            BeginPortalMove();
+            bool prev = Thing.allowDestroyNonDestroyable;
+            Thing.allowDestroyNonDestroyable = true;
+            try
+            {
+                portal.Destroy(mode);
+            }
+            finally
+            {
+                Thing.allowDestroyNonDestroyable = prev;
+                EndPortalMove();
+            }
+        }
+
         // Entrance has a pocket map but the landing is missing — restore it.
         public static void RepairMissingLandings()
         {
@@ -389,8 +411,9 @@ namespace Strata
                 return false;
             }
 
-            // Probe held the slots; StartJob re-reserves via a fresh driver.
-            pawn.ClearReservationsForJob(job);
+            // Keep the probe reservations — clearing them races other haulers onto
+            // the same cell and StartJob then Warning-spams (opens the debug log).
+            // Same-pawn re-reserve in the fresh driver is allowed.
             pawn.jobs.StartJob(job, JobCondition.InterruptForced);
             return true;
         }

@@ -318,28 +318,37 @@ namespace Strata
             Gravship ship,
             int pinnedThingId)
         {
-            StrataGravshipPocketAlign.MarkLandAlignComplete();
-            // G7: place packed deck cargo at landed engine (engine-relative).
-            StrataGravshipDeckCargo.PlaceAll(ship, newHost, landEngine);
-            StrataGravshipFootprintSnapshot.PrePaintLinkedDecks(newHost, maps, landEngine);
-            // When cargo was placed, skip live-pocket translate (MF place-at-root).
-            if (!StrataGravshipDeckCargo.PlacedThisLand)
+            // Viewing a linked pocket during land paint RGB-corrupts MapDrawer sections.
+            Map previousView = StrataGravshipTravelView.BeginLandPaintSafeView(newHost, maps);
+            try
             {
-                StrataGravshipPocketAlign.AlignPocketsToLandedShip(
-                    maps, newHost, takeoffPos, landEngine);
+                StrataGravshipPocketAlign.MarkLandAlignComplete();
+                // G7: place packed deck cargo at landed engine (engine-relative).
+                StrataGravshipDeckCargo.PlaceAll(ship, newHost, landEngine);
+                StrataGravshipFootprintSnapshot.PrePaintLinkedDecks(newHost, maps, landEngine);
+                // When cargo was placed, skip live-pocket translate (MF place-at-root).
+                if (!StrataGravshipDeckCargo.PlacedThisLand)
+                {
+                    StrataGravshipPocketAlign.AlignPocketsToLandedShip(
+                        maps, newHost, takeoffPos, landEngine);
+                }
+                StrataGravshipOrphanLevels.CleanupDuplicateLevels(newHost);
+                StrataGravshipFootprintSnapshot.RebuildLinkedFloors(
+                    newHost, maps, landEngine, snapContents: false);
+                // Hard invariant after everything settles: landing cell == shaft cell.
+                StrataGravshipPortalTravel.SnapAllLandingsUnderShafts(newHost);
+                StrataGravshipPortalTravel.CleanupPocketLeftovers(newHost);
+                Log.Message($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}"
+                    + (pinnedThingId >= 0 ? $" (engine thingID {pinnedThingId})." : "."));
+                Messages.Message(
+                    "Strata_GravshipLevelsDocked".Translate(maps.Count),
+                    MessageTypeDefOf.PositiveEvent,
+                    historical: false);
             }
-            StrataGravshipOrphanLevels.CleanupDuplicateLevels(newHost);
-            StrataGravshipFootprintSnapshot.RebuildLinkedFloors(
-                newHost, maps, landEngine, snapContents: false);
-            // Hard invariant after everything settles: landing cell == shaft cell.
-            StrataGravshipPortalTravel.SnapAllLandingsUnderShafts(newHost);
-            StrataGravshipPortalTravel.CleanupPocketLeftovers(newHost);
-            Log.Message($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}"
-                + (pinnedThingId >= 0 ? $" (engine thingID {pinnedThingId})." : "."));
-            Messages.Message(
-                "Strata_GravshipLevelsDocked".Translate(maps.Count),
-                MessageTypeDefOf.PositiveEvent,
-                historical: false);
+            finally
+            {
+                StrataGravshipTravelView.EndLandPaintSafeView(previousView, newHost, maps);
+            }
         }
 
         public void RebindOrphans(Map newHost)

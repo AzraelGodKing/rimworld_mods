@@ -6,7 +6,14 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 - **Repo** — `art/brought/` convention + Cursor rule: brought sprites may be installed as-is, never used as generation / style references.
 - **Repo** — ignore `Homesteader/Textures.rar` (local texture dump).
-- **Docs** — Strata V3 roadmap: drop “Out of V3” exclusion note. → [docs/strata-roadmap.html](docs/strata-roadmap.html)
+- **Docs** — Strata V3 roadmap: G1–G7 merged; More UX on `V3-M-ux` (+ M9 pilot seat, M10 level-switch OOR). → [docs/strata-roadmap.html](docs/strata-roadmap.html)
+- **Strata** — hostile lost miners now get a raid-style threat letter. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — Simplified Chinese (简体中文) language pack. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — gravship: clear B1 ghost hull rings after land + force-cull non-destroyable duplicate elevators (no debug-log pop). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — gravship: block mid-flight underdeck view + land MapDrawer regen (RGB neon fix). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — play-settings tips + gas overlay `load`/`Gas:` labels moved to Keyed (EN; RU English placeholders). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — M10: level-switch flicker / `ArgumentOutOfRangeException` on CurrentMap index. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — M9: pilot console / launch ritual reachable from linked A+/B+ floors. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — V3 level depth cap: ±2 default (was ±4), Unlimited levels setting off; large gravship underdeck sync hitch reduced. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — V3 G1: pin takeoff grav engine thingID for land rebind (no PreferBestEngine/CurrentMap). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — gravship land: stop double-snapping underdeck contents (walls/beds drifting into rock). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)

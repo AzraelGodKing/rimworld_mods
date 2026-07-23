@@ -67,7 +67,7 @@ namespace Strata
                 {
                     return pinned;
                 }
-                Log.Warning("[Strata] G1: pinned takeoff engine thingID " + pinnedThingId
+                StrataLog.Warning("[Strata] G1: pinned takeoff engine thingID " + pinnedThingId
                     + " not found on host map — skipping PreferBestEngine fallback.");
                 return null;
             }

@@ -44,11 +44,23 @@ namespace Strata
                 GenSpawn.Spawn(pawn, CellFinder.RandomClosewalkCellNear(spawn, map, 4), map);
                 spawned.Add(pawn);
             }
+            var targets = new LookTargets(spawned);
             if (hostile && faction.HostileTo(Faction.OfPlayer))
             {
                 LordMaker.MakeNewLord(faction, new LordJob_AssaultColony(faction), map, spawned);
+                // Neutral letters are easy to miss while viewing another floor —
+                // hostiles get a raid-style threat letter that jumps to them.
+                Find.LetterStack.ReceiveLetter(
+                    "Strata_LostMiners_HostileLabel".Translate(),
+                    "Strata_LostMiners_HostileText".Translate(spawned.Count),
+                    LetterDefOf.ThreatSmall,
+                    targets);
+                Find.TickManager.slower.SignalForceNormalSpeedShort();
             }
-            SendStandardLetter(parms, new TargetInfo(spawn, map));
+            else
+            {
+                SendStandardLetter(parms, targets);
+            }
             return true;
         }
     }
