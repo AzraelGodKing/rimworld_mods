@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_Underground.label>地下</Strata_Underground.label>
+  <Strata_Underground.description>地表深处的原生岩层。没有天空、天气或季节——只有岩石。</Strata_Underground.description>
+
+  <Strata_Upper.label>上层</Strata_Upper.label>
+  <Strata_Upper.description>殖民地上方的框架楼层——暴露在天空与天气中，经楼梯与竖井连接下层。</Strata_Upper.description>
+
+</LanguageData>

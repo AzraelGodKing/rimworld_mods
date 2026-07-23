@@ -1672,13 +1672,22 @@ namespace Strata
             IReadOnlyList<Room> rooms = map.regionGrid.AllRooms;
             if (rooms.Count == 0)
             {
+                breathableSeedRoomCursor = 0;
                 return 0;
+            }
+            if (breathableSeedRoomCursor >= rooms.Count)
+            {
+                breathableSeedRoomCursor = 0;
             }
 
             int count = 0;
             int end = Mathf.Min(rooms.Count, breathableSeedRoomCursor + maxRooms);
             for (int i = breathableSeedRoomCursor; i < end; i++)
             {
+                if (i >= rooms.Count)
+                {
+                    break;
+                }
                 Room room = rooms[i];
                 if (room == null || room.UsesOutdoorTemperature || !TryGetSampleCell(room, out IntVec3 sample))
                 {

@@ -150,7 +150,8 @@
     <minRefireDays>11</minRefireDays>
     <letterDef>NeutralEvent</letterDef>
     <letterLabel>Lost miners</letterLabel>
-    <letterText>A small group of miners has wandered into your workings from some other tunnel. They may be grateful for rescue — or desperate enough to fight.</letterText>
+    <!-- Friendly outcome uses this letter; hostiles use ThreatSmall keyed text in the worker. -->
+    <letterText>A small group of miners has wandered into your workings from some other tunnel. They look exhausted — and glad to see a living settlement again.</letterText>
   </IncidentDef>
 
   <!-- ============ Surface: deep siege ============ -->

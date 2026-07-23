@@ -253,7 +253,7 @@ namespace Strata
                 return;
             }
             row.ToggleableIcon(ref StrataResources.Combined, icon,
-                "Strata: combined level resources - the resource readout and build costs count items on every linked level.");
+                "Strata_PlaySettings_CombinedResourcesTip".Translate());
         }
     }
 }

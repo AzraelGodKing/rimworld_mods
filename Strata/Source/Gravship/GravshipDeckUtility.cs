@@ -659,11 +659,11 @@ namespace Strata
                 return;
             }
 
-            // Ghost DECK circles and stale projected-substructure things only —
-            // hull is the pocket's background and clearing it map-wide (60k+
-            // cells) is what corrupted map sections. Stale GravshipSubstructure
-            // things render as a grey circle even on plain terrain, so they are
-            // swept independently of the terrain def.
+            // Ghost deck/hull rings and stale projected-substructure things.
+            // Live hull rim sits ONE cell off CellOnGravship — never clear that.
+            // Orphan hull circles from prior parking spots are off the live rim.
+            // Stale GravshipSubstructure things render as a grey circle even on
+            // plain terrain, so they are swept independently of the terrain def.
             var toClear = new List<IntVec3>(256);
             foreach (IntVec3 cell in under.AllCells)
             {
@@ -671,9 +671,11 @@ namespace Strata
                 {
                     continue;
                 }
-                bool ghostDeck = cell.GetTerrain(under)?.defName == DeckDefName;
+                string terrainName = cell.GetTerrain(under)?.defName;
+                bool ghostDeck = terrainName == DeckDefName;
+                bool ghostHull = terrainName == HullDefName && !CellTouchesHostPad(host, cell);
                 bool staleSub = StrataGravshipSubstructureSync.SubstructureAt(under, cell) != null;
-                if (!ghostDeck && !staleSub)
+                if (!ghostDeck && !ghostHull && !staleSub)
                 {
                     continue;
                 }
@@ -709,12 +711,15 @@ namespace Strata
                         sub.Destroy(DestroyMode.Vanish);
                     }
                     under.GetComponent<MapComponent_StrataProjectedSubstructure>()?.UnmarkProjected(cell);
-                    // Terrain/roof only revert on managed ghost deck — cells that
+                    // Terrain/roof revert on managed ghost deck/hull — cells that
                     // merely carried a stale substructure thing keep their floor.
-                    if (cell.GetTerrain(under)?.defName == DeckDefName)
+                    string terrainName = cell.GetTerrain(under)?.defName;
+                    if (terrainName == DeckDefName || terrainName == HullDefName)
                     {
                         under.terrainGrid.SetTerrain(
-                            cell, StrataDeferredCellClear.ReplacementFor(under, cell, upper: false));
+                            cell, terrainName == HullDefName
+                                ? VoidTerrain
+                                : StrataDeferredCellClear.ReplacementFor(under, cell, upper: false));
                         under.roofGrid.SetRoof(cell, null);
                     }
                     removed++;
@@ -732,6 +737,20 @@ namespace Strata
                 Log.Message("[Strata] Gravship underdeck: cleared " + removed
                     + " off-pad silhouette cell(s).");
             }
+        }
+
+        // Live hull rim is painted on cells adjacent to substructure, not on it.
+        private static bool CellTouchesHostPad(Map host, IntVec3 cell)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                IntVec3 adj = cell + GenAdj.CardinalDirections[i];
+                if (adj.InBounds(host) && StrataGravshipUtility.CellOnGravship(host, adj))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

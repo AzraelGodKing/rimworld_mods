@@ -164,7 +164,13 @@ namespace Strata
             {
                 return false;
             }
-            if (!StrataPawnUtility.CanUseLevelPortals(pawn) || pawn.Drafted)
+            if (!StrataPawnUtility.CanUseLevelPortals(pawn))
+            {
+                return false;
+            }
+            // Drafted pawns usually skip stair orders; pilot console is an exception
+            // (M9 — launch from underdeck / tower while drafted).
+            if (pawn.Drafted && job.def != JobDefOf.PilotConsole)
             {
                 return false;
             }
