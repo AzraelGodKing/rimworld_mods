@@ -11,8 +11,6 @@ namespace Strata
     // Wire each level's grid to its junction and power flows both ways.
     public class Building_ShaftConduit : Building
     {
-        private const int BalanceInterval = 60;
-
         private const int PartnerCheckInterval = 250;
 
         private const int ShaftSearchRadius = 6;
@@ -99,10 +97,7 @@ namespace Strata
                 }
                 EnsurePartnerBelow();
             }
-            if (!this.IsHashIntervalTick(BalanceInterval))
-            {
-                return;
-            }
+            // Power every tick (A4 one-net feel); partner discovery stays periodic.
             CompPowerShaft node = GetComp<CompPowerShaft>();
             CompPowerShaft partner = PartnerValid() ? partnerBelow.GetComp<CompPowerShaft>() : null;
             if (node != null && partner != null)

@@ -159,7 +159,9 @@
   <Strata_SomeoneAbove>Someone is still on the level above.</Strata_SomeoneAbove>
   <Strata_SmokeShaftSealed>Smoke shaft: sealed</Strata_SmokeShaftSealed>
   <Strata_SmokeShaftOpen>Smoke shaft: fumes rise to the level above</Strata_SmokeShaftOpen>
-  <Strata_PowerShaft>Power shaft: ties both levels' grids (wire each floor into the stairwell; keep batteries on each level)</Strata_PowerShaft>
+  <Strata_PowerShaft>Power shaft: ties both levels' grids (wire each floor into the stairwell; batteries optional for overnight pooling)</Strata_PowerShaft>
+  <Strata_PowerShaft_FeedingBelow>Supplying level below: {0} W from host surplus</Strata_PowerShaft_FeedingBelow>
+  <Strata_PowerShaft_DrawingBelow>Drawing from level below: {0} W</Strata_PowerShaft_DrawingBelow>
   <Strata_OreHoistDriven>It is driven by the ore hoist on the level above.</Strata_OreHoistDriven>
   <Strata_OreHoistExtended>Ore hoist extended a skip to the linked level.</Strata_OreHoistExtended>
   <Strata_ShaftConduitDriven>It is driven by the conduit on the level above.</Strata_ShaftConduitDriven>

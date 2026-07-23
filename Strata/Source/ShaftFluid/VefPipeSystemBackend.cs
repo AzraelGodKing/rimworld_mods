@@ -84,31 +84,6 @@ namespace Strata
             return ShaftFluidAdjacentNet.FirstNet(junction, GetNetFromThing);
         }
 
-        public override void DriveTie(object topNet, object bottomNet, CompShaftFluidTie topTie = null, CompShaftFluidTie bottomTie = null)
-        {
-            if (!TryBind() || topNet == null || bottomNet == null || ReferenceEquals(topNet, bottomNet))
-            {
-                return;
-            }
-
-            float topSpare = DrawableAmount(topNet);
-            float botSpare = DrawableAmount(bottomNet);
-            float topNeed = ImportNeed(topNet);
-            float botNeed = ImportNeed(bottomNet);
-
-            float down = Mathf.Min(botNeed, topSpare);
-            float up = Mathf.Min(topNeed, botSpare);
-            float transfer = down - up;
-            if (transfer > 0.001f)
-            {
-                Transfer(topNet, bottomNet, transfer);
-            }
-            else if (transfer < -0.001f)
-            {
-                Transfer(bottomNet, topNet, -transfer);
-            }
-        }
-
         private object GetNetFromThing(ThingWithComps thing)
         {
             foreach (ThingComp comp in thing.AllComps)
@@ -168,6 +143,32 @@ namespace Strata
             return DrawableAmount(net);
         }
 
+        public override float NetStorageRoom(object net)
+        {
+            if (net == null || !TryBind())
+            {
+                return 0f;
+            }
+            float room = (float)availableCapacityProp.GetValue(net, null);
+            float refill = (float)refillableAmountProp.GetValue(net, null);
+            return Mathf.Max(0f, room + refill);
+        }
+
+        public override float PushIntoNet(object net, float amount)
+        {
+            if (!TryBind() || net == null || amount <= 0f)
+            {
+                return amount;
+            }
+            int distributeParamCount = distributeAmongStorageMethod.GetParameters().Length;
+            object[] storeArgs = distributeParamCount == 4
+                ? new object[] { amount, 0f, null, true }
+                : new object[] { amount, 0f };
+            distributeAmongStorageMethod.Invoke(net, storeArgs);
+            float stored = (float)storeArgs[1];
+            return Mathf.Max(0f, amount - stored);
+        }
+
         public override bool Transfer(object fromNet, object toNet, float amount, CompShaftFluidTie fromTie = null, CompShaftFluidTie toTie = null)
         {
             if (!TryBind() || fromNet == null || toNet == null || amount <= 0f)
@@ -182,13 +183,9 @@ namespace Strata
             {
                 return false;
             }
-            int distributeParamCount = distributeAmongStorageMethod.GetParameters().Length;
-            object[] storeArgs = distributeParamCount == 4
-                ? new object[] { moved, 0f, null, true }
-                : new object[] { moved, 0f };
-            distributeAmongStorageMethod.Invoke(toNet, storeArgs);
-            float stored = (float)storeArgs[1];
-            return stored > 0.001f;
+            float leftover = PushIntoNet(toNet, moved);
+            ParkLeftover(toTie, leftover);
+            return true;
         }
 
         private float DrawableAmount(object net)

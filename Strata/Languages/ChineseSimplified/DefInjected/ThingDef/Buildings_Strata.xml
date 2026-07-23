@@ -19,7 +19,7 @@
   <Strata_StairsDown.label>挖掘楼梯</Strata_StairsDown.label>
   <Strata_StairsDown.description>凿入殖民地下方岩层的宽楼梯。完工后打开新地下楼层：与本图同尺寸的整层坚岩，可挖成房间、工坊与仓储。从地表到第一层地下室需要研究“向下挖掘”；再往下每层需要研究“深层挖掘”。注意：地图越大，每层开放带来的负担也越大。
 
-殖民者会自行使用楼梯在各层工作、进食与睡觉。当每层都接到楼梯时，竖井还会连接两层电网——每层自备电池以便合并盈余。下方有人时不可拆除。</Strata_StairsDown.description>
+殖民者会自行使用楼梯在各层工作、进食与睡觉。当每层都接到楼梯时，竖井还会连接两层电网——主机侧的实时盈余可直接供应另一层，无需每层自备电池；电池可选，用于夜间蓄电与应对短时缺口。下方有人时不可拆除。</Strata_StairsDown.description>
 
   <!-- 向下挖掘延伸 -->
   <Strata_DigDownShaft.label>挖掘竖井</Strata_DigDownShaft.label>
@@ -69,7 +69,7 @@
 
   <!-- ============ 竖井电力导管 ============ -->
   <Strata_ShaftConduit.label>竖井电力导管</Strata_ShaftConduit.label>
-  <Strata_ShaftConduit.description>可选的跨竖井输电节点。建在楼梯或电梯几格之内：它会自动在下方落脚点生成对端节点，每层接到各自节点后电力便在两网间流动——建好并接线后立即生效，无需开关。楼梯与电梯本身已可输电——仅在需要竖井外的单独接点时使用。</Strata_ShaftConduit.description>
+  <Strata_ShaftConduit.description>可选的跨竖井输电节点。建在楼梯或电梯几格之内：它会自动在下方落脚点生成对端节点，每层接到各自节点后电力便在两网间流动——建好并接线后立即生效，无需开关。无电池的楼层仍可从已连接的主机电网取用实时盈余。楼梯与电梯本身已可输电——仅在需要竖井外的单独接点时使用。</Strata_ShaftConduit.description>
 
   <!-- ============ 氧气泵 ============ -->
   <Strata_OxygenPump.label>氧气泵</Strata_OxygenPump.label>

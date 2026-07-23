@@ -158,7 +158,9 @@
   <Strata_SomeoneAbove>Кто-то всё ещё на уровне выше.</Strata_SomeoneAbove>
   <Strata_SmokeShaftSealed>Дымовая шахта: запечатана</Strata_SmokeShaftSealed>
   <Strata_SmokeShaftOpen>Дымовая шахта: пары поднимаются на уровень выше</Strata_SmokeShaftOpen>
-  <Strata_PowerShaft>Энергошахта: связывает сети обоих уровней (подведите проводку каждого этажа к лестнице; держите батареи на каждом уровне)</Strata_PowerShaft>
+  <Strata_PowerShaft>Энергошахта: связывает сети обоих уровней (подведите проводку каждого этажа к лестнице; батареи по желанию — для ночного запаса)</Strata_PowerShaft>
+  <Strata_PowerShaft_FeedingBelow>Питает уровень ниже: {0} Вт из избытка хоста</Strata_PowerShaft_FeedingBelow>
+  <Strata_PowerShaft_DrawingBelow>Берёт с уровня ниже: {0} Вт</Strata_PowerShaft_DrawingBelow>
   <Strata_OreHoistDriven>Им управляет рудный подъёмник на уровне выше.</Strata_OreHoistDriven>
   <Strata_OreHoistExtended>Рудный подъёмник опустил бадью на связанный уровень.</Strata_OreHoistExtended>
   <Strata_ShaftConduitDriven>Им управляет проводник на уровне выше.</Strata_ShaftConduitDriven>

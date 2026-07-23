@@ -74,7 +74,43 @@ namespace Strata
             {
                 return false;
             }
-            return mode != DestroyMode.Vanish && mode != DestroyMode.WillReplace;
+            // Vanish / WillReplace: map-gen and pack/unpack moves.
+            // Deconstruct: player tore down an empty stairwell/elevator after
+            // DeconstructibleBy allowed it — must not be swallowed here or the
+            // designation finishes while the shaft stays forever.
+            return mode != DestroyMode.Vanish
+                && mode != DestroyMode.WillReplace
+                && mode != DestroyMode.Deconstruct;
+        }
+
+        // Colony pawns (incl. downed), prisoners, mechs, and player animals on a
+        // linked level — broader than vanilla AnyPawnBlockingMapRemoval, which
+        // ignores downed colonists and non-colonist colony pawns.
+        public static bool LinkedLevelHasColonyPresence(Map level)
+        {
+            if (level?.mapPawns == null)
+            {
+                return false;
+            }
+            if (level.mapPawns.AnyPawnBlockingMapRemoval)
+            {
+                return true;
+            }
+            Faction player = Faction.OfPlayer;
+            IReadOnlyList<Pawn> pawns = level.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn == null || pawn.Dead)
+                {
+                    continue;
+                }
+                if (pawn.Faction == player || pawn.HostFaction == player)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         // Stairs/elevators are def.destroyable=false; vanilla Thing.Destroy then

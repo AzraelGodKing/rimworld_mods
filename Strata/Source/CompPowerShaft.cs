@@ -7,15 +7,19 @@ namespace Strata
 {
     // One end of a power tie that runs through a shaft. It's an ordinary power
     // trader on its own level's grid; the controller end (top) drives both this
-    // node and its partner each period to move energy across the shaft.
+    // node and its partner each tick to move energy across the shaft.
     //
     // Demand-driven: a grid asks for its running deficit plus a battery-
     // equalization trickle, and the other side gives its live surplus plus
-    // whatever its batteries can discharge — no flat watt cap.
+    // whatever its batteries can discharge — no flat watt cap. Pocket floors
+    // do not need their own batteries when the host can cover live demand.
     public class CompPowerShaft : CompPowerTrader
     {
         // Watts moved per unit of stored-energy (Wd) imbalance between the grids.
         private const float TransferGain = 4f;
+
+        // Last DriveTie transfer (+ = feeding the bottom net). For inspect copy.
+        private float lastTransferWatts;
 
         private float BaseLoad
         {
@@ -34,6 +38,8 @@ namespace Strata
                 return Props.PowerConsumption;
             }
         }
+
+        public float LastTransferWatts => lastTransferWatts;
 
         public override void CompTick()
         {
@@ -93,12 +99,16 @@ namespace Strata
             float botBalance = botNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick
                 - bottom.PowerOutput - bottom.BaseLoad;
 
+            // Equalize only when the hungry side has battery room — battery-free
+            // pockets just take live deficit cover from the host (A4).
             float botWant = Mathf.Max(0f, -botBalance) + EqualizeWant(botNet, topNet);
             float topWant = Mathf.Max(0f, -topBalance) + EqualizeWant(topNet, botNet);
 
             float down = Mathf.Min(botWant, Supply(topNet, topBalance));
             float up = Mathf.Min(topWant, Supply(botNet, botBalance));
             float transfer = down - up; // + = down
+            lastTransferWatts = transfer;
+            bottom.lastTransferWatts = -transfer;
 
             // Negative output = drawing from the local grid; positive = feeding
             // it. The two outputs always sum to the base loads: the tie moves
@@ -109,11 +119,14 @@ namespace Strata
 
         private void Idle(CompPowerShaft bottom)
         {
+            lastTransferWatts = 0f;
+            bottom.lastTransferWatts = 0f;
             PowerOutput = -BaseLoad;
             bottom.PowerOutput = -bottom.BaseLoad;
         }
 
         // Live production surplus, then battery discharge headroom if needed.
+        // Partner batteries count as shared store for a hungry battery-free floor.
         private static float Supply(PowerNet net, float balance)
         {
             float spare = Mathf.Max(0f, balance);
@@ -136,7 +149,8 @@ namespace Strata
 
         // Battery-equalization trickle: charge toward the other grid's stored
         // level while there is room. Stops on its own once the levels meet, so
-        // the tie can't drain one side forever.
+        // the tie can't drain one side forever. No room (battery-free floor) =
+        // no equalize want — live deficit cover still flows via Supply.
         private static float EqualizeWant(PowerNet mine, PowerNet other)
         {
             float myStored = mine.CurrentStoredEnergy();
@@ -159,6 +173,24 @@ namespace Strata
                 }
             }
             return false;
+        }
+
+        public static bool NetHasBatteries(PowerNet net)
+        {
+            return net?.batteryComps != null && net.batteryComps.Count > 0;
+        }
+
+        public override string CompInspectStringExtra()
+        {
+            string baseText = base.CompInspectStringExtra();
+            if (Mathf.Abs(lastTransferWatts) < 1f)
+            {
+                return baseText;
+            }
+            string tip = lastTransferWatts > 0f
+                ? "Strata_PowerShaft_FeedingBelow".Translate(lastTransferWatts.ToString("F0"))
+                : "Strata_PowerShaft_DrawingBelow".Translate((-lastTransferWatts).ToString("F0"));
+            return baseText.NullOrEmpty() ? tip : baseText + "\n" + tip;
         }
     }
 }
