@@ -5,6 +5,7 @@
   <Strata_FluidTie_ModNotLoaded>流体连接（{0}）：模组未加载</Strata_FluidTie_ModNotLoaded>
   <Strata_FluidTie_NotConnected>流体连接（{0}）：未连接 — 请把管道接到此节点</Strata_FluidTie_NotConnected>
   <Strata_FluidTie_Linked>流体连接（{0}）：已连接到本地 {0} 网络</Strata_FluidTie_Linked>
+  <Strata_FluidTie_Buffer>竖井缓冲（{0}）：{1} / {2}</Strata_FluidTie_Buffer>
 
   <!-- CompShaftFluidJunctionLink -->
   <Strata_FluidLink_DrivenAbove>连接：由上层节点驱动</Strata_FluidLink_DrivenAbove>

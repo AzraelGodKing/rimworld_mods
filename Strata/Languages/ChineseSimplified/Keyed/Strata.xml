@@ -159,7 +159,9 @@
   <Strata_SomeoneAbove>上方楼层仍有人。</Strata_SomeoneAbove>
   <Strata_SmokeShaftSealed>烟雾竖井：已密封</Strata_SmokeShaftSealed>
   <Strata_SmokeShaftOpen>烟雾竖井：烟气升至上层</Strata_SmokeShaftOpen>
-  <Strata_PowerShaft>电力竖井：连接两层电网（每层接线到楼梯井；每层自备电池）</Strata_PowerShaft>
+  <Strata_PowerShaft>电力竖井：连接两层电网（每层接线到楼梯井；电池可选，用于夜间蓄电）</Strata_PowerShaft>
+  <Strata_PowerShaft_FeedingBelow>向下层供电：{0} W（主机盈余）</Strata_PowerShaft_FeedingBelow>
+  <Strata_PowerShaft_DrawingBelow>从下层取电：{0} W</Strata_PowerShaft_DrawingBelow>
   <Strata_OreHoistDriven>由上层的矿石吊车驱动。</Strata_OreHoistDriven>
   <Strata_OreHoistExtended>矿石吊车已向相连楼层延伸吊斗。</Strata_OreHoistExtended>
   <Strata_ShaftConduitDriven>由上层的导管驱动。</Strata_ShaftConduitDriven>

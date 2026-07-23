@@ -77,6 +77,25 @@ namespace Strata
             return (float)waterStorageNetProp.GetValue(net, null);
         }
 
+        public override float NetStorageRoom(object net)
+        {
+            if (net == null || !TryBind())
+            {
+                return 0f;
+            }
+            return SumTowerSpace(GetTowers(net));
+        }
+
+        public override float PushIntoNet(object net, float amount)
+        {
+            if (net == null || !TryBind() || amount <= 0f)
+            {
+                return amount;
+            }
+            object leftover = pushWaterMethod.Invoke(net, new object[] { amount });
+            return leftover is float f ? Mathf.Max(0f, f) : 0f;
+        }
+
         public override bool Transfer(object fromNet, object toNet, float amount, CompShaftFluidTie fromTie = null, CompShaftFluidTie toTie = null)
         {
             if (!TryBind() || fromNet == null || toNet == null || amount <= 0f)
@@ -103,10 +122,10 @@ namespace Strata
             {
                 return false;
             }
-            object leftover = pushWaterMethod.Invoke(toNet, new object[] { moved });
-            if (leftover is float f && f > 0.001f)
+            float leftover = PushIntoNet(toNet, moved);
+            if (leftover > 0.001f)
             {
-                pushWaterMethod.Invoke(fromNet, new object[] { f });
+                ParkLeftover(toTie, leftover);
             }
             return true;
         }
