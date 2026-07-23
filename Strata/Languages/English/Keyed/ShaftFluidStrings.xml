@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- CompShaftFluidTie -->
+  <Strata_FluidTie_ModNotLoaded>Fluid tie ({0}): mod not loaded</Strata_FluidTie_ModNotLoaded>
+  <Strata_FluidTie_NotConnected>Fluid tie ({0}): not connected — pipe into this junction</Strata_FluidTie_NotConnected>
+  <Strata_FluidTie_Linked>Fluid tie ({0}): linked to local {0} net</Strata_FluidTie_Linked>
+  <Strata_FluidTie_Buffer>Shaft buffer ({0}): {1} / {2}</Strata_FluidTie_Buffer>
+
+</LanguageData>

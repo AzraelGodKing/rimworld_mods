@@ -123,35 +123,44 @@ namespace Strata
             {
                 return false;
             }
-            // Construction demand outranks storage priority: a level short of
-            // materials for its blueprints pulls them like a temporary Critical
-            // stockpile. The pawn's own level keeps first claim - while local
-            // construction is short of this def, it never gets exported.
+            // This level keeps first claim while it still needs the def
+            // (construction / bills / refuel / storage upgrade).
             if (LevelDemand.MissingOn(pawn.Map, t.def) > 0)
             {
                 return false;
             }
-            // Snapshot once: MissingOn → Build → AddStorageUpgradePulls used to
-            // call ReachableLevels and clear the shared buffer mid-foreach
-            // (Collection was modified on Mech_Lifter / Strata_HaulAcrossLevels).
+            // Hard demand (construction / bills / refuel) may pull from any
+            // local priority. Storage-upgrade demand only pulls stacks whose
+            // current priority is strictly beaten by the destination — otherwise
+            // a Critical freezer downstairs gets emptied into a Normal shelf up.
+            StoragePriority current = StoreUtility.CurrentStoragePriorityOf(t);
             List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(pawn.Map);
             for (int i = 0; i < links.Count; i++)
             {
                 LevelGraph.LevelLink link = links[i];
-                if (LevelDemand.MissingOn(link.map, t.def) > 0
-                    && LevelDemand.AnySiteReachable(link.map, t.def, link.arrivalCell))
+                if (!LevelDemand.AnySiteReachable(link.map, t.def, link.arrivalCell))
                 {
-                    MapPortal step = UsableStep(pawn, link);
-                    if (step != null)
-                    {
-                        portal = step;
-                        destMap = link.map;
-                        return true;
-                    }
+                    continue;
+                }
+
+                bool hardNeed = LevelDemand.HardMissingOn(link.map, t.def) > 0;
+                bool storageUpgrade = !hardNeed
+                    && LevelDemand.MissingOn(link.map, t.def) > 0
+                    && BestAcceptingPriority(link.map, t, current, link.arrivalCell) > current;
+                if (!hardNeed && !storageUpgrade)
+                {
+                    continue;
+                }
+
+                MapPortal step = UsableStep(pawn, link);
+                if (step != null)
+                {
+                    portal = step;
+                    destMap = link.map;
+                    return true;
                 }
             }
 
-            StoragePriority current = StoreUtility.CurrentStoragePriorityOf(t);
             // The best this level can offer; a linked level only gets the job
             // if it strictly beats it, so ties stay local (shorter trip) and
             // vanilla hauling handles them.

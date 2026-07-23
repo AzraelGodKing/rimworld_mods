@@ -1,3 +1,4 @@
+using UnityEngine;
 using Verse;
 
 namespace Strata
@@ -14,13 +15,23 @@ namespace Strata
 
     public class CompShaftFluidTie : ThingComp
     {
+        // Rimatomics coolant loop bonus (existing).
         private float shaftCoolingBuffer;
+
+        // A4 tankless pocket buffer for storage-based channels (DBH / VEF / Rimefeller).
+        private float shaftResourceBuffer;
+
+        public const float MaxResourceBuffer = 250f;
 
         public CompProperties_ShaftFluidTie Props => (CompProperties_ShaftFluidTie)props;
 
         public ShaftFluidBackend Backend => ShaftFluidRegistry.Get(Props.channel);
 
         public float ShaftCoolingBuffer => shaftCoolingBuffer;
+
+        public float ShaftResourceBuffer => shaftResourceBuffer;
+
+        public float ShaftResourceBufferRoom => Mathf.Max(0f, MaxResourceBuffer - shaftResourceBuffer);
 
         public static CompShaftFluidTie FindOn(Thing thing, string channel)
         {
@@ -75,7 +86,7 @@ namespace Strata
 
         internal float TakeShaftCoolingBuffer(float amount)
         {
-            float moved = UnityEngine.Mathf.Min(amount, shaftCoolingBuffer);
+            float moved = Mathf.Min(amount, shaftCoolingBuffer);
             shaftCoolingBuffer -= moved;
             return moved;
         }
@@ -88,10 +99,27 @@ namespace Strata
             }
         }
 
+        internal float TakeShaftResourceBuffer(float amount)
+        {
+            float moved = Mathf.Min(amount, shaftResourceBuffer);
+            shaftResourceBuffer -= moved;
+            return moved;
+        }
+
+        internal void AddShaftResourceBuffer(float amount)
+        {
+            if (amount <= 0f)
+            {
+                return;
+            }
+            shaftResourceBuffer = Mathf.Min(MaxResourceBuffer, shaftResourceBuffer + amount);
+        }
+
         public override void PostExposeData()
         {
             base.PostExposeData();
             Scribe_Values.Look(ref shaftCoolingBuffer, "strataShaftCoolingBuffer", 0f);
+            Scribe_Values.Look(ref shaftResourceBuffer, "strataShaftResourceBuffer", 0f);
         }
 
         public override string CompInspectStringExtra()
@@ -105,9 +133,15 @@ namespace Strata
             object net = backend.GetNetFromJunction(parent);
             if (net == null)
             {
-                return $"Fluid tie ({backend.Label}): not connected — wire pipes to this junction";
+                return "Strata_FluidTie_NotConnected".Translate(backend.Label);
             }
-            return $"Fluid tie ({backend.Label}): linked to local {backend.Label} network";
+            string line = "Strata_FluidTie_Linked".Translate(backend.Label);
+            if (shaftResourceBuffer > 0.1f)
+            {
+                line += "\n" + "Strata_FluidTie_Buffer".Translate(
+                    backend.Label, shaftResourceBuffer.ToString("F0"), MaxResourceBuffer.ToString("F0"));
+            }
+            return line;
         }
     }
 }

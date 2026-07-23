@@ -122,7 +122,7 @@ namespace Strata
 
         public override AcceptanceReport DeconstructibleBy(Faction faction)
         {
-            if (PocketMapExists && PocketMap.mapPawns.AnyPawnBlockingMapRemoval)
+            if (PocketMapExists && StrataPortalUtility.LinkedLevelHasColonyPresence(PocketMap))
             {
                 return OccupiedOtherLevelMessage();
             }
@@ -137,12 +137,33 @@ namespace Strata
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
             Map level = PocketMapExists ? PocketMap : null;
-            base.Destroy(mode);
-            // Collapse an empty level with the stairs; a level with pawns on it
+            // destroyable=false + DeSpawn immunity: need move-scope and the
+            // non-destroyable allowance or player deconstruct never removes us.
+            bool openedMove = false;
+            if (!StrataPortalUtility.PortalMoveInProgress)
+            {
+                StrataPortalUtility.BeginPortalMove();
+                openedMove = true;
+            }
+            bool prevAllow = Thing.allowDestroyNonDestroyable;
+            Thing.allowDestroyNonDestroyable = true;
+            try
+            {
+                base.Destroy(mode);
+            }
+            finally
+            {
+                Thing.allowDestroyNonDestroyable = prevAllow;
+                if (openedMove)
+                {
+                    StrataPortalUtility.EndPortalMove();
+                }
+            }
+            // Collapse an empty level with the stairs; a level with colony pawns
             // stays alive so they can still climb out via the stairwell below,
             // and a shared level stays alive while any other entrance links in.
             if (level != null && Find.Maps.Contains(level)
-                && !level.mapPawns.AnyPawnBlockingMapRemoval
+                && !StrataPortalUtility.LinkedLevelHasColonyPresence(level)
                 && !AnyEntranceTo(level))
             {
                 PocketMapUtility.DestroyPocketMap(level);

@@ -6,15 +6,19 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ### Added
 
+- **A4 Vertical utilities as one net** — shaft power ties drive every tick (stairs / conduit / omni); battery-free pockets draw live host surplus and partner battery discharge; equalization only when the hungry side has battery room. DBH / VEF / Rimefeller shaft junctions keep a capped resource buffer when the destination lacks tanks. Player copy no longer requires a battery on every floor. Build stamp `a4-one-net-v1`.
 - **Simplified Chinese (简体中文)** — full `Languages/ChineseSimplified/` pack: Keyed (`Strata.xml`, gravship + shaft-fluid strings) and DefInjected covering the same defs as the Russian pack (buildings, research, incidents, gases, hediffs, sites, terrain, jobs, etc.).
 
 ### Changed
 
 - **Branch** — `V3-M-ux` merged into `V3` (M9 pilot-across-levels, M10 CurrentMap OOR, G9 travel-view RGB guard, B1 ghost-hull clear, Simplified Chinese pack, hostile lost-miners threat letter).
 - **Lost miners (hostile)** — when the crew turns hostile, fire a raid-style `ThreatSmall` letter (jumps to them, briefly forces normal speed) instead of a quiet Neutral letter that’s easy to miss on another floor. Friendly arrivals keep the calm letter.
+- **Power / fluid copy** — About, stairwell, shaft conduit, and EN/RU/CN keyed + DefInjected strings: batteries optional for overnight pooling; inspect tips show watts feeding/drawing across the shaft.
 
 ### Fixed
 
+- **Cross-level storage priority** — a linked floor’s storage-upgrade pull no longer exports *every* stack of that def. Critical (or otherwise higher-priority) shelves underground stay put when the surface only has lower-priority room; only construction / bills / refuel may still pull regardless of priority. Build stamp `cross-level-storage-prio-v1`.
+- **Empty stairwell / elevator deconstruct** — portal destroy immunity swallowed `DestroyMode.Deconstruct`, so designations finished while shafts stayed (`destroyable=false` + DeSpawn block). Player deconstruct now goes through; occupied-floor checks also catch downed colonists / colony animals / mechs / prisoners. Build stamp `stair-deconstruct-empty-v1`.
 - **B1 leftover ship circles after land** — cargo clear only wiped packed deck/floors, so old hull rims stayed as ghost pads; duplicate elevators also refused `Destroy` (`destroyable=false`) and `Log.Error`'d without removing. Off-pad hull (not the live pad rim) now clears with the silhouette sweep / old-footprint rim pass; non-destroyable shafts use `Thing.allowDestroyNonDestroyable` + portal-move scope. Non-fatal gravship warnings post via `StrataLog` (Player.log only, no debug-log pop). Build stamp `g9-ghost-hull-clear-v1`.
 - **Gravship land RGB / neon section corruption** — viewing an underdeck/tower mid-flight (colonist-bar portrait) then landing mass-dirtied that pocket while MapDrawer was live, leaving permanent red/green/blue section meshes (save/load did not heal). Block camera jumps onto travelling floors when another map exists; evacuate the view at takeoff; during land paint temporarily view the host and `RegenerateEverythingNow` on host + linked pockets afterward. Build stamp `g9-travel-view-rgb-guard-v1`.
 - **Play-settings tooltips localized** — gas overlay and combined-level-resources toggle tips were hardcoded English; moved to Keyed (`Strata_PlaySettings_GasOverlayTip`, `Strata_PlaySettings_CombinedResourcesTip`) with Russian. Build stamp `m-ux-playsettings-tips-keyed-v1`.

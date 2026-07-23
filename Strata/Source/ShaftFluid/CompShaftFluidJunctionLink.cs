@@ -108,12 +108,16 @@ namespace Strata
                 }
                 EnsurePartnerBelow();
             }
-            if (!parent.IsHashIntervalTick(BalanceInterval) || !PartnerValid())
+            if (!PartnerValid())
             {
                 return;
             }
-            DriveAllTies();
+            // Power every tick; fluid channels keep a 60-tick pulse (storage moves).
             DrivePowerTie();
+            if (parent.IsHashIntervalTick(BalanceInterval))
+            {
+                DriveAllTies();
+            }
         }
 
         private void DriveAllTies()
