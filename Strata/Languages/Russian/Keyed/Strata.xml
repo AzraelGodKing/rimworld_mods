@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
-  <!--
-    AI-assisted fill-in for keys not covered by the community Keyed pack.
-    Do not overwrite GravshipStrings.xml / ShaftFluidStrings.xml (community).
-    Terminology aligned with community DefInjected (уровень, лестница, шахта, гравикорабль).
-  -->
-
   <!-- Mod settings -->
   <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
   <Strata_Settings_LevelHotkeys>Горячие клавиши уровней</Strata_Settings_LevelHotkeys>
@@ -62,6 +55,12 @@
   <Strata_Settings_BreathingSimulationDesc>Подземные уровни отслеживают кислород и углекислый газ: колонисты дышат O₂, выдыхают CO₂, O₂ поднимается по шахтам, CO₂ оседает. Выключение очищает оба газа.</Strata_Settings_BreathingSimulationDesc>
   <Strata_Settings_GasOverlayLabels>Подписи комнат на оверлее газа</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>При включённом оверлее газа в настройках игры рисует цветные процентные подписи на каждой закрытой комнате (топ-3 газа + нагрузка). Панель у курсора доступна всегда, когда оверлей включён.</Strata_Settings_GasOverlayLabelsDesc>
+  <Strata_PlaySettings_GasOverlayTip>Strata: show gas overlay\nTints each room by its dominant hazardous gas. Move the mouse over a room for a cursor-attached gas mix panel. Optional per-room labels: Strata mod settings → Gas overlay room labels.</Strata_PlaySettings_GasOverlayTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata: combined level resources - the resource readout and build costs count items on every linked level.</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_GasOverlay_Load>load {0}%</Strata_GasOverlay_Load>
+  <Strata_GasOverlay_LoadParen>  (load {0}%)</Strata_GasOverlay_LoadParen>
+  <Strata_GasOverlay_OpenAir>Gas: open air</Strata_GasOverlay_OpenAir>
+  <Strata_GasOverlay_GasPrefix>Gas: </Strata_GasOverlay_GasPrefix>
   <Strata_Settings_ThreatsPerf>Угрозы и производительность</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>Преследование рейдеров</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>Рейдеры без целей для боя идут за колонистами через незапечатанные лестницы.</Strata_Settings_RaidPursuitDesc>
@@ -267,11 +266,16 @@
   <Strata_RaidersBatteringPortal>Рейдеры ломают запечатанный {0}!</Strata_RaidersBatteringPortal>
   <Strata_GravshipLevelsTravel>Strata: {0} связанный(х) уровень(ней) отправится с гравикораблём.</Strata_GravshipLevelsTravel>
   <Strata_GravshipLevelsDocked>Strata: {0} связанный(х) уровень(ней) пристыкован(о) к гравикораблю.</Strata_GravshipLevelsDocked>
+  <Strata_GravshipTravelViewBlocked>Strata: cannot view underdeck/tower decks while the gravship is in flight (causes land graphics corruption). Open those floors after landing.</Strata_GravshipTravelViewBlocked>
   <Strata_TravelWithShipOn>Полёт с кораблём: ВКЛ</Strata_TravelWithShipOn>
   <Strata_TravelWithShipOff>Полёт с кораблём: ВЫКЛ</Strata_TravelWithShipOff>
   <Strata_TravelWithShipDesc>Когда ВКЛ, связанный этаж этой шахты следует за запуском гравикорабля. Выключите, чтобы оставить этаж на текущей клетке мира.</Strata_TravelWithShipDesc>
   <Strata_GravshipRescuedPawns>Strata: {0} заключённый(х)/младенец(ев) перенесены на гравикорабль, чтобы их не оставили.</Strata_GravshipRescuedPawns>
   <Strata_GravshipLinkedLeftBehindWarn>Strata: эти пешки вне палубы корабля или на связанном этаже, который не полетит (заключённых/младенцев заберут на борт при старте): {0}</Strata_GravshipLinkedLeftBehindWarn>
+
+  <!-- Lost miners (hostile branch — raid-style attention) -->
+  <Strata_LostMiners_HostileLabel>Враждебные шахтёры</Strata_LostMiners_HostileLabel>
+  <Strata_LostMiners_HostileText>{0} отчаявшихся шахтёров прорвались в ваши подземные выработки и враждебны. Переключитесь на этот уровень — они будут сражаться.</Strata_LostMiners_HostileText>
 
   <!-- Letters -->
   <Strata_AncientStairwellLetterTitle>Древняя лестница</Strata_AncientStairwellLetterTitle>

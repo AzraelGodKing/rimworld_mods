@@ -56,6 +56,12 @@
   <Strata_Settings_BreathingSimulationDesc>Underground levels track oxygen and carbon dioxide: colonists breathe O₂, exhale CO₂, O₂ rises through shafts, and CO₂ sinks. Turning this off clears both gases.</Strata_Settings_BreathingSimulationDesc>
   <Strata_Settings_GasOverlayLabels>Gas overlay room labels</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>While the play-settings gas overlay is on, draw color-coded percentage labels on each enclosed room (top three gases + load). The cursor panel is always available when the overlay is on.</Strata_Settings_GasOverlayLabelsDesc>
+  <Strata_PlaySettings_GasOverlayTip>Strata: show gas overlay\nTints each room by its dominant hazardous gas. Move the mouse over a room for a cursor-attached gas mix panel. Optional per-room labels: Strata mod settings → Gas overlay room labels.</Strata_PlaySettings_GasOverlayTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata: combined level resources - the resource readout and build costs count items on every linked level.</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_GasOverlay_Load>load {0}%</Strata_GasOverlay_Load>
+  <Strata_GasOverlay_LoadParen>  (load {0}%)</Strata_GasOverlay_LoadParen>
+  <Strata_GasOverlay_OpenAir>Gas: open air</Strata_GasOverlay_OpenAir>
+  <Strata_GasOverlay_GasPrefix>Gas: </Strata_GasOverlay_GasPrefix>
   <Strata_Settings_ThreatsPerf>Threats &amp; performance</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>Raid pursuit</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>Raiders with nobody left to fight follow your colonists through unsealed stairwells.</Strata_Settings_RaidPursuitDesc>
@@ -261,11 +267,16 @@
   <Strata_RaidersBatteringPortal>Raiders are battering the sealed {0}!</Strata_RaidersBatteringPortal>
   <Strata_GravshipLevelsTravel>Strata: {0} linked level(s) will travel with the gravship.</Strata_GravshipLevelsTravel>
   <Strata_GravshipLevelsDocked>Strata: {0} linked level(s) docked with the gravship.</Strata_GravshipLevelsDocked>
+  <Strata_GravshipTravelViewBlocked>Strata: cannot view underdeck/tower decks while the gravship is in flight (causes land graphics corruption). Open those floors after landing.</Strata_GravshipTravelViewBlocked>
   <Strata_TravelWithShipOn>Travel with ship: ON</Strata_TravelWithShipOn>
   <Strata_TravelWithShipOff>Travel with ship: OFF</Strata_TravelWithShipOff>
   <Strata_TravelWithShipDesc>When ON, this shaft's linked floor follows gravship launch. Turn OFF to leave the floor behind on the current world tile.</Strata_TravelWithShipDesc>
   <Strata_GravshipRescuedPawns>Strata: moved {0} prisoner(s)/baby(ies) onto the gravship so they would not be left behind.</Strata_GravshipRescuedPawns>
   <Strata_GravshipLinkedLeftBehindWarn>Strata: these pawns are off the ship deck or on a linked floor that will not travel (prisoners/babies will be pulled aboard at launch): {0}</Strata_GravshipLinkedLeftBehindWarn>
+
+  <!-- Lost miners (hostile branch — raid-style attention) -->
+  <Strata_LostMiners_HostileLabel>Hostile miners</Strata_LostMiners_HostileLabel>
+  <Strata_LostMiners_HostileText>{0} desperate miners have broken into your underground workings and are hostile. Get eyes on that floor — they will fight.</Strata_LostMiners_HostileText>
 
   <!-- Letters -->
   <Strata_AncientStairwellLetterTitle>Ancient stairwell</Strata_AncientStairwellLetterTitle>

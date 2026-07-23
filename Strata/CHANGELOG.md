@@ -4,7 +4,25 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
+### Added
+
+- **Simplified Chinese (简体中文)** — full `Languages/ChineseSimplified/` pack: Keyed (`Strata.xml`, gravship + shaft-fluid strings) and DefInjected covering the same defs as the Russian pack (buildings, research, incidents, gases, hediffs, sites, terrain, jobs, etc.).
+
 ### Changed
+
+- **Lost miners (hostile)** — when the crew turns hostile, fire a raid-style `ThreatSmall` letter (jumps to them, briefly forces normal speed) instead of a quiet Neutral letter that’s easy to miss on another floor. Friendly arrivals keep the calm letter.
+
+### Fixed
+
+- **B1 leftover ship circles after land** — cargo clear only wiped packed deck/floors, so old hull rims stayed as ghost pads; duplicate elevators also refused `Destroy` (`destroyable=false`) and `Log.Error`'d without removing. Off-pad hull (not the live pad rim) now clears with the silhouette sweep / old-footprint rim pass; non-destroyable shafts use `Thing.allowDestroyNonDestroyable` + portal-move scope. Non-fatal gravship warnings post via `StrataLog` (Player.log only, no debug-log pop). Build stamp `g9-ghost-hull-clear-v1`.
+- **Gravship land RGB / neon section corruption** — viewing an underdeck/tower mid-flight (colonist-bar portrait) then landing mass-dirtied that pocket while MapDrawer was live, leaving permanent red/green/blue section meshes (save/load did not heal). Block camera jumps onto travelling floors when another map exists; evacuate the view at takeoff; during land paint temporarily view the host and `RegenerateEverythingNow` on host + linked pockets afterward. Build stamp `g9-travel-view-rgb-guard-v1`.
+- **Play-settings tooltips localized** — gas overlay and combined-level-resources toggle tips were hardcoded English; moved to Keyed (`Strata_PlaySettings_GasOverlayTip`, `Strata_PlaySettings_CombinedResourcesTip`) with Russian. Build stamp `m-ux-playsettings-tips-keyed-v1`.
+- **Gas overlay room/cursor labels** — hardcoded `load` / `Gas: open air` / `Gas:` moved to Keyed (`Strata_GasOverlay_Load`, `Strata_GasOverlay_LoadParen`, `Strata_GasOverlay_OpenAir`, `Strata_GasOverlay_GasPrefix`). Chemical symbols (N₂, O₂, …) stay on gas def `overlayLabel`. RU left English for translators. Build stamp `m-ux-gas-overlay-labels-keyed-v1`.
+- **M10 Level-switch flicker / `ArgumentOutOfRangeException`** — changing floors (esp. after digging a new level) could spam `Root level exception in Update(): ArgumentOutOfRangeException (Parameter name: index)` until returning to the surface. Vanilla `Game.CurrentMap` indexes `maps[currentMapIndex]` with no upper bound; pocket create/destroy can leave that index past `maps.Count`. Strata now clamps/repairs the index, hardens gas-overlay + breath-room batching, and snapshots Work/Schedule pawn lists so a re-entrant table recache cannot clear a live enumerator. Build stamp `m10-level-switch-oor-v1`.
+
+### Changed
+
+- **M9 Pilot seat from other floors** — launch ritual no longer rejects navigators on a linked underdeck/tower with "No path to pilot console"; right-click Pilot Gravship and board/leave jobgivers use the stack engine + stair commute. Work branch `V3-M-ux`. Build stamp `m9-pilot-across-levels-v1`.
 
 <!-- ┌───────────────────────────────────────────────────────────────────────┐ -->
 <!-- │  GRAVSHIP LINKING OVERHAUL (V3-G)                                        │ -->
@@ -18,7 +36,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
   - **Crash on load fixed** — the load-time repair no longer regenerates ship graphics on the background loader thread (an off-thread Unity mesh create was hard-crashing); it's deferred to the main thread.
 
 - **Level depth cap** — new digs/towers default to ±2 from the stack root (colony surface or gravship host). Settings: **Unlimited levels** (default OFF). Extra shafts may still join an already-open floor; existing deeper stacks are not removed. Was ±4; tightened to ±2. Build stamp `cap-pm2-large-ship-sync-v1`.
-- **Docs** — V3 roadmap: drop “Out of V3” exclusion note; V3 target locked on `feature/strata-v3` (New Gravship Linking, Polish, UX changes, ±2 hard cap / Unlimited default off); parks AASB-inspired polish and MultiFloors-inspired linking backlog. → [docs/strata-roadmap.html](../docs/strata-roadmap.html)
+- **Docs** — V3 roadmap: New Gravship Linking (G1–G7) marked merged into `V3`; More UX active on `V3-M-ux` with **M9** (pilot seat) and **M10** (level-switch CurrentMap OOR). → [docs/strata-roadmap.html](../docs/strata-roadmap.html)
 
 ### Fixed
 - **`Strata_HaulAcrossLevels` “Collection was modified”** — `LevelGraph.ReachableLevels` now returns a fresh list each call (topology still cached), and `TryFindHaulTarget` snapshots links before nested `LevelDemand` rebuilds. Fixes Mech_Lifter / haul workgiver spam when demand cache cold-builds mid-scan. Build stamp `haul-reachablelevels-reentrant-v1`.

@@ -315,6 +315,18 @@ namespace Strata
 
         private void JumpTo(Map map)
         {
+            if (map == null)
+            {
+                return;
+            }
+            if (StrataGravshipTravelView.ShouldBlockView(map))
+            {
+                Messages.Message(
+                    "Strata_GravshipTravelViewBlocked".Translate(),
+                    MessageTypeDefOf.RejectInput,
+                    historical: false);
+                return;
+            }
             IntVec3 cell = map.Center;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {

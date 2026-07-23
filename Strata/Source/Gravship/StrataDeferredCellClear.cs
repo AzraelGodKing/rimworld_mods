@@ -96,8 +96,10 @@ namespace Strata
                 bool ghostDeck = upper
                     ? terrain?.defName == UpperDeckUtility.RoofDeckDefName
                     : terrain?.defName == GravshipDeckUtility.DeckDefName;
+                bool ghostHull = !upper
+                    && terrain?.defName == GravshipDeckUtility.HullDefName;
                 Thing sub = StrataGravshipSubstructureSync.SubstructureAt(map, cell);
-                if ((!ghostDeck && sub == null) || CellHasPawn(map, cell))
+                if ((!ghostDeck && !ghostHull && sub == null) || CellHasPawn(map, cell))
                 {
                     continue;
                 }
@@ -111,9 +113,17 @@ namespace Strata
                 else
                 {
                     Map host = (map.Parent as PocketMapParent)?.sourceMap;
-                    if (host != null && StrataGravshipUtility.CellOnGravship(host, cell))
+                    if (host != null)
                     {
-                        continue;
+                        if (StrataGravshipUtility.CellOnGravship(host, cell))
+                        {
+                            continue;
+                        }
+                        // Preserve the live one-cell hull rim around the pad.
+                        if (ghostHull && CellTouchesHostPad(host, cell))
+                        {
+                            continue;
+                        }
                     }
                 }
                 if (sub != null && !sub.Destroyed)
@@ -121,11 +131,13 @@ namespace Strata
                     sub.Destroy(DestroyMode.Vanish);
                 }
                 tracker?.UnmarkProjected(cell);
-                // Terrain/roof only revert on managed ghost deck — a cell that
+                // Terrain/roof revert on managed ghost deck/hull — a cell that
                 // only carried a stale substructure thing keeps its floor.
-                if (ghostDeck)
+                if (ghostDeck || ghostHull)
                 {
-                    map.terrainGrid.SetTerrain(cell, ReplacementFor(map, cell, upper));
+                    map.terrainGrid.SetTerrain(
+                        cell,
+                        ghostHull ? GravshipDeckUtility.VoidTerrain : ReplacementFor(map, cell, upper));
                     map.roofGrid.SetRoof(cell, null);
                 }
                 done++;
@@ -164,6 +176,19 @@ namespace Strata
             for (int i = 0; i < things.Count; i++)
             {
                 if (things[i] is Pawn)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool CellTouchesHostPad(Map host, IntVec3 cell)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                IntVec3 adj = cell + GenAdj.CardinalDirections[i];
+                if (adj.InBounds(host) && StrataGravshipUtility.CellOnGravship(host, adj))
                 {
                     return true;
                 }

@@ -528,7 +528,7 @@ namespace Strata
                             || TrySpawnNear(thing, map.Center, map, rot);
                     if (!ok)
                     {
-                        Log.Warning("[Strata] Gravship align: could not place "
+                        StrataLog.Warning("[Strata] Gravship align: could not place "
                             + thing.LabelCap + " after shift " + delta);
                         // Last resort: put back at original cell so we do not void the thing.
                         IntVec3 back = dest - delta;

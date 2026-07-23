@@ -60,6 +60,7 @@ Package id: `AzraelGodKing.Strata`
 | Language | DefInjected | Keyed |
 |----------|-------------|-------|
 | **Russian** | Yes (community) | Community: `GravshipStrings.xml`, `ShaftFluidStrings.xml` (do not overwrite). Fill-in: `Strata.xml` for remaining English Keyed keys. |
+| **ChineseSimplified** (简体中文) | Yes (full pack mirroring Russian coverage) | `Strata.xml`, `GravshipStrings.xml`, `ShaftFluidStrings.xml` |
 
 ## Why an empty English folder did not work
 

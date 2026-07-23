@@ -23,6 +23,7 @@ namespace Strata
             var stacks = WorldComponent_StrataGravshipStacks.Get();
             stacks?.RememberTakeoffEngine(engine);
             stacks?.MarkTravelling(levels);
+            StrataGravshipTravelView.LeaveTravellingView(preferHost: engine.Map);
             // After travelling floors are known: pull prisoners/babies off the
             // host deck fringe and non-travelling colony digs onto the ship.
             StrataGravshipPawnRescue.RescueAtTakeoff(engine);
