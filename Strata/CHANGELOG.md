@@ -11,6 +11,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ### Changed
 
+- **Russian Keyed** — filled remaining English placeholders in `Languages/Russian/Keyed/Strata.xml` from community pack (caravans, gas overlay tips/labels, play-settings tips) plus `GravshipTravelViewBlocked`.
 - **Branch** — `V3-M-ux` merged into `V3` (M9 pilot-across-levels, M10 CurrentMap OOR, G9 travel-view RGB guard, B1 ghost-hull clear, Simplified Chinese pack, hostile lost-miners threat letter).
 - **Lost miners (hostile)** — when the crew turns hostile, fire a raid-style `ThreatSmall` letter (jumps to them, briefly forces normal speed) instead of a quiet Neutral letter that’s easy to miss on another floor. Friendly arrivals keep the calm letter.
 - **Power / fluid copy** — About, stairwell, shaft conduit, and EN/RU/CN keyed + DefInjected strings: batteries optional for overnight pooling; inspect tips show watts feeding/drawing across the shaft.

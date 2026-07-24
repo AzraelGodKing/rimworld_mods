@@ -31,8 +31,8 @@
   <Strata_Settings_CaravanPullDesc>При формировании каравана на поверхности колонисты поднимают ценные товары с связанных подземных уровней.</Strata_Settings_CaravanPullDesc>
   <Strata_Settings_CrossLevelRituals>Ритуалы между уровнями</Strata_Settings_CrossLevelRituals>
   <Strata_Settings_CrossLevelRitualsDesc>Меню ритуала показывает колонистов со всех связанных уровней; остальные идут к ритуалу и присоединяются по прибытии.</Strata_Settings_CrossLevelRitualsDesc>
-  <Strata_Settings_CrossLevelCaravans>Cross-level caravans</Strata_Settings_CrossLevelCaravans>
-  <Strata_Settings_CrossLevelCaravansDesc>The form-caravan dialog lists colonists, prisoners, and colony animals from every linked level; those elsewhere walk to the surface gathering and join when they arrive. Downed pawns on other levels cannot climb and are left out.</Strata_Settings_CrossLevelCaravansDesc>
+  <Strata_Settings_CrossLevelCaravans>Караваны, пересекающие уровни</Strata_Settings_CrossLevelCaravans>
+  <Strata_Settings_CrossLevelCaravansDesc>В диалоговом окне «Форм-караван» перечислены колонисты, заключенные и животные колонии со всех связанных уровней. Те, кто находится на других уровнях, поднимаются на поверхность и присоединяются к остальным по прибытии. Поверженные пешки с других уровней не могут подняться наверх и остаются на месте.</Strata_Settings_CrossLevelCaravansDesc>
   <Strata_Settings_CageSustainHunger>Поддерживать голод птиц в клетке</Strata_Settings_CageSustainHunger>
   <Strata_Settings_CageSustainHungerDesc>Если выключено (по умолчанию), клетки канареек и птиц кормят из запаса сена или комбикорма. Если включено, голод заморожен, пока птица в клетке — запас еды не нужен.</Strata_Settings_CageSustainHungerDesc>
   <Strata_Settings_SmokeGas>Дым и газ</Strata_Settings_SmokeGas>
@@ -55,12 +55,12 @@
   <Strata_Settings_BreathingSimulationDesc>Подземные уровни отслеживают кислород и углекислый газ: колонисты дышат O₂, выдыхают CO₂, O₂ поднимается по шахтам, CO₂ оседает. Выключение очищает оба газа.</Strata_Settings_BreathingSimulationDesc>
   <Strata_Settings_GasOverlayLabels>Подписи комнат на оверлее газа</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>При включённом оверлее газа в настройках игры рисует цветные процентные подписи на каждой закрытой комнате (топ-3 газа + нагрузка). Панель у курсора доступна всегда, когда оверлей включён.</Strata_Settings_GasOverlayLabelsDesc>
-  <Strata_PlaySettings_GasOverlayTip>Strata: show gas overlay\nTints each room by its dominant hazardous gas. Move the mouse over a room for a cursor-attached gas mix panel. Optional per-room labels: Strata mod settings → Gas overlay room labels.</Strata_PlaySettings_GasOverlayTip>
-  <Strata_PlaySettings_CombinedResourcesTip>Strata: combined level resources - the resource readout and build costs count items on every linked level.</Strata_PlaySettings_CombinedResourcesTip>
-  <Strata_GasOverlay_Load>load {0}%</Strata_GasOverlay_Load>
-  <Strata_GasOverlay_LoadParen>  (load {0}%)</Strata_GasOverlay_LoadParen>
-  <Strata_GasOverlay_OpenAir>Gas: open air</Strata_GasOverlay_OpenAir>
-  <Strata_GasOverlay_GasPrefix>Gas: </Strata_GasOverlay_GasPrefix>
+  <Strata_PlaySettings_GasOverlayTip>Strata: отображение наложения данных о газе\nКаждую комнату окрашивает в цвет преобладающего в ней опасного газа. Наведите указатель мыши на комнату, чтобы открыть прикрепленную к курсору панель с данными о газовой смеси. Дополнительные подписи для каждой комнаты: настройки мода Strata → Подписи для комнат с наложением данных о газе.</Strata_PlaySettings_GasOverlayTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata: комбинированные ресурсы уровня — при подсчете ресурсов и затрат на строительство учитываются предметы на каждом связанном уровне.</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_GasOverlay_Load>Нагрузка {0}%</Strata_GasOverlay_Load>
+  <Strata_GasOverlay_LoadParen>  (Нагрузка {0}%)</Strata_GasOverlay_LoadParen>
+  <Strata_GasOverlay_OpenAir>Газ: открытый воздух</Strata_GasOverlay_OpenAir>
+  <Strata_GasOverlay_GasPrefix>Газ: </Strata_GasOverlay_GasPrefix>
   <Strata_Settings_ThreatsPerf>Угрозы и производительность</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>Преследование рейдеров</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>Рейдеры без целей для боя идут за колонистами через незапечатанные лестницы.</Strata_Settings_RaidPursuitDesc>
@@ -125,7 +125,7 @@
   <Strata_Alert_FlammableGas_Explanation>Горючий газ скапливается в комнате с открытым огнём — факелом, костром или работающей топливной горелкой. Когда газ превысит плотность воспламенения, комната взорвётся. Погасите огонь, проветрите комнату или перейдите на электрический свет.</Strata_Alert_FlammableGas_Explanation>
   <Strata_Alert_CaravanGoods_Label>Товары каравана внизу</Strata_Alert_CaravanGoods_Label>
   <Strata_Alert_CaravanGoods_Explanation>Ценные предметы остаются на связанных подземных уровнях, пока на поверхности формируется караван. Включите подъём товаров в настройках Strata или поднимите их вручную перед уходом.</Strata_Alert_CaravanGoods_Explanation>
-  <Strata_MessageCaravanDownedExcluded>Cannot bring downed pawns from other levels into the caravan (they cannot climb): {0}</Strata_MessageCaravanDownedExcluded>
+  <Strata_MessageCaravanDownedExcluded>Нельзя переносить сбитых пешек с других уровней в караван (они не могут подниматься): {0}</Strata_MessageCaravanDownedExcluded>
   <Strata_Alert_SealedColonists_Label>Колонисты отрезаны</Strata_Alert_SealedColonists_Label>
   <Strata_Alert_SealedColonists_Explanation>Колонисты на связанном уровне, у которого все выходные шахты запечатаны. Они не смогут вернуться, пока лестница или лифт не будут распечатаны.</Strata_Alert_SealedColonists_Explanation>
   <Strata_Alert_Canary_Label>Предупреждение канарейки</Strata_Alert_Canary_Label>
@@ -268,7 +268,7 @@
   <Strata_RaidersBatteringPortal>Рейдеры ломают запечатанный {0}!</Strata_RaidersBatteringPortal>
   <Strata_GravshipLevelsTravel>Strata: {0} связанный(х) уровень(ней) отправится с гравикораблём.</Strata_GravshipLevelsTravel>
   <Strata_GravshipLevelsDocked>Strata: {0} связанный(х) уровень(ней) пристыкован(о) к гравикораблю.</Strata_GravshipLevelsDocked>
-  <Strata_GravshipTravelViewBlocked>Strata: cannot view underdeck/tower decks while the gravship is in flight (causes land graphics corruption). Open those floors after landing.</Strata_GravshipTravelViewBlocked>
+  <Strata_GravshipTravelViewBlocked>Strata: нельзя открывать подпалубы/башни, пока гравикорабль в полёте (ломает графику при посадке). Открывайте эти этажи после посадки.</Strata_GravshipTravelViewBlocked>
   <Strata_TravelWithShipOn>Полёт с кораблём: ВКЛ</Strata_TravelWithShipOn>
   <Strata_TravelWithShipOff>Полёт с кораблём: ВЫКЛ</Strata_TravelWithShipOff>
   <Strata_TravelWithShipDesc>Когда ВКЛ, связанный этаж этой шахты следует за запуском гравикорабля. Выключите, чтобы оставить этаж на текущей клетке мира.</Strata_TravelWithShipDesc>
