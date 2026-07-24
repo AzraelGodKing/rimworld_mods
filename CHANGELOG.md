@@ -10,6 +10,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 - **Strata** — A4: vertical power/fluids feel like one net (every-tick ties, battery-free surplus, fluid junction buffer). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — empty stairwells/elevators can be deconstructed again (portal immunity no longer swallows Deconstruct). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — cross-level haul respects storage priority (Critical underground no longer emptied into lower-priority surface shelves). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — Russian Keyed: filled leftover English placeholders (caravans, gas overlay, travel-view block). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — merged `V3-M-ux` into `V3` (M9/M10, G9 land polish, Chinese pack, hostile lost-miners letter).
 - **Strata** — hostile lost miners now get a raid-style threat letter. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — Simplified Chinese (简体中文) language pack. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
