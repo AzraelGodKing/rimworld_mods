@@ -203,11 +203,22 @@ namespace Strata
             {
                 lastMessageTick = Find.TickManager.TicksGame;
                 bool goingDown = StrataDepth.Of(LevelGraph.OtherMapSafe(firstStep)) > StrataDepth.Of(map);
-                Messages.Message(
-                    "Strata_RaidersFoundPortal".Translate(
-                        firstStep.def.label,
-                        goingDown ? "Strata_RaidersDirectionDown".Translate() : "Strata_RaidersDirectionUp".Translate()),
-                    new LookTargets(firstStep), MessageTypeDefOf.ThreatBig);
+                TaggedString label = "Strata_RaidersFoundPortal".Translate(
+                    firstStep.def.label,
+                    goingDown ? "Strata_RaidersDirectionDown".Translate() : "Strata_RaidersDirectionUp".Translate());
+                Map other = LevelGraph.OtherMapSafe(firstStep);
+                if (other != null && StrataCrossLevelThreatNotify.ShouldForceAttention(other))
+                {
+                    StrataCrossLevelThreatNotify.NotifyHostilesOnLinkedFloor(
+                        other,
+                        new LookTargets(firstStep),
+                        "Strata_CrossLevelThreat_Label".Translate(),
+                        label);
+                }
+                else
+                {
+                    Messages.Message(label, new LookTargets(firstStep), MessageTypeDefOf.ThreatBig);
+                }
             }
         }
 

@@ -27,6 +27,8 @@ namespace Strata
 
         public static JobDef Strata_CaptureToLevel;
 
+        public static JobDef Strata_RescueToLevel;
+
         [MayRequire("Ludeon.RimWorld.Anomaly")]
         public static JobDef Strata_BringEntityToLevel;
 

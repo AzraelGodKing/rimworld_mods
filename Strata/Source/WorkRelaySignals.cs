@@ -267,18 +267,43 @@ namespace Strata
         // floor even when local listerHaulables is empty.
         public static bool HasCrossLevelHaulExports(Map map)
         {
-            HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
-            if (wanted.Count == 0)
+            if (map == null)
             {
                 return false;
             }
 
-            foreach (ThingDef def in wanted)
+            HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
+            if (wanted.Count > 0)
             {
-                List<Thing> things = map.listerThings.ThingsOfDef(def);
-                if (things != null && things.Count > 0)
+                foreach (ThingDef def in wanted)
                 {
-                    return true;
+                    List<Thing> things = map.listerThings.ThingsOfDef(def);
+                    if (things != null && things.Count > 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            // Minified buildings whose Blueprint_Install sits on a linked floor.
+            List<Thing> minis = map.listerThings.ThingsInGroup(ThingRequestGroup.MinifiedThing);
+            if (minis == null || minis.Count == 0 || !LevelGraph.AnyLinkFrom(map))
+            {
+                return false;
+            }
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(map);
+            for (int i = 0; i < minis.Count; i++)
+            {
+                if (minis[i] is not MinifiedThing mini)
+                {
+                    continue;
+                }
+                for (int j = 0; j < links.Count; j++)
+                {
+                    if (WorkGiver_InstallAcrossLevels.FindInstallBlueprintFor(links[j].map, mini) != null)
+                    {
+                        return true;
+                    }
                 }
             }
 

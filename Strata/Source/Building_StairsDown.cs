@@ -97,8 +97,26 @@ namespace Strata
                 reason = "The stairwell is sealed.";
                 return false;
             }
-            if (!PocketMapExists && !BypassFirstLevelResearch && !CanOpenPortalLevel(out reason))
+            if (!PocketMapExists)
             {
+                if (!BypassFirstLevelResearch && !CanOpenPortalLevel(out reason))
+                {
+                    return false;
+                }
+                if (StrataPocketMapOpen.HasFailed(this))
+                {
+                    reason = "Strata_OpenLevelFailed".Translate();
+                    return false;
+                }
+                if (StrataPocketMapOpen.IsGenerating(this))
+                {
+                    reason = "Strata_OpeningLevel".Translate();
+                    return false;
+                }
+                // First descent (ancient / excavated) generates a full-size rock
+                // map — do it as a LongEvent so large mod lists don't hard-freeze.
+                StrataPocketMapOpen.TryBeginOpen(this);
+                reason = "Strata_OpeningLevel".Translate();
                 return false;
             }
             return base.IsEnterable(out reason);
@@ -328,6 +346,12 @@ namespace Strata
             {
                 return;
             }
+            // Drive from the host side so vacant underdecks (MapPreTick throttled)
+            // still get a live shaft tie every tick.
+            if (exit is Building_StairsUp landing && landing.Spawned)
+            {
+                StairwellPowerUtility.MaintainVerticalTie(landing);
+            }
             if (this.IsHashIntervalTick(ExchangeInterval))
             {
                 ExchangeTemperature();
@@ -431,7 +455,7 @@ namespace Strata
         // Virtual so tower stairwells can open an upper level with their own gates.
         public virtual void OpenLevelBelow()
         {
-            if (PocketMapExists)
+            if (PocketMapExists || StrataPocketMapOpen.IsGenerating(this))
             {
                 return;
             }
@@ -443,7 +467,8 @@ namespace Strata
                 }
                 return;
             }
-            _ = PocketMap;
+            StrataPocketMapOpen.ClearFailed(this);
+            StrataPocketMapOpen.TryBeginOpen(this);
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
