@@ -112,6 +112,9 @@
   <Strata_Settings_MultiFloorStairs>Лестницы Multifloor</Strata_Settings_MultiFloorStairs>
   <Strata_Settings_MultiFloorStairsDesc>Использовать альтернативную графику из Textures/Strata/Buildings/MultiFloors/ (лестницы с перилами + современный лифт). Мод MultiFloors не требуется.</Strata_Settings_MultiFloorStairsDesc>
   <Strata_Settings_MultiFloorCredit>Эти ресурсы из Multifloors; Telardo может попросить их удалить.</Strata_Settings_MultiFloorCredit>
+  <Strata_Settings_DepthDim>Затемнение верхних палуб</Strata_Settings_DepthDim>
+  <Strata_Settings_DepthDimDesc>При просмотре палубы A+/крыши слегка затемняет экран, намекая на взгляд вниз. Не рисует этаж ниже (сквозные крыши — отдельная функция).</Strata_Settings_DepthDimDesc>
+  <Strata_Settings_DepthDimStrength>Сила затемнения: {0}</Strata_Settings_DepthDimStrength>
   <Strata_Settings_Interface>Интерфейс</Strata_Settings_Interface>
   <Strata_Settings_LinkedColonistsTabs>Уровни Strata на вкладках «Работа» / «Расписание»</Strata_Settings_LinkedColonistsTabs>
   <Strata_Settings_LinkedColonistsTabsDesc>На вкладках «Работа» и «Расписание» появляется флажок «Уровни Strata» (когда у колонии есть выкопанные уровни). Если включён, обе вкладки показывают колонистов со всех связанных уровней, а не только с просматриваемой карты.</Strata_Settings_LinkedColonistsTabsDesc>
@@ -158,7 +161,20 @@
   <Strata_SomeoneAbove>Кто-то всё ещё на уровне выше.</Strata_SomeoneAbove>
   <Strata_SmokeShaftSealed>Дымовая шахта: запечатана</Strata_SmokeShaftSealed>
   <Strata_SmokeShaftOpen>Дымовая шахта: пары поднимаются на уровень выше</Strata_SmokeShaftOpen>
-  <Strata_PowerShaft>Энергошахта: связывает сети обоих уровней (подведите проводку каждого этажа к лестнице; держите батареи на каждом уровне)</Strata_PowerShaft>
+  <Strata_PowerShaft>Энергошахта: связывает сети обоих уровней (подведите проводку каждого этажа к лестнице; батареи необязательны — для ночного накопления)</Strata_PowerShaft>
+  <Strata_PowerShaft_FeedingBelow>Питание уровня ниже: {0} Вт от избытка хоста</Strata_PowerShaft_FeedingBelow>
+  <Strata_PowerShaft_DrawingBelow>Забор с уровня ниже: {0} Вт</Strata_PowerShaft_DrawingBelow>
+  <Strata_PowerShaft_LimitUnlimited>Передача энергии: без ограничения</Strata_PowerShaft_LimitUnlimited>
+  <Strata_PowerShaft_LimitCap>Лимит передачи энергии: {0} Вт</Strata_PowerShaft_LimitCap>
+  <Strata_PowerShaft_DecreaseLimit>Меньше энергии по шахте</Strata_PowerShaft_DecreaseLimit>
+  <Strata_PowerShaft_DecreaseLimitDesc>Снизить лимит ватт через эту шахту (в обе стороны). Из режима «без лимита» сначала ставит 1000 Вт. Shift: шаг −500 Вт.</Strata_PowerShaft_DecreaseLimitDesc>
+  <Strata_PowerShaft_IncreaseLimit>Больше энергии по шахте</Strata_PowerShaft_IncreaseLimit>
+  <Strata_PowerShaft_IncreaseLimitDesc>Поднять лимит ватт через эту шахту. Shift: шаг +500 Вт. «Без лимита» снимает ограничение.</Strata_PowerShaft_IncreaseLimitDesc>
+  <Strata_PowerShaft_Unlimited>Без лимита по шахте</Strata_PowerShaft_Unlimited>
+  <Strata_PowerShaft_UnlimitedDesc>Снять лимит ватт — шахта передаёт столько, сколько сетям нужно и сколько есть в запасе.</Strata_PowerShaft_UnlimitedDesc>
+  <Strata_PowerShaft_AlreadyUnlimited>Уже без ограничения.</Strata_PowerShaft_AlreadyUnlimited>
+  <Strata_CrossLevelThreat_Label>Угроза на другом этаже</Strata_CrossLevelThreat_Label>
+  <Strata_CrossLevelThreat_Text>Враги активны на {0}. Камера перейдёт туда — защитите этаж или запечатайте шахту.</Strata_CrossLevelThreat_Text>
   <Strata_OreHoistDriven>Им управляет рудный подъёмник на уровне выше.</Strata_OreHoistDriven>
   <Strata_OreHoistExtended>Рудный подъёмник опустил бадью на связанный уровень.</Strata_OreHoistExtended>
   <Strata_ShaftConduitDriven>Им управляет проводник на уровне выше.</Strata_ShaftConduitDriven>
@@ -171,6 +187,8 @@
   <Strata_DigDownLabel>Копать вниз</Strata_DigDownLabel>
   <Strata_DigDownFromLandingDesc>Назначьте шахту копки рядом с этой площадкой. Колонисты должны закончить её — та же работа, что у вырытой лестницы — прежде чем откроется следующий уровень. Ниже первого подземного уровня нужно исследование глубокой выемки.</Strata_DigDownFromLandingDesc>
   <Strata_DigDownFromEntranceDesc>Пробейтесь на уровень ниже, когда эта лестница полностью построена, или используйте её, если строительство закончилось до доступности исследования.</Strata_DigDownFromEntranceDesc>
+  <Strata_OpeningLevel>Opening the level below…</Strata_OpeningLevel>
+  <Strata_OpenLevelFailed>Could not open the level below. Check Player.log, then use Dig down again to retry.</Strata_OpenLevelFailed>
 
   <!-- Dig-down utility -->
   <Strata_Dig_InvalidStairwell>Недействительная лестница.</Strata_Dig_InvalidStairwell>
@@ -271,6 +289,7 @@
   <Strata_TravelWithShipOff>Полёт с кораблём: ВЫКЛ</Strata_TravelWithShipOff>
   <Strata_TravelWithShipDesc>Когда ВКЛ, связанный этаж этой шахты следует за запуском гравикорабля. Выключите, чтобы оставить этаж на текущей клетке мира.</Strata_TravelWithShipDesc>
   <Strata_GravshipRescuedPawns>Strata: {0} заключённый(х)/младенец(ев) перенесены на гравикорабль, чтобы их не оставили.</Strata_GravshipRescuedPawns>
+  <Strata_CannotRescueNoCrossLevelBed>Cannot rescue: no usable bed on this floor or a linked level.</Strata_CannotRescueNoCrossLevelBed>
   <Strata_GravshipLinkedLeftBehindWarn>Strata: эти пешки вне палубы корабля или на связанном этаже, который не полетит (заключённых/младенцев заберут на борт при старте): {0}</Strata_GravshipLinkedLeftBehindWarn>
 
   <!-- Lost miners (hostile branch — raid-style attention) -->

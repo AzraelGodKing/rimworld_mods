@@ -113,6 +113,9 @@
   <Strata_Settings_MultiFloorStairs>多层楼梯美术</Strata_Settings_MultiFloorStairs>
   <Strata_Settings_MultiFloorStairsDesc>使用 Textures/Strata/Buildings/MultiFloors/ 中捆绑的替代美术（扶手楼梯 + 现代电梯）。不需要 MultiFloors 模组。</Strata_Settings_MultiFloorStairsDesc>
   <Strata_Settings_MultiFloorCredit>这些资源来自 Multifloors，Telardo 可要求移除。</Strata_Settings_MultiFloorCredit>
+  <Strata_Settings_DepthDim>上层深度暗化</Strata_Settings_DepthDim>
+  <Strata_Settings_DepthDimDesc>查看 A+/屋顶甲板时略微压暗画面，暗示向下俯视。不会绘制下层（透视屋顶是另一项功能）。</Strata_Settings_DepthDimDesc>
+  <Strata_Settings_DepthDimStrength>暗化强度：{0}</Strata_Settings_DepthDimStrength>
   <Strata_Settings_Interface>界面</Strata_Settings_Interface>
   <Strata_Settings_LinkedColonistsTabs>工作/日程中的 Strata 楼层</Strata_Settings_LinkedColonistsTabs>
   <Strata_Settings_LinkedColonistsTabsDesc>殖民地有挖掘楼层时，工作与日程页显示 Strata 楼层复选框。勾选后两页列出所有相连楼层的殖民者，而非仅当前地图。</Strata_Settings_LinkedColonistsTabsDesc>
@@ -159,7 +162,20 @@
   <Strata_SomeoneAbove>上方楼层仍有人。</Strata_SomeoneAbove>
   <Strata_SmokeShaftSealed>烟雾竖井：已密封</Strata_SmokeShaftSealed>
   <Strata_SmokeShaftOpen>烟雾竖井：烟气升至上层</Strata_SmokeShaftOpen>
-  <Strata_PowerShaft>电力竖井：连接两层电网（每层接线到楼梯井；每层自备电池）</Strata_PowerShaft>
+  <Strata_PowerShaft>电力竖井：连接两层电网（每层接线到楼梯井；电池可选，用于夜间蓄电）</Strata_PowerShaft>
+  <Strata_PowerShaft_FeedingBelow>向下层供电：来自主网盈余 {0} W</Strata_PowerShaft_FeedingBelow>
+  <Strata_PowerShaft_DrawingBelow>从下层取电：{0} W</Strata_PowerShaft_DrawingBelow>
+  <Strata_PowerShaft_LimitUnlimited>电力传输：无限制</Strata_PowerShaft_LimitUnlimited>
+  <Strata_PowerShaft_LimitCap>电力传输上限：{0} W</Strata_PowerShaft_LimitCap>
+  <Strata_PowerShaft_DecreaseLimit>降低竖井供电</Strata_PowerShaft_DecreaseLimit>
+  <Strata_PowerShaft_DecreaseLimitDesc>降低该竖井双向瓦特上限。从“无限制”起先设为 1000 W。按住 Shift 每次 −500 W。</Strata_PowerShaft_DecreaseLimitDesc>
+  <Strata_PowerShaft_IncreaseLimit>提高竖井供电</Strata_PowerShaft_IncreaseLimit>
+  <Strata_PowerShaft_IncreaseLimitDesc>提高该竖井瓦特上限。按住 Shift 每次 +500 W。点“无限制”可取消上限。</Strata_PowerShaft_IncreaseLimitDesc>
+  <Strata_PowerShaft_Unlimited>竖井供电无限制</Strata_PowerShaft_Unlimited>
+  <Strata_PowerShaft_UnlimitedDesc>取消瓦特上限，竖井按两侧电网需求与盈余尽量传输。</Strata_PowerShaft_UnlimitedDesc>
+  <Strata_PowerShaft_AlreadyUnlimited>已经是无限制。</Strata_PowerShaft_AlreadyUnlimited>
+  <Strata_CrossLevelThreat_Label>其他楼层有威胁</Strata_CrossLevelThreat_Label>
+  <Strata_CrossLevelThreat_Text>{0} 上有敌对单位活动。镜头将跳转过去——防守该层或密封通道。</Strata_CrossLevelThreat_Text>
   <Strata_OreHoistDriven>由上层的矿石吊车驱动。</Strata_OreHoistDriven>
   <Strata_OreHoistExtended>矿石吊车已向相连楼层延伸吊斗。</Strata_OreHoistExtended>
   <Strata_ShaftConduitDriven>由上层的导管驱动。</Strata_ShaftConduitDriven>
@@ -172,6 +188,8 @@
   <Strata_DigDownLabel>向下挖掘</Strata_DigDownLabel>
   <Strata_DigDownFromLandingDesc>在此落脚点旁指定挖掘竖井。殖民者必须完工开凿——与开挖楼梯井相同——才会打开下一层。第一层地下以下需要深层挖掘研究。</Strata_DigDownFromLandingDesc>
   <Strata_DigDownFromEntranceDesc>楼梯井完全建成后打通下方楼层；若研究未完成但建造已完成也可使用。</Strata_DigDownFromEntranceDesc>
+  <Strata_OpeningLevel>正在打开下层…</Strata_OpeningLevel>
+  <Strata_OpenLevelFailed>无法打开下层。请查看 Player.log，然后再次使用「向下挖掘」重试。</Strata_OpenLevelFailed>
 
   <!-- Dig-down utility -->
   <Strata_Dig_InvalidStairwell>无效楼梯井。</Strata_Dig_InvalidStairwell>
@@ -272,6 +290,7 @@
   <Strata_TravelWithShipOff>随船同行：关</Strata_TravelWithShipOff>
   <Strata_TravelWithShipDesc>开启时，此竖井相连楼层随重力飞船发射同行。关闭则把该楼层留在当前世界地块。</Strata_TravelWithShipDesc>
   <Strata_GravshipRescuedPawns>Strata：已将 {0} 名囚犯/婴儿移上重力飞船，以免被留下。</Strata_GravshipRescuedPawns>
+  <Strata_CannotRescueNoCrossLevelBed>无法救援：本层或关联楼层没有可用床位。</Strata_CannotRescueNoCrossLevelBed>
   <Strata_GravshipLinkedLeftBehindWarn>Strata：这些单位不在飞船甲板，或位于不会同行的相连楼层（囚犯/婴儿会在发射时被拉上船）：{0}</Strata_GravshipLinkedLeftBehindWarn>
 
   <!-- Lost miners (hostile branch — raid-style attention) -->

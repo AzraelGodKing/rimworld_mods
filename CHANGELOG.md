@@ -4,9 +4,23 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Strata** — ancient/excavated stair freeze on first open (`dig-stair-freeze-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — rescue downed pawns to beds on another level (`rescue-across-levels-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — shaft/fluid performance pass (`shaft-perf-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — VHGE feed/equalize on PipeSystemTick + silence Rimefeller when absent (`vhge-pipesystem-tick-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — VHGE AASB feed + junction place lag fix (`vhge-aasb-lagfix-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — VHGE cross-floor gas actually flows (Extra* accumulates over PipeSystem interval) (`vhge-crossfloor-flow-v2`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — VHGE shaft junction matches power/DBH demand+bootstrap flow (`vhge-power-shaft-parity-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — VHGE Helixien wakes without a local tank (`vhge-tankless-wake-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — DBH + VHGE shaft fluid: AASB-style 0.5 fill equalize + Helixien DirectFeed (`fluid-aasb-flow-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — VHGE Helixien gas flows across shaft junctions. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — DBH shaft water without local tanks (junction mini-tower + PullWater). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — shaft power charges linked batteries; upward flow + transfer cap. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — shaft power every-tick / battery-free host surplus (incl. dark-floor demand bootstrap); cross-level hostile threat letters (`power-threat-crosslevel-v4`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Repo** — `art/brought/` convention + Cursor rule: brought sprites may be installed as-is, never used as generation / style references.
 - **Repo** — ignore `Homesteader/Textures.rar` (local texture dump).
-- **Docs** — Strata V3 roadmap: G1–G7 merged; More UX on `V3-M-ux` (+ M9 pilot seat, M10 level-switch OOR). → [docs/strata-roadmap.html](docs/strata-roadmap.html)
+- **Docs** — Strata V3 roadmap: G1–G7 merged; **More UX M1–M10 ✅** on `V3-M-ux` (`m-ux-finish-v1`). → [docs/strata-roadmap.html](docs/strata-roadmap.html)
+- **Strata** — More UX finish: medical pin, reinstall haul, modder API, visitors, VF roof-deck, depth dim. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — hostile lost miners now get a raid-style threat letter. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — Simplified Chinese (简体中文) language pack. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — gravship: clear B1 ghost hull rings after land + force-cull non-destroyable duplicate elevators (no debug-log pop). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
