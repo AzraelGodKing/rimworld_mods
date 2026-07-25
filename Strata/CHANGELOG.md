@@ -4,8 +4,31 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
+### Changed
+
+- **Shaft / fluid performance** — power ties use `PowerNet.CurrentEnergyGainRate` (no per-tick trader scan); MethodInfo cache on pipe rebuild; lazy VEF reconnect only when a net is missing; load reconcile skips full `RebuildFor`; Rimatomics/Rimefeller reconnect gated on mod presence; performance mode skips offline-demand/bootstrap scans and drives power every 3 ticks. Build stamp `shaft-perf-v1`.
+
+### Fixed
+
+- **Ancient / excavated stair freeze** — first descent fills a full-size rock map via per-cell `GenSpawn`; with large mod lists that looked like a hard crash (tower stairs stayed fine because they skip rock fill). Rock fill now disables region rebuilds and uses load-style spawn; level open runs as a LongEvent (“Generating map…”) and Enter is blocked until the pocket exists. Native cavern no longer re-fills carved chambers. Build stamp `dig-stair-freeze-v1`.
+- **Cross-level Rescue** — downed/wounded pawns on a floor with no bed can be carried through stairs to a usable bed (medical preferred) on a linked level; Doctor workgiver + float-menu Rescue when vanilla greys out for “no bed”. Build stamp `rescue-across-levels-v1`.
+- **VHGE on PipeSystemTick** — DirectFeed (incl. storage-charge) in Prefix and storage equalize in Postfix so gas moves after production hits tanks/overflow; stop Rimefeller reconnect warnings when that mod isn’t loaded; reconnect VEF junctions before reading nets. Build stamp `vhge-pipesystem-tick-v1`.
+- **VHGE flow + junction lag** — VEF reconnect binds `PipeSystem.dll` (was looking in VEF.dll); spawn no longer rebuilds every adjacent wall/furniture; fluid ties tick every 100 (PipeSystem cadence) while power stays every tick; VHGE drive is AASB DirectFeed-on-`PipeSystemTick` + storage equalize. Build stamp `vhge-aasb-lagfix-v1`.
+- **VHGE cross-floor flow** — pending Extra* now accumulates across PipeSystem’s 100-tick interval (was overwritten each tick at ~0.24 L, so 14400 L/d never arrived); junction net lookup prefers its own CompResource; equalize/charge use drawable+overflow; draw falls back to overflow. Build stamp `vhge-crossfloor-flow-v2`.
+- **VHGE junction = power/DBH parity** — Helixien shaft drive now matches CompPowerShaft: online balance + offline demand + storage equalize/charge, physical transfer into the junction mini-tank, BootstrapReceivers to wake appliances, and pending Extra* applied in `PipeSystemTick` Prefix (PipeSystem's PowerOutput). Build stamp `vhge-power-shaft-parity-v1`.
+- **VHGE tankless wake** — DirectFeed now injects in a `PipeSystemTick` Prefix (Extra* was wiped before PipeSystem read it); equalize syncs `Stored` from `CurrentStored` and force-wakes offline traders so Helixien appliances turn on without a local tank. Build stamp `vhge-tankless-wake-v1`.
+- **DBH / VHGE shaft fluid (AASB flow)** — DBH equalizes fill with `PullWater`/`PushWater` at 0.5 damping (no raw tower-field edits); VHGE uses DirectFeed (`ExtraProduction`/`ExtraConsumption`) plus the same fill equalize on storages; fluid ties tick every frame like AASB. Rebuild or replace old junctions after the CompWaterStorage XML change. Build stamp `fluid-aasb-flow-v1`.
+- **VHGE Helixien gas between levels** — shaft helixien junctions now use `CompResourceStorage` (250) instead of a bare pipe connector so PipeSystem can store/draw across floors; VEF transfer also falls back to overflow draw/push and binds `PipeSystem.dll` explicitly. Build stamp `vhge-shaft-gas-v1`.
+- **DBH water without tanks** — shaft plumbing junctions carry a small hidden `CompWaterStorage` (250) so DBH fixtures that gate on `WaterTowers` / `WaterStorage` before `PullWater` actually see water; PullWater also counts any leftover junction buffer. VEF / Rimefeller still use the generic shaft buffer. Build stamp `dbh-tankless-water-v2` (v1 buffer-only never reached PullWater).
+- **Shaft power without per-floor batteries** — stairwell/conduit ties drive every tick from the host stairwell as well as the landing; vacant underdecks still run `PowerNetsTick` while ambient PreTick is throttled; demand sensing counts offline appliances that want power (vanilla `CurrentEnergyGainRate` ignores them, so dark B1 never asked for watts). Build stamp `power-threat-crosslevel-v4`.
+- **Hostile events on another floor** — ThreatBig/ThreatSmall letters targeting a linked B+/A+ floor now cut the camera there and force normal speed when you're viewing a different map; deep raids / hostile lost miners jump immediately; raid pursuit across shafts and any new hostile wave on an off-view linked floor get a threat letter. Build stamp `power-threat-crosslevel-v3` (v1 wrong Harmony overload; v2 missed vacant-map power + debug-spawn hostiles).
+
 ### Added
 
+- **Shaft power charges linked batteries** — live surplus on one floor now pulls into battery room on the other (not only appliance demand / stored-level equalize). Build stamp `power-shaft-battery-charge-v1`.
+- **Shaft power upward flow** — export supply uses live `PowerOn` balance only; offline local appliances no longer “reserve” generator watts, so B1/A1 surplus can feed the surface. Demand still counts offline loads for bootstrap downward. Build stamp `power-shaft-upflow-v1`.
+- **Shaft power transfer cap** — Less / More / Unlimited gizmos on stairwells / shaft conduits (±100 W, Shift ±500 W). Cap syncs to the partner end; transfer uses live excess then batteries so linked floors don’t brown out. Build stamp `power-shaft-limit-v3`.
+- **More UX finish (M1–M8 remaining)** — medical bed pin + arrival LayDown (M6); cross-level reinstall haul (M7); float-menu/caravan already covered (M8); `StrataModderApi` (M3); visitor/guest/trader shaft pathing (M1); Vehicle Framework roof-deck soft-compat (M2); optional upper-deck depth dim slider (M4). Build stamp `m-ux-finish-v1`.
 - **Simplified Chinese (简体中文)** — full `Languages/ChineseSimplified/` pack: Keyed (`Strata.xml`, gravship + shaft-fluid strings) and DefInjected covering the same defs as the Russian pack (buildings, research, incidents, gases, hediffs, sites, terrain, jobs, etc.).
 
 ### Changed

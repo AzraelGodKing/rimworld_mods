@@ -15,6 +15,7 @@ namespace Strata
         Warden,
         Containment,
         ForcedOrder,
+        Rescue,
     }
 
     // Lightweight coordination so a whole colony of idle pawns doesn't stampede

@@ -43,6 +43,15 @@
     <alwaysShowWeapon>true</alwaysShowWeapon>
   </JobDef>
 
+  <JobDef>
+    <defName>Strata_RescueToLevel</defName>
+    <driverClass>Strata.JobDriver_RescueToLevel</driverClass>
+    <reportString>rescuing TargetA to a bed on another level.</reportString>
+    <carryThingAfterJob>true</carryThingAfterJob>
+    <dropThingBeforeJob>false</dropThingBeforeJob>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+
   <JobDef MayRequire="Ludeon.RimWorld.Anomaly">
     <defName>Strata_BringEntityToLevel</defName>
     <driverClass>Strata.JobDriver_BringEntityToLevel</driverClass>

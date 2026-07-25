@@ -53,6 +53,10 @@ namespace Strata
         public float ancientColonyStairwellChance = 0.35f;
         public bool cageSustainHunger = false;
         public bool multiFloorStairs = false;
+        /// <summary>Darken the view when looking at A+ roof decks (depth cue).</summary>
+        public bool depthDimEnabled = false;
+        /// <summary>0–1 strength of the upper-deck depth dim overlay.</summary>
+        public float depthDimStrength = 0.35f;
         /// <summary>Gravship underdecks need pumps/tanks/heatsinks (VGE-inspired). Default ON.</summary>
         public bool gravshipLifeSupportEnabled = true;
         /// <summary>When false (default), new digs/towers stop at ±2 from the stack root. Existing floors keep working.</summary>
@@ -110,6 +114,8 @@ namespace Strata
             Scribe_Values.Look(ref ancientColonyStairwellChance, "ancientColonyStairwellChance", 0.35f);
             Scribe_Values.Look(ref cageSustainHunger, "cageSustainHunger", defaultValue: false);
             Scribe_Values.Look(ref multiFloorStairs, "multiFloorStairs", defaultValue: false);
+            Scribe_Values.Look(ref depthDimEnabled, "depthDimEnabled", defaultValue: false);
+            Scribe_Values.Look(ref depthDimStrength, "depthDimStrength", 0.35f);
             Scribe_Values.Look(ref gravshipLifeSupportEnabled, "gravshipLifeSupportEnabled", defaultValue: true);
             Scribe_Values.Look(ref unlimitedLevelsEnabled, "unlimitedLevelsEnabled", defaultValue: false);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
@@ -340,6 +346,14 @@ namespace Strata
             if (previousMultiFloorStairs != Settings.multiFloorStairs)
             {
                 StrataMultiFloorStairsUtility.Apply(Settings.multiFloorStairs);
+            }
+            listing.CheckboxLabeled("Strata_Settings_DepthDim".Translate(), ref Settings.depthDimEnabled,
+                "Strata_Settings_DepthDimDesc".Translate());
+            if (Settings.depthDimEnabled)
+            {
+                listing.Label("Strata_Settings_DepthDimStrength".Translate(
+                    Settings.depthDimStrength.ToStringPercent()));
+                Settings.depthDimStrength = listing.Slider(Settings.depthDimStrength, 0f, 1f);
             }
             listing.Gap();
 

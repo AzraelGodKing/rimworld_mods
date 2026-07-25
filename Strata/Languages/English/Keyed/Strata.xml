@@ -113,6 +113,9 @@
   <Strata_Settings_MultiFloorStairs>Multifloor Stairs</Strata_Settings_MultiFloorStairs>
   <Strata_Settings_MultiFloorStairsDesc>Use bundled alternate art from Textures/Strata/Buildings/MultiFloors/ (handrail stairs + modern elevator). Does not require the MultiFloors mod.</Strata_Settings_MultiFloorStairsDesc>
   <Strata_Settings_MultiFloorCredit>These Assets are from Multifloors, Telardo can ask for it to be removed.</Strata_Settings_MultiFloorCredit>
+  <Strata_Settings_DepthDim>Upper-deck depth dim</Strata_Settings_DepthDim>
+  <Strata_Settings_DepthDimDesc>When viewing an A+/roof deck, darken the screen slightly to suggest looking down. Does not render the floor below (see-through roofs are a separate feature).</Strata_Settings_DepthDimDesc>
+  <Strata_Settings_DepthDimStrength>Depth dim strength: {0}</Strata_Settings_DepthDimStrength>
   <Strata_Settings_Interface>Interface</Strata_Settings_Interface>
   <Strata_Settings_LinkedColonistsTabs>Strata Levels on Work / Schedule</Strata_Settings_LinkedColonistsTabs>
   <Strata_Settings_LinkedColonistsTabsDesc>Work and Schedule tabs show a Strata Levels checkbox (when your colony has excavated levels). When checked, both tabs list colonists from every linked level, not only the map you are viewing.</Strata_Settings_LinkedColonistsTabsDesc>
@@ -159,7 +162,20 @@
   <Strata_SomeoneAbove>Someone is still on the level above.</Strata_SomeoneAbove>
   <Strata_SmokeShaftSealed>Smoke shaft: sealed</Strata_SmokeShaftSealed>
   <Strata_SmokeShaftOpen>Smoke shaft: fumes rise to the level above</Strata_SmokeShaftOpen>
-  <Strata_PowerShaft>Power shaft: ties both levels' grids (wire each floor into the stairwell; keep batteries on each level)</Strata_PowerShaft>
+  <Strata_PowerShaft>Power shaft: ties both levels' grids (wire each floor into the stairwell; batteries optional for overnight pooling)</Strata_PowerShaft>
+  <Strata_PowerShaft_FeedingBelow>Supplying level below: {0} W from host surplus</Strata_PowerShaft_FeedingBelow>
+  <Strata_PowerShaft_DrawingBelow>Drawing from level below: {0} W</Strata_PowerShaft_DrawingBelow>
+  <Strata_PowerShaft_LimitUnlimited>Power transfer: unlimited</Strata_PowerShaft_LimitUnlimited>
+  <Strata_PowerShaft_LimitCap>Power transfer cap: {0} W</Strata_PowerShaft_LimitCap>
+  <Strata_PowerShaft_DecreaseLimit>Less shaft power</Strata_PowerShaft_DecreaseLimit>
+  <Strata_PowerShaft_DecreaseLimitDesc>Lower the watt cap across this shaft (both ways). From unlimited, sets to what the grids can spare (live excess or batteries). Hold Shift for −500 W steps.</Strata_PowerShaft_DecreaseLimitDesc>
+  <Strata_PowerShaft_IncreaseLimit>More shaft power</Strata_PowerShaft_IncreaseLimit>
+  <Strata_PowerShaft_IncreaseLimitDesc>Raise the watt cap across this shaft, up to live excess or battery headroom. Hold Shift for +500 W steps.</Strata_PowerShaft_IncreaseLimitDesc>
+  <Strata_PowerShaft_Unlimited>Unlimited shaft power</Strata_PowerShaft_Unlimited>
+  <Strata_PowerShaft_UnlimitedDesc>Remove the watt cap so this shaft transfers as much as the grids need and can spare.</Strata_PowerShaft_UnlimitedDesc>
+  <Strata_PowerShaft_AlreadyUnlimited>Already unlimited.</Strata_PowerShaft_AlreadyUnlimited>
+  <Strata_CrossLevelThreat_Label>Threat on another floor</Strata_CrossLevelThreat_Label>
+  <Strata_CrossLevelThreat_Text>Hostiles are active on {0}. The camera will jump there — defend that floor or seal the shaft.</Strata_CrossLevelThreat_Text>
   <Strata_OreHoistDriven>It is driven by the ore hoist on the level above.</Strata_OreHoistDriven>
   <Strata_OreHoistExtended>Ore hoist extended a skip to the linked level.</Strata_OreHoistExtended>
   <Strata_ShaftConduitDriven>It is driven by the conduit on the level above.</Strata_ShaftConduitDriven>
@@ -172,6 +188,8 @@
   <Strata_DigDownLabel>Dig down</Strata_DigDownLabel>
   <Strata_DigDownFromLandingDesc>Designate a dig shaft beside this landing. Colonists must finish carving it — same work as an excavated stairwell — before the next level opens. Below the first underground level requires deep excavation research.</Strata_DigDownFromLandingDesc>
   <Strata_DigDownFromEntranceDesc>Break through to the level below once this stairwell is fully built, or use it if construction finished before research was available.</Strata_DigDownFromEntranceDesc>
+  <Strata_OpeningLevel>Opening the level below…</Strata_OpeningLevel>
+  <Strata_OpenLevelFailed>Could not open the level below. Check Player.log, then use Dig down again to retry.</Strata_OpenLevelFailed>
 
   <!-- Dig-down utility -->
   <Strata_Dig_InvalidStairwell>Invalid stairwell.</Strata_Dig_InvalidStairwell>
@@ -273,6 +291,7 @@
   <Strata_TravelWithShipDesc>When ON, this shaft's linked floor follows gravship launch. Turn OFF to leave the floor behind on the current world tile.</Strata_TravelWithShipDesc>
   <Strata_GravshipRescuedPawns>Strata: moved {0} prisoner(s)/baby(ies) onto the gravship so they would not be left behind.</Strata_GravshipRescuedPawns>
   <Strata_GravshipLinkedLeftBehindWarn>Strata: these pawns are off the ship deck or on a linked floor that will not travel (prisoners/babies will be pulled aboard at launch): {0}</Strata_GravshipLinkedLeftBehindWarn>
+  <Strata_CannotRescueNoCrossLevelBed>Cannot rescue: no usable bed on this floor or a linked level.</Strata_CannotRescueNoCrossLevelBed>
 
   <!-- Lost miners (hostile branch — raid-style attention) -->
   <Strata_LostMiners_HostileLabel>Hostile miners</Strata_LostMiners_HostileLabel>

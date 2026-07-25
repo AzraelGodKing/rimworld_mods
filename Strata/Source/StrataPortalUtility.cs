@@ -288,7 +288,8 @@ namespace Strata
             // same tick and all pick one frame (HaulToContainer reserves maxPawns=1).
             // Starting without a probe spam-logs and EndCurrentJob(Errored).
             // Billgivers first (cellar food → surface stove), then refuel
-            // (uranium → reactors), then stockpile, then frames.
+            // (uranium → reactors), then cross-level reinstall blueprints,
+            // then stockpile, then frames.
             if (TryStartJobIfReservable(pawn, TryMakeBillJob(pawn, cargo)))
             {
                 return true;
@@ -299,12 +300,46 @@ namespace Strata
                 return true;
             }
 
+            if (TryStartJobIfReservable(pawn, TryMakeInstallJob(pawn, cargo)))
+            {
+                return true;
+            }
+
             if (TryStartJobIfReservable(pawn, TryMakeStorageJob(pawn, cargo)))
             {
                 return true;
             }
 
             return TryStartJobIfReservable(pawn, TryMakeConstructionJob(pawn, cargo));
+        }
+
+        private static Job TryMakeInstallJob(Pawn pawn, Thing cargo)
+        {
+            if (cargo is not MinifiedThing mini)
+            {
+                return null;
+            }
+
+            Blueprint_Install bp = WorkGiver_InstallAcrossLevels.FindInstallBlueprintFor(pawn.Map, mini);
+            if (bp == null)
+            {
+                return null;
+            }
+
+            if (cargo.Spawned && !pawn.CanReserve(cargo))
+            {
+                return null;
+            }
+
+            if (!pawn.CanReserveAndReach(bp, PathEndMode.Touch, Danger.Deadly))
+            {
+                return null;
+            }
+
+            Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, bp);
+            job.count = 1;
+            job.haulMode = HaulMode.ToContainer;
+            return job;
         }
 
         // CompRefuelable is not a HaulToContainer destination — use the vanilla

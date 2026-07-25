@@ -46,6 +46,19 @@ namespace Strata
             {
                 __instance.components.Add(new MapComponent_StrataDeferredGen(__instance));
             }
+            if (StrataMapUtility.IsUpperLevel(__instance)
+                && __instance.GetComponent<MapComponent_DepthDim>() == null)
+            {
+                __instance.components.Add(new MapComponent_DepthDim(__instance));
+            }
+            // Every colony / linked floor can be the viewed map that scans
+            // siblings for off-view hostiles.
+            if (__instance.GetComponent<MapComponent_CrossLevelThreatWatch>() == null
+                && (__instance.IsPlayerHome
+                    || StrataCrossLevelThreatNotify.IsLinkedFloor(__instance)))
+            {
+                __instance.components.Add(new MapComponent_CrossLevelThreatWatch(__instance));
+            }
             StrataDeferredGenUtility.AttachPending(__instance);
         }
     }
