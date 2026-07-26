@@ -7,7 +7,7 @@ namespace Strata
     // Each backend reads/writes its framework's per-map net through reflection — no
     // network merging across maps, same demand-driven shape as CompPowerShaft.
     //
-    // A4: when the destination has demand but little tank room, leftovers park in
+    // When the destination has demand but little tank room, leftovers park in
     // CompShaftFluidTie.ShaftResourceBuffer so tankless pockets still feel supplied.
     public abstract class ShaftFluidBackend
     {
@@ -69,7 +69,7 @@ namespace Strata
         }
 
         // Live deficit, plus shaft-buffer fill when tanks are missing / full.
-        private float Want(object net, float balance, CompShaftFluidTie tie)
+        protected float Want(object net, float balance, CompShaftFluidTie tie)
         {
             float deficit = Mathf.Max(0f, -balance);
             if (tie == null)
@@ -86,7 +86,7 @@ namespace Strata
             return Mathf.Max(deficit, Mathf.Min(tie.ShaftResourceBufferRoom, MaxTransferPerPulse(net)));
         }
 
-        private void TransferWithBuffer(
+        protected void TransferWithBuffer(
             object fromNet,
             object toNet,
             float amount,
@@ -109,7 +109,7 @@ namespace Strata
             }
         }
 
-        private void FlushBufferIntoNet(CompShaftFluidTie tie, object net)
+        protected void FlushBufferIntoNet(CompShaftFluidTie tie, object net)
         {
             if (tie == null || net == null || tie.ShaftResourceBuffer < 0.001f)
             {
@@ -126,7 +126,7 @@ namespace Strata
             }
         }
 
-        private static float BufferSupply(CompShaftFluidTie tie)
+        protected static float BufferSupply(CompShaftFluidTie tie)
         {
             return tie?.ShaftResourceBuffer ?? 0f;
         }

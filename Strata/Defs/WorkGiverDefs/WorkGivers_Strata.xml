@@ -21,6 +21,21 @@
     </requiredCapacities>
   </WorkGiverDef>
 
+  <WorkGiverDef>
+    <defName>Strata_InstallAcrossLevels</defName>
+    <label>install buildings on other levels</label>
+    <giverClass>Strata.WorkGiver_InstallAcrossLevels</giverClass>
+    <workType>Hauling</workType>
+    <verb>install on another level</verb>
+    <gerund>installing on another level:</gerund>
+    <!-- Above HaulAcrossLevels (16): a waiting Blueprint_Install should win
+         over generic cross-level stockpile pulls for the same minified. -->
+    <priorityInType>17</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
   <WorkGiverDef MayRequire="Ludeon.RimWorld.Biotech">
     <defName>Strata_BringBabyToCribAcrossLevels</defName>
     <label>bring babies to cribs on other levels</label>
@@ -51,6 +66,22 @@
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>Strata_RescueToBedAcrossLevels</defName>
+    <label>rescue to beds on other levels</label>
+    <giverClass>Strata.WorkGiver_RescueToBedAcrossLevels</giverClass>
+    <workType>Doctor</workType>
+    <!-- Distinct from vanilla "rescue" so prioritize does not shadow. -->
+    <verb>rescue to another level</verb>
+    <gerund>rescuing to another level:</gerund>
+    <!-- Above RescueDowned (~110). -->
+    <priorityInType>120</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <prioritizeSustains>true</prioritizeSustains>
   </WorkGiverDef>
 
 </Defs>

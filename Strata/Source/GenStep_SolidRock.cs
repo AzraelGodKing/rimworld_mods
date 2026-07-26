@@ -44,7 +44,9 @@ namespace Strata
                 bool nativeCavern = StrataCavernUtility.ShouldGenerateNativeCavernLayout(map);
                 if (nativeCavern)
                 {
+                    // Shell + rock first; GenStep_CarveWarren empties chambers afterward.
                     FillShell(map);
+                    SpawnMineables(map);
                 }
                 else
                 {
@@ -77,28 +79,54 @@ namespace Strata
             }
         }
 
+        // Full-map GenSpawn is the dig/ancient stair freeze with large mod lists
+        // (tower decks skip this). Disable region rebuilds and use load-style
+        // SpawnSetup so Harmony postfixes on live spawns do not run per cell.
         internal static void SpawnMineables(Map map)
         {
             ThingDef rockDef = RockForMap(map);
-            foreach (IntVec3 cell in map.AllCells)
+            bool regionsWereEnabled = map.regionAndRoomUpdater.Enabled;
+            map.regionAndRoomUpdater.Enabled = false;
+            try
             {
-                if (cell.GetFirstMineable(map) == null)
+                foreach (IntVec3 cell in map.AllCells)
                 {
-                    GenSpawn.Spawn(rockDef, cell, map);
+                    if (cell.GetEdifice(map) != null)
+                    {
+                        continue;
+                    }
+                    Thing rock = ThingMaker.MakeThing(rockDef);
+                    // respawningAfterLoad:true skips live-spawn side effects that
+                    // modded GenSpawn prefixes/postfixes amplify across 50k+ cells.
+                    GenSpawn.Spawn(rock, cell, map, Rot4.North, WipeMode.Vanish,
+                        respawningAfterLoad: true);
                 }
+            }
+            finally
+            {
+                map.regionAndRoomUpdater.Enabled = regionsWereEnabled;
             }
         }
 
         private static void ClearGeneratedMap(Map map)
         {
-            foreach (IntVec3 cell in map.AllCells)
+            bool regionsWereEnabled = map.regionAndRoomUpdater.Enabled;
+            map.regionAndRoomUpdater.Enabled = false;
+            try
             {
-                List<Thing> things = cell.GetThingList(map);
-                for (int i = things.Count - 1; i >= 0; i--)
+                foreach (IntVec3 cell in map.AllCells)
                 {
-                    things[i].Destroy(DestroyMode.Vanish);
+                    List<Thing> things = cell.GetThingList(map);
+                    for (int i = things.Count - 1; i >= 0; i--)
+                    {
+                        things[i].Destroy(DestroyMode.Vanish);
+                    }
+                    map.roofGrid.SetRoof(cell, null);
                 }
-                map.roofGrid.SetRoof(cell, null);
+            }
+            finally
+            {
+                map.regionAndRoomUpdater.Enabled = regionsWereEnabled;
             }
         }
 

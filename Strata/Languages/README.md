@@ -4,6 +4,15 @@ English text for **buildings, research, incidents, jobs, thoughts, hediffs, and 
 
 C# strings (mod settings, alerts, messages, gizmos, inspect text, letters) are listed in `Languages/English/Keyed/Strata.xml`. Copy that file for each new language and translate the values inside the tags.
 
+## Modder API (M3)
+
+Other mods can use `Strata.StrataModderApi` without referencing internal helpers:
+
+- `ReachableMaps` / `AnyLinkFrom` / `BestFirstStep` / `FirstStepCandidates`
+- `IsUnderground` / `IsUpperLevel` / `IsGravshipLinkedLevel`
+- `RegisterVerticalLinkListener` / `NotifyVerticalLink`
+- `WouldBlockUndergroundIncident`
+
 ## Add a language (example: Russian)
 
 ```

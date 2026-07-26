@@ -87,8 +87,29 @@ namespace Strata
             return true;
         }
 
-        public static bool Prefix(Thing newThing, IntVec3 loc, Map map, Rot4 rot, ref Thing __result)
+        public static bool Prefix(
+            Thing newThing,
+            IntVec3 loc,
+            Map map,
+            Rot4 rot,
+            WipeMode wipeMode,
+            ref Thing __result)
         {
+            // Only when placing another Strata portal. WipeMode cannot remove
+            // destroyable=false shafts — but running this for pawns/items would
+            // ForceDestroy the landing underfoot when colonists EnterPortal.
+            if (newThing is MapPortal
+                && newThing.def?.defName != null
+                && newThing.def.defName.StartsWith("Strata_")
+                && map != null
+                && (wipeMode == WipeMode.Vanish
+                    || wipeMode == WipeMode.VanishOrMoveAside
+                    || wipeMode == WipeMode.FullRefund))
+            {
+                StrataPortalUtility.PrefireWipeStrataPortals(
+                    map, loc, rot, newThing.def.Size, newThing);
+            }
+
             if (newThing == null || map == null)
             {
                 return true;

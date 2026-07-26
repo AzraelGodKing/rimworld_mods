@@ -133,6 +133,11 @@ namespace Strata
                 return true;
             }
 
+            if (StrataCrossLevelCombat.TryConvertOrderedAttack(pawn, job, out __result))
+            {
+                return false;
+            }
+
             if (CrossLevelOrderedJobs.TryInterceptOrderedJob(pawn, job, tag, requestQueueing, out __result))
             {
                 return false;

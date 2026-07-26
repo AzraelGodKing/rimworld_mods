@@ -13,8 +13,12 @@ namespace Strata
     {
         public static bool ShowGasOverlay;
 
-        private static readonly Texture2D icon =
-            ContentFinder<Texture2D>.Get("UI/Strata/SmokeToggle", reportFailure: false) ?? BaseContent.BadTex;
+        // Lazy-filled on first UI draw (avoids BadTex if ContentFinder runs too early).
+        private static Texture2D icon;
+
+        private static Texture2D Icon =>
+            icon ??= ContentFinder<Texture2D>.Get("UI/Strata/SmokeToggle", reportFailure: false)
+                ?? BaseContent.WhiteTex;
 
         public static void Postfix(WidgetRow row, bool worldView)
         {
@@ -22,7 +26,7 @@ namespace Strata
             {
                 return;
             }
-            row.ToggleableIcon(ref ShowGasOverlay, icon,
+            row.ToggleableIcon(ref ShowGasOverlay, Icon,
                 "Strata_PlaySettings_GasOverlayTip".Translate());
         }
     }

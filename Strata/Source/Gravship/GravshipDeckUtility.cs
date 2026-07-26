@@ -326,7 +326,7 @@ namespace Strata
                     // Do not leave unspawned things; prefer vanish over a ghost pad.
                     if (thing.def.category == ThingCategory.Building)
                     {
-                        thing.Destroy(DestroyMode.Vanish);
+                        StrataPortalUtility.SafeDestroyThing(thing);
                     }
                     else
                     {
