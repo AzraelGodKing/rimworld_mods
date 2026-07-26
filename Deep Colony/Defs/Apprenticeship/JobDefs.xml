@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <JobDef>
+    <defName>DC_Job_Mentor</defName>
+    <label>mentor apprentice</label>
+    <driverClass>DeepColony.JobDriver_Mentor</driverClass>
+    <reportString>mentoring TargetA.</reportString>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+
+  <JobDef>
+    <defName>DC_Job_CounselTrauma</defName>
+    <label>counsel</label>
+    <driverClass>DeepColony.JobDriver_CounselTrauma</driverClass>
+    <reportString>counseling TargetA.</reportString>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+
+</Defs>

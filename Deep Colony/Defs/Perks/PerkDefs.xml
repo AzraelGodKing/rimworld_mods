@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SHOOTING PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_PracticedEye</defName>
+    <label>practiced eye</label>
+    <description>Years of shooting practice have trained this colonist's eye. Improves shooting accuracy.</description>
+    <skill>Shooting</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_PracticedEye</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_CrackShot</defName>
+    <label>crack shot</label>
+    <description>This colonist has mastered long-range accuracy. Dramatically increases shooting precision.</description>
+    <skill>Shooting</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_PracticedEye</prerequisitePerk>
+    <hediff>DC_PerkHediff_CrackShot</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MELEE PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_BrawlersInstinct</defName>
+    <label>brawler's instinct</label>
+    <description>Combat experience has sharpened this colonist's reflexes. Improves melee hit chance and dodge.</description>
+    <skill>Melee</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_BrawlersInstinct</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_BattleHardened</defName>
+    <label>battle hardened</label>
+    <description>Forged through countless fights, this colonist can endure more punishment and deal it out.</description>
+    <skill>Melee</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_BrawlersInstinct</prerequisitePerk>
+    <hediff>DC_PerkHediff_BattleHardened</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MEDICINE PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_FirstAidMastery</defName>
+    <label>first aid mastery</label>
+    <description>Quick and sure-handed tending. Improves tend quality in the field.</description>
+    <skill>Medicine</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_FirstAidMastery</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_SurgeonsTouch</defName>
+    <label>surgeon's touch</label>
+    <description>Exceptional precision in surgery. Significantly improves surgical success chance.</description>
+    <skill>Medicine</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_FirstAidMastery</prerequisitePerk>
+    <hediff>DC_PerkHediff_SurgeonsTouch</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       CONSTRUCTION PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_BuildersTouch</defName>
+    <label>builder's touch</label>
+    <description>Practiced hands work faster and waste less effort on every project.</description>
+    <skill>Construction</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_BuildersTouch</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_MasterPlanner</defName>
+    <label>master planner</label>
+    <description>An expert eye for structure and material. Construction speed and success are both elevated.</description>
+    <skill>Construction</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_BuildersTouch</prerequisitePerk>
+    <hediff>DC_PerkHediff_MasterPlanner</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       CRAFTING PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_ArtisansHands</defName>
+    <label>artisan's hands</label>
+    <description>Steady focus and practiced craft produce better-quality items.</description>
+    <skill>Crafting</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_ArtisansHands</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_GrandArtisan</defName>
+    <label>grand artisan</label>
+    <description>A true master of the craft, producing exceptional work at impressive speed.</description>
+    <skill>Crafting</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_ArtisansHands</prerequisitePerk>
+    <hediff>DC_PerkHediff_GrandArtisan</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       PLANTS PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_GreenTouch</defName>
+    <label>green touch</label>
+    <description>Plants respond to this colonist's care. Improves planting speed and harvest yield.</description>
+    <skill>Plants</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_GreenTouch</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_GardenMaster</defName>
+    <label>garden master</label>
+    <description>Deep mastery of horticulture brings thriving harvests and rapid growth.</description>
+    <skill>Plants</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_GreenTouch</prerequisitePerk>
+    <hediff>DC_PerkHediff_GardenMaster</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       ANIMALS PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_AnimalWhisperer</defName>
+    <label>animal whisperer</label>
+    <description>A natural ease around animals improves taming and training success.</description>
+    <skill>Animals</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_AnimalWhisperer</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_MasterTamer</defName>
+    <label>master tamer</label>
+    <description>The bond between this colonist and animals is extraordinary. Taming and training rates soar.</description>
+    <skill>Animals</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_AnimalWhisperer</prerequisitePerk>
+    <hediff>DC_PerkHediff_MasterTamer</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MINING PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_RockEye</defName>
+    <label>rock eye</label>
+    <description>An intuition for stone and mineral composition speeds up excavation.</description>
+    <skill>Mining</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_RockEye</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_DeepProspector</defName>
+    <label>deep prospector</label>
+    <description>Expert reading of rock strata yields more ore from every vein.</description>
+    <skill>Mining</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_RockEye</prerequisitePerk>
+    <hediff>DC_PerkHediff_DeepProspector</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       RESEARCH PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_QuickStudy</defName>
+    <label>quick study</label>
+    <description>An agile mind absorbs and applies new knowledge faster.</description>
+    <skill>Intellectual</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_QuickStudy</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_ScientificPioneer</defName>
+    <label>scientific pioneer</label>
+    <description>A truly exceptional intellect drives research to new heights.</description>
+    <skill>Intellectual</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_QuickStudy</prerequisitePerk>
+    <hediff>DC_PerkHediff_ScientificPioneer</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SOCIAL PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_CharmingPresence</defName>
+    <label>charming presence</label>
+    <description>A natural charisma improves trade negotiations and social interactions.</description>
+    <skill>Social</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_CharmingPresence</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_MasterDiplomat</defName>
+    <label>master diplomat</label>
+    <description>Extraordinary people-skills open doors and fill coffers. Superior trade and goodwill gains.</description>
+    <skill>Social</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_CharmingPresence</prerequisitePerk>
+    <hediff>DC_PerkHediff_MasterDiplomat</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       COOKING PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_SeasonedCook</defName>
+    <label>seasoned cook</label>
+    <description>Efficient kitchen habits reduce prep time and improve meal consistency.</description>
+    <skill>Cooking</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_SeasonedCook</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_GrandChef</defName>
+    <label>grand chef</label>
+    <description>A culinary artist whose meals are events in themselves. Fast, delicious, and never poisoned.</description>
+    <skill>Cooking</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_SeasonedCook</prerequisitePerk>
+    <hediff>DC_PerkHediff_GrandChef</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       ARTISTIC PERKS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_InspiredHand</defName>
+    <label>inspired hand</label>
+    <description>Steady creative practice produces finer work and fewer wasted materials.</description>
+    <skill>Artistic</skill>
+    <requiredLevel>5</requiredLevel>
+    <hediff>DC_PerkHediff_InspiredHand</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_MasterArtisan</defName>
+    <label>master artisan</label>
+    <description>Colony-famous craftsmanship — sculptures and art finish faster and look better.</description>
+    <skill>Artistic</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_InspiredHand</prerequisitePerk>
+    <hediff>DC_PerkHediff_MasterArtisan</hediff>
+  </DeepColony.PerkDef>
+
+</Defs>
