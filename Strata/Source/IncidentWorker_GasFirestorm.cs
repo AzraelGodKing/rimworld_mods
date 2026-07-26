@@ -65,6 +65,9 @@ namespace Strata
 
         private static bool TryFindGasRoom(Map map, out IntVec3 cell, out Room room)
         {
+            // Replaced AllCells loop (O(map_area)) with AllRooms iteration.
+            // Gas is tracked per-room, so we query density directly and only
+            // need one non-fogged cell per candidate room for the letter target.
             AtmosphereMapComponent atmosphere = map.GetComponent<AtmosphereMapComponent>();
             cell = IntVec3.Invalid;
             room = null;
@@ -73,22 +76,34 @@ namespace Strata
                 return false;
             }
             var candidates = new List<Pair<IntVec3, Room>>();
-            var seenRooms = new HashSet<Room>();
-            foreach (IntVec3 c in map.AllCells)
+            IReadOnlyList<Room> allRooms = map.regionGrid.AllRooms;
+            for (int i = 0; i < allRooms.Count; i++)
             {
-                if (c.Fogged(map))
+                Room r = allRooms[i];
+                if (r == null || r.IsDoorway || r.UsesOutdoorTemperature)
                 {
                     continue;
                 }
-                Room r = c.GetRoom(map);
-                if (r == null || r.IsDoorway || r.UsesOutdoorTemperature || !seenRooms.Add(r))
+                if (atmosphere.DensityInRoom(r, StrataGasDefOf.Strata_DeepGas) < MinGasDensity)
                 {
                     continue;
                 }
-                if (atmosphere.DensityInRoom(r, StrataGasDefOf.Strata_DeepGas) >= MinGasDensity)
+                // Pick a non-fogged sample cell for the camera-jump / letter target.
+                IntVec3 sample = IntVec3.Invalid;
+                Region region = r.FirstRegion;
+                if (region != null)
                 {
-                    candidates.Add(new Pair<IntVec3, Room>(c, r));
+                    IntVec3 candidate = region.AnyCell;
+                    if (candidate.IsValid && candidate.InBounds(map) && !candidate.Fogged(map))
+                    {
+                        sample = candidate;
+                    }
                 }
+                if (!sample.IsValid)
+                {
+                    continue;
+                }
+                candidates.Add(new Pair<IntVec3, Room>(sample, r));
             }
             if (candidates.Count == 0)
             {

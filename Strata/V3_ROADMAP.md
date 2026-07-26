@@ -1,6 +1,16 @@
 # Strata V3 Roadmap
 
-Future vision after V2 settles. Bugs and small ideas also track on
+**In-progress V3 target checklist** (what’s done vs left):  
+[docs/strata-roadmap.html](../docs/strata-roadmap.html)
+
+**Status snapshot:** Cap, G1–G9, M1–M10, and **Polish A1–A5** are done on `V3-M-ux` (stamp `a2-a5-polish-v1`).  
+**Next:** merge `V3-M-ux` → `V3`.
+
+---
+
+## After V3 (future vision)
+
+Bugs and small ideas also track on
 [GitHub issues](https://github.com/AzraelGodKing/rimworld_mods/issues).
 
 Series-wide soft-compat, Azrael storyteller, and showcase scenario:

@@ -213,7 +213,7 @@ namespace Strata
                 }
             }
 
-            Log.Warning($"[Strata] Gravship takeoff: could not find a ship cell for {pawn.LabelShort}.");
+            StrataLog.Warning($"[Strata] Gravship takeoff: could not find a ship cell for {pawn.LabelShort}.");
             return false;
         }
 

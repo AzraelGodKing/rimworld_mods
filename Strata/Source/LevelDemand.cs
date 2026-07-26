@@ -17,12 +17,19 @@ namespace Strata
         {
             public int tick;
             public readonly Dictionary<ThingDef, int> missing = new Dictionary<ThingDef, int>();
+            // Construction / bills / refuel only — may pull from any local priority.
+            public readonly Dictionary<ThingDef, int> hardMissing = new Dictionary<ThingDef, int>();
             public readonly Dictionary<ThingDef, List<IntVec3>> sites = new Dictionary<ThingDef, List<IntVec3>>();
 
-            public void AddShortfall(ThingDef def, int amount, IntVec3 site)
+            public void AddShortfall(ThingDef def, int amount, IntVec3 site, bool hardNeed = false)
             {
                 missing.TryGetValue(def, out int total);
                 missing[def] = total + amount;
+                if (hardNeed)
+                {
+                    hardMissing.TryGetValue(def, out int hardTotal);
+                    hardMissing[def] = hardTotal + amount;
+                }
                 if (!sites.TryGetValue(def, out List<IntVec3> list))
                 {
                     sites[def] = list = new List<IntVec3>();
@@ -37,6 +44,13 @@ namespace Strata
         public static int MissingOn(Map map, ThingDef def)
         {
             return Get(map).missing.TryGetValue(def, out int missing) ? missing : 0;
+        }
+
+        // Construction, bill ingredients, or auto-refuel — may export from any
+        // storage priority on the source floor. Storage-upgrade pulls are excluded.
+        public static int HardMissingOn(Map map, ThingDef def)
+        {
+            return Get(map).hardMissing.TryGetValue(def, out int missing) ? missing : 0;
         }
 
         // Whether any site that needs the def can be reached from a cell -
@@ -120,6 +134,19 @@ namespace Strata
                         entry.missing.Remove(def);
                         entry.sites.Remove(def);
                     }
+
+                    if (entry.hardMissing.TryGetValue(def, out int hard))
+                    {
+                        int hardLeft = hard - have;
+                        if (hardLeft > 0)
+                        {
+                            entry.hardMissing[def] = hardLeft;
+                        }
+                        else
+                        {
+                            entry.hardMissing.Remove(def);
+                        }
+                    }
                 }
             }
 
@@ -167,7 +194,7 @@ namespace Strata
                         continue;
                     }
 
-                    entry.AddShortfall(def, need, thing.Position);
+                    entry.AddShortfall(def, need, thing.Position, hardNeed: true);
                 }
             }
         }
@@ -302,15 +329,26 @@ namespace Strata
             for (int i = 0; i < things.Count; i++)
             {
                 Thing thing = things[i];
-                // Install/reinstall blueprints reference a specific minified
-                // building; TotalMaterialCost logs an error and returns nothing.
-                // Cross-level haul for those uses vanilla install hauling.
-                if (thing.Faction != Faction.OfPlayer || thing is Blueprint_Install
-                    || !(thing is IConstructible constructible))
+                if (thing == null || thing.Destroyed || thing.Faction != Faction.OfPlayer)
+                {
+                    continue;
+                }
+                // Install/reinstall blueprints are not built from materials —
+                // TotalMaterialCost() always Log.Errors. Prefer type-name checks
+                // so a stale/ref isinst mismatch cannot leak through.
+                if (IsInstallBlueprint(thing))
+                {
+                    continue;
+                }
+                if (thing is not IConstructible constructible)
                 {
                     continue;
                 }
                 List<ThingDefCountClass> cost = constructible.TotalMaterialCost();
+                if (cost == null)
+                {
+                    continue;
+                }
                 for (int j = 0; j < cost.Count; j++)
                 {
                     ThingDef def = cost[j].thingDef;
@@ -319,15 +357,24 @@ namespace Strata
                     {
                         continue;
                     }
-                    entry.missing.TryGetValue(def, out int total);
-                    entry.missing[def] = total + needed;
-                    if (!entry.sites.TryGetValue(def, out List<IntVec3> sites))
-                    {
-                        entry.sites[def] = sites = new List<IntVec3>();
-                    }
-                    sites.Add(thing.Position);
+                    entry.AddShortfall(def, needed, thing.Position, hardNeed: true);
                 }
             }
+        }
+
+        internal static bool IsInstallBlueprint(Thing thing)
+        {
+            if (thing is Blueprint_Install)
+            {
+                return true;
+            }
+            // Blueprint but not a material-cost build blueprint (install / mods).
+            if (thing is Blueprint && thing is not Blueprint_Build)
+            {
+                return true;
+            }
+            System.Type type = thing.GetType();
+            return type != null && type.Name == "Blueprint_Install";
         }
 
         private static int CountOnMap(Map map, ThingDef def)

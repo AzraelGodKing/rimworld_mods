@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_SunkenRuin.label>沉没废墟</Strata_SunkenRuin.label>
+  <Strata_SunkenRuin.description>古代废墟坍塌的地面，露出沉入地下的楼梯落脚点。开凿下层的人早已消失——但隧道并不空，据说下面藏有古代宝藏。</Strata_SunkenRuin.description>
+
+  <Strata_SunkenRuinEntrance.label>沉没废墟入口</Strata_SunkenRuinEntrance.label>
+  <Strata_SunkenRuinEntrance.description>通往地下楼梯的古代废墟坍塌入口。</Strata_SunkenRuinEntrance.description>
+
+  <Strata_SunkenRuinLevel.label>沉没废墟楼层</Strata_SunkenRuinLevel.label>
+  <Strata_SunkenRuinLevel.description>沉没废墟的地下楼层，布满隧道迷宫。</Strata_SunkenRuinLevel.description>
+
+  <Strata_CarveWarren.label>开凿迷宫</Strata_CarveWarren.label>
+  <Strata_CarveWarren.description>在岩中开凿隧道与腔室系统。</Strata_CarveWarren.description>
+
+  <Strata_WarrenInfestation.label>迷宫感染</Strata_WarrenInfestation.label>
+  <Strata_WarrenInfestation.description>让昆虫占据迷宫。</Strata_WarrenInfestation.description>
+
+</LanguageData>

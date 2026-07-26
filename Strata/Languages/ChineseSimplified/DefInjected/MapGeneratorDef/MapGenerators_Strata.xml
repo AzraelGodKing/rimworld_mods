@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_UpperLevel.label>上层</Strata_UpperLevel.label>
+  <Strata_UpperLevel.description>殖民地上方的框架楼层，暴露于天空与天气。经楼梯与竖井连接下层。</Strata_UpperLevel.description>
+
+  <Strata_UndergroundLevel.label>地下楼层</Strata_UndergroundLevel.label>
+  <Strata_UndergroundLevel.description>地表深处的原生岩层。没有天空、天气或季节——只有岩石。</Strata_UndergroundLevel.description>
+
+  <Strata_UpperPlatform.label>上层平台</Strata_UpperPlatform.label>
+  <Strata_UpperPlatform.description>为上层创建框架平台。</Strata_UpperPlatform.description>
+
+  <Strata_SolidRock.label>坚岩</Strata_SolidRock.label>
+  <Strata_SolidRock.description>用坚岩填满整层。</Strata_SolidRock.description>
+
+  <Strata_CarveWarren.label>开凿迷宫</Strata_CarveWarren.label>
+  <Strata_CarveWarren.description>开凿隧道与腔室系统。</Strata_CarveWarren.description>
+
+  <Strata_HiddenChambers.label>隐藏腔室</Strata_HiddenChambers.label>
+  <Strata_HiddenChambers.description>在岩中创建密封的地热与气体腔室。</Strata_HiddenChambers.description>
+
+  <Strata_BiomesCavernFeatures.label>生物群系洞穴特征</Strata_BiomesCavernFeatures.label>
+  <Strata_BiomesCavernFeatures.description>添加来自其他生物群系的洞穴特征。</Strata_BiomesCavernFeatures.description>
+
+  <Strata_RichOreNodes.label>富矿节点</Strata_RichOreNodes.label>
+  <Strata_RichOreNodes.description>在隐秘岩层中创建稀有大型矿脉。</Strata_RichOreNodes.description>
+
+  <Strata_DbhGroundwater.label>地下水</Strata_DbhGroundwater.label>
+  <Strata_DbhGroundwater.description>向开挖区域添加地下水。</Strata_DbhGroundwater.description>
+
+  <Strata_PlaceCaveExit.label>放置洞穴出口</Strata_PlaceCaveExit.label>
+  <Strata_PlaceCaveExit.description>放置楼层出口（楼梯或电梯）。</Strata_PlaceCaveExit.description>
+
+  <Strata_Fog.label>战争迷雾</Strata_Fog.label>
+  <Strata_Fog.description>除抵达腔室外全部迷雾覆盖。</Strata_Fog.description>
+
+  <Strata_AncientColonyStairwell.label>古代殖民地楼梯井</Strata_AncientColonyStairwell.label>
+  <Strata_AncientColonyStairwell.description>为任务地点放置古代殖民地楼梯井。</Strata_AncientColonyStairwell.description>
+
+</LanguageData>

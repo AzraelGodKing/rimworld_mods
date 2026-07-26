@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata.label>Strata</Strata.label>
+  <Strata.generalTitle>垂直科技</Strata.generalTitle>
+  <Strata.generalDescription>向上建造、向下挖掘、竖井、通风、生命维持与深层毒气。</Strata.generalDescription>
+
+  <Strata_BuildingUp.label>向上建造</Strata_BuildingUp.label>
+  <Strata_BuildingUp.description>框架建造技术，在殖民地上方开辟开放屋顶露台。上层与本图同尺寸，但仅可在下方有屋顶处建造（外加楼梯/电梯周边）。扩展下方屋顶以扩大露台——开阔天空无法承重。额外塔楼楼梯可接入同一上层。</Strata_BuildingUp.description>
+
+  <Strata_DiggingDown.label>向下挖掘</Strata_DiggingDown.label>
+  <Strata_DiggingDown.description>支护与开凿楼梯的基础技术，用于打开殖民地下的第一层地下室——与上方地图同尺寸的一整层坚岩。</Strata_DiggingDown.description>
+
+  <Strata_Excavation.label>深层挖掘</Strata_Excavation.label>
+  <Strata_Excavation.description>在第一层地下室以下开辟稳定居住空间的勘探与加固方法——打开 B2 及每一更深楼层。</Strata_Excavation.description>
+
+  <Strata_Elevators.label>电梯</Strata_Elevators.label>
+  <Strata_Elevators.description>在紧凑竖井中运送殖民者的电动电梯轿厢——向下进入开挖岩层，或向上通往框架上层。比凿出的楼梯更快更整洁，但需要电力。塔楼电梯上行或挖掘电梯下行需要电力；反向始终免费，因此断电不会困住人。</Strata_Elevators.description>
+
+  <Strata_Ventilation.label>强制通风</Strata_Ventilation.label>
+  <Strata_Ventilation.description>在空气不自发流动处移动空气的电动风扇与叶轮：从房间抽出烟雾的单向排气风扇，以及像烟囱一样把烟雾沿开挖竖井上送的上升过滤器。</Strata_Ventilation.description>
+
+  <Strata_LifeSupport.label>深层生命维持</Strata_LifeSupport.label>
+  <Strata_LifeSupport.description>密封房间的电动氧气泵、清除呼出空气的二氧化碳泵，以及主动沿楼梯上送可呼吸空气并下送二氧化碳的竖井气体交换器——殖民者开始地下生活时深层殖民地所需的基础设施。</Strata_LifeSupport.description>
+
+  <Strata_GasExtraction.label>深层气体开采</Strata_GasExtraction.label>
+  <Strata_GasExtraction.description>密封深层岩中气体喷口的井口装置与高压气瓶——把有毒易爆喷发变成无烟燃烧的发电机燃料。</Strata_GasExtraction.description>
+
+  <Strata_ShaftPower.label>竖井供电</Strata_ShaftPower.label>
+  <Strata_ShaftPower.description>沿开挖竖井上下输电的装甲电力节点，让地表电网为下层供电（反之亦然）。</Strata_ShaftPower.description>
+
+  <Strata_FluidShafts.label>流体竖井</Strata_FluidShafts.label>
+  <Strata_FluidShafts.description>建造在楼层间传输水、冷却液、热量与气体的竖井流体节点，且不合并跨地图管网。建筑师菜单仅显示已安装管道模组的节点。同时解锁全能跨层连接器——一个墙内节点覆盖电力与所有受支持管网。</Strata_FluidShafts.description>
+
+  <Strata_Shoring.label>岩层支护</Strata_Shoring.label>
+  <Strata_Shoring.description>防止塌方的木石支柱。在岩层自行崩塌前装入宽阔腔室。</Strata_Shoring.description>
+
+  <Strata_PassiveLifeSupport.label>被动生命维持</Strata_PassiveLifeSupport.label>
+  <Strata_PassiveLifeSupport.description>手动竖井风箱与石灰洗涤器——无需电力即可保持滞留空气流动并从密封房间清除二氧化碳的低科技手段。</Strata_PassiveLifeSupport.description>
+
+  <Strata_DeepInfrastructure.label>深层基础设施</Strata_DeepInfrastructure.label>
+  <Strata_DeepInfrastructure.description>气体气闸、矿石吊车、排水泵与安全电动矿灯——在地表深处生活与工作的工业套件。</Strata_DeepInfrastructure.description>
+
+  <Strata_DeepAgriculture.label>深层农业</Strata_DeepAgriculture.label>
+  <Strata_DeepAgriculture.description>在密封地下房间种植可食用蘑菇的暗色真菌农场，用少量二氧化碳换取可呼吸氧气。</Strata_DeepAgriculture.description>
+
+  <Strata_MineAtmosphere.label>矿井大气</Strata_MineAtmosphere.label>
+  <Strata_MineAtmosphere.description>应对深层毒气的装备：烧掉轻质矿井气的甲烷火炬、火灾后恢复氧气的黑潮洗涤器、真菌悬浮物的孢子过滤器，以及地热腔室的蒸汽冷凝器。</Strata_MineAtmosphere.description>
+
+</LanguageData>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_ShoringPillar.label>岩层支柱</Strata_ShoringPillar.label>
+  <Strata_ShoringPillar.description>加固石柱，像普通柱子一样支撑开挖岩层，但跨度约为两倍。防止大腔室上方塌方与屋顶崩塌——宽阔矿坑仍需多根支柱。</Strata_ShoringPillar.description>
+
+  <Strata_GasAirlock.label>气体气闸</Strata_GasAirlock.label>
+  <Strata_GasAirlock.description>启用时阻断房间间气体均衡的密封墙件。殖民者仍可通过——只挡住大气。切换以开放通风，或关闭以隔离有毒气囊。</Strata_GasAirlock.description>
+
+  <Strata_OreHoist.label>矿石吊车</Strata_OreHoist.label>
+  <Strata_OreHoist.description>电动吊斗，把开采的矿石与废渣运到上/下层相连的吊车。建在楼梯或电梯五格之内——会像竖井导管一样自动连接对端吊车。</Strata_OreHoist.description>
+
+  <Strata_FungusFarm.label>真菌农场</Strata_FungusFarm.label>
+  <Strata_FungusFarm.description>可食用洞穴蘑菇的暗色苗床。在地下或无光房间运作，缓慢吸收二氧化碳并释放少量氧气，产出蘑菇收成。</Strata_FungusFarm.description>
+
+  <Strata_SumpPump.label>排水泵</Strata_SumpPump.label>
+  <Strata_SumpPump.description>从开挖地面抽出地下水的电动泵。运行时清除半径内浅水——楼层开始从下方淹水时必备。</Strata_SumpPump.description>
+
+  <Strata_MineLamp.label>矿用灯</Strata_MineLamp.label>
+  <Strata_MineLamp.description>深层矿坑用密封电灯。提供强光且无明火——在火把等于自杀的气体喷口旁作业更安全。</Strata_MineLamp.description>
+
+  <Strata_ShaftBellows.label>竖井风箱</Strata_ShaftBellows.label>
+  <Strata_ShaftBellows.description>楼梯旁的手动风箱。无需电力——缓慢加强氧气上升与二氧化碳下沉，弱于电动气体交换器，但够小队伍使用。</Strata_ShaftBellows.description>
+
+  <Strata_LimeScrubber.label>石灰洗涤器</Strata_LimeScrubber.label>
+  <Strata_LimeScrubber.description>缓慢从密封房间吸收二氧化碳的石灰托盘。随时间消耗石灰；无需电力——让矿井空气可呼吸的最古老方式。</Strata_LimeScrubber.description>
+
+  <Strata_MethaneFlare.label>甲烷火炬</Strata_MethaneFlare.label>
+  <Strata_MethaneFlare.description>受控火炬立管，在轻质矿井气被火把引爆前将其烧掉。需要电力；远离你仍想开采的深层气囊。</Strata_MethaneFlare.description>
+
+  <Strata_BlackDampScrubber.label>黑潮洗涤器</Strata_BlackDampScrubber.label>
+  <Strata_BlackDampScrubber.description>从密封房间抽出滞留黑潮并返还少量氧气。用于气体火灾之后，或空气已死的淹水低洼。</Strata_BlackDampScrubber.description>
+
+  <Strata_SporeFilter.label>孢子过滤器</Strata_SporeFilter.label>
+  <Strata_SporeFilter.description>用布与炭滤除密封房间真菌孢子的过滤器。与真菌农场、真菌迷宫清理配合使用以保护殖民者肺部。</Strata_SporeFilter.description>
+
+  <Strata_SteamCondenser.label>蒸汽冷凝器</Strata_SteamCondenser.label>
+  <Strata_SteamCondenser.description>冷凝密封房间地热蒸汽的冷却板。防止间歇泉室与火山迷宫充满灼热雾气。</Strata_SteamCondenser.description>
+
+</LanguageData>
