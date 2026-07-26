@@ -35,6 +35,10 @@ namespace Strata
             {
                 return;
             }
+            if (!StrataGravshipUtility.SameShaftFamily(topPortal, bottomLanding))
+            {
+                return;
+            }
             CompPowerShaft top = topPortal.GetComp<CompPowerShaft>();
             CompPowerShaft bottom = bottomLanding.GetComp<CompPowerShaft>();
             if (top != null && bottom != null)

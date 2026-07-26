@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <DeepColony.TraumaDef>
+    <defName>DC_Trauma_CombatShock</defName>
+    <label>combat shock</label>
+    <description>The sudden violence of being downed in combat.</description>
+    <thoughtDef>DC_Thought_CombatShock</thoughtDef>
+    <therapyHealingPerSession>50000</therapyHealingPerSession>
+    <triggerMessage>was downed in battle</triggerMessage>
+  </DeepColony.TraumaDef>
+
+  <DeepColony.TraumaDef>
+    <defName>DC_Trauma_ViolentLoss</defName>
+    <label>violent loss</label>
+    <description>Witnessing a close companion die violently.</description>
+    <thoughtDef>DC_Thought_ViolentLoss</thoughtDef>
+    <therapyHealingPerSession>70000</therapyHealingPerSession>
+    <triggerMessage>witnessed a close companion's violent death</triggerMessage>
+  </DeepColony.TraumaDef>
+
+  <DeepColony.TraumaDef>
+    <defName>DC_Trauma_Captivity</defName>
+    <label>captivity trauma</label>
+    <description>The psychological scarring of prolonged captivity.</description>
+    <thoughtDef>DC_Thought_Captivity</thoughtDef>
+    <therapyHealingPerSession>80000</therapyHealingPerSession>
+    <triggerMessage>suffered the trauma of captivity</triggerMessage>
+  </DeepColony.TraumaDef>
+
+  <DeepColony.TraumaDef>
+    <defName>DC_Trauma_Massacre</defName>
+    <label>massacre survivor</label>
+    <description>Surviving an attack that killed many companions at once.</description>
+    <thoughtDef>DC_Thought_Massacre</thoughtDef>
+    <therapyHealingPerSession>90000</therapyHealingPerSession>
+    <triggerMessage>survived a massacre</triggerMessage>
+  </DeepColony.TraumaDef>
+
+  <DeepColony.TraumaDef>
+    <defName>DC_Trauma_BereavementShock</defName>
+    <label>bereavement shock</label>
+    <description>The sudden loss of multiple close companions in a short time.</description>
+    <thoughtDef>DC_Thought_BereavementShock</thoughtDef>
+    <therapyHealingPerSession>75000</therapyHealingPerSession>
+    <triggerMessage>lost multiple companions in a short time</triggerMessage>
+  </DeepColony.TraumaDef>
+
+</Defs>

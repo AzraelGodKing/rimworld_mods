@@ -56,6 +56,10 @@ namespace Strata
                     LetterDefOf.ThreatSmall,
                     targets);
                 Find.TickManager.slower.SignalForceNormalSpeedShort();
+                if (StrataCrossLevelThreatNotify.ShouldForceAttention(map))
+                {
+                    CameraJumper.TryJump(targets.TryGetPrimaryTarget(), CameraJumper.MovementMode.Cut);
+                }
             }
             else
             {

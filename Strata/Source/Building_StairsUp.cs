@@ -21,6 +21,10 @@ namespace Strata
 
         internal void SetDownEntrance(Building_StairsDown entrance)
         {
+            if (entrance != null && !StrataGravshipUtility.SameShaftFamily(this, entrance))
+            {
+                return;
+            }
             downEntrance = entrance;
         }
 

@@ -13,6 +13,8 @@ namespace Strata
     {
         private const int PartnerCheckInterval = 250;
 
+        private const int PowerIntervalPerf = 3;
+
         private const int ShaftSearchRadius = 6;
 
         private const float LandingSearchRadius = 4.5f;
@@ -30,7 +32,30 @@ namespace Strata
 
         private int parentAboveId = -1;
 
+        private CompPowerShaft cachedPower;
+
+        private CompPowerShaft cachedPartnerPower;
+
         public bool IsAutoSpawned => parentAbove != null || parentAboveId >= 0;
+
+        // Partner end of the vertical power tie (above or below).
+        internal CompPowerShaft LinkedPowerShaft()
+        {
+            if (IsAutoSpawned)
+            {
+                Building_ShaftConduit above = parentAbove;
+                if (above == null && parentAboveId >= 0)
+                {
+                    above = FindConduitById(parentAboveId);
+                }
+                return above?.GetComp<CompPowerShaft>();
+            }
+            if (PartnerValid())
+            {
+                return partnerBelow.GetComp<CompPowerShaft>();
+            }
+            return null;
+        }
 
         public override void ExposeData()
         {
@@ -97,9 +122,24 @@ namespace Strata
                 }
                 EnsurePartnerBelow();
             }
-            // Power every tick (A4 one-net feel); partner discovery stays periodic.
-            CompPowerShaft node = GetComp<CompPowerShaft>();
-            CompPowerShaft partner = PartnerValid() ? partnerBelow.GetComp<CompPowerShaft>() : null;
+            // Power every tick normally; performance mode every few ticks (PowerOutput sticks).
+            int powerInterval = StrataMod.Settings?.performanceModeEnabled == true
+                ? PowerIntervalPerf
+                : 1;
+            if (powerInterval > 1 && !this.IsHashIntervalTick(powerInterval))
+            {
+                return;
+            }
+            CompPowerShaft node = cachedPower ?? (cachedPower = GetComp<CompPowerShaft>());
+            CompPowerShaft partner = cachedPartnerPower;
+            if (partner == null || partner.parent != partnerBelow)
+            {
+                partner = cachedPartnerPower = PartnerValid() ? partnerBelow.GetComp<CompPowerShaft>() : null;
+            }
+            else if (!PartnerValid())
+            {
+                partner = cachedPartnerPower = null;
+            }
             if (node != null && partner != null)
             {
                 node.DriveTie(partner);

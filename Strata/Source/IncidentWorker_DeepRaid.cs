@@ -1,4 +1,5 @@
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -74,6 +75,12 @@ namespace Strata
             if (Find.CurrentMap == map)
             {
                 Find.CameraDriver.shaker.DoShake(1.5f);
+            }
+            else if (StrataCrossLevelThreatNotify.ShouldForceAttention(map))
+            {
+                // Threat letter postfix jumps; also cut immediately so a slow
+                // letter stack still pulls the player onto B1.
+                CameraJumper.TryJump(new GlobalTargetInfo(cell, map), CameraJumper.MovementMode.Cut);
             }
             Find.TickManager.slower.SignalForceNormalSpeedShort();
             return true;

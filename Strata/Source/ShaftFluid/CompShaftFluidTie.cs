@@ -18,7 +18,7 @@ namespace Strata
         // Rimatomics coolant loop bonus (existing).
         private float shaftCoolingBuffer;
 
-        // A4 tankless pocket buffer for storage-based channels (DBH / VEF / Rimefeller).
+        // Tankless pocket buffer for storage-based channels (DBH / VEF / Rimefeller).
         private float shaftResourceBuffer;
 
         public const float MaxResourceBuffer = 250f;
@@ -74,14 +74,39 @@ namespace Strata
 
         public void DriveTie(CompShaftFluidTie partner)
         {
-            ShaftFluidBackend backend = Backend;
-            if (backend == null || !backend.IsActive || partner?.Backend == null)
+            if (!StrataFaultGuard.ShaftFluidActive)
             {
                 return;
             }
-            object topNet = backend.GetNetFromJunction(parent);
-            object botNet = partner.Backend.GetNetFromJunction(partner.parent);
-            backend.DriveTie(topNet, botNet, this, partner);
+            try
+            {
+                ShaftFluidBackend backend = Backend;
+                if (backend == null || !backend.IsActive || partner?.Backend == null)
+                {
+                    return;
+                }
+                object topNet = backend.GetNetFromJunction(parent);
+                object botNet = partner.Backend.GetNetFromJunction(partner.parent);
+                // Lazy VEF reconnect only when a side has no net yet (not every pulse).
+                if (backend is VefPipeSystemBackend && (topNet == null || botNet == null))
+                {
+                    if (topNet == null)
+                    {
+                        VefPipeNetworkUtil.ReconnectJunction(parent);
+                        topNet = backend.GetNetFromJunction(parent);
+                    }
+                    if (botNet == null)
+                    {
+                        VefPipeNetworkUtil.ReconnectJunction(partner.parent);
+                        botNet = partner.Backend.GetNetFromJunction(partner.parent);
+                    }
+                }
+                backend.DriveTie(topNet, botNet, this, partner);
+            }
+            catch (System.Exception e)
+            {
+                StrataFaultGuard.Report(StrataFaultGuard.System.ShaftFluid, e.GetType().Name + ": " + e.Message);
+            }
         }
 
         internal float TakeShaftCoolingBuffer(float amount)

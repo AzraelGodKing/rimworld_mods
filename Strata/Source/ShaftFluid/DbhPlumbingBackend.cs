@@ -1,23 +1,30 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using HarmonyLib;
 using UnityEngine;
 using Verse;
 
 namespace Strata
 {
-    // Dubs Bad Hygiene plumbing (PipeType.Sewage): shared water/sewage nets use
-    // PlumbingNet.WaterStorage and PushWater between tower storage.
+    // Dubs Bad Hygiene plumbing (PipeType.Sewage). Cross-level flow mirrors
+    // AsAboveSoBelow.DBHWaterBridge: fill equalize at 0.5 damping via PullWater/PushWater.
+    // Junctions carry CompWaterStorage (ShaftFluid_Comps.xml) so tankless floors still
+    // appear in WaterTowers; leftovers park in CompShaftFluidTie.ShaftResourceBuffer.
     public sealed class DbhPlumbingBackend : ShaftFluidBackend
     {
         private const string PackageId = "dubwise.dubsbadhygiene";
+
+        private const float EqualizeDamping = 0.5f;
+
+        private const float MinTransfer = 0.05f;
 
         private Type compPipeType;
 
         private Type plumbingNetType;
 
         private Type compWaterStorageType;
+
+        private Type contaminationLevelType;
 
         private PropertyInfo pipeNetProp;
 
@@ -32,6 +39,8 @@ namespace Strata
         private PropertyInfo towerSpaceProp;
 
         private MethodInfo pushWaterMethod;
+
+        private MethodInfo pullWaterMethod;
 
         private bool bindLogged;
 
@@ -58,7 +67,7 @@ namespace Strata
             {
                 return 0f;
             }
-            float stored = (float)waterStorageNetProp.GetValue(net, null);
+            float stored = TowerWater(net);
             float importNeed = SumTowerSpace(GetTowers(net));
             return stored - importNeed;
         }
@@ -69,12 +78,7 @@ namespace Strata
             {
                 return 0f;
             }
-            float spare = Mathf.Max(0f, balance);
-            if (spare > 0f)
-            {
-                return spare;
-            }
-            return (float)waterStorageNetProp.GetValue(net, null);
+            return TowerWater(net);
         }
 
         public override float NetStorageRoom(object net)
@@ -96,6 +100,18 @@ namespace Strata
             return leftover is float f ? Mathf.Max(0f, f) : 0f;
         }
 
+        public override void DriveTie(object topNet, object bottomNet, CompShaftFluidTie topTie = null, CompShaftFluidTie bottomTie = null)
+        {
+            if (!TryBind() || topNet == null || bottomNet == null || ReferenceEquals(topNet, bottomNet))
+            {
+                return;
+            }
+
+            FlushBuffer(topTie, topNet);
+            FlushBuffer(bottomTie, bottomNet);
+            EqualizeNets(topNet, bottomNet);
+        }
+
         public override bool Transfer(object fromNet, object toNet, float amount, CompShaftFluidTie fromTie = null, CompShaftFluidTie toTie = null)
         {
             if (!TryBind() || fromNet == null || toNet == null || amount <= 0f)
@@ -103,31 +119,132 @@ namespace Strata
                 return false;
             }
             amount = Mathf.Min(amount, MaxTransferPerPulse(fromNet));
-            float remaining = amount;
-            IList towers = GetTowers(fromNet);
-            for (int i = 0; i < towers.Count && remaining > 0.001f; i++)
-            {
-                object tower = towers[i];
-                float have = (float)towerWaterField.GetValue(tower);
-                float draw = Mathf.Min(remaining, have);
-                if (draw <= 0f)
-                {
-                    continue;
-                }
-                towerWaterField.SetValue(tower, have - draw);
-                remaining -= draw;
-            }
-            float moved = amount - remaining;
-            if (moved <= 0f)
+            if (!TryPullWater(fromNet, amount))
             {
                 return false;
             }
-            float leftover = PushIntoNet(toNet, moved);
+            float leftover = PushIntoNet(toNet, amount);
             if (leftover > 0.001f)
             {
-                ParkLeftover(toTie, leftover);
+                // Prefer returning to the source net (AASB); park only what source cannot take.
+                float still = PushIntoNet(fromNet, leftover);
+                ParkLeftover(toTie, still);
             }
             return true;
+        }
+
+        private void EqualizeNets(object netA, object netB)
+        {
+            float capA = TowerCapacity(netA);
+            float capB = TowerCapacity(netB);
+            if (capA <= 0f || capB <= 0f)
+            {
+                return;
+            }
+
+            float waterA = TowerWater(netA);
+            float waterB = TowerWater(netB);
+            // AASB: 0.5 * (WA*CB - WB*CA) / (CA+CB)
+            float transfer = EqualizeDamping * (waterA * capB - waterB * capA) / (capA + capB);
+            object rich;
+            object poor;
+            float amount;
+            if (transfer > MinTransfer)
+            {
+                rich = netA;
+                poor = netB;
+                amount = transfer;
+            }
+            else if (transfer < -MinTransfer)
+            {
+                rich = netB;
+                poor = netA;
+                amount = -transfer;
+            }
+            else
+            {
+                return;
+            }
+
+            amount = Mathf.Min(amount, MaxTransferPerPulse(rich));
+            if (!TryPullWater(rich, amount))
+            {
+                return;
+            }
+            float leftover = PushIntoNet(poor, amount);
+            if (leftover > 0.001f)
+            {
+                PushIntoNet(rich, leftover);
+            }
+        }
+
+        private void FlushBuffer(CompShaftFluidTie tie, object net)
+        {
+            if (tie == null || net == null || tie.ShaftResourceBuffer < 0.001f)
+            {
+                return;
+            }
+            float take = tie.ShaftResourceBuffer;
+            float leftover = PushIntoNet(net, take);
+            float accepted = take - leftover;
+            if (accepted > 0.001f)
+            {
+                tie.TakeShaftResourceBuffer(accepted);
+            }
+        }
+
+        private bool TryPullWater(object net, float amount)
+        {
+            if (amount <= 0f || pullWaterMethod == null)
+            {
+                return false;
+            }
+            object contam = contaminationLevelType != null
+                ? Activator.CreateInstance(contaminationLevelType)
+                : null;
+            object[] args = new object[] { amount, contam };
+            object result = pullWaterMethod.Invoke(net, args);
+            return result is bool ok && ok;
+        }
+
+        private float TowerWater(object net)
+        {
+            IList towers = GetTowers(net);
+            if (towers == null)
+            {
+                return 0f;
+            }
+            float sum = 0f;
+            for (int i = 0; i < towers.Count; i++)
+            {
+                object tower = towers[i];
+                if (tower != null)
+                {
+                    sum += (float)towerWaterField.GetValue(tower);
+                }
+            }
+            return sum;
+        }
+
+        private float TowerCapacity(object net)
+        {
+            IList towers = GetTowers(net);
+            if (towers == null)
+            {
+                return 0f;
+            }
+            float sum = 0f;
+            for (int i = 0; i < towers.Count; i++)
+            {
+                object tower = towers[i];
+                if (tower == null)
+                {
+                    continue;
+                }
+                sum += (float)towerWaterField.GetValue(tower);
+                sum += (float)towerSpaceProp.GetValue(tower, null);
+            }
+            return sum;
         }
 
         private object FindComp(ThingWithComps thing, string modeName)
@@ -186,6 +303,7 @@ namespace Strata
             compPipeType = ReflectionUtil.TypeIn("DubsBadHygiene.CompPipe", asm);
             plumbingNetType = ReflectionUtil.TypeIn("DubsBadHygiene.PlumbingNet", asm);
             compWaterStorageType = ReflectionUtil.TypeIn("DubsBadHygiene.CompWaterStorage", asm);
+            contaminationLevelType = ReflectionUtil.TypeIn("DubsBadHygiene.ContaminationLevel", asm);
             if (compPipeType == null || plumbingNetType == null || compWaterStorageType == null)
             {
                 LogBindOnce("BadHygiene.dll types not found.");
@@ -199,10 +317,11 @@ namespace Strata
             towerWaterField = compWaterStorageType.GetField("WaterStorage", BindingFlags.Instance | BindingFlags.Public);
             towerSpaceProp = compWaterStorageType.GetProperty("space", BindingFlags.Instance | BindingFlags.Public);
             pushWaterMethod = plumbingNetType.GetMethod("PushWater", BindingFlags.Instance | BindingFlags.Public);
+            pullWaterMethod = plumbingNetType.GetMethod("PullWater", BindingFlags.Instance | BindingFlags.Public);
 
             if (pipeNetProp == null || modeProp == null || waterStorageNetProp == null
                 || waterTowersField == null || towerWaterField == null || towerSpaceProp == null
-                || pushWaterMethod == null)
+                || pushWaterMethod == null || pullWaterMethod == null)
             {
                 LogBindOnce("BadHygiene reflection bind incomplete.");
                 compPipeType = null;

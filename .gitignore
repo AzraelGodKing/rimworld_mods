@@ -16,3 +16,6 @@ Homesteader/Textures.rar
 # Local decompile / reflect scratch (must never re-enter the repo)
 Strata/Tools/_decompile_tmp/
 Strata/Tools/_reflect_tmp/
+
+# Local private outputs (never commit)
+.local/

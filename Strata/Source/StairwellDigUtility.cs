@@ -21,6 +21,13 @@ namespace Strata
                 reason = "Strata_Dig_InvalidStairwell".Translate();
                 return false;
             }
+            // Gravship landings must not grow a colony dig shaft as DownEntrance —
+            // that cross-wires ship and ground stacks and hard-crashes.
+            if (landing is IStrataGravshipPortal)
+            {
+                reason = "Strata_Dig_NoColonyShaftOnGravshipLanding".Translate();
+                return false;
+            }
             if (!StrataMapUtility.IsUnderground(landing.Map))
             {
                 reason = "Strata_Dig_OnlyUnderground".Translate();
@@ -199,7 +206,7 @@ namespace Strata
 
         public static Building_StairsDown FindNearbyDigShaft(Building_StairsUp landing)
         {
-            if (landing == null)
+            if (landing == null || landing is IStrataGravshipPortal)
             {
                 return null;
             }
@@ -209,7 +216,8 @@ namespace Strata
             float bestDist = float.MaxValue;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing is not Building_StairsDown down || !down.Spawned || down.def != StrataThingDefOf.Strata_DigDownShaft)
+                if (thing is not Building_StairsDown down || !down.Spawned || down.def != StrataThingDefOf.Strata_DigDownShaft
+                    || !StrataGravshipUtility.SameShaftFamily(landing, down))
                 {
                     continue;
                 }
@@ -259,9 +267,18 @@ namespace Strata
 
         public static void ResolveDownEntrance(Building_StairsUp landing)
         {
-            if (landing == null || landing.DownEntrance is { Spawned: true })
+            if (landing == null)
             {
                 return;
+            }
+            if (landing.DownEntrance is { Spawned: true } existing)
+            {
+                if (StrataGravshipUtility.SameShaftFamily(landing, existing))
+                {
+                    return;
+                }
+                // Break a saved colony↔gravship cross-link from older builds.
+                landing.SetDownEntrance(null);
             }
             landing.SetDownEntrance(FindNearbyDigShaft(landing));
         }
@@ -278,7 +295,8 @@ namespace Strata
             float bestDist = float.MaxValue;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing is not Building_StairsDown down || !down.Spawned || !down.PocketMapExists)
+                if (thing is not Building_StairsDown down || !down.Spawned || !down.PocketMapExists
+                    || !StrataGravshipUtility.SameShaftFamily(landing, down))
                 {
                     continue;
                 }

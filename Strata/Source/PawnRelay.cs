@@ -114,14 +114,18 @@ namespace Strata
         // Portal-capable and linked, ignoring the general relay cooldown.
         // Used for owned-bed home commute so a recent food/work trip can't leave
         // someone sleeping on the floor of the wrong level all night.
-        public static bool CanRelayBasics(Pawn pawn)
+        // allowMentalState: binge/berserk chase (A2) — normal relays stay blocked.
+        public static bool CanRelayBasics(Pawn pawn, bool allowMentalState = false)
         {
             if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed)
             {
                 return false;
             }
-            if (!StrataPawnUtility.CanUseLevelPortals(pawn)
-                || pawn.Drafted || pawn.InMentalState || pawn.IsBurning())
+            if (!StrataPawnUtility.CanUseLevelPortals(pawn) || pawn.Drafted || pawn.IsBurning())
+            {
+                return false;
+            }
+            if (!allowMentalState && pawn.InMentalState)
             {
                 return false;
             }
@@ -136,6 +140,11 @@ namespace Strata
                 return false;
             }
             return LevelGraph.AnyLinkFrom(pawn.Map);
+        }
+
+        public static bool CanRelayMentalBreak(Pawn pawn)
+        {
+            return CanRelayBasics(pawn, allowMentalState: true) && !IsOnRelayCooldown(pawn);
         }
 
         public static Job MakeRelayJob(Pawn pawn, MapPortal firstStep)
@@ -215,20 +224,29 @@ namespace Strata
         // Relay toward a level only if fewer than 'cap' pawns are already headed
         // there for the same reason - stops a whole colony stampeding to one job
         // or one free bed. Registers the claim on success and chains multi-hop.
-        public static Job TryClaimAndRelay(Pawn pawn, LevelGraph.LevelLink link, RelayPurpose purpose, int cap)
+        public static Job TryClaimAndRelay(
+            Pawn pawn,
+            LevelGraph.LevelLink link,
+            RelayPurpose purpose,
+            int cap,
+            Building_Bed preferredBed = null)
         {
             if (!RelayClaims.CanClaim(pawn, link.map, purpose, cap))
             {
                 return null;
             }
-            // Take the best portal for THIS pawn (nearest, powered elevators
-            // preferred), not just the first one the level graph found.
-            MapPortal firstStep = LevelGraph.BestFirstStep(pawn.Map, link.map, pawn.Position, pawn) ?? link.firstStep;
+            IntVec3 preferNear = default;
+            if (preferredBed != null && preferredBed.Spawned && preferredBed.Map == link.map)
+            {
+                preferNear = preferredBed.Position;
+            }
+            MapPortal firstStep = LevelGraph.BestFirstStep(
+                pawn.Map, link.map, pawn.Position, pawn, preferNear) ?? link.firstStep;
             Job job = MakeRelayJob(pawn, firstStep);
             if (job != null)
             {
                 RelayClaims.Register(pawn, link.map, purpose);
-                PortalRelayChain.Mark(pawn, link.map, purpose);
+                PortalRelayChain.Mark(pawn, link.map, purpose, preferredBed, preferArrivalNear: preferNear);
             }
             return job;
         }
@@ -372,21 +390,37 @@ namespace Strata
 
         public static bool HasMedicalBedFor(Pawn pawn, Map map)
         {
+            return FindMedicalBedFor(pawn, map) != null;
+        }
+
+        // First free medical colonist bed on the map (arrival cell reachability
+        // checked by the caller via BestFirstStep / portal chain).
+        public static Building_Bed FindMedicalBedFor(Pawn pawn, Map map)
+        {
+            if (pawn == null || map == null)
+            {
+                return null;
+            }
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
             {
-                if (thing is Building_Bed bed
-                    && bed.Faction == Faction.OfPlayer
-                    && bed.def.building.bed_humanlike
-                    && bed.Medical
-                    && !bed.ForPrisoners
-                    && bed.AnyUnoccupiedSleepingSlot
-                    && !bed.IsForbidden(pawn)
-                    && !bed.IsBurning())
+                if (thing is Building_Bed bed && IsMedicalBedCandidate(pawn, bed))
                 {
-                    return true;
+                    return bed;
                 }
             }
-            return false;
+            return null;
+        }
+
+        private static bool IsMedicalBedCandidate(Pawn pawn, Building_Bed bed)
+        {
+            return bed != null
+                && bed.Faction == Faction.OfPlayer
+                && bed.def.building.bed_humanlike
+                && bed.Medical
+                && !bed.ForPrisoners
+                && bed.AnyUnoccupiedSleepingSlot
+                && !bed.IsForbidden(pawn)
+                && !bed.IsBurning();
         }
 
         public static bool HasPatientsNeedingTend(Map map)

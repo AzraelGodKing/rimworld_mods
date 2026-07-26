@@ -158,7 +158,8 @@ namespace Strata
                 // EnterPortal dropped them on a mid landing.
                 if (intent.purpose == RelayPurpose.Childcare
                     || intent.purpose == RelayPurpose.Warden
-                    || intent.purpose == RelayPurpose.Containment)
+                    || intent.purpose == RelayPurpose.Containment
+                    || intent.purpose == RelayPurpose.Rescue)
                 {
                     if (pawn.carryTracker?.CarriedThing is not Pawn)
                     {
@@ -212,6 +213,12 @@ namespace Strata
                 return;
             }
 
+            if (intent.purpose == RelayPurpose.Medical)
+            {
+                FinishMedical(pawn, intent.preferredBedId);
+                return;
+            }
+
             if (intent.purpose == RelayPurpose.Haul)
             {
                 FinishHaul(pawn, returnMapId);
@@ -230,6 +237,12 @@ namespace Strata
                 return;
             }
 
+            if (intent.purpose == RelayPurpose.Rescue)
+            {
+                FinishRescue(pawn, intent.preferredBedId, intent.carriedPawnId);
+                return;
+            }
+
             if (intent.purpose == RelayPurpose.Containment)
             {
                 FinishContainment(pawn, intent.preferredBedId, intent.carriedPawnId);
@@ -238,11 +251,16 @@ namespace Strata
 
             if (intent.purpose == RelayPurpose.ForcedOrder)
             {
+                if (StrataConstructAcrossLevels.TryFinishFetch(pawn))
+                {
+                    return;
+                }
                 CrossLevelOrderedJobs.Finish(pawn);
                 return;
             }
 
-            // Food / work / medical / joy: idle so vanilla jobgivers take over.
+            // Food / work / joy: idle so vanilla jobgivers take over.
+            // Medical finishes above with LayDown on the pinned bed.
         }
 
         private static void FinishHaul(Pawn pawn, int returnMapId)
@@ -284,6 +302,22 @@ namespace Strata
 
             // Never claim a different bed on arrival — ownership was decided
             // before the commute (owned bed or homeless claim).
+            pawn.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, bed), JobCondition.InterruptForced);
+        }
+
+        private static void FinishMedical(Pawn pawn, int preferredBedId)
+        {
+            Building_Bed bed = preferredBedId > 0 ? FindBedById(pawn.Map, preferredBedId) : null;
+            if (bed == null || !bed.Medical || !bed.AnyUnoccupiedSleepingSlot
+                || bed.IsForbidden(pawn) || bed.IsBurning())
+            {
+                bed = PawnRelay.FindMedicalBedFor(pawn, pawn.Map);
+            }
+            if (bed == null || !pawn.CanReach(bed, PathEndMode.OnCell, Danger.Deadly))
+            {
+                return;
+            }
+
             pawn.jobs.StartJob(JobMaker.MakeJob(JobDefOf.LayDown, bed), JobCondition.InterruptForced);
         }
 
@@ -375,6 +409,43 @@ namespace Strata
             Job job = JobMaker.MakeJob(def, prisoner, bed);
             job.count = 1;
             warden.jobs.StartJob(
+                job,
+                JobCondition.InterruptForced,
+                keepCarryingThingOverride: true);
+        }
+
+        private static void FinishRescue(Pawn rescuer, int preferredBedId, int carriedPawnId)
+        {
+            Pawn patient = ResolveCarriedOrNearbyPawn(rescuer, carriedPawnId);
+            if (patient == null)
+            {
+                return;
+            }
+
+            Building_Bed bed = preferredBedId > 0
+                ? FindBedById(rescuer.Map, preferredBedId)
+                : null;
+            if (bed == null || !bed.Spawned || bed.Map != rescuer.Map || bed.ForPrisoners
+                || (!bed.AnyUnoccupiedSleepingSlot && !bed.IsOwner(patient, out _))
+                || !rescuer.CanReach(bed, PathEndMode.OnCell, Danger.Deadly))
+            {
+                bed = RestUtility.FindBedFor(
+                        patient,
+                        rescuer,
+                        checkSocialProperness: false,
+                        ignoreOtherReservations: true)
+                    ?? RestUtility.FindPatientBedFor(patient);
+            }
+
+            if (bed == null || bed.Map != rescuer.Map
+                || !rescuer.CanReach(bed, PathEndMode.OnCell, Danger.Deadly))
+            {
+                return;
+            }
+
+            Job job = JobMaker.MakeJob(JobDefOf.Rescue, patient, bed);
+            job.count = 1;
+            rescuer.jobs.StartJob(
                 job,
                 JobCondition.InterruptForced,
                 keepCarryingThingOverride: true);

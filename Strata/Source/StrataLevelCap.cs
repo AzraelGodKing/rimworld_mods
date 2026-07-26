@@ -4,20 +4,25 @@ namespace Strata
 {
     /// <summary>
     /// V3 hard cap: ±2 from the stack root (colony surface or gravship host) unless Unlimited is on.
-    /// Extra shafts that join an already-open floor skip this (handled by callers before calling).
+    /// Gravship stacks default to ±1 (cannot open a new floor from an already-linked deck);
+    /// Unlimited levels lifts that too. Extra shafts that join an already-open floor skip this
+    /// (handled by callers before calling).
     /// </summary>
     public static class StrataLevelCap
     {
         public const int HardMaxOffset = 2;
 
-        // Gravship stacks are hard-capped at ±1 (one underdeck, one tower deck):
-        // deeper stacks multiply takeoff packing / landing rebuild work and were
-        // the fragile path in travel bugs. Not affected by the Unlimited setting.
+        // Gravship stacks default to ±1 (one underdeck, one tower deck): deeper stacks
+        // multiply takeoff packing / landing rebuild work. Lifted by Unlimited levels.
         public const int GravshipMaxOffset = 1;
 
         private static bool BlockedByGravshipCap(Map map, out string reason)
         {
             reason = null;
+            if (Unlimited)
+            {
+                return false;
+            }
             if (!StrataGravshipUtility.OdysseyActive
                 || !StrataGravshipUtility.IsGravshipLinkedLevel(map))
             {
