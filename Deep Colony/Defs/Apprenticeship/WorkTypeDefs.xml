@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <WorkTypeDef>
+    <defName>DC_Mentoring</defName>
+    <labelShort>mentor</labelShort>
+    <pawnLabel>Mentor</pawnLabel>
+    <gerundLabel>mentoring</gerundLabel>
+    <description>Teach designated apprentices through active mentoring sessions.</description>
+    <verb>Mentor</verb>
+    <naturalPriority>450</naturalPriority>
+    <relevantSkills>
+      <li>Social</li>
+    </relevantSkills>
+    <workTags>
+      <li>Social</li>
+      <li>Commoner</li>
+      <li>AllWork</li>
+    </workTags>
+  </WorkTypeDef>
+
+</Defs>

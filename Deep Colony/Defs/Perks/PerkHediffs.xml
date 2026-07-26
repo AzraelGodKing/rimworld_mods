@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ── Shared base for all perk hediffs ────────────────────────────────────── -->
+  <HediffDef Name="DC_PerkHediffBase" Abstract="True">
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <initialSeverity>0.5</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SHOOTING
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_PracticedEye</defName>
+    <label>practiced eye</label>
+    <description>Trained shooting eye — improved accuracy.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_CrackShot</defName>
+    <label>crack shot</label>
+    <description>Master-level shooting precision.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.09</ShootingAccuracyPawn>
+        </statOffsets>
+        <statFactors>
+          <AimingDelayFactor>0.85</AimingDelayFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MELEE
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_BrawlersInstinct</defName>
+    <label>brawler's instinct</label>
+    <description>Sharper reflexes in close combat.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <MeleeHitChance>0.04</MeleeHitChance>
+          <MeleeDodgeChance>0.03</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_BattleHardened</defName>
+    <label>battle hardened</label>
+    <description>Veteran combat instincts.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <MeleeHitChance>0.08</MeleeHitChance>
+          <MeleeDodgeChance>0.06</MeleeDodgeChance>
+          <PainShockThreshold>0.08</PainShockThreshold>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MEDICINE
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_FirstAidMastery</defName>
+    <label>first aid mastery</label>
+    <description>Improved tending speed and quality.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <MedicalTendQuality>0.08</MedicalTendQuality>
+        </statOffsets>
+        <statFactors>
+          <MedicalTendSpeed>1.15</MedicalTendSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_SurgeonsTouch</defName>
+    <label>surgeon's touch</label>
+    <description>Superior surgical precision.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <MedicalTendQuality>0.12</MedicalTendQuality>
+          <MedicalSurgerySuccessChance>0.10</MedicalSurgerySuccessChance>
+        </statOffsets>
+        <statFactors>
+          <MedicalOperationSpeed>1.20</MedicalOperationSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       CONSTRUCTION
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_BuildersTouch</defName>
+    <label>builder's touch</label>
+    <description>Faster building with less waste.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <ConstructionSpeed>1.15</ConstructionSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_MasterPlanner</defName>
+    <label>master planner</label>
+    <description>Expert construction speed and quality.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <ConstructionSpeed>1.22</ConstructionSpeed>
+        </statFactors>
+        <statOffsets>
+          <ConstructSuccessChance>0.08</ConstructSuccessChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       CRAFTING
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_ArtisansHands</defName>
+    <label>artisan's hands</label>
+    <description>Improved crafting quality.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <GeneralLaborSpeed>1.08</GeneralLaborSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_GrandArtisan</defName>
+    <label>grand artisan</label>
+    <description>Master-level crafting speed and quality.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <GeneralLaborSpeed>1.15</GeneralLaborSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       PLANTS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_GreenTouch</defName>
+    <label>green touch</label>
+    <description>Improved planting speed and harvest yield.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <PlantWorkSpeed>1.12</PlantWorkSpeed>
+        </statFactors>
+        <statOffsets>
+          <PlantHarvestYield>0.06</PlantHarvestYield>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_GardenMaster</defName>
+    <label>garden master</label>
+    <description>Exceptional plant work speed and yield.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <PlantWorkSpeed>1.25</PlantWorkSpeed>
+        </statFactors>
+        <statOffsets>
+          <PlantHarvestYield>0.14</PlantHarvestYield>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       ANIMALS
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_AnimalWhisperer</defName>
+    <label>animal whisperer</label>
+    <description>Improved taming and training chance.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <TameAnimalChance>0.08</TameAnimalChance>
+          <TrainAnimalChance>0.08</TrainAnimalChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_MasterTamer</defName>
+    <label>master tamer</label>
+    <description>Exceptional taming and training mastery.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <TameAnimalChance>0.18</TameAnimalChance>
+          <TrainAnimalChance>0.18</TrainAnimalChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MINING
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_RockEye</defName>
+    <label>rock eye</label>
+    <description>Faster mining from reading the stone.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <MiningSpeed>1.12</MiningSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_DeepProspector</defName>
+    <label>deep prospector</label>
+    <description>Expert mining speed and higher yields.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <MiningSpeed>1.25</MiningSpeed>
+        </statFactors>
+        <statOffsets>
+          <MiningYield>0.10</MiningYield>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       INTELLECTUAL / RESEARCH
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_QuickStudy</defName>
+    <label>quick study</label>
+    <description>Accelerated research and learning.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <ResearchSpeed>1.12</ResearchSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_ScientificPioneer</defName>
+    <label>scientific pioneer</label>
+    <description>Exceptional research speed and insight.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <ResearchSpeed>1.20</ResearchSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SOCIAL
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_CharmingPresence</defName>
+    <label>charming presence</label>
+    <description>Better trade prices and social standing.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <TradePriceImprovement>0.04</TradePriceImprovement>
+          <SocialImpact>0.05</SocialImpact>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_MasterDiplomat</defName>
+    <label>master diplomat</label>
+    <description>Master-level social influence and trade advantage.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <TradePriceImprovement>0.10</TradePriceImprovement>
+          <SocialImpact>0.12</SocialImpact>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       COOKING
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_SeasonedCook</defName>
+    <label>seasoned cook</label>
+    <description>Efficient cooking with reduced prep time.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <CookSpeed>1.15</CookSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_GrandChef</defName>
+    <label>grand chef</label>
+    <description>Master-level cooking speed and zero food poisoning risk.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <CookSpeed>1.22</CookSpeed>
+        </statFactors>
+        <statOffsets>
+          <FoodPoisonChance>-0.10</FoodPoisonChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       ARTISTIC
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_InspiredHand</defName>
+    <label>inspired hand</label>
+    <description>Finer creative work.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <GeneralLaborSpeed>1.08</GeneralLaborSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_MasterArtisan</defName>
+    <label>master artisan</label>
+    <description>Exceptional artistic craftsmanship.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <GeneralLaborSpeed>1.14</GeneralLaborSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>
