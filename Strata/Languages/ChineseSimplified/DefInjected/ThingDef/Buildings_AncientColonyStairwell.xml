@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_AncientColonyStairsDown.label>古代楼梯</Strata_AncientColonyStairsDown.label>
+  <Strata_AncientColonyStairsDown.description>沉入地下的宽石阶，远比周围殖民地更古老。磨损的台阶仍通往可挖成房间与工坊的坚岩——但曾经穿过竖井的电力线早已消失，因此除非附近建造现代楼梯或竖井电力导管，否则每层需单独供电。</Strata_AncientColonyStairsDown.description>
+
+  <Strata_AncientColonyStairsUp.label>古代楼梯落脚点</Strata_AncientColonyStairsUp.label>
+  <Strata_AncientColonyStairsUp.description>古代楼梯的下层落脚点——通往地表的磨损台阶。竖井不通电；请为本层自行供电。</Strata_AncientColonyStairsUp.description>
+
+</LanguageData>

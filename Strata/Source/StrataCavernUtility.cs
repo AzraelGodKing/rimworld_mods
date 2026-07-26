@@ -12,6 +12,11 @@ namespace Strata
             {
                 return false;
             }
+            if (MapGenerator.TryGetVar(StrataNativeCavernUtility.ForceNativeWarrenVar, out bool force)
+                && force)
+            {
+                return true;
+            }
             if (BiomesCavernsUtility.ShouldGenerateCavernLayout(map))
             {
                 return false;

@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
-  <!--
-    AI-assisted fill-in for keys not covered by the community Keyed pack.
-    Do not overwrite GravshipStrings.xml / ShaftFluidStrings.xml (community).
-    Terminology aligned with community DefInjected (уровень, лестница, шахта, гравикорабль).
-  -->
-
   <!-- Mod settings -->
   <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
   <Strata_Settings_LevelHotkeys>Горячие клавиши уровней</Strata_Settings_LevelHotkeys>
+  <Strata_Settings_UnlimitedLevels>Безлимитные уровни</Strata_Settings_UnlimitedLevels>
+  <Strata_Settings_UnlimitedLevelsDesc>Если выключено (по умолчанию), стеки колонии ограничены {0} этажами ниже/выше корня, а стеки гравикорабля — 1 этажом ниже/выше палубы. Дополнительные шахты всё ещё могут присоединиться к уже открытому этажу. Уже существующие более глубокие/высокие стеки продолжают работать. Если включено, снимаются оба лимита (глубокие стеки гравикорабля тяжелее при взлёте/посадке).</Strata_Settings_UnlimitedLevelsDesc>
+  <Strata_LevelCap_MaxBelow>Лимит уровней: нельзя копать ниже B{0}. Включите «Безлимитные уровни» в настройках Strata или копайте с более мелкого этажа.</Strata_LevelCap_MaxBelow>
+  <Strata_LevelCap_MaxAbove>Лимит уровней: нельзя строить выше A{0}. Включите «Безлимитные уровни» в настройках Strata или стройте с более низкого этажа.</Strata_LevelCap_MaxAbove>
+  <Strata_LevelCap_GravshipMax>Лимит уровней гравикорабля: не более {0} уровня выше и {0} уровня ниже палубы корабля. Включите «Безлимитные уровни» в настройках Strata или посадите корабль и копайте с этажа колонии.</Strata_LevelCap_GravshipMax>
   <Strata_Settings_ViewLevelAbove>Смотреть уровень выше</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>Смотреть уровень ниже</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>Нажмите клавишу...</Strata_Settings_PressKey>
@@ -21,6 +19,9 @@
   <Strata_Settings_RobotSoftCompatDesc>Межуровневая маршрутизация роботов Misc. Robots через порталы (возврат на базу, если зарядка на другом уровне). Выключите для проверки, не вызывают ли хуки Strata лаги.</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Маршрут работы Misc. Robots</Strata_Settings_RobotWorkRelay>
   <Strata_Settings_RobotWorkRelayDesc>Если у робота нет локальной работы по переноске/уборке, отправить его через лестницы к связанным уровням с работой. По умолчанию выключено.</Strata_Settings_RobotWorkRelayDesc>
+  <Strata_Settings_ShaftFluid>Жидкостные шахтные узлы</Strata_Settings_ShaftFluid>
+  <Strata_Settings_ShaftFluidDesc>Перенос жидкостей между этажами. Автоотключение при повторяющихся ошибках.</Strata_Settings_ShaftFluidDesc>
+  <Strata_FaultGuardTripped>Strata автоматически отключила {0} после повторяющихся ошибок. Включите снова в настройках мода при необходимости.</Strata_FaultGuardTripped>
   <Strata_Settings_FoodRelay>Маршрут еды</Strata_Settings_FoodRelay>
   <Strata_Settings_FoodRelayDesc>Голодные колонисты ищут еду на другом уровне.</Strata_Settings_FoodRelayDesc>
   <Strata_Settings_RestRelay>Маршрут отдыха</Strata_Settings_RestRelay>
@@ -33,8 +34,8 @@
   <Strata_Settings_CaravanPullDesc>При формировании каравана на поверхности колонисты поднимают ценные товары с связанных подземных уровней.</Strata_Settings_CaravanPullDesc>
   <Strata_Settings_CrossLevelRituals>Ритуалы между уровнями</Strata_Settings_CrossLevelRituals>
   <Strata_Settings_CrossLevelRitualsDesc>Меню ритуала показывает колонистов со всех связанных уровней; остальные идут к ритуалу и присоединяются по прибытии.</Strata_Settings_CrossLevelRitualsDesc>
-  <Strata_Settings_CrossLevelCaravans>Cross-level caravans</Strata_Settings_CrossLevelCaravans>
-  <Strata_Settings_CrossLevelCaravansDesc>The form-caravan dialog lists colonists, prisoners, and colony animals from every linked level; those elsewhere walk to the surface gathering and join when they arrive. Downed pawns on other levels cannot climb and are left out.</Strata_Settings_CrossLevelCaravansDesc>
+  <Strata_Settings_CrossLevelCaravans>Караваны, пересекающие уровни</Strata_Settings_CrossLevelCaravans>
+  <Strata_Settings_CrossLevelCaravansDesc>В диалоговом окне «Форм-караван» перечислены колонисты, заключенные и животные колонии со всех связанных уровней. Те, кто находится на других уровнях, поднимаются на поверхность и присоединяются к остальным по прибытии. Поверженные пешки с других уровней не могут подняться наверх и остаются на месте.</Strata_Settings_CrossLevelCaravansDesc>
   <Strata_Settings_CageSustainHunger>Поддерживать голод птиц в клетке</Strata_Settings_CageSustainHunger>
   <Strata_Settings_CageSustainHungerDesc>Если выключено (по умолчанию), клетки канареек и птиц кормят из запаса сена или комбикорма. Если включено, голод заморожен, пока птица в клетке — запас еды не нужен.</Strata_Settings_CageSustainHungerDesc>
   <Strata_Settings_SmokeGas>Дым и газ</Strata_Settings_SmokeGas>
@@ -57,6 +58,12 @@
   <Strata_Settings_BreathingSimulationDesc>Подземные уровни отслеживают кислород и углекислый газ: колонисты дышат O₂, выдыхают CO₂, O₂ поднимается по шахтам, CO₂ оседает. Выключение очищает оба газа.</Strata_Settings_BreathingSimulationDesc>
   <Strata_Settings_GasOverlayLabels>Подписи комнат на оверлее газа</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>При включённом оверлее газа в настройках игры рисует цветные процентные подписи на каждой закрытой комнате (топ-3 газа + нагрузка). Панель у курсора доступна всегда, когда оверлей включён.</Strata_Settings_GasOverlayLabelsDesc>
+  <Strata_PlaySettings_GasOverlayTip>Strata: отображение наложения данных о газе\nКаждую комнату окрашивает в цвет преобладающего в ней опасного газа. Наведите указатель мыши на комнату, чтобы открыть прикрепленную к курсору панель с данными о газовой смеси. Дополнительные подписи для каждой комнаты: настройки мода Strata → Подписи для комнат с наложением данных о газе.</Strata_PlaySettings_GasOverlayTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata: комбинированные ресурсы уровня — при подсчете ресурсов и затрат на строительство учитываются предметы на каждом связанном уровне.</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_GasOverlay_Load>Нагрузка {0}%</Strata_GasOverlay_Load>
+  <Strata_GasOverlay_LoadParen>  (Нагрузка {0}%)</Strata_GasOverlay_LoadParen>
+  <Strata_GasOverlay_OpenAir>Газ: открытый воздух</Strata_GasOverlay_OpenAir>
+  <Strata_GasOverlay_GasPrefix>Газ: </Strata_GasOverlay_GasPrefix>
   <Strata_Settings_ThreatsPerf>Угрозы и производительность</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>Преследование рейдеров</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>Рейдеры без целей для боя идут за колонистами через незапечатанные лестницы.</Strata_Settings_RaidPursuitDesc>
@@ -108,6 +115,27 @@
   <Strata_Settings_MultiFloorStairs>Лестницы Multifloor</Strata_Settings_MultiFloorStairs>
   <Strata_Settings_MultiFloorStairsDesc>Использовать альтернативную графику из Textures/Strata/Buildings/MultiFloors/ (лестницы с перилами + современный лифт). Мод MultiFloors не требуется.</Strata_Settings_MultiFloorStairsDesc>
   <Strata_Settings_MultiFloorCredit>Эти ресурсы из Multifloors; Telardo может попросить их удалить.</Strata_Settings_MultiFloorCredit>
+  <Strata_Settings_DepthDim>Затемнение верхних палуб</Strata_Settings_DepthDim>
+  <Strata_Settings_DepthDimDesc>При просмотре палубы A+/крыши слегка затемняет весь экран как глубинный акцент. Отдельно от «видеть этаж ниже» — та функция реально рисует карту под открытым небом.</Strata_Settings_DepthDimDesc>
+  <Strata_Settings_DepthDimStrength>Сила затемнения: {0}</Strata_Settings_DepthDimStrength>
+  <Strata_Settings_SeeBelow>Видеть этаж ниже через открытое небо</Strata_Settings_SeeBelow>
+  <Strata_Settings_SeeBelowDesc>На палубах A+ рисует настоящую карту снизу через клетки открытого неба Strata (рельеф, вода, здания, туман войны).</Strata_Settings_SeeBelowDesc>
+  <Strata_Settings_SeeBelowLive>Живые пешки и снаряды снизу</Strata_Settings_SeeBelowLive>
+  <Strata_Settings_SeeBelowLiveDesc>Также рисовать движущиеся объекты с карты ниже при взгляде через открытое небо.</Strata_Settings_SeeBelowLiveDesc>
+  <Strata_Settings_BelowDim>Затемнение вида снизу: {0}</Strata_Settings_BelowDim>
+  <Strata_Settings_BelowThingScale>Масштаб объектов снизу: {0}</Strata_Settings_BelowThingScale>
+  <Strata_Settings_CrossLevelCombat>Стрельба между этажами</Strata_Settings_CrossLevelCombat>
+  <Strata_Settings_CrossLevelCombatDesc>Пешки, турели и миномёты могут стрелять через клетки открытого неба Strata по парному этажу выше или ниже (дальность учитывает вертикальный зазор).</Strata_Settings_CrossLevelCombatDesc>
+  <Strata_Settings_CrossLevelAutoEngage>Автоатака между этажами</Strata_Settings_CrossLevelAutoEngage>
+  <Strata_Settings_CrossLevelAutoEngageDesc>Праздные враги и немобилизованные колонисты с оружием (и турели без локальной цели) сами стреляют через открытое небо. У мобилизованных с «огонь на поражение» — ответный огонь через проём.</Strata_Settings_CrossLevelAutoEngageDesc>
+  <Strata_ReportAttackingAcross>атакует {0} через этажи.</Strata_ReportAttackingAcross>
+  <Strata_NoArcPath>Нет дуги через открытое небо до этой клетки.</Strata_NoArcPath>
+  <Strata_NoGapLine>Нет линии огня через открытое небо до цели.</Strata_NoGapLine>
+  <Strata_MortarTargetSet>{0}: цель миномёта между этажами задана.</Strata_MortarTargetSet>
+  <Strata_TurretTargetSet>{0}: цель турели между этажами задана.</Strata_TurretTargetSet>
+  <Strata_GapLineLost>{0} потеряла линию огня между этажами.</Strata_GapLineLost>
+  <Strata_StopCrossBombard>Стоп огонь между этажами</Strata_StopCrossBombard>
+  <Strata_StopCrossBombardDesc>Отменить текущий приказ турели или миномёта между этажами.</Strata_StopCrossBombardDesc>
   <Strata_Settings_Interface>Интерфейс</Strata_Settings_Interface>
   <Strata_Settings_LinkedColonistsTabs>Уровни Strata на вкладках «Работа» / «Расписание»</Strata_Settings_LinkedColonistsTabs>
   <Strata_Settings_LinkedColonistsTabsDesc>На вкладках «Работа» и «Расписание» появляется флажок «Уровни Strata» (когда у колонии есть выкопанные уровни). Если включён, обе вкладки показывают колонистов со всех связанных уровней, а не только с просматриваемой карты.</Strata_Settings_LinkedColonistsTabsDesc>
@@ -121,7 +149,7 @@
   <Strata_Alert_FlammableGas_Explanation>Горючий газ скапливается в комнате с открытым огнём — факелом, костром или работающей топливной горелкой. Когда газ превысит плотность воспламенения, комната взорвётся. Погасите огонь, проветрите комнату или перейдите на электрический свет.</Strata_Alert_FlammableGas_Explanation>
   <Strata_Alert_CaravanGoods_Label>Товары каравана внизу</Strata_Alert_CaravanGoods_Label>
   <Strata_Alert_CaravanGoods_Explanation>Ценные предметы остаются на связанных подземных уровнях, пока на поверхности формируется караван. Включите подъём товаров в настройках Strata или поднимите их вручную перед уходом.</Strata_Alert_CaravanGoods_Explanation>
-  <Strata_MessageCaravanDownedExcluded>Cannot bring downed pawns from other levels into the caravan (they cannot climb): {0}</Strata_MessageCaravanDownedExcluded>
+  <Strata_MessageCaravanDownedExcluded>Нельзя переносить сбитых пешек с других уровней в караван (они не могут подниматься): {0}</Strata_MessageCaravanDownedExcluded>
   <Strata_Alert_SealedColonists_Label>Колонисты отрезаны</Strata_Alert_SealedColonists_Label>
   <Strata_Alert_SealedColonists_Explanation>Колонисты на связанном уровне, у которого все выходные шахты запечатаны. Они не смогут вернуться, пока лестница или лифт не будут распечатаны.</Strata_Alert_SealedColonists_Explanation>
   <Strata_Alert_Canary_Label>Предупреждение канарейки</Strata_Alert_Canary_Label>
@@ -152,9 +180,24 @@
   <Strata_OnlyWayDown>Это единственный путь вниз.</Strata_OnlyWayDown>
   <Strata_SomeoneBelow>Кто-то всё ещё на уровне ниже.</Strata_SomeoneBelow>
   <Strata_SomeoneAbove>Кто-то всё ещё на уровне выше.</Strata_SomeoneAbove>
+  <Strata_AbandonLevelBelowConfirm>Снос этой лестницы или лифта обрушит связанный нижний уровень, если к нему больше нет другого входа.\n\nВсё на том этаже (постройки, вещи, растения) будет потеряно. Колонисты внизу блокируют снос.\n\nЗабросить связанный уровень?</Strata_AbandonLevelBelowConfirm>
+  <Strata_AbandonLevelAboveConfirm>Снос этой лестницы или лифта обрушит связанный верхний уровень, если к нему больше нет другого входа.\n\nВсё на том этаже (постройки, вещи, растения) будет потеряно. Колонисты сверху блокируют снос.\n\nЗабросить связанный уровень?</Strata_AbandonLevelAboveConfirm>
   <Strata_SmokeShaftSealed>Дымовая шахта: запечатана</Strata_SmokeShaftSealed>
   <Strata_SmokeShaftOpen>Дымовая шахта: пары поднимаются на уровень выше</Strata_SmokeShaftOpen>
-  <Strata_PowerShaft>Энергошахта: связывает сети обоих уровней (подведите проводку каждого этажа к лестнице; держите батареи на каждом уровне)</Strata_PowerShaft>
+  <Strata_PowerShaft>Энергошахта: связывает сети обоих уровней (подведите проводку каждого этажа к лестнице; батареи по желанию — для ночного запаса)</Strata_PowerShaft>
+  <Strata_PowerShaft_FeedingBelow>Питает уровень ниже: {0} Вт из избытка хоста</Strata_PowerShaft_FeedingBelow>
+  <Strata_PowerShaft_DrawingBelow>Берёт с уровня ниже: {0} Вт</Strata_PowerShaft_DrawingBelow>
+  <Strata_PowerShaft_LimitUnlimited>Передача энергии: без ограничения</Strata_PowerShaft_LimitUnlimited>
+  <Strata_PowerShaft_LimitCap>Лимит передачи энергии: {0} Вт</Strata_PowerShaft_LimitCap>
+  <Strata_PowerShaft_DecreaseLimit>Меньше энергии по шахте</Strata_PowerShaft_DecreaseLimit>
+  <Strata_PowerShaft_DecreaseLimitDesc>Снизить лимит ватт через эту шахту (в обе стороны). Из режима «без лимита» сначала ставит 1000 Вт. Shift: шаг −500 Вт.</Strata_PowerShaft_DecreaseLimitDesc>
+  <Strata_PowerShaft_IncreaseLimit>Больше энергии по шахте</Strata_PowerShaft_IncreaseLimit>
+  <Strata_PowerShaft_IncreaseLimitDesc>Поднять лимит ватт через эту шахту. Shift: шаг +500 Вт. «Без лимита» снимает ограничение.</Strata_PowerShaft_IncreaseLimitDesc>
+  <Strata_PowerShaft_Unlimited>Без лимита по шахте</Strata_PowerShaft_Unlimited>
+  <Strata_PowerShaft_UnlimitedDesc>Снять лимит ватт — шахта передаёт столько, сколько сетям нужно и сколько есть в запасе.</Strata_PowerShaft_UnlimitedDesc>
+  <Strata_PowerShaft_AlreadyUnlimited>Уже без ограничения.</Strata_PowerShaft_AlreadyUnlimited>
+  <Strata_CrossLevelThreat_Label>Угроза на другом этаже</Strata_CrossLevelThreat_Label>
+  <Strata_CrossLevelThreat_Text>Враги активны на {0}. Камера перейдёт туда — защитите этаж или запечатайте шахту.</Strata_CrossLevelThreat_Text>
   <Strata_OreHoistDriven>Им управляет рудный подъёмник на уровне выше.</Strata_OreHoistDriven>
   <Strata_OreHoistExtended>Рудный подъёмник опустил бадью на связанный уровень.</Strata_OreHoistExtended>
   <Strata_ShaftConduitDriven>Им управляет проводник на уровне выше.</Strata_ShaftConduitDriven>
@@ -167,6 +210,8 @@
   <Strata_DigDownLabel>Копать вниз</Strata_DigDownLabel>
   <Strata_DigDownFromLandingDesc>Назначьте шахту копки рядом с этой площадкой. Колонисты должны закончить её — та же работа, что у вырытой лестницы — прежде чем откроется следующий уровень. Ниже первого подземного уровня нужно исследование глубокой выемки.</Strata_DigDownFromLandingDesc>
   <Strata_DigDownFromEntranceDesc>Пробейтесь на уровень ниже, когда эта лестница полностью построена, или используйте её, если строительство закончилось до доступности исследования.</Strata_DigDownFromEntranceDesc>
+  <Strata_OpeningLevel>Opening the level below…</Strata_OpeningLevel>
+  <Strata_OpenLevelFailed>Could not open the level below. Check Player.log, then use Dig down again to retry.</Strata_OpenLevelFailed>
 
   <!-- Dig-down utility -->
   <Strata_Dig_InvalidStairwell>Недействительная лестница.</Strata_Dig_InvalidStairwell>
@@ -189,6 +234,7 @@
   <Strata_Place_NeedsGravEngine>Требуется гравитационный двигатель на этой карте.</Strata_Place_NeedsGravEngine>
   <Strata_Place_MustBeSubstructure>Должно быть построено на подконструкции гравикорабля.</Strata_Place_MustBeSubstructure>
   <Strata_Place_NoColonyStairsOnGravship>Нельзя строить колониальные лестницы на гравикорабле. Используйте лестницу гравикорабля.</Strata_Place_NoColonyStairsOnGravship>
+  <Strata_Dig_NoColonyShaftOnGravshipLanding>Нельзя копать колониальный шахтный ствол от площадки гравикорабля. Копайте от площадки колониальной лестницы или откройте другой ствол гравикорабля на корабле.</Strata_Dig_NoColonyShaftOnGravshipLanding>
   <Strata_Place_MustBeOnGasVent>Должно быть размещено на жерле глубинного газа.</Strata_Place_MustBeOnGasVent>
 
   <!-- Gas / atmosphere -->
@@ -262,8 +308,17 @@
   <Strata_RaidersBatteringPortal>Рейдеры ломают запечатанный {0}!</Strata_RaidersBatteringPortal>
   <Strata_GravshipLevelsTravel>Strata: {0} связанный(х) уровень(ней) отправится с гравикораблём.</Strata_GravshipLevelsTravel>
   <Strata_GravshipLevelsDocked>Strata: {0} связанный(х) уровень(ней) пристыкован(о) к гравикораблю.</Strata_GravshipLevelsDocked>
+  <Strata_GravshipTravelViewBlocked>Strata: нельзя открывать подпалубы/башни, пока гравикорабль в полёте (ломает графику при посадке). Открывайте эти этажи после посадки.</Strata_GravshipTravelViewBlocked>
+  <Strata_TravelWithShipOn>Полёт с кораблём: ВКЛ</Strata_TravelWithShipOn>
+  <Strata_TravelWithShipOff>Полёт с кораблём: ВЫКЛ</Strata_TravelWithShipOff>
+  <Strata_TravelWithShipDesc>Когда ВКЛ, связанный этаж этой шахты следует за запуском гравикорабля. Выключите, чтобы оставить этаж на текущей клетке мира.</Strata_TravelWithShipDesc>
   <Strata_GravshipRescuedPawns>Strata: {0} заключённый(х)/младенец(ев) перенесены на гравикорабль, чтобы их не оставили.</Strata_GravshipRescuedPawns>
+  <Strata_CannotRescueNoCrossLevelBed>Cannot rescue: no usable bed on this floor or a linked level.</Strata_CannotRescueNoCrossLevelBed>
   <Strata_GravshipLinkedLeftBehindWarn>Strata: эти пешки вне палубы корабля или на связанном этаже, который не полетит (заключённых/младенцев заберут на борт при старте): {0}</Strata_GravshipLinkedLeftBehindWarn>
+
+  <!-- Lost miners (hostile branch — raid-style attention) -->
+  <Strata_LostMiners_HostileLabel>Враждебные шахтёры</Strata_LostMiners_HostileLabel>
+  <Strata_LostMiners_HostileText>{0} отчаявшихся шахтёров прорвались в ваши подземные выработки и враждебны. Переключитесь на этот уровень — они будут сражаться.</Strata_LostMiners_HostileText>
 
   <!-- Letters -->
   <Strata_AncientStairwellLetterTitle>Древняя лестница</Strata_AncientStairwellLetterTitle>

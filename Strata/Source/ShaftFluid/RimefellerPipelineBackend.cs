@@ -77,6 +77,31 @@ namespace Strata
             return Mathf.Max(0f, NetStored(net));
         }
 
+        public override float NetStorageRoom(object net)
+        {
+            if (net == null || !TryBind())
+            {
+                return 0f;
+            }
+            // No reliable capacity API — treat empty stored as "may need buffer"
+            // and positive stored as having somewhere to go. Soft room for flush.
+            return NetStored(net) > 0.001f ? MaxTransferPerPulse(net) : 0f;
+        }
+
+        public override float PushIntoNet(object net, float amount)
+        {
+            if (!TryBind() || net == null || amount <= 0f || pushMethod == null)
+            {
+                return amount;
+            }
+            object result = pushMethod.Invoke(net, new object[] { amount });
+            if (result is float leftover)
+            {
+                return Mathf.Max(0f, leftover);
+            }
+            return 0f;
+        }
+
         public override bool Transfer(object fromNet, object toNet, float amount, CompShaftFluidTie fromTie = null, CompShaftFluidTie toTie = null)
         {
             if (!TryBind() || fromNet == null || toNet == null || amount <= 0f)
@@ -101,7 +126,8 @@ namespace Strata
             {
                 return false;
             }
-            pushMethod.Invoke(toNet, new object[] { moved });
+            float leftover = PushIntoNet(toNet, moved);
+            ParkLeftover(toTie, leftover);
             return true;
         }
 

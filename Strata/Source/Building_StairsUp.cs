@@ -21,6 +21,10 @@ namespace Strata
 
         internal void SetDownEntrance(Building_StairsDown entrance)
         {
+            if (entrance != null && !StrataGravshipUtility.SameShaftFamily(this, entrance))
+            {
+                return;
+            }
             downEntrance = entrance;
         }
 
@@ -132,10 +136,8 @@ namespace Strata
         protected override void Tick()
         {
             base.Tick();
-            if ((Find.TickManager.TicksGame + Position.GetHashCode()) % 60 == 0)
-            {
-                StairwellPowerUtility.MaintainVerticalTie(this);
-            }
+            // Every tick so pocket loads feel like one net with the host (A4).
+            StairwellPowerUtility.MaintainVerticalTie(this);
         }
 
         public override IEnumerable<Gizmo> GetGizmos()

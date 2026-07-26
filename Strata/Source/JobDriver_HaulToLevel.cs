@@ -40,15 +40,19 @@ namespace Strata
                     return;
                 }
 
-                if (HaulToLevelTargets.TryTake(pawn, out Map destMap, out Map sourceMap)
+                if (HaulToLevelTargets.TryTake(pawn, out Map destMap, out Map sourceMap, out int constructibleId)
                     && destMap != null)
                 {
+                    Thing site = constructibleId > 0
+                        ? StrataPortalUtility.FindThingByIdAcrossMaps(constructibleId)
+                        : null;
                     PortalRelayChain.Mark(
                         pawn,
                         destMap,
                         RelayPurpose.Haul,
                         preferredBed: null,
-                        returnMap: sourceMap);
+                        returnMap: sourceMap,
+                        preferredThing: site);
                 }
 
                 Job enterJob = JobMaker.MakeJob(JobDefOf.EnterPortal, Portal);
@@ -60,17 +64,20 @@ namespace Strata
     }
 
     // Final dest map for HaulToLevel (may be multi-hop past the first stair).
+    // Optional constructibleId: force-build / deliver-resources should finish into
+    // that blueprint/frame instead of a stockpile (or dropping on failed storage).
     internal static class HaulToLevelTargets
     {
         private struct Target
         {
             public int destMapId;
             public int sourceMapId;
+            public int constructibleId;
         }
 
         private static readonly Dictionary<int, Target> pending = new Dictionary<int, Target>();
 
-        internal static void Remember(Pawn pawn, Map destMap, Map sourceMap)
+        internal static void Remember(Pawn pawn, Map destMap, Map sourceMap, Thing constructible = null)
         {
             if (pawn == null || destMap == null || sourceMap == null)
             {
@@ -81,13 +88,15 @@ namespace Strata
             {
                 destMapId = destMap.uniqueID,
                 sourceMapId = sourceMap.uniqueID,
+                constructibleId = constructible != null ? constructible.thingIDNumber : 0,
             };
         }
 
-        internal static bool TryTake(Pawn pawn, out Map destMap, out Map sourceMap)
+        internal static bool TryTake(Pawn pawn, out Map destMap, out Map sourceMap, out int constructibleId)
         {
             destMap = null;
             sourceMap = null;
+            constructibleId = 0;
             if (pawn == null || !pending.TryGetValue(pawn.thingIDNumber, out Target t))
             {
                 return false;
@@ -96,6 +105,7 @@ namespace Strata
             pending.Remove(pawn.thingIDNumber);
             destMap = FindMap(t.destMapId);
             sourceMap = FindMap(t.sourceMapId);
+            constructibleId = t.constructibleId;
             return destMap != null;
         }
 

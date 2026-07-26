@@ -110,8 +110,11 @@ namespace Strata
         private static bool NameSuggestsCombustion(ThingDef def)
         {
             string name = def.defName;
+            // "Chemfuel" is deliberate: the old "Fuel" was too broad and incorrectly
+            // tagged nuclear/hydrogen fuel cells and similar clean generators from
+            // other mods. "Chemfuel" still catches every liquid-combustion generator.
             return name.Contains("Wood") || name.Contains("Coal") || name.Contains("Diesel")
-                || name.Contains("Fuel") || name.Contains("Burn");
+                || name.Contains("Chemfuel") || name.Contains("Burn");
         }
 
         private static bool LooksLikeFlame(ThingDef def)

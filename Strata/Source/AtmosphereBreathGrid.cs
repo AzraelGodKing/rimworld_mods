@@ -351,17 +351,23 @@ namespace Strata
 
         public void PaintCellDensity(float[][] cellDensity, StrataGasDef gas)
         {
-            if (cellDensity == null || gas == null || o2 == null)
+            if (cellDensity == null || gas == null || o2 == null || co2 == null)
             {
                 return;
             }
             int gasIndex = gas.index;
+            if (gasIndex < 0 || gasIndex >= cellDensity.Length)
+            {
+                return;
+            }
             cellDensity[gasIndex] ??= new float[map.cellIndices.NumGridCells];
             float[] plane = cellDensity[gasIndex];
             bool isO2 = gas == StrataGasDefOf.Strata_Oxygen;
-            for (int i = 0; i < plane.Length; i++)
+            float[] source = isO2 ? o2 : co2;
+            int len = Mathf.Min(plane.Length, source.Length);
+            for (int i = 0; i < len; i++)
             {
-                float value = isO2 ? o2[i] : co2[i];
+                float value = source[i];
                 if (value <= 0f)
                 {
                     continue;
@@ -379,12 +385,21 @@ namespace Strata
             IReadOnlyList<Room> rooms = map.regionGrid.AllRooms;
             if (rooms.Count == 0)
             {
+                roomBatchCursor = 0;
                 return;
+            }
+            if (roomBatchCursor >= rooms.Count)
+            {
+                roomBatchCursor = 0;
             }
             int batch = StrataLevelPerfUtility.BreathRoomsPerBatch(map);
             int end = Mathf.Min(rooms.Count, roomBatchCursor + batch);
             for (int i = roomBatchCursor; i < end; i++)
             {
+                if (i >= rooms.Count)
+                {
+                    break;
+                }
                 Room room = rooms[i];
                 if (room == null || room.IsDoorway || RoomIsColonyBuiltCached(room))
                 {
@@ -511,10 +526,23 @@ namespace Strata
             StrataGasDef oxygenDef = StrataGasDefOf.Strata_Oxygen;
             StrataGasDef co2Def = StrataGasDefOf.Strata_CarbonDioxide;
             IReadOnlyList<Room> rooms = map.regionGrid.AllRooms;
+            if (rooms.Count == 0)
+            {
+                roomBatchCursor = 0;
+                return;
+            }
+            if (roomBatchCursor >= rooms.Count)
+            {
+                roomBatchCursor = 0;
+            }
             int batch = StrataLevelPerfUtility.BreathRoomsPerBatch(map);
             int end = Mathf.Min(rooms.Count, roomBatchCursor + batch);
             for (int i = roomBatchCursor; i < end; i++)
             {
+                if (i >= rooms.Count)
+                {
+                    break;
+                }
                 Room room = rooms[i];
                 if (!RoomIsColonyBuiltCached(room))
                 {
@@ -539,10 +567,23 @@ namespace Strata
         private void SyncRoomCloudsBatched(AtmosphereMapComponent atmosphere)
         {
             IReadOnlyList<Room> rooms = map.regionGrid.AllRooms;
+            if (rooms.Count == 0)
+            {
+                roomBatchCursor = 0;
+                return;
+            }
+            if (roomBatchCursor >= rooms.Count)
+            {
+                roomBatchCursor = 0;
+            }
             int batch = StrataLevelPerfUtility.BreathRoomsPerBatch(map);
             int end = Mathf.Min(rooms.Count, roomBatchCursor + batch);
             for (int i = roomBatchCursor; i < end; i++)
             {
+                if (i >= rooms.Count)
+                {
+                    break;
+                }
                 Room room = rooms[i];
                 if (room == null || room.IsDoorway)
                 {

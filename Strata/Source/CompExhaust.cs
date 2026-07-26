@@ -111,8 +111,8 @@ namespace Strata
             if (GasDef == StrataGasDefOf.Strata_Oxygen)
             {
                 return density >= AtmosphereMapComponent.AmbientOxygen - 0.01f
-                    ? "Room air is breathable."
-                    : "Enriching room with " + GasDef.label + " (" + density.ToStringPercent() + ").";
+                    ? "Strata_ExhaustBreathable".Translate()
+                    : "Strata_ExhaustEnriching".Translate(GasDef.label, density.ToStringPercent());
             }
             return "Strata_ExhaustIntoRoom".Translate(GasDef.label);
         }

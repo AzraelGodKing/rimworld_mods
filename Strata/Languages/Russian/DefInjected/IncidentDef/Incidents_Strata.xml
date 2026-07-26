@@ -44,7 +44,7 @@
   <!-- ============ Подземелье: потерянные шахтёры ============ -->
   <Strata_LostMiners.label>потерянные шахтёры</Strata_LostMiners.label>
   <Strata_LostMiners.letterLabel>Потерянные шахтёры</Strata_LostMiners.letterLabel>
-  <Strata_LostMiners.letterText>Небольшая группа шахтёров забрела в ваши выработки из какого-то другого туннеля. Они могут быть благодарны за спасение — или достаточно отчаянны, чтобы сражаться.</Strata_LostMiners.letterText>
+  <Strata_LostMiners.letterText>Небольшая группа шахтёров забрела в ваши выработки из какого-то другого туннеля. Они выглядят измождёнными — и рады снова увидеть живое поселение.</Strata_LostMiners.letterText>
 
   <!-- ============ Поверхность: глубокая осада ============ -->
   <Strata_DeepSiege.label>глубокая осада</Strata_DeepSiege.label>

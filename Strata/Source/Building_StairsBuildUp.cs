@@ -26,7 +26,7 @@ namespace Strata
 
         public override void OpenLevelBelow()
         {
-            if (PocketMapExists)
+            if (PocketMapExists || StrataPocketMapOpen.IsGenerating(this))
             {
                 return;
             }
@@ -38,7 +38,8 @@ namespace Strata
                 }
                 return;
             }
-            _ = PocketMap;
+            StrataPocketMapOpen.ClearFailed(this);
+            StrataPocketMapOpen.TryBeginOpen(this);
         }
 
         protected override Map GeneratePocketMapInt()
@@ -74,7 +75,11 @@ namespace Strata
                     && other is not IStrataGravshipPortal
                     && other.Spawned && other.PocketMapExists)
                 {
-                    return other.PocketMap;
+                    Map pocket = other.PocketMap;
+                    if (pocket != null && !StrataGravshipUtility.IsGravshipLinkedLevel(pocket))
+                    {
+                        return pocket;
+                    }
                 }
             }
             return null;

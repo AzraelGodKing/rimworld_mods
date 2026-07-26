@@ -25,7 +25,12 @@ namespace Strata
 
         internal static void ReconnectJunction(Thing thing)
         {
-            if (!TryBind() || thing?.Spawned != true || !IsRimatomicsJunction(thing))
+            // Soft no-op when Rimatomics isn't loaded (Omni / multi-channel still call us).
+            if (ModLister.GetActiveModWithIdentifier("Dubwise.Rimatomics") == null)
+            {
+                return;
+            }
+            if (thing?.Spawned != true || !IsRimatomicsJunction(thing) || !TryBind())
             {
                 return;
             }

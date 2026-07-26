@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Mod settings -->
+  <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
+  <Strata_Settings_LevelHotkeys>楼层视角快捷键</Strata_Settings_LevelHotkeys>
+  <Strata_Settings_UnlimitedLevels>无限楼层</Strata_Settings_UnlimitedLevels>
+  <Strata_Settings_UnlimitedLevelsDesc>关闭时（默认），殖民地堆叠最多到根以下/以上各 {0} 层，重力飞船堆叠最多到甲板上下各 1 层。额外竖井仍可接入已开放楼层。已有更深/更高的堆叠不受影响。开启后同时取消殖民地与飞船上限（更深的飞船堆叠会加重起飞/着陆负担）。</Strata_Settings_UnlimitedLevelsDesc>
+  <Strata_LevelCap_MaxBelow>楼层上限：无法挖到 B{0} 以下。请在 Strata 设置中启用无限楼层，或从较浅楼层挖掘。</Strata_LevelCap_MaxBelow>
+  <Strata_LevelCap_MaxAbove>楼层上限：无法建到 A{0} 以上。请在 Strata 设置中启用无限楼层，或从较低楼层建造。</Strata_LevelCap_MaxAbove>
+  <Strata_LevelCap_GravshipMax>重力飞船楼层上限：飞船堆叠仅允许甲板上下各 {0} 层。请在 Strata 设置中启用「无限楼层」，或着陆后从殖民地楼层继续挖掘。</Strata_LevelCap_GravshipMax>
+  <Strata_Settings_ViewLevelAbove>查看上层</Strata_Settings_ViewLevelAbove>
+  <Strata_Settings_ViewLevelBelow>查看下层</Strata_Settings_ViewLevelBelow>
+  <Strata_Settings_PressKey>请按键…</Strata_Settings_PressKey>
+  <Strata_Settings_Reset>重置</Strata_Settings_Reset>
+  <Strata_Settings_ColonistRelays>殖民者跨层通勤</Strata_Settings_ColonistRelays>
+  <Strata_Settings_WorkRelay>工作通勤</Strata_Settings_WorkRelay>
+  <Strata_Settings_WorkRelayDesc>空闲殖民者与殖民地机械体前往有工作的其他楼层。默认关闭——仅在需要跨层工作调度时启用。</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_RobotSoftCompat>Misc. Robots 软兼容</Strata_Settings_RobotSoftCompat>
+  <Strata_Settings_RobotSoftCompatDesc>为 Misc. Robots 提供跨层门户路径（充电点在其他楼层时的返回基地）。关闭可对比测试是否由 Strata 机器人钩子导致卡顿。</Strata_Settings_RobotSoftCompatDesc>
+  <Strata_Settings_RobotWorkRelay>Misc. Robots 工作通勤</Strata_Settings_RobotWorkRelay>
+  <Strata_Settings_RobotWorkRelayDesc>当机器人在本地找不到搬运/清洁工作时，经楼梯井前往有工作的相连楼层。默认关闭——需要机器人跨层通勤时再启用。</Strata_Settings_RobotWorkRelayDesc>
+  <Strata_Settings_ShaftFluid>竖井流体接头</Strata_Settings_ShaftFluid>
+  <Strata_Settings_ShaftFluidDesc>跨层流体连接。反复出错时会由故障保护自动关闭。</Strata_Settings_ShaftFluidDesc>
+  <Strata_FaultGuardTripped>Strata 因反复出错已自动关闭 {0}。如需可在模组选项中重新启用。</Strata_FaultGuardTripped>
+  <Strata_Settings_FoodRelay>觅食通勤</Strata_Settings_FoodRelay>
+  <Strata_Settings_FoodRelayDesc>饥饿的殖民者会去其他楼层寻找餐食。</Strata_Settings_FoodRelayDesc>
+  <Strata_Settings_RestRelay>休息通勤</Strata_Settings_RestRelay>
+  <Strata_Settings_RestRelayDesc>所在楼层无床的困倦殖民者会前往已分配床铺，或相连楼层的空闲床铺（优先兵营角色）。</Strata_Settings_RestRelayDesc>
+  <Strata_Settings_MedicalRelay>医疗通勤</Strata_Settings_MedicalRelay>
+  <Strata_Settings_MedicalRelayDesc>病人与医生前往有医疗床或治疗工作的相连楼层。</Strata_Settings_MedicalRelayDesc>
+  <Strata_Settings_JoyRelay>娱乐通勤</Strata_Settings_JoyRelay>
+  <Strata_Settings_JoyRelayDesc>娱乐不足的殖民者前往有餐饮娱乐或娱乐建筑的其他楼层。</Strata_Settings_JoyRelayDesc>
+  <Strata_Settings_CaravanPull>商队从下层取货</Strata_Settings_CaravanPull>
+  <Strata_Settings_CaravanPullDesc>在地表组建商队时，殖民者会从相连地下楼层往上搬运高价值货物。</Strata_Settings_CaravanPullDesc>
+  <Strata_Settings_CrossLevelRituals>跨层仪式</Strata_Settings_CrossLevelRituals>
+  <Strata_Settings_CrossLevelRitualsDesc>仪式菜单列出所有相连楼层的殖民者；在别处的人会走到仪式地点并在抵达后加入。</Strata_Settings_CrossLevelRitualsDesc>
+  <Strata_Settings_CrossLevelCaravans>跨层商队</Strata_Settings_CrossLevelCaravans>
+  <Strata_Settings_CrossLevelCaravansDesc>组建商队对话框列出所有相连楼层的殖民者、囚犯与殖民地动物；在别处的会走到地表集合点并在抵达后加入。其他楼层倒地的单位无法攀爬，不会被纳入。</Strata_Settings_CrossLevelCaravansDesc>
+  <Strata_Settings_CageSustainHunger>笼养鸟类维持饥饿</Strata_Settings_CageSustainHunger>
+  <Strata_Settings_CageSustainHungerDesc>关闭时（默认），金丝雀/鸟笼用库存干草或饲料喂养。开启时，笼中鸟类饥饿冻结——无需存粮。</Strata_Settings_CageSustainHungerDesc>
+  <Strata_Settings_SmokeGas>烟雾与气体</Strata_Settings_SmokeGas>
+  <Strata_Settings_GasSystemWarning>警告：气体系统在大型或多层殖民地上可能造成卡顿。仅在需要大气/烟雾模拟时启用。</Strata_Settings_GasSystemWarning>
+  <Strata_Settings_PollutantGases>污染气体</Strata_Settings_PollutantGases>
+  <Strata_Settings_PollutantGasesDesc>烟雾、甲烷、深层气囊、孢子、蒸汽、黑潮等有害气体。关闭会清除它们、跳过排放/排除/伤害，并在气体叠加层中隐藏。吸入烟雾严重度仅在开启时生效。</Strata_Settings_PollutantGasesDesc>
+  <Strata_Settings_SmokeSimulation>烟雾模拟</Strata_Settings_SmokeSimulation>
+  <Strata_Settings_SmokeSimulationDesc>燃烧装置产生烟雾并在不通风房间中积聚。关闭会清除所有现有烟雾。</Strata_Settings_SmokeSimulationDesc>
+  <Strata_Settings_SmokeSeverity>吸入烟雾严重度：{0}（浓烟对单位造成伤害的速度）</Strata_Settings_SmokeSeverity>
+  <Strata_Settings_UndergroundGas>地下气体</Strata_Settings_UndergroundGas>
+  <Strata_Settings_UndergroundGasDesc>深层气体危险：挖掘可能打穿恶臭深层气囊，也可能出现沉没废墟遗址。密封楼梯井无论此设置如何都含有气体。</Strata_Settings_UndergroundGasDesc>
+  <Strata_Settings_DeepBreathing>深层呼吸</Strata_Settings_DeepBreathing>
+  <Strata_Settings_NaturalGases>天然气体</Strata_Settings_NaturalGases>
+  <Strata_Settings_NaturalGasesDesc>大气呼吸混合气（N₂、O₂、Ar、环境 CO₂）：地表锁定、深度缺氧、植物 CO₂↔O₂ 交换，以及天然气体叠加着色。关闭则空气视为完全可呼吸，无氧气模拟。</Strata_Settings_NaturalGasesDesc>
+  <Strata_Settings_GravshipLifeSupport>重力飞船生命维持（氧气 + 热量）</Strata_Settings_GravshipLifeSupport>
+  <Strata_Settings_GravshipLifeSupportDesc>开启时（默认），与重力飞船相连的下层甲板与舰塔不会免费补充氧气。请使用氧气罐/回收器、普通氧气泵，或通往主机的开放楼梯脐带。发射会把热量排入飞船散热器（或舰内房间）。若 Vanilla Gravship Expanded 已管理热量，则跳过 Strata 发射热量。氧气部分需要启用天然气体。</Strata_Settings_GravshipLifeSupportDesc>
+  <Strata_GravshipOxygenStored>氧气储量：{0} / {1}</Strata_GravshipOxygenStored>
+  <Strata_GravshipHeatsinkStored>热量储量：{0} / {1}</Strata_GravshipHeatsinkStored>
+  <Strata_Settings_BreathingSimulation>氧气 / 二氧化碳模拟</Strata_Settings_BreathingSimulation>
+  <Strata_Settings_BreathingSimulationDesc>地下楼层追踪氧气与二氧化碳：殖民者吸入氧气、呼出二氧化碳，氧气沿竖井上升，二氧化碳下沉。关闭会清除这两种气体。</Strata_Settings_BreathingSimulationDesc>
+  <Strata_Settings_GasOverlayLabels>气体叠加房间标签</Strata_Settings_GasOverlayLabels>
+  <Strata_Settings_GasOverlayLabelsDesc>开启游戏设置中的气体叠加时，在每个封闭房间绘制彩色百分比标签（前三种气体 + 负载）。叠加开启时，光标面板始终可用。</Strata_Settings_GasOverlayLabelsDesc>
+  <Strata_PlaySettings_GasOverlayTip>Strata：显示气体叠加\n按主要有害气体为房间着色。将鼠标移到房间上可查看附着于光标的气体混合面板。可选每房间标签：Strata 模组设置 → 气体叠加房间标签。</Strata_PlaySettings_GasOverlayTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata：合并楼层资源（默认开启）\n资源读数、建造成本与“直到拥有 X”账单会计入每个相连楼层货堆/货架上的物品。</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_GasOverlay_Load>负载 {0}%</Strata_GasOverlay_Load>
+  <Strata_GasOverlay_LoadParen>  （负载 {0}%）</Strata_GasOverlay_LoadParen>
+  <Strata_GasOverlay_OpenAir>气体：开阔空气</Strata_GasOverlay_OpenAir>
+  <Strata_GasOverlay_GasPrefix>气体：</Strata_GasOverlay_GasPrefix>
+  <Strata_Settings_ThreatsPerf>威胁与性能</Strata_Settings_ThreatsPerf>
+  <Strata_Settings_RaidPursuit>袭击追击</Strata_Settings_RaidPursuit>
+  <Strata_Settings_RaidPursuitDesc>没有可打目标的袭击者会经未密封楼梯井追击你的殖民者。</Strata_Settings_RaidPursuitDesc>
+  <Strata_Settings_HibernateEmpty>休眠空楼层</Strata_Settings_HibernateEmpty>
+  <Strata_Settings_HibernateEmptyDesc>空置的 A+ / B+ 口袋地图以每 4 tick 跑 1 次原版环境模拟、每 8 周期跑 1 次 Strata 气体。你正在查看的地图或有单位的楼层保持完全运行。</Strata_Settings_HibernateEmptyDesc>
+  <Strata_Settings_ReduceBackground>降低后台楼层负载</Strata_Settings_ReduceBackground>
+  <Strata_Settings_ReduceBackgroundDesc>当殖民者在你未查看的相连楼层上时，Strata 气体与氧气/二氧化碳以 8× 降速运行并跳过叠加重建。当前查看的地图保持全速。</Strata_Settings_ReduceBackgroundDesc>
+  <Strata_Settings_PerformanceMode>性能模式（总开关）</Strata_Settings_PerformanceMode>
+  <Strata_Settings_PerformanceModeDesc>禁用殖民者工作通勤、Misc. Robots 软兼容与外部 JobGiver 工作通勤。大气模拟降为 4×，所有楼层使用精简批处理氧气/二氧化碳，节流单位气体伤害检查，并在未查看楼层跳过气体微粒。用于对比测试 Strata 卡顿。</Strata_Settings_PerformanceModeDesc>
+  <Strata_Settings_PerformanceModeActive>性能模式已开启 — 跨层工作通勤与机器人软兼容已抑制。</Strata_Settings_PerformanceModeActive>
+  <Strata_Settings_OffThreadAtmosphere>后台线程氧气/二氧化碳扩散</Strata_Settings_OffThreadAtmosphere>
+  <Strata_Settings_OffThreadAtmosphereDesc>在后台线程运行每格洞穴扩散（主线程快照、主线程应用）。减轻大型地下地图卡顿。默认开启；需要天然气体。若怀疑大气异常可关闭。</Strata_Settings_OffThreadAtmosphereDesc>
+  <Strata_Settings_AtmosphereQuality>大气质量</Strata_Settings_AtmosphereQuality>
+  <Strata_Settings_AtmosphereQualityDesc>控制后台楼层气体与氧气/二氧化碳模拟频率。低最省；高保持当前查看楼层更跟手。</Strata_Settings_AtmosphereQualityDesc>
+  <Strata_Settings_AtmosphereQualityLow>低（后台精简）</Strata_Settings_AtmosphereQualityLow>
+  <Strata_Settings_AtmosphereQualityLowDesc>后台楼层大气 8× 降速，房间/植物批处理。动物除非已受影响否则跳过气体伤害。</Strata_Settings_AtmosphereQualityLowDesc>
+  <Strata_Settings_AtmosphereQualityMedium>中（默认）</Strata_Settings_AtmosphereQualityMedium>
+  <Strata_Settings_AtmosphereQualityMediumDesc>查看楼层全速；有人的后台楼层 4× 降速，工作分摊到多个 tick。</Strata_Settings_AtmosphereQualityMediumDesc>
+  <Strata_Settings_AtmosphereQualityHigh>高（完整精度）</Strata_Settings_AtmosphereQualityHigh>
+  <Strata_Settings_AtmosphereQualityHighDesc>所有楼层全速运行大气；若远处楼层氧气均衡明显滞后可选用。</Strata_Settings_AtmosphereQualityHighDesc>
+  <Strata_Settings_RobotDiagnostics>Misc. Robots 诊断</Strata_Settings_RobotDiagnostics>
+  <Strata_Settings_LogRobotDiagnostics>每 600 tick 记录机器人诊断</Strata_Settings_LogRobotDiagnostics>
+  <Strata_Settings_LogRobotDiagnosticsDesc>将会话计数器总量与 60 秒速率写入日志。默认关闭。</Strata_Settings_LogRobotDiagnosticsDesc>
+  <Strata_Settings_RobotDiagLine>{0}：总计 {1}，{2}/60 秒</Strata_Settings_RobotDiagLine>
+  <Strata_Settings_RobotDiagReset>重置机器人诊断计数器</Strata_Settings_RobotDiagReset>
+  <Strata_RobotDiag_RechargeRelayPrefix>充电/返回通勤前缀命中</Strata_RobotDiag_RechargeRelayPrefix>
+  <Strata_RobotDiag_RechargeRelayPostfix>充电/返回通勤后缀修复</Strata_RobotDiag_RechargeRelayPostfix>
+  <Strata_RobotDiag_ReturnBasePortal>Return2Base 门户工作</Strata_RobotDiag_ReturnBasePortal>
+  <Strata_RobotDiag_WorkSeekingCall>工作 JobGiver TryIssueJobPackage（机器人）</Strata_RobotDiag_WorkSeekingCall>
+  <Strata_RobotDiag_WorkRelayHit>工作通勤后缀扫描</Strata_RobotDiag_WorkRelayHit>
+  <Strata_RobotDiag_WorkRelayJob>已发放工作通勤任务</Strata_RobotDiag_WorkRelayJob>
+  <Strata_RobotDiag_EnterPortalJob>EnterPortal 通勤任务（机器人）</Strata_RobotDiag_EnterPortalJob>
+  <Strata_RobotDiag_ReachableLevels>ReachableLevels 调用（机器人路径）</Strata_RobotDiag_ReachableLevels>
+  <Strata_RobotDiag_BestFirstStep>BestFirstStep 调用（机器人路径）</Strata_RobotDiag_BestFirstStep>
+  <Strata_Settings_ShowLevelPerf>在楼层页显示性能</Strata_Settings_ShowLevelPerf>
+  <Strata_Settings_ShowLevelPerfDesc>在楼层页列出每层单位数量与休眠状态。</Strata_Settings_ShowLevelPerfDesc>
+  <Strata_Settings_ExplorationSites>探索任务地点</Strata_Settings_ExplorationSites>
+  <Strata_Settings_ExplorationSitesDesc>揭示沉没废墟、坍塌矿井、密封金库与地热喷口的世界事件。</Strata_Settings_ExplorationSitesDesc>
+  <Strata_Settings_FloodEvents>地下洪水事件</Strata_Settings_FloodEvents>
+  <Strata_Settings_FloodEventsDesc>地下水渗出，淹没已挖掘楼层的局部区域。</Strata_Settings_FloodEventsDesc>
+  <Strata_Settings_NativeCavern>天然洞穴布局</Strata_Settings_NativeCavern>
+  <Strata_Settings_NativeCavernDesc>已挖掘楼层（B1 及更深）生成 Strata 洞穴网络——在坚岩中凿出腔室与隧道，而不是整层保持未开采。</Strata_Settings_NativeCavernDesc>
+  <Strata_Settings_AncientStairwell>古代殖民地楼梯井</Strata_Settings_AncientStairwell>
+  <Strata_Settings_AncientStairwellDesc>部分新殖民地地图会在地表生成一座预制古代楼梯井。无需向下挖掘研究即可打开第一层地下，但不在楼层间传输电力。</Strata_Settings_AncientStairwellDesc>
+  <Strata_Settings_AncientStairwellChance>古代楼梯井生成几率：{0}</Strata_Settings_AncientStairwellChance>
+  <Strata_Settings_BiomesCaverns>Biomes! Caverns 布局</Strata_Settings_BiomesCaverns>
+  <Strata_Settings_BiomesCavernsDesc>启用且已加载 Biomes! Caverns 时，使用 Biomes! 洞穴生成替代 Strata 原生洞穴布局（植物、动物、石笋与晶体）。</Strata_Settings_BiomesCavernsDesc>
+  <Strata_Settings_Appearance>外观</Strata_Settings_Appearance>
+  <Strata_Settings_MultiFloorStairs>多层楼梯美术</Strata_Settings_MultiFloorStairs>
+  <Strata_Settings_MultiFloorStairsDesc>使用 Textures/Strata/Buildings/MultiFloors/ 中捆绑的替代美术（扶手楼梯 + 现代电梯）。不需要 MultiFloors 模组。</Strata_Settings_MultiFloorStairsDesc>
+  <Strata_Settings_MultiFloorCredit>这些资源来自 Multifloors，Telardo 可要求移除。</Strata_Settings_MultiFloorCredit>
+  <Strata_Settings_DepthDim>上层深度暗化</Strata_Settings_DepthDim>
+  <Strata_Settings_DepthDimDesc>查看 A+/屋顶甲板时略微压暗整个画面作为深度氛围。与“透过开阔天空看见下层”分开：后者会真正绘制下层。</Strata_Settings_DepthDimDesc>
+  <Strata_Settings_DepthDimStrength>暗化强度：{0}</Strata_Settings_DepthDimStrength>
+  <Strata_Settings_SeeBelow>透过开阔天空看见下层</Strata_Settings_SeeBelow>
+  <Strata_Settings_SeeBelowDesc>在 A+ 甲板上，透过 Strata 开阔天空格绘制下层真实地图（地形、水面、建筑、迷雾）。</Strata_Settings_SeeBelowDesc>
+  <Strata_Settings_SeeBelowLive>绘制下层活体与抛射物</Strata_Settings_SeeBelowLive>
+  <Strata_Settings_SeeBelowLiveDesc>透过开阔天空时也绘制下层移动中的单位。</Strata_Settings_SeeBelowLiveDesc>
+  <Strata_Settings_BelowDim>开阔天空下层暗化：{0}</Strata_Settings_BelowDim>
+  <Strata_Settings_BelowThingScale>下层物体缩放：{0}</Strata_Settings_BelowThingScale>
+  <Strata_Settings_CrossLevelCombat>跨层远程射击</Strata_Settings_CrossLevelCombat>
+  <Strata_Settings_CrossLevelCombatDesc>单位、炮塔与迫击炮可透过 Strata 开阔天空格射击配对楼层上/下的目标（射程计入垂直落差）。</Strata_Settings_CrossLevelCombatDesc>
+  <Strata_Settings_CrossLevelAutoEngage>跨层自动交火</Strata_Settings_CrossLevelAutoEngage>
+  <Strata_Settings_CrossLevelAutoEngageDesc>空闲敌方与未征召持枪殖民者（以及无本地目标的炮塔）会自动透过开阔天空射击。征召且开启随意开火时也会跨层还击。</Strata_Settings_CrossLevelAutoEngageDesc>
+  <Strata_ReportAttackingAcross>正在跨层攻击{0}。</Strata_ReportAttackingAcross>
+  <Strata_NoArcPath>没有通往该格子的开阔天空弹道。</Strata_NoArcPath>
+  <Strata_NoGapLine>没有通往该目标的开阔天空射界。</Strata_NoGapLine>
+  <Strata_MortarTargetSet>{0}：已设定跨层迫击炮目标。</Strata_MortarTargetSet>
+  <Strata_TurretTargetSet>{0}：已设定跨层炮塔目标。</Strata_TurretTargetSet>
+  <Strata_GapLineLost>{0} 失去了跨层射界。</Strata_GapLineLost>
+  <Strata_StopCrossBombard>停止跨层射击</Strata_StopCrossBombard>
+  <Strata_StopCrossBombardDesc>取消当前跨层炮塔/迫击炮指令。</Strata_StopCrossBombardDesc>
+  <Strata_Settings_Interface>界面</Strata_Settings_Interface>
+  <Strata_Settings_LinkedColonistsTabs>工作/日程中的 Strata 楼层</Strata_Settings_LinkedColonistsTabs>
+  <Strata_Settings_LinkedColonistsTabsDesc>殖民地有挖掘楼层时，工作与日程页显示 Strata 楼层复选框。勾选后两页列出所有相连楼层的殖民者，而非仅当前地图。</Strata_Settings_LinkedColonistsTabsDesc>
+  <Strata_Settings_MergedAbandonWarning>合并遗弃警告</Strata_Settings_MergedAbandonWarning>
+  <Strata_Settings_MergedAbandonWarningDesc>遗弃仍有下层单位的定居点时，显示一条合并警告列出所有被留下者（地表与地下）。关闭则分两次提示。</Strata_Settings_MergedAbandonWarningDesc>
+
+  <!-- Alerts -->
+  <Strata_Alert_SmokeVacant_Label>地下气体建筑</Strata_Alert_SmokeVacant_Label>
+  <Strata_Alert_SmokeVacant_Explanation>有害气体正在无人殖民者所在的楼层积聚。下面有东西在燃烧或渗漏且通风失效——下一个走进去的人会直接吸入。</Strata_Alert_SmokeVacant_Explanation>
+  <Strata_Alert_FlammableGas_Label>易燃气体靠近明火</Strata_Alert_FlammableGas_Label>
+  <Strata_Alert_FlammableGas_Explanation>易燃气体正在含有明火的房间积聚——火把、篝火或运行中的燃料燃烧器。气体超过点火浓度时房间会爆炸。熄灭火源、通风，或改用电灯。</Strata_Alert_FlammableGas_Explanation>
+  <Strata_Alert_CaravanGoods_Label>商队货物在下层</Strata_Alert_CaravanGoods_Label>
+  <Strata_Alert_CaravanGoods_Explanation>地表正在组建商队时，相连地下楼层仍有贵重物品。在 Strata 设置中启用商队取货，或出发前手动往上搬运。</Strata_Alert_CaravanGoods_Explanation>
+  <Strata_MessageCaravanDownedExcluded>无法将其他楼层倒地单位带入商队（他们无法攀爬）：{0}</Strata_MessageCaravanDownedExcluded>
+  <Strata_Alert_SealedColonists_Label>殖民者被密封隔绝</Strata_Alert_SealedColonists_Label>
+  <Strata_Alert_SealedColonists_Explanation>殖民者所在相连楼层的所有出口竖井均已密封。在解封楼梯井或电梯前无法返回。</Strata_Alert_SealedColonists_Explanation>
+  <Strata_Alert_Canary_Label>金丝雀警报</Strata_Alert_Canary_Label>
+  <Strata_Alert_Canary_Explanation>笼中矿用金丝雀因空气恶劣而痛苦或死亡。金丝雀比殖民者更早倒下——在人们开始咳嗽、窒息或更糟之前通风或撤离。</Strata_Alert_Canary_Explanation>
+  <Strata_Alert_SleepBedNotFound_Label>找不到床铺</Strata_Alert_SleepBedNotFound_Label>
+  <Strata_Alert_SleepBedNotFound_Explanation>殖民者需要睡觉，但 Strata 在其楼层及任何相连楼层（地面、上方或下方）都找不到空闲床铺。请建造或腾出殖民者床，或手动分配。</Strata_Alert_SleepBedNotFound_Explanation>
+
+  <!-- Levels tab / roles -->
+  <Strata_RenameLevelPrompt>重命名此楼层：</Strata_RenameLevelPrompt>
+  <Strata_LevelSurface>地表</Strata_LevelSurface>
+  <Strata_LevelSurfaceNamed>地表 — {0}</Strata_LevelSurfaceNamed>
+  <Strata_LevelAbove>上层 +{0}</Strata_LevelAbove>
+  <Strata_LevelBelow>下层 {0}</Strata_LevelBelow>
+  <Strata_Role_None>无</Strata_Role_None>
+  <Strata_Role_Freezer>冷库</Strata_Role_Freezer>
+  <Strata_Role_Barracks>兵营</Strata_Role_Barracks>
+  <Strata_Role_Workshop>工坊</Strata_Role_Workshop>
+  <Strata_Role_Hospital>医院</Strata_Role_Hospital>
+  <Strata_Role_Storage>仓储</Strata_Role_Storage>
+
+  <!-- Stairwells / shafts -->
+  <Strata_StairsConnectedBelow>打通到下方已有楼层。</Strata_StairsConnectedBelow>
+  <Strata_StairsConnectedAbove>连接到上方已有楼层。</Strata_StairsConnectedAbove>
+  <Strata_GravshipConnectedBelow>打通到下方已有重力飞船甲板。</Strata_GravshipConnectedBelow>
+  <Strata_GravshipConnectedAbove>连接到上方已有重力飞船甲板。</Strata_GravshipConnectedAbove>
+  <Strata_LandingRepositioned>楼梯井落脚点已重新置于上方竖井正下方。</Strata_LandingRepositioned>
+  <Strata_OnlyWayUp>这是唯一向上的路。</Strata_OnlyWayUp>
+  <Strata_OnlyWayDown>这是唯一向下的路。</Strata_OnlyWayDown>
+  <Strata_SomeoneBelow>下方楼层仍有人。</Strata_SomeoneBelow>
+  <Strata_SomeoneAbove>上方楼层仍有人。</Strata_SomeoneAbove>
+  <Strata_AbandonLevelBelowConfirm>拆除此楼梯或电梯将在没有其他连接时坍塌下方关联楼层。\n\n该层上的建筑、物品、植物都会丢失。下方仍有殖民者时无法拆除。\n\n确认放弃关联楼层？</Strata_AbandonLevelBelowConfirm>
+  <Strata_AbandonLevelAboveConfirm>拆除此楼梯或电梯将在没有其他连接时坍塌上方关联楼层。\n\n该层上的建筑、物品、植物都会丢失。上方仍有殖民者时无法拆除。\n\n确认放弃关联楼层？</Strata_AbandonLevelAboveConfirm>
+  <Strata_SmokeShaftSealed>烟雾竖井：已密封</Strata_SmokeShaftSealed>
+  <Strata_SmokeShaftOpen>烟雾竖井：烟气升至上层</Strata_SmokeShaftOpen>
+  <Strata_PowerShaft>电力竖井：连接两层电网（每层接线到楼梯井；电池可选，用于夜间蓄电）</Strata_PowerShaft>
+  <Strata_PowerShaft_FeedingBelow>向下层供电：{0} W（主机盈余）</Strata_PowerShaft_FeedingBelow>
+  <Strata_PowerShaft_DrawingBelow>从下层取电：{0} W</Strata_PowerShaft_DrawingBelow>
+  <Strata_PowerShaft_LimitUnlimited>电力传输：无限制</Strata_PowerShaft_LimitUnlimited>
+  <Strata_PowerShaft_LimitCap>电力传输上限：{0} W</Strata_PowerShaft_LimitCap>
+  <Strata_PowerShaft_DecreaseLimit>降低竖井供电</Strata_PowerShaft_DecreaseLimit>
+  <Strata_PowerShaft_DecreaseLimitDesc>降低该竖井双向瓦特上限。从“无限制”起先设为 1000 W。按住 Shift 每次 −500 W。</Strata_PowerShaft_DecreaseLimitDesc>
+  <Strata_PowerShaft_IncreaseLimit>提高竖井供电</Strata_PowerShaft_IncreaseLimit>
+  <Strata_PowerShaft_IncreaseLimitDesc>提高该竖井瓦特上限。按住 Shift 每次 +500 W。点“无限制”可取消上限。</Strata_PowerShaft_IncreaseLimitDesc>
+  <Strata_PowerShaft_Unlimited>竖井供电无限制</Strata_PowerShaft_Unlimited>
+  <Strata_PowerShaft_UnlimitedDesc>取消瓦特上限，竖井按两侧电网需求与盈余尽量传输。</Strata_PowerShaft_UnlimitedDesc>
+  <Strata_PowerShaft_AlreadyUnlimited>已经是无限制。</Strata_PowerShaft_AlreadyUnlimited>
+  <Strata_CrossLevelThreat_Label>其他楼层有威胁</Strata_CrossLevelThreat_Label>
+  <Strata_CrossLevelThreat_Text>{0} 上有敌对单位活动。镜头将跳转过去——防守该层或密封通道。</Strata_CrossLevelThreat_Text>
+  <Strata_OreHoistDriven>由上层的矿石吊车驱动。</Strata_OreHoistDriven>
+  <Strata_OreHoistExtended>矿石吊车已向相连楼层延伸吊斗。</Strata_OreHoistExtended>
+  <Strata_ShaftConduitDriven>由上层的导管驱动。</Strata_ShaftConduitDriven>
+  <Strata_ShaftConduitExtended>竖井导管已向下层延伸接头。</Strata_ShaftConduitExtended>
+  <Strata_FluidJunctionExtended>竖井流体接头已向下层延伸接头。</Strata_FluidJunctionExtended>
+  <Strata_SealStairwell>密封楼梯井</Strata_SealStairwell>
+  <Strata_SealElevator>密封电梯</Strata_SealElevator>
+  <Strata_SealDesc>封闭此通道。无人可通过，楼层间空气与气体也不流动——用于把毒气、烟雾或感染限制在一层。</Strata_SealDesc>
+  <Strata_Sealed>已密封</Strata_Sealed>
+  <Strata_DigDownLabel>向下挖掘</Strata_DigDownLabel>
+  <Strata_DigDownFromLandingDesc>在此落脚点旁指定挖掘竖井。殖民者必须完工开凿——与开挖楼梯井相同——才会打开下一层。第一层地下以下需要深层挖掘研究。</Strata_DigDownFromLandingDesc>
+  <Strata_DigDownFromEntranceDesc>楼梯井完全建成后打通下方楼层；若研究未完成但建造已完成也可使用。</Strata_DigDownFromEntranceDesc>
+  <Strata_OpeningLevel>正在打开下层…</Strata_OpeningLevel>
+  <Strata_OpenLevelFailed>无法打开下层。请查看 Player.log，然后再次使用「向下挖掘」重试。</Strata_OpenLevelFailed>
+
+  <!-- Dig-down utility -->
+  <Strata_Dig_InvalidStairwell>无效楼梯井。</Strata_Dig_InvalidStairwell>
+  <Strata_Dig_OnlyUnderground>仅地下可向下挖掘。</Strata_Dig_OnlyUnderground>
+  <Strata_Dig_MustBeColony>必须属于殖民地。</Strata_Dig_MustBeColony>
+  <Strata_Dig_AlreadyBelow>此楼梯井已通向下方楼层。</Strata_Dig_AlreadyBelow>
+  <Strata_Dig_ShaftUnderConstruction>挖掘竖井仍在建造中。</Strata_Dig_ShaftUnderConstruction>
+  <Strata_Dig_NoRoomNearby>附近没有可开凿下行楼梯井的空间。</Strata_Dig_NoRoomNearby>
+  <Strata_Dig_LevelAlreadyOpen>下方楼层已开放。</Strata_Dig_LevelAlreadyOpen>
+  <Strata_Dig_UnsealFirst>请先解封楼梯井。</Strata_Dig_UnsealFirst>
+  <Strata_Dig_FailedOpen>无法打开下方楼层。</Strata_Dig_FailedOpen>
+  <Strata_Dig_BrokeThroughNew>打通到新的下方楼层。</Strata_Dig_BrokeThroughNew>
+  <Strata_Dig_CouldNotPlaceShaft>无法放置挖掘竖井。</Strata_Dig_CouldNotPlaceShaft>
+
+  <!-- Place workers -->
+  <Strata_Place_MustBeIndoors>必须建在室内。</Strata_Place_MustBeIndoors>
+  <Strata_Place_MustBeShaftRoom>必须建在楼梯井或电梯房间内。</Strata_Place_MustBeShaftRoom>
+  <Strata_Place_RequiresOdyssey>需要奥德赛 DLC。</Strata_Place_RequiresOdyssey>
+  <Strata_Place_GravshipNotLinkedLevel>请在飞船甲板上建造重力飞船楼梯，而非相连的 Strata 楼层。</Strata_Place_GravshipNotLinkedLevel>
+  <Strata_Place_NeedsGravEngine>此地图需要重力引擎。</Strata_Place_NeedsGravEngine>
+  <Strata_Place_MustBeSubstructure>必须建在重力飞船子结构上。</Strata_Place_MustBeSubstructure>
+  <Strata_Place_NoColonyStairsOnGravship>不能在重力飞船上建造殖民地楼梯。请改用重力飞船楼梯井。</Strata_Place_NoColonyStairsOnGravship>
+  <Strata_Dig_NoColonyShaftOnGravshipLanding>不能从重力飞船落点向下挖殖民地竖井。请从殖民地楼梯落点挖掘，或在飞船上另开重力飞船竖井。</Strata_Dig_NoColonyShaftOnGravshipLanding>
+  <Strata_Place_MustBeOnGasVent>必须放置在深层气体喷口上。</Strata_Place_MustBeOnGasVent>
+
+  <!-- Gas / atmosphere -->
+  <Strata_GasIgnitionLetterTitle>气体引爆</Strata_GasIgnitionLetterTitle>
+  <Strata_GasIgnitionLetterText>一团易燃气体接触 {0} 后引爆。爆炸在房间留下黑潮——派人回去前请先通风并恢复氧气。让明火远离气体渗漏，或用电灯采矿。</Strata_GasIgnitionLetterText>
+  <Strata_GasScrubberNeedsPower>需要电力以清除 {0}。</Strata_GasScrubberNeedsPower>
+  <Strata_ExhaustNeedsPower>需要电力以向房间补充 {0}。</Strata_ExhaustNeedsPower>
+  <Strata_ExhaustOpenAir>释放 {0}（开阔空气——无需富集）。</Strata_ExhaustOpenAir>
+  <Strata_ExhaustIntoRoom>向房间释放 {0}。</Strata_ExhaustIntoRoom>
+  <Strata_ExhaustVentIntake>进气侧必须朝向封闭房间。</Strata_ExhaustVentIntake>
+  <Strata_ExhaustVentNoOutdoors>管道未通到室外——风扇无法排气。</Strata_ExhaustVentNoOutdoors>
+  <Strata_GasExchangerShaft>必须位于楼梯井或电梯房间内才能在楼层间交换气体。</Strata_GasExchangerShaft>
+  <Strata_GasExchangerActive>沿竖井向上输送氧气、向下输送二氧化碳。</Strata_GasExchangerActive>
+  <Strata_GasExchangerNeedsPower>需要电力以加强气体交换。</Strata_GasExchangerNeedsPower>
+  <Strata_SmokeUpdraftShaft>必须位于楼梯井或电梯房间内才能向上排烟。</Strata_SmokeUpdraftShaft>
+  <Strata_SmokeUpdraftActive>将烟雾沿竖井向上抽。</Strata_SmokeUpdraftActive>
+  <Strata_SmokeUpdraftNeedsPower>需要电力以加强上升气流。</Strata_SmokeUpdraftNeedsPower>
+  <Strata_GasWellNoVent>下方无深层气体喷口——没有产出。</Strata_GasWellNoVent>
+  <Strata_ShoringInspect>在 {0} 格范围内加固岩顶。</Strata_ShoringInspect>
+  <Strata_OreHoistNeedsPartner>需要另一楼层的相连伙伴吊车。</Strata_OreHoistNeedsPartner>
+  <Strata_OreHoistPowered>已通电 — 正在向伙伴楼层运送矿石块。</Strata_OreHoistPowered>
+  <Strata_OreHoistNeedsPowerSkip>需要电力以运行吊斗。</Strata_OreHoistNeedsPowerSkip>
+  <Strata_GasScrubberScrubbing>正在从房间清除 {0}。</Strata_GasScrubberScrubbing>
+  <Strata_GasScrubberNone>没有可清除的 {0}。</Strata_GasScrubberNone>
+  <Strata_TremorOpenedStairwell>震动震开了一座密封楼梯井。</Strata_TremorOpenedStairwell>
+
+  <!-- Shaft fluid ties -->
+  <Strata_FluidTie_DrivenAbove>连接：由上层接头驱动</Strata_FluidTie_DrivenAbove>
+  <Strata_FluidTie_LinkedBelow>连接：已链接到下层接头</Strata_FluidTie_LinkedBelow>
+  <Strata_FluidTie_NoShaft>连接：附近没有竖井 — 请建在楼梯井或电梯几格之内</Strata_FluidTie_NoShaft>
+  <Strata_FluidTie_WaitingBelow>连接：等待打开下方楼层</Strata_FluidTie_WaitingBelow>
+
+  <!-- Caged birds / canaries -->
+  <Strata_Cage_AlreadyHolds>{0} 已装有一只 {1}。</Strata_Cage_AlreadyHolds>
+  <Strata_Cage_Assigned>{0} 现已放入 {1}。</Strata_Cage_Assigned>
+  <Strata_Cage_Released>{0} 已离开 {1}。</Strata_Cage_Released>
+  <Strata_Cage_Assign>放入 {0}</Strata_Cage_Assign>
+  <Strata_Cage_Release>放出 {0}</Strata_Cage_Release>
+  <Strata_Cage_ReleaseDesc>让 {0} 离开笼子。它会留在这一格。</Strata_Cage_ReleaseDesc>
+  <Strata_Cage_AssignLabel>放入 {0}</Strata_Cage_AssignLabel>
+  <Strata_Cage_AssignDescSustain>将附近一只驯服的 {0} 放入此笼。笼养期间饥饿由模组设置维持。</Strata_Cage_AssignDescSustain>
+  <Strata_Cage_AssignDescFeed>将附近一只驯服的 {0} 放入此笼。请在笼中存放食物喂养。</Strata_Cage_AssignDescFeed>
+  <Strata_Cage_NoNearby>附近没有 {0}</Strata_Cage_NoNearby>
+  <Strata_Cage_DeadBody>死去的 {0} — 移走尸体后再放入或获取另一只。</Strata_Cage_DeadBody>
+  <Strata_Canary_WrongBirdCage>金丝雀笼只能放矿用金丝雀 — 其他鸟类请用鸟笼。</Strata_Canary_WrongBirdCage>
+  <Strata_Canary_NotMineCanary>不是矿用金丝雀。</Strata_Canary_NotMineCanary>
+  <Strata_Canary_Died>{0} 中的金丝雀死于 {1} — 空气已致命。</Strata_Canary_Died>
+  <Strata_Canary_NeedHay>需要附近有 {0} 干草才能为 {1} 获取金丝雀。</Strata_Canary_NeedHay>
+  <Strata_Canary_KindMissing>未加载矿用金丝雀种类。</Strata_Canary_KindMissing>
+  <Strata_Canary_Acquired>一只矿用金丝雀现已放入 {0}。</Strata_Canary_Acquired>
+  <Strata_Canary_ReplaceLabel>更换金丝雀</Strata_Canary_ReplaceLabel>
+  <Strata_Canary_AcquireLabel>获取金丝雀</Strata_Canary_AcquireLabel>
+  <Strata_Canary_AcquireDesc>生成一只矿用金丝雀（{0} 干草）。此笼只能放矿用金丝雀。</Strata_Canary_AcquireDesc>
+  <Strata_Canary_DeadInspect>金丝雀已死{0}。用 {1} 干草更换，或放入另一只矿用金丝雀。</Strata_Canary_DeadInspect>
+  <Strata_Canary_EmptyInspect>空笼 — 放入附近矿用金丝雀，或获取一只（{0} 干草）。</Strata_Canary_EmptyInspect>
+  <Strata_Canary_Distressed>金丝雀不适 — {0}（在殖民者生病前通风）。</Strata_Canary_Distressed>
+  <Strata_Canary_AirSafe> 目前空气看起来安全。</Strata_Canary_AirSafe>
+  <Strata_CageFood_Full>{0} 的食物储存已满。</Strata_CageFood_Full>
+  <Strata_CageFood_NoFood>附近没有可装入 {0} 的鸟食。</Strata_CageFood_NoFood>
+  <Strata_CageFood_Stocked>已为 {0} 装入 {1}。</Strata_CageFood_Stocked>
+  <Strata_CageFood_StockLabel>装填食物</Strata_CageFood_StockLabel>
+  <Strata_CageFood_StockDesc>从附近向此笼装入最多 {0} 堆干草或其他鸟食。</Strata_CageFood_StockDesc>
+  <Strata_CageFood_SustainMode>笼养喂食：饥饿维持（模组设置）。</Strata_CageFood_SustainMode>
+  <Strata_CageFood_Empty>笼内无粮 — 装填干草或饲料。</Strata_CageFood_Empty>
+  <Strata_CageFood_Count>笼内食物：{0} / {1}</Strata_CageFood_Count>
+
+  <!-- Raids / gravship -->
+  <Strata_RaidersFoundPortal>袭击者发现了{0}，正在{1}追击你的殖民者！</Strata_RaidersFoundPortal>
+  <Strata_RaidersDirectionDown>向下</Strata_RaidersDirectionDown>
+  <Strata_RaidersDirectionUp>向上</Strata_RaidersDirectionUp>
+  <Strata_RaidersBatteringPortal>袭击者正在砸开密封的{0}！</Strata_RaidersBatteringPortal>
+  <Strata_GravshipLevelsTravel>Strata：{0} 个相连楼层将随重力飞船同行。</Strata_GravshipLevelsTravel>
+  <Strata_GravshipLevelsDocked>Strata：{0} 个相连楼层已与重力飞船对接。</Strata_GravshipLevelsDocked>
+  <Strata_GravshipTravelViewBlocked>Strata：重力飞船飞行中无法查看下层甲板/舰塔（会导致着陆画面损坏）。着陆后再打开那些楼层。</Strata_GravshipTravelViewBlocked>
+  <Strata_TravelWithShipOn>随船同行：开</Strata_TravelWithShipOn>
+  <Strata_TravelWithShipOff>随船同行：关</Strata_TravelWithShipOff>
+  <Strata_TravelWithShipDesc>开启时，此竖井相连楼层随重力飞船发射同行。关闭则把该楼层留在当前世界地块。</Strata_TravelWithShipDesc>
+  <Strata_GravshipRescuedPawns>Strata：已将 {0} 名囚犯/婴儿移上重力飞船，以免被留下。</Strata_GravshipRescuedPawns>
+  <Strata_CannotRescueNoCrossLevelBed>无法救援：本层或关联楼层没有可用床位。</Strata_CannotRescueNoCrossLevelBed>
+  <Strata_GravshipLinkedLeftBehindWarn>Strata：这些单位不在飞船甲板，或位于不会同行的相连楼层（囚犯/婴儿会在发射时被拉上船）：{0}</Strata_GravshipLinkedLeftBehindWarn>
+
+  <!-- Lost miners (hostile branch — raid-style attention) -->
+  <Strata_LostMiners_HostileLabel>敌对矿工</Strata_LostMiners_HostileLabel>
+  <Strata_LostMiners_HostileText>{0} 名绝望的矿工闯入你的地下巷道且怀有敌意。快看那一层——他们会动手。</Strata_LostMiners_HostileText>
+
+  <!-- Letters -->
+  <Strata_AncientStairwellLetterTitle>古代楼梯井</Strata_AncientStairwellLetterTitle>
+  <Strata_AncientStairwellLetterText>着陆区不远处，石阶沉入岩层。看起来足够稳固可下——下方岩石也可挖成房间——但竖井不通电力。请各自为每层布线，或建造现代楼梯井/竖井导管以共享电网。</Strata_AncientStairwellLetterText>
+
+</LanguageData>

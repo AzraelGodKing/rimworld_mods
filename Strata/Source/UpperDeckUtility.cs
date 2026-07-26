@@ -13,6 +13,15 @@ namespace Strata
     {
         public const string RoofDeckDefName = "Strata_RoofDeck";
         public const string OpenSkyDefName = "Strata_OpenSky";
+
+        /// <summary>
+        /// True open-sky holes only. Walkable roof-deck pads are opaque local floor
+        /// (select/draw like the surface); see-below must not punch through them.
+        /// </summary>
+        public static bool IsSeeThroughGap(TerrainDef terrain)
+        {
+            return terrain != null && terrain.defName == OpenSkyDefName;
+        }
         public const float DefaultPlazaRadius = 6.5f;
 
         // Set while painting a whole upper map so per-cell SetRoof noise skips sync.
@@ -54,8 +63,12 @@ namespace Strata
             {
                 return false;
             }
-            IntVec3 below = StrataMapUtility.ProportionalCell(upperCell, upper, source);
-            return SourceCellSupportsDeck(source, below, IsGravshipLinkedUpper(upper));
+            bool gravship = IsGravshipLinkedUpper(upper);
+            // Gravship decks are raw 1:1 with the host regardless of map size.
+            IntVec3 below = gravship
+                ? upperCell
+                : StrataMapUtility.ProportionalCell(upperCell, upper, source);
+            return SourceCellSupportsDeck(source, below, gravship);
         }
 
         private static bool IsGravshipLinkedUpper(Map upper)
@@ -106,7 +119,8 @@ namespace Strata
             SuspendRoofSync = true;
             try
             {
-                if (source != null && source.Size == upper.Size)
+                // Gravship decks: raw 1:1 even when the host map size differs.
+                if (source != null && (gravshipLinked || source.Size == upper.Size))
                 {
                     PaintSameSize(upper, source, deck, sky, gravshipLinked);
                 }
@@ -299,6 +313,79 @@ namespace Strata
             }
         }
 
+        // Deck that lost its support below (ship took off / moved, roof removed
+        // via RemoveRoofUnsafe which bypasses the SetRoof hook) never shrank.
+        // Collect unsupported, unoccupied RoofDeck and clear it — inline when
+        // small, deferred drain when large (section-corruption guard).
+        public static int SweepUnsupportedDeck(Map upper)
+        {
+            if (upper == null || !StrataMapUtility.IsUpperLevel(upper))
+            {
+                return 0;
+            }
+            Map source = SourceMapFor(upper);
+            if (source == null)
+            {
+                return 0;
+            }
+            // Gravship uppers: never shrink while the host footprint is still
+            // rebuilding — an empty substructure set would wipe the whole deck.
+            if (IsGravshipLinkedUpper(upper)
+                && !StrataGravshipUtility.EngineHasSubstructure(
+                    StrataGravshipUtility.FindGravEngine(source)
+                    ?? StrataGravshipUtility.FindGravEngineOnMap(source)))
+            {
+                return 0;
+            }
+
+            var toClear = new List<IntVec3>(64);
+            foreach (IntVec3 cell in upper.AllCells)
+            {
+                bool ghostDeck = cell.GetTerrain(upper)?.defName == RoofDeckDefName;
+                bool staleSub = StrataGravshipSubstructureSync.SubstructureAt(upper, cell) != null;
+                if (!ghostDeck && !staleSub)
+                {
+                    continue;
+                }
+                if (SourceSupportsUpperDeck(upper, cell, source))
+                {
+                    continue;
+                }
+                if (CellHasPreservableStuff(cell, upper))
+                {
+                    continue;
+                }
+                toClear.Add(cell);
+            }
+            if (toClear.Count == 0)
+            {
+                return 0;
+            }
+            if (toClear.Count > 256)
+            {
+                StrataDeferredCellClear.Enqueue(upper, toClear);
+                return toClear.Count;
+            }
+            for (int i = 0; i < toClear.Count; i++)
+            {
+                IntVec3 cell = toClear[i];
+                Thing sub = StrataGravshipSubstructureSync.SubstructureAt(upper, cell);
+                if (sub != null && !sub.Destroyed)
+                {
+                    sub.Destroy(DestroyMode.Vanish);
+                }
+                upper.GetComponent<MapComponent_StrataProjectedSubstructure>()?.UnmarkProjected(cell);
+                if (cell.GetTerrain(upper)?.defName == RoofDeckDefName)
+                {
+                    upper.terrainGrid.SetTerrain(cell, OpenSky);
+                    upper.roofGrid.SetRoof(cell, null);
+                }
+            }
+            Log.Message("[Strata] Upper deck: cleared " + toClear.Count
+                + " unsupported deck cell(s) on " + upper.uniqueID + ".");
+            return toClear.Count;
+        }
+
         // Land paint can leave beds/shelves on OpenSky — restore walkable roof deck.
         public static void RestoreRoofDeckUnderBuildings(Map upper)
         {
@@ -427,13 +514,30 @@ namespace Strata
                 }
             }
 
-            int removed = 0;
+            var toClear = new List<IntVec3>(64);
             foreach (IntVec3 cell in upper.AllCells)
             {
                 if (cell.GetTerrain(upper)?.defName != RoofDeckDefName || keep.Contains(cell))
                 {
                     continue;
                 }
+                toClear.Add(cell);
+            }
+            if (toClear.Count == 0)
+            {
+                return;
+            }
+            // Same section-corruption guard as the underdeck: big clears drain
+            // a slice per tick.
+            if (toClear.Count > 256)
+            {
+                StrataDeferredCellClear.Enqueue(upper, toClear);
+                return;
+            }
+            int removed = 0;
+            for (int i = 0; i < toClear.Count; i++)
+            {
+                IntVec3 cell = toClear[i];
                 Thing sub = StrataGravshipSubstructureSync.SubstructureAt(upper, cell);
                 if (sub != null && !sub.Destroyed)
                 {
@@ -540,7 +644,13 @@ namespace Strata
                 {
                     continue;
                 }
-                IntVec3 upperCell = StrataMapUtility.ProportionalCell(c, source, upper);
+                IntVec3 upperCell = StrataGravshipUtility.IsGravshipLinkedLevel(upper)
+                    ? c
+                    : StrataMapUtility.ProportionalCell(c, source, upper);
+                if (!upperCell.InBounds(upper))
+                {
+                    continue;
+                }
                 UpperDeckUtility.SyncCell(upper, upperCell);
             }
         }
