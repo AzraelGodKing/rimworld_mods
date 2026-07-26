@@ -80,6 +80,14 @@ namespace Strata
             {
                 return;
             }
+            if (StrataGravshipTravelView.ShouldBlockView(target))
+            {
+                Messages.Message(
+                    "Strata_GravshipTravelViewBlocked".Translate(),
+                    MessageTypeDefOf.RejectInput,
+                    historical: false);
+                return;
+            }
             IntVec3 look = StrataMapUtility.ProportionalCell(Find.CameraDriver.MapPosition, current, target);
             CameraJumper.TryJump(new GlobalTargetInfo(look, target), CameraJumper.MovementMode.Cut);
         }

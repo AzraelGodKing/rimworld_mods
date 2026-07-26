@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_ShaftFluid_DBH.label>竖井水管接头</Strata_ShaftFluid_DBH.label>
+  <Strata_ShaftFluid_DBH.description>在楼层间传输 Dubs Bad Hygiene 水管。建在楼梯或电梯旁，并在每层把水管接到此节点；它会在下方生成对端节点并链接两套给排水网络，而不合并它们。</Strata_ShaftFluid_DBH.description>
+
+  <Strata_ShaftFluid_DCH_Heat.label>竖井供热接头</Strata_ShaftFluid_DCH_Heat.label>
+  <Strata_ShaftFluid_DCH_Heat.description>在楼层间传输 Dubs Central Heating 热水管道。建在竖井旁，并在每层把供热管道接到此节点。</Strata_ShaftFluid_DCH_Heat.description>
+
+  <Strata_ShaftFluid_DCH_Air.label>竖井空调接头</Strata_ShaftFluid_DCH_Air.label>
+  <Strata_ShaftFluid_DCH_Air.description>在楼层间传输 Dubs Central Heating 空调风管。建在竖井旁，并在每层把空调管道接到此节点。</Strata_ShaftFluid_DCH_Air.description>
+
+  <Strata_ShaftFluid_Rimatomics.label>竖井冷却接头</Strata_ShaftFluid_Rimatomics.label>
+  <Strata_ShaftFluid_Rimatomics.description>在楼层间传输 Rimatomics 反应堆冷却液。建在竖井旁，并在每层把冷却管道接到此节点。</Strata_ShaftFluid_Rimatomics.description>
+
+  <Strata_ShaftFluid_VHGE.label>竖井 Helixien 气体接头</Strata_ShaftFluid_VHGE.label>
+  <Strata_ShaftFluid_VHGE.description>在楼层间传输 Vanilla Helixien Gas Expanded 管道网络。建在竖井旁，并在每层把 Helixien 气体管道接到此节点。</Strata_ShaftFluid_VHGE.description>
+
+  <Strata_ShaftFluid_VTE.label>竖井 AC 风管接头</Strata_ShaftFluid_VTE.label>
+  <Strata_ShaftFluid_VTE.description>在楼层间传输 Vanilla Temperature Expanded 风管。建在竖井旁，并在每层把风管接到此节点——地表室外压缩机与 AC 控制单元可向下层空调供电。效率与单控制器规则在相连楼层共享。</Strata_ShaftFluid_VTE.description>
+
+  <Strata_ShaftFluid_VefChemfuel.label>竖井化合燃料接头</Strata_ShaftFluid_VefChemfuel.label>
+  <Strata_ShaftFluid_VefChemfuel.description>在楼层间传输 Vanilla Chemfuel Expanded 管道网络。建在竖井旁，并在每层把化合燃料管道接到此节点。</Strata_ShaftFluid_VefChemfuel.description>
+
+  <Strata_ShaftFluid_RimefellerCrude.label>竖井原油接头</Strata_ShaftFluid_RimefellerCrude.label>
+  <Strata_ShaftFluid_RimefellerCrude.description>在楼层间传输 Rimefeller 原油管道。建在竖井旁，并在每层把原油管道接到此节点。</Strata_ShaftFluid_RimefellerCrude.description>
+
+  <Strata_ShaftFluid_RimefellerFuel.label>竖井燃料接头</Strata_ShaftFluid_RimefellerFuel.label>
+  <Strata_ShaftFluid_RimefellerFuel.description>在楼层间传输 Rimefeller 燃料管道。建在竖井旁，并在每层把燃料管道接到此节点。</Strata_ShaftFluid_RimefellerFuel.description>
+
+  <Strata_ShaftFluid_Omni.label>全能跨层连接器</Strata_ShaftFluid_Omni.label>
+  <Strata_ShaftFluid_Omni.description>在楼层间传输电力与所有受支持管道网络的通用竖井节点——水、供热、空调、冷却、Helixien 气体、化合燃料、原油与 VTE 风管（若已安装对应模组）。建在楼梯或电梯旁；会在下方生成对端连接器。可嵌入墙壁并与管道同格。缺失模组的网络会自动跳过。</Strata_ShaftFluid_Omni.description>
+
+</LanguageData>

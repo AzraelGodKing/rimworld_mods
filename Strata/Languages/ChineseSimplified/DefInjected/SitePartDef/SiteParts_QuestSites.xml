@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_CollapsedMine.label>废弃矿井</Strata_CollapsedMine.label>
+  <Strata_CollapsedMine.description>上层巷道已坍塌的废弃矿井，破旧木制入口下是冰冷隧道。食腐者与昆虫栖于黑暗，旧矿车里仍有产出。</Strata_CollapsedMine.description>
+
+  <Strata_CollapsedMineEntrance.label>废弃矿井入口</Strata_CollapsedMineEntrance.label>
+  <Strata_CollapsedMineEntrance.description>支护破败的废弃矿井入口。</Strata_CollapsedMineEntrance.description>
+
+  <Strata_CollapsedMineLevel.label>废弃矿井楼层</Strata_CollapsedMineLevel.label>
+  <Strata_CollapsedMineLevel.description>有隧道与腔室的废弃矿井地下楼层。</Strata_CollapsedMineLevel.description>
+
+  <Strata_SealedVault.label>密封金库</Strata_SealedVault.label>
+  <Strata_SealedVault.description>地表舱口被侵蚀揭开的古代地下金库。巨大腔室在崩坏封印后冻结，由休眠机器——或断电后迁入之物——守卫。</Strata_SealedVault.description>
+
+  <Strata_SealedVaultEntrance.label>密封金库入口</Strata_SealedVaultEntrance.label>
+  <Strata_SealedVaultEntrance.description>带有古代舱口的密封金库入口。</Strata_SealedVaultEntrance.description>
+
+  <Strata_SealedVaultLevel.label>密封金库楼层</Strata_SealedVaultLevel.label>
+  <Strata_SealedVaultLevel.description>有巨大腔室的密封金库地下楼层。</Strata_SealedVaultLevel.description>
+
+  <Strata_GeothermalVent.label>地热裂缝</Strata_GeothermalVent.label>
+  <Strata_GeothermalVent.description>地面上冒蒸汽的裂缝标志着通往下方炎热地热巷道。蒸汽间歇泉与毒气囊在昆虫栖息的隧道中翻腾——危险，但热与压力暗示丰富产出。</Strata_GeothermalVent.description>
+
+  <Strata_GeothermalVentEntrance.label>地热裂缝入口</Strata_GeothermalVentEntrance.label>
+  <Strata_GeothermalVentEntrance.description>带有冒蒸汽台阶的地热裂缝入口。</Strata_GeothermalVentEntrance.description>
+
+  <Strata_GeothermalVentLevel.label>地热裂缝楼层</Strata_GeothermalVentLevel.label>
+  <Strata_GeothermalVentLevel.description>有炎热隧道的地热裂缝地下楼层。</Strata_GeothermalVentLevel.description>
+
+  <Strata_CarveVault.label>开凿金库</Strata_CarveVault.label>
+  <Strata_CarveVault.description>在岩中开凿金库腔室。</Strata_CarveVault.description>
+
+  <Strata_WarrenTheme_Fungal.label>真菌主题</Strata_WarrenTheme_Fungal.label>
+  <Strata_WarrenTheme_Fungal.description>添加真菌植被与孢子。</Strata_WarrenTheme_Fungal.description>
+
+  <Strata_WarrenTheme_Frozen.label>冰冻主题</Strata_WarrenTheme_Frozen.label>
+  <Strata_WarrenTheme_Frozen.description>添加冰层结构与寒冷。</Strata_WarrenTheme_Frozen.description>
+
+  <Strata_WarrenTheme_Volcanic.label>火山主题</Strata_WarrenTheme_Volcanic.label>
+  <Strata_WarrenTheme_Volcanic.description>添加火山结构与蒸汽。</Strata_WarrenTheme_Volcanic.description>
+
+  <Strata_WarrenTheme_Flooded.label>淹水主题</Strata_WarrenTheme_Flooded.label>
+  <Strata_WarrenTheme_Flooded.description>添加水与潮湿环境。</Strata_WarrenTheme_Flooded.description>
+
+  <Strata_MineWarrenOccupants.label>矿井占据者</Strata_MineWarrenOccupants.label>
+  <Strata_MineWarrenOccupants.description>在矿井中放置食腐者与昆虫。</Strata_MineWarrenOccupants.description>
+
+  <Strata_VaultOccupants.label>金库占据者</Strata_VaultOccupants.label>
+  <Strata_VaultOccupants.description>在金库中放置休眠机器或昆虫。</Strata_VaultOccupants.description>
+
+  <Strata_GeothermalVentFeatures.label>地热裂缝特征</Strata_GeothermalVentFeatures.label>
+  <Strata_GeothermalVentFeatures.description>添加间歇泉与蒸汽气囊。</Strata_GeothermalVentFeatures.description>
+
+</LanguageData>

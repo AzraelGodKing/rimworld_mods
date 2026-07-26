@@ -192,6 +192,14 @@ namespace Strata
             list.Add(new PendingSeed { cell = cell, gas = gas, density = density });
         }
 
+        // Called from Patch_DeinitAndRemoveMap_CleanupAtmosphere when a pocket map
+        // is removed. Prevents dead map IDs from accumulating in the static dictionary
+        // across the session.
+        public static void RemovePendingSeeds(int mapUniqueId)
+        {
+            pendingSeedsByMap.Remove(mapUniqueId);
+        }
+
         public bool GetCellBool(int index) =>
             GasOverlayUtility.CellHasOverlayGas(cellDensity, index, map);
 
@@ -387,6 +395,18 @@ namespace Strata
         }
 
         public override void MapComponentTick()
+        {
+            try
+            {
+                MapComponentTickInner();
+            }
+            catch (System.Exception e)
+            {
+                StrataFaultGuard.Report(StrataFaultGuard.System.Atmosphere, e.GetType().Name + ": " + e.Message);
+            }
+        }
+
+        private void MapComponentTickInner()
         {
             EnsureBuildingCompsRegistered();
 
@@ -1672,13 +1692,22 @@ namespace Strata
             IReadOnlyList<Room> rooms = map.regionGrid.AllRooms;
             if (rooms.Count == 0)
             {
+                breathableSeedRoomCursor = 0;
                 return 0;
+            }
+            if (breathableSeedRoomCursor >= rooms.Count)
+            {
+                breathableSeedRoomCursor = 0;
             }
 
             int count = 0;
             int end = Mathf.Min(rooms.Count, breathableSeedRoomCursor + maxRooms);
             for (int i = breathableSeedRoomCursor; i < end; i++)
             {
+                if (i >= rooms.Count)
+                {
+                    break;
+                }
                 Room room = rooms[i];
                 if (room == null || room.UsesOutdoorTemperature || !TryGetSampleCell(room, out IntVec3 sample))
                 {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_GravshipStairsDown.label>重力飞船楼梯</Strata_GravshipStairsDown.label>
+  <Strata_GravshipStairsDown.description>穿过重力飞船甲板通往下方 Strata 楼层的紧凑竖井。仅可建在重力飞船子结构上。相连楼层在起飞时随船同行，着陆时重新连接。
+
+需要研究“向下挖掘”。第二座重力飞船楼梯会接入同一下层甲板。</Strata_GravshipStairsDown.description>
+
+  <Strata_GravshipStairsUp.label>重力飞船上行楼梯</Strata_GravshipStairsUp.label>
+  <Strata_GravshipStairsUp.description>重力飞船楼梯下方的落脚点——回到飞船甲板。不可拆除。</Strata_GravshipStairsUp.description>
+
+  <Strata_GravshipStairsBuildUp.label>重力飞船塔楼楼梯</Strata_GravshipStairsBuildUp.label>
+  <Strata_GravshipStairsBuildUp.description>从重力飞船甲板通往上方开放屋顶露台的竖井。仅可建在重力飞船子结构上。相连楼层随船同行。
+
+上层可建面积对应下方甲板的重力飞船子结构（外加竖井周边）。扩展飞船上的子结构以扩大屋顶露台。需要研究“向上建造”。</Strata_GravshipStairsBuildUp.description>
+
+  <Strata_GravshipBuildUpLanding.label>重力飞船塔楼落脚点</Strata_GravshipBuildUpLanding.label>
+  <Strata_GravshipBuildUpLanding.description>重力飞船塔楼楼梯的上层落脚点——回到飞船。不可拆除。</Strata_GravshipBuildUpLanding.description>
+
+</LanguageData>

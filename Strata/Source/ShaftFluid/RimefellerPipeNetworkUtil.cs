@@ -13,7 +13,16 @@ namespace Strata
 
         public static void ReconnectJunction(Thing thing)
         {
-            if (!TryBind() || thing?.Map == null || !IsRimefellerJunction(thing))
+            // Soft no-op when Rimefeller isn't loaded (Omni / multi-channel junctions still call us).
+            if (ModLister.GetActiveModWithIdentifier("Dubwise.Rimefeller") == null)
+            {
+                return;
+            }
+            if (thing?.Map == null || !IsRimefellerJunction(thing))
+            {
+                return;
+            }
+            if (!TryBind())
             {
                 return;
             }

@@ -27,8 +27,14 @@ namespace Strata
 
         public static JobDef Strata_CaptureToLevel;
 
+        public static JobDef Strata_RescueToLevel;
+
         [MayRequire("Ludeon.RimWorld.Anomaly")]
         public static JobDef Strata_BringEntityToLevel;
+
+        public static MapMeshFlagDef Strata_BelowThings;
+
+        public static JobDef Strata_CrossLevelAttack;
 
         static StrataDefOf()
         {

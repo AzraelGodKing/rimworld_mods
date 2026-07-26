@@ -19,12 +19,31 @@ namespace Strata
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
             Map level = PocketMapExists ? PocketMap : null;
-            base.Destroy(mode);
+            bool openedMove = false;
+            if (!StrataPortalUtility.PortalMoveInProgress)
+            {
+                StrataPortalUtility.BeginPortalMove();
+                openedMove = true;
+            }
+            bool prevAllow = Thing.allowDestroyNonDestroyable;
+            Thing.allowDestroyNonDestroyable = true;
+            try
+            {
+                base.Destroy(mode);
+            }
+            finally
+            {
+                Thing.allowDestroyNonDestroyable = prevAllow;
+                if (openedMove)
+                {
+                    StrataPortalUtility.EndPortalMove();
+                }
+            }
             // If the stairhead is wrecked, an empty warren collapses with it.
-            // A warren with anyone still inside stays alive: the landing below
+            // A warren with colony presence stays alive: the landing below
             // keeps working and pawns emerge where the stairhead stood.
             if (level != null && Find.Maps.Contains(level)
-                && !level.mapPawns.AnyPawnBlockingMapRemoval)
+                && !StrataPortalUtility.LinkedLevelHasColonyPresence(level))
             {
                 PocketMapUtility.DestroyPocketMap(level);
             }

@@ -337,6 +337,10 @@ namespace Strata
 
         private static bool ShouldBlockUndergroundIncident(IncidentDef def)
         {
+            if (def == null)
+            {
+                return false;
+            }
             if (def.defName.Contains("Infestation") || StrataIncidentDefOf.IsStrataUndergroundEvent(def))
             {
                 return false;
@@ -360,6 +364,9 @@ namespace Strata
 
             return def.gameCondition != null && BlockedConditions.Contains(def.gameCondition.defName);
         }
+
+        /// <summary>Public mirror for <see cref="StrataModderApi"/>.</summary>
+        public static bool WouldBlock(IncidentDef def) => ShouldBlockUndergroundIncident(def);
 
         public static bool Prefix(IncidentWorker __instance, IncidentParms parms, ref bool __result)
         {

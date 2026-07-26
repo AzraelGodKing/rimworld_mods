@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ── Perk Tree ─────────────────────────────────────────────────────────── -->
+  <DC_ViewPerks>View perks</DC_ViewPerks>
+  <DC_ViewPerksDesc>Open the perk tree for this colonist. Unlocked: {1}, Points available: {0}.</DC_ViewPerksDesc>
+  <DC_PerkTreeTitle>Perks — {PAWN}</DC_PerkTreeTitle>
+  <DC_PerkPoints>Perk points: {0}</DC_PerkPoints>
+  <DC_PerkRequires>Req: {0} lv.{1}</DC_PerkRequires>
+  <DC_PerkUnlockBtn>Unlock</DC_PerkUnlockBtn>
+  <DC_PerkStatus_Unlocked>✓ Unlocked</DC_PerkStatus_Unlocked>
+  <DC_PerkStatus_NeedPrereq>Need prerequisite</DC_PerkStatus_NeedPrereq>
+  <DC_PerkStatus_NeedLevel>Level too low</DC_PerkStatus_NeedLevel>
+  <DC_PerkUnlocked>{PAWN} unlocked the perk: {PERK}.</DC_PerkUnlocked>
+  <DC_PerkPointGained>{PAWN} gained a perk point from leveling {SKILL}.</DC_PerkPointGained>
+  <DC_PerksAvailable>{PAWN} leveled {SKILL} — {2} perk(s) available to unlock.</DC_PerksAvailable>
+  <DC_InspectPerks>Perks: {0} points, {1} unlocked</DC_InspectPerks>
+
+  <!-- ── Trauma ─────────────────────────────────────────────────────────────── -->
+  <DC_TherapyProgress>Making progress...</DC_TherapyProgress>
+  <DC_TraumaApplied>{PAWN} {EVENT}.</DC_TraumaApplied>
+  <DC_CounselComplete>Counseling complete.</DC_CounselComplete>
+  <DC_CounselFloat>Counsel {PAWN} about their trauma</DC_CounselFloat>
+  <DC_InspectTrauma>Carrying psychological trauma</DC_InspectTrauma>
+
+  <!-- ── Apprenticeship ────────────────────────────────────────────────────── -->
+  <DC_BecomeMentor>Make {PAWN} mentor {APPRENTICE}</DC_BecomeMentor>
+  <DC_RemoveMentor>Remove {PAWN} as mentor of {APPRENTICE}</DC_RemoveMentor>
+  <DC_MentorAssigned>{MENTOR} is now mentoring {APPRENTICE}. The apprentice will gain XP faster while working alongside their mentor.</DC_MentorAssigned>
+  <DC_MentorRemoved>{MENTOR} is no longer mentoring {APPRENTICE}.</DC_MentorRemoved>
+  <DC_MentoringComplete>Session complete.</DC_MentoringComplete>
+  <DC_MentorInvalid>Cannot assign this mentoring relationship.</DC_MentorInvalid>
+  <DC_MentorSelf>A colonist cannot mentor themselves.</DC_MentorSelf>
+  <DC_MentorMutual>Cannot create mutual mentoring loops.</DC_MentorMutual>
+  <DC_MentorSkillGap>Mentor must lead by at least {0} levels in one skill.</DC_MentorSkillGap>
+  <DC_InspectMentor>Apprentice of {0}</DC_InspectMentor>
+  <DC_InspectApprentices>Mentoring {0} apprentice(s)</DC_InspectApprentices>
+
+  <!-- ── Generations ────────────────────────────────────────────────────────── -->
+  <DC_InheritedTrait>Inherited trait '{TRAIT}' from {PARENT}</DC_InheritedTrait>
+  <DC_InheritedPassion>Inherited passion in {SKILL} from {PARENT}</DC_InheritedPassion>
+  <DC_InheritedPassionMajor>Inherited major passion in {SKILL} from {PARENT}</DC_InheritedPassionMajor>
+  <DC_InheritanceLetter_Label>Inherited characteristics: {PAWN}</DC_InheritanceLetter_Label>
+  <DC_InheritanceLetter_Body>{PAWN} shows signs of inheriting traits and passions from their colonist lineage.</DC_InheritanceLetter_Body>
+
+</LanguageData>

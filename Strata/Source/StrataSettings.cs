@@ -22,12 +22,13 @@ namespace Strata
         public bool gasOverlayRoomLabels = false;
         public bool gasEventsEnabled = false;
         public bool raidPursuitEnabled = true;
-        public const int CurrentSettingsVersion = 3;
+        public const int CurrentSettingsVersion = 4;
 
         public int settingsVersion = CurrentSettingsVersion;
-        public bool workRelayEnabled = false;
+        public bool workRelayEnabled = true;
         public bool robotSoftCompatEnabled = true;
         public bool robotWorkRelayEnabled = false;
+        public bool shaftFluidEnabled = true;
         public bool performanceModeEnabled = false;
         public bool offThreadAtmosphere = true;
         public AtmosphereQualityLevel atmosphereQuality = AtmosphereQualityLevel.Medium;
@@ -53,8 +54,28 @@ namespace Strata
         public float ancientColonyStairwellChance = 0.35f;
         public bool cageSustainHunger = false;
         public bool multiFloorStairs = false;
+        /// <summary>Darken the view when looking at A+ roof decks (depth cue).</summary>
+        public bool depthDimEnabled = false;
+        /// <summary>0–1 strength of the upper-deck depth dim overlay.</summary>
+        public float depthDimStrength = 0.35f;
+        /// <summary>Draw the map below through Strata_OpenSky holes on A+ decks.</summary>
+        public bool seeBelowEnabled = true;
+        /// <summary>Also draw live pawns/projectiles from the map below through open sky.</summary>
+        public bool seeBelowLive = true;
+        /// <summary>0–0.6 darken of the underlay seen through open-sky holes.</summary>
+        public float belowDim = 0.12f;
+        /// <summary>Scale of printed/live things drawn from below (looks farther down).</summary>
+        public float belowThingScale = 0.85f;
+        /// <summary>Resource readout / build costs count stockpiles on every linked floor.</summary>
+        public bool combinedLevelResources = true;
+        /// <summary>Pawns can shoot through open sky up/down between A+ and the map below.</summary>
+        public bool crossLevelCombatEnabled = true;
+        /// <summary>Auto-engage hostiles/colonists/turrets across open-sky gaps.</summary>
+        public bool crossLevelAutoEngage = true;
         /// <summary>Gravship underdecks need pumps/tanks/heatsinks (VGE-inspired). Default ON.</summary>
         public bool gravshipLifeSupportEnabled = true;
+        /// <summary>When false (default), new digs/towers stop at ±2 from the stack root. Existing floors keep working.</summary>
+        public bool unlimitedLevelsEnabled = false;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;
 
@@ -80,9 +101,10 @@ namespace Strata
             Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: false);
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
             Scribe_Values.Look(ref settingsVersion, "settingsVersion", defaultValue: 0);
-            Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: false);
+            Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotSoftCompatEnabled, "robotSoftCompatEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotWorkRelayEnabled, "robotWorkRelayEnabled", defaultValue: false);
+            Scribe_Values.Look(ref shaftFluidEnabled, "shaftFluidEnabled", defaultValue: true);
             Scribe_Values.Look(ref performanceModeEnabled, "performanceModeEnabled", defaultValue: false);
             Scribe_Values.Look(ref offThreadAtmosphere, "offThreadAtmosphere", defaultValue: true);
             Scribe_Values.Look(ref atmosphereQuality, "atmosphereQuality", AtmosphereQualityLevel.Medium);
@@ -108,13 +130,24 @@ namespace Strata
             Scribe_Values.Look(ref ancientColonyStairwellChance, "ancientColonyStairwellChance", 0.35f);
             Scribe_Values.Look(ref cageSustainHunger, "cageSustainHunger", defaultValue: false);
             Scribe_Values.Look(ref multiFloorStairs, "multiFloorStairs", defaultValue: false);
+            Scribe_Values.Look(ref depthDimEnabled, "depthDimEnabled", defaultValue: false);
+            Scribe_Values.Look(ref depthDimStrength, "depthDimStrength", 0.35f);
+            Scribe_Values.Look(ref seeBelowEnabled, "seeBelowEnabled", defaultValue: true);
+            Scribe_Values.Look(ref seeBelowLive, "seeBelowLive", defaultValue: true);
+            Scribe_Values.Look(ref belowDim, "belowDim", 0.12f);
+            Scribe_Values.Look(ref belowThingScale, "belowThingScale", 0.85f);
+            Scribe_Values.Look(ref combinedLevelResources, "combinedLevelResources", defaultValue: true);
+            Scribe_Values.Look(ref crossLevelCombatEnabled, "crossLevelCombatEnabled", defaultValue: true);
+            Scribe_Values.Look(ref crossLevelAutoEngage, "crossLevelAutoEngage", defaultValue: true);
             Scribe_Values.Look(ref gravshipLifeSupportEnabled, "gravshipLifeSupportEnabled", defaultValue: true);
+            Scribe_Values.Look(ref unlimitedLevelsEnabled, "unlimitedLevelsEnabled", defaultValue: false);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
             Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 MigrateSettings(legacySmokeEnabled, legacyBreathingEnabled);
+                StrataResources.SyncFromSettings();
             }
         }
 
@@ -149,6 +182,12 @@ namespace Strata
                 Log.Message("[Strata] Settings migration: gas systems disabled by default (can cause lag).");
             }
 
+            if (settingsVersion < 4)
+            {
+                workRelayEnabled = true;
+                Log.Message("[Strata] Settings migration v4: colonist work relay enabled by default.");
+            }
+
             if (settingsVersion >= CurrentSettingsVersion)
             {
                 return;
@@ -165,12 +204,29 @@ namespace Strata
         // Which key picker is waiting for a keypress ("up", "down", or null).
         private static string listeningFor;
 
+        // Scroll state for the settings window (content overflows a fixed-height rect).
+        private static Vector2 settingsScroll;
+        // Seed tall so the first open does not multi-column-clip into an empty pane.
+        private static float settingsContentHeight = 4000f;
+
         public StrataMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<StrataSettings>();
+            StrataResources.SyncFromSettings();
         }
 
-        public override string SettingsCategory() => "Strata_SettingsCategory".Translate();
+        public override string SettingsCategory()
+        {
+            // Never throw — a Translate failure would hide Strata from Mod Options entirely.
+            try
+            {
+                return "Strata_SettingsCategory".Translate().Resolve();
+            }
+            catch
+            {
+                return "Strata";
+            }
+        }
 
         public override void WriteSettings()
         {
@@ -184,6 +240,24 @@ namespace Strata
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            try
+            {
+                DrawSettingsWindowContents(inRect);
+            }
+            catch (System.Exception e)
+            {
+                Log.Error("[Strata] Mod options UI failed: " + e);
+                Widgets.Label(inRect, "Strata settings error — see Player.log.\n" + e.Message);
+            }
+        }
+
+        private void DrawSettingsWindowContents(Rect inRect)
+        {
+            if (Settings == null)
+            {
+                Settings = GetSettings<StrataSettings>();
+            }
+
             // Capture the next keypress for whichever picker is listening.
             if (listeningFor != null && Event.current.type == EventType.KeyDown)
             {
@@ -202,14 +276,38 @@ namespace Strata
                 Event.current.Use();
             }
 
-            var listing = new Listing_Standard();
-            listing.Begin(inRect);
+            // Listing defaults to multi-column when content exceeds listingRect.height.
+            // A short scroll viewRect then parks every option after the first row in a
+            // clipped second column — looks like "only View level above" remains.
+            var listing = new Listing_Standard { maxOneColumn = true };
+            float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
+            var viewRect = new Rect(0f, 0f, inRect.width - 20f, viewHeight);
+            Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
+            // Tall listing rect so NewColumnIfNeeded never fires even if maxOneColumn
+            // is somehow cleared; scroll view still clips to viewRect.
+            listing.Begin(new Rect(0f, 0f, viewRect.width, 99999f));
+            try
+            {
+                DrawSettingsListing(listing);
+            }
+            finally
+            {
+                settingsContentHeight = Mathf.Max(listing.MaxColumnHeightSeen + 24f, inRect.height);
+                listing.End();
+                Widgets.EndScrollView();
+            }
+        }
+
+        private void DrawSettingsListing(Listing_Standard listing)
+        {
 
             Text.Font = GameFont.Medium;
             listing.Label("Strata_Settings_LevelHotkeys".Translate());
             Text.Font = GameFont.Small;
             KeyPickerRow(listing, "Strata_Settings_ViewLevelAbove".Translate(), ref Settings.viewLevelUpKey, "up", KeyCode.PageUp);
             KeyPickerRow(listing, "Strata_Settings_ViewLevelBelow".Translate(), ref Settings.viewLevelDownKey, "down", KeyCode.PageDown);
+            listing.CheckboxLabeled("Strata_Settings_UnlimitedLevels".Translate(), ref Settings.unlimitedLevelsEnabled,
+                "Strata_Settings_UnlimitedLevelsDesc".Translate(StrataLevelCap.HardMaxOffset));
             listing.Gap();
 
             Text.Font = GameFont.Medium;
@@ -221,6 +319,8 @@ namespace Strata
                 "Strata_Settings_RobotSoftCompatDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_RobotWorkRelay".Translate(), ref Settings.robotWorkRelayEnabled,
                 "Strata_Settings_RobotWorkRelayDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_ShaftFluid".Translate(), ref Settings.shaftFluidEnabled,
+                "Strata_Settings_ShaftFluidDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_FoodRelay".Translate(), ref Settings.foodRelayEnabled,
                 "Strata_Settings_FoodRelayDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_RestRelay".Translate(), ref Settings.restRelayEnabled,
@@ -274,7 +374,8 @@ namespace Strata
                 "Strata_Settings_RaidPursuitDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_HibernateEmpty".Translate(), ref Settings.hibernateEmptyLevels,
                 "Strata_Settings_HibernateEmptyDesc".Translate());
-            Settings.throttleVacantLevels = Settings.hibernateEmptyLevels;
+            // Note: throttleVacantLevels is kept in ExposeData for save compat but is no
+            // longer read at runtime. HibernateEnabled() reads hibernateEmptyLevels directly.
             listing.CheckboxLabeled("Strata_Settings_ReduceBackground".Translate(), ref Settings.reduceBackgroundLevels,
                 "Strata_Settings_ReduceBackgroundDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_PerformanceMode".Translate(), ref Settings.performanceModeEnabled,
@@ -336,6 +437,32 @@ namespace Strata
             {
                 StrataMultiFloorStairsUtility.Apply(Settings.multiFloorStairs);
             }
+            listing.CheckboxLabeled("Strata_Settings_SeeBelow".Translate(), ref Settings.seeBelowEnabled,
+                "Strata_Settings_SeeBelowDesc".Translate());
+            if (Settings.seeBelowEnabled)
+            {
+                listing.CheckboxLabeled("Strata_Settings_SeeBelowLive".Translate(), ref Settings.seeBelowLive,
+                    "Strata_Settings_SeeBelowLiveDesc".Translate());
+                listing.Label("Strata_Settings_BelowDim".Translate(Settings.belowDim.ToStringPercent()));
+                Settings.belowDim = listing.Slider(Settings.belowDim, 0f, 0.6f);
+                listing.Label("Strata_Settings_BelowThingScale".Translate(Settings.belowThingScale.ToStringPercent()));
+                Settings.belowThingScale = listing.Slider(Settings.belowThingScale, 0.5f, 1f);
+            }
+            listing.CheckboxLabeled("Strata_Settings_CrossLevelCombat".Translate(), ref Settings.crossLevelCombatEnabled,
+                "Strata_Settings_CrossLevelCombatDesc".Translate());
+            if (Settings.crossLevelCombatEnabled)
+            {
+                listing.CheckboxLabeled("Strata_Settings_CrossLevelAutoEngage".Translate(), ref Settings.crossLevelAutoEngage,
+                    "Strata_Settings_CrossLevelAutoEngageDesc".Translate());
+            }
+            listing.CheckboxLabeled("Strata_Settings_DepthDim".Translate(), ref Settings.depthDimEnabled,
+                "Strata_Settings_DepthDimDesc".Translate());
+            if (Settings.depthDimEnabled)
+            {
+                listing.Label("Strata_Settings_DepthDimStrength".Translate(
+                    Settings.depthDimStrength.ToStringPercent()));
+                Settings.depthDimStrength = listing.Slider(Settings.depthDimStrength, 0f, 1f);
+            }
             listing.Gap();
 
             Text.Font = GameFont.Medium;
@@ -345,8 +472,6 @@ namespace Strata
                 "Strata_Settings_LinkedColonistsTabsDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_MergedAbandonWarning".Translate(), ref Settings.mergedAbandonWarning,
                 "Strata_Settings_MergedAbandonWarningDesc".Translate());
-
-            listing.End();
         }
 
         private static void KeyPickerRow(Listing_Standard listing, string label, ref KeyCode key, string id, KeyCode defaultKey)

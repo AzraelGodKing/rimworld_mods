@@ -52,7 +52,9 @@ namespace Strata
             {
                 return true;
             }
-            return settings.throttleVacantLevels;
+            // Read hibernateEmptyLevels directly; throttleVacantLevels is kept
+            // in ExposeData for backwards-save compatibility only.
+            return settings.hibernateEmptyLevels;
         }
 
         public static bool ReduceBackgroundLevelsEnabled()

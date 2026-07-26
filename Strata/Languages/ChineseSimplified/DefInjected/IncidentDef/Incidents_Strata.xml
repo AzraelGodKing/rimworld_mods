@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_CaveIn.label>塌方</Strata_CaveIn.label>
+  <Strata_CaveIn.letterLabel>塌方</Strata_CaveIn.letterLabel>
+  <Strata_CaveIn.letterText>大块岩顶崩塌，砸向下一层。用支柱或支撑墙加固宽阔矿坑，以免整片顶板塌下。</Strata_CaveIn.letterText>
+
+  <Strata_GasPocket.label>气囊</Strata_GasPocket.label>
+  <Strata_GasPocket.letterLabel>气囊突破</Strata_GasPocket.letterLabel>
+  <Strata_GasPocket.letterText>挖掘撕开裂缝，打穿恶臭深层气囊。它正充满附近巷道——吸入有毒，在明火旁积聚时易爆。用风扇与百叶通风、密封区域或撤走殖民者；熄灭路径上所有火把。</Strata_GasPocket.letterText>
+
+  <Strata_DeepVein.label>深层矿脉</Strata_DeepVein.label>
+  <Strata_DeepVein.letterLabel>深层矿脉</Strata_DeepVein.letterLabel>
+  <Strata_DeepVein.letterText>你的矿工发现了贯穿本层岩体的富矿脉。派人去开采它。</Strata_DeepVein.letterText>
+
+  <Strata_DeepRaid.label>深层袭击</Strata_DeepRaid.label>
+  <Strata_DeepRaid.letterLabel>深层袭击</Strata_DeepRaid.letterLabel>
+  <Strata_DeepRaid.letterText>岩层低语了好几天——刮擦、啃咬、逼近。现在本层地面裂开，昆虫从深处涌出。天空够不到你，但黑暗可以。</Strata_DeepRaid.letterText>
+
+  <Strata_ProspectorTip.label>探矿线索</Strata_ProspectorTip.label>
+  <Strata_ProspectorTip.letterLabel>探矿线索</Strata_ProspectorTip.letterLabel>
+  <Strata_ProspectorTip.letterText>一名流浪探矿者研究了殖民地周围岩层，离开前标出了藏在岩中的富矿脉。它归你了——也是更深挖掘可能带来什么的预兆。</Strata_ProspectorTip.letterText>
+
+  <Strata_Tremor.label>地下震动</Strata_Tremor.label>
+  <Strata_Tremor.letterLabel>地下震动</Strata_Tremor.letterLabel>
+  <Strata_Tremor.letterText>深处震动掠过地面，摇晃殖民地并震裂部分建筑。下方岩层从未真正静止。</Strata_Tremor.letterText>
+
+  <Strata_GasFirestorm.label>气体火风暴</Strata_GasFirestorm.label>
+  <Strata_GasFirestorm.letterLabel>气体火风暴</Strata_GasFirestorm.letterLabel>
+  <Strata_GasFirestorm.letterText>一团深层气体在地下点燃——来自明火或震动火花——火势沿巷道蔓延。尽量通风，并在气体烧尽前让殖民者远离。</Strata_GasFirestorm.letterText>
+
+  <Strata_CaveBreakthrough.label>洞穴突破</Strata_CaveBreakthrough.label>
+  <Strata_CaveBreakthrough.letterLabel>洞穴突破</Strata_CaveBreakthrough.letterLabel>
+  <Strata_CaveBreakthrough.letterText>开挖打穿了岩中隐藏侧洞。里面可能有蘑菇、毒气，或更早挖掘者的遗物。</Strata_CaveBreakthrough.letterText>
+
+  <Strata_LostMiners.label>迷失矿工</Strata_LostMiners.label>
+  <Strata_LostMiners.letterLabel>迷失矿工</Strata_LostMiners.letterLabel>
+  <Strata_LostMiners.letterText>一小群矿工从别的隧道走进你的巷道。他们看起来筋疲力尽——也很高兴再见到活人定居点。</Strata_LostMiners.letterText>
+
+  <Strata_DeepSiege.label>深层围攻</Strata_DeepSiege.label>
+  <Strata_DeepSiege.letterLabel>深层围攻</Strata_DeepSiege.letterLabel>
+  <Strata_DeepSiege.letterText>袭击者为你的矿井而来。他们会攻击殖民地并砸开楼梯入口——若竖井保持开放，预计他们会追殖民者下地。</Strata_DeepSiege.letterText>
+
+  <Strata_ProspectorDig.label>探矿挖掘</Strata_ProspectorDig.label>
+  <Strata_ProspectorDig.letterLabel>探矿挖掘</Strata_ProspectorDig.letterLabel>
+  <Strata_ProspectorDig.letterText>殖民者标出了岩中一处有望的矿囊——对刚开始向深处挖掘的殖民地来说是很好的首批产出。</Strata_ProspectorDig.letterText>
+
+  <Strata_SunkenRuinDiscovered.label>沉没废墟</Strata_SunkenRuinDiscovered.label>
+  <Strata_SunkenRuinDiscovered.letterLabel>发现沉没废墟</Strata_SunkenRuinDiscovered.letterLabel>
+  <Strata_SunkenRuinDiscovered.letterText>路过的商人说起一处废墟，其地板塌到古代楼梯落脚点上，离殖民地不远。据说下层爬满昆虫——还藏着建造者的宝藏。\n\n楼梯通往地点本身下方的迷宫。带上战士；深处不会空。该地点大约二十天后会被遗忘。</Strata_SunkenRuinDiscovered.letterText>
+
+  <Strata_FloodSeep.label>渗水</Strata_FloodSeep.label>
+  <Strata_FloodSeep.letterLabel>渗水</Strata_FloodSeep.letterLabel>
+  <Strata_FloodSeep.letterText>地下水冲破本层地面，用浅水淹没一片巷道。排水泵可抽干——或改道挖掘，以免蔓延。</Strata_FloodSeep.letterText>
+
+  <Strata_CollapsedMineDiscovered.label>废弃矿井</Strata_CollapsedMineDiscovered.label>
+  <Strata_CollapsedMineDiscovered.letterLabel>发现废弃矿井</Strata_CollapsedMineDiscovered.letterLabel>
+  <Strata_CollapsedMineDiscovered.letterText>探矿者报告离殖民地不远有一处旧矿井入口，木支护腐烂但巷道仍开着。据说下方隧道爬满食腐者与昆虫——废弃矿车里仍有产出。\n\n矿井通往地点本身下方的巷道。带上战士与光源；寒冷黑暗不会空。该地点大约二十天后会被遗忘。</Strata_CollapsedMineDiscovered.letterText>
+
+  <Strata_SealedVaultDiscovered.label>密封金库</Strata_SealedVaultDiscovered.label>
+  <Strata_SealedVaultDiscovered.letterLabel>发现密封金库</Strata_SealedVaultDiscovered.letterLabel>
+  <Strata_SealedVaultDiscovered.letterText>勘测者找到古代金库的地表舱口，封印已被岁月与霜冻破坏。下方腔室巨大而寒冷，仍有东西守卫其中宝藏——休眠机器，或断电后迁入的昆虫。\n\n舱口通向地点下方冰冻金库楼层。带上重型武器与保暖装备。该地点大约二十天后会被遗忘。</Strata_SealedVaultDiscovered.letterText>
+
+  <Strata_GeothermalVentDiscovered.label>地热裂缝</Strata_GeothermalVentDiscovered.label>
+  <Strata_GeothermalVentDiscovered.letterLabel>发现地热裂缝</Strata_GeothermalVentDiscovered.letterLabel>
+  <Strata_GeothermalVentDiscovered.letterText>殖民地附近地面裂开冒蒸汽的裂缝，从下方地热巷道喷出热气。昆虫栖于炎热隧道，蒸汽间歇泉在毒气腔室中翻腾——危险之地，但热暗示丰富产出。\n\n裂缝旁粗糙台阶下到地点下方气囊。带上战士与通风手段；深处会又热又敌对。该地点大约二十天后会被遗忘。</Strata_GeothermalVentDiscovered.letterText>
+
+  <Strata_LostMinersAnomaly.label>迷失矿工</Strata_LostMinersAnomaly.label>
+  <Strata_LostMinersAnomaly.letterLabel>迷失矿工</Strata_LostMinersAnomaly.letterLabel>
+  <Strata_LostMinersAnomaly.letterText>深处密封隧道传来无线电静电——一支再也没回来的矿工队。深处有东西在本不该有殖民者的地方移动。</Strata_LostMinersAnomaly.letterText>
+
+</LanguageData>

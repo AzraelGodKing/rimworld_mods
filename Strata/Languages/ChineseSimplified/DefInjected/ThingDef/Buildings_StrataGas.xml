@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_DeepGasVent.label>深层气体喷口</Strata_DeepGasVent.label>
+  <Strata_DeepGasVent.description>从深处渗出有毒气体的天然裂缝。敞开时会缓慢充满房间——吸入有毒，靠近明火易爆。用气井盖住可把危险变成燃料；喷口永不枯竭。</Strata_DeepGasVent.description>
+
+  <Strata_GasWell.label>气井</Strata_GasWell.label>
+  <Strata_GasWell.description>安装在深层气体喷口上的电动井口装置。它密封喷发——房间不再被充满——并把气体压入钢瓶供发电机使用。若装有气体管道模组（Vanilla Helixien Gas Expanded），接上管道即可直接向管网供气。</Strata_GasWell.description>
+
+  <Strata_DeepGasGenerator.label>深层气体发电机</Strata_DeepGasGenerator.label>
+  <Strata_DeepGasGenerator.description>燃烧加压深层气体钢瓶的发电机。燃烧干净——无烟、无需通风——是密封地下楼层的理想电源。用气井为其供料。</Strata_DeepGasGenerator.description>
+
+</LanguageData>
