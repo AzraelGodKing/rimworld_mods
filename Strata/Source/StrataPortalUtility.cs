@@ -388,7 +388,7 @@ namespace Strata
         // Stockpile first, then blueprint/frame. Returns true if a job started.
         // Prefer carried cargo — vanilla drop at crowded landings often fails and
         // left pawns wandering while still holding meals/steel.
-        public static bool TryStartHaulDelivery(Pawn pawn)
+        public static bool TryStartHaulDelivery(Pawn pawn, int preferConstructibleId = 0)
         {
             if (pawn?.jobs == null || pawn.Map == null || !pawn.Spawned
                 || pawn.Downed || pawn.Dead || pawn.Drafted)
@@ -407,12 +407,20 @@ namespace Strata
                 return false;
             }
 
+            // Force-build / cross-level deliver: hit the remembered blueprint/frame
+            // before any stockpile steal.
+            if (preferConstructibleId > 0
+                && TryStartJobIfReservable(pawn, TryMakeConstructionJobFor(pawn, cargo, preferConstructibleId)))
+            {
+                return true;
+            }
+
             // Probe reservations before StartJob — several haulers can land on the
             // same tick and all pick one frame (HaulToContainer reserves maxPawns=1).
             // Starting without a probe spam-logs and EndCurrentJob(Errored).
             // Billgivers first (cellar food → surface stove), then refuel
             // (uranium → reactors), then cross-level reinstall blueprints,
-            // then stockpile, then frames.
+            // then frames (prefer construction over general stockpile), then storage.
             if (TryStartJobIfReservable(pawn, TryMakeBillJob(pawn, cargo)))
             {
                 return true;
@@ -428,12 +436,12 @@ namespace Strata
                 return true;
             }
 
-            if (TryStartJobIfReservable(pawn, TryMakeStorageJob(pawn, cargo)))
+            if (TryStartJobIfReservable(pawn, TryMakeConstructionJob(pawn, cargo)))
             {
                 return true;
             }
 
-            return TryStartJobIfReservable(pawn, TryMakeConstructionJob(pawn, cargo));
+            return TryStartJobIfReservable(pawn, TryMakeStorageJob(pawn, cargo));
         }
 
         private static Job TryMakeInstallJob(Pawn pawn, Thing cargo)
@@ -572,7 +580,12 @@ namespace Strata
             // Keep the probe reservations — clearing them races other haulers onto
             // the same cell and StartJob then Warning-spams (opens the debug log).
             // Same-pawn re-reserve in the fresh driver is allowed.
-            pawn.jobs.StartJob(job, JobCondition.InterruptForced);
+            // Keep carried cargo: InterruptForced otherwise drops wood/steel mid
+            // force-build / cross-level haul finish.
+            pawn.jobs.StartJob(
+                job,
+                JobCondition.InterruptForced,
+                keepCarryingThingOverride: true);
             return true;
         }
 
@@ -605,6 +618,33 @@ namespace Strata
                 return null;
             }
 
+            return MakeHaulToConstructible(pawn, cargo, site);
+        }
+
+        private static Job TryMakeConstructionJobFor(Pawn pawn, Thing cargo, int constructibleId)
+        {
+            Thing site = FindThingByIdOnMap(pawn.Map, constructibleId);
+            if (site == null || site is not IConstructible constructible)
+            {
+                return null;
+            }
+            if (LevelDemand.IsInstallBlueprint(site))
+            {
+                return null;
+            }
+            if (constructible.ThingCountNeeded(cargo.def) <= 0)
+            {
+                return null;
+            }
+            if (!pawn.CanReserveAndReach(site, PathEndMode.Touch, Danger.Deadly, 1, 1))
+            {
+                return null;
+            }
+            return MakeHaulToConstructible(pawn, cargo, site);
+        }
+
+        private static Job MakeHaulToConstructible(Pawn pawn, Thing cargo, Thing site)
+        {
             if (cargo.Spawned && !pawn.CanReserve(cargo))
             {
                 return null;
@@ -614,6 +654,41 @@ namespace Strata
             job.count = cargo.stackCount;
             job.haulMode = HaulMode.ToContainer;
             return job;
+        }
+
+        private static Thing FindThingByIdOnMap(Map map, int thingId)
+        {
+            if (map == null || thingId <= 0)
+            {
+                return null;
+            }
+            List<Thing> things = map.listerThings.AllThings;
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (things[i].thingIDNumber == thingId)
+                {
+                    return things[i];
+                }
+            }
+            return null;
+        }
+
+        public static Thing FindThingByIdAcrossMaps(int thingId)
+        {
+            if (thingId <= 0)
+            {
+                return null;
+            }
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Thing t = FindThingByIdOnMap(maps[i], thingId);
+                if (t != null)
+                {
+                    return t;
+                }
+            }
+            return null;
         }
 
         private static Thing FindNearbyHaulCargo(Pawn pawn)

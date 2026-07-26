@@ -130,6 +130,19 @@ namespace Strata
                     StrataGravshipUtility.FindGravEngine(host)
                     ?? StrataGravshipUtility.FindGravEngineOnMap(host)))
             {
+                // Sync path: leave travelling deck alone until ValidSubstructure
+                // exists (painting all-off-deck would wipe the room).
+                // First open: still paint a full baseline — empty topGrid cells
+                // NRE ReGrowth SimpleFX splash cache (and similar) on FinalizeInit.
+                if (!preserveExistingDeck)
+                {
+                    TerrainDef fill = offDeck ?? TerrainDefOf.MetalTile;
+                    foreach (IntVec3 cell in pocket.AllCells)
+                    {
+                        pocket.terrainGrid.SetTerrain(cell, fill);
+                        pocket.roofGrid.SetRoof(cell, null);
+                    }
+                }
                 return;
             }
             // Gravship pockets are strictly raw 1:1 with the host — a new host map

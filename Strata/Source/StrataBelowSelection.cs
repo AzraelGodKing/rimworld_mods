@@ -160,9 +160,49 @@ namespace Strata
                 return true;
             }
 
+            // Belt-and-suspenders: GenUI can miss map-mesh things; never let
+            // below-select steal clicks when this floor has a selectable here.
             IntVec3 cell = UI.MouseCell();
+            if (cell.InBounds(sky) && HasLocalSelectableAt(sky, cell, clickPos))
+            {
+                return true;
+            }
+
             if (sky.zoneManager.ZoneAt(cell) != null) return true;
             return sky.planManager?.PlanAt(cell) != null;
+        }
+
+        private static bool HasLocalSelectableAt(Map sky, IntVec3 cell, Vector3 clickPos)
+        {
+            for (int dx = -1; dx <= 1; dx++)
+            {
+                for (int dz = -1; dz <= 1; dz++)
+                {
+                    IntVec3 c = cell + new IntVec3(dx, 0, dz);
+                    if (!c.InBounds(sky)) continue;
+
+                    List<Thing> list = sky.thingGrid.ThingsListAtFast(c);
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        Thing t = list[i];
+                        if (t == null || !t.Spawned || !t.def.selectable) continue;
+                        if (t is Pawn p && p.IsHiddenFromPlayer()) continue;
+
+                        ThingCategory cat = t.def.category;
+                        if (cat != ThingCategory.Pawn
+                            && cat != ThingCategory.Item
+                            && cat != ThingCategory.Building)
+                        {
+                            continue;
+                        }
+
+                        if (dx == 0 && dz == 0) return true;
+                        if ((t.DrawPos - clickPos).MagnitudeHorizontal() < ClickRadius) return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public static void HandleBelowClick(Selector selector, List<Thing> hits)
@@ -358,6 +398,15 @@ namespace Strata
         }
 
         public static void Postfix(bool __state)
+        {
+            if (__state)
+            {
+                StrataBelowRenderer.OffsetActive = false;
+            }
+        }
+
+        // Guarantee clear if DrawSelectionBracketFor throws after Prefix.
+        public static void Finalizer(bool __state)
         {
             if (__state)
             {

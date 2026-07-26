@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -11,6 +10,8 @@ namespace Strata
     // stairwell landing (GenStep_PlaceLevelExit spawns the stairs there afterwards).
     public class GenStep_SolidRock : GenStep
     {
+        public const string DeferMineablesVar = "Strata_DeferMineables";
+
         public override int SeedPart => 762303921;
 
         public override void Generate(Map map, GenStepParams parms)
@@ -31,12 +32,18 @@ namespace Strata
                 if (BiomesCavernsUtility.TryGenerateCavernLayout(map, parms, profile))
                 {
                     ArrivalZoneUtility.PrepareLandingZone(map, spot, clearRoof: true);
+                    BiomesCavernsUtility.LogLayoutChoice(map, usedBiomes: true, profile);
                 }
                 else
                 {
                     ClearGeneratedMap(map);
-                    FillSolidRock(map);
+                    // Defer mineables until after CarveWarren marks the warren —
+                    // avoids spawn-then-destroy on every chamber cell.
+                    FillShell(map);
+                    MapGenerator.SetVar(DeferMineablesVar, true);
                     ArrivalZoneUtility.PrepareLandingZone(map, spot, clearRoof: false);
+                    MapGenerator.SetVar(StrataNativeCavernUtility.ForceNativeWarrenVar, true);
+                    BiomesCavernsUtility.LogLayoutChoice(map, usedBiomes: false, profile);
                 }
             }
             else
@@ -44,9 +51,10 @@ namespace Strata
                 bool nativeCavern = StrataCavernUtility.ShouldGenerateNativeCavernLayout(map);
                 if (nativeCavern)
                 {
-                    // Shell + rock first; GenStep_CarveWarren empties chambers afterward.
+                    // Shell only; GenStep_CarveWarren spawns host rock outside the
+                    // carve mask so chambers never pay GenSpawn + Destroy.
                     FillShell(map);
-                    SpawnMineables(map);
+                    MapGenerator.SetVar(DeferMineablesVar, true);
                 }
                 else
                 {
@@ -62,18 +70,22 @@ namespace Strata
         private static void FillSolidRock(Map map)
         {
             FillShell(map);
-            SpawnMineables(map);
+            SpawnMineables(map, skipCarveMask: null);
         }
 
         // Terrain + thick roof without mineables — used before native cavern
         // carving so we do not spawn rock that is immediately destroyed.
         internal static void FillShell(Map map)
         {
-            ThingDef rockDef = RockForMap(map);
-            TerrainDef floor = rockDef.building?.naturalTerrain ?? TerrainDefOf.Gravel;
+            List<ThingDef> rocks = StrataRockUtility.RocksForMap(map);
+            bool simpleRock = StrataRockUtility.UseSimpleRockFill;
 
             foreach (IntVec3 cell in map.AllCells)
             {
+                ThingDef rockDef = simpleRock
+                    ? rocks[0]
+                    : StrataRockUtility.RockAt(map, cell, rocks);
+                TerrainDef floor = StrataRockUtility.NaturalFloorFor(rockDef);
                 map.terrainGrid.SetTerrain(cell, floor);
                 map.roofGrid.SetRoof(cell, RoofDefOf.RoofRockThick);
             }
@@ -82,19 +94,28 @@ namespace Strata
         // Full-map GenSpawn is the dig/ancient stair freeze with large mod lists
         // (tower decks skip this). Disable region rebuilds and use load-style
         // SpawnSetup so Harmony postfixes on live spawns do not run per cell.
-        internal static void SpawnMineables(Map map)
+        // skipCarveMask: when set, leave warren cells empty (already carved).
+        internal static void SpawnMineables(Map map, BoolGrid skipCarveMask = null)
         {
-            ThingDef rockDef = RockForMap(map);
+            List<ThingDef> rocks = StrataRockUtility.RocksForMap(map);
+            bool simpleRock = StrataRockUtility.UseSimpleRockFill;
             bool regionsWereEnabled = map.regionAndRoomUpdater.Enabled;
             map.regionAndRoomUpdater.Enabled = false;
             try
             {
                 foreach (IntVec3 cell in map.AllCells)
                 {
+                    if (skipCarveMask != null && skipCarveMask[cell])
+                    {
+                        continue;
+                    }
                     if (cell.GetEdifice(map) != null)
                     {
                         continue;
                     }
+                    ThingDef rockDef = simpleRock
+                        ? rocks[0]
+                        : StrataRockUtility.RockAt(map, cell, rocks);
                     Thing rock = ThingMaker.MakeThing(rockDef);
                     // respawningAfterLoad:true skips live-spawn side effects that
                     // modded GenSpawn prefixes/postfixes amplify across 50k+ cells.
@@ -141,25 +162,6 @@ namespace Strata
             {
                 AtmosphereMapComponent.QueueSeed(map, spot, oxygen, AtmosphereMapComponent.AmbientOxygen);
             }
-        }
-
-        private static ThingDef RockForMap(Map map)
-        {
-            // Walk up the pocket map chain to the real surface map so deeper
-            // levels keep the same rock as the tile they sit under.
-            Map surface = map;
-            int guard = 0;
-            while (surface.Parent is PocketMapParent pocket && pocket.sourceMap != null && guard++ < 32)
-            {
-                surface = pocket.sourceMap;
-            }
-
-            List<ThingDef> rocks = Find.World.NaturalRockTypesIn(surface.Tile).ToList();
-            if (!rocks.NullOrEmpty())
-            {
-                return rocks.RandomElement();
-            }
-            return ThingDefOf.Granite;
         }
     }
 }

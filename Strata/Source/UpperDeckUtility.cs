@@ -14,12 +14,13 @@ namespace Strata
         public const string RoofDeckDefName = "Strata_RoofDeck";
         public const string OpenSkyDefName = "Strata_OpenSky";
 
-        /// <summary>Open sky holes and see-through roof-deck pads (dontRender).</summary>
+        /// <summary>
+        /// True open-sky holes only. Walkable roof-deck pads are opaque local floor
+        /// (select/draw like the surface); see-below must not punch through them.
+        /// </summary>
         public static bool IsSeeThroughGap(TerrainDef terrain)
         {
-            if (terrain == null) return false;
-            string n = terrain.defName;
-            return n == OpenSkyDefName || n == RoofDeckDefName;
+            return terrain != null && terrain.defName == OpenSkyDefName;
         }
         public const float DefaultPlazaRadius = 6.5f;
 

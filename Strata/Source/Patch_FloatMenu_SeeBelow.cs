@@ -84,8 +84,12 @@ namespace Strata
                 StrataBelowFloatMenu.Redirecting = true;
                 try
                 {
-                    // Same XY click on the lower map — providers see below things.
-                    __result = FloatMenuMakerMap.GetOptions(selectedPawns, clickPos, out context);
+                    // Remap click into lower-map space (1:1 or proportional).
+                    IntVec3 skyCell = clickPos.ToIntVec3();
+                    IntVec3 lowerCell = StrataBelowRenderer.SkyToLowerCell(sky, lower, skyCell);
+                    Vector3 lowerClick = lowerCell.ToVector3Shifted();
+                    lowerClick.y = clickPos.y;
+                    __result = FloatMenuMakerMap.GetOptions(selectedPawns, lowerClick, out context);
                 }
                 finally
                 {

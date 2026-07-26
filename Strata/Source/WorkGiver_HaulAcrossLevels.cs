@@ -205,7 +205,9 @@ namespace Strata
         private static MapPortal UsableStep(Pawn pawn, LevelGraph.LevelLink link)
         {
             MapPortal step = LevelGraph.BestFirstStep(pawn.Map, link.map, pawn.Position, pawn) ?? link.firstStep;
-            if (step.Spawned && step.IsEnterable(out _)
+            if (step != null
+                && step.Spawned
+                && step.IsEnterable(out _)
                 && pawn.CanReach(step, PathEndMode.Touch, Danger.Some))
             {
                 return step;

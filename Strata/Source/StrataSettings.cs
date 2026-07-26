@@ -22,10 +22,10 @@ namespace Strata
         public bool gasOverlayRoomLabels = false;
         public bool gasEventsEnabled = false;
         public bool raidPursuitEnabled = true;
-        public const int CurrentSettingsVersion = 3;
+        public const int CurrentSettingsVersion = 4;
 
         public int settingsVersion = CurrentSettingsVersion;
-        public bool workRelayEnabled = false;
+        public bool workRelayEnabled = true;
         public bool robotSoftCompatEnabled = true;
         public bool robotWorkRelayEnabled = false;
         public bool shaftFluidEnabled = true;
@@ -101,7 +101,7 @@ namespace Strata
             Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: false);
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
             Scribe_Values.Look(ref settingsVersion, "settingsVersion", defaultValue: 0);
-            Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: false);
+            Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotSoftCompatEnabled, "robotSoftCompatEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotWorkRelayEnabled, "robotWorkRelayEnabled", defaultValue: false);
             Scribe_Values.Look(ref shaftFluidEnabled, "shaftFluidEnabled", defaultValue: true);
@@ -182,6 +182,12 @@ namespace Strata
                 Log.Message("[Strata] Settings migration: gas systems disabled by default (can cause lag).");
             }
 
+            if (settingsVersion < 4)
+            {
+                workRelayEnabled = true;
+                Log.Message("[Strata] Settings migration v4: colonist work relay enabled by default.");
+            }
+
             if (settingsVersion >= CurrentSettingsVersion)
             {
                 return;
@@ -200,7 +206,8 @@ namespace Strata
 
         // Scroll state for the settings window (content overflows a fixed-height rect).
         private static Vector2 settingsScroll;
-        private static float settingsContentHeight;
+        // Seed tall so the first open does not multi-column-clip into an empty pane.
+        private static float settingsContentHeight = 4000f;
 
         public StrataMod(ModContentPack content) : base(content)
         {
@@ -208,7 +215,18 @@ namespace Strata
             StrataResources.SyncFromSettings();
         }
 
-        public override string SettingsCategory() => "Strata_SettingsCategory".Translate();
+        public override string SettingsCategory()
+        {
+            // Never throw — a Translate failure would hide Strata from Mod Options entirely.
+            try
+            {
+                return "Strata_SettingsCategory".Translate().Resolve();
+            }
+            catch
+            {
+                return "Strata";
+            }
+        }
 
         public override void WriteSettings()
         {
@@ -222,6 +240,24 @@ namespace Strata
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            try
+            {
+                DrawSettingsWindowContents(inRect);
+            }
+            catch (System.Exception e)
+            {
+                Log.Error("[Strata] Mod options UI failed: " + e);
+                Widgets.Label(inRect, "Strata settings error — see Player.log.\n" + e.Message);
+            }
+        }
+
+        private void DrawSettingsWindowContents(Rect inRect)
+        {
+            if (Settings == null)
+            {
+                Settings = GetSettings<StrataSettings>();
+            }
+
             // Capture the next keypress for whichever picker is listening.
             if (listeningFor != null && Event.current.type == EventType.KeyDown)
             {
@@ -240,12 +276,30 @@ namespace Strata
                 Event.current.Use();
             }
 
-            // Scroll view so no settings are clipped when the list overflows the window.
-            float viewHeight = settingsContentHeight > 0f ? settingsContentHeight : inRect.height * 2f;
+            // Listing defaults to multi-column when content exceeds listingRect.height.
+            // A short scroll viewRect then parks every option after the first row in a
+            // clipped second column — looks like "only View level above" remains.
+            var listing = new Listing_Standard { maxOneColumn = true };
+            float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
             var viewRect = new Rect(0f, 0f, inRect.width - 20f, viewHeight);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
-            var listing = new Listing_Standard();
-            listing.Begin(viewRect);
+            // Tall listing rect so NewColumnIfNeeded never fires even if maxOneColumn
+            // is somehow cleared; scroll view still clips to viewRect.
+            listing.Begin(new Rect(0f, 0f, viewRect.width, 99999f));
+            try
+            {
+                DrawSettingsListing(listing);
+            }
+            finally
+            {
+                settingsContentHeight = Mathf.Max(listing.MaxColumnHeightSeen + 24f, inRect.height);
+                listing.End();
+                Widgets.EndScrollView();
+            }
+        }
+
+        private void DrawSettingsListing(Listing_Standard listing)
+        {
 
             Text.Font = GameFont.Medium;
             listing.Label("Strata_Settings_LevelHotkeys".Translate());
@@ -418,10 +472,6 @@ namespace Strata
                 "Strata_Settings_LinkedColonistsTabsDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_MergedAbandonWarning".Translate(), ref Settings.mergedAbandonWarning,
                 "Strata_Settings_MergedAbandonWarningDesc".Translate());
-
-            listing.End();
-            settingsContentHeight = listing.CurHeight;
-            Widgets.EndScrollView();
         }
 
         private static void KeyPickerRow(Listing_Standard listing, string label, ref KeyCode key, string id, KeyCode defaultKey)

@@ -4,6 +4,19 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Strata** — removed ModMixer magenta placeholders that overrode vanilla Mine / UI command icons. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — force-build rewrite for cross-map HaulToContainer; Ideology gates; float-menu reserve; work relay default on. Build stamp `V3 Complete`. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Docs** — Strata pages mark Version 3 complete (hub, strata.html, roadmap; build stamp `V3 Complete`). → [docs/strata.html](docs/strata.html)
+- **Strata** — force-build prioritize works when the pawn is on another linked floor (`force-build-commute-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — force-build fetch recovery hops to replacement stacks on other floors (`fetch-recover-hop-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — gravship stairwell + ReGrowth splash NRE on underdeck open (`regrowth-splash-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — Mod Options list was multi-column-clipped to one hotkey row (`modoptions-column-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — faster dig map gen (carve-mask before mineables; less Perlin/chamber work) (`map-gen-fast-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — force-build across floors keeps cargo + delivers to frame; Mod Options UI harden (`force-build-modoptions-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — native cavern biome (mixed tile rocks, chamber floors, flora scatter) + Biomes! fallback; shaft power gizmo icons (`native-cavern-biome-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — A+ roof deck paints terrain from below (marble/slate match) (`roofdeck-match-below-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — stair presence gate + DeSpawn on deconstruct; construct-fetch recovery; see-below float menu / gravship 1:1 cells (`bugfix-stairs-fetch-float-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — A+ roof deck is local floor again; see-below only through open-sky holes (`a1-local-floor-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — V3 Polish A2–A5 (mental breaks, raid divert, tankless power wake, fault guard) (`a2-a5-polish-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Docs** — Strata V3 roadmap: Cap / G1–G9 / M1–M10 / A1–A5 done on `V3-M-ux`. → [docs/strata-roadmap.html](docs/strata-roadmap.html)
 - **Strata** — skip install blueprints in LevelDemand material scan (`install-bp-demand-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)

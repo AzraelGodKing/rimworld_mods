@@ -205,6 +205,9 @@ namespace Strata
             }
 
             int returnMapId = intent.returnMapId;
+            int haulConstructibleId = intent.purpose == RelayPurpose.Haul
+                ? intent.preferredBedId
+                : -1;
             intents.Remove(pawnId);
 
             if (intent.purpose == RelayPurpose.Rest)
@@ -221,7 +224,7 @@ namespace Strata
 
             if (intent.purpose == RelayPurpose.Haul)
             {
-                FinishHaul(pawn, returnMapId);
+                FinishHaul(pawn, returnMapId, haulConstructibleId);
                 return;
             }
 
@@ -263,9 +266,9 @@ namespace Strata
             // Medical finishes above with LayDown on the pinned bed.
         }
 
-        private static void FinishHaul(Pawn pawn, int returnMapId)
+        private static void FinishHaul(Pawn pawn, int returnMapId, int constructibleId)
         {
-            bool delivering = StrataPortalUtility.TryStartHaulDelivery(pawn);
+            bool delivering = StrataPortalUtility.TryStartHaulDelivery(pawn, constructibleId);
             Map returnMap = returnMapId > 0 ? FindMap(returnMapId) : null;
             if (returnMap == null || returnMap == pawn.Map)
             {
@@ -288,7 +291,12 @@ namespace Strata
             }
             else
             {
-                pawn.jobs.StartJob(home, JobCondition.InterruptForced);
+                // Keep carried materials — InterruptForced otherwise drops wood/steel
+                // and the force-build looks "forgotten".
+                pawn.jobs.StartJob(
+                    home,
+                    JobCondition.InterruptForced,
+                    keepCarryingThingOverride: true);
             }
         }
 

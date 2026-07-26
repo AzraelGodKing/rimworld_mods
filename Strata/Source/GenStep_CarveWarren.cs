@@ -37,10 +37,18 @@ namespace Strata
                 start = map.Center;
             }
 
+            bool deferMineables = MapGenerator.TryGetVar(GenStep_SolidRock.DeferMineablesVar, out bool defer)
+                && defer;
+            var carveMask = new BoolGrid(map);
+
+            // Arrival chamber (PrepareLandingZone already cleared hazards; mark
+            // so deferred mineable spawn skips these cells).
+            CarveCircle(map, start, ArrivalZoneUtility.ChamberRadius, carveMask);
+
             var chambers = new List<IntVec3> { start };
             int target = playerLevel
                 ? TargetChamberCount(StrataDepth.CountLevelsBelowSurface(map))
-                : Rand.RangeInclusive(5, 8);
+                : Rand.RangeInclusive(4, 7);
             int attempts = 0;
             while (chambers.Count <= target && attempts++ < 40)
             {
@@ -54,28 +62,44 @@ namespace Strata
                 {
                     continue;
                 }
-                CarveTunnel(map, anchor, next);
-                CarveCircle(map, next, Rand.Range(MinChamberRadius, MaxChamberRadius));
+                CarveTunnel(map, anchor, next, carveMask);
+                CarveCircle(map, next, Rand.Range(MinChamberRadius, MaxChamberRadius), carveMask);
                 chambers.Add(next);
             }
 
             MapGenerator.SetVar(ChambersVar, chambers);
-            // Rock is already placed by GenStep_SolidRock before this step;
-            // do not SpawnMineables again (that refilled carved chambers and
-            // doubled the freeze cost on large maps / mod lists).
+
+            if (playerLevel
+                || (MapGenerator.TryGetVar(StrataNativeCavernUtility.ForceNativeWarrenVar, out bool force) && force))
+            {
+                // Only carved cells — not a full-map walk.
+                StrataNativeCavernUtility.PaintCarvedFloors(map, carveMask);
+            }
+
+            if (deferMineables)
+            {
+                GenStep_SolidRock.SpawnMineables(map, skipCarveMask: carveMask);
+            }
         }
 
         private static int TargetChamberCount(int depth)
         {
+            // Kept modest: each chamber + tunnel is Destroy/mark work, and deep
+            // levels already feel larger from ore/hidden-chamber gensteps.
+            bool perf = StrataMod.Settings?.performanceModeEnabled == true;
+            if (perf)
+            {
+                return depth <= 2 ? 3 : 4;
+            }
             if (depth <= 2)
             {
-                return Rand.RangeInclusive(4, 6);
+                return Rand.RangeInclusive(3, 5);
             }
             if (depth <= 4)
             {
-                return Rand.RangeInclusive(5, 8);
+                return Rand.RangeInclusive(4, 6);
             }
-            return Rand.RangeInclusive(6, 10);
+            return Rand.RangeInclusive(5, 7);
         }
 
         private static IntVec3 NextChamberSpot(Map map, IntVec3 anchor, List<IntVec3> existing)
@@ -111,33 +135,36 @@ namespace Strata
 
         // Two straight legs through a jittered midpoint read as one crooked,
         // dug-by-something tunnel rather than a surveyor's corridor.
-        private static void CarveTunnel(Map map, IntVec3 from, IntVec3 to)
+        private static void CarveTunnel(Map map, IntVec3 from, IntVec3 to, BoolGrid mask)
         {
             IntVec3 mid = (from + to) / 2 + new IntVec3(Rand.RangeInclusive(-5, 5), 0, Rand.RangeInclusive(-5, 5));
             if (!mid.InBounds(map))
             {
                 mid = (from + to) / 2;
             }
-            CarveLeg(map, from, mid);
-            CarveLeg(map, mid, to);
+            CarveLeg(map, from, mid, mask);
+            CarveLeg(map, mid, to, mask);
         }
 
-        private static void CarveLeg(Map map, IntVec3 from, IntVec3 to)
+        private static void CarveLeg(Map map, IntVec3 from, IntVec3 to, BoolGrid mask)
         {
             foreach (IntVec3 cell in GenSight.PointsOnLineOfSight(from, to))
             {
-                CarveCircle(map, cell, 1.5f);
+                CarveCircle(map, cell, 1.5f, mask);
             }
         }
 
-        private static void CarveCircle(Map map, IntVec3 center, float radius)
+        private static void CarveCircle(Map map, IntVec3 center, float radius, BoolGrid mask)
         {
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, radius, useCenter: true))
             {
-                if (cell.InBounds(map))
+                if (!cell.InBounds(map))
                 {
-                    cell.GetFirstMineable(map)?.Destroy(DestroyMode.Vanish);
+                    continue;
                 }
+                mask[cell] = true;
+                // Solid-rock quest paths still spawn mineables before this step.
+                cell.GetFirstMineable(map)?.Destroy(DestroyMode.Vanish);
             }
         }
     }

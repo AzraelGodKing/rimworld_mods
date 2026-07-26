@@ -365,25 +365,59 @@ namespace Strata
             {
                 defaultLabel = "Strata_PowerShaft_DecreaseLimit".Translate(),
                 defaultDesc = "Strata_PowerShaft_DecreaseLimitDesc".Translate(),
-                icon = ContentFinder<Texture2D>.Get("UI/Commands/TempLower", reportFailure: false),
+                icon = ShaftGizmoIcon(
+                    "UI/Commands/TempLower",
+                    "UI/Buttons/Minus",
+                    "UI/Designators/Cancel"),
                 action = DecreaseTransferLimit,
             };
             yield return new Command_Action
             {
                 defaultLabel = "Strata_PowerShaft_IncreaseLimit".Translate(),
                 defaultDesc = "Strata_PowerShaft_IncreaseLimitDesc".Translate(),
-                icon = ContentFinder<Texture2D>.Get("UI/Commands/TempRaise", reportFailure: false),
+                icon = ShaftGizmoIcon(
+                    "UI/Commands/TempRaise",
+                    "UI/Buttons/Plus",
+                    "UI/Designators/Claim"),
                 action = IncreaseTransferLimit,
             };
             yield return new Command_Action
             {
                 defaultLabel = "Strata_PowerShaft_Unlimited".Translate(),
                 defaultDesc = "Strata_PowerShaft_UnlimitedDesc".Translate(),
-                icon = ContentFinder<Texture2D>.Get("UI/Commands/TryReconnect", reportFailure: false),
+                icon = ShaftGizmoIcon(
+                    "UI/Commands/TryReconnect",
+                    "UI/Commands/ShowMap",
+                    "UI/Commands/ForbidOff"),
                 action = () => SetTransferLimit(-1f),
                 Disabled = !HasTransferLimit,
                 disabledReason = "Strata_PowerShaft_AlreadyUnlimited".Translate(),
             };
+        }
+
+        private static Texture2D ShaftGizmoIcon(string preferred, string fallback, string lastResort)
+        {
+            Texture2D tex = ContentFinder<Texture2D>.Get(preferred, reportFailure: false);
+            if (IsUsableIcon(tex))
+            {
+                return tex;
+            }
+            tex = ContentFinder<Texture2D>.Get(fallback, reportFailure: false);
+            if (IsUsableIcon(tex))
+            {
+                return tex;
+            }
+            tex = ContentFinder<Texture2D>.Get(lastResort, reportFailure: false);
+            if (IsUsableIcon(tex))
+            {
+                return tex;
+            }
+            return TexCommand.ClearPrioritizedWork;
+        }
+
+        private static bool IsUsableIcon(Texture2D tex)
+        {
+            return tex != null && tex != BaseContent.BadTex;
         }
 
         private static float LimitStepNow()

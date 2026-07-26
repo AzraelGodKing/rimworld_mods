@@ -2,11 +2,12 @@
 <Defs>
 
   <!-- Walkable/buildable pad on A+: only where the floor below is roofed.
-       dontRender: see-below draws the real map underneath (no opaque concrete slab). -->
+       dontRender: SectionLayer_GroundBelow paints the real terrain from below
+       (marble/slate/floors) so pads aren't white concrete. Selection stays local. -->
   <TerrainDef>
     <defName>Strata_RoofDeck</defName>
     <label>roof deck</label>
-    <description>Framing over a roof on the floor below. You can walk and build here — the view shows the map underneath instead of a solid pad. Open sky beyond the roof edge cannot hold structures — expand roofs downstairs to grow this deck.</description>
+    <description>Framing over a roof on the floor below. You can walk and build here — the pad shows the flooring/terrain underneath. Look down through open-sky gaps at the roof edge for a live view. Expand roofs downstairs to grow this deck.</description>
     <texturePath>Terrain/Surfaces/Concrete</texturePath>
     <dontRender>true</dontRender>
     <edgeType>Hard</edgeType>

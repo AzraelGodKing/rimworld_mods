@@ -132,8 +132,10 @@ namespace Strata
                 return;
             }
 
-            // Targets may have despawned while commuting.
-            if (job.targetA.HasThing && (job.targetA.Thing.Destroyed || job.targetA.Thing.MapHeld != pawn.Map))
+            // Targets may have despawned while commuting, or still sit on another floor.
+            if (HasUnusableThingTarget(job.targetA, pawn.Map)
+                || HasUnusableThingTarget(job.targetB, pawn.Map)
+                || HasUnusableThingTarget(job.targetC, pawn.Map))
             {
                 return;
             }
@@ -189,19 +191,21 @@ namespace Strata
 
         private static Map ResolveDestinationMap(Pawn pawn, Job job)
         {
-            Map map = MapOfTarget(job.targetA)
-                ?? MapOfTarget(job.targetB)
-                ?? MapOfTarget(job.targetC);
+            // Prefer a target on another linked floor. HaulToContainer often has
+            // materials on the pawn's map (targetA) and the frame elsewhere (B/C).
+            Map map = FirstOffMapThing(pawn, job.targetB)
+                ?? FirstOffMapThing(pawn, job.targetC)
+                ?? FirstOffMapThing(pawn, job.targetA);
             if (map != null)
             {
                 return map;
             }
 
-            if (job.targetQueueA != null)
+            if (job.targetQueueB != null)
             {
-                for (int i = 0; i < job.targetQueueA.Count; i++)
+                for (int i = 0; i < job.targetQueueB.Count; i++)
                 {
-                    map = MapOfTarget(job.targetQueueA[i]);
+                    map = FirstOffMapThing(pawn, job.targetQueueB[i]);
                     if (map != null)
                     {
                         return map;
@@ -209,11 +213,11 @@ namespace Strata
                 }
             }
 
-            if (job.targetQueueB != null)
+            if (job.targetQueueA != null)
             {
-                for (int i = 0; i < job.targetQueueB.Count; i++)
+                for (int i = 0; i < job.targetQueueA.Count; i++)
                 {
-                    map = MapOfTarget(job.targetQueueB[i]);
+                    map = FirstOffMapThing(pawn, job.targetQueueA[i]);
                     if (map != null)
                     {
                         return map;
@@ -230,6 +234,31 @@ namespace Strata
             }
 
             return null;
+        }
+
+        private static Map FirstOffMapThing(Pawn pawn, LocalTargetInfo target)
+        {
+            Map map = MapOfTarget(target);
+            if (map != null && map != pawn.Map)
+            {
+                return map;
+            }
+            return null;
+        }
+
+        private static bool HasUnusableThingTarget(LocalTargetInfo target, Map pawnMap)
+        {
+            if (!target.HasThing)
+            {
+                return false;
+            }
+            Thing thing = target.Thing;
+            if (thing.Destroyed)
+            {
+                return true;
+            }
+            Map held = thing.MapHeld;
+            return held != null && held != pawnMap;
         }
 
         private static Map MapOfTarget(LocalTargetInfo target)

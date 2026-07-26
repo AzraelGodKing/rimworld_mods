@@ -72,21 +72,61 @@ namespace Strata
             {
                 return;
             }
+            if (FloatMenuLinkedReach.CanCommuteTo(pawn, dest))
+            {
+                __result = true;
+            }
+        }
+    }
 
+    // CanReach is patched above, but mine/deconstruct/haul HasJobOnThing still
+    // fails CanReserve / CanReserveAndReach on the wrong map's reservationManager.
+    [HarmonyPatch(typeof(ReservationUtility), nameof(ReservationUtility.CanReserve))]
+    public static class Patch_FloatMenu_CanReserve_Linked
+    {
+        public static void Postfix(Pawn p, LocalTargetInfo target, ref bool __result)
+        {
+            if (__result || p?.Map == null || FloatMenuMakerMap.makingFor != p)
+            {
+                return;
+            }
+            if (FloatMenuLinkedReach.CanCommuteTo(p, target))
+            {
+                __result = true;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(ReservationUtility), nameof(ReservationUtility.CanReserveAndReach))]
+    public static class Patch_FloatMenu_CanReserveAndReach_Linked
+    {
+        public static void Postfix(Pawn p, LocalTargetInfo target, ref bool __result)
+        {
+            if (__result || p?.Map == null || FloatMenuMakerMap.makingFor != p)
+            {
+                return;
+            }
+            if (FloatMenuLinkedReach.CanCommuteTo(p, target))
+            {
+                __result = true;
+            }
+        }
+    }
+
+    internal static class FloatMenuLinkedReach
+    {
+        internal static bool CanCommuteTo(Pawn pawn, LocalTargetInfo dest)
+        {
             Map destMap = dest.HasThing ? dest.Thing.MapHeld : Find.CurrentMap;
             if (destMap == null || destMap == pawn.Map)
             {
-                return;
+                return false;
             }
             if (!ColonyBedUtility.MapsLinked(pawn.Map, destMap))
             {
-                return;
+                return false;
             }
-            if (LevelGraph.BestFirstStep(pawn.Map, destMap, pawn.Position, pawn) == null)
-            {
-                return;
-            }
-            __result = true;
+            return LevelGraph.BestFirstStep(pawn.Map, destMap, pawn.Position, pawn) != null;
         }
     }
 

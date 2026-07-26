@@ -141,7 +141,9 @@ namespace Strata
 
         public override AcceptanceReport DeconstructibleBy(Faction faction)
         {
-            if (PocketMapExists && PocketMap.mapPawns.AnyPawnBlockingMapRemoval)
+            // Broader than vanilla AnyPawnBlockingMapRemoval: downed colonists,
+            // mechs, prisoners, and player animals must also block tear-down.
+            if (PocketMapExists && StrataPortalUtility.LinkedLevelHasColonyPresence(PocketMap))
             {
                 return OccupiedOtherLevelMessage();
             }
@@ -158,6 +160,13 @@ namespace Strata
             Map level = PocketMapExists ? PocketMap : null;
             // destroyable=false: need the non-destroyable allowance or player
             // deconstruct / intentional ForceDestroy never removes us.
+            // PortalMove lifts DeSpawn immunity so the shaft actually leaves the grid.
+            bool openedMove = false;
+            if (!StrataPortalUtility.PortalMoveInProgress)
+            {
+                StrataPortalUtility.BeginPortalMove();
+                openedMove = true;
+            }
             bool prev = Thing.allowDestroyNonDestroyable;
             Thing.allowDestroyNonDestroyable = true;
             try
@@ -167,13 +176,16 @@ namespace Strata
             finally
             {
                 Thing.allowDestroyNonDestroyable = prev;
+                if (openedMove)
+                {
+                    StrataPortalUtility.EndPortalMove();
+                }
             }
             // Collapse an empty level with the surface/host shaft only. A level
-            // with pawns stays alive so they can climb out; a shared level stays
-            // while any other entrance still links in. Travel must never reach
-            // here — only intentional shaft destruction (with Abandon confirm).
+            // with colony presence stays alive so they can climb out; a shared
+            // level stays while any other entrance still links in.
             if (level != null && Find.Maps.Contains(level)
-                && !level.mapPawns.AnyPawnBlockingMapRemoval
+                && !StrataPortalUtility.LinkedLevelHasColonyPresence(level)
                 && !AnyEntranceTo(level))
             {
                 PocketMapUtility.DestroyPocketMap(level);

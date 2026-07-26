@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Strata V3 Roadmap</title>
-<meta name="description" content="Strata V3: Cap, G1–G9, M1–M10, and Polish A1–A5 done on V3-M-ux. Merge into V3.">
+<title>Strata — Version 3 complete</title>
+<meta name="description" content="Strata Version 3 complete: Cap, G1–G9, M1–M10, and Polish A1–A5 shipped on branch V3. Build stamp V3 Complete.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,11 +26,12 @@
 <header class="hero strata">
   <div class="wrap">
     <h1 class="t">STRATA — V3</h1>
-    <p class="tagline">Active work on <code>V3-M-ux</code> (merge into <code>V3</code> / <code>feature/strata-v3</code>)</p>
+    <p class="tagline">Version 3 complete</p>
     <div class="badges">
       <span class="badge strata">V2 shipped</span>
       <span class="badge strata">G1–G9 + M1–M10 + A1–A5 done</span>
-      <span class="badge strata">Merge V3-M-ux → V3</span>
+      <span class="badge strata">Version 3 complete</span>
+      <span class="badge strata">Build stamp: V3 Complete</span>
     </div>
     <div class="cta">
       <a class="btn btn-strata" href="strata.html">&#8592; Back to Strata</a>
@@ -42,22 +43,22 @@
 <div class="wrap">
 
   <section id="v3-target">
-    <h2 class="t">V3 target (locked)</h2>
-    <p class="sub">Hard cap <b>±2</b> levels (colony and gravship A+/B+); Unlimited setting defaults <b>OFF</b>. Do not run Strata alongside AASB or MultiFloors.</p>
+    <h2 class="t">V3 target — shipped</h2>
+    <p class="sub">Hard cap <b>±2</b> levels (colony and gravship A+/B+); Unlimited setting defaults <b>OFF</b>. Do not run Strata alongside AASB or MultiFloors. All locked items below are on branch <code>V3</code> (build stamp <code>V3 Complete</code>).</p>
 
     <h3 class="t">Build order</h3>
     <ol>
-      <li><b>Cap setting</b> (±2 / Unlimited off) — ✅ merged into <code>V3</code></li>
-      <li><b>G1–G7</b> Gravship linking — ✅ merged into <code>V3</code> (via <code>V3-G2</code>; includes G8 land polish)</li>
-      <li><b>More UX (M1–M10)</b> — ✅ finished on <code>V3-M-ux</code>; merge into <code>V3</code></li>
-      <li><b>A1 Live see-through roof view</b> — ✅ finished on <code>V3-M-ux</code> (see Polish)</li>
-      <li><b>A2–A5 Polish</b> — ✅ finished on <code>V3-M-ux</code> (stamp <code>a2-a5-polish-v1</code>); merge into <code>V3</code></li>
+      <li><b>Cap setting</b> (±2 / Unlimited off) — ✅ shipped on <code>V3</code></li>
+      <li><b>G1–G7</b> Gravship linking — ✅ shipped on <code>V3</code> (via <code>V3-G2</code>; includes G8 land polish)</li>
+      <li><b>More UX (M1–M10)</b> — ✅ shipped on <code>V3</code> (via <code>V3-M-ux</code>)</li>
+      <li><b>A1 Live see-through roof view</b> — ✅ shipped on <code>V3</code></li>
+      <li><b>A2–A5 Polish</b> — ✅ shipped on <code>V3</code> (stamp <code>a2-a5-polish-v1</code>)</li>
     </ol>
   </section>
 
   <section id="gravship">
     <h2 class="t">New Gravship Linking (G1–G9) — done</h2>
-    <p class="sub">G1–G7 (+ G8 land polish) merged into <code>V3</code>. G9 on <code>V3-M-ux</code>. MultiFloors lesson: explicit travel entitlement + deterministic shaft identity — not endless orphan heuristics.</p>
+    <p class="sub">G1–G9 shipped on <code>V3</code>. MultiFloors lesson: explicit travel entitlement + deterministic shaft identity — not endless orphan heuristics.</p>
     <ol>
       <li><b>G1 One engine of record</b> — ✅ Pin travelling stack to the packed ship’s engine thingID at takeoff; never PreferBestEngine / CurrentMap fallback during land rebind.</li>
       <li><b>G2 Stable shaft identity</b> — ✅ Persist stack GUID + per-shaft ID so land never spawns a second “New” underdeck when packed stairs replace temp shafts.</li>
@@ -67,14 +68,14 @@
       <li><b>G6 Shaft as grav-extender</b> — ✅ Shaft footprint + rim owns the vertical pocket column for linked placement.</li>
       <li><b>G7 Pack A+/B+ into Gravship cargo</b> — ✅ MVP: pack buildings/items engine-relative at takeoff; place at land root (skip live-pocket align when cargo placed).</li>
       <li><b>G8 Land polish</b> — ✅ Orphan adoption, duplicate cull, deck cargo / footprint clear (with later force-wipe for non-destroyable elevators).</li>
-      <li><b>G9 Mid-flight underdeck view → land RGB</b> — ✅ on <code>V3-M-ux</code>: block viewing travelling floors mid-flight; land paints with host as CurrentMap + MapDrawer regen (stamp <code>g9-travel-view-rgb-guard-v1</code>).</li>
+      <li><b>G9 Mid-flight underdeck view → land RGB</b> — ✅ block viewing travelling floors mid-flight; land paints with host as CurrentMap + MapDrawer regen (stamp <code>g9-travel-view-rgb-guard-v1</code>).</li>
     </ol>
   </section>
 
   <section id="aasb-polish">
-    <h2 class="t">Polish (A1–A5)</h2>
+    <h2 class="t">Polish (A1–A5) — done</h2>
     <ol>
-      <li><b>A1 Live see-through roof view</b> — ✅ on <code>V3-M-ux</code>: draw the map below through <code>Strata_OpenSky</code> / see-through <code>Strata_RoofDeck</code> (terrain, MapMesh things, live pawns); weather sync; click-select + double-click select-similar + forbidden overlays; float menu; cross-level ranged combat (pawns/turrets/mortars). Stamps <code>see-below-v1</code> → <code>below-select-parity-v1</code>, <code>cross-level-combat-v2</code>, <code>weather-sync-v1</code>, <code>roofdeck-seethrough-v1</code>.</li>
+      <li><b>A1 Live see-through roof view</b> — ✅ draw the map below through <code>Strata_OpenSky</code> / see-through <code>Strata_RoofDeck</code> (terrain, MapMesh things, live pawns); weather sync; click-select + double-click select-similar + forbidden overlays; float menu; cross-level ranged combat (pawns/turrets/mortars). Stamps <code>see-below-v1</code> → <code>below-select-parity-v1</code>, <code>cross-level-combat-v2</code>, <code>weather-sync-v1</code>, <code>roofdeck-seethrough-v1</code>.</li>
       <li><b>A2 Mental breaks that cross stairs</b> — ✅ binge food/drug stash hunt + berserk / murderous rage chase through shafts (stamp <code>a2-a5-polish-v1</code>).</li>
       <li><b>A3 Raider divert polish</b> — ✅ pursue when no fightable colonists remain on this floor (downed-only does not hold them); chase toward linked floors with live colonists.</li>
       <li><b>A4 Vertical utilities as one net</b> — ✅ tankless pockets (no local batteries) still get offline demand + consumer bootstrap from shaft surplus even in performance mode.</li>
@@ -83,8 +84,8 @@
   </section>
 
   <section id="multifloors-ux">
-    <h2 class="t">More UX changes (M1–M10, no M5) — finished</h2>
-    <p class="sub">Work branch: <code>V3-M-ux</code>. Merge into <code>V3</code>.</p>
+    <h2 class="t">More UX changes (M1–M10, no M5) — done</h2>
+    <p class="sub">Shipped on <code>V3</code> (merged from <code>V3-M-ux</code>).</p>
     <ol>
       <li><b>M10 Level-switch Update OOR / flicker</b> — ✅ clamp stale <code>CurrentMap</code> index after pocket create/destroy; harden overlay + Work/Schedule lists (stamp <code>m10-level-switch-oor-v1</code>).</li>
       <li><b>M9 Gravship pilot seat from other floors</b> — ✅ pawns on a linked underdeck / tower deck can fill the pilot role and right-click Pilot Gravship (stamp <code>m9-pilot-across-levels-v1</code>).</li>
@@ -99,13 +100,15 @@
   </section>
 
   <section id="baseline">
-    <h2 class="t">Already on <code>V3-M-ux</code> (beyond the locked list)</h2>
-    <p class="sub">Also shipping on this branch while Polish finishes:</p>
+    <h2 class="t">Also on <code>V3</code> (beyond the locked list)</h2>
+    <p class="sub">Extra work that landed with Version 3 complete:</p>
     <ul>
       <li>VGE Chapter 1 soft-compat, gravship life support (O₂ + heatsinks), VGE new-game crash fix</li>
       <li>Colony vs gravship shaft-family isolation; dig-stair open LongEvent; rescue across levels</li>
-      <li>Combined linked stockpile resources; force-build with materials on another floor</li>
+      <li>Combined linked stockpile resources; force-build / prioritize across floors (build stamp <code>V3 Complete</code>)</li>
+      <li>Work relay on by default; float-menu reserve/reach for linked floors</li>
       <li>Gravship land stability: force-wipe non-destroyable elevators; no portal wipe on EnterPortal; Abandon confirm on host deconstruct; skip install BPs in LevelDemand</li>
+      <li>Native cavern biome fallback; ReGrowth underdeck soft-compat; Mod Options single-column fix</li>
     </ul>
     <div class="note strata">
       Post-V3 ideas (magma, flooded levels, stack panel, etc.) live in

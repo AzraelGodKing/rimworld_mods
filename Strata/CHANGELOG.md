@@ -6,7 +6,32 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ### Fixed
 
-- **V3 Polish A2–A5** — mental-break stash/chase through shafts; raid pursue when only downed colonists remain; tankless power wake under perf mode; fault-guard auto-disable for work/atmosphere/fluid/robots. Stamp `a2-a5-polish-v1`.
+- **Vanilla Mine icon pink checkers** — live ModMixer install had a 188-byte magenta placeholder at `Textures/UI/Designators/Mine.png` (plus other vanilla `UI/Commands` / `UI/Buttons` stubs) that overrode Core. Removed those overrides so vanilla icons load again. Not in the git tree; do not re-copy placeholder UI paths into the deploy folder.
+- **Force-build HaulToContainer dead-end** — when materials were on the pawn’s floor and the blueprint elsewhere, vanilla emitted same-map `HaulToContainer` and our postfix skipped rewrite; stair haul / commute now replaces those jobs. Ordered-job dest prefers off-floor targets (B/C before A). Stamp `V3 Complete` (was `force-build-haul-rewrite-v1`).
+- **Force-build Ideology / turret gates** — linked-floor `CanConstruct` postfix no longer skips Ideology member builds, attachment walls, or turret history events.
+- **Prioritize mine/deconstruct/haul off-floor** — float-menu `CanReserve` / `CanReserveAndReach` treat linked-floor targets as reservable (same pattern as CanReach), so options enable and commute via stairs.
+- **Haul-across UsableStep NRE** — null portal from `BestFirstStep` / `firstStep` no longer dereferences `.Spawned`.
+- **Force-build on another floor greyed out** — prioritize construction when the pawn is on a linked floor failed `CanTouchTargetFromValidCell` / `CanConstruct` (same-map reach + reserve). Allow stair commute so deliver/finish jobs can start. Stamp `force-build-commute-v1`.
+- **Force-build fetch recovery stalls** — after a stair commute, if the reserved stack merged away and the replacement was on another floor, pending was cleared and the pawn gave up. Re-arm a commute to the new stack. Stamp `fetch-recover-hop-v1`.
+- **Gravship stairwell + ReGrowth NRE** — underdeck gen could skip terrain paint while `ValidSubstructure` was empty, then ReGrowth SimpleFX `RebuildCache` null-deref’d `terrainDef` on FinalizeInit and aborted the pocket. Always baseline-paint on first open; soft-compat skips splash cache on Strata floors. Stamp `regrowth-splash-v1`.
+- **Force-build across floors drops materials** — haul finish kept stockpile-first and `InterruptForced` without `keepCarryingThingOverride`, so pawns picked up wood, dropped it, and forgot the frame. Prefer the remembered blueprint/frame, construct before storage, and keep cargo through delivery / return hops. Stamp `force-build-modoptions-v1`.
+- **Mod Options only showed “View level above”** — `Listing_Standard` multi-column wrap + short scroll `viewRect` parked every other toggle in a clipped second column. Force `maxOneColumn`, tall listing rect, measure with `MaxColumnHeightSeen`. Stamp `modoptions-column-v1`.
+- **Mod Options blank / missing** — settings draw and category label no longer throw out of the options UI (null Settings recover + try/catch).
+- **Shaft power gizmo icons** — Less / More / Unlimited no longer use missing TempLower/TempRaise/TryReconnect paths (pink checkers); fall back to present UI textures.
+
+### Changed
+
+- **Work relay on by default** — colonist work relay defaults to enabled (settings migration v4 flips existing profiles). Disable in Mod Options if unwanted.
+- **Faster dig map generation** — native cavern levels no longer GenSpawn rock into chambers then Destroy it; carve mask first, spawn host rock only outside the warren, paint floors on carved cells only, single-octave rock patches, slightly fewer chambers (Performance mode uses one rock type + minimal warren). Stamp `map-gen-fast-v1`.
+- **A+ roof deck matches terrain below** — walkable pads paint marble/slate/floors from the map underneath instead of white concrete; selection stays on the local floor (open-sky see-below unchanged). Stamp `roofdeck-match-below-v1`.
+- **Stair deconstruct / pocket wipe** — block tear-down and pocket collapse with `LinkedLevelHasColonyPresence` (downed colonists, mechs, prisoners, player animals); lift portal DeSpawn immunity during Destroy so empty shafts actually leave the grid.
+
+### Added
+
+- **Native cavern biome (no Biomes! Caverns)** — dig levels mix the tile’s natural rocks (marble/slate/… patches), vary carved chamber floors, and defer cave flora/chunk scatter. With Biomes! Caverns loaded, that path still wins; on failure Strata falls back to the native warren. Stamp `native-cavern-biome-v1`.
+- **See-below float menu cell** — remap click into lower-map space; gravship A+/B+ use raw 1:1 cell mapping (not proportional) when host size differs. Stamp `bugfix-stairs-fetch-float-v1`.
+- **Cross-level construct fetch recovery** — remember the material def across the stair commute; if the reserved stack merged/despawned, pick another matching stack instead of always failing.
+- **Docs** — V3 roadmap / Strata pages mark Version 3 complete (build stamp `V3 Complete`).
 - **Docs** — V3 roadmap: Cap / G1–G9 / M1–M10 / A1–A5 done on `V3-M-ux`.
 - **`MaterialsNeededTotal` on Blueprint_Install** — LevelDemand / haul-across no longer asks install blueprints for construction materials (spam error while scanning haul jobs). Stamp `install-bp-demand-v1`.
 - **Stairs vanish when pawns enter** — land wipe prefire ran on every `GenSpawn` (including colonist portal teleport) and ForceDestroyed the landing underfoot. Prefire wipe only when spawning another Strata portal. Linked-level map wipe remains only on host shaft destroy; deconstruct shows an Abandon confirmation first. Stamp `portal-travel-no-wipe-v1`.
