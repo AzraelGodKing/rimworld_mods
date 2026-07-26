@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_Smoke.label>烟雾</Strata_Smoke.label>
+  <Strata_Smoke.overlayLabel>烟雾</Strata_Smoke.overlayLabel>
+  <Strata_Smoke.description>炉灶与明火的废气。沿未密封竖井上升，并窒息久留其中的人。</Strata_Smoke.description>
+
+  <Strata_DeepGas.label>深层气体</Strata_DeepGas.label>
+  <Strata_DeepGas.overlayLabel>深层气体</Strata_DeepGas.overlayLabel>
+  <Strata_DeepGas.description>锁在岩中的恶臭可燃气体。在渗出处积聚，毒害吸入者，接触明火会爆炸——但盖住的喷口可把它抽成燃料。</Strata_DeepGas.description>
+
+  <Strata_Oxygen.label>氧气</Strata_Oxygen.label>
+  <Strata_Oxygen.overlayLabel>O₂</Strata_Oxygen.overlayLabel>
+  <Strata_Oxygen.description>开挖楼层中的可呼吸空气。沿未密封竖井上升；没有通风时殖民者会逐渐耗尽它。</Strata_Oxygen.description>
+
+  <Strata_CarbonDioxide.label>二氧化碳</Strata_CarbonDioxide.label>
+  <Strata_CarbonDioxide.overlayLabel>CO₂</Strata_CarbonDioxide.overlayLabel>
+  <Strata_CarbonDioxide.description>呼出气体与燃烧废气。积在地面，沿楼梯沉到更深楼层，高浓度时有毒。</Strata_CarbonDioxide.description>
+
+  <Strata_Methane.label>甲烷</Strata_Methane.label>
+  <Strata_Methane.overlayLabel>CH₄</Strata_Methane.overlayLabel>
+  <Strata_Methane.description>积在腔室顶与楼梯落脚点的轻质矿井气。毒性弱，但点火密度低于深层气体——渗出处用电灯作业更安全。</Strata_Methane.description>
+
+  <Strata_BlackDamp.label>黑潮</Strata_BlackDamp.label>
+  <Strata_BlackDamp.overlayLabel>黑潮</Strata_BlackDamp.overlayLabel>
+  <Strata_BlackDamp.description>火灾与气体爆炸后残留的滞重空气。积在低洼，无声挤走房间氧气，并像深层气体一样毫无预警地令人窒息。</Strata_BlackDamp.description>
+
+  <Strata_Spores.label>真菌孢子</Strata_Spores.label>
+  <Strata_Spores.overlayLabel>孢子</Strata_Spores.overlayLabel>
+  <Strata_Spores.description>来自深层菌丛与真菌农场的空气真菌孢子。堵塞肺部并破坏心情；布滤与洗涤器可清除。</Strata_Spores.description>
+
+  <Strata_Steam.label>蒸汽</Strata_Steam.label>
+  <Strata_Steam.overlayLabel>蒸汽</Strata_Steam.overlayLabel>
+  <Strata_Steam.description>来自地热裂缝与间歇泉的热蒸汽。沿竖井上升，在浓云中烫伤，由冷凝器或开放通风消散。</Strata_Steam.description>
+
+</LanguageData>

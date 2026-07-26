@@ -135,6 +135,23 @@ namespace Strata
             return DefDatabase<BiomeDef>.GetNamedSilentFail(defName);
         }
 
+        public static void LogLayoutChoice(Map map, bool usedBiomes, BiomeDef profile)
+        {
+            string profileName = profile?.defName ?? "(none)";
+            int depth = StrataDepth.CountLevelsBelowSurface(map);
+            if (usedBiomes)
+            {
+                Log.Message("[Strata] Dig cavern layout: Biomes! Caverns profile " + profileName
+                    + " (depth " + depth + ").");
+            }
+            else
+            {
+                Log.Message("[Strata] Dig cavern layout: native mixed-rock warren"
+                    + (profile != null ? " (Biomes! profile " + profileName + " failed)" : "")
+                    + ".");
+            }
+        }
+
         private static void RunCavernRocksFromGrid(Map map, GenStepParams parms)
         {
             if (!TryBindCavernRocks(out GenStep step))

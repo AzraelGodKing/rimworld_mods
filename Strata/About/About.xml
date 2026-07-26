@@ -34,6 +34,9 @@
     <li>Ludeon.RimWorld.Odyssey</li>
     <!-- Optional: VGE Chapter 1 overhauls gravships; load Strata after so stack-follow patches win. -->
     <li>vanillaexpanded.gravship</li>
+    <!-- Optional: ReGrowth splash cache runs on FinalizeInit; load Strata after. -->
+    <li>ReGrowth.BOTR.Core</li>
+    <li>Helixien.ReGrowthCore</li>
   </loadAfter>
   <description>My Discord: https://discord.gg/Vwh2y7qMXv
 Dont have discord: https://azraelgodking.github.io/rimworld_mods/strata.html
@@ -80,14 +83,14 @@ EVENTS THAT KNOW WHICH WAY IS UP
 Underground levels are sealed rock, so the sky cannot reach them: solar flares, eclipses, toxic fallout, weather, and raids with no way in are suppressed below ground. What can reach you lives in the dark - infestations, cave-ins, breached gas pockets, gas firestorms, deep sieges, cave breakthroughs, rich ore nodes, and rare burrowing raiders. World quest sites (collapsed mine, sealed vault, geothermal vent) and optional ancient colony stairheads on the surface open multi-level adventures. Seal a stairwell to contain gas or bugs on one level.
 
 THE DEEPER, THE STRANGER
-Levels sit on a geothermal gradient - the deeper you dig, the warmer the rock - and deeper levels crawl with more bugs and hide richer ore. Native warren carving runs by default; with Biomes! Caverns loaded, Strata can generate full cavern layouts instead. For a compact shaft, research the powered elevator: a 1x1 car that needs power to descend but always lets colonists ride up if power fails, so no one is trapped below. Empty levels throttle background simulation to protect framerate in a tall base.
+Levels sit on a geothermal gradient - the deeper you dig, the warmer the rock - and deeper levels crawl with more bugs and hide richer ore. Digs mix the tile's natural rocks into patches and carve a native warren with cave flora when Biomes! Caverns is not loaded; with Biomes! Caverns present, Strata can use full cavern layouts instead. For a compact shaft, research the powered elevator: a 1x1 car that needs power to descend but always lets colonists ride up if power fails, so no one is trapped below. Empty levels throttle background simulation to protect framerate in a tall base.
 
 PERFORMANCE NOTE: every level is a full map matching your map size, so on LARGE map sizes (300x300 and up) each opened level adds correspondingly more load. A deep base on a big map will cost real performance - the vacant-level and background-level throttles soften it, but if you dig many levels, consider a smaller map size when generating the world.
 
 To move goods between levels, keep a stockpile near the stairs on each floor - colonists haul up and down through the stairwell on their own.
 
 POWER UP AND DOWN THE SHAFTS
-An elevator automatically ties the two levels' power grids together, and a researched shaft power conduit does the same beside any stairwell - so surface generators can light the deep, and a level's spare power can flow back up. Surplus flows to whichever level runs short; keep a battery on each level for it to pool across.
+An elevator automatically ties the two levels' power grids together, and a researched shaft power conduit does the same beside any stairwell - so surface generators can light the deep, and a level's spare power can flow back up. Live surplus covers demand on linked floors without a battery on every level; batteries are optional for overnight pooling and brownouts. Fluid shaft junctions work the same way when the host side has supply.
 
 HOW IT WORKS
 Each level is a real RimWorld map linked by stairwell pairs. Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla - Strata's job relay teaches colonist AI to move to the level where they are needed, so everything degrades safely and stays mod-compatible.

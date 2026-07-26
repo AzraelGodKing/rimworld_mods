@@ -1,4 +1,5 @@
 using HarmonyLib;
+using RimWorld;
 using Verse;
 
 namespace Strata
@@ -19,7 +20,15 @@ namespace Strata
     {
         public static bool Prefix(Map __instance)
         {
-            return !LevelTicking.ShouldThrottle(__instance);
+            if (!LevelTicking.ShouldThrottle(__instance))
+            {
+                return true;
+            }
+            // Vacant pockets skip most PreTick work, but shaft power still sets
+            // CompPowerShaft.PowerOutput from the host side — PowerNetsTick must
+            // still run or underdeck appliances never see that energy.
+            __instance.powerNetManager?.PowerNetsTick();
+            return false;
         }
     }
 

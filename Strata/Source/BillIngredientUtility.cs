@@ -151,7 +151,7 @@ namespace Strata
                 // cellar→surface pulls when the stove map already had a little food.
                 foreach (ThingDef def in MatchingDefs(bill, ing))
                 {
-                    entry.AddShortfall(def, needed, billGiver.Position);
+                    entry.AddShortfall(def, needed, billGiver.Position, hardNeed: true);
                     break;
                 }
             }

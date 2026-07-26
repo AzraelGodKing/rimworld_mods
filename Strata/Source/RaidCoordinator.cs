@@ -56,11 +56,12 @@ namespace Strata
             {
                 return;
             }
-            if (FindLeadLord(lead.faction, BuildColumn(root)) != lead)
+            List<Map> column = BuildColumn(root);
+            if (FindLeadLord(lead.faction, column) != lead)
             {
                 return;
             }
-            PropagatePhase(lead, BuildColumn(root));
+            PropagatePhase(lead, column);
         }
 
         private static void SyncColumn(Map root)
@@ -160,15 +161,22 @@ namespace Strata
 
         private static Lord FindLeadLord(Faction faction, List<Map> maps)
         {
+            // A lord on a map where colonists are actively present takes priority
+            // over a deeper/shallower lord on an empty floor. Without this, the
+            // surface lord (depth=0 but map now empty) was always "lead" and could
+            // time out + retreat while colonists were still fighting underground,
+            // silently pulling the whole column with it.
             Lord best = null;
             int bestDepth = int.MaxValue;
             int bestPawns = -1;
             bool bestVanilla = false;
+            bool bestHasColonists = false;
 
             for (int m = 0; m < maps.Count; m++)
             {
                 Map map = maps[m];
                 int depth = StrataDepth.Of(map);
+                bool hasColonists = map.mapPawns.FreeColonistsSpawnedCount > 0;
                 List<Lord> lords = map.lordManager.lords;
                 for (int i = 0; i < lords.Count; i++)
                 {
@@ -179,15 +187,20 @@ namespace Strata
                     }
                     bool vanilla = lord.LordJob is LordJob_AssaultColony;
                     int pawns = lord.ownedPawns.Count;
-                    if (best == null
-                        || depth < bestDepth
-                        || (depth == bestDepth && vanilla && !bestVanilla)
-                        || (depth == bestDepth && vanilla == bestVanilla && pawns > bestPawns))
+                    bool newWins = best == null
+                        // Colonist-map lords always beat empty-map lords.
+                        || (!bestHasColonists && hasColonists)
+                        // Among equal colonist-presence: shallowest wins (surface drives).
+                        || (bestHasColonists == hasColonists && depth < bestDepth)
+                        || (bestHasColonists == hasColonists && depth == bestDepth && vanilla && !bestVanilla)
+                        || (bestHasColonists == hasColonists && depth == bestDepth && vanilla == bestVanilla && pawns > bestPawns);
+                    if (newWins)
                     {
                         best = lord;
                         bestDepth = depth;
                         bestVanilla = vanilla;
                         bestPawns = pawns;
+                        bestHasColonists = hasColonists;
                     }
                 }
             }

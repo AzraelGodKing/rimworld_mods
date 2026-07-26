@@ -51,6 +51,10 @@ namespace Strata
             {
                 return true;
             }
+            if (!StrataLevelCap.AllowsNewLevelAbove(map, out reason))
+            {
+                return false;
+            }
             if (!IsBuildingUpResearchFinished())
             {
                 reason = "Requires building up research to open the first upper level.";

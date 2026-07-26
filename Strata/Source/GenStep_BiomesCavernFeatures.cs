@@ -2,15 +2,24 @@ using Verse;
 
 namespace Strata
 {
-    // Wild cave flora, fauna, and BMT scatter (stalagmites / crystals) after
-    // the rock layout and hidden chambers are in place.
+    // Wild cave flora / fauna: Biomes! scatter when that path won, otherwise
+    // Strata's native deferred cavern dressing.
     public class GenStep_BiomesCavernFeatures : GenStep
     {
         public override int SeedPart => 482910337;
 
         public override void Generate(Map map, GenStepParams parms)
         {
-            StrataDeferredGenUtility.ScheduleBiomesCavernFeatures(map);
+            if (BiomesCavernsUtility.ShouldGenerateCavernLayout(map)
+                && BiomesCavernsUtility.IsStrataCavernBiome(map.Biome))
+            {
+                StrataDeferredGenUtility.ScheduleBiomesCavernFeatures(map);
+            }
+            else if (StrataCavernUtility.ShouldGenerateNativeCavernLayout(map)
+                || (MapGenerator.TryGetVar(StrataNativeCavernUtility.ForceNativeWarrenVar, out bool force) && force))
+            {
+                StrataDeferredGenUtility.ScheduleNativeCavernFeatures(map);
+            }
         }
     }
 }

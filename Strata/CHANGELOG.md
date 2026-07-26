@@ -4,10 +4,125 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
+### Fixed
+
+- **Vanilla Mine icon pink checkers** — live ModMixer install had a 188-byte magenta placeholder at `Textures/UI/Designators/Mine.png` (plus other vanilla `UI/Commands` / `UI/Buttons` stubs) that overrode Core. Removed those overrides so vanilla icons load again. Not in the git tree; do not re-copy placeholder UI paths into the deploy folder.
+- **Force-build HaulToContainer dead-end** — when materials were on the pawn’s floor and the blueprint elsewhere, vanilla emitted same-map `HaulToContainer` and our postfix skipped rewrite; stair haul / commute now replaces those jobs. Ordered-job dest prefers off-floor targets (B/C before A). Stamp `V3 Complete` (was `force-build-haul-rewrite-v1`).
+- **Force-build Ideology / turret gates** — linked-floor `CanConstruct` postfix no longer skips Ideology member builds, attachment walls, or turret history events.
+- **Prioritize mine/deconstruct/haul off-floor** — float-menu `CanReserve` / `CanReserveAndReach` treat linked-floor targets as reservable (same pattern as CanReach), so options enable and commute via stairs.
+- **Haul-across UsableStep NRE** — null portal from `BestFirstStep` / `firstStep` no longer dereferences `.Spawned`.
+- **Force-build on another floor greyed out** — prioritize construction when the pawn is on a linked floor failed `CanTouchTargetFromValidCell` / `CanConstruct` (same-map reach + reserve). Allow stair commute so deliver/finish jobs can start. Stamp `force-build-commute-v1`.
+- **Force-build fetch recovery stalls** — after a stair commute, if the reserved stack merged away and the replacement was on another floor, pending was cleared and the pawn gave up. Re-arm a commute to the new stack. Stamp `fetch-recover-hop-v1`.
+- **Gravship stairwell + ReGrowth NRE** — underdeck gen could skip terrain paint while `ValidSubstructure` was empty, then ReGrowth SimpleFX `RebuildCache` null-deref’d `terrainDef` on FinalizeInit and aborted the pocket. Always baseline-paint on first open; soft-compat skips splash cache on Strata floors. Stamp `regrowth-splash-v1`.
+- **Force-build across floors drops materials** — haul finish kept stockpile-first and `InterruptForced` without `keepCarryingThingOverride`, so pawns picked up wood, dropped it, and forgot the frame. Prefer the remembered blueprint/frame, construct before storage, and keep cargo through delivery / return hops. Stamp `force-build-modoptions-v1`.
+- **Mod Options only showed “View level above”** — `Listing_Standard` multi-column wrap + short scroll `viewRect` parked every other toggle in a clipped second column. Force `maxOneColumn`, tall listing rect, measure with `MaxColumnHeightSeen`. Stamp `modoptions-column-v1`.
+- **Mod Options blank / missing** — settings draw and category label no longer throw out of the options UI (null Settings recover + try/catch).
+- **Shaft power gizmo icons** — Less / More / Unlimited no longer use missing TempLower/TempRaise/TryReconnect paths (pink checkers); fall back to present UI textures.
+
 ### Changed
-- **Docs** — V3 roadmap: drop “Out of V3” exclusion note. → [docs/strata-roadmap.html](../docs/strata-roadmap.html)
-- **Docs** — V3 target locked on `feature/strata-v3` (from VGE Chapter 1 compat): New Gravship Linking (G1–G7), Polish (A1–A5), More UX changes (M1–M8 except M5), ±4 hard cap / Unlimited default off. → [docs/strata-roadmap.html](../docs/strata-roadmap.html)
-- **Docs** — V3 roadmap parks AASB-inspired polish and MultiFloors-inspired gravship linking backlog (travel entitlement, shaft identity table, substructure-ready land gate).
+
+- **Work relay on by default** — colonist work relay defaults to enabled (settings migration v4 flips existing profiles). Disable in Mod Options if unwanted.
+- **Faster dig map generation** — native cavern levels no longer GenSpawn rock into chambers then Destroy it; carve mask first, spawn host rock only outside the warren, paint floors on carved cells only, single-octave rock patches, slightly fewer chambers (Performance mode uses one rock type + minimal warren). Stamp `map-gen-fast-v1`.
+- **A+ roof deck matches terrain below** — walkable pads paint marble/slate/floors from the map underneath instead of white concrete; selection stays on the local floor (open-sky see-below unchanged). Stamp `roofdeck-match-below-v1`.
+- **Stair deconstruct / pocket wipe** — block tear-down and pocket collapse with `LinkedLevelHasColonyPresence` (downed colonists, mechs, prisoners, player animals); lift portal DeSpawn immunity during Destroy so empty shafts actually leave the grid.
+
+### Added
+
+- **Native cavern biome (no Biomes! Caverns)** — dig levels mix the tile’s natural rocks (marble/slate/… patches), vary carved chamber floors, and defer cave flora/chunk scatter. With Biomes! Caverns loaded, that path still wins; on failure Strata falls back to the native warren. Stamp `native-cavern-biome-v1`.
+- **See-below float menu cell** — remap click into lower-map space; gravship A+/B+ use raw 1:1 cell mapping (not proportional) when host size differs. Stamp `bugfix-stairs-fetch-float-v1`.
+- **Cross-level construct fetch recovery** — remember the material def across the stair commute; if the reserved stack merged/despawned, pick another matching stack instead of always failing.
+- **Docs** — V3 roadmap / Strata pages mark Version 3 complete (build stamp `V3 Complete`).
+- **Docs** — V3 roadmap: Cap / G1–G9 / M1–M10 / A1–A5 done on `V3-M-ux`.
+- **`MaterialsNeededTotal` on Blueprint_Install** — LevelDemand / haul-across no longer asks install blueprints for construction materials (spam error while scanning haul jobs). Stamp `install-bp-demand-v1`.
+- **Stairs vanish when pawns enter** — land wipe prefire ran on every `GenSpawn` (including colonist portal teleport) and ForceDestroyed the landing underfoot. Prefire wipe only when spawning another Strata portal. Linked-level map wipe remains only on host shaft destroy; deconstruct shows an Abandon confirmation first. Stamp `portal-travel-no-wipe-v1`.
+- **Gravship land Update NRE / black map** — landing wipe/cull used plain `Destroy` on `destroyable=false` elevators/landings (error + ghost left behind), then stacked two power transmitters on one cell and corrupted the power-grid regen / Update loop. Force-wipe Strata portals before GenSpawn and SafeDestroy blockers. Stamp `gravship-land-wipe-v1`.
+- **A+ see-below selection parity** — through open sky / roof-deck gaps: double-click selects all similar on-screen items/pawns below; floor items are easier to click; forbidden X overlays draw (Allow/Forbid gizmos work when selected). Stamp `below-select-parity-v1`.
+- **Force-build with materials on another floor** — prioritize/construct no longer greys out with Missing Materials when steel/etc. is only in a linked stockpile; pawns walk stairs, haul it up, and deliver. Stamp `force-build-across-v1`.
+- **Combined level resources / stockpiles** — resource readout and “until you have X” now count live stockpile/shelf stacks on linked floors by default (was opt-in and could miss idle floors’ stale counters). Play-settings toggle persists. Stamp `combined-resources-stockpile-v1`.
+
+### Changed
+
+- **Combined resources scan cost** — extras cache lasts 60 ticks (was every tick) and prefers ResourceCounter snapshots before walking HeldThings, cutting UI/GetCount work at 3x.
+
+### Added
+
+- **A4 Vertical utilities as one net** — shaft power ties drive every tick (stairs / conduit / omni); battery-free pockets draw live host surplus and partner battery discharge; equalization only when the hungry side has battery room. DBH / VEF / Rimefeller shaft junctions keep a capped resource buffer when the destination lacks tanks. Player copy no longer requires a battery on every floor. Build stamp `a4-one-net-v1`.
+- **Cross-level ranged combat** — drafted pawns, turrets, and mortars can shoot through `Strata_OpenSky` (manual orders + auto-engage for idle hostiles/undrafted colonists/Fire-at-will). Toggle combat + auto-engage in settings. Stamp `cross-level-combat-v2`.
+- **Float menu through open sky** — right-click on visible below things/cells builds the normal float menu (haul, draft-move, etc.); cross-level jobs still route through stairs. Stamp `below-floatmenu-v1`.
+- **Select through open sky** — on A+, click pawns/items/buildings visible through `Strata_OpenSky` to select/inspect them (selection brackets use see-below offset). Stamp `below-select-v1`.
+- **A+ weather sync** — upper decks copy the map-below weather (and stop rolling their own) so rain/snow matches see-below. Stamp `weather-sync-v1`.
+- **See-below on A+ decks** — through `Strata_OpenSky` holes, draw the real map underneath (terrain/snow/water, MapMesh things, optional live pawns), with underlay dim + thing scale settings. Open sky is `dontRender` so holes are true voids. Existing depth-dim overlay remains as a separate full-screen mood cue. Build stamp `see-below-v1`.
+
+### Changed
+
+- **A+ roof deck is see-through** — `Strata_RoofDeck` is `dontRender` so the map below shows through walkable pads (no white concrete slabs); open-sky dim mask uses black fog. Stamp `roofdeck-seethrough-v1`.
+- **Unlimited levels covers gravships** — with Unlimited on, gravship stacks can go past the default ±1 under/over the ship deck (same setting as colony towers). Stamp `gravship-unlimited-cap-v1`.
+- **Shaft / fluid performance** — power ties use `PowerNet.CurrentEnergyGainRate` (no per-tick trader scan); MethodInfo cache on pipe rebuild; lazy VEF reconnect only when a net is missing; load reconcile skips full `RebuildFor`; Rimatomics/Rimefeller reconnect gated on mod presence; performance mode skips offline-demand/bootstrap scans and drives power every 3 ticks. Build stamp `shaft-perf-v1`.
+
+### Fixed
+
+- **Cross-level storage priority** — a linked floor’s storage-upgrade pull no longer exports *every* stack of that def. Critical (or otherwise higher-priority) shelves underground stay put when the surface only has lower-priority room; only construction / bills / refuel may still pull regardless of priority. Build stamp `cross-level-storage-prio-v1`.
+- **Empty stairwell / elevator deconstruct** — portal destroy immunity swallowed `DestroyMode.Deconstruct`, so designations finished while shafts stayed (`destroyable=false` + DeSpawn block). Player deconstruct now goes through; occupied-floor checks also catch downed colonists / colony animals / mechs / prisoners. Build stamp `stair-deconstruct-empty-v1`.
+- **ModMixer deploy incomplete** — live `4c907a7e9671` was missing `Odyssey/` (gravship stairs/elevators) and `Defs/Misc` (`Strata_BelowThings`); full-synced from repo. Duplicate `Mods/Strata` packageId retagged to `DeployMirror` so only one Strata loads. Stamp `modmixer-fullsync-v1`.
+- **Pink checker Mine + gas overlay icons** — removed magenta placeholder PNGs that overrode vanilla `UI/Designators/Mine` (and other UI paths); replaced `SmokeToggle` with a real gas icon; lazy-load play-settings icons so they don’t freeze on BadTex. Deploy to the ModMixer folder the game actually loads. Stamp `ui-icons-fix-v1`.
+- **See-below live pawns** — when viewing A+, the ground map never ran RimWorld’s EnsureInitialized/ParallelPreDraw, so only the static underlay showed. Live pawns/projectiles through open sky now run the full draw phases (stamp `see-below-live-v1`).
+- **Unable to open any new pocket level** — dig-stair LongEvent path only read `MapPortal.PocketMap` (never generates); vanilla opens via `GetOtherMap()`. Every first descent was marked failed and stayed blocked across quit-to-menu / new colonies when thing IDs recycled. Now calls `GetOtherMap()` and clears open-session state on load. Build stamp `pocket-open-getothermap-v1`.
+- **Gravship + ground stairs crash** — colony dig shafts no longer attach as `DownEntrance` on gravship landings (and vice versa); pocket join / orphan adopt refuse cross-stack partners. Having up+down on ship and ground at once no longer cross-wires portal/power and hard-crashes. Load clears bad saved links. Build stamp `shaft-family-isolate-v1`.
+- **Ancient / excavated stair freeze** — first descent fills a full-size rock map via per-cell `GenSpawn`; with large mod lists that looked like a hard crash (tower stairs stayed fine because they skip rock fill). Rock fill now disables region rebuilds and uses load-style spawn; level open runs as a LongEvent (“Generating map…”) and Enter is blocked until the pocket exists. Native cavern no longer re-fills carved chambers. Build stamp `dig-stair-freeze-v1`.
+- **Cross-level Rescue** — downed/wounded pawns on a floor with no bed can be carried through stairs to a usable bed (medical preferred) on a linked level; Doctor workgiver + float-menu Rescue when vanilla greys out for “no bed”. Build stamp `rescue-across-levels-v1`.
+- **VHGE on PipeSystemTick** — DirectFeed (incl. storage-charge) in Prefix and storage equalize in Postfix so gas moves after production hits tanks/overflow; stop Rimefeller reconnect warnings when that mod isn’t loaded; reconnect VEF junctions before reading nets. Build stamp `vhge-pipesystem-tick-v1`.
+- **VHGE flow + junction lag** — VEF reconnect binds `PipeSystem.dll` (was looking in VEF.dll); spawn no longer rebuilds every adjacent wall/furniture; fluid ties tick every 100 (PipeSystem cadence) while power stays every tick; VHGE drive is AASB DirectFeed-on-`PipeSystemTick` + storage equalize. Build stamp `vhge-aasb-lagfix-v1`.
+- **VHGE cross-floor flow** — pending Extra* now accumulates across PipeSystem’s 100-tick interval (was overwritten each tick at ~0.24 L, so 14400 L/d never arrived); junction net lookup prefers its own CompResource; equalize/charge use drawable+overflow; draw falls back to overflow. Build stamp `vhge-crossfloor-flow-v2`.
+- **VHGE junction = power/DBH parity** — Helixien shaft drive now matches CompPowerShaft: online balance + offline demand + storage equalize/charge, physical transfer into the junction mini-tank, BootstrapReceivers to wake appliances, and pending Extra* applied in `PipeSystemTick` Prefix (PipeSystem's PowerOutput). Build stamp `vhge-power-shaft-parity-v1`.
+- **VHGE tankless wake** — DirectFeed now injects in a `PipeSystemTick` Prefix (Extra* was wiped before PipeSystem read it); equalize syncs `Stored` from `CurrentStored` and force-wakes offline traders so Helixien appliances turn on without a local tank. Build stamp `vhge-tankless-wake-v1`.
+- **DBH / VHGE shaft fluid (AASB flow)** — DBH equalizes fill with `PullWater`/`PushWater` at 0.5 damping (no raw tower-field edits); VHGE uses DirectFeed (`ExtraProduction`/`ExtraConsumption`) plus the same fill equalize on storages; fluid ties tick every frame like AASB. Rebuild or replace old junctions after the CompWaterStorage XML change. Build stamp `fluid-aasb-flow-v1`.
+- **VHGE Helixien gas between levels** — shaft helixien junctions now use `CompResourceStorage` (250) instead of a bare pipe connector so PipeSystem can store/draw across floors; VEF transfer also falls back to overflow draw/push and binds `PipeSystem.dll` explicitly. Build stamp `vhge-shaft-gas-v1`.
+- **DBH water without tanks** — shaft plumbing junctions carry a small hidden `CompWaterStorage` (250) so DBH fixtures that gate on `WaterTowers` / `WaterStorage` before `PullWater` actually see water; PullWater also counts any leftover junction buffer. VEF / Rimefeller still use the generic shaft buffer. Build stamp `dbh-tankless-water-v2` (v1 buffer-only never reached PullWater).
+- **Shaft power without per-floor batteries** — stairwell/conduit ties drive every tick from the host stairwell as well as the landing; vacant underdecks still run `PowerNetsTick` while ambient PreTick is throttled; demand sensing counts offline appliances that want power (vanilla `CurrentEnergyGainRate` ignores them, so dark B1 never asked for watts). Build stamp `power-threat-crosslevel-v4`.
+- **Hostile events on another floor** — ThreatBig/ThreatSmall letters targeting a linked B+/A+ floor now cut the camera there and force normal speed when you're viewing a different map; deep raids / hostile lost miners jump immediately; raid pursuit across shafts and any new hostile wave on an off-view linked floor get a threat letter. Build stamp `power-threat-crosslevel-v3` (v1 wrong Harmony overload; v2 missed vacant-map power + debug-spawn hostiles).
+
+### Added
+
+- **Shaft power charges linked batteries** — live surplus on one floor now pulls into battery room on the other (not only appliance demand / stored-level equalize). Build stamp `power-shaft-battery-charge-v1`.
+- **Shaft power upward flow** — export supply uses live `PowerOn` balance only; offline local appliances no longer “reserve” generator watts, so B1/A1 surplus can feed the surface. Demand still counts offline loads for bootstrap downward. Build stamp `power-shaft-upflow-v1`.
+- **Shaft power transfer cap** — Less / More / Unlimited gizmos on stairwells / shaft conduits (±100 W, Shift ±500 W). Cap syncs to the partner end; transfer uses live excess then batteries so linked floors don’t brown out. Build stamp `power-shaft-limit-v3`.
+- **More UX finish (M1–M8 remaining)** — medical bed pin + arrival LayDown (M6); cross-level reinstall haul (M7); float-menu/caravan already covered (M8); `StrataModderApi` (M3); visitor/guest/trader shaft pathing (M1); Vehicle Framework roof-deck soft-compat (M2); optional upper-deck depth dim slider (M4). Build stamp `m-ux-finish-v1`.
+- **Simplified Chinese (简体中文)** — full `Languages/ChineseSimplified/` pack: Keyed (`Strata.xml`, gravship + shaft-fluid strings) and DefInjected covering the same defs as the Russian pack (buildings, research, incidents, gases, hediffs, sites, terrain, jobs, etc.).
+
+### Changed
+
+- **Russian Keyed** — filled remaining English placeholders in `Languages/Russian/Keyed/Strata.xml` from community pack (caravans, gas overlay tips/labels, play-settings tips) plus `GravshipTravelViewBlocked`.
+- **Branch** — `V3-M-ux` merged into `V3` (M9 pilot-across-levels, M10 CurrentMap OOR, G9 travel-view RGB guard, B1 ghost-hull clear, Simplified Chinese pack, hostile lost-miners threat letter).
+- **Lost miners (hostile)** — when the crew turns hostile, fire a raid-style `ThreatSmall` letter (jumps to them, briefly forces normal speed) instead of a quiet Neutral letter that’s easy to miss on another floor. Friendly arrivals keep the calm letter.
+- **Power / fluid copy** — About, stairwell, shaft conduit, and EN/RU/CN keyed + DefInjected strings: batteries optional for overnight pooling; inspect tips show watts feeding/drawing across the shaft.
+
+### Fixed
+
+- **Cross-level storage priority** — a linked floor’s storage-upgrade pull no longer exports *every* stack of that def. Critical (or otherwise higher-priority) shelves underground stay put when the surface only has lower-priority room; only construction / bills / refuel may still pull regardless of priority. Build stamp `cross-level-storage-prio-v1`.
+- **Empty stairwell / elevator deconstruct** — portal destroy immunity swallowed `DestroyMode.Deconstruct`, so designations finished while shafts stayed (`destroyable=false` + DeSpawn block). Player deconstruct now goes through; occupied-floor checks also catch downed colonists / colony animals / mechs / prisoners. Build stamp `stair-deconstruct-empty-v1`.
+- **B1 leftover ship circles after land** — cargo clear only wiped packed deck/floors, so old hull rims stayed as ghost pads; duplicate elevators also refused `Destroy` (`destroyable=false`) and `Log.Error`'d without removing. Off-pad hull (not the live pad rim) now clears with the silhouette sweep / old-footprint rim pass; non-destroyable shafts use `Thing.allowDestroyNonDestroyable` + portal-move scope. Non-fatal gravship warnings post via `StrataLog` (Player.log only, no debug-log pop). Build stamp `g9-ghost-hull-clear-v1`.
+- **Gravship land RGB / neon section corruption** — viewing an underdeck/tower mid-flight (colonist-bar portrait) then landing mass-dirtied that pocket while MapDrawer was live, leaving permanent red/green/blue section meshes (save/load did not heal). Block camera jumps onto travelling floors when another map exists; evacuate the view at takeoff; during land paint temporarily view the host and `RegenerateEverythingNow` on host + linked pockets afterward. Build stamp `g9-travel-view-rgb-guard-v1`.
+- **Play-settings tooltips localized** — gas overlay and combined-level-resources toggle tips were hardcoded English; moved to Keyed (`Strata_PlaySettings_GasOverlayTip`, `Strata_PlaySettings_CombinedResourcesTip`) with Russian. Build stamp `m-ux-playsettings-tips-keyed-v1`.
+- **Gas overlay room/cursor labels** — hardcoded `load` / `Gas: open air` / `Gas:` moved to Keyed (`Strata_GasOverlay_Load`, `Strata_GasOverlay_LoadParen`, `Strata_GasOverlay_OpenAir`, `Strata_GasOverlay_GasPrefix`). Chemical symbols (N₂, O₂, …) stay on gas def `overlayLabel`. RU left English for translators. Build stamp `m-ux-gas-overlay-labels-keyed-v1`.
+- **M10 Level-switch flicker / `ArgumentOutOfRangeException`** — changing floors (esp. after digging a new level) could spam `Root level exception in Update(): ArgumentOutOfRangeException (Parameter name: index)` until returning to the surface. Vanilla `Game.CurrentMap` indexes `maps[currentMapIndex]` with no upper bound; pocket create/destroy can leave that index past `maps.Count`. Strata now clamps/repairs the index, hardens gas-overlay + breath-room batching, and snapshots Work/Schedule pawn lists so a re-entrant table recache cannot clear a live enumerator. Build stamp `m10-level-switch-oor-v1`.
+
+### Changed
+
+- **M9 Pilot seat from other floors** — launch ritual no longer rejects navigators on a linked underdeck/tower with "No path to pilot console"; right-click Pilot Gravship and board/leave jobgivers use the stack engine + stair commute. Work branch `V3-M-ux`. Build stamp `m9-pilot-across-levels-v1`.
+
+<!-- ┌───────────────────────────────────────────────────────────────────────┐ -->
+<!-- │  GRAVSHIP LINKING OVERHAUL (V3-G)                                        │ -->
+<!-- └───────────────────────────────────────────────────────────────────────┘ -->
+- **Gravship linking overhaul — Strata levels now travel with the ship and re-link cleanly on landing.** A ground-up rework of how dug-down underdecks and built-up tower decks follow an Odyssey gravship through launch, flight, and landing. Current build stamp `g8-stale-substructure-sweep-v8`.
+  - **Stairs follow the ship (root cause found).** Strata's own portal-protection patch was silently swallowing every intentional stairwell despawn, so each land-time move reported success while the stairs never actually moved — the true source of the long-standing "stairs don't follow the ship" symptom. Portal moves now run in an explicit move-scope the protection honors, and every landing is verified to sit exactly under its host shaft.
+  - **One circle, correctly placed and rotated.** Packed deck contents land with the exact vanilla placement transform, so furniture, floors, roofs, zones, and designations all arrive rotated the same way as the ship — no more "two circles" (one rotated pad, one offset room). Pocket↔ship mapping is strict 1:1, so landing on a differently-sized map (e.g. Geological Landforms tiles) no longer splits the deck from its contents.
+  - **Launch no longer crawls.** The stall between pressing Launch and takeoff is gone — the per-cell ship-membership checks vanilla runs during launch are now cached instead of re-scanning every map and portal. (No worker thread; RimWorld map state stays main-thread only.)
+  - **Ghost circles cleaned up.** Leftover landing pads, orphaned duplicate stairs, stale substructure markers, and unsupported L1 deck left above old parking spots are now swept — gently, a slice per tick to avoid the section-mesh corruption a mass clear caused. Existing damaged saves self-heal on load.
+  - **Gravship stacks capped at ±1 level** (one underdeck, one tower deck) — deeper ship stacks multiplied travel work and were the fragile path in these bugs. Colony floors keep the normal ±2 / Unlimited rules; existing deeper stacks keep working.
+  - **Crash on load fixed** — the load-time repair no longer regenerates ship graphics on the background loader thread (an off-thread Unity mesh create was hard-crashing); it's deferred to the main thread.
+
+- **Level depth cap** — new digs/towers default to ±2 from the stack root (colony surface or gravship host). Settings: **Unlimited levels** (default OFF). Extra shafts may still join an already-open floor; existing deeper stacks are not removed. Was ±4; tightened to ±2. Build stamp `cap-pm2-large-ship-sync-v1`.
+- **Docs** — V3 roadmap: New Gravship Linking (G1–G7) marked merged into `V3`; More UX active on `V3-M-ux` with **M9** (pilot seat) and **M10** (level-switch CurrentMap OOR). → [docs/strata-roadmap.html](../docs/strata-roadmap.html)
 
 ### Fixed
 - **`Strata_HaulAcrossLevels` “Collection was modified”** — `LevelGraph.ReachableLevels` now returns a fresh list each call (topology still cached), and `TryFindHaulTarget` snapshots links before nested `LevelDemand` rebuilds. Fixes Mech_Lifter / haul workgiver spam when demand cache cold-builds mid-scan. Build stamp `haul-reachablelevels-reentrant-v1`.
@@ -145,12 +260,8 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 - Cross-level haul spam, bill ingredients, Misc. Robots on shafts, relay session state on load, sealed-shaft siege on indestructible landings.
 - Dozens of startup/XML/Harmony 1.6 compat fixes across incidents, canary, mine lamp, lime scrubber, and dev tools.
 
----
-
-## [1.1] — 2026-07-12
-
-Level sharing, cross-level storage/construction, smoke ventilation, pursuing raids, deep insect eruptions, shaft power, legacy landing migration.
-
 ## [1.0] — Strata V1
 
 Initial release: excavated levels, relays, smoke sim, Levels tab, elevators, shaft power, raid pursuit.
+Level sharing, cross-level storage/construction, smoke ventilation, pursuing raids, deep insect eruptions, shaft power, legacy landing migration.
+

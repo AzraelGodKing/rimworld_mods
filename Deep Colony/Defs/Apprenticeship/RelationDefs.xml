@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- The mentor's side: mentor → apprentice -->
+  <PawnRelationDef>
+    <defName>DC_MentorOf</defName>
+    <label>mentor of</label>
+    <labelFemale>mentor of</labelFemale>
+    <implied>false</implied>
+    <workerClass>PawnRelationWorker</workerClass>
+    <opinionOffset>10</opinionOffset>
+  </PawnRelationDef>
+
+  <!-- The apprentice's side: apprentice → mentor -->
+  <PawnRelationDef>
+    <defName>DC_ApprenticeOf</defName>
+    <label>apprentice of</label>
+    <labelFemale>apprentice of</labelFemale>
+    <implied>false</implied>
+    <workerClass>PawnRelationWorker</workerClass>
+    <opinionOffset>15</opinionOffset>
+  </PawnRelationDef>
+
+</Defs>

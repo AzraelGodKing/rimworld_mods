@@ -35,6 +35,15 @@ namespace Strata
             return ColonistsForTab(includeSubhumans: true);
         }
 
+        // Call after camera jumps floors so Work/Schedule refresh if still open.
+        public static void NotifyCurrentMapChanged()
+        {
+            MainTabWindow_PawnTable work = Find.WindowStack?.WindowOfType<MainTabWindow_Work>();
+            work?.Notify_PawnsChanged();
+            MainTabWindow_PawnTable schedule = Find.WindowStack?.WindowOfType<MainTabWindow_Schedule>();
+            schedule?.Notify_PawnsChanged();
+        }
+
         public static void DrawLinkedColonistsToggle(Rect rect, MainTabWindow_PawnTable tab)
         {
             if (!CanOfferLinkedColonistToggle(Find.CurrentMap))
@@ -56,16 +65,12 @@ namespace Strata
             Map current = Find.CurrentMap;
             if (current == null)
             {
-                yield break;
+                return System.Array.Empty<Pawn>();
             }
 
             if (!ShowLinkedColonists || !CanOfferLinkedColonistToggle(current))
             {
-                foreach (Pawn pawn in CurrentMapPawns(current, includeSubhumans))
-                {
-                    yield return pawn;
-                }
-                yield break;
+                return SnapshotCurrentMapPawns(current, includeSubhumans);
             }
 
             tmpPawns.Clear();
@@ -98,32 +103,32 @@ namespace Strata
             }
 
             tmpPawns.Sort(CompareTabPawns);
-            for (int i = 0; i < tmpPawns.Count; i++)
-            {
-                yield return tmpPawns[i];
-            }
+            // Snapshot: PawnTable may re-enter this getter while AddRange walks the
+            // prior enumerable; a shared static list would clear mid-enumeration.
+            return new List<Pawn>(tmpPawns);
         }
 
-        private static IEnumerable<Pawn> CurrentMapPawns(Map map, bool includeSubhumans)
+        private static List<Pawn> SnapshotCurrentMapPawns(Map map, bool includeSubhumans)
         {
+            tmpPawns.Clear();
             foreach (Pawn pawn in map.mapPawns.FreeColonists)
             {
                 if (!pawn.DevelopmentalStage.Baby())
                 {
-                    yield return pawn;
+                    tmpPawns.Add(pawn);
                 }
             }
-            if (!includeSubhumans)
+            if (includeSubhumans)
             {
-                yield break;
-            }
-            foreach (Pawn pawn in map.mapPawns.ColonySubhumansControllable)
-            {
-                if (!pawn.DevelopmentalStage.Baby())
+                foreach (Pawn pawn in map.mapPawns.ColonySubhumansControllable)
                 {
-                    yield return pawn;
+                    if (!pawn.DevelopmentalStage.Baby())
+                    {
+                        tmpPawns.Add(pawn);
+                    }
                 }
             }
+            return new List<Pawn>(tmpPawns);
         }
 
         private static int CompareTabPawns(Pawn a, Pawn b)

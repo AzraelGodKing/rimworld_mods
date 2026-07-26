@@ -87,8 +87,29 @@ namespace Strata
             return true;
         }
 
-        public static bool Prefix(Thing newThing, IntVec3 loc, Map map, Rot4 rot, ref Thing __result)
+        public static bool Prefix(
+            Thing newThing,
+            IntVec3 loc,
+            Map map,
+            Rot4 rot,
+            WipeMode wipeMode,
+            ref Thing __result)
         {
+            // Only when placing another Strata portal. WipeMode cannot remove
+            // destroyable=false shafts — but running this for pawns/items would
+            // ForceDestroy the landing underfoot when colonists EnterPortal.
+            if (newThing is MapPortal
+                && newThing.def?.defName != null
+                && newThing.def.defName.StartsWith("Strata_")
+                && map != null
+                && (wipeMode == WipeMode.Vanish
+                    || wipeMode == WipeMode.VanishOrMoveAside
+                    || wipeMode == WipeMode.FullRefund))
+            {
+                StrataPortalUtility.PrefireWipeStrataPortals(
+                    map, loc, rot, newThing.def.Size, newThing);
+            }
+
             if (newThing == null || map == null)
             {
                 return true;
@@ -128,6 +149,13 @@ namespace Strata
             }
             // Allow our own map-gen / landing repair despawn cycles.
             if (PocketMapUtility.currentlyGeneratingPortal != null)
+            {
+                return true;
+            }
+            // Allow explicit portal moves (gravship cargo, landing snap, align).
+            // Without this every mover's DeSpawn was silently swallowed: the
+            // respawn then errored "already spawned" and the portal never moved.
+            if (StrataPortalUtility.PortalMoveInProgress)
             {
                 return true;
             }

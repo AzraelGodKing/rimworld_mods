@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ============ 已移除的货运电梯 ============ -->
+  <Strata_CargoLift.label>货运电梯（已废弃）</Strata_CargoLift.label>
+  <Strata_CargoLift.description>此建筑已从 Strata 移除。请拆除它——现在由搬运工与楼梯旁仓储在楼层间运送货物。</Strata_CargoLift.description>
+
+  <!-- ============ 塔楼楼梯 ============ -->
+  <Strata_StairsBuildUp.label>塔楼楼梯</Strata_StairsBuildUp.label>
+  <Strata_StairsBuildUp.description>通往本图上方新地上楼层的楼梯塔。完工后打开上层 +1（或接入另一座塔楼楼梯已打开的上层）。上层地图是屋顶露台：仅可在本层有屋顶处行走与建造，外加竖井周边——屋顶外的开阔天空无法承重。扩展下方屋顶以扩大露台。需要研究“向上建造”。
+
+殖民者会自行使用塔楼在楼层间工作。将每层接到楼梯以合并电力。上方有人时不可拆除。</Strata_StairsBuildUp.description>
+
+  <!-- 上层落脚点 -->
+  <Strata_BuildUpLanding.label>塔楼落脚点</Strata_BuildUpLanding.label>
+  <Strata_BuildUpLanding.description>塔楼楼梯的上层落脚点——通往下方楼层的楼梯。将本层接到楼梯，电力才能与下层合并。不可拆除；这是下行通道。</Strata_BuildUpLanding.description>
+
+  <!-- ============ 挖掘楼梯 ============ -->
+  <Strata_StairsDown.label>挖掘楼梯</Strata_StairsDown.label>
+  <Strata_StairsDown.description>凿入殖民地下方岩层的宽楼梯。完工后打开新地下楼层：与本图同尺寸的整层坚岩，可挖成房间、工坊与仓储。从地表到第一层地下室需要研究“向下挖掘”；再往下每层需要研究“深层挖掘”。注意：地图越大，每层开放带来的负担也越大。
+
+殖民者会自行使用楼梯在各层工作、进食与睡觉。当每层都接到楼梯时，竖井还会连接两层电网——主机侧的实时盈余可直接供应另一层，无需每层自备电池；电池可选，用于夜间蓄电与应对短时缺口。下方有人时不可拆除。</Strata_StairsDown.description>
+
+  <!-- 向下挖掘延伸 -->
+  <Strata_DigDownShaft.label>挖掘竖井</Strata_DigDownShaft.label>
+  <Strata_DigDownShaft.description>上方楼梯落脚点向下凿入岩层的延伸。殖民者在完工后用它抵达下一层。将上方落脚点（或建成后的本竖井）接入电网——它会像挖掘楼梯一样向下层输电。</Strata_DigDownShaft.description>
+
+  <!-- ============ 上行楼梯 ============ -->
+  <Strata_StairsUp.label>上行楼梯</Strata_StairsUp.label>
+  <Strata_StairsUp.description>挖掘楼梯的下层落脚点——通往上层的宽楼梯。将本层本地网络接到楼梯，电力才能与上层合并。不可拆除；这是回家的路。</Strata_StairsUp.description>
+
+  <!-- ============ 塔楼电梯 ============ -->
+  <Strata_ElevatorBuildUp.label>塔楼电梯</Strata_ElevatorBuildUp.label>
+  <Strata_ElevatorBuildUp.description>打开并连接上方地上露台楼层的电动电梯，作用如同塔楼楼梯——但更紧凑。可建面积对应本层屋顶（外加竖井周边）。轿厢上行需要电力；断电时上方人员仍可安全下行。上层有殖民者时不可拆除。</Strata_ElevatorBuildUp.description>
+
+  <Strata_ElevatorBuildUpLanding.label>塔楼电梯落脚点</Strata_ElevatorBuildUpLanding.label>
+  <Strata_ElevatorBuildUpLanding.description>塔楼电梯的上层落脚点，通往下方楼层。不可拆除——这是下行通道。断电时下行仍可用。</Strata_ElevatorBuildUpLanding.description>
+
+  <!-- ============ 电梯 ============ -->
+  <Strata_ElevatorDown.label>电梯</Strata_ElevatorDown.label>
+  <Strata_ElevatorDown.description>打开并连接下方楼层的电动电梯，作用如同楼梯——但更紧凑，乘坐更舒适。轿厢下行需要电力；断电时下方人员仍可安全上行，不会被困。下层有殖民者时不可拆除。</Strata_ElevatorDown.description>
+
+  <Strata_ElevatorUp.label>电梯落脚点</Strata_ElevatorUp.label>
+  <Strata_ElevatorUp.description>电梯的下层落脚点，通往上层。不可拆除——这是回家的路。</Strata_ElevatorUp.description>
+
+  <!-- ============ 排气风扇 ============ -->
+  <Strata_ExhaustFan.label>排气风扇</Strata_ExhaustFan.label>
+  <Strata_ExhaustFan.description>电动单向墙式通风口。将进气侧朝向冒烟房间安装；烟雾经另一侧抽入另一房间、管道或室外。不可反向。地下木柴或化合燃料发电机几乎必备。</Strata_ExhaustFan.description>
+
+  <!-- ============ 上升过滤器 ============ -->
+  <Strata_UpdraftFilter.label>上升过滤器</Strata_UpdraftFilter.label>
+  <Strata_UpdraftFilter.description>安装在楼梯或电梯房间内的电动风扇。烟雾会自然沿开放竖井上升；此过滤器主动把烟雾从房间抽到上层——如同地下炉灶的烟囱。竖井密封时无效。</Strata_UpdraftFilter.description>
+
+  <!-- ============ 烟雾百叶 ============ -->
+  <Strata_SmokeLouver.label>烟雾百叶</Strata_SmokeLouver.label>
+  <Strata_SmokeLouver.description>被动单向墙式百叶。像通风口一样将进气侧朝向需通风房间；无需电力缓慢排出烟雾。比排气风扇弱，但便宜且始终可用。</Strata_SmokeLouver.description>
+
+  <!-- ============ 烟雾孔 ============ -->
+  <Strata_SmokeHole.label>烟雾孔</Strata_SmokeHole.label>
+  <Strata_SmokeHole.description>嵌在墙洞中的草皮编织烟囱——最古老的烟囱。将进气侧朝向冒烟房间，烟雾会缓慢渗到另一侧。比机械通风弱，但不需研究，只要木材，并让有火房间保持可呼吸。仅单向。</Strata_SmokeHole.description>
+
+  <!-- ============ 气体管道 ============ -->
+  <Strata_GasPipeBase.description>铺在管线层的金属管。像电力线一样连接，并用一条线路在房间间输送所有 Strata 气体（烟雾、氧气、深层气体等）。风扇与百叶可把气体排入管道；网络需通到开阔空气才能排到室外。</Strata_GasPipeBase.description>
+
+  <Strata_SmokeDuct.label>气体管道</Strata_SmokeDuct.label>
+
+  <Strata_HiddenGasPipe.label>隐藏气体管道</Strata_HiddenGasPipe.label>
+  <Strata_HiddenGasPipe.description>几乎看不见的管线层气体管道。与普通气体管道相连并同样输送所有 Strata 气体，但藏在地板下。</Strata_HiddenGasPipe.description>
+
+  <!-- ============ 竖井电力导管 ============ -->
+  <Strata_ShaftConduit.label>竖井电力导管</Strata_ShaftConduit.label>
+  <Strata_ShaftConduit.description>可选的跨竖井输电节点。建在楼梯或电梯几格之内：它会自动在下方落脚点生成对端节点，每层接到各自节点后电力便在两网间流动——建好并接线后立即生效，无需开关。无电池的楼层仍可从已连接的主机电网取用实时盈余。楼梯与电梯本身已可输电——仅在需要竖井外的单独接点时使用。</Strata_ShaftConduit.description>
+
+  <!-- ============ 氧气泵 ============ -->
+  <Strata_OxygenPump.label>氧气泵</Strata_OxygenPump.label>
+  <Strata_OxygenPump.description>密封地下房间的电动空气富集器。运行时缓慢向房间释放可呼吸氧气——足够几名殖民者，但不能替代繁忙楼层的竖井通风。</Strata_OxygenPump.description>
+
+  <!-- ============ 二氧化碳泵 ============ -->
+  <Strata_CO2Pump.label>二氧化碳泵</Strata_CO2Pump.label>
+  <Strata_CO2Pump.description>从密封房间空气中清除二氧化碳并截留在化学过滤器中的电动洗涤器。与氧气泵或竖井通风配合，使深层工作间保持可呼吸——殖民者呼出快于单台清除，繁忙房间需要多台。</Strata_CO2Pump.description>
+
+  <!-- ============ 竖井气体交换器 ============ -->
+  <Strata_GasExchanger.label>竖井气体交换器</Strata_GasExchanger.label>
+  <Strata_GasExchanger.description>安装在楼梯或电梯房间内的电动风扇。氧气自然上升、二氧化碳沿开放竖井下沉；此交换器主动驱动两者——把滞留二氧化碳抽向更深楼层，并把新鲜氧气沿井筒上送。竖井密封时无效。</Strata_GasExchanger.description>
+
+  <!-- ============ 金丝雀笼 ============ -->
+  <Strata_CanaryCage.label>金丝雀笼</Strata_CanaryCage.label>
+  <Strata_CanaryCage.description>关养活体矿用金丝雀的小笼——矿工经典的气体警报。金丝雀对烟雾、深层气体、低氧与二氧化碳积聚比对殖民者更敏感。鸟安静或死亡时，先通风再派人进入。
+
+此处只能放矿用金丝雀。放入附近矿用金丝雀，或以干草获取。默认在笼中装填食物，或在模组设置中开启饥饿维持。</Strata_CanaryCage.description>
+
+  <!-- ============ 鸟笼 ============ -->
+  <Strata_BirdCage.label>鸟笼</Strata_BirdCage.label>
+  <Strata_BirdCage.description>驯养鸟类的装饰笼——鸡、火鸡等。默认在笼中装填食物，或在模组设置中开启饥饿维持。
+
+地下气体预警请用金丝雀笼与矿用金丝雀。</Strata_BirdCage.description>
+
+</LanguageData>
