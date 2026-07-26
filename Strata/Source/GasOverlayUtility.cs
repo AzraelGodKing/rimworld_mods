@@ -152,7 +152,7 @@ namespace Strata
 
         public static bool CellHasOverlayGas(float[][] cellDensity, int cellIndex, Map map)
         {
-            if (cellDensity == null)
+            if (cellDensity == null || cellIndex < 0)
             {
                 return false;
             }
@@ -160,8 +160,16 @@ namespace Strata
             for (int i = 0; i < gases.Count; i++)
             {
                 StrataGasDef gas = gases[i];
+                if (gas == null || gas.index < 0 || gas.index >= cellDensity.Length)
+                {
+                    continue;
+                }
                 float[] plane = cellDensity[gas.index];
-                if (plane != null && VisibleInOverlay(gas, plane[cellIndex], map))
+                if (plane == null || cellIndex >= plane.Length)
+                {
+                    continue;
+                }
+                if (VisibleInOverlay(gas, plane[cellIndex], map))
                 {
                     return true;
                 }
@@ -172,7 +180,7 @@ namespace Strata
         // Dominant visible gas tints the cell; a strong secondary gas blends in.
         public static Color GetCellOverlayColor(float[][] cellDensity, int cellIndex, Map map)
         {
-            if (cellDensity == null)
+            if (cellDensity == null || cellIndex < 0)
             {
                 return Color.clear;
             }
@@ -184,8 +192,12 @@ namespace Strata
             for (int i = 0; i < gases.Count; i++)
             {
                 StrataGasDef gas = gases[i];
+                if (gas == null || gas.index < 0 || gas.index >= cellDensity.Length)
+                {
+                    continue;
+                }
                 float[] plane = cellDensity[gas.index];
-                if (plane == null)
+                if (plane == null || cellIndex >= plane.Length)
                 {
                     continue;
                 }
@@ -212,11 +224,17 @@ namespace Strata
             {
                 return Color.clear;
             }
-            float primaryDensity = cellDensity[primary.index][cellIndex];
+            float[] primaryPlane = cellDensity[primary.index];
+            float primaryDensity = primaryPlane != null && cellIndex < primaryPlane.Length
+                ? primaryPlane[cellIndex]
+                : 0f;
             Color color = ResolveOverlayColor(primary, primaryDensity);
             if (secondary != null && secondaryWeight >= primaryWeight * 0.2f)
             {
-                float secondaryDensity = cellDensity[secondary.index][cellIndex];
+                float[] secondaryPlane = cellDensity[secondary.index];
+                float secondaryDensity = secondaryPlane != null && cellIndex < secondaryPlane.Length
+                    ? secondaryPlane[cellIndex]
+                    : 0f;
                 float mix = secondaryWeight / (primaryWeight + secondaryWeight);
                 color = Color.Lerp(color, ResolveOverlayColor(secondary, secondaryDensity), mix * 0.45f);
             }
@@ -240,11 +258,11 @@ namespace Strata
             }
             if (openAir)
             {
-                line = "Gas: open air";
+                line = "Strata_GasOverlay_OpenAir".Translate();
                 return true;
             }
 
-            var sb = new StringBuilder("Gas: ");
+            var sb = new StringBuilder("Strata_GasOverlay_GasPrefix".Translate());
             for (int i = 0; i < slices.Count; i++)
             {
                 if (i > 0)
@@ -253,9 +271,7 @@ namespace Strata
                 }
                 sb.Append(FormatSliceLabel(slices[i]));
             }
-            sb.Append("  (load ");
-            sb.Append(FormatLoadPercent(pollutantLoad));
-            sb.Append("%)");
+            sb.Append("Strata_GasOverlay_LoadParen".Translate(FormatLoadPercent(pollutantLoad)));
             line = sb.ToString();
             return true;
         }
@@ -280,7 +296,7 @@ namespace Strata
 
             if (openAir)
             {
-                string line = "Gas: open air";
+                string line = "Strata_GasOverlay_OpenAir".Translate();
                 Vector2 size = Text.CalcSize(line);
                 Rect rect = ClampLabelRect(new Rect(
                     mouse.x + cursorPad,
@@ -539,7 +555,7 @@ namespace Strata
 
         private static string FormatLoadLabel(float pollutantLoad)
         {
-            return "load " + FormatLoadPercent(pollutantLoad) + "%";
+            return "Strata_GasOverlay_Load".Translate(FormatLoadPercent(pollutantLoad));
         }
 
         private static string FormatLoadPercent(float pollutantLoad)

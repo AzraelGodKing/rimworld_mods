@@ -3,7 +3,7 @@
 Cross-mod vision for Strata, Homesteader, Stormproof, and Nemesis.
 Per-mod later work lives in each mod’s roadmap:
 
-- [Strata V3](Strata/V3_ROADMAP.md)
+- [Strata V3 checklist (done vs left)](docs/strata-roadmap.html) · [post-V3 ideas](Strata/V3_ROADMAP.md)
 - [Homesteader](Homesteader/ROADMAP.md)
 - [Stormproof](Stormproof/ROADMAP.md)
 - [Nemesis](Nemesis/ROADMAP.md)

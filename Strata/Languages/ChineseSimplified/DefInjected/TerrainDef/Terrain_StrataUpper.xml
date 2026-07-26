@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_RoofDeck.label>屋顶露台</Strata_RoofDeck.label>
+  <Strata_RoofDeck.description>下方楼层屋顶上的框架。可在此行走与建造。屋顶外的开阔天空无法承重——扩展下方屋顶以扩大此露台。</Strata_RoofDeck.description>
+
+  <Strata_OpenSky.label>开阔天空</Strata_OpenSky.label>
+  <Strata_OpenSky.description>下方没有建造支撑的空空气域。为下方楼层加盖屋顶即可把露台扩进这片空间。</Strata_OpenSky.description>
+
+</LanguageData>

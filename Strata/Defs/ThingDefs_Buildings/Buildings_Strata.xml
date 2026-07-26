@@ -115,7 +115,7 @@ Colonists use the tower on their own to work across floors. Wire each level into
     <label>excavated stairwell</label>
     <description>A broad staircase carved down into the rock beneath the colony. Completing it opens a new underground level: a solid stratum of stone the same size as this map, directly beneath it, that can be mined out into rooms, workshops, and vaults. The first basement from the surface requires digging down research; every level below that requires deep excavation research. Note: on large map sizes each opened level adds correspondingly more load.
 
-Colonists will use the stairwell on their own to work, eat, and sleep across levels. The shaft also ties both floors' power grids together when each level is wired into the stairwell — keep a battery on each level for surplus to pool across. It cannot be deconstructed while anyone is still below.</description>
+Colonists will use the stairwell on their own to work, eat, and sleep across levels. The shaft also ties both floors' power grids together when each level is wired into the stairwell — live host surplus feeds the other floor without a local battery; batteries are optional for overnight pooling and brownouts. It cannot be deconstructed while anyone is still below.</description>
     <thingClass>Strata.Building_StairsDown</thingClass>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
@@ -745,7 +745,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ShaftConduit</defName>
     <label>shaft power conduit</label>
-    <description>An optional power junction for running power through a shaft. Build one within a few tiles of a stairwell or elevator: it automatically extends a matching junction down to the landing below, and power flows between the two grids once each level is wired to its junction — active as soon as it is built and wired, no switch to flip. Stairwells and elevators already carry power on their own — use this when you need a dedicated tie point away from the shaft footprint.</description>
+    <description>An optional power junction for running power through a shaft. Build one within a few tiles of a stairwell or elevator: it automatically extends a matching junction down to the landing below, and power flows between the two grids once each level is wired to its junction — active as soon as it is built and wired, no switch to flip. Battery-free floors still draw live surplus from the linked host net. Stairwells and elevators already carry power on their own — use this when you need a dedicated tie point away from the shaft footprint.</description>
     <thingClass>Strata.Building_ShaftConduit</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/ShaftConduit</texPath>

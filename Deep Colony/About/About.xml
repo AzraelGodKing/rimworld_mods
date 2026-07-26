@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModMetaData>
+  <name>Deep Colony</name>
+  <packageId>azraelgodking.DeepColony</packageId>
+  <author>azraelgodking</author>
+  <description>Your colonists are more than their stats. Deep Colony adds five interlocking systems that give each colonist a real identity — and make your colony feel like it has a living history.
+
+🌳 PERK TREES
+As colonists hit skill levels 5 and 15, they earn perk points you can spend on permanent passive bonuses — better aim, faster surgery, richer harvests. Every skill has its own two-node tree.
+
+🧠 TRAUMA &amp; THERAPY
+Hostile downs, violent loss of close companions, captivity, and mass-casualty raids can leave lasting psychological trauma that fades over weeks. Doctors can counsel the wounded mind (or right-click Counsel), and casual therapy chats still help.
+
+🎓 APPRENTICESHIP
+Pair a veteran with a rookie via right-click (mentor must lead by 3+ skill levels). Apprentices earn bonus XP near their mentor; the Mentoring work type runs active teaching sessions.
+
+👶 GENERATIONAL COLONIES
+Children and recruits with colonist parents can inherit traits and passions. Build long enough and you'll see echoes of your founders.
+
+🏛️ LIVING FACTION REPUTATION
+Raids and trade nudge goodwill. Strong friendships and deep enmities slowly drift over time without constant contact.
+
+Requires Harmony.</description>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+  </loadAfter>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+</ModMetaData>
