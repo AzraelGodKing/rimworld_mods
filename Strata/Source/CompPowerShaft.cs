@@ -112,10 +112,15 @@ namespace Strata
             float topOffDemand = OfflineDemandWatts(topNet, this);
             float botOffDemand = OfflineDemandWatts(botNet, bottom);
 
-            float botWant = Mathf.Max(0f, -botOn) + botOffDemand
+            // Include the receiving shaft's base load in each side's demand so
+            // the transfer covers both the far-side consumers AND the receiving
+            // shaft's own maintenance draw. Without this the bottom net runs a
+            // permanent deficit equal to bottom.BaseLoad (one small device stays
+            // dark even when the top has ample surplus). Symmetric for upward flow.
+            float botWant = bottom.BaseLoad + Mathf.Max(0f, -botOn) + botOffDemand
                 + EqualizeWant(botNet, topNet)
                 + BatteryChargeWant(botNet, LiveExcess(topOn));
-            float topWant = Mathf.Max(0f, -topOn) + topOffDemand
+            float topWant = BaseLoad + Mathf.Max(0f, -topOn) + topOffDemand
                 + EqualizeWant(topNet, botNet)
                 + BatteryChargeWant(topNet, LiveExcess(botOn));
 
@@ -144,6 +149,23 @@ namespace Strata
             else if (transfer < -1f)
             {
                 BootstrapConsumers(topNet, -transfer);
+            }
+            else
+            {
+                // Startup / balanced-grid probe: transfer is near-zero but live surplus
+                // exists (fresh connection, or CurrentEnergyGainRate lagged one tick).
+                // Boot underground consumers now so they don't wait an extra cycle for
+                // botWant to register through the demand scan.
+                float topLive = Mathf.Max(0f, topOn) - BaseLoad;
+                float botLive = Mathf.Max(0f, botOn) - bottom.BaseLoad;
+                if (topLive > 1f)
+                {
+                    BootstrapConsumers(botNet, topLive);
+                }
+                else if (botLive > 1f)
+                {
+                    BootstrapConsumers(topNet, botLive);
+                }
             }
         }
 
@@ -250,8 +272,10 @@ namespace Strata
         // Offline appliances that still want power (bootstrap demand).
         private static float OfflineDemandWatts(PowerNet net, CompPowerShaft self)
         {
-            // Performance mode: skip the O(n) offline scan; online surplus still flows.
-            if (StrataMod.Settings?.performanceModeEnabled == true)
+            // Performance mode skips the O(n) scan — except tankless nets (no
+            // batteries): those need host surplus demand registered so A4
+            // "one net" wake still works without local storage.
+            if (StrataMod.Settings?.performanceModeEnabled == true && NetHasBatteries(net))
             {
                 return 0f;
             }
@@ -279,8 +303,13 @@ namespace Strata
 
         private static void BootstrapConsumers(PowerNet net, float availableWatts)
         {
-            if (availableWatts < 1f || net?.powerComps == null
-                || StrataMod.Settings?.performanceModeEnabled == true)
+            if (availableWatts < 1f || net?.powerComps == null)
+            {
+                return;
+            }
+            // Perf mode may skip bootstrap on battery nets; tankless pockets
+            // must still wake from shaft surplus (A4).
+            if (StrataMod.Settings?.performanceModeEnabled == true && NetHasBatteries(net))
             {
                 return;
             }
@@ -310,6 +339,11 @@ namespace Strata
                     break;
                 }
             }
+        }
+
+        private static bool NetHasBatteries(PowerNet net)
+        {
+            return net?.batteryComps != null && net.batteryComps.Count > 0;
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()

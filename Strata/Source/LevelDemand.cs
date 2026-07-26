@@ -302,15 +302,26 @@ namespace Strata
             for (int i = 0; i < things.Count; i++)
             {
                 Thing thing = things[i];
-                // Install/reinstall blueprints reference a specific minified
-                // building; TotalMaterialCost logs an error and returns nothing.
-                // Cross-level haul for those uses vanilla install hauling.
-                if (thing.Faction != Faction.OfPlayer || thing is Blueprint_Install
-                    || !(thing is IConstructible constructible))
+                if (thing == null || thing.Destroyed || thing.Faction != Faction.OfPlayer)
+                {
+                    continue;
+                }
+                // Install/reinstall blueprints are not built from materials —
+                // TotalMaterialCost() always Log.Errors. Prefer type-name checks
+                // so a stale/ref isinst mismatch cannot leak through.
+                if (IsInstallBlueprint(thing))
+                {
+                    continue;
+                }
+                if (thing is not IConstructible constructible)
                 {
                     continue;
                 }
                 List<ThingDefCountClass> cost = constructible.TotalMaterialCost();
+                if (cost == null)
+                {
+                    continue;
+                }
                 for (int j = 0; j < cost.Count; j++)
                 {
                     ThingDef def = cost[j].thingDef;
@@ -328,6 +339,21 @@ namespace Strata
                     sites.Add(thing.Position);
                 }
             }
+        }
+
+        internal static bool IsInstallBlueprint(Thing thing)
+        {
+            if (thing is Blueprint_Install)
+            {
+                return true;
+            }
+            // Blueprint but not a material-cost build blueprint (install / mods).
+            if (thing is Blueprint && thing is not Blueprint_Build)
+            {
+                return true;
+            }
+            System.Type type = thing.GetType();
+            return type != null && type.Name == "Blueprint_Install";
         }
 
         private static int CountOnMap(Map map, ThingDef def)

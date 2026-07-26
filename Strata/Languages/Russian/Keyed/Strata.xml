@@ -4,10 +4,10 @@
   <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
   <Strata_Settings_LevelHotkeys>Горячие клавиши уровней</Strata_Settings_LevelHotkeys>
   <Strata_Settings_UnlimitedLevels>Безлимитные уровни</Strata_Settings_UnlimitedLevels>
-  <Strata_Settings_UnlimitedLevelsDesc>Если выключено (по умолчанию), новые шахты вниз и башни вверх останавливаются на {0} этажах ниже и {0} выше корня стека (поверхность колонии или палуба гравикорабля). Дополнительные шахты всё ещё могут присоединиться к уже открытому этажу. Уже существующие более глубокие/высокие стеки продолжают работать.</Strata_Settings_UnlimitedLevelsDesc>
+  <Strata_Settings_UnlimitedLevelsDesc>Если выключено (по умолчанию), стеки колонии ограничены {0} этажами ниже/выше корня, а стеки гравикорабля — 1 этажом ниже/выше палубы. Дополнительные шахты всё ещё могут присоединиться к уже открытому этажу. Уже существующие более глубокие/высокие стеки продолжают работать. Если включено, снимаются оба лимита (глубокие стеки гравикорабля тяжелее при взлёте/посадке).</Strata_Settings_UnlimitedLevelsDesc>
   <Strata_LevelCap_MaxBelow>Лимит уровней: нельзя копать ниже B{0}. Включите «Безлимитные уровни» в настройках Strata или копайте с более мелкого этажа.</Strata_LevelCap_MaxBelow>
   <Strata_LevelCap_MaxAbove>Лимит уровней: нельзя строить выше A{0}. Включите «Безлимитные уровни» в настройках Strata или стройте с более низкого этажа.</Strata_LevelCap_MaxAbove>
-  <Strata_LevelCap_GravshipMax>Лимит уровней гравикорабля: не более {0} уровня выше и {0} уровня ниже палубы корабля. Для более глубоких уровней посадите корабль и копайте с этажа колонии.</Strata_LevelCap_GravshipMax>
+  <Strata_LevelCap_GravshipMax>Лимит уровней гравикорабля: не более {0} уровня выше и {0} уровня ниже палубы корабля. Включите «Безлимитные уровни» в настройках Strata или посадите корабль и копайте с этажа колонии.</Strata_LevelCap_GravshipMax>
   <Strata_Settings_ViewLevelAbove>Смотреть уровень выше</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>Смотреть уровень ниже</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>Нажмите клавишу...</Strata_Settings_PressKey>
@@ -19,6 +19,9 @@
   <Strata_Settings_RobotSoftCompatDesc>Межуровневая маршрутизация роботов Misc. Robots через порталы (возврат на базу, если зарядка на другом уровне). Выключите для проверки, не вызывают ли хуки Strata лаги.</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Маршрут работы Misc. Robots</Strata_Settings_RobotWorkRelay>
   <Strata_Settings_RobotWorkRelayDesc>Если у робота нет локальной работы по переноске/уборке, отправить его через лестницы к связанным уровням с работой. По умолчанию выключено.</Strata_Settings_RobotWorkRelayDesc>
+  <Strata_Settings_ShaftFluid>Жидкостные шахтные узлы</Strata_Settings_ShaftFluid>
+  <Strata_Settings_ShaftFluidDesc>Перенос жидкостей между этажами. Автоотключение при повторяющихся ошибках.</Strata_Settings_ShaftFluidDesc>
+  <Strata_FaultGuardTripped>Strata автоматически отключила {0} после повторяющихся ошибок. Включите снова в настройках мода при необходимости.</Strata_FaultGuardTripped>
   <Strata_Settings_FoodRelay>Маршрут еды</Strata_Settings_FoodRelay>
   <Strata_Settings_FoodRelayDesc>Голодные колонисты ищут еду на другом уровне.</Strata_Settings_FoodRelayDesc>
   <Strata_Settings_RestRelay>Маршрут отдыха</Strata_Settings_RestRelay>
@@ -56,7 +59,7 @@
   <Strata_Settings_GasOverlayLabels>Подписи комнат на оверлее газа</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>При включённом оверлее газа в настройках игры рисует цветные процентные подписи на каждой закрытой комнате (топ-3 газа + нагрузка). Панель у курсора доступна всегда, когда оверлей включён.</Strata_Settings_GasOverlayLabelsDesc>
   <Strata_PlaySettings_GasOverlayTip>Strata: show gas overlay\nTints each room by its dominant hazardous gas. Move the mouse over a room for a cursor-attached gas mix panel. Optional per-room labels: Strata mod settings → Gas overlay room labels.</Strata_PlaySettings_GasOverlayTip>
-  <Strata_PlaySettings_CombinedResourcesTip>Strata: combined level resources - the resource readout and build costs count items on every linked level.</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata: общие ресурсы уровней (вкл. по умолчанию)\nСчётчик ресурсов, стоимость строительства и «пока не будет X» учитывают предметы на складах/полках всех связанных этажей.</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>load {0}%</Strata_GasOverlay_Load>
   <Strata_GasOverlay_LoadParen>  (load {0}%)</Strata_GasOverlay_LoadParen>
   <Strata_GasOverlay_OpenAir>Gas: open air</Strata_GasOverlay_OpenAir>
@@ -113,8 +116,26 @@
   <Strata_Settings_MultiFloorStairsDesc>Использовать альтернативную графику из Textures/Strata/Buildings/MultiFloors/ (лестницы с перилами + современный лифт). Мод MultiFloors не требуется.</Strata_Settings_MultiFloorStairsDesc>
   <Strata_Settings_MultiFloorCredit>Эти ресурсы из Multifloors; Telardo может попросить их удалить.</Strata_Settings_MultiFloorCredit>
   <Strata_Settings_DepthDim>Затемнение верхних палуб</Strata_Settings_DepthDim>
-  <Strata_Settings_DepthDimDesc>При просмотре палубы A+/крыши слегка затемняет экран, намекая на взгляд вниз. Не рисует этаж ниже (сквозные крыши — отдельная функция).</Strata_Settings_DepthDimDesc>
+  <Strata_Settings_DepthDimDesc>При просмотре палубы A+/крыши слегка затемняет весь экран как глубинный акцент. Отдельно от «видеть этаж ниже» — та функция реально рисует карту под открытым небом.</Strata_Settings_DepthDimDesc>
   <Strata_Settings_DepthDimStrength>Сила затемнения: {0}</Strata_Settings_DepthDimStrength>
+  <Strata_Settings_SeeBelow>Видеть этаж ниже через открытое небо</Strata_Settings_SeeBelow>
+  <Strata_Settings_SeeBelowDesc>На палубах A+ рисует настоящую карту снизу через клетки открытого неба Strata (рельеф, вода, здания, туман войны).</Strata_Settings_SeeBelowDesc>
+  <Strata_Settings_SeeBelowLive>Живые пешки и снаряды снизу</Strata_Settings_SeeBelowLive>
+  <Strata_Settings_SeeBelowLiveDesc>Также рисовать движущиеся объекты с карты ниже при взгляде через открытое небо.</Strata_Settings_SeeBelowLiveDesc>
+  <Strata_Settings_BelowDim>Затемнение вида снизу: {0}</Strata_Settings_BelowDim>
+  <Strata_Settings_BelowThingScale>Масштаб объектов снизу: {0}</Strata_Settings_BelowThingScale>
+  <Strata_Settings_CrossLevelCombat>Стрельба между этажами</Strata_Settings_CrossLevelCombat>
+  <Strata_Settings_CrossLevelCombatDesc>Пешки, турели и миномёты могут стрелять через клетки открытого неба Strata по парному этажу выше или ниже (дальность учитывает вертикальный зазор).</Strata_Settings_CrossLevelCombatDesc>
+  <Strata_Settings_CrossLevelAutoEngage>Автоатака между этажами</Strata_Settings_CrossLevelAutoEngage>
+  <Strata_Settings_CrossLevelAutoEngageDesc>Праздные враги и немобилизованные колонисты с оружием (и турели без локальной цели) сами стреляют через открытое небо. У мобилизованных с «огонь на поражение» — ответный огонь через проём.</Strata_Settings_CrossLevelAutoEngageDesc>
+  <Strata_ReportAttackingAcross>атакует {0} через этажи.</Strata_ReportAttackingAcross>
+  <Strata_NoArcPath>Нет дуги через открытое небо до этой клетки.</Strata_NoArcPath>
+  <Strata_NoGapLine>Нет линии огня через открытое небо до цели.</Strata_NoGapLine>
+  <Strata_MortarTargetSet>{0}: цель миномёта между этажами задана.</Strata_MortarTargetSet>
+  <Strata_TurretTargetSet>{0}: цель турели между этажами задана.</Strata_TurretTargetSet>
+  <Strata_GapLineLost>{0} потеряла линию огня между этажами.</Strata_GapLineLost>
+  <Strata_StopCrossBombard>Стоп огонь между этажами</Strata_StopCrossBombard>
+  <Strata_StopCrossBombardDesc>Отменить текущий приказ турели или миномёта между этажами.</Strata_StopCrossBombardDesc>
   <Strata_Settings_Interface>Интерфейс</Strata_Settings_Interface>
   <Strata_Settings_LinkedColonistsTabs>Уровни Strata на вкладках «Работа» / «Расписание»</Strata_Settings_LinkedColonistsTabs>
   <Strata_Settings_LinkedColonistsTabsDesc>На вкладках «Работа» и «Расписание» появляется флажок «Уровни Strata» (когда у колонии есть выкопанные уровни). Если включён, обе вкладки показывают колонистов со всех связанных уровней, а не только с просматриваемой карты.</Strata_Settings_LinkedColonistsTabsDesc>
@@ -159,6 +180,8 @@
   <Strata_OnlyWayDown>Это единственный путь вниз.</Strata_OnlyWayDown>
   <Strata_SomeoneBelow>Кто-то всё ещё на уровне ниже.</Strata_SomeoneBelow>
   <Strata_SomeoneAbove>Кто-то всё ещё на уровне выше.</Strata_SomeoneAbove>
+  <Strata_AbandonLevelBelowConfirm>Снос этой лестницы или лифта обрушит связанный нижний уровень, если к нему больше нет другого входа.\n\nВсё на том этаже (постройки, вещи, растения) будет потеряно. Колонисты внизу блокируют снос.\n\nЗабросить связанный уровень?</Strata_AbandonLevelBelowConfirm>
+  <Strata_AbandonLevelAboveConfirm>Снос этой лестницы или лифта обрушит связанный верхний уровень, если к нему больше нет другого входа.\n\nВсё на том этаже (постройки, вещи, растения) будет потеряно. Колонисты сверху блокируют снос.\n\nЗабросить связанный уровень?</Strata_AbandonLevelAboveConfirm>
   <Strata_SmokeShaftSealed>Дымовая шахта: запечатана</Strata_SmokeShaftSealed>
   <Strata_SmokeShaftOpen>Дымовая шахта: пары поднимаются на уровень выше</Strata_SmokeShaftOpen>
   <Strata_PowerShaft>Энергошахта: связывает сети обоих уровней (подведите проводку каждого этажа к лестнице; батареи необязательны — для ночного накопления)</Strata_PowerShaft>
@@ -211,6 +234,7 @@
   <Strata_Place_NeedsGravEngine>Требуется гравитационный двигатель на этой карте.</Strata_Place_NeedsGravEngine>
   <Strata_Place_MustBeSubstructure>Должно быть построено на подконструкции гравикорабля.</Strata_Place_MustBeSubstructure>
   <Strata_Place_NoColonyStairsOnGravship>Нельзя строить колониальные лестницы на гравикорабле. Используйте лестницу гравикорабля.</Strata_Place_NoColonyStairsOnGravship>
+  <Strata_Dig_NoColonyShaftOnGravshipLanding>Нельзя копать колониальный шахтный ствол от площадки гравикорабля. Копайте от площадки колониальной лестницы или откройте другой ствол гравикорабля на корабле.</Strata_Dig_NoColonyShaftOnGravshipLanding>
   <Strata_Place_MustBeOnGasVent>Должно быть размещено на жерле глубинного газа.</Strata_Place_MustBeOnGasVent>
 
   <!-- Gas / atmosphere -->

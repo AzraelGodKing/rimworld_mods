@@ -5,10 +5,10 @@
   <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
   <Strata_Settings_LevelHotkeys>楼层视角快捷键</Strata_Settings_LevelHotkeys>
   <Strata_Settings_UnlimitedLevels>无限楼层</Strata_Settings_UnlimitedLevels>
-  <Strata_Settings_UnlimitedLevelsDesc>关闭时（默认），新挖掘与建塔最多到堆叠根（殖民地地表或重力飞船主机）以下 {0} 层、以上 {0} 层。额外竖井仍可接入已开放楼层。已有更深/更高的堆叠不受影响。</Strata_Settings_UnlimitedLevelsDesc>
+  <Strata_Settings_UnlimitedLevelsDesc>关闭时（默认），殖民地堆叠最多到根以下/以上各 {0} 层，重力飞船堆叠最多到甲板上下各 1 层。额外竖井仍可接入已开放楼层。已有更深/更高的堆叠不受影响。开启后同时取消殖民地与飞船上限（更深的飞船堆叠会加重起飞/着陆负担）。</Strata_Settings_UnlimitedLevelsDesc>
   <Strata_LevelCap_MaxBelow>楼层上限：无法挖到 B{0} 以下。请在 Strata 设置中启用无限楼层，或从较浅楼层挖掘。</Strata_LevelCap_MaxBelow>
   <Strata_LevelCap_MaxAbove>楼层上限：无法建到 A{0} 以上。请在 Strata 设置中启用无限楼层，或从较低楼层建造。</Strata_LevelCap_MaxAbove>
-  <Strata_LevelCap_GravshipMax>重力飞船楼层上限：飞船堆叠仅允许甲板上下各 {0} 层。着陆后从殖民地楼层继续向下挖可获得更深楼层。</Strata_LevelCap_GravshipMax>
+  <Strata_LevelCap_GravshipMax>重力飞船楼层上限：飞船堆叠仅允许甲板上下各 {0} 层。请在 Strata 设置中启用「无限楼层」，或着陆后从殖民地楼层继续挖掘。</Strata_LevelCap_GravshipMax>
   <Strata_Settings_ViewLevelAbove>查看上层</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>查看下层</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>请按键…</Strata_Settings_PressKey>
@@ -20,6 +20,9 @@
   <Strata_Settings_RobotSoftCompatDesc>为 Misc. Robots 提供跨层门户路径（充电点在其他楼层时的返回基地）。关闭可对比测试是否由 Strata 机器人钩子导致卡顿。</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Misc. Robots 工作通勤</Strata_Settings_RobotWorkRelay>
   <Strata_Settings_RobotWorkRelayDesc>当机器人在本地找不到搬运/清洁工作时，经楼梯井前往有工作的相连楼层。默认关闭——需要机器人跨层通勤时再启用。</Strata_Settings_RobotWorkRelayDesc>
+  <Strata_Settings_ShaftFluid>竖井流体接头</Strata_Settings_ShaftFluid>
+  <Strata_Settings_ShaftFluidDesc>跨层流体连接。反复出错时会由故障保护自动关闭。</Strata_Settings_ShaftFluidDesc>
+  <Strata_FaultGuardTripped>Strata 因反复出错已自动关闭 {0}。如需可在模组选项中重新启用。</Strata_FaultGuardTripped>
   <Strata_Settings_FoodRelay>觅食通勤</Strata_Settings_FoodRelay>
   <Strata_Settings_FoodRelayDesc>饥饿的殖民者会去其他楼层寻找餐食。</Strata_Settings_FoodRelayDesc>
   <Strata_Settings_RestRelay>休息通勤</Strata_Settings_RestRelay>
@@ -57,7 +60,7 @@
   <Strata_Settings_GasOverlayLabels>气体叠加房间标签</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>开启游戏设置中的气体叠加时，在每个封闭房间绘制彩色百分比标签（前三种气体 + 负载）。叠加开启时，光标面板始终可用。</Strata_Settings_GasOverlayLabelsDesc>
   <Strata_PlaySettings_GasOverlayTip>Strata：显示气体叠加\n按主要有害气体为房间着色。将鼠标移到房间上可查看附着于光标的气体混合面板。可选每房间标签：Strata 模组设置 → 气体叠加房间标签。</Strata_PlaySettings_GasOverlayTip>
-  <Strata_PlaySettings_CombinedResourcesTip>Strata：合并楼层资源 — 资源读数与建造成本会计入每个相连楼层上的物品。</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata：合并楼层资源（默认开启）\n资源读数、建造成本与“直到拥有 X”账单会计入每个相连楼层货堆/货架上的物品。</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>负载 {0}%</Strata_GasOverlay_Load>
   <Strata_GasOverlay_LoadParen>  （负载 {0}%）</Strata_GasOverlay_LoadParen>
   <Strata_GasOverlay_OpenAir>气体：开阔空气</Strata_GasOverlay_OpenAir>
@@ -114,8 +117,26 @@
   <Strata_Settings_MultiFloorStairsDesc>使用 Textures/Strata/Buildings/MultiFloors/ 中捆绑的替代美术（扶手楼梯 + 现代电梯）。不需要 MultiFloors 模组。</Strata_Settings_MultiFloorStairsDesc>
   <Strata_Settings_MultiFloorCredit>这些资源来自 Multifloors，Telardo 可要求移除。</Strata_Settings_MultiFloorCredit>
   <Strata_Settings_DepthDim>上层深度暗化</Strata_Settings_DepthDim>
-  <Strata_Settings_DepthDimDesc>查看 A+/屋顶甲板时略微压暗画面，暗示向下俯视。不会绘制下层（透视屋顶是另一项功能）。</Strata_Settings_DepthDimDesc>
+  <Strata_Settings_DepthDimDesc>查看 A+/屋顶甲板时略微压暗整个画面作为深度氛围。与“透过开阔天空看见下层”分开：后者会真正绘制下层。</Strata_Settings_DepthDimDesc>
   <Strata_Settings_DepthDimStrength>暗化强度：{0}</Strata_Settings_DepthDimStrength>
+  <Strata_Settings_SeeBelow>透过开阔天空看见下层</Strata_Settings_SeeBelow>
+  <Strata_Settings_SeeBelowDesc>在 A+ 甲板上，透过 Strata 开阔天空格绘制下层真实地图（地形、水面、建筑、迷雾）。</Strata_Settings_SeeBelowDesc>
+  <Strata_Settings_SeeBelowLive>绘制下层活体与抛射物</Strata_Settings_SeeBelowLive>
+  <Strata_Settings_SeeBelowLiveDesc>透过开阔天空时也绘制下层移动中的单位。</Strata_Settings_SeeBelowLiveDesc>
+  <Strata_Settings_BelowDim>开阔天空下层暗化：{0}</Strata_Settings_BelowDim>
+  <Strata_Settings_BelowThingScale>下层物体缩放：{0}</Strata_Settings_BelowThingScale>
+  <Strata_Settings_CrossLevelCombat>跨层远程射击</Strata_Settings_CrossLevelCombat>
+  <Strata_Settings_CrossLevelCombatDesc>单位、炮塔与迫击炮可透过 Strata 开阔天空格射击配对楼层上/下的目标（射程计入垂直落差）。</Strata_Settings_CrossLevelCombatDesc>
+  <Strata_Settings_CrossLevelAutoEngage>跨层自动交火</Strata_Settings_CrossLevelAutoEngage>
+  <Strata_Settings_CrossLevelAutoEngageDesc>空闲敌方与未征召持枪殖民者（以及无本地目标的炮塔）会自动透过开阔天空射击。征召且开启随意开火时也会跨层还击。</Strata_Settings_CrossLevelAutoEngageDesc>
+  <Strata_ReportAttackingAcross>正在跨层攻击{0}。</Strata_ReportAttackingAcross>
+  <Strata_NoArcPath>没有通往该格子的开阔天空弹道。</Strata_NoArcPath>
+  <Strata_NoGapLine>没有通往该目标的开阔天空射界。</Strata_NoGapLine>
+  <Strata_MortarTargetSet>{0}：已设定跨层迫击炮目标。</Strata_MortarTargetSet>
+  <Strata_TurretTargetSet>{0}：已设定跨层炮塔目标。</Strata_TurretTargetSet>
+  <Strata_GapLineLost>{0} 失去了跨层射界。</Strata_GapLineLost>
+  <Strata_StopCrossBombard>停止跨层射击</Strata_StopCrossBombard>
+  <Strata_StopCrossBombardDesc>取消当前跨层炮塔/迫击炮指令。</Strata_StopCrossBombardDesc>
   <Strata_Settings_Interface>界面</Strata_Settings_Interface>
   <Strata_Settings_LinkedColonistsTabs>工作/日程中的 Strata 楼层</Strata_Settings_LinkedColonistsTabs>
   <Strata_Settings_LinkedColonistsTabsDesc>殖民地有挖掘楼层时，工作与日程页显示 Strata 楼层复选框。勾选后两页列出所有相连楼层的殖民者，而非仅当前地图。</Strata_Settings_LinkedColonistsTabsDesc>
@@ -160,6 +181,8 @@
   <Strata_OnlyWayDown>这是唯一向下的路。</Strata_OnlyWayDown>
   <Strata_SomeoneBelow>下方楼层仍有人。</Strata_SomeoneBelow>
   <Strata_SomeoneAbove>上方楼层仍有人。</Strata_SomeoneAbove>
+  <Strata_AbandonLevelBelowConfirm>拆除此楼梯或电梯将在没有其他连接时坍塌下方关联楼层。\n\n该层上的建筑、物品、植物都会丢失。下方仍有殖民者时无法拆除。\n\n确认放弃关联楼层？</Strata_AbandonLevelBelowConfirm>
+  <Strata_AbandonLevelAboveConfirm>拆除此楼梯或电梯将在没有其他连接时坍塌上方关联楼层。\n\n该层上的建筑、物品、植物都会丢失。上方仍有殖民者时无法拆除。\n\n确认放弃关联楼层？</Strata_AbandonLevelAboveConfirm>
   <Strata_SmokeShaftSealed>烟雾竖井：已密封</Strata_SmokeShaftSealed>
   <Strata_SmokeShaftOpen>烟雾竖井：烟气升至上层</Strata_SmokeShaftOpen>
   <Strata_PowerShaft>电力竖井：连接两层电网（每层接线到楼梯井；电池可选，用于夜间蓄电）</Strata_PowerShaft>
@@ -212,6 +235,7 @@
   <Strata_Place_NeedsGravEngine>此地图需要重力引擎。</Strata_Place_NeedsGravEngine>
   <Strata_Place_MustBeSubstructure>必须建在重力飞船子结构上。</Strata_Place_MustBeSubstructure>
   <Strata_Place_NoColonyStairsOnGravship>不能在重力飞船上建造殖民地楼梯。请改用重力飞船楼梯井。</Strata_Place_NoColonyStairsOnGravship>
+  <Strata_Dig_NoColonyShaftOnGravshipLanding>不能从重力飞船落点向下挖殖民地竖井。请从殖民地楼梯落点挖掘，或在飞船上另开重力飞船竖井。</Strata_Dig_NoColonyShaftOnGravshipLanding>
   <Strata_Place_MustBeOnGasVent>必须放置在深层气体喷口上。</Strata_Place_MustBeOnGasVent>
 
   <!-- Gas / atmosphere -->
