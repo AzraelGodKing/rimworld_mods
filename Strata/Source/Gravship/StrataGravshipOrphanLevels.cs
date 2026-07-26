@@ -26,6 +26,10 @@ namespace Strata
                 return null;
             }
             List<Map> maps = Find.Maps;
+            if (maps == null)
+            {
+                return null;
+            }
             for (int i = 0; i < maps.Count; i++)
             {
                 if (maps[i] != null && maps[i].uniqueID == uniqueId)
@@ -207,6 +211,15 @@ namespace Strata
 
         private static bool LooksLikeGravshipLinkedLevel(Map map, Map host)
         {
+            if (map == null)
+            {
+                return false;
+            }
+            // Never adopt a colony dig/tower pocket as a gravship underdeck/A+.
+            if (HasColonyOnlyLanding(map))
+            {
+                return false;
+            }
             if (StrataGravshipUtility.IsGravshipLinkedLevel(map))
             {
                 return true;
@@ -226,6 +239,32 @@ namespace Strata
                     && map.listerThings.ThingsOfDef(subDef).Count > 0;
             }
             return false;
+        }
+
+        private static bool HasColonyOnlyLanding(Map map)
+        {
+            if (map?.listerThings == null)
+            {
+                return false;
+            }
+            bool sawColony = false;
+            bool sawGravship = false;
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is not PocketMapExit)
+                {
+                    continue;
+                }
+                if (thing is IStrataGravshipPortal)
+                {
+                    sawGravship = true;
+                }
+                else if (thing is Building_StairsUp)
+                {
+                    sawColony = true;
+                }
+            }
+            return sawColony && !sawGravship;
         }
 
         private static bool HasGravshipDeckTerrain(Map map)

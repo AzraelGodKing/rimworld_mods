@@ -7,6 +7,22 @@ namespace Strata
 {
     public static class StrataPortalUtility
     {
+        // Escape hatch for Patch_PortalDeSpawnImmunity: intentional portal
+        // despawn/respawn cycles (moves) raise this around the whole cycle.
+        private static int portalMoveDepth;
+
+        public static bool PortalMoveInProgress => portalMoveDepth > 0;
+
+        public static void BeginPortalMove() => portalMoveDepth++;
+
+        public static void EndPortalMove()
+        {
+            if (portalMoveDepth > 0)
+            {
+                portalMoveDepth--;
+            }
+        }
+
         // Shafts, stairs, elevators, and dig extensions — never valid for
         // infestation hives, roof collapse, or event damage.
         public static bool IsProtectedPortal(Thing thing)
@@ -58,7 +74,152 @@ namespace Strata
             {
                 return false;
             }
-            return mode != DestroyMode.Vanish && mode != DestroyMode.WillReplace;
+            // Vanish / WillReplace: map-gen and pack/unpack moves.
+            // Deconstruct: player tore down an empty stairwell/elevator after
+            // DeconstructibleBy allowed it — must not be swallowed here or the
+            // designation finishes while the shaft stays forever.
+            return mode != DestroyMode.Vanish
+                && mode != DestroyMode.WillReplace
+                && mode != DestroyMode.Deconstruct;
+        }
+
+        // Colony pawns (incl. downed), prisoners, mechs, and player animals on a
+        // linked level — broader than vanilla AnyPawnBlockingMapRemoval, which
+        // ignores downed colonists and non-colonist colony pawns.
+        public static bool LinkedLevelHasColonyPresence(Map level)
+        {
+            if (level?.mapPawns == null)
+            {
+                return false;
+            }
+            if (level.mapPawns.AnyPawnBlockingMapRemoval)
+            {
+                return true;
+            }
+            Faction player = Faction.OfPlayer;
+            IReadOnlyList<Pawn> pawns = level.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn == null || pawn.Dead)
+                {
+                    continue;
+                }
+                if (pawn.Faction == player || pawn.HostFaction == player)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Stairs/elevators are def.destroyable=false; vanilla Thing.Destroy then
+        // Log.Errors and leaves the duplicate spawned (ghost shaft + debug log pop).
+        public static void ForceDestroyPortal(Thing portal, DestroyMode mode = DestroyMode.Vanish)
+        {
+            if (portal == null || portal.Destroyed)
+            {
+                return;
+            }
+            BeginPortalMove();
+            bool prev = Thing.allowDestroyNonDestroyable;
+            Thing.allowDestroyNonDestroyable = true;
+            try
+            {
+                portal.Destroy(mode);
+            }
+            finally
+            {
+                Thing.allowDestroyNonDestroyable = prev;
+                EndPortalMove();
+            }
+        }
+
+        // Prefer this over Thing.Destroy when the thing may be a Strata shaft/landing
+        // (or any destroyable=false building) — plain Destroy leaves ghosts and
+        // double-registers CompPower transmitters after gravship land.
+        public static void SafeDestroyThing(Thing thing, DestroyMode mode = DestroyMode.Vanish)
+        {
+            if (thing == null || thing.Destroyed)
+            {
+                return;
+            }
+            if (thing.def != null && !thing.def.destroyable)
+            {
+                ForceDestroyPortal(thing, mode);
+                return;
+            }
+            thing.Destroy(mode);
+        }
+
+        // WipeMode cannot remove destroyable=false portals; clear them first so
+        // GenSpawn / PlaceGravship do not stack two transmitters on one cell.
+        public static void PrefireWipeStrataPortals(
+            Map map,
+            IntVec3 loc,
+            Rot4 rot,
+            IntVec2 size,
+            Thing except = null)
+        {
+            if (map == null)
+            {
+                return;
+            }
+            CellRect rect = GenAdj.OccupiedRect(loc, rot, size);
+            foreach (IntVec3 cell in rect)
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+                List<Thing> at = cell.GetThingList(map);
+                for (int i = at.Count - 1; i >= 0; i--)
+                {
+                    Thing blocker = at[i];
+                    if (blocker == null || blocker == except || blocker.Destroyed)
+                    {
+                        continue;
+                    }
+                    if (blocker is MapPortal
+                        && blocker.def?.defName != null
+                        && blocker.def.defName.StartsWith("Strata_"))
+                    {
+                        ForceDestroyPortal(blocker);
+                    }
+                }
+            }
+        }
+
+        public static void ClearBuildingsAndItemsInRect(
+            Map map,
+            CellRect rect,
+            Thing except = null)
+        {
+            if (map == null)
+            {
+                return;
+            }
+            foreach (IntVec3 cell in rect)
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+                List<Thing> at = cell.GetThingList(map);
+                for (int i = at.Count - 1; i >= 0; i--)
+                {
+                    Thing blocker = at[i];
+                    if (blocker == null || blocker == except || blocker.Destroyed)
+                    {
+                        continue;
+                    }
+                    if (blocker.def.category == ThingCategory.Building
+                        || blocker.def.category == ThingCategory.Item)
+                    {
+                        SafeDestroyThing(blocker);
+                    }
+                }
+            }
         }
 
         // Entrance has a pocket map but the landing is missing — restore it.
@@ -227,7 +388,7 @@ namespace Strata
         // Stockpile first, then blueprint/frame. Returns true if a job started.
         // Prefer carried cargo — vanilla drop at crowded landings often fails and
         // left pawns wandering while still holding meals/steel.
-        public static bool TryStartHaulDelivery(Pawn pawn)
+        public static bool TryStartHaulDelivery(Pawn pawn, int preferConstructibleId = 0)
         {
             if (pawn?.jobs == null || pawn.Map == null || !pawn.Spawned
                 || pawn.Downed || pawn.Dead || pawn.Drafted)
@@ -246,11 +407,20 @@ namespace Strata
                 return false;
             }
 
+            // Force-build / cross-level deliver: hit the remembered blueprint/frame
+            // before any stockpile steal.
+            if (preferConstructibleId > 0
+                && TryStartJobIfReservable(pawn, TryMakeConstructionJobFor(pawn, cargo, preferConstructibleId)))
+            {
+                return true;
+            }
+
             // Probe reservations before StartJob — several haulers can land on the
             // same tick and all pick one frame (HaulToContainer reserves maxPawns=1).
             // Starting without a probe spam-logs and EndCurrentJob(Errored).
             // Billgivers first (cellar food → surface stove), then refuel
-            // (uranium → reactors), then stockpile, then frames.
+            // (uranium → reactors), then cross-level reinstall blueprints,
+            // then frames (prefer construction over general stockpile), then storage.
             if (TryStartJobIfReservable(pawn, TryMakeBillJob(pawn, cargo)))
             {
                 return true;
@@ -261,12 +431,46 @@ namespace Strata
                 return true;
             }
 
-            if (TryStartJobIfReservable(pawn, TryMakeStorageJob(pawn, cargo)))
+            if (TryStartJobIfReservable(pawn, TryMakeInstallJob(pawn, cargo)))
             {
                 return true;
             }
 
-            return TryStartJobIfReservable(pawn, TryMakeConstructionJob(pawn, cargo));
+            if (TryStartJobIfReservable(pawn, TryMakeConstructionJob(pawn, cargo)))
+            {
+                return true;
+            }
+
+            return TryStartJobIfReservable(pawn, TryMakeStorageJob(pawn, cargo));
+        }
+
+        private static Job TryMakeInstallJob(Pawn pawn, Thing cargo)
+        {
+            if (cargo is not MinifiedThing mini)
+            {
+                return null;
+            }
+
+            Blueprint_Install bp = WorkGiver_InstallAcrossLevels.FindInstallBlueprintFor(pawn.Map, mini);
+            if (bp == null)
+            {
+                return null;
+            }
+
+            if (cargo.Spawned && !pawn.CanReserve(cargo))
+            {
+                return null;
+            }
+
+            if (!pawn.CanReserveAndReach(bp, PathEndMode.Touch, Danger.Deadly))
+            {
+                return null;
+            }
+
+            Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, bp);
+            job.count = 1;
+            job.haulMode = HaulMode.ToContainer;
+            return job;
         }
 
         // CompRefuelable is not a HaulToContainer destination — use the vanilla
@@ -373,9 +577,15 @@ namespace Strata
                 return false;
             }
 
-            // Probe held the slots; StartJob re-reserves via a fresh driver.
-            pawn.ClearReservationsForJob(job);
-            pawn.jobs.StartJob(job, JobCondition.InterruptForced);
+            // Keep the probe reservations — clearing them races other haulers onto
+            // the same cell and StartJob then Warning-spams (opens the debug log).
+            // Same-pawn re-reserve in the fresh driver is allowed.
+            // Keep carried cargo: InterruptForced otherwise drops wood/steel mid
+            // force-build / cross-level haul finish.
+            pawn.jobs.StartJob(
+                job,
+                JobCondition.InterruptForced,
+                keepCarryingThingOverride: true);
             return true;
         }
 
@@ -408,6 +618,33 @@ namespace Strata
                 return null;
             }
 
+            return MakeHaulToConstructible(pawn, cargo, site);
+        }
+
+        private static Job TryMakeConstructionJobFor(Pawn pawn, Thing cargo, int constructibleId)
+        {
+            Thing site = FindThingByIdOnMap(pawn.Map, constructibleId);
+            if (site == null || site is not IConstructible constructible)
+            {
+                return null;
+            }
+            if (LevelDemand.IsInstallBlueprint(site))
+            {
+                return null;
+            }
+            if (constructible.ThingCountNeeded(cargo.def) <= 0)
+            {
+                return null;
+            }
+            if (!pawn.CanReserveAndReach(site, PathEndMode.Touch, Danger.Deadly, 1, 1))
+            {
+                return null;
+            }
+            return MakeHaulToConstructible(pawn, cargo, site);
+        }
+
+        private static Job MakeHaulToConstructible(Pawn pawn, Thing cargo, Thing site)
+        {
             if (cargo.Spawned && !pawn.CanReserve(cargo))
             {
                 return null;
@@ -417,6 +654,41 @@ namespace Strata
             job.count = cargo.stackCount;
             job.haulMode = HaulMode.ToContainer;
             return job;
+        }
+
+        private static Thing FindThingByIdOnMap(Map map, int thingId)
+        {
+            if (map == null || thingId <= 0)
+            {
+                return null;
+            }
+            List<Thing> things = map.listerThings.AllThings;
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (things[i].thingIDNumber == thingId)
+                {
+                    return things[i];
+                }
+            }
+            return null;
+        }
+
+        public static Thing FindThingByIdAcrossMaps(int thingId)
+        {
+            if (thingId <= 0)
+            {
+                return null;
+            }
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Thing t = FindThingByIdOnMap(maps[i], thingId);
+                if (t != null)
+                {
+                    return t;
+                }
+            }
+            return null;
         }
 
         private static Thing FindNearbyHaulCargo(Pawn pawn)
@@ -489,7 +761,8 @@ namespace Strata
             for (int i = 0; i < things.Count; i++)
             {
                 Thing thing = things[i];
-                if (thing.Faction != Faction.OfPlayer || thing is Blueprint_Install
+                if (thing == null || thing.Faction != Faction.OfPlayer
+                    || LevelDemand.IsInstallBlueprint(thing)
                     || thing is not IConstructible constructible)
                 {
                     continue;

@@ -26,8 +26,12 @@ namespace Strata
             SleepRelay.ResetSession();
             HaulToLevelTargets.ResetSession();
             CrossLevelOrderedJobs.ResetSession();
+            StrataCrossLevelCombat.ResetSession();
+            StrataConstructAcrossLevels.ResetSession();
             CaravanTravelUtility.ResetSession();
             StrataPortalUtility.ResetHaulDeliverSession();
+            StrataFaultGuard.ResetSession();
+            StrataPocketMapOpen.ResetSession();
             StrataResources.ClearCaches();
 
             UpgradeVanillaCaveExits();
@@ -43,7 +47,16 @@ namespace Strata
         // A bad gravship land can leave furnished levels detached and shafts
         // unwired; saves carry that damage forward. Re-adopt and re-wire once
         // per load — quiet no-op on healthy saves.
+        // MUST run on the main thread: FinalizeInit executes on the LongEvent
+        // worker thread, and this path reads engine.ValidSubstructure, which
+        // regenerates the GravshipMask section mesh — creating a UnityEngine.Mesh
+        // off-thread hard-crashes.
         private static void RebindGravshipOrphansAfterLoad()
+        {
+            LongEventHandler.ExecuteWhenFinished(RebindGravshipOrphansOnMainThread);
+        }
+
+        private static void RebindGravshipOrphansOnMainThread()
         {
             var stacks = WorldComponent_StrataGravshipStacks.Get();
             if (stacks == null)
@@ -79,6 +92,32 @@ namespace Strata
                 Log.Message("[Strata] Load repair: rebinding gravship levels on map "
                     + hosts[i].uniqueID + ".");
                 stacks.RebindOrphans(hosts[i]);
+            }
+
+            // Even on healthy saves: snap landings under their shafts and clear
+            // orphaned duplicate landings + ghost deck left by old versions.
+            maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (map == null)
+                {
+                    continue;
+                }
+                // Upper decks (colony towers and ship decks): shrink deck whose
+                // support below vanished while the SetRoof hook was bypassed.
+                if (StrataMapUtility.IsUpperLevel(map))
+                {
+                    UpperDeckUtility.SweepUnsupportedDeck(map);
+                    continue;
+                }
+                if (StrataMapUtility.IsUnderground(map)
+                    || StrataGravshipUtility.FindGravEngineOnMap(map) == null)
+                {
+                    continue;
+                }
+                StrataGravshipPortalTravel.SnapAllLandingsUnderShafts(map);
+                StrataGravshipPortalTravel.CleanupPocketLeftovers(map);
             }
         }
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_GravshipOxygenTank.label>重力飞船氧气罐</Strata_GravshipOxygenTank.label>
+  <Strata_GravshipOxygenTank.description>为 Strata 重力飞船下层甲板与舰塔储存压缩氧气。通电时向房间释放可呼吸空气。用化合燃料补给，或着陆时经通往主机甲板的开放楼梯脐带补给（真空中不行）。\n\n与重力飞船相连的楼层不会免费补充氧气——需要氧气罐、泵、回收器或开放竖井。</Strata_GravshipOxygenTank.description>
+
+  <Strata_GravshipOxygenReclaimer.label>重力飞船氧气回收器</Strata_GravshipOxygenReclaimer.label>
+  <Strata_GravshipOxygenReclaimer.description>为重力飞船生命维持生成氧气的电动洗涤器。最好放在氧气罐附近——产出会填充 12 格内最近的氧气罐；否则缓慢渗入房间空气。</Strata_GravshipOxygenReclaimer.description>
+
+  <Strata_GravshipHeatsink.label>重力飞船散热器</Strata_GravshipHeatsink.label>
+  <Strata_GravshipHeatsink.description>吸收重力飞船发射废热，并以暖意排入周围房间。可放在飞船甲板或相连 Strata 下层甲板。没有散热器时，发射热量会直接排入舰内房间。</Strata_GravshipHeatsink.description>
+
+  <Strata_GravshipHeatsinkLarge.label>大型重力飞船散热器</Strata_GravshipHeatsinkLarge.label>
+  <Strata_GravshipHeatsinkLarge.description>用于长途跃迁的重型散热组。储存更多发射热量，通电后排出更快。</Strata_GravshipHeatsinkLarge.description>
+
+</LanguageData>

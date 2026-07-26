@@ -60,6 +60,10 @@ namespace Strata
             {
                 return true;
             }
+            if (!StrataLevelCap.AllowsNewLevelBelow(map, out reason))
+            {
+                return false;
+            }
             if (StrataDepth.Of(map) == 0)
             {
                 if (!IsDiggingDownResearchFinished())

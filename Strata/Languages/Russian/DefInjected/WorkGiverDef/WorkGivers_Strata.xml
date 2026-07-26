@@ -13,4 +13,8 @@
   <Strata_BringPrisonerToBedAcrossLevels.verb>отнести к кровати на другом уровне</Strata_BringPrisonerToBedAcrossLevels.verb>
   <Strata_BringPrisonerToBedAcrossLevels.gerund>отнесение к кровати на другом уровне:</Strata_BringPrisonerToBedAcrossLevels.gerund>
 
+  <Strata_RescueToBedAcrossLevels.label>спасать на кровати на других уровнях</Strata_RescueToBedAcrossLevels.label>
+  <Strata_RescueToBedAcrossLevels.verb>спасти на другой уровень</Strata_RescueToBedAcrossLevels.verb>
+  <Strata_RescueToBedAcrossLevels.gerund>спасение на другой уровень:</Strata_RescueToBedAcrossLevels.gerund>
+
 </LanguageData>

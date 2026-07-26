@@ -96,6 +96,19 @@ namespace Strata
 
         public static bool HasWorkFor(Pawn pawn, Map map)
         {
+            try
+            {
+                return HasWorkForInner(pawn, map);
+            }
+            catch (Exception e)
+            {
+                StrataFaultGuard.Report(StrataFaultGuard.System.WorkRelay, e.GetType().Name + ": " + e.Message);
+                return false;
+            }
+        }
+
+        private static bool HasWorkForInner(Pawn pawn, Map map)
+        {
             if (pawn == null || map == null)
             {
                 return false;
@@ -226,9 +239,11 @@ namespace Strata
                 {
                     continue;
                 }
-                // Sample up to 24 cells: empty sowable tiles or harvestable plants.
-                int step = Math.Max(1, grow.cells.Count / 24);
-                for (int c = 0; c < grow.cells.Count; c += step)
+                // Check every cell: sparse sampling (old step = count / 24) missed
+                // harvestable plants or empty sowable tiles that fell between
+                // sample indices. The relay is cooldown-throttled (7500 ticks
+                // per pawn) so the full scan runs rarely and the overhead is fine.
+                for (int c = 0; c < grow.cells.Count; c++)
                 {
                     IntVec3 cell = grow.cells[c];
                     if (!cell.InBounds(map))
@@ -267,18 +282,43 @@ namespace Strata
         // floor even when local listerHaulables is empty.
         public static bool HasCrossLevelHaulExports(Map map)
         {
-            HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
-            if (wanted.Count == 0)
+            if (map == null)
             {
                 return false;
             }
 
-            foreach (ThingDef def in wanted)
+            HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
+            if (wanted.Count > 0)
             {
-                List<Thing> things = map.listerThings.ThingsOfDef(def);
-                if (things != null && things.Count > 0)
+                foreach (ThingDef def in wanted)
                 {
-                    return true;
+                    List<Thing> things = map.listerThings.ThingsOfDef(def);
+                    if (things != null && things.Count > 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            // Minified buildings whose Blueprint_Install sits on a linked floor.
+            List<Thing> minis = map.listerThings.ThingsInGroup(ThingRequestGroup.MinifiedThing);
+            if (minis == null || minis.Count == 0 || !LevelGraph.AnyLinkFrom(map))
+            {
+                return false;
+            }
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(map);
+            for (int i = 0; i < minis.Count; i++)
+            {
+                if (minis[i] is not MinifiedThing mini)
+                {
+                    continue;
+                }
+                for (int j = 0; j < links.Count; j++)
+                {
+                    if (WorkGiver_InstallAcrossLevels.FindInstallBlueprintFor(links[j].map, mini) != null)
+                    {
+                        return true;
+                    }
                 }
             }
 

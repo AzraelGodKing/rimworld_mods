@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Dedicated dirty flag for upper-deck below-things: source map thing/building/fog
+       changes mirror to this flag so only SectionLayer_StrataBelowThings regenerates. -->
+  <MapMeshFlagDef>
+    <defName>Strata_BelowThings</defName>
+  </MapMeshFlagDef>
+
+</Defs>

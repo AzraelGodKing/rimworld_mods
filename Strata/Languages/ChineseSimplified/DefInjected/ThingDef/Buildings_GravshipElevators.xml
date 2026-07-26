@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_GravshipElevatorDown.label>重力飞船电梯</Strata_GravshipElevatorDown.label>
+  <Strata_GravshipElevatorDown.description>穿过重力飞船甲板通往下方 Strata 楼层的电动电梯竖井。仅可建在重力飞船子结构上。相连楼层在起飞时随船同行，着陆时重新连接。
+
+下行需要电力；从下方可无电力上行。需要电梯与向下挖掘研究。第二座重力飞船竖井（楼梯或电梯）会接入同一下层甲板。</Strata_GravshipElevatorDown.description>
+
+  <Strata_GravshipElevatorUp.label>重力飞船电梯落脚点</Strata_GravshipElevatorUp.label>
+  <Strata_GravshipElevatorUp.description>重力飞船电梯下方的落脚点——回到飞船甲板。不可拆除。无电力时上行仍可用。</Strata_GravshipElevatorUp.description>
+
+  <Strata_GravshipElevatorBuildUp.label>重力飞船塔楼电梯</Strata_GravshipElevatorBuildUp.label>
+  <Strata_GravshipElevatorBuildUp.description>从重力飞船甲板通往上方开放屋顶露台的电动电梯。仅可建在重力飞船子结构上。相连楼层随船同行。
+
+上行需要电力；从上方可无电力下行。上层可建面积对应重力飞船子结构。需要电梯与向上建造研究。</Strata_GravshipElevatorBuildUp.description>
+
+  <Strata_GravshipElevatorBuildUpLanding.label>重力飞船塔楼电梯落脚点</Strata_GravshipElevatorBuildUpLanding.label>
+  <Strata_GravshipElevatorBuildUpLanding.description>重力飞船塔楼电梯的上层落脚点——回到飞船。不可拆除。无电力时下行仍可用。</Strata_GravshipElevatorBuildUpLanding.description>
+
+</LanguageData>
