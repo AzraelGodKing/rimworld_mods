@@ -339,9 +339,11 @@ namespace Strata
             {
                 return true;
             }
-            Assembly vef = ReflectionUtil.FindAssembly("VEF");
-            compResourceType = ReflectionUtil.TypeIn("PipeSystem.CompResource", vef);
-            pipeNetType = ReflectionUtil.TypeIn("PipeSystem.PipeNet", vef);
+            // PipeSystem lives in PipeSystem.dll (with VEF), not inside VEF.dll.
+            Assembly pipeSystem = ReflectionUtil.FindAssembly("PipeSystem")
+                ?? ReflectionUtil.FindAssembly("VEF");
+            compResourceType = ReflectionUtil.TypeIn("PipeSystem.CompResource", pipeSystem);
+            pipeNetType = ReflectionUtil.TypeIn("PipeSystem.PipeNet", pipeSystem);
             if (compResourceType == null || pipeNetType == null)
             {
                 LogBindOnce("PipeSystem types not found.");

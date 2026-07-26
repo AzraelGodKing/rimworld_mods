@@ -181,6 +181,8 @@ namespace Strata
             {
                 Log.Warning("[Strata] Robot " + category + " relay: FAILED — "
                     + string.Join(", ", missing) + ".");
+                StrataFaultGuard.Report(StrataFaultGuard.System.RobotSoftCompat,
+                    category + " patch miss: " + string.Join(", ", missing));
             }
             if (patched.Count == 0 && missing.Count == 0)
             {

@@ -13,25 +13,65 @@ namespace Strata
         // Grav engine physically on this map (ship deck / host surface).
         // With Vanilla Gravship Expanded, prefer the engine that actually owns substructure
         // (jumper / hulk / vanilla are all Building_GravEngine).
+        // Cached: this runs per cell in vanilla region sweeps around launch.
         public static Building_GravEngine FindGravEngineOnMap(Map map)
         {
-            if (map?.listerBuildings == null)
+            return StrataGravshipCache.EngineOnMap(map);
+        }
+
+        /// <summary>G1: exact thingID lookup — never PreferBestEngine.</summary>
+        public static Building_GravEngine FindGravEngineByThingId(Map map, int thingId)
+        {
+            if (map?.listerBuildings == null || thingId < 0)
             {
                 return null;
             }
-            if (StrataVgeCompat.Active)
-            {
-                return StrataVgeCompat.PreferBestEngine(
-                    map.listerBuildings.AllBuildingsColonistOfClass<Building_GravEngine>());
-            }
             foreach (Building_GravEngine engine in map.listerBuildings.AllBuildingsColonistOfClass<Building_GravEngine>())
             {
-                if (engine != null && engine.Spawned)
+                if (engine != null && engine.Spawned && engine.thingIDNumber == thingId)
                 {
                     return engine;
                 }
             }
             return null;
+        }
+
+        public static Building_GravEngine FindGravEngineByThingIdAnywhere(int thingId)
+        {
+            if (thingId < 0 || Find.Maps == null)
+            {
+                return null;
+            }
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Building_GravEngine engine = FindGravEngineByThingId(maps[i], thingId);
+                if (engine != null)
+                {
+                    return engine;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// G1 land rebind: when <paramref name="pinnedThingId"/> is set, resolve only that engine.
+        /// No PreferBestEngine / first-engine fallback while a pin is active.
+        /// </summary>
+        public static Building_GravEngine FindGravEngineForLandRebind(Map host, int pinnedThingId)
+        {
+            if (pinnedThingId >= 0)
+            {
+                Building_GravEngine pinned = FindGravEngineByThingId(host, pinnedThingId);
+                if (pinned != null)
+                {
+                    return pinned;
+                }
+                StrataLog.Warning("[Strata] G1: pinned takeoff engine thingID " + pinnedThingId
+                    + " not found on host map — skipping PreferBestEngine fallback.");
+                return null;
+            }
+            return FindGravEngineOnMap(host);
         }
 
         // Host engine, or the engine on the gravship stack root when map is a linked B+/A+ floor.
@@ -114,6 +154,14 @@ namespace Strata
             return thing is IStrataGravshipPortal;
         }
 
+        // Colony dig/tower shafts and gravship shafts must never share DownEntrance
+        // partners or join each other's pockets — mixing them on a landed ship
+        // host crashes portal/power wiring.
+        public static bool SameShaftFamily(Thing a, Thing b)
+        {
+            return IsGravshipPortal(a) == IsGravshipPortal(b);
+        }
+
         // Host shaft on the ship deck (not a pocket landing).
         public static bool IsGravshipHostShaft(Thing thing)
         {
@@ -180,7 +228,7 @@ namespace Strata
             {
                 return false;
             }
-            var travelling = WorldComponent_StrataGravshipStacks.Get();
+            var travelling = StrataGravshipCache.StacksComp;
             if (travelling != null && travelling.IsTravelling(map))
             {
                 return true;
@@ -189,6 +237,7 @@ namespace Strata
         }
 
         // Surface map that owns this gravship-linked floor (engine map), or null.
+        // Cached: called from per-cell patches (IsOnboardGravship, InsideFootprint).
         public static Map FindGravshipStackRoot(Map map)
         {
             if (!OdysseyActive || map == null)
@@ -199,7 +248,20 @@ namespace Strata
             {
                 return map;
             }
-            Map portalHost = FindDirectGravshipPortalHost(map);
+            return StrataGravshipCache.StackRootOf(map);
+        }
+
+        internal static Map ComputeGravshipStackRoot(Map map, Map directPortalHost)
+        {
+            if (!OdysseyActive || map == null)
+            {
+                return null;
+            }
+            if (IsGravshipHostMap(map))
+            {
+                return map;
+            }
+            Map portalHost = directPortalHost;
             if (portalHost != null)
             {
                 return ResolveGravshipHost(portalHost);
@@ -224,7 +286,18 @@ namespace Strata
         }
 
         // Map that holds the gravship shaft opening this pocket, if any.
+        // Cached: the all-maps × all-portals scan below was the hot path.
         public static Map FindDirectGravshipPortalHost(Map level)
+        {
+            if (!OdysseyActive || level == null
+                || (!StrataMapUtility.IsUnderground(level) && !StrataMapUtility.IsUpperLevel(level)))
+            {
+                return null;
+            }
+            return StrataGravshipCache.PortalHostOf(level);
+        }
+
+        internal static Map ComputeDirectGravshipPortalHost(Map level)
         {
             if (!OdysseyActive || level == null
                 || (!StrataMapUtility.IsUnderground(level) && !StrataMapUtility.IsUpperLevel(level)))
@@ -339,38 +412,16 @@ namespace Strata
                 }
             }
 
-            // Linked underdeck / tower deck cells (launch ritual reach from below).
-            if (TryStrataOnboardCell(cell, engine))
+            // Host deck first — cheap set lookup; this answers the vast majority
+            // of calls (vanilla region sweeps during launch run this per cell).
+            Map host = engine.Map;
+            if (cell.InBounds(host) && CellOnGravship(host, cell))
             {
                 return true;
             }
 
-            Map host = engine.Map;
-            if (!cell.InBounds(host))
-            {
-                return false;
-            }
-            if (!desperate)
-            {
-                Room room = cell.GetRoom(host);
-                if (room == null || room.PsychologicallyOutdoors)
-                {
-                    return false;
-                }
-            }
-
-            HashSet<IntVec3> sub = engine.ValidSubstructure;
-            if (sub != null && sub.Count > 0)
-            {
-                return sub.Contains(cell);
-            }
-            sub = engine.AllConnectedSubstructure;
-            if (sub != null && sub.Count > 0)
-            {
-                return sub.Contains(cell);
-            }
-            // VGE scaffold / damaged foundation while ValidSubstructure is rebuilding.
-            return StrataVgeCompat.Active && StrataVgeCompat.CellHasShipFoundation(host, cell);
+            // Linked underdeck / tower deck cells (launch ritual reach from below).
+            return TryStrataOnboardCell(cell, engine, skipHost: true);
         }
 
         public static void ApplyOnboardPostfix(IntVec3 cell, Building_GravEngine engine, ref bool __result)
@@ -378,10 +429,14 @@ namespace Strata
             // Prefix fully replaces vanilla — Postfix is a no-op keep for Harmony wiring.
         }
 
-        private static bool TryStrataOnboardCell(IntVec3 cell, Building_GravEngine engine)
+        private static bool TryStrataOnboardCell(
+            IntVec3 cell,
+            Building_GravEngine engine,
+            bool skipHost = false)
         {
             Map host = engine.Map;
-            if (host != null && cell.InBounds(host) && IsLinkedDeckCell(host, cell, engine))
+            if (!skipHost && host != null && cell.InBounds(host)
+                && IsLinkedDeckCell(host, cell, engine))
             {
                 return true;
             }
@@ -417,16 +472,51 @@ namespace Strata
             {
                 return true;
             }
-            var tracker = map.GetComponent<MapComponent_StrataProjectedSubstructure>();
+            var tracker = StrataGravshipCache.TrackerOf(map);
             if (tracker != null && tracker.IsProjected(cell))
             {
                 return true;
             }
+            // Cheap grid checks before the per-cell shaft-rect scan.
             if (StrataMapUtility.IsUpperLevel(map))
             {
-                return cell.GetTerrain(map)?.defName == UpperDeckUtility.RoofDeckDefName;
+                if (cell.GetTerrain(map)?.defName == UpperDeckUtility.RoofDeckDefName)
+                {
+                    return true;
+                }
             }
-            return GravshipDeckUtility.IsWalkableDeckCell(map, cell);
+            else if (GravshipDeckUtility.IsWalkableDeckCell(map, cell))
+            {
+                return true;
+            }
+            // G6: wired host shaft projects vertical ownership onto the pocket cell
+            // at the same absolute coords (shaft as grav-extender).
+            return CellOwnedByWiredHostShaft(map, cell, engine.Map);
+        }
+
+        private static bool CellOwnedByWiredHostShaft(Map pocket, IntVec3 cell, Map host)
+        {
+            // Raw 1:1 — valid regardless of host map size.
+            if (host == null || !cell.InBounds(host))
+            {
+                return false;
+            }
+            foreach (Thing thing in host.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is not MapPortal shaft || !shaft.Spawned
+                    || !IsGravshipHostShaft(shaft)
+                    || !shaft.PocketMapExists || shaft.PocketMap != pocket)
+                {
+                    continue;
+                }
+                // Shaft footprint + 1-cell rim owns the vertical column on the pocket.
+                CellRect rect = shaft.OccupiedRect().ExpandedBy(1);
+                if (rect.Contains(cell))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static IEnumerable<Map> EnumerateStackDeckMaps(Building_GravEngine engine)

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_SmokeInhalation.label>吸入烟雾</Strata_SmokeInhalation.label>
+  <Strata_SmokeInhalation.description>在不通风房间吸入的废气。到新鲜空气中会消退，但在浓烟中久留会窒息肺部——大量时致命。</Strata_SmokeInhalation.description>
+  <Strata_SmokeInhalation.stages_0.label>轻微</Strata_SmokeInhalation.stages_0.label>
+  <Strata_SmokeInhalation.stages_1.label>咳嗽</Strata_SmokeInhalation.stages_1.label>
+  <Strata_SmokeInhalation.stages_2.label>窒息</Strata_SmokeInhalation.stages_2.label>
+
+  <Strata_GasInhalation.label>吸入深层气体</Strata_GasInhalation.label>
+  <Strata_GasInhalation.description>在充满恶臭地下气体的房间中吸入。到新鲜空气中会消退，但在浓气中久留会毒害血液并麻痹心智——大量时致命。</Strata_GasInhalation.description>
+  <Strata_GasInhalation.stages_0.label>眩晕</Strata_GasInhalation.stages_0.label>
+  <Strata_GasInhalation.stages_1.label>中毒</Strata_GasInhalation.stages_1.label>
+  <Strata_GasInhalation.stages_2.label>窒息</Strata_GasInhalation.stages_2.label>
+
+  <Strata_Hypoxia.label>缺氧</Strata_Hypoxia.label>
+  <Strata_Hypoxia.description>空气中氧气不足。新鲜空气进入房间后会消退，但在密封深层楼层久留会缓慢窒息肺部。</Strata_Hypoxia.description>
+  <Strata_Hypoxia.stages_0.label>气短</Strata_Hypoxia.stages_0.label>
+  <Strata_Hypoxia.stages_1.label>喘息</Strata_Hypoxia.stages_1.label>
+  <Strata_Hypoxia.stages_2.label>窒息</Strata_Hypoxia.stages_2.label>
+
+  <Strata_CO2Exposure.label>二氧化碳暴露</Strata_CO2Exposure.label>
+  <Strata_CO2Exposure.description>空气中二氧化碳过多。通风后会消退，但积在密封房间的重气体会引发头痛、混乱并最终失去意识。</Strata_CO2Exposure.description>
+  <Strata_CO2Exposure.stages_0.label>头痛</Strata_CO2Exposure.stages_0.label>
+  <Strata_CO2Exposure.stages_1.label>困倦</Strata_CO2Exposure.stages_1.label>
+  <Strata_CO2Exposure.stages_2.label>昏迷</Strata_CO2Exposure.stages_2.label>
+
+  <Strata_MethaneExposure.label>甲烷暴露</Strata_MethaneExposure.label>
+  <Strata_MethaneExposure.description>吸入浓重矿井气。轻微眩晕——真正危险在于点火而非中毒。</Strata_MethaneExposure.description>
+  <Strata_MethaneExposure.stages_0.label>轻微眩晕</Strata_MethaneExposure.stages_0.label>
+  <Strata_MethaneExposure.stages_1.label>眩晕</Strata_MethaneExposure.stages_1.label>
+
+  <Strata_BlackDampExposure.label>黑潮暴露</Strata_BlackDampExposure.label>
+  <Strata_BlackDampExposure.description>缺氧滞留空气。到新鲜空气中或用洗涤器可消退，但在黑潮坑中久留会悄然窒息。</Strata_BlackDampExposure.description>
+  <Strata_BlackDampExposure.stages_0.label>窒息感</Strata_BlackDampExposure.stages_0.label>
+  <Strata_BlackDampExposure.stages_1.label>喘息</Strata_BlackDampExposure.stages_1.label>
+  <Strata_BlackDampExposure.stages_2.label>窒息</Strata_BlackDampExposure.stages_2.label>
+
+  <Strata_SporeSickness.label>孢子病</Strata_SporeSickness.label>
+  <Strata_SporeSickness.description>肺部真菌孢子。过滤器与洗涤器可净化空气；不治疗时暴露会导致发热虚弱与坏心情。</Strata_SporeSickness.description>
+  <Strata_SporeSickness.stages_0.label>肺痒</Strata_SporeSickness.stages_0.label>
+  <Strata_SporeSickness.stages_1.label>发热</Strata_SporeSickness.stages_1.label>
+  <Strata_SporeSickness.stages_2.label>虚脱</Strata_SporeSickness.stages_2.label>
+
+  <Strata_SteamScald.label>蒸汽烫伤</Strata_SteamScald.label>
+  <Strata_SteamScald.description>灼热地热蒸汽烫伤皮肤与呼吸道。到更凉爽通风的空气中会消退。</Strata_SteamScald.description>
+  <Strata_SteamScald.stages_0.label>灼热</Strata_SteamScald.stages_0.label>
+  <Strata_SteamScald.stages_1.label>烫伤</Strata_SteamScald.stages_1.label>
+  <Strata_SteamScald.stages_2.label>严重烫伤</Strata_SteamScald.stages_2.label>
+
+</LanguageData>

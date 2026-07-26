@@ -19,11 +19,20 @@ namespace Strata
         // Never join a colony dig pocket — only other gravship shafts.
         protected override Map GeneratePocketMapInt()
         {
+            // G2: shaftId → known pocket first (never a second empty "New" underdeck).
+            Map mapped = StrataGravshipShaftIdentity.FindMappedPocket(this);
+            if (mapped != null)
+            {
+                StrataGravshipShaftIdentity.CompOf(this)?.RememberPocket(mapped);
+                Messages.Message("Strata_GravshipConnectedBelow".Translate(), this, MessageTypeDefOf.PositiveEvent);
+                return mapped;
+            }
             // A bad land can leave the furnished travelling floor detached —
             // adopt it before ever generating a fresh empty level.
             Map orphan = StrataGravshipOrphanLevels.TryAdoptOrphanFor(this, wantUpper: false);
             if (orphan != null)
             {
+                StrataGravshipShaftIdentity.CompOf(this)?.RememberPocket(orphan);
                 Messages.Message("Strata_GravshipConnectedBelow".Translate(), this, MessageTypeDefOf.PositiveEvent);
                 return orphan;
             }
@@ -34,6 +43,7 @@ namespace Strata
                 if (landing.IsValid)
                 {
                     StrataPortalUtility.SpawnLanding(def.portal.exitDef, landing, existing);
+                    StrataGravshipShaftIdentity.CompOf(this)?.RememberPocket(existing);
                     Messages.Message("Strata_GravshipConnectedBelow".Translate(), this, MessageTypeDefOf.PositiveEvent);
                     return existing;
                 }
@@ -43,9 +53,11 @@ namespace Strata
                 Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
                 return null;
             }
-            return PocketMapUtility.GeneratePocketMap(
+            Map generated = PocketMapUtility.GeneratePocketMap(
                 new IntVec3(Map.Size.x, 1, Map.Size.z),
                 def.portal.pocketMapGenerator, null, Map);
+            StrataGravshipShaftIdentity.CompOf(this)?.RememberPocket(generated);
+            return generated;
         }
 
         protected override string LevelInspectState()
@@ -107,9 +119,17 @@ namespace Strata
 
         protected override Map GeneratePocketMapInt()
         {
+            Map mapped = StrataGravshipShaftIdentity.FindMappedPocket(this);
+            if (mapped != null)
+            {
+                StrataGravshipShaftIdentity.CompOf(this)?.RememberPocket(mapped);
+                Messages.Message("Strata_GravshipConnectedAbove".Translate(), this, MessageTypeDefOf.PositiveEvent);
+                return mapped;
+            }
             Map orphan = StrataGravshipOrphanLevels.TryAdoptOrphanFor(this, wantUpper: true);
             if (orphan != null)
             {
+                StrataGravshipShaftIdentity.CompOf(this)?.RememberPocket(orphan);
                 Messages.Message("Strata_GravshipConnectedAbove".Translate(), this, MessageTypeDefOf.PositiveEvent);
                 return orphan;
             }
@@ -121,6 +141,7 @@ namespace Strata
                 {
                     // Exact ship footprint — no colony-style plaza beyond the hull.
                     StrataPortalUtility.SpawnLanding(def.portal.exitDef, landing, existing);
+                    StrataGravshipShaftIdentity.CompOf(this)?.RememberPocket(existing);
                     Messages.Message("Strata_GravshipConnectedAbove".Translate(), this, MessageTypeDefOf.PositiveEvent);
                     return existing;
                 }
@@ -130,9 +151,11 @@ namespace Strata
                 Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
                 return null;
             }
-            return PocketMapUtility.GeneratePocketMap(
+            Map generated = PocketMapUtility.GeneratePocketMap(
                 new IntVec3(Map.Size.x, 1, Map.Size.z),
                 def.portal.pocketMapGenerator, null, Map);
+            StrataGravshipShaftIdentity.CompOf(this)?.RememberPocket(generated);
+            return generated;
         }
 
         protected override string LevelInspectState()

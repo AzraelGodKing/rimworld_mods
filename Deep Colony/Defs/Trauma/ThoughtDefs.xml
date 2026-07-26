@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ── Shared base ────────────────────────────────────────────────────────── -->
+  <ThoughtDef Name="DC_TraumaThoughtBase" Abstract="True">
+    <thoughtClass>DeepColony.Thought_Trauma</thoughtClass>
+    <stackLimit>1</stackLimit>
+    <lerpMoodToZero>true</lerpMoodToZero>
+    <durationDays>30</durationDays>
+  </ThoughtDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       COMBAT SHOCK (downed in battle)
+       Raw: -12, Processing: -8, Fading: -4
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_CombatShock</defName>
+    <label>combat shock</label>
+    <stages>
+      <li>
+        <label>flashbacks (raw)</label>
+        <description>Vivid flashbacks to the moment of being struck down in battle.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+      <li>
+        <label>processing trauma</label>
+        <description>Still working through the shock of being downed in combat.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+      <li>
+        <label>fading memories</label>
+        <description>The worst memories of combat are slowly fading.</description>
+        <baseMoodEffect>-2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       VIOLENT LOSS (witnessed close companion die)
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_ViolentLoss</defName>
+    <label>violent loss</label>
+    <durationDays>45</durationDays>
+    <stages>
+      <li>
+        <label>haunted by {0}'s death</label>
+        <description>Cannot stop seeing it happen. The violence of it refuses to leave.</description>
+        <baseMoodEffect>-12</baseMoodEffect>
+      </li>
+      <li>
+        <label>grieving {0}</label>
+        <description>Still coming to terms with the loss of someone close.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+      <li>
+        <label>remembering {0}</label>
+        <description>The grief is softening, but the memory lingers.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       CAPTIVITY TRAUMA
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_Captivity</defName>
+    <label>captivity trauma</label>
+    <durationDays>60</durationDays>
+    <stages>
+      <li>
+        <label>reliving captivity</label>
+        <description>Reliving every detail of captivity in waking nightmares.</description>
+        <baseMoodEffect>-18</baseMoodEffect>
+      </li>
+      <li>
+        <label>haunted by captivity</label>
+        <description>The fear and helplessness of captivity still press in.</description>
+        <baseMoodEffect>-12</baseMoodEffect>
+      </li>
+      <li>
+        <label>distant memories of captivity</label>
+        <description>Captivity feels like a long time ago now, though the scars remain.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       MASSACRE SURVIVOR
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_Massacre</defName>
+    <label>massacre survivor</label>
+    <durationDays>50</durationDays>
+    <stages>
+      <li>
+        <label>survivor's guilt</label>
+        <description>Why did they survive when so many others did not?</description>
+        <baseMoodEffect>-14</baseMoodEffect>
+      </li>
+      <li>
+        <label>coming to terms with the massacre</label>
+        <description>Slowly making peace with surviving something so terrible.</description>
+        <baseMoodEffect>-9</baseMoodEffect>
+      </li>
+      <li>
+        <label>at peace with the past</label>
+        <description>The massacre is in the past. They carry those lost with them.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       BEREAVEMENT SHOCK (multiple losses in rapid succession)
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_BereavementShock</defName>
+    <label>bereavement shock</label>
+    <durationDays>40</durationDays>
+    <stages>
+      <li>
+        <label>reeling from loss</label>
+        <description>Too many people gone too fast. The grief hasn't caught up yet.</description>
+        <baseMoodEffect>-16</baseMoodEffect>
+      </li>
+      <li>
+        <label>grieving multiple losses</label>
+        <description>Carrying the weight of losing several companions in a short time.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+      <li>
+        <label>slowly healing</label>
+        <description>The worst of the grief is passing, leaving a quieter sadness.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

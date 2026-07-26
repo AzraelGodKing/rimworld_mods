@@ -16,6 +16,12 @@
             <li Class="DubsBadHygiene.CompProperties_Pipe">
               <mode>Sewage</mode>
             </li>
+            <!-- Fixtures gate on WaterTowers before PullWater. Cap matches
+                 CompShaftFluidTie.MaxResourceBuffer; Auto off (not a well). -->
+            <li Class="DubsBadHygiene.CompProperties_WaterStorage">
+              <WaterStorageCap>250</WaterStorageCap>
+              <Auto>false</Auto>
+            </li>
           </value>
         </li>
         <li Class="PatchOperationAdd">
@@ -23,6 +29,10 @@
           <value>
             <li Class="DubsBadHygiene.CompProperties_Pipe">
               <mode>Sewage</mode>
+            </li>
+            <li Class="DubsBadHygiene.CompProperties_WaterStorage">
+              <WaterStorageCap>250</WaterStorageCap>
+              <Auto>false</Auto>
             </li>
           </value>
         </li>
@@ -102,8 +112,11 @@
         <li Class="PatchOperationAdd">
           <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_VHGE"]/comps</xpath>
           <value>
-            <li Class="PipeSystem.CompProperties_Resource">
+            <!-- Storage (extends CompResource) so the junction joins the net AND
+                 holds gas — PipeSystem traders/draw APIs need storages, not a bare connector. -->
+            <li Class="PipeSystem.CompProperties_ResourceStorage">
               <pipeNet>VHGE_HelixienNet</pipeNet>
+              <storageCapacity>250</storageCapacity>
             </li>
           </value>
         </li>
@@ -117,8 +130,9 @@
         <li Class="PatchOperationAdd">
           <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Omni"]/comps</xpath>
           <value>
-            <li Class="PipeSystem.CompProperties_Resource">
+            <li Class="PipeSystem.CompProperties_ResourceStorage">
               <pipeNet>VHGE_HelixienNet</pipeNet>
+              <storageCapacity>250</storageCapacity>
             </li>
           </value>
         </li>

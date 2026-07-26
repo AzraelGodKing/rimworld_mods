@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
-using RimWorld.Planet;
 using Verse;
 
 namespace Strata
@@ -94,25 +92,7 @@ namespace Strata
 
         private static TerrainDef SafeFloorForMap(Map map)
         {
-            ThingDef rock = RockForMap(map);
-            return rock.building?.naturalTerrain ?? TerrainDefOf.Gravel;
-        }
-
-        private static ThingDef RockForMap(Map map)
-        {
-            Map surface = map;
-            int guard = 0;
-            while (surface.Parent is PocketMapParent pocket && pocket.sourceMap != null && guard++ < 32)
-            {
-                surface = pocket.sourceMap;
-            }
-
-            List<ThingDef> rocks = Find.World.NaturalRockTypesIn(surface.Tile).ToList();
-            if (!rocks.NullOrEmpty())
-            {
-                return rocks.RandomElement();
-            }
-            return ThingDefOf.Granite;
+            return StrataRockUtility.NaturalFloorFor(StrataRockUtility.PrimaryRock(map));
         }
     }
 }

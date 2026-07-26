@@ -15,8 +15,7 @@ namespace Strata
             {
                 return false;
             }
-            return ModsConfig.IsActive("VanillaExpanded.HelixienGas")
-                || ModsConfig.IsActive("VanillaExpanded.Temperature");
+            return TargetMethod() != null;
         }
 
         private static MethodBase TargetMethod()

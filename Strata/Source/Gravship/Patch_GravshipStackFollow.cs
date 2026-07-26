@@ -23,6 +23,7 @@ namespace Strata
             var stacks = WorldComponent_StrataGravshipStacks.Get();
             stacks?.RememberTakeoffEngine(engine);
             stacks?.MarkTravelling(levels);
+            StrataGravshipTravelView.LeaveTravellingView(preferHost: engine.Map);
             // After travelling floors are known: pull prisoners/babies off the
             // host deck fringe and non-travelling colony digs onto the ship.
             StrataGravshipPawnRescue.RescueAtTakeoff(engine);
@@ -97,6 +98,28 @@ namespace Strata
             // any shaft Odyssey skipped would otherwise stay visible on the old site.
             StrataGravshipPortalTravel.SweepLeftBehindHostShafts(__result, engine);
             WorldComponent_StrataGravshipStacks.Get()?.RegisterTakeoff(__result, engine);
+            // Ship roofs were stripped via RemoveRoofUnsafe (bypasses the SetRoof
+            // hook) — shrink colony L1 decks that sat above the parked ship.
+            SweepUppersOfLaunchMap(engine);
+        }
+
+        private static void SweepUppersOfLaunchMap(Building_GravEngine engine)
+        {
+            Map launch = engine?.MapHeld ?? engine?.Map;
+            if (launch == null || Find.Maps == null)
+            {
+                return;
+            }
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map upper = maps[i];
+                if (upper != null && StrataMapUtility.IsUpperLevel(upper)
+                    && (upper.Parent as PocketMapParent)?.sourceMap == launch)
+                {
+                    UpperDeckUtility.SweepUnsupportedDeck(upper);
+                }
+            }
         }
     }
 
@@ -144,6 +167,11 @@ namespace Strata
     [HarmonyPatch(typeof(GravshipPlacementUtility), nameof(GravshipPlacementUtility.PlaceGravshipInMap))]
     public static class Patch_Gravship_PlaceInMap
     {
+        public static void Prefix(Gravship gravship)
+        {
+            StrataGravshipPortalTravel.EnsurePackedHostShaftsUnspawned(gravship);
+        }
+
         public static void Postfix(Gravship gravship, Map map)
         {
             if (gravship == null || map == null)
@@ -204,8 +232,8 @@ namespace Strata
             WorldComponent_StrataGravshipStacks.Get()?.CompleteLanding(gravship, host);
         }
 
-        // Prefer the packed ship's engine map — never the first GravEngine on any map
-        // (GravAnchor / multi-colony can leave an engine behind on the departure site).
+        // Prefer the packed ship's engine map — never PreferBestEngine / CurrentMap
+        // (GravAnchor / multi-colony / VGE can leave other engines on other maps).
         private static Map FindHostMap(Gravship gravship)
         {
             Building_GravEngine engine = gravship?.Engine;
@@ -216,12 +244,17 @@ namespace Strata
                 return engine.Map;
             }
 
-            return Find.CurrentMap != null
-                && !StrataMapUtility.IsUnderground(Find.CurrentMap)
-                && !StrataMapUtility.IsUpperLevel(Find.CurrentMap)
-                && StrataGravshipUtility.FindGravEngineOnMap(Find.CurrentMap) != null
-                ? Find.CurrentMap
-                : null;
+            // G1: pinned takeoff engine thingID → that engine's map only.
+            int pinnedId = WorldComponent_StrataGravshipStacks.Get()?.PeekTakeoffEngineThingId(gravship) ?? -1;
+            Building_GravEngine pinned = StrataGravshipUtility.FindGravEngineByThingIdAnywhere(pinnedId);
+            if (pinned?.Map != null
+                && !StrataMapUtility.IsUnderground(pinned.Map)
+                && !StrataMapUtility.IsUpperLevel(pinned.Map))
+            {
+                return pinned.Map;
+            }
+
+            return null;
         }
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_HaulToLevel.reportString>正在把 TargetA 运到其他楼层。</Strata_HaulToLevel.reportString>
+
+  <Strata_EscortToPortal.reportString>正在护送 TargetB 到其他楼层。</Strata_EscortToPortal.reportString>
+
+  <Strata_BringBabyToLevel.reportString>正在把 TargetA 抱到其他楼层的婴儿床。</Strata_BringBabyToLevel.reportString>
+
+  <Strata_BringPrisonerToLevel.reportString>正在把囚犯 TargetA 抬到其他楼层的床铺。</Strata_BringPrisonerToLevel.reportString>
+
+  <Strata_CaptureToLevel.reportString>正在捕获 TargetA 并抬到其他楼层的监狱床。</Strata_CaptureToLevel.reportString>
+
+  <Strata_RescueToLevel.reportString>正在把 TargetA 抬到其他楼层的床铺。</Strata_RescueToLevel.reportString>
+
+  <Strata_BringEntityToLevel.reportString>正在把 TargetA 抬到其他楼层的收容平台。</Strata_BringEntityToLevel.reportString>
+
+</LanguageData>

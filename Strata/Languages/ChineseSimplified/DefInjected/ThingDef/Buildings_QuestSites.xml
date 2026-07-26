@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_MineStairsDown.label>破旧矿井入口</Strata_MineStairsDown.label>
+  <Strata_MineStairsDown.description>沉入地下的木制矿井框架。支护已腐烂，下方铁轨生锈，但巷道仍从深层矿坑吐出冰冷潮湿的空气。</Strata_MineStairsDown.description>
+
+  <Strata_VaultStairsDown.label>古代金库门</Strata_VaultStairsDown.label>
+  <Strata_VaultStairsDown.description>嵌在碎石中的巨大金库舱口，封印已被岁月破坏。冷空气与旧机器的微弱嗡鸣从下方腔室升起。</Strata_VaultStairsDown.description>
+
+  <Strata_VentStairsDown.label>蒸汽裂缝</Strata_VentStairsDown.label>
+  <Strata_VentStairsDown.description>地面上的锯齿裂缝，从下方地热气囊喷出灼热蒸汽。裂缝旁岩中凿有粗糙台阶。</Strata_VentStairsDown.description>
+
+</LanguageData>

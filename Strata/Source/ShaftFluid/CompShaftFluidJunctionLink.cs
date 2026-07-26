@@ -17,7 +17,11 @@ namespace Strata
     // (patched in ShaftFluid_Comps.xml) — same idea as CompPowerShaft on shaft conduits.
     public class CompShaftFluidJunctionLink : ThingComp
     {
-        private const int BalanceInterval = 60;
+        // Fluid ties match PipeSystem / AASB (~100-tick). Power every tick normally;
+        // performance mode drives power every few ticks (PowerOutput sticks).
+        private const int BalanceInterval = 100;
+
+        private const int PowerIntervalPerf = 3;
 
         private const int PartnerCheckInterval = 250;
 
@@ -30,6 +34,10 @@ namespace Strata
         private Building partnerBelow;
 
         private CompShaftFluidJunctionLink parentAbove;
+
+        private CompPowerShaft cachedPower;
+
+        private CompPowerShaft cachedPartnerPower;
 
         private int partnerBelowId = -1;
 
@@ -79,19 +87,19 @@ namespace Strata
 
         private void RebuildPipesDeferred()
         {
-            if (parent.Spawned)
+            if (!parent.Spawned)
             {
-                PipeNetworkUtil.RebuildFor(parent);
-                PipeNetworkUtil.RebuildNeighbors(parent);
-                LongEventHandler.ExecuteWhenFinished(delegate
-                {
-                    if (parent.Spawned)
-                    {
-                        VefPipeNetworkUtil.ReconnectJunction(parent);
-                        PipeNetworkUtil.RebuildNeighbors(parent);
-                    }
-                });
+                return;
             }
+            // One cheap pass now; deferred pass only reconnects VEF (no neighbor spam).
+            PipeNetworkUtil.RebuildFor(parent);
+            LongEventHandler.ExecuteWhenFinished(delegate
+            {
+                if (parent.Spawned)
+                {
+                    VefPipeNetworkUtil.ReconnectJunction(parent);
+                }
+            });
         }
 
         public override void CompTick()
@@ -108,12 +116,26 @@ namespace Strata
                 }
                 EnsurePartnerBelow();
             }
-            if (!parent.IsHashIntervalTick(BalanceInterval) || !PartnerValid())
+
+            if (!PartnerValid())
             {
                 return;
             }
-            DriveAllTies();
-            DrivePowerTie();
+
+            int powerInterval = StrataMod.Settings?.performanceModeEnabled == true
+                ? PowerIntervalPerf
+                : 1;
+            if (powerInterval <= 1 || parent.IsHashIntervalTick(powerInterval))
+            {
+                DrivePowerTie();
+            }
+            if (parent.IsHashIntervalTick(BalanceInterval))
+            {
+                if (StrataFaultGuard.ShaftFluidActive)
+                {
+                    DriveAllTies();
+                }
+            }
         }
 
         private void DriveAllTies()
@@ -134,8 +156,12 @@ namespace Strata
 
         private void DrivePowerTie()
         {
-            CompPowerShaft node = parent.TryGetComp<CompPowerShaft>();
-            CompPowerShaft partner = partnerBelow?.TryGetComp<CompPowerShaft>();
+            CompPowerShaft node = cachedPower ?? (cachedPower = parent.TryGetComp<CompPowerShaft>());
+            CompPowerShaft partner = cachedPartnerPower;
+            if (partner == null || partner.parent != partnerBelow)
+            {
+                partner = cachedPartnerPower = partnerBelow?.TryGetComp<CompPowerShaft>();
+            }
             if (node != null && partner != null)
             {
                 node.DriveTie(partner);
@@ -211,7 +237,8 @@ namespace Strata
                     if (things[i].TryGetComp<CompShaftFluidJunctionLink>() is CompShaftFluidJunctionLink link && things[i].Spawned)
                     {
                         link.ReconcilePartnerLinks();
-                        PipeNetworkUtil.RebuildFor(things[i]);
+                        // Cheap reconnect only — full RebuildFor on every junction stalls load.
+                        VefPipeNetworkUtil.ReconnectJunction(things[i]);
                     }
                 }
             }
@@ -408,7 +435,6 @@ namespace Strata
             var child = (Building)GenSpawn.Spawn(ThingMaker.MakeThing(parent.def), cell, below);
             child.SetFaction(Faction.OfPlayer);
             PipeNetworkUtil.RebuildFor(child);
-            PipeNetworkUtil.RebuildNeighbors(child);
             Messages.Message("Strata_FluidJunctionExtended".Translate(), child, MessageTypeDefOf.PositiveEvent);
             return child;
         }

@@ -4,6 +4,9 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ## [Unreleased]
 
+### Changed
+- **Diggo the plushie** — replaced in-game sprite with brought `HippoDogPlushie42` art (installed as-is at `Textures/Homesteader/Buildings/HippoDogPlushie.png`).
+
 ### Fixed
 - **Passive cooling performance** — root cellar / icehouse / springhouse cell cache rebuilds only when a cooler spawns or despawns (dirty flag), not every 250 ticks; `AmbientTemperature` early-outs when the map has no cooled cells.
 - **Environmental allergy scans** — check one colonist per pulse (rotated) so Mold/PetDander map scans no longer hit everyone on the same tick.
