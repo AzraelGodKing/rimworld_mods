@@ -3,8 +3,8 @@ using Verse;
 
 namespace Strata
 {
-    // Soft darken when viewing an A+/upper deck — suggests looking down without
-    // rendering the surface (that is A1). Strength is a settings slider.
+    // Soft full-screen darken when viewing an A+/upper deck — mood cue on top of
+    // (or instead of) live see-below rendering through open-sky holes.
     public class MapComponent_DepthDim : MapComponent
     {
         public MapComponent_DepthDim(Map map) : base(map)

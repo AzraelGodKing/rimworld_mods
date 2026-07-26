@@ -494,23 +494,7 @@ namespace Strata
             try
             {
                 landing.DeSpawn(DestroyMode.WillReplace);
-                foreach (IntVec3 cell in rect)
-                {
-                    List<Thing> at = cell.GetThingList(pocket);
-                    for (int i = at.Count - 1; i >= 0; i--)
-                    {
-                        Thing blocker = at[i];
-                        if (blocker == null || blocker == landing || blocker.Destroyed)
-                        {
-                            continue;
-                        }
-                        if (blocker.def.category == ThingCategory.Building
-                            || blocker.def.category == ThingCategory.Item)
-                        {
-                            blocker.Destroy(DestroyMode.Vanish);
-                        }
-                    }
-                }
+                StrataPortalUtility.ClearBuildingsAndItemsInRect(pocket, rect, landing);
                 ArrivalZoneUtility.PrepareLandingCell(pocket, dest);
                 ok = landing.Spawned
                     || GenSpawn.Spawn(landing, dest, pocket, shaft.Rotation, WipeMode.VanishOrMoveAside) != null;
@@ -728,7 +712,9 @@ namespace Strata
                     {
                         continue;
                     }
-                    GenSpawn.Spawn(existing, cell, host, spawnRot);
+                    StrataPortalUtility.PrefireWipeStrataPortals(
+                        host, cell, spawnRot, existing.def.Size, existing);
+                    GenSpawn.Spawn(existing, cell, host, spawnRot, WipeMode.VanishOrMoveAside);
                     CompStrataGravshipShaft id = StrataGravshipShaftIdentity.CompOf(existing);
                     if (id != null)
                     {

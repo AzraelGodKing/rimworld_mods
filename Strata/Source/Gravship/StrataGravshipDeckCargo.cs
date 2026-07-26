@@ -506,23 +506,7 @@ namespace Strata
             try
             {
                 thing.DeSpawn(DestroyMode.WillReplace);
-                foreach (IntVec3 cell in rect)
-                {
-                    List<Thing> at = cell.GetThingList(pocket);
-                    for (int i = at.Count - 1; i >= 0; i--)
-                    {
-                        Thing blocker = at[i];
-                        if (blocker == null || blocker == thing || blocker.Destroyed)
-                        {
-                            continue;
-                        }
-                        if (blocker.def.category == ThingCategory.Building
-                            || blocker.def.category == ThingCategory.Item)
-                        {
-                            blocker.Destroy(DestroyMode.Vanish);
-                        }
-                    }
-                }
+                StrataPortalUtility.ClearBuildingsAndItemsInRect(pocket, rect, thing);
                 if (!thing.Spawned
                     && GenSpawn.Spawn(thing, dest, pocket, rot, WipeMode.VanishOrMoveAside) == null
                     && !thing.Spawned && !thing.Destroyed)

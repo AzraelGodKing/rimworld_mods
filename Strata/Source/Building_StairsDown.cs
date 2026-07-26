@@ -60,7 +60,8 @@ namespace Strata
             float bestDist = float.MaxValue;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing is not Building_StairsUp landing || !landing.Spawned)
+                if (thing is not Building_StairsUp landing || !landing.Spawned
+                    || !StrataGravshipUtility.SameShaftFamily(this, landing))
                 {
                     continue;
                 }
@@ -155,10 +156,22 @@ namespace Strata
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
             Map level = PocketMapExists ? PocketMap : null;
-            base.Destroy(mode);
-            // Collapse an empty level with the stairs; a level with pawns on it
-            // stays alive so they can still climb out via the stairwell below,
-            // and a shared level stays alive while any other entrance links in.
+            // destroyable=false: need the non-destroyable allowance or player
+            // deconstruct / intentional ForceDestroy never removes us.
+            bool prev = Thing.allowDestroyNonDestroyable;
+            Thing.allowDestroyNonDestroyable = true;
+            try
+            {
+                base.Destroy(mode);
+            }
+            finally
+            {
+                Thing.allowDestroyNonDestroyable = prev;
+            }
+            // Collapse an empty level with the surface/host shaft only. A level
+            // with pawns stays alive so they can climb out; a shared level stays
+            // while any other entrance still links in. Travel must never reach
+            // here — only intentional shaft destruction (with Abandon confirm).
             if (level != null && Find.Maps.Contains(level)
                 && !level.mapPawns.AnyPawnBlockingMapRemoval
                 && !AnyEntranceTo(level))
@@ -237,7 +250,10 @@ namespace Strata
                     continue;
                 }
                 Map pocket = other.PocketMap;
-                if (pocket != null && !StrataMapUtility.IsUpperLevel(pocket))
+                // Defense in depth: never join a gravship underdeck even if the
+                // owning shaft wasn't tagged as IStrataGravshipPortal.
+                if (pocket != null && !StrataMapUtility.IsUpperLevel(pocket)
+                    && !StrataGravshipUtility.IsGravshipLinkedLevel(pocket))
                 {
                     return pocket;
                 }
@@ -426,10 +442,10 @@ namespace Strata
 
         protected virtual string LevelInspectState()
         {
-            string state = "Level below: not yet opened";
+            string state = "Strata_StairwellNotOpen".Translate();
             if (PocketMapExists)
             {
-                state = "Level below: excavated";
+                state = "Strata_StairwellExcavated".Translate();
                 if (exit != null && exit.Spawned)
                 {
                     Room bottom = exit.Position.GetRoom(exit.Map);
@@ -446,7 +462,7 @@ namespace Strata
             }
             else if (StrataMapUtility.IsUnderground(Map))
             {
-                state += "\nSelect Dig down to designate a dig shaft; colonists must finish carving it before the level below opens.";
+                state += "\n" + "Strata_StairwellDigHint".Translate();
             }
             return state;
         }

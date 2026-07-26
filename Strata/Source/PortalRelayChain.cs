@@ -251,6 +251,10 @@ namespace Strata
 
             if (intent.purpose == RelayPurpose.ForcedOrder)
             {
+                if (StrataConstructAcrossLevels.TryFinishFetch(pawn))
+                {
+                    return;
+                }
                 CrossLevelOrderedJobs.Finish(pawn);
                 return;
             }

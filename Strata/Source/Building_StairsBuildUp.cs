@@ -75,7 +75,11 @@ namespace Strata
                     && other is not IStrataGravshipPortal
                     && other.Spawned && other.PocketMapExists)
                 {
-                    return other.PocketMap;
+                    Map pocket = other.PocketMap;
+                    if (pocket != null && !StrataGravshipUtility.IsGravshipLinkedLevel(pocket))
+                    {
+                        return pocket;
+                    }
                 }
             }
             return null;

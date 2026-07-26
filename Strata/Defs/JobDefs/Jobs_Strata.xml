@@ -61,4 +61,14 @@
     <casualInterruptible>false</casualInterruptible>
   </JobDef>
 
+  <JobDef>
+    <defName>Strata_CrossLevelAttack</defName>
+    <driverClass>Strata.JobDriver_StrataCrossLevelAttack</driverClass>
+    <reportString>attacking across levels.</reportString>
+    <playerInterruptible>true</playerInterruptible>
+    <collideWithPawns>false</collideWithPawns>
+    <suspendable>false</suspendable>
+    <alwaysShowWeapon>true</alwaysShowWeapon>
+  </JobDef>
+
 </Defs>

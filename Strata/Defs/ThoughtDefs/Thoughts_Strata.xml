@@ -21,4 +21,20 @@
     </stages>
   </ThoughtDef>
 
+
+  <!-- Mood bonus for colonists standing on an exposed upper roof deck. -->
+  <ThoughtDef>
+    <defName>Strata_UpperDeckView</defName>
+    <thoughtClass>Thought_Situational</thoughtClass>
+    <workerClass>Strata.ThoughtWorker_StrataUpperDeckView</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>rooftop view</label>
+        <description>I can see across the whole base from up here. There is something satisfying about looking down on everything.</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

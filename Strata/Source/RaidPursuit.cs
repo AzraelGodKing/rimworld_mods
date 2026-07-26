@@ -125,7 +125,13 @@ namespace Strata
 
         private void TryPursue()
         {
-            if (!RelevantMap() || map.mapPawns.FreeColonistsSpawnedCount > 0)
+            if (!RelevantMap())
+            {
+                return;
+            }
+            // Stay and fight while this floor still has undowned free colonists.
+            // If they all fled downstairs (or only downed remain), chase (A3).
+            if (HasFightableColonist(map))
             {
                 return;
             }
@@ -148,7 +154,7 @@ namespace Strata
             Map targetLevel = null;
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
             {
-                if (link.map.mapPawns.FreeColonistsSpawnedCount > 0)
+                if (HasFightableColonist(link.map))
                 {
                     targetLevel = link.map;
                     break;
@@ -264,6 +270,24 @@ namespace Strata
                     "Strata_RaidersBatteringPortal".Translate(sealedPortal.def.label),
                     new LookTargets(sealedPortal), MessageTypeDefOf.ThreatBig);
             }
+        }
+
+        private static bool HasFightableColonist(Map map)
+        {
+            if (map?.mapPawns == null)
+            {
+                return false;
+            }
+            IReadOnlyList<Pawn> colonists = map.mapPawns.FreeColonistsSpawned;
+            for (int i = 0; i < colonists.Count; i++)
+            {
+                Pawn c = colonists[i];
+                if (c != null && !c.Dead && !c.Downed)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool IsPursuer(Pawn pawn)
