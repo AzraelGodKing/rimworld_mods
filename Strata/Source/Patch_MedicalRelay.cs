@@ -29,11 +29,12 @@ namespace Strata
             LevelRoleUtility.SortLinksByRole(links, LevelRole.Hospital);
             foreach (LevelGraph.LevelLink link in links)
             {
-                if (!PawnRelay.HasMedicalBedFor(pawn, link.map))
+                Building_Bed bed = PawnRelay.FindMedicalBedFor(pawn, link.map);
+                if (bed == null)
                 {
                     continue;
                 }
-                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Medical, 2);
+                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Medical, 2, bed);
                 if (job != null)
                 {
                     __result = job;

@@ -77,7 +77,6 @@ namespace Strata
             return Mathf.Max(0f, NetStored(net));
         }
 
-        // Rimefeller Push* typically returns unstored remainder when tanks are full.
         public override float NetStorageRoom(object net)
         {
             if (net == null || !TryBind())

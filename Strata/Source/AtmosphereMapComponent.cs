@@ -192,6 +192,14 @@ namespace Strata
             list.Add(new PendingSeed { cell = cell, gas = gas, density = density });
         }
 
+        // Called from Patch_DeinitAndRemoveMap_CleanupAtmosphere when a pocket map
+        // is removed. Prevents dead map IDs from accumulating in the static dictionary
+        // across the session.
+        public static void RemovePendingSeeds(int mapUniqueId)
+        {
+            pendingSeedsByMap.Remove(mapUniqueId);
+        }
+
         public bool GetCellBool(int index) =>
             GasOverlayUtility.CellHasOverlayGas(cellDensity, index, map);
 
@@ -387,6 +395,18 @@ namespace Strata
         }
 
         public override void MapComponentTick()
+        {
+            try
+            {
+                MapComponentTickInner();
+            }
+            catch (System.Exception e)
+            {
+                StrataFaultGuard.Report(StrataFaultGuard.System.Atmosphere, e.GetType().Name + ": " + e.Message);
+            }
+        }
+
+        private void MapComponentTickInner()
         {
             EnsureBuildingCompsRegistered();
 

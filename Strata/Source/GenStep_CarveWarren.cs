@@ -60,10 +60,9 @@ namespace Strata
             }
 
             MapGenerator.SetVar(ChambersVar, chambers);
-            if (playerLevel && StrataCavernUtility.ShouldGenerateNativeCavernLayout(map))
-            {
-                GenStep_SolidRock.SpawnMineables(map);
-            }
+            // Rock is already placed by GenStep_SolidRock before this step;
+            // do not SpawnMineables again (that refilled carved chambers and
+            // doubled the freeze cost on large maps / mod lists).
         }
 
         private static int TargetChamberCount(int depth)

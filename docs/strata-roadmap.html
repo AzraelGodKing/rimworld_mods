@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Strata V3 Roadmap</title>
-<meta name="description" content="Strata V3: Gravship Linking G1–G7 merged; remaining Polish A1–A5, More UX changes M1–M10 (no M5), ±2 level hard cap.">
+<meta name="description" content="Strata V3: Cap, G1–G9, M1–M10, and Polish A1–A5 done on V3-M-ux. Merge into V3.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,11 +26,11 @@
 <header class="hero strata">
   <div class="wrap">
     <h1 class="t">STRATA — V3</h1>
-    <p class="tagline">Selected target on <code>feature/strata-v3</code> (includes VGE Chapter 1 soft-compat)</p>
+    <p class="tagline">Active work on <code>V3-M-ux</code> (merge into <code>V3</code> / <code>feature/strata-v3</code>)</p>
     <div class="badges">
       <span class="badge strata">V2 shipped</span>
-      <span class="badge strata">G1–G7 merged</span>
-      <span class="badge strata">V3 in progress</span>
+      <span class="badge strata">G1–G9 + M1–M10 + A1–A5 done</span>
+      <span class="badge strata">Merge V3-M-ux → V3</span>
     </div>
     <div class="cta">
       <a class="btn btn-strata" href="strata.html">&#8592; Back to Strata</a>
@@ -43,22 +43,21 @@
 
   <section id="v3-target">
     <h2 class="t">V3 target (locked)</h2>
-    <p class="sub">Branch: <code>feature/strata-v3</code>, forked from <code>compat/strata-vge-chapter1</code>. Hard cap <b>±2</b> levels (colony and gravship A+/B+); Unlimited setting defaults <b>OFF</b>. Do not run Strata alongside AASB or MultiFloors.</p>
+    <p class="sub">Hard cap <b>±2</b> levels (colony and gravship A+/B+); Unlimited setting defaults <b>OFF</b>. Do not run Strata alongside AASB or MultiFloors.</p>
 
     <h3 class="t">Build order</h3>
     <ol>
       <li><b>Cap setting</b> (±2 / Unlimited off) — ✅ merged into <code>V3</code></li>
       <li><b>G1–G7</b> Gravship linking — ✅ merged into <code>V3</code> (via <code>V3-G2</code>; includes G8 land polish)</li>
-      <li><b>More UX (M9/M10 + G9 land polish)</b> — ✅ merged into <code>V3</code> from <code>V3-M-ux</code></li>
-      <li><b>A4 Vertical utilities as one net</b> — ✅ on <code>V3</code> (stamp <code>a4-one-net-v1</code>)</li>
-      <li>A1, A2, A3, A5</li>
-      <li>Remaining M: M6, M8, M7, M1, M4, M3, M2</li>
+      <li><b>More UX (M1–M10)</b> — ✅ finished on <code>V3-M-ux</code>; merge into <code>V3</code></li>
+      <li><b>A1 Live see-through roof view</b> — ✅ finished on <code>V3-M-ux</code> (see Polish)</li>
+      <li><b>A2–A5 Polish</b> — ✅ finished on <code>V3-M-ux</code> (stamp <code>a2-a5-polish-v1</code>); merge into <code>V3</code></li>
     </ol>
   </section>
 
   <section id="gravship">
-    <h2 class="t">New Gravship Linking (G1–G7) — merged</h2>
-    <p class="sub">Merged into <code>V3</code>. MultiFloors lesson: explicit travel entitlement + deterministic shaft identity — not endless orphan heuristics.</p>
+    <h2 class="t">New Gravship Linking (G1–G9) — done</h2>
+    <p class="sub">G1–G7 (+ G8 land polish) merged into <code>V3</code>. G9 on <code>V3-M-ux</code>. MultiFloors lesson: explicit travel entitlement + deterministic shaft identity — not endless orphan heuristics.</p>
     <ol>
       <li><b>G1 One engine of record</b> — ✅ Pin travelling stack to the packed ship’s engine thingID at takeoff; never PreferBestEngine / CurrentMap fallback during land rebind.</li>
       <li><b>G2 Stable shaft identity</b> — ✅ Persist stack GUID + per-shaft ID so land never spawns a second “New” underdeck when packed stairs replace temp shafts.</li>
@@ -67,6 +66,7 @@
       <li><b>G5 Multi-shaft wiring table</b> — ✅ Restore by shaftId table; no best-match salvage when ID present.</li>
       <li><b>G6 Shaft as grav-extender</b> — ✅ Shaft footprint + rim owns the vertical pocket column for linked placement.</li>
       <li><b>G7 Pack A+/B+ into Gravship cargo</b> — ✅ MVP: pack buildings/items engine-relative at takeoff; place at land root (skip live-pocket align when cargo placed).</li>
+      <li><b>G8 Land polish</b> — ✅ Orphan adoption, duplicate cull, deck cargo / footprint clear (with later force-wipe for non-destroyable elevators).</li>
       <li><b>G9 Mid-flight underdeck view → land RGB</b> — ✅ on <code>V3-M-ux</code>: block viewing travelling floors mid-flight; land paints with host as CurrentMap + MapDrawer regen (stamp <code>g9-travel-view-rgb-guard-v1</code>).</li>
     </ol>
   </section>
@@ -74,35 +74,43 @@
   <section id="aasb-polish">
     <h2 class="t">Polish (A1–A5)</h2>
     <ol>
-      <li><b>A1 Live see-through roof view</b> — From A+/sky decks, render the surface through open roof holes.</li>
-      <li><b>A2 Mental breaks that cross stairs</b> — Binges find other-level stash; berserkers chase through shafts.</li>
-      <li><b>A3 Raider divert polish</b> — Tighten raid pursuit so fights don’t die on the wrong floor.</li>
-      <li><b>A4 Vertical utilities as one net</b> — ✅ Must: shaft power every tick + host-battery shared deficit; DBH/VEF/Rimefeller junction buffer when destination lacks tanks (stamp <code>a4-one-net-v1</code>).</li>
-      <li><b>A5 Per-system kill-switches</b> — Auto-disable haul relay / atmosphere / shaft fluid / robot soft-compat on repeated errors.</li>
+      <li><b>A1 Live see-through roof view</b> — ✅ on <code>V3-M-ux</code>: draw the map below through <code>Strata_OpenSky</code> / see-through <code>Strata_RoofDeck</code> (terrain, MapMesh things, live pawns); weather sync; click-select + double-click select-similar + forbidden overlays; float menu; cross-level ranged combat (pawns/turrets/mortars). Stamps <code>see-below-v1</code> → <code>below-select-parity-v1</code>, <code>cross-level-combat-v2</code>, <code>weather-sync-v1</code>, <code>roofdeck-seethrough-v1</code>.</li>
+      <li><b>A2 Mental breaks that cross stairs</b> — ✅ binge food/drug stash hunt + berserk / murderous rage chase through shafts (stamp <code>a2-a5-polish-v1</code>).</li>
+      <li><b>A3 Raider divert polish</b> — ✅ pursue when no fightable colonists remain on this floor (downed-only does not hold them); chase toward linked floors with live colonists.</li>
+      <li><b>A4 Vertical utilities as one net</b> — ✅ tankless pockets (no local batteries) still get offline demand + consumer bootstrap from shaft surplus even in performance mode.</li>
+      <li><b>A5 Per-system kill-switches</b> — ✅ <code>StrataFaultGuard</code> auto-disables work relay / atmosphere / shaft fluid / robot soft-compat after repeated errors; shaft fluid toggle in settings.</li>
     </ol>
   </section>
 
   <section id="multifloors-ux">
-    <h2 class="t">More UX changes (M1–M10, no M5)</h2>
-    <p class="sub">M9/M10 (+ G9 travel-view RGB guard, ghost-hull clear, Chinese pack, hostile lost-miners letter) merged into <code>V3</code> from <code>V3-M-ux</code>. Remaining items still open.</p>
+    <h2 class="t">More UX changes (M1–M10, no M5) — finished</h2>
+    <p class="sub">Work branch: <code>V3-M-ux</code>. Merge into <code>V3</code>.</p>
     <ol>
       <li><b>M10 Level-switch Update OOR / flicker</b> — ✅ clamp stale <code>CurrentMap</code> index after pocket create/destroy; harden overlay + Work/Schedule lists (stamp <code>m10-level-switch-oor-v1</code>).</li>
       <li><b>M9 Gravship pilot seat from other floors</b> — ✅ pawns on a linked underdeck / tower deck can fill the pilot role and right-click Pilot Gravship (stamp <code>m9-pilot-across-levels-v1</code>).</li>
-      <li><b>M1 Hospitality / guest / trader pathing</b> across levels.</li>
-      <li><b>M2 Vehicle Framework</b> soft-compat (roof-deck park/land rules).</li>
-      <li><b>M3 Modder API</b> — reachable levels, first stair step, register vertical link, underground incident policy.</li>
-      <li><b>M4 Depth dim / mood slider</b> for looking down from upper decks.</li>
-      <li><b>M6 Medical bed preference</b> across levels (finish existing work).</li>
-      <li><b>M7 Reinstall buildings</b> across levels.</li>
-      <li><b>M8 Float-menu / caravan selection</b> that sees other levels.</li>
+      <li><b>M1 Hospitality / guest / trader pathing</b> — ✅ visitors rest/follow lord through shafts; exit-map escape already covered.</li>
+      <li><b>M2 Vehicle Framework</b> — ✅ soft-compat: RoofDeck park / OpenSky blocked when VF hooks match.</li>
+      <li><b>M3 Modder API</b> — ✅ <code>Strata.StrataModderApi</code> facade (reachable maps, stairs, link listeners, incident policy).</li>
+      <li><b>M4 Depth dim slider</b> — ✅ optional upper-deck screen darken (settings).</li>
+      <li><b>M6 Medical bed preference</b> — ✅ pin medical bed + <code>FinishMedical</code> LayDown on arrival.</li>
+      <li><b>M7 Reinstall buildings</b> — ✅ <code>WorkGiver_InstallAcrossLevels</code> for minified → linked <code>Blueprint_Install</code>.</li>
+      <li><b>M8 Float-menu / caravan selection</b> — ✅ linked-floor float menus + cross-level caravan sendables.</li>
     </ol>
   </section>
 
   <section id="baseline">
-    <h2 class="t">Already on this branch</h2>
-    <p class="sub">VGE Chapter 1 soft-compat, gravship life support (O₂ + heatsinks), VGE new-game crash fix, haul ReachableLevels reentrancy, <b>New Gravship Linking G1–G7</b> (+ G8 land polish) merged from <code>V3-G2</code>.</p>
+    <h2 class="t">Already on <code>V3-M-ux</code> (beyond the locked list)</h2>
+    <p class="sub">Also shipping on this branch while Polish finishes:</p>
+    <ul>
+      <li>VGE Chapter 1 soft-compat, gravship life support (O₂ + heatsinks), VGE new-game crash fix</li>
+      <li>Colony vs gravship shaft-family isolation; dig-stair open LongEvent; rescue across levels</li>
+      <li>Combined linked stockpile resources; force-build with materials on another floor</li>
+      <li>Gravship land stability: force-wipe non-destroyable elevators; no portal wipe on EnterPortal; Abandon confirm on host deconstruct; skip install BPs in LevelDemand</li>
+    </ul>
     <div class="note strata">
-      Suggest features and report bugs on
+      Post-V3 ideas (magma, flooded levels, stack panel, etc.) live in
+      <a href="https://github.com/AzraelGodKing/rimworld_mods/blob/main/Strata/V3_ROADMAP.md"><code>Strata/V3_ROADMAP.md</code></a>.
+      Bugs and suggestions:
       <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">GitHub issues</a>.
     </div>
   </section>

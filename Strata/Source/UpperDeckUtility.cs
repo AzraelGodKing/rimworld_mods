@@ -13,6 +13,14 @@ namespace Strata
     {
         public const string RoofDeckDefName = "Strata_RoofDeck";
         public const string OpenSkyDefName = "Strata_OpenSky";
+
+        /// <summary>Open sky holes and see-through roof-deck pads (dontRender).</summary>
+        public static bool IsSeeThroughGap(TerrainDef terrain)
+        {
+            if (terrain == null) return false;
+            string n = terrain.defName;
+            return n == OpenSkyDefName || n == RoofDeckDefName;
+        }
         public const float DefaultPlazaRadius = 6.5f;
 
         // Set while painting a whole upper map so per-cell SetRoof noise skips sync.
