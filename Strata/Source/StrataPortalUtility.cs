@@ -99,6 +99,93 @@ namespace Strata
             }
         }
 
+        // Prefer this over Thing.Destroy when the thing may be a Strata shaft/landing
+        // (or any destroyable=false building) — plain Destroy leaves ghosts and
+        // double-registers CompPower transmitters after gravship land.
+        public static void SafeDestroyThing(Thing thing, DestroyMode mode = DestroyMode.Vanish)
+        {
+            if (thing == null || thing.Destroyed)
+            {
+                return;
+            }
+            if (thing.def != null && !thing.def.destroyable)
+            {
+                ForceDestroyPortal(thing, mode);
+                return;
+            }
+            thing.Destroy(mode);
+        }
+
+        // WipeMode cannot remove destroyable=false portals; clear them first so
+        // GenSpawn / PlaceGravship do not stack two transmitters on one cell.
+        public static void PrefireWipeStrataPortals(
+            Map map,
+            IntVec3 loc,
+            Rot4 rot,
+            IntVec2 size,
+            Thing except = null)
+        {
+            if (map == null)
+            {
+                return;
+            }
+            CellRect rect = GenAdj.OccupiedRect(loc, rot, size);
+            foreach (IntVec3 cell in rect)
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+                List<Thing> at = cell.GetThingList(map);
+                for (int i = at.Count - 1; i >= 0; i--)
+                {
+                    Thing blocker = at[i];
+                    if (blocker == null || blocker == except || blocker.Destroyed)
+                    {
+                        continue;
+                    }
+                    if (blocker is MapPortal
+                        && blocker.def?.defName != null
+                        && blocker.def.defName.StartsWith("Strata_"))
+                    {
+                        ForceDestroyPortal(blocker);
+                    }
+                }
+            }
+        }
+
+        public static void ClearBuildingsAndItemsInRect(
+            Map map,
+            CellRect rect,
+            Thing except = null)
+        {
+            if (map == null)
+            {
+                return;
+            }
+            foreach (IntVec3 cell in rect)
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+                List<Thing> at = cell.GetThingList(map);
+                for (int i = at.Count - 1; i >= 0; i--)
+                {
+                    Thing blocker = at[i];
+                    if (blocker == null || blocker == except || blocker.Destroyed)
+                    {
+                        continue;
+                    }
+                    if (blocker.def.category == ThingCategory.Building
+                        || blocker.def.category == ThingCategory.Item)
+                    {
+                        SafeDestroyThing(blocker);
+                    }
+                }
+            }
+        }
+
         // Entrance has a pocket map but the landing is missing — restore it.
         public static void RepairMissingLandings()
         {
@@ -563,7 +650,8 @@ namespace Strata
             for (int i = 0; i < things.Count; i++)
             {
                 Thing thing = things[i];
-                if (thing.Faction != Faction.OfPlayer || thing is Blueprint_Install
+                if (thing == null || thing.Faction != Faction.OfPlayer
+                    || LevelDemand.IsInstallBlueprint(thing)
                     || thing is not IConstructible constructible)
                 {
                     continue;

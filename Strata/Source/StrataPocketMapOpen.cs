@@ -10,11 +10,21 @@ namespace Strata
     // crash. Tower decks skip rock fill, which is why they still feel fine.
     // Queue generation as a LongEvent so the loading overlay stays alive, and
     // refuse EnterPortal until the pocket exists.
+    //
+    // Important: MapPortal.PocketMap only returns an existing map. Generation is
+    // MapPortal.GetOtherMap() → private GeneratePocketMap(). Reading PocketMap
+    // alone always "fails" and permanently blacklists the portal id.
     public static class StrataPocketMapOpen
     {
         private static readonly HashSet<int> generatingPortalIds = new HashSet<int>();
 
         private static readonly HashSet<int> failedPortalIds = new HashSet<int>();
+
+        public static void ResetSession()
+        {
+            generatingPortalIds.Clear();
+            failedPortalIds.Clear();
+        }
 
         public static bool IsGenerating(MapPortal portal)
         {
@@ -52,7 +62,11 @@ namespace Strata
                         {
                             return;
                         }
-                        Map map = portal.PocketMap;
+                        if (portal.PocketMapExists)
+                        {
+                            return;
+                        }
+                        Map map = portal.GetOtherMap();
                         if (map == null)
                         {
                             failedPortalIds.Add(id);

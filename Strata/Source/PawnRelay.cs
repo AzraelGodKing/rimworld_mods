@@ -114,14 +114,18 @@ namespace Strata
         // Portal-capable and linked, ignoring the general relay cooldown.
         // Used for owned-bed home commute so a recent food/work trip can't leave
         // someone sleeping on the floor of the wrong level all night.
-        public static bool CanRelayBasics(Pawn pawn)
+        // allowMentalState: binge/berserk chase (A2) — normal relays stay blocked.
+        public static bool CanRelayBasics(Pawn pawn, bool allowMentalState = false)
         {
             if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed)
             {
                 return false;
             }
-            if (!StrataPawnUtility.CanUseLevelPortals(pawn)
-                || pawn.Drafted || pawn.InMentalState || pawn.IsBurning())
+            if (!StrataPawnUtility.CanUseLevelPortals(pawn) || pawn.Drafted || pawn.IsBurning())
+            {
+                return false;
+            }
+            if (!allowMentalState && pawn.InMentalState)
             {
                 return false;
             }
@@ -136,6 +140,11 @@ namespace Strata
                 return false;
             }
             return LevelGraph.AnyLinkFrom(pawn.Map);
+        }
+
+        public static bool CanRelayMentalBreak(Pawn pawn)
+        {
+            return CanRelayBasics(pawn, allowMentalState: true) && !IsOnRelayCooldown(pawn);
         }
 
         public static Job MakeRelayJob(Pawn pawn, MapPortal firstStep)

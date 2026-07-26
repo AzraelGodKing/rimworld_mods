@@ -154,6 +154,14 @@ namespace Strata
             return thing is IStrataGravshipPortal;
         }
 
+        // Colony dig/tower shafts and gravship shafts must never share DownEntrance
+        // partners or join each other's pockets — mixing them on a landed ship
+        // host crashes portal/power wiring.
+        public static bool SameShaftFamily(Thing a, Thing b)
+        {
+            return IsGravshipPortal(a) == IsGravshipPortal(b);
+        }
+
         // Host shaft on the ship deck (not a pocket landing).
         public static bool IsGravshipHostShaft(Thing thing)
         {

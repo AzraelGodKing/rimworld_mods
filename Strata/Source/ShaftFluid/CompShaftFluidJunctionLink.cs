@@ -131,7 +131,10 @@ namespace Strata
             }
             if (parent.IsHashIntervalTick(BalanceInterval))
             {
-                DriveAllTies();
+                if (StrataFaultGuard.ShaftFluidActive)
+                {
+                    DriveAllTies();
+                }
             }
         }
 

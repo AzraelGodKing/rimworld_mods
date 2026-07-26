@@ -5,10 +5,10 @@
   <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
   <Strata_Settings_LevelHotkeys>Level view hotkeys</Strata_Settings_LevelHotkeys>
   <Strata_Settings_UnlimitedLevels>Unlimited levels</Strata_Settings_UnlimitedLevels>
-  <Strata_Settings_UnlimitedLevelsDesc>When off (default), new digs and towers stop at {0} floors below and {0} floors above the stack root (colony surface or gravship host). Extra shafts can still join an already-open floor. Existing deeper/taller stacks keep working.</Strata_Settings_UnlimitedLevelsDesc>
+  <Strata_Settings_UnlimitedLevelsDesc>When off (default), colony stacks stop at {0} floors below/above the stack root, and gravship stacks stop at 1 floor below/above the ship deck. Extra shafts can still join an already-open floor. Existing deeper/taller stacks keep working. When on, both colony and gravship caps are lifted (deeper gravship stacks are heavier on takeoff/landing).</Strata_Settings_UnlimitedLevelsDesc>
   <Strata_LevelCap_MaxBelow>Level cap: cannot dig below B{0}. Enable Unlimited levels in Strata settings, or dig from a shallower floor.</Strata_LevelCap_MaxBelow>
   <Strata_LevelCap_MaxAbove>Level cap: cannot build above A{0}. Enable Unlimited levels in Strata settings, or build from a lower floor.</Strata_LevelCap_MaxAbove>
-  <Strata_LevelCap_GravshipMax>Gravship level cap: ship stacks are limited to {0} level above and {0} level below the ship deck. Land the ship and dig from a colony floor for deeper levels.</Strata_LevelCap_GravshipMax>
+  <Strata_LevelCap_GravshipMax>Gravship level cap: ship stacks are limited to {0} level above and {0} level below the ship deck. Enable Unlimited levels in Strata settings, or land and dig from a colony floor.</Strata_LevelCap_GravshipMax>
   <Strata_Settings_ViewLevelAbove>View level above</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>View level below</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>Press a key...</Strata_Settings_PressKey>
@@ -20,6 +20,9 @@
   <Strata_Settings_RobotSoftCompatDesc>Cross-level portal routing for Misc. Robots (return-to-base when recharge is on another level). Turn off to A/B test whether Strata robot hooks cause lag.</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Misc. Robots work relay</Strata_Settings_RobotWorkRelay>
   <Strata_Settings_RobotWorkRelayDesc>When a bot finds no local haul/clean work, send it through stairwells toward linked levels that have work. Off by default — enable if you want bots to commute across floors.</Strata_Settings_RobotWorkRelayDesc>
+  <Strata_Settings_ShaftFluid>Shaft fluid junctions</Strata_Settings_ShaftFluid>
+  <Strata_Settings_ShaftFluidDesc>Cross-level fluid ties (water, helixien, coolant, etc.). Auto-disabled if repeated errors trip the fault guard.</Strata_Settings_ShaftFluidDesc>
+  <Strata_FaultGuardTripped>Strata auto-disabled {0} after repeated errors. Re-enable in mod options if needed.</Strata_FaultGuardTripped>
   <Strata_Settings_FoodRelay>Food relay</Strata_Settings_FoodRelay>
   <Strata_Settings_FoodRelayDesc>Hungry colonists go find a meal on another level.</Strata_Settings_FoodRelayDesc>
   <Strata_Settings_RestRelay>Rest relay</Strata_Settings_RestRelay>
@@ -57,7 +60,7 @@
   <Strata_Settings_GasOverlayLabels>Gas overlay room labels</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>While the play-settings gas overlay is on, draw color-coded percentage labels on each enclosed room (top three gases + load). The cursor panel is always available when the overlay is on.</Strata_Settings_GasOverlayLabelsDesc>
   <Strata_PlaySettings_GasOverlayTip>Strata: show gas overlay\nTints each room by its dominant hazardous gas. Move the mouse over a room for a cursor-attached gas mix panel. Optional per-room labels: Strata mod settings → Gas overlay room labels.</Strata_PlaySettings_GasOverlayTip>
-  <Strata_PlaySettings_CombinedResourcesTip>Strata: combined level resources - the resource readout and build costs count items on every linked level.</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata: combined level resources (on by default)\nResource readout, build costs, and “until you have X” bills count items in stockpiles/shelves on every linked floor.</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>load {0}%</Strata_GasOverlay_Load>
   <Strata_GasOverlay_LoadParen>  (load {0}%)</Strata_GasOverlay_LoadParen>
   <Strata_GasOverlay_OpenAir>Gas: open air</Strata_GasOverlay_OpenAir>
@@ -114,8 +117,26 @@
   <Strata_Settings_MultiFloorStairsDesc>Use bundled alternate art from Textures/Strata/Buildings/MultiFloors/ (handrail stairs + modern elevator). Does not require the MultiFloors mod.</Strata_Settings_MultiFloorStairsDesc>
   <Strata_Settings_MultiFloorCredit>These Assets are from Multifloors, Telardo can ask for it to be removed.</Strata_Settings_MultiFloorCredit>
   <Strata_Settings_DepthDim>Upper-deck depth dim</Strata_Settings_DepthDim>
-  <Strata_Settings_DepthDimDesc>When viewing an A+/roof deck, darken the screen slightly to suggest looking down. Does not render the floor below (see-through roofs are a separate feature).</Strata_Settings_DepthDimDesc>
+  <Strata_Settings_DepthDimDesc>When viewing an A+/roof deck, darken the whole screen slightly as a depth mood cue. Separate from see-below, which actually draws the floor under open-sky gaps.</Strata_Settings_DepthDimDesc>
   <Strata_Settings_DepthDimStrength>Depth dim strength: {0}</Strata_Settings_DepthDimStrength>
+  <Strata_Settings_SeeBelow>See floor below through open sky</Strata_Settings_SeeBelow>
+  <Strata_Settings_SeeBelowDesc>On A+ decks, draw the real map underneath through Strata open-sky holes (terrain, weather water, buildings, fog).</Strata_Settings_SeeBelowDesc>
+  <Strata_Settings_SeeBelowLive>Live pawns and projectiles below</Strata_Settings_SeeBelowLive>
+  <Strata_Settings_SeeBelowLiveDesc>Also draw moving things from the map below when looking through open sky.</Strata_Settings_SeeBelowLiveDesc>
+  <Strata_Settings_BelowDim>Open-sky underlay dim: {0}</Strata_Settings_BelowDim>
+  <Strata_Settings_BelowThingScale>Below thing scale: {0}</Strata_Settings_BelowThingScale>
+  <Strata_Settings_CrossLevelCombat>Cross-level ranged fire</Strata_Settings_CrossLevelCombat>
+  <Strata_Settings_CrossLevelCombatDesc>Pawns, turrets, and mortars can shoot through Strata open-sky holes at the paired floor above or below (range includes the vertical gap).</Strata_Settings_CrossLevelCombatDesc>
+  <Strata_Settings_CrossLevelAutoEngage>Cross-level auto-engage</Strata_Settings_CrossLevelAutoEngage>
+  <Strata_Settings_CrossLevelAutoEngageDesc>Idle/hostiles and undrafted colonists with guns (and turrets with no local target) automatically fire through open sky. Drafted Fire-at-will also returns fire across the gap.</Strata_Settings_CrossLevelAutoEngageDesc>
+  <Strata_ReportAttackingAcross>attacking {0} across levels.</Strata_ReportAttackingAcross>
+  <Strata_NoArcPath>No open-sky arc path to that cell.</Strata_NoArcPath>
+  <Strata_NoGapLine>No open-sky line of fire to that target.</Strata_NoGapLine>
+  <Strata_MortarTargetSet>{0}: cross-level mortar target set.</Strata_MortarTargetSet>
+  <Strata_TurretTargetSet>{0}: cross-level turret target set.</Strata_TurretTargetSet>
+  <Strata_GapLineLost>{0} lost its cross-level firing line.</Strata_GapLineLost>
+  <Strata_StopCrossBombard>Stop cross-level fire</Strata_StopCrossBombard>
+  <Strata_StopCrossBombardDesc>Cancel the current cross-level turret or mortar order.</Strata_StopCrossBombardDesc>
   <Strata_Settings_Interface>Interface</Strata_Settings_Interface>
   <Strata_Settings_LinkedColonistsTabs>Strata Levels on Work / Schedule</Strata_Settings_LinkedColonistsTabs>
   <Strata_Settings_LinkedColonistsTabsDesc>Work and Schedule tabs show a Strata Levels checkbox (when your colony has excavated levels). When checked, both tabs list colonists from every linked level, not only the map you are viewing.</Strata_Settings_LinkedColonistsTabsDesc>
@@ -160,6 +181,8 @@
   <Strata_OnlyWayDown>It's the only way down.</Strata_OnlyWayDown>
   <Strata_SomeoneBelow>Someone is still on the level below.</Strata_SomeoneBelow>
   <Strata_SomeoneAbove>Someone is still on the level above.</Strata_SomeoneAbove>
+  <Strata_AbandonLevelBelowConfirm>Removing this stairwell or elevator will collapse the linked level below if nothing else connects to it.\n\nAnything still on that floor (buildings, items, plants) will be lost. Colonists still below block removal.\n\nAbandon the linked level?</Strata_AbandonLevelBelowConfirm>
+  <Strata_AbandonLevelAboveConfirm>Removing this stairwell or elevator will collapse the linked level above if nothing else connects to it.\n\nAnything still on that floor (buildings, items, plants) will be lost. Colonists still above block removal.\n\nAbandon the linked level?</Strata_AbandonLevelAboveConfirm>
   <Strata_SmokeShaftSealed>Smoke shaft: sealed</Strata_SmokeShaftSealed>
   <Strata_SmokeShaftOpen>Smoke shaft: fumes rise to the level above</Strata_SmokeShaftOpen>
   <Strata_PowerShaft>Power shaft: ties both levels' grids (wire each floor into the stairwell; batteries optional for overnight pooling)</Strata_PowerShaft>
@@ -212,6 +235,7 @@
   <Strata_Place_NeedsGravEngine>Needs a grav engine on this map.</Strata_Place_NeedsGravEngine>
   <Strata_Place_MustBeSubstructure>Must be built on the gravship substructure.</Strata_Place_MustBeSubstructure>
   <Strata_Place_NoColonyStairsOnGravship>Cannot build colony stairs on the gravship. Use a gravship stairwell instead.</Strata_Place_NoColonyStairsOnGravship>
+  <Strata_Dig_NoColonyShaftOnGravshipLanding>Cannot dig a colony shaft from a gravship landing. Dig from a colony stairwell landing, or open another gravship shaft on the ship.</Strata_Dig_NoColonyShaftOnGravshipLanding>
   <Strata_Place_MustBeOnGasVent>Must be placed on a deep gas vent.</Strata_Place_MustBeOnGasVent>
 
   <!-- Gas / atmosphere -->
@@ -300,5 +324,14 @@
   <!-- Letters -->
   <Strata_AncientStairwellLetterTitle>Ancient stairwell</Strata_AncientStairwellLetterTitle>
   <Strata_AncientStairwellLetterText>Carved steps sink into the rock not far from your landing zone. They look stable enough to descend — and the stone below can be mined out into rooms — but there is no power tie through the shaft. Wire each level on its own, or build a modern stairwell or shaft conduit if you want grids to pool.</Strata_AncientStairwellLetterText>
+
+  <!-- Stairwell inspect strings (Bug fix: were hardcoded English) -->
+  <Strata_StairwellNotOpen>Level below: not yet opened</Strata_StairwellNotOpen>
+  <Strata_StairwellExcavated>Level below: excavated</Strata_StairwellExcavated>
+  <Strata_StairwellDigHint>Select Dig down to designate a dig shaft; colonists must finish carving it before the level below opens.</Strata_StairwellDigHint>
+
+  <!-- O₂ pump inspect strings (Bug fix: were hardcoded English) -->
+  <Strata_ExhaustBreathable>Room air is breathable.</Strata_ExhaustBreathable>
+  <Strata_ExhaustEnriching>Enriching room with {0} ({1}).</Strata_ExhaustEnriching>
 
 </LanguageData>
