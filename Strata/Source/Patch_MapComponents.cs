@@ -46,7 +46,45 @@ namespace Strata
             {
                 __instance.components.Add(new MapComponent_StrataDeferredGen(__instance));
             }
+            if (StrataMapUtility.IsUpperLevel(__instance)
+                && __instance.GetComponent<MapComponent_DepthDim>() == null)
+            {
+                __instance.components.Add(new MapComponent_DepthDim(__instance));
+            }
+            if (StrataMapUtility.IsUpperLevel(__instance)
+                && __instance.GetComponent<MapComponent_WeatherSync>() == null)
+            {
+                __instance.components.Add(new MapComponent_WeatherSync(__instance));
+            }
+            if (StrataMapUtility.IsUpperLevel(__instance)
+                && __instance.GetComponent<MapComponent_CrossLevelCombat>() == null)
+            {
+                __instance.components.Add(new MapComponent_CrossLevelCombat(__instance));
+            }
+            // Every colony / linked floor can be the viewed map that scans
+            // siblings for off-view hostiles.
+            if (__instance.GetComponent<MapComponent_CrossLevelThreatWatch>() == null
+                && (__instance.IsPlayerHome
+                    || StrataCrossLevelThreatNotify.IsLinkedFloor(__instance)))
+            {
+                __instance.components.Add(new MapComponent_CrossLevelThreatWatch(__instance));
+            }
             StrataDeferredGenUtility.AttachPending(__instance);
+        }
+    }
+
+    // When a pocket map is removed from the game (collapsed level, gravship underdeck
+    // destroyed, etc.) prune its entry from the atmosphere's static pending-seed
+    // dictionary so dead map IDs do not accumulate across the session.
+    [HarmonyPatch(typeof(Game), nameof(Game.DeinitAndRemoveMap))]
+    public static class Patch_DeinitAndRemoveMap_CleanupAtmosphere
+    {
+        public static void Prefix(Map map)
+        {
+            if (map != null)
+            {
+                AtmosphereMapComponent.RemovePendingSeeds(map.uniqueID);
+            }
         }
     }
 }

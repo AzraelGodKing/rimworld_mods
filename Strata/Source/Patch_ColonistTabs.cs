@@ -65,4 +65,15 @@ namespace Strata
                 __instance);
         }
     }
+
+    // Vanilla closes/reopens main tabs on map switch; refresh pawn tables if any
+    // window survived (or was reopened with a stale cache in the same frame).
+    [HarmonyPatch(typeof(MapInterface), nameof(MapInterface.Notify_SwitchedMap))]
+    public static class Patch_NotifySwitchedMap_ColonistTabs
+    {
+        public static void Postfix()
+        {
+            StrataColonyPawnsUtility.NotifyCurrentMapChanged();
+        }
+    }
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_HaulAcrossLevels.label>跨层搬运物品</Strata_HaulAcrossLevels.label>
+  <Strata_HaulAcrossLevels.verb>跨层搬运</Strata_HaulAcrossLevels.verb>
+  <Strata_HaulAcrossLevels.gerund>跨层搬运：</Strata_HaulAcrossLevels.gerund>
+
+  <Strata_BringBabyToCribAcrossLevels.label>把婴儿送到其他楼层婴儿床</Strata_BringBabyToCribAcrossLevels.label>
+  <Strata_BringBabyToCribAcrossLevels.verb>送到其他楼层婴儿床</Strata_BringBabyToCribAcrossLevels.verb>
+  <Strata_BringBabyToCribAcrossLevels.gerund>送到其他楼层婴儿床：</Strata_BringBabyToCribAcrossLevels.gerund>
+
+  <Strata_BringPrisonerToBedAcrossLevels.label>把囚犯送到其他楼层床铺</Strata_BringPrisonerToBedAcrossLevels.label>
+  <Strata_BringPrisonerToBedAcrossLevels.verb>送到其他楼层床铺</Strata_BringPrisonerToBedAcrossLevels.verb>
+  <Strata_BringPrisonerToBedAcrossLevels.gerund>送到其他楼层床铺：</Strata_BringPrisonerToBedAcrossLevels.gerund>
+
+  <Strata_RescueToBedAcrossLevels.label>跨层救援到床铺</Strata_RescueToBedAcrossLevels.label>
+  <Strata_RescueToBedAcrossLevels.verb>救援到其他楼层</Strata_RescueToBedAcrossLevels.verb>
+  <Strata_RescueToBedAcrossLevels.gerund>救援到其他楼层：</Strata_RescueToBedAcrossLevels.gerund>
+
+</LanguageData>

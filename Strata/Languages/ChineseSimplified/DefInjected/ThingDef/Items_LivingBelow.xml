@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_Fungus.label>洞穴蘑菇</Strata_Fungus.label>
+  <Strata_Fungus.description>在黑暗地下农场种植的可食用蘑菇。寡淡但耐饥——没有阳光的深层殖民地主食。</Strata_Fungus.description>
+
+  <Strata_Lime.label>石灰</Strata_Lime.label>
+  <Strata_Lime.description>磨碎供石灰洗涤器使用的石灰石——从闷热矿井空气中吸收二氧化碳，逐渐消耗装料。</Strata_Lime.description>
+
+</LanguageData>

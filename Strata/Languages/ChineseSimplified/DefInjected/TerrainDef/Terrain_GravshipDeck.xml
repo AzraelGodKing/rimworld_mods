@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_GravshipDeck.label>重力飞船甲板</Strata_GravshipDeck.label>
+  <Strata_GravshipDeck.description>可通行的重力飞船铺板，从上方甲板投影而来。</Strata_GravshipDeck.description>
+
+  <Strata_GravshipHull.label>重力飞船船体</Strata_GravshipHull.label>
+  <Strata_GravshipHull.description>飞船外侧的密封外壳。不可通行。</Strata_GravshipHull.description>
+
+  <Strata_GravshipUnderdeckLevel.label>重力飞船下层甲板</Strata_GravshipUnderdeckLevel.label>
+  <Strata_GravshipUnderdeckLevel.description>重力飞船的下层甲板空间。</Strata_GravshipUnderdeckLevel.description>
+
+  <Strata_GravshipUnderdeck.label>重力飞船下层甲板</Strata_GravshipUnderdeck.label>
+  <Strata_GravshipUnderdeck.description>生成重力飞船的下层甲板空间。</Strata_GravshipUnderdeck.description>
+
+</LanguageData>

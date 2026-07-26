@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -15,28 +16,28 @@ namespace Strata
     //    exist on ANY linked level, so a wood wall is placeable on a level
     //    with no wood - construction demand pull fetches it after placement.
     //
-    // 2. Toggleable ("combined level resources" in play settings): the
-    //    resource readout and every other ResourceCounter reader see the sum
-    //    across all linked levels - vanilla's "colony owned items" view, but
-    //    for the whole column. Count-based systems (designator cost labels,
-    //    "make until X" bills) follow the toggle too.
+    // 2. Toggleable ("combined level resources" in play settings, default ON):
+    //    the resource readout and every other ResourceCounter reader see the
+    //    sum across all linked levels. Counts are taken from live stockpile /
+    //    shelf HeldThings so hibernated or rarely-ticked floors stay accurate.
     public static class StrataResources
     {
-        public static bool Combined;
+        // Default on — matches AASB “one colony column” inventory. Persisted
+        // via StrataSettings.combinedLevelResources; sync on load / toggle.
+        public static bool Combined = true;
 
-        // Re-entrancy guard: our GetCount postfix sums other maps' GetCount,
-        // whose postfix must not recurse. Also used to read raw per-level
-        // counts (LevelDemand's shortage math must never see merged totals).
+        // Re-entrancy guard: our GetCount postfix sums other maps' stockpiles,
+        // whose ResourceCounter readers must not recurse. Also used to read raw
+        // per-level counts (LevelDemand's shortage math must never see merged totals).
         private static bool aggregating;
 
         private static readonly AccessTools.FieldRef<ResourceCounter, Map> mapField =
             AccessTools.FieldRefAccess<ResourceCounter, Map>("map");
 
-        // Per-tick caches. GetCount is HOT (resource readout every frame,
-        // "make until X" bills), so the cross-level sum must not re-walk the
-        // level graph per call; counts only change while ticking, so one
-        // rebuild per tick is exact. Keyed by map: pruned when maps die so a
-        // collapsed level's Map can't be retained forever.
+        // Per-tick caches were too hot once we walked live stockpiles: GetCount
+        // runs every UI frame. Rebuild extras at most every CacheInterval ticks.
+        private const int CacheInterval = 60;
+
         private static readonly Dictionary<Map, Pair<int, Dictionary<ThingDef, int>>> extrasCache =
             new Dictionary<Map, Pair<int, Dictionary<ThingDef, int>>>();
 
@@ -46,6 +47,22 @@ namespace Strata
         public static Map MapOf(ResourceCounter counter) => mapField(counter);
 
         public static bool Aggregating => aggregating;
+
+        public static void SyncFromSettings()
+        {
+            if (StrataMod.Settings != null)
+            {
+                Combined = StrataMod.Settings.combinedLevelResources;
+            }
+        }
+
+        public static void SyncToSettings()
+        {
+            if (StrataMod.Settings != null)
+            {
+                StrataMod.Settings.combinedLevelResources = Combined;
+            }
+        }
 
         public static int RawGetCount(Map map, ThingDef def)
         {
@@ -66,13 +83,11 @@ namespace Strata
             return LinkedExtras(map).TryGetValue(def, out int extra) ? extra : 0;
         }
 
-        // Everything the linked levels hold, summed per def, rebuilt at most
-        // once per tick per map.
         private static Dictionary<ThingDef, int> LinkedExtras(Map map)
         {
             int tick = Find.TickManager.TicksGame;
             if (extrasCache.TryGetValue(map, out Pair<int, Dictionary<ThingDef, int>> cached)
-                && cached.First == tick)
+                && tick - cached.First < CacheInterval)
             {
                 return cached.Second;
             }
@@ -83,14 +98,11 @@ namespace Strata
             {
                 foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
                 {
-                    foreach (KeyValuePair<ThingDef, int> kv in link.map.resourceCounter.AllCountedAmounts)
-                    {
-                        if (kv.Value > 0)
-                        {
-                            extras.TryGetValue(kv.Key, out int have);
-                            extras[kv.Key] = have + kv.Value;
-                        }
-                    }
+                    Map other = link.map;
+                    if (other == null || other.Disposed) continue;
+                    // Prefer counter snapshot (cheap). HeldThings only when the
+                    // other map's counter looks empty but it has storage groups.
+                    AddCountedResources(other, extras);
                 }
             }
             finally
@@ -102,11 +114,44 @@ namespace Strata
             return extras;
         }
 
+        private static void AddCountedResources(Map other, Dictionary<ThingDef, int> into)
+        {
+            Dictionary<ThingDef, int> amounts = other.resourceCounter?.AllCountedAmounts;
+            if (amounts != null && amounts.Count > 0)
+            {
+                int positive = 0;
+                foreach (KeyValuePair<ThingDef, int> kv in amounts)
+                {
+                    if (kv.Value <= 0) continue;
+                    positive++;
+                    into.TryGetValue(kv.Key, out int have);
+                    into[kv.Key] = have + kv.Value;
+                }
+                if (positive > 0) return;
+            }
+
+            // Fallback for hibernated / never-updated counters.
+            List<SlotGroup> groups = other.haulDestinationManager?.AllGroupsListForReading;
+            if (groups == null) return;
+            for (int i = 0; i < groups.Count; i++)
+            {
+                SlotGroup group = groups[i];
+                if (group == null) continue;
+                foreach (Thing held in group.HeldThings)
+                {
+                    Thing inner = held.GetInnerIfMinified();
+                    if (inner == null || !inner.def.CountAsResource) continue;
+                    into.TryGetValue(inner.def, out int have);
+                    into[inner.def] = have + inner.stackCount;
+                }
+            }
+        }
+
         public static Dictionary<ThingDef, int> MergedCounts(Map map, Dictionary<ThingDef, int> own)
         {
             int tick = Find.TickManager.TicksGame;
             if (mergedCache.TryGetValue(map, out Pair<int, Dictionary<ThingDef, int>> cached)
-                && cached.First == tick)
+                && tick - cached.First < CacheInterval)
             {
                 return cached.Second;
             }
@@ -243,8 +288,14 @@ namespace Strata
     [HarmonyPatch(typeof(PlaySettings), nameof(PlaySettings.DoPlaySettingsGlobalControls))]
     public static class Patch_CombinedResourcesToggle
     {
-        private static readonly Texture2D icon =
-            ContentFinder<Texture2D>.Get("UI/Buttons/ResourceReadoutCategorized", reportFailure: false) ?? BaseContent.BadTex;
+        private static Texture2D icon;
+        private static bool lastCombined = true;
+
+        // Lazy: StaticConstructor ContentFinder can cache BadTex before textures load.
+        private static Texture2D Icon =>
+            icon ??= TexButton.CategorizedResourceReadout
+                ?? ContentFinder<Texture2D>.Get("UI/Buttons/ResourceReadoutCategorized", reportFailure: false)
+                ?? BaseContent.WhiteTex;
 
         public static void Postfix(WidgetRow row, bool worldView)
         {
@@ -252,8 +303,14 @@ namespace Strata
             {
                 return;
             }
-            row.ToggleableIcon(ref StrataResources.Combined, icon,
-                "Strata: combined level resources - the resource readout and build costs count items on every linked level.");
+            row.ToggleableIcon(ref StrataResources.Combined, Icon,
+                "Strata_PlaySettings_CombinedResourcesTip".Translate());
+            if (StrataResources.Combined != lastCombined)
+            {
+                lastCombined = StrataResources.Combined;
+                StrataResources.SyncToSettings();
+                StrataResources.ClearCaches();
+            }
         }
     }
 }

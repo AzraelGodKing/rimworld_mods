@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <InteractionDef>
+    <defName>DC_Interaction_Therapy</defName>
+    <label>therapy session</label>
+    <initiatorThought>DC_Thought_ProvidedTherapy</initiatorThought>
+    <recipientThought>DC_Thought_ReceivedTherapy</recipientThought>
+    <workerClass>DeepColony.InteractionWorker_Therapy</workerClass>
+    <socialFightBaseChance>0</socialFightBaseChance>
+    <initiatorXpGainSkill>Social</initiatorXpGainSkill>
+    <initiatorXpGainAmount>35</initiatorXpGainAmount>
+    <recipientXpGainSkill>Social</recipientXpGainSkill>
+    <recipientXpGainAmount>10</recipientXpGainAmount>
+    <symbol>/Things/Mote/SpeechSymbols/KindWords</symbol>
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef] sat with [RECIPIENT_nameDef] and helped them talk through their trauma.</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </InteractionDef>
+
+  <!-- Mood thoughts from therapy interactions -->
+  <ThoughtDef>
+    <defName>DC_Thought_ProvidedTherapy</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <description>Helped a struggling companion work through their trauma.</description>
+    <durationDays>1</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>helped a companion process trauma</label>
+        <description>Helped a struggling companion work through their trauma.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_ReceivedTherapy</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <description>Talked through difficult feelings with a caring companion.</description>
+    <durationDays>2</durationDays>
+    <stackLimit>3</stackLimit>
+    <stages>
+      <li>
+        <label>had a meaningful talk</label>
+        <description>Had a meaningful conversation that helped process difficult feelings.</description>
+        <baseMoodEffect>5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

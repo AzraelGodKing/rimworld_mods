@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- CompShaftFluidTie -->
+  <Strata_FluidTie_ModNotLoaded>流体连接（{0}）：模组未加载</Strata_FluidTie_ModNotLoaded>
+  <Strata_FluidTie_NotConnected>流体连接（{0}）：未连接 — 请把管道接到此节点</Strata_FluidTie_NotConnected>
+  <Strata_FluidTie_Linked>流体连接（{0}）：已连接到本地 {0} 网络</Strata_FluidTie_Linked>
+  <Strata_FluidTie_Buffer>竖井缓冲（{0}）：{1} / {2}</Strata_FluidTie_Buffer>
+
+  <!-- CompShaftFluidJunctionLink -->
+  <Strata_FluidLink_DrivenAbove>连接：由上层节点驱动</Strata_FluidLink_DrivenAbove>
+  <Strata_FluidLink_LinkedBelow>连接：已链接到下层节点</Strata_FluidLink_LinkedBelow>
+  <Strata_FluidLink_NoShaft>连接：附近没有竖井 — 请建在楼梯井或电梯旁</Strata_FluidLink_NoShaft>
+  <Strata_FluidLink_Waiting>连接：等待打开下方楼层</Strata_FluidLink_Waiting>
+
+  <!-- Patch_ShaftFluidDeconstruct -->
+  <Strata_FluidLink_DeconstructBlocked>它由上层节点驱动。</Strata_FluidLink_DeconstructBlocked>
+
+</LanguageData>
