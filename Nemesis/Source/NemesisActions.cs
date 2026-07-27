@@ -113,24 +113,33 @@ namespace Nemesis
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
             Pawn nemesis = comp?.FindNemesisPawn();
 
-            if (nemesis == null || nemesis.Spawned)
+            if (nemesis == null || nemesis.Dead || nemesis.Destroyed)
             {
                 DirectRaid(data, map);
                 return;
             }
 
-            if (nemesis.IsWorldPawn())
-                Find.WorldPawns.RemovePawn(nemesis);
+            // Already fighting on this map — don't double-lord; fall back to a supporting raid.
+            if (nemesis.Spawned && nemesis.Map == map)
+            {
+                DirectRaid(data, map);
+                return;
+            }
 
             if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out IntVec3 spawnCell))
                 spawnCell = CellFinder.RandomEdgeCell(map);
 
-            GenSpawn.Spawn(nemesis, spawnCell, map);
+            if (!NemesisPawnUtil.TrySpawnOnMap(nemesis, map, spawnCell))
+            {
+                DirectRaid(data, map);
+                return;
+            }
+
             NemesisRegistry.CachedNemesis = nemesis;
             NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
 
             // canTimeoutOrFlee: true so they pull back when losing; Kill intercept still handles "death".
-            if (nemesis.Faction != null && !nemesis.Faction.IsPlayer)
+            if (nemesis.Faction != null && !nemesis.Faction.IsPlayer && nemesis.GetLord() == null)
             {
                 LordMaker.MakeNewLord(
                     nemesis.Faction,

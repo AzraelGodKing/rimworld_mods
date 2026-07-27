@@ -92,6 +92,22 @@ namespace Nemesis
         {
             if (IsEngaged) return;
 
+            // Claim the hunt immediately so stacked Kill prefixes/postfixes in the
+            // same combat beat cannot open a second hunt (duplicate "A Nemesis Emerges").
+            _data = new NemesisData
+            {
+                active = true,
+                trigger = trigger,
+                targetMode = mode,
+                aggressionLevel = 1f,
+                nextActionTick = Find.TickManager.TicksGame + 120000,
+                // Treat wounded-escape create as the escape beat so queued Kill
+                // calls do not also spam "{name} Escapes".
+                lastEscapeTick = trigger == NemesisTrigger.WoundedAndEscaped
+                    ? Find.TickManager.TicksGame
+                    : -999999,
+            };
+
             Pawn nemesis;
             Faction faction;
 
@@ -101,15 +117,16 @@ namespace Nemesis
             {
                 nemesis = useAsNemesis;
                 faction = nemesis.Faction;
-                if (nemesis.Spawned)
-                    nemesis.DeSpawn(DestroyMode.WillReplace);
-                if (!nemesis.IsWorldPawn())
-                    Find.WorldPawns.PassToWorld(nemesis, PawnDiscardDecideMode.KeepForever);
+                NemesisPawnUtil.ParkAsWorldNemesis(nemesis);
             }
             else
             {
                 faction = sourcePawn?.Faction;
-                if (faction == null || faction.IsPlayer) return;
+                if (faction == null || faction.IsPlayer)
+                {
+                    _data.active = false;
+                    return;
+                }
 
                 PawnKindDef kind = faction.RandomPawnKind();
                 if (kind == null || !kind.RaceProps.Humanlike)
@@ -120,7 +137,7 @@ namespace Nemesis
                     forceGenerateNewPawn: true, canGeneratePawnRelations: false, allowDead: false);
 
                 nemesis = PawnGenerator.GeneratePawn(request);
-                Find.WorldPawns.PassToWorld(nemesis, PawnDiscardDecideMode.KeepForever);
+                NemesisPawnUtil.ParkAsWorldNemesis(nemesis);
             }
 
             NemesisRegistry.CachedNemesis = nemesis;
@@ -128,20 +145,12 @@ namespace Nemesis
             NemesisRegistry.CachedTarget = targetPawn;
             NemesisRegistry.CachedTargetId = targetPawn?.thingIDNumber ?? -1;
 
-            _data = new NemesisData
-            {
-                active = true,
-                nemesisPawnId = nemesis.thingIDNumber,
-                nemesisName = nemesis.Name?.ToStringShort ?? nemesis.LabelShort,
-                factionName = faction.Name,
-                faction = faction,
-                targetMode = mode,
-                trigger = trigger,
-                targetPawnId = targetPawn?.thingIDNumber ?? -1,
-                targetPawnName = targetPawn?.LabelShort,
-                aggressionLevel = 1f,
-                nextActionTick = Find.TickManager.TicksGame + 120000,
-            };
+            _data.nemesisPawnId = nemesis.thingIDNumber;
+            _data.nemesisName = nemesis.Name?.ToStringShort ?? nemesis.LabelShort;
+            _data.factionName = faction.Name;
+            _data.faction = faction;
+            _data.targetPawnId = targetPawn?.thingIDNumber ?? -1;
+            _data.targetPawnName = targetPawn?.LabelShort;
 
             SendIntroLetter(targetPawn);
         }
@@ -169,6 +178,11 @@ namespace Nemesis
 
         public void HandleLethalDamage(Pawn nemesis)
         {
+            if (_data == null || !_data.active || nemesis == null || nemesis.Destroyed) return;
+            // Already fled — multi-hit Kill spam must not re-letter.
+            if (!nemesis.Spawned) return;
+            if (Find.TickManager.TicksGame - _data.lastEscapeTick < 180) return;
+
             if (_data.escapeCount >= MaxEscapes)
                 SubdueNemesis(nemesis, fromLethalDamage: true);
             else
@@ -177,14 +191,16 @@ namespace Nemesis
 
         private void FireEscape(Pawn nemesis)
         {
+            if (_data == null || !_data.active || nemesis == null || nemesis.Destroyed) return;
+            if (!nemesis.Spawned) return;
+            if (Find.TickManager.TicksGame - _data.lastEscapeTick < 180) return;
+
             Map map = nemesis.Map;
             IntVec3 pos = nemesis.Position;
 
-            if (nemesis.Spawned)
-                nemesis.DeSpawn(DestroyMode.WillReplace);
-
-            if (!nemesis.IsWorldPawn())
-                Find.WorldPawns.PassToWorld(nemesis, PawnDiscardDecideMode.KeepForever);
+            // Must leave the assault lord before PassToWorld or LordTick spams
+            // "owns a free world pawn".
+            NemesisPawnUtil.ParkAsWorldNemesis(nemesis);
 
             NemesisRegistry.CachedNemesis = nemesis;
             NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
@@ -263,8 +279,9 @@ namespace Nemesis
             }
             else if (hp < 0.3f)
             {
-                // Flee-when-losing for on-map assaults.
-                FireEscape(nemesis);
+                // Flee-when-losing for on-map assaults (same latch as Kill spam).
+                if (Find.TickManager.TicksGame - _data.lastEscapeTick >= 180)
+                    FireEscape(nemesis);
             }
         }
 
@@ -349,13 +366,11 @@ namespace Nemesis
             Pawn nemesis = FindNemesisPawn();
             if (nemesis == null || nemesis.Dead) return;
             if (nemesis.IsPrisonerOfColony) return;
+            NemesisPawnUtil.DetachFromLord(nemesis);
             if (nemesis.Spawned)
-                nemesis.DeSpawn(DestroyMode.WillReplace);
-            if (nemesis.IsWorldPawn())
-            {
-                // Allow world pawn GC later — drop KeepForever pin by discarding decide.
-                // WorldPawns doesn't expose unpin easily; leave them but clear our cache.
-            }
+                nemesis.DeSpawn(DestroyMode.Vanish);
+            // Leave KeepForever pin if present — WorldPawns has no clean unpin API.
+            // Cache clear below is enough for hunt end; pawn can GC later if unpinned elsewhere.
         }
 
         private void CheckRogue()

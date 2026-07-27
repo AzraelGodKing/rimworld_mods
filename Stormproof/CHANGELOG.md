@@ -5,6 +5,7 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 ## [Unreleased]
 
 ### Fixed
+- **Volcanic ash Harmony startup crash** — `GiveOrUpdateHediff` second arg is `target` in 1.6 (was patched as `pawn`); optional Odyssey ash barrier prefix now applies.
 - Research tab XML parse failure: escaped `&` in `Storm & grid research` (`&amp;`) so `Research_Stormproof.xml` loads again (was breaking all Stormproof research defs and prerequisites).
 - **Ion storm tick cost** — dampener shield checks and EMP candidate picks use plain loops instead of LINQ allocations.
 - Solar shield's electricity patch now targets `GameConditionManager.ElectricityDisabled(Map)`, which RimWorld 1.6 changed from a property to a method. The previous getter patch failed to apply and aborted the whole mod's Harmony initialization on startup.
@@ -22,6 +23,7 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 - `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
 
 ### Changed
+- **Vanilla pixel building remake** — all Stormproof building textures redrawn as Core-like top-down pixel art (correct 128/256 canvases; charcoal steel + amber/cyan accents; no UI-badge frames). Armored conduit segment, menu icon, and 512×512 link atlas rebuilt with continuous amber channels. Workshop `About/Preview.png` updated to match.
 - **Workshop preview makeover** — cinematic painted `About/Preview.png` in the Strata style (thunderstorm grid defense scene; Flares • Lightning • Surges • EMP), replacing the old icon-row banner.
 - Replaced empty `Languages/English/.gitkeep` scaffolding with real Keyed files.
 - **Dedicated research tab** — all Stormproof projects live under their own *Stormproof* tab (no longer on Main).

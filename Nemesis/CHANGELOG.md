@@ -4,6 +4,10 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
+- **Duplicate emerge / escape letters** — stacked Kill hits no longer re-open a hunt or re-send "Escapes" (claim hunt immediately; 180-tick escape latch; ignore Kill when already off-map). Wounded-escape create counts as the escape beat so queued Kills do not double-letter.
+- **Lord owns free world pawn** — escape / create / assault now detach the nemesis from any `Lord` and clear WorldPawns before `PassToWorld` or map spawn (fixes spam after Nemesis assault).
+- **Dev debug actions** — Development Mode menu under *Nemesis* / *Nemesis/Actions*: log state, start/clear hunt, fire next action, bump aggression, force escape, resolution dialog, and each harassment action.
+- **SocialFightChance Harmony startup crash** — RimWorld 1.6 renamed the second parameter to `initiator`; postfix updated so Nemesis loads again.
 - **No public download zip** — CI still compiles Nemesis, but `Nemesis.zip` is not published on the rolling GitHub Release.
 - **Brought into** `rimworld_mods/Nemesis` as `AzraelGodKing.Nemesis` (Harmony 1.6, sibling csproj pattern).
 - **Credit** — Dredd / Misakabob named in About + this changelog as original author of the foundation.
