@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Docs** — Strata webpage revamped for V3 features (`strata.html` + roadmap CTA). Stamp `docs-strata-v3-page-v1`. → [docs/strata.html](docs/strata.html)
 - **Docs** — mystery teaser page for Deep Colony (`ledger.html`, nav `···`), parallel to Nemesis `signal.html`. → [docs/ledger.html](docs/ledger.html)
 - **Strata** — removed ModMixer magenta placeholders that overrode vanilla Mine / UI command icons. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — force-build rewrite for cross-map HaulToContainer; Ideology gates; float-menu reserve; work relay default on. Build stamp `V3 Complete`. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)

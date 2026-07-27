@@ -4,6 +4,10 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
+### Changed
+
+- **Docs — Strata V3 page** — `strata.html` leads with Version 3 (see-below, cross-level combat, force-build, combined resources, gravship stacks, living polish); foundation section keeps dig/build/atmosphere. Roadmap CTA + README link say V3 checklist. Stamp `docs-strata-v3-page-v1`.
+
 ### Fixed
 
 - **Vanilla Mine icon pink checkers** — live ModMixer install had a 188-byte magenta placeholder at `Textures/UI/Designators/Mine.png` (plus other vanilla `UI/Commands` / `UI/Buttons` stubs) that overrode Core. Removed those overrides so vanilla icons load again. Not in the git tree; do not re-copy placeholder UI paths into the deploy folder.
