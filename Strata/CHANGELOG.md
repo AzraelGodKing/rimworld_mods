@@ -6,6 +6,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ### Changed
 
+- **Surface-idle TPS** — with no linked floors and gases off (no clouds/emitters/vents), atmosphere skips its full cycle on the surface too; combined resources, work/food/joy/medical/robot relays, raid pursuit, and cross-level threat watch early-out. `AnyLinkFrom` is cached until portal topology changes. Stamp `surface-idle-tps-v1`.
 - **Docs — Strata V3 page** — `strata.html` leads with Version 3 (see-below, cross-level combat, force-build, combined resources, gravship stacks, living polish); foundation section keeps dig/build/atmosphere. Roadmap CTA + README link say V3 checklist. Stamp `docs-strata-v3-page-v1`.
 
 ### Fixed

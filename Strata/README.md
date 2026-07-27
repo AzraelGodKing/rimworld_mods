@@ -66,6 +66,12 @@ raid pursuit, and the vacant-level performance throttle.
 
 ## Performance
 
+With **no floors opened yet**, Strata short-circuits atmosphere simulation (when
+gases are off and no vents/emitters are registered) and cross-level hooks
+(resources, work/food/rest relays, raid pursuit, threat watch). Enabling the
+mod still adds a small Harmony baseline, but the avoidable per-tick / think
+tax stays near zero until the first stairwell or shaft opens a linked map.
+
 Each opened level is a full map **the same size as the map above it** — that
 is what makes true 1:1 vertical stacking possible, and it means the cost
 scales with your chosen map size. On large maps (300×300 and up) every level

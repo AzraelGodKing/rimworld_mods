@@ -30,6 +30,10 @@ namespace Strata
             {
                 return;
             }
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return;
+            }
             if (PawnRelay.IsColonistWorkScanCooldown(pawn))
             {
                 return;

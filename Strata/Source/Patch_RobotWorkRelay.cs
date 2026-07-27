@@ -59,6 +59,10 @@ namespace Strata
             {
                 return;
             }
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return;
+            }
             PawnRelay.TouchRobotWorkScan(pawn);
             StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.ReachableLevelsCall);
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))

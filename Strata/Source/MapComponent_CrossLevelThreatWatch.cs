@@ -23,6 +23,10 @@ namespace Strata
             {
                 return;
             }
+            if (!LevelGraph.AnyLinkFrom(map))
+            {
+                return;
+            }
             if (!map.IsPlayerHome
                 && !StrataCrossLevelThreatNotify.IsLinkedFloor(map))
             {
