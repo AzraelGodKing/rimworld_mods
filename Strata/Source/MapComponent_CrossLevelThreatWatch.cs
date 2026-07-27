@@ -28,6 +28,10 @@ namespace Strata
             {
                 return;
             }
+            if (!LevelGraph.AnyLinkFrom(map))
+            {
+                return;
+            }
 
             List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(map);
             for (int i = 0; i < links.Count; i++)

@@ -8,7 +8,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "V3 Complete";
+        public const string BuildStamp = "idle-tps-v1";
 
         public static void LogStartup()
         {

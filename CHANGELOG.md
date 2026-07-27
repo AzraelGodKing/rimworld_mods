@@ -4,6 +4,15 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Strata** — idle TPS cut with no levels (`idle-tps-v1`: atmosphere/relay early-outs). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Nemesis** — fix Lord/world-pawn illegal state on assault/escape; Dev Mode debug actions. → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
+- **Strata** — added mine canary `Canary_west.png` (flip of east). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — god mode skips dig/build-up research when opening a new floor (`godmode-level-research-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Nemesis** — SocialFightChance Harmony param `initiator` (1.6); mod loads again. → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
+- **Strata** — removed magenta `Things/Building/Linked/*_MenuIcon` placeholders that overrode VE pipe/duct build icons. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Stormproof** — vanilla-pixel remake of all building textures + conduit atlas + Workshop preview. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
+- **Stormproof** — VolcanicAsh `GiveOrUpdateHediff` Harmony param `target` (1.6). → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
+- **Repo / ModMixer** — retagged named `Mods/Strata|Homesteader|Stormproof|Deep Colony` folders as `*.DeployMirror` so only ModMixer hash folders keep the live packageId (stops duplicate packageId errors).
 - **Strata** — removed ModMixer magenta placeholders that overrode vanilla Mine / UI command icons. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — force-build rewrite for cross-map HaulToContainer; Ideology gates; float-menu reserve; work relay default on. Build stamp `V3 Complete`. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Docs** — Strata pages mark Version 3 complete (hub, strata.html, roadmap; build stamp `V3 Complete`). → [docs/strata.html](docs/strata.html)

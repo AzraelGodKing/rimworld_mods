@@ -422,6 +422,7 @@ namespace Strata
 
             if (ShouldSkipHeavyAtmosphereCycle())
             {
+                atmosphereCyclePhase = -1;
                 return;
             }
 
@@ -489,9 +490,12 @@ namespace Strata
             {
                 case 0:
                     RunAtmospherePrep();
-                    RefreshOutdoorVentCache();
-                    ProcessDirectionalVents();
-                    ProcessGasPipeNetworks();
+                    if (clouds.Count > 0 || Vents.Count > 0 || Updrafts.Count > 0 || GasExchangers.Count > 0)
+                    {
+                        RefreshOutdoorVentCache();
+                        ProcessDirectionalVents();
+                        ProcessGasPipeNetworks();
+                    }
                     break;
                 case 1:
                     if (PollutantGasesActive())
@@ -557,9 +561,13 @@ namespace Strata
 
         private void RunAtmosphereTransport()
         {
-            RefreshOutdoorVentCache();
-            ProcessDirectionalVents();
-            ProcessGasPipeNetworks();
+            // Vent cluster walks every room — skip when no clouds and no pipe/vent hardware.
+            if (clouds.Count > 0 || Vents.Count > 0 || Updrafts.Count > 0 || GasExchangers.Count > 0)
+            {
+                RefreshOutdoorVentCache();
+                ProcessDirectionalVents();
+                ProcessGasPipeNetworks();
+            }
             if (PollutantGasesActive())
             {
                 SmokeRiseUtility.ProcessMap(this);
@@ -700,6 +708,10 @@ namespace Strata
 
         private void MaybeAffectPawns()
         {
+            if (!NaturalGasesActive() && !PollutantGasesActive())
+            {
+                return;
+            }
             int interval = StrataLevelPerfUtility.PawnGasAffectInterval(map);
             pawnAffectCooldown++;
             if (pawnAffectCooldown < interval)
@@ -888,6 +900,17 @@ namespace Strata
 
         private bool ShouldSkipHeavyAtmosphereCycle()
         {
+            // Zero-level / gases-off idle: still registered on every map, but do
+            // not pay vent-cache / emitter / pawn-affect cycles when there is
+            // nothing to simulate. Biggest TPS win for "Strata installed, never dug".
+            if (!NaturalGasesActive() && !PollutantGasesActive()
+                && clouds.Count == 0
+                && loadedClouds == null
+                && !pendingSeedsByMap.ContainsKey(map.uniqueID))
+            {
+                return true;
+            }
+
             if (!StrataLevelPerfUtility.IsHibernating(map))
             {
                 return false;

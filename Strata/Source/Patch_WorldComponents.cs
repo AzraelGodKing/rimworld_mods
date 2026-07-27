@@ -39,6 +39,20 @@ namespace Strata
     {
         public static void Postfix()
         {
+            // Fast path when nothing is mid-portal / haul / draft-route.
+            bool haulPending = StrataPortalUtility.HasPendingHaulDeliveries;
+            bool relayPending = PortalRelayChain.HasPendingContinues;
+            bool draftPending = DraftedPortalPathing.HasPendingContinues;
+            if (!haulPending && !relayPending && !draftPending)
+            {
+                StrataRobotDiagnostics.Tick();
+                if (Find.TickManager.TicksGame % 250 == 0)
+                {
+                    StrataCaravanUtility.TickCaravanPull();
+                }
+                return;
+            }
+
             StrataRobotDiagnostics.Tick();
             DraftedPortalPathing.Tick();
             // Before PortalRelayChain: haul-intent arrivals skip here and finish

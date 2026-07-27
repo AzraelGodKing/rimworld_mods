@@ -55,6 +55,11 @@ namespace Strata
             {
                 ProcessPendingArrivals();
             }
+            // No stairwells yet — nothing to pursue across.
+            if (!LevelGraph.AnyLinkFrom(map))
+            {
+                return;
+            }
 
             // Idle maps: skip enroll/pursue when no hostile raid lords.
             // Rare stray enroll (lordless hostiles) runs at 1/4 rate.

@@ -30,6 +30,8 @@ namespace Strata
             pending.Clear();
         }
 
+        internal static bool HasPendingContinues => pending.Count > 0;
+
         public static void Mark(
             Pawn pawn,
             Map destMap,

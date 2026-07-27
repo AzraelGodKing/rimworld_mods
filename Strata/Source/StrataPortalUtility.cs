@@ -347,6 +347,8 @@ namespace Strata
             pendingHaulDeliver.Clear();
         }
 
+        internal static bool HasPendingHaulDeliveries => pendingHaulDeliver.Count > 0;
+
         public static void NotifyHaulArrival(Pawn pawn)
         {
             if (pawn == null)

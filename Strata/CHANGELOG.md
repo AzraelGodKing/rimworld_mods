@@ -6,6 +6,10 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ### Fixed
 
+- **Idle TPS with no levels** — atmosphere no longer runs vent-cache / pawn-gas cycles when both gas systems are off and clouds are empty (surface still registered, but idle). Work/food/joy/medical relays and raid/threat watch early-out when the map has no stair links. Game-tick portal/haul postfix skips when queues are empty. Stamp `idle-tps-v1`.
+- **Mine canary west sprite** — added `Canary_west.png` by horizontal flip of `Canary_east.png` (Textures + ArtPackage).
+- **Shaft fluid junction pink checkers** — removed 188-byte magenta placeholders at `Textures/Things/Building/Linked/{GasPipe,ACDuct,ChemfuelPipes}_MenuIcon.png` that overrode Vanilla Helixien / Temperature / Chemfuel Expanded menu icons used by the shaft fluid junctions.
+- **God mode skips open-level research** — digging down / deep excavation / building up gates no longer block opening a floor while god mode is on (architect place already bypassed via vanilla). Stamp `godmode-level-research-v1`.
 - **Vanilla Mine icon pink checkers** — live ModMixer install had a 188-byte magenta placeholder at `Textures/UI/Designators/Mine.png` (plus other vanilla `UI/Commands` / `UI/Buttons` stubs) that overrode Core. Removed those overrides so vanilla icons load again. Not in the git tree; do not re-copy placeholder UI paths into the deploy folder.
 - **Force-build HaulToContainer dead-end** — when materials were on the pawn’s floor and the blueprint elsewhere, vanilla emitted same-map `HaulToContainer` and our postfix skipped rewrite; stair haul / commute now replaces those jobs. Ordered-job dest prefers off-floor targets (B/C before A). Stamp `V3 Complete` (was `force-build-haul-rewrite-v1`).
 - **Force-build Ideology / turret gates** — linked-floor `CanConstruct` postfix no longer skips Ideology member builds, attachment walls, or turret history events.

@@ -56,6 +56,8 @@ namespace Strata
             pendingContinue.Clear();
         }
 
+        internal static bool HasPendingContinues => pendingContinue.Count > 0;
+
         public static bool HasDetour(Pawn pawn, IntVec3 destCell)
         {
             return TryFindDetour(pawn, destCell, out _, out _);

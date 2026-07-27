@@ -21,6 +21,10 @@ namespace Strata
             {
                 return;
             }
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return;
+            }
             var links = new List<LevelGraph.LevelLink>(LevelGraph.ReachableLevels(pawn.Map));
             foreach (LevelGraph.LevelLink link in links)
             {

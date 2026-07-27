@@ -20,6 +20,10 @@ namespace Strata
             {
                 return;
             }
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return;
+            }
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
             {
                 if (!PawnRelay.HasFoodFor(pawn, link.map))
