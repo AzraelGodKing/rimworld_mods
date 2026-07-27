@@ -5,6 +5,9 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
+- **Docs teaser** — mystery hub page (`docs/ledger.html`, nav `···`) — fragmentary ledger, no download, no public name. Stamp `ledger-mystery-v1`.
+
+### Added
 - **Counsel trauma job** — doctors (and right-click) can run counseling sessions that advance trauma recovery; random therapy chat remains as a light supplement.
 - **Mentoring work type** — dedicated `DC_Mentoring` work type (no longer buried under Warden), with skill-gap and no-mutual-loop rules.
 - **Artistic perk tree** — inspired hand / master artisan (levels 5 / 15).
