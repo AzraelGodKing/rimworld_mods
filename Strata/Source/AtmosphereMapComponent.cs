@@ -886,8 +886,28 @@ namespace Strata
             return true;
         }
 
+        // True when gas systems are off and nothing is registered to simulate —
+        // includes surface maps (not only hibernating pockets).
+        private bool IsAtmosphereSimulationIdle()
+        {
+            if (NaturalGasesActive() || PollutantGasesActive())
+            {
+                return false;
+            }
+            if (clouds.Count > 0 || loadedClouds != null || pendingSeedsByMap.ContainsKey(map.uniqueID))
+            {
+                return false;
+            }
+            return Emitters.Count == 0 && Vents.Count == 0 && Updrafts.Count == 0
+                && GasExchangers.Count == 0 && Scrubbers.Count == 0;
+        }
+
         private bool ShouldSkipHeavyAtmosphereCycle()
         {
+            if (IsAtmosphereSimulationIdle())
+            {
+                return true;
+            }
             if (!StrataLevelPerfUtility.IsHibernating(map))
             {
                 return false;

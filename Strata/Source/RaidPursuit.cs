@@ -51,6 +51,11 @@ namespace Strata
                 pendingArrivals.Clear();
                 return;
             }
+            if (!LevelGraph.AnyLinkFrom(map))
+            {
+                pendingArrivals.Clear();
+                return;
+            }
             if (pendingArrivals.Count > 0)
             {
                 ProcessPendingArrivals();

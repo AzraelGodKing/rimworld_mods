@@ -206,15 +206,16 @@ namespace Strata
                 return local;
             }
             Map map = Find.CurrentMap;
-            if (map != null)
+            if (map == null || !LevelGraph.AnyLinkFrom(map))
             {
-                foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
+                return local;
+            }
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
+            {
+                List<Thing> other = link.map.listerThings.ThingsOfDef(def);
+                if (other.Count > 0)
                 {
-                    List<Thing> other = link.map.listerThings.ThingsOfDef(def);
-                    if (other.Count > 0)
-                    {
-                        return other;
-                    }
+                    return other;
                 }
             }
             return local;
@@ -231,10 +232,11 @@ namespace Strata
                 return;
             }
             Map map = StrataResources.MapOf(__instance);
-            if (map != null)
+            if (map == null || !LevelGraph.AnyLinkFrom(map))
             {
-                __result += StrataResources.LinkedExtra(map, rDef);
+                return;
             }
+            __result += StrataResources.LinkedExtra(map, rDef);
         }
     }
 
@@ -248,10 +250,11 @@ namespace Strata
                 return;
             }
             Map map = StrataResources.MapOf(__instance);
-            if (map != null)
+            if (map == null || !LevelGraph.AnyLinkFrom(map))
             {
-                __result = StrataResources.MergedCounts(map, __result);
+                return;
             }
+            __result = StrataResources.MergedCounts(map, __result);
         }
     }
 

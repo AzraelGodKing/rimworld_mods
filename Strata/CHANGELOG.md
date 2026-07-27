@@ -4,6 +4,10 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
+### Changed
+
+- **Surface-idle TPS** — with no linked floors and gases off (no clouds/emitters/vents), atmosphere skips its full cycle on the surface too; combined resources, work/food/joy/medical/robot relays, raid pursuit, and cross-level threat watch early-out. `AnyLinkFrom` is cached until portal topology changes. Stamp `surface-idle-tps-v1`.
+
 ### Fixed
 
 - **Vanilla Mine icon pink checkers** — live ModMixer install had a 188-byte magenta placeholder at `Textures/UI/Designators/Mine.png` (plus other vanilla `UI/Commands` / `UI/Buttons` stubs) that overrode Core. Removed those overrides so vanilla icons load again. Not in the git tree; do not re-copy placeholder UI paths into the deploy folder.
