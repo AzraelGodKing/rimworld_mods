@@ -249,6 +249,8 @@ td b { color: var(--text); }
   overflow-x: auto;
 }
 .research-tree b { color: var(--accent-h); }
+.research-tree.strata b { color: var(--accent-t); }
+.research-tree.strata { border-color: #6e5030; }
 
 ol { margin: 12px 0 0 22px; color: var(--text-dim); }
 ol li { margin-bottom: 8px; }
