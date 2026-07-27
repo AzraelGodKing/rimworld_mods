@@ -35,52 +35,34 @@ namespace Strata
                 return;
             }
             StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.WorkSeekingGiverCall);
-            if (__result.Job != null)
+            // Real work job — leave it. Idle/wait fillers still allow a relay.
+            if (__result.Job != null && !IsIdleFillerJob(__result.Job))
             {
                 return;
             }
-            if (StrataMod.Settings != null
-                && (!StrataMod.Settings.RobotSoftCompatActive || !StrataMod.Settings.robotWorkRelayEnabled))
+            if (StrataRobotSoftCompat.TryIssueRobotWorkRelay(__instance, pawn, ref __result))
             {
                 return;
             }
-            StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.WorkRelayPostfixHit);
-            if (PawnRelay.IsRobotWorkScanCooldown(pawn))
+        }
+
+        private static bool IsIdleFillerJob(Job job)
+        {
+            if (job?.def == null)
             {
-                return;
+                return true;
             }
-            // Low-charge bots on the wrong level should return home, not scan for work.
-            if (StrataPawnUtility.IsMiscRobotRechargeCrossMap(pawn)
-                && StrataPawnUtility.MiscRobotNeedsRecharge(pawn))
+            JobDef def = job.def;
+            if (def == JobDefOf.Wait
+                || def == JobDefOf.Wait_Wander
+                || def == JobDefOf.Wait_MaintainPosture)
             {
-                return;
+                return true;
             }
-            if (!PawnRelay.CanRelay(pawn))
-            {
-                return;
-            }
-            if (!LevelGraph.AnyLinkFrom(pawn.Map))
-            {
-                return;
-            }
-            PawnRelay.TouchRobotWorkScan(pawn);
-            StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.ReachableLevelsCall);
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
-            {
-                if (!StrataPawnUtility.MiscRobotHasWorkOn(pawn, link.map))
-                {
-                    continue;
-                }
-                StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.BestFirstStepCall);
-                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Work, 2);
-                if (job != null)
-                {
-                    StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.WorkRelayJobIssued);
-                    StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.EnterPortalRobotJob);
-                    __result = new ThinkResult(job, __instance, JobTag.MiscWork);
-                    return;
-                }
-            }
+            string name = def.defName;
+            return name != null
+                && (name.IndexOf("Wait", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || name.IndexOf("Wander", System.StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private static List<MethodBase> DiscoverTargetMethods()
@@ -102,8 +84,19 @@ namespace Strata
                 {
                     continue;
                 }
-                MethodInfo method = AccessTools.DeclaredMethod(type, "TryIssueJobPackage");
-                if (method != null)
+                MethodInfo method = AccessTools.DeclaredMethod(
+                    type,
+                    "TryIssueJobPackage",
+                    new[] { typeof(Pawn), typeof(JobIssueParams) });
+                // Some AIRobot builds inherit TryIssueJobPackage from ThinkNode_JobGiver.
+                if (method == null)
+                {
+                    method = AccessTools.Method(
+                        type,
+                        "TryIssueJobPackage",
+                        new[] { typeof(Pawn), typeof(JobIssueParams) });
+                }
+                if (method != null && !methods.Contains(method))
                 {
                     methods.Add(method);
                 }

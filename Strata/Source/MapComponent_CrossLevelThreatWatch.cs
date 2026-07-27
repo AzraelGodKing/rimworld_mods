@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
+using Verse.AI.Group;
 
 namespace Strata
 {
@@ -9,6 +10,9 @@ namespace Strata
     // a direct HostileTo scan and fire a threat letter + camera jump.
     public class MapComponent_CrossLevelThreatWatch : MapComponent
     {
+        private const int ActiveScanInterval = 30;
+        private const int QuietScanInterval = 250;
+
         private readonly HashSet<int> knownHostileIds = new HashSet<int>();
 
         public MapComponent_CrossLevelThreatWatch(Map map) : base(map)
@@ -19,7 +23,7 @@ namespace Strata
         {
             // Only the viewed map scans — avoids N duplicate letters from every
             // linked pocket ticking the same wave.
-            if (Find.CurrentMap != map || !map.IsHashIntervalTick(30))
+            if (Find.CurrentMap != map)
             {
                 return;
             }
@@ -34,6 +38,14 @@ namespace Strata
             }
 
             List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(map);
+            bool lordThreat = AnyLinkedHostileRaidLord(links);
+            bool quiet = !lordThreat && knownHostileIds.Count == 0;
+            int interval = quiet ? QuietScanInterval : ActiveScanInterval;
+            if (!map.IsHashIntervalTick(interval))
+            {
+                return;
+            }
+
             for (int i = 0; i < links.Count; i++)
             {
                 Map other = links[i].map;
@@ -56,6 +68,38 @@ namespace Strata
 
             // Drop IDs for pawns that left / died so a later wave can re-alert.
             PruneKnown(links);
+        }
+
+        private static bool AnyLinkedHostileRaidLord(List<LevelGraph.LevelLink> links)
+        {
+            for (int i = 0; i < links.Count; i++)
+            {
+                if (MapHasHostileRaidLord(links[i].map))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool MapHasHostileRaidLord(Map other)
+        {
+            if (other?.lordManager?.lords == null)
+            {
+                return false;
+            }
+            List<Lord> lords = other.lordManager.lords;
+            for (int i = 0; i < lords.Count; i++)
+            {
+                Lord lord = lords[i];
+                if (lord?.faction != null
+                    && lord.faction.HostileTo(Faction.OfPlayer)
+                    && lord.ownedPawns.Count > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private Pawn FirstNewHostile(Map other)

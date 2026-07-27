@@ -61,14 +61,19 @@ namespace Strata
                 ProcessPendingArrivals();
             }
 
-            // Idle maps: skip enroll/pursue when no hostile raid lords.
-            // Rare stray enroll (lordless hostiles) runs at 1/4 rate.
+            // Idle maps: skip enroll/pursue/coordinator when no hostile raid lords
+            // and nothing is mid-stair. Rare stray enroll (lordless hostiles) at 1/4 rate.
             int tick = Find.TickManager.TicksGame + map.uniqueID * 37;
             bool enrollPulse = tick % EnrollInterval == 0;
             bool pursuePulse = tick % PursuitInterval == 0;
+            bool hasRaidLords = false;
+            if (enrollPulse || pursuePulse || pendingArrivals.Count > 0)
+            {
+                hasRaidLords = HasHostileRaidLords();
+            }
             if (enrollPulse || pursuePulse)
             {
-                if (HasHostileRaidLords())
+                if (hasRaidLords)
                 {
                     if (enrollPulse)
                     {
@@ -84,7 +89,11 @@ namespace Strata
                     EnrollStrays();
                 }
             }
-            RaidCoordinator.Tick(map);
+            // Coordinator only while a raid is live (or arrivals pending).
+            if (hasRaidLords || pendingArrivals.Count > 0)
+            {
+                RaidCoordinator.Tick(map);
+            }
         }
 
         private bool HasHostileRaidLords()

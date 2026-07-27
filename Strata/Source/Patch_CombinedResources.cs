@@ -22,9 +22,10 @@ namespace Strata
     //    shelf HeldThings so hibernated or rarely-ticked floors stay accurate.
     public static class StrataResources
     {
-        // Default on — matches AASB “one colony column” inventory. Persisted
-        // via StrataSettings.combinedLevelResources; sync on load / toggle.
-        public static bool Combined = true;
+        // Default off — zero cost until the player enables combined inventory.
+        // Persisted via StrataSettings.combinedLevelResources; sync on load / toggle.
+        // GetCount / UI paths also no-op when !AnyLinkFrom (single map).
+        public static bool Combined = false;
 
         // Re-entrancy guard: our GetCount postfix sums other maps' stockpiles,
         // whose ResourceCounter readers must not recurse. Also used to read raw
@@ -292,7 +293,7 @@ namespace Strata
     public static class Patch_CombinedResourcesToggle
     {
         private static Texture2D icon;
-        private static bool lastCombined = true;
+        private static bool lastCombined = false;
 
         // Lazy: StaticConstructor ContentFinder can cache BadTex before textures load.
         private static Texture2D Icon =>

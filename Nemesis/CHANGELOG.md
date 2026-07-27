@@ -4,6 +4,9 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
+- **Post-escape heal** — park / inject / assault recover the nemesis above the flee threshold so army-return and personal assaults no longer vanish within seconds.
+- **Vengeance army return** — after escapes, Direct Raid prefers a heavier points raid that injects the same nemesis pawn into the assault (BFV-style: don't come back alone). Raid letters land the line: *Why return alone when you can return with an army?* Dev action: *Nemesis/Actions → Vengeance army raid*.
+- **Workshop preview** — added `About/Preview.png` (under 2 MB) selling the personal-antagonist fantasy.
 - **Duplicate emerge / escape letters** — stacked Kill hits no longer re-open a hunt or re-send "Escapes" (claim hunt immediately; 180-tick escape latch; ignore Kill when already off-map). Wounded-escape create counts as the escape beat so queued Kills do not double-letter.
 - **Lord owns free world pawn** — escape / create / assault now detach the nemesis from any `Lord` and clear WorldPawns before `PassToWorld` or map spawn (fixes spam after Nemesis assault).
 - **Dev debug actions** — Development Mode menu under *Nemesis* / *Nemesis/Actions*: log state, start/clear hunt, fire next action, bump aggression, force escape, resolution dialog, and each harassment action.

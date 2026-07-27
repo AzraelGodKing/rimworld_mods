@@ -4,13 +4,13 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
-### Changed
-
-- **Surface-idle TPS** — with no linked floors and gases off (no clouds/emitters/vents), atmosphere skips its full cycle on the surface too; combined resources, work/food/joy/medical/robot relays, raid pursuit, and cross-level threat watch early-out. `AnyLinkFrom` is cached until portal topology changes. Stamp `surface-idle-tps-v1`.
-- **Docs — Strata V3 page** — `strata.html` leads with Version 3 (see-below, cross-level combat, force-build, combined resources, gravship stacks, living polish); foundation section keeps dig/build/atmosphere. Roadmap CTA + README link say V3 checklist. Stamp `docs-strata-v3-page-v1`.
-
 ### Fixed
 
+- **`Patch_CurrentMapIndex` frame cost** — no longer Harmony-patches `Game.CurrentMap` at all (any Prefix was still ~8–13% of frame at 300–1200 calls/update). Clamp only on `DeinitAndRemoveMap` + see-below restore. Stamp `currentmap-no-getter-patch-v3`.
+- **Cross-level haul stuck underground** — mid-hop stair relays no longer wipe the haul `returnMap`, so colonists/Misc. Robots keep returning home for another load after delivering downstairs (was: a few trips then wander on the lower floor). Failed home paths also retry instead of giving up.
+- **Misc. Robots work relay from underground** — `JobGiver_SeekAllowedArea` no longer yank bots back to an underground allowed area before work relay can send them to the surface; return-to-base idle also yields to work relay when another floor has jobs.
+- **Haul cargo dropped at stairs** — EnterPortal keeps carried materials (and PUAH single-carry stacks) for Haul / force-build intents. Soft-compat places Pick Up And Haul inventory into dest storage on arrival when that mod is present.
+- **Cage food lost on despawn** — `CompCageFoodStorage.PostDeSpawn` now drops stored feed using the map/position args (was gated on `SpawnedOrAnyParentSpawned` after despawn, so hay/kibble vanished).
 - **Vanilla Mine icon pink checkers** — live ModMixer install had a 188-byte magenta placeholder at `Textures/UI/Designators/Mine.png` (plus other vanilla `UI/Commands` / `UI/Buttons` stubs) that overrode Core. Removed those overrides so vanilla icons load again. Not in the git tree; do not re-copy placeholder UI paths into the deploy folder.
 - **Force-build HaulToContainer dead-end** — when materials were on the pawn’s floor and the blueprint elsewhere, vanilla emitted same-map `HaulToContainer` and our postfix skipped rewrite; stair haul / commute now replaces those jobs. Ordered-job dest prefers off-floor targets (B/C before A). Stamp `V3 Complete` (was `force-build-haul-rewrite-v1`).
 - **Force-build Ideology / turret gates** — linked-floor `CanConstruct` postfix no longer skips Ideology member builds, attachment walls, or turret history events.
@@ -23,6 +23,13 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 - **Mod Options only showed “View level above”** — `Listing_Standard` multi-column wrap + short scroll `viewRect` parked every other toggle in a clipped second column. Force `maxOneColumn`, tall listing rect, measure with `MaxColumnHeightSeen`. Stamp `modoptions-column-v1`.
 - **Mod Options blank / missing** — settings draw and category label no longer throw out of the options UI (null Settings recover + try/catch).
 - **Shaft power gizmo icons** — Less / More / Unlimited no longer use missing TempLower/TempRaise/TryReconnect paths (pink checkers); fall back to present UI textures.
+
+### Changed
+
+- **Idle TPS v2** (`idle-tps-v2`) — gases-off ignores registered emitters (no atmosphere cycle); skip atmosphere while a pocket is generating; cross-level threat scans slow down when quiet; raid coordinator only runs during live raids; work relay checks `AnyLinkFrom` before other work; **combined level resources off by default** (still no-ops with a single map).
+- **Haul across levels setting** — new Mod Options toggle (on by default), separate from Work relay. Work relay description clarifies it does not control stair hauling. Cross-level haul export probes (colonist + Misc. Robots work relay) honor the same toggle.
+- **Surface-idle TPS** — with no linked floors and gases off (no clouds/emitters/vents), atmosphere skips its full cycle on the surface too; combined resources, work/food/joy/medical/robot relays, raid pursuit, and cross-level threat watch early-out. `AnyLinkFrom` is cached until portal topology changes. Stamp `surface-idle-tps-v1`.
+- **Docs — Strata V3 page** — `strata.html` leads with Version 3 (see-below, cross-level combat, force-build, combined resources, gravship stacks, living polish); foundation section keeps dig/build/atmosphere. Roadmap CTA + README link say V3 checklist. Stamp `docs-strata-v3-page-v1`.
 
 ### Changed
 

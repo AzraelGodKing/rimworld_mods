@@ -466,6 +466,14 @@ namespace Nemesis
                 sabotage *= 1.3f;
             }
 
+            // After escapes: prefer returning with an army over solo assaults / soft harassment.
+            if (_data.escapeCount > 0)
+            {
+                raid *= 2.4f;
+                assault *= 0.45f;
+                taunt *= 0.7f;
+            }
+
             // Soft Strata: slight bias toward food/sabotage when harassing multi-level bases (surface map).
             if (SoftCompat.StrataActive)
                 food *= 1.15f;

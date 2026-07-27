@@ -5,6 +5,8 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 ## [Unreleased]
 
 ### Fixed
+- **Surge protector eats no-op spire Zzzt** — storm spire short-circuit rolls call `CanFireNow` first; surge Prefix also refuses `Absorb()` when vanilla would find nothing shortable.
+- **Static pylon charge bleed** — capacitor drain is all-or-nothing: if the bank cannot cover a zap, nothing is taken.
 - **Volcanic ash Harmony startup crash** — `GiveOrUpdateHediff` second arg is `target` in 1.6 (was patched as `pawn`); optional Odyssey ash barrier prefix now applies.
 - Research tab XML parse failure: escaped `&` in `Storm & grid research` (`&amp;`) so `Research_Stormproof.xml` loads again (was breaking all Stormproof research defs and prerequisites).
 - **Ion storm tick cost** — dampener shield checks and EMP candidate picks use plain loops instead of LINQ allocations.

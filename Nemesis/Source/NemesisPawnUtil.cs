@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 using Verse.AI.Group;
 
@@ -26,6 +28,55 @@ namespace Nemesis
                 Find.WorldPawns.RemovePawn(pawn);
         }
 
+        /// <summary>
+        /// Recover enough body HP that a return raid/assault does not instantly re-flee
+        /// (CheckNemesisHealth flees below 30%).
+        /// </summary>
+        public static void RecoverForReturn(Pawn pawn, float minHealth = 0.7f)
+        {
+            if (pawn?.health == null || pawn.Dead || pawn.Destroyed) return;
+
+            HediffDef bloodLossDef = DefDatabase<HediffDef>.GetNamedSilentFail("BloodLoss");
+            if (bloodLossDef != null)
+            {
+                Hediff bloodLoss = pawn.health.hediffSet.GetFirstHediffOfDef(bloodLossDef);
+                if (bloodLoss != null)
+                    pawn.health.RemoveHediff(bloodLoss);
+            }
+
+            List<Hediff> hediffs = pawn.health.hediffSet.hediffs;
+            for (int guard = 0; guard < 48; guard++)
+            {
+                if (pawn.health.summaryHealth.SummaryHealthPercent >= minHealth)
+                    break;
+
+                Hediff_Injury worst = null;
+                float worstSev = 0f;
+                for (int i = 0; i < hediffs.Count; i++)
+                {
+                    if (hediffs[i] is Hediff_Injury injury && injury.Severity > worstSev)
+                    {
+                        worst = injury;
+                        worstSev = injury.Severity;
+                    }
+                }
+
+                if (worst == null)
+                    break;
+
+                worst.Heal(Mathf.Max(1f, worst.Severity));
+            }
+
+            // Clear lingering anesthetic so they can fight on return.
+            HediffDef anesthetic = DefDatabase<HediffDef>.GetNamedSilentFail("Anesthetic");
+            if (anesthetic != null)
+            {
+                Hediff a = pawn.health.hediffSet.GetFirstHediffOfDef(anesthetic);
+                if (a != null)
+                    pawn.health.RemoveHediff(a);
+            }
+        }
+
         public static void ParkAsWorldNemesis(Pawn pawn)
         {
             if (pawn == null || pawn.Destroyed) return;
@@ -34,6 +85,8 @@ namespace Nemesis
 
             if (pawn.Spawned)
                 pawn.DeSpawn(DestroyMode.Vanish);
+
+            RecoverForReturn(pawn);
 
             if (!pawn.IsWorldPawn())
                 Find.WorldPawns.PassToWorld(pawn, PawnDiscardDecideMode.KeepForever);
@@ -44,6 +97,7 @@ namespace Nemesis
             if (pawn == null || pawn.Destroyed || map == null || !cell.IsValid) return false;
 
             DetachFromLord(pawn);
+            RecoverForReturn(pawn);
 
             if (pawn.Spawned)
             {

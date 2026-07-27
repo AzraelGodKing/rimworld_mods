@@ -325,6 +325,17 @@ namespace Nemesis
         [DebugAction(ActionsCat, "Direct raid", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ActionRaid() => FireAction(NemesisAction.DirectRaid);
 
+        [DebugAction(ActionsCat, "Vengeance army raid (post-escape)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ActionVengeanceArmyRaid()
+        {
+            if (!RequireActiveHunt(out GameComponent_Nemesis comp, out NemesisData data)) return;
+            data.escapeCount = Mathf.Max(data.escapeCount, 1);
+            Pawn nemesis = comp.FindNemesisPawn();
+            if (nemesis != null && nemesis.Spawned && !nemesis.Dead)
+                NemesisPawnUtil.ParkAsWorldNemesis(nemesis);
+            FireAction(NemesisAction.DirectRaid);
+        }
+
         [DebugAction(ActionsCat, "Nemesis assault", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ActionAssault() => FireAction(NemesisAction.NemesisAssault);
 

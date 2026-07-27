@@ -4,6 +4,13 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ## [Unreleased]
 
+### Fixed
+- **Bereavement stacks with Violent Loss** — second close violent death upgrades by removing Violent Loss before applying BereavementShock.
+- **Massacre trauma latch** — massacre flag clears when the death window drops below the cluster threshold (trickle deaths no longer block future massacres forever).
+
+### Changed
+- **Workshop preview** — refreshed `About/Preview.png` (under 2 MB) for the five-system pitch.
+
 ### Added
 - **Docs teaser** — mystery hub page (`docs/ledger.html`, nav `···`) — fragmentary ledger, no download, no public name. Stamp `ledger-mystery-v1`.
 

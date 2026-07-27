@@ -396,6 +396,11 @@ namespace Strata
 
         public override void MapComponentTick()
         {
+            // Dig/tower LongEvent: don't pay atmosphere while a pocket is generating.
+            if (StrataPocketMapOpen.AnyGenerating)
+            {
+                return;
+            }
             try
             {
                 MapComponentTickInner();
@@ -408,6 +413,17 @@ namespace Strata
 
         private void MapComponentTickInner()
         {
+            // Gases off + no clouds: zero work (do not keep sim alive for registered
+            // emitters/vents — those comps idle when toggles are off).
+            if (IsAtmosphereSimulationIdle())
+            {
+                if (!BreathingActive())
+                {
+                    breathableAirSeeded = true;
+                }
+                return;
+            }
+
             EnsureBuildingCompsRegistered();
 
             if (pendingSeedsByMap.ContainsKey(map.uniqueID))
@@ -886,20 +902,18 @@ namespace Strata
             return true;
         }
 
-        // True when gas systems are off and nothing is registered to simulate —
-        // includes surface maps (not only hibernating pockets).
+        // True when gas systems are off and nothing remains to simulate.
+        // Emitters/vents stay registered while gases are off — they must not
+        // keep the multi-phase cycle alive.
         private bool IsAtmosphereSimulationIdle()
         {
             if (NaturalGasesActive() || PollutantGasesActive())
             {
                 return false;
             }
-            if (clouds.Count > 0 || loadedClouds != null || pendingSeedsByMap.ContainsKey(map.uniqueID))
-            {
-                return false;
-            }
-            return Emitters.Count == 0 && Vents.Count == 0 && Updrafts.Count == 0
-                && GasExchangers.Count == 0 && Scrubbers.Count == 0;
+            return clouds.Count == 0
+                && loadedClouds == null
+                && !pendingSeedsByMap.ContainsKey(map.uniqueID);
         }
 
         private bool ShouldSkipHeavyAtmosphereCycle()
