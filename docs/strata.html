@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Strata V3 — a RimWorld mod by AzraelGodKing</title>
-<meta name="description" content="Strata Version 3 complete: dig down, build up, breathe deep. Multistory RimWorld bases with atmosphere, quest sites, fluid shafts, and Odyssey gravship stacks. Requires Harmony.">
+<title>Strata V3 — dig down, build up, breathe deep</title>
+<meta name="description" content="Strata Version 3 complete: multistory RimWorld bases with see-below roofs, cross-level combat and force-build, atmosphere, quest sites, fluid shafts, and Odyssey gravship stacks. Requires Harmony.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,15 +29,16 @@
     <h1 class="t">STRATA</h1>
     <p class="tagline">Version 3 complete &mdash; dig down, build up, breathe deep</p>
     <div class="badges">
-      <span class="badge strata">Version 3 complete</span>
+      <span class="badge strata">V3 complete</span>
       <span class="badge strata">RimWorld 1.6</span>
       <span class="badge strata">Requires Harmony</span>
       <span class="badge strata">Odyssey optional</span>
     </div>
     <div class="cta">
       <a class="btn btn-strata" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Strata.zip">&#11015; Download Strata</a>
-      <a class="btn btn-ghost" href="strata-roadmap.html">V3 complete</a>
-      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+      <a class="btn btn-ghost" href="#v3">What&rsquo;s in V3</a>
+      <a class="btn btn-ghost" href="strata-roadmap.html">V3 checklist</a>
+      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
     </div>
   </div>
 </header>
@@ -45,16 +46,74 @@
 <div class="wrap">
 
   <section id="overview">
-    <h2 class="t">Overview</h2>
-    <p class="sub">Carve a basement under your colony, frame a roof deck above it, and treat every floor as one home. Colonists commute for work, food, rest, hauling, and rituals. Power, smoke, and (optionally) pipes follow the shafts with them.</p>
+    <h2 class="t">One home, many floors</h2>
+    <p class="sub">Carve rock under your colony, frame a roof deck above it, and treat every floor as one settlement. Colonists commute for work, food, rest, hauling, medicine, and rituals. Power, smoke, and (optionally) pipes follow the shafts with them. <b>V3</b> hardens that column &mdash; see-through decks, cross-level combat and construction, and Odyssey gravship stacks that actually stay linked through launch and land.</p>
     <div class="note strata">
-      <b>Needs:</b> <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a>. Load Strata after it. <b>Odyssey</b> unlocks gravship stairwells only &mdash; everything else works without the DLC.
+      <b>Needs:</b> <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a>. Load Strata after it.
+      <b>Odyssey</b> unlocks gravship stairwells and ship stacks only &mdash; dig, tower decks, atmosphere, and colony logistics work without the DLC.
+      Default level cap is <b>&plusmn;2</b> (Unlimited off). Do not run Strata alongside AASB or MultiFloors.
     </div>
   </section>
 
-  <section id="v2">
-    <h2 class="t">What&rsquo;s in V2</h2>
-    <p class="sub">Short version of the whole release.</p>
+  <section id="v3">
+    <h2 class="t">What&rsquo;s new in Version 3</h2>
+    <p class="sub">Player-facing highlights. Engineering checklist: <a href="strata-roadmap.html">V3 complete</a>.</p>
+    <div class="grid">
+
+      <div class="card strata">
+        <div class="icon">&#9678;</div>
+        <div>
+          <h3>See-below roof decks</h3>
+          <p>Look through open sky and see-through roof deck into the map below &mdash; terrain, buildings, live pawns and projectiles. Click-select, double-click select-similar, forbidden overlays, and float menus work on what you can see. A+ weather syncs from the floor underneath.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <div class="icon">&#9876;</div>
+        <div>
+          <h3>Cross-level combat</h3>
+          <p>Pawns, turrets, and mortars can fire through open shafts and sky holes. Auto-engage keeps decks and underfloors in the fight without hopping maps by hand.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <div class="icon">&#128736;</div>
+        <div>
+          <h3>Force-build across floors</h3>
+          <p>Prioritize / construct when steel or wood only exists on another linked stockpile. Pawns walk the stairs, haul, and deliver &mdash; including Ideology gates and turret history. Work relay defaults <b>on</b>.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <div class="icon">&#9638;</div>
+        <div>
+          <h3>One inventory column</h3>
+          <p>Combined resources (default on) sum linked stockpiles for the readout and build menu. Install minified buildings onto blueprints on other floors. Medical beds and rest can pin across the stack.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <div class="icon">&#128640;</div>
+        <div>
+          <h3>Gravship stacks <span class="stat">(Odyssey)</span></h3>
+          <p>Ship-only stairwells open A+/B+ pockets that travel on launch and reattach on landing. Stable shaft IDs, travel entitlement toggle, cargo pack/place, land polish, and pilot the ship from a linked underdeck.</p>
+        </div>
+      </div>
+
+      <div class="card strata">
+        <div class="icon">&#128065;</div>
+        <div>
+          <h3>Living colony polish</h3>
+          <p>Mental breaks and raiders chase through shafts. Visitors use stairs. Depth-dim slider for upper decks. Fault guards auto-kill broken subsystems. Native cavern biome when Biomes! Caverns is absent.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="foundation">
+    <h2 class="t">The foundation</h2>
+    <p class="sub">Everything V2 already delivered &mdash; still the core of every Strata colony.</p>
     <div class="grid">
 
       <div class="card strata">
@@ -77,7 +136,7 @@
         <div class="icon">&#9729;</div>
         <div>
           <h3>Atmosphere</h3>
-          <p>Smoke, deep gas, O₂, and CO₂ share one sim. Vent, pipe, or exchange through shafts. Deep gas poisons and can ignite; oxygen pumps and scrubbers keep sealed rooms livable. Gas overlay in play settings.</p>
+          <p>Smoke, deep gas, O₂, and CO₂ share one sim (optional; gases default off for performance). Vent, pipe, or exchange through shafts. Overlay in play settings. Performance mode and vacant-level throttle keep tall colonies playable.</p>
         </div>
       </div>
 
@@ -106,14 +165,6 @@
       </div>
 
       <div class="card strata">
-        <div class="icon">&#128640;</div>
-        <div>
-          <h3>Gravship stacks <span class="stat">(Odyssey)</span></h3>
-          <p>Ship-only stairwells open A+/B+ pockets that travel on launch and reattach on landing. Colony dig/tower stairs stay planet-side.</p>
-        </div>
-      </div>
-
-      <div class="card strata">
         <div class="icon">&#129517;</div>
         <div>
           <h3>One colony column</h3>
@@ -121,11 +172,19 @@
         </div>
       </div>
 
+      <div class="card strata">
+        <div class="icon">&#9881;</div>
+        <div>
+          <h3>Modder API &amp; soft-compat</h3>
+          <p><code>Strata.StrataModderApi</code> for reachable maps and link listeners. Soft bridges for Vehicle Framework roof decks, VGE Chapter 1, ReGrowth underdecks, and sister mods in this series.</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <section id="shafts">
-    <h2 class="t">Shafts &amp; power</h2>
+    <h2 class="t">Shafts &amp; life support</h2>
     <p class="sub">The buildings you&rsquo;ll place first.</p>
     <div class="grid">
       <div class="card strata">
@@ -139,7 +198,7 @@
         <img src="img/ShaftConduit.png" alt="Shaft power conduit">
         <div>
           <h3>Shaft power conduit</h3>
-          <p>Optional dedicated tie away from the stair footprint &mdash; builds its partner below automatically.</p>
+          <p>Optional dedicated tie away from the stair footprint &mdash; builds its partner below automatically. Tankless pockets still wake from shaft surplus.</p>
         </div>
       </div>
       <div class="card strata">
@@ -153,7 +212,21 @@
         <img src="img/OxygenPump.png" alt="Life support">
         <div>
           <h3>Life support</h3>
-          <p>O₂ / CO₂ pumps, shaft exchangers, canary cages. Medieval bellows and lime scrubbers if you&rsquo;re not industrial yet.</p>
+          <p>O₂ / CO₂ pumps, shaft exchangers, canary cages. Medieval bellows and lime scrubbers if you&rsquo;re not industrial yet. Gravship O₂ reclaimers / tanks when Odyssey is loaded.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <img src="img/ElevatorDown.png" alt="Elevator">
+        <div>
+          <h3>Elevators</h3>
+          <p>Compact powered shafts for the same dig / tower / gravship roles as stairwells &mdash; faster transit, smaller footprint.</p>
+        </div>
+      </div>
+      <div class="card strata">
+        <img src="img/GasWell.png" alt="Gas well">
+        <div>
+          <h3>Deep gas &amp; wells</h3>
+          <p>Cap a vent, burn canisters in the deep-gas generator, or feed Helixien pipes when VHGE is present.</p>
         </div>
       </div>
     </div>
@@ -162,7 +235,7 @@
   <section id="research">
     <h2 class="t">Research</h2>
     <p class="sub">Own <b>Strata</b> tab. Medieval opens floors; industrial keeps them livable.</p>
-    <div class="research-tree">
+    <div class="research-tree strata">
       <b>Building up</b> &rarr; tower stairwell / A+<br>
       <b>Digging down</b> &rarr; B1 &rarr; <b>Deep excavation</b> &rarr; B2+, quest sites<br>
       + Electricity &rarr; <b>Elevators</b>, <b>Shaft power</b> &rarr; <b>Fluid shafts</b><br>
@@ -176,8 +249,10 @@
     <ol>
       <li>Leave pillars under thick rock roof &mdash; or research shoring.</li>
       <li>Seal a shaft to stop raiders and gas; it also traps your own people.</li>
-      <li>Grow A+ by expanding roofs downstairs; open sky never holds buildings.</li>
-      <li>On Odyssey ships, only gravship stairwells place on the footprint.</li>
+      <li>Grow A+ by expanding roofs downstairs; open sky never holds buildings, but you can see and shoot through it.</li>
+      <li>On Odyssey ships, only gravship stairwells place on the footprint; dig/tower stairs stay planet-side.</li>
+      <li>Prefer a smaller map size if you plan many deep floors &mdash; each level is a full same-size map.</li>
+      <li>Leave Natural / Pollutant gases off unless you want the atmosphere sim; use Performance mode to A/B lag.</li>
     </ol>
   </section>
 
@@ -189,7 +264,7 @@
       <li>Enable Harmony, then Strata. Restart.</li>
     </ol>
     <div class="note strata">
-      <b>Saves:</b> safe to add mid-save. Before removing: bring everyone up, haul what you care about, deconstruct all stairwells.
+      <b>Saves:</b> safe to add mid-save. Before removing: bring everyone up, haul what you care about, deconstruct all stairwells (Abandon confirm if a linked level still has colony presence).
     </div>
   </section>
 
@@ -198,7 +273,7 @@
 <footer>
   <div class="wrap">
     <a href="index.html">All mods</a>
-    &middot; <a href="strata-roadmap.html">V3 complete</a>
+    &middot; <a href="strata-roadmap.html">V3 checklist</a>
     &middot; Strata by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
     &middot; <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">Report a bug</a>
   </div>
