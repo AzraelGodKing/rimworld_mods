@@ -104,6 +104,23 @@
   color: #f0f6f2;
 }
 
+.hs-nav-links a[href="signal.html"],
+.hs-nav-links a[href="ledger.html"] {
+  font-family: Consolas, Menlo, monospace;
+  letter-spacing: 0.14em;
+  opacity: 0.85;
+}
+
+.hs-nav-links a[href="ledger.html"] {
+  letter-spacing: 0.28em;
+  color: #9aab78;
+}
+
+.hs-nav-links a[href="signal.html"]:hover,
+.hs-nav-links a[href="ledger.html"]:hover {
+  opacity: 1;
+}
+
 /* Hero — one composition, full-bleed image plane */
 .hs-hero {
   position: relative;
