@@ -1,63 +1,68 @@
 using System.Collections.Generic;
-using System.Reflection;
 using HarmonyLib;
 using Verse;
 
 namespace Strata
 {
     // Vanilla Game.CurrentMap is `maps[currentMapIndex]` with no upper bound check.
-    // Destroying / generating pocket levels can leave the index past maps.Count;
-    // every MapUpdate then throws ArgumentOutOfRangeException (parameter: index)
-    // and the view flickers until CurrentMap is assigned again (e.g. surface).
-    [HarmonyPatch(typeof(Game), "get_CurrentMap")]
+    // Pocket create/destroy can leave that index past maps.Count and spam
+    // ArgumentOutOfRangeException until the view is reassigned.
+    //
+    // Never Harmony-patch get_CurrentMap — it is read hundreds of times per frame
+    // and any Prefix shows up as ~8–13% of frame in Dubs. Clamp only when the maps
+    // list changes (and when see-below restores a possibly stale index).
     public static class Patch_CurrentMapIndex
     {
-        private static readonly FieldInfo CurrentMapIndexField =
-            AccessTools.Field(typeof(Game), "currentMapIndex");
-
-        private static readonly FieldInfo MapsField =
-            AccessTools.Field(typeof(Game), "maps");
+        private static readonly AccessTools.FieldRef<Game, List<Map>> MapsRef =
+            AccessTools.FieldRefAccess<Game, List<Map>>("maps");
 
         private static bool warnedThisSession;
 
-        public static bool Prefix(Game __instance, ref Map __result)
+        public static void ClampIfNeeded(Game game)
         {
-            if (CurrentMapIndexField == null || MapsField == null)
+            if (game == null)
             {
-                return true;
+                return;
             }
 
-            sbyte index = (sbyte)CurrentMapIndexField.GetValue(__instance);
+            sbyte index = game.currentMapIndex;
             if (index < 0)
             {
-                __result = null;
-                return false;
+                return;
             }
 
-            var maps = (List<Map>)MapsField.GetValue(__instance);
-            if (maps == null || maps.Count == 0)
+            List<Map> maps = MapsRef(game);
+            int count = maps != null ? maps.Count : 0;
+            if (count == 0)
             {
-                CurrentMapIndexField.SetValue(__instance, (sbyte)(-1));
-                __result = null;
-                return false;
+                game.currentMapIndex = -1;
+                return;
             }
 
-            if (index < maps.Count)
+            if ((uint)index < (uint)count)
             {
-                return true;
+                return;
             }
 
-            sbyte repaired = 0;
-            CurrentMapIndexField.SetValue(__instance, repaired);
-            __result = maps[repaired];
+            game.currentMapIndex = 0;
             if (!warnedThisSession)
             {
                 warnedThisSession = true;
                 Log.Warning("[Strata] CurrentMap index was out of range (index="
-                    + index + ", maps=" + maps.Count
+                    + index + ", maps=" + count
                     + "); clamped to map 0. Further repairs this session are silent.");
             }
-            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(Game), nameof(Game.DeinitAndRemoveMap))]
+    public static class Patch_DeinitAndRemoveMap_ClampCurrentMapIndex
+    {
+        // After vanilla reindexes, force a bounds check in case nested pocket
+        // teardown left a stale value mid-cascade.
+        public static void Postfix(Game __instance)
+        {
+            Patch_CurrentMapIndex.ClampIfNeeded(__instance);
         }
     }
 }

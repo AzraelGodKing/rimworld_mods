@@ -14,7 +14,9 @@
   <Strata_Settings_Reset>Сброс</Strata_Settings_Reset>
   <Strata_Settings_ColonistRelays>Маршруты колонистов</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Маршрут работы</Strata_Settings_WorkRelay>
-  <Strata_Settings_WorkRelayDesc>Простаивающие колонисты и колониальные механоиды ходят на другие уровни, где есть работа. По умолчанию выключено — включайте только если нужен поиск работы между этажами.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_WorkRelayDesc>Простаивающие колонисты и колониальные механоиды ходят на другие уровни, где есть работа, если на своём этаже дел нет. НЕ управляет переносом через лестницы — для этого есть «Перенос между уровнями».</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_HaulAcrossLevels>Перенос между уровнями</Strata_Settings_HaulAcrossLevels>
+  <Strata_Settings_HaulAcrossLevelsDesc>Колонисты и боты берут задания на перенос через лестницы на склады / стройки связанных этажей. Отдельно от маршрута работы.</Strata_Settings_HaulAcrossLevelsDesc>
   <Strata_Settings_RobotSoftCompat>Совместимость с Misc. Robots</Strata_Settings_RobotSoftCompat>
   <Strata_Settings_RobotSoftCompatDesc>Межуровневая маршрутизация роботов Misc. Robots через порталы (возврат на базу, если зарядка на другом уровне). Выключите для проверки, не вызывают ли хуки Strata лаги.</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Маршрут работы Misc. Robots</Strata_Settings_RobotWorkRelay>
@@ -59,7 +61,7 @@
   <Strata_Settings_GasOverlayLabels>Подписи комнат на оверлее газа</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>При включённом оверлее газа в настройках игры рисует цветные процентные подписи на каждой закрытой комнате (топ-3 газа + нагрузка). Панель у курсора доступна всегда, когда оверлей включён.</Strata_Settings_GasOverlayLabelsDesc>
   <Strata_PlaySettings_GasOverlayTip>Strata: отображение наложения данных о газе\nКаждую комнату окрашивает в цвет преобладающего в ней опасного газа. Наведите указатель мыши на комнату, чтобы открыть прикрепленную к курсору панель с данными о газовой смеси. Дополнительные подписи для каждой комнаты: настройки мода Strata → Подписи для комнат с наложением данных о газе.</Strata_PlaySettings_GasOverlayTip>
-  <Strata_PlaySettings_CombinedResourcesTip>Strata: комбинированные ресурсы уровня — при подсчете ресурсов и затрат на строительство учитываются предметы на каждом связанном уровне.</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata: комбинированные ресурсы уровня (по умолчанию выкл.)\nПри включении учёт ресурсов и затрат на строительство суммирует предметы на каждом связанном этаже. Без второй карты нагрузки нет.</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>Нагрузка {0}%</Strata_GasOverlay_Load>
   <Strata_GasOverlay_LoadParen>  (Нагрузка {0}%)</Strata_GasOverlay_LoadParen>
   <Strata_GasOverlay_OpenAir>Газ: открытый воздух</Strata_GasOverlay_OpenAir>

@@ -159,7 +159,10 @@ namespace Stormproof
                 if (zzzt != null)
                 {
                     IncidentParms parms = new IncidentParms { target = parent.Map };
-                    zzzt.Worker.TryExecute(parms);
+                    // Don't burn a surge protector (or spam TryExecute) when vanilla
+                    // would find nothing shortable on the map.
+                    if (zzzt.Worker.CanFireNow(parms))
+                        zzzt.Worker.TryExecute(parms);
                 }
             }
         }
