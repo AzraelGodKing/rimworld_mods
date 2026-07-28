@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using HarmonyLib;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 using Verse.AI;
 
@@ -7,6 +9,9 @@ namespace Strata
 {
     public static class StrataPortalUtility
     {
+        private static readonly AccessTools.FieldRef<MapPortal, Map> PocketMapRef =
+            AccessTools.FieldRefAccess<MapPortal, Map>("pocketMap");
+
         // Escape hatch for Patch_PortalDeSpawnImmunity: intentional portal
         // despawn/respawn cycles (moves) raise this around the whole cycle.
         private static int portalMoveDepth;
@@ -788,6 +793,254 @@ namespace Strata
             }
         }
 
+        public static bool IsStrataPortalShaft(Thing thing)
+        {
+            return thing is MapPortal portal
+                && thing is not PocketMapExit
+                && CompStrataShaftLinkInjector.IsStrataPortalDef(thing.def)
+                && portal.Spawned;
+        }
+
+        public static bool IsStrataPortalLanding(Thing thing)
+        {
+            return thing is PocketMapExit
+                && CompStrataShaftLinkInjector.IsStrataPortalDef(thing.def)
+                && thing.Spawned;
+        }
+
+        public static bool IsProperlyLinked(MapPortal shaft, MapPortal landing)
+        {
+            if (shaft == null || landing is not PocketMapExit exit)
+            {
+                return false;
+            }
+            if (exit.entrance != shaft || shaft.exit != exit)
+            {
+                return false;
+            }
+            Map pocket = PocketMapRef(shaft);
+            return pocket != null && pocket == landing.Map;
+        }
+
+        // Single wiring path for shaft↔landing. Clears stale links, sets
+        // entrance/exit/pocketMap, syncs pair IDs, invalidates caches.
+        public static bool ConnectPortalPair(MapPortal hostShaft, MapPortal landing, bool log = true)
+        {
+            if (hostShaft == null || hostShaft is PocketMapExit
+                || landing is not PocketMapExit exitLanding)
+            {
+                return false;
+            }
+            if (!StrataGravshipUtility.SameShaftFamily(hostShaft, landing))
+            {
+                if (log)
+                {
+                    Log.Warning("[Strata] Refused portal pair: colony/gravship family mismatch ("
+                        + hostShaft.LabelCap + " <-> " + landing.LabelCap + ").");
+                }
+                return false;
+            }
+
+            if (IsProperlyLinked(hostShaft, exitLanding))
+            {
+                CompStrataShaftLink.SyncPairIds(hostShaft, exitLanding);
+                return true;
+            }
+
+            // Drop stale one-way links on the host's previous exit.
+            if (hostShaft.exit != null && hostShaft.exit != exitLanding
+                && hostShaft.exit.entrance == hostShaft)
+            {
+                hostShaft.exit.entrance = null;
+            }
+
+            // Drop stale entrance on the landing if it pointed elsewhere.
+            if (exitLanding.entrance != null && exitLanding.entrance != hostShaft
+                && exitLanding.entrance.exit == exitLanding)
+            {
+                exitLanding.entrance.exit = null;
+            }
+
+            exitLanding.entrance = hostShaft;
+            hostShaft.exit = exitLanding;
+
+            if (landing.Map != null)
+            {
+                PocketMapRef(hostShaft) = landing.Map;
+                StrataGravshipShaftIdentity.CompOf(hostShaft)?.RememberPocket(landing.Map);
+            }
+
+            if (landing.Map?.Parent is PocketMapParent parent && hostShaft.Map != null)
+            {
+                parent.sourceMap = hostShaft.Map;
+            }
+
+            CompStrataShaftLink.SyncPairIds(hostShaft, exitLanding);
+            LevelGraph.InvalidateCache();
+            StrataGravshipCache.Invalidate();
+
+            if (log)
+            {
+                Log.Message("[Strata] Wired "
+                    + landing.LabelCap + " <-> " + hostShaft.LabelCap
+                    + " (pair " + (CompStrataShaftLink.CompOf(hostShaft)?.ShortId ?? "?") + ")"
+                    + " on " + hostShaft.Map);
+            }
+            return true;
+        }
+
+        // Stamp pair IDs onto every healthy shaft↔landing link.
+        public static int StampLinkedPortalPairIds()
+        {
+            int stamped = 0;
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                List<Thing> portals = map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal);
+                for (int j = 0; j < portals.Count; j++)
+                {
+                    if (!IsStrataPortalShaft(portals[j]))
+                    {
+                        continue;
+                    }
+                    MapPortal shaft = (MapPortal)portals[j];
+                    PocketMapExit exit = shaft.exit;
+                    if (exit == null || !exit.Spawned || !IsProperlyLinked(shaft, exit))
+                    {
+                        continue;
+                    }
+                    CompStrataShaftLink.SyncPairIds(shaft, exit);
+                    stamped++;
+                }
+            }
+            return stamped;
+        }
+
+        // Auto-rewire when exactly one shaft and one landing share a pairGuid
+        // but are not properly linked. Call after RepairMissingLandings.
+        public static int RelinkPortalsByPairId()
+        {
+            StampLinkedPortalPairIds();
+
+            var shaftsByGuid = new Dictionary<string, List<MapPortal>>();
+            var landingsByGuid = new Dictionary<string, List<MapPortal>>();
+
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                List<Thing> portals = map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal);
+                for (int j = 0; j < portals.Count; j++)
+                {
+                    Thing thing = portals[j];
+                    CompStrataShaftLink link = CompStrataShaftLink.CompOf(thing);
+                    if (link == null)
+                    {
+                        continue;
+                    }
+                    link.EnsurePairGuid();
+                    string guid = link.pairGuid;
+                    if (guid.NullOrEmpty())
+                    {
+                        continue;
+                    }
+
+                    if (IsStrataPortalShaft(thing))
+                    {
+                        AddToGuidList(shaftsByGuid, guid, (MapPortal)thing);
+                    }
+                    else if (IsStrataPortalLanding(thing))
+                    {
+                        AddToGuidList(landingsByGuid, guid, (MapPortal)thing);
+                    }
+                }
+            }
+
+            int relinked = 0;
+            foreach (KeyValuePair<string, List<MapPortal>> kv in shaftsByGuid)
+            {
+                if (kv.Value.Count != 1)
+                {
+                    continue;
+                }
+                if (!landingsByGuid.TryGetValue(kv.Key, out List<MapPortal> landings)
+                    || landings.Count != 1)
+                {
+                    continue;
+                }
+
+                MapPortal shaft = kv.Value[0];
+                MapPortal landing = landings[0];
+                if (IsProperlyLinked(shaft, landing))
+                {
+                    continue;
+                }
+                if (!StrataGravshipUtility.SameShaftFamily(shaft, landing))
+                {
+                    continue;
+                }
+                if (ConnectPortalPair(shaft, landing))
+                {
+                    relinked++;
+                }
+            }
+            return relinked;
+        }
+
+        private static void AddToGuidList(
+            Dictionary<string, List<MapPortal>> dict, string guid, MapPortal portal)
+        {
+            if (!dict.TryGetValue(guid, out List<MapPortal> list))
+            {
+                list = new List<MapPortal>();
+                dict[guid] = list;
+            }
+            list.Add(portal);
+        }
+
+        public static string DebugPortalTopology()
+        {
+            var sb = new System.Text.StringBuilder("[Strata] Portal topology:\n");
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                sb.AppendLine("  Map " + map + ":");
+                List<Thing> portals = map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal);
+                for (int j = 0; j < portals.Count; j++)
+                {
+                    Thing thing = portals[j];
+                    if (!CompStrataShaftLinkInjector.IsStrataPortalDef(thing.def))
+                    {
+                        continue;
+                    }
+                    CompStrataShaftLink link = CompStrataShaftLink.CompOf(thing);
+                    string pair = link != null ? link.ShortId : "-";
+                    if (thing is MapPortal shaft && thing is not PocketMapExit)
+                    {
+                        PocketMapExit exit = shaft.exit;
+                        Map pocket = PocketMapRef(shaft);
+                        bool ok = exit != null && IsProperlyLinked(shaft, exit);
+                        sb.AppendLine("    SHAFT " + thing.LabelCap + " @" + thing.Position
+                            + " pair=" + pair
+                            + " exit=" + (exit?.LabelCap ?? "null")
+                            + " pocket=" + (pocket?.ToString() ?? "null")
+                            + (ok ? " OK" : " BROKEN"));
+                    }
+                    else if (thing is PocketMapExit landing)
+                    {
+                        MapPortal entrance = landing.entrance;
+                        sb.AppendLine("    LAND " + thing.LabelCap + " @" + thing.Position
+                            + " pair=" + pair
+                            + " entrance=" + (entrance?.LabelCap ?? "null")
+                            + (entrance != null && IsProperlyLinked(entrance, landing) ? " OK" : " BROKEN"));
+                    }
+                }
+            }
+            return sb.ToString();
+        }
+
         // Carves a small chamber out of the rock and spawns a portal's bottom
         // landing there. Must run while PocketMapUtility.currentlyGeneratingPortal
         // points at the entrance (during map generation or GeneratePocketMapInt):
@@ -796,7 +1049,16 @@ namespace Strata
         {
             ArrivalZoneUtility.PrepareLandingCell(level, cell);
             Rot4 spawnRot = rot ?? PocketMapUtility.currentlyGeneratingPortal?.Rotation ?? Rot4.North;
-            return (PocketMapExit)GenSpawn.Spawn(ThingMaker.MakeThing(exitDef), cell, level, spawnRot);
+            PocketMapExit landing = (PocketMapExit)GenSpawn.Spawn(
+                ThingMaker.MakeThing(exitDef), cell, level, spawnRot);
+            MapPortal entrance = PocketMapUtility.currentlyGeneratingPortal;
+            if (entrance != null && landing != null)
+            {
+                // Vanilla SpawnSetup usually wires entrance/exit; stamp pair IDs
+                // and repair if that wiring was incomplete.
+                ConnectPortalPair(entrance, landing, log: false);
+            }
+            return landing;
         }
 
         public static bool IsSealedPortal(Thing thing)

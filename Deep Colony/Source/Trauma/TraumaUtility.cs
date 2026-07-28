@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 
@@ -45,6 +46,19 @@ namespace DeepColony
                     victim,
                     MessageTypeDefOf.NegativeEvent,
                     historical: false);
+            }
+        }
+
+        /// <summary>Removes a specific trauma memory (e.g. upgrade Violent Loss → Bereavement).</summary>
+        public static void RemoveTrauma(Pawn pawn, TraumaDef def)
+        {
+            if (pawn?.needs?.mood?.thoughts == null || def == null) return;
+
+            List<Thought_Memory> memories = pawn.needs.mood.thoughts.memories.Memories;
+            for (int i = memories.Count - 1; i >= 0; i--)
+            {
+                if (memories[i] is Thought_Trauma tt && tt.traumaDef == def)
+                    pawn.needs.mood.thoughts.memories.RemoveMemory(tt);
             }
         }
 
