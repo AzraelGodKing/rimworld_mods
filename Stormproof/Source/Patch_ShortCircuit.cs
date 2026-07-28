@@ -10,10 +10,15 @@ namespace Stormproof
     [HarmonyPatch(typeof(IncidentWorker_ShortCircuit), "TryExecuteWorker")]
     public static class Patch_ShortCircuit
     {
-        public static bool Prefix(IncidentParms parms, ref bool __result)
+        public static bool Prefix(IncidentWorker_ShortCircuit __instance, IncidentParms parms, ref bool __result)
         {
             Map map = (Map)parms.target;
             if (map == null)
+            {
+                return true;
+            }
+            // Never Absorb() a no-op Zzzt (e.g. storm spire roll with no shortable net).
+            if (!__instance.CanFireNow(parms))
             {
                 return true;
             }

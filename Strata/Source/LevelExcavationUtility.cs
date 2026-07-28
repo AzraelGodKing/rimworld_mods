@@ -66,14 +66,14 @@ namespace Strata
             }
             if (StrataDepth.Of(map) == 0)
             {
-                if (!IsDiggingDownResearchFinished())
+                if (!DebugSettings.godMode && !IsDiggingDownResearchFinished())
                 {
                     reason = "Requires digging down research to open the first underground level.";
                     return false;
                 }
                 return true;
             }
-            if (!IsDeepExcavationResearchFinished())
+            if (!DebugSettings.godMode && !IsDeepExcavationResearchFinished())
             {
                 reason = "Requires deep excavation research to dig below the first underground level.";
                 return false;

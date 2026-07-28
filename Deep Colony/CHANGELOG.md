@@ -4,8 +4,14 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ## [Unreleased]
 
-### Added
-- **Docs teaser** — mystery hub page (`docs/ledger.html`, nav `···`) — fragmentary ledger, no download, no public name. Stamp `ledger-mystery-v1`.
+### Changed
+- **Public release** — docs site declassified (`docs/deep-colony.html`); Steam Workshop + `DeepColony.zip` on the rolling GitHub `latest` release; `PublishedFileId.txt` checked in. Mystery `ledger.html` redirects here.
+- **Workshop preview** — compressed `About/Preview.png` (~1.63 MB → ~0.38 MB) so Steam Workshop accepts it (Preview must be under 1 MB).
+- Deep Colony C# project uses `Krafs.Rimworld.Ref` (same CI pattern as sibling mods).
+
+### Fixed
+- **Bereavement stacks with Violent Loss** — second close violent death upgrades by removing Violent Loss before applying BereavementShock.
+- **Massacre trauma latch** — massacre flag clears when the death window drops below the cluster threshold (trickle deaths no longer block future massacres forever).
 
 ### Added
 - **Counsel trauma job** — doctors (and right-click) can run counseling sessions that advance trauma recovery; random therapy chat remains as a light supplement.

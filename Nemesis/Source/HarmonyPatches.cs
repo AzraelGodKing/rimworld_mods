@@ -232,4 +232,26 @@ namespace Nemesis
                 NemesisRegistry.ResolutionDirty = true;
         }
     }
+
+    /// <summary>Boost social-fight chance between nemesis and fixation target.</summary>
+    [HarmonyPatch]
+    public static class Patch_SocialFightChance
+    {
+        static bool Prepare() =>
+            AccessTools.Method(typeof(Pawn_InteractionsTracker), "SocialFightChance",
+                new[] { typeof(InteractionDef), typeof(Pawn) }) != null;
+
+        [HarmonyTargetMethod]
+        static MethodBase TargetMethod() =>
+            AccessTools.Method(typeof(Pawn_InteractionsTracker), "SocialFightChance",
+                new[] { typeof(InteractionDef), typeof(Pawn) });
+
+        // RimWorld 1.6 renamed the second arg from otherPawn → initiator.
+        [HarmonyPostfix]
+        static void Postfix(Pawn ___pawn, Pawn initiator, ref float __result)
+        {
+            if (__result <= 0f || ___pawn == null || initiator == null) return;
+            __result *= NemesisSocial.SocialFightMultiplier(___pawn, initiator);
+        }
+    }
 }

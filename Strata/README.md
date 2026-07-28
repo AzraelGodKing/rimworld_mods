@@ -66,6 +66,12 @@ raid pursuit, and the vacant-level performance throttle.
 
 ## Performance
 
+With **no floors opened yet**, Strata short-circuits atmosphere simulation (when
+gases are off and no vents/emitters are registered) and cross-level hooks
+(resources, work/food/rest relays, raid pursuit, threat watch). Enabling the
+mod still adds a small Harmony baseline, but the avoidable per-tick / think
+tax stays near zero until the first stairwell or shaft opens a linked map.
+
 Each opened level is a full map **the same size as the map above it** — that
 is what makes true 1:1 vertical stacking possible, and it means the cost
 scales with your chosen map size. On large maps (300×300 and up) every level
@@ -86,6 +92,19 @@ Development mode adds a **Strata** debug category: fire any Strata incident
 list smoke emitters, list hidden chambers (geysers and gas vents, discovered
 or not), log level depths, and **Run self-tests** — invariant checks over the
 live colony that catch registration, gas-def, and level-graph problems.
+
+**Stair / portal repair** (same Strata category):
+
+- **Relink stairs by pair ID** — stamp healthy pairs, then rewire unique
+  shaft↔landing matches that share a `pairGuid`
+- **Relink stairs (click shaft, then landing)** — map tool; switch floors
+  between clicks if needed
+- **Relink selected shaft ↔ landing** — both selected on the current map
+- **Cancel stair relink** — clear an in-progress click relink
+- **Repair missing landings** — restore landings under shafts that still
+  own a pocket map
+- **Log portal topology (include pair id)** — dump shaft/landing wiring +
+  short Pair ID (also shown on inspect when DevMode is on)
 
 ## Building from source
 

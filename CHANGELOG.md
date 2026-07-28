@@ -4,6 +4,15 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Docs** — Nemesis and Deep Colony declassified as full releases (`nemesis.html`, `deep-colony.html`); hub cards, nav, comparison table, and download buttons. Mystery `signal.html` / `ledger.html` redirect. Steam Workshop links + CI packs `Nemesis.zip` / `DeepColony.zip`.
+- **Strata** — stair pair IDs + auto/manual DevMode relink (`stair-pair-id-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — removed `CurrentMap` Harmony patch entirely; clamp on map remove / see-below restore (`currentmap-no-getter-patch-v3`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — idle TPS v2 (gases-off, threat/raid gates, work relay link check, combined resources default off). Stamp `idle-tps-v2`. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — Misc. Robots work relay from underground (allowed-area + return-to-base); cross-level haul return-home; PUAH soft unload; Haul across levels setting. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Bugfix pass** — Homesteader allergy-on-ingest only; Nemesis post-escape heal; Strata cage food drop; Deep Colony bereavement/massacre; Stormproof spire/pylon. → per-mod changelogs
+- **Deep Colony** — refreshed Workshop `About/Preview.png` (under 2 MB). → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Nemesis** — post-escape Direct Raid returns with a bigger army + injects the nemesis; BARS raid letter. → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
+- **Nemesis** — Workshop `About/Preview.png` (under 2 MB). → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
 - **Docs** — Strata webpage revamped for V3 features (`strata.html` + roadmap CTA). Stamp `docs-strata-v3-page-v1`. → [docs/strata.html](docs/strata.html)
 - **Docs** — mystery teaser page for Deep Colony (`ledger.html`, nav `···`), parallel to Nemesis `signal.html`. → [docs/ledger.html](docs/ledger.html)
 - **Strata** — removed ModMixer magenta placeholders that overrode vanilla Mine / UI command icons. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)

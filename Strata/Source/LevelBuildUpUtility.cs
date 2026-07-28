@@ -55,7 +55,7 @@ namespace Strata
             {
                 return false;
             }
-            if (!IsBuildingUpResearchFinished())
+            if (!DebugSettings.godMode && !IsBuildingUpResearchFinished())
             {
                 reason = "Requires building up research to open the first upper level.";
                 return false;

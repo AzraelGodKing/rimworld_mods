@@ -707,6 +707,10 @@ namespace Homesteader
         }
     }
 
+    /// <summary>
+    /// ThoughtsFromIngesting is also called from FoodOptimality / ingest menus.
+    /// Only add mood thoughts here — never hediff / discovery side effects.
+    /// </summary>
     [HarmonyPatch(typeof(FoodUtility), nameof(FoodUtility.ThoughtsFromIngesting))]
     public static class Patch_FavoriteFoodThoughts
     {
@@ -715,14 +719,6 @@ namespace Homesteader
             if (ingester?.needs?.mood == null || __result == null || foodDef == null)
             {
                 return;
-            }
-
-            string allergyId = AllergyCatalog.MatchingFoodAllergyId(
-                FavoriteFoodUtility.Comp?.GetAllergyIds(ingester),
-                foodDef);
-            if (allergyId != null)
-            {
-                FavoriteFoodUtility.ApplyAllergicReaction(ingester, allergyId);
             }
 
             if (!FavoriteFoodUtility.IsFavorite(ingester, foodDef))
@@ -749,6 +745,27 @@ namespace Homesteader
                 thought = thought,
                 fromPrecept = null
             });
+        }
+    }
+
+    /// <summary>Allergy flare + discovery only when the pawn actually eats.</summary>
+    [HarmonyPatch(typeof(Thing), nameof(Thing.Ingested))]
+    public static class Patch_Thing_Ingested_Allergy
+    {
+        public static void Postfix(Thing __instance, Pawn ingester)
+        {
+            if (ingester?.needs?.mood == null || __instance?.def == null)
+            {
+                return;
+            }
+
+            string allergyId = AllergyCatalog.MatchingFoodAllergyId(
+                FavoriteFoodUtility.Comp?.GetAllergyIds(ingester),
+                __instance.def);
+            if (allergyId != null)
+            {
+                FavoriteFoodUtility.ApplyAllergicReaction(ingester, allergyId);
+            }
         }
     }
 

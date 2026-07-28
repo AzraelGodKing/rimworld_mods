@@ -154,9 +154,9 @@ namespace Stormproof
             harmony.Patch(getter, postfix: new HarmonyMethod(patch));
         }
 
-        public static bool SkipAshHediffIfBarrier(Pawn pawn)
+        public static bool SkipAshHediffIfBarrier(Pawn target)
         {
-            return pawn?.Map == null || !HazardProtection.BarrierProtecting(pawn.Map);
+            return target?.Map == null || !HazardProtection.BarrierProtecting(target.Map);
         }
 
         public static void RestoreAshSky(Map map, ref SkyTarget? __result) =>

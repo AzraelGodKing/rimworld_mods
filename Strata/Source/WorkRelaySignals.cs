@@ -286,6 +286,11 @@ namespace Strata
             {
                 return false;
             }
+            // Same kill switch as WorkGiver_HaulAcrossLevels / InstallAcrossLevels.
+            if (StrataMod.Settings != null && !StrataMod.Settings.haulAcrossLevelsEnabled)
+            {
+                return false;
+            }
 
             HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
             if (wanted.Count > 0)

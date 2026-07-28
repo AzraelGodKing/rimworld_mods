@@ -20,7 +20,8 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 ## Livestock & yard
 
 - [ ] **Guard geese** — alarm animal / nest theme; map-edge alert at the farmyard
-- [ ] **Prize livestock** — hidden quality across generations; festival + coop / goat pen synergy
+- [ ] **Prize livestock** — hidden quality across generations; festival + coop synergy
+- [ ] **Goat pen** — fenced dairy shed that periodically yields milk (companion to chicken coop)
 
 ## Power & water
 

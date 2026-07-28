@@ -15,7 +15,9 @@
   <Strata_Settings_Reset>重置</Strata_Settings_Reset>
   <Strata_Settings_ColonistRelays>殖民者跨层通勤</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>工作通勤</Strata_Settings_WorkRelay>
-  <Strata_Settings_WorkRelayDesc>空闲殖民者与殖民地机械体前往有工作的其他楼层。默认关闭——仅在需要跨层工作调度时启用。</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_WorkRelayDesc>空闲殖民者与殖民地机械体在本层无事可做时前往有工作的其他楼层。不控制经楼梯搬运——请用「跨层搬运」。</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_HaulAcrossLevels>跨层搬运</Strata_Settings_HaulAcrossLevels>
+  <Strata_Settings_HaulAcrossLevelsDesc>殖民者与机器人接取经楼梯井搬到相连楼层更好仓库/工地需求的搬运工作。与工作通勤分开。</Strata_Settings_HaulAcrossLevelsDesc>
   <Strata_Settings_RobotSoftCompat>Misc. Robots 软兼容</Strata_Settings_RobotSoftCompat>
   <Strata_Settings_RobotSoftCompatDesc>为 Misc. Robots 提供跨层门户路径（充电点在其他楼层时的返回基地）。关闭可对比测试是否由 Strata 机器人钩子导致卡顿。</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Misc. Robots 工作通勤</Strata_Settings_RobotWorkRelay>
@@ -60,7 +62,7 @@
   <Strata_Settings_GasOverlayLabels>气体叠加房间标签</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>开启游戏设置中的气体叠加时，在每个封闭房间绘制彩色百分比标签（前三种气体 + 负载）。叠加开启时，光标面板始终可用。</Strata_Settings_GasOverlayLabelsDesc>
   <Strata_PlaySettings_GasOverlayTip>Strata：显示气体叠加\n按主要有害气体为房间着色。将鼠标移到房间上可查看附着于光标的气体混合面板。可选每房间标签：Strata 模组设置 → 气体叠加房间标签。</Strata_PlaySettings_GasOverlayTip>
-  <Strata_PlaySettings_CombinedResourcesTip>Strata：合并楼层资源（默认开启）\n资源读数、建造成本与“直到拥有 X”账单会计入每个相连楼层货堆/货架上的物品。</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata：合并楼层资源（默认关闭）\n开启后，资源读数、建造成本与“直到拥有 X”账单会计入每个相连楼层货堆/货架上的物品。仅一层时无额外开销。</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>负载 {0}%</Strata_GasOverlay_Load>
   <Strata_GasOverlay_LoadParen>  （负载 {0}%）</Strata_GasOverlay_LoadParen>
   <Strata_GasOverlay_OpenAir>气体：开阔空气</Strata_GasOverlay_OpenAir>
