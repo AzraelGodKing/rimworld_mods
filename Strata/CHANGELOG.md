@@ -4,6 +4,10 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
+### Added
+
+- **Stair pair IDs + auto/manual relink** — `CompStrataShaftLink` (`strataPairGuid`) on all Strata shafts/landings; syncs with gravship `shaftId` when present. `ConnectPortalPair` is the single wiring path; load stamps healthy pairs and auto-rewires unique pair-ID matches. DevMode: relink by pair ID, click shaft→landing (cross-floor), relink selected, cancel, repair missing landings, log topology with pair id. Stamp `stair-pair-id-v1`.
+
 ### Fixed
 
 - **`Patch_CurrentMapIndex` frame cost** — no longer Harmony-patches `Game.CurrentMap` at all (any Prefix was still ~8–13% of frame at 300–1200 calls/update). Clamp only on `DeinitAndRemoveMap` + see-below restore. Stamp `currentmap-no-getter-patch-v3`.

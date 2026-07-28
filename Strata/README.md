@@ -93,6 +93,19 @@ list smoke emitters, list hidden chambers (geysers and gas vents, discovered
 or not), log level depths, and **Run self-tests** — invariant checks over the
 live colony that catch registration, gas-def, and level-graph problems.
 
+**Stair / portal repair** (same Strata category):
+
+- **Relink stairs by pair ID** — stamp healthy pairs, then rewire unique
+  shaft↔landing matches that share a `pairGuid`
+- **Relink stairs (click shaft, then landing)** — map tool; switch floors
+  between clicks if needed
+- **Relink selected shaft ↔ landing** — both selected on the current map
+- **Cancel stair relink** — clear an in-progress click relink
+- **Repair missing landings** — restore landings under shafts that still
+  own a pocket map
+- **Log portal topology (include pair id)** — dump shaft/landing wiring +
+  short Pair ID (also shown on inspect when DevMode is on)
+
 ## Building from source
 
 `Strata/Source/Strata.csproj` targets .NET Framework 4.7.2 and references

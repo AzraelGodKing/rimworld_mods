@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Strata** — stair pair IDs + auto/manual DevMode relink (`stair-pair-id-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — removed `CurrentMap` Harmony patch entirely; clamp on map remove / see-below restore (`currentmap-no-getter-patch-v3`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — idle TPS v2 (gases-off, threat/raid gates, work relay link check, combined resources default off). Stamp `idle-tps-v2`. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — Misc. Robots work relay from underground (allowed-area + return-to-base); cross-level haul return-home; PUAH soft unload; Haul across levels setting. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
