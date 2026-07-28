@@ -73,5 +73,21 @@ namespace Nemesis
             if (n <= 4) return "Nemesis_Letter_EscapeN".Translate(name, n);
             return "Nemesis_Letter_EscapeMany".Translate(name, n);
         }
+
+        /// <summary>BFV-style theatrical return-with-army raid letters by escape stage.</summary>
+        public static string VengeanceReturnTitle(NemesisData data, int stage)
+        {
+            string name = data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
+            stage = UnityEngine.Mathf.Clamp(stage, 1, 5);
+            return $"Nemesis_Letter_VengeanceReturnTitle{stage}".Translate(name);
+        }
+
+        public static string VengeanceReturnBody(NemesisData data, int stage)
+        {
+            string name = data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
+            string target = TargetPhrase(data);
+            stage = UnityEngine.Mathf.Clamp(stage, 1, 5);
+            return $"Nemesis_Letter_VengeanceReturnBody{stage}".Translate(name, target);
+        }
     }
 }

@@ -49,22 +49,45 @@ namespace Stormproof
                 .Where(c => c.Net == powerComp.PowerNet)
                 .Sum(c => c.StoredEnergy);
 
-        // Drains up to `amount` of stored strike energy from capacitor banks on
-        // our net. Returns true if the full amount was available and taken.
+        // Drains `amount` of stored strike energy from capacitor banks on our net.
+        // Returns true only if the full amount was available; otherwise drains nothing.
         private bool TryDrainCapacitors(float amount)
         {
-            foreach (CompStormCapacitor capacitor in StormproofRegistry
-                         .On(StormproofRegistry.Capacitors, parent.Map)
-                         .Where(c => c.Net == powerComp.PowerNet)
-                         .OrderByDescending(c => c.StoredEnergy))
+            if (amount <= 0f)
             {
-                if (amount <= 0f)
+                return true;
+            }
+
+            var banks = StormproofRegistry
+                .On(StormproofRegistry.Capacitors, parent.Map)
+                .Where(c => c.Net == powerComp.PowerNet)
+                .OrderByDescending(c => c.StoredEnergy)
+                .ToList();
+
+            float available = 0f;
+            foreach (CompStormCapacitor capacitor in banks)
+            {
+                available += capacitor.StoredEnergy;
+                if (available >= amount)
                 {
                     break;
                 }
-                amount -= capacitor.DrainEnergy(amount);
             }
-            return amount <= 0f;
+            if (available < amount)
+            {
+                return false;
+            }
+
+            float remaining = amount;
+            foreach (CompStormCapacitor capacitor in banks)
+            {
+                if (remaining <= 0f)
+                {
+                    break;
+                }
+                remaining -= capacitor.DrainEnergy(remaining);
+            }
+            return remaining <= 0.01f;
         }
 
         public override void CompTick()
