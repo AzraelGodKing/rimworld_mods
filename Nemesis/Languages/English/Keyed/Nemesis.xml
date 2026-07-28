@@ -65,6 +65,18 @@
   <Nemesis_Letter_NoteBody>A note was left where your colonists would find it. No one saw who left it.\n\n{0}</Nemesis_Letter_NoteBody>
   <Nemesis_Letter_RaidTitle>Raid: {0}</Nemesis_Letter_RaidTitle>
   <Nemesis_Letter_RaidBody>{0} sent this raid. They want {1} to know who ordered it.</Nemesis_Letter_RaidBody>
+
+  <!-- Vengeance army return (post-escape DirectRaid) — punchline is deliberate BARS -->
+  <Nemesis_Letter_VengeanceReturnTitle1>{0} Returns</Nemesis_Letter_VengeanceReturnTitle1>
+  <Nemesis_Letter_VengeanceReturnBody1>{0} slipped away once. That was a mistake you will not make twice — because this time they did not come alone.\n\nWhy return alone when you can return with an army?\n\nThey are here for {1}.</Nemesis_Letter_VengeanceReturnBody1>
+  <Nemesis_Letter_VengeanceReturnTitle2>{0} Brought Friends</Nemesis_Letter_VengeanceReturnTitle2>
+  <Nemesis_Letter_VengeanceReturnBody2>You had {0}. Then you didn't. Now the horizon is crowded.\n\nWhy return alone when you can return with an army?\n\n{1} is still on the list.</Nemesis_Letter_VengeanceReturnBody2>
+  <Nemesis_Letter_VengeanceReturnTitle3>Army at the Gate: {0}</Nemesis_Letter_VengeanceReturnTitle3>
+  <Nemesis_Letter_VengeanceReturnBody3>Escape after escape. Lesson learned — by them, not by you.\n\n{0} is back, and this time the raid is theirs to lead.\n\nWhy return alone when you can return with an army?\n\nTell {1} to get ready.</Nemesis_Letter_VengeanceReturnBody3>
+  <Nemesis_Letter_VengeanceReturnTitle4>{0}: No More Solo Runs</Nemesis_Letter_VengeanceReturnTitle4>
+  <Nemesis_Letter_VengeanceReturnBody4>Enough skulking. Enough near-misses. {0} stopped pretending this was a duel.\n\nWhy return alone when you can return with an army?\n\nThe debt against {1} just got collective.</Nemesis_Letter_VengeanceReturnBody4>
+  <Nemesis_Letter_VengeanceReturnTitle5>{0} and the Horde</Nemesis_Letter_VengeanceReturnTitle5>
+  <Nemesis_Letter_VengeanceReturnBody5>They have survived you too many times to care about fair fights.\n\n{0} returns at the head of a warband.\n\nWhy return alone when you can return with an army?\n\n{1} was never going to face them one-on-one again.</Nemesis_Letter_VengeanceReturnBody5>
   <Nemesis_Letter_AssaultTitle>{0} Arrives</Nemesis_Letter_AssaultTitle>
   <Nemesis_Letter_AssaultPawn>{0} has come for {1} personally. They will pull back if things turn, but they will be back.</Nemesis_Letter_AssaultPawn>
   <Nemesis_Letter_AssaultColony>{0} is leading this assault in person. They won't stay if the odds turn against them.</Nemesis_Letter_AssaultColony>

@@ -57,14 +57,38 @@ namespace Strata
                 preferArrivalNear = anchor.Position;
             }
 
+            int returnId = returnMap?.uniqueID ?? -1;
+            int preferredId = preferredBed?.thingIDNumber
+                ?? preferredThing?.thingIDNumber
+                ?? -1;
+
+            // Mid-hop TryRelayToMap re-Marks without returnMap / constructible.
+            // Preserve haul home + force-build site across intermediate landings.
+            if (purpose == RelayPurpose.Haul
+                && intents.TryGetValue(pawn.thingIDNumber, out Intent prior)
+                && prior.purpose == RelayPurpose.Haul)
+            {
+                if (returnId < 0 && prior.returnMapId > 0)
+                {
+                    returnId = prior.returnMapId;
+                }
+                if (preferredId < 0 && prior.preferredBedId > 0)
+                {
+                    preferredId = prior.preferredBedId;
+                }
+                if ((!preferArrivalNear.IsValid || !preferArrivalNear.InBounds(destMap))
+                    && prior.preferArrivalNear.IsValid)
+                {
+                    preferArrivalNear = prior.preferArrivalNear;
+                }
+            }
+
             intents[pawn.thingIDNumber] = new Intent
             {
                 destMapId = destMap.uniqueID,
                 purpose = purpose,
-                preferredBedId = preferredBed?.thingIDNumber
-                    ?? preferredThing?.thingIDNumber
-                    ?? -1,
-                returnMapId = returnMap?.uniqueID ?? -1,
+                preferredBedId = preferredId,
+                returnMapId = returnId,
                 carriedPawnId = carriedId,
                 preferArrivalNear = preferArrivalNear,
             };
@@ -269,6 +293,9 @@ namespace Strata
         private static void FinishHaul(Pawn pawn, int returnMapId, int constructibleId)
         {
             bool delivering = StrataPortalUtility.TryStartHaulDelivery(pawn, constructibleId);
+            // Soft-compat: unload Pick Up And Haul inventory into dest storage.
+            StrataPuahSoftCompat.TryDeliverInventory(pawn);
+
             Map returnMap = returnMapId > 0 ? FindMap(returnMapId) : null;
             if (returnMap == null || returnMap == pawn.Map)
             {
@@ -282,6 +309,10 @@ namespace Strata
                 RelayPurpose.Haul);
             if (home == null)
             {
+                // Stair congested / temporarily unreachable — retry next ticks
+                // instead of wandering forever on the delivery floor.
+                Mark(pawn, returnMap, RelayPurpose.Haul);
+                NotifyPortalArrival(pawn);
                 return;
             }
 

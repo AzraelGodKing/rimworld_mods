@@ -15,11 +15,13 @@
   <Strata_Settings_Reset>Reset</Strata_Settings_Reset>
   <Strata_Settings_ColonistRelays>Colonist relays</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Work relay</Strata_Settings_WorkRelay>
-  <Strata_Settings_WorkRelayDesc>Idle colonists and colony mechanoids commute to other levels that have work. Off by default — enable only if you want cross-floor work routing.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_WorkRelayDesc>Idle colonists and colony mechanoids walk to other levels that have work when their own floor is idle. Does NOT control hauling through stairs — use Haul across levels for that.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_HaulAcrossLevels>Haul across levels</Strata_Settings_HaulAcrossLevels>
+  <Strata_Settings_HaulAcrossLevelsDesc>Colonists and bots take Hauling jobs that carry items through stairwells to better storage / construction demand on linked floors. Separate from Work relay.</Strata_Settings_HaulAcrossLevelsDesc>
   <Strata_Settings_RobotSoftCompat>Misc. Robots soft-compat</Strata_Settings_RobotSoftCompat>
   <Strata_Settings_RobotSoftCompatDesc>Cross-level portal routing for Misc. Robots (return-to-base when recharge is on another level). Turn off to A/B test whether Strata robot hooks cause lag.</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Misc. Robots work relay</Strata_Settings_RobotWorkRelay>
-  <Strata_Settings_RobotWorkRelayDesc>When a bot finds no local haul/clean work, send it through stairwells toward linked levels that have work. Off by default — enable if you want bots to commute across floors.</Strata_Settings_RobotWorkRelayDesc>
+  <Strata_Settings_RobotWorkRelayDesc>When a bot finds no local haul/clean work, send it through stairwells toward linked levels that have work. Also lets bots leave an allowed-area restriction (e.g. underground station) to work upstairs. Off by default.</Strata_Settings_RobotWorkRelayDesc>
   <Strata_Settings_ShaftFluid>Shaft fluid junctions</Strata_Settings_ShaftFluid>
   <Strata_Settings_ShaftFluidDesc>Cross-level fluid ties (water, helixien, coolant, etc.). Auto-disabled if repeated errors trip the fault guard.</Strata_Settings_ShaftFluidDesc>
   <Strata_FaultGuardTripped>Strata auto-disabled {0} after repeated errors. Re-enable in mod options if needed.</Strata_FaultGuardTripped>
@@ -60,7 +62,7 @@
   <Strata_Settings_GasOverlayLabels>Gas overlay room labels</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>While the play-settings gas overlay is on, draw color-coded percentage labels on each enclosed room (top three gases + load). The cursor panel is always available when the overlay is on.</Strata_Settings_GasOverlayLabelsDesc>
   <Strata_PlaySettings_GasOverlayTip>Strata: show gas overlay\nTints each room by its dominant hazardous gas. Move the mouse over a room for a cursor-attached gas mix panel. Optional per-room labels: Strata mod settings → Gas overlay room labels.</Strata_PlaySettings_GasOverlayTip>
-  <Strata_PlaySettings_CombinedResourcesTip>Strata: combined level resources (on by default)\nResource readout, build costs, and “until you have X” bills count items in stockpiles/shelves on every linked floor.</Strata_PlaySettings_CombinedResourcesTip>
+  <Strata_PlaySettings_CombinedResourcesTip>Strata: combined level resources (off by default)\nWhen on, resource readout, build costs, and “until you have X” bills count items in stockpiles/shelves on every linked floor. No cost while only one map is linked.</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>load {0}%</Strata_GasOverlay_Load>
   <Strata_GasOverlay_LoadParen>  (load {0}%)</Strata_GasOverlay_LoadParen>
   <Strata_GasOverlay_OpenAir>Gas: open air</Strata_GasOverlay_OpenAir>

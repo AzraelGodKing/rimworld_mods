@@ -1157,46 +1157,7 @@ namespace Strata
 
         private static void ConnectPortalPair(MapPortal hostShaft, MapPortal landing)
         {
-            if (hostShaft == null || landing == null)
-            {
-                return;
-            }
-
-            // MapPortal.exit / PocketMapExit.entrance are the bidirectional link.
-            if (landing is PocketMapExit exitLanding)
-            {
-                if (exitLanding.entrance == hostShaft && hostShaft.exit == exitLanding)
-                {
-                    return;
-                }
-
-                // Drop the old landing's entrance so rewiring leaves no one-way link.
-                if (hostShaft.exit != null && hostShaft.exit != exitLanding
-                    && hostShaft.exit.entrance == hostShaft)
-                {
-                    hostShaft.exit.entrance = null;
-                }
-
-                exitLanding.entrance = hostShaft;
-                hostShaft.exit = exitLanding;
-            }
-
-            if (landing.Map != null)
-            {
-                AccessTools.Field(typeof(MapPortal), "pocketMap").SetValue(hostShaft, landing.Map);
-                StrataGravshipShaftIdentity.CompOf(hostShaft)?.RememberPocket(landing.Map);
-            }
-
-            // Ensure pocket parenting points at the shaft's host map.
-            if (landing.Map?.Parent is PocketMapParent parent && hostShaft.Map != null)
-            {
-                parent.sourceMap = hostShaft.Map;
-            }
-            StrataGravshipCache.Invalidate();
-
-            Log.Message("[Strata] Gravship land: wired "
-                + landing.LabelCap + " <-> " + hostShaft.LabelCap
-                + " on " + hostShaft.Map);
+            StrataPortalUtility.ConnectPortalPair(hostShaft, landing);
         }
 
         // True when a landing's entrance is usable on the current gravship stack.

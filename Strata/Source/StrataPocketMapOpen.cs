@@ -31,6 +31,9 @@ namespace Strata
             return portal != null && generatingPortalIds.Contains(portal.thingIDNumber);
         }
 
+        /// <summary>True while any stair/elevator dig or tower open is mid-LongEvent.</summary>
+        public static bool AnyGenerating => generatingPortalIds.Count > 0;
+
         public static bool HasFailed(MapPortal portal)
         {
             return portal != null && failedPortalIds.Contains(portal.thingIDNumber);
