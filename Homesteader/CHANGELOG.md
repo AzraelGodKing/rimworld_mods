@@ -8,7 +8,12 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Allergy flare without eating** — food allergy hediff / discovery no longer run from `ThoughtsFromIngesting` (also used by food AI and ingest menus). Reactions apply only on real `Thing.Ingested`.
 
 ### Changed
+- **Chicken coop** — replaced hay-bin placeholder sprite with a proper henhouse graphic (`Textures/Homesteader/Buildings/ChickenCoop.png`).
+- **27 statue** — replaced in-game sprite with brought `27_2.0` art (installed as-is at `Textures/Homesteader/Buildings/Statue27.png`).
 - **Diggo the plushie** — replaced in-game sprite with brought `HippoDogPlushie42` art (installed as-is at `Textures/Homesteader/Buildings/HippoDogPlushie.png`).
+
+### Removed
+- **Goat pen** — building and texture removed (`Homesteader_GoatPen` / `GoatPen.png`).
 
 ### Fixed
 - **Passive cooling performance** — root cellar / icehouse / springhouse cell cache rebuilds only when a cooler spawns or despawns (dirty flag), not every 250 ticks; `AmbientTemperature` early-outs when the map has no cooled cells.
@@ -48,7 +53,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Kats Effect** — rare Misc storyteller event that only fires when a finished 27 statue/monument is on the home map. Hybrid anomalous-broadcast letter (with a short Foundation addendum), temporary heat dome (~+10°C), short brain-rot hediff, 27-silver Super Chat (or hostile Kats if unpaid), and a personal Kats directive mood (+12, ~1 day). Min refire 27 days.
 - `Languages/English/Keyed/Homesteader.xml` — all C# player strings (wash tub, passive cooling, favorite food inspect, Kats Effect letter body) with `.Translate()` wiring.
 - `Languages/README.md` — translator guide (Keyed + DefInjected layout, package id).
-- **Homestead livestock:** chicken coop (periodic eggs) and goat pen (periodic milk); animal mash recipe at the hearth (barley/pumpkin/hay).
+- **Homestead livestock:** chicken coop (periodic eggs); animal mash recipe at the hearth (barley/pumpkin/hay).
 - **Charcuterie:** render lard or tallow from meat; stuff sausage from salted/smoked meat or jerky + fat + herbs (hearth).
 - **Homestead textiles:** flax crop, spinning wheel (flax/wool → homespun cloth), loom (quilt); quilted bed now costs a homestead quilt (comforts + textiles).
 - **Soil & cold storage:** compost heap (compost → fertilizer), composted soil terrain (1.45 fertility), icehouse (≤0°C), springhouse (≤8°C) — reuse root-cellar cooling.

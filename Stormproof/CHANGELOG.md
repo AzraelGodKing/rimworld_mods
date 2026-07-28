@@ -4,6 +4,9 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 
 ## [Unreleased]
 
+### Changed
+- **Workshop preview** — compressed `About/Preview.png` (~3.0 MB → ~0.94 MB) via palette PNG so Steam uploads stay under size pressure.
+
 ### Fixed
 - **Surge protector eats no-op spire Zzzt** — storm spire short-circuit rolls call `CanFireNow` first; surge Prefix also refuses `Absorb()` when vanilla would find nothing shortable.
 - **Static pylon charge bleed** — capacitor drain is all-or-nothing: if the bank cannot cover a zap, nothing is taken.

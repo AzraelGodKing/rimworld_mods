@@ -4,14 +4,15 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
+- **Public release** — docs site declassified (`docs/nemesis.html`); Steam Workshop + `Nemesis.zip` on the rolling GitHub `latest` release; `PublishedFileId.txt` checked in.
+- **Workshop preview** — added `About/Preview.png` selling the personal-antagonist fantasy; compressed ~1.39 MB → ~0.36 MB so Steam Workshop accepts it (Preview must be under 1 MB).
 - **Post-escape heal** — park / inject / assault recover the nemesis above the flee threshold so army-return and personal assaults no longer vanish within seconds.
 - **Vengeance army return** — after escapes, Direct Raid prefers a heavier points raid that injects the same nemesis pawn into the assault (BFV-style: don't come back alone). Raid letters land the line: *Why return alone when you can return with an army?* Dev action: *Nemesis/Actions → Vengeance army raid*.
-- **Workshop preview** — added `About/Preview.png` (under 2 MB) selling the personal-antagonist fantasy.
 - **Duplicate emerge / escape letters** — stacked Kill hits no longer re-open a hunt or re-send "Escapes" (claim hunt immediately; 180-tick escape latch; ignore Kill when already off-map). Wounded-escape create counts as the escape beat so queued Kills do not double-letter.
 - **Lord owns free world pawn** — escape / create / assault now detach the nemesis from any `Lord` and clear WorldPawns before `PassToWorld` or map spawn (fixes spam after Nemesis assault).
 - **Dev debug actions** — Development Mode menu under *Nemesis* / *Nemesis/Actions*: log state, start/clear hunt, fire next action, bump aggression, force escape, resolution dialog, and each harassment action.
 - **SocialFightChance Harmony startup crash** — RimWorld 1.6 renamed the second parameter to `initiator`; postfix updated so Nemesis loads again.
-- **No public download zip** — CI still compiles Nemesis, but `Nemesis.zip` is not published on the rolling GitHub Release.
+- **No public download zip** — ~~CI still compiles Nemesis, but `Nemesis.zip` is not published on the rolling GitHub Release.~~ **Superseded:** zip is published with the public release.
 - **Brought into** `rimworld_mods/Nemesis` as `AzraelGodKing.Nemesis` (Harmony 1.6, sibling csproj pattern).
 - **Credit** — Dredd / Misakabob named in About + this changelog as original author of the foundation.
 - **New harassment** — fake signal → delayed ambush; caravan harassment; EMP / grid sabotage; food-store raids; Anomaly bait (DLC, fail-open).

@@ -80,9 +80,19 @@ New event — **Ion storm**: batteries bleed charge, random EMP bursts stun powe
 
 Source lives in `Stormproof/Source`. The compiled `Stormproof.dll` is produced by the **Build mod DLLs** GitHub Action and included in the [release download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Stormproof.zip) (Assemblies are gitignored).
 
-### Nemesis (in progress)
+### Nemesis
 
-A named hostile becomes a personal antagonist — taunts, false leads, and targeted harassment. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Source lives in `Nemesis/Source`; CI still compiles it, but there is **no public download zip** yet. Site teaser: [signal.html](https://azraelgodking.github.io/rimworld_mods/signal.html).
+A named hostile becomes a personal antagonist — taunts, false leads, sabotage, and targeted assaults that flee when losing. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Foundation by **Dredd (Misakabob)**.
+
+- Site: [nemesis.html](https://azraelgodking.github.io/rimworld_mods/nemesis.html)
+- [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3773562126) · [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Nemesis.zip)
+
+### Deep Colony
+
+Perk trees, trauma & therapy, apprenticeship, generational inheritance, and living faction reputation. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
+
+- Site: [deep-colony.html](https://azraelgodking.github.io/rimworld_mods/deep-colony.html)
+- [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3773568314) · [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DeepColony.zip)
 
 ## Installation
 
@@ -94,15 +104,15 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, **Strata**, and **Nemesis** require the **Harmony** mod.
+4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, and **Deep Colony** require the **Harmony** mod.
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally.
 
-Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first.
+Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first (resolve an active Nemesis hunt before removing Nemesis).
 
 ## Changelogs
 
-Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md), [Nemesis](Nemesis/CHANGELOG.md).
+Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md), [Nemesis](Nemesis/CHANGELOG.md), [Deep Colony](Deep%20Colony/CHANGELOG.md).
 
 ## Website
 
