@@ -22,9 +22,10 @@ namespace Strata
     //    shelf HeldThings so hibernated or rarely-ticked floors stay accurate.
     public static class StrataResources
     {
-        // Default on — matches AASB “one colony column” inventory. Persisted
-        // via StrataSettings.combinedLevelResources; sync on load / toggle.
-        public static bool Combined = true;
+        // Default off — zero cost until the player enables combined inventory.
+        // Persisted via StrataSettings.combinedLevelResources; sync on load / toggle.
+        // GetCount / UI paths also no-op when !AnyLinkFrom (single map).
+        public static bool Combined = false;
 
         // Re-entrancy guard: our GetCount postfix sums other maps' stockpiles,
         // whose ResourceCounter readers must not recurse. Also used to read raw
@@ -206,15 +207,16 @@ namespace Strata
                 return local;
             }
             Map map = Find.CurrentMap;
-            if (map != null)
+            if (map == null || !LevelGraph.AnyLinkFrom(map))
             {
-                foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
+                return local;
+            }
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
+            {
+                List<Thing> other = link.map.listerThings.ThingsOfDef(def);
+                if (other.Count > 0)
                 {
-                    List<Thing> other = link.map.listerThings.ThingsOfDef(def);
-                    if (other.Count > 0)
-                    {
-                        return other;
-                    }
+                    return other;
                 }
             }
             return local;
@@ -231,10 +233,11 @@ namespace Strata
                 return;
             }
             Map map = StrataResources.MapOf(__instance);
-            if (map != null)
+            if (map == null || !LevelGraph.AnyLinkFrom(map))
             {
-                __result += StrataResources.LinkedExtra(map, rDef);
+                return;
             }
+            __result += StrataResources.LinkedExtra(map, rDef);
         }
     }
 
@@ -248,10 +251,11 @@ namespace Strata
                 return;
             }
             Map map = StrataResources.MapOf(__instance);
-            if (map != null)
+            if (map == null || !LevelGraph.AnyLinkFrom(map))
             {
-                __result = StrataResources.MergedCounts(map, __result);
+                return;
             }
+            __result = StrataResources.MergedCounts(map, __result);
         }
     }
 
@@ -289,7 +293,7 @@ namespace Strata
     public static class Patch_CombinedResourcesToggle
     {
         private static Texture2D icon;
-        private static bool lastCombined = true;
+        private static bool lastCombined = false;
 
         // Lazy: StaticConstructor ContentFinder can cache BadTex before textures load.
         private static Texture2D Icon =>

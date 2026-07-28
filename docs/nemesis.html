@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nemesis — a RimWorld mod by AzraelGodKing</title>
+<meta name="description" content="Nemesis: a named personal antagonist harasses your colony with taunts, false leads, and assaults that flee when losing. RimWorld 1.6, requires Harmony. Foundation by Dredd (Misakabob).">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">RIMWORLD MODS</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="homesteader.html">Homesteader</a>
+      <a href="stormproof.html">Stormproof</a>
+      <a href="strata.html">Strata</a>
+      <a href="nemesis.html" class="signal-link active">Nemesis</a>
+      <a href="deep-colony.html" class="ledger-link">Deep Colony</a>
+      <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero signal">
+  <div class="wrap">
+    <h1 class="x">NEMESIS</h1>
+    <p class="tagline">Someone remembers. Someone is coming back.</p>
+    <div class="badges">
+      <span class="badge signal">RimWorld 1.6</span>
+      <span class="badge signal">Requires Harmony</span>
+      <span class="badge signal">C# mod</span>
+      <span class="badge signal">Personal antagonist</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-nemesis" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3773562126">Steam Workshop</a>
+      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Nemesis.zip">&#11015; Download zip</a>
+      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="overview">
+    <h2 class="x">Overview</h2>
+    <p class="sub">A named pawn from a hostile faction becomes a <b>personal antagonist</b> — not another faceless raid. They harass your colony with taunts, false leads, waste drops, power sabotage, and personal assaults that flee when the fight turns. The hunt ends when you capture or kill them&hellip; or when they get what they came for.</p>
+    <div class="note signal">
+      <b>Credit:</b> original design and core runtime by <b>Dredd (Misakabob)</b>. Expanded and packaged here by AzraelGodKing with gratitude.<br>
+      <b>Needs:</b> <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a>. Load Nemesis after it. Safe to add mid-save; resolve any active hunt before removing.
+    </div>
+  </section>
+
+  <section id="starts">
+    <h2 class="x">How it starts</h2>
+    <p class="sub">Trigger chances are configurable in mod settings.</p>
+    <div class="grid">
+      <div class="card signal">
+        <div>
+          <h3>Killed ally or kin</h3>
+          <p>A colonist kills someone&rsquo;s ally or kin. Someone takes it personally.</p>
+        </div>
+      </div>
+      <div class="card signal">
+        <div>
+          <h3>Prison break / slave escape</h3>
+          <p>A prisoner (or Ideology slave) breaks out &mdash; and a former friend of the colony does not forgive it.</p>
+        </div>
+      </div>
+      <div class="card signal">
+        <div>
+          <h3>Wounded escape</h3>
+          <p>An enemy is wounded, escapes the map, then comes back for the colonist who cut them.</p>
+        </div>
+      </div>
+      <div class="card signal">
+        <div>
+          <h3>Fixation</h3>
+          <p>An enemy who killed one of yours fixates on a surviving colonist and makes it personal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="harassment">
+    <h2 class="x">What they do</h2>
+    <p class="sub">Harassment escalates over time. Settings control aggression pacing and the action mix.</p>
+    <div class="grid">
+      <div class="card signal wide">
+        <div>
+          <h3>Taunts &amp; notes</h3>
+          <div class="stat">Comms + paper</div>
+          <p>Comms taunts and paper notes that name your people. Soft-compat lines can reference Homesteader cellars / favorites and Stormproof ion flavor when those mods are loaded.</p>
+        </div>
+      </div>
+      <div class="card signal wide">
+        <div>
+          <h3>Raids &amp; vengeance army</h3>
+          <div class="stat">After escapes</div>
+          <p>Faction raids &mdash; and after escapes, <b>vengeance army returns</b> that inject the same nemesis into a heavier assault. <em>Why return alone when you can return with an army?</em></p>
+        </div>
+      </div>
+      <div class="card signal">
+        <div>
+          <h3>Personal assault</h3>
+          <p>On-map assaults that pull back when losing. They heal between escapes so the hunt keeps coming.</p>
+        </div>
+      </div>
+      <div class="card signal">
+        <div>
+          <h3>False signals</h3>
+          <p>Fake distress / trader offers that become delayed ambushes.</p>
+        </div>
+      </div>
+      <div class="card signal">
+        <div>
+          <h3>Sabotage &amp; waste</h3>
+          <p>EMP / grid sabotage, Biotech waste drops, caravan harassment, and food-store vandalism.</p>
+        </div>
+      </div>
+      <div class="card signal">
+        <div>
+          <h3>Anomaly bait</h3>
+          <p>Optional Anomaly baiting when that DLC is active (fail-open without it).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ends">
+    <h2 class="x">How it ends</h2>
+    <div class="grid">
+      <div class="card signal">
+        <div>
+          <h3>Capture</h3>
+          <p>Arrest them alive, then Execute / Release / Keep / Truce from the resolution dialog.</p>
+        </div>
+      </div>
+      <div class="card signal">
+        <div>
+          <h3>Corner &amp; kill</h3>
+          <p>After enough escapes they can finally be finished for good.</p>
+        </div>
+      </div>
+      <div class="card signal">
+        <div>
+          <h3>They win</h3>
+          <p>If they hunt a specific colonist, the hunt also ends if that pawn dies or is handed over &mdash; they get what they came for.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="compat">
+    <h2 class="x">Soft compat</h2>
+    <p class="sub">Optional and fail-open &mdash; Nemesis never hard-requires sibling mods.</p>
+    <ul class="feature-list">
+      <li><b>Stormproof</b> &mdash; EMP sabotage respects EMP dampeners; surge protectors blunt grid sabotage.</li>
+      <li><b>Strata</b> &mdash; prefers surface home maps; aware of underground / upper levels when choosing targets.</li>
+      <li><b>Homesteader</b> &mdash; food raids and taunts can reference root cellars and favorite foods.</li>
+    </ul>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    RimWorld mods by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
+    &middot; foundation by <b>Dredd (Misakabob)</b>
+    &middot; <a href="index.html">Back to hub</a>
+  </div>
+</footer>
+
+</body>
+</html>

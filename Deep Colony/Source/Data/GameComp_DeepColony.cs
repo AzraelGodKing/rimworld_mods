@@ -73,7 +73,9 @@ namespace DeepColony
         private void PruneDeathWindow(int now)
         {
             recentColonistDeathTimestamps.RemoveAll(t => now - t > MassacreWindowTicks);
-            if (recentColonistDeathTimestamps.Count == 0)
+            // Allow another massacre once the dense cluster has aged out of the window
+            // (not only when the list is completely empty — trickle deaths used to latch forever).
+            if (recentColonistDeathTimestamps.Count < MassacreDeathThreshold)
                 massacreTriggeredThisWindow = false;
         }
 

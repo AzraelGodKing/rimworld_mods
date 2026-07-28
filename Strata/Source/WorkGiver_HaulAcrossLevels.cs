@@ -85,6 +85,10 @@ namespace Strata
 
         public override bool ShouldSkip(Pawn pawn, bool forced = false)
         {
+            if (StrataMod.Settings != null && !StrataMod.Settings.haulAcrossLevelsEnabled)
+            {
+                return true;
+            }
             return !LevelGraph.AnyLinkFrom(pawn.Map);
         }
 

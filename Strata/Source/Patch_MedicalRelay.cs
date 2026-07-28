@@ -25,6 +25,10 @@ namespace Strata
             {
                 return;
             }
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return;
+            }
             var links = new List<LevelGraph.LevelLink>(LevelGraph.ReachableLevels(pawn.Map));
             LevelRoleUtility.SortLinksByRole(links, LevelRole.Hospital);
             foreach (LevelGraph.LevelLink link in links)
@@ -69,6 +73,10 @@ namespace Strata
                 return;
             }
             if (!PawnRelay.CanRelay(pawn))
+            {
+                return;
+            }
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
             {
                 return;
             }

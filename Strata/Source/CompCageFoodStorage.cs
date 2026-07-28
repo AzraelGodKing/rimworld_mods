@@ -37,9 +37,13 @@ namespace Strata
 
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
-            if (innerContainer != null && parent.SpawnedOrAnyParentSpawned)
+            if (innerContainer != null && innerContainer.Any && map != null)
             {
-                innerContainer.TryDropAll(parent.Position, parent.Map, ThingPlaceMode.Near);
+                IntVec3 dropCell = parent.PositionHeld.IsValid ? parent.PositionHeld : IntVec3.Invalid;
+                if (dropCell.IsValid && dropCell.InBounds(map))
+                    innerContainer.TryDropAll(dropCell, map, ThingPlaceMode.Near);
+                else
+                    innerContainer.ClearAndDestroyContents();
             }
             base.PostDeSpawn(map, mode);
         }

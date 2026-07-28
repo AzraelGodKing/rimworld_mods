@@ -149,6 +149,94 @@ namespace Strata
             return false;
         }
 
+        internal static bool IsIdleAtBaseJob(Job job)
+        {
+            if (job?.def == null)
+            {
+                return true;
+            }
+            string name = job.def.defName;
+            if (name == null)
+            {
+                return false;
+            }
+            return name.IndexOf("GoAndWait", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("GoToCellAndWait", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Return2Base", StringComparison.OrdinalIgnoreCase) >= 0
+                || job.def == JobDefOf.Wait
+                || job.def == JobDefOf.Wait_Wander
+                || job.def == JobDefOf.Goto;
+        }
+
+        /// <summary>
+        /// Send an idle Misc. Robot through stairs toward a linked floor that has
+        /// haul/clean/etc. work. Shared by X2_JobGiver_Work and return-to-base.
+        /// </summary>
+        internal static bool TryIssueRobotWorkRelay(ThinkNode node, Pawn pawn, ref ThinkResult result)
+        {
+            if (StrataMod.Settings != null
+                && (!StrataMod.Settings.RobotSoftCompatActive || !StrataMod.Settings.robotWorkRelayEnabled))
+            {
+                return false;
+            }
+            if (!StrataPawnUtility.IsMiscRobot(pawn))
+            {
+                return false;
+            }
+            StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.WorkRelayPostfixHit);
+            if (PawnRelay.IsRobotWorkScanCooldown(pawn))
+            {
+                return false;
+            }
+            // Low-charge bots on the wrong level should return home, not scan for work.
+            if (StrataPawnUtility.IsMiscRobotRechargeCrossMap(pawn)
+                && StrataPawnUtility.MiscRobotNeedsRecharge(pawn))
+            {
+                return false;
+            }
+            if (StrataPawnUtility.MiscRobotNeedsRecharge(pawn))
+            {
+                return false;
+            }
+            if (!PawnRelay.CanRelay(pawn))
+            {
+                return false;
+            }
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return false;
+            }
+
+            StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.ReachableLevelsCall);
+            bool sawCandidate = false;
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
+            {
+                if (!StrataPawnUtility.MiscRobotHasWorkOn(pawn, link.map))
+                {
+                    continue;
+                }
+                sawCandidate = true;
+                StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.BestFirstStepCall);
+                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Work, 2);
+                if (job != null)
+                {
+                    PawnRelay.TouchRobotWorkScan(pawn);
+                    StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.WorkRelayJobIssued);
+                    StrataRobotDiagnostics.Increment(StrataRobotDiagnostics.Counter.EnterPortalRobotJob);
+                    result = new ThinkResult(job, node, JobTag.MiscWork);
+                    return true;
+                }
+            }
+
+            // Cooldown only after we actually looked (avoids 7500t lockouts when
+            // the first think pass ran before stairs linked).
+            if (sawCandidate)
+            {
+                PawnRelay.TouchRobotWorkScan(pawn);
+            }
+            return false;
+        }
+
         internal static MethodInfo ResolveThinkNodeTryIssueJobPackage(Type type)
         {
             if (type == null)

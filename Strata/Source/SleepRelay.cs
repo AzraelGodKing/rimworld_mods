@@ -26,6 +26,10 @@ namespace Strata
             {
                 return null;
             }
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return null;
+            }
 
             if (ShouldYieldToCommute(pawn))
             {
