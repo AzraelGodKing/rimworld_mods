@@ -122,12 +122,16 @@ namespace DeepColony.Patches
                 TraumaDef loss = DC_DefOf.DC_Trauma_ViolentLoss;
                 if (loss == null) continue;
 
+                TraumaDef bereave = DC_DefOf.DC_Trauma_BereavementShock;
                 if (TraumaUtility.HasTrauma(colonist, loss)
-                    || TraumaUtility.HasTrauma(colonist, DC_DefOf.DC_Trauma_BereavementShock))
+                    || TraumaUtility.HasTrauma(colonist, bereave))
                 {
-                    TraumaDef bereave = DC_DefOf.DC_Trauma_BereavementShock;
+                    // Upgrade: replace Violent Loss with Bereavement (do not stack).
                     if (bereave != null)
+                    {
+                        TraumaUtility.RemoveTrauma(colonist, loss);
                         TraumaUtility.ApplyTrauma(colonist, bereave, __instance);
+                    }
                 }
                 else
                 {

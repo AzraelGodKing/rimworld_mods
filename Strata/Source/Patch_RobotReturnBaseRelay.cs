@@ -36,6 +36,18 @@ namespace Strata
         public static void Postfix(ThinkNode __instance, Pawn pawn, ref ThinkResult __result)
         {
             StrataRobotSoftCompat.SanitizeCrossMapThinkResult(__instance, pawn, ref __result);
+            // After return-to-base / idle recharge: if the bot is parked underground
+            // with its station while the surface has work, send it up.
+            if (__result.Job != null
+                && StrataRobotSoftCompat.IsIdleAtBaseJob(__result.Job)
+                && StrataRobotSoftCompat.TryIssueRobotWorkRelay(__instance, pawn, ref __result))
+            {
+                return;
+            }
+            if (__result.Job == null)
+            {
+                StrataRobotSoftCompat.TryIssueRobotWorkRelay(__instance, pawn, ref __result);
+            }
         }
 
         private static List<MethodBase> DiscoverTargetMethods()

@@ -26,6 +26,7 @@ namespace Strata
 
         public int settingsVersion = CurrentSettingsVersion;
         public bool workRelayEnabled = true;
+        public bool haulAcrossLevelsEnabled = true;
         public bool robotSoftCompatEnabled = true;
         public bool robotWorkRelayEnabled = false;
         public bool shaftFluidEnabled = true;
@@ -67,7 +68,7 @@ namespace Strata
         /// <summary>Scale of printed/live things drawn from below (looks farther down).</summary>
         public float belowThingScale = 0.85f;
         /// <summary>Resource readout / build costs count stockpiles on every linked floor.</summary>
-        public bool combinedLevelResources = true;
+        public bool combinedLevelResources = false;
         /// <summary>Pawns can shoot through open sky up/down between A+ and the map below.</summary>
         public bool crossLevelCombatEnabled = true;
         /// <summary>Auto-engage hostiles/colonists/turrets across open-sky gaps.</summary>
@@ -102,6 +103,7 @@ namespace Strata
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
             Scribe_Values.Look(ref settingsVersion, "settingsVersion", defaultValue: 0);
             Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref haulAcrossLevelsEnabled, "haulAcrossLevelsEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotSoftCompatEnabled, "robotSoftCompatEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotWorkRelayEnabled, "robotWorkRelayEnabled", defaultValue: false);
             Scribe_Values.Look(ref shaftFluidEnabled, "shaftFluidEnabled", defaultValue: true);
@@ -136,7 +138,7 @@ namespace Strata
             Scribe_Values.Look(ref seeBelowLive, "seeBelowLive", defaultValue: true);
             Scribe_Values.Look(ref belowDim, "belowDim", 0.12f);
             Scribe_Values.Look(ref belowThingScale, "belowThingScale", 0.85f);
-            Scribe_Values.Look(ref combinedLevelResources, "combinedLevelResources", defaultValue: true);
+            Scribe_Values.Look(ref combinedLevelResources, "combinedLevelResources", defaultValue: false);
             Scribe_Values.Look(ref crossLevelCombatEnabled, "crossLevelCombatEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelAutoEngage, "crossLevelAutoEngage", defaultValue: true);
             Scribe_Values.Look(ref gravshipLifeSupportEnabled, "gravshipLifeSupportEnabled", defaultValue: true);
@@ -315,6 +317,8 @@ namespace Strata
             Text.Font = GameFont.Small;
             listing.CheckboxLabeled("Strata_Settings_WorkRelay".Translate(), ref Settings.workRelayEnabled,
                 "Strata_Settings_WorkRelayDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_HaulAcrossLevels".Translate(), ref Settings.haulAcrossLevelsEnabled,
+                "Strata_Settings_HaulAcrossLevelsDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_RobotSoftCompat".Translate(), ref Settings.robotSoftCompatEnabled,
                 "Strata_Settings_RobotSoftCompatDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_RobotWorkRelay".Translate(), ref Settings.robotWorkRelayEnabled,

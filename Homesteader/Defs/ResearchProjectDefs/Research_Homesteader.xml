@@ -147,7 +147,7 @@
   <ResearchProjectDef>
     <defName>Homesteader_Livestock</defName>
     <label>homestead livestock</label>
-    <description>Chicken coops for steady eggs, goat pens for dairy milk, and mash recipes to keep the yard flock productive.</description>
+    <description>Chicken coops for steady eggs, and mash recipes to keep the yard flock productive.</description>
     <baseCost>700</baseCost>
     <techLevel>Neolithic</techLevel>
     <tab>Homesteader</tab>
