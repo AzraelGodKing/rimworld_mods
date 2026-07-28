@@ -32,21 +32,29 @@ function Set-ZipEntryFile {
     }
 }
 
-# Nemesis is intentionally not packaged for public download yet.
-foreach ($mod in @('Homesteader', 'Stormproof', 'Strata')) {
-    $zip = Join-Path $out "$mod.zip"
-    git -C $repo archive --format=zip -o $zip HEAD $mod
-    if ($LASTEXITCODE -ne 0) { throw "git archive failed for $mod" }
+# folder = git path / zip root; zipName = download asset; dllName = Assemblies/*.dll
+$mods = @(
+    @{ Folder = 'Homesteader'; ZipName = 'Homesteader'; DllName = 'Homesteader' },
+    @{ Folder = 'Stormproof'; ZipName = 'Stormproof'; DllName = 'Stormproof' },
+    @{ Folder = 'Strata'; ZipName = 'Strata'; DllName = 'Strata' },
+    @{ Folder = 'Nemesis'; ZipName = 'Nemesis'; DllName = 'Nemesis' },
+    @{ Folder = 'Deep Colony'; ZipName = 'DeepColony'; DllName = 'DeepColony' }
+)
 
-    $dll = Join-Path $repo "$mod\Assemblies\$mod.dll"
+foreach ($mod in $mods) {
+    $zip = Join-Path $out "$($mod.ZipName).zip"
+    git -C $repo archive --format=zip -o $zip HEAD $mod.Folder
+    if ($LASTEXITCODE -ne 0) { throw "git archive failed for $($mod.Folder)" }
+
+    $dll = Join-Path $repo "$($mod.Folder)\Assemblies\$($mod.DllName).dll"
     if (Test-Path -LiteralPath $dll) {
-        $entry = "$mod/Assemblies/$mod.dll"
+        $entry = "$($mod.Folder)/Assemblies/$($mod.DllName).dll"
         Set-ZipEntryFile -ZipPath $zip -EntryName $entry -FilePath $dll
-        Write-Output ("{0}: injected {1}" -f $mod, $entry)
+        Write-Output ("{0}: injected {1}" -f $mod.ZipName, $entry)
     }
     else {
-        Write-Warning ("{0}: no {1} — zip has no assembly (build the mod first)" -f $mod, $dll)
+        Write-Warning ("{0}: no {1} — zip has no assembly (build the mod first)" -f $mod.ZipName, $dll)
     }
 
-    Write-Output ("{0}: {1:N0} KB" -f $mod, ((Get-Item $zip).Length / 1KB))
+    Write-Output ("{0}: {1:N0} KB" -f $mod.ZipName, ((Get-Item $zip).Length / 1KB))
 }

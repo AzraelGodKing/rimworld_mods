@@ -15,6 +15,9 @@ namespace Strata
         private const string IncidentsCat = "Strata/Incidents";
         private const string GasCat = "Strata/Gas";
 
+        // Cross-map click relink: pick shaft, switch floors, click landing.
+        private static MapPortal pendingRelinkShaft;
+
         private static IIncidentTarget ResolveIncidentTarget(IncidentDef def)
         {
             if (def?.targetTags != null)
@@ -404,6 +407,166 @@ namespace Strata
 
             sb.AppendLine($"Total: {passed} passed, {failed} failed.");
             if (failed > 0) { Log.Warning(sb.ToString()); } else { Log.Message(sb.ToString()); }
+        }
+
+        [DebugAction(Cat, "Relink stairs by pair ID", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void RelinkStairsByPairId()
+        {
+            StrataPortalUtility.RepairMissingLandings();
+            int stamped = StrataPortalUtility.StampLinkedPortalPairIds();
+            int relinked = StrataPortalUtility.RelinkPortalsByPairId();
+            Messages.Message(
+                "[Strata] Pair-ID relink: stamped " + stamped + ", rewired " + relinked + ".",
+                MessageTypeDefOf.TaskCompletion, historical: false);
+        }
+
+        [DebugAction(Cat, "Relink stairs (click shaft, then landing)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap,
+            actionType = DebugActionType.ToolMap)]
+        private static void RelinkStairsClickTool()
+        {
+            Map map = Find.CurrentMap;
+            if (map == null)
+            {
+                return;
+            }
+            IntVec3 cell = UI.MouseCell();
+            if (!cell.InBounds(map))
+            {
+                return;
+            }
+
+            MapPortal hit = FindPortalAt(map, cell);
+            if (pendingRelinkShaft == null)
+            {
+                if (hit != null && StrataPortalUtility.IsStrataPortalShaft(hit))
+                {
+                    pendingRelinkShaft = hit;
+                    Messages.Message(
+                        "[Strata] Relink: shaft selected ("
+                        + hit.LabelCap + ", pair "
+                        + (CompStrataShaftLink.CompOf(hit)?.ShortId ?? "?")
+                        + "). Switch floors if needed, then click its landing.",
+                        MessageTypeDefOf.NeutralEvent, historical: false);
+                    return;
+                }
+                Messages.Message("[Strata] Relink: click a Strata shaft first.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            if (hit != null && StrataPortalUtility.IsStrataPortalLanding(hit))
+            {
+                if (StrataPortalUtility.ConnectPortalPair(pendingRelinkShaft, hit))
+                {
+                    Messages.Message(
+                        "[Strata] Relinked " + pendingRelinkShaft.LabelCap
+                        + " <-> " + hit.LabelCap + ".",
+                        MessageTypeDefOf.TaskCompletion, historical: false);
+                }
+                pendingRelinkShaft = null;
+                return;
+            }
+
+            if (hit != null && StrataPortalUtility.IsStrataPortalShaft(hit))
+            {
+                pendingRelinkShaft = hit;
+                Messages.Message(
+                    "[Strata] Relink: shaft changed to " + hit.LabelCap + ".",
+                    MessageTypeDefOf.NeutralEvent, historical: false);
+                return;
+            }
+
+            Messages.Message("[Strata] Relink: click a landing (or another shaft).",
+                MessageTypeDefOf.RejectInput, historical: false);
+        }
+
+        [DebugAction(Cat, "Relink selected shaft ↔ landing",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void RelinkSelectedShaftLanding()
+        {
+            MapPortal shaft = null;
+            MapPortal landing = null;
+            foreach (object obj in Find.Selector.SelectedObjectsListForReading)
+            {
+                if (obj is not Thing thing)
+                {
+                    continue;
+                }
+                if (shaft == null && StrataPortalUtility.IsStrataPortalShaft(thing))
+                {
+                    shaft = (MapPortal)thing;
+                }
+                else if (landing == null && StrataPortalUtility.IsStrataPortalLanding(thing))
+                {
+                    landing = (MapPortal)thing;
+                }
+            }
+
+            if (shaft == null || landing == null)
+            {
+                Messages.Message(
+                    "[Strata] Select one Strata shaft and one landing (use multi-select / shift).",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            if (StrataPortalUtility.ConnectPortalPair(shaft, landing))
+            {
+                Messages.Message(
+                    "[Strata] Relinked " + shaft.LabelCap + " <-> " + landing.LabelCap + ".",
+                    MessageTypeDefOf.TaskCompletion, historical: false);
+            }
+        }
+
+        [DebugAction(Cat, "Cancel stair relink", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void CancelStairRelink()
+        {
+            if (pendingRelinkShaft == null)
+            {
+                Messages.Message("[Strata] No stair relink in progress.",
+                    MessageTypeDefOf.NeutralEvent, historical: false);
+                return;
+            }
+            pendingRelinkShaft = null;
+            Messages.Message("[Strata] Stair relink cancelled.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
+        [DebugAction(Cat, "Repair missing landings", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void RepairMissingLandingsDev()
+        {
+            StrataPortalUtility.RepairMissingLandings();
+            Messages.Message("[Strata] Repair missing landings finished (see log).",
+                MessageTypeDefOf.TaskCompletion, historical: false);
+        }
+
+        [DebugAction(Cat, "Log portal topology (include pair id)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void LogPortalTopology()
+        {
+            Log.Message(StrataPortalUtility.DebugPortalTopology());
+        }
+
+        private static MapPortal FindPortalAt(Map map, IntVec3 cell)
+        {
+            List<Thing> things = cell.GetThingList(map);
+            MapPortal landing = null;
+            MapPortal shaft = null;
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (StrataPortalUtility.IsStrataPortalLanding(thing))
+                {
+                    landing = (MapPortal)thing;
+                }
+                else if (StrataPortalUtility.IsStrataPortalShaft(thing))
+                {
+                    shaft = (MapPortal)thing;
+                }
+            }
+            // Prefer landing when finishing a click-relink.
+            return landing ?? shaft;
         }
 
         [DebugAction(Cat, "Force hibernate all empty levels", allowedGameStates = AllowedGameStates.PlayingOnMap)]

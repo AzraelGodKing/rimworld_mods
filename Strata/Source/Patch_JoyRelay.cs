@@ -17,6 +17,10 @@ namespace Strata
             {
                 return;
             }
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return;
+            }
             if (StrataMod.Settings == null || !StrataMod.Settings.joyRelayEnabled)
             {
                 return;

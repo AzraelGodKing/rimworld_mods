@@ -33,6 +33,11 @@ namespace Strata
         private static int cachedReachableEpoch = -1;
         private static readonly List<LevelLink> reachableCache = new List<LevelLink>();
 
+        // AnyLinkFrom is hit from many Harmony postfixes; cache per map until
+        // InvalidateCache (portal spawn/despawn) bumps graphEpoch.
+        private static int anyLinkEpoch = -1;
+        private static readonly Dictionary<int, bool> anyLinkByMapId = new Dictionary<int, bool>();
+
         private struct RouteCacheEntry
         {
             public int epoch;
@@ -55,6 +60,8 @@ namespace Strata
             cachedReachableFrom = null;
             cachedReachableEpoch = -1;
             reachableCache.Clear();
+            anyLinkByMapId.Clear();
+            anyLinkEpoch = graphEpoch;
         }
 
         public static bool AnyLinkFrom(Map map)
@@ -63,6 +70,22 @@ namespace Strata
             {
                 return false;
             }
+            if (anyLinkEpoch != graphEpoch)
+            {
+                anyLinkByMapId.Clear();
+                anyLinkEpoch = graphEpoch;
+            }
+            if (anyLinkByMapId.TryGetValue(map.uniqueID, out bool cached))
+            {
+                return cached;
+            }
+            bool result = ComputeAnyLinkFrom(map);
+            anyLinkByMapId[map.uniqueID] = result;
+            return result;
+        }
+
+        private static bool ComputeAnyLinkFrom(Map map)
+        {
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
                 if (thing is MapPortal portal && OtherMapSafe(portal) != null)

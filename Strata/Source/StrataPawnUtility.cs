@@ -121,7 +121,8 @@ namespace Strata
             {
                 return false;
             }
-            if (pawn.Faction != Faction.OfPlayer)
+            // Player colony + Misc. Robots (same IsPlayer flag as colony pawns).
+            if (pawn.Faction == null || !pawn.Faction.IsPlayer)
             {
                 return false;
             }
@@ -140,7 +141,6 @@ namespace Strata
             }
             // Biotech colony mechs commute stairs for work/charge like colonists.
             if (ModsConfig.BiotechActive && pawn.IsColonyMech
-                && pawn.Faction == Faction.OfPlayer
                 && pawn.workSettings?.EverWork == true)
             {
                 return true;
@@ -172,12 +172,51 @@ namespace Strata
             }
 
             if (ModsConfig.BiotechActive && pawn.IsColonyMech
-                && pawn.Faction == Faction.OfPlayer
+                && pawn.Faction != null && pawn.Faction.IsPlayer
                 && pawn.workSettings?.EverWork == true)
             {
                 return true;
             }
 
+            return false;
+        }
+
+        /// <summary>
+        /// True when a Misc. Robot should be allowed outside its allowed area so
+        /// work relay can send it to (or keep it on) another linked floor.
+        /// </summary>
+        public static bool RobotShouldBypassAllowedAreaForWork(Pawn pawn)
+        {
+            if (!IsMiscRobot(pawn) || pawn?.Map == null)
+            {
+                return false;
+            }
+            if (StrataMod.Settings == null
+                || !StrataMod.Settings.RobotSoftCompatActive
+                || !StrataMod.Settings.robotWorkRelayEnabled)
+            {
+                return false;
+            }
+            if (PortalRelayChain.HasIntent(pawn, RelayPurpose.Work))
+            {
+                return true;
+            }
+            // Already on a floor with work (e.g. surface after commute) — stay put.
+            if (MiscRobotHasWorkOn(pawn, pawn.Map))
+            {
+                return true;
+            }
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return false;
+            }
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
+            {
+                if (MiscRobotHasWorkOn(pawn, link.map))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -196,23 +235,9 @@ namespace Strata
                 return true;
             }
             if ((omni || defName.IndexOf("Haul", StringComparison.OrdinalIgnoreCase) >= 0)
-                && WorkRelaySignals.HasHauling(map))
+                && (WorkRelaySignals.HasHauling(map) || WorkRelaySignals.HasCrossLevelHaulExports(map)))
             {
                 return true;
-            }
-            if ((omni || defName.IndexOf("Haul", StringComparison.OrdinalIgnoreCase) >= 0))
-            {
-                HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
-                if (wanted.Count > 0)
-                {
-                    foreach (ThingDef def in wanted)
-                    {
-                        if (map.listerThings.ThingsOfDef(def).Count > 0)
-                        {
-                            return true;
-                        }
-                    }
-                }
             }
             if ((omni || defName.IndexOf("Mine", StringComparison.OrdinalIgnoreCase) >= 0)
                 && WorkRelaySignals.HasMining(map))

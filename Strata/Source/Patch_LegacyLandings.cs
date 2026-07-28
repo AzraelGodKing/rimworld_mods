@@ -37,6 +37,12 @@ namespace Strata
             UpgradeVanillaCaveExits();
             RealignAllStairLandings();
             StrataPortalUtility.RepairMissingLandings();
+            StrataPortalUtility.StampLinkedPortalPairIds();
+            int relinked = StrataPortalUtility.RelinkPortalsByPairId();
+            if (relinked > 0)
+            {
+                Log.Message("[Strata] Relinked " + relinked + " portal pair(s) by pair ID.");
+            }
             RepairAllPocketMapTiles();
             Building_ShaftConduit.ReconcileAllAfterLoad();
             Building_OreHoist.ReconcileAllAfterLoad();

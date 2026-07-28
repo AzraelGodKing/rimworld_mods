@@ -53,10 +53,15 @@ namespace Strata
 
         public static void RestoreCurrentMap(sbyte previousIndex)
         {
-            if (Current.Game != null)
+            Game game = Current.Game;
+            if (game == null)
             {
-                Current.Game.currentMapIndex = previousIndex;
+                return;
             }
+
+            game.currentMapIndex = previousIndex;
+            // Float-menu work can destroy a pocket; don't restore a stale index.
+            Patch_CurrentMapIndex.ClampIfNeeded(game);
         }
     }
 

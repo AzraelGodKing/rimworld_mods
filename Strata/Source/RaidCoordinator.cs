@@ -28,12 +28,59 @@ namespace Strata
             {
                 return;
             }
+            if (!LevelGraph.AnyLinkFrom(map))
+            {
+                return;
+            }
             int tick = Find.TickManager.TicksGame + map.uniqueID * 41;
             if (tick % SyncInterval != 0)
             {
                 return;
             }
+            // No raid lords on the column → skip BuildColumn / faction sync.
+            if (!ColumnHasHostileRaidLord(map))
+            {
+                return;
+            }
             SyncColumn(map);
+        }
+
+        private static bool ColumnHasHostileRaidLord(Map root)
+        {
+            if (MapHasHostileRaidLord(root))
+            {
+                return true;
+            }
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(root);
+            for (int i = 0; i < links.Count; i++)
+            {
+                if (MapHasHostileRaidLord(links[i].map))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool MapHasHostileRaidLord(Map other)
+        {
+            if (other?.lordManager?.lords == null)
+            {
+                return false;
+            }
+            List<Lord> lords = other.lordManager.lords;
+            for (int i = 0; i < lords.Count; i++)
+            {
+                Lord lord = lords[i];
+                if (lord?.faction != null
+                    && lord.faction.HostileTo(Faction.OfPlayer)
+                    && lord.ownedPawns.Count > 0
+                    && IsRaidLord(lord))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         // Immediate broadcast when a lead lord changes toil (Harmony on GotoToil).
