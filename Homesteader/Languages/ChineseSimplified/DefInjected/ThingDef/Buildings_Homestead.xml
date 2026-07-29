@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_BeeswaxCandle.label>蜂蜡蜡烛</Homesteader_BeeswaxCandle.label>
+  <Homesteader_BeeswaxCandle.description>用蜂箱蜡浇制的粗大慢燃蜡烛。光线比油灯更柔和，却不需要蒸馏器或电网——只要让蜜蜂开心就行。</Homesteader_BeeswaxCandle.description>
+  <Homesteader_NestingBox.label>巢箱</Homesteader_NestingBox.label>
+  <Homesteader_NestingBox.description>铺着干草、供小动物睡觉的舒适箱子。比光秃地面更暖更舒服——母鸡似乎特别喜欢。</Homesteader_NestingBox.description>
+  <Homesteader_HarvestMaypole.label>丰收五月柱</Homesteader_HarvestMaypole.label>
+  <Homesteader_HarvestMaypole.description>高高的雕花柱，挂着鲜艳丝带，为庆祝丰收而立。殖民者围着它聚会，附近的人会感到一点丰收喜悦（+6 心情）。</Homesteader_HarvestMaypole.description>
+
+</LanguageData>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_CompostHeap.label>堆肥堆</Homesteader_CompostHeap.label>
+  <Homesteader_CompostHeap.description>由植物废料与粪便堆成、冒着热气的堆肥。工单把干草与植物料变成堆肥，再变成堆肥土用的肥料。</Homesteader_CompostHeap.description>
+  <Homesteader_Icehouse.label>冰窖</Homesteader_Icehouse.label>
+  <Homesteader_Icehouse.description>厚壁冰窖，填充锯末与冬寒。可放四堆物品，无需电力即可把食物保持在接近冰点——比地窖更冷，占地更小。</Homesteader_Icehouse.description>
+  <Homesteader_Springhouse.label>泉屋</Homesteader_Springhouse.label>
+  <Homesteader_Springhouse.description>建在冷泉感觉上的水冷棚屋。可放三堆物品，无需电力即可让乳品与农产品保持凉爽（≤8°C）——农庄里地窖的伴侣。</Homesteader_Springhouse.description>
+
+</LanguageData>

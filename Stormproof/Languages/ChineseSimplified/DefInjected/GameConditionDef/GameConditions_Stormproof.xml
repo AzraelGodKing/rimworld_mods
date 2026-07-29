@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Stormproof_IonStorm.label>离子风暴</Stormproof_IonStorm.label>
+  <Stormproof_IonStorm.description>带电粒子波正饱和大气。蓄电池持续流失储能，随机 EMP 爆发眩晕电子设备，过载电路额外引发短路。EMP 抑制器保护附近蓄电池与建筑，电涌保护器吸收额外电涌，风暴电容组免疫能量流失。</Stormproof_IonStorm.description>
+  <Stormproof_HeatDome.label>热穹顶</Stormproof_HeatDome.label>
+  <Stormproof_HeatDome.description>高压热穹顶正炙烤整片区域，远超普通热浪。通电的气候稳定器可抵消温度飙升。</Stormproof_HeatDome.description>
+  <Stormproof_HeatDome.letterText>严重热穹顶已笼罩本地区域。\n\n气温将危险飙升（+28°C）。未降温的空间会烤坏殖民者与作物。\n\nStormproof 气候稳定器在有电网供电时可完全抵消该偏移。</Stormproof_HeatDome.letterText>
+  <Stormproof_PolarFront.label>极地锋面</Stormproof_PolarFront.label>
+  <Stormproof_PolarFront.description>北极气团正猛烈冲击本地区域，远比普通寒潮更冷。通电的气候稳定器可抵消温度骤降。</Stormproof_PolarFront.description>
+  <Stormproof_PolarFront.letterText>极地锋面正在冻结本地区域。\n\n气温将骤降（-28°C）。未供暖空间与户外作物面临极端风险。\n\nStormproof 气候稳定器在有电网供电时可完全抵消该偏移。</Stormproof_PolarFront.letterText>
+  <Stormproof_ToxicSurge.label>毒气浪涌</Stormproof_ToxicSurge.label>
+  <Stormproof_ToxicSurge.description>浓密化学烟羽正以快于普通沉降的速度倾泻毒素。户外生命很快中毒。通电的大气屏障可全图压制毒素；沉降净化器仍有助于清除已污染者体内的毒素。</Stormproof_ToxicSurge.description>
+  <Stormproof_ToxicSurge.letterText>毒气浪涌烟羽正笼罩本地区域。\n\n比普通毒性沉降更糟：户外暴露会迅速毒害生物，未防护的户外物资也会腐蚀。\n\nStormproof 大气屏障在有电网供电时可压制毒素。请让室内沉降净化器持续运转，以清除已有毒素积累。</Stormproof_ToxicSurge.letterText>
+  <Stormproof_DryLightning.label>干雷锋面</Stormproof_DryLightning.label>
+  <Stormproof_DryLightning.description>干雷暴锁定在地图上空：反复闪电却无雨水灭火。风暴尖塔收获雷击；灭火器扑灭火焰；需要时风暴召唤器可强制降雨。</Stormproof_DryLightning.description>
+  <Stormproof_DryLightning.letterText>干雷锋面正猛击本地区域。\n\n预计反复雷击却无雨水——正是野火的完美燃料。\n\n风暴尖塔将捕获附近雷击。灭火器扑灭半径内火灾。若你更需要水而非瓦特，风暴召唤器仍可强制召唤带雨雷暴。</Stormproof_DryLightning.letterText>
+
+</LanguageData>

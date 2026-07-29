@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_StorageCrate.label>ящик для хранения</Homesteader_StorageCrate.label>
+  <Homesteader_StorageCrate.description>Прочный деревянный ящик на три стопки предметов. Крышка защищает содержимое от порчи даже на улице.</Homesteader_StorageCrate.description>
+  <Homesteader_StorageBarrel.label>бочка для хранения</Homesteader_StorageBarrel.label>
+  <Homesteader_StorageBarrel.description>Деревянная бочка с крышкой для еды и напитков. Вмещает до трёх стопок и защищает их от порчи погодой. Не замедляет гниение — держите скоропортящееся в холоде или консервируйте заранее.</Homesteader_StorageBarrel.description>
+  <Homesteader_Pallet.label>поддон</Homesteader_Pallet.label>
+  <Homesteader_Pallet.description>Простой деревянный поддон, поднимающий две стопки груза с земли и защищающий от порчи. Достаточно дёшев, чтобы выстелить им весь двор. Может хранить что угодно, включая обломки камня.</Homesteader_Pallet.description>
+  <Homesteader_IngredientBarrel.label>бочка для ингредиентов</Homesteader_IngredientBarrel.label>
+  <Homesteader_IngredientBarrel.description>Бочка с крышкой для кухонных запасов: сырого мяса, яиц и молока. Вмещает три стопки и защищает их от порчи на улице.</Homesteader_IngredientBarrel.description>
+  <Homesteader_Hayloft.label>сеновал</Homesteader_Hayloft.label>
+  <Homesteader_Hayloft.description>Открытый деревянный чердак для массового фермерского хранения. Вмещает четыре стопки сена, сырых растений и дымолиста, укрывая от погоды.</Homesteader_Hayloft.description>
+  <Homesteader_LargeStorageCrate.label>большой ящик для хранения</Homesteader_LargeStorageCrate.label>
+  <Homesteader_LargeStorageCrate.description>Усиленный двойной ящик для серьёзных запасов. Вмещает шесть стопок чего угодно и защищает их от порчи даже на улице.</Homesteader_LargeStorageCrate.description>
+  <Homesteader_RootCellar.label>корневой погреб</Homesteader_RootCellar.label>
+  <Homesteader_RootCellar.description>Заглублённый погреб, облицованный камнем и землёй. Вмещает шесть стопок еды и напитков. Содержимое на погребе — и еда в соседних внутренних клетках — остаётся при температуре не выше 5°C для порчи и укрыто от уличной погоды.</Homesteader_RootCellar.description>
+  <Homesteader_PreservesShelf.label>полка для заготовок</Homesteader_PreservesShelf.label>
+  <Homesteader_PreservesShelf.description>Красивая деревянная полка для гордости кладовой: банок варенья и маринадов, кругов сыра, горшков мёда и сиропа. Половина смысла консервирования — потом этим любоваться.</Homesteader_PreservesShelf.description>
+
+</LanguageData>

@@ -4,6 +4,7 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
+- **CN / RU localization** — full Chinese Simplified and Russian keyed packs from English (`Languages/ChineseSimplified|Russian/Keyed/Nemesis.xml`).
 - **Public release** — docs site declassified (`docs/nemesis.html`); Steam Workshop + `Nemesis.zip` on the rolling GitHub `latest` release; `PublishedFileId.txt` checked in.
 - **Workshop preview** — added `About/Preview.png` selling the personal-antagonist fantasy; compressed ~1.39 MB → ~0.36 MB so Steam Workshop accepts it (Preview must be under 1 MB).
 - **Post-escape heal** — park / inject / assault recover the nemesis above the flee threshold so army-return and personal assaults no longer vanish within seconds.

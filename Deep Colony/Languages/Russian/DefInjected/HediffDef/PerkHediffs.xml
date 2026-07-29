@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_PerkHediff_PracticedEye.label>намётанный глаз</DC_PerkHediff_PracticedEye.label>
+  <DC_PerkHediff_PracticedEye.description>Натренированный глаз стрелка — повышенная точность.</DC_PerkHediff_PracticedEye.description>
+  <DC_PerkHediff_PracticedEye.stages_0.label>активно</DC_PerkHediff_PracticedEye.stages_0.label>
+  <DC_PerkHediff_CrackShot.label>меткий стрелок</DC_PerkHediff_CrackShot.label>
+  <DC_PerkHediff_CrackShot.description>Мастерская точность стрельбы.</DC_PerkHediff_CrackShot.description>
+  <DC_PerkHediff_CrackShot.stages_0.label>активно</DC_PerkHediff_CrackShot.stages_0.label>
+  <DC_PerkHediff_BrawlersInstinct.label>инстинкт бойца</DC_PerkHediff_BrawlersInstinct.label>
+  <DC_PerkHediff_BrawlersInstinct.description>Более острые рефлексы в ближнем бою.</DC_PerkHediff_BrawlersInstinct.description>
+  <DC_PerkHediff_BrawlersInstinct.stages_0.label>активно</DC_PerkHediff_BrawlersInstinct.stages_0.label>
+  <DC_PerkHediff_BattleHardened.label>закалённый в бою</DC_PerkHediff_BattleHardened.label>
+  <DC_PerkHediff_BattleHardened.description>Ветеранские боевые инстинкты.</DC_PerkHediff_BattleHardened.description>
+  <DC_PerkHediff_BattleHardened.stages_0.label>активно</DC_PerkHediff_BattleHardened.stages_0.label>
+  <DC_PerkHediff_FirstAidMastery.label>мастерство первой помощи</DC_PerkHediff_FirstAidMastery.label>
+  <DC_PerkHediff_FirstAidMastery.description>Улучшенная скорость и качество перевязки.</DC_PerkHediff_FirstAidMastery.description>
+  <DC_PerkHediff_FirstAidMastery.stages_0.label>активно</DC_PerkHediff_FirstAidMastery.stages_0.label>
+  <DC_PerkHediff_SurgeonsTouch.label>рука хирурга</DC_PerkHediff_SurgeonsTouch.label>
+  <DC_PerkHediff_SurgeonsTouch.description>Превосходная хирургическая точность.</DC_PerkHediff_SurgeonsTouch.description>
+  <DC_PerkHediff_SurgeonsTouch.stages_0.label>активно</DC_PerkHediff_SurgeonsTouch.stages_0.label>
+  <DC_PerkHediff_BuildersTouch.label>рука строителя</DC_PerkHediff_BuildersTouch.label>
+  <DC_PerkHediff_BuildersTouch.description>Быстрее строит с меньшими потерями.</DC_PerkHediff_BuildersTouch.description>
+  <DC_PerkHediff_BuildersTouch.stages_0.label>активно</DC_PerkHediff_BuildersTouch.stages_0.label>
+  <DC_PerkHediff_MasterPlanner.label>мастер планирования</DC_PerkHediff_MasterPlanner.label>
+  <DC_PerkHediff_MasterPlanner.description>Экспертная скорость и качество строительства.</DC_PerkHediff_MasterPlanner.description>
+  <DC_PerkHediff_MasterPlanner.stages_0.label>активно</DC_PerkHediff_MasterPlanner.stages_0.label>
+  <DC_PerkHediff_ArtisansHands.label>руки ремесленника</DC_PerkHediff_ArtisansHands.label>
+  <DC_PerkHediff_ArtisansHands.description>Улучшенное качество изготовления.</DC_PerkHediff_ArtisansHands.description>
+  <DC_PerkHediff_ArtisansHands.stages_0.label>активно</DC_PerkHediff_ArtisansHands.stages_0.label>
+  <DC_PerkHediff_GrandArtisan.label>великий ремесленник</DC_PerkHediff_GrandArtisan.label>
+  <DC_PerkHediff_GrandArtisan.description>Мастерская скорость и качество изготовления.</DC_PerkHediff_GrandArtisan.description>
+  <DC_PerkHediff_GrandArtisan.stages_0.label>активно</DC_PerkHediff_GrandArtisan.stages_0.label>
+  <DC_PerkHediff_GreenTouch.label>зелёная рука</DC_PerkHediff_GreenTouch.label>
+  <DC_PerkHediff_GreenTouch.description>Улучшенная скорость посадки и урожайность.</DC_PerkHediff_GreenTouch.description>
+  <DC_PerkHediff_GreenTouch.stages_0.label>активно</DC_PerkHediff_GreenTouch.stages_0.label>
+  <DC_PerkHediff_GardenMaster.label>мастер сада</DC_PerkHediff_GardenMaster.label>
+  <DC_PerkHediff_GardenMaster.description>Исключительная скорость работы с растениями и урожайность.</DC_PerkHediff_GardenMaster.description>
+  <DC_PerkHediff_GardenMaster.stages_0.label>активно</DC_PerkHediff_GardenMaster.stages_0.label>
+  <DC_PerkHediff_AnimalWhisperer.label>заклинатель животных</DC_PerkHediff_AnimalWhisperer.label>
+  <DC_PerkHediff_AnimalWhisperer.description>Улучшенный шанс приручения и дрессировки.</DC_PerkHediff_AnimalWhisperer.description>
+  <DC_PerkHediff_AnimalWhisperer.stages_0.label>активно</DC_PerkHediff_AnimalWhisperer.stages_0.label>
+  <DC_PerkHediff_MasterTamer.label>мастер-укротитель</DC_PerkHediff_MasterTamer.label>
+  <DC_PerkHediff_MasterTamer.description>Исключительное мастерство приручения и дрессировки.</DC_PerkHediff_MasterTamer.description>
+  <DC_PerkHediff_MasterTamer.stages_0.label>активно</DC_PerkHediff_MasterTamer.stages_0.label>
+  <DC_PerkHediff_RockEye.label>каменный глаз</DC_PerkHediff_RockEye.label>
+  <DC_PerkHediff_RockEye.description>Быстрее добывает, читая породу.</DC_PerkHediff_RockEye.description>
+  <DC_PerkHediff_RockEye.stages_0.label>активно</DC_PerkHediff_RockEye.stages_0.label>
+  <DC_PerkHediff_DeepProspector.label>глубокий разведчик</DC_PerkHediff_DeepProspector.label>
+  <DC_PerkHediff_DeepProspector.description>Экспертная скорость добычи и повышенный выход.</DC_PerkHediff_DeepProspector.description>
+  <DC_PerkHediff_DeepProspector.stages_0.label>активно</DC_PerkHediff_DeepProspector.stages_0.label>
+  <DC_PerkHediff_QuickStudy.label>быстрый ученик</DC_PerkHediff_QuickStudy.label>
+  <DC_PerkHediff_QuickStudy.description>Ускоренные исследования и обучение.</DC_PerkHediff_QuickStudy.description>
+  <DC_PerkHediff_QuickStudy.stages_0.label>активно</DC_PerkHediff_QuickStudy.stages_0.label>
+  <DC_PerkHediff_ScientificPioneer.label>научный первопроходец</DC_PerkHediff_ScientificPioneer.label>
+  <DC_PerkHediff_ScientificPioneer.description>Исключительная скорость исследований и проницательность.</DC_PerkHediff_ScientificPioneer.description>
+  <DC_PerkHediff_ScientificPioneer.stages_0.label>активно</DC_PerkHediff_ScientificPioneer.stages_0.label>
+  <DC_PerkHediff_CharmingPresence.label>обаятельное присутствие</DC_PerkHediff_CharmingPresence.label>
+  <DC_PerkHediff_CharmingPresence.description>Лучшие цены торговли и социальный статус.</DC_PerkHediff_CharmingPresence.description>
+  <DC_PerkHediff_CharmingPresence.stages_0.label>активно</DC_PerkHediff_CharmingPresence.stages_0.label>
+  <DC_PerkHediff_MasterDiplomat.label>мастер-дипломат</DC_PerkHediff_MasterDiplomat.label>
+  <DC_PerkHediff_MasterDiplomat.description>Мастерское социальное влияние и торговое преимущество.</DC_PerkHediff_MasterDiplomat.description>
+  <DC_PerkHediff_MasterDiplomat.stages_0.label>активно</DC_PerkHediff_MasterDiplomat.stages_0.label>
+  <DC_PerkHediff_SeasonedCook.label>опытный повар</DC_PerkHediff_SeasonedCook.label>
+  <DC_PerkHediff_SeasonedCook.description>Эффективная готовка с меньшим временем подготовки.</DC_PerkHediff_SeasonedCook.description>
+  <DC_PerkHediff_SeasonedCook.stages_0.label>активно</DC_PerkHediff_SeasonedCook.stages_0.label>
+  <DC_PerkHediff_GrandChef.label>великий шеф</DC_PerkHediff_GrandChef.label>
+  <DC_PerkHediff_GrandChef.description>Мастерская скорость готовки и нулевой риск пищевого отравления.</DC_PerkHediff_GrandChef.description>
+  <DC_PerkHediff_GrandChef.stages_0.label>активно</DC_PerkHediff_GrandChef.stages_0.label>
+  <DC_PerkHediff_InspiredHand.label>вдохновенная рука</DC_PerkHediff_InspiredHand.label>
+  <DC_PerkHediff_InspiredHand.description>Более тонкая творческая работа.</DC_PerkHediff_InspiredHand.description>
+  <DC_PerkHediff_InspiredHand.stages_0.label>активно</DC_PerkHediff_InspiredHand.stages_0.label>
+  <DC_PerkHediff_MasterArtisan.label>мастер-художник</DC_PerkHediff_MasterArtisan.label>
+  <DC_PerkHediff_MasterArtisan.description>Исключительное художественное мастерство.</DC_PerkHediff_MasterArtisan.description>
+  <DC_PerkHediff_MasterArtisan.stages_0.label>активно</DC_PerkHediff_MasterArtisan.stages_0.label>
+
+</LanguageData>

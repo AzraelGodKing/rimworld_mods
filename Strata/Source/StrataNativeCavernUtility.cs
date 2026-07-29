@@ -88,16 +88,19 @@ namespace Strata
                 return StrataRockUtility.NaturalFloorFor(StrataRockUtility.RockAt(map, cell, rocks));
             }
 
-            float roll = Rand.Value;
-            if (depth >= 3 && roll < 0.04f)
+            // Seed-stable per-cell floor picks (same map seed → same cave floors).
+            int floorSeed = Gen.HashCombineInt(map.ConstantRandSeed, cell.x);
+            floorSeed = Gen.HashCombineInt(floorSeed, cell.z * 73856093);
+            float roll = Rand.ValueSeeded(floorSeed);
+            if (depth >= 3 && roll < 0.045f)
             {
                 return TerrainDefOf.WaterShallow;
             }
-            if (roll < 0.18f)
+            if (roll < 0.20f)
             {
                 return TerrainDefOf.Gravel;
             }
-            if (roll < 0.32f)
+            if (roll < 0.36f)
             {
                 return TerrainDefOf.Soil;
             }

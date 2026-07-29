@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_GrainMill.label>зерновая мельница</Homesteader_GrainMill.label>
+  <Homesteader_GrainMill.description>Ручная каменная мельница для размола сырых растений и зерна в муку. Энергия не нужна.</Homesteader_GrainMill.description>
+  <Homesteader_ButterChurn.label>маслобойка</Homesteader_ButterChurn.label>
+  <Homesteader_ButterChurn.description>Деревянная маслобойка для снятия сливок с молока и превращения их в масло. Простое ремесло «с фермы на стол».</Homesteader_ButterChurn.description>
+  <Homesteader_CheesePress.label>пресс для сыра</Homesteader_CheesePress.label>
+  <Homesteader_CheesePress.description>Утяжелённый деревянный пресс для превращения солёных сливочных сгустков в круги долгохранящегося фермерского сыра.</Homesteader_CheesePress.description>
+
+</LanguageData>
