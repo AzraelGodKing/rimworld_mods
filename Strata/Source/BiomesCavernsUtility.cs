@@ -37,11 +37,25 @@ namespace Strata
 
         public static bool ShouldGenerateCavernLayout(Map map)
         {
-            if (!IsActive || map == null || StrataMod.Settings?.biomesCavernsCompatEnabled == false)
+            // When Biomes! Caverns (+ Core/Framework) is loaded, it always owns
+            // dig map generation over Strata's native caves.
+            if (!IsActive || map == null)
             {
                 return false;
             }
             return StrataDepth.CountLevelsBelowSurface(map) >= 1;
+        }
+
+        // Optional extras (plants/fauna/stalagmites) — gated by the Mod Options toggle.
+        public static bool ShouldScatterCavernFeatures(Map map)
+        {
+            if (!ShouldGenerateCavernLayout(map)
+                || StrataMod.Settings?.biomesCavernsCompatEnabled == false
+                || !IsStrataCavernBiome(map.Biome))
+            {
+                return false;
+            }
+            return true;
         }
 
         public static bool IsStrataCavernBiome(BiomeDef biome)
@@ -70,6 +84,8 @@ namespace Strata
             BiomeDef previous = tile.PrimaryBiome;
             tile.PrimaryBiome = profile;
 
+            bool regionsWereEnabled = map.regionAndRoomUpdater.Enabled;
+            map.regionAndRoomUpdater.Enabled = false;
             try
             {
                 new GenStep_ElevationFertility().Generate(map, parms);
@@ -83,11 +99,15 @@ namespace Strata
                 LogBindOnce("Cavern layout failed: " + ex.Message);
                 return false;
             }
+            finally
+            {
+                map.regionAndRoomUpdater.Enabled = regionsWereEnabled;
+            }
         }
 
         public static void ScatterCavernFeatures(Map map, GenStepParams parms)
         {
-            if (!ShouldGenerateCavernLayout(map) || !IsStrataCavernBiome(map.Biome))
+            if (!ShouldScatterCavernFeatures(map))
             {
                 return;
             }

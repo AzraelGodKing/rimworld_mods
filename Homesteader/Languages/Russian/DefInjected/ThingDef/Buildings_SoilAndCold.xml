@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_CompostHeap.label>компостная куча</Homesteader_CompostHeap.label>
+  <Homesteader_CompostHeap.description>Парящая куча растительных отходов и навоза, превращённая в компост. Заказы превращают сено и растительную массу в компост, а затем в удобрение для компостной почвы.</Homesteader_CompostHeap.description>
+  <Homesteader_Icehouse.label>ледник</Homesteader_Icehouse.label>
+  <Homesteader_Icehouse.description>Толстостенный ледник, забитый опилками и зимним холодом. Вмещает четыре стопки и держит еду почти у замерзания без энергии — холоднее корневого погреба, компактнее по площади.</Homesteader_Icehouse.description>
+  <Homesteader_Springhouse.label>родниковый домик</Homesteader_Springhouse.label>
+  <Homesteader_Springhouse.description>Водоохлаждаемый сарай над холодным родником. Вмещает три стопки и держит молочку и урожай прохладными (≤8°C) без электричества — фермерский спутник корневого погреба.</Homesteader_Springhouse.description>
+
+</LanguageData>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_RenderLard.label>вытопить сало</Homesteader_RenderLard.label>
+  <Homesteader_RenderLard.description>Вытопить мягкий жир из сырого мяса в кулинарное сало.</Homesteader_RenderLard.description>
+  <Homesteader_RenderLard.jobString>Вытапливает сало.</Homesteader_RenderLard.jobString>
+  <Homesteader_RenderTallow.label>вытопить жир</Homesteader_RenderTallow.label>
+  <Homesteader_RenderTallow.description>Медленно вытопить мясо в твёрдый жир для мыла и кладовых ремёсел.</Homesteader_RenderTallow.description>
+  <Homesteader_RenderTallow.jobString>Вытапливает жир.</Homesteader_RenderTallow.jobString>
+  <Homesteader_MakeSausage.label>делать колбасу</Homesteader_MakeSausage.label>
+  <Homesteader_MakeSausage.description>Начинить солёное или копчёное мясо вытопленным жиром и сушёными травами в хуторскую колбасу.</Homesteader_MakeSausage.description>
+  <Homesteader_MakeSausage.jobString>Делает колбасу.</Homesteader_MakeSausage.jobString>
+  <Homesteader_MakeAnimalMash.label>делать кормовую кашу</Homesteader_MakeAnimalMash.label>
+  <Homesteader_MakeAnimalMash.description>Сварить ячмень и тыкву в мягкую кашу для курятников, загонов и другого скота.</Homesteader_MakeAnimalMash.description>
+  <Homesteader_MakeAnimalMash.jobString>Делает кормовую кашу.</Homesteader_MakeAnimalMash.jobString>
+  <Homesteader_MakeCompost.label>делать компост</Homesteader_MakeCompost.label>
+  <Homesteader_MakeCompost.description>Переработать сено и растительную пищу в тёмный компост.</Homesteader_MakeCompost.description>
+  <Homesteader_MakeCompost.jobString>Делает компост.</Homesteader_MakeCompost.jobString>
+  <Homesteader_ScreenFertilizer.label>просеивать удобрение</Homesteader_ScreenFertilizer.label>
+  <Homesteader_ScreenFertilizer.description>Просеять готовый компост в удобрение для компостированной почвы.</Homesteader_ScreenFertilizer.description>
+  <Homesteader_ScreenFertilizer.jobString>Просеивает удобрение.</Homesteader_ScreenFertilizer.jobString>
+  <Homesteader_SpinFlax.label>прясть льняную ткань</Homesteader_SpinFlax.label>
+  <Homesteader_SpinFlax.description>Спрясть льняное волокно в грубую домотканую ткань.</Homesteader_SpinFlax.description>
+  <Homesteader_SpinFlax.jobString>Прядёт лён.</Homesteader_SpinFlax.jobString>
+  <Homesteader_SpinWool.label>прясть шерстяную ткань</Homesteader_SpinWool.label>
+  <Homesteader_SpinWool.description>Спрясть шерсть в грубую домотканую ткань.</Homesteader_SpinWool.description>
+  <Homesteader_SpinWool.jobString>Прядёт шерсть.</Homesteader_SpinWool.jobString>
+  <Homesteader_WeaveQuilt.label>ткать хуторское одеяло</Homesteader_WeaveQuilt.label>
+  <Homesteader_WeaveQuilt.description>Соткать домотканую ткань в толстое фермерское одеяло.</Homesteader_WeaveQuilt.description>
+  <Homesteader_WeaveQuilt.jobString>Ткёт одеяло.</Homesteader_WeaveQuilt.jobString>
+  <Homesteader_MakeMasonJars.label>делать банки Мейсона</Homesteader_MakeMasonJars.label>
+  <Homesteader_MakeMasonJars.description>Сформировать из стали многоразовые банки для консервирования.</Homesteader_MakeMasonJars.description>
+  <Homesteader_MakeMasonJars.jobString>Делает банки Мейсона.</Homesteader_MakeMasonJars.jobString>
+  <Homesteader_CanStew.label>консервировать похлёбку</Homesteader_CanStew.label>
+  <Homesteader_CanStew.description>Закатать сытную или походную похлёбку в банки Мейсона на годы хранения.</Homesteader_CanStew.description>
+  <Homesteader_CanStew.jobString>Консервирует похлёбку.</Homesteader_CanStew.jobString>
+  <Homesteader_CanJam.label>консервировать джем</Homesteader_CanJam.label>
+  <Homesteader_CanJam.description>Закатать джем в банки Мейсона для гораздо более долгого хранения в кладовой.</Homesteader_CanJam.description>
+  <Homesteader_CanJam.jobString>Консервирует джем.</Homesteader_CanJam.jobString>
+  <Homesteader_PressAppleJuice.label>отжимать яблочный сок</Homesteader_PressAppleJuice.label>
+  <Homesteader_PressAppleJuice.description>Отжать садовые яблоки в свежий сок.</Homesteader_PressAppleJuice.description>
+  <Homesteader_PressAppleJuice.jobString>Отжимает яблочный сок.</Homesteader_PressAppleJuice.jobString>
+
+</LanguageData>

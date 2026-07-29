@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_WorkGiver_BeginMentoring.label>наставничество</DC_WorkGiver_BeginMentoring.label>
+  <DC_WorkGiver_BeginMentoring.gerund>наставляет</DC_WorkGiver_BeginMentoring.gerund>
+  <DC_WorkGiver_BeginMentoring.verb>наставлять</DC_WorkGiver_BeginMentoring.verb>
+  <DC_WorkGiver_CounselTrauma.label>консультировать по травме</DC_WorkGiver_CounselTrauma.label>
+  <DC_WorkGiver_CounselTrauma.gerund>консультирует</DC_WorkGiver_CounselTrauma.gerund>
+  <DC_WorkGiver_CounselTrauma.verb>консультировать</DC_WorkGiver_CounselTrauma.verb>
+
+</LanguageData>

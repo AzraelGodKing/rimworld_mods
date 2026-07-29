@@ -4,6 +4,9 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ## [Unreleased]
 
+### Added
+- **CN / RU language packs** — Chinese Simplified and Russian Keyed + full DefInjected (buildings, items, plants, recipes, research, thoughts, hediffs, incidents, and related defs).
+
 ### Fixed
 - **Allergy flare without eating** — food allergy hediff / discovery no longer run from `ThoughtsFromIngesting` (also used by food AI and ingest menus). Reactions apply only on real `Thing.Ingested`.
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_StrawHat.label>草帽</Homesteader_StrawHat.label>
+  <Homesteader_StrawHat.description>宽檐草编帽。长时间在田间劳作时能挡住日晒。</Homesteader_StrawHat.description>
+  <Homesteader_WorkApron.label>工作围裙</Homesteader_WorkApron.label>
+  <Homesteader_WorkApron.description>套在衣服外的结实围裙。口袋和厚布让作坊与厨房杂务稍快一些。</Homesteader_WorkApron.description>
+  <Homesteader_Overalls.label>工装背带裤</Homesteader_Overalls.label>
+  <Homesteader_Overalls.description>耐磨的背带裤，遮住躯干和双腿。各地农夫的标配；穿着它耕作会轻松一点。</Homesteader_Overalls.description>
+  <Homesteader_WoolPoncho.label>披风</Homesteader_WoolPoncho.label>
+  <Homesteader_WoolPoncho.description>披在肩上的厚实织披风。制作便宜，霜晨里格外暖和。</Homesteader_WoolPoncho.description>
+
+</LanguageData>

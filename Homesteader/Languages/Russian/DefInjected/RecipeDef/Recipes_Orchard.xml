@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_BoilMapleSyrup.label>варить кленовый сироп</Homesteader_BoilMapleSyrup.label>
+  <Homesteader_BoilMapleSyrup.description>Выпарить кленовый сок на очаге, пока он не загустеет в густой янтарный сироп.</Homesteader_BoilMapleSyrup.description>
+  <Homesteader_BoilMapleSyrup.jobString>Варит кленовый сироп.</Homesteader_BoilMapleSyrup.jobString>
+  <Homesteader_BakeFlapjacks.label>печь оладьи</Homesteader_BakeFlapjacks.label>
+  <Homesteader_BakeFlapjacks.description>Жарить мучное тесто с маслом в оладьи и щедро полить кленовым сиропом.</Homesteader_BakeFlapjacks.description>
+  <Homesteader_BakeFlapjacks.jobString>Печёт оладьи.</Homesteader_BakeFlapjacks.jobString>
+
+</LanguageData>

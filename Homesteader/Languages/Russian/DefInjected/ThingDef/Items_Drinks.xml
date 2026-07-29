@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Cider.label>сидр</Homesteader_Cider.label>
+  <Homesteader_Cider.description>Фруктовый сидр лёгкой крепости. Поднимает настроение, а слишком много — к тому же, к чему всегда приводит слишком много.</Homesteader_Cider.description>
+  <Homesteader_Mead.label>медовуха</Homesteader_Mead.label>
+  <Homesteader_Mead.description>Медовое вино по старинному рецепту. Сладкое, крепкое и достойная награда после тяжёлого сезона на усадьбе.</Homesteader_Mead.description>
+  <Homesteader_HerbalTea.label>травяной чай</Homesteader_HerbalTea.label>
+  <Homesteader_HerbalTea.description>Успокаивающая чашка из сушёных усадебных трав. Греет руки и поднимает дух без капли алкоголя.</Homesteader_HerbalTea.description>
+
+</LanguageData>

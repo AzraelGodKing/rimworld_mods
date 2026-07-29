@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_DryingRack.label>сушильная стойка</Homesteader_DryingRack.label>
+  <Homesteader_DryingRack.description>Деревянная стойка для воздушной сушки еды. Сырое мясо можно высушить в долговечные джерки, фрукты и овощи — в сушёные продукты или фруктовую пастилу, а собранные грибы — в сушёные грибы. Не требует энергии и исследований.</Homesteader_DryingRack.description>
+  <Homesteader_CuringRack.label>стойка для засолки</Homesteader_CuringRack.label>
+  <Homesteader_CuringRack.description>Решетчатая деревянная стойка для засолки мяса и рыбы или добычи каменной соли из обломков камня. Быстрее копчения и не требует топлива.</Homesteader_CuringRack.description>
+  <Homesteader_Smokehouse.label>коптильня</Homesteader_Smokehouse.label>
+  <Homesteader_Smokehouse.description>Дровяная коптильня. Сырое мясо и рыба, закопчённые здесь, хранятся около месяца и всё ещё могут идти в блюда. Во время работы расходует древесину как топливо.</Homesteader_Smokehouse.description>
+  <Homesteader_PicklingCrock.label>кадка для маринада</Homesteader_PicklingCrock.label>
+  <Homesteader_PicklingCrock.description>Каменная кадка для ферментации овощей в рассоле. Энергия не нужна — только соль, урожай и терпение.</Homesteader_PicklingCrock.description>
+  <Homesteader_HomesteadHearth.label>очаг усадьбы</Homesteader_HomesteadHearth.label>
+  <Homesteader_HomesteadHearth.description>Кирпично-каменная печь с дровяным очагом. Печёт хлеб и сухари, собирает кладовые блюда вроде тостов с джемом или «обеда пахаря», варит похлёбки, каши и оладьи.</Homesteader_HomesteadHearth.description>
+  <Homesteader_JamCauldron.label>котёл для варенья</Homesteader_JamCauldron.label>
+  <Homesteader_JamCauldron.description>Широкий железный котёл над дровяным огнём для уваривания фруктов с сахаром в сладкое, долго хранящееся варенье.</Homesteader_JamCauldron.description>
+
+</LanguageData>

@@ -4,6 +4,9 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 
 ## [Unreleased]
 
+### Added
+- **CN / RU language packs** — Chinese Simplified and Russian Keyed + DefInjected translations for all Stormproof player strings (buildings, research, incidents, game conditions).
+
 ### Changed
 - **Workshop preview** — compressed `About/Preview.png` (~3.0 MB → ~0.94 MB) via palette PNG so Steam uploads stay under size pressure.
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ── Perk Tree ─────────────────────────────────────────────────────────── -->
+  <DC_ViewPerks>Просмотреть перки</DC_ViewPerks>
+  <DC_ViewPerksDesc>Открыть дерево перков этого колониста. Разблокировано: {1}, доступно очков: {0}.</DC_ViewPerksDesc>
+  <DC_PerkTreeTitle>Перки — {PAWN}</DC_PerkTreeTitle>
+  <DC_PerkPoints>Очки перков: {0}</DC_PerkPoints>
+  <DC_PerkRequires>Треб.: {0} ур.{1}</DC_PerkRequires>
+  <DC_PerkUnlockBtn>Разблокировать</DC_PerkUnlockBtn>
+  <DC_PerkStatus_Unlocked>✓ Разблокировано</DC_PerkStatus_Unlocked>
+  <DC_PerkStatus_NeedPrereq>Нужен предварительный перк</DC_PerkStatus_NeedPrereq>
+  <DC_PerkStatus_NeedLevel>Слишком низкий уровень</DC_PerkStatus_NeedLevel>
+  <DC_PerkUnlocked>{PAWN} разблокировал(а) перк: {PERK}.</DC_PerkUnlocked>
+  <DC_PerkPointGained>{PAWN} получил(а) очко перка за повышение {SKILL}.</DC_PerkPointGained>
+  <DC_PerksAvailable>{PAWN} повысил(а) {SKILL} — доступно перков для разблокировки: {2}.</DC_PerksAvailable>
+  <DC_InspectPerks>Перки: {0} очк., разблокировано {1}</DC_InspectPerks>
+
+  <!-- ── Trauma ─────────────────────────────────────────────────────────────── -->
+  <DC_TherapyProgress>Есть прогресс...</DC_TherapyProgress>
+  <DC_TraumaApplied>{PAWN} {EVENT}.</DC_TraumaApplied>
+  <DC_CounselComplete>Консультирование завершено.</DC_CounselComplete>
+  <DC_CounselFloat>Проконсультировать {PAWN} насчёт травмы</DC_CounselFloat>
+  <DC_InspectTrauma>Несёт психологическую травму</DC_InspectTrauma>
+
+  <!-- ── Apprenticeship ────────────────────────────────────────────────────── -->
+  <DC_BecomeMentor>Сделать {PAWN} наставником для {APPRENTICE}</DC_BecomeMentor>
+  <DC_RemoveMentor>Снять {PAWN} с наставничества над {APPRENTICE}</DC_RemoveMentor>
+  <DC_MentorAssigned>{MENTOR} теперь наставляет {APPRENTICE}. Ученик будет быстрее получать опыт, работая рядом с наставником.</DC_MentorAssigned>
+  <DC_MentorRemoved>{MENTOR} больше не наставляет {APPRENTICE}.</DC_MentorRemoved>
+  <DC_MentoringComplete>Сессия завершена.</DC_MentoringComplete>
+  <DC_MentorInvalid>Нельзя назначить эту наставническую связь.</DC_MentorInvalid>
+  <DC_MentorSelf>Колонист не может наставлять самого себя.</DC_MentorSelf>
+  <DC_MentorMutual>Нельзя создавать взаимные циклы наставничества.</DC_MentorMutual>
+  <DC_MentorSkillGap>Наставник должен опережать хотя бы на {0} ур. в одном навыке.</DC_MentorSkillGap>
+  <DC_InspectMentor>Ученик у {0}</DC_InspectMentor>
+  <DC_InspectApprentices>Наставляет учеников: {0}</DC_InspectApprentices>
+
+  <!-- ── Generations ────────────────────────────────────────────────────────── -->
+  <DC_InheritedTrait>Унаследована черта «{TRAIT}» от {PARENT}</DC_InheritedTrait>
+  <DC_InheritedPassion>Унаследована страсть к {SKILL} от {PARENT}</DC_InheritedPassion>
+  <DC_InheritedPassionMajor>Унаследована сильная страсть к {SKILL} от {PARENT}</DC_InheritedPassionMajor>
+  <DC_InheritanceLetter_Label>Унаследованные черты: {PAWN}</DC_InheritanceLetter_Label>
+  <DC_InheritanceLetter_Body>{PAWN} проявляет признаки наследования черт и страстей из линии колонистов.</DC_InheritanceLetter_Body>
+
+</LanguageData>

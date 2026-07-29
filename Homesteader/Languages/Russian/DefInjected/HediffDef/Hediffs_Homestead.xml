@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_NearMaypole.label>рядом с майским столбом урожая</Homesteader_NearMaypole.label>
+  <Homesteader_NearMaypole.description>В радостной зоне действия майского столба урожая.</Homesteader_NearMaypole.description>
+  <Homesteader_NearMonument27.label>рядом со статуей 27</Homesteader_NearMonument27.label>
+  <Homesteader_NearMonument27.description>В зоне действия усадебного монумента или статуи 27.</Homesteader_NearMonument27.description>
+  <Homesteader_AllergicReaction.label>аллергическая реакция</Homesteader_AllergicReaction.label>
+  <Homesteader_AllergicReaction.description>Кратковременный приступ аллергии — зуд в глазах или горле, лёгкая тошнота, туман в голове. Проходит само.</Homesteader_AllergicReaction.description>
+  <Homesteader_AllergicReaction.stages_0.label>зуд</Homesteader_AllergicReaction.stages_0.label>
+  <Homesteader_KatsBrainRot.label>гниение мозга</Homesteader_KatsBrainRot.label>
+  <Homesteader_KatsBrainRot.description>Кратковременное помутнение после аномальной трансляции. Мысли крутят одно и то же число и слоган. Проходит само.</Homesteader_KatsBrainRot.description>
+  <Homesteader_KatsBrainRot.stages_0.label>помутнение</Homesteader_KatsBrainRot.stages_0.label>
+
+</LanguageData>

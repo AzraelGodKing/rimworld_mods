@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Plant_Barley.label>ячмень (растение)</Homesteader_Plant_Barley.label>
+  <Homesteader_Plant_Barley.description>Выносливая злаковая культура, терпящая прохладный климат. Урожай можно смолоть в муку, сварить в кашу или пустить на пивоварение.</Homesteader_Plant_Barley.description>
+  <Homesteader_Plant_Pumpkin.label>тыква (растение)</Homesteader_Plant_Pumpkin.label>
+  <Homesteader_Plant_Pumpkin.description>Расползающаяся лоза с крупными оранжевыми тыквами. Растёт медленно, но каждый урожай щедр.</Homesteader_Plant_Pumpkin.description>
+  <Homesteader_Plant_Herbs.label>травяной куст</Homesteader_Plant_Herbs.label>
+  <Homesteader_Plant_Herbs.description>Душистый куст кухонных трав. Собранные травы сушат для стряпни и травяного чая.</Homesteader_Plant_Herbs.description>
+  <Homesteader_Plant_SugarBeet.label>сахарная свёкла (растение)</Homesteader_Plant_SugarBeet.label>
+  <Homesteader_Plant_SugarBeet.description>Толстокорневая свёкла, выведенная ради высокого содержания сахара. На зерновой мельнице из неё извлекают сахар.</Homesteader_Plant_SugarBeet.description>
+  <Homesteader_Plant_Flax.label>лён (растение)</Homesteader_Plant_Flax.label>
+  <Homesteader_Plant_Flax.description>Синецветная волокнистая культура. Стебли разбивают в льняное волокно для прялки. Лучше всего растёт после исследований садового ремесла или текстиля.</Homesteader_Plant_Flax.description>
+
+</LanguageData>

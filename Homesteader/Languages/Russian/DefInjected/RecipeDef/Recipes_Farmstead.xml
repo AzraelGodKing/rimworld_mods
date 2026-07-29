@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_MillFlour.label>молоть муку</Homesteader_MillFlour.label>
+  <Homesteader_MillFlour.description>Смолоть сырые растения и зерно в муку.</Homesteader_MillFlour.description>
+  <Homesteader_MillFlour.jobString>Мелет муку.</Homesteader_MillFlour.jobString>
+  <Homesteader_ChurnButter.label>сбивать масло</Homesteader_ChurnButter.label>
+  <Homesteader_ChurnButter.description>Взбивать снятые сливки, пока они не разделятся на масло и пахту.</Homesteader_ChurnButter.description>
+  <Homesteader_ChurnButter.jobString>Сбивает масло.</Homesteader_ChurnButter.jobString>
+  <Homesteader_SkimCream.label>снимать сливки</Homesteader_SkimCream.label>
+  <Homesteader_SkimCream.description>Дать свежему молоку отстояться и снять густые сливки.</Homesteader_SkimCream.description>
+  <Homesteader_SkimCream.jobString>Снимает сливки.</Homesteader_SkimCream.jobString>
+  <Homesteader_PressCheese.label>прессовать сыр</Homesteader_PressCheese.label>
+  <Homesteader_PressCheese.description>Свернуть сливки с солью и спрессовать в круг долгохранящегося фермерского сыра.</Homesteader_PressCheese.description>
+  <Homesteader_PressCheese.jobString>Прессует сыр.</Homesteader_PressCheese.jobString>
+  <Homesteader_BakeBread.label>печь хлеб</Homesteader_BakeBread.label>
+  <Homesteader_BakeBread.description>Испечь простой хлеб из хуторской муки и кусочка масла.</Homesteader_BakeBread.description>
+  <Homesteader_BakeBread.jobString>Печёт хлеб.</Homesteader_BakeBread.jobString>
+  <Homesteader_BakeHardtack.label>печь галеты</Homesteader_BakeHardtack.label>
+  <Homesteader_BakeHardtack.description>Испечь из муки твёрдые как камень галеты, которые хранятся месяцами.</Homesteader_BakeHardtack.description>
+  <Homesteader_BakeHardtack.jobString>Печёт галеты.</Homesteader_BakeHardtack.jobString>
+  <Homesteader_CookTrailStew.label>варить походную похлёбку</Homesteader_CookTrailStew.label>
+  <Homesteader_CookTrailStew.description>Тушить вяленое мясо и сушёные овощи в сытную хуторскую похлёбку, приправленную сушёными травами.</Homesteader_CookTrailStew.description>
+  <Homesteader_CookTrailStew.jobString>Варит походную похлёбку.</Homesteader_CookTrailStew.jobString>
+  <Homesteader_CookHeartyStew.label>варить сытную похлёбку</Homesteader_CookHeartyStew.label>
+  <Homesteader_CookHeartyStew.description>Тушить копчёное мясо и маринованные овощи в густую утешительную похлёбку, завершённую сушёными травами.</Homesteader_CookHeartyStew.description>
+  <Homesteader_CookHeartyStew.jobString>Варит сытную похлёбку.</Homesteader_CookHeartyStew.jobString>
+  <Homesteader_MakeToastAndJam.label>делать тосты с джемом</Homesteader_MakeToastAndJam.label>
+  <Homesteader_MakeToastAndJam.description>Поджарить хуторской хлеб и густо намазать его кладовым джемом.</Homesteader_MakeToastAndJam.description>
+  <Homesteader_MakeToastAndJam.jobString>Делает тосты с джемом.</Homesteader_MakeToastAndJam.jobString>
+  <Homesteader_MakePloughmansLunch.label>готовить ленч пахаря</Homesteader_MakePloughmansLunch.label>
+  <Homesteader_MakePloughmansLunch.description>Собрать хлеб, сыр и соленья в классическую фермерскую тарелку.</Homesteader_MakePloughmansLunch.description>
+  <Homesteader_MakePloughmansLunch.jobString>Готовит ленч пахаря.</Homesteader_MakePloughmansLunch.jobString>
+  <Homesteader_CookHoneyPorridge.label>варить медовую кашу</Homesteader_CookHoneyPorridge.label>
+  <Homesteader_CookHoneyPorridge.description>Варить зерно в кашу и щедро полить её мёдом.</Homesteader_CookHoneyPorridge.description>
+  <Homesteader_CookHoneyPorridge.jobString>Варит медовую кашу.</Homesteader_CookHoneyPorridge.jobString>
+
+</LanguageData>

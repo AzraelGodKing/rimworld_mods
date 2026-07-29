@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_RawApples.label>яблоки</Homesteader_RawApples.label>
+  <Homesteader_RawApples.description>Хрустящие садовые яблоки. Вкусны свежими, идут в сидр, варенье и сушку для дороги.</Homesteader_RawApples.description>
+  <Homesteader_RawCherries.label>вишня</Homesteader_RawCherries.label>
+  <Homesteader_RawCherries.description>Сладкая тёмная садовая вишня. Лакомство свежей — и любимый плод варочного котла.</Homesteader_RawCherries.description>
+  <Homesteader_MapleSap.label>кленовый сок</Homesteader_MapleSap.label>
+  <Homesteader_MapleSap.description>Жидкий чуть сладкий сок, собранный с сахарного клёна. Выкипятите у очага в кленовый сироп, пока не прокис.</Homesteader_MapleSap.description>
+  <Homesteader_MapleSyrup.label>кленовый сироп</Homesteader_MapleSyrup.label>
+  <Homesteader_MapleSyrup.description>Кленовый сок, уваренный до густого янтарного сиропа. Хранится бесконечно. Подслащивает варенье, кашу и сидр и превращает оладьи в повод встать с постели.</Homesteader_MapleSyrup.description>
+  <Homesteader_Flapjacks.label>оладьи</Homesteader_Flapjacks.label>
+  <Homesteader_Flapjacks.description>Стопка лепёшек, залитых кленовым сиропом. Классический усадебный завтрак — тёплый, сладкий и стоящий того, чтобы проснуться.</Homesteader_Flapjacks.description>
+  <Homesteader_Beeswax.label>пчелиный воск</Homesteader_Beeswax.label>
+  <Homesteader_Beeswax.description>Золотистые восковые соты из улья. Из них льют медленно горящие свечи, освещающие усадьбу без капли химтоплива.</Homesteader_Beeswax.description>
+
+</LanguageData>

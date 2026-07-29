@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_StorageCrate.label>储物箱</Homesteader_StorageCrate.label>
+  <Homesteader_StorageCrate.description>结实的木箱，最多可放三堆物品。箱盖可防止内容物劣化，即使在室外也一样。</Homesteader_StorageCrate.description>
+  <Homesteader_StorageBarrel.label>储物桶</Homesteader_StorageBarrel.label>
+  <Homesteader_StorageBarrel.description>带盖木桶，用于存放食物与饮料。最多可放三堆，并防止它们在天气中劣化。不能减缓腐烂——易腐物请保持凉爽或先保存。</Homesteader_StorageBarrel.description>
+  <Homesteader_Pallet.label>托盘</Homesteader_Pallet.label>
+  <Homesteader_Pallet.description>简易木托盘，让两堆货物离地存放以防劣化。便宜到能铺满整个院子。可放任何东西，包括石块。</Homesteader_Pallet.description>
+  <Homesteader_IngredientBarrel.label>食材桶</Homesteader_IngredientBarrel.label>
+  <Homesteader_IngredientBarrel.description>专为厨房主料设计的带盖桶：生肉、鸡蛋与牛奶。可放三堆，并防止它们在室外劣化。</Homesteader_IngredientBarrel.description>
+  <Homesteader_Hayloft.label>干草阁楼</Homesteader_Hayloft.label>
+  <Homesteader_Hayloft.description>开放式木阁楼，用于大宗农贮。可放四堆干草、生植物与烟叶，遮挡风雨。</Homesteader_Hayloft.description>
+  <Homesteader_LargeStorageCrate.label>大型储物箱</Homesteader_LargeStorageCrate.label>
+  <Homesteader_LargeStorageCrate.description>加固的双宽箱子，适合大量囤货。可放六堆任何物品，并防止劣化，即使在室外也一样。</Homesteader_LargeStorageCrate.description>
+  <Homesteader_RootCellar.label>地窖</Homesteader_RootCellar.label>
+  <Homesteader_RootCellar.description>以石与土衬里的埋地地窖。可放六堆食物与饮料。地窖上的内容物——以及相邻室内格子中的食物——在腐败计算中保持在 5°C 或以下，并遮挡室外天气。</Homesteader_RootCellar.description>
+  <Homesteader_PreservesShelf.label>腌制货架</Homesteader_PreservesShelf.label>
+  <Homesteader_PreservesShelf.description>漂亮的木架，用来展示储藏室的骄傲：果酱与泡菜罐、奶酪轮、蜂蜜与糖浆罐。保存食物一半的乐趣在于事后欣赏。</Homesteader_PreservesShelf.description>
+
+</LanguageData>

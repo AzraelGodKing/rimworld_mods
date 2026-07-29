@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Jerky.label>肉干</Homesteader_Jerky.label>
+  <Homesteader_Jerky.description>晒至坚韧有嚼劲的肉条。能存放两个月，几乎不占重量，是理想的旅行粮和应急口粮。</Homesteader_Jerky.description>
+  <Homesteader_DriedProduce.label>干蔬果</Homesteader_DriedProduce.label>
+  <Homesteader_DriedProduce.description>切薄后风干的水果和蔬菜。能存放两个月，轻便得足以带上长途旅程。</Homesteader_DriedProduce.description>
+  <Homesteader_FruitLeather.label>果皮糖</Homesteader_FruitLeather.label>
+  <Homesteader_FruitLeather.description>果泥摊薄晒成有嚼劲的薄片。甜美轻便，路上能存放三个月。</Homesteader_FruitLeather.description>
+  <Homesteader_DriedMushrooms.label>干蘑菇</Homesteader_DriedMushrooms.label>
+  <Homesteader_DriedMushrooms.description>切片风干的采集蘑菇。轻便鲜香，是歉收季节受欢迎的储藏室常备。</Homesteader_DriedMushrooms.description>
+  <Homesteader_SmokedMeat.label>烟熏肉</Homesteader_SmokedMeat.label>
+  <Homesteader_SmokedMeat.description>用木烟熏制的肉。无需冷藏约可存放一个月，可像生肉一样入菜。单独吃则难以下咽。</Homesteader_SmokedMeat.description>
+  <Homesteader_SaltedMeat.label>腌咸肉</Homesteader_SaltedMeat.label>
+  <Homesteader_SaltedMeat.description>用盐腌透的生肉。无冷柜约可存放六周，仍可入菜。单吃又咸又硬。</Homesteader_SaltedMeat.description>
+  <Homesteader_SmokedFish.label>烟熏鱼</Homesteader_SmokedFish.label>
+  <Homesteader_SmokedFish.description>用木烟熏制的鱼。约可存放一个月，可入菜。单独吃则难以下咽。</Homesteader_SmokedFish.description>
+  <Homesteader_SaltedFish.label>腌咸鱼</Homesteader_SaltedFish.label>
+  <Homesteader_SaltedFish.description>用盐腌透的鱼。约可存放六周，可入菜。单吃又咸又硬。</Homesteader_SaltedFish.description>
+  <Homesteader_PickledVegetables.label>腌菜</Homesteader_PickledVegetables.label>
+  <Homesteader_PickledVegetables.description>用盐水发酵的蔬菜。酸脆可口，在阴凉储藏室可存放四个月。</Homesteader_PickledVegetables.description>
+  <Homesteader_Hardtack.label>硬饼干</Homesteader_Hardtack.label>
+  <Homesteader_Hardtack.description>烤至毫无水分的硬如岩石的饼干。勉强算食物，但能放好几个月，紧急时能填饱肚子。</Homesteader_Hardtack.description>
+  <Homesteader_Jam.label>果酱</Homesteader_Jam.label>
+  <Homesteader_Jam.description>水果与糖、蜂蜜或枫糖浆一同煮成浓稠甜美的蜜饯。可涂面包，也可在储藏室存上半年。</Homesteader_Jam.description>
+  <Homesteader_Bread.label>面包</Homesteader_Bread.label>
+  <Homesteader_Bread.description>用农庄面粉烤成的简单面包。温热饱腹，趁新鲜最好吃。</Homesteader_Bread.description>
+  <Homesteader_Cream.label>奶油</Homesteader_Cream.label>
+  <Homesteader_Cream.description>在搅乳器上从鲜奶撇出的浓奶油。可搅成黄油，或与岩盐压成奶酪。</Homesteader_Cream.description>
+  <Homesteader_Cheese.label>奶酪</Homesteader_Cheese.label>
+  <Homesteader_Cheese.description>用奶油和岩盐压成的农家奶酪轮。能存放数月，便于携带。</Homesteader_Cheese.description>
+  <Homesteader_Porridge.label>粥</Homesteader_Porridge.label>
+  <Homesteader_Porridge.description>一碗温热的大麦粥，用储藏室里能找到的东西加甜。朴实、滚烫、饱腹。</Homesteader_Porridge.description>
+  <Homesteader_TrailStew.label>旅途炖菜</Homesteader_TrailStew.label>
+  <Homesteader_TrailStew.description>用肉干和防腐蔬果慢炖的朴实炖菜。是储备充足的冬日储藏室的味道。</Homesteader_TrailStew.description>
+  <Homesteader_HeartyStew.label>丰盛炖菜</Homesteader_HeartyStew.label>
+  <Homesteader_HeartyStew.description>烟熏肉与腌菜在农庄炉边慢炖的丰盛炖菜。大地所赐的慰藉之食。</Homesteader_HeartyStew.description>
+  <Homesteader_ToastAndJam.label>果酱吐司</Homesteader_ToastAndJam.label>
+  <Homesteader_ToastAndJam.description>温热的烤面包厚厚涂上储藏室果酱。快捷的农家早餐，吃起来像夏天。</Homesteader_ToastAndJam.description>
+  <Homesteader_PloughmansLunch.label>农夫午餐</Homesteader_PloughmansLunch.label>
+  <Homesteader_PloughmansLunch.description>面包、奶酪和腌菜拼成的经典农家拼盘。足够撑过漫长的田间一下午。</Homesteader_PloughmansLunch.description>
+  <Homesteader_HoneyPorridge.label>蜂蜜粥</Homesteader_HoneyPorridge.label>
+  <Homesteader_HoneyPorridge.description>一碗温热的谷物粥，淋上充足的蜂蜜。比日常的粥更甜、更慰藉。</Homesteader_HoneyPorridge.description>
+
+</LanguageData>

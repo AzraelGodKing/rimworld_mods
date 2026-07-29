@@ -37,4 +37,42 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>Strata_Suffocation</defName>
+    <thoughtClass>Thought_Situational</thoughtClass>
+    <workerClass>Strata.ThoughtWorker_StrataSuffocation</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>thin air</label>
+        <description>The air down here feels thin. I need ventilation, plants, or an oxygen pump.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+      <li>
+        <label>suffocating</label>
+        <description>I can barely catch my breath. This sealed chamber is running out of oxygen.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Strata_StuffyAir</defName>
+    <thoughtClass>Thought_Situational</thoughtClass>
+    <workerClass>Strata.ThoughtWorker_StrataStuffyAir</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>stuffy air</label>
+        <description>The air is heavy with exhaled breath. We need a CO₂ scrubber or a way out.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+      <li>
+        <label>choking on CO₂</label>
+        <description>Carbon dioxide is pooling in this room. My head is pounding.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

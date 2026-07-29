@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Perk_PracticedEye.label>намётанный глаз</DC_Perk_PracticedEye.label>
+  <DC_Perk_PracticedEye.description>Годы стрелковой практики натренировали глаз этого колониста. Повышает точность стрельбы.</DC_Perk_PracticedEye.description>
+  <DC_Perk_CrackShot.label>меткий стрелок</DC_Perk_CrackShot.label>
+  <DC_Perk_CrackShot.description>Этот колонист овладел дальним прицелом. Значительно повышает точность стрельбы.</DC_Perk_CrackShot.description>
+  <DC_Perk_BrawlersInstinct.label>инстинкт бойца</DC_Perk_BrawlersInstinct.label>
+  <DC_Perk_BrawlersInstinct.description>Боевой опыт обострил рефлексы этого колониста. Повышает шанс попадания в ближнем бою и уклонение.</DC_Perk_BrawlersInstinct.description>
+  <DC_Perk_BattleHardened.label>закалённый в бою</DC_Perk_BattleHardened.label>
+  <DC_Perk_BattleHardened.description>Закалённый бесчисленными схватками, этот колонист выдерживает больше урона и сам наносит его.</DC_Perk_BattleHardened.description>
+  <DC_Perk_FirstAidMastery.label>мастерство первой помощи</DC_Perk_FirstAidMastery.label>
+  <DC_Perk_FirstAidMastery.description>Быстрая и уверенная перевязка. Улучшает качество лечения в полевых условиях.</DC_Perk_FirstAidMastery.description>
+  <DC_Perk_SurgeonsTouch.label>рука хирурга</DC_Perk_SurgeonsTouch.label>
+  <DC_Perk_SurgeonsTouch.description>Исключительная точность в хирургии. Значительно повышает шанс успешной операции.</DC_Perk_SurgeonsTouch.description>
+  <DC_Perk_BuildersTouch.label>рука строителя</DC_Perk_BuildersTouch.label>
+  <DC_Perk_BuildersTouch.description>Опытные руки работают быстрее и тратят меньше усилий на каждый проект.</DC_Perk_BuildersTouch.description>
+  <DC_Perk_MasterPlanner.label>мастер планирования</DC_Perk_MasterPlanner.label>
+  <DC_Perk_MasterPlanner.description>Экспертный взгляд на конструкцию и материалы. Скорость и успех строительства повышены.</DC_Perk_MasterPlanner.description>
+  <DC_Perk_ArtisansHands.label>руки ремесленника</DC_Perk_ArtisansHands.label>
+  <DC_Perk_ArtisansHands.description>Устойчивое внимание и опытное ремесло дают изделия лучшего качества.</DC_Perk_ArtisansHands.description>
+  <DC_Perk_GrandArtisan.label>великий ремесленник</DC_Perk_GrandArtisan.label>
+  <DC_Perk_GrandArtisan.description>Истинный мастер ремесла, создающий исключительную работу с впечатляющей скоростью.</DC_Perk_GrandArtisan.description>
+  <DC_Perk_GreenTouch.label>зелёная рука</DC_Perk_GreenTouch.label>
+  <DC_Perk_GreenTouch.description>Растения откликаются на заботу этого колониста. Улучшает скорость посадки и урожайность.</DC_Perk_GreenTouch.description>
+  <DC_Perk_GardenMaster.label>мастер сада</DC_Perk_GardenMaster.label>
+  <DC_Perk_GardenMaster.description>Глубокое мастерство садоводства приносит богатые урожаи и быстрый рост.</DC_Perk_GardenMaster.description>
+  <DC_Perk_AnimalWhisperer.label>заклинатель животных</DC_Perk_AnimalWhisperer.label>
+  <DC_Perk_AnimalWhisperer.description>Природная лёгкость с животными повышает успех приручения и дрессировки.</DC_Perk_AnimalWhisperer.description>
+  <DC_Perk_MasterTamer.label>мастер-укротитель</DC_Perk_MasterTamer.label>
+  <DC_Perk_MasterTamer.description>Связь этого колониста с животными необычайна. Скорость приручения и дрессировки взлетает.</DC_Perk_MasterTamer.description>
+  <DC_Perk_RockEye.label>каменный глаз</DC_Perk_RockEye.label>
+  <DC_Perk_RockEye.description>Интуиция к составу камня и минералов ускоряет добычу.</DC_Perk_RockEye.description>
+  <DC_Perk_DeepProspector.label>глубокий разведчик</DC_Perk_DeepProspector.label>
+  <DC_Perk_DeepProspector.description>Экспертное чтение горных пластов даёт больше руды из каждой жилы.</DC_Perk_DeepProspector.description>
+  <DC_Perk_QuickStudy.label>быстрый ученик</DC_Perk_QuickStudy.label>
+  <DC_Perk_QuickStudy.description>Гибкий ум быстрее усваивает и применяет новые знания.</DC_Perk_QuickStudy.description>
+  <DC_Perk_ScientificPioneer.label>научный первопроходец</DC_Perk_ScientificPioneer.label>
+  <DC_Perk_ScientificPioneer.description>Истинно исключительный интеллект поднимает исследования на новые высоты.</DC_Perk_ScientificPioneer.description>
+  <DC_Perk_CharmingPresence.label>обаятельное присутствие</DC_Perk_CharmingPresence.label>
+  <DC_Perk_CharmingPresence.description>Природная харизма улучшает торговые переговоры и социальное общение.</DC_Perk_CharmingPresence.description>
+  <DC_Perk_MasterDiplomat.label>мастер-дипломат</DC_Perk_MasterDiplomat.label>
+  <DC_Perk_MasterDiplomat.description>Необычайные навыки общения открывают двери и наполняют казну. Превосходная торговля и прирост расположения.</DC_Perk_MasterDiplomat.description>
+  <DC_Perk_SeasonedCook.label>опытный повар</DC_Perk_SeasonedCook.label>
+  <DC_Perk_SeasonedCook.description>Эффективные кухонные привычки сокращают подготовку и улучшают стабильность блюд.</DC_Perk_SeasonedCook.description>
+  <DC_Perk_GrandChef.label>великий шеф</DC_Perk_GrandChef.label>
+  <DC_Perk_GrandChef.description>Кулинарный художник, чьи блюда сами по себе событие. Быстро, вкусно и без отравлений.</DC_Perk_GrandChef.description>
+  <DC_Perk_InspiredHand.label>вдохновенная рука</DC_Perk_InspiredHand.label>
+  <DC_Perk_InspiredHand.description>Устойчивая творческая практика даёт более тонкую работу и меньше отходов материалов.</DC_Perk_InspiredHand.description>
+  <DC_Perk_MasterArtisan.label>мастер-художник</DC_Perk_MasterArtisan.label>
+  <DC_Perk_MasterArtisan.description>Знаменитое на всю колонию мастерство — скульптуры и искусство завершаются быстрее и выглядят лучше.</DC_Perk_MasterArtisan.description>
+
+</LanguageData>

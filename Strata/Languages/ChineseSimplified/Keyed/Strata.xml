@@ -52,7 +52,7 @@
   <Strata_Settings_UndergroundGasDesc>深层气体危险：挖掘可能打穿恶臭深层气囊，也可能出现沉没废墟遗址。密封楼梯井无论此设置如何都含有气体。</Strata_Settings_UndergroundGasDesc>
   <Strata_Settings_DeepBreathing>深层呼吸</Strata_Settings_DeepBreathing>
   <Strata_Settings_NaturalGases>天然气体</Strata_Settings_NaturalGases>
-  <Strata_Settings_NaturalGasesDesc>大气呼吸混合气（N₂、O₂、Ar、环境 CO₂）：地表锁定、深度缺氧、植物 CO₂↔O₂ 交换，以及天然气体叠加着色。关闭则空气视为完全可呼吸，无氧气模拟。</Strata_Settings_NaturalGasesDesc>
+  <Strata_Settings_NaturalGasesDesc>可选的大气呼吸（N₂、O₂、Ar、CO₂）。地表与 A+ 房间保持安全（环境锁定）。B1+ 密封房间：殖民者消耗 O₂ / 呼出 CO₂；植物相反；无通风、泵或竖井时会缺氧。关闭 = 完全可呼吸，无 O₂ 模拟。</Strata_Settings_NaturalGasesDesc>
   <Strata_Settings_GravshipLifeSupport>重力飞船生命维持（氧气 + 热量）</Strata_Settings_GravshipLifeSupport>
   <Strata_Settings_GravshipLifeSupportDesc>开启时（默认），与重力飞船相连的下层甲板与舰塔不会免费补充氧气。请使用氧气罐/回收器、普通氧气泵，或通往主机的开放楼梯脐带。发射会把热量排入飞船散热器（或舰内房间）。若 Vanilla Gravship Expanded 已管理热量，则跳过 Strata 发射热量。氧气部分需要启用天然气体。</Strata_Settings_GravshipLifeSupportDesc>
   <Strata_GravshipOxygenStored>氧气储量：{0} / {1}</Strata_GravshipOxygenStored>
@@ -214,6 +214,9 @@
   <Strata_DigDownFromLandingDesc>在此落脚点旁指定挖掘竖井。殖民者必须完工开凿——与开挖楼梯井相同——才会打开下一层。第一层地下以下需要深层挖掘研究。</Strata_DigDownFromLandingDesc>
   <Strata_DigDownFromEntranceDesc>楼梯井完全建成后打通下方楼层；若研究未完成但建造已完成也可使用。</Strata_DigDownFromEntranceDesc>
   <Strata_OpeningLevel>正在打开下层…</Strata_OpeningLevel>
+  <Strata_GeneratingLevel>正在打开地层关卡…</Strata_GeneratingLevel>
+  <Strata_GeneratingLevel_Structure>正在雕刻关卡（结构）…</Strata_GeneratingLevel_Structure>
+  <Strata_GeneratingLevel_Rock>正在填充岩石——大地图需要较长时间，请稍候…</Strata_GeneratingLevel_Rock>
   <Strata_OpenLevelFailed>无法打开下层。请查看 Player.log，然后再次使用「向下挖掘」重试。</Strata_OpenLevelFailed>
 
   <!-- Dig-down utility -->
@@ -326,5 +329,29 @@
   <!-- Letters -->
   <Strata_AncientStairwellLetterTitle>古代楼梯井</Strata_AncientStairwellLetterTitle>
   <Strata_AncientStairwellLetterText>着陆区不远处，石阶沉入岩层。看起来足够稳固可下——下方岩石也可挖成房间——但竖井不通电力。请各自为每层布线，或建造现代楼梯井/竖井导管以共享电网。</Strata_AncientStairwellLetterText>
+
+  <!-- Stairwell inspect -->
+  <Strata_StairwellNotOpen>下层：尚未打开</Strata_StairwellNotOpen>
+  <Strata_StairwellExcavated>下层：已开挖</Strata_StairwellExcavated>
+  <Strata_StairwellDigHint>选择「向下挖掘」以指定竖井；殖民者必须完成开凿后，下层才会开放。</Strata_StairwellDigHint>
+
+  <!-- O₂ pump inspect -->
+  <Strata_ExhaustBreathable>房间空气可呼吸。</Strata_ExhaustBreathable>
+  <Strata_ExhaustEnriching>正在用 {0} 富集房间空气（{1}）。</Strata_ExhaustEnriching>
+
+  <Strata_Atmos_Unknown>未知空气</Strata_Atmos_Unknown>
+  <Strata_Atmos_AmbientLocked>地表空气（安全）</Strata_Atmos_AmbientLocked>
+  <Strata_Atmos_Outdoor>露天</Strata_Atmos_Outdoor>
+  <Strata_Atmos_OpenCavern>开放洞穴</Strata_Atmos_OpenCavern>
+  <Strata_Atmos_Ventilated>已通风</Strata_Atmos_Ventilated>
+  <Strata_Atmos_ShaftLinked>竖井连通</Strata_Atmos_ShaftLinked>
+  <Strata_Atmos_Sealed>密封</Strata_Atmos_Sealed>
+  <Strata_Atmos_StatusLine>{0} · O₂ {1}% · CO₂ {2}%</Strata_Atmos_StatusLine>
+  <Strata_Letter_FirstB1Air_Label>地下空气</Strata_Letter_FirstB1Air_Label>
+  <Strata_Letter_FirstB1Air_Text>地表以下，密封房间不会自动补充氧气。\n\n殖民者吸入 O₂、呼出 CO₂；植物相反。用开放竖井、通向室外的通风口、氧气/二氧化碳泵、石灰洗涤器、竖井风箱或交换器保持可呼吸——或让房间通向洞穴。\n\n地表与 A+ 甲板始终安全。此系统需在模组选项中启用「天然气体」（默认关闭）。</Strata_Letter_FirstB1Air_Text>
+  <Strata_Alert_LowOxygen_Label>地下氧气不足</Strata_Alert_LowOxygen_Label>
+  <Strata_Alert_LowOxygen_Explanation>地下殖民地房间氧气偏低。请通风、打开竖井、种植植物或建造氧气泵，以免殖民者窒息。</Strata_Alert_LowOxygen_Explanation>
+  <Strata_Alert_HighCO2_Label>地下二氧化碳过高</Strata_Alert_HighCO2_Label>
+  <Strata_Alert_HighCO2_Explanation>地下殖民者周围二氧化碳积聚。请洗涤、通风或通往更新鲜的空气。</Strata_Alert_HighCO2_Explanation>
 
 </LanguageData>

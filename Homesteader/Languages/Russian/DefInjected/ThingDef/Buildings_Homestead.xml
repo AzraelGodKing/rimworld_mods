@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_BeeswaxCandle.label>свеча из пчелиного воска</Homesteader_BeeswaxCandle.label>
+  <Homesteader_BeeswaxCandle.description>Толстая, медленно горящая свеча из воска улья. Свет мягче, чем у масляной лампы, но ей не нужны ни перегонный аппарат, ни электросеть — лишь держите пчёл довольными.</Homesteader_BeeswaxCandle.description>
+  <Homesteader_NestingBox.label>гнездовой ящик</Homesteader_NestingBox.label>
+  <Homesteader_NestingBox.description>Уютный ящик, выстланный соломой, для сна мелких животных. Теплее и гораздо удобнее голой земли — куры, кажется, особенно его любят.</Homesteader_NestingBox.description>
+  <Homesteader_HarvestMaypole.label>урожайный майский столб</Homesteader_HarvestMaypole.label>
+  <Homesteader_HarvestMaypole.description>Высокий резной столб с яркими лентами, поднятый в честь хорошего урожая. Колонисты собираются вокруг него на праздники, а рядом чувствуется лёгкая урожайная радость (+6 к настроению).</Homesteader_HarvestMaypole.description>
+
+</LanguageData>

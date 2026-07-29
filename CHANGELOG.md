@@ -4,6 +4,16 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Homesteader** — Chinese Simplified and Russian Keyed + DefInjected language packs. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
+- **Stormproof** — Chinese Simplified and Russian Keyed + DefInjected language packs. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
+- **Deep Colony** — Chinese Simplified and Russian Keyed + DefInjected language packs. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Nemesis** — full Chinese Simplified and Russian keyed translation packs. → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
+- **Strata** — atmosphere V3.5 bugfix (seed/hypoxia/lite/replenish) + CN/RU localization fill (`atmosphere-v35-bugfix`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — atmosphere V3.5 room-volume rewrite; gases remain opt-in default OFF (`atmosphere-v35`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — dig/first descent no longer hard-freezes on large maps; rock fill yields in a LongEvent (`dig-open-yield-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — safe off-thread atmosphere + rock/cavern plan helpers (`offthread-safe-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — native digs use seed-stable cave networks (`cave-system-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — Biomes! Caverns always wins dig layout when loaded (`biomes-wins-layout-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Docs** — Nemesis and Deep Colony declassified as full releases (`nemesis.html`, `deep-colony.html`); hub cards, nav, comparison table, and download buttons. Mystery `signal.html` / `ledger.html` redirect. Steam Workshop links + CI packs `Nemesis.zip` / `DeepColony.zip`.
 - **Strata** — stair pair IDs + auto/manual DevMode relink (`stair-pair-id-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — removed `CurrentMap` Harmony patch entirely; clamp on map remove / see-below restore (`currentmap-no-getter-patch-v3`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
