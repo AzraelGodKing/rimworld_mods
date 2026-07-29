@@ -11,6 +11,8 @@ namespace Strata
     internal static class StrataOffThreadWork
     {
         private const float BreathDiffusionRate = 0.11f;
+        // Match AtmosphereBreathGrid.BuoyancyBias — O₂ rises / CO₂ sinks after diffuse.
+        private const float BreathBuoyancyBias = 0.045f;
         private const int MaxStaleBreathDiffusionTicks = 600;
 
         private static readonly Dictionary<int, BreathDiffusionJob> breathJobsByMapId =
@@ -24,7 +26,8 @@ namespace Strata
 
         public static void LogStartup()
         {
-            Log.Message("[Strata] Off-thread work: enabled=" + OffThreadAtmosphereEnabled + ".");
+            Log.Message("[Strata] Off-thread work: atmosphere=" + OffThreadAtmosphereEnabled
+                + " (A1 buoyancy, A2 density, A3 overlay; B1–B3 rock/cavern plans use Parallel/ThreadPool).");
         }
 
         public static void CancelMap(int mapUniqueId)
@@ -221,6 +224,55 @@ namespace Strata
                     neighborCo2 /= neighbors;
                     outO2[index] = Mathf.Lerp(scratchO2[index], neighborO2, BreathDiffusionRate);
                     outCo2[index] = Mathf.Lerp(scratchCo2[index], neighborCo2, BreathDiffusionRate);
+                }
+            }
+
+            ApplyBuoyancyBias(snap, outO2, outCo2);
+        }
+
+        // A1: same vertical nudge as AtmosphereBreathGrid.ApplyBuoyancyBias (plain arrays only).
+        private static void ApplyBuoyancyBias(
+            BreathDiffusionSnapshot snap,
+            float[] o2,
+            float[] co2)
+        {
+            int width = snap.mapWidth;
+            int height = snap.mapHeight;
+            bool[] skip = snap.skipCell;
+            for (int z = 0; z < height; z++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int index = z * width + x;
+                    if (skip[index])
+                    {
+                        continue;
+                    }
+
+                    float upO2 = 0f;
+                    float downCo2 = 0f;
+                    int upCount = 0;
+                    int downCount = 0;
+
+                    if (z + 1 < height)
+                    {
+                        upO2 += o2[index + width];
+                        upCount++;
+                    }
+                    if (z > 0)
+                    {
+                        downCo2 += co2[index - width];
+                        downCount++;
+                    }
+
+                    if (upCount > 0)
+                    {
+                        o2[index] = Mathf.Lerp(o2[index], upO2 / upCount, BreathBuoyancyBias);
+                    }
+                    if (downCount > 0)
+                    {
+                        co2[index] = Mathf.Lerp(co2[index], downCo2 / downCount, BreathBuoyancyBias);
+                    }
                 }
             }
         }

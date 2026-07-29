@@ -51,7 +51,7 @@
   <Strata_Settings_UndergroundGasDesc>Газовые угрозы глубин: при копке могут вскрыться карманы зловонного глубинного газа, возможны руины. Запечатанные лестницы всё равно содержат газ.</Strata_Settings_UndergroundGasDesc>
   <Strata_Settings_DeepBreathing>Дыхание на глубоких уровнях</Strata_Settings_DeepBreathing>
   <Strata_Settings_NaturalGases>Природные газы</Strata_Settings_NaturalGases>
-  <Strata_Settings_NaturalGasesDesc>Дыхательная смесь атмосферы (N₂, O₂, Ar, фоновый CO₂): фиксация на поверхности, нехватка O₂ на глубине, гипоксия, обмен CO₂↔O₂ у растений и оттенки оверлея. Выключено — воздух полностью пригоден для дыхания без симуляции O₂.</Strata_Settings_NaturalGasesDesc>
+  <Strata_Settings_NaturalGasesDesc>Опциональное дыхание атмосферы (N₂, O₂, Ar, CO₂). Поверхность и палубы A+ остаются безопасными (фиксация среды). Герметичные комнаты B1+: поселенцы потребляют O₂ / выдыхают CO₂; растения — наоборот; без вентиляции, насосов или шахт — гипоксия. Выкл. = полностью пригодный воздух без симуляции O₂.</Strata_Settings_NaturalGasesDesc>
   <Strata_Settings_GravshipLifeSupport>Жизнеобеспечение гравикорабля (O₂ + тепло)</Strata_Settings_GravshipLifeSupport>
   <Strata_Settings_GravshipLifeSupportDesc>При включении (по умолчанию) связанные уровни гравикорабля и башни не пополняют кислород сами. Нужны баллоны/рекуператоры, обычные O₂-насосы или открытая шахта к палубе. Запуски сбрасывают тепло в теплоотводы (или в комнаты корабля). Тепло Strata пропускается, если VGE уже управляет теплом. Для O₂ нужны «Природные газы».</Strata_Settings_GravshipLifeSupportDesc>
   <Strata_GravshipOxygenStored>Запас кислорода: {0} / {1}</Strata_GravshipOxygenStored>
@@ -212,8 +212,11 @@
   <Strata_DigDownLabel>Копать вниз</Strata_DigDownLabel>
   <Strata_DigDownFromLandingDesc>Назначьте шахту копки рядом с этой площадкой. Колонисты должны закончить её — та же работа, что у вырытой лестницы — прежде чем откроется следующий уровень. Ниже первого подземного уровня нужно исследование глубокой выемки.</Strata_DigDownFromLandingDesc>
   <Strata_DigDownFromEntranceDesc>Пробейтесь на уровень ниже, когда эта лестница полностью построена, или используйте её, если строительство закончилось до доступности исследования.</Strata_DigDownFromEntranceDesc>
-  <Strata_OpeningLevel>Opening the level below…</Strata_OpeningLevel>
-  <Strata_OpenLevelFailed>Could not open the level below. Check Player.log, then use Dig down again to retry.</Strata_OpenLevelFailed>
+  <Strata_OpeningLevel>Открытие уровня ниже…</Strata_OpeningLevel>
+  <Strata_GeneratingLevel>Открытие уровня Strata…</Strata_GeneratingLevel>
+  <Strata_GeneratingLevel_Structure>Вырезание уровня (структура)…</Strata_GeneratingLevel_Structure>
+  <Strata_GeneratingLevel_Rock>Заполнение породой — на больших картах это займёт время; подождите…</Strata_GeneratingLevel_Rock>
+  <Strata_OpenLevelFailed>Не удалось открыть уровень ниже. Проверьте Player.log, затем снова используйте «Копать вниз».</Strata_OpenLevelFailed>
 
   <!-- Dig-down utility -->
   <Strata_Dig_InvalidStairwell>Недействительная лестница.</Strata_Dig_InvalidStairwell>
@@ -315,7 +318,7 @@
   <Strata_TravelWithShipOff>Полёт с кораблём: ВЫКЛ</Strata_TravelWithShipOff>
   <Strata_TravelWithShipDesc>Когда ВКЛ, связанный этаж этой шахты следует за запуском гравикорабля. Выключите, чтобы оставить этаж на текущей клетке мира.</Strata_TravelWithShipDesc>
   <Strata_GravshipRescuedPawns>Strata: {0} заключённый(х)/младенец(ев) перенесены на гравикорабль, чтобы их не оставили.</Strata_GravshipRescuedPawns>
-  <Strata_CannotRescueNoCrossLevelBed>Cannot rescue: no usable bed on this floor or a linked level.</Strata_CannotRescueNoCrossLevelBed>
+  <Strata_CannotRescueNoCrossLevelBed>Нельзя спасти: нет свободной кровати на этом этаже или связанном уровне.</Strata_CannotRescueNoCrossLevelBed>
   <Strata_GravshipLinkedLeftBehindWarn>Strata: эти пешки вне палубы корабля или на связанном этаже, который не полетит (заключённых/младенцев заберут на борт при старте): {0}</Strata_GravshipLinkedLeftBehindWarn>
 
   <!-- Lost miners (hostile branch — raid-style attention) -->
@@ -325,5 +328,29 @@
   <!-- Letters -->
   <Strata_AncientStairwellLetterTitle>Древняя лестница</Strata_AncientStairwellLetterTitle>
   <Strata_AncientStairwellLetterText>Недалеко от зоны высадки в скалу уходят вырезанные ступени. Они выглядят достаточно устойчивыми, чтобы спуститься — камень внизу можно выкопать в комнаты — но через шахту нет энергосвязи. Проведите проводку на каждом уровне отдельно или постройте современную лестницу или шахтный проводник, если хотите объединять сети.</Strata_AncientStairwellLetterText>
+
+  <!-- Stairwell inspect -->
+  <Strata_StairwellNotOpen>Уровень ниже: ещё не открыт</Strata_StairwellNotOpen>
+  <Strata_StairwellExcavated>Уровень ниже: выкопан</Strata_StairwellExcavated>
+  <Strata_StairwellDigHint>Выберите «Копать вниз», чтобы назначить шахту; колонисты должны закончить проходку, прежде чем откроется уровень ниже.</Strata_StairwellDigHint>
+
+  <!-- O₂ pump inspect -->
+  <Strata_ExhaustBreathable>Воздух в комнате пригоден для дыхания.</Strata_ExhaustBreathable>
+  <Strata_ExhaustEnriching>Насыщение комнаты: {0} ({1}).</Strata_ExhaustEnriching>
+
+  <Strata_Atmos_Unknown>Неизвестный воздух</Strata_Atmos_Unknown>
+  <Strata_Atmos_AmbientLocked>Поверхностный воздух (безопасно)</Strata_Atmos_AmbientLocked>
+  <Strata_Atmos_Outdoor>Открытый воздух</Strata_Atmos_Outdoor>
+  <Strata_Atmos_OpenCavern>Открытая пещера</Strata_Atmos_OpenCavern>
+  <Strata_Atmos_Ventilated>Вентилируется</Strata_Atmos_Ventilated>
+  <Strata_Atmos_ShaftLinked>Связано шахтой</Strata_Atmos_ShaftLinked>
+  <Strata_Atmos_Sealed>Герметично</Strata_Atmos_Sealed>
+  <Strata_Atmos_StatusLine>{0} · O₂ {1}% · CO₂ {2}%</Strata_Atmos_StatusLine>
+  <Strata_Letter_FirstB1Air_Label>Подземный воздух</Strata_Letter_FirstB1Air_Label>
+  <Strata_Letter_FirstB1Air_Text>Под поверхностью герметичные комнаты не получают свободный кислород.\n\nПоселенцы вдыхают O₂ и выдыхают CO₂; растения — наоборот. Держите воздух дыхательным через открытые шахты, вентиляцию наружу, насосы O₂/CO₂, известковые скрубберы, мехи или обменники — или оставьте комнаты открытыми в пещеру.\n\nПоверхность и палубы A+ всегда безопасны. Система включается в настройках мода («природные газы», по умолчанию выкл.).</Strata_Letter_FirstB1Air_Text>
+  <Strata_Alert_LowOxygen_Label>Мало кислорода под землёй</Strata_Alert_LowOxygen_Label>
+  <Strata_Alert_LowOxygen_Explanation>В подземных комнатах колонии мало кислорода. Вентилируйте, откройте шахту, посадите растения или постройте кислородный насос, пока поселенцы не задохнулись.</Strata_Alert_LowOxygen_Explanation>
+  <Strata_Alert_HighCO2_Label>Высокий CO₂ под землёй</Strata_Alert_HighCO2_Label>
+  <Strata_Alert_HighCO2_Explanation>Вокруг поселенцев под землёй растёт углекислый газ. Очистите воздух, проветрите или откройте путь к свежему воздуху.</Strata_Alert_HighCO2_Explanation>
 
 </LanguageData>

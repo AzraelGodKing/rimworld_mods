@@ -11,10 +11,20 @@
   <Strata_DeepGas.overlayLabel>глубинный газ</Strata_DeepGas.overlayLabel>
   <Strata_DeepGas.description>Зловонный горючий газ, запертый в скале. Скапливается там, где просачивается, отравляет всех, кто им дышит, и взрывается при контакте с открытым пламенем — но перекрытый вентиль может перекачивать его в топливо.</Strata_DeepGas.description>
 
+  <!-- ============ Азот ============ -->
+  <Strata_Nitrogen.label>азот</Strata_Nitrogen.label>
+  <Strata_Nitrogen.overlayLabel>N₂</Strata_Nitrogen.overlayLabel>
+  <Strata_Nitrogen.description>Основная часть дыхательного воздуха. Разбавляет кислород при вытяжке и возвращает герметичные комнаты к поверхностной смеси.</Strata_Nitrogen.description>
+
   <!-- ============ Кислород ============ -->
   <Strata_Oxygen.label>кислород</Strata_Oxygen.label>
   <Strata_Oxygen.overlayLabel>O₂</Strata_Oxygen.overlayLabel>
   <Strata_Oxygen.description>Пригодный для дыхания воздух в вырытых уровнях. Поднимается через незапечатанные шахты; без вентиляции колоники постепенно расходуют его.</Strata_Oxygen.description>
+
+  <!-- ============ Аргон ============ -->
+  <Strata_Argon.label>аргон</Strata_Argon.label>
+  <Strata_Argon.overlayLabel>Ar</Strata_Argon.overlayLabel>
+  <Strata_Argon.description>Следовой благородный газ поверхностного воздуха. Тяжелее азота и скапливается в низинах вместе с углекислым газом.</Strata_Argon.description>
 
   <!-- ============ Углекислый газ ============ -->
   <Strata_CarbonDioxide.label>углекислый газ</Strata_CarbonDioxide.label>

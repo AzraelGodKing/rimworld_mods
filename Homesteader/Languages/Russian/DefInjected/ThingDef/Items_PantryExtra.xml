@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Buttermilk.label>пахта</Homesteader_Buttermilk.label>
+  <Homesteader_Buttermilk.description>Кисловатая жидкость, оставшаяся после сбивания сливок в масло. Идеальна для мягких пахтаных булочек.</Homesteader_Buttermilk.description>
+  <Homesteader_CiderVinegar.label>яблочный уксус</Homesteader_CiderVinegar.label>
+  <Homesteader_CiderVinegar.description>Острый уксус, выбродивший из сидра. Нужен для маринования овощей — ярче вкус и дольше хранение в банке.</Homesteader_CiderVinegar.description>
+  <Homesteader_WaxedCheese.label>вощёный сыр</Homesteader_WaxedCheese.label>
+  <Homesteader_WaxedCheese.description>Фермерский сыр, залитый пчелиным воском. Хранится куда дольше открытой головки и всё ещё пахнет молочной.</Homesteader_WaxedCheese.description>
+  <Homesteader_SmokedCheese.label>копчёный сыр</Homesteader_SmokedCheese.label>
+  <Homesteader_SmokedCheese.description>Сыр холодного копчения, пока корка не станет глубоко золотой. Роскошь коптильни: хорошо хранится и на вкус как осень.</Homesteader_SmokedCheese.description>
+  <Homesteader_Soap.label>усадебное мыло</Homesteader_Soap.label>
+  <Homesteader_Soap.description>Бруски мыла из пчелиного воска и масла. Колонисты могут умыться бруском ради свежего чистого настроения.</Homesteader_Soap.description>
+  <Homesteader_PumpkinPie.label>тыквенный пирог</Homesteader_PumpkinPie.label>
+  <Homesteader_PumpkinPie.description>Золотистый пирог из пюре тыквы, масла и подсластителя. Сезон урожая на тарелке.</Homesteader_PumpkinPie.description>
+  <Homesteader_ButtermilkBiscuits.label>пахтаные булочки</Homesteader_ButtermilkBiscuits.label>
+  <Homesteader_ButtermilkBiscuits.description>Мягкие слоистые булочки с пахтой и маслом. Лучше всего тёплыми с очага.</Homesteader_ButtermilkBiscuits.description>
+
+</LanguageData>

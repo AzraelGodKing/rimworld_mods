@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Mentoring.description>Обучать назначенных учеников в активных сессиях наставничества.</DC_Mentoring.description>
+  <DC_Mentoring.labelShort>наставник</DC_Mentoring.labelShort>
+  <DC_Mentoring.verb>Наставлять</DC_Mentoring.verb>
+  <DC_Mentoring.pawnLabel>Наставник</DC_Mentoring.pawnLabel>
+
+</LanguageData>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Stormproof_SolarShield.label>太阳护盾</Stormproof_SolarShield.label>
+  <Stormproof_SolarShield.description>保护殖民地电子设备免受太阳耀斑伤害的场发生器。待机功耗极低，但耀斑期间持续消耗 2,500W，以维持地图上所有用电设备运转。若电网储能在耀斑中途耗尽，护盾会崩溃，电力中断直至耀斑结束。事前请囤足蓄电池电量。</Stormproof_SolarShield.description>
+  <Stormproof_StormSpire.label>风暴尖塔</Stormproof_StormSpire.label>
+  <Stormproof_StormSpire.description>高大的接地尖塔，在大范围内吸引雷击，保护基地免遭火灾。尖塔本身不可燃，接地会扑灭基座附近被吸引雷击所点燃的火焰。若接入电网，每次捕获的雷击可为蓄电池注入最多 1,500 Wd——但有 5% 几率过载电网并引发「Zzzt！」电涌。研究完美接地可完全消除电涌风险。</Stormproof_StormSpire.description>
+  <Stormproof_SurgeProtector.label>电涌保护器</Stormproof_SurgeProtector.label>
+  <Stormproof_SurgeProtector.description>重型断路柜，可吸收一次「Zzzt！」短路事件，保全蓄电池与导管。吸收电涌会轻微损伤它，并使其进入一天充能。每张地图只需一台——但备机总是好事。</Stormproof_SurgeProtector.description>
+  <Stormproof_EmpDampener.label>EMP 抑制器</Stormproof_EmpDampener.label>
+  <Stormproof_EmpDampener.description>投射抑制力场，保护范围内殖民地建筑免受 EMP 眩晕。炮塔可在 EMP 迫击炮与手雷攻击中继续开火。不保护角色或机械体——仅保护建筑。</Stormproof_EmpDampener.description>
+  <Stormproof_ArmoredConduit.label>装甲导管</Stormproof_ArmoredConduit.label>
+  <Stormproof_ArmoredConduit.description>外包铆接钢板的电力导管。防火且远比标准导管坚固——杀戮走廊与外墙布线的首选。</Stormproof_ArmoredConduit.description>
+  <Stormproof_StormCapacitor.label>风暴电容组</Stormproof_StormCapacitor.label>
+  <Stormproof_StormCapacitor.description>调谐用于吞没雷击猛烈电荷的重型电容组。只有尖塔捕获的闪电能充能——电网无法为其充电——但换来的是储存零泄漏，且「Zzzt！」电涌无法波及。当电网产出不足时，它会自动放电最多 2,000W 以弥补缺口。</Stormproof_StormCapacitor.description>
+  <Stormproof_WeatherForecaster.label>天气预报仪</Stormproof_WeatherForecaster.label>
+  <Stormproof_WeatherForecaster.description>读取气压锋面与空气静电荷的气压控制台。检视面板显示当前天气将持续多久，会通报即将到来的雷暴以便你准备尖塔，并在天气变化前一小时发出警告。</Stormproof_WeatherForecaster.description>
+  <Stormproof_StaticPylon.label>静电放电塔</Stormproof_StaticPylon.label>
+  <Stormproof_StaticPylon.description>仅靠瓶装闪电运转的防御塔。每次电击从同一电网上的风暴电容组消耗 50 Wd 储存的雷击能量，在小范围内眩晕并灼伤敌对袭击者与机械体，造成电烧伤。没有电容电量就没有电击——请让风暴尖塔保持供能。</Stormproof_StaticPylon.description>
+  <Stormproof_FalloutScrubber.label>沉降净化器</Stormproof_FalloutScrubber.label>
+  <Stormproof_FalloutScrubber.description>工业空气净化器，从封闭房间中剥离空气中的毒素。在房间内躲避的角色与动物会缓慢清除毒素积累——快过严重沉降的增加速度。户外无用；它无法净化开阔天空。</Stormproof_FalloutScrubber.description>
+  <Stormproof_StormCaller.label>风暴召唤器</Stormproof_StormCaller.label>
+  <Stormproof_StormCaller.description>向高层大气发射带电粒子的电离层扰动器，可按需将带雨雷暴拖至地图上空。闪电为风暴尖塔供电，雨水扑灭野火。充能需五天——它补充电网，而非取代电网。</Stormproof_StormCaller.description>
+  <Stormproof_LoadShedder.label>负荷切除器</Stormproof_LoadShedder.label>
+  <Stormproof_LoadShedder.description>自动断路器。将其接在主电网与低优先级子电网（灯具、娱乐、备用冷却器）之间。供电侧蓄电池有电时像导管一样输电；电量低于切断阈值时跳闸并切除子电网，让冷库比电视机撑得更久。蓄电池恢复后自动重连。切断阈值可调。</Stormproof_LoadShedder.description>
+  <Stormproof_GridMonitor.label>电网监控台</Stormproof_GridMonitor.label>
+  <Stormproof_GridMonitor.description>接入电网的仪表墙。检视面板显示实时产出、消耗、蓄电池电量，以及蓄电池耗尽或充满还需多久。储存电量低于 25% 时发出警告，低于 10% 时发出紧急警报，以免夜间缓慢放电再让你措手不及。</Stormproof_GridMonitor.description>
+  <Stormproof_AtmosphericBarrier.label>大气屏障</Stormproof_AtmosphericBarrier.label>
+  <Stormproof_AtmosphericBarrier.description>殖民地级大气加固装置。待机功耗适中，直至毒性沉降、毒气浪涌、毒雾或火山灰来袭——随后大力抽取电网电力，全图压制户外毒素与腐蚀。保持蓄电池充能：若事件中途电网耗尽，屏障会崩溃。搭配沉降净化器可清除殖民者血液中已有的毒素积累。</Stormproof_AtmosphericBarrier.description>
+  <Stormproof_ClimateStabilizer.label>气候稳定器</Stormproof_ClimateStabilizer.label>
+  <Stormproof_ClimateStabilizer.description>热力场调节器，抵消热浪、寒潮、火山寒冬、热穹顶与极地锋面造成的全图温度偏移。待机功耗较低；极端气候事件期间大量耗电。没有储能就没有防护。</Stormproof_ClimateStabilizer.description>
+  <Stormproof_SkyRestorer.label>天空恢复器</Stormproof_SkyRestorer.label>
+  <Stormproof_SkyRestorer.description>轨道镜 / 电离层照明器，在日食、火山寒冬、火山灰与昏暗天空期间恢复可用日光。电网有电时，作物与殖民者不必再活在永夜黄昏中。</Stormproof_SkyRestorer.description>
+  <Stormproof_FireSuppressor.label>灭火器</Stormproof_FireSuppressor.label>
+  <Stormproof_FireSuppressor.description>通电时在大范围内喷射泡沫 / 惰性气体灭火的发射器。闪光风暴与干雷锋面期间提高功耗，与风暴尖塔协同，防止被雷击的基地烧毁。</Stormproof_FireSuppressor.description>
+  <Stormproof_DroughtCondenser.label>干旱冷凝器</Stormproof_DroughtCondenser.label>
+  <Stormproof_DroughtCondenser.description>大气水分冷凝器，通电时全图抵消干旱对植物生长的惩罚。干旱开始前待机，随后大量抽取电网电力。对 Odyssey 草原干旱最有用；若从不发生则只是无害家具。</Stormproof_DroughtCondenser.description>
+  <Stormproof_StormVane.label>风暴风标</Stormproof_StormVane.label>
+  <Stormproof_StormVane.description>漂亮的铜制风向标。它不预测、不防护、也不发电。但像样的宅院总得有一个。</Stormproof_StormVane.description>
+
+</LanguageData>
