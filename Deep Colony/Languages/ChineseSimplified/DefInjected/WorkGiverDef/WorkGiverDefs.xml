@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_WorkGiver_BeginMentoring.label>指导</DC_WorkGiver_BeginMentoring.label>
+  <DC_WorkGiver_BeginMentoring.gerund>指导中</DC_WorkGiver_BeginMentoring.gerund>
+  <DC_WorkGiver_BeginMentoring.verb>指导</DC_WorkGiver_BeginMentoring.verb>
+  <DC_WorkGiver_CounselTrauma.label>辅导创伤</DC_WorkGiver_CounselTrauma.label>
+  <DC_WorkGiver_CounselTrauma.gerund>辅导中</DC_WorkGiver_CounselTrauma.gerund>
+  <DC_WorkGiver_CounselTrauma.verb>辅导</DC_WorkGiver_CounselTrauma.verb>
+
+</LanguageData>

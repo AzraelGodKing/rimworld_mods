@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Trauma_CombatShock.label>боевой шок</DC_Trauma_CombatShock.label>
+  <DC_Trauma_CombatShock.description>Внезапное насилие падения в бою.</DC_Trauma_CombatShock.description>
+  <DC_Trauma_CombatShock.triggerMessage>был(а) сбит(а) в бою</DC_Trauma_CombatShock.triggerMessage>
+  <DC_Trauma_ViolentLoss.label>насильственная утрата</DC_Trauma_ViolentLoss.label>
+  <DC_Trauma_ViolentLoss.description>Свидетельство насильственной смерти близкого товарища.</DC_Trauma_ViolentLoss.description>
+  <DC_Trauma_ViolentLoss.triggerMessage>стал(а) свидетелем насильственной смерти близкого товарища</DC_Trauma_ViolentLoss.triggerMessage>
+  <DC_Trauma_Captivity.label>травма плена</DC_Trauma_Captivity.label>
+  <DC_Trauma_Captivity.description>Психологические шрамы длительного плена.</DC_Trauma_Captivity.description>
+  <DC_Trauma_Captivity.triggerMessage>пережил(а) травму плена</DC_Trauma_Captivity.triggerMessage>
+  <DC_Trauma_Massacre.label>выживший в резне</DC_Trauma_Massacre.label>
+  <DC_Trauma_Massacre.description>Выживание в атаке, убившей многих товарищей сразу.</DC_Trauma_Massacre.description>
+  <DC_Trauma_Massacre.triggerMessage>выжил(а) в резне</DC_Trauma_Massacre.triggerMessage>
+  <DC_Trauma_BereavementShock.label>шоковая утрата</DC_Trauma_BereavementShock.label>
+  <DC_Trauma_BereavementShock.description>Внезапная потеря нескольких близких товарищей за короткое время.</DC_Trauma_BereavementShock.description>
+  <DC_Trauma_BereavementShock.triggerMessage>потерял(а) нескольких товарищей за короткое время</DC_Trauma_BereavementShock.triggerMessage>
+
+</LanguageData>

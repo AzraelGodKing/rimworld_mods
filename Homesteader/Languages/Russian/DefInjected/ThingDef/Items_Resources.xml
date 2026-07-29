@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_RockSalt.label>каменная соль</Homesteader_RockSalt.label>
+  <Homesteader_RockSalt.description>Крупные кристаллы соли, отколотые от камня. Нужны для засолки мяса и рыбы на долгое хранение.</Homesteader_RockSalt.description>
+  <Homesteader_Flour.label>мука</Homesteader_Flour.label>
+  <Homesteader_Flour.description>Смолотое зерно, готовое к выпечке. В сухой кладовой хранится около месяца.</Homesteader_Flour.description>
+  <Homesteader_Butter.label>масло</Homesteader_Butter.label>
+  <Homesteader_Butter.description>Сбито из снятых сливок (остаётся пахта). Богатый кулинарный ингредиент для хлеба, оладий, булочек и другой усадебной выпечки.</Homesteader_Butter.description>
+
+</LanguageData>

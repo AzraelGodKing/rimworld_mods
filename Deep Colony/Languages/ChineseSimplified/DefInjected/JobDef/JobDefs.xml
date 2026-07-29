@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Job_Mentor.label>指导学徒</DC_Job_Mentor.label>
+  <DC_Job_Mentor.reportString>正在指导 TargetA。</DC_Job_Mentor.reportString>
+  <DC_Job_CounselTrauma.label>辅导</DC_Job_CounselTrauma.label>
+  <DC_Job_CounselTrauma.reportString>正在辅导 TargetA。</DC_Job_CounselTrauma.reportString>
+
+</LanguageData>

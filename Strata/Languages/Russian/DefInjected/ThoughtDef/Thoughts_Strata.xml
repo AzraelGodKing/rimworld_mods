@@ -8,4 +8,19 @@
   <Strata_DeepBedroom.stages_1.label>глубокая очень впечатляющая спальня</Strata_DeepBedroom.stages_1.label>
   <Strata_DeepBedroom.stages_1.description>Я сплю в замечательной камере, вырезанной в живой скале. Немногие аристократы могли бы сравниться с этим.</Strata_DeepBedroom.stages_1.description>
 
+  <Strata_UpperDeckView.stages_0.label>вид с крыши</Strata_UpperDeckView.stages_0.label>
+  <Strata_UpperDeckView.stages_0.description>Отсюда видно всю базу. Есть что-то приятное в том, чтобы смотреть на всё сверху.</Strata_UpperDeckView.stages_0.description>
+
+  <Strata_Suffocation.stages_0.label>разреженный воздух</Strata_Suffocation.stages_0.label>
+  <Strata_Suffocation.stages_0.description>Воздух здесь кажется разреженным. Нужна вентиляция, растения или кислородный насос.</Strata_Suffocation.stages_0.description>
+
+  <Strata_Suffocation.stages_1.label>удушье</Strata_Suffocation.stages_1.label>
+  <Strata_Suffocation.stages_1.description>Едва могу перевести дыхание. В этой герметичной камере заканчивается кислород.</Strata_Suffocation.stages_1.description>
+
+  <Strata_StuffyAir.stages_0.label>спёртый воздух</Strata_StuffyAir.stages_0.label>
+  <Strata_StuffyAir.stages_0.description>Воздух тяжёл от выдохов. Нужен скруббер CO₂ или выход наружу.</Strata_StuffyAir.stages_0.description>
+
+  <Strata_StuffyAir.stages_1.label>задыхаюсь от CO₂</Strata_StuffyAir.stages_1.label>
+  <Strata_StuffyAir.stages_1.description>Углекислый газ скапливается в этой комнате. Голова раскалывается.</Strata_StuffyAir.stages_1.description>
+
 </LanguageData>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_CompactBattery.label>компактный аккумулятор</Homesteader_CompactBattery.label>
+  <Homesteader_CompactBattery.description>Небольшой аккумулятор для хранения электричества. Вмещает меньше полного аккумулятора, но занимает одну клетку — удобно для тесных баз, аванпостов и ранних сетей. Как и все аккумуляторы, теряет часть энергии из‑за неэффективности и может замкнуть под дождём.</Homesteader_CompactBattery.description>
+  <Homesteader_BatteryBank.label>блок аккумуляторов</Homesteader_BatteryBank.label>
+  <Homesteader_BatteryBank.description>Стойка из связанных аккумуляторных ячеек с улучшенным контроллером заряда. Хранит большой запас энергии эффективнее одиночных аккумуляторов. Может замкнуть под дождём.</Homesteader_BatteryBank.description>
+  <Homesteader_AdvancedBattery.label>продвинутый аккумулятор</Homesteader_AdvancedBattery.label>
+  <Homesteader_AdvancedBattery.description>Точно изготовленный аккумулятор с ламинированными ячейками и умным контроллером заряда. Хранит куда больше энергии, чем обычный, и теряет лишь 10% подаваемой мощности. Может замкнуть под дождём.</Homesteader_AdvancedBattery.description>
+  <Homesteader_UltratechBattery.label>ультратех-аккумулятор</Homesteader_UltratechBattery.label>
+  <Homesteader_UltratechBattery.description>Вершина хранения энергии: герметичный пластальный сосуд вокруг сверхпроводящего ядра, тихо светящийся голубым. Хранит огромный заряд и теряет едва ли 1% подаваемой мощности. Всё ещё может замкнуть под дождём — даже у ультратеха есть пределы.</Homesteader_UltratechBattery.description>
+  <Homesteader_PortableGenerator.label>портативный генератор</Homesteader_PortableGenerator.label>
+  <Homesteader_PortableGenerator.description>Компактный генератор на химтопливе. Даёт скромные 350 Вт с одной клетки — менее экономичен по топливу, чем полноразмерный, но идеален для аванпостов, мастерских и тесных баз. Выделяет немного тепла.</Homesteader_PortableGenerator.description>
+  <Homesteader_WoodGenerator.label>дровяной генератор</Homesteader_WoodGenerator.label>
+  <Homesteader_WoodGenerator.description>Компактный генератор, сжигающий дрова вместо химтоплива. Даёт 300 Вт с одной клетки — идеален для лесных усадеб и автономных мастерских. Выделяет немного тепла.</Homesteader_WoodGenerator.description>
+
+</LanguageData>

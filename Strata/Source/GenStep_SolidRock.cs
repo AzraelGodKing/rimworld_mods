@@ -26,19 +26,19 @@ namespace Strata
                 ? StrataMapUtility.VerticalAlign(entrance.Position, entrance.Map, map)
                 : map.Center;
 
-            if (BiomesCavernsUtility.ShouldGenerateCavernLayout(map)
-                && BiomesCavernsUtility.PickProfileBiome(map) is BiomeDef profile)
+            // Priority: Biomes! Caverns (when loaded) > Strata native caves > solid rock.
+            if (BiomesCavernsUtility.ShouldGenerateCavernLayout(map))
             {
-                if (BiomesCavernsUtility.TryGenerateCavernLayout(map, parms, profile))
+                BiomeDef profile = BiomesCavernsUtility.PickProfileBiome(map);
+                if (profile != null && BiomesCavernsUtility.TryGenerateCavernLayout(map, parms, profile))
                 {
                     ArrivalZoneUtility.PrepareLandingZone(map, spot, clearRoof: true);
                     BiomesCavernsUtility.LogLayoutChoice(map, usedBiomes: true, profile);
                 }
                 else
                 {
+                    // Biomes failed or missing profile — fall back to Strata caves.
                     ClearGeneratedMap(map);
-                    // Defer mineables until after CarveWarren marks the warren —
-                    // avoids spawn-then-destroy on every chamber cell.
                     FillShell(map);
                     MapGenerator.SetVar(DeferMineablesVar, true);
                     ArrivalZoneUtility.PrepareLandingZone(map, spot, clearRoof: false);
@@ -69,25 +69,39 @@ namespace Strata
 
         private static void FillSolidRock(Map map)
         {
+            // Shell only during GetOtherMap — full GenSpawn is drained afterward
+            // by StrataPocketMapOpen in a yielding LongEvent (275² freezes otherwise).
             FillShell(map);
-            SpawnMineables(map, skipCarveMask: null);
+            MapGenerator.SetVar(DeferMineablesVar, true);
+            StrataRockFillScheduler.Schedule(map, skipCarveMask: null);
         }
 
         // Terrain + thick roof without mineables — used before native cavern
         // carving so we do not spawn rock that is immediately destroyed.
+        // B2: rock indices via Parallel.For, then main-thread grid writes.
         internal static void FillShell(Map map)
         {
             List<ThingDef> rocks = StrataRockUtility.RocksForMap(map);
-            bool simpleRock = StrataRockUtility.UseSimpleRockFill;
-
-            foreach (IntVec3 cell in map.AllCells)
+            byte[] rockIndices = StrataRockPlan.BuildRockIndices(map, rocks);
+            bool regionsWereEnabled = map.regionAndRoomUpdater.Enabled;
+            map.regionAndRoomUpdater.Enabled = false;
+            try
             {
-                ThingDef rockDef = simpleRock
-                    ? rocks[0]
-                    : StrataRockUtility.RockAt(map, cell, rocks);
-                TerrainDef floor = StrataRockUtility.NaturalFloorFor(rockDef);
-                map.terrainGrid.SetTerrain(cell, floor);
-                map.roofGrid.SetRoof(cell, RoofDefOf.RoofRockThick);
+                int width = map.Size.x;
+                foreach (IntVec3 cell in map.AllCells)
+                {
+                    int index = cell.z * width + cell.x;
+                    ThingDef rockDef = StrataRockPlan.RockAtIndex(
+                        rocks,
+                        index >= 0 && index < rockIndices.Length ? rockIndices[index] : (byte)0);
+                    TerrainDef floor = StrataRockUtility.NaturalFloorFor(rockDef);
+                    map.terrainGrid.SetTerrain(cell, floor);
+                    map.roofGrid.SetRoof(cell, RoofDefOf.RoofRockThick);
+                }
+            }
+            finally
+            {
+                map.regionAndRoomUpdater.Enabled = regionsWereEnabled;
             }
         }
 
@@ -95,14 +109,16 @@ namespace Strata
         // (tower decks skip this). Disable region rebuilds and use load-style
         // SpawnSetup so Harmony postfixes on live spawns do not run per cell.
         // skipCarveMask: when set, leave warren cells empty (already carved).
+        // Prefer StrataRockFillScheduler.SpawnMineablesChunked from LongEvents.
         internal static void SpawnMineables(Map map, BoolGrid skipCarveMask = null)
         {
             List<ThingDef> rocks = StrataRockUtility.RocksForMap(map);
-            bool simpleRock = StrataRockUtility.UseSimpleRockFill;
+            byte[] rockIndices = StrataRockPlan.BuildRockIndices(map, rocks);
             bool regionsWereEnabled = map.regionAndRoomUpdater.Enabled;
             map.regionAndRoomUpdater.Enabled = false;
             try
             {
+                int width = map.Size.x;
                 foreach (IntVec3 cell in map.AllCells)
                 {
                     if (skipCarveMask != null && skipCarveMask[cell])
@@ -113,9 +129,10 @@ namespace Strata
                     {
                         continue;
                     }
-                    ThingDef rockDef = simpleRock
-                        ? rocks[0]
-                        : StrataRockUtility.RockAt(map, cell, rocks);
+                    int index = cell.z * width + cell.x;
+                    ThingDef rockDef = StrataRockPlan.RockAtIndex(
+                        rocks,
+                        index >= 0 && index < rockIndices.Length ? rockIndices[index] : (byte)0);
                     Thing rock = ThingMaker.MakeThing(rockDef);
                     // respawningAfterLoad:true skips live-spawn side effects that
                     // modded GenSpawn prefixes/postfixes amplify across 50k+ cells.

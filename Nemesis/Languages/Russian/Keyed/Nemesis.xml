@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Settings -->
+  <Nemesis_Settings_Triggers>Шансы срабатывания</Nemesis_Settings_Triggers>
+  <Nemesis_Settings_KilledAlly>Шанс при убийстве союзника: {0}%</Nemesis_Settings_KilledAlly>
+  <Nemesis_Settings_PrisonerEscaped>Шанс при побеге заключённого: {0}%</Nemesis_Settings_PrisonerEscaped>
+  <Nemesis_Settings_SlaveEscaped>Шанс при мятеже рабов: {0}%</Nemesis_Settings_SlaveEscaped>
+  <Nemesis_Settings_Fixation>Шанс одержимости: {0}%</Nemesis_Settings_Fixation>
+  <Nemesis_Settings_WoundedEscape>Шанс при ранении и побеге: {0}%</Nemesis_Settings_WoundedEscape>
+  <Nemesis_Settings_TruceDays>Длительность перемирия: {0} дн.</Nemesis_Settings_TruceDays>
+  <Nemesis_Settings_MaxEscapes>Побегов до загона: {0}</Nemesis_Settings_MaxEscapes>
+  <Nemesis_Settings_Pacing>Темп немезиса</Nemesis_Settings_Pacing>
+  <Nemesis_Settings_MaxAggression>Максимальная агрессия: {0}%</Nemesis_Settings_MaxAggression>
+  <Nemesis_Settings_Escalation>Скорость эскалации: {0} в день</Nemesis_Settings_Escalation>
+  <Nemesis_Settings_MinCooldown>Минимум между действиями: {0} дн.</Nemesis_Settings_MinCooldown>
+  <Nemesis_Settings_ActionMix>Набор действий</Nemesis_Settings_ActionMix>
+  <Nemesis_Settings_WeightTaunt>Насмешка по связи: {0}</Nemesis_Settings_WeightTaunt>
+  <Nemesis_Settings_WeightRaid>Прямой рейд: {0}</Nemesis_Settings_WeightRaid>
+  <Nemesis_Settings_WeightAssault>Штурм немезиса: {0}</Nemesis_Settings_WeightAssault>
+  <Nemesis_Settings_WeightWaste>Сброс отходов: {0}</Nemesis_Settings_WeightWaste>
+  <Nemesis_Settings_WeightFakeSignal>Ложный сигнал / засада: {0}</Nemesis_Settings_WeightFakeSignal>
+  <Nemesis_Settings_WeightCaravan>Травля каравана: {0}</Nemesis_Settings_WeightCaravan>
+  <Nemesis_Settings_WeightSabotage>Саботаж питания: {0}</Nemesis_Settings_WeightSabotage>
+  <Nemesis_Settings_WeightFood>Налёт на склады еды: {0}</Nemesis_Settings_WeightFood>
+  <Nemesis_Settings_Reset>Сброс</Nemesis_Settings_Reset>
+
+  <!-- Phrases -->
+  <Nemesis_Phrase_YourColony>ваша колония</Nemesis_Phrase_YourColony>
+  <Nemesis_Phrase_Someone>Кто-то</Nemesis_Phrase_Someone>
+  <Nemesis_Phrase_TheirFaction>их фракция</Nemesis_Phrase_TheirFaction>
+
+  <!-- Taunts -->
+  <Nemesis_Taunt_Low0>{0}: «Наслаждайтесь тишиной. Она ненадолго».</Nemesis_Taunt_Low0>
+  <Nemesis_Taunt_Low1>{0}: «Я знаю, где спит {1}».</Nemesis_Taunt_Low1>
+  <Nemesis_Taunt_Low2>{0}: «У меня ваши координаты. Все до одной».</Nemesis_Taunt_Low2>
+  <Nemesis_Taunt_Low3>{0}: «Передайте {1}, что я передаю привет».</Nemesis_Taunt_Low3>
+  <Nemesis_Taunt_Low4>{0}: «Всё ещё здесь. Всё ещё смотрю».</Nemesis_Taunt_Low4>
+  <Nemesis_Taunt_Low5>{0}: «Теперь это личное. {1} это поймёт».</Nemesis_Taunt_Low5>
+  <Nemesis_Taunt_High0>{0}: «Вам следовало прикончить меня, пока был шанс».</Nemesis_Taunt_High0>
+  <Nemesis_Taunt_High1>{0}: «С каждым побегом я всё увереннее. {1} умрёт последним».</Nemesis_Taunt_High1>
+  <Nemesis_Taunt_High2>{0}: «Я ещё не закончил. Даже близко».</Nemesis_Taunt_High2>
+  <Nemesis_Taunt_High3>{0}: «Я выжил {2} раз. Почему вы думаете, что в этот раз будет иначе?»</Nemesis_Taunt_High3>
+  <Nemesis_Taunt_High4>{0}: «Хочу, чтобы {1} видел, как я иду».</Nemesis_Taunt_High4>
+  <Nemesis_Taunt_High5>{0}: «Молитесь, чтобы {1} был готов. Я готов».</Nemesis_Taunt_High5>
+  <Nemesis_Taunt_FavoriteFood>{0}: «Я знаю, что любит есть {1}. {2}. Мило».</Nemesis_Taunt_FavoriteFood>
+  <Nemesis_Taunt_Cellar>{0}: «Хороший погреб. Жаль, если что-то испортится».</Nemesis_Taunt_Cellar>
+  <Nemesis_Taunt_Ion>{0}: «Люблю сухие молнии. Ваша сеть тоже полюбит, {1}».</Nemesis_Taunt_Ion>
+
+  <!-- Intro -->
+  <Nemesis_Intro_Title>Появляется немезис</Nemesis_Intro_Title>
+  <Nemesis_Intro_KilledAlly>{0} убил кого-то важного.\n\n{1} по имени {2} сделал это личным. Они не перестанут возвращаться, пока {0} не ответит за это — или пока их не возьмут живыми.</Nemesis_Intro_KilledAlly>
+  <Nemesis_Intro_Wounded>{0} оставил рану, которая не зажила.\n\n{1} из {2} выжил и помнит, кто это сделал. Они возвращаются.</Nemesis_Intro_Wounded>
+  <Nemesis_Intro_Fixation>Кто-то из {0} убил одного из ваших — и для них этого было мало.\n\nУ {1} развилась болезненная одержимость {2}. Они идут — и им никто другой не нужен.</Nemesis_Intro_Fixation>
+  <Nemesis_Intro_PawnDefault>Кто-то из {0} решил, что {1} стоит охоты.\n\n{2} не остановится, пока не получит то, за чем пришёл.</Nemesis_Intro_PawnDefault>
+  <Nemesis_Intro_Prisoner>Заключённый сбежал — и кто-то это заметил.\n\n{0} из {1} принял это как оскорбление. Ваша колония о них услышит.</Nemesis_Intro_Prisoner>
+  <Nemesis_Intro_Slave>Мятеж рабов нажил не тех врагов.\n\n{0} из {1} решил, что ваша колония должна кровью.</Nemesis_Intro_Slave>
+  <Nemesis_Intro_Retaliation>{0} хватит.\n\n{1} получил полномочия заставить вашу колонию заплатить.</Nemesis_Intro_Retaliation>
+  <Nemesis_Intro_ColonyDefault>Что-то, что сделала ваша колония, привлекло не то внимание.\n\n{0} из {1} сделал ваше уничтожение личной миссией.</Nemesis_Intro_ColonyDefault>
+
+  <!-- Letters: harassment -->
+  <Nemesis_Letter_CommsTitle>Сообщение с консоли связи</Nemesis_Letter_CommsTitle>
+  <Nemesis_Letter_CommsBody>Ваша консоль связи ловит незапланированную передачу.\n\n{0}</Nemesis_Letter_CommsBody>
+  <Nemesis_Letter_NoteTitle>Записка от {0}</Nemesis_Letter_NoteTitle>
+  <Nemesis_Letter_NoteBody>Где-то, где колонисты обязательно найдут, оставили записку. Никто не видел, кто её положил.\n\n{0}</Nemesis_Letter_NoteBody>
+  <Nemesis_Letter_RaidTitle>Рейд: {0}</Nemesis_Letter_RaidTitle>
+  <Nemesis_Letter_RaidBody>{0} отправил этот рейд. Они хотят, чтобы {1} знал, кто приказал.</Nemesis_Letter_RaidBody>
+
+  <!-- Vengeance army return (post-escape DirectRaid) — punchline is deliberate BARS -->
+  <Nemesis_Letter_VengeanceReturnTitle1>{0} возвращается</Nemesis_Letter_VengeanceReturnTitle1>
+  <Nemesis_Letter_VengeanceReturnBody1>{0} однажды ускользнул. Эту ошибку вы не совершите дважды — потому что в этот раз они пришли не одни.\n\nЗачем возвращаться в одиночку, если можно вернуться с армией?\n\nОни здесь ради {1}.</Nemesis_Letter_VengeanceReturnBody1>
+  <Nemesis_Letter_VengeanceReturnTitle2>{0} привёл друзей</Nemesis_Letter_VengeanceReturnTitle2>
+  <Nemesis_Letter_VengeanceReturnBody2>У вас был {0}. Потом не было. Теперь горизонт забит.\n\nЗачем возвращаться в одиночку, если можно вернуться с армией?\n\n{1} всё ещё в списке.</Nemesis_Letter_VengeanceReturnBody2>
+  <Nemesis_Letter_VengeanceReturnTitle3>Армия у ворот: {0}</Nemesis_Letter_VengeanceReturnTitle3>
+  <Nemesis_Letter_VengeanceReturnBody3>Побег за побегом. Урок усвоен — ими, а не вами.\n\n{0} вернулся, и на этот раз рейд ведёт он сам.\n\nЗачем возвращаться в одиночку, если можно вернуться с армией?\n\nСкажите {1} готовиться.</Nemesis_Letter_VengeanceReturnBody3>
+  <Nemesis_Letter_VengeanceReturnTitle4>{0}: хватит соло</Nemesis_Letter_VengeanceReturnTitle4>
+  <Nemesis_Letter_VengeanceReturnBody4>Хватит красться. Хватит почти-промахов. {0} перестал притворяться, что это дуэль.\n\nЗачем возвращаться в одиночку, если можно вернуться с армией?\n\nДолг перед {1} стал коллективным.</Nemesis_Letter_VengeanceReturnBody4>
+  <Nemesis_Letter_VengeanceReturnTitle5>{0} и орда</Nemesis_Letter_VengeanceReturnTitle5>
+  <Nemesis_Letter_VengeanceReturnBody5>Они слишком часто от вас уходили, чтобы заботиться о честном бою.\n\n{0} возвращается во главе воинства.\n\nЗачем возвращаться в одиночку, если можно вернуться с армией?\n\n{1} больше не придётся встречаться с ними один на один.</Nemesis_Letter_VengeanceReturnBody5>
+  <Nemesis_Letter_AssaultTitle>{0} прибывает</Nemesis_Letter_AssaultTitle>
+  <Nemesis_Letter_AssaultPawn>{0} пришёл за {1} лично. Они отступят, если дела пойдут плохо, — но вернутся.</Nemesis_Letter_AssaultPawn>
+  <Nemesis_Letter_AssaultColony>{0} лично ведёт этот штурм. Они не останутся, если шансы обернутся против них.</Nemesis_Letter_AssaultColony>
+  <Nemesis_Letter_WasteTitle>Сброс отходов: {0}</Nemesis_Letter_WasteTitle>
+  <Nemesis_Letter_WasteBody>Химические отходы сброшены с воздуха у вашей колонии.\n\nКороткое сообщение сопровождало их: «{0} передаёт привет».</Nemesis_Letter_WasteBody>
+  <Nemesis_Fake_Trader>торговый караван, запрашивающий разрешение на стыковку</Nemesis_Fake_Trader>
+  <Nemesis_Fake_Distress>маяк бедствия, утверждающий, что выжившим нужна эвакуация</Nemesis_Fake_Distress>
+  <Nemesis_Letter_FakeSignalTitle>Входящий сигнал</Nemesis_Letter_FakeSignalTitle>
+  <Nemesis_Letter_FakeSignalBody>Ваша консоль ловит то, что похоже на {0}.\n\nЧто-то в рукопожатии не так — но канал открыт.\n\n(Если это {1}, визит будет далеко не дружеским.)</Nemesis_Letter_FakeSignalBody>
+  <Nemesis_Letter_AmbushTitle>Засада: {0}</Nemesis_Letter_AmbushTitle>
+  <Nemesis_Letter_AmbushBody>Сигнал был ложью.\n\n{0} использовал его, чтобы провести ударную группу к вашему порогу.</Nemesis_Letter_AmbushBody>
+  <Nemesis_Letter_CaravanWatchTitle>{0} следит за дорогами</Nemesis_Letter_CaravanWatchTitle>
+  <Nemesis_Letter_CaravanWatchBody>{0} оставил метку на торговых путях. За вашими караванами следят.</Nemesis_Letter_CaravanWatchBody>
+  <Nemesis_Letter_CaravanHitTitle>Караван атакован: {0}</Nemesis_Letter_CaravanHitTitle>
+  <Nemesis_Letter_CaravanHitBody>{0} ударил по {1} на дороге. В хаосе пропали припасы. Оставили клочок ткани с именем.</Nemesis_Letter_CaravanHitBody>
+  <Nemesis_Letter_SabotageTitle>Саботаж: {0}</Nemesis_Letter_SabotageTitle>
+  <Nemesis_Letter_SabotageBody>{0} прогнал ЭМИ по вашей сети. Пострадали здания: {1}.</Nemesis_Letter_SabotageBody>
+  <Nemesis_Letter_SabotageBlocked>{0} пытался спалить вашу электронику — но гасители ЭМИ удержали линию. По открытому каналу прошипел раздражённый звук.</Nemesis_Letter_SabotageBlocked>
+  <Nemesis_Letter_SabotageSurgeBlocked>{0} ударил ЭМИ по зданиям ({1}). Защита от скачков съела последующее короткое замыкание.</Nemesis_Letter_SabotageSurgeBlocked>
+  <Nemesis_Letter_FoodTitle>Удар по складам еды: {0}</Nemesis_Letter_FoodTitle>
+  <Nemesis_Letter_FoodBody>{0} испортил или украл из ваших запасов еды (повреждено стопок: {1}). Голод — оружие.</Nemesis_Letter_FoodBody>
+  <Nemesis_Letter_FoodCellar>{0} пробрался на ваши склады — в том числе к корневому погребу. Испорчено стопок: {1}.</Nemesis_Letter_FoodCellar>
+  <Nemesis_Letter_FoodFavoriteNote>{0} оставил записку для {1}: «Больше никакого {2} для тебя».</Nemesis_Letter_FoodFavoriteNote>
+  <Nemesis_Letter_AnomalyTitle>Не то внимание: {0}</Nemesis_Letter_AnomalyTitle>
+  <Nemesis_Letter_AnomalyBody>{0} разворошил то, что должно было остаться погребённым. То, что идёт, может быть не целиком их рук дело — но они хотели, чтобы вы были заняты.</Nemesis_Letter_AnomalyBody>
+
+  <!-- Escape / corner / rogue / end -->
+  <Nemesis_Letter_EscapeTitle>{0} сбегает</Nemesis_Letter_EscapeTitle>
+  <Nemesis_Letter_Escape1>{0} ускользнул, прежде чем вы успели закончить. Они вернутся.</Nemesis_Letter_Escape1>
+  <Nemesis_Letter_Escape2>Вы их схватили. А потом — нет. {0} всё ещё там, и злее прежнего.</Nemesis_Letter_Escape2>
+  <Nemesis_Letter_EscapeN>Фигура в дыму. Исчезла, пока пыль не осела. Побег №{1} для {0}.</Nemesis_Letter_EscapeN>
+  <Nemesis_Letter_EscapeMany>{0} пережил это уже {1} раз. Они не остановятся.</Nemesis_Letter_EscapeMany>
+  <Nemesis_Letter_CorneredTitle>{0} загнан</Nemesis_Letter_CorneredTitle>
+  <Nemesis_Letter_CorneredBody>У {0} кончились побеги. Они упали — и на этот раз не ускользнут.\n\nАрестуйте их и возьмите живыми, чтобы навсегда закончить охоту.</Nemesis_Letter_CorneredBody>
+  <Nemesis_Letter_TruceBrokenTitle>{0}: перемирие нарушено</Nemesis_Letter_TruceBrokenTitle>
+  <Nemesis_Letter_TruceBrokenBody>Перемирие с {0} истекло.\n\nОни никогда не забывали. Они всегда собирались вернуться.</Nemesis_Letter_TruceBrokenBody>
+  <Nemesis_Letter_RogueTitle>{0} идёт в одиночку</Nemesis_Letter_RogueTitle>
+  <Nemesis_Letter_RogueBodyFaction>Вы заключили мир с {1}. {0} — нет.\n\nОни бросили своих и примкнули к {2}. Договор не кончает вендетту.</Nemesis_Letter_RogueBodyFaction>
+  <Nemesis_Letter_RogueBodyAlone>Вы заключили мир с {1}. {0} — нет.\n\nТеперь они охотятся на вас в одиночку. Договор не кончает вендетту.</Nemesis_Letter_RogueBodyAlone>
+  <Nemesis_Letter_EndedKilledTitle>{0}: охота окончена</Nemesis_Letter_EndedKilledTitle>
+  <Nemesis_Letter_EndedKilledBody>{0} мёртв. Канал замолкает.</Nemesis_Letter_EndedKilledBody>
+  <Nemesis_Letter_EndedTargetDiedTitle>{0}: теряет интерес</Nemesis_Letter_EndedTargetDiedTitle>
+  <Nemesis_Letter_EndedTargetDiedBody>{1} мёртв. {0} получил то, за чем пришёл — в каком-то смысле.\n\nОхота кончается. Они не празднуют. Они просто останавливаются.</Nemesis_Letter_EndedTargetDiedBody>
+  <Nemesis_Letter_EndedHandedTitle>{0}: забрал добычу</Nemesis_Letter_EndedHandedTitle>
+  <Nemesis_Letter_EndedHandedBody>{1} больше не ваш. {0} считает долг уплаченным.\n\nНасмешки прекращаются. Рейды прекращаются. Они победили.</Nemesis_Letter_EndedHandedBody>
+
+  <!-- Resolution dialog -->
+  <Nemesis_Dialog_Title>{0} в ваших руках.</Nemesis_Dialog_Title>
+  <Nemesis_Dialog_Body_KilledAlly>Они пришли за местью. Теперь сидят в вашей тюрьме.\n\nТри выбора. Ни один не чист.</Nemesis_Dialog_Body_KilledAlly>
+  <Nemesis_Dialog_Body_Prisoner>Тот, кто сделал вашу колонию своей миссией, за решёткой.\n\nРешите, что будет дальше.</Nemesis_Dialog_Body_Prisoner>
+  <Nemesis_Dialog_Body_Slave>Охотник, ответивший на мятеж рабов, сидит в ваших камерах.\n\nПокончите — или отложите.</Nemesis_Dialog_Body_Slave>
+  <Nemesis_Dialog_Body_Fixation>Тот, кто одержим вашим колонистом, пойман.\n\nОдержимость обычно не переживает запертую дверь. Обычно.</Nemesis_Dialog_Body_Fixation>
+  <Nemesis_Dialog_Body_Wounded>Тот, кто отказывался умирать, наконец недвижим.\n\nТо, что вы сделаете дальше, решит, кончится ли эта история.</Nemesis_Dialog_Body_Wounded>
+  <Nemesis_Dialog_Body_Default>{0} захвачен. Охота окончена.\n\nТо, что вы сделаете сейчас, определит то, что будет после.</Nemesis_Dialog_Body_Default>
+  <Nemesis_Dialog_Execute>Казнить: покончить навсегда. Они не вернутся. Добрая воля — тоже.</Nemesis_Dialog_Execute>
+  <Nemesis_Dialog_Release>Отпустить: отпустить их. Сейчас это ничего не стоит. Позже, возможно, будет.</Nemesis_Dialog_Release>
+  <Nemesis_Dialog_Keep>Держать заключённым: они остаются в камерах. Охота окончена. Пока.</Nemesis_Dialog_Keep>
+  <Nemesis_Dialog_Truce>Перемирие: приостановить охоту на {0} дн. Игра никогда не останавливается по-настоящему.</Nemesis_Dialog_Truce>
+
+  <Nemesis_Letter_ExecutedTitle>{0}: казнён</Nemesis_Letter_ExecutedTitle>
+  <Nemesis_Letter_ExecutedBody>Готово. {0} больше не вернётся.\n\n{1}</Nemesis_Letter_ExecutedBody>
+  <Nemesis_Letter_ReleasedTitle>{0}: отпущен</Nemesis_Letter_ReleasedTitle>
+  <Nemesis_Letter_ReleasedBody>Вы отпустили их. {0} ушёл без слова.\n\n{1}</Nemesis_Letter_ReleasedBody>
+  <Nemesis_Letter_KeptTitle>{0}: остаётся</Nemesis_Letter_KeptTitle>
+  <Nemesis_Letter_KeptBody>{0} остаётся в вашей тюрьме. Охота окончена. Что с ними делать — ваше дело.</Nemesis_Letter_KeptBody>
+  <Nemesis_Letter_TruceTitle>{0}: перемирие</Nemesis_Letter_TruceTitle>
+  <Nemesis_Letter_TruceBody>Вы заключили временный мир с {0}. Они уходят — пока.\n\nЧерез {1} игровых дней охота возобновится. Они никогда по-настоящему не останавливаются.</Nemesis_Letter_TruceBody>
+
+</LanguageData>

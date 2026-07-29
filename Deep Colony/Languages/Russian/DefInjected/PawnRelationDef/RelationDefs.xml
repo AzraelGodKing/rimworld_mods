@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_MentorOf.label>наставник</DC_MentorOf.label>
+  <DC_MentorOf.labelFemale>наставница</DC_MentorOf.labelFemale>
+  <DC_ApprenticeOf.label>ученик</DC_ApprenticeOf.label>
+  <DC_ApprenticeOf.labelFemale>ученица</DC_ApprenticeOf.labelFemale>
+
+</LanguageData>

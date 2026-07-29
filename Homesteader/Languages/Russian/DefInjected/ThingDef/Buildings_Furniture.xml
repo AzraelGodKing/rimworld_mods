@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_LogBench.label>бревенчатая скамья</Homesteader_LogBench.label>
+  <Homesteader_LogBench.description>Скамья из расколотого бревна на двоих. Простая, крепкая мебель для крыльца усадьбы или обеденного стола.</Homesteader_LogBench.description>
+  <Homesteader_RockingChair.label>кресло-качалка</Homesteader_RockingChair.label>
+  <Homesteader_RockingChair.description>Резное кресло-качалка. На редкость удобно для долгих вечеров у очага.</Homesteader_RockingChair.description>
+  <Homesteader_QuiltedBed.label>стёганая кровать</Homesteader_QuiltedBed.label>
+  <Homesteader_QuiltedBed.description>Деревянная кровать с толстым лоскутным одеялом. Тёплая, уютная и чуть комфортнее обычной кровати.</Homesteader_QuiltedBed.description>
+  <Homesteader_DiggoPlushie.label>плюшевый Diggo</Homesteader_DiggoPlushie.label>
+  <Homesteader_DiggoPlushie.description>Безнадёжно круглый плюш, сшитый в форме… никто толком не знает. Чуть бегемот, чуть пёс, целиком толстячок. Вышитая улыбка и глаза-пуговицы делают любую комнату роднее, а колонисты могут плюхнуться к нему на живот и прижаться, отгоняя тревоги.
+
+Поздравляем dognamedKats с 1 тыс. подписчиков!</Homesteader_DiggoPlushie.description>
+  <Homesteader_SharkPlushie.label>плюшевая Sharkira</Homesteader_SharkPlushie.label>
+  <Homesteader_SharkPlushie.description>Обнимательная круглая акула из мягкого войлока с глазами-пуговицами, короткими плавниками и безобидными тряпичными зубами. Радостно сидит в углу и никого не пугает. Колонисты могут прижаться к ней и отдохнуть — любимый океанский друг Diggo.</Homesteader_SharkPlushie.description>
+  <Homesteader_StatueTwentySeven.label>статуя 27</Homesteader_StatueTwentySeven.label>
+  <Homesteader_StatueTwentySeven.description>Позолоченная цифра 27 на резном каменном постаменте, будто застывшее в каплях расплавленное золото по штрихам. Никто точно не помнит, что отмечают эти 27, но ощущение важности есть. Пешки в радиусе становятся необъяснимо веселее (+27 к настроению).</Homesteader_StatueTwentySeven.description>
+  <Homesteader_Statue27Grand.label>величественная статуя 27</Homesteader_Statue27Grand.label>
+  <Homesteader_Statue27Grand.description>Высокая позолоченная 27 на монументальном каменном постаменте, золото стекает с каждого штриха. Что бы ни значила 27, эта версия говорит об этом вдвое громче. Пешки в радиусе становятся необъяснимо веселее (+27 к настроению).</Homesteader_Statue27Grand.description>
+  <Homesteader_OilLamp.label>масляная лампа</Homesteader_OilLamp.label>
+  <Homesteader_OilLamp.description>Латунная лампа, горящая на химтопливе и дающая тёплый ровный свет. Электросеть не нужна.</Homesteader_OilLamp.description>
+  <Homesteader_WoodStove.label>дровяная печь</Homesteader_WoodStove.label>
+  <Homesteader_WoodStove.description>Чугунная печь, сжигающая древесину для обогрева комнаты. Греется медленнее электрического обогревателя, но работает полностью автономно.</Homesteader_WoodStove.description>
+
+</LanguageData>
