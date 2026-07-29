@@ -54,4 +54,73 @@ namespace Strata
             return ThoughtState.ActiveAtStage(impressiveness >= 120f ? 1 : 0);
         }
     }
+
+    // B1+ sealed rooms: low O₂ mood (natural gases opt-in).
+    public class ThoughtWorker_StrataSuffocation : ThoughtWorker
+    {
+        private const float O2Worry = 0.14f;
+
+        protected override ThoughtState CurrentStateInternal(Pawn pawn)
+        {
+            if (pawn?.Map == null || !pawn.RaceProps.Humanlike
+                || StrataMod.Settings?.NaturalGasesActive != true)
+            {
+                return ThoughtState.Inactive;
+            }
+            if (!StrataMapUtility.IsUnderground(pawn.Map) || StrataMapUtility.IsUpperLevel(pawn.Map))
+            {
+                return ThoughtState.Inactive;
+            }
+            Room room = pawn.GetRoom();
+            if (!AtmosphereVolumeUtility.AllowsBreathMetabolism(pawn.Map, room))
+            {
+                return ThoughtState.Inactive;
+            }
+            AtmosphereMapComponent atmo = pawn.Map.GetComponent<AtmosphereMapComponent>();
+            if (atmo == null)
+            {
+                return ThoughtState.Inactive;
+            }
+            float o2 = atmo.DensityInRoom(room, StrataGasDefOf.Strata_Oxygen);
+            if (o2 <= 0f || o2 >= O2Worry)
+            {
+                return ThoughtState.Inactive;
+            }
+            return ThoughtState.ActiveAtStage(o2 < 0.10f ? 1 : 0);
+        }
+    }
+
+    public class ThoughtWorker_StrataStuffyAir : ThoughtWorker
+    {
+        private const float Co2Worry = 0.14f;
+
+        protected override ThoughtState CurrentStateInternal(Pawn pawn)
+        {
+            if (pawn?.Map == null || !pawn.RaceProps.Humanlike
+                || StrataMod.Settings?.NaturalGasesActive != true)
+            {
+                return ThoughtState.Inactive;
+            }
+            if (!StrataMapUtility.IsUnderground(pawn.Map) || StrataMapUtility.IsUpperLevel(pawn.Map))
+            {
+                return ThoughtState.Inactive;
+            }
+            Room room = pawn.GetRoom();
+            if (!AtmosphereVolumeUtility.AllowsBreathMetabolism(pawn.Map, room))
+            {
+                return ThoughtState.Inactive;
+            }
+            AtmosphereMapComponent atmo = pawn.Map.GetComponent<AtmosphereMapComponent>();
+            if (atmo == null)
+            {
+                return ThoughtState.Inactive;
+            }
+            float co2 = atmo.DensityInRoom(room, StrataGasDefOf.Strata_CarbonDioxide);
+            if (co2 < Co2Worry)
+            {
+                return ThoughtState.Inactive;
+            }
+            return ThoughtState.ActiveAtStage(co2 >= 0.20f ? 1 : 0);
+        }
+    }
 }

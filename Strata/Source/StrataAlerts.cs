@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -227,6 +228,143 @@ namespace Strata
 
             targets.Clear();
             SleepRelay.CollectBedNotFoundCulprits(targets);
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
+        }
+    }
+
+    // B1+ colony rooms with dangerously low oxygen (natural gases opt-in).
+    public class Alert_LowOxygen : Alert_Critical
+    {
+        private const float WorryThreshold = 0.14f;
+
+        private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
+
+        public Alert_LowOxygen()
+        {
+            defaultLabel = "Strata_Alert_LowOxygen_Label".Translate();
+            defaultExplanation = "Strata_Alert_LowOxygen_Explanation".Translate();
+        }
+
+        public override AlertReport GetReport()
+        {
+            if (StrataMod.Settings?.NaturalGasesActive != true)
+            {
+                return false;
+            }
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
+            targets.Clear();
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (!StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map))
+                {
+                    continue;
+                }
+                if (StrataLevelPerfUtility.ColonyPresenceCount(map) <= 0)
+                {
+                    continue;
+                }
+                AtmosphereMapComponent atmo = map.GetComponent<AtmosphereMapComponent>();
+                if (atmo == null)
+                {
+                    continue;
+                }
+                foreach (Room room in map.regionGrid.AllRooms)
+                {
+                    if (room == null || room.UsesOutdoorTemperature || room.IsDoorway)
+                    {
+                        continue;
+                    }
+                    if (!room.Owners.Any())
+                    {
+                        // Prefer rooms with colonists present.
+                        bool hasColonist = false;
+                        foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
+                        {
+                            if (p.GetRoom() == room)
+                            {
+                                hasColonist = true;
+                                break;
+                            }
+                        }
+                        if (!hasColonist)
+                        {
+                            continue;
+                        }
+                    }
+                    float o2 = atmo.DensityInRoom(room, StrataGasDefOf.Strata_Oxygen);
+                    if (o2 > 0f && o2 < WorryThreshold)
+                    {
+                        IntVec3 cell = room.Cells.Any() ? room.Cells.RandomElement() : map.Center;
+                        targets.Add(new GlobalTargetInfo(cell, map));
+                    }
+                }
+            }
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
+        }
+    }
+
+    public class Alert_HighCarbonDioxide : Alert
+    {
+        private const float WorryThreshold = 0.16f;
+
+        private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
+
+        public Alert_HighCarbonDioxide()
+        {
+            defaultLabel = "Strata_Alert_HighCO2_Label".Translate();
+            defaultExplanation = "Strata_Alert_HighCO2_Explanation".Translate();
+            defaultPriority = AlertPriority.High;
+        }
+
+        public override AlertReport GetReport()
+        {
+            if (StrataMod.Settings?.NaturalGasesActive != true)
+            {
+                return false;
+            }
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
+            targets.Clear();
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (!StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map))
+                {
+                    continue;
+                }
+                AtmosphereMapComponent atmo = map.GetComponent<AtmosphereMapComponent>();
+                if (atmo == null)
+                {
+                    continue;
+                }
+                foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
+                {
+                    Room room = p.GetRoom();
+                    if (room == null || room.UsesOutdoorTemperature)
+                    {
+                        continue;
+                    }
+                    float co2 = atmo.DensityInRoom(room, StrataGasDefOf.Strata_CarbonDioxide);
+                    if (co2 >= WorryThreshold)
+                    {
+                        targets.Add(p);
+                    }
+                }
+            }
             cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
             return cachedReport;
         }

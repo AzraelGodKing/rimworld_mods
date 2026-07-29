@@ -214,6 +214,9 @@
   <Strata_DigDownFromLandingDesc>在此落脚点旁指定挖掘竖井。殖民者必须完工开凿——与开挖楼梯井相同——才会打开下一层。第一层地下以下需要深层挖掘研究。</Strata_DigDownFromLandingDesc>
   <Strata_DigDownFromEntranceDesc>楼梯井完全建成后打通下方楼层；若研究未完成但建造已完成也可使用。</Strata_DigDownFromEntranceDesc>
   <Strata_OpeningLevel>正在打开下层…</Strata_OpeningLevel>
+  <Strata_GeneratingLevel>正在打开地层关卡…</Strata_GeneratingLevel>
+  <Strata_GeneratingLevel_Structure>正在雕刻关卡（结构）…</Strata_GeneratingLevel_Structure>
+  <Strata_GeneratingLevel_Rock>正在填充岩石——大地图需要较长时间，请稍候…</Strata_GeneratingLevel_Rock>
   <Strata_OpenLevelFailed>无法打开下层。请查看 Player.log，然后再次使用「向下挖掘」重试。</Strata_OpenLevelFailed>
 
   <!-- Dig-down utility -->

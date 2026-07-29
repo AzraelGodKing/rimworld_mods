@@ -88,11 +88,6 @@ namespace Strata
             }
 
             atmo.AddGasToRoomPublic(room, o2, Props.releasePerRareTick, parent.Position);
-            // Prefer breath-grid pump path on underground decks for even pressurization.
-            if (StrataMapUtility.IsUnderground(parent.Map))
-            {
-                // EmitOxygenPump is internal — room cloud path above is enough with AddGasToRoomPublic.
-            }
             stored = Mathf.Max(0f, stored - Props.consumePerRareTick);
         }
 

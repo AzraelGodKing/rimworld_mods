@@ -10,6 +10,11 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ### Fixed
 
+- **Atmosphere V3.5 (`atmosphere-v35`)** — room-volume sim is the only mix store (per-cell breath grid retired). B1+ sealed rooms: pawns inhale O₂ / exhale CO₂, plants reverse; surface/A+ ambient-locked. O₂ pumps + gravship tank use room inject. Low-O₂ / high-CO₂ alerts, suffocation/stuffy thoughts, overlay status line, first-descent letter. **Gas sim stays opt-in (default OFF).**
+- **Dig / first descent hard-freeze** — pocket open no longer GenSpawns the full rock fill inside sync `GetOtherMap` (275²+ maps looked dead for minutes). Shell + warren run first; mineables drain in a yielding LongEvent (~2k cells/frame) with progress text; Enter stays blocked until fill finishes. Stamp `dig-open-yield-v1`.
+- **Safe off-thread helpers (A1–A3 / B1–B3)** — buoyancy folded into off-thread breath diffusion; cell-density plane fill + overlay color bake via `Parallel.For`; rock-index Perlin grid + warren/vault geometry on workers (apply/GenSpawn stay main). Stamp `offthread-safe-v1`.
+- **Native cave-system digs** — warren is a seed-stable network (trunk + branches + dead-end spurs, variable-width tunnels, irregular rooms) from `map.ConstantRandSeed`; rock patches + carved floors follow the same seed. Stamp `cave-system-v1`.
+- **Biomes! layout priority** — when Biomes! Caverns is loaded it always owns dig map gen; Strata caves are fallback only if Biomes! fails or is absent. Mod option only gates Biomes! feature scatter. Stamp `biomes-wins-layout-v1`.
 - **`Patch_CurrentMapIndex` frame cost** — no longer Harmony-patches `Game.CurrentMap` at all (any Prefix was still ~8–13% of frame at 300–1200 calls/update). Clamp only on `DeinitAndRemoveMap` + see-below restore. Stamp `currentmap-no-getter-patch-v3`.
 - **Cross-level haul stuck underground** — mid-hop stair relays no longer wipe the haul `returnMap`, so colonists/Misc. Robots keep returning home for another load after delivering downstairs (was: a few trips then wander on the lower floor). Failed home paths also retry instead of giving up.
 - **Misc. Robots work relay from underground** — `JobGiver_SeekAllowedArea` no longer yank bots back to an underground allowed area before work relay can send them to the surface; return-to-base idle also yields to work relay when another floor has jobs.

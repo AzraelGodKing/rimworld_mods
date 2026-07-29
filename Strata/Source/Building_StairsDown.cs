@@ -98,6 +98,12 @@ namespace Strata
                 reason = "The stairwell is sealed.";
                 return false;
             }
+            // Rock fill continues after PocketMapExists — keep Enter blocked.
+            if (StrataPocketMapOpen.IsGenerating(this))
+            {
+                reason = "Strata_OpeningLevel".Translate();
+                return false;
+            }
             if (!PocketMapExists)
             {
                 if (!BypassFirstLevelResearch && !CanOpenPortalLevel(out reason))
@@ -107,11 +113,6 @@ namespace Strata
                 if (StrataPocketMapOpen.HasFailed(this))
                 {
                     reason = "Strata_OpenLevelFailed".Translate();
-                    return false;
-                }
-                if (StrataPocketMapOpen.IsGenerating(this))
-                {
-                    reason = "Strata_OpeningLevel".Translate();
                     return false;
                 }
                 // First descent (ancient / excavated) generates a full-size rock

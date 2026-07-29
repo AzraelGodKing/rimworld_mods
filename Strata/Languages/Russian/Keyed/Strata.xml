@@ -213,6 +213,9 @@
   <Strata_DigDownFromLandingDesc>Назначьте шахту копки рядом с этой площадкой. Колонисты должны закончить её — та же работа, что у вырытой лестницы — прежде чем откроется следующий уровень. Ниже первого подземного уровня нужно исследование глубокой выемки.</Strata_DigDownFromLandingDesc>
   <Strata_DigDownFromEntranceDesc>Пробейтесь на уровень ниже, когда эта лестница полностью построена, или используйте её, если строительство закончилось до доступности исследования.</Strata_DigDownFromEntranceDesc>
   <Strata_OpeningLevel>Opening the level below…</Strata_OpeningLevel>
+  <Strata_GeneratingLevel>Opening Strata level…</Strata_GeneratingLevel>
+  <Strata_GeneratingLevel_Structure>Carving the level (structure)…</Strata_GeneratingLevel_Structure>
+  <Strata_GeneratingLevel_Rock>Filling rock — large maps take a while; please wait…</Strata_GeneratingLevel_Rock>
   <Strata_OpenLevelFailed>Could not open the level below. Check Player.log, then use Dig down again to retry.</Strata_OpenLevelFailed>
 
   <!-- Dig-down utility -->
