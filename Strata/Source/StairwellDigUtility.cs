@@ -148,14 +148,21 @@ namespace Strata
         private static bool OpenLevelBelow(Building_StairsDown entrance, Building_StairsUp landing, out string message)
         {
             entrance.OpenLevelBelow();
-            if (!entrance.PocketMapExists)
+            if (entrance.PocketMapExists)
             {
-                message = "Strata_Dig_FailedOpen".Translate();
-                return false;
+                message = "Strata_Dig_BrokeThroughNew".Translate();
+                Messages.Message(message, landing ?? (Thing)entrance, MessageTypeDefOf.PositiveEvent);
+                return true;
             }
-            message = "Strata_Dig_BrokeThroughNew".Translate();
-            Messages.Message(message, landing ?? (Thing)entrance, MessageTypeDefOf.PositiveEvent);
-            return true;
+            if (StrataPocketMapOpen.IsGenerating(entrance))
+            {
+                // LongEvent is running — not a failure; Enter is blocked until done.
+                message = "Strata_OpeningLevel".Translate();
+                Messages.Message(message, entrance, MessageTypeDefOf.NeutralEvent);
+                return true;
+            }
+            message = "Strata_Dig_FailedOpen".Translate();
+            return false;
         }
 
         private static bool TryPlaceDigShaftBlueprint(IntVec3 center, Map map, Rot4 rot, out string message)

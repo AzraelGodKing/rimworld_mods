@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_LogBench.label>原木长凳</Homesteader_LogBench.label>
+  <Homesteader_LogBench.description>可坐两人的劈木长凳。朴实结实，适合农庄门廊或餐桌旁。</Homesteader_LogBench.description>
+  <Homesteader_RockingChair.label>摇椅</Homesteader_RockingChair.label>
+  <Homesteader_RockingChair.description>手工雕刻的摇椅。在炉边度过长夜时极为舒适。</Homesteader_RockingChair.description>
+  <Homesteader_QuiltedBed.label>拼布床</Homesteader_QuiltedBed.label>
+  <Homesteader_QuiltedBed.description>铺着厚实拼布被的木床。温暖家常，比普通床稍更舒服。</Homesteader_QuiltedBed.description>
+  <Homesteader_DiggoPlushie.label>毛绒玩具 Diggo</Homesteader_DiggoPlushie.label>
+  <Homesteader_DiggoPlushie.description>圆得没救的毛绒玩具，缝成……谁也说不清的样子。半河马半狗，整只胖墩墩。缝线笑脸和纽扣眼睛让房间更有家的感觉，殖民者可以趴在它肚子上依偎，把烦恼抛到一边。
+
+恭喜 dognamedKats 达到 1k 粉丝！</Homesteader_DiggoPlushie.description>
+  <Homesteader_SharkPlushie.label>毛绒玩具 Sharkira</Homesteader_SharkPlushie.label>
+  <Homesteader_SharkPlushie.description>用软毡缝成的可抱圆鲨鱼，纽扣眼睛、短鳍，满嘴无害的布牙。开心地蹲在角落里，却吓不到任何人。殖民者可以靠着它依偎散心——Diggo 最爱的海洋朋友。</Homesteader_SharkPlushie.description>
+  <Homesteader_StatueTwentySeven.label>27 雕像</Homesteader_StatueTwentySeven.label>
+  <Homesteader_StatueTwentySeven.description>镀金数字 27 立在雕花石座上，熔金仿佛凝固在笔划间滴落。没人确切记得 27 纪念什么，但感觉很重要。范围内的小人会莫名开朗（+27 心情）。</Homesteader_StatueTwentySeven.description>
+  <Homesteader_Statue27Grand.label>宏伟 27 雕像</Homesteader_Statue27Grand.label>
+  <Homesteader_Statue27Grand.description>耸立在宏伟石座上的镀金 27，每一笔划都滴着金。无论 27 意味着什么，这一版说得加倍用力。范围内的小人会莫名开朗（+27 心情）。</Homesteader_Statue27Grand.description>
+  <Homesteader_OilLamp.label>油灯</Homesteader_OilLamp.label>
+  <Homesteader_OilLamp.description>燃烧化合燃料、发出温暖稳定光亮的黄铜油灯。无需电网。</Homesteader_OilLamp.description>
+  <Homesteader_WoodStove.label>柴火炉</Homesteader_WoodStove.label>
+  <Homesteader_WoodStove.description>烧木材取暖的铸铁炉。升温比电热器慢，但完全离网可用。</Homesteader_WoodStove.description>
+
+</LanguageData>

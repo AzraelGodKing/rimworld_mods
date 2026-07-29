@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_PrimitiveHomestead.label>原始家园</Homesteader_PrimitiveHomestead.label>
+  <Homesteader_PrimitiveHomestead.description>基础家园拓荒知识：腌制与熏制肉类、干草阁楼与食材桶，以及栽种果园树木。</Homesteader_PrimitiveHomestead.description>
+  <Homesteader_FoodPreservation.label>家园食物保存</Homesteader_FoodPreservation.label>
+  <Homesteader_FoodPreservation.description>进阶保存技术：将水果熬成果酱及其他耐久的食品室存货。</Homesteader_FoodPreservation.description>
+  <Homesteader_FarmsteadCrafting.label>农庄工艺</Homesteader_FarmsteadCrafting.label>
+  <Homesteader_FarmsteadCrafting.description>解锁谷物磨、黄油搅动机、奶酪压榨机、腌渍缸与家园炉灶，用于碾磨、乳品、腌制与烘焙。</Homesteader_FarmsteadCrafting.description>
+  <Homesteader_HomesteadStorage.label>家园仓储</Homesteader_HomesteadStorage.label>
+  <Homesteader_HomesteadStorage.description>凉爽的根窖（被动冷藏存放的食物）、腌制架，以及加固货箱，用于认真的食品室与库存管理。</Homesteader_HomesteadStorage.description>
+  <Homesteader_HomesteadBrewing.label>家园酿造</Homesteader_HomesteadBrewing.label>
+  <Homesteader_HomesteadBrewing.description>发酵苹果酒与蜂蜜酒、冲泡草本茶，并养蜂以获得稳定的蜂蜜供应。</Homesteader_HomesteadBrewing.description>
+  <Homesteader_HomesteadComforts.label>家园舒适</Homesteader_HomesteadComforts.label>
+  <Homesteader_HomesteadComforts.description>边疆生活中更精致的一面：棉被床、原木长椅、摇椅、油灯、木炉、门廊游戏，以及27纪念碑与雕像。</Homesteader_HomesteadComforts.description>
+  <Homesteader_AdvancedHomestead.label>进阶家园</Homesteader_AdvancedHomestead.label>
+  <Homesteader_AdvancedHomestead.description>以燃木发电机将电力引入家园，并完善从农场到餐桌的成熟基础设施。</Homesteader_AdvancedHomestead.description>
+  <Wellspring_Wellcraft.label>井工技艺</Wellspring_Wellcraft.label>
+  <Wellspring_Wellcraft.description>挖掘与砌衬水井、箍制雨水桶、建造蓄水池：寻找水源并妥善保存的技艺。</Wellspring_Wellcraft.description>
+  <Wellspring_Irrigation.label>灌溉</Wellspring_Irrigation.label>
+  <Wellspring_Irrigation.description>将抽取的水引入农田沟渠，使之成为肥沃乌黑的灌溉土壤，作物生长更快。</Wellspring_Irrigation.description>
+  <Wellspring_Waterworks.label>水利工程</Wellspring_Waterworks.label>
+  <Wellspring_Waterworks.description>更深的竖井、更高的水塔：加固深井抽取地下水，高架水塔囤积可观的储备。</Wellspring_Waterworks.description>
+  <Homesteader_Livestock.label>家园畜牧</Homesteader_Livestock.label>
+  <Homesteader_Livestock.description>鸡舍可稳定产蛋，以及保持院落禽群生产力的饲料配方。</Homesteader_Livestock.description>
+  <Homesteader_Textiles.label>家园纺织</Homesteader_Textiles.label>
+  <Homesteader_Textiles.description>种植亚麻，将纤维或羊毛纺成家纺布，并织成农舍棉被以用于棉被床。</Homesteader_Textiles.description>
+  <Homesteader_SoilAndCold.label>土壤与冷藏</Homesteader_SoilAndCold.label>
+  <Homesteader_SoilAndCold.description>堆肥堆与堆肥土壤让田地更肥沃，外加冰屋与泉屋提供被动冷藏食品室空间。</Homesteader_SoilAndCold.description>
+  <Homesteader_PantryCraft.label>食品室工艺</Homesteader_PantryCraft.label>
+  <Homesteader_PantryCraft.description>罐头厨房与梅森罐用于密封炖菜与果酱，苹果压榨机榨取果园果汁，以及肥皂洗衣盆供好好搓洗。</Homesteader_PantryCraft.description>
+
+</LanguageData>

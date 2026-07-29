@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_CanningKitchen.label>кухня для консервации</Homesteader_CanningKitchen.label>
+  <Homesteader_CanningKitchen.description>Дровяная установка для консервации с водяной баней и стойкой для банок. Запечатывает похлёбку и варенье в банки Мейсона на годы хранения.</Homesteader_CanningKitchen.description>
+  <Homesteader_CiderPress.label>пресс для сидра</Homesteader_CiderPress.label>
+  <Homesteader_CiderPress.description>Винтовой пресс для выжимания свежего сока из садовых яблок. Жмите сок здесь, затем сбраживайте на пивоваренном верстаке.</Homesteader_CiderPress.description>
+  <Homesteader_WashTub.label>лохань для стирки</Homesteader_WashTub.label>
+  <Homesteader_WashTub.description>Деревянная лохань и стиральная доска для настоящей стирки с усадебным мылом. Заправьте лохань брусками мыла, затем используйте её ради бонуса настроения от свежей стирки.</Homesteader_WashTub.description>
+
+</LanguageData>

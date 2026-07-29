@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_RenderLard.label>熬制猪油</Homesteader_RenderLard.label>
+  <Homesteader_RenderLard.description>从生肉中炼出软脂肪，制成烹饪用猪油。</Homesteader_RenderLard.description>
+  <Homesteader_RenderLard.jobString>正在熬制猪油。</Homesteader_RenderLard.jobString>
+  <Homesteader_RenderTallow.label>熬制牛脂</Homesteader_RenderTallow.label>
+  <Homesteader_RenderTallow.description>将肉慢炼成硬脂，用于制皂和储藏室工艺。</Homesteader_RenderTallow.description>
+  <Homesteader_RenderTallow.jobString>正在熬制牛脂。</Homesteader_RenderTallow.jobString>
+  <Homesteader_MakeSausage.label>制作香肠</Homesteader_MakeSausage.label>
+  <Homesteader_MakeSausage.description>将盐腌或烟熏肉与炼制脂肪、干草药灌进家园香肠。</Homesteader_MakeSausage.description>
+  <Homesteader_MakeSausage.jobString>正在制作香肠。</Homesteader_MakeSausage.jobString>
+  <Homesteader_MakeAnimalMash.label>制作牲畜糊食</Homesteader_MakeAnimalMash.label>
+  <Homesteader_MakeAnimalMash.description>将大麦和南瓜煮成软糊，供鸡舍、畜栏和其他牲畜食用。</Homesteader_MakeAnimalMash.description>
+  <Homesteader_MakeAnimalMash.jobString>正在制作牲畜糊食。</Homesteader_MakeAnimalMash.jobString>
+  <Homesteader_MakeCompost.label>制作堆肥</Homesteader_MakeCompost.label>
+  <Homesteader_MakeCompost.description>将干草和植物性食物翻成深色堆肥。</Homesteader_MakeCompost.description>
+  <Homesteader_MakeCompost.jobString>正在制作堆肥。</Homesteader_MakeCompost.jobString>
+  <Homesteader_ScreenFertilizer.label>筛制肥料</Homesteader_ScreenFertilizer.label>
+  <Homesteader_ScreenFertilizer.description>将成熟堆肥筛成肥料，用于堆肥土壤。</Homesteader_ScreenFertilizer.description>
+  <Homesteader_ScreenFertilizer.jobString>正在筛制肥料。</Homesteader_ScreenFertilizer.jobString>
+  <Homesteader_SpinFlax.label>纺亚麻布</Homesteader_SpinFlax.label>
+  <Homesteader_SpinFlax.description>将亚麻纤维纺成粗糙的家织布。</Homesteader_SpinFlax.description>
+  <Homesteader_SpinFlax.jobString>正在纺亚麻。</Homesteader_SpinFlax.jobString>
+  <Homesteader_SpinWool.label>纺羊毛布</Homesteader_SpinWool.label>
+  <Homesteader_SpinWool.description>将羊毛纺成粗糙的家织布。</Homesteader_SpinWool.description>
+  <Homesteader_SpinWool.jobString>正在纺羊毛。</Homesteader_SpinWool.jobString>
+  <Homesteader_WeaveQuilt.label>织家园被褥</Homesteader_WeaveQuilt.label>
+  <Homesteader_WeaveQuilt.description>用家织布织成厚实的农家被褥。</Homesteader_WeaveQuilt.description>
+  <Homesteader_WeaveQuilt.jobString>正在织被褥。</Homesteader_WeaveQuilt.jobString>
+  <Homesteader_MakeMasonJars.label>制作梅森罐</Homesteader_MakeMasonJars.label>
+  <Homesteader_MakeMasonJars.description>用钢材制成可重复使用的罐头瓶。</Homesteader_MakeMasonJars.description>
+  <Homesteader_MakeMasonJars.jobString>正在制作梅森罐。</Homesteader_MakeMasonJars.jobString>
+  <Homesteader_CanStew.label>罐装炖菜</Homesteader_CanStew.label>
+  <Homesteader_CanStew.description>将丰盛或旅途炖菜密封进梅森罐，可保存数年。</Homesteader_CanStew.description>
+  <Homesteader_CanStew.jobString>正在罐装炖菜。</Homesteader_CanStew.jobString>
+  <Homesteader_CanJam.label>罐装果酱</Homesteader_CanJam.label>
+  <Homesteader_CanJam.description>将果酱密封进梅森罐，大幅延长储藏室保质期。</Homesteader_CanJam.description>
+  <Homesteader_CanJam.jobString>正在罐装果酱。</Homesteader_CanJam.jobString>
+  <Homesteader_PressAppleJuice.label>压榨苹果汁</Homesteader_PressAppleJuice.label>
+  <Homesteader_PressAppleJuice.description>将果园苹果压榨成新鲜果汁。</Homesteader_PressAppleJuice.description>
+  <Homesteader_PressAppleJuice.jobString>正在压榨苹果汁。</Homesteader_PressAppleJuice.jobString>
+
+</LanguageData>

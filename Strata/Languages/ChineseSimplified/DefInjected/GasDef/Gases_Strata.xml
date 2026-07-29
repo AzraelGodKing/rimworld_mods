@@ -9,9 +9,17 @@
   <Strata_DeepGas.overlayLabel>深层气体</Strata_DeepGas.overlayLabel>
   <Strata_DeepGas.description>锁在岩中的恶臭可燃气体。在渗出处积聚，毒害吸入者，接触明火会爆炸——但盖住的喷口可把它抽成燃料。</Strata_DeepGas.description>
 
+  <Strata_Nitrogen.label>氮气</Strata_Nitrogen.label>
+  <Strata_Nitrogen.overlayLabel>N₂</Strata_Nitrogen.overlayLabel>
+  <Strata_Nitrogen.description>可呼吸空气的主体。被排走时会稀释氧气，并在密封房间中把混合气拉回地表比例。</Strata_Nitrogen.description>
+
   <Strata_Oxygen.label>氧气</Strata_Oxygen.label>
   <Strata_Oxygen.overlayLabel>O₂</Strata_Oxygen.overlayLabel>
   <Strata_Oxygen.description>开挖楼层中的可呼吸空气。沿未密封竖井上升；没有通风时殖民者会逐渐耗尽它。</Strata_Oxygen.description>
+
+  <Strata_Argon.label>氩气</Strata_Argon.label>
+  <Strata_Argon.overlayLabel>Ar</Strata_Argon.overlayLabel>
+  <Strata_Argon.description>地表空气中的微量惰性气体。比氮气重，会与二氧化碳一同积在坑底。</Strata_Argon.description>
 
   <Strata_CarbonDioxide.label>二氧化碳</Strata_CarbonDioxide.label>
   <Strata_CarbonDioxide.overlayLabel>CO₂</Strata_CarbonDioxide.overlayLabel>

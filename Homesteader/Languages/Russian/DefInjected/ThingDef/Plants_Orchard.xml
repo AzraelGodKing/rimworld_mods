@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Plant_AppleTree.label>яблоня</Homesteader_Plant_AppleTree.label>
+  <Homesteader_Plant_AppleTree.description>Выносливая садовая яблоня. Медленно взрослеет, но раз укоренившись, даёт корзину за корзиной хрустящих яблок — ешьте свежими, жмите в сидр или варите варенье.</Homesteader_Plant_AppleTree.description>
+  <Homesteader_Plant_CherryTree.label>вишня (дерево)</Homesteader_Plant_CherryTree.label>
+  <Homesteader_Plant_CherryTree.description>Садовая вишня. Нужны сезоны терпения, чтобы укорениться, затем усадьба получает тяжёлые гроздья сладкой тёмной вишни — лакомство с ветки, и варочные котлы их любят.</Homesteader_Plant_CherryTree.description>
+  <Homesteader_Plant_MapleTree.label>сахарный клён</Homesteader_Plant_MapleTree.label>
+  <Homesteader_Plant_MapleTree.description>Сахарный клён ради сладкого сока. Сверлите его при каждом созревании и выкипайте сок у очага в густой кленовый сироп. Усадебный завтрак без него неполон.</Homesteader_Plant_MapleTree.description>
+
+</LanguageData>

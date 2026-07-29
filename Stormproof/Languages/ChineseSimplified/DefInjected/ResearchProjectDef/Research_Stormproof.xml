@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Stormproof_StormProtection.label>风暴防护</Stormproof_StormProtection.label>
+  <Stormproof_StormProtection.description>接地尖塔、断路器与加固导管，用于保护电网免受雷击与短路侵害。</Stormproof_StormProtection.description>
+  <Stormproof_FlareShielding.label>耀斑屏蔽</Stormproof_FlareShielding.label>
+  <Stormproof_FlareShielding.description>偏转太阳耀斑辐射并抑制电磁脉冲的场发生器，让电子设备在天空最糟的打击下仍能运转。</Stormproof_FlareShielding.description>
+  <Stormproof_AtmosphericControl.label>大气控制</Stormproof_AtmosphericControl.label>
+  <Stormproof_AtmosphericControl.description>电离层扰动技术，让殖民地可按需召唤雷暴。警告：副作用包括剧烈天气、吃饱喝足的风暴尖塔，以及洋洋得意的殖民者。</Stormproof_AtmosphericControl.description>
+  <Stormproof_PerfectGrounding.label>完美接地</Stormproof_PerfectGrounding.label>
+  <Stormproof_PerfectGrounding.description>超导接地锚与自平衡负载调节器，让风暴尖塔将整次雷击导入电网而不产生任何杂散电涌。消除已接电网风暴尖塔引发「Zzzt！」电涌的风险。</Stormproof_PerfectGrounding.description>
+  <Stormproof_HazardHardening.label>灾害加固</Stormproof_HazardHardening.label>
+  <Stormproof_HazardHardening.description>殖民地级大气与气候加固：毒气屏障、温度稳定器、天空恢复器、闪光风暴防火发射器与干旱冷凝器。后期基础设施，让电力充足的基地挺过边境世界甩来的大多数自然灾害。</Stormproof_HazardHardening.description>
+
+</LanguageData>

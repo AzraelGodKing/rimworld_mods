@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Jerky.label>вяленое мясо</Homesteader_Jerky.label>
+  <Homesteader_Jerky.description>Полоски мяса, высушенные до жёсткой жевательности. Хранятся два месяца и почти ничего не весят — идеальная еда в дорогу и аварийный запас.</Homesteader_Jerky.description>
+  <Homesteader_DriedProduce.label>сушёные плоды</Homesteader_DriedProduce.label>
+  <Homesteader_DriedProduce.description>Тонко нарезанные и высушенные на воздухе фрукты и овощи. Хранятся два месяца и достаточно легки для дальних походов.</Homesteader_DriedProduce.description>
+  <Homesteader_FruitLeather.label>фруктовая пастила</Homesteader_FruitLeather.label>
+  <Homesteader_FruitLeather.description>Фруктовое пюре, тонко размазанное и высушенное на солнце в жевательные листы. Сладкое, лёгкое и хранится три месяца в дороге.</Homesteader_FruitLeather.description>
+  <Homesteader_DriedMushrooms.label>сушёные грибы</Homesteader_DriedMushrooms.label>
+  <Homesteader_DriedMushrooms.description>Собранные грибы, нарезанные и высушенные на воздухе. Лёгкие, пикантные и желанный запас кладовой в голодные сезоны.</Homesteader_DriedMushrooms.description>
+  <Homesteader_SmokedMeat.label>копчёное мясо</Homesteader_SmokedMeat.label>
+  <Homesteader_SmokedMeat.description>Мясо, прокопчённое на дровяном дыму. Хранится около месяца без холодильника и годится для готовки как сырое мясо. Само по себе неаппетитно.</Homesteader_SmokedMeat.description>
+  <Homesteader_SaltedMeat.label>солёное мясо</Homesteader_SaltedMeat.label>
+  <Homesteader_SaltedMeat.description>Сырое мясо, засоленное до готовности. Хранится шесть недель без морозилки и всё ещё годится для блюд. На вкус солёное и жёсткое.</Homesteader_SaltedMeat.description>
+  <Homesteader_SmokedFish.label>копчёная рыба</Homesteader_SmokedFish.label>
+  <Homesteader_SmokedFish.description>Рыба, прокопчённая на дровяном дыму. Хранится около месяца и годится для готовки. Само по себе неаппетитно.</Homesteader_SmokedFish.description>
+  <Homesteader_SaltedFish.label>солёная рыба</Homesteader_SaltedFish.label>
+  <Homesteader_SaltedFish.description>Рыба, засоленная до готовности. Хранится шесть недель и годится для блюд. На вкус солёная и жёсткая.</Homesteader_SaltedFish.description>
+  <Homesteader_PickledVegetables.label>маринованные овощи</Homesteader_PickledVegetables.label>
+  <Homesteader_PickledVegetables.description>Овощи, заквашенные в рассоле. Кисло-хрустящие и хранятся четыре месяца в прохладной кладовой.</Homesteader_PickledVegetables.description>
+  <Homesteader_Hardtack.label>галеты</Homesteader_Hardtack.label>
+  <Homesteader_Hardtack.description>Каменные галеты, выпеченные до полного исчезновения влаги. Едва ли еда, но месяцами не портятся и в крайности заполняют желудок.</Homesteader_Hardtack.description>
+  <Homesteader_Jam.label>варенье</Homesteader_Jam.label>
+  <Homesteader_Jam.description>Фрукты, сваренные с сахаром, мёдом или кленовым сиропом в густой сладкий джем. Мажьте на хлеб или запасайте в кладовой на полгода.</Homesteader_Jam.description>
+  <Homesteader_Bread.label>хлеб</Homesteader_Bread.label>
+  <Homesteader_Bread.description>Простой хлеб из усадебной муки. Тёплый, сытный и лучше всего свежий.</Homesteader_Bread.description>
+  <Homesteader_Cream.label>сливки</Homesteader_Cream.label>
+  <Homesteader_Cream.description>Густые сливки, снятые с свежего молока на маслобойке. Сбейте в масло или спрессуйте с каменной солью в сыр.</Homesteader_Cream.description>
+  <Homesteader_Cheese.label>сыр</Homesteader_Cheese.label>
+  <Homesteader_Cheese.description>Головка прессованного фермерского сыра из сливок и каменной соли. Хранится месяцами и удобна в дороге.</Homesteader_Cheese.description>
+  <Homesteader_Porridge.label>каша</Homesteader_Porridge.label>
+  <Homesteader_Porridge.description>Тёплая миска ячменной каши, подслащенная тем, что нашлось в кладовой. Скромная, горячая и сытная.</Homesteader_Porridge.description>
+  <Homesteader_TrailStew.label>походная похлёбка</Homesteader_TrailStew.label>
+  <Homesteader_TrailStew.description>Скромная похлёбка из вяленого мяса и законсервированных плодов. Вкус хорошо запасанной зимней кладовой.</Homesteader_TrailStew.description>
+  <Homesteader_HeartyStew.label>сытная похлёбка</Homesteader_HeartyStew.label>
+  <Homesteader_HeartyStew.description>Богатая похлёбка из копчёного мяса и маринованных овощей, томлённая у усадебного очага. Утешение из того, что дала земля.</Homesteader_HeartyStew.description>
+  <Homesteader_ToastAndJam.label>тост с вареньем</Homesteader_ToastAndJam.label>
+  <Homesteader_ToastAndJam.description>Тёплый поджаренный хлеб, густо намазанный кладовым вареньем. Быстрый фермерский завтрак со вкусом лета.</Homesteader_ToastAndJam.description>
+  <Homesteader_PloughmansLunch.label>обед пахаря</Homesteader_PloughmansLunch.label>
+  <Homesteader_PloughmansLunch.description>Хлеб, сыр и соленья — классическая фермерская тарелка. Сытная на долгий день в поле.</Homesteader_PloughmansLunch.description>
+  <Homesteader_HoneyPorridge.label>медовая каша</Homesteader_HoneyPorridge.label>
+  <Homesteader_HoneyPorridge.description>Тёплая миска зерновой каши с щедрой порцией мёда. Слаще и утешительнее повседневной каши.</Homesteader_HoneyPorridge.description>
+
+</LanguageData>

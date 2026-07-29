@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_RawApples.label>苹果</Homesteader_RawApples.label>
+  <Homesteader_RawApples.description>清脆的果园苹果。鲜食美味，可压成果酒、煮成果酱，也可风干作干粮。</Homesteader_RawApples.description>
+  <Homesteader_RawCherries.label>樱桃</Homesteader_RawCherries.label>
+  <Homesteader_RawCherries.description>甜美的深色果园樱桃。鲜食是种享受——也是果酱锅最爱的水果。</Homesteader_RawCherries.description>
+  <Homesteader_MapleSap.label>枫树汁</Homesteader_MapleSap.label>
+  <Homesteader_MapleSap.description>从糖枫树上采集的淡甜稀汁。在炉边熬成枫糖浆，否则会变酸。</Homesteader_MapleSap.description>
+  <Homesteader_MapleSyrup.label>枫糖浆</Homesteader_MapleSyrup.label>
+  <Homesteader_MapleSyrup.description>枫树汁熬成的浓郁琥珀色糖浆。可永久保存。可为果酱、粥和苹果酒加甜，也能让薄饼值得起床一吃。</Homesteader_MapleSyrup.description>
+  <Homesteader_Flapjacks.label>薄饼</Homesteader_Flapjacks.label>
+  <Homesteader_Flapjacks.description>一叠浇满枫糖浆的煎饼。农庄早餐的典范——温热甜美，值得为之醒来。</Homesteader_Flapjacks.description>
+  <Homesteader_Beeswax.label>蜂蜡</Homesteader_Beeswax.label>
+  <Homesteader_Beeswax.description>从蜂巢采收的金色蜡巢。可制成慢燃蜡烛，无需化学燃料就能照亮农庄。</Homesteader_Beeswax.description>
+
+</LanguageData>

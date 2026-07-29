@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_NearMaypole.label>靠近丰收五月柱</Homesteader_NearMaypole.label>
+  <Homesteader_NearMaypole.description>置身于丰收五月柱欢快的影响范围之内。</Homesteader_NearMaypole.description>
+  <Homesteader_NearMonument27.label>靠近27雕像</Homesteader_NearMonument27.label>
+  <Homesteader_NearMonument27.description>置身于家园27纪念碑或雕像的影响范围之内。</Homesteader_NearMonument27.description>
+  <Homesteader_AllergicReaction.label>过敏反应</Homesteader_AllergicReaction.label>
+  <Homesteader_AllergicReaction.description>短暂的过敏发作——眼睛或喉咙发痒、轻微恶心、注意力模糊。会自行消退。</Homesteader_AllergicReaction.description>
+  <Homesteader_AllergicReaction.stages_0.label>发痒</Homesteader_AllergicReaction.stages_0.label>
+  <Homesteader_KatsBrainRot.label>脑腐</Homesteader_KatsBrainRot.label>
+  <Homesteader_KatsBrainRot.description>异常广播后的短暂昏沉。思绪不断循环着某个数字和一句口号。会自行消退。</Homesteader_KatsBrainRot.description>
+  <Homesteader_KatsBrainRot.stages_0.label>昏沉</Homesteader_KatsBrainRot.stages_0.label>
+
+</LanguageData>

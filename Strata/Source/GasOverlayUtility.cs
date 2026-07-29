@@ -262,7 +262,10 @@ namespace Strata
                 return true;
             }
 
-            var sb = new StringBuilder("Strata_GasOverlay_GasPrefix".Translate());
+            string status = AtmosphereSimulator.FormatRoomStatusLine(atmosphere.map, room, atmosphere);
+            var sb = new StringBuilder(status);
+            sb.Append("\n");
+            sb.Append("Strata_GasOverlay_GasPrefix".Translate());
             for (int i = 0; i < slices.Count; i++)
             {
                 if (i > 0)

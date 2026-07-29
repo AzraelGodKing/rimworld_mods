@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Lard.label>猪油</Homesteader_Lard.label>
+  <Homesteader_Lard.description>从肉中炼出的软脂肪。用于香肠、肥皂和浓郁烹饪。</Homesteader_Lard.description>
+  <Homesteader_Tallow.label>牛羊脂</Homesteader_Tallow.label>
+  <Homesteader_Tallow.description>炼制的硬脂肪。极适合制皂和耐存的储藏室工艺。</Homesteader_Tallow.description>
+  <Homesteader_Sausage.label>农庄香肠</Homesteader_Sausage.label>
+  <Homesteader_Sausage.description>咸肉或烟熏肉塞入脂肪与干香草。耐存，吃起来像旅途口粮。</Homesteader_Sausage.description>
+  <Homesteader_AnimalMash.label>牲口糊</Homesteader_AnimalMash.label>
+  <Homesteader_AnimalMash.description>碾碎的大麦与南瓜煮成的软糊。放在鸡舍和畜栏旁，可保持牲口产出。</Homesteader_AnimalMash.description>
+  <Homesteader_FlaxFiber.label>亚麻纤维</Homesteader_FlaxFiber.label>
+  <Homesteader_FlaxFiber.description>沤制后打碎的亚麻秆软纤维。可在纺车上纺成土布。</Homesteader_FlaxFiber.description>
+  <Homesteader_HomespunCloth.label>土布</Homesteader_HomespunCloth.label>
+  <Homesteader_HomespunCloth.description>用亚麻或羊毛纺成的粗布。缺乏工业织物时，用于被子和农庄缝纫。</Homesteader_HomespunCloth.description>
+  <Homesteader_HomesteadQuilt.label>农庄被子</Homesteader_HomesteadQuilt.label>
+  <Homesteader_HomesteadQuilt.description>织机上缝成的厚实拼布被。可作为带被床铺的柔软寝具，或农庄送来的温暖礼物。</Homesteader_HomesteadQuilt.description>
+  <Homesteader_Compost.label>堆肥</Homesteader_Compost.label>
+  <Homesteader_Compost.description>腐烂的植物与粪肥制成的深色堆肥。可制成肥料，滋养农田。</Homesteader_Compost.description>
+  <Homesteader_CompostFertilizer.label>堆肥肥料</Homesteader_CompostFertilizer.label>
+  <Homesteader_CompostFertilizer.description>筛过的现成堆肥，可拌入土壤。用来铺设堆肥土以加快作物生长。</Homesteader_CompostFertilizer.description>
+  <Homesteader_MasonJar.label>梅森罐</Homesteader_MasonJar.label>
+  <Homesteader_MasonJar.description>用于罐装的空玻璃钢罐。可重复使用的储藏包装，密封果酱与炖菜。</Homesteader_MasonJar.description>
+  <Homesteader_CannedStew.label>罐装炖菜</Homesteader_CannedStew.label>
+  <Homesteader_CannedStew.description>密封在梅森罐中的丰盛炖菜。架上可存数年——农庄版的应急口粮。</Homesteader_CannedStew.description>
+  <Homesteader_CannedJam.label>罐装果酱</Homesteader_CannedJam.label>
+  <Homesteader_CannedJam.description>用梅森罐盖密封的果酱。比开盖的果酱更甜、更耐存。</Homesteader_CannedJam.description>
+  <Homesteader_AppleJuice.label>苹果汁</Homesteader_AppleJuice.label>
+  <Homesteader_AppleJuice.description>现压的果园果汁。可甜饮，也可发酵成苹果酒和醋。</Homesteader_AppleJuice.description>
+
+</LanguageData>

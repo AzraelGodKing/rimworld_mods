@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Thought_ProvidedTherapy.label>помог(ла) товарищу пережить травму</DC_Thought_ProvidedTherapy.label>
+  <DC_Thought_ProvidedTherapy.description>Помог(ла) страдающему товарищу проработать травму.</DC_Thought_ProvidedTherapy.description>
+  <DC_Thought_ProvidedTherapy.stages_0.label>помог(ла) товарищу пережить травму</DC_Thought_ProvidedTherapy.stages_0.label>
+  <DC_Thought_ProvidedTherapy.stages_0.description>Помог(ла) страдающему товарищу проработать травму.</DC_Thought_ProvidedTherapy.stages_0.description>
+  <DC_Thought_ReceivedTherapy.label>состоялся важный разговор</DC_Thought_ReceivedTherapy.label>
+  <DC_Thought_ReceivedTherapy.description>Проговорил(а) тяжёлые чувства с заботливым товарищем.</DC_Thought_ReceivedTherapy.description>
+  <DC_Thought_ReceivedTherapy.stages_0.label>состоялся важный разговор</DC_Thought_ReceivedTherapy.stages_0.label>
+  <DC_Thought_ReceivedTherapy.stages_0.description>Состоялся важный разговор, который помог переработать тяжёлые чувства.</DC_Thought_ReceivedTherapy.stages_0.description>
+
+</LanguageData>

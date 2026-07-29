@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Thought_CombatShock.label>боевой шок</DC_Thought_CombatShock.label>
+  <DC_Thought_CombatShock.description>Яркие вспышки того момента, когда сбили в бою.</DC_Thought_CombatShock.description>
+  <DC_Thought_CombatShock.stages_0.label>флэшбэки (свежие)</DC_Thought_CombatShock.stages_0.label>
+  <DC_Thought_CombatShock.stages_0.description>Яркие вспышки того момента, когда сбили в бою.</DC_Thought_CombatShock.stages_0.description>
+  <DC_Thought_CombatShock.stages_1.label>переработка травмы</DC_Thought_CombatShock.stages_1.label>
+  <DC_Thought_CombatShock.stages_1.description>Всё ещё переживает шок от падения в бою.</DC_Thought_CombatShock.stages_1.description>
+  <DC_Thought_CombatShock.stages_2.label>угасающие воспоминания</DC_Thought_CombatShock.stages_2.label>
+  <DC_Thought_CombatShock.stages_2.description>Худшие воспоминания о бое постепенно тускнеют.</DC_Thought_CombatShock.stages_2.description>
+  <DC_Thought_ViolentLoss.label>насильственная утрата</DC_Thought_ViolentLoss.label>
+  <DC_Thought_ViolentLoss.description>Не может перестать видеть, как это произошло. Жестокость не отпускает.</DC_Thought_ViolentLoss.description>
+  <DC_Thought_ViolentLoss.stages_0.label>преследует смерть {0}</DC_Thought_ViolentLoss.stages_0.label>
+  <DC_Thought_ViolentLoss.stages_0.description>Не может перестать видеть, как это произошло. Жестокость не отпускает.</DC_Thought_ViolentLoss.stages_0.description>
+  <DC_Thought_ViolentLoss.stages_1.label>скорбит о {0}</DC_Thought_ViolentLoss.stages_1.label>
+  <DC_Thought_ViolentLoss.stages_1.description>Всё ещё принимает утрату близкого человека.</DC_Thought_ViolentLoss.stages_1.description>
+  <DC_Thought_ViolentLoss.stages_2.label>помнит {0}</DC_Thought_ViolentLoss.stages_2.label>
+  <DC_Thought_ViolentLoss.stages_2.description>Горе смягчается, но память остаётся.</DC_Thought_ViolentLoss.stages_2.description>
+  <DC_Thought_Captivity.label>травма плена</DC_Thought_Captivity.label>
+  <DC_Thought_Captivity.description>Переживает каждую деталь плена в кошмарах наяву.</DC_Thought_Captivity.description>
+  <DC_Thought_Captivity.stages_0.label>переживает плен</DC_Thought_Captivity.stages_0.label>
+  <DC_Thought_Captivity.stages_0.description>Переживает каждую деталь плена в кошмарах наяву.</DC_Thought_Captivity.stages_0.description>
+  <DC_Thought_Captivity.stages_1.label>преследует плен</DC_Thought_Captivity.stages_1.label>
+  <DC_Thought_Captivity.stages_1.description>Страх и беспомощность плена всё ещё давят.</DC_Thought_Captivity.stages_1.description>
+  <DC_Thought_Captivity.stages_2.label>далёкие воспоминания о плене</DC_Thought_Captivity.stages_2.label>
+  <DC_Thought_Captivity.stages_2.description>Плен кажется далёким прошлым, хотя шрамы остаются.</DC_Thought_Captivity.stages_2.description>
+  <DC_Thought_Massacre.label>выживший в резне</DC_Thought_Massacre.label>
+  <DC_Thought_Massacre.description>Почему выжил именно он, когда столько других нет?</DC_Thought_Massacre.description>
+  <DC_Thought_Massacre.stages_0.label>вина выжившего</DC_Thought_Massacre.stages_0.label>
+  <DC_Thought_Massacre.stages_0.description>Почему выжил именно он, когда столько других нет?</DC_Thought_Massacre.stages_0.description>
+  <DC_Thought_Massacre.stages_1.label>смиряется с резнёй</DC_Thought_Massacre.stages_1.label>
+  <DC_Thought_Massacre.stages_1.description>Медленно мирится с тем, что выжил в чём-то столь ужасном.</DC_Thought_Massacre.stages_1.description>
+  <DC_Thought_Massacre.stages_2.label>в мире с прошлым</DC_Thought_Massacre.stages_2.label>
+  <DC_Thought_Massacre.stages_2.description>Резня в прошлом. Он несёт с собой тех, кого потерял.</DC_Thought_Massacre.stages_2.description>
+  <DC_Thought_BereavementShock.label>шоковая утрата</DC_Thought_BereavementShock.label>
+  <DC_Thought_BereavementShock.description>Слишком много людей ушло слишком быстро. Горе ещё не успело настигнуть.</DC_Thought_BereavementShock.description>
+  <DC_Thought_BereavementShock.stages_0.label>ошеломлён утратой</DC_Thought_BereavementShock.stages_0.label>
+  <DC_Thought_BereavementShock.stages_0.description>Слишком много людей ушло слишком быстро. Горе ещё не успело настигнуть.</DC_Thought_BereavementShock.stages_0.description>
+  <DC_Thought_BereavementShock.stages_1.label>скорбит о многих утратах</DC_Thought_BereavementShock.stages_1.label>
+  <DC_Thought_BereavementShock.stages_1.description>Несёт тяжесть потери нескольких товарищей за короткое время.</DC_Thought_BereavementShock.stages_1.description>
+  <DC_Thought_BereavementShock.stages_2.label>медленно исцеляется</DC_Thought_BereavementShock.stages_2.label>
+  <DC_Thought_BereavementShock.stages_2.description>Худшее горе проходит, оставляя более тихую печаль.</DC_Thought_BereavementShock.stages_2.description>
+
+</LanguageData>

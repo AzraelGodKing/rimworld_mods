@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_CanningKitchen.label>罐头厨房</Homesteader_CanningKitchen.label>
+  <Homesteader_CanningKitchen.description>柴火罐头设备，配有水浴锅与罐架。把炖菜和果酱封进梅森罐，可存放数年。</Homesteader_CanningKitchen.description>
+  <Homesteader_CiderPress.label>榨汁压机</Homesteader_CiderPress.label>
+  <Homesteader_CiderPress.description>用螺旋压榨果园苹果成鲜汁的压机。在此压汁，再到酿造台发酵。</Homesteader_CiderPress.description>
+  <Homesteader_WashTub.label>洗衣盆</Homesteader_WashTub.label>
+  <Homesteader_WashTub.description>木盆与搓衣板，配合农庄肥皂好好搓洗。先在盆里备好肥皂块，再用它获得刚洗完的心情加成。</Homesteader_WashTub.description>
+
+</LanguageData>

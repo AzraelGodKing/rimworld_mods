@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Plant_AppleTree.label>苹果树</Homesteader_Plant_AppleTree.label>
+  <Homesteader_Plant_AppleTree.description>耐寒的果园苹果树。成熟缓慢，但一旦成活，就会一篮又一篮地结出清脆苹果——可鲜食、压成果酒，或煮成果酱。</Homesteader_Plant_AppleTree.description>
+  <Homesteader_Plant_CherryTree.label>樱桃树</Homesteader_Plant_CherryTree.label>
+  <Homesteader_Plant_CherryTree.description>果园樱桃树。需数个季节的耐心才能成活，随后以成串甜美的深色樱桃回报农庄——枝头鲜食是种享受，果酱锅也爱它们。</Homesteader_Plant_CherryTree.description>
+  <Homesteader_Plant_MapleTree.label>糖枫</Homesteader_Plant_MapleTree.label>
+  <Homesteader_Plant_MapleTree.description>为甜汁而种的糖枫。每次成熟时采汁，在炉边熬成浓郁的枫糖浆。没有它，农庄早餐就不完整。</Homesteader_Plant_MapleTree.description>
+
+</LanguageData>

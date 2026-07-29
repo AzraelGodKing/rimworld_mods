@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_BakePumpkinPie.label>烤南瓜派</Homesteader_BakePumpkinPie.label>
+  <Homesteader_BakePumpkinPie.description>用南瓜泥、面粉、黄油和甜味剂烤制香甜的南瓜派。</Homesteader_BakePumpkinPie.description>
+  <Homesteader_BakePumpkinPie.jobString>正在烤南瓜派。</Homesteader_BakePumpkinPie.jobString>
+  <Homesteader_BakeButtermilkBiscuits.label>烤酪乳饼干</Homesteader_BakeButtermilkBiscuits.label>
+  <Homesteader_BakeButtermilkBiscuits.description>用面粉、酪乳和黄油烤制松软饼干。</Homesteader_BakeButtermilkBiscuits.description>
+  <Homesteader_BakeButtermilkBiscuits.jobString>正在烤酪乳饼干。</Homesteader_BakeButtermilkBiscuits.jobString>
+  <Homesteader_BrewCiderVinegar.label>酿造果醋</Homesteader_BrewCiderVinegar.label>
+  <Homesteader_BrewCiderVinegar.description>让果酒变酸，制成尖锐的果醋，用于腌制和烹饪。</Homesteader_BrewCiderVinegar.description>
+  <Homesteader_BrewCiderVinegar.jobString>正在酿造果醋。</Homesteader_BrewCiderVinegar.jobString>
+  <Homesteader_BrewAppleCider.label>酿造苹果酒</Homesteader_BrewAppleCider.label>
+  <Homesteader_BrewAppleCider.description>用果园苹果和甜味剂压榨酿成正宗苹果酒——不是假装成水果的大麦醪。</Homesteader_BrewAppleCider.description>
+  <Homesteader_BrewAppleCider.jobString>正在酿造苹果酒。</Homesteader_BrewAppleCider.jobString>
+  <Homesteader_MakeVinegarPickles.label>制作醋渍腌菜</Homesteader_MakeVinegarPickles.label>
+  <Homesteader_MakeVinegarPickles.description>将蔬菜用果醋腌制，比单用盐水更酸、更耐存。</Homesteader_MakeVinegarPickles.description>
+  <Homesteader_MakeVinegarPickles.jobString>正在制作醋渍腌菜。</Homesteader_MakeVinegarPickles.jobString>
+  <Homesteader_WaxCheese.label>蜡封奶酪</Homesteader_WaxCheese.label>
+  <Homesteader_WaxCheese.description>用蜂蜡封住奶酪轮，使其在架上保存得更久。</Homesteader_WaxCheese.description>
+  <Homesteader_WaxCheese.jobString>正在蜡封奶酪。</Homesteader_WaxCheese.jobString>
+  <Homesteader_SmokeCheese.label>烟熏奶酪</Homesteader_SmokeCheese.label>
+  <Homesteader_SmokeCheese.description>冷熏农家奶酪，直至形成浓郁的烟熏外皮。</Homesteader_SmokeCheese.description>
+  <Homesteader_SmokeCheese.jobString>正在烟熏奶酪。</Homesteader_SmokeCheese.jobString>
+  <Homesteader_RenderSoap.label>熬制肥皂</Homesteader_RenderSoap.label>
+  <Homesteader_RenderSoap.description>将蜂蜡与黄油、猪油或牛脂熬制成家园肥皂块，用于好好清洗。</Homesteader_RenderSoap.description>
+  <Homesteader_RenderSoap.jobString>正在熬制肥皂。</Homesteader_RenderSoap.jobString>
+
+</LanguageData>

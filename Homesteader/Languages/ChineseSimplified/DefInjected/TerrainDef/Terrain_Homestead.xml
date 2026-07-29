@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_WoodenDeck.label>木甲板</Homesteader_WoodenDeck.label>
+  <Homesteader_WoodenDeck.description>宽阔风化的甲板木板。脚下舒适、铺设迅速，但易燃。</Homesteader_WoodenDeck.description>
+  <Homesteader_StrawMatting.label>草垫</Homesteader_StrawMatting.label>
+  <Homesteader_StrawMatting.description>铺在地面上的编织草席。廉价、看起来温暖，适合谷仓与质朴住宅的地板。</Homesteader_StrawMatting.description>
+  <Homesteader_PackedGravel.label>夯实碎石</Homesteader_PackedGravel.label>
+  <Homesteader_PackedGravel.description>将碎石夯实成坚固干净的小径。除人工外几乎不费成本。</Homesteader_PackedGravel.description>
+  <Homesteader_CompostedSoil.label>堆肥土壤</Homesteader_CompostedSoil.label>
+  <Homesteader_CompostedSoil.description>用堆肥肥料耕作至肥沃乌黑的农田。植物生长甚至比仅灌溉的土壤更快。</Homesteader_CompostedSoil.description>
+
+</LanguageData>
