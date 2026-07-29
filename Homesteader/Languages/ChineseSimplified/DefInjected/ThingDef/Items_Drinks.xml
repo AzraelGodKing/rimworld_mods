@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Cider.label>苹果酒</Homesteader_Cider.label>
+  <Homesteader_Cider.description>发酵水果酒，带一点温和的劲。能提振心情；喝多了，结局和喝多了总是一样。</Homesteader_Cider.description>
+  <Homesteader_Mead.label>蜜酒</Homesteader_Mead.label>
+  <Homesteader_Mead.description>按老法子酿成的蜂蜜酒。甜美而烈，是农庄辛苦一季后的好犒赏。</Homesteader_Mead.description>
+  <Homesteader_HerbalTea.label>草本茶</Homesteader_HerbalTea.label>
+  <Homesteader_HerbalTea.description>用农庄干香草冲泡的舒缓一杯。暖手提神，不含酒精。</Homesteader_HerbalTea.description>
+
+</LanguageData>

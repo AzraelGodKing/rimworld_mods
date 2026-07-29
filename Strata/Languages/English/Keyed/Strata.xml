@@ -42,7 +42,7 @@
   <Strata_Settings_CageSustainHunger>Sustain caged bird hunger</Strata_Settings_CageSustainHunger>
   <Strata_Settings_CageSustainHungerDesc>When off (default), canary and bird cages feed occupants from stocked hay or kibble. When on, hunger is frozen while a bird is caged — no food storage needed.</Strata_Settings_CageSustainHungerDesc>
   <Strata_Settings_SmokeGas>Smoke &amp; gas</Strata_Settings_SmokeGas>
-  <Strata_Settings_GasSystemWarning>Warning: the gas system can cause lag on large or multi-level colonies. Enable only if you want atmospheric/smoke simulation.</Strata_Settings_GasSystemWarning>
+  <Strata_Settings_GasSystemWarning>Opt-in: gas simulation is OFF by default. Enable only if you want atmospheric/smoke simulation — it can cost TPS on large or multi-level colonies.</Strata_Settings_GasSystemWarning>
   <Strata_Settings_PollutantGases>Pollutant gases</Strata_Settings_PollutantGases>
   <Strata_Settings_PollutantGasesDesc>Smoke, methane, deep gas pockets, spores, steam, black damp, and other harmful extras. Turning this off clears them, skips emit/drain/harm, and hides them on the gas overlay. Smoke inhalation severity below applies when this is on.</Strata_Settings_PollutantGasesDesc>
   <Strata_Settings_SmokeSimulation>Smoke simulation</Strata_Settings_SmokeSimulation>
@@ -52,7 +52,7 @@
   <Strata_Settings_UndergroundGasDesc>Gas hazards of the deep: excavation can breach pockets of foul deep gas, and sunken ruin sites can appear. Sealed stairwells always contain gas either way.</Strata_Settings_UndergroundGasDesc>
   <Strata_Settings_DeepBreathing>Deep-level breathing</Strata_Settings_DeepBreathing>
   <Strata_Settings_NaturalGases>Natural gases</Strata_Settings_NaturalGases>
-  <Strata_Settings_NaturalGasesDesc>Atmospheric breathing mix (N₂, O₂, Ar, ambient CO₂): surface lock, depth O₂ scarcity, hypoxia, plant CO₂↔O₂ exchange, and natural-gas overlay tints. Off treats air as fully breathable with no O₂ simulation.</Strata_Settings_NaturalGasesDesc>
+  <Strata_Settings_NaturalGasesDesc>Opt-in atmospheric breathing (N₂, O₂, Ar, CO₂). Surface and A+ rooms stay safe (ambient lock). B1+ sealed rooms: pawns consume O₂ / exhale CO₂; plants reverse; hypoxia without vents, pumps, or shafts. Off = fully breathable with no O₂ simulation.</Strata_Settings_NaturalGasesDesc>
   <Strata_Settings_GravshipLifeSupport>Gravship life support (O₂ + heat)</Strata_Settings_GravshipLifeSupport>
   <Strata_Settings_GravshipLifeSupportDesc>When on (default), gravship-linked underdecks and ship towers do not free-replenish oxygen. Use oxygen tanks/reclaimers, ordinary O₂ pumps, or an open stair umbilical to the host. Launches dump heat into gravship heatsinks (or ship rooms). Skips Strata launch heat when Vanilla Gravship Expanded already manages heat. Requires Natural gases for the O₂ half.</Strata_Settings_GravshipLifeSupportDesc>
   <Strata_GravshipOxygenStored>Oxygen stored: {0} / {1}</Strata_GravshipOxygenStored>
@@ -108,12 +108,12 @@
   <Strata_Settings_FloodEvents>Underground flood events</Strata_Settings_FloodEvents>
   <Strata_Settings_FloodEventsDesc>Groundwater seeps that flood patches of excavated levels.</Strata_Settings_FloodEventsDesc>
   <Strata_Settings_NativeCavern>Natural cave layout</Strata_Settings_NativeCavern>
-  <Strata_Settings_NativeCavernDesc>Excavated levels (B1 and deeper) generate Strata cave networks — chambers and tunnels carved from the solid rock instead of leaving the whole level unmined.</Strata_Settings_NativeCavernDesc>
+  <Strata_Settings_NativeCavernDesc>When Biomes! Caverns is not loaded, excavated levels (B1+) use Strata cave networks. If Biomes! is loaded, Biomes! always wins layout generation — this only applies as a fallback if Biomes! fails.</Strata_Settings_NativeCavernDesc>
   <Strata_Settings_AncientStairwell>Ancient colony stairwell</Strata_Settings_AncientStairwell>
   <Strata_Settings_AncientStairwellDesc>Some new colony maps spawn a pre-built ancient stairwell on the surface. It opens the first underground level without digging-down research, but does not carry power between levels.</Strata_Settings_AncientStairwellDesc>
   <Strata_Settings_AncientStairwellChance>Ancient stairwell spawn chance: {0}</Strata_Settings_AncientStairwellChance>
-  <Strata_Settings_BiomesCaverns>Biomes! Caverns layout</Strata_Settings_BiomesCaverns>
-  <Strata_Settings_BiomesCavernsDesc>When enabled and Biomes! Caverns is loaded, use Biomes! cavern generation instead of Strata's native cave layout (plants, fauna, stalagmites, and crystals).</Strata_Settings_BiomesCavernsDesc>
+  <Strata_Settings_BiomesCaverns>Biomes! Caverns features</Strata_Settings_BiomesCaverns>
+  <Strata_Settings_BiomesCavernsDesc>Biomes! Caverns always owns dig layout when loaded. This toggle only enables Biomes! plants, fauna, stalagmites, and crystals on those levels.</Strata_Settings_BiomesCavernsDesc>
   <Strata_Settings_Appearance>Appearance</Strata_Settings_Appearance>
   <Strata_Settings_MultiFloorStairs>Multifloor Stairs</Strata_Settings_MultiFloorStairs>
   <Strata_Settings_MultiFloorStairsDesc>Use bundled alternate art from Textures/Strata/Buildings/MultiFloors/ (handrail stairs + modern elevator). Does not require the MultiFloors mod.</Strata_Settings_MultiFloorStairsDesc>
@@ -214,6 +214,9 @@
   <Strata_DigDownFromLandingDesc>Designate a dig shaft beside this landing. Colonists must finish carving it — same work as an excavated stairwell — before the next level opens. Below the first underground level requires deep excavation research.</Strata_DigDownFromLandingDesc>
   <Strata_DigDownFromEntranceDesc>Break through to the level below once this stairwell is fully built, or use it if construction finished before research was available.</Strata_DigDownFromEntranceDesc>
   <Strata_OpeningLevel>Opening the level below…</Strata_OpeningLevel>
+  <Strata_GeneratingLevel>Opening Strata level…</Strata_GeneratingLevel>
+  <Strata_GeneratingLevel_Structure>Carving the level (structure)…</Strata_GeneratingLevel_Structure>
+  <Strata_GeneratingLevel_Rock>Filling rock — large maps take a while; please wait…</Strata_GeneratingLevel_Rock>
   <Strata_OpenLevelFailed>Could not open the level below. Check Player.log, then use Dig down again to retry.</Strata_OpenLevelFailed>
 
   <!-- Dig-down utility -->
@@ -335,5 +338,20 @@
   <!-- O₂ pump inspect strings (Bug fix: were hardcoded English) -->
   <Strata_ExhaustBreathable>Room air is breathable.</Strata_ExhaustBreathable>
   <Strata_ExhaustEnriching>Enriching room with {0} ({1}).</Strata_ExhaustEnriching>
+
+  <Strata_Atmos_Unknown>Unknown air</Strata_Atmos_Unknown>
+  <Strata_Atmos_AmbientLocked>Surface air (safe)</Strata_Atmos_AmbientLocked>
+  <Strata_Atmos_Outdoor>Open air</Strata_Atmos_Outdoor>
+  <Strata_Atmos_OpenCavern>Open cavern</Strata_Atmos_OpenCavern>
+  <Strata_Atmos_Ventilated>Ventilated</Strata_Atmos_Ventilated>
+  <Strata_Atmos_ShaftLinked>Shaft-linked</Strata_Atmos_ShaftLinked>
+  <Strata_Atmos_Sealed>Sealed</Strata_Atmos_Sealed>
+  <Strata_Atmos_StatusLine>{0} · O₂ {1}% · CO₂ {2}%</Strata_Atmos_StatusLine>
+  <Strata_Letter_FirstB1Air_Label>Underground air</Strata_Letter_FirstB1Air_Label>
+  <Strata_Letter_FirstB1Air_Text>Below the surface, sealed rooms do not freely refresh oxygen.\n\nColonists inhale O₂ and exhale CO₂. Growing plants reverse that. Keep air breathable with open shafts, vents to the outdoors, oxygen / CO₂ pumps, lime scrubbers, shaft bellows or exchangers — or leave rooms open to the cavern.\n\nSurface and A+ decks stay safe. Enable Natural gases in Mod Options to use this system (it is opt-in).</Strata_Letter_FirstB1Air_Text>
+  <Strata_Alert_LowOxygen_Label>Low oxygen underground</Strata_Alert_LowOxygen_Label>
+  <Strata_Alert_LowOxygen_Explanation>Colony rooms below the surface are running low on oxygen. Ventilate, open a shaft, add plants, or build an oxygen pump before colonists suffocate.</Strata_Alert_LowOxygen_Explanation>
+  <Strata_Alert_HighCO2_Label>High CO₂ underground</Strata_Alert_HighCO2_Label>
+  <Strata_Alert_HighCO2_Explanation>Carbon dioxide is building up around colonists underground. Scrub it, ventilate, or open a path to fresher air.</Strata_Alert_HighCO2_Explanation>
 
 </LanguageData>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_WoodenDeck.label>деревянный настил</Homesteader_WoodenDeck.label>
+  <Homesteader_WoodenDeck.description>Широкие выветренные доски настила. Уютны под ногами и быстро укладываются, но горючи.</Homesteader_WoodenDeck.description>
+  <Homesteader_StrawMatting.label>соломенный мат</Homesteader_StrawMatting.label>
+  <Homesteader_StrawMatting.description>Плетёные соломенные маты, уложенные на землю. Дешёвый, тёплый на вид пол для амбаров и деревенских домов.</Homesteader_StrawMatting.description>
+  <Homesteader_PackedGravel.label>утрамбованный гравий</Homesteader_PackedGravel.label>
+  <Homesteader_PackedGravel.description>Щебень, утрамбованный в твёрдую чистую тропу. Стоит только труда.</Homesteader_PackedGravel.description>
+  <Homesteader_CompostedSoil.label>компостированная почва</Homesteader_CompostedSoil.label>
+  <Homesteader_CompostedSoil.description>Пашня, обработанная компостным удобрением до богатой тёмной земли. Растения растут ещё быстрее, чем на одной лишь орошаемой почве.</Homesteader_CompostedSoil.description>
+
+</LanguageData>

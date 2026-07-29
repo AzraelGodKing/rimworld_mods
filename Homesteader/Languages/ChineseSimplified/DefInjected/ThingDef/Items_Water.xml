@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Wellspring_Water.label>水</Wellspring_Water.label>
+  <Wellspring_Water.description>一罐从井中打来或用雨水桶收集的沉重淡水。可引入农田灌溉。边缘世界的生活靠它运转。</Wellspring_Water.description>
+  <Wellspring_BoiledWater.label>开水</Wellspring_BoiledWater.label>
+  <Wellspring_BoiledWater.description>在火上煮沸并趁热装罐的水。安全、略带矿物质味，莫名安心——边境最朴素的饮品。</Wellspring_BoiledWater.description>
+  <Wellspring_MudBricks.label>泥砖</Wellspring_MudBricks.label>
+  <Wellspring_MudBricks.description>用水和泥与稻草制成、经日晒硬化的土坯砖。比切石更便宜、更快，但远没有那么坚固。</Wellspring_MudBricks.description>
+  <Wellspring_CleanBandages.label>清洁绷带</Wellspring_CleanBandages.label>
+  <Wellspring_CleanBandages.description>用净水煮过再卷紧的布条。不算真正的医疗品，但比用脏衬衫按住伤口好得多。</Wellspring_CleanBandages.description>
+
+</LanguageData>

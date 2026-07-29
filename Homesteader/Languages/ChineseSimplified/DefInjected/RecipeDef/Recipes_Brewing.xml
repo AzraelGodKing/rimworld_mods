@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_BrewCider.label>酿造果酒</Homesteader_BrewCider.label>
+  <Homesteader_BrewCider.description>将生水果压榨发酵，加入少许糖、蜂蜜或枫糖浆，酿成一小批果酒。</Homesteader_BrewCider.description>
+  <Homesteader_BrewCider.jobString>正在酿造果酒。</Homesteader_BrewCider.jobString>
+  <Homesteader_BrewMead.label>酿造蜂蜜酒</Homesteader_BrewMead.label>
+  <Homesteader_BrewMead.description>将蜂蜜发酵成浓烈甘甜的蜂蜜酒。</Homesteader_BrewMead.description>
+  <Homesteader_BrewMead.jobString>正在酿造蜂蜜酒。</Homesteader_BrewMead.jobString>
+  <Homesteader_BrewHerbalTea.label>冲泡草药茶</Homesteader_BrewHerbalTea.label>
+  <Homesteader_BrewHerbalTea.description>用干草药浸泡出一批舒缓的草药茶。</Homesteader_BrewHerbalTea.description>
+  <Homesteader_BrewHerbalTea.jobString>正在冲泡草药茶。</Homesteader_BrewHerbalTea.jobString>
+  <Homesteader_FermentAppleJuice.label>发酵苹果汁</Homesteader_FermentAppleJuice.label>
+  <Homesteader_FermentAppleJuice.description>将压榨机榨出的果汁发酵成清澈的果园果酒。比在工作台压碎水果更快。</Homesteader_FermentAppleJuice.description>
+  <Homesteader_FermentAppleJuice.jobString>正在发酵苹果汁。</Homesteader_FermentAppleJuice.jobString>
+
+</LanguageData>

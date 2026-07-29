@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Wash tub -->
+  <Homesteader_NeedsSoapInWashTub>洗衣盆里需要肥皂。</Homesteader_NeedsSoapInWashTub>
+
+  <!-- Passive cooling (root cellar / icehouse / springhouse) -->
+  <Homesteader_PassiveCoolStorage>被动冷藏：物品（及相邻室内格子）保持在 {0} 或以下</Homesteader_PassiveCoolStorage>
+
+  <!-- Favorite foods / tastes tab -->
+  <Homesteader_TabTastes>口味</Homesteader_TabTastes>
+  <Homesteader_TastesFavoritesHeader>最爱食物</Homesteader_TastesFavoritesHeader>
+  <Homesteader_TastesAllergiesHeader>过敏</Homesteader_TastesAllergiesHeader>
+  <Homesteader_TastesAllergyHidden>未知敏感</Homesteader_TastesAllergyHidden>
+  <Homesteader_TastesNone>无</Homesteader_TastesNone>
+  <Homesteader_TastesRerollDev>开发：重掷口味</Homesteader_TastesRerollDev>
+  <Homesteader_AllergyDiscovered>{0} 对 {1} 产生了过敏反应。</Homesteader_AllergyDiscovered>
+  <Homesteader_Allergy_Milk>牛奶</Homesteader_Allergy_Milk>
+  <Homesteader_Allergy_Eggs>鸡蛋</Homesteader_Allergy_Eggs>
+  <Homesteader_Allergy_Peanuts>花生</Homesteader_Allergy_Peanuts>
+  <Homesteader_Allergy_TreeNuts>坚果</Homesteader_Allergy_TreeNuts>
+  <Homesteader_Allergy_Wheat>小麦</Homesteader_Allergy_Wheat>
+  <Homesteader_Allergy_Soy>大豆</Homesteader_Allergy_Soy>
+  <Homesteader_Allergy_Fish>鱼</Homesteader_Allergy_Fish>
+  <Homesteader_Allergy_Shellfish>贝类</Homesteader_Allergy_Shellfish>
+  <Homesteader_Allergy_Sesame>芝麻</Homesteader_Allergy_Sesame>
+  <Homesteader_Allergy_Pollen>花粉（花粉症）</Homesteader_Allergy_Pollen>
+  <Homesteader_Allergy_DustMites>尘螨</Homesteader_Allergy_DustMites>
+  <Homesteader_Allergy_PetDander>宠物皮屑</Homesteader_Allergy_PetDander>
+  <Homesteader_Allergy_Mold>霉菌</Homesteader_Allergy_Mold>
+  <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
+  <Homesteader_SettingsDevHeader>开发者</Homesteader_SettingsDevHeader>
+  <Homesteader_SettingsRevealAllergies>显示过敏</Homesteader_SettingsRevealAllergies>
+  <Homesteader_SettingsRevealAllergiesTip>口味页在发现前就显示过敏名称（食用或环境接触触发发现）。仅供测试。</Homesteader_SettingsRevealAllergiesTip>
+  <Homesteader_SettingsDevModeHint>启用开发模式以显示 Homesteader 开发者选项。</Homesteader_SettingsDevModeHint>
+
+  <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
+  <Homesteader_KatsLetter_Open>一则异常广播锁定了你殖民地的 27 纪念碑频率。短暂的热穹正在该区域形成，几名殖民者报告短暂的头脑昏沉——他们称之为「脑腐」。</Homesteader_KatsLetter_Open>
+  <Homesteader_KatsLetter_SilverTaken>殖民地账目显示有 {0} 白银以「超级留言」名义被划走。收容突破已避免。</Homesteader_KatsLetter_SilverTaken>
+  <Homesteader_KatsLetter_KatsSpawned>广播要求以「超级留言」支付 {0} 白银。殖民地付不起——SCP-27272727 以敌对单位 {1} 的形态现身于地图边缘，名叫 Kats。</Homesteader_KatsLetter_KatsSpawned>
+  <Homesteader_KatsLetter_NoSilver>广播要求以「超级留言」支付 {0} 白银，但殖民地没有多余白银（Kats 也未能现身）。</Homesteader_KatsLetter_NoSilver>
+  <Homesteader_KatsLetter_FoundationHeader>基金会附录 // 项目编号 SCP-27272727 // Keter（可爱）</Homesteader_KatsLetter_FoundationHeader>
+  <Homesteader_KatsLetter_ContainmentNote>收容备注：补水 / 用药 / 咀嚼。不要把目光从那个数字上移开。</Homesteader_KatsLetter_ContainmentNote>
+
+</LanguageData>

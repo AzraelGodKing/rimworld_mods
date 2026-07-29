@@ -10,8 +10,7 @@ namespace Strata
 
         public override void Generate(Map map, GenStepParams parms)
         {
-            if (BiomesCavernsUtility.ShouldGenerateCavernLayout(map)
-                && BiomesCavernsUtility.IsStrataCavernBiome(map.Biome))
+            if (BiomesCavernsUtility.ShouldScatterCavernFeatures(map))
             {
                 StrataDeferredGenUtility.ScheduleBiomesCavernFeatures(map);
             }

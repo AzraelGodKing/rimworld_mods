@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_GrainMill.label>谷物磨</Homesteader_GrainMill.label>
+  <Homesteader_GrainMill.description>手摇石磨，把生植物与谷物磨成面粉。无需电力。</Homesteader_GrainMill.description>
+  <Homesteader_ButterChurn.label>黄油搅乳器</Homesteader_ButterChurn.label>
+  <Homesteader_ButterChurn.description>木制搅乳器，从牛奶撇取奶油再制成黄油。朴实的农场到餐桌手艺。</Homesteader_ButterChurn.description>
+  <Homesteader_CheesePress.label>奶酪压机</Homesteader_CheesePress.label>
+  <Homesteader_CheesePress.description>加重木压机，把加盐的奶油凝乳压成耐存的农家奶酪轮。</Homesteader_CheesePress.description>
+
+</LanguageData>

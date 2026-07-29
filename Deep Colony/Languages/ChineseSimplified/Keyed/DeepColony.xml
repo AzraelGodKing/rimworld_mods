@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ── Perk Tree ─────────────────────────────────────────────────────────── -->
+  <DC_ViewPerks>查看专长</DC_ViewPerks>
+  <DC_ViewPerksDesc>打开该殖民者的专长树。已解锁：{1}，可用点数：{0}。</DC_ViewPerksDesc>
+  <DC_PerkTreeTitle>专长 — {PAWN}</DC_PerkTreeTitle>
+  <DC_PerkPoints>专长点数：{0}</DC_PerkPoints>
+  <DC_PerkRequires>需要：{0} 等级 {1}</DC_PerkRequires>
+  <DC_PerkUnlockBtn>解锁</DC_PerkUnlockBtn>
+  <DC_PerkStatus_Unlocked>✓ 已解锁</DC_PerkStatus_Unlocked>
+  <DC_PerkStatus_NeedPrereq>需要前置专长</DC_PerkStatus_NeedPrereq>
+  <DC_PerkStatus_NeedLevel>等级不足</DC_PerkStatus_NeedLevel>
+  <DC_PerkUnlocked>{PAWN} 解锁了专长：{PERK}。</DC_PerkUnlocked>
+  <DC_PerkPointGained>{PAWN} 因提升 {SKILL} 获得了专长点数。</DC_PerkPointGained>
+  <DC_PerksAvailable>{PAWN} 提升了 {SKILL} — 有 {2} 个专长可解锁。</DC_PerksAvailable>
+  <DC_InspectPerks>专长：{0} 点，已解锁 {1}</DC_InspectPerks>
+
+  <!-- ── Trauma ─────────────────────────────────────────────────────────────── -->
+  <DC_TherapyProgress>正在取得进展…</DC_TherapyProgress>
+  <DC_TraumaApplied>{PAWN} {EVENT}。</DC_TraumaApplied>
+  <DC_CounselComplete>辅导完成。</DC_CounselComplete>
+  <DC_CounselFloat>辅导 {PAWN} 处理创伤</DC_CounselFloat>
+  <DC_InspectTrauma>背负心理创伤</DC_InspectTrauma>
+
+  <!-- ── Apprenticeship ────────────────────────────────────────────────────── -->
+  <DC_BecomeMentor>让 {PAWN} 指导 {APPRENTICE}</DC_BecomeMentor>
+  <DC_RemoveMentor>取消 {PAWN} 对 {APPRENTICE} 的指导</DC_RemoveMentor>
+  <DC_MentorAssigned>{MENTOR} 开始指导 {APPRENTICE}。学徒与导师并肩工作时获得经验更快。</DC_MentorAssigned>
+  <DC_MentorRemoved>{MENTOR} 不再指导 {APPRENTICE}。</DC_MentorRemoved>
+  <DC_MentoringComplete>指导结束。</DC_MentoringComplete>
+  <DC_MentorInvalid>无法建立此指导关系。</DC_MentorInvalid>
+  <DC_MentorSelf>殖民者不能指导自己。</DC_MentorSelf>
+  <DC_MentorMutual>不能形成互相指导的循环。</DC_MentorMutual>
+  <DC_MentorSkillGap>导师至少有一项技能领先 {0} 级。</DC_MentorSkillGap>
+  <DC_InspectMentor>{0} 的学徒</DC_InspectMentor>
+  <DC_InspectApprentices>正在指导 {0} 名学徒</DC_InspectApprentices>
+
+  <!-- ── Generations ────────────────────────────────────────────────────────── -->
+  <DC_InheritedTrait>从 {PARENT} 遗传了特性「{TRAIT}」</DC_InheritedTrait>
+  <DC_InheritedPassion>从 {PARENT} 遗传了对 {SKILL} 的热情</DC_InheritedPassion>
+  <DC_InheritedPassionMajor>从 {PARENT} 遗传了对 {SKILL} 的强烈热情</DC_InheritedPassionMajor>
+  <DC_InheritanceLetter_Label>遗传特征：{PAWN}</DC_InheritanceLetter_Label>
+  <DC_InheritanceLetter_Body>{PAWN} 表现出从殖民者血脉继承特性与热情的迹象。</DC_InheritanceLetter_Body>
+
+</LanguageData>

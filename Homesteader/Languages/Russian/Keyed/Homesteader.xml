@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Wash tub -->
+  <Homesteader_NeedsSoapInWashTub>В лохани нужно мыло.</Homesteader_NeedsSoapInWashTub>
+
+  <!-- Passive cooling (root cellar / icehouse / springhouse) -->
+  <Homesteader_PassiveCoolStorage>Пассивное охлаждение: предметы (и соседние внутренние клетки) остаются при температуре не выше {0}</Homesteader_PassiveCoolStorage>
+
+  <!-- Favorite foods / tastes tab -->
+  <Homesteader_TabTastes>Вкусы</Homesteader_TabTastes>
+  <Homesteader_TastesFavoritesHeader>Любимая еда</Homesteader_TastesFavoritesHeader>
+  <Homesteader_TastesAllergiesHeader>Аллергии</Homesteader_TastesAllergiesHeader>
+  <Homesteader_TastesAllergyHidden>Неизвестная чувствительность</Homesteader_TastesAllergyHidden>
+  <Homesteader_TastesNone>Нет</Homesteader_TastesNone>
+  <Homesteader_TastesRerollDev>РАЗРАБ: Перебросить вкусы</Homesteader_TastesRerollDev>
+  <Homesteader_AllergyDiscovered>{0} отреагировал(а) аллергией на {1}.</Homesteader_AllergyDiscovered>
+  <Homesteader_Allergy_Milk>молоко</Homesteader_Allergy_Milk>
+  <Homesteader_Allergy_Eggs>яйца</Homesteader_Allergy_Eggs>
+  <Homesteader_Allergy_Peanuts>арахис</Homesteader_Allergy_Peanuts>
+  <Homesteader_Allergy_TreeNuts>орехи</Homesteader_Allergy_TreeNuts>
+  <Homesteader_Allergy_Wheat>пшеница</Homesteader_Allergy_Wheat>
+  <Homesteader_Allergy_Soy>соя</Homesteader_Allergy_Soy>
+  <Homesteader_Allergy_Fish>рыба</Homesteader_Allergy_Fish>
+  <Homesteader_Allergy_Shellfish>моллюски</Homesteader_Allergy_Shellfish>
+  <Homesteader_Allergy_Sesame>кунжут</Homesteader_Allergy_Sesame>
+  <Homesteader_Allergy_Pollen>пыльца (сенная лихорадка)</Homesteader_Allergy_Pollen>
+  <Homesteader_Allergy_DustMites>пылевые клещи</Homesteader_Allergy_DustMites>
+  <Homesteader_Allergy_PetDander>перхоть животных</Homesteader_Allergy_PetDander>
+  <Homesteader_Allergy_Mold>плесень</Homesteader_Allergy_Mold>
+  <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
+  <Homesteader_SettingsDevHeader>Разработчик</Homesteader_SettingsDevHeader>
+  <Homesteader_SettingsRevealAllergies>Показывать аллергии</Homesteader_SettingsRevealAllergies>
+  <Homesteader_SettingsRevealAllergiesTip>Вкладка «Вкусы» показывает названия аллергий до обнаружения (приём пищи или воздействие среды). Только для тестов.</Homesteader_SettingsRevealAllergiesTip>
+  <Homesteader_SettingsDevModeHint>Включите режим разработчика, чтобы увидеть параметры Homesteader для разработчиков.</Homesteader_SettingsDevModeHint>
+
+  <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
+  <Homesteader_KatsLetter_Open>Аномальная трансляция зафиксировалась на частоте вашего монумента 27. Над регионом образуется краткий тепловой купол, а несколько колонистов жалуются на короткое помутнение — «гниение мозга», как они это называют.</Homesteader_KatsLetter_Open>
+  <Homesteader_KatsLetter_SilverTaken>По счетам колонии списано {0} серебра как «Super Chat». Прорыв содержания предотвращён.</Homesteader_KatsLetter_SilverTaken>
+  <Homesteader_KatsLetter_KatsSpawned>Трансляция потребовала {0} серебра как «Super Chat». Колония не смогла заплатить — и SCP-27272727 проявился как враждебный {1} по имени Kats на краю карты.</Homesteader_KatsLetter_KatsSpawned>
+  <Homesteader_KatsLetter_NoSilver>Трансляция потребовала {0} серебра как «Super Chat», но у колонии не было лишнего серебра (и Kats так и не материализовался).</Homesteader_KatsLetter_NoSilver>
+  <Homesteader_KatsLetter_FoundationHeader>Дополнение Фонда // Объект № SCP-27272727 // Keter (Обаятельный)</Homesteader_KatsLetter_FoundationHeader>
+  <Homesteader_KatsLetter_ContainmentNote>Примечание по содержанию: увлажнять / лечить / жевать. Не отводите взгляд от числа.</Homesteader_KatsLetter_ContainmentNote>
+
+</LanguageData>

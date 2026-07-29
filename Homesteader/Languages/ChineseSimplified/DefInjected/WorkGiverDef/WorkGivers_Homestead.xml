@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_DoBillsCook.label>在家园生产处制作</Homesteader_DoBillsCook.label>
+  <Homesteader_DoBillsCook.gerund>制作于</Homesteader_DoBillsCook.gerund>
+  <Homesteader_DoBillsCook.verb>制作于</Homesteader_DoBillsCook.verb>
+  <Homesteader_DoBillsCraft.label>在家园工艺处制作</Homesteader_DoBillsCraft.label>
+  <Homesteader_DoBillsCraft.gerund>工艺于</Homesteader_DoBillsCraft.gerund>
+  <Homesteader_DoBillsCraft.verb>工艺于</Homesteader_DoBillsCraft.verb>
+
+</LanguageData>

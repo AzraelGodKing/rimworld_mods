@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Stormproof_SolarShield.label>солнечный щит</Stormproof_SolarShield.label>
+  <Stormproof_SolarShield.description>Генератор поля, защищающий электронику колонии от солнечных вспышек. В простое потребляет почти ничего, но пока вспышка активна, непрерывно тянет 2 500 Вт, чтобы вся электроника на карте продолжала работать. Если запас сети иссякнет посреди вспышки, щит рухнет, и электричество останется выключенным до её конца. Накопите заряд батарей заранее.</Stormproof_SolarShield.description>
+  <Stormproof_StormSpire.label>штормовой шпиль</Stormproof_StormSpire.label>
+  <Stormproof_StormSpire.description>Высокий заземлённый шпиль, притягивающий удары молний в широком радиусе и защищающий базу от пожаров. Сам шпиль не горит, а заземление гасит пламя, которое пойманный удар может зажечь у основания. Подключённый к сети, каждый пойманный удар даёт до 1 500 Вт·д в батареи — но с шансом 5% перегрузит сеть и вызовет скачок «Zzzt!». Исследование идеального заземления полностью устраняет этот риск.</Stormproof_StormSpire.description>
+  <Stormproof_SurgeProtector.label>ограничитель скачков</Stormproof_SurgeProtector.label>
+  <Stormproof_SurgeProtector.description>Тяжёлый шкаф автомата, поглощающий одно короткое замыкание «Zzzt!» и спасающий батареи с кабелями. Поглощение слегка повреждает его и ставит на суточную перезарядку. На карту достаточно одного — но запасной не помешает.</Stormproof_SurgeProtector.description>
+  <Stormproof_EmpDampener.label>ЭМИ-гаситель</Stormproof_EmpDampener.label>
+  <Stormproof_EmpDampener.description>Создаёт гасящее поле, защищающее здания колонии в радиусе от ЭМИ-оглушения. Турели продолжают стрелять сквозь залпы ЭМИ-миномётов и гранаты. Не защищает пешек и механоидов — только здания.</Stormproof_EmpDampener.description>
+  <Stormproof_ArmoredConduit.label>бронированный кабель</Stormproof_ArmoredConduit.label>
+  <Stormproof_ArmoredConduit.description>Силовой кабель в клёпаной стальной оболочке. Негорючий и куда прочнее обычного — проводка для киллбоксов и внешних стен.</Stormproof_ArmoredConduit.description>
+  <Stormproof_StormCapacitor.label>банк штормовых конденсаторов</Stormproof_StormCapacitor.label>
+  <Stormproof_StormCapacitor.description>Банк тяжёлых конденсаторов, настроенных глотать яростный заряд удара молнии. Зарядить его может только молния, пойманная шпилем — сеть не заряжает его, — зато он не теряет ни ватта в хранении, и скачки «Zzzt!» его не касаются. Когда выработка сети не хватает, он автоматически отдаёт до 2 000 Вт на покрытие дефицита.</Stormproof_StormCapacitor.description>
+  <Stormproof_WeatherForecaster.label>метеорологический пульт</Stormproof_WeatherForecaster.label>
+  <Stormproof_WeatherForecaster.description>Барометрическая консоль, читающая фронты давления и статический заряд воздуха. Панель осмотра показывает, сколько продержится текущая погода; она объявляет приближающиеся грозы, чтобы вы подготовили шпили, и предупреждает за час до смены погоды.</Stormproof_WeatherForecaster.description>
+  <Stormproof_StaticPylon.label>пилон статического разряда</Stormproof_StaticPylon.label>
+  <Stormproof_StaticPylon.description>Оборонительный пилон, работающий исключительно на законсервированной молнии. Каждый удар тратит 50 Вт·д запасённой энергии удара из банка штормовых конденсаторов на той же сети, оглушая и обжигая враждебных рейдеров и механоидов в малом радиусе электрическими ожогами. Нет заряда конденсаторов — нет разряда; кормите штормовые шпили.</Stormproof_StaticPylon.description>
+  <Stormproof_FalloutScrubber.label>очиститель осадков</Stormproof_FalloutScrubber.label>
+  <Stormproof_FalloutScrubber.description>Промышленный воздушный фильтр, вытягивающий токсины из воздуха закрытой комнаты. Пешки и животные в укрытии медленно сбрасывают токсичное накопление — быстрее, чем тяжёлые осадки его добавляют. На улице бесполезен: открытое небо не очистить.</Stormproof_FalloutScrubber.description>
+  <Stormproof_StormCaller.label>вызыватель шторма</Stormproof_StormCaller.label>
+  <Stormproof_StormCaller.description>Ионосферный возмутитель, стреляющий заряженными частицами в верхнюю атмосферу и по команде натягивающий дождевую грозу над картой. Молнии питают штормовые шпили, а дождь тушит пожары. Перезарядка — пять дней: он дополняет сеть, а не заменяет её.</Stormproof_StormCaller.description>
+  <Stormproof_LoadShedder.label>сбрасыватель нагрузки</Stormproof_LoadShedder.label>
+  <Stormproof_LoadShedder.description>Автоматический выключатель. Подключите его между основной сетью и низкоприоритетной подсетью (лампы, развлечения, запасные охладители). Пока батареи стороны питания держат заряд, он передаёт ток как кабель; когда они падают ниже порога, он размыкается и отключает подсеть — морозильник переживает телевизор. Сам подключается снова, когда батареи восстанавливаются. Порог отключения настраивается.</Stormproof_LoadShedder.description>
+  <Stormproof_GridMonitor.label>пульт мониторинга сети</Stormproof_GridMonitor.label>
+  <Stormproof_GridMonitor.description>Стена циферблатов и датчиков, врезанных в электросеть. Панель осмотра показывает текущую выработку, потребление, заряд батарей и сколько осталось до опустошения или заполнения. Предупреждает, когда запас падает ниже 25%, и срочно — ниже 10%, чтобы медленный ночной разряд больше не застал врасплох.</Stormproof_GridMonitor.description>
+  <Stormproof_AtmosphericBarrier.label>атмосферный барьер</Stormproof_AtmosphericBarrier.label>
+  <Stormproof_AtmosphericBarrier.description>Атмосферный укрепитель масштаба колонии. В простое потребляет умеренно, пока не ударят токсичные осадки, токсичный выброс, ядовитая мгла или вулканический пепел — тогда сильно тянет из сети, чтобы подавить уличный яд и коррозию по всей карте. Держите батареи заряженными: если сеть иссякнет посреди события, барьер рухнет. Сочетайте с очистителями осадков, чтобы снять уже накопившиеся токсины в крови колонистов.</Stormproof_AtmosphericBarrier.description>
+  <Stormproof_ClimateStabilizer.label>климат-стабилизатор</Stormproof_ClimateStabilizer.label>
+  <Stormproof_ClimateStabilizer.description>Регулятор теплового поля, отменяющий общекартовые температурные смещения от жары, похолоданий, вулканических зим, тепловых куполов и полярных фронтов. В простое потребление невелико; во время экстремального климата — высокое. Нет запаса энергии — нет защиты.</Stormproof_ClimateStabilizer.description>
+  <Stormproof_SkyRestorer.label>восстановитель неба</Stormproof_SkyRestorer.label>
+  <Stormproof_SkyRestorer.description>Орбитальное зеркало / ионосферный осветитель, возвращающий пригодный дневной свет во время затмений, вулканических зим, вулканического пепла и затемнённого неба. Пока сеть держит заряд, посевы и колонисты не живут в вечных сумерках.</Stormproof_SkyRestorer.description>
+  <Stormproof_FireSuppressor.label>огнетушитель</Stormproof_FireSuppressor.label>
+  <Stormproof_FireSuppressor.description>Излучатель пены / инертного газа, тушащий пожары в широком радиусе при питании. Во время вспышек и сухих грозовых фронтов повышает потребление и вместе со штормовыми шпилями не даёт базе, избитой молниями, сгореть.</Stormproof_FireSuppressor.description>
+  <Stormproof_DroughtCondenser.label>засушливый конденсатор</Stormproof_DroughtCondenser.label>
+  <Stormproof_DroughtCondenser.description>Атмосферный конденсатор влаги, отменяющий штрафы засухи к росту растений по всей карте при питании. Простаивает, пока не начнётся засуха, затем сильно тянет из сети. Наиболее полезен при засухах лугов Odyssey; безвредная мебель, если они никогда не наступят.</Stormproof_DroughtCondenser.description>
+  <Stormproof_StormVane.label>штормовой флюгер</Stormproof_StormVane.label>
+  <Stormproof_StormVane.description>Красивый медный флюгер. Ничего не предсказывает, не предотвращает и не питает. Но у каждой порядочной усадьбы он должен быть.</Stormproof_StormVane.description>
+
+</LanguageData>

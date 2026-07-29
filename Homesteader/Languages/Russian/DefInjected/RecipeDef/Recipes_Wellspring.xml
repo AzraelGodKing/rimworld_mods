@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Wellspring_DrawWater.label>черпать воду</Wellspring_DrawWater.label>
+  <Wellspring_DrawWater.description>Опустить ведро на лебёдке и поднять кувшины свежей воды.</Wellspring_DrawWater.description>
+  <Wellspring_DrawWater.jobString>Черпает воду.</Wellspring_DrawWater.jobString>
+  <Wellspring_DrawWaterDeep.label>черпать воду из глубины</Wellspring_DrawWaterDeep.label>
+  <Wellspring_DrawWaterDeep.description>Опустить широкое ведро мимо неглубоких грунтовых вод и поднять тяжёлую порцию свежей воды.</Wellspring_DrawWaterDeep.description>
+  <Wellspring_DrawWaterDeep.jobString>Черпает воду.</Wellspring_DrawWaterDeep.jobString>
+  <Wellspring_BoilWater.label>кипятить воду</Wellspring_BoilWater.label>
+  <Wellspring_BoilWater.description>Прокипятить воду из кувшинов на огне.</Wellspring_BoilWater.description>
+  <Wellspring_BoilWater.jobString>Кипятит воду.</Wellspring_BoilWater.jobString>
+  <Wellspring_MakeMudBricks.label>делать саманные кирпичи</Wellspring_MakeMudBricks.label>
+  <Wellspring_MakeMudBricks.description>Смешать воду и солому с землёй, сформовать кирпичи и оставить сушиться на солнце.</Wellspring_MakeMudBricks.description>
+  <Wellspring_MakeMudBricks.jobString>Делает саманные кирпичи.</Wellspring_MakeMudBricks.jobString>
+  <Wellspring_MakeCleanBandages.label>делать чистые бинты</Wellspring_MakeCleanBandages.label>
+  <Wellspring_MakeCleanBandages.description>Прокипятить полоски ткани в чистой воде и свернуть в тугие бинты.</Wellspring_MakeCleanBandages.description>
+  <Wellspring_MakeCleanBandages.jobString>Делает чистые бинты.</Wellspring_MakeCleanBandages.jobString>
+
+</LanguageData>

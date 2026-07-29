@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Thought_ProvidedTherapy.label>帮助同伴处理创伤</DC_Thought_ProvidedTherapy.label>
+  <DC_Thought_ProvidedTherapy.description>帮助陷入困境的同伴走出创伤。</DC_Thought_ProvidedTherapy.description>
+  <DC_Thought_ProvidedTherapy.stages_0.label>帮助同伴处理创伤</DC_Thought_ProvidedTherapy.stages_0.label>
+  <DC_Thought_ProvidedTherapy.stages_0.description>帮助陷入困境的同伴走出创伤。</DC_Thought_ProvidedTherapy.stages_0.description>
+  <DC_Thought_ReceivedTherapy.label>进行了一次有意义的交谈</DC_Thought_ReceivedTherapy.label>
+  <DC_Thought_ReceivedTherapy.description>与关心自己的同伴倾诉了艰难的感受。</DC_Thought_ReceivedTherapy.description>
+  <DC_Thought_ReceivedTherapy.stages_0.label>进行了一次有意义的交谈</DC_Thought_ReceivedTherapy.stages_0.label>
+  <DC_Thought_ReceivedTherapy.stages_0.description>进行了一次有意义的交谈，帮助消化了艰难的感受。</DC_Thought_ReceivedTherapy.stages_0.description>
+
+</LanguageData>

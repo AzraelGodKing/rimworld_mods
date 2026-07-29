@@ -2,8 +2,9 @@ using Verse;
 
 namespace Strata
 {
-    // Native Strata cave layout for excavated colony levels when Biomes! is
-    // absent or its compat toggle is off.
+    // Native Strata cave layout for excavated colony levels when Biomes! Caverns
+    // is not loaded. If Biomes! is present, it always wins layout generation;
+    // native only runs as a failure fallback (ForceNativeWarren).
     public static class StrataCavernUtility
     {
         public static bool ShouldGenerateNativeCavernLayout(Map map)
@@ -12,12 +13,14 @@ namespace Strata
             {
                 return false;
             }
+            // Explicit fallback after a failed Biomes! layout attempt.
             if (MapGenerator.TryGetVar(StrataNativeCavernUtility.ForceNativeWarrenVar, out bool force)
                 && force)
             {
                 return true;
             }
-            if (BiomesCavernsUtility.ShouldGenerateCavernLayout(map))
+            // Biomes! Caverns stack loaded → never prefer Strata caves.
+            if (BiomesCavernsUtility.IsActive)
             {
                 return false;
             }

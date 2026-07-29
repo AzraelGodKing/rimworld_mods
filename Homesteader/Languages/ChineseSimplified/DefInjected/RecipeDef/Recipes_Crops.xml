@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_CookPorridge.label>煮粥</Homesteader_CookPorridge.label>
+  <Homesteader_CookPorridge.description>将谷物慢煮成温热饱腹的粥，用糖、蜂蜜或枫糖浆调甜。</Homesteader_CookPorridge.description>
+  <Homesteader_CookPorridge.jobString>正在煮粥。</Homesteader_CookPorridge.jobString>
+  <Homesteader_MillSugar.label>制糖</Homesteader_MillSugar.label>
+  <Homesteader_MillSugar.description>压碎甜菜并熬煮汁液，结晶成糖。</Homesteader_MillSugar.description>
+  <Homesteader_MillSugar.jobString>正在制糖。</Homesteader_MillSugar.jobString>
+
+</LanguageData>
