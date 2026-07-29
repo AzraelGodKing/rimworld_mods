@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_AteHomesteadTreat.label>угощение усадьбы</Homesteader_AteHomesteadTreat.label>
+  <Homesteader_AteHomesteadTreat.description>На вкус как дом — хороший дом.</Homesteader_AteHomesteadTreat.description>
+  <Homesteader_AteHomesteadTreat.stages_0.label>угощение усадьбы</Homesteader_AteHomesteadTreat.stages_0.label>
+  <Homesteader_AteHomesteadTreat.stages_0.description>На вкус как дом — хороший дом.</Homesteader_AteHomesteadTreat.stages_0.description>
+  <Homesteader_AteFineCheese.label>изысканный сыр</Homesteader_AteFineCheese.label>
+  <Homesteader_AteFineCheese.description>Настоящий фермерский сыр. Стоило ждать.</Homesteader_AteFineCheese.description>
+  <Homesteader_AteFineCheese.stages_0.label>изысканный сыр</Homesteader_AteFineCheese.stages_0.label>
+  <Homesteader_AteFineCheese.stages_0.description>Настоящий фермерский сыр. Стоило ждать.</Homesteader_AteFineCheese.stages_0.description>
+  <Homesteader_AteFavoriteFood.label>любимая еда</Homesteader_AteFavoriteFood.label>
+  <Homesteader_AteFavoriteFood.description>Это было моё любимое. Ничто другое так не попадает.</Homesteader_AteFavoriteFood.description>
+  <Homesteader_AteFavoriteFood.stages_0.label>любимая еда</Homesteader_AteFavoriteFood.stages_0.label>
+  <Homesteader_AteFavoriteFood.stages_0.description>Это было моё любимое. Ничто другое так не попадает.</Homesteader_AteFavoriteFood.stages_0.description>
+  <Homesteader_AteAllergen.label>аллергическая реакция</Homesteader_AteAllergen.label>
+  <Homesteader_AteAllergen.description>Что-то вызвало аллергию. Зуд, тошнота и тоска на какое-то время.</Homesteader_AteAllergen.description>
+  <Homesteader_AteAllergen.stages_0.label>аллергическая реакция</Homesteader_AteAllergen.stages_0.label>
+  <Homesteader_AteAllergen.stages_0.description>Что-то вызвало аллергию. Зуд, тошнота и тоска на какое-то время.</Homesteader_AteAllergen.stages_0.description>
+  <Homesteader_FreshlyWashed.label>только что вымыт(а)</Homesteader_FreshlyWashed.label>
+  <Homesteader_FreshlyWashed.description>Настоящее мытьё усадебным мылом. Снова чисто и по-человечески.</Homesteader_FreshlyWashed.description>
+  <Homesteader_FreshlyWashed.stages_0.label>только что вымыт(а)</Homesteader_FreshlyWashed.stages_0.label>
+  <Homesteader_FreshlyWashed.stages_0.description>Настоящее мытьё усадебным мылом. Снова чисто и по-человечески.</Homesteader_FreshlyWashed.stages_0.description>
+  <Homesteader_MaypoleCheerMood.label>урожайное веселье</Homesteader_MaypoleCheerMood.label>
+  <Homesteader_MaypoleCheerMood.description>Ленты майского столба делают весь двор похожим на праздник.</Homesteader_MaypoleCheerMood.description>
+  <Homesteader_MaypoleCheerMood.stages_0.label>урожайное веселье</Homesteader_MaypoleCheerMood.stages_0.label>
+  <Homesteader_MaypoleCheerMood.stages_0.description>Ленты майского столба делают весь двор похожим на праздник.</Homesteader_MaypoleCheerMood.stages_0.description>
+  <Homesteader_Monument27Mood.label>статуя 27</Homesteader_Monument27Mood.label>
+  <Homesteader_Monument27Mood.description>В этой статуе есть что-то, что просто поднимает весь день.</Homesteader_Monument27Mood.description>
+  <Homesteader_Monument27Mood.stages_0.label>статуя 27</Homesteader_Monument27Mood.stages_0.label>
+  <Homesteader_Monument27Mood.stages_0.description>В этой статуе есть что-то, что просто поднимает весь день.</Homesteader_Monument27Mood.stages_0.description>
+  <Homesteader_KatsDirective.label>директива Kats</Homesteader_KatsDirective.label>
+  <Homesteader_KatsDirective.description>Эта трансляция была будто с моим именем. Увлажнять. Лечить. Жевать. И почему-то это… проясняет.</Homesteader_KatsDirective.description>
+  <Homesteader_KatsDirective.stages_0.label>директива Kats</Homesteader_KatsDirective.stages_0.label>
+  <Homesteader_KatsDirective.stages_0.description>Эта трансляция была будто с моим именем. Увлажнять. Лечить. Жевать. И почему-то это… проясняет.</Homesteader_KatsDirective.stages_0.description>
+
+</LanguageData>

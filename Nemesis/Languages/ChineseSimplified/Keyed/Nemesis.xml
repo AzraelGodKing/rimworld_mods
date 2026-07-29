@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Settings -->
+  <Nemesis_Settings_Triggers>触发概率</Nemesis_Settings_Triggers>
+  <Nemesis_Settings_KilledAlly>击杀盟友概率：{0}%</Nemesis_Settings_KilledAlly>
+  <Nemesis_Settings_PrisonerEscaped>囚犯逃脱概率：{0}%</Nemesis_Settings_PrisonerEscaped>
+  <Nemesis_Settings_SlaveEscaped>奴隶叛乱概率：{0}%</Nemesis_Settings_SlaveEscaped>
+  <Nemesis_Settings_Fixation>执念概率：{0}%</Nemesis_Settings_Fixation>
+  <Nemesis_Settings_WoundedEscape>重伤逃脱概率：{0}%</Nemesis_Settings_WoundedEscape>
+  <Nemesis_Settings_TruceDays>休战时长：{0} 天</Nemesis_Settings_TruceDays>
+  <Nemesis_Settings_MaxEscapes>走投无路前的逃脱次数：{0}</Nemesis_Settings_MaxEscapes>
+  <Nemesis_Settings_Pacing>宿敌节奏</Nemesis_Settings_Pacing>
+  <Nemesis_Settings_MaxAggression>最大侵略强度：{0}%</Nemesis_Settings_MaxAggression>
+  <Nemesis_Settings_Escalation>升级速率：每天 {0}</Nemesis_Settings_Escalation>
+  <Nemesis_Settings_MinCooldown>行动最短间隔：{0} 天</Nemesis_Settings_MinCooldown>
+  <Nemesis_Settings_ActionMix>行动组合</Nemesis_Settings_ActionMix>
+  <Nemesis_Settings_WeightTaunt>通讯嘲讽：{0}</Nemesis_Settings_WeightTaunt>
+  <Nemesis_Settings_WeightRaid>直接袭击：{0}</Nemesis_Settings_WeightRaid>
+  <Nemesis_Settings_WeightAssault>宿敌突击：{0}</Nemesis_Settings_WeightAssault>
+  <Nemesis_Settings_WeightWaste>废料空投：{0}</Nemesis_Settings_WeightWaste>
+  <Nemesis_Settings_WeightFakeSignal>假信号 / 伏击：{0}</Nemesis_Settings_WeightFakeSignal>
+  <Nemesis_Settings_WeightCaravan>商队骚扰：{0}</Nemesis_Settings_WeightCaravan>
+  <Nemesis_Settings_WeightSabotage>电力破坏：{0}</Nemesis_Settings_WeightSabotage>
+  <Nemesis_Settings_WeightFood>粮仓突袭：{0}</Nemesis_Settings_WeightFood>
+  <Nemesis_Settings_Reset>重置</Nemesis_Settings_Reset>
+
+  <!-- Phrases -->
+  <Nemesis_Phrase_YourColony>你的殖民地</Nemesis_Phrase_YourColony>
+  <Nemesis_Phrase_Someone>某人</Nemesis_Phrase_Someone>
+  <Nemesis_Phrase_TheirFaction>他们的派系</Nemesis_Phrase_TheirFaction>
+
+  <!-- Taunts -->
+  <Nemesis_Taunt_Low0>{0}：「好好享受这份安静吧。它撑不了多久。」</Nemesis_Taunt_Low0>
+  <Nemesis_Taunt_Low1>{0}：「我知道{1}睡在哪儿。」</Nemesis_Taunt_Low1>
+  <Nemesis_Taunt_Low2>{0}：「我有你们的坐标。一个不漏。」</Nemesis_Taunt_Low2>
+  <Nemesis_Taunt_Low3>{0}：「替我向{1}问好。」</Nemesis_Taunt_Low3>
+  <Nemesis_Taunt_Low4>{0}：「我还在。还在看着。」</Nemesis_Taunt_Low4>
+  <Nemesis_Taunt_Low5>{0}：「这已经私人恩怨了。{1}会明白的。」</Nemesis_Taunt_Low5>
+  <Nemesis_Taunt_High0>{0}：「当初有机会时，你们就该了结我。」</Nemesis_Taunt_High0>
+  <Nemesis_Taunt_High1>{0}：「每逃一次，我就更确定。{1}会死在最后。」</Nemesis_Taunt_High1>
+  <Nemesis_Taunt_High2>{0}：「我还没完。远没有。」</Nemesis_Taunt_High2>
+  <Nemesis_Taunt_High3>{0}：「我已经活下来{2}次了。凭什么觉得这次会不一样？」</Nemesis_Taunt_High3>
+  <Nemesis_Taunt_High4>{0}：「我要让{1}看着我逼近。」</Nemesis_Taunt_High4>
+  <Nemesis_Taunt_High5>{0}：「祈祷{1}已经准备好了吧。我准备好了。」</Nemesis_Taunt_High5>
+  <Nemesis_Taunt_FavoriteFood>{0}：「我知道{1}爱吃什么。{2}。真可爱。」</Nemesis_Taunt_FavoriteFood>
+  <Nemesis_Taunt_Cellar>{0}：「地窖不错。可惜要是有东西坏了就不好了。」</Nemesis_Taunt_Cellar>
+  <Nemesis_Taunt_Ion>{0}：「我喜欢干闪电。你的电网也会喜欢的，{1}。」</Nemesis_Taunt_Ion>
+
+  <!-- Intro -->
+  <Nemesis_Intro_Title>宿敌现身</Nemesis_Intro_Title>
+  <Nemesis_Intro_KilledAlly>{0}杀了某个重要的人。\n\n一个名叫{2}的{1}把这当成了私人恩怨。他们会不断回来，直到{0}为此付出代价，或直到被活捉。</Nemesis_Intro_KilledAlly>
+  <Nemesis_Intro_Wounded>{0}留下了一道愈合不了的伤。\n\n来自{2}的{1}活了下来，他们记得是谁干的。他们会回来。</Nemesis_Intro_Wounded>
+  <Nemesis_Intro_Fixation>有人来自{0}杀了你们的人——而对他们来说，这还不够。\n\n{1}对{2}产生了病态的执念。他们来了，而且只盯着那一个人。</Nemesis_Intro_Fixation>
+  <Nemesis_Intro_PawnDefault>有人来自{0}认定{1}值得猎杀。\n\n{2}不会罢休，直到得到他们想要的。</Nemesis_Intro_PawnDefault>
+  <Nemesis_Intro_Prisoner>一个囚犯溜走了，有人注意到了。\n\n来自{1}的{0}把这当成了侮辱。你们的殖民地会收到他们的消息。</Nemesis_Intro_Prisoner>
+  <Nemesis_Intro_Slave>一场奴隶叛乱树错了敌人。\n\n来自{1}的{0}认定你们的殖民地欠下一笔血债。</Nemesis_Intro_Slave>
+  <Nemesis_Intro_Retaliation>{0}受够了。\n\n{1}已被授权，让你们的殖民地为此付出代价。</Nemesis_Intro_Retaliation>
+  <Nemesis_Intro_ColonyDefault>你们殖民地的所作所为引来了错误的关注。\n\n来自{1}的{0}已将摧毁你们当成私人使命。</Nemesis_Intro_ColonyDefault>
+
+  <!-- Letters: harassment -->
+  <Nemesis_Letter_CommsTitle>来自通讯控制台的讯息</Nemesis_Letter_CommsTitle>
+  <Nemesis_Letter_CommsBody>你的通讯控制台截获了一段计划外的传输。\n\n{0}</Nemesis_Letter_CommsBody>
+  <Nemesis_Letter_NoteTitle>来自{0}的字条</Nemesis_Letter_NoteTitle>
+  <Nemesis_Letter_NoteBody>有人在殖民者一定会发现的地方留下了字条。没人看见是谁放的。\n\n{0}</Nemesis_Letter_NoteBody>
+  <Nemesis_Letter_RaidTitle>袭击：{0}</Nemesis_Letter_RaidTitle>
+  <Nemesis_Letter_RaidBody>{0}派出了这次袭击。他们要让{1}知道是谁下的令。</Nemesis_Letter_RaidBody>
+
+  <!-- Vengeance army return (post-escape DirectRaid) — punchline is deliberate BARS -->
+  <Nemesis_Letter_VengeanceReturnTitle1>{0}归来</Nemesis_Letter_VengeanceReturnTitle1>
+  <Nemesis_Letter_VengeanceReturnBody1>{0}曾溜走一次。那个错误你们不会再犯——因为这次他们不是一个人回来。\n\n为何独自归来，当你能带着一支军队？\n\n他们是为了{1}而来。</Nemesis_Letter_VengeanceReturnBody1>
+  <Nemesis_Letter_VengeanceReturnTitle2>{0}带了朋友</Nemesis_Letter_VengeanceReturnTitle2>
+  <Nemesis_Letter_VengeanceReturnBody2>你们曾抓住{0}。然后又没了。如今地平线挤满了人。\n\n为何独自归来，当你能带着一支军队？\n\n{1}仍在名单上。</Nemesis_Letter_VengeanceReturnBody2>
+  <Nemesis_Letter_VengeanceReturnTitle3>兵临城下：{0}</Nemesis_Letter_VengeanceReturnTitle3>
+  <Nemesis_Letter_VengeanceReturnBody3>一次又一次逃脱。教训已学会——是他们学会了，不是你们。\n\n{0}回来了，这次袭击由他们亲自率领。\n\n为何独自归来，当你能带着一支军队？\n\n告诉{1}准备好。</Nemesis_Letter_VengeanceReturnBody3>
+  <Nemesis_Letter_VengeanceReturnTitle4>{0}：不再单打独斗</Nemesis_Letter_VengeanceReturnTitle4>
+  <Nemesis_Letter_VengeanceReturnBody4>够了鬼祟。够了险些失手。{0}不再假装这是一场决斗。\n\n为何独自归来，当你能带着一支军队？\n\n对{1}的血债，现在成了集体账。</Nemesis_Letter_VengeanceReturnBody4>
+  <Nemesis_Letter_VengeanceReturnTitle5>{0}与大军</Nemesis_Letter_VengeanceReturnTitle5>
+  <Nemesis_Letter_VengeanceReturnBody5>他们对你们活得太久，早已不在乎公平对决。\n\n{0}率领战团归来。\n\n为何独自归来，当你能带着一支军队？\n\n{1}再也无法与他们一对一交手了。</Nemesis_Letter_VengeanceReturnBody5>
+  <Nemesis_Letter_AssaultTitle>{0}抵达</Nemesis_Letter_AssaultTitle>
+  <Nemesis_Letter_AssaultPawn>{0}亲自前来找{1}。局势不妙时他们会撤退，但还会再来。</Nemesis_Letter_AssaultPawn>
+  <Nemesis_Letter_AssaultColony>{0}亲自率领这次突击。若形势不利，他们不会久留。</Nemesis_Letter_AssaultColony>
+  <Nemesis_Letter_WasteTitle>废料空投：{0}</Nemesis_Letter_WasteTitle>
+  <Nemesis_Letter_WasteBody>化学废料被空投到了殖民地附近。\n\n附带一句短讯：「{0}向你们问好。」</Nemesis_Letter_WasteBody>
+  <Nemesis_Fake_Trader>请求停靠许可的贸易商队</Nemesis_Fake_Trader>
+  <Nemesis_Fake_Distress>声称有幸存者需要撤离的求救信标</Nemesis_Fake_Distress>
+  <Nemesis_Letter_FakeSignalTitle>收到信号</Nemesis_Letter_FakeSignalTitle>
+  <Nemesis_Letter_FakeSignalBody>你的控制台收到了看似{0}的信号。\n\n握手协议有些不对劲——但频道已经打开。\n\n（如果这是{1}，那就不会是友好拜访。）</Nemesis_Letter_FakeSignalBody>
+  <Nemesis_Letter_AmbushTitle>伏击：{0}</Nemesis_Letter_AmbushTitle>
+  <Nemesis_Letter_AmbushBody>信号是个谎言。\n\n{0}用它把突袭小队带到了你家门口。</Nemesis_Letter_AmbushBody>
+  <Nemesis_Letter_CaravanWatchTitle>{0}监视道路</Nemesis_Letter_CaravanWatchTitle>
+  <Nemesis_Letter_CaravanWatchBody>{0}在贸易路线上留下了标记。你们的商队正被监视。</Nemesis_Letter_CaravanWatchBody>
+  <Nemesis_Letter_CaravanHitTitle>商队遇袭：{0}</Nemesis_Letter_CaravanHitTitle>
+  <Nemesis_Letter_CaravanHitBody>{0}在路上袭击了{1}。混乱中物资失踪。留下了一块写着名字的碎布。</Nemesis_Letter_CaravanHitBody>
+  <Nemesis_Letter_SabotageTitle>破坏：{0}</Nemesis_Letter_SabotageTitle>
+  <Nemesis_Letter_SabotageBody>{0}向你们的电网脉冲释放了电磁脉冲。{1}栋建筑受到冲击。</Nemesis_Letter_SabotageBody>
+  <Nemesis_Letter_SabotageBlocked>{0}试图烧毁你们的电子设备——但电磁脉冲抑制器挡住了冲击。开放频道里传来一声恼怒的嘶声。</Nemesis_Letter_SabotageBlocked>
+  <Nemesis_Letter_SabotageSurgeBlocked>{0}用电磁脉冲击中了{1}栋建筑。浪涌保护器吞掉了后续的短路。</Nemesis_Letter_SabotageSurgeBlocked>
+  <Nemesis_Letter_FoodTitle>粮仓遇袭：{0}</Nemesis_Letter_FoodTitle>
+  <Nemesis_Letter_FoodBody>{0}腐坏或偷走了你们的食物储备（损坏{1}堆）。饥饿也是武器。</Nemesis_Letter_FoodBody>
+  <Nemesis_Letter_FoodCellar>{0}摸进了你们的仓库——包括靠近地窖根的地方。{1}堆食物被毁。</Nemesis_Letter_FoodCellar>
+  <Nemesis_Letter_FoodFavoriteNote>{0}给{1}留了字条：「再也没有{2}给你吃了。」</Nemesis_Letter_FoodFavoriteNote>
+  <Nemesis_Letter_AnomalyTitle>错误的关注：{0}</Nemesis_Letter_AnomalyTitle>
+  <Nemesis_Letter_AnomalyBody>{0}惊动了本该沉睡的东西。即将到来的未必全是他们的手笔——但他们就是要让你们忙起来。</Nemesis_Letter_AnomalyBody>
+
+  <!-- Escape / corner / rogue / end -->
+  <Nemesis_Letter_EscapeTitle>{0}逃脱</Nemesis_Letter_EscapeTitle>
+  <Nemesis_Letter_Escape1>{0}在你们了结之前溜走了。他们还会回来。</Nemesis_Letter_Escape1>
+  <Nemesis_Letter_Escape2>你们抓住了他们。然后又没了。{0}仍在外面，而且更愤怒了。</Nemesis_Letter_Escape2>
+  <Nemesis_Letter_EscapeN>烟尘中的身影。尘埃落定前便已消失。这是{0}的第{1}次逃脱。</Nemesis_Letter_EscapeN>
+  <Nemesis_Letter_EscapeMany>{0}已经这样活下来{1}次了。他们不会罢休。</Nemesis_Letter_EscapeMany>
+  <Nemesis_Letter_CorneredTitle>{0}走投无路</Nemesis_Letter_CorneredTitle>
+  <Nemesis_Letter_CorneredBody>{0}已经无处可逃。他们倒下了——这次无法再溜走。\n\n逮捕他们，活捉下来，永久结束这场狩猎。</Nemesis_Letter_CorneredBody>
+  <Nemesis_Letter_TruceBrokenTitle>{0}：休战破裂</Nemesis_Letter_TruceBrokenTitle>
+  <Nemesis_Letter_TruceBrokenBody>与{0}的休战已到期。\n\n他们从未忘记。他们一直会回来。</Nemesis_Letter_TruceBrokenBody>
+  <Nemesis_Letter_RogueTitle>{0}叛离</Nemesis_Letter_RogueTitle>
+  <Nemesis_Letter_RogueBodyFaction>你们与{1}讲和了。{0}没有。\n\n他们抛弃了自己的族人，投靠了{2}。条约无法终结宿怨。</Nemesis_Letter_RogueBodyFaction>
+  <Nemesis_Letter_RogueBodyAlone>你们与{1}讲和了。{0}没有。\n\n如今他们独自猎杀你们。条约无法终结宿怨。</Nemesis_Letter_RogueBodyAlone>
+  <Nemesis_Letter_EndedKilledTitle>{0}：狩猎结束</Nemesis_Letter_EndedKilledTitle>
+  <Nemesis_Letter_EndedKilledBody>{0}死了。频道归于寂静。</Nemesis_Letter_EndedKilledBody>
+  <Nemesis_Letter_EndedTargetDiedTitle>{0}：失去兴趣</Nemesis_Letter_EndedTargetDiedTitle>
+  <Nemesis_Letter_EndedTargetDiedBody>{1}死了。{0}以某种方式得到了他们想要的。\n\n狩猎结束。他们不庆祝。只是停下。</Nemesis_Letter_EndedTargetDiedBody>
+  <Nemesis_Letter_EndedHandedTitle>{0}：夺走猎物</Nemesis_Letter_EndedHandedTitle>
+  <Nemesis_Letter_EndedHandedBody>{1}不再属于你们。{0}认为债务已清。\n\n嘲讽停止。袭击停止。他们赢了。</Nemesis_Letter_EndedHandedBody>
+
+  <!-- Resolution dialog -->
+  <Nemesis_Dialog_Title>{0}已在你们手中。</Nemesis_Dialog_Title>
+  <Nemesis_Dialog_Body_KilledAlly>他们为复仇而来。如今坐在你们的牢房里。\n\n三个选择。没有一个干净。</Nemesis_Dialog_Body_KilledAlly>
+  <Nemesis_Dialog_Body_Prisoner>把你们殖民地当作使命的人已被关押。\n\n决定接下来怎么办。</Nemesis_Dialog_Body_Prisoner>
+  <Nemesis_Dialog_Body_Slave>回应奴隶叛乱的猎人坐在你们的牢房里。\n\n了结——或推迟。</Nemesis_Dialog_Body_Slave>
+  <Nemesis_Dialog_Body_Fixation>执念于你们殖民者的人已被捕获。\n\n执念通常撑不过一扇锁上的门。通常如此。</Nemesis_Dialog_Body_Fixation>
+  <Nemesis_Dialog_Body_Wounded>那个拒绝死去的人终于静止了。\n\n你们接下来的决定，将决定这个故事是否终结。</Nemesis_Dialog_Body_Wounded>
+  <Nemesis_Dialog_Body_Default>{0}已被捕获。狩猎结束。\n\n你们现在的作为，将塑造之后发生的一切。</Nemesis_Dialog_Body_Default>
+  <Nemesis_Dialog_Execute>处决：永久了结。他们不会再来。善意也不会再有。</Nemesis_Dialog_Execute>
+  <Nemesis_Dialog_Release>释放：放他们走。现在不用付出代价。也许以后会。</Nemesis_Dialog_Release>
+  <Nemesis_Dialog_Keep>继续囚禁：他们留在牢房里。狩猎结束。暂时如此。</Nemesis_Dialog_Keep>
+  <Nemesis_Dialog_Truce>休战：暂停狩猎{0}天。游戏从未真正停止。</Nemesis_Dialog_Truce>
+
+  <Nemesis_Letter_ExecutedTitle>{0}：已处决</Nemesis_Letter_ExecutedTitle>
+  <Nemesis_Letter_ExecutedBody>了结了。{0}不会再来。\n\n{1}</Nemesis_Letter_ExecutedBody>
+  <Nemesis_Letter_ReleasedTitle>{0}：已释放</Nemesis_Letter_ReleasedTitle>
+  <Nemesis_Letter_ReleasedBody>你们放他们走了。{0}一言不发地离开。\n\n{1}</Nemesis_Letter_ReleasedBody>
+  <Nemesis_Letter_KeptTitle>{0}：留下</Nemesis_Letter_KeptTitle>
+  <Nemesis_Letter_KeptBody>{0}留在你们的监狱里。狩猎结束。怎么处置他们是你们的事。</Nemesis_Letter_KeptBody>
+  <Nemesis_Letter_TruceTitle>{0}：休战</Nemesis_Letter_TruceTitle>
+  <Nemesis_Letter_TruceBody>你们与{0}达成了暂时的和平。他们暂时离开。\n\n{1}个游戏日后，狩猎将重新开始。他们从未真正停下。</Nemesis_Letter_TruceBody>
+
+</LanguageData>

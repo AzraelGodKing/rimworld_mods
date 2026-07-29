@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Wellspring_Water.label>вода</Wellspring_Water.label>
+  <Wellspring_Water.description>Тяжёлый кувшин свежей воды из колодца или дождевой бочки. Подаётся по траншеям на пашню для полива. Жизнь на Ободе крутится вокруг неё.</Wellspring_Water.description>
+  <Wellspring_BoiledWater.label>кипячёная вода</Wellspring_BoiledWater.label>
+  <Wellspring_BoiledWater.description>Вода, прокипячённая на огне и разлитая ещё тёплой. Безопасна, чуть минеральна и странно успокаивает — скромнейший напиток фронтира.</Wellspring_BoiledWater.description>
+  <Wellspring_MudBricks.label>саманные кирпичи</Wellspring_MudBricks.label>
+  <Wellspring_MudBricks.description>Саманные кирпичи из размоченной земли и соломы, высушенные на солнце. Дешевле и быстрее камня, но далеко не так прочны.</Wellspring_MudBricks.description>
+  <Wellspring_CleanBandages.label>чистые бинты</Wellspring_CleanBandages.label>
+  <Wellspring_CleanBandages.description>Полосы ткани, прокипячённые в чистой воде и туго свёрнутые. Не настоящее лекарство, но куда лучше грязной рубашки на ране.</Wellspring_CleanBandages.description>
+
+</LanguageData>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Wellspring_DrawWater.label>打水</Wellspring_DrawWater.label>
+  <Wellspring_DrawWater.description>把水桶绞下去，打上几罐淡水。</Wellspring_DrawWater.description>
+  <Wellspring_DrawWater.jobString>正在打水。</Wellspring_DrawWater.jobString>
+  <Wellspring_DrawWaterDeep.label>从深处打水</Wellspring_DrawWaterDeep.label>
+  <Wellspring_DrawWaterDeep.description>把宽口桶绞过浅层地下水，打上沉重的一大桶淡水。</Wellspring_DrawWaterDeep.description>
+  <Wellspring_DrawWaterDeep.jobString>正在打水。</Wellspring_DrawWaterDeep.jobString>
+  <Wellspring_BoilWater.label>煮水</Wellspring_BoilWater.label>
+  <Wellspring_BoilWater.description>在火上把罐装水煮沸消毒。</Wellspring_BoilWater.description>
+  <Wellspring_BoilWater.jobString>正在煮水。</Wellspring_BoilWater.jobString>
+  <Wellspring_MakeMudBricks.label>制作泥砖</Wellspring_MakeMudBricks.label>
+  <Wellspring_MakeMudBricks.description>把水和稻草和进泥土，塑成砖块，放在阳光下晒硬。</Wellspring_MakeMudBricks.description>
+  <Wellspring_MakeMudBricks.jobString>正在制作泥砖。</Wellspring_MakeMudBricks.jobString>
+  <Wellspring_MakeCleanBandages.label>制作干净绷带</Wellspring_MakeCleanBandages.label>
+  <Wellspring_MakeCleanBandages.description>用净水煮沸布条，卷成结实的绷带。</Wellspring_MakeCleanBandages.description>
+  <Wellspring_MakeCleanBandages.jobString>正在制作干净绷带。</Wellspring_MakeCleanBandages.jobString>
+
+</LanguageData>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_MillFlour.label>磨面粉</Homesteader_MillFlour.label>
+  <Homesteader_MillFlour.description>将原料植物和谷物磨成面粉。</Homesteader_MillFlour.description>
+  <Homesteader_MillFlour.jobString>正在磨面粉。</Homesteader_MillFlour.jobString>
+  <Homesteader_ChurnButter.label>搅制黄油</Homesteader_ChurnButter.label>
+  <Homesteader_ChurnButter.description>搅动撇出的奶油，使其分离成黄油和酪乳。</Homesteader_ChurnButter.description>
+  <Homesteader_ChurnButter.jobString>正在搅制黄油。</Homesteader_ChurnButter.jobString>
+  <Homesteader_SkimCream.label>撇取奶油</Homesteader_SkimCream.label>
+  <Homesteader_SkimCream.description>让鲜奶静置沉淀，撇取浓厚的奶油。</Homesteader_SkimCream.description>
+  <Homesteader_SkimCream.jobString>正在撇取奶油。</Homesteader_SkimCream.jobString>
+  <Homesteader_PressCheese.label>压制奶酪</Homesteader_PressCheese.label>
+  <Homesteader_PressCheese.description>用盐使奶油凝结，压制成可久存的农家奶酪轮。</Homesteader_PressCheese.description>
+  <Homesteader_PressCheese.jobString>正在压制奶酪。</Homesteader_PressCheese.jobString>
+  <Homesteader_BakeBread.label>烤面包</Homesteader_BakeBread.label>
+  <Homesteader_BakeBread.description>用家园面粉和一小块黄油烤制简单的面包。</Homesteader_BakeBread.description>
+  <Homesteader_BakeBread.jobString>正在烤面包。</Homesteader_BakeBread.jobString>
+  <Homesteader_BakeHardtack.label>烤硬饼干</Homesteader_BakeHardtack.label>
+  <Homesteader_BakeHardtack.description>将面粉烤成坚硬如石的饼干，可存放数月。</Homesteader_BakeHardtack.description>
+  <Homesteader_BakeHardtack.jobString>正在烤硬饼干。</Homesteader_BakeHardtack.jobString>
+  <Homesteader_CookTrailStew.label>煮旅途炖菜</Homesteader_CookTrailStew.label>
+  <Homesteader_CookTrailStew.description>将肉干和干蔬果慢煮成饱腹的家园炖菜，并用干草药调味。</Homesteader_CookTrailStew.description>
+  <Homesteader_CookTrailStew.jobString>正在煮旅途炖菜。</Homesteader_CookTrailStew.jobString>
+  <Homesteader_CookHeartyStew.label>煮丰盛炖菜</Homesteader_CookHeartyStew.label>
+  <Homesteader_CookHeartyStew.description>将烟熏肉和腌菜慢煮成浓郁暖心的炖菜，最后用干草药收尾。</Homesteader_CookHeartyStew.description>
+  <Homesteader_CookHeartyStew.jobString>正在煮丰盛炖菜。</Homesteader_CookHeartyStew.jobString>
+  <Homesteader_MakeToastAndJam.label>制作果酱吐司</Homesteader_MakeToastAndJam.label>
+  <Homesteader_MakeToastAndJam.description>烤家园面包，厚厚涂上一层储藏室果酱。</Homesteader_MakeToastAndJam.description>
+  <Homesteader_MakeToastAndJam.jobString>正在制作果酱吐司。</Homesteader_MakeToastAndJam.jobString>
+  <Homesteader_MakePloughmansLunch.label>制作农夫午餐</Homesteader_MakePloughmansLunch.label>
+  <Homesteader_MakePloughmansLunch.description>将面包、奶酪和腌菜拼成经典的农家拼盘。</Homesteader_MakePloughmansLunch.description>
+  <Homesteader_MakePloughmansLunch.jobString>正在制作农夫午餐。</Homesteader_MakePloughmansLunch.jobString>
+  <Homesteader_CookHoneyPorridge.label>煮蜂蜜粥</Homesteader_CookHoneyPorridge.label>
+  <Homesteader_CookHoneyPorridge.description>将谷物慢煮成粥，再淋上充足的蜂蜜。</Homesteader_CookHoneyPorridge.description>
+  <Homesteader_CookHoneyPorridge.jobString>正在煮蜂蜜粥。</Homesteader_CookHoneyPorridge.jobString>
+
+</LanguageData>

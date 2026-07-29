@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_MakeJerky.label>делать вяленое мясо</Homesteader_MakeJerky.label>
+  <Homesteader_MakeJerky.description>Нарезать сырое мясо тонкими полосками и высушить в долгохранящееся вяленое мясо.</Homesteader_MakeJerky.description>
+  <Homesteader_MakeJerky.jobString>Делает вяленое мясо.</Homesteader_MakeJerky.jobString>
+  <Homesteader_MakeDriedProduce.label>сушить овощи и фрукты</Homesteader_MakeDriedProduce.label>
+  <Homesteader_MakeDriedProduce.description>Нарезать фрукты и овощи тонко и высушить на воздухе для долгого хранения.</Homesteader_MakeDriedProduce.description>
+  <Homesteader_MakeDriedProduce.jobString>Сушит овощи и фрукты.</Homesteader_MakeDriedProduce.jobString>
+  <Homesteader_MakeFruitLeather.label>делать фруктовую пастилу</Homesteader_MakeFruitLeather.label>
+  <Homesteader_MakeFruitLeather.description>Тонко размазать фруктовое пюре и высушить в сладкие жевательные листы для похода.</Homesteader_MakeFruitLeather.description>
+  <Homesteader_MakeFruitLeather.jobString>Делает фруктовую пастилу.</Homesteader_MakeFruitLeather.jobString>
+  <Homesteader_MakeDriedMushrooms.label>сушить грибы</Homesteader_MakeDriedMushrooms.label>
+  <Homesteader_MakeDriedMushrooms.description>Нарезать собранные грибы тонко и высушить на воздухе для долгого хранения.</Homesteader_MakeDriedMushrooms.description>
+  <Homesteader_MakeDriedMushrooms.jobString>Сушит грибы.</Homesteader_MakeDriedMushrooms.jobString>
+  <Homesteader_MakePemmican.label>делать пеммикан</Homesteader_MakePemmican.label>
+  <Homesteader_MakePemmican.description>Смешать сушёное мясо с растительной массой в плотный долгохранящийся пеммикан — без отдельного исследования.</Homesteader_MakePemmican.description>
+  <Homesteader_MakePemmican.jobString>Делает пеммикан.</Homesteader_MakePemmican.jobString>
+  <Homesteader_MakeRockSalt.label>добывать каменную соль</Homesteader_MakeRockSalt.label>
+  <Homesteader_MakeRockSalt.description>Отколоть крупные кристаллы соли от каменных обломков.</Homesteader_MakeRockSalt.description>
+  <Homesteader_MakeRockSalt.jobString>Добывает каменную соль.</Homesteader_MakeRockSalt.jobString>
+  <Homesteader_CureMeat.label>солить мясо</Homesteader_CureMeat.label>
+  <Homesteader_CureMeat.description>Упаковать сырое мясо в каменную соль до просолки. Хранится дольше свежего и всё ещё годится для блюд.</Homesteader_CureMeat.description>
+  <Homesteader_CureMeat.jobString>Солит мясо.</Homesteader_CureMeat.jobString>
+  <Homesteader_SmokeMeat.label>коптить мясо</Homesteader_SmokeMeat.label>
+  <Homesteader_SmokeMeat.description>Прокоптить сырое мясо в древесном дыму — хранится около месяца. Копчёное мясо всё ещё годится для блюд.</Homesteader_SmokeMeat.description>
+  <Homesteader_SmokeMeat.jobString>Коптит мясо.</Homesteader_SmokeMeat.jobString>
+  <Homesteader_MakePickledVegetables.label>делать маринованные овощи</Homesteader_MakePickledVegetables.label>
+  <Homesteader_MakePickledVegetables.description>Сбродить сырые овощи в рассоле для долгого хранения в кладовой.</Homesteader_MakePickledVegetables.description>
+  <Homesteader_MakePickledVegetables.jobString>Маринует овощи.</Homesteader_MakePickledVegetables.jobString>
+  <Homesteader_MakeJam.label>варить джем</Homesteader_MakeJam.label>
+  <Homesteader_MakeJam.description>Уварить фрукты с сахаром, мёдом или кленовым сиропом в густое сладкое варенье, которое хранится месяцами.</Homesteader_MakeJam.description>
+  <Homesteader_MakeJam.jobString>Варит джем.</Homesteader_MakeJam.jobString>
+
+</LanguageData>

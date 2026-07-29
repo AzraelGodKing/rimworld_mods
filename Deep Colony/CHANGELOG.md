@@ -4,6 +4,9 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ## [Unreleased]
 
+### Added
+- **Chinese Simplified & Russian language packs** — full Keyed + DefInjected translations (perks, trauma, mentoring, inheritance, jobs, thoughts).
+
 ### Changed
 - **Public release** — docs site declassified (`docs/deep-colony.html`); Steam Workshop + `DeepColony.zip` on the rolling GitHub `latest` release; `PublishedFileId.txt` checked in. Mystery `ledger.html` redirects here.
 - **Workshop preview** — compressed `About/Preview.png` (~1.63 MB → ~0.38 MB) so Steam Workshop accepts it (Preview must be under 1 MB).

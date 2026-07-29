@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_RawBarley.label>大麦</Homesteader_RawBarley.label>
+  <Homesteader_RawBarley.description>生大麦粒。可磨成面粉、煮成粥，走投无路时也能生吃。</Homesteader_RawBarley.description>
+  <Homesteader_RawPumpkin.label>南瓜</Homesteader_RawPumpkin.label>
+  <Homesteader_RawPumpkin.description>一块生南瓜。单独吃寡淡无味，但能做成饱腹的饭菜，也适合腌制。</Homesteader_RawPumpkin.description>
+  <Homesteader_DriedHerbs.label>干香草</Homesteader_DriedHerbs.label>
+  <Homesteader_DriedHerbs.description>一束芬芳的厨房香草。用来泡草本茶，也为农庄烹饪调味。</Homesteader_DriedHerbs.description>
+  <Homesteader_SugarBeet.label>甜菜</Homesteader_SugarBeet.label>
+  <Homesteader_SugarBeet.description>致密而甜美的根茎蔬菜。可在谷物磨上碾出糖，急需时也能生吃。</Homesteader_SugarBeet.description>
+  <Homesteader_Sugar.label>糖</Homesteader_Sugar.label>
+  <Homesteader_Sugar.description>从甜菜中提炼出的结晶糖。用来做果酱、给粥加甜，以及发酵苹果酒——蜂蜜和枫糖浆亦可代替。</Homesteader_Sugar.description>
+  <Homesteader_Honey.label>蜂蜜</Homesteader_Honey.label>
+  <Homesteader_Honey.description>从蜂巢采集的金色蜂蜜。永不腐坏。可为果酱、粥和苹果酒加甜，能煮成蜂蜜粥，也能发酵成蜜酒。</Homesteader_Honey.description>
+
+</LanguageData>

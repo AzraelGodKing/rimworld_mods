@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Plant_Barley.label>大麦植株</Homesteader_Plant_Barley.label>
+  <Homesteader_Plant_Barley.description>耐寒的谷物，能适应凉爽气候。收获的大麦可磨成面粉、煮成粥或用于酿造。</Homesteader_Plant_Barley.description>
+  <Homesteader_Plant_Pumpkin.label>南瓜植株</Homesteader_Plant_Pumpkin.label>
+  <Homesteader_Plant_Pumpkin.description>蔓延的藤蔓，结出硕大的橙色南瓜。生长缓慢，但每次收获都很丰盛。</Homesteader_Plant_Pumpkin.description>
+  <Homesteader_Plant_Herbs.label>香草丛</Homesteader_Plant_Herbs.label>
+  <Homesteader_Plant_Herbs.description>芬芳的厨房香草丛。收获的香草干燥后用于烹饪和泡草本茶。</Homesteader_Plant_Herbs.description>
+  <Homesteader_Plant_SugarBeet.label>甜菜植株</Homesteader_Plant_SugarBeet.label>
+  <Homesteader_Plant_SugarBeet.description>为高含糖量培育的粗根甜菜。在谷物磨上碾出糖。</Homesteader_Plant_SugarBeet.description>
+  <Homesteader_Plant_Flax.label>亚麻植株</Homesteader_Plant_Flax.label>
+  <Homesteader_Plant_Flax.description>开蓝花的纤维作物。收获的茎秆打碎成亚麻纤维供纺车使用。在果园工艺或纺织研究后生长最佳。</Homesteader_Plant_Flax.description>
+
+</LanguageData>

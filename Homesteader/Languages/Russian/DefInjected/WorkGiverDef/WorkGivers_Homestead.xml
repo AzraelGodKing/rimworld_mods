@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_DoBillsCook.label>выполнять заказы на производстве усадьбы</Homesteader_DoBillsCook.label>
+  <Homesteader_DoBillsCook.gerund>работая у</Homesteader_DoBillsCook.gerund>
+  <Homesteader_DoBillsCook.verb>работать у</Homesteader_DoBillsCook.verb>
+  <Homesteader_DoBillsCraft.label>выполнять заказы в мастерской усадьбы</Homesteader_DoBillsCraft.label>
+  <Homesteader_DoBillsCraft.gerund>изготавливая у</Homesteader_DoBillsCraft.gerund>
+  <Homesteader_DoBillsCraft.verb>изготавливать у</Homesteader_DoBillsCraft.verb>
+
+</LanguageData>

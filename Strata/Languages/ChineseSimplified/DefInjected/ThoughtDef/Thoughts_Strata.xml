@@ -7,4 +7,19 @@
   <Strata_DeepBedroom.stages_1.label>深层极致气派卧室</Strata_DeepBedroom.stages_1.label>
   <Strata_DeepBedroom.stages_1.description>我睡在原生岩中凿出的出色腔室里。没几个贵族比得上这个。</Strata_DeepBedroom.stages_1.description>
 
+  <Strata_UpperDeckView.stages_0.label>屋顶景观</Strata_UpperDeckView.stages_0.label>
+  <Strata_UpperDeckView.stages_0.description>从这里能俯瞰整个基地。居高临下有种满足感。</Strata_UpperDeckView.stages_0.description>
+
+  <Strata_Suffocation.stages_0.label>空气稀薄</Strata_Suffocation.stages_0.label>
+  <Strata_Suffocation.stages_0.description>这里的空气感觉很稀薄。我需要通风、植物或氧气泵。</Strata_Suffocation.stages_0.description>
+
+  <Strata_Suffocation.stages_1.label>窒息</Strata_Suffocation.stages_1.label>
+  <Strata_Suffocation.stages_1.description>我几乎喘不过气。这个密封腔室的氧气快耗尽了。</Strata_Suffocation.stages_1.description>
+
+  <Strata_StuffyAir.stages_0.label>空气闷浊</Strata_StuffyAir.stages_0.label>
+  <Strata_StuffyAir.stages_0.description>空气里满是呼出的浊气。我们需要二氧化碳洗涤器或出路。</Strata_StuffyAir.stages_0.description>
+
+  <Strata_StuffyAir.stages_1.label>被二氧化碳呛住</Strata_StuffyAir.stages_1.label>
+  <Strata_StuffyAir.stages_1.description>二氧化碳在这间房积聚。我头痛欲裂。</Strata_StuffyAir.stages_1.description>
+
 </LanguageData>

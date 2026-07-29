@@ -59,10 +59,10 @@ namespace Strata
                 return rocks[0];
             }
 
-            // Single octave — mixed patches without a second Perlin per cell.
+            // ConstantRandSeed so rock patches match the map seed (not uniqueID).
             float n = Mathf.PerlinNoise(
-                (cell.x + map.uniqueID * 0.17f) * PatchScale,
-                (cell.z + map.uniqueID * 0.31f) * PatchScale);
+                (cell.x + map.ConstantRandSeed * 0.17f) * PatchScale,
+                (cell.z + map.ConstantRandSeed * 0.31f) * PatchScale);
             int idx = Mathf.Clamp(Mathf.FloorToInt(n * rocks.Count), 0, rocks.Count - 1);
             return rocks[idx];
         }

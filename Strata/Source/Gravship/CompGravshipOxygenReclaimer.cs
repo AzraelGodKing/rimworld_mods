@@ -36,7 +36,7 @@ namespace Strata
             {
                 return;
             }
-            if (!StrataMod.Settings.NaturalGasesActive)
+            if (StrataMod.Settings?.NaturalGasesActive != true)
             {
                 return;
             }
@@ -53,7 +53,7 @@ namespace Strata
             StrataGasDef o2 = StrataGasDefOf.Strata_Oxygen;
             if (room != null && atmo != null && o2 != null && !room.UsesOutdoorTemperature)
             {
-                atmo.AddGasToRoomPublic(room, o2, Props.producePerRareTick * 0.08f, parent.Position);
+                atmo.AddGasToRoomPublic(room, o2, Props.producePerRareTick * 0.08f, parent.Position, bypassCap: true);
             }
         }
 

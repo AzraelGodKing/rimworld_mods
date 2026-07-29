@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Wellspring_HandDugWell.label>手挖井</Wellspring_HandDugWell.label>
+  <Wellspring_HandDugWell.description>石砌井壁，配有木绞盘与水桶。殖民者用手打上罐装淡水——缓慢而踏实的劳作，只要脚下有地就能用。</Wellspring_HandDugWell.description>
+  <Wellspring_RainBarrel.label>雨水桶</Wellspring_RainBarrel.label>
+  <Wellspring_RainBarrel.description>带盖木桶，缓慢收集雨水与晨露。便宜、被动，每条屋檐下都该有一个。放在室外效果最好。</Wellspring_RainBarrel.description>
+  <Wellspring_Cistern.label>蓄水池</Wellspring_Cistern.label>
+  <Wellspring_Cistern.description>宽大有盖的石槽，用于囤积水，桶不会洒、阳光晒不到。可存放八堆水。</Wellspring_Cistern.description>
+  <Wellspring_DeepWell.label>深井</Wellspring_DeepWell.label>
+  <Wellspring_DeepWell.description>加固竖井，深达浅层地下水之下，配有沉重钢绞盘与大桶。每次提水远多于手挖井。</Wellspring_DeepWell.description>
+  <Wellspring_SolarStill.label>太阳能蒸馏器</Wellspring_SolarStill.label>
+  <Wellspring_SolarStill.description>铺着兽皮与玻璃的浅坑，从地面与空气中逼出水分，一滴滴冷凝。缓慢，但即使从不下雨的地方也能用。</Wellspring_SolarStill.description>
+  <Wellspring_WaterTower.label>水塔</Wellspring_WaterTower.label>
+  <Wellspring_WaterTower.description>高高的木架水箱，立在粗壮腿上，把大量备用水抬离日晒与泥地。可存放十六堆。</Wellspring_WaterTower.description>
+  <Wellspring_StoneFountain.label>石喷泉</Wellspring_StoneFountain.label>
+  <Wellspring_StoneFountain.description>雕花石盆，中央缓缓喷出一缕水柱。除了提醒所有人殖民地水够用之外别无用途——而这正是重点。</Wellspring_StoneFountain.description>
+  <Wellspring_IrrigatedPlanter.label>灌溉种植箱</Wellspring_IrrigatedPlanter.label>
+  <Wellspring_IrrigatedPlanter.description>深木种植箱，底部嵌有蓄水槽。在肥沃、持续湿润的土壤中种植单株作物——一小块可放在任何地方的灌溉田，甚至室内。</Wellspring_IrrigatedPlanter.description>
+
+</LanguageData>

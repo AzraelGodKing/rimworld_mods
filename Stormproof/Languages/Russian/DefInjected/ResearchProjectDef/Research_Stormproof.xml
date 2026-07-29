@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Stormproof_StormProtection.label>защита от штормов</Stormproof_StormProtection.label>
+  <Stormproof_StormProtection.description>Заземляющие шпили, автоматы и усиленные кабели для защиты электросети от ударов молний и коротких замыканий.</Stormproof_StormProtection.description>
+  <Stormproof_FlareShielding.label>защита от вспышек</Stormproof_FlareShielding.label>
+  <Stormproof_FlareShielding.description>Генераторы поля, отклоняющие радиацию солнечных вспышек и гасящие электромагнитные импульсы, чтобы электроника пережила самое худшее, что может дать небо.</Stormproof_FlareShielding.description>
+  <Stormproof_AtmosphericControl.label>атмосферный контроль</Stormproof_AtmosphericControl.label>
+  <Stormproof_AtmosphericControl.description>Техники возмущения ионосферы, позволяющие колонии вызвать грозу по команде. Предупреждение: побочные эффекты включают драматичную погоду, сытые штормовые шпили и самодовольных колонистов.</Stormproof_AtmosphericControl.description>
+  <Stormproof_PerfectGrounding.label>идеальное заземление</Stormproof_PerfectGrounding.label>
+  <Stormproof_PerfectGrounding.description>Сверхпроводящие земные якоря и самобалансирующие регуляторы нагрузки, позволяющие штормовому шпилю сбросить весь удар молнии в сеть без единого случайного скачка. Устраняет риск скачков «Zzzt!» от подключённых к сети штормовых шпилей.</Stormproof_PerfectGrounding.description>
+  <Stormproof_HazardHardening.label>защита от бедствий</Stormproof_HazardHardening.label>
+  <Stormproof_HazardHardening.description>Атмосферная и климатическая защита масштаба колонии: токсичные барьеры, стабилизаторы температуры, восстановители неба, излучатели противопожарных рубежей при вспышках и засушливые конденсаторы. Поздняя инфраструктура, позволяющая хорошо питаемой базе пережить большинство природных катаклизмов Окраины.</Stormproof_HazardHardening.description>
+
+</LanguageData>

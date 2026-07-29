@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Wellspring_HandDugWell.label>колодец ручной копки</Wellspring_HandDugWell.label>
+  <Wellspring_HandDugWell.description>Каменный колодец с деревянным воротом и ведром. Колонисты вручную набирают кувшины пресной воды — медленный честный труд, работающий везде, где под ногами есть земля.</Wellspring_HandDugWell.description>
+  <Wellspring_RainBarrel.label>бочка для дождевой воды</Wellspring_RainBarrel.label>
+  <Wellspring_RainBarrel.description>Деревянная бочка с крышкой, медленно собирающая дождевую воду и утреннюю росу. Дешёвая, пассивная — у каждой кровли должна быть своя. Лучше всего работает на улице.</Wellspring_RainBarrel.description>
+  <Wellspring_Cistern.label>цистерна</Wellspring_Cistern.label>
+  <Wellspring_Cistern.description>Широкий крытый каменный резервуар для запасов воды, где вёдра не прольются и солнце не достанет. Вмещает восемь стопок воды.</Wellspring_Cistern.description>
+  <Wellspring_DeepWell.label>глубокий колодец</Wellspring_DeepWell.label>
+  <Wellspring_DeepWell.description>Усиленная шахта, уходящая далеко ниже мелких грунтовых вод, с тяжёлым стальным воротом и широким ведром. Каждый подъём приносит куда больше воды, чем колодец ручной копки.</Wellspring_DeepWell.description>
+  <Wellspring_SolarStill.label>солнечный дистиллятор</Wellspring_SolarStill.label>
+  <Wellspring_SolarStill.description>Неглубокая яма, выстланная шкурой и стеклом, вытягивающая влагу из земли и воздуха и конденсирующая её капля за каплей. Медленно, но работает даже там, где никогда не бывает дождя.</Wellspring_SolarStill.description>
+  <Wellspring_WaterTower.label>водонапорная башня</Wellspring_WaterTower.label>
+  <Wellspring_WaterTower.description>Высокий деревянный бак на крепких ногах, держащий серьёзный запас воды вдали от солнца и грязи. Вмещает шестнадцать стопок.</Wellspring_WaterTower.description>
+  <Wellspring_StoneFountain.label>каменный фонтан</Wellspring_StoneFountain.label>
+  <Wellspring_StoneFountain.description>Резной каменный бассейн с мягким фонтанчиком воды в центре. Ни для чего не нужен, кроме как напоминать всем, что у колонии воды с избытком — а в этом и весь смысл.</Wellspring_StoneFountain.description>
+  <Wellspring_IrrigatedPlanter.label>орошаемая грядка</Wellspring_IrrigatedPlanter.label>
+  <Wellspring_IrrigatedPlanter.description>Глубокий деревянный ящик-грядка с резервуаром для воды в основании. Выращивает одну культуру в богатой, постоянно влажной почве — маленькое орошаемое поле, которое можно поставить куда угодно, даже в помещении.</Wellspring_IrrigatedPlanter.description>
+
+</LanguageData>

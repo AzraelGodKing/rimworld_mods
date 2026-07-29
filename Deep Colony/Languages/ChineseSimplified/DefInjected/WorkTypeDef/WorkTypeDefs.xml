@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Mentoring.description>通过主动指导课程教导指定学徒。</DC_Mentoring.description>
+  <DC_Mentoring.labelShort>指导</DC_Mentoring.labelShort>
+  <DC_Mentoring.verb>指导</DC_Mentoring.verb>
+  <DC_Mentoring.pawnLabel>导师</DC_Mentoring.pawnLabel>
+
+</LanguageData>

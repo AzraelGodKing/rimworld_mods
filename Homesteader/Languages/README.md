@@ -4,6 +4,8 @@ English text for **items, buildings, recipes, research, plants, incidents, and t
 
 C# strings (wash tub rejection, passive cooler inspect, Tastes tab, Kats Effect letter body) are in `Languages/English/Keyed/Homesteader.xml`.
 
+**Shipped:** `ChineseSimplified` and `Russian` include Keyed + full DefInjected packs.
+
 ## Add a language (example: Russian)
 
 ```

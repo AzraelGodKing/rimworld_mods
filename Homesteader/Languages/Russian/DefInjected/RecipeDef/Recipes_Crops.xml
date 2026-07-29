@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_CookPorridge.label>варить кашу</Homesteader_CookPorridge.label>
+  <Homesteader_CookPorridge.description>Варить зерно в тёплую сытную кашу, подслащённую сахаром, мёдом или кленовым сиропом.</Homesteader_CookPorridge.description>
+  <Homesteader_CookPorridge.jobString>Варит кашу.</Homesteader_CookPorridge.jobString>
+  <Homesteader_MillSugar.label>молоть сахар</Homesteader_MillSugar.label>
+  <Homesteader_MillSugar.description>Раздавить сахарную свёклу и выпарить сок до кристаллического сахара.</Homesteader_MillSugar.description>
+  <Homesteader_MillSugar.jobString>Мелет сахар.</Homesteader_MillSugar.jobString>
+
+</LanguageData>
