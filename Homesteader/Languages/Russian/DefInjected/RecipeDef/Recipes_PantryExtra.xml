@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_BakePumpkinPie.label>печь тыквенный пирог</Homesteader_BakePumpkinPie.label>
+  <Homesteader_BakePumpkinPie.description>Испечь сладкий тыквенный пирог из пюре, муки, масла и подсластителя.</Homesteader_BakePumpkinPie.description>
+  <Homesteader_BakePumpkinPie.jobString>Печёт тыквенный пирог.</Homesteader_BakePumpkinPie.jobString>
+  <Homesteader_BakeButtermilkBiscuits.label>печь бисквиты на пахте</Homesteader_BakeButtermilkBiscuits.label>
+  <Homesteader_BakeButtermilkBiscuits.description>Испечь мягкие бисквиты из муки, пахты и масла.</Homesteader_BakeButtermilkBiscuits.description>
+  <Homesteader_BakeButtermilkBiscuits.jobString>Печёт бисквиты на пахте.</Homesteader_BakeButtermilkBiscuits.jobString>
+  <Homesteader_BrewCiderVinegar.label>варить яблочный уксус</Homesteader_BrewCiderVinegar.label>
+  <Homesteader_BrewCiderVinegar.description>Дать сидру прокиснуть в резкий яблочный уксус для маринования и готовки.</Homesteader_BrewCiderVinegar.description>
+  <Homesteader_BrewCiderVinegar.jobString>Варит яблочный уксус.</Homesteader_BrewCiderVinegar.jobString>
+  <Homesteader_BrewAppleCider.label>варить яблочный сидр</Homesteader_BrewAppleCider.label>
+  <Homesteader_BrewAppleCider.description>Отжать садовые яблоки с подсластителем в настоящий яблочный сидр — без ячменного сусла под видом фруктов.</Homesteader_BrewAppleCider.description>
+  <Homesteader_BrewAppleCider.jobString>Варит яблочный сидр.</Homesteader_BrewAppleCider.jobString>
+  <Homesteader_MakeVinegarPickles.label>делать уксусные соленья</Homesteader_MakeVinegarPickles.label>
+  <Homesteader_MakeVinegarPickles.description>Упаковать овощи в яблочный уксус — более резкая и долгохранящаяся засолка, чем один рассол.</Homesteader_MakeVinegarPickles.description>
+  <Homesteader_MakeVinegarPickles.jobString>Делает уксусные соленья.</Homesteader_MakeVinegarPickles.jobString>
+  <Homesteader_WaxCheese.label>вощить сыр</Homesteader_WaxCheese.label>
+  <Homesteader_WaxCheese.description>Запечатать круг сыра в пчелиный воск, чтобы он гораздо дольше хранился на полке.</Homesteader_WaxCheese.description>
+  <Homesteader_WaxCheese.jobString>Вощит сыр.</Homesteader_WaxCheese.jobString>
+  <Homesteader_SmokeCheese.label>коптить сыр</Homesteader_SmokeCheese.label>
+  <Homesteader_SmokeCheese.description>Холодно прокоптить фермерский сыр, пока он не покроется богатой дымной корочкой.</Homesteader_SmokeCheese.description>
+  <Homesteader_SmokeCheese.jobString>Коптит сыр.</Homesteader_SmokeCheese.jobString>
+  <Homesteader_RenderSoap.label>варить мыло</Homesteader_RenderSoap.label>
+  <Homesteader_RenderSoap.description>Вытопить пчелиный воск с маслом, салом или жиром в бруски хуторского мыла для настоящей стирки.</Homesteader_RenderSoap.description>
+  <Homesteader_RenderSoap.jobString>Варит мыло.</Homesteader_RenderSoap.jobString>
+
+</LanguageData>

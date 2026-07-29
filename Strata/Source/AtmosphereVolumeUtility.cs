@@ -15,6 +15,11 @@ namespace Strata
 
     public static class AtmosphereVolumeUtility
     {
+        // Alert/thought worry bands — slightly above hediff harm thresholds so
+        // UI warns before severity ramps hard (O₂ harm 0.12, CO₂ harm 0.18).
+        public const float OxygenWorryThreshold = 0.14f;
+        public const float CarbonDioxideWorryThreshold = 0.16f;
+
         public static AtmosphereVolumeKind KindForRoom(Map map, Room room)
         {
             if (map == null || room == null)

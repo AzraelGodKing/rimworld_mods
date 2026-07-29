@@ -102,6 +102,7 @@ namespace Strata
         private int breathableSeedRetryTick = -1;
         private int breathableSeedRoomCursor;
         private const int BreathableSeedRoomsPerTick = 16;
+        private bool wasBreathingActive;
 
         // Skip heavy O₂ grid work briefly after a level is created.
         private int atmosphereWarmupTick = -1;
@@ -219,6 +220,49 @@ namespace Strata
             return room != null && gas != null && clouds.TryGetValue(room.ID, out Cloud c)
                 ? c.density[gas.index]
                 : 0f;
+        }
+
+        // Breath/harm/UI density: missing cloud on a sealed room that should have
+        // air is treated as ambient — never as vacuum (0 → instant hypoxia).
+        public float EffectiveBreathDensity(Room room, StrataGasDef gas)
+        {
+            if (room == null || gas == null)
+            {
+                return 0f;
+            }
+            if (clouds.TryGetValue(room.ID, out Cloud c))
+            {
+                return c.density[gas.index];
+            }
+            if (!BreathingActive() || !AtmosphericMix.IsAtmosphericComponent(gas)
+                || room.UsesOutdoorTemperature)
+            {
+                return 0f;
+            }
+            bool needsAmbientFallback = AtmosphericMix.ForcesAmbientInEnclosedRooms(map)
+                || AtmosphereVolumeUtility.AllowsBreathMetabolism(map, room);
+            if (!needsAmbientFallback)
+            {
+                return 0f;
+            }
+            AtmosphericMix.TargetMix target = AtmosphericMix.TargetForMap(map);
+            if (gas == StrataGasDefOf.Strata_Oxygen)
+            {
+                return target.oxygen;
+            }
+            if (gas == StrataGasDefOf.Strata_CarbonDioxide)
+            {
+                return target.carbonDioxide;
+            }
+            if (gas == StrataGasDefOf.Strata_Nitrogen)
+            {
+                return target.nitrogen;
+            }
+            if (gas == StrataGasDefOf.Strata_Argon)
+            {
+                return target.argon;
+            }
+            return 0f;
         }
 
         public float DensityAtCell(IntVec3 cell, StrataGasDef gas)
@@ -410,14 +454,22 @@ namespace Strata
 
         private void MapComponentTickInner()
         {
+            bool breathing = BreathingActive();
+            if (breathing && !wasBreathingActive)
+            {
+                // Opt-in just enabled — force a fresh ambient seed pass.
+                breathableAirSeeded = false;
+                breathableSeedRetryTick = -1;
+                breathableSeedRoomCursor = 0;
+            }
+            wasBreathingActive = breathing;
+
             // Gases off + no clouds: zero work (do not keep sim alive for registered
             // emitters/vents — those comps idle when toggles are off).
             if (IsAtmosphereSimulationIdle())
             {
-                if (!BreathingActive())
-                {
-                    breathableAirSeeded = true;
-                }
+                // Do NOT mark breathableAirSeeded while gases are off — that
+                // permanently skipped seeding when the player later opts in.
                 return;
             }
 
@@ -428,7 +480,7 @@ namespace Strata
                 DrainPendingSeeds();
             }
 
-            if (!breathableAirSeeded && StrataMapUtility.IsUnderground(map) && !StrataDepth.IsStarterLevel(map))
+            if (!breathableAirSeeded && StrataMapUtility.IsUnderground(map))
             {
                 TrySeedBreathableAir();
             }
@@ -510,9 +562,8 @@ namespace Strata
                     }
                     ProcessDoorFlow();
                     RunDisperseClouds();
+                    // RunEmittersAndHazards already runs breathing + methane.
                     RunEmittersAndHazards(skipReplenishOxygen: StrataLevelPerfUtility.IsHibernating(map));
-                    ProcessRoomBreathingAndPlants();
-                    ProcessAnimalMethane();
                     break;
                 case 2:
                     FinishAtmosphereCycle();
@@ -577,7 +628,8 @@ namespace Strata
 
         private void RunAtmosphereSources()
         {
-            RunEmittersAndHazards(skipReplenishOxygen: false);
+            // Transport already replenished once this cycle.
+            RunEmittersAndHazards(skipReplenishOxygen: true);
         }
 
         private void RunEmittersAndHazards(bool skipReplenishOxygen)
@@ -1639,6 +1691,7 @@ namespace Strata
             if (StrataDepth.IsStarterLevel(map))
             {
                 SeedAllEnclosedRoomsWithAmbientMix();
+                breathableAirSeeded = true;
                 return;
             }
 
@@ -2054,6 +2107,11 @@ namespace Strata
         internal void AddGasToRoomPublic(Room room, StrataGasDef gas, float amount, IntVec3 sample)
         {
             AddGasToRoom(room, gas, amount, sample);
+        }
+
+        internal void AddGasToRoomPublic(Room room, StrataGasDef gas, float amount, IntVec3 sample, bool bypassCap)
+        {
+            AddGasToRoom(room, gas, amount, sample, bypassCap);
         }
 
         private bool CellHasSealedGasAirlock(IntVec3 cell)
@@ -2504,7 +2562,7 @@ namespace Strata
                     {
                         continue;
                     }
-                    float density = DensityInRoom(room, gas);
+                    float density = EffectiveBreathDensity(room, gas);
                     Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(gas.harmHediff);
                     if (gas.harmWhenBelow)
                     {

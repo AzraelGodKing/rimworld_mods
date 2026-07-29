@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Trauma_CombatShock.label>战斗冲击</DC_Trauma_CombatShock.label>
+  <DC_Trauma_CombatShock.description>在战斗中被突然击倒的暴力冲击。</DC_Trauma_CombatShock.description>
+  <DC_Trauma_CombatShock.triggerMessage>在战斗中被击倒</DC_Trauma_CombatShock.triggerMessage>
+  <DC_Trauma_ViolentLoss.label>暴力丧亲</DC_Trauma_ViolentLoss.label>
+  <DC_Trauma_ViolentLoss.description>目睹亲近同伴惨死。</DC_Trauma_ViolentLoss.description>
+  <DC_Trauma_ViolentLoss.triggerMessage>目睹亲近同伴惨死</DC_Trauma_ViolentLoss.triggerMessage>
+  <DC_Trauma_Captivity.label>囚禁创伤</DC_Trauma_Captivity.label>
+  <DC_Trauma_Captivity.description>长期囚禁留下的心理伤痕。</DC_Trauma_Captivity.description>
+  <DC_Trauma_Captivity.triggerMessage>遭受了囚禁创伤</DC_Trauma_Captivity.triggerMessage>
+  <DC_Trauma_Massacre.label>屠杀幸存者</DC_Trauma_Massacre.label>
+  <DC_Trauma_Massacre.description>在一次夺走众多同伴性命的袭击中幸存。</DC_Trauma_Massacre.description>
+  <DC_Trauma_Massacre.triggerMessage>在屠杀中幸存</DC_Trauma_Massacre.triggerMessage>
+  <DC_Trauma_BereavementShock.label>丧亲冲击</DC_Trauma_BereavementShock.label>
+  <DC_Trauma_BereavementShock.description>短时间内突然失去多名亲近同伴。</DC_Trauma_BereavementShock.description>
+  <DC_Trauma_BereavementShock.triggerMessage>短时间内失去多名同伴</DC_Trauma_BereavementShock.triggerMessage>
+
+</LanguageData>

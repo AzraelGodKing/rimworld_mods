@@ -2,7 +2,11 @@
 
 English player-facing text for **buildings, research, incidents, and defs** lives in `Stormproof/Defs/` (labels and descriptions there are the English source).
 
-Strings from C# (messages, gizmo labels, inspect panels, mod settings) are listed in `Languages/English/Keyed/Stormproof.xml`. Translators should copy that file into a new language folder and translate the **values**, keeping the **tag names** unchanged.
+Strings from C# (messages, gizmo labels, inspect panels, mod settings) are listed in `Languages/English/Keyed/Stormproof.xml`.
+
+**Shipped:** `ChineseSimplified` and `Russian` include Keyed + DefInjected packs.
+
+Translators should copy the English Keyed file into a new language folder and translate the **values**, keeping the **tag names** unchanged.
 
 ## Add a language (example: Russian)
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_BoilMapleSyrup.label>熬煮枫糖浆</Homesteader_BoilMapleSyrup.label>
+  <Homesteader_BoilMapleSyrup.description>在炉火上熬煮枫树汁，直至浓稠成琥珀色糖浆。</Homesteader_BoilMapleSyrup.description>
+  <Homesteader_BoilMapleSyrup.jobString>正在熬煮枫糖浆。</Homesteader_BoilMapleSyrup.jobString>
+  <Homesteader_BakeFlapjacks.label>烤薄饼</Homesteader_BakeFlapjacks.label>
+  <Homesteader_BakeFlapjacks.description>用面粉面糊和黄油在平底锅上烙薄饼，再淋上枫糖浆。</Homesteader_BakeFlapjacks.description>
+  <Homesteader_BakeFlapjacks.jobString>正在烤薄饼。</Homesteader_BakeFlapjacks.jobString>
+
+</LanguageData>

@@ -4,6 +4,11 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Homesteader** — Chinese Simplified and Russian Keyed + DefInjected language packs. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
+- **Stormproof** — Chinese Simplified and Russian Keyed + DefInjected language packs. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
+- **Deep Colony** — Chinese Simplified and Russian Keyed + DefInjected language packs. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Nemesis** — full Chinese Simplified and Russian keyed translation packs. → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md)
+- **Strata** — atmosphere V3.5 bugfix (seed/hypoxia/lite/replenish) + CN/RU localization fill (`atmosphere-v35-bugfix`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — atmosphere V3.5 room-volume rewrite; gases remain opt-in default OFF (`atmosphere-v35`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — dig/first descent no longer hard-freezes on large maps; rock fill yields in a LongEvent (`dig-open-yield-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — safe off-thread atmosphere + rock/cavern plan helpers (`offthread-safe-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)

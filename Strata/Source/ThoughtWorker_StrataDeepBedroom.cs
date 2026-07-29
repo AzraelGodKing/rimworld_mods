@@ -58,8 +58,6 @@ namespace Strata
     // B1+ sealed rooms: low O₂ mood (natural gases opt-in).
     public class ThoughtWorker_StrataSuffocation : ThoughtWorker
     {
-        private const float O2Worry = 0.14f;
-
         protected override ThoughtState CurrentStateInternal(Pawn pawn)
         {
             if (pawn?.Map == null || !pawn.RaceProps.Humanlike
@@ -81,8 +79,8 @@ namespace Strata
             {
                 return ThoughtState.Inactive;
             }
-            float o2 = atmo.DensityInRoom(room, StrataGasDefOf.Strata_Oxygen);
-            if (o2 <= 0f || o2 >= O2Worry)
+            float o2 = atmo.EffectiveBreathDensity(room, StrataGasDefOf.Strata_Oxygen);
+            if (o2 >= AtmosphereVolumeUtility.OxygenWorryThreshold)
             {
                 return ThoughtState.Inactive;
             }
@@ -92,8 +90,6 @@ namespace Strata
 
     public class ThoughtWorker_StrataStuffyAir : ThoughtWorker
     {
-        private const float Co2Worry = 0.14f;
-
         protected override ThoughtState CurrentStateInternal(Pawn pawn)
         {
             if (pawn?.Map == null || !pawn.RaceProps.Humanlike
@@ -115,8 +111,8 @@ namespace Strata
             {
                 return ThoughtState.Inactive;
             }
-            float co2 = atmo.DensityInRoom(room, StrataGasDefOf.Strata_CarbonDioxide);
-            if (co2 < Co2Worry)
+            float co2 = atmo.EffectiveBreathDensity(room, StrataGasDefOf.Strata_CarbonDioxide);
+            if (co2 < AtmosphereVolumeUtility.CarbonDioxideWorryThreshold)
             {
                 return ThoughtState.Inactive;
             }

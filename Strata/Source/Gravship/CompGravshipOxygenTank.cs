@@ -74,6 +74,11 @@ namespace Strata
                 return;
             }
 
+            if (StrataMod.Settings?.NaturalGasesActive != true)
+            {
+                return;
+            }
+
             Room room = parent.GetRoom();
             if (room == null || room.UsesOutdoorTemperature)
             {
@@ -82,12 +87,12 @@ namespace Strata
 
             AtmosphereMapComponent atmo = parent.Map.GetComponent<AtmosphereMapComponent>();
             StrataGasDef o2 = StrataGasDefOf.Strata_Oxygen;
-            if (atmo == null || o2 == null || !StrataMod.Settings.NaturalGasesActive)
+            if (atmo == null || o2 == null)
             {
                 return;
             }
 
-            atmo.AddGasToRoomPublic(room, o2, Props.releasePerRareTick, parent.Position);
+            atmo.AddGasToRoomPublic(room, o2, Props.releasePerRareTick, parent.Position, bypassCap: true);
             stored = Mathf.Max(0f, stored - Props.consumePerRareTick);
         }
 

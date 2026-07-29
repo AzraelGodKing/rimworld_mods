@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_AteHomesteadTreat.label>家园点心</Homesteader_AteHomesteadTreat.label>
+  <Homesteader_AteHomesteadTreat.description>那味道像家——好的那种家。</Homesteader_AteHomesteadTreat.description>
+  <Homesteader_AteHomesteadTreat.stages_0.label>家园点心</Homesteader_AteHomesteadTreat.stages_0.label>
+  <Homesteader_AteHomesteadTreat.stages_0.description>那味道像家——好的那种家。</Homesteader_AteHomesteadTreat.stages_0.description>
+  <Homesteader_AteFineCheese.label>上等奶酪</Homesteader_AteFineCheese.label>
+  <Homesteader_AteFineCheese.description>正宗农舍奶酪。值得等待。</Homesteader_AteFineCheese.description>
+  <Homesteader_AteFineCheese.stages_0.label>上等奶酪</Homesteader_AteFineCheese.stages_0.label>
+  <Homesteader_AteFineCheese.stages_0.description>正宗农舍奶酪。值得等待。</Homesteader_AteFineCheese.stages_0.description>
+  <Homesteader_AteFavoriteFood.label>最爱食物</Homesteader_AteFavoriteFood.label>
+  <Homesteader_AteFavoriteFood.description>那是我的最爱。没什么能比得上。</Homesteader_AteFavoriteFood.description>
+  <Homesteader_AteFavoriteFood.stages_0.label>最爱食物</Homesteader_AteFavoriteFood.stages_0.label>
+  <Homesteader_AteFavoriteFood.stages_0.description>那是我的最爱。没什么能比得上。</Homesteader_AteFavoriteFood.stages_0.description>
+  <Homesteader_AteAllergen.label>过敏反应</Homesteader_AteAllergen.label>
+  <Homesteader_AteAllergen.description>有什么东西引发了过敏。发痒、恶心，难受好一阵。</Homesteader_AteAllergen.description>
+  <Homesteader_AteAllergen.stages_0.label>过敏反应</Homesteader_AteAllergen.stages_0.label>
+  <Homesteader_AteAllergen.stages_0.description>有什么东西引发了过敏。发痒、恶心，难受好一阵。</Homesteader_AteAllergen.stages_0.description>
+  <Homesteader_FreshlyWashed.label>刚洗干净</Homesteader_FreshlyWashed.label>
+  <Homesteader_FreshlyWashed.description>用家园肥皂好好洗了一遍。感觉干净，又像个人了。</Homesteader_FreshlyWashed.description>
+  <Homesteader_FreshlyWashed.stages_0.label>刚洗干净</Homesteader_FreshlyWashed.stages_0.label>
+  <Homesteader_FreshlyWashed.stages_0.description>用家园肥皂好好洗了一遍。感觉干净，又像个人了。</Homesteader_FreshlyWashed.stages_0.description>
+  <Homesteader_MaypoleCheerMood.label>丰收欢愉</Homesteader_MaypoleCheerMood.label>
+  <Homesteader_MaypoleCheerMood.description>五月柱的彩带让整个院子都像在过节。</Homesteader_MaypoleCheerMood.description>
+  <Homesteader_MaypoleCheerMood.stages_0.label>丰收欢愉</Homesteader_MaypoleCheerMood.stages_0.label>
+  <Homesteader_MaypoleCheerMood.stages_0.description>五月柱的彩带让整个院子都像在过节。</Homesteader_MaypoleCheerMood.stages_0.description>
+  <Homesteader_Monument27Mood.label>27雕像</Homesteader_Monument27Mood.label>
+  <Homesteader_Monument27Mood.description>那座雕像有种说不清的魔力，能把整日心情都抬起来。</Homesteader_Monument27Mood.description>
+  <Homesteader_Monument27Mood.stages_0.label>27雕像</Homesteader_Monument27Mood.stages_0.label>
+  <Homesteader_Monument27Mood.stages_0.description>那座雕像有种说不清的魔力，能把整日心情都抬起来。</Homesteader_Monument27Mood.stages_0.description>
+  <Homesteader_KatsDirective.label>Kats指令</Homesteader_KatsDirective.label>
+  <Homesteader_KatsDirective.description>那广播好像点了名。补水。用药。咀嚼。不知怎的，感觉……清晰了。</Homesteader_KatsDirective.description>
+  <Homesteader_KatsDirective.stages_0.label>Kats指令</Homesteader_KatsDirective.stages_0.label>
+  <Homesteader_KatsDirective.stages_0.description>那广播好像点了名。补水。用药。咀嚼。不知怎的，感觉……清晰了。</Homesteader_KatsDirective.stages_0.description>
+
+</LanguageData>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_StrawHat.label>соломенная шляпа</Homesteader_StrawHat.label>
+  <Homesteader_StrawHat.description>Широкополая шляпа, сплетённая из соломы. Защищает от солнца в долгие дни в поле.</Homesteader_StrawHat.description>
+  <Homesteader_WorkApron.label>рабочий фартук</Homesteader_WorkApron.label>
+  <Homesteader_WorkApron.description>Прочный фартук поверх одежды. Карманы и плотная ткань чуть ускоряют работу в мастерской и на кухне.</Homesteader_WorkApron.description>
+  <Homesteader_Overalls.label>комбинезон</Homesteader_Overalls.label>
+  <Homesteader_Overalls.description>Износостойкий комбинезон с нагрудником, закрывающий торс и ноги. Униформа фермеров повсюду; в нём земледелие даётся чуть легче.</Homesteader_Overalls.description>
+  <Homesteader_WoolPoncho.label>пончо</Homesteader_WoolPoncho.label>
+  <Homesteader_WoolPoncho.description>Тяжёлое тканое пончо на плечи. Дешёвое в изготовлении и на удивление тёплое в морозные утра.</Homesteader_WoolPoncho.description>
+
+</LanguageData>

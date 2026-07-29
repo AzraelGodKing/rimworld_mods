@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Shared -->
+  <Stormproof_OfflineNeedsPower>离线：需要电力。</Stormproof_OfflineNeedsPower>
+  <Stormproof_NotConnectedPowerNet>未连接到电网。</Stormproof_NotConnectedPower>
+  <Stormproof_RechargingReadyIn>充能中：{0}后就绪。</Stormproof_RechargingReadyIn>
+
+  <!-- Grid monitor -->
+  <Stormproof_GridMonitor_Critical>{0}：电网蓄电池电量危急，当前 {1}。</Stormproof_GridMonitor_Critical>
+  <Stormproof_GridMonitor_Low>{0}：电网蓄电池电量偏低，当前 {1}。</Stormproof_GridMonitor_Low>
+  <Stormproof_GridMonitor_Header>产出：{0} W  |  消耗：{1} W  （净 {2} W）</Stormproof_GridMonitor_Header>
+  <Stormproof_GridMonitor_NoBatteries>此电网没有蓄电池。</Stormproof_GridMonitor_NoBatteries>
+  <Stormproof_GridMonitor_Stored>已存：{0} / {1} Wd（{2}）</Stormproof_GridMonitor_Stored>
+  <Stormproof_GridMonitor_EmptyIn>按当前消耗，蓄电池将在 {0} 后耗尽。</Stormproof_GridMonitor_EmptyIn>
+  <Stormproof_GridMonitor_FullIn>按当前盈余，蓄电池将在 {0} 后充满。</Stormproof_GridMonitor_FullIn>
+
+  <!-- Surge protector -->
+  <Stormproof_SurgeProtector_Absorbed>电网遭受电涌冲击，但被 {0} 吸收。需要一天充能（并受到了一些内部损伤）。</Stormproof_SurgeProtector_Absorbed>
+  <Stormproof_SurgeProtector_Ready>就绪：将吸收此电网下一次短路。</Stormproof_SurgeProtector_Ready>
+
+  <!-- Storm spire -->
+  <Stormproof_StormSpire_StrikeHarvested>{0} 捕获一次雷击：储存 +{1} Wd。</Stormproof_StormSpire_StrikeHarvested>
+  <Stormproof_StormSpire_Grounded>已接地：安全吸引闪电。接入电网即可收获雷击能量。</Stormproof_StormSpire_Grounded>
+  <Stormproof_StormSpire_SurgeRiskNone>无电涌风险（完美接地）</Stormproof_StormSpire_SurgeRiskNone>
+  <Stormproof_StormSpire_SurgeRiskPercent>每次雷击 {0}% 电涌风险</Stormproof_StormSpire_SurgeRiskPercent>
+  <Stormproof_StormSpire_GridConnected>已接电网：雷击为蓄电池充电（+{0} Wd），{1}。</Stormproof_StormSpire_GridConnected>
+
+  <!-- Storm caller -->
+  <Stormproof_StormCaller_Label>召唤风暴</Stormproof_StormCaller_Label>
+  <Stormproof_StormCaller_Desc>扰动电离层，在本地图召唤一场带雨雷暴。闪电为风暴尖塔供电，雨水扑灭火灾。充能需五天。</Stormproof_StormCaller_Desc>
+  <Stormproof_StormCaller_NoPower>没有电力。</Stormproof_StormCaller_NoPower>
+  <Stormproof_StormCaller_Discharging>{0} 向天空放电。雷暴正在形成。</Stormproof_StormCaller_Discharging>
+  <Stormproof_StormCaller_Charged>已充能：可以召唤风暴。</Stormproof_StormCaller_Charged>
+
+  <!-- Weather forecaster -->
+  <Stormproof_WeatherForecaster_LightningIncoming>{0}：{1} 正在逼近——预计有闪电。风暴尖塔将捕获雷击。</Stormproof_WeatherForecaster_LightningIncoming>
+  <Stormproof_WeatherForecaster_BreakingSoon>{0}：当前天气（{1}）将在一小时内结束。</Stormproof_WeatherForecaster_BreakingSoon>
+  <Stormproof_WeatherForecaster_Current>当前天气：{0}</Stormproof_WeatherForecaster_Current>
+  <Stormproof_WeatherForecaster_HoldsFor>预报：约持续 {0}。</Stormproof_WeatherForecaster_HoldsFor>
+  <Stormproof_WeatherForecaster_AboutToChange>预报：即将变化。</Stormproof_WeatherForecaster_AboutToChange>
+
+  <!-- Ion storm -->
+  <Stormproof_IonStorm_EmpBurst>离子风暴：{0} 附近发生 EMP 爆发。</Stormproof_IonStorm_EmpBurst>
+
+  <!-- Load shedder -->
+  <Stormproof_LoadShedder_CutoffLowerLabel>切断阈值 -5%</Stormproof_LoadShedder_CutoffLowerLabel>
+  <Stormproof_LoadShedder_CutoffLowerDesc>当供电侧蓄电池降至更低电量时跳闸。</Stormproof_LoadShedder_CutoffLowerDesc>
+  <Stormproof_LoadShedder_CutoffRaiseLabel>切断阈值 +5%</Stormproof_LoadShedder_CutoffRaiseLabel>
+  <Stormproof_LoadShedder_CutoffRaiseDesc>当供电侧蓄电池降至更高电量时跳闸。</Stormproof_LoadShedder_CutoffRaiseDesc>
+  <Stormproof_LoadShedder_Reconnected>{0}：蓄电池已恢复，子电网已重新接通。</Stormproof_LoadShedder_Reconnected>
+  <Stormproof_LoadShedder_Shed>{0}：蓄电池低于 {1}，子电网已切除。</Stormproof_LoadShedder_Shed>
+  <Stormproof_LoadShedder_Closed>断路器闭合：正在输电。</Stormproof_LoadShedder_Closed>
+  <Stormproof_LoadShedder_Open>断路器断开：子电网已切除。</Stormproof_LoadShedder_Open>
+  <Stormproof_LoadShedder_NoSupplyBatteries>供电电网没有蓄电池。</Stormproof_LoadShedder_NoSupplyBatteries>
+  <Stormproof_LoadShedder_SupplyStatus>供电蓄电池：{0}（低于 {1} 跳闸，恢复至 {2} 重连）。</Stormproof_LoadShedder_SupplyStatus>
+
+  <!-- Solar shield -->
+  <Stormproof_SolarShield_Standby>待机。太阳耀斑期间此护盾将消耗 {0} W。</Stormproof_SolarShield_Standby>
+  <Stormproof_SolarShield_Protecting>防护中：太阳耀斑已偏转，消耗 {0} W。</Stormproof_SolarShield_Protecting>
+  <Stormproof_SolarShield_Down>护盾失效：需要电力（已开启、已连接、电网有储能）。</Stormproof_SolarShield_Down>
+
+  <!-- EMP dampener -->
+  <Stormproof_EmpDampener_Active>启用中：范围内殖民地建筑免疫 EMP 眩晕。</Stormproof_EmpDampener_Active>
+  <Stormproof_EmpDampener_Inactive>未启用：需要电力。</Stormproof_EmpDampener_Inactive>
+
+  <!-- Static pylon -->
+  <Stormproof_StaticPylon_Armed>已就绪：可用闪电储能 {0} Wd（每次电击 {1} Wd）。</Stormproof_StaticPylon_Armed>
+  <Stormproof_StaticPylon_Standby>待机：无闪电储能。需要本电网上有已充电的风暴电容组。</Stormproof_StaticPylon_Standby>
+
+  <!-- Fallout scrubber -->
+  <Stormproof_FalloutScrubber_Scrubbing>净化中：本房间内角色的毒素积累正缓慢下降。</Stormproof_FalloutScrubber_Scrubbing>
+  <Stormproof_FalloutScrubber_Idle>空闲：必须放置在封闭房间内才能净化空气。</Stormproof_FalloutScrubber_Idle>
+
+  <!-- Atmospheric barrier -->
+  <Stormproof_AtmosphericBarrier_Standby>待机。毒性沉降 / 毒气浪涌 / 火山灰 / 毒雾期间此屏障将消耗 {0} W。</Stormproof_AtmosphericBarrier_Standby>
+  <Stormproof_AtmosphericBarrier_Protecting>防护中：全图大气毒素已压制，消耗 {0} W。</Stormproof_AtmosphericBarrier_Protecting>
+  <Stormproof_AtmosphericBarrier_Down>屏障失效：需要电力（已开启、已连接、电网有储能）。</Stormproof_AtmosphericBarrier_Down>
+
+  <!-- Climate stabilizer -->
+  <Stormproof_ClimateStabilizer_Standby>待机。极端气候事件期间此稳定器将消耗 {0} W。</Stormproof_ClimateStabilizer_Standby>
+  <Stormproof_ClimateStabilizer_Protecting>防护中：全图温度偏移已抵消，消耗 {0} W。</Stormproof_ClimateStabilizer_Protecting>
+  <Stormproof_ClimateStabilizer_Down>稳定器失效：需要电力（已开启、已连接、电网有储能）。</Stormproof_ClimateStabilizer_Down>
+
+  <!-- Sky restorer -->
+  <Stormproof_SkyRestorer_Standby>待机。日食 / 火山灰 / 火山寒冬期间此恢复器将消耗 {0} W。</Stormproof_SkyRestorer_Standby>
+  <Stormproof_SkyRestorer_Protecting>防护中：可用日光已恢复，消耗 {0} W。</Stormproof_SkyRestorer_Protecting>
+  <Stormproof_SkyRestorer_Down>恢复器失效：需要电力（已开启、已连接、电网有储能）。</Stormproof_SkyRestorer_Down>
+
+  <!-- Fire suppressor -->
+  <Stormproof_FireSuppressor_Active>启用中：正在扑灭 {0} 格范围内的火灾。</Stormproof_FireSuppressor_Active>
+  <Stormproof_FireSuppressor_Flashstorm>闪光风暴模式：正在灭火，消耗 {0} W。</Stormproof_FireSuppressor_Flashstorm>
+
+  <!-- Drought condenser -->
+  <Stormproof_DroughtCondenser_Standby>待机。干旱期间此冷凝器将消耗 {0} W。</Stormproof_DroughtCondenser_Standby>
+  <Stormproof_DroughtCondenser_Protecting>防护中：干旱植物惩罚已抵消，消耗 {0} W。</Stormproof_DroughtCondenser_Protecting>
+  <Stormproof_DroughtCondenser_Down>冷凝器失效：需要电力（已开启、已连接、电网有储能）。</Stormproof_DroughtCondenser_Down>
+
+  <!-- Storm capacitor -->
+  <Stormproof_StormCapacitor_Stored>已存：{0} / {1} Wd（仅闪电，无自放电）</Stormproof_StormCapacitor_Stored>
+  <Stormproof_StormCapacitor_Discharging>放电中：向电网补给 {0} W 以弥补缺口。</Stormproof_StormCapacitor_Discharging>
+
+</LanguageData>

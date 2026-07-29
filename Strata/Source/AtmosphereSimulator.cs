@@ -44,8 +44,8 @@ namespace Strata
             {
                 return vent;
             }
-            float o2 = atmosphere.DensityInRoom(room, StrataGasDefOf.Strata_Oxygen);
-            float co2 = atmosphere.DensityInRoom(room, StrataGasDefOf.Strata_CarbonDioxide);
+            float o2 = atmosphere.EffectiveBreathDensity(room, StrataGasDefOf.Strata_Oxygen);
+            float co2 = atmosphere.EffectiveBreathDensity(room, StrataGasDefOf.Strata_CarbonDioxide);
             return "Strata_Atmos_StatusLine".Translate(
                 vent,
                 (o2 * 100f).ToString("F0"),

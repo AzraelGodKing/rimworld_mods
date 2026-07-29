@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_CompactBattery.label>小型蓄电池</Homesteader_CompactBattery.label>
+  <Homesteader_CompactBattery.description>用于储存电力的小电池。容量不如全尺寸电池，但只占一格——适合紧凑基地、前哨与早期电网。与所有电池一样，会因效率损耗部分能量，雨天可能短路。</Homesteader_CompactBattery.description>
+  <Homesteader_BatteryBank.label>电池组</Homesteader_BatteryBank.label>
+  <Homesteader_BatteryBank.description>互联电池单元机架，配有改进的充电控制器。可大量储能，效率优于独立电池。雨天可能短路。</Homesteader_BatteryBank.description>
+  <Homesteader_AdvancedBattery.label>先进蓄电池</Homesteader_AdvancedBattery.label>
+  <Homesteader_AdvancedBattery.description>精密制造的电池，层压电芯加智能充电控制器。储能远超普通电池，输入电力仅损耗 10%。雨天可能短路。</Homesteader_AdvancedBattery.description>
+  <Homesteader_UltratechBattery.label>超科技蓄电池</Homesteader_UltratechBattery.label>
+  <Homesteader_UltratechBattery.description>储能巅峰：密封的玻璃钢容器包裹超导核心，隐隐发出蓝光。可储存巨量电荷，输入电力几乎只损耗 1%。雨天仍可能短路——即便超科技也有极限。</Homesteader_UltratechBattery.description>
+  <Homesteader_PortableGenerator.label>便携发电机</Homesteader_PortableGenerator.label>
+  <Homesteader_PortableGenerator.description>紧凑的化合燃料发电机。单格产出约 350W——燃料效率不如全尺寸发电机，但非常适合前哨、作坊与狭小基地。会产生一些热量。</Homesteader_PortableGenerator.description>
+  <Homesteader_WoodGenerator.label>燃木发电机</Homesteader_WoodGenerator.label>
+  <Homesteader_WoodGenerator.description>烧木材而非化合燃料的紧凑发电机。单格产出 300W——适合林中农庄与离网作坊。会产生一些热量。</Homesteader_WoodGenerator.description>
+
+</LanguageData>

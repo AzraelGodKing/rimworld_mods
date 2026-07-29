@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_DryingRack.label>晾晒架</Homesteader_DryingRack.label>
+  <Homesteader_DryingRack.description>用于风干食物的木架。生肉可制成耐存肉干，果蔬可制成干货或果丹皮，采来的菌类可制成干蘑菇。无需电力或研究。</Homesteader_DryingRack.description>
+  <Homesteader_CuringRack.label>腌制架</Homesteader_CuringRack.label>
+  <Homesteader_CuringRack.description>带缝的木架，用于盐腌肉类与鱼类，或从石块上凿取岩盐。比烟熏更快，且无需燃料。</Homesteader_CuringRack.description>
+  <Homesteader_Smokehouse.label>烟熏房</Homesteader_Smokehouse.label>
+  <Homesteader_Smokehouse.description>烧木柴的烟熏室。在此烟熏的生肉与鱼大约可保存一个月，仍可做成餐食。使用时消耗木材作燃料。</Homesteader_Smokehouse.description>
+  <Homesteader_PicklingCrock.label>腌菜缸</Homesteader_PicklingCrock.label>
+  <Homesteader_PicklingCrock.description>用于在盐水中发酵蔬菜的炻器缸。无需电力——只要盐、蔬菜和耐心。</Homesteader_PicklingCrock.description>
+  <Homesteader_HomesteadHearth.label>农庄炉灶</Homesteader_HomesteadHearth.label>
+  <Homesteader_HomesteadHearth.description>砖石烤炉配柴火炉膛。可烤面包与硬饼干，制作吐司果酱或农夫午餐等储藏室餐食，还可炖汤、熬粥和烙薄饼。</Homesteader_HomesteadHearth.description>
+  <Homesteader_JamCauldron.label>果酱锅</Homesteader_JamCauldron.label>
+  <Homesteader_JamCauldron.description>架在柴火上的宽口铁锅，把水果与糖一起煮成香甜耐存的果酱。</Homesteader_JamCauldron.description>
+
+</LanguageData>

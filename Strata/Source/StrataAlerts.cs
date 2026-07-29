@@ -236,8 +236,6 @@ namespace Strata
     // B1+ colony rooms with dangerously low oxygen (natural gases opt-in).
     public class Alert_LowOxygen : Alert_Critical
     {
-        private const float WorryThreshold = 0.14f;
-
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
         private AlertReport cachedReport = false;
         private int lastScanTick = -9999;
@@ -276,31 +274,27 @@ namespace Strata
                 {
                     continue;
                 }
+                var roomsWithColonists = new HashSet<int>();
+                foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
+                {
+                    Room r = p.GetRoom();
+                    if (r != null && !r.UsesOutdoorTemperature && !r.IsDoorway)
+                    {
+                        roomsWithColonists.Add(r.ID);
+                    }
+                }
                 foreach (Room room in map.regionGrid.AllRooms)
                 {
                     if (room == null || room.UsesOutdoorTemperature || room.IsDoorway)
                     {
                         continue;
                     }
-                    if (!room.Owners.Any())
+                    if (!roomsWithColonists.Contains(room.ID))
                     {
-                        // Prefer rooms with colonists present.
-                        bool hasColonist = false;
-                        foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
-                        {
-                            if (p.GetRoom() == room)
-                            {
-                                hasColonist = true;
-                                break;
-                            }
-                        }
-                        if (!hasColonist)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
-                    float o2 = atmo.DensityInRoom(room, StrataGasDefOf.Strata_Oxygen);
-                    if (o2 > 0f && o2 < WorryThreshold)
+                    float o2 = atmo.EffectiveBreathDensity(room, StrataGasDefOf.Strata_Oxygen);
+                    if (o2 < AtmosphereVolumeUtility.OxygenWorryThreshold)
                     {
                         IntVec3 cell = room.Cells.Any() ? room.Cells.RandomElement() : map.Center;
                         targets.Add(new GlobalTargetInfo(cell, map));
@@ -314,8 +308,6 @@ namespace Strata
 
     public class Alert_HighCarbonDioxide : Alert
     {
-        private const float WorryThreshold = 0.16f;
-
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
         private AlertReport cachedReport = false;
         private int lastScanTick = -9999;
@@ -358,8 +350,8 @@ namespace Strata
                     {
                         continue;
                     }
-                    float co2 = atmo.DensityInRoom(room, StrataGasDefOf.Strata_CarbonDioxide);
-                    if (co2 >= WorryThreshold)
+                    float co2 = atmo.EffectiveBreathDensity(room, StrataGasDefOf.Strata_CarbonDioxide);
+                    if (co2 >= AtmosphereVolumeUtility.CarbonDioxideWorryThreshold)
                     {
                         targets.Add(p);
                     }
