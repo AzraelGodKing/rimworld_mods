@@ -4,6 +4,8 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Stormproof** — packed building sprites to ~90% fill and stripped leftover light editor pads so icons/buildings aren’t tiny boxed fake-PNGs. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
+- **Strata** — rebuilt `Strata.dll` so suffocation/stuffy ThoughtWorkers match V3.5 defs (`atmosphere-thoughts-dll-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Homesteader** — Chinese Simplified and Russian Keyed + DefInjected language packs. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
 - **Stormproof** — Chinese Simplified and Russian Keyed + DefInjected language packs. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
 - **Deep Colony** — Chinese Simplified and Russian Keyed + DefInjected language packs. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
