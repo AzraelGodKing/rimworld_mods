@@ -4,13 +4,11 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 
 ## [Unreleased]
 
-### Added
-- **CN / RU language packs** — Chinese Simplified and Russian Keyed + DefInjected translations for all Stormproof player strings (buildings, research, incidents, game conditions).
-
 ### Changed
 - **Workshop preview** — compressed `About/Preview.png` (~3.0 MB → ~0.94 MB) via palette PNG so Steam uploads stay under size pressure.
 
 ### Fixed
+- **Building textures white backgrounds** — batch alpha-cleaned all `Textures/Stormproof/Buildings/*.png` (baked white/checkerboard → transparent).
 - **Surge protector eats no-op spire Zzzt** — storm spire short-circuit rolls call `CanFireNow` first; surge Prefix also refuses `Absorb()` when vanilla would find nothing shortable.
 - **Static pylon charge bleed** — capacitor drain is all-or-nothing: if the bank cannot cover a zap, nothing is taken.
 - **Volcanic ash Harmony startup crash** — `GiveOrUpdateHediff` second arg is `target` in 1.6 (was patched as `pawn`); optional Odyssey ash barrier prefix now applies.
