@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Thought_CombatShock.label>战斗冲击</DC_Thought_CombatShock.label>
+  <DC_Thought_CombatShock.description>清晰闪回在战场上被击倒的那一刻。</DC_Thought_CombatShock.description>
+  <DC_Thought_CombatShock.stages_0.label>闪回（剧烈）</DC_Thought_CombatShock.stages_0.label>
+  <DC_Thought_CombatShock.stages_0.description>清晰闪回在战场上被击倒的那一刻。</DC_Thought_CombatShock.stages_0.description>
+  <DC_Thought_CombatShock.stages_1.label>处理创伤</DC_Thought_CombatShock.stages_1.label>
+  <DC_Thought_CombatShock.stages_1.description>仍在消化战斗中被击倒的冲击。</DC_Thought_CombatShock.stages_1.description>
+  <DC_Thought_CombatShock.stages_2.label>记忆渐淡</DC_Thought_CombatShock.stages_2.label>
+  <DC_Thought_CombatShock.stages_2.description>最糟糕的战斗记忆正在慢慢淡去。</DC_Thought_CombatShock.stages_2.description>
+  <DC_Thought_ViolentLoss.label>暴力丧亲</DC_Thought_ViolentLoss.label>
+  <DC_Thought_ViolentLoss.description>无法停止看到那一幕。暴力挥之不去。</DC_Thought_ViolentLoss.description>
+  <DC_Thought_ViolentLoss.stages_0.label>被 {0} 之死缠绕</DC_Thought_ViolentLoss.stages_0.label>
+  <DC_Thought_ViolentLoss.stages_0.description>无法停止看到那一幕。暴力挥之不去。</DC_Thought_ViolentLoss.stages_0.description>
+  <DC_Thought_ViolentLoss.stages_1.label>哀悼 {0}</DC_Thought_ViolentLoss.stages_1.label>
+  <DC_Thought_ViolentLoss.stages_1.description>仍在接受失去亲近之人的事实。</DC_Thought_ViolentLoss.stages_1.description>
+  <DC_Thought_ViolentLoss.stages_2.label>缅怀 {0}</DC_Thought_ViolentLoss.stages_2.label>
+  <DC_Thought_ViolentLoss.stages_2.description>悲痛在软化，但记忆仍在。</DC_Thought_ViolentLoss.stages_2.description>
+  <DC_Thought_Captivity.label>囚禁创伤</DC_Thought_Captivity.label>
+  <DC_Thought_Captivity.description>在清醒的噩梦中重温囚禁的每一处细节。</DC_Thought_Captivity.description>
+  <DC_Thought_Captivity.stages_0.label>重温囚禁</DC_Thought_Captivity.stages_0.label>
+  <DC_Thought_Captivity.stages_0.description>在清醒的噩梦中重温囚禁的每一处细节。</DC_Thought_Captivity.stages_0.description>
+  <DC_Thought_Captivity.stages_1.label>被囚禁阴霾缠绕</DC_Thought_Captivity.stages_1.label>
+  <DC_Thought_Captivity.stages_1.description>囚禁时的恐惧与无助仍在压迫。</DC_Thought_Captivity.stages_1.description>
+  <DC_Thought_Captivity.stages_2.label>遥远的囚禁记忆</DC_Thought_Captivity.stages_2.label>
+  <DC_Thought_Captivity.stages_2.description>囚禁已像很久以前，尽管伤疤仍在。</DC_Thought_Captivity.stages_2.description>
+  <DC_Thought_Massacre.label>屠杀幸存者</DC_Thought_Massacre.label>
+  <DC_Thought_Massacre.description>为什么自己活下来了，而那么多人没有？</DC_Thought_Massacre.description>
+  <DC_Thought_Massacre.stages_0.label>幸存者内疚</DC_Thought_Massacre.stages_0.label>
+  <DC_Thought_Massacre.stages_0.description>为什么自己活下来了，而那么多人没有？</DC_Thought_Massacre.stages_0.description>
+  <DC_Thought_Massacre.stages_1.label>逐渐接受屠杀</DC_Thought_Massacre.stages_1.label>
+  <DC_Thought_Massacre.stages_1.description>慢慢与经历如此可怕之事却幸存下来和解。</DC_Thought_Massacre.stages_1.description>
+  <DC_Thought_Massacre.stages_2.label>与往事和解</DC_Thought_Massacre.stages_2.label>
+  <DC_Thought_Massacre.stages_2.description>屠杀已成过去。他们带着逝者继续前行。</DC_Thought_Massacre.stages_2.description>
+  <DC_Thought_BereavementShock.label>丧亲冲击</DC_Thought_BereavementShock.label>
+  <DC_Thought_BereavementShock.description>太多人走得太快。悲痛还没来得及追上。</DC_Thought_BereavementShock.description>
+  <DC_Thought_BereavementShock.stages_0.label>因丧亲而眩晕</DC_Thought_BereavementShock.stages_0.label>
+  <DC_Thought_BereavementShock.stages_0.description>太多人走得太快。悲痛还没来得及追上。</DC_Thought_BereavementShock.stages_0.description>
+  <DC_Thought_BereavementShock.stages_1.label>哀悼多人离世</DC_Thought_BereavementShock.stages_1.label>
+  <DC_Thought_BereavementShock.stages_1.description>背负着短时间内失去多名同伴的重量。</DC_Thought_BereavementShock.stages_1.description>
+  <DC_Thought_BereavementShock.stages_2.label>慢慢愈合</DC_Thought_BereavementShock.stages_2.label>
+  <DC_Thought_BereavementShock.stages_2.description>最剧烈的悲痛正在过去，留下更安静的哀伤。</DC_Thought_BereavementShock.stages_2.description>
+
+</LanguageData>

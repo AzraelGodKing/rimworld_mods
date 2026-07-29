@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_BrewCider.label>варить сидр</Homesteader_BrewCider.label>
+  <Homesteader_BrewCider.description>Отжать и сбродить сырые фрукты с небольшим количеством сахара, мёда или кленового сиропа в небольшую партию сидра.</Homesteader_BrewCider.description>
+  <Homesteader_BrewCider.jobString>Варит сидр.</Homesteader_BrewCider.jobString>
+  <Homesteader_BrewMead.label>варить медовуху</Homesteader_BrewMead.label>
+  <Homesteader_BrewMead.description>Сбродить мёд в крепкую сладкую медовуху.</Homesteader_BrewMead.description>
+  <Homesteader_BrewMead.jobString>Варит медовуху.</Homesteader_BrewMead.jobString>
+  <Homesteader_BrewHerbalTea.label>заваривать травяной чай</Homesteader_BrewHerbalTea.label>
+  <Homesteader_BrewHerbalTea.description>Заварить сушёные травы в партию успокаивающего травяного чая.</Homesteader_BrewHerbalTea.description>
+  <Homesteader_BrewHerbalTea.jobString>Заваривает травяной чай.</Homesteader_BrewHerbalTea.jobString>
+  <Homesteader_FermentAppleJuice.label>сбраживать яблочный сок</Homesteader_FermentAppleJuice.label>
+  <Homesteader_FermentAppleJuice.description>Сбродить сок из пресса в чистый садовый сидр. Быстрее, чем давить фрукты на верстаке.</Homesteader_FermentAppleJuice.description>
+  <Homesteader_FermentAppleJuice.jobString>Сбраживает яблочный сок.</Homesteader_FermentAppleJuice.jobString>
+
+</LanguageData>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_Lard.label>смалец</Homesteader_Lard.label>
+  <Homesteader_Lard.description>Мягкий вытопленный жир из мяса. Идёт на колбасу, мыло и сытную стряпню.</Homesteader_Lard.description>
+  <Homesteader_Tallow.label>говяжий жир</Homesteader_Tallow.label>
+  <Homesteader_Tallow.description>Твёрдый вытопленный жир. Отличен для мыла и долговечных кладовых ремёсел.</Homesteader_Tallow.description>
+  <Homesteader_Sausage.label>усадебная колбаса</Homesteader_Sausage.label>
+  <Homesteader_Sausage.description>Солёное или копчёное мясо, нафаршированное жиром и сушёными травами. Хорошо хранится и естся как походная еда.</Homesteader_Sausage.description>
+  <Homesteader_AnimalMash.label>кормовая каша</Homesteader_AnimalMash.label>
+  <Homesteader_AnimalMash.description>Дроблёный ячмень и тыква, сваренные в мягкую кашу. Держит скот продуктивным у курятников и загонов.</Homesteader_AnimalMash.description>
+  <Homesteader_FlaxFiber.label>льняное волокно</Homesteader_FlaxFiber.label>
+  <Homesteader_FlaxFiber.description>Вымоченные стебли льна, разбитые в мягкое волокно. Прядите в домоткань на прялке.</Homesteader_FlaxFiber.description>
+  <Homesteader_HomespunCloth.label>домоткань</Homesteader_HomespunCloth.label>
+  <Homesteader_HomespunCloth.description>Грубая ткань из льна или шерсти. Для одеял и усадебного шитья, когда нет промышленной ткани.</Homesteader_HomespunCloth.description>
+  <Homesteader_HomesteadQuilt.label>усадебное одеяло</Homesteader_HomesteadQuilt.label>
+  <Homesteader_HomesteadQuilt.description>Толстое лоскутное одеяло с ткацкого станка. Мягкая постель для стёганых кроватей или тёплый подарок с фермы.</Homesteader_HomesteadQuilt.description>
+  <Homesteader_Compost.label>компост</Homesteader_Compost.label>
+  <Homesteader_Compost.description>Перепревшие растения и навоз, превращённые в тёмный компост. Доведите до удобрения для плодородной пашни.</Homesteader_Compost.description>
+  <Homesteader_CompostFertilizer.label>компостное удобрение</Homesteader_CompostFertilizer.label>
+  <Homesteader_CompostFertilizer.description>Просеянный компост, готовый к внесению в почву. Нужен для компостной земли и более быстрого роста культур.</Homesteader_CompostFertilizer.description>
+  <Homesteader_MasonJar.label>банка Мейсона</Homesteader_MasonJar.label>
+  <Homesteader_MasonJar.description>Пустые стеклянно-стальные банки для консервации. Многоразовая кладовая тара для запечатанного варенья и похлёбки.</Homesteader_MasonJar.description>
+  <Homesteader_CannedStew.label>консервированная похлёбка</Homesteader_CannedStew.label>
+  <Homesteader_CannedStew.description>Сытная похлёбка в банке Мейсона. Годами стоит на полке — усадебный ответ аварийным рационам.</Homesteader_CannedStew.description>
+  <Homesteader_CannedJam.label>консервированное варенье</Homesteader_CannedJam.label>
+  <Homesteader_CannedJam.description>Варенье под крышкой Мейсона. Слаще и дольше хранится, чем открытый горшок.</Homesteader_CannedJam.description>
+  <Homesteader_AppleJuice.label>яблочный сок</Homesteader_AppleJuice.label>
+  <Homesteader_AppleJuice.description>Свежевыжатый садовый сок. Пейте сладким или сбродите в сидр и уксус.</Homesteader_AppleJuice.description>
+
+</LanguageData>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Shared -->
+  <Stormproof_OfflineNeedsPower>Не в сети: нужна энергия.</Stormproof_OfflineNeedsPower>
+  <Stormproof_NotConnectedPowerNet>Не подключено к электросети.</Stormproof_NotConnectedPowerNet>
+  <Stormproof_RechargingReadyIn>Зарядка: готовность через {0}.</Stormproof_RechargingReadyIn>
+
+  <!-- Grid monitor -->
+  <Stormproof_GridMonitor_Critical>{0}: батареи сети КРИТИЧЕСКИ на {1}.</Stormproof_GridMonitor_Critical>
+  <Stormproof_GridMonitor_Low>{0}: батареи сети на низком уровне — {1}.</Stormproof_GridMonitor_Low>
+  <Stormproof_GridMonitor_Header>Выработка: {0} Вт  |  Потребление: {1} Вт  (нетто {2} Вт)</Stormproof_GridMonitor_Header>
+  <Stormproof_GridMonitor_NoBatteries>На этой сети нет батарей.</Stormproof_GridMonitor_NoBatteries>
+  <Stormproof_GridMonitor_Stored>Запас: {0} / {1} Вт·д ({2})</Stormproof_GridMonitor_Stored>
+  <Stormproof_GridMonitor_EmptyIn>При текущем расходе батареи опустеют через {0}.</Stormproof_GridMonitor_EmptyIn>
+  <Stormproof_GridMonitor_FullIn>При текущем избытке батареи заполнятся через {0}.</Stormproof_GridMonitor_FullIn>
+
+  <!-- Surge protector -->
+  <Stormproof_SurgeProtector_Absorbed>Скачок напряжения ударил по сети, но {0} поглотил его. Нужен день на перезарядку (и получены внутренние повреждения).</Stormproof_SurgeProtector_Absorbed>
+  <Stormproof_SurgeProtector_Ready>Готов: поглотит следующее короткое замыкание на этой сети.</Stormproof_SurgeProtector_Ready>
+
+  <!-- Storm spire -->
+  <Stormproof_StormSpire_StrikeHarvested>{0} поймал удар молнии: +{1} Вт·д в запасе.</Stormproof_StormSpire_StrikeHarvested>
+  <Stormproof_StormSpire_Grounded>Заземлён: безопасно притягивает молнии. Подключите к сети, чтобы собирать удары.</Stormproof_StormSpire_Grounded>
+  <Stormproof_StormSpire_SurgeRiskNone>нет риска скачка (идеальное заземление)</Stormproof_StormSpire_SurgeRiskNone>
+  <Stormproof_StormSpire_SurgeRiskPercent>{0}% риска скачка за удар</Stormproof_StormSpire_SurgeRiskPercent>
+  <Stormproof_StormSpire_GridConnected>Подключён к сети: удары заряжают батареи (+{0} Вт·д), {1}.</Stormproof_StormSpire_GridConnected>
+
+  <!-- Storm caller -->
+  <Stormproof_StormCaller_Label>Вызвать шторм</Stormproof_StormCaller_Label>
+  <Stormproof_StormCaller_Desc>Возмутите ионосферу, чтобы вызвать дождевую грозу над картой. Молнии питают штормовые шпили, а дождь тушит пожары. Перезарядка — пять дней.</Stormproof_StormCaller_Desc>
+  <Stormproof_StormCaller_NoPower>Нет энергии.</Stormproof_StormCaller_NoPower>
+  <Stormproof_StormCaller_Discharging>{0} разряжается в небо. Формируется гроза.</Stormproof_StormCaller_Discharging>
+  <Stormproof_StormCaller_Charged>Заряжен: готов вызвать шторм.</Stormproof_StormCaller_Charged>
+
+  <!-- Weather forecaster -->
+  <Stormproof_WeatherForecaster_LightningIncoming>{0}: приближается {1} — ожидаются молнии. Штормовые шпили поймают удары.</Stormproof_WeatherForecaster_LightningIncoming>
+  <Stormproof_WeatherForecaster_BreakingSoon>{0}: текущая погода ({1}) сменится в течение часа.</Stormproof_WeatherForecaster_BreakingSoon>
+  <Stormproof_WeatherForecaster_Current>Текущая погода: {0}</Stormproof_WeatherForecaster_Current>
+  <Stormproof_WeatherForecaster_HoldsFor>Прогноз: продержится около {0}.</Stormproof_WeatherForecaster_HoldsFor>
+  <Stormproof_WeatherForecaster_AboutToChange>Прогноз: вот-вот сменится.</Stormproof_WeatherForecaster_AboutToChange>
+
+  <!-- Ion storm -->
+  <Stormproof_IonStorm_EmpBurst>Ионный шторм: ЭМИ-вспышка у {0}.</Stormproof_IonStorm_EmpBurst>
+
+  <!-- Load shedder -->
+  <Stormproof_LoadShedder_CutoffLowerLabel>Порог −5%</Stormproof_LoadShedder_CutoffLowerLabel>
+  <Stormproof_LoadShedder_CutoffLowerDesc>Отключать автомат, когда батареи питания падают ниже более низкого уровня заряда.</Stormproof_LoadShedder_CutoffLowerDesc>
+  <Stormproof_LoadShedder_CutoffRaiseLabel>Порог +5%</Stormproof_LoadShedder_CutoffRaiseLabel>
+  <Stormproof_LoadShedder_CutoffRaiseDesc>Отключать автомат, когда батареи питания падают ниже более высокого уровня заряда.</Stormproof_LoadShedder_CutoffRaiseDesc>
+  <Stormproof_LoadShedder_Reconnected>{0}: батареи восстановились, подсеть подключена снова.</Stormproof_LoadShedder_Reconnected>
+  <Stormproof_LoadShedder_Shed>{0}: батареи ниже {1}, подсеть отключена.</Stormproof_LoadShedder_Shed>
+  <Stormproof_LoadShedder_Closed>Автомат замкнут: передаёт ток.</Stormproof_LoadShedder_Closed>
+  <Stormproof_LoadShedder_Open>Автомат РАЗОМКНУТ: подсеть отключена.</Stormproof_LoadShedder_Open>
+  <Stormproof_LoadShedder_NoSupplyBatteries>На сети питания нет батарей.</Stormproof_LoadShedder_NoSupplyBatteries>
+  <Stormproof_LoadShedder_SupplyStatus>Батареи питания: {0} (отключение ниже {1}, подключение при {2}).</Stormproof_LoadShedder_SupplyStatus>
+
+  <!-- Solar shield -->
+  <Stormproof_SolarShield_Standby>Ожидание. Во время солнечной вспышки щит будет потреблять {0} Вт.</Stormproof_SolarShield_Standby>
+  <Stormproof_SolarShield_Protecting>ЗАЩИТА: солнечная вспышка отклонена, потребление {0} Вт.</Stormproof_SolarShield_Protecting>
+  <Stormproof_SolarShield_Down>ЩИТ ВЫКЛЮЧЕН: нужна энергия (включён, подключён, есть запас в сети).</Stormproof_SolarShield_Down>
+
+  <!-- EMP dampener -->
+  <Stormproof_EmpDampener_Active>Активен: здания колонии в радиусе иммунны к ЭМИ-оглушению.</Stormproof_EmpDampener_Active>
+  <Stormproof_EmpDampener_Inactive>Неактивен: нужна энергия.</Stormproof_EmpDampener_Inactive>
+
+  <!-- Static pylon -->
+  <Stormproof_StaticPylon_Armed>Наготове: доступно {0} Вт·д запасённой молнии ({1} Вт·д за удар).</Stormproof_StaticPylon_Armed>
+  <Stormproof_StaticPylon_Standby>Ожидание: нет запасённой молнии. Нужен заряженный банк штормовых конденсаторов на этой сети.</Stormproof_StaticPylon_Standby>
+
+  <!-- Fallout scrubber -->
+  <Stormproof_FalloutScrubber_Scrubbing>Очистка: токсичное накопление у пешек в этой комнате медленно снижается.</Stormproof_FalloutScrubber_Scrubbing>
+  <Stormproof_FalloutScrubber_Idle>Простой: нужно разместить в закрытой комнате, чтобы очищать воздух.</Stormproof_FalloutScrubber_Idle>
+
+  <!-- Atmospheric barrier -->
+  <Stormproof_AtmosphericBarrier_Standby>Ожидание. Во время токсичных осадков / выброса / пепла / мглы барьер будет потреблять {0} Вт.</Stormproof_AtmosphericBarrier_Standby>
+  <Stormproof_AtmosphericBarrier_Protecting>ЗАЩИТА: атмосферные токсины подавлены по всей карте, потребление {0} Вт.</Stormproof_AtmosphericBarrier_Protecting>
+  <Stormproof_AtmosphericBarrier_Down>БАРЬЕР ВЫКЛЮЧЕН: нужна энергия (включён, подключён, есть запас в сети).</Stormproof_AtmosphericBarrier_Down>
+
+  <!-- Climate stabilizer -->
+  <Stormproof_ClimateStabilizer_Standby>Ожидание. Во время экстремальных климатических событий стабилизатор будет потреблять {0} Вт.</Stormproof_ClimateStabilizer_Standby>
+  <Stormproof_ClimateStabilizer_Protecting>ЗАЩИТА: температурные смещения отменены по всей карте, потребление {0} Вт.</Stormproof_ClimateStabilizer_Protecting>
+  <Stormproof_ClimateStabilizer_Down>СТАБИЛИЗАТОР ВЫКЛЮЧЕН: нужна энергия (включён, подключён, есть запас в сети).</Stormproof_ClimateStabilizer_Down>
+
+  <!-- Sky restorer -->
+  <Stormproof_SkyRestorer_Standby>Ожидание. Во время затмения / пепла / вулканической зимы восстановитель будет потреблять {0} Вт.</Stormproof_SkyRestorer_Standby>
+  <Stormproof_SkyRestorer_Protecting>ЗАЩИТА: пригодный дневной свет восстановлен, потребление {0} Вт.</Stormproof_SkyRestorer_Protecting>
+  <Stormproof_SkyRestorer_Down>ВОССТАНОВИТЕЛЬ ВЫКЛЮЧЕН: нужна энергия (включён, подключён, есть запас в сети).</Stormproof_SkyRestorer_Down>
+
+  <!-- Fire suppressor -->
+  <Stormproof_FireSuppressor_Active>Активен: тушит пожары в радиусе {0} клеток.</Stormproof_FireSuppressor_Active>
+  <Stormproof_FireSuppressor_Flashstorm>РЕЖИМ ВСПЫШКИ: тушит пожары, потребление {0} Вт.</Stormproof_FireSuppressor_Flashstorm>
+
+  <!-- Drought condenser -->
+  <Stormproof_DroughtCondenser_Standby>Ожидание. Во время засухи конденсатор будет потреблять {0} Вт.</Stormproof_DroughtCondenser_Standby>
+  <Stormproof_DroughtCondenser_Protecting>ЗАЩИТА: штрафы засухи для растений отменены, потребление {0} Вт.</Stormproof_DroughtCondenser_Protecting>
+  <Stormproof_DroughtCondenser_Down>КОНДЕНСАТОР ВЫКЛЮЧЕН: нужна энергия (включён, подключён, есть запас в сети).</Stormproof_DroughtCondenser_Down>
+
+  <!-- Storm capacitor -->
+  <Stormproof_StormCapacitor_Stored>Запас: {0} / {1} Вт·д (только молния, без саморазряда)</Stormproof_StormCapacitor_Stored>
+  <Stormproof_StormCapacitor_Discharging>Разряд: {0} Вт на покрытие дефицита сети.</Stormproof_StormCapacitor_Discharging>
+
+</LanguageData>

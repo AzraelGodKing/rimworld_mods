@@ -380,6 +380,13 @@ namespace Strata
             }
         }
 
+        // Snapshot for off-thread density fill (A2) — plain float arrays only.
+        public void CopyBreathPlanes(out float[] oxygen, out float[] carbonDioxide)
+        {
+            oxygen = o2 != null ? (float[])o2.Clone() : null;
+            carbonDioxide = co2 != null ? (float[])co2.Clone() : null;
+        }
+
         private void ApplyNaturalRoofAmbientBatched()
         {
             IReadOnlyList<Room> rooms = map.regionGrid.AllRooms;

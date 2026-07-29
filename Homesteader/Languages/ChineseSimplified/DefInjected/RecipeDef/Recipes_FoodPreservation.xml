@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_MakeJerky.label>制作肉干</Homesteader_MakeJerky.label>
+  <Homesteader_MakeJerky.description>将生肉切成薄片干燥，制成可久存的肉干。</Homesteader_MakeJerky.description>
+  <Homesteader_MakeJerky.jobString>正在制作肉干。</Homesteader_MakeJerky.jobString>
+  <Homesteader_MakeDriedProduce.label>制作干蔬果</Homesteader_MakeDriedProduce.label>
+  <Homesteader_MakeDriedProduce.description>将水果和蔬菜切薄风干，以便长期储藏。</Homesteader_MakeDriedProduce.description>
+  <Homesteader_MakeDriedProduce.jobString>正在制作干蔬果。</Homesteader_MakeDriedProduce.jobString>
+  <Homesteader_MakeFruitLeather.label>制作果丹皮</Homesteader_MakeFruitLeather.label>
+  <Homesteader_MakeFruitLeather.description>将果泥摊薄晾干，制成甜软耐嚼的果丹皮，便于旅途携带。</Homesteader_MakeFruitLeather.description>
+  <Homesteader_MakeFruitLeather.jobString>正在制作果丹皮。</Homesteader_MakeFruitLeather.jobString>
+  <Homesteader_MakeDriedMushrooms.label>制作干蘑菇</Homesteader_MakeDriedMushrooms.label>
+  <Homesteader_MakeDriedMushrooms.description>将采集的菌菇切薄风干，以便长期储藏。</Homesteader_MakeDriedMushrooms.description>
+  <Homesteader_MakeDriedMushrooms.jobString>正在制作干蘑菇。</Homesteader_MakeDriedMushrooms.jobString>
+  <Homesteader_MakePemmican.label>制作干肉饼</Homesteader_MakePemmican.label>
+  <Homesteader_MakePemmican.description>将干肉与植物材料混合成致密耐存的干肉饼——无需专门研究。</Homesteader_MakePemmican.description>
+  <Homesteader_MakePemmican.jobString>正在制作干肉饼。</Homesteader_MakePemmican.jobString>
+  <Homesteader_MakeRockSalt.label>制作岩盐</Homesteader_MakeRockSalt.label>
+  <Homesteader_MakeRockSalt.description>从石块上凿下粗盐晶体。</Homesteader_MakeRockSalt.description>
+  <Homesteader_MakeRockSalt.jobString>正在制作岩盐。</Homesteader_MakeRockSalt.jobString>
+  <Homesteader_CureMeat.label>用盐腌制肉</Homesteader_CureMeat.label>
+  <Homesteader_CureMeat.description>将生肉用岩盐层层腌制。比鲜肉更耐存，仍可烹成餐食。</Homesteader_CureMeat.description>
+  <Homesteader_CureMeat.jobString>正在腌制肉。</Homesteader_CureMeat.jobString>
+  <Homesteader_SmokeMeat.label>烟熏肉</Homesteader_SmokeMeat.label>
+  <Homesteader_SmokeMeat.description>用木烟熏制生肉，大约可保存一个月。烟熏肉仍可烹成餐食。</Homesteader_SmokeMeat.description>
+  <Homesteader_SmokeMeat.jobString>正在烟熏肉。</Homesteader_SmokeMeat.jobString>
+  <Homesteader_MakePickledVegetables.label>制作腌菜</Homesteader_MakePickledVegetables.label>
+  <Homesteader_MakePickledVegetables.description>将生蔬菜用盐水发酵，以便长期储藏。</Homesteader_MakePickledVegetables.description>
+  <Homesteader_MakePickledVegetables.jobString>正在腌制蔬菜。</Homesteader_MakePickledVegetables.jobString>
+  <Homesteader_MakeJam.label>制作果酱</Homesteader_MakeJam.label>
+  <Homesteader_MakeJam.description>将水果与糖、蜂蜜或枫糖浆一起熬成浓稠甘甜的果酱，可保存数月。</Homesteader_MakeJam.description>
+  <Homesteader_MakeJam.jobString>正在制作果酱。</Homesteader_MakeJam.jobString>
+
+</LanguageData>
