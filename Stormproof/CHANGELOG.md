@@ -8,6 +8,8 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 - **Workshop preview** — compressed `About/Preview.png` (~3.0 MB → ~0.94 MB) via palette PNG so Steam uploads stay under size pressure.
 
 ### Fixed
+- **Building architect icons tiny** — sprites only filled ~10–25% of each PNG; packed content to ~90% canvas fill so Power-tab icons and in-world draw match normal RimWorld scale (Armored conduit atlas unchanged).
+- **Building textures baked backgrounds** — alpha-cleaned white/checkerboard plates, then stripped leftover light editor pads (near-black / light-gray connected to transparent) so in-world draw isn’t a solid cell square around the art.
 - **Building textures white backgrounds** — batch alpha-cleaned all `Textures/Stormproof/Buildings/*.png` (baked white/checkerboard → transparent).
 - **Surge protector eats no-op spire Zzzt** — storm spire short-circuit rolls call `CanFireNow` first; surge Prefix also refuses `Absorb()` when vanilla would find nothing shortable.
 - **Static pylon charge bleed** — capacitor drain is all-or-nothing: if the bank cannot cover a zap, nothing is taken.
