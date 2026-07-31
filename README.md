@@ -94,6 +94,13 @@ Perk trees, trauma & therapy, apprenticeship, generational inheritance, and livi
 - Site: [deep-colony.html](https://azraelgodking.github.io/rimworld_mods/deep-colony.html)
 - [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3773568314) · [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DeepColony.zip)
 
+### Date Night
+
+Adds a Lovin timetable slot to the Schedule tab. Paint the same hours on both partners; they meet in a double bed. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
+
+- Site: [datenight.html](https://azraelgodking.github.io/rimworld_mods/datenight.html)
+- [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip)
+
 ## Installation
 
 A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a packaged zip:
@@ -104,7 +111,7 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, and **Deep Colony** require the **Harmony** mod.
+4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, and **Date Night** require the **Harmony** mod.
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally.
 
@@ -112,7 +119,7 @@ Safe to add to an existing save. Before removing a mod from a save, deconstruct 
 
 ## Changelogs
 
-Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md), [Nemesis](Nemesis/CHANGELOG.md), [Deep Colony](Deep%20Colony/CHANGELOG.md).
+Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md), [Nemesis](Nemesis/CHANGELOG.md), [Deep Colony](Deep%20Colony/CHANGELOG.md), [Date Night](DateNight/CHANGELOG.md).
 
 ## Website
 
