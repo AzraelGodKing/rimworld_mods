@@ -57,6 +57,17 @@
   margin-inline: auto;
 }
 
+.mod-workshop-stats {
+  margin: 1.25rem 0 0;
+  padding: 0.75rem 1rem;
+  background: rgba(20, 28, 24, 0.7);
+  border: 1px solid var(--hs-line);
+  border-radius: 0.5rem;
+  font: 0.9rem/1.4 Verdana, sans-serif;
+  color: var(--hs-muted, #a8b4aa);
+}
+.mod-workshop-stats strong { color: var(--hs-ink, #e8efe8); }
+
 /* Nav */
 .hs-nav {
   position: sticky;

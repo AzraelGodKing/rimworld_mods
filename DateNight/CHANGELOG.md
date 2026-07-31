@@ -6,6 +6,7 @@ Detailed notes for **Date Night** only. Repo-wide highlights: [../CHANGELOG.md](
 
 ### Added
 - **Docs site** — [`docs/datenight.html`](../docs/datenight.html) (how-it-works, settings, install) wired into the hub nav / comparison table; CI packs `DateNight.zip` for the download button.
+- **Workshop ID** — `About/PublishedFileId.txt` (`3774158903`) so uploads update the existing item; included in the docs stats roster.
 - **Workshop preview** — `About/Preview.png` (~748 KB, schedule-hero option) for Steam upload size limits.
 - **Lovin schedule** — `DateNight_Lovin` TimeAssignmentDef on the Schedule tab (rose). While assigned, colonists seek bed like Sleep (including no-sleep / full-rest pawns), work priority matches Sleep, and lovin MTB is shortened to Always-Do-Lovin rates when a partner shares the bed. Default keeps vanilla post-lovin cooldown (pregnancy-safer); optional Eager mode shortens cooldown too.
 - **Schedule button** — Harmony draws Lovin next to Sleep/Meditate (vanilla hardcodes the assignment grid, so XML alone never showed a button).
