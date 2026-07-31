@@ -382,3 +382,29 @@ h2.d { color: var(--accent-d); }
 .hub-card.ledger .count { color: var(--accent-d2); }
 .card.ledger .stat { color: var(--accent-d2); }
 .note.ledger { border-left-color: var(--accent-d); }
+
+/* Date Night */
+:root {
+  --accent-n: #e090a8;
+  --accent-n2: #c07088;
+}
+header.hero.date {
+  background: linear-gradient(180deg, #2a1c24 0%, #1a1718 55%, var(--bg) 100%);
+}
+h1.n { color: var(--accent-n); }
+h2.n { color: var(--accent-n); }
+.badge.date { border-color: #6a4050; color: var(--accent-n2); }
+.btn-date { background: var(--accent-n); color: #1a1014; }
+.btn-date:hover { background: #f0a8bc; color: #1a1014; }
+.nav-links a.date-link { color: var(--accent-n2); }
+.nav-links a.date-link:hover,
+.nav-links a.date-link.active {
+  color: var(--accent-n);
+  border-color: #6a4050;
+  background: #2a2024;
+}
+.hub-card.date:hover { border-color: var(--accent-n); }
+.hub-card h2.n { color: var(--accent-n); }
+.hub-card.date .count { color: var(--accent-n2); }
+.card.date .stat { color: var(--accent-n2); }
+.note.date { border-left-color: var(--accent-n); }
