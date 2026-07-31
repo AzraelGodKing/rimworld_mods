@@ -1,0 +1,54 @@
+name: Update Workshop stats
+
+# Hourly Steam Workshop subscriber / favorite pull → docs/data/stats-cache.json
+# (same commit-to-docs pattern as azrael-sunhaven-website). No API key required.
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force refresh (bypass same-UTC-hour cache guard)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-workshop-stats
+  cancel-in-progress: false
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Commit + push needs a token that can write to the default branch.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Fetch Workshop stats
+        env:
+          STATS_FORCE: ${{ (github.event_name == 'workflow_dispatch' && inputs.force) && '1' || '' }}
+        run: node scripts/fetch-workshop-stats.js
+
+      - name: Commit stats cache if changed
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data/stats-cache.json
+          if git diff --staged --quiet; then
+            echo "No stats changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(docs): refresh Steam Workshop stats cache"
+          git push
