@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <TimeAssignmentDef>
+    <defName>DateNight_Lovin</defName>
+    <label>lovin</label>
+    <color>(176, 72, 118)</color>
+    <allowRest>true</allowRest>
+    <allowJoy>false</allowJoy>
+  </TimeAssignmentDef>
+
+</Defs>
