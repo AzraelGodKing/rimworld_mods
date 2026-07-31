@@ -4,6 +4,11 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
+### Changed
+
+- **Work relay job board** (`work-relay-board-v1`) — background `GameComponent` scanner publishes a per-floor work board; work relay reads it instead of probing during every idle think. Optional off-thread grow-cell aggregate (`offThreadWorkRelay`, on by default). Sync fallback if the board is missing/stale.
+- **Work relay smooth rework** (`work-relay-smooth-v1`) — idle colonists/mechs no longer burn a 7500-tick scan lockout on empty or claim-capped looks (short empty / medium failed cooldowns; only after a real scan). Map work-signal TTL cache + `Notify_WorkChanged` (designations / blueprints/frames) bumps a work version so new jobs wake mid-cooldown pawns. False-positive arrivals blacklist that floor ~5000 ticks to stop stair loops. Work stampede cap scales with signal strength (3–8) and frees on Work arrival. External JobGiver relay uses the same scan throttle + dynamic cap.
+
 ### Added
 
 - **Stair pair IDs + auto/manual relink** — `CompStrataShaftLink` (`strataPairGuid`) on all Strata shafts/landings; syncs with gravship `shaftId` when present. `ConnectPortalPair` is the single wiring path; load stamps healthy pairs and auto-rewires unique pair-ID matches. DevMode: relink by pair ID, click shaft→landing (cross-floor), relink selected, cancel, repair missing landings, log topology with pair id. Stamp `stair-pair-id-v1`.

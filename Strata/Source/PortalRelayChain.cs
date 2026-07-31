@@ -286,6 +286,13 @@ namespace Strata
                 return;
             }
 
+            if (intent.purpose == RelayPurpose.Work)
+            {
+                // Free stampede slot; check next JobGiver_Work for false-positive loop.
+                RelayClaims.Release(pawn);
+                WorkRelayAntiLoop.MarkPendingEmptyCheck(pawn);
+            }
+
             // Food / work / joy: idle so vanilla jobgivers take over.
             // Medical finishes above with LayDown on the pinned bed.
         }
