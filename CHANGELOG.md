@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Docs** — hourly GitHub Action pulls Steam Workshop subscribers/favorites into [`docs/data/stats-cache.json`](docs/data/stats-cache.json) (Sunhaven-style); hub + mod pages show live counts via `stats-display.js`. Roster: [`scripts/workshop-mods.json`](scripts/workshop-mods.json).
 - **Date Night** — Lovin schedule button (vanilla UI is hardcoded), bed seek + short MTB, Dev tools to make lovers; Workshop preview (#2 schedule-hero); docs page [`datenight.html`](docs/datenight.html) + hub card; CI packs `DateNight.zip`. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Ideas** — parked Outfit Routines design for a later Wardrobe mod. → [docs/ideas/outfit-routines.md](docs/ideas/outfit-routines.md)
 - **Stormproof** — packed building sprites to ~90% fill and stripped leftover light editor pads so icons/buildings aren’t tiny boxed fake-PNGs. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
