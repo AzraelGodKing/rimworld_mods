@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Date Night</name>
+  <author>AzraelGodKing</author>
+  <packageId>azraelgodking.DateNight</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>Ludeon.RimWorld</li>
+  </loadAfter>
+  <description>Adds a Lovin timetable slot to the Schedule tab.
+
+Paint Lovin on both partners for the same hours. Each colonist goes to their bed and waits. When both are in a shared double bed, lovin uses a short mean-time-between (like the vanilla Always Do Lovin debug option) until the schedule changes — then behavior returns to normal.
+
+Works for no-sleep / low-rest pawns who never hit a Sleep block: Lovin still sends them to bed.
+
+REQUIREMENTS
+- Both partners scheduled Lovin for the window (independent pathing).
+- Love relationship and a shared double bed (vanilla GetPartnerInMyBed rules).
+- Single bed or missing partner: they wait in bed; no lovin.
+
+SETTINGS
+- Pregnancy-safe cooldown (default ON): keeps vanilla post-lovin cooldown; only shortens the chance MTB while scheduled.
+- Eager mode (optional): also shortens post-lovin cooldown like Always Do Lovin — can spam pregnancy rolls.
+
+Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: clear Lovin schedule slots back to Sleep/Anything.</description>
+</ModMetaData>
