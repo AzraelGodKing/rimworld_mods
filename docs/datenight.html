@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Date Night — a RimWorld mod by AzraelGodKing</title>
+<meta name="description" content="Date Night: add a Lovin timetable slot to RimWorld’s Schedule tab. Paint the same hours for both partners; they meet in a double bed. RimWorld 1.6, requires Harmony.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">RIMWORLD MODS</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="homesteader.html">Homesteader</a>
+      <a href="stormproof.html">Stormproof</a>
+      <a href="strata.html">Strata</a>
+      <a href="nemesis.html" class="signal-link">Nemesis</a>
+      <a href="deep-colony.html" class="ledger-link">Deep Colony</a>
+      <a href="datenight.html" class="date-link active">Date Night</a>
+      <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero date">
+  <div class="wrap">
+    <h1 class="n">DATE NIGHT</h1>
+    <p class="tagline">Schedule romance. Make memories.</p>
+    <div class="badges">
+      <span class="badge date">RimWorld 1.6</span>
+      <span class="badge date">Requires Harmony</span>
+      <span class="badge date">C# mod</span>
+      <span class="badge date">Lovin schedule</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-date" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip">&#11015; Download zip</a>
+      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="overview">
+    <h2 class="n">Overview</h2>
+    <p class="sub">Adds a <b>Lovin</b> timetable slot to the Schedule tab. Paint Lovin on both partners for the same hours — each colonist goes to bed and waits. When both share a double bed, lovin uses a short mean-time-between (like the vanilla Always Do Lovin debug option) until the schedule changes.</p>
+    <div class="note date">
+      <b>Dependencies:</b> requires <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a>. Load Date Night after it.<br>
+      <b>Save-safe:</b> safe to add mid-save. Before removing, clear Lovin slots back to Sleep / Anything.
+    </div>
+  </section>
+
+  <section id="how">
+    <h2 class="n">How it works</h2>
+    <div class="grid">
+      <div class="card date">
+        <div>
+          <h3>1. Paint Lovin</h3>
+          <p>Open Schedule and pick the new rose <b>Lovin</b> button (drawn next to Sleep / Meditate — vanilla hardcodes that grid, so XML alone never shows a custom slot).</p>
+        </div>
+      </div>
+      <div class="card date">
+        <div>
+          <h3>2. Both partners</h3>
+          <p>Assign the same hours on both lovers. Each paths independently to a shared rendezvous double bed (not their private singles).</p>
+        </div>
+      </div>
+      <div class="card date">
+        <div>
+          <h3>3. Shared double bed</h3>
+          <div class="stat">Vanilla partner-in-bed rules</div>
+          <p>When both are in the double, lovin chance uses a short MTB for the rest of the window. Missing partner or only a single bed: they wait; no lovin.</p>
+        </div>
+      </div>
+      <div class="card date">
+        <div>
+          <h3>4. Needs first</h3>
+          <p>Hungry, chemical desire, player-forced jobs, and exhaustion block bed-forcing so colonists eat (etc.) before the date.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="settings">
+    <h2 class="n">Settings</h2>
+    <div class="grid">
+      <div class="card date wide">
+        <div>
+          <h3>Pregnancy-safe cooldown</h3>
+          <div class="stat">Default ON</div>
+          <p>Only shortens lovin <em>chance</em> while scheduled; keeps vanilla post-lovin cooldown so pregnancy rolls stay sane.</p>
+        </div>
+      </div>
+      <div class="card date wide">
+        <div>
+          <h3>Eager mode</h3>
+          <div class="stat">Optional</div>
+          <p>Also shortens post-lovin cooldown like Always Do Lovin. Can spam pregnancy rolls — leave off unless you want that.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="requirements">
+    <h2 class="n">Requirements checklist</h2>
+    <ul class="feature-list">
+      <li>Love relationship between the pair</li>
+      <li>Both scheduled Lovin for the window</li>
+      <li>A reachable shared double bed (rendezvous cache picks one; no ownership storm)</li>
+      <li>Works for no-sleep / low-rest pawns who never hit a Sleep block</li>
+    </ul>
+  </section>
+
+  <section id="dev">
+    <h2 class="n">Dev tools</h2>
+    <p class="sub">With Dev mode on: <b>Date Night</b> menu — make selected pair lovers, click-to-pair, paint Lovin all day, force lovin now, log rendezvous bed.</p>
+  </section>
+
+  <section id="install">
+    <h2 class="n">Installation</h2>
+    <ol>
+      <li>Download the zip above (or copy the <code>DateNight</code> folder into your RimWorld <code>Mods</code> directory).</li>
+      <li>Enable <b>Harmony</b>, then <b>Date Night</b>, and restart.</li>
+      <li>Open a colonist&rsquo;s Schedule tab — Lovin appears beside Sleep.</li>
+    </ol>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    RimWorld mods by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
+    &middot; <a href="index.html">Back to hub</a>
+  </div>
+</footer>
+
+</body>
+</html>
