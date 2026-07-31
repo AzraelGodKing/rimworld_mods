@@ -1,0 +1,72 @@
+{
+  "lastFetched": "2026-07-31T01:06:10.082Z",
+  "mods": {
+    "homesteader": {
+      "name": "Homesteader",
+      "publishedFileId": "3759238501",
+      "title": "Homesteader",
+      "subscriptions": 302,
+      "favorited": 48,
+      "views": 2700,
+      "lifetime_subscriptions": 371,
+      "lifetime_favorited": 51
+    },
+    "stormproof": {
+      "name": "Stormproof",
+      "publishedFileId": "3760021127",
+      "title": "Stormproof",
+      "subscriptions": 321,
+      "favorited": 39,
+      "views": 1031,
+      "lifetime_subscriptions": 358,
+      "lifetime_favorited": 44
+    },
+    "strata": {
+      "name": "Strata",
+      "publishedFileId": "3762844292",
+      "title": "Strata",
+      "subscriptions": 1482,
+      "favorited": 362,
+      "views": 8634,
+      "lifetime_subscriptions": 1798,
+      "lifetime_favorited": 377
+    },
+    "nemesis": {
+      "name": "Nemesis",
+      "publishedFileId": "3773562126",
+      "title": "Nemesis",
+      "subscriptions": 101,
+      "favorited": 22,
+      "views": 579,
+      "lifetime_subscriptions": 106,
+      "lifetime_favorited": 22
+    },
+    "deep-colony": {
+      "name": "Deep Colony",
+      "publishedFileId": "3773568314",
+      "title": "Deep Colony",
+      "subscriptions": 58,
+      "favorited": 22,
+      "views": 608,
+      "lifetime_subscriptions": 61,
+      "lifetime_favorited": 22
+    },
+    "date-night": {
+      "name": "Date Night",
+      "publishedFileId": "3774158903",
+      "title": "Date Night",
+      "subscriptions": 81,
+      "favorited": 12,
+      "views": 387,
+      "lifetime_subscriptions": 82,
+      "lifetime_favorited": 12
+    }
+  },
+  "site_total": {
+    "subscriptions": 2345,
+    "favorited": 505,
+    "views": 13939,
+    "lifetime_subscriptions": 2776,
+    "lifetime_favorited": 528
+  }
+}

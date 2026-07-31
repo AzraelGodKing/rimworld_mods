@@ -6,6 +6,7 @@
 <title>RimWorld Mods — AzraelGodKing</title>
 <meta name="description" content="Homesteader, Stormproof, Strata, Nemesis, Deep Colony, and Date Night — RimWorld mods by AzraelGodKing.">
 <link rel="stylesheet" href="style.css">
+<script src="scripts/stats-display.js" defer></script>
 </head>
 <body>
 
@@ -47,12 +48,27 @@
 </header>
 
 <div class="wrap">
+
+  <div class="hub-workshop-stats" aria-live="polite">
+    <p class="hub-workshop-stats-primary">
+      <strong>Steam Workshop (all mods):</strong>
+      <span data-stats="total" data-field="subscriptions">&mdash;</span> subscribers
+      &middot;
+      <span data-stats="total" data-field="favorited">&mdash;</span> favorites
+    </p>
+    <p class="hub-workshop-stats-detail">Updated <span data-stats-fetched>&mdash;</span> &middot; refreshed hourly from Steam</p>
+  </div>
+
   <div class="hub-grid">
 
     <a class="hub-card" href="homesteader.html">
       <img class="hub-card-preview" src="img/HomesteaderPreview.png" alt="Homesteader workshop preview">
       <h2 class="h">HOMESTEADER</h2>
       <p>Tribal survival, farm-to-table crafting, wells and irrigation, brewing, beekeeping, cool root cellars, and off-grid power. C# + Harmony for cellar cooling and favorite foods.</p>
+      <div class="workshop-stats">
+        <span><span data-stats-mod="homesteader" data-field="subscriptions">&mdash;</span> subs</span>
+        <span><span data-stats-mod="homesteader" data-field="favorited">&mdash;</span> favs</span>
+      </div>
       <div class="count">Food + water + power &middot; custom scenario &amp; trader &middot; RimWorld 1.4 / 1.5 / 1.6</div>
     </a>
 
@@ -60,6 +76,10 @@
       <img class="hub-card-preview" src="img/StormproofPreview.png" alt="Stormproof workshop preview">
       <h2 class="s">STORMPROOF</h2>
       <p>Defend your colony's power grid from solar flares, lightning, short circuits, EMP, and toxic fallout &mdash; then summon the storm yourself. Custom C# behaviors with Harmony.</p>
+      <div class="workshop-stats">
+        <span><span data-stats-mod="stormproof" data-field="subscriptions">&mdash;</span> subs</span>
+        <span><span data-stats-mod="stormproof" data-field="favorited">&mdash;</span> favs</span>
+      </div>
       <div class="count">18 buildings &middot; 5 research projects &middot; 5 custom events &middot; RimWorld 1.6</div>
     </a>
 
@@ -67,6 +87,10 @@
       <img class="hub-card-preview" src="img/StrataPreview.png" alt="Strata workshop preview">
       <h2 class="t">STRATA</h2>
       <p><b>Version 3 complete:</b> dig down, build up, breathe deep. Colonists commute; atmosphere, quest sites, fluid shafts, Odyssey gravship stacks, see-below roofs, and cross-level force-build. Custom C# with Harmony.</p>
+      <div class="workshop-stats">
+        <span><span data-stats-mod="strata" data-field="subscriptions">&mdash;</span> subs</span>
+        <span><span data-stats-mod="strata" data-field="favorited">&mdash;</span> favs</span>
+      </div>
       <div class="count">V3 complete &middot; dig / build / breathe &middot; RimWorld 1.6 &middot; Odyssey optional</div>
     </a>
 
@@ -74,6 +98,10 @@
       <img class="hub-card-preview" src="img/NemesisPreview.png" alt="Nemesis workshop preview">
       <h2 class="x">NEMESIS</h2>
       <p>A named personal antagonist harasses your colony with taunts, false leads, sabotage, and assaults that flee when losing. Foundation by Dredd (Misakabob).</p>
+      <div class="workshop-stats">
+        <span><span data-stats-mod="nemesis" data-field="subscriptions">&mdash;</span> subs</span>
+        <span><span data-stats-mod="nemesis" data-field="favorited">&mdash;</span> favs</span>
+      </div>
       <div class="count">Personal hunt &middot; soft compat &middot; RimWorld 1.6</div>
     </a>
 
@@ -81,6 +109,10 @@
       <img class="hub-card-preview" src="img/DeepColonyPreview.png" alt="Deep Colony workshop preview">
       <h2 class="d">DEEP COLONY</h2>
       <p>Perk trees, trauma &amp; therapy, apprenticeship, generational inheritance, and living faction reputation. Colonists become more than their skill sheet.</p>
+      <div class="workshop-stats">
+        <span><span data-stats-mod="deep-colony" data-field="subscriptions">&mdash;</span> subs</span>
+        <span><span data-stats-mod="deep-colony" data-field="favorited">&mdash;</span> favs</span>
+      </div>
       <div class="count">Five systems &middot; C# + Harmony &middot; RimWorld 1.6</div>
     </a>
 
@@ -88,6 +120,10 @@
       <img class="hub-card-preview" src="img/DateNightPreview.png" alt="Date Night workshop preview">
       <h2 class="n">DATE NIGHT</h2>
       <p>Paint Lovin on the Schedule tab. Partners meet in a double bed; short lovin MTB while the hours last. Pregnancy-safe by default.</p>
+      <div class="workshop-stats">
+        <span><span data-stats-mod="date-night" data-field="subscriptions">&mdash;</span> subs</span>
+        <span><span data-stats-mod="date-night" data-field="favorited">&mdash;</span> favs</span>
+      </div>
       <div class="count">Lovin schedule &middot; C# + Harmony &middot; RimWorld 1.6</div>
     </a>
 

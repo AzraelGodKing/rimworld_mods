@@ -125,6 +125,8 @@ Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Hom
 
 Browse the full mod catalog at the [GitHub Pages site](https://azraelgodking.github.io/rimworld_mods/).
 
+Workshop subscriber / favorite counts are refreshed hourly by [`.github/workflows/update-stats.yml`](.github/workflows/update-stats.yml) into [`docs/data/stats-cache.json`](docs/data/stats-cache.json) (see [`scripts/fetch-workshop-stats.js`](scripts/fetch-workshop-stats.js)). Local refresh: `node scripts/fetch-workshop-stats.js --force`.
+
 ## License
 
 Everything in this repository is released under the [MIT License](LICENSE).
