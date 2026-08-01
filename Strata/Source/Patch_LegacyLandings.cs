@@ -17,6 +17,8 @@ namespace Strata
         {
             // Session statics first: tick-stamped, pawn-ID-keyed state from a
             // previously loaded save is garbage in this one.
+            // Session statics first: tick-stamped, pawn-ID-keyed state from a
+            // previously loaded save is garbage in this one.
             PawnRelay.ResetSession();
             RelayClaims.ResetSession();
             MapComponent_RaidPursuit.ResetSession();

@@ -53,6 +53,9 @@ namespace Strata
                 Thing t = list[i];
                 if (t == null || t.Destroyed || !t.Spawned) continue;
                 if (pawn != null && t.IsForbidden(pawn)) continue;
+                // Reserved stacks are not available — counting them made fetch jobs
+                // target wood another builder already claimed (StartJob reserve spam).
+                if (pawn != null && !pawn.CanReserve(t)) continue;
                 n += t.stackCount;
             }
             return n;
@@ -167,7 +170,7 @@ namespace Strata
                         continue;
                     }
 
-                    Thing mat = FindBestMaterial(pawn, need.thingDef, site.Map, excludeMap: null);
+                    Thing mat = FindBestMaterial(pawn, need.thingDef, site.Map, excludeMap: null, forced);
                     if (mat == null) continue;
 
                     int take = Math.Min(mat.stackCount, want);
@@ -238,7 +241,12 @@ namespace Strata
                     && HaulAIUtility.PawnCanAutomaticallyHaulFast(pawn, t, forced));
         }
 
-        private static Thing FindBestMaterial(Pawn pawn, ThingDef def, Map siteMap, Map excludeMap)
+        private static Thing FindBestMaterial(
+            Pawn pawn,
+            ThingDef def,
+            Map siteMap,
+            Map excludeMap,
+            bool forced)
         {
             if (pawn == null || def == null) return null;
             Thing best = null;
@@ -252,6 +260,12 @@ namespace Strata
                 {
                     Thing t = list[i];
                     if (t == null || !t.Spawned || t.IsForbidden(pawn)) continue;
+                    if (!pawn.CanReserve(t)) continue;
+                    if (map == pawn.Map
+                        && !HaulAIUtility.PawnCanAutomaticallyHaulFast(pawn, t, forced))
+                    {
+                        continue;
+                    }
                     int dist = (t.Position - (map == pawn.Map ? pawn.Position : t.Position)).LengthHorizontalSquared;
                     // Prefer same map as pawn, then nearer stacks.
                     if (map == pawn.Map) dist -= 1_000_000;
@@ -277,6 +291,7 @@ namespace Strata
             Map siteMap = site?.Map;
             Map matMap = mat.Map;
             if (matMap == null || siteMap == null || site == null) return null;
+            if (mat.Spawned && !pawn.CanReserve(mat)) return null;
 
             if (pawn.Map == matMap)
             {
@@ -284,6 +299,10 @@ namespace Strata
                 // or deliver straight into the frame when material is on-site.
                 if (matMap == siteMap)
                 {
+                    if (!pawn.CanReserveAndReach(site, PathEndMode.Touch, Danger.Deadly))
+                    {
+                        return null;
+                    }
                     Job local = JobMaker.MakeJob(JobDefOf.HaulToContainer, mat, site);
                     local.count = count;
                     local.haulMode = HaulMode.ToContainer;
@@ -347,11 +366,11 @@ namespace Strata
             if (matMap == null || siteMap == null || pawn.Map != matMap) return false;
 
             Thing mat = FindThing(matMap, fetch.matThingId);
-            if (mat == null || !mat.Spawned)
+            if (mat == null || !mat.Spawned || (mat.Spawned && !pawn.CanReserve(mat)))
             {
-                // Stack moved/merged — recover another stack of the same def.
+                // Stack moved/merged/claimed — recover another free stack of the same def.
                 if (fetch.matDef == null) return false;
-                mat = FindBestMaterial(pawn, fetch.matDef, siteMap, excludeMap: null);
+                mat = FindBestMaterial(pawn, fetch.matDef, siteMap, excludeMap: null, fetch.forced);
                 if (mat == null || !mat.Spawned) return false;
                 matMap = mat.Map;
                 if (matMap == null) return false;
@@ -381,12 +400,19 @@ namespace Strata
             // Materials landed on the build floor — deliver into the frame directly.
             if (matMap == siteMap && site != null && site.Map == matMap)
             {
+                if (!pawn.CanReserve(mat)
+                    || !pawn.CanReserveAndReach(site, PathEndMode.Touch, Danger.Deadly))
+                {
+                    return false;
+                }
                 Job deliver = JobMaker.MakeJob(JobDefOf.HaulToContainer, mat, site);
                 deliver.count = Math.Min(mat.stackCount, Math.Max(1, fetch.count));
                 deliver.haulMode = HaulMode.ToContainer;
                 deliver.playerForced = fetch.forced;
                 return pawn.jobs.TryTakeOrderedJob(deliver, JobTag.MiscWork);
             }
+
+            if (!pawn.CanReserve(mat)) return false;
 
             MapPortal portal = LevelGraph.BestFirstStep(matMap, siteMap, pawn.Position, pawn);
             if (portal == null) return false;
@@ -593,8 +619,25 @@ namespace Strata
                 if (rewritten != null)
                 {
                     __result = rewritten;
+                    return;
                 }
-                return;
+
+                // Same-map race: another pawn already claimed the stack between
+                // WorkGiver scan and StartJob. Drop the job so we don't Warning-spam
+                // TryMakePreToilReservations / Could not reserve.
+                if (__result.def == JobDefOf.HaulToContainer)
+                {
+                    Thing mat = __result.targetA.Thing;
+                    if (mat != null && mat.Spawned && !pawn.CanReserve(mat))
+                    {
+                        __result = null;
+                    }
+                }
+
+                if (__result != null)
+                {
+                    return;
+                }
             }
 
             Job fetch = StrataConstructAcrossLevels.TryMakeFetchJob(pawn, c, forced);
