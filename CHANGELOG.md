@@ -4,9 +4,11 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Living World** — Phase 1 mod cut: off-map chronicle, hear-rules, settlement morph (prosperity / flip / abandon / outpost / epithet), soft event bus, CI zip (`living-world-phase1`). → [LivingWorld/CHANGELOG.md](LivingWorld/CHANGELOG.md) · [docs/ideas/living-world.md](docs/ideas/living-world.md)
 - **Docs** — hourly GitHub Action pulls Steam Workshop subscribers/favorites into [`docs/data/stats-cache.json`](docs/data/stats-cache.json) (Sunhaven-style); hub + mod pages show live counts via `stats-display.js`. Roster: [`scripts/workshop-mods.json`](scripts/workshop-mods.json).
 - **Date Night** — Lovin schedule button (vanilla UI is hardcoded), bed seek + short MTB, Dev tools to make lovers; Workshop preview (#2 schedule-hero); docs page [`datenight.html`](docs/datenight.html) + hub card; CI packs `DateNight.zip`. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Ideas** — parked Outfit Routines design for a later Wardrobe mod. → [docs/ideas/outfit-routines.md](docs/ideas/outfit-routines.md)
+- **Ideas** — Living World design: off-map faction chronicle, settlement morph, NPC diplomacy; Nemesis / Deep Colony / Homesteader keep their lanes. → [docs/ideas/living-world.md](docs/ideas/living-world.md)
 - **Stormproof** — packed building sprites to ~90% fill and stripped leftover light editor pads so icons/buildings aren’t tiny boxed fake-PNGs. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
 - **Strata** — rebuilt `Strata.dll` so suffocation/stuffy ThoughtWorkers match V3.5 defs (`atmosphere-thoughts-dll-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Homesteader** — Chinese Simplified and Russian Keyed + DefInjected language packs. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
