@@ -1,14 +1,14 @@
 {
-  "lastFetched": "2026-08-01T11:57:22.559Z",
+  "lastFetched": "2026-08-01T13:16:13.295Z",
   "mods": {
     "homesteader": {
       "name": "Homesteader",
       "publishedFileId": "3759238501",
       "title": "Homesteader",
-      "subscriptions": 313,
+      "subscriptions": 314,
       "favorited": 49,
-      "views": 2781,
-      "lifetime_subscriptions": 387,
+      "views": 2785,
+      "lifetime_subscriptions": 388,
       "lifetime_favorited": 52
     },
     "stormproof": {
@@ -25,11 +25,11 @@
       "name": "Strata",
       "publishedFileId": "3762844292",
       "title": "Strata",
-      "subscriptions": 1505,
-      "favorited": 364,
-      "views": 8733,
-      "lifetime_subscriptions": 1839,
-      "lifetime_favorited": 379
+      "subscriptions": 1504,
+      "favorited": 365,
+      "views": 8739,
+      "lifetime_subscriptions": 1840,
+      "lifetime_favorited": 380
     },
     "nemesis": {
       "name": "Nemesis",
@@ -37,7 +37,7 @@
       "title": "Nemesis",
       "subscriptions": 130,
       "favorited": 30,
-      "views": 743,
+      "views": 745,
       "lifetime_subscriptions": 140,
       "lifetime_favorited": 30
     },
@@ -47,7 +47,7 @@
       "title": "Deep Colony",
       "subscriptions": 81,
       "favorited": 32,
-      "views": 811,
+      "views": 820,
       "lifetime_subscriptions": 87,
       "lifetime_favorited": 33
     },
@@ -57,16 +57,16 @@
       "title": "Date Night",
       "subscriptions": 148,
       "favorited": 23,
-      "views": 651,
+      "views": 653,
       "lifetime_subscriptions": 157,
       "lifetime_favorited": 24
     }
   },
   "site_total": {
     "subscriptions": 2502,
-    "favorited": 537,
-    "views": 14765,
-    "lifetime_subscriptions": 2972,
-    "lifetime_favorited": 562
+    "favorited": 538,
+    "views": 14788,
+    "lifetime_subscriptions": 2974,
+    "lifetime_favorited": 563
   }
 }
