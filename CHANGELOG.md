@@ -4,6 +4,8 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Strata** — construct deliver no longer starts `HaulToContainer` on stacks another pawn already reserved (`construct-reserve-probe-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — cross-level construct haul that fails reassigns to storage; stuck-carry Wait/ghost-cargo fix (`haul-construct-to-storage-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — shared work-relay job board + optional off-thread grow aggregate (`work-relay-board-v1`); prior smooth cooldown/anti-loop (`work-relay-smooth-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Docs** — hourly GitHub Action pulls Steam Workshop subscribers/favorites into [`docs/data/stats-cache.json`](docs/data/stats-cache.json) (Sunhaven-style); hub + mod pages show live counts via `stats-display.js`. Roster: [`scripts/workshop-mods.json`](scripts/workshop-mods.json).
 - **Date Night** — Lovin schedule button (vanilla UI is hardcoded), bed seek + short MTB, Dev tools to make lovers; Workshop preview (#2 schedule-hero); docs page [`datenight.html`](docs/datenight.html) + hub card; CI packs `DateNight.zip`. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)

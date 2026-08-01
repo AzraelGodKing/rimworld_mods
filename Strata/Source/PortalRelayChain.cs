@@ -303,8 +303,31 @@ namespace Strata
             // Soft-compat: unload Pick Up And Haul inventory into dest storage.
             StrataPuahSoftCompat.TryDeliverInventory(pawn);
 
+            // Construction/frame delivery failed — reassign to storage on this floor
+            // before dropping at feet or stair-ping-ponging home with cargo.
+            if (!delivering
+                && pawn.carryTracker?.CarriedThing != null
+                && pawn.carryTracker.CarriedThing is not Pawn)
+            {
+                delivering = StrataPortalUtility.TryStartStorageDelivery(pawn);
+            }
+
+            if (!delivering
+                && pawn.carryTracker?.CarriedThing != null
+                && pawn.carryTracker.CarriedThing is not Pawn)
+            {
+                StrataPortalUtility.TryForceDropCarriedCargo(pawn);
+            }
+
             Map returnMap = returnMapId > 0 ? FindMap(returnMapId) : null;
             if (returnMap == null || returnMap == pawn.Map)
+            {
+                return;
+            }
+
+            // Still carrying after failed storage + drop — do not stair-ping-pong.
+            if (pawn.carryTracker?.CarriedThing != null
+                && pawn.carryTracker.CarriedThing is not Pawn)
             {
                 return;
             }
@@ -329,8 +352,7 @@ namespace Strata
             }
             else
             {
-                // Keep carried materials — InterruptForced otherwise drops wood/steel
-                // and the force-build looks "forgotten".
+                // Empty-handed return for another load.
                 pawn.jobs.StartJob(
                     home,
                     JobCondition.InterruptForced,
