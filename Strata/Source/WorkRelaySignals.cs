@@ -8,17 +8,48 @@ namespace Strata
 {
     /// <summary>
     /// Cheap "is there plausibly work on this map for this pawn?" probes used by
-    /// the work relay. False positives only cost a stair walk + cooldown.
+    /// the work relay. Map signals live on <see cref="WorkRelayBoard"/> (scanner
+    /// push + sync fallback); false positives cost a stair walk + blacklist.
     /// </summary>
     public static class WorkRelaySignals
     {
         public delegate bool WorkProbe(Pawn pawn, Map map);
 
+        /// <summary>Max age for a published board entry before the scanner/rebuild refreshes.</summary>
+        public const int BoardFreshTicks = 600;
+
+        private const int WorkClaimCapMin = 3;
+
+        private const int WorkClaimCapMax = 8;
+
         private static readonly List<WorkProbe> externalProbes = new List<WorkProbe>();
 
         private static readonly List<string> workSeekingGiverMarkers = new List<string>();
 
+        private static int workVersion = 1;
+
         internal static int RegisteredWorkSeekingGiverMarkerCount => workSeekingGiverMarkers.Count;
+
+        /// <summary>Bumps when designations / blueprints change so pawn scan cooldowns wake up.</summary>
+        public static int WorkVersion => workVersion;
+
+        public static void Notify_WorkChanged(Map map)
+        {
+            unchecked
+            {
+                workVersion++;
+            }
+            if (workVersion <= 0)
+            {
+                workVersion = 1;
+            }
+            WorkRelayBoard.Invalidate(map);
+            if (map != null)
+            {
+                WorkRelayBoardBuilder.CancelMap(map.uniqueID);
+                WorkRelayAntiLoop.ClearForMap(map);
+            }
+        }
 
         /// <summary>
         /// Mods: register a probe so cross-level work relay notices your jobs.
@@ -69,7 +100,9 @@ namespace Strata
 
         internal static void ResetSession()
         {
-            // External registrations are process-lifetime; nothing to clear per save.
+            workVersion = 1;
+            WorkRelayBoard.ResetSession();
+            WorkRelayBoardBuilder.ResetSession();
         }
 
         public static bool IsRegisteredWorkSeekingGiver(ThinkNode_JobGiver giver)
@@ -113,6 +146,10 @@ namespace Strata
             {
                 return false;
             }
+            if (WorkRelayAntiLoop.IsBlacklisted(pawn, map))
+            {
+                return false;
+            }
 
             Pawn_WorkSettings work = pawn.workSettings;
             if (work == null || !work.EverWork)
@@ -121,49 +158,50 @@ namespace Strata
                     && StrataPawnUtility.MiscRobotHasWorkOn(pawn, map);
             }
 
+            WorkRelayBoard.BoardEntry signals = GetSignals(map);
             bool Active(WorkTypeDef type) => type != null && work.WorkIsActive(type);
 
-            if (Active(WorkTypeDefOf.Construction) && HasConstruction(map))
+            if (Active(WorkTypeDefOf.Construction) && signals.construction)
             {
                 return true;
             }
-            if (Active(WorkTypeDefOf.Growing) && HasGrowing(map))
+            if (Active(WorkTypeDefOf.Growing) && signals.growing)
             {
                 return true;
             }
-            if (Active(StrataDefOf.Mining) && HasMining(map))
+            if (Active(StrataDefOf.Mining) && signals.mining)
             {
                 return true;
             }
-            if (Active(StrataDefOf.PlantCutting) && HasPlantCutting(map))
+            if (Active(StrataDefOf.PlantCutting) && signals.plantCutting)
             {
                 return true;
             }
-            if (Active(WorkTypeDefOf.Hunting) && HasHunting(map))
+            if (Active(WorkTypeDefOf.Hunting) && signals.hunting)
             {
                 return true;
             }
-            if (Active(WorkTypeDefOf.Hauling) && (HasHauling(map) || HasCrossLevelHaulExports(map)))
+            if (Active(WorkTypeDefOf.Hauling) && (signals.hauling || signals.haulExports))
             {
                 return true;
             }
-            if (Active(WorkTypeDefOf.Cleaning) && HasCleaning(map))
+            if (Active(WorkTypeDefOf.Cleaning) && signals.cleaning)
             {
                 return true;
             }
-            if (Active(WorkTypeDefOf.Firefighter) && HasFirefighting(map))
+            if (Active(WorkTypeDefOf.Firefighter) && signals.firefighting)
             {
                 return true;
             }
-            if (Active(WorkTypeDefOf.Research) && HasResearch(map))
+            if (Active(WorkTypeDefOf.Research) && signals.research)
             {
                 return true;
             }
-            if (Active(WorkTypeDefOf.Warden) && HasWardenWork(map))
+            if (Active(WorkTypeDefOf.Warden) && signals.warden)
             {
                 return true;
             }
-            if (Active(WorkTypeDefOf.Handling) && HasHandling(map))
+            if (Active(WorkTypeDefOf.Handling) && signals.handling)
             {
                 return true;
             }
@@ -172,16 +210,15 @@ namespace Strata
             {
                 return true;
             }
-            if (HasFlickWork(map) && (Active(WorkTypeDefOf.Hauling) || Active(WorkTypeDefOf.Construction)))
+            if (signals.flick && (Active(WorkTypeDefOf.Hauling) || Active(WorkTypeDefOf.Construction)))
             {
-                // Flick is often done by anyone; haul/construct pawns cover it.
                 return true;
             }
             if (HasBillsFor(pawn, map))
             {
                 return true;
             }
-            if (HasChildcare(map) && Active(WorkTypeDefOf.Childcare))
+            if (signals.childcare && Active(WorkTypeDefOf.Childcare))
             {
                 return true;
             }
@@ -204,7 +241,101 @@ namespace Strata
             return false;
         }
 
-        public static bool HasConstruction(Map map)
+        /// <summary>
+        /// Soft stampede cap for work commute: more signal on the floor → more
+        /// pawns allowed to head there (clamped 3–8).
+        /// </summary>
+        public static int WorkClaimCap(Map map)
+        {
+            if (map == null)
+            {
+                return WorkClaimCapMin;
+            }
+            WorkRelayBoard.BoardEntry signals = GetSignals(map);
+            int score = signals.blueprintFrames;
+            if (signals.mining)
+            {
+                score += 2;
+            }
+            if (signals.plantCutting)
+            {
+                score += 1;
+            }
+            if (signals.hunting)
+            {
+                score += 1;
+            }
+            if (signals.haulableCount > 0)
+            {
+                score += Math.Min(4, (signals.haulableCount + 4) / 5);
+            }
+            if (signals.haulExports)
+            {
+                score += 1;
+            }
+            if (signals.cleaning)
+            {
+                score += 1;
+            }
+            if (signals.firefighting)
+            {
+                score += 2;
+            }
+            if (signals.flick)
+            {
+                score += 1;
+            }
+            if (signals.growing)
+            {
+                score += 1;
+            }
+            if (signals.warden || signals.handling || signals.childcare)
+            {
+                score += 1;
+            }
+            return Math.Min(WorkClaimCapMax, Math.Max(WorkClaimCapMin, WorkClaimCapMin + score / 3));
+        }
+
+        /// <summary>Read published board; sync-build if missing/stale (relay never goes blind).</summary>
+        internal static WorkRelayBoard.BoardEntry GetSignals(Map map)
+        {
+            if (WorkRelayBoard.TryGetFresh(map, BoardFreshTicks, out WorkRelayBoard.BoardEntry entry))
+            {
+                return entry;
+            }
+            return WorkRelayBoardBuilder.BuildAndPublishSync(map);
+        }
+
+        public static bool HasConstruction(Map map) => map != null && GetSignals(map).construction;
+
+        public static bool HasMining(Map map) => map != null && GetSignals(map).mining;
+
+        public static bool HasPlantCutting(Map map) => map != null && GetSignals(map).plantCutting;
+
+        public static bool HasGrowing(Map map) => map != null && GetSignals(map).growing;
+
+        public static bool HasHunting(Map map) => map != null && GetSignals(map).hunting;
+
+        public static bool HasHauling(Map map) => map != null && GetSignals(map).hauling;
+
+        public static bool HasCrossLevelHaulExports(Map map) =>
+            map != null && GetSignals(map).haulExports;
+
+        public static bool HasCleaning(Map map) => map != null && GetSignals(map).cleaning;
+
+        public static bool HasFirefighting(Map map) => map != null && GetSignals(map).firefighting;
+
+        public static bool HasResearch(Map map) => map != null && GetSignals(map).research;
+
+        public static bool HasWardenWork(Map map) => map != null && GetSignals(map).warden;
+
+        public static bool HasHandling(Map map) => map != null && GetSignals(map).handling;
+
+        public static bool HasFlickWork(Map map) => map != null && GetSignals(map).flick;
+
+        public static bool HasChildcare(Map map) => map != null && GetSignals(map).childcare;
+
+        internal static bool ProbeConstruction(Map map)
         {
             if (AnyPlayerThing(map, ThingRequestGroup.Blueprint) || AnyPlayerThing(map, ThingRequestGroup.BuildingFrame))
             {
@@ -218,75 +349,31 @@ namespace Strata
                 || d.AnySpawnedDesignationOfDef(DesignationDefOf.RemoveFloor);
         }
 
-        public static bool HasMining(Map map)
+        internal static bool ProbeMining(Map map)
         {
             return map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.Mine);
         }
 
-        public static bool HasPlantCutting(Map map)
+        internal static bool ProbePlantCutting(Map map)
         {
             DesignationManager d = map.designationManager;
             return d.AnySpawnedDesignationOfDef(DesignationDefOf.CutPlant)
                 || d.AnySpawnedDesignationOfDef(DesignationDefOf.HarvestPlant);
         }
 
-        public static bool HasGrowing(Map map)
-        {
-            List<Zone> zones = map.zoneManager.AllZones;
-            for (int i = 0; i < zones.Count; i++)
-            {
-                if (zones[i] is not Zone_Growing grow || grow.cells.Count == 0)
-                {
-                    continue;
-                }
-                // Check every cell: sparse sampling (old step = count / 24) missed
-                // harvestable plants or empty sowable tiles that fell between
-                // sample indices. The relay is cooldown-throttled (7500 ticks
-                // per pawn) so the full scan runs rarely and the overhead is fine.
-                for (int c = 0; c < grow.cells.Count; c++)
-                {
-                    IntVec3 cell = grow.cells[c];
-                    if (!cell.InBounds(map))
-                    {
-                        continue;
-                    }
-                    Plant plant = cell.GetPlant(map);
-                    if (plant == null)
-                    {
-                        if (cell.GetEdifice(map) == null && grow.GetPlantDefToGrow() != null)
-                        {
-                            return true;
-                        }
-                    }
-                    else if (plant.HarvestableNow)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public static bool HasHunting(Map map)
+        internal static bool ProbeHunting(Map map)
         {
             return map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.Hunt);
         }
 
-        public static bool HasHauling(Map map)
+        internal static bool ProbeHauling(Map map, out int count)
         {
-            return map.listerHaulables.ThingsPotentiallyNeedingHauling().Count > 0;
+            count = map.listerHaulables.ThingsPotentiallyNeedingHauling().Count;
+            return count > 0;
         }
 
-        // Items on this map that a linked floor is pulling (refuel, higher-priority
-        // storage, construction/bills). Lets work-relay send haulers to the source
-        // floor even when local listerHaulables is empty.
-        public static bool HasCrossLevelHaulExports(Map map)
+        internal static bool ProbeCrossLevelHaulExports(Map map)
         {
-            if (map == null)
-            {
-                return false;
-            }
-            // Same kill switch as WorkGiver_HaulAcrossLevels / InstallAcrossLevels.
             if (StrataMod.Settings != null && !StrataMod.Settings.haulAcrossLevelsEnabled)
             {
                 return false;
@@ -305,7 +392,6 @@ namespace Strata
                 }
             }
 
-            // Minified buildings whose Blueprint_Install sits on a linked floor.
             List<Thing> minis = map.listerThings.ThingsInGroup(ThingRequestGroup.MinifiedThing);
             if (minis == null || minis.Count == 0 || !LevelGraph.AnyLinkFrom(map))
             {
@@ -330,18 +416,18 @@ namespace Strata
             return false;
         }
 
-        public static bool HasCleaning(Map map)
+        internal static bool ProbeCleaning(Map map)
         {
             return map.listerFilthInHomeArea.FilthInHomeArea.Count > 0;
         }
 
-        public static bool HasFirefighting(Map map)
+        internal static bool ProbeFirefighting(Map map)
         {
             List<Thing> fires = map.listerThings.ThingsOfDef(ThingDefOf.Fire);
             return fires != null && fires.Count > 0;
         }
 
-        public static bool HasResearch(Map map)
+        internal static bool ProbeResearch(Map map)
         {
             if (Find.ResearchManager.GetProject() == null)
             {
@@ -357,7 +443,7 @@ namespace Strata
             return false;
         }
 
-        public static bool HasWardenWork(Map map)
+        internal static bool ProbeWarden(Map map)
         {
             List<Pawn> prisoners = map.mapPawns.PrisonersOfColonySpawned;
             if (prisoners == null || prisoners.Count == 0)
@@ -371,7 +457,6 @@ namespace Strata
                 {
                     continue;
                 }
-                // Food delivery, tending in prison, or recruit/chat potential.
                 if (p.needs?.food != null && p.needs.food.CurLevelPercentage < 0.45f)
                 {
                     return true;
@@ -385,7 +470,6 @@ namespace Strata
                     return true;
                 }
 
-                // Assigned bed on another linked floor — needs a warden commute.
                 Building_Bed owned = p.ownership?.OwnedBed;
                 if (owned != null && owned.Spawned && owned.ForPrisoners
                     && owned.Map != map && p.CurrentBed() != owned
@@ -397,7 +481,7 @@ namespace Strata
             return false;
         }
 
-        public static bool HasHandling(Map map)
+        internal static bool ProbeHandling(Map map)
         {
             DesignationManager d = map.designationManager;
             if (d.AnySpawnedDesignationOfDef(DesignationDefOf.Tame)
@@ -420,19 +504,18 @@ namespace Strata
                 if (animal.needs?.food != null && animal.needs.food.CurLevelPercentage < 0.35f
                     && animal.RaceProps.EatsFood)
                 {
-                    // Animal feeding is often Handling/Hauling adjacent; count it.
                     return true;
                 }
             }
             return false;
         }
 
-        public static bool HasFlickWork(Map map)
+        internal static bool ProbeFlick(Map map)
         {
             return map.designationManager.AnySpawnedDesignationOfDef(DesignationDefOf.Flick);
         }
 
-        public static bool HasChildcare(Map map)
+        internal static bool ProbeChildcare(Map map)
         {
             List<Pawn> kids = map.mapPawns.FreeColonistsSpawned;
             if (kids == null)
@@ -454,7 +537,6 @@ namespace Strata
                     }
                 }
 
-                // Infant on this floor with an assigned crib on a linked floor.
                 if (ModsConfig.BiotechActive
                     && p.DevelopmentalStage.Baby()
                     && p.CurrentBed() == null
@@ -469,10 +551,11 @@ namespace Strata
             return false;
         }
 
+        internal static int CountPlayerThingsPublic(Map map, ThingRequestGroup group)
+            => CountPlayerThings(map, group);
+
         private static bool HasMedicalBedsNeedingPatients(Map map)
         {
-            // Doctor work on a hospital floor that has empty medical beds is weak;
-            // prefer patients. Kept as a soft signal only via HasPatientsNeedingTend.
             return false;
         }
 
@@ -502,15 +585,21 @@ namespace Strata
 
         private static bool AnyPlayerThing(Map map, ThingRequestGroup group)
         {
+            return CountPlayerThings(map, group) > 0;
+        }
+
+        private static int CountPlayerThings(Map map, ThingRequestGroup group)
+        {
             List<Thing> things = map.listerThings.ThingsInGroup(group);
+            int count = 0;
             for (int i = 0; i < things.Count; i++)
             {
                 if (things[i].Faction == Faction.OfPlayer)
                 {
-                    return true;
+                    count++;
                 }
             }
-            return false;
+            return count;
         }
     }
 }
