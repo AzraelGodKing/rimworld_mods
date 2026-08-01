@@ -385,7 +385,75 @@ namespace Strata
                 Pawn pawn = FindPawnById(id);
                 if (pawn != null)
                 {
-                    TryStartHaulDelivery(pawn);
+                    if (!TryStartHaulDelivery(pawn)
+                        && pawn.carryTracker?.CarriedThing != null
+                        && pawn.carryTracker.CarriedThing is not Pawn)
+                    {
+                        TryForceDropCarriedCargo(pawn);
+                    }
+                }
+            }
+
+            // Stuck carriers: Wait spam with cargo after a failed HaulToContainer.
+            TickStuckHaulCarriers();
+        }
+
+        private static void TickStuckHaulCarriers()
+        {
+            if (Find.TickManager.TicksGame % 60 != 0)
+            {
+                return;
+            }
+
+            List<Map> maps = Find.Maps;
+            for (int m = 0; m < maps.Count; m++)
+            {
+                Map map = maps[m];
+                if (map == null || !LevelGraph.AnyLinkFrom(map))
+                {
+                    continue;
+                }
+
+                List<Pawn> pawns = map.mapPawns.SpawnedPawnsInFaction(Faction.OfPlayer);
+                if (pawns == null)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i < pawns.Count; i++)
+                {
+                    Pawn pawn = pawns[i];
+                    if (pawn?.carryTracker?.CarriedThing == null
+                        || pawn.carryTracker.CarriedThing is Pawn
+                        || pawn.Downed
+                        || pawn.Dead
+                        || pawn.Drafted)
+                    {
+                        continue;
+                    }
+
+                    // Only recover idle / Wait — do not interrupt an active haul job.
+                    JobDef jobDef = pawn.CurJobDef;
+                    if (jobDef != null
+                        && jobDef != JobDefOf.Wait_MaintainPosture
+                        && jobDef != JobDefOf.Wait_Combat
+                        && jobDef != JobDefOf.Wait)
+                    {
+                        continue;
+                    }
+
+                    if (PortalRelayChain.HasIntent(pawn))
+                    {
+                        continue;
+                    }
+
+                    if (!TryStartHaulDelivery(pawn)
+                        && pawn.carryTracker.CarriedThing != null
+                        && !TryStartStorageDelivery(pawn)
+                        && pawn.carryTracker.CarriedThing != null)
+                    {
+                        TryForceDropCarriedCargo(pawn);
+                    }
                 }
             }
         }
@@ -413,11 +481,18 @@ namespace Strata
             }
 
             // Force-build / cross-level deliver: hit the remembered blueprint/frame
-            // before any stockpile steal.
-            if (preferConstructibleId > 0
-                && TryStartJobIfReservable(pawn, TryMakeConstructionJobFor(pawn, cargo, preferConstructibleId)))
+            // before any stockpile steal. If that fails, reassign to storage so the
+            // stack is not stuck in their arms.
+            if (preferConstructibleId > 0)
             {
-                return true;
+                if (TryStartJobIfReservable(pawn, TryMakeConstructionJobFor(pawn, cargo, preferConstructibleId)))
+                {
+                    return true;
+                }
+                if (TryStartStorageDelivery(pawn, cargo))
+                {
+                    return true;
+                }
             }
 
             // Probe reservations before StartJob — several haulers can land on the
@@ -446,7 +521,70 @@ namespace Strata
                 return true;
             }
 
+            return TryStartStorageDelivery(pawn, cargo);
+        }
+
+        /// <summary>
+        /// Reassign carried cargo into a stockpile/shelf on the current map.
+        /// Used when construction delivery fails after a stair trip.
+        /// </summary>
+        public static bool TryStartStorageDelivery(Pawn pawn, Thing cargo = null)
+        {
+            if (pawn?.jobs == null || pawn.Map == null || !pawn.Spawned
+                || pawn.Downed || pawn.Dead || pawn.Drafted)
+            {
+                return false;
+            }
+
+            cargo ??= pawn.carryTracker?.CarriedThing;
+            if (cargo == null || cargo is Pawn)
+            {
+                return false;
+            }
+
             return TryStartJobIfReservable(pawn, TryMakeStorageJob(pawn, cargo));
+        }
+
+        /// <summary>
+        /// Place carried non-pawn cargo near the pawn. Used when post-stair delivery
+        /// finds no frame/stockpile so haulers are not stuck forever.
+        /// </summary>
+        public static bool TryForceDropCarriedCargo(Pawn pawn)
+        {
+            if (pawn?.carryTracker == null || pawn.Map == null || !pawn.Spawned)
+            {
+                return false;
+            }
+
+            Thing cargo = pawn.carryTracker.CarriedThing;
+            if (cargo == null || cargo is Pawn)
+            {
+                return false;
+            }
+
+            if (pawn.carryTracker.TryDropCarriedThing(
+                    pawn.Position,
+                    ThingPlaceMode.Near,
+                    out Thing _))
+            {
+                return true;
+            }
+
+            // TryDrop can fail if something still blocks it — tear out of the tracker.
+            IntVec3 cell = CellFinder.RandomClosewalkCellNear(pawn.Position, pawn.Map, 3);
+            if (!cell.IsValid)
+            {
+                cell = pawn.Position;
+            }
+
+            return pawn.carryTracker.innerContainer.TryDrop(
+                cargo,
+                cell,
+                pawn.Map,
+                ThingPlaceMode.Near,
+                out _,
+                null,
+                null);
         }
 
         private static Job TryMakeInstallJob(Pawn pawn, Thing cargo)
@@ -596,6 +734,9 @@ namespace Strata
 
         private static Job TryMakeStorageJob(Pawn pawn, Thing cargo)
         {
+            // Prefer any valid store cell (stockpile / shelf). Try Unstored first,
+            // then a second pass with CurrentStoragePriority so already-"stored"
+            // carried stacks (weird after portal) still get a cell.
             if (!StoreUtility.TryFindBestBetterStoreCellFor(
                     cargo,
                     pawn,
@@ -604,7 +745,17 @@ namespace Strata
                     pawn.Faction,
                     out IntVec3 cell))
             {
-                return null;
+                StoragePriority current = StoreUtility.CurrentStoragePriorityOf(cargo);
+                if (!StoreUtility.TryFindBestBetterStoreCellFor(
+                        cargo,
+                        pawn,
+                        pawn.Map,
+                        current,
+                        pawn.Faction,
+                        out cell))
+                {
+                    return null;
+                }
             }
 
             if (cargo.Spawned && !pawn.CanReserve(cargo))

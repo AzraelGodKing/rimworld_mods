@@ -19,11 +19,20 @@ namespace Strata
         // recharge room is on another level — throttle pathfinding retries.
         private const int ReturnBaseRetryCooldownTicks = 6000;
 
-        // Idle colonists with null work jobs scan linked levels every think
-        // pass; throttle that BFS/work probe separately from relay cooldown.
+        // Idle colonists with null work jobs scan linked levels; throttle that
+        // probe separately from relay cooldown. Empty / failed / versioned so
+        // pawns do not sit idle for minutes ignoring new work.
         private const int RobotWorkScanCooldownTicks = 7500;
 
-        private const int ColonistWorkScanCooldownTicks = 7500;
+        private const int ColonistWorkScanEmptyTicks = 1100;
+
+        private const int ColonistWorkScanFailedTicks = 1800;
+
+        private struct ColonistWorkScanEntry
+        {
+            public int untilTick;
+            public int workVersion;
+        }
 
         private static readonly Dictionary<int, int> lastRelayTick = new Dictionary<int, int>();
 
@@ -31,7 +40,8 @@ namespace Strata
 
         private static readonly Dictionary<int, int> lastRobotWorkScanTick = new Dictionary<int, int>();
 
-        private static readonly Dictionary<int, int> lastColonistWorkScanTick = new Dictionary<int, int>();
+        private static readonly Dictionary<int, ColonistWorkScanEntry> lastColonistWorkScan =
+            new Dictionary<int, ColonistWorkScanEntry>();
 
         // Tick-stamped and keyed by pawn ID, so entries from one save are
         // garbage in another (loading an earlier save leaves future-dated
@@ -41,7 +51,9 @@ namespace Strata
             lastRelayTick.Clear();
             lastReturnBaseAttemptTick.Clear();
             lastRobotWorkScanTick.Clear();
-            lastColonistWorkScanTick.Clear();
+            lastColonistWorkScan.Clear();
+            WorkRelaySignals.ResetSession();
+            WorkRelayAntiLoop.ResetSession();
             StrataPawnUtility.ResetMiscRobotCaches();
             LevelGraph.InvalidateCache();
         }
@@ -93,17 +105,40 @@ namespace Strata
 
         internal static bool IsColonistWorkScanCooldown(Pawn pawn)
         {
-            return pawn != null
-                && lastColonistWorkScanTick.TryGetValue(pawn.thingIDNumber, out int tick)
-                && Find.TickManager.TicksGame - tick < ColonistWorkScanCooldownTicks;
+            if (pawn == null
+                || !lastColonistWorkScan.TryGetValue(pawn.thingIDNumber, out ColonistWorkScanEntry entry))
+            {
+                return false;
+            }
+            // New designations / blueprints wake the scan immediately.
+            if (entry.workVersion != WorkRelaySignals.WorkVersion)
+            {
+                return false;
+            }
+            return Find.TickManager.TicksGame < entry.untilTick;
         }
 
-        internal static void TouchColonistWorkScan(Pawn pawn)
+        internal static void TouchColonistWorkScanEmpty(Pawn pawn)
         {
-            if (pawn != null)
+            TouchColonistWorkScan(pawn, ColonistWorkScanEmptyTicks);
+        }
+
+        internal static void TouchColonistWorkScanFailed(Pawn pawn)
+        {
+            TouchColonistWorkScan(pawn, ColonistWorkScanFailedTicks);
+        }
+
+        private static void TouchColonistWorkScan(Pawn pawn, int durationTicks)
+        {
+            if (pawn == null)
             {
-                lastColonistWorkScanTick[pawn.thingIDNumber] = Find.TickManager.TicksGame;
+                return;
             }
+            lastColonistWorkScan[pawn.thingIDNumber] = new ColonistWorkScanEntry
+            {
+                untilTick = Find.TickManager.TicksGame + durationTicks,
+                workVersion = WorkRelaySignals.WorkVersion,
+            };
         }
 
         public static bool CanRelay(Pawn pawn)

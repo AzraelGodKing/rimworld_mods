@@ -4,12 +4,19 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
+### Changed
+
+- **Work relay job board** (`work-relay-board-v1`) — background `GameComponent` scanner publishes a per-floor work board; work relay reads it instead of probing during every idle think. Optional off-thread grow-cell aggregate (`offThreadWorkRelay`, on by default). Sync fallback if the board is missing/stale.
+- **Work relay smooth rework** (`work-relay-smooth-v1`) — idle colonists/mechs no longer burn a 7500-tick scan lockout on empty or claim-capped looks (short empty / medium failed cooldowns; only after a real scan). Map work-signal TTL cache + `Notify_WorkChanged` (designations / blueprints/frames) bumps a work version so new jobs wake mid-cooldown pawns. False-positive arrivals blacklist that floor ~5000 ticks to stop stair loops. Work stampede cap scales with signal strength (3–8) and frees on Work arrival. External JobGiver relay uses the same scan throttle + dynamic cap.
+
 ### Added
 
 - **Stair pair IDs + auto/manual relink** — `CompStrataShaftLink` (`strataPairGuid`) on all Strata shafts/landings; syncs with gravship `shaftId` when present. `ConnectPortalPair` is the single wiring path; load stamps healthy pairs and auto-rewires unique pair-ID matches. DevMode: relink by pair ID, click shaft→landing (cross-floor), relink selected, cancel, repair missing landings, log topology with pair id. Stamp `stair-pair-id-v1`.
 
 ### Fixed
 
+- **Construct deliver reserve spam** (`construct-reserve-probe-v1`) — cross-level fetch no longer picks wood/steel already reserved by another builder (`Could not reserve` / `TryMakePreToilReservations returned false`). Material scan + counts skip claimed stacks; same-map `HaulToContainer` results are dropped when the stack is no longer free.
+- **Stuck carrying after cross-level haul / force-build** (`haul-stuck-carry-v1` / `haul-construct-to-storage-v1`) — haul keep-carry only blocks drops during `EnterPortal` (not the whole Haul intent), so failed deliveries no longer leave colonists/mechs in Wait loops with ghost-carried items. If construction/frame delivery fails after stairs, the haul is **reassigned to storage** on that floor before any force-drop; empty-handed return only when cargo is placed. Idle Wait carriers retry delivery → storage → drop.
 - **Missing atmosphere ThoughtWorkers at startup** — shipped `Strata.dll` predated V3.5 room-volume types, so `ThoughtWorker_StrataSuffocation` / `ThoughtWorker_StrataStuffyAir` XML resolved to missing types. Rebuilt assembly includes those workers + `AtmosphereVolumeUtility`. Stamp `atmosphere-thoughts-dll-v1`.
 - **Atmosphere V3.5 bugfix (`atmosphere-v35-bugfix`)** — unseeded rooms no longer read as vacuum hypoxia; enabling natural gases mid-game reseeds; lite path no longer double-metabolizes; ambient replenish once per cycle; B1 full-seeds; overlay/alerts use effective density; gravship O₂ tank/reclaimer bypass ventilated cap + null-safe settings. CN/RU: atmos/alert/letter keys, O₂-pump + stairwell inspect strings, N₂/Ar gas labels, suffocation/stuffy/upper-deck thoughts; RU dig-open progress strings no longer left in English.
 - **Atmosphere V3.5 (`atmosphere-v35`)** — room-volume sim is the only mix store (per-cell breath grid retired). B1+ sealed rooms: pawns inhale O₂ / exhale CO₂, plants reverse; surface/A+ ambient-locked. O₂ pumps + gravship tank use room inject. Low-O₂ / high-CO₂ alerts, suffocation/stuffy thoughts, overlay status line, first-descent letter. **Gas sim stays opt-in (default OFF).**

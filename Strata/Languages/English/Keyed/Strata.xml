@@ -16,6 +16,8 @@
   <Strata_Settings_ColonistRelays>Colonist relays</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Work relay</Strata_Settings_WorkRelay>
   <Strata_Settings_WorkRelayDesc>Idle colonists and colony mechanoids walk to other levels that have work when their own floor is idle. Does NOT control hauling through stairs — use Haul across levels for that.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_OffThreadWorkRelay>Off-thread work board</Strata_Settings_OffThreadWorkRelay>
+  <Strata_Settings_OffThreadWorkRelayDesc>A background scanner fills a per-floor work board that work relay reads (instead of probing during every idle think). Grow-zone flags can finish on a worker thread. On by default when Work relay is on; off in Performance mode.</Strata_Settings_OffThreadWorkRelayDesc>
   <Strata_Settings_HaulAcrossLevels>Haul across levels</Strata_Settings_HaulAcrossLevels>
   <Strata_Settings_HaulAcrossLevelsDesc>Colonists and bots take Hauling jobs that carry items through stairwells to better storage / construction demand on linked floors. Separate from Work relay.</Strata_Settings_HaulAcrossLevelsDesc>
   <Strata_Settings_RobotSoftCompat>Misc. Robots soft-compat</Strata_Settings_RobotSoftCompat>

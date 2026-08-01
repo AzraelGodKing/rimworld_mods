@@ -85,5 +85,14 @@ namespace Strata
                 expiresTick = Find.TickManager.TicksGame + ClaimTicks,
             };
         }
+
+        /// <summary>Free a claim early (e.g. Work arrival) so others can commute.</summary>
+        public static void Release(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                claims.Remove(pawn.thingIDNumber);
+            }
+        }
     }
 }

@@ -15,6 +15,8 @@
   <Strata_Settings_ColonistRelays>Маршруты колонистов</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Маршрут работы</Strata_Settings_WorkRelay>
   <Strata_Settings_WorkRelayDesc>Простаивающие колонисты и колониальные механоиды ходят на другие уровни, где есть работа, если на своём этаже дел нет. НЕ управляет переносом через лестницы — для этого есть «Перенос между уровнями».</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_OffThreadWorkRelay>Доска работ вне основного потока</Strata_Settings_OffThreadWorkRelay>
+  <Strata_Settings_OffThreadWorkRelayDesc>Фоновый сканер заполняет доску работ по этажам; маршрут работы только читает её (без зондов на каждом простое). Флаги грядок могут считаться в рабочем потоке. По умолчанию вкл. при маршруте работы; выкл. в режиме производительности.</Strata_Settings_OffThreadWorkRelayDesc>
   <Strata_Settings_HaulAcrossLevels>Перенос между уровнями</Strata_Settings_HaulAcrossLevels>
   <Strata_Settings_HaulAcrossLevelsDesc>Колонисты и боты берут задания на перенос через лестницы на склады / стройки связанных этажей. Отдельно от маршрута работы.</Strata_Settings_HaulAcrossLevelsDesc>
   <Strata_Settings_RobotSoftCompat>Совместимость с Misc. Robots</Strata_Settings_RobotSoftCompat>
