@@ -32,6 +32,7 @@ namespace Strata
         public bool shaftFluidEnabled = true;
         public bool performanceModeEnabled = false;
         public bool offThreadAtmosphere = true;
+        public bool offThreadWorkRelay = true;
         public AtmosphereQualityLevel atmosphereQuality = AtmosphereQualityLevel.Medium;
         public bool logRobotDiagnostics = false;
         public bool foodRelayEnabled = true;
@@ -84,6 +85,9 @@ namespace Strata
 
         public bool RobotSoftCompatActive => robotSoftCompatEnabled && !performanceModeEnabled;
 
+        public bool OffThreadWorkRelayActive =>
+            offThreadWorkRelay && WorkRelayActive;
+
         public bool NaturalGasesActive => naturalGasesEnabled;
 
         public bool PollutantGasesActive => pollutantGasesEnabled;
@@ -109,6 +113,7 @@ namespace Strata
             Scribe_Values.Look(ref shaftFluidEnabled, "shaftFluidEnabled", defaultValue: true);
             Scribe_Values.Look(ref performanceModeEnabled, "performanceModeEnabled", defaultValue: false);
             Scribe_Values.Look(ref offThreadAtmosphere, "offThreadAtmosphere", defaultValue: true);
+            Scribe_Values.Look(ref offThreadWorkRelay, "offThreadWorkRelay", defaultValue: true);
             Scribe_Values.Look(ref atmosphereQuality, "atmosphereQuality", AtmosphereQualityLevel.Medium);
             Scribe_Values.Look(ref logRobotDiagnostics, "logRobotDiagnostics", defaultValue: false);
             Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
@@ -317,6 +322,8 @@ namespace Strata
             Text.Font = GameFont.Small;
             listing.CheckboxLabeled("Strata_Settings_WorkRelay".Translate(), ref Settings.workRelayEnabled,
                 "Strata_Settings_WorkRelayDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_OffThreadWorkRelay".Translate(), ref Settings.offThreadWorkRelay,
+                "Strata_Settings_OffThreadWorkRelayDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_HaulAcrossLevels".Translate(), ref Settings.haulAcrossLevelsEnabled,
                 "Strata_Settings_HaulAcrossLevelsDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_RobotSoftCompat".Translate(), ref Settings.robotSoftCompatEnabled,

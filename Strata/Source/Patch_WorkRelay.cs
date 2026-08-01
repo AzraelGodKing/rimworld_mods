@@ -13,6 +13,15 @@ namespace Strata
     {
         public static void Postfix(JobGiver_Work __instance, Pawn pawn, ref ThinkResult __result)
         {
+            // Work-relay arrival: real job clears the check; null → blacklist floor.
+            if (WorkRelayAntiLoop.ConsumePendingEmptyCheck(pawn))
+            {
+                if (__result.Job == null && !__instance.emergency && pawn?.Map != null)
+                {
+                    WorkRelayAntiLoop.Blacklist(pawn, pawn.Map);
+                }
+            }
+
             if (__result.Job != null || __instance.emergency)
             {
                 return;
@@ -38,22 +47,35 @@ namespace Strata
             {
                 return;
             }
-            PawnRelay.TouchColonistWorkScan(pawn);
+
             var links = LevelGraph.ReachableLevels(pawn.Map);
             LevelRoleUtility.SortLinksByRole(links, LevelRole.Workshop);
+            bool sawCandidate = false;
             foreach (LevelGraph.LevelLink link in links)
             {
                 if (!PawnRelay.HasWorkFor(pawn, link.map))
                 {
                     continue;
                 }
-                // Soft cap so a few pawns commute to a busy level, not all of them.
-                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Work, 3);
+                sawCandidate = true;
+                int cap = WorkRelaySignals.WorkClaimCap(link.map);
+                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Work, cap);
                 if (job != null)
                 {
                     __result = new ThinkResult(job, __instance, JobTag.MiscWork);
                     return;
                 }
+            }
+
+            // Match Misc. Robots: only cooldown after we actually looked / found
+            // candidates (never burn 7500t on a no-link or empty first pass).
+            if (sawCandidate)
+            {
+                PawnRelay.TouchColonistWorkScanFailed(pawn);
+            }
+            else
+            {
+                PawnRelay.TouchColonistWorkScanEmpty(pawn);
             }
         }
     }

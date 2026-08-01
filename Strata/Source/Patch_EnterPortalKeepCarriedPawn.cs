@@ -1,15 +1,18 @@
 using System;
 using System.Reflection;
 using HarmonyLib;
+using RimWorld;
 using Verse;
 
 namespace Strata
 {
     // Vanilla JobDriver_EnterPortal drops carried things when the walker is not
     // drafted, then clears the job queue. That dumps infants/prisoners on the
-    // landing and aborts Strata's Warden/Childcare relay finish. Keep the pawn
-    // in arms while those intents are active. Haul / force-build also keep
-    // materials (and PUAH single-carry stacks) so cargo survives the stair.
+    // landing and aborts Strata's Warden/Childcare relay finish. Keep pawns in
+    // arms for those intents. For Haul / ForcedOrder, ONLY block drops while
+    // the current job is EnterPortal — blocking for the whole Haul intent left
+    // colonists/mechs stuck holding steel forever (Wait spam, can't force-drop)
+    // when post-stair delivery failed to find a cell/frame.
     [HarmonyPatch]
     public static class Patch_EnterPortalKeepCarriedPawn
     {
@@ -46,8 +49,9 @@ namespace Strata
                 return false;
             }
 
-            if (PortalRelayChain.HasIntent(pawn, RelayPurpose.Haul)
-                || PortalRelayChain.HasIntent(pawn, RelayPurpose.ForcedOrder))
+            if (pawn.CurJobDef == JobDefOf.EnterPortal
+                && (PortalRelayChain.HasIntent(pawn, RelayPurpose.Haul)
+                    || PortalRelayChain.HasIntent(pawn, RelayPurpose.ForcedOrder)))
             {
                 __result = false;
                 return false;

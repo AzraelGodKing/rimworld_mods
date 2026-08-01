@@ -27,7 +27,9 @@ namespace Strata
         public static void LogStartup()
         {
             Log.Message("[Strata] Off-thread work: atmosphere=" + OffThreadAtmosphereEnabled
-                + " (A1 buoyancy, A2 density, A3 overlay; B1–B3 rock/cavern plans use Parallel/ThreadPool).");
+                + " workRelayBoard=" + (StrataMod.Settings?.OffThreadWorkRelayActive == true)
+                + " (A1 buoyancy, A2 density, A3 overlay; B1–B3 rock/cavern plans use Parallel/ThreadPool;"
+                + " work board packs grow cells on main, aggregates on worker).");
         }
 
         public static void CancelMap(int mapUniqueId)
