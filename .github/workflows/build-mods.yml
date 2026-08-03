@@ -1,6 +1,6 @@
 name: Build mod DLLs
 
-# Build Homesteader / Strata / Stormproof / Nemesis on push to main and on PRs.
+# Build Homesteader / Strata / Stormproof / Nemesis / DateNight / LivingWorld on push to main and on PRs.
 # On main (and workflow_dispatch): pack download zips with injected DLLs and publish
 # them to the rolling "latest" GitHub Release for the docs site buttons.
 # Assemblies/*.dll stay gitignored — zips are never committed.
@@ -13,6 +13,8 @@ on:
       - "Strata/Source/**"
       - "Stormproof/Source/**"
       - "Nemesis/Source/**"
+      - "DateNight/Source/**"
+      - "LivingWorld/Source/**"
       - "scripts/build_downloads.ps1"
       - ".github/workflows/build-mods.yml"
   pull_request:
@@ -21,6 +23,8 @@ on:
       - "Strata/Source/**"
       - "Stormproof/Source/**"
       - "Nemesis/Source/**"
+      - "DateNight/Source/**"
+      - "LivingWorld/Source/**"
       - "scripts/build_downloads.ps1"
       - ".github/workflows/build-mods.yml"
   workflow_dispatch:
@@ -64,14 +68,20 @@ jobs:
       - name: Build Nemesis
         run: dotnet build Nemesis/Source/Nemesis.csproj -c Release --nologo
 
+      - name: Build DateNight
+        run: dotnet build DateNight/Source/DateNight.csproj -c Release --nologo
+
+      - name: Build LivingWorld
+        run: dotnet build LivingWorld/Source/LivingWorld.csproj -c Release --nologo
+
       - name: Pack docs/downloads zips (with DLLs)
         if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p docs/downloads
-          # Nemesis is intentionally not packaged for public download yet.
-          for mod in Homesteader Stormproof Strata; do
+          # Nemesis / Deep Colony Workshop-first; Homesteader / Stormproof / Strata / DateNight / LivingWorld zip for docs.
+          for mod in Homesteader Stormproof Strata DateNight LivingWorld; do
             zip_path="docs/downloads/${mod}.zip"
             git archive --format=zip -o "$zip_path" HEAD "$mod"
             dll="${mod}/Assemblies/${mod}.dll"
@@ -81,6 +91,10 @@ jobs:
             fi
             # Inject / replace assembly inside the archive (paths use forward slashes).
             zip -u "$zip_path" "$dll"
+            # Drop draft Workshop preview options from the public zip.
+            if [[ "$mod" == "DateNight" ]]; then
+              zip -d "$zip_path" "DateNight/About/preview-options/*" 2>/dev/null || true
+            fi
             echo "${mod}: $(du -h "$zip_path" | cut -f1)"
           done
 
@@ -111,11 +125,13 @@ jobs:
           body: |
             Packaged mod folders with CI-built assemblies for the docs site download buttons.
             Rebuilt on each relevant push to `main` (rolling tag — assets are overwritten).
-            Nemesis is compiled in CI but not published as a download zip yet.
+            Nemesis / Deep Colony are Workshop-first; Date Night / Living World ship docs download zips.
           files: |
             docs/downloads/Homesteader.zip
             docs/downloads/Stormproof.zip
             docs/downloads/Strata.zip
+            docs/downloads/DateNight.zip
+            docs/downloads/LivingWorld.zip
           make_latest: true
           fail_on_unmatched_files: true
           # Replace assets when the rolling `latest` tag is republished.
