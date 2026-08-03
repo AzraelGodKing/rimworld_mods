@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LivingWorld_SettingsCategory>Living World</LivingWorld_SettingsCategory>
+  <LivingWorld_Settings_Enabled>Enable Living World</LivingWorld_Settings_Enabled>
+  <LivingWorld_Settings_EnabledDesc>Run the off-map settlement sim (chronicle + morph). Turn off to disable everything.</LivingWorld_Settings_EnabledDesc>
+  <LivingWorld_Settings_Chronicle>World news letters</LivingWorld_Settings_Chronicle>
+  <LivingWorld_Settings_ChronicleDesc>Send letters when hear-rules pass. Soft consumers still receive events.</LivingWorld_Settings_ChronicleDesc>
+  <LivingWorld_Settings_Morph>Settlement morph</LivingWorld_Settings_Morph>
+  <LivingWorld_Settings_MorphDesc>Prosperity drift, ownership flips, abandons, outposts, epithets.</LivingWorld_Settings_MorphDesc>
+  <LivingWorld_Settings_Verbosity>News verbosity</LivingWorld_Settings_Verbosity>
+  <LivingWorld_Verbosity_Low>Low (major only)</LivingWorld_Verbosity_Low>
+  <LivingWorld_Verbosity_Medium>Medium (contact / nearby / allies)</LivingWorld_Verbosity_Medium>
+  <LivingWorld_Verbosity_High>High (most news)</LivingWorld_Verbosity_High>
+  <LivingWorld_Settings_TickInterval>Sim pulse every {0} ticks</LivingWorld_Settings_TickInterval>
+  <LivingWorld_Settings_Resolutions>Resolutions per pulse: {0}</LivingWorld_Settings_Resolutions>
+  <LivingWorld_Settings_MaxLetters>Max letters per quadrum: {0}</LivingWorld_Settings_MaxLetters>
+  <LivingWorld_Settings_MaxMorphs>Max morphs per year: {0}</LivingWorld_Settings_MaxMorphs>
+  <LivingWorld_Settings_Proximity>Nearby news radius (tiles): {0}</LivingWorld_Settings_Proximity>
+  <LivingWorld_Settings_Reset>Reset</LivingWorld_Settings_Reset>
+
+  <LivingWorld_UnknownFaction>an unknown faction</LivingWorld_UnknownFaction>
+  <LivingWorld_UnknownPlace>a distant settlement</LivingWorld_UnknownPlace>
+
+  <LivingWorld_Prosperity_Thriving>Living World: thriving</LivingWorld_Prosperity_Thriving>
+  <LivingWorld_Prosperity_StablePlus>Living World: prosperous</LivingWorld_Prosperity_StablePlus>
+  <LivingWorld_Prosperity_Stable>Living World: stable</LivingWorld_Prosperity_Stable>
+  <LivingWorld_Prosperity_Struggling>Living World: struggling</LivingWorld_Prosperity_Struggling>
+  <LivingWorld_Prosperity_Collapsing>Living World: collapsing</LivingWorld_Prosperity_Collapsing>
+
+  <LivingWorld_Epithet_Fortress>the Fortress</LivingWorld_Epithet_Fortress>
+  <LivingWorld_Epithet_Market>the Market</LivingWorld_Epithet_Market>
+  <LivingWorld_Epithet_Watch>the Watch</LivingWorld_Epithet_Watch>
+  <LivingWorld_Epithet_Haven>the Haven</LivingWorld_Epithet_Haven>
+  <LivingWorld_Epithet_Ruinous>the Ruinous</LivingWorld_Epithet_Ruinous>
+
+  <LivingWorld_LetterLabel_Skirmish>Distant skirmish</LivingWorld_LetterLabel_Skirmish>
+  <LivingWorld_LetterText_Skirmish>{0} and {1} clashed near {2}. The rim barely noticed — unless you were listening.</LivingWorld_LetterText_Skirmish>
+  <LivingWorld_LetterLabel_DecisiveVictory>Decisive victory</LivingWorld_LetterLabel_DecisiveVictory>
+  <LivingWorld_LetterText_DecisiveVictory>{0} crushed {1} in fighting around {2}. The balance of power on the rim just shifted.</LivingWorld_LetterText_DecisiveVictory>
+  <LivingWorld_LetterLabel_FamineRumor>Famine rumor</LivingWorld_LetterLabel_FamineRumor>
+  <LivingWorld_LetterText_FamineRumor>Word from {2}: {0} is short on food. Travelers speak of empty stores and thin herds.</LivingWorld_LetterText_FamineRumor>
+  <LivingWorld_LetterLabel_Founding>New settlement</LivingWorld_LetterLabel_Founding>
+  <LivingWorld_LetterText_Founding>{0} founded {2}. Another pin on the world map that was not there yesterday.</LivingWorld_LetterText_Founding>
+  <LivingWorld_LetterLabel_Collapse>Settlement collapse</LivingWorld_LetterLabel_Collapse>
+  <LivingWorld_LetterText_Collapse>{2} of {0} has gone quiet. Refugees may follow — or silence.</LivingWorld_LetterText_Collapse>
+  <LivingWorld_LetterLabel_Alliance>Faction alliance</LivingWorld_LetterLabel_Alliance>
+  <LivingWorld_LetterText_Alliance>{0} and {1} have sworn common cause. Expect fewer knives between them — for now.</LivingWorld_LetterText_Alliance>
+  <LivingWorld_LetterLabel_Betrayal>Betrayal</LivingWorld_LetterLabel_Betrayal>
+  <LivingWorld_LetterText_Betrayal>{0} turned on {1}. Old promises burned with the treaty.</LivingWorld_LetterText_Betrayal>
+  <LivingWorld_LetterLabel_OwnershipFlip>Settlement taken</LivingWorld_LetterLabel_OwnershipFlip>
+  <LivingWorld_LetterText_OwnershipFlip>{0} seized {2} from {1}. The banners on the walls have changed.</LivingWorld_LetterText_OwnershipFlip>
+  <LivingWorld_LetterLabel_ProsperityRise>Settlement thriving</LivingWorld_LetterLabel_ProsperityRise>
+  <LivingWorld_LetterText_ProsperityRise>{2} ({0}) is doing well — fuller markets, louder streets.</LivingWorld_LetterText_ProsperityRise>
+  <LivingWorld_LetterLabel_ProsperityFall>Settlement struggling</LivingWorld_LetterLabel_ProsperityFall>
+  <LivingWorld_LetterText_ProsperityFall>{2} ({0}) is struggling. Trade thins; people look elsewhere.</LivingWorld_LetterText_ProsperityFall>
+  <LivingWorld_LetterLabel_OutpostFounded>Outpost founded</LivingWorld_LetterLabel_OutpostFounded>
+  <LivingWorld_LetterText_OutpostFounded>{0} raised a new outpost at {2}, extending their reach.</LivingWorld_LetterText_OutpostFounded>
+  <LivingWorld_LetterLabel_SettlementAbandoned>Settlement abandoned</LivingWorld_LetterLabel_SettlementAbandoned>
+  <LivingWorld_LetterText_SettlementAbandoned>{0} abandoned {2}. The site is empty on the world map.</LivingWorld_LetterText_SettlementAbandoned>
+  <LivingWorld_LetterLabel_Epithet>Settlement renown</LivingWorld_LetterLabel_Epithet>
+  <LivingWorld_LetterText_Epithet>{2} of {0} has earned a new nickname among travelers.</LivingWorld_LetterText_Epithet>
+</LanguageData>

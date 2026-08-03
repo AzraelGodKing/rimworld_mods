@@ -1,0 +1,21 @@
+---
+description: Never use art/brought/ as image-generation references
+alwaysApply: true
+---
+
+# Brought sprites — no generation refs
+
+Files under `art/brought/` are user-supplied / third-party brought sprites.
+
+## Forbidden
+
+- Pass them (or paths under `art/brought/`) as `reference_image_paths` to `GenerateImage` or any similar image tool
+- Use them as style, mood, composition, or “derive / restyle from these” references for new workshop previews, building art, icons, or other generated art
+- Re-generate or remix them into new assets
+
+## Allowed
+
+- When the user explicitly asks to place that exact asset: **copy/install the file unchanged** into a mod Texture (or similar) path
+- Read or list the folder only to locate a file the user named for as-is install
+
+New brought drops go in `art/brought/` (see that folder’s README). Do not invent a parallel “brought” dump elsewhere.
