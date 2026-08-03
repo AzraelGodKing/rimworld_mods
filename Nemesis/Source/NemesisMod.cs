@@ -73,6 +73,32 @@ namespace Nemesis
 
             listing.GapLine();
             Text.Font = GameFont.Medium;
+            listing.Label("Nemesis_Settings_Captain".Translate());
+            Text.Font = GameFont.Small;
+            listing.Gap(4f);
+            listing.CheckboxLabeled(
+                "Nemesis_Settings_EnableProgression".Translate(),
+                ref Settings.enableCaptainProgression,
+                "Nemesis_Settings_EnableProgressionTip".Translate());
+            listing.Gap(4f);
+            listing.Label("Nemesis_Settings_MaxProgression".Translate(Settings.maxProgressionLevel));
+            Settings.maxProgressionLevel = (int)listing.Slider(Settings.maxProgressionLevel, 1f, 12f);
+            listing.Gap(4f);
+            listing.Label("Nemesis_Settings_PostEscapeSabotage".Translate((int)(Settings.postEscapeSabotageWeightMul * 100f)));
+            Settings.postEscapeSabotageWeightMul = listing.Slider(Settings.postEscapeSabotageWeightMul, 0f, 1f);
+            listing.Gap(4f);
+            listing.CheckboxLabeled(
+                "Nemesis_Settings_SoftMounts".Translate(),
+                ref Settings.enableSoftMounts,
+                "Nemesis_Settings_SoftMountsTip".Translate());
+            listing.CheckboxLabeled(
+                "Nemesis_Settings_SoftMechs".Translate(),
+                ref Settings.enableSoftMechs,
+                "Nemesis_Settings_SoftMechsTip".Translate());
+            listing.Gap(10f);
+
+            listing.GapLine();
+            Text.Font = GameFont.Medium;
             listing.Label("Nemesis_Settings_ActionMix".Translate());
             Text.Font = GameFont.Small;
             listing.Gap(4f);

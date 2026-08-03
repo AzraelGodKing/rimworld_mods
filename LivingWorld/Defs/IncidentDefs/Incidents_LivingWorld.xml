@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <IncidentDef>
+    <defName>LivingWorld_Refugees</defName>
+    <label>war refugees</label>
+    <category>Misc</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>LivingWorld.IncidentWorker_LivingWorldRefugees</workerClass>
+    <baseChance>0.05</baseChance>
+    <minRefireDays>20</minRefireDays>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <letterDef>NeutralEvent</letterDef>
+  </IncidentDef>
+
+  <IncidentDef>
+    <defName>LivingWorld_Warband</defName>
+    <label>pass-through warband</label>
+    <category>ThreatSmall</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>LivingWorld.IncidentWorker_LivingWorldWarband</workerClass>
+    <baseChance>0.02</baseChance>
+    <minRefireDays>40</minRefireDays>
+    <requireColonistsPresent>true</requireColonistsPresent>
+    <pointsScaleable>true</pointsScaleable>
+    <letterDef>ThreatSmall</letterDef>
+  </IncidentDef>
+
+</Defs>

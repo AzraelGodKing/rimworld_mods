@@ -112,12 +112,16 @@ namespace Nemesis
             IncidentParms parms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.ThreatBig, map);
             parms.faction = faction;
             float points = Mathf.Max(250f, parms.points * AggressionRaidFactor(data.EffectiveAggression));
+            points *= NemesisProgression.RaidPointsFactor(data);
             if (armyReturn)
             {
                 float army = Mathf.Clamp(1.35f + 0.12f * data.escapeCount, 1.35f, 2.6f);
                 points *= army;
                 if (canInject)
+                {
+                    NemesisProgression.Apply(nemesis, data);
                     NemesisRaidInject.Arm(nemesis);
+                }
                 int stage = Mathf.Clamp(data.escapeCount, 1, 5);
                 parms.customLetterLabel = NemesisTaunts.VengeanceReturnTitle(data, stage);
                 parms.customLetterText = NemesisTaunts.VengeanceReturnBody(data, stage);
@@ -133,7 +137,23 @@ namespace Nemesis
             bool ok = raidDef.Worker.TryExecute(parms);
             NemesisRaidInject.Clear();
             if (!ok)
+            {
                 CommsTaunt(data, map);
+                return;
+            }
+
+            if (armyReturn && canInject && nemesis != null && nemesis.Spawned && nemesis.Map == map)
+            {
+                NemesisProgression.TrySpawnMechEscort(map, faction, data, nemesis);
+                NemesisProgression.TrySpawnMountEscort(map, faction, data, nemesis);
+            }
+            else if (armyReturn)
+            {
+                // Inject may place them mid-raid; try near any spawned nemesis or map edge.
+                Pawn onMap = nemesis != null && nemesis.Spawned ? nemesis : null;
+                NemesisProgression.TrySpawnMechEscort(map, faction, data, onMap);
+                NemesisProgression.TrySpawnMountEscort(map, faction, data, onMap);
+            }
         }
 
         private static void NemesisAssault(NemesisData data, Map map)
@@ -157,6 +177,7 @@ namespace Nemesis
             if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out IntVec3 spawnCell))
                 spawnCell = CellFinder.RandomEdgeCell(map);
 
+            NemesisProgression.Apply(nemesis, data);
             if (!NemesisPawnUtil.TrySpawnOnMap(nemesis, map, spawnCell))
             {
                 DirectRaid(data, map);
@@ -165,6 +186,8 @@ namespace Nemesis
 
             NemesisRegistry.CachedNemesis = nemesis;
             NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
+            NemesisProgression.TrySpawnMechEscort(map, FindFaction(data), data, nemesis);
+            NemesisProgression.TrySpawnMountEscort(map, FindFaction(data), data, nemesis);
 
             // canTimeoutOrFlee: true so they pull back when losing; Kill intercept still handles "death".
             if (nemesis.Faction != null && !nemesis.Faction.IsPlayer && nemesis.GetLord() == null)

@@ -2,7 +2,7 @@
 
 Design: [../docs/ideas/living-world.md](../docs/ideas/living-world.md) (§8b completion sequence).
 
-## Phase 1 — Foundation (in progress / shipping)
+## Phase 1 — Foundation (done)
 
 - [x] LW0 Mod stub
 - [x] LW1 Chronicle component + tick
@@ -11,12 +11,12 @@ Design: [../docs/ideas/living-world.md](../docs/ideas/living-world.md) (§8b com
 - [x] LW4 Soft event bus
 - [x] LW5 Morph polish (abandon, outpost, epithet, options, inspector)
 
-## Phase 2 — Wars (next)
+## Phase 2 — Wars (done)
 
-- [ ] LW6 FactionPairState diplomacy
-- [ ] LW7 Refugee fallout
-- [ ] DC1 Deep Colony goodwill consumer
-- [ ] LW8 War polish + generic sites
+- [x] LW6 FactionPairState diplomacy
+- [x] LW7 Refugee fallout
+- [x] DC1 Deep Colony goodwill consumer
+- [x] LW8 War polish + generic sites
 
 ## Later
 
