@@ -22,7 +22,7 @@
     <li>AzraelGodKing.Strata</li>
     <li>AzraelGodKing.Homesteader</li>
   </loadAfter>
-  <description>A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. They harass your colony with taunts, false leads, waste drops, power sabotage, and personal assaults that flee when the fight turns. The hunt ends when you capture or kill them… or when they get what they came for.
+  <description>A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. They harass your colony with taunts, false leads, and assaults that flee when losing. After each escape they level up as a combat captain — better skills, gear, and armor — and prefer returning with an army. The hunt still ends when you capture or kill them… or when they get what they came for.
 
 FOUNDATION
 Original design and core runtime by Dredd (Misakabob). Expanded and packaged here with credit.
@@ -35,20 +35,22 @@ HOW IT STARTS
 
 WHAT THEY DO
 - Comms taunts and paper notes that name your people.
-- Faction raids, personal on-map assaults that pull back when losing.
-- Biotech waste drops, fake distress / trader signals that become ambushes.
-- Caravan harassment, food-store vandalism, EMP / grid sabotage.
-- Optional Anomaly baiting when that DLC is active.
+- Early hunt: sabotage, waste, fake signals, caravan harassment (downweighted after escapes).
+- Personal assaults that pull back when losing.
+- After escapes: vengeance army raids that inject the same pawn; captain progression (skills, gear quality, battle-hardened armor; Biotech bionics/genes when present).
+- Combat focus rolled at create (Destroyer, Berserker, Sniper, Psycho, Survivor, Mechanitor with Biotech).
+- Soft escorts: animal mount/escort from level 2; Mechanitor mech retinue on army returns when Biotech is loaded.
 
 HOW IT ENDS
 - Capture them alive (execute / release / keep / truce).
-- Corner them after enough escapes, then kill or arrest.
+- Corner them after enough escapes, then kill or arrest (no cheat-death).
 - If they hunt a specific colonist: the hunt also ends if that pawn dies or is handed over — they win, and lose interest.
 
 SOFT COMPAT (optional, fail-open)
 - Stormproof: EMP sabotage respects EMP dampeners; surge protectors blunt grid sabotage; ion flavor when present.
 - Strata: prefers surface home maps; aware of underground / upper levels when choosing harassment targets.
 - Homesteader: food raids and taunts can reference root cellars and favorite foods when those systems exist.
+- Giddy-Up: animal escorts pair better as mounts when present (still spawn as escorts without it).
 
 Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: resolve or dismiss any active nemesis (capture/truce/end) so WorldPawn refs are cleaned up.</description>
 </ModMetaData>

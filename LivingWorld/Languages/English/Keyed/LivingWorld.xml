@@ -2,11 +2,21 @@
 <LanguageData>
   <LivingWorld_SettingsCategory>Living World</LivingWorld_SettingsCategory>
   <LivingWorld_Settings_Enabled>Enable Living World</LivingWorld_Settings_Enabled>
-  <LivingWorld_Settings_EnabledDesc>Run the off-map settlement sim (chronicle + morph). Turn off to disable everything.</LivingWorld_Settings_EnabledDesc>
+  <LivingWorld_Settings_EnabledDesc>Run the off-map settlement sim (chronicle + morph + diplomacy). Turn off to disable everything.</LivingWorld_Settings_EnabledDesc>
   <LivingWorld_Settings_Chronicle>World news letters</LivingWorld_Settings_Chronicle>
   <LivingWorld_Settings_ChronicleDesc>Send letters when hear-rules pass. Soft consumers still receive events.</LivingWorld_Settings_ChronicleDesc>
   <LivingWorld_Settings_Morph>Settlement morph</LivingWorld_Settings_Morph>
   <LivingWorld_Settings_MorphDesc>Prosperity drift, ownership flips, abandons, outposts, epithets.</LivingWorld_Settings_MorphDesc>
+  <LivingWorld_Settings_Diplomacy>Faction diplomacy</LivingWorld_Settings_Diplomacy>
+  <LivingWorld_Settings_DiplomacyDesc>NPC factions drift through peace, tension, war, and rare alliances without involving you.</LivingWorld_Settings_DiplomacyDesc>
+  <LivingWorld_Settings_Fallout>War fallout incidents</LivingWorld_Settings_Fallout>
+  <LivingWorld_Settings_FalloutDesc>After severe wars you hear about, refugees (and optional warbands) may reach your colony.</LivingWorld_Settings_FalloutDesc>
+  <LivingWorld_Settings_TradeBlackout>Trade blackout in total war</LivingWorld_Settings_TradeBlackout>
+  <LivingWorld_Settings_TradeBlackoutDesc>Factions locked in intense war rarely send trade caravans until the fighting cools.</LivingWorld_Settings_TradeBlackoutDesc>
+  <LivingWorld_Settings_WarSites>Generic war sites</LivingWorld_Settings_WarSites>
+  <LivingWorld_Settings_WarSitesDesc>After decisive NPC battles, spawn short-lived battlefield / refugee-camp pins on the world map (not Nemesis hunt sites).</LivingWorld_Settings_WarSitesDesc>
+  <LivingWorld_Settings_Warband>Pass-through warbands</LivingWorld_Settings_Warband>
+  <LivingWorld_Settings_WarbandDesc>Rare hostile or tense warbands chasing a war you heard about. Off by default — keep cautious.</LivingWorld_Settings_WarbandDesc>
   <LivingWorld_Settings_Verbosity>News verbosity</LivingWorld_Settings_Verbosity>
   <LivingWorld_Verbosity_Low>Low (major only)</LivingWorld_Verbosity_Low>
   <LivingWorld_Verbosity_Medium>Medium (contact / nearby / allies)</LivingWorld_Verbosity_Medium>
@@ -16,6 +26,8 @@
   <LivingWorld_Settings_MaxLetters>Max letters per quadrum: {0}</LivingWorld_Settings_MaxLetters>
   <LivingWorld_Settings_MaxMorphs>Max morphs per year: {0}</LivingWorld_Settings_MaxMorphs>
   <LivingWorld_Settings_Proximity>Nearby news radius (tiles): {0}</LivingWorld_Settings_Proximity>
+  <LivingWorld_Settings_MaxWars>Max concurrent wars: {0}</LivingWorld_Settings_MaxWars>
+  <LivingWorld_Settings_WarRate>War / escalate rate: {0}</LivingWorld_Settings_WarRate>
   <LivingWorld_Settings_Reset>Reset</LivingWorld_Settings_Reset>
 
   <LivingWorld_UnknownFaction>an unknown faction</LivingWorld_UnknownFaction>
@@ -59,4 +71,15 @@
   <LivingWorld_LetterText_SettlementAbandoned>{0} abandoned {2}. The site is empty on the world map.</LivingWorld_LetterText_SettlementAbandoned>
   <LivingWorld_LetterLabel_Epithet>Settlement renown</LivingWorld_LetterLabel_Epithet>
   <LivingWorld_LetterText_Epithet>{2} of {0} has earned a new nickname among travelers.</LivingWorld_LetterText_Epithet>
+  <LivingWorld_LetterLabel_WhitePeace>White peace</LivingWorld_LetterLabel_WhitePeace>
+  <LivingWorld_LetterText_WhitePeace>{0} and {1} have stopped open fighting near {2}. Tension remains.</LivingWorld_LetterText_WhitePeace>
+  <LivingWorld_LetterLabel_RefugeeFlight>War refugees</LivingWorld_LetterLabel_RefugeeFlight>
+  <LivingWorld_LetterText_RefugeeFlight>Survivors from {0} fled fighting with {1} around {2}. A ragged group has reached your borders seeking safety.</LivingWorld_LetterText_RefugeeFlight>
+  <LivingWorld_LetterLabel_TradeBlackout>Trade blackout</LivingWorld_LetterLabel_TradeBlackout>
+  <LivingWorld_LetterText_TradeBlackout>War between {0} and {1} has choked caravans near {2}. Expect fewer traders from the embattled side.</LivingWorld_LetterText_TradeBlackout>
+  <LivingWorld_LetterLabel_WarbandPass>Pass-through warband</LivingWorld_LetterLabel_WarbandPass>
+  <LivingWorld_LetterText_WarbandPass>A warband of {0} is hunting remnants of {1} from the fighting near {2}. They are passing through your region.</LivingWorld_LetterText_WarbandPass>
+
+  <LivingWorld_WarSite_BattlefieldInspect>Recent battlefield debris from an off-map war.</LivingWorld_WarSite_BattlefieldInspect>
+  <LivingWorld_WarSite_RefugeeCampInspect>A temporary refugee camp spawned by distant fighting.</LivingWorld_WarSite_RefugeeCampInspect>
 </LanguageData>

@@ -6,6 +6,18 @@ Playable core is in. Remaining fantasy for later passes.
 
 ---
 
+## Hybrid captain progression (shipped — first pass)
+
+- [x] Progression levels on escape (skills, gear quality, battle-hardened hediff)
+- [x] Combat focus at create (Destroyer / Berserker / Sniper / Psycho / Survivor / Mechanitor)
+- [x] Post-escape action bias toward army returns; petty sabotage downweighted
+- [x] Soft animal escorts + Biotech mech retinue (Mechanitor)
+- [ ] Warcaskets (VFE Pirates) / vehicles (VRF) — later
+- [ ] Full tactic matrix (Siege / Breach / Commander) — later
+- [ ] Cheat-death — **out of scope** (keep corner → killable)
+
+---
+
 ## Hunt base / false-lead arc (Nemesis-owned)
 
 Acceptance-oriented checklist for later implementation:
@@ -34,7 +46,7 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 ## More personal systems
 
 - [ ] Nemesis relationship / social memory with the fixation target (opinion, social fight chance).
-- [ ] Unique weapon / apparel tint so the antagonist is visually recognizable across raids.
+- [ ] Apparel / weapon tint polish (focus gear upgrades already ship).
 - [ ] Comms console interaction: reply options (taunt back / offer truce / demand surrender).
 
 ## Assault polish

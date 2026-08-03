@@ -1,6 +1,6 @@
 # Living World (parked idea)
 
-**Status:** Phase 1 shipped in-repo (`LivingWorld/` package) — chronicle + settlement morph. Wars / refugees = Phase 2.  
+**Status:** Phase 1–2 shipped in-repo (`LivingWorld/` package) — chronicle, settlement morph, NPC diplomacy, refugee/warband fallout, war sites. Soft DC goodwill consumer. Traffic / Azrael = later.  
 **Package:** `LivingWorld` / `azraelgodking.livingworld`.  
 **Series:** Azrael — see [ROADMAP.md](../../ROADMAP.md).
 
@@ -421,12 +421,12 @@ flowchart TD
 
 ### Phase 2 — Wars and player fallout
 
-| Step | Owner | Work | Depends on |
-|---|---|---|---|
-| **LW6** | Living World | `FactionPairState` Peace/Tension/War; skirmish/battle rolls write chronicle + nudge prosperity | LW5 |
-| **LW7** | Living World | Refugee fallout incident (LW-timed or storyteller-friendly); tie to visible war severity | LW6 |
-| **DC1** | Deep Colony | Fail-open register on bus; map visible war / ally disaster → existing `AddFactionDrift` / `FactionRepUtility` | LW4, LW7 |
-| **LW8** | Living World | War polish: max concurrent wars, white peace, rare alliance/betrayal, trade blackout, pass-through warband (**default cautious**), generic war sites + tile avoid vs Nemesis | LW7 |
+| Step | Owner | Work | Depends on | Status |
+|---|---|---|---|---|
+| **LW6** | Living World | `FactionPairState` Peace/Tension/War; skirmish/battle rolls write chronicle + nudge prosperity | LW5 | Done |
+| **LW7** | Living World | Refugee fallout incident (LW-timed or storyteller-friendly); tie to visible war severity | LW6 | Done |
+| **DC1** | Deep Colony | Fail-open register on bus; map visible war / ally disaster → existing `AddFactionDrift` / `FactionRepUtility` | LW4, LW7 | Done |
+| **LW8** | Living World | War polish: max concurrent wars, white peace, rare alliance/betrayal, trade blackout, pass-through warband (**default cautious**), generic war sites + tile avoid vs Nemesis | LW7 | Done |
 
 **Checkpoint — Slice 2 acceptance:** NPC wars without player; refugees possible; goodwill only if DC loaded.
 

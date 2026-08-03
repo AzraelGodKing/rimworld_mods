@@ -14,6 +14,15 @@
   <Nemesis_Settings_MaxAggression>Maximum aggression intensity: {0}%</Nemesis_Settings_MaxAggression>
   <Nemesis_Settings_Escalation>Escalation rate: {0} per day</Nemesis_Settings_Escalation>
   <Nemesis_Settings_MinCooldown>Minimum time between actions: {0} days</Nemesis_Settings_MinCooldown>
+  <Nemesis_Settings_Captain>Captain progression</Nemesis_Settings_Captain>
+  <Nemesis_Settings_EnableProgression>Enable captain progression</Nemesis_Settings_EnableProgression>
+  <Nemesis_Settings_EnableProgressionTip>After escapes, the nemesis levels up (skills, gear, armor). Hunt can still end by capture/kill.</Nemesis_Settings_EnableProgressionTip>
+  <Nemesis_Settings_MaxProgression>Maximum captain level: {0}</Nemesis_Settings_MaxProgression>
+  <Nemesis_Settings_PostEscapeSabotage>Post-escape petty sabotage weight: {0}%</Nemesis_Settings_PostEscapeSabotage>
+  <Nemesis_Settings_SoftMounts>Soft animal mounts / escorts</Nemesis_Settings_SoftMounts>
+  <Nemesis_Settings_SoftMountsTip>From captain level 2, assign a faction-appropriate animal that spawns beside them on returns (works better with Giddy-Up; still fights without it).</Nemesis_Settings_SoftMountsTip>
+  <Nemesis_Settings_SoftMechs>Soft Biotech mech escorts</Nemesis_Settings_SoftMechs>
+  <Nemesis_Settings_SoftMechsTip>Mechanitor-focus captains can bring 1–3 Biotech mechs on army-return raids when Biotech is loaded.</Nemesis_Settings_SoftMechsTip>
   <Nemesis_Settings_ActionMix>Action mix</Nemesis_Settings_ActionMix>
   <Nemesis_Settings_WeightTaunt>Comms taunt: {0}</Nemesis_Settings_WeightTaunt>
   <Nemesis_Settings_WeightRaid>Direct raid: {0}</Nemesis_Settings_WeightRaid>
@@ -77,6 +86,15 @@
   <Nemesis_Letter_VengeanceReturnBody4>Enough skulking. Enough near-misses. {0} stopped pretending this was a duel.\n\nWhy return alone when you can return with an army?\n\nThe debt against {1} just got collective.</Nemesis_Letter_VengeanceReturnBody4>
   <Nemesis_Letter_VengeanceReturnTitle5>{0} and the Horde</Nemesis_Letter_VengeanceReturnTitle5>
   <Nemesis_Letter_VengeanceReturnBody5>They have survived you too many times to care about fair fights.\n\n{0} returns at the head of a warband.\n\nWhy return alone when you can return with an army?\n\n{1} was never going to face them one-on-one again.</Nemesis_Letter_VengeanceReturnBody5>
+  <Nemesis_Letter_VengeanceCaptainLine>{0} returns as a level {1} {2}.</Nemesis_Letter_VengeanceCaptainLine>
+  <Nemesis_Letter_ProgressionTitle>{0} Grows Stronger</Nemesis_Letter_ProgressionTitle>
+  <Nemesis_Letter_ProgressionBody>{0} escaped again — and spent the time well.\n\nCaptain level {1}. Focus: {2}.\n\nThey will not return as the same threat.</Nemesis_Letter_ProgressionBody>
+  <Nemesis_Focus_Destroyer>Destroyer</Nemesis_Focus_Destroyer>
+  <Nemesis_Focus_Berserker>Berserker</Nemesis_Focus_Berserker>
+  <Nemesis_Focus_Sniper>Sniper</Nemesis_Focus_Sniper>
+  <Nemesis_Focus_Psycho>Psycho</Nemesis_Focus_Psycho>
+  <Nemesis_Focus_Survivor>Survivor</Nemesis_Focus_Survivor>
+  <Nemesis_Focus_Mechanitor>Mechanitor</Nemesis_Focus_Mechanitor>
   <Nemesis_Letter_AssaultTitle>{0} Arrives</Nemesis_Letter_AssaultTitle>
   <Nemesis_Letter_AssaultPawn>{0} has come for {1} personally. They will pull back if things turn, but they will be back.</Nemesis_Letter_AssaultPawn>
   <Nemesis_Letter_AssaultColony>{0} is leading this assault in person. They won't stay if the odds turn against them.</Nemesis_Letter_AssaultColony>
