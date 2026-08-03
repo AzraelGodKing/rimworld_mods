@@ -51,6 +51,17 @@ namespace Nemesis
         Cleared
     }
 
+    /// <summary>Captain combat specialty — rolled once at hunt create; steers gear/skills/escorts.</summary>
+    public enum NemesisCombatFocus
+    {
+        Destroyer,
+        Berserker,
+        Sniper,
+        Psycho,
+        Survivor,
+        Mechanitor,
+    }
+
     /// <summary>
     /// Persistent hunt state. Foundation by Dredd (Misakabob); fields extended for new actions / end reasons.
     /// </summary>
@@ -76,6 +87,14 @@ namespace Nemesis
         public int harassmentCount;
         public bool pendingFakeAmbush;
         public int fakeAmbushTick = -1;
+
+        /// <summary>Captain tier — rises on each escape (capped by settings).</summary>
+        public int progressionLevel;
+        /// <summary>Last level fully applied to the pawn (idempotent Apply).</summary>
+        public int appliedProgressionLevel = -1;
+        public NemesisCombatFocus combatFocus = NemesisCombatFocus.Survivor;
+        /// <summary>Soft Giddy-Up mount animal kind defName, if assigned.</summary>
+        public string mountKindDefName;
 
         public float EffectiveAggression
         {
@@ -109,6 +128,21 @@ namespace Nemesis
             Scribe_Values.Look(ref harassmentCount, "harassmentCount", 0);
             Scribe_Values.Look(ref pendingFakeAmbush, "pendingFakeAmbush", false);
             Scribe_Values.Look(ref fakeAmbushTick, "fakeAmbushTick", -1);
+            Scribe_Values.Look(ref progressionLevel, "progressionLevel", 0);
+            Scribe_Values.Look(ref appliedProgressionLevel, "appliedProgressionLevel", -1);
+            Scribe_Values.Look(ref combatFocus, "combatFocus", NemesisCombatFocus.Survivor);
+            Scribe_Values.Look(ref mountKindDefName, "mountKindDefName", null);
         }
+
+        public string FocusLabelKey => combatFocus switch
+        {
+            NemesisCombatFocus.Destroyer => "Nemesis_Focus_Destroyer",
+            NemesisCombatFocus.Berserker => "Nemesis_Focus_Berserker",
+            NemesisCombatFocus.Sniper => "Nemesis_Focus_Sniper",
+            NemesisCombatFocus.Psycho => "Nemesis_Focus_Psycho",
+            NemesisCombatFocus.Survivor => "Nemesis_Focus_Survivor",
+            NemesisCombatFocus.Mechanitor => "Nemesis_Focus_Mechanitor",
+            _ => "Nemesis_Focus_Survivor",
+        };
     }
 }

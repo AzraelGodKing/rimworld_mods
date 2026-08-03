@@ -11,7 +11,8 @@ namespace DateNight
         public DateNightMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<DateNightSettings>();
-            new Harmony("azraelgodking.datenight").PatchAll();
+            // PatchAll runs after defs load — Harmony compiling TimeAssignmentSelector
+            // patches otherwise touches TimeAssignmentDefOf before DefOfs exist.
         }
 
         public override string SettingsCategory() => "DateNight_SettingsCategory".Translate();
@@ -50,6 +51,15 @@ namespace DateNight
             }
 
             listing.End();
+        }
+    }
+
+    [StaticConstructorOnStartup]
+    public static class DateNightInit
+    {
+        static DateNightInit()
+        {
+            new Harmony("azraelgodking.datenight").PatchAll();
         }
     }
 }

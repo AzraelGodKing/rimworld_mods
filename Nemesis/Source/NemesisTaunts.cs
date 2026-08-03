@@ -87,7 +87,12 @@ namespace Nemesis
             string name = data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
             string target = TargetPhrase(data);
             stage = UnityEngine.Mathf.Clamp(stage, 1, 5);
-            return $"Nemesis_Letter_VengeanceReturnBody{stage}".Translate(name, target);
+            string focus = data.FocusLabelKey.Translate();
+            int tier = data.progressionLevel;
+            string body = $"Nemesis_Letter_VengeanceReturnBody{stage}".Translate(name, target);
+            if (tier > 0)
+                body += "\n\n" + "Nemesis_Letter_VengeanceCaptainLine".Translate(name, tier, focus);
+            return body;
         }
     }
 }

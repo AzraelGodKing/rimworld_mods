@@ -12,6 +12,10 @@ namespace Strata
 
         public override AcceptanceReport DeconstructibleBy(Faction faction)
         {
+            if (CanTearDownUnlinkedLanding())
+            {
+                return true;
+            }
             return "Strata_OnlyWayDown".Translate();
         }
     }
