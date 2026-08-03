@@ -96,12 +96,48 @@ namespace Nemesis
             sb.AppendLine($"targetMode={d.targetMode} target={d.targetPawnName ?? "-"} (id {d.targetPawnId})");
             sb.AppendLine($"aggression={d.aggressionLevel:F2} effective={d.EffectiveAggression:F2}");
             sb.AppendLine($"escapes={d.escapeCount} harassment={d.harassmentCount} lastAction={d.lastActionKind}");
+            sb.AppendLine($"focus={d.combatFocus} progression={d.progressionLevel} applied={d.appliedProgressionLevel} mount={d.mountKindDefName ?? "-"}");
             sb.AppendLine($"nextAction in {FormatTicks(d.nextActionTick - now)} (tick {d.nextActionTick})");
             sb.AppendLine($"pendingFakeAmbush={d.pendingFakeAmbush} ambushTick={d.fakeAmbushTick}");
             sb.AppendLine($"nemesis pawn: {(nemesis == null ? "MISSING" : DescribePawn(nemesis))}");
             sb.AppendLine($"target pawn: {(target == null ? "-" : DescribePawn(target))}");
             Log.Message(sb.ToString());
             Messages.Message("[Nemesis] Hunt state dumped to log.", MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
+        [DebugAction(Cat, "Force captain level-up", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceLevelUp()
+        {
+            if (!RequireActiveHunt(out GameComponent_Nemesis comp, out NemesisData data)) return;
+            Pawn nemesis = comp.FindNemesisPawn();
+            if (nemesis == null)
+            {
+                Messages.Message("[Nemesis] Nemesis pawn missing.", MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+            NemesisProgression.LevelUpOnEscape(data, nemesis);
+            Messages.Message(
+                $"[Nemesis] Progression → {data.progressionLevel} ({data.combatFocus}).",
+                MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
+        [DebugAction(Cat, "Cycle combat focus + reapply", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void CycleFocus()
+        {
+            if (!RequireActiveHunt(out GameComponent_Nemesis comp, out NemesisData data)) return;
+            Pawn nemesis = comp.FindNemesisPawn();
+            if (nemesis == null)
+            {
+                Messages.Message("[Nemesis] Nemesis pawn missing.", MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+            int next = ((int)data.combatFocus + 1) % 6;
+            if ((NemesisCombatFocus)next == NemesisCombatFocus.Mechanitor && !ModsConfig.BiotechActive)
+                next = 0;
+            data.combatFocus = (NemesisCombatFocus)next;
+            data.appliedProgressionLevel = -1;
+            NemesisProgression.Apply(nemesis, data);
+            Messages.Message($"[Nemesis] Focus → {data.combatFocus}.", MessageTypeDefOf.NeutralEvent, historical: false);
         }
 
         private static string DescribePawn(Pawn p)

@@ -46,6 +46,8 @@ namespace Strata
         public bool showLevelPerfInTab = false;
         public bool explorationSitesEnabled = true;
         public bool floodEventsEnabled = true;
+        /// <summary>When false, infestations cannot fire on underground floors (B1+).</summary>
+        public bool b1InfestationsEnabled = true;
         public bool crossLevelRitualsEnabled = true;
         public bool crossLevelCaravansEnabled = true;
         public bool mergedAbandonWarning = true;
@@ -127,6 +129,7 @@ namespace Strata
             Scribe_Values.Look(ref showLevelPerfInTab, "showLevelPerfInTab", defaultValue: false);
             Scribe_Values.Look(ref explorationSitesEnabled, "explorationSitesEnabled", defaultValue: true);
             Scribe_Values.Look(ref floodEventsEnabled, "floodEventsEnabled", defaultValue: true);
+            Scribe_Values.Look(ref b1InfestationsEnabled, "b1InfestationsEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelRitualsEnabled, "crossLevelRitualsEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelCaravansEnabled, "crossLevelCaravansEnabled", defaultValue: true);
             Scribe_Values.Look(ref mergedAbandonWarning, "mergedAbandonWarning", defaultValue: true);
@@ -383,6 +386,8 @@ namespace Strata
             Text.Font = GameFont.Small;
             listing.CheckboxLabeled("Strata_Settings_RaidPursuit".Translate(), ref Settings.raidPursuitEnabled,
                 "Strata_Settings_RaidPursuitDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_B1Infestations".Translate(), ref Settings.b1InfestationsEnabled,
+                "Strata_Settings_B1InfestationsDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_HibernateEmpty".Translate(), ref Settings.hibernateEmptyLevels,
                 "Strata_Settings_HibernateEmptyDesc".Translate());
             // Note: throttleVacantLevels is kept in ExposeData for save compat but is no

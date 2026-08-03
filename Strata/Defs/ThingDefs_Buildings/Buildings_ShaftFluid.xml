@@ -148,7 +148,8 @@
     <uiIconScale>1</uiIconScale>
     <researchPrerequisites>
       <li>Strata_FluidShafts</li>
-      <li>VCHE_ChemfuelProduction</li>
+      <!-- VCE unlocks chemfuel pipes with vanilla BiofuelRefining; there is no VCHE_ChemfuelProduction. -->
+      <li>BiofuelRefining</li>
     </researchPrerequisites>
     <comps>
       <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>

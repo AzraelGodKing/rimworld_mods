@@ -5,6 +5,7 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
+- **Living World soft consumer (DC1)** — fail-open register on `LivingWorldSignals`; visible decisive victories / betrayals / refugee flights nudge existing `AddFactionDrift` (shared-enemy boost / ally sympathy). No LW project reference.
 - **Chinese Simplified & Russian language packs** — full Keyed + DefInjected translations (perks, trauma, mentoring, inheritance, jobs, thoughts).
 
 ### Changed
