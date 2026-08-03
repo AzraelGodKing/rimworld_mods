@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>AsAboveSoBelow</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>12.0</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="0Harmony" />
+    <Reference Include="UnityEngine.CoreModule" />
+    <Reference Include="BadHygiene" />
+    <Reference Include="Rimefeller" />
+    <Reference Include="PipeSystem" />
+    <Reference Include="UnityEngine.TextRenderingModule" />
+    <Reference Include="UnityEngine.InputLegacyModule" />
+    <Reference Include="UnityEngine.IMGUIModule" />
+  </ItemGroup>
+</Project>
