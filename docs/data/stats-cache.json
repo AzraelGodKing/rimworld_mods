@@ -1,5 +1,5 @@
 {
-  "lastFetched": "2026-08-03T20:21:24.939Z",
+  "lastFetched": "2026-08-03T22:00:31.304Z",
   "mods": {
     "homesteader": {
       "name": "Homesteader",
@@ -7,7 +7,7 @@
       "title": "Homesteader",
       "subscriptions": 322,
       "favorited": 52,
-      "views": 2886,
+      "views": 2887,
       "lifetime_subscriptions": 405,
       "lifetime_favorited": 55
     },
@@ -15,21 +15,21 @@
       "name": "Stormproof",
       "publishedFileId": "3760021127",
       "title": "Stormproof",
-      "subscriptions": 327,
+      "subscriptions": 328,
       "favorited": 41,
-      "views": 1068,
-      "lifetime_subscriptions": 368,
+      "views": 1069,
+      "lifetime_subscriptions": 369,
       "lifetime_favorited": 46
     },
     "strata": {
       "name": "Strata",
       "publishedFileId": "3762844292",
       "title": "Strata",
-      "subscriptions": 1534,
-      "favorited": 371,
-      "views": 9002,
-      "lifetime_subscriptions": 1902,
-      "lifetime_favorited": 390
+      "subscriptions": 1535,
+      "favorited": 373,
+      "views": 9012,
+      "lifetime_subscriptions": 1903,
+      "lifetime_favorited": 392
     },
     "nemesis": {
       "name": "Nemesis",
@@ -37,7 +37,7 @@
       "title": "Nemesis",
       "subscriptions": 149,
       "favorited": 36,
-      "views": 1015,
+      "views": 1023,
       "lifetime_subscriptions": 166,
       "lifetime_favorited": 36
     },
@@ -47,7 +47,7 @@
       "title": "Deep Colony",
       "subscriptions": 106,
       "favorited": 36,
-      "views": 1068,
+      "views": 1073,
       "lifetime_subscriptions": 112,
       "lifetime_favorited": 37
     },
@@ -57,16 +57,16 @@
       "title": "Date Night",
       "subscriptions": 202,
       "favorited": 28,
-      "views": 868,
+      "views": 873,
       "lifetime_subscriptions": 219,
       "lifetime_favorited": 30
     }
   },
   "site_total": {
-    "subscriptions": 2640,
-    "favorited": 564,
-    "views": 15907,
-    "lifetime_subscriptions": 3172,
-    "lifetime_favorited": 594
+    "subscriptions": 2642,
+    "favorited": 566,
+    "views": 15937,
+    "lifetime_subscriptions": 3174,
+    "lifetime_favorited": 596
   }
 }
