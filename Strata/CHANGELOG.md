@@ -6,15 +6,21 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ### Changed
 
+- **Steam Workshop / About description** — rewritten for V3 (see-below, cross-level combat &amp; force-build, combined inventory, atmosphere opt-in, gravship stacks). Paste-ready BBCode in `SteamDescription.txt`.
 - **Work relay job board** (`work-relay-board-v1`) — background `GameComponent` scanner publishes a per-floor work board; work relay reads it instead of probing during every idle think. Optional off-thread grow-cell aggregate (`offThreadWorkRelay`, on by default). Sync fallback if the board is missing/stale.
 - **Work relay smooth rework** (`work-relay-smooth-v1`) — idle colonists/mechs no longer burn a 7500-tick scan lockout on empty or claim-capped looks (short empty / medium failed cooldowns; only after a real scan). Map work-signal TTL cache + `Notify_WorkChanged` (designations / blueprints/frames) bumps a work version so new jobs wake mid-cooldown pawns. False-positive arrivals blacklist that floor ~5000 ticks to stop stair loops. Work stampede cap scales with signal strength (3–8) and frees on Work arrival. External JobGiver relay uses the same scan throttle + dynamic cap.
 
 ### Added
 
+- **Underground infestations toggle** (`b1-infestations-toggle-v1`) — Mod Options → Threats &amp; performance: **Underground infestations (B1+)** (default on). When off, infestation incidents cannot fire on any underground Strata floor.
 - **Stair pair IDs + auto/manual relink** — `CompStrataShaftLink` (`strataPairGuid`) on all Strata shafts/landings; syncs with gravship `shaftId` when present. `ConnectPortalPair` is the single wiring path; load stamps healthy pairs and auto-rewires unique pair-ID matches. DevMode: relink by pair ID, click shaft→landing (cross-floor), relink selected, cancel, repair missing landings, log topology with pair id. Stamp `stair-pair-id-v1`.
 
 ### Fixed
 
+- **Shaft chemfuel junction research** — `VCHE_ChemfuelProduction` never existed (VCE uses vanilla `BiofuelRefining`). Clears the cross-ref error when Vanilla Chemfuel Expanded is loaded.
+- **Mental breaks across levels** (`mental-break-cross-level-v1`) — all mental-break JobGivers (tantrum, insult, manhunter, fire-starting, slaughter, social fight, wander, plus existing binge/berserk/murder) can stair-commute; smash/insult/murder target scans include linked floors so breaks can play out anywhere in the colony column.
+- **Orphan / unlinked underground stair deconstruct** (`orphan-stair-deconstruct-v1`) — landings always returned “only way up/down,” and dig shafts with `deconstructible=false` could not be torn down after the pair broke. Unlinked or orphan shafts/landings can be deconstructed again (still blocked while a linked floor has colony presence).
+- **Low Food / Low Medicine across levels** (`alert-food-med-levels-v1`) — vanilla alerts only counted the surface map’s stockpiles, so food/medicine in underground (or upper) zones still raised the warning. Totals and colonist counts now include every linked floor; explanation text matches.
 - **Construct deliver reserve spam** (`construct-reserve-probe-v1`) — cross-level fetch no longer picks wood/steel already reserved by another builder (`Could not reserve` / `TryMakePreToilReservations returned false`). Material scan + counts skip claimed stacks; same-map `HaulToContainer` results are dropped when the stack is no longer free.
 - **Stuck carrying after cross-level haul / force-build** (`haul-stuck-carry-v1` / `haul-construct-to-storage-v1`) — haul keep-carry only blocks drops during `EnterPortal` (not the whole Haul intent), so failed deliveries no longer leave colonists/mechs in Wait loops with ghost-carried items. If construction/frame delivery fails after stairs, the haul is **reassigned to storage** on that floor before any force-drop; empty-handed return only when cargo is placed. Idle Wait carriers retry delivery → storage → drop.
 - **Missing atmosphere ThoughtWorkers at startup** — shipped `Strata.dll` predated V3.5 room-volume types, so `ThoughtWorker_StrataSuffocation` / `ThoughtWorker_StrataStuffyAir` XML resolved to missing types. Rebuilt assembly includes those workers + `AtmosphereVolumeUtility`. Stamp `atmosphere-thoughts-dll-v1`.
