@@ -15,6 +15,10 @@ namespace LivingWorld
         OutpostFounded = 10,
         SettlementAbandoned = 11,
         Epithet = 12,
+        WhitePeace = 13,
+        RefugeeFlight = 14,
+        TradeBlackout = 15,
+        WarbandPass = 16,
     }
 
     public enum NewsSeverity : byte

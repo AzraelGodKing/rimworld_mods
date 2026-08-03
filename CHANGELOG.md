@@ -4,6 +4,10 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Strata** — mental breaks can chase targets / wander across linked floors (`mental-break-cross-level-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — orphan/unlinked underground stairs can be deconstructed again (`orphan-stair-deconstruct-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata** — Low Food / Low Medicine alerts count stockpiles on linked underground floors (`alert-food-med-levels-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Living World** — Phase 2: NPC diplomacy (peace/tension/war/alliance), refugee fallout, trade blackout, war sites; Deep Colony fail-open goodwill consumer (`living-world-phase2`). → [LivingWorld/CHANGELOG.md](LivingWorld/CHANGELOG.md) · [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Living World** — Phase 1 mod cut: off-map chronicle, hear-rules, settlement morph (prosperity / flip / abandon / outpost / epithet), soft event bus, CI zip (`living-world-phase1`). → [LivingWorld/CHANGELOG.md](LivingWorld/CHANGELOG.md) · [docs/ideas/living-world.md](docs/ideas/living-world.md)
 - **Strata** — construct deliver no longer starts `HaulToContainer` on stacks another pawn already reserved (`construct-reserve-probe-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — cross-level construct haul that fails reassigns to storage; stuck-carry Wait/ghost-cargo fix (`haul-construct-to-storage-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
