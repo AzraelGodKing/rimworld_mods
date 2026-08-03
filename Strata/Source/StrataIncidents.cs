@@ -381,6 +381,16 @@ namespace Strata
                 PocketMapColonyTileUtility.TryAssign(map);
             }
 
+            // Optional: no infestations on underground floors (B1+).
+            if (underground
+                && StrataMod.Settings != null
+                && !StrataMod.Settings.b1InfestationsEnabled
+                && IsInfestationIncident(__instance.def))
+            {
+                __result = false;
+                return false;
+            }
+
             if (underground && ShouldBlockUndergroundIncident(__instance.def))
             {
                 __result = false;
@@ -395,6 +405,19 @@ namespace Strata
             }
 
             return true;
+        }
+
+        private static bool IsInfestationIncident(IncidentDef def)
+        {
+            if (def == null)
+            {
+                return false;
+            }
+            if (def.defName != null && def.defName.Contains("Infestation"))
+            {
+                return true;
+            }
+            return def.category == IncidentCategoryDefOf.DeepDrillInfestation;
         }
 
         public static void Postfix(IncidentWorker __instance, IncidentParms parms, ref bool __result)
@@ -465,11 +488,17 @@ namespace Strata
             {
                 return;
             }
-            if (target is Map map && StrataMapUtility.IsUnderground(map))
+            if (!(target is Map map) || !StrataMapUtility.IsUnderground(map))
             {
-                // Deeper levels crawl with more bugs.
-                __result *= Mathf.Min(1.3f + 0.35f * StrataDepth.Of(map), 3f);
+                return;
             }
+            if (StrataMod.Settings != null && !StrataMod.Settings.b1InfestationsEnabled)
+            {
+                __result = 0f;
+                return;
+            }
+            // Deeper levels crawl with more bugs.
+            __result *= Mathf.Min(1.3f + 0.35f * StrataDepth.Of(map), 3f);
         }
     }
 }

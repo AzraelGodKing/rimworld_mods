@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nemesis — a RimWorld mod by AzraelGodKing</title>
-<meta name="description" content="Nemesis: a named personal antagonist harasses your colony with taunts, false leads, and assaults that flee when losing. RimWorld 1.6, requires Harmony. Foundation by Dredd (Misakabob).">
+<meta name="description" content="Nemesis: a named personal antagonist who escalates into a combat captain after escapes — army returns, gear progression, still endable. RimWorld 1.6, requires Harmony. Foundation by Dredd (Misakabob).">
 <link rel="stylesheet" href="style.css">
 <script src="scripts/stats-display.js" defer></script>
 </head>
@@ -54,7 +54,7 @@
 
   <section id="overview">
     <h2 class="x">Overview</h2>
-    <p class="sub">A named pawn from a hostile faction becomes a <b>personal antagonist</b> — not another faceless raid. They harass your colony with taunts, false leads, waste drops, power sabotage, and personal assaults that flee when the fight turns. The hunt ends when you capture or kill them&hellip; or when they get what they came for.</p>
+    <p class="sub">A named pawn from a hostile faction becomes a <b>personal antagonist</b> — not another faceless raid. Early on they harass with taunts, false leads, and sabotage. After each escape they level up as a <b>combat captain</b> (skills, gear, armor) and prefer returning with an army. The hunt still ends when you capture or kill them&hellip; or when they get what they came for.</p>
     <div class="note signal">
       <b>Credit:</b> original design and core runtime by <b>Dredd (Misakabob)</b>. Expanded and packaged here by AzraelGodKing with gratitude.<br>
       <b>Needs:</b> <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a>. Load Nemesis after it. Safe to add mid-save; resolve any active hunt before removing.
@@ -107,7 +107,14 @@
         <div>
           <h3>Raids &amp; vengeance army</h3>
           <div class="stat">After escapes</div>
-          <p>Faction raids &mdash; and after escapes, <b>vengeance army returns</b> that inject the same nemesis into a heavier assault. <em>Why return alone when you can return with an army?</em></p>
+          <p>Faction raids &mdash; and after escapes, <b>vengeance army returns</b> that inject the same nemesis into a heavier assault. <em>Why return alone when you can return with an army?</em> Raid points also scale with captain level.</p>
+        </div>
+      </div>
+      <div class="card signal wide">
+        <div>
+          <h3>Captain progression</h3>
+          <div class="stat">Hybrid</div>
+          <p>Each escape raises captain level: combat focus (Destroyer, Berserker, Sniper, Psycho, Survivor, Mechanitor), better skills and gear, battle-hardened armor. Biotech can add bionics/genes. Soft animal escorts and Mechanitor mech retinues when those systems are present. Still killable after enough escapes &mdash; no cheat-death.</p>
         </div>
       </div>
       <div class="card signal">
@@ -119,13 +126,13 @@
       <div class="card signal">
         <div>
           <h3>False signals</h3>
-          <p>Fake distress / trader offers that become delayed ambushes.</p>
+          <p>Fake distress / trader offers that become delayed ambushes (downweighted after escapes).</p>
         </div>
       </div>
       <div class="card signal">
         <div>
           <h3>Sabotage &amp; waste</h3>
-          <p>EMP / grid sabotage, Biotech waste drops, caravan harassment, and food-store vandalism.</p>
+          <p>EMP / grid sabotage, Biotech waste drops, caravan harassment, and food-store vandalism &mdash; common early; less likely once they start returning as a captain.</p>
         </div>
       </div>
       <div class="card signal">
@@ -168,6 +175,8 @@
       <li><b>Stormproof</b> &mdash; EMP sabotage respects EMP dampeners; surge protectors blunt grid sabotage.</li>
       <li><b>Strata</b> &mdash; prefers surface home maps; aware of underground / upper levels when choosing targets.</li>
       <li><b>Homesteader</b> &mdash; food raids and taunts can reference root cellars and favorite foods.</li>
+      <li><b>Giddy-Up</b> &mdash; animal escorts pair better as mounts when present (still spawn as raid escorts without it).</li>
+      <li><b>Biotech</b> &mdash; Mechanitor focus, bionics/genes thresholds, waste packs, mech escorts.</li>
     </ul>
   </section>
 

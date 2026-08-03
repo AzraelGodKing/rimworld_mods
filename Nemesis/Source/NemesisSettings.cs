@@ -25,6 +25,13 @@ namespace Nemesis
         public float actionWeightSabotage = 0.05f;
         public float actionWeightFood = 0.05f;
 
+        // Hybrid captain progression
+        public bool enableCaptainProgression = true;
+        public int maxProgressionLevel = 8;
+        public float postEscapeSabotageWeightMul = 0.35f;
+        public bool enableSoftMounts = true;
+        public bool enableSoftMechs = true;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -46,6 +53,11 @@ namespace Nemesis
             Scribe_Values.Look(ref actionWeightCaravan, "actionWeightCaravan", 0.07f);
             Scribe_Values.Look(ref actionWeightSabotage, "actionWeightSabotage", 0.05f);
             Scribe_Values.Look(ref actionWeightFood, "actionWeightFood", 0.05f);
+            Scribe_Values.Look(ref enableCaptainProgression, "enableCaptainProgression", true);
+            Scribe_Values.Look(ref maxProgressionLevel, "maxProgressionLevel", 8);
+            Scribe_Values.Look(ref postEscapeSabotageWeightMul, "postEscapeSabotageWeightMul", 0.35f);
+            Scribe_Values.Look(ref enableSoftMounts, "enableSoftMounts", true);
+            Scribe_Values.Look(ref enableSoftMechs, "enableSoftMechs", true);
         }
 
         public void ResetToDefaults()
@@ -68,6 +80,11 @@ namespace Nemesis
             actionWeightCaravan = 0.07f;
             actionWeightSabotage = 0.05f;
             actionWeightFood = 0.05f;
+            enableCaptainProgression = true;
+            maxProgressionLevel = 8;
+            postEscapeSabotageWeightMul = 0.35f;
+            enableSoftMounts = true;
+            enableSoftMechs = true;
         }
     }
 }

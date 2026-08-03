@@ -151,6 +151,10 @@ namespace Nemesis
             _data.faction = faction;
             _data.targetPawnId = targetPawn?.thingIDNumber ?? -1;
             _data.targetPawnName = targetPawn?.LabelShort;
+            _data.combatFocus = NemesisProgression.RollCombatFocus();
+            _data.progressionLevel = 0;
+            _data.appliedProgressionLevel = -1;
+            NemesisProgression.Apply(nemesis, _data);
 
             SendIntroLetter(targetPawn);
         }
@@ -209,6 +213,7 @@ namespace Nemesis
             _data.aggressionLevel = Mathf.Min(_data.aggressionLevel + 0.5f, 10f);
             _data.lastEscapeTick = Find.TickManager.TicksGame;
             _data.nextActionTick = Find.TickManager.TicksGame + 120000;
+            NemesisProgression.LevelUpOnEscape(_data, nemesis);
 
             GlobalTargetInfo lookTarget = map != null ? new GlobalTargetInfo(pos, map) : GlobalTargetInfo.Invalid;
 
@@ -466,12 +471,18 @@ namespace Nemesis
                 sabotage *= 1.3f;
             }
 
-            // After escapes: prefer returning with an army over solo assaults / soft harassment.
+            // After escapes: captain returns — army raids up, petty sabotage down.
             if (_data.escapeCount > 0)
             {
-                raid *= 2.4f;
-                assault *= 0.45f;
+                float pettyMul = s?.postEscapeSabotageWeightMul ?? 0.35f;
+                raid *= 2.8f;
+                assault *= 1.35f;
                 taunt *= 0.7f;
+                waste *= pettyMul;
+                fake *= pettyMul;
+                sabotage *= pettyMul;
+                food *= pettyMul;
+                caravan *= Mathf.Lerp(1f, pettyMul, 0.5f);
             }
 
             // Soft Strata: slight bias toward food/sabotage when harassing multi-level bases (surface map).
