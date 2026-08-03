@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using RimWorld;
 using Verse;
+using Verse.AI.Group;
 
 namespace Nemesis
 {
@@ -15,12 +16,22 @@ namespace Nemesis
         public const string StrataId = "AzraelGodKing.Strata";
         public const string HomesteaderId = "AzraelGodKing.Homesteader";
 
+        private static readonly string[] GiddyUpPackageIds =
+        {
+            "Owlchemist.GiddyUp",
+            "roolo.giddyupcore",
+            "roolo.giddyuprideandroll",
+            "roolo.giddyupcaravan",
+        };
+
         private static bool _stormChecked;
         private static bool _stormActive;
         private static bool _strataChecked;
         private static bool _strataActive;
         private static bool _homeChecked;
         private static bool _homeActive;
+        private static bool _giddyChecked;
+        private static bool _giddyActive;
 
         private static MethodInfo _strataIsUnderground;
         private static MethodInfo _strataIsUpper;
@@ -79,12 +90,101 @@ namespace Nemesis
             }
         }
 
+        public static bool GiddyUpActive
+        {
+            get
+            {
+                if (!_giddyChecked)
+                {
+                    _giddyChecked = true;
+                    _giddyActive = false;
+                    for (int i = 0; i < GiddyUpPackageIds.Length; i++)
+                    {
+                        if (ModLister.GetActiveModWithIdentifier(GiddyUpPackageIds[i]) != null)
+                        {
+                            _giddyActive = true;
+                            break;
+                        }
+                    }
+                }
+                return _giddyActive;
+            }
+        }
+
         public static void ResetCaches()
         {
-            _stormChecked = _strataChecked = _homeChecked = false;
-            _stormActive = _strataActive = _homeActive = false;
+            _stormChecked = _strataChecked = _homeChecked = _giddyChecked = false;
+            _stormActive = _strataActive = _homeActive = _giddyActive = false;
             _strataIsUnderground = _strataIsUpper = null;
             _homeGetFavorites = null;
+        }
+
+        /// <summary>
+        /// Remember a faction-appropriate animal kind for later escort spawn.
+        /// Fail-open without Giddy-Up (animal still fights beside the captain).
+        /// </summary>
+        public static void TryAssignMountKind(Pawn rider, NemesisData data, int level)
+        {
+            if (data == null || level < 2) return;
+            if (!(NemesisMod.Settings?.enableSoftMounts ?? true)) return;
+            if (!string.IsNullOrEmpty(data.mountKindDefName)) return;
+
+            // Prefer assigning when Giddy-Up is present; still allow animal escort without it.
+            TechLevel tech = rider?.Faction?.def?.techLevel ?? TechLevel.Neolithic;
+            string kindName;
+            if (tech <= TechLevel.Neolithic)
+                kindName = Rand.Bool ? "Elephant" : "Muffalo";
+            else if (tech <= TechLevel.Medieval)
+                kindName = Rand.Bool ? "Horse" : "Muffalo";
+            else
+                kindName = Rand.Bool ? "Horse" : "Thrumbo";
+
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(kindName)
+                               ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("Muffalo")
+                               ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("Horse");
+            if (kind == null || !kind.RaceProps.Animal) return;
+            data.mountKindDefName = kind.defName;
+        }
+
+        public static void TrySpawnMountBeside(Map map, Faction faction, NemesisData data, Pawn near)
+        {
+            if (data == null || map == null || faction == null) return;
+            if (!(NemesisMod.Settings?.enableSoftMounts ?? true)) return;
+            if (string.IsNullOrEmpty(data.mountKindDefName)) return;
+
+            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(data.mountKindDefName);
+            if (kind == null) return;
+
+            try
+            {
+                PawnGenerationRequest req = new PawnGenerationRequest(
+                    kind, faction, PawnGenerationContext.NonPlayer,
+                    forceGenerateNewPawn: true, canGeneratePawnRelations: false);
+                Pawn animal = PawnGenerator.GeneratePawn(req);
+                IntVec3 cell = IntVec3.Invalid;
+                if (near != null && near.Spawned && near.Map == map)
+                    CellFinder.TryFindRandomSpawnCellForPawnNear(near.Position, map, out cell, 3);
+                if (!cell.IsValid)
+                    CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out cell);
+                if (!cell.IsValid) return;
+                GenSpawn.Spawn(animal, cell, map);
+
+                Lord lord = near?.GetLord();
+                if (lord != null)
+                    lord.AddPawn(animal);
+                else
+                {
+                    LordMaker.MakeNewLord(
+                        faction,
+                        new LordJob_AssaultColony(faction, canKidnap: false, canTimeoutOrFlee: true),
+                        map,
+                        new[] { animal });
+                }
+            }
+            catch
+            {
+                /* fail open */
+            }
         }
 
         public static bool IsStrataUnderground(Map map)

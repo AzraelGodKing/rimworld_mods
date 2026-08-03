@@ -120,7 +120,57 @@ namespace Strata
 
         public override AcceptanceReport DeconstructibleBy(Faction faction)
         {
+            // Landings are normally permanent escape hatches. When the pair is
+            // gone (no entrance, or pocket no longer linked to its host), allow
+            // tear-down so orphan underground stairs can be cleared.
+            if (CanTearDownUnlinkedLanding())
+            {
+                return true;
+            }
             return "Strata_OnlyWayUp".Translate();
+        }
+
+        /// <summary>
+        /// True when this landing is no longer a live escape to a linked host.
+        /// </summary>
+        protected bool CanTearDownUnlinkedLanding()
+        {
+            if (EntranceValid)
+            {
+                return false;
+            }
+            Map above = SourceMap;
+            if (above == null || above.Disposed)
+            {
+                return true;
+            }
+            return Map != null && !ColonyBedUtility.MapsLinked(Map, above);
+        }
+
+        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+        {
+            // destroyable=false — same allowance as host shafts so player
+            // deconstruct of an orphan landing actually removes it.
+            bool openedMove = false;
+            if (!StrataPortalUtility.PortalMoveInProgress)
+            {
+                StrataPortalUtility.BeginPortalMove();
+                openedMove = true;
+            }
+            bool prev = Thing.allowDestroyNonDestroyable;
+            Thing.allowDestroyNonDestroyable = true;
+            try
+            {
+                base.Destroy(mode);
+            }
+            finally
+            {
+                Thing.allowDestroyNonDestroyable = prev;
+                if (openedMove)
+                {
+                    StrataPortalUtility.EndPortalMove();
+                }
+            }
         }
 
         public override void OnEntered(Pawn pawn)

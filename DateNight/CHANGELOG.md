@@ -13,6 +13,7 @@ Detailed notes for **Date Night** only. Repo-wide highlights: [../CHANGELOG.md](
 - **Dev tools** — Date Night debug: make selected pair lovers, click-to-pair with selected, paint Lovin all day on selected, force lovin now.
 
 ### Fixed
+- **Startup TimeAssignmentDefOf warning** — Harmony `PatchAll` no longer runs in the Mod ctor (compiling the Schedule-tab patch touched `TimeAssignmentSelector` / `TimeAssignmentDefOf` before DefOfs init). Patches apply in `StaticConstructorOnStartup` after defs load.
 - **Lovin never firing on schedule** — pawns preferred their own single beds (vanilla requires a shared double), hourly chance burned while waiting alone, and MustKeepLyingDown kept them stuck. Now both path to one cached rendezvous double bed; tick forces LayDown + Lovin when both are in it.
 - **Bed claim storm** — tick loop called `ClaimBedIfNonMedical` on a new free double whenever reserve checks failed, so couples ate every bed on the map. Ownership claims removed from the hot path; one rendezvous bed is cached per couple and LayDown’s own toil handles claiming.
 - **Needs before lovin** — hungry (or wanting food), chemical desire, ingest/flee/player-forced jobs, and exhausted rest block bed-forcing / lovin so colonists eat (etc.) first, then date.

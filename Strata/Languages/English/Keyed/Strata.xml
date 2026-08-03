@@ -72,6 +72,8 @@
   <Strata_Settings_ThreatsPerf>Threats &amp; performance</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>Raid pursuit</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>Raiders with nobody left to fight follow your colonists through unsealed stairwells.</Strata_Settings_RaidPursuitDesc>
+  <Strata_Settings_B1Infestations>Underground infestations (B1+)</Strata_Settings_B1Infestations>
+  <Strata_Settings_B1InfestationsDesc>When off, infestations (including deep-drill style) cannot fire on any underground Strata floor (B1 and deeper). Surface and A+ are unchanged.</Strata_Settings_B1InfestationsDesc>
   <Strata_Settings_HibernateEmpty>Hibernate empty levels</Strata_Settings_HibernateEmpty>
   <Strata_Settings_HibernateEmptyDesc>Vacant A+ and B+ pocket maps run vanilla ambient sims 1 tick in 4 and Strata gas 1 cycle in 8. Fully live on the map you are viewing or any level with pawns on it.</Strata_Settings_HibernateEmptyDesc>
   <Strata_Settings_ReduceBackground>Reduce background levels</Strata_Settings_ReduceBackground>

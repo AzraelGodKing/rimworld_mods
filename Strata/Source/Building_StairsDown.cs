@@ -148,6 +148,23 @@ namespace Strata
             {
                 return OccupiedOtherLevelMessage();
             }
+            // Dig shafts / some elevators set building.deconstructible=false so
+            // base always rejects. Empty or unlinked shafts must still come down.
+            if (def?.building != null && !def.building.IsDeconstructible)
+            {
+                if (!PocketMapExists
+                    || PocketMap == null
+                    || PocketMap.Disposed
+                    || !Find.Maps.Contains(PocketMap)
+                    || !ColonyBedUtility.MapsLinked(Map, PocketMap))
+                {
+                    return true;
+                }
+                if (!StrataPortalUtility.LinkedLevelHasColonyPresence(PocketMap))
+                {
+                    return true;
+                }
+            }
             return base.DeconstructibleBy(faction);
         }
 

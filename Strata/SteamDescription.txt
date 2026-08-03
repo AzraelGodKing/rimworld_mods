@@ -1,0 +1,80 @@
+My Discord: https://discord.gg/Vwh2y7qMXv
+Site (no Discord): https://azraelgodking.github.io/rimworld_mods/strata.html
+Roadmap: https://azraelgodking.github.io/rimworld_mods/strata-roadmap.html
+Issues: https://github.com/AzraelGodKing/rimworld_mods/issues
+
+[h1]Strata[/h1]
+Dig down. Build up. One colony — many floors.
+
+Carve rock under your base, frame a roof deck above it, and let colonists treat every linked level as home. Work, food, sleep, hauling, medicine, combat, and construction commute through the shafts on their own.
+
+[b]Version 3 complete.[/b] RimWorld 1.6. Requires [b]Harmony[/b]. Odyssey optional (gravship stacks only). Safe to add mid-save.
+Do [b]not[/b] run alongside AASB or MultiFloors.
+
+[h2]Dig down[/h2]
+[list]
+[*] Research [b]digging down[/b], build an excavated stairwell, open a full-size rock level under your map
+[*] Deeper floors need [b]deep excavation[/b]; extra shafts join the same level
+[*] Thick rock roof — no drop pods, mortars, or weather from the sky
+[*] Elevators: compact 1×1 cars (power to descend; ride up even if power fails)
+[/list]
+
+[h2]Build up[/h2]
+[list]
+[*] Research [b]building up[/b], frame a tower stairwell or tower elevator
+[*] Opens outdoor Level +N as a roof deck — walk and build where the floor below is roofed
+[*] Expand roofs downstairs to grow the deck; Page Up / Page Down jump floors
+[*] [b]See-below[/b]: look through open sky / see-through deck into the map underneath — select, float menus, live pawns
+[/list]
+
+[h2]One base, many floors[/h2]
+Other multi-level mods leave each floor an island. Strata’s job relay treats the column as one settlement:
+[list]
+[*] Idle colonists notice mining, blueprints, hauling, and bills on other levels and walk the stairs
+[*] Hungry / sleepy pawns find meals and beds across the stack
+[*] Haulers deliver through shafts; force-build pulls materials from linked stockpiles
+[*] Combined resources can sum the column for the readout and build menu
+[*] Work & Schedule can list colonists on every linked floor
+[*] Mental breaks, raiders, and visitors chase / commute through shafts
+[/list]
+No micromanagement: you designate, they commute.
+
+[h2]Cross-level combat[/h2]
+Pawns, turrets, and mortars can fire through open shafts and sky holes. Auto-engage keeps decks and underfloors in the fight without hopping maps by hand.
+
+[h2]Heat, smoke, and air[/h2]
+[list]
+[*] Stairwells exchange temperature — heat rises fast, cold pools below
+[*] Buoyant gases rise through open shafts; heavy gases sink
+[*] Optional atmosphere sim (gases default [b]off[/b] for performance): smoke, deep gas, O₂ / CO₂ in sealed rooms
+[*] Oxygen pumps, scrubbers, shaft exchangers, canary cages, gas overlay
+[/list]
+
+[h2]Living below[/h2]
+Research living below for shoring, gas airlocks, ore hoists, fungus farms, sump pumps, mine lamps, bellows, lime scrubbers, deep-gas wells, and smokeless generators.
+
+[h2]Power & pipes up the shaft[/h2]
+[list]
+[*] Elevators and shaft power conduits tie grids between floors — live surplus feeds demand without a battery on every level
+[*] Soft fluid junctions (when those mods load): Dubs Bad Hygiene, Central Heating, Rimatomics, helixien gas, Vanilla Temperature ducts, chemfuel, crude oil
+[/list]
+
+[h2]Gravship stacks (Odyssey)[/h2]
+Ship-only stairwells open A+/B+ pockets that travel on launch and reattach on landing. Soft-compatible with Vanilla Gravship Expanded — Chapter 1. Colony dig/tower stairs cannot sit on substructure — use gravship shafts on the ship.
+
+[h2]Events that know which way is up[/h2]
+Sky threats stay upstairs. Below: infestations, cave-ins, gas pockets, firestorms, deep sieges, cave breakthroughs, rich ore, burrowing raiders. World sites (collapsed mine, sealed vault, geothermal vent, sunken ruins) and optional ancient surface stairheads. Seal a stairwell to contain gas or bugs — and your own colonists.
+
+[h2]Performance[/h2]
+Every level is a full map matching your map size. On large maps (300×300+), each opened floor costs real FPS. Vacant-level and background throttles help; prefer a smaller map if you dig deep. Default level cap ±2 (Unlimited off).
+
+[h2]Tips[/h2]
+[list]
+[*] Leave pillars in big halls — thick rock roofs collapse when unsupported
+[*] Keep a stockpile near the stairs on each floor for hauling
+[*] Stairwells cannot be torn down while anyone is still on the linked level (orphan / unlinked shafts can be cleared)
+[*] Rename levels in the Levels tab
+[*] Before removing the mod: bring everyone up, haul what you care about, deconstruct every stairwell
+[/list]
+
+Requires Harmony. RimWorld 1.6. Odyssey optional.

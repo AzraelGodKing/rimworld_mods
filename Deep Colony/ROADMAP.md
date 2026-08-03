@@ -15,9 +15,9 @@ Deep Colony owns **player↔faction goodwill memory and drift** (raids, trades, 
 
 ### When Living World ships (consumer only)
 
-- [ ] Register fail-open for Living World world-event signals
-- [ ] Map **visible** wars / ally disasters to existing `AddFactionDrift` / `FactionRepUtility` paths
-- [ ] Do **not** duplicate a second goodwill buffer inside Living World
+- [x] Register fail-open for Living World world-event signals
+- [x] Map **visible** wars / ally disasters to existing `AddFactionDrift` / `FactionRepUtility` paths
+- [x] Do **not** duplicate a second goodwill buffer inside Living World
 - [ ] Keep current idle ally / enemy drift behavior unless playtests say otherwise
 
 ## Later Deep Colony fantasy (colony identity — not world sim)

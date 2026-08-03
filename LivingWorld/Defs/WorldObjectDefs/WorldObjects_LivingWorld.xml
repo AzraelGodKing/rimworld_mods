@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <WorldObjectDef>
+    <defName>LivingWorld_WarSite</defName>
+    <label>war scar</label>
+    <description>A short-lived scar from an off-map battle — debris, camps, or contested ground. Not a personal nemesis site.</description>
+    <worldObjectClass>LivingWorld.WorldObject_LivingWorldWarSite</worldObjectClass>
+    <texture>World/WorldObjects/Expanding/Sites</texture>
+    <expandingIcon>true</expandingIcon>
+    <expandingIconPriority>30</expandingIconPriority>
+    <expandingIconColor>(0.75, 0.45, 0.25)</expandingIconColor>
+  </WorldObjectDef>
+
+</Defs>

@@ -39,68 +39,70 @@
     <li>Helixien.ReGrowthCore</li>
   </loadAfter>
   <description>My Discord: https://discord.gg/Vwh2y7qMXv
-Dont have discord: https://azraelgodking.github.io/rimworld_mods/strata.html
+Site (no Discord): https://azraelgodking.github.io/rimworld_mods/strata.html
 Roadmap: https://azraelgodking.github.io/rimworld_mods/strata-roadmap.html
+Issues: https://github.com/AzraelGodKing/rimworld_mods/issues
 
-Dig down and build up a true multistory base - and let your colonists treat every level as one home.
+Dig down. Build up. One colony — many floors.
 
-EXCAVATED STAIRWELL
-Build a stairwell and your colonists carve out a new underground level beneath your base: a solid slab of living rock the same size as the map above, stacked exactly beneath it, ready to be mined into bedrooms, workshops, freezers, and vaults. Build another stairwell down there and keep going deeper. Every level is protected by thick rock roof - safe from drop pods, mortars, and weather. Stairwells are rotatable before placement.
+Carve rock under your base, frame a roof deck above it, and let colonists treat every linked level as home. Work, food, sleep, hauling, medicine, combat, and construction commute through the shafts on their own.
 
-TOWER STAIRWELL (BUILDING UP)
-Research building up, then frame a tower stairwell (or powered tower elevator) on the surface or on an upper floor. Completing it opens outdoor Level +N as a roof deck: you can only walk and build where the floor below is roofed, plus a plaza around the shaft. Open sky beyond the roof edge holds nothing - expand roofs downstairs to grow the deck. A second tower on the same floor joins that upper level. Page Up / Page Down jump between surface and upper floors.
+Version 3 complete. RimWorld 1.6. Requires Harmony. Odyssey optional (gravship stacks only). Safe to add mid-save.
+Do not run alongside AASB or MultiFloors.
 
-GRAVSHIP (ODYSSEY)
-Build gravship stairwells on the ship substructure to open Strata levels below or above the deck. Linked A+/B+ floors travel with the launch and reattach when you land. Use gravship shafts on the ship - colony dig/tower stairs and elevators cannot be placed on substructure tiles. Soft-compatible with Vanilla Gravship Expanded - Chapter 1 (jumper/hulk engines, scaffold/damaged substructure). Gravship life support (inspired by VGE): underdecks need oxygen tanks/reclaimers or an open shaft umbilical; launches dump heat into heatsinks. VGE's own oxygen pipe net and heatsinks stay on the host — Strata covers linked decks without requiring VEF pipes.
+DIG DOWN
+- Research digging down, build an excavated stairwell, open a full-size rock level under your map
+- Deeper floors need deep excavation; extra shafts join the same level
+- Thick rock roof — no drop pods, mortars, or weather from the sky
+- Elevators: compact 1x1 cars (power to descend; ride up even if power fails)
+
+BUILD UP
+- Research building up, frame a tower stairwell or tower elevator
+- Opens outdoor Level +N as a roof deck — walk and build where the floor below is roofed
+- Expand roofs downstairs to grow the deck; Page Up / Page Down jump floors
+- See-below: look through open sky / see-through deck into the map underneath — select, float menus, live pawns
 
 ONE BASE, MANY FLOORS
-Other multi-level mods make each floor an island. Strata's fluidity engine relays your pawns between levels on their own:
-
-- Idle colonists notice mining designations, blueprints, hauling, and bills on other levels and head down (or up) the stairs to do the work.
-- Hungry pawns will go find a meal on another level instead of starving next to a staircase.
-- Sleepy pawns walk home to their own bed - or to any level with a free bed to claim.
-- Haulers carry items through the stairwell to a level whose stockpiles accept them.
-- Work and Schedule tabs can list colonists across every linked level (Strata Levels toggle).
-
+Other multi-level mods leave each floor an island. Strata's job relay treats the column as one settlement:
+- Idle colonists notice mining, blueprints, hauling, and bills on other levels and walk the stairs
+- Hungry / sleepy pawns find meals and beds across the stack
+- Haulers deliver through shafts; force-build pulls materials from linked stockpiles
+- Combined resources can sum the column for the readout and build menu
+- Work and Schedule can list colonists on every linked floor
+- Mental breaks, raiders, and visitors chase / commute through shafts
 No micromanagement: you designate, they commute.
 
-HEAT RISES, COLD FALLS
-Stairwells exchange temperature between the rooms at their top and bottom. A warm level below convects its heat upward quickly; a warmer level above only bleeds down slowly. Freezers belong downstairs - generator heat drifts up and out, and the cold pools where you put it. Buoyant gases (smoke, oxygen, methane, steam) rise through open shafts; heavy gases (deep gas, CO₂, black damp) sink to the level below.
+CROSS-LEVEL COMBAT
+Pawns, turrets, and mortars can fire through open shafts and sky holes. Auto-engage keeps decks and underfloors in the fight without hopping maps by hand.
+
+HEAT, SMOKE, AND AIR
+- Stairwells exchange temperature — heat rises fast, cold pools below
+- Buoyant gases rise through open shafts; heavy gases sink
+- Optional atmosphere sim (gases default off for performance): smoke, deep gas, O2 / CO2 in sealed rooms
+- Oxygen pumps, scrubbers, shaft exchangers, canary cages, gas overlay
 
 LIVING BELOW
-Research living below for rock shoring pillars, gas airlocks, ore hoists, fungus farms, sump pumps, mine lamps, shaft bellows, and lime scrubbers. Shore wide halls against cave-ins, seal rooms, drain flood seep, and farm fungus in the dark.
+Research living below for shoring, gas airlocks, ore hoists, fungus farms, sump pumps, mine lamps, bellows, lime scrubbers, deep-gas wells, and smokeless generators.
 
-BREATHE DEEP
-Underground levels run a full atmosphere simulation. Burners emit smoke that pools in enclosed rooms. Hidden chambers hold pressurized deep gas - poisonous, flammable, and worth extracting with a gas well and deep-gas generator (or helixien pipes if VHGE is loaded). Colonists and plants consume oxygen and produce CO₂ in sealed spaces. Oxygen pumps, CO₂ scrubbers, shaft gas exchangers, canary cages, gas pipes, exhaust fans, and the gas overlay (play settings) keep the deep livable - or warn you when it is not.
+POWER AND PIPES UP THE SHAFT
+- Elevators and shaft power conduits tie grids between floors — live surplus feeds demand without a battery on every level
+- Soft fluid junctions (when those mods load): Dubs Bad Hygiene, Central Heating, Rimatomics, helixien gas, Vanilla Temperature ducts, chemfuel, crude oil
 
-MINE ATMOSPHERE
-Methane, black damp, fungal spores, and steam each behave differently underground, with counter buildings once you research mine atmosphere.
-
-FLUID SHAFTS
-Optional cross-level junctions beside stairwells tie pipe networks between floors when the matching mods are loaded: Dubs Bad Hygiene plumbing, Dubs Central Heating, Rimatomics coolant, helixien gas, Vanilla Temperature Expanded air ducts, chemfuel, and crude oil.
+GRAVSHIP STACKS (ODYSSEY)
+Ship-only stairwells open A+/B+ pockets that travel on launch and reattach on landing. Soft-compatible with Vanilla Gravship Expanded — Chapter 1. Colony dig/tower stairs cannot sit on substructure — use gravship shafts on the ship.
 
 EVENTS THAT KNOW WHICH WAY IS UP
-Underground levels are sealed rock, so the sky cannot reach them: solar flares, eclipses, toxic fallout, weather, and raids with no way in are suppressed below ground. What can reach you lives in the dark - infestations, cave-ins, breached gas pockets, gas firestorms, deep sieges, cave breakthroughs, rich ore nodes, and rare burrowing raiders. World quest sites (collapsed mine, sealed vault, geothermal vent) and optional ancient colony stairheads on the surface open multi-level adventures. Seal a stairwell to contain gas or bugs on one level.
+Sky threats stay upstairs. Below: infestations, cave-ins, gas pockets, firestorms, deep sieges, cave breakthroughs, rich ore, burrowing raiders. World sites (collapsed mine, sealed vault, geothermal vent, sunken ruins) and optional ancient surface stairheads. Seal a stairwell to contain gas or bugs — and your own colonists.
 
-THE DEEPER, THE STRANGER
-Levels sit on a geothermal gradient - the deeper you dig, the warmer the rock - and deeper levels crawl with more bugs and hide richer ore. Digs mix the tile's natural rocks into patches and carve a native warren with cave flora when Biomes! Caverns is not loaded; with Biomes! Caverns present, Strata can use full cavern layouts instead. For a compact shaft, research the powered elevator: a 1x1 car that needs power to descend but always lets colonists ride up if power fails, so no one is trapped below. Empty levels throttle background simulation to protect framerate in a tall base.
-
-PERFORMANCE NOTE: every level is a full map matching your map size, so on LARGE map sizes (300x300 and up) each opened level adds correspondingly more load. A deep base on a big map will cost real performance - the vacant-level and background-level throttles soften it, but if you dig many levels, consider a smaller map size when generating the world.
-
-To move goods between levels, keep a stockpile near the stairs on each floor - colonists haul up and down through the stairwell on their own.
-
-POWER UP AND DOWN THE SHAFTS
-An elevator automatically ties the two levels' power grids together, and a researched shaft power conduit does the same beside any stairwell - so surface generators can light the deep, and a level's spare power can flow back up. Live surplus covers demand on linked floors without a battery on every level; batteries are optional for overnight pooling and brownouts. Fluid shaft junctions work the same way when the host side has supply.
-
-HOW IT WORKS
-Each level is a real RimWorld map linked by stairwell pairs. Pathfinding, temperature, rooms, and combat all work per-level exactly like vanilla - Strata's job relay teaches colonist AI to move to the level where they are needed, so everything degrades safely and stays mod-compatible.
+PERFORMANCE
+Every level is a full map matching your map size. On large maps (300x300+) each opened floor costs real FPS. Vacant-level and background throttles help; prefer a smaller map if you dig deep. Default level cap +/-2 (Unlimited off).
 
 TIPS
-- Thick rock roofs collapse when unsupported: leave pillars in big halls, just like mountain bases.
-- Stairwells cannot be deconstructed while colonists are still on the linked level.
-- Raiders who run out of targets on their level will find your stairwells and come down (or up) after you. A sealed stairwell stops them cold - and blocks gas through the shaft - but it stops your colonists too.
-- Rename levels in the Levels tab so "Level -2" or "Level +1" becomes something you will remember.
-- Smoke and buoyant gases rise through open stairwells - put burners in a ventilated room, duct fumes to a shaft, or let the stack carry them up.
+- Leave pillars in big halls — thick rock roofs collapse when unsupported
+- Keep a stockpile near the stairs on each floor for hauling
+- Stairwells cannot be torn down while anyone is still on the linked level (orphan / unlinked shafts can be cleared)
+- Rename levels in the Levels tab
+- Before removing the mod: bring everyone up, haul what you care about, deconstruct every stairwell
 
-Requires the Harmony mod. RimWorld 1.6. Odyssey optional (gravship stacks only). Safe to add to existing saves. Before removing from a save: bring everyone to the surface, haul up anything you care about, and deconstruct all stairwells.</description>
+Requires Harmony. RimWorld 1.6. Odyssey optional.</description>
 </ModMetaData>
