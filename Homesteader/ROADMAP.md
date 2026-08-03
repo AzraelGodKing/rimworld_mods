@@ -5,6 +5,8 @@ Playable core is in. Later fantasy / content passes:
 Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 [../ROADMAP.md](../ROADMAP.md).
 
+**Living World:** Homesteader does **not** own off-map faction sims. Farmstand, harvest festival, aging preserves, Diggo supplier, and livestock yard features stay here. If [Living World](../docs/ideas/living-world.md) ships, Homesteader may only **consume** famine/refugee chronicle flavor (optional keyed lines) — fail-open, no hard dependency.
+
 ---
 
 ## Rituals & mood
@@ -26,3 +28,8 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 ## Power & water
 
 - [ ] **Waterwheel** — river water power; interacts with Stormproof droughts
+
+## Soft-compat consumers (do not move into Living World)
+
+- [ ] Optional flavor when Living World reports outlander famine / refugees (string hooks only)
+- [ ] Nemesis pantry / smokehouse targeting remains a **Nemesis** soft-compat item (defName list), not a Homesteader world-sim
