@@ -17,5 +17,10 @@ Homesteader/Textures.rar
 Strata/Tools/_decompile_tmp/
 Strata/Tools/_reflect_tmp/
 
+# Scratch workspace: decompiled RimWorld / third-party mod source, IL dumps,
+# build artifacts. Local-only — republishing decompiled assemblies is not ours
+# to do, and these are throwaway anyway.
+.tmp/
+
 # Local private outputs (never commit)
 .local/
