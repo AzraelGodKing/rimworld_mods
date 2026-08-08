@@ -1,14 +1,14 @@
 {
-  "lastFetched": "2026-08-08T18:25:33.017Z",
+  "lastFetched": "2026-08-08T19:22:52.922Z",
   "mods": {
     "homesteader": {
       "name": "Homesteader",
       "publishedFileId": "3759238501",
       "title": "Homesteader",
-      "subscriptions": 338,
+      "subscriptions": 339,
       "favorited": 57,
-      "views": 3138,
-      "lifetime_subscriptions": 434,
+      "views": 3142,
+      "lifetime_subscriptions": 435,
       "lifetime_favorited": 61
     },
     "stormproof": {
@@ -17,7 +17,7 @@
       "title": "Stormproof",
       "subscriptions": 328,
       "favorited": 41,
-      "views": 1094,
+      "views": 1095,
       "lifetime_subscriptions": 377,
       "lifetime_favorited": 46
     },
@@ -25,9 +25,9 @@
       "name": "Strata",
       "publishedFileId": "3762844292",
       "title": "Strata",
-      "subscriptions": 1586,
+      "subscriptions": 1587,
       "favorited": 393,
-      "views": 9428,
+      "views": 9431,
       "lifetime_subscriptions": 2018,
       "lifetime_favorited": 414
     },
@@ -37,7 +37,7 @@
       "title": "Nemesis",
       "subscriptions": 157,
       "favorited": 38,
-      "views": 1170,
+      "views": 1171,
       "lifetime_subscriptions": 182,
       "lifetime_favorited": 39
     },
@@ -63,10 +63,10 @@
     }
   },
   "site_total": {
-    "subscriptions": 2799,
+    "subscriptions": 2801,
     "favorited": 609,
-    "views": 17282,
-    "lifetime_subscriptions": 3441,
+    "views": 17291,
+    "lifetime_subscriptions": 3442,
     "lifetime_favorited": 644
   }
 }
