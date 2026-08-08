@@ -1,13 +1,13 @@
 {
-  "lastFetched": "2026-08-08T19:22:52.922Z",
+  "lastFetched": "2026-08-08T20:19:40.857Z",
   "mods": {
     "homesteader": {
       "name": "Homesteader",
       "publishedFileId": "3759238501",
       "title": "Homesteader",
-      "subscriptions": 339,
+      "subscriptions": 338,
       "favorited": 57,
-      "views": 3142,
+      "views": 3145,
       "lifetime_subscriptions": 435,
       "lifetime_favorited": 61
     },
@@ -25,10 +25,10 @@
       "name": "Strata",
       "publishedFileId": "3762844292",
       "title": "Strata",
-      "subscriptions": 1587,
+      "subscriptions": 1590,
       "favorited": 393,
-      "views": 9431,
-      "lifetime_subscriptions": 2018,
+      "views": 9435,
+      "lifetime_subscriptions": 2021,
       "lifetime_favorited": 414
     },
     "nemesis": {
@@ -47,7 +47,7 @@
       "title": "Deep Colony",
       "subscriptions": 123,
       "favorited": 43,
-      "views": 1268,
+      "views": 1269,
       "lifetime_subscriptions": 133,
       "lifetime_favorited": 44
     },
@@ -63,10 +63,10 @@
     }
   },
   "site_total": {
-    "subscriptions": 2801,
+    "subscriptions": 2803,
     "favorited": 609,
-    "views": 17291,
-    "lifetime_subscriptions": 3442,
+    "views": 17299,
+    "lifetime_subscriptions": 3445,
     "lifetime_favorited": 644
   }
 }
