@@ -1,5 +1,5 @@
 {
-  "lastFetched": "2026-08-08T22:20:28.748Z",
+  "lastFetched": "2026-08-08T23:20:24.639Z",
   "mods": {
     "homesteader": {
       "name": "Homesteader",
@@ -17,27 +17,27 @@
       "title": "Stormproof",
       "subscriptions": 328,
       "favorited": 41,
-      "views": 1095,
-      "lifetime_subscriptions": 377,
+      "views": 1096,
+      "lifetime_subscriptions": 378,
       "lifetime_favorited": 46
     },
     "strata": {
       "name": "Strata",
       "publishedFileId": "3762844292",
       "title": "Strata",
-      "subscriptions": 1594,
+      "subscriptions": 1593,
       "favorited": 393,
-      "views": 9442,
-      "lifetime_subscriptions": 2025,
+      "views": 9445,
+      "lifetime_subscriptions": 2026,
       "lifetime_favorited": 414
     },
     "nemesis": {
       "name": "Nemesis",
       "publishedFileId": "3773562126",
       "title": "Nemesis",
-      "subscriptions": 157,
+      "subscriptions": 156,
       "favorited": 38,
-      "views": 1171,
+      "views": 1172,
       "lifetime_subscriptions": 182,
       "lifetime_favorited": 39
     },
@@ -45,9 +45,9 @@
       "name": "Deep Colony",
       "publishedFileId": "3773568314",
       "title": "Deep Colony",
-      "subscriptions": 123,
+      "subscriptions": 122,
       "favorited": 43,
-      "views": 1271,
+      "views": 1272,
       "lifetime_subscriptions": 133,
       "lifetime_favorited": 44
     },
@@ -55,18 +55,18 @@
       "name": "Date Night",
       "publishedFileId": "3774158903",
       "title": "Date Night",
-      "subscriptions": 266,
+      "subscriptions": 267,
       "favorited": 37,
-      "views": 1184,
-      "lifetime_subscriptions": 297,
+      "views": 1185,
+      "lifetime_subscriptions": 298,
       "lifetime_favorited": 40
     }
   },
   "site_total": {
-    "subscriptions": 2806,
+    "subscriptions": 2804,
     "favorited": 609,
-    "views": 17310,
-    "lifetime_subscriptions": 3449,
+    "views": 17317,
+    "lifetime_subscriptions": 3452,
     "lifetime_favorited": 644
   }
 }
