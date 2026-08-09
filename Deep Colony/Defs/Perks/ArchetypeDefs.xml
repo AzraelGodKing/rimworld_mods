@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <DeepColony.ArchetypeDef>
+    <defName>DC_Archetype_FieldSurgeon</defName>
+    <label>field surgeon</label>
+    <description>Mastery of medicine and shooting — a combat medic archetype.</description>
+    <skillA>Medicine</skillA>
+    <skillB>Shooting</skillB>
+    <requiredTier>2</requiredTier>
+    <hediff>DC_ArchetypeHediff_FieldSurgeon</hediff>
+  </DeepColony.ArchetypeDef>
+
+  <DeepColony.ArchetypeDef>
+    <defName>DC_Archetype_Foreman</defName>
+    <label>foreman</label>
+    <description>Construction leadership — builds and rallies.</description>
+    <skillA>Construction</skillA>
+    <skillB>Social</skillB>
+    <requiredTier>2</requiredTier>
+    <hediff>DC_ArchetypeHediff_Foreman</hediff>
+  </DeepColony.ArchetypeDef>
+
+  <DeepColony.ArchetypeDef>
+    <defName>DC_Archetype_Homesteader</defName>
+    <label>homesteader spirit</label>
+    <description>Plants and cooking mastery — the homestead heart.</description>
+    <skillA>Plants</skillA>
+    <skillB>Cooking</skillB>
+    <requiredTier>2</requiredTier>
+    <hediff>DC_ArchetypeHediff_Homesteader</hediff>
+  </DeepColony.ArchetypeDef>
+
+</Defs>

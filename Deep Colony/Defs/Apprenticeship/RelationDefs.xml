@@ -21,4 +21,24 @@
     <opinionOffset>15</opinionOffset>
   </PawnRelationDef>
 
+  <!-- Repeated counseling bond -->
+  <PawnRelationDef>
+    <defName>DC_Confidant</defName>
+    <label>confidant</label>
+    <labelFemale>confidant</labelFemale>
+    <implied>false</implied>
+    <workerClass>PawnRelationWorker</workerClass>
+    <opinionOffset>20</opinionOffset>
+  </PawnRelationDef>
+
+  <!-- Professional rivalry -->
+  <PawnRelationDef>
+    <defName>DC_Rival</defName>
+    <label>rival</label>
+    <labelFemale>rival</labelFemale>
+    <implied>false</implied>
+    <workerClass>PawnRelationWorker</workerClass>
+    <opinionOffset>-10</opinionOffset>
+  </PawnRelationDef>
+
 </Defs>

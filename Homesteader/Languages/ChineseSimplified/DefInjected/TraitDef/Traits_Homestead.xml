@@ -4,4 +4,7 @@
   <Homesteader_Polyarmory.label>多角恋</Homesteader_Polyarmory.label>
   <Homesteader_Polyarmory.description>{PAWN_nameDef}对多角关系很自在。{PAWN_pronoun}不介意与恋人——或恋人的伴侣——同床，并且会乐于与整个群体挤进多人床。</Homesteader_Polyarmory.description>
 
+  <Homesteader_LittleGuy.label>小家伙</Homesteader_LittleGuy.label>
+  <Homesteader_LittleGuy.description>{PAWN_nameDef}就是个小家伙。没了。这就是整个特性。</Homesteader_LittleGuy.description>
+
 </LanguageData>

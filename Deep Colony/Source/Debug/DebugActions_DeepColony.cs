@@ -94,6 +94,17 @@ namespace DeepColony
             Log.Message(sb.ToString());
         }
 
+        [DebugAction("Deep Colony", "Backfill perk gate points now",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceBackfillPerkPoints(Pawn p)
+        {
+            var comp = p.TryGetComp<Comp_DeepColony>();
+            if (comp == null) { Log.Warning("[DeepColony] No Comp_DeepColony on " + p.LabelShort); return; }
+            comp.perkGatesBackfilled = false;
+            comp.TryBackfillPerkGatePoints(announce: true);
+        }
+
         [DebugAction("Deep Colony", "Open perk tree window",
             actionType = DebugActionType.ToolMapForPawns,
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -168,7 +179,99 @@ namespace DeepColony
             Log.Message(sb.ToString());
         }
 
+        [DebugAction("Deep Colony", "Clear all trauma",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ClearAllTrauma(Pawn p)
+        {
+            if (p.needs?.mood?.thoughts == null) return;
+            var memories = p.needs.mood.thoughts.memories.Memories;
+            int removed = 0;
+            for (int i = memories.Count - 1; i >= 0; i--)
+            {
+                if (memories[i] is Thought_Trauma tt)
+                {
+                    p.needs.mood.thoughts.memories.RemoveMemory(tt);
+                    removed++;
+                }
+            }
+            Messages.Message("[DeepColony] Cleared " + removed + " trauma(s) from " + p.LabelShort + ".",
+                p, MessageTypeDefOf.PositiveEvent, false);
+        }
+
+        [DebugAction("Deep Colony", "Apply trauma: captivity",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ApplyCaptivity(Pawn p)
+        {
+            TraumaUtility.ApplyTrauma(p, DC_DefOf.DC_Trauma_Captivity);
+            Messages.Message("[DeepColony] Applied captivity trauma to " + p.LabelShort + ".",
+                p, MessageTypeDefOf.NegativeEvent, false);
+        }
+
+        [DebugAction("Deep Colony", "Apply trauma: bereavement shock",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ApplyBereavement(Pawn p)
+        {
+            TraumaUtility.ApplyTrauma(p, DC_DefOf.DC_Trauma_BereavementShock);
+            Messages.Message("[DeepColony] Applied bereavement shock to " + p.LabelShort + ".",
+                p, MessageTypeDefOf.NegativeEvent, false);
+        }
+
         // ── APPRENTICESHIP ────────────────────────────────────────────────────────
+
+        [DebugAction("Deep Colony", "Force set mentor (click mentor, then apprentice)",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceSetMentorPick(Pawn p)
+        {
+            // Two-step via selected pawns: if another colonist is selected, link them.
+            Pawn other = null;
+            foreach (object obj in Find.Selector.SelectedObjectsListForReading)
+            {
+                if (obj is Pawn sel && sel != p && sel.IsColonistPlayerControlled)
+                {
+                    other = sel;
+                    break;
+                }
+            }
+            if (other == null)
+            {
+                Messages.Message("[DeepColony] Select mentor AND apprentice, then use this on the mentor.",
+                    MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            MentorshipUtility.SetMentorRelation(p, other);
+            Messages.Message("[DeepColony] Forced mentor link: " + p.LabelShort + " → " + other.LabelShort + ".",
+                MessageTypeDefOf.NeutralEvent, false);
+        }
+
+        [DebugAction("Deep Colony", "Clear mentor link",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ClearMentorLink(Pawn p)
+        {
+            MentorshipUtility.ClearAllLinksInvolving(p);
+            Messages.Message("[DeepColony] Cleared mentoring links involving " + p.LabelShort + ".",
+                p, MessageTypeDefOf.NeutralEvent, false);
+        }
+
+        [DebugAction("Deep Colony", "Force graduate apprenticeship",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceGraduate(Pawn p)
+        {
+            var comp = p.TryGetComp<Comp_DeepColony>();
+            if (comp?.mentor == null)
+            {
+                Messages.Message("[DeepColony] " + p.LabelShort + " has no mentor.",
+                    MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            MentorshipUtility.Graduate(comp.mentor, p);
+        }
 
         [DebugAction("Deep Colony", "Log mentor state",
             actionType = DebugActionType.ToolMapForPawns,
@@ -208,7 +311,58 @@ namespace DeepColony
                 p, MessageTypeDefOf.NeutralEvent, false);
         }
 
+        [DebugAction("Deep Colony", "Dump inheritance roll (log only)",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void DumpInheritanceRoll(Pawn p)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("[DeepColony] Inheritance dump for " + p.LabelShort + ":");
+            sb.AppendLine("  Parents (relations):");
+            if (p.relations != null)
+            {
+                foreach (Pawn other in p.relations.RelatedPawns)
+                {
+                    PawnRelationDef rel = p.GetMostImportantRelation(other);
+                    sb.AppendLine("    " + other.LabelShort + " (" + (rel?.defName ?? "?") + ")"
+                        + " colonist=" + (other.IsColonist || other.Faction == Faction.OfPlayer));
+                }
+            }
+            sb.AppendLine("  Trait inherit chance setting: "
+                + DeepColonySettings.Get.traitInheritChance.ToString("F2"));
+            sb.AppendLine("  Inheritance enabled: " + DeepColonySettings.Get.enableInheritance);
+            Log.Message(sb.ToString());
+        }
+
         // ── FACTION REPUTATION ────────────────────────────────────────────────────
+
+        [DebugAction("Deep Colony", "Inject +5 faction drift (selected pawn's faction)",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void InjectPositiveDrift(Pawn p)
+        {
+            if (p.Faction == null || p.Faction.IsPlayer)
+            {
+                Log.Warning("[DeepColony] Pawn has no non-player faction."); return;
+            }
+            GameComp_DeepColony.Instance?.AddFactionDrift(p.Faction, 5f, FactionRepReason.Debug);
+            Messages.Message("[DeepColony] Injected +5 drift for " + p.Faction.Name + ".",
+                MessageTypeDefOf.NeutralEvent, false);
+        }
+
+        [DebugAction("Deep Colony", "Inject -5 faction drift (selected pawn's faction)",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void InjectNegativeDrift(Pawn p)
+        {
+            if (p.Faction == null || p.Faction.IsPlayer)
+            {
+                Log.Warning("[DeepColony] Pawn has no non-player faction."); return;
+            }
+            GameComp_DeepColony.Instance?.AddFactionDrift(p.Faction, -5f, FactionRepReason.Debug);
+            Messages.Message("[DeepColony] Injected -5 drift for " + p.Faction.Name + ".",
+                MessageTypeDefOf.NeutralEvent, false);
+        }
 
         [DebugAction("Deep Colony", "Log faction drift buffer",
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -257,6 +411,22 @@ namespace DeepColony
 
         // ── GENERAL ───────────────────────────────────────────────────────────────
 
+        [DebugAction("Deep Colony", "Log settings snapshot",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void LogSettingsSnapshot()
+        {
+            var s = DeepColonySettings.Get;
+            Log.Message("[DeepColony] Settings: perks=" + s.enablePerks
+                + " trauma=" + s.enableTrauma
+                + " mentoring=" + s.enableMentoring
+                + " inheritance=" + s.enableInheritance
+                + " factionRep=" + s.enableFactionRep
+                + " combatShock=" + s.combatShockChance
+                + " minLead=" + s.minSkillLead
+                + " mentorXP=" + s.passiveMentorMultiplier + "/" + s.activeMentorMultiplier
+                + " massacre=" + s.massacreDeathThreshold);
+        }
+
         [DebugAction("Deep Colony", "Log all comp states (all colonists)",
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void LogAllCompStates()
@@ -272,6 +442,8 @@ namespace DeepColony
                     sb.AppendLine("  " + p.LabelShort +
                         " | Points: " + comp.availablePerkPoints +
                         " | Perks: " + comp.unlockedPerkDefNames.Count +
+                        " | Gates: " + Comp_DeepColony.CountPassedPerkGates(p) +
+                        " | Backfilled: " + comp.perkGatesBackfilled +
                         " | Mentor: " + (comp.mentor?.LabelShort ?? "none"));
                 }
             }

@@ -53,6 +53,7 @@ namespace DeepColony
             yield return Toils_General.Do(() =>
             {
                 TraumaUtility.ApplyTherapy(pawn, Patient);
+                ConfidantUtility.NotifyCounselSession(pawn, Patient);
                 if (Patient is { Spawned: true, Map: not null })
                 {
                     MoteMaker.ThrowText(Patient.DrawPos, Patient.Map,

@@ -95,7 +95,7 @@ namespace DeepColony
             if (kind == "DecisiveVictory")
             {
                 ApplySharedEnemyBoost(winner: a, loser: b);
-                ApplyAllySympathy(loser: b, magnitude: 1.5f);
+                ApplyAllySympathy(loser: b, magnitude: 1.5f, reason: FactionRepReason.LwVictory);
                 return;
             }
 
@@ -103,15 +103,15 @@ namespace DeepColony
             {
                 if (IsFriendly(b))
                 {
-                    GameComp_DeepColony.Instance?.AddFactionDrift(a, -1.5f);
-                    GameComp_DeepColony.Instance?.AddFactionDrift(b, 1f);
+                    GameComp_DeepColony.Instance?.AddFactionDrift(a, -1.5f, FactionRepReason.LwBetrayal);
+                    GameComp_DeepColony.Instance?.AddFactionDrift(b, 1f, FactionRepReason.LwBetrayal);
                 }
                 return;
             }
 
             if (kind == "RefugeeFlight")
             {
-                ApplyAllySympathy(loser: a, magnitude: 1f);
+                ApplyAllySympathy(loser: a, magnitude: 1f, reason: FactionRepReason.LwRefugee);
             }
         }
 
@@ -123,15 +123,15 @@ namespace DeepColony
             }
             if (loser.HostileTo(Faction.OfPlayer) && !winner.HostileTo(Faction.OfPlayer))
             {
-                GameComp_DeepColony.Instance?.AddFactionDrift(winner, 1.25f);
+                GameComp_DeepColony.Instance?.AddFactionDrift(winner, 1.25f, FactionRepReason.LwVictory);
             }
             else if (loser.HostileTo(Faction.OfPlayer))
             {
-                GameComp_DeepColony.Instance?.AddFactionDrift(winner, 0.75f);
+                GameComp_DeepColony.Instance?.AddFactionDrift(winner, 0.75f, FactionRepReason.LwVictory);
             }
         }
 
-        private static void ApplyAllySympathy(Faction loser, float magnitude)
+        private static void ApplyAllySympathy(Faction loser, float magnitude, FactionRepReason reason)
         {
             if (loser == null || loser.IsPlayer)
             {
@@ -139,7 +139,7 @@ namespace DeepColony
             }
             if (IsFriendly(loser))
             {
-                GameComp_DeepColony.Instance?.AddFactionDrift(loser, magnitude);
+                GameComp_DeepColony.Instance?.AddFactionDrift(loser, magnitude, reason);
             }
         }
 

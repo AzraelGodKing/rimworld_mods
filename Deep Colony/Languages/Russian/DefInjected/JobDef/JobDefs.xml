@@ -5,5 +5,7 @@
   <DC_Job_Mentor.reportString>наставляет TargetA.</DC_Job_Mentor.reportString>
   <DC_Job_CounselTrauma.label>консультировать</DC_Job_CounselTrauma.label>
   <DC_Job_CounselTrauma.reportString>консультирует TargetA.</DC_Job_CounselTrauma.reportString>
+  <DC_Job_GroupCounsel.label>групповое консультирование</DC_Job_GroupCounsel.label>
+  <DC_Job_GroupCounsel.reportString>групповое консультирование рядом с TargetA.</DC_Job_GroupCounsel.reportString>
 
 </LanguageData>

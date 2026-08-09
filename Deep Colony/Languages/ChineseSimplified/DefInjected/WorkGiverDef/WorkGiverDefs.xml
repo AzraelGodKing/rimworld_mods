@@ -7,5 +7,8 @@
   <DC_WorkGiver_CounselTrauma.label>辅导创伤</DC_WorkGiver_CounselTrauma.label>
   <DC_WorkGiver_CounselTrauma.gerund>辅导中</DC_WorkGiver_CounselTrauma.gerund>
   <DC_WorkGiver_CounselTrauma.verb>辅导</DC_WorkGiver_CounselTrauma.verb>
+  <DC_WorkGiver_GroupCounsel.label>团体辅导</DC_WorkGiver_GroupCounsel.label>
+  <DC_WorkGiver_GroupCounsel.gerund>团体辅导中</DC_WorkGiver_GroupCounsel.gerund>
+  <DC_WorkGiver_GroupCounsel.verb>团体辅导</DC_WorkGiver_GroupCounsel.verb>
 
 </LanguageData>

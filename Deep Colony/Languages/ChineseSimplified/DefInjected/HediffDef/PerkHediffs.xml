@@ -74,4 +74,109 @@
   <DC_PerkHediff_MasterArtisan.description>卓越的艺术工艺。</DC_PerkHediff_MasterArtisan.description>
   <DC_PerkHediff_MasterArtisan.stages_0.label>生效中</DC_PerkHediff_MasterArtisan.stages_0.label>
 
+  <!-- Phase 5 perk hediffs -->
+  <DC_PerkHediff_SuppressingFire.label>压制火力</DC_PerkHediff_SuppressingFire.label>
+  <DC_PerkHediff_SuppressingFire.description>压力下瞄准更快。</DC_PerkHediff_SuppressingFire.description>
+  <DC_PerkHediff_SuppressingFire.stages_0.label>生效中</DC_PerkHediff_SuppressingFire.stages_0.label>
+  <DC_PerkHediff_Deadeye.label>神射</DC_PerkHediff_Deadeye.label>
+  <DC_PerkHediff_Deadeye.description>巅峰枪法。</DC_PerkHediff_Deadeye.description>
+  <DC_PerkHediff_Deadeye.stages_0.label>生效中</DC_PerkHediff_Deadeye.stages_0.label>
+  <DC_PerkHediff_Duelist.label>决斗者</DC_PerkHediff_Duelist.label>
+  <DC_PerkHediff_Duelist.description>精准近战专注。</DC_PerkHediff_Duelist.description>
+  <DC_PerkHediff_Duelist.stages_0.label>生效中</DC_PerkHediff_Duelist.stages_0.label>
+  <DC_PerkHediff_IronWill.label>钢铁意志</DC_PerkHediff_IronWill.label>
+  <DC_PerkHediff_IronWill.description>巅峰近战耐力。</DC_PerkHediff_IronWill.description>
+  <DC_PerkHediff_IronWill.stages_0.label>生效中</DC_PerkHediff_IronWill.stages_0.label>
+  <DC_PerkHediff_FieldMedic.label>战地医护</DC_PerkHediff_FieldMedic.label>
+  <DC_PerkHediff_FieldMedic.description>更快的野战包扎。</DC_PerkHediff_FieldMedic.description>
+  <DC_PerkHediff_FieldMedic.stages_0.label>生效中</DC_PerkHediff_FieldMedic.stages_0.label>
+  <DC_PerkHediff_MiracleWorker.label>奇迹医者</DC_PerkHediff_MiracleWorker.label>
+  <DC_PerkHediff_MiracleWorker.description>巅峰手术造诣。</DC_PerkHediff_MiracleWorker.description>
+  <DC_PerkHediff_MiracleWorker.stages_0.label>生效中</DC_PerkHediff_MiracleWorker.stages_0.label>
+  <DC_PerkHediff_Fortifier.label>筑防者</DC_PerkHediff_Fortifier.label>
+  <DC_PerkHediff_Fortifier.description>更坚固的建造。</DC_PerkHediff_Fortifier.description>
+  <DC_PerkHediff_Fortifier.stages_0.label>生效中</DC_PerkHediff_Fortifier.stages_0.label>
+  <DC_PerkHediff_MasterBuilder.label>建造宗师</DC_PerkHediff_MasterBuilder.label>
+  <DC_PerkHediff_MasterBuilder.description>巅峰建造。</DC_PerkHediff_MasterBuilder.description>
+  <DC_PerkHediff_MasterBuilder.stages_0.label>生效中</DC_PerkHediff_MasterBuilder.stages_0.label>
+  <DC_PerkHediff_EfficientSmith.label>高效铁匠</DC_PerkHediff_EfficientSmith.label>
+  <DC_PerkHediff_EfficientSmith.description>更精简的制作。</DC_PerkHediff_EfficientSmith.description>
+  <DC_PerkHediff_EfficientSmith.stages_0.label>生效中</DC_PerkHediff_EfficientSmith.stages_0.label>
+  <DC_PerkHediff_LegendarySmith.label>传奇铁匠</DC_PerkHediff_LegendarySmith.label>
+  <DC_PerkHediff_LegendarySmith.description>巅峰制作。</DC_PerkHediff_LegendarySmith.description>
+  <DC_PerkHediff_LegendarySmith.stages_0.label>生效中</DC_PerkHediff_LegendarySmith.stages_0.label>
+  <DC_PerkHediff_CropHusband.label>稼穑能手</DC_PerkHediff_CropHusband.label>
+  <DC_PerkHediff_CropHusband.description>更好的收获。</DC_PerkHediff_CropHusband.description>
+  <DC_PerkHediff_CropHusband.stages_0.label>生效中</DC_PerkHediff_CropHusband.stages_0.label>
+  <DC_PerkHediff_GreenSage.label>绿野贤者</DC_PerkHediff_GreenSage.label>
+  <DC_PerkHediff_GreenSage.description>巅峰种植。</DC_PerkHediff_GreenSage.description>
+  <DC_PerkHediff_GreenSage.stages_0.label>生效中</DC_PerkHediff_GreenSage.stages_0.label>
+  <DC_PerkHediff_HerdKeeper.label>牧群守护</DC_PerkHediff_HerdKeeper.label>
+  <DC_PerkHediff_HerdKeeper.description>更平静的动物。</DC_PerkHediff_HerdKeeper.description>
+  <DC_PerkHediff_HerdKeeper.stages_0.label>生效中</DC_PerkHediff_HerdKeeper.stages_0.label>
+  <DC_PerkHediff_BeastBond.label>兽之羁绊</DC_PerkHediff_BeastBond.label>
+  <DC_PerkHediff_BeastBond.description>巅峰驯兽。</DC_PerkHediff_BeastBond.description>
+  <DC_PerkHediff_BeastBond.stages_0.label>生效中</DC_PerkHediff_BeastBond.stages_0.label>
+  <DC_PerkHediff_TunnelRat.label>隧道鼠</DC_PerkHediff_TunnelRat.label>
+  <DC_PerkHediff_TunnelRat.description>挖掘更快。</DC_PerkHediff_TunnelRat.description>
+  <DC_PerkHediff_TunnelRat.stages_0.label>生效中</DC_PerkHediff_TunnelRat.stages_0.label>
+  <DC_PerkHediff_VeinSense.label>矿脉感知</DC_PerkHediff_VeinSense.label>
+  <DC_PerkHediff_VeinSense.description>巅峰采矿。</DC_PerkHediff_VeinSense.description>
+  <DC_PerkHediff_VeinSense.stages_0.label>生效中</DC_PerkHediff_VeinSense.stages_0.label>
+  <DC_PerkHediff_Archivist.label>典藏学者</DC_PerkHediff_Archivist.label>
+  <DC_PerkHediff_Archivist.description>专注研究。</DC_PerkHediff_Archivist.description>
+  <DC_PerkHediff_Archivist.stages_0.label>生效中</DC_PerkHediff_Archivist.stages_0.label>
+  <DC_PerkHediff_Polymath.label>博学者</DC_PerkHediff_Polymath.label>
+  <DC_PerkHediff_Polymath.description>巅峰智识。</DC_PerkHediff_Polymath.description>
+  <DC_PerkHediff_Polymath.stages_0.label>生效中</DC_PerkHediff_Polymath.stages_0.label>
+  <DC_PerkHediff_Negotiator.label>谈判者</DC_PerkHediff_Negotiator.label>
+  <DC_PerkHediff_Negotiator.description>更柔和的交易与交谈。</DC_PerkHediff_Negotiator.description>
+  <DC_PerkHediff_Negotiator.stages_0.label>生效中</DC_PerkHediff_Negotiator.stages_0.label>
+  <DC_PerkHediff_SilverTongue.label>巧舌如簧</DC_PerkHediff_SilverTongue.label>
+  <DC_PerkHediff_SilverTongue.description>巅峰社交。</DC_PerkHediff_SilverTongue.description>
+  <DC_PerkHediff_SilverTongue.stages_0.label>生效中</DC_PerkHediff_SilverTongue.stages_0.label>
+  <DC_PerkHediff_Provisioner.label>粮秣官</DC_PerkHediff_Provisioner.label>
+  <DC_PerkHediff_Provisioner.description>高效烹饪。</DC_PerkHediff_Provisioner.description>
+  <DC_PerkHediff_Provisioner.stages_0.label>生效中</DC_PerkHediff_Provisioner.stages_0.label>
+  <DC_PerkHediff_Feastwright.label>盛宴宗匠</DC_PerkHediff_Feastwright.label>
+  <DC_PerkHediff_Feastwright.description>巅峰烹饪。</DC_PerkHediff_Feastwright.description>
+  <DC_PerkHediff_Feastwright.stages_0.label>生效中</DC_PerkHediff_Feastwright.stages_0.label>
+  <DC_PerkHediff_Storyteller.label>说书人</DC_PerkHediff_Storyteller.label>
+  <DC_PerkHediff_Storyteller.description>难忘的艺术。</DC_PerkHediff_Storyteller.description>
+  <DC_PerkHediff_Storyteller.stages_0.label>生效中</DC_PerkHediff_Storyteller.stages_0.label>
+  <DC_PerkHediff_Virtuoso.label>艺术宗师</DC_PerkHediff_Virtuoso.label>
+  <DC_PerkHediff_Virtuoso.description>巅峰艺术。</DC_PerkHediff_Virtuoso.description>
+  <DC_PerkHediff_Virtuoso.stages_0.label>生效中</DC_PerkHediff_Virtuoso.stages_0.label>
+
+  <!-- Archetypes / heirloom / chronic / elder / trauma depth -->
+  <DC_ArchetypeHediff_FieldSurgeon.label>战地外科医生</DC_ArchetypeHediff_FieldSurgeon.label>
+  <DC_ArchetypeHediff_FieldSurgeon.description>医疗 + 射击原型。</DC_ArchetypeHediff_FieldSurgeon.description>
+  <DC_ArchetypeHediff_FieldSurgeon.stages_0.label>生效中</DC_ArchetypeHediff_FieldSurgeon.stages_0.label>
+  <DC_ArchetypeHediff_Foreman.label>工头</DC_ArchetypeHediff_Foreman.label>
+  <DC_ArchetypeHediff_Foreman.description>建造 + 社交原型。</DC_ArchetypeHediff_Foreman.description>
+  <DC_ArchetypeHediff_Foreman.stages_0.label>生效中</DC_ArchetypeHediff_Foreman.stages_0.label>
+  <DC_ArchetypeHediff_Homesteader.label>家园精神</DC_ArchetypeHediff_Homesteader.label>
+  <DC_ArchetypeHediff_Homesteader.description>种植 + 烹饪原型。</DC_ArchetypeHediff_Homesteader.description>
+  <DC_ArchetypeHediff_Homesteader.stages_0.label>生效中</DC_ArchetypeHediff_Homesteader.stages_0.label>
+  <DC_Hediff_HeirloomEcho.label>传家宝余韵</DC_Hediff_HeirloomEcho.label>
+  <DC_Hediff_HeirloomEcho.description>携带殖民地传家宝时，手略更稳。</DC_Hediff_HeirloomEcho.description>
+  <DC_Hediff_HeirloomEcho.stages_0.label>生效中</DC_Hediff_HeirloomEcho.stages_0.label>
+  <DC_Hediff_ChronicStress.label>慢性压力</DC_Hediff_ChronicStress.label>
+  <DC_Hediff_ChronicStress.description>未治疗的创伤沉淀入体。辅导可缓解；忽视则加重。</DC_Hediff_ChronicStress.description>
+  <DC_Hediff_ChronicStress.stages_0.label>睡眠不安</DC_Hediff_ChronicStress.stages_0.label>
+  <DC_Hediff_ChronicStress.stages_1.label>过度警觉</DC_Hediff_ChronicStress.stages_1.label>
+  <DC_Hediff_ChronicStress.stages_2.label>脆弱</DC_Hediff_ChronicStress.stages_2.label>
+  <DC_Hediff_Elder.label>长者</DC_Hediff_Elder.label>
+  <DC_Hediff_Elder.description>多年殖民地生活。指导更有效；体力劳作稍慢。</DC_Hediff_Elder.description>
+  <DC_Hediff_Elder.stages_0.label>生效中</DC_Hediff_Elder.stages_0.label>
+  <DC_Hediff_Flashback.label>闪回</DC_Hediff_Flashback.label>
+  <DC_Hediff_Flashback.description>突发创伤闪回。意识短暂下降。</DC_Hediff_Flashback.description>
+  <DC_Hediff_Flashback.stages_0.label>闪回</DC_Hediff_Flashback.stages_0.label>
+  <DC_Hediff_CombatHabit.label>战斗习惯</DC_Hediff_CombatHabit.label>
+  <DC_Hediff_CombatHabit.description>创伤改变了此人的战斗方式 — 更慢接敌，瞄准更审慎。</DC_Hediff_CombatHabit.description>
+  <DC_Hediff_CombatHabit.stages_0.label>生效中</DC_Hediff_CombatHabit.stages_0.label>
+  <DC_Hediff_TraumaDraftPenalty.label>火力下的创伤</DC_Hediff_TraumaDraftPenalty.label>
+  <DC_Hediff_TraumaDraftPenalty.description>背负战斗创伤时被征召 — 精度与专注受损。（设置：创伤征召惩罚。）</DC_Hediff_TraumaDraftPenalty.description>
+  <DC_Hediff_TraumaDraftPenalty.stages_0.label>生效中</DC_Hediff_TraumaDraftPenalty.stages_0.label>
+
 </LanguageData>

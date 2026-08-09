@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <!-- Update news -->
+  <Homesteader_LittleGuyLetterLabel>New trait: Little guy</Homesteader_LittleGuyLetterLabel>
+  <Homesteader_LittleGuyLetterText>Homesteader has added a new trait: Little guy.\n\nIt does nothing.\n\nPawns may roll it naturally; you can also add it in character creation / editor.</Homesteader_LittleGuyLetterText>
+
   <!-- Wash tub -->
   <Homesteader_NeedsSoapInWashTub>Needs soap in the wash tub.</Homesteader_NeedsSoapInWashTub>
 

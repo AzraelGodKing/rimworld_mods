@@ -21,7 +21,15 @@
   <DC_TraumaApplied>{PAWN} {EVENT}.</DC_TraumaApplied>
   <DC_CounselComplete>Counseling complete.</DC_CounselComplete>
   <DC_CounselFloat>Counsel {PAWN} about their trauma</DC_CounselFloat>
+  <DC_GroupCounselComplete>Group counseling complete.</DC_GroupCounselComplete>
+  <DC_GroupCounselFloat>Group counsel near {PAWN} (room)</DC_GroupCounselFloat>
   <DC_InspectTrauma>Carrying psychological trauma</DC_InspectTrauma>
+  <DC_InspectGrudge>Grudge: {0}</DC_InspectGrudge>
+  <DC_TraumaRecovered>{PAWN} recovered from {TRAUMA}.</DC_TraumaRecovered>
+  <DC_SeasonedGrowth>{PAWN} grew stronger through recovery — seasoned survivor (+1 perk point).</DC_SeasonedGrowth>
+  <DC_Flashback>{PAWN} is having a flashback.</DC_Flashback>
+  <DC_FlashbackGrudge>A raid by {0} triggers old grudges.</DC_FlashbackGrudge>
+  <DC_DayOfRemembrance>Day of remembrance for {NAME}.</DC_DayOfRemembrance>
 
   <!-- ── Apprenticeship ────────────────────────────────────────────────────── -->
   <DC_BecomeMentor>Make {PAWN} mentor {APPRENTICE}</DC_BecomeMentor>
@@ -42,5 +50,146 @@
   <DC_InheritedPassionMajor>Inherited major passion in {SKILL} from {PARENT}</DC_InheritedPassionMajor>
   <DC_InheritanceLetter_Label>Inherited characteristics: {PAWN}</DC_InheritanceLetter_Label>
   <DC_InheritanceLetter_Body>{PAWN} shows signs of inheriting traits and passions from their colonist lineage.</DC_InheritanceLetter_Body>
+
+  <!-- ── Settings ───────────────────────────────────────────────────────────── -->
+  <DC_Settings_Presets>Presets</DC_Settings_Presets>
+  <DC_Settings_PresetsTip>Soft / Default / Hard retune the sliders below. System toggles stay on.</DC_Settings_PresetsTip>
+  <DC_Settings_PresetSoft>Soft</DC_Settings_PresetSoft>
+  <DC_Settings_PresetDefault>Default</DC_Settings_PresetDefault>
+  <DC_Settings_PresetHard>Hard</DC_Settings_PresetHard>
+  <DC_Settings_Systems>Systems</DC_Settings_Systems>
+  <DC_Settings_EnablePerks>Enable perk trees</DC_Settings_EnablePerks>
+  <DC_Settings_EnablePerksTip>Skill-gate perk points and the perk tree UI.</DC_Settings_EnablePerksTip>
+  <DC_Settings_EnableTrauma>Enable trauma &amp; therapy</DC_Settings_EnableTrauma>
+  <DC_Settings_EnableTraumaTip>Combat shock, loss, captivity, massacre, counsel jobs.</DC_Settings_EnableTraumaTip>
+  <DC_Settings_EnableMentoring>Enable apprenticeship</DC_Settings_EnableMentoring>
+  <DC_Settings_EnableMentoringTip>Mentor links, XP boosts, and Mentoring work.</DC_Settings_EnableMentoringTip>
+  <DC_Settings_EnableInheritance>Enable generational inheritance</DC_Settings_EnableInheritance>
+  <DC_Settings_EnableInheritanceTip>Trait and passion inheritance from colonist parents.</DC_Settings_EnableInheritanceTip>
+  <DC_Settings_EnableFactionRep>Enable living faction reputation</DC_Settings_EnableFactionRep>
+  <DC_Settings_EnableFactionRepTip>Raid/trade/gift/shared-kill drift and idle ally/enemy goodwill.</DC_Settings_EnableFactionRepTip>
+  <DC_Settings_TraumaPenalties>Trauma draft / work penalties</DC_Settings_TraumaPenalties>
+  <DC_Settings_TraumaPenaltiesTip>Default off. Combat trauma reduces accuracy while drafted; captivity trauma mood penalty on Warden work. Hard preset enables this.</DC_Settings_TraumaPenaltiesTip>
+  <DC_Settings_AttitudeConsequences>Attitude consequences</DC_Settings_AttitudeConsequences>
+  <DC_Settings_AttitudeConsequencesTip>Default off. Cordial/indebted/wary/vengeful attitudes affect trade prices, trader caravans, and raid strength. Hard preset enables this.</DC_Settings_AttitudeConsequencesTip>
+  <DC_Settings_Phase5>Power systems (Phase 5)</DC_Settings_Phase5>
+  <DC_Settings_Capstones>Skill-20 capstone perks</DC_Settings_Capstones>
+  <DC_Settings_CapstonesTip>Default off. Adds a third perk node at skill 20. Hard preset enables this.</DC_Settings_CapstonesTip>
+  <DC_Settings_Branching>Branching L15 perk picks</DC_Settings_Branching>
+  <DC_Settings_BranchingTip>Default off. Choose one of two L15 perks per skill. Hard preset enables this.</DC_Settings_BranchingTip>
+  <DC_Settings_Respec>Perk respec (forget)</DC_Settings_Respec>
+  <DC_Settings_RespecTip>Allow forgetting an unlocked perk (refunds a point; mood hit + cooldown). Default on.</DC_Settings_RespecTip>
+  <DC_Settings_RespecCooldown>Respec cooldown (days): {0}</DC_Settings_RespecCooldown>
+  <DC_Settings_Archetypes>Cross-skill archetypes</DC_Settings_Archetypes>
+  <DC_Settings_ArchetypesTip>Default off. Unlocking L15 in paired skills grants a titled archetype bonus. Hard preset enables this.</DC_Settings_ArchetypesTip>
+  <DC_Settings_RecruitPrePerks>Recruits arrive pre-perked</DC_Settings_RecruitPrePerks>
+  <DC_Settings_RecruitPrePerksTip>Default off. New colonists auto-spend backfilled points on L5 perks only.</DC_Settings_RecruitPrePerksTip>
+  <DC_Settings_Heirlooms>Heirlooms</DC_Settings_Heirlooms>
+  <DC_Settings_HeirloomsTip>Default off. Colonist deaths can mark gear as heirlooms (mood + tiny bonus while carried). Hard preset enables this.</DC_Settings_HeirloomsTip>
+  <DC_Settings_ChronicTrauma>Chronic trauma hediff</DC_Settings_ChronicTrauma>
+  <DC_Settings_ChronicTraumaTip>Default off. Trauma that expires without therapy can become chronic stress. Counseling eases it. Hard preset enables this.</DC_Settings_ChronicTraumaTip>
+  <DC_Settings_Tuning>Tuning</DC_Settings_Tuning>
+  <DC_Settings_CombatShock>Combat shock chance: {0}%</DC_Settings_CombatShock>
+  <DC_Settings_MinSkillLead>Mentor minimum skill lead: {0}</DC_Settings_MinSkillLead>
+  <DC_Settings_PassiveMentor>Passive mentoring XP multiplier: {0}</DC_Settings_PassiveMentor>
+  <DC_Settings_ActiveMentor>Active mentoring XP multiplier: {0}</DC_Settings_ActiveMentor>
+  <DC_Settings_AllyDriftMtb>Ally idle-drift MTB (days): {0}</DC_Settings_AllyDriftMtb>
+  <DC_Settings_EnemyDriftMtb>Enemy idle-drift MTB (days): {0}</DC_Settings_EnemyDriftMtb>
+  <DC_Settings_MassacreThreshold>Massacre death threshold: {0}</DC_Settings_MassacreThreshold>
+  <DC_Settings_TraitInherit>Trait inherit chance: {0}%</DC_Settings_TraitInherit>
+  <DC_Settings_TherapyScale>Therapy heal scale: {0}</DC_Settings_TherapyScale>
+  <DC_Settings_Reset>Reset to defaults</DC_Settings_Reset>
+  <DC_PerkPointsBackfilled>{PAWN} received {0} retroactive perk point(s) for skills already past perk gates.</DC_PerkPointsBackfilled>
+
+  <!-- ── Phase 1 ────────────────────────────────────────────────────────────── -->
+  <DC_PerkOverviewTitle>Colony perks</DC_PerkOverviewTitle>
+  <DC_PerkOverview_ColName>Colonist</DC_PerkOverview_ColName>
+  <DC_PerkOverview_ColPoints>Points</DC_PerkOverview_ColPoints>
+  <DC_PerkOverview_ColUnlocked>Unlocked</DC_PerkOverview_ColUnlocked>
+  <DC_PerkOverview_ColStatus>Status</DC_PerkOverview_ColStatus>
+  <DC_PerkOverview_Unspent>Unspent points</DC_PerkOverview_Unspent>
+  <DC_PerkOverview_CaughtUp>Caught up</DC_PerkOverview_CaughtUp>
+  <DC_Alert_UnspentPerks>Unspent perk points</DC_Alert_UnspentPerks>
+  <DC_Alert_UnspentPerksDesc>These colonists have had unspent perk points for more than a day. Open their perk tree (or the Perks tab) to spend them.</DC_Alert_UnspentPerksDesc>
+  <DC_Epithet_TrustedPartners>Reputation: trusted partners</DC_Epithet_TrustedPartners>
+  <DC_Epithet_Cordial>Reputation: cordial neighbors</DC_Epithet_Cordial>
+  <DC_Epithet_DeepEnmity>Reputation: deep enmity</DC_Epithet_DeepEnmity>
+  <DC_Epithet_SwornEnemies>Reputation: sworn enemies</DC_Epithet_SwornEnemies>
+  <DC_SurnameApplied>{PAWN} took the family name {SURNAME}.</DC_SurnameApplied>
+  <DC_GraduationLetter_Label>Apprenticeship complete: {APPRENTICE}</DC_GraduationLetter_Label>
+  <DC_GraduationLetter_Body>{APPRENTICE} has caught up with mentor {MENTOR}. The apprenticeship ends — both keep the bond they built, and {APPRENTICE} may carry forward a spark of their teacher's passion.</DC_GraduationLetter_Body>
+  <DC_GraduationMessage>{APPRENTICE} graduated from {MENTOR}'s apprenticeship.</DC_GraduationMessage>
+  <DC_GraduationPassion>{APPRENTICE} inherited a passion for {SKILL} from mentor {MENTOR}.</DC_GraduationPassion>
+  <DC_ConfidantFormed>{A} and {B} have become confidants through counseling.</DC_ConfidantFormed>
+  <DC_InspectTaughtBy>Taught by {0}</DC_InspectTaughtBy>
+  <DC_InspectLineage>Teaching line: {0}</DC_InspectLineage>
+  <DC_BecomeMentorSkill>Make {PAWN} mentor {APPRENTICE} in {SKILL}</DC_BecomeMentorSkill>
+  <DC_BecomeMentorSkillFamily>Make {PAWN} mentor {APPRENTICE} in {SKILL} (family)</DC_BecomeMentorSkillFamily>
+  <DC_MentorAssignedSkill>{MENTOR} is now mentoring {APPRENTICE} in {SKILL}.</DC_MentorAssignedSkill>
+  <DC_InspectMentorSkill>Apprentice of {0} ({1})</DC_InspectMentorSkill>
+  <DC_PerkTeachProgress>{APPRENTICE} perk lesson progress: {PERK} ({0}/{1})</DC_PerkTeachProgress>
+  <DC_PerkTaught>{MENTOR} taught {APPRENTICE} the perk: {PERK}.</DC_PerkTaught>
+  <DC_RivalFormed>{A} and {B} have become rivals in {SKILL}.</DC_RivalFormed>
+  <DC_ElderPerkPoint>{PAWN} is recognized as an elder and gains a perk point.</DC_ElderPerkPoint>
+  <DC_FamilyTradition>Family tradition of {SKILL} from {PARENT}</DC_FamilyTradition>
+  <DC_AdoptivePassion>Learned a passion for {SKILL} from caregiver {PARENT}</DC_AdoptivePassion>
+  <DC_LegacyTitle>Colony legacy</DC_LegacyTitle>
+  <DC_LegacySurname>Founder surname: {0}</DC_LegacySurname>
+  <DC_LegacyStats>Living colonists: {0} · With perks: {1} · Apprentices: {2} · Elders: {3}</DC_LegacyStats>
+  <DC_LegacyColonists>Colonists</DC_LegacyColonists>
+
+  <!-- ── Phase 4 reputation ─────────────────────────────────────────────────── -->
+  <DC_RepTitle>Faction reputation</DC_RepTitle>
+  <DC_RepDetailHeader>Reputation</DC_RepDetailHeader>
+  <DC_RepEpithet>Standing: {0}</DC_RepEpithet>
+  <DC_RepNoEpithet>Standing: —</DC_RepNoEpithet>
+  <DC_RepDisabled>Living faction reputation is disabled in mod settings.</DC_RepDisabled>
+  <DC_RepConsequencesOn>Attitude consequences: ON (trade / caravans / raids).</DC_RepConsequencesOn>
+  <DC_RepConsequencesOff>Attitude consequences: off (ledger + envoys only).</DC_RepConsequencesOff>
+  <DC_RepSelectFaction>Select a faction to view its reputation ledger.</DC_RepSelectFaction>
+  <DC_RepGoodwill>Goodwill: {0}</DC_RepGoodwill>
+  <DC_RepPending>Pending drift: {0}</DC_RepPending>
+  <DC_RepAttitude>Attitude: {0}</DC_RepAttitude>
+  <DC_RepEnvoy>Envoy: {0}</DC_RepEnvoy>
+  <DC_RepNoEnvoy>Envoy: none</DC_RepNoEnvoy>
+  <DC_RepEnvoyShort>envoy {0}</DC_RepEnvoyShort>
+  <DC_RepLedgerHeader>Ledger (newest first)</DC_RepLedgerHeader>
+  <DC_RepLedgerEmpty>No recorded reputation events yet.</DC_RepLedgerEmpty>
+  <DC_RepLedgerLine>{0}: {1} ×{2}  (~{3} days ago)</DC_RepLedgerLine>
+  <DC_RepReason_Other>Other</DC_RepReason_Other>
+  <DC_RepReason_Raid>Raid against us</DC_RepReason_Raid>
+  <DC_RepReason_SharedEnemyRaid>Shared enemy of raider</DC_RepReason_SharedEnemyRaid>
+  <DC_RepReason_TradeCaravan>Trader caravan</DC_RepReason_TradeCaravan>
+  <DC_RepReason_SuccessfulTrade>Successful trade</DC_RepReason_SuccessfulTrade>
+  <DC_RepReason_Gift>Visitor gift</DC_RepReason_Gift>
+  <DC_RepReason_SharedKill>Shared-enemy kill</DC_RepReason_SharedKill>
+  <DC_RepReason_Grudge>Trauma grudge</DC_RepReason_Grudge>
+  <DC_RepReason_LwVictory>World victory sympathy</DC_RepReason_LwVictory>
+  <DC_RepReason_LwBetrayal>World betrayal</DC_RepReason_LwBetrayal>
+  <DC_RepReason_LwRefugee>World refugee sympathy</DC_RepReason_LwRefugee>
+  <DC_RepReason_IdleAlly>Idle ally drift</DC_RepReason_IdleAlly>
+  <DC_RepReason_IdleEnemy>Idle enemy thaw</DC_RepReason_IdleEnemy>
+  <DC_RepReason_Envoy>Personal envoy</DC_RepReason_Envoy>
+  <DC_RepReason_Debug>Debug</DC_RepReason_Debug>
+  <DC_Attitude_Neutral>Neutral</DC_Attitude_Neutral>
+  <DC_Attitude_Cordial>Cordial</DC_Attitude_Cordial>
+  <DC_Attitude_Indebted>Indebted</DC_Attitude_Indebted>
+  <DC_Attitude_Wary>Wary</DC_Attitude_Wary>
+  <DC_Attitude_Vengeful>Vengeful</DC_Attitude_Vengeful>
+  <DC_SetEnvoy>Make {PAWN} envoy to {FACTION}</DC_SetEnvoy>
+  <DC_ClearEnvoy>Clear {PAWN}'s envoy role ({FACTION})</DC_ClearEnvoy>
+  <DC_EnvoyCurrent>(current)</DC_EnvoyCurrent>
+  <DC_EnvoyAssigned>{PAWN} is now the colony envoy to {FACTION}.</DC_EnvoyAssigned>
+  <DC_EnvoyDied>{PAWN} died while envoy to {FACTION} — goodwill suffers.</DC_EnvoyDied>
+  <DC_TradeRefusedAttitude>{0} refuse to deal — attitude is too hostile.</DC_TradeRefusedAttitude>
+
+  <!-- ── Phase 5 power ──────────────────────────────────────────────────────── -->
+  <DC_PerkForgetBtn>Forget</DC_PerkForgetBtn>
+  <DC_PerkForgotten>{PAWN} forgot the perk: {PERK}.</DC_PerkForgotten>
+  <DC_ArchetypeGained>{PAWN} became a {ARCH}.</DC_ArchetypeGained>
+  <DC_InspectArchetype>Archetype: {0}</DC_InspectArchetype>
+  <DC_RecruitPrePerked>{PAWN} arrived with starter perks unlocked.</DC_RecruitPrePerked>
+  <DC_HeirloomCreated>{PAWN}'s {ITEM} is now a colony heirloom.</DC_HeirloomCreated>
+  <DC_ChronicTrauma>{PAWN}'s untreated trauma settled into chronic stress.</DC_ChronicTrauma>
 
 </LanguageData>

@@ -13,15 +13,48 @@ namespace DeepColony
         private HashSet<int> formerPlayerColonists = new HashSet<int>();
         private Dictionary<int, float> factionDriftBuffer = new Dictionary<int, float>();
         private int driftTickCounter;
+        public List<FactionRepLedgerEntry> factionRepLedger = new List<FactionRepLedgerEntry>();
+
+        /// <summary>B10 — thingIDNumber → owner name (heirloom markers).</summary>
+        private Dictionary<int, string> heirloomOwners = new Dictionary<int, string>();
+        private Dictionary<int, string> heirloomEchoPerks = new Dictionary<int, string>();
 
         private List<int> recentColonistDeathTimestamps = new List<int>();
         private bool massacreTriggeredThisWindow;
+        public string founderSurname;
+        public List<RemembranceEntry> remembranceEntries = new List<RemembranceEntry>();
+        public int lastRemembranceDayOfYear = -1;
 
         private const int DriftIntervalTicks = 2500;
         private const int MassacreWindowTicks = 60000;
-        private const int MassacreDeathThreshold = 3;
+        private const int MaxLedgerEntries = 240;
+        private const int AggregateWindowTicks = 60000; // merge same reason within a day
 
         public GameComp_DeepColony(Game game) { }
+
+        private static int MassacreDeathThreshold =>
+            DeepColonySettings.Get.massacreDeathThreshold;
+
+        public void EnsureFounderSurname()
+        {
+            if (!founderSurname.NullOrEmpty()) return;
+            Map map = Find.CurrentMap ?? (Find.Maps.Count > 0 ? Find.Maps[0] : null);
+            if (map == null) return;
+            foreach (Pawn p in map.mapPawns.FreeColonists)
+            {
+                if (p.Name is NameTriple triple && !triple.Last.NullOrEmpty())
+                {
+                    founderSurname = triple.Last;
+                    return;
+                }
+            }
+        }
+
+        public string GetFounderSurname()
+        {
+            EnsureFounderSurname();
+            return founderSurname;
+        }
 
         public bool HasProcessedInheritance(Pawn pawn) =>
             inheritanceProcessed.Contains(pawn.thingIDNumber);
@@ -37,17 +70,87 @@ namespace DeepColony
             if (pawn != null) formerPlayerColonists.Add(pawn.thingIDNumber);
         }
 
-        public void AddFactionDrift(Faction faction, float amount)
+        public void AddFactionDrift(Faction faction, float amount, FactionRepReason reason = FactionRepReason.Other)
         {
+            if (!DeepColonySettings.Get.enableFactionRep) return;
             if (faction == null || faction.IsPlayer) return;
+            if (System.Math.Abs(amount) < 0.0001f) return;
+
             if (!factionDriftBuffer.ContainsKey(faction.loadID))
                 factionDriftBuffer[faction.loadID] = 0f;
             factionDriftBuffer[faction.loadID] += amount;
+            RecordLedger(faction.loadID, amount, reason);
+        }
+
+        public float GetPendingDrift(Faction faction)
+        {
+            if (faction == null) return 0f;
+            return factionDriftBuffer != null && factionDriftBuffer.TryGetValue(faction.loadID, out float v)
+                ? v : 0f;
+        }
+
+        public IEnumerable<FactionRepLedgerEntry> GetLedger(Faction faction)
+        {
+            if (factionRepLedger == null || faction == null)
+                yield break;
+            for (int i = factionRepLedger.Count - 1; i >= 0; i--)
+            {
+                FactionRepLedgerEntry e = factionRepLedger[i];
+                if (e.factionId == faction.loadID)
+                    yield return e;
+            }
+        }
+
+        public float SumLedger(Faction faction, FactionRepReason reason)
+        {
+            if (factionRepLedger == null || faction == null) return 0f;
+            float sum = 0f;
+            for (int i = 0; i < factionRepLedger.Count; i++)
+            {
+                FactionRepLedgerEntry e = factionRepLedger[i];
+                if (e.factionId == faction.loadID && e.reason == reason)
+                    sum += e.amount;
+            }
+            return sum;
+        }
+
+        private void RecordLedger(int factionId, float amount, FactionRepReason reason)
+        {
+            if (factionRepLedger == null)
+                factionRepLedger = new List<FactionRepLedgerEntry>();
+
+            int now = Find.TickManager?.TicksGame ?? 0;
+            for (int i = factionRepLedger.Count - 1; i >= 0; i--)
+            {
+                FactionRepLedgerEntry e = factionRepLedger[i];
+                if (e.factionId != factionId || e.reason != reason) continue;
+                if (now - e.ticksGame > AggregateWindowTicks) continue;
+                if ((e.amount >= 0f) != (amount >= 0f)) continue;
+                e.amount += amount;
+                e.count++;
+                e.ticksGame = now;
+                return;
+            }
+
+            factionRepLedger.Add(new FactionRepLedgerEntry
+            {
+                factionId = factionId,
+                reason = reason,
+                amount = amount,
+                ticksGame = now,
+                count = 1
+            });
+
+            while (factionRepLedger.Count > MaxLedgerEntries)
+                factionRepLedger.RemoveAt(0);
         }
 
         public void NotifyColonistDied(Pawn victim)
         {
+            if (!DeepColonySettings.Get.enableTrauma) return;
             if (victim == null || !victim.RaceProps.Humanlike) return;
+
+            RemembranceUtility.NotifyColonistDied(victim);
 
             int now = Find.TickManager.TicksGame;
             recentColonistDeathTimestamps.Add(now);
@@ -81,12 +184,72 @@ namespace DeepColony
 
         public override void GameComponentTick()
         {
+            if (DeepColonySettings.Get.enableTrauma)
+            {
+                FlashbackUtility.GameTick();
+                RemembranceUtility.GameTick();
+                if (Find.TickManager.TicksGame % DriftIntervalTicks == 0)
+                    TickTraumaSystems();
+            }
+
             driftTickCounter++;
             if (driftTickCounter < DriftIntervalTicks) return;
             driftTickCounter = 0;
 
-            ProcessFactionDrift();
-            PruneDeathWindow(Find.TickManager.TicksGame);
+            if (DeepColonySettings.Get.enableFactionRep)
+            {
+                ProcessFactionDrift();
+                FactionEnvoyUtility.GameTick();
+            }
+            if (DeepColonySettings.Get.enableTrauma)
+                PruneDeathWindow(Find.TickManager.TicksGame);
+
+            RivalryUtility.GameTick();
+            TickElders();
+            if (DeepColonySettings.Get.enableHeirlooms)
+                TickHeirlooms();
+        }
+
+        public void RegisterHeirloom(int thingId, string ownerName, string echoPerkDefName)
+        {
+            if (heirloomOwners == null) heirloomOwners = new Dictionary<int, string>();
+            if (heirloomEchoPerks == null) heirloomEchoPerks = new Dictionary<int, string>();
+            heirloomOwners[thingId] = ownerName ?? "";
+            if (!echoPerkDefName.NullOrEmpty())
+                heirloomEchoPerks[thingId] = echoPerkDefName;
+        }
+
+        public bool IsHeirloom(int thingId) =>
+            heirloomOwners != null && heirloomOwners.ContainsKey(thingId);
+
+        private static void TickHeirlooms()
+        {
+            foreach (Map map in Find.Maps)
+            {
+                foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
+                    HeirloomUtility.TickCarrier(p);
+            }
+        }
+
+        private static void TickTraumaSystems()
+        {
+            foreach (Map map in Find.Maps)
+            {
+                foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
+                {
+                    TraumaRecoveryUtility.TickNaturalRecovery(p);
+                    TraumaCombatUtility.TickPawn(p);
+                }
+            }
+        }
+
+        private static void TickElders()
+        {
+            foreach (Map map in Find.Maps)
+            {
+                foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
+                    ElderUtility.TickPawn(p);
+            }
         }
 
         private void ProcessFactionDrift()
@@ -116,6 +279,7 @@ namespace DeepColony
                     factionDriftBuffer[id] = amount;
             }
 
+            var settings = DeepColonySettings.Get;
             foreach (Faction faction in Find.FactionManager.AllFactionsListForReading)
             {
                 if (faction.IsPlayer || faction.defeated) continue;
@@ -123,19 +287,13 @@ namespace DeepColony
                 int goodwill = faction.GoodwillWith(Faction.OfPlayer);
                 if (goodwill > 40)
                 {
-                    if (Rand.MTBEventOccurs(5f, 60000f, DriftIntervalTicks))
-                    {
-                        faction.TryAffectGoodwillWith(Faction.OfPlayer, -1,
-                            canSendMessage: false, canSendHostilityLetter: false);
-                    }
+                    if (Rand.MTBEventOccurs(settings.allyDriftMtbDays, 60000f, DriftIntervalTicks))
+                        AddFactionDrift(faction, -1f, FactionRepReason.IdleAlly);
                 }
                 else if (goodwill < -40)
                 {
-                    if (Rand.MTBEventOccurs(4f, 60000f, DriftIntervalTicks))
-                    {
-                        faction.TryAffectGoodwillWith(Faction.OfPlayer, 1,
-                            canSendMessage: false, canSendHostilityLetter: false);
-                    }
+                    if (Rand.MTBEventOccurs(settings.enemyDriftMtbDays, 60000f, DriftIntervalTicks))
+                        AddFactionDrift(faction, 1f, FactionRepReason.IdleEnemy);
                 }
             }
         }
@@ -147,16 +305,27 @@ namespace DeepColony
             Scribe_Collections.Look(ref formerPlayerColonists, "formerPlayerColonists", LookMode.Value);
             Scribe_Collections.Look(ref factionDriftBuffer, "factionDriftBuffer",
                 LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref factionRepLedger, "factionRepLedger", LookMode.Deep);
+            Scribe_Collections.Look(ref heirloomOwners, "heirloomOwners", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref heirloomEchoPerks, "heirloomEchoPerks", LookMode.Value, LookMode.Value);
             Scribe_Values.Look(ref driftTickCounter, "driftTickCounter", 0);
             Scribe_Collections.Look(ref recentColonistDeathTimestamps, "recentColonistDeaths",
                 LookMode.Value);
             Scribe_Values.Look(ref massacreTriggeredThisWindow, "massacreTriggered", false);
+            Scribe_Values.Look(ref founderSurname, "founderSurname");
+            Scribe_Collections.Look(ref remembranceEntries, "remembranceEntries", LookMode.Deep);
+            Scribe_Values.Look(ref lastRemembranceDayOfYear, "lastRemembranceDayOfYear", -1);
 
             if (inheritanceProcessed == null) inheritanceProcessed = new HashSet<int>();
             if (formerPlayerColonists == null) formerPlayerColonists = new HashSet<int>();
             if (factionDriftBuffer == null) factionDriftBuffer = new Dictionary<int, float>();
+            if (factionRepLedger == null) factionRepLedger = new List<FactionRepLedgerEntry>();
+            if (heirloomOwners == null) heirloomOwners = new Dictionary<int, string>();
+            if (heirloomEchoPerks == null) heirloomEchoPerks = new Dictionary<int, string>();
             if (recentColonistDeathTimestamps == null)
                 recentColonistDeathTimestamps = new List<int>();
+            if (remembranceEntries == null)
+                remembranceEntries = new List<RemembranceEntry>();
         }
 
         public override void FinalizeInit()
@@ -164,9 +333,15 @@ namespace DeepColony
             if (inheritanceProcessed == null) inheritanceProcessed = new HashSet<int>();
             if (formerPlayerColonists == null) formerPlayerColonists = new HashSet<int>();
             if (factionDriftBuffer == null) factionDriftBuffer = new Dictionary<int, float>();
+            if (factionRepLedger == null) factionRepLedger = new List<FactionRepLedgerEntry>();
+            if (heirloomOwners == null) heirloomOwners = new Dictionary<int, string>();
+            if (heirloomEchoPerks == null) heirloomEchoPerks = new Dictionary<int, string>();
             if (recentColonistDeathTimestamps == null)
                 recentColonistDeathTimestamps = new List<int>();
+            if (remembranceEntries == null)
+                remembranceEntries = new List<RemembranceEntry>();
             ActiveMentoringSession.ResetSession();
+            EnsureFounderSurname();
         }
     }
 }

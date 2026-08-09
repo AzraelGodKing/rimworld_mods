@@ -74,4 +74,109 @@
   <DC_PerkHediff_MasterArtisan.description>Исключительное художественное мастерство.</DC_PerkHediff_MasterArtisan.description>
   <DC_PerkHediff_MasterArtisan.stages_0.label>активно</DC_PerkHediff_MasterArtisan.stages_0.label>
 
+  <!-- Phase 5 perk hediffs -->
+  <DC_PerkHediff_SuppressingFire.label>подавляющий огонь</DC_PerkHediff_SuppressingFire.label>
+  <DC_PerkHediff_SuppressingFire.description>Быстрее целится под давлением.</DC_PerkHediff_SuppressingFire.description>
+  <DC_PerkHediff_SuppressingFire.stages_0.label>активно</DC_PerkHediff_SuppressingFire.stages_0.label>
+  <DC_PerkHediff_Deadeye.label>меткий глаз</DC_PerkHediff_Deadeye.label>
+  <DC_PerkHediff_Deadeye.description>Капстоун-меткость.</DC_PerkHediff_Deadeye.description>
+  <DC_PerkHediff_Deadeye.stages_0.label>активно</DC_PerkHediff_Deadeye.stages_0.label>
+  <DC_PerkHediff_Duelist.label>дуэлянт</DC_PerkHediff_Duelist.label>
+  <DC_PerkHediff_Duelist.description>Точный фокус в ближнем бою.</DC_PerkHediff_Duelist.description>
+  <DC_PerkHediff_Duelist.stages_0.label>активно</DC_PerkHediff_Duelist.stages_0.label>
+  <DC_PerkHediff_IronWill.label>железная воля</DC_PerkHediff_IronWill.label>
+  <DC_PerkHediff_IronWill.description>Капстоун-выносливость ближнего боя.</DC_PerkHediff_IronWill.description>
+  <DC_PerkHediff_IronWill.stages_0.label>активно</DC_PerkHediff_IronWill.stages_0.label>
+  <DC_PerkHediff_FieldMedic.label>полевой медик</DC_PerkHediff_FieldMedic.label>
+  <DC_PerkHediff_FieldMedic.description>Более быстрая полевая перевязка.</DC_PerkHediff_FieldMedic.description>
+  <DC_PerkHediff_FieldMedic.stages_0.label>активно</DC_PerkHediff_FieldMedic.stages_0.label>
+  <DC_PerkHediff_MiracleWorker.label>чудотворец</DC_PerkHediff_MiracleWorker.label>
+  <DC_PerkHediff_MiracleWorker.description>Капстоун-мастерство хирургии.</DC_PerkHediff_MiracleWorker.description>
+  <DC_PerkHediff_MiracleWorker.stages_0.label>активно</DC_PerkHediff_MiracleWorker.stages_0.label>
+  <DC_PerkHediff_Fortifier.label>укрепитель</DC_PerkHediff_Fortifier.label>
+  <DC_PerkHediff_Fortifier.description>Более прочное строительство.</DC_PerkHediff_Fortifier.description>
+  <DC_PerkHediff_Fortifier.stages_0.label>активно</DC_PerkHediff_Fortifier.stages_0.label>
+  <DC_PerkHediff_MasterBuilder.label>мастер-строитель</DC_PerkHediff_MasterBuilder.label>
+  <DC_PerkHediff_MasterBuilder.description>Капстоун строительства.</DC_PerkHediff_MasterBuilder.description>
+  <DC_PerkHediff_MasterBuilder.stages_0.label>активно</DC_PerkHediff_MasterBuilder.stages_0.label>
+  <DC_PerkHediff_EfficientSmith.label>экономный кузнец</DC_PerkHediff_EfficientSmith.label>
+  <DC_PerkHediff_EfficientSmith.description>Бережливое ремесло.</DC_PerkHediff_EfficientSmith.description>
+  <DC_PerkHediff_EfficientSmith.stages_0.label>активно</DC_PerkHediff_EfficientSmith.stages_0.label>
+  <DC_PerkHediff_LegendarySmith.label>легендарный кузнец</DC_PerkHediff_LegendarySmith.label>
+  <DC_PerkHediff_LegendarySmith.description>Капстоун ремесла.</DC_PerkHediff_LegendarySmith.description>
+  <DC_PerkHediff_LegendarySmith.stages_0.label>активно</DC_PerkHediff_LegendarySmith.stages_0.label>
+  <DC_PerkHediff_CropHusband.label>хозяин урожая</DC_PerkHediff_CropHusband.label>
+  <DC_PerkHediff_CropHusband.description>Лучшие урожаи.</DC_PerkHediff_CropHusband.description>
+  <DC_PerkHediff_CropHusband.stages_0.label>активно</DC_PerkHediff_CropHusband.stages_0.label>
+  <DC_PerkHediff_GreenSage.label>зелёный мудрец</DC_PerkHediff_GreenSage.label>
+  <DC_PerkHediff_GreenSage.description>Капстоун растений.</DC_PerkHediff_GreenSage.description>
+  <DC_PerkHediff_GreenSage.stages_0.label>активно</DC_PerkHediff_GreenSage.stages_0.label>
+  <DC_PerkHediff_HerdKeeper.label>хранитель стада</DC_PerkHediff_HerdKeeper.label>
+  <DC_PerkHediff_HerdKeeper.description>Более спокойные животные.</DC_PerkHediff_HerdKeeper.description>
+  <DC_PerkHediff_HerdKeeper.stages_0.label>активно</DC_PerkHediff_HerdKeeper.stages_0.label>
+  <DC_PerkHediff_BeastBond.label>связь со зверем</DC_PerkHediff_BeastBond.label>
+  <DC_PerkHediff_BeastBond.description>Капстоун животных.</DC_PerkHediff_BeastBond.description>
+  <DC_PerkHediff_BeastBond.stages_0.label>активно</DC_PerkHediff_BeastBond.stages_0.label>
+  <DC_PerkHediff_TunnelRat.label>туннельная крыса</DC_PerkHediff_TunnelRat.label>
+  <DC_PerkHediff_TunnelRat.description>Быстрее копает.</DC_PerkHediff_TunnelRat.description>
+  <DC_PerkHediff_TunnelRat.stages_0.label>активно</DC_PerkHediff_TunnelRat.stages_0.label>
+  <DC_PerkHediff_VeinSense.label>чутье жилы</DC_PerkHediff_VeinSense.label>
+  <DC_PerkHediff_VeinSense.description>Капстоун добычи.</DC_PerkHediff_VeinSense.description>
+  <DC_PerkHediff_VeinSense.stages_0.label>активно</DC_PerkHediff_VeinSense.stages_0.label>
+  <DC_PerkHediff_Archivist.label>архивариус</DC_PerkHediff_Archivist.label>
+  <DC_PerkHediff_Archivist.description>Сосредоточенные исследования.</DC_PerkHediff_Archivist.description>
+  <DC_PerkHediff_Archivist.stages_0.label>активно</DC_PerkHediff_Archivist.stages_0.label>
+  <DC_PerkHediff_Polymath.label>эрудит</DC_PerkHediff_Polymath.label>
+  <DC_PerkHediff_Polymath.description>Капстоун интеллекта.</DC_PerkHediff_Polymath.description>
+  <DC_PerkHediff_Polymath.stages_0.label>активно</DC_PerkHediff_Polymath.stages_0.label>
+  <DC_PerkHediff_Negotiator.label>переговорщик</DC_PerkHediff_Negotiator.label>
+  <DC_PerkHediff_Negotiator.description>Мягче торгует и говорит.</DC_PerkHediff_Negotiator.description>
+  <DC_PerkHediff_Negotiator.stages_0.label>активно</DC_PerkHediff_Negotiator.stages_0.label>
+  <DC_PerkHediff_SilverTongue.label>серебряный язык</DC_PerkHediff_SilverTongue.label>
+  <DC_PerkHediff_SilverTongue.description>Капстоун общения.</DC_PerkHediff_SilverTongue.description>
+  <DC_PerkHediff_SilverTongue.stages_0.label>активно</DC_PerkHediff_SilverTongue.stages_0.label>
+  <DC_PerkHediff_Provisioner.label>провиантмейстер</DC_PerkHediff_Provisioner.label>
+  <DC_PerkHediff_Provisioner.description>Эффективная готовка.</DC_PerkHediff_Provisioner.description>
+  <DC_PerkHediff_Provisioner.stages_0.label>активно</DC_PerkHediff_Provisioner.stages_0.label>
+  <DC_PerkHediff_Feastwright.label>мастер пиров</DC_PerkHediff_Feastwright.label>
+  <DC_PerkHediff_Feastwright.description>Капстоун готовки.</DC_PerkHediff_Feastwright.description>
+  <DC_PerkHediff_Feastwright.stages_0.label>активно</DC_PerkHediff_Feastwright.stages_0.label>
+  <DC_PerkHediff_Storyteller.label>сказитель</DC_PerkHediff_Storyteller.label>
+  <DC_PerkHediff_Storyteller.description>Запоминающееся искусство.</DC_PerkHediff_Storyteller.description>
+  <DC_PerkHediff_Storyteller.stages_0.label>активно</DC_PerkHediff_Storyteller.stages_0.label>
+  <DC_PerkHediff_Virtuoso.label>виртуоз</DC_PerkHediff_Virtuoso.label>
+  <DC_PerkHediff_Virtuoso.description>Капстоун искусства.</DC_PerkHediff_Virtuoso.description>
+  <DC_PerkHediff_Virtuoso.stages_0.label>активно</DC_PerkHediff_Virtuoso.stages_0.label>
+
+  <!-- Archetypes / heirloom / chronic / elder / trauma depth -->
+  <DC_ArchetypeHediff_FieldSurgeon.label>полевой хирург</DC_ArchetypeHediff_FieldSurgeon.label>
+  <DC_ArchetypeHediff_FieldSurgeon.description>Архетип медицины + стрельбы.</DC_ArchetypeHediff_FieldSurgeon.description>
+  <DC_ArchetypeHediff_FieldSurgeon.stages_0.label>активно</DC_ArchetypeHediff_FieldSurgeon.stages_0.label>
+  <DC_ArchetypeHediff_Foreman.label>бригадир</DC_ArchetypeHediff_Foreman.label>
+  <DC_ArchetypeHediff_Foreman.description>Архетип строительства + общения.</DC_ArchetypeHediff_Foreman.description>
+  <DC_ArchetypeHediff_Foreman.stages_0.label>активно</DC_ArchetypeHediff_Foreman.stages_0.label>
+  <DC_ArchetypeHediff_Homesteader.label>дух поселенца</DC_ArchetypeHediff_Homesteader.label>
+  <DC_ArchetypeHediff_Homesteader.description>Архетип растений + готовки.</DC_ArchetypeHediff_Homesteader.description>
+  <DC_ArchetypeHediff_Homesteader.stages_0.label>активно</DC_ArchetypeHediff_Homesteader.stages_0.label>
+  <DC_Hediff_HeirloomEcho.label>эхо наследной вещи</DC_Hediff_HeirloomEcho.label>
+  <DC_Hediff_HeirloomEcho.description>Ношение наследной вещи колонии чуть стабилизирует руку.</DC_Hediff_HeirloomEcho.description>
+  <DC_Hediff_HeirloomEcho.stages_0.label>активно</DC_Hediff_HeirloomEcho.stages_0.label>
+  <DC_Hediff_ChronicStress.label>хронический стресс</DC_Hediff_ChronicStress.label>
+  <DC_Hediff_ChronicStress.description>Невылеченная травма осела в теле. Консультирование ослабляет; запущенность усугубляет.</DC_Hediff_ChronicStress.description>
+  <DC_Hediff_ChronicStress.stages_0.label>тревожный сон</DC_Hediff_ChronicStress.stages_0.label>
+  <DC_Hediff_ChronicStress.stages_1.label>гипербдительность</DC_Hediff_ChronicStress.stages_1.label>
+  <DC_Hediff_ChronicStress.stages_2.label>хрупкость</DC_Hediff_ChronicStress.stages_2.label>
+  <DC_Hediff_Elder.label>старейшина</DC_Hediff_Elder.label>
+  <DC_Hediff_Elder.description>Годы жизни колонии. Наставляет эффективнее; физический труд чуть медленнее.</DC_Hediff_Elder.description>
+  <DC_Hediff_Elder.stages_0.label>активно</DC_Hediff_Elder.stages_0.label>
+  <DC_Hediff_Flashback.label>флэшбэк</DC_Hediff_Flashback.label>
+  <DC_Hediff_Flashback.description>Внезапный травматический флэшбэк. Сознание кратко падает.</DC_Hediff_Flashback.description>
+  <DC_Hediff_Flashback.stages_0.label>флэшбэк</DC_Hediff_Flashback.stages_0.label>
+  <DC_Hediff_CombatHabit.label>боевые привычки</DC_Hediff_CombatHabit.label>
+  <DC_Hediff_CombatHabit.description>Травма изменила стиль боя — медленнее сближается, целится осмотрительнее.</DC_Hediff_CombatHabit.description>
+  <DC_Hediff_CombatHabit.stages_0.label>активно</DC_Hediff_CombatHabit.stages_0.label>
+  <DC_Hediff_TraumaDraftPenalty.label>травма под огнём</DC_Hediff_TraumaDraftPenalty.label>
+  <DC_Hediff_TraumaDraftPenalty.description>Призван с боевой травмой — точность и концентрация страдают. (Настройки: штрафы травмы при призыве.)</DC_Hediff_TraumaDraftPenalty.description>
+  <DC_Hediff_TraumaDraftPenalty.stages_0.label>активно</DC_Hediff_TraumaDraftPenalty.stages_0.label>
+
 </LanguageData>

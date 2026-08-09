@@ -5,10 +5,27 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
+- **CN/RU language spot-check (2.0)** — filled missing Chinese Simplified + Russian Keyed strings for settings/presets, Perks/Legacy/Reputation tabs, Phase 3–5 trauma/rep/power UI; DefInjected for main tabs, Phase 5 perks/hediffs/archetypes, specialty traumas, group counsel, confidant/rival.
+- **Workshop / docs polish** — About.xml description rewritten per system for 2.0 (Perks/Legacy/Reputation tabs, capstones/branches/respec/archetypes, specialty trauma + group counsel + confidant, elders/rivalry/blackboard, heirlooms + traditions, ledger + envoys + epithets); docs site rebuilt with per-system 2.0 cards (“New in 2.0” / “Hard preset” tags, what’s-new grid, 2.0 badge) instead of a single blurb; Soft/Default keep power systems & attitude consequences off, Hard enables the heavier set. → [docs/deep-colony.html](../docs/deep-colony.html)
+- **Nemesis soft-compat note** — capture/truce goodwill reviewed vs DC ledger: no conflict (Execute/Release = vanilla goodwill; Truce = timer only; DC does not double-buffer). Font’s later Rimesis leader-raid injection idea recorded. → [docs/ideas/nemesis-rimesis-compat.md](../docs/ideas/nemesis-rimesis-compat.md)
+- **Phase 5 power systems** (`phase5-power-v1`) — settings-gated skill-20 capstones; branching L15 picks; perk forget/respec (cooldown + mood); cross-skill archetypes; conservative recruit pre-perks; heirlooms on colonist death; chronic stress hediff from untreated trauma expiry (counseling eases it). Most power toggles default off; Hard preset enables the combat/power set.
+- **Phase 4 reputation transparency** (`phase4-reputation-v1`) — Reputation main tab with per-faction ledger + pending drift; personal envoy assignment (periodic goodwill / death penalty); attitude states with settings-gated trade/caravan/raid consequences (default off; Hard preset on). All events still flow through `AddFactionDrift`.
+- **Phase 3 trauma depth** (`phase3-trauma-depth-v1`) — therapy quality scales with Social/opinion/room; group counsel job; fire/toxic/insect + betrayal traumas; scars + resilience/seasoned growth after recovery; contextual flashbacks; combat habits hediff; optional draft/warden penalties (default off); faction grudges; days of remembrance.
+- **Phase 2 mentoring & generations** (`phase2-mentor-gen-v1`) — skill-focus mentor float menu; family mentors need −1 skill gap; Biotech blackboard in room (+15% active mentoring XP); Legacy main tab; dead parents + grandparents inheritance + Biotech gene backoff; family skill traditions; adoptive caregiver passion echo; elders (60+) labor slowdown hediff + mentoring boost + late perk point; tier-1 perk apprenticeship after 3 sessions; professional rivalry (+10% competitive XP).
+- **Phase 1 quick wins** (`phase1-quickwins-v1`) — perk numeric tooltips; colony Perks main tab + unspent-points alert (1 day); skill rust slowed/stopped by perk tier + double XP reclaiming lost levels; faction settlement epithets from goodwill; founder/parent surnames on colony-born; apprentice graduation letter + optional passion; confidant relation after 3 counsel sessions (+25% therapy); teaching lineage on inspect.
+- **Phase 0 foundation** (`phase0-foundation-v1`) — mod settings (per-system on/off, soft/default/hard presets, combat shock / mentor XP / drift MTB / massacre / inheritance / therapy sliders); expanded Dev tools (clear trauma, force mentor, inject drift, backfill perk gates, settings snapshot); retroactive perk-gate points for recruits who joined past skill 5/15. → [docs/ideas/deep-colony-updates.md](../docs/ideas/deep-colony-updates.md)
+- **Phased roadmap triage** — 42 ideas tagged Phase 0–5 on ROADMAP + ideas doc.
 - **Living World soft consumer (DC1)** — fail-open register on `LivingWorldSignals`; visible decisive victories / betrayals / refugee flights nudge existing `AddFactionDrift` (shared-enemy boost / ally sympathy). No LW project reference.
 - **Chinese Simplified & Russian language packs** — full Keyed + DefInjected translations (perks, trauma, mentoring, inheritance, jobs, thoughts).
 
+### Fixed
+- **Warden dread ThoughtDef** — removed invalid `validWhileMinified` XML field (1.6 load error).
+- **Reputation tab layout** — left list is name/goodwill only; attitude, standing, envoy, and ledger show on the right after selecting a faction.
+- **Fix lineage check** — `IsLineagePair` no longer calls `DirectRelationExists` on Sibling/Grandparent/Grandchild (implied relations); stops log spam on mentor float menu.
+
 ### Changed
+- **Workshop preview (2.0)** — new `About/Preview.png`: glowing perk-tree constellation behind the title, same dark ember look (picked from 5 generated candidates); 900×600 at ~0.84 MB, under Steam's 1 MB limit.
+- **A12 chalkboard** — mentoring room bonus uses Biotech **blackboard** instead of custom teaching-notes furniture (removed `DC_TeachingNotes`).
 - **Public release** — docs site declassified (`docs/deep-colony.html`); Steam Workshop + `DeepColony.zip` on the rolling GitHub `latest` release; `PublishedFileId.txt` checked in. Mystery `ledger.html` redirects here.
 - **Workshop preview** — compressed `About/Preview.png` (~1.63 MB → ~0.38 MB) so Steam Workshop accepts it (Preview must be under 1 MB).
 - Deep Colony C# project uses `Krafs.Rimworld.Ref` (same CI pattern as sibling mods).

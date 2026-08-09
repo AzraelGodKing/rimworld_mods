@@ -50,4 +50,54 @@
   <DC_Perk_MasterArtisan.label>мастер-художник</DC_Perk_MasterArtisan.label>
   <DC_Perk_MasterArtisan.description>Знаменитое на всю колонию мастерство — скульптуры и искусство завершаются быстрее и выглядят лучше.</DC_Perk_MasterArtisan.description>
 
+  <!-- Phase 5 branches + capstones -->
+  <DC_Perk_SuppressingFire.label>подавляющий огонь</DC_Perk_SuppressingFire.label>
+  <DC_Perk_SuppressingFire.description>Заставляет врагов держать головы ниже. Быстрее целится под давлением.</DC_Perk_SuppressingFire.description>
+  <DC_Perk_Deadeye.label>меткий глаз</DC_Perk_Deadeye.label>
+  <DC_Perk_Deadeye.description>Бесподобная меткость — капстоун стрельбы навыка 20.</DC_Perk_Deadeye.description>
+  <DC_Perk_Duelist.label>дуэлянт</DC_Perk_Duelist.label>
+  <DC_Perk_Duelist.description>Предпочитает точные удары грубой силе.</DC_Perk_Duelist.description>
+  <DC_Perk_IronWill.label>железная воля</DC_Perk_IronWill.label>
+  <DC_Perk_IronWill.description>Несокрушим в гуще ближнего боя — капстоун навыка 20.</DC_Perk_IronWill.description>
+  <DC_Perk_FieldMedic.label>полевой медик</DC_Perk_FieldMedic.label>
+  <DC_Perk_FieldMedic.description>Быстрее перевязывает под огнём.</DC_Perk_FieldMedic.description>
+  <DC_Perk_MiracleWorker.label>чудотворец</DC_Perk_MiracleWorker.label>
+  <DC_Perk_MiracleWorker.description>Операции, что должны провалиться, всё же удаются — капстоун медицины навыка 20.</DC_Perk_MiracleWorker.description>
+  <DC_Perk_Fortifier.label>укрепитель</DC_Perk_Fortifier.label>
+  <DC_Perk_Fortifier.description>Строит более прочные и долговечные конструкции.</DC_Perk_Fortifier.description>
+  <DC_Perk_MasterBuilder.label>мастер-строитель</DC_Perk_MasterBuilder.label>
+  <DC_Perk_MasterBuilder.description>Ничто не стоит выше — капстоун строительства навыка 20.</DC_Perk_MasterBuilder.description>
+  <DC_Perk_EfficientSmith.label>экономный кузнец</DC_Perk_EfficientSmith.label>
+  <DC_Perk_EfficientSmith.description>Тратит меньше материалов без потери качества.</DC_Perk_EfficientSmith.description>
+  <DC_Perk_LegendarySmith.label>легендарный кузнец</DC_Perk_LegendarySmith.label>
+  <DC_Perk_LegendarySmith.description>Работы, что становятся наследными — капстоун ремесла навыка 20.</DC_Perk_LegendarySmith.description>
+  <DC_Perk_CropHusband.label>хозяин урожая</DC_Perk_CropHusband.label>
+  <DC_Perk_CropHusband.description>Максимизирует урожай с каждого участка.</DC_Perk_CropHusband.description>
+  <DC_Perk_GreenSage.label>зелёный мудрец</DC_Perk_GreenSage.label>
+  <DC_Perk_GreenSage.description>Земля отвечает — капстоун растений навыка 20.</DC_Perk_GreenSage.description>
+  <DC_Perk_HerdKeeper.label>хранитель стада</DC_Perk_HerdKeeper.label>
+  <DC_Perk_HerdKeeper.description>Животные спокойнее и обучаются быстрее.</DC_Perk_HerdKeeper.description>
+  <DC_Perk_BeastBond.label>связь со зверем</DC_Perk_BeastBond.label>
+  <DC_Perk_BeastBond.description>Живая связь с фауной — капстоун животных навыка 20.</DC_Perk_BeastBond.description>
+  <DC_Perk_TunnelRat.label>туннельная крыса</DC_Perk_TunnelRat.label>
+  <DC_Perk_TunnelRat.description>Быстрее двигается и копает под землёй.</DC_Perk_TunnelRat.description>
+  <DC_Perk_VeinSense.label>чутье жилы</DC_Perk_VeinSense.label>
+  <DC_Perk_VeinSense.description>Чувствует руду сквозь камень — капстоун добычи навыка 20.</DC_Perk_VeinSense.description>
+  <DC_Perk_Archivist.label>архивариус</DC_Perk_Archivist.label>
+  <DC_Perk_Archivist.description>Читает и исследует с неустанной сосредоточенностью.</DC_Perk_Archivist.description>
+  <DC_Perk_Polymath.label>эрудит</DC_Perk_Polymath.label>
+  <DC_Perk_Polymath.description>Мастер многих дисциплин — капстоун интеллекта навыка 20.</DC_Perk_Polymath.description>
+  <DC_Perk_Negotiator.label>переговорщик</DC_Perk_Negotiator.label>
+  <DC_Perk_Negotiator.description>Торгует и говорит на более мягких условиях.</DC_Perk_Negotiator.description>
+  <DC_Perk_SilverTongue.label>серебряный язык</DC_Perk_SilverTongue.label>
+  <DC_Perk_SilverTongue.description>Слова, что меняют умы — капстоун общения навыка 20.</DC_Perk_SilverTongue.description>
+  <DC_Perk_Provisioner.label>провиантмейстер</DC_Perk_Provisioner.label>
+  <DC_Perk_Provisioner.description>Растягивает ингредиенты дальше без потери качества.</DC_Perk_Provisioner.description>
+  <DC_Perk_Feastwright.label>мастер пиров</DC_Perk_Feastwright.label>
+  <DC_Perk_Feastwright.description>Блюда, что поднимают всю колонию — капстоун готовки навыка 20.</DC_Perk_Feastwright.description>
+  <DC_Perk_Storyteller.label>сказитель</DC_Perk_Storyteller.label>
+  <DC_Perk_Storyteller.description>Искусство, несущее память колонии.</DC_Perk_Storyteller.description>
+  <DC_Perk_Virtuoso.label>виртуоз</DC_Perk_Virtuoso.label>
+  <DC_Perk_Virtuoso.description>Бесподобное творческое мастерство — капстоун искусства навыка 20.</DC_Perk_Virtuoso.description>
+
 </LanguageData>
