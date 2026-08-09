@@ -1,5 +1,5 @@
 {
-  "lastFetched": "2026-08-09T05:45:12.850Z",
+  "lastFetched": "2026-08-09T06:41:39.286Z",
   "mods": {
     "homesteader": {
       "name": "Homesteader",
@@ -7,7 +7,7 @@
       "title": "Homesteader",
       "subscriptions": 338,
       "favorited": 57,
-      "views": 3157,
+      "views": 3158,
       "lifetime_subscriptions": 436,
       "lifetime_favorited": 61
     },
@@ -27,7 +27,7 @@
       "title": "Strata",
       "subscriptions": 1596,
       "favorited": 393,
-      "views": 9456,
+      "views": 9457,
       "lifetime_subscriptions": 2029,
       "lifetime_favorited": 414
     },
@@ -35,10 +35,10 @@
       "name": "Nemesis",
       "publishedFileId": "3773562126",
       "title": "Nemesis",
-      "subscriptions": 156,
+      "subscriptions": 157,
       "favorited": 38,
-      "views": 1174,
-      "lifetime_subscriptions": 183,
+      "views": 1175,
+      "lifetime_subscriptions": 184,
       "lifetime_favorited": 39
     },
     "deep-colony": {
@@ -63,10 +63,10 @@
     }
   },
   "site_total": {
-    "subscriptions": 2809,
+    "subscriptions": 2810,
     "favorited": 609,
-    "views": 17345,
-    "lifetime_subscriptions": 3460,
+    "views": 17348,
+    "lifetime_subscriptions": 3461,
     "lifetime_favorited": 644
   }
 }
