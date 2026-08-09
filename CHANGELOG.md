@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Repo** — stop tracking `.tmp/` scratch (IL dumps, decompiles, preview compressors); already gitignored for local use only (`repo-cleanup-tmp-v1`).
 - **Strata** — second level under/over mountain keeps mineable rock (`mountain-second-level-rock-v1`): dig hollow checks mountain footprint + guaranteed fill; A+ over mountain mass is diggable rock, not empty deck. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Docs Workshop stats** — hub/mod subscriber counts fetch live in-browser from Steam (no hourly GitHub Action). Roster at `docs/data/workshop-mods.json`; `stats-cache.json` kept only as offline fallback. → [docs/scripts/stats-display.js](docs/scripts/stats-display.js)
 - **Weekend Steam backlog** (`weekend-steam-backlog-v1`) — Strata ASF/haul + quest-map shaft guard + mountain dig fallback; Homesteader quilted bed / storage ShelfBase parity; Stormproof texture re-clean; NemesisCompatApi (Rimesis/BFV); Date Night Exosuit schedule offset. → [docs/ideas/weekend-steam-backlog.md](docs/ideas/weekend-steam-backlog.md)
