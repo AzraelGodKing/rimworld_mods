@@ -5,5 +5,7 @@
   <DC_Job_Mentor.reportString>正在指导 TargetA。</DC_Job_Mentor.reportString>
   <DC_Job_CounselTrauma.label>辅导</DC_Job_CounselTrauma.label>
   <DC_Job_CounselTrauma.reportString>正在辅导 TargetA。</DC_Job_CounselTrauma.reportString>
+  <DC_Job_GroupCounsel.label>团体辅导</DC_Job_GroupCounsel.label>
+  <DC_Job_GroupCounsel.reportString>正在 TargetA 附近进行团体辅导。</DC_Job_GroupCounsel.reportString>
 
 </LanguageData>

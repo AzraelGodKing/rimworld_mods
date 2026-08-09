@@ -16,5 +16,17 @@
   <DC_Trauma_BereavementShock.label>шоковая утрата</DC_Trauma_BereavementShock.label>
   <DC_Trauma_BereavementShock.description>Внезапная потеря нескольких близких товарищей за короткое время.</DC_Trauma_BereavementShock.description>
   <DC_Trauma_BereavementShock.triggerMessage>потерял(а) нескольких товарищей за короткое время</DC_Trauma_BereavementShock.triggerMessage>
+  <DC_Trauma_Fire.label>травма огня</DC_Trauma_Fire.label>
+  <DC_Trauma_Fire.description>Ужасающие ожоги и память о пламени.</DC_Trauma_Fire.description>
+  <DC_Trauma_Fire.triggerMessage>был(а) изуродован(а) огнём</DC_Trauma_Fire.triggerMessage>
+  <DC_Trauma_Toxic.label>токсическая травма</DC_Trauma_Toxic.label>
+  <DC_Trauma_Toxic.description>Удушье ядом оставляет стойкий страх заражения.</DC_Trauma_Toxic.description>
+  <DC_Trauma_Toxic.triggerMessage>пережил(а) травму токсического воздействия</DC_Trauma_Toxic.triggerMessage>
+  <DC_Trauma_Insect.label>ужас насекомых</DC_Trauma_Insect.label>
+  <DC_Trauma_Insect.description>Стрекотание и роение насекомоподобных оставляют глубокий страх.</DC_Trauma_Insect.description>
+  <DC_Trauma_Insect.triggerMessage>был(а) травмирован(а) насекомоподобными</DC_Trauma_Insect.triggerMessage>
+  <DC_Trauma_Betrayal.label>травма предательства</DC_Trauma_Betrayal.label>
+  <DC_Trauma_Betrayal.description>Вред от того, кому доверял, режет глубже чужого клинка.</DC_Trauma_Betrayal.description>
+  <DC_Trauma_Betrayal.triggerMessage>был(а) предан(а) близким человеком</DC_Trauma_Betrayal.triggerMessage>
 
 </LanguageData>

@@ -7,7 +7,7 @@ namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "systems-complete-v1";
+        public const string BuildStamp = "phase5-power-v1";
 
         public static void LogStartup()
         {

@@ -9,11 +9,13 @@ namespace DeepColony
         // ── Relations ─────────────────────────────────────────────────────────────
         public static PawnRelationDef DC_MentorOf;
         public static PawnRelationDef DC_ApprenticeOf;
+        public static PawnRelationDef DC_Confidant;
+        public static PawnRelationDef DC_Rival;
 
         // ── Jobs ─────────────────────────────────────────────────────────────────
         public static JobDef DC_Job_Mentor;
-
         public static JobDef DC_Job_CounselTrauma;
+        public static JobDef DC_Job_GroupCounsel;
 
         // ── Traumas ──────────────────────────────────────────────────────────────
         public static TraumaDef DC_Trauma_CombatShock;
@@ -21,6 +23,26 @@ namespace DeepColony
         public static TraumaDef DC_Trauma_Captivity;
         public static TraumaDef DC_Trauma_Massacre;
         public static TraumaDef DC_Trauma_BereavementShock;
+        public static TraumaDef DC_Trauma_Fire;
+        public static TraumaDef DC_Trauma_Toxic;
+        public static TraumaDef DC_Trauma_Insect;
+        public static TraumaDef DC_Trauma_Betrayal;
+
+        // ── Thoughts (non-trauma class) ───────────────────────────────────────────
+        public static ThoughtDef DC_Thought_TraumaScar;
+        public static ThoughtDef DC_Thought_Seasoned;
+        public static ThoughtDef DC_Thought_Flashback;
+        public static ThoughtDef DC_Thought_DayOfRemembrance;
+        public static ThoughtDef DC_Thought_PerkReflection;
+        public static ThoughtDef DC_Thought_Heirloom;
+
+        // ── Hediffs ───────────────────────────────────────────────────────────────
+        public static HediffDef DC_Hediff_Elder;
+        public static HediffDef DC_Hediff_Flashback;
+        public static HediffDef DC_Hediff_CombatHabit;
+        public static HediffDef DC_Hediff_TraumaDraftPenalty;
+        public static HediffDef DC_Hediff_ChronicStress;
+        public static HediffDef DC_Hediff_HeirloomEcho;
 
         static DC_DefOf() => DefOfHelper.EnsureInitializedInCtor(typeof(DC_DefOf));
     }

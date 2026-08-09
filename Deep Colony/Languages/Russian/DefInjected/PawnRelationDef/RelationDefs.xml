@@ -5,5 +5,9 @@
   <DC_MentorOf.labelFemale>наставница</DC_MentorOf.labelFemale>
   <DC_ApprenticeOf.label>ученик</DC_ApprenticeOf.label>
   <DC_ApprenticeOf.labelFemale>ученица</DC_ApprenticeOf.labelFemale>
+  <DC_Confidant.label>доверенный</DC_Confidant.label>
+  <DC_Confidant.labelFemale>доверенная</DC_Confidant.labelFemale>
+  <DC_Rival.label>соперник</DC_Rival.label>
+  <DC_Rival.labelFemale>соперница</DC_Rival.labelFemale>
 
 </LanguageData>

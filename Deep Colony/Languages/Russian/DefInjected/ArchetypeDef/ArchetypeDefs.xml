@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Archetype_FieldSurgeon.label>полевой хирург</DC_Archetype_FieldSurgeon.label>
+  <DC_Archetype_FieldSurgeon.description>Мастерство медицины и стрельбы — архетип боевого медика.</DC_Archetype_FieldSurgeon.description>
+  <DC_Archetype_Foreman.label>бригадир</DC_Archetype_Foreman.label>
+  <DC_Archetype_Foreman.description>Лидерство в строительстве — строит и сплачивает.</DC_Archetype_Foreman.description>
+  <DC_Archetype_Homesteader.label>дух поселенца</DC_Archetype_Homesteader.label>
+  <DC_Archetype_Homesteader.description>Мастерство растений и готовки — сердце усадьбы.</DC_Archetype_Homesteader.description>
+
+</LanguageData>

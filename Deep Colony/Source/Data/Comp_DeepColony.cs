@@ -17,8 +17,44 @@ namespace DeepColony
     {
         public List<string> unlockedPerkDefNames = new List<string>();
         public int availablePerkPoints;
+        public bool perkGatesBackfilled;
+        public int unspentPerkPointsSinceTick = -1;
 
         public Pawn mentor;
+        public string mentoredSkillDefName;
+        public string perkBeingTaughtDefName;
+        public int perkTeachProgress;
+        public bool elderPerkGranted;
+        public string familyTraditionSkillDefName;
+
+        /// <summary>Past mentor display names for teaching-lineage flavor (newest last).</summary>
+        public List<string> teacherLineage = new List<string>();
+
+        /// <summary>Peak skill levels for muscle-memory double XP when rusting back up.</summary>
+        public Dictionary<string, int> peakSkillLevels = new Dictionary<string, int>();
+
+        /// <summary>Counsel session counts keyed by counselor thingIDNumber.</summary>
+        public Dictionary<int, int> counselCountsByPawn = new Dictionary<int, int>();
+
+        /// <summary>B06 — recoveries per TraumaDef.defName.</summary>
+        public Dictionary<string, int> recoveredTraumaCounts = new Dictionary<string, int>();
+
+        /// <summary>Active trauma defNames for natural-expiry detection.</summary>
+        public List<string> trackedTraumaDefNames = new List<string>();
+
+        /// <summary>B17 — faction loadIDs remembered from trauma.</summary>
+        public List<int> grudgeFactionIds = new List<int>();
+
+        public bool seasonedGrowthGranted;
+
+        /// <summary>A17 — Faction.loadID this pawn is envoy for, or -1.</summary>
+        public int envoyFactionId = -1;
+
+        /// <summary>A03 — last respec tick (-1 = never).</summary>
+        public int lastRespecTick = -1;
+
+        /// <summary>B02 — active archetype defName, if any.</summary>
+        public string activeArchetypeDefName;
 
         public Pawn Pawn => parent as Pawn;
 
@@ -27,17 +63,68 @@ namespace DeepColony
 
         public bool CanUnlock(PerkDef perk)
         {
-            if (HasPerk(perk)) return false;
+            if (!DeepColonySettings.Get.enablePerks) return false;
+            if (perk == null || HasPerk(perk)) return false;
             if (availablePerkPoints <= 0) return false;
+            if (!PerkVisible(perk)) return false;
+
             var pawn = Pawn;
             if (pawn == null || pawn.skills == null) return false;
             if (pawn.skills.GetSkill(perk.skill).Level < perk.requiredLevel) return false;
-            if (perk.HasPrerequisite)
+
+            if (IsExclusiveBlocked(perk)) return false;
+
+            if (perk.capstone || perk.requiredLevel >= 20)
+            {
+                if (!HasUnlockedAnyAtLevel(perk.skill, 15)) return false;
+            }
+            else if (perk.HasPrerequisite)
             {
                 var prereq = DefDatabase<PerkDef>.GetNamedSilentFail(perk.prerequisitePerk);
                 if (prereq != null && !HasPerk(prereq)) return false;
             }
             return true;
+        }
+
+        public static bool PerkVisible(PerkDef perk)
+        {
+            if (perk == null) return false;
+            var s = DeepColonySettings.Get;
+            if (perk.capstone || perk.requiredLevel >= 20)
+                return s.enableSkill20Capstones;
+            if (perk.alternateBranch)
+                return s.enableBranchingPerks;
+            return true;
+        }
+
+        private bool IsExclusiveBlocked(PerkDef perk)
+        {
+            if (perk.exclusiveWith != null)
+            {
+                for (int i = 0; i < perk.exclusiveWith.Count; i++)
+                {
+                    if (unlockedPerkDefNames.Contains(perk.exclusiveWith[i]))
+                        return true;
+                }
+            }
+            foreach (PerkDef other in DefDatabase<PerkDef>.AllDefs)
+            {
+                if (other?.exclusiveWith == null) continue;
+                if (!other.exclusiveWith.Contains(perk.defName)) continue;
+                if (HasPerk(other)) return true;
+            }
+            return false;
+        }
+
+        public bool HasUnlockedAnyAtLevel(SkillDef skill, int level)
+        {
+            if (skill == null) return false;
+            for (int i = 0; i < unlockedPerkDefNames.Count; i++)
+            {
+                PerkDef p = DefDatabase<PerkDef>.GetNamedSilentFail(unlockedPerkDefNames[i]);
+                if (p?.skill == skill && p.requiredLevel == level) return true;
+            }
+            return false;
         }
 
         public void UnlockPerk(PerkDef perk)
@@ -48,16 +135,129 @@ namespace DeepColony
 
             unlockedPerkDefNames.Add(perk.defName);
             availablePerkPoints--;
+            NoteUnspentPointsChanged();
             ApplyPerkHediff(perk);
+            ArchetypeUtility.TryRefresh(pawn);
 
             Messages.Message(
                 "DC_PerkUnlocked".Translate(pawn.LabelShort.Named("PAWN"), perk.LabelCap.Named("PERK")),
                 pawn, MessageTypeDefOf.PositiveEvent, false);
         }
 
+        /// <summary>Grant a perk without spending a point (perk apprenticeship).</summary>
+        public void UnlockPerkFree(PerkDef perk)
+        {
+            if (perk == null || HasPerk(perk)) return;
+            if (!DeepColonySettings.Get.enablePerks) return;
+            if (!PerkVisible(perk)) return;
+            var pawn = Pawn;
+            if (pawn == null) return;
+            unlockedPerkDefNames.Add(perk.defName);
+            ApplyPerkHediff(perk);
+            ArchetypeUtility.TryRefresh(pawn);
+        }
+
+        public bool CanForget(PerkDef perk)
+        {
+            if (!DeepColonySettings.Get.enablePerks) return false;
+            if (!DeepColonySettings.Get.enablePerkRespec) return false;
+            if (perk == null || !HasPerk(perk)) return false;
+            if (HasDependentUnlocked(perk)) return false;
+
+            int cooldown = Mathf.RoundToInt(DeepColonySettings.Get.respecCooldownDays * 60000f);
+            if (lastRespecTick >= 0 && Find.TickManager != null
+                && Find.TickManager.TicksGame - lastRespecTick < cooldown)
+                return false;
+            return true;
+        }
+
+        public bool HasDependentUnlocked(PerkDef perk)
+        {
+            if (perk == null) return false;
+            foreach (PerkDef other in DefDatabase<PerkDef>.AllDefs)
+            {
+                if (other == null || !HasPerk(other)) continue;
+                if (other.prerequisitePerk == perk.defName) return true;
+                // Capstones depend on any L15 — block forgetting L15 if a capstone is owned for that skill.
+                if ((other.capstone || other.requiredLevel >= 20)
+                    && other.skill == perk.skill
+                    && perk.requiredLevel == 15)
+                    return true;
+            }
+            return false;
+        }
+
+        public void ForgetPerk(PerkDef perk)
+        {
+            if (!CanForget(perk)) return;
+            var pawn = Pawn;
+            if (pawn == null) return;
+
+            unlockedPerkDefNames.Remove(perk.defName);
+            availablePerkPoints++;
+            NoteUnspentPointsChanged();
+            lastRespecTick = Find.TickManager?.TicksGame ?? 0;
+
+            if (perk.hediff != null && pawn.health != null)
+            {
+                Hediff h = pawn.health.hediffSet.GetFirstHediffOfDef(perk.hediff);
+                if (h != null) pawn.health.RemoveHediff(h);
+            }
+
+            if (DC_DefOf.DC_Thought_PerkReflection != null && pawn.needs?.mood?.thoughts != null)
+            {
+                var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_PerkReflection);
+                pawn.needs.mood.thoughts.memories.TryGainMemory(thought);
+            }
+
+            ArchetypeUtility.TryRefresh(pawn);
+
+            Messages.Message(
+                "DC_PerkForgotten".Translate(pawn.LabelShort.Named("PAWN"), perk.LabelCap.Named("PERK")),
+                pawn, MessageTypeDefOf.NeutralEvent, false);
+        }
+
+        /// <summary>B14 — auto-spend backfilled points on L5 perks only (conservative).</summary>
+        public void TryAutoSpendRecruitPerks()
+        {
+            if (!DeepColonySettings.Get.enablePerks) return;
+            if (!DeepColonySettings.Get.enableRecruitPrePerks) return;
+            var pawn = Pawn;
+            if (pawn?.skills == null || !pawn.IsColonistPlayerControlled) return;
+
+            bool spent = false;
+            foreach (PerkDef perk in DefDatabase<PerkDef>.AllDefsListForReading)
+            {
+                if (perk.requiredLevel != 5) continue;
+                if (!CanUnlock(perk)) continue;
+                UnlockPerk(perk);
+                spent = true;
+                if (availablePerkPoints <= 0) break;
+            }
+            if (spent)
+            {
+                Messages.Message(
+                    "DC_RecruitPrePerked".Translate(pawn.LabelShort.Named("PAWN")),
+                    pawn, MessageTypeDefOf.PositiveEvent, false);
+            }
+        }
+
+        public SkillDef GetMentoredSkill()
+        {
+            if (mentoredSkillDefName.NullOrEmpty()) return null;
+            return DefDatabase<SkillDef>.GetNamedSilentFail(mentoredSkillDefName);
+        }
+
+        public void SetMentoredSkill(SkillDef skill)
+        {
+            mentoredSkillDefName = skill?.defName;
+        }
+
         public void NotifySkillLevelUp(SkillDef skill, int newLevel)
         {
+            if (!DeepColonySettings.Get.enablePerks) return;
             availablePerkPoints++;
+            NoteUnspentPointsChanged();
             var pawn = Pawn;
             if (pawn == null) return;
 
@@ -66,16 +266,191 @@ namespace DeepColony
                 pawn, MessageTypeDefOf.PositiveEvent, false);
         }
 
+        public void NoteUnspentPointsChanged()
+        {
+            if (availablePerkPoints > 0)
+            {
+                if (unspentPerkPointsSinceTick < 0)
+                    unspentPerkPointsSinceTick = Find.TickManager?.TicksGame ?? 0;
+            }
+            else
+            {
+                unspentPerkPointsSinceTick = -1;
+            }
+        }
+
+        public void TryBackfillPerkGatePoints(bool announce = true)
+        {
+            if (perkGatesBackfilled) return;
+            perkGatesBackfilled = true;
+
+            if (!DeepColonySettings.Get.enablePerks) return;
+
+            var pawn = Pawn;
+            if (pawn?.skills == null || !pawn.IsColonistPlayerControlled) return;
+
+            int gatesPassed = CountPassedPerkGates(pawn);
+            int accounted = unlockedPerkDefNames.Count + availablePerkPoints;
+            int deficit = gatesPassed - accounted;
+            if (deficit <= 0)
+            {
+                NoteUnspentPointsChanged();
+                return;
+            }
+
+            availablePerkPoints += deficit;
+            NoteUnspentPointsChanged();
+            if (announce)
+            {
+                Messages.Message(
+                    "DC_PerkPointsBackfilled".Translate(pawn.LabelShort.Named("PAWN"), deficit),
+                    pawn, MessageTypeDefOf.PositiveEvent, false);
+            }
+        }
+
+        public static int CountPassedPerkGates(Pawn pawn)
+        {
+            if (pawn?.skills == null) return 0;
+            bool capstones = DeepColonySettings.Get.enableSkill20Capstones;
+            int gates = 0;
+            foreach (SkillRecord skill in pawn.skills.skills)
+            {
+                if (skill.TotallyDisabled) continue;
+                if (skill.Level >= 5) gates++;
+                if (skill.Level >= 15) gates++;
+                if (capstones && skill.Level >= 20) gates++;
+            }
+            return gates;
+        }
+
+        public int HighestUnlockedPerkTierForSkill(SkillDef skill)
+        {
+            if (skill == null) return 0;
+            int best = 0;
+            for (int i = 0; i < unlockedPerkDefNames.Count; i++)
+            {
+                PerkDef perk = DefDatabase<PerkDef>.GetNamedSilentFail(unlockedPerkDefNames[i]);
+                if (perk?.skill != skill) continue;
+                if (perk.requiredLevel >= 20) best = Mathf.Max(best, 3);
+                else if (perk.requiredLevel >= 15) best = Mathf.Max(best, 2);
+                else if (perk.requiredLevel >= 5) best = Mathf.Max(best, 1);
+            }
+            return best;
+        }
+
+        public void RecordPeakSkill(SkillDef skill, int level)
+        {
+            if (skill == null) return;
+            string key = skill.defName;
+            if (!peakSkillLevels.TryGetValue(key, out int peak) || level > peak)
+                peakSkillLevels[key] = level;
+        }
+
+        public int GetPeakSkill(SkillDef skill)
+        {
+            if (skill == null) return 0;
+            return peakSkillLevels.TryGetValue(skill.defName, out int peak) ? peak : 0;
+        }
+
+        public void RecordTeacher(Pawn teacher)
+        {
+            if (teacher == null) return;
+            string name = teacher.Name?.ToStringShort ?? teacher.LabelShort;
+            if (teacherLineage == null) teacherLineage = new List<string>();
+            if (teacherLineage.Count > 0 && teacherLineage[teacherLineage.Count - 1] == name)
+                return;
+            teacherLineage.Add(name);
+            if (teacherLineage.Count > 8)
+                teacherLineage.RemoveAt(0);
+        }
+
+        public string TeachingLineageInspect()
+        {
+            if (teacherLineage == null || teacherLineage.Count == 0) return null;
+            if (teacherLineage.Count == 1)
+                return "DC_InspectTaughtBy".Translate(teacherLineage[0]);
+            // newest last
+            string chain = string.Join(" ← ", teacherLineage);
+            return "DC_InspectLineage".Translate(chain);
+        }
+
+        public int IncrementCounselCount(Pawn counselor)
+        {
+            if (counselor == null) return 0;
+            if (counselCountsByPawn == null) counselCountsByPawn = new Dictionary<int, int>();
+            int id = counselor.thingIDNumber;
+            counselCountsByPawn.TryGetValue(id, out int count);
+            count++;
+            counselCountsByPawn[id] = count;
+            return count;
+        }
+
+        public bool RollTraumaApplyChance(TraumaDef def)
+        {
+            if (def == null) return false;
+            if (recoveredTraumaCounts == null) recoveredTraumaCounts = new Dictionary<string, int>();
+            if (!recoveredTraumaCounts.TryGetValue(def.defName, out int n) || n <= 0)
+                return true;
+            // Each prior recovery of this trauma reduces re-apply chance.
+            float chance = 1f - 0.15f * Mathf.Min(n, 4);
+            return Rand.Chance(Mathf.Clamp(chance, 0.35f, 1f));
+        }
+
+        public float TraumaDurationSkipFraction(TraumaDef def)
+        {
+            if (def == null || recoveredTraumaCounts == null) return 0f;
+            if (!recoveredTraumaCounts.TryGetValue(def.defName, out int n) || n <= 0)
+                return 0f;
+            return 0.08f * Mathf.Min(n, 4); // up to 32% shorter
+        }
+
+        public int RecordTraumaRecovery(TraumaDef def)
+        {
+            if (def == null) return 0;
+            if (recoveredTraumaCounts == null) recoveredTraumaCounts = new Dictionary<string, int>();
+            recoveredTraumaCounts.TryGetValue(def.defName, out int n);
+            n++;
+            recoveredTraumaCounts[def.defName] = n;
+            return n;
+        }
+
+        public int TotalTraumaRecoveries()
+        {
+            if (recoveredTraumaCounts == null) return 0;
+            int total = 0;
+            foreach (var kv in recoveredTraumaCounts)
+                total += kv.Value;
+            return total;
+        }
+
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
+            TryBackfillPerkGatePoints(announce: !respawningAfterLoad);
+            if (!respawningAfterLoad)
+                TryAutoSpendRecruitPerks();
+            SeedPeakSkillsFromCurrent();
             ReapplyPerkHediffs();
+            ArchetypeUtility.TryRefresh(Pawn);
+            NoteUnspentPointsChanged();
+        }
+
+        private void SeedPeakSkillsFromCurrent()
+        {
+            var pawn = Pawn;
+            if (pawn?.skills == null) return;
+            foreach (SkillRecord sr in pawn.skills.skills)
+            {
+                if (sr.TotallyDisabled) continue;
+                RecordPeakSkill(sr.def, sr.Level);
+            }
         }
 
         private void ReapplyPerkHediffs()
         {
             var pawn = Pawn;
             if (pawn?.health == null) return;
+            if (!DeepColonySettings.Get.enablePerks) return;
 
             for (int i = 0; i < unlockedPerkDefNames.Count; i++)
             {
@@ -98,6 +473,7 @@ namespace DeepColony
         {
             var pawn = Pawn;
             if (pawn == null || !pawn.IsColonistPlayerControlled) yield break;
+            if (!DeepColonySettings.Get.enablePerks) yield break;
 
             yield return new Command_Action
             {
@@ -116,16 +492,21 @@ namespace DeepColony
             if (pawn == null || !pawn.IsColonistPlayerControlled) return null;
 
             var parts = new List<string>();
-            if (availablePerkPoints > 0 || unlockedPerkDefNames.Count > 0)
+            if (DeepColonySettings.Get.enablePerks
+                && (availablePerkPoints > 0 || unlockedPerkDefNames.Count > 0))
             {
                 parts.Add("DC_InspectPerks".Translate(availablePerkPoints, unlockedPerkDefNames.Count));
             }
-            if (mentor != null)
+            if (DeepColonySettings.Get.enableMentoring && mentor != null)
             {
-                parts.Add("DC_InspectMentor".Translate(mentor.LabelShort));
+                SkillDef focus = GetMentoredSkill();
+                if (focus != null)
+                    parts.Add("DC_InspectMentorSkill".Translate(mentor.LabelShort, focus.LabelCap));
+                else
+                    parts.Add("DC_InspectMentor".Translate(mentor.LabelShort));
             }
             int apprentices = 0;
-            if (pawn.relations != null)
+            if (DeepColonySettings.Get.enableMentoring && pawn.relations != null)
             {
                 foreach (DirectPawnRelation rel in pawn.relations.DirectRelations)
                 {
@@ -136,9 +517,26 @@ namespace DeepColony
             {
                 parts.Add("DC_InspectApprentices".Translate(apprentices));
             }
-            if (TraumaUtility.HasAnyTrauma(pawn))
+            if (DeepColonySettings.Get.enableMentoring)
+            {
+                string lineage = TeachingLineageInspect();
+                if (!lineage.NullOrEmpty()) parts.Add(lineage);
+            }
+            if (DeepColonySettings.Get.enableTrauma && TraumaUtility.HasAnyTrauma(pawn))
             {
                 parts.Add("DC_InspectTrauma".Translate());
+            }
+            if (DeepColonySettings.Get.enableTrauma)
+            {
+                string grudge = GrudgeUtility.InspectString(pawn);
+                if (!grudge.NullOrEmpty()) parts.Add(grudge);
+            }
+            if (DeepColonySettings.Get.enableCrossSkillArchetypes
+                && !activeArchetypeDefName.NullOrEmpty())
+            {
+                ArchetypeDef arch = DefDatabase<ArchetypeDef>.GetNamedSilentFail(activeArchetypeDefName);
+                if (arch != null)
+                    parts.Add("DC_InspectArchetype".Translate(arch.LabelCap));
             }
             return parts.Count == 0 ? null : string.Join("\n", parts);
         }
@@ -147,13 +545,40 @@ namespace DeepColony
         {
             Scribe_Collections.Look(ref unlockedPerkDefNames, "unlockedPerks", LookMode.Value);
             Scribe_Values.Look(ref availablePerkPoints, "availablePerkPoints", 0);
+            Scribe_Values.Look(ref perkGatesBackfilled, "perkGatesBackfilled", false);
+            Scribe_Values.Look(ref unspentPerkPointsSinceTick, "unspentPerkPointsSinceTick", -1);
             Scribe_References.Look(ref mentor, "mentor");
+            Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");
+            Scribe_Values.Look(ref perkBeingTaughtDefName, "perkBeingTaughtDefName");
+            Scribe_Values.Look(ref perkTeachProgress, "perkTeachProgress", 0);
+            Scribe_Values.Look(ref elderPerkGranted, "elderPerkGranted", false);
+            Scribe_Values.Look(ref familyTraditionSkillDefName, "familyTraditionSkillDefName");
+            Scribe_Collections.Look(ref teacherLineage, "teacherLineage", LookMode.Value);
+            Scribe_Collections.Look(ref peakSkillLevels, "peakSkillLevels", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref counselCountsByPawn, "counselCountsByPawn", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref recoveredTraumaCounts, "recoveredTraumaCounts", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref trackedTraumaDefNames, "trackedTraumaDefNames", LookMode.Value);
+            Scribe_Collections.Look(ref grudgeFactionIds, "grudgeFactionIds", LookMode.Value);
+            Scribe_Values.Look(ref seasonedGrowthGranted, "seasonedGrowthGranted", false);
+            Scribe_Values.Look(ref envoyFactionId, "envoyFactionId", -1);
+            Scribe_Values.Look(ref lastRespecTick, "lastRespecTick", -1);
+            Scribe_Values.Look(ref activeArchetypeDefName, "activeArchetypeDefName");
 
             if (unlockedPerkDefNames == null) unlockedPerkDefNames = new List<string>();
+            if (teacherLineage == null) teacherLineage = new List<string>();
+            if (peakSkillLevels == null) peakSkillLevels = new Dictionary<string, int>();
+            if (counselCountsByPawn == null) counselCountsByPawn = new Dictionary<int, int>();
+            if (recoveredTraumaCounts == null) recoveredTraumaCounts = new Dictionary<string, int>();
+            if (trackedTraumaDefNames == null) trackedTraumaDefNames = new List<string>();
+            if (grudgeFactionIds == null) grudgeFactionIds = new List<int>();
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
+                TryBackfillPerkGatePoints(announce: false);
+                SeedPeakSkillsFromCurrent();
                 ReapplyPerkHediffs();
+                ArchetypeUtility.TryRefresh(Pawn);
+                NoteUnspentPointsChanged();
             }
         }
     }

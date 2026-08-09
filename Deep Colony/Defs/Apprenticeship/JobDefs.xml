@@ -19,4 +19,13 @@
     <casualInterruptible>true</casualInterruptible>
   </JobDef>
 
+  <JobDef>
+    <defName>DC_Job_GroupCounsel</defName>
+    <label>group counsel</label>
+    <driverClass>DeepColony.JobDriver_GroupCounsel</driverClass>
+    <reportString>group counseling near TargetA.</reportString>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+
 </Defs>
