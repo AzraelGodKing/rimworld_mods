@@ -75,6 +75,9 @@ Every level is a full map matching your map size. On large maps (300×300+), eac
 [*] Stairwells cannot be torn down while anyone is still on the linked level (orphan / unlinked shafts can be cleared)
 [*] Rename levels in the Levels tab
 [*] Before removing the mod: bring everyone up, haul what you care about, deconstruct every stairwell
+[*] Tall towers from other mods keep normal sky — Strata roof decks (A+) only open from a Strata tower stairwell or elevator
+[*] Digging under a mountain (or building a tower over one) should leave mineable rock — Biomes! hollow digs fall back to Strata fill; A+ over mountain mass is diggable rock, not empty deck
+[*] Don't dig Strata shafts on temporary quest maps (Ancient Urban Ruins, world sites) — use their floors; Strata is for your home colony
 [/list]
 
 Requires Harmony. RimWorld 1.6. Odyssey optional.

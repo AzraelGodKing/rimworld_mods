@@ -8,7 +8,9 @@ using Verse;
 namespace Strata
 {
     // A+ floors are roof decks: walkable/buildable only where the map below has
-    // a roof (or inside the shaft plaza). Everything else is open sky.
+    // a constructed / thin roof (or inside the shaft plaza). Thick mountain rock
+    // / natural rock below becomes mineable rock on this floor. Everything else
+    // is open sky.
     public static class UpperDeckUtility
     {
         public const string RoofDeckDefName = "Strata_RoofDeck";
@@ -95,6 +97,11 @@ namespace Strata
             {
                 return StrataGravshipUtility.CellOnGravship(source, below);
             }
+            // Mountain mass becomes diggable rock on A+, not empty roof deck.
+            if (StrataRockUtility.CellIsMountainMass(source, below))
+            {
+                return false;
+            }
             return source.roofGrid.Roofed(below);
         }
 
@@ -116,17 +123,18 @@ namespace Strata
                 return;
             }
 
+            BoolGrid mountainFill = null;
             SuspendRoofSync = true;
             try
             {
                 // Gravship decks: raw 1:1 even when the host map size differs.
                 if (source != null && (gravshipLinked || source.Size == upper.Size))
                 {
-                    PaintSameSize(upper, source, deck, sky, gravshipLinked);
+                    mountainFill = PaintSameSize(upper, source, deck, sky, gravshipLinked);
                 }
                 else if (source != null)
                 {
-                    PaintProportional(upper, source, deck, sky, gravshipLinked);
+                    mountainFill = PaintProportional(upper, source, deck, sky, gravshipLinked);
                 }
                 else
                 {
@@ -143,6 +151,8 @@ namespace Strata
                 {
                     EnsurePlaza(upper, landingSpot, plazaRadius);
                 }
+
+                ScheduleMountainRockFill(upper, mountainFill);
             }
             finally
             {
@@ -150,20 +160,79 @@ namespace Strata
             }
         }
 
-        private static void PaintSameSize(Map upper, Map source, TerrainDef deck, TerrainDef sky, bool gravshipLinked)
+        /// <summary>
+        /// Drain mineables into mountain-mass cells after GetOtherMap (same LongEvent
+        /// path as dig rock fill). Plaza / deck / sky cells are skipped.
+        /// </summary>
+        private static void ScheduleMountainRockFill(Map upper, BoolGrid mountainFill)
         {
+            if (upper == null || mountainFill == null)
+            {
+                return;
+            }
+            var skip = new BoolGrid(upper);
+            bool any = false;
             foreach (IntVec3 cell in upper.AllCells)
             {
+                bool fill = mountainFill[cell]
+                    && upper.roofGrid.RoofAt(cell) == RoofDefOf.RoofRockThick
+                    && cell.GetTerrain(upper)?.defName != RoofDeckDefName
+                    && cell.GetTerrain(upper)?.defName != OpenSkyDefName;
+                skip[cell] = !fill;
+                if (fill)
+                {
+                    any = true;
+                }
+            }
+            if (any)
+            {
+                StrataRockFillScheduler.Schedule(upper, skip);
+            }
+        }
+
+        private static void PaintMountainShell(Map upper, IntVec3 cell, List<ThingDef> rocks, byte[] rockIndices)
+        {
+            int width = upper.Size.x;
+            int index = cell.z * width + cell.x;
+            ThingDef rockDef = StrataRockPlan.RockAtIndex(
+                rocks,
+                index >= 0 && index < rockIndices.Length ? rockIndices[index] : (byte)0);
+            upper.terrainGrid.SetTerrain(cell, StrataRockUtility.NaturalFloorFor(rockDef));
+            upper.roofGrid.SetRoof(cell, RoofDefOf.RoofRockThick);
+        }
+
+        private static BoolGrid PaintSameSize(
+            Map upper, Map source, TerrainDef deck, TerrainDef sky, bool gravshipLinked)
+        {
+            BoolGrid mountainFill = gravshipLinked ? null : new BoolGrid(upper);
+            List<ThingDef> rocks = gravshipLinked ? null : StrataRockUtility.RocksForMap(upper);
+            byte[] rockIndices = rocks != null ? StrataRockPlan.BuildRockIndices(upper, rocks) : null;
+
+            foreach (IntVec3 cell in upper.AllCells)
+            {
+                if (!gravshipLinked
+                    && StrataRockUtility.CellIsMountainMass(source, cell))
+                {
+                    PaintMountainShell(upper, cell, rocks, rockIndices);
+                    mountainFill[cell] = true;
+                    continue;
+                }
                 upper.roofGrid.SetRoof(cell, null);
                 bool supported = SourceCellSupportsDeck(source, cell, gravshipLinked);
                 upper.terrainGrid.SetTerrain(cell, supported ? deck : sky);
             }
+            return mountainFill;
         }
 
-        private static void PaintProportional(Map upper, Map source, TerrainDef deck, TerrainDef sky, bool gravshipLinked)
+        private static BoolGrid PaintProportional(
+            Map upper, Map source, TerrainDef deck, TerrainDef sky, bool gravshipLinked)
         {
+            BoolGrid mountainFill = gravshipLinked ? null : new BoolGrid(upper);
+            List<ThingDef> rocks = gravshipLinked ? null : StrataRockUtility.RocksForMap(upper);
+            byte[] rockIndices = rocks != null ? StrataRockPlan.BuildRockIndices(upper, rocks) : null;
             int sourceCells = source.cellIndices.NumGridCells;
             var sourceRoofs = gravshipLinked ? null : new bool[sourceCells];
+            var sourceMountain = gravshipLinked ? null : new bool[sourceCells];
             var sourceSubstructure = gravshipLinked ? new bool[sourceCells] : null;
             foreach (IntVec3 below in source.AllCells)
             {
@@ -175,6 +244,10 @@ namespace Strata
                         sourceSubstructure[index] = true;
                     }
                 }
+                else if (StrataRockUtility.CellIsMountainMass(source, below))
+                {
+                    sourceMountain[index] = true;
+                }
                 else if (source.roofGrid.Roofed(below))
                 {
                     sourceRoofs[index] = true;
@@ -183,14 +256,22 @@ namespace Strata
 
             foreach (IntVec3 cell in upper.AllCells)
             {
-                upper.roofGrid.SetRoof(cell, null);
                 IntVec3 below = StrataMapUtility.ProportionalCell(cell, upper, source);
+                if (!gravshipLinked && below.InBounds(source)
+                    && sourceMountain[source.cellIndices.CellToIndex(below)])
+                {
+                    PaintMountainShell(upper, cell, rocks, rockIndices);
+                    mountainFill[cell] = true;
+                    continue;
+                }
+                upper.roofGrid.SetRoof(cell, null);
                 bool supported = below.InBounds(source)
                     && (gravshipLinked
                         ? sourceSubstructure[source.cellIndices.CellToIndex(below)]
                         : sourceRoofs[source.cellIndices.CellToIndex(below)]);
                 upper.terrainGrid.SetTerrain(cell, supported ? deck : sky);
             }
+            return mountainFill;
         }
 
         public static void EnsurePlaza(Map upper, IntVec3 spot, float radius = DefaultPlazaRadius)
@@ -218,8 +299,56 @@ namespace Strata
                 return;
             }
             TerrainDef current = upperCell.GetTerrain(upper);
-            bool supported = SourceSupportsUpperDeck(upper, upperCell);
             bool gravship = IsGravshipLinkedUpper(upper);
+            Map source = SourceMapFor(upper);
+            IntVec3 below = gravship
+                ? upperCell
+                : source != null
+                    ? StrataMapUtility.ProportionalCell(upperCell, upper, source)
+                    : IntVec3.Invalid;
+            bool mountain = !gravship && source != null && below.IsValid
+                && StrataRockUtility.CellIsMountainMass(source, below);
+
+            // Grow mountain rock when thick roof / natural rock appears downstairs.
+            if (mountain)
+            {
+                if (!CellHasBlockingThing(upperCell, upper))
+                {
+                    if (upper.roofGrid.RoofAt(upperCell) != RoofDefOf.RoofRockThick)
+                    {
+                        ThingDef rockDef = StrataRockUtility.RockAt(upper, upperCell);
+                        upper.terrainGrid.SetTerrain(upperCell, StrataRockUtility.NaturalFloorFor(rockDef));
+                        upper.roofGrid.SetRoof(upperCell, RoofDefOf.RoofRockThick);
+                    }
+                    if (upperCell.GetEdifice(upper) == null
+                        && upperCell.GetFirstMineable(upper) == null)
+                    {
+                        ThingDef rockDef = StrataRockUtility.RockAt(upper, upperCell);
+                        GenSpawn.Spawn(ThingMaker.MakeThing(rockDef), upperCell, upper, Rot4.North,
+                            WipeMode.Vanish, respawningAfterLoad: true);
+                    }
+                }
+                return;
+            }
+
+            // Mountain mass cleared downstairs — reclaim empty rock / thick roof.
+            if (!gravship && allowShrink
+                && upper.roofGrid.RoofAt(upperCell) == RoofDefOf.RoofRockThick
+                && !CellHasPreservableStuff(upperCell, upper))
+            {
+                upperCell.GetFirstMineable(upper)?.Destroy(DestroyMode.Vanish);
+                Building edifice = upperCell.GetEdifice(upper);
+                if (edifice?.def?.building?.isNaturalRock == true)
+                {
+                    edifice.Destroy(DestroyMode.Vanish);
+                }
+                upper.roofGrid.SetRoof(upperCell, null);
+                bool stillRoofed = source != null && below.IsValid && source.roofGrid.Roofed(below);
+                upper.terrainGrid.SetTerrain(upperCell, stillRoofed ? RoofDeck : OpenSky);
+                return;
+            }
+
+            bool supported = SourceSupportsUpperDeck(upper, upperCell);
 
             if (supported)
             {

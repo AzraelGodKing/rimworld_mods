@@ -30,19 +30,24 @@ namespace Strata
             if (BiomesCavernsUtility.ShouldGenerateCavernLayout(map))
             {
                 BiomeDef profile = BiomesCavernsUtility.PickProfileBiome(map);
-                if (profile != null && BiomesCavernsUtility.TryGenerateCavernLayout(map, parms, profile))
+                if (profile != null && BiomesCavernsUtility.TryGenerateCavernLayout(map, parms, profile)
+                    && !BiomesCavernsUtility.CavernLayoutTooHollow(map))
                 {
                     ArrivalZoneUtility.PrepareLandingZone(map, spot, clearRoof: true);
                     BiomesCavernsUtility.LogLayoutChoice(map, usedBiomes: true, profile);
                 }
                 else
                 {
-                    // Biomes failed or missing profile — fall back to Strata caves.
+                    // Biomes failed, missing profile, or mountain/landform hollow —
+                    // fall back to Strata rock so digs stay mineable.
                     ClearGeneratedMap(map);
                     FillShell(map);
                     MapGenerator.SetVar(DeferMineablesVar, true);
                     ArrivalZoneUtility.PrepareLandingZone(map, spot, clearRoof: false);
                     MapGenerator.SetVar(StrataNativeCavernUtility.ForceNativeWarrenVar, true);
+                    // CarveWarren reschedules with a warren skip mask when it runs;
+                    // keep a chamber skip here so native-off still gets rock fill.
+                    StrataRockFillScheduler.Schedule(map, ArrivalSkipMask(map, spot));
                     BiomesCavernsUtility.LogLayoutChoice(map, usedBiomes: false, profile);
                 }
             }
@@ -166,6 +171,25 @@ namespace Strata
             {
                 map.regionAndRoomUpdater.Enabled = regionsWereEnabled;
             }
+        }
+
+        // LongEvent rock fill must not reseal the stair landing chamber.
+        private static BoolGrid ArrivalSkipMask(Map map, IntVec3 spot)
+        {
+            var mask = new BoolGrid(map);
+            if (map == null || !spot.IsValid)
+            {
+                return mask;
+            }
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(
+                spot, ArrivalZoneUtility.ChamberRadius, useCenter: true))
+            {
+                if (cell.InBounds(map))
+                {
+                    mask[cell] = true;
+                }
+            }
+            return mask;
         }
 
         private static void SeedStarterOxygen(Map map, IntVec3 spot)
