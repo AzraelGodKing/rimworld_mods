@@ -4,7 +4,9 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
-- **Rimesis / BFV soft-compat** — public `NemesisCompatApi` (`HasActiveHunt`, `ActiveNemesisPawn`, `IsNemesisPawn`) for Font’s Rimesis; skip hunt create / raid inject when a pawn already has Rimesis/BFV hediff markers. Solo behavior unchanged. Spec: `docs/ideas/nemesis-rimesis-compat.md`.
+- **Rimesis / BFV soft-compat** — public `NemesisCompatApi` (`HasActiveHunt`, `ActiveNemesisPawn`, `IsNemesisPawn`, `WouldClaim`, `ShouldReportMissingToRimesis`) for Font’s Rimesis; skip hunt create / raid inject when a pawn already has Rimesis/BFV hediff markers. Solo behavior unchanged. Spec: `docs/ideas/nemesis-rimesis-compat.md`.
+- **Rimesis Availability / Missing** — Font Availability states documented; Nemesis stub `ShouldReportMissingToRimesis` (= `IsNemesisPawn`) for Font to mark pawns Missing. Soft-read of Font Availability still design-only (fail-open reflection once API names land). Leader-raid → Rimesis inject remains later / coexistence bar unchanged.
+- **Compat notes** — Deep Colony capture/truce goodwill reviewed (no double-buffer gap). Font later-idea recorded: Nemesis “leader raid” could call Rimesis raid injection for full combat style (beyond coexistence).
 - **Hybrid captain progression** — after each escape the nemesis gains a captain level (skills, focus-appropriate gear quality, `Nemesis_BattleHardened` armor; Biotech bionics/genes at thresholds). Combat focus rolled at create. Post-escape action mix favors army raids/assaults and downweights petty sabotage. Soft animal escorts (Giddy-Up aware) + Mechanitor Biotech mech retinue. Settings under Captain progression. Still endable (no cheat-death). Stamp: hunt keeps personal capture/kill/they-win ends.
 - **CN / RU localization** — full Chinese Simplified and Russian keyed packs from English (`Languages/ChineseSimplified|Russian/Keyed/Nemesis.xml`).
 - **Public release** — docs site declassified (`docs/nemesis.html`); Steam Workshop + `Nemesis.zip` on the rolling GitHub `latest` release; `PublishedFileId.txt` checked in.

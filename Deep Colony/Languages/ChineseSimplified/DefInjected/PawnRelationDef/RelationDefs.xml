@@ -5,5 +5,9 @@
   <DC_MentorOf.labelFemale>导师</DC_MentorOf.labelFemale>
   <DC_ApprenticeOf.label>学徒</DC_ApprenticeOf.label>
   <DC_ApprenticeOf.labelFemale>学徒</DC_ApprenticeOf.labelFemale>
+  <DC_Confidant.label>知己</DC_Confidant.label>
+  <DC_Confidant.labelFemale>知己</DC_Confidant.labelFemale>
+  <DC_Rival.label>对手</DC_Rival.label>
+  <DC_Rival.labelFemale>对手</DC_Rival.labelFemale>
 
 </LanguageData>
