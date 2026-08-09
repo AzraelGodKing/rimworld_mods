@@ -4,4 +4,7 @@
   <Homesteader_Polyarmory.label>полиамория</Homesteader_Polyarmory.label>
   <Homesteader_Polyarmory.description>{PAWN_nameDef} комфортно чувствует себя в поликуле. {PAWN_pronoun} не против делить постель с любовниками — или с партнёрами своих любовников — и с радостью забирается в многоместные кровати со всей группой.</Homesteader_Polyarmory.description>
 
+  <Homesteader_LittleGuy.label>little guy</Homesteader_LittleGuy.label>
+  <Homesteader_LittleGuy.description>{PAWN_nameDef} — просто little guy. И всё. На этом черта заканчивается.</Homesteader_LittleGuy.description>
+
 </LanguageData>

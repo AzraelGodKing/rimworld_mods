@@ -139,4 +139,194 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_FireTrauma</defName>
+    <label>fire trauma</label>
+    <durationDays>35</durationDays>
+    <stages>
+      <li>
+        <label>terrified of fire</label>
+        <description>Every spark feels like the blaze that nearly took them.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+      <li>
+        <label>uneasy around flame</label>
+        <description>Still flinches near open fire.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+      <li>
+        <label>fire memories fading</label>
+        <description>The burns healed; the fear is quieter now.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_ToxicTrauma</defName>
+    <label>toxic trauma</label>
+    <durationDays>40</durationDays>
+    <stages>
+      <li>
+        <label>poison panic</label>
+        <description>Cannot shake the feeling of toxins in their blood.</description>
+        <baseMoodEffect>-11</baseMoodEffect>
+      </li>
+      <li>
+        <label>wary of contamination</label>
+        <description>Suspicious of air, water, and unexplained smells.</description>
+        <baseMoodEffect>-7</baseMoodEffect>
+      </li>
+      <li>
+        <label>toxic memories fading</label>
+        <description>The poisoning feels more distant.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_InsectTrauma</defName>
+    <label>insect horror</label>
+    <durationDays>40</durationDays>
+    <stages>
+      <li>
+        <label>swarm nightmares</label>
+        <description>Dreams of chitin and endless skittering.</description>
+        <baseMoodEffect>-12</baseMoodEffect>
+      </li>
+      <li>
+        <label>insect dread</label>
+        <description>Still jumps at sudden movement in the dark.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+      <li>
+        <label>insect fear fading</label>
+        <description>The swarm feels less immediate.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_Betrayal</defName>
+    <label>betrayal trauma</label>
+    <durationDays>50</durationDays>
+    <stages>
+      <li>
+        <label>raw betrayal</label>
+        <description>Trusted someone who turned a blade on them.</description>
+        <baseMoodEffect>-14</baseMoodEffect>
+      </li>
+      <li>
+        <label>trust shattered</label>
+        <description>Hard to believe anyone means well.</description>
+        <baseMoodEffect>-9</baseMoodEffect>
+      </li>
+      <li>
+        <label>learning to trust again</label>
+        <description>The wound is closing, carefully.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- A08 scar / B06 seasoned / B05 flashback / B18 remembrance / B21 warden -->
+  <ThoughtDef>
+    <defName>DC_Thought_TraumaScar</defName>
+    <label>old trauma scar</label>
+    <durationDays>20</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>carries an old scar</label>
+        <description>The trauma healed, but a quiet mark remains.</description>
+        <baseMoodEffect>-2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_Seasoned</defName>
+    <label>seasoned survivor</label>
+    <durationDays>15</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>seasoned by hardship</label>
+        <description>Recovered from trauma and came out stronger.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_Flashback</defName>
+    <label>flashback</label>
+    <durationDays>0.15</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>flashback</label>
+        <description>A sudden, vivid return to the moment of trauma.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_DayOfRemembrance</defName>
+    <label>day of remembrance</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>day of remembrance</label>
+        <description>The colony remembers those who fell on this day.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_PerkReflection</defName>
+    <label>reflection</label>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>reflecting on a forgotten perk</label>
+        <description>Letting go of hard-won expertise stings.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_Heirloom</defName>
+    <label>heirloom</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>carrying an heirloom</label>
+        <description>A piece of a fallen colonist's story rests in their hands.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TraumaWarden</defName>
+    <label>warden dread</label>
+    <workerClass>DeepColony.ThoughtWorker_TraumaWarden</workerClass>
+    <stages>
+      <li>
+        <label>dreads warden duty</label>
+        <description>Captivity trauma makes guarding prisoners feel like being back in chains.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

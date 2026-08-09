@@ -46,4 +46,40 @@
     <triggerMessage>lost multiple companions in a short time</triggerMessage>
   </DeepColony.TraumaDef>
 
+  <DeepColony.TraumaDef>
+    <defName>DC_Trauma_Fire</defName>
+    <label>fire trauma</label>
+    <description>Terrifying burns and the memory of flames.</description>
+    <thoughtDef>DC_Thought_FireTrauma</thoughtDef>
+    <therapyHealingPerSession>55000</therapyHealingPerSession>
+    <triggerMessage>was scarred by fire</triggerMessage>
+  </DeepColony.TraumaDef>
+
+  <DeepColony.TraumaDef>
+    <defName>DC_Trauma_Toxic</defName>
+    <label>toxic trauma</label>
+    <description>Choking on poison leaves a lasting dread of contamination.</description>
+    <thoughtDef>DC_Thought_ToxicTrauma</thoughtDef>
+    <therapyHealingPerSession>60000</therapyHealingPerSession>
+    <triggerMessage>suffered toxic exposure trauma</triggerMessage>
+  </DeepColony.TraumaDef>
+
+  <DeepColony.TraumaDef>
+    <defName>DC_Trauma_Insect</defName>
+    <label>insect horror</label>
+    <description>The chittering and swarming of insectoids leave deep fear.</description>
+    <thoughtDef>DC_Thought_InsectTrauma</thoughtDef>
+    <therapyHealingPerSession>65000</therapyHealingPerSession>
+    <triggerMessage>was traumatized by insectoids</triggerMessage>
+  </DeepColony.TraumaDef>
+
+  <DeepColony.TraumaDef>
+    <defName>DC_Trauma_Betrayal</defName>
+    <label>betrayal trauma</label>
+    <description>Harm from someone trusted cuts deeper than a stranger's blade.</description>
+    <thoughtDef>DC_Thought_Betrayal</thoughtDef>
+    <therapyHealingPerSession>80000</therapyHealingPerSession>
+    <triggerMessage>was betrayed by someone close</triggerMessage>
+  </DeepColony.TraumaDef>
+
 </Defs>

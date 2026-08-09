@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Archetype_FieldSurgeon.label>战地外科医生</DC_Archetype_FieldSurgeon.label>
+  <DC_Archetype_FieldSurgeon.description>精通医疗与射击 — 战斗医护原型。</DC_Archetype_FieldSurgeon.description>
+  <DC_Archetype_Foreman.label>工头</DC_Archetype_Foreman.label>
+  <DC_Archetype_Foreman.description>建造领导力 — 既能施工也能凝聚人心。</DC_Archetype_Foreman.description>
+  <DC_Archetype_Homesteader.label>家园精神</DC_Archetype_Homesteader.label>
+  <DC_Archetype_Homesteader.description>种植与烹饪精通 — 家园之心。</DC_Archetype_Homesteader.description>
+
+</LanguageData>

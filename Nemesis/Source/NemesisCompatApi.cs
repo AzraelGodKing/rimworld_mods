@@ -46,5 +46,14 @@ namespace Nemesis
         }
 
         public static bool WouldClaim(Pawn pawn) => IsNemesisPawn(pawn) || HasActiveHunt;
+
+        /// <summary>
+        /// True when Rimesis should treat this pawn as Missing (cannot call to
+        /// action / hunt down) because Nemesis has exclusive claim on them.
+        /// Prefer this over <see cref="WouldClaim"/> for Availability handshakes:
+        /// WouldClaim is broader (any active hunt). Fail-open; no Rimesis dependency.
+        /// Spec: docs/ideas/nemesis-rimesis-compat.md
+        /// </summary>
+        public static bool ShouldReportMissingToRimesis(Pawn pawn) => IsNemesisPawn(pawn);
     }
 }

@@ -23,4 +23,15 @@
     <scanThings>true</scanThings>
   </WorkGiverDef>
 
+  <WorkGiverDef>
+    <defName>DC_WorkGiver_GroupCounsel</defName>
+    <label>group counsel</label>
+    <giverClass>DeepColony.WorkGiver_GroupCounsel</giverClass>
+    <workType>Doctor</workType>
+    <priorityInType>40</priorityInType>
+    <verb>group counsel</verb>
+    <gerund>group counseling</gerund>
+    <scanThings>true</scanThings>
+  </WorkGiverDef>
+
 </Defs>

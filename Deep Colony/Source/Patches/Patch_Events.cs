@@ -55,12 +55,13 @@ namespace DeepColony.Patches
     [HarmonyPatch(typeof(Pawn_HealthTracker), "MakeDowned")]
     public static class Patch_MakeDowned_Trauma
     {
-        private const float CombatShockChance = 0.40f;
         private static readonly AccessTools.FieldRef<Pawn_HealthTracker, Pawn> PawnField =
             AccessTools.FieldRefAccess<Pawn_HealthTracker, Pawn>("pawn");
 
         public static void Postfix(Pawn_HealthTracker __instance, DamageInfo? dinfo)
         {
+            if (!DeepColonySettings.Get.enableTrauma) return;
+
             Pawn victim = PawnField(__instance);
             if (victim == null || !victim.IsColonistPlayerControlled) return;
             if (!dinfo.HasValue) return;
@@ -69,11 +70,16 @@ namespace DeepColony.Patches
             if (info.Def == null || info.Def.isExplosive) return;
 
             Thing instigator = info.Instigator;
-            if (instigator == null || !instigator.HostileTo(victim)) return;
-            if (!Rand.Chance(CombatShockChance)) return;
+            // Fire / toxic can down without a hostile pawn instigator.
+            bool environmental = info.Def == DamageDefOf.Flame
+                || (info.Def.defName != null && info.Def.defName.IndexOf("Burn", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                || victim.IsBurning();
+            if (!environmental)
+            {
+                if (instigator == null || !instigator.HostileTo(victim)) return;
+            }
 
-            TraumaDef def = DC_DefOf.DC_Trauma_CombatShock;
-            if (def != null) TraumaUtility.ApplyTrauma(victim, def);
+            TraumaEventUtility.TrySpecialtyOrCombatShock(victim, info);
         }
     }
 
@@ -85,10 +91,12 @@ namespace DeepColony.Patches
             if (!__instance.RaceProps.Humanlike) return;
 
             MentorshipUtility.ClearAllLinksInvolving(__instance);
+            FactionEnvoyUtility.NotifyPawnDied(__instance);
 
             bool wasColonist = __instance.Faction == Faction.OfPlayer || __instance.IsColonist;
             if (wasColonist)
             {
+                HeirloomUtility.TryCreateFromDeath(__instance);
                 GameComp_DeepColony.Instance?.NotifyColonistDied(__instance);
             }
 
@@ -122,6 +130,8 @@ namespace DeepColony.Patches
                 TraumaDef loss = DC_DefOf.DC_Trauma_ViolentLoss;
                 if (loss == null) continue;
 
+                Faction killerFaction = dinfo.HasValue ? dinfo.Value.Instigator?.Faction : null;
+
                 TraumaDef bereave = DC_DefOf.DC_Trauma_BereavementShock;
                 if (TraumaUtility.HasTrauma(colonist, loss)
                     || TraumaUtility.HasTrauma(colonist, bereave))
@@ -130,12 +140,12 @@ namespace DeepColony.Patches
                     if (bereave != null)
                     {
                         TraumaUtility.RemoveTrauma(colonist, loss);
-                        TraumaUtility.ApplyTrauma(colonist, bereave, __instance);
+                        TraumaUtility.ApplyTrauma(colonist, bereave, __instance, killerFaction);
                     }
                 }
                 else
                 {
-                    TraumaUtility.ApplyTrauma(colonist, loss, __instance);
+                    TraumaUtility.ApplyTrauma(colonist, loss, __instance, killerFaction);
                 }
             }
         }

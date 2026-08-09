@@ -29,5 +29,6 @@ Triage from Workshop comments plus follow-ups. **Status: implemented on `fix/str
 | Strata | Fog-of-war underground (mlgdrone) | Feature — later |
 | Stormproof | SP2 Storm Vane art polish | Optional polish |
 | Nemesis | Confirm live BFV/Rimesis packageIds | Smoke-test when Font confirms |
+| Nemesis | Leader-raid → Rimesis inject (Font) | Beyond coexistence; needs Rimesis public inject hook — see `nemesis-rimesis-compat.md` |
 
 Deploy when asked: Strata, Homesteader, Stormproof, Nemesis, Date Night.

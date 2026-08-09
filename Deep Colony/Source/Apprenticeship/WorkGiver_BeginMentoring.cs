@@ -17,6 +17,7 @@ namespace DeepColony
 
         public override bool ShouldSkip(Pawn pawn, bool forced = false)
         {
+            if (!DeepColonySettings.Get.enableMentoring) return true;
             // Only skilled pawns with a designated apprentice do this work.
             var comp = pawn.TryGetComp<Comp_DeepColony>();
             return comp == null || pawn.relations.GetDirectRelationsCount(DC_DefOf.DC_MentorOf) == 0;
