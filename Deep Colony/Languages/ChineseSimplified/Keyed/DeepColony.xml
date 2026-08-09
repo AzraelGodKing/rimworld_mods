@@ -21,7 +21,15 @@
   <DC_TraumaApplied>{PAWN} {EVENT}。</DC_TraumaApplied>
   <DC_CounselComplete>辅导完成。</DC_CounselComplete>
   <DC_CounselFloat>辅导 {PAWN} 处理创伤</DC_CounselFloat>
+  <DC_GroupCounselComplete>团体辅导完成。</DC_GroupCounselComplete>
+  <DC_GroupCounselFloat>在 {PAWN} 附近进行团体辅导（房间）</DC_GroupCounselFloat>
   <DC_InspectTrauma>背负心理创伤</DC_InspectTrauma>
+  <DC_InspectGrudge>宿怨：{0}</DC_InspectGrudge>
+  <DC_TraumaRecovered>{PAWN} 从 {TRAUMA} 中恢复了。</DC_TraumaRecovered>
+  <DC_SeasonedGrowth>{PAWN} 在康复中变得更强 — 历练幸存者（+1 专长点）。</DC_SeasonedGrowth>
+  <DC_Flashback>{PAWN} 正在闪回。</DC_Flashback>
+  <DC_FlashbackGrudge>{0} 的袭击勾起了旧日宿怨。</DC_FlashbackGrudge>
+  <DC_DayOfRemembrance>缅怀之日：纪念 {NAME}。</DC_DayOfRemembrance>
 
   <!-- ── Apprenticeship ────────────────────────────────────────────────────── -->
   <DC_BecomeMentor>让 {PAWN} 指导 {APPRENTICE}</DC_BecomeMentor>
@@ -42,5 +50,146 @@
   <DC_InheritedPassionMajor>从 {PARENT} 遗传了对 {SKILL} 的强烈热情</DC_InheritedPassionMajor>
   <DC_InheritanceLetter_Label>遗传特征：{PAWN}</DC_InheritanceLetter_Label>
   <DC_InheritanceLetter_Body>{PAWN} 表现出从殖民者血脉继承特性与热情的迹象。</DC_InheritanceLetter_Body>
+
+  <!-- ── Settings ───────────────────────────────────────────────────────────── -->
+  <DC_Settings_Presets>预设</DC_Settings_Presets>
+  <DC_Settings_PresetsTip>柔和 / 默认 / 困难会重调下方滑块。系统开关保持开启。</DC_Settings_PresetsTip>
+  <DC_Settings_PresetSoft>柔和</DC_Settings_PresetSoft>
+  <DC_Settings_PresetDefault>默认</DC_Settings_PresetDefault>
+  <DC_Settings_PresetHard>困难</DC_Settings_PresetHard>
+  <DC_Settings_Systems>系统</DC_Settings_Systems>
+  <DC_Settings_EnablePerks>启用专长树</DC_Settings_EnablePerks>
+  <DC_Settings_EnablePerksTip>技能门槛专长点与专长树界面。</DC_Settings_EnablePerksTip>
+  <DC_Settings_EnableTrauma>启用创伤与治疗</DC_Settings_EnableTrauma>
+  <DC_Settings_EnableTraumaTip>战斗冲击、丧亲、囚禁、屠杀、辅导工作。</DC_Settings_EnableTraumaTip>
+  <DC_Settings_EnableMentoring>启用学徒制</DC_Settings_EnableMentoring>
+  <DC_Settings_EnableMentoringTip>导师链接、经验加成与指导工作。</DC_Settings_EnableMentoringTip>
+  <DC_Settings_EnableInheritance>启用代际遗传</DC_Settings_EnableInheritance>
+  <DC_Settings_EnableInheritanceTip>从殖民者父母遗传特性与热情。</DC_Settings_EnableInheritanceTip>
+  <DC_Settings_EnableFactionRep>启用派系声望</DC_Settings_EnableFactionRep>
+  <DC_Settings_EnableFactionRepTip>袭击/贸易/礼物/共同击杀漂移，以及闲置盟友/敌人好感。</DC_Settings_EnableFactionRepTip>
+  <DC_Settings_TraumaPenalties>创伤征召 / 工作惩罚</DC_Settings_TraumaPenalties>
+  <DC_Settings_TraumaPenaltiesTip>默认关闭。战斗创伤会降低征召时精度；囚禁创伤在狱卒工作时有心情惩罚。困难预设启用。</DC_Settings_TraumaPenaltiesTip>
+  <DC_Settings_AttitudeConsequences>态度后果</DC_Settings_AttitudeConsequences>
+  <DC_Settings_AttitudeConsequencesTip>默认关闭。友好/亏欠/戒备/复仇态度会影响贸易价格、商队与袭击强度。困难预设启用。</DC_Settings_AttitudeConsequencesTip>
+  <DC_Settings_Phase5>力量系统（阶段 5）</DC_Settings_Phase5>
+  <DC_Settings_Capstones>技能 20 巅峰专长</DC_Settings_Capstones>
+  <DC_Settings_CapstonesTip>默认关闭。在技能 20 增加第三个专长节点。困难预设启用。</DC_Settings_CapstonesTip>
+  <DC_Settings_Branching>分支 L15 专长选择</DC_Settings_Branching>
+  <DC_Settings_BranchingTip>默认关闭。每项技能在 L15 二选一。困难预设启用。</DC_Settings_BranchingTip>
+  <DC_Settings_Respec>专长重置（遗忘）</DC_Settings_Respec>
+  <DC_Settings_RespecTip>允许遗忘已解锁专长（返还点数；心情打击 + 冷却）。默认开启。</DC_Settings_RespecTip>
+  <DC_Settings_RespecCooldown>重置冷却（天）：{0}</DC_Settings_RespecCooldown>
+  <DC_Settings_Archetypes>跨技能原型</DC_Settings_Archetypes>
+  <DC_Settings_ArchetypesTip>默认关闭。在配对技能解锁 L15 后获得称号型原型加成。困难预设启用。</DC_Settings_ArchetypesTip>
+  <DC_Settings_RecruitPrePerks>招募者自带起步专长</DC_Settings_RecruitPrePerks>
+  <DC_Settings_RecruitPrePerksTip>默认关闭。新殖民者自动花费补发点数，仅解锁 L5 专长。</DC_Settings_RecruitPrePerksTip>
+  <DC_Settings_Heirlooms>传家宝</DC_Settings_Heirlooms>
+  <DC_Settings_HeirloomsTip>默认关闭。殖民者死亡可将装备标记为传家宝（携带时心情 + 微小加成）。困难预设启用。</DC_Settings_HeirloomsTip>
+  <DC_Settings_ChronicTrauma>慢性创伤状态</DC_Settings_ChronicTrauma>
+  <DC_Settings_ChronicTraumaTip>默认关闭。未经治疗而到期的创伤可变为慢性压力。辅导可缓解。困难预设启用。</DC_Settings_ChronicTraumaTip>
+  <DC_Settings_Tuning>调参</DC_Settings_Tuning>
+  <DC_Settings_CombatShock>战斗冲击几率：{0}%</DC_Settings_CombatShock>
+  <DC_Settings_MinSkillLead>导师最低技能领先：{0}</DC_Settings_MinSkillLead>
+  <DC_Settings_PassiveMentor>被动指导经验倍率：{0}</DC_Settings_PassiveMentor>
+  <DC_Settings_ActiveMentor>主动指导经验倍率：{0}</DC_Settings_ActiveMentor>
+  <DC_Settings_AllyDriftMtb>盟友闲置漂移 MTB（天）：{0}</DC_Settings_AllyDriftMtb>
+  <DC_Settings_EnemyDriftMtb>敌人闲置漂移 MTB（天）：{0}</DC_Settings_EnemyDriftMtb>
+  <DC_Settings_MassacreThreshold>屠杀死亡阈值：{0}</DC_Settings_MassacreThreshold>
+  <DC_Settings_TraitInherit>特性遗传几率：{0}%</DC_Settings_TraitInherit>
+  <DC_Settings_TherapyScale>治疗愈合倍率：{0}</DC_Settings_TherapyScale>
+  <DC_Settings_Reset>重置为默认</DC_Settings_Reset>
+  <DC_PerkPointsBackfilled>{PAWN} 因技能已越过专长门槛，获得了 {0} 点补发专长点。</DC_PerkPointsBackfilled>
+
+  <!-- ── Phase 1 ────────────────────────────────────────────────────────────── -->
+  <DC_PerkOverviewTitle>殖民地专长</DC_PerkOverviewTitle>
+  <DC_PerkOverview_ColName>殖民者</DC_PerkOverview_ColName>
+  <DC_PerkOverview_ColPoints>点数</DC_PerkOverview_ColPoints>
+  <DC_PerkOverview_ColUnlocked>已解锁</DC_PerkOverview_ColUnlocked>
+  <DC_PerkOverview_ColStatus>状态</DC_PerkOverview_ColStatus>
+  <DC_PerkOverview_Unspent>未花费点数</DC_PerkOverview_Unspent>
+  <DC_PerkOverview_CaughtUp>已跟上</DC_PerkOverview_CaughtUp>
+  <DC_Alert_UnspentPerks>未花费的专长点</DC_Alert_UnspentPerks>
+  <DC_Alert_UnspentPerksDesc>这些殖民者已有超过一天未花费的专长点。打开其专长树（或专长标签页）进行分配。</DC_Alert_UnspentPerksDesc>
+  <DC_Epithet_TrustedPartners>声望：可信伙伴</DC_Epithet_TrustedPartners>
+  <DC_Epithet_Cordial>声望：和睦邻邦</DC_Epithet_Cordial>
+  <DC_Epithet_DeepEnmity>声望：深仇大恨</DC_Epithet_DeepEnmity>
+  <DC_Epithet_SwornEnemies>声望：不共戴天</DC_Epithet_SwornEnemies>
+  <DC_SurnameApplied>{PAWN} 采用了家族姓氏 {SURNAME}。</DC_SurnameApplied>
+  <DC_GraduationLetter_Label>学徒期满：{APPRENTICE}</DC_GraduationLetter_Label>
+  <DC_GraduationLetter_Body>{APPRENTICE} 已追上导师 {MENTOR}。学徒关系结束 — 双方保留建立的纽带，且 {APPRENTICE} 可能继承其师的一丝热情。</DC_GraduationLetter_Body>
+  <DC_GraduationMessage>{APPRENTICE} 从 {MENTOR} 的学徒制中毕业了。</DC_GraduationMessage>
+  <DC_GraduationPassion>{APPRENTICE} 从导师 {MENTOR} 继承了对 {SKILL} 的热情。</DC_GraduationPassion>
+  <DC_ConfidantFormed>{A} 与 {B} 因辅导成为了知己。</DC_ConfidantFormed>
+  <DC_InspectTaughtBy>受教于 {0}</DC_InspectTaughtBy>
+  <DC_InspectLineage>师承：{0}</DC_InspectLineage>
+  <DC_BecomeMentorSkill>让 {PAWN} 在 {SKILL} 上指导 {APPRENTICE}</DC_BecomeMentorSkill>
+  <DC_BecomeMentorSkillFamily>让 {PAWN} 在 {SKILL} 上指导 {APPRENTICE}（家族）</DC_BecomeMentorSkillFamily>
+  <DC_MentorAssignedSkill>{MENTOR} 开始在 {SKILL} 上指导 {APPRENTICE}。</DC_MentorAssignedSkill>
+  <DC_InspectMentorSkill>{0} 的学徒（{1}）</DC_InspectMentorSkill>
+  <DC_PerkTeachProgress>{APPRENTICE} 专长课进度：{PERK}（{0}/{1}）</DC_PerkTeachProgress>
+  <DC_PerkTaught>{MENTOR} 将专长传授给了 {APPRENTICE}：{PERK}。</DC_PerkTaught>
+  <DC_RivalFormed>{A} 与 {B} 在 {SKILL} 上成为了对手。</DC_RivalFormed>
+  <DC_ElderPerkPoint>{PAWN} 被尊为长者，获得一点专长点。</DC_ElderPerkPoint>
+  <DC_FamilyTradition>来自 {PARENT} 的 {SKILL} 家族传统</DC_FamilyTradition>
+  <DC_AdoptivePassion>从照料者 {PARENT} 学到了对 {SKILL} 的热情</DC_AdoptivePassion>
+  <DC_LegacyTitle>殖民地传承</DC_LegacyTitle>
+  <DC_LegacySurname>创始姓氏：{0}</DC_LegacySurname>
+  <DC_LegacyStats>在世殖民者：{0} · 有专长：{1} · 学徒：{2} · 长者：{3}</DC_LegacyStats>
+  <DC_LegacyColonists>殖民者</DC_LegacyColonists>
+
+  <!-- ── Phase 4 reputation ─────────────────────────────────────────────────── -->
+  <DC_RepTitle>派系声望</DC_RepTitle>
+  <DC_RepDetailHeader>声望</DC_RepDetailHeader>
+  <DC_RepEpithet>立场：{0}</DC_RepEpithet>
+  <DC_RepNoEpithet>立场：—</DC_RepNoEpithet>
+  <DC_RepDisabled>派系声望已在模组设置中关闭。</DC_RepDisabled>
+  <DC_RepConsequencesOn>态度后果：开（贸易 / 商队 / 袭击）。</DC_RepConsequencesOn>
+  <DC_RepConsequencesOff>态度后果：关（仅账本 + 使者）。</DC_RepConsequencesOff>
+  <DC_RepSelectFaction>选择一个派系以查看其声望账本。</DC_RepSelectFaction>
+  <DC_RepGoodwill>好感：{0}</DC_RepGoodwill>
+  <DC_RepPending>待结算漂移：{0}</DC_RepPending>
+  <DC_RepAttitude>态度：{0}</DC_RepAttitude>
+  <DC_RepEnvoy>使者：{0}</DC_RepEnvoy>
+  <DC_RepNoEnvoy>使者：无</DC_RepNoEnvoy>
+  <DC_RepEnvoyShort>使者 {0}</DC_RepEnvoyShort>
+  <DC_RepLedgerHeader>账本（最新在前）</DC_RepLedgerHeader>
+  <DC_RepLedgerEmpty>尚无记录的声望事件。</DC_RepLedgerEmpty>
+  <DC_RepLedgerLine>{0}：{1} ×{2}  （约 {3} 天前）</DC_RepLedgerLine>
+  <DC_RepReason_Other>其他</DC_RepReason_Other>
+  <DC_RepReason_Raid>袭击我们</DC_RepReason_Raid>
+  <DC_RepReason_SharedEnemyRaid>袭击者的共同敌人</DC_RepReason_SharedEnemyRaid>
+  <DC_RepReason_TradeCaravan>贸易商队</DC_RepReason_TradeCaravan>
+  <DC_RepReason_SuccessfulTrade>成功交易</DC_RepReason_SuccessfulTrade>
+  <DC_RepReason_Gift>访客礼物</DC_RepReason_Gift>
+  <DC_RepReason_SharedKill>共同敌人击杀</DC_RepReason_SharedKill>
+  <DC_RepReason_Grudge>创伤宿怨</DC_RepReason_Grudge>
+  <DC_RepReason_LwVictory>世界胜利共鸣</DC_RepReason_LwVictory>
+  <DC_RepReason_LwBetrayal>世界背叛</DC_RepReason_LwBetrayal>
+  <DC_RepReason_LwRefugee>世界难民同情</DC_RepReason_LwRefugee>
+  <DC_RepReason_IdleAlly>闲置盟友漂移</DC_RepReason_IdleAlly>
+  <DC_RepReason_IdleEnemy>闲置敌人缓和</DC_RepReason_IdleEnemy>
+  <DC_RepReason_Envoy>私人使者</DC_RepReason_Envoy>
+  <DC_RepReason_Debug>调试</DC_RepReason_Debug>
+  <DC_Attitude_Neutral>中立</DC_Attitude_Neutral>
+  <DC_Attitude_Cordial>友好</DC_Attitude_Cordial>
+  <DC_Attitude_Indebted>亏欠</DC_Attitude_Indebted>
+  <DC_Attitude_Wary>戒备</DC_Attitude_Wary>
+  <DC_Attitude_Vengeful>复仇</DC_Attitude_Vengeful>
+  <DC_SetEnvoy>任命 {PAWN} 为驻 {FACTION} 使者</DC_SetEnvoy>
+  <DC_ClearEnvoy>解除 {PAWN} 的使者职务（{FACTION}）</DC_ClearEnvoy>
+  <DC_EnvoyCurrent>（当前）</DC_EnvoyCurrent>
+  <DC_EnvoyAssigned>{PAWN} 现为殖民地驻 {FACTION} 使者。</DC_EnvoyAssigned>
+  <DC_EnvoyDied>{PAWN} 在担任驻 {FACTION} 使者期间死亡 — 好感受损。</DC_EnvoyDied>
+  <DC_TradeRefusedAttitude>{0} 拒绝交易 — 态度过于敌对。</DC_TradeRefusedAttitude>
+
+  <!-- ── Phase 5 power ──────────────────────────────────────────────────────── -->
+  <DC_PerkForgetBtn>遗忘</DC_PerkForgetBtn>
+  <DC_PerkForgotten>{PAWN} 遗忘了专长：{PERK}。</DC_PerkForgotten>
+  <DC_ArchetypeGained>{PAWN} 成为了{ARCH}。</DC_ArchetypeGained>
+  <DC_InspectArchetype>原型：{0}</DC_InspectArchetype>
+  <DC_RecruitPrePerked>{PAWN} 抵达时已解锁起步专长。</DC_RecruitPrePerked>
+  <DC_HeirloomCreated>{PAWN} 的 {ITEM} 现已成为殖民地传家宝。</DC_HeirloomCreated>
+  <DC_ChronicTrauma>{PAWN} 未治疗的创伤沉淀为慢性压力。</DC_ChronicTrauma>
 
 </LanguageData>

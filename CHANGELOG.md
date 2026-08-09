@@ -4,6 +4,16 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Deep Colony** — CN/RU spot-check for 2.0 tabs + Phase 5 (Keyed + DefInjected fill). → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony** — Workshop / docs polish: About.xml description rewritten per system for 2.0; docs page rebuilt with per-system 2.0 cards + Soft/Default/Hard defaults callout; new 2.0 Workshop preview (perk-tree constellation). → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md) · [docs/deep-colony.html](docs/deep-colony.html)
+- **Nemesis / Deep Colony / Rimesis** — soft-compat: Availability / Missing handshake (Font Availability states + Nemesis `ShouldReportMissingToRimesis` stub); capture/truce goodwill OK with DC ledger; leader raid → Rimesis inject still later. → [docs/ideas/nemesis-rimesis-compat.md](docs/ideas/nemesis-rimesis-compat.md)
+- **Homesteader** — Little guy trait (flavor-only) + one-time update mail on first load. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
+- **Deep Colony** — Phase 5 power systems (`phase5-power-v1`): L20 capstones, L15 branches, respec, archetypes, recruit pre-perks, heirlooms, chronic trauma (mostly settings-gated). → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony** — Phase 4 reputation transparency (`phase4-reputation-v1`): ledger UI, personal envoys, settings-gated attitude consequences. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony** — Phase 3 trauma depth (`phase3-trauma-depth-v1`): therapy quality, group counsel, specialty/betrayal trauma, scars/resilience, flashbacks, combat habits, optional penalties, grudges, remembrance. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony** — Phase 2 mentoring & generations (`phase2-mentor-gen-v1`): skill-focus teach, lineage mentors, Biotech blackboard XP boost, legacy tab, deeper inheritance, elders, perk apprenticeship, rivalry. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony** — Phase 1 quick wins (`phase1-quickwins-v1`): perk overview tab, numeric tips, skill rust, graduation, confidant, surnames, epithets. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony** — Phase 0 foundation (`phase0-foundation-v1`): settings pack, expanded Dev tools, retroactive perk points; 42-idea phased roadmap. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md) · [docs/ideas/deep-colony-updates.md](docs/ideas/deep-colony-updates.md)
 - **Repo** — stop tracking `.tmp/` scratch (IL dumps, decompiles, preview compressors); already gitignored for local use only (`repo-cleanup-tmp-v1`).
 - **Strata** — second level under/over mountain keeps mineable rock (`mountain-second-level-rock-v1`): dig hollow checks mountain footprint + guaranteed fill; A+ over mountain mass is diggable rock, not empty deck. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Docs Workshop stats** — hub/mod subscriber counts fetch live in-browser from Steam (no hourly GitHub Action). Roster at `docs/data/workshop-mods.json`; `stats-cache.json` kept only as offline fallback. → [docs/scripts/stats-display.js](docs/scripts/stats-display.js)

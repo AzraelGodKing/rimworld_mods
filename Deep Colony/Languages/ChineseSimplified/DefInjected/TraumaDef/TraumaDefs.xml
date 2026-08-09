@@ -16,5 +16,17 @@
   <DC_Trauma_BereavementShock.label>丧亲冲击</DC_Trauma_BereavementShock.label>
   <DC_Trauma_BereavementShock.description>短时间内突然失去多名亲近同伴。</DC_Trauma_BereavementShock.description>
   <DC_Trauma_BereavementShock.triggerMessage>短时间内失去多名同伴</DC_Trauma_BereavementShock.triggerMessage>
+  <DC_Trauma_Fire.label>火焰创伤</DC_Trauma_Fire.label>
+  <DC_Trauma_Fire.description>可怕的烧伤与火焰记忆。</DC_Trauma_Fire.description>
+  <DC_Trauma_Fire.triggerMessage>被火焰留下伤痕</DC_Trauma_Fire.triggerMessage>
+  <DC_Trauma_Toxic.label>毒素创伤</DC_Trauma_Toxic.label>
+  <DC_Trauma_Toxic.description>窒息于毒物留下对污染的持久恐惧。</DC_Trauma_Toxic.description>
+  <DC_Trauma_Toxic.triggerMessage>遭受了毒素暴露创伤</DC_Trauma_Toxic.triggerMessage>
+  <DC_Trauma_Insect.label>虫群恐惧</DC_Trauma_Insect.label>
+  <DC_Trauma_Insect.description>虫族的窸窣与蜂拥留下深深恐惧。</DC_Trauma_Insect.description>
+  <DC_Trauma_Insect.triggerMessage>被虫族创伤了</DC_Trauma_Insect.triggerMessage>
+  <DC_Trauma_Betrayal.label>背叛创伤</DC_Trauma_Betrayal.label>
+  <DC_Trauma_Betrayal.description>来自信任之人的伤害比陌生人的刀更深。</DC_Trauma_Betrayal.description>
+  <DC_Trauma_Betrayal.triggerMessage>被亲近之人背叛</DC_Trauma_Betrayal.triggerMessage>
 
 </LanguageData>

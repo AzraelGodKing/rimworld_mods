@@ -21,7 +21,15 @@
   <DC_TraumaApplied>{PAWN} {EVENT}.</DC_TraumaApplied>
   <DC_CounselComplete>Консультирование завершено.</DC_CounselComplete>
   <DC_CounselFloat>Проконсультировать {PAWN} насчёт травмы</DC_CounselFloat>
+  <DC_GroupCounselComplete>Групповое консультирование завершено.</DC_GroupCounselComplete>
+  <DC_GroupCounselFloat>Групповое консультирование рядом с {PAWN} (комната)</DC_GroupCounselFloat>
   <DC_InspectTrauma>Несёт психологическую травму</DC_InspectTrauma>
+  <DC_InspectGrudge>Обида: {0}</DC_InspectGrudge>
+  <DC_TraumaRecovered>{PAWN} оправился(ась) от {TRAUMA}.</DC_TraumaRecovered>
+  <DC_SeasonedGrowth>{PAWN} стал(а) сильнее после восстановления — закалённый выживший (+1 очко перка).</DC_SeasonedGrowth>
+  <DC_Flashback>У {PAWN} флэшбэк.</DC_Flashback>
+  <DC_FlashbackGrudge>Набег {0} будит старые обиды.</DC_FlashbackGrudge>
+  <DC_DayOfRemembrance>День памяти о {NAME}.</DC_DayOfRemembrance>
 
   <!-- ── Apprenticeship ────────────────────────────────────────────────────── -->
   <DC_BecomeMentor>Сделать {PAWN} наставником для {APPRENTICE}</DC_BecomeMentor>
@@ -42,5 +50,146 @@
   <DC_InheritedPassionMajor>Унаследована сильная страсть к {SKILL} от {PARENT}</DC_InheritedPassionMajor>
   <DC_InheritanceLetter_Label>Унаследованные черты: {PAWN}</DC_InheritanceLetter_Label>
   <DC_InheritanceLetter_Body>{PAWN} проявляет признаки наследования черт и страстей из линии колонистов.</DC_InheritanceLetter_Body>
+
+  <!-- ── Settings ───────────────────────────────────────────────────────────── -->
+  <DC_Settings_Presets>Пресеты</DC_Settings_Presets>
+  <DC_Settings_PresetsTip>Мягкий / По умолчанию / Сложный перенастраивают ползунки ниже. Переключатели систем остаются включёнными.</DC_Settings_PresetsTip>
+  <DC_Settings_PresetSoft>Мягкий</DC_Settings_PresetSoft>
+  <DC_Settings_PresetDefault>По умолчанию</DC_Settings_PresetDefault>
+  <DC_Settings_PresetHard>Сложный</DC_Settings_PresetHard>
+  <DC_Settings_Systems>Системы</DC_Settings_Systems>
+  <DC_Settings_EnablePerks>Включить деревья перков</DC_Settings_EnablePerks>
+  <DC_Settings_EnablePerksTip>Очки перков по порогам навыка и интерфейс дерева перков.</DC_Settings_EnablePerksTip>
+  <DC_Settings_EnableTrauma>Включить травму и терапию</DC_Settings_EnableTrauma>
+  <DC_Settings_EnableTraumaTip>Боевой шок, утраты, плен, резня, работа консультирования.</DC_Settings_EnableTraumaTip>
+  <DC_Settings_EnableMentoring>Включить ученичество</DC_Settings_EnableMentoring>
+  <DC_Settings_EnableMentoringTip>Связи наставника, бонусы опыта и работа наставничества.</DC_Settings_EnableMentoringTip>
+  <DC_Settings_EnableInheritance>Включить поколенческое наследование</DC_Settings_EnableInheritance>
+  <DC_Settings_EnableInheritanceTip>Наследование черт и страстей от родителей-колонистов.</DC_Settings_EnableInheritanceTip>
+  <DC_Settings_EnableFactionRep>Включить живую репутацию фракций</DC_Settings_EnableFactionRep>
+  <DC_Settings_EnableFactionRepTip>Дрейф от набегов/торговли/подарков/общих убийств и редкий idle-дрейф союзников/врагов.</DC_Settings_EnableFactionRepTip>
+  <DC_Settings_TraumaPenalties>Штрафы травмы при призыве / работе</DC_Settings_TraumaPenalties>
+  <DC_Settings_TraumaPenaltiesTip>По умолчанию выкл. Боевая травма снижает точность в призыве; травма плена даёт штраф настроения на работе надзирателя. Сложный пресет включает.</DC_Settings_TraumaPenaltiesTip>
+  <DC_Settings_AttitudeConsequences>Последствия отношения</DC_Settings_AttitudeConsequences>
+  <DC_Settings_AttitudeConsequencesTip>По умолчанию выкл. Приветливое/обязанное/настороженное/мстительное отношение влияет на цены, караваны торговцев и силу набегов. Сложный пресет включает.</DC_Settings_AttitudeConsequencesTip>
+  <DC_Settings_Phase5>Системы силы (фаза 5)</DC_Settings_Phase5>
+  <DC_Settings_Capstones>Капстоун-перки навыка 20</DC_Settings_Capstones>
+  <DC_Settings_CapstonesTip>По умолчанию выкл. Добавляет третий узел перка на навыке 20. Сложный пресет включает.</DC_Settings_CapstonesTip>
+  <DC_Settings_Branching>Ветвление выбора L15</DC_Settings_Branching>
+  <DC_Settings_BranchingTip>По умолчанию выкл. Выберите один из двух перков L15 на навык. Сложный пресет включает.</DC_Settings_BranchingTip>
+  <DC_Settings_Respec>Сброс перков (забыть)</DC_Settings_Respec>
+  <DC_Settings_RespecTip>Позволяет забыть разблокированный перк (возврат очка; удар по настроению + перезарядка). По умолчанию вкл.</DC_Settings_RespecTip>
+  <DC_Settings_RespecCooldown>Перезарядка сброса (дни): {0}</DC_Settings_RespecCooldown>
+  <DC_Settings_Archetypes>Межнавыковые архетипы</DC_Settings_Archetypes>
+  <DC_Settings_ArchetypesTip>По умолчанию выкл. Разблокировка L15 в парных навыках даёт титульный бонус архетипа. Сложный пресет включает.</DC_Settings_ArchetypesTip>
+  <DC_Settings_RecruitPrePerks>Рекруты приходят с перками</DC_Settings_RecruitPrePerks>
+  <DC_Settings_RecruitPrePerksTip>По умолчанию выкл. Новые колонисты автоматически тратят наверстанные очки только на перки L5.</DC_Settings_RecruitPrePerksTip>
+  <DC_Settings_Heirlooms>Наследные вещи</DC_Settings_Heirlooms>
+  <DC_Settings_HeirloomsTip>По умолчанию выкл. Смерть колониста может отметить снаряжение как наследную вещь (настроение + крошечный бонус при ношении). Сложный пресет включает.</DC_Settings_HeirloomsTip>
+  <DC_Settings_ChronicTrauma>Хедiff хронической травмы</DC_Settings_ChronicTrauma>
+  <DC_Settings_ChronicTraumaTip>По умолчанию выкл. Травма, истёкшая без терапии, может стать хроническим стрессом. Консультирование ослабляет. Сложный пресет включает.</DC_Settings_ChronicTraumaTip>
+  <DC_Settings_Tuning>Настройка</DC_Settings_Tuning>
+  <DC_Settings_CombatShock>Шанс боевого шока: {0}%</DC_Settings_CombatShock>
+  <DC_Settings_MinSkillLead>Мин. отрыв навыка наставника: {0}</DC_Settings_MinSkillLead>
+  <DC_Settings_PassiveMentor>Множитель пассивного наставничества: {0}</DC_Settings_PassiveMentor>
+  <DC_Settings_ActiveMentor>Множитель активного наставничества: {0}</DC_Settings_ActiveMentor>
+  <DC_Settings_AllyDriftMtb>MTB idle-дрейфа союзников (дни): {0}</DC_Settings_AllyDriftMtb>
+  <DC_Settings_EnemyDriftMtb>MTB idle-дрейфа врагов (дни): {0}</DC_Settings_EnemyDriftMtb>
+  <DC_Settings_MassacreThreshold>Порог смертей для резни: {0}</DC_Settings_MassacreThreshold>
+  <DC_Settings_TraitInherit>Шанс наследования черты: {0}%</DC_Settings_TraitInherit>
+  <DC_Settings_TherapyScale>Множитель лечения терапией: {0}</DC_Settings_TherapyScale>
+  <DC_Settings_Reset>Сбросить к умолчаниям</DC_Settings_Reset>
+  <DC_PerkPointsBackfilled>{PAWN} получил(а) {0} ретроактивных очк. перков за навыки уже выше порогов.</DC_PerkPointsBackfilled>
+
+  <!-- ── Phase 1 ────────────────────────────────────────────────────────────── -->
+  <DC_PerkOverviewTitle>Перки колонии</DC_PerkOverviewTitle>
+  <DC_PerkOverview_ColName>Колонист</DC_PerkOverview_ColName>
+  <DC_PerkOverview_ColPoints>Очки</DC_PerkOverview_ColPoints>
+  <DC_PerkOverview_ColUnlocked>Разблокировано</DC_PerkOverview_ColUnlocked>
+  <DC_PerkOverview_ColStatus>Статус</DC_PerkOverview_ColStatus>
+  <DC_PerkOverview_Unspent>Непотраченные очки</DC_PerkOverview_Unspent>
+  <DC_PerkOverview_CaughtUp>В курсе</DC_PerkOverview_CaughtUp>
+  <DC_Alert_UnspentPerks>Непотраченные очки перков</DC_Alert_UnspentPerks>
+  <DC_Alert_UnspentPerksDesc>У этих колонистов больше суток лежат непотраченные очки перков. Откройте их дерево перков (или вкладку Перки), чтобы потратить.</DC_Alert_UnspentPerksDesc>
+  <DC_Epithet_TrustedPartners>Репутация: надёжные партнёры</DC_Epithet_TrustedPartners>
+  <DC_Epithet_Cordial>Репутация: приветливые соседи</DC_Epithet_Cordial>
+  <DC_Epithet_DeepEnmity>Репутация: глубокая вражда</DC_Epithet_DeepEnmity>
+  <DC_Epithet_SwornEnemies>Репутация: заклятые враги</DC_Epithet_SwornEnemies>
+  <DC_SurnameApplied>{PAWN} взял(а) фамильное имя {SURNAME}.</DC_SurnameApplied>
+  <DC_GraduationLetter_Label>Ученичество завершено: {APPRENTICE}</DC_GraduationLetter_Label>
+  <DC_GraduationLetter_Body>{APPRENTICE} догнал(а) наставника {MENTOR}. Ученичество заканчивается — оба сохраняют связь, и {APPRENTICE} может унести искру страсти учителя.</DC_GraduationLetter_Body>
+  <DC_GraduationMessage>{APPRENTICE} окончил(а) ученичество у {MENTOR}.</DC_GraduationMessage>
+  <DC_GraduationPassion>{APPRENTICE} унаследовал(а) страсть к {SKILL} от наставника {MENTOR}.</DC_GraduationPassion>
+  <DC_ConfidantFormed>{A} и {B} стали доверенными через консультирование.</DC_ConfidantFormed>
+  <DC_InspectTaughtBy>Учил(а) {0}</DC_InspectTaughtBy>
+  <DC_InspectLineage>Линия обучения: {0}</DC_InspectLineage>
+  <DC_BecomeMentorSkill>Сделать {PAWN} наставником {APPRENTICE} в {SKILL}</DC_BecomeMentorSkill>
+  <DC_BecomeMentorSkillFamily>Сделать {PAWN} наставником {APPRENTICE} в {SKILL} (семья)</DC_BecomeMentorSkillFamily>
+  <DC_MentorAssignedSkill>{MENTOR} теперь наставляет {APPRENTICE} в {SKILL}.</DC_MentorAssignedSkill>
+  <DC_InspectMentorSkill>Ученик у {0} ({1})</DC_InspectMentorSkill>
+  <DC_PerkTeachProgress>Прогресс урока перка {APPRENTICE}: {PERK} ({0}/{1})</DC_PerkTeachProgress>
+  <DC_PerkTaught>{MENTOR} обучил(а) {APPRENTICE} перку: {PERK}.</DC_PerkTaught>
+  <DC_RivalFormed>{A} и {B} стали соперниками в {SKILL}.</DC_RivalFormed>
+  <DC_ElderPerkPoint>{PAWN} признан(а) старейшиной и получает очко перка.</DC_ElderPerkPoint>
+  <DC_FamilyTradition>Семейная традиция {SKILL} от {PARENT}</DC_FamilyTradition>
+  <DC_AdoptivePassion>Перенял(а) страсть к {SKILL} от опекуна {PARENT}</DC_AdoptivePassion>
+  <DC_LegacyTitle>Наследие колонии</DC_LegacyTitle>
+  <DC_LegacySurname>Фамилия основателя: {0}</DC_LegacySurname>
+  <DC_LegacyStats>Живые колонисты: {0} · С перками: {1} · Ученики: {2} · Старейшины: {3}</DC_LegacyStats>
+  <DC_LegacyColonists>Колонисты</DC_LegacyColonists>
+
+  <!-- ── Phase 4 reputation ─────────────────────────────────────────────────── -->
+  <DC_RepTitle>Репутация фракций</DC_RepTitle>
+  <DC_RepDetailHeader>Репутация</DC_RepDetailHeader>
+  <DC_RepEpithet>Положение: {0}</DC_RepEpithet>
+  <DC_RepNoEpithet>Положение: —</DC_RepNoEpithet>
+  <DC_RepDisabled>Живая репутация фракций отключена в настройках мода.</DC_RepDisabled>
+  <DC_RepConsequencesOn>Последствия отношения: ВКЛ (торговля / караваны / набеги).</DC_RepConsequencesOn>
+  <DC_RepConsequencesOff>Последствия отношения: выкл (только журнал + посланники).</DC_RepConsequencesOff>
+  <DC_RepSelectFaction>Выберите фракцию, чтобы увидеть журнал репутации.</DC_RepSelectFaction>
+  <DC_RepGoodwill>Расположение: {0}</DC_RepGoodwill>
+  <DC_RepPending>Ожидающий дрейф: {0}</DC_RepPending>
+  <DC_RepAttitude>Отношение: {0}</DC_RepAttitude>
+  <DC_RepEnvoy>Посланник: {0}</DC_RepEnvoy>
+  <DC_RepNoEnvoy>Посланник: нет</DC_RepNoEnvoy>
+  <DC_RepEnvoyShort>посланник {0}</DC_RepEnvoyShort>
+  <DC_RepLedgerHeader>Журнал (сначала новые)</DC_RepLedgerHeader>
+  <DC_RepLedgerEmpty>Записей о репутации пока нет.</DC_RepLedgerEmpty>
+  <DC_RepLedgerLine>{0}: {1} ×{2}  (~{3} дн. назад)</DC_RepLedgerLine>
+  <DC_RepReason_Other>Прочее</DC_RepReason_Other>
+  <DC_RepReason_Raid>Набег на нас</DC_RepReason_Raid>
+  <DC_RepReason_SharedEnemyRaid>Общий враг налётчика</DC_RepReason_SharedEnemyRaid>
+  <DC_RepReason_TradeCaravan>Торговый караван</DC_RepReason_TradeCaravan>
+  <DC_RepReason_SuccessfulTrade>Успешная сделка</DC_RepReason_SuccessfulTrade>
+  <DC_RepReason_Gift>Подарок посетителя</DC_RepReason_Gift>
+  <DC_RepReason_SharedKill>Убийство общего врага</DC_RepReason_SharedKill>
+  <DC_RepReason_Grudge>Травматическая обида</DC_RepReason_Grudge>
+  <DC_RepReason_LwVictory>Сочувствие мировой победе</DC_RepReason_LwVictory>
+  <DC_RepReason_LwBetrayal>Мировое предательство</DC_RepReason_LwBetrayal>
+  <DC_RepReason_LwRefugee>Сочувствие мировым беженцам</DC_RepReason_LwRefugee>
+  <DC_RepReason_IdleAlly>Idle-дрейф союзника</DC_RepReason_IdleAlly>
+  <DC_RepReason_IdleEnemy>Idle-оттепель врага</DC_RepReason_IdleEnemy>
+  <DC_RepReason_Envoy>Личный посланник</DC_RepReason_Envoy>
+  <DC_RepReason_Debug>Отладка</DC_RepReason_Debug>
+  <DC_Attitude_Neutral>Нейтральное</DC_Attitude_Neutral>
+  <DC_Attitude_Cordial>Приветливое</DC_Attitude_Cordial>
+  <DC_Attitude_Indebted>Обязанное</DC_Attitude_Indebted>
+  <DC_Attitude_Wary>Настороженное</DC_Attitude_Wary>
+  <DC_Attitude_Vengeful>Мстительное</DC_Attitude_Vengeful>
+  <DC_SetEnvoy>Сделать {PAWN} посланником к {FACTION}</DC_SetEnvoy>
+  <DC_ClearEnvoy>Снять роль посланника с {PAWN} ({FACTION})</DC_ClearEnvoy>
+  <DC_EnvoyCurrent>(текущий)</DC_EnvoyCurrent>
+  <DC_EnvoyAssigned>{PAWN} теперь посланник колонии к {FACTION}.</DC_EnvoyAssigned>
+  <DC_EnvoyDied>{PAWN} погиб(ла), будучи посланником к {FACTION} — расположение страдает.</DC_EnvoyDied>
+  <DC_TradeRefusedAttitude>{0} отказываются торговать — отношение слишком враждебное.</DC_TradeRefusedAttitude>
+
+  <!-- ── Phase 5 power ──────────────────────────────────────────────────────── -->
+  <DC_PerkForgetBtn>Забыть</DC_PerkForgetBtn>
+  <DC_PerkForgotten>{PAWN} забыл(а) перк: {PERK}.</DC_PerkForgotten>
+  <DC_ArchetypeGained>{PAWN} стал(а) {ARCH}.</DC_ArchetypeGained>
+  <DC_InspectArchetype>Архетип: {0}</DC_InspectArchetype>
+  <DC_RecruitPrePerked>{PAWN} прибыл(а) со стартовыми перками.</DC_RecruitPrePerked>
+  <DC_HeirloomCreated>{ITEM} {PAWN} теперь наследная вещь колонии.</DC_HeirloomCreated>
+  <DC_ChronicTrauma>Невылеченная травма {PAWN} перешла в хронический стресс.</DC_ChronicTrauma>
 
 </LanguageData>

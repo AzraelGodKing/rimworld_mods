@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_SuppressingFire</defName>
+    <label>suppressing fire</label>
+    <description>Faster aiming under pressure.</description>
+    <stages><li><label>active</label>
+      <statFactors><AimingDelayFactor>0.80</AimingDelayFactor></statFactors>
+      <statOffsets><ShootingAccuracyPawn>0.05</ShootingAccuracyPawn></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_Deadeye</defName>
+    <label>deadeye</label>
+    <description>Capstone marksmanship.</description>
+    <stages><li><label>active</label>
+      <statOffsets><ShootingAccuracyPawn>0.14</ShootingAccuracyPawn></statOffsets>
+      <statFactors><AimingDelayFactor>0.75</AimingDelayFactor></statFactors>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_Duelist</defName>
+    <label>duelist</label>
+    <description>Precision melee focus.</description>
+    <stages><li><label>active</label>
+      <statOffsets><MeleeHitChance>0.08</MeleeHitChance><MeleeDodgeChance>0.05</MeleeDodgeChance></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_IronWill</defName>
+    <label>iron will</label>
+    <description>Capstone melee endurance.</description>
+    <stages><li><label>active</label>
+      <statOffsets><MeleeHitChance>0.10</MeleeHitChance><MeleeDodgeChance>0.08</MeleeDodgeChance></statOffsets>
+      <statFactors><IncomingDamageFactor>0.92</IncomingDamageFactor></statFactors>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_FieldMedic</defName>
+    <label>field medic</label>
+    <description>Faster field tending.</description>
+    <stages><li><label>active</label>
+      <statOffsets><MedicalTendSpeed>0.20</MedicalTendSpeed><MedicalTendQuality>0.08</MedicalTendQuality></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_MiracleWorker</defName>
+    <label>miracle worker</label>
+    <description>Capstone surgery mastery.</description>
+    <stages><li><label>active</label>
+      <statOffsets><MedicalSurgerySuccessChance>0.15</MedicalSurgerySuccessChance><MedicalTendQuality>0.12</MedicalTendQuality></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_Fortifier</defName>
+    <label>fortifier</label>
+    <description>Tougher construction.</description>
+    <stages><li><label>active</label>
+      <statOffsets><ConstructionSpeed>0.15</ConstructionSpeed><FixBrokenDownBuildingSuccessChance>0.10</FixBrokenDownBuildingSuccessChance></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_MasterBuilder</defName>
+    <label>master builder</label>
+    <description>Capstone construction.</description>
+    <stages><li><label>active</label>
+      <statOffsets><ConstructionSpeed>0.25</ConstructionSpeed><ConstructSuccessChance>0.12</ConstructSuccessChance></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_EfficientSmith</defName>
+    <label>efficient smith</label>
+    <description>Leaner crafting.</description>
+    <stages><li><label>active</label>
+      <statOffsets><WorkSpeedGlobal>0.08</WorkSpeedGlobal><GeneralLaborSpeed>0.10</GeneralLaborSpeed></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_LegendarySmith</defName>
+    <label>legendary smith</label>
+    <description>Capstone crafting.</description>
+    <stages><li><label>active</label>
+      <statOffsets><WorkSpeedGlobal>0.12</WorkSpeedGlobal><GeneralLaborSpeed>0.15</GeneralLaborSpeed></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_CropHusband</defName>
+    <label>crop husband</label>
+    <description>Better harvests.</description>
+    <stages><li><label>active</label>
+      <statOffsets><PlantWorkSpeed>0.18</PlantWorkSpeed><PlantHarvestYield>0.10</PlantHarvestYield></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_GreenSage</defName>
+    <label>green sage</label>
+    <description>Capstone plants.</description>
+    <stages><li><label>active</label>
+      <statOffsets><PlantWorkSpeed>0.25</PlantWorkSpeed><PlantHarvestYield>0.15</PlantHarvestYield></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_HerdKeeper</defName>
+    <label>herd keeper</label>
+    <description>Calmer animals.</description>
+    <stages><li><label>active</label>
+      <statOffsets><AnimalGatherSpeed>0.15</AnimalGatherSpeed><TameAnimalChance>0.08</TameAnimalChance></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_BeastBond</defName>
+    <label>beast bond</label>
+    <description>Capstone animals.</description>
+    <stages><li><label>active</label>
+      <statOffsets><AnimalGatherSpeed>0.20</AnimalGatherSpeed><TameAnimalChance>0.12</TameAnimalChance><TrainAnimalChance>0.10</TrainAnimalChance></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_TunnelRat</defName>
+    <label>tunnel rat</label>
+    <description>Faster digging.</description>
+    <stages><li><label>active</label>
+      <statOffsets><MiningSpeed>0.18</MiningSpeed><MoveSpeed>0.05</MoveSpeed></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_VeinSense</defName>
+    <label>vein sense</label>
+    <description>Capstone mining.</description>
+    <stages><li><label>active</label>
+      <statOffsets><MiningSpeed>0.25</MiningSpeed><MiningYield>0.10</MiningYield></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_Archivist</defName>
+    <label>archivist</label>
+    <description>Focused research.</description>
+    <stages><li><label>active</label>
+      <statOffsets><ResearchSpeed>0.18</ResearchSpeed><GlobalLearningFactor>0.05</GlobalLearningFactor></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_Polymath</defName>
+    <label>polymath</label>
+    <description>Capstone intellectual.</description>
+    <stages><li><label>active</label>
+      <statOffsets><ResearchSpeed>0.25</ResearchSpeed><GlobalLearningFactor>0.10</GlobalLearningFactor></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_Negotiator</defName>
+    <label>negotiator</label>
+    <description>Softer trades and talks.</description>
+    <stages><li><label>active</label>
+      <statOffsets><TradePriceImprovement>0.08</TradePriceImprovement><SocialImpact>0.10</SocialImpact></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_SilverTongue</defName>
+    <label>silver tongue</label>
+    <description>Capstone social.</description>
+    <stages><li><label>active</label>
+      <statOffsets><TradePriceImprovement>0.12</TradePriceImprovement><SocialImpact>0.15</SocialImpact><NegotiationAbility>0.15</NegotiationAbility></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_Provisioner</defName>
+    <label>provisioner</label>
+    <description>Efficient cooking.</description>
+    <stages><li><label>active</label>
+      <statOffsets><CookSpeed>0.18</CookSpeed><FoodPoisonChance>-0.08</FoodPoisonChance></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_Feastwright</defName>
+    <label>feastwright</label>
+    <description>Capstone cooking.</description>
+    <stages><li><label>active</label>
+      <statOffsets><CookSpeed>0.25</CookSpeed><FoodPoisonChance>-0.12</FoodPoisonChance></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_Storyteller</defName>
+    <label>storyteller</label>
+    <description>Memorable art.</description>
+    <stages><li><label>active</label>
+      <statOffsets><GeneralLaborSpeed>0.10</GeneralLaborSpeed><WorkSpeedGlobal>0.06</WorkSpeedGlobal></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_Virtuoso</defName>
+    <label>virtuoso</label>
+    <description>Capstone artistic.</description>
+    <stages><li><label>active</label>
+      <statOffsets><GeneralLaborSpeed>0.15</GeneralLaborSpeed><WorkSpeedGlobal>0.10</WorkSpeedGlobal></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <!-- B02 archetypes -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_ArchetypeHediff_FieldSurgeon</defName>
+    <label>field surgeon</label>
+    <description>Medicine + Shooting archetype.</description>
+    <stages><li><label>active</label>
+      <statOffsets><MedicalTendSpeed>0.08</MedicalTendSpeed><ShootingAccuracyPawn>0.03</ShootingAccuracyPawn></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_ArchetypeHediff_Foreman</defName>
+    <label>foreman</label>
+    <description>Construction + Social archetype.</description>
+    <stages><li><label>active</label>
+      <statOffsets><ConstructionSpeed>0.08</ConstructionSpeed><SocialImpact>0.05</SocialImpact></statOffsets>
+    </li></stages>
+  </HediffDef>
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_ArchetypeHediff_Homesteader</defName>
+    <label>homesteader spirit</label>
+    <description>Plants + Cooking archetype.</description>
+    <stages><li><label>active</label>
+      <statOffsets><PlantWorkSpeed>0.08</PlantWorkSpeed><CookSpeed>0.08</CookSpeed></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <!-- B10 heirloom echo -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_Hediff_HeirloomEcho</defName>
+    <label>heirloom echo</label>
+    <description>Carrying a colony heirloom steadies the hand slightly.</description>
+    <stages><li><label>active</label>
+      <statOffsets><WorkSpeedGlobal>0.03</WorkSpeedGlobal></statOffsets>
+    </li></stages>
+  </HediffDef>
+
+  <!-- B04 chronic trauma -->
+  <HediffDef>
+    <defName>DC_Hediff_ChronicStress</defName>
+    <label>chronic stress</label>
+    <description>Untreated trauma that settled into the body. Counseling eases it; neglect worsens it.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <initialSeverity>0.35</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <stages>
+      <li>
+        <minSeverity>0</minSeverity>
+        <label>disturbed sleep</label>
+        <capMods>
+          <li><capacity>Consciousness</capacity><offset>-0.02</offset></li>
+        </capMods>
+        <statOffsets><RestRateMultiplier>-0.08</RestRateMultiplier></statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.4</minSeverity>
+        <label>hypervigilance</label>
+        <capMods>
+          <li><capacity>Consciousness</capacity><offset>-0.04</offset></li>
+        </capMods>
+        <statOffsets>
+          <RestRateMultiplier>-0.12</RestRateMultiplier>
+          <MentalBreakThreshold>-0.04</MentalBreakThreshold>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.7</minSeverity>
+        <label>fragile</label>
+        <capMods>
+          <li><capacity>Consciousness</capacity><offset>-0.06</offset></li>
+        </capMods>
+        <statOffsets>
+          <RestRateMultiplier>-0.18</RestRateMultiplier>
+          <MentalBreakThreshold>-0.08</MentalBreakThreshold>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

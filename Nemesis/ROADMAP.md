@@ -56,6 +56,11 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 
 ## Soft compat depth
 
+- [x] **Rimesis / BFV exclusive claim** — `NemesisCompatApi` + foreign-antagonist skip (shipped). Spec: [nemesis-rimesis-compat.md](../docs/ideas/nemesis-rimesis-compat.md)
+- [x] **Deep Colony capture / truce goodwill** — reviewed with DC ledger; no conflict (Execute/Release = vanilla goodwill only; Truce = timer only). Same spec.
+- [x] **Rimesis Availability / Missing (design + stub)** — Font owns Availability (`Available` vs busy: AwaitingInvestigation / LocatedCampsite / LocatedSettlement / IncomingRaid / DispatchingRaid / EncounterActive). Nemesis exposes `ShouldReportMissingToRimesis` (`IsNemesisPawn`) for Font to mark Missing; soft-read of Availability via reflection still TBD (fail-open; need Font type/method names). Same spec.
+- [ ] **Rimesis Availability soft-read** — when Font publishes the API, fail-open reflection in `SoftCompat` so Nemesis never steals a busy Rimesis pawn; no hard require.
+- [ ] **Rimesis leader-raid handoff (Font)** — when Nemesis fires a vengeance / “leader” army return, call into Rimesis raid injection so Rimesis combat style/tactics apply. More work than coexistence; not scheduled until Font confirms packageId + public inject surface.
 - [ ] Stormproof: optional ion-storm baiting when aggression is high (still fail-open).
 - [ ] Strata: harassment on underground levels via stairs awareness; don’t break pocket maps.
 - [ ] Homesteader: target pantry / smokehouse stacks by defName list.
