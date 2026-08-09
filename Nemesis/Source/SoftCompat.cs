@@ -24,6 +24,21 @@ namespace Nemesis
             "roolo.giddyupcaravan",
         };
 
+        private static readonly string[] RimesisPackageIds =
+        {
+            "Font.Rimesis",
+            "font.rimesis",
+            "Rimesis",
+        };
+
+        private static readonly string[] BfvPackageIds =
+        {
+            "SmashPhil.BackForVengeance",
+            "smashphil.backforvengeance",
+            "BackForVengeance",
+            "VanillaExpanded.BackForVengeance",
+        };
+
         private static bool _stormChecked;
         private static bool _stormActive;
         private static bool _strataChecked;
@@ -32,6 +47,10 @@ namespace Nemesis
         private static bool _homeActive;
         private static bool _giddyChecked;
         private static bool _giddyActive;
+        private static bool _rimesisChecked;
+        private static bool _rimesisActive;
+        private static bool _bfvChecked;
+        private static bool _bfvActive;
 
         private static MethodInfo _strataIsUnderground;
         private static MethodInfo _strataIsUpper;
@@ -111,12 +130,91 @@ namespace Nemesis
             }
         }
 
+        public static bool RimesisActive
+        {
+            get
+            {
+                if (!_rimesisChecked)
+                {
+                    _rimesisChecked = true;
+                    _rimesisActive = AnyPackageActive(RimesisPackageIds);
+                }
+                return _rimesisActive;
+            }
+        }
+
+        public static bool BackForVengeanceActive
+        {
+            get
+            {
+                if (!_bfvChecked)
+                {
+                    _bfvChecked = true;
+                    _bfvActive = AnyPackageActive(BfvPackageIds);
+                }
+                return _bfvActive;
+            }
+        }
+
+        /// <summary>
+        /// True if another antagonist mod already owns this pawn (hediff/comp name
+        /// markers). Fail-open: unknown markers → false.
+        /// </summary>
+        public static bool IsForeignAntagonistPawn(Pawn pawn)
+        {
+            if (pawn?.health?.hediffSet?.hediffs == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                List<Hediff> hediffs = pawn.health.hediffSet.hediffs;
+                for (int i = 0; i < hediffs.Count; i++)
+                {
+                    string name = hediffs[i]?.def?.defName;
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        continue;
+                    }
+                    if (name.IndexOf("Rimesis", StringComparison.OrdinalIgnoreCase) >= 0
+                        || name.IndexOf("BFV", StringComparison.OrdinalIgnoreCase) >= 0
+                        || name.IndexOf("BackForVengeance", StringComparison.OrdinalIgnoreCase) >= 0
+                        || name.IndexOf("Vengeance", StringComparison.OrdinalIgnoreCase) >= 0
+                           && name.IndexOf("Nemesis", StringComparison.OrdinalIgnoreCase) < 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                /* fail open */
+            }
+
+            return false;
+        }
+
         public static void ResetCaches()
         {
             _stormChecked = _strataChecked = _homeChecked = _giddyChecked = false;
+            _rimesisChecked = _bfvChecked = false;
             _stormActive = _strataActive = _homeActive = _giddyActive = false;
+            _rimesisActive = _bfvActive = false;
             _strataIsUnderground = _strataIsUpper = null;
             _homeGetFavorites = null;
+        }
+
+        private static bool AnyPackageActive(string[] ids)
+        {
+            for (int i = 0; i < ids.Length; i++)
+            {
+                if (ModLister.GetActiveModWithIdentifier(ids[i], ignorePostfix: true) != null)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
