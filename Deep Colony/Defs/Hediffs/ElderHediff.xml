@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <HediffDef>
+    <defName>DC_Hediff_Elder</defName>
+    <label>elder</label>
+    <description>Years of colony life. Mentors more effectively; physical labor is a little slower.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <initialSeverity>0.5</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <GeneralLaborSpeed>0.92</GeneralLaborSpeed>
+          <WorkSpeedGlobal>0.95</WorkSpeedGlobal>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

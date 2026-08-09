@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Deep Colony — a RimWorld mod by AzraelGodKing</title>
-<meta name="description" content="Deep Colony: perk trees, trauma &amp; therapy, apprenticeship, generational inheritance, and living faction reputation. RimWorld 1.6, requires Harmony.">
+<meta name="description" content="Deep Colony 2.0: perk trees with capstones and archetypes, trauma &amp; therapy, apprenticeship, generational legacy, and a living faction reputation ledger. RimWorld 1.6, requires Harmony.">
 <link rel="stylesheet" href="style.css">
 <script src="scripts/stats-display.js" defer></script>
 </head>
@@ -35,6 +35,7 @@
       <span class="badge ledger">Requires Harmony</span>
       <span class="badge ledger">C# mod</span>
       <span class="badge ledger">Five systems</span>
+      <span class="badge ledger">2.0</span>
     </div>
     <div class="cta">
       <a class="btn btn-deep" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3773568314">Steam Workshop</a>
@@ -61,9 +62,41 @@
     </div>
   </section>
 
+  <section id="whats-new">
+    <h2 class="d">What&rsquo;s new in 2.0</h2>
+    <p class="sub">The same five systems, deepened &mdash; and made readable. Three new colony tabs, full mod settings, and a heavier power tier you opt into.</p>
+    <div class="grid">
+      <div class="card ledger">
+        <div>
+          <h3>Three colony tabs</h3>
+          <div class="stat">Perks &middot; Legacy &middot; Reputation</div>
+          <p>See every colonist&rsquo;s perks and unspent points, trace founder bloodlines and teaching lineages, and read the full goodwill ledger per faction.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Mod settings &amp; presets</h3>
+          <div class="stat">Soft / Default / Hard</div>
+          <p>Every system has its own toggle, plus sliders for combat shock, mentor XP, drift pacing, inheritance, and therapy strength.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Power tier (opt-in)</h3>
+          <div class="stat">Hard preset</div>
+          <p>Skill-20 capstones, branching level-15 picks, respec, cross-skill archetypes, chronic trauma, and attitude-driven consequences.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note ledger">
+      <b>Presets:</b> Soft and Default keep power systems and attitude consequences off.
+      Hard enables the heavier set &mdash; skill-20 capstones, branching perks, chronic trauma, and attitude-driven trade / caravan / raid pressure.
+    </div>
+  </section>
+
   <section id="perks">
     <h2 class="d">Perk trees</h2>
-    <p class="sub">At skill levels <b>5</b> and <b>15</b>, colonists earn perk points for permanent passive bonuses. Every skill has its own two-node tree.</p>
+    <p class="sub">At skill levels <b>5</b> and <b>15</b>, colonists earn perk points for permanent passive bonuses. Every skill has its own tree, with exact numbers in the tooltips.</p>
     <div class="grid">
       <div class="card ledger">
         <div>
@@ -77,6 +110,30 @@
           <p>Construction, Crafting, Plants, Animals, Mining, Intellectual, Social, Cooking, and Artistic &mdash; each with its own path.</p>
         </div>
       </div>
+      <div class="card ledger">
+        <div>
+          <h3>Muscle memory</h3>
+          <div class="stat">New in 2.0</div>
+          <p>Perks slow skill rust &mdash; and reclaiming lost levels earns double XP. Recruits who join past a gate arrive with points (or a modest pre-pick).</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Capstones &amp; branches</h3>
+          <div class="stat">Hard preset</div>
+          <p>Skill 20 unlocks a capstone perk; level 15 becomes a branching pick. Respec at the cost of a cooldown and a bruised ego.</p>
+        </div>
+      </div>
+      <div class="card ledger wide">
+        <div>
+          <h3>Cross-skill archetypes</h3>
+          <div class="stat">Hard preset</div>
+          <p>Colonists whose perks span the right skills grow into archetypes &mdash; a named identity with its own bonus, earned from how they actually lived.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note ledger">
+      The <b>Perks tab</b> shows every colonist&rsquo;s trees at a glance, and an alert nudges you when points sit unspent.
     </div>
   </section>
 
@@ -92,16 +149,47 @@
       </div>
       <div class="card ledger">
         <div>
-          <h3>Counsel</h3>
-          <p>Doctors can <b>counsel</b> the wounded mind (workgiver or right-click). Casual therapy chats still help as a light supplement.</p>
+          <h3>Specialty trauma</h3>
+          <div class="stat">New in 2.0</div>
+          <p>Fire, toxic exposure, insect swarms, and betrayal each leave their own mark &mdash; and their own triggers to avoid.</p>
         </div>
       </div>
+      <div class="card ledger">
+        <div>
+          <h3>Counsel</h3>
+          <p>Doctors can <b>counsel</b> the wounded mind (workgiver or right-click). Therapy quality scales with the counselor&rsquo;s Social skill, opinion, and the room. Casual therapy chats still help as a light supplement.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Group counseling</h3>
+          <div class="stat">New in 2.0</div>
+          <p>One counselor, several patients &mdash; slower per pawn, but it keeps a shaken colony moving after a bad raid.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Scars &amp; resilience</h3>
+          <div class="stat">New in 2.0</div>
+          <p>Recovery leaves something behind: sometimes a lingering scar, sometimes resilience &mdash; a colonist genuinely hardened by what they survived.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Living with it</h3>
+          <div class="stat">New in 2.0</div>
+          <p>Contextual flashbacks, combat habits shaped by old wounds, grudges against the faction responsible, and days of remembrance for the dead. Three counsel sessions forge a <b>confidant</b> bond that makes future therapy stronger.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note ledger">
+      <b>Hard preset:</b> trauma left untreated until it expires can settle into <b>chronic stress</b> &mdash; counseling eases it back down.
     </div>
   </section>
 
   <section id="apprenticeship">
     <h2 class="d">Apprenticeship</h2>
-    <p class="sub">Pair a veteran with a rookie via right-click (mentor must lead by 3+ skill levels).</p>
+    <p class="sub">Pair a veteran with a rookie via right-click &mdash; pick the skill to focus on. Mentors must lead by 3+ skill levels; family only needs 2.</p>
     <div class="grid">
       <div class="card ledger">
         <div>
@@ -112,7 +200,21 @@
       <div class="card ledger">
         <div>
           <h3>Mentoring work</h3>
-          <p>Dedicated <b>Mentoring</b> work type runs active teaching sessions. Multiple pairs can run at once.</p>
+          <p>Dedicated <b>Mentoring</b> work type runs active teaching sessions. Multiple pairs can run at once &mdash; and a Biotech <b>blackboard</b> in the room boosts the XP.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Elders</h3>
+          <div class="stat">New in 2.0</div>
+          <p>Colonists past 60 slow down at labor but shine as mentors, and earn one late perk point. Your founders stay valuable to the end.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Graduation &amp; rivalry</h3>
+          <div class="stat">New in 2.0</div>
+          <p>Graduating apprentices can pick up their mentor&rsquo;s first perk &mdash; and maybe a new passion. Professional rivals in the same craft push each other&rsquo;s XP.</p>
         </div>
       </div>
     </div>
@@ -121,11 +223,63 @@
   <section id="generations">
     <h2 class="d">Generational colonies</h2>
     <p class="sub">Children and recruits with colonist parents can inherit traits and passions. Build long enough and you&rsquo;ll see echoes of your founders.</p>
+    <div class="grid">
+      <div class="card ledger">
+        <div>
+          <h3>Deeper inheritance</h3>
+          <div class="stat">New in 2.0</div>
+          <p>Dead parents and grandparents count too, families develop skill traditions, and adoptive caregivers can echo a passion onto their wards.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Founder surnames</h3>
+          <div class="stat">New in 2.0</div>
+          <p>Colony-born children carry founder and parent surnames, so your bloodlines read like bloodlines.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Heirlooms</h3>
+          <div class="stat">New in 2.0</div>
+          <p>When a colonist dies, a treasured possession passes to their kin &mdash; a small comfort with a long memory.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note ledger">
+      The <b>Legacy tab</b> traces founder lines, family traditions, and who taught whom.
+    </div>
   </section>
 
   <section id="reputation">
     <h2 class="d">Living faction reputation</h2>
-    <p class="sub">Raids and trade nudge goodwill. Strong friendships and deep enmities slowly drift over time without constant contact &mdash; allies don&rsquo;t collapse overnight from idle drift.</p>
+    <p class="sub">Raids, trades, gifts, and shared-enemy kills nudge goodwill. Strong friendships and deep enmities slowly drift over time without constant contact &mdash; allies don&rsquo;t collapse overnight from idle drift.</p>
+    <div class="grid">
+      <div class="card ledger">
+        <div>
+          <h3>Reputation ledger</h3>
+          <div class="stat">New in 2.0</div>
+          <p>The <b>Reputation tab</b> shows every faction&rsquo;s ledger: what moved goodwill, when, and what drift is still pending.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Personal envoys</h3>
+          <div class="stat">New in 2.0</div>
+          <p>Assign a colonist as envoy to a faction for steady goodwill &mdash; but if they die, the relationship takes it personally.</p>
+        </div>
+      </div>
+      <div class="card ledger">
+        <div>
+          <h3>Settlement epithets</h3>
+          <div class="stat">New in 2.0</div>
+          <p>Settlements earn epithets from your shared history &mdash; grudges and favors written on the world map.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note ledger">
+      <b>Hard preset:</b> attitude has teeth &mdash; trade prices, caravan access, and raid pressure follow how factions actually feel about you.
+    </div>
   </section>
 
 </div>

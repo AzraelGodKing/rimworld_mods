@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <!-- Update news -->
+  <Homesteader_LittleGuyLetterLabel>新特性：小家伙</Homesteader_LittleGuyLetterLabel>
+  <Homesteader_LittleGuyLetterText>Homesteader 新增了特性：小家伙（Little guy）。\n\n它没有任何效果。\n\n殖民者可能自然获得；也可在角色创建/编辑器中添加。</Homesteader_LittleGuyLetterText>
+
   <!-- Wash tub -->
   <Homesteader_NeedsSoapInWashTub>洗衣盆里需要肥皂。</Homesteader_NeedsSoapInWashTub>
 

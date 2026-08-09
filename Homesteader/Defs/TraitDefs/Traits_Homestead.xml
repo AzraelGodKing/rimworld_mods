@@ -15,4 +15,19 @@
     </exclusionTags>
   </TraitDef>
 
+  <!-- Flavor-only; no skill offsets, work tags, or thoughts. -->
+  <TraitDef>
+    <defName>Homesteader_LittleGuy</defName>
+    <commonality>0.45</commonality>
+    <degreeDatas>
+      <li>
+        <label>little guy</label>
+        <description>{PAWN_nameDef} is just a little guy. That's it. That's the trait.</description>
+      </li>
+    </degreeDatas>
+    <exclusionTags>
+      <li>HomesteaderLittleGuy</li>
+    </exclusionTags>
+  </TraitDef>
+
 </Defs>

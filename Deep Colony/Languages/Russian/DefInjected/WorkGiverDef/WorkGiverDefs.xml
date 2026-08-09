@@ -7,5 +7,8 @@
   <DC_WorkGiver_CounselTrauma.label>консультировать по травме</DC_WorkGiver_CounselTrauma.label>
   <DC_WorkGiver_CounselTrauma.gerund>консультирует</DC_WorkGiver_CounselTrauma.gerund>
   <DC_WorkGiver_CounselTrauma.verb>консультировать</DC_WorkGiver_CounselTrauma.verb>
+  <DC_WorkGiver_GroupCounsel.label>групповое консультирование</DC_WorkGiver_GroupCounsel.label>
+  <DC_WorkGiver_GroupCounsel.gerund>групповое консультирование</DC_WorkGiver_GroupCounsel.gerund>
+  <DC_WorkGiver_GroupCounsel.verb>групповое консультирование</DC_WorkGiver_GroupCounsel.verb>
 
 </LanguageData>
