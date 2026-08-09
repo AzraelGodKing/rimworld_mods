@@ -9,15 +9,20 @@ namespace Strata
     {
         public static bool ShouldGenerateNativeCavernLayout(Map map)
         {
-            if (map == null || StrataMod.Settings?.nativeCavernLayoutEnabled == false)
+            if (map == null)
             {
                 return false;
             }
-            // Explicit fallback after a failed Biomes! layout attempt.
+            // Explicit fallback after a failed / hollow Biomes! layout — even when
+            // the native-cavern setting is off (otherwise digs stay shell-only).
             if (MapGenerator.TryGetVar(StrataNativeCavernUtility.ForceNativeWarrenVar, out bool force)
                 && force)
             {
                 return true;
+            }
+            if (StrataMod.Settings?.nativeCavernLayoutEnabled == false)
+            {
+                return false;
             }
             // Biomes! Caverns stack loaded → never prefer Strata caves.
             if (BiomesCavernsUtility.IsActive)

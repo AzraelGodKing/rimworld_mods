@@ -4,6 +4,7 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
+- **Rimesis / BFV soft-compat** — public `NemesisCompatApi` (`HasActiveHunt`, `ActiveNemesisPawn`, `IsNemesisPawn`) for Font’s Rimesis; skip hunt create / raid inject when a pawn already has Rimesis/BFV hediff markers. Solo behavior unchanged. Spec: `docs/ideas/nemesis-rimesis-compat.md`.
 - **Hybrid captain progression** — after each escape the nemesis gains a captain level (skills, focus-appropriate gear quality, `Nemesis_BattleHardened` armor; Biotech bionics/genes at thresholds). Combat focus rolled at create. Post-escape action mix favors army raids/assaults and downweights petty sabotage. Soft animal escorts (Giddy-Up aware) + Mechanitor Biotech mech retinue. Settings under Captain progression. Still endable (no cheat-death). Stamp: hunt keeps personal capture/kill/they-win ends.
 - **CN / RU localization** — full Chinese Simplified and Russian keyed packs from English (`Languages/ChineseSimplified|Russian/Keyed/Nemesis.xml`).
 - **Public release** — docs site declassified (`docs/nemesis.html`); Steam Workshop + `Nemesis.zip` on the rolling GitHub `latest` release; `PublishedFileId.txt` checked in.

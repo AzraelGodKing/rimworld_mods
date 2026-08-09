@@ -10,6 +10,8 @@ Per-mod later work lives in each mod’s roadmap:
 - [Deep Colony](Deep%20Colony/ROADMAP.md) — goodwill consumer (DC1 wired)
 - [Living World (Phase 1–2 in-repo)](LivingWorld/ROADMAP.md) · [design](docs/ideas/living-world.md) — chronicle, morph, wars, refugees
 
+**This weekend:** [Steam comment triage backlog](docs/ideas/weekend-steam-backlog.md).
+
 ---
 
 ## Soft-compat web

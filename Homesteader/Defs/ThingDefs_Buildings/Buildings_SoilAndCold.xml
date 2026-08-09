@@ -83,10 +83,14 @@
       </li>
     </comps>
     <building>
+      <storageGroupTag>HomesteaderStorage</storageGroupTag>
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
+      <blueprintClass>Blueprint_Storage</blueprintClass>
       <maxItemsInCell>4</maxItemsInCell>
       <fixedStorageSettings>
         <filter>
+          <disallowNotEverStorable>true</disallowNotEverStorable>
           <categories>
             <li>Foods</li>
             <li>Drugs</li>
@@ -148,10 +152,14 @@
       </li>
     </comps>
     <building>
+      <storageGroupTag>HomesteaderStorage</storageGroupTag>
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
+      <blueprintClass>Blueprint_Storage</blueprintClass>
       <maxItemsInCell>3</maxItemsInCell>
       <fixedStorageSettings>
         <filter>
+          <disallowNotEverStorable>true</disallowNotEverStorable>
           <categories>
             <li>Foods</li>
             <li>Drugs</li>

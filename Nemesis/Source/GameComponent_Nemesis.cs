@@ -92,6 +92,13 @@ namespace Nemesis
         {
             if (IsEngaged) return;
 
+            // Exclusive claim: never start a hunt on a Rimesis / BFV captain.
+            Pawn candidate = useAsNemesis ?? sourcePawn;
+            if (SoftCompat.IsForeignAntagonistPawn(candidate))
+            {
+                return;
+            }
+
             // Claim the hunt immediately so stacked Kill prefixes/postfixes in the
             // same combat beat cannot open a second hunt (duplicate "A Nemesis Emerges").
             _data = new NemesisData

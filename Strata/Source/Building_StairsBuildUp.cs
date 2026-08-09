@@ -102,7 +102,7 @@ namespace Strata
                         state += " (" + temp.ToStringTemperature("F0") + " at the landing)";
                     }
                 }
-                state += "\nBuildable only where this floor is roofed (plus the shaft plaza)";
+                state += "\nBuildable where this floor is roofed (plus the shaft plaza); mountain rock above stays mineable";
                 state += "\nSmoke shaft: fumes rise into the floor above";
                 state += "\n" + PowerShaftInspectLine();
             }
