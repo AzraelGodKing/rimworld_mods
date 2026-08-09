@@ -42,4 +42,75 @@
   <DC_Thought_BereavementShock.stages_2.label>慢慢愈合</DC_Thought_BereavementShock.stages_2.label>
   <DC_Thought_BereavementShock.stages_2.description>最剧烈的悲痛正在过去，留下更安静的哀伤。</DC_Thought_BereavementShock.stages_2.description>
 
+  <DC_Thought_FireTrauma.label>火焰创伤</DC_Thought_FireTrauma.label>
+  <DC_Thought_FireTrauma.description>每一点火星都像差点夺命的那场大火。</DC_Thought_FireTrauma.description>
+  <DC_Thought_FireTrauma.stages_0.label>惧怕火焰</DC_Thought_FireTrauma.stages_0.label>
+  <DC_Thought_FireTrauma.stages_0.description>每一点火星都像差点夺命的那场大火。</DC_Thought_FireTrauma.stages_0.description>
+  <DC_Thought_FireTrauma.stages_1.label>靠近火焰不安</DC_Thought_FireTrauma.stages_1.label>
+  <DC_Thought_FireTrauma.stages_1.description>靠近明火仍会退缩。</DC_Thought_FireTrauma.stages_1.description>
+  <DC_Thought_FireTrauma.stages_2.label>火焰记忆渐淡</DC_Thought_FireTrauma.stages_2.label>
+  <DC_Thought_FireTrauma.stages_2.description>烧伤已愈；恐惧如今更轻。</DC_Thought_FireTrauma.stages_2.description>
+
+  <DC_Thought_ToxicTrauma.label>毒素创伤</DC_Thought_ToxicTrauma.label>
+  <DC_Thought_ToxicTrauma.description>挥之不去毒素入血的感觉。</DC_Thought_ToxicTrauma.description>
+  <DC_Thought_ToxicTrauma.stages_0.label>中毒恐慌</DC_Thought_ToxicTrauma.stages_0.label>
+  <DC_Thought_ToxicTrauma.stages_0.description>挥之不去毒素入血的感觉。</DC_Thought_ToxicTrauma.stages_0.description>
+  <DC_Thought_ToxicTrauma.stages_1.label>警惕污染</DC_Thought_ToxicTrauma.stages_1.label>
+  <DC_Thought_ToxicTrauma.stages_1.description>对空气、水与不明气味心存疑虑。</DC_Thought_ToxicTrauma.stages_1.description>
+  <DC_Thought_ToxicTrauma.stages_2.label>毒素记忆渐淡</DC_Thought_ToxicTrauma.stages_2.label>
+  <DC_Thought_ToxicTrauma.stages_2.description>中毒的感觉更远了。</DC_Thought_ToxicTrauma.stages_2.description>
+
+  <DC_Thought_InsectTrauma.label>虫群恐惧</DC_Thought_InsectTrauma.label>
+  <DC_Thought_InsectTrauma.description>梦见甲壳与无尽的窸窣。</DC_Thought_InsectTrauma.description>
+  <DC_Thought_InsectTrauma.stages_0.label>虫群噩梦</DC_Thought_InsectTrauma.stages_0.label>
+  <DC_Thought_InsectTrauma.stages_0.description>梦见甲壳与无尽的窸窣。</DC_Thought_InsectTrauma.stages_0.description>
+  <DC_Thought_InsectTrauma.stages_1.label>虫群畏惧</DC_Thought_InsectTrauma.stages_1.label>
+  <DC_Thought_InsectTrauma.stages_1.description>黑暗中突然的动静仍会让人跳起。</DC_Thought_InsectTrauma.stages_1.description>
+  <DC_Thought_InsectTrauma.stages_2.label>虫群恐惧渐淡</DC_Thought_InsectTrauma.stages_2.label>
+  <DC_Thought_InsectTrauma.stages_2.description>虫群的感觉不再那么逼近。</DC_Thought_InsectTrauma.stages_2.description>
+
+  <DC_Thought_Betrayal.label>背叛创伤</DC_Thought_Betrayal.label>
+  <DC_Thought_Betrayal.description>信任之人却拔刀相向。</DC_Thought_Betrayal.description>
+  <DC_Thought_Betrayal.stages_0.label>赤裸背叛</DC_Thought_Betrayal.stages_0.label>
+  <DC_Thought_Betrayal.stages_0.description>信任之人却拔刀相向。</DC_Thought_Betrayal.stages_0.description>
+  <DC_Thought_Betrayal.stages_1.label>信任破碎</DC_Thought_Betrayal.stages_1.label>
+  <DC_Thought_Betrayal.stages_1.description>难以相信任何人怀有善意。</DC_Thought_Betrayal.stages_1.description>
+  <DC_Thought_Betrayal.stages_2.label>重新学习信任</DC_Thought_Betrayal.stages_2.label>
+  <DC_Thought_Betrayal.stages_2.description>伤口在谨慎地愈合。</DC_Thought_Betrayal.stages_2.description>
+
+  <DC_Thought_TraumaScar.label>旧创伤疤痕</DC_Thought_TraumaScar.label>
+  <DC_Thought_TraumaScar.description>创伤已愈，但仍留下安静的印记。</DC_Thought_TraumaScar.description>
+  <DC_Thought_TraumaScar.stages_0.label>背负旧疤</DC_Thought_TraumaScar.stages_0.label>
+  <DC_Thought_TraumaScar.stages_0.description>创伤已愈，但仍留下安静的印记。</DC_Thought_TraumaScar.stages_0.description>
+
+  <DC_Thought_Seasoned.label>历练幸存者</DC_Thought_Seasoned.label>
+  <DC_Thought_Seasoned.description>从创伤中恢复并变得更强。</DC_Thought_Seasoned.description>
+  <DC_Thought_Seasoned.stages_0.label>因苦难而历练</DC_Thought_Seasoned.stages_0.label>
+  <DC_Thought_Seasoned.stages_0.description>从创伤中恢复并变得更强。</DC_Thought_Seasoned.stages_0.description>
+
+  <DC_Thought_Flashback.label>闪回</DC_Thought_Flashback.label>
+  <DC_Thought_Flashback.description>突然、清晰地回到创伤发生的那一刻。</DC_Thought_Flashback.description>
+  <DC_Thought_Flashback.stages_0.label>闪回</DC_Thought_Flashback.stages_0.label>
+  <DC_Thought_Flashback.stages_0.description>突然、清晰地回到创伤发生的那一刻。</DC_Thought_Flashback.stages_0.description>
+
+  <DC_Thought_DayOfRemembrance.label>缅怀之日</DC_Thought_DayOfRemembrance.label>
+  <DC_Thought_DayOfRemembrance.description>殖民地纪念今日倒下的人们。</DC_Thought_DayOfRemembrance.description>
+  <DC_Thought_DayOfRemembrance.stages_0.label>缅怀之日</DC_Thought_DayOfRemembrance.stages_0.label>
+  <DC_Thought_DayOfRemembrance.stages_0.description>殖民地纪念今日倒下的人们。</DC_Thought_DayOfRemembrance.stages_0.description>
+
+  <DC_Thought_PerkReflection.label>反思</DC_Thought_PerkReflection.label>
+  <DC_Thought_PerkReflection.description>放下辛苦得来的专长令人刺痛。</DC_Thought_PerkReflection.description>
+  <DC_Thought_PerkReflection.stages_0.label>反思被遗忘的专长</DC_Thought_PerkReflection.stages_0.label>
+  <DC_Thought_PerkReflection.stages_0.description>放下辛苦得来的专长令人刺痛。</DC_Thought_PerkReflection.stages_0.description>
+
+  <DC_Thought_Heirloom.label>传家宝</DC_Thought_Heirloom.label>
+  <DC_Thought_Heirloom.description>逝去殖民者故事的一角握在手中。</DC_Thought_Heirloom.description>
+  <DC_Thought_Heirloom.stages_0.label>携带传家宝</DC_Thought_Heirloom.stages_0.label>
+  <DC_Thought_Heirloom.stages_0.description>逝去殖民者故事的一角握在手中。</DC_Thought_Heirloom.stages_0.description>
+
+  <DC_Thought_TraumaWarden.label>狱卒恐惧</DC_Thought_TraumaWarden.label>
+  <DC_Thought_TraumaWarden.description>囚禁创伤让看守囚犯感觉像重新戴上锁链。</DC_Thought_TraumaWarden.description>
+  <DC_Thought_TraumaWarden.stages_0.label>惧怕狱卒职责</DC_Thought_TraumaWarden.stages_0.label>
+  <DC_Thought_TraumaWarden.stages_0.description>囚禁创伤让看守囚犯感觉像重新戴上锁链。</DC_Thought_TraumaWarden.stages_0.description>
+
 </LanguageData>

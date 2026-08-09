@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Perks.label>перки</DC_Perks.label>
+  <DC_Perks.description>Обзор перков колонии — непотраченные очки и прогресс дерева у каждого колониста.</DC_Perks.description>
+  <DC_Legacy.label>наследие</DC_Legacy.label>
+  <DC_Legacy.description>Фамилия основателя, живые колонисты, старейшины, традиции и счётчики перков.</DC_Legacy.description>
+  <DC_Reputation.label>репутация</DC_Reputation.label>
+  <DC_Reputation.description>Журнал расположения фракций — почему дрейфовала репутация, посланники и отношение.</DC_Reputation.description>
+
+</LanguageData>

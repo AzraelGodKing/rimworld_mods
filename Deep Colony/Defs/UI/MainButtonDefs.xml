@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <MainButtonDef>
+    <defName>DC_Perks</defName>
+    <label>perks</label>
+    <description>Colony perk overview — unspent points and tree progress for every colonist.</description>
+    <tabWindowClass>DeepColony.MainTabWindow_DeepColonyPerks</tabWindowClass>
+    <order>58</order>
+    <closesWorldView>true</closesWorldView>
+  </MainButtonDef>
+
+  <MainButtonDef>
+    <defName>DC_Legacy</defName>
+    <label>legacy</label>
+    <description>Founder surname, living colonists, elders, traditions, and perk counts.</description>
+    <tabWindowClass>DeepColony.MainTabWindow_DeepColonyLegacy</tabWindowClass>
+    <order>59</order>
+    <closesWorldView>true</closesWorldView>
+  </MainButtonDef>
+
+  <MainButtonDef>
+    <defName>DC_Reputation</defName>
+    <label>reputation</label>
+    <description>Faction goodwill ledger — why reputation drifted, envoys, and attitude.</description>
+    <tabWindowClass>DeepColony.MainTabWindow_DeepColonyReputation</tabWindowClass>
+    <order>60</order>
+    <closesWorldView>true</closesWorldView>
+  </MainButtonDef>
+
+</Defs>

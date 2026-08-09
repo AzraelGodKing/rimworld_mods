@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- A02 alternate L15 branches + A01 L20 capstones. Hidden unless settings enabled. -->
+
+  <!-- Shooting -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_SuppressingFire</defName>
+    <label>suppressing fire</label>
+    <description>Keeps enemies' heads down. Faster aiming under pressure.</description>
+    <skill>Shooting</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_PracticedEye</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_CrackShot</li></exclusiveWith>
+    <hediff>DC_PerkHediff_SuppressingFire</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_Deadeye</defName>
+    <label>deadeye</label>
+    <description>Peerless marksmanship — a skill-20 shooting capstone.</description>
+    <skill>Shooting</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_Deadeye</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Melee -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_Duelist</defName>
+    <label>duelist</label>
+    <description>Favors precision strikes over brute force.</description>
+    <skill>Melee</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_BrawlersInstinct</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_BattleHardened</li></exclusiveWith>
+    <hediff>DC_PerkHediff_Duelist</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_IronWill</defName>
+    <label>iron will</label>
+    <description>Unbreakable in the press of melee — skill-20 capstone.</description>
+    <skill>Melee</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_IronWill</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Medicine -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_FieldMedic</defName>
+    <label>field medic</label>
+    <description>Tends wounds faster under fire.</description>
+    <skill>Medicine</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_FirstAidMastery</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_SurgeonsTouch</li></exclusiveWith>
+    <hediff>DC_PerkHediff_FieldMedic</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_MiracleWorker</defName>
+    <label>miracle worker</label>
+    <description>Surgeries that should fail somehow succeed — skill-20 capstone.</description>
+    <skill>Medicine</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_MiracleWorker</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Construction -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_Fortifier</defName>
+    <label>fortifier</label>
+    <description>Builds tougher structures that last.</description>
+    <skill>Construction</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_BuildersTouch</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_MasterPlanner</li></exclusiveWith>
+    <hediff>DC_PerkHediff_Fortifier</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_MasterBuilder</defName>
+    <label>master builder</label>
+    <description>Nothing stands taller — skill-20 construction capstone.</description>
+    <skill>Construction</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_MasterBuilder</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Crafting -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_EfficientSmith</defName>
+    <label>efficient smith</label>
+    <description>Uses fewer materials without sacrificing quality.</description>
+    <skill>Crafting</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_ArtisansHands</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_GrandArtisan</li></exclusiveWith>
+    <hediff>DC_PerkHediff_EfficientSmith</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_LegendarySmith</defName>
+    <label>legendary smith</label>
+    <description>Works that become heirlooms — skill-20 crafting capstone.</description>
+    <skill>Crafting</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_LegendarySmith</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Plants -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_CropHusband</defName>
+    <label>crop husband</label>
+    <description>Maximizes harvest yields from every plot.</description>
+    <skill>Plants</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_GreenTouch</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_GardenMaster</li></exclusiveWith>
+    <hediff>DC_PerkHediff_CropHusband</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_GreenSage</defName>
+    <label>green sage</label>
+    <description>The land answers — skill-20 plants capstone.</description>
+    <skill>Plants</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_GreenSage</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Animals -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_HerdKeeper</defName>
+    <label>herd keeper</label>
+    <description>Animals stay calmer and train faster.</description>
+    <skill>Animals</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_AnimalWhisperer</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_MasterTamer</li></exclusiveWith>
+    <hediff>DC_PerkHediff_HerdKeeper</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_BeastBond</defName>
+    <label>beast bond</label>
+    <description>A living bond with fauna — skill-20 animals capstone.</description>
+    <skill>Animals</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_BeastBond</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Mining -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_TunnelRat</defName>
+    <label>tunnel rat</label>
+    <description>Moves and digs faster underground.</description>
+    <skill>Mining</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_RockEye</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_DeepProspector</li></exclusiveWith>
+    <hediff>DC_PerkHediff_TunnelRat</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_VeinSense</defName>
+    <label>vein sense</label>
+    <description>Feels ore through stone — skill-20 mining capstone.</description>
+    <skill>Mining</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_VeinSense</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Intellectual -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_Archivist</defName>
+    <label>archivist</label>
+    <description>Reads and researches with relentless focus.</description>
+    <skill>Intellectual</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_QuickStudy</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_ScientificPioneer</li></exclusiveWith>
+    <hediff>DC_PerkHediff_Archivist</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_Polymath</defName>
+    <label>polymath</label>
+    <description>Master of many disciplines — skill-20 intellectual capstone.</description>
+    <skill>Intellectual</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_Polymath</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Social -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_Negotiator</defName>
+    <label>negotiator</label>
+    <description>Trades and talks land softer terms.</description>
+    <skill>Social</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_CharmingPresence</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_MasterDiplomat</li></exclusiveWith>
+    <hediff>DC_PerkHediff_Negotiator</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_SilverTongue</defName>
+    <label>silver tongue</label>
+    <description>Words that change minds — skill-20 social capstone.</description>
+    <skill>Social</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_SilverTongue</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Cooking -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_Provisioner</defName>
+    <label>provisioner</label>
+    <description>Stretches ingredients further without losing quality.</description>
+    <skill>Cooking</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_SeasonedCook</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_GrandChef</li></exclusiveWith>
+    <hediff>DC_PerkHediff_Provisioner</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_Feastwright</defName>
+    <label>feastwright</label>
+    <description>Meals that lift a whole colony — skill-20 cooking capstone.</description>
+    <skill>Cooking</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_Feastwright</hediff>
+  </DeepColony.PerkDef>
+
+  <!-- Artistic -->
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_Storyteller</defName>
+    <label>storyteller</label>
+    <description>Art that carries the colony's memory.</description>
+    <skill>Artistic</skill>
+    <requiredLevel>15</requiredLevel>
+    <prerequisitePerk>DC_Perk_InspiredHand</prerequisitePerk>
+    <alternateBranch>true</alternateBranch>
+    <exclusiveWith><li>DC_Perk_MasterArtisan</li></exclusiveWith>
+    <hediff>DC_PerkHediff_Storyteller</hediff>
+  </DeepColony.PerkDef>
+  <DeepColony.PerkDef>
+    <defName>DC_Perk_Virtuoso</defName>
+    <label>virtuoso</label>
+    <description>Peerless creative mastery — skill-20 artistic capstone.</description>
+    <skill>Artistic</skill>
+    <requiredLevel>20</requiredLevel>
+    <capstone>true</capstone>
+    <hediff>DC_PerkHediff_Virtuoso</hediff>
+  </DeepColony.PerkDef>
+
+</Defs>

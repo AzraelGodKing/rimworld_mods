@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Perks.label>专长</DC_Perks.label>
+  <DC_Perks.description>殖民地专长总览 — 每位殖民者的未花费点数与专长树进度。</DC_Perks.description>
+  <DC_Legacy.label>传承</DC_Legacy.label>
+  <DC_Legacy.description>创始姓氏、在世殖民者、长者、传统与专长统计。</DC_Legacy.description>
+  <DC_Reputation.label>声望</DC_Reputation.label>
+  <DC_Reputation.description>派系好感账本 — 声望为何漂移、使者与态度。</DC_Reputation.description>
+
+</LanguageData>

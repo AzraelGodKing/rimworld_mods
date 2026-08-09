@@ -55,6 +55,7 @@ namespace DeepColony
 
             yield return Toils_General.Do(() =>
             {
+                MentorshipUtility.NotifyMentoringSessionComplete(pawn, Apprentice);
                 if (Apprentice is { Spawned: true, Map: not null })
                 {
                     MoteMaker.ThrowText(Apprentice.DrawPos, Apprentice.Map,

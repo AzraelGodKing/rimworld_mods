@@ -42,4 +42,75 @@
   <DC_Thought_BereavementShock.stages_2.label>медленно исцеляется</DC_Thought_BereavementShock.stages_2.label>
   <DC_Thought_BereavementShock.stages_2.description>Худшее горе проходит, оставляя более тихую печаль.</DC_Thought_BereavementShock.stages_2.description>
 
+  <DC_Thought_FireTrauma.label>травма огня</DC_Thought_FireTrauma.label>
+  <DC_Thought_FireTrauma.description>Каждая искра кажется тем пламенем, что едва не забрало жизнь.</DC_Thought_FireTrauma.description>
+  <DC_Thought_FireTrauma.stages_0.label>страх огня</DC_Thought_FireTrauma.stages_0.label>
+  <DC_Thought_FireTrauma.stages_0.description>Каждая искра кажется тем пламенем, что едва не забрало жизнь.</DC_Thought_FireTrauma.stages_0.description>
+  <DC_Thought_FireTrauma.stages_1.label>неловко у огня</DC_Thought_FireTrauma.stages_1.label>
+  <DC_Thought_FireTrauma.stages_1.description>Всё ещё вздрагивает у открытого пламени.</DC_Thought_FireTrauma.stages_1.description>
+  <DC_Thought_FireTrauma.stages_2.label>воспоминания об огне тускнеют</DC_Thought_FireTrauma.stages_2.label>
+  <DC_Thought_FireTrauma.stages_2.description>Ожоги зажили; страх тише.</DC_Thought_FireTrauma.stages_2.description>
+
+  <DC_Thought_ToxicTrauma.label>токсическая травма</DC_Thought_ToxicTrauma.label>
+  <DC_Thought_ToxicTrauma.description>Не может стряхнуть ощущение яда в крови.</DC_Thought_ToxicTrauma.description>
+  <DC_Thought_ToxicTrauma.stages_0.label>паника отравления</DC_Thought_ToxicTrauma.stages_0.label>
+  <DC_Thought_ToxicTrauma.stages_0.description>Не может стряхнуть ощущение яда в крови.</DC_Thought_ToxicTrauma.stages_0.description>
+  <DC_Thought_ToxicTrauma.stages_1.label>опасается заражения</DC_Thought_ToxicTrauma.stages_1.label>
+  <DC_Thought_ToxicTrauma.stages_1.description>Подозрителен к воздуху, воде и странным запахам.</DC_Thought_ToxicTrauma.stages_1.description>
+  <DC_Thought_ToxicTrauma.stages_2.label>токсические воспоминания тускнеют</DC_Thought_ToxicTrauma.stages_2.label>
+  <DC_Thought_ToxicTrauma.stages_2.description>Отравление кажется более далёким.</DC_Thought_ToxicTrauma.stages_2.description>
+
+  <DC_Thought_InsectTrauma.label>ужас насекомых</DC_Thought_InsectTrauma.label>
+  <DC_Thought_InsectTrauma.description>Сны о хитине и бесконечном шуршании.</DC_Thought_InsectTrauma.description>
+  <DC_Thought_InsectTrauma.stages_0.label>кошмары роя</DC_Thought_InsectTrauma.stages_0.label>
+  <DC_Thought_InsectTrauma.stages_0.description>Сны о хитине и бесконечном шуршании.</DC_Thought_InsectTrauma.stages_0.description>
+  <DC_Thought_InsectTrauma.stages_1.label>страх насекомых</DC_Thought_InsectTrauma.stages_1.label>
+  <DC_Thought_InsectTrauma.stages_1.description>Всё ещё вздрагивает от внезапного движения во тьме.</DC_Thought_InsectTrauma.stages_1.description>
+  <DC_Thought_InsectTrauma.stages_2.label>страх насекомых тускнеет</DC_Thought_InsectTrauma.stages_2.label>
+  <DC_Thought_InsectTrauma.stages_2.description>Рой кажется менее близким.</DC_Thought_InsectTrauma.stages_2.description>
+
+  <DC_Thought_Betrayal.label>травма предательства</DC_Thought_Betrayal.label>
+  <DC_Thought_Betrayal.description>Доверял тому, кто повернул клинок.</DC_Thought_Betrayal.description>
+  <DC_Thought_Betrayal.stages_0.label>свежее предательство</DC_Thought_Betrayal.stages_0.label>
+  <DC_Thought_Betrayal.stages_0.description>Доверял тому, кто повернул клинок.</DC_Thought_Betrayal.stages_0.description>
+  <DC_Thought_Betrayal.stages_1.label>доверие разрушено</DC_Thought_Betrayal.stages_1.label>
+  <DC_Thought_Betrayal.stages_1.description>Трудно верить, что кто-то желает добра.</DC_Thought_Betrayal.stages_1.description>
+  <DC_Thought_Betrayal.stages_2.label>учится доверять снова</DC_Thought_Betrayal.stages_2.label>
+  <DC_Thought_Betrayal.stages_2.description>Рана осторожно закрывается.</DC_Thought_Betrayal.stages_2.description>
+
+  <DC_Thought_TraumaScar.label>старый шрам травмы</DC_Thought_TraumaScar.label>
+  <DC_Thought_TraumaScar.description>Травма зажила, но тихий след остаётся.</DC_Thought_TraumaScar.description>
+  <DC_Thought_TraumaScar.stages_0.label>несёт старый шрам</DC_Thought_TraumaScar.stages_0.label>
+  <DC_Thought_TraumaScar.stages_0.description>Травма зажила, но тихий след остаётся.</DC_Thought_TraumaScar.stages_0.description>
+
+  <DC_Thought_Seasoned.label>закалённый выживший</DC_Thought_Seasoned.label>
+  <DC_Thought_Seasoned.description>Оправился от травмы и стал сильнее.</DC_Thought_Seasoned.description>
+  <DC_Thought_Seasoned.stages_0.label>закалён трудностями</DC_Thought_Seasoned.stages_0.label>
+  <DC_Thought_Seasoned.stages_0.description>Оправился от травмы и стал сильнее.</DC_Thought_Seasoned.stages_0.description>
+
+  <DC_Thought_Flashback.label>флэшбэк</DC_Thought_Flashback.label>
+  <DC_Thought_Flashback.description>Внезапное яркое возвращение к моменту травмы.</DC_Thought_Flashback.description>
+  <DC_Thought_Flashback.stages_0.label>флэшбэк</DC_Thought_Flashback.stages_0.label>
+  <DC_Thought_Flashback.stages_0.description>Внезапное яркое возвращение к моменту травмы.</DC_Thought_Flashback.stages_0.description>
+
+  <DC_Thought_DayOfRemembrance.label>день памяти</DC_Thought_DayOfRemembrance.label>
+  <DC_Thought_DayOfRemembrance.description>Колония помнит тех, кто пал в этот день.</DC_Thought_DayOfRemembrance.description>
+  <DC_Thought_DayOfRemembrance.stages_0.label>день памяти</DC_Thought_DayOfRemembrance.stages_0.label>
+  <DC_Thought_DayOfRemembrance.stages_0.description>Колония помнит тех, кто пал в этот день.</DC_Thought_DayOfRemembrance.stages_0.description>
+
+  <DC_Thought_PerkReflection.label>размышление</DC_Thought_PerkReflection.label>
+  <DC_Thought_PerkReflection.description>Отпускать добытое трудом мастерство больно.</DC_Thought_PerkReflection.description>
+  <DC_Thought_PerkReflection.stages_0.label>размышляет о забытом перке</DC_Thought_PerkReflection.stages_0.label>
+  <DC_Thought_PerkReflection.stages_0.description>Отпускать добытое трудом мастерство больно.</DC_Thought_PerkReflection.stages_0.description>
+
+  <DC_Thought_Heirloom.label>наследная вещь</DC_Thought_Heirloom.label>
+  <DC_Thought_Heirloom.description>Частица истории павшего колониста в руках.</DC_Thought_Heirloom.description>
+  <DC_Thought_Heirloom.stages_0.label>несёт наследную вещь</DC_Thought_Heirloom.stages_0.label>
+  <DC_Thought_Heirloom.stages_0.description>Частица истории павшего колониста в руках.</DC_Thought_Heirloom.stages_0.description>
+
+  <DC_Thought_TraumaWarden.label>страх надзирателя</DC_Thought_TraumaWarden.label>
+  <DC_Thought_TraumaWarden.description>Травма плена делает охрану заключённых похожей на возвращение в цепи.</DC_Thought_TraumaWarden.description>
+  <DC_Thought_TraumaWarden.stages_0.label>боятся работы надзирателя</DC_Thought_TraumaWarden.stages_0.label>
+  <DC_Thought_TraumaWarden.stages_0.description>Травма плена делает охрану заключённых похожей на возвращение в цепи.</DC_Thought_TraumaWarden.stages_0.description>
+
 </LanguageData>
