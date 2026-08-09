@@ -4,8 +4,9 @@ using Verse;
 
 namespace Strata
 {
-    // Upper levels are roof decks: buildable only where the floor below is
-    // roofed, plus a plaza around the tower shaft. Everywhere else is open sky.
+    // Upper levels are roof decks where the floor below is roofed, mineable rock
+    // over mountain / thick-rock mass, plus a plaza around the tower shaft.
+    // Everywhere else is open sky.
     public class GenStep_UpperPlatform : GenStep
     {
         public override int SeedPart => 591837264;
