@@ -18,6 +18,10 @@ namespace Strata
             {
                 return gravship;
             }
+            if (StrataQuestMapGuard.IsUnsafeForColonyShafts(map, out string questKey))
+            {
+                return questKey.Translate();
+            }
             if (!LevelExcavationUtility.CanOpenNewLevelBelow(map, out string reason, thingToIgnore))
             {
                 return reason;

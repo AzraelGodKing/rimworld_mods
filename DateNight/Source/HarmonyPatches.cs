@@ -29,8 +29,27 @@ namespace DateNight
             float cellW = rect.width * 0.5f;
             float cellH = rect.height * 0.5f;
             int index = ModsConfig.RoyaltyActive ? 5 : 4;
-            Rect cell = new Rect(rect.x + cellW * index, rect.y, cellW, cellH);
+            // Exosuit Framework (and similar) draws Piloting into the same slot —
+            // move Lovin to the second row so both buttons stay clickable.
+            Rect cell = ExosuitScheduleCrowded()
+                ? new Rect(rect.x, rect.y + cellH, cellW, cellH)
+                : new Rect(rect.x + cellW * index, rect.y, cellW, cellH);
             DrawSelectorButton(cell, lovin);
+        }
+
+        private static bool? exosuitCrowded;
+
+        private static bool ExosuitScheduleCrowded()
+        {
+            if (exosuitCrowded == null)
+            {
+                exosuitCrowded =
+                    ModLister.GetActiveModWithIdentifier("AOBA.ExosuitFramework", ignorePostfix: true) != null
+                    || ModLister.GetActiveModWithIdentifier("AOBA.MechsuitFramework", ignorePostfix: true) != null
+                    || DefDatabase<TimeAssignmentDef>.GetNamedSilentFail("Piloting") != null
+                    || DefDatabase<TimeAssignmentDef>.GetNamedSilentFail("Exosuit_Piloting") != null;
+            }
+            return exosuitCrowded.Value;
         }
 
         private static void DrawSelectorButton(Rect rect, TimeAssignmentDef ta)

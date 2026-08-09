@@ -147,10 +147,15 @@ namespace Strata
                     continue;
                 }
 
+                if (StrataStorageSoftCompat.IsDestCoolingDown(link.map, t.def))
+                {
+                    continue;
+                }
+
                 bool hardNeed = LevelDemand.HardMissingOn(link.map, t.def) > 0;
                 bool storageUpgrade = !hardNeed
                     && LevelDemand.MissingOn(link.map, t.def) > 0
-                    && BestAcceptingPriority(link.map, t, current, link.arrivalCell) > current;
+                    && BestAcceptingPriority(pawn, link.map, t, current, link.arrivalCell) > current;
                 if (!hardNeed && !storageUpgrade)
                 {
                     continue;
@@ -181,7 +186,12 @@ namespace Strata
             for (int i = 0; i < links.Count; i++)
             {
                 LevelGraph.LevelLink link = links[i];
-                StoragePriority p = BestAcceptingPriority(link.map, t, bestPriority, link.arrivalCell);
+                if (StrataStorageSoftCompat.IsDestCoolingDown(link.map, t.def))
+                {
+                    continue;
+                }
+
+                StoragePriority p = BestAcceptingPriority(pawn, link.map, t, bestPriority, link.arrivalCell);
                 if (p > bestPriority)
                 {
                     MapPortal step = UsableStep(pawn, link);
@@ -224,7 +234,8 @@ namespace Strata
         // landing - a freshly broken-through landing sits in a sealed rock
         // bubble, and cargo must not be shipped somewhere it can only pile up.
         // Final placement is deferred haul delivery after portal arrival.
-        private static StoragePriority BestAcceptingPriority(Map map, Thing t, StoragePriority above, IntVec3 arrivalCell)
+        private static StoragePriority BestAcceptingPriority(
+            Pawn pawn, Map map, Thing t, StoragePriority above, IntVec3 arrivalCell)
         {
             if (!arrivalCell.IsValid || !arrivalCell.InBounds(map))
             {
@@ -244,8 +255,11 @@ namespace Strata
                 int scan = Math.Min(cells.Count, MaxCellsScannedPerGroup);
                 for (int j = 0; j < scan; j++)
                 {
-                    if (CellHasRoomFor(cells[j], map, t)
-                        && map.reachability.CanReach(arrivalCell, cells[j], PathEndMode.Touch,
+                    IntVec3 cell = cells[j];
+                    // IsGoodStoreCell respects ASF / multi-stack shelf capacity
+                    // (naive floor-stack room checks caused stair haul loops).
+                    if (StrataStorageSoftCompat.CellIsGoodStore(cell, map, t, pawn)
+                        && map.reachability.CanReach(arrivalCell, cell, PathEndMode.Touch,
                             TraverseParms.For(TraverseMode.PassDoors)))
                     {
                         best = priority;
@@ -254,20 +268,6 @@ namespace Strata
                 }
             }
             return best;
-        }
-
-        private static bool CellHasRoomFor(IntVec3 cell, Map map, Thing t)
-        {
-            List<Thing> things = cell.GetThingList(map);
-            for (int i = 0; i < things.Count; i++)
-            {
-                Thing other = things[i];
-                if (other.def.EverStorable(willMinifyIfPossible: false))
-                {
-                    return other.CanStackWith(t) && other.stackCount < other.def.stackLimit;
-                }
-            }
-            return true;
         }
     }
 }

@@ -1,20 +1,24 @@
 /**
- * Fetch Steam Workshop subscribers / favorites for mods in workshop-mods.json
- * and write docs/data/stats-cache.json (same pattern as azrael-sunhaven-website).
+ * Optional local refresh of docs/data/stats-cache.json (static fallback for the
+ * docs site). Live numbers are fetched in-browser by docs/scripts/stats-display.js
+ * — no GitHub Action required.
+ *
+ * Roster: docs/data/workshop-mods.json
  *
  * Usage:
  *   node scripts/fetch-workshop-stats.js
  *   node scripts/fetch-workshop-stats.js --force
- *   STATS_FORCE=1 node scripts/fetch-workshop-stats.js
  */
 const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const ROSTER_PATH = path.join(ROOT, "scripts", "workshop-mods.json");
+const ROSTER_PATH = path.join(ROOT, "docs", "data", "workshop-mods.json");
+const LEGACY_ROSTER = path.join(ROOT, "scripts", "workshop-mods.json");
 const CACHE_PATH = path.join(ROOT, "docs", "data", "stats-cache.json");
 const TMP_PATH = `${CACHE_PATH}.tmp`;
-const STEAM_URL = "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/";
+const STEAM_URL =
+  "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/";
 
 function utcHourBucket(date) {
   return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}T${String(date.getUTCHours()).padStart(2, "0")}`;
@@ -54,7 +58,8 @@ function emptySiteTotal() {
 }
 
 function loadRoster() {
-  const text = fs.readFileSync(ROSTER_PATH, "utf8").replace(/^\uFEFF/, "");
+  const rosterPath = fs.existsSync(ROSTER_PATH) ? ROSTER_PATH : LEGACY_ROSTER;
+  const text = fs.readFileSync(rosterPath, "utf8").replace(/^\uFEFF/, "");
   const rows = JSON.parse(text);
   if (!Array.isArray(rows) || rows.length === 0) {
     throw new Error("workshop-mods.json must be a non-empty array");
@@ -105,7 +110,9 @@ function num(v, fallback = 0) {
 function buildModStats(mod, detail, previous) {
   const prev = previous?.mods?.[mod.id] || {};
   if (!detail || Number(detail.result) !== 1) {
-    console.warn(`[stats] No details for ${mod.id} (${mod.publishedFileId}); keeping prior cache`);
+    console.warn(
+      `[stats] No details for ${mod.id} (${mod.publishedFileId}); keeping prior cache`
+    );
     return {
       name: mod.name,
       publishedFileId: mod.publishedFileId,
@@ -149,13 +156,18 @@ function writeCacheAtomic(data) {
 }
 
 async function main() {
+  console.log(
+    "[stats] Note: the docs site fetches Steam live in-browser; this script only refreshes the static fallback cache."
+  );
   const force = isForceRefresh();
   const cache = readCache();
   const now = new Date();
   if (!force && cache?.lastFetched) {
     const last = new Date(cache.lastFetched);
     if (!Number.isNaN(last.valueOf()) && utcHourBucket(last) === utcHourBucket(now)) {
-      console.log("Stats already up to date (same UTC hour). Use --force or STATS_FORCE=1 to refresh anyway.");
+      console.log(
+        "Stats already up to date (same UTC hour). Use --force or STATS_FORCE=1 to refresh anyway."
+      );
       return;
     }
   }
