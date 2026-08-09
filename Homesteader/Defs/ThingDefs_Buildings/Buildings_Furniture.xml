@@ -117,6 +117,17 @@
     <building>
       <bed_showSleeperBody>false</bed_showSleeperBody>
     </building>
+    <!-- BedWithQualityBase includes PlaceWorker_ShowFacilitiesConnections;
+         without this comp the designator NRE blanks the UI (same as bedroll). -->
+    <comps>
+      <li Class="CompProperties_AffectedByFacilities">
+        <linkableFacilities>
+          <li>EndTable</li>
+          <li>Dresser</li>
+          <li MayRequire="Ludeon.RimWorld.Ideology">SleepAccelerator</li>
+        </linkableFacilities>
+      </li>
+    </comps>
     <designationCategory>Furniture</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>

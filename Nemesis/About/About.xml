@@ -51,6 +51,7 @@ SOFT COMPAT (optional, fail-open)
 - Strata: prefers surface home maps; aware of underground / upper levels when choosing harassment targets.
 - Homesteader: food raids and taunts can reference root cellars and favorite foods when those systems exist.
 - Giddy-Up: animal escorts pair better as mounts when present (still spawn as escorts without it).
+- Rimesis / Back for Vengeance: exclusive pawn claim via NemesisCompatApi; skip create/inject on their captains.
 
 Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: resolve or dismiss any active nemesis (capture/truce/end) so WorldPawn refs are cleaned up.</description>
 </ModMetaData>

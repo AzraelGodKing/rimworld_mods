@@ -172,6 +172,110 @@ namespace Strata
             }
         }
 
+        /// <summary>
+        /// Biomes elevation/rocks on a mountain (or landform) PlanetTile can leave
+        /// a contour-shaped hollow with almost no mineable rock — dig-under-mountain
+        /// then looks empty. Real cavern layouts are still mostly rock.
+        /// Also catches maps that pass a global rock % but leave the mountain
+        /// silhouette (thick roof / natural rock upstairs) empty.
+        /// </summary>
+        public static bool CavernLayoutTooHollow(Map map)
+        {
+            if (map == null)
+            {
+                return true;
+            }
+
+            const float minMineableFraction = 0.28f;
+            int stride = map.Size.x >= 200 ? 2 : 1;
+
+            if (TrySampleMineableFraction(map, stride, mountainAlignedOnly: false,
+                    out int cells, out float fraction)
+                && (cells <= 0 || fraction < minMineableFraction))
+            {
+                Log.Message("[Strata] Biomes! dig layout too sparse ("
+                    + (fraction * 100f).ToString("F1") + "% mineable sampled) — "
+                    + "falling back to Strata rock fill (common under mountains / landforms).");
+                return true;
+            }
+
+            // Edge rock can push the global sample over the threshold while the
+            // mountain footprint the player dug under stays empty.
+            if (TrySampleMineableFraction(map, stride, mountainAlignedOnly: true,
+                    out int mountainCells, out float mountainFraction)
+                && mountainCells >= 40
+                && mountainFraction < minMineableFraction)
+            {
+                Log.Message("[Strata] Biomes! dig layout empty under mountain footprint ("
+                    + (mountainFraction * 100f).ToString("F1") + "% mineable in "
+                    + mountainCells + " mountain-aligned samples) — "
+                    + "falling back to Strata rock fill.");
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool TrySampleMineableFraction(
+            Map map,
+            int stride,
+            bool mountainAlignedOnly,
+            out int cells,
+            out float fraction)
+        {
+            cells = 0;
+            fraction = 0f;
+            Map source = mountainAlignedOnly ? SourceMapForDig(map) : null;
+            if (mountainAlignedOnly && source == null)
+            {
+                return false;
+            }
+
+            int mineables = 0;
+            for (int z = 0; z < map.Size.z; z += stride)
+            {
+                for (int x = 0; x < map.Size.x; x += stride)
+                {
+                    IntVec3 cell = new IntVec3(x, 0, z);
+                    if (mountainAlignedOnly)
+                    {
+                        IntVec3 below = source.Size == map.Size
+                            ? cell
+                            : StrataMapUtility.ProportionalCell(cell, map, source);
+                        if (!below.InBounds(source) || !StrataRockUtility.CellIsMountainMass(source, below))
+                        {
+                            continue;
+                        }
+                    }
+
+                    cells++;
+                    if (cell.GetFirstMineable(map) != null)
+                    {
+                        mineables++;
+                    }
+                }
+            }
+
+            if (cells > 0)
+            {
+                fraction = (float)mineables / cells;
+            }
+            return true;
+        }
+
+        internal static Map SourceMapForDig(Map dig)
+        {
+            if (PocketMapUtility.currentlyGeneratingPortal?.Map != null)
+            {
+                return PocketMapUtility.currentlyGeneratingPortal.Map;
+            }
+            if (dig?.Parent is PocketMapParent pocket)
+            {
+                return pocket.sourceMap;
+            }
+            return null;
+        }
+
         private static void RunCavernRocksFromGrid(Map map, GenStepParams parms)
         {
             if (!TryBindCavernRocks(out GenStep step))

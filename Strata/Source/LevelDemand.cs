@@ -295,7 +295,7 @@ namespace Strata
                 for (int j = 0; j < scan; j++)
                 {
                     IntVec3 c = cells[j];
-                    if (!CellHasStackRoom(c, map, t))
+                    if (!StrataStorageSoftCompat.CellIsGoodStore(c, map, t))
                     {
                         continue;
                     }
@@ -307,21 +307,6 @@ namespace Strata
             }
 
             return cell.IsValid;
-        }
-
-        private static bool CellHasStackRoom(IntVec3 cell, Map map, Thing t)
-        {
-            List<Thing> things = cell.GetThingList(map);
-            for (int i = 0; i < things.Count; i++)
-            {
-                Thing other = things[i];
-                if (other.def.EverStorable(willMinifyIfPossible: false))
-                {
-                    return other.CanStackWith(t) && other.stackCount < other.def.stackLimit;
-                }
-            }
-
-            return true;
         }
 
         private static void AddConstructibles(Entry entry, Map map, List<Thing> things)

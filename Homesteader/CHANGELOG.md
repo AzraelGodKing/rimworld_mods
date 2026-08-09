@@ -8,6 +8,8 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **CN / RU language packs** — Chinese Simplified and Russian Keyed + full DefInjected (buildings, items, plants, recipes, research, thoughts, hediffs, incidents, and related defs).
 
 ### Fixed
+- **Quilted bed blanks Furniture UI** — added `CompProperties_AffectedByFacilities` (BedWithQualityBase PlaceWorker NRE without it, same class of bug as bedroll).
+- **Crates / barrels invisible to cook & cure bills** — Homesteader `Building_Storage` defs now match vanilla ShelfBase parity (`ignoreStoredThingsBeauty`, `Blueprint_Storage`, `storageGroupTag`, `disallowNotEverStorable`), including icehouse / springhouse. Should also unstick curing-rack “only salt works” when meat was parked in ingredient barrels.
 - **Allergy flare without eating** — food allergy hediff / discovery no longer run from `ThoughtsFromIngesting` (also used by food AI and ingest menus). Reactions apply only on real `Thing.Ingested`.
 
 ### Changed

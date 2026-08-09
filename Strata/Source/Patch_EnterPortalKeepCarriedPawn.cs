@@ -49,12 +49,22 @@ namespace Strata
                 return false;
             }
 
-            if (pawn.CurJobDef == JobDefOf.EnterPortal
-                && (PortalRelayChain.HasIntent(pawn, RelayPurpose.Haul)
-                    || PortalRelayChain.HasIntent(pawn, RelayPurpose.ForcedOrder)))
+            if (pawn.CurJobDef == JobDefOf.EnterPortal)
             {
-                __result = false;
-                return false;
+                if (PortalRelayChain.HasIntent(pawn, RelayPurpose.Haul)
+                    || PortalRelayChain.HasIntent(pawn, RelayPurpose.ForcedOrder))
+                {
+                    __result = false;
+                    return false;
+                }
+
+                // Corpses / always-haulable cargo must not vanish at the shaft
+                // when haul intent was cleared mid-hop (cross-level slaughter).
+                if (carried is Corpse || carried.def.alwaysHaulable)
+                {
+                    __result = false;
+                    return false;
+                }
             }
 
             return true;
