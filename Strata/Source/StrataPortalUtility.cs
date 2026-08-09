@@ -542,7 +542,26 @@ namespace Strata
                 return false;
             }
 
-            return TryStartJobIfReservable(pawn, TryMakeStorageJob(pawn, cargo));
+            Job job = TryMakeStorageJob(pawn, cargo);
+            if (job == null)
+            {
+                if (cargo.def != null)
+                {
+                    StrataStorageSoftCompat.NoteFailedDest(pawn.Map, cargo.def);
+                }
+                return false;
+            }
+
+            if (TryStartJobIfReservable(pawn, job))
+            {
+                return true;
+            }
+
+            if (cargo.def != null)
+            {
+                StrataStorageSoftCompat.NoteFailedDest(pawn.Map, cargo.def);
+            }
+            return false;
         }
 
         /// <summary>
@@ -577,14 +596,28 @@ namespace Strata
                 cell = pawn.Position;
             }
 
-            return pawn.carryTracker.innerContainer.TryDrop(
-                cargo,
-                cell,
-                pawn.Map,
-                ThingPlaceMode.Near,
-                out _,
-                null,
-                null);
+            if (pawn.carryTracker.innerContainer.TryDrop(
+                    cargo,
+                    cell,
+                    pawn.Map,
+                    ThingPlaceMode.Near,
+                    out _,
+                    null,
+                    null))
+            {
+                return true;
+            }
+
+            // Last resort so corpses never vanish from a stuck haul tracker.
+            if (pawn.carryTracker.innerContainer.Contains(cargo))
+            {
+                pawn.carryTracker.innerContainer.Remove(cargo);
+            }
+            if (!cargo.Spawned)
+            {
+                return GenPlace.TryPlaceThing(cargo, cell, pawn.Map, ThingPlaceMode.Near);
+            }
+            return true;
         }
 
         private static Job TryMakeInstallJob(Pawn pawn, Thing cargo)
@@ -734,36 +767,9 @@ namespace Strata
 
         private static Job TryMakeStorageJob(Pawn pawn, Thing cargo)
         {
-            // Prefer any valid store cell (stockpile / shelf). Try Unstored first,
-            // then a second pass with CurrentStoragePriority so already-"stored"
-            // carried stacks (weird after portal) still get a cell.
-            if (!StoreUtility.TryFindBestBetterStoreCellFor(
-                    cargo,
-                    pawn,
-                    pawn.Map,
-                    StoragePriority.Unstored,
-                    pawn.Faction,
-                    out IntVec3 cell))
-            {
-                StoragePriority current = StoreUtility.CurrentStoragePriorityOf(cargo);
-                if (!StoreUtility.TryFindBestBetterStoreCellFor(
-                        cargo,
-                        pawn,
-                        pawn.Map,
-                        current,
-                        pawn.Faction,
-                        out cell))
-                {
-                    return null;
-                }
-            }
-
-            if (cargo.Spawned && !pawn.CanReserve(cargo))
-            {
-                return null;
-            }
-
-            return HaulAIUtility.HaulToCellStorageJob(pawn, cargo, cell, fitInStoreCell: true);
+            // Prefer TryFindBestBetterStorageFor + HaulToContainer for buildings
+            // (Adaptive Storage / Neat shelves); cell haul for stockpile zones.
+            return StrataStorageSoftCompat.TryMakeStorageJob(pawn, cargo);
         }
 
         private static Job TryMakeConstructionJob(Pawn pawn, Thing cargo)

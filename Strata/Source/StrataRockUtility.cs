@@ -71,5 +71,23 @@ namespace Strata
         {
             return rock?.building?.naturalTerrain ?? TerrainDefOf.Gravel;
         }
+
+        /// <summary>
+        /// Thick rock roof or natural rock edifice — mountain / overhead-rock mass
+        /// that should stay diggable on the floor above or below.
+        /// </summary>
+        public static bool CellIsMountainMass(Map map, IntVec3 cell)
+        {
+            if (map == null || !cell.InBounds(map))
+            {
+                return false;
+            }
+            if (map.roofGrid.RoofAt(cell) == RoofDefOf.RoofRockThick)
+            {
+                return true;
+            }
+            Building edifice = cell.GetEdifice(map);
+            return edifice?.def?.building?.isNaturalRock == true;
+        }
     }
 }

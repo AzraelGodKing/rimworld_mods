@@ -74,6 +74,7 @@
   <Strata_Settings_RaidPursuitDesc>Raiders with nobody left to fight follow your colonists through unsealed stairwells.</Strata_Settings_RaidPursuitDesc>
   <Strata_Settings_B1Infestations>Underground infestations (B1+)</Strata_Settings_B1Infestations>
   <Strata_Settings_B1InfestationsDesc>When off, infestations (including deep-drill style) cannot fire on any underground Strata floor (B1 and deeper). Surface and A+ are unchanged.</Strata_Settings_B1InfestationsDesc>
+  <Strata_Place_QuestMapNoShaft>Don't dig Strata shafts on temporary quest maps (Ancient Urban Ruins, world sites, etc.) — abandoning the site orphans the pocket levels. Use Strata on your home colony; use the other mod's floors for exploration.</Strata_Place_QuestMapNoShaft>
   <Strata_Settings_HibernateEmpty>Hibernate empty levels</Strata_Settings_HibernateEmpty>
   <Strata_Settings_HibernateEmptyDesc>Vacant A+ and B+ pocket maps run vanilla ambient sims 1 tick in 4 and Strata gas 1 cycle in 8. Fully live on the map you are viewing or any level with pawns on it.</Strata_Settings_HibernateEmptyDesc>
   <Strata_Settings_ReduceBackground>Reduce background levels</Strata_Settings_ReduceBackground>
@@ -117,7 +118,7 @@
   <Strata_Settings_AncientStairwellDesc>Some new colony maps spawn a pre-built ancient stairwell on the surface. It opens the first underground level without digging-down research, but does not carry power between levels.</Strata_Settings_AncientStairwellDesc>
   <Strata_Settings_AncientStairwellChance>Ancient stairwell spawn chance: {0}</Strata_Settings_AncientStairwellChance>
   <Strata_Settings_BiomesCaverns>Biomes! Caverns features</Strata_Settings_BiomesCaverns>
-  <Strata_Settings_BiomesCavernsDesc>Biomes! Caverns always owns dig layout when loaded. This toggle only enables Biomes! plants, fauna, stalagmites, and crystals on those levels.</Strata_Settings_BiomesCavernsDesc>
+  <Strata_Settings_BiomesCavernsDesc>Biomes! Caverns always owns dig layout when loaded (plants/fauna/stalagmites when this is on). If Biomes! leaves a hollow contour with almost no rock — common when digging under mountains — Strata falls back to its own rock fill so the floor stays mineable. Also checks the mountain footprint upstairs so edge rock alone cannot hide an empty dig.</Strata_Settings_BiomesCavernsDesc>
   <Strata_Settings_Appearance>Appearance</Strata_Settings_Appearance>
   <Strata_Settings_MultiFloorStairs>Multifloor Stairs</Strata_Settings_MultiFloorStairs>
   <Strata_Settings_MultiFloorStairsDesc>Use bundled alternate art from Textures/Strata/Buildings/MultiFloors/ (handrail stairs + modern elevator). Does not require the MultiFloors mod.</Strata_Settings_MultiFloorStairsDesc>

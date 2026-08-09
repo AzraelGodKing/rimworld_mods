@@ -4,6 +4,9 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Strata** — second level under/over mountain keeps mineable rock (`mountain-second-level-rock-v1`): dig hollow checks mountain footprint + guaranteed fill; A+ over mountain mass is diggable rock, not empty deck. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Docs Workshop stats** — hub/mod subscriber counts fetch live in-browser from Steam (no hourly GitHub Action). Roster at `docs/data/workshop-mods.json`; `stats-cache.json` kept only as offline fallback. → [docs/scripts/stats-display.js](docs/scripts/stats-display.js)
+- **Weekend Steam backlog** (`weekend-steam-backlog-v1`) — Strata ASF/haul + quest-map shaft guard + mountain dig fallback; Homesteader quilted bed / storage ShelfBase parity; Stormproof texture re-clean; NemesisCompatApi (Rimesis/BFV); Date Night Exosuit schedule offset. → [docs/ideas/weekend-steam-backlog.md](docs/ideas/weekend-steam-backlog.md)
 - **Strata** — mental breaks can chase targets / wander across linked floors (`mental-break-cross-level-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — orphan/unlinked underground stairs can be deconstructed again (`orphan-stair-deconstruct-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — Low Food / Low Medicine alerts count stockpiles on linked underground floors (`alert-food-med-levels-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
@@ -12,7 +15,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 - **Strata** — construct deliver no longer starts `HaulToContainer` on stacks another pawn already reserved (`construct-reserve-probe-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — cross-level construct haul that fails reassigns to storage; stuck-carry Wait/ghost-cargo fix (`haul-construct-to-storage-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** — shared work-relay job board + optional off-thread grow aggregate (`work-relay-board-v1`); prior smooth cooldown/anti-loop (`work-relay-smooth-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
-- **Docs** — hourly GitHub Action pulls Steam Workshop subscribers/favorites into [`docs/data/stats-cache.json`](docs/data/stats-cache.json) (Sunhaven-style); hub + mod pages show live counts via `stats-display.js`. Roster: [`scripts/workshop-mods.json`](scripts/workshop-mods.json).
+- **Docs** — ~~hourly GitHub Action~~ superseded: live in-browser Steam stats (see Unreleased).
 - **Date Night** — Lovin schedule button (vanilla UI is hardcoded), bed seek + short MTB, Dev tools to make lovers; Workshop preview (#2 schedule-hero); docs page [`datenight.html`](docs/datenight.html) + hub card; CI packs `DateNight.zip`. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Ideas** — parked Outfit Routines design for a later Wardrobe mod. → [docs/ideas/outfit-routines.md](docs/ideas/outfit-routines.md)
 - **Ideas** — Living World design: off-map faction chronicle, settlement morph, NPC diplomacy; Nemesis / Deep Colony / Homesteader keep their lanes. → [docs/ideas/living-world.md](docs/ideas/living-world.md)
