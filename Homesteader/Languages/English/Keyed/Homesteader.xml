@@ -5,6 +5,8 @@
   <Homesteader_LittleGuyLetterLabel>New trait: Little guy</Homesteader_LittleGuyLetterLabel>
   <Homesteader_LittleGuyLetterText>Homesteader has added a new trait: Little guy.\n\nIt does nothing.\n\nPawns may roll it naturally; you can also add it in character creation / editor.</Homesteader_LittleGuyLetterText>
 
+  <Homesteader_ScenPart_ForcedStorytellerSummary>Storyteller locked to {0}.</Homesteader_ScenPart_ForcedStorytellerSummary>
+
   <!-- Wash tub -->
   <Homesteader_NeedsSoapInWashTub>Needs soap in the wash tub.</Homesteader_NeedsSoapInWashTub>
 
