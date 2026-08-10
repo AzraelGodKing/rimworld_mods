@@ -2,11 +2,11 @@
 <Defs>
 
   <ScenarioDef>
-    <defName>Homesteader_Homesteaders</defName>
-    <label>Homesteaders</label>
-    <description>Three settlers strike out to build a self-sufficient farmstead far from civilization. No fancy technology - just livestock, seed grain, hand tools, and the knowledge to live off the land.\n\nLocks the Azrael storyteller (ships with Homesteader).</description>
+    <defName>Azrael_DeepHomestead</defName>
+    <label>The Deep Homestead</label>
+    <description>Three settlers dig in at the mountain foothills — wells and grain above, shafts below, storms on the horizon, and wars you only hear about until they wash refugees to your gate.\n\nRecommended: pick a mountainous or cave-friendly tile. Enable Homesteader, Strata, Stormproof, Living World, and Nemesis for the full series feel. Soft start parts apply when those mods are present.</description>
     <scenario>
-      <summary>Three homesteaders under Azrael. Livestock, seed, and grit.</summary>
+      <summary>Three homesteaders under Azrael. Mountain foothills recommended. Series mods soft-optional.</summary>
       <playerFaction>
         <def>PlayerFaction</def>
         <factionDef>PlayerColony</factionDef>
@@ -38,8 +38,8 @@
           </connections>
         </li>
 
-        <li Class="Homesteader.ScenPart_ForcedStoryteller">
-          <def>Homesteader_ForcedStoryteller</def>
+        <li Class="Azrael.ScenPart_ForcedStoryteller">
+          <def>Azrael_ForcedStoryteller</def>
           <storyteller>Azrael</storyteller>
         </li>
 
@@ -56,17 +56,22 @@
 
         <li Class="ScenPart_GameStartDialog">
           <def>GameStartDialog</def>
-          <text>The wagon is unloaded and the ground is yours to work.
+          <text>The foothills rise behind you. Wagon unloaded. Soil ready for seed — stone ready for shafts.
 
-There is grain to sow, animals to tend, and a long winter somewhere beyond the horizon.
+Distant wars rumble on the radio. Weather will try to break you. Dig deep if you must; farm hard if you can.
 
-Build a homestead that can outlast it all.</text>
+Azrael is watching. Build a homestead that outlasts the mountain.</text>
           <closeSound>GameStartSting</closeSound>
         </li>
 
-        <li Class="ScenPart_StartingResearch">
+        <li MayRequire="AzraelGodKing.Homesteader" Class="ScenPart_StartingResearch">
           <def>StartingResearch</def>
           <project>Homesteader_PrimitiveHomestead</project>
+        </li>
+
+        <li MayRequire="AzraelGodKing.Strata" Class="ScenPart_StartingResearch">
+          <def>StartingResearch</def>
+          <project>Strata_DiggingDown</project>
         </li>
 
         <li Class="ScenPart_StartingThing_Defined">
@@ -93,7 +98,7 @@ Build a homestead that can outlast it all.</text>
           <count>16</count>
         </li>
 
-        <li Class="ScenPart_StartingThing_Defined">
+        <li MayRequire="AzraelGodKing.Homesteader" Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
           <thingDef>Homesteader_RockSalt</thingDef>
           <count>30</count>

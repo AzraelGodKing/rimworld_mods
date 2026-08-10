@@ -10,6 +10,7 @@ Paste-ready BBCode for Workshop updates: [`../assets/workshop/strata-update-note
 ## [Unreleased]
 
 ### Added
+- **Deep Shafts scenario** — mountain/shaft showcase start; unlocks Digging Down + Building Up; locks Azrael when Homesteader is loaded.
 - **Cave mods stay out of your column** (`foreign-portal-exclusion-v1`) - Anomaly undercaves, Deep And Deeper caves, and similar portal maps are no longer treated as colony floors for work / food / rest / alerts. Optional setting: *Relay into other mods' portal maps* (off by default).
 - **Underground infestations toggle** (`b1-infestations-toggle-v1`) - Mod Options > Threats & performance. Turn off bug infestations on B1+ floors if you want a quieter basement.
 - **Stair pair IDs** (`stair-pair-id-v1`) - shafts and landings remember their partner. Broken links auto-repair when possible; Dev tools can relink by hand.
