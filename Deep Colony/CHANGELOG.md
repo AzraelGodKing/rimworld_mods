@@ -24,7 +24,7 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Fix lineage check** — `IsLineagePair` no longer calls `DirectRelationExists` on Sibling/Grandparent/Grandchild (implied relations); stops log spam on mentor float menu.
 
 ### Changed
-- **Workshop preview (2.0)** — new `About/Preview.png`: glowing perk-tree constellation behind the title, same dark ember look (picked from 5 generated candidates); 900×600 at ~0.84 MB, under Steam's 1 MB limit.
+- **Workshop preview (2.0)** — new `About/Preview.png`: glowing perk-tree constellation behind the title, same dark ember look (picked from 5 generated candidates); 900×600 at ~0.84 MB, under Steam's 1 MB limit. Docs hub card (`docs/img/DeepColonyPreview.png`) synced to match.
 - **Workshop description (2.0)** — Steam BBCode description rewritten per system for 2.0 (what's-new tabs/presets section, Hard callouts); source of truth at [assets/workshop/deep-colony-description.bbcode](../assets/workshop/deep-colony-description.bbcode).
 - **A12 chalkboard** — mentoring room bonus uses Biotech **blackboard** instead of custom teaching-notes furniture (removed `DC_TeachingNotes`).
 - **Public release** — docs site declassified (`docs/deep-colony.html`); Steam Workshop + `DeepColony.zip` on the rolling GitHub `latest` release; `PublishedFileId.txt` checked in. Mystery `ledger.html` redirects here.
