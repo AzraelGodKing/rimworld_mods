@@ -25,6 +25,7 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 
 ### Changed
 - **Workshop preview (2.0)** — new `About/Preview.png`: glowing perk-tree constellation behind the title, same dark ember look (picked from 5 generated candidates); 900×600 at ~0.84 MB, under Steam's 1 MB limit.
+- **Workshop description (2.0)** — Steam BBCode description rewritten per system for 2.0 (what's-new tabs/presets section, Hard callouts); source of truth at [assets/workshop/deep-colony-description.bbcode](../assets/workshop/deep-colony-description.bbcode).
 - **A12 chalkboard** — mentoring room bonus uses Biotech **blackboard** instead of custom teaching-notes furniture (removed `DC_TeachingNotes`).
 - **Public release** — docs site declassified (`docs/deep-colony.html`); Steam Workshop + `DeepColony.zip` on the rolling GitHub `latest` release; `PublishedFileId.txt` checked in. Mystery `ledger.html` redirects here.
 - **Workshop preview** — compressed `About/Preview.png` (~1.63 MB → ~0.38 MB) so Steam Workshop accepts it (Preview must be under 1 MB).
