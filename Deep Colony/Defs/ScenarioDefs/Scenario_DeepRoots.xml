@@ -2,11 +2,11 @@
 <Defs>
 
   <ScenarioDef>
-    <defName>Homesteader_Homesteaders</defName>
-    <label>Homesteaders</label>
-    <description>Three settlers strike out to build a self-sufficient farmstead far from civilization. No fancy technology - just livestock, seed grain, hand tools, and the knowledge to live off the land.\n\nLocks the Azrael storyteller (ships with Homesteader).</description>
+    <defName>DeepColony_DeepRoots</defName>
+    <label>Deep Roots</label>
+    <description>Three founders plant a colony meant to outlive them — perks, trauma, mentoring, surnames, and a reputation that factions remember.\n\nLocks Azrael when Homesteader is also loaded.</description>
     <scenario>
-      <summary>Three homesteaders under Azrael. Livestock, seed, and grit.</summary>
+      <summary>Three founders for a generational colony. Azrael when Homesteader is present.</summary>
       <playerFaction>
         <def>PlayerFaction</def>
         <factionDef>PlayerColony</factionDef>
@@ -38,7 +38,7 @@
           </connections>
         </li>
 
-        <li Class="Homesteader.ScenPart_ForcedStoryteller">
+        <li MayRequire="AzraelGodKing.Homesteader" Class="Homesteader.ScenPart_ForcedStoryteller">
           <def>Homesteader_ForcedStoryteller</def>
           <storyteller>Azrael</storyteller>
         </li>
@@ -56,72 +56,60 @@
 
         <li Class="ScenPart_GameStartDialog">
           <def>GameStartDialog</def>
-          <text>The wagon is unloaded and the ground is yours to work.
+          <text>These three are not disposable stats.
 
-There is grain to sow, animals to tend, and a long winter somewhere beyond the horizon.
+They will take scars. They will teach. They will leave surnames and stories. Factions will remember how you treat them — and how you treat everyone else.
 
-Build a homestead that can outlast it all.</text>
+Plant deep. Grow a colony with a history.</text>
           <closeSound>GameStartSting</closeSound>
-        </li>
-
-        <li Class="ScenPart_StartingResearch">
-          <def>StartingResearch</def>
-          <project>Homesteader_PrimitiveHomestead</project>
         </li>
 
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
           <thingDef>Silver</thingDef>
-          <count>300</count>
+          <count>500</count>
+        </li>
+
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>Steel</thingDef>
+          <count>140</count>
+        </li>
+
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>ComponentIndustrial</thingDef>
+          <count>12</count>
         </li>
 
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
           <thingDef>WoodLog</thingDef>
-          <count>350</count>
+          <count>320</count>
         </li>
 
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
-          <thingDef>Pemmican</thingDef>
-          <count>120</count>
-        </li>
-
-        <li Class="ScenPart_StartingThing_Defined">
-          <def>StartingThing_Defined</def>
-          <thingDef>MedicineHerbal</thingDef>
-          <count>16</count>
-        </li>
-
-        <li Class="ScenPart_StartingThing_Defined">
-          <def>StartingThing_Defined</def>
-          <thingDef>Homesteader_RockSalt</thingDef>
+          <thingDef>MealFine</thingDef>
           <count>30</count>
         </li>
 
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
-          <thingDef>Bow_Short</thingDef>
-          <count>2</count>
+          <thingDef>MedicineIndustrial</thingDef>
+          <count>18</count>
         </li>
 
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
-          <thingDef>MeleeWeapon_Knife</thingDef>
-          <stuff>Steel</stuff>
-          <count>1</count>
+          <thingDef>Beer</thingDef>
+          <count>20</count>
         </li>
 
-        <li Class="ScenPart_StartingAnimal">
-          <def>StartingAnimal</def>
-          <animalKind>Cow</animalKind>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>Gun_Revolver</thingDef>
           <count>1</count>
-        </li>
-
-        <li Class="ScenPart_StartingAnimal">
-          <def>StartingAnimal</def>
-          <animalKind>Chicken</animalKind>
-          <count>3</count>
         </li>
 
       </parts>

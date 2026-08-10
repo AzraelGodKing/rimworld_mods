@@ -4,6 +4,9 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 
 ## [Unreleased]
 
+### Added
+- **Stormfront scenario** — hard-weather showcase start; unlocks storm protection research; locks Azrael when Homesteader is loaded.
+
 ### Changed
 - **Workshop preview** — compressed `About/Preview.png` (~3.0 MB → ~0.94 MB) via palette PNG so Steam uploads stay under size pressure.
 
