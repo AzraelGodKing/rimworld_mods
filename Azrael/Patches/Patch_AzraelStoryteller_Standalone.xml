@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!-- Canonical StorytellerDef Azrael ships with Homesteader.
+       Standalone Azrael injects the same def only when Homesteader is absent
+       so both packages can coexist without duplicate defName errors. -->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>AzraelGodKing.Homesteader</li>
+    </mods>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs</xpath>
+      <value>
+        <StorytellerDef ParentName="BaseStoryteller">
+          <defName>Azrael</defName>
+          <label>Azrael</label>
+          <description>Azrael tells the series story: distant wars, hard weather, deep shafts, and homestead grit.\n\nPacing follows Cassandra Classic — big threats come in waves with breathing room — but miscellaneous events and small threats arrive a little more often so Living World news, Stormproof weather, and other soft series content have room to breathe.\n\nRaids and major threats stay near Cassandra so Nemesis hunts and colony defense still matter.\n\n(Standalone copy — install Homesteader for the canonical package.)</description>
+          <portraitLarge>UI/HeroArt/Storytellers/Cassandra</portraitLarge>
+          <portraitTiny>UI/HeroArt/Storytellers/CassandraTiny</portraitTiny>
+          <listOrder>25</listOrder>
+          <comps>
+
+            <li Class="StorytellerCompProperties_ClassicIntro"/>
+
+            <li Class="StorytellerCompProperties_Disease">
+              <category>DiseaseHuman</category>
+              <mtbDays>90</mtbDays>
+            </li>
+
+            <li Class="StorytellerCompProperties_Disease">
+              <category>DiseaseAnimal</category>
+              <mtbDays>120</mtbDays>
+            </li>
+
+            <li Class="StorytellerCompProperties_OnOffCycle">
+              <category>ThreatBig</category>
+              <minDaysPassed>11.0</minDaysPassed>
+              <onDays>4.6</onDays>
+              <offDays>6.0</offDays>
+              <minSpacingDays>1.9</minSpacingDays>
+              <numIncidentsRange>1~2</numIncidentsRange>
+              <forceRaidEnemyBeforeDaysPassed>30</forceRaidEnemyBeforeDaysPassed>
+            </li>
+
+            <li Class="StorytellerCompProperties_CategoryMTB">
+              <category>ThreatSmall</category>
+              <minDaysPassed>6</minDaysPassed>
+              <mtbDays>2.0</mtbDays>
+            </li>
+
+            <li Class="StorytellerCompProperties_CategoryMTB">
+              <category>Misc</category>
+              <mtbDays>3.5</mtbDays>
+            </li>
+
+            <li Class="StorytellerCompProperties_CategoryMTB">
+              <category>ShipChunkDrop</category>
+              <mtbDays>18</mtbDays>
+            </li>
+
+            <li Class="StorytellerCompProperties_CategoryMTB">
+              <category>OrbitalVisitor</category>
+              <mtbDays>30</mtbDays>
+            </li>
+
+            <li Class="StorytellerCompProperties_CategoryMTB">
+              <category>FactionArrival</category>
+              <mtbDays>12</mtbDays>
+            </li>
+
+            <li Class="StorytellerCompProperties_DeepDrillInfestation">
+              <baseMtbDays>35</baseMtbDays>
+            </li>
+
+            <li Class="StorytellerCompProperties_CategoryMTB">
+              <allowedTargetTags>
+                <li>Map_RaidBeacon</li>
+              </allowedTargetTags>
+              <category>ThreatBig</category>
+              <mtbDays>1.0</mtbDays>
+              <maxThreatBigIntervalDays>100000</maxThreatBigIntervalDays>
+            </li>
+
+            <li Class="StorytellerCompProperties_FactionInteraction">
+              <incident>RaidEnemy</incident>
+              <baseIncidentsPerYear>5</baseIncidentsPerYear>
+              <minSpacingDays>5</minSpacingDays>
+              <fullAlliesOnly>true</fullAlliesOnly>
+            </li>
+
+            <li Class="StorytellerCompProperties_FactionInteraction">
+              <incident>TraderCaravanArrival</incident>
+              <baseIncidentsPerYear>10</baseIncidentsPerYear>
+              <minSpacingDays>2</minSpacingDays>
+              <fullAlliesOnly>false</fullAlliesOnly>
+            </li>
+
+            <li Class="StorytellerCompProperties_FactionInteraction">
+              <incident>VisitorGroup</incident>
+              <baseIncidentsPerYear>8</baseIncidentsPerYear>
+              <minSpacingDays>0.5</minSpacingDays>
+              <fullAlliesOnly>false</fullAlliesOnly>
+            </li>
+
+            <li Class="StorytellerCompProperties_RandomQuest">
+              <minDaysPassed>10</minDaysPassed>
+              <mtbDays>10</mtbDays>
+            </li>
+
+          </comps>
+        </StorytellerDef>
+      </value>
+    </nomatch>
+  </Operation>
+
+</Patch>

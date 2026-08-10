@@ -24,8 +24,9 @@ Per-mod later work lives in each mod’s roadmap:
 
 ## Storyteller & showcase
 
-- [ ] **Azrael** series storyteller — weights incidents from Strata / Homesteader / Stormproof / Nemesis, and Living World fallout incidents (refugees, warbands) at low threat cost
-- [ ] Showcase scenario **“The Deep Homestead”** — river, storm-heavy, core four mods (+ optional Deep Colony / Living World)
+- [x] **Azrael** series storyteller — canonical in [Homesteader](Homesteader/); standalone [Azrael](Azrael/) injects the same def only if Homesteader is absent
+- [x] Showcase scenario **“The Deep Homestead”** — mountain-foothills homestead start, forced Azrael, MayRequire Homesteader / Strata ([Azrael/](Azrael/))
+- [x] Per-mod showcase scenarios (each mod owns its own): Homesteaders, Deep Shafts, Stormfront, Marked, Listening Post, Deep Roots
 
 ## Living World (Phase 1–2)
 
