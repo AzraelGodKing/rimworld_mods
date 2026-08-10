@@ -2,11 +2,11 @@
 <Defs>
 
   <ScenarioDef>
-    <defName>Homesteader_Homesteaders</defName>
-    <label>Homesteaders</label>
-    <description>Three settlers strike out to build a self-sufficient farmstead far from civilization. No fancy technology - just livestock, seed grain, hand tools, and the knowledge to live off the land.\n\nLocks the Azrael storyteller (ships with Homesteader).</description>
+    <defName>LivingWorld_ListeningPost</defName>
+    <label>Listening Post</label>
+    <description>Three settlers plant a colony on a loud rimworld — distant wars, flipping settlements, and news that arrives before the refugees do.\n\nLocks Azrael when Homesteader is also loaded.</description>
     <scenario>
-      <summary>Three homesteaders under Azrael. Livestock, seed, and grit.</summary>
+      <summary>Three colonists in a living off-map world. Azrael when Homesteader is present.</summary>
       <playerFaction>
         <def>PlayerFaction</def>
         <factionDef>PlayerColony</factionDef>
@@ -38,7 +38,7 @@
           </connections>
         </li>
 
-        <li Class="Homesteader.ScenPart_ForcedStoryteller">
+        <li MayRequire="AzraelGodKing.Homesteader" Class="Homesteader.ScenPart_ForcedStoryteller">
           <def>Homesteader_ForcedStoryteller</def>
           <storyteller>Azrael</storyteller>
         </li>
@@ -56,71 +56,57 @@
 
         <li Class="ScenPart_GameStartDialog">
           <def>GameStartDialog</def>
-          <text>The wagon is unloaded and the ground is yours to work.
+          <text>The map is quiet. The planet is not.
 
-There is grain to sow, animals to tend, and a long winter somewhere beyond the horizon.
-
-Build a homestead that can outlast it all.</text>
+Settlements rise and fall beyond your fog of war. Factions feud. Rumors travel farther than caravans. Keep the radio warm — the next letter may already be walking toward your gate.</text>
           <closeSound>GameStartSting</closeSound>
-        </li>
-
-        <li Class="ScenPart_StartingResearch">
-          <def>StartingResearch</def>
-          <project>Homesteader_PrimitiveHomestead</project>
         </li>
 
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
           <thingDef>Silver</thingDef>
-          <count>300</count>
+          <count>400</count>
         </li>
 
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
-          <thingDef>WoodLog</thingDef>
-          <count>350</count>
-        </li>
-
-        <li Class="ScenPart_StartingThing_Defined">
-          <def>StartingThing_Defined</def>
-          <thingDef>Pemmican</thingDef>
+          <thingDef>Steel</thingDef>
           <count>120</count>
         </li>
 
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
+          <thingDef>ComponentIndustrial</thingDef>
+          <count>10</count>
+        </li>
+
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>WoodLog</thingDef>
+          <count>300</count>
+        </li>
+
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>MealSurvivalPack</thingDef>
+          <count>35</count>
+        </li>
+
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
           <thingDef>MedicineHerbal</thingDef>
-          <count>16</count>
+          <count>20</count>
         </li>
 
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
-          <thingDef>Homesteader_RockSalt</thingDef>
-          <count>30</count>
-        </li>
-
-        <li Class="ScenPart_StartingThing_Defined">
-          <def>StartingThing_Defined</def>
-          <thingDef>Bow_Short</thingDef>
-          <count>2</count>
-        </li>
-
-        <li Class="ScenPart_StartingThing_Defined">
-          <def>StartingThing_Defined</def>
-          <thingDef>MeleeWeapon_Knife</thingDef>
-          <stuff>Steel</stuff>
+          <thingDef>Gun_Revolver</thingDef>
           <count>1</count>
         </li>
 
-        <li Class="ScenPart_StartingAnimal">
-          <def>StartingAnimal</def>
-          <animalKind>Cow</animalKind>
-          <count>1</count>
-        </li>
-
-        <li Class="ScenPart_StartingAnimal">
-          <def>StartingAnimal</def>
-          <animalKind>Chicken</animalKind>
+        <li Class="ScenPart_StartingThing_Defined">
+          <def>StartingThing_Defined</def>
+          <thingDef>Apparel_CowboyHat</thingDef>
           <count>3</count>
         </li>
 
