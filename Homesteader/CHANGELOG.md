@@ -5,6 +5,9 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
+- **Azrael storyteller** — Cassandra-style pacing with slightly more Misc / ThreatSmall (series flavor). Canonical package; the optional Azrael showcase mod only injects this teller if Homesteader is not loaded.
+- **ForcedStoryteller scen part** — `Homesteader.ScenPart_ForcedStoryteller` so Homesteaders (and sibling mod scenarios via MayRequire) can lock Azrael.
+- **Homesteaders scenario** — locks Azrael storyteller on start.
 - **Little guy trait** — flavor-only trait (`Homesteader_LittleGuy`) with no gameplay effects; one-time mail on first load after update announcing it.
 - **CN / RU language packs** — Chinese Simplified and Russian Keyed + full DefInjected (buildings, items, plants, recipes, research, thoughts, hediffs, incidents, and related defs).
 

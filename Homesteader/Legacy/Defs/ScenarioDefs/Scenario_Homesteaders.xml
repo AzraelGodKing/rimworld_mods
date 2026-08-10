@@ -4,14 +4,19 @@
   <ScenarioDef>
     <defName>Homesteader_Homesteaders</defName>
     <label>Homesteaders</label>
-    <description>Three settlers strike out to build a self-sufficient farmstead far from civilization. No fancy technology - just livestock, seed grain, hand tools, and the knowledge to live off the land.</description>
+    <description>Three settlers strike out to build a self-sufficient farmstead far from civilization. No fancy technology - just livestock, seed grain, hand tools, and the knowledge to live off the land.\n\nLocks the Azrael storyteller (ships with Homesteader).</description>
     <scenario>
-      <summary>Three homesteaders, their animals, and a wagon of supplies. Build a farm that can outlast anything.</summary>
+      <summary>Three homesteaders under Azrael. Livestock, seed, and grit.</summary>
       <playerFaction>
         <def>PlayerFaction</def>
         <factionDef>PlayerColony</factionDef>
       </playerFaction>
       <parts>
+
+        <li Class="Homesteader.ScenPart_ForcedStoryteller">
+          <def>Homesteader_ForcedStoryteller</def>
+          <storyteller>Azrael</storyteller>
+        </li>
 
         <li Class="ScenPart_ConfigPage_ConfigureStartingPawns">
           <def>ConfigPage_ConfigureStartingPawns</def>

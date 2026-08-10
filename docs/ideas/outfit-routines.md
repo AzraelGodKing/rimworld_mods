@@ -1,6 +1,6 @@
 # Outfit Routines (parked idea)
 
-**Status:** Design only — not started. Schedulable Lovin (`DateNight`) ships first.
+**Status:** In progress — Wardrobe mod MVP (`Wardrobe/`). Sleep + Cook/Doctor/Animals triggers.
 
 **Source:** Community/QoL brainstorm (job-based apparel assignment). Feasibility notes also in the Cursor plan `QoL Mods Feasibility`.
 

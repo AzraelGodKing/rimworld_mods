@@ -4,6 +4,9 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Azrael / Homesteader** — Azrael storyteller lives in Homesteader (canonical); standalone Azrael showcase injects the teller only without Homesteader, plus **The Deep Homestead** scenario. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md) · [Azrael/CHANGELOG.md](Azrael/CHANGELOG.md)
+- **Per-mod showcase scenarios** — Homesteaders (Azrael lock), Strata Deep Shafts, Stormproof Stormfront, Nemesis Marked, Living World Listening Post, Deep Colony Deep Roots (Azrael lock when Homesteader present).
+- **Wardrobe** — Outfit Routines MVP (Sleep + Cook/Doctor/Animals swaps from a wardrobe stockpile, snapshot restore). → [Wardrobe/CHANGELOG.md](Wardrobe/CHANGELOG.md)
 - **Deep Colony** — CN/RU spot-check for 2.0 tabs + Phase 5 (Keyed + DefInjected fill). → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony** — Workshop / docs polish: About.xml description rewritten per system for 2.0; docs page rebuilt with per-system 2.0 cards + Soft/Default/Hard defaults callout; new 2.0 Workshop preview (perk-tree constellation) + Steam BBCode description. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md) · [docs/deep-colony.html](docs/deep-colony.html)
 - **Nemesis / Deep Colony / Rimesis** — soft-compat: Availability / Missing handshake (Font Availability states + Nemesis `ShouldReportMissingToRimesis` stub); capture/truce goodwill OK with DC ledger; leader raid → Rimesis inject still later. → [docs/ideas/nemesis-rimesis-compat.md](docs/ideas/nemesis-rimesis-compat.md)

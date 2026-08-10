@@ -4,9 +4,10 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ## [Unreleased]
 
-### Changed
+### Added
 
-- **Steam Workshop / About description** — rewritten for V3 (see-below, cross-level combat &amp; force-build, combined inventory, atmosphere opt-in, gravship stacks). Paste-ready BBCode in `SteamDescription.txt`.
+- **Deep Shafts scenario** — mountain/shaft showcase start; unlocks Digging Down + Building Up; locks Azrael when Homesteader is loaded.
+
 - **Work relay job board** (`work-relay-board-v1`) — background `GameComponent` scanner publishes a per-floor work board; work relay reads it instead of probing during every idle think. Optional off-thread grow-cell aggregate (`offThreadWorkRelay`, on by default). Sync fallback if the board is missing/stale.
 - **Work relay smooth rework** (`work-relay-smooth-v1`) — idle colonists/mechs no longer burn a 7500-tick scan lockout on empty or claim-capped looks (short empty / medium failed cooldowns; only after a real scan). Map work-signal TTL cache + `Notify_WorkChanged` (designations / blueprints/frames) bumps a work version so new jobs wake mid-cooldown pawns. False-positive arrivals blacklist that floor ~5000 ticks to stop stair loops. Work stampede cap scales with signal strength (3–8) and frees on Work arrival. External JobGiver relay uses the same scan throttle + dynamic cap.
 

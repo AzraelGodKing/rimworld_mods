@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <MainButtonDef>
+    <defName>Wardrobe</defName>
+    <label>wardrobe</label>
+    <description>Outfit routines — swap into task gear from a wardrobe stockpile, then restore.</description>
+    <tabWindowClass>Wardrobe.MainTabWindow_Wardrobe</tabWindowClass>
+    <order>52</order>
+    <closesWorldView>true</closesWorldView>
+  </MainButtonDef>
+
+</Defs>
