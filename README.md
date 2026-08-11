@@ -127,9 +127,11 @@ Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Hom
 
 ## Website
 
-Browse the full mod catalog at the [GitHub Pages site](https://azraelgodking.github.io/rimworld_mods/).
+Browse the rebuilt docs hub at the [GitHub Pages site](https://azraelgodking.github.io/rimworld_mods/).
 
-Workshop subscriber / favorite counts load live in the browser via [`docs/scripts/stats-display.js`](docs/scripts/stats-display.js) (roster: [`docs/data/workshop-mods.json`](docs/data/workshop-mods.json); 1h localStorage cache). [`docs/data/stats-cache.json`](docs/data/stats-cache.json) is an offline fallback only — optional refresh: `node scripts/fetch-workshop-stats.js --force`.
+- **Direct downloads:** every listed mod has Steam Workshop **and** GitHub release zip buttons (hub `#downloads` + each mod page) for players who cannot use the Workshop.
+- **Steam subscriber tracker:** live in-browser via [`docs/scripts/stats-display.js`](docs/scripts/stats-display.js) (roster: [`docs/data/workshop-mods.json`](docs/data/workshop-mods.json); 1h `localStorage` cache). **Not** driven by GitHub Actions — no hourly bot commits to rebase around. [`docs/data/stats-cache.json`](docs/data/stats-cache.json) is a manual offline fallback only (`node scripts/fetch-workshop-stats.js --force`).
+- **Accessibility:** skip link, landmarks, focus styles, keyboardable mobile nav, `prefers-reduced-motion`, and live regions for stats.
 
 ## License
 
