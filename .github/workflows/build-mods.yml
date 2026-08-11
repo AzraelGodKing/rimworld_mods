@@ -1,9 +1,11 @@
 name: Build mod DLLs
 
-# Build Homesteader / Strata / Stormproof / Nemesis / DateNight / LivingWorld on push to main and on PRs.
+# Build Homesteader / Strata / Stormproof / Nemesis / DateNight / LivingWorld /
+# Deep Colony on push to main and on PRs.
 # On main (and workflow_dispatch): pack download zips with injected DLLs and publish
 # them to the rolling "latest" GitHub Release for the docs site buttons.
 # Assemblies/*.dll stay gitignored — zips are never committed.
+# Nemesis / Deep Colony stay Workshop-first (compile-only; no docs zip).
 
 on:
   push:
@@ -15,6 +17,7 @@ on:
       - "Nemesis/Source/**"
       - "DateNight/Source/**"
       - "LivingWorld/Source/**"
+      - "Deep Colony/Source/**"
       - "scripts/build_downloads.ps1"
       - ".github/workflows/build-mods.yml"
   pull_request:
@@ -25,6 +28,7 @@ on:
       - "Nemesis/Source/**"
       - "DateNight/Source/**"
       - "LivingWorld/Source/**"
+      - "Deep Colony/Source/**"
       - "scripts/build_downloads.ps1"
       - ".github/workflows/build-mods.yml"
   workflow_dispatch:
@@ -73,6 +77,9 @@ jobs:
 
       - name: Build LivingWorld
         run: dotnet build LivingWorld/Source/LivingWorld.csproj -c Release --nologo
+
+      - name: Build Deep Colony
+        run: dotnet build "Deep Colony/Source/DeepColony.csproj" -c Release --nologo
 
       - name: Pack docs/downloads zips (with DLLs)
         if: github.event_name != 'pull_request'
