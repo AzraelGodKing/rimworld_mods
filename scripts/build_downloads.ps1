@@ -33,12 +33,11 @@ function Set-ZipEntryFile {
 }
 
 # folder = git path / zip root; zipName = download asset; dllName = Assemblies/*.dll
+# Keep in sync with .github/workflows/build-mods.yml pack list (Workshop-first mods omitted).
 $mods = @(
     @{ Folder = 'Homesteader'; ZipName = 'Homesteader'; DllName = 'Homesteader' },
     @{ Folder = 'Stormproof'; ZipName = 'Stormproof'; DllName = 'Stormproof' },
     @{ Folder = 'Strata'; ZipName = 'Strata'; DllName = 'Strata' },
-    @{ Folder = 'Nemesis'; ZipName = 'Nemesis'; DllName = 'Nemesis' },
-    @{ Folder = 'Deep Colony'; ZipName = 'DeepColony'; DllName = 'DeepColony' },
     @{ Folder = 'DateNight'; ZipName = 'DateNight'; DllName = 'DateNight' },
     @{ Folder = 'LivingWorld'; ZipName = 'LivingWorld'; DllName = 'LivingWorld' }
 )
