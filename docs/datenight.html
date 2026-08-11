@@ -6,49 +6,54 @@
 <title>Date Night — a RimWorld mod by AzraelGodKing</title>
 <meta name="description" content="Date Night: add a Lovin timetable slot to RimWorld’s Schedule tab. Paint the same hours for both partners; they meet in a double bed. RimWorld 1.6, requires Harmony.">
 <link rel="stylesheet" href="style.css">
+<script src="scripts/site.js" defer></script>
 <script src="scripts/stats-display.js" defer></script>
 </head>
-<body>
+<body data-theme="date-night">
 
-<nav class="site-nav">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Primary">
   <div class="wrap">
-    <a class="brand" href="index.html">RIMWORLD MODS</a>
-    <div class="nav-links">
+    <a class="brand" href="index.html">AzraelGodKing</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <div class="nav-links" id="primary-nav">
       <a href="index.html">Home</a>
       <a href="homesteader.html">Homesteader</a>
       <a href="stormproof.html">Stormproof</a>
       <a href="strata.html">Strata</a>
-      <a href="nemesis.html" class="signal-link">Nemesis</a>
-      <a href="deep-colony.html" class="ledger-link">Deep Colony</a>
-      <a href="datenight.html" class="date-link active">Date Night</a>
+      <a href="nemesis.html">Nemesis</a>
+      <a href="deep-colony.html">Deep Colony</a>
+      <a href="datenight.html" class="active" aria-current="page">Date Night</a>
+      <a href="index.html#downloads">Downloads</a>
       <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
     </div>
   </div>
 </nav>
 
-<header class="hero date">
-  <div class="wrap">
-    <h1 class="n">DATE NIGHT</h1>
-    <p class="tagline">Schedule romance. Make memories.</p>
-    <div class="badges">
-      <span class="badge date">RimWorld 1.6</span>
-      <span class="badge date">Requires Harmony</span>
-      <span class="badge date">C# mod</span>
-      <span class="badge date">Lovin schedule</span>
-    </div>
-    <div class="cta">
-      <a class="btn btn-date" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip">&#11015; Download zip</a>
-      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+<header class="hero mod-hero">
+  <div class="hero-media" aria-hidden="true">
+    <img src="img/DateNightPreview.png" alt="">
+  </div>
+  <div class="hero-copy">
+    <h1 class="hero-brand">Date Night</h1>
+    <p class="hero-line">Schedule romance. Make memories.</p>
+    <div class="hero-cta">
+      <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3774158903">Steam Workshop</a>
+      <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip">Download zip</a>
+      
     </div>
   </div>
 </header>
 
+<main id="main">
 <div class="wrap">
   <div class="mod-workshop-stats" aria-live="polite">
     Steam Workshop:
     <strong><span data-stats-mod="date-night" data-field="subscriptions">&mdash;</span></strong> subscribers
     &middot;
     <strong><span data-stats-mod="date-night" data-field="favorited">&mdash;</span></strong> favorites
+  <p class="stats-meta">Live in your browser — not updated by GitHub Actions.</p>
   </div>
 
   <section id="overview">
@@ -136,8 +141,9 @@
   </section>
 
 </div>
+</main>
 
-<footer>
+<footer class="site-footer">
   <div class="wrap">
     RimWorld mods by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
     &middot; <a href="index.html">Back to hub</a>
