@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Workshop stats admin — unlisted</title>
+<meta name="description" content="Unlisted admin page to force-refresh Steam Workshop stats. Not linked from the hub.">
+<link rel="stylesheet" href="style.css">
+<style>
+  .admin-shell { max-width: 720px; margin: 2.5rem auto; padding: 0 1rem 3rem; }
+  .admin-panel {
+    background: var(--surface-raised);
+    border: 1px solid var(--line-soft);
+    padding: 1.25rem 1.35rem;
+  }
+  .admin-panel + .admin-panel { margin-top: 1rem; }
+  .admin-panel h1, .admin-panel h2 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+  }
+  .admin-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+  .admin-status {
+    margin-top: 0.85rem;
+    padding: 0.75rem 0.9rem;
+    background: var(--surface);
+    border-left: 4px solid var(--brand);
+    color: var(--ink-muted);
+    min-height: 1.4em;
+  }
+  .admin-status[data-tone="error"] { border-left-color: var(--danger); }
+  .admin-status[data-tone="ok"] { border-left-color: var(--ok); }
+  .admin-field { margin-top: 0.85rem; }
+  .admin-field label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+  .admin-field input, .admin-field textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font: 1rem/1.4 var(--font-body);
+    background: #fff;
+    color: var(--ink);
+  }
+  .admin-field textarea {
+    min-height: 180px;
+    font: 0.85rem/1.45 ui-monospace, Consolas, Menlo, monospace;
+  }
+  .admin-table { width: 100%; margin-top: 0.75rem; }
+  .admin-hidden { display: none !important; }
+  .admin-warn {
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+  }
+</style>
+<script>window.AZRAEL_STATS_MANUAL = true;</script>
+<script src="scripts/stats-display.js" defer></script>
+<script src="scripts/admin-stats.js" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<main id="main" class="admin-shell">
+  <p class="secret-banner" style="color: var(--ink-muted); border-color: var(--line);">
+    Unlisted admin page (<code>noindex</code>). Not linked from the public hub.
+  </p>
+
+  <section id="gate" class="admin-panel" aria-labelledby="gate-h">
+    <h1 id="gate-h">Workshop stats admin</h1>
+    <p class="lead">Force a live Steam refresh without a GitHub Action. Client-side passphrase only — treat the URL as private.</p>
+    <form id="unlock-form">
+      <div class="admin-field">
+        <label for="passphrase">Passphrase</label>
+        <input id="passphrase" name="passphrase" type="password" autocomplete="current-password" required>
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-download" type="submit">Unlock</button>
+      </div>
+    </form>
+    <div class="admin-status" id="gate-status" role="status" aria-live="polite"></div>
+  </section>
+
+  <section id="console" class="admin-panel admin-hidden" aria-labelledby="console-h">
+    <h2 id="console-h">Force refresh</h2>
+    <p class="lead">Pulls live Workshop counts, updates this browser&rsquo;s hour cache, and prepares the offline fallback JSON. Visitors still fetch live themselves.</p>
+    <div class="admin-actions">
+      <button class="btn btn-download" type="button" id="btn-refresh">Force refresh from Steam</button>
+      <button class="btn btn-ghost" type="button" id="btn-download">Download stats-cache.json</button>
+      <button class="btn btn-ghost" type="button" id="btn-clear">Clear this browser cache</button>
+      <button class="btn btn-ghost" type="button" id="btn-lock">Lock</button>
+    </div>
+    <div class="admin-status" id="console-status" role="status" aria-live="polite"></div>
+
+    <div class="table-scroll" role="region" aria-label="Live workshop stats" tabindex="0">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th scope="col">Mod</th>
+            <th scope="col">Subscribers</th>
+            <th scope="col">Favorites</th>
+            <th scope="col">Views</th>
+          </tr>
+        </thead>
+        <tbody id="stats-rows">
+          <tr><td colspan="4">Refresh to load.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admin-field">
+      <label for="stats-json">Fallback JSON</label>
+      <textarea id="stats-json" readonly spellcheck="false" aria-describedby="json-help"></textarea>
+      <p id="json-help" class="admin-warn">Optional: commit this file to <code>docs/data/stats-cache.json</code> when you want a fresher offline fallback — still no scheduled runner.</p>
+    </div>
+
+    <details class="admin-field">
+      <summary><strong>Optional:</strong> publish fallback to GitHub (uses your PAT, once)</summary>
+      <p class="admin-warn">Paste a fine-grained token with Contents write on this repo. It stays in <code>sessionStorage</code> only for this tab session and is never written into the site. Creates one commit on <code>main</code> when you click Publish.</p>
+      <div class="admin-field">
+        <label for="gh-token">GitHub token</label>
+        <input id="gh-token" type="password" autocomplete="off" placeholder="github_pat_…">
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-steam" type="button" id="btn-publish">Publish stats-cache.json to main</button>
+      </div>
+    </details>
+  </section>
+</main>
+
+</body>
+</html>
