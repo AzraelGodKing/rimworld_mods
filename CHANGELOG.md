@@ -4,33 +4,13 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 - **Repo** — Cursor Cloud Agent dev environment (`cloud-agent-env-v1`): `.cursor/environment.json` + `.cursor/install.sh` install the .NET SDK 8 the mods compile against, build all seven mod DLLs, and serve the `docs/` site on port 8000 for preview.
 - **Cloud Agent** — RimWorld archive install/wiring (`.cursor/install-rimworld.sh`): downloads from `RIMWORLD_ARCHIVE_URL` into `/opt/rimworld`, symlinks repo mods into `Mods/`, called from `.cursor/install.sh` when present.
-=======
-=======
-=======
-=======
-=======
 - **Repo** — restore Nemesis + Deep Colony docs/download zips on the rolling `latest` release (and local `build_downloads.ps1`) for non-Steam installs; hub/README zip buttons work again.
-<<<<<<< HEAD
->>>>>>> e06f43f (Restore Nemesis and Deep Colony GitHub download zips)
-- **Docs** — unlisted Living World page at `docs/living-world.html` (`noindex`, not on hub/nav). Local `build_downloads.ps1` matches CI (Homesteader / Stormproof / Strata / DateNight / LivingWorld only).
->>>>>>> 029c658 (Unlisted Living World docs; match local zip pack to CI)
-- **Repo** — CI also strips leftover `DeepColony.zip` from `latest`; `setup-rimworld.sh --build-mods`; Deep Colony `loadAfter` Living World (`repo-hygiene-no-debate`).
->>>>>>> 5ef1ad3 (CI DeepColony.zip cleanup, --build-mods, DC loadAfter LW)
-=======
 - **Docs** — unlisted Living World page at `docs/living-world.html` (`noindex`, not on hub/nav).
 - **Repo** — `setup-rimworld.sh --build-mods`; Deep Colony `loadAfter` Living World (`repo-hygiene-no-debate`).
->>>>>>> cf4b57e (Changelogs: clarify restored Nemesis/Deep Colony zips)
 - **Repo** — Deep Colony added to CI compile; Living World design doc retitled (not “parked”); drop duplicate `scripts/workshop-mods.json`; `Assemblies/.gitkeep` for Nemesis / DateNight / LivingWorld / Deep Colony; Living World languages README; Cloud Agent RimWorld setup note in README (`repo-hygiene-1-6`).
->>>>>>> 81efb06 (Repo hygiene: Deep Colony CI, docs/setup small fixes)
 - **Repo / Cloud Agent** — `scripts/setup-rimworld.sh` downloads RimWorld from `RIMWORLD_ARCHIVE_URL`, installs Harmony, links workspace mods under `/opt/rimworld/RimWorld/Mods`, and writes `ModsConfig` + `RIMWORLD_DIR` env markers (`rimworld-archive-setup`).
->>>>>>> 125b65b (Add Cloud Agent RimWorld setup from RIMWORLD_ARCHIVE_URL)
 - **Deep Colony** — CN/RU spot-check for 2.0 tabs + Phase 5 (Keyed + DefInjected fill). → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony** — Workshop / docs polish: About.xml description rewritten per system for 2.0; docs page rebuilt with per-system 2.0 cards + Soft/Default/Hard defaults callout; new 2.0 Workshop preview (perk-tree constellation) + Steam BBCode description. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md) · [docs/deep-colony.html](docs/deep-colony.html)
 - **Nemesis / Deep Colony / Rimesis** — soft-compat: Availability / Missing handshake (Font Availability states + Nemesis `ShouldReportMissingToRimesis` stub); capture/truce goodwill OK with DC ledger; leader raid → Rimesis inject still later. → [docs/ideas/nemesis-rimesis-compat.md](docs/ideas/nemesis-rimesis-compat.md)
