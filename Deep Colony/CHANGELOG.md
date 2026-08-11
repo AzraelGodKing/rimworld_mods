@@ -5,6 +5,7 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
+- **GitHub zip restored** — `DeepColony.zip` published again on the rolling `latest` release for non-Steam installs (alongside Workshop).
 - **Load order** — `loadAfter` Living World so DC’s soft LW goodwill consumer sees LW signals when both are active (`repo-hygiene-no-debate`).
 - **CN/RU language spot-check (2.0)** — filled missing Chinese Simplified + Russian Keyed strings for settings/presets, Perks/Legacy/Reputation tabs, Phase 3–5 trauma/rep/power UI; DefInjected for main tabs, Phase 5 perks/hediffs/archetypes, specialty traumas, group counsel, confidant/rival.
 - **Workshop / docs polish** — About.xml description rewritten per system for 2.0 (Perks/Legacy/Reputation tabs, capstones/branches/respec/archetypes, specialty trauma + group counsel + confidant, elders/rivalry/blackboard, heirlooms + traditions, ledger + envoys + epithets); docs site rebuilt with per-system 2.0 cards (“New in 2.0” / “Hard preset” tags, what’s-new grid, 2.0 badge) instead of a single blurb; Soft/Default keep power systems & attitude consequences off, Hard enables the heavier set. → [docs/deep-colony.html](../docs/deep-colony.html)
