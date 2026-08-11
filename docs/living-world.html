@@ -7,36 +7,46 @@
 <title>Living World — unlisted</title>
 <meta name="description" content="Unlisted Living World docs page. Off-map faction chronicle for RimWorld 1.6.">
 <link rel="stylesheet" href="style.css">
+<script src="scripts/site.js" defer></script>
 </head>
-<body>
+<body data-theme="living-world">
 
-<nav class="site-nav">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Primary">
   <div class="wrap">
-    <a class="brand" href="index.html">RIMWORLD MODS</a>
-    <div class="nav-links">
+    <a class="brand" href="index.html">AzraelGodKing</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <div class="nav-links" id="primary-nav">
       <a href="index.html">Home</a>
+      <a href="homesteader.html">Homesteader</a>
+      <a href="stormproof.html">Stormproof</a>
+      <a href="strata.html">Strata</a>
+      <a href="nemesis.html">Nemesis</a>
+      <a href="deep-colony.html">Deep Colony</a>
+      <a href="datenight.html">Date Night</a>
+      <a href="index.html#downloads">Downloads</a>
       <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
     </div>
   </div>
 </nav>
 
-<header class="hero world">
-  <div class="wrap">
-    <h1 class="w">LIVING WORLD</h1>
-    <p class="tagline">The rim keeps happening when you are not looking.</p>
-    <div class="badges">
-      <span class="badge world">RimWorld 1.6</span>
-      <span class="badge world">Requires Harmony</span>
-      <span class="badge world">Unlisted</span>
-    </div>
+<header class="hero mod-hero">
+  <div class="hero-media" aria-hidden="true">
+    <img src="img/HomesteaderPreview.png" alt="">
+  </div>
+  <div class="hero-copy">
+    <h1 class="hero-brand">Living World</h1>
+    <p class="hero-line">The rim keeps happening when you are not looking.</p>
     <p class="secret-banner">Unlisted page — not on the public hub. Share the URL only if you mean to.</p>
-    <div class="cta">
-      <a class="btn btn-world" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/LivingWorld.zip">&#11015; Download zip</a>
-      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods/tree/main/LivingWorld">Source</a>
+    <div class="hero-cta">
+      <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/LivingWorld.zip">Download zip</a>
+      <a class="btn btn-secondary" href="https://github.com/AzraelGodKing/rimworld_mods/tree/main/LivingWorld">Source</a>
     </div>
   </div>
 </header>
 
+<main id="main">
 <div class="wrap">
 
   <section id="overview">
@@ -92,8 +102,9 @@
   </section>
 
 </div>
+</main>
 
-<footer>
+<footer class="site-footer">
   <div class="wrap">
     Unlisted &middot; <a href="index.html">Hub</a>
     &middot; <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">Issues</a>

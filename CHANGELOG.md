@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Docs** — rebuild site from scratch (`docs-site-rebuild-v1`): cool slate/teal atlas design (Fraunces + Karla), full-bleed heroes, hub Downloads section with Steam + GitHub zip for every listed mod, dual CTAs on mod pages, skip-link / landmarks / focus / reduced-motion a11y, mobile menu. Steam subscriber tracker stays browser-only (no GitHub Action commits). Dropped unused `homesteader.css` in favor of shared `style.css`.
 - **Repo** — Cursor Cloud Agent dev environment (`cloud-agent-env-v1`): `.cursor/environment.json` + `.cursor/install.sh` install the .NET SDK 8 the mods compile against, build all seven mod DLLs, and serve the `docs/` site on port 8000 for preview.
 - **Cloud Agent** — RimWorld archive install/wiring (`.cursor/install-rimworld.sh`): downloads from `RIMWORLD_ARCHIVE_URL` into `/opt/rimworld`, symlinks repo mods into `Mods/`, called from `.cursor/install.sh` when present.
 - **Repo** — restore Nemesis + Deep Colony docs/download zips on the rolling `latest` release (and local `build_downloads.ps1`) for non-Steam installs; hub/README zip buttons work again.
