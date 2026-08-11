@@ -5,6 +5,7 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
+- **Load order** — `loadAfter` Living World so DC’s soft LW goodwill consumer sees LW signals when both are active (`repo-hygiene-no-debate`).
 - **CN/RU language spot-check (2.0)** — filled missing Chinese Simplified + Russian Keyed strings for settings/presets, Perks/Legacy/Reputation tabs, Phase 3–5 trauma/rep/power UI; DefInjected for main tabs, Phase 5 perks/hediffs/archetypes, specialty traumas, group counsel, confidant/rival.
 - **Workshop / docs polish** — About.xml description rewritten per system for 2.0 (Perks/Legacy/Reputation tabs, capstones/branches/respec/archetypes, specialty trauma + group counsel + confidant, elders/rivalry/blackboard, heirlooms + traditions, ledger + envoys + epithets); docs site rebuilt with per-system 2.0 cards (“New in 2.0” / “Hard preset” tags, what’s-new grid, 2.0 badge) instead of a single blurb; Soft/Default keep power systems & attitude consequences off, Hard enables the heavier set. → [docs/deep-colony.html](../docs/deep-colony.html)
 - **Nemesis soft-compat note** — capture/truce goodwill reviewed vs DC ledger: no conflict (Execute/Release = vanilla goodwill; Truce = timer only; DC does not double-buffer). Font’s later Rimesis leader-raid injection idea recorded. → [docs/ideas/nemesis-rimesis-compat.md](../docs/ideas/nemesis-rimesis-compat.md)

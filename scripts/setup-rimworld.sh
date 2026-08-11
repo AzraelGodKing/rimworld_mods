@@ -15,11 +15,15 @@ WORKSPACE_ROOT="${WORKSPACE_ROOT:-/workspace}"
 HARMONY_URL="${HARMONY_URL:-https://github.com/pardeike/HarmonyRimWorld/releases/latest/download/HarmonyMod.zip}"
 
 LINK_ONLY=0
+BUILD_MODS=0
 for arg in "$@"; do
   case "$arg" in
     --link-only) LINK_ONLY=1 ;;
+    --build-mods) BUILD_MODS=1 ;;
     -h|--help)
-      echo "Usage: $0 [--link-only]"
+      echo "Usage: $0 [--link-only] [--build-mods]"
+      echo "  --link-only   skip download/Harmony; refresh symlinks + ModsConfig"
+      echo "  --build-mods  dotnet build all workspace mod projects (Release)"
       exit 0
       ;;
   esac
@@ -166,9 +170,9 @@ write_mods_config() {
     <li>AzraelGodKing.Stormproof</li>
     <li>AzraelGodKing.Strata</li>
     <li>AzraelGodKing.Nemesis</li>
+    <li>azraelgodking.livingworld</li>
     <li>azraelgodking.DeepColony</li>
     <li>azraelgodking.DateNight</li>
-    <li>azraelgodking.livingworld</li>
   </activeMods>
   <knownExpansions>
     <li>ludeon.rimworld.royalty</li>
@@ -180,6 +184,31 @@ write_mods_config() {
 </ModsConfigData>
 EOF
   echo "Wrote $config_dir/ModsConfig.xml"
+}
+
+build_workspace_mods() {
+  if ! command -v dotnet >/dev/null 2>&1; then
+    echo "dotnet not on PATH; skip --build-mods" >&2
+    return 1
+  fi
+  local proj
+  local projects=(
+    "$WORKSPACE_ROOT/Homesteader/Source/Homesteader.csproj"
+    "$WORKSPACE_ROOT/Strata/Source/Strata.csproj"
+    "$WORKSPACE_ROOT/Stormproof/Source/Stormproof.csproj"
+    "$WORKSPACE_ROOT/Nemesis/Source/Nemesis.csproj"
+    "$WORKSPACE_ROOT/DateNight/Source/DateNight.csproj"
+    "$WORKSPACE_ROOT/LivingWorld/Source/LivingWorld.csproj"
+    "$WORKSPACE_ROOT/Deep Colony/Source/DeepColony.csproj"
+  )
+  for proj in "${projects[@]}"; do
+    if [[ ! -f "$proj" ]]; then
+      echo "skip missing project: $proj"
+      continue
+    fi
+    echo "Building $proj ..."
+    dotnet build "$proj" -c Release --nologo
+  done
 }
 
 main() {
@@ -197,6 +226,9 @@ main() {
   write_env
   link_workspace_mods
   write_mods_config
+  if [[ "$BUILD_MODS" -eq 1 ]]; then
+    build_workspace_mods
+  fi
   # shellcheck disable=SC1090
   source "$RW_ROOT/env.sh"
   echo "RIMWORLD_DIR=$RIMWORLD_DIR"
