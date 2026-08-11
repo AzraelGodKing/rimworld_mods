@@ -220,7 +220,19 @@ async function onRefresh() {
       "ok"
     );
   } catch (err) {
-    setStatus(status, "Refresh failed: " + (err.message || err), "error");
+    try {
+      const fallback = await window.AzraelWorkshopStats.fetchStaticFallback();
+      renderStats(fallback);
+      setStatus(
+        status,
+        "Live refresh failed (" +
+          (err.message || err) +
+          "). Showing offline stats-cache.json — download/publish won’t update Steam numbers until live fetch works.",
+        "error"
+      );
+    } catch {
+      setStatus(status, "Refresh failed: " + (err.message || err), "error");
+    }
   } finally {
     btn.disabled = false;
   }
