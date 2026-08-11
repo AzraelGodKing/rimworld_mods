@@ -4,6 +4,7 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
+- **GitHub zip restored** — `Nemesis.zip` published again on the rolling `latest` release for non-Steam installs (alongside Workshop).
 - **Rimesis / BFV soft-compat** — public `NemesisCompatApi` (`HasActiveHunt`, `ActiveNemesisPawn`, `IsNemesisPawn`, `WouldClaim`, `ShouldReportMissingToRimesis`) for Font’s Rimesis; skip hunt create / raid inject when a pawn already has Rimesis/BFV hediff markers. Solo behavior unchanged. Spec: `docs/ideas/nemesis-rimesis-compat.md`.
 - **Rimesis Availability / Missing** — Font Availability states documented; Nemesis stub `ShouldReportMissingToRimesis` (= `IsNemesisPawn`) for Font to mark pawns Missing. Soft-read of Font Availability still design-only (fail-open reflection once API names land). Leader-raid → Rimesis inject remains later / coexistence bar unchanged.
 - **Compat notes** — Deep Colony capture/truce goodwill reviewed (no double-buffer gap). Font later-idea recorded: Nemesis “leader raid” could call Rimesis raid injection for full combat style (beyond coexistence).
