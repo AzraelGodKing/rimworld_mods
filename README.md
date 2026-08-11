@@ -117,7 +117,7 @@ Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL u
 
 ### Cloud Agents
 
-Cloud Agent environments that set `RIMWORLD_ARCHIVE_URL` can install the game with [`scripts/setup-rimworld.sh`](scripts/setup-rimworld.sh) (Harmony + workspace mod symlinks under `/opt/rimworld/RimWorld/Mods`). That script does **not** compile DLLs — run `dotnet build` for each mod (or the CI workflow) after checkout so `Assemblies/*.dll` exist.
+Cloud Agent environments that set `RIMWORLD_ARCHIVE_URL` can install the game with [`scripts/setup-rimworld.sh`](scripts/setup-rimworld.sh) (Harmony + workspace mod symlinks under `/opt/rimworld/RimWorld/Mods`). Pass `--build-mods` to compile all mod DLLs, or run `dotnet build` yourself after checkout.
 
 Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first (resolve an active Nemesis hunt before removing Nemesis).
 
