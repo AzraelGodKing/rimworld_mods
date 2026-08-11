@@ -6,51 +6,55 @@
 <title>Strata V3 — dig down, build up, breathe deep</title>
 <meta name="description" content="Strata Version 3 complete: multistory RimWorld bases with see-below roofs, cross-level combat and force-build, atmosphere, quest sites, fluid shafts, and Odyssey gravship stacks. Requires Harmony.">
 <link rel="stylesheet" href="style.css">
+<script src="scripts/site.js" defer></script>
 <script src="scripts/stats-display.js" defer></script>
 </head>
-<body>
+<body data-theme="strata">
 
-<nav class="site-nav">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Primary">
   <div class="wrap">
-    <a class="brand" href="index.html">RIMWORLD MODS</a>
-    <div class="nav-links">
+    <a class="brand" href="index.html">AzraelGodKing</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <div class="nav-links" id="primary-nav">
       <a href="index.html">Home</a>
       <a href="homesteader.html">Homesteader</a>
       <a href="stormproof.html">Stormproof</a>
-      <a href="strata.html" class="active">Strata</a>
-      <a href="nemesis.html" class="signal-link">Nemesis</a>
-      <a href="deep-colony.html" class="ledger-link">Deep Colony</a>
-      <a href="datenight.html" class="date-link">Date Night</a>
+      <a href="strata.html" class="active" aria-current="page">Strata</a>
+      <a href="nemesis.html">Nemesis</a>
+      <a href="deep-colony.html">Deep Colony</a>
+      <a href="datenight.html">Date Night</a>
+      <a href="index.html#downloads">Downloads</a>
       <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
     </div>
   </div>
 </nav>
 
-<header class="hero strata">
-  <div class="wrap">
-    <h1 class="t">STRATA</h1>
-    <p class="tagline">Version 3 complete &mdash; dig down, build up, breathe deep</p>
-    <div class="badges">
-      <span class="badge strata">V3 complete</span>
-      <span class="badge strata">RimWorld 1.6</span>
-      <span class="badge strata">Requires Harmony</span>
-      <span class="badge strata">Odyssey optional</span>
-    </div>
-    <div class="cta">
-      <a class="btn btn-strata" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Strata.zip">&#11015; Download Strata</a>
-      <a class="btn btn-ghost" href="#v3">What&rsquo;s in V3</a>
-      <a class="btn btn-ghost" href="strata-roadmap.html">V3 checklist</a>
-      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
+<header class="hero mod-hero">
+  <div class="hero-media" aria-hidden="true">
+    <img src="img/StrataPreview.png" alt="">
+  </div>
+  <div class="hero-copy">
+    <h1 class="hero-brand">Strata</h1>
+    <p class="hero-line">Version 3 complete — dig down, build up, breathe deep.</p>
+    <div class="hero-cta">
+      <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3762844292">Steam Workshop</a>
+      <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Strata.zip">Download zip</a>
+      <a class="btn btn-secondary" href="#v3">What's in V3</a>
+      <a class="btn btn-secondary" href="strata-roadmap.html">V3 checklist</a>
     </div>
   </div>
 </header>
 
+<main id="main">
 <div class="wrap">
   <div class="mod-workshop-stats" aria-live="polite">
     Steam Workshop:
     <strong><span data-stats-mod="strata" data-field="subscriptions">&mdash;</span></strong> subscribers
     &middot;
     <strong><span data-stats-mod="strata" data-field="favorited">&mdash;</span></strong> favorites
+  <p class="stats-meta">Live in your browser — not updated by GitHub Actions.</p>
   </div>
 
   <section id="overview">
@@ -277,8 +281,9 @@
   </section>
 
 </div>
+</main>
 
-<footer>
+<footer class="site-footer">
   <div class="wrap">
     <a href="index.html">All mods</a>
     &middot; <a href="strata-roadmap.html">V3 checklist</a>

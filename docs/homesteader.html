@@ -4,57 +4,62 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Homesteader — a RimWorld mod by AzraelGodKing</title>
-<meta name="description" content="Homesteader: tribal survival, farm-to-table crafting, wells and irrigation, cool storage, comforts, and off-grid power. Requires Harmony. RimWorld 1.4–1.6.">
-<link rel="stylesheet" href="homesteader.css">
+<meta name="description" content="Homesteader: tribal survival, farm-to-table crafting, wells and irrigation, cool storage, comforts, and off-grid power. Steam Workshop or direct zip. Requires Harmony. RimWorld 1.4–1.6.">
+<link rel="stylesheet" href="style.css">
+<script src="scripts/site.js" defer></script>
 <script src="scripts/stats-display.js" defer></script>
 </head>
-<body class="hs">
+<body data-theme="homesteader">
 
-<nav class="hs-nav">
-  <div class="hs-wrap hs-nav-inner">
-    <a class="hs-nav-brand" href="index.html">RimWorld Mods</a>
-    <div class="hs-nav-links">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap">
+    <a class="brand" href="index.html">AzraelGodKing</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <div class="nav-links" id="primary-nav">
       <a href="index.html">Home</a>
-      <a href="homesteader.html" class="active">Homesteader</a>
+      <a href="homesteader.html" class="active" aria-current="page">Homesteader</a>
       <a href="stormproof.html">Stormproof</a>
       <a href="strata.html">Strata</a>
-      <a href="nemesis.html" class="signal-link">Nemesis</a>
-      <a href="deep-colony.html" class="ledger-link">Deep Colony</a>
-      <a href="datenight.html" class="date-link">Date Night</a>
+      <a href="nemesis.html">Nemesis</a>
+      <a href="deep-colony.html">Deep Colony</a>
+      <a href="datenight.html">Date Night</a>
+      <a href="index.html#downloads">Downloads</a>
       <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
     </div>
   </div>
 </nav>
 
-<header class="hs-hero">
-  <div class="hs-hero-media" aria-hidden="true">
+<header class="hero mod-hero">
+  <div class="hero-media" aria-hidden="true">
     <img src="img/HomesteadHearth.png" alt="">
   </div>
-  <div class="hs-hero-copy">
-    <h1 class="hs-brand">Homesteader</h1>
-    <p class="hs-hero-line">Grow it, put it by, live off the land.</p>
-    <p class="hs-hero-sub">A farmstead mod for RimWorld — pantry craft, wells, cool cellars, and wood-fired power.</p>
-    <div class="hs-cta">
-      <a class="hs-btn hs-btn-primary" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip">Download</a>
-      <a class="hs-btn hs-btn-ghost" href="homesteader-catalog.html">Item catalog</a>
+  <div class="hero-copy">
+    <h1 class="hero-brand">Homesteader</h1>
+    <p class="hero-line">Grow it, put it by, live off the land.</p>
+    <div class="hero-cta">
+      <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3759238501">Steam Workshop</a>
+      <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip">Download zip</a>
+      <a class="btn btn-secondary" href="homesteader-catalog.html">Item catalog</a>
     </div>
   </div>
 </header>
 
-<main class="hs-main">
-  <div class="hs-wrap">
-  <div class="mod-workshop-stats" aria-live="polite">
-    Steam Workshop:
-    <strong><span data-stats-mod="homesteader" data-field="subscriptions">&mdash;</span></strong> subscribers
-    &middot;
-    <strong><span data-stats-mod="homesteader" data-field="favorited">&mdash;</span></strong> favorites
-  </div>
+<main id="main">
+  <div class="wrap">
+    <div class="mod-workshop-stats" aria-live="polite">
+      Steam Workshop:
+      <strong><span data-stats-mod="homesteader" data-field="subscriptions">&mdash;</span></strong> subscribers
+      &middot;
+      <strong><span data-stats-mod="homesteader" data-field="favorited">&mdash;</span></strong> favorites
+      <p class="stats-meta">Live in your browser — not updated by GitHub Actions.</p>
+    </div>
 
-
-    <section class="hs-section" id="preserve">
-      <span class="hs-kicker">Winter pantry</span>
-      <h2>Preserve without a freezer</h2>
-      <p class="hs-lead">Dry, salt, and smoke from day one of a tribal start. The drying rack needs no research; curing and smoking unlock with Primitive homestead.</p>
+    <section class="section" id="preserve" aria-labelledby="preserve-h">
+      <span class="section-kicker">Winter pantry</span>
+      <h2 id="preserve-h">Preserve without a freezer</h2>
+      <p class="lead">Dry, salt, and smoke from day one of a tribal start. The drying rack needs no research; curing and smoking unlock with Primitive homestead.</p>
       <div class="hs-feature">
         <div class="hs-feature-visual">
           <img src="img/DryingRack.png" alt="Drying rack">
@@ -72,10 +77,10 @@
       </div>
     </section>
 
-    <section class="hs-section" id="kitchen">
-      <span class="hs-kicker">Farm to table</span>
-      <h2>A kitchen that earns its keep</h2>
-      <p class="hs-lead">Mill grain, churn butter, press cheese, brew cider, and plate pantry meals at the homestead hearth.</p>
+    <section class="section" id="kitchen" aria-labelledby="kitchen-h">
+      <span class="section-kicker">Farm to table</span>
+      <h2 id="kitchen-h">A kitchen that earns its keep</h2>
+      <p class="lead">Mill grain, churn butter, press cheese, brew cider, and plate pantry meals at the homestead hearth.</p>
       <div class="hs-feature reverse">
         <div class="hs-feature-copy">
           <h3>Dairy, jam, and hearth meals</h3>
@@ -107,10 +112,10 @@
       </div>
     </section>
 
-    <section class="hs-section" id="water">
-      <span class="hs-kicker">Wellcraft</span>
-      <h2>Water that feeds the fields</h2>
-      <p class="hs-lead">Former Wellspring content ships inside Homesteader. Draw, catch, store, and trench water into irrigated soil. With Dubs Bad Hygiene, tanks join the plumbing net.</p>
+    <section class="section" id="water" aria-labelledby="water-h">
+      <span class="section-kicker">Wellcraft</span>
+      <h2 id="water-h">Water that feeds the fields</h2>
+      <p class="lead">Former Wellspring content ships inside Homesteader. Draw, catch, store, and trench water into irrigated soil. With Dubs Bad Hygiene, tanks join the plumbing net.</p>
       <div class="hs-feature">
         <div class="hs-feature-visual">
           <img src="img/HandDugWell.png" alt="Hand-dug well">
@@ -118,102 +123,76 @@
         <div class="hs-feature-copy">
           <h3>Wells, barrels, and irrigation</h3>
           <ul class="hs-points">
-            <li>Hand-dug and deep wells, rain barrels, cisterns, solar stills</li>
-            <li>Water towers for elevated reserve</li>
-            <li>Irrigated soil and planters for richer crops</li>
-            <li>Boiled water, mud bricks, and clean bandages</li>
+            <li>Hand-dug and deep wells, rain barrel, cistern, solar still</li>
+            <li>Irrigated soil and planter for reliable crops</li>
+            <li>Boiled water, mud bricks, clean bandages</li>
+            <li>Optional Bad Hygiene plumbing bridge</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section class="hs-section" id="settle">
-      <span class="hs-kicker">Settle in</span>
-      <h2>Cool storage, comforts, and power</h2>
-      <p class="hs-lead">Root cellars keep the pantry cold. Quilted beds and maypoles make the yard feel like home. Batteries and a wood generator keep the lights on without a reactor.</p>
-      <div class="hs-feature reverse">
-        <div class="hs-feature-copy">
-          <h3>From cellar to generator</h3>
-          <ul class="hs-points">
-            <li>Root cellar, icehouse, and springhouse passive cooling</li>
-            <li>Quilted beds, rocking chairs, harvest maypole, 27 statues</li>
-            <li>Compact through ultratech batteries</li>
-            <li>Wood-burning and portable generators</li>
-          </ul>
+    <section class="section" id="power" aria-labelledby="power-h">
+      <span class="section-kicker">Off-grid</span>
+      <h2 id="power-h">Power without the glitterworld</h2>
+      <p class="lead">Compact batteries and wood-fired generators keep a homestead lit when the grid fails.</p>
+      <div class="grid">
+        <div class="feature" data-theme="homesteader">
+          <img src="img/CompactBattery.png" alt="Compact battery">
+          <h3>Batteries</h3>
+          <p>Compact, bank, advanced, and ultratech cells for tight footprints.</p>
         </div>
-        <div class="hs-feature-visual">
-          <img src="img/RootCellar.png" alt="Root cellar">
+        <div class="feature" data-theme="homesteader">
+          <img src="img/PortableGenerator.png" alt="Portable generator">
+          <h3>Generators</h3>
+          <p>Chemfuel portable and wood-burning options for rural power.</p>
         </div>
       </div>
     </section>
 
-    <section class="hs-section" id="research">
-      <span class="hs-kicker">Progression</span>
-      <h2>Homestead research tree</h2>
-      <p class="hs-lead">Neolithic to industrial — drying racks and basic crates stay available with no research.</p>
-      <div class="hs-tree">
-        <strong>Primitive homestead</strong> → curing, smoking, orchard, farm storage<br>
-        → <strong>Food preservation</strong> → jam cauldron<br>
-        → <strong>Farmstead crafting</strong> → mill, dairy, hearth → <strong>Brewing</strong><br>
-        → <strong>Storage</strong> → root cellar &amp; preserves shelf<br>
-        → <strong>Comforts</strong> → furniture, maypole, 27 monuments<br>
+    <section class="section" id="research" aria-labelledby="research-h">
+      <span class="section-kicker">Tech tree</span>
+      <h2 id="research-h">Homestead research</h2>
+      <div class="research-tree">
+        <strong>Primitive homestead</strong> → curing, smoking, dairy<br>
         → <strong>Advanced homestead</strong> → wood-burning generator<br>
         → <strong>Wellcraft / Irrigation / Waterworks</strong> → wells and irrigated land
       </div>
     </section>
 
-    <section class="hs-section" id="scenario">
-      <span class="hs-kicker">Start here</span>
-      <h2>Homesteaders scenario</h2>
-      <p class="hs-lead">Three settlers, livestock, and hand tools — far from the glitterworld supply chain. A homestead supplier caravan visits with preserves, seeds, and the occasional Diggo plushie.</p>
+    <section class="section" id="scenario" aria-labelledby="scenario-h">
+      <span class="section-kicker">Start here</span>
+      <h2 id="scenario-h">Homesteaders scenario</h2>
+      <p class="lead">Three settlers, livestock, and hand tools — far from the glitterworld supply chain. A homestead supplier caravan visits with preserves, seeds, and the occasional Diggo plushie.</p>
       <div class="hs-cta">
-        <a class="hs-btn hs-btn-ink" href="homesteader-catalog.html">Browse every item</a>
-        <a class="hs-btn hs-btn-line" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip">Download Homesteader</a>
+        <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip">Download Homesteader zip</a>
+        <a class="btn btn-ghost" href="homesteader-catalog.html">Browse every item</a>
+        <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3759238501">Steam Workshop</a>
       </div>
     </section>
 
-    <section class="hs-section" id="install">
-      <span class="hs-kicker">Install</span>
-      <h2>Get it running</h2>
-      <ol class="hs-install">
-        <li>Download the zip (or clone the repository).</li>
-        <li>Copy the <code>Homesteader</code> folder into your RimWorld <code>Mods</code> directory.</li>
-        <li>Enable <strong>Homesteader</strong> and <strong>Harmony</strong> in the mod list, then restart.</li>
+    <section class="section" id="install" aria-labelledby="install-h">
+      <span class="section-kicker">Install</span>
+      <h2 id="install-h">Get it running</h2>
+      <ol>
+        <li>Subscribe on Steam <strong>or</strong> download the zip above.</li>
+        <li>For zips: copy the <code>Homesteader</code> folder into your RimWorld <code>Mods</code> directory.</li>
+        <li>Enable <strong>Harmony</strong>, then <strong>Homesteader</strong>, and restart.</li>
       </ol>
-      <div class="hs-note">
+      <div class="note">
         <strong>Save compatibility:</strong> safe to add to an existing save. Before removing it, deconstruct Homesteader buildings and use up or sell its items. RimWorld 1.4–1.6.
       </div>
     </section>
-
   </div>
 </main>
 
-<footer class="hs-footer">
-  <div class="hs-wrap">
+<footer class="site-footer">
+  <div class="wrap">
     <a href="index.html">All mods</a>
     · Homesteader by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
     · <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">Report a bug</a>
   </div>
 </footer>
-
-<script>
-(() => {
-  const sections = document.querySelectorAll(".hs-section");
-  if (!("IntersectionObserver" in window)) {
-    sections.forEach((el) => el.classList.add("is-in"));
-    return;
-  }
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-in");
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
-  sections.forEach((el) => io.observe(el));
-})();
-</script>
 
 </body>
 </html>
