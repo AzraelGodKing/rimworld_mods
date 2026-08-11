@@ -131,6 +131,7 @@ Browse the rebuilt docs hub at the [GitHub Pages site](https://azraelgodking.git
 
 - **Direct downloads:** every listed mod has Steam Workshop **and** GitHub release zip buttons (hub `#downloads` + each mod page) for players who cannot use the Workshop.
 - **Steam subscriber tracker:** live in-browser via [`docs/scripts/stats-display.js`](docs/scripts/stats-display.js) (roster: [`docs/data/workshop-mods.json`](docs/data/workshop-mods.json); 1h `localStorage` cache). **Not** driven by GitHub Actions — no hourly bot commits to rebase around. [`docs/data/stats-cache.json`](docs/data/stats-cache.json) is a manual offline fallback only (`node scripts/fetch-workshop-stats.js --force`).
+- **Admin force refresh:** unlisted [`docs/admin-stats.html`](docs/admin-stats.html) (`noindex`, not in nav). Passphrase hash lives in [`docs/data/admin-gate.json`](docs/data/admin-gate.json) — rotate by replacing `passphraseSha256`. Can download or optionally publish the fallback JSON with a PAT you paste for that session only.
 - **Accessibility:** skip link, landmarks, focus styles, keyboardable mobile nav, `prefers-reduced-motion`, and live regions for stats.
 
 ## License
