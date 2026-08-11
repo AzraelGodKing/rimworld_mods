@@ -1,8 +1,9 @@
-// Live Steam Workshop stats for the docs site (no GitHub Action).
+// Live Steam Workshop stats for the docs site.
+// Independent of GitHub Actions / git runners — never commits to this repo.
 // 1) Try Steam Web API from the browser (works when CORS allows)
 // 2) Else read Workshop pages via r.jina.ai (CORS-friendly GET)
-// 3) Else fall back to docs/data/stats-cache.json
-// Results cached in localStorage for one hour.
+// 3) Else fall back to docs/data/stats-cache.json (manual offline snapshot only)
+// Results cached in localStorage for one hour (visitor browser only).
 
 const STEAM_API =
   "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/";
