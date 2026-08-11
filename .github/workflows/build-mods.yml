@@ -5,7 +5,6 @@ name: Build mod DLLs
 # On main (and workflow_dispatch): pack download zips with injected DLLs and publish
 # them to the rolling "latest" GitHub Release for the docs site buttons.
 # Assemblies/*.dll stay gitignored — zips are never committed.
-# Nemesis / Deep Colony stay Workshop-first (compile-only; no docs zip).
 
 on:
   push:
@@ -87,11 +86,11 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p docs/downloads
-          # Nemesis / Deep Colony Workshop-first; Homesteader / Stormproof / Strata / DateNight / LivingWorld zip for docs.
-          for mod in Homesteader Stormproof Strata DateNight LivingWorld; do
-            zip_path="docs/downloads/${mod}.zip"
-            git archive --format=zip -o "$zip_path" HEAD "$mod"
-            dll="${mod}/Assemblies/${mod}.dll"
+          pack_mod() {
+            local folder="$1" zip_name="$2" dll_name="$3"
+            local zip_path="docs/downloads/${zip_name}.zip"
+            local dll="${folder}/Assemblies/${dll_name}.dll"
+            git archive --format=zip -o "$zip_path" HEAD "$folder"
             if [[ ! -f "$dll" ]]; then
               echo "Missing $dll" >&2
               exit 1
@@ -99,11 +98,18 @@ jobs:
             # Inject / replace assembly inside the archive (paths use forward slashes).
             zip -u "$zip_path" "$dll"
             # Drop draft Workshop preview options from the public zip.
-            if [[ "$mod" == "DateNight" ]]; then
+            if [[ "$folder" == "DateNight" ]]; then
               zip -d "$zip_path" "DateNight/About/preview-options/*" 2>/dev/null || true
             fi
-            echo "${mod}: $(du -h "$zip_path" | cut -f1)"
-          done
+            echo "${zip_name}: $(du -h "$zip_path" | cut -f1)"
+          }
+          pack_mod Homesteader Homesteader Homesteader
+          pack_mod Stormproof Stormproof Stormproof
+          pack_mod Strata Strata Strata
+          pack_mod Nemesis Nemesis Nemesis
+          pack_mod "Deep Colony" DeepColony DeepColony
+          pack_mod DateNight DateNight DateNight
+          pack_mod LivingWorld LivingWorld LivingWorld
 
       - name: Upload download zips (artifact)
         if: github.event_name != 'pull_request'
@@ -132,41 +138,16 @@ jobs:
           body: |
             Packaged mod folders with CI-built assemblies for the docs site download buttons.
             Rebuilt on each relevant push to `main` (rolling tag — assets are overwritten).
-            Nemesis / Deep Colony are Workshop-first; Date Night / Living World ship docs download zips.
+            Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, DateNight, and LivingWorld.
           files: |
             docs/downloads/Homesteader.zip
             docs/downloads/Stormproof.zip
             docs/downloads/Strata.zip
+            docs/downloads/Nemesis.zip
+            docs/downloads/DeepColony.zip
             docs/downloads/DateNight.zip
             docs/downloads/LivingWorld.zip
           make_latest: true
           fail_on_unmatched_files: true
           # Replace assets when the rolling `latest` tag is republished.
           overwrite_files: true
-
-      # softprops does not delete omitted assets — strip leftover Workshop-first zips.
-      - name: Remove Nemesis.zip / DeepColony.zip from latest release if present
-        if: github.event_name != 'pull_request'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          assets_json="$(curl -fsSL \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/latest")"
-          for name in Nemesis.zip DeepColony.zip; do
-            asset_id="$(printf '%s' "$assets_json" | python3 -c \
-              'import json,sys; a=json.load(sys.stdin).get("assets",[]); print(next((x["id"] for x in a if x["name"]==sys.argv[1]), ""))' \
-              "$name")"
-            if [[ -z "$asset_id" ]]; then
-              echo "$name not on latest release — nothing to delete."
-              continue
-            fi
-            curl -fsSL -X DELETE \
-              -H "Authorization: Bearer $GH_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/assets/${asset_id}"
-            echo "Deleted $name (asset id $asset_id)."
-          done
