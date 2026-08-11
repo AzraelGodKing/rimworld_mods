@@ -33,6 +33,7 @@ Requires Harmony.</description>
   </modDependencies>
   <loadAfter>
     <li>brrainz.harmony</li>
+    <li>azraelgodking.livingworld</li>
   </loadAfter>
   <supportedVersions>
     <li>1.6</li>
