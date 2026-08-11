@@ -1,4 +1,4 @@
-# Living World (parked idea)
+# Living World (design notes)
 
 **Status:** Phase 1–2 shipped in-repo (`LivingWorld/` package) — chronicle, settlement morph, NPC diplomacy, refugee/warband fallout, war sites. Soft DC goodwill consumer. Traffic / Azrael = later.  
 **Package:** `LivingWorld` / `azraelgodking.livingworld`.  

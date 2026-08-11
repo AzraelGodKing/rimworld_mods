@@ -14,7 +14,6 @@ const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const ROSTER_PATH = path.join(ROOT, "docs", "data", "workshop-mods.json");
-const LEGACY_ROSTER = path.join(ROOT, "scripts", "workshop-mods.json");
 const CACHE_PATH = path.join(ROOT, "docs", "data", "stats-cache.json");
 const TMP_PATH = `${CACHE_PATH}.tmp`;
 const STEAM_URL =
@@ -58,8 +57,10 @@ function emptySiteTotal() {
 }
 
 function loadRoster() {
-  const rosterPath = fs.existsSync(ROSTER_PATH) ? ROSTER_PATH : LEGACY_ROSTER;
-  const text = fs.readFileSync(rosterPath, "utf8").replace(/^\uFEFF/, "");
+  if (!fs.existsSync(ROSTER_PATH)) {
+    throw new Error(`Missing roster: ${ROSTER_PATH}`);
+  }
+  const text = fs.readFileSync(ROSTER_PATH, "utf8").replace(/^\uFEFF/, "");
   const rows = JSON.parse(text);
   if (!Array.isArray(rows) || rows.length === 0) {
     throw new Error("workshop-mods.json must be a non-empty array");
