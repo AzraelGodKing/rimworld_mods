@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Repo** — Cursor Cloud Agent dev environment (`cloud-agent-env-v1`): `.cursor/environment.json` + `.cursor/install.sh` install the .NET SDK 8 the mods compile against, build all seven mod DLLs, and serve the `docs/` site on port 8000 for preview.
 - **Deep Colony** — CN/RU spot-check for 2.0 tabs + Phase 5 (Keyed + DefInjected fill). → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony** — Workshop / docs polish: About.xml description rewritten per system for 2.0; docs page rebuilt with per-system 2.0 cards + Soft/Default/Hard defaults callout; new 2.0 Workshop preview (perk-tree constellation) + Steam BBCode description. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md) · [docs/deep-colony.html](docs/deep-colony.html)
 - **Nemesis / Deep Colony / Rimesis** — soft-compat: Availability / Missing handshake (Font Availability states + Nemesis `ShouldReportMissingToRimesis` stub); capture/truce goodwill OK with DC ledger; leader raid → Rimesis inject still later. → [docs/ideas/nemesis-rimesis-compat.md](docs/ideas/nemesis-rimesis-compat.md)
