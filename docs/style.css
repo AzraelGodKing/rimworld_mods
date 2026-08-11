@@ -450,3 +450,26 @@ h2.n { color: var(--accent-n); }
 .hub-card.date .count { color: var(--accent-n2); }
 .card.date .stat { color: var(--accent-n2); }
 .note.date { border-left-color: var(--accent-n); }
+
+/* Living World (unlisted / secret page — not linked from hub nav) */
+:root {
+  --accent-w: #8cb8a0;
+  --accent-w2: #6a9880;
+}
+header.hero.world {
+  background: linear-gradient(180deg, #1c2824 0%, #1a1d18 55%, var(--bg) 100%);
+}
+h1.w { color: var(--accent-w); }
+h2.w { color: var(--accent-w); }
+.badge.world { border-color: #3a5548; color: var(--accent-w2); }
+.btn-world { background: var(--accent-w); color: #101814; }
+.btn-world:hover { background: #a8d0b8; color: #101814; }
+.card.world .stat { color: var(--accent-w2); }
+.note.world { border-left-color: var(--accent-w); }
+.secret-banner {
+  margin: 1.25rem 0 0;
+  padding: 0.65rem 0.9rem;
+  border: 1px dashed #3a5548;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
