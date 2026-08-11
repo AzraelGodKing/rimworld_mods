@@ -3,196 +3,291 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RimWorld Mods — AzraelGodKing</title>
-<meta name="description" content="Homesteader, Stormproof, Strata, Nemesis, Deep Colony, and Date Night — RimWorld mods by AzraelGodKing.">
+<title>AzraelGodKing — RimWorld Mods</title>
+<meta name="description" content="RimWorld mods by AzraelGodKing: Homesteader, Stormproof, Strata, Nemesis, Deep Colony, and Date Night. Steam Workshop or direct GitHub zip downloads.">
 <link rel="stylesheet" href="style.css">
+<script src="scripts/site.js" defer></script>
 <script src="scripts/stats-display.js" defer></script>
 </head>
 <body>
 
-<nav class="site-nav">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Primary">
   <div class="wrap">
-    <a class="brand" href="index.html">RIMWORLD MODS</a>
-    <div class="nav-links">
-      <a href="index.html" class="active">Home</a>
+    <a class="brand" href="index.html">AzraelGodKing</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <div class="nav-links" id="primary-nav">
+      <a href="index.html" class="active" aria-current="page">Home</a>
       <a href="homesteader.html">Homesteader</a>
       <a href="stormproof.html">Stormproof</a>
       <a href="strata.html">Strata</a>
-      <a href="nemesis.html" class="signal-link">Nemesis</a>
-      <a href="deep-colony.html" class="ledger-link">Deep Colony</a>
-      <a href="datenight.html" class="date-link">Date Night</a>
+      <a href="nemesis.html">Nemesis</a>
+      <a href="deep-colony.html">Deep Colony</a>
+      <a href="datenight.html">Date Night</a>
+      <a href="#downloads">Downloads</a>
       <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
     </div>
   </div>
 </nav>
 
 <header class="hero">
-  <div class="wrap">
-    <h1 class="h">RIMWORLD MODS</h1>
-    <p class="tagline">Homesteads that feed themselves. Grids that survive the storm. Bases that go down. Stories that get personal. Colonies that remember. Evenings worth scheduling.</p>
-    <div class="badges">
-      <span class="badge">By AzraelGodKing</span>
-      <span class="badge">Save-safe to add</span>
-      <span class="badge">Open source</span>
-    </div>
-    <div class="cta">
-      <a class="btn btn-primary" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip">&#11015; Homesteader</a>
-      <a class="btn btn-storm" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Stormproof.zip">&#11015; Stormproof</a>
-      <a class="btn btn-strata" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Strata.zip">&#11015; Strata</a>
-      <a class="btn btn-nemesis" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Nemesis.zip">&#11015; Nemesis</a>
-      <a class="btn btn-deep" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DeepColony.zip">&#11015; Deep Colony</a>
-      <a class="btn btn-date" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip">&#11015; Date Night</a>
-      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+  <div class="hero-media" aria-hidden="true">
+    <img src="img/HomesteaderPreview.png" alt="">
+  </div>
+  <div class="hero-copy">
+    <p class="hero-brand">AzraelGodKing</p>
+    <p class="hero-line">RimWorld mods for colonies that farm, harden, dig, remember, and make time for each other.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#mods">Browse mods</a>
+      <a class="btn btn-secondary" href="#downloads">Direct downloads</a>
     </div>
   </div>
 </header>
 
-<div class="wrap">
+<main id="main">
+  <div class="wrap">
 
-  <div class="hub-workshop-stats" aria-live="polite">
-    <p class="hub-workshop-stats-primary">
-      <strong>Steam Workshop (all mods):</strong>
-      <span data-stats="total" data-field="subscriptions">&mdash;</span> subscribers
-      &middot;
-      <span data-stats="total" data-field="favorited">&mdash;</span> favorites
-    </p>
-    <p class="hub-workshop-stats-detail">Updated <span data-stats-fetched>&mdash;</span> &middot; live from Steam (cached 1h in your browser)</p>
+    <section class="section" id="mods" aria-labelledby="mods-heading">
+      <span class="section-kicker">The collection</span>
+      <h2 id="mods-heading">Six mods. One workshop.</h2>
+      <p class="lead">Open a mod page for details — or jump straight to Steam / zip downloads below if you cannot use the Workshop.</p>
+
+      <div class="mod-directory">
+        <a class="mod-link" data-theme="homesteader" href="homesteader.html">
+          <div class="mod-link-media"><img src="img/HomesteaderPreview.png" alt=""></div>
+          <div class="mod-link-body">
+            <h3>Homesteader</h3>
+            <p>Farm-to-table craft, wells and irrigation, cool cellars, and off-grid power for tribal and homestead starts.</p>
+            <div class="workshop-stats" aria-live="polite">
+              <span><b data-stats-mod="homesteader" data-field="subscriptions">&mdash;</b> subscribers</span>
+              <span><b data-stats-mod="homesteader" data-field="favorited">&mdash;</b> favorites</span>
+            </div>
+            <div class="meta">RimWorld 1.4 / 1.5 / 1.6</div>
+          </div>
+        </a>
+
+        <a class="mod-link" data-theme="stormproof" href="stormproof.html">
+          <div class="mod-link-media"><img src="img/StormproofPreview.png" alt=""></div>
+          <div class="mod-link-body">
+            <h3>Stormproof</h3>
+            <p>Defend the power grid from flares, lightning, short circuits, EMP, and fallout — then call the storm yourself.</p>
+            <div class="workshop-stats" aria-live="polite">
+              <span><b data-stats-mod="stormproof" data-field="subscriptions">&mdash;</b> subscribers</span>
+              <span><b data-stats-mod="stormproof" data-field="favorited">&mdash;</b> favorites</span>
+            </div>
+            <div class="meta">RimWorld 1.6 &middot; 18 buildings</div>
+          </div>
+        </a>
+
+        <a class="mod-link" data-theme="strata" href="strata.html">
+          <div class="mod-link-media"><img src="img/StrataPreview.png" alt=""></div>
+          <div class="mod-link-body">
+            <h3>Strata</h3>
+            <p>Dig down, build up, breathe deep. Multistory bases with commuting colonists and Odyssey-ready stacks.</p>
+            <div class="workshop-stats" aria-live="polite">
+              <span><b data-stats-mod="strata" data-field="subscriptions">&mdash;</b> subscribers</span>
+              <span><b data-stats-mod="strata" data-field="favorited">&mdash;</b> favorites</span>
+            </div>
+            <div class="meta">V3 complete &middot; RimWorld 1.6</div>
+          </div>
+        </a>
+
+        <a class="mod-link" data-theme="nemesis" href="nemesis.html">
+          <div class="mod-link-media"><img src="img/NemesisPreview.png" alt=""></div>
+          <div class="mod-link-body">
+            <h3>Nemesis</h3>
+            <p>A named antagonist who taunts, sabotages, and returns with an army — until you end the hunt.</p>
+            <div class="workshop-stats" aria-live="polite">
+              <span><b data-stats-mod="nemesis" data-field="subscriptions">&mdash;</b> subscribers</span>
+              <span><b data-stats-mod="nemesis" data-field="favorited">&mdash;</b> favorites</span>
+            </div>
+            <div class="meta">Personal hunt &middot; RimWorld 1.6</div>
+          </div>
+        </a>
+
+        <a class="mod-link" data-theme="deep-colony" href="deep-colony.html">
+          <div class="mod-link-media"><img src="img/DeepColonyPreview.png" alt=""></div>
+          <div class="mod-link-body">
+            <h3>Deep Colony</h3>
+            <p>Perks, trauma &amp; therapy, apprenticeship, inheritance, and a living faction reputation ledger.</p>
+            <div class="workshop-stats" aria-live="polite">
+              <span><b data-stats-mod="deep-colony" data-field="subscriptions">&mdash;</b> subscribers</span>
+              <span><b data-stats-mod="deep-colony" data-field="favorited">&mdash;</b> favorites</span>
+            </div>
+            <div class="meta">Five systems &middot; RimWorld 1.6</div>
+          </div>
+        </a>
+
+        <a class="mod-link" data-theme="date-night" href="datenight.html">
+          <div class="mod-link-media"><img src="img/DateNightPreview.png" alt=""></div>
+          <div class="mod-link-body">
+            <h3>Date Night</h3>
+            <p>Paint Lovin on the Schedule tab. Partners meet in a double bed while the hours last.</p>
+            <div class="workshop-stats" aria-live="polite">
+              <span><b data-stats-mod="date-night" data-field="subscriptions">&mdash;</b> subscribers</span>
+              <span><b data-stats-mod="date-night" data-field="favorited">&mdash;</b> favorites</span>
+            </div>
+            <div class="meta">Lovin schedule &middot; RimWorld 1.6</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="downloads" aria-labelledby="downloads-heading">
+      <span class="section-kicker">No Steam required</span>
+      <h2 id="downloads-heading">Steam Workshop or direct zip</h2>
+      <p class="lead">Every mod ships as a GitHub release zip for players who cannot use Steam Workshop. Extract into your RimWorld <code>Mods</code> folder. All mods need <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a>.</p>
+
+      <div class="download-list">
+        <div class="download-row" data-theme="homesteader">
+          <div>
+            <h3>Homesteader</h3>
+            <p>Food, water, storage, and off-grid power.</p>
+          </div>
+          <div class="download-actions">
+            <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3759238501">Steam Workshop</a>
+            <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip">Download zip</a>
+          </div>
+        </div>
+        <div class="download-row" data-theme="stormproof">
+          <div>
+            <h3>Stormproof</h3>
+            <p>Grid defense against the Rim&rsquo;s worst weather.</p>
+          </div>
+          <div class="download-actions">
+            <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3760021127">Steam Workshop</a>
+            <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Stormproof.zip">Download zip</a>
+          </div>
+        </div>
+        <div class="download-row" data-theme="strata">
+          <div>
+            <h3>Strata</h3>
+            <p>True multistory bases — dig, build, breathe.</p>
+          </div>
+          <div class="download-actions">
+            <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3762844292">Steam Workshop</a>
+            <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Strata.zip">Download zip</a>
+          </div>
+        </div>
+        <div class="download-row" data-theme="nemesis">
+          <div>
+            <h3>Nemesis</h3>
+            <p>A personal antagonist who will not forget.</p>
+          </div>
+          <div class="download-actions">
+            <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3773562126">Steam Workshop</a>
+            <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Nemesis.zip">Download zip</a>
+          </div>
+        </div>
+        <div class="download-row" data-theme="deep-colony">
+          <div>
+            <h3>Deep Colony</h3>
+            <p>Identity, trauma, mentors, and reputation.</p>
+          </div>
+          <div class="download-actions">
+            <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3773568314">Steam Workshop</a>
+            <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DeepColony.zip">Download zip</a>
+          </div>
+        </div>
+        <div class="download-row" data-theme="date-night">
+          <div>
+            <h3>Date Night</h3>
+            <p>Schedulable romance on the timetable.</p>
+          </div>
+          <div class="download-actions">
+            <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3774158903">Steam Workshop</a>
+            <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip">Download zip</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workshop-stats" aria-labelledby="stats-heading">
+      <span class="section-kicker">Live from Steam</span>
+      <h2 id="stats-heading">Workshop totals</h2>
+      <p class="lead">Subscriber counts load in your browser from Steam. They are not written by GitHub Actions, so stats never force rebase commits on this repo.</p>
+      <div class="stats-bar" aria-live="polite">
+        <p>
+          <strong>All listed mods:</strong>
+          <span data-stats="total" data-field="subscriptions">&mdash;</span> subscribers
+          &middot;
+          <span data-stats="total" data-field="favorited">&mdash;</span> favorites
+        </p>
+        <p class="stats-meta">Updated <span data-stats-fetched>&mdash;</span> &middot; cached 1 hour in your browser only</p>
+      </div>
+    </section>
+
+    <section class="section" id="compare" aria-labelledby="compare-heading">
+      <span class="section-kicker">Pick your lane</span>
+      <h2 id="compare-heading">Quick comparison</h2>
+      <p class="lead">Mix and match — they are designed to share a colony without stepping on each other.</p>
+      <div class="table-scroll" role="region" aria-label="Mod comparison table" tabindex="0">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Mod</th>
+              <th scope="col">Focus</th>
+              <th scope="col">Best for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Homesteader</b></td>
+              <td>Food, water, storage, power</td>
+              <td>Tribal starts, farming colonies, off-grid bases</td>
+            </tr>
+            <tr>
+              <td><b>Stormproof</b></td>
+              <td>Grid defense</td>
+              <td>Industrial colonies, thunderstorm biomes, raid-heavy saves</td>
+            </tr>
+            <tr>
+              <td><b>Strata</b></td>
+              <td>Multistory bases</td>
+              <td>Mountain bases, tall colonies, infestation enjoyers</td>
+            </tr>
+            <tr>
+              <td><b>Nemesis</b></td>
+              <td>Personal antagonist</td>
+              <td>Colonies with unfinished business</td>
+            </tr>
+            <tr>
+              <td><b>Deep Colony</b></td>
+              <td>Identity &amp; legacy</td>
+              <td>Colonies that outlive a single generation</td>
+            </tr>
+            <tr>
+              <td><b>Date Night</b></td>
+              <td>Schedulable romance</td>
+              <td>Couples who never find time to share a bed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="install" aria-labelledby="install-heading">
+      <span class="section-kicker">Get playing</span>
+      <h2 id="install-heading">Installation</h2>
+      <ol>
+        <li>Subscribe on Steam Workshop <strong>or</strong> download the zip from <a href="#downloads">Downloads</a>.</li>
+        <li>For zips: extract into your RimWorld <code>Mods</code> folder — each archive is one mod folder.</li>
+        <li>Enable <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a>, then the mod(s), and restart.</li>
+      </ol>
+      <div class="note">
+        <b>Save compatibility:</b> safe to add mid-save. Before removing a mod, deconstruct its buildings or resolve active systems (for example an active Nemesis hunt) first.
+      </div>
+    </section>
+
   </div>
+</main>
 
-  <div class="hub-grid">
-
-    <a class="hub-card" href="homesteader.html">
-      <img class="hub-card-preview" src="img/HomesteaderPreview.png" alt="Homesteader workshop preview">
-      <h2 class="h">HOMESTEADER</h2>
-      <p>Tribal survival, farm-to-table crafting, wells and irrigation, brewing, beekeeping, cool root cellars, and off-grid power. C# + Harmony for cellar cooling and favorite foods.</p>
-      <div class="workshop-stats">
-        <span><span data-stats-mod="homesteader" data-field="subscriptions">&mdash;</span> subs</span>
-        <span><span data-stats-mod="homesteader" data-field="favorited">&mdash;</span> favs</span>
-      </div>
-      <div class="count">Food + water + power &middot; custom scenario &amp; trader &middot; RimWorld 1.4 / 1.5 / 1.6</div>
-    </a>
-
-    <a class="hub-card storm" href="stormproof.html">
-      <img class="hub-card-preview" src="img/StormproofPreview.png" alt="Stormproof workshop preview">
-      <h2 class="s">STORMPROOF</h2>
-      <p>Defend your colony's power grid from solar flares, lightning, short circuits, EMP, and toxic fallout &mdash; then summon the storm yourself. Custom C# behaviors with Harmony.</p>
-      <div class="workshop-stats">
-        <span><span data-stats-mod="stormproof" data-field="subscriptions">&mdash;</span> subs</span>
-        <span><span data-stats-mod="stormproof" data-field="favorited">&mdash;</span> favs</span>
-      </div>
-      <div class="count">18 buildings &middot; 5 research projects &middot; 5 custom events &middot; RimWorld 1.6</div>
-    </a>
-
-    <a class="hub-card strata" href="strata.html">
-      <img class="hub-card-preview" src="img/StrataPreview.png" alt="Strata workshop preview">
-      <h2 class="t">STRATA</h2>
-      <p><b>Version 3 complete:</b> dig down, build up, breathe deep. Colonists commute; atmosphere, quest sites, fluid shafts, Odyssey gravship stacks, see-below roofs, and cross-level force-build. Custom C# with Harmony.</p>
-      <div class="workshop-stats">
-        <span><span data-stats-mod="strata" data-field="subscriptions">&mdash;</span> subs</span>
-        <span><span data-stats-mod="strata" data-field="favorited">&mdash;</span> favs</span>
-      </div>
-      <div class="count">V3 complete &middot; dig / build / breathe &middot; RimWorld 1.6 &middot; Odyssey optional</div>
-    </a>
-
-    <a class="hub-card signal" href="nemesis.html">
-      <img class="hub-card-preview" src="img/NemesisPreview.png" alt="Nemesis workshop preview">
-      <h2 class="x">NEMESIS</h2>
-      <p>A named personal antagonist harasses your colony with taunts, false leads, sabotage, and assaults that flee when losing. Foundation by Dredd (Misakabob).</p>
-      <div class="workshop-stats">
-        <span><span data-stats-mod="nemesis" data-field="subscriptions">&mdash;</span> subs</span>
-        <span><span data-stats-mod="nemesis" data-field="favorited">&mdash;</span> favs</span>
-      </div>
-      <div class="count">Personal hunt &middot; soft compat &middot; RimWorld 1.6</div>
-    </a>
-
-    <a class="hub-card ledger" href="deep-colony.html">
-      <img class="hub-card-preview" src="img/DeepColonyPreview.png" alt="Deep Colony workshop preview">
-      <h2 class="d">DEEP COLONY</h2>
-      <p>Perk trees, trauma &amp; therapy, apprenticeship, generational inheritance, and living faction reputation. Colonists become more than their skill sheet.</p>
-      <div class="workshop-stats">
-        <span><span data-stats-mod="deep-colony" data-field="subscriptions">&mdash;</span> subs</span>
-        <span><span data-stats-mod="deep-colony" data-field="favorited">&mdash;</span> favs</span>
-      </div>
-      <div class="count">Five systems &middot; C# + Harmony &middot; RimWorld 1.6</div>
-    </a>
-
-    <a class="hub-card date" href="datenight.html">
-      <img class="hub-card-preview" src="img/DateNightPreview.png" alt="Date Night workshop preview">
-      <h2 class="n">DATE NIGHT</h2>
-      <p>Paint Lovin on the Schedule tab. Partners meet in a double bed; short lovin MTB while the hours last. Pregnancy-safe by default.</p>
-      <div class="workshop-stats">
-        <span><span data-stats-mod="date-night" data-field="subscriptions">&mdash;</span> subs</span>
-        <span><span data-stats-mod="date-night" data-field="favorited">&mdash;</span> favs</span>
-      </div>
-      <div class="count">Lovin schedule &middot; C# + Harmony &middot; RimWorld 1.6</div>
-    </a>
-
-  </div>
-
-  <section>
-    <h2>Quick comparison</h2>
-    <p class="sub">Pick the mod that fits your colony &mdash; or mix and match.</p>
-    <div class="table-scroll">
-      <table>
-        <tr><th>Mod</th><th>Focus</th><th>Tech</th><th>Best for</th></tr>
-        <tr>
-          <td><b>Homesteader</b></td>
-          <td>Food, water, storage, power</td>
-          <td>C# + Harmony</td>
-          <td>Tribal starts, farming colonies, off-grid bases</td>
-        </tr>
-        <tr>
-          <td><b>Stormproof</b></td>
-          <td>Grid defense</td>
-          <td>C# + Harmony</td>
-          <td>Industrial colonies, thunderstorm biomes, raid-heavy saves</td>
-        </tr>
-        <tr>
-          <td><b>Strata</b></td>
-          <td>Multistory bases</td>
-          <td>C# + Harmony</td>
-          <td>Mountain-base lovers, tall colonies, infestation enjoyers</td>
-        </tr>
-        <tr>
-          <td><b>Nemesis</b></td>
-          <td>Personal antagonist</td>
-          <td>C# + Harmony</td>
-          <td>Colonies with unfinished business</td>
-        </tr>
-        <tr>
-          <td><b>Deep Colony</b></td>
-          <td>Identity &amp; legacy</td>
-          <td>C# + Harmony</td>
-          <td>Colonies that outlive a single generation</td>
-        </tr>
-        <tr>
-          <td><b>Date Night</b></td>
-          <td>Schedulable romance</td>
-          <td>C# + Harmony</td>
-          <td>Couples who never find time to share a bed</td>
-        </tr>
-      </table>
-    </div>
-  </section>
-
-  <section id="install">
-    <h2>Installation</h2>
-    <ol>
-      <li>Download the mod(s) using the buttons above (or subscribe on Steam Workshop).</li>
-      <li>Extract the zip into your RimWorld <code>Mods</code> folder &mdash; each zip contains one mod folder.</li>
-      <li>Enable the mod(s) in the in-game mod list and restart.</li>
-      <li>These mods require the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a> mod.</li>
-    </ol>
-    <div class="note">
-      <b>Save compatibility:</b> safe to add mid-save. Before removing a mod, deconstruct its buildings / resolve active systems (e.g. an active Nemesis hunt) first.
-    </div>
-  </section>
-</div>
-
-<footer>
+<footer class="site-footer">
   <div class="wrap">
     RimWorld mods by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
     &middot; <a href="https://github.com/AzraelGodKing/rimworld_mods/issues">Report a bug</a>
+    &middot; <a href="#downloads">Direct downloads</a>
   </div>
 </footer>
 

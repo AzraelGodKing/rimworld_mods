@@ -1,11 +1,13 @@
 /**
- * Optional local refresh of docs/data/stats-cache.json (static fallback for the
- * docs site). Live numbers are fetched in-browser by docs/scripts/stats-display.js
- * — no GitHub Action required.
+ * Optional local refresh of docs/data/stats-cache.json (static offline fallback).
+ *
+ * Live subscriber counts are fetched in-browser by docs/scripts/stats-display.js.
+ * Do NOT wire this script to a GitHub Action that commits — that caused hourly
+ * bot commits and forced rebases. Keep stats independent of git runners.
  *
  * Roster: docs/data/workshop-mods.json
  *
- * Usage:
+ * Usage (local / manual only):
  *   node scripts/fetch-workshop-stats.js
  *   node scripts/fetch-workshop-stats.js --force
  */

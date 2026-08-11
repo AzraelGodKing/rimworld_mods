@@ -5,21 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Homesteader item catalog — AzraelGodKing</title>
 <meta name="description" content="Full Homesteader item catalog: every food, ingredient, pantry good, and water craftable added by the mod.">
-<link rel="stylesheet" href="homesteader.css">
+<link rel="stylesheet" href="style.css">
+<script src="scripts/site.js" defer></script>
 </head>
-<body class="hs">
+<body data-theme="homesteader">
 
-<nav class="hs-nav">
-  <div class="hs-wrap hs-nav-inner">
-    <a class="hs-nav-brand" href="index.html">RimWorld Mods</a>
-    <div class="hs-nav-links">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Primary">
+  <div class="wrap">
+    <a class="brand" href="index.html">AzraelGodKing</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <div class="nav-links" id="primary-nav">
       <a href="index.html">Home</a>
-      <a href="homesteader.html" class="active">Homesteader</a>
+      <a href="homesteader.html" class="active" aria-current="page">Homesteader</a>
       <a href="stormproof.html">Stormproof</a>
       <a href="strata.html">Strata</a>
-      <a href="nemesis.html" class="signal-link">Nemesis</a>
-      <a href="deep-colony.html" class="ledger-link">Deep Colony</a>
-      <a href="datenight.html" class="date-link">Date Night</a>
+      <a href="nemesis.html">Nemesis</a>
+      <a href="deep-colony.html">Deep Colony</a>
+      <a href="datenight.html">Date Night</a>
+      <a href="index.html#downloads">Downloads</a>
       <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
     </div>
   </div>
@@ -29,12 +34,13 @@
   <h1 class="hs-brand">Item catalog</h1>
   <p class="hs-hero-sub">Every food, ingredient, and pantry good added by Homesteader.</p>
   <div class="hs-cta">
-    <a class="hs-btn hs-btn-ink" href="homesteader.html">Back to Homesteader</a>
-    <a class="hs-btn hs-btn-line" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip">Download</a>
+    <a class="btn btn-ghost" href="homesteader.html">Back to Homesteader</a>
+    <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip">Download zip</a>
+    <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3759238501">Steam Workshop</a>
   </div>
 </header>
 
-<main class="hs-main">
+<main id="main">
   <div class="hs-wrap">
 
     <section class="hs-section is-in" id="catalog">
@@ -101,7 +107,7 @@
       </div>
       <div class="hs-band">
         <div class="hs-cta">
-          <a class="hs-btn hs-btn-ink" href="homesteader.html">Back to Homesteader</a>
+          <a class="btn btn-ghost" href="homesteader.html">Back to Homesteader</a>
         </div>
       </div>
     </section>
@@ -109,7 +115,7 @@
   </div>
 </main>
 
-<footer class="hs-footer">
+<footer class="site-footer">
   <div class="hs-wrap">
     <a href="index.html">All mods</a>
     · <a href="homesteader.html">Homesteader</a>

@@ -6,51 +6,54 @@
 <title>Deep Colony — a RimWorld mod by AzraelGodKing</title>
 <meta name="description" content="Deep Colony 2.0: perk trees with capstones and archetypes, trauma &amp; therapy, apprenticeship, generational legacy, and a living faction reputation ledger. RimWorld 1.6, requires Harmony.">
 <link rel="stylesheet" href="style.css">
+<script src="scripts/site.js" defer></script>
 <script src="scripts/stats-display.js" defer></script>
 </head>
-<body>
+<body data-theme="deep-colony">
 
-<nav class="site-nav">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-nav" aria-label="Primary">
   <div class="wrap">
-    <a class="brand" href="index.html">RIMWORLD MODS</a>
-    <div class="nav-links">
+    <a class="brand" href="index.html">AzraelGodKing</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <div class="nav-links" id="primary-nav">
       <a href="index.html">Home</a>
       <a href="homesteader.html">Homesteader</a>
       <a href="stormproof.html">Stormproof</a>
       <a href="strata.html">Strata</a>
-      <a href="nemesis.html" class="signal-link">Nemesis</a>
-      <a href="deep-colony.html" class="ledger-link active">Deep Colony</a>
-      <a href="datenight.html" class="date-link">Date Night</a>
+      <a href="nemesis.html">Nemesis</a>
+      <a href="deep-colony.html" class="active" aria-current="page">Deep Colony</a>
+      <a href="datenight.html">Date Night</a>
+      <a href="index.html#downloads">Downloads</a>
       <a href="https://github.com/AzraelGodKing/rimworld_mods">GitHub</a>
     </div>
   </div>
 </nav>
 
-<header class="hero ledger">
-  <div class="wrap">
-    <h1 class="d">DEEP COLONY</h1>
-    <p class="tagline">Your colonists are more than their stats.</p>
-    <div class="badges">
-      <span class="badge ledger">RimWorld 1.6</span>
-      <span class="badge ledger">Requires Harmony</span>
-      <span class="badge ledger">C# mod</span>
-      <span class="badge ledger">Five systems</span>
-      <span class="badge ledger">2.0</span>
-    </div>
-    <div class="cta">
-      <a class="btn btn-deep" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3773568314">Steam Workshop</a>
-      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DeepColony.zip">&#11015; Download zip</a>
-      <a class="btn btn-ghost" href="https://github.com/AzraelGodKing/rimworld_mods">View on GitHub</a>
+<header class="hero mod-hero">
+  <div class="hero-media" aria-hidden="true">
+    <img src="img/DeepColonyPreview.png" alt="">
+  </div>
+  <div class="hero-copy">
+    <h1 class="hero-brand">Deep Colony</h1>
+    <p class="hero-line">Your colonists are more than their stats.</p>
+    <div class="hero-cta">
+      <a class="btn btn-steam" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3773568314">Steam Workshop</a>
+      <a class="btn btn-download" href="https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DeepColony.zip">Download zip</a>
+      
     </div>
   </div>
 </header>
 
+<main id="main">
 <div class="wrap">
   <div class="mod-workshop-stats" aria-live="polite">
     Steam Workshop:
     <strong><span data-stats-mod="deep-colony" data-field="subscriptions">&mdash;</span></strong> subscribers
     &middot;
     <strong><span data-stats-mod="deep-colony" data-field="favorited">&mdash;</span></strong> favorites
+  <p class="stats-meta">Live in your browser — not updated by GitHub Actions.</p>
   </div>
 
   <section id="overview">
@@ -283,8 +286,9 @@
   </section>
 
 </div>
+</main>
 
-<footer>
+<footer class="site-footer">
   <div class="wrap">
     RimWorld mods by <a href="https://github.com/AzraelGodKing">AzraelGodKing</a>
     &middot; <a href="index.html">Back to hub</a>
