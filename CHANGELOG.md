@@ -17,11 +17,16 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 =======
 =======
 - **Repo** — restore Nemesis + Deep Colony docs/download zips on the rolling `latest` release (and local `build_downloads.ps1`) for non-Steam installs; hub/README zip buttons work again.
+<<<<<<< HEAD
 >>>>>>> e06f43f (Restore Nemesis and Deep Colony GitHub download zips)
 - **Docs** — unlisted Living World page at `docs/living-world.html` (`noindex`, not on hub/nav). Local `build_downloads.ps1` matches CI (Homesteader / Stormproof / Strata / DateNight / LivingWorld only).
 >>>>>>> 029c658 (Unlisted Living World docs; match local zip pack to CI)
 - **Repo** — CI also strips leftover `DeepColony.zip` from `latest`; `setup-rimworld.sh --build-mods`; Deep Colony `loadAfter` Living World (`repo-hygiene-no-debate`).
 >>>>>>> 5ef1ad3 (CI DeepColony.zip cleanup, --build-mods, DC loadAfter LW)
+=======
+- **Docs** — unlisted Living World page at `docs/living-world.html` (`noindex`, not on hub/nav).
+- **Repo** — `setup-rimworld.sh --build-mods`; Deep Colony `loadAfter` Living World (`repo-hygiene-no-debate`).
+>>>>>>> cf4b57e (Changelogs: clarify restored Nemesis/Deep Colony zips)
 - **Repo** — Deep Colony added to CI compile; Living World design doc retitled (not “parked”); drop duplicate `scripts/workshop-mods.json`; `Assemblies/.gitkeep` for Nemesis / DateNight / LivingWorld / Deep Colony; Living World languages README; Cloud Agent RimWorld setup note in README (`repo-hygiene-1-6`).
 >>>>>>> 81efb06 (Repo hygiene: Deep Colony CI, docs/setup small fixes)
 - **Repo / Cloud Agent** — `scripts/setup-rimworld.sh` downloads RimWorld from `RIMWORLD_ARCHIVE_URL`, installs Harmony, links workspace mods under `/opt/rimworld/RimWorld/Mods`, and writes `ModsConfig` + `RIMWORLD_DIR` env markers (`rimworld-archive-setup`).
