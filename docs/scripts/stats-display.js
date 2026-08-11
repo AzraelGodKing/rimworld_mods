@@ -159,14 +159,22 @@ async function fetchSteamApi(ids) {
 
 function parseCountNearLabel(text, labels) {
   for (const label of labels) {
-    // Markdown / HTML-ish: **Label** … **1,565**  or Label\n1,565
-    const re = new RegExp(
-      label + "[^0-9]{0,80}?([0-9][0-9,]*)",
+    // Steam stats_table HTML: <td>343</td><td>Current Subscribers</td>
+    const before = new RegExp(
+      "([0-9][0-9,]*)\\s*</[^>]+>\\s*<[^>]+>\\s*" + label,
       "i"
     );
-    const m = text.match(re);
-    if (m) {
-      const n = Number(String(m[1]).replace(/,/g, ""));
+    const beforeMatch = text.match(before);
+    if (beforeMatch) {
+      const n = Number(String(beforeMatch[1]).replace(/,/g, ""));
+      if (Number.isFinite(n)) return n;
+    }
+
+    // Markdown / plain: **Label** … **1,565**  or Label\n1,565
+    const after = new RegExp(label + "[^0-9]{0,80}?([0-9][0-9,]*)", "i");
+    const afterMatch = text.match(after);
+    if (afterMatch) {
+      const n = Number(String(afterMatch[1]).replace(/,/g, ""));
       if (Number.isFinite(n)) return n;
     }
   }
@@ -176,9 +184,11 @@ function parseCountNearLabel(text, labels) {
 async function fetchViaWorkshopPage(publishedFileId) {
   const pageUrl =
     "https://steamcommunity.com/sharedfiles/filedetails/?id=" + publishedFileId;
-  // r.jina.ai returns a CORS-friendly text/markdown render of the page.
+  // r.jina.ai returns a CORS-friendly render. Prefer HTML so the stats table
+  // (Current Subscribers / Favorites) is present — markdown often drops it.
   const res = await fetch("https://r.jina.ai/" + pageUrl, {
     cache: "no-cache",
+    headers: { "X-Return-Format": "html" },
   });
   if (!res.ok) throw new Error("jina HTTP " + res.status);
   const text = await res.text();
