@@ -111,15 +111,19 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, and **Date Night** require the **Harmony** mod.
+4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Living World** require the **Harmony** mod.
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally.
+
+### Cloud Agents
+
+Cloud Agent environments that set `RIMWORLD_ARCHIVE_URL` can install the game with [`scripts/setup-rimworld.sh`](scripts/setup-rimworld.sh) (Harmony + workspace mod symlinks under `/opt/rimworld/RimWorld/Mods`). That script does **not** compile DLLs — run `dotnet build` for each mod (or the CI workflow) after checkout so `Assemblies/*.dll` exist.
 
 Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first (resolve an active Nemesis hunt before removing Nemesis).
 
 ## Changelogs
 
-Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md), [Nemesis](Nemesis/CHANGELOG.md), [Deep Colony](Deep%20Colony/CHANGELOG.md), [Date Night](DateNight/CHANGELOG.md).
+Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md), [Nemesis](Nemesis/CHANGELOG.md), [Deep Colony](Deep%20Colony/CHANGELOG.md), [Date Night](DateNight/CHANGELOG.md), [Living World](LivingWorld/CHANGELOG.md).
 
 ## Website
 
