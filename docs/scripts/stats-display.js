@@ -259,18 +259,52 @@ async function fetchStaticFallback() {
   return res.json();
 }
 
+function clearLocalCache() {
+  try {
+    localStorage.removeItem(CACHE_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+async function refreshLiveStats({ force = false } = {}) {
+  if (force) clearLocalCache();
+  const roster = await loadRoster();
+  const stats = await fetchLiveStats(roster);
+  writeLocalCache(stats);
+  applyStats(stats);
+  return stats;
+}
+
+window.AzraelWorkshopStats = {
+  CACHE_KEY,
+  CACHE_TTL_MS,
+  resolveDocsDataUrl,
+  loadRoster,
+  fetchLiveStats,
+  fetchStaticFallback,
+  readLocalCache,
+  writeLocalCache,
+  clearLocalCache,
+  applyStats,
+  refreshLiveStats,
+  formatValue,
+};
+
 document.addEventListener("DOMContentLoaded", () => {
-  const cached = readLocalCache();
+  // Admin / tooling pages set this before the script loads.
+  if (window.AZRAEL_STATS_MANUAL) return;
+
+  const force =
+    typeof location !== "undefined" &&
+    new URLSearchParams(location.search).get("force") === "1";
+
+  const cached = force ? null : readLocalCache();
   if (cached) {
     applyStats(cached);
   }
 
-  loadRoster()
-    .then((roster) => fetchLiveStats(roster))
-    .then((stats) => {
-      writeLocalCache(stats);
-      applyStats(stats);
-    })
+  refreshLiveStats({ force })
     .catch(() => {
       if (cached) return;
       return fetchStaticFallback()

@@ -1,0 +1,4 @@
+{
+  "passphraseSha256": "86f2f6aadb573b207798d2726b098c386544a30ad04db69a275b75c5e6d78d5f",
+  "note": "SHA-256 hex of the admin passphrase (UTF-8, no trailing newline). Rotate with: python3 -c \"import hashlib; print(hashlib.sha256(input('pass: ').encode()).hexdigest())\""
+}
