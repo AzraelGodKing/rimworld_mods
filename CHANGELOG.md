@@ -8,12 +8,16 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - **Repo** — Cursor Cloud Agent dev environment (`cloud-agent-env-v1`): `.cursor/environment.json` + `.cursor/install.sh` install the .NET SDK 8 the mods compile against, build all seven mod DLLs, and serve the `docs/` site on port 8000 for preview.
 - **Cloud Agent** — RimWorld archive install/wiring (`.cursor/install-rimworld.sh`): downloads from `RIMWORLD_ARCHIVE_URL` into `/opt/rimworld`, symlinks repo mods into `Mods/`, called from `.cursor/install.sh` when present.
 =======
 =======
 =======
 =======
+=======
+- **Repo** — restore Nemesis + Deep Colony docs/download zips on the rolling `latest` release (and local `build_downloads.ps1`) for non-Steam installs; hub/README zip buttons work again.
+>>>>>>> e06f43f (Restore Nemesis and Deep Colony GitHub download zips)
 - **Docs** — unlisted Living World page at `docs/living-world.html` (`noindex`, not on hub/nav). Local `build_downloads.ps1` matches CI (Homesteader / Stormproof / Strata / DateNight / LivingWorld only).
 >>>>>>> 029c658 (Unlisted Living World docs; match local zip pack to CI)
 - **Repo** — CI also strips leftover `DeepColony.zip` from `latest`; `setup-rimworld.sh --build-mods`; Deep Colony `loadAfter` Living World (`repo-hygiene-no-debate`).
