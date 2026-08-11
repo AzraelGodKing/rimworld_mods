@@ -39,3 +39,9 @@ for proj in "${PROJECTS[@]}"; do
 done
 
 echo "[install] Done. Built ${#PROJECTS[@]} mod assemblies."
+
+# Optional: download RimWorld from RIMWORLD_ARCHIVE_URL and symlink repo mods
+# into /opt/rimworld/Mods. No-ops when the secret is unset and no install exists.
+if [[ -x .cursor/install-rimworld.sh ]]; then
+  bash .cursor/install-rimworld.sh
+fi
