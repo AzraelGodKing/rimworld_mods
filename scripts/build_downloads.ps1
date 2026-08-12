@@ -41,7 +41,8 @@ $mods = @(
     @{ Folder = 'Nemesis'; ZipName = 'Nemesis'; DllName = 'Nemesis' },
     @{ Folder = 'Deep Colony'; ZipName = 'DeepColony'; DllName = 'DeepColony' },
     @{ Folder = 'DateNight'; ZipName = 'DateNight'; DllName = 'DateNight' },
-    @{ Folder = 'LivingWorld'; ZipName = 'LivingWorld'; DllName = 'LivingWorld' }
+    @{ Folder = 'LivingWorld'; ZipName = 'LivingWorld'; DllName = 'LivingWorld' },
+    @{ Folder = 'ShiftChange'; ZipName = 'ShiftChange'; DllName = 'ShiftChange' }
 )
 
 foreach ($mod in $mods) {
