@@ -31,6 +31,7 @@ PROJECTS=(
   "DateNight/Source/DateNight.csproj"
   "LivingWorld/Source/LivingWorld.csproj"
   "Deep Colony/Source/DeepColony.csproj"
+  "ShiftChange/Source/ShiftChange.csproj"
 )
 
 for proj in "${PROJECTS[@]}"; do
