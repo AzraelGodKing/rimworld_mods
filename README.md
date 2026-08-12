@@ -101,13 +101,6 @@ Adds a Lovin timetable slot to the Schedule tab. Paint the same hours on both pa
 - Site: [datenight.html](https://azraelgodking.github.io/rimworld_mods/datenight.html)
 - [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip)
 
-### Shift Change
-
-Automatic dress-for-task: Sleep, Cook / Doctor / Animals work, and Ideology rituals walk colonists to a wardrobe stockpile, change into an apparel policy, and restore previous clothes when the shift ends. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
-
-- Design: [docs/ideas/shift-change.md](docs/ideas/shift-change.md)
-- [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/ShiftChange.zip) (after CI publish)
-
 ## Installation
 
 A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a packaged zip:
@@ -115,10 +108,10 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
 1. Download a mod zip from the [latest GitHub Release](https://github.com/AzraelGodKing/rimworld_mods/releases/latest) or the [GitHub Pages site](https://azraelgodking.github.io/rimworld_mods/).
 2. Extract the mod folder into your RimWorld `Mods` directory:
    - Windows: `C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods`
-   - Linux: `~/.steam/steam/steamapps/common\RimWorld/Mods`
+   - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, **Living World**, and **Shift Change** require the **Harmony** mod.
+4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Living World** require the **Harmony** mod.
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally.
 
@@ -130,7 +123,7 @@ Safe to add to an existing save. Before removing a mod from a save, deconstruct 
 
 ## Changelogs
 
-Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md), [Nemesis](Nemesis/CHANGELOG.md), [Deep Colony](Deep%20Colony/CHANGELOG.md), [Date Night](DateNight/CHANGELOG.md), [Living World](LivingWorld/CHANGELOG.md), [Shift Change](ShiftChange/CHANGELOG.md).
+Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md), [Nemesis](Nemesis/CHANGELOG.md), [Deep Colony](Deep%20Colony/CHANGELOG.md), [Date Night](DateNight/CHANGELOG.md), [Living World](LivingWorld/CHANGELOG.md).
 
 ## Website
 
