@@ -189,7 +189,6 @@ wire_mods() {
     DateNight
     LivingWorld
     "Deep Colony"
-    ShiftChange
   )
 
   local name src dest

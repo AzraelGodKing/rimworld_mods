@@ -1,5 +1,7 @@
-# Outfit Routines → Shift Change
+# Outfit Routines / Shift Change — dropped
 
-This idea was renamed and started as **Shift Change**.
+**Status:** Dropped. Not shipping.
 
-See [shift-change.md](shift-change.md) and the mod package [`ShiftChange/`](../../ShiftChange/).
+Briefly renamed to **Shift Change** and scaffolded on a feature branch, then abandoned because a similar dress-for-task / wardrobe mod is about to release — no point overlapping.
+
+Historical pitch (kept for archive only): per-pawn rules that walk a colonist to a wardrobe stockpile when Sleep / work / ritual starts, wear an apparel policy, and restore previous clothes when the shift ends.
