@@ -2,21 +2,23 @@
 
 Formerly parked as **Outfit Routines** / Wardrobe (`docs/ideas/outfit-routines.md` → `docs/ideas/shift-change.md`).
 
-## Shipped (MVP)
+## Shipped
 
 - [x] Mod package (`ShiftChange` / `azraelgodking.ShiftChange`): About, csproj, Harmony, settings, CI wiring
-- [x] `GameComponent_ShiftChange` — per-pawn Sleep rules, apparel ThingID snapshots, managed mode
-- [x] Sleep timetable trigger → walk to wardrobe stockpile → wear apparel matching assigned policy → restore on Sleep end
-- [x] Suppress `JobGiver_OptimizeApparel` while managed
-- [x] Main tab UI + Dev tools + Mod Options (master enable, cooldown, default wardrobe label)
+- [x] `GameComponent_ShiftChange` — per-pawn rules, apparel ThingID snapshots, managed mode, soft apparel claims
+- [x] Sleep timetable trigger → wardrobe stockpile → apparel policy → snapshot restore
+- [x] WorkType triggers (Cooking / Doctor / Handling) via `JobGiver_Work` + tick fallback
+- [x] Ideology ritual start via `RitualBehaviorWorker.TryExecuteOn` + lord tick fallback
+- [x] Priority: Sleep → Ritual → Work; keep civilian snapshot across rule switches
+- [x] Hysteresis before restore; inventory-prefer for removed layers; OptimizeApparel skip while managed
+- [x] Main tab UI (all rule blocks) + Dev tools + Mod Options
 
 ## Next
 
-- [ ] WorkType triggers (Cook / Doctor / Animals) when a work job is issued
-- [ ] Ideology ritual start (`RitualBehaviorWorker.TryExecuteOn`)
-- [ ] Hysteresis / reservation so two pawns never claim the same apparel Thing
-- [ ] Add-mode (layer on top) vs Replace polish; drop-to-inventory option
-- [ ] Assign-tab feel polish; tip when wardrobe empty or policy missing
+- [ ] More work types on demand (beyond Cook / Doctor / Animals)
+- [ ] Stronger reservation (vanilla Reserve) during the walk-to-wardrobe window
+- [ ] Tip/letter when wardrobe empty or policy missing
+- [ ] Assign-tab feel polish
 
 ## Later
 
