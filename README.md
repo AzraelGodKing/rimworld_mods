@@ -103,7 +103,7 @@ Adds a Lovin timetable slot to the Schedule tab. Paint the same hours on both pa
 
 ### Shift Change
 
-Automatic dress-for-task: Sleep (MVP) walks colonists to a wardrobe stockpile, changes into an apparel policy, and restores previous clothes when the shift ends. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
+Automatic dress-for-task: Sleep, Cook / Doctor / Animals work, and Ideology rituals walk colonists to a wardrobe stockpile, change into an apparel policy, and restore previous clothes when the shift ends. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
 
 - Design: [docs/ideas/shift-change.md](docs/ideas/shift-change.md)
 - [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/ShiftChange.zip) (after CI publish)
