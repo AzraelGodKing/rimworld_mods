@@ -1,18 +1,62 @@
 ﻿/* AzraelGodKing RimWorld Mods — shared site stylesheet
-   Design: cool slate atlas + deep teal (not cream/terracotta, not purple dark-mode)
+   Design: cool slate atlas + deep teal. Dark is default; light is optional.
+   Avoid cream/terracotta, purple glow kitsch, and neon accents.
    Accessibility: skip link, focus-visible, reduced motion, high-contrast text */
 
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Karla:wght@400;500;600;700&display=swap");
 
-:root {
-  --bg: #d8e0e6;
-  --bg-band: #c8d3db;
-  --surface: #eef3f6;
-  --surface-raised: #f7fafc;
+:root,
+[data-color-mode="dark"] {
+  color-scheme: dark;
+  --bg: #0f1418;
+  --bg-band: #12181e;
+  --surface: #171e25;
+  --surface-raised: #1c242c;
+  --ink: #e4ebf0;
+  --ink-muted: #9aadb9;
+  --line: #3a4854;
+  --line-soft: #2a3540;
+  --brand: #2f7a74;
+  --brand-bright: #4a9e96;
+  --brand-ink: #b7ddd8;
+  --brass: #b08a4a;
+  --focus: #6aa8ff;
+  --ok: #5ea87a;
+  --danger: #c07070;
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  --nav-bg: rgba(15, 20, 24, 0.88);
+  --footer-bg: rgba(0, 0, 0, 0.28);
+  --cta-fill: #3d8f88;
+  --cta-ink: #f2f8f7;
+  --cta-hover: #4fa39b;
+  --hero-overlay: linear-gradient(
+    105deg,
+    rgba(8, 12, 16, 0.94) 0%,
+    rgba(8, 12, 16, 0.82) 42%,
+    rgba(8, 12, 16, 0.5) 100%
+  );
+  --glow-teal: rgba(47, 122, 116, 0.12);
+  --glow-brass: rgba(176, 138, 74, 0.07);
+  --radius: 4px;
+  --font-display: "Fraunces", "Palatino Linotype", Palatino, serif;
+  --font-body: "Karla", "Trebuchet MS", sans-serif;
+  --max: 1080px;
+
+  /* Per-mod accents (used with [data-theme]) — muted, readable on dark */
+  --mod: var(--brand);
+  --mod-ink: #f2f8f7;
+}
+
+[data-color-mode="light"] {
+  color-scheme: light;
+  --bg: #c5ced6;
+  --bg-band: #b5c0ca;
+  --surface: #dbe3e9;
+  --surface-raised: #e8eef3;
   --ink: #142028;
   --ink-muted: #3a4a56;
-  --line: #8fa0ad;
-  --line-soft: #b7c4ce;
+  --line: #7f91a0;
+  --line-soft: #a8b6c2;
   --brand: #0a5a58;
   --brand-bright: #0d7a72;
   --brand-ink: #073f3e;
@@ -21,29 +65,50 @@
   --ok: #1a6b3c;
   --danger: #8b2e2e;
   --shadow: 0 18px 40px rgba(20, 32, 40, 0.12);
-  --radius: 4px;
-  --font-display: "Fraunces", "Palatino Linotype", Palatino, serif;
-  --font-body: "Karla", "Trebuchet MS", sans-serif;
-  --max: 1080px;
+  --nav-bg: rgba(232, 238, 243, 0.92);
+  --footer-bg: rgba(20, 32, 40, 0.05);
+  --cta-fill: #d5ebe7;
+  --cta-ink: #073f3e;
+  --cta-hover: #fff;
   --hero-overlay: linear-gradient(
     105deg,
     rgba(10, 32, 36, 0.92) 0%,
     rgba(10, 32, 36, 0.78) 42%,
     rgba(10, 32, 36, 0.45) 100%
   );
-
-  /* Per-mod accents (used with [data-theme]) */
-  --mod: var(--brand);
-  --mod-ink: #fff;
+  --glow-teal: rgba(13, 122, 114, 0.12);
+  --glow-brass: rgba(138, 98, 40, 0.08);
 }
 
-[data-theme="homesteader"] { --mod: #7a8f3a; --mod-ink: #14200a; }
-[data-theme="stormproof"] { --mod: #2f6fad; --mod-ink: #071420; }
-[data-theme="strata"] { --mod: #b07830; --mod-ink: #1f1408; }
-[data-theme="nemesis"] { --mod: #a85a4a; --mod-ink: #1a0e0c; }
-[data-theme="deep-colony"] { --mod: #5f8a48; --mod-ink: #101808; }
-[data-theme="date-night"] { --mod: #b06078; --mod-ink: #1a0c12; }
-[data-theme="living-world"] { --mod: #3f8a6e; --mod-ink: #081410; }
+[data-theme="homesteader"] { --mod: #7a8f3a; --mod-ink: #f3f6ea; }
+[data-theme="stormproof"] { --mod: #3d7eb8; --mod-ink: #eef5fb; }
+[data-theme="strata"] { --mod: #b07830; --mod-ink: #faf4ea; }
+[data-theme="nemesis"] { --mod: #a85a4a; --mod-ink: #faf0ee; }
+[data-theme="deep-colony"] { --mod: #5f8a48; --mod-ink: #eef5ea; }
+[data-theme="date-night"] { --mod: #b06078; --mod-ink: #faf0f3; }
+[data-theme="living-world"] { --mod: #3f8a6e; --mod-ink: #eaf6f1; }
+
+[data-color-mode="light"][data-theme="homesteader"],
+[data-color-mode="light"] .mod-link[data-theme="homesteader"],
+[data-color-mode="light"] [data-theme="homesteader"] { --mod: #7a8f3a; --mod-ink: #14200a; }
+[data-color-mode="light"][data-theme="stormproof"],
+[data-color-mode="light"] .mod-link[data-theme="stormproof"],
+[data-color-mode="light"] [data-theme="stormproof"] { --mod: #2f6fad; --mod-ink: #071420; }
+[data-color-mode="light"][data-theme="strata"],
+[data-color-mode="light"] .mod-link[data-theme="strata"],
+[data-color-mode="light"] [data-theme="strata"] { --mod: #b07830; --mod-ink: #1f1408; }
+[data-color-mode="light"][data-theme="nemesis"],
+[data-color-mode="light"] .mod-link[data-theme="nemesis"],
+[data-color-mode="light"] [data-theme="nemesis"] { --mod: #a85a4a; --mod-ink: #1a0e0c; }
+[data-color-mode="light"][data-theme="deep-colony"],
+[data-color-mode="light"] .mod-link[data-theme="deep-colony"],
+[data-color-mode="light"] [data-theme="deep-colony"] { --mod: #5f8a48; --mod-ink: #101808; }
+[data-color-mode="light"][data-theme="date-night"],
+[data-color-mode="light"] .mod-link[data-theme="date-night"],
+[data-color-mode="light"] [data-theme="date-night"] { --mod: #b06078; --mod-ink: #1a0c12; }
+[data-color-mode="light"][data-theme="living-world"],
+[data-color-mode="light"] .mod-link[data-theme="living-world"],
+[data-color-mode="light"] [data-theme="living-world"] { --mod: #3f8a6e; --mod-ink: #081410; }
 
 *,
 *::before,
@@ -67,8 +132,8 @@ body {
   min-height: 100vh;
   color: var(--ink);
   background:
-    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(13, 122, 114, 0.14), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(138, 98, 40, 0.1), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 10% -10%, var(--glow-teal), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, var(--glow-brass), transparent 50%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-band) 100%);
   font: 400 17px/1.6 var(--font-body);
 }
@@ -91,8 +156,9 @@ button:focus-visible,
   top: 12px;
   z-index: 100;
   padding: 10px 14px;
-  background: var(--ink);
-  color: #fff;
+  background: var(--surface-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
   text-decoration: none;
   font-weight: 700;
   transform: translateY(-160%);
@@ -111,7 +177,7 @@ button:focus-visible,
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(238, 243, 246, 0.92);
+  background: var(--nav-bg);
   border-bottom: 1px solid var(--line-soft);
   backdrop-filter: blur(10px);
 }
@@ -159,6 +225,24 @@ button:focus-visible,
   font: 600 0.9rem/1 var(--font-body);
   padding: 0.5rem 0.75rem;
   cursor: pointer;
+}
+.theme-toggle {
+  border: 1px solid var(--line);
+  background: var(--surface-raised);
+  color: var(--ink-muted);
+  font: 600 0.85rem/1 var(--font-body);
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+  border-radius: var(--radius);
+}
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--brand);
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 @media (max-width: 760px) {
   .nav-toggle { display: inline-block; }
@@ -273,21 +357,21 @@ button:focus-visible,
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 .btn-primary {
-  background: #e8f4f2;
-  color: var(--brand-ink);
-  border-color: #e8f4f2;
+  background: var(--cta-fill);
+  color: var(--cta-ink);
+  border-color: var(--cta-fill);
 }
 .btn-primary:hover {
-  background: #fff;
-  color: var(--brand-ink);
+  background: var(--cta-hover);
+  color: var(--cta-ink);
 }
 .btn-secondary {
   background: transparent;
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.55);
 }
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
 }
 .btn-mod {
@@ -655,7 +739,7 @@ code {
   margin-top: 2rem;
   padding: 1.75rem 0 2.5rem;
   border-top: 1px solid var(--line);
-  background: rgba(20, 32, 40, 0.04);
+  background: var(--footer-bg);
   color: var(--ink-muted);
   font-size: 0.92rem;
   text-align: center;
@@ -730,7 +814,7 @@ section > h2 {
   font-size: clamp(1.55rem, 3vw, 2rem);
   color: var(--ink);
 }
-.btn-storm, .btn-strata, .btn-nemesis, .btn-deep, .btn-date, .btn-world, .btn-water, .btn-primary {
+.btn-storm, .btn-strata, .btn-nemesis, .btn-deep, .btn-date, .btn-world, .btn-water {
   background: var(--mod, var(--brand));
   color: var(--mod-ink, #fff);
   border-color: var(--mod, var(--brand));
@@ -744,7 +828,7 @@ footer, .site-footer {
   margin-top: 2rem;
   padding: 1.75rem 0 2.5rem;
   border-top: 1px solid var(--line);
-  background: rgba(20, 32, 40, 0.04);
+  background: var(--footer-bg);
   color: var(--ink-muted);
   font-size: 0.92rem;
   text-align: center;

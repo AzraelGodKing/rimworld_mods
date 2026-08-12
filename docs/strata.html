@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-color-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Strata V3 — dig down, build up, breathe deep</title>
 <meta name="description" content="Strata Version 3 complete: multistory RimWorld bases with see-below roofs, cross-level combat and force-build, atmosphere, quest sites, fluid shafts, and Odyssey gravship stacks. Requires Harmony.">
 <link rel="stylesheet" href="style.css">
+<script>
+/* Apply saved color mode before CSS paints (dark is default). */
+(function(){try{var m=localStorage.getItem("azrael-color-mode");if(m==="light"||m==="dark")document.documentElement.dataset.colorMode=m;}catch(e){}})();
+</script>
+
 <script src="scripts/site.js" defer></script>
 <script src="scripts/stats-display.js" defer></script>
 </head>
