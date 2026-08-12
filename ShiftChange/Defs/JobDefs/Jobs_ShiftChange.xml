@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <JobDef>
+    <defName>ShiftChange_Apply</defName>
+    <driverClass>ShiftChange.JobDriver_ShiftChangeApply</driverClass>
+    <reportString>changing for shift at TargetA.</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>true</playerInterruptible>
+  </JobDef>
+
+  <JobDef>
+    <defName>ShiftChange_Restore</defName>
+    <driverClass>ShiftChange.JobDriver_ShiftChangeRestore</driverClass>
+    <reportString>changing out of shift at TargetA.</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>true</playerInterruptible>
+  </JobDef>
+
+</Defs>

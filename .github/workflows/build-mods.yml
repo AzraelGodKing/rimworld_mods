@@ -1,7 +1,7 @@
 name: Build mod DLLs
 
 # Build Homesteader / Strata / Stormproof / Nemesis / DateNight / LivingWorld /
-# Deep Colony on push to main and on PRs.
+# Deep Colony / ShiftChange on push to main and on PRs.
 # On main (and workflow_dispatch): pack download zips with injected DLLs and publish
 # them to the rolling "latest" GitHub Release for the docs site buttons.
 # Assemblies/*.dll stay gitignored — zips are never committed.
@@ -17,6 +17,7 @@ on:
       - "DateNight/Source/**"
       - "LivingWorld/Source/**"
       - "Deep Colony/Source/**"
+      - "ShiftChange/Source/**"
       - "scripts/build_downloads.ps1"
       - ".github/workflows/build-mods.yml"
   pull_request:
@@ -28,6 +29,7 @@ on:
       - "DateNight/Source/**"
       - "LivingWorld/Source/**"
       - "Deep Colony/Source/**"
+      - "ShiftChange/Source/**"
       - "scripts/build_downloads.ps1"
       - ".github/workflows/build-mods.yml"
   workflow_dispatch:
@@ -80,6 +82,9 @@ jobs:
       - name: Build Deep Colony
         run: dotnet build "Deep Colony/Source/DeepColony.csproj" -c Release --nologo
 
+      - name: Build ShiftChange
+        run: dotnet build ShiftChange/Source/ShiftChange.csproj -c Release --nologo
+
       - name: Pack docs/downloads zips (with DLLs)
         if: github.event_name != 'pull_request'
         shell: bash
@@ -110,6 +115,7 @@ jobs:
           pack_mod "Deep Colony" DeepColony DeepColony
           pack_mod DateNight DateNight DateNight
           pack_mod LivingWorld LivingWorld LivingWorld
+          pack_mod ShiftChange ShiftChange ShiftChange
 
       - name: Upload download zips (artifact)
         if: github.event_name != 'pull_request'
@@ -138,7 +144,7 @@ jobs:
           body: |
             Packaged mod folders with CI-built assemblies for the docs site download buttons.
             Rebuilt on each relevant push to `main` (rolling tag — assets are overwritten).
-            Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, DateNight, and LivingWorld.
+            Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, DateNight, LivingWorld, and ShiftChange.
           files: |
             docs/downloads/Homesteader.zip
             docs/downloads/Stormproof.zip
@@ -147,6 +153,7 @@ jobs:
             docs/downloads/DeepColony.zip
             docs/downloads/DateNight.zip
             docs/downloads/LivingWorld.zip
+            docs/downloads/ShiftChange.zip
           make_latest: true
           fail_on_unmatched_files: true
           # Replace assets when the rolling `latest` tag is republished.
