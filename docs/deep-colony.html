@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-color-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Deep Colony — a RimWorld mod by AzraelGodKing</title>
 <meta name="description" content="Deep Colony 2.0: perk trees with capstones and archetypes, trauma &amp; therapy, apprenticeship, generational legacy, and a living faction reputation ledger. RimWorld 1.6, requires Harmony.">
 <link rel="stylesheet" href="style.css">
+<script>
+/* Apply saved color mode before CSS paints (dark is default). */
+(function(){try{var m=localStorage.getItem("azrael-color-mode");if(m==="light"||m==="dark")document.documentElement.dataset.colorMode=m;}catch(e){}})();
+</script>
+
 <script src="scripts/site.js" defer></script>
 <script src="scripts/stats-display.js" defer></script>
 </head>

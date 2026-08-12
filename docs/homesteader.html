@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-color-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Homesteader — a RimWorld mod by AzraelGodKing</title>
 <meta name="description" content="Homesteader: tribal survival, farm-to-table crafting, wells and irrigation, cool storage, comforts, and off-grid power. Steam Workshop or direct zip. Requires Harmony. RimWorld 1.4–1.6.">
 <link rel="stylesheet" href="style.css">
+<script>
+/* Apply saved color mode before CSS paints (dark is default). */
+(function(){try{var m=localStorage.getItem("azrael-color-mode");if(m==="light"||m==="dark")document.documentElement.dataset.colorMode=m;}catch(e){}})();
+</script>
+
 <script src="scripts/site.js" defer></script>
 <script src="scripts/stats-display.js" defer></script>
 </head>
