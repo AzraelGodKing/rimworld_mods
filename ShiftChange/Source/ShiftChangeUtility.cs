@@ -2,11 +2,19 @@ using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using Verse.AI;
+using Verse.AI.Group;
 
 namespace ShiftChange
 {
     public static class ShiftChangeUtility
     {
+        public static readonly string[] DefaultWorkTypeDefNames =
+        {
+            "Cooking",
+            "Doctor",
+            "Handling",
+        };
+
         public static bool IsSleepSchedule(Pawn pawn)
         {
             if (pawn?.timetable == null || pawn.Dead || !pawn.Spawned)
@@ -16,6 +24,32 @@ namespace ShiftChange
 
             TimeAssignmentDef ta = pawn.timetable.CurrentAssignment;
             return ta == TimeAssignmentDefOf.Sleep;
+        }
+
+        public static bool IsInIdeologyRitual(Pawn pawn)
+        {
+            if (pawn == null || !pawn.Spawned)
+            {
+                return false;
+            }
+
+            Lord lord = pawn.GetLord();
+            return lord?.LordJob is LordJob_Ritual;
+        }
+
+        public static WorkTypeDef WorkTypeOfJob(Job job)
+        {
+            if (job == null)
+            {
+                return null;
+            }
+
+            if (job.workGiverDef?.workType != null)
+            {
+                return job.workGiverDef.workType;
+            }
+
+            return null;
         }
 
         public static Zone_Stockpile FindWardrobe(Pawn pawn, ShiftChangeRule rule)
@@ -57,7 +91,6 @@ namespace ShiftChange
                 }
             }
 
-            // Fallback: first stockpile that currently holds apparel.
             for (int i = 0; i < zones.Count; i++)
             {
                 if (zones[i] is Zone_Stockpile stock && StockpileHasApparel(stock))
@@ -143,7 +176,6 @@ namespace ShiftChange
                 return null;
             }
 
-            // Worn on any pawn on this map.
             IReadOnlyList<Pawn> pawns = map.mapPawns?.AllPawnsSpawned;
             if (pawns != null)
             {
@@ -165,7 +197,6 @@ namespace ShiftChange
                 }
             }
 
-            // On the ground / in stockpiles.
             List<Thing> all = map.listerThings?.ThingsInGroup(ThingRequestGroup.Apparel);
             if (all == null)
             {
@@ -177,6 +208,28 @@ namespace ShiftChange
                 if (all[i] is Apparel apparel && apparel.thingIDNumber == thingId && !apparel.Destroyed)
                 {
                     return apparel;
+                }
+            }
+
+            // Also check inventories.
+            if (pawns != null)
+            {
+                for (int i = 0; i < pawns.Count; i++)
+                {
+                    Pawn p = pawns[i];
+                    ThingOwner inner = p?.inventory?.innerContainer;
+                    if (inner == null)
+                    {
+                        continue;
+                    }
+
+                    for (int t = 0; t < inner.Count; t++)
+                    {
+                        if (inner[t] is Apparel apparel && apparel.thingIDNumber == thingId)
+                        {
+                            return apparel;
+                        }
+                    }
                 }
             }
 
@@ -281,7 +334,7 @@ namespace ShiftChange
             return pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
         }
 
-        public static void DropApparelToZone(Pawn pawn, Apparel apparel, Zone_Stockpile zone)
+        public static void RemoveApparelFromPawn(Pawn pawn, Apparel apparel, Zone_Stockpile zone)
         {
             if (pawn?.apparel == null || apparel == null)
             {
@@ -294,6 +347,14 @@ namespace ShiftChange
             }
 
             pawn.apparel.Remove(apparel);
+
+            bool preferInv = ShiftChangeMod.Settings == null
+                || ShiftChangeMod.Settings.preferInventoryForRemoved;
+            if (preferInv && pawn.inventory != null && pawn.inventory.innerContainer.TryAdd(apparel, canMergeWithExistingStacks: false))
+            {
+                return;
+            }
+
             IntVec3 dropCell = zone != null && zone.cells.Count > 0
                 ? zone.cells[0]
                 : pawn.Position;
@@ -310,41 +371,84 @@ namespace ShiftChange
                 return false;
             }
 
-            if (apparel.Wearer != null)
+            if (apparel.Wearer != null && apparel.Wearer != pawn)
             {
                 return false;
             }
 
-            if (!pawn.CanReserveAndReach(apparel, PathEndMode.ClosestTouch, Danger.Deadly))
+            GameComponent_ShiftChange comp = GameComponent_ShiftChange.Get;
+            if (comp != null && comp.IsClaimedByOther(apparel.thingIDNumber, pawn.thingIDNumber))
             {
-                // Already at zone; still try if adjacent/same cell.
-                if (!apparel.Position.InHorDistOf(pawn.Position, 2.9f))
-                {
-                    return false;
-                }
+                return false;
+            }
+
+            if (apparel.Spawned
+                && !apparel.Position.InHorDistOf(pawn.Position, 2.9f)
+                && !pawn.CanReserveAndReach(apparel, PathEndMode.ClosestTouch, Danger.Deadly))
+            {
+                return false;
+            }
+
+            if (comp != null && !comp.TryClaimApparel(apparel.thingIDNumber, pawn.thingIDNumber))
+            {
+                return false;
             }
 
             if (replace)
             {
-                // Remove conflicting layers into the wardrobe.
                 List<Apparel> worn = pawn.apparel.WornApparel;
                 for (int i = worn.Count - 1; i >= 0; i--)
                 {
                     Apparel w = worn[i];
                     if (w != null && !ApparelUtility.CanWearTogether(w.def, apparel.def, pawn.RaceProps.body))
                     {
-                        DropApparelToZone(pawn, w, zone);
+                        RemoveApparelFromPawn(pawn, w, zone);
+                    }
+                }
+            }
+            else
+            {
+                // Add mode: skip if a conflicting layer is already worn.
+                List<Apparel> worn = pawn.apparel.WornApparel;
+                for (int i = 0; i < worn.Count; i++)
+                {
+                    Apparel w = worn[i];
+                    if (w != null && !ApparelUtility.CanWearTogether(w.def, apparel.def, pawn.RaceProps.body))
+                    {
+                        return false;
                     }
                 }
             }
 
-            if (apparel.Spawned)
+            // Pull out of inventory or zone.
+            if (apparel.ParentHolder is Pawn_InventoryTracker inv && inv.pawn != null)
+            {
+                inv.innerContainer.Remove(apparel);
+            }
+            else if (apparel.Spawned)
             {
                 apparel.DeSpawn();
             }
 
             pawn.apparel.Wear(apparel, dropReplacedApparel: false);
             return true;
+        }
+
+        public static IEnumerable<Pawn> RitualParticipants(LordJob_Ritual ritual)
+        {
+            if (ritual?.lord?.ownedPawns == null)
+            {
+                yield break;
+            }
+
+            List<Pawn> owned = ritual.lord.ownedPawns;
+            for (int i = 0; i < owned.Count; i++)
+            {
+                if (owned[i] != null)
+                {
+                    yield return owned[i];
+                }
+            }
         }
     }
 }
