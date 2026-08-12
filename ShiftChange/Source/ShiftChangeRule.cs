@@ -6,6 +6,7 @@ namespace ShiftChange
 {
     /// <summary>
     /// Per-pawn rule: when trigger T fires, change into apparel policy Z at wardrobe Y.
+    /// WorkType rules also store <see cref="workTypeDefName"/> (Cooking, Doctor, Handling, …).
     /// </summary>
     public class ShiftChangeRule : IExposable
     {
@@ -49,29 +50,29 @@ namespace ShiftChange
             return null;
         }
 
-        public Pawn ResolvePawn() => pawnId <= 0 ? null : FindPawnById(pawnId);
-
-        private static Pawn FindPawnById(int id)
+        public WorkTypeDef ResolveWorkType()
         {
-            List<Map> maps = Find.Maps;
-            for (int m = 0; m < maps.Count; m++)
+            if (string.IsNullOrEmpty(workTypeDefName))
             {
-                IReadOnlyList<Pawn> pawns = maps[m]?.mapPawns?.AllPawnsSpawned;
-                if (pawns == null)
-                {
-                    continue;
-                }
-
-                for (int i = 0; i < pawns.Count; i++)
-                {
-                    if (pawns[i] != null && pawns[i].thingIDNumber == id)
-                    {
-                        return pawns[i];
-                    }
-                }
+                return null;
             }
 
-            return null;
+            return DefDatabase<WorkTypeDef>.GetNamedSilentFail(workTypeDefName);
+        }
+
+        public string LabelShort()
+        {
+            switch (trigger)
+            {
+                case ShiftChangeTriggerKind.Sleep:
+                    return "Sleep";
+                case ShiftChangeTriggerKind.Ritual:
+                    return "Ritual";
+                case ShiftChangeTriggerKind.WorkType:
+                    return ResolveWorkType()?.labelShort ?? workTypeDefName ?? "Work";
+                default:
+                    return trigger.ToString();
+            }
         }
     }
 
@@ -83,8 +84,11 @@ namespace ShiftChange
         public bool managed;
         public bool wantsRestore;
         public List<int> snapshotApparelIds = new List<int>();
+        public List<int> reservedApparelIds = new List<int>();
         public int lastSwapTick = -99999;
-        public bool triggerActive;
+        public int hysteresisUntilTick = -99999;
+        public string pendingWorkTypeDefName;
+        public bool applyJobQueued;
 
         public void ExposeData()
         {
@@ -93,11 +97,15 @@ namespace ShiftChange
             Scribe_Values.Look(ref managed, "managed");
             Scribe_Values.Look(ref wantsRestore, "wantsRestore");
             Scribe_Collections.Look(ref snapshotApparelIds, "snapshotApparelIds", LookMode.Value);
+            Scribe_Collections.Look(ref reservedApparelIds, "reservedApparelIds", LookMode.Value);
             Scribe_Values.Look(ref lastSwapTick, "lastSwapTick", -99999);
-            Scribe_Values.Look(ref triggerActive, "triggerActive");
+            Scribe_Values.Look(ref hysteresisUntilTick, "hysteresisUntilTick", -99999);
+            Scribe_Values.Look(ref pendingWorkTypeDefName, "pendingWorkTypeDefName");
+            Scribe_Values.Look(ref applyJobQueued, "applyJobQueued");
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 snapshotApparelIds ??= new List<int>();
+                reservedApparelIds ??= new List<int>();
             }
         }
     }
