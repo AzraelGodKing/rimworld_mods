@@ -119,9 +119,62 @@ namespace ShiftChange
                 ShiftChangeRule rule = comp?.FindRule(p.thingIDNumber, ShiftChangeTriggerKind.Sleep);
                 PawnShiftState state = comp?.GetState(p.thingIDNumber);
                 Zone_Stockpile zone = ShiftChangeUtility.FindWardrobe(p, rule);
+                ShiftChangeRule workCook = comp?.FindWorkRule(p.thingIDNumber, "Cooking");
+                ShiftChangeRule ritual = comp?.FindRule(p.thingIDNumber, ShiftChangeTriggerKind.Ritual);
                 Log.Message(
-                    $"[Shift Change] {p.LabelShort}: enabled={rule?.enabled} policy={rule?.apparelPolicyName} zone={zone?.label} managed={state?.managed} trigger={state?.triggerActive} snap={state?.snapshotApparelIds?.Count ?? 0} sleepSched={ShiftChangeUtility.IsSleepSchedule(p)}");
+                    $"[Shift Change] {p.LabelShort}: sleep={rule?.enabled}/{rule?.apparelPolicyName} cook={workCook?.enabled}/{workCook?.apparelPolicyName} ritual={ritual?.enabled}/{ritual?.apparelPolicyName} zone={zone?.label} managed={state?.managed} activeRule={state?.activeRuleId} pendingWork={state?.pendingWorkTypeDefName} snap={state?.snapshotApparelIds?.Count ?? 0} claims={state?.reservedApparelIds?.Count ?? 0} sleepSched={ShiftChangeUtility.IsSleepSchedule(p)} inRitual={ShiftChangeUtility.IsInIdeologyRitual(p)} jobWt={ShiftChangeUtility.WorkTypeOfJob(p.CurJob)?.defName}");
             }
+        }
+
+        [DebugAction(Cat, "Enable Cook+Doctor+Animals+Ritual stubs on selected",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void EnableWorkAndRitualStubs()
+        {
+            GameComponent_ShiftChange comp = GameComponent_ShiftChange.Get;
+            if (comp == null)
+            {
+                return;
+            }
+
+            int n = 0;
+            foreach (Pawn p in SelectedColonists())
+            {
+                for (int i = 0; i < ShiftChangeUtility.DefaultWorkTypeDefNames.Length; i++)
+                {
+                    ShiftChangeRule r = comp.GetOrCreateWorkRule(p, ShiftChangeUtility.DefaultWorkTypeDefNames[i]);
+                    r.enabled = true;
+                    if (string.IsNullOrEmpty(r.apparelPolicyName))
+                    {
+                        r.apparelPolicyName = FirstPolicyLabel();
+                    }
+                }
+
+                ShiftChangeRule ritual = comp.GetOrCreateRitualRule(p);
+                ritual.enabled = true;
+                if (string.IsNullOrEmpty(ritual.apparelPolicyName))
+                {
+                    ritual.apparelPolicyName = FirstPolicyLabel();
+                }
+
+                n++;
+            }
+
+            Messages.Message(n > 0
+                    ? $"[Shift Change] Enabled work+ritual stubs on {n} pawn(s). Assign real apparel policies on the Shift Change tab."
+                    : "[Shift Change] Select colonists.",
+                n > 0 ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
+                historical: false);
+        }
+
+        private static string FirstPolicyLabel()
+        {
+            if (Current.Game?.outfitDatabase == null)
+            {
+                return null;
+            }
+
+            List<ApparelPolicy> all = Current.Game.outfitDatabase.AllOutfits;
+            return all.Count > 0 ? all[0].label : null;
         }
 
         private static List<Pawn> SelectedColonists()

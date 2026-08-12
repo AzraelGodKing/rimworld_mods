@@ -1,6 +1,6 @@
 # Shift Change (from Outfit Routines)
 
-**Status:** MVP in-repo (`ShiftChange/` package) — Sleep timetable → wardrobe stockpile → apparel policy + snapshot restore.  
+**Status:** Full-sail in-repo (`ShiftChange/` package) — Sleep + Cook/Doctor/Animals work + Ideology rituals → wardrobe → apparel policy + snapshot restore.  
 **Package:** `ShiftChange` / `azraelgodking.ShiftChange`.  
 **Mod roadmap:** [ShiftChange/ROADMAP.md](../../ShiftChange/ROADMAP.md).
 
@@ -22,25 +22,24 @@ Examples: chef gear while cooking, scrubs for surgery, sleepwear for Sleep, cere
 
 `Pawn → Task / WorkType / Schedule / Ritual → Place/Storage → Outfit → Add|Replace → Return: snapshot|Outfit B`
 
-Per-pawn rules avoid two colonists claiming the same specific apparel Thing (reserve during swap — next).
+Priority while several could apply: **Sleep → Ritual → WorkType**. Soft apparel claims avoid two colonists grabbing the same Thing.
 
-## MVP (shipped)
+## Shipped
 
-1. Trigger: Sleep timetable.
-2. One designated stockpile / wardrobe zone per rule (or auto: label contains “Wardrobe”, else first apparel stockpile).
-3. Replace conflicting layers + snapshot restore via forced wear jobs.
-4. Suppress `JobGiver_OptimizeApparel` while a managed mode is active.
+1. Triggers: Sleep timetable; WorkType (Cooking / Doctor / Handling) on job issue + tick; Ideology ritual start.
+2. Wardrobe stockpile per rule (or auto: label contains “Wardrobe”, else first apparel stockpile).
+3. Replace / add modes + snapshot restore; optional inventory stash for stripped layers.
+4. Suppress `JobGiver_OptimizeApparel` while managed; restore hysteresis.
 
-## Next / deferred
+## Deferred
 
-- WorkType issued (Cook / Doctor / Animals), Ideology ritual start.
 - Gravship events, Anomaly psychic rituals, patient-as-surgery-target, dresser furniture.
-- Stronger apparel reservation / hysteresis.
+- Vanilla `Reserve` during the walk window; more work types; docs/Workshop page.
 
 ## Architecture
 
-- `GameComponent_ShiftChange`: rules, active mode per pawn, apparel ThingID snapshots, zone refs, cooldowns.
-- Harmony: OptimizeApparel skip while managed; later Work / ritual hooks.
+- `GameComponent_ShiftChange`: rules, active mode per pawn, apparel ThingID snapshots, claims, cooldowns/hysteresis.
+- Harmony: OptimizeApparel skip; `JobGiver_Work.TryIssueJobPackage`; `RitualBehaviorWorker.TryExecuteOn`.
 - Execution: snapshot → path to zone → Wear/Remove → on exit restore.
 
 ## Prior art
