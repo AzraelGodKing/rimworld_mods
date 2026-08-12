@@ -9,7 +9,6 @@ Per-mod later work lives in each mod’s roadmap:
 - [Nemesis](Nemesis/ROADMAP.md)
 - [Deep Colony](Deep%20Colony/ROADMAP.md) — goodwill consumer (DC1 wired); 2.0 shipped; [Batch C](docs/ideas/deep-colony-batch-c.md)
 - [Living World (Phase 1–2 in-repo)](LivingWorld/ROADMAP.md) · [design](docs/ideas/living-world.md) — chronicle, morph, wars, refugees
-- [Shift Change (full-sail in-repo)](ShiftChange/ROADMAP.md) · [design](docs/ideas/shift-change.md) — Sleep / work / ritual outfits (ex Outfit Routines)
 
 **This weekend:** [Steam comment triage backlog](docs/ideas/weekend-steam-backlog.md).
 
