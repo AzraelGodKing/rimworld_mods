@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-color-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +7,11 @@
 <title>Workshop stats admin — unlisted</title>
 <meta name="description" content="Unlisted admin page to force-refresh Steam Workshop stats. Not linked from the hub.">
 <link rel="stylesheet" href="style.css">
+<script>
+/* Apply saved color mode before CSS paints (dark is default). */
+(function(){try{var m=localStorage.getItem("azrael-color-mode");if(m==="light"||m==="dark")document.documentElement.dataset.colorMode=m;}catch(e){}})();
+</script>
+
 <style>
   .admin-shell { max-width: 720px; margin: 2.5rem auto; padding: 0 1rem 3rem; }
   .admin-panel {
@@ -43,7 +48,7 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     font: 1rem/1.4 var(--font-body);
-    background: #fff;
+    background: var(--surface);
     color: var(--ink);
   }
   .admin-field textarea {
