@@ -15,8 +15,9 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 - **Homesteader** — Little guy trait + one-time update mail. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
 - **Living World** — Phases 1–2 (chronicle, settlement morph, NPC diplomacy). → [LivingWorld/CHANGELOG.md](LivingWorld/CHANGELOG.md)
 - **Weekend Steam backlog** — Strata haul/storage soft-compat; Homesteader bed/storage; Stormproof textures; NemesisCompatApi; Date Night Exosuit. → [docs/ideas/weekend-steam-backlog.md](docs/ideas/weekend-steam-backlog.md)
+
 - **Date Night** — Lovin schedule button (vanilla UI is hardcoded), bed seek + short MTB, Dev tools to make lovers; Workshop preview (#2 schedule-hero); docs page [`datenight.html`](docs/datenight.html) + hub card; CI packs `DateNight.zip`. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
-- **Ideas** — Outfit Routines design parked (later started as **Shift Change**). → [docs/ideas/shift-change.md](docs/ideas/shift-change.md)
+- **Ideas** — Outfit Routines / Shift Change **dropped** (overlapping mod about to release). → [docs/ideas/outfit-routines.md](docs/ideas/outfit-routines.md)
 - **Ideas** — Living World design: off-map faction chronicle, settlement morph, NPC diplomacy; Nemesis / Deep Colony / Homesteader keep their lanes. → [docs/ideas/living-world.md](docs/ideas/living-world.md)
 - **Stormproof** — packed building sprites to ~90% fill and stripped leftover light editor pads so icons/buildings aren’t tiny boxed fake-PNGs. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
 - **Strata** — rebuilt `Strata.dll` so suffocation/stuffy ThoughtWorkers match V3.5 defs (`atmosphere-thoughts-dll-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
