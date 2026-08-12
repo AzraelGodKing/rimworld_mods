@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Shift Change** — new mod MVP (`shift-change-mvp-v1`): Sleep timetable → wardrobe stockpile → apparel policy + snapshot restore; OptimizeApparel suppressed while managed; main tab + Dev tools. Formerly Outfit Routines / Wardrobe. → [ShiftChange/CHANGELOG.md](ShiftChange/CHANGELOG.md) · [docs/ideas/shift-change.md](docs/ideas/shift-change.md)
 - **Strata** — cross-level haul matches vanilla "needs haul" + full path to stockpile (`haul-needs-parity-v1`). Build stamp `haul-needs-parity-v1` (Player.log). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md) · [Steam paste](assets/workshop/strata-update-notes.bbcode)
 - **Ideas** — Homesteader next-content pool and Deep Colony Batch C. → [docs/ideas/homesteader-updates.md](docs/ideas/homesteader-updates.md) · [docs/ideas/deep-colony-batch-c.md](docs/ideas/deep-colony-batch-c.md)
 - **Homesteader** — optional unique texture pack (off by default); many refresh buildings redrawn to read as RimWorld sprites. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
@@ -16,7 +17,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 - **Weekend Steam backlog** — Strata haul/storage soft-compat; Homesteader bed/storage; Stormproof textures; NemesisCompatApi; Date Night Exosuit. → [docs/ideas/weekend-steam-backlog.md](docs/ideas/weekend-steam-backlog.md)
 
 - **Date Night** — Lovin schedule button (vanilla UI is hardcoded), bed seek + short MTB, Dev tools to make lovers; Workshop preview (#2 schedule-hero); docs page [`datenight.html`](docs/datenight.html) + hub card; CI packs `DateNight.zip`. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
-- **Ideas** — parked Outfit Routines design for a later Wardrobe mod. → [docs/ideas/outfit-routines.md](docs/ideas/outfit-routines.md)
+- **Ideas** — Outfit Routines design parked (later started as **Shift Change**). → [docs/ideas/shift-change.md](docs/ideas/shift-change.md)
 - **Ideas** — Living World design: off-map faction chronicle, settlement morph, NPC diplomacy; Nemesis / Deep Colony / Homesteader keep their lanes. → [docs/ideas/living-world.md](docs/ideas/living-world.md)
 - **Stormproof** — packed building sprites to ~90% fill and stripped leftover light editor pads so icons/buildings aren’t tiny boxed fake-PNGs. → [Stormproof/CHANGELOG.md](Stormproof/CHANGELOG.md)
 - **Strata** — rebuilt `Strata.dll` so suffocation/stuffy ThoughtWorkers match V3.5 defs (`atmosphere-thoughts-dll-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
