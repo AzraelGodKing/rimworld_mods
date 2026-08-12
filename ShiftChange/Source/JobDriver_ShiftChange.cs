@@ -27,8 +27,10 @@ namespace ShiftChange
                         return;
                     }
 
-                    ShiftChangeRule rule = comp.FindRule(pawn.thingIDNumber, ShiftChangeTriggerKind.Sleep);
                     PawnShiftState state = comp.GetState(pawn.thingIDNumber);
+                    ShiftChangeRule rule = state != null
+                        ? comp.FindRuleById(state.activeRuleId)
+                        : null;
                     if (rule == null || state == null)
                     {
                         comp.NotifyApplyFinished(pawn, success: false);
@@ -48,11 +50,28 @@ namespace ShiftChange
                     }
 
                     List<Apparel> available = ShiftChangeUtility.CollectApparelInZone(zone);
+                    // Also allow already-inventoried pieces that match the policy.
+                    ThingOwner inv = pawn.inventory?.innerContainer;
+                    if (inv != null)
+                    {
+                        for (int i = 0; i < inv.Count; i++)
+                        {
+                            if (inv[i] is Apparel apparel
+                                && !apparel.Destroyed
+                                && ShiftChangeUtility.PolicyAllows(policy, apparel)
+                                && !available.Contains(apparel))
+                            {
+                                available.Add(apparel);
+                            }
+                        }
+                    }
+
                     int worn = 0;
+                    int claimedDenied = 0;
                     for (int i = 0; i < available.Count; i++)
                     {
                         Apparel a = available[i];
-                        if (a == null || a.Destroyed || a.Wearer != null)
+                        if (a == null || a.Destroyed || (a.Wearer != null && a.Wearer != pawn))
                         {
                             continue;
                         }
@@ -62,8 +81,13 @@ namespace ShiftChange
                             continue;
                         }
 
-                        // Skip if already wearing an allowed piece on the same layer set.
-                        if (AlreadySatisfied(pawn, a))
+                        if (comp.IsClaimedByOther(a.thingIDNumber, pawn.thingIDNumber))
+                        {
+                            claimedDenied++;
+                            continue;
+                        }
+
+                        if (AlreadySatisfied(pawn, a, policy))
                         {
                             continue;
                         }
@@ -79,6 +103,11 @@ namespace ShiftChange
                         Messages.Message("ShiftChange_Msg_EmptyWardrobe".Translate(pawn.LabelShort),
                             pawn, MessageTypeDefOf.RejectInput, historical: false);
                     }
+                    else if (worn == 0 && claimedDenied > 0)
+                    {
+                        Messages.Message("ShiftChange_Msg_ApparelClaimed".Translate(pawn.LabelShort),
+                            pawn, MessageTypeDefOf.RejectInput, historical: false);
+                    }
 
                     comp.NotifyApplyFinished(pawn, success: true);
                 },
@@ -87,7 +116,7 @@ namespace ShiftChange
             yield return change;
         }
 
-        private static bool AlreadySatisfied(Pawn pawn, Apparel candidate)
+        private static bool AlreadySatisfied(Pawn pawn, Apparel candidate, ApparelPolicy policy)
         {
             List<Apparel> worn = pawn.apparel?.WornApparel;
             if (worn == null)
@@ -104,10 +133,7 @@ namespace ShiftChange
                 }
 
                 if (!ApparelUtility.CanWearTogether(w.def, candidate.def, pawn.RaceProps.body)
-                    && ShiftChangeUtility.PolicyAllows(
-                        GameComponent_ShiftChange.Get?.FindRule(pawn.thingIDNumber, ShiftChangeTriggerKind.Sleep)
-                            ?.ResolvePolicy(),
-                        w))
+                    && ShiftChangeUtility.PolicyAllows(policy, w))
                 {
                     return true;
                 }
@@ -138,7 +164,6 @@ namespace ShiftChange
                         return;
                     }
 
-                    ShiftChangeRule rule = comp.FindRule(pawn.thingIDNumber, ShiftChangeTriggerKind.Sleep);
                     PawnShiftState state = comp.GetState(pawn.thingIDNumber);
                     if (state == null)
                     {
@@ -146,10 +171,11 @@ namespace ShiftChange
                         return;
                     }
 
+                    ShiftChangeRule rule = comp.FindRuleById(state.activeRuleId)
+                        ?? comp.FindAnyRuleForPawn(pawn.thingIDNumber);
                     Zone_Stockpile zone = ShiftChangeUtility.FindWardrobe(pawn, rule);
                     List<int> snapshot = new List<int>(state.snapshotApparelIds ?? new List<int>());
 
-                    // Drop currently worn gear that is not in the snapshot into the wardrobe.
                     if (pawn.apparel?.WornApparel != null)
                     {
                         List<Apparel> wornCopy = new List<Apparel>(pawn.apparel.WornApparel);
@@ -163,12 +189,11 @@ namespace ShiftChange
 
                             if (!snapshot.Contains(w.thingIDNumber))
                             {
-                                ShiftChangeUtility.DropApparelToZone(pawn, w, zone);
+                                ShiftChangeUtility.RemoveApparelFromPawn(pawn, w, zone);
                             }
                         }
                     }
 
-                    // Re-wear snapshotted pieces from the wardrobe / map.
                     for (int i = 0; i < snapshot.Count; i++)
                     {
                         Apparel a = ShiftChangeUtility.FindApparelById(pawn.Map, snapshot[i]);

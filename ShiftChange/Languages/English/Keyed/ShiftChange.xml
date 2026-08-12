@@ -2,20 +2,30 @@
 <LanguageData>
 
   <ShiftChange_SettingsCategory>Shift Change</ShiftChange_SettingsCategory>
-  <ShiftChange_Settings_Intro>When a colonist clocks into Sleep, they go to a wardrobe stockpile, put on the assigned apparel policy, and restore their previous clothes when Sleep ends. Open the Shift Change tab to configure per-pawn rules.</ShiftChange_Settings_Intro>
+  <ShiftChange_Settings_Intro>Colonists clock into Sleep, Cook / Doctor / Animals work, or Ideology rituals, walk to a wardrobe stockpile, put on the assigned apparel policy, then restore previous clothes when the shift ends. Configure per-pawn rules on the Shift Change tab.</ShiftChange_Settings_Intro>
   <ShiftChange_Settings_Enabled>Enable Shift Change</ShiftChange_Settings_Enabled>
   <ShiftChange_Settings_EnabledTip>Master switch. When off, no automatic apply/restore jobs run.</ShiftChange_Settings_EnabledTip>
+  <ShiftChange_Settings_WorkTriggers>Work-type triggers (Cook / Doctor / Animals)</ShiftChange_Settings_WorkTriggers>
+  <ShiftChange_Settings_WorkTriggersTip>When a matching work job is issued, change into that rule's kit before settling into the task.</ShiftChange_Settings_WorkTriggersTip>
+  <ShiftChange_Settings_RitualTriggers>Ideology ritual triggers</ShiftChange_Settings_RitualTriggers>
+  <ShiftChange_Settings_RitualTriggersTip>When a colonist joins an Ideology ritual lord, apply their Ritual outfit.</ShiftChange_Settings_RitualTriggersTip>
   <ShiftChange_Settings_Cooldown>Swap cooldown: {0} ticks</ShiftChange_Settings_Cooldown>
+  <ShiftChange_Settings_Hysteresis>Restore hysteresis: {0} ticks</ShiftChange_Settings_Hysteresis>
   <ShiftChange_Settings_WardrobeLabel>Default wardrobe stockpile label contains</ShiftChange_Settings_WardrobeLabel>
+  <ShiftChange_Settings_PreferInventory>Stash removed apparel in inventory</ShiftChange_Settings_PreferInventory>
+  <ShiftChange_Settings_PreferInventoryTip>When replacing layers, try inventory first; otherwise drop into the wardrobe zone.</ShiftChange_Settings_PreferInventoryTip>
   <ShiftChange_Settings_Reset>Reset to defaults</ShiftChange_Settings_Reset>
 
   <ShiftChange_TabTitle>Shift Change</ShiftChange_TabTitle>
-  <ShiftChange_TabIntro>Assign Sleep-shift outfits. Colonists walk to the wardrobe zone, change, then restore when Sleep ends.</ShiftChange_TabIntro>
+  <ShiftChange_TabIntro>Per-colonist shift outfits for Sleep, Cook / Doctor / Animals, and Ideology rituals. Colonists walk to the wardrobe, change, then restore when the shift ends.</ShiftChange_TabIntro>
   <ShiftChange_TabNoGame>Start or load a game to configure shift rules.</ShiftChange_TabNoGame>
   <ShiftChange_TabDisabled>Shift Change is disabled in Mod Options.</ShiftChange_TabDisabled>
   <ShiftChange_TabSelectPawn>Select a colonist on the left.</ShiftChange_TabSelectPawn>
 
-  <ShiftChange_Rule_SleepEnabled>Sleep shift enabled</ShiftChange_Rule_SleepEnabled>
+  <ShiftChange_Rule_SleepTitle>Sleep shift</ShiftChange_Rule_SleepTitle>
+  <ShiftChange_Rule_WorkTitle>Work: {0}</ShiftChange_Rule_WorkTitle>
+  <ShiftChange_Rule_RitualTitle>Ideology ritual</ShiftChange_Rule_RitualTitle>
+  <ShiftChange_Rule_Enabled>Enabled</ShiftChange_Rule_Enabled>
   <ShiftChange_Rule_Replace>Replace conflicting layers</ShiftChange_Rule_Replace>
   <ShiftChange_Rule_Policy>Apparel policy: {0}</ShiftChange_Rule_Policy>
   <ShiftChange_Rule_PickPolicy>Pick apparel policy…</ShiftChange_Rule_PickPolicy>
@@ -26,6 +36,7 @@
 
   <ShiftChange_Status_Idle>Status: idle</ShiftChange_Status_Idle>
   <ShiftChange_Status_Managed>Status: on shift (managed apparel)</ShiftChange_Status_Managed>
+  <ShiftChange_Status_ManagedNamed>Status: on shift — {0}</ShiftChange_Status_ManagedNamed>
   <ShiftChange_Status_WantsRestore>Status: waiting to restore</ShiftChange_Status_WantsRestore>
 
   <ShiftChange_ForceApply>Force change now</ShiftChange_ForceApply>
@@ -33,6 +44,7 @@
 
   <ShiftChange_Msg_NoWardrobeOrPolicy>{0} has no wardrobe zone or apparel policy for this shift.</ShiftChange_Msg_NoWardrobeOrPolicy>
   <ShiftChange_Msg_EmptyWardrobe>{0} found no apparel in the wardrobe zone.</ShiftChange_Msg_EmptyWardrobe>
+  <ShiftChange_Msg_ApparelClaimed>{0} — wardrobe pieces are reserved by another colonist.</ShiftChange_Msg_ApparelClaimed>
   <ShiftChange_Msg_NeedPolicy>Pick an apparel policy first.</ShiftChange_Msg_NeedPolicy>
 
 </LanguageData>

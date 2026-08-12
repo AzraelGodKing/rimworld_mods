@@ -18,9 +18,9 @@
     <li>brrainz.harmony</li>
     <li>Ludeon.RimWorld</li>
   </loadAfter>
-  <description>Automatic dress-for-task: when a colonist clocks into Sleep (and later work types / rituals), they walk to a wardrobe stockpile, change into the assigned apparel policy, and restore their previous clothes when the shift ends.
+  <description>Automatic dress-for-task: when a colonist clocks into Sleep, Cook / Doctor / Animals work, or an Ideology ritual, they walk to a wardrobe stockpile, change into the assigned apparel policy, and restore their previous clothes when the shift ends.
 
-MVP: Sleep timetable → outfit policy + one stockpile zone + snapshot restore. Vanilla OptimizeApparel is suppressed while Shift Change is managing a pawn.
+Features: per-pawn rules on the Shift Change tab, apparel ThingID snapshots, wardrobe zone auto/label pick, OptimizeApparel suppressed while managed, soft apparel claims so two colonists do not grab the same piece, restore hysteresis, optional inventory stash for removed layers.
 
 Requires Harmony. RimWorld 1.6. Safe to add mid-save.</description>
 </ModMetaData>
