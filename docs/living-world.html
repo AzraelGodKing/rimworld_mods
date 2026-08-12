@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-color-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +7,11 @@
 <title>Living World — unlisted</title>
 <meta name="description" content="Unlisted Living World docs page. Off-map faction chronicle for RimWorld 1.6.">
 <link rel="stylesheet" href="style.css">
+<script>
+/* Apply saved color mode before CSS paints (dark is default). */
+(function(){try{var m=localStorage.getItem("azrael-color-mode");if(m==="light"||m==="dark")document.documentElement.dataset.colorMode=m;}catch(e){}})();
+</script>
+
 <script src="scripts/site.js" defer></script>
 </head>
 <body data-theme="living-world">
