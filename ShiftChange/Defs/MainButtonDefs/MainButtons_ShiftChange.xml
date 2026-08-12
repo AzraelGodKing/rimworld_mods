@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <MainButtonDef>
+    <defName>ShiftChange_Main</defName>
+    <label>shift change</label>
+    <description>Per-colonist shift outfit rules: Sleep (MVP) walks to a wardrobe stockpile, changes into an apparel policy, and restores the previous clothes when the shift ends.</description>
+    <tabWindowClass>ShiftChange.MainTabWindow_ShiftChange</tabWindowClass>
+    <order>62</order>
+    <closesWorldView>true</closesWorldView>
+  </MainButtonDef>
+
+</Defs>
