@@ -33,6 +33,9 @@
   <Homesteader_Allergy_PetDander>pet dander</Homesteader_Allergy_PetDander>
   <Homesteader_Allergy_Mold>mold</Homesteader_Allergy_Mold>
   <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
+  <Homesteader_SettingsUseRefreshedTextures>Use refreshed textures</Homesteader_SettingsUseRefreshedTextures>
+  <Homesteader_SettingsUseRefreshedTexturesTip>Swap Homesteader buildings, items, plants, and floors to the optional unique art pack. Original sprites stay in the mod; this is off by default. Each def has its own texture (no shared jam/cellar/etc. placeholders).</Homesteader_SettingsUseRefreshedTexturesTip>
+  <Homesteader_SettingsUseRefreshedTexturesRestart>Restart RimWorld after changing this if any sprites look stale.</Homesteader_SettingsUseRefreshedTexturesRestart>
   <Homesteader_SettingsDevHeader>Developer</Homesteader_SettingsDevHeader>
   <Homesteader_SettingsRevealAllergies>Reveal allergies</Homesteader_SettingsRevealAllergies>
   <Homesteader_SettingsRevealAllergiesTip>Tastes tab shows allergy names before discovery (eating the food or environmental exposure). For testing only.</Homesteader_SettingsRevealAllergiesTip>
