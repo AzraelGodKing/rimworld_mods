@@ -61,7 +61,7 @@ namespace Homesteader
                 }
 
                 ThingGraphicSnapshot original = kv.Value;
-                if (useRefresh)
+                if (useRefresh && !KeepOriginalArt(def, original.texPath))
                 {
                     string refreshPath = RefreshPathFor(def, original.texPath);
                     Type graphicClass = RefreshGraphicClass(def, original.graphicClass);
@@ -177,6 +177,20 @@ namespace Homesteader
 
             return def.modContentPack.PackageId != null
                 && def.modContentPack.PackageId.IndexOf("homesteader", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>
+        /// Brought Diggo art stays on the original texPath even when the refresh pack is on.
+        /// </summary>
+        private static bool KeepOriginalArt(ThingDef def, string originalPath)
+        {
+            if (def != null && def.defName == "Homesteader_DiggoPlushie")
+            {
+                return true;
+            }
+
+            return originalPath != null
+                && originalPath.IndexOf("HippoDogPlushie", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         internal static string RefreshPathFor(Def def, string originalPath)
