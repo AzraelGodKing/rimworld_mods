@@ -1,6 +1,6 @@
 # HomesteaderRefresh unique sprites
 
-Count: 163
+Count: 162
 
 Apparel/Overalls.png
 Apparel/StrawHat.png
@@ -73,7 +73,6 @@ Buildings/Smokehouse_south.png
 Buildings/Smokehouse_west.png
 Buildings/SpinningWheel.png
 Buildings/Springhouse.png
-Buildings/Statue27.png
 Buildings/Statue27Grand.png
 Buildings/StorageBarrel.png
 Buildings/StorageCrate.png

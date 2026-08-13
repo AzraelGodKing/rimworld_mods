@@ -13,3 +13,4 @@ Orchard trees and composted soil also get their own art instead of vanilla oaks
 / shared irrigated soil.
 
 Diggo (`Homesteader/Buildings/HippoDogPlushie`) is brought art and is never swapped.
+The 27 statue (`Homesteader/Buildings/Statue27`) is brought `art/brought/27_2.0.png` and is never swapped.
