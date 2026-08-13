@@ -33,6 +33,9 @@
   <Homesteader_Allergy_PetDander>宠物皮屑</Homesteader_Allergy_PetDander>
   <Homesteader_Allergy_Mold>霉菌</Homesteader_Allergy_Mold>
   <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
+  <Homesteader_SettingsUseRefreshedTextures>使用刷新贴图</Homesteader_SettingsUseRefreshedTextures>
+  <Homesteader_SettingsUseRefreshedTexturesTip>将 Homesteader 建筑、物品、植物和地板切换到可选的独立美术包。原贴图仍保留在模组中；默认关闭。每个定义都有自己的贴图，不再共用占位图。</Homesteader_SettingsUseRefreshedTexturesTip>
+  <Homesteader_SettingsUseRefreshedTexturesRestart>如果贴图看起来没更新，请在更改此项后重启 RimWorld。</Homesteader_SettingsUseRefreshedTexturesRestart>
   <Homesteader_SettingsDevHeader>开发者</Homesteader_SettingsDevHeader>
   <Homesteader_SettingsRevealAllergies>显示过敏</Homesteader_SettingsRevealAllergies>
   <Homesteader_SettingsRevealAllergiesTip>口味页在发现前就显示过敏名称（食用或环境接触触发发现）。仅供测试。</Homesteader_SettingsRevealAllergiesTip>

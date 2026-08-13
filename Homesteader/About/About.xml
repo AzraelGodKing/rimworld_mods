@@ -81,5 +81,7 @@ Requires the Harmony mod (C# for root cellar cooling and favorite foods). Safe t
 
 Note: former Wellspring water content now ships inside Homesteader (Wellspring_* defNames preserved). Disable any old standalone Wellspring mod.
 
-Optional: Dubs Bad Hygiene soft-compat patches Homesteader water buildings into its plumbing when that mod is present.</description>
+Optional: Dubs Bad Hygiene soft-compat patches Homesteader water buildings into its plumbing when that mod is present.
+
+Optional: Mod Options → Use refreshed textures (off by default) swaps in a unique art pack. Original sprites are kept.</description>
 </ModMetaData>

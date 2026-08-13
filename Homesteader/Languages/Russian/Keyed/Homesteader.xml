@@ -33,6 +33,9 @@
   <Homesteader_Allergy_PetDander>перхоть животных</Homesteader_Allergy_PetDander>
   <Homesteader_Allergy_Mold>плесень</Homesteader_Allergy_Mold>
   <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
+  <Homesteader_SettingsUseRefreshedTextures>Обновлённые текстуры</Homesteader_SettingsUseRefreshedTextures>
+  <Homesteader_SettingsUseRefreshedTexturesTip>Переключить здания, предметы, растения и полы Homesteader на отдельный набор уникальных спрайтов. Старые файлы остаются в моде; по умолчанию выключено. У каждого дефа своя текстура, без общих заглушек.</Homesteader_SettingsUseRefreshedTexturesTip>
+  <Homesteader_SettingsUseRefreshedTexturesRestart>После смены этой опции перезапустите RimWorld, если спрайты не обновились.</Homesteader_SettingsUseRefreshedTexturesRestart>
   <Homesteader_SettingsDevHeader>Разработчик</Homesteader_SettingsDevHeader>
   <Homesteader_SettingsRevealAllergies>Показывать аллергии</Homesteader_SettingsRevealAllergies>
   <Homesteader_SettingsRevealAllergiesTip>Вкладка «Вкусы» показывает названия аллергий до обнаружения (приём пищи или воздействие среды). Только для тестов.</Homesteader_SettingsRevealAllergiesTip>
