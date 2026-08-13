@@ -16,5 +16,6 @@ Diggo (`Homesteader/Buildings/HippoDogPlushie`) is brought art and is never swap
 The 27 statue (`Homesteader/Buildings/Statue27`) is brought `art/brought/27_2.0.png` and is never swapped.
 
 A later pass redrew the sprites that read as product photos / RPG icons / true-isometric
-renders so they sit next to vanilla RimWorld furniture: thick outlines, flat cel shading,
-flattened top-down camera. Originals under Textures/Homesteader are unchanged.
+renders against actual Core sprites (wood-fired generator, cowboy hat, oak/maple trees,
+chess table, sculptures, meals): thick dark outlines, muted palette, flattened top-down
+3/4 camera. Originals under Textures/Homesteader are unchanged.
