@@ -5,7 +5,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
-- **Optional texture refresh** — Mod Options → Homesteader → "Use refreshed textures" (off by default). Original sprites are kept. The new pack gives every building, item, plant, and floor its own unique texture (no more shared jam/cellar/etc. placeholders); orchard trees and composted soil get dedicated art too. `_*_{north,south,east,west}` files are one building from four camera angles, not four different objects. Curing rack refresh redone as one mixed-charcuterie rack (hams, sausages, bacon slab, netted salami) with matching facings. EN/CN/RU settings strings. Restart if sprites look stale after toggling.
+- **Optional texture refresh** — Mod Options → Homesteader → "Use refreshed textures" (off by default). Original sprites are kept. The new pack gives every building, item, plant, and floor its own unique texture (no more shared jam/cellar/etc. placeholders); orchard trees and composted soil get dedicated art too. `_*_{north,south,east,west}` files are one building from four camera angles, not four different objects. Curing rack refresh redone as one mixed-charcuterie rack (hams, sausages, bacon slab, netted salami) with matching facings. Diggo keeps brought `art/brought/HippoDogPlushie.png` (not in the refresh swap). EN/CN/RU settings strings. Restart if sprites look stale after toggling.
 - **Little guy trait** — flavor-only trait (`Homesteader_LittleGuy`) with no gameplay effects; one-time mail on first load after update announcing it.
 - **CN / RU language packs** — Chinese Simplified and Russian Keyed + full DefInjected (buildings, items, plants, recipes, research, thoughts, hediffs, incidents, and related defs).
 
