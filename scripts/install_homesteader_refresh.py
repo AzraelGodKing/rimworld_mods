@@ -18,6 +18,11 @@ MAP = Path("/tmp/hs_refresh_name_map.json")
 
 
 def flood_transparent(im: Image.Image, thresh: int = 18) -> Image.Image:
+    """Punch studio backdrops to alpha, but keep black outline pixels that touch content.
+
+    Vanilla RimWorld sprites use thick near-black outlines. A naive flood of
+    near-black from the corners would eat those outlines along with the backdrop.
+    """
     im = im.convert("RGBA")
     px = im.load()
     w, h = im.size
@@ -34,6 +39,18 @@ def flood_transparent(im: Image.Image, thresh: int = 18) -> Image.Image:
             return True
         return False
 
+    def is_near_black(c):
+        r, g, b, a = c
+        return a >= 8 and r <= thresh and g <= thresh and b <= thresh
+
+    def is_content(c):
+        r, g, b, a = c
+        if a < 8:
+            return False
+        if r <= thresh and g <= thresh and b <= thresh:
+            return False
+        return True
+
     if not any(is_bg(c) for c in corners):
         return im
     seen = [[False] * w for _ in range(h)]
@@ -47,6 +64,15 @@ def flood_transparent(im: Image.Image, thresh: int = 18) -> Image.Image:
         seen[y][x] = True
         if not is_bg(px[x, y]):
             continue
+        if is_near_black(px[x, y]):
+            keep_outline = False
+            for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (1, -1), (-1, 1), (1, 1)):
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < w and 0 <= ny < h and is_content(px[nx, ny]):
+                    keep_outline = True
+                    break
+            if keep_outline:
+                continue
         px[x, y] = (0, 0, 0, 0)
         stack.extend(((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)))
     return im
