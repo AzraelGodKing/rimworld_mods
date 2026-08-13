@@ -1,6 +1,6 @@
 # HomesteaderRefresh unique sprites
 
-Count: 164
+Count: 163
 
 Apparel/Overalls.png
 Apparel/StrawHat.png
@@ -36,7 +36,6 @@ Buildings/Hayloft_east.png
 Buildings/Hayloft_north.png
 Buildings/Hayloft_south.png
 Buildings/Hayloft_west.png
-Buildings/HippoDogPlushie.png
 Buildings/HomesteadHearth_east.png
 Buildings/HomesteadHearth_north.png
 Buildings/HomesteadHearth_south.png

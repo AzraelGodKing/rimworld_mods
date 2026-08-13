@@ -11,3 +11,5 @@ building — the same object from four camera angles, not four different buildin
 
 Orchard trees and composted soil also get their own art instead of vanilla oaks
 / shared irrigated soil.
+
+Diggo (`Homesteader/Buildings/HippoDogPlushie`) is brought art and is never swapped.
