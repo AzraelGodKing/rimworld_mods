@@ -103,6 +103,10 @@ extract_archive() {
       fi
       7z x -o"$tmp" "$archive" >/dev/null
       ;;
+    *.rar)
+      command -v 7z >/dev/null 2>&1 || sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq 7zip 7zip-rar
+      7z x -o"$tmp" "$archive" >/dev/null
+      ;;
     *)
       # Guess by file(1).
       local kind
@@ -114,6 +118,9 @@ extract_archive() {
         unzip -q "$archive" -d "$tmp"
       elif echo "$kind" | grep -qi '7-zip'; then
         command -v 7z >/dev/null 2>&1 || sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq p7zip-full
+        7z x -o"$tmp" "$archive" >/dev/null
+      elif echo "$kind" | grep -qi 'RAR archive'; then
+        command -v 7z >/dev/null 2>&1 || sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq 7zip 7zip-rar
         7z x -o"$tmp" "$archive" >/dev/null
       else
         die "Unrecognized archive type: $kind"
