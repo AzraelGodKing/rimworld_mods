@@ -180,17 +180,24 @@ namespace Homesteader
         }
 
         /// <summary>
-        /// Brought Diggo art stays on the original texPath even when the refresh pack is on.
+        /// Brought Diggo / 27 statue art stays on the original texPath even when the refresh pack is on.
         /// </summary>
         private static bool KeepOriginalArt(ThingDef def, string originalPath)
         {
-            if (def != null && def.defName == "Homesteader_DiggoPlushie")
+            if (def != null &&
+                (def.defName == "Homesteader_DiggoPlushie" || def.defName == "Homesteader_StatueTwentySeven"))
             {
                 return true;
             }
 
-            return originalPath != null
-                && originalPath.IndexOf("HippoDogPlushie", StringComparison.OrdinalIgnoreCase) >= 0;
+            if (originalPath == null)
+            {
+                return false;
+            }
+
+            return originalPath.IndexOf("HippoDogPlushie", StringComparison.OrdinalIgnoreCase) >= 0
+                || (originalPath.IndexOf("/Statue27", StringComparison.OrdinalIgnoreCase) >= 0
+                    && originalPath.IndexOf("Statue27Grand", StringComparison.OrdinalIgnoreCase) < 0);
         }
 
         internal static string RefreshPathFor(Def def, string originalPath)
