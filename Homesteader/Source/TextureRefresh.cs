@@ -33,6 +33,7 @@ namespace Homesteader
         {
             public string texPath;
             public Type graphicClass;
+            public bool rotatable;
         }
 
         private struct TerrainGraphicSnapshot
@@ -74,6 +75,7 @@ namespace Homesteader
 
                     def.graphicData.texPath = refreshPath;
                     def.graphicData.graphicClass = graphicClass;
+                    def.rotatable = RefreshRotatable(def, original.rotatable);
                 }
                 else
                 {
@@ -140,7 +142,8 @@ namespace Homesteader
                 thingSnapshots[def.defName] = new ThingGraphicSnapshot
                 {
                     texPath = def.graphicData.texPath,
-                    graphicClass = def.graphicData.graphicClass
+                    graphicClass = def.graphicData.graphicClass,
+                    rotatable = def.rotatable
                 };
             }
 
@@ -245,14 +248,26 @@ namespace Homesteader
                 return typeof(Graphic_Single);
             }
 
-            // Original def stays Graphic_Single so toggle-off keeps working.
-            // Refresh pack ships CanningKitchen_{south,north,east,west}.
-            if (def != null && def.defName == "Homesteader_CanningKitchen")
+            // Original defs stay Graphic_Single so toggle-off keeps working.
+            // Refresh pack ships CanningKitchen_* and Icehouse_* cardinals.
+            if (def != null &&
+                (def.defName == "Homesteader_CanningKitchen"
+                 || def.defName == "Homesteader_Icehouse"))
             {
                 return typeof(Graphic_Multi);
             }
 
             return original ?? typeof(Graphic_Single);
+        }
+
+        private static bool RefreshRotatable(ThingDef def, bool original)
+        {
+            if (def != null && def.defName == "Homesteader_Icehouse")
+            {
+                return true;
+            }
+
+            return original;
         }
 
         private static bool RefreshTexturePresent(string texPath, Type graphicClass)
@@ -270,6 +285,7 @@ namespace Homesteader
         {
             def.graphicData.texPath = original.texPath;
             def.graphicData.graphicClass = original.graphicClass ?? typeof(Graphic_Single);
+            def.rotatable = original.rotatable;
         }
 
         private static void RecacheThingGraphic(ThingDef def)
