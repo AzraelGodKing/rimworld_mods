@@ -37,6 +37,7 @@
   <Homesteader_SettingsRevealAllergies>Показывать аллергии</Homesteader_SettingsRevealAllergies>
   <Homesteader_SettingsRevealAllergiesTip>Вкладка «Вкусы» показывает названия аллергий до обнаружения (приём пищи или воздействие среды). Только для тестов.</Homesteader_SettingsRevealAllergiesTip>
   <Homesteader_PoopExpires>Разложится через {0}</Homesteader_PoopExpires>
+  <Homesteader_SettingsDevModeHint>Включите режим разработчика, чтобы увидеть параметры Homesteader для разработчиков.</Homesteader_SettingsDevModeHint>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>Аномальная трансляция зафиксировалась на частоте вашего монумента 27. Над регионом образуется краткий тепловой купол, а несколько колонистов жалуются на короткое помутнение — «гниение мозга», как они это называют.</Homesteader_KatsLetter_Open>

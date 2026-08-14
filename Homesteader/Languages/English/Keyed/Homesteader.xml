@@ -37,6 +37,7 @@
   <Homesteader_SettingsRevealAllergies>Reveal allergies</Homesteader_SettingsRevealAllergies>
   <Homesteader_SettingsRevealAllergiesTip>Tastes tab shows allergy names before discovery (eating the food or environmental exposure). For testing only.</Homesteader_SettingsRevealAllergiesTip>
   <Homesteader_PoopExpires>Breaks down in {0}</Homesteader_PoopExpires>
+  <Homesteader_SettingsDevModeHint>Enable Development mode to show Homesteader developer options.</Homesteader_SettingsDevModeHint>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>An anomalous broadcast has locked onto your colony's 27 monument frequency. A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — "brain rot," they call it.</Homesteader_KatsLetter_Open>
