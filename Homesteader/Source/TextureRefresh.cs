@@ -245,6 +245,13 @@ namespace Homesteader
                 return typeof(Graphic_Single);
             }
 
+            // Original def stays Graphic_Single so toggle-off keeps working.
+            // Refresh pack ships CanningKitchen_{south,north,east,west}.
+            if (def != null && def.defName == "Homesteader_CanningKitchen")
+            {
+                return typeof(Graphic_Multi);
+            }
+
             return original ?? typeof(Graphic_Single);
         }
 
