@@ -15,6 +15,8 @@
   <Homesteader_HomespunCloth.description>Грубая ткань из льна или шерсти. Для одеял и усадебного шитья, когда нет промышленной ткани.</Homesteader_HomespunCloth.description>
   <Homesteader_HomesteadQuilt.label>усадебное одеяло</Homesteader_HomesteadQuilt.label>
   <Homesteader_HomesteadQuilt.description>Толстое лоскутное одеяло с ткацкого станка. Мягкая постель для стёганых кроватей или тёплый подарок с фермы.</Homesteader_HomesteadQuilt.description>
+  <Homesteader_AnimalPoop.label>навоз</Homesteader_AnimalPoop.label>
+  <Homesteader_AnimalPoop.description>Свежий навоз от скота и диких животных. Смешивайте с растительными отходами на компостной куче. Разлагается за несколько дней — успейте отнести.</Homesteader_AnimalPoop.description>
   <Homesteader_Compost.label>компост</Homesteader_Compost.label>
   <Homesteader_Compost.description>Перепревшие растения и навоз, превращённые в тёмный компост. Доведите до удобрения для плодородной пашни.</Homesteader_Compost.description>
   <Homesteader_CompostFertilizer.label>компостное удобрение</Homesteader_CompostFertilizer.label>

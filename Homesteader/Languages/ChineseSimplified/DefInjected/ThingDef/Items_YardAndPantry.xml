@@ -15,6 +15,8 @@
   <Homesteader_HomespunCloth.description>用亚麻或羊毛纺成的粗布。缺乏工业织物时，用于被子和农庄缝纫。</Homesteader_HomespunCloth.description>
   <Homesteader_HomesteadQuilt.label>农庄被子</Homesteader_HomesteadQuilt.label>
   <Homesteader_HomesteadQuilt.description>织机上缝成的厚实拼布被。可作为带被床铺的柔软寝具，或农庄送来的温暖礼物。</Homesteader_HomesteadQuilt.description>
+  <Homesteader_AnimalPoop.label>动物粪便</Homesteader_AnimalPoop.label>
+  <Homesteader_AnimalPoop.description>牲畜与野生动物留下的新鲜粪肥。在堆肥堆里与植物废料混合。几天后会分解，记得及时运走。</Homesteader_AnimalPoop.description>
   <Homesteader_Compost.label>堆肥</Homesteader_Compost.label>
   <Homesteader_Compost.description>腐烂的植物与粪肥制成的深色堆肥。可制成肥料，滋养农田。</Homesteader_Compost.description>
   <Homesteader_CompostFertilizer.label>堆肥肥料</Homesteader_CompostFertilizer.label>

@@ -5,6 +5,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
+- **Animal poop** — animals drop haulable manure. Compost heap `make compost` now requires 5 animal poop plus hay/plant food. Piles expire after 4 days (faster unroofed) and the map caps at 80 piles so they do not clog.
 - **Little guy trait** — flavor-only trait (`Homesteader_LittleGuy`) with no gameplay effects; one-time mail on first load after update announcing it.
 - **CN / RU language packs** — Chinese Simplified and Russian Keyed + full DefInjected (buildings, items, plants, recipes, research, thoughts, hediffs, incidents, and related defs).
 

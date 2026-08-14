@@ -5,7 +5,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_CompostHeap</defName>
     <label>compost heap</label>
-    <description>A steaming pile of plant waste and manure turned into compost. Bills turn hay and plant matter into compost, then into fertilizer for composted soil.</description>
+    <description>A steaming pile of plant waste and manure turned into compost. Bills need hay or plant matter plus animal poop, then screen the compost into fertilizer for composted soil.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/CompostHeap</texPath>

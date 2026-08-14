@@ -14,7 +14,7 @@
   <Homesteader_MakeAnimalMash.description>将大麦和南瓜煮成软糊，供鸡舍、畜栏和其他牲畜食用。</Homesteader_MakeAnimalMash.description>
   <Homesteader_MakeAnimalMash.jobString>正在制作牲畜糊食。</Homesteader_MakeAnimalMash.jobString>
   <Homesteader_MakeCompost.label>制作堆肥</Homesteader_MakeCompost.label>
-  <Homesteader_MakeCompost.description>将干草和植物性食物翻成深色堆肥。</Homesteader_MakeCompost.description>
+  <Homesteader_MakeCompost.description>将干草、植物性食物和动物粪便翻成深色堆肥。</Homesteader_MakeCompost.description>
   <Homesteader_MakeCompost.jobString>正在制作堆肥。</Homesteader_MakeCompost.jobString>
   <Homesteader_ScreenFertilizer.label>筛制肥料</Homesteader_ScreenFertilizer.label>
   <Homesteader_ScreenFertilizer.description>将成熟堆肥筛成肥料，用于堆肥土壤。</Homesteader_ScreenFertilizer.description>

@@ -198,6 +198,36 @@
     </thingCategories>
   </ThingDef>
 
+  <!-- ============ Animal poop ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_AnimalPoop</defName>
+    <label>animal poop</label>
+    <description>Fresh manure from livestock and wildlife. Mix it with plant waste at a compost heap. Breaks down after a few days, so haul it before it vanishes.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Items/AnimalPoop</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Rare</tickerType>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>30</MaxHitPoints>
+      <Flammability>0.15</Flammability>
+      <DeteriorationRate>10</DeteriorationRate>
+      <Mass>0.04</Mass>
+      <MarketValue>0.15</MarketValue>
+      <Beauty>-6</Beauty>
+    </statBases>
+    <comps>
+      <li Class="Homesteader.CompProperties_AnimalPoopExpire">
+        <lifespanTicks>240000</lifespanTicks>
+      </li>
+    </comps>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+  </ThingDef>
+
   <!-- ============ Compost ============ -->
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_Compost</defName>

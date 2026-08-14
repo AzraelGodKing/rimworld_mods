@@ -175,7 +175,7 @@
   <ResearchProjectDef>
     <defName>Homesteader_SoilAndCold</defName>
     <label>soil and cold storage</label>
-    <description>Compost heaps and composted soil for richer fields, plus icehouses and springhouses for passive cold pantry space.</description>
+    <description>Compost heaps need animal poop mixed with plant waste for richer fields, plus icehouses and springhouses for passive cold pantry space.</description>
     <baseCost>900</baseCost>
     <techLevel>Neolithic</techLevel>
     <tab>Homesteader</tab>

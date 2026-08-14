@@ -14,7 +14,7 @@
   <Homesteader_MakeAnimalMash.description>Сварить ячмень и тыкву в мягкую кашу для курятников, загонов и другого скота.</Homesteader_MakeAnimalMash.description>
   <Homesteader_MakeAnimalMash.jobString>Делает кормовую кашу.</Homesteader_MakeAnimalMash.jobString>
   <Homesteader_MakeCompost.label>делать компост</Homesteader_MakeCompost.label>
-  <Homesteader_MakeCompost.description>Переработать сено и растительную пищу в тёмный компост.</Homesteader_MakeCompost.description>
+  <Homesteader_MakeCompost.description>Переработать сено, растительную пищу и навоз в тёмный компост.</Homesteader_MakeCompost.description>
   <Homesteader_MakeCompost.jobString>Делает компост.</Homesteader_MakeCompost.jobString>
   <Homesteader_ScreenFertilizer.label>просеивать удобрение</Homesteader_ScreenFertilizer.label>
   <Homesteader_ScreenFertilizer.description>Просеять готовый компост в удобрение для компостированной почвы.</Homesteader_ScreenFertilizer.description>

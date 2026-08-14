@@ -185,7 +185,7 @@
   <RecipeDef>
     <defName>Homesteader_MakeCompost</defName>
     <label>make compost</label>
-    <description>Turn hay and plant food into dark compost.</description>
+    <description>Turn hay, plant food, and animal poop into dark compost.</description>
     <jobString>Making compost.</jobString>
     <workAmount>600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -204,10 +204,19 @@
         </filter>
         <count>20</count>
       </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_AnimalPoop</li>
+          </thingDefs>
+        </filter>
+        <count>5</count>
+      </li>
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
         <li>Hay</li>
+        <li>Homesteader_AnimalPoop</li>
       </thingDefs>
       <categories>
         <li>PlantFoodRaw</li>
