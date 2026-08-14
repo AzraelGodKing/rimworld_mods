@@ -1,6 +1,6 @@
 # HomesteaderRefresh unique sprites
 
-Count: 162
+Count: 165
 
 Apparel/Overalls.png
 Apparel/StrawHat.png
@@ -15,7 +15,10 @@ Buildings/BrewingBench_north.png
 Buildings/BrewingBench_south.png
 Buildings/BrewingBench_west.png
 Buildings/ButterChurn.png
-Buildings/CanningKitchen.png
+Buildings/CanningKitchen_east.png
+Buildings/CanningKitchen_north.png
+Buildings/CanningKitchen_south.png
+Buildings/CanningKitchen_west.png
 Buildings/CheckersTable.png
 Buildings/CheesePress.png
 Buildings/ChickenCoop.png
