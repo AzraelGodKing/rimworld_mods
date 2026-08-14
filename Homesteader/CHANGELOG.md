@@ -17,6 +17,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 ### Changed
 - **Refresh wood-burning generator** — redrew `HomesteaderRefresh/Buildings/WoodGenerator.png` to match Core wood-fired generator packing (compact 1x1 firebox + cylinder, log hopper, grate glow, chimney) with clean alpha instead of the muddy outlined-eaten blob.
 - **Refresh wood stove** — redrew `HomesteaderRefresh/Buildings/WoodStove.png` as a compact Core-style 1x1 cast-iron stove (cook plate, chimney, grate glow, side logs) instead of the photoreal render.
+- **Refresh battery bank** — redrew `HomesteaderRefresh/Buildings/BatteryBank.png` as a 2x2 industrial cell rack (wood frame, beige tops, copper posts) instead of a grid of AA-battery icons.
 - **Chicken coop** — replaced hay-bin placeholder sprite with a proper henhouse graphic (`Textures/Homesteader/Buildings/ChickenCoop.png`).
 - **27 statue** — replaced in-game sprite with brought `27_2.0` art (installed as-is at `Textures/Homesteader/Buildings/Statue27.png`).
 - **Diggo the plushie** — replaced in-game sprite with brought `HippoDogPlushie42` art (installed as-is at `Textures/Homesteader/Buildings/HippoDogPlushie.png`).
