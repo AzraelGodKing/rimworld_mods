@@ -1,6 +1,6 @@
 # HomesteaderRefresh unique sprites
 
-Count: 165
+Count: 168
 
 Apparel/Overalls.png
 Apparel/StrawHat.png
@@ -43,7 +43,10 @@ Buildings/HomesteadHearth_east.png
 Buildings/HomesteadHearth_north.png
 Buildings/HomesteadHearth_south.png
 Buildings/HomesteadHearth_west.png
-Buildings/Icehouse.png
+Buildings/Icehouse_east.png
+Buildings/Icehouse_north.png
+Buildings/Icehouse_south.png
+Buildings/Icehouse_west.png
 Buildings/IngredientBarrel.png
 Buildings/JamCauldron.png
 Buildings/LargeStorageCrate.png
