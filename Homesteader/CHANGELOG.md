@@ -23,6 +23,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Refresh butter churn** — redrew `HomesteaderRefresh/Buildings/ButterChurn.png` as a compact Core-style 1x1 wooden dash churn (stave barrel, hoops, lid, T-handle dasher) instead of the photoreal render.
 - **Refresh canning kitchen** — redrew as four Graphic_Multi facings of one 2x1 wood-fired canning station (water-bath pot on a grate, mason-jar rack). Refresh swap uses `Graphic_Multi`; the original def stays `Graphic_Single` so toggle-off still works.
 - **Refresh checkers table** — redrew `HomesteaderRefresh/Buildings/CheckersTable.png` as a compact Core-style 1x1 wooden table with a carved board, red/cream pieces, and short wood legs instead of the white chess-table pedestal.
+- **Refresh cheese press + cider press** — redrew as compact Core-style 1x1 screw presses with distinct silhouettes (hoop mold + cheese wheels vs slatted apple crate + juice trough) instead of the photoreal isometric pair.
 - **Chicken coop** — replaced hay-bin placeholder sprite with a proper henhouse graphic (`Textures/Homesteader/Buildings/ChickenCoop.png`).
 - **27 statue** — replaced in-game sprite with brought `27_2.0` art (installed as-is at `Textures/Homesteader/Buildings/Statue27.png`).
 - **Diggo the plushie** — replaced in-game sprite with brought `HippoDogPlushie42` art (installed as-is at `Textures/Homesteader/Buildings/HippoDogPlushie.png`).
