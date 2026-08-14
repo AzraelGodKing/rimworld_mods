@@ -15,6 +15,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Allergy flare without eating** — food allergy hediff / discovery no longer run from `ThoughtsFromIngesting` (also used by food AI and ingest menus). Reactions apply only on real `Thing.Ingested`.
 
 ### Changed
+- **Refresh wood-burning generator** — redrew `HomesteaderRefresh/Buildings/WoodGenerator.png` to match Core wood-fired generator packing (compact 1x1 firebox + cylinder, log hopper, grate glow, chimney) with clean alpha instead of the muddy outlined-eaten blob.
 - **Chicken coop** — replaced hay-bin placeholder sprite with a proper henhouse graphic (`Textures/Homesteader/Buildings/ChickenCoop.png`).
 - **27 statue** — replaced in-game sprite with brought `27_2.0` art (installed as-is at `Textures/Homesteader/Buildings/Statue27.png`).
 - **Diggo the plushie** — replaced in-game sprite with brought `HippoDogPlushie42` art (installed as-is at `Textures/Homesteader/Buildings/HippoDogPlushie.png`).
