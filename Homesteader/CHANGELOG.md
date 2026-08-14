@@ -19,6 +19,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Refresh wood stove** — redrew `HomesteaderRefresh/Buildings/WoodStove.png` as a compact Core-style 1x1 cast-iron stove (cook plate, chimney, grate glow, side logs) instead of the photoreal render.
 - **Refresh battery bank** — redrew `HomesteaderRefresh/Buildings/BatteryBank.png` as a 2x2 industrial cell rack (wood frame, beige tops, copper posts) instead of a grid of AA-battery icons.
 - **Refresh beehive + beeswax candle** — redrew as compact Core-style 1x1s: wooden Langstroth hive box (matches the def, not a straw skep) and a fat outlined candle in a dish instead of the photoreal paint.
+- **Refresh brewing bench** — redrew all four Graphic_Multi facings as one wood bench (copper kettle, keg, bottles) from four camera angles, Core outlines instead of the painted still.
 - **Chicken coop** — replaced hay-bin placeholder sprite with a proper henhouse graphic (`Textures/Homesteader/Buildings/ChickenCoop.png`).
 - **27 statue** — replaced in-game sprite with brought `27_2.0` art (installed as-is at `Textures/Homesteader/Buildings/Statue27.png`).
 - **Diggo the plushie** — replaced in-game sprite with brought `HippoDogPlushie42` art (installed as-is at `Textures/Homesteader/Buildings/HippoDogPlushie.png`).
