@@ -88,6 +88,35 @@ namespace Strata
                 && mode != DestroyMode.Deconstruct;
         }
 
+        // Patch_PortalDeSpawnImmunity: colony shafts stay glued down, but
+        // Odyssey gravship pack calls Thing.DeSpawn(WillReplace) without
+        // BeginPortalMove(). Swallowing that leaves stairs on the launch map
+        // (or packed-and-still-spawned), then land cannot restore them.
+        public static bool ShouldAllowPortalDeSpawn(Thing thing, DestroyMode mode)
+        {
+            if (!IsProtectedPortal(thing))
+            {
+                return true;
+            }
+            if (PocketMapUtility.currentlyGeneratingPortal != null)
+            {
+                return true;
+            }
+            if (PortalMoveInProgress)
+            {
+                return true;
+            }
+            if (!StrataGravshipUtility.IsGravshipHostShaft(thing)
+                || thing.def == null
+                || !thing.def.bringAlongOnGravship)
+            {
+                return false;
+            }
+            // Vanilla pack, or any host-shaft despawn while takeoff/land is running.
+            return mode == DestroyMode.WillReplace
+                || StrataGravshipPortalTravel.TravelInProgress;
+        }
+
         // Colony pawns (incl. downed), prisoners, mechs, and player animals on a
         // linked level — broader than vanilla AnyPawnBlockingMapRemoval, which
         // ignores downed colonists and non-colonist colony pawns.
