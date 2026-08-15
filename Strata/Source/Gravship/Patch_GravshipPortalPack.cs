@@ -13,13 +13,25 @@ namespace Strata
     {
         public static void Postfix(Thing thing, IntVec3 cell, ref bool __result)
         {
-            if (__result || thing == null)
+            if (thing == null)
             {
                 return;
             }
 
-            if (thing is IStrataGravshipPortal
-                && thing.def.bringAlongOnGravship
+            // G4 travel toggle: never pack a host shaft the player left behind.
+            if (StrataGravshipUtility.IsGravshipHostShaft(thing)
+                && !StrataGravshipPortalTravel.ShouldPackHostShaft(thing))
+            {
+                __result = false;
+                return;
+            }
+
+            if (__result)
+            {
+                return;
+            }
+
+            if (StrataGravshipPortalTravel.ShouldPackHostShaft(thing)
                 && thing.Spawned
                 && StrataGravshipUtility.IsGravshipPortal(thing))
             {
@@ -28,22 +40,27 @@ namespace Strata
         }
     }
 
-    // AddThing also requires OnValidSubstructure for every occupied cell — a 2x2
-    // shaft with one fringe cell off Valid (or excess substructure) is skipped
-    // and left on a GravAnchor-kept map. Force host shafts through.
+    // Vanilla AddThing DeSpawns packed buildings without BeginPortalMove.
+    // Raise the move scope so Patch_PortalDeSpawnImmunity does not swallow it.
+    // 2x2 fringe misses still get force-packed in SweepLeftBehindHostShafts.
     [HarmonyPatch(typeof(Gravship), "AddThing")]
     public static class Patch_Gravship_AddThingPortal
     {
-        public static bool Prefix(Gravship __instance, Thing thing, IntVec3 offset)
+        public static void Prefix(Thing thing, out bool __state)
         {
-            if (thing == null
-                || !StrataGravshipUtility.IsGravshipHostShaft(thing)
-                || !thing.def.bringAlongOnGravship)
+            __state = StrataGravshipPortalTravel.ShouldPackHostShaft(thing);
+            if (__state)
             {
-                return true;
+                StrataPortalUtility.BeginPortalMove();
             }
+        }
 
-            return !StrataGravshipPortalTravel.TryForcePackHostShaft(__instance, thing, offset);
+        public static void Finalizer(bool __state)
+        {
+            if (__state)
+            {
+                StrataPortalUtility.EndPortalMove();
+            }
         }
     }
 
@@ -82,10 +99,33 @@ namespace Strata
         // Launch map while engine may already be despawned during GenerateGravship.
         private static Map launchMapAtTakeoff;
 
+        // InitiateTakeoff → CompleteLanding. Lets host-shaft DeSpawn through
+        // immunity during vanilla pack even if BeginPortalMove was missed.
+        public static bool TravelInProgress { get; private set; }
+
+        public static void BeginTravel() => TravelInProgress = true;
+
+        public static void EndTravel() => TravelInProgress = false;
+
         public static void ResetSession()
         {
             snapshots.Clear();
             launchMapAtTakeoff = null;
+            EndTravel();
+        }
+
+        public static bool ShouldPackHostShaft(Thing thing)
+        {
+            if (thing == null
+                || !StrataGravshipUtility.IsGravshipHostShaft(thing)
+                || thing.def == null
+                || !thing.def.bringAlongOnGravship)
+            {
+                return false;
+            }
+
+            CompStrataGravshipShaft identity = StrataGravshipShaftIdentity.CompOf(thing);
+            return identity == null || identity.travelsWithShip;
         }
 
         public static IReadOnlyList<PortalSnapshot> PeekSnapshots() => snapshots;
@@ -96,7 +136,7 @@ namespace Strata
         // which otherwise leaves stairs on GravAnchor-kept maps.
         public static bool TryForcePackHostShaft(Gravship ship, Thing thing, IntVec3 offset)
         {
-            if (ship == null || thing == null || !StrataGravshipUtility.IsGravshipHostShaft(thing))
+            if (ship == null || !ShouldPackHostShaft(thing))
             {
                 return false;
             }
@@ -185,9 +225,7 @@ namespace Strata
                 var remaining = new List<Thing>();
                 foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
                 {
-                    if (thing != null && thing.Spawned
-                        && StrataGravshipUtility.IsGravshipHostShaft(thing)
-                        && thing.def.bringAlongOnGravship)
+                    if (thing != null && thing.Spawned && ShouldPackHostShaft(thing))
                     {
                         remaining.Add(thing);
                     }
@@ -202,10 +240,15 @@ namespace Strata
                     }
 
                     IntVec3 offset = ResolvePackOffset(shaft, engine);
-                    TryForcePackHostShaft(ship, shaft, offset);
-                    if (!shaft.Spawned)
+                    if (TryForcePackHostShaft(ship, shaft, offset) && !shaft.Spawned)
                     {
                         swept++;
+                    }
+                    else if (shaft.Spawned)
+                    {
+                        StrataLog.Warning("[Strata] Gravship takeoff: could not pack host shaft "
+                            + shaft.LabelCap + " at " + shaft.Position
+                            + " — left spawned (will not vanish without a packed copy).");
                     }
                 }
             }
@@ -238,6 +281,7 @@ namespace Strata
         public static void SnapshotHostPortals(Building_GravEngine engine)
         {
             snapshots.Clear();
+            BeginTravel();
             launchMapAtTakeoff = engine?.Map;
             if (engine?.Map == null)
             {
@@ -254,7 +298,8 @@ namespace Strata
                 }
 
                 // Host shafts only — landings live on pocket maps.
-                if (!StrataGravshipUtility.IsGravshipHostShaft(portal))
+                if (!StrataGravshipUtility.IsGravshipHostShaft(portal)
+                    || !ShouldPackHostShaft(portal))
                 {
                     continue;
                 }
@@ -340,6 +385,7 @@ namespace Strata
             if (restoreMissingShafts)
             {
                 snapshots.Clear();
+                EndTravel();
             }
         }
 
@@ -689,54 +735,95 @@ namespace Strata
                     }
                 }
 
-                // G2: reclaim by shaftId from cargo first — never MakeThing a twin.
+                // G2: reclaim by shaftId from cargo first — never MakeThing a twin
+                // unless that instance is already destroyed.
                 MapPortal existing = StrataGravshipShaftIdentity.FindPackedShaftById(
                         landShip, snap.shaftId)
                     ?? FindPackedShaft(landShip, snap.defName)
                     ?? FindShaftThingAnywhere(snap.defName);
-                if (existing != null)
+                if (existing != null && !existing.Destroyed)
                 {
-                    if (existing.Destroyed)
-                    {
-                        StrataLog.Warning("[Strata] Gravship land: packed shaft " + snap.defName
-                            + " is destroyed — skipping reclaim (PlaceGravship may already own it).");
-                        continue;
-                    }
                     if (existing.Spawned && existing.Map == host)
                     {
                         continue;
                     }
 
                     ForceUnspawn(existing);
-                    if (existing.Destroyed || existing.Spawned)
+                    if (existing.Destroyed)
                     {
+                        StrataLog.Warning("[Strata] Gravship land: packed shaft " + snap.defName
+                            + " destroyed during unspawn — MakeThing restore.");
+                    }
+                    else if (existing.Spawned)
+                    {
+                        StrataLog.Warning("[Strata] Gravship land: packed shaft " + snap.defName
+                            + " still spawned on " + existing.Map
+                            + " — skipping MakeThing to avoid a duplicate.");
                         continue;
                     }
-                    StrataPortalUtility.PrefireWipeStrataPortals(
-                        host, cell, spawnRot, existing.def.Size, existing);
-                    GenSpawn.Spawn(existing, cell, host, spawnRot, WipeMode.VanishOrMoveAside);
-                    CompStrataGravshipShaft id = StrataGravshipShaftIdentity.CompOf(existing);
-                    if (id != null)
+                    else
                     {
-                        if (!snap.shaftId.NullOrEmpty())
+                        StrataPortalUtility.PrefireWipeStrataPortals(
+                            host, cell, spawnRot, existing.def.Size, existing);
+                        GenSpawn.Spawn(existing, cell, host, spawnRot, WipeMode.VanishOrMoveAside);
+                        CompStrataGravshipShaft id = StrataGravshipShaftIdentity.CompOf(existing);
+                        if (id != null)
                         {
-                            id.shaftId = snap.shaftId;
+                            if (!snap.shaftId.NullOrEmpty())
+                            {
+                                id.shaftId = snap.shaftId;
+                            }
+                            id.BindStack(snap.stackGuid);
+                            if (snap.pocketMapId >= 0)
+                            {
+                                Map pocket = StrataGravshipOrphanLevels.FindMapById(snap.pocketMapId);
+                                id.RememberPocket(pocket);
+                            }
                         }
-                        id.BindStack(snap.stackGuid);
-                        if (snap.pocketMapId >= 0)
-                        {
-                            Map pocket = StrataGravshipOrphanLevels.FindMapById(snap.pocketMapId);
-                            id.RememberPocket(pocket);
-                        }
+                        Log.Message("[Strata] Gravship land: reclaimed packed shaft "
+                            + def.defName + " at " + cell
+                            + (snap.shaftId.NullOrEmpty() ? "" : " (shaftId " + snap.shaftId + ")"));
+                        continue;
                     }
-                    Log.Message("[Strata] Gravship land: reclaimed packed shaft "
-                        + def.defName + " at " + cell
-                        + (snap.shaftId.NullOrEmpty() ? "" : " (shaftId " + snap.shaftId + ")"));
+                }
+
+                // Host loop already continued if this shaftId / def is on the
+                // landed map. A missed pack used to skip MakeThing and the
+                // stairs were gone for good after launch.
+                Thing made = ThingMaker.MakeThing(def);
+                if (made is not MapPortal portal || portal is PocketMapExit)
+                {
+                    StrataLog.Warning("[Strata] Gravship land: MakeThing did not yield a host shaft for "
+                        + snap.defName);
                     continue;
                 }
 
-                StrataLog.Warning("[Strata] Gravship land: no packed shaft for "
-                    + snap.defName + " — skipping MakeThing restore (avoids duplicate off-pad).");
+                CompStrataGravshipShaft newId = StrataGravshipShaftIdentity.CompOf(portal);
+                if (newId != null)
+                {
+                    if (!snap.shaftId.NullOrEmpty())
+                    {
+                        newId.shaftId = snap.shaftId;
+                    }
+                    newId.BindStack(snap.stackGuid);
+                    if (snap.pocketMapId >= 0)
+                    {
+                        newId.RememberPocket(StrataGravshipOrphanLevels.FindMapById(snap.pocketMapId));
+                    }
+                }
+
+                StrataPortalUtility.PrefireWipeStrataPortals(
+                    host, cell, spawnRot, def.Size, portal);
+                if (GenSpawn.Spawn(portal, cell, host, spawnRot, WipeMode.VanishOrMoveAside) == null)
+                {
+                    StrataLog.Warning("[Strata] Gravship land: MakeThing spawn failed for "
+                        + snap.defName + " at " + cell);
+                    continue;
+                }
+
+                Log.Message("[Strata] Gravship land: MakeThing restored shaft "
+                    + def.defName + " at " + cell
+                    + (snap.shaftId.NullOrEmpty() ? "" : " (shaftId " + snap.shaftId + ")"));
             }
 
             CullOffShipDuplicateShafts(host, engine);

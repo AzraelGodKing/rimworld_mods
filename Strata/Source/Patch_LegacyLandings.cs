@@ -34,6 +34,8 @@ namespace Strata
             StrataPortalUtility.ResetHaulDeliverSession();
             StrataFaultGuard.ResetSession();
             StrataPocketMapOpen.ResetSession();
+            StrataGravshipPortalTravel.ResetSession();
+            StrataGravshipDeckCargo.ResetSession();
             StrataResources.ClearCaches();
 
             UpgradeVanillaCaveExits();

@@ -138,28 +138,12 @@ namespace Strata
         }
     }
 
-    [HarmonyPatch(typeof(Thing), nameof(Thing.DeSpawn))]
+    [HarmonyPatch(typeof(Thing), nameof(Thing.DeSpawn), new[] { typeof(DestroyMode) })]
     public static class Patch_PortalDeSpawnImmunity
     {
-        public static bool Prefix(Thing __instance)
+        public static bool Prefix(Thing __instance, DestroyMode mode)
         {
-            if (!StrataPortalUtility.IsProtectedPortal(__instance))
-            {
-                return true;
-            }
-            // Allow our own map-gen / landing repair despawn cycles.
-            if (PocketMapUtility.currentlyGeneratingPortal != null)
-            {
-                return true;
-            }
-            // Allow explicit portal moves (gravship cargo, landing snap, align).
-            // Without this every mover's DeSpawn was silently swallowed: the
-            // respawn then errored "already spawned" and the portal never moved.
-            if (StrataPortalUtility.PortalMoveInProgress)
-            {
-                return true;
-            }
-            return false;
+            return StrataPortalUtility.ShouldAllowPortalDeSpawn(__instance, mode);
         }
     }
 }

@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Strata** — gravship stairwells/elevators no longer vanish on launch (`gravship-stairs-launch-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Date Night** — Lovin schedule button no longer shares Rimbody’s Workout cell (clicks were opening the workout dropdown). → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Steam-first fixes** — Deep Colony envoy/mentor menus; Nemesis raid inject + phantom escapes; Strata flood/sump + ore hoist; Homesteader homestead tab / soap / allergies / cellar text / cistern storage; Azrael FindMod + CI zip; Date Night pregnancy-safe cooldown. Plan: [docs/ideas/general-fixes.md](docs/ideas/general-fixes.md).
 - **Homesteader** — water buildings form an upgrade ladder (barrel → cistern → tower; hand-dug → deep well); stone fountain drinks ~2 jugs/day. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
