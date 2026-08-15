@@ -56,6 +56,7 @@ Paste-ready BBCode for Workshop updates: [`../assets/workshop/strata-update-note
 - **Pink UI icons** - shaft power gizmos and bad Mine-icon overrides cleaned up.
 - **Gravship / ReGrowth** (`regrowth-splash-v1`) - underdeck open no longer black-screens or null-refs with ReGrowth SimpleFX.
 - **Stairs vanishing underfoot** (`portal-travel-no-wipe-v1`) - walking through a portal no longer destroys the landing.
+- **Gravship stairs vanish on launch** (`gravship-stairs-launch-v1`) — portal `DeSpawn` immunity swallowed Odyssey’s pack, so shafts stayed spawned or were swept off the GravAnchor map without a packed copy; land then skipped `MakeThing` restore. Host shafts may `DeSpawn(WillReplace)` during takeoff/land; leftover sweep only despawns after a successful pack; land `MakeThing`s a missing shaft.
 
 ## Older notes
 
