@@ -1,0 +1,11 @@
+---
+description: Live Windows deploys go to RimWorld - Dev Mods only
+alwaysApply: true
+---
+
+# Deploy target
+
+- **Windows Dev install (all live deployments):** `E:\SteamLibrary\steamapps\common\RimWorld - Dev\Mods`
+- Use `scripts/deploy-mods.ps1`. Override with `RIMWORLD_DEV_MODS` if needed.
+- **Never** deploy into the gaming RimWorld `Mods` folder (`...\common\RimWorld\Mods` without `- Dev`).
+- Cloud Agent Linux VMs still use `/opt/rimworld/RimWorld/Mods` via `scripts/setup-rimworld.sh`.

@@ -107,13 +107,15 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
 
 1. Download a mod zip from the [latest GitHub Release](https://github.com/AzraelGodKing/rimworld_mods/releases/latest) or the [GitHub Pages site](https://azraelgodking.github.io/rimworld_mods/).
 2. Extract the mod folder into your RimWorld `Mods` directory:
-   - Windows: `C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods`
+   - Windows (players): `C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods`
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
 4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Living World** require the **Harmony** mod.
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally.
+
+**Local Windows (this repo):** live copies go to the **Dev** install only — `E:\SteamLibrary\steamapps\common\RimWorld - Dev\Mods` — via [`scripts/deploy-mods.ps1`](scripts/deploy-mods.ps1). Do not deploy into the gaming `RimWorld\Mods` folder. Override the path with `RIMWORLD_DEV_MODS` if the Dev library lives elsewhere.
 
 ### Cloud Agents
 
