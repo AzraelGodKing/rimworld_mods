@@ -109,7 +109,6 @@ Brand stays Homesteader-local (travelers talk about *your jam*). Deep Colony sti
 - Restoring `Homesteader_GoatPen`
 - Merging drying rack + curing rack (different jobs: dry vs salt)
 - Gravship hydroponic homestead (Odyssey) — parked unless gravship players ask
-- Outfit Routines / farmer-gear auto-swap → [outfit-routines.md](outfit-routines.md), not this mod
 - More orchard species (pear/plum) until aging + festival ship — depth before width
 
 ---
