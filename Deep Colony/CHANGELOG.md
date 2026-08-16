@@ -5,6 +5,7 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
+- **Post-2.0 idea pool (Batch C)** — 20 ideas, Phase 6–9 (QoL alerts/filters, kin memory, DLC/sibling hooks, gated envoy/tribute). Spec: [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
 - **GitHub zip restored** — `DeepColony.zip` published again on the rolling `latest` release for non-Steam installs (alongside Workshop).
 - **Load order** — `loadAfter` Living World so DC’s soft LW goodwill consumer sees LW signals when both are active (`repo-hygiene-no-debate`).
 - **CN/RU language spot-check (2.0)** — filled missing Chinese Simplified + Russian Keyed strings for settings/presets, Perks/Legacy/Reputation tabs, Phase 3–5 trauma/rep/power UI; DefInjected for main tabs, Phase 5 perks/hediffs/archetypes, specialty traumas, group counsel, confidant/rival.
