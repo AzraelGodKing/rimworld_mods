@@ -12,6 +12,7 @@ Short release notes for Strata. Repo-wide highlights: [../CHANGELOG.md](../CHANG
 
 ### Added
 
+- **Foreign portal exclusion** (`foreign-portal-exclusion-v1`) — `LevelGraph` only counts Strata shafts/elevators as level links; other mods' portal maps (Anomaly undercaves, Deep And Deeper caves, pit gates) no longer pull cross-level relays/alerts into non-base maps. New opt-in setting **Relay into other mods' portal maps** (default off, EN/CN/RU) restores the old behavior for cross-mod relay coverage. Compat blurbs added to README, About.xml tips, Workshop BBCode (`assets/workshop/strata-description.bbcode`), and the docs page.
 - **Underground infestations toggle** (`b1-infestations-toggle-v1`) — Mod Options → Threats &amp; performance: **Underground infestations (B1+)** (default on). When off, infestation incidents cannot fire on any underground Strata floor.
 - **Stair pair IDs + auto/manual relink** — `CompStrataShaftLink` (`strataPairGuid`) on all Strata shafts/landings; syncs with gravship `shaftId` when present. `ConnectPortalPair` is the single wiring path; load stamps healthy pairs and auto-rewires unique pair-ID matches. DevMode: relink by pair ID, click shaft→landing (cross-floor), relink selected, cancel, repair missing landings, log topology with pair id. Stamp `stair-pair-id-v1`.
 

@@ -43,6 +43,8 @@
   <Strata_Settings_CrossLevelCaravansDesc>The form-caravan dialog lists colonists, prisoners, and colony animals from every linked level; those elsewhere walk to the surface gathering and join when they arrive. Downed pawns on other levels cannot climb and are left out.</Strata_Settings_CrossLevelCaravansDesc>
   <Strata_Settings_CageSustainHunger>Sustain caged bird hunger</Strata_Settings_CageSustainHunger>
   <Strata_Settings_CageSustainHungerDesc>When off (default), canary and bird cages feed occupants from stocked hay or kibble. When on, hunger is frozen while a bird is caged — no food storage needed.</Strata_Settings_CageSustainHungerDesc>
+  <Strata_Settings_ForeignPortals>Relay into other mods' portal maps</Strata_Settings_ForeignPortals>
+  <Strata_Settings_ForeignPortalsDesc>When off (default), Strata's cross-level systems (work, food, rest, medical, alerts) only treat Strata stairwells and elevators as level links. When on, portal maps from other mods — Anomaly undercaves, Deep And Deeper caves, and similar — also count as linked floors. Careful: colonists may then be sent into unstable or hostile maps on their own.</Strata_Settings_ForeignPortalsDesc>
   <Strata_Settings_SmokeGas>Smoke &amp; gas</Strata_Settings_SmokeGas>
   <Strata_Settings_GasSystemWarning>Opt-in: gas simulation is OFF by default. Enable only if you want atmospheric/smoke simulation — it can cost TPS on large or multi-level colonies.</Strata_Settings_GasSystemWarning>
   <Strata_Settings_PollutantGases>Pollutant gases</Strata_Settings_PollutantGases>
