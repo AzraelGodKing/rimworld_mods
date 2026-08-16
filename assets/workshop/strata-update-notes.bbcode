@@ -1,0 +1,34 @@
+[h1]Strata — Update[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Cave mods stay separate[/b] — Anomaly undercaves, Deep And Deeper, and similar portals are no longer treated as your colony floors for work / food / rest / alerts. Optional setting: Relay into other mods' portal maps (off by default).
+[*] Toggle for [b]underground infestations[/b] on B1+ floors.
+[*] Stairwells remember their partner and auto-relink when possible.
+[/list]
+
+[b]Improved[/b]
+[list]
+[*] Work relay is smoother (less stair looping, wakes faster when new jobs appear).
+[*] Digging a new floor freezes less; rock fills in with a progress bar.
+[*] Workshop / About description updated for Version 3.
+[/list]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Prioritize haul to basement storage[/b] — greyed "no accessible spot" is vanilla (this map only). [i]Haul to another level[/i] finds empty shelves on B1+, only uses a shaft with a walkable path to that stockpile, and auto-haul follows the same vanilla "needs haul" rules then finishes into the chosen shelf like a normal haul job.
+[*] [b]Climbing upstairs crash[/b] — orphan / unlinked landings no longer hard-error when a pawn goes up (missing entrance link).
+[*] [b]Auto haul to another floor[/b] — loot that only Force haul would move downstairs now hauls on its own when a better stockpile is linked (check Allowed Areas if piles are outside Home).
+[*] Mountain digs / towers keep mineable rock instead of empty voids.
+[*] Biomes! mountain digs that came out hollow get a diggable warren.
+[*] Better soft-compat with Adaptive Storage / Neat / Hauler's Dream (fewer haul loops).
+[*] Low Food / Low Medicine count stockpiles on every linked floor.
+[*] Mental breaks can chase across stairs.
+[*] Orphan / unlinked stairs can be deconstructed again.
+[*] Haulers and Misc. Robots keep returning upstairs for the next load.
+[*] Force-build and prioritize across floors (including Ideology / turrets).
+[*] Mod Options shows all toggles again.
+[/list]
+
+[i]Build stamp (Player.log): haul-needs-parity-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Strata/CHANGELOG.md[/i]
