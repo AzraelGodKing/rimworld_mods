@@ -64,6 +64,23 @@ namespace Strata
             anyLinkEpoch = graphEpoch;
         }
 
+        // Only Strata shafts count as level links by default. Foreign portals
+        // (Anomaly undercaves, Deep And Deeper caves, other pocket-map mods)
+        // would otherwise pull relays/alerts into maps that are not base floors
+        // — opt back in via mod settings for cross-mod relay coverage.
+        public static bool IsLevelPortal(MapPortal portal)
+        {
+            if (portal == null)
+            {
+                return false;
+            }
+            if (CompStrataShaftLinkInjector.IsStrataPortalDef(portal.def))
+            {
+                return true;
+            }
+            return StrataMod.Settings != null && StrataMod.Settings.foreignPortalLevelsEnabled;
+        }
+
         public static bool AnyLinkFrom(Map map)
         {
             if (map == null)
@@ -88,7 +105,7 @@ namespace Strata
         {
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing is MapPortal portal && OtherMapSafe(portal) != null)
+                if (thing is MapPortal portal && IsLevelPortal(portal) && OtherMapSafe(portal) != null)
                 {
                     return true;
                 }
@@ -124,7 +141,7 @@ namespace Strata
                 Map current = openQueue.Dequeue();
                 foreach (Thing thing in current.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
                 {
-                    if (!(thing is MapPortal portal))
+                    if (!(thing is MapPortal portal) || !IsLevelPortal(portal))
                     {
                         continue;
                     }
@@ -284,7 +301,7 @@ namespace Strata
             var candidates = new List<MapPortal>();
             foreach (Thing thing in from.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (!(thing is MapPortal portal) || !portal.Spawned)
+                if (!(thing is MapPortal portal) || !portal.Spawned || !IsLevelPortal(portal))
                 {
                     continue;
                 }
@@ -315,7 +332,7 @@ namespace Strata
             int hash = map.uniqueID;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {
-                if (thing is MapPortal portal && portal.Spawned)
+                if (thing is MapPortal portal && portal.Spawned && IsLevelPortal(portal))
                 {
                     hash = Gen.HashCombineInt(hash, portal.thingIDNumber);
                 }
@@ -357,7 +374,8 @@ namespace Strata
                 Map current = reachesQueue.Dequeue();
                 foreach (Thing thing in current.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
                 {
-                    Map other = thing is MapPortal portal ? OtherMapSafe(portal) : null;
+                    Map other = thing is MapPortal portal && IsLevelPortal(portal)
+                        ? OtherMapSafe(portal) : null;
                     if (other == null || !reachesVisited.Add(other))
                     {
                         continue;
