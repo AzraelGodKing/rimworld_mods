@@ -16,6 +16,13 @@ namespace Strata
     {
         private const int MaxCellsScannedPerGroup = 120;
 
+        // FloatMenuOptionProvider_WorkGivers.ScannerShouldSkip only considers a
+        // scanner when PotentialWorkThingRequest accepts the click target OR the
+        // thing appears in PotentialWorkThingsGlobal. Without this, haulables
+        // that fall out of our global scan never even get HasJobOnThing.
+        public override ThingRequest PotentialWorkThingRequest =>
+            ThingRequest.ForGroup(ThingRequestGroup.HaulableEver);
+
         public override IEnumerable<Thing> PotentialWorkThingsGlobal(Pawn pawn)
         {
             Map map = pawn.Map;
@@ -46,9 +53,9 @@ namespace Strata
                     {
                         continue;
                     }
-                    foreach (Thing t in group.HeldThings)
+                    foreach (Thing held in group.HeldThings)
                     {
-                        yield return t;
+                        yield return held;
                     }
                 }
             }
@@ -94,17 +101,17 @@ namespace Strata
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            return TryFindHaulTarget(pawn, t, forced, out _, out _);
+            return TryFindHaulTarget(pawn, t, forced, out _, out _, out _);
         }
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            if (!TryFindHaulTarget(pawn, t, forced, out MapPortal portal, out Map destMap))
+            if (!TryFindHaulTarget(pawn, t, forced, out MapPortal portal, out Map destMap, out IntVec3 storeCell))
             {
                 return null;
             }
 
-            HaulToLevelTargets.Remember(pawn, destMap, pawn.Map);
+            HaulToLevelTargets.Remember(pawn, destMap, pawn.Map, preferArrivalNear: storeCell);
             Job job = JobMaker.MakeJob(StrataDefOf.Strata_HaulToLevel, t, portal);
             job.count = t.stackCount;
             return job;
@@ -115,139 +122,166 @@ namespace Strata
             Thing t,
             bool forced,
             out MapPortal portal,
-            out Map destMap)
+            out Map destMap,
+            out IntVec3 storeCell)
         {
             portal = null;
             destMap = null;
+            storeCell = IntVec3.Invalid;
             if (t == null || !t.Spawned || t.Map != pawn.Map)
             {
                 return false;
             }
-            if (!HaulAIUtility.PawnCanAutomaticallyHaulFast(pawn, t, forced))
+            // Auto: full vanilla "needs haul" gate (designations, forbidden, etc.).
+            // Forced/prioritize: Fast only, same as WorkGiver_Haul.JobOnThing.
+            if (forced)
+            {
+                if (!HaulAIUtility.PawnCanAutomaticallyHaulFast(pawn, t, forced: true))
+                {
+                    return false;
+                }
+            }
+            else if (!HaulAIUtility.PawnCanAutomaticallyHaul(pawn, t, forced: false))
             {
                 return false;
             }
-            // This level keeps first claim while it still needs the def
-            // (construction / bills / refuel / storage upgrade).
-            if (LevelDemand.MissingOn(pawn.Map, t.def) > 0)
+            // Hard need keeps first claim on auto-haul; prioritize may still export.
+            if (!forced && LevelDemand.HardMissingOn(pawn.Map, t.def) > 0)
             {
                 return false;
             }
-            // Hard demand (construction / bills / refuel) may pull from any
-            // local priority. Storage-upgrade demand only pulls stacks whose
-            // current priority is strictly beaten by the destination — otherwise
-            // a Critical freezer downstairs gets emptied into a Normal shelf up.
-            StoragePriority current = StoreUtility.CurrentStoragePriorityOf(t);
+            if (!forced && LevelDemand.MissingOn(pawn.Map, t.def) > 0)
+            {
+                StoragePriority here = StoreUtility.CurrentStoragePriorityOf(t);
+                if (HasLocalBetterStore(pawn, t, here, forced))
+                {
+                    return false;
+                }
+            }
+
+            StoragePriority current = StoreUtility.CurrentStoragePriorityOf(t, forced);
             List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(pawn.Map);
+
+            // Demand pull: hard construction / bills, or storage-upgrade sites.
             for (int i = 0; i < links.Count; i++)
             {
                 LevelGraph.LevelLink link = links[i];
-                if (!LevelDemand.AnySiteReachable(link.map, t.def, link.arrivalCell))
-                {
-                    continue;
-                }
-
-                if (StrataStorageSoftCompat.IsDestCoolingDown(link.map, t.def))
+                if (!forced && StrataStorageSoftCompat.IsDestCoolingDown(link.map, t.def))
                 {
                     continue;
                 }
 
                 bool hardNeed = LevelDemand.HardMissingOn(link.map, t.def) > 0;
-                bool storageUpgrade = !hardNeed
-                    && LevelDemand.MissingOn(link.map, t.def) > 0
-                    && BestAcceptingPriority(pawn, link.map, t, current, link.arrivalCell) > current;
-                if (!hardNeed && !storageUpgrade)
+                bool softNeed = !hardNeed && LevelDemand.MissingOn(link.map, t.def) > 0;
+                if (!hardNeed && !softNeed)
+                {
+                    continue;
+                }
+                if (!LevelDemand.AnySiteReachable(link.map, t.def, link.arrivalCell)
+                    && !hardNeed)
+                {
+                    // Soft upgrade sites still need a reachable demand site; hard
+                    // need can use any accepting store with a complete stair path.
+                    continue;
+                }
+
+                StoragePriority minBeat = hardNeed ? StoragePriority.Unstored : current;
+                if (!TryFindStoreWithPath(
+                        pawn, link.map, t, minBeat, forced,
+                        out StoragePriority p, out MapPortal step, out IntVec3 cell))
+                {
+                    continue;
+                }
+                if (!hardNeed && p <= current)
                 {
                     continue;
                 }
 
-                MapPortal step = UsableStep(pawn, link);
-                if (step != null)
-                {
-                    portal = step;
-                    destMap = link.map;
-                    return true;
-                }
+                portal = step;
+                destMap = link.map;
+                storeCell = cell;
+                return true;
             }
 
-            // The best this level can offer; a linked level only gets the job
-            // if it strictly beats it, so ties stay local (shorter trip) and
-            // vanilla hauling handles them.
+            // Priority upgrade / "needs haul" export: same bar as vanilla
+            // HaulToStorageJob — beat the best empty cell on this map. When this
+            // map has no empty accepting spot (the grey "needs haul" case), any
+            // linked store with a complete stair path wins, just like that
+            // stockpile would if it were on this floor.
             StoragePriority localBest = current;
-            if (StoreUtility.TryFindBestBetterStoreCellFor(t, pawn, pawn.Map, current, pawn.Faction, out IntVec3 localCell, needAccurateResult: false))
+            bool localHasSpot = StoreUtility.TryFindBestBetterStorageFor(
+                t, pawn, pawn.Map, current, pawn.Faction,
+                out IntVec3 localCell, out IHaulDestination localDest, needAccurateResult: false);
+            if (localHasSpot)
             {
-                localBest = localCell.GetSlotGroup(pawn.Map)?.Settings?.Priority ?? localBest;
+                if (localCell.IsValid)
+                {
+                    localBest = localCell.GetSlotGroup(pawn.Map)?.Settings?.Priority ?? localBest;
+                }
+                else if (localDest != null)
+                {
+                    localBest = localDest.GetStoreSettings().Priority;
+                }
             }
-            // Take the level with the highest accepting priority; BFS order is
-            // nearest-first, so ties go to the closest level.
-            MapPortal best = null;
+            else if (current == StoragePriority.Unstored || !t.IsInValidStorage())
+            {
+                // Needs haul / no empty spot here — any linked accepting store
+                // with a complete path is fair game (vanilla same-map rule).
+                localBest = StoragePriority.Unstored;
+            }
+
+            MapPortal bestStep = null;
             Map bestMap = null;
+            IntVec3 bestCell = IntVec3.Invalid;
             StoragePriority bestPriority = localBest;
             for (int i = 0; i < links.Count; i++)
             {
                 LevelGraph.LevelLink link = links[i];
-                if (StrataStorageSoftCompat.IsDestCoolingDown(link.map, t.def))
+                if (!forced && StrataStorageSoftCompat.IsDestCoolingDown(link.map, t.def))
                 {
                     continue;
                 }
 
-                StoragePriority p = BestAcceptingPriority(pawn, link.map, t, bestPriority, link.arrivalCell);
+                if (!TryFindStoreWithPath(
+                        pawn, link.map, t, bestPriority, forced,
+                        out StoragePriority p, out MapPortal step, out IntVec3 cell))
+                {
+                    continue;
+                }
                 if (p > bestPriority)
                 {
-                    MapPortal step = UsableStep(pawn, link);
-                    if (step != null)
-                    {
-                        best = step;
-                        bestMap = link.map;
-                        bestPriority = p;
-                    }
+                    bestStep = step;
+                    bestMap = link.map;
+                    bestCell = cell;
+                    bestPriority = p;
                 }
             }
 
-            if (best == null)
+            if (bestStep == null)
             {
+                if (forced && links.Count > 0)
+                {
+                    JobFailReason.Is(HaulAIUtility.NoEmptyPlaceLowerTrans);
+                }
                 return false;
             }
 
-            portal = best;
+            portal = bestStep;
             destMap = bestMap;
+            storeCell = bestCell;
             return true;
         }
 
-        // The best portal for this pawn toward the link's level - nearest,
-        // powered elevators preferred - that is actually usable right now.
-        private static MapPortal UsableStep(Pawn pawn, LevelGraph.LevelLink link)
+        // Same-map empty cell better than 'above' (soft demand keep-local).
+        private static bool HasLocalBetterStore(Pawn pawn, Thing t, StoragePriority above, bool forced)
         {
-            MapPortal step = LevelGraph.BestFirstStep(pawn.Map, link.map, pawn.Position, pawn) ?? link.firstStep;
-            if (step != null
-                && step.Spawned
-                && step.IsEnterable(out _)
-                && pawn.CanReach(step, PathEndMode.Touch, Danger.Some))
-            {
-                return step;
-            }
-            return null;
-        }
-
-        // The highest storage-group priority above 'above' that accepts the
-        // thing and has a cell with room that is walkable from the arrival
-        // landing - a freshly broken-through landing sits in a sealed rock
-        // bubble, and cargo must not be shipped somewhere it can only pile up.
-        // Final placement is deferred haul delivery after portal arrival.
-        private static StoragePriority BestAcceptingPriority(
-            Pawn pawn, Map map, Thing t, StoragePriority above, IntVec3 arrivalCell)
-        {
-            if (!arrivalCell.IsValid || !arrivalCell.InBounds(map))
-            {
-                return StoragePriority.Unstored;
-            }
-            StoragePriority best = StoragePriority.Unstored;
+            Map map = pawn.Map;
+            Danger maxDanger = forced ? Danger.Deadly : Danger.Some;
             List<SlotGroup> groups = map.haulDestinationManager.AllGroupsListForReading;
             for (int i = 0; i < groups.Count; i++)
             {
                 SlotGroup group = groups[i];
-                StoragePriority priority = group.Settings.Priority;
-                if (priority <= above || priority <= best || !group.Settings.AllowedToAccept(t))
+                if (group.Settings.Priority <= above || !group.Settings.AllowedToAccept(t))
                 {
                     continue;
                 }
@@ -256,18 +290,185 @@ namespace Strata
                 for (int j = 0; j < scan; j++)
                 {
                     IntVec3 cell = cells[j];
-                    // IsGoodStoreCell respects ASF / multi-stack shelf capacity
-                    // (naive floor-stack room checks caused stair haul loops).
                     if (StrataStorageSoftCompat.CellIsGoodStore(cell, map, t, pawn)
-                        && map.reachability.CanReach(arrivalCell, cell, PathEndMode.Touch,
-                            TraverseParms.For(TraverseMode.PassDoors)))
+                        && pawn.CanReach(cell, PathEndMode.Touch, maxDanger))
                     {
-                        best = priority;
-                        break;
+                        return true;
                     }
                 }
             }
-            return best;
+            return false;
+        }
+
+        // Highest accepting priority above 'above' that has an empty cell AND a
+        // complete path: pawn → enterable shaft → landing → store cell.
+        private static bool TryFindStoreWithPath(
+            Pawn pawn,
+            Map map,
+            Thing t,
+            StoragePriority above,
+            bool forced,
+            out StoragePriority priority,
+            out MapPortal step,
+            out IntVec3 storeCell)
+        {
+            priority = StoragePriority.Unstored;
+            step = null;
+            storeCell = IntVec3.Invalid;
+            if (pawn?.Map == null || map == null || t == null || pawn.Map == map)
+            {
+                return false;
+            }
+
+            Pawn storeCarrier = null;
+            Danger maxDanger = forced ? Danger.Deadly : Danger.Some;
+            StoragePriority bestPriority = StoragePriority.Unstored;
+            MapPortal bestStep = null;
+            IntVec3 bestCell = IntVec3.Invalid;
+
+            List<SlotGroup> groups = map.haulDestinationManager.AllGroupsListForReading;
+            for (int i = 0; i < groups.Count; i++)
+            {
+                SlotGroup group = groups[i];
+                StoragePriority groupPriority = group.Settings.Priority;
+                if (groupPriority <= above || groupPriority < bestPriority
+                    || !group.Settings.AllowedToAccept(t))
+                {
+                    continue;
+                }
+                if (group.parent is Thing parentThing
+                    && parentThing.Faction != null
+                    && parentThing.Faction != Faction.OfPlayer)
+                {
+                    continue;
+                }
+                if (!group.parent.HaulDestinationEnabled)
+                {
+                    continue;
+                }
+
+                List<IntVec3> cells = group.CellsList;
+                int scan = Math.Min(cells.Count, MaxCellsScannedPerGroup);
+                for (int j = 0; j < scan; j++)
+                {
+                    IntVec3 cell = cells[j];
+                    if (!StrataStorageSoftCompat.CellIsGoodStore(cell, map, t, storeCarrier))
+                    {
+                        continue;
+                    }
+
+                    MapPortal portal = FindStepWithCompletePath(pawn, map, cell, maxDanger);
+                    if (portal == null)
+                    {
+                        continue;
+                    }
+
+                    if (groupPriority == bestPriority && bestStep != null
+                        && pawn.Position.DistanceToSquared(portal.Position)
+                            >= pawn.Position.DistanceToSquared(bestStep.Position))
+                    {
+                        continue;
+                    }
+
+                    bestPriority = groupPriority;
+                    bestStep = portal;
+                    bestCell = cell;
+                    break;
+                }
+            }
+
+            if (bestStep != null)
+            {
+                priority = bestPriority;
+                step = bestStep;
+                storeCell = bestCell;
+                return true;
+            }
+
+            List<IHaulDestination> destinations =
+                map.haulDestinationManager.AllHaulDestinationsListInPriorityOrder;
+            for (int i = 0; i < destinations.Count; i++)
+            {
+                IHaulDestination dest = destinations[i];
+                if (dest is ISlotGroupParent || !dest.HaulDestinationEnabled || !dest.Accepts(t))
+                {
+                    continue;
+                }
+                StoragePriority destPriority = dest.GetStoreSettings().Priority;
+                if (destPriority <= above || destPriority < bestPriority)
+                {
+                    continue;
+                }
+                if (dest is not Thing destThing || !destThing.Spawned || destThing.Map != map)
+                {
+                    continue;
+                }
+
+                MapPortal portal = FindStepWithCompletePath(pawn, map, destThing.Position, maxDanger);
+                if (portal == null)
+                {
+                    continue;
+                }
+
+                bestPriority = destPriority;
+                bestStep = portal;
+                bestCell = destThing.Position;
+            }
+
+            if (bestStep == null)
+            {
+                return false;
+            }
+
+            priority = bestPriority;
+            step = bestStep;
+            storeCell = bestCell;
+            return true;
+        }
+
+        // Pawn can reach the shaft, shaft is enterable, and the landing can walk
+        // to the store cell. Never pick an open ancient stair into a sealed bubble.
+        private static MapPortal FindStepWithCompletePath(
+            Pawn pawn,
+            Map destMap,
+            IntVec3 storeCell,
+            Danger maxDanger)
+        {
+            MapPortal required = LevelGraph.BestFirstStepRequiringArrival(
+                pawn.Map, destMap, pawn.Position, pawn, storeCell);
+            if (required == null
+                || !required.Spawned
+                || !required.IsEnterable(out _)
+                || !pawn.CanReach(required, PathEndMode.Touch, maxDanger))
+            {
+                return null;
+            }
+
+            // Direct hop onto destMap: re-verify landing → store (ancient shafts
+            // are enterable but often dump into disconnected rock).
+            Map other = null;
+            try
+            {
+                other = required.GetOtherMap();
+            }
+            catch
+            {
+                other = null;
+            }
+
+            if (other == destMap)
+            {
+                IntVec3 arrival = required.GetDestinationLocation();
+                if (!arrival.IsValid || !arrival.InBounds(destMap)
+                    || !destMap.reachability.CanReach(
+                        arrival, storeCell, PathEndMode.Touch,
+                        TraverseParms.For(TraverseMode.PassDoors, Danger.Deadly, canBashDoors: false)))
+                {
+                    return null;
+                }
+            }
+
+            return required;
         }
     }
 }

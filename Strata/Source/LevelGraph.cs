@@ -180,6 +180,7 @@ namespace Strata
         // When preferArrivalNear is set on 'target', prefer stairs whose landing
         // can actually walk to that cell — otherwise a nearer entrance can dump
         // the pawn into a disconnected dig (empty "new" shaft vs the real room).
+        // Falls back to any enterable shaft if none can reach the preferred cell.
         public static MapPortal BestFirstStep(
             Map from,
             Map target,
@@ -210,6 +211,30 @@ namespace Strata
 
             return PickBestFirstStep(
                 candidates, from, target, pawnPos, pawn, preferArrivalNear, requireArrivalReach: false);
+        }
+
+        // Like BestFirstStep, but never falls back to a shaft whose landing cannot
+        // walk to preferArrivalNear (haul / force-build must not pick open ancient
+        // stairs into a sealed rock bubble while the real stockpile is elsewhere).
+        public static MapPortal BestFirstStepRequiringArrival(
+            Map from,
+            Map target,
+            IntVec3 pawnPos,
+            Pawn pawn,
+            IntVec3 preferArrivalNear)
+        {
+            if (from == null || target == null
+                || !preferArrivalNear.IsValid || !preferArrivalNear.InBounds(target))
+            {
+                return null;
+            }
+            List<MapPortal> candidates = GetRouteCandidates(from, target);
+            if (candidates == null || candidates.Count == 0)
+            {
+                return null;
+            }
+            return PickBestFirstStep(
+                candidates, from, target, pawnPos, pawn, preferArrivalNear, requireArrivalReach: true);
         }
 
         private static MapPortal PickBestFirstStep(

@@ -92,13 +92,19 @@ namespace Strata
 
         /// <summary>
         /// Storage job that prefers HaulToContainer for buildings (ASF shelves)
-        /// and cell haul for stockpile zones.
+        /// and cell haul for stockpile zones. Optional preferStoreCell is the
+        /// cell chosen before a stair trip — same finish as vanilla HaulToCell.
         /// </summary>
-        public static Job TryMakeStorageJob(Pawn pawn, Thing cargo)
+        public static Job TryMakeStorageJob(Pawn pawn, Thing cargo, IntVec3 preferStoreCell = default)
         {
             if (pawn?.Map == null || cargo == null)
             {
                 return null;
+            }
+
+            if (TryMakePreferredStoreJob(pawn, cargo, preferStoreCell, out Job preferred))
+            {
+                return preferred;
             }
 
             if (!TryFindStorage(pawn, cargo, StoragePriority.Unstored, out IntVec3 cell, out IHaulDestination dest)
@@ -126,6 +132,56 @@ namespace Strata
             }
 
             return null;
+        }
+
+        private static bool TryMakePreferredStoreJob(
+            Pawn pawn,
+            Thing cargo,
+            IntVec3 preferStoreCell,
+            out Job job)
+        {
+            job = null;
+            Map map = pawn.Map;
+            if (!preferStoreCell.IsValid || !preferStoreCell.InBounds(map))
+            {
+                return false;
+            }
+
+            if (!pawn.CanReach(preferStoreCell, PathEndMode.ClosestTouch, Danger.Deadly))
+            {
+                return false;
+            }
+
+            if (cargo.Spawned && !pawn.CanReserve(cargo))
+            {
+                return false;
+            }
+
+            // Container / ASF shelf occupying the remembered cell.
+            List<Thing> things = preferStoreCell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (things[i] is Building building
+                    && building.Faction == Faction.OfPlayer
+                    && building is IHaulDestination haulDest
+                    && haulDest.HaulDestinationEnabled
+                    && haulDest.Accepts(cargo)
+                    && building.TryGetInnerInteractableThingOwner() != null)
+                {
+                    job = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, building);
+                    job.count = cargo.stackCount;
+                    job.haulMode = HaulMode.ToContainer;
+                    return true;
+                }
+            }
+
+            if (!StoreUtility.IsGoodStoreCell(preferStoreCell, map, cargo, pawn, pawn.Faction))
+            {
+                return false;
+            }
+
+            job = HaulAIUtility.HaulToCellStorageJob(pawn, cargo, preferStoreCell, fitInStoreCell: true);
+            return job != null;
         }
 
         private static bool TryFindStorage(
