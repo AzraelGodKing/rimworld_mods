@@ -461,7 +461,12 @@ namespace Strata
         // Stockpile first, then blueprint/frame. Returns true if a job started.
         // Prefer carried cargo — vanilla drop at crowded landings often fails and
         // left pawns wandering while still holding meals/steel.
-        public static bool TryStartHaulDelivery(Pawn pawn, int preferConstructibleId = 0)
+        // preferStoreCell: stockpile cell chosen before the stair trip (same as
+        // vanilla HaulToCell once the hauler is on the destination floor).
+        public static bool TryStartHaulDelivery(
+            Pawn pawn,
+            int preferConstructibleId = 0,
+            IntVec3 preferStoreCell = default)
         {
             if (pawn?.jobs == null || pawn.Map == null || !pawn.Spawned
                 || pawn.Downed || pawn.Dead || pawn.Drafted)
@@ -489,7 +494,7 @@ namespace Strata
                 {
                     return true;
                 }
-                if (TryStartStorageDelivery(pawn, cargo))
+                if (TryStartStorageDelivery(pawn, cargo, preferStoreCell))
                 {
                     return true;
                 }
@@ -521,14 +526,17 @@ namespace Strata
                 return true;
             }
 
-            return TryStartStorageDelivery(pawn, cargo);
+            return TryStartStorageDelivery(pawn, cargo, preferStoreCell);
         }
 
         /// <summary>
         /// Reassign carried cargo into a stockpile/shelf on the current map.
         /// Used when construction delivery fails after a stair trip.
         /// </summary>
-        public static bool TryStartStorageDelivery(Pawn pawn, Thing cargo = null)
+        public static bool TryStartStorageDelivery(
+            Pawn pawn,
+            Thing cargo = null,
+            IntVec3 preferStoreCell = default)
         {
             if (pawn?.jobs == null || pawn.Map == null || !pawn.Spawned
                 || pawn.Downed || pawn.Dead || pawn.Drafted)
@@ -542,7 +550,7 @@ namespace Strata
                 return false;
             }
 
-            Job job = TryMakeStorageJob(pawn, cargo);
+            Job job = TryMakeStorageJob(pawn, cargo, preferStoreCell);
             if (job == null)
             {
                 if (cargo.def != null)
@@ -765,11 +773,12 @@ namespace Strata
             return true;
         }
 
-        private static Job TryMakeStorageJob(Pawn pawn, Thing cargo)
+        private static Job TryMakeStorageJob(Pawn pawn, Thing cargo, IntVec3 preferStoreCell = default)
         {
             // Prefer TryFindBestBetterStorageFor + HaulToContainer for buildings
             // (Adaptive Storage / Neat shelves); cell haul for stockpile zones.
-            return StrataStorageSoftCompat.TryMakeStorageJob(pawn, cargo);
+            // preferStoreCell: cell chosen before the stair trip (vanilla HaulToCell).
+            return StrataStorageSoftCompat.TryMakeStorageJob(pawn, cargo, preferStoreCell);
         }
 
         private static Job TryMakeConstructionJob(Pawn pawn, Thing cargo)

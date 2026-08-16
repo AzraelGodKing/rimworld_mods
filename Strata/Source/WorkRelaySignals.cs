@@ -378,6 +378,10 @@ namespace Strata
             {
                 return false;
             }
+            if (!LevelGraph.AnyLinkFrom(map))
+            {
+                return false;
+            }
 
             HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
             if (wanted.Count > 0)
@@ -392,8 +396,29 @@ namespace Strata
                 }
             }
 
+            // Storage-priority exports: LevelDemand shortfalls can lag or miss
+            // when the destination scan caps out. If this floor has things that
+            // need hauling and a linked floor has any stockpile, wake work relay
+            // so HaulAcrossLevels can decide (including "local full, B1 same
+            // priority with room" — vanilla would haul there if it were one map).
+            ICollection<Thing> haulables = map.listerHaulables.ThingsPotentiallyNeedingHauling();
+            if (haulables != null && haulables.Count > 0)
+            {
+                StoragePriority maxLocal = MaxStoragePriorityOn(map);
+                List<LevelGraph.LevelLink> linksForPriority = LevelGraph.ReachableLevels(map);
+                for (int i = 0; i < linksForPriority.Count; i++)
+                {
+                    StoragePriority linkedMax = MaxStoragePriorityOn(linksForPriority[i].map);
+                    if (linkedMax > StoragePriority.Unstored
+                        && (linkedMax > maxLocal || maxLocal > StoragePriority.Unstored))
+                    {
+                        return true;
+                    }
+                }
+            }
+
             List<Thing> minis = map.listerThings.ThingsInGroup(ThingRequestGroup.MinifiedThing);
-            if (minis == null || minis.Count == 0 || !LevelGraph.AnyLinkFrom(map))
+            if (minis == null || minis.Count == 0)
             {
                 return false;
             }
@@ -414,6 +439,24 @@ namespace Strata
             }
 
             return false;
+        }
+
+        private static StoragePriority MaxStoragePriorityOn(Map map)
+        {
+            StoragePriority max = StoragePriority.Unstored;
+            if (map?.haulDestinationManager == null)
+            {
+                return max;
+            }
+            List<SlotGroup> groups = map.haulDestinationManager.AllGroupsListForReading;
+            for (int i = 0; i < groups.Count; i++)
+            {
+                if (groups[i].Settings.Priority > max)
+                {
+                    max = groups[i].Settings.Priority;
+                }
+            }
+            return max;
         }
 
         internal static bool ProbeCleaning(Map map)
