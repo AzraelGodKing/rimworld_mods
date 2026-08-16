@@ -42,6 +42,8 @@
   <Strata_Settings_CrossLevelCaravansDesc>В диалоговом окне «Форм-караван» перечислены колонисты, заключенные и животные колонии со всех связанных уровней. Те, кто находится на других уровнях, поднимаются на поверхность и присоединяются к остальным по прибытии. Поверженные пешки с других уровней не могут подняться наверх и остаются на месте.</Strata_Settings_CrossLevelCaravansDesc>
   <Strata_Settings_CageSustainHunger>Поддерживать голод птиц в клетке</Strata_Settings_CageSustainHunger>
   <Strata_Settings_CageSustainHungerDesc>Если выключено (по умолчанию), клетки канареек и птиц кормят из запаса сена или комбикорма. Если включено, голод заморожен, пока птица в клетке — запас еды не нужен.</Strata_Settings_CageSustainHungerDesc>
+  <Strata_Settings_ForeignPortals>Ретрансляция в порталы других модов</Strata_Settings_ForeignPortals>
+  <Strata_Settings_ForeignPortalsDesc>Если выключено (по умолчанию), межуровневые системы Strata (работа, еда, отдых, медицина, оповещения) считают связями уровней только лестницы и лифты Strata. Если включено, карты-порталы других модов — подпещеры Anomaly, пещеры Deep And Deeper и подобные — тоже считаются связанными этажами. Осторожно: колонисты могут сами отправиться в нестабильные или враждебные карты.</Strata_Settings_ForeignPortalsDesc>
   <Strata_Settings_SmokeGas>Дым и газ</Strata_Settings_SmokeGas>
   <Strata_Settings_GasSystemWarning>Внимание: газовая система может вызывать лаги на больших или многоуровневых колониях. Включайте только если нужна симуляция атмосферы/дыма.</Strata_Settings_GasSystemWarning>
   <Strata_Settings_PollutantGases>Загрязняющие газы</Strata_Settings_PollutantGases>
