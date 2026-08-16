@@ -106,6 +106,7 @@ TIPS
 - Tall towers from other mods keep normal sky — Strata roof decks (A+) only open when you build a Strata tower stairwell or elevator
 - Digging under a mountain (or building a tower over one) should leave mineable rock; Biomes! hollow digs fall back to Strata rock fill, and A+ over mountain mass is diggable rock not empty deck
 - Don't dig Strata shafts on temporary quest maps (Ancient Urban Ruins, world sites) — use their own floors; Strata is for your home colony
+- Cave mods like Deep And Deeper (and Anomaly undercaves) are ignored by Strata's cross-level relays by default — an optional setting can extend relays into their caves too
 
 Requires Harmony. RimWorld 1.6. Odyssey optional.</description>
 </ModMetaData>

@@ -58,6 +58,11 @@ raid pursuit, and the vacant-level performance throttle.
   when VHGE is absent.
 - **Fluid shaft junctions** (optional): cross-level ties for **Dubs Bad Hygiene** plumbing, **Dubs Central Heating**, **Dubs Rimatomics** coolant, **Vanilla Helixien Gas Expanded**, and **Rimefeller** crude-oil / chemfuel pipes when those mods are loaded.
   integration yet; cross-level pipe ties are Pillar 2 of the V2 roadmap.
+- **Cave / pocket-map mods** (Deep And Deeper, Anomaly undercaves, and
+  similar) — compatible. Their portal maps are invisible to Strata's level
+  system by default: cross-level relays and alerts only follow Strata
+  stairwells and elevators. An opt-in setting ("Relay into other mods'
+  portal maps") extends the relays to them if you want that.
 - Mods adding **fuel-burning buildings** are auto-detected and given exhaust
   behavior when they look like burners. Dev mode → Strata → "List smoke
   emitters" shows what got covered on your map.
