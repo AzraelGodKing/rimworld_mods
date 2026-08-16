@@ -458,7 +458,7 @@ Do **not** schedule these under the Living World package:
 
 - Nemesis vengeance armies, personal camps, multi-hunt caps → **Nemesis** (N1–N4)
 - Goodwill drift math / ally decay → **Deep Colony** (shipped + DC1)
-- Farmstand, harvest festival, Diggo supplier, aging preserves → **Homesteader** roadmap
+- Farmstand, harvest festival, Diggo supplier, aging preserves → **Homesteader** ([homesteader-updates.md](homesteader-updates.md))
 - Weather / column / romance → Stormproof / Strata / Date Night
 
 ### Suggested execution cadence
