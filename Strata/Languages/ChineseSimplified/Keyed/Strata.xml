@@ -43,6 +43,8 @@
   <Strata_Settings_CrossLevelCaravansDesc>组建商队对话框列出所有相连楼层的殖民者、囚犯与殖民地动物；在别处的会走到地表集合点并在抵达后加入。其他楼层倒地的单位无法攀爬，不会被纳入。</Strata_Settings_CrossLevelCaravansDesc>
   <Strata_Settings_CageSustainHunger>笼养鸟类维持饥饿</Strata_Settings_CageSustainHunger>
   <Strata_Settings_CageSustainHungerDesc>关闭时（默认），金丝雀/鸟笼用库存干草或饲料喂养。开启时，笼中鸟类饥饿冻结——无需存粮。</Strata_Settings_CageSustainHungerDesc>
+  <Strata_Settings_ForeignPortals>中继至其他模组的传送门地图</Strata_Settings_ForeignPortals>
+  <Strata_Settings_ForeignPortalsDesc>关闭时（默认），Strata 的跨层系统（工作、食物、休息、医疗、警报）只将 Strata 的楼梯井和电梯视为层级链接。开启时，其他模组的传送门地图——Anomaly 地下洞穴、Deep And Deeper 洞穴等——也会被视为已链接楼层。注意：殖民者可能会自行进入不稳定或危险的地图。</Strata_Settings_ForeignPortalsDesc>
   <Strata_Settings_SmokeGas>烟雾与气体</Strata_Settings_SmokeGas>
   <Strata_Settings_GasSystemWarning>警告：气体系统在大型或多层殖民地上可能造成卡顿。仅在需要大气/烟雾模拟时启用。</Strata_Settings_GasSystemWarning>
   <Strata_Settings_PollutantGases>污染气体</Strata_Settings_PollutantGases>

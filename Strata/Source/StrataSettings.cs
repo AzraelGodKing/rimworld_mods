@@ -80,6 +80,8 @@ namespace Strata
         public bool gravshipLifeSupportEnabled = true;
         /// <summary>When false (default), new digs/towers stop at ±2 from the stack root. Existing floors keep working.</summary>
         public bool unlimitedLevelsEnabled = false;
+        /// <summary>Treat other mods' portal maps (Anomaly undercaves, Deep And Deeper caves, ...) as linked floors for relays. Default off.</summary>
+        public bool foreignPortalLevelsEnabled = false;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;
 
@@ -151,6 +153,7 @@ namespace Strata
             Scribe_Values.Look(ref crossLevelAutoEngage, "crossLevelAutoEngage", defaultValue: true);
             Scribe_Values.Look(ref gravshipLifeSupportEnabled, "gravshipLifeSupportEnabled", defaultValue: true);
             Scribe_Values.Look(ref unlimitedLevelsEnabled, "unlimitedLevelsEnabled", defaultValue: false);
+            Scribe_Values.Look(ref foreignPortalLevelsEnabled, "foreignPortalLevelsEnabled", defaultValue: false);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
             Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
 
@@ -241,10 +244,15 @@ namespace Strata
         public override void WriteSettings()
         {
             bool wasMultiFloor = Settings.multiFloorStairs;
+            bool wasForeignPortals = Settings.foreignPortalLevelsEnabled;
             base.WriteSettings();
             if (wasMultiFloor != Settings.multiFloorStairs)
             {
                 StrataMultiFloorStairsUtility.Apply(Settings.multiFloorStairs);
+            }
+            if (wasForeignPortals != Settings.foreignPortalLevelsEnabled)
+            {
+                LevelGraph.InvalidateCache();
             }
         }
 
@@ -351,6 +359,8 @@ namespace Strata
                 "Strata_Settings_CrossLevelCaravansDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_CageSustainHunger".Translate(), ref Settings.cageSustainHunger,
                 "Strata_Settings_CageSustainHungerDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_ForeignPortals".Translate(), ref Settings.foreignPortalLevelsEnabled,
+                "Strata_Settings_ForeignPortalsDesc".Translate());
             listing.Gap();
 
             Text.Font = GameFont.Medium;
