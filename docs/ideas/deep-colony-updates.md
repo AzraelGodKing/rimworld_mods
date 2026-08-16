@@ -1,11 +1,11 @@
 # Deep Colony — update ideas
 
-**Status:** triage complete — Batch A (20) + Batch B (22) = **42 ideas**, assigned to Phase 0–5.  
+**Status:** Phases 0–5 shipped in 2.0 (all 42 A/B ideas). Next pool: [Batch C](deep-colony-batch-c.md) (20 ideas, Phase 6–9).  
 **Mod:** [Deep Colony](../../Deep%20Colony/) — perk trees, trauma/therapy, apprenticeship, generational inheritance, living faction reputation.  
 **Lane rule:** colonist / colony-facing only. World chronicle, settlement morph, NPC wars → [Living World](living-world.md). Named hunters → [Nemesis](../../Nemesis/ROADMAP.md). Farm brand → Homesteader.  
 **Roadmap:** [Deep Colony/ROADMAP.md](../../Deep%20Colony/ROADMAP.md).
 
-**Sources:** Cursor Batch A; Claude pool from worktree `claude/deep-colony-ideas-554ceb`.
+**Sources:** Cursor Batch A; Claude pool from worktree `claude/deep-colony-ideas-554ceb`. Batch C: post-2.0 playtest + DLC/sibling hooks.
 
 ---
 
@@ -116,4 +116,4 @@ Claude’s original 20: **6 hard duplicates** dropped/folded; **12 kept** as B01
 - Prefer **S/M** polish that players feel in the first 20 hours (Phase 1) after Foundation (Phase 0).
 - Capstone / branching (A01–A02), chronic trauma (B04), attitude consequences (B12) stay Phase 5 / settings-gated.
 - Reputation ideas must keep using `AddFactionDrift` / `FactionRepUtility`; no parallel buffer.
-- Further idea rounds must avoid **A01–A20 and B01–B22**.
+- Further idea rounds must avoid **A01–A20 and B01–B22**. Next pool: [Batch C](deep-colony-batch-c.md) (C01–C24; skip unused C19, C20, C22, C25).
