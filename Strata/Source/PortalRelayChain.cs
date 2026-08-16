@@ -232,6 +232,7 @@ namespace Strata
             int haulConstructibleId = intent.purpose == RelayPurpose.Haul
                 ? intent.preferredBedId
                 : -1;
+            IntVec3 haulPreferCell = intent.preferArrivalNear;
             intents.Remove(pawnId);
 
             if (intent.purpose == RelayPurpose.Rest)
@@ -248,7 +249,7 @@ namespace Strata
 
             if (intent.purpose == RelayPurpose.Haul)
             {
-                FinishHaul(pawn, returnMapId, haulConstructibleId);
+                FinishHaul(pawn, returnMapId, haulConstructibleId, haulPreferCell);
                 return;
             }
 
@@ -297,9 +298,14 @@ namespace Strata
             // Medical finishes above with LayDown on the pinned bed.
         }
 
-        private static void FinishHaul(Pawn pawn, int returnMapId, int constructibleId)
+        private static void FinishHaul(
+            Pawn pawn,
+            int returnMapId,
+            int constructibleId,
+            IntVec3 preferStoreCell)
         {
-            bool delivering = StrataPortalUtility.TryStartHaulDelivery(pawn, constructibleId);
+            bool delivering = StrataPortalUtility.TryStartHaulDelivery(
+                pawn, constructibleId, preferStoreCell);
             // Soft-compat: unload Pick Up And Haul inventory into dest storage.
             StrataPuahSoftCompat.TryDeliverInventory(pawn);
 
@@ -309,7 +315,7 @@ namespace Strata
                 && pawn.carryTracker?.CarriedThing != null
                 && pawn.carryTracker.CarriedThing is not Pawn)
             {
-                delivering = StrataPortalUtility.TryStartStorageDelivery(pawn);
+                delivering = StrataPortalUtility.TryStartStorageDelivery(pawn, preferStoreCell: preferStoreCell);
             }
 
             if (!delivering

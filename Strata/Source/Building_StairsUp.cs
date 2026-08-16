@@ -3,6 +3,7 @@ using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace Strata
 {
@@ -175,7 +176,22 @@ namespace Strata
 
         public override void OnEntered(Pawn pawn)
         {
-            base.OnEntered(pawn);
+            // Vanilla PocketMapExit.OnEntered unconditionally touches entrance.def /
+            // entrance.Map for traverseSound. Orphan or load-broken landings have
+            // entrance == null (GetOtherMap already falls back to SourceMap) and
+            // JobDriver_EnterPortal then NREs in toil initAction.
+            if (EntranceValid)
+            {
+                base.OnEntered(pawn);
+            }
+            else
+            {
+                Notify_ThingAdded(pawn);
+                if (Find.CurrentMap == Map)
+                {
+                    def.portal?.traverseSound?.PlayOneShot(this);
+                }
+            }
             StrataPortalUtility.TransferHaulDesignation(this, pawn);
             StrataPortalUtility.NotifyHaulArrival(pawn);
             DraftedPortalPathing.NotifyPortalArrival(pawn);

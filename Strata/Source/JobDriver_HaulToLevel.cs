@@ -40,7 +40,12 @@ namespace Strata
                     return;
                 }
 
-                if (HaulToLevelTargets.TryTake(pawn, out Map destMap, out Map sourceMap, out int constructibleId)
+                if (HaulToLevelTargets.TryTake(
+                        pawn,
+                        out Map destMap,
+                        out Map sourceMap,
+                        out int constructibleId,
+                        out IntVec3 preferArrivalNear)
                     && destMap != null)
                 {
                     Thing site = constructibleId > 0
@@ -52,6 +57,7 @@ namespace Strata
                         RelayPurpose.Haul,
                         preferredBed: null,
                         returnMap: sourceMap,
+                        preferArrivalNear: preferArrivalNear,
                         preferredThing: site);
                 }
 
@@ -66,6 +72,8 @@ namespace Strata
     // Final dest map for HaulToLevel (may be multi-hop past the first stair).
     // Optional constructibleId: force-build / deliver-resources should finish into
     // that blueprint/frame instead of a stockpile (or dropping on failed storage).
+    // preferArrivalNear: stockpile / site cell so multi-hop picks landings that
+    // can actually walk there (skips open ancient stairs into sealed rock).
     internal static class HaulToLevelTargets
     {
         private struct Target
@@ -73,15 +81,27 @@ namespace Strata
             public int destMapId;
             public int sourceMapId;
             public int constructibleId;
+            public IntVec3 preferArrivalNear;
         }
 
         private static readonly Dictionary<int, Target> pending = new Dictionary<int, Target>();
 
-        internal static void Remember(Pawn pawn, Map destMap, Map sourceMap, Thing constructible = null)
+        internal static void Remember(
+            Pawn pawn,
+            Map destMap,
+            Map sourceMap,
+            Thing constructible = null,
+            IntVec3 preferArrivalNear = default)
         {
             if (pawn == null || destMap == null || sourceMap == null)
             {
                 return;
+            }
+
+            if ((!preferArrivalNear.IsValid || !preferArrivalNear.InBounds(destMap))
+                && constructible != null && constructible.Spawned && constructible.Map == destMap)
+            {
+                preferArrivalNear = constructible.Position;
             }
 
             pending[pawn.thingIDNumber] = new Target
@@ -89,14 +109,21 @@ namespace Strata
                 destMapId = destMap.uniqueID,
                 sourceMapId = sourceMap.uniqueID,
                 constructibleId = constructible != null ? constructible.thingIDNumber : 0,
+                preferArrivalNear = preferArrivalNear,
             };
         }
 
-        internal static bool TryTake(Pawn pawn, out Map destMap, out Map sourceMap, out int constructibleId)
+        internal static bool TryTake(
+            Pawn pawn,
+            out Map destMap,
+            out Map sourceMap,
+            out int constructibleId,
+            out IntVec3 preferArrivalNear)
         {
             destMap = null;
             sourceMap = null;
             constructibleId = 0;
+            preferArrivalNear = IntVec3.Invalid;
             if (pawn == null || !pending.TryGetValue(pawn.thingIDNumber, out Target t))
             {
                 return false;
@@ -106,6 +133,7 @@ namespace Strata
             destMap = FindMap(t.destMapId);
             sourceMap = FindMap(t.sourceMapId);
             constructibleId = t.constructibleId;
+            preferArrivalNear = t.preferArrivalNear;
             return destMap != null;
         }
 
