@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -16,6 +17,11 @@ namespace DateNight
     [HarmonyPatch(typeof(TimeAssignmentSelector), nameof(TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid))]
     public static class Patch_TimeAssignmentSelector_DrawGrid
     {
+        // Vanilla 2×2 uses columns 0–1. Extra schedule buttons (Meditate is in-grid)
+        // continue the top row at index 4+, matching Rimbody / Exosuit.
+        private const int FirstExtraColumn = 4;
+
+        [HarmonyPriority(Priority.Last)]
         public static void Postfix(Rect rect)
         {
             TimeAssignmentDef lovin = DateNightDefOf.DateNight_Lovin;
@@ -24,32 +30,106 @@ namespace DateNight
                 return;
             }
 
-            // Match vanilla cell math from the 191×65 rect MainTabWindow_Schedule passes
-            // (Anything/Work/Joy/Sleep[/Meditate] are drawn in one row of half-width cells).
             float cellW = rect.width * 0.5f;
             float cellH = rect.height * 0.5f;
-            int index = ModsConfig.RoyaltyActive ? 5 : 4;
-            // Exosuit Framework (and similar) draws Piloting into the same slot —
-            // move Lovin to the second row so both buttons stay clickable.
-            Rect cell = ExosuitScheduleCrowded()
-                ? new Rect(rect.x, rect.y + cellH, cellW, cellH)
-                : new Rect(rect.x + cellW * index, rect.y, cellW, cellH);
+            int index = LovinColumnIndex();
+            Rect cell = new Rect(rect.x + cellW * index, rect.y, cellW, cellH);
             DrawSelectorButton(cell, lovin);
         }
 
-        private static bool? exosuitCrowded;
+        private static int? cachedColumn;
 
-        private static bool ExosuitScheduleCrowded()
+        private static int LovinColumnIndex()
         {
-            if (exosuitCrowded == null)
+            if (cachedColumn != null)
             {
-                exosuitCrowded =
-                    ModLister.GetActiveModWithIdentifier("AOBA.ExosuitFramework", ignorePostfix: true) != null
-                    || ModLister.GetActiveModWithIdentifier("AOBA.MechsuitFramework", ignorePostfix: true) != null
-                    || DefDatabase<TimeAssignmentDef>.GetNamedSilentFail("Piloting") != null
-                    || DefDatabase<TimeAssignmentDef>.GetNamedSilentFail("Exosuit_Piloting") != null;
+                return cachedColumn.Value;
             }
-            return exosuitCrowded.Value;
+
+            int index = FirstExtraColumn;
+            if (ModsConfig.RoyaltyActive)
+            {
+                index++;
+            }
+            if (HasExosuitScheduleButton())
+            {
+                index++;
+            }
+            if (HasRimbodyScheduleButton())
+            {
+                index++;
+            }
+            if (HasScheduleEverythingButton())
+            {
+                index++;
+            }
+
+            cachedColumn = index;
+            return index;
+        }
+
+        private static bool HasExosuitScheduleButton()
+        {
+            return ModActive("AOBA.ExosuitFramework")
+                || ModActive("AOBA.MechsuitFramework")
+                || DefDatabase<TimeAssignmentDef>.GetNamedSilentFail("Piloting") != null
+                || DefDatabase<TimeAssignmentDef>.GetNamedSilentFail("Exosuit_Piloting") != null;
+        }
+
+        /// <summary>
+        /// Rimbody draws Workout in the same extra column Date Night used to occupy.
+        /// Clicks then open Workout / Joy (useRecToSelect) instead of selecting Lovin.
+        /// When useRecToSelect is on, Workout shares the Joy cell — no extra column.
+        /// </summary>
+        private static bool HasRimbodyScheduleButton()
+        {
+            if (!ModActive("Maux36.Rimbody")
+                && DefDatabase<TimeAssignmentDef>.GetNamedSilentFail("Rimbody_Workout") == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                Type settings = AccessTools.TypeByName("Maux36.Rimbody.RimbodySettings");
+                FieldInfo rec = settings != null
+                    ? AccessTools.Field(settings, "useRecToSelect")
+                    : null;
+                if (rec != null && rec.IsStatic && rec.FieldType == typeof(bool) && (bool)rec.GetValue(null))
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                // Fail-open: assume the extra Workout button exists.
+            }
+
+            return true;
+        }
+
+        private static bool HasScheduleEverythingButton()
+        {
+            return ModNameContains("Schedule Everything");
+        }
+
+        private static bool ModActive(string packageId)
+        {
+            return !packageId.NullOrEmpty()
+                && ModLister.GetActiveModWithIdentifier(packageId, ignorePostfix: true) != null;
+        }
+
+        private static bool ModNameContains(string fragment)
+        {
+            foreach (ModMetaData mod in ModsConfig.ActiveModsInLoadOrder)
+            {
+                if (mod?.Name != null
+                    && mod.Name.IndexOf(fragment, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static void DrawSelectorButton(Rect rect, TimeAssignmentDef ta)
