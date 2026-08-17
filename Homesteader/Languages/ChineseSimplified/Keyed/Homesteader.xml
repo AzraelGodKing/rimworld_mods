@@ -7,6 +7,7 @@
 
   <!-- Wash tub -->
   <Homesteader_NeedsSoapInWashTub>洗衣盆里需要肥皂。</Homesteader_NeedsSoapInWashTub>
+  <Homesteader_FountainDry>喷泉干了。把水罐运过来。</Homesteader_FountainDry>
 
   <!-- Passive cooling (root cellar / icehouse / springhouse) -->
   <Homesteader_PassiveCoolStorage>被动冷藏：物品（及相邻室内格子）保持在 {0} 或以下</Homesteader_PassiveCoolStorage>

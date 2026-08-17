@@ -9,6 +9,7 @@
 
   <!-- Wash tub -->
   <Homesteader_NeedsSoapInWashTub>Needs soap in the wash tub.</Homesteader_NeedsSoapInWashTub>
+  <Homesteader_FountainDry>The fountain is dry. Haul water jugs to it.</Homesteader_FountainDry>
 
   <!-- Passive cooling (root cellar / icehouse / springhouse) -->
   <Homesteader_PassiveCoolStorage>Passive cool storage: items (and adjacent indoor cells) stay at or below {0}</Homesteader_PassiveCoolStorage>

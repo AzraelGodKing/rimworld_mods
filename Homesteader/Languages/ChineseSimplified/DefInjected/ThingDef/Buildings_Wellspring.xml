@@ -14,7 +14,7 @@
   <Wellspring_WaterTower.label>水塔</Wellspring_WaterTower.label>
   <Wellspring_WaterTower.description>高高的木架水箱：重力集水加上远离日晒与泥地的正经储备。可放二十四堆（每格六堆），注水快过蓄水池，搬运工视为关键。灌溉和厨房一夜抽空水槽时，用它替换蓄水池。</Wellspring_WaterTower.description>
   <Wellspring_StoneFountain.label>石喷泉</Wellspring_StoneFountain.label>
-  <Wellspring_StoneFountain.description>雕花石盆，中央缓缓喷出一缕水柱。水利工程的门面：不产罐子，但院子会告诉所有人家园水够用。需先研究水利工程。</Wellspring_StoneFountain.description>
+  <Wellspring_StoneFountain.description>雕花石盆，中央喷水——水利工程的院子门面。往里灌水罐，大约一天喝掉两罐。有水流动才有美观；干了就只是一只空碗。</Wellspring_StoneFountain.description>
   <Wellspring_IrrigatedPlanter.label>灌溉种植箱</Wellspring_IrrigatedPlanter.label>
   <Wellspring_IrrigatedPlanter.description>深木种植箱，底部嵌有蓄水槽。在肥沃、持续湿润的土壤中种植单株作物——一小块可放在任何地方的灌溉田，甚至室内。</Wellspring_IrrigatedPlanter.description>
 
