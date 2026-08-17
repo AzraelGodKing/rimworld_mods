@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Steam-first fixes** — Deep Colony envoy/mentor menus; Nemesis raid inject + phantom escapes; Strata flood/sump + ore hoist; Homesteader homestead tab / soap / allergies / cellar text / cistern storage; Azrael FindMod + CI zip; Date Night pregnancy-safe cooldown. Plan: [docs/ideas/general-fixes.md](docs/ideas/general-fixes.md).
 - **Strata** — cross-level haul matches vanilla "needs haul" + full path to stockpile (`haul-needs-parity-v1`). Build stamp `haul-needs-parity-v1` (Player.log). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md) · [Steam paste](assets/workshop/strata-update-notes.bbcode)
 - **Ideas** — Homesteader next-content pool and Deep Colony Batch C. → [docs/ideas/homesteader-updates.md](docs/ideas/homesteader-updates.md) · [docs/ideas/deep-colony-batch-c.md](docs/ideas/deep-colony-batch-c.md)
 - **Homesteader** — optional unique texture pack (off by default); many refresh buildings redrawn to read as RimWorld sprites. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)

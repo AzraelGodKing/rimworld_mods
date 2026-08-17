@@ -130,6 +130,19 @@ namespace DeepColony
                 .Where(f => !f.IsPlayer && !f.defeated && !f.Hidden);
         }
 
+        public static IEnumerable<Pawn> EnvoyCandidates()
+        {
+            foreach (Map map in Find.Maps)
+            {
+                foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
+                {
+                    if (p.skills?.GetSkill(SkillDefOf.Social)?.TotallyDisabled == true)
+                        continue;
+                    yield return p;
+                }
+            }
+        }
+
         private static Faction FindFaction(int loadId)
         {
             if (loadId < 0) return null;
