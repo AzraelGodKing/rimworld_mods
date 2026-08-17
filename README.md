@@ -12,7 +12,7 @@ Everything a growing homestead needs: tribal survival, farm-to-table crafting, w
 |---|---|
 | **Tribal survival** | Curing rack (rock salt, salted meat), drying rack (+ fruit leather, dried mushrooms, pemmican without research), smokehouse, hayloft, ingredient barrel |
 | **Farm-to-table** | Grain mill, butter churn (+ buttermilk), pickling crock, homestead hearth (bread, pantry meals, pumpkin pie, biscuits, stews, flapjacks) |
-| **Water & irrigation** | Hand-dug / deep wells, rain barrel, cistern, solar still, water tower, irrigated soil & planter, boiled water, mud bricks, clean bandages; optional [Dubs Bad Hygiene](https://steamcommunity.com/sharedfiles/filedetails/?id=836308268) plumbing bridge |
+| **Water & irrigation** | Upgrade ladder: rain barrel trickle → cistern (stores + fills) → water tower (24 stacks); hand-dug well → deep well (20 jugs); solar still yields boiled water; irrigated soil & planter; optional [Dubs Bad Hygiene](https://steamcommunity.com/sharedfiles/filedetails/?id=836308268) plumbing bridge |
 | **Favorites** | Every humanlike rolls a favorite from Homesteader + vanilla foods (+mood when eaten) |
 | **Orchard & apiary** | Apple, cherry, and sugar maple trees (regrow after harvest); maple sap → syrup → flapjacks; beehives produce honey + beeswax; beeswax candle |
 | **Storage** | Storage crate, storage barrel, pallet, hayloft, ingredient barrel, root cellar (passive cool ≤5°C), large storage crate, preserves shelf |
