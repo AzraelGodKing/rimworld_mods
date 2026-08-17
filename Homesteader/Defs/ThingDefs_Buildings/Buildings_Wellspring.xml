@@ -355,7 +355,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Wellspring_StoneFountain</defName>
     <label>stone fountain</label>
-    <description>A carved stone basin with a gentle plume of water at its center. The waterworks vanity piece: it makes no jugs, but the courtyard says the homestead has water to spare. Research waterworks first.</description>
+    <description>A carved stone basin with a plume at its center — the waterworks courtyard flex. Haul water jugs into it; it drinks about two a day. Beauty only while the water is flowing. Empty, it is just a dry bowl.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Wellspring/Buildings/StoneFountain</texPath>
@@ -368,20 +368,36 @@
     <fillPercent>0.4</fillPercent>
     <rotatable>false</rotatable>
     <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
     <stuffCategories>
       <li>Stony</li>
     </stuffCategories>
     <costStuffCount>120</costStuffCount>
-    <costList>
-      <Wellspring_Water>25</Wellspring_Water>
-    </costList>
     <statBases>
       <MaxHitPoints>250</MaxHitPoints>
       <WorkToBuild>4000</WorkToBuild>
       <Mass>45</Mass>
       <Flammability>0</Flammability>
-      <Beauty>40</Beauty>
+      <Beauty>8</Beauty>
     </statBases>
+    <comps>
+      <li Class="CompProperties_Refuelable">
+        <fuelConsumptionRate>2.0</fuelConsumptionRate>
+        <fuelCapacity>50.0</fuelCapacity>
+        <fuelFilter>
+          <thingDefs>
+            <li>Wellspring_Water</li>
+          </thingDefs>
+        </fuelFilter>
+        <initialFuelPercent>0</initialFuelPercent>
+        <showAllowAutoRefuelToggle>true</showAllowAutoRefuelToggle>
+        <consumeFuelOnlyWhenUsed>false</consumeFuelOnlyWhenUsed>
+      </li>
+      <li Class="Homesteader.CompProperties_BeautyWhenFueled">
+        <fueledBeauty>32</fueledBeauty>
+        <dryBeauty>0</dryBeauty>
+      </li>
+    </comps>
     <designationCategory>Furniture</designationCategory>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>

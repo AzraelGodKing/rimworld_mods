@@ -7,6 +7,7 @@
 
   <!-- Wash tub -->
   <Homesteader_NeedsSoapInWashTub>В лохани нужно мыло.</Homesteader_NeedsSoapInWashTub>
+  <Homesteader_FountainDry>Фонтан высох. Подвезите кувшины с водой.</Homesteader_FountainDry>
 
   <!-- Passive cooling (root cellar / icehouse / springhouse) -->
   <Homesteader_PassiveCoolStorage>Пассивное охлаждение: предметы (и соседние внутренние клетки) остаются при температуре не выше {0}</Homesteader_PassiveCoolStorage>
