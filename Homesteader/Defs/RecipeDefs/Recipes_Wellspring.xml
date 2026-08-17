@@ -19,13 +19,13 @@
   <RecipeDef>
     <defName>Wellspring_DrawWaterDeep</defName>
     <label>draw water from the deep</label>
-    <description>Winch the wide bucket down past the shallow groundwater and haul up a heavy load of fresh water.</description>
+    <description>Winch the wide bucket past the shallow groundwater. Twenty jugs a haul — four times a hand-dug well — for only a little more time on the windlass.</description>
     <jobString>Drawing water.</jobString>
-    <workAmount>600</workAmount>
+    <workAmount>480</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <soundWorking>Recipe_CookMeal</soundWorking>
     <products>
-      <Wellspring_Water>12</Wellspring_Water>
+      <Wellspring_Water>20</Wellspring_Water>
     </products>
   </RecipeDef>
 
