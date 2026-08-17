@@ -143,8 +143,17 @@ namespace DateNight
                 return false;
             }
 
-            // During a Lovin schedule window, ignore leftover vanilla cooldowns.
-            if (IsLovinSchedule(pawn) || IsLovinSchedule(partner))
+            // Pregnancy-safe (default): keep vanilla post-lovin cooldown.
+            // Eager: clear leftover cooldown while on the Lovin schedule.
+            if (DateNightMod.Settings != null && DateNightMod.Settings.pregnancySafeCooldown)
+            {
+                if (Find.TickManager.TicksGame < pawn.mindState.canLovinTick
+                    || Find.TickManager.TicksGame < partner.mindState.canLovinTick)
+                {
+                    return false;
+                }
+            }
+            else if (IsLovinSchedule(pawn) || IsLovinSchedule(partner))
             {
                 pawn.mindState.canLovinTick = 0;
                 partner.mindState.canLovinTick = 0;
@@ -249,7 +258,8 @@ namespace DateNight
 
         public static void NotifyEnteredLovinSchedule(Pawn pawn)
         {
-            if (pawn?.mindState != null)
+            if (pawn?.mindState != null
+                && (DateNightMod.Settings == null || !DateNightMod.Settings.pregnancySafeCooldown))
             {
                 pawn.mindState.canLovinTick = 0;
             }

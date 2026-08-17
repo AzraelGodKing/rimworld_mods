@@ -6,6 +6,7 @@
        so both packages can coexist without duplicate defName errors. -->
   <Operation Class="PatchOperationFindMod">
     <mods>
+      <li>Homesteader</li>
       <li>AzraelGodKing.Homesteader</li>
     </mods>
     <nomatch Class="PatchOperationAdd">
