@@ -10,7 +10,7 @@ Per-mod later work lives in each mod’s roadmap:
 - [Deep Colony](Deep%20Colony/ROADMAP.md) — goodwill consumer (DC1 wired); 2.0 shipped; [Batch C](docs/ideas/deep-colony-batch-c.md)
 - [Living World (Phase 1–2 in-repo)](LivingWorld/ROADMAP.md) · [design](docs/ideas/living-world.md) — chronicle, morph, wars, refugees
 
-**This weekend:** [Steam comment triage backlog](docs/ideas/weekend-steam-backlog.md).
+**This weekend:** [General fixes](docs/ideas/general-fixes.md) (Steam-first). Closed backlog: [weekend-steam-backlog.md](docs/ideas/weekend-steam-backlog.md).
 
 ---
 

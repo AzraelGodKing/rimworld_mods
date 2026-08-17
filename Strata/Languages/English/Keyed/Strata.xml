@@ -270,6 +270,9 @@
   <Strata_OreHoistNeedsPartner>Needs a linked partner hoist on another level.</Strata_OreHoistNeedsPartner>
   <Strata_OreHoistPowered>Powered — shuttling ore chunks to partner level.</Strata_OreHoistPowered>
   <Strata_OreHoistNeedsPowerSkip>Needs power to run the skip.</Strata_OreHoistNeedsPowerSkip>
+  <Strata_SumpNeedsPower>Needs power to pump water.</Strata_SumpNeedsPower>
+  <Strata_SumpNoFlood>No flood water in range.</Strata_SumpNoFlood>
+  <Strata_SumpPumping>Pumping flood water within {0} tiles.</Strata_SumpPumping>
   <Strata_GasScrubberScrubbing>Scrubbing {0} from the room.</Strata_GasScrubberScrubbing>
   <Strata_GasScrubberNone>No {0} to scrub.</Strata_GasScrubberNone>
   <Strata_TremorOpenedStairwell>A tremor jarred a sealed stairwell open.</Strata_TremorOpenedStairwell>
