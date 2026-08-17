@@ -20,7 +20,7 @@
   <Wellspring_Irrigation.label>灌溉</Wellspring_Irrigation.label>
   <Wellspring_Irrigation.description>将抽取的水引入农田沟渠，使之成为肥沃乌黑的灌溉土壤，作物生长更快。</Wellspring_Irrigation.description>
   <Wellspring_Waterworks.label>水利工程</Wellspring_Waterworks.label>
-  <Wellspring_Waterworks.description>更深的竖井、更高的水塔。深井一次打水手挖井的四倍。水塔可放二十四堆，注水快过蓄水池，并视为关键储备。石喷泉是水够用之后的院子门面。</Wellspring_Waterworks.description>
+  <Wellspring_Waterworks.description>更深的竖井、更高的水塔。深井一次打水手挖井的四倍。水塔可放二十四堆，注水快过蓄水池，并视为关键储备。石喷泉靠水罐维持院中水柱。</Wellspring_Waterworks.description>
   <Homesteader_Livestock.label>家园畜牧</Homesteader_Livestock.label>
   <Homesteader_Livestock.description>鸡舍可稳定产蛋，以及保持院落禽群生产力的饲料配方。</Homesteader_Livestock.description>
   <Homesteader_Textiles.label>家园纺织</Homesteader_Textiles.label>
