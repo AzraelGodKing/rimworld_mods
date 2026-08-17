@@ -5,7 +5,7 @@
   <Wellspring_DrawWater.description>把水桶绞下去，打上几罐淡水。</Wellspring_DrawWater.description>
   <Wellspring_DrawWater.jobString>正在打水。</Wellspring_DrawWater.jobString>
   <Wellspring_DrawWaterDeep.label>从深处打水</Wellspring_DrawWaterDeep.label>
-  <Wellspring_DrawWaterDeep.description>把宽口桶绞过浅层地下水，打上沉重的一大桶淡水。</Wellspring_DrawWaterDeep.description>
+  <Wellspring_DrawWaterDeep.description>把宽口桶绞过浅层地下水。一次二十罐——手挖井的四倍——绞盘上只多花一点时间。</Wellspring_DrawWaterDeep.description>
   <Wellspring_DrawWaterDeep.jobString>正在打水。</Wellspring_DrawWaterDeep.jobString>
   <Wellspring_BoilWater.label>煮水</Wellspring_BoilWater.label>
   <Wellspring_BoilWater.description>在火上把罐装水煮沸消毒。</Wellspring_BoilWater.description>
