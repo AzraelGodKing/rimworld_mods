@@ -125,6 +125,7 @@ namespace Nemesis
                 nemesis = useAsNemesis;
                 faction = nemesis.Faction;
                 NemesisPawnUtil.ParkAsWorldNemesis(nemesis);
+                NemesisPawnUtil.EnsureHuntFaction(nemesis, faction);
             }
             else
             {
@@ -145,6 +146,7 @@ namespace Nemesis
 
                 nemesis = PawnGenerator.GeneratePawn(request);
                 NemesisPawnUtil.ParkAsWorldNemesis(nemesis);
+                NemesisPawnUtil.EnsureHuntFaction(nemesis, faction);
             }
 
             NemesisRegistry.CachedNemesis = nemesis;
@@ -203,7 +205,9 @@ namespace Nemesis
         private void FireEscape(Pawn nemesis)
         {
             if (_data == null || !_data.active || nemesis == null || nemesis.Destroyed) return;
-            if (!nemesis.Spawned) return;
+            if (!nemesis.Spawned || nemesis.Map == null) return;
+            if (!nemesis.Map.IsPlayerHome) return;
+            if (nemesis.Faction == null || nemesis.Faction.IsPlayer || nemesis.IsPrisonerOfColony) return;
             if (Find.TickManager.TicksGame - _data.lastEscapeTick < 180) return;
 
             Map map = nemesis.Map;
@@ -212,6 +216,7 @@ namespace Nemesis
             // Must leave the assault lord before PassToWorld or LordTick spams
             // "owns a free world pawn".
             NemesisPawnUtil.ParkAsWorldNemesis(nemesis);
+            NemesisPawnUtil.EnsureHuntFaction(nemesis, _data.faction);
 
             NemesisRegistry.CachedNemesis = nemesis;
             NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;

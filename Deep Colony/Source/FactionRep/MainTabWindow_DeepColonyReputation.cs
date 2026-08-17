@@ -111,7 +111,33 @@ namespace DeepColony
                 selectedEnvoy != null
                     ? "DC_RepEnvoy".Translate(selectedEnvoy.LabelShort)
                     : "DC_RepNoEnvoy".Translate());
-            dy += 28f;
+            dy += 24f;
+
+            float btnW = 140f;
+            Rect assignRect = new Rect(inner.x, dy, btnW, 28f);
+            if (Widgets.ButtonText(assignRect, "DC_AssignEnvoy".Translate()))
+            {
+                List<FloatMenuOption> opts = new List<FloatMenuOption>();
+                foreach (Pawn p in FactionEnvoyUtility.EnvoyCandidates())
+                {
+                    Pawn local = p;
+                    opts.Add(new FloatMenuOption(
+                        local.LabelShortCap,
+                        () => FactionEnvoyUtility.SetEnvoy(local, selected)));
+                }
+                if (opts.Count == 0)
+                {
+                    opts.Add(new FloatMenuOption("DC_NoEnvoyCandidates".Translate(), null) { Disabled = true });
+                }
+                Find.WindowStack.Add(new FloatMenu(opts));
+            }
+            if (selectedEnvoy != null)
+            {
+                Rect clearRect = new Rect(inner.x + btnW + 8f, dy, btnW, 28f);
+                if (Widgets.ButtonText(clearRect, "DC_ClearEnvoyButton".Translate()))
+                    FactionEnvoyUtility.ClearEnvoy(selectedEnvoy);
+            }
+            dy += 36f;
 
             Widgets.Label(new Rect(inner.x, dy, inner.width, 22f), "DC_RepLedgerHeader".Translate());
             dy += 24f;

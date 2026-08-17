@@ -25,6 +25,7 @@ namespace Strata
     public class FloodMapComponent : MapComponent
     {
         private HashSet<IntVec3> floodedCells = new HashSet<IntVec3>();
+        private Dictionary<IntVec3, string> originalTerrain = new Dictionary<IntVec3, string>();
 
         public FloodMapComponent(Map map) : base(map)
         {
@@ -34,7 +35,9 @@ namespace Strata
         {
             base.ExposeData();
             Scribe_Collections.Look(ref floodedCells, "strataFloodedCells", LookMode.Value);
+            Scribe_Collections.Look(ref originalTerrain, "strataFloodOriginalTerrain", LookMode.Value, LookMode.Value);
             floodedCells ??= new HashSet<IntVec3>();
+            originalTerrain ??= new Dictionary<IntVec3, string>();
         }
 
         public void FloodCell(IntVec3 cell)
@@ -47,6 +50,11 @@ namespace Strata
             if (flood == null)
             {
                 return;
+            }
+            TerrainDef current = map.terrainGrid.TerrainAt(cell);
+            if (current != null && !FloodUtility.IsFlooded(current) && !originalTerrain.ContainsKey(cell))
+            {
+                originalTerrain[cell] = current.defName;
             }
             map.terrainGrid.SetTerrain(cell, flood);
             floodedCells.Add(cell);
@@ -77,13 +85,38 @@ namespace Strata
             }
         }
 
+        public bool AnyFloodedInRadius(IntVec3 center, float radius)
+        {
+            foreach (IntVec3 cell in floodedCells)
+            {
+                if (cell.InBounds(map) && cell.InHorDistOf(center, radius))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void ClearCell(IntVec3 cell)
         {
             floodedCells.Remove(cell);
             if (!cell.InBounds(map))
             {
+                originalTerrain.Remove(cell);
                 return;
             }
+
+            if (originalTerrain.TryGetValue(cell, out string defName))
+            {
+                originalTerrain.Remove(cell);
+                TerrainDef orig = DefDatabase<TerrainDef>.GetNamedSilentFail(defName);
+                if (orig != null)
+                {
+                    map.terrainGrid.SetTerrain(cell, orig);
+                    return;
+                }
+            }
+
             if (FloodUtility.IsFlooded(map.terrainGrid.TerrainAt(cell)))
             {
                 map.terrainGrid.RemoveTopLayer(cell);

@@ -6,6 +6,7 @@
 
   <Operation Class="PatchOperationFindMod">
     <mods>
+      <li>Dubs Bad Hygiene</li>
       <li>Dubwise.DubsBadHygiene</li>
     </mods>
     <match Class="PatchOperationSequence">
@@ -42,6 +43,7 @@
 
   <Operation Class="PatchOperationFindMod">
     <mods>
+      <li>Dubs Central Heating</li>
       <li>Dubwise.DubsCentralHeating</li>
     </mods>
     <match Class="PatchOperationSequence">
@@ -79,6 +81,7 @@
 
   <Operation Class="PatchOperationFindMod">
     <mods>
+      <li>Rimatomics</li>
       <li>Dubwise.Rimatomics</li>
     </mods>
     <match Class="PatchOperationSequence">
@@ -105,6 +108,7 @@
 
   <Operation Class="PatchOperationFindMod">
     <mods>
+      <li>Vanilla Helixien Gas Expanded</li>
       <li>VanillaExpanded.HelixienGas</li>
     </mods>
     <match Class="PatchOperationSequence">
@@ -142,6 +146,7 @@
 
   <Operation Class="PatchOperationFindMod">
     <mods>
+      <li>Vanilla Temperature Expanded</li>
       <li>VanillaExpanded.Temperature</li>
     </mods>
     <match Class="PatchOperationSequence">
@@ -175,6 +180,7 @@
 
   <Operation Class="PatchOperationFindMod">
     <mods>
+      <li>Rimefeller</li>
       <li>Dubwise.Rimefeller</li>
     </mods>
     <match Class="PatchOperationSequence">
@@ -212,6 +218,7 @@
 
   <Operation Class="PatchOperationFindMod">
     <mods>
+      <li>Vanilla Chemfuel Expanded</li>
       <li>VanillaExpanded.VChemfuelE</li>
     </mods>
     <match Class="PatchOperationSequence">

@@ -110,6 +110,9 @@ namespace Nemesis
             if (__instance.Faction == null || __instance.Faction.IsPlayer || __instance.Faction.def.hidden) return true;
             if (!__instance.RaceProps.Humanlike) return true;
             if (comp.IsNemesisPawn(__instance)) return true;
+            // Public execution / ritual kills are already a death — don't pop hunt UI.
+            if (__instance.IsPrisonerOfColony) return true;
+            if (dinfo.HasValue && dinfo.Value.Def == DamageDefOf.ExecutionCut) return true;
 
             Pawn attacker = dinfo?.Instigator as Pawn;
             if (attacker == null || !attacker.IsColonist) return true;

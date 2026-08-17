@@ -176,6 +176,11 @@
   <DC_Attitude_Indebted>亏欠</DC_Attitude_Indebted>
   <DC_Attitude_Wary>戒备</DC_Attitude_Wary>
   <DC_Attitude_Vengeful>复仇</DC_Attitude_Vengeful>
+  <DC_EnvoyMenu>为 {PAWN} 任命使者…</DC_EnvoyMenu>
+  <DC_MentorMenu>指导 {APPRENTICE}…</DC_MentorMenu>
+  <DC_AssignEnvoy>任命使者…</DC_AssignEnvoy>
+  <DC_ClearEnvoyButton>解除使者</DC_ClearEnvoyButton>
+  <DC_NoEnvoyCandidates>没有可用社交技能的殖民者。</DC_NoEnvoyCandidates>
   <DC_SetEnvoy>任命 {PAWN} 为驻 {FACTION} 使者</DC_SetEnvoy>
   <DC_ClearEnvoy>解除 {PAWN} 的使者职务（{FACTION}）</DC_ClearEnvoy>
   <DC_EnvoyCurrent>（当前）</DC_EnvoyCurrent>

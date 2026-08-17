@@ -267,6 +267,9 @@
   <Strata_OreHoistNeedsPartner>需要另一楼层的相连伙伴吊车。</Strata_OreHoistNeedsPartner>
   <Strata_OreHoistPowered>已通电 — 正在向伙伴楼层运送矿石块。</Strata_OreHoistPowered>
   <Strata_OreHoistNeedsPowerSkip>需要电力以运行吊斗。</Strata_OreHoistNeedsPowerSkip>
+  <Strata_SumpNeedsPower>需要电力才能抽水。</Strata_SumpNeedsPower>
+  <Strata_SumpNoFlood>范围内没有积水。</Strata_SumpNoFlood>
+  <Strata_SumpPumping>正在抽取 {0} 格范围内的积水。</Strata_SumpPumping>
   <Strata_GasScrubberScrubbing>正在从房间清除 {0}。</Strata_GasScrubberScrubbing>
   <Strata_GasScrubberNone>没有可清除的 {0}。</Strata_GasScrubberNone>
   <Strata_TremorOpenedStairwell>震动震开了一座密封楼梯井。</Strata_TremorOpenedStairwell>

@@ -100,10 +100,8 @@ namespace Nemesis
 
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
             Pawn nemesis = comp?.FindNemesisPawn();
-            // After a flee: bigger raid + inject the same nemesis (BFV-style army return).
             bool armyReturn = data.escapeCount > 0;
-            bool canInject = armyReturn
-                && nemesis != null
+            bool canInject = nemesis != null
                 && !nemesis.Dead
                 && !nemesis.Destroyed
                 && !nemesis.IsPrisonerOfColony
@@ -113,15 +111,16 @@ namespace Nemesis
             parms.faction = faction;
             float points = Mathf.Max(250f, parms.points * AggressionRaidFactor(data.EffectiveAggression));
             points *= NemesisProgression.RaidPointsFactor(data);
+            if (canInject)
+            {
+                NemesisPawnUtil.EnsureHuntFaction(nemesis, data.faction ?? faction);
+                NemesisProgression.Apply(nemesis, data);
+                NemesisRaidInject.Arm(nemesis);
+            }
             if (armyReturn)
             {
                 float army = Mathf.Clamp(1.35f + 0.12f * data.escapeCount, 1.35f, 2.6f);
                 points *= army;
-                if (canInject)
-                {
-                    NemesisProgression.Apply(nemesis, data);
-                    NemesisRaidInject.Arm(nemesis);
-                }
                 int stage = Mathf.Clamp(data.escapeCount, 1, 5);
                 parms.customLetterLabel = NemesisTaunts.VengeanceReturnTitle(data, stage);
                 parms.customLetterText = NemesisTaunts.VengeanceReturnBody(data, stage);
@@ -135,11 +134,17 @@ namespace Nemesis
             parms.points = points;
 
             bool ok = raidDef.Worker.TryExecute(parms);
+            bool injectMissed = canInject && NemesisRaidInject.Pending != null;
             NemesisRaidInject.Clear();
             if (!ok)
             {
                 CommsTaunt(data, map);
                 return;
+            }
+            if (injectMissed && nemesis != null && (!nemesis.Spawned || nemesis.Map != map))
+            {
+                if (RCellFinder.TryFindRandomPawnEntryCell(out IntVec3 entry, map, 0f))
+                    NemesisPawnUtil.TrySpawnOnMap(nemesis, map, entry);
             }
 
             if (armyReturn && canInject && nemesis != null && nemesis.Spawned && nemesis.Map == map)

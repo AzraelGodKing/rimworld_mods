@@ -43,25 +43,47 @@ namespace DeepColony
                         if (!reason.NullOrEmpty()) label = label + " (" + reason + ")";
                         yield return new FloatMenuOption(label, null) { Disabled = true };
                     }
-                    else
+                    else if (skills.Count == 1)
                     {
-                        // Family first as a hint on the submenu header option
-                        foreach (SkillDef skill in skills)
-                        {
-                            SkillDef captured = skill;
-                            string label = "DC_BecomeMentorSkill".Translate(
+                        SkillDef captured = skills[0];
+                        string label = lineage
+                            ? "DC_BecomeMentorSkillFamily".Translate(
+                                actor.LabelShort.Named("PAWN"),
+                                targetPawn.LabelShort.Named("APPRENTICE"),
+                                captured.LabelCap.Named("SKILL"))
+                            : "DC_BecomeMentorSkill".Translate(
                                 actor.LabelShort.Named("PAWN"),
                                 targetPawn.LabelShort.Named("APPRENTICE"),
                                 captured.LabelCap.Named("SKILL"));
-                            if (lineage)
-                                label = "DC_BecomeMentorSkillFamily".Translate(
+                        yield return new FloatMenuOption(
+                            label,
+                            () => MentorshipUtility.SetMentorRelation(actor, targetPawn, captured));
+                    }
+                    else
+                    {
+                        List<FloatMenuOption> sub = new List<FloatMenuOption>();
+                        foreach (SkillDef skill in skills)
+                        {
+                            SkillDef captured = skill;
+                            string label = lineage
+                                ? "DC_BecomeMentorSkillFamily".Translate(
+                                    actor.LabelShort.Named("PAWN"),
+                                    targetPawn.LabelShort.Named("APPRENTICE"),
+                                    captured.LabelCap.Named("SKILL"))
+                                : "DC_BecomeMentorSkill".Translate(
                                     actor.LabelShort.Named("PAWN"),
                                     targetPawn.LabelShort.Named("APPRENTICE"),
                                     captured.LabelCap.Named("SKILL"));
-                            yield return new FloatMenuOption(
+                            sub.Add(new FloatMenuOption(
                                 label,
-                                () => MentorshipUtility.SetMentorRelation(actor, targetPawn, captured));
+                                () => MentorshipUtility.SetMentorRelation(actor, targetPawn, captured)));
                         }
+
+                        yield return new FloatMenuOption(
+                            "DC_MentorMenu".Translate(
+                                actor.LabelShort.Named("PAWN"),
+                                targetPawn.LabelShort.Named("APPRENTICE")),
+                            () => Find.WindowStack.Add(new FloatMenu(sub)));
                     }
                 }
                 else

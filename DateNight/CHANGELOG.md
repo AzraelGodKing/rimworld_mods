@@ -13,6 +13,7 @@ Detailed notes for **Date Night** only. Repo-wide highlights: [../CHANGELOG.md](
 - **Dev tools** — Date Night debug: make selected pair lovers, click-to-pair with selected, paint Lovin all day on selected, force lovin now.
 
 ### Fixed
+- **Pregnancy-safe cooldown** — default setting no longer zeros `canLovinTick` on the Lovin schedule; Eager mode still shortens cooldown.
 - **Exosuit Framework schedule overlap (DN1)** — when Exosuit / Piloting occupies the same Schedule-tab slot as Lovin, Lovin draws on the second row so both stay clickable (fail-open if Exosuit absent).
 - **Startup TimeAssignmentDefOf warning** — Harmony `PatchAll` no longer runs in the Mod ctor (compiling the Schedule-tab patch touched `TimeAssignmentSelector` / `TimeAssignmentDefOf` before DefOfs init). Patches apply in `StaticConstructorOnStartup` after defs load.
 - **Lovin never firing on schedule** — pawns preferred their own single beds (vanilla requires a shared double), hourly chance burned while waiting alone, and MustKeepLyingDown kept them stuck. Now both path to one cached rendezvous double bed; tick forces LayDown + Lovin when both are in it.
