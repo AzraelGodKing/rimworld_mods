@@ -176,6 +176,11 @@
   <DC_Attitude_Indebted>Обязанное</DC_Attitude_Indebted>
   <DC_Attitude_Wary>Настороженное</DC_Attitude_Wary>
   <DC_Attitude_Vengeful>Мстительное</DC_Attitude_Vengeful>
+  <DC_EnvoyMenu>Посланник для {PAWN}…</DC_EnvoyMenu>
+  <DC_MentorMenu>Наставник для {APPRENTICE}…</DC_MentorMenu>
+  <DC_AssignEnvoy>Назначить посланника…</DC_AssignEnvoy>
+  <DC_ClearEnvoyButton>Снять посланника</DC_ClearEnvoyButton>
+  <DC_NoEnvoyCandidates>Нет колонистов с навыком общения.</DC_NoEnvoyCandidates>
   <DC_SetEnvoy>Сделать {PAWN} посланником к {FACTION}</DC_SetEnvoy>
   <DC_ClearEnvoy>Снять роль посланника с {PAWN} ({FACTION})</DC_ClearEnvoy>
   <DC_EnvoyCurrent>(текущий)</DC_EnvoyCurrent>

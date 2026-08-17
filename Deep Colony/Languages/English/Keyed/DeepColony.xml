@@ -176,6 +176,11 @@
   <DC_Attitude_Indebted>Indebted</DC_Attitude_Indebted>
   <DC_Attitude_Wary>Wary</DC_Attitude_Wary>
   <DC_Attitude_Vengeful>Vengeful</DC_Attitude_Vengeful>
+  <DC_EnvoyMenu>Envoy for {PAWN}…</DC_EnvoyMenu>
+  <DC_MentorMenu>Mentor {APPRENTICE}…</DC_MentorMenu>
+  <DC_AssignEnvoy>Assign envoy…</DC_AssignEnvoy>
+  <DC_ClearEnvoyButton>Clear envoy</DC_ClearEnvoyButton>
+  <DC_NoEnvoyCandidates>No colonists with Social available.</DC_NoEnvoyCandidates>
   <DC_SetEnvoy>Make {PAWN} envoy to {FACTION}</DC_SetEnvoy>
   <DC_ClearEnvoy>Clear {PAWN}'s envoy role ({FACTION})</DC_ClearEnvoy>
   <DC_EnvoyCurrent>(current)</DC_EnvoyCurrent>
