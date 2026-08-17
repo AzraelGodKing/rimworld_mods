@@ -109,7 +109,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
@@ -178,7 +178,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>

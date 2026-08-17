@@ -5,6 +5,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 ## [Unreleased]
 
 ### Added
+- **Homestead architect tab** — crates, barrels, pallet, hayloft, cellars, icehouse, springhouse, cistern, and water tower moved off Furniture (Steam Aug 6). If Adaptive Storage Framework is loaded, those defs list on its Storage tab instead (fail-open).
 - **Update idea pool** — Workshop QoL (architect tab, ASF Storage patch, texture audit, settings) plus pantry/yard/farmstand/waterwheel phases. Goat pen stays removed; dairy shed is the livestock follow-up. Spec: [docs/ideas/homesteader-updates.md](../docs/ideas/homesteader-updates.md).
 - **Optional texture refresh** — Mod Options → Homesteader → "Use refreshed textures" (off by default). Original sprites are kept. The new pack gives every building, item, plant, and floor its own unique texture (no more shared jam/cellar/etc. placeholders); orchard trees and composted soil get dedicated art too. `_*_{north,south,east,west}` files are one building from four camera angles, not four different objects. Curing rack refresh redone as one mixed-charcuterie rack (hams, sausages, bacon slab, netted salami) with matching facings. Diggo keeps brought `art/brought/HippoDogPlushie.png`; the 27 statue keeps brought `art/brought/27_2.0.png` (neither is in the refresh swap). Outliers that read as product photos, RPG loot, or true-isometric renders (apparel, power buildings, maypole, monuments, grand 27, shark plushie, chicken coop, beehive, icehouse/root cellar/springhouse, solar still, water tower, orchard trees, crops, jam/mason jar/pie/cans) were redrawn against actual Core sprites (wood-fired generator, cowboy hat, oak/maple, chess table, sculptures): thick dark outlines, muted palette, flattened top-down 3/4 camera. EN/CN/RU settings strings. Restart if sprites look stale after toggling.
 - **Azrael storyteller** — Cassandra-style pacing with slightly more Misc / ThreatSmall (series flavor). Canonical package; the optional Azrael showcase mod only injects this teller if Homesteader is not loaded.
@@ -14,6 +15,11 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **CN / RU language packs** — Chinese Simplified and Russian Keyed + full DefInjected (buildings, items, plants, recipes, research, thoughts, hediffs, incidents, and related defs).
 
 ### Fixed
+- **Handheld soap** — wash consumes a bar (`CompUseEffect_DestroySelf`); the tub already used fuel.
+- **Allergy catalog** — pumpkin pie, ploughman's lunch, bread, flapjacks, and toast-and-jam match milk and/or wheat.
+- **Root cellar description** — UTF-8 dash and `5°C` instead of mojibake.
+- **Cistern / water tower** — ShelfBase storage parity so bills/hauling see contents.
+- **Dubs Bad Hygiene plumbing** — `PatchOperationFindMod` matches the Workshop display name so pipe comps actually attach.
 - **Quilted bed blanks Furniture UI** — added `CompProperties_AffectedByFacilities` (BedWithQualityBase PlaceWorker NRE without it, same class of bug as bedroll).
 - **Crates / barrels invisible to cook & cure bills** — Homesteader `Building_Storage` defs now match vanilla ShelfBase parity (`ignoreStoredThingsBeauty`, `Blueprint_Storage`, `storageGroupTag`, `disallowNotEverStorable`), including icehouse / springhouse. Should also unstick curing-rack “only salt works” when meat was parked in ingredient barrels.
 - **Allergy flare without eating** — food allergy hediff / discovery no longer run from `ThoughtsFromIngesting` (also used by food AI and ingest menus). Reactions apply only on real `Thing.Ingested`.
