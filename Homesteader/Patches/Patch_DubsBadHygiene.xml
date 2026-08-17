@@ -8,6 +8,7 @@
 
   <Operation Class="PatchOperationFindMod">
     <mods>
+      <li>Dubs Bad Hygiene</li>
       <li>Dubwise.DubsBadHygiene</li>
     </mods>
     <match Class="PatchOperationSequence">

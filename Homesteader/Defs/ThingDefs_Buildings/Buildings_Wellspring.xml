@@ -125,10 +125,14 @@
       <Steel>25</Steel>
     </costList>
     <building>
+      <storageGroupTag>HomesteaderStorage</storageGroupTag>
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
+      <blueprintClass>Blueprint_Storage</blueprintClass>
       <maxItemsInCell>4</maxItemsInCell>
       <fixedStorageSettings>
         <filter>
+          <disallowNotEverStorable>true</disallowNotEverStorable>
           <thingDefs>
             <li>Wellspring_Water</li>
           </thingDefs>
@@ -146,7 +150,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
@@ -285,10 +289,14 @@
       <Steel>50</Steel>
     </costList>
     <building>
+      <storageGroupTag>HomesteaderStorage</storageGroupTag>
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
+      <blueprintClass>Blueprint_Storage</blueprintClass>
       <maxItemsInCell>4</maxItemsInCell>
       <fixedStorageSettings>
         <filter>
+          <disallowNotEverStorable>true</disallowNotEverStorable>
           <thingDefs>
             <li>Wellspring_Water</li>
           </thingDefs>
@@ -306,7 +314,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>

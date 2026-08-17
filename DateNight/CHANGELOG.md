@@ -15,6 +15,8 @@ Detailed notes for **Date Night** only. Repo-wide highlights: [../CHANGELOG.md](
 ### Fixed
 - **Rimbody / workout schedule overlap** — Lovin sat on Rimbody’s Workout cell, so the rose button showed Lovin but clicks opened the workout / Joy dropdown. Lovin now takes the next free extra column (also Exosuit Piloting and Schedule Everything). Fail-open if those mods are absent.
 - **Exosuit Framework schedule overlap (DN1)** — Piloting also takes an extra column; Lovin sits one slot further right (no longer covers Joy).
+- **Pregnancy-safe cooldown** — default setting no longer zeros `canLovinTick` on the Lovin schedule; Eager mode still shortens cooldown.
+- **Exosuit Framework schedule overlap (DN1)** — when Exosuit / Piloting occupies the same Schedule-tab slot as Lovin, Lovin draws on the second row so both stay clickable (fail-open if Exosuit absent).
 - **Startup TimeAssignmentDefOf warning** — Harmony `PatchAll` no longer runs in the Mod ctor (compiling the Schedule-tab patch touched `TimeAssignmentSelector` / `TimeAssignmentDefOf` before DefOfs init). Patches apply in `StaticConstructorOnStartup` after defs load.
 - **Lovin never firing on schedule** — pawns preferred their own single beds (vanilla requires a shared double), hourly chance burned while waiting alone, and MustKeepLyingDown kept them stuck. Now both path to one cached rendezvous double bed; tick forces LayDown + Lovin when both are in it.
 - **Bed claim storm** — tick loop called `ClaimBedIfNonMedical` on a new free double whenever reserve checks failed, so couples ate every bed on the map. Ownership claims removed from the hot path; one rendezvous bed is cached per couple and LayDown’s own toil handles claiming.
