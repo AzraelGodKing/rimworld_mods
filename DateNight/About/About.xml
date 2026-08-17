@@ -17,6 +17,10 @@
   <loadAfter>
     <li>brrainz.harmony</li>
     <li>Ludeon.RimWorld</li>
+    <!-- Soft: draw Lovin after their extra Schedule buttons so the column index matches. -->
+    <li>Maux36.Rimbody</li>
+    <li>AOBA.ExosuitFramework</li>
+    <li>AOBA.MechsuitFramework</li>
   </loadAfter>
   <description>Adds a Lovin timetable slot to the Schedule tab.
 
