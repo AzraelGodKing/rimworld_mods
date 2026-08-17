@@ -23,6 +23,8 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Chinese Simplified & Russian language packs** — full Keyed + DefInjected translations (perks, trauma, mentoring, inheritance, jobs, thoughts).
 
 ### Fixed
+- **Envoy right-click flood** — pawn float menu is one Envoy submenu instead of a row per faction; Reputation tab can assign/clear envoy (Steam Aug 15).
+- **Mentor float menu** — multiple teachable skills nest under one Mentor submenu.
 - **Warden dread ThoughtDef** — removed invalid `validWhileMinified` XML field (1.6 load error).
 - **Reputation tab layout** — left list is name/goodwill only; attitude, standing, envoy, and ledger show on the right after selecting a faction.
 - **Fix lineage check** — `IsLineagePair` no longer calls `DirectRelationExists` on Sibling/Grandparent/Grandchild (implied relations); stops log spam on mentor float menu.

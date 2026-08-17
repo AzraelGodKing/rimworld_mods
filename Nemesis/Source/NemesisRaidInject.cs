@@ -39,7 +39,10 @@ namespace Nemesis
             Pawn inject = NemesisRaidInject.Pending;
             if (!yielded || inject == null || parms == null) yield break;
             if (parms.groupKind != PawnGroupKindDefOf.Combat) yield break;
-            if (parms.faction == null || inject.Faction != parms.faction) yield break;
+            if (parms.faction == null) yield break;
+            if (inject.Faction != parms.faction)
+                NemesisPawnUtil.EnsureHuntFaction(inject, parms.faction);
+            if (inject.Faction != parms.faction) yield break;
             if (inject.Destroyed || inject.Dead || inject.IsPrisonerOfColony) yield break;
             // Soft-compat: don't double-inject if BFV/Rimesis already owns them.
             if (SoftCompat.IsForeignAntagonistPawn(inject))

@@ -42,9 +42,16 @@ namespace Strata
 
         public override string CompInspectStringExtra()
         {
-            return Active
-                ? "Pumping flood water within " + Props.clearRadius.ToString("0.#") + " tiles."
-                : "Needs power to pump water.";
+            if (!Active)
+            {
+                return "Strata_SumpNeedsPower".Translate();
+            }
+            FloodMapComponent flood = parent.Map.GetComponent<FloodMapComponent>();
+            if (flood == null || !flood.AnyFloodedInRadius(parent.Position, Props.clearRadius))
+            {
+                return "Strata_SumpNoFlood".Translate();
+            }
+            return "Strata_SumpPumping".Translate(Props.clearRadius.ToString("0.#"));
         }
     }
 }

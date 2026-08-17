@@ -14,8 +14,8 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 ## Phase 0 — Workshop QoL
 
-- [ ] **HS-Q01** Homesteader architect tab (storage/cellars off Furniture)
-- [ ] **HS-Q02** Adaptive Storage Framework Storage-tab patch (fail-open)
+- [x] **HS-Q01** Homesteader architect tab (storage/cellars off Furniture)
+- [x] **HS-Q02** Adaptive Storage Framework Storage-tab patch (fail-open)
 - [ ] **HS-Q03** Texture audit (directional drying rack / missing `_north`)
 - [ ] **HS-Q04** Player settings pack (allergies, favorites, coop, Kats, cooling)
 

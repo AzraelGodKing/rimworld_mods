@@ -31,6 +31,9 @@ Paste-ready BBCode for Workshop updates: [`../assets/workshop/strata-update-note
 - **Workshop description** - About / Steam text updated for Version 3 features.
 
 ### Fixed
+- **Flood seep / sump** — pumping restores the original floor instead of leaving shallow water forever (`SetTerrain` + `RemoveTopLayer` was a no-op). Inspect string says if there is no flood in range (Steam Jul 26).
+- **Ore hoist singles** — single-item stacks despawn before placing on the partner level so they actually transfer.
+- **Shaft-fluid FindMod** — DBH / VE / Rimatomics / Rimefeller pipe comps match Workshop display names (packageId-only lists never attached).
 - **Prioritize haul to B1 storage** (`haul-b1-store-v2` / `haul-complete-path-v1` / `haul-needs-parity-v1`) - float menu "Cannot haul… no accessible spot" only checks the current map. *Haul to another level* finds linked shelves, only takes a shaft with a walk to that stockpile, and auto-haul uses the same vanilla "needs haul" rules (designations / no local spot) then finishes with a normal haul-to-cell into the chosen shelf.
 - **Climbing upstairs crash** (`orphan-stairs-enter-v1`) - going up an orphan / unlinked landing no longer null-refs in vanilla `PocketMapExit.OnEntered` (missing stair entrance). Pawns still exit to the surface map.
 - **Auto haul to another floor** (`haul-export-claim-v1`) - loose loot that only *Force haul* would move downstairs now gets picked up automatically when a better stockpile is on a linked floor.

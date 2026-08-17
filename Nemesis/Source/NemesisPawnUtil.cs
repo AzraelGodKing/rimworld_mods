@@ -92,6 +92,13 @@ namespace Nemesis
                 Find.WorldPawns.PassToWorld(pawn, PawnDiscardDecideMode.KeepForever);
         }
 
+        public static void EnsureHuntFaction(Pawn pawn, Faction faction)
+        {
+            if (pawn == null || pawn.Destroyed || faction == null || faction.defeated) return;
+            if (pawn.Faction == faction) return;
+            pawn.SetFaction(faction);
+        }
+
         public static bool TrySpawnOnMap(Pawn pawn, Map map, IntVec3 cell)
         {
             if (pawn == null || pawn.Destroyed || map == null || !cell.IsValid) return false;

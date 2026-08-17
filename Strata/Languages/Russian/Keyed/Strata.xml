@@ -266,6 +266,9 @@
   <Strata_OreHoistNeedsPartner>Нужен связанный парный подъёмник на другом уровне.</Strata_OreHoistNeedsPartner>
   <Strata_OreHoistPowered>Под питанием — переправляет куски руды на парный уровень.</Strata_OreHoistPowered>
   <Strata_OreHoistNeedsPowerSkip>Нужно питание для работы бадьи.</Strata_OreHoistNeedsPowerSkip>
+  <Strata_SumpNeedsPower>Нужно питание, чтобы качать воду.</Strata_SumpNeedsPower>
+  <Strata_SumpNoFlood>В радиусе нет паводковой воды.</Strata_SumpNoFlood>
+  <Strata_SumpPumping>Откачивает воду в радиусе {0} клеток.</Strata_SumpPumping>
   <Strata_GasScrubberScrubbing>Очищает {0} из комнаты.</Strata_GasScrubberScrubbing>
   <Strata_GasScrubberNone>Нет {0} для очистки.</Strata_GasScrubberNone>
   <Strata_TremorOpenedStairwell>Толчок расшатал и открыл запечатанную лестницу.</Strata_TremorOpenedStairwell>

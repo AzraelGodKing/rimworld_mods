@@ -160,6 +160,7 @@
         <compClass>CompUsable</compClass>
       </li>
       <li Class="Homesteader.CompProperties_UseEffectWashWithSoap" />
+      <li Class="CompProperties_UseEffectDestroySelf" />
     </comps>
     <thingCategories>
       <li>Manufactured</li>

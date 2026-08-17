@@ -20,6 +20,7 @@
     <li>brrainz.harmony</li>
     <!-- Optional: when Dubs Bad Hygiene is present, Homesteader water buildings join its plumbing. -->
     <li>Dubwise.DubsBadHygiene</li>
+    <li>adaptive.storage.framework</li>
   </loadAfter>
   <description>Everything a growing homestead needs: tribal survival, farm-to-table crafting, wells and irrigation, storage, food preservation, and off-grid power.
 

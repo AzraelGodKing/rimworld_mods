@@ -4,6 +4,9 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
+- **Hunt raids omit the nemesis** — Direct Raid injects the named pawn whenever the hunt is active (not only after the first flee); hunt faction is restored after parking as a world pawn; if the raid group never generated them they spawn at the map edge (Steam Aug 15).
+- **Phantom escape letters** — flee only when the nemesis is spawned, hostile, and on a player home map (not a world pawn).
+- **Ideology public execution** — killing a colony prisoner / ExecutionCut no longer intercepts as cinematic wounded-escape (Steam Aug 11).
 - **GitHub zip restored** — `Nemesis.zip` published again on the rolling `latest` release for non-Steam installs (alongside Workshop).
 - **Marked scenario** — personal-antagonist showcase start (flak + revolvers); locks Azrael when Homesteader is loaded.
 - **Rimesis / BFV soft-compat** — public `NemesisCompatApi` (`HasActiveHunt`, `ActiveNemesisPawn`, `IsNemesisPawn`, `WouldClaim`, `ShouldReportMissingToRimesis`) for Font’s Rimesis; skip hunt create / raid inject when a pawn already has Rimesis/BFV hediff markers. Solo behavior unchanged. Spec: `docs/ideas/nemesis-rimesis-compat.md`.
