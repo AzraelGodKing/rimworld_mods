@@ -40,7 +40,7 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 ## Phase 4 — Power & season
 
-- [x] **Water building ladder** — barrel trickle → cistern stockpile+catch → tower capacity; hand-dug → deep well; still = boiled sidegrade
+- [x] **Water building ladder** — barrel trickle → cistern stockpile+catch → tower capacity; hand-dug → deep well; still = boiled sidegrade; fountain drinks jugs
 - [ ] **HS-A11** **Waterwheel** — river water power; interacts with Stormproof droughts
 - [ ] **HS-A12** Maple sugaring season
 - [ ] **HS-A13** Rain-aware barrels / drought empty
