@@ -69,8 +69,18 @@ namespace Strata
                     break;
                 }
                 Thing payload = thing.stackCount > 1 ? thing.SplitOff(1) : thing;
-                GenPlace.TryPlaceThing(payload, drop, toMap, ThingPlaceMode.Near);
-                moved++;
+                if (payload.Spawned)
+                {
+                    payload.DeSpawn();
+                }
+                if (GenPlace.TryPlaceThing(payload, drop, toMap, ThingPlaceMode.Near))
+                {
+                    moved++;
+                }
+                else if (!payload.Destroyed && !payload.Spawned)
+                {
+                    GenPlace.TryPlaceThing(payload, from.Position, fromMap, ThingPlaceMode.Near);
+                }
             }
         }
 

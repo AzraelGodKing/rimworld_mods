@@ -53,7 +53,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
@@ -116,7 +116,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
@@ -178,7 +178,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
@@ -248,7 +248,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
@@ -320,7 +320,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
@@ -386,7 +386,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
@@ -403,7 +403,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_RootCellar</defName>
     <label>root cellar</label>
-    <description>A buried cellar lined with stone and earth. Holds six stacks of food and drink. Contents on the cellar â€” and food in adjacent indoor cells â€” stay at or below 5Â°C for spoilage, and are sheltered from outdoor weather.</description>
+    <description>A buried cellar lined with stone and earth. Holds six stacks of food and drink. Contents on the cellar — and food in adjacent indoor cells — stay at or below 5°C for spoilage, and are sheltered from outdoor weather.</description>
     <thingClass>Building_Storage</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/RootCellar</texPath>
@@ -458,7 +458,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
@@ -590,7 +590,7 @@
     <inspectorTabs>
       <li>ITab_Storage</li>
     </inspectorTabs>
-    <designationCategory>Furniture</designationCategory>
+    <designationCategory>Homesteader_Storage</designationCategory>
     <surfaceType>Item</surfaceType>
     <canOverlapZones>false</canOverlapZones>
     <minifiedDef>MinifiedThing</minifiedDef>
