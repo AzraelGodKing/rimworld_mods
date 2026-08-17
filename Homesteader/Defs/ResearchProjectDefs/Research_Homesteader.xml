@@ -108,7 +108,7 @@
   <ResearchProjectDef>
     <defName>Wellspring_Wellcraft</defName>
     <label>wellcraft</label>
-    <description>Digging and lining wells, coopering rain barrels, and building cisterns: the craft of finding water and keeping it.</description>
+    <description>Digging and lining wells, coopering rain barrels, and covering cisterns: catch a trickle, then keep it. Rain barrels start you; a cistern stores and fills itself; a solar still yields boiled water where rain never comes.</description>
     <baseCost>500</baseCost>
     <techLevel>Neolithic</techLevel>
     <tab>Homesteader</tab>
@@ -133,7 +133,7 @@
   <ResearchProjectDef>
     <defName>Wellspring_Waterworks</defName>
     <label>waterworks</label>
-    <description>Deeper shafts, taller tanks: reinforced deep wells that tap the water table and elevated towers that stockpile serious reserves.</description>
+    <description>Deeper shafts and taller tanks. A deep well hauls four times a hand-dug bucket. A water tower holds twenty-four stacks, fills faster than a cistern, and keeps the reserve critical. The stone fountain is the courtyard flex once you have water to spare.</description>
     <baseCost>1200</baseCost>
     <techLevel>Medieval</techLevel>
     <tab>Homesteader</tab>

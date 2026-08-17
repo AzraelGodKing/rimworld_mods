@@ -5,7 +5,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Wellspring_HandDugWell</defName>
     <label>hand-dug well</label>
-    <description>A stone-lined well with a wooden windlass and bucket. Colonists draw jugs of fresh water by hand - slow, honest labor that works anywhere with ground under it.</description>
+    <description>A stone-lined well with a wooden windlass and bucket. On-demand water: colonists spend labor and get five jugs, rain or drought. Slow honest work — replace it with a deep well when the homestead's thirst outruns the bucket.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Wellspring/Buildings/HandDugWell</texPath>
@@ -50,7 +50,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Wellspring_RainBarrel</defName>
     <label>rain barrel</label>
-    <description>A lidded wooden barrel that slowly collects rainwater and morning dew. Cheap, passive, and every roofline should have one. Works best left outdoors.</description>
+    <description>A lidded wooden barrel that slowly collects rainwater and morning dew. Cheap starter catch — a trickle of three jugs every day or two, dumped beside the barrel where they can weather. Upgrade to a cistern when you need a real reserve.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Wellspring/Buildings/RainBarrel</texPath>
@@ -76,9 +76,9 @@
     <comps>
       <li Class="CompProperties_Spawner">
         <thingToSpawn>Wellspring_Water</thingToSpawn>
-        <spawnCount>4</spawnCount>
-        <spawnIntervalRange>60000~120000</spawnIntervalRange>
-        <spawnMaxAdjacent>30</spawnMaxAdjacent>
+        <spawnCount>3</spawnCount>
+        <spawnIntervalRange>70000~110000</spawnIntervalRange>
+        <spawnMaxAdjacent>12</spawnMaxAdjacent>
         <spawnForbidden>false</spawnForbidden>
         <writeTimeLeftToSpawn>true</writeTimeLeftToSpawn>
         <showMessageIfOwned>false</showMessageIfOwned>
@@ -101,8 +101,9 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Wellspring_Cistern</defName>
     <label>cistern</label>
-    <description>A wide, covered stone tank for stockpiling water where the buckets can't spill and the sun can't reach it. Holds eight stacks of water.</description>
+    <description>A wide, covered stone tank that catches runoff and dew, then keeps the jugs where they will not weather. Holds eight stacks and slowly fills itself — a rain barrel that actually stores what it catches. Replace barrels with this once the homestead drinks faster than a trickle.</description>
     <thingClass>Building_Storage</thingClass>
+    <tickerType>Normal</tickerType>
     <graphicData>
       <texPath>Wellspring/Buildings/Cistern</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -119,11 +120,24 @@
       <WorkToBuild>1400</WorkToBuild>
       <Mass>30</Mass>
       <Flammability>0.1</Flammability>
+      <Beauty>2</Beauty>
     </statBases>
     <costList>
       <WoodLog>25</WoodLog>
       <Steel>25</Steel>
     </costList>
+    <comps>
+      <li Class="CompProperties_Spawner">
+        <thingToSpawn>Wellspring_Water</thingToSpawn>
+        <spawnCount>8</spawnCount>
+        <spawnIntervalRange>50000~80000</spawnIntervalRange>
+        <spawnMaxAdjacent>40</spawnMaxAdjacent>
+        <spawnForbidden>false</spawnForbidden>
+        <writeTimeLeftToSpawn>true</writeTimeLeftToSpawn>
+        <showMessageIfOwned>false</showMessageIfOwned>
+        <saveKeysPrefix>cistern</saveKeysPrefix>
+      </li>
+    </comps>
     <building>
       <storageGroupTag>HomesteaderStorage</storageGroupTag>
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
@@ -167,7 +181,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Wellspring_DeepWell</defName>
     <label>deep well</label>
-    <description>A reinforced shaft sunk far past the shallow groundwater, with a heavy steel windlass and a wide bucket. Each haul brings up far more water than a hand-dug well.</description>
+    <description>A reinforced shaft sunk far past the shallow groundwater, with a heavy steel windlass and a wide bucket. Each haul brings up twenty jugs — four times a hand-dug well — for only a little more work. Build this when colonists spend their days on the windlass instead of the fields.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Wellspring/Buildings/DeepWell</texPath>
@@ -212,7 +226,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Wellspring_SolarStill</defName>
     <label>solar still</label>
-    <description>A shallow pit lined with hide and glass that sweats moisture out of the ground and air, condensing it drop by drop. Slow, but it works even where it never rains.</description>
+    <description>A shallow pit lined with hide and glass that sweats moisture out of the ground and air. Slow, and it yields boiled water already — the arid-biome sidegrade, not a faster rain barrel. Use it where rain never comes, or when you want clean jugs without a stove.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Wellspring/Buildings/SolarStill</texPath>
@@ -238,10 +252,10 @@
     </costList>
     <comps>
       <li Class="CompProperties_Spawner">
-        <thingToSpawn>Wellspring_Water</thingToSpawn>
-        <spawnCount>2</spawnCount>
-        <spawnIntervalRange>30000~60000</spawnIntervalRange>
-        <spawnMaxAdjacent>30</spawnMaxAdjacent>
+        <thingToSpawn>Wellspring_BoiledWater</thingToSpawn>
+        <spawnCount>1</spawnCount>
+        <spawnIntervalRange>40000~70000</spawnIntervalRange>
+        <spawnMaxAdjacent>15</spawnMaxAdjacent>
         <spawnForbidden>false</spawnForbidden>
         <writeTimeLeftToSpawn>true</writeTimeLeftToSpawn>
         <showMessageIfOwned>false</showMessageIfOwned>
@@ -264,8 +278,9 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Wellspring_WaterTower</defName>
     <label>water tower</label>
-    <description>A tall timber-framed tank raised on stout legs, holding a serious reserve of water out of the sun and out of the mud. Holds sixteen stacks.</description>
+    <description>A tall timber-framed tank on stout legs: gravity catchment plus a serious reserve out of the sun and the mud. Holds twenty-four stacks (six per cell), fills faster than a cistern, and haulers treat it as critical. Replace cisterns when irrigation and the kitchen start emptying the tank overnight.</description>
     <thingClass>Building_Storage</thingClass>
+    <tickerType>Normal</tickerType>
     <graphicData>
       <texPath>Wellspring/Buildings/WaterTower</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -283,17 +298,30 @@
       <WorkToBuild>2800</WorkToBuild>
       <Mass>70</Mass>
       <Flammability>0.6</Flammability>
+      <Beauty>8</Beauty>
     </statBases>
     <costList>
       <WoodLog>50</WoodLog>
       <Steel>50</Steel>
     </costList>
+    <comps>
+      <li Class="CompProperties_Spawner">
+        <thingToSpawn>Wellspring_Water</thingToSpawn>
+        <spawnCount>12</spawnCount>
+        <spawnIntervalRange>40000~60000</spawnIntervalRange>
+        <spawnMaxAdjacent>75</spawnMaxAdjacent>
+        <spawnForbidden>false</spawnForbidden>
+        <writeTimeLeftToSpawn>true</writeTimeLeftToSpawn>
+        <showMessageIfOwned>false</showMessageIfOwned>
+        <saveKeysPrefix>watertower</saveKeysPrefix>
+      </li>
+    </comps>
     <building>
       <storageGroupTag>HomesteaderStorage</storageGroupTag>
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
       <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
       <blueprintClass>Blueprint_Storage</blueprintClass>
-      <maxItemsInCell>4</maxItemsInCell>
+      <maxItemsInCell>6</maxItemsInCell>
       <fixedStorageSettings>
         <filter>
           <disallowNotEverStorable>true</disallowNotEverStorable>
@@ -303,7 +331,7 @@
         </filter>
       </fixedStorageSettings>
       <defaultStorageSettings>
-        <priority>Important</priority>
+        <priority>Critical</priority>
         <filter>
           <thingDefs>
             <li>Wellspring_Water</li>
@@ -327,7 +355,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Wellspring_StoneFountain</defName>
     <label>stone fountain</label>
-    <description>A carved stone basin with a gentle plume of water at its center. It serves no purpose except to remind everyone that the colony has water to spare - which is exactly the point.</description>
+    <description>A carved stone basin with a gentle plume of water at its center. The waterworks vanity piece: it makes no jugs, but the courtyard says the homestead has water to spare. Research waterworks first.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Wellspring/Buildings/StoneFountain</texPath>
@@ -345,14 +373,14 @@
     </stuffCategories>
     <costStuffCount>120</costStuffCount>
     <costList>
-      <Wellspring_Water>10</Wellspring_Water>
+      <Wellspring_Water>25</Wellspring_Water>
     </costList>
     <statBases>
       <MaxHitPoints>250</MaxHitPoints>
       <WorkToBuild>4000</WorkToBuild>
       <Mass>45</Mass>
       <Flammability>0</Flammability>
-      <Beauty>30</Beauty>
+      <Beauty>40</Beauty>
     </statBases>
     <designationCategory>Furniture</designationCategory>
     <canOverlapZones>false</canOverlapZones>
@@ -362,7 +390,7 @@
     </thingCategories>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
     <researchPrerequisites>
-      <li>Wellspring_Wellcraft</li>
+      <li>Wellspring_Waterworks</li>
     </researchPrerequisites>
   </ThingDef>
 
