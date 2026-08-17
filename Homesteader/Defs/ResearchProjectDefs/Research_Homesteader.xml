@@ -133,7 +133,7 @@
   <ResearchProjectDef>
     <defName>Wellspring_Waterworks</defName>
     <label>waterworks</label>
-    <description>Deeper shafts and taller tanks. A deep well hauls four times a hand-dug bucket. A water tower holds twenty-four stacks, fills faster than a cistern, and keeps the reserve critical. The stone fountain is the courtyard flex once you have water to spare.</description>
+    <description>Deeper shafts and taller tanks. A deep well hauls four times a hand-dug bucket. A water tower holds twenty-four stacks, fills faster than a cistern, and keeps the reserve critical. The stone fountain drinks water jugs to keep the courtyard plume going.</description>
     <baseCost>1200</baseCost>
     <techLevel>Medieval</techLevel>
     <tab>Homesteader</tab>
