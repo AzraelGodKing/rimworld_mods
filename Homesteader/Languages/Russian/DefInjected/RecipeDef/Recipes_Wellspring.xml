@@ -5,7 +5,7 @@
   <Wellspring_DrawWater.description>Опустить ведро на лебёдке и поднять кувшины свежей воды.</Wellspring_DrawWater.description>
   <Wellspring_DrawWater.jobString>Черпает воду.</Wellspring_DrawWater.jobString>
   <Wellspring_DrawWaterDeep.label>черпать воду из глубины</Wellspring_DrawWaterDeep.label>
-  <Wellspring_DrawWaterDeep.description>Опустить широкое ведро мимо неглубоких грунтовых вод и поднять тяжёлую порцию свежей воды.</Wellspring_DrawWaterDeep.description>
+  <Wellspring_DrawWaterDeep.description>Опустить широкое ведро мимо неглубоких грунтовых вод. Двадцать кувшинов за подъём — вчетверо больше ручного колодца — лишь чуть дольше на вороте.</Wellspring_DrawWaterDeep.description>
   <Wellspring_DrawWaterDeep.jobString>Черпает воду.</Wellspring_DrawWaterDeep.jobString>
   <Wellspring_BoilWater.label>кипятить воду</Wellspring_BoilWater.label>
   <Wellspring_BoilWater.description>Прокипятить воду из кувшинов на огне.</Wellspring_BoilWater.description>
