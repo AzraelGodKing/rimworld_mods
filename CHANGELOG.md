@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Date Night** — adults on Lovin hours can have private time in a single bed when no partner is sharing a double (off in settings). → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Pre-ship general fixes** (`fix/general-fixes`) — Homesteader ASF tab hijack, meal-ingredient allergies, storage capacity copy; Nemesis execution hunts + fixation MapHeld; Strata upstairs enter, gravship stairs, second-shaft pocket; Deep Colony Isekai aptitude inherit, birth stamp, Biotech backoff; Date Night Lovin rest fallback. → per-mod changelogs.
 - **Strata** — gravship stairwells/elevators no longer vanish on launch (`gravship-stairs-launch-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Date Night** — Lovin schedule button no longer shares Rimbody’s Workout cell (clicks were opening the workout dropdown). → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
