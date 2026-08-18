@@ -43,6 +43,12 @@ namespace DateNight
             {
                 Settings.pregnancySafeCooldown = false;
             }
+            listing.Gap(6f);
+
+            listing.CheckboxLabeled(
+                "DateNight_Settings_SelfLovin".Translate(),
+                ref Settings.allowSelfLovin,
+                "DateNight_Settings_SelfLovinTip".Translate());
             listing.Gap(10f);
 
             if (listing.ButtonText("DateNight_Settings_Reset".Translate(), null, 0.25f))
