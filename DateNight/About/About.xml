@@ -26,16 +26,18 @@
 
 Paint Lovin on both partners for the same hours. Each colonist goes to their bed and waits. When both are in a shared double bed, lovin uses a short mean-time-between (like the vanilla Always Do Lovin debug option) until the schedule changes — then behavior returns to normal.
 
+Adults without a partner in that bed can have some private time in any bed (including a single). No pregnancy. Toggle it off in mod settings.
+
 Works for no-sleep / low-rest pawns who never hit a Sleep block: Lovin still sends them to bed.
 
 REQUIREMENTS
-- Both partners scheduled Lovin for the window (independent pathing).
-- Love relationship and a shared double bed (vanilla GetPartnerInMyBed rules).
-- Single bed or missing partner: they wait in bed; no lovin.
+- Couples: both scheduled Lovin, love relationship, shared double bed.
+- Private time: adult colonist, Lovin hours, a reachable bed. Children never qualify.
 
 SETTINGS
 - Pregnancy-safe cooldown (default ON): keeps vanilla post-lovin cooldown; only shortens the chance MTB while scheduled.
 - Eager mode (optional): also shortens post-lovin cooldown like Always Do Lovin — can spam pregnancy rolls.
+- Allow private time (default ON): self-lovin when a partner is not sharing a double.
 
 Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: clear Lovin schedule slots back to Sleep/Anything.</description>
 </ModMetaData>
