@@ -3,7 +3,7 @@
 Player-facing release notes for Strata (Steam Workshop style).
 Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
 
-Paste-ready BBCode for Workshop updates: [`../assets/workshop/strata-update-notes.bbcode`](../assets/workshop/strata-update-notes.bbcode).
+Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog.txt) · [`../assets/workshop/strata-update-notes.bbcode`](../assets/workshop/strata-update-notes.bbcode).
 
 **Build stamp:** each DLL logs `[Strata] Soft-compat build <stamp> loaded from ...` in Player.log on startup. Current stamp is set in `StrataBuildInfo.BuildStamp`.
 
