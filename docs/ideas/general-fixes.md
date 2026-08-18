@@ -32,6 +32,7 @@
 **Date Night**
 - Lovin hours fall back to vanilla rest / medical rest when there is no double.
 - Either partner in the bed may start lovin.
+- Private time (self-lovin) for adults on Lovin hours when a partner is not sharing a double. Off in settings. Children never qualify.
 
 ---
 
