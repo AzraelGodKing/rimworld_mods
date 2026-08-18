@@ -91,28 +91,22 @@ namespace DeepColony
         public static void ClearEnvoyForFaction(Faction faction)
         {
             if (faction == null) return;
-            foreach (Map map in Find.Maps)
+            foreach (Pawn p in AllPlayerColonists())
             {
-                foreach (Pawn p in map.mapPawns.FreeColonists)
-                {
-                    var c = p.TryGetComp<Comp_DeepColony>();
-                    if (c != null && c.envoyFactionId == faction.loadID)
-                        c.envoyFactionId = -1;
-                }
+                var c = p.TryGetComp<Comp_DeepColony>();
+                if (c != null && c.envoyFactionId == faction.loadID)
+                    c.envoyFactionId = -1;
             }
         }
 
         public static Pawn FindEnvoy(Faction faction)
         {
             if (faction == null) return null;
-            foreach (Map map in Find.Maps)
+            foreach (Pawn p in AllPlayerColonists())
             {
-                foreach (Pawn p in map.mapPawns.FreeColonists)
-                {
-                    var c = p.TryGetComp<Comp_DeepColony>();
-                    if (c != null && c.envoyFactionId == faction.loadID)
-                        return p;
-                }
+                var c = p.TryGetComp<Comp_DeepColony>();
+                if (c != null && c.envoyFactionId == faction.loadID)
+                    return p;
             }
             return null;
         }
@@ -132,15 +126,29 @@ namespace DeepColony
 
         public static IEnumerable<Pawn> EnvoyCandidates()
         {
+            foreach (Pawn p in AllPlayerColonists())
+            {
+                if (p.Dead || p.skills?.GetSkill(SkillDefOf.Social)?.TotallyDisabled == true)
+                    continue;
+                yield return p;
+            }
+        }
+
+        private static IEnumerable<Pawn> AllPlayerColonists()
+        {
+            List<Pawn> found = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
+            if (found != null)
+            {
+                return found;
+            }
+
+            var fallback = new List<Pawn>();
             foreach (Map map in Find.Maps)
             {
-                foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
-                {
-                    if (p.skills?.GetSkill(SkillDefOf.Social)?.TotallyDisabled == true)
-                        continue;
-                    yield return p;
-                }
+                if (map?.mapPawns?.FreeColonists == null) continue;
+                fallback.AddRange(map.mapPawns.FreeColonists);
             }
+            return fallback;
         }
 
         private static Faction FindFaction(int loadId)

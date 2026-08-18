@@ -211,15 +211,7 @@ namespace DeepColony.Patches
         public static void Postfix(Thing __result, Pawn geneticMother, Pawn father)
         {
             if (__result is not Pawn baby) return;
-            if (!baby.RaceProps.Humanlike) return;
-
-            // Ensure parent links exist before inheritance rolls.
-            if (geneticMother != null && baby.relations != null
-                && !baby.relations.DirectRelationExists(PawnRelationDefOf.Parent, geneticMother))
-            {
-                // Vanilla usually already added these; no-op if present.
-            }
-
+            if (!baby.RaceProps.Humanlike || baby.Dead) return;
             InheritanceUtility.TryApplyInheritance(baby);
         }
     }

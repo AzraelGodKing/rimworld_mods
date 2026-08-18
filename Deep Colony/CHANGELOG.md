@@ -23,6 +23,12 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Chinese Simplified & Russian language packs** — full Keyed + DefInjected translations (perks, trauma, mentoring, inheritance, jobs, thoughts).
 
 ### Fixed
+- **ISEKAI RPG Leveling traits** — inheritance skips Rank (F–SSS) and destiny traits. Growth / combat / utility aptitude traits inherit like vanilla (`general-fixes-v1`).
+- **NPC birth inheritance stamp** — `ApplyBirthOutcome` no longer marks every humanlike baby processed. Only player-faction / former-colonist pawns roll; stillborns are skipped. Recruits still inherit on join.
+- **Biotech gene backoff** — skips trait/passion rolls for non-Baseliner xenotypes and implanted xenogenes (endogene xenotypes were slipping through).
+- **Grandparent donors** — dead non-colonist grandparents no longer donate. “Processed inheritance” is not treated as colony blood.
+- **Mentor loops** — cannot assign A→B when B already mentors A.
+- **Envoy uniqueness** — assign/clear/find scan caravan and transport-pod colonists, not only map pawns.
 - **Envoy right-click flood** — pawn float menu is one Envoy submenu instead of a row per faction; Reputation tab can assign/clear envoy (Steam Aug 15).
 - **Mentor float menu** — multiple teachable skills nest under one Mentor submenu.
 - **Warden dread ThoughtDef** — removed invalid `validWhileMinified` XML field (1.6 load error).
