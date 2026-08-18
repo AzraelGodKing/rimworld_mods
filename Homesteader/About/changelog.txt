@@ -1,0 +1,9 @@
+[h1]Homesteader — Update[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Azrael storyteller (1.6)[/b] — loads cleanly (Cassandra Classic comps + portraits).
+[*] Adaptive Storage Framework no longer hides Homestead storage (Homestead tab stays).
+[*] Meal allergies check ingredients (milk / wheat / eggs / fish in cooked meals).
+[*] Storage descriptions match real capacity (hayloft, crates, cellars, etc.).
+[/list]
