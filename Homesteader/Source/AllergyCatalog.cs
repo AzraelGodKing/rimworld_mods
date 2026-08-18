@@ -297,21 +297,12 @@ namespace Homesteader
 
         public static bool FoodMatchesAny(IEnumerable<string> allergyIds, ThingDef foodDef)
         {
-            if (allergyIds == null || foodDef == null)
-            {
-                return false;
-            }
+            return MatchingFoodAllergyId(allergyIds, foodDef) != null;
+        }
 
-            foreach (string id in allergyIds)
-            {
-                AllergyKind kind = Get(id);
-                if (FoodMatches(kind, foodDef))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+        public static bool FoodMatchesAny(IEnumerable<string> allergyIds, Thing food)
+        {
+            return MatchingFoodAllergyId(allergyIds, food) != null;
         }
 
         public static string MatchingFoodAllergyId(IEnumerable<string> allergyIds, ThingDef foodDef)
@@ -327,6 +318,37 @@ namespace Homesteader
                 if (FoodMatches(kind, foodDef))
                 {
                     return id;
+                }
+            }
+
+            return null;
+        }
+
+        public static string MatchingFoodAllergyId(IEnumerable<string> allergyIds, Thing food)
+        {
+            if (food == null)
+            {
+                return null;
+            }
+
+            string direct = MatchingFoodAllergyId(allergyIds, food.def);
+            if (direct != null)
+            {
+                return direct;
+            }
+
+            CompIngredients ingredients = food.TryGetComp<CompIngredients>();
+            if (ingredients?.ingredients == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < ingredients.ingredients.Count; i++)
+            {
+                string match = MatchingFoodAllergyId(allergyIds, ingredients.ingredients[i]);
+                if (match != null)
+                {
+                    return match;
                 }
             }
 

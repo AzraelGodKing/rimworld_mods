@@ -256,7 +256,20 @@ namespace Homesteader
                 return false;
             }
 
+            EnsureTastes(pawn);
             string match = AllergyCatalog.MatchingFoodAllergyId(GetAllergyNames(pawn.thingIDNumber), foodDef);
+            return match != null && GetDiscoveredNames(pawn.thingIDNumber).Contains(match);
+        }
+
+        public bool IsDiscoveredFoodAllergy(Pawn pawn, Thing food)
+        {
+            if (pawn == null || food == null)
+            {
+                return false;
+            }
+
+            EnsureTastes(pawn);
+            string match = AllergyCatalog.MatchingFoodAllergyId(GetAllergyNames(pawn.thingIDNumber), food);
             return match != null && GetDiscoveredNames(pawn.thingIDNumber).Contains(match);
         }
 
@@ -519,6 +532,9 @@ namespace Homesteader
         public static bool IsDiscoveredAllergy(Pawn pawn, ThingDef foodDef) =>
             Comp != null && Comp.IsDiscoveredFoodAllergy(pawn, foodDef);
 
+        public static bool IsDiscoveredAllergy(Pawn pawn, Thing food) =>
+            Comp != null && Comp.IsDiscoveredFoodAllergy(pawn, food);
+
         public static void ApplyAllergicReaction(Pawn pawn, string allergyId)
         {
             if (pawn?.health == null || allergyId.NullOrEmpty() || Comp == null)
@@ -761,7 +777,7 @@ namespace Homesteader
 
             string allergyId = AllergyCatalog.MatchingFoodAllergyId(
                 FavoriteFoodUtility.Comp?.GetAllergyIds(ingester),
-                __instance.def);
+                __instance);
             if (allergyId != null)
             {
                 FavoriteFoodUtility.ApplyAllergicReaction(ingester, allergyId);
@@ -785,7 +801,9 @@ namespace Homesteader
             }
 
             // Only avoid after the allergy has been discovered (hidden until first reaction).
-            if (FavoriteFoodUtility.IsDiscoveredAllergy(eater, foodDef))
+            if (foodSource != null
+                ? FavoriteFoodUtility.IsDiscoveredAllergy(eater, foodSource)
+                : FavoriteFoodUtility.IsDiscoveredAllergy(eater, foodDef))
             {
                 __result -= 80f;
             }
