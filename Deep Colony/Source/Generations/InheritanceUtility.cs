@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -80,6 +81,7 @@ namespace DeepColony
                 foreach (Trait parentTrait in donor.story.traits.allTraits)
                 {
                     if (added >= MaxInheritedTraits) return;
+                    if (ShouldSkipInheritedTrait(parentTrait.def)) continue;
                     if (!Rand.Chance(traitChance)) continue;
                     if (pawn.story?.traits == null) continue;
                     if (pawn.story.traits.HasTrait(parentTrait.def)) continue;
@@ -101,6 +103,35 @@ namespace DeepColony
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// ISEKAI RPG Leveling (JellyCreative.IsekaiLeveling) stamps rank and
+        /// destiny traits onto pawns. Those are runtime / scenario power, not
+        /// bloodline. Known TraitDefs (all <c>Isekai_*</c>):
+        /// Rank F–SSS; Protagonist, Antagonist, Reincarnated, Regressor,
+        /// SummonedHero, NaturalTalent, Prodigy, LateBloomer, QuickLearner,
+        /// SlowGrind, PowerSpike, AwakenedPotential, Genius, BattleManiac,
+        /// BerserkerBlood, IronWill, GlassCannon, Fortress, ShadowStep,
+        /// PredatorInstinct, Undying, Mighty, Agile, Resilient, Brilliant,
+        /// Enlightened, SilverTongue, MerchantEye, CraftsmanSoul,
+        /// BeastWhisperer, HealerTouch, Lucky, CursedLuck, SystemGlitch,
+        /// HollowCore, FragileVessel, EchoOfDefeat, SealedPower.
+        /// </summary>
+        internal static bool ShouldSkipInheritedTrait(TraitDef def)
+        {
+            if (def == null) return true;
+
+            string packId = def.modContentPack?.PackageId;
+            if (!packId.NullOrEmpty()
+                && packId.IndexOf("jellycreative.isekaileveling", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+
+            string name = def.defName;
+            return !name.NullOrEmpty()
+                && name.StartsWith("Isekai_", StringComparison.Ordinal);
         }
 
         private static void ApplyPassionInheritance(
