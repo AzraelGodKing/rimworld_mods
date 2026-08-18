@@ -1,0 +1,11 @@
+[h1]Strata — Update[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Omni inter-floor connector + Helixien / VTE / Chemfuel[/b] — no longer crashes PipeSystem with a duplicate LinkedPipes key; placing Helixien (and other VEF) pipes works again. Omni still joins those nets; only dedicated shaft junctions stay in pipeDefs.
+[*] Second stairwell with no free landing cell refuses instead of opening a parallel pocket map.
+[*] Gravship stairwells / elevators pack and restore through launch (no longer vanish).
+[*] Climbing upstairs no longer hard-errors via vanilla PocketMapExit on orphan / unlinked landings.
+[/list]
+
+[i]Build stamp (Player.log): omnijunction-linkedpipes-v1[/i]
