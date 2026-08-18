@@ -2,6 +2,8 @@
 
 Detailed notes for **Azrael** only. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
 
+Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
+
 ## [Unreleased]
 
 ### Added

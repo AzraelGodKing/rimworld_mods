@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Workshop pastes** — Steam BBCode update notes in `About/changelog.txt` for Strata, Homesteader, Azrael, Nemesis, Deep Colony, Date Night.
 - **Strata** — Omni inter-floor connector no longer duplicates into multiple VEF `pipeDefs` (LinkedPipes crash with Helixien + VTE + Chemfuel). Stamp `omnijunction-linkedpipes-v1`. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Date Night** — schedule-mismatch alert when one lover has Date/Lovin painted and the other does not. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Date Night** — Date hours, missed-date thoughts, temporary double-bed claim, Ideology/Biotech reroute, CN/RU packs. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
