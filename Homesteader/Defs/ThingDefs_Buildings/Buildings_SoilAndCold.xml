@@ -54,7 +54,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_Icehouse</defName>
     <label>icehouse</label>
-    <description>A thick-walled ice cellar packed with sawdust and winter cold. Holds four stacks and keeps food near freezing without power - colder than a root cellar, smaller footprint.</description>
+    <description>A thick-walled ice cellar packed with sawdust and winter cold. Holds sixteen stacks (four per cell on a 2×2 footprint) and keeps food near freezing without power - colder than a root cellar, smaller footprint.</description>
     <thingClass>Building_Storage</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/Icehouse</texPath>
@@ -122,7 +122,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_Springhouse</defName>
     <label>springhouse</label>
-    <description>A water-cooled shed built over a cold spring feel. Holds three stacks and keeps dairy and produce cool (≤8°C) without electricity - the farmhouse companion to the root cellar.</description>
+    <description>A water-cooled shed built over a cold spring feel. Holds six stacks (three per cell on a 2×1 footprint) and keeps dairy and produce cool (≤8°C) without electricity - the farmhouse companion to the root cellar.</description>
     <thingClass>Building_Storage</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/Springhouse</texPath>

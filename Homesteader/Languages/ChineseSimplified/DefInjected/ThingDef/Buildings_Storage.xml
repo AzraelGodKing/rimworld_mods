@@ -10,11 +10,11 @@
   <Homesteader_IngredientBarrel.label>食材桶</Homesteader_IngredientBarrel.label>
   <Homesteader_IngredientBarrel.description>专为厨房主料设计的带盖桶：生肉、鸡蛋与牛奶。可放三堆，并防止它们在室外劣化。</Homesteader_IngredientBarrel.description>
   <Homesteader_Hayloft.label>干草阁楼</Homesteader_Hayloft.label>
-  <Homesteader_Hayloft.description>开放式木阁楼，用于大宗农贮。可放四堆干草、生植物与烟叶，遮挡风雨。</Homesteader_Hayloft.description>
+  <Homesteader_Hayloft.description>开放式木阁楼，用于大宗农贮。可放八堆干草、生植物与烟叶（2×1 占地，每格四堆），遮挡风雨。</Homesteader_Hayloft.description>
   <Homesteader_LargeStorageCrate.label>大型储物箱</Homesteader_LargeStorageCrate.label>
-  <Homesteader_LargeStorageCrate.description>加固的双宽箱子，适合大量囤货。可放六堆任何物品，并防止劣化，即使在室外也一样。</Homesteader_LargeStorageCrate.description>
+  <Homesteader_LargeStorageCrate.description>加固的双宽箱子，适合大量囤货。可放二十四堆任何物品（2×2 占地，每格六堆），并防止劣化，即使在室外也一样。</Homesteader_LargeStorageCrate.description>
   <Homesteader_RootCellar.label>地窖</Homesteader_RootCellar.label>
-  <Homesteader_RootCellar.description>以石与土衬里的埋地地窖。可放六堆食物与饮料。地窖上的内容物——以及相邻室内格子中的食物——在腐败计算中保持在 5°C 或以下，并遮挡室外天气。</Homesteader_RootCellar.description>
+  <Homesteader_RootCellar.description>以石与土衬里的埋地地窖。可放二十四堆食物与饮料（2×2 占地，每格六堆）。地窖上的内容物——以及相邻室内格子中的食物——在腐败计算中保持在 5°C 或以下，并遮挡室外天气。</Homesteader_RootCellar.description>
   <Homesteader_PreservesShelf.label>腌制货架</Homesteader_PreservesShelf.label>
   <Homesteader_PreservesShelf.description>漂亮的木架，用来展示储藏室的骄傲：果酱与泡菜罐、奶酪轮、蜂蜜与糖浆罐。保存食物一半的乐趣在于事后欣赏。</Homesteader_PreservesShelf.description>
 
