@@ -106,14 +106,15 @@ namespace Strata
                 reason = "The stairwell is sealed.";
                 return false;
             }
-            if (EntranceValid)
-            {
-                return base.IsEnterable(out reason);
-            }
-            if (SourceMap == null)
+            Map dest = GetOtherMap();
+            if (dest == null || dest.Disposed || !Find.Maps.Contains(dest))
             {
                 reason = "The way up has collapsed.";
                 return false;
+            }
+            if (EntranceValid)
+            {
+                return base.IsEnterable(out reason);
             }
             reason = null;
             return true;
@@ -176,20 +177,26 @@ namespace Strata
 
         public override void OnEntered(Pawn pawn)
         {
-            // Vanilla PocketMapExit.OnEntered unconditionally touches entrance.def /
-            // entrance.Map for traverseSound. Orphan or load-broken landings have
-            // entrance == null (GetOtherMap already falls back to SourceMap) and
-            // JobDriver_EnterPortal then NREs in toil initAction.
-            if (EntranceValid)
+            // Never call PocketMapExit.OnEntered. Vanilla plays traverseSound via
+            // entrance.def.portal / entrance.Map after Notify_ThingAdded; if the
+            // host shaft unlinks or despawns during the teleport, that NRE's in
+            // JobDriver_EnterPortal (Steam Aug 12: toilIndex=2).
+            Notify_ThingAdded(pawn);
+            if (Find.CurrentMap == Map)
             {
-                base.OnEntered(pawn);
+                def.portal?.traverseSound?.PlayOneShot(this);
             }
             else
             {
-                Notify_ThingAdded(pawn);
-                if (Find.CurrentMap == Map)
+                Map dest = GetOtherMap();
+                if (dest != null && !dest.Disposed && Find.CurrentMap == dest)
                 {
-                    def.portal?.traverseSound?.PlayOneShot(this);
+                    IntVec3 loc = GetDestinationLocation();
+                    SoundDef sound = def.portal?.traverseSound;
+                    if (sound != null && loc.IsValid)
+                    {
+                        sound.PlayOneShot(new TargetInfo(loc, dest));
+                    }
                 }
             }
             StrataPortalUtility.TransferHaulDesignation(this, pawn);
