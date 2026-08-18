@@ -7,9 +7,16 @@ namespace DateNight
     public class GameComponent_DateNight : GameComponent
     {
         private readonly Dictionary<int, bool> wasOnLovin = new Dictionary<int, bool>();
+        private readonly Dictionary<int, bool> wasOnDate = new Dictionary<int, bool>();
 
         public GameComponent_DateNight(Game game)
         {
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            DateNightWindows.ExposeData();
         }
 
         public override void GameComponentTick()
@@ -19,20 +26,15 @@ namespace DateNight
                 return;
             }
 
-            List<Map> maps = Find.Maps;
-            for (int m = 0; m < maps.Count; m++)
+            List<Pawn> colonists = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
+            if (colonists == null)
             {
-                Map map = maps[m];
-                List<Pawn> colonists = map?.mapPawns?.FreeColonistsSpawned;
-                if (colonists == null)
-                {
-                    continue;
-                }
+                return;
+            }
 
-                for (int i = 0; i < colonists.Count; i++)
-                {
-                    TickPawn(colonists[i]);
-                }
+            for (int i = 0; i < colonists.Count; i++)
+            {
+                TickPawn(colonists[i]);
             }
         }
 
@@ -44,23 +46,43 @@ namespace DateNight
             }
 
             bool onLovin = DateNightUtility.IsLovinSchedule(pawn);
+            bool onDate = DateNightUtility.IsDateSchedule(pawn);
             int id = pawn.thingIDNumber;
-            wasOnLovin.TryGetValue(id, out bool was);
+            wasOnLovin.TryGetValue(id, out bool wasLovin);
+            wasOnDate.TryGetValue(id, out bool wasDate);
 
-            if (onLovin && !was)
+            if (onLovin && !wasLovin)
             {
                 DateNightUtility.NotifyEnteredLovinSchedule(pawn);
             }
-            else if (!onLovin && was)
+            else if (!onLovin && wasLovin)
             {
                 DateNightUtility.NotifyLeftLovinSchedule(pawn);
+                DateNightWindows.NotifyLeftSharedSchedule(pawn);
+            }
+
+            if (!onDate && wasDate)
+            {
+                DateNightWindows.NotifyLeftSharedSchedule(pawn);
             }
 
             wasOnLovin[id] = onLovin;
+            wasOnDate[id] = onDate;
+
+            DateNightWindows.NotifyScheduleTick(pawn, onLovin, onDate);
+
+            if (!pawn.Spawned || pawn.Map == null)
+            {
+                return;
+            }
 
             if (onLovin)
             {
                 DateNightUtility.TickScheduledPawn(pawn);
+            }
+            if (onDate)
+            {
+                DateNightDateUtility.TickScheduledDate(pawn);
             }
         }
     }
