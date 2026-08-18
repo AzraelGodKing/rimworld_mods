@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DateNight_PrivateTime.label>独处</DateNight_PrivateTime.label>
+  <DateNight_PrivateTime.description>给了自己一点时间。心情好了些。</DateNight_PrivateTime.description>
+  <DateNight_PrivateTime.stages_0.label>独处</DateNight_PrivateTime.stages_0.label>
+  <DateNight_PrivateTime.stages_0.description>给了自己一点时间。心情好了些。</DateNight_PrivateTime.stages_0.description>
+
+  <DateNight_HadADate.label>约会</DateNight_HadADate.label>
+  <DateNight_HadADate.description>和{0}共度了一段时间。挺好。</DateNight_HadADate.description>
+  <DateNight_HadADate.stages_0.label>约会</DateNight_HadADate.stages_0.label>
+  <DateNight_HadADate.stages_0.description>和{0}共度了一段时间。挺好。</DateNight_HadADate.stages_0.description>
+
+  <DateNight_MadeIt.label>赴约成功</DateNight_MadeIt.label>
+  <DateNight_MadeIt.description>你和{0}都到了。</DateNight_MadeIt.description>
+  <DateNight_MadeIt.stages_0.label>赴约成功</DateNight_MadeIt.stages_0.label>
+  <DateNight_MadeIt.stages_0.description>你和{0}都到了。</DateNight_MadeIt.stages_0.description>
+
+  <DateNight_StoodUp.label>被放鸽子</DateNight_StoodUp.label>
+  <DateNight_StoodUp.description>{0}本该来的。</DateNight_StoodUp.description>
+  <DateNight_StoodUp.stages_0.label>被放鸽子</DateNight_StoodUp.stages_0.label>
+  <DateNight_StoodUp.stages_0.description>{0}本该来的。</DateNight_StoodUp.stages_0.description>
+
+</LanguageData>

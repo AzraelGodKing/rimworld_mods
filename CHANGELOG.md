@@ -4,9 +4,12 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Date Night** — schedule-mismatch alert when one lover has Date/Lovin painted and the other does not. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
+- **Date Night** — Date hours, missed-date thoughts, temporary double-bed claim, Ideology/Biotech reroute, CN/RU packs. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Date Night** — adults on Lovin hours can have private time in a single bed when no partner is sharing a double (off in settings). → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Pre-ship general fixes** (`fix/general-fixes`) — Homesteader ASF tab hijack, meal-ingredient allergies, storage capacity copy; Nemesis execution hunts + fixation MapHeld; Strata upstairs enter, gravship stairs, second-shaft pocket; Deep Colony Isekai aptitude inherit, birth stamp, Biotech backoff; Date Night Lovin rest fallback. → per-mod changelogs.
 - **Strata** — gravship stairwells/elevators no longer vanish on launch (`gravship-stairs-launch-v1`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Homesteader / Azrael** — Azrael storyteller loads on RimWorld 1.6 (Cassandra Classic comps + portraits). → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md) · [Azrael/CHANGELOG.md](Azrael/CHANGELOG.md)
 - **Date Night** — Lovin schedule button no longer shares Rimbody’s Workout cell (clicks were opening the workout dropdown). → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Steam-first fixes** — Deep Colony envoy/mentor menus; Nemesis raid inject + phantom escapes; Strata flood/sump + ore hoist; Homesteader homestead tab / soap / allergies / cellar text / cistern storage; Azrael FindMod + CI zip; Date Night pregnancy-safe cooldown. Plan: [docs/ideas/general-fixes.md](docs/ideas/general-fixes.md).
 - **Homesteader** — water buildings form an upgrade ladder (barrel → cistern → tower; hand-dug → deep well); stone fountain drinks ~2 jugs/day. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
