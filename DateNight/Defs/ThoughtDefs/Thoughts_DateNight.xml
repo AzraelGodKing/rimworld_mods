@@ -15,4 +15,55 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>DateNight_HadADate</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>1.25</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>had a date</label>
+        <description>Spent some time with {0}. Nice.</description>
+        <baseMoodEffect>5</baseMoodEffect>
+        <baseOpinionOffset>8</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_MadeIt</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>0.75</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>made it</label>
+        <description>You and {0} both showed up.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+        <baseOpinionOffset>5</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_StoodUp</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>0.6</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>stood up</label>
+        <description>{0} was supposed to show up.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+        <baseOpinionOffset>-4</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>
