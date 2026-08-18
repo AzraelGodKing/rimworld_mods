@@ -56,6 +56,9 @@ namespace Strata
                     Messages.Message("Strata_StairsConnectedAbove".Translate(), this, MessageTypeDefOf.PositiveEvent);
                     return existing;
                 }
+
+                Messages.Message("Strata_NoLandingCell".Translate(), this, MessageTypeDefOf.RejectInput, historical: false);
+                return null;
             }
             if (!LevelBuildUpUtility.CanOpenNewLevelAbove(Map, out string reason, this))
             {
