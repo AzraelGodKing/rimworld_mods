@@ -253,8 +253,14 @@ namespace DeepColony
 
         public static void SetMentorRelation(Pawn mentor, Pawn apprentice, SkillDef skill = null)
         {
+            if (!CanMentor(mentor, apprentice, skill, out _)) return;
+
             var apprenticeComp = apprentice.TryGetComp<Comp_DeepColony>();
             if (apprenticeComp == null) return;
+
+            var mentorComp = mentor.TryGetComp<Comp_DeepColony>();
+            if (mentorComp?.mentor == apprentice)
+                ClearMentorRelation(apprentice, mentor, silent: true);
 
             if (apprenticeComp.mentor != null)
                 ClearMentorRelation(apprenticeComp.mentor, apprentice, silent: true);
