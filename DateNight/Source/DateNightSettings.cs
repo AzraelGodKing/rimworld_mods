@@ -20,11 +20,17 @@ namespace DateNight
         /// </summary>
         public bool allowSelfLovin = true;
 
+        /// <summary>
+        /// Claim the rendezvous double for the Lovin window, then restore previous beds.
+        /// </summary>
+        public bool allowWindowBedClaim = true;
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref pregnancySafeCooldown, "pregnancySafeCooldown", true);
             Scribe_Values.Look(ref eagerCooldown, "eagerCooldown", false);
             Scribe_Values.Look(ref allowSelfLovin, "allowSelfLovin", true);
+            Scribe_Values.Look(ref allowWindowBedClaim, "allowWindowBedClaim", true);
         }
 
         public void ResetToDefaults()
@@ -32,6 +38,7 @@ namespace DateNight
             pregnancySafeCooldown = true;
             eagerCooldown = false;
             allowSelfLovin = true;
+            allowWindowBedClaim = true;
         }
     }
 }
