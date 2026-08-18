@@ -42,7 +42,7 @@ namespace DateNight
                 return null;
             }
 
-            Building_Bed target = GetRendezvousBed(pawn);
+            Building_Bed target = GetScheduledBed(pawn);
             if (target == null)
             {
                 return null;
@@ -50,6 +50,18 @@ namespace DateNight
             if (pawn.CurrentBed() == target)
             {
                 return null;
+            }
+
+            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            if (!WaitingForPartner(pawn, partner, target)
+                && CanSelfLovin(pawn)
+                && OnLovinCooldownReady(pawn)
+                && !ShouldSatisfyNeedsBeforeLovin(pawn)
+                && DateNightDefOf.DateNight_SelfLovin != null)
+            {
+                Job self = JobMaker.MakeJob(DateNightDefOf.DateNight_SelfLovin, target);
+                self.ignoreForbidden = true;
+                return self;
             }
 
             return JobMaker.MakeJob(JobDefOf.LayDown, target);
@@ -65,7 +77,8 @@ namespace DateNight
             {
                 return;
             }
-            if (pawn.CurJobDef == JobDefOf.Lovin)
+            if (pawn.CurJobDef == JobDefOf.Lovin
+                || pawn.CurJobDef == DateNightDefOf.DateNight_SelfLovin)
             {
                 return;
             }
@@ -76,7 +89,7 @@ namespace DateNight
                 return;
             }
 
-            Building_Bed target = GetRendezvousBed(pawn);
+            Building_Bed target = GetScheduledBed(pawn);
             if (target == null)
             {
                 return;
@@ -94,15 +107,24 @@ namespace DateNight
                 return;
             }
 
-            // Only the lower-ID partner initiates, so we don't double-StartJob.
-            if (inTarget && target.SleepingSlotsCount > 1)
+            if (!inTarget)
             {
-                Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
-                if (partner != null && partner.CurrentBed() == target)
-                {
-                    TryStartLovinNow(pawn);
-                }
+                return;
             }
+
+            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            if (partner != null && partner.CurrentBed() == target && target.SleepingSlotsCount > 1)
+            {
+                TryStartLovinNow(pawn);
+                return;
+            }
+
+            if (WaitingForPartner(pawn, partner, target))
+            {
+                return;
+            }
+
+            TryStartSelfLovinNow(pawn);
         }
 
         public static bool TryStartLovinNow(Pawn pawn)
@@ -168,6 +190,207 @@ namespace DateNight
             lovin.ignoreForbidden = true;
             pawn.jobs.StartJob(lovin, JobCondition.InterruptForced, null, resumeCurJobAfterwards: false);
             return pawn.CurJobDef == JobDefOf.Lovin;
+        }
+
+        public static bool CanSelfLovin(Pawn pawn, bool ignoreSetting = false)
+        {
+            if (pawn == null || pawn.Dead || pawn.Downed || pawn.Drafted)
+            {
+                return false;
+            }
+            if (!pawn.RaceProps.Humanlike || pawn.ageTracker == null || !pawn.ageTracker.Adult)
+            {
+                return false;
+            }
+            if (!pawn.DevelopmentalStage.Adult())
+            {
+                return false;
+            }
+            if (!ignoreSetting && DateNightMod.Settings != null && !DateNightMod.Settings.allowSelfLovin)
+            {
+                return false;
+            }
+            return pawn.health != null && pawn.health.capacities.CanBeAwake;
+        }
+
+        public static bool TryStartSelfLovinNow(Pawn pawn, bool force = false)
+        {
+            if (!CanSelfLovin(pawn, ignoreSetting: force) || pawn.jobs == null)
+            {
+                return false;
+            }
+            if (pawn.CurJobDef == DateNightDefOf.DateNight_SelfLovin)
+            {
+                return true;
+            }
+            if (pawn.CurJobDef == JobDefOf.Lovin)
+            {
+                return false;
+            }
+            if (!force && ShouldSatisfyNeedsBeforeLovin(pawn))
+            {
+                return false;
+            }
+            if (!force && !OnLovinCooldownReady(pawn))
+            {
+                return false;
+            }
+
+            Building_Bed bed = pawn.CurrentBed();
+            if (!IsUsableAnyBed(bed, pawn))
+            {
+                bed = GetSelfLovinBed(pawn);
+            }
+            if (!IsUsableAnyBed(bed, pawn))
+            {
+                return false;
+            }
+            if (LovePartnerRelationUtility.GetPartnerInMyBed(pawn) != null)
+            {
+                return false;
+            }
+
+            if (DateNightDefOf.DateNight_SelfLovin == null)
+            {
+                return false;
+            }
+
+            Job job = JobMaker.MakeJob(DateNightDefOf.DateNight_SelfLovin, bed);
+            job.ignoreForbidden = true;
+            pawn.jobs.StartJob(job, JobCondition.InterruptForced, null, resumeCurJobAfterwards: false);
+            return pawn.CurJobDef == DateNightDefOf.DateNight_SelfLovin;
+        }
+
+        public static void NotifySelfLovinFinished(Pawn pawn)
+        {
+            if (pawn?.needs?.mood?.thoughts?.memories == null)
+            {
+                return;
+            }
+            if (!pawn.ageTracker.Adult)
+            {
+                return;
+            }
+
+            ThoughtDef thought = DateNightDefOf.DateNight_PrivateTime;
+            if (thought != null)
+            {
+                pawn.needs.mood.thoughts.memories.TryGainMemory(thought);
+            }
+
+            ApplyLovinCooldown(pawn);
+        }
+
+        /// <summary>
+        /// Couple rendezvous if a partner is likely to join; otherwise any usable bed
+        /// (including singles) for self-lovin.
+        /// </summary>
+        public static Building_Bed GetScheduledBed(Pawn pawn)
+        {
+            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Building_Bed couple = GetRendezvousBed(pawn);
+            if (couple != null && WaitingForPartner(pawn, partner, couple))
+            {
+                return couple;
+            }
+            if (couple != null && partner != null && partner.CurrentBed() == couple)
+            {
+                return couple;
+            }
+            if (CanSelfLovin(pawn))
+            {
+                return GetSelfLovinBed(pawn) ?? couple;
+            }
+            return couple;
+        }
+
+        private static Building_Bed GetSelfLovinBed(Pawn pawn)
+        {
+            Building_Bed owned = pawn.ownership?.OwnedBed;
+            if (IsUsableAnyBed(owned, pawn))
+            {
+                return owned;
+            }
+
+            Building_Bed found = RestUtility.FindBedFor(pawn);
+            if (IsUsableAnyBed(found, pawn))
+            {
+                return found;
+            }
+
+            return null;
+        }
+
+        private static bool WaitingForPartner(Pawn pawn, Pawn partner, Building_Bed bed)
+        {
+            if (partner == null || bed == null || bed.SleepingSlotsCount <= 1)
+            {
+                return false;
+            }
+            if (!IsLovinSchedule(partner))
+            {
+                return false;
+            }
+            if (partner.Map != pawn.Map || partner.Dead || partner.Downed)
+            {
+                return false;
+            }
+            return IsUsableDouble(bed, pawn, partner);
+        }
+
+        private static bool OnLovinCooldownReady(Pawn pawn)
+        {
+            if (pawn?.mindState == null)
+            {
+                return true;
+            }
+            if (DateNightMod.Settings != null && DateNightMod.Settings.pregnancySafeCooldown)
+            {
+                return Find.TickManager.TicksGame >= pawn.mindState.canLovinTick;
+            }
+            if (IsLovinSchedule(pawn) && DateNightMod.Settings != null && !DateNightMod.Settings.pregnancySafeCooldown)
+            {
+                pawn.mindState.canLovinTick = 0;
+                return true;
+            }
+            return Find.TickManager.TicksGame >= pawn.mindState.canLovinTick;
+        }
+
+        private static void ApplyLovinCooldown(Pawn pawn)
+        {
+            if (pawn?.mindState == null)
+            {
+                return;
+            }
+            if (DateNightMod.Settings != null
+                && !DateNightMod.Settings.pregnancySafeCooldown
+                && DateNightMod.Settings.eagerCooldown
+                && IsLovinSchedule(pawn))
+            {
+                pawn.mindState.canLovinTick = Find.TickManager.TicksGame
+                    + AlwaysDoLovinCooldownTicks;
+                return;
+            }
+
+            pawn.mindState.canLovinTick = Find.TickManager.TicksGame
+                + Rand.RangeInclusive(10000, 20000);
+        }
+
+        private static bool IsUsableAnyBed(Building_Bed bed, Pawn pawn)
+        {
+            if (bed == null || bed.Destroyed || !bed.Spawned || bed.Medical)
+            {
+                return false;
+            }
+            if (bed.Map != pawn.Map)
+            {
+                return false;
+            }
+            if (!pawn.CanReach(bed, PathEndMode.OnCell, Danger.Deadly))
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>Hungry / chem / mid need-job — don't force bed yet.</summary>

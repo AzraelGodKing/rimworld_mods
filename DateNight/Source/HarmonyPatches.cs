@@ -218,7 +218,7 @@ namespace DateNight
                 return false;
             }
 
-            // No reachable double: fall back to vanilla rest (owned single / ground).
+            // No reachable bed: fall back to vanilla rest (ground / medical).
             return true;
         }
     }
