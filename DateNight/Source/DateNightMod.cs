@@ -49,6 +49,12 @@ namespace DateNight
                 "DateNight_Settings_SelfLovin".Translate(),
                 ref Settings.allowSelfLovin,
                 "DateNight_Settings_SelfLovinTip".Translate());
+            listing.Gap(6f);
+
+            listing.CheckboxLabeled(
+                "DateNight_Settings_WindowBed".Translate(),
+                ref Settings.allowWindowBedClaim,
+                "DateNight_Settings_WindowBedTip".Translate());
             listing.Gap(10f);
 
             if (listing.ButtonText("DateNight_Settings_Reset".Translate(), null, 0.25f))

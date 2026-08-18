@@ -2,13 +2,21 @@
 <LanguageData>
 
   <DateNight_SettingsCategory>Date Night</DateNight_SettingsCategory>
-  <DateNight_Settings_Intro>Schedule Lovin on the Schedule tab. Couples go to a shared double; when both are in it, lovin uses a short MTB. Adults without a partner in that bed can have some private time in any bed (singles included). Off in settings if you do not want that.</DateNight_Settings_Intro>
+  <DateNight_Settings_Intro>Schedule Date or Lovin on the Schedule tab. Date is a walk / table / hangout (mood + opinion, no bed). Lovin still uses a shared double. Adults without a partner in that bed can have private time. Ideology that forbids lovin, and Biotech sterile genes, reroute to a date instead of forcing the job.</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>Pregnancy-safe cooldown</DateNight_Settings_PregnancySafe>
   <DateNight_Settings_PregnancySafeTip>ON (recommended): only shortens lovin chance while scheduled; keeps vanilla post-lovin cooldown. OFF with Eager: mirrors Always Do Lovin cooldown (~100 ticks).</DateNight_Settings_PregnancySafeTip>
   <DateNight_Settings_Eager>Eager mode (short cooldown)</DateNight_Settings_Eager>
   <DateNight_Settings_EagerTip>Shortens post-lovin cooldown like the Always Do Lovin debug option. Can spam pregnancy rolls — leave off unless you want that.</DateNight_Settings_EagerTip>
   <DateNight_Settings_SelfLovin>Allow private time (self)</DateNight_Settings_SelfLovin>
   <DateNight_Settings_SelfLovinTip>Adults on Lovin hours use their own bed when a partner is not sharing a double. No pregnancy. Same cooldown as lovin. Children never qualify.</DateNight_Settings_SelfLovinTip>
+  <DateNight_Settings_WindowBed>Claim double for Lovin hours</DateNight_Settings_WindowBed>
+  <DateNight_Settings_WindowBedTip>Temporarily assign the rendezvous double to the couple for the Lovin window, then restore their previous beds. Off if you want to assign beds yourself.</DateNight_Settings_WindowBedTip>
   <DateNight_Settings_Reset>Reset to defaults</DateNight_Settings_Reset>
+  <DateNight_Alert_Mismatch>Schedule mismatch</DateNight_Alert_Mismatch>
+  <DateNight_Alert_MismatchDesc>A lover has Date or Lovin painted, but their partner does not — or they painted different hours. Paint the same hours on both.</DateNight_Alert_MismatchDesc>
+  <DateNight_Alert_MismatchNone>{0} has {1} painted; {2} does not.</DateNight_Alert_MismatchNone>
+  <DateNight_Alert_MismatchHours>{0} and {1} have {2} on different hours.</DateNight_Alert_MismatchHours>
+  <DateNight_Alert_SlotLovin>Lovin</DateNight_Alert_SlotLovin>
+  <DateNight_Alert_SlotDate>Date</DateNight_Alert_SlotDate>
 
 </LanguageData>

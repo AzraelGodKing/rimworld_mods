@@ -135,6 +135,30 @@ namespace DateNight
             }
         }
 
+        [DebugAction(Cat, "Force date now (selected)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceDateNow()
+        {
+            int n = 0;
+            foreach (Pawn p in SelectedHumanlikes())
+            {
+                if (DateNightDateUtility.TryStartDateNow(p, force: true))
+                {
+                    n++;
+                }
+                else
+                {
+                    Messages.Message($"[Date Night] {p.LabelShort}: could not start a date (need a love partner on the map).",
+                        MessageTypeDefOf.RejectInput, historical: false);
+                }
+            }
+            if (n > 0)
+            {
+                Messages.Message($"[Date Night] Started a date on {n} pawn(s).",
+                    MessageTypeDefOf.NeutralEvent, historical: false);
+            }
+        }
+
         [DebugAction(Cat, "Log rendezvous bed for selected",
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void LogRendezvous()
@@ -176,6 +200,38 @@ namespace DateNight
 
             Messages.Message(n > 0
                     ? $"[Date Night] Painted Lovin all day on {n} pawn(s)."
+                    : "[Date Night] Select colonists with a timetable.",
+                n > 0 ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
+                historical: false);
+        }
+
+        [DebugAction(Cat, "Paint Date on selected (all hours)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void PaintDateAllDay()
+        {
+            if (DateNightDefOf.DateNight_Date == null)
+            {
+                Messages.Message("[Date Night] Date TimeAssignmentDef missing.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            int n = 0;
+            foreach (Pawn p in SelectedHumanlikes())
+            {
+                if (p.timetable == null)
+                {
+                    continue;
+                }
+                for (int h = 0; h < 24; h++)
+                {
+                    p.timetable.SetAssignment(h, DateNightDefOf.DateNight_Date);
+                }
+                n++;
+            }
+
+            Messages.Message(n > 0
+                    ? $"[Date Night] Painted Date all day on {n} pawn(s)."
                     : "[Date Night] Select colonists with a timetable.",
                 n > 0 ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
                 historical: false);

@@ -1,30 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
-  <!-- Cassandra-style pacing; Misc + ThreatSmall fire a bit more often for series flavor. -->
+  <!-- Cassandra Classic comps (RimWorld 1.6), with slightly more Misc / ThreatSmall for series flavor. -->
   <StorytellerDef ParentName="BaseStoryteller">
     <defName>Azrael</defName>
     <label>Azrael</label>
     <description>Azrael tells the series story: distant wars, hard weather, deep shafts, and homestead grit.\n\nPacing follows Cassandra Classic — big threats come in waves with breathing room — but miscellaneous events and small threats arrive a little more often so Living World news, Stormproof weather, and other soft series content have room to breathe.\n\nRaids and major threats stay near Cassandra so Nemesis hunts and colony defense still matter.\n\nShips with Homesteader (canonical). The standalone Azrael showcase mod adds The Deep Homestead scenario and only injects this teller if Homesteader is not loaded.</description>
-    <!-- Reuse vanilla art until custom portraits ship. -->
-    <portraitLarge>UI/HeroArt/Storytellers/Cassandra</portraitLarge>
-    <portraitTiny>UI/HeroArt/Storytellers/CassandraTiny</portraitTiny>
+    <!-- Reuse Cassandra Classic art until custom portraits ship. -->
+    <portraitLarge>UI/HeroArt/Storytellers/CassandraClassic</portraitLarge>
+    <portraitTiny>UI/HeroArt/Storytellers/CassandraClassicTiny</portraitTiny>
     <listOrder>25</listOrder>
     <comps>
-
       <li Class="StorytellerCompProperties_ClassicIntro"/>
 
-      <li Class="StorytellerCompProperties_Disease">
-        <category>DiseaseHuman</category>
-        <mtbDays>90</mtbDays>
-      </li>
-
-      <li Class="StorytellerCompProperties_Disease">
-        <category>DiseaseAnimal</category>
-        <mtbDays>120</mtbDays>
-      </li>
-
-      <!-- ThreatBig: Cassandra on/off cycle unchanged. -->
       <li Class="StorytellerCompProperties_OnOffCycle">
         <category>ThreatBig</category>
         <minDaysPassed>11.0</minDaysPassed>
@@ -33,75 +21,177 @@
         <minSpacingDays>1.9</minSpacingDays>
         <numIncidentsRange>1~2</numIncidentsRange>
         <forceRaidEnemyBeforeDaysPassed>30</forceRaidEnemyBeforeDaysPassed>
+        <disallowedTargetTags>
+          <li>Map_RaidBeacon</li>
+        </disallowedTargetTags>
       </li>
 
-      <!-- ThreatSmall: Cassandra ~2.5 → 2.0 (slightly more). -->
-      <li Class="StorytellerCompProperties_CategoryMTB">
-        <category>ThreatSmall</category>
-        <minDaysPassed>6</minDaysPassed>
-        <mtbDays>2.0</mtbDays>
-      </li>
-
-      <!-- Misc: Cassandra ~4.8 → 3.5 (Living World / flavor room). -->
-      <li Class="StorytellerCompProperties_CategoryMTB">
-        <category>Misc</category>
-        <mtbDays>3.5</mtbDays>
-      </li>
-
-      <li Class="StorytellerCompProperties_CategoryMTB">
-        <category>ShipChunkDrop</category>
-        <mtbDays>18</mtbDays>
-      </li>
-
-      <li Class="StorytellerCompProperties_CategoryMTB">
-        <category>OrbitalVisitor</category>
-        <mtbDays>30</mtbDays>
-      </li>
-
-      <li Class="StorytellerCompProperties_CategoryMTB">
-        <category>FactionArrival</category>
-        <mtbDays>12</mtbDays>
-      </li>
-
-      <li Class="StorytellerCompProperties_DeepDrillInfestation">
-        <baseMtbDays>35</baseMtbDays>
-      </li>
-
-      <li Class="StorytellerCompProperties_CategoryMTB">
+      <li Class="StorytellerCompProperties_ThreatsGenerator">
         <allowedTargetTags>
           <li>Map_RaidBeacon</li>
         </allowedTargetTags>
-        <category>ThreatBig</category>
-        <mtbDays>1.0</mtbDays>
-        <maxThreatBigIntervalDays>100000</maxThreatBigIntervalDays>
+        <parms>
+          <allowedThreats>Raids</allowedThreats>
+          <onDays>1.0</onDays>
+          <offDays>0.5</offDays>
+          <minSpacingDays>0.04</minSpacingDays>
+          <numIncidentsRange>1~2</numIncidentsRange>
+          <minThreatPoints>500</minThreatPoints>
+        </parms>
+      </li>
+
+      <!-- ThreatSmall: Cassandra 0.2~1 → slightly more incidents per on-cycle. -->
+      <li Class="StorytellerCompProperties_OnOffCycle">
+        <category>ThreatSmall</category>
+        <minDaysPassed>11.0</minDaysPassed>
+        <onDays>4.6</onDays>
+        <offDays>6.0</offDays>
+        <numIncidentsRange>0.35~1.15</numIncidentsRange>
+        <acceptPercentFactorPerThreatPointsCurve>
+          <points>
+            <li>(800, 1)</li>
+            <li>(2800, 0)</li>
+          </points>
+        </acceptPercentFactorPerThreatPointsCurve>
+      </li>
+
+      <!-- Misc: Cassandra 4.8 → 3.5. -->
+      <li Class="StorytellerCompProperties_CategoryMTB">
+        <category>Misc</category>
+        <allowedTargetTags>
+          <li>Map_PlayerHome</li>
+        </allowedTargetTags>
+        <minDaysPassed>5</minDaysPassed>
+        <mtbDays>3.5</mtbDays>
+      </li>
+
+      <li Class="StorytellerCompProperties_ShipChunkDrop"/>
+
+      <li Class="StorytellerCompProperties_Disease">
+        <category>DiseaseHuman</category>
+        <minDaysPassed>9</minDaysPassed>
+      </li>
+      <li Class="StorytellerCompProperties_Disease">
+        <category>DiseaseAnimal</category>
+        <minDaysPassed>9</minDaysPassed>
       </li>
 
       <li Class="StorytellerCompProperties_FactionInteraction">
-        <incident>RaidEnemy</incident>
-        <baseIncidentsPerYear>5</baseIncidentsPerYear>
-        <minSpacingDays>5</minSpacingDays>
+        <incident>RaidFriendly</incident>
+        <baseIncidentsPerYear>15</baseIncidentsPerYear>
+        <minSpacingDays>0.4</minSpacingDays>
         <fullAlliesOnly>true</fullAlliesOnly>
+        <minDanger>High</minDanger>
       </li>
-
       <li Class="StorytellerCompProperties_FactionInteraction">
         <incident>TraderCaravanArrival</incident>
-        <baseIncidentsPerYear>10</baseIncidentsPerYear>
-        <minSpacingDays>2</minSpacingDays>
-        <fullAlliesOnly>false</fullAlliesOnly>
+        <minDaysPassed>5</minDaysPassed>
+        <baseIncidentsPerYear>5</baseIncidentsPerYear>
+        <minSpacingDays>6</minSpacingDays>
+        <allowedTargetTags>
+          <li>Map_PlayerHome</li>
+        </allowedTargetTags>
       </li>
-
       <li Class="StorytellerCompProperties_FactionInteraction">
         <incident>VisitorGroup</incident>
-        <baseIncidentsPerYear>8</baseIncidentsPerYear>
-        <minSpacingDays>0.5</minSpacingDays>
-        <fullAlliesOnly>false</fullAlliesOnly>
+        <minDaysPassed>3</minDaysPassed>
+        <baseIncidentsPerYear>4</baseIncidentsPerYear>
+        <minSpacingDays>5</minSpacingDays>
+        <allowedTargetTags>
+          <li>Map_PlayerHome</li>
+        </allowedTargetTags>
+      </li>
+      <li Class="StorytellerCompProperties_FactionInteraction">
+        <incident>TravelerGroup</incident>
+        <minDaysPassed>1</minDaysPassed>
+        <baseIncidentsPerYear>6</baseIncidentsPerYear>
+        <minSpacingDays>1</minSpacingDays>
+        <allowedTargetTags>
+          <li>Map_PlayerHome</li>
+        </allowedTargetTags>
+      </li>
+
+      <li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
+        <category>Misc</category>
+        <allowedTargetTags>
+          <li>Caravan</li>
+          <li>Map_TempIncident</li>
+        </allowedTargetTags>
+      </li>
+      <li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
+        <category>ThreatSmall</category>
+        <applyCaravanVisibility>true</applyCaravanVisibility>
+        <allowedTargetTags>
+          <li>Caravan</li>
+          <li>Map_TempIncident</li>
+        </allowedTargetTags>
+      </li>
+      <li Class="StorytellerCompProperties_CategoryIndividualMTBByBiome">
+        <category>ThreatBig</category>
+        <applyCaravanVisibility>true</applyCaravanVisibility>
+        <allowedTargetTags>
+          <li>Caravan</li>
+          <li>Map_TempIncident</li>
+        </allowedTargetTags>
       </li>
 
       <li Class="StorytellerCompProperties_RandomQuest">
-        <minDaysPassed>10</minDaysPassed>
-        <mtbDays>10</mtbDays>
+        <category>GiveQuest</category>
+        <allowedTargetTags>
+          <li>World</li>
+        </allowedTargetTags>
+        <onDays>10</onDays>
+        <numIncidentsRange>1</numIncidentsRange>
+        <acceptFractionByDaysPassedCurve>
+          <points>
+            <li>(8, 0)</li>
+            <li>(15, 1)</li>
+          </points>
+        </acceptFractionByDaysPassedCurve>
+        <minSpacingDays>3</minSpacingDays>
+        <disableIfAnyModActive>
+          <li>Ludeon.RimWorld.Royalty</li>
+        </disableIfAnyModActive>
+      </li>
+      <li Class="StorytellerCompProperties_RandomQuest">
+        <category>GiveQuest</category>
+        <allowedTargetTags>
+          <li>World</li>
+        </allowedTargetTags>
+        <onDays>12</onDays>
+        <numIncidentsRange>2</numIncidentsRange>
+        <acceptFractionByDaysPassedCurve>
+          <points>
+            <li>(8, 0)</li>
+            <li>(15, 1)</li>
+          </points>
+        </acceptFractionByDaysPassedCurve>
+        <minSpacingDays>3</minSpacingDays>
+        <enableIfAnyModActive>
+          <li>Ludeon.RimWorld.Royalty</li>
+        </enableIfAnyModActive>
       </li>
 
+      <li Class="StorytellerCompProperties_CategoryMTB">
+        <category>Misc</category>
+        <allowedTargetTags>
+          <li>World</li>
+        </allowedTargetTags>
+        <minDaysPassed>15</minDaysPassed>
+        <mtbDays>15</mtbDays>
+      </li>
+
+      <li Class="StorytellerCompProperties_OnOffCycle">
+        <incident>OrbitalTraderArrival</incident>
+        <onDays>7</onDays>
+        <offDays>8</offDays>
+        <numIncidentsRange>1</numIncidentsRange>
+      </li>
+
+      <li Class="StorytellerCompProperties_Triggered">
+        <incident>StrangerInBlackJoin</incident>
+        <delayTicks>180</delayTicks>
+      </li>
     </comps>
   </StorytellerDef>
 
