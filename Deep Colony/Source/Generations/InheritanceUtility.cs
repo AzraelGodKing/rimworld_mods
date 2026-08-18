@@ -105,33 +105,30 @@ namespace DeepColony
             }
         }
 
+        // Rank is stamped from current level; destiny traits are unique scenario
+        // power. Growth / combat / utility Isekai_* traits still inherit.
+        private static readonly HashSet<string> BlockedIsekaiDestinyTraits = new HashSet<string>
+        {
+            "Isekai_Protagonist",
+            "Isekai_Antagonist",
+            "Isekai_Reincarnated",
+            "Isekai_Regressor",
+            "Isekai_SummonedHero",
+            "Isekai_SealedPower",
+        };
+
         /// <summary>
-        /// ISEKAI RPG Leveling (JellyCreative.IsekaiLeveling) stamps rank and
-        /// destiny traits onto pawns. Those are runtime / scenario power, not
-        /// bloodline. Known TraitDefs (all <c>Isekai_*</c>):
-        /// Rank F–SSS; Protagonist, Antagonist, Reincarnated, Regressor,
-        /// SummonedHero, NaturalTalent, Prodigy, LateBloomer, QuickLearner,
-        /// SlowGrind, PowerSpike, AwakenedPotential, Genius, BattleManiac,
-        /// BerserkerBlood, IronWill, GlassCannon, Fortress, ShadowStep,
-        /// PredatorInstinct, Undying, Mighty, Agile, Resilient, Brilliant,
-        /// Enlightened, SilverTongue, MerchantEye, CraftsmanSoul,
-        /// BeastWhisperer, HealerTouch, Lucky, CursedLuck, SystemGlitch,
-        /// HollowCore, FragileVessel, EchoOfDefeat, SealedPower.
+        /// Skip ISEKAI RPG Leveling rank (F–SSS) and destiny traits. Aptitude
+        /// traits (Natural Talent, Prodigy, Mighty, Lucky, …) can inherit.
         /// </summary>
         internal static bool ShouldSkipInheritedTrait(TraitDef def)
         {
             if (def == null) return true;
 
-            string packId = def.modContentPack?.PackageId;
-            if (!packId.NullOrEmpty()
-                && packId.IndexOf("jellycreative.isekaileveling", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-
             string name = def.defName;
-            return !name.NullOrEmpty()
-                && name.StartsWith("Isekai_", StringComparison.Ordinal);
+            if (name.NullOrEmpty()) return false;
+            if (name.StartsWith("Isekai_Rank_", StringComparison.Ordinal)) return true;
+            return BlockedIsekaiDestinyTraits.Contains(name);
         }
 
         private static void ApplyPassionInheritance(

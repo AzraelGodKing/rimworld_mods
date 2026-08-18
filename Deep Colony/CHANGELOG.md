@@ -23,7 +23,7 @@ Detailed notes for Deep Colony only. Repo-wide highlights: [../CHANGELOG.md](../
 - **Chinese Simplified & Russian language packs** — full Keyed + DefInjected translations (perks, trauma, mentoring, inheritance, jobs, thoughts).
 
 ### Fixed
-- **ISEKAI RPG Leveling traits** — inheritance no longer copies Rank (F–SSS), Protagonist, or other `Isekai_*` destiny/power traits from parents (`isekai-trait-inherit-v1`). Those are runtime ranks and scenario destinies, not bloodline. Vanilla traits still inherit. Fail-open if that mod is absent.
+- **ISEKAI RPG Leveling traits** — inheritance skips Rank (F–SSS) and destiny traits (Protagonist, Antagonist, Reincarnator, Regressor, Summoned Hero, Sealed Power). Growth / combat / utility Isekai traits (Natural Talent, Prodigy, Mighty, Lucky, …) still inherit like vanilla (`isekai-trait-inherit-v1`).
 - **Envoy right-click flood** — pawn float menu is one Envoy submenu instead of a row per faction; Reputation tab can assign/clear envoy (Steam Aug 15).
 - **Mentor float menu** — multiple teachable skills nest under one Mentor submenu.
 - **Warden dread ThoughtDef** — removed invalid `validWhileMinified` XML field (1.6 load error).
