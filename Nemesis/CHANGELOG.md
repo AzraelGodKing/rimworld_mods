@@ -4,6 +4,8 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
+- **Fixation after a colonist dies** — uses `MapHeld` (corpse / killer map) so the hunt can still pick a surviving colonist.
+- **Wounded-escape cheat-death** — if `CreateNemesis` no-ops (Rimesis/BFV claim, failed generate), vanilla `Kill` proceeds. Anesthetic is no longer applied during the lethal prefix.
 - **Hunt raids omit the nemesis** — Direct Raid injects the named pawn whenever the hunt is active (not only after the first flee); hunt faction is restored after parking as a world pawn; if the raid group never generated them they spawn at the map edge (Steam Aug 15).
 - **Phantom escape letters** — flee only when the nemesis is spawned, hostile, and on a player home map (not a world pawn).
 - **Colony executions start a hunt** — executing a prisoner (including Ideology public execution / ExecutionCut, slaves, and colony-bed kills) no longer starts wounded-escape or "killed ally" hunts, so the victim is not parked on the world map sedated with a mount (Steam Aug 11 / 15 / 17). Wounded-escape still requires a hostile in the field.
