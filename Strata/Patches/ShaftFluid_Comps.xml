@@ -124,11 +124,12 @@
             </li>
           </value>
         </li>
+        <!-- Omni stays off pipeDefs: LinkedPipes keys by ThingDef once; listing Omni
+             on Helixien + VTE + Chemfuel nets throws duplicate-key and breaks all pipes. -->
         <li Class="PatchOperationAdd">
           <xpath>/Defs/PipeSystem.PipeNetDef[defName="VHGE_HelixienNet"]/pipeDefs</xpath>
           <value>
             <li>Strata_ShaftFluid_VHGE</li>
-            <li>Strata_ShaftFluid_Omni</li>
           </value>
         </li>
         <li Class="PatchOperationAdd">
@@ -163,7 +164,6 @@
           <xpath>/Defs/PipeSystem.PipeNetDef[defName="VTE_EfficiencyNet"]/pipeDefs</xpath>
           <value>
             <li>Strata_ShaftFluid_VTE</li>
-            <li>Strata_ShaftFluid_Omni</li>
           </value>
         </li>
         <li Class="PatchOperationAdd">
@@ -235,7 +235,6 @@
           <xpath>/Defs/PipeSystem.PipeNetDef[defName="VCHE_ChemfuelNet"]/pipeDefs</xpath>
           <value>
             <li>Strata_ShaftFluid_VefChemfuel</li>
-            <li>Strata_ShaftFluid_Omni</li>
           </value>
         </li>
         <li Class="PatchOperationAdd">
