@@ -5,6 +5,7 @@ Detailed notes for **Date Night** only. Repo-wide highlights: [../CHANGELOG.md](
 ## [Unreleased]
 
 ### Added
+- **Schedule mismatch alert** — if one lover has Date or Lovin painted and the other does not (or they painted different hours), the alerts bar shows Schedule mismatch.
 - **Date hours** — teal Schedule slot. Partners walk / table / hang out together. Mood + opinion, no bed, no pregnancy.
 - **Missed date** — if a partner is drafted, in a medical bed, or off-map for the window, the one who showed up gets a short stood-up thought. Both making it grants a small boost.
 - **Window bed claim** — rendezvous double is assigned for Lovin hours, then previous beds restore. Off in settings.

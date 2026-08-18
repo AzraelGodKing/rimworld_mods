@@ -36,6 +36,40 @@ namespace DateNight
             return IsLovinSchedule(pawn) || IsDateSchedule(pawn);
         }
 
+        public static bool HasAnyHour(Pawn pawn, TimeAssignmentDef def)
+        {
+            if (pawn?.timetable == null || def == null)
+            {
+                return false;
+            }
+            for (int h = 0; h < 24; h++)
+            {
+                if (pawn.timetable.GetAssignment(h) == def)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool SameHours(Pawn a, Pawn b, TimeAssignmentDef def)
+        {
+            if (a?.timetable == null || b?.timetable == null || def == null)
+            {
+                return true;
+            }
+            for (int h = 0; h < 24; h++)
+            {
+                bool ah = a.timetable.GetAssignment(h) == def;
+                bool bh = b.timetable.GetAssignment(h) == def;
+                if (ah != bh)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public static bool ShouldBoostLovinChance(Pawn pawn, Pawn partner)
         {
             return IsLovinSchedule(pawn) || IsLovinSchedule(partner);
