@@ -1,68 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
-
-  <!-- When Adaptive Storage Framework is loaded, also put Homesteader storage
-       on its Storage architect tab. Fail-open if ASF is absent. -->
-  <Operation Class="PatchOperationFindMod">
-    <mods>
-      <li>Adaptive Storage Framework</li>
-    </mods>
-    <match Class="PatchOperationSequence">
-      <operations>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Homesteader_StorageCrate"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Homesteader_StorageBarrel"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Homesteader_Pallet"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Homesteader_IngredientBarrel"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Homesteader_Hayloft"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Homesteader_LargeStorageCrate"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Homesteader_RootCellar"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Homesteader_PreservesShelf"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Homesteader_Icehouse"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Homesteader_Springhouse"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Wellspring_Cistern"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <li Class="PatchOperationReplace">
-          <xpath>/Defs/ThingDef[defName="Wellspring_WaterTower"]/designationCategory</xpath>
-          <value><designationCategory>ASF_Architect</designationCategory></value>
-        </li>
-        <!-- Buildings moved off Homesteader_Storage; drop the empty tab. -->
-        <li Class="PatchOperationRemove">
-          <xpath>/Defs/DesignationCategoryDef[defName="Homesteader_Storage"]</xpath>
-        </li>
-      </operations>
-    </match>
-  </Operation>
-
+  <!-- Adaptive Storage Framework does not add an architect tab. An earlier
+       patch moved Homesteader crates/cellars/cisterns to ASF_Architect and
+       deleted Homesteader_Storage, which hid those buildings whenever ASF
+       was loaded as a dependency. Keep the Homestead tab. -->
 </Patch>
