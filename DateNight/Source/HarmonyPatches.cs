@@ -25,7 +25,8 @@ namespace DateNight
         public static void Postfix(Rect rect)
         {
             TimeAssignmentDef lovin = DateNightDefOf.DateNight_Lovin;
-            if (lovin == null)
+            TimeAssignmentDef date = DateNightDefOf.DateNight_Date;
+            if (lovin == null && date == null)
             {
                 return;
             }
@@ -33,8 +34,17 @@ namespace DateNight
             float cellW = rect.width * 0.5f;
             float cellH = rect.height * 0.5f;
             int index = LovinColumnIndex();
-            Rect cell = new Rect(rect.x + cellW * index, rect.y, cellW, cellH);
-            DrawSelectorButton(cell, lovin);
+            if (lovin != null)
+            {
+                Rect cell = new Rect(rect.x + cellW * index, rect.y, cellW, cellH);
+                DrawSelectorButton(cell, lovin);
+                index++;
+            }
+            if (date != null)
+            {
+                Rect cell = new Rect(rect.x + cellW * index, rect.y, cellW, cellH);
+                DrawSelectorButton(cell, date);
+            }
         }
 
         private static int? cachedColumn;
@@ -165,6 +175,18 @@ namespace DateNight
     {
         public static bool Prefix(Pawn pawn, ref float __result)
         {
+            if (DateNightUtility.IsDateSchedule(pawn))
+            {
+                Need_Rest rest = pawn.needs?.rest;
+                if (rest != null && rest.CurCategory >= RestCategory.Exhausted)
+                {
+                    return true;
+                }
+
+                __result = 0f;
+                return false;
+            }
+
             if (!DateNightUtility.IsLovinSchedule(pawn))
             {
                 return true;
@@ -228,12 +250,12 @@ namespace DateNight
     {
         public static bool Prefix(Pawn pawn, ref float __result)
         {
-            if (!DateNightUtility.IsLovinSchedule(pawn))
+            if (!DateNightUtility.IsLovinOrDateSchedule(pawn))
             {
                 return true;
             }
 
-            // Same as Sleep: work is low-priority background.
+            // Same as Sleep/Joy: work is low-priority background.
             if (pawn.workSettings == null || !pawn.workSettings.EverWork)
             {
                 __result = 0f;
@@ -255,6 +277,11 @@ namespace DateNight
                 return;
             }
             if (!DateNightUtility.ShouldBoostLovinChance(pawn, partner))
+            {
+                return;
+            }
+            if (DateNightHooks.BiotechBlocksForcedLovin(pawn)
+                || DateNightHooks.BiotechBlocksForcedLovin(partner))
             {
                 return;
             }
@@ -287,6 +314,61 @@ namespace DateNight
             }
 
             __result = DateNightUtility.AlwaysDoLovinCooldownTicks;
+        }
+    }
+
+    [HarmonyPatch(typeof(ThinkNode_Priority_GetJoy), nameof(ThinkNode_Priority_GetJoy.GetPriority))]
+    public static class Patch_GetJoy_GetPriority
+    {
+        public static void Postfix(Pawn pawn, ref float __result)
+        {
+            if (!DateNightUtility.IsDateSchedule(pawn))
+            {
+                return;
+            }
+            if (DateNightUtility.ShouldSatisfyNeedsBeforeBed(pawn))
+            {
+                return;
+            }
+
+            __result = 8f;
+        }
+    }
+
+    [HarmonyPatch(typeof(JobGiver_GetJoy), "TryGiveJob")]
+    public static class Patch_GetJoy_TryGiveJob
+    {
+        public static bool Prefix(Pawn pawn, ref Job __result)
+        {
+            if (!DateNightUtility.IsDateSchedule(pawn))
+            {
+                return true;
+            }
+            if (DateNightUtility.ShouldSatisfyNeedsBeforeBed(pawn))
+            {
+                __result = null;
+                return false;
+            }
+
+            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            if (partner == null || !DateNightUtility.IsDateSchedule(partner)
+                || !DateNightDateUtility.CanDate(pawn, partner))
+            {
+                return true;
+            }
+            if (DateNightDefOf.DateNight_GoOnDate == null)
+            {
+                return true;
+            }
+
+            LocalTargetInfo spot = DateNightDateUtility.FindDateSpot(pawn, partner);
+            Job job = JobMaker.MakeJob(DateNightDefOf.DateNight_GoOnDate);
+            job.SetTarget(TargetIndex.A, partner);
+            job.SetTarget(TargetIndex.B, spot);
+            job.locomotionUrgency = LocomotionUrgency.Jog;
+            job.ignoreForbidden = true;
+            __result = job;
+            return false;
         }
     }
 }

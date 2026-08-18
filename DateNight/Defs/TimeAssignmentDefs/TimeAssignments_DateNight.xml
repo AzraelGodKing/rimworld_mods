@@ -9,4 +9,12 @@
     <allowJoy>false</allowJoy>
   </TimeAssignmentDef>
 
+  <TimeAssignmentDef>
+    <defName>DateNight_Date</defName>
+    <label>date</label>
+    <color>(70, 130, 150)</color>
+    <allowRest>false</allowRest>
+    <allowJoy>true</allowJoy>
+  </TimeAssignmentDef>
+
 </Defs>

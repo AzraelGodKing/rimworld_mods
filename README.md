@@ -96,7 +96,7 @@ Perk trees, trauma & therapy, apprenticeship, generational inheritance, and livi
 
 ### Date Night
 
-Adds a Lovin timetable slot to the Schedule tab. Paint the same hours on both partners; they meet in a double bed. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
+Adds Date and Lovin timetable slots. Date is a walk / table hangout; Lovin still uses a shared double. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
 
 - Site: [datenight.html](https://azraelgodking.github.io/rimworld_mods/datenight.html)
 - [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip)
