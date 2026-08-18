@@ -98,7 +98,7 @@ namespace DateNight
             if (inTarget && target.SleepingSlotsCount > 1)
             {
                 Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
-                if (partner != null && partner.CurrentBed() == target && pawn.thingIDNumber < partner.thingIDNumber)
+                if (partner != null && partner.CurrentBed() == target)
                 {
                     TryStartLovinNow(pawn);
                 }

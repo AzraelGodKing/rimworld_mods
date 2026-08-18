@@ -13,6 +13,7 @@ Detailed notes for **Date Night** only. Repo-wide highlights: [../CHANGELOG.md](
 - **Dev tools** — Date Night debug: make selected pair lovers, click-to-pair with selected, paint Lovin all day on selected, force lovin now.
 
 ### Fixed
+- **Lovin hours with no double** — GetRest falls back to vanilla sleep (and medical rest) instead of leaving the pawn idle. Either partner in the bed may start lovin.
 - **Rimbody / workout schedule overlap** — Lovin sat on Rimbody’s Workout cell, so the rose button showed Lovin but clicks opened the workout / Joy dropdown. Lovin now takes the next free extra column (also Exosuit Piloting and Schedule Everything). Fail-open if those mods are absent.
 - **Exosuit Framework schedule overlap (DN1)** — Piloting also takes an extra column; Lovin sits one slot further right (no longer covers Joy).
 - **Pregnancy-safe cooldown** — default setting no longer zeros `canLovinTick` on the Lovin schedule; Eager mode still shortens cooldown.
