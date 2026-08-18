@@ -22,6 +22,11 @@ namespace DeepColony
             var gameComp = GameComp_DeepColony.Instance;
             if (gameComp == null) return;
             if (gameComp.HasProcessedInheritance(pawn)) return;
+            if (pawn.Dead) return;
+
+            bool playerSide = pawn.Faction != null && pawn.Faction.IsPlayer
+                || gameComp.WasEverPlayerColonist(pawn);
+            if (!playerSide) return;
 
             gameComp.MarkInheritanceProcessed(pawn);
 
@@ -64,9 +69,13 @@ namespace DeepColony
 
         private static bool ShouldBackOffForBiotech(Pawn pawn)
         {
-            // Avoid double-dipping xenotype trait/gene identity when Biotech genes are present.
+            // Avoid double-dipping xenotype trait/gene identity. Colony-born
+            // xenotypes use endogenes; implanted germlines use xenogenes.
             if (pawn?.genes == null) return false;
-            return pawn.genes.Xenogenes != null && pawn.genes.Xenogenes.Count > 0;
+            if (pawn.genes.Xenogenes != null && pawn.genes.Xenogenes.Count > 0)
+                return true;
+            XenotypeDef xeno = pawn.genes.Xenotype;
+            return xeno != null && xeno != XenotypeDefOf.Baseliner;
         }
 
         private static void ApplyTraitInheritance(
@@ -350,9 +359,9 @@ namespace DeepColony
 
         private static bool IsColonistBloodline(Pawn parent)
         {
+            if (parent == null) return false;
             return parent.Faction == Faction.OfPlayer
-                || (GameComp_DeepColony.Instance?.WasEverPlayerColonist(parent) ?? false)
-                || (GameComp_DeepColony.Instance?.HasProcessedInheritance(parent) ?? false);
+                || (GameComp_DeepColony.Instance?.WasEverPlayerColonist(parent) ?? false);
         }
 
         private static List<Pawn> GetColonistGrandparents(Pawn pawn, List<Pawn> parents)
@@ -366,7 +375,7 @@ namespace DeepColony
                     if (rel.def != PawnRelationDefOf.Parent) continue;
                     Pawn gp = rel.otherPawn;
                     if (gp == null || result.Contains(gp)) continue;
-                    if (IsColonistBloodline(gp) || gp.Dead)
+                    if (IsColonistBloodline(gp))
                         result.Add(gp);
                 }
             }
