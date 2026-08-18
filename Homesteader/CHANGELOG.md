@@ -15,6 +15,7 @@ Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../
 - **CN / RU language packs** — Chinese Simplified and Russian Keyed + full DefInjected (buildings, items, plants, recipes, research, thoughts, hediffs, incidents, and related defs).
 
 ### Fixed
+- **Azrael storyteller (1.6)** — comps rewritten to match Cassandra Classic (valid disease / quest / raid-beacon fields); portraits use `CassandraClassic` art so the teller loads without XML / missing-texture errors.
 - **ASF hid Homestead storage** — Adaptive Storage Framework has no `ASF_Architect` tab. The old patch moved crates/cellars/cisterns there and deleted `Homesteader_Storage`, so those buildings vanished whenever ASF was a dependency.
 - **Meal allergies** — flares and food AI now inspect `CompIngredients`, so simple/fine meals cooked with milk, wheat, eggs, or fish match.
 - **Storage capacity copy** — descriptions use per-cell `maxItemsInCell` totals (hayloft 8, large crate 24, root cellar 24, icehouse 16, springhouse 6).
