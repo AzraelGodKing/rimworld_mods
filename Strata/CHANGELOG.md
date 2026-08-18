@@ -31,6 +31,8 @@ Paste-ready BBCode for Workshop updates: [`../assets/workshop/strata-update-note
 - **Workshop description** - About / Steam text updated for Version 3 features.
 
 ### Fixed
+- **Second stairwell parallel pocket** — if a sibling already opened B1/A+ but no landing cell is free in the 25-cell ring, refuse instead of generating a second pocket map.
+- **Orphan upstairs dump** — climbing a broken landing no longer teleports into random rock (`CellFinder.RandomCell`); only standable unfogged cells.
 - **Flood seep / sump** — pumping restores the original floor instead of leaving shallow water forever (`SetTerrain` + `RemoveTopLayer` was a no-op). Inspect string says if there is no flood in range (Steam Jul 26).
 - **Ore hoist singles** — single-item stacks despawn before placing on the partner level so they actually transfer.
 - **Shaft-fluid FindMod** — DBH / VE / Rimatomics / Rimefeller pipe comps match Workshop display names (packageId-only lists never attached).
