@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <JobDef>
+    <defName>DateNight_SelfLovin</defName>
+    <driverClass>DateNight.JobDriver_SelfLovin</driverClass>
+    <reportString>having some private time.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <suspendable>false</suspendable>
+    <sleepCanInterrupt>false</sleepCanInterrupt>
+  </JobDef>
+
+</Defs>

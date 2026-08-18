@@ -100,6 +100,41 @@ namespace DateNight
             }
         }
 
+        [DebugAction(Cat, "Force private time (selected)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForcePrivateTimeNow()
+        {
+            int n = 0;
+            foreach (Pawn p in SelectedHumanlikes())
+            {
+                string why = !p.ageTracker.Adult || !p.DevelopmentalStage.Adult() ? "not an adult"
+                    : p.CurJobDef == DateNightDefOf.DateNight_SelfLovin ? "already private time"
+                    : p.CurJobDef == JobDefOf.Lovin ? "already lovin"
+                    : LovePartnerRelationUtility.GetPartnerInMyBed(p) != null ? "love partner is in this bed — use Force lovin"
+                    : null;
+
+                if (why == null && DateNightUtility.TryStartSelfLovinNow(p, force: true))
+                {
+                    n++;
+                }
+                else if (why != null)
+                {
+                    Messages.Message($"[Date Night] {p.LabelShort}: {why}",
+                        MessageTypeDefOf.RejectInput, historical: false);
+                }
+                else
+                {
+                    Messages.Message($"[Date Night] {p.LabelShort}: no usable bed",
+                        MessageTypeDefOf.RejectInput, historical: false);
+                }
+            }
+            if (n > 0)
+            {
+                Messages.Message($"[Date Night] Started private time on {n} pawn(s).",
+                    MessageTypeDefOf.NeutralEvent, historical: false);
+            }
+        }
+
         [DebugAction(Cat, "Log rendezvous bed for selected",
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void LogRendezvous()
