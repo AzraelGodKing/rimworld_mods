@@ -1,0 +1,9 @@
+[h1]Deep Colony — Update[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] Isekai Rank / destiny traits stay unique; growth/combat/utility aptitudes can inherit.
+[*] Birth inheritance only for player-side babies (no NPC birth stamp).
+[*] Biotech gene backoff for non-Baseliner xenotypes + xenogenes.
+[*] Mentor loops blocked; envoy uniqueness includes caravans.
+[/list]
