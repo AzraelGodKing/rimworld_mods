@@ -43,6 +43,8 @@ namespace Nemesis
             if (__instance.Faction == null || __instance.Faction.IsPlayer || __instance.Faction.def.hidden) return;
             if (!__instance.RaceProps.Humanlike) return;
 
+            if (NemesisTriggers.IsColonyInternedOrExecution(__instance, dinfo)) return;
+
             Pawn attacker = dinfo?.Instigator as Pawn;
             if (attacker == null || !attacker.IsColonist) return;
 
@@ -110,9 +112,10 @@ namespace Nemesis
             if (__instance.Faction == null || __instance.Faction.IsPlayer || __instance.Faction.def.hidden) return true;
             if (!__instance.RaceProps.Humanlike) return true;
             if (comp.IsNemesisPawn(__instance)) return true;
-            // Public execution / ritual kills are already a death — don't pop hunt UI.
-            if (__instance.IsPrisonerOfColony) return true;
-            if (dinfo.HasValue && dinfo.Value.Def == DamageDefOf.ExecutionCut) return true;
+            // Executions, prisoners, and slaves are already a death — don't park them
+            // as a world-map hunt (Steam: executing a prisoner started a nemesis).
+            if (NemesisTriggers.IsColonyInternedOrExecution(__instance, dinfo)) return true;
+            if (!__instance.HostileTo(Faction.OfPlayer)) return true;
 
             Pawn attacker = dinfo?.Instigator as Pawn;
             if (attacker == null || !attacker.IsColonist) return true;
