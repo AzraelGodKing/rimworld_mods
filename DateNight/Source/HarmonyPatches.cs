@@ -206,8 +206,20 @@ namespace DateNight
                 return false;
             }
 
-            __result = DateNightUtility.TryMakeBedJob(pawn);
-            return false;
+            if (HealthAIUtility.ShouldSeekMedicalRest(pawn))
+            {
+                return true;
+            }
+
+            Job bedJob = DateNightUtility.TryMakeBedJob(pawn);
+            if (bedJob != null)
+            {
+                __result = bedJob;
+                return false;
+            }
+
+            // No reachable double: fall back to vanilla rest (owned single / ground).
+            return true;
         }
     }
 
