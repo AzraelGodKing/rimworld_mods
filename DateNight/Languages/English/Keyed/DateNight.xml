@@ -2,11 +2,13 @@
 <LanguageData>
 
   <DateNight_SettingsCategory>Date Night</DateNight_SettingsCategory>
-  <DateNight_Settings_Intro>Schedule Lovin on the Schedule tab for both partners. They go to bed; when both share a double bed, lovin chance uses a short MTB until the hour ends.</DateNight_Settings_Intro>
+  <DateNight_Settings_Intro>Schedule Lovin on the Schedule tab. Couples go to a shared double; when both are in it, lovin uses a short MTB. Adults without a partner in that bed can have some private time in any bed (singles included). Off in settings if you do not want that.</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>Pregnancy-safe cooldown</DateNight_Settings_PregnancySafe>
   <DateNight_Settings_PregnancySafeTip>ON (recommended): only shortens lovin chance while scheduled; keeps vanilla post-lovin cooldown. OFF with Eager: mirrors Always Do Lovin cooldown (~100 ticks).</DateNight_Settings_PregnancySafeTip>
   <DateNight_Settings_Eager>Eager mode (short cooldown)</DateNight_Settings_Eager>
   <DateNight_Settings_EagerTip>Shortens post-lovin cooldown like the Always Do Lovin debug option. Can spam pregnancy rolls — leave off unless you want that.</DateNight_Settings_EagerTip>
+  <DateNight_Settings_SelfLovin>Allow private time (self)</DateNight_Settings_SelfLovin>
+  <DateNight_Settings_SelfLovinTip>Adults on Lovin hours use their own bed when a partner is not sharing a double. No pregnancy. Same cooldown as lovin. Children never qualify.</DateNight_Settings_SelfLovinTip>
   <DateNight_Settings_Reset>Reset to defaults</DateNight_Settings_Reset>
 
 </LanguageData>

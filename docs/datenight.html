@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Date Night — a RimWorld mod by AzraelGodKing</title>
-<meta name="description" content="Date Night: add a Lovin timetable slot to RimWorld’s Schedule tab. Paint the same hours for both partners; they meet in a double bed. RimWorld 1.6, requires Harmony.">
+<meta name="description" content="Date Night: add a Lovin timetable slot to RimWorld’s Schedule tab. Couples meet in a double bed; adults can have private time when a partner is not sharing. RimWorld 1.6, requires Harmony.">
 <link rel="stylesheet" href="style.css">
 <script>
 /* Apply saved color mode before CSS paints (dark is default). */
@@ -63,7 +63,7 @@
 
   <section id="overview">
     <h2 class="n">Overview</h2>
-    <p class="sub">Adds a <b>Lovin</b> timetable slot to the Schedule tab. Paint Lovin on both partners for the same hours — each colonist goes to bed and waits. When both share a double bed, lovin uses a short mean-time-between (like the vanilla Always Do Lovin debug option) until the schedule changes.</p>
+    <p class="sub">Adds a <b>Lovin</b> timetable slot to the Schedule tab. Paint Lovin on both partners for the same hours — each colonist goes to bed and waits. When both share a double bed, lovin uses a short mean-time-between (like the vanilla Always Do Lovin debug option) until the schedule changes. Adults without a partner in that bed can have some <b>private time</b> in any bed (including a single). Children never qualify.</p>
     <div class="note date">
       <b>Dependencies:</b> requires <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a>. Load Date Night after it.<br>
       <b>Save-safe:</b> safe to add mid-save. Before removing, clear Lovin slots back to Sleep / Anything.
@@ -82,14 +82,14 @@
       <div class="card date">
         <div>
           <h3>2. Both partners</h3>
-          <p>Assign the same hours on both lovers. Each paths independently to a shared rendezvous double bed (not their private singles).</p>
+          <p>Assign the same hours on both lovers. Each paths independently to a shared rendezvous double bed (not their private singles). If the partner is off-hours or away, adults use private time instead of waiting forever.</p>
         </div>
       </div>
       <div class="card date">
         <div>
           <h3>3. Shared double bed</h3>
           <div class="stat">Vanilla partner-in-bed rules</div>
-          <p>When both are in the double, lovin chance uses a short MTB for the rest of the window. Missing partner or only a single bed: they wait; no lovin.</p>
+          <p>When both are in the double, lovin chance uses a short MTB for the rest of the window. Adults without a partner in that bed can have some private time in any bed (including a single). Toggle it off in mod settings. Children never qualify.</p>
         </div>
       </div>
       <div class="card date">
@@ -118,22 +118,29 @@
           <p>Also shortens post-lovin cooldown like Always Do Lovin. Can spam pregnancy rolls — leave off unless you want that.</p>
         </div>
       </div>
+      <div class="card date wide">
+        <div>
+          <h3>Allow private time</h3>
+          <div class="stat">Default ON</div>
+          <p>Adults on Lovin hours use any bed when a couple job cannot start. Mood thought only — no pregnancy. Same cooldown as lovin. Children never qualify.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <section id="requirements">
     <h2 class="n">Requirements checklist</h2>
     <ul class="feature-list">
-      <li>Love relationship between the pair</li>
-      <li>Both scheduled Lovin for the window</li>
-      <li>A reachable shared double bed (rendezvous cache picks one; no ownership storm)</li>
+      <li>Couples: love relationship, both scheduled Lovin, reachable shared double</li>
+      <li>Private time: adult colonist, Lovin hours, any reachable bed (toggle in settings)</li>
+      <li>Vanilla lovin cooldown elapsed — children never qualify</li>
       <li>Works for no-sleep / low-rest pawns who never hit a Sleep block</li>
     </ul>
   </section>
 
   <section id="dev">
     <h2 class="n">Dev tools</h2>
-    <p class="sub">With Dev mode on: <b>Date Night</b> menu — make selected pair lovers, click-to-pair, paint Lovin all day, force lovin now, log rendezvous bed.</p>
+    <p class="sub">With Dev mode on: <b>Date Night</b> menu — make selected pair lovers, click-to-pair, paint Lovin all day, force lovin now, force private time, log rendezvous bed.</p>
   </section>
 
   <section id="install">
