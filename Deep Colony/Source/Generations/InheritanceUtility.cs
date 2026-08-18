@@ -105,30 +105,66 @@ namespace DeepColony
             }
         }
 
-        // Rank is stamped from current level; destiny traits are unique scenario
-        // power. Growth / combat / utility Isekai_* traits still inherit.
-        private static readonly HashSet<string> BlockedIsekaiDestinyTraits = new HashSet<string>
+        // ISEKAI RPG Leveling: Rank (F–SSS) and destiny (Protagonist, …) stay
+        // unique. Only these growth / combat / utility aptitude traits inherit.
+        private static readonly HashSet<string> AllowedIsekaiAptitudeTraits = new HashSet<string>
         {
-            "Isekai_Protagonist",
-            "Isekai_Antagonist",
-            "Isekai_Reincarnated",
-            "Isekai_Regressor",
-            "Isekai_SummonedHero",
-            "Isekai_SealedPower",
+            // Growth
+            "Isekai_NaturalTalent",
+            "Isekai_Prodigy",
+            "Isekai_LateBloomer",
+            "Isekai_QuickLearner",
+            "Isekai_SlowGrind",
+            "Isekai_PowerSpike",
+            "Isekai_AwakenedPotential",
+            "Isekai_Genius",
+            // Combat / body
+            "Isekai_BattleManiac",
+            "Isekai_BerserkerBlood",
+            "Isekai_IronWill",
+            "Isekai_GlassCannon",
+            "Isekai_Fortress",
+            "Isekai_ShadowStep",
+            "Isekai_PredatorInstinct",
+            "Isekai_Undying",
+            "Isekai_Mighty",
+            "Isekai_Agile",
+            "Isekai_Resilient",
+            "Isekai_Brilliant",
+            "Isekai_Enlightened",
+            // Utility / luck
+            "Isekai_SilverTongue",
+            "Isekai_MerchantEye",
+            "Isekai_CraftsmanSoul",
+            "Isekai_BeastWhisperer",
+            "Isekai_HealerTouch",
+            "Isekai_Lucky",
+            "Isekai_CursedLuck",
+            "Isekai_SystemGlitch",
+            "Isekai_HollowCore",
+            "Isekai_FragileVessel",
+            "Isekai_EchoOfDefeat",
         };
 
         /// <summary>
-        /// Skip ISEKAI RPG Leveling rank (F–SSS) and destiny traits. Aptitude
-        /// traits (Natural Talent, Prodigy, Mighty, Lucky, …) can inherit.
+        /// Skip ISEKAI RPG Leveling rank and destiny traits. The listed growth /
+        /// combat / utility aptitude traits can inherit like vanilla.
         /// </summary>
         internal static bool ShouldSkipInheritedTrait(TraitDef def)
         {
             if (def == null) return true;
+            return ShouldSkipInheritedTraitName(def.defName);
+        }
 
-            string name = def.defName;
-            if (name.NullOrEmpty()) return false;
-            if (name.StartsWith("Isekai_Rank_", StringComparison.Ordinal)) return true;
-            return BlockedIsekaiDestinyTraits.Contains(name);
+        /// <summary>
+        /// <c>Isekai_*</c> inherits only when the defName is on the aptitude
+        /// allow list. Other mods' traits are unchanged.
+        /// </summary>
+        internal static bool ShouldSkipInheritedTraitName(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return false;
+            if (!name.StartsWith("Isekai_", StringComparison.Ordinal)) return false;
+            return !AllowedIsekaiAptitudeTraits.Contains(name);
         }
 
         private static void ApplyPassionInheritance(
