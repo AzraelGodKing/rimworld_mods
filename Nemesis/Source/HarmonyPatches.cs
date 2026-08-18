@@ -74,7 +74,7 @@ namespace Nemesis
 
             if (!Rand.Chance(NemesisMod.Settings?.fixationChance ?? 0.10f)) return;
 
-            Map map = __instance.Map;
+            Map map = __instance.MapHeld ?? killer.MapHeld ?? killer.Map;
             if (map?.mapPawns?.FreeColonistsSpawned == null) return;
 
             List<Pawn> candidates = new List<Pawn>();
@@ -122,13 +122,12 @@ namespace Nemesis
 
             if (!Rand.Chance(NemesisMod.Settings?.woundedEscapeChance ?? 0.12f)) return true;
 
-            HediffDef anesthetic = DefDatabase<HediffDef>.GetNamedSilentFail("Anesthetic");
-            if (anesthetic != null)
-                __instance.health.AddHediff(anesthetic);
-
+            // Do not AddHediff(Anesthetic) here: a ShouldBeDead pawn can re-enter
+            // Kill, leave a corpse, and CreateNemesis then generates a lookalike.
             comp.CreateNemesis(__instance, NemesisTargetMode.Pawn, NemesisTrigger.WoundedAndEscaped,
                 attacker, useAsNemesis: __instance);
-            return false;
+            // Foreign-antagonist / failed create must not cancel vanilla death.
+            return !comp.IsEngaged;
         }
     }
 
