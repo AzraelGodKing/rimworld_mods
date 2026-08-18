@@ -6,6 +6,7 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 - **Hunt raids omit the nemesis** — Direct Raid injects the named pawn whenever the hunt is active (not only after the first flee); hunt faction is restored after parking as a world pawn; if the raid group never generated them they spawn at the map edge (Steam Aug 15).
 - **Phantom escape letters** — flee only when the nemesis is spawned, hostile, and on a player home map (not a world pawn).
+- **Colony executions start a hunt** — executing a prisoner (including Ideology public execution / ExecutionCut, slaves, and colony-bed kills) no longer starts wounded-escape or "killed ally" hunts, so the victim is not parked on the world map sedated with a mount (Steam Aug 11 / 15 / 17). Wounded-escape still requires a hostile in the field.
 - **Ideology public execution** — killing a colony prisoner / ExecutionCut no longer intercepts as cinematic wounded-escape (Steam Aug 11).
 - **GitHub zip restored** — `Nemesis.zip` published again on the rolling `latest` release for non-Steam installs (alongside Workshop).
 - **Marked scenario** — personal-antagonist showcase start (flak + revolvers); locks Azrael when Homesteader is loaded.
