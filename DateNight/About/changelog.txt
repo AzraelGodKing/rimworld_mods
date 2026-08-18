@@ -1,0 +1,17 @@
+[h1]Date Night — Update[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Date hours[/b] — teal Schedule slot; walk / table / hang out (mood + opinion, no bed).
+[*] Missed-date thought if a partner can't make it; schedule mismatch alert when lovers paint different hours.
+[*] Temporary double-bed claim for Lovin windows (off in settings).
+[*] Ideology / Biotech skip forced lovin and reroute to a date when appropriate.
+[*] Private time (self-lovin) for adults alone on Lovin hours (off in settings).
+[*] CN / RU language packs.
+[/list]
+
+[b]Fixed[/b]
+[list]
+[*] Lovin hours with no shared double fall back to normal sleep / medical rest.
+[*] Either partner in the bed may start lovin.
+[/list]

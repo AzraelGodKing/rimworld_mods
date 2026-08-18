@@ -1,0 +1,8 @@
+[h1]Nemesis — Update[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] Colony executions (including Ideology public execution) no longer start a hunt / wounded-escape on the victim.
+[*] Fixation after a colonist dies uses MapHeld so the hunt can still pick a survivor.
+[*] If wounded-escape create fails, vanilla Kill proceeds (no stuck anesthetic cheat-death).
+[/list]
