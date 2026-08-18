@@ -9,7 +9,7 @@
 - Temporary rendezvous double claim for the Lovin window
 - Ideology no-lovin + Biotech sterile reroute (fail-open)
 - Chinese Simplified and Russian packs
+- Schedule mismatch alert when one lover has Date/Lovin painted and the other does not
 
 ## Later
-- Tip/letter when Lovin hour starts but partner absent or bed is single
 - Better Pawn Control smoke tests

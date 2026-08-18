@@ -12,5 +12,11 @@
   <DateNight_Settings_WindowBed>爱爱时段占用双人床</DateNight_Settings_WindowBed>
   <DateNight_Settings_WindowBedTip>爱爱时段临时把约会双人床分给这对伴侣，结束后恢复原来的床。若你想自己分配床铺，请关闭。</DateNight_Settings_WindowBedTip>
   <DateNight_Settings_Reset>恢复默认</DateNight_Settings_Reset>
+  <DateNight_Alert_Mismatch>作息不一致</DateNight_Alert_Mismatch>
+  <DateNight_Alert_MismatchDesc>有人给爱爱或约会涂了时段，但伴侣没有涂，或两人涂的小时不同。请给双方涂上相同的小时。</DateNight_Alert_MismatchDesc>
+  <DateNight_Alert_MismatchNone>{0} 涂了{1}；{2} 没有。</DateNight_Alert_MismatchNone>
+  <DateNight_Alert_MismatchHours>{0} 和 {1} 的{2}时段不同。</DateNight_Alert_MismatchHours>
+  <DateNight_Alert_SlotLovin>爱爱</DateNight_Alert_SlotLovin>
+  <DateNight_Alert_SlotDate>约会</DateNight_Alert_SlotDate>
 
 </LanguageData>

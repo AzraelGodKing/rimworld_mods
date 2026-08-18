@@ -12,5 +12,11 @@
   <DateNight_Settings_WindowBed>Занимать двуспальную на любовные часы</DateNight_Settings_WindowBed>
   <DateNight_Settings_WindowBedTip>На время любовных часов двуспальная кровать назначается паре, затем прежние кровати возвращаются. Выключите, если назначаете кровати сами.</DateNight_Settings_WindowBedTip>
   <DateNight_Settings_Reset>Сбросить</DateNight_Settings_Reset>
+  <DateNight_Alert_Mismatch>Расписание не совпадает</DateNight_Alert_Mismatch>
+  <DateNight_Alert_MismatchDesc>У одного из пары стоят часы свидания или любовные часы, а у партнёра нет — или часы разные. Назначьте одни и те же часы обоим.</DateNight_Alert_MismatchDesc>
+  <DateNight_Alert_MismatchNone>У {0} стоит {1}; у {2} нет.</DateNight_Alert_MismatchNone>
+  <DateNight_Alert_MismatchHours>У {0} и {1} разные часы: {2}.</DateNight_Alert_MismatchHours>
+  <DateNight_Alert_SlotLovin>любовные</DateNight_Alert_SlotLovin>
+  <DateNight_Alert_SlotDate>свидание</DateNight_Alert_SlotDate>
 
 </LanguageData>
