@@ -15,7 +15,7 @@
   <Strata_Settings_Reset>Reset</Strata_Settings_Reset>
   <Strata_Settings_ColonistRelays>Colonist relays</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Work relay</Strata_Settings_WorkRelay>
-  <Strata_Settings_WorkRelayDesc>Idle colonists and colony mechanoids walk to other levels that have work when their own floor is idle. Does NOT control hauling through stairs — use Haul across levels for that.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_WorkRelayDesc>Idle colonists and colony mechanoids walk to other levels that have work when their own floor is idle. On by default. Does NOT control hauling through stairs — use Haul across levels for that. Turn this off in Mod Options if pawns should stay on their current floor.</Strata_Settings_WorkRelayDesc>
   <Strata_Settings_OffThreadWorkRelay>Off-thread work board</Strata_Settings_OffThreadWorkRelay>
   <Strata_Settings_OffThreadWorkRelayDesc>A background scanner fills a per-floor work board that work relay reads (instead of probing during every idle think). Grow-zone flags can finish on a worker thread. On by default when Work relay is on; off in Performance mode.</Strata_Settings_OffThreadWorkRelayDesc>
   <Strata_Settings_HaulAcrossLevels>Haul across levels</Strata_Settings_HaulAcrossLevels>
@@ -182,6 +182,7 @@
 
   <!-- Stairwells / shafts -->
   <Strata_StairsConnectedBelow>Broke through to the existing level below.</Strata_StairsConnectedBelow>
+  <Strata_NoLandingCell>No clear landing cell on the existing floor (25-cell ring is blocked). Clear space around the shaft alignment, then try again — do not open a second parallel floor.</Strata_NoLandingCell>
   <Strata_StairsConnectedAbove>Connected to the existing level above.</Strata_StairsConnectedAbove>
   <Strata_GravshipConnectedBelow>Broke through to the existing gravship deck below.</Strata_GravshipConnectedBelow>
   <Strata_GravshipConnectedAbove>Connected to the existing gravship deck above.</Strata_GravshipConnectedAbove>

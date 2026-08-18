@@ -96,7 +96,12 @@ namespace Strata
             {
                 return cell;
             }
-            return CellFinder.RandomCell(above);
+            if (CellFinderLoose.TryGetRandomCellWith(
+                    c => c.Standable(above) && !c.Fogged(above), above, 1000, out IntVec3 any))
+            {
+                return any;
+            }
+            return IntVec3.Invalid;
         }
 
         public override bool IsEnterable(out string reason)
