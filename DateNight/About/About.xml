@@ -22,22 +22,30 @@
     <li>AOBA.ExosuitFramework</li>
     <li>AOBA.MechsuitFramework</li>
   </loadAfter>
-  <description>Adds a Lovin timetable slot to the Schedule tab.
+  <description>Adds Date and Lovin timetable slots to the Schedule tab.
 
-Paint Lovin on both partners for the same hours. Each colonist goes to their bed and waits. When both are in a shared double bed, lovin uses a short mean-time-between (like the vanilla Always Do Lovin debug option) until the schedule changes — then behavior returns to normal.
+Date hours: partners walk, sit at a table, or hang out. Mood and opinion only — no bed, no pregnancy.
+
+Lovin hours: paint the same hours on both partners. They meet in a shared double. When both are in it, lovin uses a short mean-time-between until the schedule changes. The double is claimed for that window, then previous beds are restored.
 
 Adults without a partner in that bed can have some private time in any bed (including a single). No pregnancy. Toggle it off in mod settings.
+
+If Ideology forbids lovin, or Biotech sterile genes would make a forced lovin job pointless, Date Night reroutes to a date instead of forcing the job. Missing DLC fails open.
+
+If a partner is drafted, in a medical bed, or off-map for the window, the one who showed up gets a short stood-up thought. If both make it, they get a small boost.
 
 Works for no-sleep / low-rest pawns who never hit a Sleep block: Lovin still sends them to bed.
 
 REQUIREMENTS
-- Couples: both scheduled Lovin, love relationship, shared double bed.
+- Date: love relationship, both scheduled Date, same map. Adults only.
+- Couples (Lovin): both scheduled Lovin, love relationship, shared double bed.
 - Private time: adult colonist, Lovin hours, a reachable bed. Children never qualify.
 
 SETTINGS
 - Pregnancy-safe cooldown (default ON): keeps vanilla post-lovin cooldown; only shortens the chance MTB while scheduled.
 - Eager mode (optional): also shortens post-lovin cooldown like Always Do Lovin — can spam pregnancy rolls.
 - Allow private time (default ON): self-lovin when a partner is not sharing a double.
+- Claim double for Lovin hours (default ON): temporary rendezvous bed, then restore.
 
-Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: clear Lovin schedule slots back to Sleep/Anything.</description>
+Chinese Simplified and Russian included. Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: clear Date / Lovin schedule slots back to Sleep/Anything.</description>
 </ModMetaData>

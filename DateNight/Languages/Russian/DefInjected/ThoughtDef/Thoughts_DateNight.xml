@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DateNight_PrivateTime.label>личное время</DateNight_PrivateTime.label>
+  <DateNight_PrivateTime.description>Немного времени для себя. Полегчало.</DateNight_PrivateTime.description>
+  <DateNight_PrivateTime.stages_0.label>личное время</DateNight_PrivateTime.stages_0.label>
+  <DateNight_PrivateTime.stages_0.description>Немного времени для себя. Полегчало.</DateNight_PrivateTime.stages_0.description>
+
+  <DateNight_HadADate.label>свидание</DateNight_HadADate.label>
+  <DateNight_HadADate.description>Провёл время с {0}. Приятно.</DateNight_HadADate.description>
+  <DateNight_HadADate.stages_0.label>свидание</DateNight_HadADate.stages_0.label>
+  <DateNight_HadADate.stages_0.description>Провёл время с {0}. Приятно.</DateNight_HadADate.stages_0.description>
+
+  <DateNight_MadeIt.label>оба пришли</DateNight_MadeIt.label>
+  <DateNight_MadeIt.description>Вы с {0} оба явились.</DateNight_MadeIt.description>
+  <DateNight_MadeIt.stages_0.label>оба пришли</DateNight_MadeIt.stages_0.label>
+  <DateNight_MadeIt.stages_0.description>Вы с {0} оба явились.</DateNight_MadeIt.stages_0.description>
+
+  <DateNight_StoodUp.label>оставили ждать</DateNight_StoodUp.label>
+  <DateNight_StoodUp.description>{0} должен был прийти.</DateNight_StoodUp.description>
+  <DateNight_StoodUp.stages_0.label>оставили ждать</DateNight_StoodUp.stages_0.label>
+  <DateNight_StoodUp.stages_0.description>{0} должен был прийти.</DateNight_StoodUp.stages_0.description>
+
+</LanguageData>

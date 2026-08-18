@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DateNight_SettingsCategory>约会之夜</DateNight_SettingsCategory>
+  <DateNight_Settings_Intro>在作息表上安排“约会”或“爱爱”。约会是散步 / 餐桌 / 一起消遣（心情与好感，不上床）。爱爱仍使用双人床。若伴侣不在同一张床，成人可以独处。意识形态禁止爱爱，或生物科技不育基因，会改去约会，而不是强行开始爱爱。</DateNight_Settings_Intro>
+  <DateNight_Settings_PregnancySafe>安全怀孕冷却</DateNight_Settings_PregnancySafe>
+  <DateNight_Settings_PregnancySafeTip>开启（推荐）：只在排班时提高爱爱几率，保留原版爱爱后冷却。关闭并开启急切模式：冷却约 100 tick，可能频繁判定怀孕。</DateNight_Settings_PregnancySafeTip>
+  <DateNight_Settings_Eager>急切模式（短冷却）</DateNight_Settings_Eager>
+  <DateNight_Settings_EagerTip>像原版“总是爱爱”调试选项一样缩短冷却。可能频繁判定怀孕——除非你想要，否则请保持关闭。</DateNight_Settings_EagerTip>
+  <DateNight_Settings_SelfLovin>允许独处</DateNight_Settings_SelfLovin>
+  <DateNight_Settings_SelfLovinTip>爱爱时段若伴侣不在双人床，成人可以使用自己的床。不会怀孕。冷却与爱爱相同。儿童永远不符合条件。</DateNight_Settings_SelfLovinTip>
+  <DateNight_Settings_WindowBed>爱爱时段占用双人床</DateNight_Settings_WindowBed>
+  <DateNight_Settings_WindowBedTip>爱爱时段临时把约会双人床分给这对伴侣，结束后恢复原来的床。若你想自己分配床铺，请关闭。</DateNight_Settings_WindowBedTip>
+  <DateNight_Settings_Reset>恢复默认</DateNight_Settings_Reset>
+
+</LanguageData>

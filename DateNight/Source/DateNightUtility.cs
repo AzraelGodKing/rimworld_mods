@@ -22,6 +22,20 @@ namespace DateNight
             return pawn.timetable.CurrentAssignment == DateNightDefOf.DateNight_Lovin;
         }
 
+        public static bool IsDateSchedule(Pawn pawn)
+        {
+            if (pawn?.timetable == null || DateNightDefOf.DateNight_Date == null)
+            {
+                return false;
+            }
+            return pawn.timetable.CurrentAssignment == DateNightDefOf.DateNight_Date;
+        }
+
+        public static bool IsLovinOrDateSchedule(Pawn pawn)
+        {
+            return IsLovinSchedule(pawn) || IsDateSchedule(pawn);
+        }
+
         public static bool ShouldBoostLovinChance(Pawn pawn, Pawn partner)
         {
             return IsLovinSchedule(pawn) || IsLovinSchedule(partner);
@@ -78,7 +92,8 @@ namespace DateNight
                 return;
             }
             if (pawn.CurJobDef == JobDefOf.Lovin
-                || pawn.CurJobDef == DateNightDefOf.DateNight_SelfLovin)
+                || pawn.CurJobDef == DateNightDefOf.DateNight_SelfLovin
+                || pawn.CurJobDef == DateNightDefOf.DateNight_GoOnDate)
             {
                 return;
             }
@@ -86,6 +101,15 @@ namespace DateNight
             // Needs first: never yank someone off food / chem / etc.
             if (ShouldSatisfyNeedsBeforeBed(pawn) || IsDoingNeedJob(pawn))
             {
+                return;
+            }
+
+            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            if (partner != null
+                && IsLovinSchedule(partner)
+                && !DateNightHooks.CanForceCoupleLovin(pawn, partner))
+            {
+                DateNightDateUtility.TryStartDateNow(pawn);
                 return;
             }
 
@@ -112,10 +136,16 @@ namespace DateNight
                 return;
             }
 
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
             if (partner != null && partner.CurrentBed() == target && target.SleepingSlotsCount > 1)
             {
-                TryStartLovinNow(pawn);
+                if (DateNightHooks.CanForceCoupleLovin(pawn, partner))
+                {
+                    TryStartLovinNow(pawn);
+                }
+                else
+                {
+                    DateNightDateUtility.TryStartDateNow(pawn);
+                }
                 return;
             }
 
@@ -158,6 +188,10 @@ namespace DateNight
             {
                 return false;
             }
+            if (!DateNightHooks.CanForceCoupleLovin(pawn, partner))
+            {
+                return false;
+            }
 
             // Both partners must be topped up enough before lovin.
             if (ShouldSatisfyNeedsBeforeLovin(pawn) || ShouldSatisfyNeedsBeforeLovin(partner))
@@ -189,7 +223,12 @@ namespace DateNight
             Job lovin = JobMaker.MakeJob(JobDefOf.Lovin, partner, bed);
             lovin.ignoreForbidden = true;
             pawn.jobs.StartJob(lovin, JobCondition.InterruptForced, null, resumeCurJobAfterwards: false);
-            return pawn.CurJobDef == JobDefOf.Lovin;
+            if (pawn.CurJobDef == JobDefOf.Lovin)
+            {
+                DateNightWindows.NotifyLovinSuccess(pawn, partner);
+                return true;
+            }
+            return false;
         }
 
         public static bool CanSelfLovin(Pawn pawn, bool ignoreSetting = false)
@@ -203,6 +242,10 @@ namespace DateNight
                 return false;
             }
             if (!pawn.DevelopmentalStage.Adult())
+            {
+                return false;
+            }
+            if (!DateNightHooks.IdeologyAllowsLovin(pawn))
             {
                 return false;
             }
