@@ -43,7 +43,7 @@ Steam (Aug 2026): storage on the Furniture tab bloating the architect; a drying-
 |----|------|------|-------|
 | HS-Q01 | **Homesteader architect tab** — crates, barrels, cellar, icehouse, springhouse, preserves shelf, hayloft under one tab (keep Production for stations) | S | **Shipped** (homestead tab). Fixes Furniture bloat without requiring Adaptive Storage Framework |
 | HS-Q02 | **ASF Storage tab patch** — if Adaptive Storage Framework is loaded, also list storage defs on its Storage category | S | **Shipped** (fail-open). Comment asked for “the storage tab” |
-| HS-Q03 | **Texture audit** — directional drying rack / hayloft / hearth; missing `_north` must never pink-check | S | Player reported `DryingRack_north.png`; confirm pack vs git LFS |
+| HS-Q03 | **Texture audit** — directional drying rack / hayloft / hearth; missing `_north` must never pink-check | S | **Verified** — `Graphic_Multi` defs have all four facings in both the original pack and HomesteaderRefresh (Steam Jul 28 `DryingRack_north` is present) |
 | HS-Q04 | **Settings pack** — today settings are DevMode allergy-reveal only. Add: allergy flare intensity, favorite-food mood, coop egg interval, Kats on/off, cooling tooltip verbosity | S | Match Deep Colony’s “players can tone it down” habit |
 
 Do **not** merge jam cauldron into canning kitchen or hearth into wood stove in Phase 0 — document the split in About/FAQ instead (hearth cooks; stove heats). Revisit only if playtests agree they’re redundant.

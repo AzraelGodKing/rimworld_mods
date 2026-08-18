@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Steam bugfixes** — Nemesis no longer starts a hunt from colony prisoner/slave executions (Steam Aug 11/15/17); Strata upstairs enter no longer NREs in vanilla `PocketMapExit.OnEntered` when the host shaft unlinks (Steam Aug 12). → [Nemesis/CHANGELOG.md](Nemesis/CHANGELOG.md) · [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Date Night** — Lovin schedule button no longer shares Rimbody’s Workout cell (clicks were opening the workout dropdown). → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Steam-first fixes** — Deep Colony envoy/mentor menus; Nemesis raid inject + phantom escapes; Strata flood/sump + ore hoist; Homesteader homestead tab / soap / allergies / cellar text / cistern storage; Azrael FindMod + CI zip; Date Night pregnancy-safe cooldown. Plan: [docs/ideas/general-fixes.md](docs/ideas/general-fixes.md).
 - **Homesteader** — water buildings form an upgrade ladder (barrel → cistern → tower; hand-dug → deep well); stone fountain drinks ~2 jugs/day. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)

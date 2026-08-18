@@ -1,6 +1,6 @@
 # General fixes — approved set
 
-**Status:** implemented on `cursor/general-fixes-8c68`. Remaining items only; already-shipped work stays out.  
+**Status:** implemented on `cursor/general-fixes-8c68`. Follow-up Steam comments (Aug 12–17) landed on `cursor/steam-bugfixes-7d9c`.  
 **No About.xml version bumps.** Changelogs updated with whatever landed.
 
 ---
@@ -26,10 +26,13 @@ Parking as a world pawn can mismatch faction so inject silently fails. Keep a ho
 Only `FireEscape` if they are spawned, hostile, and losing a fight. No off-map escape letters.
 
 **7. Nemesis — Ideology execution**
-Skip the cinematic-escape prefix for public execution / ritual kills (Steam Aug 11).
+Skip the cinematic-escape prefix for public execution / ritual kills (Steam Aug 11). Follow-up (Steam Aug 15/17): also skip **killed-ally** on interned pawns / ExecutionCut / colony-bed kills, and require HostileTo for wounded-escape so executing a prisoner cannot park them as a world-map hunt.
 
 **8. Strata — flood / sump**
 Store original terrain and restore on pump so flood seep actually drains (Steam Jul 26).
+
+**8b. Strata — upstairs enter NRE**
+Never call vanilla `PocketMapExit.OnEntered` (Steam Aug 12 Bug Reports). Teleport via `Notify_ThingAdded`; refuse enter if the destination map is gone.
 
 **9. Strata — ore hoist**
 `DeSpawn` / `SplitOff` before place so single stacks transfer.
