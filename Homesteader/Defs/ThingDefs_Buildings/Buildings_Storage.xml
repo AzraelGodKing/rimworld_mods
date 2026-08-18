@@ -265,7 +265,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_Hayloft</defName>
     <label>hayloft</label>
-    <description>An open wooden loft for bulk farm storage. Holds four stacks of hay, raw plants, and smokeleaf, sheltered from the weather.</description>
+    <description>An open wooden loft for bulk farm storage. Holds eight stacks of hay, raw plants, and smokeleaf (four per cell on a 2×1 footprint), sheltered from the weather.</description>
     <thingClass>Building_Storage</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/Hayloft</texPath>
@@ -337,7 +337,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_LargeStorageCrate</defName>
     <label>large storage crate</label>
-    <description>A reinforced double-wide crate for serious stockpiles. Holds six stacks of anything and keeps them from deteriorating, even outdoors.</description>
+    <description>A reinforced double-wide crate for serious stockpiles. Holds twenty-four stacks of anything (six per cell on a 2×2 footprint) and keeps them from deteriorating, even outdoors.</description>
     <thingClass>Building_Storage</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/LargeStorageCrate</texPath>
@@ -403,7 +403,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Homesteader_RootCellar</defName>
     <label>root cellar</label>
-    <description>A buried cellar lined with stone and earth. Holds six stacks of food and drink. Contents on the cellar — and food in adjacent indoor cells — stay at or below 5°C for spoilage, and are sheltered from outdoor weather.</description>
+    <description>A buried cellar lined with stone and earth. Holds twenty-four stacks of food and drink (six per cell on a 2×2 footprint). Contents on the cellar — and food in adjacent indoor cells — stay at or below 5°C for spoilage, and are sheltered from outdoor weather.</description>
     <thingClass>Building_Storage</thingClass>
     <graphicData>
       <texPath>Homesteader/Buildings/RootCellar</texPath>
