@@ -31,6 +31,15 @@ namespace DeepColony
             {
                 if (targetComp.mentor != actor)
                 {
+                    if (!MentorshipUtility.CanMentor(actor, targetPawn, out string gateReason))
+                    {
+                        string label = "DC_BecomeMentor".Translate(actor.LabelShort.Named("PAWN"),
+                            targetPawn.LabelShort.Named("APPRENTICE"));
+                        if (!gateReason.NullOrEmpty()) label = label + " (" + gateReason + ")";
+                        yield return new FloatMenuOption(label, null) { Disabled = true };
+                    }
+                    else
+                    {
                     var skills = MentorshipUtility.SkillsMentorCanTeach(actor, targetPawn).ToList();
                     bool lineage = MentorshipUtility.IsLineagePair(actor, targetPawn);
 
@@ -84,6 +93,7 @@ namespace DeepColony
                                 actor.LabelShort.Named("PAWN"),
                                 targetPawn.LabelShort.Named("APPRENTICE")),
                             () => Find.WindowStack.Add(new FloatMenu(sub)));
+                    }
                     }
                 }
                 else
