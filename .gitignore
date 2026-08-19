@@ -7,6 +7,10 @@
 # Site download zips — published via GitHub Release, not committed
 docs/downloads/*.zip
 
+# Vue site build artifacts
+site/node_modules/
+site/dist/
+
 # One-off art package duplicate (canonical copy lives under Strata/ArtPackage/)
 /Strata_Art_Package.zip
 

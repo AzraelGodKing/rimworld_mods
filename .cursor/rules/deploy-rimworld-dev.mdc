@@ -1,0 +1,16 @@
+---
+description: Always deploy RimWorld mods to the RimWorld - Dev Mods folder
+alwaysApply: true
+---
+
+# Deploy target: RimWorld - Dev
+
+When deploying any mod from this repo to a local RimWorld install:
+
+1. **Always** deploy to:
+   `E:\SteamLibrary\steamapps\common\RimWorld - Dev\Mods\<ModFolder>`
+2. Also deploy to the non-Dev install when useful / when the user asks for “the RimWorld mods folder”:
+   `E:\SteamLibrary\steamapps\common\RimWorld\Mods\<ModFolder>`
+3. If C# changed, **rebuild the DLL first**, then copy so the deployed assembly matches the branch.
+4. Prefer a runtime pack (About, Assemblies, Defs, Languages, Textures, Patches, LoadFolders, etc.). Skip `Source`, `Tools`, `ArtPackage`, and other non-runtime trees unless the user asks otherwise.
+5. If a DLL copy fails because the file is locked (“user-mapped section open”), tell the user to close RimWorld (or the Dev instance) and retry — do not silently leave a stale DLL.
