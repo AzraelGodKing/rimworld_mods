@@ -24,3 +24,5 @@ Strata/Tools/_reflect_tmp/
 
 # Local private outputs (never commit)
 .local/
+.local/**
+**/discord*webhook*
