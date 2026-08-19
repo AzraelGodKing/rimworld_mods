@@ -1,0 +1,58 @@
+---
+description: Player-facing changelogs → About/changelog.txt (Steam) + Discord embeds (one per mod)
+alwaysApply: true
+---
+
+# Player-facing changelog
+
+When the user asks for a **player-facing changelog**, **Steam changelog**, **Workshop update notes**, or similar:
+
+## Do this
+
+1. Identify **each mod touched** by the work.
+2. Write **`<ModFolder>/About/changelog.txt`** as **Steam Workshop BBCode**.
+3. Keep detail in **`CHANGELOG.md`**; optional root `CHANGELOG.md` highlight.
+4. **Post to Discord** — **one webhook message per mod** as a **rich embed** (not plain `content`). Read URL from `.local/discord-changelog-webhook.url` (gitignored). Never commit the token.
+
+## Steam (`About/changelog.txt`)
+
+```
+[h1]ModName — Update[/h1]
+[b]Fixed[/b]
+[list]
+[*] [b]Lead[/b] — player language.
+[/list]
+```
+
+## Discord embed (match this layout)
+
+Each POST body:
+
+```json
+{
+  "embeds": [{
+    "title": "ModName — Update",
+    "color": 9109504,
+    "thumbnail": { "url": "https://azraelgodking.github.io/rimworld_mods/img/<Preview>.png" },
+    "description": "**__Changes__**\n• …\n\n**__Download__**\n• **Steam Workshop:** <url>\n• **GitHub Release:** zip in release assets\n• **Manual:** folder → `RimWorld/Mods/`"
+  }]
+}
+```
+
+- **Title:** mod display name + ` — Update` (do **not** invent version bumps unless the user asked / About was versioned).
+- **Color:** maroon sidebar `9109504` (`#8B1A2B`).
+- **Thumbnail:** public docs preview PNG on GitHub Pages (`…/img/StrataPreview.png`, `HomesteaderPreview.png`, `NemesisPreview.png`, `DeepColonyPreview.png`, `DateNightPreview.png`, `StormproofPreview.png`). Skip thumbnail if none exists.
+- **`**__Changes__**`:** convert Steam bullets to `•` lines (same facts, Discord markdown).
+- **`**__Download__**`:** Steam Workshop link from `About/PublishedFileId.txt` when present; always GitHub `releases/latest/download/<ZipName>.zip` note as “zip in release assets”; Manual = extract into `` `RimWorld/Mods/` ``.
+- One embed per message; ~600ms between posts.
+
+## Do not
+
+- Plain-text Discord posts when this embed layout is required
+- Bundle multiple mods into one message
+- Commit webhook URLs
+- Bump About versions just for Discord titles
+
+## After writing
+
+Deploy to RimWorld - Dev Mods when the user asks (include `About/changelog.txt`).
