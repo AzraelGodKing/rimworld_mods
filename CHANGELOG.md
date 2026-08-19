@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Docs site rebuilt in Vue** (`site/vue-rewrite`) — new Vite + Vue 3 app in `site/`: data-driven hub and mod pages from `site/src/data/mods.json`, live Steam stats with auto/manual refresh and sort-by-subscribers, feature tabs, sprite gallery with lightbox, in-page changelog viewer (renders each mod's `CHANGELOG.md`), compatibility checker page, EN/RU/CN UI strings, light/dark theme, old `.html` links redirect to new routes. Pages workflow now builds `site/` and deploys `site/dist`; legacy pages (ledger, admin-stats, strata-roadmap, homesteader-catalog, living-world, signal) carried over unchanged.
 - **Workshop pastes** — Steam BBCode update notes in `About/changelog.txt` for Strata, Homesteader, Azrael, Nemesis, Deep Colony, Date Night.
 - **Strata** — Omni inter-floor connector no longer duplicates into multiple VEF `pipeDefs` (LinkedPipes crash with Helixien + VTE + Chemfuel). Stamp `omnijunction-linkedpipes-v1`. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Date Night** — schedule-mismatch alert when one lover has Date/Lovin painted and the other does not. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
