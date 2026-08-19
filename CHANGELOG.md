@@ -4,7 +4,8 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
-- **Ideas** — next-content slate (Slice 1 QoL, then one signature per lane) plus Stormproof, Nemesis N1–N4, Date Night, and Strata post-V3 pools. → [docs/ideas/next-content.md](docs/ideas/next-content.md)
+- **Homesteader** — yard/pantry drop: settings pack, larder mood, harvest festival, cellar aging, dairy shed, geese, scarecrow/fox, farmstand brand, county fair, waterwheel, maple season, rain-aware barrels, Living World flavor letters. Nemesis food raids prefer Homesteader pantry stacks. → [Homesteader/CHANGELOG.md](Homesteader/CHANGELOG.md)
+- **Ideas** — next-content slate (Slice 1 QoL, then one signature per lane) plus Stormproof, Nemesis N1–N4, Date Night, and Strata post-V3 pools. Homesteader pool implemented. → [docs/ideas/next-content.md](docs/ideas/next-content.md)
 - **Workshop pastes** — Steam BBCode update notes in `About/changelog.txt` for Strata, Homesteader, Azrael, Nemesis, Deep Colony, Date Night.
 - **Strata** — Omni inter-floor connector no longer duplicates into multiple VEF `pipeDefs` (LinkedPipes crash with Helixien + VTE + Chemfuel). Stamp `omnijunction-linkedpipes-v1`. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Date Night** — schedule-mismatch alert when one lover has Date/Lovin painted and the other does not. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)

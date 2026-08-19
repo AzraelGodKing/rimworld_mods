@@ -42,7 +42,7 @@ FARMSTEAD CRAFTING
 - Favorite food mood for every humanlike (Homesteader + vanilla pool); maypole harvest cheer.
 
 WATER &amp; IRRIGATION
-- Rain barrel (cheap trickle) → cistern (sheltered stockpile that also fills itself) → water tower (24 stacks, faster catch, critical haul). Wellcraft then waterworks.
+- Rain barrel (cheap trickle) → cistern (sheltered stockpile that also fills itself) → water tower (24 stacks, faster catch, critical haul). Fill rate follows rain; drought empties outdoor barrels slowly.
 - Hand-dug well (5 jugs on demand) → deep well (20 jugs a haul). Solar still is the arid sidegrade: boiled water without a stove.
 - Stone fountain drinks about two water jugs a day; the courtyard beauty only counts while it is flowing.
 - Irrigated soil and irrigated planter (+30% fertility) (irrigation research).
@@ -51,17 +51,20 @@ WATER &amp; IRRIGATION
 
 ORCHARD &amp; APIARY
 - Apple and cherry trees: slow-growing, regrowing orchard fruit for cider, jam, and eating fresh.
-- Sugar maple: tap for maple sap and boil it into maple syrup at the hearth - then griddle flapjacks.
-- Beehives produce beeswax alongside honey; render it into slow-burning beeswax candles.
+- Sugar maple: tap for maple sap and boil it into maple syrup at the hearth - then griddle flapjacks. Sap runs hard in early spring / cold, nearly none in summer.
+- Beehives produce beeswax alongside honey; output slows when nothing is in bloom nearby.
 
 AROUND THE FARMHOUSE
 - Preserves shelf: beautiful display storage for jams, pickles, cheese, dairy, honey, and syrup.
 - Nesting box: a snug straw-lined bed for small animals.
-- Harvest maypole: a ribboned gathering spot colonists celebrate around.
+- Harvest maypole: a ribboned gathering spot; once a year in fall it hosts a harvest festival (mood, extra food, gathering).
+- Scarecrow (yard beauty; foxes skip the coop) and a roadside farmstand (visitors buy preserves; local brand, not faction goodwill).
+- Waterwheel on moving water (400W; Stormproof drought cuts output).
 - Polyarmory trait: polycule members (lovers and metamours with the trait) are fine sharing multi-person beds (works with Polyamory Beds).
 
 LIVESTOCK, FIBER &amp; PANTRY
-- Chicken coop (eggs); animal mash from barley, pumpkin, or hay.
+- Chicken coop (eggs); dairy shed (milk if hay/mash is nearby); goose shelter (map-edge alarm); animal mash from barley, pumpkin, or hay.
+- Well-stocked larder mood from distinct preserves in cellars/shelves; waxed cheese, smoked meat, and cider age in the root cellar.
 - Render lard/tallow and stuff sausage from cured meats and herbs.
 - Flax crop, spinning wheel, loom, and homestead quilts (quilted beds need a quilt).
 - Compost heap → fertilizer → composted soil (+45% fertility).
@@ -88,5 +91,5 @@ Note: former Wellspring water content now ships inside Homesteader (Wellspring_*
 
 Optional: Dubs Bad Hygiene soft-compat patches Homesteader water buildings into its plumbing when that mod is present.
 
-Optional: Mod Options → Use refreshed textures (off by default) swaps in a unique art pack. Original sprites are kept.</description>
+Optional: Mod Options → Use refreshed textures (off by default) swaps in a unique art pack. Original sprites are kept. Same menu: allergy flare, favorite-food mood, coop egg interval, Kats on/off, cooling tooltip verbosity.</description>
 </ModMetaData>

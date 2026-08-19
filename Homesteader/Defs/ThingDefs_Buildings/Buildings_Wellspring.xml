@@ -31,6 +31,9 @@
       <WoodLog>40</WoodLog>
       <Steel>10</Steel>
     </costList>
+    <comps>
+      <li Class="Homesteader.CompProperties_WaterSense"/>
+    </comps>
     <recipes>
       <li>Wellspring_DrawWater</li>
     </recipes>
@@ -84,6 +87,7 @@
         <showMessageIfOwned>false</showMessageIfOwned>
         <saveKeysPrefix>rainwater</saveKeysPrefix>
       </li>
+      <li Class="Homesteader.CompProperties_WaterSense"/>
     </comps>
     <designationCategory>Production</designationCategory>
     <canOverlapZones>false</canOverlapZones>
@@ -137,6 +141,7 @@
         <showMessageIfOwned>false</showMessageIfOwned>
         <saveKeysPrefix>cistern</saveKeysPrefix>
       </li>
+      <li Class="Homesteader.CompProperties_WaterSense"/>
     </comps>
     <building>
       <storageGroupTag>HomesteaderStorage</storageGroupTag>
@@ -207,6 +212,9 @@
       <WoodLog>30</WoodLog>
       <Steel>60</Steel>
     </costList>
+    <comps>
+      <li Class="Homesteader.CompProperties_WaterSense"/>
+    </comps>
     <recipes>
       <li>Wellspring_DrawWaterDeep</li>
     </recipes>
@@ -315,6 +323,7 @@
         <showMessageIfOwned>false</showMessageIfOwned>
         <saveKeysPrefix>watertower</saveKeysPrefix>
       </li>
+      <li Class="Homesteader.CompProperties_WaterSense"/>
     </comps>
     <building>
       <storageGroupTag>HomesteaderStorage</storageGroupTag>

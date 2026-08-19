@@ -4,5 +4,11 @@
   <Homesteader_KatsEffect.label>Эффект Kats</Homesteader_KatsEffect.label>
   <Homesteader_KatsEffect.letterLabel>Эффект Kats</Homesteader_KatsEffect.letterLabel>
   <Homesteader_KatsEffect.letterText>Аномальная трансляция зафиксировалась на частоте вашего монумента 27. Над регионом образуется краткий тепловой купол, а несколько колонистов жалуются на короткое помутнение — «гниение мозга», как они это называют.\n\nЗаплатите 27 серебра как Super Chat, иначе SCP-27272727 может проявиться как враждебная пешка по имени Kats (предпочтительно раса Wolfein, если доступна).\n\n---\nДополнение Фонда // Объект № SCP-27272727 // Keter (Обаятельный)\nПримечание по содержанию: увлажнять / лечить / жевать. Не отводите взгляд от числа.</Homesteader_KatsEffect.letterText>
+  <Homesteader_FoxOnCoop.label>лиса в курятнике</Homesteader_FoxOnCoop.label>
+  <Homesteader_FoxOnCoop.letterLabel>Лиса в курятнике</Homesteader_FoxOnCoop.letterLabel>
+  <Homesteader_FoxOnCoop.letterText>Хищник забрался в безнадзорный курятник.</Homesteader_FoxOnCoop.letterText>
+  <Homesteader_CountyFair.label>гость ярмарки</Homesteader_CountyFair.label>
+  <Homesteader_CountyFair.letterLabel>Гость ярмарки</Homesteader_CountyFair.letterLabel>
+  <Homesteader_CountyFair.letterText>Сосед зашёл попробовать погреб.</Homesteader_CountyFair.letterText>
 
 </LanguageData>

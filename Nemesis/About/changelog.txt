@@ -1,5 +1,10 @@
 [h1]Nemesis — Update[/h1]
 
+[b]Added[/b]
+[list]
+[*] Food-store raids prefer Homesteader pantry / smokehouse / farmstand stacks when Homesteader is loaded.
+[/list]
+
 [b]Fixed[/b]
 [list]
 [*] Colony executions (including Ideology public execution) no longer start a hunt / wounded-escape on the victim.

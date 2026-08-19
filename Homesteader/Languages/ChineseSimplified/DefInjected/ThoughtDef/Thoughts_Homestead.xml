@@ -33,5 +33,23 @@
   <Homesteader_KatsDirective.description>那广播好像点了名。补水。用药。咀嚼。不知怎的，感觉……清晰了。</Homesteader_KatsDirective.description>
   <Homesteader_KatsDirective.stages_0.label>Kats指令</Homesteader_KatsDirective.stages_0.label>
   <Homesteader_KatsDirective.stages_0.description>那广播好像点了名。补水。用药。咀嚼。不知怎的，感觉……清晰了。</Homesteader_KatsDirective.stages_0.description>
+  <Homesteader_WellStockedLarder.stages_0.label>有存货的地窖</Homesteader_WellStockedLarder.stages_0.label>
+  <Homesteader_WellStockedLarder.stages_0.description>地窖里有几种腌制食物。冬天好像远了点。</Homesteader_WellStockedLarder.stages_0.description>
+  <Homesteader_WellStockedLarder.stages_1.label>库存充足的地窖</Homesteader_WellStockedLarder.stages_1.label>
+  <Homesteader_WellStockedLarder.stages_1.description>果酱、奶酪、熏肉、腌菜——这才像真正的农庄。</Homesteader_WellStockedLarder.stages_1.description>
+  <Homesteader_WellStockedLarder.stages_2.label>塞满的地窖</Homesteader_WellStockedLarder.stages_2.label>
+  <Homesteader_WellStockedLarder.stages_2.description>九种存粮。田里歉收，这家人也不会饿。</Homesteader_WellStockedLarder.stages_2.description>
+  <Homesteader_HarvestFestival.stages_0.label>丰收节</Homesteader_HarvestFestival.stages_0.label>
+  <Homesteader_HarvestFestival.stages_0.description>我们绕五月柱跳了舞，桌上多了食物。一年过去，人还在。</Homesteader_HarvestFestival.stages_0.description>
+  <Homesteader_FoxRaid.stages_0.label>鸡舍进了狐狸</Homesteader_FoxRaid.stages_0.label>
+  <Homesteader_FoxRaid.stages_0.description>有东西钻进了鸡窝。羽毛和空巢。早该立个稻草人。</Homesteader_FoxRaid.stages_0.description>
+  <Homesteader_CountyFairPrize.stages_0.label>县集奖</Homesteader_CountyFairPrize.stages_0.label>
+  <Homesteader_CountyFairPrize.stages_0.description>邻居品了品地窖，留下银币和夸奖。果酱替我们说了话。</Homesteader_CountyFairPrize.stages_0.description>
+  <Homesteader_CountyFairShrug.stages_0.label>礼貌的耸肩</Homesteader_CountyFairShrug.stages_0.label>
+  <Homesteader_CountyFairShrug.stages_0.description>县集访客尝了地窖，笑了笑，说「还行」。明年会更好。</Homesteader_CountyFairShrug.stages_0.description>
+  <Homesteader_AteAgedPreserve.stages_0.label>地窖陈化</Homesteader_AteAgedPreserve.stages_0.label>
+  <Homesteader_AteAgedPreserve.stages_0.description>那奶酪 / 火腿 / 苹果酒在地窖里待得够久，尝起来像耐心。</Homesteader_AteAgedPreserve.stages_0.description>
+  <Homesteader_AteVintagePreserve.stages_0.label>窖藏年份</Homesteader_AteVintagePreserve.stages_0.label>
+  <Homesteader_AteVintagePreserve.stages_0.description>阴凉、黑暗和蜂蜡。这才是存粮的意义。</Homesteader_AteVintagePreserve.stages_0.description>
 
 </LanguageData>

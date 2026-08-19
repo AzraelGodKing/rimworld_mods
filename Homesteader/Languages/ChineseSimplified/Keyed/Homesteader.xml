@@ -42,6 +42,46 @@
   <Homesteader_SettingsRevealAllergiesTip>口味页在发现前就显示过敏名称（食用或环境接触触发发现）。仅供测试。</Homesteader_SettingsRevealAllergiesTip>
   <Homesteader_SettingsDevModeHint>启用开发模式以显示 Homesteader 开发者选项。</Homesteader_SettingsDevModeHint>
 
+  <Homesteader_SettingsPackHeader>玩法</Homesteader_SettingsPackHeader>
+  <Homesteader_SettingsAllergyFlare>过敏发作强度：{0}</Homesteader_SettingsAllergyFlare>
+  <Homesteader_SettingsFavoriteMood>最爱食物心情：{0}</Homesteader_SettingsFavoriteMood>
+  <Homesteader_SettingsCoopInterval>鸡舍产蛋间隔（越高越慢）：{0}</Homesteader_SettingsCoopInterval>
+  <Homesteader_SettingsKats>允许 Kats Effect 事件</Homesteader_SettingsKats>
+  <Homesteader_SettingsKatsTip>与 27 雕像相关的稀有杂项事件。关闭则完全禁用。</Homesteader_SettingsKatsTip>
+  <Homesteader_SettingsCoolingVerbosity>冷藏提示详细度：{0}（0 隐藏，1 普通，2 详细）</Homesteader_SettingsCoolingVerbosity>
+  <Homesteader_SettingsLarderMood>库存充足的地窖心情</Homesteader_SettingsLarderMood>
+  <Homesteader_SettingsFestival>年度丰收节</Homesteader_SettingsFestival>
+  <Homesteader_SettingsAging>地窖陈化（奶酪 / 火腿 / 苹果酒）</Homesteader_SettingsAging>
+  <Homesteader_SettingsLwFlavor>Living World 饥荒/难民风味信件</Homesteader_SettingsLwFlavor>
+  <Homesteader_PassiveCoolCells>本图被冷却的格子：{0}</Homesteader_PassiveCoolCells>
+  <Homesteader_AgedReady>地窖陈化。</Homesteader_AgedReady>
+  <Homesteader_AgedVintage>窖藏年份。</Homesteader_AgedVintage>
+  <Homesteader_BeesInBloom>周围有花开。</Homesteader_BeesInBloom>
+  <Homesteader_BeesNothingInBloom>没有花开 — 产蜜变慢。</Homesteader_BeesNothingInBloom>
+  <Homesteader_WaterDrought>干旱：室外集水变慢，罐子在风化。</Homesteader_WaterDrought>
+  <Homesteader_WaterDroughtCondenser>干旱冷凝器正在覆盖本图。</Homesteader_WaterDroughtCondenser>
+  <Homesteader_WaterStormCatch>暴雨集水：装得很快。</Homesteader_WaterStormCatch>
+  <Homesteader_WaterRaining>雨水收集中。</Homesteader_WaterRaining>
+  <Homesteader_WaterDryCatch>天气干燥：缓慢结露。</Homesteader_WaterDryCatch>
+  <Homesteader_DairyFeedOk>附近有饲料 — 正在产奶。</Homesteader_DairyFeedOk>
+  <Homesteader_DairyNeedsFeed>附近需要干草或饲料糊。</Homesteader_DairyNeedsFeed>
+  <Homesteader_NextSpawnHours>约 {0} 小时后下次产出。</Homesteader_NextSpawnHours>
+  <Homesteader_PrizeQuality>奖畜品质 {0}/3</Homesteader_PrizeQuality>
+  <Homesteader_FarmstandBrand>农庄口碑：{0}</Homesteader_FarmstandBrand>
+  <Homesteader_FarmstandSale>访客买走了 {0}×{1}，付了 {2} 银币。</Homesteader_FarmstandSale>
+  <Homesteader_PlaceOnMovingWater>必须建在流水（河流）上或旁边。</Homesteader_PlaceOnMovingWater>
+  <Homesteader_FestivalLetterLabel>丰收节</Homesteader_FestivalLetterLabel>
+  <Homesteader_FestivalLetterText>五月柱立起来了，地窖也开了。殖民者聚在一起过丰收，柱旁多出食物，院子像是把这一年过完了。</Homesteader_FestivalLetterText>
+  <Homesteader_GeeseLetterLabel>鹅群大叫</Homesteader_GeeseLetterLabel>
+  <Homesteader_GeeseLetterText>院子里的鹅发现地图边缘的 {0}。不是战斗，是警报。</Homesteader_GeeseLetterText>
+  <Homesteader_FoxLetterEggs>狐狸钻进无人看管的鸡舍，毁了 {0} 个蛋。院子里立个稻草人会有用。</Homesteader_FoxLetterEggs>
+  <Homesteader_FoxLetterEmpty>狐狸在鸡舍转了一圈，没偷到多少。下次来之前先立个稻草人。</Homesteader_FoxLetterEmpty>
+  <Homesteader_FairPrizeText>县集访客尝了 {1} 种窖藏食物，留下 {0} 银币和几句好话。</Homesteader_FairPrizeText>
+  <Homesteader_FairShrugText>访客尝了尝地窖（{0} 种），礼貌地耸了耸肩。明年再丰富些。</Homesteader_FairShrugText>
+  <Homesteader_LwFlavorLabel>农庄听来的消息</Homesteader_LwFlavorLabel>
+  <Homesteader_LwFamineFlavor>旅人说 {0} 缺粮。地窖里若有余，该送点果酱去。</Homesteader_LwFamineFlavor>
+  <Homesteader_LwRefugeeFlavor>来自 {0} 的难民可能会饿着过来。要不要分口粮，由农庄自己决定。</Homesteader_LwRefugeeFlavor>
+
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>一则异常广播锁定了你殖民地的 27 纪念碑频率。短暂的热穹正在该区域形成，几名殖民者报告短暂的头脑昏沉——他们称之为「脑腐」。</Homesteader_KatsLetter_Open>
   <Homesteader_KatsLetter_SilverTaken>殖民地账目显示有 {0} 白银以「超级留言」名义被划走。收容突破已避免。</Homesteader_KatsLetter_SilverTaken>

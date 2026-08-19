@@ -112,5 +112,107 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>Homesteader_WellStockedLarder</defName>
+    <workerClass>Homesteader.ThoughtWorker_WellStockedLarder</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <developmentalStageFilter>Baby, Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>stocked larder</label>
+        <description>The cellar has a few kinds of preserves put by. Winter feels farther off.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+      <li>
+        <label>well-stocked larder</label>
+        <description>Jam, cheese, smoke, pickle — the pantry looks like a real homestead.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+      <li>
+        <label>packed larder</label>
+        <description>Nine kinds of put-by food. Nobody in this house goes hungry if the fields fail.</description>
+        <baseMoodEffect>12</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Homesteader_HarvestFestival</defName>
+    <durationDays>3.0</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>harvest festival</label>
+        <description>We danced the maypole and put extra food on the table. The year turned and we were still here.</description>
+        <baseMoodEffect>10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Homesteader_FoxRaid</defName>
+    <durationDays>1.0</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>fox in the coop</label>
+        <description>Something got into the hens. Feathers and empty nests. Should have put a scarecrow out.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Homesteader_CountyFairPrize</defName>
+    <durationDays>2.0</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>county-fair prize</label>
+        <description>A neighbor judged the pantry and paid in silver and compliments. The jam did the talking.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Homesteader_CountyFairShrug</defName>
+    <durationDays>0.8</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>polite shrug</label>
+        <description>A county-fair visitor tasted the pantry, smiled, and said it was "coming along." We'll do better next year.</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Homesteader_AteAgedPreserve</defName>
+    <durationDays>0.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>cellar-aged</label>
+        <description>That wheel / ham / cider sat in the cellar long enough to taste like patience.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>Homesteader_AteVintagePreserve</defName>
+    <durationDays>0.7</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>vintage cellar</label>
+        <description>Years of cool dark and beeswax. This is why we put food by.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>
 

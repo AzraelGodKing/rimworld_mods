@@ -35,7 +35,23 @@ namespace Homesteader
 
         public override string CompInspectStringExtra()
         {
-            return "Homesteader_PassiveCoolStorage".Translate(Props.maxTemperature.ToStringTemperature());
+            int verbosity = HomesteaderMod.Settings?.coolingTooltipVerbosity ?? 1;
+            if (verbosity <= 0)
+            {
+                return null;
+            }
+
+            string line = "Homesteader_PassiveCoolStorage".Translate(Props.maxTemperature.ToStringTemperature());
+            if (verbosity >= 2 && parent.Map != null)
+            {
+                RootCellarCoolingMapComponent cooling = parent.Map.GetComponent<RootCellarCoolingMapComponent>();
+                if (cooling != null)
+                {
+                    line = line + "\n" + "Homesteader_PassiveCoolCells".Translate(cooling.CooledCellCount);
+                }
+            }
+
+            return line;
         }
     }
 
@@ -54,6 +70,8 @@ namespace Homesteader
         }
 
         public bool HasAnyCooling => cooledCellTemps.Count > 0;
+
+        public int CooledCellCount => cooledCellTemps.Count;
 
         public bool TryGetCoolingCeiling(IntVec3 cell, out float maxTemperature) =>
             cooledCellTemps.TryGetValue(cell, out maxTemperature);

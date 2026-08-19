@@ -5,12 +5,13 @@
   <ThingDef ParentName="DrugBase">
     <defName>Homesteader_Cider</defName>
     <label>cider</label>
-    <description>Fermented fruit cider with a gentle kick. Lifts the mood, and drinking too much leads where drinking too much always leads.</description>
+    <description>Fermented fruit cider with a gentle kick. Lifts the mood, and drinking too much leads where drinking too much always leads. Ages in a root cellar.</description>
     <graphicData>
       <texPath>Homesteader/Items/Cider</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <rotatable>false</rotatable>
+    <tickerType>Rare</tickerType>
     <stackLimit>25</stackLimit>
     <statBases>
       <DeteriorationRate>0.5</DeteriorationRate>
@@ -48,6 +49,7 @@
         <needLevelOffset>0.9</needLevelOffset>
         <listOrder>11</listOrder>
       </li>
+      <li Class="Homesteader.CompProperties_AgeInCellar"/>
     </comps>
   </ThingDef>
 

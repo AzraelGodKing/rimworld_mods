@@ -28,7 +28,8 @@ namespace Homesteader
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
-            return parms.target is Map map
+            return (HomesteaderMod.Settings == null || HomesteaderMod.Settings.katsEnabled)
+                && parms.target is Map map
                 && map.IsPlayerHome
                 && FindAnyStatue(map) != null;
         }

@@ -153,7 +153,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_SmokedMeat</defName>
     <label>smoked meat</label>
-    <description>Meat cured in wood smoke. Keeps for around a month without refrigeration and can be cooked into meals just like raw meat. Unappetizing eaten on its own.</description>
+    <description>Meat cured in wood smoke. Keeps for around a month without refrigeration and can be cooked into meals just like raw meat. Unappetizing eaten on its own. Ages into country ham in a root cellar.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
       <texPath>Homesteader/Items/SmokedMeat</texPath>
@@ -182,6 +182,7 @@
         <daysToRotStart>30</daysToRotStart>
         <rotDestroys>true</rotDestroys>
       </li>
+      <li Class="Homesteader.CompProperties_AgeInCellar"/>
     </comps>
     <thingCategories>
       <li>MeatRaw</li>

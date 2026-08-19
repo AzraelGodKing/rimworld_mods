@@ -44,6 +44,49 @@
   <Homesteader_SettingsRevealAllergiesTip>Tastes tab shows allergy names before discovery (eating the food or environmental exposure). For testing only.</Homesteader_SettingsRevealAllergiesTip>
   <Homesteader_SettingsDevModeHint>Enable Development mode to show Homesteader developer options.</Homesteader_SettingsDevModeHint>
 
+  <!-- HS-Q04 settings pack -->
+  <Homesteader_SettingsPackHeader>Gameplay</Homesteader_SettingsPackHeader>
+  <Homesteader_SettingsAllergyFlare>Allergy flare intensity: {0}</Homesteader_SettingsAllergyFlare>
+  <Homesteader_SettingsFavoriteMood>Favorite-food mood: {0}</Homesteader_SettingsFavoriteMood>
+  <Homesteader_SettingsCoopInterval>Coop egg interval (higher = slower): {0}</Homesteader_SettingsCoopInterval>
+  <Homesteader_SettingsKats>Allow Kats Effect incident</Homesteader_SettingsKats>
+  <Homesteader_SettingsKatsTip>Rare Misc event tied to 27 statues. Off disables it entirely.</Homesteader_SettingsKatsTip>
+  <Homesteader_SettingsCoolingVerbosity>Cooling tooltip detail: {0} (0 hide, 1 normal, 2 verbose)</Homesteader_SettingsCoolingVerbosity>
+  <Homesteader_SettingsLarderMood>Well-stocked larder mood</Homesteader_SettingsLarderMood>
+  <Homesteader_SettingsFestival>Annual harvest festival</Homesteader_SettingsFestival>
+  <Homesteader_SettingsAging>Cellar aging (cheese / ham / cider)</Homesteader_SettingsAging>
+  <Homesteader_SettingsLwFlavor>Living World famine/refugee flavor letters</Homesteader_SettingsLwFlavor>
+  <Homesteader_PassiveCoolCells>Cooled cells on this map: {0}</Homesteader_PassiveCoolCells>
+
+  <Homesteader_AgedReady>Cellar-aged.</Homesteader_AgedReady>
+  <Homesteader_AgedVintage>Vintage cellar age.</Homesteader_AgedVintage>
+  <Homesteader_BeesInBloom>Forage in bloom.</Homesteader_BeesInBloom>
+  <Homesteader_BeesNothingInBloom>Nothing in bloom — honey slowed.</Homesteader_BeesNothingInBloom>
+  <Homesteader_WaterDrought>Drought: outdoor catch slowing, jugs weathering.</Homesteader_WaterDrought>
+  <Homesteader_WaterDroughtCondenser>Drought condenser covering the map.</Homesteader_WaterDroughtCondenser>
+  <Homesteader_WaterStormCatch>Storm catch: filling fast.</Homesteader_WaterStormCatch>
+  <Homesteader_WaterRaining>Rain catch.</Homesteader_WaterRaining>
+  <Homesteader_WaterDryCatch>Dry weather: slow dew catch.</Homesteader_WaterDryCatch>
+  <Homesteader_DairyFeedOk>Feed nearby — milking.</Homesteader_DairyFeedOk>
+  <Homesteader_DairyNeedsFeed>Needs hay or mash nearby.</Homesteader_DairyNeedsFeed>
+  <Homesteader_NextSpawnHours>Next yield in about {0} hours.</Homesteader_NextSpawnHours>
+  <Homesteader_PrizeQuality>Prize flock quality {0}/3</Homesteader_PrizeQuality>
+  <Homesteader_FarmstandBrand>Homestead brand: {0}</Homesteader_FarmstandBrand>
+  <Homesteader_FarmstandSale>A visitor bought {0}x {1} for {2} silver.</Homesteader_FarmstandSale>
+  <Homesteader_PlaceOnMovingWater>Must sit on or beside moving water (river).</Homesteader_PlaceOnMovingWater>
+
+  <Homesteader_FestivalLetterLabel>Harvest festival</Homesteader_FestivalLetterLabel>
+  <Homesteader_FestivalLetterText>The maypole is up and the cellar is open. Colonists gather for the harvest, extra food appears by the pole, and the yard feels like a year well spent.</Homesteader_FestivalLetterText>
+  <Homesteader_GeeseLetterLabel>Geese raising hell</Homesteader_GeeseLetterLabel>
+  <Homesteader_GeeseLetterText>The farmyard geese spotted {0} at the map edge. Not a fight — a warning.</Homesteader_GeeseLetterText>
+  <Homesteader_FoxLetterEggs>A fox hit the unattended coop and ruined {0} eggs. A scarecrow in the yard would have helped.</Homesteader_FoxLetterEggs>
+  <Homesteader_FoxLetterEmpty>A fox nosed around the coop but found little to steal. Build a scarecrow before the next visit.</Homesteader_FoxLetterEmpty>
+  <Homesteader_FairPrizeText>A county-fair visitor tasted {1} kinds of pantry food and left {0} silver plus kind words.</Homesteader_FairPrizeText>
+  <Homesteader_FairShrugText>A visitor sampled the pantry ({0} kinds) and offered a polite shrug. More variety next year.</Homesteader_FairShrugText>
+  <Homesteader_LwFlavorLabel>Word for the homestead</Homesteader_LwFlavorLabel>
+  <Homesteader_LwFamineFlavor>Travelers say {0} is short on food. We should send jam if the cellar can spare it.</Homesteader_LwFamineFlavor>
+  <Homesteader_LwRefugeeFlavor>Refugees from {0} may come hungry. The pantry is ours to share — or not.</Homesteader_LwRefugeeFlavor>
+
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>An anomalous broadcast has locked onto your colony's 27 monument frequency. A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — "brain rot," they call it.</Homesteader_KatsLetter_Open>
   <Homesteader_KatsLetter_SilverTaken>Colony accounts show {0} silver diverted as a "Super Chat." Containment breach averted.</Homesteader_KatsLetter_SilverTaken>

@@ -39,7 +39,7 @@ Persistent hunt, escape-until-cornered, captain levels + combat foci, vengeance 
 | ID | Parent | Idea | Size | Notes |
 |----|--------|------|------|-------|
 | NM-A09 | N4 | **Obsession thought** — named mood/opinion while the nemesis is on the map (both sides) | S | Deeper than social-fight ×2.4; not a goodwill ledger |
-| NM-S02 | N4 | **Homesteader pantry list** — smokehouse / cellar / farmstand defNames for food raids | S | HS-S04; Homesteader only keeps names stable |
+| NM-S02 | N4 | **Homesteader pantry list** — smokehouse / cellar / farmstand defNames for food raids | S | **Shipped** (HS-S04; `IsOnHomesteaderPantryTarget`) |
 
 ---
 

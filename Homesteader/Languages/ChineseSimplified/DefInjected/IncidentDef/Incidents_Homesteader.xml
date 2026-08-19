@@ -4,5 +4,11 @@
   <Homesteader_KatsEffect.label>Kats效应</Homesteader_KatsEffect.label>
   <Homesteader_KatsEffect.letterLabel>Kats效应</Homesteader_KatsEffect.letterLabel>
   <Homesteader_KatsEffect.letterText>一则异常广播锁定了你殖民地的27纪念碑频率。短暂的热穹正在该区域形成，几名殖民者报告短暂的头脑昏沉——他们称之为「脑腐」。\n\n支付27白银的超级留言，否则SCP-27272727可能以名叫Kats的敌对单位现身（优先选择Wolfein种族，如可用）。\n\n---\n基金会附录 // 项目编号 SCP-27272727 // Keter（可爱）\n收容备注：补水 / 用药 / 咀嚼。不要把目光从那个数字上移开。</Homesteader_KatsEffect.letterText>
+  <Homesteader_FoxOnCoop.label>鸡舍进了狐狸</Homesteader_FoxOnCoop.label>
+  <Homesteader_FoxOnCoop.letterLabel>鸡舍进了狐狸</Homesteader_FoxOnCoop.letterLabel>
+  <Homesteader_FoxOnCoop.letterText>一只捕食者钻进了无人看管的鸡舍。</Homesteader_FoxOnCoop.letterText>
+  <Homesteader_CountyFair.label>县集访客</Homesteader_CountyFair.label>
+  <Homesteader_CountyFair.letterLabel>县集访客</Homesteader_CountyFair.letterLabel>
+  <Homesteader_CountyFair.letterText>一位邻居过来品尝地窖。</Homesteader_CountyFair.letterText>
 
 </LanguageData>

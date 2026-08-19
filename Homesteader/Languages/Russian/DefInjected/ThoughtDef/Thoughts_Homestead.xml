@@ -33,5 +33,23 @@
   <Homesteader_KatsDirective.description>Эта трансляция была будто с моим именем. Увлажнять. Лечить. Жевать. И почему-то это… проясняет.</Homesteader_KatsDirective.description>
   <Homesteader_KatsDirective.stages_0.label>директива Kats</Homesteader_KatsDirective.stages_0.label>
   <Homesteader_KatsDirective.stages_0.description>Эта трансляция была будто с моим именем. Увлажнять. Лечить. Жевать. И почему-то это… проясняет.</Homesteader_KatsDirective.stages_0.description>
+  <Homesteader_WellStockedLarder.stages_0.label>запасливый погреб</Homesteader_WellStockedLarder.stages_0.label>
+  <Homesteader_WellStockedLarder.stages_0.description>В погребе несколько видов припасов. Зима кажется дальше.</Homesteader_WellStockedLarder.stages_0.description>
+  <Homesteader_WellStockedLarder.stages_1.label>хорошо запасённый погреб</Homesteader_WellStockedLarder.stages_1.label>
+  <Homesteader_WellStockedLarder.stages_1.description>Варенье, сыр, копчёности, соленья — вот это уже усадьба.</Homesteader_WellStockedLarder.stages_1.description>
+  <Homesteader_WellStockedLarder.stages_2.label>набитый погреб</Homesteader_WellStockedLarder.stages_2.label>
+  <Homesteader_WellStockedLarder.stages_2.description>Девять видов запасов. Если поля подведут, дом не проголодается.</Homesteader_WellStockedLarder.stages_2.description>
+  <Homesteader_HarvestFestival.stages_0.label>праздник урожая</Homesteader_HarvestFestival.stages_0.label>
+  <Homesteader_HarvestFestival.stages_0.description>Мы водили хоровод у майского столба и поставили лишнюю еду на стол. Год прошёл — мы всё ещё здесь.</Homesteader_HarvestFestival.stages_0.description>
+  <Homesteader_FoxRaid.stages_0.label>лиса в курятнике</Homesteader_FoxRaid.stages_0.label>
+  <Homesteader_FoxRaid.stages_0.description>Кто-то залез к курам. Перья и пустые гнёзда. Надо было поставить пугало.</Homesteader_FoxRaid.stages_0.description>
+  <Homesteader_CountyFairPrize.stages_0.label>приз ярмарки</Homesteader_CountyFairPrize.stages_0.label>
+  <Homesteader_CountyFairPrize.stages_0.description>Сосед оценил погреб и оставил серебро и комплименты. Варенье говорило за нас.</Homesteader_CountyFairPrize.stages_0.description>
+  <Homesteader_CountyFairShrug.stages_0.label>вежливое пожатие</Homesteader_CountyFairShrug.stages_0.label>
+  <Homesteader_CountyFairShrug.stages_0.description>Гость ярмарки попробовал погреб, улыбнулся и сказал, что «идёт неплохо». В следующем году будет лучше.</Homesteader_CountyFairShrug.stages_0.description>
+  <Homesteader_AteAgedPreserve.stages_0.label>выдержка погреба</Homesteader_AteAgedPreserve.stages_0.label>
+  <Homesteader_AteAgedPreserve.stages_0.description>Этот сыр / окорок / сидр пролежал в погребе достаточно, чтобы пахнуть терпением.</Homesteader_AteAgedPreserve.stages_0.description>
+  <Homesteader_AteVintagePreserve.stages_0.label>винтажная выдержка</Homesteader_AteVintagePreserve.stages_0.label>
+  <Homesteader_AteVintagePreserve.stages_0.description>Холод, темнота и воск. Вот зачем мы кладём еду впрок.</Homesteader_AteVintagePreserve.stages_0.description>
 
 </LanguageData>

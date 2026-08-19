@@ -64,7 +64,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Homesteader_WaxedCheese</defName>
     <label>waxed cheese</label>
-    <description>Farmhouse cheese sealed in beeswax. Keeps far longer than an open wheel and still tastes like the dairy it came from.</description>
+    <description>Farmhouse cheese sealed in beeswax. Keeps far longer than an open wheel and still tastes like the dairy it came from. Ages in a root cellar.</description>
     <thingClass>ThingWithComps</thingClass>
     <graphicData>
       <texPath>Homesteader/Items/WaxedCheese</texPath>
@@ -92,6 +92,7 @@
         <daysToRotStart>240</daysToRotStart>
         <rotDestroys>true</rotDestroys>
       </li>
+      <li Class="Homesteader.CompProperties_AgeInCellar"/>
     </comps>
     <thingCategories>
       <li>FoodMeals</li>

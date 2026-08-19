@@ -1,5 +1,16 @@
 [h1]Homesteader — Update[/h1]
 
+[b]Added[/b]
+[list]
+[*] [b]Settings pack[/b] — allergy flare, favorite-food mood, coop egg interval, Kats on/off, cooling tooltip, larder/festival/aging/Living World flavor.
+[*] Well-stocked larder mood from distinct preserves in cellars and shelves.
+[*] Fall harvest festival at the maypole (mood, extra food).
+[*] Cellar aging for waxed cheese, smoked meat, and cider.
+[*] Dairy shed, goose shelter, scarecrow, farmstand (local brand), waterwheel.
+[*] Bees need bloom; maple sap in spring; rain barrels follow weather.
+[*] Fox-on-coop and county-fair visitor.
+[/list]
+
 [b]Fixed[/b]
 [list]
 [*] [b]Azrael storyteller (1.6)[/b] — loads cleanly (Cassandra Classic comps + portraits).

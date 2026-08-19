@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- HS-A07 Dairy shed -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_DairyShed</defName>
+    <label>dairy shed</label>
+    <description>A small milking shed. Keep hay or animal mash nearby and it yields milk on its own schedule. Not a restored goat pen — new building, new id.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/DairyShed</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.45</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>160</MaxHitPoints>
+      <WorkToBuild>1400</WorkToBuild>
+      <Mass>30</Mass>
+      <Flammability>0.85</Flammability>
+      <Beauty>4</Beauty>
+    </statBases>
+    <costList>
+      <WoodLog>60</WoodLog>
+      <Hay>15</Hay>
+    </costList>
+    <comps>
+      <li Class="Homesteader.CompProperties_FeedSpawner">
+        <thingToSpawn>Milk</thingToSpawn>
+        <spawnCount>8</spawnCount>
+        <spawnIntervalRange>90000~150000</spawnIntervalRange>
+        <feedRadius>8</feedRadius>
+        <feedConsumed>2</feedConsumed>
+      </li>
+      <li Class="Homesteader.CompProperties_PrizeFlock"/>
+    </comps>
+    <designationCategory>Production</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_Livestock</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- HS-A05 Guard geese -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_GooseShelter</defName>
+    <label>goose shelter</label>
+    <description>A noisy farmyard flock. Geese honk when hostiles appear at the map edge near the yard — an alarm, not a turret. Pairs well with nesting boxes.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/GooseShelter</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>1000</WorkToBuild>
+      <Mass>22</Mass>
+      <Flammability>0.9</Flammability>
+      <Beauty>3</Beauty>
+    </statBases>
+    <costList>
+      <WoodLog>40</WoodLog>
+      <Hay>10</Hay>
+    </costList>
+    <comps>
+      <li Class="Homesteader.CompProperties_GuardGeese"/>
+    </comps>
+    <designationCategory>Production</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_Livestock</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- HS-A09 Scarecrow -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_Scarecrow</defName>
+    <label>scarecrow</label>
+    <description>A cheap yard marker. Looks like harvest, and a fox is less likely to raid an unattended coop while one stands in the fields.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Scarecrow</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>20</pathCost>
+    <fillPercent>0.15</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <WorkToBuild>200</WorkToBuild>
+      <Mass>4</Mass>
+      <Flammability>1.0</Flammability>
+      <Beauty>6</Beauty>
+    </statBases>
+    <costList>
+      <WoodLog>15</WoodLog>
+      <Hay>5</Hay>
+    </costList>
+    <designationCategory>Homesteader_Storage</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsMisc</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_PrimitiveHomestead</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- HS-A04 Farmstand -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_Farmstand</defName>
+    <label>farmstand</label>
+    <description>A roadside stall. Visitors buy jam, cheese, cider, and other preserves off the counter for silver. Builds a local homestead brand — not faction goodwill.</description>
+    <thingClass>Building_Storage</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Farmstand</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.4</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToBuild>800</WorkToBuild>
+      <Mass>16</Mass>
+      <Flammability>0.9</Flammability>
+      <Beauty>8</Beauty>
+    </statBases>
+    <costList>
+      <WoodLog>50</WoodLog>
+    </costList>
+    <comps>
+      <li Class="Homesteader.CompProperties_Farmstand">
+        <visitorRange>10</visitorRange>
+        <checkInterval>18000</checkInterval>
+      </li>
+    </comps>
+    <building>
+      <storageGroupTag>HomesteaderStorage</storageGroupTag>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
+      <blueprintClass>Blueprint_Storage</blueprintClass>
+      <maxItemsInCell>3</maxItemsInCell>
+      <fixedStorageSettings>
+        <filter>
+          <disallowNotEverStorable>true</disallowNotEverStorable>
+          <categories>
+            <li>Foods</li>
+            <li>Drugs</li>
+          </categories>
+        </filter>
+      </fixedStorageSettings>
+      <defaultStorageSettings>
+        <priority>Important</priority>
+        <filter>
+          <categories>
+            <li>Foods</li>
+          </categories>
+        </filter>
+      </defaultStorageSettings>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <designationCategory>Homesteader_Storage</designationCategory>
+    <surfaceType>Item</surfaceType>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsFurniture</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Homesteader_FarmsteadCrafting</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- HS-A11 Waterwheel -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Homesteader_Waterwheel</defName>
+    <label>waterwheel</label>
+    <description>A wooden wheel on moving water. Makes 400W while the river runs. Stormproof droughts cut output unless a drought condenser is protecting the map.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/Waterwheel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>70</pathCost>
+    <fillPercent>0.55</fillPercent>
+    <rotatable>true</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <statBases>
+      <MaxHitPoints>180</MaxHitPoints>
+      <WorkToBuild>2200</WorkToBuild>
+      <Mass>40</Mass>
+      <Flammability>0.6</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>80</WoodLog>
+      <Steel>30</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="Homesteader.CompProperties_PowerPlantWaterwheel">
+        <compClass>Homesteader.CompPowerPlantWaterwheel</compClass>
+        <basePowerConsumption>-400</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+        <droughtFactor>0.25</droughtFactor>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>Homesteader.PlaceWorker_OnMovingWater</li>
+    </placeWorkers>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Wellspring_Waterworks</li>
+      <li>Electricity</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>

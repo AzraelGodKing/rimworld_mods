@@ -42,6 +42,46 @@
   <Homesteader_SettingsRevealAllergiesTip>Вкладка «Вкусы» показывает названия аллергий до обнаружения (приём пищи или воздействие среды). Только для тестов.</Homesteader_SettingsRevealAllergiesTip>
   <Homesteader_SettingsDevModeHint>Включите режим разработчика, чтобы увидеть параметры Homesteader для разработчиков.</Homesteader_SettingsDevModeHint>
 
+  <Homesteader_SettingsPackHeader>Игровые настройки</Homesteader_SettingsPackHeader>
+  <Homesteader_SettingsAllergyFlare>Сила аллергии: {0}</Homesteader_SettingsAllergyFlare>
+  <Homesteader_SettingsFavoriteMood>Настроение от любимой еды: {0}</Homesteader_SettingsFavoriteMood>
+  <Homesteader_SettingsCoopInterval>Интервал яиц в курятнике (больше = медленнее): {0}</Homesteader_SettingsCoopInterval>
+  <Homesteader_SettingsKats>Разрешить событие Kats Effect</Homesteader_SettingsKats>
+  <Homesteader_SettingsKatsTip>Редкое событие Misc, привязанное к статуям 27. Выключение полностью отключает его.</Homesteader_SettingsKatsTip>
+  <Homesteader_SettingsCoolingVerbosity>Подробность подсказки охлаждения: {0} (0 скрыть, 1 обычно, 2 подробно)</Homesteader_SettingsCoolingVerbosity>
+  <Homesteader_SettingsLarderMood>Настроение от запасливого погреба</Homesteader_SettingsLarderMood>
+  <Homesteader_SettingsFestival>Ежегодный праздник урожая</Homesteader_SettingsFestival>
+  <Homesteader_SettingsAging>Выдержка в погребе (сыр / ветчина / сидр)</Homesteader_SettingsAging>
+  <Homesteader_SettingsLwFlavor>Письма Living World про голод и беженцев</Homesteader_SettingsLwFlavor>
+  <Homesteader_PassiveCoolCells>Охлаждаемых клеток на карте: {0}</Homesteader_PassiveCoolCells>
+  <Homesteader_AgedReady>Выдержано в погребе.</Homesteader_AgedReady>
+  <Homesteader_AgedVintage>Винтажная выдержка.</Homesteader_AgedVintage>
+  <Homesteader_BeesInBloom>Цветение рядом.</Homesteader_BeesInBloom>
+  <Homesteader_BeesNothingInBloom>Не цветёт — мёд замедлен.</Homesteader_BeesNothingInBloom>
+  <Homesteader_WaterDrought>Засуха: уличный сбор замедляется, кувшины выветриваются.</Homesteader_WaterDrought>
+  <Homesteader_WaterDroughtCondenser>Конденсатор засухи покрывает карту.</Homesteader_WaterDroughtCondenser>
+  <Homesteader_WaterStormCatch>Ливень: бочка наполняется быстро.</Homesteader_WaterStormCatch>
+  <Homesteader_WaterRaining>Сбор дождя.</Homesteader_WaterRaining>
+  <Homesteader_WaterDryCatch>Сухая погода: медленная роса.</Homesteader_WaterDryCatch>
+  <Homesteader_DairyFeedOk>Корм рядом — дойка идёт.</Homesteader_DairyFeedOk>
+  <Homesteader_DairyNeedsFeed>Нужно сено или мешанка рядом.</Homesteader_DairyNeedsFeed>
+  <Homesteader_NextSpawnHours>Следующая добыча примерно через {0} ч.</Homesteader_NextSpawnHours>
+  <Homesteader_PrizeQuality>Качество призового стада {0}/3</Homesteader_PrizeQuality>
+  <Homesteader_FarmstandBrand>Марка усадьбы: {0}</Homesteader_FarmstandBrand>
+  <Homesteader_FarmstandSale>Гость купил {0}× {1} за {2} серебра.</Homesteader_FarmstandSale>
+  <Homesteader_PlaceOnMovingWater>Нужна проточная вода (река) под постройкой или рядом.</Homesteader_PlaceOnMovingWater>
+  <Homesteader_FestivalLetterLabel>Праздник урожая</Homesteader_FestivalLetterLabel>
+  <Homesteader_FestivalLetterText>Майский столб стоит, погреб открыт. Колонисты собираются на урожай, у столба появляется лишняя еда, и двор чувствует прожитый год.</Homesteader_FestivalLetterText>
+  <Homesteader_GeeseLetterLabel>Гуси подняли шум</Homesteader_GeeseLetterLabel>
+  <Homesteader_GeeseLetterText>Дворовые гуси заметили {0} у края карты. Это не бой — предупреждение.</Homesteader_GeeseLetterText>
+  <Homesteader_FoxLetterEggs>Лиса забралась в безнадзорный курятник и испортила {0} яиц. Пугало во дворе помогло бы.</Homesteader_FoxLetterEggs>
+  <Homesteader_FoxLetterEmpty>Лиса обнюхала курятник, но почти ничего не украла. Поставьте пугало до следующего визита.</Homesteader_FoxLetterEmpty>
+  <Homesteader_FairPrizeText>Гость ярмарки попробовал {1} видов запасов и оставил {0} серебра и добрые слова.</Homesteader_FairPrizeText>
+  <Homesteader_FairShrugText>Гость попробовал погреб ({0} видов) и вежливо пожал плечами. В следующем году — разнообразнее.</Homesteader_FairShrugText>
+  <Homesteader_LwFlavorLabel>Вести для усадьбы</Homesteader_LwFlavorLabel>
+  <Homesteader_LwFamineFlavor>Путники говорят, что в {0} мало еды. Стоит послать варенье, если погреб позволяет.</Homesteader_LwFamineFlavor>
+  <Homesteader_LwRefugeeFlavor>Беженцы из {0} могут прийти голодными. Делиться погребом или нет — решение усадьбы.</Homesteader_LwRefugeeFlavor>
+
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>Аномальная трансляция зафиксировалась на частоте вашего монумента 27. Над регионом образуется краткий тепловой купол, а несколько колонистов жалуются на короткое помутнение — «гниение мозга», как они это называют.</Homesteader_KatsLetter_Open>
   <Homesteader_KatsLetter_SilverTaken>По счетам колонии списано {0} серебра как «Super Chat». Прорыв содержания предотвращён.</Homesteader_KatsLetter_SilverTaken>

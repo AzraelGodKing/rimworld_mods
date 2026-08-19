@@ -133,7 +133,7 @@
   <ResearchProjectDef>
     <defName>Wellspring_Waterworks</defName>
     <label>waterworks</label>
-    <description>Deeper shafts and taller tanks. A deep well hauls four times a hand-dug bucket. A water tower holds twenty-four stacks, fills faster than a cistern, and keeps the reserve critical. The stone fountain drinks water jugs to keep the courtyard plume going.</description>
+    <description>Deeper shafts and taller tanks. A deep well hauls four times a hand-dug bucket. A water tower holds twenty-four stacks, fills faster than a cistern, and keeps the reserve critical. The stone fountain drinks water jugs to keep the courtyard plume going. A waterwheel turns river current into power.</description>
     <baseCost>1200</baseCost>
     <techLevel>Medieval</techLevel>
     <tab>Homesteader</tab>
@@ -147,7 +147,7 @@
   <ResearchProjectDef>
     <defName>Homesteader_Livestock</defName>
     <label>homestead livestock</label>
-    <description>Chicken coops for steady eggs, and mash recipes to keep the yard flock productive.</description>
+    <description>Chicken coops for steady eggs, a dairy shed for milk, a goose shelter that alarms at map-edge hostiles, and mash recipes to keep the yard flock productive.</description>
     <baseCost>700</baseCost>
     <techLevel>Neolithic</techLevel>
     <tab>Homesteader</tab>

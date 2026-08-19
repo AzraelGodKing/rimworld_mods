@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using HarmonyLib;
 using RimWorld;
 using Verse;
 using Verse.AI.Group;
@@ -376,6 +377,49 @@ namespace Nemesis
             if (def == null) return false;
             List<Thing> things = map.listerThings.ThingsOfDef(def);
             return things != null && things.Count > 0;
+        }
+
+        private static string[] _pantryBuildings;
+        private static bool _pantryTried;
+
+        public static bool IsOnHomesteaderPantryTarget(Thing thing)
+        {
+            if (thing?.Map == null || !HomesteaderActive)
+            {
+                return false;
+            }
+
+            if (!_pantryTried)
+            {
+                _pantryTried = true;
+                FieldInfo field = AccessTools.Field("Homesteader.HomesteaderPantry:NemesisTargetBuildingDefNames");
+                _pantryBuildings = field?.GetValue(null) as string[];
+            }
+
+            if (_pantryBuildings == null || _pantryBuildings.Length == 0)
+            {
+                return MapHasRootCellar(thing.Map) && thing.Position.GetFirstBuilding(thing.Map)?.def?.defName == "Homesteader_RootCellar";
+            }
+
+            List<Thing> at = thing.Map.thingGrid.ThingsListAt(thing.Position);
+            for (int i = 0; i < at.Count; i++)
+            {
+                string name = at[i]?.def?.defName;
+                if (name == null)
+                {
+                    continue;
+                }
+
+                for (int n = 0; n < _pantryBuildings.Length; n++)
+                {
+                    if (_pantryBuildings[n] == name)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

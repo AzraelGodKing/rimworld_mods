@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Homesteader_DairyShed.label>молочный сарай</Homesteader_DairyShed.label>
+  <Homesteader_DairyShed.description>Небольшой доильный сарай. Держите сено или мешанку рядом — и он сам даёт молоко по расписанию. Это не возвращённый загон для коз: новое здание, новый id.</Homesteader_DairyShed.description>
+  <Homesteader_GooseShelter.label>гусиный навес</Homesteader_GooseShelter.label>
+  <Homesteader_GooseShelter.description>Шумная дворовая стая. Гуси гогочут, когда враги появляются у края карты рядом с двором — тревога, не турель. Хорошо сочетается с гнездовыми ящиками.</Homesteader_GooseShelter.description>
+  <Homesteader_Scarecrow.label>пугало</Homesteader_Scarecrow.label>
+  <Homesteader_Scarecrow.description>Дешёвый дворовый знак. Выглядит как урожай, и лиса реже лезет в безнадзорный курятник, пока пугало стоит в поле.</Homesteader_Scarecrow.description>
+  <Homesteader_Farmstand.label>придорожный лоток</Homesteader_Farmstand.label>
+  <Homesteader_Farmstand.description>Придорожный прилавок. Гости покупают варенье, сыр, сидр и другие запасы за серебро. Копит местную марку усадьбы — не репутацию фракции.</Homesteader_Farmstand.description>
+  <Homesteader_Waterwheel.label>водяное колесо</Homesteader_Waterwheel.label>
+  <Homesteader_Waterwheel.description>Деревянное колесо на проточной воде. Даёт 400 Вт, пока река течёт. Засуха Stormproof режет отдачу, если конденсатор засухи не защищает карту.</Homesteader_Waterwheel.description>
+</LanguageData>

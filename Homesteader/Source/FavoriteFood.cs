@@ -547,6 +547,11 @@ namespace Homesteader
                 return;
             }
 
+            if ((HomesteaderMod.Settings?.allergyFlareIntensity ?? 1f) <= 0.01f)
+            {
+                return;
+            }
+
             HediffDef hediff = DefDatabase<HediffDef>.GetNamedSilentFail("Homesteader_AllergicReaction");
             if (hediff != null && pawn.health.hediffSet.HasHediff(hediff))
             {
@@ -738,6 +743,11 @@ namespace Homesteader
             }
 
             if (!FavoriteFoodUtility.IsFavorite(ingester, foodDef))
+            {
+                return;
+            }
+
+            if ((HomesteaderMod.Settings?.favoriteFoodMood ?? 1f) <= 0.01f)
             {
                 return;
             }

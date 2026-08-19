@@ -4,7 +4,7 @@ Cross-mod vision for Strata, Homesteader, Stormproof, Nemesis, Deep Colony, and 
 Per-mod later work lives in each mod’s roadmap:
 
 - [Strata V3 checklist (done vs left)](docs/strata-roadmap.html) · [post-V3 pool](docs/ideas/strata-post-v3.md)
-- [Homesteader](Homesteader/ROADMAP.md) — next pool: [docs/ideas/homesteader-updates.md](docs/ideas/homesteader-updates.md)
+- [Homesteader](Homesteader/ROADMAP.md) — pool Q04–S04 implemented: [docs/ideas/homesteader-updates.md](docs/ideas/homesteader-updates.md)
 - [Stormproof](Stormproof/ROADMAP.md) — next pool: [docs/ideas/stormproof-updates.md](docs/ideas/stormproof-updates.md)
 - [Nemesis](Nemesis/ROADMAP.md) — next pool: [docs/ideas/nemesis-updates.md](docs/ideas/nemesis-updates.md) (N1–N4)
 - [Deep Colony](Deep%20Colony/ROADMAP.md) — goodwill consumer (DC1 wired); 2.0 shipped; [Batch C](docs/ideas/deep-colony-batch-c.md)

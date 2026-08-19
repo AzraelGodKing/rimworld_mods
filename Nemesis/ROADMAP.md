@@ -66,7 +66,7 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 - [ ] **Rimesis leader-raid handoff (Font)** — when Nemesis fires a vengeance / “leader” army return, call into Rimesis raid injection so Rimesis combat style/tactics apply. More work than coexistence; not scheduled until Font confirms packageId + public inject surface.
 - [ ] **NM-S03** Stormproof: optional ion-storm baiting when aggression is high (still fail-open).
 - [ ] **NM-S04** Strata: harassment on underground levels via stairs awareness; don’t break pocket maps.
-- [ ] **NM-S02** Homesteader: target pantry / smokehouse stacks by defName list.
+- [x] **NM-S02** Homesteader: target pantry / smokehouse stacks by defName list.
 - [ ] **NM-A07** Living World: consume faction crushed / victory chronicle signals only (see N3).
 
 ## Content / UX

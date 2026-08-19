@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Homesteader_DairyShed.label>挤奶棚</Homesteader_DairyShed.label>
+  <Homesteader_DairyShed.description>小型挤奶棚。附近备好干草或饲料糊，就会按自己的节奏产奶。不是恢复的羊圈——新建筑、新 id。</Homesteader_DairyShed.description>
+  <Homesteader_GooseShelter.label>鹅棚</Homesteader_GooseShelter.label>
+  <Homesteader_GooseShelter.description>吵闹的农院鹅群。敌对单位出现在院子附近的地图边缘时会叫——是警报，不是炮塔。和巢箱很搭。</Homesteader_GooseShelter.description>
+  <Homesteader_Scarecrow.label>稻草人</Homesteader_Scarecrow.label>
+  <Homesteader_Scarecrow.description>便宜的院子摆设。看着像丰收，而且院子里立着它时，狐狸不太会去偷没人看管的鸡舍。</Homesteader_Scarecrow.description>
+  <Homesteader_Farmstand.label>路边货摊</Homesteader_Farmstand.label>
+  <Homesteader_Farmstand.description>路边摊子。访客会买柜上的果酱、奶酪、苹果酒和其他腌制食品换银币。积累的是本地农庄口碑——不是派系好感。</Homesteader_Farmstand.description>
+  <Homesteader_Waterwheel.label>水车</Homesteader_Waterwheel.label>
+  <Homesteader_Waterwheel.description>流水上的木轮。河在转时发 400W。Stormproof 干旱会削减输出，除非干旱冷凝器在保护这张图。</Homesteader_Waterwheel.description>
+</LanguageData>

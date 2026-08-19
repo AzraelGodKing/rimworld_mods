@@ -41,6 +41,7 @@
         <showMessageIfOwned>true</showMessageIfOwned>
         <saveKeysPrefix>eggs</saveKeysPrefix>
       </li>
+      <li Class="Homesteader.CompProperties_PrizeFlock"/>
     </comps>
     <designationCategory>Production</designationCategory>
     <canOverlapZones>false</canOverlapZones>

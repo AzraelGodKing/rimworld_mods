@@ -6,6 +6,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## Unreleased (monorepo integration)
 
+- **NM-S02 pantry targeting** — food-store raids prefer stacks sitting on Homesteader cellar / icehouse / springhouse / smokehouse / farmstand / preserves shelf when Homesteader is loaded (defName list, fail-open).
 - **Update idea pool** — N1 hunt sites, N2 multi-hunt, N3 Living World listen, N4 personal/comms/LordJob/shuttle plus pantry and ion-bait lists. Spec: [docs/ideas/nemesis-updates.md](../docs/ideas/nemesis-updates.md).
 - **Fixation after a colonist dies** — uses `MapHeld` (corpse / killer map) so the hunt can still pick a surviving colonist.
 - **Wounded-escape cheat-death** — if `CreateNemesis` no-ops (Rimesis/BFV claim, failed generate), vanilla `Kill` proceeds. Anesthetic is no longer applied during the lethal prefix.

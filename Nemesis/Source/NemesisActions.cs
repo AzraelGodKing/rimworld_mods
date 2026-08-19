@@ -421,13 +421,23 @@ namespace Nemesis
                 }
             }
 
-            // Prefer cellar-adjacent stacks when Homesteader is present.
+            // Prefer Homesteader pantry / smokehouse / farmstand stacks when present.
             bool cellar = SoftCompat.MapHasRootCellar(map);
+            List<Thing> pantryFirst = new List<Thing>();
+            for (int i = 0; i < foods.Count; i++)
+            {
+                if (SoftCompat.IsOnHomesteaderPantryTarget(foods[i]))
+                {
+                    pantryFirst.Add(foods[i]);
+                }
+            }
+
+            List<Thing> pool = pantryFirst.Count > 0 ? pantryFirst : foods;
             int ruined = 0;
             int targetCount = Rand.RangeInclusive(1, 3);
-            for (int i = 0; i < foods.Count && ruined < targetCount; i++)
+            for (int i = 0; i < pool.Count && ruined < targetCount; i++)
             {
-                Thing t = foods[Rand.Range(0, foods.Count)];
+                Thing t = pool[Rand.Range(0, pool.Count)];
                 if (t == null || t.Destroyed) continue;
                 int lose = Mathf.Clamp(t.stackCount / 3, 1, 25);
                 t.SplitOff(lose).Destroy(DestroyMode.Vanish);

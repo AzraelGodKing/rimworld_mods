@@ -50,6 +50,7 @@
         <showMessageIfOwned>true</showMessageIfOwned>
         <saveKeysPrefix>beeswax</saveKeysPrefix>
       </li>
+      <li Class="Homesteader.CompProperties_BeehiveBloom"/>
     </comps>
     <designationCategory>Production</designationCategory>
     <canOverlapZones>false</canOverlapZones>
