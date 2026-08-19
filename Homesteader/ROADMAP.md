@@ -2,6 +2,7 @@
 
 Playable core is in. Idea pool (IDs, Steam QoL, build order):
 [docs/ideas/homesteader-updates.md](../docs/ideas/homesteader-updates.md).
+Series slate (Slice 1 = **HS-Q04**): [docs/ideas/next-content.md](../docs/ideas/next-content.md).
 
 Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 [../ROADMAP.md](../ROADMAP.md).

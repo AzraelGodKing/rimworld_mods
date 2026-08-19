@@ -7,6 +7,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 ## [Unreleased]
 
 ### Added
+- **S1 teller weights** stay later (series slate). Spec: [docs/ideas/next-content.md](../docs/ideas/next-content.md).
 - **The Deep Homestead** scenario — 3 settlers, farm kit, mountain-foothills opener; forces Azrael; MayRequire Homesteader / Strata start research and rock salt.
 - **Standalone storyteller fallback** — injects `StorytellerDef` Azrael only when Homesteader is not loaded (Homesteader owns the canonical copy). `PatchOperationFindMod` matches the Homesteader display name so both mods together do not duplicate the def.
 - **CI zip** — `Azrael.zip` with the compiled DLL is packed on `latest` so Deep Homestead's forced-storyteller part loads.

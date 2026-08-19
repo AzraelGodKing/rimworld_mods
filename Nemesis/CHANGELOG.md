@@ -6,6 +6,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## Unreleased (monorepo integration)
 
+- **Update idea pool** — N1 hunt sites, N2 multi-hunt, N3 Living World listen, N4 personal/comms/LordJob/shuttle plus pantry and ion-bait lists. Spec: [docs/ideas/nemesis-updates.md](../docs/ideas/nemesis-updates.md).
 - **Fixation after a colonist dies** — uses `MapHeld` (corpse / killer map) so the hunt can still pick a surviving colonist.
 - **Wounded-escape cheat-death** — if `CreateNemesis` no-ops (Rimesis/BFV claim, failed generate), vanilla `Kill` proceeds. Anesthetic is no longer applied during the lethal prefix.
 - **Hunt raids omit the nemesis** — Direct Raid injects the named pawn whenever the hunt is active (not only after the first flee); hunt faction is restored after parking as a world pawn; if the raid group never generated them they spawn at the map edge (Steam Aug 15).

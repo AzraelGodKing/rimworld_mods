@@ -1,8 +1,9 @@
 # Nemesis — ROADMAP
 
-Playable core is in. Remaining fantasy for later passes.
+Playable core is in. Remaining fantasy (N1–N4 sub-IDs, sizes, build order):
+[docs/ideas/nemesis-updates.md](../docs/ideas/nemesis-updates.md).
 
-**Ownership:** personal antagonists, hunt arcs, and hunt-keyed world sites stay in **Nemesis**. Off-map faction politics / settlement morph / generic war sites belong to **[Living World](../docs/ideas/living-world.md)** (design only). Nemesis may *listen* to Living World signals fail-open; it does not own the world sim.
+**Ownership:** personal antagonists, hunt arcs, and hunt-keyed world sites stay in **Nemesis**. Off-map faction politics / settlement morph / generic war sites belong to **[Living World](../docs/ideas/living-world.md)**. Nemesis may *listen* to Living World signals fail-open; it does not own the world sim.
 
 ---
 
@@ -18,53 +19,55 @@ Playable core is in. Remaining fantasy for later passes.
 
 ---
 
-## Hunt base / false-lead arc (Nemesis-owned)
+## Hunt base / false-lead arc (N1)
 
-Acceptance-oriented checklist for later implementation:
+Acceptance-oriented checklist for later implementation. Sub-IDs: [nemesis-updates.md](../docs/ideas/nemesis-updates.md).
 
-- [ ] **Aggression gate** — camp / quest content only above hunt aggression threshold X (Mod Options).
-- [ ] **Nemesis camp world site / quest** — offer at higher aggression; resolving may be:
+- [ ] **NM-A01 Aggression gate** — camp / quest content only above hunt aggression threshold X (Mod Options).
+- [ ] **NM-A02 Nemesis camp world site / quest** — offer at higher aggression; resolving may be:
   - **Real** — confrontation with the nemesis (and retinue), or
   - **False lead** — empty camp, planted evidence, or trap.
-- [ ] **Progressive intel** — scrap / rumor → last-known world tile → site reveal; each step requires an active hunt.
-- [ ] **Caravan-route ambush** — encounter map tied to the active nemesis pawn / faction (not a Living World warband).
-- [ ] **Taunt cache** — abandoned stockpile / note on a route; do **not** reuse Living World generic war-site defs.
+- [ ] **NM-A03 Progressive intel** — scrap / rumor → last-known world tile → site reveal; each step requires an active hunt.
+- [ ] **NM-A04 Caravan-route ambush** — encounter map tied to the active nemesis pawn / faction (not a Living World warband).
+- [ ] **NM-A05 Taunt cache** — abandoned stockpile / note on a route; do **not** reuse Living World generic war-site defs.
 
 Shared tile rule (when Living World exists): if a LW war site already occupies a cell, offset or skip; Nemesis sites remain hunt-keyed.
 
 ---
 
-## Multi-faction antagonists (Nemesis-owned)
+## Multi-faction antagonists (N2)
 
-- [ ] Allow **one active nemesis per hostile faction**, with a **global cap of 1–2** hunts.
+- [ ] **NM-A06** Allow **one active nemesis per hostile faction**, with a **global cap of 1–2** hunts.
 - [ ] Reuse the same hunt component / letter pipeline; faction-colored taunt strings.
 - [ ] **Not** a Living World “warlord table” — still personal fixation targets.
-- [ ] **Living World listen (fail-open)** — if LW reports the nemesis’s faction crushed / fled the region: escalate aggression **or** end/dormant hunt (option). If LW absent, behavior unchanged.
+- [ ] **NM-A07 Living World listen (N3, fail-open)** — if LW reports the nemesis’s faction crushed / fled the region: escalate aggression **or** end/dormant hunt (option). If LW absent, behavior unchanged.
 
 ---
 
-## More personal systems
+## More personal systems (N4)
 
-- [ ] Nemesis relationship / social memory with the fixation target (opinion, social fight chance).
+- [ ] **NM-A09** Obsession thought / social memory with the fixation target (opinion; social fight chance already exists).
+- [ ] **NM-A08** Comms console interaction: reply options (taunt back / offer truce / demand surrender).
+- [ ] **NM-A12** Trophy memento after escapes (intel crumb, not a reputation sheet).
 - [ ] Apparel / weapon tint polish (focus gear upgrades already ship).
-- [ ] Comms console interaction: reply options (taunt back / offer truce / demand surrender).
 
 ## Assault polish
 
-- [ ] Dedicated `LordJob` that prioritizes the fixation pawn, then flees to map edge when raid points collapse.
-- [ ] Shuttle drop + extract when Odyssey present (soft).
+- [ ] **NM-A10** Dedicated `LordJob` that prioritizes the fixation pawn, then flees to map edge when raid points collapse.
+- [ ] **NM-A11** Shuttle drop + extract when Odyssey present (soft).
+- [ ] **NM-A13** Light focus tactics (not full Siege matrix).
 
 ## Soft compat depth
 
 - [x] **Rimesis / BFV exclusive claim** — `NemesisCompatApi` + foreign-antagonist skip (shipped). Spec: [nemesis-rimesis-compat.md](../docs/ideas/nemesis-rimesis-compat.md)
 - [x] **Deep Colony capture / truce goodwill** — reviewed with DC ledger; no conflict (Execute/Release = vanilla goodwill only; Truce = timer only). Same spec.
 - [x] **Rimesis Availability / Missing (design + stub)** — Font owns Availability (`Available` vs busy: AwaitingInvestigation / LocatedCampsite / LocatedSettlement / IncomingRaid / DispatchingRaid / EncounterActive). Nemesis exposes `ShouldReportMissingToRimesis` (`IsNemesisPawn`) for Font to mark Missing; soft-read of Availability via reflection still TBD (fail-open; need Font type/method names). Same spec.
-- [ ] **Rimesis Availability soft-read** — when Font publishes the API, fail-open reflection in `SoftCompat` so Nemesis never steals a busy Rimesis pawn; no hard require.
+- [ ] **NM-S01 Rimesis Availability soft-read** — when Font publishes the API, fail-open reflection in `SoftCompat` so Nemesis never steals a busy Rimesis pawn; no hard require.
 - [ ] **Rimesis leader-raid handoff (Font)** — when Nemesis fires a vengeance / “leader” army return, call into Rimesis raid injection so Rimesis combat style/tactics apply. More work than coexistence; not scheduled until Font confirms packageId + public inject surface.
-- [ ] Stormproof: optional ion-storm baiting when aggression is high (still fail-open).
-- [ ] Strata: harassment on underground levels via stairs awareness; don’t break pocket maps.
-- [ ] Homesteader: target pantry / smokehouse stacks by defName list.
-- [ ] Living World: consume faction crushed / victory chronicle signals only (see above).
+- [ ] **NM-S03** Stormproof: optional ion-storm baiting when aggression is high (still fail-open).
+- [ ] **NM-S04** Strata: harassment on underground levels via stairs awareness; don’t break pocket maps.
+- [ ] **NM-S02** Homesteader: target pantry / smokehouse stacks by defName list.
+- [ ] **NM-A07** Living World: consume faction crushed / victory chronicle signals only (see N3).
 
 ## Content / UX
 

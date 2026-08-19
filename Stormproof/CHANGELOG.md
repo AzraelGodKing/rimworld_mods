@@ -5,6 +5,7 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 ## [Unreleased]
 
 ### Added
+- **Update idea pool** — settings, DeepFreeze gap, substations, divertor, sky events, lightning gun, emit queries for Homesteader / Nemesis / Strata / Living World. Spec: [docs/ideas/stormproof-updates.md](../docs/ideas/stormproof-updates.md).
 - **Stormfront scenario** — hard-weather showcase start; unlocks storm protection research; locks Azrael when Homesteader is loaded.
 
 ### Changed

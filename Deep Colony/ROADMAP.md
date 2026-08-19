@@ -95,7 +95,8 @@ Deep Colony owns **player↔faction goodwill memory and drift** (raids, trades, 
 
 ## Later — Batch C (not started)
 
-Playtest 2.0 first. Spec: [deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
+Playtest 2.0 first. Spec: [deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).  
+Not in series Slice 1 ([next-content.md](../docs/ideas/next-content.md)).
 
 - [ ] **Phase 6 QoL** — untreated-trauma alert, counseling history, Perks tab filter, Royalty envoy bias
 - [ ] **Phase 7 memory & kin** — family letters, deathbed lesson, childhood memories, funerals ease loss, sibling bond

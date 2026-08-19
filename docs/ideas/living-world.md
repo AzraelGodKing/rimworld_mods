@@ -463,10 +463,10 @@ Do **not** schedule these under the Living World package:
 
 ### Suggested execution cadence
 
-1. **Now → next code branch:** Phase 1 (LW0–LW5) only.  
-2. **Second code branch:** Phase 2 (LW6–LW8 + DC1).  
-3. **Parallel or third:** Phase 3 Nemesis N1–N3 when hunt fantasy is the priority; HS1 is tiny.  
-4. **Later:** Phase 4 traffic, Azrael, polish questions in §11.
+1. **Done:** Phase 1 (LW0–LW5) and Phase 2 (LW6–LW8 + DC1).  
+2. **Parallel next:** Phase 3 sibling consumers — HS1 (tiny), Nemesis N1–N3 when hunt fantasy is the priority. Sub-IDs: [nemesis-updates.md](nemesis-updates.md). Series slate: [next-content.md](next-content.md).  
+3. **Later:** Phase 4 traffic (LW9), Azrael weights (S1), polish questions in §11.  
+4. Stormproof / Date Night / Strata post-V3 pools are **not** Living World work — see those idea files.
 
 ---
 

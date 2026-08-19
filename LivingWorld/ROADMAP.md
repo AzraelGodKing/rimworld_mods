@@ -18,8 +18,12 @@ Design: [../docs/ideas/living-world.md](../docs/ideas/living-world.md) (§8b com
 - [x] DC1 Deep Colony goodwill consumer
 - [x] LW8 War polish + generic sites
 
-## Later
+## Later (Phase 3–4)
 
-- [ ] Sibling flavor (Homesteader HS1, Nemesis N3 listen)
-- [ ] LW9 Inter-settlement traffic
-- [ ] Azrael storyteller weights (series)
+Spec: [living-world.md](../docs/ideas/living-world.md) §8b. Nemesis sub-IDs: [nemesis-updates.md](../docs/ideas/nemesis-updates.md).
+
+- [ ] **HS1** Homesteader famine / refugee keyed lines (Homesteader-owned)
+- [ ] **N3** Nemesis listen to faction crushed / fled (`NM-A07`)
+- [ ] **LW9** Inter-settlement traffic (parked)
+- [ ] **LW10** Opportunity quests / chronicle History UI (if playtests want it)
+- [ ] **S1** Azrael storyteller weights for LW + sibling incidents (series)

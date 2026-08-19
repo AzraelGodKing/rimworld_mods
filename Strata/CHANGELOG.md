@@ -10,6 +10,7 @@ Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog
 ## [Unreleased]
 
 ### Added
+- **Post-V3 idea pool** — Levels-tab badges, dumbwaiter, collapse trap, seismograph, noise economy, flooded/magma types, lost floor, stack panel. Spec: [docs/ideas/strata-post-v3.md](../docs/ideas/strata-post-v3.md).
 - **Deep Shafts scenario** — mountain/shaft showcase start; unlocks Digging Down + Building Up; locks Azrael when Homesteader is loaded.
 - **Cave mods stay out of your column** (`foreign-portal-exclusion-v1`) - Anomaly undercaves, Deep And Deeper caves, and similar portal maps are no longer treated as colony floors for work / food / rest / alerts. Optional setting: *Relay into other mods' portal maps* (off by default).
 - **Underground infestations toggle** (`b1-infestations-toggle-v1`) - Mod Options > Threats & performance. Turn off bug infestations on B1+ floors if you want a quieter basement.

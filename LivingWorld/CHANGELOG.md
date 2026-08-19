@@ -4,6 +4,7 @@
 
 ### Added
 
+- **Later-phase checklist** — HS1 / N3 / LW9 / LW10 / S1 called out on the ROADMAP; cadence in the design doc updated now that Phase 1–2 shipped. Series slate: [docs/ideas/next-content.md](../docs/ideas/next-content.md).
 - **Unlisted docs page** — `docs/living-world.html` with `noindex` (not linked from the public hub).
 - **Languages README** — translator stub for Keyed packs (`repo-hygiene-1-6`).
 - **Listening Post scenario** — off-map world showcase start; locks Azrael when Homesteader is loaded.

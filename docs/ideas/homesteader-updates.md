@@ -4,7 +4,8 @@
 **Mod:** [Homesteader](../../Homesteader/). Checklist: [Homesteader/ROADMAP.md](../../Homesteader/ROADMAP.md).  
 **Lane rule:** player-colony agrarian fantasy — grow it, put it by, sell it, celebrate it. Off-map faction sims → [Living World](living-world.md). Named hunters targeting the pantry → Nemesis (defName list only). Colonist identity → Deep Colony.
 
-**Sources:** existing Homesteader ROADMAP; Steam Workshop comments (Aug 2026); series soft-compat (Stormproof drought, Living World HS1).
+**Sources:** existing Homesteader ROADMAP; Steam Workshop comments (Aug 2026); series soft-compat (Stormproof drought, Living World HS1).  
+**In flight:** animal poop → compost (draft PR #74, `cursor/homesteader-animal-poop-dd08`) — yard feature, not this pool. Series next-slice starts at **HS-Q04**.
 
 ---
 
