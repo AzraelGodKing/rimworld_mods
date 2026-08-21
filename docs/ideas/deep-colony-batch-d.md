@@ -1,6 +1,6 @@
 # Deep Colony — Batch D (post–Batch C)
 
-**Status:** shipped (`batch-d-v1`, family tree `family-tree-v1`, family join `family-join-v1`). Do not reuse D01–D18.  
+**Status:** shipped (`batch-d-v1`, family tree `family-tree-v1`, family join `family-join-v1`, family loyalty `family-loyalty-v1`). Do not reuse D01–D19.  
 **Mod:** [Deep Colony](../../Deep%20Colony/). Prior pools: [deep-colony-updates.md](deep-colony-updates.md) (A01–A20, B01–B22), [deep-colony-batch-c.md](deep-colony-batch-c.md) (C01–C24). **Do not reuse those IDs.**  
 **Lane rule:** colonist / colony-facing only. No furniture packs, raid timers, off-map politics, farm brand, or a second goodwill buffer.
 
@@ -78,6 +78,10 @@ Colony identity: family on the map can switch sides; ex-lovers do not defect, th
 | D18 | Ex-lovers get back together; 4th time is toxic | Trauma | Separate from D17. Same-map ex-lover / ex-spouse may become `Lover` again (MTB ~8 days). After more than 3 reunions, both get `DC_Trauma_ToxicRelationship` (counseling / therapy eases it). Date Night still owns romance schedules. |
 
 Settings (default on): family join, raid defect chance, visit join chance, ex-lover reconcile, reconcile MTB. Soft raises join chances / slows reconcile; Hard lowers join chances / hastens reconcile drama.
+
+| ID | Idea | System | Notes |
+|----|------|--------|-------|
+| D19 | Unwavering prisoners can be broken by family only | Generations | Kin (`KinWeight` > 0, so not ex-lovers) who like each other (mutual opinion, default 20 both ways) can talk the prisoner out of `guest.Recruitable == false`. Chance scales with relation (spouse highest). Then vanilla recruit is available. Non-family still cannot. |
 
 ---
 

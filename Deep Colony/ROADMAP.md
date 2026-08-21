@@ -114,3 +114,4 @@ Spec: [deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md). Build stam
 - [x] **D16 Family tree** — Character inspect tab + Bio-card button; click a relative to select and jump to that pawn
 - [x] **D17 Kin join / defect** — spouse highest chance, ex-lover 0% for this path; no goodwill hit unless hostile (grudge / `FamilyDefect`)
 - [x] **D18 Ex-lover reconcile** — get back together on the map; 4th time marks a toxic relationship that counseling can ease (`family-join-v1`)
+- [x] **D19 Family vs unwavering** — only kin the prisoner likes (and who like them back) can break unwavering loyalty (`family-loyalty-v1`)

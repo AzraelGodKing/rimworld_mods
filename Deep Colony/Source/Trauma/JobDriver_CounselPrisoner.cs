@@ -61,6 +61,12 @@ namespace DeepColony
             }
 
             var guest = Patient.guest;
+            if (guest != null && !guest.Recruitable)
+            {
+                FamilyLoyaltyUtility.TryBreak(pawn, Patient);
+                return;
+            }
+
             if (guest != null && guest.resistance > 0f)
             {
                 int social = pawn.skills?.GetSkill(SkillDefOf.Social)?.Level ?? 0;

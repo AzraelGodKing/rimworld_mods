@@ -21,7 +21,7 @@ namespace DeepColony
             var settings = Settings;
             if (settings == null) return;
 
-            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 1960f);
+            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 2080f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
 
             var listing = new Listing_Standard();
@@ -119,6 +119,10 @@ namespace DeepColony
                 "DC_Settings_ExLoverReconcileTip".Translate());
             listing.Label("DC_Settings_ReconcileMtb".Translate(settings.exLoverReconcileMtbDays.ToString("F0")));
             settings.exLoverReconcileMtbDays = listing.Slider(settings.exLoverReconcileMtbDays, 2f, 20f);
+            listing.Label("DC_Settings_UnwaveringOpinion".Translate(settings.familyUnwaveringMinOpinion));
+            settings.familyUnwaveringMinOpinion = (int)listing.Slider(settings.familyUnwaveringMinOpinion, 0f, 80f);
+            listing.Label("DC_Settings_UnwaveringBreak".Translate((int)(settings.familyUnwaveringBreakChance * 100f)));
+            settings.familyUnwaveringBreakChance = listing.Slider(settings.familyUnwaveringBreakChance, 0.05f, 1f);
 
             listing.Gap(10f);
             listing.GapLine();

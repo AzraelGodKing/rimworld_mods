@@ -4,7 +4,8 @@ using Verse.AI;
 
 namespace DeepColony
 {
-    public class WorkGiver_CounselPrisoner : WorkGiver_Scanner
+    /// <summary>D19 — wardens who are family will talk to unwavering kin prisoners.</summary>
+    public class WorkGiver_FamilyLoyalty : WorkGiver_Scanner
     {
         public override ThingRequest PotentialWorkThingRequest =>
             ThingRequest.ForGroup(ThingRequestGroup.Pawn);
@@ -13,31 +14,19 @@ namespace DeepColony
 
         public override bool ShouldSkip(Pawn pawn, bool forced = false)
         {
+            if (!DeepColonySettings.Get.enableFamilyJoin) return true;
             if (pawn.WorkTagIsDisabled(WorkTags.Social)) return true;
             if (pawn.skills?.GetSkill(SkillDefOf.Social)?.TotallyDisabled == true) return true;
-            if (DeepColonySettings.Get.enablePrisonerCounsel && DeepColonySettings.Get.enableTrauma)
-                return false;
-            if (DeepColonySettings.Get.enableFamilyJoin)
-                return false;
-            return true;
+            return false;
         }
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
             if (t is not Pawn patient || patient == pawn) return false;
-            if (!patient.IsPrisonerOfColony) return false;
-            if (patient.Dead || !patient.Spawned) return false;
-            if (patient.InMentalState || patient.Downed) return false;
-            if (patient.guest == null) return false;
+            if (!FamilyLoyaltyUtility.CanAttemptBreak(pawn, patient, out _)) return false;
+            if (patient.InMentalState) return false;
             if (!pawn.CanReserveAndReach(patient, PathEndMode.Touch, Danger.Deadly, 1, -1, null, forced))
                 return false;
-
-            if (FamilyLoyaltyUtility.IsUnwaveringPrisoner(patient))
-                return FamilyLoyaltyUtility.CanAttemptBreak(pawn, patient, out _);
-
-            if (!DeepColonySettings.Get.enablePrisonerCounsel) return false;
-            if (!DeepColonySettings.Get.enableTrauma) return false;
-            if ((pawn.skills?.GetSkill(SkillDefOf.Social)?.Level ?? 0) < 4 && !forced) return false;
             return true;
         }
 

@@ -14,8 +14,6 @@ namespace DeepColony
         public override IEnumerable<FloatMenuOption> GetOptionsFor(
             Pawn targetPawn, FloatMenuContext context)
         {
-            if (!DeepColonySettings.Get.enableTrauma) yield break;
-            if (!DeepColonySettings.Get.enablePrisonerCounsel) yield break;
             if (targetPawn == null || !targetPawn.IsPrisonerOfColony) yield break;
             if (targetPawn.Dead || !targetPawn.Spawned || targetPawn.Downed) yield break;
 
@@ -25,6 +23,34 @@ namespace DeepColony
             if (actor.WorkTagIsDisabled(WorkTags.Social)) yield break;
             if (!actor.CanReach(targetPawn, PathEndMode.Touch, Danger.Deadly)) yield break;
             if (!actor.CanReserve(targetPawn)) yield break;
+
+            if (FamilyLoyaltyUtility.WouldShowFamilyTalk(actor, targetPawn))
+            {
+                if (FamilyLoyaltyUtility.CanAttemptBreak(actor, targetPawn, out string reason))
+                {
+                    yield return new FloatMenuOption(
+                        "DC_FamilyLoyaltyFloat".Translate(targetPawn.LabelShort.Named("PAWN")),
+                        () =>
+                        {
+                            Job job = JobMaker.MakeJob(DC_DefOf.DC_Job_CounselPrisoner, targetPawn);
+                            actor.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                        });
+                }
+                else
+                {
+                    yield return new FloatMenuOption(
+                        "DC_FamilyLoyaltyFloat".Translate(targetPawn.LabelShort.Named("PAWN"))
+                            + ": " + reason,
+                        null)
+                    { Disabled = true };
+                }
+            }
+
+            if (!DeepColonySettings.Get.enablePrisonerCounsel) yield break;
+            if (!DeepColonySettings.Get.enableTrauma) yield break;
+            if (FamilyLoyaltyUtility.IsUnwaveringPrisoner(targetPawn)
+                && !FamilyLoyaltyUtility.IsFamily(actor, targetPawn))
+                yield break;
 
             yield return new FloatMenuOption(
                 "DC_CounselPrisonerFloat".Translate(targetPawn.LabelShort.Named("PAWN")),

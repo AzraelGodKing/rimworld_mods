@@ -519,5 +519,36 @@ namespace DeepColony
             }
             TraumaUtility.ApplyTrauma(p, DC_DefOf.DC_Trauma_ToxicRelationship);
         }
+
+        [DebugAction("Deep Colony", "Toggle unwavering prisoner",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ToggleUnwavering(Pawn p)
+        {
+            if (p.guest == null)
+            {
+                Log.Warning("[DeepColony] No guest tracker on " + p.LabelShort);
+                return;
+            }
+            p.guest.Recruitable = !p.guest.Recruitable;
+            Messages.Message("[DeepColony] " + p.LabelShort + " Recruitable=" + p.guest.Recruitable
+                + " (unwavering=" + (!p.guest.Recruitable) + ").",
+                p, MessageTypeDefOf.NeutralEvent, false);
+        }
+
+        [DebugAction("Deep Colony", "Force family loyalty break",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceFamilyLoyaltyBreak(Pawn p)
+        {
+            if (FamilyLoyaltyUtility.TryForceBreak(p))
+            {
+                Messages.Message("[DeepColony] Broke unwavering loyalty on " + p.LabelShort + ".",
+                    p, MessageTypeDefOf.PositiveEvent, false);
+                return;
+            }
+            Log.Warning("[DeepColony] Could not break unwavering on " + p.LabelShort
+                + " (not an unwavering prisoner, or no family on the map).");
+        }
     }
 }

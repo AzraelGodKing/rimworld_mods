@@ -284,7 +284,7 @@
   <DC_FamilyTree_ClickTip>点击以选中并跳转到该角色。</DC_FamilyTree_ClickTip>
   <DC_Settings_FamilyJoin>亲族加入与复合</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>地图上的亲族加入 / 投诚</DC_Settings_EnableFamilyJoin>
-  <DC_Settings_EnableFamilyJoinTip>殖民者的亲族可能在来访时加入，或在袭击中投诚。配偶几率最高。前恋人不会借此加入（0%）。非敌对亲族招募不扣好感；敌对亲族会留下派系积怨。</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_EnableFamilyJoinTip>殖民者的亲族可能在来访时加入，或在袭击中投诚。配偶几率最高。前恋人不会借此加入（0%）。非敌对亲族招募不扣好感；敌对亲族会留下派系积怨。不屈的囚犯只有彼此都喜欢的家人才能打动。</DC_Settings_EnableFamilyJoinTip>
   <DC_Settings_RaidDefect>袭击亲族投诚几率（配偶）：{0}%</DC_Settings_RaidDefect>
   <DC_Settings_VisitJoin>来访亲族加入几率（配偶）：{0}%</DC_Settings_VisitJoin>
   <DC_Settings_ExLoverReconcile>前恋人可能复合</DC_Settings_ExLoverReconcile>
@@ -300,5 +300,13 @@
   <DC_Letter_ToxicRelationshipLabel>有毒关系</DC_Letter_ToxicRelationshipLabel>
   <DC_Letter_ToxicRelationshipBody>{A} 与 {B} 再次复合（第 {COUNT} 次）。这种分分合合已经变得有毒——疏导或治疗也许能帮忙。</DC_Letter_ToxicRelationshipBody>
   <DC_InspectToxicRelationship>有毒关系 — 疏导也许能帮忙</DC_InspectToxicRelationship>
+  <DC_Settings_UnwaveringOpinion>亲族动摇不屈忠诚的最低好感（双方）：{0}</DC_Settings_UnwaveringOpinion>
+  <DC_Settings_UnwaveringBreak>亲族动摇不屈忠诚几率（配偶）：{0}%</DC_Settings_UnwaveringBreak>
+  <DC_FamilyLoyaltyFloat>以家人身份与 {PAWN} 交谈</DC_FamilyLoyaltyFloat>
+  <DC_FamilyLoyalty_NotFamily>只有家人能动摇不屈的囚犯。</DC_FamilyLoyalty_NotFamily>
+  <DC_FamilyLoyalty_LowOpinion>彼此好感不够（双方需 {0}；当前 {1} / {2}）。</DC_FamilyLoyalty_LowOpinion>
+  <DC_FamilyLoyalty_StillHolds>忠诚仍在…</DC_FamilyLoyalty_StillHolds>
+  <DC_Letter_FamilyLoyaltyLabel>忠诚松动</DC_Letter_FamilyLoyaltyLabel>
+  <DC_Letter_FamilyLoyaltyBody>{FAMILY} 打动了 {PAWN}。不屈忠诚已破——狱卒现在可以招募他们。</DC_Letter_FamilyLoyaltyBody>
 
 </LanguageData>

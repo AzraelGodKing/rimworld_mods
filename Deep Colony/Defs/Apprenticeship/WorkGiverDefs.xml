@@ -45,4 +45,15 @@
     <scanThings>true</scanThings>
   </WorkGiverDef>
 
+  <WorkGiverDef>
+    <defName>DC_WorkGiver_FamilyLoyalty</defName>
+    <label>talk to kin prisoner</label>
+    <giverClass>DeepColony.WorkGiver_FamilyLoyalty</giverClass>
+    <workType>Warden</workType>
+    <priorityInType>90</priorityInType>
+    <verb>reach kin</verb>
+    <gerund>talking to kin</gerund>
+    <scanThings>true</scanThings>
+  </WorkGiverDef>
+
 </Defs>

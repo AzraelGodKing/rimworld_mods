@@ -52,6 +52,8 @@ namespace DeepColony
         public float familyVisitJoinChance = 0.18f;
         public bool enableExLoverReconcile = true;
         public float exLoverReconcileMtbDays = 8f;
+        public int familyUnwaveringMinOpinion = 20;
+        public float familyUnwaveringBreakChance = 0.55f;
 
         public static DeepColonySettings Get =>
             DeepColonyMod.Settings ?? new DeepColonySettings();
@@ -92,6 +94,8 @@ namespace DeepColony
             Scribe_Values.Look(ref familyVisitJoinChance, "familyVisitJoinChance", 0.18f);
             Scribe_Values.Look(ref enableExLoverReconcile, "enableExLoverReconcile", true);
             Scribe_Values.Look(ref exLoverReconcileMtbDays, "exLoverReconcileMtbDays", 8f);
+            Scribe_Values.Look(ref familyUnwaveringMinOpinion, "familyUnwaveringMinOpinion", 20);
+            Scribe_Values.Look(ref familyUnwaveringBreakChance, "familyUnwaveringBreakChance", 0.55f);
         }
 
         public void ApplyPreset(Preset preset)
@@ -120,6 +124,8 @@ namespace DeepColony
             familyVisitJoinChance = 0.18f;
             enableExLoverReconcile = true;
             exLoverReconcileMtbDays = 8f;
+            familyUnwaveringMinOpinion = 20;
+            familyUnwaveringBreakChance = 0.55f;
 
             switch (preset)
             {
@@ -137,6 +143,8 @@ namespace DeepColony
                     familyRaidDefectChance = 0.40f;
                     familyVisitJoinChance = 0.28f;
                     exLoverReconcileMtbDays = 12f;
+                    familyUnwaveringMinOpinion = 10;
+                    familyUnwaveringBreakChance = 0.75f;
                     break;
                 case Preset.Hard:
                     combatShockChance = 0.55f;
@@ -161,6 +169,8 @@ namespace DeepColony
                     familyRaidDefectChance = 0.18f;
                     familyVisitJoinChance = 0.10f;
                     exLoverReconcileMtbDays = 5f;
+                    familyUnwaveringMinOpinion = 40;
+                    familyUnwaveringBreakChance = 0.35f;
                     break;
                 default:
                     ResetToDefaults();
@@ -203,6 +213,8 @@ namespace DeepColony
             familyVisitJoinChance = 0.18f;
             enableExLoverReconcile = true;
             exLoverReconcileMtbDays = 8f;
+            familyUnwaveringMinOpinion = 20;
+            familyUnwaveringBreakChance = 0.55f;
         }
     }
 }
