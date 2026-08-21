@@ -284,7 +284,7 @@
   <DC_FamilyTree_ClickTip>Click to select and jump to this pawn.</DC_FamilyTree_ClickTip>
   <DC_Settings_FamilyJoin>Family join &amp; reconcile</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>Kin join / defect on the map</DC_Settings_EnableFamilyJoin>
-  <DC_Settings_EnableFamilyJoinTip>Family of colonists may join from visits, or defect from raids. Spouse is the highest chance. Ex-lovers never join this way (0%). Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge. Unwavering prisoners can be reached by family they like (both ways). Also: in-law welcome, kin homecoming, kin dying or executed, breakup wounds, grandchild born, kin taken, tended by family, last of the line, and step-family.</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_EnableFamilyJoinTip>Family of colonists may join from visits, or defect from raids. Spouse is the highest chance. Ex-lovers never join this way (0%). Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge. Unwavering prisoners can be reached by family they like (both ways). Also: in-law welcome, kin homecoming, kin dying or executed, breakup wounds, grandchild born, kin taken, tended by family, last of the line, step-family, prison visits, releasing kin, family-tradition teaching, kin downed in a fight, and empty nest.</DC_Settings_EnableFamilyJoinTip>
   <DC_Settings_RaidDefect>Raid kin defect chance (spouse): {0}%</DC_Settings_RaidDefect>
   <DC_Settings_VisitJoin>Visit kin join chance (spouse): {0}%</DC_Settings_VisitJoin>
   <DC_Settings_ExLoverReconcile>Ex-lovers may get back together</DC_Settings_ExLoverReconcile>
@@ -324,5 +324,12 @@
   <DC_Letter_LineContinuesLabel>The line continues</DC_Letter_LineContinuesLabel>
   <DC_Letter_LineContinuesBody>{PAWN} has blood kin in the colony again. The name does not end here.</DC_Letter_LineContinuesBody>
   <DC_StepFamily>{A} and {B} married. Children on the map have a new step-parent.</DC_StepFamily>
+  <DC_Letter_KinReleasedLabel>Colony released {PAWN}</DC_Letter_KinReleasedLabel>
+  <DC_Letter_KinReleasedBody>The colony let {PAWN} go. {KIN} and other kin felt that — it is not an execution.</DC_Letter_KinReleasedBody>
+  <DC_KinDownedBeside>{PAWN} saw {KIN} fall in the fight.</DC_KinDownedBeside>
+  <DC_FamilyLetter_TraditionLabel>Family skill: {SKILL}</DC_FamilyLetter_TraditionLabel>
+  <DC_FamilyLetter_TraditionBody>{MENTOR} passed the household {SKILL} on to {APPRENTICE}. The Legacy tab keeps the note.</DC_FamilyLetter_TraditionBody>
+  <DC_FamilyLetter_EmptyNestLabel>Empty nest: {PAWN}</DC_FamilyLetter_EmptyNestLabel>
+  <DC_FamilyLetter_EmptyNestBody>{CHILD} left the home map. {PAWN} has no children left there. The rooms are quieter. The Legacy tab keeps the note.</DC_FamilyLetter_EmptyNestBody>
 
 </LanguageData>

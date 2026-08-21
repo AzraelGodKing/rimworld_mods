@@ -1,6 +1,6 @@
 # Deep Colony — Batch D (post–Batch C)
 
-**Status:** shipped (`batch-d-v1`, family tree `family-tree-v1`, family join `family-join-v1`, family loyalty `family-loyalty-v1`, family beats `family-beats-v1`, family life `family-life-v1`). Do not reuse D01–D24 or E01–E05.  
+**Status:** shipped (`batch-d-v1`, family tree `family-tree-v1`, family join `family-join-v1`, family loyalty `family-loyalty-v1`, family beats `family-beats-v1`, family life `family-life-v1`, family echo `family-echo-v1`). Do not reuse D01–D24 or E01–E10.  
 **Mod:** [Deep Colony](../../Deep%20Colony/). Prior pools: [deep-colony-updates.md](deep-colony-updates.md) (A01–A20, B01–B22), [deep-colony-batch-c.md](deep-colony-batch-c.md) (C01–C24). **Do not reuse those IDs.**  
 **Lane rule:** colonist / colony-facing only. No furniture packs, raid timers, off-map politics, farm brand, or a second goodwill buffer.
 
@@ -110,6 +110,20 @@ Next family life-cycle beats. Same `enableFamilyJoin` toggle. Date Night still o
 | E03 | Tended by family | Generations | `TendUtility.DoTend`: colonist (or prisoner kin) tended by colonist kin (`KinWeight` > 0, not ex). Patient `DC_Thought_TendedByFamily`, doctor `DC_Thought_TendedFamily`. 1-day cooldown. No new medical job. |
 | E04 | Last of the line / line continues | Generations | Comp flags `sawColonyBloodKin` + `lastOfTheLine`. Situational `DC_Thought_LastOfTheLine` only after they have had living colony blood kin (parent/child/sibling/grand). Birth, join, or return that restores blood kin applies `DC_Thought_LineContinues` + letter. |
 | E05 | Step-family | Generations | On colonist–colonist marriage, living children of either spouse who do not already have the other as parent get `DC_Thought_StepFamily`. Distinct from D20 (parents/siblings of the couple). |
+
+---
+
+## E06–E10 (shipped `family-echo-v1`)
+
+The leftover family-life runners. Same `enableFamilyJoin` toggle. D19 still owns unwavering recruit; Date Night still owns romance schedules; C07 still owns child raid-witness.
+
+| ID | Idea | System | Notes |
+|----|------|--------|-------|
+| E06 | Prison visit | Generations | Kin walking up to a kin prisoner (adjacent, vanilla warden chat, or family-talk job) gives both a short mood. 1-day cooldown. Loyalty may still hold. |
+| E07 | Release kin | Trauma-adjacent | `GenGuest.PrisonerRelease`: colonist kin **or ex** get `DC_Thought_KinReleased` + letter. Inverse of D24 execute (no betrayal). |
+| E08 | Tradition teach | Mentoring | One-shot Legacy letter + thought when an apprentice hits perk gate 5/15/20, or is taught a tier-1 perk, in the stored family tradition skill (`familyTraditionSkillDefName`). |
+| E09 | Kin downed beside you | Trauma-adjacent | Adult colonist kin within 12 cells when family is downed in a fight. Not death, not C07 child witness. 1-day cooldown. |
+| E10 | Empty nest | Generations | Last colonist child leaves a player home map (alive, not kidnapped/prisoner). Staying parent gets `DC_Thought_EmptyNest` + Legacy letter. Inverse of D21 homecoming. |
 
 ---
 

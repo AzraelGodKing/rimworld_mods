@@ -373,6 +373,7 @@ namespace DeepColony
                 && apprentice.skills.GetSkill(teachable.skill).Level >= teachable.requiredLevel)
             {
                 apprenticeComp.UnlockPerkFree(teachable);
+                FamilyEchoUtility.NotifyTraditionTaught(mentor, apprentice, teachable);
                 Messages.Message(
                     "DC_PerkTaught".Translate(
                         mentor.LabelShort.Named("MENTOR"),

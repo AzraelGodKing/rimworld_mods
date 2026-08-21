@@ -54,6 +54,8 @@ namespace DeepColony
         {
             if (Patient == null || pawn == null) return;
 
+            FamilyEchoUtility.NotifyPrisonVisit(pawn, Patient);
+
             if (TraumaUtility.HasAnyTrauma(Patient))
             {
                 TraumaUtility.ApplyTherapy(pawn, Patient);

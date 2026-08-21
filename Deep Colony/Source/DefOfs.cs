@@ -59,6 +59,12 @@ namespace DeepColony
         public static ThoughtDef DC_Thought_TendedFamily;
         public static ThoughtDef DC_Thought_LineContinues;
         public static ThoughtDef DC_Thought_StepFamily;
+        public static ThoughtDef DC_Thought_FamilyPrisonVisit;
+        public static ThoughtDef DC_Thought_VisitedKinPrisoner;
+        public static ThoughtDef DC_Thought_KinReleased;
+        public static ThoughtDef DC_Thought_TraditionTaught;
+        public static ThoughtDef DC_Thought_KinDownedBeside;
+        public static ThoughtDef DC_Thought_EmptyNest;
 
         // ── Hediffs ───────────────────────────────────────────────────────────────
         public static HediffDef DC_Hediff_Elder;

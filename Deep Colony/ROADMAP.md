@@ -125,3 +125,8 @@ Spec: [deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md). Build stam
 - [x] **E03 Tended by family** — kin doctor tend gives both a short comfort thought (1-day cooldown)
 - [x] **E04 Last of the line** — last living colony blood kin gets a lasting thought; a new blood relative is “the line continues”
 - [x] **E05 Step-family** — children of a colonist marriage get a step-parent thought (`family-life-v1`)
+- [x] **E06 Prison visit** — family at a kin prisoner’s cell gives mood even if loyalty holds
+- [x] **E07 Release kin** — releasing kin/ex is the inverse of execution (relief, no betrayal)
+- [x] **E08 Tradition teach** — one-shot letter when the household skill is passed on at a perk gate
+- [x] **E09 Kin downed beside you** — adult sees family collapse in a fight (not death, not child raid-witness)
+- [x] **E10 Empty nest** — last child leaves the home map; staying parent gets a quiet-house thought (`family-echo-v1`)

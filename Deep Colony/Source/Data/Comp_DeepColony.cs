@@ -49,6 +49,18 @@ namespace DeepColony
         /// <summary>E04 — true while this colonist is the last blood kin in the colony.</summary>
         public bool lastOfTheLine;
 
+        /// <summary>E06 — last family prison-visit tick (-1 = never).</summary>
+        public int lastFamilyVisitTick = -1;
+
+        /// <summary>E09 — last kin-downed-beside-you tick (-1 = never).</summary>
+        public int lastKinDownedTick = -1;
+
+        /// <summary>E10 — last empty-nest thought tick (-1 = never).</summary>
+        public int lastEmptyNestTick = -1;
+
+        /// <summary>E08 — one-shot family-tradition teach letter.</summary>
+        public bool traditionTeachNoted;
+
         /// <summary>D18 — how many times this pawn got back together with another (keyed by thingIDNumber).</summary>
         public Dictionary<int, int> reconcileCountsByPawn = new Dictionary<int, int>();
 
@@ -287,10 +299,12 @@ namespace DeepColony
 
         public void NotifySkillLevelUp(SkillDef skill, int newLevel)
         {
+            var pawn = Pawn;
+            if (pawn != null)
+                FamilyEchoUtility.NotifyTraditionGate(pawn, skill, newLevel);
             if (!DeepColonySettings.Get.enablePerks) return;
             availablePerkPoints++;
             NoteUnspentPointsChanged();
-            var pawn = Pawn;
             if (pawn == null) return;
 
             Messages.Message(
@@ -732,6 +746,10 @@ namespace DeepColony
             Scribe_Values.Look(ref kinTakenTick, "kinTakenTick", -1);
             Scribe_Values.Look(ref sawColonyBloodKin, "sawColonyBloodKin", false);
             Scribe_Values.Look(ref lastOfTheLine, "lastOfTheLine", false);
+            Scribe_Values.Look(ref lastFamilyVisitTick, "lastFamilyVisitTick", -1);
+            Scribe_Values.Look(ref lastKinDownedTick, "lastKinDownedTick", -1);
+            Scribe_Values.Look(ref lastEmptyNestTick, "lastEmptyNestTick", -1);
+            Scribe_Values.Look(ref traditionTeachNoted, "traditionTeachNoted", false);
             Scribe_Collections.Look(ref reconcileCountsByPawn, "reconcileCountsByPawn", LookMode.Value, LookMode.Value);
             Scribe_References.Look(ref mentor, "mentor");
             Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");

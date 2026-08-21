@@ -152,6 +152,38 @@ namespace DeepColony
             Post(gc, title, body, now, grandparent);
         }
 
+        public static void NotifyTraditionTaught(Pawn teacher, Pawn apprentice, SkillDef skill)
+        {
+            if (!DeepColonySettings.Get.enableFamilyJoin) return;
+            if (apprentice == null || skill == null) return;
+            var gc = GameComp_DeepColony.Instance;
+            if (gc == null) return;
+            int now = Find.TickManager.TicksGame;
+            string teacherName = teacher?.LabelShort ?? apprentice.LabelShort;
+            string title = "DC_FamilyLetter_TraditionLabel".Translate(skill.LabelCap.Named("SKILL"));
+            string body = "DC_FamilyLetter_TraditionBody".Translate(
+                teacherName.Named("MENTOR"),
+                apprentice.LabelShort.Named("APPRENTICE"),
+                skill.LabelCap.Named("SKILL"));
+            Post(gc, title, body, now, apprentice);
+        }
+
+        public static void NotifyEmptyNest(Pawn parent, Pawn child)
+        {
+            if (!DeepColonySettings.Get.enableFamilyJoin) return;
+            if (parent == null || child == null) return;
+            var gc = GameComp_DeepColony.Instance;
+            if (gc == null) return;
+            int now = Find.TickManager.TicksGame;
+            if (gc.lastFamilyLetterTick >= 0 && now - gc.lastFamilyLetterTick < 2500)
+                return;
+            string title = "DC_FamilyLetter_EmptyNestLabel".Translate(parent.LabelShort.Named("PAWN"));
+            string body = "DC_FamilyLetter_EmptyNestBody".Translate(
+                parent.LabelShort.Named("PAWN"),
+                child.LabelShort.Named("CHILD"));
+            Post(gc, title, body, now, parent);
+        }
+
         public static void NotifyComingOfAge(Pawn pawn)
         {
             if (!DeepColonySettings.Get.enableInheritance) return;

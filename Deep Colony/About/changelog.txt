@@ -2,6 +2,7 @@
 
 [b]Added[/b]
 [list]
+[*] [b]Family echo[/b] — family at a kin prisoner’s cell still matters if loyalty holds. Releasing kin is not an execution. Passing on the household skill is a Legacy note. Seeing family fall in a fight hurts. The last child leaving home is an empty nest.
 [*] [b]Family life[/b] — grandparents welcome a grandchild. Kin taken (captured or kidnapped) hurts until they come back. Family tending wounds comforts both. Last of the bloodline in the colony is a weight; a new relative is the line continuing. Step-parents count.
 [*] [b]Family beats[/b] — in-laws welcome a marriage. Kin coming home after time away cheers the closest family. Kin (or an ex) dying outside the colony hurts. Breakups leave a wound. Executing family is a betrayal.
 [*] [b]Family join[/b] — kin on your map may join from a visit or defect from a raid. Spouse is the strongest pull; ex-lovers never join this way. Friendly family recruit does not anger their faction; enemies hold a grudge.
@@ -27,5 +28,5 @@
 [*] Isekai Rank / destiny traits stay unique; birth inheritance only for player-side babies.
 [/list]
 
-[i]Build stamp (Player.log): family-life-v1[/i]
+[i]Build stamp (Player.log): family-echo-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Deep%20Colony/CHANGELOG.md[/i]

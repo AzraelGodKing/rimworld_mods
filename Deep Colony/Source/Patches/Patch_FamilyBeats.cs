@@ -10,6 +10,7 @@ namespace DeepColony.Patches
         public static void Prefix(Pawn __instance)
         {
             FamilyBeatsUtility.MarkLeavingHomeMap(__instance);
+            FamilyEchoUtility.NotifyChildLeft(__instance);
         }
     }
 

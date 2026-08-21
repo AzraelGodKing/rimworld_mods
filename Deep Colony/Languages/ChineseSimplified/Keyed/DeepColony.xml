@@ -284,7 +284,7 @@
   <DC_FamilyTree_ClickTip>点击以选中并跳转到该角色。</DC_FamilyTree_ClickTip>
   <DC_Settings_FamilyJoin>亲族加入与复合</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>地图上的亲族加入 / 投诚</DC_Settings_EnableFamilyJoin>
-  <DC_Settings_EnableFamilyJoinTip>殖民者的亲族可能在来访时加入，或在袭击中投诚。配偶几率最高。前恋人不会借此加入（0%）。非敌对亲族招募不扣好感；敌对亲族会留下派系积怨。不屈的囚犯只有彼此都喜欢的家人才能打动。另外：姻亲欢迎、亲族归乡、亲族死去或被处决、分手的伤、孙子女出生、亲族被掳、家人照料、血脉仅存、以及继亲。</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_EnableFamilyJoinTip>殖民者的亲族可能在来访时加入，或在袭击中投诚。配偶几率最高。前恋人不会借此加入（0%）。非敌对亲族招募不扣好感；敌对亲族会留下派系积怨。不屈的囚犯只有彼此都喜欢的家人才能打动。另外：姻亲欢迎、亲族归乡、亲族死去或被处决、分手的伤、孙子女出生、亲族被掳、家人照料、血脉仅存、继亲、探监、释放亲族、家传技艺、亲族在战斗中倒下、以及空巢。</DC_Settings_EnableFamilyJoinTip>
   <DC_Settings_RaidDefect>袭击亲族投诚几率（配偶）：{0}%</DC_Settings_RaidDefect>
   <DC_Settings_VisitJoin>来访亲族加入几率（配偶）：{0}%</DC_Settings_VisitJoin>
   <DC_Settings_ExLoverReconcile>前恋人可能复合</DC_Settings_ExLoverReconcile>
@@ -324,5 +324,12 @@
   <DC_Letter_LineContinuesLabel>血脉延续</DC_Letter_LineContinuesLabel>
   <DC_Letter_LineContinuesBody>{PAWN} 在殖民地里又有了血亲。这个姓不会到此为止。</DC_Letter_LineContinuesBody>
   <DC_StepFamily>{A} 与 {B} 成婚。地图上的子女有了继父母。</DC_StepFamily>
+  <DC_Letter_KinReleasedLabel>殖民地释放了 {PAWN}</DC_Letter_KinReleasedLabel>
+  <DC_Letter_KinReleasedBody>殖民地放走了 {PAWN}。{KIN} 和其他亲族感受到了——这不是处决。</DC_Letter_KinReleasedBody>
+  <DC_KinDownedBeside>{PAWN} 看见 {KIN} 在战斗中倒下。</DC_KinDownedBeside>
+  <DC_FamilyLetter_TraditionLabel>家传技艺：{SKILL}</DC_FamilyLetter_TraditionLabel>
+  <DC_FamilyLetter_TraditionBody>{MENTOR} 把家里的 {SKILL} 传给了 {APPRENTICE}。传承页会记下这一笔。</DC_FamilyLetter_TraditionBody>
+  <DC_FamilyLetter_EmptyNestLabel>空巢：{PAWN}</DC_FamilyLetter_EmptyNestLabel>
+  <DC_FamilyLetter_EmptyNestBody>{CHILD} 离开了家园地图。{PAWN} 那里再没有孩子了。屋子更安静了。传承页会记下这一笔。</DC_FamilyLetter_EmptyNestBody>
 
 </LanguageData>

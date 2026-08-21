@@ -222,4 +222,34 @@
   <DC_Thought_StepFamily.stages_0.label>新继父母：{0}</DC_Thought_StepFamily.stages_0.label>
   <DC_Thought_StepFamily.stages_0.description>父母再婚。家里多了一位继父母。</DC_Thought_StepFamily.stages_0.description>
 
+  <DC_Thought_FamilyPrisonVisit.label>家人探视</DC_Thought_FamilyPrisonVisit.label>
+  <DC_Thought_FamilyPrisonVisit.description>家人来到牢房。忠诚也许仍在——探视仍然重要。</DC_Thought_FamilyPrisonVisit.description>
+  <DC_Thought_FamilyPrisonVisit.stages_0.label>被 {0} 探视</DC_Thought_FamilyPrisonVisit.stages_0.label>
+  <DC_Thought_FamilyPrisonVisit.stages_0.description>家人来到牢房。忠诚也许仍在——探视仍然重要。</DC_Thought_FamilyPrisonVisit.stages_0.description>
+
+  <DC_Thought_VisitedKinPrisoner.label>探视狱中亲族</DC_Thought_VisitedKinPrisoner.label>
+  <DC_Thought_VisitedKinPrisoner.description>他们走到了门后的家人身边。</DC_Thought_VisitedKinPrisoner.description>
+  <DC_Thought_VisitedKinPrisoner.stages_0.label>探视了 {0}</DC_Thought_VisitedKinPrisoner.stages_0.label>
+  <DC_Thought_VisitedKinPrisoner.stages_0.description>他们走到了门后的家人身边。</DC_Thought_VisitedKinPrisoner.stages_0.description>
+
+  <DC_Thought_KinReleased.label>亲族被释放</DC_Thought_KinReleased.label>
+  <DC_Thought_KinReleased.description>家人被放走，而不是处决。这是另一种记忆。</DC_Thought_KinReleased.description>
+  <DC_Thought_KinReleased.stages_0.label>殖民地释放了 {0}</DC_Thought_KinReleased.stages_0.label>
+  <DC_Thought_KinReleased.stages_0.description>家人被放走，而不是处决。这是另一种记忆。</DC_Thought_KinReleased.stages_0.description>
+
+  <DC_Thought_TraditionTaught.label>家传技艺传授</DC_Thought_TraditionTaught.label>
+  <DC_Thought_TraditionTaught.description>家里的手艺传下去了。这活儿现在有名字了。</DC_Thought_TraditionTaught.description>
+  <DC_Thought_TraditionTaught.stages_0.label>家传技艺延续</DC_Thought_TraditionTaught.stages_0.label>
+  <DC_Thought_TraditionTaught.stages_0.description>家里的手艺传下去了。这活儿现在有名字了。</DC_Thought_TraditionTaught.stages_0.description>
+
+  <DC_Thought_KinDownedBeside.label>亲族在身边倒下</DC_Thought_KinDownedBeside.label>
+  <DC_Thought_KinDownedBeside.description>家人在战斗中倒下。他们没死——但那一幕还在。</DC_Thought_KinDownedBeside.description>
+  <DC_Thought_KinDownedBeside.stages_0.label>看见 {0} 倒下</DC_Thought_KinDownedBeside.stages_0.label>
+  <DC_Thought_KinDownedBeside.stages_0.description>家人在战斗中倒下。他们没死——但那一幕还在。</DC_Thought_KinDownedBeside.stages_0.description>
+
+  <DC_Thought_EmptyNest.label>空巢</DC_Thought_EmptyNest.label>
+  <DC_Thought_EmptyNest.description>最后一个孩子离开了家园地图。屋子更安静了。</DC_Thought_EmptyNest.description>
+  <DC_Thought_EmptyNest.stages_0.label>孩子们走了</DC_Thought_EmptyNest.stages_0.label>
+  <DC_Thought_EmptyNest.stages_0.description>最后一个孩子离开了家园地图。屋子更安静了。</DC_Thought_EmptyNest.stages_0.description>
+
 </LanguageData>

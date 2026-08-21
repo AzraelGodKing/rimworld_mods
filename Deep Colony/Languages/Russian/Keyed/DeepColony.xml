@@ -284,7 +284,7 @@
   <DC_FamilyTree_ClickTip>Нажмите, чтобы выбрать и перейти к этому колонисту.</DC_FamilyTree_ClickTip>
   <DC_Settings_FamilyJoin>Семья: переход и примирение</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>Родня на карте может присоединиться / перебежать</DC_Settings_EnableFamilyJoin>
-  <DC_Settings_EnableFamilyJoinTip>Родня колонистов может присоединиться с визита или перебежать из рейда. Супруг(а) — высший шанс. Бывшие любовники этим путём не приходят (0%). Вербовка невраждебной родни не штрафует расположение; враждебная родня оставляет обиду фракции. Несгибаемых пленников может пробить только семья, которая нравится им взаимно. Также: свойственники, возвращение родни, смерть или казнь, рана расставания, рождение внука, похищение родни, уход семьи, последний в роду, сводная семья.</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_EnableFamilyJoinTip>Родня колонистов может присоединиться с визита или перебежать из рейда. Супруг(а) — высший шанс. Бывшие любовники этим путём не приходят (0%). Вербовка невраждебной родни не штрафует расположение; враждебная родня оставляет обиду фракции. Несгибаемых пленников может пробить только семья, которая нравится им взаимно. Также: свойственники, возвращение родни, смерть или казнь, рана расставания, рождение внука, похищение родни, уход семьи, последний в роду, сводная семья, визит в тюрьму, освобождение родни, семейное ремесло, падение родни в бою, пустое гнездо.</DC_Settings_EnableFamilyJoinTip>
   <DC_Settings_RaidDefect>Шанс перебежки родни в рейде (супруг): {0}%</DC_Settings_RaidDefect>
   <DC_Settings_VisitJoin>Шанс присоединения родни с визита (супруг): {0}%</DC_Settings_VisitJoin>
   <DC_Settings_ExLoverReconcile>Бывшие любовники могут сойтись снова</DC_Settings_ExLoverReconcile>
@@ -324,5 +324,12 @@
   <DC_Letter_LineContinuesLabel>Линия продолжается</DC_Letter_LineContinuesLabel>
   <DC_Letter_LineContinuesBody>У {PAWN} снова есть кровная родня в колонии. Имя здесь не кончается.</DC_Letter_LineContinuesBody>
   <DC_StepFamily>{A} и {B} поженились. Дети на карте получили отчима или мачеху.</DC_StepFamily>
+  <DC_Letter_KinReleasedLabel>Колония отпустила {PAWN}</DC_Letter_KinReleasedLabel>
+  <DC_Letter_KinReleasedBody>Колония отпустила {PAWN}. {KIN} и другая родня это почувствовали — это не казнь.</DC_Letter_KinReleasedBody>
+  <DC_KinDownedBeside>{PAWN} видел(а), как {KIN} упал(а) в бою.</DC_KinDownedBeside>
+  <DC_FamilyLetter_TraditionLabel>Семейный навык: {SKILL}</DC_FamilyLetter_TraditionLabel>
+  <DC_FamilyLetter_TraditionBody>{MENTOR} передал(а) домашний {SKILL} {APPRENTICE}. Вкладка Наследие сохраняет запись.</DC_FamilyLetter_TraditionBody>
+  <DC_FamilyLetter_EmptyNestLabel>Пустое гнездо: {PAWN}</DC_FamilyLetter_EmptyNestLabel>
+  <DC_FamilyLetter_EmptyNestBody>{CHILD} ушёл(ла) с домашней карты. У {PAWN} там больше нет детей. В комнатах тише. Вкладка Наследие сохраняет запись.</DC_FamilyLetter_EmptyNestBody>
 
 </LanguageData>

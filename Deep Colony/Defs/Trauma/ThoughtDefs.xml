@@ -663,6 +663,94 @@
     </stages>
   </ThoughtDef>
 
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FAMILY ECHO (E06–E10)
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef>
+    <defName>DC_Thought_FamilyPrisonVisit</defName>
+    <label>family visited</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>visited by {0}</label>
+        <description>Family came to the cell. Loyalty may still hold — the visit still mattered.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_VisitedKinPrisoner</defName>
+    <label>visited kin in prison</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>visited {0}</label>
+        <description>They walked up to family behind the door.</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinReleased</defName>
+    <label>kin released</label>
+    <durationDays>5</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>the colony released {0}</label>
+        <description>Family was let go instead of executed. That is a different kind of memory.</description>
+        <baseMoodEffect>5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TraditionTaught</defName>
+    <label>family tradition taught</label>
+    <durationDays>6</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>the family skill continues</label>
+        <description>The household skill was passed on. The work has a name now.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinDownedBeside</defName>
+    <label>kin downed beside you</label>
+    <durationDays>2</durationDays>
+    <stackLimit>2</stackLimit>
+    <stackedEffectMultiplier>0.75</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>saw {0} fall</label>
+        <description>Family went down in the fight. They are not dead — but the image stays.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_EmptyNest</defName>
+    <label>empty nest</label>
+    <durationDays>8</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>the children left</label>
+        <description>The last child left the home map. The rooms are quieter.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
   <ThoughtDef ParentName="DC_TraumaThoughtBase">
     <defName>DC_Thought_ToxicRelationship</defName>
     <label>toxic relationship</label>

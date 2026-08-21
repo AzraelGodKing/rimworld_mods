@@ -13,6 +13,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
   - **D19** (`family-loyalty-v1`) Unwavering prisoners can be reached **only by family**, and only if they like each other (mutual opinion). A successful talk sets them recruitable again so wardens can work.
   - **D20–D24** (`family-beats-v1`) More family beats on the same join toggle: in-law welcome on colonist marriage; kin homecoming after time away; kin/ex dying while not a colonist; breakup wound; executing kin/ex (betrayal trauma).
   - **E01–E05** (`family-life-v1`) Grandchild born (grandparents + Legacy note); kin taken / returned; tended by family; last of the line / the line continues; step-family on marriage.
+  - **E06–E10** (`family-echo-v1`) Prison visit; release kin (inverse of execute); family-tradition teach letter; kin downed beside you; empty nest.
 - **Batch D** (`batch-d-v1`) — leftovers, fixes, and the next identity layer. Spec: [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
   - **C11 leftovers** First harvest as a family + marriage letters on the Legacy tab.
   - **C15 leftovers** Right-click silver / gold / jade / a valuable gift as tribute (still `AddFactionDrift`).

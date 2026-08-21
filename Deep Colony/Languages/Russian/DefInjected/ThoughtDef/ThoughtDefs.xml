@@ -222,4 +222,34 @@
   <DC_Thought_StepFamily.stages_0.label>новый отчим / мачеха: {0}</DC_Thought_StepFamily.stages_0.label>
   <DC_Thought_StepFamily.stages_0.description>Родитель вступил в брак. В доме появился отчим или мачеха.</DC_Thought_StepFamily.stages_0.description>
 
+  <DC_Thought_FamilyPrisonVisit.label>семья навестила</DC_Thought_FamilyPrisonVisit.label>
+  <DC_Thought_FamilyPrisonVisit.description>Семья пришла в камеру. Верность может держаться — визит всё равно важен.</DC_Thought_FamilyPrisonVisit.description>
+  <DC_Thought_FamilyPrisonVisit.stages_0.label>навестил(а) {0}</DC_Thought_FamilyPrisonVisit.stages_0.label>
+  <DC_Thought_FamilyPrisonVisit.stages_0.description>Семья пришла в камеру. Верность может держаться — визит всё равно важен.</DC_Thought_FamilyPrisonVisit.stages_0.description>
+
+  <DC_Thought_VisitedKinPrisoner.label>навестил(а) родню в тюрьме</DC_Thought_VisitedKinPrisoner.label>
+  <DC_Thought_VisitedKinPrisoner.description>Они подошли к семье за дверью.</DC_Thought_VisitedKinPrisoner.description>
+  <DC_Thought_VisitedKinPrisoner.stages_0.label>навестил(а) {0}</DC_Thought_VisitedKinPrisoner.stages_0.label>
+  <DC_Thought_VisitedKinPrisoner.stages_0.description>Они подошли к семье за дверью.</DC_Thought_VisitedKinPrisoner.stages_0.description>
+
+  <DC_Thought_KinReleased.label>родню отпустили</DC_Thought_KinReleased.label>
+  <DC_Thought_KinReleased.description>Семью отпустили, а не казнили. Это другая память.</DC_Thought_KinReleased.description>
+  <DC_Thought_KinReleased.stages_0.label>колония отпустила {0}</DC_Thought_KinReleased.stages_0.label>
+  <DC_Thought_KinReleased.stages_0.description>Семью отпустили, а не казнили. Это другая память.</DC_Thought_KinReleased.stages_0.description>
+
+  <DC_Thought_TraditionTaught.label>семейное ремесло передано</DC_Thought_TraditionTaught.label>
+  <DC_Thought_TraditionTaught.description>Домашний навык передали дальше. У работы теперь есть имя.</DC_Thought_TraditionTaught.description>
+  <DC_Thought_TraditionTaught.stages_0.label>семейный навык продолжается</DC_Thought_TraditionTaught.stages_0.label>
+  <DC_Thought_TraditionTaught.stages_0.description>Домашний навык передали дальше. У работы теперь есть имя.</DC_Thought_TraditionTaught.stages_0.description>
+
+  <DC_Thought_KinDownedBeside.label>родня упала рядом</DC_Thought_KinDownedBeside.label>
+  <DC_Thought_KinDownedBeside.description>Семья упала в бою. Они не мертвы — но картина остаётся.</DC_Thought_KinDownedBeside.description>
+  <DC_Thought_KinDownedBeside.stages_0.label>видел(а), как упал(а) {0}</DC_Thought_KinDownedBeside.stages_0.label>
+  <DC_Thought_KinDownedBeside.stages_0.description>Семья упала в бою. Они не мертвы — но картина остаётся.</DC_Thought_KinDownedBeside.stages_0.description>
+
+  <DC_Thought_EmptyNest.label>пустое гнездо</DC_Thought_EmptyNest.label>
+  <DC_Thought_EmptyNest.description>Последний ребёнок ушёл с домашней карты. В комнатах тише.</DC_Thought_EmptyNest.description>
+  <DC_Thought_EmptyNest.stages_0.label>дети ушли</DC_Thought_EmptyNest.stages_0.label>
+  <DC_Thought_EmptyNest.stages_0.description>Последний ребёнок ушёл с домашней карты. В комнатах тише.</DC_Thought_EmptyNest.stages_0.description>
+
 </LanguageData>

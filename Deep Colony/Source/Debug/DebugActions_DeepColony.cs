@@ -657,5 +657,53 @@ namespace DeepColony
             var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_StepFamily);
             p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
         }
+
+        [DebugAction("Deep Colony", "Apply family prison-visit thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForcePrisonVisit(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_FamilyPrisonVisit == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_FamilyPrisonVisit);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply kin-released thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinReleased(Pawn p)
+        {
+            FamilyEchoUtility.NotifyReleased(p);
+        }
+
+        [DebugAction("Deep Colony", "Apply kin-downed-beside thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinDownedBeside(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_KinDownedBeside == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_KinDownedBeside);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply empty-nest thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceEmptyNest(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_EmptyNest == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_EmptyNest);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply tradition-taught thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceTraditionTaught(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_TraditionTaught == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_TraditionTaught);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
     }
 }

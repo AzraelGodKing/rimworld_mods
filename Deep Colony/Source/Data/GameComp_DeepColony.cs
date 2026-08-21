@@ -219,6 +219,7 @@ namespace DeepColony
             FamilyJoinUtility.GameTick();
             ExLoverReconcileUtility.GameTick();
             FamilyLifeUtility.GameTick();
+            FamilyEchoUtility.GameTick();
         }
 
         public void RegisterHeirloom(int thingId, string ownerName, string echoPerkDefName)
