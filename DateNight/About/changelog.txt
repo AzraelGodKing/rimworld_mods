@@ -2,16 +2,14 @@
 
 [b]Added[/b]
 [list]
-[*] [b]Date hours[/b] — teal Schedule slot; walk / table / hang out (mood + opinion, no bed).
-[*] Missed-date thought if a partner can't make it; schedule mismatch alert when lovers paint different hours.
-[*] Temporary double-bed claim for Lovin windows (off in settings).
-[*] Ideology / Biotech skip forced lovin and reroute to a date when appropriate.
-[*] Private time (self-lovin) for adults alone on Lovin hours (off in settings).
-[*] CN / RU language packs.
+[*] [b]Date activities[/b] — dates pick a real activity from the map (dinner, picnic, walk, stargazing, dancing, gift, recreation) instead of only hanging at a gather spot; shared couple+day seed so both partners match. Off in settings.
+[*] [b]Date quality[/b] — wonderful / nice / awkward outcomes from activity, beauty, weather, and a shared roll. Off in settings.
+[*] [b]Ruined date[/b] — draft, mental break, or active hostiles after a date starts leave a short negative mood.
+[*] [b]Post-date lovin spark[/b] — a finished date shortens the couple's lovin wait for about a day. Off in settings.
+[*] Schedule mismatch alert when lovers paint different Date / Lovin hours.
 [/list]
 
 [b]Fixed[/b]
 [list]
-[*] Lovin hours with no shared double fall back to normal sleep / medical rest.
-[*] Either partner in the bed may start lovin.
+[*] [b]Date hours crash[/b] — no longer throws when joy AI runs on a Date timetable slot (vanilla GetPriority only knows Joy / Sleep / etc.).
 [/list]
