@@ -325,21 +325,28 @@ namespace DateNight
         }
     }
 
+    /// <summary>
+    /// Vanilla GetPriority only handles Anything / Joy / Sleep / Meditate — any other
+    /// TimeAssignmentDef with allowJoy (including Date) throws NotImplementedException.
+    /// Must Prefix-skip the original; a Postfix never runs after that throw.
+    /// </summary>
     [HarmonyPatch(typeof(ThinkNode_Priority_GetJoy), nameof(ThinkNode_Priority_GetJoy.GetPriority))]
     public static class Patch_GetJoy_GetPriority
     {
-        public static void Postfix(Pawn pawn, ref float __result)
+        public static bool Prefix(Pawn pawn, ref float __result)
         {
             if (!DateNightUtility.IsDateSchedule(pawn))
             {
-                return;
+                return true;
             }
             if (DateNightUtility.ShouldSatisfyNeedsBeforeBed(pawn))
             {
-                return;
+                __result = 0f;
+                return false;
             }
 
             __result = 8f;
+            return false;
         }
     }
 
