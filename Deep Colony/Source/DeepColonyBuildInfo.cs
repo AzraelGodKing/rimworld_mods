@@ -7,7 +7,7 @@ namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "family-loyalty-v1";
+        public const string BuildStamp = "family-beats-v1";
 
         public static void LogStartup()
         {

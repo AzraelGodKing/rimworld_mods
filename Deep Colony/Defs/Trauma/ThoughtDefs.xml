@@ -473,8 +473,80 @@
   </ThoughtDef>
 
   <!-- ═══════════════════════════════════════════════════════════════════
-       TOXIC RELATIONSHIP (4th+ ex-lover reconciliation)
+       FAMILY BEATS (D20–D24) + TOXIC RELATIONSHIP
   ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef>
+    <defName>DC_Thought_InLawWelcome</defName>
+    <label>new in-law</label>
+    <durationDays>5</durationDays>
+    <stackLimit>3</stackLimit>
+    <stackedEffectMultiplier>0.75</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>new in-law: {0}</label>
+        <description>{0} married into the family. The colony got a little bigger.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinHomecoming</defName>
+    <label>kin homecoming</label>
+    <durationDays>4</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>home with {0}</label>
+        <description>Family is on the map again after time away.</description>
+        <baseMoodEffect>5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinDiedOtherSide</defName>
+    <label>kin died other side</label>
+    <durationDays>12</durationDays>
+    <stackLimit>3</stackLimit>
+    <stackedEffectMultiplier>0.75</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>{0} died on the other side</label>
+        <description>Family died while not part of this colony. The distance does not make it easier.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_BreakupWound</defName>
+    <label>breakup wound</label>
+    <durationDays>8</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>split from {0}</label>
+        <description>The relationship ended. The colony still has to live with both of them.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinExecuted</defName>
+    <label>kin executed</label>
+    <durationDays>15</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>the colony executed {0}</label>
+        <description>Someone they loved — or used to — was executed here. That does not wash off.</description>
+        <baseMoodEffect>-12</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
   <ThoughtDef ParentName="DC_TraumaThoughtBase">
     <defName>DC_Thought_ToxicRelationship</defName>
     <label>toxic relationship</label>

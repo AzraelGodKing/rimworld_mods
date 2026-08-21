@@ -1,6 +1,6 @@
 # Deep Colony — Batch D (post–Batch C)
 
-**Status:** shipped (`batch-d-v1`, family tree `family-tree-v1`, family join `family-join-v1`, family loyalty `family-loyalty-v1`). Do not reuse D01–D19.  
+**Status:** shipped (`batch-d-v1`, family tree `family-tree-v1`, family join `family-join-v1`, family loyalty `family-loyalty-v1`, family beats `family-beats-v1`). Do not reuse D01–D24.  
 **Mod:** [Deep Colony](../../Deep%20Colony/). Prior pools: [deep-colony-updates.md](deep-colony-updates.md) (A01–A20, B01–B22), [deep-colony-batch-c.md](deep-colony-batch-c.md) (C01–C24). **Do not reuse those IDs.**  
 **Lane rule:** colonist / colony-facing only. No furniture packs, raid timers, off-map politics, farm brand, or a second goodwill buffer.
 
@@ -82,6 +82,20 @@ Settings (default on): family join, raid defect chance, visit join chance, ex-lo
 | ID | Idea | System | Notes |
 |----|------|--------|-------|
 | D19 | Unwavering prisoners can be broken by family only | Generations | Kin (`KinWeight` > 0, so not ex-lovers) who like each other (mutual opinion, default 20 both ways) can talk the prisoner out of `guest.Recruitable == false`. Chance scales with relation (spouse highest). Then vanilla recruit is available. Non-family still cannot. |
+
+---
+
+## D20–D24 (shipped `family-beats-v1`)
+
+More colony-facing family beats. Same `enableFamilyJoin` toggle. Date Night still owns romance schedules.
+
+| ID | Idea | System | Notes |
+|----|------|--------|-------|
+| D20 | In-law welcome | Generations | On colonist–colonist marriage, living parent/sibling colonists on the map get `DC_Thought_InLawWelcome`. Dedupe with `thingIDNumber` order (marriage `AddDirectRelation` fires twice). |
+| D21 | Kin homecoming | Generations | `DeSpawn` on a player home map stamps `leftColonyMapTick`. `SpawnSetup` (not after load): if away ≥ 8h and cooldown 10 days, returning colonist + best kin (`KinWeight`) get `DC_Thought_KinHomecoming`. Distinct from D02 parent reunion (once, parent-only; first-time recruit spawn does not fire). |
+| D22 | Kin died other side | Trauma-adjacent | `Pawn.Kill`: victim is not a player colonist; colonist kin **or ex** on the map get `DC_Thought_KinDiedOtherSide` + letter. Skips if an execution is in progress. Does not replace opinion≥40 violent-loss trauma. |
+| D23 | Breakup wound | Trauma-adjacent | `AddDirectRelation` ExLover/ExSpouse: both get `DC_Thought_BreakupWound` if at least one is a colonist. Skip first 600 ticks (world gen). If toxic-relationship trauma is already present, renew it. Reconcile removes Ex then adds Lover, so it does not fire breakup. |
+| D24 | Execute family | Trauma | Harmony `ExecutionUtility.DoExecutionByCut(Pawn executioner, Pawn victim, …)`: Prefix/Postfix. Colonist kin/ex get `DC_Thought_KinExecuted` + `DC_Trauma_Betrayal`. Letter. ThreadStatic so the Kill path does not also fire D22. |
 
 ---
 

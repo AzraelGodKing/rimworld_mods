@@ -157,4 +157,29 @@
   <DC_Thought_ToxicRelationship.stages_2.label>учится на {0}</DC_Thought_ToxicRelationship.stages_2.label>
   <DC_Thought_ToxicRelationship.stages_2.description>Цикл тише, если они продолжают говорить об этом.</DC_Thought_ToxicRelationship.stages_2.description>
 
+  <DC_Thought_InLawWelcome.label>новый свойственник</DC_Thought_InLawWelcome.label>
+  <DC_Thought_InLawWelcome.description>{0} вошёл(а) в семью через брак. Колония стала чуть больше.</DC_Thought_InLawWelcome.description>
+  <DC_Thought_InLawWelcome.stages_0.label>новый свойственник: {0}</DC_Thought_InLawWelcome.stages_0.label>
+  <DC_Thought_InLawWelcome.stages_0.description>{0} вошёл(а) в семью через брак. Колония стала чуть больше.</DC_Thought_InLawWelcome.stages_0.description>
+
+  <DC_Thought_KinHomecoming.label>возвращение родни</DC_Thought_KinHomecoming.label>
+  <DC_Thought_KinHomecoming.description>Семья снова на карте после времени вдали.</DC_Thought_KinHomecoming.description>
+  <DC_Thought_KinHomecoming.stages_0.label>дома с {0}</DC_Thought_KinHomecoming.stages_0.label>
+  <DC_Thought_KinHomecoming.stages_0.description>Семья снова на карте после времени вдали.</DC_Thought_KinHomecoming.stages_0.description>
+
+  <DC_Thought_KinDiedOtherSide.label>родня погибла на той стороне</DC_Thought_KinDiedOtherSide.label>
+  <DC_Thought_KinDiedOtherSide.description>Семья умерла, не будучи частью этой колонии. Расстояние не облегчает.</DC_Thought_KinDiedOtherSide.description>
+  <DC_Thought_KinDiedOtherSide.stages_0.label>{0} погиб(ла) на той стороне</DC_Thought_KinDiedOtherSide.stages_0.label>
+  <DC_Thought_KinDiedOtherSide.stages_0.description>Семья умерла, не будучи частью этой колонии. Расстояние не облегчает.</DC_Thought_KinDiedOtherSide.stages_0.description>
+
+  <DC_Thought_BreakupWound.label>рана расставания</DC_Thought_BreakupWound.label>
+  <DC_Thought_BreakupWound.description>Отношения кончились. Колонии всё равно жить с ними обоими.</DC_Thought_BreakupWound.description>
+  <DC_Thought_BreakupWound.stages_0.label>расстались с {0}</DC_Thought_BreakupWound.stages_0.label>
+  <DC_Thought_BreakupWound.stages_0.description>Отношения кончились. Колонии всё равно жить с ними обоими.</DC_Thought_BreakupWound.stages_0.description>
+
+  <DC_Thought_KinExecuted.label>родню казнили</DC_Thought_KinExecuted.label>
+  <DC_Thought_KinExecuted.description>Кого-то, кого они любили — или любили раньше — казнили здесь. Это не смывается.</DC_Thought_KinExecuted.description>
+  <DC_Thought_KinExecuted.stages_0.label>колония казнила {0}</DC_Thought_KinExecuted.stages_0.label>
+  <DC_Thought_KinExecuted.stages_0.description>Кого-то, кого они любили — или любили раньше — казнили здесь. Это не смывается.</DC_Thought_KinExecuted.stages_0.description>
+
 </LanguageData>

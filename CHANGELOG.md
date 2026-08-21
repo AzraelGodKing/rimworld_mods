@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Deep Colony family beats** — in-law welcome, kin homecoming, kin dying on the other side, breakup wound, executing family (betrayal). Stamp `family-beats-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony family join / reconcile** — kin may join or defect on the home map (spouse highest, ex-lover 0% for that path; no goodwill hit unless hostile). Ex-lovers can get back together; the fourth reunion is a toxic relationship that therapy can ease. Unwavering prisoners can be broken only by family they like (and who like them). Stamp `family-loyalty-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony family tree** — Character inspect tab + Bio-card button; click kin to jump to that pawn. Stamp `family-tree-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony Feature Update (Batch D)** — first harvest / marriage / coming-of-age letters, gift tribute float menu, Ideology funerals, family meals, parent reunion, classroom extra, envoy-at-trade, surface isolation ease, quiet-room therapy, tab/inspect QoL, plus rivalry/deathbed/funeral/alert fixes. Stamp `batch-d-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)

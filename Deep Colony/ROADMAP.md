@@ -115,3 +115,8 @@ Spec: [deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md). Build stam
 - [x] **D17 Kin join / defect** — spouse highest chance, ex-lover 0% for this path; no goodwill hit unless hostile (grudge / `FamilyDefect`)
 - [x] **D18 Ex-lover reconcile** — get back together on the map; 4th time marks a toxic relationship that counseling can ease (`family-join-v1`)
 - [x] **D19 Family vs unwavering** — only kin the prisoner likes (and who like them back) can break unwavering loyalty (`family-loyalty-v1`)
+- [x] **D20 In-law welcome** — parents and siblings on the map get a short mood when colonists marry
+- [x] **D21 Kin homecoming** — returning after ≥8h away (10-day cooldown) cheers the returner and their closest kin; distinct from D02 parent reunion
+- [x] **D22 Kin died other side** — colonist kin/ex mourn a relative who dies while not a colonist (letter; skipped during execution)
+- [x] **D23 Breakup wound** — colonists gain a breakup thought when ExLover/ExSpouse is written; toxic trauma renews if already present
+- [x] **D24 Execute family** — executing kin/ex hits remaining colonist family with executed thought + betrayal trauma (`family-beats-v1`)

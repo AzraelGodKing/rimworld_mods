@@ -284,7 +284,7 @@
   <DC_FamilyTree_ClickTip>点击以选中并跳转到该角色。</DC_FamilyTree_ClickTip>
   <DC_Settings_FamilyJoin>亲族加入与复合</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>地图上的亲族加入 / 投诚</DC_Settings_EnableFamilyJoin>
-  <DC_Settings_EnableFamilyJoinTip>殖民者的亲族可能在来访时加入，或在袭击中投诚。配偶几率最高。前恋人不会借此加入（0%）。非敌对亲族招募不扣好感；敌对亲族会留下派系积怨。不屈的囚犯只有彼此都喜欢的家人才能打动。</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_EnableFamilyJoinTip>殖民者的亲族可能在来访时加入，或在袭击中投诚。配偶几率最高。前恋人不会借此加入（0%）。非敌对亲族招募不扣好感；敌对亲族会留下派系积怨。不屈的囚犯只有彼此都喜欢的家人才能打动。另外：姻亲欢迎、亲族归乡、亲族在另一边死去或被处决、以及分手的伤。</DC_Settings_EnableFamilyJoinTip>
   <DC_Settings_RaidDefect>袭击亲族投诚几率（配偶）：{0}%</DC_Settings_RaidDefect>
   <DC_Settings_VisitJoin>来访亲族加入几率（配偶）：{0}%</DC_Settings_VisitJoin>
   <DC_Settings_ExLoverReconcile>前恋人可能复合</DC_Settings_ExLoverReconcile>
@@ -308,5 +308,12 @@
   <DC_FamilyLoyalty_StillHolds>忠诚仍在…</DC_FamilyLoyalty_StillHolds>
   <DC_Letter_FamilyLoyaltyLabel>忠诚松动</DC_Letter_FamilyLoyaltyLabel>
   <DC_Letter_FamilyLoyaltyBody>{FAMILY} 打动了 {PAWN}。不屈忠诚已破——狱卒现在可以招募他们。</DC_Letter_FamilyLoyaltyBody>
+  <DC_InLawWelcome>{A} 与 {B} 成婚。地图上的家人欢迎了新姻亲。</DC_InLawWelcome>
+  <DC_KinHomecoming>{PAWN} 回家了。{KIN} 很高兴他们回来。</DC_KinHomecoming>
+  <DC_BreakupWound>{A} 与 {B} 分手了。伤口还新。</DC_BreakupWound>
+  <DC_Letter_KinDiedLabel>{PAWN} 死了</DC_Letter_KinDiedLabel>
+  <DC_Letter_KinDiedBody>{PAWN} 在不属于这座殖民地时死去。{KIN} 和地图上的其他亲族感受到了。</DC_Letter_KinDiedBody>
+  <DC_Letter_KinExecutedLabel>殖民地处决了 {PAWN}</DC_Letter_KinExecutedLabel>
+  <DC_Letter_KinExecutedBody>{WARDEN} 处决了 {PAWN}。{KIN} 和地图上的其他亲族不会忘记，是这座殖民地做的。</DC_Letter_KinExecutedBody>
 
 </LanguageData>

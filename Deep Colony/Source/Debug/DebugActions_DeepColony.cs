@@ -550,5 +550,60 @@ namespace DeepColony
             Log.Warning("[DeepColony] Could not break unwavering on " + p.LabelShort
                 + " (not an unwavering prisoner, or no family on the map).");
         }
+
+        [DebugAction("Deep Colony", "Force kin homecoming",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinHomecoming(Pawn p)
+        {
+            if (FamilyBeatsUtility.TryForceHomecoming(p))
+            {
+                Messages.Message("[DeepColony] Forced kin homecoming for " + p.LabelShort + ".",
+                    p, MessageTypeDefOf.PositiveEvent, false);
+                return;
+            }
+            Log.Warning("[DeepColony] Could not force homecoming for " + p.LabelShort
+                + " (need kin on this player home map).");
+        }
+
+        [DebugAction("Deep Colony", "Apply in-law welcome thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceInLawWelcome(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_InLawWelcome == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_InLawWelcome);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply breakup wound thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceBreakupWound(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_BreakupWound == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_BreakupWound);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply kin-died-other-side thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinDiedOtherSide(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_KinDiedOtherSide == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_KinDiedOtherSide);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply kin-executed thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinExecuted(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_KinExecuted == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_KinExecuted);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
     }
 }

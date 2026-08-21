@@ -31,6 +31,12 @@ namespace DeepColony
         public bool parentReunionGranted;
         public bool familyJoinRolled;
 
+        /// <summary>D21 — last tick this colonist despawned from a player home map (-1 = never).</summary>
+        public int leftColonyMapTick = -1;
+
+        /// <summary>D21 — last kin-homecoming thought tick (-1 = never).</summary>
+        public int lastHomecomingTick = -1;
+
         /// <summary>D18 — how many times this pawn got back together with another (keyed by thingIDNumber).</summary>
         public Dictionary<int, int> reconcileCountsByPawn = new Dictionary<int, int>();
 
@@ -708,6 +714,8 @@ namespace DeepColony
             Scribe_Values.Look(ref lastFamilyMealTick, "lastFamilyMealTick", -1);
             Scribe_Values.Look(ref parentReunionGranted, "parentReunionGranted", false);
             Scribe_Values.Look(ref familyJoinRolled, "familyJoinRolled", false);
+            Scribe_Values.Look(ref leftColonyMapTick, "leftColonyMapTick", -1);
+            Scribe_Values.Look(ref lastHomecomingTick, "lastHomecomingTick", -1);
             Scribe_Collections.Look(ref reconcileCountsByPawn, "reconcileCountsByPawn", LookMode.Value, LookMode.Value);
             Scribe_References.Look(ref mentor, "mentor");
             Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");

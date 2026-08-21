@@ -284,7 +284,7 @@
   <DC_FamilyTree_ClickTip>Click to select and jump to this pawn.</DC_FamilyTree_ClickTip>
   <DC_Settings_FamilyJoin>Family join &amp; reconcile</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>Kin join / defect on the map</DC_Settings_EnableFamilyJoin>
-  <DC_Settings_EnableFamilyJoinTip>Family of colonists may join from visits, or defect from raids. Spouse is the highest chance. Ex-lovers never join this way (0%). Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge. Unwavering prisoners can be reached by family they like (both ways).</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_EnableFamilyJoinTip>Family of colonists may join from visits, or defect from raids. Spouse is the highest chance. Ex-lovers never join this way (0%). Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge. Unwavering prisoners can be reached by family they like (both ways). Also: in-law welcome, kin homecoming, kin dying or executed on the other side, and breakup wounds.</DC_Settings_EnableFamilyJoinTip>
   <DC_Settings_RaidDefect>Raid kin defect chance (spouse): {0}%</DC_Settings_RaidDefect>
   <DC_Settings_VisitJoin>Visit kin join chance (spouse): {0}%</DC_Settings_VisitJoin>
   <DC_Settings_ExLoverReconcile>Ex-lovers may get back together</DC_Settings_ExLoverReconcile>
@@ -308,5 +308,12 @@
   <DC_FamilyLoyalty_StillHolds>Loyalty holds…</DC_FamilyLoyalty_StillHolds>
   <DC_Letter_FamilyLoyaltyLabel>Loyalty cracked</DC_Letter_FamilyLoyaltyLabel>
   <DC_Letter_FamilyLoyaltyBody>{FAMILY} reached {PAWN}. Unwavering loyalty broke — wardens can recruit them now.</DC_Letter_FamilyLoyaltyBody>
+  <DC_InLawWelcome>{A} and {B} married. Family on the map welcomed the new in-law.</DC_InLawWelcome>
+  <DC_KinHomecoming>{PAWN} is home. {KIN} is glad they are back.</DC_KinHomecoming>
+  <DC_BreakupWound>{A} and {B} split. The wound is still fresh.</DC_BreakupWound>
+  <DC_Letter_KinDiedLabel>{PAWN} died</DC_Letter_KinDiedLabel>
+  <DC_Letter_KinDiedBody>{PAWN} died while not part of this colony. {KIN} and other kin on the map felt it.</DC_Letter_KinDiedBody>
+  <DC_Letter_KinExecutedLabel>Colony executed {PAWN}</DC_Letter_KinExecutedLabel>
+  <DC_Letter_KinExecutedBody>{WARDEN} executed {PAWN}. {KIN} and other kin on the map will not forget that the colony did this.</DC_Letter_KinExecutedBody>
 
 </LanguageData>

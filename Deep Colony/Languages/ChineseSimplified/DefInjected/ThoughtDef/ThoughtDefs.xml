@@ -157,4 +157,29 @@
   <DC_Thought_ToxicRelationship.stages_2.label>从 {0} 中学习</DC_Thought_ToxicRelationship.stages_2.label>
   <DC_Thought_ToxicRelationship.stages_2.description>这个循环安静了些，只要他们继续谈开。</DC_Thought_ToxicRelationship.stages_2.description>
 
+  <DC_Thought_InLawWelcome.label>新姻亲</DC_Thought_InLawWelcome.label>
+  <DC_Thought_InLawWelcome.description>{0} 嫁入了这个家。殖民地又大了一点。</DC_Thought_InLawWelcome.description>
+  <DC_Thought_InLawWelcome.stages_0.label>新姻亲：{0}</DC_Thought_InLawWelcome.stages_0.label>
+  <DC_Thought_InLawWelcome.stages_0.description>{0} 嫁入了这个家。殖民地又大了一点。</DC_Thought_InLawWelcome.stages_0.description>
+
+  <DC_Thought_KinHomecoming.label>亲族归乡</DC_Thought_KinHomecoming.label>
+  <DC_Thought_KinHomecoming.description>离家一段时间后，家人又在地图上了。</DC_Thought_KinHomecoming.description>
+  <DC_Thought_KinHomecoming.stages_0.label>与 {0} 同在</DC_Thought_KinHomecoming.stages_0.label>
+  <DC_Thought_KinHomecoming.stages_0.description>离家一段时间后，家人又在地图上了。</DC_Thought_KinHomecoming.stages_0.description>
+
+  <DC_Thought_KinDiedOtherSide.label>亲族死在另一边</DC_Thought_KinDiedOtherSide.label>
+  <DC_Thought_KinDiedOtherSide.description>家人在不属于这座殖民地时死去。距离并不能让它轻松。</DC_Thought_KinDiedOtherSide.description>
+  <DC_Thought_KinDiedOtherSide.stages_0.label>{0} 死在另一边</DC_Thought_KinDiedOtherSide.stages_0.label>
+  <DC_Thought_KinDiedOtherSide.stages_0.description>家人在不属于这座殖民地时死去。距离并不能让它轻松。</DC_Thought_KinDiedOtherSide.stages_0.description>
+
+  <DC_Thought_BreakupWound.label>分手的伤</DC_Thought_BreakupWound.label>
+  <DC_Thought_BreakupWound.description>这段关系结束了。殖民地还得和他们两人一起过。</DC_Thought_BreakupWound.description>
+  <DC_Thought_BreakupWound.stages_0.label>与 {0} 分手</DC_Thought_BreakupWound.stages_0.label>
+  <DC_Thought_BreakupWound.stages_0.description>这段关系结束了。殖民地还得和他们两人一起过。</DC_Thought_BreakupWound.stages_0.description>
+
+  <DC_Thought_KinExecuted.label>亲族被处决</DC_Thought_KinExecuted.label>
+  <DC_Thought_KinExecuted.description>他们爱过——或曾经爱过——的人在这里被处决。那洗不掉。</DC_Thought_KinExecuted.description>
+  <DC_Thought_KinExecuted.stages_0.label>殖民地处决了 {0}</DC_Thought_KinExecuted.stages_0.label>
+  <DC_Thought_KinExecuted.stages_0.description>他们爱过——或曾经爱过——的人在这里被处决。那洗不掉。</DC_Thought_KinExecuted.stages_0.description>
+
 </LanguageData>

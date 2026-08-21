@@ -11,6 +11,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
   - **D17** Kin of colonists on the player home map may join from visits or defect from raids. Spouse is the highest chance; fiancé / parent / child / lover / sibling / grandparent follow. **Ex-lovers do not join this way (0%)**. Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge (`FactionRepReason.FamilyDefect`).
   - **D18** Ex-lovers and ex-spouses on the same map may get back together. More than three reunions marks a **toxic relationship** that counseling / therapy can ease. Date Night still owns romance schedules.
   - **D19** (`family-loyalty-v1`) Unwavering prisoners can be reached **only by family**, and only if they like each other (mutual opinion). A successful talk sets them recruitable again so wardens can work.
+  - **D20–D24** (`family-beats-v1`) More family beats on the same join toggle: in-law welcome on colonist marriage; kin homecoming after time away; kin/ex dying while not a colonist; breakup wound; executing kin/ex (betrayal trauma).
 - **Batch D** (`batch-d-v1`) — leftovers, fixes, and the next identity layer. Spec: [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
   - **C11 leftovers** First harvest as a family + marriage letters on the Legacy tab.
   - **C15 leftovers** Right-click silver / gold / jade / a valuable gift as tribute (still `AddFactionDrift`).
