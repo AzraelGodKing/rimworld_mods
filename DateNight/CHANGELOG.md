@@ -6,6 +6,9 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
+### Fixed
+- **Date hours crash** — vanilla `ThinkNode_Priority_GetJoy.GetPriority` throws `NotImplementedException` for any timetable slot other than Anything/Joy/Sleep/Meditate when `allowJoy` is true (including Date). Date Night now Prefix-skips that method on Date hours instead of Postfixing after it blows up.
+
 ### Added
 - **Date activities** — dates resolve a real activity from what's available on the map instead of always standing at a gather spot: **dinner** (fetch a meal, eat by a table), **picnic** (meal at a pretty outdoor cell, fair weather), **walk** (amble between scenic waypoints, initiator leads), **stargazing** (lie face-up outdoors at night), **dancing** (spin at a gather spot), **gift** (initiator fetches beer / chocolate / ambrosia / psychite tea / insect jelly and hands it over — receiver gets a +6 mood / +10 opinion thought), **recreation** (hang near a joy building, double joy trickle), and the classic **hangout** fallback. Both partners resolve the same activity from a shared couple+day seed. All dates trickle a little joy (Social; Meditative for stargazing). Off in settings (`Date activities`).
 - **Date quality** — outcomes vary with the activity, venue beauty, weather, and a shared seeded roll: **wonderful date** (+8 mood / +12 opinion), the usual nice date, or **awkward date** (+1 / +1). Off in settings (flat nice-date thought).
