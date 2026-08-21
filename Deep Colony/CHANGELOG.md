@@ -7,6 +7,9 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 ## [Unreleased]
 
 ### Added
+- **Family join / reconcile** (`family-join-v1`) — spec D17/D18 in [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
+  - **D17** Kin of colonists on the player home map may join from visits or defect from raids. Spouse is the highest chance; fiancé / parent / child / lover / sibling / grandparent follow. **Ex-lovers do not join this way (0%)**. Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge (`FactionRepReason.FamilyDefect`).
+  - **D18** Ex-lovers and ex-spouses on the same map may get back together. More than three reunions marks a **toxic relationship** that counseling / therapy can ease. Date Night still owns romance schedules.
 - **Batch D** (`batch-d-v1`) — leftovers, fixes, and the next identity layer. Spec: [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
   - **C11 leftovers** First harvest as a family + marriage letters on the Legacy tab.
   - **C15 leftovers** Right-click silver / gold / jade / a valuable gift as tribute (still `AddFactionDrift`).

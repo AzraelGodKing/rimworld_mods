@@ -21,7 +21,7 @@ namespace DeepColony
             var settings = Settings;
             if (settings == null) return;
 
-            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 1680f);
+            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 1960f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
 
             var listing = new Listing_Standard();
@@ -103,6 +103,22 @@ namespace DeepColony
                 "DC_Settings_EnvoyVisitsTip".Translate());
             listing.CheckboxLabeled("DC_Settings_ApologyTribute".Translate(), ref settings.enableApologyTribute,
                 "DC_Settings_ApologyTributeTip".Translate());
+
+            listing.Gap(8f);
+            Text.Font = GameFont.Medium;
+            listing.Label("DC_Settings_FamilyJoin".Translate());
+            Text.Font = GameFont.Small;
+            listing.Gap(4f);
+            listing.CheckboxLabeled("DC_Settings_EnableFamilyJoin".Translate(), ref settings.enableFamilyJoin,
+                "DC_Settings_EnableFamilyJoinTip".Translate());
+            listing.Label("DC_Settings_RaidDefect".Translate((int)(settings.familyRaidDefectChance * 100f)));
+            settings.familyRaidDefectChance = listing.Slider(settings.familyRaidDefectChance, 0f, 1f);
+            listing.Label("DC_Settings_VisitJoin".Translate((int)(settings.familyVisitJoinChance * 100f)));
+            settings.familyVisitJoinChance = listing.Slider(settings.familyVisitJoinChance, 0f, 1f);
+            listing.CheckboxLabeled("DC_Settings_ExLoverReconcile".Translate(), ref settings.enableExLoverReconcile,
+                "DC_Settings_ExLoverReconcileTip".Translate());
+            listing.Label("DC_Settings_ReconcileMtb".Translate(settings.exLoverReconcileMtbDays.ToString("F0")));
+            settings.exLoverReconcileMtbDays = listing.Slider(settings.exLoverReconcileMtbDays, 2f, 20f);
 
             listing.Gap(10f);
             listing.GapLine();

@@ -148,4 +148,13 @@
   <DC_Thought_SpouseRemembrance.stages_0.label>怀念伴侣</DC_Thought_SpouseRemembrance.stages_0.label>
   <DC_Thought_SpouseRemembrance.stages_0.description>葬礼或纪念日对失去的爱人更沉。</DC_Thought_SpouseRemembrance.stages_0.description>
 
+  <DC_Thought_ToxicRelationship.label>有毒关系</DC_Thought_ToxicRelationship.label>
+  <DC_Thought_ToxicRelationship.description>一次次复合把爱变成了伤口。疏导仍能帮忙。</DC_Thought_ToxicRelationship.description>
+  <DC_Thought_ToxicRelationship.stages_0.label>与 {0} 的有毒关系</DC_Thought_ToxicRelationship.stages_0.label>
+  <DC_Thought_ToxicRelationship.stages_0.description>他们不断回到彼此身边，也不断受伤。治疗也许能帮忙。</DC_Thought_ToxicRelationship.stages_0.description>
+  <DC_Thought_ToxicRelationship.stages_1.label>与 {0} 缠在一起</DC_Thought_ToxicRelationship.stages_1.label>
+  <DC_Thought_ToxicRelationship.stages_1.description>分分合合正在把他们磨垮。疏导仍能缓和。</DC_Thought_ToxicRelationship.stages_1.description>
+  <DC_Thought_ToxicRelationship.stages_2.label>从 {0} 中学习</DC_Thought_ToxicRelationship.stages_2.label>
+  <DC_Thought_ToxicRelationship.stages_2.description>这个循环安静了些，只要他们继续谈开。</DC_Thought_ToxicRelationship.stages_2.description>
+
 </LanguageData>

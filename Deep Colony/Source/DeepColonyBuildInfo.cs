@@ -7,7 +7,7 @@ namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "family-tree-v1";
+        public const string BuildStamp = "family-join-v1";
 
         public static void LogStartup()
         {

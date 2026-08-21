@@ -216,6 +216,8 @@ namespace DeepColony
             TickElders();
             if (DeepColonySettings.Get.enableHeirlooms)
                 TickHeirlooms();
+            FamilyJoinUtility.GameTick();
+            ExLoverReconcileUtility.GameTick();
         }
 
         public void RegisterHeirloom(int thingId, string ownerName, string echoPerkDefName)

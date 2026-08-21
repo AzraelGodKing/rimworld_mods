@@ -472,4 +472,30 @@
     </stages>
   </ThoughtDef>
 
+  <!-- ═══════════════════════════════════════════════════════════════════
+       TOXIC RELATIONSHIP (4th+ ex-lover reconciliation)
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_ToxicRelationship</defName>
+    <label>toxic relationship</label>
+    <durationDays>40</durationDays>
+    <stages>
+      <li>
+        <label>toxic with {0}</label>
+        <description>They keep coming back to each other, and it keeps hurting. Therapy might help.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+      <li>
+        <label>tangled with {0}</label>
+        <description>The on-again pattern is wearing them down. Counseling can still ease it.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+      <li>
+        <label>learning from {0}</label>
+        <description>The cycle is quieter now, if they keep talking it through.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

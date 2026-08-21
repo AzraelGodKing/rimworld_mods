@@ -28,6 +28,7 @@ namespace DeepColony
         public static TraumaDef DC_Trauma_Toxic;
         public static TraumaDef DC_Trauma_Insect;
         public static TraumaDef DC_Trauma_Betrayal;
+        public static TraumaDef DC_Trauma_ToxicRelationship;
         [MayRequire("Ludeon.RimWorld.Anomaly")]
         public static TraumaDef DC_Trauma_Horror;
         [MayRequire("Ludeon.RimWorld.Odyssey")]

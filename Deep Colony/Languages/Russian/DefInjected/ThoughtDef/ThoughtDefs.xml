@@ -148,4 +148,13 @@
   <DC_Thought_SpouseRemembrance.stages_0.label>поминая супруга</DC_Thought_SpouseRemembrance.stages_0.label>
   <DC_Thought_SpouseRemembrance.stages_0.description>Похороны или день памяти тяжелее для потерянной любви.</DC_Thought_SpouseRemembrance.stages_0.description>
 
+  <DC_Thought_ToxicRelationship.label>токсичные отношения</DC_Thought_ToxicRelationship.label>
+  <DC_Thought_ToxicRelationship.description>Сходиться снова и снова превратило любовь в рану. Консультации всё ещё могут помочь.</DC_Thought_ToxicRelationship.description>
+  <DC_Thought_ToxicRelationship.stages_0.label>токсично с {0}</DC_Thought_ToxicRelationship.stages_0.label>
+  <DC_Thought_ToxicRelationship.stages_0.description>Они снова и снова возвращаются друг к другу — и снова ранят. Терапия может помочь.</DC_Thought_ToxicRelationship.stages_0.description>
+  <DC_Thought_ToxicRelationship.stages_1.label>связан(а) с {0}</DC_Thought_ToxicRelationship.stages_1.label>
+  <DC_Thought_ToxicRelationship.stages_1.description>Цикл «сошлись — расстались» их изматывает. Консультации всё ещё смягчают.</DC_Thought_ToxicRelationship.stages_1.description>
+  <DC_Thought_ToxicRelationship.stages_2.label>учится на {0}</DC_Thought_ToxicRelationship.stages_2.label>
+  <DC_Thought_ToxicRelationship.stages_2.description>Цикл тише, если они продолжают говорить об этом.</DC_Thought_ToxicRelationship.stages_2.description>
+
 </LanguageData>

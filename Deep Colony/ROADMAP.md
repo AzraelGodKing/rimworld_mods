@@ -112,3 +112,5 @@ Spec: [deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md). Build stam
 - [x] **Identity** — family meal, parent reunion, coming of age, classroom extra, envoy-at-trade, surface isolation ease, quiet-room therapy, spouse remembrance
 - [x] **Tabs / inspect** — Legacy trauma + remembrance, Reputation ally/hostile filter, Perks archetype column, inspect extras, prisoner-counsel float menu, Strata gas/firestorm reasons
 - [x] **D16 Family tree** — Character inspect tab + Bio-card button; click a relative to select and jump to that pawn
+- [x] **D17 Kin join / defect** — spouse highest chance, ex-lover 0% for this path; no goodwill hit unless hostile (grudge / `FamilyDefect`)
+- [x] **D18 Ex-lover reconcile** — get back together on the map; 4th time marks a toxic relationship that counseling can ease (`family-join-v1`)

@@ -100,4 +100,13 @@
     <triggerMessage>was isolated far from home</triggerMessage>
   </DeepColony.TraumaDef>
 
+  <DeepColony.TraumaDef>
+    <defName>DC_Trauma_ToxicRelationship</defName>
+    <label>toxic relationship</label>
+    <description>Getting back together again and again has turned love into a wound. Counseling can still help.</description>
+    <thoughtDef>DC_Thought_ToxicRelationship</thoughtDef>
+    <therapyHealingPerSession>70000</therapyHealingPerSession>
+    <triggerMessage>is stuck in a toxic relationship</triggerMessage>
+  </DeepColony.TraumaDef>
+
 </Defs>

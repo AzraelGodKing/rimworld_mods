@@ -29,6 +29,10 @@ namespace DeepColony
         public int isolationSinceTick = -1;
         public int lastFamilyMealTick = -1;
         public bool parentReunionGranted;
+        public bool familyJoinRolled;
+
+        /// <summary>D18 — how many times this pawn got back together with another (keyed by thingIDNumber).</summary>
+        public Dictionary<int, int> reconcileCountsByPawn = new Dictionary<int, int>();
 
         public Pawn mentor;
         public string mentoredSkillDefName;
@@ -554,6 +558,8 @@ namespace DeepColony
                 parts.Add("DC_InspectTrauma".Translate());
                 string types = TraumaTypesInspect();
                 if (!types.NullOrEmpty()) parts.Add(types);
+                if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_ToxicRelationship))
+                    parts.Add("DC_InspectToxicRelationship".Translate());
                 string history = CounselingHistoryInspect();
                 if (!history.NullOrEmpty()) parts.Add(history);
             }
@@ -701,6 +707,8 @@ namespace DeepColony
             Scribe_Values.Look(ref isolationSinceTick, "isolationSinceTick", -1);
             Scribe_Values.Look(ref lastFamilyMealTick, "lastFamilyMealTick", -1);
             Scribe_Values.Look(ref parentReunionGranted, "parentReunionGranted", false);
+            Scribe_Values.Look(ref familyJoinRolled, "familyJoinRolled", false);
+            Scribe_Collections.Look(ref reconcileCountsByPawn, "reconcileCountsByPawn", LookMode.Value, LookMode.Value);
             Scribe_References.Look(ref mentor, "mentor");
             Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");
             Scribe_Values.Look(ref perkBeingTaughtDefName, "perkBeingTaughtDefName");
@@ -722,6 +730,7 @@ namespace DeepColony
             if (teacherLineage == null) teacherLineage = new List<string>();
             if (peakSkillLevels == null) peakSkillLevels = new Dictionary<string, int>();
             if (counselCountsByPawn == null) counselCountsByPawn = new Dictionary<int, int>();
+            if (reconcileCountsByPawn == null) reconcileCountsByPawn = new Dictionary<int, int>();
             if (recoveredTraumaCounts == null) recoveredTraumaCounts = new Dictionary<string, int>();
             if (trackedTraumaDefNames == null) trackedTraumaDefNames = new List<string>();
             if (grudgeFactionIds == null) grudgeFactionIds = new List<int>();

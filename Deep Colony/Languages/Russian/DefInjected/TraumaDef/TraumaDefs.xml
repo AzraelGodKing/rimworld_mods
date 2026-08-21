@@ -34,5 +34,8 @@
   <DC_Trauma_Isolation.label>травма изоляции</DC_Trauma_Isolation.label>
   <DC_Trauma_Isolation.description>Крушение гравкорабля или долгое одиночество вне мира изнашивают разум.</DC_Trauma_Isolation.description>
   <DC_Trauma_Isolation.triggerMessage>был(а) изолирован(а) вдали от дома</DC_Trauma_Isolation.triggerMessage>
+  <DC_Trauma_ToxicRelationship.label>токсичные отношения</DC_Trauma_ToxicRelationship.label>
+  <DC_Trauma_ToxicRelationship.description>Сходиться снова и снова превратило любовь в рану. Консультации всё ещё могут помочь.</DC_Trauma_ToxicRelationship.description>
+  <DC_Trauma_ToxicRelationship.triggerMessage>застрял(а) в токсичных отношениях</DC_Trauma_ToxicRelationship.triggerMessage>
 
 </LanguageData>

@@ -34,5 +34,8 @@
   <DC_Trauma_Isolation.label>隔绝创伤</DC_Trauma_Isolation.label>
   <DC_Trauma_Isolation.description>重力飞船失事或长期离世独处磨蚀心智。</DC_Trauma_Isolation.description>
   <DC_Trauma_Isolation.triggerMessage>在远离家园处陷入隔绝</DC_Trauma_Isolation.triggerMessage>
+  <DC_Trauma_ToxicRelationship.label>有毒关系</DC_Trauma_ToxicRelationship.label>
+  <DC_Trauma_ToxicRelationship.description>一次次复合把爱变成了伤口。疏导仍能帮忙。</DC_Trauma_ToxicRelationship.description>
+  <DC_Trauma_ToxicRelationship.triggerMessage>陷在有毒关系里</DC_Trauma_ToxicRelationship.triggerMessage>
 
 </LanguageData>

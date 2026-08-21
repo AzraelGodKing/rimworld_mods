@@ -282,5 +282,23 @@
   <DC_FamilyTree_Dead>(мёртв)</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>не на карте</DC_FamilyTree_Away>
   <DC_FamilyTree_ClickTip>Нажмите, чтобы выбрать и перейти к этому колонисту.</DC_FamilyTree_ClickTip>
+  <DC_Settings_FamilyJoin>Семья: переход и примирение</DC_Settings_FamilyJoin>
+  <DC_Settings_EnableFamilyJoin>Родня на карте может присоединиться / перебежать</DC_Settings_EnableFamilyJoin>
+  <DC_Settings_EnableFamilyJoinTip>Родня колонистов может присоединиться с визита или перебежать из рейда. Супруг(а) — высший шанс. Бывшие любовники этим путём не приходят (0%). Вербовка невраждебной родни не штрафует расположение; враждебная родня оставляет обиду фракции.</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_RaidDefect>Шанс перебежки родни в рейде (супруг): {0}%</DC_Settings_RaidDefect>
+  <DC_Settings_VisitJoin>Шанс присоединения родни с визита (супруг): {0}%</DC_Settings_VisitJoin>
+  <DC_Settings_ExLoverReconcile>Бывшие любовники могут сойтись снова</DC_Settings_ExLoverReconcile>
+  <DC_Settings_ExLoverReconcileTip>Бывшие любовники и бывшие супруги на одной карте могут снова стать парой. Четвёртое воссоединение помечает токсичные отношения, которые можно смягчить консультациями. Date Night по-прежнему владеет расписанием романтики.</DC_Settings_ExLoverReconcileTip>
+  <DC_Settings_ReconcileMtb>MTB примирения бывших (дней): {0}</DC_Settings_ReconcileMtb>
+  <DC_RepReason_FamilyDefect>Родня перебежала</DC_RepReason_FamilyDefect>
+  <DC_Letter_FamilyJoinLabel>{PAWN} присоединился(ась) к колонии</DC_Letter_FamilyJoinLabel>
+  <DC_Letter_FamilyJoinBody>{PAWN} покинул(а) {FACTION}, чтобы остаться с семьёй. Поскольку они не были в войне с вами, фракция не сочла это обидой.</DC_Letter_FamilyJoinBody>
+  <DC_Letter_FamilyDefectLabel>{PAWN} перебежал(а)</DC_Letter_FamilyDefectLabel>
+  <DC_Letter_FamilyDefectBody>{PAWN} порвал(а) с {FACTION} в бою, чтобы встать на сторону родни. Старая фракция держит обиду.</DC_Letter_FamilyDefectBody>
+  <DC_Letter_ReconcileLabel>Снова вместе</DC_Letter_ReconcileLabel>
+  <DC_Letter_ReconcileBody>{A} и {B} снова сошлись (раз {COUNT}). Старые раны не исчезли, но они снова любовники.</DC_Letter_ReconcileBody>
+  <DC_Letter_ToxicRelationshipLabel>Токсичные отношения</DC_Letter_ToxicRelationshipLabel>
+  <DC_Letter_ToxicRelationshipBody>{A} и {B} снова сошлись (раз {COUNT}). Этот цикл стал токсичным — консультации или терапия могут помочь.</DC_Letter_ToxicRelationshipBody>
+  <DC_InspectToxicRelationship>Токсичные отношения — консультации могут помочь</DC_InspectToxicRelationship>
 
 </LanguageData>

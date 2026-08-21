@@ -46,6 +46,13 @@ namespace DeepColony
         public bool enableEnvoyVisits = false;
         public bool enableApologyTribute = true;
 
+        // Family join / ex-lover reconcile (D17 / D18)
+        public bool enableFamilyJoin = true;
+        public float familyRaidDefectChance = 0.28f;
+        public float familyVisitJoinChance = 0.18f;
+        public bool enableExLoverReconcile = true;
+        public float exLoverReconcileMtbDays = 8f;
+
         public static DeepColonySettings Get =>
             DeepColonyMod.Settings ?? new DeepColonySettings();
 
@@ -80,6 +87,11 @@ namespace DeepColony
             Scribe_Values.Look(ref enablePrisonerCounsel, "enablePrisonerCounsel", false);
             Scribe_Values.Look(ref enableEnvoyVisits, "enableEnvoyVisits", false);
             Scribe_Values.Look(ref enableApologyTribute, "enableApologyTribute", true);
+            Scribe_Values.Look(ref enableFamilyJoin, "enableFamilyJoin", true);
+            Scribe_Values.Look(ref familyRaidDefectChance, "familyRaidDefectChance", 0.28f);
+            Scribe_Values.Look(ref familyVisitJoinChance, "familyVisitJoinChance", 0.18f);
+            Scribe_Values.Look(ref enableExLoverReconcile, "enableExLoverReconcile", true);
+            Scribe_Values.Look(ref exLoverReconcileMtbDays, "exLoverReconcileMtbDays", 8f);
         }
 
         public void ApplyPreset(Preset preset)
@@ -103,6 +115,11 @@ namespace DeepColony
             enablePrisonerCounsel = false;
             enableEnvoyVisits = false;
             enableApologyTribute = true;
+            enableFamilyJoin = true;
+            familyRaidDefectChance = 0.28f;
+            familyVisitJoinChance = 0.18f;
+            enableExLoverReconcile = true;
+            exLoverReconcileMtbDays = 8f;
 
             switch (preset)
             {
@@ -117,6 +134,9 @@ namespace DeepColony
                     traitInheritChance = 0.45f;
                     therapyHealScale = 1.35f;
                     respecCooldownDays = 10f;
+                    familyRaidDefectChance = 0.40f;
+                    familyVisitJoinChance = 0.28f;
+                    exLoverReconcileMtbDays = 12f;
                     break;
                 case Preset.Hard:
                     combatShockChance = 0.55f;
@@ -138,6 +158,9 @@ namespace DeepColony
                     respecCooldownDays = 20f;
                     childRaidWitnessChance = 0.70f;
                     enableEnvoyVisits = true;
+                    familyRaidDefectChance = 0.18f;
+                    familyVisitJoinChance = 0.10f;
+                    exLoverReconcileMtbDays = 5f;
                     break;
                 default:
                     ResetToDefaults();
@@ -175,6 +198,11 @@ namespace DeepColony
             enablePrisonerCounsel = false;
             enableEnvoyVisits = false;
             enableApologyTribute = true;
+            enableFamilyJoin = true;
+            familyRaidDefectChance = 0.28f;
+            familyVisitJoinChance = 0.18f;
+            enableExLoverReconcile = true;
+            exLoverReconcileMtbDays = 8f;
         }
     }
 }

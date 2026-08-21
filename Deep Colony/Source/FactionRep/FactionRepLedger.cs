@@ -21,7 +21,8 @@ namespace DeepColony
         Debug = 14,
         Tribute = 15,
         EnvoyVisit = 16,
-        EnvoyPresent = 17
+        EnvoyPresent = 17,
+        FamilyDefect = 18
     }
 
     public class FactionRepLedgerEntry : IExposable

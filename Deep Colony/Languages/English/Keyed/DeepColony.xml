@@ -282,5 +282,23 @@
   <DC_FamilyTree_Dead>(dead)</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>not on a map</DC_FamilyTree_Away>
   <DC_FamilyTree_ClickTip>Click to select and jump to this pawn.</DC_FamilyTree_ClickTip>
+  <DC_Settings_FamilyJoin>Family join &amp; reconcile</DC_Settings_FamilyJoin>
+  <DC_Settings_EnableFamilyJoin>Kin join / defect on the map</DC_Settings_EnableFamilyJoin>
+  <DC_Settings_EnableFamilyJoinTip>Family of colonists may join from visits, or defect from raids. Spouse is the highest chance. Ex-lovers never join this way (0%). Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge.</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_RaidDefect>Raid kin defect chance (spouse): {0}%</DC_Settings_RaidDefect>
+  <DC_Settings_VisitJoin>Visit kin join chance (spouse): {0}%</DC_Settings_VisitJoin>
+  <DC_Settings_ExLoverReconcile>Ex-lovers may get back together</DC_Settings_ExLoverReconcile>
+  <DC_Settings_ExLoverReconcileTip>Ex-lovers and ex-spouses on the same map may become lovers again. The fourth reunion marks a toxic relationship that counseling can ease. Date Night still owns romance schedules.</DC_Settings_ExLoverReconcileTip>
+  <DC_Settings_ReconcileMtb>Ex-lover reconcile MTB (days): {0}</DC_Settings_ReconcileMtb>
+  <DC_RepReason_FamilyDefect>Family defected</DC_RepReason_FamilyDefect>
+  <DC_Letter_FamilyJoinLabel>{PAWN} joined the colony</DC_Letter_FamilyJoinLabel>
+  <DC_Letter_FamilyJoinBody>{PAWN} left {FACTION} to stay with family. Because they were not at war with you, the faction did not take it as a slight.</DC_Letter_FamilyJoinBody>
+  <DC_Letter_FamilyDefectLabel>{PAWN} defected</DC_Letter_FamilyDefectLabel>
+  <DC_Letter_FamilyDefectBody>{PAWN} broke from {FACTION} in the fight to stand with kin. The old faction holds a grudge.</DC_Letter_FamilyDefectBody>
+  <DC_Letter_ReconcileLabel>Back together</DC_Letter_ReconcileLabel>
+  <DC_Letter_ReconcileBody>{A} and {B} got back together (reunion {COUNT}). Old wounds are not gone, but they are lovers again.</DC_Letter_ReconcileBody>
+  <DC_Letter_ToxicRelationshipLabel>Toxic relationship</DC_Letter_ToxicRelationshipLabel>
+  <DC_Letter_ToxicRelationshipBody>{A} and {B} got back together again (reunion {COUNT}). This on-again pattern has turned toxic — counseling or therapy may help.</DC_Letter_ToxicRelationshipBody>
+  <DC_InspectToxicRelationship>Toxic relationship — counseling may help</DC_InspectToxicRelationship>
 
 </LanguageData>

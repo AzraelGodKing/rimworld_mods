@@ -421,6 +421,8 @@ namespace DeepColony
                 + " mentoring=" + s.enableMentoring
                 + " inheritance=" + s.enableInheritance
                 + " factionRep=" + s.enableFactionRep
+                + " familyJoin=" + s.enableFamilyJoin
+                + " reconcile=" + s.enableExLoverReconcile
                 + " combatShock=" + s.combatShockChance
                 + " minLead=" + s.minSkillLead
                 + " mentorXP=" + s.passiveMentorMultiplier + "/" + s.activeMentorMultiplier
@@ -473,6 +475,49 @@ namespace DeepColony
             if (DC_DefOf.DC_Thought_ChildRaidWitness == null || p.needs?.mood?.thoughts == null) return;
             var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_ChildRaidWitness);
             p.needs.mood.thoughts.memories.TryGainMemory(thought);
+        }
+
+        [DebugAction("Deep Colony", "Force kin join / defect",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinJoin(Pawn p)
+        {
+            if (FamilyJoinUtility.TryForceJoin(p))
+            {
+                Messages.Message("[DeepColony] Forced kin join for " + p.LabelShort + ".",
+                    p, MessageTypeDefOf.PositiveEvent, false);
+                return;
+            }
+            Log.Warning("[DeepColony] Could not force kin join for " + p.LabelShort
+                + " (player / prisoner / no kin / not on a home map). Weight="
+                + FamilyJoinUtility.MaxKinWeight(p).ToString("F2"));
+        }
+
+        [DebugAction("Deep Colony", "Force ex-lover reconcile",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceExLoverReconcile(Pawn p)
+        {
+            if (ExLoverReconcileUtility.TryForceReconcile(p))
+            {
+                Messages.Message("[DeepColony] Forced reconcile for " + p.LabelShort + ".",
+                    p, MessageTypeDefOf.PositiveEvent, false);
+                return;
+            }
+            Log.Warning("[DeepColony] No ex-lover/ex-spouse on this map for " + p.LabelShort + ".");
+        }
+
+        [DebugAction("Deep Colony", "Apply toxic relationship trauma",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceToxicRelationship(Pawn p)
+        {
+            if (DC_DefOf.DC_Trauma_ToxicRelationship == null)
+            {
+                Log.Warning("[DeepColony] DC_Trauma_ToxicRelationship is missing.");
+                return;
+            }
+            TraumaUtility.ApplyTrauma(p, DC_DefOf.DC_Trauma_ToxicRelationship);
         }
     }
 }

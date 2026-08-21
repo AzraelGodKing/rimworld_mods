@@ -282,5 +282,23 @@
   <DC_FamilyTree_Dead>（已故）</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>不在地图上</DC_FamilyTree_Away>
   <DC_FamilyTree_ClickTip>点击以选中并跳转到该角色。</DC_FamilyTree_ClickTip>
+  <DC_Settings_FamilyJoin>亲族加入与复合</DC_Settings_FamilyJoin>
+  <DC_Settings_EnableFamilyJoin>地图上的亲族加入 / 投诚</DC_Settings_EnableFamilyJoin>
+  <DC_Settings_EnableFamilyJoinTip>殖民者的亲族可能在来访时加入，或在袭击中投诚。配偶几率最高。前恋人不会借此加入（0%）。非敌对亲族招募不扣好感；敌对亲族会留下派系积怨。</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_RaidDefect>袭击亲族投诚几率（配偶）：{0}%</DC_Settings_RaidDefect>
+  <DC_Settings_VisitJoin>来访亲族加入几率（配偶）：{0}%</DC_Settings_VisitJoin>
+  <DC_Settings_ExLoverReconcile>前恋人可能复合</DC_Settings_ExLoverReconcile>
+  <DC_Settings_ExLoverReconcileTip>同一地图上的前恋人或前配偶可能再次成为恋人。第四次复合会标为需要疏导的有毒关系。约会之夜仍负责恋爱时间表。</DC_Settings_ExLoverReconcileTip>
+  <DC_Settings_ReconcileMtb>前恋人复合平均间隔（天）：{0}</DC_Settings_ReconcileMtb>
+  <DC_RepReason_FamilyDefect>亲族投诚</DC_RepReason_FamilyDefect>
+  <DC_Letter_FamilyJoinLabel>{PAWN} 加入了殖民地</DC_Letter_FamilyJoinLabel>
+  <DC_Letter_FamilyJoinBody>{PAWN} 离开 {FACTION}，选择与家人同在。对方并未与你交战，因此没有把这当作冒犯。</DC_Letter_FamilyJoinBody>
+  <DC_Letter_FamilyDefectLabel>{PAWN} 投诚了</DC_Letter_FamilyDefectLabel>
+  <DC_Letter_FamilyDefectBody>{PAWN} 在战斗中脱离 {FACTION}，站到亲族一侧。旧派系怀恨在心。</DC_Letter_FamilyDefectBody>
+  <DC_Letter_ReconcileLabel>复合</DC_Letter_ReconcileLabel>
+  <DC_Letter_ReconcileBody>{A} 与 {B} 复合了（第 {COUNT} 次）。旧伤未消，但他们再次成为恋人。</DC_Letter_ReconcileBody>
+  <DC_Letter_ToxicRelationshipLabel>有毒关系</DC_Letter_ToxicRelationshipLabel>
+  <DC_Letter_ToxicRelationshipBody>{A} 与 {B} 再次复合（第 {COUNT} 次）。这种分分合合已经变得有毒——疏导或治疗也许能帮忙。</DC_Letter_ToxicRelationshipBody>
+  <DC_InspectToxicRelationship>有毒关系 — 疏导也许能帮忙</DC_InspectToxicRelationship>
 
 </LanguageData>
