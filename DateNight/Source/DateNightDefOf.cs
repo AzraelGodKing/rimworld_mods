@@ -14,6 +14,10 @@ namespace DateNight
         public static ThoughtDef DateNight_HadADate;
         public static ThoughtDef DateNight_StoodUp;
         public static ThoughtDef DateNight_MadeIt;
+        public static ThoughtDef DateNight_DateWonderful;
+        public static ThoughtDef DateNight_DateAwkward;
+        public static ThoughtDef DateNight_DateRuined;
+        public static ThoughtDef DateNight_ReceivedGift;
 
         static DateNightDefOf()
         {
