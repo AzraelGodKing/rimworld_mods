@@ -276,17 +276,25 @@ namespace DateNight
             {
                 return;
             }
-            if (!DateNightUtility.ShouldBoostLovinChance(pawn, partner))
-            {
-                return;
-            }
             if (DateNightHooks.BiotechBlocksForcedLovin(pawn)
                 || DateNightHooks.BiotechBlocksForcedLovin(partner))
             {
                 return;
             }
 
-            __result = DateNightUtility.AlwaysDoLovinMtbHours;
+            if (DateNightUtility.ShouldBoostLovinChance(pawn, partner))
+            {
+                __result = DateNightUtility.AlwaysDoLovinMtbHours;
+                return;
+            }
+
+            // A good date leaves a spark: better lovin chance for a day after.
+            if ((DateNightMod.Settings == null || DateNightMod.Settings.postDateLovinBoost)
+                && (DateNightDateUtility.HadRecentGoodDate(pawn)
+                    || DateNightDateUtility.HadRecentGoodDate(partner)))
+            {
+                __result *= 0.25f;
+            }
         }
     }
 

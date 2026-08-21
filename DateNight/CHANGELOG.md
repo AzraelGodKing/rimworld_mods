@@ -7,6 +7,12 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 ## [Unreleased]
 
 ### Added
+- **Date activities** — dates resolve a real activity from what's available on the map instead of always standing at a gather spot: **dinner** (fetch a meal, eat by a table), **picnic** (meal at a pretty outdoor cell, fair weather), **walk** (amble between scenic waypoints, initiator leads), **stargazing** (lie face-up outdoors at night), **dancing** (spin at a gather spot), **gift** (initiator fetches beer / chocolate / ambrosia / psychite tea / insect jelly and hands it over — receiver gets a +6 mood / +10 opinion thought), **recreation** (hang near a joy building, double joy trickle), and the classic **hangout** fallback. Both partners resolve the same activity from a shared couple+day seed. All dates trickle a little joy (Social; Meditative for stargazing). Off in settings (`Date activities`).
+- **Date quality** — outcomes vary with the activity, venue beauty, weather, and a shared seeded roll: **wonderful date** (+8 mood / +12 opinion), the usual nice date, or **awkward date** (+1 / +1). Off in settings (flat nice-date thought).
+- **Ruined date** — a date cut short after it properly started (draft, mental break, or an active hostile threat) leaves a −4 *date ruined* mood for 0.75 days.
+- **Post-date lovin spark** — a finished date multiplies the couple's lovin MTB by 0.25 for ~1 in-game day (stacks under the schedule boost, persists through saves). Off in settings.
+- **Per-activity job reports** — "having a dinner date with X", "stargazing with X", etc., in EN/RU/CN.
+- **Dev tools** — *Force date with activity* (float menu; override window ~4 in-game hours so the partner resolves the same activity) and *Clear forced date activity*.
 - **Schedule mismatch alert** — if one lover has Date or Lovin painted and the other does not (or they painted different hours), the alerts bar shows Schedule mismatch.
 - **Date hours** — teal Schedule slot. Partners walk / table / hang out together. Mood + opinion, no bed, no pregnancy.
 - **Missed date** — if a partner is drafted, in a medical bed, or off-map for the window, the one who showed up gets a short stood-up thought. Both making it grants a small boost.
