@@ -37,6 +37,18 @@ namespace DeepColony
         /// <summary>D21 — last kin-homecoming thought tick (-1 = never).</summary>
         public int lastHomecomingTick = -1;
 
+        /// <summary>E03 — last family-tend comfort tick (-1 = never).</summary>
+        public int lastFamilyTendTick = -1;
+
+        /// <summary>E02 — last kidnapped/captured tick (-1 = not currently taken).</summary>
+        public int kinTakenTick = -1;
+
+        /// <summary>E04 — true once this pawn has had living blood kin as colonists.</summary>
+        public bool sawColonyBloodKin;
+
+        /// <summary>E04 — true while this colonist is the last blood kin in the colony.</summary>
+        public bool lastOfTheLine;
+
         /// <summary>D18 — how many times this pawn got back together with another (keyed by thingIDNumber).</summary>
         public Dictionary<int, int> reconcileCountsByPawn = new Dictionary<int, int>();
 
@@ -716,6 +728,10 @@ namespace DeepColony
             Scribe_Values.Look(ref familyJoinRolled, "familyJoinRolled", false);
             Scribe_Values.Look(ref leftColonyMapTick, "leftColonyMapTick", -1);
             Scribe_Values.Look(ref lastHomecomingTick, "lastHomecomingTick", -1);
+            Scribe_Values.Look(ref lastFamilyTendTick, "lastFamilyTendTick", -1);
+            Scribe_Values.Look(ref kinTakenTick, "kinTakenTick", -1);
+            Scribe_Values.Look(ref sawColonyBloodKin, "sawColonyBloodKin", false);
+            Scribe_Values.Look(ref lastOfTheLine, "lastOfTheLine", false);
             Scribe_Collections.Look(ref reconcileCountsByPawn, "reconcileCountsByPawn", LookMode.Value, LookMode.Value);
             Scribe_References.Look(ref mentor, "mentor");
             Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");

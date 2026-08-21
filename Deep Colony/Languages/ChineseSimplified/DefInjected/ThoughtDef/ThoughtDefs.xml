@@ -182,4 +182,44 @@
   <DC_Thought_KinExecuted.stages_0.label>殖民地处决了 {0}</DC_Thought_KinExecuted.stages_0.label>
   <DC_Thought_KinExecuted.stages_0.description>他们爱过——或曾经爱过——的人在这里被处决。那洗不掉。</DC_Thought_KinExecuted.stages_0.description>
 
+  <DC_Thought_GrandchildBorn.label>孙子女出生</DC_Thought_GrandchildBorn.label>
+  <DC_Thought_GrandchildBorn.description>家又大了。殖民地里有了孙子女。</DC_Thought_GrandchildBorn.description>
+  <DC_Thought_GrandchildBorn.stages_0.label>孙子女：{0}</DC_Thought_GrandchildBorn.stages_0.label>
+  <DC_Thought_GrandchildBorn.stages_0.description>家又大了。殖民地里有了孙子女。</DC_Thought_GrandchildBorn.stages_0.description>
+
+  <DC_Thought_KinTaken.label>亲族被掳走</DC_Thought_KinTaken.label>
+  <DC_Thought_KinTaken.description>家人被俘或被绑架。他们没死——但不在了。</DC_Thought_KinTaken.description>
+  <DC_Thought_KinTaken.stages_0.label>{0} 被掳走了</DC_Thought_KinTaken.stages_0.label>
+  <DC_Thought_KinTaken.stages_0.description>家人被俘或被绑架。他们没死——但不在了。</DC_Thought_KinTaken.stages_0.description>
+
+  <DC_Thought_KinReturned.label>亲族归来</DC_Thought_KinReturned.label>
+  <DC_Thought_KinReturned.description>家人被掳走之后回来了。</DC_Thought_KinReturned.description>
+  <DC_Thought_KinReturned.stages_0.label>{0} 回来了</DC_Thought_KinReturned.stages_0.label>
+  <DC_Thought_KinReturned.stages_0.description>家人被掳走之后回来了。</DC_Thought_KinReturned.stages_0.description>
+
+  <DC_Thought_TendedByFamily.label>家人照料</DC_Thought_TendedByFamily.label>
+  <DC_Thought_TendedByFamily.description>家人处理了伤口。这比药更管用一点。</DC_Thought_TendedByFamily.description>
+  <DC_Thought_TendedByFamily.stages_0.label>由 {0} 照料</DC_Thought_TendedByFamily.stages_0.label>
+  <DC_Thought_TendedByFamily.stages_0.description>家人处理了伤口。这比药更管用一点。</DC_Thought_TendedByFamily.stages_0.description>
+
+  <DC_Thought_TendedFamily.label>照料家人</DC_Thought_TendedFamily.label>
+  <DC_Thought_TendedFamily.description>他们照料了家人。留下就是为了这个。</DC_Thought_TendedFamily.description>
+  <DC_Thought_TendedFamily.stages_0.label>照料了 {0}</DC_Thought_TendedFamily.stages_0.label>
+  <DC_Thought_TendedFamily.stages_0.description>他们照料了家人。留下就是为了这个。</DC_Thought_TendedFamily.stages_0.description>
+
+  <DC_Thought_LastOfTheLine.label>血脉仅存</DC_Thought_LastOfTheLine.label>
+  <DC_Thought_LastOfTheLine.description>这座殖民地里再没有活着的血亲。除非血脉延续，这个姓就到此为止。</DC_Thought_LastOfTheLine.description>
+  <DC_Thought_LastOfTheLine.stages_0.label>血脉仅存</DC_Thought_LastOfTheLine.stages_0.label>
+  <DC_Thought_LastOfTheLine.stages_0.description>这座殖民地里再没有活着的血亲。除非血脉延续，这个姓就到此为止。</DC_Thought_LastOfTheLine.stages_0.description>
+
+  <DC_Thought_LineContinues.label>血脉延续</DC_Thought_LineContinues.label>
+  <DC_Thought_LineContinues.description>殖民地里又有血亲了。这个姓不会到此为止。</DC_Thought_LineContinues.description>
+  <DC_Thought_LineContinues.stages_0.label>血脉延续</DC_Thought_LineContinues.stages_0.label>
+  <DC_Thought_LineContinues.stages_0.description>殖民地里又有血亲了。这个姓不会到此为止。</DC_Thought_LineContinues.stages_0.description>
+
+  <DC_Thought_StepFamily.label>继亲</DC_Thought_StepFamily.label>
+  <DC_Thought_StepFamily.description>父母再婚。家里多了一位继父母。</DC_Thought_StepFamily.description>
+  <DC_Thought_StepFamily.stages_0.label>新继父母：{0}</DC_Thought_StepFamily.stages_0.label>
+  <DC_Thought_StepFamily.stages_0.description>父母再婚。家里多了一位继父母。</DC_Thought_StepFamily.stages_0.description>
+
 </LanguageData>

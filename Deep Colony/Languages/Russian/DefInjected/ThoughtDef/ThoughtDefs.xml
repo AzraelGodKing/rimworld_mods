@@ -182,4 +182,44 @@
   <DC_Thought_KinExecuted.stages_0.label>колония казнила {0}</DC_Thought_KinExecuted.stages_0.label>
   <DC_Thought_KinExecuted.stages_0.description>Кого-то, кого они любили — или любили раньше — казнили здесь. Это не смывается.</DC_Thought_KinExecuted.stages_0.description>
 
+  <DC_Thought_GrandchildBorn.label>внук / внучка</DC_Thought_GrandchildBorn.label>
+  <DC_Thought_GrandchildBorn.description>Семья стала больше. В колонии появился внук или внучка.</DC_Thought_GrandchildBorn.description>
+  <DC_Thought_GrandchildBorn.stages_0.label>внук / внучка: {0}</DC_Thought_GrandchildBorn.stages_0.label>
+  <DC_Thought_GrandchildBorn.stages_0.description>Семья стала больше. В колонии появился внук или внучка.</DC_Thought_GrandchildBorn.stages_0.description>
+
+  <DC_Thought_KinTaken.label>родню увезли</DC_Thought_KinTaken.label>
+  <DC_Thought_KinTaken.description>Семью захватили или похитили. Они не мертвы — но их нет.</DC_Thought_KinTaken.description>
+  <DC_Thought_KinTaken.stages_0.label>{0} увезли</DC_Thought_KinTaken.stages_0.label>
+  <DC_Thought_KinTaken.stages_0.description>Семью захватили или похитили. Они не мертвы — но их нет.</DC_Thought_KinTaken.stages_0.description>
+
+  <DC_Thought_KinReturned.label>родня вернулась</DC_Thought_KinReturned.label>
+  <DC_Thought_KinReturned.description>Семья вернулась после того, как её увезли.</DC_Thought_KinReturned.description>
+  <DC_Thought_KinReturned.stages_0.label>{0} вернулся(ась)</DC_Thought_KinReturned.stages_0.label>
+  <DC_Thought_KinReturned.stages_0.description>Семья вернулась после того, как её увезли.</DC_Thought_KinReturned.stages_0.description>
+
+  <DC_Thought_TendedByFamily.label>родня лечила</DC_Thought_TendedByFamily.label>
+  <DC_Thought_TendedByFamily.description>Семья обработала раны. Это помогает сильнее, чем одно лекарство.</DC_Thought_TendedByFamily.description>
+  <DC_Thought_TendedByFamily.stages_0.label>лечил(а) {0}</DC_Thought_TendedByFamily.stages_0.label>
+  <DC_Thought_TendedByFamily.stages_0.description>Семья обработала раны. Это помогает сильнее, чем одно лекарство.</DC_Thought_TendedByFamily.stages_0.description>
+
+  <DC_Thought_TendedFamily.label>лечил(а) родню</DC_Thought_TendedFamily.label>
+  <DC_Thought_TendedFamily.description>Они лечили семью. Ради этого и остаются.</DC_Thought_TendedFamily.description>
+  <DC_Thought_TendedFamily.stages_0.label>лечил(а) {0}</DC_Thought_TendedFamily.stages_0.label>
+  <DC_Thought_TendedFamily.stages_0.description>Они лечили семью. Ради этого и остаются.</DC_Thought_TendedFamily.stages_0.description>
+
+  <DC_Thought_LastOfTheLine.label>последний в роду</DC_Thought_LastOfTheLine.label>
+  <DC_Thought_LastOfTheLine.description>В колонии не осталось живой кровной родни. Имя оборвётся, если линия не продолжится.</DC_Thought_LastOfTheLine.description>
+  <DC_Thought_LastOfTheLine.stages_0.label>последний в роду</DC_Thought_LastOfTheLine.stages_0.label>
+  <DC_Thought_LastOfTheLine.stages_0.description>В колонии не осталось живой кровной родни. Имя оборвётся, если линия не продолжится.</DC_Thought_LastOfTheLine.stages_0.description>
+
+  <DC_Thought_LineContinues.label>линия продолжается</DC_Thought_LineContinues.label>
+  <DC_Thought_LineContinues.description>В колонии снова есть кровная родня. Имя здесь не кончается.</DC_Thought_LineContinues.description>
+  <DC_Thought_LineContinues.stages_0.label>линия продолжается</DC_Thought_LineContinues.stages_0.label>
+  <DC_Thought_LineContinues.stages_0.description>В колонии снова есть кровная родня. Имя здесь не кончается.</DC_Thought_LineContinues.stages_0.description>
+
+  <DC_Thought_StepFamily.label>сводная семья</DC_Thought_StepFamily.label>
+  <DC_Thought_StepFamily.description>Родитель вступил в брак. В доме появился отчим или мачеха.</DC_Thought_StepFamily.description>
+  <DC_Thought_StepFamily.stages_0.label>новый отчим / мачеха: {0}</DC_Thought_StepFamily.stages_0.label>
+  <DC_Thought_StepFamily.stages_0.description>Родитель вступил в брак. В доме появился отчим или мачеха.</DC_Thought_StepFamily.stages_0.description>
+
 </LanguageData>

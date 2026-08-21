@@ -215,6 +215,7 @@ namespace DeepColony.Patches
             if (__result is not Pawn baby) return;
             if (!baby.RaceProps.Humanlike || baby.Dead) return;
             InheritanceUtility.TryApplyInheritance(baby);
+            FamilyLifeUtility.NotifyBirth(baby);
         }
     }
 }

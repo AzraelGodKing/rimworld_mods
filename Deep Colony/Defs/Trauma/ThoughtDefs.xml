@@ -547,6 +547,122 @@
     </stages>
   </ThoughtDef>
 
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FAMILY LIFE (E01–E05)
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef>
+    <defName>DC_Thought_GrandchildBorn</defName>
+    <label>grandchild born</label>
+    <durationDays>8</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>grandchild: {0}</label>
+        <description>The family got bigger. A grandchild is in the colony.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinTaken</defName>
+    <label>kin taken</label>
+    <durationDays>10</durationDays>
+    <stackLimit>2</stackLimit>
+    <stackedEffectMultiplier>0.75</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>{0} was taken</label>
+        <description>Family was captured or kidnapped. They are not dead — but they are gone.</description>
+        <baseMoodEffect>-7</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinReturned</defName>
+    <label>kin returned</label>
+    <durationDays>4</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>{0} came back</label>
+        <description>Family made it back after being taken.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TendedByFamily</defName>
+    <label>tended by family</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>tended by {0}</label>
+        <description>Family treated the wounds. It helps more than medicine alone.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TendedFamily</defName>
+    <label>tended family</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>tended {0}</label>
+        <description>They treated family. That is what you stay for.</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_LastOfTheLine</defName>
+    <label>last of the line</label>
+    <thoughtClass>Thought_Situational</thoughtClass>
+    <workerClass>DeepColony.ThoughtWorker_LastOfTheLine</workerClass>
+    <stages>
+      <li>
+        <label>last of the line</label>
+        <description>No living blood kin remain in this colony. The name ends here unless the line continues.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_LineContinues</defName>
+    <label>the line continues</label>
+    <durationDays>8</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>the line continues</label>
+        <description>Blood kin is in the colony again. The name does not end here.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_StepFamily</defName>
+    <label>step-family</label>
+    <durationDays>6</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>new step-parent: {0}</label>
+        <description>A parent married. The household got a step-parent.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
   <ThoughtDef ParentName="DC_TraumaThoughtBase">
     <defName>DC_Thought_ToxicRelationship</defName>
     <label>toxic relationship</label>

@@ -36,6 +36,7 @@ namespace DeepColony.Patches
             if (def == PawnRelationDefOf.Spouse)
             {
                 FamilyBeatsUtility.NotifyMarriage(pawn, otherPawn);
+                FamilyLifeUtility.NotifyStepFamily(pawn, otherPawn);
                 return;
             }
             if (def == PawnRelationDefOf.ExLover

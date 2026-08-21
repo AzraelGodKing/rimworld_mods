@@ -120,3 +120,8 @@ Spec: [deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md). Build stam
 - [x] **D22 Kin died other side** — colonist kin/ex mourn a relative who dies while not a colonist (letter; skipped during execution)
 - [x] **D23 Breakup wound** — colonists gain a breakup thought when ExLover/ExSpouse is written; toxic trauma renews if already present
 - [x] **D24 Execute family** — executing kin/ex hits remaining colonist family with executed thought + betrayal trauma (`family-beats-v1`)
+- [x] **E01 Grandchild born** — grandparents / great-grandparents on the map get a thought + Legacy note
+- [x] **E02 Kin taken** — kidnap or enemy capture hurts kin/ex on the map; return/recruit clears it
+- [x] **E03 Tended by family** — kin doctor tend gives both a short comfort thought (1-day cooldown)
+- [x] **E04 Last of the line** — last living colony blood kin gets a lasting thought; a new blood relative is “the line continues”
+- [x] **E05 Step-family** — children of a colonist marriage get a step-parent thought (`family-life-v1`)

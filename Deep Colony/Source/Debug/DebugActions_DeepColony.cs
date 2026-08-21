@@ -605,5 +605,57 @@ namespace DeepColony
             var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_KinExecuted);
             p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
         }
+
+        [DebugAction("Deep Colony", "Apply grandchild-born thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceGrandchildBorn(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_GrandchildBorn == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_GrandchildBorn);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply kin-taken thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinTaken(Pawn p)
+        {
+            FamilyLifeUtility.NotifyTaken(p);
+        }
+
+        [DebugAction("Deep Colony", "Apply tended-by-family thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceTendedByFamily(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_TendedByFamily == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_TendedByFamily);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Force last of the line",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceLastOfTheLine(Pawn p)
+        {
+            if (FamilyLifeUtility.TryForceLastOfTheLine(p))
+            {
+                Messages.Message("[DeepColony] Marked last-of-the-line on " + p.LabelShort + ".",
+                    p, MessageTypeDefOf.NegativeEvent, false);
+                return;
+            }
+            Log.Warning("[DeepColony] No Deep Colony comp on " + p.LabelShort + ".");
+        }
+
+        [DebugAction("Deep Colony", "Apply step-family thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceStepFamily(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_StepFamily == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_StepFamily);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
     }
 }

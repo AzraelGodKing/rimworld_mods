@@ -52,6 +52,13 @@ namespace DeepColony
         public static ThoughtDef DC_Thought_KinDiedOtherSide;
         public static ThoughtDef DC_Thought_BreakupWound;
         public static ThoughtDef DC_Thought_KinExecuted;
+        public static ThoughtDef DC_Thought_GrandchildBorn;
+        public static ThoughtDef DC_Thought_KinTaken;
+        public static ThoughtDef DC_Thought_KinReturned;
+        public static ThoughtDef DC_Thought_TendedByFamily;
+        public static ThoughtDef DC_Thought_TendedFamily;
+        public static ThoughtDef DC_Thought_LineContinues;
+        public static ThoughtDef DC_Thought_StepFamily;
 
         // ── Hediffs ───────────────────────────────────────────────────────────────
         public static HediffDef DC_Hediff_Elder;

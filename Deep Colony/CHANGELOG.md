@@ -12,6 +12,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
   - **D18** Ex-lovers and ex-spouses on the same map may get back together. More than three reunions marks a **toxic relationship** that counseling / therapy can ease. Date Night still owns romance schedules.
   - **D19** (`family-loyalty-v1`) Unwavering prisoners can be reached **only by family**, and only if they like each other (mutual opinion). A successful talk sets them recruitable again so wardens can work.
   - **D20–D24** (`family-beats-v1`) More family beats on the same join toggle: in-law welcome on colonist marriage; kin homecoming after time away; kin/ex dying while not a colonist; breakup wound; executing kin/ex (betrayal trauma).
+  - **E01–E05** (`family-life-v1`) Grandchild born (grandparents + Legacy note); kin taken / returned; tended by family; last of the line / the line continues; step-family on marriage.
 - **Batch D** (`batch-d-v1`) — leftovers, fixes, and the next identity layer. Spec: [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
   - **C11 leftovers** First harvest as a family + marriage letters on the Legacy tab.
   - **C15 leftovers** Right-click silver / gold / jade / a valuable gift as tribute (still `AddFactionDrift`).

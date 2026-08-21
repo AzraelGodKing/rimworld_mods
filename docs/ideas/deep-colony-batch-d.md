@@ -1,6 +1,6 @@
 # Deep Colony — Batch D (post–Batch C)
 
-**Status:** shipped (`batch-d-v1`, family tree `family-tree-v1`, family join `family-join-v1`, family loyalty `family-loyalty-v1`, family beats `family-beats-v1`). Do not reuse D01–D24.  
+**Status:** shipped (`batch-d-v1`, family tree `family-tree-v1`, family join `family-join-v1`, family loyalty `family-loyalty-v1`, family beats `family-beats-v1`, family life `family-life-v1`). Do not reuse D01–D24 or E01–E05.  
 **Mod:** [Deep Colony](../../Deep%20Colony/). Prior pools: [deep-colony-updates.md](deep-colony-updates.md) (A01–A20, B01–B22), [deep-colony-batch-c.md](deep-colony-batch-c.md) (C01–C24). **Do not reuse those IDs.**  
 **Lane rule:** colonist / colony-facing only. No furniture packs, raid timers, off-map politics, farm brand, or a second goodwill buffer.
 
@@ -96,6 +96,20 @@ More colony-facing family beats. Same `enableFamilyJoin` toggle. Date Night stil
 | D22 | Kin died other side | Trauma-adjacent | `Pawn.Kill`: victim is not a player colonist; colonist kin **or ex** on the map get `DC_Thought_KinDiedOtherSide` + letter. Skips if an execution is in progress. Does not replace opinion≥40 violent-loss trauma. |
 | D23 | Breakup wound | Trauma-adjacent | `AddDirectRelation` ExLover/ExSpouse: both get `DC_Thought_BreakupWound` if at least one is a colonist. Skip first 600 ticks (world gen). If toxic-relationship trauma is already present, renew it. Reconcile removes Ex then adds Lover, so it does not fire breakup. |
 | D24 | Execute family | Trauma | Harmony `ExecutionUtility.DoExecutionByCut(Pawn executioner, Pawn victim, …)`: Prefix/Postfix. Colonist kin/ex get `DC_Thought_KinExecuted` + `DC_Trauma_Betrayal`. Letter. ThreadStatic so the Kill path does not also fire D22. |
+
+---
+
+## E01–E05 (shipped `family-life-v1`)
+
+Next family life-cycle beats. Same `enableFamilyJoin` toggle. Date Night still owns romance schedules. Spouse/lover is not blood for last-of-the-line.
+
+| ID | Idea | System | Notes |
+|----|------|--------|-------|
+| E01 | Grandchild born | Generations | Colony birth: living grandparent / great-grandparent colonists get `DC_Thought_GrandchildBorn` + a Legacy letter. Distinct from D20 in-law (marriage) and D03 coming of age. |
+| E02 | Kin taken / returned | Trauma-adjacent | Kidnap (`PreKidnapped`) or enemy `CapturedBy`: colonist kin **or ex** get `DC_Thought_KinTaken` + letter. Rescue / recruit / return clears it and applies `DC_Thought_KinReturned`. Dedupe 2500 ticks. Not a Nemesis hunt. |
+| E03 | Tended by family | Generations | `TendUtility.DoTend`: colonist (or prisoner kin) tended by colonist kin (`KinWeight` > 0, not ex). Patient `DC_Thought_TendedByFamily`, doctor `DC_Thought_TendedFamily`. 1-day cooldown. No new medical job. |
+| E04 | Last of the line / line continues | Generations | Comp flags `sawColonyBloodKin` + `lastOfTheLine`. Situational `DC_Thought_LastOfTheLine` only after they have had living colony blood kin (parent/child/sibling/grand). Birth, join, or return that restores blood kin applies `DC_Thought_LineContinues` + letter. |
+| E05 | Step-family | Generations | On colonist–colonist marriage, living children of either spouse who do not already have the other as parent get `DC_Thought_StepFamily`. Distinct from D20 (parents/siblings of the couple). |
 
 ---
 

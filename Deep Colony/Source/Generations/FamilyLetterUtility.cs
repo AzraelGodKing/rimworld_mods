@@ -136,6 +136,22 @@ namespace DeepColony
             Find.LetterStack.ReceiveLetter(title, body, LetterDefOf.PositiveEvent, look);
         }
 
+        public static void NotifyGrandchildBorn(Pawn baby, Pawn grandparent)
+        {
+            if (!DeepColonySettings.Get.enableFamilyJoin) return;
+            if (baby == null || grandparent == null) return;
+            var gc = GameComp_DeepColony.Instance;
+            if (gc == null) return;
+            int now = Find.TickManager.TicksGame;
+            if (gc.lastFamilyLetterTick >= 0 && now - gc.lastFamilyLetterTick < 2500)
+                return;
+            string title = "DC_FamilyLetter_GrandchildLabel".Translate(baby.LabelShort.Named("BABY"));
+            string body = "DC_FamilyLetter_GrandchildBody".Translate(
+                grandparent.LabelShort.Named("KIN"),
+                baby.LabelShort.Named("BABY"));
+            Post(gc, title, body, now, grandparent);
+        }
+
         public static void NotifyComingOfAge(Pawn pawn)
         {
             if (!DeepColonySettings.Get.enableInheritance) return;
