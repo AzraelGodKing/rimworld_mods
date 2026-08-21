@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -112,7 +113,32 @@ namespace DateNight
             return pawn.CurJobDef == DateNightDefOf.DateNight_GoOnDate;
         }
 
-        public static void NotifyDateFinished(Pawn pawn, Pawn partner)
+        /// <summary>Ticks a good date keeps the lovin-chance spark alive (1 day).</summary>
+        public const int GoodDateBoostTicks = 60000;
+
+        // pawn id -> tick of their last completed date (post-date lovin boost).
+        private static Dictionary<int, int> lastGoodDateTicks = new Dictionary<int, int>();
+
+        public static void ExposeData()
+        {
+            Scribe_Collections.Look(ref lastGoodDateTicks, "dateNightLastGoodDateTicks",
+                LookMode.Value, LookMode.Value);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && lastGoodDateTicks == null)
+            {
+                lastGoodDateTicks = new Dictionary<int, int>();
+            }
+        }
+
+        public static bool HadRecentGoodDate(Pawn pawn)
+        {
+            if (pawn == null || !lastGoodDateTicks.TryGetValue(pawn.thingIDNumber, out int tick))
+            {
+                return false;
+            }
+            return Find.TickManager.TicksGame - tick <= GoodDateBoostTicks;
+        }
+
+        public static void NotifyDateFinished(Pawn pawn, Pawn partner, DateActivity activity, LocalTargetInfo spot)
         {
             if (pawn?.needs?.mood?.thoughts?.memories == null || partner == null)
             {
@@ -123,13 +149,116 @@ namespace DateNight
                 return;
             }
 
-            ThoughtDef def = DateNightDefOf.DateNight_HadADate;
+            ThoughtDef def = PickQualityThought(pawn, partner, activity, spot);
             if (def != null)
             {
                 pawn.needs.mood.thoughts.memories.TryGainMemory(def, partner);
             }
 
+            if (DateNightMod.Settings == null || DateNightMod.Settings.postDateLovinBoost)
+            {
+                lastGoodDateTicks[pawn.thingIDNumber] = Find.TickManager.TicksGame;
+            }
+
             DateNightWindows.NotifyDateSuccess(pawn, partner);
+        }
+
+        /// <summary>
+        /// Wonderful / nice / awkward, from venue beauty, weather, whether the couple
+        /// did something more special than standing around, and a seeded roll shared
+        /// by both partners.
+        /// </summary>
+        private static ThoughtDef PickQualityThought(Pawn pawn, Pawn partner, DateActivity activity, LocalTargetInfo spot)
+        {
+            if (DateNightMod.Settings != null && !DateNightMod.Settings.enableDateQuality)
+            {
+                return DateNightDefOf.DateNight_HadADate;
+            }
+
+            Map map = pawn.Map;
+            int score = 0;
+            if (activity != DateActivity.Hangout && activity != DateActivity.Unresolved)
+            {
+                score++;
+            }
+
+            IntVec3 cell = spot.IsValid ? spot.Cell : pawn.Position;
+            if (map != null && cell.InBounds(map))
+            {
+                float beauty = BeautyUtility.AverageBeautyPerceptible(cell, map);
+                if (beauty >= 4f)
+                {
+                    score++;
+                }
+                else if (beauty < 0f)
+                {
+                    score--;
+                }
+                if (!cell.Roofed(map) && DateNightActivities.IsRaining(map))
+                {
+                    score--;
+                }
+            }
+
+            Rand.PushState(Gen.HashCombineInt(DateNightActivities.CoupleSeed(pawn, partner), GenDate.DaysPassed));
+            score += Rand.RangeInclusive(-1, 1);
+            Rand.PopState();
+
+            if (score >= 2 && DateNightDefOf.DateNight_DateWonderful != null)
+            {
+                return DateNightDefOf.DateNight_DateWonderful;
+            }
+            if (score <= -1 && DateNightDefOf.DateNight_DateAwkward != null)
+            {
+                return DateNightDefOf.DateNight_DateAwkward;
+            }
+            return DateNightDefOf.DateNight_HadADate;
+        }
+
+        /// <summary>Date cut short by a draft, mental break, or an active threat.</summary>
+        public static void NotifyDateInterrupted(Pawn pawn, Pawn partner)
+        {
+            if (pawn?.needs?.mood?.thoughts?.memories == null)
+            {
+                return;
+            }
+            if (pawn.ageTracker == null || !pawn.ageTracker.Adult || !pawn.DevelopmentalStage.Adult())
+            {
+                return;
+            }
+
+            bool ruined = pawn.Drafted
+                || pawn.InMentalState
+                || (partner != null && (partner.Drafted || partner.InMentalState))
+                || (pawn.Map != null && GenHostility.AnyHostileActiveThreatToPlayer(pawn.Map));
+            if (!ruined)
+            {
+                return;
+            }
+
+            ThoughtDef def = DateNightDefOf.DateNight_DateRuined;
+            if (def != null)
+            {
+                pawn.needs.mood.thoughts.memories.TryGainMemory(def);
+            }
+        }
+
+        public static void NotifyGiftGiven(Pawn giver, Pawn receiver)
+        {
+            if (receiver?.needs?.mood?.thoughts?.memories == null || giver == null)
+            {
+                return;
+            }
+            if (receiver.ageTracker == null || !receiver.ageTracker.Adult || !receiver.DevelopmentalStage.Adult())
+            {
+                return;
+            }
+
+            ThoughtDef def = DateNightDefOf.DateNight_ReceivedGift;
+            if (def != null)
+            {
+                receiver.needs.mood.thoughts.memories.TryGainMemory(def, giver);
+            }
         }
 
         public static LocalTargetInfo FindDateSpot(Pawn pawn, Pawn partner)
