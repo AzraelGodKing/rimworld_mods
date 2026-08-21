@@ -1,6 +1,6 @@
 # Deep Colony — Batch C (post-2.0)
 
-**Status:** ideas only — Phases 0–5 shipped. Do not start until 2.0 has some playtime.  
+**Status:** Phases 6–9 shipped (`batch-c-v1`). Do not reuse C01–C24.  
 **Mod:** [Deep Colony](../../Deep%20Colony/). Prior pool: [deep-colony-updates.md](deep-colony-updates.md) (A01–A20, B01–B22 — **do not reuse**). Batch C = **20 ideas**, Phase 6–9.  
 **Lane rule:** colonist / colony-facing only. No furniture packs, raid timers, off-map politics, farm brand, or a second goodwill buffer.
 

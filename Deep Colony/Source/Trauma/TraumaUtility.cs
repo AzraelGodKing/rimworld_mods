@@ -12,7 +12,7 @@ namespace DeepColony
         /// <paramref name="source"/> (e.g. the pawn who died) and/or a remembered faction.
         /// Existing matching trauma is renewed rather than stacked.
         /// </summary>
-        public static void ApplyTrauma(Pawn victim, TraumaDef def, Pawn source = null, Faction sourceFaction = null)
+        public static void ApplyTrauma(Pawn victim, TraumaDef def, Pawn source = null, Faction sourceFaction = null, string reasonOverride = null)
         {
             if (!DeepColonySettings.Get.enableTrauma) return;
             if (victim?.needs?.mood?.thoughts == null) return;
@@ -60,12 +60,15 @@ namespace DeepColony
             if (faction != null && !faction.IsPlayer)
                 GrudgeUtility.RememberFaction(victim, faction);
 
-            if (!def.triggerMessage.NullOrEmpty())
+            comp?.NoteUntreatedTrauma();
+
+            string eventText = reasonOverride.NullOrEmpty() ? def.triggerMessage : reasonOverride.Translate();
+            if (!eventText.NullOrEmpty())
             {
                 Messages.Message(
                     "DC_TraumaApplied".Translate(
                         victim.LabelShort.Named("PAWN"),
-                        def.triggerMessage.Named("EVENT")),
+                        eventText.Named("EVENT")),
                     victim,
                     MessageTypeDefOf.NegativeEvent,
                     historical: false);
@@ -97,7 +100,8 @@ namespace DeepColony
             bool healed = false;
             float scale = DeepColonySettings.Get.therapyHealScale
                 * ConfidantUtility.TherapyBonusBetween(counselor, patient)
-                * TherapyQualityMultiplier(counselor, patient);
+                * TherapyQualityMultiplier(counselor, patient)
+                * IdeologyCounselUtility.TherapyMultiplier();
 
             var recovered = new List<TraumaDef>();
             foreach (Thought_Memory mem in patient.needs.mood.thoughts.memories.Memories)
@@ -126,6 +130,7 @@ namespace DeepColony
             {
                 MoteMaker.ThrowText(patient.DrawPos, patient.Map,
                     "DC_TherapyProgress".Translate(), 3f);
+                patient.TryGetComp<Comp_DeepColony>()?.ClearUntreatedTraumaIfHealed();
             }
 
             // Sustained counseling also eases chronic stress (B04).

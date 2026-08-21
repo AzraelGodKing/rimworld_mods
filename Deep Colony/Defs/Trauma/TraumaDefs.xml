@@ -82,4 +82,22 @@
     <triggerMessage>was betrayed by someone close</triggerMessage>
   </DeepColony.TraumaDef>
 
+  <DeepColony.TraumaDef MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>DC_Trauma_Horror</defName>
+    <label>horror trauma</label>
+    <description>Exposure to entities and the void leaves a stain that counseling can still ease.</description>
+    <thoughtDef>DC_Thought_Horror</thoughtDef>
+    <therapyHealingPerSession>70000</therapyHealingPerSession>
+    <triggerMessage>was marked by something that should not exist</triggerMessage>
+  </DeepColony.TraumaDef>
+
+  <DeepColony.TraumaDef MayRequire="Ludeon.RimWorld.Odyssey">
+    <defName>DC_Trauma_Isolation</defName>
+    <label>isolation trauma</label>
+    <description>A gravship wreck or long solitude off-world frays the mind.</description>
+    <thoughtDef>DC_Thought_Isolation</thoughtDef>
+    <therapyHealingPerSession>65000</therapyHealingPerSession>
+    <triggerMessage>was isolated far from home</triggerMessage>
+  </DeepColony.TraumaDef>
+
 </Defs>

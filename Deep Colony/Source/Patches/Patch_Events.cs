@@ -14,6 +14,8 @@ namespace DeepColony.Patches
             if (!__result || parms?.faction == null) return;
             if (parms.target is not Map map) return;
             if (map.ParentFaction != Faction.OfPlayer) return;
+            if (__result && parms?.target is Map raidMap)
+                ChildRaidUtility.NotifyRaidStarted(raidMap);
             FactionRepUtility.OnRaidFromFaction(parms.faction);
         }
     }

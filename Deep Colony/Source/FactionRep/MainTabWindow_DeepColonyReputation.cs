@@ -121,8 +121,10 @@ namespace DeepColony
                 foreach (Pawn p in FactionEnvoyUtility.EnvoyCandidates())
                 {
                     Pawn local = p;
-                    opts.Add(new FloatMenuOption(
-                        local.LabelShortCap,
+                    string label = local.LabelShortCap;
+                    if (SoftCompat.HasAnyRoyalTitle(local))
+                        label += " " + "DC_EnvoyTitled".Translate();
+                    opts.Add(new FloatMenuOption(label,
                         () => FactionEnvoyUtility.SetEnvoy(local, selected)));
                 }
                 if (opts.Count == 0)
@@ -138,6 +140,14 @@ namespace DeepColony
                     FactionEnvoyUtility.ClearEnvoy(selectedEnvoy);
             }
             dy += 36f;
+
+            if (DeepColonySettings.Get.enableApologyTribute)
+            {
+                Rect tributeRect = new Rect(inner.x, dy, btnW + 40f, 28f);
+                if (Widgets.ButtonText(tributeRect, "DC_SendTribute".Translate()))
+                    TributeUtility.TrySendTribute(selected);
+                dy += 36f;
+            }
 
             Widgets.Label(new Rect(inner.x, dy, inner.width, 22f), "DC_RepLedgerHeader".Translate());
             dy += 24f;

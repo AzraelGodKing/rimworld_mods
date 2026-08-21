@@ -28,5 +28,11 @@
   <DC_Trauma_Betrayal.label>背叛创伤</DC_Trauma_Betrayal.label>
   <DC_Trauma_Betrayal.description>来自信任之人的伤害比陌生人的刀更深。</DC_Trauma_Betrayal.description>
   <DC_Trauma_Betrayal.triggerMessage>被亲近之人背叛</DC_Trauma_Betrayal.triggerMessage>
+  <DC_Trauma_Horror.label>恐袭创伤</DC_Trauma_Horror.label>
+  <DC_Trauma_Horror.description>接触实体与虚空留下的印记，疏导仍能缓解。</DC_Trauma_Horror.description>
+  <DC_Trauma_Horror.triggerMessage>被不该存在之物留下印记</DC_Trauma_Horror.triggerMessage>
+  <DC_Trauma_Isolation.label>隔绝创伤</DC_Trauma_Isolation.label>
+  <DC_Trauma_Isolation.description>重力飞船失事或长期离世独处磨蚀心智。</DC_Trauma_Isolation.description>
+  <DC_Trauma_Isolation.triggerMessage>在远离家园处陷入隔绝</DC_Trauma_Isolation.triggerMessage>
 
 </LanguageData>

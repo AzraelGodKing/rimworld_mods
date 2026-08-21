@@ -113,4 +113,24 @@
   <DC_Thought_TraumaWarden.stages_0.label>惧怕狱卒职责</DC_Thought_TraumaWarden.stages_0.label>
   <DC_Thought_TraumaWarden.stages_0.description>囚禁创伤让看守囚犯感觉像重新戴上锁链。</DC_Thought_TraumaWarden.stages_0.description>
 
+  <DC_Thought_GrewUpHere.label>在这里长大</DC_Thought_GrewUpHere.label>
+  <DC_Thought_GrewUpHere.description>这座殖民地就是家。墙、面孔、收成——他们记得自己在这里还很小。</DC_Thought_GrewUpHere.description>
+  <DC_Thought_GrewUpHere.stages_0.label>我在这里长大</DC_Thought_GrewUpHere.stages_0.label>
+  <DC_Thought_GrewUpHere.stages_0.description>这座殖民地就是家。墙、面孔、收成——他们记得自己在这里还很小。</DC_Thought_GrewUpHere.stages_0.description>
+
+  <DC_Thought_ChildRaidWitness.label>看见了战斗</DC_Thought_ChildRaidWitness.label>
+  <DC_Thought_ChildRaidWitness.description>孩子看见了自己还太小、无法加入的暴力。</DC_Thought_ChildRaidWitness.description>
+  <DC_Thought_ChildRaidWitness.stages_0.label>看见了战斗</DC_Thought_ChildRaidWitness.stages_0.label>
+  <DC_Thought_ChildRaidWitness.stages_0.description>孩子看见了自己还太小、无法加入的暴力。</DC_Thought_ChildRaidWitness.stages_0.description>
+
+  <DC_Thought_GrandChefHomestead.label>家园烹饪</DC_Thought_GrandChefHomestead.label>
+  <DC_Thought_GrandChefHomestead.description>宗厨按本味品尝储藏室食物。</DC_Thought_GrandChefHomestead.description>
+  <DC_Thought_GrandChefHomestead.stages_0.label>家园烹饪</DC_Thought_GrandChefHomestead.stages_0.label>
+  <DC_Thought_GrandChefHomestead.stages_0.description>宗厨按本味品尝储藏室食物。</DC_Thought_GrandChefHomestead.stages_0.description>
+
+  <DC_Thought_SiblingBond.label>殖民地手足</DC_Thought_SiblingBond.label>
+  <DC_Thought_SiblingBond.description>在这座殖民地一起长大。羁绊比竞争更安静。</DC_Thought_SiblingBond.description>
+  <DC_Thought_SiblingBond.stages_0.label>殖民地手足</DC_Thought_SiblingBond.stages_0.label>
+  <DC_Thought_SiblingBond.stages_0.description>在这座殖民地一起长大。羁绊比竞争更安静。</DC_Thought_SiblingBond.stages_0.description>
+
 </LanguageData>

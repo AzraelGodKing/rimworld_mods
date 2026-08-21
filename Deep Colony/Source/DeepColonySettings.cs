@@ -40,6 +40,12 @@ namespace DeepColony
         public bool enableHeirlooms = false;
         public bool enableChronicTrauma = false;
 
+        // Batch C
+        public float childRaidWitnessChance = 0.55f;
+        public bool enablePrisonerCounsel = false;
+        public bool enableEnvoyVisits = false;
+        public bool enableApologyTribute = true;
+
         public static DeepColonySettings Get =>
             DeepColonyMod.Settings ?? new DeepColonySettings();
 
@@ -70,6 +76,10 @@ namespace DeepColony
             Scribe_Values.Look(ref enableRecruitPrePerks, "enableRecruitPrePerks", false);
             Scribe_Values.Look(ref enableHeirlooms, "enableHeirlooms", false);
             Scribe_Values.Look(ref enableChronicTrauma, "enableChronicTrauma", false);
+            Scribe_Values.Look(ref childRaidWitnessChance, "childRaidWitnessChance", 0.55f);
+            Scribe_Values.Look(ref enablePrisonerCounsel, "enablePrisonerCounsel", false);
+            Scribe_Values.Look(ref enableEnvoyVisits, "enableEnvoyVisits", false);
+            Scribe_Values.Look(ref enableApologyTribute, "enableApologyTribute", true);
         }
 
         public void ApplyPreset(Preset preset)
@@ -89,6 +99,10 @@ namespace DeepColony
             enableRecruitPrePerks = false;
             enableHeirlooms = false;
             enableChronicTrauma = false;
+            childRaidWitnessChance = 0.55f;
+            enablePrisonerCounsel = false;
+            enableEnvoyVisits = false;
+            enableApologyTribute = true;
 
             switch (preset)
             {
@@ -122,6 +136,8 @@ namespace DeepColony
                     enableHeirlooms = true;
                     enableChronicTrauma = true;
                     respecCooldownDays = 20f;
+                    childRaidWitnessChance = 0.70f;
+                    enableEnvoyVisits = true;
                     break;
                 default:
                     ResetToDefaults();
@@ -155,6 +171,10 @@ namespace DeepColony
             enableRecruitPrePerks = false;
             enableHeirlooms = false;
             enableChronicTrauma = false;
+            childRaidWitnessChance = 0.55f;
+            enablePrisonerCounsel = false;
+            enableEnvoyVisits = false;
+            enableApologyTribute = true;
         }
     }
 }

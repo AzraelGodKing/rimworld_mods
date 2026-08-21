@@ -7,6 +7,26 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 ## [Unreleased]
 
 ### Added
+- **Batch C (Phases 6–9)** (`batch-c-v1`) — post-2.0 QoL, kin memory, DLC/sibling hooks, gated envoy/tribute. Spec: [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
+  - **C01** Untreated-trauma alert after a 1-day grace (same pattern as unspent perk points).
+  - **C02** Counseling history on inspect (last counselor, session count, confidant progress).
+  - **C16** Perks tab filters: all / unspent / Hard-only nodes, plus skill dropdown.
+  - **C04** Royalty titles sort envoy candidates first; titled envoys add a little extra goodwill (fail-open).
+  - **C11** Rare family birthday / anniversary letters, capped and listed on the Legacy tab.
+  - **C12** Deathbed lesson — a dying mentor can finish one last teach or pass a tier-1 perk if the apprentice is on the map.
+  - **C17** Childhood memories — colony-born kids (not growth vats) keep a short “I grew up here” thought into adulthood.
+  - **C18** Funerals ease violent loss — burying or burning the body ages that trauma faster.
+  - **C21** Sibling bond — colony-raised siblings get extra opinion and a further teach-gap discount.
+  - **C08** Date Night lovers reach confidant in 2 counsel sessions instead of 3 (fail-open).
+  - **C09** Grand Chef extra mood only on Homesteader pantry foods (fail-open).
+  - **C10** Strata cave-in / Stormproof ion-storm downs apply existing trauma with a keyed reason.
+  - **C03** Ideology precepts: counseling sacred (faster therapy) vs stoic (skip auto-counsel, slower fade). Fail-open.
+  - **C05 / C06** Anomaly horror trauma and Odyssey isolation/crash trauma (DLC-gated defs; counseling still works).
+  - **C07** Child raid witnesses get a lighter, shorter thought (slider; 0% off).
+  - **C24** Gene vs blood — inspect line when xenogenes sit against a family skill tradition.
+  - **C13** Prisoner counsel recruitment path (default off; does not replace Warden chat).
+  - **C15** Apology / tribute — Reputation tab spends 200 silver for a ledger goodwill row.
+  - **C23** Envoy visit — settings-gated goodwill pulse to an allied settlement (Hard on; no caravan form).
 - **Post-2.0 idea pool (Batch C)** — 20 ideas, Phase 6–9 (QoL alerts/filters, kin memory, DLC/sibling hooks, gated envoy/tribute). Spec: [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
 - **GitHub zip restored** — `DeepColony.zip` published again on the rolling `latest` release for non-Steam installs (alongside Workshop).
 - **Load order** — `loadAfter` Living World so DC’s soft LW goodwill consumer sees LW signals when both are active (`repo-hygiene-no-debate`).

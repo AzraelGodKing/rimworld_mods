@@ -197,4 +197,48 @@
   <DC_HeirloomCreated>{ITEM} {PAWN} теперь наследная вещь колонии.</DC_HeirloomCreated>
   <DC_ChronicTrauma>Невылеченная травма {PAWN} перешла в хронический стресс.</DC_ChronicTrauma>
 
+  <!-- ── Batch C ────────────────────────────────────────────────────────────── -->
+  <DC_Alert_UntreatedTrauma>Невылеченная травма</DC_Alert_UntreatedTrauma>
+  <DC_Alert_UntreatedTraumaDesc>Эти колонисты несут психологическую травму больше суток без консультации. Врачи могут провести беседу через работу врача или ПКМ.</DC_Alert_UntreatedTraumaDesc>
+  <DC_InspectCounsel>Консультации: последняя {0}, сессий {1} (связь {2}/{3})</DC_InspectCounsel>
+  <DC_InspectGeneVsBlood>Ксеногены спорят с семейной традицией ({0})</DC_InspectGeneVsBlood>
+  <DC_PerkFilter_All>Все</DC_PerkFilter_All>
+  <DC_PerkFilter_Unspent>Непотраченные</DC_PerkFilter_Unspent>
+  <DC_PerkFilter_Hard>Только сложные</DC_PerkFilter_Hard>
+  <DC_PerkFilter_AllSkills>Все навыки</DC_PerkFilter_AllSkills>
+  <DC_EnvoyTitled>(титул)</DC_EnvoyTitled>
+  <DC_TraumaReason_CaveIn>был(а) погребён(а) обвалом</DC_TraumaReason_CaveIn>
+  <DC_TraumaReason_IonStorm>был(а) сражён(а) в ионный шторм</DC_TraumaReason_IonStorm>
+  <DC_FamilyLetter_BirthdayLabel>Семейный день рождения: {PAWN}</DC_FamilyLetter_BirthdayLabel>
+  <DC_FamilyLetter_BirthdayBody>Колония отмечает день рождения {PAWN}. Родные на карте видят короткую запись на вкладке Наследие.</DC_FamilyLetter_BirthdayBody>
+  <DC_FamilyLetter_AnniversaryLabel>Семейная годовщина</DC_FamilyLetter_AnniversaryLabel>
+  <DC_FamilyLetter_AnniversaryBody>{A} и {B} отмечают ещё один год вместе. Вкладка Наследие хранит запись.</DC_FamilyLetter_AnniversaryBody>
+  <DC_LegacyLetters>Семейные записи</DC_LegacyLetters>
+  <DC_DeathbedPerk>Последний урок {MENTOR} дал {APPRENTICE} перк: {GIFT}.</DC_DeathbedPerk>
+  <DC_DeathbedLesson>Последний урок {MENTOR} дошёл до {APPRENTICE} ({GIFT}).</DC_DeathbedLesson>
+  <DC_GrewUpHere>У {PAWN} осталась детская память о жизни в этой колонии.</DC_GrewUpHere>
+  <DC_FuneralEase>Погребение {PAWN} смягчает травму насильственной потери.</DC_FuneralEase>
+  <DC_FuneralBurn>Костёр для {PAWN} смягчает травму насильственной потери.</DC_FuneralBurn>
+  <DC_FuneralEaseMote>Предали земле…</DC_FuneralEaseMote>
+  <DC_ChildRaidWitness>{PAWN} видел(а) бой и так скоро не забудет.</DC_ChildRaidWitness>
+  <DC_Settings_BatchC>Поздние системы (партия C)</DC_Settings_BatchC>
+  <DC_Settings_ChildRaid>Шанс детского свидетеля рейда: {0}%</DC_Settings_ChildRaid>
+  <DC_Settings_PrisonerCounsel>Консультации пленников (путь вербовки)</DC_Settings_PrisonerCounsel>
+  <DC_Settings_PrisonerCounselTip>По умолчанию выкл. Врачи могут консультировать пленников как медленную вербовку через общение. Не заменяет разговор надзирателя.</DC_Settings_PrisonerCounselTip>
+  <DC_Settings_EnvoyVisits>Визиты посланников</DC_Settings_EnvoyVisits>
+  <DC_Settings_EnvoyVisitsTip>По умолчанию выкл. Назначенные посланники могут отправить визит в союзное поселение ради импульса расположения. Жёсткий пресет включает это.</DC_Settings_EnvoyVisitsTip>
+  <DC_Settings_ApologyTribute>Извинение / дань</DC_Settings_ApologyTribute>
+  <DC_Settings_ApologyTributeTip>На вкладке Репутация можно потратить серебро, чтобы записать строку в книге расположения.</DC_Settings_ApologyTributeTip>
+  <DC_TributeDisabled>Дань отключена в настройках мода.</DC_TributeDisabled>
+  <DC_TributeNoFaction>Фракция не выбрана.</DC_TributeNoFaction>
+  <DC_TributeNoSilver>Нужно 200 серебра на складе, чтобы отправить дань.</DC_TributeNoSilver>
+  <DC_TributeSent>Дань отправлена {FACTION} (−{0} серебра).</DC_TributeSent>
+  <DC_SendTribute>Отправить дань (200 серебра)</DC_SendTribute>
+  <DC_PrisonerCounselRecruit>Консультации {COUNSELOR} убедили {PAWN} присоединиться.</DC_PrisonerCounselRecruit>
+  <DC_EnvoyVisitLabel>Визит посланника: {PAWN}</DC_EnvoyVisitLabel>
+  <DC_EnvoyVisitBody>{PAWN} отправил(а) визит к {FACTION}. Книга фиксирует импульс расположения.</DC_EnvoyVisitBody>
+  <DC_EnvoyVisitBodyTitle>Титул {PAWN} открыл двери у {FACTION}. Визит весомее обычного посланника.</DC_EnvoyVisitBodyTitle>
+  <DC_RepReason_Tribute>Извинение / дань</DC_RepReason_Tribute>
+  <DC_RepReason_EnvoyVisit>Визит посланника</DC_RepReason_EnvoyVisit>
+
 </LanguageData>

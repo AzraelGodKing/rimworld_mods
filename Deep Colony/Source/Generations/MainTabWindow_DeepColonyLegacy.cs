@@ -60,6 +60,23 @@ namespace DeepColony
                 "DC_LegacyColonists".Translate());
             y += 24f;
 
+            var gcLetters = gameComp?.familyLetters;
+            if (gcLetters != null && gcLetters.Count > 0)
+            {
+                Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
+                    "DC_LegacyLetters".Translate());
+                y += 22f;
+                int shown = 0;
+                for (int i = gcLetters.Count - 1; i >= 0 && shown < 4; i--, shown++)
+                {
+                    FamilyLetterEntry e = gcLetters[i];
+                    Widgets.Label(new Rect(inRect.x, y, inRect.width, 20f),
+                        "  " + e.title);
+                    y += 20f;
+                }
+                y += 6f;
+            }
+
             Rect outRect = new Rect(inRect.x, y, inRect.width, inRect.yMax - y);
             var rows = living.OrderBy(p => p.LabelShort).ToList();
             float rowH = 24f;

@@ -7,5 +7,7 @@
   <DC_Job_CounselTrauma.reportString>консультирует TargetA.</DC_Job_CounselTrauma.reportString>
   <DC_Job_GroupCounsel.label>групповое консультирование</DC_Job_GroupCounsel.label>
   <DC_Job_GroupCounsel.reportString>групповое консультирование рядом с TargetA.</DC_Job_GroupCounsel.reportString>
+  <DC_Job_CounselPrisoner.label>консультировать пленника</DC_Job_CounselPrisoner.label>
+  <DC_Job_CounselPrisoner.reportString>консультирует пленника TargetA.</DC_Job_CounselPrisoner.reportString>
 
 </LanguageData>

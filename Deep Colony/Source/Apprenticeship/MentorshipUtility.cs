@@ -47,7 +47,19 @@ namespace DeepColony
             int lead = MinSkillLead;
             if (IsLineagePair(mentor, apprentice))
                 lead = System.Math.Max(1, lead - 1);
+            if (AreColonySiblings(mentor, apprentice))
+                lead = System.Math.Max(1, lead - 1);
             return lead;
+        }
+
+        public static bool AreColonySiblings(Pawn a, Pawn b)
+        {
+            if (a == null || b == null) return false;
+            var ca = a.TryGetComp<Comp_DeepColony>();
+            var cb = b.TryGetComp<Comp_DeepColony>();
+            if (ca == null || cb == null || !ca.bornInColony || !cb.bornInColony) return false;
+            return PawnRelationDefOf.Sibling != null
+                && PawnRelationDefOf.Sibling.Worker.InRelation(a, b);
         }
 
         public static bool CanMentor(Pawn mentor, Pawn apprentice, out string reason)

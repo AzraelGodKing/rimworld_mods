@@ -449,5 +449,30 @@ namespace DeepColony
             }
             Log.Message(sb.ToString());
         }
+
+        [DebugAction("Deep Colony", "Force family birthday letter",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceFamilyLetter(Pawn p)
+        {
+            var gc = GameComp_DeepColony.Instance;
+            if (gc == null) return;
+            gc.lastFamilyLetterTick = -1;
+            string title = "DC_FamilyLetter_BirthdayLabel".Translate(p.LabelShort.Named("PAWN"));
+            string body = "DC_FamilyLetter_BirthdayBody".Translate(p.LabelShort.Named("PAWN"));
+            if (gc.familyLetters == null) gc.familyLetters = new System.Collections.Generic.List<FamilyLetterEntry>();
+            gc.familyLetters.Add(new FamilyLetterEntry { title = title, body = body, ticksGame = Find.TickManager.TicksGame });
+            Find.LetterStack.ReceiveLetter(title, body, LetterDefOf.PositiveEvent, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply child raid-witness thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceChildWitness(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_ChildRaidWitness == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_ChildRaidWitness);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought);
+        }
     }
 }

@@ -197,4 +197,48 @@
   <DC_HeirloomCreated>{PAWN}'s {ITEM} is now a colony heirloom.</DC_HeirloomCreated>
   <DC_ChronicTrauma>{PAWN}'s untreated trauma settled into chronic stress.</DC_ChronicTrauma>
 
+  <!-- ── Batch C ────────────────────────────────────────────────────────────── -->
+  <DC_Alert_UntreatedTrauma>Untreated trauma</DC_Alert_UntreatedTrauma>
+  <DC_Alert_UntreatedTraumaDesc>These colonists have carried psychological trauma for more than a day without counseling. Doctors can Counsel from the Doctor work type or right-click.</DC_Alert_UntreatedTraumaDesc>
+  <DC_InspectCounsel>Counsel: last {0}, {1} sessions (bond {2}/{3})</DC_InspectCounsel>
+  <DC_InspectGeneVsBlood>Xenogenes pull against the family {0} tradition</DC_InspectGeneVsBlood>
+  <DC_PerkFilter_All>All</DC_PerkFilter_All>
+  <DC_PerkFilter_Unspent>Unspent</DC_PerkFilter_Unspent>
+  <DC_PerkFilter_Hard>Hard-only</DC_PerkFilter_Hard>
+  <DC_PerkFilter_AllSkills>All skills</DC_PerkFilter_AllSkills>
+  <DC_EnvoyTitled>(titled)</DC_EnvoyTitled>
+  <DC_TraumaReason_CaveIn>was buried in a cave-in</DC_TraumaReason_CaveIn>
+  <DC_TraumaReason_IonStorm>was downed in an ion storm</DC_TraumaReason_IonStorm>
+  <DC_FamilyLetter_BirthdayLabel>Family birthday: {PAWN}</DC_FamilyLetter_BirthdayLabel>
+  <DC_FamilyLetter_BirthdayBody>The colony marks {PAWN}'s birthday. Kin on the map share a quiet note on the Legacy tab.</DC_FamilyLetter_BirthdayBody>
+  <DC_FamilyLetter_AnniversaryLabel>Family anniversary</DC_FamilyLetter_AnniversaryLabel>
+  <DC_FamilyLetter_AnniversaryBody>{A} and {B} mark another year together. The Legacy tab keeps the note.</DC_FamilyLetter_AnniversaryBody>
+  <DC_LegacyLetters>Family notes</DC_LegacyLetters>
+  <DC_DeathbedPerk>{MENTOR}'s last lesson granted {APPRENTICE} the perk: {GIFT}.</DC_DeathbedPerk>
+  <DC_DeathbedLesson>{MENTOR}'s last lesson reached {APPRENTICE} ({GIFT}).</DC_DeathbedLesson>
+  <DC_GrewUpHere>{PAWN} carries a childhood memory of growing up in this colony.</DC_GrewUpHere>
+  <DC_FuneralEase>Laying {PAWN} to rest eases violent loss.</DC_FuneralEase>
+  <DC_FuneralBurn>The pyre for {PAWN} eases violent loss.</DC_FuneralBurn>
+  <DC_FuneralEaseMote>Laid to rest…</DC_FuneralEaseMote>
+  <DC_ChildRaidWitness>{PAWN} saw the fighting and will not forget it soon.</DC_ChildRaidWitness>
+  <DC_Settings_BatchC>Later systems (Batch C)</DC_Settings_BatchC>
+  <DC_Settings_ChildRaid>Child raid-witness chance: {0}%</DC_Settings_ChildRaid>
+  <DC_Settings_PrisonerCounsel>Prisoner counseling (recruit path)</DC_Settings_PrisonerCounsel>
+  <DC_Settings_PrisonerCounselTip>Default off. Doctors can counsel prisoners as a slow Social-gated recruit. Does not replace Warden chat.</DC_Settings_PrisonerCounselTip>
+  <DC_Settings_EnvoyVisits>Envoy visits</DC_Settings_EnvoyVisits>
+  <DC_Settings_EnvoyVisitsTip>Default off. Assigned envoys may dispatch a visit to an allied settlement for a goodwill pulse. Hard preset enables this.</DC_Settings_EnvoyVisitsTip>
+  <DC_Settings_ApologyTribute>Apology / tribute</DC_Settings_ApologyTribute>
+  <DC_Settings_ApologyTributeTip>Reputation tab can spend silver to write a goodwill ledger row.</DC_Settings_ApologyTributeTip>
+  <DC_TributeDisabled>Tribute is disabled in mod settings.</DC_TributeDisabled>
+  <DC_TributeNoFaction>No faction selected.</DC_TributeNoFaction>
+  <DC_TributeNoSilver>Need 200 silver in stock to send tribute.</DC_TributeNoSilver>
+  <DC_TributeSent>Sent tribute to {FACTION} (−{0} silver).</DC_TributeSent>
+  <DC_SendTribute>Send tribute (200 silver)</DC_SendTribute>
+  <DC_PrisonerCounselRecruit>{COUNSELOR}'s counseling convinced {PAWN} to join.</DC_PrisonerCounselRecruit>
+  <DC_EnvoyVisitLabel>Envoy visit: {PAWN}</DC_EnvoyVisitLabel>
+  <DC_EnvoyVisitBody>{PAWN} dispatched a visit to {FACTION}. The ledger records the goodwill pulse.</DC_EnvoyVisitBody>
+  <DC_EnvoyVisitBodyTitle>{PAWN}'s title opened doors in {FACTION}. The visit lands harder than a common envoy's.</DC_EnvoyVisitBodyTitle>
+  <DC_RepReason_Tribute>Apology / tribute</DC_RepReason_Tribute>
+  <DC_RepReason_EnvoyVisit>Envoy visit</DC_RepReason_EnvoyVisit>
+
 </LanguageData>

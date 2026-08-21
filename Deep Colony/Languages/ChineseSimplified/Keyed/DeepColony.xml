@@ -197,4 +197,48 @@
   <DC_HeirloomCreated>{PAWN} 的 {ITEM} 现已成为殖民地传家宝。</DC_HeirloomCreated>
   <DC_ChronicTrauma>{PAWN} 未治疗的创伤沉淀为慢性压力。</DC_ChronicTrauma>
 
+  <!-- ── Batch C ────────────────────────────────────────────────────────────── -->
+  <DC_Alert_UntreatedTrauma>未治疗的创伤</DC_Alert_UntreatedTrauma>
+  <DC_Alert_UntreatedTraumaDesc>这些殖民者已携带心理创伤超过一天且未经疏导。医生可通过医生工作类型或右键进行疏导。</DC_Alert_UntreatedTraumaDesc>
+  <DC_InspectCounsel>疏导：最近 {0}，共 {1} 次（羁绊 {2}/{3}）</DC_InspectCounsel>
+  <DC_InspectGeneVsBlood>外源基因与家族{0}传统相悖</DC_InspectGeneVsBlood>
+  <DC_PerkFilter_All>全部</DC_PerkFilter_All>
+  <DC_PerkFilter_Unspent>未花费</DC_PerkFilter_Unspent>
+  <DC_PerkFilter_Hard>仅困难</DC_PerkFilter_Hard>
+  <DC_PerkFilter_AllSkills>全部技能</DC_PerkFilter_AllSkills>
+  <DC_EnvoyTitled>（有头衔）</DC_EnvoyTitled>
+  <DC_TraumaReason_CaveIn>在塌方中被埋</DC_TraumaReason_CaveIn>
+  <DC_TraumaReason_IonStorm>在离子风暴中倒下</DC_TraumaReason_IonStorm>
+  <DC_FamilyLetter_BirthdayLabel>家族生日：{PAWN}</DC_FamilyLetter_BirthdayLabel>
+  <DC_FamilyLetter_BirthdayBody>殖民地记下 {PAWN} 的生日。地图上的亲族可在传承标签查看这条短讯。</DC_FamilyLetter_BirthdayBody>
+  <DC_FamilyLetter_AnniversaryLabel>家族纪念日</DC_FamilyLetter_AnniversaryLabel>
+  <DC_FamilyLetter_AnniversaryBody>{A} 与 {B} 又共同走过一年。传承标签保留了这条短讯。</DC_FamilyLetter_AnniversaryBody>
+  <DC_LegacyLetters>家族短讯</DC_LegacyLetters>
+  <DC_DeathbedPerk>{MENTOR} 的最后一课让 {APPRENTICE} 获得专长：{GIFT}。</DC_DeathbedPerk>
+  <DC_DeathbedLesson>{MENTOR} 的最后一课传到了 {APPRENTICE}（{GIFT}）。</DC_DeathbedLesson>
+  <DC_GrewUpHere>{PAWN} 带着在这片殖民地长大的童年记忆。</DC_GrewUpHere>
+  <DC_FuneralEase>安葬 {PAWN} 减轻了暴死之痛。</DC_FuneralEase>
+  <DC_FuneralBurn>为 {PAWN} 举行的火化减轻了暴死之痛。</DC_FuneralBurn>
+  <DC_FuneralEaseMote>入土为安…</DC_FuneralEaseMote>
+  <DC_ChildRaidWitness>{PAWN} 看见了战斗，一时难以忘记。</DC_ChildRaidWitness>
+  <DC_Settings_BatchC>后续系统（批次 C）</DC_Settings_BatchC>
+  <DC_Settings_ChildRaid>儿童目击袭击几率：{0}%</DC_Settings_ChildRaid>
+  <DC_Settings_PrisonerCounsel>囚犯疏导（招募途径）</DC_Settings_PrisonerCounsel>
+  <DC_Settings_PrisonerCounselTip>默认关闭。医生可疏导囚犯，作为缓慢的社交招募。不会取代狱卒交谈。</DC_Settings_PrisonerCounselTip>
+  <DC_Settings_EnvoyVisits>使者出访</DC_Settings_EnvoyVisits>
+  <DC_Settings_EnvoyVisitsTip>默认关闭。已任命的使者可向同盟据点派出访问并带来好感脉冲。困难预设开启此项。</DC_Settings_EnvoyVisitsTip>
+  <DC_Settings_ApologyTribute>道歉 / 贡礼</DC_Settings_ApologyTribute>
+  <DC_Settings_ApologyTributeTip>声望标签可用白银写下一条好感账本记录。</DC_Settings_ApologyTributeTip>
+  <DC_TributeDisabled>贡礼已在模组设置中关闭。</DC_TributeDisabled>
+  <DC_TributeNoFaction>未选择派系。</DC_TributeNoFaction>
+  <DC_TributeNoSilver>需要库存中有 200 白银才能送出贡礼。</DC_TributeNoSilver>
+  <DC_TributeSent>已向 {FACTION} 送出贡礼（−{0} 白银）。</DC_TributeSent>
+  <DC_SendTribute>送出贡礼（200 白银）</DC_SendTribute>
+  <DC_PrisonerCounselRecruit>{COUNSELOR} 的疏导说服 {PAWN} 加入。</DC_PrisonerCounselRecruit>
+  <DC_EnvoyVisitLabel>使者出访：{PAWN}</DC_EnvoyVisitLabel>
+  <DC_EnvoyVisitBody>{PAWN} 向 {FACTION} 派出访问。账本记录了这次好感脉冲。</DC_EnvoyVisitBody>
+  <DC_EnvoyVisitBodyTitle>{PAWN} 的头衔在 {FACTION} 打开了门路。这次出访比普通使者更有分量。</DC_EnvoyVisitBodyTitle>
+  <DC_RepReason_Tribute>道歉 / 贡礼</DC_RepReason_Tribute>
+  <DC_RepReason_EnvoyVisit>使者出访</DC_RepReason_EnvoyVisit>
+
 </LanguageData>

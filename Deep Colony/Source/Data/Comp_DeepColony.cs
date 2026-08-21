@@ -19,6 +19,13 @@ namespace DeepColony
         public int availablePerkPoints;
         public bool perkGatesBackfilled;
         public int unspentPerkPointsSinceTick = -1;
+        public int untreatedTraumaSinceTick = -1;
+        public string lastCounselorName;
+        public int totalCounselSessions;
+        public bool bornInColony;
+        public bool grewInGrowthVat;
+        public bool childhoodMemoryGranted;
+        public int isolationSinceTick = -1;
 
         public Pawn mentor;
         public string mentoredSkillDefName;
@@ -382,6 +389,8 @@ namespace DeepColony
             counselCountsByPawn.TryGetValue(id, out int count);
             count++;
             counselCountsByPawn[id] = count;
+            lastCounselorName = counselor.LabelShort;
+            totalCounselSessions++;
             return count;
         }
 
@@ -525,6 +534,18 @@ namespace DeepColony
             if (DeepColonySettings.Get.enableTrauma && TraumaUtility.HasAnyTrauma(pawn))
             {
                 parts.Add("DC_InspectTrauma".Translate());
+                string history = CounselingHistoryInspect();
+                if (!history.NullOrEmpty()) parts.Add(history);
+            }
+            else if (DeepColonySettings.Get.enableTrauma)
+            {
+                string history = CounselingHistoryInspect();
+                if (!history.NullOrEmpty()) parts.Add(history);
+            }
+            if (DeepColonySettings.Get.enableInheritance)
+            {
+                string gene = GeneVsBloodInspect();
+                if (!gene.NullOrEmpty()) parts.Add(gene);
             }
             if (DeepColonySettings.Get.enableTrauma)
             {
@@ -541,12 +562,60 @@ namespace DeepColony
             return parts.Count == 0 ? null : string.Join("\n", parts);
         }
 
+        public string CounselingHistoryInspect()
+        {
+            if (totalCounselSessions <= 0 && lastCounselorName.NullOrEmpty()) return null;
+            int best = 0;
+            if (counselCountsByPawn != null)
+            {
+                foreach (var kv in counselCountsByPawn)
+                    if (kv.Value > best) best = kv.Value;
+            }
+            int need = ConfidantUtility.SessionsToBondFor(Pawn, null);
+            string counselor = lastCounselorName.NullOrEmpty() ? "—" : lastCounselorName;
+            return "DC_InspectCounsel".Translate(counselor, totalCounselSessions, best, need);
+        }
+
+        public string GeneVsBloodInspect()
+        {
+            if (familyTraditionSkillDefName.NullOrEmpty()) return null;
+            var pawn = Pawn;
+            if (pawn?.genes == null || pawn.genes.Xenogenes == null || pawn.genes.Xenogenes.Count == 0)
+                return null;
+            SkillDef skill = DefDatabase<SkillDef>.GetNamedSilentFail(familyTraditionSkillDefName);
+            if (skill == null) return null;
+            SkillRecord rec = pawn.skills?.GetSkill(skill);
+            if (rec == null) return null;
+            // Flavor only: xenogenes present vs a family tradition skill.
+            return "DC_InspectGeneVsBlood".Translate(skill.LabelCap);
+        }
+
+        public void NoteUntreatedTrauma()
+        {
+            if (untreatedTraumaSinceTick < 0)
+                untreatedTraumaSinceTick = Find.TickManager?.TicksGame ?? 0;
+        }
+
+        public void ClearUntreatedTraumaIfHealed()
+        {
+            var pawn = Pawn;
+            if (pawn != null && !TraumaUtility.HasAnyTrauma(pawn))
+                untreatedTraumaSinceTick = -1;
+        }
+
         public override void PostExposeData()
         {
             Scribe_Collections.Look(ref unlockedPerkDefNames, "unlockedPerks", LookMode.Value);
             Scribe_Values.Look(ref availablePerkPoints, "availablePerkPoints", 0);
             Scribe_Values.Look(ref perkGatesBackfilled, "perkGatesBackfilled", false);
             Scribe_Values.Look(ref unspentPerkPointsSinceTick, "unspentPerkPointsSinceTick", -1);
+            Scribe_Values.Look(ref untreatedTraumaSinceTick, "untreatedTraumaSinceTick", -1);
+            Scribe_Values.Look(ref lastCounselorName, "lastCounselorName");
+            Scribe_Values.Look(ref totalCounselSessions, "totalCounselSessions", 0);
+            Scribe_Values.Look(ref bornInColony, "bornInColony", false);
+            Scribe_Values.Look(ref grewInGrowthVat, "grewInGrowthVat", false);
+            Scribe_Values.Look(ref childhoodMemoryGranted, "childhoodMemoryGranted", false);
+            Scribe_Values.Look(ref isolationSinceTick, "isolationSinceTick", -1);
             Scribe_References.Look(ref mentor, "mentor");
             Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");
             Scribe_Values.Look(ref perkBeingTaughtDefName, "perkBeingTaughtDefName");

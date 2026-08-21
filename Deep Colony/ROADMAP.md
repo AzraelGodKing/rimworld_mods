@@ -93,11 +93,11 @@ Deep Colony owns **player↔faction goodwill memory and drift** (raids, trades, 
 - [x] Workshop / docs polish — About.xml + `docs/deep-colony.html` 2.0 blurb; Soft/Default keep power systems & attitude consequences off, Hard enables heavier set
 - [x] CN/RU language spot-check — 2.0 tabs (Perks/Legacy/Reputation) + Phase 5 Keyed/DefInjected fill
 
-## Later — Batch C (not started)
+## Batch C (Phases 6–9)
 
-Playtest 2.0 first. Spec: [deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
+Spec: [deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md). Build stamp `batch-c-v1`.
 
-- [ ] **Phase 6 QoL** — untreated-trauma alert, counseling history, Perks tab filter, Royalty envoy bias
-- [ ] **Phase 7 memory & kin** — family letters, deathbed lesson, childhood memories, funerals ease loss, sibling bond
-- [ ] **Phase 8 DLC + siblings** — Ideology precepts; Anomaly/Odyssey trauma; child witnesses; Date Night confidants; Homesteader chef meals; Strata/Stormproof trauma reasons; gene vs blood flavor
-- [ ] **Phase 9 gated** — prisoner counsel, apology/tribute, envoy visit (caravan)
+- [x] **Phase 6 QoL** — untreated-trauma alert, counseling history, Perks tab filter, Royalty envoy bias
+- [x] **Phase 7 memory & kin** — family letters, deathbed lesson, childhood memories, funerals ease loss, sibling bond
+- [x] **Phase 8 DLC + siblings** — Ideology precepts; Anomaly/Odyssey trauma; child witnesses; Date Night confidants; Homesteader chef meals; Strata/Stormproof trauma reasons; gene vs blood flavor
+- [x] **Phase 9 gated** — prisoner counsel (default off), apology/tribute, envoy visit (settings-gated; goodwill pulse, no caravan form)

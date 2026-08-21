@@ -1,4 +1,17 @@
-[h1]Deep Colony — Update[/h1]
+[h1]Deep Colony — Feature Update[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Perks tab filters[/b] — all / unspent / Hard-only, plus a skill dropdown.
+[*] Untreated-trauma alert after a day's grace; inspect shows last counselor, session count, and confidant progress.
+[*] [b]Family notes[/b] — rare birthday / anniversary letters on the Legacy tab; colony-born kids keep an "I grew up here" thought (not growth vats).
+[*] A dying mentor can finish one last lesson (or pass a first perk). Funerals (grave or pyre) ease violent-loss trauma.
+[*] Colony-raised siblings: extra opinion and an easier teach gap.
+[*] Royalty titles bubble to the top of envoy picks; titled envoys earn a little extra goodwill.
+[*] Date Night lovers bond as confidants in two sessions. Grand Chef extra mood only on Homesteader pantry food.
+[*] Ideology: Counseling sacred vs stoic. Anomaly horror trauma. Odyssey isolation / crash trauma. Child raid witnesses (slider).
+[*] Reputation tab [b]tribute[/b] (200 silver). Optional prisoner counseling (off) and envoy visits (off; Hard on).
+[/list]
 
 [b]Fixed[/b]
 [list]
@@ -7,3 +20,6 @@
 [*] Biotech gene backoff for non-Baseliner xenotypes + xenogenes.
 [*] Mentor loops blocked; envoy uniqueness includes caravans.
 [/list]
+
+[i]Build stamp (Player.log): batch-c-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Deep%20Colony/CHANGELOG.md[/i]

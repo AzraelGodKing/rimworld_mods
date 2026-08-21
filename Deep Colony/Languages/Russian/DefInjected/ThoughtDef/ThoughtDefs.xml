@@ -113,4 +113,24 @@
   <DC_Thought_TraumaWarden.stages_0.label>боятся работы надзирателя</DC_Thought_TraumaWarden.stages_0.label>
   <DC_Thought_TraumaWarden.stages_0.description>Травма плена делает охрану заключённых похожей на возвращение в цепи.</DC_Thought_TraumaWarden.stages_0.description>
 
+  <DC_Thought_GrewUpHere.label>вырос(ла) здесь</DC_Thought_GrewUpHere.label>
+  <DC_Thought_GrewUpHere.description>Эта колония — дом. Стены, лица, урожай — они помнят, какими маленькими здесь были.</DC_Thought_GrewUpHere.description>
+  <DC_Thought_GrewUpHere.stages_0.label>я вырос(ла) здесь</DC_Thought_GrewUpHere.stages_0.label>
+  <DC_Thought_GrewUpHere.stages_0.description>Эта колония — дом. Стены, лица, урожай — они помнят, какими маленькими здесь были.</DC_Thought_GrewUpHere.stages_0.description>
+
+  <DC_Thought_ChildRaidWitness.label>видел(а) бой</DC_Thought_ChildRaidWitness.label>
+  <DC_Thought_ChildRaidWitness.description>Ребёнок видел насилие, в котором ещё рано участвовать.</DC_Thought_ChildRaidWitness.description>
+  <DC_Thought_ChildRaidWitness.stages_0.label>видел(а) бой</DC_Thought_ChildRaidWitness.stages_0.label>
+  <DC_Thought_ChildRaidWitness.stages_0.description>Ребёнок видел насилие, в котором ещё рано участвовать.</DC_Thought_ChildRaidWitness.stages_0.description>
+
+  <DC_Thought_GrandChefHomestead.label>усадская стряпня</DC_Thought_GrandChefHomestead.label>
+  <DC_Thought_GrandChefHomestead.description>Великий шеф пробует кладовую еду так, как она задумана.</DC_Thought_GrandChefHomestead.description>
+  <DC_Thought_GrandChefHomestead.stages_0.label>усадская стряпня</DC_Thought_GrandChefHomestead.stages_0.label>
+  <DC_Thought_GrandChefHomestead.stages_0.description>Великий шеф пробует кладовую еду так, как она задумана.</DC_Thought_GrandChefHomestead.stages_0.description>
+
+  <DC_Thought_SiblingBond.label>колонистский сиблинг</DC_Thought_SiblingBond.label>
+  <DC_Thought_SiblingBond.description>Выросли вместе в этой колонии. Связь тише соперничества.</DC_Thought_SiblingBond.description>
+  <DC_Thought_SiblingBond.stages_0.label>колонистский сиблинг</DC_Thought_SiblingBond.stages_0.label>
+  <DC_Thought_SiblingBond.stages_0.description>Выросли вместе в этой колонии. Связь тише соперничества.</DC_Thought_SiblingBond.stages_0.description>
+
 </LanguageData>

@@ -34,4 +34,15 @@
     <scanThings>true</scanThings>
   </WorkGiverDef>
 
+  <WorkGiverDef>
+    <defName>DC_WorkGiver_CounselPrisoner</defName>
+    <label>counsel prisoner</label>
+    <giverClass>DeepColony.WorkGiver_CounselPrisoner</giverClass>
+    <workType>Doctor</workType>
+    <priorityInType>20</priorityInType>
+    <verb>counsel prisoner</verb>
+    <gerund>counseling prisoner</gerund>
+    <scanThings>true</scanThings>
+  </WorkGiverDef>
+
 </Defs>

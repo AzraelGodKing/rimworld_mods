@@ -18,7 +18,9 @@ namespace DeepColony
         IdleAlly = 11,
         IdleEnemy = 12,
         Envoy = 13,
-        Debug = 14
+        Debug = 14,
+        Tribute = 15,
+        EnvoyVisit = 16
     }
 
     public class FactionRepLedgerEntry : IExposable

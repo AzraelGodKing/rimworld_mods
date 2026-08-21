@@ -329,4 +329,106 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>DC_Thought_GrewUpHere</defName>
+    <label>grew up here</label>
+    <durationDays>20</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>I grew up here</label>
+        <description>This colony is home. The walls, the faces, the harvests — they remember being small here.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_ChildRaidWitness</defName>
+    <label>saw the fighting</label>
+    <durationDays>8</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>saw the fighting</label>
+        <description>A child who watched violence they were too young to join.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_GrandChefHomestead</defName>
+    <label>homestead cooking</label>
+    <durationDays>0.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>homestead cooking</label>
+        <description>A Grand Chef tasting pantry food the way it was meant to be eaten.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_SiblingBond</defName>
+    <label>colony sibling</label>
+    <thoughtClass>Thought_SituationalSocial</thoughtClass>
+    <workerClass>DeepColony.ThoughtWorker_SiblingBond</workerClass>
+    <stages>
+      <li>
+        <label>colony sibling</label>
+        <description>Grew up together in this colony. The bond is quieter than rivalry.</description>
+        <baseOpinionOffset>10</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef ParentName="DC_TraumaThoughtBase" MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>DC_Thought_Horror</defName>
+    <label>horror trauma</label>
+    <durationDays>40</durationDays>
+    <stages>
+      <li>
+        <label>void-haunted (raw)</label>
+        <description>Something inhuman brushed the mind and will not leave.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+      <li>
+        <label>processing horror</label>
+        <description>Counseling helps, but the entity's shape still returns at night.</description>
+        <baseMoodEffect>-7</baseMoodEffect>
+      </li>
+      <li>
+        <label>fading horror</label>
+        <description>The worst of the void-memory is loosening.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef ParentName="DC_TraumaThoughtBase" MayRequire="Ludeon.RimWorld.Odyssey">
+    <defName>DC_Thought_Isolation</defName>
+    <label>isolation trauma</label>
+    <durationDays>35</durationDays>
+    <stages>
+      <li>
+        <label>adrift (raw)</label>
+        <description>Too long alone off-world, or the wreck of a gravship.</description>
+        <baseMoodEffect>-9</baseMoodEffect>
+      </li>
+      <li>
+        <label>processing isolation</label>
+        <description>The silence of orbit still rings.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+      <li>
+        <label>fading isolation</label>
+        <description>Ground and company are slowly convincing them they made it back.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

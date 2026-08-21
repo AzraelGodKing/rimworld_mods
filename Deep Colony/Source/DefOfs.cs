@@ -16,6 +16,7 @@ namespace DeepColony
         public static JobDef DC_Job_Mentor;
         public static JobDef DC_Job_CounselTrauma;
         public static JobDef DC_Job_GroupCounsel;
+        public static JobDef DC_Job_CounselPrisoner;
 
         // ── Traumas ──────────────────────────────────────────────────────────────
         public static TraumaDef DC_Trauma_CombatShock;
@@ -27,6 +28,10 @@ namespace DeepColony
         public static TraumaDef DC_Trauma_Toxic;
         public static TraumaDef DC_Trauma_Insect;
         public static TraumaDef DC_Trauma_Betrayal;
+        [MayRequire("Ludeon.RimWorld.Anomaly")]
+        public static TraumaDef DC_Trauma_Horror;
+        [MayRequire("Ludeon.RimWorld.Odyssey")]
+        public static TraumaDef DC_Trauma_Isolation;
 
         // ── Thoughts (non-trauma class) ───────────────────────────────────────────
         public static ThoughtDef DC_Thought_TraumaScar;
@@ -35,6 +40,9 @@ namespace DeepColony
         public static ThoughtDef DC_Thought_DayOfRemembrance;
         public static ThoughtDef DC_Thought_PerkReflection;
         public static ThoughtDef DC_Thought_Heirloom;
+        public static ThoughtDef DC_Thought_GrewUpHere;
+        public static ThoughtDef DC_Thought_ChildRaidWitness;
+        public static ThoughtDef DC_Thought_GrandChefHomestead;
 
         // ── Hediffs ───────────────────────────────────────────────────────────────
         public static HediffDef DC_Hediff_Elder;

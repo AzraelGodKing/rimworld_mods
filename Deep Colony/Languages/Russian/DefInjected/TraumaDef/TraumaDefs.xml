@@ -28,5 +28,11 @@
   <DC_Trauma_Betrayal.label>травма предательства</DC_Trauma_Betrayal.label>
   <DC_Trauma_Betrayal.description>Вред от того, кому доверял, режет глубже чужого клинка.</DC_Trauma_Betrayal.description>
   <DC_Trauma_Betrayal.triggerMessage>был(а) предан(а) близким человеком</DC_Trauma_Betrayal.triggerMessage>
+  <DC_Trauma_Horror.label>травма ужаса</DC_Trauma_Horror.label>
+  <DC_Trauma_Horror.description>Столкновение с сущностями и пустотой оставляет след, который консультации всё ещё могут смягчить.</DC_Trauma_Horror.description>
+  <DC_Trauma_Horror.triggerMessage>был(а) отмечен(а) тем, чего не должно существовать</DC_Trauma_Horror.triggerMessage>
+  <DC_Trauma_Isolation.label>травма изоляции</DC_Trauma_Isolation.label>
+  <DC_Trauma_Isolation.description>Крушение гравкорабля или долгое одиночество вне мира изнашивают разум.</DC_Trauma_Isolation.description>
+  <DC_Trauma_Isolation.triggerMessage>был(а) изолирован(а) вдали от дома</DC_Trauma_Isolation.triggerMessage>
 
 </LanguageData>
