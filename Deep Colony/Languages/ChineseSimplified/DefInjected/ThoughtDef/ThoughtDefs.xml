@@ -133,4 +133,19 @@
   <DC_Thought_SiblingBond.stages_0.label>殖民地手足</DC_Thought_SiblingBond.stages_0.label>
   <DC_Thought_SiblingBond.stages_0.description>在这座殖民地一起长大。羁绊比竞争更安静。</DC_Thought_SiblingBond.stages_0.description>
 
+  <DC_Thought_FamilyMeal.label>家庭餐</DC_Thought_FamilyMeal.label>
+  <DC_Thought_FamilyMeal.description>在同一屋檐下与亲族同餐。</DC_Thought_FamilyMeal.description>
+  <DC_Thought_FamilyMeal.stages_0.label>与家人同餐</DC_Thought_FamilyMeal.stages_0.label>
+  <DC_Thought_FamilyMeal.stages_0.description>在同一屋檐下与亲族同餐。</DC_Thought_FamilyMeal.stages_0.description>
+
+  <DC_Thought_ParentReunion.label>与父母重逢</DC_Thought_ParentReunion.label>
+  <DC_Thought_ParentReunion.description>回到了父母仍在的地图。</DC_Thought_ParentReunion.description>
+  <DC_Thought_ParentReunion.stages_0.label>与父母同在</DC_Thought_ParentReunion.stages_0.label>
+  <DC_Thought_ParentReunion.stages_0.description>回到了父母仍在的地图。</DC_Thought_ParentReunion.stages_0.description>
+
+  <DC_Thought_SpouseRemembrance.label>怀念伴侣</DC_Thought_SpouseRemembrance.label>
+  <DC_Thought_SpouseRemembrance.description>葬礼或纪念日对失去的爱人更沉。</DC_Thought_SpouseRemembrance.description>
+  <DC_Thought_SpouseRemembrance.stages_0.label>怀念伴侣</DC_Thought_SpouseRemembrance.stages_0.label>
+  <DC_Thought_SpouseRemembrance.stages_0.description>葬礼或纪念日对失去的爱人更沉。</DC_Thought_SpouseRemembrance.stages_0.description>
+
 </LanguageData>

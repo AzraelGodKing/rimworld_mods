@@ -228,17 +228,45 @@
   <DC_Settings_EnvoyVisits>Визиты посланников</DC_Settings_EnvoyVisits>
   <DC_Settings_EnvoyVisitsTip>По умолчанию выкл. Назначенные посланники могут отправить визит в союзное поселение ради импульса расположения. Жёсткий пресет включает это.</DC_Settings_EnvoyVisitsTip>
   <DC_Settings_ApologyTribute>Извинение / дань</DC_Settings_ApologyTribute>
-  <DC_Settings_ApologyTributeTip>На вкладке Репутация можно потратить серебро, чтобы записать строку в книге расположения.</DC_Settings_ApologyTributeTip>
+  <DC_Settings_ApologyTributeTip>На вкладке Репутация можно потратить серебро или ПКМ по серебру / золоту / нефриту / ценному дару, чтобы записать строку в книге расположения.</DC_Settings_ApologyTributeTip>
   <DC_TributeDisabled>Дань отключена в настройках мода.</DC_TributeDisabled>
   <DC_TributeNoFaction>Фракция не выбрана.</DC_TributeNoFaction>
   <DC_TributeNoSilver>Нужно 200 серебра на складе, чтобы отправить дань.</DC_TributeNoSilver>
+  <DC_TributeNeedGift>Нужен дар стоимостью не меньше 200 серебра (серебро, золото, нефрит или ценная вещь).</DC_TributeNeedGift>
   <DC_TributeSent>Дань отправлена {FACTION} (−{0} серебра).</DC_TributeSent>
+  <DC_TributeGiftSent>{GIFT} отправлен(а) как дань {FACTION}.</DC_TributeGiftSent>
+  <DC_TributeThingMenu>Отправить {GIFT} как дань…</DC_TributeThingMenu>
+  <DC_TributeThingTo>Дань {FACTION}</DC_TributeThingTo>
   <DC_SendTribute>Отправить дань (200 серебра)</DC_SendTribute>
   <DC_PrisonerCounselRecruit>Консультации {COUNSELOR} убедили {PAWN} присоединиться.</DC_PrisonerCounselRecruit>
+  <DC_CounselPrisonerFloat>Консультировать пленника {PAWN}</DC_CounselPrisonerFloat>
   <DC_EnvoyVisitLabel>Визит посланника: {PAWN}</DC_EnvoyVisitLabel>
   <DC_EnvoyVisitBody>{PAWN} отправил(а) визит к {FACTION}. Книга фиксирует импульс расположения.</DC_EnvoyVisitBody>
   <DC_EnvoyVisitBodyTitle>Титул {PAWN} открыл двери у {FACTION}. Визит весомее обычного посланника.</DC_EnvoyVisitBodyTitle>
   <DC_RepReason_Tribute>Извинение / дань</DC_RepReason_Tribute>
   <DC_RepReason_EnvoyVisit>Визит посланника</DC_RepReason_EnvoyVisit>
+  <DC_RepReason_EnvoyPresent>Посланник на сделке</DC_RepReason_EnvoyPresent>
+  <DC_FuneralRitual>Похороны {PAWN} смягчают травму насильственной потери.</DC_FuneralRitual>
+  <DC_FuneralSpouseMote>Предали земле вместе…</DC_FuneralSpouseMote>
+  <DC_FamilyLetter_ComingOfAgeLabel>Совершеннолетие: {PAWN}</DC_FamilyLetter_ComingOfAgeLabel>
+  <DC_FamilyLetter_ComingOfAgeBody>{PAWN} вырос(ла) в этой колонии. Детская память остаётся; вкладка Наследие хранит запись.</DC_FamilyLetter_ComingOfAgeBody>
+  <DC_FamilyLetter_MarriageLabel>Брак в колонии</DC_FamilyLetter_MarriageLabel>
+  <DC_FamilyLetter_MarriageBody>{A} и {B} поженились. Вкладка Наследие хранит семейную запись.</DC_FamilyLetter_MarriageBody>
+  <DC_FamilyLetter_HarvestLabel>Первый семейный урожай</DC_FamilyLetter_HarvestLabel>
+  <DC_FamilyLetter_HarvestBody>{PAWN} собрал(а) урожай, пока родня ещё на карте. Вкладка Наследие хранит запись о первом урожае.</DC_FamilyLetter_HarvestBody>
+  <DC_InspectTraumaTypes>Травма: {0}</DC_InspectTraumaTypes>
+  <DC_InspectTeachProgress>Учит {0} ({1}/{2} сессий)</DC_InspectTeachProgress>
+  <DC_InspectEnvoy>Посланник к {0}</DC_InspectEnvoy>
+  <DC_InspectRival>Соперник: {0}</DC_InspectRival>
+  <DC_ParentReunion>{CHILD} снова с {PARENT}.</DC_ParentReunion>
+  <DC_SurfaceReturnEase>Твёрдая земля смягчает изоляцию {PAWN}.</DC_SurfaceReturnEase>
+  <DC_TraumaReason_StrataGas>был(а) сражён(а) колониальным газом</DC_TraumaReason_StrataGas>
+  <DC_TraumaReason_Firestorm>был(а) сражён(а) в огнешторм</DC_TraumaReason_Firestorm>
+  <DC_LegacyTraumatized>Колонисты с травмой: {0}</DC_LegacyTraumatized>
+  <DC_LegacyRemembrance>Память</DC_LegacyRemembrance>
+  <DC_RepFilter_All>Все фракции</DC_RepFilter_All>
+  <DC_RepFilter_Ally>Союзники / дружественные</DC_RepFilter_Ally>
+  <DC_RepFilter_Hostile>Враждебные</DC_RepFilter_Hostile>
+  <DC_PerkOverview_ColArchetype>Архетип</DC_PerkOverview_ColArchetype>
 
 </LanguageData>

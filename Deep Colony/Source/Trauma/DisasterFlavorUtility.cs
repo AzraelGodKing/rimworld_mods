@@ -22,6 +22,22 @@ namespace DeepColony
                 return;
             }
 
+            if (SoftCompat.StrataLoaded && IsStrataGasDamage(info, victim))
+            {
+                TraumaDef toxic = DC_DefOf.DC_Trauma_Toxic;
+                if (toxic != null)
+                    TraumaUtility.ApplyTrauma(victim, toxic, reasonOverride: "DC_TraumaReason_StrataGas");
+                return;
+            }
+
+            if (SoftCompat.StrataLoaded && IsStrataFirestorm(info, victim))
+            {
+                TraumaDef fire = DC_DefOf.DC_Trauma_Fire;
+                if (fire != null)
+                    TraumaUtility.ApplyTrauma(victim, fire, reasonOverride: "DC_TraumaReason_Firestorm");
+                return;
+            }
+
             if (SoftCompat.StormproofLoaded && IsIonStormDown(info, victim))
             {
                 TraumaDef fire = DC_DefOf.DC_Trauma_Fire;
@@ -60,6 +76,32 @@ namespace DeepColony
                     || info.Def.defName.IndexOf("Lightning", System.StringComparison.OrdinalIgnoreCase) >= 0))
                 return true;
             return false;
+        }
+
+        private static bool IsStrataGasDamage(DamageInfo info, Pawn victim)
+        {
+            string n = info.Def?.defName ?? "";
+            if (n.IndexOf("Toxic", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
+            if (n.IndexOf("RotStink", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
+            if (n.IndexOf("Gas", System.StringComparison.OrdinalIgnoreCase) >= 0
+                && n.IndexOf("Strata", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+            return false;
+        }
+
+        private static bool IsStrataFirestorm(DamageInfo info, Pawn victim)
+        {
+            Map map = victim.MapHeld;
+            if (map?.GameConditionManager != null)
+            {
+                GameConditionDef firestorm = DefDatabase<GameConditionDef>.GetNamedSilentFail("Strata_Firestorm")
+                    ?? DefDatabase<GameConditionDef>.GetNamedSilentFail("StrataFirestorm");
+                if (firestorm != null && map.GameConditionManager.ConditionIsActive(firestorm)
+                    && (info.Def == DamageDefOf.Flame || victim.IsBurning()))
+                    return true;
+            }
+            string n = info.Def?.defName ?? "";
+            return n.IndexOf("Firestorm", System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
     }
 }

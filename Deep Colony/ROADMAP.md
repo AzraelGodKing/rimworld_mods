@@ -4,7 +4,8 @@ Playable core is in (perks, trauma, mentoring, inheritance, living faction reput
 
 Series vision: [../ROADMAP.md](../ROADMAP.md).  
 Idea pool (42, shipped): [docs/ideas/deep-colony-updates.md](../docs/ideas/deep-colony-updates.md).  
-Post-2.0 pool (20): [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
+Post-2.0 pool (20): [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).  
+Batch D: [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
 
 ## Ownership vs Living World
 
@@ -101,3 +102,12 @@ Spec: [deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md). Build stam
 - [x] **Phase 7 memory & kin** — family letters, deathbed lesson, childhood memories, funerals ease loss, sibling bond
 - [x] **Phase 8 DLC + siblings** — Ideology precepts; Anomaly/Odyssey trauma; child witnesses; Date Night confidants; Homesteader chef meals; Strata/Stormproof trauma reasons; gene vs blood flavor
 - [x] **Phase 9 gated** — prisoner counsel (default off), apology/tribute, envoy visit (settings-gated; goodwill pulse, no caravan form)
+
+## Batch D
+
+Spec: [deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md). Build stamp `batch-d-v1`.
+
+- [x] **Leftovers** — first harvest + marriage letters (C11), gift/float-menu tribute (C15), Ideology funeral (C18)
+- [x] **Fixes** — rivalry interval, player-only deathbed, funeral only-when-eased, counseling restarts trauma-alert grace, sibling/caravan kin, Date Night confidant inspect
+- [x] **Identity** — family meal, parent reunion, coming of age, classroom extra, envoy-at-trade, surface isolation ease, quiet-room therapy, spouse remembrance
+- [x] **Tabs / inspect** — Legacy trauma + remembrance, Reputation ally/hostile filter, Perks archetype column, inspect extras, prisoner-counsel float menu, Strata gas/firestorm reasons

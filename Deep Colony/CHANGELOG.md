@@ -7,6 +7,24 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 ## [Unreleased]
 
 ### Added
+- **Batch D** (`batch-d-v1`) — leftovers, fixes, and the next identity layer. Spec: [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
+  - **C11 leftovers** First harvest as a family + marriage letters on the Legacy tab.
+  - **C15 leftovers** Right-click silver / gold / jade / a valuable gift as tribute (still `AddFactionDrift`).
+  - **C18 leftovers** Ideology funeral rituals ease violent-loss trauma (fail-open).
+  - **D01** Family meal thought when eating in the same room as kin.
+  - **D02** Parent reunion thought when an adult child returns to a parent's map.
+  - **D03** Coming-of-age letter with the childhood memory.
+  - **D04** Classroom extra: two or more apprentices plus a Biotech blackboard (on top of the existing 1.15).
+  - **D05** Assigned envoy present at a successful trade writes extra goodwill.
+  - **D06** Returning to a surface map eases Odyssey isolation.
+  - **D07** Quiet indoor room (no work benches) therapy bonus.
+  - **D08** Spouse / lover extra ease at funerals and remembrance day.
+  - **D09** Legacy tab lists traumatized count + remembrance names.
+  - **D10** Reputation tab ally / hostile filter.
+  - **D11** Perks tab shows archetype on each row.
+  - **D12** Right-click counsel prisoner (still settings-gated, default off).
+  - **D13** Strata gas / firestorm downs use existing toxic/fire trauma with a keyed reason.
+  - **D14** Inspect shows trauma types, teach progress, envoy, and rival.
 - **Batch C (Phases 6–9)** (`batch-c-v1`) — post-2.0 QoL, kin memory, DLC/sibling hooks, gated envoy/tribute. Spec: [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
   - **C01** Untreated-trauma alert after a 1-day grace (same pattern as unspent perk points).
   - **C02** Counseling history on inspect (last counselor, session count, confidant progress).
@@ -45,6 +63,12 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 - **Chinese Simplified & Russian language packs** — full Keyed + DefInjected translations (perks, trauma, mentoring, inheritance, jobs, thoughts).
 
 ### Fixed
+- **Rivalry scan** — pair checks run on a 2500-tick interval with a reused list (not a fresh scan every call).
+- **Deathbed lesson** — only player-side mentors and apprentices.
+- **Funeral message** — only if someone actually had violent-loss eased.
+- **Untreated-trauma alert** — counseling restarts the 1-day grace if trauma remains.
+- **Family birthday** — implied siblings and caravan kin count as living family.
+- **Confidant inspect** — bond progress uses the last counselor (Date Night lovers still 2 sessions).
 - **ISEKAI RPG Leveling traits** — inheritance skips Rank (F–SSS) and destiny traits. Growth / combat / utility aptitude traits inherit like vanilla (`general-fixes-v1`).
 - **NPC birth inheritance stamp** — `ApplyBirthOutcome` no longer marks every humanlike baby processed. Only player-faction / former-colonist pawns roll; stillborns are skipped. Recruits still inherit on join.
 - **Biotech gene backoff** — skips trait/passion rolls for non-Baseliner xenotypes and implanted xenogenes (endogene xenotypes were slipping through).

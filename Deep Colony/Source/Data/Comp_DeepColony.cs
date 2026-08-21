@@ -21,11 +21,14 @@ namespace DeepColony
         public int unspentPerkPointsSinceTick = -1;
         public int untreatedTraumaSinceTick = -1;
         public string lastCounselorName;
+        public int lastCounselorId = -1;
         public int totalCounselSessions;
         public bool bornInColony;
         public bool grewInGrowthVat;
         public bool childhoodMemoryGranted;
         public int isolationSinceTick = -1;
+        public int lastFamilyMealTick = -1;
+        public bool parentReunionGranted;
 
         public Pawn mentor;
         public string mentoredSkillDefName;
@@ -390,8 +393,23 @@ namespace DeepColony
             count++;
             counselCountsByPawn[id] = count;
             lastCounselorName = counselor.LabelShort;
+            lastCounselorId = counselor.thingIDNumber;
             totalCounselSessions++;
             return count;
+        }
+
+        public Pawn TryGetLastCounselor()
+        {
+            if (lastCounselorId < 0) return null;
+            foreach (Map map in Find.Maps)
+            {
+                if (map?.mapPawns?.AllPawnsSpawned == null) continue;
+                foreach (Pawn p in map.mapPawns.AllPawnsSpawned)
+                {
+                    if (p.thingIDNumber == lastCounselorId) return p;
+                }
+            }
+            return null;
         }
 
         public bool RollTraumaApplyChance(TraumaDef def)
@@ -534,6 +552,8 @@ namespace DeepColony
             if (DeepColonySettings.Get.enableTrauma && TraumaUtility.HasAnyTrauma(pawn))
             {
                 parts.Add("DC_InspectTrauma".Translate());
+                string types = TraumaTypesInspect();
+                if (!types.NullOrEmpty()) parts.Add(types);
                 string history = CounselingHistoryInspect();
                 if (!history.NullOrEmpty()) parts.Add(history);
             }
@@ -541,6 +561,21 @@ namespace DeepColony
             {
                 string history = CounselingHistoryInspect();
                 if (!history.NullOrEmpty()) parts.Add(history);
+            }
+            if (DeepColonySettings.Get.enableMentoring)
+            {
+                string teach = TeachProgressInspect();
+                if (!teach.NullOrEmpty()) parts.Add(teach);
+            }
+            if (DeepColonySettings.Get.enableFactionRep)
+            {
+                string envoy = EnvoyInspect();
+                if (!envoy.NullOrEmpty()) parts.Add(envoy);
+            }
+            if (DeepColonySettings.Get.enableMentoring)
+            {
+                string rival = RivalInspect();
+                if (!rival.NullOrEmpty()) parts.Add(rival);
             }
             if (DeepColonySettings.Get.enableInheritance)
             {
@@ -571,9 +606,56 @@ namespace DeepColony
                 foreach (var kv in counselCountsByPawn)
                     if (kv.Value > best) best = kv.Value;
             }
-            int need = ConfidantUtility.SessionsToBondFor(Pawn, null);
+            int need = ConfidantUtility.SessionsToBondFor(Pawn, TryGetLastCounselor());
             string counselor = lastCounselorName.NullOrEmpty() ? "—" : lastCounselorName;
             return "DC_InspectCounsel".Translate(counselor, totalCounselSessions, best, need);
+        }
+
+        public string TraumaTypesInspect()
+        {
+            var pawn = Pawn;
+            if (pawn?.needs?.mood?.thoughts == null) return null;
+            var labels = new List<string>();
+            foreach (Thought_Memory mem in pawn.needs.mood.thoughts.memories.Memories)
+            {
+                if (mem is not Thought_Trauma tt || tt.traumaDef == null) continue;
+                string lab = tt.traumaDef.LabelCap;
+                if (!labels.Contains(lab)) labels.Add(lab);
+                if (labels.Count >= 3) break;
+            }
+            if (labels.Count == 0) return null;
+            return "DC_InspectTraumaTypes".Translate(string.Join(", ", labels));
+        }
+
+        public string TeachProgressInspect()
+        {
+            if (perkTeachProgress <= 0 || perkBeingTaughtDefName.NullOrEmpty()) return null;
+            PerkDef perk = DefDatabase<PerkDef>.GetNamedSilentFail(perkBeingTaughtDefName);
+            string name = perk?.LabelCap ?? perkBeingTaughtDefName;
+            return "DC_InspectTeachProgress".Translate(name, perkTeachProgress, 3);
+        }
+
+        public string EnvoyInspect()
+        {
+            Faction f = FactionEnvoyUtility.GetEnvoyFaction(Pawn);
+            if (f == null) return null;
+            return "DC_InspectEnvoy".Translate(f.Name);
+        }
+
+        public string RivalInspect()
+        {
+            Pawn rival = RivalryUtility.FirstLivingRival(Pawn);
+            if (rival == null) return null;
+            return "DC_InspectRival".Translate(rival.LabelShort);
+        }
+
+        public void NoteCounselingSession()
+        {
+            var pawn = Pawn;
+            if (pawn != null && TraumaUtility.HasAnyTrauma(pawn))
+                untreatedTraumaSinceTick = Find.TickManager?.TicksGame ?? 0;
+            else
+                untreatedTraumaSinceTick = -1;
         }
 
         public string GeneVsBloodInspect()
@@ -611,11 +693,14 @@ namespace DeepColony
             Scribe_Values.Look(ref unspentPerkPointsSinceTick, "unspentPerkPointsSinceTick", -1);
             Scribe_Values.Look(ref untreatedTraumaSinceTick, "untreatedTraumaSinceTick", -1);
             Scribe_Values.Look(ref lastCounselorName, "lastCounselorName");
+            Scribe_Values.Look(ref lastCounselorId, "lastCounselorId", -1);
             Scribe_Values.Look(ref totalCounselSessions, "totalCounselSessions", 0);
             Scribe_Values.Look(ref bornInColony, "bornInColony", false);
             Scribe_Values.Look(ref grewInGrowthVat, "grewInGrowthVat", false);
             Scribe_Values.Look(ref childhoodMemoryGranted, "childhoodMemoryGranted", false);
             Scribe_Values.Look(ref isolationSinceTick, "isolationSinceTick", -1);
+            Scribe_Values.Look(ref lastFamilyMealTick, "lastFamilyMealTick", -1);
+            Scribe_Values.Look(ref parentReunionGranted, "parentReunionGranted", false);
             Scribe_References.Look(ref mentor, "mentor");
             Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");
             Scribe_Values.Look(ref perkBeingTaughtDefName, "perkBeingTaughtDefName");

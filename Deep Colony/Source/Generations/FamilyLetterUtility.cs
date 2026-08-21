@@ -95,31 +95,28 @@ namespace DeepColony
         private static bool HasLivingFamily(Pawn pawn)
         {
             if (pawn.relations == null) return false;
-            foreach (DirectPawnRelation rel in pawn.relations.DirectRelations)
+            IEnumerable<Pawn> kin = CandidateKin();
+            foreach (Pawn other in kin)
             {
-                if (rel.otherPawn == null || rel.otherPawn.Dead) continue;
-                if (!rel.otherPawn.IsColonistPlayerControlled) continue;
-                if (rel.def == PawnRelationDefOf.Parent
-                    || rel.def == PawnRelationDefOf.Child
-                    || rel.def == PawnRelationDefOf.Spouse
-                    || rel.def == PawnRelationDefOf.Lover
-                    || rel.def == PawnRelationDefOf.Sibling)
-                    return true;
-            }
-            return HasAnyLineageColonist(pawn);
-        }
-
-        private static bool HasAnyLineageColonist(Pawn pawn)
-        {
-            foreach (Map map in Find.Maps)
-            {
-                foreach (Pawn other in map.mapPawns.FreeColonistsSpawned)
-                {
-                    if (other == pawn || other.Dead) continue;
-                    if (MentorshipUtility.IsLineagePair(pawn, other)) return true;
-                }
+                if (other == pawn || other.Dead) continue;
+                if (!other.IsColonistPlayerControlled) continue;
+                if (MentorshipUtility.IsLineagePair(pawn, other)) return true;
+                if (LovePartnerRelationUtility.LovePartnerRelationExists(pawn, other)) return true;
             }
             return false;
+        }
+
+        private static IEnumerable<Pawn> CandidateKin()
+        {
+            List<Pawn> found = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
+            if (found != null) return found;
+            var fallback = new List<Pawn>();
+            foreach (Map map in Find.Maps)
+            {
+                if (map?.mapPawns?.FreeColonists == null) continue;
+                fallback.AddRange(map.mapPawns.FreeColonists);
+            }
+            return fallback;
         }
 
         private static void Post(GameComp_DeepColony gc, string title, string body, int now, Pawn look)
@@ -137,6 +134,69 @@ namespace DeepColony
             gc.lastFamilyLetterTick = now;
 
             Find.LetterStack.ReceiveLetter(title, body, LetterDefOf.PositiveEvent, look);
+        }
+
+        public static void NotifyComingOfAge(Pawn pawn)
+        {
+            if (!DeepColonySettings.Get.enableInheritance) return;
+            if (pawn == null) return;
+            var gc = GameComp_DeepColony.Instance;
+            if (gc == null) return;
+            string title = "DC_FamilyLetter_ComingOfAgeLabel".Translate(pawn.LabelShort.Named("PAWN"));
+            string body = "DC_FamilyLetter_ComingOfAgeBody".Translate(pawn.LabelShort.Named("PAWN"));
+            Post(gc, title, body, Find.TickManager.TicksGame, pawn);
+        }
+
+        public static void NotifyMarriage(Pawn a, Pawn b)
+        {
+            if (!DeepColonySettings.Get.enableInheritance) return;
+            if (a == null || b == null) return;
+            if (!a.IsColonistPlayerControlled || !b.IsColonistPlayerControlled) return;
+            if (a.thingIDNumber > b.thingIDNumber) { Pawn tmp = a; a = b; b = tmp; }
+
+            var gc = GameComp_DeepColony.Instance;
+            if (gc == null) return;
+            int now = Find.TickManager.TicksGame;
+            if (gc.lastFamilyLetterTick >= 0 && now - gc.lastFamilyLetterTick < 2500)
+                return;
+
+            string title = "DC_FamilyLetter_MarriageLabel".Translate();
+            string body = "DC_FamilyLetter_MarriageBody".Translate(
+                a.LabelShort.Named("A"),
+                b.LabelShort.Named("B"));
+            Post(gc, title, body, now, a);
+        }
+
+        public static void NotifyFirstHarvest(Pawn harvester, Thing plant)
+        {
+            if (!DeepColonySettings.Get.enableInheritance) return;
+            if (harvester == null || !harvester.IsColonistPlayerControlled) return;
+            if (plant is not Plant p) return;
+            if (!p.sown && !IsHomesteaderPlant(p)) return;
+            if (!LooksLikeFoodCrop(p)) return;
+
+            var gc = GameComp_DeepColony.Instance;
+            if (gc == null || gc.firstHarvestLetterSent) return;
+            if (!HasLivingFamily(harvester)) return;
+
+            gc.firstHarvestLetterSent = true;
+            string title = "DC_FamilyLetter_HarvestLabel".Translate();
+            string body = "DC_FamilyLetter_HarvestBody".Translate(harvester.LabelShort.Named("PAWN"));
+            Post(gc, title, body, Find.TickManager.TicksGame, harvester);
+        }
+
+        private static bool IsHomesteaderPlant(Plant plant)
+        {
+            string n = plant?.def?.defName ?? "";
+            return n.StartsWith("Homesteader_");
+        }
+
+        private static bool LooksLikeFoodCrop(Plant plant)
+        {
+            if (plant?.def?.plant == null) return false;
+            if (plant.def.plant.harvestedThingDef == null) return false;
+            return plant.def.plant.harvestedThingDef.IsNutritionGivingIngestible
+                || plant.def.plant.harvestedThingDef.IsIngestible;
         }
     }
 }

@@ -372,7 +372,48 @@
   </ThoughtDef>
 
   <ThoughtDef>
-    <defName>DC_Thought_SiblingBond</defName>
+    <defName>DC_Thought_FamilyMeal</defName>
+    <label>family meal</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>ate with family</label>
+        <description>A meal shared with kin under the same roof.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_ParentReunion</defName>
+    <label>parent reunion</label>
+    <durationDays>6</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>home with a parent</label>
+        <description>Returned to a map where a parent still lives.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_SpouseRemembrance</defName>
+    <label>remembering a spouse</label>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>remembering a spouse</label>
+        <description>The funeral or remembrance day hits harder for a lost love.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
     <label>colony sibling</label>
     <thoughtClass>Thought_SituationalSocial</thoughtClass>
     <workerClass>DeepColony.ThoughtWorker_SiblingBond</workerClass>

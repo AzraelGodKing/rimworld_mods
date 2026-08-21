@@ -27,6 +27,7 @@ namespace DeepColony
         public List<FamilyLetterEntry> familyLetters = new List<FamilyLetterEntry>();
         public int lastFamilyLetterTick = -1;
         public HashSet<int> funeralProcessedCorpses = new HashSet<int>();
+        public bool firstHarvestLetterSent;
         public int lastEnvoyVisitTick = -1;
 
         private const int DriftIntervalTicks = 2500;
@@ -326,6 +327,7 @@ namespace DeepColony
             Scribe_Values.Look(ref lastFamilyLetterTick, "lastFamilyLetterTick", -1);
             Scribe_Collections.Look(ref funeralProcessedCorpses, "funeralProcessedCorpses", LookMode.Value);
             Scribe_Values.Look(ref lastEnvoyVisitTick, "lastEnvoyVisitTick", -1);
+            Scribe_Values.Look(ref firstHarvestLetterSent, "firstHarvestLetterSent", false);
 
             if (inheritanceProcessed == null) inheritanceProcessed = new HashSet<int>();
             if (formerPlayerColonists == null) formerPlayerColonists = new HashSet<int>();

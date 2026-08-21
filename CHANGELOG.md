@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Deep Colony Feature Update (Batch D)** — first harvest / marriage / coming-of-age letters, gift tribute float menu, Ideology funerals, family meals, parent reunion, classroom extra, envoy-at-trade, surface isolation ease, quiet-room therapy, tab/inspect QoL, plus rivalry/deathbed/funeral/alert fixes. Stamp `batch-d-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony Feature Update (Batch C)** — untreated-trauma alert, Perks tab filters, family letters, deathbed lessons, funerals, sibling bond, DLC/sibling hooks (Ideology/Anomaly/Odyssey/Date Night/Homesteader/Strata/Stormproof), tribute, optional prisoner counsel and envoy visits. Stamp `batch-c-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Repo** — `.cursor/` is gitignored (agent rules stay local).
 - **Date Night** (`datenight/date-activities`) — dates now pick a real activity (dinner, picnic, walk, stargazing, dancing, gift, recreation, hangout fallback), have quality outcomes (wonderful / nice / awkward + ruined-date on interruptions), gift dates hand over a small luxury, and a finished date boosts lovin chance for a day. Four new settings, EN/RU/CN strings, dev tool to force an activity. Fixed Date-hours `NotImplementedException` from vanilla joy GetPriority. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)

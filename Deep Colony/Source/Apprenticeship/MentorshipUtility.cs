@@ -407,7 +407,6 @@ namespace DeepColony
         public static float ChalkboardRoomMultiplier(Pawn pawn)
         {
             if (pawn?.Map == null || !pawn.Spawned) return 1f;
-            // Biotech blackboard — soft-fail if DLC / def missing
             ThingDef blackboard = DefDatabase<ThingDef>.GetNamedSilentFail("Blackboard");
             if (blackboard == null) return 1f;
             Room room = pawn.GetRoom();
@@ -418,6 +417,25 @@ namespace DeepColony
                     return 1.15f;
             }
             return 1f;
+        }
+
+        /// <summary>D04 — two or more apprentices of the same mentor in a blackboard room.</summary>
+        public static float ClassroomExtraMultiplier(Pawn apprentice)
+        {
+            if (ChalkboardRoomMultiplier(apprentice) <= 1f) return 1f;
+            var comp = apprentice.TryGetComp<Comp_DeepColony>();
+            if (comp?.mentor == null || apprentice.Map == null) return 1f;
+            Room room = apprentice.GetRoom();
+            if (room == null) return 1f;
+            int n = 0;
+            foreach (Pawn p in apprentice.Map.mapPawns.FreeColonistsSpawned)
+            {
+                if (p.Dead) continue;
+                if (p.GetRoom() != room) continue;
+                var c = p.TryGetComp<Comp_DeepColony>();
+                if (c?.mentor == comp.mentor) n++;
+            }
+            return n >= 2 ? 1.05f : 1f;
         }
     }
 }

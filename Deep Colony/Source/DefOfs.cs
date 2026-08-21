@@ -43,6 +43,9 @@ namespace DeepColony
         public static ThoughtDef DC_Thought_GrewUpHere;
         public static ThoughtDef DC_Thought_ChildRaidWitness;
         public static ThoughtDef DC_Thought_GrandChefHomestead;
+        public static ThoughtDef DC_Thought_FamilyMeal;
+        public static ThoughtDef DC_Thought_ParentReunion;
+        public static ThoughtDef DC_Thought_SpouseRemembrance;
 
         // ── Hediffs ───────────────────────────────────────────────────────────────
         public static HediffDef DC_Hediff_Elder;

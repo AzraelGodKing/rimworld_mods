@@ -228,17 +228,45 @@
   <DC_Settings_EnvoyVisits>Envoy visits</DC_Settings_EnvoyVisits>
   <DC_Settings_EnvoyVisitsTip>Default off. Assigned envoys may dispatch a visit to an allied settlement for a goodwill pulse. Hard preset enables this.</DC_Settings_EnvoyVisitsTip>
   <DC_Settings_ApologyTribute>Apology / tribute</DC_Settings_ApologyTribute>
-  <DC_Settings_ApologyTributeTip>Reputation tab can spend silver to write a goodwill ledger row.</DC_Settings_ApologyTributeTip>
+  <DC_Settings_ApologyTributeTip>Reputation tab can spend silver, or right-click silver / gold / jade / a valuable gift, to write a goodwill ledger row.</DC_Settings_ApologyTributeTip>
   <DC_TributeDisabled>Tribute is disabled in mod settings.</DC_TributeDisabled>
   <DC_TributeNoFaction>No faction selected.</DC_TributeNoFaction>
   <DC_TributeNoSilver>Need 200 silver in stock to send tribute.</DC_TributeNoSilver>
+  <DC_TributeNeedGift>Need a gift worth at least 200 silver (silver, gold, jade, or a valuable item).</DC_TributeNeedGift>
   <DC_TributeSent>Sent tribute to {FACTION} (−{0} silver).</DC_TributeSent>
+  <DC_TributeGiftSent>Sent {GIFT} as tribute to {FACTION}.</DC_TributeGiftSent>
+  <DC_TributeThingMenu>Send {GIFT} as tribute…</DC_TributeThingMenu>
+  <DC_TributeThingTo>Tribute to {FACTION}</DC_TributeThingTo>
   <DC_SendTribute>Send tribute (200 silver)</DC_SendTribute>
   <DC_PrisonerCounselRecruit>{COUNSELOR}'s counseling convinced {PAWN} to join.</DC_PrisonerCounselRecruit>
+  <DC_CounselPrisonerFloat>Counsel prisoner {PAWN}</DC_CounselPrisonerFloat>
   <DC_EnvoyVisitLabel>Envoy visit: {PAWN}</DC_EnvoyVisitLabel>
   <DC_EnvoyVisitBody>{PAWN} dispatched a visit to {FACTION}. The ledger records the goodwill pulse.</DC_EnvoyVisitBody>
   <DC_EnvoyVisitBodyTitle>{PAWN}'s title opened doors in {FACTION}. The visit lands harder than a common envoy's.</DC_EnvoyVisitBodyTitle>
   <DC_RepReason_Tribute>Apology / tribute</DC_RepReason_Tribute>
   <DC_RepReason_EnvoyVisit>Envoy visit</DC_RepReason_EnvoyVisit>
+  <DC_RepReason_EnvoyPresent>Envoy at trade</DC_RepReason_EnvoyPresent>
+  <DC_FuneralRitual>The funeral for {PAWN} eases violent loss.</DC_FuneralRitual>
+  <DC_FuneralSpouseMote>Laid to rest together…</DC_FuneralSpouseMote>
+  <DC_FamilyLetter_ComingOfAgeLabel>Coming of age: {PAWN}</DC_FamilyLetter_ComingOfAgeLabel>
+  <DC_FamilyLetter_ComingOfAgeBody>{PAWN} came of age in this colony. The childhood memory stays; the Legacy tab keeps the note.</DC_FamilyLetter_ComingOfAgeBody>
+  <DC_FamilyLetter_MarriageLabel>Married in the colony</DC_FamilyLetter_MarriageLabel>
+  <DC_FamilyLetter_MarriageBody>{A} and {B} married. The Legacy tab keeps the family note.</DC_FamilyLetter_MarriageBody>
+  <DC_FamilyLetter_HarvestLabel>First harvest as a family</DC_FamilyLetter_HarvestLabel>
+  <DC_FamilyLetter_HarvestBody>{PAWN} brought in a crop with kin still on the map. The Legacy tab keeps the first-harvest note.</DC_FamilyLetter_HarvestBody>
+  <DC_InspectTraumaTypes>Trauma: {0}</DC_InspectTraumaTypes>
+  <DC_InspectTeachProgress>Learning {0} ({1}/{2} sessions)</DC_InspectTeachProgress>
+  <DC_InspectEnvoy>Envoy to {0}</DC_InspectEnvoy>
+  <DC_InspectRival>Rival: {0}</DC_InspectRival>
+  <DC_ParentReunion>{CHILD} is home with {PARENT} again.</DC_ParentReunion>
+  <DC_SurfaceReturnEase>Solid ground eases {PAWN}'s isolation.</DC_SurfaceReturnEase>
+  <DC_TraumaReason_StrataGas>was downed in colony gas</DC_TraumaReason_StrataGas>
+  <DC_TraumaReason_Firestorm>was downed in a firestorm</DC_TraumaReason_Firestorm>
+  <DC_LegacyTraumatized>Colonists carrying trauma: {0}</DC_LegacyTraumatized>
+  <DC_LegacyRemembrance>Remembered</DC_LegacyRemembrance>
+  <DC_RepFilter_All>All factions</DC_RepFilter_All>
+  <DC_RepFilter_Ally>Allies / cordial</DC_RepFilter_Ally>
+  <DC_RepFilter_Hostile>Hostile</DC_RepFilter_Hostile>
+  <DC_PerkOverview_ColArchetype>Archetype</DC_PerkOverview_ColArchetype>
 
 </LanguageData>

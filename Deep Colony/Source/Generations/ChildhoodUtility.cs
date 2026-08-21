@@ -25,6 +25,7 @@ namespace DeepColony
 
             var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_GrewUpHere);
             pawn.needs.mood.thoughts.memories.TryGainMemory(thought);
+            FamilyLetterUtility.NotifyComingOfAge(pawn);
             Messages.Message(
                 "DC_GrewUpHere".Translate(pawn.LabelShort.Named("PAWN")),
                 pawn, MessageTypeDefOf.PositiveEvent, false);

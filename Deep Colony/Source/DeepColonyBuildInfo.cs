@@ -7,7 +7,7 @@ namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "batch-c-v1";
+        public const string BuildStamp = "batch-d-v1";
 
         public static void LogStartup()
         {

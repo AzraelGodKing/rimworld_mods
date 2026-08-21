@@ -2,24 +2,24 @@
 
 [b]Added[/b]
 [list]
-[*] [b]Perks tab filters[/b] — all / unspent / Hard-only, plus a skill dropdown.
-[*] Untreated-trauma alert after a day's grace; inspect shows last counselor, session count, and confidant progress.
-[*] [b]Family notes[/b] — rare birthday / anniversary letters on the Legacy tab; colony-born kids keep an "I grew up here" thought (not growth vats).
-[*] A dying mentor can finish one last lesson (or pass a first perk). Funerals (grave or pyre) ease violent-loss trauma.
-[*] Colony-raised siblings: extra opinion and an easier teach gap.
-[*] Royalty titles bubble to the top of envoy picks; titled envoys earn a little extra goodwill.
-[*] Date Night lovers bond as confidants in two sessions. Grand Chef extra mood only on Homesteader pantry food.
-[*] Ideology: Counseling sacred vs stoic. Anomaly horror trauma. Odyssey isolation / crash trauma. Child raid witnesses (slider).
-[*] Reputation tab [b]tribute[/b] (200 silver). Optional prisoner counseling (off) and envoy visits (off; Hard on).
+[*] [b]Family notes[/b] — first harvest as a family, marriage, coming of age, birthdays, and anniversaries on the Legacy tab. Eating with kin gives a short mood.
+[*] Adult children returning to a parent's map get a reunion thought. Colony-born kids still keep "I grew up here" (not growth vats).
+[*] [b]Tribute[/b] — Reputation tab (200 silver) or right-click silver / gold / jade / a valuable gift. Envoy on the map during a successful trade writes extra goodwill.
+[*] Ideology funerals ease violent-loss trauma. Spouses get extra ease. Quiet rooms (no work benches) counsel better.
+[*] Classroom extra when two apprentices share a Biotech blackboard. Right-click prisoner counseling (off by default).
+[*] Odyssey isolation eases when you return to the surface. Strata gas / firestorm downs use existing trauma with a keyed reason.
+[*] Perks tab archetype column. Reputation ally / hostile filter. Legacy lists traumatized colonists and remembrance names.
+[*] Inspect: trauma types, teach progress, envoy, rival, and Date Night confidant count.
+[*] Untreated-trauma alert, Perks filters, deathbed lesson, sibling bond, Royalty envoy bias, Date Night / Homesteader / Anomaly hooks (Batch C).
 [/list]
 
 [b]Fixed[/b]
 [list]
-[*] Isekai Rank / destiny traits stay unique; growth/combat/utility aptitudes can inherit.
-[*] Birth inheritance only for player-side babies (no NPC birth stamp).
-[*] Biotech gene backoff for non-Baseliner xenotypes + xenogenes.
-[*] Mentor loops blocked; envoy uniqueness includes caravans.
+[*] Rivalry checks no longer scan every colonist pair on a hot path.
+[*] Deathbed lessons are player-side only. Funeral messages only fire if someone was actually eased.
+[*] Counseling restarts the untreated-trauma grace. Birthday notes see siblings on caravans.
+[*] Isekai Rank / destiny traits stay unique; birth inheritance only for player-side babies.
 [/list]
 
-[i]Build stamp (Player.log): batch-c-v1[/i]
+[i]Build stamp (Player.log): batch-d-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Deep%20Colony/CHANGELOG.md[/i]

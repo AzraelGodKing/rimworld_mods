@@ -133,4 +133,19 @@
   <DC_Thought_SiblingBond.stages_0.label>колонистский сиблинг</DC_Thought_SiblingBond.stages_0.label>
   <DC_Thought_SiblingBond.stages_0.description>Выросли вместе в этой колонии. Связь тише соперничества.</DC_Thought_SiblingBond.stages_0.description>
 
+  <DC_Thought_FamilyMeal.label>семейная трапеза</DC_Thought_FamilyMeal.label>
+  <DC_Thought_FamilyMeal.description>Еда с родными под одной крышей.</DC_Thought_FamilyMeal.description>
+  <DC_Thought_FamilyMeal.stages_0.label>ел(а) с семьёй</DC_Thought_FamilyMeal.stages_0.label>
+  <DC_Thought_FamilyMeal.stages_0.description>Еда с родными под одной крышей.</DC_Thought_FamilyMeal.stages_0.description>
+
+  <DC_Thought_ParentReunion.label>воссоединение с родителем</DC_Thought_ParentReunion.label>
+  <DC_Thought_ParentReunion.description>Вернулся(ась) на карту, где ещё живёт родитель.</DC_Thought_ParentReunion.description>
+  <DC_Thought_ParentReunion.stages_0.label>дома с родителем</DC_Thought_ParentReunion.stages_0.label>
+  <DC_Thought_ParentReunion.stages_0.description>Вернулся(ась) на карту, где ещё живёт родитель.</DC_Thought_ParentReunion.stages_0.description>
+
+  <DC_Thought_SpouseRemembrance.label>поминая супруга</DC_Thought_SpouseRemembrance.label>
+  <DC_Thought_SpouseRemembrance.description>Похороны или день памяти тяжелее для потерянной любви.</DC_Thought_SpouseRemembrance.description>
+  <DC_Thought_SpouseRemembrance.stages_0.label>поминая супруга</DC_Thought_SpouseRemembrance.stages_0.label>
+  <DC_Thought_SpouseRemembrance.stages_0.description>Похороны или день памяти тяжелее для потерянной любви.</DC_Thought_SpouseRemembrance.stages_0.description>
+
 </LanguageData>

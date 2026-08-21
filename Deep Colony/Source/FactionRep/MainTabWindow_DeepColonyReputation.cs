@@ -11,6 +11,7 @@ namespace DeepColony
         private Vector2 factionScroll;
         private Vector2 ledgerScroll;
         private Faction selected;
+        private int repFilter; // 0 all, 1 ally, 2 hostile
 
         public override Vector2 RequestedTabSize => new Vector2(900f, 560f);
 
@@ -35,12 +36,26 @@ namespace DeepColony
                     : "DC_RepConsequencesOff".Translate());
             y += 24f;
 
+            Rect filterRect = new Rect(inRect.x, y, 180f, 26f);
+            if (Widgets.ButtonText(filterRect, RepFilterLabel()))
+            {
+                var opts = new List<FloatMenuOption>
+                {
+                    new FloatMenuOption("DC_RepFilter_All".Translate(), () => repFilter = 0),
+                    new FloatMenuOption("DC_RepFilter_Ally".Translate(), () => repFilter = 1),
+                    new FloatMenuOption("DC_RepFilter_Hostile".Translate(), () => repFilter = 2)
+                };
+                Find.WindowStack.Add(new FloatMenu(opts));
+            }
+            y += 30f;
+
             float listW = inRect.width * 0.38f;
             Rect listOut = new Rect(inRect.x, y, listW, inRect.yMax - y);
             Rect detailOut = new Rect(inRect.x + listW + 12f, y, inRect.width - listW - 12f, inRect.yMax - y);
 
             var factions = Find.FactionManager.AllFactionsListForReading
                 .Where(f => !f.IsPlayer && !f.defeated && !f.Hidden)
+                .Where(MatchesRepFilter)
                 .OrderByDescending(f => f.GoodwillWith(Faction.OfPlayer))
                 .ToList();
 
@@ -180,6 +195,25 @@ namespace DeepColony
                 }
             }
             Widgets.EndScrollView();
+        }
+
+        private string RepFilterLabel()
+        {
+            string key = repFilter == 1 ? "DC_RepFilter_Ally"
+                : repFilter == 2 ? "DC_RepFilter_Hostile"
+                : "DC_RepFilter_All";
+            return key.Translate();
+        }
+
+        private bool MatchesRepFilter(Faction f)
+        {
+            if (repFilter == 1)
+                return f.RelationKindWith(Faction.OfPlayer) == FactionRelationKind.Ally
+                    || f.GoodwillWith(Faction.OfPlayer) >= 0;
+            if (repFilter == 2)
+                return f.RelationKindWith(Faction.OfPlayer) == FactionRelationKind.Hostile
+                    || f.GoodwillWith(Faction.OfPlayer) < 0;
+            return true;
         }
     }
 }

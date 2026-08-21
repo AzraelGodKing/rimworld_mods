@@ -10,6 +10,7 @@ namespace DeepColony
         {
             if (!DeepColonySettings.Get.enableMentoring) return;
             if (mentor == null || mentor.relations == null) return;
+            if (!IsPlayerSide(mentor)) return;
 
             Map map = mentor.MapHeld;
             if (map == null) return;
@@ -25,10 +26,18 @@ namespace DeepColony
             {
                 Pawn apprentice = toNotify[i];
                 if (apprentice.Dead) continue;
+                if (!IsPlayerSide(apprentice)) continue;
                 if (apprentice.MapHeld != map && apprentice.MapHeld != mentor.MapHeld) continue;
 
                 TryLastLesson(mentor, apprentice);
             }
+        }
+
+        private static bool IsPlayerSide(Pawn pawn)
+        {
+            if (pawn == null) return false;
+            if (pawn.IsColonistPlayerControlled) return true;
+            return pawn.Faction != null && pawn.Faction.IsPlayer;
         }
 
         private static void TryLastLesson(Pawn mentor, Pawn apprentice)
