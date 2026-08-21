@@ -11,6 +11,26 @@
   <DateNight_HadADate.stages_0.label>свидание</DateNight_HadADate.stages_0.label>
   <DateNight_HadADate.stages_0.description>Провёл время с {0}. Приятно.</DateNight_HadADate.stages_0.description>
 
+  <DateNight_DateWonderful.label>чудесное свидание</DateNight_DateWonderful.label>
+  <DateNight_DateWonderful.description>Свидание с {0} было идеальным. Всё ещё думаю о нём.</DateNight_DateWonderful.description>
+  <DateNight_DateWonderful.stages_0.label>чудесное свидание</DateNight_DateWonderful.stages_0.label>
+  <DateNight_DateWonderful.stages_0.description>Свидание с {0} было идеальным. Всё ещё думаю о нём.</DateNight_DateWonderful.stages_0.description>
+
+  <DateNight_DateAwkward.label>неловкое свидание</DateNight_DateAwkward.label>
+  <DateNight_DateAwkward.description>Провёл время с {0}, но что-то не клеилось. И всё же... это было что-то.</DateNight_DateAwkward.description>
+  <DateNight_DateAwkward.stages_0.label>неловкое свидание</DateNight_DateAwkward.stages_0.label>
+  <DateNight_DateAwkward.stages_0.description>Провёл время с {0}, но что-то не клеилось. И всё же... это было что-то.</DateNight_DateAwkward.stages_0.description>
+
+  <DateNight_DateRuined.label>сорванное свидание</DateNight_DateRuined.label>
+  <DateNight_DateRuined.description>Наше свидание прервали. Ну конечно.</DateNight_DateRuined.description>
+  <DateNight_DateRuined.stages_0.label>сорванное свидание</DateNight_DateRuined.stages_0.label>
+  <DateNight_DateRuined.stages_0.description>Наше свидание прервали. Ну конечно.</DateNight_DateRuined.stages_0.description>
+
+  <DateNight_ReceivedGift.label>получен подарок</DateNight_ReceivedGift.label>
+  <DateNight_ReceivedGift.description>{0} принёс мне кое-что. Обо мне думали.</DateNight_ReceivedGift.description>
+  <DateNight_ReceivedGift.stages_0.label>получен подарок</DateNight_ReceivedGift.stages_0.label>
+  <DateNight_ReceivedGift.stages_0.description>{0} принёс мне кое-что. Обо мне думали.</DateNight_ReceivedGift.stages_0.description>
+
   <DateNight_MadeIt.label>оба пришли</DateNight_MadeIt.label>
   <DateNight_MadeIt.description>Вы с {0} оба явились.</DateNight_MadeIt.description>
   <DateNight_MadeIt.stages_0.label>оба пришли</DateNight_MadeIt.stages_0.label>

@@ -11,7 +11,23 @@
   <DateNight_Settings_SelfLovinTip>В любовные часы взрослые используют свою кровать, если партнёр не делит двуспальную. Без беременности. Та же пауза, что у любовных часов. Дети никогда не подходят.</DateNight_Settings_SelfLovinTip>
   <DateNight_Settings_WindowBed>Занимать двуспальную на любовные часы</DateNight_Settings_WindowBed>
   <DateNight_Settings_WindowBedTip>На время любовных часов двуспальная кровать назначается паре, затем прежние кровати возвращаются. Выключите, если назначаете кровати сами.</DateNight_Settings_WindowBedTip>
+  <DateNight_Settings_Activities>Занятия на свидании</DateNight_Settings_Activities>
+  <DateNight_Settings_ActivitiesTip>Свидание выбирает настоящее занятие по обстановке: ужин за столом, пикник, прогулка, звёзды ночью, танцы у места сбора, небольшой подарок или развлечения. ВЫКЛ: свидание — всегда простые посиделки.</DateNight_Settings_ActivitiesTip>
+  <DateNight_Settings_Quality>Качество свидания (чудесное / неловкое)</DateNight_Settings_Quality>
+  <DateNight_Settings_QualityTip>Итог свидания зависит от занятия, красоты места, погоды и удачи — чудесное, приятное или неловкое. ВЫКЛ: всегда обычная мысль о свидании.</DateNight_Settings_QualityTip>
+  <DateNight_Settings_Gifts>Разрешить подарки (расходует предметы)</DateNight_Settings_Gifts>
+  <DateNight_Settings_GiftsTip>Один из пары может принести небольшой презент (пиво, шоколад, амброзию...) и вручить его — настроение и мнение растут. Предмет переходит в инвентарь партнёра.</DateNight_Settings_GiftsTip>
+  <DateNight_Settings_PostDateBoost>Искра после свидания</DateNight_Settings_PostDateBoost>
+  <DateNight_Settings_PostDateBoostTip>Завершённое свидание повышает шанс любовных часов примерно на игровой день.</DateNight_Settings_PostDateBoostTip>
   <DateNight_Settings_Reset>Сбросить</DateNight_Settings_Reset>
+  <DateNight_Report_Hangout>на свидании с {0}.</DateNight_Report_Hangout>
+  <DateNight_Report_Dinner>ужинает с {0}.</DateNight_Report_Dinner>
+  <DateNight_Report_Picnic>на пикнике с {0}.</DateNight_Report_Picnic>
+  <DateNight_Report_Walk>гуляет с {0}.</DateNight_Report_Walk>
+  <DateNight_Report_Stargaze>смотрит на звёзды с {0}.</DateNight_Report_Stargaze>
+  <DateNight_Report_Dance>танцует с {0}.</DateNight_Report_Dance>
+  <DateNight_Report_Gift>дарит подарок {0}.</DateNight_Report_Gift>
+  <DateNight_Report_Recreation>развлекается с {0}.</DateNight_Report_Recreation>
   <DateNight_Alert_Mismatch>Расписание не совпадает</DateNight_Alert_Mismatch>
   <DateNight_Alert_MismatchDesc>У одного из пары стоят часы свидания или любовные часы, а у партнёра нет — или часы разные. Назначьте одни и те же часы обоим.</DateNight_Alert_MismatchDesc>
   <DateNight_Alert_MismatchNone>У {0} стоит {1}; у {2} нет.</DateNight_Alert_MismatchNone>

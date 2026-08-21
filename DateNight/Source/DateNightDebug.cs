@@ -159,6 +159,61 @@ namespace DateNight
             }
         }
 
+        [DebugAction(Cat, "Force date with activity (selected)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceDateWithActivity()
+        {
+            List<Pawn> pawns = SelectedHumanlikes();
+            if (pawns.Count == 0)
+            {
+                Messages.Message("[Date Night] Select at least one humanlike with a love partner.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            foreach (DateActivity activity in new[]
+                     {
+                         DateActivity.Hangout, DateActivity.Dinner, DateActivity.Picnic,
+                         DateActivity.Walk, DateActivity.Stargaze, DateActivity.Dance,
+                         DateActivity.Gift, DateActivity.Recreation,
+                     })
+            {
+                DateActivity chosen = activity;
+                options.Add(new FloatMenuOption(chosen.ToString(), () =>
+                {
+                    // Window instead of one-shot: the partner resolves their copy of
+                    // the date a few ticks later and must land on the same activity.
+                    DateNightActivities.ForcedActivity = chosen;
+                    DateNightActivities.ForcedActivityExpireTick = Find.TickManager.TicksGame + 10000;
+
+                    int n = 0;
+                    foreach (Pawn p in pawns)
+                    {
+                        if (DateNightDateUtility.TryStartDateNow(p, force: true))
+                        {
+                            n++;
+                        }
+                    }
+                    Messages.Message(
+                        $"[Date Night] Forced {chosen} date on {n} pawn(s); override active ~4 in-game hours.",
+                        n > 0 ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
+                        historical: false);
+                }));
+            }
+            Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        [DebugAction(Cat, "Clear forced date activity",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ClearForcedActivity()
+        {
+            DateNightActivities.ForcedActivity = DateActivity.Unresolved;
+            DateNightActivities.ForcedActivityExpireTick = -1;
+            Messages.Message("[Date Night] Forced date activity cleared.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
         [DebugAction(Cat, "Log rendezvous bed for selected",
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void LogRendezvous()
