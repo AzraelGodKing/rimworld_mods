@@ -2,6 +2,7 @@
 
 [b]Added[/b]
 [list]
+[*] [b]Family tree[/b] — Family tab on the pawn inspect pane (next to Character). Click a relative to jump to that pawn. Also a Family tree button on the Bio card.
 [*] [b]Family notes[/b] — first harvest as a family, marriage, coming of age, birthdays, and anniversaries on the Legacy tab. Eating with kin gives a short mood.
 [*] Adult children returning to a parent's map get a reunion thought. Colony-born kids still keep "I grew up here" (not growth vats).
 [*] [b]Tribute[/b] — Reputation tab (200 silver) or right-click silver / gold / jade / a valuable gift. Envoy on the map during a successful trade writes extra goodwill.
@@ -21,5 +22,5 @@
 [*] Isekai Rank / destiny traits stay unique; birth inheritance only for player-side babies.
 [/list]
 
-[i]Build stamp (Player.log): batch-d-v1[/i]
+[i]Build stamp (Player.log): family-tree-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Deep%20Colony/CHANGELOG.md[/i]

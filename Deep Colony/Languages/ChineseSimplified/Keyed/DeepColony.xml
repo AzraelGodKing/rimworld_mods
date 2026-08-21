@@ -268,5 +268,19 @@
   <DC_RepFilter_Ally>同盟 / 友善</DC_RepFilter_Ally>
   <DC_RepFilter_Hostile>敌对</DC_RepFilter_Hostile>
   <DC_PerkOverview_ColArchetype>原型</DC_PerkOverview_ColArchetype>
+  <DC_TabFamily>家族</DC_TabFamily>
+  <DC_FamilyTreeButton>家族树</DC_FamilyTreeButton>
+  <DC_FamilyTree_Title>{PAWN} 的家族</DC_FamilyTree_Title>
+  <DC_FamilyTree_Empty>没有记录的父母、子女、兄弟姐妹或伴侣。</DC_FamilyTree_Empty>
+  <DC_FamilyTree_Grandparents>祖父母</DC_FamilyTree_Grandparents>
+  <DC_FamilyTree_Parents>父母</DC_FamilyTree_Parents>
+  <DC_FamilyTree_Generation>同代</DC_FamilyTree_Generation>
+  <DC_FamilyTree_Children>子女</DC_FamilyTree_Children>
+  <DC_FamilyTree_Grandchildren>孙子女</DC_FamilyTree_Grandchildren>
+  <DC_FamilyTree_Teaching>师徒线</DC_FamilyTree_Teaching>
+  <DC_FamilyTree_Self>本人</DC_FamilyTree_Self>
+  <DC_FamilyTree_Dead>（已故）</DC_FamilyTree_Dead>
+  <DC_FamilyTree_Away>不在地图上</DC_FamilyTree_Away>
+  <DC_FamilyTree_ClickTip>点击以选中并跳转到该角色。</DC_FamilyTree_ClickTip>
 
 </LanguageData>

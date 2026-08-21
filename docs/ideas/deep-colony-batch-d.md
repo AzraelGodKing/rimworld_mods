@@ -1,6 +1,6 @@
 # Deep Colony — Batch D (post–Batch C)
 
-**Status:** shipped (`batch-d-v1`). Do not reuse D01–D25.  
+**Status:** shipped (`batch-d-v1`, family tree `family-tree-v1`). Do not reuse D01–D25.  
 **Mod:** [Deep Colony](../../Deep%20Colony/). Prior pools: [deep-colony-updates.md](deep-colony-updates.md) (A01–A20, B01–B22), [deep-colony-batch-c.md](deep-colony-batch-c.md) (C01–C24). **Do not reuse those IDs.**  
 **Lane rule:** colonist / colony-facing only. No furniture packs, raid timers, off-map politics, farm brand, or a second goodwill buffer.
 
@@ -62,6 +62,7 @@ Batch C shipped Phases 6–9. Players asked for **as much as possible** from lef
 | D13 | Strata gas / firestorm keyed reasons on existing toxic/fire trauma | Trauma | Fail-open |
 | D14 | Inspect: trauma types, teach progress, envoy, rival | QoL | |
 | D15 | Marriage letter | Generations | Colonist–colonist spouse |
+| D16 | Family tree on the Character inspect tab — click a relative to jump to that pawn | Generations | Inspect tab + Bio-card button; dead included |
 
 Dropped on purpose: extra perk tiers, caravan-forming envoy visits, farmstand, named hunters, world chronicle UI, school furniture.
 

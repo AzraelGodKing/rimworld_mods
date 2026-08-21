@@ -111,3 +111,4 @@ Spec: [deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md). Build stam
 - [x] **Fixes** — rivalry interval, player-only deathbed, funeral only-when-eased, counseling restarts trauma-alert grace, sibling/caravan kin, Date Night confidant inspect
 - [x] **Identity** — family meal, parent reunion, coming of age, classroom extra, envoy-at-trade, surface isolation ease, quiet-room therapy, spouse remembrance
 - [x] **Tabs / inspect** — Legacy trauma + remembrance, Reputation ally/hostile filter, Perks archetype column, inspect extras, prisoner-counsel float menu, Strata gas/firestorm reasons
+- [x] **D16 Family tree** — Character inspect tab + Bio-card button; click a relative to select and jump to that pawn

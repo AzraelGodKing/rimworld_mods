@@ -268,5 +268,19 @@
   <DC_RepFilter_Ally>Allies / cordial</DC_RepFilter_Ally>
   <DC_RepFilter_Hostile>Hostile</DC_RepFilter_Hostile>
   <DC_PerkOverview_ColArchetype>Archetype</DC_PerkOverview_ColArchetype>
+  <DC_TabFamily>Family</DC_TabFamily>
+  <DC_FamilyTreeButton>Family tree</DC_FamilyTreeButton>
+  <DC_FamilyTree_Title>Family of {PAWN}</DC_FamilyTree_Title>
+  <DC_FamilyTree_Empty>No parents, children, siblings, or partners recorded.</DC_FamilyTree_Empty>
+  <DC_FamilyTree_Grandparents>Grandparents</DC_FamilyTree_Grandparents>
+  <DC_FamilyTree_Parents>Parents</DC_FamilyTree_Parents>
+  <DC_FamilyTree_Generation>This generation</DC_FamilyTree_Generation>
+  <DC_FamilyTree_Children>Children</DC_FamilyTree_Children>
+  <DC_FamilyTree_Grandchildren>Grandchildren</DC_FamilyTree_Grandchildren>
+  <DC_FamilyTree_Teaching>Teaching line</DC_FamilyTree_Teaching>
+  <DC_FamilyTree_Self>this pawn</DC_FamilyTree_Self>
+  <DC_FamilyTree_Dead>(dead)</DC_FamilyTree_Dead>
+  <DC_FamilyTree_Away>not on a map</DC_FamilyTree_Away>
+  <DC_FamilyTree_ClickTip>Click to select and jump to this pawn.</DC_FamilyTree_ClickTip>
 
 </LanguageData>

@@ -268,5 +268,19 @@
   <DC_RepFilter_Ally>Союзники / дружественные</DC_RepFilter_Ally>
   <DC_RepFilter_Hostile>Враждебные</DC_RepFilter_Hostile>
   <DC_PerkOverview_ColArchetype>Архетип</DC_PerkOverview_ColArchetype>
+  <DC_TabFamily>Семья</DC_TabFamily>
+  <DC_FamilyTreeButton>Родословная</DC_FamilyTreeButton>
+  <DC_FamilyTree_Title>Семья {PAWN}</DC_FamilyTree_Title>
+  <DC_FamilyTree_Empty>Нет записанных родителей, детей, сиблингов или партнёров.</DC_FamilyTree_Empty>
+  <DC_FamilyTree_Grandparents>Бабушки и дедушки</DC_FamilyTree_Grandparents>
+  <DC_FamilyTree_Parents>Родители</DC_FamilyTree_Parents>
+  <DC_FamilyTree_Generation>Это поколение</DC_FamilyTree_Generation>
+  <DC_FamilyTree_Children>Дети</DC_FamilyTree_Children>
+  <DC_FamilyTree_Grandchildren>Внуки</DC_FamilyTree_Grandchildren>
+  <DC_FamilyTree_Teaching>Линия учительства</DC_FamilyTree_Teaching>
+  <DC_FamilyTree_Self>этот колонист</DC_FamilyTree_Self>
+  <DC_FamilyTree_Dead>(мёртв)</DC_FamilyTree_Dead>
+  <DC_FamilyTree_Away>не на карте</DC_FamilyTree_Away>
+  <DC_FamilyTree_ClickTip>Нажмите, чтобы выбрать и перейти к этому колонисту.</DC_FamilyTree_ClickTip>
 
 </LanguageData>

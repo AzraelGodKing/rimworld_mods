@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Deep Colony family tree** — Character inspect tab + Bio-card button; click kin to jump to that pawn. Stamp `family-tree-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony Feature Update (Batch D)** — first harvest / marriage / coming-of-age letters, gift tribute float menu, Ideology funerals, family meals, parent reunion, classroom extra, envoy-at-trade, surface isolation ease, quiet-room therapy, tab/inspect QoL, plus rivalry/deathbed/funeral/alert fixes. Stamp `batch-d-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony Feature Update (Batch C)** — untreated-trauma alert, Perks tab filters, family letters, deathbed lessons, funerals, sibling bond, DLC/sibling hooks (Ideology/Anomaly/Odyssey/Date Night/Homesteader/Strata/Stormproof), tribute, optional prisoner counsel and envoy visits. Stamp `batch-c-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Repo** — `.cursor/` is gitignored (agent rules stay local).

@@ -25,6 +25,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
   - **D12** Right-click counsel prisoner (still settings-gated, default off).
   - **D13** Strata gas / firestorm downs use existing toxic/fire trauma with a keyed reason.
   - **D14** Inspect shows trauma types, teach progress, envoy, and rival.
+  - **D16** Family tree on the pawn Character inspect pane (and a Bio-card button). Click a relative to select and jump to that pawn; dead kin included; teaching line listed separately.
 - **Batch C (Phases 6–9)** (`batch-c-v1`) — post-2.0 QoL, kin memory, DLC/sibling hooks, gated envoy/tribute. Spec: [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
   - **C01** Untreated-trauma alert after a 1-day grace (same pattern as unspent perk points).
   - **C02** Counseling history on inspect (last counselor, session count, confidant progress).
