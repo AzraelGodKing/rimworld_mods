@@ -24,7 +24,9 @@
   </loadAfter>
   <description>Adds Date and Lovin timetable slots to the Schedule tab.
 
-Date hours: partners walk, sit at a table, or hang out. Mood and opinion only — no bed, no pregnancy.
+Date hours: partners pick a real date activity based on what's around — dinner at a table, a picnic, a walk, stargazing at night, dancing at a gather spot, a small gift (beer, chocolate...), recreation, or a simple hangout. Mood and opinion only — no bed, no pregnancy.
+
+Dates have quality: venue beauty, weather, and a little luck decide whether it was a wonderful, nice, or awkward date. A raid, draft, or mental break mid-date leaves a ruined-date mood. A finished date leaves a spark — better lovin chance for about a day.
 
 Lovin hours: paint the same hours on both partners. They meet in a shared double. When both are in it, lovin uses a short mean-time-between until the schedule changes. The double is claimed for that window, then previous beds are restored.
 
@@ -48,6 +50,10 @@ SETTINGS
 - Eager mode (optional): also shortens post-lovin cooldown like Always Do Lovin — can spam pregnancy rolls.
 - Allow private time (default ON): self-lovin when a partner is not sharing a double.
 - Claim double for Lovin hours (default ON): temporary rendezvous bed, then restore.
+- Date activities (default ON): dinner / picnic / walk / stargazing / dancing / gifts / recreation. Off = plain hangout dates.
+- Date quality (default ON): wonderful / nice / awkward outcomes. Off = flat nice-date thought.
+- Allow gift dates (default ON): consumes a small luxury item; it moves to the partner's inventory.
+- Post-date lovin spark (default ON): a finished date improves lovin chance for about a day.
 
 Chinese Simplified and Russian included. Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: clear Date / Lovin schedule slots back to Sleep/Anything.</description>
 </ModMetaData>
