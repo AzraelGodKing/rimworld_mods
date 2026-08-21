@@ -17,6 +17,7 @@ namespace DateNight
         {
             base.ExposeData();
             DateNightWindows.ExposeData();
+            DateNightDateUtility.ExposeData();
         }
 
         public override void GameComponentTick()

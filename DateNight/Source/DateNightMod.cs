@@ -55,6 +55,30 @@ namespace DateNight
                 "DateNight_Settings_WindowBed".Translate(),
                 ref Settings.allowWindowBedClaim,
                 "DateNight_Settings_WindowBedTip".Translate());
+            listing.Gap(6f);
+
+            listing.CheckboxLabeled(
+                "DateNight_Settings_Activities".Translate(),
+                ref Settings.enableDateActivities,
+                "DateNight_Settings_ActivitiesTip".Translate());
+            listing.Gap(6f);
+
+            listing.CheckboxLabeled(
+                "DateNight_Settings_Quality".Translate(),
+                ref Settings.enableDateQuality,
+                "DateNight_Settings_QualityTip".Translate());
+            listing.Gap(6f);
+
+            listing.CheckboxLabeled(
+                "DateNight_Settings_Gifts".Translate(),
+                ref Settings.allowGiftDates,
+                "DateNight_Settings_GiftsTip".Translate());
+            listing.Gap(6f);
+
+            listing.CheckboxLabeled(
+                "DateNight_Settings_PostDateBoost".Translate(),
+                ref Settings.postDateLovinBoost,
+                "DateNight_Settings_PostDateBoostTip".Translate());
             listing.Gap(10f);
 
             if (listing.ButtonText("DateNight_Settings_Reset".Translate(), null, 0.25f))
