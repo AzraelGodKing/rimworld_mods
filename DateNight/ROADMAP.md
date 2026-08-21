@@ -5,6 +5,7 @@
 - Rimbody / Exosuit / Schedule Everything extra-column schedule button (no Workout dropdown steal)
 - Private time (self-lovin) for adults on Lovin hours when a partner/double is not available
 - Date hours (walk / table / hangout, mood + opinion)
+- Date activities (dinner / picnic / walk / stargaze / dance / gift / recreation) with quality tiers, ruined-date thought, and post-date lovin spark
 - Missed-date / made-it thoughts
 - Temporary rendezvous double claim for the Lovin window
 - Ideology no-lovin + Biotech sterile reroute (fail-open)
