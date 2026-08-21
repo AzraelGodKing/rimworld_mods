@@ -1,0 +1,9 @@
+blank_issues_enabled: true
+
+contact_links:
+  - name: Discord — RimWorld bug reports
+    url: https://discord.gg/Vwh2y7qMXv
+    about: Chat about bugs or get help on the Discord server.
+  - name: Steam Workshop — Strata
+    url: https://steamcommunity.com/sharedfiles/filedetails/?id=3762844292
+    about: Leave feedback or report issues on the Strata Workshop page.
