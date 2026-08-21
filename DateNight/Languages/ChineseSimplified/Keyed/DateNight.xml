@@ -11,7 +11,23 @@
   <DateNight_Settings_SelfLovinTip>爱爱时段若伴侣不在双人床，成人可以使用自己的床。不会怀孕。冷却与爱爱相同。儿童永远不符合条件。</DateNight_Settings_SelfLovinTip>
   <DateNight_Settings_WindowBed>爱爱时段占用双人床</DateNight_Settings_WindowBed>
   <DateNight_Settings_WindowBedTip>爱爱时段临时把约会双人床分给这对伴侣，结束后恢复原来的床。若你想自己分配床铺，请关闭。</DateNight_Settings_WindowBedTip>
+  <DateNight_Settings_Activities>约会活动</DateNight_Settings_Activities>
+  <DateNight_Settings_ActivitiesTip>约会会根据环境选择真正的活动：餐桌晚餐、野餐、散步、夜晚观星、聚集点跳舞、送小礼物，或在娱乐设施旁消遣。关闭：约会永远只是简单地待在一起。</DateNight_Settings_ActivitiesTip>
+  <DateNight_Settings_Quality>约会质量（美妙 / 尴尬）</DateNight_Settings_Quality>
+  <DateNight_Settings_QualityTip>约会结果随活动、场地美观度、天气和运气变化——美妙、愉快或尴尬。关闭：每次约会都给固定的愉快约会心情。</DateNight_Settings_QualityTip>
+  <DateNight_Settings_Gifts>允许礼物约会（消耗物品）</DateNight_Settings_Gifts>
+  <DateNight_Settings_GiftsTip>一方可以取来小奢侈品（啤酒、巧克力、珍馐……）送给对方，提升心情和好感。物品会进入伴侣的物品栏。</DateNight_Settings_GiftsTip>
+  <DateNight_Settings_PostDateBoost>约会后的火花</DateNight_Settings_PostDateBoost>
+  <DateNight_Settings_PostDateBoostTip>完成一次约会后，这对伴侣的爱爱几率提升约一个游戏日。</DateNight_Settings_PostDateBoostTip>
   <DateNight_Settings_Reset>恢复默认</DateNight_Settings_Reset>
+  <DateNight_Report_Hangout>正在和{0}约会。</DateNight_Report_Hangout>
+  <DateNight_Report_Dinner>正在和{0}共进晚餐。</DateNight_Report_Dinner>
+  <DateNight_Report_Picnic>正在和{0}野餐。</DateNight_Report_Picnic>
+  <DateNight_Report_Walk>正在和{0}散步。</DateNight_Report_Walk>
+  <DateNight_Report_Stargaze>正在和{0}观星。</DateNight_Report_Stargaze>
+  <DateNight_Report_Dance>正在和{0}跳舞。</DateNight_Report_Dance>
+  <DateNight_Report_Gift>正在给{0}送礼物。</DateNight_Report_Gift>
+  <DateNight_Report_Recreation>正在和{0}消遣。</DateNight_Report_Recreation>
   <DateNight_Alert_Mismatch>作息不一致</DateNight_Alert_Mismatch>
   <DateNight_Alert_MismatchDesc>有人给爱爱或约会涂了时段，但伴侣没有涂，或两人涂的小时不同。请给双方涂上相同的小时。</DateNight_Alert_MismatchDesc>
   <DateNight_Alert_MismatchNone>{0} 涂了{1}；{2} 没有。</DateNight_Alert_MismatchNone>
