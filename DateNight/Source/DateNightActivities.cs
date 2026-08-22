@@ -48,10 +48,20 @@ namespace DateNight
                 ForcedActivity = DateActivity.Unresolved;
             }
 
+            if (partner.jobs?.curDriver is JobDriver_Date other
+                && other.CoupleActivity != DateActivity.Unresolved)
+            {
+                return other.CoupleActivity;
+            }
+
+            Pawn initiator = IsInitiator(pawn, partner) ? pawn : partner;
+            Pawn otherPawn = initiator == pawn ? partner : pawn;
+
             List<DateActivity> candidates = new List<DateActivity> { DateActivity.Hangout };
 
             Map map = pawn.Map;
-            bool mealsAvailable = FindMealFor(pawn, partner) != null;
+            bool mealsAvailable = FindMealFor(pawn, partner) != null
+                || FindMealFor(partner, pawn) != null;
             bool niceOutside = IsNiceOutside(map);
 
             if (mealsAvailable && HasColonistTable(map))
@@ -74,7 +84,7 @@ namespace DateNight
             {
                 candidates.Add(DateActivity.Dance);
             }
-            if (AllowGifts() && FindGiftFor(pawn, partner) != null)
+            if (AllowGifts() && FindGiftFor(initiator, otherPawn) != null)
             {
                 candidates.Add(DateActivity.Gift);
             }
@@ -235,7 +245,7 @@ namespace DateNight
                 return null;
             }
             Thing best = null;
-            float bestDist = float.MaxValue;
+            int bestId = int.MaxValue;
             foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
             {
                 CompGatherSpot gather = building.TryGetComp<CompGatherSpot>();
@@ -247,10 +257,9 @@ namespace DateNight
                 {
                     continue;
                 }
-                float dist = PairDistance(pawn, partner, building.Position);
-                if (dist < bestDist)
+                if (building.thingIDNumber < bestId)
                 {
-                    bestDist = dist;
+                    bestId = building.thingIDNumber;
                     best = building;
                 }
             }
@@ -265,7 +274,7 @@ namespace DateNight
                 return null;
             }
             Building best = null;
-            float bestDist = float.MaxValue;
+            int bestId = int.MaxValue;
             foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
             {
                 if (building.def.building?.joyKind == null)
@@ -276,10 +285,9 @@ namespace DateNight
                 {
                     continue;
                 }
-                float dist = PairDistance(pawn, partner, building.Position);
-                if (dist < bestDist)
+                if (building.thingIDNumber < bestId)
                 {
-                    bestDist = dist;
+                    bestId = building.thingIDNumber;
                     best = building;
                 }
             }
@@ -290,33 +298,39 @@ namespace DateNight
         public static IntVec3 FindOutdoorSpot(Pawn pawn, Pawn partner, bool preferBeauty)
         {
             Map map = pawn.Map;
-            IntVec3 root = partner != null
-                ? new IntVec3((pawn.Position.x + partner.Position.x) / 2, 0, (pawn.Position.z + partner.Position.z) / 2)
-                : pawn.Position;
-            if (!root.InBounds(map))
-            {
-                root = pawn.Position;
-            }
+            IntVec3 root = StableSearchRoot(pawn, partner);
 
             IntVec3 best = IntVec3.Invalid;
             float bestBeauty = float.MinValue;
-            for (int i = 0; i < 24; i++)
+            int seed = Gen.HashCombineInt(
+                CoupleSeed(pawn, partner),
+                GenDate.DaysPassed * 31 + GenLocalDate.HourInteger(map) / 6);
+            seed = Gen.HashCombineInt(seed, preferBeauty ? 7 : 13);
+            Rand.PushState(seed);
+            try
             {
-                if (!CellFinder.TryFindRandomCellNear(root, map, 20,
-                        c => IsUsableOutdoorCell(c, map, pawn, partner), out IntVec3 cell))
+                for (int i = 0; i < 24; i++)
                 {
-                    break;
+                    if (!CellFinder.TryFindRandomCellNear(root, map, 20,
+                            c => IsUsableOutdoorCell(c, map, pawn, partner), out IntVec3 cell))
+                    {
+                        break;
+                    }
+                    if (!preferBeauty)
+                    {
+                        return cell;
+                    }
+                    float beauty = BeautyUtility.AverageBeautyPerceptible(cell, map);
+                    if (beauty > bestBeauty)
+                    {
+                        bestBeauty = beauty;
+                        best = cell;
+                    }
                 }
-                if (!preferBeauty)
-                {
-                    return cell;
-                }
-                float beauty = BeautyUtility.AverageBeautyPerceptible(cell, map);
-                if (beauty > bestBeauty)
-                {
-                    bestBeauty = beauty;
-                    best = cell;
-                }
+            }
+            finally
+            {
+                Rand.PopState();
             }
             return best;
         }
@@ -356,21 +370,11 @@ namespace DateNight
             return true;
         }
 
-        private static float PairDistance(Pawn pawn, Pawn partner, IntVec3 pos)
-        {
-            float dist = pawn.Position.DistanceToSquared(pos);
-            if (partner != null && partner.Map == pawn.Map)
-            {
-                dist += partner.Position.DistanceToSquared(pos);
-            }
-            return dist;
-        }
-
-        /// <summary>Nearest colonist table cell both pawns can reach (for dinner dates).</summary>
+        /// <summary>Shared table; initiator and partner take adjacent seats.</summary>
         public static LocalTargetInfo FindDinnerSpot(Pawn pawn, Pawn partner)
         {
             Building best = null;
-            float bestDist = float.MaxValue;
+            int bestId = int.MaxValue;
             foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
             {
                 if (!building.def.IsTable)
@@ -381,10 +385,9 @@ namespace DateNight
                 {
                     continue;
                 }
-                float dist = PairDistance(pawn, partner, building.Position);
-                if (dist < bestDist)
+                if (building.thingIDNumber < bestId)
                 {
-                    bestDist = dist;
+                    bestId = building.thingIDNumber;
                     best = building;
                 }
             }
@@ -393,38 +396,46 @@ namespace DateNight
                 return LocalTargetInfo.Invalid;
             }
 
-            // Stand next to the table, not on it.
+            var seats = new List<IntVec3>();
             foreach (IntVec3 side in GenAdj.CellsAdjacentCardinal(best))
             {
                 if (side.InBounds(pawn.Map) && side.Standable(pawn.Map)
-                    && pawn.CanReach(side, PathEndMode.OnCell, Danger.Some))
+                    && pawn.CanReach(side, PathEndMode.OnCell, Danger.Some)
+                    && (partner == null || partner.Map != pawn.Map
+                        || partner.CanReach(side, PathEndMode.OnCell, Danger.Some)))
                 {
-                    return side;
+                    seats.Add(side);
                 }
             }
-            return best;
+            if (seats.Count == 0)
+            {
+                return best;
+            }
+            int idx = IsInitiator(pawn, partner) ? 0 : 1;
+            if (idx >= seats.Count)
+            {
+                return AdjacentTo(seats[0], pawn, partner);
+            }
+            return seats[idx];
         }
 
         /// <summary>Where this activity happens. Falls back to the generic date spot.</summary>
         public static LocalTargetInfo FindSpotFor(DateActivity activity, Pawn pawn, Pawn partner)
         {
-            switch (activity)
+            DateActivity kind = activity == DateActivity.Gift ? DateActivity.Hangout : activity;
+            LocalTargetInfo venue = LocalTargetInfo.Invalid;
+
+            switch (kind)
             {
                 case DateActivity.Dinner:
-                {
-                    LocalTargetInfo table = FindDinnerSpot(pawn, partner);
-                    if (table.IsValid)
-                    {
-                        return table;
-                    }
-                    break;
-                }
+                    return FindDinnerSpot(pawn, partner);
                 case DateActivity.Picnic:
+                case DateActivity.Walk:
                 {
                     IntVec3 cell = FindOutdoorSpot(pawn, partner, preferBeauty: true);
                     if (cell.IsValid)
                     {
-                        return cell;
+                        venue = cell;
                     }
                     break;
                 }
@@ -433,16 +444,7 @@ namespace DateNight
                     IntVec3 cell = FindOutdoorSpot(pawn, partner, preferBeauty: false);
                     if (cell.IsValid)
                     {
-                        return cell;
-                    }
-                    break;
-                }
-                case DateActivity.Walk:
-                {
-                    IntVec3 cell = FindOutdoorSpot(pawn, partner, preferBeauty: true);
-                    if (cell.IsValid)
-                    {
-                        return cell;
+                        venue = cell;
                     }
                     break;
                 }
@@ -451,7 +453,7 @@ namespace DateNight
                     Thing gather = FindGatherSpotFor(pawn, partner);
                     if (gather != null)
                     {
-                        return gather;
+                        venue = gather;
                     }
                     break;
                 }
@@ -460,16 +462,130 @@ namespace DateNight
                     Building joy = FindJoyBuildingFor(pawn, partner);
                     if (joy != null)
                     {
-                        if (joy.def.hasInteractionCell)
-                        {
-                            return joy.InteractionCell;
-                        }
-                        return joy;
+                        venue = joy.def.hasInteractionCell
+                            ? (LocalTargetInfo)joy.InteractionCell
+                            : joy;
                     }
                     break;
                 }
             }
-            return DateNightDateUtility.FindDateSpot(pawn, partner);
+
+            if (!venue.IsValid)
+            {
+                venue = DateNightDateUtility.FindDateSpot(pawn, partner);
+            }
+
+            if (kind == DateActivity.Walk || !venue.IsValid)
+            {
+                return venue;
+            }
+
+            return PairStandCell(venue, pawn, partner);
+        }
+
+        /// <summary>
+        /// Two standable cells at the same venue. Initiator takes the first, partner the
+        /// second, so they never claim the same chair / campfire cell.
+        /// </summary>
+        private static LocalTargetInfo PairStandCell(LocalTargetInfo venue, Pawn pawn, Pawn partner)
+        {
+            IntVec3 root = venue.HasThing ? venue.Thing.Position : venue.Cell;
+            Map map = pawn.Map;
+            var seats = new List<IntVec3>();
+            if (IsSharedStandable(root, map, pawn, partner))
+            {
+                seats.Add(root);
+            }
+            foreach (IntVec3 dir in GenAdj.CardinalDirections)
+            {
+                IntVec3 side = root + dir;
+                if (IsSharedStandable(side, map, pawn, partner) && !seats.Contains(side))
+                {
+                    seats.Add(side);
+                }
+            }
+            if (seats.Count == 0)
+            {
+                return venue;
+            }
+            int idx = IsInitiator(pawn, partner) ? 0 : 1;
+            if (idx >= seats.Count)
+            {
+                return AdjacentTo(seats[0], pawn, partner);
+            }
+            return seats[idx];
+        }
+
+        private static bool IsSharedStandable(IntVec3 cell, Map map, Pawn pawn, Pawn partner)
+        {
+            if (!cell.InBounds(map) || !cell.Standable(map))
+            {
+                return false;
+            }
+            if (!pawn.CanReach(cell, PathEndMode.OnCell, Danger.Some))
+            {
+                return false;
+            }
+            if (partner != null && partner.Map == map
+                && !partner.CanReach(cell, PathEndMode.OnCell, Danger.Some))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>Partner stands next to the shared venue instead of occupying the same cell.</summary>
+        public static LocalTargetInfo AdjacentTo(LocalTargetInfo venue, Pawn pawn, Pawn partner)
+        {
+            IntVec3 root = venue.HasThing ? venue.Thing.Position : venue.Cell;
+            Map map = pawn.Map;
+            foreach (IntVec3 dir in GenAdj.CardinalDirections)
+            {
+                IntVec3 side = root + dir;
+                if (!side.InBounds(map) || !side.Standable(map))
+                {
+                    continue;
+                }
+                if (partner != null && side == partner.Position)
+                {
+                    continue;
+                }
+                if (pawn.CanReach(side, PathEndMode.OnCell, Danger.Some))
+                {
+                    return side;
+                }
+            }
+            return venue;
+        }
+
+        /// <summary>
+        /// Search origin that does not depend on where each pawn currently stands,
+        /// so both partners get the same outdoor cell even if they resolve minutes apart.
+        /// </summary>
+        private static IntVec3 StableSearchRoot(Pawn pawn, Pawn partner)
+        {
+            Map map = pawn.Map;
+            Thing gather = FindGatherSpotFor(pawn, partner);
+            if (gather != null)
+            {
+                return gather.Position;
+            }
+
+            Building first = null;
+            int bestId = int.MaxValue;
+            foreach (Building building in map.listerBuildings.allBuildingsColonist)
+            {
+                if (building.thingIDNumber < bestId)
+                {
+                    bestId = building.thingIDNumber;
+                    first = building;
+                }
+            }
+            if (first != null)
+            {
+                return first.Position;
+            }
+            return map.Center;
         }
     }
 }
