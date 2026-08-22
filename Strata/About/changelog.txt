@@ -1,4 +1,4 @@
-[h1]Strata — Update[/h1]
+[h1]Strata — 3.0.0[/h1]
 
 [b]Fixed[/b]
 [list]
@@ -8,4 +8,4 @@
 [*] Climbing upstairs no longer hard-errors via vanilla PocketMapExit on orphan / unlinked landings.
 [/list]
 
-[i]Build stamp (Player.log): omnijunction-linkedpipes-v1[/i]
+[i]Version 3.0.0 in Player.log (`[Strata] v3.0.0 ...`). Build stamp: omnijunction-linkedpipes-v1[/i]
