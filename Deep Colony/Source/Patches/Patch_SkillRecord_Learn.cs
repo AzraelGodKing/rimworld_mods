@@ -69,7 +69,10 @@ namespace DeepColony.Patches
 
             // Biotech blackboard in room during active teaching
             if (active)
+            {
                 mult *= MentorshipUtility.ChalkboardRoomMultiplier(pawn);
+                mult *= MentorshipUtility.ClassroomExtraMultiplier(pawn);
+            }
 
             xp *= mult;
         }

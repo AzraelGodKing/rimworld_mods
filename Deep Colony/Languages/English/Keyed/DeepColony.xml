@@ -197,4 +197,139 @@
   <DC_HeirloomCreated>{PAWN}'s {ITEM} is now a colony heirloom.</DC_HeirloomCreated>
   <DC_ChronicTrauma>{PAWN}'s untreated trauma settled into chronic stress.</DC_ChronicTrauma>
 
+  <!-- ── Batch C ────────────────────────────────────────────────────────────── -->
+  <DC_Alert_UntreatedTrauma>Untreated trauma</DC_Alert_UntreatedTrauma>
+  <DC_Alert_UntreatedTraumaDesc>These colonists have carried psychological trauma for more than a day without counseling. Doctors can Counsel from the Doctor work type or right-click.</DC_Alert_UntreatedTraumaDesc>
+  <DC_InspectCounsel>Counsel: last {0}, {1} sessions (bond {2}/{3})</DC_InspectCounsel>
+  <DC_InspectGeneVsBlood>Xenogenes pull against the family {0} tradition</DC_InspectGeneVsBlood>
+  <DC_PerkFilter_All>All</DC_PerkFilter_All>
+  <DC_PerkFilter_Unspent>Unspent</DC_PerkFilter_Unspent>
+  <DC_PerkFilter_Hard>Hard-only</DC_PerkFilter_Hard>
+  <DC_PerkFilter_AllSkills>All skills</DC_PerkFilter_AllSkills>
+  <DC_EnvoyTitled>(titled)</DC_EnvoyTitled>
+  <DC_TraumaReason_CaveIn>was buried in a cave-in</DC_TraumaReason_CaveIn>
+  <DC_TraumaReason_IonStorm>was downed in an ion storm</DC_TraumaReason_IonStorm>
+  <DC_FamilyLetter_BirthdayLabel>Family birthday: {PAWN}</DC_FamilyLetter_BirthdayLabel>
+  <DC_FamilyLetter_BirthdayBody>The colony marks {PAWN}'s birthday. Kin on the map share a quiet note on the Legacy tab.</DC_FamilyLetter_BirthdayBody>
+  <DC_FamilyLetter_AnniversaryLabel>Family anniversary</DC_FamilyLetter_AnniversaryLabel>
+  <DC_FamilyLetter_AnniversaryBody>{A} and {B} mark another year together. The Legacy tab keeps the note.</DC_FamilyLetter_AnniversaryBody>
+  <DC_LegacyLetters>Family notes</DC_LegacyLetters>
+  <DC_DeathbedPerk>{MENTOR}'s last lesson granted {APPRENTICE} the perk: {GIFT}.</DC_DeathbedPerk>
+  <DC_DeathbedLesson>{MENTOR}'s last lesson reached {APPRENTICE} ({GIFT}).</DC_DeathbedLesson>
+  <DC_GrewUpHere>{PAWN} carries a childhood memory of growing up in this colony.</DC_GrewUpHere>
+  <DC_FuneralEase>Laying {PAWN} to rest eases violent loss.</DC_FuneralEase>
+  <DC_FuneralBurn>The pyre for {PAWN} eases violent loss.</DC_FuneralBurn>
+  <DC_FuneralEaseMote>Laid to rest…</DC_FuneralEaseMote>
+  <DC_ChildRaidWitness>{PAWN} saw the fighting and will not forget it soon.</DC_ChildRaidWitness>
+  <DC_Settings_BatchC>Later systems (Batch C)</DC_Settings_BatchC>
+  <DC_Settings_ChildRaid>Child raid-witness chance: {0}%</DC_Settings_ChildRaid>
+  <DC_Settings_PrisonerCounsel>Prisoner counseling (recruit path)</DC_Settings_PrisonerCounsel>
+  <DC_Settings_PrisonerCounselTip>Default off. Doctors can counsel prisoners as a slow Social-gated recruit. Does not replace Warden chat.</DC_Settings_PrisonerCounselTip>
+  <DC_Settings_EnvoyVisits>Envoy visits</DC_Settings_EnvoyVisits>
+  <DC_Settings_EnvoyVisitsTip>Default off. Assigned envoys may dispatch a visit to an allied settlement for a goodwill pulse. Hard preset enables this.</DC_Settings_EnvoyVisitsTip>
+  <DC_Settings_ApologyTribute>Apology / tribute</DC_Settings_ApologyTribute>
+  <DC_Settings_ApologyTributeTip>Reputation tab can spend silver, or right-click silver / gold / jade / a valuable gift, to write a goodwill ledger row.</DC_Settings_ApologyTributeTip>
+  <DC_TributeDisabled>Tribute is disabled in mod settings.</DC_TributeDisabled>
+  <DC_TributeNoFaction>No faction selected.</DC_TributeNoFaction>
+  <DC_TributeNoSilver>Need 200 silver in stock to send tribute.</DC_TributeNoSilver>
+  <DC_TributeNeedGift>Need a gift worth at least 200 silver (silver, gold, jade, or a valuable item).</DC_TributeNeedGift>
+  <DC_TributeSent>Sent tribute to {FACTION} (−{0} silver).</DC_TributeSent>
+  <DC_TributeGiftSent>Sent {GIFT} as tribute to {FACTION}.</DC_TributeGiftSent>
+  <DC_TributeThingMenu>Send {GIFT} as tribute…</DC_TributeThingMenu>
+  <DC_TributeThingTo>Tribute to {FACTION}</DC_TributeThingTo>
+  <DC_SendTribute>Send tribute (200 silver)</DC_SendTribute>
+  <DC_PrisonerCounselRecruit>{COUNSELOR}'s counseling convinced {PAWN} to join.</DC_PrisonerCounselRecruit>
+  <DC_CounselPrisonerFloat>Counsel prisoner {PAWN}</DC_CounselPrisonerFloat>
+  <DC_EnvoyVisitLabel>Envoy visit: {PAWN}</DC_EnvoyVisitLabel>
+  <DC_EnvoyVisitBody>{PAWN} dispatched a visit to {FACTION}. The ledger records the goodwill pulse.</DC_EnvoyVisitBody>
+  <DC_EnvoyVisitBodyTitle>{PAWN}'s title opened doors in {FACTION}. The visit lands harder than a common envoy's.</DC_EnvoyVisitBodyTitle>
+  <DC_RepReason_Tribute>Apology / tribute</DC_RepReason_Tribute>
+  <DC_RepReason_EnvoyVisit>Envoy visit</DC_RepReason_EnvoyVisit>
+  <DC_RepReason_EnvoyPresent>Envoy at trade</DC_RepReason_EnvoyPresent>
+  <DC_FuneralRitual>The funeral for {PAWN} eases violent loss.</DC_FuneralRitual>
+  <DC_FuneralSpouseMote>Laid to rest together…</DC_FuneralSpouseMote>
+  <DC_FamilyLetter_ComingOfAgeLabel>Coming of age: {PAWN}</DC_FamilyLetter_ComingOfAgeLabel>
+  <DC_FamilyLetter_ComingOfAgeBody>{PAWN} came of age in this colony. The childhood memory stays; the Legacy tab keeps the note.</DC_FamilyLetter_ComingOfAgeBody>
+  <DC_FamilyLetter_MarriageLabel>Married in the colony</DC_FamilyLetter_MarriageLabel>
+  <DC_FamilyLetter_MarriageBody>{A} and {B} married. The Legacy tab keeps the family note.</DC_FamilyLetter_MarriageBody>
+  <DC_FamilyLetter_HarvestLabel>First harvest as a family</DC_FamilyLetter_HarvestLabel>
+  <DC_FamilyLetter_HarvestBody>{PAWN} brought in a crop with kin still on the map. The Legacy tab keeps the first-harvest note.</DC_FamilyLetter_HarvestBody>
+  <DC_InspectTraumaTypes>Trauma: {0}</DC_InspectTraumaTypes>
+  <DC_InspectTeachProgress>Learning {0} ({1}/{2} sessions)</DC_InspectTeachProgress>
+  <DC_InspectEnvoy>Envoy to {0}</DC_InspectEnvoy>
+  <DC_InspectRival>Rival: {0}</DC_InspectRival>
+  <DC_ParentReunion>{CHILD} is home with {PARENT} again.</DC_ParentReunion>
+  <DC_SurfaceReturnEase>Solid ground eases {PAWN}'s isolation.</DC_SurfaceReturnEase>
+  <DC_TraumaReason_StrataGas>was downed in colony gas</DC_TraumaReason_StrataGas>
+  <DC_TraumaReason_Firestorm>was downed in a firestorm</DC_TraumaReason_Firestorm>
+  <DC_LegacyTraumatized>Colonists carrying trauma: {0}</DC_LegacyTraumatized>
+  <DC_LegacyRemembrance>Remembered</DC_LegacyRemembrance>
+  <DC_RepFilter_All>All factions</DC_RepFilter_All>
+  <DC_RepFilter_Ally>Allies / cordial</DC_RepFilter_Ally>
+  <DC_RepFilter_Hostile>Hostile</DC_RepFilter_Hostile>
+  <DC_PerkOverview_ColArchetype>Archetype</DC_PerkOverview_ColArchetype>
+  <DC_TabFamily>Family</DC_TabFamily>
+  <DC_FamilyTreeButton>Family tree</DC_FamilyTreeButton>
+  <DC_FamilyTree_Title>Family of {PAWN}</DC_FamilyTree_Title>
+  <DC_FamilyTree_Empty>No parents, children, siblings, or partners recorded.</DC_FamilyTree_Empty>
+  <DC_FamilyTree_Grandparents>Grandparents</DC_FamilyTree_Grandparents>
+  <DC_FamilyTree_Parents>Parents</DC_FamilyTree_Parents>
+  <DC_FamilyTree_Generation>This generation</DC_FamilyTree_Generation>
+  <DC_FamilyTree_Children>Children</DC_FamilyTree_Children>
+  <DC_FamilyTree_Grandchildren>Grandchildren</DC_FamilyTree_Grandchildren>
+  <DC_FamilyTree_Teaching>Teaching line</DC_FamilyTree_Teaching>
+  <DC_FamilyTree_Self>this pawn</DC_FamilyTree_Self>
+  <DC_FamilyTree_Dead>(dead)</DC_FamilyTree_Dead>
+  <DC_FamilyTree_Away>not on a map</DC_FamilyTree_Away>
+  <DC_FamilyTree_ClickTip>Click to select and jump to this pawn.</DC_FamilyTree_ClickTip>
+  <DC_Settings_FamilyJoin>Family join &amp; reconcile</DC_Settings_FamilyJoin>
+  <DC_Settings_EnableFamilyJoin>Kin join / defect on the map</DC_Settings_EnableFamilyJoin>
+  <DC_Settings_EnableFamilyJoinTip>Family of colonists may join from visits, or defect from raids. Spouse is the highest chance. Ex-lovers never join this way (0%). Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge. Unwavering prisoners can be reached by family they like (both ways). Also: in-law welcome, kin homecoming, kin dying or executed, breakup wounds, grandchild born, kin taken, tended by family, last of the line, step-family, prison visits, releasing kin, family-tradition teaching, kin downed in a fight, and empty nest.</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_RaidDefect>Raid kin defect chance (spouse): {0}%</DC_Settings_RaidDefect>
+  <DC_Settings_VisitJoin>Visit kin join chance (spouse): {0}%</DC_Settings_VisitJoin>
+  <DC_Settings_ExLoverReconcile>Ex-lovers may get back together</DC_Settings_ExLoverReconcile>
+  <DC_Settings_ExLoverReconcileTip>Ex-lovers and ex-spouses on the same map may become lovers again. The fourth reunion marks a toxic relationship that counseling can ease. Date Night still owns romance schedules.</DC_Settings_ExLoverReconcileTip>
+  <DC_Settings_ReconcileMtb>Ex-lover reconcile MTB (days): {0}</DC_Settings_ReconcileMtb>
+  <DC_RepReason_FamilyDefect>Family defected</DC_RepReason_FamilyDefect>
+  <DC_Letter_FamilyJoinLabel>{PAWN} joined the colony</DC_Letter_FamilyJoinLabel>
+  <DC_Letter_FamilyJoinBody>{PAWN} left {FACTION} to stay with family. Because they were not at war with you, the faction did not take it as a slight.</DC_Letter_FamilyJoinBody>
+  <DC_Letter_FamilyDefectLabel>{PAWN} defected</DC_Letter_FamilyDefectLabel>
+  <DC_Letter_FamilyDefectBody>{PAWN} broke from {FACTION} in the fight to stand with kin. The old faction holds a grudge.</DC_Letter_FamilyDefectBody>
+  <DC_Letter_ReconcileLabel>Back together</DC_Letter_ReconcileLabel>
+  <DC_Letter_ReconcileBody>{A} and {B} got back together (reunion {COUNT}). Old wounds are not gone, but they are lovers again.</DC_Letter_ReconcileBody>
+  <DC_Letter_ToxicRelationshipLabel>Toxic relationship</DC_Letter_ToxicRelationshipLabel>
+  <DC_Letter_ToxicRelationshipBody>{A} and {B} got back together again (reunion {COUNT}). This on-again pattern has turned toxic — counseling or therapy may help.</DC_Letter_ToxicRelationshipBody>
+  <DC_InspectToxicRelationship>Toxic relationship — counseling may help</DC_InspectToxicRelationship>
+  <DC_Settings_UnwaveringOpinion>Family vs unwavering min opinion (both ways): {0}</DC_Settings_UnwaveringOpinion>
+  <DC_Settings_UnwaveringBreak>Family vs unwavering break chance (spouse): {0}%</DC_Settings_UnwaveringBreak>
+  <DC_FamilyLoyaltyFloat>Talk as family to {PAWN}</DC_FamilyLoyaltyFloat>
+  <DC_FamilyLoyalty_NotFamily>Only family can reach an unwavering prisoner.</DC_FamilyLoyalty_NotFamily>
+  <DC_FamilyLoyalty_LowOpinion>They do not like each other enough (need {0} both ways; {1} / {2}).</DC_FamilyLoyalty_LowOpinion>
+  <DC_FamilyLoyalty_StillHolds>Loyalty holds…</DC_FamilyLoyalty_StillHolds>
+  <DC_Letter_FamilyLoyaltyLabel>Loyalty cracked</DC_Letter_FamilyLoyaltyLabel>
+  <DC_Letter_FamilyLoyaltyBody>{FAMILY} reached {PAWN}. Unwavering loyalty broke — wardens can recruit them now.</DC_Letter_FamilyLoyaltyBody>
+  <DC_InLawWelcome>{A} and {B} married. Family on the map welcomed the new in-law.</DC_InLawWelcome>
+  <DC_KinHomecoming>{PAWN} is home. {KIN} is glad they are back.</DC_KinHomecoming>
+  <DC_BreakupWound>{A} and {B} split. The wound is still fresh.</DC_BreakupWound>
+  <DC_Letter_KinDiedLabel>{PAWN} died</DC_Letter_KinDiedLabel>
+  <DC_Letter_KinDiedBody>{PAWN} died while not part of this colony. {KIN} and other kin on the map felt it.</DC_Letter_KinDiedBody>
+  <DC_Letter_KinExecutedLabel>Colony executed {PAWN}</DC_Letter_KinExecutedLabel>
+  <DC_Letter_KinExecutedBody>{WARDEN} executed {PAWN}. {KIN} and other kin on the map will not forget that the colony did this.</DC_Letter_KinExecutedBody>
+  <DC_FamilyLetter_GrandchildLabel>Grandchild: {BABY}</DC_FamilyLetter_GrandchildLabel>
+  <DC_FamilyLetter_GrandchildBody>{KIN} has a grandchild in the colony. {BABY} is here. The Legacy tab keeps the note.</DC_FamilyLetter_GrandchildBody>
+  <DC_Letter_KinTakenLabel>{PAWN} was taken</DC_Letter_KinTakenLabel>
+  <DC_Letter_KinTakenBody>{PAWN} was captured or kidnapped. {KIN} and other kin on the map felt it. They are not dead — but they are gone.</DC_Letter_KinTakenBody>
+  <DC_KinReturned>{PAWN} made it back. {KIN} is glad they are home.</DC_KinReturned>
+  <DC_LastOfTheLine>{PAWN} is the last of their blood in this colony.</DC_LastOfTheLine>
+  <DC_Letter_LineContinuesLabel>The line continues</DC_Letter_LineContinuesLabel>
+  <DC_Letter_LineContinuesBody>{PAWN} has blood kin in the colony again. The name does not end here.</DC_Letter_LineContinuesBody>
+  <DC_StepFamily>{A} and {B} married. Children on the map have a new step-parent.</DC_StepFamily>
+  <DC_Letter_KinReleasedLabel>Colony released {PAWN}</DC_Letter_KinReleasedLabel>
+  <DC_Letter_KinReleasedBody>The colony let {PAWN} go. {KIN} and other kin felt that — it is not an execution.</DC_Letter_KinReleasedBody>
+  <DC_KinDownedBeside>{PAWN} saw {KIN} fall in the fight.</DC_KinDownedBeside>
+  <DC_FamilyLetter_TraditionLabel>Family skill: {SKILL}</DC_FamilyLetter_TraditionLabel>
+  <DC_FamilyLetter_TraditionBody>{MENTOR} passed the household {SKILL} on to {APPRENTICE}. The Legacy tab keeps the note.</DC_FamilyLetter_TraditionBody>
+  <DC_FamilyLetter_EmptyNestLabel>Empty nest: {PAWN}</DC_FamilyLetter_EmptyNestLabel>
+  <DC_FamilyLetter_EmptyNestBody>{CHILD} left the home map. {PAWN} has no children left there. The rooms are quieter. The Legacy tab keeps the note.</DC_FamilyLetter_EmptyNestBody>
+
 </LanguageData>

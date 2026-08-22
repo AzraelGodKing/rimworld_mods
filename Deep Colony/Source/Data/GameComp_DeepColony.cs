@@ -24,6 +24,11 @@ namespace DeepColony
         public string founderSurname;
         public List<RemembranceEntry> remembranceEntries = new List<RemembranceEntry>();
         public int lastRemembranceDayOfYear = -1;
+        public List<FamilyLetterEntry> familyLetters = new List<FamilyLetterEntry>();
+        public int lastFamilyLetterTick = -1;
+        public HashSet<int> funeralProcessedCorpses = new HashSet<int>();
+        public bool firstHarvestLetterSent;
+        public int lastEnvoyVisitTick = -1;
 
         private const int DriftIntervalTicks = 2500;
         private const int MassacreWindowTicks = 60000;
@@ -190,6 +195,8 @@ namespace DeepColony
                 RemembranceUtility.GameTick();
                 if (Find.TickManager.TicksGame % DriftIntervalTicks == 0)
                     TickTraumaSystems();
+                FamilyLetterUtility.GameTick();
+                AnomalyOdysseyTraumaUtility.GameTick();
             }
 
             driftTickCounter++;
@@ -200,6 +207,7 @@ namespace DeepColony
             {
                 ProcessFactionDrift();
                 FactionEnvoyUtility.GameTick();
+                EnvoyVisitUtility.GameTick();
             }
             if (DeepColonySettings.Get.enableTrauma)
                 PruneDeathWindow(Find.TickManager.TicksGame);
@@ -208,6 +216,10 @@ namespace DeepColony
             TickElders();
             if (DeepColonySettings.Get.enableHeirlooms)
                 TickHeirlooms();
+            FamilyJoinUtility.GameTick();
+            ExLoverReconcileUtility.GameTick();
+            FamilyLifeUtility.GameTick();
+            FamilyEchoUtility.GameTick();
         }
 
         public void RegisterHeirloom(int thingId, string ownerName, string echoPerkDefName)
@@ -315,6 +327,11 @@ namespace DeepColony
             Scribe_Values.Look(ref founderSurname, "founderSurname");
             Scribe_Collections.Look(ref remembranceEntries, "remembranceEntries", LookMode.Deep);
             Scribe_Values.Look(ref lastRemembranceDayOfYear, "lastRemembranceDayOfYear", -1);
+            Scribe_Collections.Look(ref familyLetters, "familyLetters", LookMode.Deep);
+            Scribe_Values.Look(ref lastFamilyLetterTick, "lastFamilyLetterTick", -1);
+            Scribe_Collections.Look(ref funeralProcessedCorpses, "funeralProcessedCorpses", LookMode.Value);
+            Scribe_Values.Look(ref lastEnvoyVisitTick, "lastEnvoyVisitTick", -1);
+            Scribe_Values.Look(ref firstHarvestLetterSent, "firstHarvestLetterSent", false);
 
             if (inheritanceProcessed == null) inheritanceProcessed = new HashSet<int>();
             if (formerPlayerColonists == null) formerPlayerColonists = new HashSet<int>();
@@ -326,6 +343,10 @@ namespace DeepColony
                 recentColonistDeathTimestamps = new List<int>();
             if (remembranceEntries == null)
                 remembranceEntries = new List<RemembranceEntry>();
+            if (familyLetters == null)
+                familyLetters = new List<FamilyLetterEntry>();
+            if (funeralProcessedCorpses == null)
+                funeralProcessedCorpses = new HashSet<int>();
         }
 
         public override void FinalizeInit()
@@ -340,6 +361,10 @@ namespace DeepColony
                 recentColonistDeathTimestamps = new List<int>();
             if (remembranceEntries == null)
                 remembranceEntries = new List<RemembranceEntry>();
+            if (familyLetters == null)
+                familyLetters = new List<FamilyLetterEntry>();
+            if (funeralProcessedCorpses == null)
+                funeralProcessedCorpses = new HashSet<int>();
             ActiveMentoringSession.ResetSession();
             EnsureFounderSurname();
         }

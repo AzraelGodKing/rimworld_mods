@@ -421,6 +421,8 @@ namespace DeepColony
                 + " mentoring=" + s.enableMentoring
                 + " inheritance=" + s.enableInheritance
                 + " factionRep=" + s.enableFactionRep
+                + " familyJoin=" + s.enableFamilyJoin
+                + " reconcile=" + s.enableExLoverReconcile
                 + " combatShock=" + s.combatShockChance
                 + " minLead=" + s.minSkillLead
                 + " mentorXP=" + s.passiveMentorMultiplier + "/" + s.activeMentorMultiplier
@@ -448,6 +450,260 @@ namespace DeepColony
                 }
             }
             Log.Message(sb.ToString());
+        }
+
+        [DebugAction("Deep Colony", "Force family birthday letter",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceFamilyLetter(Pawn p)
+        {
+            var gc = GameComp_DeepColony.Instance;
+            if (gc == null) return;
+            gc.lastFamilyLetterTick = -1;
+            string title = "DC_FamilyLetter_BirthdayLabel".Translate(p.LabelShort.Named("PAWN"));
+            string body = "DC_FamilyLetter_BirthdayBody".Translate(p.LabelShort.Named("PAWN"));
+            if (gc.familyLetters == null) gc.familyLetters = new System.Collections.Generic.List<FamilyLetterEntry>();
+            gc.familyLetters.Add(new FamilyLetterEntry { title = title, body = body, ticksGame = Find.TickManager.TicksGame });
+            Find.LetterStack.ReceiveLetter(title, body, LetterDefOf.PositiveEvent, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply child raid-witness thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceChildWitness(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_ChildRaidWitness == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_ChildRaidWitness);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought);
+        }
+
+        [DebugAction("Deep Colony", "Force kin join / defect",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinJoin(Pawn p)
+        {
+            if (FamilyJoinUtility.TryForceJoin(p))
+            {
+                Messages.Message("[DeepColony] Forced kin join for " + p.LabelShort + ".",
+                    p, MessageTypeDefOf.PositiveEvent, false);
+                return;
+            }
+            Log.Warning("[DeepColony] Could not force kin join for " + p.LabelShort
+                + " (player / prisoner / no kin / not on a home map). Weight="
+                + FamilyJoinUtility.MaxKinWeight(p).ToString("F2"));
+        }
+
+        [DebugAction("Deep Colony", "Force ex-lover reconcile",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceExLoverReconcile(Pawn p)
+        {
+            if (ExLoverReconcileUtility.TryForceReconcile(p))
+            {
+                Messages.Message("[DeepColony] Forced reconcile for " + p.LabelShort + ".",
+                    p, MessageTypeDefOf.PositiveEvent, false);
+                return;
+            }
+            Log.Warning("[DeepColony] No ex-lover/ex-spouse on this map for " + p.LabelShort + ".");
+        }
+
+        [DebugAction("Deep Colony", "Apply toxic relationship trauma",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceToxicRelationship(Pawn p)
+        {
+            if (DC_DefOf.DC_Trauma_ToxicRelationship == null)
+            {
+                Log.Warning("[DeepColony] DC_Trauma_ToxicRelationship is missing.");
+                return;
+            }
+            TraumaUtility.ApplyTrauma(p, DC_DefOf.DC_Trauma_ToxicRelationship);
+        }
+
+        [DebugAction("Deep Colony", "Toggle unwavering prisoner",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ToggleUnwavering(Pawn p)
+        {
+            if (p.guest == null)
+            {
+                Log.Warning("[DeepColony] No guest tracker on " + p.LabelShort);
+                return;
+            }
+            p.guest.Recruitable = !p.guest.Recruitable;
+            Messages.Message("[DeepColony] " + p.LabelShort + " Recruitable=" + p.guest.Recruitable
+                + " (unwavering=" + (!p.guest.Recruitable) + ").",
+                p, MessageTypeDefOf.NeutralEvent, false);
+        }
+
+        [DebugAction("Deep Colony", "Force family loyalty break",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceFamilyLoyaltyBreak(Pawn p)
+        {
+            if (FamilyLoyaltyUtility.TryForceBreak(p))
+            {
+                Messages.Message("[DeepColony] Broke unwavering loyalty on " + p.LabelShort + ".",
+                    p, MessageTypeDefOf.PositiveEvent, false);
+                return;
+            }
+            Log.Warning("[DeepColony] Could not break unwavering on " + p.LabelShort
+                + " (not an unwavering prisoner, or no family on the map).");
+        }
+
+        [DebugAction("Deep Colony", "Force kin homecoming",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinHomecoming(Pawn p)
+        {
+            if (FamilyBeatsUtility.TryForceHomecoming(p))
+            {
+                Messages.Message("[DeepColony] Forced kin homecoming for " + p.LabelShort + ".",
+                    p, MessageTypeDefOf.PositiveEvent, false);
+                return;
+            }
+            Log.Warning("[DeepColony] Could not force homecoming for " + p.LabelShort
+                + " (need kin on this player home map).");
+        }
+
+        [DebugAction("Deep Colony", "Apply in-law welcome thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceInLawWelcome(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_InLawWelcome == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_InLawWelcome);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply breakup wound thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceBreakupWound(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_BreakupWound == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_BreakupWound);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply kin-died-other-side thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinDiedOtherSide(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_KinDiedOtherSide == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_KinDiedOtherSide);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply kin-executed thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinExecuted(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_KinExecuted == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_KinExecuted);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply grandchild-born thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceGrandchildBorn(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_GrandchildBorn == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_GrandchildBorn);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply kin-taken thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinTaken(Pawn p)
+        {
+            FamilyLifeUtility.NotifyTaken(p);
+        }
+
+        [DebugAction("Deep Colony", "Apply tended-by-family thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceTendedByFamily(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_TendedByFamily == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_TendedByFamily);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Force last of the line",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceLastOfTheLine(Pawn p)
+        {
+            if (FamilyLifeUtility.TryForceLastOfTheLine(p))
+            {
+                Messages.Message("[DeepColony] Marked last-of-the-line on " + p.LabelShort + ".",
+                    p, MessageTypeDefOf.NegativeEvent, false);
+                return;
+            }
+            Log.Warning("[DeepColony] No Deep Colony comp on " + p.LabelShort + ".");
+        }
+
+        [DebugAction("Deep Colony", "Apply step-family thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceStepFamily(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_StepFamily == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_StepFamily);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply family prison-visit thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForcePrisonVisit(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_FamilyPrisonVisit == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_FamilyPrisonVisit);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply kin-released thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinReleased(Pawn p)
+        {
+            FamilyEchoUtility.NotifyReleased(p);
+        }
+
+        [DebugAction("Deep Colony", "Apply kin-downed-beside thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceKinDownedBeside(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_KinDownedBeside == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_KinDownedBeside);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply empty-nest thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceEmptyNest(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_EmptyNest == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_EmptyNest);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        [DebugAction("Deep Colony", "Apply tradition-taught thought",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceTraditionTaught(Pawn p)
+        {
+            if (DC_DefOf.DC_Thought_TraditionTaught == null || p.needs?.mood?.thoughts == null) return;
+            var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_TraditionTaught);
+            p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
         }
     }
 }

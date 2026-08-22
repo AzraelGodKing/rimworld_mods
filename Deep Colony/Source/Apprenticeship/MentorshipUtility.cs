@@ -47,7 +47,19 @@ namespace DeepColony
             int lead = MinSkillLead;
             if (IsLineagePair(mentor, apprentice))
                 lead = System.Math.Max(1, lead - 1);
+            if (AreColonySiblings(mentor, apprentice))
+                lead = System.Math.Max(1, lead - 1);
             return lead;
+        }
+
+        public static bool AreColonySiblings(Pawn a, Pawn b)
+        {
+            if (a == null || b == null) return false;
+            var ca = a.TryGetComp<Comp_DeepColony>();
+            var cb = b.TryGetComp<Comp_DeepColony>();
+            if (ca == null || cb == null || !ca.bornInColony || !cb.bornInColony) return false;
+            return PawnRelationDefOf.Sibling != null
+                && PawnRelationDefOf.Sibling.Worker.InRelation(a, b);
         }
 
         public static bool CanMentor(Pawn mentor, Pawn apprentice, out string reason)
@@ -361,6 +373,7 @@ namespace DeepColony
                 && apprentice.skills.GetSkill(teachable.skill).Level >= teachable.requiredLevel)
             {
                 apprenticeComp.UnlockPerkFree(teachable);
+                FamilyEchoUtility.NotifyTraditionTaught(mentor, apprentice, teachable);
                 Messages.Message(
                     "DC_PerkTaught".Translate(
                         mentor.LabelShort.Named("MENTOR"),
@@ -395,7 +408,6 @@ namespace DeepColony
         public static float ChalkboardRoomMultiplier(Pawn pawn)
         {
             if (pawn?.Map == null || !pawn.Spawned) return 1f;
-            // Biotech blackboard — soft-fail if DLC / def missing
             ThingDef blackboard = DefDatabase<ThingDef>.GetNamedSilentFail("Blackboard");
             if (blackboard == null) return 1f;
             Room room = pawn.GetRoom();
@@ -406,6 +418,25 @@ namespace DeepColony
                     return 1.15f;
             }
             return 1f;
+        }
+
+        /// <summary>D04 — two or more apprentices of the same mentor in a blackboard room.</summary>
+        public static float ClassroomExtraMultiplier(Pawn apprentice)
+        {
+            if (ChalkboardRoomMultiplier(apprentice) <= 1f) return 1f;
+            var comp = apprentice.TryGetComp<Comp_DeepColony>();
+            if (comp?.mentor == null || apprentice.Map == null) return 1f;
+            Room room = apprentice.GetRoom();
+            if (room == null) return 1f;
+            int n = 0;
+            foreach (Pawn p in apprentice.Map.mapPawns.FreeColonistsSpawned)
+            {
+                if (p.Dead) continue;
+                if (p.GetRoom() != room) continue;
+                var c = p.TryGetComp<Comp_DeepColony>();
+                if (c?.mentor == comp.mentor) n++;
+            }
+            return n >= 2 ? 1.05f : 1f;
         }
     }
 }

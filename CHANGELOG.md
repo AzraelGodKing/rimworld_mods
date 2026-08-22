@@ -4,6 +4,13 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Deep Colony family echo** — prison visit, release kin, family-tradition teach, kin downed beside you, empty nest. Stamp `family-echo-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony family life** — grandchild born, kin taken/returned, tended by family, last of the line, step-family. Stamp `family-life-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony family beats** — in-law welcome, kin homecoming, kin dying on the other side, breakup wound, executing family (betrayal). Stamp `family-beats-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony family join / reconcile** — kin may join or defect on the home map (spouse highest, ex-lover 0% for that path; no goodwill hit unless hostile). Ex-lovers can get back together; the fourth reunion is a toxic relationship that therapy can ease. Unwavering prisoners can be broken only by family they like (and who like them). Stamp `family-loyalty-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony family tree** — Character inspect tab + Bio-card button; click kin to jump to that pawn. Stamp `family-tree-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony Feature Update (Batch D)** — first harvest / marriage / coming-of-age letters, gift tribute float menu, Ideology funerals, family meals, parent reunion, classroom extra, envoy-at-trade, surface isolation ease, quiet-room therapy, tab/inspect QoL, plus rivalry/deathbed/funeral/alert fixes. Stamp `batch-d-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony Feature Update (Batch C)** — untreated-trauma alert, Perks tab filters, family letters, deathbed lessons, funerals, sibling bond, DLC/sibling hooks (Ideology/Anomaly/Odyssey/Date Night/Homesteader/Strata/Stormproof), tribute, optional prisoner counsel and envoy visits. Stamp `batch-c-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Date Night** (`azr-16-date-together-v2`) — date activities share one venue; the follower faces the partner instead of freezing one way. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Date Night** (`azr-14-schedule-combo-v3`) — Date sits last after Clean (Lovin in the ▾ menu) without covering Manage areas. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Date Night** (`azr-15-lovin-anim-v1`) — lovin + animation mods no longer restart every 2–3 seconds; pregnancy can finish. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
