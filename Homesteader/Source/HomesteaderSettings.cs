@@ -28,6 +28,7 @@ namespace Homesteader
         {
             ContentPack = content;
             Settings = GetSettings<HomesteaderSettings>();
+            ModVersionLog.Write("[Homesteader]", content);
         }
 
         public override string SettingsCategory() => "Homesteader_SettingsCategory".Translate();
