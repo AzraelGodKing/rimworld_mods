@@ -4,6 +4,8 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Repo** — Git history rewritten to remove Claude/Anthropic `Co-Authored-By` and `Claude-Session` trailers, and re-attribute `cursoragent@cursor.com` commits to AzraelGodKing. All branches, tags force-pushed. Existing local clones must `git fetch --all && git reset --hard origin/<branch>`.
+
 - **Date Night** (`date-cooldown-v1`) — finished dates wait like post-lovin before the couple starts another. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Deep Colony family tree** (`family-tree-pedigree-v3`) — Pedigree / Rows button on the Family tab title row. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony family echo** — prison visit, release kin, family-tradition teach, kin downed beside you, empty nest. Stamp `family-echo-v4`. Colony sibling thought had no defName. Family tab section titles are no longer cut off. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
