@@ -42,21 +42,23 @@ namespace Strata
             nextAutoTry.Clear();
         }
 
-        public static Verb_LaunchProjectile LauncherVerb(Building_Turret turret)
+        public static Verb LauncherVerb(Building_Turret turret)
         {
-            return turret?.AttackVerb as Verb_LaunchProjectile;
+            Verb verb = turret?.AttackVerb;
+            return StrataCrossLevelCombat.IsRangedLaunchVerb(verb) ? verb : null;
         }
 
-        public static bool IsArc(Verb_LaunchProjectile verb)
+        public static bool IsArc(Verb verb)
         {
             if (verb == null) return false;
-            if (verb.Projectile?.projectile?.flyOverhead == true) return true;
+            ThingDef proj = StrataCrossLevelCombat.GetProjectile(verb);
+            if (proj?.projectile?.flyOverhead == true) return true;
             if (verb.verbProps.defaultProjectile?.projectile?.flyOverhead == true) return true;
             return !verb.verbProps.requireLineOfSight;
         }
 
         public static bool TurretCanFire(
-            Building_Turret turret, Thing target, Verb_LaunchProjectile verb, out StrataCrossLevelCombat.GapShot shot)
+            Building_Turret turret, Thing target, Verb verb, out StrataCrossLevelCombat.GapShot shot)
         {
             return StrataCrossLevelCombat.CanCrossGapFire(turret, target, verb, out shot);
         }
@@ -65,7 +67,7 @@ namespace Strata
         {
             try
             {
-                Verb_LaunchProjectile verb = LauncherVerb(turret);
+                Verb verb = LauncherVerb(turret);
                 if (verb == null || !target.IsValid || targetMap == null) return false;
 
                 bool arc = IsArc(verb);
@@ -131,7 +133,7 @@ namespace Strata
             };
         }
 
-        public static void TryAutoAcquire(Building_TurretGun turret)
+        public static void TryAutoAcquire(Building_Turret turret)
         {
             try
             {
@@ -149,7 +151,7 @@ namespace Strata
                     return;
                 }
 
-                Verb_LaunchProjectile verb = LauncherVerb(turret);
+                Verb verb = LauncherVerb(turret);
                 if (verb == null || turret.Faction == null)
                 {
                     Charge(turret, now + 2800);
@@ -204,7 +206,7 @@ namespace Strata
                 if (entries.ContainsKey(turret.thingIDNumber)) continue;
                 if (nextAutoTry.TryGetValue(turret.thingIDNumber, out int until) && now < until) continue;
 
-                Verb_LaunchProjectile verb = LauncherVerb(turret);
+                Verb verb = LauncherVerb(turret);
                 if (verb == null || turret.Faction == null) continue;
 
                 if (turret.CurrentTarget.IsValid || turret.ForcedTarget.IsValid)
@@ -238,7 +240,7 @@ namespace Strata
             nextAutoTry[turret.thingIDNumber] = untilTick;
         }
 
-        private static Pawn FindAutoTarget(Building_Turret turret, Verb_LaunchProjectile verb, Map targetMap)
+        private static Pawn FindAutoTarget(Building_Turret turret, Verb verb, Map targetMap)
         {
             tmpTargets.Clear();
             IReadOnlyList<Pawn> pawns = targetMap.mapPawns.AllPawnsSpawned;
@@ -301,8 +303,8 @@ namespace Strata
                 {
                     case Phase.Warmup:
                         e.phase = Phase.Burst;
-                        Verb_LaunchProjectile warmVerb = LauncherVerb(turret);
-                        e.burstShotsLeft = Mathf.Max(1, warmVerb?.verbProps.burstShotCount ?? 1);
+                        Verb warmVerb = LauncherVerb(turret);
+                        e.burstShotsLeft = StrataCrossLevelCombat.BurstShotCount(warmVerb);
                         e.nextEventTick = now;
                         goto case Phase.Burst;
 
@@ -318,13 +320,13 @@ namespace Strata
                                 e.burstShotsLeft--;
                                 if (e.burstShotsLeft > 0)
                                 {
-                                    Verb_LaunchProjectile burstVerb = LauncherVerb(turret);
+                                    Verb burstVerb = LauncherVerb(turret);
                                     e.nextEventTick = now + Mathf.Max(1, burstVerb?.verbProps.ticksBetweenBurstShots ?? 10);
                                 }
                                 else
                                 {
                                     e.phase = Phase.Cooldown;
-                                    Verb_LaunchProjectile coolVerb = LauncherVerb(turret);
+                                    Verb coolVerb = LauncherVerb(turret);
                                     Pawn manner = turret.TryGetComp<CompMannable>()?.ManningPawn;
                                     e.nextEventTick = now + (coolVerb != null
                                         ? CooldownTicks(turret, coolVerb, manner)
@@ -362,7 +364,7 @@ namespace Strata
 
             if (turret.CurrentTarget.IsValid) return !e.auto;
 
-            Verb_LaunchProjectile verb = LauncherVerb(turret);
+            Verb verb = LauncherVerb(turret);
             if (verb == null) return false;
 
             bool ok = e.arc
@@ -379,18 +381,22 @@ namespace Strata
 
         private static void FaceTarget(Building_Turret turret, Entry e)
         {
-            if (!(turret is Building_TurretGun gun) || gun.Top == null) return;
             IntVec3 delta = e.target.Cell - turret.Position;
             Vector3 v = delta.ToVector3();
-            if (v.sqrMagnitude > 0.01f)
+            if (v.sqrMagnitude <= 0.01f) return;
+            float angle = v.AngleFlat();
+            if (turret is Building_TurretGun gun && gun.Top != null)
             {
-                gun.Top.CurRotation = v.AngleFlat();
+                gun.Top.CurRotation = angle;
+                return;
             }
+
+            StrataCombatExtendedSoftCompat.FaceTurret(turret, angle);
         }
 
         private static FireResult TryFireOne(Entry e, Building_Turret turret, int now)
         {
-            Verb_LaunchProjectile verb = LauncherVerb(turret);
+            Verb verb = LauncherVerb(turret);
             if (verb == null) return FireResult.Dead;
             if (!ReadyToFire(turret, verb))
             {
@@ -417,19 +423,24 @@ namespace Strata
             return StrataCrossLevelCombat.Fire(turret, verb, e.target.Thing) ? FireResult.Fired : FireResult.Dead;
         }
 
-        private static void NotifyShellUsed(Verb_LaunchProjectile verb)
+        private static void NotifyShellUsed(Verb verb)
         {
             ThingWithComps eq = verb.EquipmentSource;
             eq?.TryGetComp<CompChangeableProjectile>()?.Notify_ProjectileLaunched();
         }
 
-        private static bool ReadyToFire(Building_Turret turret, Verb_LaunchProjectile verb)
+        private static bool ReadyToFire(Building_Turret turret, Verb verb)
         {
             CompMannable mannable = turret.TryGetComp<CompMannable>();
             if (mannable != null && !mannable.MannedNow) return false;
             CompPowerTrader power = turret.TryGetComp<CompPowerTrader>();
             if (power != null && !power.PowerOn) return false;
-            if (verb.Projectile == null) return false;
+            if (StrataCrossLevelCombat.GetProjectile(verb) == null) return false;
+            if (!StrataCombatExtendedSoftCompat.CanFire(verb))
+            {
+                StrataCombatExtendedSoftCompat.TryReload(verb);
+                return false;
+            }
             if (turret.CurrentTarget.IsValid) return false;
             return true;
         }
@@ -441,7 +452,7 @@ namespace Strata
             return Mathf.Max(1, Mathf.RoundToInt(sec * 60f));
         }
 
-        private static int CooldownTicks(Building_Turret turret, Verb_LaunchProjectile verb, Pawn manner)
+        private static int CooldownTicks(Building_Turret turret, Verb verb, Pawn manner)
         {
             float sec = turret.def.building?.turretBurstCooldownTime ?? -1f;
             if (sec <= 0f)
