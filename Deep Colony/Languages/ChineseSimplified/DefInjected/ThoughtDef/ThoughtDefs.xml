@@ -113,4 +113,143 @@
   <DC_Thought_TraumaWarden.stages_0.label>惧怕狱卒职责</DC_Thought_TraumaWarden.stages_0.label>
   <DC_Thought_TraumaWarden.stages_0.description>囚禁创伤让看守囚犯感觉像重新戴上锁链。</DC_Thought_TraumaWarden.stages_0.description>
 
+  <DC_Thought_GrewUpHere.label>在这里长大</DC_Thought_GrewUpHere.label>
+  <DC_Thought_GrewUpHere.description>这座殖民地就是家。墙、面孔、收成——他们记得自己在这里还很小。</DC_Thought_GrewUpHere.description>
+  <DC_Thought_GrewUpHere.stages_0.label>我在这里长大</DC_Thought_GrewUpHere.stages_0.label>
+  <DC_Thought_GrewUpHere.stages_0.description>这座殖民地就是家。墙、面孔、收成——他们记得自己在这里还很小。</DC_Thought_GrewUpHere.stages_0.description>
+
+  <DC_Thought_ChildRaidWitness.label>看见了战斗</DC_Thought_ChildRaidWitness.label>
+  <DC_Thought_ChildRaidWitness.description>孩子看见了自己还太小、无法加入的暴力。</DC_Thought_ChildRaidWitness.description>
+  <DC_Thought_ChildRaidWitness.stages_0.label>看见了战斗</DC_Thought_ChildRaidWitness.stages_0.label>
+  <DC_Thought_ChildRaidWitness.stages_0.description>孩子看见了自己还太小、无法加入的暴力。</DC_Thought_ChildRaidWitness.stages_0.description>
+
+  <DC_Thought_GrandChefHomestead.label>家园烹饪</DC_Thought_GrandChefHomestead.label>
+  <DC_Thought_GrandChefHomestead.description>宗厨按本味品尝储藏室食物。</DC_Thought_GrandChefHomestead.description>
+  <DC_Thought_GrandChefHomestead.stages_0.label>家园烹饪</DC_Thought_GrandChefHomestead.stages_0.label>
+  <DC_Thought_GrandChefHomestead.stages_0.description>宗厨按本味品尝储藏室食物。</DC_Thought_GrandChefHomestead.stages_0.description>
+
+  <DC_Thought_SiblingBond.label>殖民地手足</DC_Thought_SiblingBond.label>
+  <DC_Thought_SiblingBond.description>在这座殖民地一起长大。羁绊比竞争更安静。</DC_Thought_SiblingBond.description>
+  <DC_Thought_SiblingBond.stages_0.label>殖民地手足</DC_Thought_SiblingBond.stages_0.label>
+  <DC_Thought_SiblingBond.stages_0.description>在这座殖民地一起长大。羁绊比竞争更安静。</DC_Thought_SiblingBond.stages_0.description>
+
+  <DC_Thought_FamilyMeal.label>家庭餐</DC_Thought_FamilyMeal.label>
+  <DC_Thought_FamilyMeal.description>在同一屋檐下与亲族同餐。</DC_Thought_FamilyMeal.description>
+  <DC_Thought_FamilyMeal.stages_0.label>与家人同餐</DC_Thought_FamilyMeal.stages_0.label>
+  <DC_Thought_FamilyMeal.stages_0.description>在同一屋檐下与亲族同餐。</DC_Thought_FamilyMeal.stages_0.description>
+
+  <DC_Thought_ParentReunion.label>与父母重逢</DC_Thought_ParentReunion.label>
+  <DC_Thought_ParentReunion.description>回到了父母仍在的地图。</DC_Thought_ParentReunion.description>
+  <DC_Thought_ParentReunion.stages_0.label>与父母同在</DC_Thought_ParentReunion.stages_0.label>
+  <DC_Thought_ParentReunion.stages_0.description>回到了父母仍在的地图。</DC_Thought_ParentReunion.stages_0.description>
+
+  <DC_Thought_SpouseRemembrance.label>怀念伴侣</DC_Thought_SpouseRemembrance.label>
+  <DC_Thought_SpouseRemembrance.description>葬礼或纪念日对失去的爱人更沉。</DC_Thought_SpouseRemembrance.description>
+  <DC_Thought_SpouseRemembrance.stages_0.label>怀念伴侣</DC_Thought_SpouseRemembrance.stages_0.label>
+  <DC_Thought_SpouseRemembrance.stages_0.description>葬礼或纪念日对失去的爱人更沉。</DC_Thought_SpouseRemembrance.stages_0.description>
+
+  <DC_Thought_ToxicRelationship.label>有毒关系</DC_Thought_ToxicRelationship.label>
+  <DC_Thought_ToxicRelationship.description>一次次复合把爱变成了伤口。疏导仍能帮忙。</DC_Thought_ToxicRelationship.description>
+  <DC_Thought_ToxicRelationship.stages_0.label>与 {0} 的有毒关系</DC_Thought_ToxicRelationship.stages_0.label>
+  <DC_Thought_ToxicRelationship.stages_0.description>他们不断回到彼此身边，也不断受伤。治疗也许能帮忙。</DC_Thought_ToxicRelationship.stages_0.description>
+  <DC_Thought_ToxicRelationship.stages_1.label>与 {0} 缠在一起</DC_Thought_ToxicRelationship.stages_1.label>
+  <DC_Thought_ToxicRelationship.stages_1.description>分分合合正在把他们磨垮。疏导仍能缓和。</DC_Thought_ToxicRelationship.stages_1.description>
+  <DC_Thought_ToxicRelationship.stages_2.label>从 {0} 中学习</DC_Thought_ToxicRelationship.stages_2.label>
+  <DC_Thought_ToxicRelationship.stages_2.description>这个循环安静了些，只要他们继续谈开。</DC_Thought_ToxicRelationship.stages_2.description>
+
+  <DC_Thought_InLawWelcome.label>新姻亲</DC_Thought_InLawWelcome.label>
+  <DC_Thought_InLawWelcome.description>{0} 嫁入了这个家。殖民地又大了一点。</DC_Thought_InLawWelcome.description>
+  <DC_Thought_InLawWelcome.stages_0.label>新姻亲：{0}</DC_Thought_InLawWelcome.stages_0.label>
+  <DC_Thought_InLawWelcome.stages_0.description>{0} 嫁入了这个家。殖民地又大了一点。</DC_Thought_InLawWelcome.stages_0.description>
+
+  <DC_Thought_KinHomecoming.label>亲族归乡</DC_Thought_KinHomecoming.label>
+  <DC_Thought_KinHomecoming.description>离家一段时间后，家人又在地图上了。</DC_Thought_KinHomecoming.description>
+  <DC_Thought_KinHomecoming.stages_0.label>与 {0} 同在</DC_Thought_KinHomecoming.stages_0.label>
+  <DC_Thought_KinHomecoming.stages_0.description>离家一段时间后，家人又在地图上了。</DC_Thought_KinHomecoming.stages_0.description>
+
+  <DC_Thought_KinDiedOtherSide.label>亲族死在另一边</DC_Thought_KinDiedOtherSide.label>
+  <DC_Thought_KinDiedOtherSide.description>家人在不属于这座殖民地时死去。距离并不能让它轻松。</DC_Thought_KinDiedOtherSide.description>
+  <DC_Thought_KinDiedOtherSide.stages_0.label>{0} 死在另一边</DC_Thought_KinDiedOtherSide.stages_0.label>
+  <DC_Thought_KinDiedOtherSide.stages_0.description>家人在不属于这座殖民地时死去。距离并不能让它轻松。</DC_Thought_KinDiedOtherSide.stages_0.description>
+
+  <DC_Thought_BreakupWound.label>分手的伤</DC_Thought_BreakupWound.label>
+  <DC_Thought_BreakupWound.description>这段关系结束了。殖民地还得和他们两人一起过。</DC_Thought_BreakupWound.description>
+  <DC_Thought_BreakupWound.stages_0.label>与 {0} 分手</DC_Thought_BreakupWound.stages_0.label>
+  <DC_Thought_BreakupWound.stages_0.description>这段关系结束了。殖民地还得和他们两人一起过。</DC_Thought_BreakupWound.stages_0.description>
+
+  <DC_Thought_KinExecuted.label>亲族被处决</DC_Thought_KinExecuted.label>
+  <DC_Thought_KinExecuted.description>他们爱过——或曾经爱过——的人在这里被处决。那洗不掉。</DC_Thought_KinExecuted.description>
+  <DC_Thought_KinExecuted.stages_0.label>殖民地处决了 {0}</DC_Thought_KinExecuted.stages_0.label>
+  <DC_Thought_KinExecuted.stages_0.description>他们爱过——或曾经爱过——的人在这里被处决。那洗不掉。</DC_Thought_KinExecuted.stages_0.description>
+
+  <DC_Thought_GrandchildBorn.label>孙子女出生</DC_Thought_GrandchildBorn.label>
+  <DC_Thought_GrandchildBorn.description>家又大了。殖民地里有了孙子女。</DC_Thought_GrandchildBorn.description>
+  <DC_Thought_GrandchildBorn.stages_0.label>孙子女：{0}</DC_Thought_GrandchildBorn.stages_0.label>
+  <DC_Thought_GrandchildBorn.stages_0.description>家又大了。殖民地里有了孙子女。</DC_Thought_GrandchildBorn.stages_0.description>
+
+  <DC_Thought_KinTaken.label>亲族被掳走</DC_Thought_KinTaken.label>
+  <DC_Thought_KinTaken.description>家人被俘或被绑架。他们没死——但不在了。</DC_Thought_KinTaken.description>
+  <DC_Thought_KinTaken.stages_0.label>{0} 被掳走了</DC_Thought_KinTaken.stages_0.label>
+  <DC_Thought_KinTaken.stages_0.description>家人被俘或被绑架。他们没死——但不在了。</DC_Thought_KinTaken.stages_0.description>
+
+  <DC_Thought_KinReturned.label>亲族归来</DC_Thought_KinReturned.label>
+  <DC_Thought_KinReturned.description>家人被掳走之后回来了。</DC_Thought_KinReturned.description>
+  <DC_Thought_KinReturned.stages_0.label>{0} 回来了</DC_Thought_KinReturned.stages_0.label>
+  <DC_Thought_KinReturned.stages_0.description>家人被掳走之后回来了。</DC_Thought_KinReturned.stages_0.description>
+
+  <DC_Thought_TendedByFamily.label>家人照料</DC_Thought_TendedByFamily.label>
+  <DC_Thought_TendedByFamily.description>家人处理了伤口。这比药更管用一点。</DC_Thought_TendedByFamily.description>
+  <DC_Thought_TendedByFamily.stages_0.label>由 {0} 照料</DC_Thought_TendedByFamily.stages_0.label>
+  <DC_Thought_TendedByFamily.stages_0.description>家人处理了伤口。这比药更管用一点。</DC_Thought_TendedByFamily.stages_0.description>
+
+  <DC_Thought_TendedFamily.label>照料家人</DC_Thought_TendedFamily.label>
+  <DC_Thought_TendedFamily.description>他们照料了家人。留下就是为了这个。</DC_Thought_TendedFamily.description>
+  <DC_Thought_TendedFamily.stages_0.label>照料了 {0}</DC_Thought_TendedFamily.stages_0.label>
+  <DC_Thought_TendedFamily.stages_0.description>他们照料了家人。留下就是为了这个。</DC_Thought_TendedFamily.stages_0.description>
+
+  <DC_Thought_LastOfTheLine.label>血脉仅存</DC_Thought_LastOfTheLine.label>
+  <DC_Thought_LastOfTheLine.description>这座殖民地里再没有活着的血亲。除非血脉延续，这个姓就到此为止。</DC_Thought_LastOfTheLine.description>
+  <DC_Thought_LastOfTheLine.stages_0.label>血脉仅存</DC_Thought_LastOfTheLine.stages_0.label>
+  <DC_Thought_LastOfTheLine.stages_0.description>这座殖民地里再没有活着的血亲。除非血脉延续，这个姓就到此为止。</DC_Thought_LastOfTheLine.stages_0.description>
+
+  <DC_Thought_LineContinues.label>血脉延续</DC_Thought_LineContinues.label>
+  <DC_Thought_LineContinues.description>殖民地里又有血亲了。这个姓不会到此为止。</DC_Thought_LineContinues.description>
+  <DC_Thought_LineContinues.stages_0.label>血脉延续</DC_Thought_LineContinues.stages_0.label>
+  <DC_Thought_LineContinues.stages_0.description>殖民地里又有血亲了。这个姓不会到此为止。</DC_Thought_LineContinues.stages_0.description>
+
+  <DC_Thought_StepFamily.label>继亲</DC_Thought_StepFamily.label>
+  <DC_Thought_StepFamily.description>父母再婚。家里多了一位继父母。</DC_Thought_StepFamily.description>
+  <DC_Thought_StepFamily.stages_0.label>新继父母：{0}</DC_Thought_StepFamily.stages_0.label>
+  <DC_Thought_StepFamily.stages_0.description>父母再婚。家里多了一位继父母。</DC_Thought_StepFamily.stages_0.description>
+
+  <DC_Thought_FamilyPrisonVisit.label>家人探视</DC_Thought_FamilyPrisonVisit.label>
+  <DC_Thought_FamilyPrisonVisit.description>家人来到牢房。忠诚也许仍在——探视仍然重要。</DC_Thought_FamilyPrisonVisit.description>
+  <DC_Thought_FamilyPrisonVisit.stages_0.label>被 {0} 探视</DC_Thought_FamilyPrisonVisit.stages_0.label>
+  <DC_Thought_FamilyPrisonVisit.stages_0.description>家人来到牢房。忠诚也许仍在——探视仍然重要。</DC_Thought_FamilyPrisonVisit.stages_0.description>
+
+  <DC_Thought_VisitedKinPrisoner.label>探视狱中亲族</DC_Thought_VisitedKinPrisoner.label>
+  <DC_Thought_VisitedKinPrisoner.description>他们走到了门后的家人身边。</DC_Thought_VisitedKinPrisoner.description>
+  <DC_Thought_VisitedKinPrisoner.stages_0.label>探视了 {0}</DC_Thought_VisitedKinPrisoner.stages_0.label>
+  <DC_Thought_VisitedKinPrisoner.stages_0.description>他们走到了门后的家人身边。</DC_Thought_VisitedKinPrisoner.stages_0.description>
+
+  <DC_Thought_KinReleased.label>亲族被释放</DC_Thought_KinReleased.label>
+  <DC_Thought_KinReleased.description>家人被放走，而不是处决。这是另一种记忆。</DC_Thought_KinReleased.description>
+  <DC_Thought_KinReleased.stages_0.label>殖民地释放了 {0}</DC_Thought_KinReleased.stages_0.label>
+  <DC_Thought_KinReleased.stages_0.description>家人被放走，而不是处决。这是另一种记忆。</DC_Thought_KinReleased.stages_0.description>
+
+  <DC_Thought_TraditionTaught.label>家传技艺传授</DC_Thought_TraditionTaught.label>
+  <DC_Thought_TraditionTaught.description>家里的手艺传下去了。这活儿现在有名字了。</DC_Thought_TraditionTaught.description>
+  <DC_Thought_TraditionTaught.stages_0.label>家传技艺延续</DC_Thought_TraditionTaught.stages_0.label>
+  <DC_Thought_TraditionTaught.stages_0.description>家里的手艺传下去了。这活儿现在有名字了。</DC_Thought_TraditionTaught.stages_0.description>
+
+  <DC_Thought_KinDownedBeside.label>亲族在身边倒下</DC_Thought_KinDownedBeside.label>
+  <DC_Thought_KinDownedBeside.description>家人在战斗中倒下。他们没死——但那一幕还在。</DC_Thought_KinDownedBeside.description>
+  <DC_Thought_KinDownedBeside.stages_0.label>看见 {0} 倒下</DC_Thought_KinDownedBeside.stages_0.label>
+  <DC_Thought_KinDownedBeside.stages_0.description>家人在战斗中倒下。他们没死——但那一幕还在。</DC_Thought_KinDownedBeside.stages_0.description>
+
+  <DC_Thought_EmptyNest.label>空巢</DC_Thought_EmptyNest.label>
+  <DC_Thought_EmptyNest.description>最后一个孩子离开了家园地图。屋子更安静了。</DC_Thought_EmptyNest.description>
+  <DC_Thought_EmptyNest.stages_0.label>孩子们走了</DC_Thought_EmptyNest.stages_0.label>
+  <DC_Thought_EmptyNest.stages_0.description>最后一个孩子离开了家园地图。屋子更安静了。</DC_Thought_EmptyNest.stages_0.description>
+
 </LanguageData>

@@ -28,4 +28,13 @@
     <casualInterruptible>true</casualInterruptible>
   </JobDef>
 
+  <JobDef>
+    <defName>DC_Job_CounselPrisoner</defName>
+    <label>counsel prisoner</label>
+    <driverClass>DeepColony.JobDriver_CounselPrisoner</driverClass>
+    <reportString>counseling prisoner TargetA.</reportString>
+    <allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+
 </Defs>
