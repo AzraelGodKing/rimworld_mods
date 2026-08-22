@@ -14,7 +14,7 @@
     <defName>DateNight_GoOnDate</defName>
     <driverClass>DateNight.JobDriver_Date</driverClass>
     <reportString>on a date with TargetA.</reportString>
-    <casualInterruptible>true</casualInterruptible>
+    <casualInterruptible>false</casualInterruptible>
   </JobDef>
 
 </Defs>

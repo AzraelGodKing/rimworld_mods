@@ -11,7 +11,7 @@
 
 [b]Fixed[/b]
 [list]
-[*] [b]Schedule Everything overlap[/b] — Date sits last after Clean (Lovin in the ▾ menu) and no longer covers Manage areas.
+[*] [b]Date hours idle apart[/b] — both partners share one venue for every date activity (walk, picnic, stargaze, dinner, dance, hangout, gift, recreation) and stay together; the follower looks at their partner instead of freezing one way; dates are not interrupted by casual work. — Date sits last after Clean (Lovin in the ▾ menu) and no longer covers Manage areas.
 [*] [b]Lovin animation loop[/b] — with animation mods (Rimworld Animations, breeding ritual, RJW), Date Night no longer restarts lovin every couple of seconds. One animation plays through; a new one starts only after it finishes if Lovin hours are still on. Pregnancies can complete again.
 [*] [b]Date hours crash[/b] — no longer throws when joy AI runs on a Date timetable slot (vanilla GetPriority only knows Joy / Sleep / etc.).
 [/list]
