@@ -38,6 +38,7 @@ namespace DeepColony
                 float extra = SoftCompat.HasAnyRoyalTitle(p) ? 0.75f : 0f;
                 GameComp_DeepColony.Instance?.AddFactionDrift(
                     faction, BaseDrift + extra, FactionRepReason.EnvoyVisit);
+                ExternalDiplomacySoftCompat.OnEnvoyVisit(faction, p);
                 gc.lastEnvoyVisitTick = Find.TickManager.TicksGame;
 
                 string title = "DC_EnvoyVisitLabel".Translate(p.LabelShort.Named("PAWN"));
