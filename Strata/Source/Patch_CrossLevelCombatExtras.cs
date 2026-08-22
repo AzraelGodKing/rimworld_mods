@@ -11,7 +11,7 @@ namespace Strata
     [HarmonyPatch(typeof(Building_TurretGun), "TryFindNewTarget")]
     public static class Patch_TurretGun_TryFindNewTarget_CrossLevel
     {
-        public static void Postfix(Building_TurretGun __instance, LocalTargetInfo __result)
+        public static void Postfix(Building_Turret __instance, LocalTargetInfo __result)
         {
             if (!__result.IsValid && StrataCrossLevelCombat.Enabled)
             {
@@ -23,7 +23,7 @@ namespace Strata
     [HarmonyPatch(typeof(Building_TurretGun), nameof(Building_TurretGun.GetGizmos))]
     public static class Patch_TurretGun_CrossLevelGizmos
     {
-        public static IEnumerable<Gizmo> Postfix(IEnumerable<Gizmo> __result, Building_TurretGun __instance)
+        public static IEnumerable<Gizmo> Postfix(IEnumerable<Gizmo> __result, Building_Turret __instance)
         {
             foreach (Gizmo g in __result)
             {
@@ -91,7 +91,7 @@ namespace Strata
             Thing caster = source?.Caster;
             if (!(caster is Building_Turret turret)) return false;
 
-            Verb_LaunchProjectile verb = StrataCrossLevelTurret.LauncherVerb(turret);
+            Verb verb = StrataCrossLevelTurret.LauncherVerb(turret);
             if (verb == null) return false;
 
             if (!StrataBelowSelection.TryGetBelowView(out Map sky, out Map lower) || sky != Find.CurrentMap)
