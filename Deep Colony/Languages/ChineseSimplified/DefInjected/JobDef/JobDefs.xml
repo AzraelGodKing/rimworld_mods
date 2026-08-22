@@ -7,5 +7,7 @@
   <DC_Job_CounselTrauma.reportString>正在辅导 TargetA。</DC_Job_CounselTrauma.reportString>
   <DC_Job_GroupCounsel.label>团体辅导</DC_Job_GroupCounsel.label>
   <DC_Job_GroupCounsel.reportString>正在 TargetA 附近进行团体辅导。</DC_Job_GroupCounsel.reportString>
+  <DC_Job_CounselPrisoner.label>辅导囚犯</DC_Job_CounselPrisoner.label>
+  <DC_Job_CounselPrisoner.reportString>正在辅导囚犯 TargetA。</DC_Job_CounselPrisoner.reportString>
 
 </LanguageData>

@@ -19,6 +19,50 @@ namespace DeepColony
         public int availablePerkPoints;
         public bool perkGatesBackfilled;
         public int unspentPerkPointsSinceTick = -1;
+        public int untreatedTraumaSinceTick = -1;
+        public string lastCounselorName;
+        public int lastCounselorId = -1;
+        public int totalCounselSessions;
+        public bool bornInColony;
+        public bool grewInGrowthVat;
+        public bool childhoodMemoryGranted;
+        public int isolationSinceTick = -1;
+        public int lastFamilyMealTick = -1;
+        public bool parentReunionGranted;
+        public bool familyJoinRolled;
+
+        /// <summary>D21 — last tick this colonist despawned from a player home map (-1 = never).</summary>
+        public int leftColonyMapTick = -1;
+
+        /// <summary>D21 — last kin-homecoming thought tick (-1 = never).</summary>
+        public int lastHomecomingTick = -1;
+
+        /// <summary>E03 — last family-tend comfort tick (-1 = never).</summary>
+        public int lastFamilyTendTick = -1;
+
+        /// <summary>E02 — last kidnapped/captured tick (-1 = not currently taken).</summary>
+        public int kinTakenTick = -1;
+
+        /// <summary>E04 — true once this pawn has had living blood kin as colonists.</summary>
+        public bool sawColonyBloodKin;
+
+        /// <summary>E04 — true while this colonist is the last blood kin in the colony.</summary>
+        public bool lastOfTheLine;
+
+        /// <summary>E06 — last family prison-visit tick (-1 = never).</summary>
+        public int lastFamilyVisitTick = -1;
+
+        /// <summary>E09 — last kin-downed-beside-you tick (-1 = never).</summary>
+        public int lastKinDownedTick = -1;
+
+        /// <summary>E10 — last empty-nest thought tick (-1 = never).</summary>
+        public int lastEmptyNestTick = -1;
+
+        /// <summary>E08 — one-shot family-tradition teach letter.</summary>
+        public bool traditionTeachNoted;
+
+        /// <summary>D18 — how many times this pawn got back together with another (keyed by thingIDNumber).</summary>
+        public Dictionary<int, int> reconcileCountsByPawn = new Dictionary<int, int>();
 
         public Pawn mentor;
         public string mentoredSkillDefName;
@@ -255,10 +299,12 @@ namespace DeepColony
 
         public void NotifySkillLevelUp(SkillDef skill, int newLevel)
         {
+            var pawn = Pawn;
+            if (pawn != null)
+                FamilyEchoUtility.NotifyTraditionGate(pawn, skill, newLevel);
             if (!DeepColonySettings.Get.enablePerks) return;
             availablePerkPoints++;
             NoteUnspentPointsChanged();
-            var pawn = Pawn;
             if (pawn == null) return;
 
             Messages.Message(
@@ -382,7 +428,24 @@ namespace DeepColony
             counselCountsByPawn.TryGetValue(id, out int count);
             count++;
             counselCountsByPawn[id] = count;
+            lastCounselorName = counselor.LabelShort;
+            lastCounselorId = counselor.thingIDNumber;
+            totalCounselSessions++;
             return count;
+        }
+
+        public Pawn TryGetLastCounselor()
+        {
+            if (lastCounselorId < 0) return null;
+            foreach (Map map in Find.Maps)
+            {
+                if (map?.mapPawns?.AllPawnsSpawned == null) continue;
+                foreach (Pawn p in map.mapPawns.AllPawnsSpawned)
+                {
+                    if (p.thingIDNumber == lastCounselorId) return p;
+                }
+            }
+            return null;
         }
 
         public bool RollTraumaApplyChance(TraumaDef def)
@@ -525,6 +588,37 @@ namespace DeepColony
             if (DeepColonySettings.Get.enableTrauma && TraumaUtility.HasAnyTrauma(pawn))
             {
                 parts.Add("DC_InspectTrauma".Translate());
+                string types = TraumaTypesInspect();
+                if (!types.NullOrEmpty()) parts.Add(types);
+                if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_ToxicRelationship))
+                    parts.Add("DC_InspectToxicRelationship".Translate());
+                string history = CounselingHistoryInspect();
+                if (!history.NullOrEmpty()) parts.Add(history);
+            }
+            else if (DeepColonySettings.Get.enableTrauma)
+            {
+                string history = CounselingHistoryInspect();
+                if (!history.NullOrEmpty()) parts.Add(history);
+            }
+            if (DeepColonySettings.Get.enableMentoring)
+            {
+                string teach = TeachProgressInspect();
+                if (!teach.NullOrEmpty()) parts.Add(teach);
+            }
+            if (DeepColonySettings.Get.enableFactionRep)
+            {
+                string envoy = EnvoyInspect();
+                if (!envoy.NullOrEmpty()) parts.Add(envoy);
+            }
+            if (DeepColonySettings.Get.enableMentoring)
+            {
+                string rival = RivalInspect();
+                if (!rival.NullOrEmpty()) parts.Add(rival);
+            }
+            if (DeepColonySettings.Get.enableInheritance)
+            {
+                string gene = GeneVsBloodInspect();
+                if (!gene.NullOrEmpty()) parts.Add(gene);
             }
             if (DeepColonySettings.Get.enableTrauma)
             {
@@ -541,12 +635,122 @@ namespace DeepColony
             return parts.Count == 0 ? null : string.Join("\n", parts);
         }
 
+        public string CounselingHistoryInspect()
+        {
+            if (totalCounselSessions <= 0 && lastCounselorName.NullOrEmpty()) return null;
+            int best = 0;
+            if (counselCountsByPawn != null)
+            {
+                foreach (var kv in counselCountsByPawn)
+                    if (kv.Value > best) best = kv.Value;
+            }
+            int need = ConfidantUtility.SessionsToBondFor(Pawn, TryGetLastCounselor());
+            string counselor = lastCounselorName.NullOrEmpty() ? "—" : lastCounselorName;
+            return "DC_InspectCounsel".Translate(counselor, totalCounselSessions, best, need);
+        }
+
+        public string TraumaTypesInspect()
+        {
+            var pawn = Pawn;
+            if (pawn?.needs?.mood?.thoughts == null) return null;
+            var labels = new List<string>();
+            foreach (Thought_Memory mem in pawn.needs.mood.thoughts.memories.Memories)
+            {
+                if (mem is not Thought_Trauma tt || tt.traumaDef == null) continue;
+                string lab = tt.traumaDef.LabelCap;
+                if (!labels.Contains(lab)) labels.Add(lab);
+                if (labels.Count >= 3) break;
+            }
+            if (labels.Count == 0) return null;
+            return "DC_InspectTraumaTypes".Translate(string.Join(", ", labels));
+        }
+
+        public string TeachProgressInspect()
+        {
+            if (perkTeachProgress <= 0 || perkBeingTaughtDefName.NullOrEmpty()) return null;
+            PerkDef perk = DefDatabase<PerkDef>.GetNamedSilentFail(perkBeingTaughtDefName);
+            string name = perk?.LabelCap ?? perkBeingTaughtDefName;
+            return "DC_InspectTeachProgress".Translate(name, perkTeachProgress, 3);
+        }
+
+        public string EnvoyInspect()
+        {
+            Faction f = FactionEnvoyUtility.GetEnvoyFaction(Pawn);
+            if (f == null) return null;
+            return "DC_InspectEnvoy".Translate(f.Name);
+        }
+
+        public string RivalInspect()
+        {
+            Pawn rival = RivalryUtility.FirstLivingRival(Pawn);
+            if (rival == null) return null;
+            return "DC_InspectRival".Translate(rival.LabelShort);
+        }
+
+        public void NoteCounselingSession()
+        {
+            var pawn = Pawn;
+            if (pawn != null && TraumaUtility.HasAnyTrauma(pawn))
+                untreatedTraumaSinceTick = Find.TickManager?.TicksGame ?? 0;
+            else
+                untreatedTraumaSinceTick = -1;
+        }
+
+        public string GeneVsBloodInspect()
+        {
+            if (familyTraditionSkillDefName.NullOrEmpty()) return null;
+            var pawn = Pawn;
+            if (pawn?.genes == null || pawn.genes.Xenogenes == null || pawn.genes.Xenogenes.Count == 0)
+                return null;
+            SkillDef skill = DefDatabase<SkillDef>.GetNamedSilentFail(familyTraditionSkillDefName);
+            if (skill == null) return null;
+            SkillRecord rec = pawn.skills?.GetSkill(skill);
+            if (rec == null) return null;
+            // Flavor only: xenogenes present vs a family tradition skill.
+            return "DC_InspectGeneVsBlood".Translate(skill.LabelCap);
+        }
+
+        public void NoteUntreatedTrauma()
+        {
+            if (untreatedTraumaSinceTick < 0)
+                untreatedTraumaSinceTick = Find.TickManager?.TicksGame ?? 0;
+        }
+
+        public void ClearUntreatedTraumaIfHealed()
+        {
+            var pawn = Pawn;
+            if (pawn != null && !TraumaUtility.HasAnyTrauma(pawn))
+                untreatedTraumaSinceTick = -1;
+        }
+
         public override void PostExposeData()
         {
             Scribe_Collections.Look(ref unlockedPerkDefNames, "unlockedPerks", LookMode.Value);
             Scribe_Values.Look(ref availablePerkPoints, "availablePerkPoints", 0);
             Scribe_Values.Look(ref perkGatesBackfilled, "perkGatesBackfilled", false);
             Scribe_Values.Look(ref unspentPerkPointsSinceTick, "unspentPerkPointsSinceTick", -1);
+            Scribe_Values.Look(ref untreatedTraumaSinceTick, "untreatedTraumaSinceTick", -1);
+            Scribe_Values.Look(ref lastCounselorName, "lastCounselorName");
+            Scribe_Values.Look(ref lastCounselorId, "lastCounselorId", -1);
+            Scribe_Values.Look(ref totalCounselSessions, "totalCounselSessions", 0);
+            Scribe_Values.Look(ref bornInColony, "bornInColony", false);
+            Scribe_Values.Look(ref grewInGrowthVat, "grewInGrowthVat", false);
+            Scribe_Values.Look(ref childhoodMemoryGranted, "childhoodMemoryGranted", false);
+            Scribe_Values.Look(ref isolationSinceTick, "isolationSinceTick", -1);
+            Scribe_Values.Look(ref lastFamilyMealTick, "lastFamilyMealTick", -1);
+            Scribe_Values.Look(ref parentReunionGranted, "parentReunionGranted", false);
+            Scribe_Values.Look(ref familyJoinRolled, "familyJoinRolled", false);
+            Scribe_Values.Look(ref leftColonyMapTick, "leftColonyMapTick", -1);
+            Scribe_Values.Look(ref lastHomecomingTick, "lastHomecomingTick", -1);
+            Scribe_Values.Look(ref lastFamilyTendTick, "lastFamilyTendTick", -1);
+            Scribe_Values.Look(ref kinTakenTick, "kinTakenTick", -1);
+            Scribe_Values.Look(ref sawColonyBloodKin, "sawColonyBloodKin", false);
+            Scribe_Values.Look(ref lastOfTheLine, "lastOfTheLine", false);
+            Scribe_Values.Look(ref lastFamilyVisitTick, "lastFamilyVisitTick", -1);
+            Scribe_Values.Look(ref lastKinDownedTick, "lastKinDownedTick", -1);
+            Scribe_Values.Look(ref lastEmptyNestTick, "lastEmptyNestTick", -1);
+            Scribe_Values.Look(ref traditionTeachNoted, "traditionTeachNoted", false);
+            Scribe_Collections.Look(ref reconcileCountsByPawn, "reconcileCountsByPawn", LookMode.Value, LookMode.Value);
             Scribe_References.Look(ref mentor, "mentor");
             Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");
             Scribe_Values.Look(ref perkBeingTaughtDefName, "perkBeingTaughtDefName");
@@ -568,6 +772,7 @@ namespace DeepColony
             if (teacherLineage == null) teacherLineage = new List<string>();
             if (peakSkillLevels == null) peakSkillLevels = new Dictionary<string, int>();
             if (counselCountsByPawn == null) counselCountsByPawn = new Dictionary<int, int>();
+            if (reconcileCountsByPawn == null) reconcileCountsByPawn = new Dictionary<int, int>();
             if (recoveredTraumaCounts == null) recoveredTraumaCounts = new Dictionary<string, int>();
             if (trackedTraumaDefNames == null) trackedTraumaDefNames = new List<string>();
             if (grudgeFactionIds == null) grudgeFactionIds = new List<int>();

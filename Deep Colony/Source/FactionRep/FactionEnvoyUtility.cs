@@ -36,8 +36,11 @@ namespace DeepColony
 
                     if (Rand.MTBEventOccurs(EnvoyMtbDays, 60000f, TickInterval))
                     {
+                        float amount = EnvoyDrift;
+                        if (SoftCompat.HasAnyRoyalTitle(p))
+                            amount += 0.2f;
                         GameComp_DeepColony.Instance?.AddFactionDrift(
-                            faction, EnvoyDrift, FactionRepReason.Envoy);
+                            faction, amount, FactionRepReason.Envoy);
                     }
                 }
             }
@@ -126,12 +129,16 @@ namespace DeepColony
 
         public static IEnumerable<Pawn> EnvoyCandidates()
         {
+            var list = new List<Pawn>();
             foreach (Pawn p in AllPlayerColonists())
             {
                 if (p.Dead || p.skills?.GetSkill(SkillDefOf.Social)?.TotallyDisabled == true)
                     continue;
-                yield return p;
+                list.Add(p);
             }
+            return list
+                .OrderByDescending(SoftCompat.RoyalTitleSeniority)
+                .ThenByDescending(p => p.skills?.GetSkill(SkillDefOf.Social)?.Level ?? 0);
         }
 
         private static IEnumerable<Pawn> AllPlayerColonists()

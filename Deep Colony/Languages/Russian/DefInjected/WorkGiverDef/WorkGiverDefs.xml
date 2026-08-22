@@ -10,5 +10,11 @@
   <DC_WorkGiver_GroupCounsel.label>групповое консультирование</DC_WorkGiver_GroupCounsel.label>
   <DC_WorkGiver_GroupCounsel.gerund>групповое консультирование</DC_WorkGiver_GroupCounsel.gerund>
   <DC_WorkGiver_GroupCounsel.verb>групповое консультирование</DC_WorkGiver_GroupCounsel.verb>
+  <DC_WorkGiver_CounselPrisoner.label>консультировать пленника</DC_WorkGiver_CounselPrisoner.label>
+  <DC_WorkGiver_CounselPrisoner.gerund>консультирует пленника</DC_WorkGiver_CounselPrisoner.gerund>
+  <DC_WorkGiver_CounselPrisoner.verb>консультировать пленника</DC_WorkGiver_CounselPrisoner.verb>
+  <DC_WorkGiver_FamilyLoyalty.label>говорить с роднёй-пленником</DC_WorkGiver_FamilyLoyalty.label>
+  <DC_WorkGiver_FamilyLoyalty.gerund>говорит с роднёй</DC_WorkGiver_FamilyLoyalty.gerund>
+  <DC_WorkGiver_FamilyLoyalty.verb>дойти до родни</DC_WorkGiver_FamilyLoyalty.verb>
 
 </LanguageData>

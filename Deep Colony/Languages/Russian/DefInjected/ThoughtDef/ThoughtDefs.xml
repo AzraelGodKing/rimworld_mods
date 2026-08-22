@@ -113,4 +113,143 @@
   <DC_Thought_TraumaWarden.stages_0.label>боятся работы надзирателя</DC_Thought_TraumaWarden.stages_0.label>
   <DC_Thought_TraumaWarden.stages_0.description>Травма плена делает охрану заключённых похожей на возвращение в цепи.</DC_Thought_TraumaWarden.stages_0.description>
 
+  <DC_Thought_GrewUpHere.label>вырос(ла) здесь</DC_Thought_GrewUpHere.label>
+  <DC_Thought_GrewUpHere.description>Эта колония — дом. Стены, лица, урожай — они помнят, какими маленькими здесь были.</DC_Thought_GrewUpHere.description>
+  <DC_Thought_GrewUpHere.stages_0.label>я вырос(ла) здесь</DC_Thought_GrewUpHere.stages_0.label>
+  <DC_Thought_GrewUpHere.stages_0.description>Эта колония — дом. Стены, лица, урожай — они помнят, какими маленькими здесь были.</DC_Thought_GrewUpHere.stages_0.description>
+
+  <DC_Thought_ChildRaidWitness.label>видел(а) бой</DC_Thought_ChildRaidWitness.label>
+  <DC_Thought_ChildRaidWitness.description>Ребёнок видел насилие, в котором ещё рано участвовать.</DC_Thought_ChildRaidWitness.description>
+  <DC_Thought_ChildRaidWitness.stages_0.label>видел(а) бой</DC_Thought_ChildRaidWitness.stages_0.label>
+  <DC_Thought_ChildRaidWitness.stages_0.description>Ребёнок видел насилие, в котором ещё рано участвовать.</DC_Thought_ChildRaidWitness.stages_0.description>
+
+  <DC_Thought_GrandChefHomestead.label>усадская стряпня</DC_Thought_GrandChefHomestead.label>
+  <DC_Thought_GrandChefHomestead.description>Великий шеф пробует кладовую еду так, как она задумана.</DC_Thought_GrandChefHomestead.description>
+  <DC_Thought_GrandChefHomestead.stages_0.label>усадская стряпня</DC_Thought_GrandChefHomestead.stages_0.label>
+  <DC_Thought_GrandChefHomestead.stages_0.description>Великий шеф пробует кладовую еду так, как она задумана.</DC_Thought_GrandChefHomestead.stages_0.description>
+
+  <DC_Thought_SiblingBond.label>колонистский сиблинг</DC_Thought_SiblingBond.label>
+  <DC_Thought_SiblingBond.description>Выросли вместе в этой колонии. Связь тише соперничества.</DC_Thought_SiblingBond.description>
+  <DC_Thought_SiblingBond.stages_0.label>колонистский сиблинг</DC_Thought_SiblingBond.stages_0.label>
+  <DC_Thought_SiblingBond.stages_0.description>Выросли вместе в этой колонии. Связь тише соперничества.</DC_Thought_SiblingBond.stages_0.description>
+
+  <DC_Thought_FamilyMeal.label>семейная трапеза</DC_Thought_FamilyMeal.label>
+  <DC_Thought_FamilyMeal.description>Еда с родными под одной крышей.</DC_Thought_FamilyMeal.description>
+  <DC_Thought_FamilyMeal.stages_0.label>ел(а) с семьёй</DC_Thought_FamilyMeal.stages_0.label>
+  <DC_Thought_FamilyMeal.stages_0.description>Еда с родными под одной крышей.</DC_Thought_FamilyMeal.stages_0.description>
+
+  <DC_Thought_ParentReunion.label>воссоединение с родителем</DC_Thought_ParentReunion.label>
+  <DC_Thought_ParentReunion.description>Вернулся(ась) на карту, где ещё живёт родитель.</DC_Thought_ParentReunion.description>
+  <DC_Thought_ParentReunion.stages_0.label>дома с родителем</DC_Thought_ParentReunion.stages_0.label>
+  <DC_Thought_ParentReunion.stages_0.description>Вернулся(ась) на карту, где ещё живёт родитель.</DC_Thought_ParentReunion.stages_0.description>
+
+  <DC_Thought_SpouseRemembrance.label>поминая супруга</DC_Thought_SpouseRemembrance.label>
+  <DC_Thought_SpouseRemembrance.description>Похороны или день памяти тяжелее для потерянной любви.</DC_Thought_SpouseRemembrance.description>
+  <DC_Thought_SpouseRemembrance.stages_0.label>поминая супруга</DC_Thought_SpouseRemembrance.stages_0.label>
+  <DC_Thought_SpouseRemembrance.stages_0.description>Похороны или день памяти тяжелее для потерянной любви.</DC_Thought_SpouseRemembrance.stages_0.description>
+
+  <DC_Thought_ToxicRelationship.label>токсичные отношения</DC_Thought_ToxicRelationship.label>
+  <DC_Thought_ToxicRelationship.description>Сходиться снова и снова превратило любовь в рану. Консультации всё ещё могут помочь.</DC_Thought_ToxicRelationship.description>
+  <DC_Thought_ToxicRelationship.stages_0.label>токсично с {0}</DC_Thought_ToxicRelationship.stages_0.label>
+  <DC_Thought_ToxicRelationship.stages_0.description>Они снова и снова возвращаются друг к другу — и снова ранят. Терапия может помочь.</DC_Thought_ToxicRelationship.stages_0.description>
+  <DC_Thought_ToxicRelationship.stages_1.label>связан(а) с {0}</DC_Thought_ToxicRelationship.stages_1.label>
+  <DC_Thought_ToxicRelationship.stages_1.description>Цикл «сошлись — расстались» их изматывает. Консультации всё ещё смягчают.</DC_Thought_ToxicRelationship.stages_1.description>
+  <DC_Thought_ToxicRelationship.stages_2.label>учится на {0}</DC_Thought_ToxicRelationship.stages_2.label>
+  <DC_Thought_ToxicRelationship.stages_2.description>Цикл тише, если они продолжают говорить об этом.</DC_Thought_ToxicRelationship.stages_2.description>
+
+  <DC_Thought_InLawWelcome.label>новый свойственник</DC_Thought_InLawWelcome.label>
+  <DC_Thought_InLawWelcome.description>{0} вошёл(а) в семью через брак. Колония стала чуть больше.</DC_Thought_InLawWelcome.description>
+  <DC_Thought_InLawWelcome.stages_0.label>новый свойственник: {0}</DC_Thought_InLawWelcome.stages_0.label>
+  <DC_Thought_InLawWelcome.stages_0.description>{0} вошёл(а) в семью через брак. Колония стала чуть больше.</DC_Thought_InLawWelcome.stages_0.description>
+
+  <DC_Thought_KinHomecoming.label>возвращение родни</DC_Thought_KinHomecoming.label>
+  <DC_Thought_KinHomecoming.description>Семья снова на карте после времени вдали.</DC_Thought_KinHomecoming.description>
+  <DC_Thought_KinHomecoming.stages_0.label>дома с {0}</DC_Thought_KinHomecoming.stages_0.label>
+  <DC_Thought_KinHomecoming.stages_0.description>Семья снова на карте после времени вдали.</DC_Thought_KinHomecoming.stages_0.description>
+
+  <DC_Thought_KinDiedOtherSide.label>родня погибла на той стороне</DC_Thought_KinDiedOtherSide.label>
+  <DC_Thought_KinDiedOtherSide.description>Семья умерла, не будучи частью этой колонии. Расстояние не облегчает.</DC_Thought_KinDiedOtherSide.description>
+  <DC_Thought_KinDiedOtherSide.stages_0.label>{0} погиб(ла) на той стороне</DC_Thought_KinDiedOtherSide.stages_0.label>
+  <DC_Thought_KinDiedOtherSide.stages_0.description>Семья умерла, не будучи частью этой колонии. Расстояние не облегчает.</DC_Thought_KinDiedOtherSide.stages_0.description>
+
+  <DC_Thought_BreakupWound.label>рана расставания</DC_Thought_BreakupWound.label>
+  <DC_Thought_BreakupWound.description>Отношения кончились. Колонии всё равно жить с ними обоими.</DC_Thought_BreakupWound.description>
+  <DC_Thought_BreakupWound.stages_0.label>расстались с {0}</DC_Thought_BreakupWound.stages_0.label>
+  <DC_Thought_BreakupWound.stages_0.description>Отношения кончились. Колонии всё равно жить с ними обоими.</DC_Thought_BreakupWound.stages_0.description>
+
+  <DC_Thought_KinExecuted.label>родню казнили</DC_Thought_KinExecuted.label>
+  <DC_Thought_KinExecuted.description>Кого-то, кого они любили — или любили раньше — казнили здесь. Это не смывается.</DC_Thought_KinExecuted.description>
+  <DC_Thought_KinExecuted.stages_0.label>колония казнила {0}</DC_Thought_KinExecuted.stages_0.label>
+  <DC_Thought_KinExecuted.stages_0.description>Кого-то, кого они любили — или любили раньше — казнили здесь. Это не смывается.</DC_Thought_KinExecuted.stages_0.description>
+
+  <DC_Thought_GrandchildBorn.label>внук / внучка</DC_Thought_GrandchildBorn.label>
+  <DC_Thought_GrandchildBorn.description>Семья стала больше. В колонии появился внук или внучка.</DC_Thought_GrandchildBorn.description>
+  <DC_Thought_GrandchildBorn.stages_0.label>внук / внучка: {0}</DC_Thought_GrandchildBorn.stages_0.label>
+  <DC_Thought_GrandchildBorn.stages_0.description>Семья стала больше. В колонии появился внук или внучка.</DC_Thought_GrandchildBorn.stages_0.description>
+
+  <DC_Thought_KinTaken.label>родню увезли</DC_Thought_KinTaken.label>
+  <DC_Thought_KinTaken.description>Семью захватили или похитили. Они не мертвы — но их нет.</DC_Thought_KinTaken.description>
+  <DC_Thought_KinTaken.stages_0.label>{0} увезли</DC_Thought_KinTaken.stages_0.label>
+  <DC_Thought_KinTaken.stages_0.description>Семью захватили или похитили. Они не мертвы — но их нет.</DC_Thought_KinTaken.stages_0.description>
+
+  <DC_Thought_KinReturned.label>родня вернулась</DC_Thought_KinReturned.label>
+  <DC_Thought_KinReturned.description>Семья вернулась после того, как её увезли.</DC_Thought_KinReturned.description>
+  <DC_Thought_KinReturned.stages_0.label>{0} вернулся(ась)</DC_Thought_KinReturned.stages_0.label>
+  <DC_Thought_KinReturned.stages_0.description>Семья вернулась после того, как её увезли.</DC_Thought_KinReturned.stages_0.description>
+
+  <DC_Thought_TendedByFamily.label>родня лечила</DC_Thought_TendedByFamily.label>
+  <DC_Thought_TendedByFamily.description>Семья обработала раны. Это помогает сильнее, чем одно лекарство.</DC_Thought_TendedByFamily.description>
+  <DC_Thought_TendedByFamily.stages_0.label>лечил(а) {0}</DC_Thought_TendedByFamily.stages_0.label>
+  <DC_Thought_TendedByFamily.stages_0.description>Семья обработала раны. Это помогает сильнее, чем одно лекарство.</DC_Thought_TendedByFamily.stages_0.description>
+
+  <DC_Thought_TendedFamily.label>лечил(а) родню</DC_Thought_TendedFamily.label>
+  <DC_Thought_TendedFamily.description>Они лечили семью. Ради этого и остаются.</DC_Thought_TendedFamily.description>
+  <DC_Thought_TendedFamily.stages_0.label>лечил(а) {0}</DC_Thought_TendedFamily.stages_0.label>
+  <DC_Thought_TendedFamily.stages_0.description>Они лечили семью. Ради этого и остаются.</DC_Thought_TendedFamily.stages_0.description>
+
+  <DC_Thought_LastOfTheLine.label>последний в роду</DC_Thought_LastOfTheLine.label>
+  <DC_Thought_LastOfTheLine.description>В колонии не осталось живой кровной родни. Имя оборвётся, если линия не продолжится.</DC_Thought_LastOfTheLine.description>
+  <DC_Thought_LastOfTheLine.stages_0.label>последний в роду</DC_Thought_LastOfTheLine.stages_0.label>
+  <DC_Thought_LastOfTheLine.stages_0.description>В колонии не осталось живой кровной родни. Имя оборвётся, если линия не продолжится.</DC_Thought_LastOfTheLine.stages_0.description>
+
+  <DC_Thought_LineContinues.label>линия продолжается</DC_Thought_LineContinues.label>
+  <DC_Thought_LineContinues.description>В колонии снова есть кровная родня. Имя здесь не кончается.</DC_Thought_LineContinues.description>
+  <DC_Thought_LineContinues.stages_0.label>линия продолжается</DC_Thought_LineContinues.stages_0.label>
+  <DC_Thought_LineContinues.stages_0.description>В колонии снова есть кровная родня. Имя здесь не кончается.</DC_Thought_LineContinues.stages_0.description>
+
+  <DC_Thought_StepFamily.label>сводная семья</DC_Thought_StepFamily.label>
+  <DC_Thought_StepFamily.description>Родитель вступил в брак. В доме появился отчим или мачеха.</DC_Thought_StepFamily.description>
+  <DC_Thought_StepFamily.stages_0.label>новый отчим / мачеха: {0}</DC_Thought_StepFamily.stages_0.label>
+  <DC_Thought_StepFamily.stages_0.description>Родитель вступил в брак. В доме появился отчим или мачеха.</DC_Thought_StepFamily.stages_0.description>
+
+  <DC_Thought_FamilyPrisonVisit.label>семья навестила</DC_Thought_FamilyPrisonVisit.label>
+  <DC_Thought_FamilyPrisonVisit.description>Семья пришла в камеру. Верность может держаться — визит всё равно важен.</DC_Thought_FamilyPrisonVisit.description>
+  <DC_Thought_FamilyPrisonVisit.stages_0.label>навестил(а) {0}</DC_Thought_FamilyPrisonVisit.stages_0.label>
+  <DC_Thought_FamilyPrisonVisit.stages_0.description>Семья пришла в камеру. Верность может держаться — визит всё равно важен.</DC_Thought_FamilyPrisonVisit.stages_0.description>
+
+  <DC_Thought_VisitedKinPrisoner.label>навестил(а) родню в тюрьме</DC_Thought_VisitedKinPrisoner.label>
+  <DC_Thought_VisitedKinPrisoner.description>Они подошли к семье за дверью.</DC_Thought_VisitedKinPrisoner.description>
+  <DC_Thought_VisitedKinPrisoner.stages_0.label>навестил(а) {0}</DC_Thought_VisitedKinPrisoner.stages_0.label>
+  <DC_Thought_VisitedKinPrisoner.stages_0.description>Они подошли к семье за дверью.</DC_Thought_VisitedKinPrisoner.stages_0.description>
+
+  <DC_Thought_KinReleased.label>родню отпустили</DC_Thought_KinReleased.label>
+  <DC_Thought_KinReleased.description>Семью отпустили, а не казнили. Это другая память.</DC_Thought_KinReleased.description>
+  <DC_Thought_KinReleased.stages_0.label>колония отпустила {0}</DC_Thought_KinReleased.stages_0.label>
+  <DC_Thought_KinReleased.stages_0.description>Семью отпустили, а не казнили. Это другая память.</DC_Thought_KinReleased.stages_0.description>
+
+  <DC_Thought_TraditionTaught.label>семейное ремесло передано</DC_Thought_TraditionTaught.label>
+  <DC_Thought_TraditionTaught.description>Домашний навык передали дальше. У работы теперь есть имя.</DC_Thought_TraditionTaught.description>
+  <DC_Thought_TraditionTaught.stages_0.label>семейный навык продолжается</DC_Thought_TraditionTaught.stages_0.label>
+  <DC_Thought_TraditionTaught.stages_0.description>Домашний навык передали дальше. У работы теперь есть имя.</DC_Thought_TraditionTaught.stages_0.description>
+
+  <DC_Thought_KinDownedBeside.label>родня упала рядом</DC_Thought_KinDownedBeside.label>
+  <DC_Thought_KinDownedBeside.description>Семья упала в бою. Они не мертвы — но картина остаётся.</DC_Thought_KinDownedBeside.description>
+  <DC_Thought_KinDownedBeside.stages_0.label>видел(а), как упал(а) {0}</DC_Thought_KinDownedBeside.stages_0.label>
+  <DC_Thought_KinDownedBeside.stages_0.description>Семья упала в бою. Они не мертвы — но картина остаётся.</DC_Thought_KinDownedBeside.stages_0.description>
+
+  <DC_Thought_EmptyNest.label>пустое гнездо</DC_Thought_EmptyNest.label>
+  <DC_Thought_EmptyNest.description>Последний ребёнок ушёл с домашней карты. В комнатах тише.</DC_Thought_EmptyNest.description>
+  <DC_Thought_EmptyNest.stages_0.label>дети ушли</DC_Thought_EmptyNest.stages_0.label>
+  <DC_Thought_EmptyNest.stages_0.description>Последний ребёнок ушёл с домашней карты. В комнатах тише.</DC_Thought_EmptyNest.stages_0.description>
+
 </LanguageData>

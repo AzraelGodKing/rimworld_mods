@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <IssueDef MayRequire="Ludeon.RimWorld.Ideology">
+    <defName>DC_Counseling</defName>
+    <label>counseling</label>
+    <iconPath>UI/Commands/SelectAll</iconPath>
+  </IssueDef>
+
+  <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+    <defName>DC_Precept_CounselingSacred</defName>
+    <issue>DC_Counseling</issue>
+    <label>sacred</label>
+    <description>Talking through wounds of the mind is a sacred duty. Therapy heals faster.</description>
+    <preceptClass>Precept</preceptClass>
+    <impact>Medium</impact>
+  </PreceptDef>
+
+  <PreceptDef MayRequire="Ludeon.RimWorld.Ideology">
+    <defName>DC_Precept_CounselingStoic</defName>
+    <issue>DC_Counseling</issue>
+    <label>stoic</label>
+    <description>One endures. Automatic counseling is skipped; trauma fades more slowly on its own.</description>
+    <preceptClass>Precept</preceptClass>
+    <impact>Medium</impact>
+  </PreceptDef>
+
+</Defs>

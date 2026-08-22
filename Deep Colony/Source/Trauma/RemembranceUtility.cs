@@ -22,7 +22,8 @@ namespace DeepColony
             gc.remembranceEntries.Add(new RemembranceEntry
             {
                 deathTick = Find.TickManager.TicksGame,
-                name = victim.Name?.ToStringShort ?? victim.LabelShort
+                name = victim.Name?.ToStringShort ?? victim.LabelShort,
+                pawnId = victim.thingIDNumber
             });
 
             // Cap history.
@@ -73,6 +74,12 @@ namespace DeepColony
                     if (p.needs?.mood?.thoughts == null) continue;
                     var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_DayOfRemembrance);
                     p.needs.mood.thoughts.memories.TryGainMemory(thought);
+                    if (entry.pawnId > 0 && IsSpouseOf(p, entry.pawnId)
+                        && DC_DefOf.DC_Thought_SpouseRemembrance != null)
+                    {
+                        var extra = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_SpouseRemembrance);
+                        p.needs.mood.thoughts.memories.TryGainMemory(extra);
+                    }
                     applied++;
                 }
             }
@@ -85,17 +92,34 @@ namespace DeepColony
                     false);
             }
         }
+
+        private static bool IsSpouseOf(Pawn pawn, int deadId)
+        {
+            if (pawn?.relations == null || deadId <= 0) return false;
+            foreach (DirectPawnRelation rel in pawn.relations.DirectRelations)
+            {
+                if (rel.otherPawn == null) continue;
+                if (rel.otherPawn.thingIDNumber != deadId) continue;
+                if (rel.def == PawnRelationDefOf.Spouse
+                    || rel.def == PawnRelationDefOf.Lover
+                    || rel.def == PawnRelationDefOf.Fiance)
+                    return true;
+            }
+            return false;
+        }
     }
 
     public class RemembranceEntry : IExposable
     {
         public int deathTick;
         public string name;
+        public int pawnId;
 
         public void ExposeData()
         {
             Scribe_Values.Look(ref deathTick, "deathTick", 0);
             Scribe_Values.Look(ref name, "name");
+            Scribe_Values.Look(ref pawnId, "pawnId", 0);
         }
     }
 }

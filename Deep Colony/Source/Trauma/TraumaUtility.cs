@@ -12,7 +12,7 @@ namespace DeepColony
         /// <paramref name="source"/> (e.g. the pawn who died) and/or a remembered faction.
         /// Existing matching trauma is renewed rather than stacked.
         /// </summary>
-        public static void ApplyTrauma(Pawn victim, TraumaDef def, Pawn source = null, Faction sourceFaction = null)
+        public static void ApplyTrauma(Pawn victim, TraumaDef def, Pawn source = null, Faction sourceFaction = null, string reasonOverride = null)
         {
             if (!DeepColonySettings.Get.enableTrauma) return;
             if (victim?.needs?.mood?.thoughts == null) return;
@@ -60,12 +60,15 @@ namespace DeepColony
             if (faction != null && !faction.IsPlayer)
                 GrudgeUtility.RememberFaction(victim, faction);
 
-            if (!def.triggerMessage.NullOrEmpty())
+            comp?.NoteUntreatedTrauma();
+
+            string eventText = reasonOverride.NullOrEmpty() ? def.triggerMessage : reasonOverride.Translate();
+            if (!eventText.NullOrEmpty())
             {
                 Messages.Message(
                     "DC_TraumaApplied".Translate(
                         victim.LabelShort.Named("PAWN"),
-                        def.triggerMessage.Named("EVENT")),
+                        eventText.Named("EVENT")),
                     victim,
                     MessageTypeDefOf.NegativeEvent,
                     historical: false);
@@ -97,7 +100,8 @@ namespace DeepColony
             bool healed = false;
             float scale = DeepColonySettings.Get.therapyHealScale
                 * ConfidantUtility.TherapyBonusBetween(counselor, patient)
-                * TherapyQualityMultiplier(counselor, patient);
+                * TherapyQualityMultiplier(counselor, patient)
+                * IdeologyCounselUtility.TherapyMultiplier();
 
             var recovered = new List<TraumaDef>();
             foreach (Thought_Memory mem in patient.needs.mood.thoughts.memories.Memories)
@@ -126,6 +130,8 @@ namespace DeepColony
             {
                 MoteMaker.ThrowText(patient.DrawPos, patient.Map,
                     "DC_TherapyProgress".Translate(), 3f);
+                var patientComp = patient.TryGetComp<Comp_DeepColony>();
+                patientComp?.NoteCounselingSession();
             }
 
             // Sustained counseling also eases chronic stress (B04).
@@ -162,9 +168,23 @@ namespace DeepColony
 
                 float beauty = room.GetStat(RoomStatDefOf.Beauty);
                 if (beauty >= 25f) mult *= 1.05f;
+
+                if (IsQuietCounselRoom(room))
+                    mult *= 1.10f;
             }
 
-            return Mathf.Clamp(mult, 0.50f, 1.85f);
+            return Mathf.Clamp(mult, 0.50f, 2.00f);
+        }
+
+        /// <summary>D07 — indoor room with no work benches is a quieter place to talk.</summary>
+        public static bool IsQuietCounselRoom(Room room)
+        {
+            if (room == null || room.PsychologicallyOutdoors) return false;
+            foreach (Thing t in room.ContainedAndAdjacentThings)
+            {
+                if (t is Building_WorkTable) return false;
+            }
+            return true;
         }
 
         public static bool HasAnyTrauma(Pawn pawn)

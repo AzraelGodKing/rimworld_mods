@@ -8,24 +8,48 @@ namespace DeepColony
     {
         private const int MinLevel = 8;
         private const int LevelBand = 2;
+        private const int CheckInterval = 2500;
+        private static readonly List<Pawn> Scratch = new List<Pawn>();
 
         public static void GameTick()
         {
             if (!DeepColonySettings.Get.enableMentoring) return;
-            if (Find.CurrentMap == null) return;
+            if (Find.TickManager.TicksGame % CheckInterval != 0) return;
 
-            List<Pawn> colonists = new List<Pawn>();
+            Scratch.Clear();
             foreach (Map map in Find.Maps)
             {
+                if (map?.mapPawns?.FreeColonistsSpawned == null) continue;
                 foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
-                    colonists.Add(p);
+                    Scratch.Add(p);
             }
 
-            for (int i = 0; i < colonists.Count; i++)
+            int n = Scratch.Count;
+            if (n < 2) return;
+
+            for (int i = 0; i < n; i++)
             {
-                for (int j = i + 1; j < colonists.Count; j++)
-                    TryFormRivalry(colonists[i], colonists[j]);
+                for (int j = i + 1; j < n; j++)
+                    TryFormRivalry(Scratch[i], Scratch[j]);
             }
+        }
+
+        public static bool AreRivals(Pawn a, Pawn b)
+        {
+            if (a?.relations == null || b == null) return false;
+            return a.relations.DirectRelationExists(DC_DefOf.DC_Rival, b);
+        }
+
+        public static Pawn FirstLivingRival(Pawn pawn)
+        {
+            if (pawn?.relations == null) return null;
+            foreach (DirectPawnRelation rel in pawn.relations.DirectRelations)
+            {
+                if (rel.def != DC_DefOf.DC_Rival || rel.otherPawn == null || rel.otherPawn.Dead)
+                    continue;
+                return rel.otherPawn;
+            }
+            return null;
         }
 
         public static void TryFormRivalry(Pawn a, Pawn b)

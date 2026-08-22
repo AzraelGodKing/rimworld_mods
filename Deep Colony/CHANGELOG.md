@@ -9,6 +9,52 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Startup writes `[DeepColony] v2.0.0 build ...` in Player.log.
 
 ### Added
+- **Family join / reconcile** (`family-join-v1`) — spec D17/D18 in [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
+  - **D17** Kin of colonists on the player home map may join from visits or defect from raids. Spouse is the highest chance; fiancé / parent / child / lover / sibling / grandparent follow. **Ex-lovers do not join this way (0%)**. Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge (`FactionRepReason.FamilyDefect`).
+  - **D18** Ex-lovers and ex-spouses on the same map may get back together. More than three reunions marks a **toxic relationship** that counseling / therapy can ease. Date Night still owns romance schedules.
+  - **D19** (`family-loyalty-v1`) Unwavering prisoners can be reached **only by family**, and only if they like each other (mutual opinion). A successful talk sets them recruitable again so wardens can work.
+  - **D20–D24** (`family-beats-v1`) More family beats on the same join toggle: in-law welcome on colonist marriage; kin homecoming after time away; kin/ex dying while not a colonist; breakup wound; executing kin/ex (betrayal trauma).
+  - **E01–E05** (`family-life-v1`) Grandchild born (grandparents + Legacy note); kin taken / returned; tended by family; last of the line / the line continues; step-family on marriage.
+  - **E06–E10** (`family-echo-v1`) Prison visit; release kin (inverse of execute); family-tradition teach letter; kin downed beside you; empty nest.
+- **Batch D** (`batch-d-v1`) — leftovers, fixes, and the next identity layer. Spec: [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
+  - **C11 leftovers** First harvest as a family + marriage letters on the Legacy tab.
+  - **C15 leftovers** Right-click silver / gold / jade / a valuable gift as tribute (still `AddFactionDrift`).
+  - **C18 leftovers** Ideology funeral rituals ease violent-loss trauma (fail-open).
+  - **D01** Family meal thought when eating in the same room as kin.
+  - **D02** Parent reunion thought when an adult child returns to a parent's map.
+  - **D03** Coming-of-age letter with the childhood memory.
+  - **D04** Classroom extra: two or more apprentices plus a Biotech blackboard (on top of the existing 1.15).
+  - **D05** Assigned envoy present at a successful trade writes extra goodwill.
+  - **D06** Returning to a surface map eases Odyssey isolation.
+  - **D07** Quiet indoor room (no work benches) therapy bonus.
+  - **D08** Spouse / lover extra ease at funerals and remembrance day.
+  - **D09** Legacy tab lists traumatized count + remembrance names.
+  - **D10** Reputation tab ally / hostile filter.
+  - **D11** Perks tab shows archetype on each row.
+  - **D12** Right-click counsel prisoner (still settings-gated, default off).
+  - **D13** Strata gas / firestorm downs use existing toxic/fire trauma with a keyed reason.
+  - **D14** Inspect shows trauma types, teach progress, envoy, and rival.
+  - **D16** Family tree on the pawn Character inspect pane (and a Bio-card button). Click a relative to select and jump to that pawn; dead kin included; teaching line listed separately.
+- **Batch C (Phases 6–9)** (`batch-c-v1`) — post-2.0 QoL, kin memory, DLC/sibling hooks, gated envoy/tribute. Spec: [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
+  - **C01** Untreated-trauma alert after a 1-day grace (same pattern as unspent perk points).
+  - **C02** Counseling history on inspect (last counselor, session count, confidant progress).
+  - **C16** Perks tab filters: all / unspent / Hard-only nodes, plus skill dropdown.
+  - **C04** Royalty titles sort envoy candidates first; titled envoys add a little extra goodwill (fail-open).
+  - **C11** Rare family birthday / anniversary letters, capped and listed on the Legacy tab.
+  - **C12** Deathbed lesson — a dying mentor can finish one last teach or pass a tier-1 perk if the apprentice is on the map.
+  - **C17** Childhood memories — colony-born kids (not growth vats) keep a short “I grew up here” thought into adulthood.
+  - **C18** Funerals ease violent loss — burying or burning the body ages that trauma faster.
+  - **C21** Sibling bond — colony-raised siblings get extra opinion and a further teach-gap discount.
+  - **C08** Date Night lovers reach confidant in 2 counsel sessions instead of 3 (fail-open).
+  - **C09** Grand Chef extra mood only on Homesteader pantry foods (fail-open).
+  - **C10** Strata cave-in / Stormproof ion-storm downs apply existing trauma with a keyed reason.
+  - **C03** Ideology precepts: counseling sacred (faster therapy) vs stoic (skip auto-counsel, slower fade). Fail-open.
+  - **C05 / C06** Anomaly horror trauma and Odyssey isolation/crash trauma (DLC-gated defs; counseling still works).
+  - **C07** Child raid witnesses get a lighter, shorter thought (slider; 0% off).
+  - **C24** Gene vs blood — inspect line when xenogenes sit against a family skill tradition.
+  - **C13** Prisoner counsel recruitment path (default off; does not replace Warden chat).
+  - **C15** Apology / tribute — Reputation tab spends 200 silver for a ledger goodwill row.
+  - **C23** Envoy visit — settings-gated goodwill pulse to an allied settlement (Hard on; no caravan form).
 - **Post-2.0 idea pool (Batch C)** — 20 ideas, Phase 6–9 (QoL alerts/filters, kin memory, DLC/sibling hooks, gated envoy/tribute). Spec: [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
 - **GitHub zip restored** — `DeepColony.zip` published again on the rolling `latest` release for non-Steam installs (alongside Workshop).
 - **Load order** — `loadAfter` Living World so DC’s soft LW goodwill consumer sees LW signals when both are active (`repo-hygiene-no-debate`).
@@ -27,6 +73,12 @@ Player-facing version **2.0.0** (`About.xml` `modVersion`). Startup writes `[Dee
 - **Chinese Simplified & Russian language packs** — full Keyed + DefInjected translations (perks, trauma, mentoring, inheritance, jobs, thoughts).
 
 ### Fixed
+- **Rivalry scan** — pair checks run on a 2500-tick interval with a reused list (not a fresh scan every call).
+- **Deathbed lesson** — only player-side mentors and apprentices.
+- **Funeral message** — only if someone actually had violent-loss eased.
+- **Untreated-trauma alert** — counseling restarts the 1-day grace if trauma remains.
+- **Family birthday** — implied siblings and caravan kin count as living family.
+- **Confidant inspect** — bond progress uses the last counselor (Date Night lovers still 2 sessions).
 - **ISEKAI RPG Leveling traits** — inheritance skips Rank (F–SSS) and destiny traits. Growth / combat / utility aptitude traits inherit like vanilla (`general-fixes-v1`).
 - **NPC birth inheritance stamp** — `ApplyBirthOutcome` no longer marks every humanlike baby processed. Only player-faction / former-colonist pawns roll; stillborns are skipped. Recruits still inherit on join.
 - **Biotech gene backoff** — skips trait/passion rolls for non-Baseliner xenotypes and implanted xenogenes (endogene xenotypes were slipping through).
