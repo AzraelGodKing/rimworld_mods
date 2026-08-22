@@ -7,7 +7,7 @@ namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "family-echo-v1";
+        public const string BuildStamp = "family-tree-pedigree-v3";
 
         public static void LogStartup()
         {

@@ -282,6 +282,11 @@
   <DC_FamilyTree_Dead>（已故）</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>不在地图上</DC_FamilyTree_Away>
   <DC_FamilyTree_ClickTip>点击以选中并跳转到该角色。</DC_FamilyTree_ClickTip>
+  <DC_FamilyTree_PedigreeToggle>谱系图布局</DC_FamilyTree_PedigreeToggle>
+  <DC_FamilyTree_StylePedigree>谱系图</DC_FamilyTree_StylePedigree>
+  <DC_FamilyTree_StyleRows>分行</DC_FamilyTree_StyleRows>
+  <DC_Settings_FamilyTreePedigree>家族树：谱系图布局</DC_Settings_FamilyTreePedigree>
+  <DC_Settings_FamilyTreePedigreeTip>祖先在上、后裔在下，并用连线标出血缘。关闭则保持按代分行的布局。</DC_Settings_FamilyTreePedigreeTip>
   <DC_Settings_FamilyJoin>亲族加入与复合</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>地图上的亲族加入 / 投诚</DC_Settings_EnableFamilyJoin>
   <DC_Settings_EnableFamilyJoinTip>殖民者的亲族可能在来访时加入，或在袭击中投诚。配偶几率最高。前恋人不会借此加入（0%）。非敌对亲族招募不扣好感；敌对亲族会留下派系积怨。不屈的囚犯只有彼此都喜欢的家人才能打动。另外：姻亲欢迎、亲族归乡、亲族死去或被处决、分手的伤、孙子女出生、亲族被掳、家人照料、血脉仅存、继亲、探监、释放亲族、家传技艺、亲族在战斗中倒下、以及空巢。</DC_Settings_EnableFamilyJoinTip>
