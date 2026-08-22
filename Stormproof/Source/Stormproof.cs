@@ -46,6 +46,7 @@ namespace Stormproof
         static StormproofInit()
         {
             new Harmony("azraelgodking.stormproof").PatchAll();
+            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]"));
         }
     }
 
