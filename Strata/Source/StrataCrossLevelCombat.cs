@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -54,8 +56,54 @@ namespace Strata
             return null;
         }
 
+        public static bool IsRangedLaunchVerb(Verb verb)
+        {
+            if (verb == null || verb.verbProps == null || verb.verbProps.IsMeleeAttack)
+            {
+                return false;
+            }
+
+            if (verb is Verb_LaunchProjectile)
+            {
+                return true;
+            }
+
+            return StrataCombatExtendedSoftCompat.IsLaunchVerb(verb);
+        }
+
+        public static ThingDef GetProjectile(Verb verb)
+        {
+            if (verb is Verb_LaunchProjectile vanilla)
+            {
+                return vanilla.Projectile;
+            }
+
+            return StrataCombatExtendedSoftCompat.GetProjectile(verb);
+        }
+
+        public static int BurstShotCount(Verb verb)
+        {
+            if (verb == null) return 1;
+            PropertyInfo shots = AccessTools.Property(verb.GetType(), "ShotsPerBurst")
+                ?? AccessTools.Property(typeof(Verb), "ShotsPerBurst");
+            if (shots != null)
+            {
+                try
+                {
+                    object value = shots.GetValue(verb);
+                    if (value is int n) return Mathf.Max(1, n);
+                }
+                catch
+                {
+                    // Fall through to verbProps.
+                }
+            }
+
+            return Mathf.Max(1, verb.verbProps.burstShotCount);
+        }
+
         public static bool CanArcFireAt(
-            Map shooterMap, IntVec3 sCol, IntVec3 tCol, Map targetMap, Verb_LaunchProjectile verb, out GapShot shot)
+            Map shooterMap, IntVec3 sCol, IntVec3 tCol, Map targetMap, Verb verb, out GapShot shot)
         {
             shot = default;
             if (!Enabled || shooterMap == null || verb == null || targetMap == null) return false;
@@ -80,7 +128,7 @@ namespace Strata
         }
 
         public static bool FireArcShot(
-            Thing shooter, Pawn manningPawn, Verb_LaunchProjectile verb, LocalTargetInfo target, Map targetMap, float distance)
+            Thing shooter, Pawn manningPawn, Verb verb, LocalTargetInfo target, Map targetMap, float distance)
         {
             try
             {
@@ -89,7 +137,7 @@ namespace Strata
                     return false;
                 }
 
-                ThingDef projDef = verb.Projectile;
+                ThingDef projDef = GetProjectile(verb);
                 if (projDef == null) return false;
 
                 IntVec3 dest = target.Cell;
@@ -97,6 +145,17 @@ namespace Strata
                 spawn.x = Mathf.Clamp(spawn.x, 0, targetMap.Size.x - 1);
                 spawn.z = Mathf.Clamp(spawn.z, 0, targetMap.Size.z - 1);
                 Vector3 launchPos = spawn.ToVector3Shifted();
+
+                if (StrataCombatExtendedSoftCompat.IsLaunchVerb(verb))
+                {
+                    bool ceArc = StrataCombatExtendedSoftCompat.TryFire(
+                        shooter, verb, target, targetMap, spawn, launchPos, distance, arc: true);
+                    if (ceArc)
+                    {
+                        verb.verbProps.soundCast?.PlayOneShot(new TargetInfo(shooter.Position, shooter.Map));
+                    }
+                    return ceArc;
+                }
 
                 var projectile = (Projectile)GenSpawn.Spawn(projDef, spawn, targetMap);
                 Thing equipment = verb.EquipmentSource;
@@ -203,28 +262,28 @@ namespace Strata
             return false;
         }
 
-        public static Verb_LaunchProjectile GetRangedVerb(Pawn p)
+        public static Verb GetRangedVerb(Pawn p)
         {
             if (p == null) return null;
             Verb primary = p.equipment?.PrimaryEq?.PrimaryVerb;
-            if (primary is Verb_LaunchProjectile gun && !primary.verbProps.IsMeleeAttack)
+            if (IsRangedLaunchVerb(primary))
             {
-                return gun;
+                return primary;
             }
 
             List<Verb> verbs = p.verbTracker?.AllVerbs;
             if (verbs == null) return null;
             for (int i = 0; i < verbs.Count; i++)
             {
-                if (verbs[i] is Verb_LaunchProjectile v && !verbs[i].verbProps.IsMeleeAttack)
+                if (IsRangedLaunchVerb(verbs[i]))
                 {
-                    return v;
+                    return verbs[i];
                 }
             }
             return null;
         }
 
-        public static bool CanCrossGapFire(Thing shooter, Thing target, Verb_LaunchProjectile verb, out GapShot shot)
+        public static bool CanCrossGapFire(Thing shooter, Thing target, Verb verb, out GapShot shot)
         {
             shot = default;
             if (shooter == null || !shooter.Spawned) return false;
@@ -238,7 +297,7 @@ namespace Strata
             return false;
         }
 
-        public static bool CanFireFrom(Map shooterMap, IntVec3 sCol, Thing target, Verb_LaunchProjectile verb, out GapShot shot)
+        public static bool CanFireFrom(Map shooterMap, IntVec3 sCol, Thing target, Verb verb, out GapShot shot)
         {
             shot = default;
             if (!Enabled || shooterMap == null || verb == null || target == null) return false;
@@ -282,7 +341,7 @@ namespace Strata
             return true;
         }
 
-        public static float ComputeAimChance(Thing shooter, Verb_LaunchProjectile verb, Thing target, float distance)
+        public static float ComputeAimChance(Thing shooter, Verb verb, Thing target, float distance)
         {
             float chance = 1f;
             if (verb.verbProps.canGoWild)
@@ -306,14 +365,14 @@ namespace Strata
             return Mathf.Clamp01(chance);
         }
 
-        public static bool Fire(Thing shooter, Verb_LaunchProjectile verb, Thing target)
+        public static bool Fire(Thing shooter, Verb verb, Thing target)
         {
             try
             {
                 if (shooter == null || verb == null || target == null) return false;
                 if (!CanCrossGapFire(shooter, target, verb, out GapShot shot)) return false;
 
-                ThingDef projDef = verb.Projectile;
+                ThingDef projDef = GetProjectile(verb);
                 if (projDef == null) return false;
 
                 Map targetMap = shot.targetMap;
@@ -328,6 +387,17 @@ namespace Strata
                 {
                     spawnCell = target.Position;
                     launchPos = target.DrawPos;
+                }
+
+                if (StrataCombatExtendedSoftCompat.IsLaunchVerb(verb))
+                {
+                    bool ce = StrataCombatExtendedSoftCompat.TryFire(
+                        shooter, verb, target, targetMap, spawnCell, launchPos, shot.distance, arc: false);
+                    if (ce)
+                    {
+                        verb.verbProps.soundCast?.PlayOneShot(new TargetInfo(shooter.Position, shooter.Map));
+                    }
+                    return ce;
                 }
 
                 var projectile = (Projectile)GenSpawn.Spawn(projDef, spawnCell, targetMap);
@@ -363,7 +433,7 @@ namespace Strata
             }
         }
 
-        public static IntVec3 FindFiringCell(Pawn shooter, Thing target, Verb_LaunchProjectile verb)
+        public static IntVec3 FindFiringCell(Pawn shooter, Thing target, Verb verb)
         {
             if (shooter == null || !shooter.Spawned) return IntVec3.Invalid;
             if (CanFireFrom(shooter.Map, shooter.Position, target, verb, out _))
@@ -497,7 +567,7 @@ namespace Strata
 
         private static bool StartAttackJob(Pawn pawn, Thing target, bool playerForced, bool allowReposition)
         {
-            Verb_LaunchProjectile verb = GetRangedVerb(pawn);
+            Verb verb = GetRangedVerb(pawn);
             if (verb == null) return false;
 
             IntVec3 stand = allowReposition

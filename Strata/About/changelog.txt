@@ -1,11 +1,12 @@
-[h1]Strata — 3.0.0[/h1]
+[h1]Strata — 3.0.1[/h1]
 
 [b]Fixed[/b]
 [list]
+[*] [b]Combat Extended cross-floor combat[/b] — shooting down (or up) through open sky now works with CE guns, turrets, and mortars. Rounds use CE's ballistic arc so they actually reach the target instead of vanishing at the muzzle. Vanilla fire is unchanged if CE is not loaded.
 [*] [b]Omni inter-floor connector + Helixien / VTE / Chemfuel[/b] — no longer crashes PipeSystem with a duplicate LinkedPipes key; placing Helixien (and other VEF) pipes works again. Omni still joins those nets; only dedicated shaft junctions stay in pipeDefs.
 [*] Second stairwell with no free landing cell refuses instead of opening a parallel pocket map.
 [*] Gravship stairwells / elevators pack and restore through launch (no longer vanish).
 [*] Climbing upstairs no longer hard-errors via vanilla PocketMapExit on orphan / unlinked landings.
 [/list]
 
-[i]Version 3.0.0 in Player.log (`[Strata] v3.0.0 ...`). Build stamp: omnijunction-linkedpipes-v1[/i]
+[i]Version 3.0.1 in Player.log (`[Strata] v3.0.1 ...`). Build stamp: ce-cross-level-combat-v2[/i]
