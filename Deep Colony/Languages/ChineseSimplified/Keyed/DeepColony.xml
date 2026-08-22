@@ -229,6 +229,12 @@
   <DC_Settings_EnvoyVisitsTip>默认关闭。已任命的使者可向同盟据点派出访问并带来好感脉冲。困难预设开启此项。</DC_Settings_EnvoyVisitsTip>
   <DC_Settings_ApologyTribute>道歉 / 贡礼</DC_Settings_ApologyTribute>
   <DC_Settings_ApologyTributeTip>声望标签可用白银，或右键白银 / 黄金 / 翡翠 / 贵重礼物，写下一条好感账本记录。</DC_Settings_ApologyTributeTip>
+  <DC_Settings_DiplomacyCompat>Despicable / RimPacts 外交联动</DC_Settings_DiplomacyCompat>
+  <DC_Settings_DiplomacyCompatTip>若已加载这些模组，贡礼、使者出访与家族加入/投诚也会推动英雄业力与派系信任。处决与释放仍由 Despicable 处理。关闭不影响 Deep Colony 自身的好感账本。软 / 默认 / 困难预设不改此项。</DC_Settings_DiplomacyCompatTip>
+  <DC_Compat_Karma_Tribute>贡礼</DC_Compat_Karma_Tribute>
+  <DC_Compat_Karma_Envoy>使者出访</DC_Compat_Karma_Envoy>
+  <DC_Compat_Karma_FamilyJoin>家族加入</DC_Compat_Karma_FamilyJoin>
+  <DC_Compat_Karma_FamilyDefect>家族投诚</DC_Compat_Karma_FamilyDefect>
   <DC_TributeDisabled>贡礼已在模组设置中关闭。</DC_TributeDisabled>
   <DC_TributeNoFaction>未选择派系。</DC_TributeNoFaction>
   <DC_TributeNoSilver>需要库存中有 200 白银才能送出贡礼。</DC_TributeNoSilver>

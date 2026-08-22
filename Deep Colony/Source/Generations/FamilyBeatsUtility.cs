@@ -201,6 +201,7 @@ namespace DeepColony
                     first.LabelShort.Named("KIN")),
                 LetterDefOf.NegativeEvent,
                 new LookTargets(look, first));
+            ExternalDiplomacySoftCompat.OnKinExecuted(victim);
         }
 
         public static bool IsFamilyOrEx(Pawn a, Pawn b)

@@ -13,11 +13,15 @@ namespace DeepColony
         public const string DateNightPackage = "azraelgodking.DateNight";
         public const string StrataPackage = "AzraelGodKing.Strata";
         public const string StormproofPackage = "AzraelGodKing.Stormproof";
+        public const string Despicable2Package = "DCSzar.Despicable2.Core";
+        public const string RimPactsPackage = "wowgag.RimPacts";
 
         public static bool HomesteaderLoaded => ModsConfig.IsActive(HomesteaderPackage);
         public static bool DateNightLoaded => ModsConfig.IsActive(DateNightPackage);
         public static bool StrataLoaded => ModsConfig.IsActive(StrataPackage);
         public static bool StormproofLoaded => ModsConfig.IsActive(StormproofPackage);
+        public static bool Despicable2Loaded => ModsConfig.IsActive(Despicable2Package);
+        public static bool RimPactsLoaded => ModsConfig.IsActive(RimPactsPackage);
 
         public static bool IsHomesteaderFood(Thing food)
         {
