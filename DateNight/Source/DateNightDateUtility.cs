@@ -263,52 +263,19 @@ namespace DateNight
 
         public static LocalTargetInfo FindDateSpot(Pawn pawn, Pawn partner)
         {
-            Thing gather = FindGatherSpot(pawn, partner);
+            Thing gather = DateNightActivities.FindGatherSpotFor(pawn, partner);
             if (gather != null)
             {
                 return gather;
             }
 
-            IntVec3 mid = new IntVec3(
-                (pawn.Position.x + partner.Position.x) / 2,
-                0,
-                (pawn.Position.z + partner.Position.z) / 2);
-            if (mid.InBounds(pawn.Map) && mid.Standable(pawn.Map)
-                && pawn.CanReach(mid, PathEndMode.OnCell, Danger.Deadly)
-                && partner.CanReach(mid, PathEndMode.OnCell, Danger.Deadly))
+            IntVec3 outdoor = DateNightActivities.FindOutdoorSpot(pawn, partner, preferBeauty: true);
+            if (outdoor.IsValid)
             {
-                return mid;
+                return outdoor;
             }
 
             return partner;
-        }
-
-        private static Thing FindGatherSpot(Pawn pawn, Pawn partner)
-        {
-            Thing best = null;
-            float bestDist = float.MaxValue;
-            foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
-            {
-                CompGatherSpot gather = building.TryGetComp<CompGatherSpot>();
-                if (gather == null || !gather.Active)
-                {
-                    continue;
-                }
-                if (!pawn.CanReach(building, PathEndMode.OnCell, Danger.Deadly)
-                    || !partner.CanReach(building, PathEndMode.OnCell, Danger.Deadly))
-                {
-                    continue;
-                }
-
-                float dist = pawn.Position.DistanceToSquared(building.Position)
-                    + partner.Position.DistanceToSquared(building.Position);
-                if (dist < bestDist)
-                {
-                    bestDist = dist;
-                    best = building;
-                }
-            }
-            return best;
         }
     }
 }
