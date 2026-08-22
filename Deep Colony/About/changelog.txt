@@ -1,4 +1,4 @@
-[h1]Deep Colony — Update[/h1]
+[h1]Deep Colony — 2.0.0[/h1]
 
 [b]Fixed[/b]
 [list]

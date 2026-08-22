@@ -2,7 +2,11 @@
 
 Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
 
+Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
+
 ## [Unreleased]
+
+Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.0.0 loaded from ...` in Player.log.
 
 ### Added
 - **Stormfront scenario** — hard-weather showcase start; unlocks storm protection research; locks Azrael when Homesteader is loaded.

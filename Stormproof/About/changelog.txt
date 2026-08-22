@@ -1,0 +1,17 @@
+[h1]Stormproof — 1.0.0[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Stormfront scenario[/b] — hard-weather showcase start; unlocks storm protection research; locks Azrael when Homesteader is loaded.
+[*] [b]Hazard hardening[/b] — atmospheric barrier, climate stabilizer, sky restorer, fire suppressor, drought condenser (Spacer research).
+[*] Heat dome, polar front, toxic surge, and dry lightning events, each with a matching counter.
+[/list]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Building sprites[/b] — packed to ~90% fill and stripped leftover editor pads so Power-tab icons and in-world art match normal RimWorld scale.
+[*] Solar shield Harmony on RimWorld 1.6 (`ElectricityDisabled` is a method now; the old patch aborted the whole mod).
+[*] Volcanic ash Odyssey prefix uses 1.6 `GiveOrUpdateHediff` args (no startup crash).
+[*] Research tab XML: `Storm & grid research` loads again (`&amp;`).
+[*] Surge protector ignores no-op spire Zzzt rolls; static pylon only drains a capacitor when it can pay for a zap.
+[/list]

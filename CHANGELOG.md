@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Repo** — each mod now has a player-facing `modVersion` (Strata **3.0.0**, Deep Colony **2.0.0**, others **1.0.0**) on the About page and in Player.log at load.
 - **Repo** — `.cursor/` is gitignored (agent rules stay local).
 - **Date Night** (`datenight/date-activities`) — dates now pick a real activity (dinner, picnic, walk, stargazing, dancing, gift, recreation, hangout fallback), have quality outcomes (wonderful / nice / awkward + ruined-date on interruptions), gift dates hand over a small luxury, and a finished date boosts lovin chance for a day. Four new settings, EN/RU/CN strings, dev tool to force an activity. Fixed Date-hours `NotImplementedException` from vanilla joy GetPriority. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Docs site rebuilt in Vue** (`site/vue-rewrite`) — new Vite + Vue 3 app in `site/`: data-driven hub and mod pages from `site/src/data/mods.json`, live Steam stats with auto/manual refresh and sort-by-subscribers, feature tabs, sprite gallery with lightbox, in-page changelog viewer (renders each mod's `CHANGELOG.md`), compatibility checker page, EN/RU/CN UI strings, light/dark theme, old `.html` links redirect to new routes. Pages workflow now builds `site/` and deploys `site/dist`; legacy pages (ledger, admin-stats, strata-roadmap, homesteader-catalog, living-world, signal) carried over unchanged.

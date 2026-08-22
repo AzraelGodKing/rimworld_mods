@@ -6,6 +6,8 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
+Player-facing version **2.0.0** (`About.xml` `modVersion`). Startup writes `[DeepColony] v2.0.0 build ...` in Player.log.
+
 ### Added
 - **Post-2.0 idea pool (Batch C)** — 20 ideas, Phase 6–9 (QoL alerts/filters, kin memory, DLC/sibling hooks, gated envoy/tribute). Spec: [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
 - **GitHub zip restored** — `DeepColony.zip` published again on the rolling `latest` release for non-Steam installs (alongside Workshop).
