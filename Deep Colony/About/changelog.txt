@@ -9,6 +9,7 @@
 [*] [b]Unwavering prisoners[/b] — only family can crack that loyalty, and only if they like each other. Then normal recruit works.
 [*] [b]Ex-lovers[/b] — chance to get back together. After more than three reunions it is marked a toxic relationship that counseling can help.
 [*] [b]Family tree[/b] — Family tab on the pawn inspect pane (next to Character). Click a relative to jump to that pawn. Also a Family tree button on the Bio card.
+[*] [b]Despicable 2 / RimPacts[/b] — tribute, envoy visits, and family join/defect also nudge hero karma and faction trust when those mods are loaded. Executing kin hits trust only. Off in settings if you want Deep Colony goodwill alone.
 [*] [b]Pedigree layout[/b] — Pedigree / Rows button on the Family tab title (same setting as mod options). Ancestors above, descendants below, with connecting lines. Off keeps generation rows.
 [*] [b]Family notes[/b] — first harvest as a family, marriage, coming of age, birthdays, and anniversaries on the Legacy tab. Eating with kin gives a short mood.
 [*] Adult children returning to a parent's map get a reunion thought. Colony-born kids still keep "I grew up here" (not growth vats).
@@ -31,5 +32,5 @@
 [*] Isekai Rank / destiny traits stay unique; birth inheritance only for player-side babies.
 [/list]
 
-[i]Build stamp (Player.log): family-tree-pedigree-v3[/i]
+[i]Build stamp (Player.log): diplomacy-compat-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Deep%20Colony/CHANGELOG.md[/i]

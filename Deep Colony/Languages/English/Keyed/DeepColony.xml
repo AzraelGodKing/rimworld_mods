@@ -229,6 +229,12 @@
   <DC_Settings_EnvoyVisitsTip>Default off. Assigned envoys may dispatch a visit to an allied settlement for a goodwill pulse. Hard preset enables this.</DC_Settings_EnvoyVisitsTip>
   <DC_Settings_ApologyTribute>Apology / tribute</DC_Settings_ApologyTribute>
   <DC_Settings_ApologyTributeTip>Reputation tab can spend silver, or right-click silver / gold / jade / a valuable gift, to write a goodwill ledger row.</DC_Settings_ApologyTributeTip>
+  <DC_Settings_DiplomacyCompat>Despicable / RimPacts diplomacy</DC_Settings_DiplomacyCompat>
+  <DC_Settings_DiplomacyCompatTip>When those mods are loaded, tribute, envoy visits, and family join/defect also nudge hero karma and faction trust. Execute and release stay with Despicable. Off does not change Deep Colony's own goodwill ledger. Soft / Default / Hard do not change this.</DC_Settings_DiplomacyCompatTip>
+  <DC_Compat_Karma_Tribute>Tribute</DC_Compat_Karma_Tribute>
+  <DC_Compat_Karma_Envoy>Envoy visit</DC_Compat_Karma_Envoy>
+  <DC_Compat_Karma_FamilyJoin>Family joined</DC_Compat_Karma_FamilyJoin>
+  <DC_Compat_Karma_FamilyDefect>Family defected</DC_Compat_Karma_FamilyDefect>
   <DC_TributeDisabled>Tribute is disabled in mod settings.</DC_TributeDisabled>
   <DC_TributeNoFaction>No faction selected.</DC_TributeNoFaction>
   <DC_TributeNoSilver>Need 200 silver in stock to send tribute.</DC_TributeNoSilver>

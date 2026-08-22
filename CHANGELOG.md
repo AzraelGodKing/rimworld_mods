@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Deep Colony diplomacy** (`diplomacy-compat-v1`) — fail-open Despicable 2 Hero Karma + RimPacts trust on tribute, envoy visits, and family join/defect. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Date Night** (`date-cooldown-v1`) — finished dates wait like post-lovin before the couple starts another. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Deep Colony family tree** (`family-tree-pedigree-v3`) — Pedigree / Rows button on the Family tab title row. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony family echo** — prison visit, release kin, family-tradition teach, kin downed beside you, empty nest. Stamp `family-echo-v4`. Colony sibling thought had no defName. Family tab section titles are no longer cut off. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
