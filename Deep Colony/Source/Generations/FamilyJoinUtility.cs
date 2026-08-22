@@ -186,6 +186,7 @@ namespace DeepColony
                 GameComp_DeepColony.Instance?.AddFactionDrift(
                     oldFaction, -2f, FactionRepReason.FamilyDefect);
             }
+            ExternalDiplomacySoftCompat.OnFamilyJoin(pawn, oldFaction, hostile);
 
             string titleKey = hostile ? "DC_Letter_FamilyDefectLabel" : "DC_Letter_FamilyJoinLabel";
             string bodyKey = hostile ? "DC_Letter_FamilyDefectBody" : "DC_Letter_FamilyJoinBody";
