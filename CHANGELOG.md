@@ -4,6 +4,8 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Date Night** (`azr-14-schedule-combo-v3`) — Date sits last after Clean (Lovin in the ▾ menu) without covering Manage areas. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
+- **Date Night** (`azr-15-lovin-anim-v1`) — lovin + animation mods no longer restart every 2–3 seconds; pregnancy can finish. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Strata 3.0.1** — Combat Extended guns, turrets, and mortars can fire through open sky again (`ce-cross-level-combat-v2`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Repo** — each mod now has a player-facing `modVersion` (Strata **3.0.1**, Deep Colony **2.0.0**, others **1.0.0**) on the About page and in Player.log at load.
 - **Repo** — `.cursor/` is gitignored (agent rules stay local).

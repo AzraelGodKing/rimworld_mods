@@ -36,6 +36,96 @@ namespace DateNight
             return IsLovinSchedule(pawn) || IsDateSchedule(pawn);
         }
 
+        /// <summary>
+        /// True while this pawn is already in vanilla lovin, Date Night private time,
+        /// or a replacement job from animation / RJW / breeding-ritual mods.
+        /// Restarting JobDef.Lovin in that window cycles their animations and
+        /// never lets the original job finish (so pregnancy never rolls).
+        /// </summary>
+        public static bool IsBusyWithLovin(Pawn pawn)
+        {
+            if (pawn?.jobs?.curDriver == null || pawn.CurJobDef == null)
+            {
+                return false;
+            }
+
+            JobDef def = pawn.CurJobDef;
+            if (def == JobDefOf.Lovin || def == DateNightDefOf.DateNight_SelfLovin)
+            {
+                return true;
+            }
+            if (pawn.jobs.curDriver is JobDriver_Lovin)
+            {
+                return true;
+            }
+            if (def.driverClass != null && typeof(JobDriver_Lovin).IsAssignableFrom(def.driverClass))
+            {
+                return true;
+            }
+
+            return LooksLikeLovinJob(def, pawn.jobs.curDriver);
+        }
+
+        private static bool LooksLikeLovinJob(JobDef def, JobDriver driver)
+        {
+            if (NameLooksLikeLovin(def.defName) || NameLooksLikeLovin(def.driverClass?.Name))
+            {
+                return true;
+            }
+
+            System.Type t = driver.GetType();
+            while (t != null && t != typeof(JobDriver))
+            {
+                if (NameLooksLikeLovin(t.Name) || NameLooksLikeLovin(t.Namespace))
+                {
+                    return true;
+                }
+                t = t.BaseType;
+            }
+            return false;
+        }
+
+        private static bool NameLooksLikeLovin(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return false;
+            }
+            if (name.IndexOf("Lovin", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (name.IndexOf("JobDriver_Sex", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (name.IndexOf("SexBase", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (name.IndexOf("JoinInBed", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (name.IndexOf("GettinLoved", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (name.IndexOf("Breeding", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (name.IndexOf("Rimworld_Animations", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (name.IndexOf("RimworldAnimations", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static bool HasAnyHour(Pawn pawn, TimeAssignmentDef def)
         {
             if (pawn?.timetable == null || def == null)
@@ -99,6 +189,10 @@ namespace DateNight
             {
                 return null;
             }
+            if (IsBusyWithLovin(pawn))
+            {
+                return null;
+            }
 
             Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
             if (!WaitingForPartner(pawn, partner, target)
@@ -125,9 +219,18 @@ namespace DateNight
             {
                 return;
             }
-            if (pawn.CurJobDef == JobDefOf.Lovin
-                || pawn.CurJobDef == DateNightDefOf.DateNight_SelfLovin
-                || pawn.CurJobDef == DateNightDefOf.DateNight_GoOnDate)
+            if (IsBusyWithLovin(pawn))
+            {
+                return;
+            }
+
+            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            if (partner != null && IsBusyWithLovin(partner))
+            {
+                return;
+            }
+
+            if (pawn.CurJobDef == DateNightDefOf.DateNight_GoOnDate)
             {
                 return;
             }
@@ -138,7 +241,6 @@ namespace DateNight
                 return;
             }
 
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
             if (partner != null
                 && IsLovinSchedule(partner)
                 && !DateNightHooks.CanForceCoupleLovin(pawn, partner))
@@ -197,7 +299,7 @@ namespace DateNight
             {
                 return false;
             }
-            if (pawn.CurJobDef == JobDefOf.Lovin)
+            if (IsBusyWithLovin(pawn))
             {
                 return true;
             }
@@ -221,6 +323,10 @@ namespace DateNight
             if (partner == null || !partner.health.capacities.CanBeAwake || partner.Dead || partner.Downed)
             {
                 return false;
+            }
+            if (IsBusyWithLovin(partner))
+            {
+                return true;
             }
             if (!DateNightHooks.CanForceCoupleLovin(pawn, partner))
             {
@@ -296,13 +402,9 @@ namespace DateNight
             {
                 return false;
             }
-            if (pawn.CurJobDef == DateNightDefOf.DateNight_SelfLovin)
+            if (IsBusyWithLovin(pawn))
             {
                 return true;
-            }
-            if (pawn.CurJobDef == JobDefOf.Lovin)
-            {
-                return false;
             }
             if (!force && ShouldSatisfyNeedsBeforeLovin(pawn))
             {
