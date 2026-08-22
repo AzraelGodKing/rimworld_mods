@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -13,160 +14,299 @@ namespace DateNight
     /// <summary>
     /// Vanilla hardcodes Anything/Work/Joy/Sleep(/Meditate) in TimeAssignmentSelector —
     /// custom TimeAssignmentDefs never appear unless we draw them ourselves.
+    /// One extra cell (Date, with Lovin on a dropdown), always last on the extra strip.
+    /// Drawn from a Harmony finalizer so other schedule postfixes paint first.
     /// </summary>
     [HarmonyPatch(typeof(TimeAssignmentSelector), nameof(TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid))]
     public static class Patch_TimeAssignmentSelector_DrawGrid
     {
-        // Vanilla 2×2 uses columns 0–1. Extra schedule buttons (Meditate is in-grid)
-        // continue the top row at index 4+, matching Rimbody / Exosuit.
-        private const int FirstExtraColumn = 4;
+        private const float DropWidth = 18f;
 
         [HarmonyPriority(Priority.Last)]
-        public static void Postfix(Rect rect)
+        public static Exception Finalizer(Exception __exception, Rect rect)
         {
-            TimeAssignmentDef lovin = DateNightDefOf.DateNight_Lovin;
+            try
+            {
+                DrawCombo(rect);
+            }
+            catch (Exception e)
+            {
+                Log.WarningOnce("[Date Night] Schedule selector failed: " + e.Message, 0xD47E010);
+            }
+
+            return __exception;
+        }
+
+        private static void DrawCombo(Rect rect)
+        {
             TimeAssignmentDef date = DateNightDefOf.DateNight_Date;
-            if (lovin == null && date == null)
+            TimeAssignmentDef lovin = DateNightDefOf.DateNight_Lovin;
+            if (date == null && lovin == null)
             {
                 return;
             }
 
             float cellW = rect.width * 0.5f;
             float cellH = rect.height * 0.5f;
-            int index = LovinColumnIndex();
-            if (lovin != null)
+            int col = LastExtraColumn();
+            float x = rect.x + cellW * col;
+            float w = cellW;
+            Rect areas = Patch_AllowedArea_DoHeader.ButtonRect;
+            if (areas.width > 1f && x + w > areas.x)
             {
-                Rect cell = new Rect(rect.x + cellW * index, rect.y, cellW, cellH);
-                DrawSelectorButton(cell, lovin);
-                index++;
-            }
-            if (date != null)
-            {
-                Rect cell = new Rect(rect.x + cellW * index, rect.y, cellW, cellH);
-                DrawSelectorButton(cell, date);
-            }
-        }
-
-        private static int? cachedColumn;
-
-        private static int LovinColumnIndex()
-        {
-            if (cachedColumn != null)
-            {
-                return cachedColumn.Value;
+                float afterPrev = rect.x + cellW * Mathf.Max(0, col - 1);
+                x = afterPrev + cellW;
+                w = areas.x - 2f - x;
+                if (w < 52f)
+                {
+                    w = Mathf.Min(cellW, areas.x - 2f - afterPrev);
+                    x = areas.x - 2f - w;
+                    if (x < afterPrev)
+                    {
+                        x = afterPrev;
+                        w = areas.x - 2f - x;
+                    }
+                }
             }
 
-            int index = FirstExtraColumn;
-            if (ModsConfig.RoyaltyActive)
+            if (w < 24f)
             {
-                index++;
-            }
-            if (HasExosuitScheduleButton())
-            {
-                index++;
-            }
-            if (HasRimbodyScheduleButton())
-            {
-                index++;
-            }
-            if (HasScheduleEverythingButton())
-            {
-                index++;
+                return;
             }
 
-            cachedColumn = index;
-            return index;
-        }
-
-        private static bool HasExosuitScheduleButton()
-        {
-            return ModActive("AOBA.ExosuitFramework")
-                || ModActive("AOBA.MechsuitFramework")
-                || DefDatabase<TimeAssignmentDef>.GetNamedSilentFail("Piloting") != null
-                || DefDatabase<TimeAssignmentDef>.GetNamedSilentFail("Exosuit_Piloting") != null;
+            DrawComboButton(new Rect(x, rect.y, w, cellH), date, lovin);
         }
 
         /// <summary>
-        /// Rimbody draws Workout in the same extra column Date Night used to occupy.
-        /// Clicks then open Workout / Joy (useRecToSelect) instead of selecting Lovin.
-        /// When useRecToSelect is on, Workout shares the Joy cell — no extra column.
+        /// Vanilla 1.6 draws one row: Anything, Work, Joy, Sleep, then Meditate if Royalty.
+        /// Extra mods skip ahead (Rimbody Workout, Schedule Everything). Sit immediately
+        /// after the rightmost of those — last on the strip, not a cell further into Manage areas.
         /// </summary>
-        private static bool HasRimbodyScheduleButton()
+        private static int LastExtraColumn()
         {
-            if (!ModActive("Maux36.Rimbody")
-                && DefDatabase<TimeAssignmentDef>.GetNamedSilentFail("Rimbody_Workout") == null)
+            int royalty = ModsConfig.RoyaltyActive ? 1 : 0;
+            int last = 3 + royalty;
+            int known = 0;
+
+            if (AccessTools.TypeByName("Maux36.Rimbody.TimeAssignmentSelector_DrawTimeTable_Patch") != null)
+            {
+                known++;
+                int rimbody = 4 + royalty;
+                if (IsRimbodyExosuitLoaded())
+                {
+                    rimbody++;
+                }
+                if (rimbody > last)
+                {
+                    last = rimbody;
+                }
+            }
+
+            if (AccessTools.TypeByName("MazoScheduleMod.TimeAssignmentSelectorPatch") != null)
+            {
+                known++;
+                int se = 5 + royalty;
+                if (se > last)
+                {
+                    last = se;
+                }
+            }
+
+            int unknown = CountOtherSelectorOwners() - known;
+            if (unknown < 0)
+            {
+                unknown = 0;
+            }
+
+            return last + 1 + unknown;
+        }
+
+        private static bool IsRimbodyExosuitLoaded()
+        {
+            try
+            {
+                Type type = AccessTools.TypeByName("Maux36.Rimbody.Rimbody");
+                FieldInfo field = type == null ? null : AccessTools.Field(type, "ExosuitFrameworkLoaded");
+                return field != null && field.FieldType == typeof(bool) && (bool)field.GetValue(null);
+            }
+            catch
             {
                 return false;
             }
+        }
 
-            try
+        /// <summary>
+        /// Each other Harmony owner on this method is treated as one extra top-row button.
+        /// Unique id, so a postfix+transpiler from the same mod still counts as one slot.
+        /// </summary>
+        private static int CountOtherSelectorOwners()
+        {
+            MethodInfo method = AccessTools.DeclaredMethod(
+                typeof(TimeAssignmentSelector),
+                nameof(TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid));
+            if (method == null)
             {
-                Type settings = AccessTools.TypeByName("Maux36.Rimbody.RimbodySettings");
-                FieldInfo rec = settings != null
-                    ? AccessTools.Field(settings, "useRecToSelect")
-                    : null;
-                if (rec != null && rec.IsStatic && rec.FieldType == typeof(bool) && (bool)rec.GetValue(null))
+                return 0;
+            }
+
+            Patches patches = Harmony.GetPatchInfo(method);
+            if (patches == null)
+            {
+                return 0;
+            }
+
+            var seen = new HashSet<string>();
+            int n = 0;
+            n += CountOwners(patches.Prefixes, seen);
+            n += CountOwners(patches.Postfixes, seen);
+            n += CountOwners(patches.Transpilers, seen);
+            n += CountOwners(patches.Finalizers, seen);
+            return n;
+        }
+
+        private static int CountOwners(IEnumerable<Patch> list, HashSet<string> seen)
+        {
+            if (list == null)
+            {
+                return 0;
+            }
+
+            int n = 0;
+            foreach (Patch patch in list)
+            {
+                if (patch == null || patch.owner == DateNightInit.HarmonyId)
                 {
-                    return false;
+                    continue;
+                }
+                if (!seen.Add(patch.owner ?? ""))
+                {
+                    continue;
+                }
+                n++;
+            }
+            return n;
+        }
+
+        private static void DrawComboButton(Rect rect, TimeAssignmentDef date, TimeAssignmentDef lovin)
+        {
+            TimeAssignmentDef shown = ShownAssignment(date, lovin);
+            if (shown == null)
+            {
+                return;
+            }
+
+            Rect inner = rect.ContractedBy(2f);
+            bool hasDropdown = date != null && lovin != null && inner.width >= DropWidth + 20f;
+            bool wholeOpensMenu = date != null && lovin != null && !hasDropdown;
+            Rect drop = hasDropdown
+                ? new Rect(inner.xMax - DropWidth, inner.y, DropWidth, inner.height)
+                : Rect.zero;
+            Rect main = hasDropdown
+                ? new Rect(inner.x, inner.y, inner.width - DropWidth, inner.height)
+                : inner;
+
+            GUI.DrawTexture(inner, shown.ColorTexture);
+
+            if (Widgets.ButtonInvisible(main))
+            {
+                if (wholeOpensMenu)
+                {
+                    OpenDropdown(date, lovin);
+                }
+                else
+                {
+                    Select(shown);
                 }
             }
-            catch (Exception)
+
+            if (hasDropdown && Widgets.ButtonInvisible(drop))
             {
-                // Fail-open: assume the extra Workout button exists.
+                OpenDropdown(date, lovin);
             }
 
-            return true;
-        }
-
-        private static bool HasScheduleEverythingButton()
-        {
-            return ModNameContains("Schedule Everything");
-        }
-
-        private static bool ModActive(string packageId)
-        {
-            return !packageId.NullOrEmpty()
-                && ModLister.GetActiveModWithIdentifier(packageId, ignorePostfix: true) != null;
-        }
-
-        private static bool ModNameContains(string fragment)
-        {
-            foreach (ModMetaData mod in ModsConfig.ActiveModsInLoadOrder)
+            if (Mouse.IsOver(inner))
             {
-                if (mod?.Name != null
-                    && mod.Name.IndexOf(fragment, StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    return true;
-                }
+                Widgets.DrawHighlight(inner);
+                TooltipHandler.TipRegion(inner, "DateNight_ScheduleComboTip".Translate());
             }
-            return false;
-        }
 
-        private static void DrawSelectorButton(Rect rect, TimeAssignmentDef ta)
-        {
-            rect = rect.ContractedBy(2f);
-            GUI.DrawTexture(rect, ta.ColorTexture);
-            if (Widgets.ButtonInvisible(rect))
-            {
-                TimeAssignmentSelector.selectedAssignment = ta;
-                SoundDefOf.Tick_High.PlayOneShotOnCamera();
-            }
-            if (Mouse.IsOver(rect))
-            {
-                Widgets.DrawHighlight(rect);
-            }
             using (new TextBlock(TextAnchor.MiddleCenter))
             {
-                Widgets.Label(rect, ta.LabelCap);
+                Widgets.Label(main, shown.LabelCap);
             }
-            if (TimeAssignmentSelector.selectedAssignment == ta)
+
+            if (hasDropdown)
             {
-                Widgets.DrawBox(rect, 2);
+                using (new TextBlock(GameFont.Tiny, TextAnchor.MiddleCenter))
+                {
+                    Widgets.Label(drop, "▾");
+                }
             }
-            else
+
+            TimeAssignmentDef selected = TimeAssignmentSelector.selectedAssignment;
+            if (selected == date || selected == lovin)
             {
-                UIHighlighter.HighlightOpportunity(rect, ta.cachedHighlightNotSelectedTag);
+                Widgets.DrawBox(inner, 2);
             }
+            else if (date != null)
+            {
+                UIHighlighter.HighlightOpportunity(inner, date.cachedHighlightNotSelectedTag);
+            }
+        }
+
+        private static TimeAssignmentDef ShownAssignment(TimeAssignmentDef date, TimeAssignmentDef lovin)
+        {
+            TimeAssignmentDef selected = TimeAssignmentSelector.selectedAssignment;
+            if (selected != null && (selected == date || selected == lovin))
+            {
+                return selected;
+            }
+
+            return date ?? lovin;
+        }
+
+        private static void OpenDropdown(TimeAssignmentDef date, TimeAssignmentDef lovin)
+        {
+            var options = new List<FloatMenuOption>();
+            if (date != null)
+            {
+                options.Add(new FloatMenuOption(date.LabelCap, () => Select(date)));
+            }
+            if (lovin != null)
+            {
+                options.Add(new FloatMenuOption(lovin.LabelCap, () => Select(lovin)));
+            }
+            if (options.Count == 0)
+            {
+                return;
+            }
+
+            Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        private static void Select(TimeAssignmentDef ta)
+        {
+            TimeAssignmentSelector.selectedAssignment = ta;
+            SoundDefOf.Tick_High.PlayOneShotOnCamera();
+        }
+    }
+
+    /// <summary>
+    /// Vanilla draws Manage areas in the Allowed Area header, same band as extra schedule
+    /// buttons. Cache that button so Date can sit after Clean without covering it.
+    /// </summary>
+    [HarmonyPatch(typeof(PawnColumnWorker_AllowedArea), nameof(PawnColumnWorker_AllowedArea.DoHeader))]
+    public static class Patch_AllowedArea_DoHeader
+    {
+        public static Rect ButtonRect;
+
+        public static void Postfix(Rect rect)
+        {
+            ButtonRect = new Rect(
+                rect.x,
+                rect.y + (rect.height - 65f),
+                Mathf.Min(rect.width, 360f),
+                32f);
         }
     }
 
@@ -220,6 +360,12 @@ namespace DateNight
             if (!DateNightUtility.IsLovinSchedule(pawn))
             {
                 return true;
+            }
+
+            if (DateNightUtility.IsBusyWithLovin(pawn))
+            {
+                __result = null;
+                return false;
             }
 
             if (DateNightUtility.ShouldSatisfyNeedsBeforeBed(pawn))
