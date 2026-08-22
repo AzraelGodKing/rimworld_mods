@@ -179,7 +179,7 @@ namespace Strata
 
         private static bool TryEngageAcross(Pawn shooter, Map targetMap, bool allowReposition)
         {
-            Verb_LaunchProjectile verb = StrataCrossLevelCombat.GetRangedVerb(shooter);
+            Verb verb = StrataCrossLevelCombat.GetRangedVerb(shooter);
             if (verb == null || targetMap == null || targetMap.Disposed) return false;
 
             bool shooterHostile = shooter.HostileTo(Faction.OfPlayer);

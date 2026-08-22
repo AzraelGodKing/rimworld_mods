@@ -49,7 +49,9 @@ namespace Strata
         {
             ExhaustAutoPatch.Apply();
             GasNetAdapter.Inject();
-            new Harmony("azraelgodking.strata").PatchAll();
+            Harmony harmony = new Harmony("azraelgodking.strata");
+            harmony.PatchAll();
+            StrataCombatExtendedSoftCompat.TryPatch(new Harmony("azraelgodking.strata.ce"));
             LongEventHandler.ExecuteWhenFinished(() =>
             {
                 StrataBuildInfo.LogStartup();
