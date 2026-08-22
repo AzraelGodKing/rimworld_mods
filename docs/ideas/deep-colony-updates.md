@@ -1,6 +1,6 @@
 # Deep Colony — update ideas
 
-**Status:** Phases 0–5 shipped in 2.0 (all 42 A/B ideas). Next pool: [Batch C](deep-colony-batch-c.md) (20 ideas, Phase 6–9).  
+**Status:** Phases 0–5 shipped in 2.0 (all 42 A/B ideas). Batch C: [deep-colony-batch-c.md](deep-colony-batch-c.md). Batch D: [deep-colony-batch-d.md](deep-colony-batch-d.md).  
 **Mod:** [Deep Colony](../../Deep%20Colony/) — perk trees, trauma/therapy, apprenticeship, generational inheritance, living faction reputation.  
 **Lane rule:** colonist / colony-facing only. World chronicle, settlement morph, NPC wars → [Living World](living-world.md). Named hunters → [Nemesis](../../Nemesis/ROADMAP.md). Farm brand → Homesteader.  
 **Roadmap:** [Deep Colony/ROADMAP.md](../../Deep%20Colony/ROADMAP.md).

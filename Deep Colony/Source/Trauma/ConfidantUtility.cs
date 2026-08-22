@@ -6,7 +6,16 @@ namespace DeepColony
 {
     public static class ConfidantUtility
     {
-        private const int SessionsToBond = 3;
+        private const int SessionsToBondDefault = 3;
+        private const int SessionsToBondLovers = 2;
+
+        public static int SessionsToBondFor(Pawn patient, Pawn counselor)
+        {
+            if (counselor != null && SoftCompat.DateNightLoaded
+                && SoftCompat.AreLovePartners(patient, counselor))
+                return SessionsToBondLovers;
+            return SessionsToBondDefault;
+        }
 
         public static void NotifyCounselSession(Pawn counselor, Pawn patient)
         {
@@ -18,7 +27,7 @@ namespace DeepColony
             if (patientComp == null) return;
 
             int count = patientComp.IncrementCounselCount(counselor);
-            if (count < SessionsToBond) return;
+            if (count < SessionsToBondFor(patient, counselor)) return;
             if (patient.relations == null || counselor.relations == null) return;
             if (patient.relations.DirectRelationExists(DC_DefOf.DC_Confidant, counselor)) return;
 

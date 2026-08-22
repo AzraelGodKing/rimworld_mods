@@ -29,6 +29,7 @@ namespace DeepColony
             if (!playerSide) return;
 
             gameComp.MarkInheritanceProcessed(pawn);
+            ChildhoodUtility.NoteBirth(pawn);
 
             // Dead parents still count for bloodline / surname / traits
             var parents = GetColonistParents(pawn, includeDead: true);
