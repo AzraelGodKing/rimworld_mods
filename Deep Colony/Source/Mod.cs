@@ -26,7 +26,7 @@ namespace DeepColony
             var settings = Settings;
             if (settings == null) return;
 
-            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 2080f);
+            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 2140f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
 
             var listing = new Listing_Standard();
@@ -114,6 +114,8 @@ namespace DeepColony
             listing.Label("DC_Settings_FamilyJoin".Translate());
             Text.Font = GameFont.Small;
             listing.Gap(4f);
+            listing.CheckboxLabeled("DC_Settings_FamilyTreePedigree".Translate(), ref settings.familyTreePedigreeStyle,
+                "DC_Settings_FamilyTreePedigreeTip".Translate());
             listing.CheckboxLabeled("DC_Settings_EnableFamilyJoin".Translate(), ref settings.enableFamilyJoin,
                 "DC_Settings_EnableFamilyJoinTip".Translate());
             listing.Label("DC_Settings_RaidDefect".Translate((int)(settings.familyRaidDefectChance * 100f)));

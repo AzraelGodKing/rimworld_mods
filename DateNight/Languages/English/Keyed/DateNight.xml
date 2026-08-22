@@ -4,9 +4,9 @@
   <DateNight_SettingsCategory>Date Night</DateNight_SettingsCategory>
   <DateNight_Settings_Intro>Schedule Date or Lovin on the Schedule tab. Date is a walk / table / hangout (mood + opinion, no bed). Lovin still uses a shared double. Adults without a partner in that bed can have private time. Ideology that forbids lovin, and Biotech sterile genes, reroute to a date instead of forcing the job.</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>Pregnancy-safe cooldown</DateNight_Settings_PregnancySafe>
-  <DateNight_Settings_PregnancySafeTip>ON (recommended): only shortens lovin chance while scheduled; keeps vanilla post-lovin cooldown. OFF with Eager: mirrors Always Do Lovin cooldown (~100 ticks).</DateNight_Settings_PregnancySafeTip>
+  <DateNight_Settings_PregnancySafeTip>ON (recommended): only shortens lovin chance while scheduled; keeps vanilla post-lovin cooldown. Date uses the same wait (~4–8 hours) after a finished date. OFF with Eager: mirrors Always Do Lovin cooldown (~100 ticks) for lovin and dating.</DateNight_Settings_PregnancySafeTip>
   <DateNight_Settings_Eager>Eager mode (short cooldown)</DateNight_Settings_Eager>
-  <DateNight_Settings_EagerTip>Shortens post-lovin cooldown like the Always Do Lovin debug option. Can spam pregnancy rolls — leave off unless you want that.</DateNight_Settings_EagerTip>
+  <DateNight_Settings_EagerTip>Shortens post-lovin and post-date cooldown like the Always Do Lovin debug option (~100 ticks). Can spam pregnancy rolls — leave off unless you want that.</DateNight_Settings_EagerTip>
   <DateNight_Settings_SelfLovin>Allow private time (self)</DateNight_Settings_SelfLovin>
   <DateNight_Settings_SelfLovinTip>Adults on Lovin hours use their own bed when a partner is not sharing a double. No pregnancy. Same cooldown as lovin. Children never qualify.</DateNight_Settings_SelfLovinTip>
   <DateNight_Settings_WindowBed>Claim double for Lovin hours</DateNight_Settings_WindowBed>

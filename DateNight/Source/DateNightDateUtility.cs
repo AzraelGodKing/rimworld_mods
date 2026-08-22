@@ -38,6 +38,10 @@ namespace DateNight
             {
                 return false;
             }
+            if (!force && !DateCooldownReady(pawn, partner))
+            {
+                return false;
+            }
             if (!pawn.Spawned || !partner.Spawned || pawn.Map != partner.Map)
             {
                 return false;
@@ -119,14 +123,78 @@ namespace DateNight
         // pawn id -> tick of their last completed date (post-date lovin boost).
         private static Dictionary<int, int> lastGoodDateTicks = new Dictionary<int, int>();
 
+        // pawn id -> tick when they may start another date (mirrors canLovinTick).
+        private static Dictionary<int, int> canDateTicks = new Dictionary<int, int>();
+
         public static void ExposeData()
         {
             Scribe_Collections.Look(ref lastGoodDateTicks, "dateNightLastGoodDateTicks",
                 LookMode.Value, LookMode.Value);
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && lastGoodDateTicks == null)
+            Scribe_Collections.Look(ref canDateTicks, "dateNightCanDateTicks",
+                LookMode.Value, LookMode.Value);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                lastGoodDateTicks = new Dictionary<int, int>();
+                if (lastGoodDateTicks == null)
+                {
+                    lastGoodDateTicks = new Dictionary<int, int>();
+                }
+                if (canDateTicks == null)
+                {
+                    canDateTicks = new Dictionary<int, int>();
+                }
             }
+        }
+
+        /// <summary>
+        /// Same durations as lovin: 10000–20000 ticks (~4–8 hours) by default,
+        /// or ~100 ticks in Eager mode.
+        /// </summary>
+        public static void ApplyDateCooldown(Pawn pawn, Pawn partner)
+        {
+            int until = Find.TickManager.TicksGame + DateCooldownDuration();
+            SetCanDateTick(pawn, until);
+            SetCanDateTick(partner, until);
+        }
+
+        public static bool DateCooldownReady(Pawn pawn, Pawn partner)
+        {
+            return IsDateCooldownReady(pawn) && IsDateCooldownReady(partner);
+        }
+
+        private static bool IsDateCooldownReady(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return true;
+            }
+            if (!canDateTicks.TryGetValue(pawn.thingIDNumber, out int until))
+            {
+                return true;
+            }
+            return Find.TickManager.TicksGame >= until;
+        }
+
+        private static void SetCanDateTick(Pawn pawn, int until)
+        {
+            if (pawn == null)
+            {
+                return;
+            }
+            if (!canDateTicks.TryGetValue(pawn.thingIDNumber, out int cur) || until > cur)
+            {
+                canDateTicks[pawn.thingIDNumber] = until;
+            }
+        }
+
+        private static int DateCooldownDuration()
+        {
+            if (DateNightMod.Settings != null
+                && DateNightMod.Settings.eagerCooldown
+                && !DateNightMod.Settings.pregnancySafeCooldown)
+            {
+                return DateNightUtility.AlwaysDoLovinCooldownTicks;
+            }
+            return Rand.RangeInclusive(10000, 20000);
         }
 
         public static bool HadRecentGoodDate(Pawn pawn)

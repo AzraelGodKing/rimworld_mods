@@ -206,6 +206,7 @@ namespace DateNight
                 if (ticksLeft <= 0 && totalTicks > 0)
                 {
                     DateNightDateUtility.NotifyDateFinished(pawn, Partner, CoupleActivity, job.GetTarget(SpotInd));
+                    DateNightDateUtility.ApplyDateCooldown(pawn, Partner);
                 }
                 else if (totalTicks > 0 && totalTicks - ticksLeft > 600)
                 {
