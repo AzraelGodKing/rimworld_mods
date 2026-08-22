@@ -6,6 +6,8 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
+Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.0.0 loaded from ...` in Player.log.
+
 ### Fixed
 - **Date hours crash** — vanilla `ThinkNode_Priority_GetJoy.GetPriority` throws `NotImplementedException` for any timetable slot other than Anything/Joy/Sleep/Meditate when `allowJoy` is true (including Date). Date Night now Prefix-skips that method on Date hours instead of Postfixing after it blows up.
 

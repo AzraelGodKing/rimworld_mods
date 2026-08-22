@@ -1,4 +1,4 @@
-[h1]Date Night — Update[/h1]
+[h1]Date Night — 1.0.0[/h1]
 
 [b]Added[/b]
 [list]
