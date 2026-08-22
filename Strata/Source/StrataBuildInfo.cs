@@ -8,7 +8,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "omnijunction-linkedpipes-v1";
+        public const string BuildStamp = "ce-cross-level-combat-v2";
 
         public static void LogStartup()
         {
