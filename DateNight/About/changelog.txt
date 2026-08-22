@@ -2,6 +2,7 @@
 
 [b]Added[/b]
 [list]
+[*] [b]Date cooldown[/b] — after a finished date the couple waits like post-lovin (~4–8 hours; Eager ~100 ticks) before dating again. Dev Force date still starts immediately.
 [*] [b]Date activities[/b] — dates pick a real activity from the map (dinner, picnic, walk, stargazing, dancing, gift, recreation) instead of only hanging at a gather spot; shared couple+day seed so both partners match. Off in settings.
 [*] [b]Date quality[/b] — wonderful / nice / awkward outcomes from activity, beauty, weather, and a shared roll. Off in settings.
 [*] [b]Ruined date[/b] — draft, mental break, or active hostiles after a date starts leave a short negative mood.
@@ -15,3 +16,6 @@
 [*] [b]Lovin animation loop[/b] — with animation mods (Rimworld Animations, breeding ritual, RJW), Date Night no longer restarts lovin every couple of seconds. One animation plays through; a new one starts only after it finishes if Lovin hours are still on. Pregnancies can complete again.
 [*] [b]Date hours crash[/b] — no longer throws when joy AI runs on a Date timetable slot (vanilla GetPriority only knows Joy / Sleep / etc.).
 [/list]
+
+[i]Build stamp (Player.log): date-cooldown-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/DateNight/CHANGELOG.md[/i]
