@@ -14,7 +14,7 @@ namespace Strata
         private int burstShotsLeft;
         private int ticksToNextShot;
         private int cooldownTicksLeft;
-        private Verb_LaunchProjectile cachedVerb;
+        private Verb cachedVerb;
         private int verbStaleAt;
         private int lofCheckIn;
 
@@ -53,7 +53,7 @@ namespace Strata
             Scribe_Values.Look(ref cooldownTicksLeft, "Strata_xlCooldown");
         }
 
-        private Verb_LaunchProjectile ResolvedVerb()
+        private Verb ResolvedVerb()
         {
             int now = Find.TickManager.TicksGame;
             if (cachedVerb != null && now < verbStaleAt)
@@ -90,7 +90,7 @@ namespace Strata
 
         private void FireTick()
         {
-            Verb_LaunchProjectile verb = ResolvedVerb();
+            Verb verb = ResolvedVerb();
             if (verb == null)
             {
                 EndJobWith(JobCondition.Incompletable);
@@ -134,12 +134,19 @@ namespace Strata
 
             if (burstShotsLeft <= 0)
             {
-                burstShotsLeft = Mathf.Max(1, verb.verbProps.burstShotCount);
+                burstShotsLeft = StrataCrossLevelCombat.BurstShotCount(verb);
                 ticksToNextShot = 0;
             }
             if (ticksToNextShot > 0)
             {
                 ticksToNextShot--;
+                return;
+            }
+
+            if (!StrataCombatExtendedSoftCompat.CanFire(verb))
+            {
+                StrataCombatExtendedSoftCompat.TryReload(verb);
+                EndJobWith(JobCondition.Incompletable);
                 return;
             }
 

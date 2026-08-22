@@ -6,7 +6,7 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">3.0.0</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">3.0.1</modVersion>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>
@@ -38,6 +38,8 @@
     <!-- Optional: ReGrowth splash cache runs on FinalizeInit; load Strata after. -->
     <li>ReGrowth.BOTR.Core</li>
     <li>Helixien.ReGrowthCore</li>
+    <!-- Optional: Combat Extended replaces shoot verbs; load Strata after so turret patches attach. -->
+    <li>CETeam.CombatExtended</li>
   </loadAfter>
   <description>My Discord: https://discord.gg/Vwh2y7qMXv
 Site (no Discord): https://azraelgodking.github.io/rimworld_mods/strata.html
@@ -48,7 +50,7 @@ Dig down. Build up. One colony — many floors.
 
 Carve rock under your base, frame a roof deck above it, and let colonists treat every linked level as home. Work, food, sleep, hauling, medicine, combat, and construction commute through the shafts on their own.
 
-Version 3 complete. RimWorld 1.6. Requires Harmony. Odyssey optional (gravship stacks only). Safe to add mid-save.
+Version 3.0.1. RimWorld 1.6. Requires Harmony. Odyssey optional (gravship stacks only). Safe to add mid-save.
 Do not run alongside AASB or MultiFloors.
 
 DIG DOWN
@@ -74,7 +76,7 @@ Other multi-level mods leave each floor an island. Strata's job relay treats the
 No micromanagement: you designate, they commute.
 
 CROSS-LEVEL COMBAT
-Pawns, turrets, and mortars can fire through open shafts and sky holes. Auto-engage keeps decks and underfloors in the fight without hopping maps by hand.
+Pawns, turrets, and mortars can fire through open shafts and sky holes (Combat Extended guns included). Auto-engage keeps decks and underfloors in the fight without hopping maps by hand.
 
 HEAT, SMOKE, AND AIR
 - Stairwells exchange temperature — heat rises fast, cold pools below

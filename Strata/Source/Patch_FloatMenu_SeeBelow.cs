@@ -136,7 +136,7 @@ namespace Strata
                 if (pawn.Map == null || pawn.Map == target.MapHeld) continue;
                 if (!StrataCrossLevelCombat.AreCrossGapPaired(pawn.Map, target.MapHeld, out _, out _)) continue;
 
-                Verb_LaunchProjectile verb = StrataCrossLevelCombat.GetRangedVerb(pawn);
+                Verb verb = StrataCrossLevelCombat.GetRangedVerb(pawn);
                 if (verb == null) continue;
 
                 IntVec3 stand = StrataCrossLevelCombat.FindFiringCell(pawn, target, verb);

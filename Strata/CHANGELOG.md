@@ -5,13 +5,13 @@ Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
 
 Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog.txt) · [`../assets/workshop/strata-update-notes.bbcode`](../assets/workshop/strata-update-notes.bbcode).
 
-**Version:** `3.0.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.0.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.0.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.0.1 Soft-compat build <stamp> loaded from ...`.
 
 **Build stamp:** each DLL logs the stamp after the version. Current stamp is set in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
 
-Player-facing version **3.0.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.0.0 Soft-compat build ...` in Player.log.
+Player-facing version **3.0.1** (`About.xml` `modVersion`). Startup writes `[Strata] v3.0.1 Soft-compat build ...` in Player.log. Bugfix release: Combat Extended cross-floor fire.
 
 ### Added
 - **Deep Shafts scenario** — mountain/shaft showcase start; unlocks Digging Down + Building Up; locks Azrael when Homesteader is loaded.
@@ -35,6 +35,7 @@ Player-facing version **3.0.0** (`About.xml` `modVersion`). Startup writes `[Str
 - **Workshop description** - About / Steam text updated for Version 3 features.
 
 ### Fixed
+- **Combat Extended cross-floor fire** (`ce-cross-level-combat-v2`) — CE guns are not vanilla `Verb_LaunchProjectile`, so drafted orders, auto-engage, and turrets never found a weapon to shoot through open sky. Gap shots now use CE verbs, spawn CE bullets on the paired floor, spend magazine ammo, and launch with CE's ballistic angle (a 0° shot had zero range and died at the muzzle). Vanilla combat unchanged when CE is absent.
 - **Omni junction + Helixien/VTE/Chemfuel** (`omnijunction-linkedpipes-v1`) — listing Omni on multiple VEF `pipeDefs` made `PipeSystem.LinkedPipes` throw duplicate-key `Strata_ShaftFluid_Omni`, then every pipe place/print crashed. Omni still joins those nets via CompResource; only dedicated shaft junctions stay in `pipeDefs`.
 - **Second stairwell parallel pocket** — if a sibling already opened B1/A+ but no landing cell is free in the 25-cell ring, refuse instead of generating a second pocket map.
 - **Orphan upstairs dump** — climbing a broken landing no longer teleports into random rock (`CellFinder.RandomCell`); only standable unfogged cells.
