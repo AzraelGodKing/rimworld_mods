@@ -29,7 +29,22 @@ namespace Strata
                     + " performanceMode=" + settings.performanceModeEnabled
                     + " settingsVersion=" + settings.settingsVersion;
 
-            Log.Message("[Strata] Soft-compat build " + BuildStamp + " loaded from "
+            string version = "unknown";
+            foreach (ModContentPack pack in LoadedModManager.RunningModsListForReading)
+            {
+                if (pack.assemblies?.loadedAssemblies == null
+                    || !pack.assemblies.loadedAssemblies.Contains(asm))
+                {
+                    continue;
+                }
+                if (!string.IsNullOrEmpty(pack.ModMetaData?.ModVersion))
+                {
+                    version = pack.ModMetaData.ModVersion;
+                }
+                break;
+            }
+
+            Log.Message("[Strata] v" + version + " Soft-compat build " + BuildStamp + " loaded from "
                 + path + " (modified " + writeTime + "); " + relaySummary + ".");
             StrataOffThreadWork.LogStartup();
         }

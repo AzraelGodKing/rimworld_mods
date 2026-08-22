@@ -11,7 +11,12 @@ namespace DeepColony
         public DeepColonyMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<DeepColonySettings>();
-            Log.Message($"[{content.Name}] loaded.");
+            string version = content.ModMetaData?.ModVersion;
+            if (string.IsNullOrEmpty(version))
+            {
+                version = "unknown";
+            }
+            Log.Message($"[{content.Name}] v{version} loaded.");
         }
 
         public override string SettingsCategory() => "Deep Colony";
