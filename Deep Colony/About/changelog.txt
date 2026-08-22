@@ -1,35 +1,8 @@
-[h1]Deep Colony — 1.5.0[/h1]
+[h1]Deep Colony — 1.6.0[/h1]
 
 [b]Added[/b]
 [list]
-[*] [b]Family echo[/b] — family at a kin prisoner’s cell still matters if loyalty holds. Releasing kin is not an execution. Passing on the household skill is a Legacy note. Seeing family fall in a fight hurts. The last child leaving home is an empty nest.
-[*] [b]Family life[/b] — grandparents welcome a grandchild. Kin taken (captured or kidnapped) hurts until they come back. Family tending wounds comforts both. Last of the bloodline in the colony is a weight; a new relative is the line continuing. Step-parents count.
-[*] [b]Family beats[/b] — in-laws welcome a marriage. Kin coming home after time away cheers the closest family. Kin (or an ex) dying outside the colony hurts. Breakups leave a wound. Executing family is a betrayal.
-[*] [b]Family join[/b] — kin on your map may join from a visit or defect from a raid. Spouse is the strongest pull; ex-lovers never join this way. Friendly family recruit does not anger their faction; enemies hold a grudge.
-[*] [b]Unwavering prisoners[/b] — only family can crack that loyalty, and only if they like each other. Then normal recruit works.
-[*] [b]Ex-lovers[/b] — chance to get back together. After more than three reunions it is marked a toxic relationship that counseling can help.
-[*] [b]Family tree[/b] — Family tab on the pawn inspect pane (next to Character). Click a relative to jump to that pawn. Also a Family tree button on the Bio card.
-[*] [b]Despicable 2 / RimPacts[/b] — tribute, envoy visits, and family join/defect also nudge hero karma and faction trust when those mods are loaded. Executing kin hits trust only. Off in settings if you want Deep Colony goodwill alone.
-[*] [b]Pedigree layout[/b] — Pedigree / Rows button on the Family tab title (same setting as mod options). Ancestors above, descendants below, with connecting lines. Off keeps generation rows.
-[*] [b]Family notes[/b] — first harvest as a family, marriage, coming of age, birthdays, and anniversaries on the Legacy tab. Eating with kin gives a short mood.
-[*] Adult children returning to a parent's map get a reunion thought. Colony-born kids still keep "I grew up here" (not growth vats).
-[*] [b]Tribute[/b] — Reputation tab (200 silver) or right-click silver / gold / jade / a valuable gift. Envoy on the map during a successful trade writes extra goodwill.
-[*] Ideology funerals ease violent-loss trauma. Spouses get extra ease. Quiet rooms (no work benches) counsel better.
-[*] Classroom extra when two apprentices share a Biotech blackboard. Right-click prisoner counseling (off by default).
-[*] Odyssey isolation eases when you return to the surface. Strata gas / firestorm downs use existing trauma with a keyed reason.
-[*] Perks tab archetype column. Reputation ally / hostile filter. Legacy lists traumatized colonists and remembrance names.
-[*] Inspect: trauma types, teach progress, envoy, rival, and Date Night confidant count.
-[*] Untreated-trauma alert, Perks filters, deathbed lesson, sibling bond, Royalty envoy bias, Date Night / Homesteader / Anomaly hooks (Batch C).
-[/list]
-
-[b]Fixed[/b]
-[list]
-[*] Colony sibling thought now has a defName so it loads and translations bind.
-[*] Family tree section titles (Parents, This generation, Children) are no longer cut off.
-[*] Rivalry checks no longer scan every colonist pair on a hot path.
-[*] Deathbed lessons are player-side only. Funeral messages only fire if someone was actually eased.
-[*] Counseling restarts the untreated-trauma grace. Birthday notes see siblings on caravans.
-[*] Isekai Rank / destiny traits stay unique; birth inheritance only for player-side babies.
+[*] [b]Despicable 2 / RimPacts[/b] — tribute, envoy visits, and family join/defect also nudge hero karma and faction trust when those mods are loaded. Executing kin hits trust only (Despicable already handles execute/release karma). Toggle in settings; default on. Soft / Default / Hard do not change this.
 [/list]
 
 [i]Build stamp (Player.log): diplomacy-compat-v1[/i]
