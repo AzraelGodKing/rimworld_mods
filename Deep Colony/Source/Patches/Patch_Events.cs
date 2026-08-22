@@ -14,6 +14,8 @@ namespace DeepColony.Patches
             if (!__result || parms?.faction == null) return;
             if (parms.target is not Map map) return;
             if (map.ParentFaction != Faction.OfPlayer) return;
+            if (__result && parms?.target is Map raidMap)
+                ChildRaidUtility.NotifyRaidStarted(raidMap);
             FactionRepUtility.OnRaidFromFaction(parms.faction);
         }
     }
@@ -213,6 +215,7 @@ namespace DeepColony.Patches
             if (__result is not Pawn baby) return;
             if (!baby.RaceProps.Humanlike || baby.Dead) return;
             InheritanceUtility.TryApplyInheritance(baby);
+            FamilyLifeUtility.NotifyBirth(baby);
         }
     }
 }

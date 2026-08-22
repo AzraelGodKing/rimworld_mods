@@ -14,6 +14,7 @@ namespace DeepColony
         public override bool ShouldSkip(Pawn pawn, bool forced = false)
         {
             if (!DeepColonySettings.Get.enableTrauma) return true;
+            if (!forced && IdeologyCounselUtility.AutoCounselBlocked) return true;
             if (pawn.WorkTagIsDisabled(WorkTags.Social)) return true;
             if (pawn.skills?.GetSkill(SkillDefOf.Social)?.TotallyDisabled == true) return true;
             return false;

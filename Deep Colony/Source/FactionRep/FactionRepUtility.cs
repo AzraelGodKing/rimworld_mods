@@ -33,6 +33,14 @@ namespace DeepColony
             if (!DeepColonySettings.Get.enableFactionRep) return;
             if (trader == null || trader.IsPlayer) return;
             GameComp_DeepColony.Instance?.AddFactionDrift(trader, 2f, FactionRepReason.SuccessfulTrade);
+
+            Pawn envoy = FactionEnvoyUtility.FindEnvoy(trader);
+            if (envoy == null || envoy.Dead || !envoy.Spawned) return;
+            Map tradeMap = TradeSession.playerNegotiator?.Map ?? Find.CurrentMap;
+            if (tradeMap != null && envoy.Map == tradeMap)
+            {
+                GameComp_DeepColony.Instance?.AddFactionDrift(trader, 1f, FactionRepReason.EnvoyPresent);
+            }
         }
 
         public static void OnGiftFromFaction(Faction giver)

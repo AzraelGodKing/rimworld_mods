@@ -4,7 +4,8 @@ Playable core is in (perks, trauma, mentoring, inheritance, living faction reput
 
 Series vision: [../ROADMAP.md](../ROADMAP.md).  
 Idea pool (42, shipped): [docs/ideas/deep-colony-updates.md](../docs/ideas/deep-colony-updates.md).  
-Post-2.0 pool (20): [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
+Post-2.0 pool (20): [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).  
+Batch D: [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
 
 ## Ownership vs Living World
 
@@ -93,11 +94,39 @@ Deep Colony owns **player↔faction goodwill memory and drift** (raids, trades, 
 - [x] Workshop / docs polish — About.xml + `docs/deep-colony.html` 2.0 blurb; Soft/Default keep power systems & attitude consequences off, Hard enables heavier set
 - [x] CN/RU language spot-check — 2.0 tabs (Perks/Legacy/Reputation) + Phase 5 Keyed/DefInjected fill
 
-## Later — Batch C (not started)
+## Batch C (Phases 6–9)
 
-Playtest 2.0 first. Spec: [deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).
+Spec: [deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md). Build stamp `batch-c-v1`.
 
-- [ ] **Phase 6 QoL** — untreated-trauma alert, counseling history, Perks tab filter, Royalty envoy bias
-- [ ] **Phase 7 memory & kin** — family letters, deathbed lesson, childhood memories, funerals ease loss, sibling bond
-- [ ] **Phase 8 DLC + siblings** — Ideology precepts; Anomaly/Odyssey trauma; child witnesses; Date Night confidants; Homesteader chef meals; Strata/Stormproof trauma reasons; gene vs blood flavor
-- [ ] **Phase 9 gated** — prisoner counsel, apology/tribute, envoy visit (caravan)
+- [x] **Phase 6 QoL** — untreated-trauma alert, counseling history, Perks tab filter, Royalty envoy bias
+- [x] **Phase 7 memory & kin** — family letters, deathbed lesson, childhood memories, funerals ease loss, sibling bond
+- [x] **Phase 8 DLC + siblings** — Ideology precepts; Anomaly/Odyssey trauma; child witnesses; Date Night confidants; Homesteader chef meals; Strata/Stormproof trauma reasons; gene vs blood flavor
+- [x] **Phase 9 gated** — prisoner counsel (default off), apology/tribute, envoy visit (settings-gated; goodwill pulse, no caravan form)
+
+## Batch D
+
+Spec: [deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md). Build stamp `batch-d-v1`.
+
+- [x] **Leftovers** — first harvest + marriage letters (C11), gift/float-menu tribute (C15), Ideology funeral (C18)
+- [x] **Fixes** — rivalry interval, player-only deathbed, funeral only-when-eased, counseling restarts trauma-alert grace, sibling/caravan kin, Date Night confidant inspect
+- [x] **Identity** — family meal, parent reunion, coming of age, classroom extra, envoy-at-trade, surface isolation ease, quiet-room therapy, spouse remembrance
+- [x] **Tabs / inspect** — Legacy trauma + remembrance, Reputation ally/hostile filter, Perks archetype column, inspect extras, prisoner-counsel float menu, Strata gas/firestorm reasons
+- [x] **D16 Family tree** — Character inspect tab + Bio-card button; click a relative to select and jump to that pawn
+- [x] **D17 Kin join / defect** — spouse highest chance, ex-lover 0% for this path; no goodwill hit unless hostile (grudge / `FamilyDefect`)
+- [x] **D18 Ex-lover reconcile** — get back together on the map; 4th time marks a toxic relationship that counseling can ease (`family-join-v1`)
+- [x] **D19 Family vs unwavering** — only kin the prisoner likes (and who like them back) can break unwavering loyalty (`family-loyalty-v1`)
+- [x] **D20 In-law welcome** — parents and siblings on the map get a short mood when colonists marry
+- [x] **D21 Kin homecoming** — returning after ≥8h away (10-day cooldown) cheers the returner and their closest kin; distinct from D02 parent reunion
+- [x] **D22 Kin died other side** — colonist kin/ex mourn a relative who dies while not a colonist (letter; skipped during execution)
+- [x] **D23 Breakup wound** — colonists gain a breakup thought when ExLover/ExSpouse is written; toxic trauma renews if already present
+- [x] **D24 Execute family** — executing kin/ex hits remaining colonist family with executed thought + betrayal trauma (`family-beats-v1`)
+- [x] **E01 Grandchild born** — grandparents / great-grandparents on the map get a thought + Legacy note
+- [x] **E02 Kin taken** — kidnap or enemy capture hurts kin/ex on the map; return/recruit clears it
+- [x] **E03 Tended by family** — kin doctor tend gives both a short comfort thought (1-day cooldown)
+- [x] **E04 Last of the line** — last living colony blood kin gets a lasting thought; a new blood relative is “the line continues”
+- [x] **E05 Step-family** — children of a colonist marriage get a step-parent thought (`family-life-v1`)
+- [x] **E06 Prison visit** — family at a kin prisoner’s cell gives mood even if loyalty holds
+- [x] **E07 Release kin** — releasing kin/ex is the inverse of execution (relief, no betrayal)
+- [x] **E08 Tradition teach** — one-shot letter when the household skill is passed on at a perk gate
+- [x] **E09 Kin downed beside you** — adult sees family collapse in a fight (not death, not child raid-witness)
+- [x] **E10 Empty nest** — last child leaves the home map; staying parent gets a quiet-house thought (`family-echo-v1`)
