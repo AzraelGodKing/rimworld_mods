@@ -18,10 +18,11 @@
   <loadAfter>
     <li>brrainz.harmony</li>
     <li>Ludeon.RimWorld</li>
-    <!-- Soft: draw Lovin after their extra Schedule buttons so the column index matches. -->
+            <!-- Soft: extra Schedule buttons; Date Night draws last on that row. -->
     <li>Maux36.Rimbody</li>
     <li>AOBA.ExosuitFramework</li>
     <li>AOBA.MechsuitFramework</li>
+    <li>Mazo.Schedules</li>
   </loadAfter>
   <description>Adds Date and Lovin timetable slots to the Schedule tab.
 

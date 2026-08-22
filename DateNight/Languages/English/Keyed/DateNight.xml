@@ -34,5 +34,6 @@
   <DateNight_Alert_MismatchHours>{0} and {1} have {2} on different hours.</DateNight_Alert_MismatchHours>
   <DateNight_Alert_SlotLovin>Lovin</DateNight_Alert_SlotLovin>
   <DateNight_Alert_SlotDate>Date</DateNight_Alert_SlotDate>
+  <DateNight_ScheduleComboTip>Date (click). Lovin is in the ▾ menu. This button stays last on the extra schedule row.</DateNight_ScheduleComboTip>
 
 </LanguageData>
