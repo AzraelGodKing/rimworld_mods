@@ -29,12 +29,15 @@ namespace DateNight
         private int eatTicksLeft = -1;
         private int walkTicksLeft;
         private DateActivity activity = DateActivity.Unresolved;
+        private DateActivity coupleActivity = DateActivity.Unresolved;
         private bool giftDelivered;
         private bool inHangPhase;
 
         private Pawn Partner => job.GetTarget(PartnerInd).Pawn;
 
         public DateActivity Activity => activity;
+        public DateActivity CoupleActivity =>
+            coupleActivity != DateActivity.Unresolved ? coupleActivity : activity;
 
         public override void ExposeData()
         {
@@ -44,6 +47,7 @@ namespace DateNight
             Scribe_Values.Look(ref eatTicksLeft, "eatTicksLeft", -1);
             Scribe_Values.Look(ref walkTicksLeft, "walkTicksLeft", 0);
             Scribe_Values.Look(ref activity, "activity", DateActivity.Unresolved);
+            Scribe_Values.Look(ref coupleActivity, "coupleActivity", DateActivity.Unresolved);
             Scribe_Values.Look(ref giftDelivered, "giftDelivered", false);
             Scribe_Values.Look(ref inHangPhase, "inHangPhase", false);
         }
@@ -118,14 +122,21 @@ namespace DateNight
                 inHangPhase = true;
                 if (ticksLeft <= 0)
                 {
+                    int seed = DateNightActivities.CoupleSeed(pawn, Partner);
+                    seed = Gen.HashCombineInt(seed, GenDate.DaysPassed);
+                    Rand.PushState(seed);
                     ticksLeft = Rand.RangeInclusive(2000, 4000);
+                    Rand.PopState();
                     totalTicks = ticksLeft;
                 }
                 if (NeedsItemFetch() && activity != DateActivity.Gift && eatTicksLeft < 0)
                 {
                     eatTicksLeft = EatDurationTicks;
                 }
-                pawn.pather?.StopDead();
+                if (activity != DateActivity.Walk)
+                {
+                    pawn.pather?.StopDead();
+                }
             };
             hang.tickAction = () =>
             {
@@ -140,37 +151,26 @@ namespace DateNight
                 {
                     WalkTick(partner);
                 }
-                else if (pawn.Position.DistanceToSquared(partner.Position) > 64)
+                else
                 {
-                    pawn.pather.StartPath(partner, PathEndMode.Touch);
-                    return;
+                    KeepTogetherTick(partner);
                 }
 
                 if (activity == DateActivity.Stargaze)
                 {
-                    // Same trick as vanilla skygazing: lie face-up while parked.
-                    pawn.jobs.posture = pawn.pather.MovingNow
-                        ? PawnPosture.Standing
-                        : PawnPosture.LayingOnGroundFaceUp;
+                    bool lying = !pawn.pather.MovingNow && CloseEnough(partner);
+                    pawn.jobs.posture = lying
+                        ? PawnPosture.LayingOnGroundFaceUp
+                        : PawnPosture.Standing;
                 }
 
-                if (!pawn.pather.MovingNow)
-                {
-                    if (activity == DateActivity.Dance)
-                    {
-                        DanceTick();
-                    }
-                    else if (activity != DateActivity.Stargaze)
-                    {
-                        pawn.rotationTracker.FaceCell(partner.Position);
-                    }
-                }
+                UpdateFacing(partner);
 
                 if (activity == DateActivity.Gift && !giftDelivered)
                 {
                     GiftTick(partner);
                 }
-                if (eatTicksLeft > 0 && !pawn.pather.MovingNow)
+                if (eatTicksLeft > 0 && !pawn.pather.MovingNow && CloseEnough(partner))
                 {
                     EatTick();
                 }
@@ -185,11 +185,12 @@ namespace DateNight
                 }
 
                 if (pawn.IsHashIntervalTick(TicksBetweenChat) && pawn.interactions != null
-                    && pawn.Position.DistanceToSquared(partner.Position) <= 64)
+                    && CloseEnough(partner))
                 {
                     pawn.interactions.TryInteractWith(partner, InteractionDefOf.Chitchat);
                 }
-                if (pawn.IsHashIntervalTick(TicksBetweenHeartMotes) && pawn.Map != null)
+                if (pawn.IsHashIntervalTick(TicksBetweenHeartMotes) && pawn.Map != null
+                    && CloseEnough(partner))
                 {
                     FleckMaker.ThrowMetaIcon(pawn.Position, pawn.Map, FleckDefOf.Heart);
                 }
@@ -204,7 +205,7 @@ namespace DateNight
                 DropUneatenItem();
                 if (ticksLeft <= 0 && totalTicks > 0)
                 {
-                    DateNightDateUtility.NotifyDateFinished(pawn, Partner, activity, job.GetTarget(SpotInd));
+                    DateNightDateUtility.NotifyDateFinished(pawn, Partner, CoupleActivity, job.GetTarget(SpotInd));
                 }
                 else if (totalTicks > 0 && totalTicks - ticksLeft > 600)
                 {
@@ -222,9 +223,10 @@ namespace DateNight
             }
 
             Pawn partner = Partner;
-            activity = DateNightActivities.Resolve(pawn, partner);
+            coupleActivity = DateNightActivities.Resolve(pawn, partner);
+            activity = coupleActivity;
 
-            // Only the initiator hands over a gift; the partner just shows up.
+            // Only the initiator hands over a gift; the partner waits at the spot.
             if (activity == DateActivity.Gift && !DateNightActivities.IsInitiator(pawn, partner))
             {
                 activity = DateActivity.Hangout;
@@ -234,10 +236,6 @@ namespace DateNight
             if (activity == DateActivity.Dinner || activity == DateActivity.Picnic)
             {
                 item = DateNightActivities.FindMealFor(pawn, partner);
-                if (item == null)
-                {
-                    activity = DateActivity.Hangout;
-                }
             }
             else if (activity == DateActivity.Gift)
             {
@@ -245,6 +243,7 @@ namespace DateNight
                 if (item == null)
                 {
                     activity = DateActivity.Hangout;
+                    coupleActivity = DateActivity.Hangout;
                 }
             }
 
@@ -255,10 +254,10 @@ namespace DateNight
                     job.SetTarget(ItemInd, item);
                     job.count = 1;
                 }
-                else
+                else if (activity == DateActivity.Gift)
                 {
                     activity = DateActivity.Hangout;
-                    item = null;
+                    coupleActivity = DateActivity.Hangout;
                 }
             }
 
@@ -286,31 +285,144 @@ namespace DateNight
 
         private void WalkTick(Pawn partner)
         {
+            if (pawn.jobs?.curJob != null)
+            {
+                pawn.jobs.curJob.locomotionUrgency = LocomotionUrgency.Amble;
+            }
+
             bool leader = DateNightActivities.IsInitiator(pawn, partner);
             if (leader)
             {
+                if (pawn.Position.DistanceToSquared(partner.Position) > 16)
+                {
+                    if (pawn.pather.MovingNow)
+                    {
+                        pawn.pather.StopDead();
+                    }
+                    pawn.rotationTracker.FaceCell(partner.Position);
+                    return;
+                }
+
                 walkTicksLeft--;
                 if (walkTicksLeft <= 0 && !pawn.pather.MovingNow)
                 {
                     walkTicksLeft = WalkWaypointTicks;
                     if (CellFinder.TryFindRandomCellNear(pawn.Position, pawn.Map, 12,
                             c => c.InBounds(pawn.Map) && c.Standable(pawn.Map)
+                                && !c.Fogged(pawn.Map)
                                 && c.GetDangerFor(pawn, pawn.Map) == Danger.None
-                                && pawn.CanReach(c, PathEndMode.OnCell, Danger.Some),
+                                && pawn.CanReach(c, PathEndMode.OnCell, Danger.Some)
+                                && partner.CanReach(c, PathEndMode.OnCell, Danger.Some),
                             out IntVec3 next))
                     {
-                        Job cur = pawn.CurJob;
-                        cur.locomotionUrgency = LocomotionUrgency.Amble;
                         pawn.pather.StartPath(next, PathEndMode.OnCell);
                     }
                 }
+                return;
             }
-            else if (pawn.Position.DistanceToSquared(partner.Position) > 9 && !pawn.pather.MovingNow)
+
+            LocalTargetInfo follow = partner.pather.MovingNow
+                ? partner.pather.Destination
+                : (LocalTargetInfo)partner;
+            if (!follow.IsValid)
             {
-                Job cur = pawn.CurJob;
-                cur.locomotionUrgency = LocomotionUrgency.Amble;
-                pawn.pather.StartPath(partner, PathEndMode.Touch);
+                follow = partner;
             }
+            if (pawn.Position.DistanceToSquared(follow.Cell) <= 4)
+            {
+                return;
+            }
+            if (pawn.pather.MovingNow
+                && pawn.pather.Destination.IsValid
+                && pawn.pather.Destination.Cell.DistanceToSquared(follow.Cell) <= 9)
+            {
+                return;
+            }
+            pawn.pather.StartPath(follow, PathEndMode.OnCell);
+        }
+
+        /// <summary>
+        /// The hang toil owns facing (<c>handlingFacing</c>), so we have to set it
+        /// every tick. Otherwise the follower keeps the rotation they arrived with.
+        /// </summary>
+        private void UpdateFacing(Pawn partner)
+        {
+            if (activity == DateActivity.Dance && !pawn.pather.MovingNow && CloseEnough(partner))
+            {
+                DanceTick();
+                return;
+            }
+            if (activity == DateActivity.Stargaze
+                && pawn.jobs != null
+                && pawn.jobs.posture == PawnPosture.LayingOnGroundFaceUp)
+            {
+                return;
+            }
+            if (pawn.pather.MovingNow)
+            {
+                IntVec3 next = pawn.pather.nextCell;
+                if (next.IsValid && next != pawn.Position)
+                {
+                    pawn.rotationTracker.FaceCell(next);
+                    return;
+                }
+                if (pawn.pather.Destination.IsValid)
+                {
+                    pawn.rotationTracker.FaceCell(pawn.pather.Destination.Cell);
+                    return;
+                }
+            }
+            pawn.rotationTracker.FaceTarget(partner);
+        }
+
+        private static bool CloseEnough(Pawn a, Pawn b)
+        {
+            return a != null && b != null && a.Position.DistanceToSquared(b.Position) <= 16;
+        }
+
+        private bool CloseEnough(Pawn partner)
+        {
+            return CloseEnough(pawn, partner);
+        }
+
+        /// <summary>
+        /// Parked activities (dinner, picnic, dance, stargaze, hangout) meet at the
+        /// venue and wait; they do not chase each other across the map.
+        /// </summary>
+        private void KeepTogetherTick(Pawn partner)
+        {
+            if (CloseEnough(partner))
+            {
+                return;
+            }
+
+            LocalTargetInfo spot = job.GetTarget(SpotInd);
+            bool atSpot = spot.IsValid && pawn.Position.DistanceToSquared(spot.Cell) <= 9;
+            bool partnerComing = spot.IsValid
+                && partner.Position.DistanceToSquared(spot.Cell) > 25;
+
+            if (atSpot && partnerComing)
+            {
+                if (pawn.pather.MovingNow)
+                {
+                    pawn.pather.StopDead();
+                }
+                pawn.rotationTracker.FaceCell(partner.Position);
+                return;
+            }
+
+            if (pawn.pather.MovingNow)
+            {
+                return;
+            }
+
+            if (spot.IsValid && pawn.Position.DistanceToSquared(spot.Cell) > 9)
+            {
+                pawn.pather.StartPath(spot, PathEndMode.OnCell);
+                return;
+            }
+
+            pawn.pather.StartPath(partner, PathEndMode.Touch);
         }
 
         private void DanceTick()
@@ -329,8 +441,6 @@ namespace DateNight
         {
             if (pawn.Position.DistanceToSquared(partner.Position) > 4)
             {
-                // Close the gap ourselves: the generic follow logic only kicks in
-                // past 8 cells, but a handover needs us adjacent.
                 if (!pawn.pather.MovingNow)
                 {
                     pawn.pather.StartPath(partner, PathEndMode.Touch);
