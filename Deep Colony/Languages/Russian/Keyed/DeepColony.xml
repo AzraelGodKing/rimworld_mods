@@ -282,6 +282,11 @@
   <DC_FamilyTree_Dead>(мёртв)</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>не на карте</DC_FamilyTree_Away>
   <DC_FamilyTree_ClickTip>Нажмите, чтобы выбрать и перейти к этому колонисту.</DC_FamilyTree_ClickTip>
+  <DC_FamilyTree_PedigreeToggle>Схема с линиями</DC_FamilyTree_PedigreeToggle>
+  <DC_FamilyTree_StylePedigree>Схема</DC_FamilyTree_StylePedigree>
+  <DC_FamilyTree_StyleRows>Ряды</DC_FamilyTree_StyleRows>
+  <DC_Settings_FamilyTreePedigree>Родословная: схема с линиями</DC_Settings_FamilyTreePedigree>
+  <DC_Settings_FamilyTreePedigreeTip>Предки сверху, потомки снизу, со связующими линиями. Выкл. оставляет ряды по поколениям.</DC_Settings_FamilyTreePedigreeTip>
   <DC_Settings_FamilyJoin>Семья: переход и примирение</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>Родня на карте может присоединиться / перебежать</DC_Settings_EnableFamilyJoin>
   <DC_Settings_EnableFamilyJoinTip>Родня колонистов может присоединиться с визита или перебежать из рейда. Супруг(а) — высший шанс. Бывшие любовники этим путём не приходят (0%). Вербовка невраждебной родни не штрафует расположение; враждебная родня оставляет обиду фракции. Несгибаемых пленников может пробить только семья, которая нравится им взаимно. Также: свойственники, возвращение родни, смерть или казнь, рана расставания, рождение внука, похищение родни, уход семьи, последний в роду, сводная семья, визит в тюрьму, освобождение родни, семейное ремесло, падение родни в бою, пустое гнездо.</DC_Settings_EnableFamilyJoinTip>
