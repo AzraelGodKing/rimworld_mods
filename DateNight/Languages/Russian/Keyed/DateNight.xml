@@ -34,5 +34,6 @@
   <DateNight_Alert_MismatchHours>У {0} и {1} разные часы: {2}.</DateNight_Alert_MismatchHours>
   <DateNight_Alert_SlotLovin>любовные</DateNight_Alert_SlotLovin>
   <DateNight_Alert_SlotDate>свидание</DateNight_Alert_SlotDate>
+  <DateNight_ScheduleComboTip>Свидание (клик). Любовные часы — в меню ▾. Эта кнопка всегда последняя в дополнительном ряду расписания.</DateNight_ScheduleComboTip>
 
 </LanguageData>

@@ -94,9 +94,11 @@ namespace DateNight
     [StaticConstructorOnStartup]
     public static class DateNightInit
     {
+        public const string HarmonyId = "azraelgodking.datenight";
+
         static DateNightInit()
         {
-            new Harmony("azraelgodking.datenight").PatchAll();
+            new Harmony(HarmonyId).PatchAll();
         }
     }
 }
