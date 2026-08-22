@@ -9,6 +9,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Startup writes `[DeepColony] v2.0.0 build ...` in Player.log.
 
 ### Added
+- **Family tree pedigree** (`family-tree-pedigree-v3`) — **Pedigree** / **Rows** button on the Family tab title row (and the family-tree window). Same setting as mod options. Ancestors above, descendants below, with kin lines. Off keeps generation rows. Soft / Default / Hard do not change this.
 - **Family join / reconcile** (`family-join-v1`) — spec D17/D18 in [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
   - **D17** Kin of colonists on the player home map may join from visits or defect from raids. Spouse is the highest chance; fiancé / parent / child / lover / sibling / grandparent follow. **Ex-lovers do not join this way (0%)**. Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge (`FactionRepReason.FamilyDefect`).
   - **D18** Ex-lovers and ex-spouses on the same map may get back together. More than three reunions marks a **toxic relationship** that counseling / therapy can ease. Date Night still owns romance schedules.
@@ -73,6 +74,8 @@ Player-facing version **2.0.0** (`About.xml` `modVersion`). Startup writes `[Dee
 - **Chinese Simplified & Russian language packs** — full Keyed + DefInjected translations (perks, trauma, mentoring, inheritance, jobs, thoughts).
 
 ### Fixed
+- **Colony sibling thought** — `DC_Thought_SiblingBond` was missing `<defName>`, so the thought loaded unnamed and translations did not bind.
+- **Family tree clip** (`family-echo-v4`) — generation headers used an 18px row with Small font, so Parents / This generation / Children were cut off. Headers now get a full line. The Family tab also no longer hangs off the inspect pane.
 - **Rivalry scan** — pair checks run on a 2500-tick interval with a reused list (not a fresh scan every call).
 - **Deathbed lesson** — only player-side mentors and apprentices.
 - **Funeral message** — only if someone actually had violent-loss eased.

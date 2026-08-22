@@ -414,6 +414,7 @@
   </ThoughtDef>
 
   <ThoughtDef>
+    <defName>DC_Thought_SiblingBond</defName>
     <label>colony sibling</label>
     <thoughtClass>Thought_SituationalSocial</thoughtClass>
     <workerClass>DeepColony.ThoughtWorker_SiblingBond</workerClass>

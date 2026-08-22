@@ -4,9 +4,9 @@
   <DateNight_SettingsCategory>Date Night</DateNight_SettingsCategory>
   <DateNight_Settings_Intro>Назначьте свидание или любовные часы в расписании. Свидание — прогулка / стол / совместный досуг (настроение и мнение, без кровати). Любовные часы по-прежнему требуют двуспальной кровати. Если партнёра нет в кровати, взрослые могут провести личное время. Запрет идеологии на любовные часы и стерильные гены Biotech вместо принуждения отправляют на свидание.</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>Безопасная задержка беременности</DateNight_Settings_PregnancySafe>
-  <DateNight_Settings_PregnancySafeTip>ВКЛ (рекомендуется): только повышает шанс любовных часов по расписанию; ванильная пауза после них сохраняется. ВЫКЛ с нетерпеливым режимом: пауза около 100 тиков, возможны частые проверки беременности.</DateNight_Settings_PregnancySafeTip>
+  <DateNight_Settings_PregnancySafeTip>ВКЛ (рекомендуется): только повышает шанс любовных часов по расписанию; ванильная пауза после них сохраняется. После свидания та же пауза (~4–8 часов). ВЫКЛ с нетерпеливым режимом: пауза около 100 тиков для любовных часов и свиданий, возможны частые проверки беременности.</DateNight_Settings_PregnancySafeTip>
   <DateNight_Settings_Eager>Нетерпеливый режим (короткая пауза)</DateNight_Settings_Eager>
-  <DateNight_Settings_EagerTip>Укорачивает паузу как отладочная опция Always Do Lovin. Может часто проверять беременность — не включайте без нужды.</DateNight_Settings_EagerTip>
+  <DateNight_Settings_EagerTip>Укорачивает паузу после любовных часов и свиданий как отладочная опция Always Do Lovin (~100 тиков). Может часто проверять беременность — не включайте без нужды.</DateNight_Settings_EagerTip>
   <DateNight_Settings_SelfLovin>Разрешить личное время</DateNight_Settings_SelfLovin>
   <DateNight_Settings_SelfLovinTip>В любовные часы взрослые используют свою кровать, если партнёр не делит двуспальную. Без беременности. Та же пауза, что у любовных часов. Дети никогда не подходят.</DateNight_Settings_SelfLovinTip>
   <DateNight_Settings_WindowBed>Занимать двуспальную на любовные часы</DateNight_Settings_WindowBed>

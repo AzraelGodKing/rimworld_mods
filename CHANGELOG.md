@@ -4,7 +4,9 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
-- **Deep Colony family echo** — prison visit, release kin, family-tradition teach, kin downed beside you, empty nest. Stamp `family-echo-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Date Night** (`date-cooldown-v1`) — finished dates wait like post-lovin before the couple starts another. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
+- **Deep Colony family tree** (`family-tree-pedigree-v3`) — Pedigree / Rows button on the Family tab title row. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony family echo** — prison visit, release kin, family-tradition teach, kin downed beside you, empty nest. Stamp `family-echo-v4`. Colony sibling thought had no defName. Family tab section titles are no longer cut off. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony family life** — grandchild born, kin taken/returned, tended by family, last of the line, step-family. Stamp `family-life-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony family beats** — in-law welcome, kin homecoming, kin dying on the other side, breakup wound, executing family (betrayal). Stamp `family-beats-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony family join / reconcile** — kin may join or defect on the home map (spouse highest, ex-lover 0% for that path; no goodwill hit unless hostile). Ex-lovers can get back together; the fourth reunion is a toxic relationship that therapy can ease. Unwavering prisoners can be broken only by family they like (and who like them). Stamp `family-loyalty-v1`. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
