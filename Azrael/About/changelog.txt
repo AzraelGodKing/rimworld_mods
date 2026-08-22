@@ -1,4 +1,4 @@
-[h1]Azrael — Update[/h1]
+[h1]Azrael — 1.0.0[/h1]
 
 [b]Fixed[/b]
 [list]

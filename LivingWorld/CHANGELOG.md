@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[LivingWorld] v1.0.0 loaded from ...` in Player.log.
+
 ### Added
 
 - **Unlisted docs page** — `docs/living-world.html` with `noindex` (not linked from the public hub).

@@ -6,6 +6,7 @@ namespace Azrael
     {
         public AzraelMod(ModContentPack content) : base(content)
         {
+            ModVersionLog.Write("[Azrael]", content);
         }
     }
 }

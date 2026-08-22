@@ -18,7 +18,21 @@ namespace DeepColony
             {
                 writeTime = File.GetLastWriteTime(path).ToString("yyyy-MM-dd HH:mm:ss");
             }
-            Log.Message($"[DeepColony] Build {BuildStamp} | {writeTime} | {path}");
+            string version = "unknown";
+            foreach (ModContentPack pack in LoadedModManager.RunningModsListForReading)
+            {
+                if (pack.assemblies?.loadedAssemblies == null
+                    || !pack.assemblies.loadedAssemblies.Contains(asm))
+                {
+                    continue;
+                }
+                if (!string.IsNullOrEmpty(pack.ModMetaData?.ModVersion))
+                {
+                    version = pack.ModMetaData.ModVersion;
+                }
+                break;
+            }
+            Log.Message($"[DeepColony] v{version} build {BuildStamp} | {writeTime} | {path}");
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Nemesis
         public NemesisMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<NemesisSettings>();
+            ModVersionLog.Write("[Nemesis]", content);
             new Harmony("azraelgodking.nemesis").PatchAll();
         }
 
