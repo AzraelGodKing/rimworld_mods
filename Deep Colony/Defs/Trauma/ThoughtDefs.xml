@@ -329,4 +329,449 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>DC_Thought_GrewUpHere</defName>
+    <label>grew up here</label>
+    <durationDays>20</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>I grew up here</label>
+        <description>This colony is home. The walls, the faces, the harvests — they remember being small here.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_ChildRaidWitness</defName>
+    <label>saw the fighting</label>
+    <durationDays>8</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>saw the fighting</label>
+        <description>A child who watched violence they were too young to join.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_GrandChefHomestead</defName>
+    <label>homestead cooking</label>
+    <durationDays>0.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>homestead cooking</label>
+        <description>A Grand Chef tasting pantry food the way it was meant to be eaten.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_FamilyMeal</defName>
+    <label>family meal</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>ate with family</label>
+        <description>A meal shared with kin under the same roof.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_ParentReunion</defName>
+    <label>parent reunion</label>
+    <durationDays>6</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>home with a parent</label>
+        <description>Returned to a map where a parent still lives.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_SpouseRemembrance</defName>
+    <label>remembering a spouse</label>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>remembering a spouse</label>
+        <description>The funeral or remembrance day hits harder for a lost love.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <label>colony sibling</label>
+    <thoughtClass>Thought_SituationalSocial</thoughtClass>
+    <workerClass>DeepColony.ThoughtWorker_SiblingBond</workerClass>
+    <stages>
+      <li>
+        <label>colony sibling</label>
+        <description>Grew up together in this colony. The bond is quieter than rivalry.</description>
+        <baseOpinionOffset>10</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef ParentName="DC_TraumaThoughtBase" MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>DC_Thought_Horror</defName>
+    <label>horror trauma</label>
+    <durationDays>40</durationDays>
+    <stages>
+      <li>
+        <label>void-haunted (raw)</label>
+        <description>Something inhuman brushed the mind and will not leave.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+      <li>
+        <label>processing horror</label>
+        <description>Counseling helps, but the entity's shape still returns at night.</description>
+        <baseMoodEffect>-7</baseMoodEffect>
+      </li>
+      <li>
+        <label>fading horror</label>
+        <description>The worst of the void-memory is loosening.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef ParentName="DC_TraumaThoughtBase" MayRequire="Ludeon.RimWorld.Odyssey">
+    <defName>DC_Thought_Isolation</defName>
+    <label>isolation trauma</label>
+    <durationDays>35</durationDays>
+    <stages>
+      <li>
+        <label>adrift (raw)</label>
+        <description>Too long alone off-world, or the wreck of a gravship.</description>
+        <baseMoodEffect>-9</baseMoodEffect>
+      </li>
+      <li>
+        <label>processing isolation</label>
+        <description>The silence of orbit still rings.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+      <li>
+        <label>fading isolation</label>
+        <description>Ground and company are slowly convincing them they made it back.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FAMILY BEATS (D20–D24) + TOXIC RELATIONSHIP
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef>
+    <defName>DC_Thought_InLawWelcome</defName>
+    <label>new in-law</label>
+    <durationDays>5</durationDays>
+    <stackLimit>3</stackLimit>
+    <stackedEffectMultiplier>0.75</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>new in-law: {0}</label>
+        <description>{0} married into the family. The colony got a little bigger.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinHomecoming</defName>
+    <label>kin homecoming</label>
+    <durationDays>4</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>home with {0}</label>
+        <description>Family is on the map again after time away.</description>
+        <baseMoodEffect>5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinDiedOtherSide</defName>
+    <label>kin died other side</label>
+    <durationDays>12</durationDays>
+    <stackLimit>3</stackLimit>
+    <stackedEffectMultiplier>0.75</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>{0} died on the other side</label>
+        <description>Family died while not part of this colony. The distance does not make it easier.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_BreakupWound</defName>
+    <label>breakup wound</label>
+    <durationDays>8</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>split from {0}</label>
+        <description>The relationship ended. The colony still has to live with both of them.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinExecuted</defName>
+    <label>kin executed</label>
+    <durationDays>15</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>the colony executed {0}</label>
+        <description>Someone they loved — or used to — was executed here. That does not wash off.</description>
+        <baseMoodEffect>-12</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FAMILY LIFE (E01–E05)
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef>
+    <defName>DC_Thought_GrandchildBorn</defName>
+    <label>grandchild born</label>
+    <durationDays>8</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>grandchild: {0}</label>
+        <description>The family got bigger. A grandchild is in the colony.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinTaken</defName>
+    <label>kin taken</label>
+    <durationDays>10</durationDays>
+    <stackLimit>2</stackLimit>
+    <stackedEffectMultiplier>0.75</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>{0} was taken</label>
+        <description>Family was captured or kidnapped. They are not dead — but they are gone.</description>
+        <baseMoodEffect>-7</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinReturned</defName>
+    <label>kin returned</label>
+    <durationDays>4</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>{0} came back</label>
+        <description>Family made it back after being taken.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TendedByFamily</defName>
+    <label>tended by family</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>tended by {0}</label>
+        <description>Family treated the wounds. It helps more than medicine alone.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TendedFamily</defName>
+    <label>tended family</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>tended {0}</label>
+        <description>They treated family. That is what you stay for.</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_LastOfTheLine</defName>
+    <label>last of the line</label>
+    <thoughtClass>Thought_Situational</thoughtClass>
+    <workerClass>DeepColony.ThoughtWorker_LastOfTheLine</workerClass>
+    <stages>
+      <li>
+        <label>last of the line</label>
+        <description>No living blood kin remain in this colony. The name ends here unless the line continues.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_LineContinues</defName>
+    <label>the line continues</label>
+    <durationDays>8</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>the line continues</label>
+        <description>Blood kin is in the colony again. The name does not end here.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_StepFamily</defName>
+    <label>step-family</label>
+    <durationDays>6</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>new step-parent: {0}</label>
+        <description>A parent married. The household got a step-parent.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FAMILY ECHO (E06–E10)
+  ══════════════════════════════════════════════════════════════════════ -->
+  <ThoughtDef>
+    <defName>DC_Thought_FamilyPrisonVisit</defName>
+    <label>family visited</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>visited by {0}</label>
+        <description>Family came to the cell. Loyalty may still hold — the visit still mattered.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_VisitedKinPrisoner</defName>
+    <label>visited kin in prison</label>
+    <durationDays>1</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>visited {0}</label>
+        <description>They walked up to family behind the door.</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinReleased</defName>
+    <label>kin released</label>
+    <durationDays>5</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>the colony released {0}</label>
+        <description>Family was let go instead of executed. That is a different kind of memory.</description>
+        <baseMoodEffect>5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TraditionTaught</defName>
+    <label>family tradition taught</label>
+    <durationDays>6</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>the family skill continues</label>
+        <description>The household skill was passed on. The work has a name now.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_KinDownedBeside</defName>
+    <label>kin downed beside you</label>
+    <durationDays>2</durationDays>
+    <stackLimit>2</stackLimit>
+    <stackedEffectMultiplier>0.75</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>saw {0} fall</label>
+        <description>Family went down in the fight. They are not dead — but the image stays.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_EmptyNest</defName>
+    <label>empty nest</label>
+    <durationDays>8</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>the children left</label>
+        <description>The last child left the home map. The rooms are quieter.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef ParentName="DC_TraumaThoughtBase">
+    <defName>DC_Thought_ToxicRelationship</defName>
+    <label>toxic relationship</label>
+    <durationDays>40</durationDays>
+    <stages>
+      <li>
+        <label>toxic with {0}</label>
+        <description>They keep coming back to each other, and it keeps hurting. Therapy might help.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+      <li>
+        <label>tangled with {0}</label>
+        <description>The on-again pattern is wearing them down. Counseling can still ease it.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+      <li>
+        <label>learning from {0}</label>
+        <description>The cycle is quieter now, if they keep talking it through.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

@@ -197,4 +197,139 @@
   <DC_HeirloomCreated>{PAWN} 的 {ITEM} 现已成为殖民地传家宝。</DC_HeirloomCreated>
   <DC_ChronicTrauma>{PAWN} 未治疗的创伤沉淀为慢性压力。</DC_ChronicTrauma>
 
+  <!-- ── Batch C ────────────────────────────────────────────────────────────── -->
+  <DC_Alert_UntreatedTrauma>未治疗的创伤</DC_Alert_UntreatedTrauma>
+  <DC_Alert_UntreatedTraumaDesc>这些殖民者已携带心理创伤超过一天且未经疏导。医生可通过医生工作类型或右键进行疏导。</DC_Alert_UntreatedTraumaDesc>
+  <DC_InspectCounsel>疏导：最近 {0}，共 {1} 次（羁绊 {2}/{3}）</DC_InspectCounsel>
+  <DC_InspectGeneVsBlood>外源基因与家族{0}传统相悖</DC_InspectGeneVsBlood>
+  <DC_PerkFilter_All>全部</DC_PerkFilter_All>
+  <DC_PerkFilter_Unspent>未花费</DC_PerkFilter_Unspent>
+  <DC_PerkFilter_Hard>仅困难</DC_PerkFilter_Hard>
+  <DC_PerkFilter_AllSkills>全部技能</DC_PerkFilter_AllSkills>
+  <DC_EnvoyTitled>（有头衔）</DC_EnvoyTitled>
+  <DC_TraumaReason_CaveIn>在塌方中被埋</DC_TraumaReason_CaveIn>
+  <DC_TraumaReason_IonStorm>在离子风暴中倒下</DC_TraumaReason_IonStorm>
+  <DC_FamilyLetter_BirthdayLabel>家族生日：{PAWN}</DC_FamilyLetter_BirthdayLabel>
+  <DC_FamilyLetter_BirthdayBody>殖民地记下 {PAWN} 的生日。地图上的亲族可在传承标签查看这条短讯。</DC_FamilyLetter_BirthdayBody>
+  <DC_FamilyLetter_AnniversaryLabel>家族纪念日</DC_FamilyLetter_AnniversaryLabel>
+  <DC_FamilyLetter_AnniversaryBody>{A} 与 {B} 又共同走过一年。传承标签保留了这条短讯。</DC_FamilyLetter_AnniversaryBody>
+  <DC_LegacyLetters>家族短讯</DC_LegacyLetters>
+  <DC_DeathbedPerk>{MENTOR} 的最后一课让 {APPRENTICE} 获得专长：{GIFT}。</DC_DeathbedPerk>
+  <DC_DeathbedLesson>{MENTOR} 的最后一课传到了 {APPRENTICE}（{GIFT}）。</DC_DeathbedLesson>
+  <DC_GrewUpHere>{PAWN} 带着在这片殖民地长大的童年记忆。</DC_GrewUpHere>
+  <DC_FuneralEase>安葬 {PAWN} 减轻了暴死之痛。</DC_FuneralEase>
+  <DC_FuneralBurn>为 {PAWN} 举行的火化减轻了暴死之痛。</DC_FuneralBurn>
+  <DC_FuneralEaseMote>入土为安…</DC_FuneralEaseMote>
+  <DC_ChildRaidWitness>{PAWN} 看见了战斗，一时难以忘记。</DC_ChildRaidWitness>
+  <DC_Settings_BatchC>后续系统（批次 C）</DC_Settings_BatchC>
+  <DC_Settings_ChildRaid>儿童目击袭击几率：{0}%</DC_Settings_ChildRaid>
+  <DC_Settings_PrisonerCounsel>囚犯疏导（招募途径）</DC_Settings_PrisonerCounsel>
+  <DC_Settings_PrisonerCounselTip>默认关闭。医生可疏导囚犯，作为缓慢的社交招募。不会取代狱卒交谈。</DC_Settings_PrisonerCounselTip>
+  <DC_Settings_EnvoyVisits>使者出访</DC_Settings_EnvoyVisits>
+  <DC_Settings_EnvoyVisitsTip>默认关闭。已任命的使者可向同盟据点派出访问并带来好感脉冲。困难预设开启此项。</DC_Settings_EnvoyVisitsTip>
+  <DC_Settings_ApologyTribute>道歉 / 贡礼</DC_Settings_ApologyTribute>
+  <DC_Settings_ApologyTributeTip>声望标签可用白银，或右键白银 / 黄金 / 翡翠 / 贵重礼物，写下一条好感账本记录。</DC_Settings_ApologyTributeTip>
+  <DC_TributeDisabled>贡礼已在模组设置中关闭。</DC_TributeDisabled>
+  <DC_TributeNoFaction>未选择派系。</DC_TributeNoFaction>
+  <DC_TributeNoSilver>需要库存中有 200 白银才能送出贡礼。</DC_TributeNoSilver>
+  <DC_TributeNeedGift>需要价值至少 200 白银的贡礼（白银、黄金、翡翠或贵重物品）。</DC_TributeNeedGift>
+  <DC_TributeSent>已向 {FACTION} 送出贡礼（−{0} 白银）。</DC_TributeSent>
+  <DC_TributeGiftSent>已将 {GIFT} 作为贡礼送给 {FACTION}。</DC_TributeGiftSent>
+  <DC_TributeThingMenu>将 {GIFT} 作为贡礼…</DC_TributeThingMenu>
+  <DC_TributeThingTo>向 {FACTION} 进贡</DC_TributeThingTo>
+  <DC_SendTribute>送出贡礼（200 白银）</DC_SendTribute>
+  <DC_PrisonerCounselRecruit>{COUNSELOR} 的疏导说服 {PAWN} 加入。</DC_PrisonerCounselRecruit>
+  <DC_CounselPrisonerFloat>疏导囚犯 {PAWN}</DC_CounselPrisonerFloat>
+  <DC_EnvoyVisitLabel>使者出访：{PAWN}</DC_EnvoyVisitLabel>
+  <DC_EnvoyVisitBody>{PAWN} 向 {FACTION} 派出访问。账本记录了这次好感脉冲。</DC_EnvoyVisitBody>
+  <DC_EnvoyVisitBodyTitle>{PAWN} 的头衔在 {FACTION} 打开了门路。这次出访比普通使者更有分量。</DC_EnvoyVisitBodyTitle>
+  <DC_RepReason_Tribute>道歉 / 贡礼</DC_RepReason_Tribute>
+  <DC_RepReason_EnvoyVisit>使者出访</DC_RepReason_EnvoyVisit>
+  <DC_RepReason_EnvoyPresent>使者在场交易</DC_RepReason_EnvoyPresent>
+  <DC_FuneralRitual>为 {PAWN} 举行的葬礼减轻了暴死之痛。</DC_FuneralRitual>
+  <DC_FuneralSpouseMote>一同入土…</DC_FuneralSpouseMote>
+  <DC_FamilyLetter_ComingOfAgeLabel>成年：{PAWN}</DC_FamilyLetter_ComingOfAgeLabel>
+  <DC_FamilyLetter_ComingOfAgeBody>{PAWN} 在这座殖民地长大成人。童年记忆还在；传承标签记下了这一笔。</DC_FamilyLetter_ComingOfAgeBody>
+  <DC_FamilyLetter_MarriageLabel>殖民地成婚</DC_FamilyLetter_MarriageLabel>
+  <DC_FamilyLetter_MarriageBody>{A} 与 {B} 成婚。传承标签保留了这条家族短讯。</DC_FamilyLetter_MarriageBody>
+  <DC_FamilyLetter_HarvestLabel>第一次家庭收获</DC_FamilyLetter_HarvestLabel>
+  <DC_FamilyLetter_HarvestBody>{PAWN} 在亲族仍在地图上时收进了作物。传承标签记下了第一次收获。</DC_FamilyLetter_HarvestBody>
+  <DC_InspectTraumaTypes>创伤：{0}</DC_InspectTraumaTypes>
+  <DC_InspectTeachProgress>学习 {0}（{1}/{2} 次课）</DC_InspectTeachProgress>
+  <DC_InspectEnvoy>派驻 {0} 的使者</DC_InspectEnvoy>
+  <DC_InspectRival>对手：{0}</DC_InspectRival>
+  <DC_ParentReunion>{CHILD} 又与 {PARENT} 同在一处。</DC_ParentReunion>
+  <DC_SurfaceReturnEase>实地让 {PAWN} 的孤立感缓和下来。</DC_SurfaceReturnEase>
+  <DC_TraumaReason_StrataGas>在殖民地毒气中倒下</DC_TraumaReason_StrataGas>
+  <DC_TraumaReason_Firestorm>在火暴中倒下</DC_TraumaReason_Firestorm>
+  <DC_LegacyTraumatized>携带创伤的殖民者：{0}</DC_LegacyTraumatized>
+  <DC_LegacyRemembrance>纪念</DC_LegacyRemembrance>
+  <DC_RepFilter_All>全部派系</DC_RepFilter_All>
+  <DC_RepFilter_Ally>同盟 / 友善</DC_RepFilter_Ally>
+  <DC_RepFilter_Hostile>敌对</DC_RepFilter_Hostile>
+  <DC_PerkOverview_ColArchetype>原型</DC_PerkOverview_ColArchetype>
+  <DC_TabFamily>家族</DC_TabFamily>
+  <DC_FamilyTreeButton>家族树</DC_FamilyTreeButton>
+  <DC_FamilyTree_Title>{PAWN} 的家族</DC_FamilyTree_Title>
+  <DC_FamilyTree_Empty>没有记录的父母、子女、兄弟姐妹或伴侣。</DC_FamilyTree_Empty>
+  <DC_FamilyTree_Grandparents>祖父母</DC_FamilyTree_Grandparents>
+  <DC_FamilyTree_Parents>父母</DC_FamilyTree_Parents>
+  <DC_FamilyTree_Generation>同代</DC_FamilyTree_Generation>
+  <DC_FamilyTree_Children>子女</DC_FamilyTree_Children>
+  <DC_FamilyTree_Grandchildren>孙子女</DC_FamilyTree_Grandchildren>
+  <DC_FamilyTree_Teaching>师徒线</DC_FamilyTree_Teaching>
+  <DC_FamilyTree_Self>本人</DC_FamilyTree_Self>
+  <DC_FamilyTree_Dead>（已故）</DC_FamilyTree_Dead>
+  <DC_FamilyTree_Away>不在地图上</DC_FamilyTree_Away>
+  <DC_FamilyTree_ClickTip>点击以选中并跳转到该角色。</DC_FamilyTree_ClickTip>
+  <DC_Settings_FamilyJoin>亲族加入与复合</DC_Settings_FamilyJoin>
+  <DC_Settings_EnableFamilyJoin>地图上的亲族加入 / 投诚</DC_Settings_EnableFamilyJoin>
+  <DC_Settings_EnableFamilyJoinTip>殖民者的亲族可能在来访时加入，或在袭击中投诚。配偶几率最高。前恋人不会借此加入（0%）。非敌对亲族招募不扣好感；敌对亲族会留下派系积怨。不屈的囚犯只有彼此都喜欢的家人才能打动。另外：姻亲欢迎、亲族归乡、亲族死去或被处决、分手的伤、孙子女出生、亲族被掳、家人照料、血脉仅存、继亲、探监、释放亲族、家传技艺、亲族在战斗中倒下、以及空巢。</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_RaidDefect>袭击亲族投诚几率（配偶）：{0}%</DC_Settings_RaidDefect>
+  <DC_Settings_VisitJoin>来访亲族加入几率（配偶）：{0}%</DC_Settings_VisitJoin>
+  <DC_Settings_ExLoverReconcile>前恋人可能复合</DC_Settings_ExLoverReconcile>
+  <DC_Settings_ExLoverReconcileTip>同一地图上的前恋人或前配偶可能再次成为恋人。第四次复合会标为需要疏导的有毒关系。约会之夜仍负责恋爱时间表。</DC_Settings_ExLoverReconcileTip>
+  <DC_Settings_ReconcileMtb>前恋人复合平均间隔（天）：{0}</DC_Settings_ReconcileMtb>
+  <DC_RepReason_FamilyDefect>亲族投诚</DC_RepReason_FamilyDefect>
+  <DC_Letter_FamilyJoinLabel>{PAWN} 加入了殖民地</DC_Letter_FamilyJoinLabel>
+  <DC_Letter_FamilyJoinBody>{PAWN} 离开 {FACTION}，选择与家人同在。对方并未与你交战，因此没有把这当作冒犯。</DC_Letter_FamilyJoinBody>
+  <DC_Letter_FamilyDefectLabel>{PAWN} 投诚了</DC_Letter_FamilyDefectLabel>
+  <DC_Letter_FamilyDefectBody>{PAWN} 在战斗中脱离 {FACTION}，站到亲族一侧。旧派系怀恨在心。</DC_Letter_FamilyDefectBody>
+  <DC_Letter_ReconcileLabel>复合</DC_Letter_ReconcileLabel>
+  <DC_Letter_ReconcileBody>{A} 与 {B} 复合了（第 {COUNT} 次）。旧伤未消，但他们再次成为恋人。</DC_Letter_ReconcileBody>
+  <DC_Letter_ToxicRelationshipLabel>有毒关系</DC_Letter_ToxicRelationshipLabel>
+  <DC_Letter_ToxicRelationshipBody>{A} 与 {B} 再次复合（第 {COUNT} 次）。这种分分合合已经变得有毒——疏导或治疗也许能帮忙。</DC_Letter_ToxicRelationshipBody>
+  <DC_InspectToxicRelationship>有毒关系 — 疏导也许能帮忙</DC_InspectToxicRelationship>
+  <DC_Settings_UnwaveringOpinion>亲族动摇不屈忠诚的最低好感（双方）：{0}</DC_Settings_UnwaveringOpinion>
+  <DC_Settings_UnwaveringBreak>亲族动摇不屈忠诚几率（配偶）：{0}%</DC_Settings_UnwaveringBreak>
+  <DC_FamilyLoyaltyFloat>以家人身份与 {PAWN} 交谈</DC_FamilyLoyaltyFloat>
+  <DC_FamilyLoyalty_NotFamily>只有家人能动摇不屈的囚犯。</DC_FamilyLoyalty_NotFamily>
+  <DC_FamilyLoyalty_LowOpinion>彼此好感不够（双方需 {0}；当前 {1} / {2}）。</DC_FamilyLoyalty_LowOpinion>
+  <DC_FamilyLoyalty_StillHolds>忠诚仍在…</DC_FamilyLoyalty_StillHolds>
+  <DC_Letter_FamilyLoyaltyLabel>忠诚松动</DC_Letter_FamilyLoyaltyLabel>
+  <DC_Letter_FamilyLoyaltyBody>{FAMILY} 打动了 {PAWN}。不屈忠诚已破——狱卒现在可以招募他们。</DC_Letter_FamilyLoyaltyBody>
+  <DC_InLawWelcome>{A} 与 {B} 成婚。地图上的家人欢迎了新姻亲。</DC_InLawWelcome>
+  <DC_KinHomecoming>{PAWN} 回家了。{KIN} 很高兴他们回来。</DC_KinHomecoming>
+  <DC_BreakupWound>{A} 与 {B} 分手了。伤口还新。</DC_BreakupWound>
+  <DC_Letter_KinDiedLabel>{PAWN} 死了</DC_Letter_KinDiedLabel>
+  <DC_Letter_KinDiedBody>{PAWN} 在不属于这座殖民地时死去。{KIN} 和地图上的其他亲族感受到了。</DC_Letter_KinDiedBody>
+  <DC_Letter_KinExecutedLabel>殖民地处决了 {PAWN}</DC_Letter_KinExecutedLabel>
+  <DC_Letter_KinExecutedBody>{WARDEN} 处决了 {PAWN}。{KIN} 和地图上的其他亲族不会忘记，是这座殖民地做的。</DC_Letter_KinExecutedBody>
+  <DC_FamilyLetter_GrandchildLabel>孙子女：{BABY}</DC_FamilyLetter_GrandchildLabel>
+  <DC_FamilyLetter_GrandchildBody>{KIN} 在殖民地有了孙子女。{BABY} 在这里。传承页会记下这一笔。</DC_FamilyLetter_GrandchildBody>
+  <DC_Letter_KinTakenLabel>{PAWN} 被掳走了</DC_Letter_KinTakenLabel>
+  <DC_Letter_KinTakenBody>{PAWN} 被俘或被绑架。{KIN} 和地图上的其他亲族感受到了。他们没死——但不在了。</DC_Letter_KinTakenBody>
+  <DC_KinReturned>{PAWN} 回来了。{KIN} 很高兴他们回家。</DC_KinReturned>
+  <DC_LastOfTheLine>{PAWN} 是这座殖民地里最后的血亲。</DC_LastOfTheLine>
+  <DC_Letter_LineContinuesLabel>血脉延续</DC_Letter_LineContinuesLabel>
+  <DC_Letter_LineContinuesBody>{PAWN} 在殖民地里又有了血亲。这个姓不会到此为止。</DC_Letter_LineContinuesBody>
+  <DC_StepFamily>{A} 与 {B} 成婚。地图上的子女有了继父母。</DC_StepFamily>
+  <DC_Letter_KinReleasedLabel>殖民地释放了 {PAWN}</DC_Letter_KinReleasedLabel>
+  <DC_Letter_KinReleasedBody>殖民地放走了 {PAWN}。{KIN} 和其他亲族感受到了——这不是处决。</DC_Letter_KinReleasedBody>
+  <DC_KinDownedBeside>{PAWN} 看见 {KIN} 在战斗中倒下。</DC_KinDownedBeside>
+  <DC_FamilyLetter_TraditionLabel>家传技艺：{SKILL}</DC_FamilyLetter_TraditionLabel>
+  <DC_FamilyLetter_TraditionBody>{MENTOR} 把家里的 {SKILL} 传给了 {APPRENTICE}。传承页会记下这一笔。</DC_FamilyLetter_TraditionBody>
+  <DC_FamilyLetter_EmptyNestLabel>空巢：{PAWN}</DC_FamilyLetter_EmptyNestLabel>
+  <DC_FamilyLetter_EmptyNestBody>{CHILD} 离开了家园地图。{PAWN} 那里再没有孩子了。屋子更安静了。传承页会记下这一笔。</DC_FamilyLetter_EmptyNestBody>
+
 </LanguageData>

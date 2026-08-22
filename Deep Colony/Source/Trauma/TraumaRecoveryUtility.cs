@@ -130,6 +130,19 @@ namespace DeepColony
             if (comp.trackedTraumaDefNames == null)
                 comp.trackedTraumaDefNames = new List<string>();
 
+            if (IdeologyCounselUtility.CounselingIsStoic
+                && pawn.needs?.mood?.thoughts != null)
+            {
+                // Undo 35% of natural aging so stoic fade is slower.
+                foreach (Thought_Memory mem in pawn.needs.mood.thoughts.memories.Memories)
+                {
+                    if (mem is Thought_Trauma tt && tt.age > 0)
+                        tt.age = System.Math.Max(0, tt.age - 875);
+                }
+            }
+
+            comp.ClearUntreatedTraumaIfHealed();
+
             for (int i = comp.trackedTraumaDefNames.Count - 1; i >= 0; i--)
             {
                 string name = comp.trackedTraumaDefNames[i];

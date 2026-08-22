@@ -10,5 +10,11 @@
   <DC_WorkGiver_GroupCounsel.label>团体辅导</DC_WorkGiver_GroupCounsel.label>
   <DC_WorkGiver_GroupCounsel.gerund>团体辅导中</DC_WorkGiver_GroupCounsel.gerund>
   <DC_WorkGiver_GroupCounsel.verb>团体辅导</DC_WorkGiver_GroupCounsel.verb>
+  <DC_WorkGiver_CounselPrisoner.label>辅导囚犯</DC_WorkGiver_CounselPrisoner.label>
+  <DC_WorkGiver_CounselPrisoner.gerund>辅导囚犯中</DC_WorkGiver_CounselPrisoner.gerund>
+  <DC_WorkGiver_CounselPrisoner.verb>辅导囚犯</DC_WorkGiver_CounselPrisoner.verb>
+  <DC_WorkGiver_FamilyLoyalty.label>与亲族囚犯交谈</DC_WorkGiver_FamilyLoyalty.label>
+  <DC_WorkGiver_FamilyLoyalty.gerund>与亲族交谈中</DC_WorkGiver_FamilyLoyalty.gerund>
+  <DC_WorkGiver_FamilyLoyalty.verb>打动亲族</DC_WorkGiver_FamilyLoyalty.verb>
 
 </LanguageData>
