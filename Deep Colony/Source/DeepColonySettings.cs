@@ -55,6 +55,9 @@ namespace DeepColony
         public int familyUnwaveringMinOpinion = 20;
         public float familyUnwaveringBreakChance = 0.55f;
 
+        // Family tree display (not part of Soft/Default/Hard)
+        public bool familyTreePedigreeStyle = false;
+
         public static DeepColonySettings Get =>
             DeepColonyMod.Settings ?? new DeepColonySettings();
 
@@ -96,6 +99,7 @@ namespace DeepColony
             Scribe_Values.Look(ref exLoverReconcileMtbDays, "exLoverReconcileMtbDays", 8f);
             Scribe_Values.Look(ref familyUnwaveringMinOpinion, "familyUnwaveringMinOpinion", 20);
             Scribe_Values.Look(ref familyUnwaveringBreakChance, "familyUnwaveringBreakChance", 0.55f);
+            Scribe_Values.Look(ref familyTreePedigreeStyle, "familyTreePedigreeStyle", false);
         }
 
         public void ApplyPreset(Preset preset)
@@ -215,6 +219,7 @@ namespace DeepColony
             exLoverReconcileMtbDays = 8f;
             familyUnwaveringMinOpinion = 20;
             familyUnwaveringBreakChance = 0.55f;
+            familyTreePedigreeStyle = false;
         }
     }
 }

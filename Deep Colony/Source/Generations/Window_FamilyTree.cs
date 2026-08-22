@@ -18,7 +18,10 @@ namespace DeepColony
             preventCameraMotion = false;
         }
 
-        public override Vector2 InitialSize => new Vector2(720f, 560f);
+        public override Vector2 InitialSize =>
+            DeepColonySettings.Get.familyTreePedigreeStyle
+                ? new Vector2(840f, 620f)
+                : new Vector2(720f, 560f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -28,12 +31,19 @@ namespace DeepColony
                 return;
             }
 
+            Rect header = new Rect(inRect.x, inRect.y, inRect.width, FamilyTreeDrawer.TitleRowH);
+            FamilyTreeDrawer.DrawHeader(header, root, ref scrollPos);
+
             FamilyTreeSnapshot snap = FamilyTreeUtility.Build(root);
-            Rect outRect = new Rect(inRect.x, inRect.y, inRect.width, inRect.height - 40f);
-            float viewH = Mathf.Max(outRect.height, FamilyTreeDrawer.MeasureHeight(snap) + 8f);
-            Rect view = new Rect(0f, 0f, outRect.width - 16f, viewH);
+            Rect outRect = inRect;
+            outRect.yMin += FamilyTreeDrawer.TitleRowH + 4f;
+            outRect.yMax -= 40f;
+            Vector2 need = FamilyTreeDrawer.MeasureSize(snap, includeTitle: false);
+            float viewH = Mathf.Max(outRect.height, need.y + 8f);
+            float viewW = Mathf.Max(outRect.width - 16f, need.x);
+            Rect view = new Rect(0f, 0f, viewW, viewH);
             Widgets.BeginScrollView(outRect, ref scrollPos, view);
-            FamilyTreeDrawer.Draw(view, snap, OnClick);
+            FamilyTreeDrawer.Draw(view, snap, OnClick, drawTitle: false);
             Widgets.EndScrollView();
         }
 
