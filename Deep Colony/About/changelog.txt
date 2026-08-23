@@ -10,5 +10,5 @@
 [*] [b]Last of the line[/b] — only when the last living colony blood kin dies (on or off the map). Carried babies, caravans, and other maps still count. Starting pawns with no family stay quiet. "Blood kin in the colony again" only after last-of-the-line has already fired.
 [/list]
 
-[i]Build stamp (Player.log): diplomacy-compat-v1[/i]
+[i]Build stamp (Player.log): last-of-line-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Deep%20Colony/CHANGELOG.md[/i]
