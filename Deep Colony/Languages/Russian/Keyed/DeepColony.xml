@@ -229,6 +229,12 @@
   <DC_Settings_EnvoyVisitsTip>По умолчанию выкл. Назначенные посланники могут отправить визит в союзное поселение ради импульса расположения. Жёсткий пресет включает это.</DC_Settings_EnvoyVisitsTip>
   <DC_Settings_ApologyTribute>Извинение / дань</DC_Settings_ApologyTribute>
   <DC_Settings_ApologyTributeTip>На вкладке Репутация можно потратить серебро или ПКМ по серебру / золоту / нефриту / ценному дару, чтобы записать строку в книге расположения.</DC_Settings_ApologyTributeTip>
+  <DC_Settings_DiplomacyCompat>Despicable / RimPacts — дипломатия</DC_Settings_DiplomacyCompat>
+  <DC_Settings_DiplomacyCompatTip>Если эти моды загружены, дань, визиты посланников и присоединение / переход семьи также меняют карму героя и доверие фракции. Казнь и освобождение остаются за Despicable. Выкл. не меняет книгу расположения Deep Colony. Мягкий / обычный / жёсткий пресеты это не трогают.</DC_Settings_DiplomacyCompatTip>
+  <DC_Compat_Karma_Tribute>Дань</DC_Compat_Karma_Tribute>
+  <DC_Compat_Karma_Envoy>Визит посланника</DC_Compat_Karma_Envoy>
+  <DC_Compat_Karma_FamilyJoin>Семья присоединилась</DC_Compat_Karma_FamilyJoin>
+  <DC_Compat_Karma_FamilyDefect>Семья перешла</DC_Compat_Karma_FamilyDefect>
   <DC_TributeDisabled>Дань отключена в настройках мода.</DC_TributeDisabled>
   <DC_TributeNoFaction>Фракция не выбрана.</DC_TributeNoFaction>
   <DC_TributeNoSilver>Нужно 200 серебра на складе, чтобы отправить дань.</DC_TributeNoSilver>
