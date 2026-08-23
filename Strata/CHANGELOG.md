@@ -13,6 +13,9 @@ Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog
 
 Player-facing version **3.0.1** (`About.xml` `modVersion`). Startup writes `[Strata] v3.0.1 Soft-compat build ...` in Player.log. Bugfix release: Combat Extended cross-floor fire.
 
+### Fixed
+- **Shaft dig-down on underground floors** (`shaft-temp-map-guard-v1`) — digging deeper from B1 (or any Strata underground/upper level) no longer falsely triggers the "temporary quest map" guard. The guard still blocks shafts on actual quest sites, Ancient Urban Ruins, and caravan maps.
+
 ### Added
 - **Deep Shafts scenario** — mountain/shaft showcase start; unlocks Digging Down + Building Up; locks Azrael when Homesteader is loaded.
 - **Cave mods stay out of your column** (`foreign-portal-exclusion-v1`) - Anomaly undercaves, Deep And Deeper caves, and similar portal maps are no longer treated as colony floors for work / food / rest / alerts. Optional setting: *Relay into other mods' portal maps* (off by default).
