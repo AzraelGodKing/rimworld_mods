@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Strata** (`shaft-temp-map-guard-v1`) — digging deeper from underground floors no longer falsely triggers the "temporary quest map" guard. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Repo** — Git history rewritten to remove Claude/Anthropic `Co-Authored-By` and `Claude-Session` trailers, and re-attribute `cursoragent@cursor.com` commits to AzraelGodKing. All branches, tags force-pushed. Existing local clones must `git fetch --all && git reset --hard origin/<branch>`.
 
 - **Date Night** (`date-cooldown-v1`) — finished dates wait like post-lovin before the couple starts another. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
