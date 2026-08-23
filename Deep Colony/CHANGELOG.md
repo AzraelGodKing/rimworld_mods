@@ -75,6 +75,8 @@ Player-facing version **1.6.0** (`About.xml` `modVersion`). Startup writes `[Dee
 - **Chinese Simplified & Russian language packs** — full Keyed + DefInjected translations (perks, trauma, mentoring, inheritance, jobs, thoughts).
 
 ### Fixed
+- **Empty nest** (`empty-nest-adults-v1`) — only when an adult child leaves the home map, and only if every living child is gone from that home (including carried babies and kids on linked pocket floors). Picking up a newborn no longer gives the thought.
+- **Last of the line** (`last-of-line-v1`) — message only when the last living colony blood kin **dies** (on or off the map). Carried babies, caravans, and other maps still count. Starting pawns with no family stay quiet. "Blood kin again" only after last-of-the-line has fired.
 - **Colony sibling thought** — `DC_Thought_SiblingBond` was missing `<defName>`, so the thought loaded unnamed and translations did not bind.
 - **Family tree clip** (`family-echo-v4`) — generation headers used an 18px row with Small font, so Parents / This generation / Children were cut off. Headers now get a full line. The Family tab also no longer hangs off the inspect pane.
 - **Rivalry scan** — pair checks run on a 2500-tick interval with a reused list (not a fresh scan every call).

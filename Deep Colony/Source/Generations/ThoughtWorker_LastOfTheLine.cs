@@ -9,7 +9,7 @@ namespace DeepColony
         protected override ThoughtState CurrentStateInternal(Pawn p)
         {
             if (!DeepColonySettings.Get.enableFamilyJoin) return false;
-            if (p == null || p.Dead || !p.IsColonistPlayerControlled) return false;
+            if (p == null || p.Dead || !p.IsColonist) return false;
             if (!p.RaceProps.Humanlike) return false;
             var comp = p.TryGetComp<Comp_DeepColony>();
             if (comp == null || !comp.lastOfTheLine) return false;
