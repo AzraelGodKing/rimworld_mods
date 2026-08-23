@@ -27,6 +27,13 @@ namespace Strata
                 return true;
             }
 
+            // Underground / upper levels dug from the home colony are safe for
+            // deeper shafts even though pocket maps have IsPlayerHome == false.
+            if (StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map))
+            {
+                return false;
+            }
+
             // World sites / non-home maps (AUR floors, caravan camps, etc.).
             if (!map.IsPlayerHome || map.Parent is Site)
             {
