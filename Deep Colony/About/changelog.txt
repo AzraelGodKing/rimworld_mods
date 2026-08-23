@@ -1,4 +1,4 @@
-[h1]Deep Colony — 1.6.0[/h1]
+[h1]Deep Colony — 1.5.2[/h1]
 
 [b]Added[/b]
 [list]
