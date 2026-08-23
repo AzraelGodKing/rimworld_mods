@@ -25,6 +25,11 @@ namespace DateNight
             {
                 return false;
             }
+            if (!force && (DateNightUtility.IsBusyWithRitual(pawn)
+                || DateNightUtility.IsBusyWithRitual(partner)))
+            {
+                return false;
+            }
             if (pawn.ageTracker == null || partner.ageTracker == null
                 || !pawn.ageTracker.Adult || !partner.ageTracker.Adult)
             {
@@ -64,6 +69,10 @@ namespace DateNight
             {
                 return;
             }
+            if (DateNightUtility.IsBusyWithRitual(pawn))
+            {
+                return;
+            }
             if (pawn.CurJobDef == DateNightDefOf.DateNight_GoOnDate)
             {
                 return;
@@ -75,6 +84,10 @@ namespace DateNight
 
             Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
             if (partner == null || !DateNightUtility.IsDateSchedule(partner))
+            {
+                return;
+            }
+            if (DateNightUtility.IsBusyWithRitual(partner))
             {
                 return;
             }

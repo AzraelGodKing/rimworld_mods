@@ -20,7 +20,7 @@ namespace DeepColony
         {
             if (!Enabled) return;
             if (Find.TickManager.TicksGame % LastOfLineInterval != 0) return;
-            RefreshAllLastOfTheLine(announceTransition: true);
+            RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);
         }
 
         public static void NotifyBirth(Pawn baby)
@@ -51,7 +51,7 @@ namespace DeepColony
             if (welcomed > 0 && firstGp != null)
                 FamilyLetterUtility.NotifyGrandchildBorn(baby, firstGp);
 
-            RefreshAllLastOfTheLine(announceTransition: true);
+            RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);
         }
 
         public static void NotifyStepFamily(Pawn a, Pawn b)
@@ -128,7 +128,7 @@ namespace DeepColony
                     first.LabelShort.Named("KIN")),
                 LetterDefOf.NegativeEvent,
                 new LookTargets(first, victim));
-            RefreshAllLastOfTheLine(announceTransition: true);
+            RefreshAllLastOfTheLine(announceLast: false, announceContinue: false);
         }
 
         public static void NotifyReturned(Pawn pawn)
@@ -165,14 +165,14 @@ namespace DeepColony
                     MessageTypeDefOf.PositiveEvent,
                     false);
             }
-            RefreshAllLastOfTheLine(announceTransition: true);
+            RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);
         }
 
-        public static void RefreshAllLastOfTheLine(bool announceTransition)
+        public static void RefreshAllLastOfTheLine(bool announceLast, bool announceContinue)
         {
             if (!Enabled) return;
-            foreach (Pawn colonist in ColonyHumanlikes())
-                RefreshLastOfTheLine(colonist, announceTransition);
+            foreach (Pawn colonist in LivingColonyHumanlikes())
+                RefreshLastOfTheLine(colonist, announceLast, announceContinue);
         }
 
         public static bool TryForceLastOfTheLine(Pawn pawn)
@@ -201,9 +201,9 @@ namespace DeepColony
             return false;
         }
 
-        private static void RefreshLastOfTheLine(Pawn pawn, bool announce)
+        private static void RefreshLastOfTheLine(Pawn pawn, bool announceLast, bool announceContinue)
         {
-            if (pawn == null || pawn.Dead || !pawn.IsColonistPlayerControlled) return;
+            if (pawn == null || pawn.Dead || !pawn.IsColonist) return;
             if (!pawn.RaceProps.Humanlike) return;
             var comp = pawn.TryGetComp<Comp_DeepColony>();
             if (comp == null) return;
@@ -214,7 +214,7 @@ namespace DeepColony
                 bool restored = comp.lastOfTheLine;
                 comp.sawColonyBloodKin = true;
                 comp.lastOfTheLine = false;
-                if (restored && announce)
+                if (restored && announceContinue)
                 {
                     Gain(pawn, DC_DefOf.DC_Thought_LineContinues, null);
                     Find.LetterStack.ReceiveLetter(
@@ -226,25 +226,25 @@ namespace DeepColony
                 return;
             }
 
+            // Never last-of-the-line until they have actually had colony blood kin
+            // (starting pawns with no family stay quiet).
             if (!comp.sawColonyBloodKin) return;
             if (comp.lastOfTheLine) return;
+            // Message + flag only when the last kin died — not when they left the map.
+            if (!announceLast) return;
             comp.lastOfTheLine = true;
-            if (announce)
-            {
-                Messages.Message(
-                    "DC_LastOfTheLine".Translate(pawn.LabelShort.Named("PAWN")),
-                    pawn,
-                    MessageTypeDefOf.NegativeEvent,
-                    false);
-            }
+            Messages.Message(
+                "DC_LastOfTheLine".Translate(pawn.LabelShort.Named("PAWN")),
+                pawn,
+                MessageTypeDefOf.NegativeEvent,
+                false);
         }
 
         private static bool HasLivingColonyBloodKin(Pawn pawn)
         {
-            foreach (Pawn other in ColonyHumanlikes())
+            foreach (Pawn other in LivingColonyHumanlikes())
             {
                 if (other == pawn || other.Dead) continue;
-                if (!other.IsColonistPlayerControlled) continue;
                 if (IsBloodKin(pawn, other)) return true;
             }
             return false;
@@ -284,6 +284,56 @@ namespace DeepColony
                 if (parent != null && parent.IsColonistPlayerControlled) return true;
             }
             return false;
+        }
+
+        private static IEnumerable<Pawn> LivingColonyHumanlikes()
+        {
+            var seen = new HashSet<int>();
+            if (Find.Maps != null)
+            {
+                foreach (Map map in Find.Maps)
+                {
+                    if (map?.mapPawns?.AllPawns == null) continue;
+                    foreach (Pawn p in map.mapPawns.AllPawns)
+                    {
+                        TryYieldLivingColonist(p, seen, out Pawn yieldPawn);
+                        if (yieldPawn != null) yield return yieldPawn;
+                        Pawn carried = p.carryTracker?.CarriedThing as Pawn;
+                        if (carried != null)
+                        {
+                            TryYieldLivingColonist(carried, seen, out Pawn yieldCarried);
+                            if (yieldCarried != null) yield return yieldCarried;
+                        }
+                    }
+                }
+            }
+
+            List<Pawn> found = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
+            if (found != null)
+            {
+                for (int i = 0; i < found.Count; i++)
+                {
+                    TryYieldLivingColonist(found[i], seen, out Pawn yieldPawn);
+                    if (yieldPawn != null) yield return yieldPawn;
+                }
+            }
+
+            if (Find.WorldPawns?.AllPawnsAlive == null) yield break;
+            foreach (Pawn p in Find.WorldPawns.AllPawnsAlive)
+            {
+                TryYieldLivingColonist(p, seen, out Pawn yieldPawn);
+                if (yieldPawn != null) yield return yieldPawn;
+            }
+        }
+
+        private static void TryYieldLivingColonist(Pawn pawn, HashSet<int> seen, out Pawn result)
+        {
+            result = null;
+            if (pawn == null || pawn.Dead || pawn.Destroyed) return;
+            if (pawn.RaceProps == null || !pawn.RaceProps.Humanlike) return;
+            if (!pawn.IsColonist) return;
+            if (!seen.Add(pawn.thingIDNumber)) return;
+            result = pawn;
         }
 
         private static IEnumerable<Pawn> ColonyHumanlikes()

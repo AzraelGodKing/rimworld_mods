@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using Verse.AI;
+using Verse.AI.Group;
 
 namespace DateNight
 {
@@ -64,6 +65,48 @@ namespace DateNight
             }
 
             return LooksLikeLovinJob(def, pawn.jobs.curDriver);
+        }
+
+        /// <summary>
+        /// Ideology rituals and similar ceremonies freeze if a pawn is yanked
+        /// onto a date / lovin job. Also any lord that forbids long-need jobs.
+        /// </summary>
+        public static bool IsBusyWithRitual(Pawn pawn)
+        {
+            if (pawn == null || pawn.Dead)
+            {
+                return false;
+            }
+
+            Lord lord = pawn.GetLord();
+            if (lord?.LordJob is LordJob_Ritual)
+            {
+                return true;
+            }
+            if (lord?.CurLordToil != null && !lord.CurLordToil.AllowSatisfyLongNeeds)
+            {
+                return true;
+            }
+
+            PawnDuty duty = pawn.mindState?.duty;
+            if (duty?.def == null)
+            {
+                return false;
+            }
+            string n = duty.def.defName;
+            if (n.IndexOf("Ritual", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (n.IndexOf("Spectate", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (n.IndexOf("Bestow", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         private static bool LooksLikeLovinJob(JobDef def, JobDriver driver)
@@ -171,6 +214,10 @@ namespace DateNight
             {
                 return null;
             }
+            if (IsBusyWithRitual(pawn))
+            {
+                return null;
+            }
             if (ShouldSatisfyNeedsBeforeBed(pawn))
             {
                 return null;
@@ -215,6 +262,10 @@ namespace DateNight
             {
                 return;
             }
+            if (IsBusyWithRitual(pawn))
+            {
+                return;
+            }
             if (pawn.jobs == null)
             {
                 return;
@@ -226,6 +277,10 @@ namespace DateNight
 
             Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
             if (partner != null && IsBusyWithLovin(partner))
+            {
+                return;
+            }
+            if (partner != null && IsBusyWithRitual(partner))
             {
                 return;
             }
@@ -296,6 +351,10 @@ namespace DateNight
         public static bool TryStartLovinNow(Pawn pawn)
         {
             if (pawn?.jobs == null || pawn.Dead || pawn.Downed)
+            {
+                return false;
+            }
+            if (IsBusyWithRitual(pawn))
             {
                 return false;
             }
@@ -399,6 +458,10 @@ namespace DateNight
         public static bool TryStartSelfLovinNow(Pawn pawn, bool force = false)
         {
             if (!CanSelfLovin(pawn, ignoreSetting: force) || pawn.jobs == null)
+            {
+                return false;
+            }
+            if (!force && IsBusyWithRitual(pawn))
             {
                 return false;
             }
