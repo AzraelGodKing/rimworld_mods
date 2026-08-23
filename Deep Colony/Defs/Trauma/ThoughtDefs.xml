@@ -630,7 +630,7 @@
     <stages>
       <li>
         <label>last of the line</label>
-        <description>No living blood kin remain in this colony. The name ends here unless the line continues.</description>
+        <description>No living blood kin remain in this colony. The last of them died. The name ends here unless the line continues.</description>
         <baseMoodEffect>-6</baseMoodEffect>
       </li>
     </stages>
@@ -746,7 +746,7 @@
     <stages>
       <li>
         <label>the children left</label>
-        <description>The last child left the home map. The rooms are quieter.</description>
+        <description>The last adult child left the home map, and none of the children remain there. The rooms are quieter.</description>
         <baseMoodEffect>-4</baseMoodEffect>
       </li>
     </stages>

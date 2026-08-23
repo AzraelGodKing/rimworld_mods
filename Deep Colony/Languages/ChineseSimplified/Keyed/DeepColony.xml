@@ -341,6 +341,6 @@
   <DC_FamilyLetter_TraditionLabel>家传技艺：{SKILL}</DC_FamilyLetter_TraditionLabel>
   <DC_FamilyLetter_TraditionBody>{MENTOR} 把家里的 {SKILL} 传给了 {APPRENTICE}。传承页会记下这一笔。</DC_FamilyLetter_TraditionBody>
   <DC_FamilyLetter_EmptyNestLabel>空巢：{PAWN}</DC_FamilyLetter_EmptyNestLabel>
-  <DC_FamilyLetter_EmptyNestBody>{CHILD} 离开了家园地图。{PAWN} 那里再没有孩子了。屋子更安静了。传承页会记下这一笔。</DC_FamilyLetter_EmptyNestBody>
+  <DC_FamilyLetter_EmptyNestBody>{CHILD} 长大后离开了家园地图。{PAWN} 的孩子都不在那里了。屋子更安静了。传承页会记下这一笔。</DC_FamilyLetter_EmptyNestBody>
 
 </LanguageData>
