@@ -26,7 +26,7 @@ namespace DeepColony
             var settings = Settings;
             if (settings == null) return;
 
-            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 2140f);
+            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 2200f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
 
             var listing = new Listing_Standard();
@@ -108,6 +108,8 @@ namespace DeepColony
                 "DC_Settings_EnvoyVisitsTip".Translate());
             listing.CheckboxLabeled("DC_Settings_ApologyTribute".Translate(), ref settings.enableApologyTribute,
                 "DC_Settings_ApologyTributeTip".Translate());
+            listing.CheckboxLabeled("DC_Settings_DiplomacyCompat".Translate(), ref settings.enableDiplomacyCompat,
+                "DC_Settings_DiplomacyCompatTip".Translate());
 
             listing.Gap(8f);
             Text.Font = GameFont.Medium;

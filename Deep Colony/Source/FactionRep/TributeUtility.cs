@@ -59,6 +59,7 @@ namespace DeepColony
             }
 
             GameComp_DeepColony.Instance?.AddFactionDrift(faction, Drift, FactionRepReason.Tribute);
+            ExternalDiplomacySoftCompat.OnTribute(faction);
             Messages.Message(
                 "DC_TributeSent".Translate(faction.Name.Named("FACTION"), SilverCost),
                 MessageTypeDefOf.PositiveEvent,
@@ -122,6 +123,7 @@ namespace DeepColony
             }
 
             GameComp_DeepColony.Instance?.AddFactionDrift(faction, Drift, FactionRepReason.Tribute);
+            ExternalDiplomacySoftCompat.OnTribute(faction);
             Messages.Message(
                 "DC_TributeGiftSent".Translate(faction.Name.Named("FACTION"), t.LabelNoCount.Named("GIFT")),
                 MessageTypeDefOf.PositiveEvent,

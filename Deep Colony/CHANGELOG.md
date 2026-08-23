@@ -6,9 +6,10 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **2.0.0** (`About.xml` `modVersion`). Startup writes `[DeepColony] v2.0.0 build ...` in Player.log.
+Player-facing version **1.6.0** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.0 build ...` in Player.log.
 
 ### Added
+- **Despicable 2 / RimPacts diplomacy** (`diplomacy-compat-v1`) — fail-open, no extra dependencies. Tribute, envoy visits, and family join/defect nudge Hero Karma and RimPacts trust when those mods are loaded. Executing kin hits trust only (Despicable already karmas execute/release). Toggle in settings, default on; Soft / Default / Hard do not change this. Empire Refactored is not hooked.
 - **Family tree pedigree** (`family-tree-pedigree-v3`) — **Pedigree** / **Rows** button on the Family tab title row (and the family-tree window). Same setting as mod options. Ancestors above, descendants below, with kin lines. Off keeps generation rows. Soft / Default / Hard do not change this.
 - **Family join / reconcile** (`family-join-v1`) — spec D17/D18 in [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
   - **D17** Kin of colonists on the player home map may join from visits or defect from raids. Spouse is the highest chance; fiancé / parent / child / lover / sibling / grandparent follow. **Ex-lovers do not join this way (0%)**. Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge (`FactionRepReason.FamilyDefect`).
