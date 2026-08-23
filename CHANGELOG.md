@@ -6,7 +6,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 - **Date Night rituals** (`ritual-date-v1`) — **1.0.1**. Date / Lovin hours no longer pull pawns out of Ideology rituals. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Deep Colony diplomacy** (`diplomacy-compat-v1`) — fail-open Despicable 2 Hero Karma + RimPacts trust on tribute, envoy visits, and family join/defect. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
-- **Deep Colony last of the line** (`last-of-line-v1`) — message only when the last living colony blood kin dies; "blood kin again" only after that. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
+- **Deep Colony last of the line** (`last-of-line-v1`) — **1.5.2**. Message only when the last living colony blood kin dies; "blood kin again" only after that. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Strata** (`shaft-temp-map-guard-v1`) — digging deeper from underground floors no longer falsely triggers the "temporary quest map" guard. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Repo** — Git history rewritten to remove Claude/Anthropic `Co-Authored-By` and `Claude-Session` trailers, and re-attribute `cursoragent@cursor.com` commits to AzraelGodKing. All branches, tags force-pushed. Existing local clones must `git fetch --all && git reset --hard origin/<branch>`.
 
@@ -23,7 +23,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 - **Date Night** (`azr-14-schedule-combo-v3`) — Date sits last after Clean (Lovin in the ▾ menu) without covering Manage areas. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Date Night** (`azr-15-lovin-anim-v1`) — lovin + animation mods no longer restart every 2–3 seconds; pregnancy can finish. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Strata 3.0.1** — Combat Extended guns, turrets, and mortars can fire through open sky again (`ce-cross-level-combat-v2`). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
-- **Repo** — each mod now has a player-facing `modVersion` (Strata **3.0.1**, Deep Colony **1.6.0**, others **1.0.0**) on the About page and in Player.log at load.
+- **Repo** — each mod now has a player-facing `modVersion` (Strata **3.0.1**, Deep Colony **1.5.2**, others **1.0.0**) on the About page and in Player.log at load.
 - **Repo** — `.cursor/` is gitignored (agent rules stay local).
 - **Date Night** (`datenight/date-activities`) — dates now pick a real activity (dinner, picnic, walk, stargazing, dancing, gift, recreation, hangout fallback), have quality outcomes (wonderful / nice / awkward + ruined-date on interruptions), gift dates hand over a small luxury, and a finished date boosts lovin chance for a day. Four new settings, EN/RU/CN strings, dev tool to force an activity. Fixed Date-hours `NotImplementedException` from vanilla joy GetPriority. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Docs site rebuilt in Vue** (`site/vue-rewrite`) — new Vite + Vue 3 app in `site/`: data-driven hub and mod pages from `site/src/data/mods.json`, live Steam stats with auto/manual refresh and sort-by-subscribers, feature tabs, sprite gallery with lightbox, in-page changelog viewer (renders each mod's `CHANGELOG.md`), compatibility checker page, EN/RU/CN UI strings, light/dark theme, old `.html` links redirect to new routes. Pages workflow now builds `site/` and deploys `site/dist`; legacy pages (ledger, admin-stats, strata-roadmap, homesteader-catalog, living-world, signal) carried over unchanged.
