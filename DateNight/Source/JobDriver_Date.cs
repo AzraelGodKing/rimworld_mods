@@ -89,6 +89,8 @@ namespace DateNight
         {
             this.FailOnDespawnedNullOrForbidden(PartnerInd);
             this.FailOn(() => pawn.Drafted);
+            this.FailOn(() => DateNightUtility.IsBusyWithRitual(pawn)
+                || DateNightUtility.IsBusyWithRitual(Partner));
             this.FailOn(() => !DateNightDateUtility.CanDate(pawn, Partner, force: true));
 
             bool fetchesItem = NeedsItemFetch();

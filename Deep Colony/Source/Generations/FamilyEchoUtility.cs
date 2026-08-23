@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace DeepColony
@@ -137,7 +138,8 @@ namespace DeepColony
         {
             if (!Enabled) return;
             if (child == null || child.Dead) return;
-            if (!child.IsColonistPlayerControlled) return;
+            if (!child.RaceProps.Humanlike) return;
+            if (!IsAdult(child)) return;
             if (child.IsPrisonerOfColony) return;
             var childComp = child.TryGetComp<Comp_DeepColony>();
             if (childComp != null && childComp.kinTakenTick >= 0) return;
@@ -150,8 +152,9 @@ namespace DeepColony
             {
                 if (parent == null || parent.Dead) continue;
                 if (!parent.IsColonistPlayerControlled) continue;
-                if (!parent.Spawned || parent.Map != home) continue;
-                if (HasOtherChildOnMap(parent, child, home)) continue;
+                if (!IsOnHomeMap(parent, home)) continue;
+                // Newborns, kids, and other adults still on the home tile block this.
+                if (AnyChildStillOnHomeMap(parent, child, home)) continue;
 
                 var comp = parent.TryGetComp<Comp_DeepColony>();
                 if (comp == null) continue;
@@ -210,14 +213,30 @@ namespace DeepColony
             return false;
         }
 
-        private static bool HasOtherChildOnMap(Pawn parent, Pawn leaving, Map map)
+        private static bool AnyChildStillOnHomeMap(Pawn parent, Pawn leaving, Map home)
         {
             foreach (Pawn other in FamilyTreeUtility.DirectChildren(parent))
             {
                 if (other == null || other == leaving || other.Dead) continue;
-                if (!other.Spawned || other.Map != map) continue;
-                if (!other.IsColonistPlayerControlled) continue;
-                return true;
+                if (IsOnHomeMap(other, home)) return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Still "at home": spawned or carried on the home map, another player-home map,
+        /// or a pocket map under that home (Strata floors, gravship decks).
+        /// Caravan / world pawns are off-map.
+        /// </summary>
+        private static bool IsOnHomeMap(Pawn pawn, Map home)
+        {
+            if (pawn == null || home == null) return false;
+            Map map = pawn.MapHeld ?? pawn.Map;
+            if (map == null) return false;
+            if (map == home || map.IsPlayerHome) return true;
+            if (map.Parent is PocketMapParent pocket && pocket.sourceMap != null)
+            {
+                if (pocket.sourceMap == home || pocket.sourceMap.IsPlayerHome) return true;
             }
             return false;
         }

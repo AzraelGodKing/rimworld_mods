@@ -341,6 +341,6 @@
   <DC_FamilyLetter_TraditionLabel>Семейный навык: {SKILL}</DC_FamilyLetter_TraditionLabel>
   <DC_FamilyLetter_TraditionBody>{MENTOR} передал(а) домашний {SKILL} {APPRENTICE}. Вкладка Наследие сохраняет запись.</DC_FamilyLetter_TraditionBody>
   <DC_FamilyLetter_EmptyNestLabel>Пустое гнездо: {PAWN}</DC_FamilyLetter_EmptyNestLabel>
-  <DC_FamilyLetter_EmptyNestBody>{CHILD} ушёл(ла) с домашней карты. У {PAWN} там больше нет детей. В комнатах тише. Вкладка Наследие сохраняет запись.</DC_FamilyLetter_EmptyNestBody>
+  <DC_FamilyLetter_EmptyNestBody>{CHILD} вырос(ла) и ушёл(ла) с домашней карты. У {PAWN} там больше не осталось детей. В комнатах тише. Вкладка Наследие сохраняет запись.</DC_FamilyLetter_EmptyNestBody>
 
 </LanguageData>

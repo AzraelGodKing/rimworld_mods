@@ -108,7 +108,7 @@ Next family life-cycle beats. Same `enableFamilyJoin` toggle. Date Night still o
 | E01 | Grandchild born | Generations | Colony birth: living grandparent / great-grandparent colonists get `DC_Thought_GrandchildBorn` + a Legacy letter. Distinct from D20 in-law (marriage) and D03 coming of age. |
 | E02 | Kin taken / returned | Trauma-adjacent | Kidnap (`PreKidnapped`) or enemy `CapturedBy`: colonist kin **or ex** get `DC_Thought_KinTaken` + letter. Rescue / recruit / return clears it and applies `DC_Thought_KinReturned`. Dedupe 2500 ticks. Not a Nemesis hunt. |
 | E03 | Tended by family | Generations | `TendUtility.DoTend`: colonist (or prisoner kin) tended by colonist kin (`KinWeight` > 0, not ex). Patient `DC_Thought_TendedByFamily`, doctor `DC_Thought_TendedFamily`. 1-day cooldown. No new medical job. |
-| E04 | Last of the line / line continues | Generations | Comp flags `sawColonyBloodKin` + `lastOfTheLine`. Situational `DC_Thought_LastOfTheLine` only after they have had living colony blood kin (parent/child/sibling/grand). Birth, join, or return that restores blood kin applies `DC_Thought_LineContinues` + letter. |
+| E04 | Last of the line / line continues | Generations | Comp flags `sawColonyBloodKin` + `lastOfTheLine`. Situational `DC_Thought_LastOfTheLine` only after they have had living colony blood kin (parent/child/sibling/grand) — skip starting pawns with no family. Fires only when the last living colony blood kin **dies** (caravan / other maps / carried babies still count as alive). `DC_Thought_LineContinues` + letter only after last-of-the-line has already fired. |
 | E05 | Step-family | Generations | On colonist–colonist marriage, living children of either spouse who do not already have the other as parent get `DC_Thought_StepFamily`. Distinct from D20 (parents/siblings of the couple). |
 
 ---
@@ -123,7 +123,7 @@ The leftover family-life runners. Same `enableFamilyJoin` toggle. D19 still owns
 | E07 | Release kin | Trauma-adjacent | `GenGuest.PrisonerRelease`: colonist kin **or ex** get `DC_Thought_KinReleased` + letter. Inverse of D24 execute (no betrayal). |
 | E08 | Tradition teach | Mentoring | One-shot Legacy letter + thought when an apprentice hits perk gate 5/15/20, or is taught a tier-1 perk, in the stored family tradition skill (`familyTraditionSkillDefName`). |
 | E09 | Kin downed beside you | Trauma-adjacent | Adult colonist kin within 12 cells when family is downed in a fight. Not death, not C07 child witness. 1-day cooldown. |
-| E10 | Empty nest | Generations | Last colonist child leaves a player home map (alive, not kidnapped/prisoner). Staying parent gets `DC_Thought_EmptyNest` + Legacy letter. Inverse of D21 homecoming. |
+| E10 | Empty nest | Generations | Last **adult** child leaves a player home map (alive, not kidnapped/prisoner), and **every** living child is off that home (carried babies and pocket floors still count as home). Staying parent gets `DC_Thought_EmptyNest` + Legacy letter. Inverse of D21 homecoming. |
 
 ---
 
