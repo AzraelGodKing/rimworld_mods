@@ -58,6 +58,9 @@ namespace DeepColony
         // Family tree display (not part of Soft/Default/Hard)
         public bool familyTreePedigreeStyle = false;
 
+        // Fail-open Despicable 2 / RimPacts (not part of Soft/Default/Hard)
+        public bool enableDiplomacyCompat = true;
+
         public static DeepColonySettings Get =>
             DeepColonyMod.Settings ?? new DeepColonySettings();
 
@@ -100,6 +103,7 @@ namespace DeepColony
             Scribe_Values.Look(ref familyUnwaveringMinOpinion, "familyUnwaveringMinOpinion", 20);
             Scribe_Values.Look(ref familyUnwaveringBreakChance, "familyUnwaveringBreakChance", 0.55f);
             Scribe_Values.Look(ref familyTreePedigreeStyle, "familyTreePedigreeStyle", false);
+            Scribe_Values.Look(ref enableDiplomacyCompat, "enableDiplomacyCompat", true);
         }
 
         public void ApplyPreset(Preset preset)
@@ -220,6 +224,7 @@ namespace DeepColony
             familyUnwaveringMinOpinion = 20;
             familyUnwaveringBreakChance = 0.55f;
             familyTreePedigreeStyle = false;
+            enableDiplomacyCompat = true;
         }
     }
 }
