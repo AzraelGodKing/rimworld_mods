@@ -341,6 +341,6 @@
   <DC_FamilyLetter_TraditionLabel>Family skill: {SKILL}</DC_FamilyLetter_TraditionLabel>
   <DC_FamilyLetter_TraditionBody>{MENTOR} passed the household {SKILL} on to {APPRENTICE}. The Legacy tab keeps the note.</DC_FamilyLetter_TraditionBody>
   <DC_FamilyLetter_EmptyNestLabel>Empty nest: {PAWN}</DC_FamilyLetter_EmptyNestLabel>
-  <DC_FamilyLetter_EmptyNestBody>{CHILD} left the home map. {PAWN} has no children left there. The rooms are quieter. The Legacy tab keeps the note.</DC_FamilyLetter_EmptyNestBody>
+  <DC_FamilyLetter_EmptyNestBody>{CHILD} grew up and left the home map. None of {PAWN}'s children remain there. The rooms are quieter. The Legacy tab keeps the note.</DC_FamilyLetter_EmptyNestBody>
 
 </LanguageData>

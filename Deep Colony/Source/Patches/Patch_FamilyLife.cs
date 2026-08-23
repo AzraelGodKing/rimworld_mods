@@ -43,7 +43,7 @@ namespace DeepColony.Patches
             if (pawn == null) return;
             if (pawn.Dead)
             {
-                FamilyLifeUtility.RefreshAllLastOfTheLine(announceTransition: true);
+                FamilyLifeUtility.RefreshAllLastOfTheLine(announceLast: true, announceContinue: false);
                 return;
             }
             FamilyLifeUtility.NotifyReturned(pawn);
@@ -57,7 +57,7 @@ namespace DeepColony.Patches
         {
             if (faction == null || !faction.IsPlayer) return;
             FamilyLifeUtility.NotifyReturned(pawn);
-            FamilyLifeUtility.RefreshAllLastOfTheLine(announceTransition: true);
+            FamilyLifeUtility.RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);
         }
     }
 
@@ -69,7 +69,7 @@ namespace DeepColony.Patches
             if (__instance?.RaceProps == null || !__instance.RaceProps.Humanlike) return;
             if (newFaction == null || !newFaction.IsPlayer) return;
             FamilyLifeUtility.NotifyReturned(__instance);
-            FamilyLifeUtility.RefreshAllLastOfTheLine(announceTransition: true);
+            FamilyLifeUtility.RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);
         }
     }
 
@@ -89,7 +89,7 @@ namespace DeepColony.Patches
         public static void Postfix(Pawn __instance)
         {
             if (__instance == null || !__instance.RaceProps.Humanlike) return;
-            FamilyLifeUtility.RefreshAllLastOfTheLine(announceTransition: true);
+            FamilyLifeUtility.RefreshAllLastOfTheLine(announceLast: true, announceContinue: false);
         }
     }
 }
