@@ -6,7 +6,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.6.0** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.0 build ...` in Player.log.
+Player-facing version **1.5.2** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.5.2 build ...` in Player.log.
 
 ### Added
 - **Despicable 2 / RimPacts diplomacy** (`diplomacy-compat-v1`) — fail-open, no extra dependencies. Tribute, envoy visits, and family join/defect nudge Hero Karma and RimPacts trust when those mods are loaded. Executing kin hits trust only (Despicable already karmas execute/release). Toggle in settings, default on; Soft / Default / Hard do not change this. Empire Refactored is not hooked.
