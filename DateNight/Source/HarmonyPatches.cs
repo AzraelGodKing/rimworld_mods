@@ -15,26 +15,24 @@ namespace DateNight
     /// Vanilla hardcodes Anything/Work/Joy/Sleep(/Meditate) in TimeAssignmentSelector —
     /// custom TimeAssignmentDefs never appear unless we draw them ourselves.
     /// One extra cell (Date, with Lovin on a dropdown), always last on the extra strip.
-    /// Drawn from a Harmony finalizer so other schedule postfixes paint first.
+    /// Postfix after Priority.Last so other extra-column buttons paint first.
+    /// Do not use a Harmony finalizer here: it wraps this OnGUI method in try/catch
+    /// and Unity warns for as long as the Schedule tab is open.
     /// </summary>
     [HarmonyPatch(typeof(TimeAssignmentSelector), nameof(TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid))]
     public static class Patch_TimeAssignmentSelector_DrawGrid
     {
         private const float DropWidth = 18f;
 
-        [HarmonyPriority(Priority.Last)]
-        public static Exception Finalizer(Exception __exception, Rect rect)
-        {
-            try
-            {
-                DrawCombo(rect);
-            }
-            catch (Exception e)
-            {
-                Log.WarningOnce("[Date Night] Schedule selector failed: " + e.Message, 0xD47E010);
-            }
+        // Harmony Last is 0; lower runs later among postfixes.
+        private const int AfterLastPostfix = Priority.Last - 1;
 
-            return __exception;
+        private static int cachedColumn = int.MinValue;
+
+        [HarmonyPriority(AfterLastPostfix)]
+        public static void Postfix(Rect rect)
+        {
+            DrawCombo(rect);
         }
 
         private static void DrawCombo(Rect rect)
@@ -48,7 +46,7 @@ namespace DateNight
 
             float cellW = rect.width * 0.5f;
             float cellH = rect.height * 0.5f;
-            int col = LastExtraColumn();
+            int col = ExtraColumnIndex();
             float x = rect.x + cellW * col;
             float w = cellW;
             Rect areas = Patch_AllowedArea_DoHeader.ButtonRect;
@@ -78,17 +76,23 @@ namespace DateNight
         }
 
         /// <summary>
-        /// Vanilla 1.6 draws one row: Anything, Work, Joy, Sleep, then Meditate if Royalty.
-        /// Extra mods skip ahead (Rimbody Workout, Schedule Everything). Sit immediately
-        /// after the rightmost of those — last on the strip, not a cell further into Manage areas.
+        /// Vanilla 1.6 is a 2×2 (Meditate tucks beside Sleep). Extra mods skip ahead
+        /// (Rimbody Workout, Schedule Everything). Sit immediately after the rightmost
+        /// of those — last on the strip, not a cell further into Manage areas.
+        /// Cached after first Schedule-tab draw; mods do not load/unload mid-session.
         /// </summary>
-        private static int LastExtraColumn()
+        private static int ExtraColumnIndex()
         {
+            if (cachedColumn != int.MinValue)
+            {
+                return cachedColumn;
+            }
+
             int royalty = ModsConfig.RoyaltyActive ? 1 : 0;
             int last = 3 + royalty;
             int known = 0;
 
-            if (AccessTools.TypeByName("Maux36.Rimbody.TimeAssignmentSelector_DrawTimeTable_Patch") != null)
+            if (HasRimbodySchedulePatch())
             {
                 known++;
                 int rimbody = 4 + royalty;
@@ -102,7 +106,7 @@ namespace DateNight
                 }
             }
 
-            if (AccessTools.TypeByName("MazoScheduleMod.TimeAssignmentSelectorPatch") != null)
+            if (HasScheduleEverythingPatch())
             {
                 known++;
                 int se = 5 + royalty;
@@ -118,7 +122,38 @@ namespace DateNight
                 unknown = 0;
             }
 
-            return last + 1 + unknown;
+            cachedColumn = last + 1 + unknown;
+            return cachedColumn;
+        }
+
+        private static bool HasRimbodySchedulePatch()
+        {
+            return ModActive("Maux36.Rimbody")
+                || TypePresent("Maux36.Rimbody.TimeAssignmentSelector_DrawTimeTable_Patch");
+        }
+
+        private static bool HasScheduleEverythingPatch()
+        {
+            return ModActive("Mazo.Schedules")
+                || TypePresent("MazoScheduleMod.TimeAssignmentSelectorPatch");
+        }
+
+        private static bool ModActive(string packageId)
+        {
+            return !packageId.NullOrEmpty()
+                && ModLister.GetActiveModWithIdentifier(packageId, ignorePostfix: true) != null;
+        }
+
+        private static bool TypePresent(string fullName)
+        {
+            try
+            {
+                return AccessTools.TypeByName(fullName) != null;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static bool IsRimbodyExosuitLoaded()
@@ -195,6 +230,12 @@ namespace DateNight
                 return;
             }
 
+            Texture2D tex = shown.ColorTexture;
+            if (tex == null)
+            {
+                return;
+            }
+
             Rect inner = rect.ContractedBy(2f);
             bool hasDropdown = date != null && lovin != null && inner.width >= DropWidth + 20f;
             bool wholeOpensMenu = date != null && lovin != null && !hasDropdown;
@@ -205,7 +246,7 @@ namespace DateNight
                 ? new Rect(inner.x, inner.y, inner.width - DropWidth, inner.height)
                 : inner;
 
-            GUI.DrawTexture(inner, shown.ColorTexture);
+            GUI.DrawTexture(inner, tex);
 
             if (Widgets.ButtonInvisible(main))
             {
@@ -248,9 +289,13 @@ namespace DateNight
             {
                 Widgets.DrawBox(inner, 2);
             }
-            else if (date != null)
+            else
             {
-                UIHighlighter.HighlightOpportunity(inner, date.cachedHighlightNotSelectedTag);
+                string tag = (date ?? shown).cachedHighlightNotSelectedTag;
+                if (!tag.NullOrEmpty())
+                {
+                    UIHighlighter.HighlightOpportunity(inner, tag);
+                }
             }
         }
 
