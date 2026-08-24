@@ -1,5 +1,10 @@
 [h1]Azrael — 1.0.0[/h1]
 
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] — own banner (storyteller overlooking a homestead), no longer a Homesteader copy. Under 1 MB.
+[/list]
+
 [b]Fixed[/b]
 [list]
 [*] [b]RimWorld 1.6[/b] — storyteller comps match Cassandra Classic; portraits use CassandraClassic art so the teller loads without XML / missing-texture errors.

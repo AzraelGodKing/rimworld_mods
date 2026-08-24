@@ -16,6 +16,9 @@ Player-facing version **3.0.1** (`About.xml` `modVersion`). Startup writes `[Str
 ### Fixed
 - **Shaft dig-down on underground floors** (`shaft-temp-map-guard-v1`) — digging deeper from B1 (or any Strata underground/upper level) no longer falsely triggers the "temporary quest map" guard. The guard still blocks shafts on actual quest sites, Ancient Urban Ruins, and caravan maps.
 
+### Changed
+- **Workshop preview** (`preview-redraw-v1`) — new `About/Preview.png`: surface + two underground floors, RimWorld pawns, clean STRATA type. Docs hub card and Strata Art package preview synced. Under Steam's 1 MB cap.
+
 ### Added
 - **Deep Shafts scenario** — mountain/shaft showcase start; unlocks Digging Down + Building Up; locks Azrael when Homesteader is loaded.
 - **Cave mods stay out of your column** (`foreign-portal-exclusion-v1`) - Anomaly undercaves, Deep And Deeper caves, and similar portal maps are no longer treated as colony floors for work / food / rest / alerts. Optional setting: *Relay into other mods' portal maps* (off by default).

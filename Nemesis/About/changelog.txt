@@ -1,5 +1,10 @@
 [h1]Nemesis — 1.0.0[/h1]
 
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] — new rainy hunter banner (RimWorld pawns). Under 1 MB.
+[/list]
+
 [b]Fixed[/b]
 [list]
 [*] Colony executions (including Ideology public execution) no longer start a hunt / wounded-escape on the victim.

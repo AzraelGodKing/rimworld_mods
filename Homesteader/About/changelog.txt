@@ -1,5 +1,10 @@
 [h1]Homesteader — 1.0.0[/h1]
 
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] — new homestead + cellar banner. Under 1 MB.
+[/list]
+
 [b]Fixed[/b]
 [list]
 [*] [b]Azrael storyteller (1.6)[/b] — loads cleanly (Cassandra Classic comps + portraits).

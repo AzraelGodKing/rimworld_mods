@@ -1,9 +1,13 @@
 [h1]Date Night — 1.0.1[/h1]
 
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] — new Schedule-free DATE NIGHT banner (dusk walk). Under 1 MB.
+[/list]
+
 [b]Fixed[/b]
 [list]
 [*] [b]Rituals vs Date hours[/b] — Date / Lovin hours no longer yank pawns out of Ideology rituals (or other ceremonies that forbid leaving). The ritual can finish; the date waits.
 [/list]
 
-[i]Build stamp (Player.log): ritual-date-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/DateNight/CHANGELOG.md[/i]

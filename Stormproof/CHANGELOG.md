@@ -12,6 +12,7 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Sto
 - **Stormfront scenario** — hard-weather showcase start; unlocks storm protection research; locks Azrael when Homesteader is loaded.
 
 ### Changed
+- **Workshop preview** (`preview-redraw-v1`) — new `About/Preview.png`: night grid + lightning rod + shield dome, clean STORMPROOF type. Docs hub card synced. Under Steam's 1 MB cap.
 - **Workshop preview** — compressed `About/Preview.png` (~3.0 MB → ~0.94 MB) via palette PNG so Steam uploads stay under size pressure.
 
 ### Fixed

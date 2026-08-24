@@ -8,6 +8,9 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.0.1 loaded from ...` in Player.log.
 
+### Changed
+- **Workshop preview** (`preview-redraw-v1`) — new `About/Preview.png`: dusk walk + picnic, RimWorld pawn bodies, clean DATE NIGHT type (no fake Schedule UI). Docs hub card synced. ~520 KB, under Steam's 1 MB cap.
+
 ### Fixed
 - **Rituals vs Date hours** (`ritual-date-v1`) — scheduled Date / Lovin no longer InterruptForced pawns out of Ideology rituals (or other lords that forbid long-need jobs). The ceremony can finish; the date waits until it does.
 - **Date hours idle apart** (`azr-16-date-together-v2`) — every date activity (walk, picnic, stargaze, dinner, dance, hangout, gift, recreation) could send each partner to a different cell, so they stood rooms apart throwing hearts. Both now share one venue (adjacent seats at a table / campfire; one outdoor cell for walks). The walk leader waits if the partner lags; parked activities wait at the spot. Dates are no longer yanked by casual jobs (hauling floors, etc.). The follower no longer freezes facing one way (the date toil owns facing and now looks at the path while walking and at the partner while standing). (`azr-14-schedule-combo-v3`) — Date is one extra Schedule cell immediately after the last extra button (Clean / Workout / …), drawn last so it is not inside another dropdown. Face is Date; Lovin is in the ▾ menu. The cell is clamped so it cannot cover Manage areas.

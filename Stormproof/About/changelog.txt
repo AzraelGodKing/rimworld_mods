@@ -1,5 +1,10 @@
 [h1]Stormproof — 1.0.0[/h1]
 
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] — new night-grid / lightning-rod banner. Under 1 MB.
+[/list]
+
 [b]Added[/b]
 [list]
 [*] [b]Stormfront scenario[/b] — hard-weather showcase start; unlocks storm protection research; locks Azrael when Homesteader is loaded.

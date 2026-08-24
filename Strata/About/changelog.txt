@@ -1,5 +1,10 @@
 [h1]Strata — 3.0.1.1[/h1]
 
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] — new surface + underground cutaway banner. Under 1 MB.
+[/list]
+
 [b]Fixed[/b]
 [list]
 [*] [b]Shaft dig-down on underground floors[/b] — digging deeper from B1 (or any Strata underground / upper level) no longer falsely triggers the "temporary quest map" guard. Quest sites, Ancient Urban Ruins, and caravan maps stay blocked.

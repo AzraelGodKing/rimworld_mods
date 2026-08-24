@@ -1,5 +1,10 @@
 [h1]Deep Colony — 1.5.2[/h1]
 
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] — new family-hall banner (no fake perk-tree HUD). Under 1 MB.
+[/list]
+
 [b]Added[/b]
 [list]
 [*] [b]Despicable 2 / RimPacts[/b] — tribute, envoy visits, and family join/defect also nudge hero karma and faction trust when those mods are loaded. Executing kin hits trust only (Despicable already handles execute/release karma). Toggle in settings; default on. Soft / Default / Hard do not change this.
