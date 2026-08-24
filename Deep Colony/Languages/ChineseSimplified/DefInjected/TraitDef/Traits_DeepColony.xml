@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_TouchAverse.degreeDatas.0.label>厌触</DC_TouchAverse.degreeDatas.0.label>
+  <DC_TouchAverse.degreeDatas.0.description>{PAWN_nameDef} 不喜欢被尚不信任的人碰到。恋爱要等到能接受那个人的触碰——隔着房间远远看着不够。拥挤、和别人同床都会让{PAWN_objective}很难受。</DC_TouchAverse.degreeDatas.0.description>
+  <DC_TouchAverse.degreeDatas.1.label>拘谨</DC_TouchAverse.degreeDatas.1.label>
+  <DC_TouchAverse.degreeDatas.1.description>{PAWN_nameDef} 需要一点个人空间。要先能安心靠近那个人才会开始恋爱。信任的人站在身边可以，陌生人伸手可及就不行。</DC_TouchAverse.degreeDatas.1.description>
+  <DC_TouchAverse.degreeDatas.2.label>不能碰</DC_TouchAverse.degreeDatas.2.label>
+  <DC_TouchAverse.degreeDatas.2.description>{PAWN_nameDef} 无法忍受被尚未亲密的人碰到。只有长期近距离信任之后才会恋爱。拥挤很难受，和错的人同床更糟。</DC_TouchAverse.degreeDatas.2.description>
+  <DC_TouchStarved.degreeDatas.0.label>渴触</DC_TouchStarved.degreeDatas.0.label>
+  <DC_TouchStarved.degreeDatas.0.description>{PAWN_nameDef} 需要接触。一天没有信任的人在伸手可及之处，就会空落落的。不会爱上陌生人，但一旦能安心靠近某人，恋爱来得很快——而那个人站在身边是一种缓解。</DC_TouchStarved.degreeDatas.0.description>
+  <DC_Tactile.degreeDatas.0.label>触觉型</DC_Tactile.degreeDatas.0.label>
+  <DC_Tactile.degreeDatas.0.description>{PAWN_nameDef} 喜欢动手。友善的人站在伸手可及之处是愉快的，不是问题。恋爱没有额外门槛——只是喜欢靠近。</DC_Tactile.degreeDatas.0.description>
+  <DC_Cuddly.degreeDatas.0.label>爱依偎</DC_Cuddly.degreeDatas.0.label>
+  <DC_Cuddly.degreeDatas.0.description>{PAWN_nameDef} 和已经信任的人睡在一起会更好。同床是安慰。那些人还在殖民地、自己却独睡时，床会显得更大。</DC_Cuddly.degreeDatas.0.description>
+
+</LanguageData>

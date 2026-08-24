@@ -423,6 +423,9 @@ namespace DeepColony
                 + " factionRep=" + s.enableFactionRep
                 + " familyJoin=" + s.enableFamilyJoin
                 + " reconcile=" + s.enableExLoverReconcile
+                + " touchAverse=" + s.enableTouchAverse
+                + " touchDays=" + s.touchComfortDays.ToString("F1")
+                + " touchThreshold=" + s.touchComfortThreshold.ToString("F2")
                 + " combatShock=" + s.combatShockChance
                 + " minLead=" + s.minSkillLead
                 + " mentorXP=" + s.passiveMentorMultiplier + "/" + s.activeMentorMultiplier
@@ -704,6 +707,86 @@ namespace DeepColony
             if (DC_DefOf.DC_Thought_TraditionTaught == null || p.needs?.mood?.thoughts == null) return;
             var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_TraditionTaught);
             p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
+        }
+
+        // ── TOUCH-AVERSE ──────────────────────────────────────────────────────────
+
+        [DebugAction("Deep Colony", "Grant touch-averse trait",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void GrantTouchAverse(Pawn p) =>
+            GrantTouchNeed(p, TouchAverseUtility.AverseTrait, 0, "touch-averse");
+
+        [DebugAction("Deep Colony", "Grant reserved trait",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void GrantReserved(Pawn p) =>
+            GrantTouchNeed(p, TouchAverseUtility.AverseTrait, -1, "reserved");
+
+        [DebugAction("Deep Colony", "Grant touch-intolerant trait",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void GrantTouchIntolerant(Pawn p) =>
+            GrantTouchNeed(p, TouchAverseUtility.AverseTrait, 1, "touch-intolerant");
+
+        [DebugAction("Deep Colony", "Grant touch-starved trait",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void GrantTouchStarved(Pawn p) =>
+            GrantTouchNeed(p, TouchAverseUtility.StarvedTrait, 0, "touch-starved");
+
+        [DebugAction("Deep Colony", "Grant tactile trait",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void GrantTactile(Pawn p) =>
+            GrantTouchNeed(p, TouchAverseUtility.TactileTrait, 0, "tactile");
+
+        [DebugAction("Deep Colony", "Grant cuddly trait",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void GrantCuddly(Pawn p) =>
+            GrantTouchNeed(p, TouchAverseUtility.CuddlyTrait, 0, "cuddly");
+
+        private static void GrantTouchNeed(Pawn p, TraitDef def, int degree, string label)
+        {
+            if (def == null)
+            {
+                Log.Warning("[DeepColony] Touch-need TraitDef is missing for " + label + ".");
+                return;
+            }
+            if (p.story?.traits == null)
+            {
+                Log.Warning("[DeepColony] No traits tracker on " + p.LabelShort);
+                return;
+            }
+            TouchAverseUtility.RemoveTouchNeedTraits(p);
+            p.story.traits.GainTrait(new Trait(def, degree));
+            Messages.Message("[DeepColony] Granted " + label + " to " + p.LabelShort + ".",
+                p, MessageTypeDefOf.PositiveEvent, false);
+        }
+
+        [DebugAction("Deep Colony", "Max touch-comfort with nearby",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void MaxTouchComfortNearby(Pawn p)
+        {
+            if (!TouchAverseUtility.HasTouchNeed(p))
+            {
+                Log.Warning("[DeepColony] " + p.LabelShort + " has no touch-need trait.");
+                return;
+            }
+            int n = TouchAverseUtility.MaxComfortNearby(p);
+            Messages.Message("[DeepColony] Maxed touch-comfort with " + n + " nearby for "
+                + p.LabelShort + ".",
+                p, MessageTypeDefOf.PositiveEvent, false);
+        }
+
+        [DebugAction("Deep Colony", "Log touch-comfort",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void LogTouchComfort(Pawn p)
+        {
+            Log.Message(TouchAverseUtility.DebugDump(p));
         }
     }
 }

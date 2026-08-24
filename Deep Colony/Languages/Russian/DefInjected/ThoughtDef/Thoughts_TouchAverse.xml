@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Thought_TouchAverseTooClose.label>слишком близко</DC_Thought_TouchAverseTooClose.label>
+  <DC_Thought_TouchAverseTooClose.stages_0.label>чуть близко</DC_Thought_TouchAverseTooClose.stages_0.label>
+  <DC_Thought_TouchAverseTooClose.stages_0.description>Кто-то стоит на расстоянии прикосновения, и это пока немного лишнее.</DC_Thought_TouchAverseTooClose.stages_0.description>
+  <DC_Thought_TouchAverseTooClose.stages_1.label>слишком близко</DC_Thought_TouchAverseTooClose.stages_1.label>
+  <DC_Thought_TouchAverseTooClose.stages_1.description>Кто-то стоит на расстоянии прикосновения, и к этому ещё не готовы.</DC_Thought_TouchAverseTooClose.stages_1.description>
+  <DC_Thought_TouchAverseTooClose.stages_2.label>невыносимо близко</DC_Thought_TouchAverseTooClose.stages_2.label>
+  <DC_Thought_TouchAverseTooClose.stages_2.description>Кто-то вплотную. Каждый нерв просит пространства.</DC_Thought_TouchAverseTooClose.stages_2.description>
+  <DC_Thought_TouchAverseTooClose.stages_3.label>чуть тесно</DC_Thought_TouchAverseTooClose.stages_3.label>
+  <DC_Thought_TouchAverseTooClose.stages_3.description>Слишком много людей на расстоянии прикосновения. Шаг назад помог бы.</DC_Thought_TouchAverseTooClose.stages_3.description>
+  <DC_Thought_TouchAverseTooClose.stages_4.label>вплотную обступили</DC_Thought_TouchAverseTooClose.stages_4.label>
+  <DC_Thought_TouchAverseTooClose.stages_4.description>Слишком много людей на расстоянии прикосновения. Некуда отступить.</DC_Thought_TouchAverseTooClose.stages_4.description>
+  <DC_Thought_TouchAverseTooClose.stages_5.label>зажали</DC_Thought_TouchAverseTooClose.stages_5.label>
+  <DC_Thought_TouchAverseTooClose.stages_5.description>Зажали. Слишком много тел. Безопасного места не осталось.</DC_Thought_TouchAverseTooClose.stages_5.description>
+  <DC_Thought_TouchAverseTrustedClose.label>близкий, которому доверяют</DC_Thought_TouchAverseTrustedClose.label>
+  <DC_Thought_TouchAverseTrustedClose.stages_0.label>близкий, которому доверяют</DC_Thought_TouchAverseTrustedClose.stages_0.label>
+  <DC_Thought_TouchAverseTrustedClose.stages_0.description>Рядом тот, с кем уже спокойно быть близко. Такая близость — выбор.</DC_Thought_TouchAverseTrustedClose.stages_0.description>
+  <DC_Thought_TouchAverseSharedBed.label>нежеланный сосед по кровати</DC_Thought_TouchAverseSharedBed.label>
+  <DC_Thought_TouchAverseSharedBed.stages_0.label>нежеланный сосед по кровати</DC_Thought_TouchAverseSharedBed.stages_0.label>
+  <DC_Thought_TouchAverseSharedBed.stages_0.description>Делить кровать с тем, чьих прикосновений ещё не принимают. Сон не отдых.</DC_Thought_TouchAverseSharedBed.stages_0.description>
+  <DC_Thought_TouchStarvedContact.label>нужный контакт</DC_Thought_TouchStarvedContact.label>
+  <DC_Thought_TouchStarvedContact.stages_0.label>нужный контакт</DC_Thought_TouchStarvedContact.stages_0.label>
+  <DC_Thought_TouchStarvedContact.stages_0.description>Тот, кому доверяют, на расстоянии прикосновения. Пустота отпускает.</DC_Thought_TouchStarvedContact.stages_0.description>
+  <DC_Thought_TouchStarvedLonely.label>жажда прикосновений</DC_Thought_TouchStarvedLonely.label>
+  <DC_Thought_TouchStarvedLonely.stages_0.label>жажда прикосновений</DC_Thought_TouchStarvedLonely.stages_0.label>
+  <DC_Thought_TouchStarvedLonely.stages_0.description>День без доверенного контакта. Тело замечает отсутствие.</DC_Thought_TouchStarvedLonely.stages_0.description>
+  <DC_Thought_TactileNearby.label>люди рядом</DC_Thought_TactileNearby.label>
+  <DC_Thought_TactileNearby.stages_0.label>люди рядом</DC_Thought_TactileNearby.stages_0.label>
+  <DC_Thought_TactileNearby.stages_0.description>Дружелюбные люди вплотную. Так и должен ощущаться мир.</DC_Thought_TactileNearby.stages_0.description>
+  <DC_Thought_CuddlySharedBed.label>спать вплотную</DC_Thought_CuddlySharedBed.label>
+  <DC_Thought_CuddlySharedBed.stages_0.label>спать вплотную</DC_Thought_CuddlySharedBed.stages_0.label>
+  <DC_Thought_CuddlySharedBed.stages_0.description>Делить кровать с тем, кому уже доверяют. Спать легче.</DC_Thought_CuddlySharedBed.stages_0.description>
+  <DC_Thought_CuddlySleepingAlone.label>холодная кровать</DC_Thought_CuddlySleepingAlone.label>
+  <DC_Thought_CuddlySleepingAlone.stages_0.label>холодная кровать</DC_Thought_CuddlySleepingAlone.stages_0.label>
+  <DC_Thought_CuddlySleepingAlone.stages_0.description>Спать одному, пока тот, кому доверяют, ещё в колонии. Кровать кажется больше.</DC_Thought_CuddlySleepingAlone.stages_0.description>
+
+</LanguageData>
