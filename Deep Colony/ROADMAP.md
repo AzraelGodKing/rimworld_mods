@@ -5,7 +5,8 @@ Playable core is in (perks, trauma, mentoring, inheritance, living faction reput
 Series vision: [../ROADMAP.md](../ROADMAP.md).  
 Idea pool (42, shipped): [docs/ideas/deep-colony-updates.md](../docs/ideas/deep-colony-updates.md).  
 Post-2.0 pool (20): [docs/ideas/deep-colony-batch-c.md](../docs/ideas/deep-colony-batch-c.md).  
-Batch D: [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).
+Batch D: [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).  
+Touch-averse: [docs/ideas/deep-colony-touch-averse.md](../docs/ideas/deep-colony-touch-averse.md).
 
 ## Ownership vs Living World
 
@@ -130,3 +131,10 @@ Spec: [deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md). Build stam
 - [x] **E08 Tradition teach** — one-shot letter when the household skill is passed on at a perk gate
 - [x] **E09 Kin downed beside you** — adult sees family collapse in a fight (not death, not child raid-witness)
 - [x] **E10 Empty nest** — last child leaves the home map; staying parent gets a quiet-house thought (`family-echo-v1`)
+
+## Touch-need traits (F01 / F02)
+
+Spec: [deep-colony-touch-averse.md](../docs/ideas/deep-colony-touch-averse.md). Build stamp `touch-need-v1`. Date Night still owns romance schedules.
+
+- [x] **F01 Touch-averse** — no new Lover / fiancé / spouse until that pawn is fine being touched by the other
+- [x] **F02 Comfort tiers + family** — named tiers (distant → intimate). Averse degrees: reserved / touch-averse / touch-intolerant. **Touch-starved**, **tactile**, **cuddly**. Same `DC_TouchNeed` exclusion.

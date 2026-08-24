@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_Thought_TouchAverseTooClose.label>太近了</DC_Thought_TouchAverseTooClose.label>
+  <DC_Thought_TouchAverseTooClose.stages_0.label>有点近</DC_Thought_TouchAverseTooClose.stages_0.label>
+  <DC_Thought_TouchAverseTooClose.stages_0.description>有人站在伸手可及的地方，还是有点过。</DC_Thought_TouchAverseTooClose.stages_0.description>
+  <DC_Thought_TouchAverseTooClose.stages_1.label>太近了</DC_Thought_TouchAverseTooClose.stages_1.label>
+  <DC_Thought_TouchAverseTooClose.stages_1.description>有人站在伸手可及的地方，而现在还不能接受。</DC_Thought_TouchAverseTooClose.stages_1.description>
+  <DC_Thought_TouchAverseTooClose.stages_2.label>受不了</DC_Thought_TouchAverseTooClose.stages_2.label>
+  <DC_Thought_TouchAverseTooClose.stages_2.description>有人就在伸手可及之处。每一根神经都想要空间。</DC_Thought_TouchAverseTooClose.stages_2.description>
+  <DC_Thought_TouchAverseTooClose.stages_3.label>有点挤</DC_Thought_TouchAverseTooClose.stages_3.label>
+  <DC_Thought_TouchAverseTooClose.stages_3.description>伸手可及的人太多。退一步会好一些。</DC_Thought_TouchAverseTooClose.stages_3.description>
+  <DC_Thought_TouchAverseTooClose.stages_4.label>被人挤着</DC_Thought_TouchAverseTooClose.stages_4.label>
+  <DC_Thought_TouchAverseTooClose.stages_4.description>伸手可及的人太多，没有退开的空间。</DC_Thought_TouchAverseTooClose.stages_4.description>
+  <DC_Thought_TouchAverseTooClose.stages_5.label>被围住</DC_Thought_TouchAverseTooClose.stages_5.label>
+  <DC_Thought_TouchAverseTooClose.stages_5.description>被围住了。人太多。没有安全的空隙。</DC_Thought_TouchAverseTooClose.stages_5.description>
+  <DC_Thought_TouchAverseTrustedClose.label>可以靠近的人</DC_Thought_TouchAverseTrustedClose.label>
+  <DC_Thought_TouchAverseTrustedClose.stages_0.label>可以靠近的人</DC_Thought_TouchAverseTrustedClose.stages_0.label>
+  <DC_Thought_TouchAverseTrustedClose.stages_0.description>有个真正能安心靠近的人在身边。这种近，是自己选的。</DC_Thought_TouchAverseTrustedClose.stages_0.description>
+  <DC_Thought_TouchAverseSharedBed.label>不想同床的人</DC_Thought_TouchAverseSharedBed.label>
+  <DC_Thought_TouchAverseSharedBed.stages_0.label>不想同床的人</DC_Thought_TouchAverseSharedBed.stages_0.label>
+  <DC_Thought_TouchAverseSharedBed.stages_0.description>和还不能接受触碰的人同床。睡着也不安。</DC_Thought_TouchAverseSharedBed.stages_0.description>
+  <DC_Thought_TouchStarvedContact.label>需要的接触</DC_Thought_TouchStarvedContact.label>
+  <DC_Thought_TouchStarvedContact.stages_0.label>需要的接触</DC_Thought_TouchStarvedContact.stages_0.label>
+  <DC_Thought_TouchStarvedContact.stages_0.description>信任的人就在伸手可及之处。空落落的感觉松了。</DC_Thought_TouchStarvedContact.stages_0.description>
+  <DC_Thought_TouchStarvedLonely.label>渴触</DC_Thought_TouchStarvedLonely.label>
+  <DC_Thought_TouchStarvedLonely.stages_0.label>渴触</DC_Thought_TouchStarvedLonely.stages_0.label>
+  <DC_Thought_TouchStarvedLonely.stages_0.description>一整天没有信任的接触。身体会记得缺了什么。</DC_Thought_TouchStarvedLonely.stages_0.description>
+  <DC_Thought_TactileNearby.label>有人靠近</DC_Thought_TactileNearby.label>
+  <DC_Thought_TactileNearby.stages_0.label>有人靠近</DC_Thought_TactileNearby.stages_0.label>
+  <DC_Thought_TactileNearby.stages_0.description>友善的人就在伸手可及之处。世界就该这样。</DC_Thought_TactileNearby.stages_0.description>
+  <DC_Thought_CuddlySharedBed.label>依偎着睡</DC_Thought_CuddlySharedBed.label>
+  <DC_Thought_CuddlySharedBed.stages_0.label>依偎着睡</DC_Thought_CuddlySharedBed.stages_0.label>
+  <DC_Thought_CuddlySharedBed.stages_0.description>和已经信任的人同床。更容易睡着。</DC_Thought_CuddlySharedBed.stages_0.description>
+  <DC_Thought_CuddlySleepingAlone.label>冷清的床</DC_Thought_CuddlySleepingAlone.label>
+  <DC_Thought_CuddlySleepingAlone.stages_0.label>冷清的床</DC_Thought_CuddlySleepingAlone.stages_0.label>
+  <DC_Thought_CuddlySleepingAlone.stages_0.description>信任的人还在殖民地，自己却独睡。床显得更大了。</DC_Thought_CuddlySleepingAlone.stages_0.description>
+
+</LanguageData>

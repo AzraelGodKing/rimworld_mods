@@ -218,6 +218,7 @@ namespace DeepColony
                 TickHeirlooms();
             FamilyJoinUtility.GameTick();
             ExLoverReconcileUtility.GameTick();
+            TouchAverseUtility.GameTick();
             FamilyLifeUtility.GameTick();
             FamilyEchoUtility.GameTick();
         }

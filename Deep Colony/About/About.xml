@@ -17,7 +17,7 @@ Hostile downs, violent loss, captivity, mass-casualty raids, fire, toxins, insec
 Pair a veteran with a rookie via right-click (mentor must lead by 3+ skill levels; family needs less). Apprentices earn bonus XP near their mentor; the Mentoring work type runs focused teaching sessions — boosted by a Biotech blackboard in the room. Elders (60+) slow down at labor but shine as mentors, graduating apprentices can pick up their mentor's first perk, and professional rivals push each other's XP.
 
 👶 GENERATIONAL COLONIES
-Children and recruits with colonist parents or grandparents can inherit traits and passions; families develop skill traditions and colony-born children carry founder surnames. The Legacy tab tracks your founders' lines, and dying colonists leave heirlooms behind.
+Children and recruits with colonist parents or grandparents can inherit traits and passions; families develop skill traditions and colony-born children carry founder surnames. The Legacy tab tracks your founders' lines, and dying colonists leave heirlooms behind. Touch-averse colonists (reserved / averse / intolerant) and touch-starved colonists will not start a romance until they reach a named comfort tier with that person; tactile and cuddly share the same closeness meter for mood.
 
 🏛️ LIVING FACTION REPUTATION
 Raids, trades, gifts, and shared-enemy kills nudge goodwill, and strong friendships and deep enmities drift over time. The Reputation tab shows a per-faction ledger; assign a personal envoy for steady goodwill, watch settlements earn epithets from your history — and, on Hard, let attitude drive trade, caravan, and raid pressure.
@@ -40,5 +40,5 @@ Requires Harmony.</description>
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">1.5.2</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.6.0</modVersion>
 </ModMetaData>
