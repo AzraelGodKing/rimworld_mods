@@ -64,6 +64,12 @@ namespace DeepColony
         /// <summary>D18 — how many times this pawn got back together with another (keyed by thingIDNumber).</summary>
         public Dictionary<int, int> reconcileCountsByPawn = new Dictionary<int, int>();
 
+        /// <summary>F01 — touch-comfort 0–1 keyed by other pawn thingIDNumber.</summary>
+        public Dictionary<int, float> touchComfortByPawn = new Dictionary<int, float>();
+
+        /// <summary>F02 — last tick a touch-starved pawn had trusted contact (-1 = never).</summary>
+        public int lastTrustedTouchTick = -1;
+
         public Pawn mentor;
         public string mentoredSkillDefName;
         public string perkBeingTaughtDefName;
@@ -632,6 +638,11 @@ namespace DeepColony
                 if (arch != null)
                     parts.Add("DC_InspectArchetype".Translate(arch.LabelCap));
             }
+            if (DeepColonySettings.Get.enableTouchAverse)
+            {
+                string touch = TouchAverseUtility.InspectString(pawn);
+                if (!touch.NullOrEmpty()) parts.Add(touch);
+            }
             return parts.Count == 0 ? null : string.Join("\n", parts);
         }
 
@@ -751,6 +762,8 @@ namespace DeepColony
             Scribe_Values.Look(ref lastEmptyNestTick, "lastEmptyNestTick", -1);
             Scribe_Values.Look(ref traditionTeachNoted, "traditionTeachNoted", false);
             Scribe_Collections.Look(ref reconcileCountsByPawn, "reconcileCountsByPawn", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref touchComfortByPawn, "touchComfortByPawn", LookMode.Value, LookMode.Value);
+            Scribe_Values.Look(ref lastTrustedTouchTick, "lastTrustedTouchTick", -1);
             Scribe_References.Look(ref mentor, "mentor");
             Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");
             Scribe_Values.Look(ref perkBeingTaughtDefName, "perkBeingTaughtDefName");
@@ -773,6 +786,7 @@ namespace DeepColony
             if (peakSkillLevels == null) peakSkillLevels = new Dictionary<string, int>();
             if (counselCountsByPawn == null) counselCountsByPawn = new Dictionary<int, int>();
             if (reconcileCountsByPawn == null) reconcileCountsByPawn = new Dictionary<int, int>();
+            if (touchComfortByPawn == null) touchComfortByPawn = new Dictionary<int, float>();
             if (recoveredTraumaCounts == null) recoveredTraumaCounts = new Dictionary<string, int>();
             if (trackedTraumaDefNames == null) trackedTraumaDefNames = new List<string>();
             if (grudgeFactionIds == null) grudgeFactionIds = new List<int>();
