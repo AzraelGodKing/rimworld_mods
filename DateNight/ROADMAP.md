@@ -3,6 +3,7 @@
 ## Shipped
 - Lovin timetable slot + bed seek + MTB boost + settings
 - Rimbody / Exosuit / Schedule Everything extra-column schedule button (no Workout dropdown steal)
+- Schedule-tab Date combo draws last without a Harmony finalizer (no OnGUI warning)
 - Private time (self-lovin) for adults on Lovin hours when a partner/double is not available
 - Date hours (walk / table / hangout, mood + opinion)
 - Date activities (dinner / picnic / walk / stargaze / dance / gift / recreation) with quality tiers, ruined-date thought, and post-date lovin spark
