@@ -11,7 +11,7 @@ namespace DateNight
         public DateNightMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<DateNightSettings>();
-            ModVersionLog.Write("[DateNight]", content, extra: "ritual-date-v1");
+            ModVersionLog.Write("[DateNight]", content, extra: "schedule-imgui-v1");
             // PatchAll runs after defs load — Harmony compiling TimeAssignmentSelector
             // patches otherwise touches TimeAssignmentDefOf before DefOfs exist.
         }
