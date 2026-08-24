@@ -6,7 +6,7 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">3.0.1</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">3.1.0</modVersion>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>
@@ -50,7 +50,7 @@ Dig down. Build up. One colony — many floors.
 
 Carve rock under your base, frame a roof deck above it, and let colonists treat every linked level as home. Work, food, sleep, hauling, medicine, combat, and construction commute through the shafts on their own.
 
-Version 3.0.1. RimWorld 1.6. Requires Harmony. Odyssey optional (gravship stacks only). Safe to add mid-save.
+Version 3.1.0. RimWorld 1.6. Requires Harmony. Odyssey optional (gravship stacks only). Safe to add mid-save.
 Do not run alongside AASB or MultiFloors.
 
 DIG DOWN

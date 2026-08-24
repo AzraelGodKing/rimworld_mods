@@ -9,7 +9,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 - **Date Night rituals** (`ritual-date-v1`) — **1.0.1**. Date / Lovin hours no longer pull pawns out of Ideology rituals. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Deep Colony diplomacy** (`diplomacy-compat-v1`) — fail-open Despicable 2 Hero Karma + RimPacts trust on tribute, envoy visits, and family join/defect. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony last of the line** (`last-of-line-v1`) — **1.5.2**. Message only when the last living colony blood kin dies; "blood kin again" only after that. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
-- **Strata cavern floors** (`cavern-biome-depth-v1`) — with [Biomes! Caverns](https://steamcommunity.com/sharedfiles/filedetails/?id=2969748433), B1–B2 are no longer locked to Earthen Depths (wet → fungal, cold → crystal, magma earthen deeper). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
+- **Strata cavern floors** (`cavern-biome-depth-v1`) — **3.1.0**. With [Biomes! Caverns](https://steamcommunity.com/sharedfiles/filedetails/?id=2969748433), B1–B2 are no longer locked to Earthen Depths (wet → fungal, cold → crystal, magma earthen deeper). → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Strata** (`shaft-temp-map-guard-v1`) — digging deeper from underground floors no longer falsely triggers the "temporary quest map" guard. → [Strata/CHANGELOG.md](Strata/CHANGELOG.md)
 - **Repo** — Git history rewritten to remove Claude/Anthropic `Co-Authored-By` and `Claude-Session` trailers, and re-attribute `cursoragent@cursor.com` commits to AzraelGodKing. All branches, tags force-pushed. Existing local clones must `git fetch --all && git reset --hard origin/<branch>`.
 
