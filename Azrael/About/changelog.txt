@@ -2,7 +2,7 @@
 
 [b]Changed[/b]
 [list]
-[*] [b]Workshop preview[/b] — own banner (storyteller overlooking a homestead), no longer a Homesteader copy. Under 1 MB.
+[*] [b]Workshop preview[/b] — own graphic card (storyteller pawn + Homesteader sprites), no longer a Homesteader copy. Under 1 MB.
 [/list]
 
 [b]Fixed[/b]

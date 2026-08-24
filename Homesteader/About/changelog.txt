@@ -2,7 +2,7 @@
 
 [b]Changed[/b]
 [list]
-[*] [b]Workshop preview[/b] — new homestead + cellar banner. Under 1 MB.
+[*] [b]Workshop preview[/b] — architect-tab card of Homesteader sprites (no painted scene). Under 1 MB.
 [/list]
 
 [b]Fixed[/b]

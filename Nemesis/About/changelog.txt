@@ -2,7 +2,7 @@
 
 [b]Changed[/b]
 [list]
-[*] [b]Workshop preview[/b] — new rainy hunter banner (RimWorld pawns). Under 1 MB.
+[*] [b]Workshop preview[/b] — graphic card (geometric hunter + cabin). Under 1 MB.
 [/list]
 
 [b]Fixed[/b]

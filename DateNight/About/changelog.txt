@@ -2,7 +2,7 @@
 
 [b]Changed[/b]
 [list]
-[*] [b]Workshop preview[/b] — new Schedule-free DATE NIGHT banner (dusk walk). Under 1 MB.
+[*] [b]Workshop preview[/b] — Schedule card (Date / Lovin buttons + 24-hour row). Under 1 MB.
 [/list]
 
 [b]Fixed[/b]

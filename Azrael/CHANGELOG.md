@@ -9,7 +9,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log.
 
 ### Changed
-- **Workshop preview** (`preview-redraw-v1`) — new `About/Preview.png` of its own (no longer a copy of Homesteader): storyteller pawn overlooking a homestead. Under Steam's 1 MB cap.
+- **Workshop preview** (`preview-redraw-v2`) — `About/Preview.png` of its own (no longer a Homesteader copy): geometric storyteller pawn plus Homesteader building sprites on a flat card. Under Steam's 1 MB cap.
 
 ### Added
 - **The Deep Homestead** scenario — 3 settlers, farm kit, mountain-foothills opener; forces Azrael; MayRequire Homesteader / Strata start research and rock salt.

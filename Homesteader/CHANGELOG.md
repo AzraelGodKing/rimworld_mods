@@ -9,7 +9,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.0 loaded from ...` in Player.log.
 
 ### Changed
-- **Workshop preview** (`preview-redraw-v1`) — new `About/Preview.png`: homestead + cellar cutaway with RimWorld pawns and clean HOMESTEADER type. Docs hub card synced. Under Steam's 1 MB cap.
+- **Workshop preview** (`preview-redraw-v2`) — `About/Preview.png` is a flat architect-tab card of Homesteader building and item sprites (nearest-neighbor, no painted scene). Docs hub card synced. Under Steam's 1 MB cap.
 
 ### Added
 - **Homestead architect tab** — crates, barrels, pallet, hayloft, cellars, icehouse, springhouse, cistern, and water tower moved off Furniture (Steam Aug 6). Adaptive Storage Framework does not get those buildings (it has no Storage tab); the Homestead tab stays.

@@ -9,7 +9,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 Player-facing version **1.5.2** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.5.2 build last-of-line-v1` in Player.log.
 
 ### Changed
-- **Workshop preview** (`preview-redraw-v1`) — new `About/Preview.png`: family hall + portrait wall, RimWorld pawns, clean DEEP COLONY type (no fake perk-tree HUD). Docs hub card synced. Under Steam's 1 MB cap.
+- **Workshop preview** (`preview-redraw-v2`) — `About/Preview.png` is a flat card: real perk-tree sprite plus geometric family pawns (no painted hall). Docs hub card synced. Under Steam's 1 MB cap.
 
 ### Added
 - **Despicable 2 / RimPacts diplomacy** (`diplomacy-compat-v1`) — fail-open, no extra dependencies. Tribute, envoy visits, and family join/defect nudge Hero Karma and RimPacts trust when those mods are loaded. Executing kin hits trust only (Despicable already karmas execute/release). Toggle in settings, default on; Soft / Default / Hard do not change this. Empire Refactored is not hooked.

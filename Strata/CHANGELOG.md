@@ -17,7 +17,7 @@ Player-facing version **3.0.1** (`About.xml` `modVersion`). Startup writes `[Str
 - **Shaft dig-down on underground floors** (`shaft-temp-map-guard-v1`) — digging deeper from B1 (or any Strata underground/upper level) no longer falsely triggers the "temporary quest map" guard. The guard still blocks shafts on actual quest sites, Ancient Urban Ruins, and caravan maps.
 
 ### Changed
-- **Workshop preview** (`preview-redraw-v1`) — new `About/Preview.png`: surface + two underground floors, RimWorld pawns, clean STRATA type. Docs hub card and Strata Art package preview synced. Under Steam's 1 MB cap.
+- **Workshop preview** (`preview-redraw-v2`) — `About/Preview.png` is a flat architect-tab card of Strata stairs, elevators, and shaft sprites (nearest-neighbor, no painted scene). Docs hub card and Strata Art package preview synced. Under Steam's 1 MB cap.
 
 ### Added
 - **Deep Shafts scenario** — mountain/shaft showcase start; unlocks Digging Down + Building Up; locks Azrael when Homesteader is loaded.

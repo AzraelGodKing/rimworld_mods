@@ -2,7 +2,7 @@
 
 [b]Changed[/b]
 [list]
-[*] [b]Workshop preview[/b] — new surface + underground cutaway banner. Under 1 MB.
+[*] [b]Workshop preview[/b] — architect-tab card of stairs, elevators, and shaft sprites. Under 1 MB.
 [/list]
 
 [b]Fixed[/b]

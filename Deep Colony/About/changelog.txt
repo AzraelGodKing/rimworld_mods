@@ -2,7 +2,7 @@
 
 [b]Changed[/b]
 [list]
-[*] [b]Workshop preview[/b] — new family-hall banner (no fake perk-tree HUD). Under 1 MB.
+[*] [b]Workshop preview[/b] — graphic card (perk tree sprite + family pawns). Under 1 MB.
 [/list]
 
 [b]Added[/b]

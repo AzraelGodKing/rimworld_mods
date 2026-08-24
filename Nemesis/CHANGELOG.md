@@ -8,7 +8,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.0.0 loaded from ...` in Player.log.
 
-- **Workshop preview** (`preview-redraw-v1`) — new `About/Preview.png`: RimWorld-pawn hunter in the rain, cabin asleep, raid on the ridge; clean NEMESIS type (no fake handwritten note). Docs hub card synced. Under Steam's 1 MB cap.
+- **Workshop preview** (`preview-redraw-v2`) — `About/Preview.png` is a flat graphic card: geometric hunter pawn, cabin blocks, no painted rain scene. Docs hub card synced. Under Steam's 1 MB cap.
 - **Fixation after a colonist dies** — uses `MapHeld` (corpse / killer map) so the hunt can still pick a surviving colonist.
 - **Wounded-escape cheat-death** — if `CreateNemesis` no-ops (Rimesis/BFV claim, failed generate), vanilla `Kill` proceeds. Anesthetic is no longer applied during the lethal prefix.
 - **Hunt raids omit the nemesis** — Direct Raid injects the named pawn whenever the hunt is active (not only after the first flee); hunt faction is restored after parking as a world pawn; if the raid group never generated them they spawn at the map edge (Steam Aug 15).

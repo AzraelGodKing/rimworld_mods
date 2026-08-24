@@ -2,7 +2,7 @@
 
 [b]Changed[/b]
 [list]
-[*] [b]Workshop preview[/b] — new night-grid / lightning-rod banner. Under 1 MB.
+[*] [b]Workshop preview[/b] — Power-tab card of Stormproof building sprites. Under 1 MB.
 [/list]
 
 [b]Added[/b]

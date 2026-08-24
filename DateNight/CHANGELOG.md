@@ -9,7 +9,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.0.1 loaded from ...` in Player.log.
 
 ### Changed
-- **Workshop preview** (`preview-redraw-v1`) — new `About/Preview.png`: dusk walk + picnic, RimWorld pawn bodies, clean DATE NIGHT type (no fake Schedule UI). Docs hub card synced. ~520 KB, under Steam's 1 MB cap.
+- **Workshop preview** (`preview-redraw-v2`) — `About/Preview.png` is a flat Schedule card: Date / Lovin assignment buttons, a 24-hour row, geometric pawns. No painted scene. Docs hub card synced. Under Steam's 1 MB cap.
 
 ### Fixed
 - **Rituals vs Date hours** (`ritual-date-v1`) — scheduled Date / Lovin no longer InterruptForced pawns out of Ideology rituals (or other lords that forbid long-need jobs). The ceremony can finish; the date waits until it does.

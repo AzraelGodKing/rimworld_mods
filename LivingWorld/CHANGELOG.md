@@ -5,7 +5,7 @@
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[LivingWorld] v1.0.0 loaded from ...` in Player.log.
 
 ### Changed
-- **Workshop preview** (`preview-redraw-v1`) — added `About/Preview.png` (and docs hero): valley with caravan and distant settlements, clean LIVING WORLD type. Under Steam's 1 MB cap.
+- **Workshop preview** (`preview-redraw-v2`) — `About/Preview.png` (and docs hero) is a flat world-map card: hard hill polygons, settlement blocks, geometric caravan. Under Steam's 1 MB cap.
 
 ### Added
 
