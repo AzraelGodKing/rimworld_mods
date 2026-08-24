@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DC_TouchAverse.degreeDatas.0.label>нелюбовь к прикосновениям</DC_TouchAverse.degreeDatas.0.label>
+  <DC_TouchAverse.degreeDatas.0.description>{PAWN_nameDef} некомфортно, когда {PAWN_objective} касаются люди, которым {PAWN_pronoun} ещё не доверяет. Роман ждёт, пока не станет можно принимать прикосновение этого человека — стоять через комнату недостаточно. Толчея и общая кровать с кем-то ещё выматывают.</DC_TouchAverse.degreeDatas.0.description>
+  <DC_TouchAverse.degreeDatas.1.label>сдержанность</DC_TouchAverse.degreeDatas.1.label>
+  <DC_TouchAverse.degreeDatas.1.description>{PAWN_nameDef} любит чуть больше пространства. {PAWN_pronoun} не начнёт роман, пока не станет спокойно рядом с этим человеком. Доверенный друг рядом — нормально; незнакомцы вплотную — нет.</DC_TouchAverse.degreeDatas.1.description>
+  <DC_TouchAverse.degreeDatas.2.label>непереносимость прикосновений</DC_TouchAverse.degreeDatas.2.label>
+  <DC_TouchAverse.degreeDatas.2.description>{PAWN_nameDef} не выносит прикосновений тех, с кем ещё нет близости. Роман только после долгого близкого доверия. Толчея мучительна, общая кровать не с тем — ещё хуже.</DC_TouchAverse.degreeDatas.2.description>
+  <DC_TouchStarved.degreeDatas.0.label>жажда прикосновений</DC_TouchStarved.degreeDatas.0.label>
+  <DC_TouchStarved.degreeDatas.0.description>{PAWN_nameDef} нужен контакт. День без кого-то, кому {PAWN_pronoun} доверяет, на расстоянии прикосновения оставляет пустоту. В незнакомца {PAWN_pronoun} не влюбится, но стоить стать спокойно рядом — роман приходит легко, а близость этого человека облегчает.</DC_TouchStarved.degreeDatas.0.description>
+  <DC_Tactile.degreeDatas.0.label>тактильность</DC_Tactile.degreeDatas.0.label>
+  <DC_Tactile.degreeDatas.0.description>{PAWN_nameDef} тактилен(льна). Дружелюбный человек вплотную — приятно, не проблема. К роману нет лишнего порога — просто любит быть рядом.</DC_Tactile.degreeDatas.0.description>
+  <DC_Cuddly.degreeDatas.0.label>ласковость</DC_Cuddly.degreeDatas.0.label>
+  <DC_Cuddly.degreeDatas.0.description>{PAWN_nameDef} лучше спит рядом с тем, кому уже доверяет. Общая кровать — утешение. Спать одному, пока этот человек ещё в колонии, чуть холодно.</DC_Cuddly.degreeDatas.0.description>
+
+</LanguageData>

@@ -342,5 +342,29 @@
   <DC_FamilyLetter_TraditionBody>{MENTOR} передал(а) домашний {SKILL} {APPRENTICE}. Вкладка Наследие сохраняет запись.</DC_FamilyLetter_TraditionBody>
   <DC_FamilyLetter_EmptyNestLabel>Пустое гнездо: {PAWN}</DC_FamilyLetter_EmptyNestLabel>
   <DC_FamilyLetter_EmptyNestBody>{CHILD} вырос(ла) и ушёл(ла) с домашней карты. У {PAWN} там больше не осталось детей. В комнатах тише. Вкладка Наследие сохраняет запись.</DC_FamilyLetter_EmptyNestBody>
+  <DC_Settings_TouchAverse>Черты прикосновения</DC_Settings_TouchAverse>
+  <DC_Settings_EnableTouchAverse>Черты потребности в прикосновении (ступени)</DC_Settings_EnableTouchAverse>
+  <DC_Settings_EnableTouchAverseTip>Нелюбовь к прикосновениям (сдержанность / нелюбовь / непереносимость) и жажда прикосновений не дадут начать роман, пока с этим человеком не достигнута нужная ступень близости. Доверие копится рядом. «Тактильность» и «ласковость» используют тот же счётчик только для настроения. Date Night по-прежнему владеет расписанием.</DC_Settings_EnableTouchAverseTip>
+  <DC_Settings_TouchComfortDays>Дней в одной комнате до ступени «можно трогать»: {0}</DC_Settings_TouchComfortDays>
+  <DC_Settings_TouchComfortThreshold>Порог ступени «можно трогать»: {0}%</DC_Settings_TouchComfortThreshold>
+  <DC_InspectTouchAverse>Нелюбовь к прикосновениям — {0}</DC_InspectTouchAverse>
+  <DC_InspectReserved>Сдержанность — {0}</DC_InspectReserved>
+  <DC_InspectTouchIntolerant>Непереносимость прикосновений — {0}</DC_InspectTouchIntolerant>
+  <DC_InspectTouchStarved>Жажда прикосновений — {0}</DC_InspectTouchStarved>
+  <DC_InspectTactile>Тактильность — {0}</DC_InspectTactile>
+  <DC_InspectCuddly>Ласковость — {0}</DC_InspectCuddly>
+  <DC_InspectTouchNeedNone>пока ни с кем не спокойно</DC_InspectTouchNeedNone>
+  <DC_InspectTouchAverseNone>пока ни с кем не спокойно</DC_InspectTouchAverseNone>
+  <DC_InspectTouchStarvedNow>есть доверенный контакт</DC_InspectTouchStarvedNow>
+  <DC_InspectTouchStarvedGrace>ещё не оставался(ась) без контакта</DC_InspectTouchStarvedGrace>
+  <DC_InspectTouchStarvedLast>последний доверенный контакт {0} ч назад</DC_InspectTouchStarvedLast>
+  <DC_TouchAverseNowFine>{PAWN} теперь {TIER} с {OTHER}.</DC_TouchAverseNowFine>
+  <DC_RomanceBlockedTouchAverse>{PAWN} ещё не готов(а) к прикосновениям {OTHER}. Нужно больше времени рядом.</DC_RomanceBlockedTouchAverse>
+  <DC_RomanceBlockedTouchTier>{PAWN} сейчас {TIER} с {OTHER} — роман ждёт ступени «{NEED}».</DC_RomanceBlockedTouchTier>
+  <DC_TouchTier_Distant>на дистанции</DC_TouchTier_Distant>
+  <DC_TouchTier_Familiar>знаком(а)</DC_TouchTier_Familiar>
+  <DC_TouchTier_AtEase>спокойно рядом</DC_TouchTier_AtEase>
+  <DC_TouchTier_FineWithTouch>можно трогать</DC_TouchTier_FineWithTouch>
+  <DC_TouchTier_Intimate>близко</DC_TouchTier_Intimate>
 
 </LanguageData>

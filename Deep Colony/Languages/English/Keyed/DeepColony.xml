@@ -342,5 +342,29 @@
   <DC_FamilyLetter_TraditionBody>{MENTOR} passed the household {SKILL} on to {APPRENTICE}. The Legacy tab keeps the note.</DC_FamilyLetter_TraditionBody>
   <DC_FamilyLetter_EmptyNestLabel>Empty nest: {PAWN}</DC_FamilyLetter_EmptyNestLabel>
   <DC_FamilyLetter_EmptyNestBody>{CHILD} grew up and left the home map. None of {PAWN}'s children remain there. The rooms are quieter. The Legacy tab keeps the note.</DC_FamilyLetter_EmptyNestBody>
+  <DC_Settings_TouchAverse>Touch traits</DC_Settings_TouchAverse>
+  <DC_Settings_EnableTouchAverse>Touch-need traits (comfort tiers)</DC_Settings_EnableTouchAverse>
+  <DC_Settings_EnableTouchAverseTip>Touch-averse (reserved / averse / intolerant) and touch-starved colonists will not start a lover / fiancé / spouse relation until they reach a named comfort tier with that person. Comfort is earned in touching distance (slowly in the same room). Tactile and cuddly share the meter for mood only. Date Night still owns romance schedules. Off keeps the traits as flavor-only.</DC_Settings_EnableTouchAverseTip>
+  <DC_Settings_TouchComfortDays>Days of shared-room time to "fine with touch": {0}</DC_Settings_TouchComfortDays>
+  <DC_Settings_TouchComfortThreshold>"Fine with touch" band: {0}%</DC_Settings_TouchComfortThreshold>
+  <DC_InspectTouchAverse>Touch-averse — {0}</DC_InspectTouchAverse>
+  <DC_InspectReserved>Reserved — {0}</DC_InspectReserved>
+  <DC_InspectTouchIntolerant>Touch-intolerant — {0}</DC_InspectTouchIntolerant>
+  <DC_InspectTouchStarved>Touch-starved — {0}</DC_InspectTouchStarved>
+  <DC_InspectTactile>Tactile — {0}</DC_InspectTactile>
+  <DC_InspectCuddly>Cuddly — {0}</DC_InspectCuddly>
+  <DC_InspectTouchNeedNone>not yet at ease with anyone</DC_InspectTouchNeedNone>
+  <DC_InspectTouchAverseNone>not yet at ease with anyone</DC_InspectTouchAverseNone>
+  <DC_InspectTouchStarvedNow>in trusted contact</DC_InspectTouchStarvedNow>
+  <DC_InspectTouchStarvedGrace>has not gone without contact yet</DC_InspectTouchStarvedGrace>
+  <DC_InspectTouchStarvedLast>last trusted contact {0}h ago</DC_InspectTouchStarvedLast>
+  <DC_TouchAverseNowFine>{PAWN} is now {TIER} with {OTHER}.</DC_TouchAverseNowFine>
+  <DC_RomanceBlockedTouchAverse>{PAWN} is not fine being touched by {OTHER} yet. They need more time in touching distance first.</DC_RomanceBlockedTouchAverse>
+  <DC_RomanceBlockedTouchTier>{PAWN} is {TIER} with {OTHER} — romance waits until {NEED}.</DC_RomanceBlockedTouchTier>
+  <DC_TouchTier_Distant>distant</DC_TouchTier_Distant>
+  <DC_TouchTier_Familiar>familiar</DC_TouchTier_Familiar>
+  <DC_TouchTier_AtEase>at ease</DC_TouchTier_AtEase>
+  <DC_TouchTier_FineWithTouch>fine with touch</DC_TouchTier_FineWithTouch>
+  <DC_TouchTier_Intimate>intimate</DC_TouchTier_Intimate>
 
 </LanguageData>

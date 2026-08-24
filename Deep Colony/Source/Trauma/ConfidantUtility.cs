@@ -35,6 +35,8 @@ namespace DeepColony
             if (!counselor.relations.DirectRelationExists(DC_DefOf.DC_Confidant, patient))
                 counselor.relations.AddDirectRelation(DC_DefOf.DC_Confidant, patient);
 
+            TouchAverseUtility.NotifyTrustedBond(counselor, patient);
+
             Messages.Message(
                 "DC_ConfidantFormed".Translate(
                     counselor.LabelShort.Named("A"),
