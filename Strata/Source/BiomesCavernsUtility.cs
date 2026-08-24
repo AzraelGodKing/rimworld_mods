@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 
 namespace Strata
@@ -125,34 +126,115 @@ namespace Strata
             }
         }
 
+        /// <summary>
+        /// Pick a Biomes! Caverns profile the way their world workers do, mapped onto
+        /// Strata floors. [Biomes! Caverns](https://steamcommunity.com/sharedfiles/filedetails/?id=2969748433)
+        /// has three full cavern biomes plus a Shallow Cave overlay (not a BiomeDef):
+        /// fungal forest wants wet rock, crystalline caverns want cold, earthen depths
+        /// are magma near the mantle (their workers start around cave-system depth 2–3).
+        /// B1–B2 used to force earthen depths, so most colonies never saw the others.
+        /// </summary>
         public static BiomeDef PickProfileBiome(Map map)
         {
             int depth = StrataDepth.CountLevelsBelowSurface(map);
-            string defName;
-            if (depth <= 2)
+            if (depth < 1)
             {
-                defName = "BMT_EarthenDepths";
+                depth = 1;
+            }
+
+            TryReadSurfaceClimate(map, out float temp, out float rain);
+            float wet = Mathf.InverseLerp(400f, 1400f, rain);
+            float cold = Mathf.InverseLerp(12f, -8f, temp);
+            float hot = Mathf.InverseLerp(18f, 45f, temp);
+
+            float fungal;
+            float crystal;
+            float earthen;
+            if (depth <= 1)
+            {
+                // Near-surface stand-in for Shallow Cave: climate first, magma rare.
+                fungal = 0.40f + 0.45f * wet;
+                crystal = 0.20f + 0.45f * cold;
+                earthen = 0.08f + 0.22f * hot;
+            }
+            else if (depth == 2)
+            {
+                fungal = 0.30f + 0.35f * wet;
+                crystal = 0.22f + 0.35f * cold;
+                earthen = 0.20f + 0.30f * hot;
             }
             else if (depth == 3)
             {
-                defName = Rand.Value < 0.55f ? "BMT_FungalForest" : "BMT_EarthenDepths";
-            }
-            else if (depth == 4)
-            {
-                float roll = Rand.Value;
-                defName = roll < 0.35f ? "BMT_CrystalCaverns"
-                    : roll < 0.7f ? "BMT_FungalForest"
-                    : "BMT_EarthenDepths";
+                fungal = 0.22f + 0.28f * wet;
+                crystal = 0.22f + 0.28f * cold;
+                earthen = 0.38f + 0.35f * hot;
             }
             else
             {
-                float roll = Rand.Value;
-                defName = roll < 0.4f ? "BMT_CrystalCaverns"
-                    : roll < 0.75f ? "BMT_FungalForest"
-                    : "BMT_EarthenDepths";
+                fungal = 0.12f + 0.22f * wet;
+                crystal = 0.18f + 0.25f * cold;
+                earthen = 0.50f + 0.40f * hot;
             }
 
-            return DefDatabase<BiomeDef>.GetNamedSilentFail(defName);
+            string defName = RollCavernProfile(fungal, crystal, earthen);
+            BiomeDef def = DefDatabase<BiomeDef>.GetNamedSilentFail(defName);
+            if (def != null)
+            {
+                return def;
+            }
+
+            for (int i = 0; i < CavernBiomeDefNames.Length; i++)
+            {
+                def = DefDatabase<BiomeDef>.GetNamedSilentFail(CavernBiomeDefNames[i]);
+                if (def != null)
+                {
+                    return def;
+                }
+            }
+
+            return null;
+        }
+
+        private static string RollCavernProfile(float fungal, float crystal, float earthen)
+        {
+            float total = fungal + crystal + earthen;
+            if (total <= 0f)
+            {
+                return "BMT_FungalForest";
+            }
+
+            float roll = Rand.Value * total;
+            if (roll < fungal)
+            {
+                return "BMT_FungalForest";
+            }
+
+            if (roll < fungal + crystal)
+            {
+                return "BMT_CrystalCaverns";
+            }
+
+            return "BMT_EarthenDepths";
+        }
+
+        private static void TryReadSurfaceClimate(Map map, out float temperature, out float rainfall)
+        {
+            temperature = 20f;
+            rainfall = 1000f;
+            PlanetTile planetTile = StrataMapUtility.ResolveColonyPlanetTile(map);
+            if (!StrataMapUtility.IsWorldGridTile(planetTile) || Find.WorldGrid == null)
+            {
+                return;
+            }
+
+            Tile tile = Find.WorldGrid[planetTile];
+            if (tile == null)
+            {
+                return;
+            }
+
+            temperature = tile.temperature;
+            rainfall = tile.rainfall;
         }
 
         public static void LogLayoutChoice(Map map, bool usedBiomes, BiomeDef profile)
