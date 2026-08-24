@@ -342,5 +342,29 @@
   <DC_FamilyLetter_TraditionBody>{MENTOR} 把家里的 {SKILL} 传给了 {APPRENTICE}。传承页会记下这一笔。</DC_FamilyLetter_TraditionBody>
   <DC_FamilyLetter_EmptyNestLabel>空巢：{PAWN}</DC_FamilyLetter_EmptyNestLabel>
   <DC_FamilyLetter_EmptyNestBody>{CHILD} 长大后离开了家园地图。{PAWN} 的孩子都不在那里了。屋子更安静了。传承页会记下这一笔。</DC_FamilyLetter_EmptyNestBody>
+  <DC_Settings_TouchAverse>触碰特质</DC_Settings_TouchAverse>
+  <DC_Settings_EnableTouchAverse>触碰需求特质（安心层级）</DC_Settings_EnableTouchAverse>
+  <DC_Settings_EnableTouchAverseTip>厌触（拘谨／厌触／不能碰）和渴触的殖民者，要先与对方达到对应的安心层级才会成为恋人／未婚／配偶。亲近距离相处会累积安心。触觉型、爱依偎只用同一计量影响心情。约会之夜仍负责恋爱时间表。关闭后特质只剩描述。</DC_Settings_EnableTouchAverseTip>
+  <DC_Settings_TouchComfortDays>同室相处多少天达到「能接受触碰」：{0}</DC_Settings_TouchComfortDays>
+  <DC_Settings_TouchComfortThreshold>「能接受触碰」层级门槛：{0}%</DC_Settings_TouchComfortThreshold>
+  <DC_InspectTouchAverse>厌触 — {0}</DC_InspectTouchAverse>
+  <DC_InspectReserved>拘谨 — {0}</DC_InspectReserved>
+  <DC_InspectTouchIntolerant>不能碰 — {0}</DC_InspectTouchIntolerant>
+  <DC_InspectTouchStarved>渴触 — {0}</DC_InspectTouchStarved>
+  <DC_InspectTactile>触觉型 — {0}</DC_InspectTactile>
+  <DC_InspectCuddly>爱依偎 — {0}</DC_InspectCuddly>
+  <DC_InspectTouchNeedNone>尚不能与任何人安心相处</DC_InspectTouchNeedNone>
+  <DC_InspectTouchAverseNone>尚不能与任何人安心相处</DC_InspectTouchAverseNone>
+  <DC_InspectTouchStarvedNow>正在与信任的人接触</DC_InspectTouchStarvedNow>
+  <DC_InspectTouchStarvedGrace>还没有缺过接触</DC_InspectTouchStarvedGrace>
+  <DC_InspectTouchStarvedLast>上次信任接触在 {0} 小时前</DC_InspectTouchStarvedLast>
+  <DC_TouchAverseNowFine>{PAWN} 对 {OTHER} 已是「{TIER}」。</DC_TouchAverseNowFine>
+  <DC_RomanceBlockedTouchAverse>{PAWN} 还不能接受 {OTHER} 的触碰。需要再靠近相处一段时间。</DC_RomanceBlockedTouchAverse>
+  <DC_RomanceBlockedTouchTier>{PAWN} 对 {OTHER} 目前是{TIER} — 恋爱要等到「{NEED}」。</DC_RomanceBlockedTouchTier>
+  <DC_TouchTier_Distant>疏远</DC_TouchTier_Distant>
+  <DC_TouchTier_Familiar>熟悉</DC_TouchTier_Familiar>
+  <DC_TouchTier_AtEase>能安心靠近</DC_TouchTier_AtEase>
+  <DC_TouchTier_FineWithTouch>能接受触碰</DC_TouchTier_FineWithTouch>
+  <DC_TouchTier_Intimate>亲密</DC_TouchTier_Intimate>
 
 </LanguageData>

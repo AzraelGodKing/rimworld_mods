@@ -6,9 +6,10 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.5.2** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.5.2 build last-of-line-v1` in Player.log.
+Player-facing version **1.6.0** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.0 build touch-need-v1` in Player.log.
 
 ### Added
+- **Touch-need traits** (`touch-need-v1`) — **1.6.0**. Spec F01/F02 in [docs/ideas/deep-colony-touch-averse.md](../docs/ideas/deep-colony-touch-averse.md). Comfort is a named ladder (distant / familiar / at ease / fine with touch / intimate). **Touch-averse** has reserved / touch-averse / touch-intolerant (existing pawns stay degree 0). **Touch-starved** needs trusted contact and romances at "at ease." **Tactile** and **cuddly** are mood-only on the same meter. Romance waits until that person reaches the required tier (earned in touching distance, slowly in the same room; organic attempts also need to be adjacent). Existing couples, scenario pairs, and ex-lovers (D18) are not blocked. Homesteader polyarmory cannot force a bed share they still refuse. Date Night still owns romance schedules. Toggle + days / threshold sliders; Soft faster, Hard slower. EN/CN/RU. Dev: grant each trait, max nearby comfort, log dump.
 - **Despicable 2 / RimPacts diplomacy** (`diplomacy-compat-v1`) — fail-open, no extra dependencies. Tribute, envoy visits, and family join/defect nudge Hero Karma and RimPacts trust when those mods are loaded. Executing kin hits trust only (Despicable already karmas execute/release). Toggle in settings, default on; Soft / Default / Hard do not change this. Empire Refactored is not hooked.
 - **Family tree pedigree** (`family-tree-pedigree-v3`) — **Pedigree** / **Rows** button on the Family tab title row (and the family-tree window). Same setting as mod options. Ancestors above, descendants below, with kin lines. Off keeps generation rows. Soft / Default / Hard do not change this.
 - **Family join / reconcile** (`family-join-v1`) — spec D17/D18 in [docs/ideas/deep-colony-batch-d.md](../docs/ideas/deep-colony-batch-d.md).

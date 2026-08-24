@@ -1,3 +1,17 @@
+# Deep Colony — Steam changenote (Add Changenote)
+
+1.6.0
+[h1]Deep Colony — 1.6.0[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Touch traits[/b] — comfort is a ladder (distant → intimate). Touch-averse has reserved / averse / intolerant. New traits: touch-starved (needs trusted contact), tactile, cuddly. Romance still waits until the required tier. Date Night still owns Date / Lovin hours.
+[/list]
+
+[i]Build stamp (Player.log): touch-need-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Deep%20Colony/CHANGELOG.md[/i]
+
+1.5.2
 [h1]Deep Colony — 1.5.2[/h1]
 
 [b]Added[/b]
