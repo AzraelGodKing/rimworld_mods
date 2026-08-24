@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TouchAverseTooClose</defName>
+    <label>too close</label>
+    <workerClass>DeepColony.ThoughtWorker_TouchAverseTooClose</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>a bit close</label>
+        <description>Someone is standing in touching distance and that is still a little much.</description>
+        <baseMoodEffect>-2</baseMoodEffect>
+      </li>
+      <li>
+        <label>too close</label>
+        <description>Someone is standing in touching distance and that is not okay yet.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+      <li>
+        <label>can't stand this</label>
+        <description>Someone is in touching distance. Every nerve wants space.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+      <li>
+        <label>a bit crowded</label>
+        <description>Too many people in touching distance. A step back would help.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+      <li>
+        <label>crowded in</label>
+        <description>Too many people in touching distance. There is no room to pull back.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+      <li>
+        <label>hemmed in</label>
+        <description>Hemmed in. Too many bodies. There is no safe space left.</description>
+        <baseMoodEffect>-14</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TouchAverseTrustedClose</defName>
+    <label>trusted closeness</label>
+    <workerClass>DeepColony.ThoughtWorker_TouchAverseTrustedClose</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>trusted closeness</label>
+        <description>Someone they are actually fine being close to is nearby. That kind of closeness is a choice.</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TouchAverseSharedBed</defName>
+    <label>unwanted bedmate</label>
+    <workerClass>DeepColony.ThoughtWorker_TouchAverseSharedBed</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>unwanted bedmate</label>
+        <description>Sharing a bed with someone they are not fine being touched by. Sleep is not rest.</description>
+        <baseMoodEffect>-12</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TouchStarvedContact</defName>
+    <label>needed contact</label>
+    <workerClass>DeepColony.ThoughtWorker_TouchStarvedContact</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>needed contact</label>
+        <description>Someone they trust is in touching distance. The hollow feeling eases.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TouchStarvedLonely</defName>
+    <label>touch-starved</label>
+    <workerClass>DeepColony.ThoughtWorker_TouchStarvedLonely</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>touch-starved</label>
+        <description>A day without trusted contact. The body notices the absence.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_TactileNearby</defName>
+    <label>people close by</label>
+    <workerClass>DeepColony.ThoughtWorker_TactileNearby</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>people close by</label>
+        <description>Friendly people in touching distance. That is how the world should feel.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_CuddlySharedBed</defName>
+    <label>sleeping close</label>
+    <workerClass>DeepColony.ThoughtWorker_CuddlySharedBed</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>sleeping close</label>
+        <description>Sharing a bed with someone they already trust. Sleep comes easier.</description>
+        <baseMoodEffect>5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_CuddlySleepingAlone</defName>
+    <label>cold bed</label>
+    <workerClass>DeepColony.ThoughtWorker_CuddlySleepingAlone</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>cold bed</label>
+        <description>Sleeping alone while someone they trust is still in the colony. The bed feels bigger than it is.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

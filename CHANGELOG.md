@@ -4,6 +4,7 @@ Short repo highlights. Detailed notes live in each mod's own `CHANGELOG.md`.
 
 ## Unreleased
 
+- **Deep Colony touch traits** (`touch-need-v1`) — **1.6.0**. Named comfort tiers; touch-averse degrees (reserved / averse / intolerant); new **touch-starved**, **tactile**, and **cuddly**. Romance waits until the required tier. Date Night still owns romance schedules. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Date Night rituals** (`ritual-date-v1`) — **1.0.1**. Date / Lovin hours no longer pull pawns out of Ideology rituals. → [DateNight/CHANGELOG.md](DateNight/CHANGELOG.md)
 - **Deep Colony diplomacy** (`diplomacy-compat-v1`) — fail-open Despicable 2 Hero Karma + RimPacts trust on tribute, envoy visits, and family join/defect. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)
 - **Deep Colony last of the line** (`last-of-line-v1`) — **1.5.2**. Message only when the last living colony blood kin dies; "blood kin again" only after that. → [Deep Colony/CHANGELOG.md](Deep%20Colony/CHANGELOG.md)

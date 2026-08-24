@@ -61,6 +61,11 @@ namespace DeepColony
         // Fail-open Despicable 2 / RimPacts (not part of Soft/Default/Hard)
         public bool enableDiplomacyCompat = true;
 
+        // F01 touch-averse (not a Hard-only power system)
+        public bool enableTouchAverse = true;
+        public float touchComfortDays = 4f;
+        public float touchComfortThreshold = 0.65f;
+
         public static DeepColonySettings Get =>
             DeepColonyMod.Settings ?? new DeepColonySettings();
 
@@ -104,6 +109,9 @@ namespace DeepColony
             Scribe_Values.Look(ref familyUnwaveringBreakChance, "familyUnwaveringBreakChance", 0.55f);
             Scribe_Values.Look(ref familyTreePedigreeStyle, "familyTreePedigreeStyle", false);
             Scribe_Values.Look(ref enableDiplomacyCompat, "enableDiplomacyCompat", true);
+            Scribe_Values.Look(ref enableTouchAverse, "enableTouchAverse", true);
+            Scribe_Values.Look(ref touchComfortDays, "touchComfortDays", 4f);
+            Scribe_Values.Look(ref touchComfortThreshold, "touchComfortThreshold", 0.65f);
         }
 
         public void ApplyPreset(Preset preset)
@@ -134,6 +142,9 @@ namespace DeepColony
             exLoverReconcileMtbDays = 8f;
             familyUnwaveringMinOpinion = 20;
             familyUnwaveringBreakChance = 0.55f;
+            enableTouchAverse = true;
+            touchComfortDays = 4f;
+            touchComfortThreshold = 0.65f;
 
             switch (preset)
             {
@@ -153,6 +164,8 @@ namespace DeepColony
                     exLoverReconcileMtbDays = 12f;
                     familyUnwaveringMinOpinion = 10;
                     familyUnwaveringBreakChance = 0.75f;
+                    touchComfortDays = 2.5f;
+                    touchComfortThreshold = 0.55f;
                     break;
                 case Preset.Hard:
                     combatShockChance = 0.55f;
@@ -179,6 +192,8 @@ namespace DeepColony
                     exLoverReconcileMtbDays = 5f;
                     familyUnwaveringMinOpinion = 40;
                     familyUnwaveringBreakChance = 0.35f;
+                    touchComfortDays = 6.5f;
+                    touchComfortThreshold = 0.75f;
                     break;
                 default:
                     ResetToDefaults();
@@ -225,6 +240,9 @@ namespace DeepColony
             familyUnwaveringBreakChance = 0.55f;
             familyTreePedigreeStyle = false;
             enableDiplomacyCompat = true;
+            enableTouchAverse = true;
+            touchComfortDays = 4f;
+            touchComfortThreshold = 0.65f;
         }
     }
 }
