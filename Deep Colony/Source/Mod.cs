@@ -26,7 +26,7 @@ namespace DeepColony
             var settings = Settings;
             if (settings == null) return;
 
-            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 2200f);
+            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 2480f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
 
             var listing = new Listing_Standard();
@@ -132,6 +132,18 @@ namespace DeepColony
             settings.familyUnwaveringMinOpinion = (int)listing.Slider(settings.familyUnwaveringMinOpinion, 0f, 80f);
             listing.Label("DC_Settings_UnwaveringBreak".Translate((int)(settings.familyUnwaveringBreakChance * 100f)));
             settings.familyUnwaveringBreakChance = listing.Slider(settings.familyUnwaveringBreakChance, 0.05f, 1f);
+
+            listing.Gap(8f);
+            Text.Font = GameFont.Medium;
+            listing.Label("DC_Settings_TouchAverse".Translate());
+            Text.Font = GameFont.Small;
+            listing.Gap(4f);
+            listing.CheckboxLabeled("DC_Settings_EnableTouchAverse".Translate(), ref settings.enableTouchAverse,
+                "DC_Settings_EnableTouchAverseTip".Translate());
+            listing.Label("DC_Settings_TouchComfortDays".Translate(settings.touchComfortDays.ToString("F1")));
+            settings.touchComfortDays = listing.Slider(settings.touchComfortDays, 1f, 10f);
+            listing.Label("DC_Settings_TouchComfortThreshold".Translate((int)(settings.touchComfortThreshold * 100f)));
+            settings.touchComfortThreshold = listing.Slider(settings.touchComfortThreshold, 0.35f, 0.9f);
 
             listing.Gap(10f);
             listing.GapLine();

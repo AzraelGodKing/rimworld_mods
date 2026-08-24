@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- Degree 0 stays "touch-averse" so existing pawns keep that label. -->
+  <TraitDef>
+    <defName>DC_TouchAverse</defName>
+    <commonality>0.52</commonality>
+    <degreeDatas>
+      <li>
+        <label>touch-averse</label>
+        <degree>0</degree>
+        <description>{PAWN_nameDef} is uncomfortable being touched by people {PAWN_pronoun} does not already trust. Romance waits until {PAWN_pronoun} is fine with that person's touch — standing across the room is not enough. Crowding and sharing a bed with anyone else is draining.</description>
+      </li>
+      <li>
+        <label>reserved</label>
+        <degree>-1</degree>
+        <commonality>0.85</commonality>
+        <description>{PAWN_nameDef} likes a little space. {PAWN_pronoun} will not start a romance until {PAWN_pronoun} is at ease near that person. A trusted friend standing close is fine; strangers in touching distance are not.</description>
+      </li>
+      <li>
+        <label>touch-intolerant</label>
+        <degree>1</degree>
+        <commonality>0.40</commonality>
+        <description>{PAWN_nameDef} cannot stand being touched by anyone {PAWN_pronoun} is not already intimate with. Romance only happens after a long close trust. Crowding is miserable, and sharing a bed with the wrong person is worse.</description>
+      </li>
+    </degreeDatas>
+    <exclusionTags>
+      <li>DC_TouchNeed</li>
+    </exclusionTags>
+    <conflictingTraits>
+      <li>Nudist</li>
+      <li>DC_TouchStarved</li>
+      <li>DC_Tactile</li>
+      <li>DC_Cuddly</li>
+    </conflictingTraits>
+  </TraitDef>
+
+  <TraitDef>
+    <defName>DC_TouchStarved</defName>
+    <commonality>0.40</commonality>
+    <degreeDatas>
+      <li>
+        <label>touch-starved</label>
+        <description>{PAWN_nameDef} needs contact. A day without someone {PAWN_pronoun} trusts in touching distance leaves {PAWN_objective} hollow. {PAWN_pronoun} still will not fall in love with a stranger, but once {PAWN_pronoun} is at ease near someone, romance comes easily — and standing close to that person is a relief.</description>
+      </li>
+    </degreeDatas>
+    <exclusionTags>
+      <li>DC_TouchNeed</li>
+    </exclusionTags>
+    <conflictingTraits>
+      <li>DC_TouchAverse</li>
+      <li>DC_Tactile</li>
+      <li>DC_Cuddly</li>
+    </conflictingTraits>
+  </TraitDef>
+
+  <TraitDef>
+    <defName>DC_Tactile</defName>
+    <commonality>0.38</commonality>
+    <degreeDatas>
+      <li>
+        <label>tactile</label>
+        <description>{PAWN_nameDef} is hands-on. A friendly person in touching distance is pleasant, not a problem. {PAWN_pronoun} has no extra bar to romance — {PAWN_pronoun} just likes being close.</description>
+      </li>
+    </degreeDatas>
+    <exclusionTags>
+      <li>DC_TouchNeed</li>
+    </exclusionTags>
+    <conflictingTraits>
+      <li>DC_TouchAverse</li>
+      <li>DC_TouchStarved</li>
+      <li>DC_Cuddly</li>
+    </conflictingTraits>
+  </TraitDef>
+
+  <TraitDef>
+    <defName>DC_Cuddly</defName>
+    <commonality>0.36</commonality>
+    <degreeDatas>
+      <li>
+        <label>cuddly</label>
+        <description>{PAWN_nameDef} sleeps better next to someone {PAWN_pronoun} already trusts. A shared bed with that person is a comfort. Sleeping alone while they are still in the colony feels a little cold.</description>
+      </li>
+    </degreeDatas>
+    <exclusionTags>
+      <li>DC_TouchNeed</li>
+    </exclusionTags>
+    <conflictingTraits>
+      <li>DC_TouchAverse</li>
+      <li>DC_TouchStarved</li>
+      <li>DC_Tactile</li>
+    </conflictingTraits>
+  </TraitDef>
+
+</Defs>
