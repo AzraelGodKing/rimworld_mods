@@ -1,0 +1,8 @@
+[h1]Living World — 1.0.0[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Listening Post scenario[/b] — off-map world showcase start; locks Azrael when Homesteader is loaded.
+[*] [b]Wars and fallout[/b] — NPC factions move between peace, tension, war, and rare alliance. Skirmishes and battles write the chronicle and nudge settlement prosperity. Optional refugees, war sites, trade blackout, and warbands (warbands default off).
+[*] [b]Off-map chronicle[/b] — settlements drift, flip ownership, abandon, or grow outposts. You hear news by rumor, proximity, allies, or comms.
+[/list]
