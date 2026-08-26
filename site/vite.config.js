@@ -54,7 +54,7 @@ export default defineConfig({
   plugins: [vue(), serveDocsAssets()],
   server: {
     fs: {
-      // allow ?raw imports of mod CHANGELOG.md files at the repo root
+      // allow ?raw imports of docs changelog history under site/src/data
       allow: [repoRoot],
     },
   },
