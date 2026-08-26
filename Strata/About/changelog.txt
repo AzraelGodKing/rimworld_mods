@@ -1,20 +1,6 @@
-# Strata — Steam changenote (Add Changenote)
-
-3.1.0
 [h1]Strata — 3.1.0[/h1]
 
 [b]Changed[/b]
 [list]
 [*] [b]Biomes! Caverns floors[/b] — B1–B2 are no longer always Earthen Depths. Wet tiles lean fungal forest, cold tiles lean crystalline caverns, and magma-style earthen depths show up more the deeper you dig.
-[/list]
-
-[i]Build stamp (Player.log): cavern-biome-depth-v1[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Strata/CHANGELOG.md[/i]
-
-3.0.1
-[h1]Strata — 3.0.1[/h1]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Shaft dig-down on underground floors[/b] — digging deeper from B1 (or any Strata underground / upper level) no longer falsely triggers the "temporary quest map" guard. Quest sites, Ancient Urban Ruins, and caravan maps stay blocked.
 [/list]
