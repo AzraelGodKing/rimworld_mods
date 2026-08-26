@@ -123,7 +123,9 @@ Safe to add to an existing save. Before removing a mod from a save, deconstruct 
 
 ## Changelogs
 
-Repo highlights: [CHANGELOG.md](CHANGELOG.md). Per-mod detail: [Homesteader](Homesteader/CHANGELOG.md), [Stormproof](Stormproof/CHANGELOG.md), [Strata](Strata/CHANGELOG.md), [Nemesis](Nemesis/CHANGELOG.md), [Deep Colony](Deep%20Colony/CHANGELOG.md), [Date Night](DateNight/CHANGELOG.md), [Living World](LivingWorld/CHANGELOG.md).
+Each mod's `About/changelog.txt` is **latest Steam notes only**. Full history is on the [docs site](https://azraelgodking.github.io/rimworld_mods/) changelog section of each mod page (source: `site/src/data/changelogs/`).
+
+Steam paste: [Homesteader](Homesteader/About/changelog.txt), [Stormproof](Stormproof/About/changelog.txt), [Strata](Strata/About/changelog.txt), [Nemesis](Nemesis/About/changelog.txt), [Deep Colony](Deep%20Colony/About/changelog.txt), [Date Night](DateNight/About/changelog.txt), [Azrael](Azrael/About/changelog.txt), [Living World](LivingWorld/About/changelog.txt).
 
 ## Website
 
