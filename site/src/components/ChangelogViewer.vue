@@ -4,13 +4,12 @@ import { marked } from "marked";
 import { useI18n } from "../composables/useI18n.js";
 
 const props = defineProps({
-  changelogPath: { type: String, required: true }, // repo-root-relative, e.g. "Strata/CHANGELOG.md"
+  changelogPath: { type: String, required: true }, // e.g. "changelogs/strata.md"
 });
 
 const { t } = useI18n();
 
-// Bundle every top-level mod CHANGELOG.md at build time.
-const changelogs = import.meta.glob("../../../*/CHANGELOG.md", {
+const changelogs = import.meta.glob("../data/changelogs/*.md", {
   query: "?raw",
   import: "default",
 });
@@ -20,24 +19,43 @@ const filter = ref("");
 
 watchEffect(async () => {
   raw.value = null;
-  const key = `../../../${props.changelogPath}`;
-  const loader = changelogs[key];
+  const file = props.changelogPath.replace(/^.*\//, "");
+  const loader =
+    changelogs[`../data/changelogs/${file}`] ||
+    Object.entries(changelogs).find(([k]) => k.endsWith(`/${file}`))?.[1];
   raw.value = loader ? await loader() : "";
 });
 
-const html = computed(() => {
-  if (raw.value == null) return null;
-  let text = raw.value;
-  if (filter.value.trim()) {
-    const q = filter.value.trim().toLowerCase();
-    // keep headings for context plus matching bullet lines
-    text = text
-      .split("\n")
-      .filter((line) => line.startsWith("#") || line.toLowerCase().includes(q))
-      .join("\n");
-  }
-  return marked.parse(text, { gfm: true, breaks: false });
+function parseSections(md) {
+  if (!md) return [];
+  const chunks = md.split(/^## /m);
+  return chunks.slice(1).map((chunk) => {
+    const nl = chunk.indexOf("\n");
+    const title = (nl === -1 ? chunk : chunk.slice(0, nl)).trim();
+    const body = nl === -1 ? "" : chunk.slice(nl + 1).trim();
+    return { title, body };
+  }).filter((s) => s.body);
+}
+
+function sectionHtml(section) {
+  return marked.parse(`## ${section.title}\n\n${section.body}`, {
+    gfm: true,
+    breaks: false,
+  });
+}
+
+const sections = computed(() => {
+  const all = parseSections(raw.value || "");
+  const q = filter.value.trim().toLowerCase();
+  if (!q) return all;
+  return all.filter(
+    (s) =>
+      s.title.toLowerCase().includes(q) || s.body.toLowerCase().includes(q)
+  );
 });
+
+const latest = computed(() => sections.value[0] || null);
+const older = computed(() => sections.value.slice(1));
 </script>
 
 <template>
@@ -46,10 +64,30 @@ const html = computed(() => {
       v-model="filter"
       type="search"
       class="changelog-filter"
-      :placeholder="t('hub.search')"
+      :placeholder="t('changelog.search')"
     >
-    <div v-if="html === null" class="changelog-body">…</div>
-    <div v-else-if="!raw" class="changelog-body">{{ t('changelog.empty') }}</div>
-    <div v-else class="changelog-body" v-html="html"></div>
+    <div v-if="raw === null" class="changelog-body">…</div>
+    <p v-else-if="!latest" class="changelog-empty">{{ t('changelog.empty') }}</p>
+    <template v-else>
+      <article class="changelog-latest">
+        <p class="changelog-kicker">{{ t('changelog.latest') }}</p>
+        <div class="changelog-body" v-html="sectionHtml(latest)"></div>
+      </article>
+      <details
+        v-if="older.length"
+        class="changelog-history"
+        :open="!!filter.trim()"
+      >
+        <summary>{{ t('changelog.history') }} ({{ older.length }})</summary>
+        <details
+          v-for="(section, i) in older"
+          :key="i"
+          class="changelog-version"
+        >
+          <summary>{{ section.title }}</summary>
+          <div class="changelog-body" v-html="sectionHtml(section)"></div>
+        </details>
+      </details>
+    </template>
   </div>
 </template>
