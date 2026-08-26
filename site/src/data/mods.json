@@ -106,7 +106,7 @@
         "incompatibleWith": [],
         "notes": []
       },
-      "changelogPath": "Homesteader/CHANGELOG.md",
+      "changelogPath": "changelogs/homesteader.md",
       "requires": ["Harmony"],
       "rimworldVersions": "1.4-1.6"
     },
@@ -216,7 +216,7 @@
         "incompatibleWith": [],
         "notes": []
       },
-      "changelogPath": "Stormproof/CHANGELOG.md",
+      "changelogPath": "changelogs/stormproof.md",
       "requires": ["Harmony"],
       "rimworldVersions": "1.6"
     },
@@ -349,9 +349,9 @@
           { "name": "Deep And Deeper", "note": "Caves stay invisible to Strata's relays by default; an opt-in setting extends relays into them" }
         ],
         "incompatibleWith": [
-          { "name": "MultiFloors", "note": "Do not run alongside Strata" },
+          { "name": "MultiFloors", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3384660931", "note": "Do not run alongside Strata" },
           { "name": "Z-Levels", "note": "Do not run alongside Strata" },
-          { "name": "As Above So Below", "note": "Do not run alongside Strata" }
+          { "name": "As Above So Below", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3767572810", "note": "Do not run alongside Strata" }
         ],
         "notes": [
           "Cave / pocket-map mods (Deep And Deeper, Anomaly undercaves, and similar) are compatible: their portal maps are invisible to Strata's level system by default. The opt-in setting \"Relay into other mods' portal maps\" extends cross-level relays to them.",
@@ -359,7 +359,7 @@
           "Multi-level mods that patch pathfinding or map generation globally are the most likely source of conflicts; Strata deliberately patches neither."
         ]
       },
-      "changelogPath": "Strata/CHANGELOG.md",
+      "changelogPath": "changelogs/strata.md",
       "requires": ["Harmony"],
       "rimworldVersions": "1.6"
     },
@@ -430,7 +430,7 @@
           "Optional Anomaly baiting when that DLC is active (fail-open without it)."
         ]
       },
-      "changelogPath": "Nemesis/CHANGELOG.md",
+      "changelogPath": "changelogs/nemesis.md",
       "requires": ["Harmony"],
       "rimworldVersions": "1.6"
     },
@@ -528,7 +528,7 @@
         "incompatibleWith": [],
         "notes": []
       },
-      "changelogPath": "Deep Colony/CHANGELOG.md",
+      "changelogPath": "changelogs/deep-colony.md",
       "requires": ["Harmony"],
       "rimworldVersions": "1.6"
     },
@@ -596,7 +596,7 @@
         "incompatibleWith": [],
         "notes": []
       },
-      "changelogPath": "DateNight/CHANGELOG.md",
+      "changelogPath": "changelogs/date-night.md",
       "requires": ["Harmony"],
       "rimworldVersions": "1.6"
     }
