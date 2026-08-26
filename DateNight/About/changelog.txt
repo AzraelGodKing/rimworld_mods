@@ -1,6 +1,3 @@
-# Date Night — Steam changenote (Add Changenote)
-
-1.0.1
 [h1]Date Night — 1.0.1[/h1]
 
 [b]Fixed[/b]
@@ -8,6 +5,3 @@
 [*] [b]Schedule tab warning[/b] — opening the Schedule tab no longer warns. Date still sits last on the extra row so it is not inside another dropdown.
 [*] [b]Rituals vs Date hours[/b] — Date / Lovin hours no longer yank pawns out of Ideology rituals (or other ceremonies that forbid leaving). The ritual can finish; the date waits.
 [/list]
-
-[i]Build stamp (Player.log): schedule-imgui-v1[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/DateNight/CHANGELOG.md[/i]
