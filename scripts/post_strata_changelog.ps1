@@ -1,4 +1,4 @@
-# Posts the Strata [Unreleased] changelog as Discord embeds (patch-notes style).
+# Posts the latest Strata About/changelog.txt block as Discord embeds.
 # Usage: .\scripts\post_strata_changelog.ps1 -WebhookUrl 'https://discord.com/api/webhooks/...'
 #        .\scripts\post_strata_changelog.ps1 -WebhookUrl '...' -DryRun
 
@@ -11,16 +11,30 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path $PSScriptRoot -Parent
-$changelogPath = Join-Path $repo 'Strata/CHANGELOG.md'
+$changelogPath = Join-Path $repo 'Strata/About/changelog.txt'
 if (-not (Test-Path $changelogPath)) {
-    throw "Strata/CHANGELOG.md not found under $repo"
+    throw "Strata/About/changelog.txt not found under $repo"
 }
 
 $raw = Get-Content $changelogPath -Raw -Encoding UTF8
-if ($raw -notmatch '(?s)## \[Unreleased\]\s*(.*?)(?=\r?\n## \[|\z)') {
-    throw 'Could not find [Unreleased] section in Strata/CHANGELOG.md'
+if ($raw -notmatch '(?s)\[h1\].*?\[/h1\]') {
+    throw 'Could not find [h1] block in Strata/About/changelog.txt'
 }
-$body = $Matches[1].Trim()
+# First Steam block: from the first [h1] until the next standalone version line (e.g. 3.0.1).
+$steamBlocks = [regex]::Split($raw, '(?m)(?=^\d+\.\d+(?:\.\d+)?\s*$)')
+$bb = ($steamBlocks | Where-Object { $_ -match '\[h1\]' } | Select-Object -First 1)
+if (-not $bb) {
+    throw 'Could not parse a Steam changelog block in Strata/About/changelog.txt'
+}
+# Convert Workshop BBCode into the markdown shape the rest of this script expects.
+$bb = [regex]::Replace($bb, '(?s)\[h1\].*?\[/h1\]', '')
+$bb = [regex]::Replace($bb, '\[b\](.*?)\[/b\]\s*(?=\r?\n\s*\[list\])', "### `$1")
+$bb = [regex]::Replace($bb, '\[list\]', '')
+$bb = [regex]::Replace($bb, '\[/list\]', '')
+$bb = [regex]::Replace($bb, '\[\*\]\s*\[b\](.*?)\[/b\]\s*[—\-]\s*', '- **$1** — ')
+$bb = [regex]::Replace($bb, '\[\*\]\s*', '- ')
+$bb = [regex]::Replace($bb, '\[i\].*?\[/i\]', '')
+$body = $bb.Trim()
 
 function Convert-ToDiscordMarkdown {
     param([string]$Text)
@@ -171,7 +185,7 @@ foreach ($sec in $sections) {
 $color = 5941866  # 0x5B8C8A
 $modPage = 'https://azraelgodking.github.io/rimworld_mods/strata.html'
 $download = 'https://azraelgodking.github.io/rimworld_mods/downloads/Strata.zip'
-$fullCl = 'https://github.com/AzraelGodKing/rimworld_mods/blob/main/Strata/CHANGELOG.md'
+$fullCl = 'https://github.com/AzraelGodKing/rimworld_mods/blob/main/Strata/About/changelog.txt'
 $timestamp = (Get-Date).ToUniversalTime().ToString('o')
 
 # Discord hard limits per message: 6000 chars across all embeds, 10 embeds.
