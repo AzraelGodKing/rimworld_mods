@@ -4,6 +4,9 @@
 
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[LivingWorld] v1.0.0 loaded from ...` in Player.log.
 
+### Changed
+- **CI zip** — Living World is not release-ready; CI no longer builds or publishes `LivingWorld.zip`.
+
 ### Added
 
 - **Unlisted docs page** — `docs/living-world.html` with `noindex` (not linked from the public hub).
