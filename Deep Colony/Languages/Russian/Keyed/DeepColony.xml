@@ -3,9 +3,13 @@
 
   <!-- ── Perk Tree ─────────────────────────────────────────────────────────── -->
   <DC_ViewPerks>Просмотреть перки</DC_ViewPerks>
-  <DC_ViewPerksDesc>Открыть дерево перков этого колониста. Разблокировано: {1}, доступно очков: {0}.</DC_ViewPerksDesc>
+  <DC_ViewPerksDesc>Открыть дерево перков этого колониста. Разблокировано: {0}. Перки выдаются автоматически на навыке 5 / 10 / 15 / 20.</DC_ViewPerksDesc>
   <DC_PerkTreeTitle>Перки — {PAWN}</DC_PerkTreeTitle>
-  <DC_PerkPoints>Очки перков: {0}</DC_PerkPoints>
+  <DC_PerkPoints>Перки по навыку: 5 / 10 / 15 / 20</DC_PerkPoints>
+  <DC_PerkAutoHint>Авто на навыке 5 / 10 / 15 / 20</DC_PerkAutoHint>
+  <DC_PerkSwitchBtn>Сменить</DC_PerkSwitchBtn>
+  <DC_PerkAutoUnlocked>{PAWN} достиг(ла) навыка для перка {PERK}.</DC_PerkAutoUnlocked>
+  <DC_PerkLapsed>Навык {PAWN} упал ниже требования для {PERK} — перк утрачен.</DC_PerkLapsed>
   <DC_PerkRequires>Треб.: {0} ур.{1}</DC_PerkRequires>
   <DC_PerkUnlockBtn>Разблокировать</DC_PerkUnlockBtn>
   <DC_PerkStatus_Unlocked>✓ Разблокировано</DC_PerkStatus_Unlocked>
@@ -14,7 +18,9 @@
   <DC_PerkUnlocked>{PAWN} разблокировал(а) перк: {PERK}.</DC_PerkUnlocked>
   <DC_PerkPointGained>{PAWN} получил(а) очко перка за повышение {SKILL}.</DC_PerkPointGained>
   <DC_PerksAvailable>{PAWN} повысил(а) {SKILL} — доступно перков для разблокировки: {2}.</DC_PerksAvailable>
-  <DC_InspectPerks>Перки: {0} очк., разблокировано {1}</DC_InspectPerks>
+  <DC_InspectPerks>Перки: разблокировано {0}</DC_InspectPerks>
+  <DC_Patch161LetterLabel>Deep Colony 1.6.1</DC_Patch161LetterLabel>
+  <DC_Patch161LetterText>Деревья перков больше не используют очки. Колонист автоматически получает перк на навыке 5, 10, 15 и 20. Если навык падает ниже требования, перк утрачивается.\n\nБонусы к точности стрельбы теперь на той же шкале, что у ванильных черт — раньше в интерфейсе было +0.0. Эффекты перков не показываются на вкладке здоровья, пока в настройках не включено «Показывать перки на вкладке здоровья». Капстоуны навыка 20 включены по умолчанию.\n\nКнопка «Древо семьи» на карточке биографии убрана, чтобы не закрывать Изгнание — используйте вкладку «Семья». Ряды / Родословная слева от кнопки закрытия.\n\nОткрытие этажа Strata больше не вызывает ошибку при сканировании живых колонистов.\n\nДерево перков открывается из панели колониста или вкладки «Перки» колонии.</DC_Patch161LetterText>
 
   <!-- ── Trauma ─────────────────────────────────────────────────────────────── -->
   <DC_TherapyProgress>Есть прогресс...</DC_TherapyProgress>
@@ -26,7 +32,7 @@
   <DC_InspectTrauma>Несёт психологическую травму</DC_InspectTrauma>
   <DC_InspectGrudge>Обида: {0}</DC_InspectGrudge>
   <DC_TraumaRecovered>{PAWN} оправился(ась) от {TRAUMA}.</DC_TraumaRecovered>
-  <DC_SeasonedGrowth>{PAWN} стал(а) сильнее после восстановления — закалённый выживший (+1 очко перка).</DC_SeasonedGrowth>
+  <DC_SeasonedGrowth>{PAWN} стал(а) сильнее после восстановления — закалённый выживший.</DC_SeasonedGrowth>
   <DC_Flashback>У {PAWN} флэшбэк.</DC_Flashback>
   <DC_FlashbackGrudge>Набег {0} будит старые обиды.</DC_FlashbackGrudge>
   <DC_DayOfRemembrance>День памяти о {NAME}.</DC_DayOfRemembrance>
@@ -59,7 +65,9 @@
   <DC_Settings_PresetHard>Сложный</DC_Settings_PresetHard>
   <DC_Settings_Systems>Системы</DC_Settings_Systems>
   <DC_Settings_EnablePerks>Включить деревья перков</DC_Settings_EnablePerks>
-  <DC_Settings_EnablePerksTip>Очки перков по порогам навыка и интерфейс дерева перков.</DC_Settings_EnablePerksTip>
+  <DC_Settings_EnablePerksTip>Перки открываются сами на навыке 5 / 10 / 15 / 20 и пропадают, если навык падает ниже.</DC_Settings_EnablePerksTip>
+  <DC_Settings_ShowPerkHediffs>Показывать перки на вкладке здоровья</DC_Settings_ShowPerkHediffs>
+  <DC_Settings_ShowPerkHediffsTip>По умолчанию выкл. Бонусы перков всё равно действуют; это только список на Здоровье.</DC_Settings_ShowPerkHediffsTip>
   <DC_Settings_EnableTrauma>Включить травму и терапию</DC_Settings_EnableTrauma>
   <DC_Settings_EnableTraumaTip>Боевой шок, утраты, плен, резня, работа консультирования.</DC_Settings_EnableTraumaTip>
   <DC_Settings_EnableMentoring>Включить ученичество</DC_Settings_EnableMentoring>
@@ -74,7 +82,7 @@
   <DC_Settings_AttitudeConsequencesTip>По умолчанию выкл. Приветливое/обязанное/настороженное/мстительное отношение влияет на цены, караваны торговцев и силу набегов. Сложный пресет включает.</DC_Settings_AttitudeConsequencesTip>
   <DC_Settings_Phase5>Системы силы (фаза 5)</DC_Settings_Phase5>
   <DC_Settings_Capstones>Капстоун-перки навыка 20</DC_Settings_Capstones>
-  <DC_Settings_CapstonesTip>По умолчанию выкл. Добавляет третий узел перка на навыке 20. Сложный пресет включает.</DC_Settings_CapstonesTip>
+  <DC_Settings_CapstonesTip>Добавляет узел перка на навыке 20. По умолчанию вкл. Перк всё равно выдаётся автоматически.</DC_Settings_CapstonesTip>
   <DC_Settings_Branching>Ветвление выбора L15</DC_Settings_Branching>
   <DC_Settings_BranchingTip>По умолчанию выкл. Выберите один из двух перков L15 на навык. Сложный пресет включает.</DC_Settings_BranchingTip>
   <DC_Settings_Respec>Сброс перков (забыть)</DC_Settings_Respec>
@@ -275,7 +283,6 @@
   <DC_RepFilter_Hostile>Враждебные</DC_RepFilter_Hostile>
   <DC_PerkOverview_ColArchetype>Архетип</DC_PerkOverview_ColArchetype>
   <DC_TabFamily>Семья</DC_TabFamily>
-  <DC_FamilyTreeButton>Родословная</DC_FamilyTreeButton>
   <DC_FamilyTree_Title>Семья {PAWN}</DC_FamilyTree_Title>
   <DC_FamilyTree_Empty>Нет записанных родителей, детей, сиблингов или партнёров.</DC_FamilyTree_Empty>
   <DC_FamilyTree_Grandparents>Бабушки и дедушки</DC_FamilyTree_Grandparents>

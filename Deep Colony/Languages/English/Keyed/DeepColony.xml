@@ -3,9 +3,13 @@
 
   <!-- ── Perk Tree ─────────────────────────────────────────────────────────── -->
   <DC_ViewPerks>View perks</DC_ViewPerks>
-  <DC_ViewPerksDesc>Open the perk tree for this colonist. Unlocked: {1}, Points available: {0}.</DC_ViewPerksDesc>
+  <DC_ViewPerksDesc>Open the perk tree for this colonist. Unlocked: {0}. Perks grant automatically at skill 5 / 10 / 15 / 20.</DC_ViewPerksDesc>
   <DC_PerkTreeTitle>Perks — {PAWN}</DC_PerkTreeTitle>
-  <DC_PerkPoints>Perk points: {0}</DC_PerkPoints>
+  <DC_PerkPoints>Perks follow skill: 5 / 10 / 15 / 20</DC_PerkPoints>
+  <DC_PerkAutoHint>Auto at skill 5 / 10 / 15 / 20</DC_PerkAutoHint>
+  <DC_PerkSwitchBtn>Switch</DC_PerkSwitchBtn>
+  <DC_PerkAutoUnlocked>{PAWN} reached the skill for {PERK}.</DC_PerkAutoUnlocked>
+  <DC_PerkLapsed>{PAWN} no longer meets the skill for {PERK} — the perk lapsed.</DC_PerkLapsed>
   <DC_PerkRequires>Req: {0} lv.{1}</DC_PerkRequires>
   <DC_PerkUnlockBtn>Unlock</DC_PerkUnlockBtn>
   <DC_PerkStatus_Unlocked>✓ Unlocked</DC_PerkStatus_Unlocked>
@@ -14,7 +18,9 @@
   <DC_PerkUnlocked>{PAWN} unlocked the perk: {PERK}.</DC_PerkUnlocked>
   <DC_PerkPointGained>{PAWN} gained a perk point from leveling {SKILL}.</DC_PerkPointGained>
   <DC_PerksAvailable>{PAWN} leveled {SKILL} — {2} perk(s) available to unlock.</DC_PerksAvailable>
-  <DC_InspectPerks>Perks: {0} points, {1} unlocked</DC_InspectPerks>
+  <DC_InspectPerks>Perks: {0} unlocked</DC_InspectPerks>
+  <DC_Patch161LetterLabel>Deep Colony 1.6.1</DC_Patch161LetterLabel>
+  <DC_Patch161LetterText>Perk trees no longer use points. Colonists unlock a perk automatically at skill 5, 10, 15, and 20. If a skill falls below that level, the perk lapses.\n\nShooting accuracy bonuses now use the same scale as vanilla traits — they used to round to +0.0 on inspect. Perk effects stay off the Health tab unless you enable "Show perk hediffs" in mod settings. Skill-20 capstones are on by default.\n\nThe Family tree button on the Bio card is gone so it no longer covers Banish — use the Family inspect tab. Rows / Pedigree sits left of the close button.\n\nOpening a Strata floor no longer throws while last-of-the-line scans living colonists.\n\nOpen perk trees from a colonist's inspect pane or the Perks colony tab.</DC_Patch161LetterText>
 
   <!-- ── Trauma ─────────────────────────────────────────────────────────────── -->
   <DC_TherapyProgress>Making progress...</DC_TherapyProgress>
@@ -26,7 +32,7 @@
   <DC_InspectTrauma>Carrying psychological trauma</DC_InspectTrauma>
   <DC_InspectGrudge>Grudge: {0}</DC_InspectGrudge>
   <DC_TraumaRecovered>{PAWN} recovered from {TRAUMA}.</DC_TraumaRecovered>
-  <DC_SeasonedGrowth>{PAWN} grew stronger through recovery — seasoned survivor (+1 perk point).</DC_SeasonedGrowth>
+  <DC_SeasonedGrowth>{PAWN} grew stronger through recovery — seasoned survivor.</DC_SeasonedGrowth>
   <DC_Flashback>{PAWN} is having a flashback.</DC_Flashback>
   <DC_FlashbackGrudge>A raid by {0} triggers old grudges.</DC_FlashbackGrudge>
   <DC_DayOfRemembrance>Day of remembrance for {NAME}.</DC_DayOfRemembrance>
@@ -59,7 +65,9 @@
   <DC_Settings_PresetHard>Hard</DC_Settings_PresetHard>
   <DC_Settings_Systems>Systems</DC_Settings_Systems>
   <DC_Settings_EnablePerks>Enable perk trees</DC_Settings_EnablePerks>
-  <DC_Settings_EnablePerksTip>Skill-gate perk points and the perk tree UI.</DC_Settings_EnablePerksTip>
+  <DC_Settings_EnablePerksTip>Perks unlock automatically at skill 5 / 10 / 15 / 20 and lapse if the skill falls below that.</DC_Settings_EnablePerksTip>
+  <DC_Settings_ShowPerkHediffs>Show perk hediffs on the health tab</DC_Settings_ShowPerkHediffs>
+  <DC_Settings_ShowPerkHediffsTip>Default off. Perk bonuses still apply; this only lists them on Health.</DC_Settings_ShowPerkHediffsTip>
   <DC_Settings_EnableTrauma>Enable trauma &amp; therapy</DC_Settings_EnableTrauma>
   <DC_Settings_EnableTraumaTip>Combat shock, loss, captivity, massacre, counsel jobs.</DC_Settings_EnableTraumaTip>
   <DC_Settings_EnableMentoring>Enable apprenticeship</DC_Settings_EnableMentoring>
@@ -74,7 +82,7 @@
   <DC_Settings_AttitudeConsequencesTip>Default off. Cordial/indebted/wary/vengeful attitudes affect trade prices, trader caravans, and raid strength. Hard preset enables this.</DC_Settings_AttitudeConsequencesTip>
   <DC_Settings_Phase5>Power systems (Phase 5)</DC_Settings_Phase5>
   <DC_Settings_Capstones>Skill-20 capstone perks</DC_Settings_Capstones>
-  <DC_Settings_CapstonesTip>Default off. Adds a third perk node at skill 20. Hard preset enables this.</DC_Settings_CapstonesTip>
+  <DC_Settings_CapstonesTip>Adds a perk node at skill 20. Default on. Perks still auto-grant at that level.</DC_Settings_CapstonesTip>
   <DC_Settings_Branching>Branching L15 perk picks</DC_Settings_Branching>
   <DC_Settings_BranchingTip>Default off. Choose one of two L15 perks per skill. Hard preset enables this.</DC_Settings_BranchingTip>
   <DC_Settings_Respec>Perk respec (forget)</DC_Settings_Respec>
@@ -275,7 +283,6 @@
   <DC_RepFilter_Hostile>Hostile</DC_RepFilter_Hostile>
   <DC_PerkOverview_ColArchetype>Archetype</DC_PerkOverview_ColArchetype>
   <DC_TabFamily>Family</DC_TabFamily>
-  <DC_FamilyTreeButton>Family tree</DC_FamilyTreeButton>
   <DC_FamilyTree_Title>Family of {PAWN}</DC_FamilyTree_Title>
   <DC_FamilyTree_Empty>No parents, children, siblings, or partners recorded.</DC_FamilyTree_Empty>
   <DC_FamilyTree_Grandparents>Grandparents</DC_FamilyTree_Grandparents>

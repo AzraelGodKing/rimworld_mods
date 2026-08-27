@@ -7,7 +7,7 @@ namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "touch-need-v1";
+        public const string BuildStamp = "patch-161-v1";
 
         public static void LogStartup()
         {
