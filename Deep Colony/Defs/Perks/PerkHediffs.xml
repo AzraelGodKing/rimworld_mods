@@ -3,7 +3,7 @@
 
   <!-- ── Shared base for all perk hediffs ────────────────────────────────────── -->
   <HediffDef Name="DC_PerkHediffBase" Abstract="True">
-    <hediffClass>HediffWithComps</hediffClass>
+    <hediffClass>DeepColony.Hediff_Perk</hediffClass>
     <isBad>false</isBad>
     <initialSeverity>0.5</initialSeverity>
     <maxSeverity>1</maxSeverity>
@@ -20,7 +20,7 @@
       <li>
         <label>active</label>
         <statOffsets>
-          <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
+          <ShootingAccuracyPawn>2</ShootingAccuracyPawn>
         </statOffsets>
       </li>
     </stages>
@@ -34,7 +34,7 @@
       <li>
         <label>active</label>
         <statOffsets>
-          <ShootingAccuracyPawn>0.09</ShootingAccuracyPawn>
+          <ShootingAccuracyPawn>3</ShootingAccuracyPawn>
         </statOffsets>
         <statFactors>
           <AimingDelayFactor>0.85</AimingDelayFactor>
@@ -408,6 +408,195 @@
         <label>active</label>
         <statFactors>
           <GeneralLaborSpeed>1.14</GeneralLaborSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       LEVEL 10
+  ══════════════════════════════════════════════════════════════════════ -->
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_SteadyBead</defName>
+    <label>steady bead</label>
+    <description>A calmer sight picture — accuracy and aim time both improve.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <ShootingAccuracyPawn>2</ShootingAccuracyPawn>
+        </statOffsets>
+        <statFactors>
+          <AimingDelayFactor>0.92</AimingDelayFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_SeasonedBrawler</defName>
+    <label>seasoned brawler</label>
+    <description>Knows when to hit and when to slip aside.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <MeleeHitChance>0.06</MeleeHitChance>
+          <MeleeDodgeChance>0.045</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_CarefulTend</defName>
+    <label>careful tend</label>
+    <description>Patient wrapping — faster, cleaner tending.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <MedicalTendQuality>0.10</MedicalTendQuality>
+        </statOffsets>
+        <statFactors>
+          <MedicalTendSpeed>1.17</MedicalTendSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_SquareFrame</defName>
+    <label>square frame</label>
+    <description>Layouts go up true.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <ConstructionSpeed>1.18</ConstructionSpeed>
+        </statFactors>
+        <statOffsets>
+          <ConstructSuccessChance>0.04</ConstructSuccessChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_SteadyCraft</defName>
+    <label>steady craft</label>
+    <description>Rhythm at the bench.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <GeneralLaborSpeed>1.11</GeneralLaborSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_CropSense</defName>
+    <label>crop sense</label>
+    <description>Knows when a plant is ready.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <PlantWorkSpeed>1.18</PlantWorkSpeed>
+        </statFactors>
+        <statOffsets>
+          <PlantHarvestYield>0.10</PlantHarvestYield>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_HerdSense</defName>
+    <label>herd sense</label>
+    <description>Reads the flock.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <TameAnimalChance>0.13</TameAnimalChance>
+          <TrainAnimalChance>0.13</TrainAnimalChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_SeamReader</defName>
+    <label>seam reader</label>
+    <description>Sees the grain in the stone.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <MiningSpeed>1.18</MiningSpeed>
+        </statFactors>
+        <statOffsets>
+          <MiningYield>0.05</MiningYield>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_DeepFocus</defName>
+    <label>deep focus</label>
+    <description>Holds a problem in mind until it gives.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <ResearchSpeed>1.16</ResearchSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_EasyManner</defName>
+    <label>easy manner</label>
+    <description>Puts people at ease.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statOffsets>
+          <TradePriceImprovement>0.07</TradePriceImprovement>
+          <SocialImpact>0.08</SocialImpact>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_KitchenRhythm</defName>
+    <label>kitchen rhythm</label>
+    <description>Every pan in its place.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <CookSpeed>1.18</CookSpeed>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="DC_PerkHediffBase">
+    <defName>DC_PerkHediff_PracticedStroke</defName>
+    <label>practiced stroke</label>
+    <description>The hand knows the next line.</description>
+    <stages>
+      <li>
+        <label>active</label>
+        <statFactors>
+          <GeneralLaborSpeed>1.11</GeneralLaborSpeed>
         </statFactors>
       </li>
     </stages>

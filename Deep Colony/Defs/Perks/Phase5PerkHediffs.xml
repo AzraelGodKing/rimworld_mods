@@ -7,7 +7,7 @@
     <description>Faster aiming under pressure.</description>
     <stages><li><label>active</label>
       <statFactors><AimingDelayFactor>0.80</AimingDelayFactor></statFactors>
-      <statOffsets><ShootingAccuracyPawn>0.05</ShootingAccuracyPawn></statOffsets>
+      <statOffsets><ShootingAccuracyPawn>2</ShootingAccuracyPawn></statOffsets>
     </li></stages>
   </HediffDef>
   <HediffDef ParentName="DC_PerkHediffBase">
@@ -15,7 +15,7 @@
     <label>deadeye</label>
     <description>Capstone marksmanship.</description>
     <stages><li><label>active</label>
-      <statOffsets><ShootingAccuracyPawn>0.14</ShootingAccuracyPawn></statOffsets>
+      <statOffsets><ShootingAccuracyPawn>4</ShootingAccuracyPawn></statOffsets>
       <statFactors><AimingDelayFactor>0.75</AimingDelayFactor></statFactors>
     </li></stages>
   </HediffDef>
@@ -214,7 +214,7 @@
     <label>field surgeon</label>
     <description>Medicine + Shooting archetype.</description>
     <stages><li><label>active</label>
-      <statOffsets><MedicalTendSpeed>0.08</MedicalTendSpeed><ShootingAccuracyPawn>0.03</ShootingAccuracyPawn></statOffsets>
+      <statOffsets><MedicalTendSpeed>0.08</MedicalTendSpeed><ShootingAccuracyPawn>1</ShootingAccuracyPawn></statOffsets>
     </li></stages>
   </HediffDef>
   <HediffDef ParentName="DC_PerkHediffBase">
