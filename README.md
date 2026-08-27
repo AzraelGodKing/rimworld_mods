@@ -111,7 +111,7 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Living World** require the **Harmony** mod.
+4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, and **Date Night** require the **Harmony** mod. **Living World** and **Azrael** are in-repo but not release-ready (not in the GitHub Release zips).
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally.
 
