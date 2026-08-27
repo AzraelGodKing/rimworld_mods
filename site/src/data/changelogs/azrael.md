@@ -11,7 +11,7 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azr
 ### Added
 - **The Deep Homestead** scenario — 3 settlers, farm kit, mountain-foothills opener; forces Azrael; MayRequire Homesteader / Strata start research and rock salt.
 - **Standalone storyteller fallback** — injects `StorytellerDef` Azrael only when Homesteader is not loaded (Homesteader owns the canonical copy). `PatchOperationFindMod` matches the Homesteader display name so both mods together do not duplicate the def.
-- **CI zip** — `Azrael.zip` with the compiled DLL is packed on `latest` so Deep Homestead's forced-storyteller part loads.
+- **CI zip** — ~~`Azrael.zip` with the compiled DLL is packed on `latest` so Deep Homestead's forced-storyteller part loads.~~ **Superseded:** Azrael is not release-ready; CI no longer builds or publishes `Azrael.zip`.
 - **Soft series load order** — loadAfter Homesteader / Strata / Stormproof / Nemesis / Deep Colony / Living World / Date Night without hard Workshop deps (Harmony only).
 
 ### Fixed
