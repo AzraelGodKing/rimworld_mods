@@ -1,0 +1,24 @@
+---
+description: SemVer for each mod About.xml — major / feature / patch
+alwaysApply: true
+---
+
+# Mod versioning
+
+Each mod has its own `About.xml` `modVersion` (`MAJOR.MINOR.PATCH`). Bump **only the mod you changed**. Read the current number from `About.xml` and add the bump — do not invent a line (Deep Colony is **1.5.x**). Player.log reads this number.
+
+## When to bump
+
+| Change | Bump |
+|---|---|
+| Breaking / big content era | `+1.0.0` (major) |
+| New player-facing feature | `+0.1.0` (minor). Reset patch to 0. |
+| Bugfix / compat glue / copy | `+0.0.1` (patch) |
+
+Examples: Empty Nest firing on newborns was **1.5.1**. Last-of-the-line death gate → **1.5.2**. A new family system → **1.6.0**. A full rewrite → **2.0.0** only if asked.
+
+## Also update
+
+- That mod's `About/changelog.txt` (Steam paste = this version only). First line of the current block **must start with this `modVersion`** so Add Changenote can replace Steam's auto text — see `add-changenote-changelog.mdc`.
+- That mod's `CHANGELOG.md` player-facing version line
+- Do **not** bump unrelated mods. Do not skip the bump because a build stamp exists.

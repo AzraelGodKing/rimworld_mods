@@ -60,6 +60,8 @@ namespace DeepColony
             listing.Gap(4f);
             listing.CheckboxLabeled("DC_Settings_EnablePerks".Translate(), ref settings.enablePerks,
                 "DC_Settings_EnablePerksTip".Translate());
+            listing.CheckboxLabeled("DC_Settings_ShowPerkHediffs".Translate(), ref settings.showPerkHediffs,
+                "DC_Settings_ShowPerkHediffsTip".Translate());
             listing.CheckboxLabeled("DC_Settings_EnableTrauma".Translate(), ref settings.enableTrauma,
                 "DC_Settings_EnableTraumaTip".Translate());
             listing.CheckboxLabeled("DC_Settings_EnableMentoring".Translate(), ref settings.enableMentoring,
