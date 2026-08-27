@@ -26,11 +26,6 @@ namespace DeepColony
             if (!comp.elderPerkGranted && DeepColonySettings.Get.enablePerks)
             {
                 comp.elderPerkGranted = true;
-                comp.availablePerkPoints++;
-                comp.NoteUnspentPointsChanged();
-                Messages.Message(
-                    "DC_ElderPerkPoint".Translate(pawn.LabelShort.Named("PAWN")),
-                    pawn, MessageTypeDefOf.PositiveEvent, false);
             }
 
             EnsureElderHediff(pawn);

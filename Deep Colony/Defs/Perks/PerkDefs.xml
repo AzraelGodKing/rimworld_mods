@@ -14,12 +14,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_SteadyBead</defName>
+    <label>steady bead</label>
+    <description>A calm sight picture between shots. Accuracy and aim time both improve.</description>
+    <skill>Shooting</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_PracticedEye</prerequisitePerk>
+    <hediff>DC_PerkHediff_SteadyBead</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_CrackShot</defName>
     <label>crack shot</label>
     <description>This colonist has mastered long-range accuracy. Dramatically increases shooting precision.</description>
     <skill>Shooting</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_PracticedEye</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_SteadyBead</prerequisitePerk>
     <hediff>DC_PerkHediff_CrackShot</hediff>
   </DeepColony.PerkDef>
 
@@ -36,12 +46,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_SeasonedBrawler</defName>
+    <label>seasoned brawler</label>
+    <description>Enough scraps to know when to hit and when to slip aside.</description>
+    <skill>Melee</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_BrawlersInstinct</prerequisitePerk>
+    <hediff>DC_PerkHediff_SeasonedBrawler</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_BattleHardened</defName>
     <label>battle hardened</label>
     <description>Forged through countless fights, this colonist can endure more punishment and deal it out.</description>
     <skill>Melee</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_BrawlersInstinct</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_SeasonedBrawler</prerequisitePerk>
     <hediff>DC_PerkHediff_BattleHardened</hediff>
   </DeepColony.PerkDef>
 
@@ -58,12 +78,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_CarefulTend</defName>
+    <label>careful tend</label>
+    <description>Patient, even wrapping. Tending is faster and cleaner.</description>
+    <skill>Medicine</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_FirstAidMastery</prerequisitePerk>
+    <hediff>DC_PerkHediff_CarefulTend</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_SurgeonsTouch</defName>
     <label>surgeon's touch</label>
     <description>Exceptional precision in surgery. Significantly improves surgical success chance.</description>
     <skill>Medicine</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_FirstAidMastery</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_CarefulTend</prerequisitePerk>
     <hediff>DC_PerkHediff_SurgeonsTouch</hediff>
   </DeepColony.PerkDef>
 
@@ -80,12 +110,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_SquareFrame</defName>
+    <label>square frame</label>
+    <description>Layouts go up true. Construction is faster and fails less often.</description>
+    <skill>Construction</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_BuildersTouch</prerequisitePerk>
+    <hediff>DC_PerkHediff_SquareFrame</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_MasterPlanner</defName>
     <label>master planner</label>
     <description>An expert eye for structure and material. Construction speed and success are both elevated.</description>
     <skill>Construction</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_BuildersTouch</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_SquareFrame</prerequisitePerk>
     <hediff>DC_PerkHediff_MasterPlanner</hediff>
   </DeepColony.PerkDef>
 
@@ -102,12 +142,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_SteadyCraft</defName>
+    <label>steady craft</label>
+    <description>Rhythm at the bench. Work goes faster without losing care.</description>
+    <skill>Crafting</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_ArtisansHands</prerequisitePerk>
+    <hediff>DC_PerkHediff_SteadyCraft</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_GrandArtisan</defName>
     <label>grand artisan</label>
     <description>A true master of the craft, producing exceptional work at impressive speed.</description>
     <skill>Crafting</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_ArtisansHands</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_SteadyCraft</prerequisitePerk>
     <hediff>DC_PerkHediff_GrandArtisan</hediff>
   </DeepColony.PerkDef>
 
@@ -124,12 +174,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_CropSense</defName>
+    <label>crop sense</label>
+    <description>Knows when a plant is ready. Planting and harvest both improve.</description>
+    <skill>Plants</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_GreenTouch</prerequisitePerk>
+    <hediff>DC_PerkHediff_CropSense</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_GardenMaster</defName>
     <label>garden master</label>
     <description>Deep mastery of horticulture brings thriving harvests and rapid growth.</description>
     <skill>Plants</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_GreenTouch</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_CropSense</prerequisitePerk>
     <hediff>DC_PerkHediff_GardenMaster</hediff>
   </DeepColony.PerkDef>
 
@@ -146,12 +206,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_HerdSense</defName>
+    <label>herd sense</label>
+    <description>Reads the flock. Taming and training come easier.</description>
+    <skill>Animals</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_AnimalWhisperer</prerequisitePerk>
+    <hediff>DC_PerkHediff_HerdSense</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_MasterTamer</defName>
     <label>master tamer</label>
     <description>The bond between this colonist and animals is extraordinary. Taming and training rates soar.</description>
     <skill>Animals</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_AnimalWhisperer</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_HerdSense</prerequisitePerk>
     <hediff>DC_PerkHediff_MasterTamer</hediff>
   </DeepColony.PerkDef>
 
@@ -168,12 +238,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_SeamReader</defName>
+    <label>seam reader</label>
+    <description>Sees the grain in the stone. Mining is faster, with a little more ore.</description>
+    <skill>Mining</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_RockEye</prerequisitePerk>
+    <hediff>DC_PerkHediff_SeamReader</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_DeepProspector</defName>
     <label>deep prospector</label>
     <description>Expert reading of rock strata yields more ore from every vein.</description>
     <skill>Mining</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_RockEye</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_SeamReader</prerequisitePerk>
     <hediff>DC_PerkHediff_DeepProspector</hediff>
   </DeepColony.PerkDef>
 
@@ -190,12 +270,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_DeepFocus</defName>
+    <label>deep focus</label>
+    <description>Holds a problem in mind until it gives. Research moves faster.</description>
+    <skill>Intellectual</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_QuickStudy</prerequisitePerk>
+    <hediff>DC_PerkHediff_DeepFocus</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_ScientificPioneer</defName>
     <label>scientific pioneer</label>
     <description>A truly exceptional intellect drives research to new heights.</description>
     <skill>Intellectual</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_QuickStudy</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_DeepFocus</prerequisitePerk>
     <hediff>DC_PerkHediff_ScientificPioneer</hediff>
   </DeepColony.PerkDef>
 
@@ -212,12 +302,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_EasyManner</defName>
+    <label>easy manner</label>
+    <description>Puts people at ease. Trade and social work both go better.</description>
+    <skill>Social</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_CharmingPresence</prerequisitePerk>
+    <hediff>DC_PerkHediff_EasyManner</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_MasterDiplomat</defName>
     <label>master diplomat</label>
     <description>Extraordinary people-skills open doors and fill coffers. Superior trade and goodwill gains.</description>
     <skill>Social</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_CharmingPresence</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_EasyManner</prerequisitePerk>
     <hediff>DC_PerkHediff_MasterDiplomat</hediff>
   </DeepColony.PerkDef>
 
@@ -234,12 +334,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_KitchenRhythm</defName>
+    <label>kitchen rhythm</label>
+    <description>Every pan in its place. Cooking is faster and cleaner.</description>
+    <skill>Cooking</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_SeasonedCook</prerequisitePerk>
+    <hediff>DC_PerkHediff_KitchenRhythm</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_GrandChef</defName>
     <label>grand chef</label>
     <description>A culinary artist whose meals are events in themselves. Fast, delicious, and never poisoned.</description>
     <skill>Cooking</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_SeasonedCook</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_KitchenRhythm</prerequisitePerk>
     <hediff>DC_PerkHediff_GrandChef</hediff>
   </DeepColony.PerkDef>
 
@@ -256,12 +366,22 @@
   </DeepColony.PerkDef>
 
   <DeepColony.PerkDef>
+    <defName>DC_Perk_PracticedStroke</defName>
+    <label>practiced stroke</label>
+    <description>The hand knows the next line. Art and sculpture finish faster.</description>
+    <skill>Artistic</skill>
+    <requiredLevel>10</requiredLevel>
+    <prerequisitePerk>DC_Perk_InspiredHand</prerequisitePerk>
+    <hediff>DC_PerkHediff_PracticedStroke</hediff>
+  </DeepColony.PerkDef>
+
+  <DeepColony.PerkDef>
     <defName>DC_Perk_MasterArtisan</defName>
     <label>master artisan</label>
     <description>Colony-famous craftsmanship — sculptures and art finish faster and look better.</description>
     <skill>Artistic</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_InspiredHand</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_PracticedStroke</prerequisitePerk>
     <hediff>DC_PerkHediff_MasterArtisan</hediff>
   </DeepColony.PerkDef>
 

@@ -8,7 +8,7 @@ namespace DeepColony
 {
     /// <summary>
     /// Dialog showing a pawn's perk tree organized by skill.
-    /// Supports L5 → L15 (optional branch) → L20 capstone, plus respec.
+    /// Supports auto-granted L5 → L10 → L15 (optional branch) → L20 capstone.
     /// </summary>
     public class Window_PerkTree : Window
     {
@@ -20,7 +20,7 @@ namespace DeepColony
         private static readonly Color ColorAvailable = new Color(0.9f, 0.75f, 0.2f, 1f);
         private static readonly Color ColorLocked = new Color(0.4f, 0.4f, 0.4f, 1f);
 
-        private const float WindowWidth = 980f;
+        private const float WindowWidth = 1180f;
         private const float WindowHeight = 720f;
         private const float HeaderHeight = 48f;
         private const float RowHeight = 96f;
@@ -50,9 +50,9 @@ namespace DeepColony
                 "DC_PerkTreeTitle".Translate(pawn.LabelShort.Named("PAWN")));
             Text.Font = GameFont.Small;
 
-            Rect pointsRect = new Rect(inRect.xMax - 200f, inRect.y, 195f, HeaderHeight);
+            Rect pointsRect = new Rect(inRect.xMax - 280f, inRect.y, 275f, HeaderHeight);
             Text.Anchor = TextAnchor.MiddleRight;
-            Widgets.Label(pointsRect, "DC_PerkPoints".Translate(comp.availablePerkPoints));
+            Widgets.Label(pointsRect, "DC_PerkAutoHint".Translate());
             Text.Anchor = TextAnchor.UpperLeft;
 
             float divY = inRect.y + HeaderHeight + 4f;
@@ -145,22 +145,14 @@ namespace DeepColony
             Rect btnRect = new Rect(r.x + 4f, r.yMax - 22f, r.width - 8f, 18f);
             if (unlocked)
             {
-                if (comp.CanForget(perk))
-                {
-                    if (Widgets.ButtonText(btnRect, "DC_PerkForgetBtn".Translate()))
-                        comp.ForgetPerk(perk);
-                }
-                else
-                {
-                    GUI.color = ColorUnlocked;
-                    Widgets.Label(btnRect, "DC_PerkStatus_Unlocked".Translate());
-                    GUI.color = Color.white;
-                }
+                GUI.color = ColorUnlocked;
+                Widgets.Label(btnRect, "DC_PerkStatus_Unlocked".Translate());
+                GUI.color = Color.white;
             }
-            else if (canUnlock)
+            else if (comp.CanSwitchTo(perk))
             {
-                if (Widgets.ButtonText(btnRect, "DC_PerkUnlockBtn".Translate()))
-                    comp.UnlockPerk(perk);
+                if (Widgets.ButtonText(btnRect, "DC_PerkSwitchBtn".Translate()))
+                    comp.SwitchToPerk(perk);
             }
             else
             {

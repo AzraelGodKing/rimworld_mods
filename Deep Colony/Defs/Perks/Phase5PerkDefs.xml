@@ -10,7 +10,7 @@
     <description>Keeps enemies' heads down. Faster aiming under pressure.</description>
     <skill>Shooting</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_PracticedEye</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_SteadyBead</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_CrackShot</li></exclusiveWith>
     <hediff>DC_PerkHediff_SuppressingFire</hediff>
@@ -32,7 +32,7 @@
     <description>Favors precision strikes over brute force.</description>
     <skill>Melee</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_BrawlersInstinct</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_SeasonedBrawler</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_BattleHardened</li></exclusiveWith>
     <hediff>DC_PerkHediff_Duelist</hediff>
@@ -54,7 +54,7 @@
     <description>Tends wounds faster under fire.</description>
     <skill>Medicine</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_FirstAidMastery</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_CarefulTend</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_SurgeonsTouch</li></exclusiveWith>
     <hediff>DC_PerkHediff_FieldMedic</hediff>
@@ -76,7 +76,7 @@
     <description>Builds tougher structures that last.</description>
     <skill>Construction</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_BuildersTouch</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_SquareFrame</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_MasterPlanner</li></exclusiveWith>
     <hediff>DC_PerkHediff_Fortifier</hediff>
@@ -98,7 +98,7 @@
     <description>Uses fewer materials without sacrificing quality.</description>
     <skill>Crafting</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_ArtisansHands</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_SteadyCraft</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_GrandArtisan</li></exclusiveWith>
     <hediff>DC_PerkHediff_EfficientSmith</hediff>
@@ -120,7 +120,7 @@
     <description>Maximizes harvest yields from every plot.</description>
     <skill>Plants</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_GreenTouch</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_CropSense</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_GardenMaster</li></exclusiveWith>
     <hediff>DC_PerkHediff_CropHusband</hediff>
@@ -142,7 +142,7 @@
     <description>Animals stay calmer and train faster.</description>
     <skill>Animals</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_AnimalWhisperer</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_HerdSense</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_MasterTamer</li></exclusiveWith>
     <hediff>DC_PerkHediff_HerdKeeper</hediff>
@@ -164,7 +164,7 @@
     <description>Moves and digs faster underground.</description>
     <skill>Mining</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_RockEye</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_SeamReader</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_DeepProspector</li></exclusiveWith>
     <hediff>DC_PerkHediff_TunnelRat</hediff>
@@ -186,7 +186,7 @@
     <description>Reads and researches with relentless focus.</description>
     <skill>Intellectual</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_QuickStudy</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_DeepFocus</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_ScientificPioneer</li></exclusiveWith>
     <hediff>DC_PerkHediff_Archivist</hediff>
@@ -208,7 +208,7 @@
     <description>Trades and talks land softer terms.</description>
     <skill>Social</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_CharmingPresence</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_EasyManner</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_MasterDiplomat</li></exclusiveWith>
     <hediff>DC_PerkHediff_Negotiator</hediff>
@@ -230,7 +230,7 @@
     <description>Stretches ingredients further without losing quality.</description>
     <skill>Cooking</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_SeasonedCook</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_KitchenRhythm</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_GrandChef</li></exclusiveWith>
     <hediff>DC_PerkHediff_Provisioner</hediff>
@@ -252,7 +252,7 @@
     <description>Art that carries the colony's memory.</description>
     <skill>Artistic</skill>
     <requiredLevel>15</requiredLevel>
-    <prerequisitePerk>DC_Perk_InspiredHand</prerequisitePerk>
+    <prerequisitePerk>DC_Perk_PracticedStroke</prerequisitePerk>
     <alternateBranch>true</alternateBranch>
     <exclusiveWith><li>DC_Perk_MasterArtisan</li></exclusiveWith>
     <hediff>DC_PerkHediff_Storyteller</hediff>
