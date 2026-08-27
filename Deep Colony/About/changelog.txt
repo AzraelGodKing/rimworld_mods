@@ -1,6 +1,18 @@
-[h1]Deep Colony — 1.6.0[/h1]
+1.6.1
+[h1]Deep Colony — 1.6.1[/h1]
 
-[b]Added[/b]
+[b]Changed[/b]
 [list]
-[*] [b]Touch traits[/b] — comfort is a ladder (distant → intimate). Touch-averse has reserved / averse / intolerant. New traits: touch-starved (needs trusted contact), tactile, cuddly. Romance still waits until the required tier. Date Night still owns Date / Lovin hours.
+[*] [b]Auto skill perks[/b] — perks unlock themselves at skill 5 / 10 / 15 / 20 (no points). If the skill falls below that, the perk lapses. Hediffs stay off Health unless you turn them on in settings. Skill-20 capstones default on.
+[*] [b]Shooting accuracy[/b] — bonuses used to round to +0.0 on inspect. They now use the same scale as vanilla traits.
 [/list]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Family tree close button[/b] — Rows / Pedigree on the Family tab no longer covers the inspect X.
+[*] [b]Family tree Bio button[/b] — removed from the Bio card so it no longer covers Banish. Use the Family inspect tab.
+[*] [b]Last of the line[/b] — opening a Strata floor no longer throws Collection was modified while scanning living colonists.
+[/list]
+
+[i]Build stamp (Player.log): patch-161-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]

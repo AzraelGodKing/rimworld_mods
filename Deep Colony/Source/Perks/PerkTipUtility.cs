@@ -58,7 +58,7 @@ namespace DeepColony
         private static string FormatOffset(StatDef stat, float value)
         {
             string sign = value >= 0f ? "+" : "";
-            // Accuracy-like stats are usually shown as percent; factors as multipliers.
+            // Hit/dodge chances are 0–1 fractions. ShootingAccuracyPawn is a rating (vanilla traits use +5).
             if (LooksLikeChanceOrOffsetPercent(stat))
                 return $"{stat.LabelCap}: {sign}{(value * 100f):0.#}%";
             return $"{stat.LabelCap}: {sign}{value:0.##}";
@@ -74,8 +74,8 @@ namespace DeepColony
         private static bool LooksLikeChanceOrOffsetPercent(StatDef stat)
         {
             string n = stat.defName ?? "";
+            if (n.Contains("Accuracy")) return false;
             return n.Contains("Chance")
-                || n.Contains("Accuracy")
                 || n.Contains("Hit")
                 || n.Contains("Dodge")
                 || n.Contains("Yield")
