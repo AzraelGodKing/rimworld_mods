@@ -351,7 +351,8 @@
         "incompatibleWith": [
           { "name": "MultiFloors", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3384660931", "note": "Do not run alongside Strata" },
           { "name": "Z-Levels", "note": "Do not run alongside Strata" },
-          { "name": "As Above So Below", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3767572810", "note": "Do not run alongside Strata" }
+          { "name": "As Above So Below", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3767572810", "note": "Deprecated — replaced by As above, So below 2. Do not run alongside Strata" },
+          { "name": "As above, So below 2", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3776015553", "note": "Do not run alongside Strata (replaces the original AASB)" }
         ],
         "notes": [
           "Cave / pocket-map mods (Deep And Deeper, Anomaly undercaves, and similar) are compatible: their portal maps are invisible to Strata's level system by default. The opt-in setting \"Relay into other mods' portal maps\" extends cross-level relays to them.",
