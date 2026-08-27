@@ -100,4 +100,29 @@
   <DC_Perk_Virtuoso.label>艺术宗师</DC_Perk_Virtuoso.label>
   <DC_Perk_Virtuoso.description>无与伦比的创作造诣 — 艺术技能 20 巅峰专长。</DC_Perk_Virtuoso.description>
 
+  <DC_Perk_SteadyBead.label>稳固准星</DC_Perk_SteadyBead.label>
+  <DC_Perk_SteadyBead.description>射击之间更沉稳的瞄准。命中与瞄准时间都有提升。</DC_Perk_SteadyBead.description>
+  <DC_Perk_SeasonedBrawler.label>老练拳手</DC_Perk_SeasonedBrawler.label>
+  <DC_Perk_SeasonedBrawler.description>知道何时出手、何时闪身。</DC_Perk_SeasonedBrawler.description>
+  <DC_Perk_CarefulTend.label>细心包扎</DC_Perk_CarefulTend.label>
+  <DC_Perk_CarefulTend.description>耐心均匀的包扎。治疗更快更干净。</DC_Perk_CarefulTend.description>
+  <DC_Perk_SquareFrame.label>方正构架</DC_Perk_SquareFrame.label>
+  <DC_Perk_SquareFrame.description>结构起得端正。建造更快、更少失败。</DC_Perk_SquareFrame.description>
+  <DC_Perk_SteadyCraft.label>沉稳工艺</DC_Perk_SteadyCraft.label>
+  <DC_Perk_SteadyCraft.description>工作台上的节奏。更快，仍仔细。</DC_Perk_SteadyCraft.description>
+  <DC_Perk_CropSense.label>庄稼直觉</DC_Perk_CropSense.label>
+  <DC_Perk_CropSense.description>知道植物何时成熟。种植与收获都更好。</DC_Perk_CropSense.description>
+  <DC_Perk_HerdSense.label>牧群直觉</DC_Perk_HerdSense.label>
+  <DC_Perk_HerdSense.description>读得懂畜群。驯服与训练更顺利。</DC_Perk_HerdSense.description>
+  <DC_Perk_SeamReader.label>矿脉判读</DC_Perk_SeamReader.label>
+  <DC_Perk_SeamReader.description>看见石头的纹理。开采更快，矿石略多。</DC_Perk_SeamReader.description>
+  <DC_Perk_DeepFocus.label>沉心专注</DC_Perk_DeepFocus.label>
+  <DC_Perk_DeepFocus.description>把问题钉在心里直到它松口。研究更快。</DC_Perk_DeepFocus.description>
+  <DC_Perk_EasyManner.label>从容风度</DC_Perk_EasyManner.label>
+  <DC_Perk_EasyManner.description>让人放松。交易与社交都更顺利。</DC_Perk_EasyManner.description>
+  <DC_Perk_KitchenRhythm.label>灶台节奏</DC_Perk_KitchenRhythm.label>
+  <DC_Perk_KitchenRhythm.description>锅碗各归其位。烹饪更快更干净。</DC_Perk_KitchenRhythm.description>
+  <DC_Perk_PracticedStroke.label>熟练运笔</DC_Perk_PracticedStroke.label>
+  <DC_Perk_PracticedStroke.description>手知道下一笔。艺术与雕塑完成更快。</DC_Perk_PracticedStroke.description>
+
 </LanguageData>

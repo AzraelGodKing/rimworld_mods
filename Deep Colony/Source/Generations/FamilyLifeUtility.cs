@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -20,7 +21,15 @@ namespace DeepColony
         {
             if (!Enabled) return;
             if (Find.TickManager.TicksGame % LastOfLineInterval != 0) return;
-            RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);
+            try
+            {
+                RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);
+            }
+            catch (InvalidOperationException)
+            {
+                // Map/world pawn lists mutated mid-scan (Strata floor open, etc.).
+                // Retry on the next interval instead of blowing the tick.
+            }
         }
 
         public static void NotifyBirth(Pawn baby)
@@ -171,8 +180,9 @@ namespace DeepColony
         public static void RefreshAllLastOfTheLine(bool announceLast, bool announceContinue)
         {
             if (!Enabled) return;
-            foreach (Pawn colonist in LivingColonyHumanlikes())
-                RefreshLastOfTheLine(colonist, announceLast, announceContinue);
+            List<Pawn> living = SnapshotLivingColonyHumanlikes();
+            for (int i = 0; i < living.Count; i++)
+                RefreshLastOfTheLine(living[i], living, announceLast, announceContinue);
         }
 
         public static bool TryForceLastOfTheLine(Pawn pawn)
@@ -201,14 +211,14 @@ namespace DeepColony
             return false;
         }
 
-        private static void RefreshLastOfTheLine(Pawn pawn, bool announceLast, bool announceContinue)
+        private static void RefreshLastOfTheLine(Pawn pawn, List<Pawn> livingColonists, bool announceLast, bool announceContinue)
         {
             if (pawn == null || pawn.Dead || !pawn.IsColonist) return;
             if (!pawn.RaceProps.Humanlike) return;
             var comp = pawn.TryGetComp<Comp_DeepColony>();
             if (comp == null) return;
 
-            bool living = HasLivingColonyBloodKin(pawn);
+            bool living = HasLivingColonyBloodKin(pawn, livingColonists);
             if (living)
             {
                 bool restored = comp.lastOfTheLine;
@@ -240,11 +250,12 @@ namespace DeepColony
                 false);
         }
 
-        private static bool HasLivingColonyBloodKin(Pawn pawn)
+        private static bool HasLivingColonyBloodKin(Pawn pawn, List<Pawn> livingColonists)
         {
-            foreach (Pawn other in LivingColonyHumanlikes())
+            for (int i = 0; i < livingColonists.Count; i++)
             {
-                if (other == pawn || other.Dead) continue;
+                Pawn other = livingColonists[i];
+                if (other == pawn || other == null || other.Dead) continue;
                 if (IsBloodKin(pawn, other)) return true;
             }
             return false;
@@ -286,44 +297,78 @@ namespace DeepColony
             return false;
         }
 
-        private static IEnumerable<Pawn> LivingColonyHumanlikes()
+        /// <summary>
+        /// Copy living colonists by index before scanning. Opening a Strata
+        /// floor (and relation checks) can add/remove pawns from map/world
+        /// lists; foreach / ToArray on a live enumerator throws
+        /// "Collection was modified".
+        /// </summary>
+        private static List<Pawn> SnapshotLivingColonyHumanlikes()
         {
+            var dest = new List<Pawn>();
             var seen = new HashSet<int>();
-            if (Find.Maps != null)
+            List<Map> maps = Find.Maps;
+            if (maps != null)
             {
-                foreach (Map map in Find.Maps)
+                int mapCount = maps.Count;
+                for (int m = 0; m < mapCount && m < maps.Count; m++)
                 {
-                    if (map?.mapPawns?.AllPawns == null) continue;
-                    foreach (Pawn p in map.mapPawns.AllPawns)
+                    Map map = maps[m];
+                    List<Pawn> all = map?.mapPawns?.AllPawns;
+                    if (all == null) continue;
+                    int pawnCount = all.Count;
+                    for (int i = 0; i < pawnCount && i < all.Count; i++)
                     {
+                        Pawn p = all[i];
                         TryYieldLivingColonist(p, seen, out Pawn yieldPawn);
-                        if (yieldPawn != null) yield return yieldPawn;
-                        Pawn carried = p.carryTracker?.CarriedThing as Pawn;
+                        if (yieldPawn != null) dest.Add(yieldPawn);
+                        Pawn carried = p?.carryTracker?.CarriedThing as Pawn;
                         if (carried != null)
                         {
                             TryYieldLivingColonist(carried, seen, out Pawn yieldCarried);
-                            if (yieldCarried != null) yield return yieldCarried;
+                            if (yieldCarried != null) dest.Add(yieldCarried);
                         }
                     }
                 }
             }
 
-            List<Pawn> found = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
-            if (found != null)
+            AppendLivingColonists(
+                PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists,
+                seen,
+                dest);
+            AppendLivingColonists(Find.WorldPawns?.AllPawnsAlive, seen, dest);
+            return dest;
+        }
+
+        private static void AppendLivingColonists(
+            IEnumerable<Pawn> source, HashSet<int> seen, List<Pawn> dest)
+        {
+            if (source == null) return;
+            if (source is List<Pawn> list)
             {
-                for (int i = 0; i < found.Count; i++)
-                {
-                    TryYieldLivingColonist(found[i], seen, out Pawn yieldPawn);
-                    if (yieldPawn != null) yield return yieldPawn;
-                }
+                int n = list.Count;
+                for (int i = 0; i < n && i < list.Count; i++)
+                    AddIfLivingColonist(list[i], seen, dest);
+                return;
             }
 
-            if (Find.WorldPawns?.AllPawnsAlive == null) yield break;
-            foreach (Pawn p in Find.WorldPawns.AllPawnsAlive)
+            List<Pawn> copy;
+            try
             {
-                TryYieldLivingColonist(p, seen, out Pawn yieldPawn);
-                if (yieldPawn != null) yield return yieldPawn;
+                copy = new List<Pawn>(source);
             }
+            catch (InvalidOperationException)
+            {
+                return;
+            }
+            for (int i = 0; i < copy.Count; i++)
+                AddIfLivingColonist(copy[i], seen, dest);
+        }
+
+        private static void AddIfLivingColonist(Pawn pawn, HashSet<int> seen, List<Pawn> dest)
+        {
+            TryYieldLivingColonist(pawn, seen, out Pawn result);
+            if (result != null) dest.Add(result);
         }
 
         private static void TryYieldLivingColonist(Pawn pawn, HashSet<int> seen, out Pawn result)
@@ -336,28 +381,9 @@ namespace DeepColony
             result = pawn;
         }
 
-        private static IEnumerable<Pawn> ColonyHumanlikes()
+        private static List<Pawn> ColonyHumanlikes()
         {
-            List<Pawn> found = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
-            if (found != null)
-            {
-                for (int i = 0; i < found.Count; i++)
-                {
-                    Pawn p = found[i];
-                    if (p != null && p.RaceProps != null && p.RaceProps.Humanlike)
-                        yield return p;
-                }
-                yield break;
-            }
-            foreach (Map map in Find.Maps)
-            {
-                if (map?.mapPawns?.FreeColonists == null) continue;
-                foreach (Pawn p in map.mapPawns.FreeColonists)
-                {
-                    if (p != null && p.RaceProps != null && p.RaceProps.Humanlike)
-                        yield return p;
-                }
-            }
+            return SnapshotLivingColonyHumanlikes();
         }
 
         private static bool HasDirect(Pawn a, Pawn b, PawnRelationDef def)

@@ -100,4 +100,29 @@
   <DC_Perk_Virtuoso.label>виртуоз</DC_Perk_Virtuoso.label>
   <DC_Perk_Virtuoso.description>Бесподобное творческое мастерство — капстоун искусства навыка 20.</DC_Perk_Virtuoso.description>
 
+  <DC_Perk_SteadyBead.label>верная мушка</DC_Perk_SteadyBead.label>
+  <DC_Perk_SteadyBead.description>Спокойная картинка прицела между выстрелами. Точность и время прицеливания лучше.</DC_Perk_SteadyBead.description>
+  <DC_Perk_SeasonedBrawler.label>опытный драчун</DC_Perk_SeasonedBrawler.label>
+  <DC_Perk_SeasonedBrawler.description>Знает, когда бить и когда ускользнуть.</DC_Perk_SeasonedBrawler.description>
+  <DC_Perk_CarefulTend.label>аккуратная перевязка</DC_Perk_CarefulTend.label>
+  <DC_Perk_CarefulTend.description>Терпеливая ровная перевязка. Лечение быстрее и чище.</DC_Perk_CarefulTend.description>
+  <DC_Perk_SquareFrame.label>ровный каркас</DC_Perk_SquareFrame.label>
+  <DC_Perk_SquareFrame.description>Конструкции встают ровно. Стройка быстрее, меньше провалов.</DC_Perk_SquareFrame.description>
+  <DC_Perk_SteadyCraft.label>верное ремесло</DC_Perk_SteadyCraft.label>
+  <DC_Perk_SteadyCraft.description>Ритм у верстака. Быстрее, но всё так же тщательно.</DC_Perk_SteadyCraft.description>
+  <DC_Perk_CropSense.label>чутьё к урожаю</DC_Perk_CropSense.label>
+  <DC_Perk_CropSense.description>Чувствует, когда растение готово. Посадка и сбор лучше.</DC_Perk_CropSense.description>
+  <DC_Perk_HerdSense.label>чутьё к стаду</DC_Perk_HerdSense.label>
+  <DC_Perk_HerdSense.description>Читает стадо. Приручение и дрессировка легче.</DC_Perk_HerdSense.description>
+  <DC_Perk_SeamReader.label>чтение жилы</DC_Perk_SeamReader.label>
+  <DC_Perk_SeamReader.description>Видит зерно камня. Добыча быстрее, руды чуть больше.</DC_Perk_SeamReader.description>
+  <DC_Perk_DeepFocus.label>глубокий фокус</DC_Perk_DeepFocus.label>
+  <DC_Perk_DeepFocus.description>Держит задачу в уме, пока она не поддастся. Исследования быстрее.</DC_Perk_DeepFocus.description>
+  <DC_Perk_EasyManner.label>лёгкая манера</DC_Perk_EasyManner.label>
+  <DC_Perk_EasyManner.description>Располагает людей. Торговля и общение идут лучше.</DC_Perk_EasyManner.description>
+  <DC_Perk_KitchenRhythm.label>кухонный ритм</DC_Perk_KitchenRhythm.label>
+  <DC_Perk_KitchenRhythm.description>Каждая сковорода на месте. Готовка быстрее и чище.</DC_Perk_KitchenRhythm.description>
+  <DC_Perk_PracticedStroke.label>уверенный штрих</DC_Perk_PracticedStroke.label>
+  <DC_Perk_PracticedStroke.description>Рука знает следующую линию. Искусство и скульптура заканчиваются быстрее.</DC_Perk_PracticedStroke.description>
+
 </LanguageData>
