@@ -13,6 +13,7 @@ namespace DeepColony
         }
 
         public bool enablePerks = true;
+        public bool showPerkHediffs = false;
         public bool enableTrauma = true;
         public bool enableMentoring = true;
         public bool enableInheritance = true;
@@ -31,7 +32,7 @@ namespace DeepColony
         public bool enableAttitudeConsequences = false;
 
         // Phase 5 — power systems (mostly default off)
-        public bool enableSkill20Capstones = false;
+        public bool enableSkill20Capstones = true;
         public bool enableBranchingPerks = false;
         public bool enablePerkRespec = true;
         public float respecCooldownDays = 15f;
@@ -73,6 +74,7 @@ namespace DeepColony
         {
             base.ExposeData();
             Scribe_Values.Look(ref enablePerks, "enablePerks", true);
+            Scribe_Values.Look(ref showPerkHediffs, "showPerkHediffs", false);
             Scribe_Values.Look(ref enableTrauma, "enableTrauma", true);
             Scribe_Values.Look(ref enableMentoring, "enableMentoring", true);
             Scribe_Values.Look(ref enableInheritance, "enableInheritance", true);
@@ -88,7 +90,7 @@ namespace DeepColony
             Scribe_Values.Look(ref therapyHealScale, "therapyHealScale", 1f);
             Scribe_Values.Look(ref enableTraumaPenalties, "enableTraumaPenalties", false);
             Scribe_Values.Look(ref enableAttitudeConsequences, "enableAttitudeConsequences", false);
-            Scribe_Values.Look(ref enableSkill20Capstones, "enableSkill20Capstones", false);
+            Scribe_Values.Look(ref enableSkill20Capstones, "enableSkill20Capstones", true);
             Scribe_Values.Look(ref enableBranchingPerks, "enableBranchingPerks", false);
             Scribe_Values.Look(ref enablePerkRespec, "enablePerkRespec", true);
             Scribe_Values.Look(ref respecCooldownDays, "respecCooldownDays", 15f);
@@ -123,7 +125,7 @@ namespace DeepColony
             enableFactionRep = true;
             enableTraumaPenalties = false;
             enableAttitudeConsequences = false;
-            enableSkill20Capstones = false;
+            enableSkill20Capstones = true;
             enableBranchingPerks = false;
             enablePerkRespec = true;
             respecCooldownDays = 15f;
@@ -204,6 +206,7 @@ namespace DeepColony
         public void ResetToDefaults()
         {
             enablePerks = true;
+            showPerkHediffs = false;
             enableTrauma = true;
             enableMentoring = true;
             enableInheritance = true;
@@ -219,7 +222,7 @@ namespace DeepColony
             therapyHealScale = 1f;
             enableTraumaPenalties = false;
             enableAttitudeConsequences = false;
-            enableSkill20Capstones = false;
+            enableSkill20Capstones = true;
             enableBranchingPerks = false;
             enablePerkRespec = true;
             respecCooldownDays = 15f;
