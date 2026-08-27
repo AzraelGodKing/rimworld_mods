@@ -95,18 +95,23 @@ namespace DeepColony.Patches
                     MentorshipUtility.TryGraduate(comp.mentor, pawn);
             }
 
-            if (__instance.levelInt <= __state) return;
+            if (__instance.levelInt == __state) return;
             if (!DeepColonySettings.Get.enablePerks) return;
 
-            int newLevel = __instance.levelInt;
-            for (int level = __state + 1; level <= newLevel; level++)
+            if (__instance.levelInt > __state)
             {
-                if (level == 5 || level == 15
-                    || (level == 20 && DeepColonySettings.Get.enableSkill20Capstones))
-                    comp.NotifySkillLevelUp(__instance.def, level);
+                int newLevel = __instance.levelInt;
+                for (int level = __state + 1; level <= newLevel; level++)
+                {
+                    if (level == 5 || level == 10 || level == 15 || level == 20)
+                        comp.NotifySkillLevelUp(__instance.def, level);
+                }
+                comp.RecordPeakSkill(__instance.def, newLevel);
             }
-
-            comp.RecordPeakSkill(__instance.def, newLevel);
+            else
+            {
+                comp.SyncPerksToSkillLevels(announce: true);
+            }
         }
     }
 }
