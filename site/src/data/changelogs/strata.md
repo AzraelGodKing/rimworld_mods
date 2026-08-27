@@ -31,6 +31,7 @@ Player-facing version **3.1.0** (`About.xml` `modVersion`). Startup writes `[Str
 - **Vertical utilities** (`a4-one-net-v1`) - shaft power (and soft DBH / VEF / Rimefeller junctions) keep pockets supplied without a battery on every floor.
 
 ### Changed
+- **Incompatibilities** — listed [As above, So below 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3776015553). The original [As Above, So Below](https://steamcommunity.com/sharedfiles/filedetails/?id=3767572810) is marked deprecated. Do not run either with Strata.
 - **Biomes! Caverns floor profiles** (`cavern-biome-depth-v1`) — B1–B2 no longer always generate as Earthen Depths. Picks follow [Biomes! Caverns](https://steamcommunity.com/sharedfiles/filedetails/?id=2969748433): wet surface tiles lean fungal forest, cold tiles lean crystalline caverns, and magma-style earthen depths become common only deeper (Caverns' own workers treat that biome as cave-system depth 2–3+). Already-dug floors are unchanged.
 - **Work relay** (`work-relay-board-v1` / `work-relay-smooth-v1`) - smoother job board: less stair looping, faster wake-ups when new designations appear, smarter caps so half the colony does not stampede one blueprint.
 - **Faster dig generation** (`map-gen-fast-v1` / `dig-open-yield-v1`) - opening a new underground level freezes the game less; rock fill streams in with a progress bar.
