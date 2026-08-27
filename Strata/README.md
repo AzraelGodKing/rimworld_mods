@@ -66,6 +66,7 @@ raid pursuit, and the vacant-level performance throttle.
 - Mods adding **fuel-burning buildings** are auto-detected and given exhaust
   behavior when they look like burners. Dev mode → Strata → "List smoke
   emitters" shows what got covered on your map.
+- **Not compatible** with MultiFloors, Z-Levels, [As Above, So Below](https://steamcommunity.com/sharedfiles/filedetails/?id=3767572810) (deprecated; replaced by AASB 2), or [As above, So below 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3776015553).
 - Multi-level mods that patch pathfinding or map generation globally are the
   most likely source of conflicts; Strata deliberately patches neither.
 
