@@ -16,19 +16,21 @@ namespace DeepColony
         public const float HeaderH = 24f;
         public const int MaxPerRow = 8;
         public const float TitleRowH = 26f;
+        private const float CloseXClearance = 28f;
 
         public static void DrawHeader(Rect rect, Pawn focus, ref Vector2 scrollPos)
         {
             if (focus == null) return;
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.MiddleLeft;
-            float btnW = 118f;
-            Rect label = new Rect(rect.x, rect.y, Mathf.Max(40f, rect.width - btnW - 6f), rect.height);
+            float btnW = 80f;
+            float rightPad = CloseXClearance;
+            Rect label = new Rect(rect.x, rect.y, Mathf.Max(40f, rect.width - btnW - rightPad - 6f), rect.height);
             Widgets.Label(label, "DC_FamilyTree_Title".Translate(focus.LabelShort.Named("PAWN")));
             Text.Anchor = TextAnchor.UpperLeft;
 
             var settings = DeepColonyMod.Settings ?? DeepColonySettings.Get;
-            Rect btn = new Rect(rect.xMax - btnW, rect.y, btnW, rect.height);
+            Rect btn = new Rect(rect.xMax - btnW - rightPad, rect.y, btnW, rect.height);
             string cap = settings.familyTreePedigreeStyle
                 ? "DC_FamilyTree_StyleRows".Translate()
                 : "DC_FamilyTree_StylePedigree".Translate();

@@ -39,8 +39,7 @@ namespace DeepColony
 
         public override AlertReport GetReport()
         {
-            Rebuild();
-            return idle.Count == 0 ? AlertReport.Inactive : AlertReport.CulpritsAre(idle);
+            return AlertReport.Inactive;
         }
 
         public override TaggedString GetExplanation()

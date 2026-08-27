@@ -35,11 +35,6 @@ namespace DeepColony
                     var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_Seasoned);
                     pawn.needs.mood.thoughts.memories.TryGainMemory(thought);
                 }
-                if (DeepColonySettings.Get.enablePerks)
-                {
-                    comp.availablePerkPoints++;
-                    comp.NoteUnspentPointsChanged();
-                }
                 Messages.Message(
                     "DC_SeasonedGrowth".Translate(pawn.LabelShort.Named("PAWN")),
                     pawn,
