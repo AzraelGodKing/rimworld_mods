@@ -3,9 +3,13 @@
 
   <!-- ── Perk Tree ─────────────────────────────────────────────────────────── -->
   <DC_ViewPerks>查看专长</DC_ViewPerks>
-  <DC_ViewPerksDesc>打开该殖民者的专长树。已解锁：{1}，可用点数：{0}。</DC_ViewPerksDesc>
+  <DC_ViewPerksDesc>打开该殖民者的专长树。已解锁：{0}。专长在技能 5 / 10 / 15 / 20 时自动获得。</DC_ViewPerksDesc>
   <DC_PerkTreeTitle>专长 — {PAWN}</DC_PerkTreeTitle>
-  <DC_PerkPoints>专长点数：{0}</DC_PerkPoints>
+  <DC_PerkPoints>专长随技能：5 / 10 / 15 / 20</DC_PerkPoints>
+  <DC_PerkAutoHint>技能 5 / 10 / 15 / 20 自动解锁</DC_PerkAutoHint>
+  <DC_PerkSwitchBtn>切换</DC_PerkSwitchBtn>
+  <DC_PerkAutoUnlocked>{PAWN} 达到了 {PERK} 所需的技能。</DC_PerkAutoUnlocked>
+  <DC_PerkLapsed>{PAWN} 的技能已低于 {PERK} — 该专长失效。</DC_PerkLapsed>
   <DC_PerkRequires>需要：{0} 等级 {1}</DC_PerkRequires>
   <DC_PerkUnlockBtn>解锁</DC_PerkUnlockBtn>
   <DC_PerkStatus_Unlocked>✓ 已解锁</DC_PerkStatus_Unlocked>
@@ -14,7 +18,9 @@
   <DC_PerkUnlocked>{PAWN} 解锁了专长：{PERK}。</DC_PerkUnlocked>
   <DC_PerkPointGained>{PAWN} 因提升 {SKILL} 获得了专长点数。</DC_PerkPointGained>
   <DC_PerksAvailable>{PAWN} 提升了 {SKILL} — 有 {2} 个专长可解锁。</DC_PerksAvailable>
-  <DC_InspectPerks>专长：{0} 点，已解锁 {1}</DC_InspectPerks>
+  <DC_InspectPerks>专长：已解锁 {0}</DC_InspectPerks>
+  <DC_Patch161LetterLabel>Deep Colony 1.6.1</DC_Patch161LetterLabel>
+  <DC_Patch161LetterText>专长树不再使用点数。殖民者在技能达到 5、10、15、20 时自动获得专长。若技能跌破该等级，专长失效。\n\n射击精度加成现与原版特性使用同一尺度 — 过去界面会显示为 +0.0。专长效果默认不出现在健康标签；可在模组设置中开启「在健康标签显示专长状态」。技能 20 巅峰专长默认开启。\n\n人物简介上的「家族树」按钮已移除，不再挡住放逐；请用检视面板的「家族」标签。行排 / 谱系按钮在关闭按钮左侧。\n\n打开 Strata 楼层时，扫描在世殖民者不再抛出异常。\n\n可从殖民者检视面板或殖民地「专长」标签打开专长树。</DC_Patch161LetterText>
 
   <!-- ── Trauma ─────────────────────────────────────────────────────────────── -->
   <DC_TherapyProgress>正在取得进展…</DC_TherapyProgress>
@@ -26,7 +32,7 @@
   <DC_InspectTrauma>背负心理创伤</DC_InspectTrauma>
   <DC_InspectGrudge>宿怨：{0}</DC_InspectGrudge>
   <DC_TraumaRecovered>{PAWN} 从 {TRAUMA} 中恢复了。</DC_TraumaRecovered>
-  <DC_SeasonedGrowth>{PAWN} 在康复中变得更强 — 历练幸存者（+1 专长点）。</DC_SeasonedGrowth>
+  <DC_SeasonedGrowth>{PAWN} 在康复中变得更强 — 历练幸存者。</DC_SeasonedGrowth>
   <DC_Flashback>{PAWN} 正在闪回。</DC_Flashback>
   <DC_FlashbackGrudge>{0} 的袭击勾起了旧日宿怨。</DC_FlashbackGrudge>
   <DC_DayOfRemembrance>缅怀之日：纪念 {NAME}。</DC_DayOfRemembrance>
@@ -59,7 +65,9 @@
   <DC_Settings_PresetHard>困难</DC_Settings_PresetHard>
   <DC_Settings_Systems>系统</DC_Settings_Systems>
   <DC_Settings_EnablePerks>启用专长树</DC_Settings_EnablePerks>
-  <DC_Settings_EnablePerksTip>技能门槛专长点与专长树界面。</DC_Settings_EnablePerksTip>
+  <DC_Settings_EnablePerksTip>专长在技能 5 / 10 / 15 / 20 时自动解锁；技能跌破该等级则失效。</DC_Settings_EnablePerksTip>
+  <DC_Settings_ShowPerkHediffs>在健康标签显示专长状态</DC_Settings_ShowPerkHediffs>
+  <DC_Settings_ShowPerkHediffsTip>默认关闭。专长加成仍然生效，只是不列在健康页。</DC_Settings_ShowPerkHediffsTip>
   <DC_Settings_EnableTrauma>启用创伤与治疗</DC_Settings_EnableTrauma>
   <DC_Settings_EnableTraumaTip>战斗冲击、丧亲、囚禁、屠杀、辅导工作。</DC_Settings_EnableTraumaTip>
   <DC_Settings_EnableMentoring>启用学徒制</DC_Settings_EnableMentoring>
@@ -74,7 +82,7 @@
   <DC_Settings_AttitudeConsequencesTip>默认关闭。友好/亏欠/戒备/复仇态度会影响贸易价格、商队与袭击强度。困难预设启用。</DC_Settings_AttitudeConsequencesTip>
   <DC_Settings_Phase5>力量系统（阶段 5）</DC_Settings_Phase5>
   <DC_Settings_Capstones>技能 20 巅峰专长</DC_Settings_Capstones>
-  <DC_Settings_CapstonesTip>默认关闭。在技能 20 增加第三个专长节点。困难预设启用。</DC_Settings_CapstonesTip>
+  <DC_Settings_CapstonesTip>在技能 20 增加专长节点。默认开启，到达该等级仍自动授予。</DC_Settings_CapstonesTip>
   <DC_Settings_Branching>分支 L15 专长选择</DC_Settings_Branching>
   <DC_Settings_BranchingTip>默认关闭。每项技能在 L15 二选一。困难预设启用。</DC_Settings_BranchingTip>
   <DC_Settings_Respec>专长重置（遗忘）</DC_Settings_Respec>
@@ -275,7 +283,6 @@
   <DC_RepFilter_Hostile>敌对</DC_RepFilter_Hostile>
   <DC_PerkOverview_ColArchetype>原型</DC_PerkOverview_ColArchetype>
   <DC_TabFamily>家族</DC_TabFamily>
-  <DC_FamilyTreeButton>家族树</DC_FamilyTreeButton>
   <DC_FamilyTree_Title>{PAWN} 的家族</DC_FamilyTree_Title>
   <DC_FamilyTree_Empty>没有记录的父母、子女、兄弟姐妹或伴侣。</DC_FamilyTree_Empty>
   <DC_FamilyTree_Grandparents>祖父母</DC_FamilyTree_Grandparents>
