@@ -48,6 +48,10 @@
   <Strata_Settings_GasSystemWarning>Внимание: газовая система может вызывать лаги на больших или многоуровневых колониях. Включайте только если нужна симуляция атмосферы/дыма.</Strata_Settings_GasSystemWarning>
   <Strata_Settings_PollutantGases>Загрязняющие газы</Strata_Settings_PollutantGases>
   <Strata_Settings_PollutantGasesDesc>Дым, метан, карманы глубинного газа, споры, пар, чёрная сырость и прочие вредные примеси. Выключение очищает их, отключает выброс/сток/вред и скрывает на оверлее газа. Ниже — сила отравления дымом, когда это включено.</Strata_Settings_PollutantGasesDesc>
+  <Strata_Settings_AutoTagExhaust>Автопометка известных горелок</Strata_Settings_AutoTagExhaust>
+  <Strata_Settings_AutoTagExhaustDesc>Добавляет дымовые компоненты только к списку ванили/DLC (топливная плита и кузница, идеологические жаровни и тёмные факелы). Генераторы, костры и горелки Homesteader всё равно патчатся XML. Выключение не сканирует здания других модов.</Strata_Settings_AutoTagExhaustDesc>
+  <Strata_Settings_VerboseLogging>Подробный лог</Strata_Settings_VerboseLogging>
+  <Strata_Settings_VerboseLoggingDesc>Пишет дополнительные диагностики Strata в Player.log (совместимость, генерация карт, посадка/взлёт гравикорабля, автопометка дыма). По умолчанию выкл.</Strata_Settings_VerboseLoggingDesc>
   <Strata_Settings_SmokeSimulation>Симуляция дыма</Strata_Settings_SmokeSimulation>
   <Strata_Settings_SmokeSimulationDesc>Горелки выделяют дым, который скапливается в непроветриваемых комнатах. Выключение очищает весь существующий дым.</Strata_Settings_SmokeSimulationDesc>
   <Strata_Settings_SmokeSeverity>Сила отравления дымом: {0} (как быстро густой дым вредит пешкам)</Strata_Settings_SmokeSeverity>
@@ -359,6 +363,8 @@
   <Strata_Atmos_StatusLine>{0} · O₂ {1}% · CO₂ {2}%</Strata_Atmos_StatusLine>
   <Strata_Letter_FirstB1Air_Label>Подземный воздух</Strata_Letter_FirstB1Air_Label>
   <Strata_Letter_FirstB1Air_Text>Под поверхностью герметичные комнаты не получают свободный кислород.\n\nПоселенцы вдыхают O₂ и выдыхают CO₂; растения — наоборот. Держите воздух дыхательным через открытые шахты, вентиляцию наружу, насосы O₂/CO₂, известковые скрубберы, мехи или обменники — или оставьте комнаты открытыми в пещеру.\n\nПоверхность и палубы A+ всегда безопасны. Система включается в настройках мода («природные газы», по умолчанию выкл.).</Strata_Letter_FirstB1Air_Text>
+  <Strata_IncompatibleStackLetterLabel>Несовместимый многоуровневый мод</Strata_IncompatibleStackLetterLabel>
+  <Strata_IncompatibleStackLetterText>Strata загружен вместе с {0}. Эти моды каждый ведёт свои слои карт и будут конфликтовать. Отключите другой мод(ы) перед игрой — About.xml также помечает их несовместимыми в списке модов.</Strata_IncompatibleStackLetterText>
   <Strata_Alert_LowOxygen_Label>Мало кислорода под землёй</Strata_Alert_LowOxygen_Label>
   <Strata_Alert_LowOxygen_Explanation>В подземных комнатах колонии мало кислорода. Вентилируйте, откройте шахту, посадите растения или постройте кислородный насос, пока поселенцы не задохнулись.</Strata_Alert_LowOxygen_Explanation>
   <Strata_Alert_HighCO2_Label>Высокий CO₂ под землёй</Strata_Alert_HighCO2_Label>

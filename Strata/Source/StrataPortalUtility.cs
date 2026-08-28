@@ -303,7 +303,7 @@ namespace Strata
                     {
                         PocketMapUtility.currentlyGeneratingPortal = null;
                     }
-                    Log.Message("[Strata] Restored missing portal landing under " + entrance.LabelCap + ".");
+                    StrataLog.Verbose("[Strata] Restored missing portal landing under " + entrance.LabelCap + ".");
                 }
 
                 // Elevator pairs use Building_ElevatorDown as entrance.
@@ -342,7 +342,7 @@ namespace Strata
                     {
                         PocketMapUtility.currentlyGeneratingPortal = null;
                     }
-                    Log.Message("[Strata] Restored missing elevator landing under " + elevator.LabelCap + ".");
+                    StrataLog.Verbose("[Strata] Restored missing elevator landing under " + elevator.LabelCap + ".");
                 }
             }
         }
@@ -376,6 +376,7 @@ namespace Strata
         // next tick (same pattern as PortalRelayChain / DraftedPortalPathing).
         private static readonly List<int> pendingHaulDeliver = new List<int>();
 
+        [StrataSessionReset]
         internal static void ResetHaulDeliverSession()
         {
             pendingHaulDeliver.Clear();
@@ -1076,7 +1077,7 @@ namespace Strata
 
             if (log)
             {
-                Log.Message("[Strata] Wired "
+                StrataLog.Verbose("[Strata] Wired "
                     + landing.LabelCap + " <-> " + hostShaft.LabelCap
                     + " (pair " + (CompStrataShaftLink.CompOf(hostShaft)?.ShortId ?? "?") + ")"
                     + " on " + hostShaft.Map);

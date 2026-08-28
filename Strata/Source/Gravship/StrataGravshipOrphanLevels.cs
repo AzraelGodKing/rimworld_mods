@@ -157,7 +157,7 @@ namespace Strata
                 {
                     parent.sourceMap = shaft.Map;
                 }
-                Log.Message("[Strata] Gravship shaft adopted orphaned "
+                StrataLog.Verbose("[Strata] Gravship shaft adopted orphaned "
                     + (wantUpper ? "upper deck" : "underdeck") + " " + orphan.uniqueID + ".");
                 return orphan;
             }
@@ -170,7 +170,7 @@ namespace Strata
                 {
                     parent.sourceMap = shaft.Map;
                 }
-                Log.Message("[Strata] Gravship shaft adopted orphaned "
+                StrataLog.Verbose("[Strata] Gravship shaft adopted orphaned "
                     + (wantUpper ? "upper deck" : "underdeck") + " " + orphan.uniqueID
                     + " (spawned new landing).");
                 return orphan;
@@ -372,7 +372,7 @@ namespace Strata
                     continue;
                 }
                 RelocatePawns(discard, keep);
-                Log.Message("[Strata] Gravship land: removing empty duplicate "
+                StrataLog.Verbose("[Strata] Gravship land: removing empty duplicate "
                     + (wantUpper ? "upper deck" : "underdeck")
                     + " " + discard.uniqueID + "; kept " + keep.uniqueID + ".");
                 PocketMapUtility.DestroyPocketMap(discard);

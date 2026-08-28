@@ -22,6 +22,7 @@ namespace Strata
 
         private static readonly HashSet<int> failedPortalIds = new HashSet<int>();
 
+        [StrataSessionReset]
         public static void ResetSession()
         {
             generatingPortalIds.Clear();
@@ -114,7 +115,7 @@ namespace Strata
                     }
                 }
 
-                Log.Message("[Strata] Opened level under " + portal.LabelCap
+                StrataLog.Verbose("[Strata] Opened level under " + portal.LabelCap
                     + " (" + map.Size.x + "×" + map.Size.z + ").");
             }
             finally

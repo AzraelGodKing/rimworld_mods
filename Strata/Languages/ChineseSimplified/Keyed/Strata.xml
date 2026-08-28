@@ -49,6 +49,10 @@
   <Strata_Settings_GasSystemWarning>警告：气体系统在大型或多层殖民地上可能造成卡顿。仅在需要大气/烟雾模拟时启用。</Strata_Settings_GasSystemWarning>
   <Strata_Settings_PollutantGases>污染气体</Strata_Settings_PollutantGases>
   <Strata_Settings_PollutantGasesDesc>烟雾、甲烷、深层气囊、孢子、蒸汽、黑潮等有害气体。关闭会清除它们、跳过排放/排除/伤害，并在气体叠加层中隐藏。吸入烟雾严重度仅在开启时生效。</Strata_Settings_PollutantGasesDesc>
+  <Strata_Settings_AutoTagExhaust>自动标记已知燃烧物</Strata_Settings_AutoTagExhaust>
+  <Strata_Settings_AutoTagExhaustDesc>只给一份原版/DLC 名单加上烟雾组件（燃料灶与铁匠台、意识形态火盆与暗火把）。发电机、篝火和 Homesteader 燃烧物仍由 XML 补丁处理。关闭后不会扫描其他模组的建筑。</Strata_Settings_AutoTagExhaustDesc>
+  <Strata_Settings_VerboseLogging>详细日志</Strata_Settings_VerboseLogging>
+  <Strata_Settings_VerboseLoggingDesc>向 Player.log 写入额外 Strata 诊断（兼容检测、地图生成、重力飞船起降、烟雾自动标记）。默认关闭。</Strata_Settings_VerboseLoggingDesc>
   <Strata_Settings_SmokeSimulation>烟雾模拟</Strata_Settings_SmokeSimulation>
   <Strata_Settings_SmokeSimulationDesc>燃烧装置产生烟雾并在不通风房间中积聚。关闭会清除所有现有烟雾。</Strata_Settings_SmokeSimulationDesc>
   <Strata_Settings_SmokeSeverity>吸入烟雾严重度：{0}（浓烟对单位造成伤害的速度）</Strata_Settings_SmokeSeverity>
@@ -360,6 +364,8 @@
   <Strata_Atmos_StatusLine>{0} · O₂ {1}% · CO₂ {2}%</Strata_Atmos_StatusLine>
   <Strata_Letter_FirstB1Air_Label>地下空气</Strata_Letter_FirstB1Air_Label>
   <Strata_Letter_FirstB1Air_Text>地表以下，密封房间不会自动补充氧气。\n\n殖民者吸入 O₂、呼出 CO₂；植物相反。用开放竖井、通向室外的通风口、氧气/二氧化碳泵、石灰洗涤器、竖井风箱或交换器保持可呼吸——或让房间通向洞穴。\n\n地表与 A+ 甲板始终安全。此系统需在模组选项中启用「天然气体」（默认关闭）。</Strata_Letter_FirstB1Air_Text>
+  <Strata_IncompatibleStackLetterLabel>不兼容的多层模组</Strata_IncompatibleStackLetterLabel>
+  <Strata_IncompatibleStackLetterText>Strata 与 {0} 同时加载。这些模组各自堆叠地图，会互相冲突。游玩前请禁用对方模组——About.xml 也会在模组列表中标为不兼容。</Strata_IncompatibleStackLetterText>
   <Strata_Alert_LowOxygen_Label>地下氧气不足</Strata_Alert_LowOxygen_Label>
   <Strata_Alert_LowOxygen_Explanation>地下殖民地房间氧气偏低。请通风、打开竖井、种植植物或建造氧气泵，以免殖民者窒息。</Strata_Alert_LowOxygen_Explanation>
   <Strata_Alert_HighCO2_Label>地下二氧化碳过高</Strata_Alert_HighCO2_Label>

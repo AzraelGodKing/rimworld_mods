@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Strata_RoomOxygen.label>кислород</Strata_RoomOxygen.label>
+  <Strata_RoomOxygen.scoreStages.0.label>опасно</Strata_RoomOxygen.scoreStages.0.label>
+  <Strata_RoomOxygen.scoreStages.1.label>спёртый</Strata_RoomOxygen.scoreStages.1.label>
+  <Strata_RoomOxygen.scoreStages.2.label>нормально</Strata_RoomOxygen.scoreStages.2.label>
+  <Strata_RoomCarbonDioxide.label>углекислый газ</Strata_RoomCarbonDioxide.label>
+  <Strata_RoomCarbonDioxide.scoreStages.0.label>нормально</Strata_RoomCarbonDioxide.scoreStages.0.label>
+  <Strata_RoomCarbonDioxide.scoreStages.1.label>спёртый</Strata_RoomCarbonDioxide.scoreStages.1.label>
+  <Strata_RoomCarbonDioxide.scoreStages.2.label>опасно</Strata_RoomCarbonDioxide.scoreStages.2.label>
+  <Strata_RoomSmoke.label>дым</Strata_RoomSmoke.label>
+  <Strata_RoomSmoke.scoreStages.0.label>нормально</Strata_RoomSmoke.scoreStages.0.label>
+  <Strata_RoomSmoke.scoreStages.1.label>спёртый</Strata_RoomSmoke.scoreStages.1.label>
+  <Strata_RoomSmoke.scoreStages.2.label>опасно</Strata_RoomSmoke.scoreStages.2.label>
+</LanguageData>

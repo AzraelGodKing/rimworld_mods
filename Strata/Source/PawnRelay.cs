@@ -46,6 +46,7 @@ namespace Strata
         // Tick-stamped and keyed by pawn ID, so entries from one save are
         // garbage in another (loading an earlier save leaves future-dated
         // cooldowns that silently suppress relays). Cleared on game load.
+        [StrataSessionReset]
         internal static void ResetSession()
         {
             lastRelayTick.Clear();

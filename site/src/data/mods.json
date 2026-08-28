@@ -374,7 +374,7 @@
         ],
         "notes": [
           "Cave / pocket-map mods (Deep And Deeper, Anomaly undercaves, and similar) are compatible: their portal maps are invisible to Strata's level system by default. The opt-in setting \"Relay into other mods' portal maps\" extends cross-level relays to them.",
-          "Mods adding fuel-burning buildings are auto-detected and given exhaust behavior when they look like burners.",
+          "Mods adding fuel-burning buildings are not auto-tagged by heuristic; only a named vanilla/DLC list plus XML patches get smoke comps.",
           "Multi-level mods that patch pathfinding or map generation globally are the most likely source of conflicts; Strata deliberately patches neither."
         ]
       },

@@ -6,6 +6,18 @@ namespace Strata
     // log window (unlike Warning/Error); keep that contract for land/takeoff noise.
     public static class StrataLog
     {
+        public static bool VerboseEnabled =>
+            StrataMod.Settings != null && StrataMod.Settings.verboseLogging;
+
+        public static void Verbose(string text)
+        {
+            if (!VerboseEnabled)
+            {
+                return;
+            }
+            Log.Message(text);
+        }
+
         public static void Message(string text)
         {
             Log.Message(text);

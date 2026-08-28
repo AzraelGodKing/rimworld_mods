@@ -1,6 +1,32 @@
-[h1]Strata — 3.1.0[/h1]
+3.2.0
+[h1]Strata — 3.2.0[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Room air on the stats card[/b] — oxygen, carbon dioxide, and smoke with fine / stale / dangerous stages when you inspect a room.
+[*] [b]Multi-floor incompat[/b] — the mod list flags AASB, AASB 2, and MultiFloors. A letter names them if you load anyway.
+[/list]
 
 [b]Changed[/b]
 [list]
-[*] [b]Biomes! Caverns floors[/b] — B1–B2 are no longer always Earthen Depths. Wet tiles lean fungal forest, cold tiles lean crystalline caverns, and magma-style earthen depths show up more the deeper you dig.
+[*] [b]Verbose log[/b] — routine Player.log chatter is off unless you enable Verbose log in settings. Startup line and real errors stay.
+[*] [b]See-below DrawPos[/b] — Harmony patches on Thing.DrawPos apply only while see-below is on, and unpatch when you turn it off.
+[*] [b]Smoke auto-tag[/b] — only a named vanilla/DLC list gets smoke comps in C#. Other mods' stoves and generators are not tagged by heuristic.
 [/list]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Root cellar rot[/b] — underground Homesteader root-cellar cooling no longer shares Harmony prefix/postfix state between rotting items.
+[*] [b]Save-load statics[/b] — session caches (hibernate, cages, threat letters, off-thread air jobs, pipe nets, and the rest) clear when you load a different save.
+[*] [b]Translations[/b] — dropped leftover gravship Keyed strings from Chinese/Russian; Russian gravship life-support buildings now have DefInjected labels.
+[/list]
+
+[b]Performance[/b]
+[list]
+[*] [b]Map kind[/b] — underground / roof-deck / depth lookups are cached per map instead of string-comparing biomes on every temperature tick.
+[*] [b]Open roofs[/b] — unroofed-cell counts on Strata floors are cached until a roof changes.
+[*] [b]Atmosphere[/b] — breath diffusion reuses per-map buffers; cloud-key snapshots no longer allocate a new list each cycle.
+[*] [b]Hibernate check[/b] — vacant-level pawn scans are cached for about a second.
+[/list]
+
+[i]Build stamp (Player.log): v320-v1[/i]

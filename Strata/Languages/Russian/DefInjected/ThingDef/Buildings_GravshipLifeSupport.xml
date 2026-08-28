@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_GravshipOxygenTank.label>бак кислорода гравикорабля</Strata_GravshipOxygenTank.label>
+  <Strata_GravshipOxygenTank.description>Хранит сжатый кислород для нижних палуб и башен гравикорабля Strata. Пока есть питание, выпускает дыхательный воздух в комнату. Заправляется химтопливом или через открытый лестничный переход к основной палубе при посадке (не в вакууме).\n\nУровни, связанные с гравикораблём, не получают кислород бесплатно — нужны баки, насосы, регенераторы или открытая шахта.</Strata_GravshipOxygenTank.description>
+
+  <Strata_GravshipOxygenReclaimer.label>регенератор кислорода гравикорабля</Strata_GravshipOxygenReclaimer.label>
+  <Strata_GravshipOxygenReclaimer.description>Электрический скруббер, вырабатывающий кислород для жизнеобеспечения гравикорабля. Лучше ставить рядом с баками — выход заполняет ближайший бак в радиусе 12 клеток; иначе медленно просачивается в воздух комнаты.</Strata_GravshipOxygenReclaimer.description>
+
+  <Strata_GravshipHeatsink.label>радиатор гравикорабля</Strata_GravshipHeatsink.label>
+  <Strata_GravshipHeatsink.description>Поглощает тепло запуска гравикорабля и отдаёт тепло в соседние комнаты. Можно ставить на палубе корабля или связанной нижней палубе Strata. Без радиаторов тепло запуска идёт прямо в комнаты корабля.</Strata_GravshipHeatsink.description>
+
+  <Strata_GravshipHeatsinkLarge.label>большой радиатор гравикорабля</Strata_GravshipHeatsinkLarge.label>
+  <Strata_GravshipHeatsinkLarge.description>Тяжёлый радиаторный блок для дальних прыжков. Хранит больше тепла запуска и сбрасывает его быстрее при питании.</Strata_GravshipHeatsinkLarge.description>
+
+</LanguageData>

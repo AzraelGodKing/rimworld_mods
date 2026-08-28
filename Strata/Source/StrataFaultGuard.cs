@@ -24,6 +24,7 @@ namespace Strata
         private static readonly int[] windowStart = new int[4];
         private static readonly bool[] tripped = new bool[4];
 
+        [StrataSessionReset]
         public static void ResetSession()
         {
             Array.Clear(counts, 0, counts.Length);

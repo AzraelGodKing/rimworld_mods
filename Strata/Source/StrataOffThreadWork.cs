@@ -18,6 +18,9 @@ namespace Strata
         private static readonly Dictionary<int, BreathDiffusionJob> breathJobsByMapId =
             new Dictionary<int, BreathDiffusionJob>();
 
+        private static readonly Dictionary<int, BreathBuffers> buffersByMapId =
+            new Dictionary<int, BreathBuffers>();
+
         private static readonly object breathGate = new object();
 
         public static bool OffThreadAtmosphereEnabled =>
@@ -26,10 +29,20 @@ namespace Strata
 
         public static void LogStartup()
         {
-            Log.Message("[Strata] Off-thread work: atmosphere=" + OffThreadAtmosphereEnabled
+            StrataLog.Verbose("[Strata] Off-thread work: atmosphere=" + OffThreadAtmosphereEnabled
                 + " workRelayBoard=" + (StrataMod.Settings?.OffThreadWorkRelayActive == true)
                 + " (A1 buoyancy, A2 density, A3 overlay; B1–B3 rock/cavern plans use Parallel/ThreadPool;"
                 + " work board packs grow cells on main, aggregates on worker).");
+        }
+
+        [StrataSessionReset]
+        public static void ResetSession()
+        {
+            lock (breathGate)
+            {
+                breathJobsByMapId.Clear();
+                buffersByMapId.Clear();
+            }
         }
 
         public static void CancelMap(int mapUniqueId)
@@ -37,6 +50,7 @@ namespace Strata
             lock (breathGate)
             {
                 breathJobsByMapId.Remove(mapUniqueId);
+                buffersByMapId.Remove(mapUniqueId);
             }
         }
 
@@ -70,22 +84,29 @@ namespace Strata
                     return false;
                 }
 
+                BreathBuffers buffers = GetBuffers(map.uniqueID, o2.Length);
+                Array.Copy(o2, buffers.snapO2, o2.Length);
+                Array.Copy(co2, buffers.snapCo2, co2.Length);
+                Array.Copy(skipDiffusionCell, buffers.skip, skipDiffusionCell.Length);
+
                 var snapshot = new BreathDiffusionSnapshot
                 {
                     mapUniqueId = map.uniqueID,
                     enqueuedTick = enqueuedTick,
                     mapWidth = map.Size.x,
                     mapHeight = map.Size.z,
-                    o2 = (float[])o2.Clone(),
-                    co2 = (float[])co2.Clone(),
-                    skipCell = (bool[])skipDiffusionCell.Clone(),
+                    o2 = buffers.snapO2,
+                    co2 = buffers.snapCo2,
+                    skipCell = buffers.skip,
                 };
 
                 var job = new BreathDiffusionJob
                 {
                     Snapshot = snapshot,
-                    ResultO2 = new float[o2.Length],
-                    ResultCo2 = new float[co2.Length],
+                    ResultO2 = buffers.resultO2,
+                    ResultCo2 = buffers.resultCo2,
+                    ScratchO2 = buffers.scratchO2,
+                    ScratchCo2 = buffers.scratchCo2,
                 };
                 breathJobsByMapId[map.uniqueID] = job;
 
@@ -145,7 +166,7 @@ namespace Strata
         {
             try
             {
-                ComputeBreathDiffusion(job.Snapshot, job.ResultO2, job.ResultCo2);
+                ComputeBreathDiffusion(job.Snapshot, job.ResultO2, job.ResultCo2, job.ScratchO2, job.ScratchCo2);
             }
             catch (Exception ex)
             {
@@ -158,13 +179,24 @@ namespace Strata
             }
         }
 
+        private static BreathBuffers GetBuffers(int mapUniqueId, int length)
+        {
+            if (!buffersByMapId.TryGetValue(mapUniqueId, out BreathBuffers buffers)
+                || buffers.Length != length)
+            {
+                buffers = BreathBuffers.Create(length);
+                buffersByMapId[mapUniqueId] = buffers;
+            }
+            return buffers;
+        }
+
         private static void ComputeBreathDiffusion(
             BreathDiffusionSnapshot snap,
             float[] outO2,
-            float[] outCo2)
+            float[] outCo2,
+            float[] scratchO2,
+            float[] scratchCo2)
         {
-            float[] scratchO2 = new float[snap.o2.Length];
-            float[] scratchCo2 = new float[snap.co2.Length];
             Array.Copy(snap.o2, scratchO2, snap.o2.Length);
             Array.Copy(snap.co2, scratchCo2, snap.co2.Length);
             Array.Copy(snap.o2, outO2, snap.o2.Length);
@@ -279,6 +311,33 @@ namespace Strata
             }
         }
 
+        private sealed class BreathBuffers
+        {
+            public float[] snapO2;
+            public float[] snapCo2;
+            public bool[] skip;
+            public float[] resultO2;
+            public float[] resultCo2;
+            public float[] scratchO2;
+            public float[] scratchCo2;
+
+            public int Length => snapO2?.Length ?? 0;
+
+            public static BreathBuffers Create(int length)
+            {
+                return new BreathBuffers
+                {
+                    snapO2 = new float[length],
+                    snapCo2 = new float[length],
+                    skip = new bool[length],
+                    resultO2 = new float[length],
+                    resultCo2 = new float[length],
+                    scratchO2 = new float[length],
+                    scratchCo2 = new float[length],
+                };
+            }
+        }
+
         private struct BreathDiffusionSnapshot
         {
             public int mapUniqueId;
@@ -295,6 +354,8 @@ namespace Strata
             public BreathDiffusionSnapshot Snapshot;
             public float[] ResultO2;
             public float[] ResultCo2;
+            public float[] ScratchO2;
+            public float[] ScratchCo2;
             public bool Failed;
             public string ErrorMessage;
             private int completedFlag;

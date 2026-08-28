@@ -262,7 +262,7 @@ namespace Strata
         {
             if (patched.Count > 0)
             {
-                Log.Message("[Strata] Robot " + category + " relay: patched "
+                StrataLog.Verbose("[Strata] Robot " + category + " relay: patched "
                     + patched.Count + " — " + string.Join(", ", patched) + ".");
             }
             if (missing.Count > 0)
@@ -274,7 +274,7 @@ namespace Strata
             }
             if (patched.Count == 0 && missing.Count == 0)
             {
-                Log.Message("[Strata] Robot " + category + " relay: AIRobot assembly not loaded.");
+                StrataLog.Verbose("[Strata] Robot " + category + " relay: AIRobot assembly not loaded.");
             }
         }
 

@@ -63,7 +63,7 @@ namespace Strata
                 StrataThingDefOf.Strata_GasWell.comps.Add(resourceProps);
                 available = true;
                 Status = $"feeding '{gasNet.defName}'";
-                Log.Message("[Strata] Helixien gas network detected - gas wells can feed its pipes.");
+                StrataLog.Verbose("[Strata] Helixien gas network detected - gas wells can feed its pipes.");
             }
             catch (Exception e)
             {

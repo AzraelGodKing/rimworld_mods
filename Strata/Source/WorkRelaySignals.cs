@@ -98,6 +98,7 @@ namespace Strata
             workSeekingGiverMarkers.Remove(typeNameContains);
         }
 
+        [StrataSessionReset]
         internal static void ResetSession()
         {
             workVersion = 1;

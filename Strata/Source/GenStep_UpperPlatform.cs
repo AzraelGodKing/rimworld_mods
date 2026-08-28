@@ -48,7 +48,7 @@ namespace Strata
                         sky++;
                     }
                 }
-                Log.Message($"[Strata] Upper deck gen: {deck} roof-deck cells, {sky} open-sky cells (landing {spot}).");
+                StrataLog.Verbose($"[Strata] Upper deck gen: {deck} roof-deck cells, {sky} open-sky cells (landing {spot}).");
             }
         }
     }

@@ -103,7 +103,7 @@ namespace Strata
             }
             if (methods.Count > 0)
             {
-                Log.Message("[Strata] Robot work relay: patched " + methods.Count + " AIRobot JobGiver(s).");
+                StrataLog.Verbose("[Strata] Robot work relay: patched " + methods.Count + " AIRobot JobGiver(s).");
             }
             return methods;
         }

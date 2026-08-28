@@ -24,6 +24,7 @@ namespace Strata
         private static readonly Dictionary<int, Intent> intents = new Dictionary<int, Intent>();
         private static readonly List<int> pending = new List<int>();
 
+        [StrataSessionReset]
         internal static void ResetSession()
         {
             intents.Clear();

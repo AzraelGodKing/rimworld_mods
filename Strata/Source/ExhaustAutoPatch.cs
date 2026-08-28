@@ -1,130 +1,64 @@
 using System.Collections.Generic;
-using RimWorld;
+using System.Text;
 using Verse;
 
 namespace Strata
 {
-    // At startup, tag obvious combustion buildings that other mods forgot to patch.
+    // Tag a named allowlist of vanilla / DLC combustion buildings. Other mods
+    // are not opted in by heuristic — add them in Patches/Exhaust_Strata.xml.
     public static class ExhaustAutoPatch
     {
-        private static readonly HashSet<string> ExcludedDefNames = new HashSet<string>
-        {
-            "Strata_ExhaustFan",
-            "Strata_UpdraftFilter",
-            "Strata_SmokeLouver",
-            "Strata_SmokeDuct",
-            "Strata_HiddenGasPipe",
-            // Burns clean - that is its whole selling point underground.
-            "Strata_DeepGasGenerator",
-            "Strata_GasWell",
-            "Strata_DeepGasVent",
-            "SolarGenerator",
-            "WindTurbine",
-            "GeothermalGenerator",
-            "WatermillGenerator",
-            "VanometricPowerCell",
-            "Ship_Reactor",
-            "WoodFiredGenerator",
-            "ChemfuelPoweredGenerator",
-            "Campfire",
-            "TorchLamp",
-            "Fire",
-            "Homesteader_WoodGenerator",
-            "Homesteader_PortableGenerator",
-        };
+        // emissionPerCycle matches CompExhaust work-table / flame comments.
+        private static readonly Dictionary<string, float> AllowlistedEmissions =
+            new Dictionary<string, float>
+            {
+                { "FueledStove", 1f },
+                { "FueledSmithy", 1f },
+                { "Brazier", 2f },
+                { "DarklightBrazier", 2f },
+                { "Darktorch", 0.1f },
+                { "DarktorchFloodlight", 0.1f },
+            };
 
         public static void Apply()
         {
-            foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
+            StrataSettings settings = StrataMod.Settings;
+            if (settings != null && !settings.autoTagExhaust)
             {
-                if (def.category != ThingCategory.Building || def.IsBlueprint || def.IsFrame)
+                if (settings.verboseLogging)
                 {
-                    continue;
+                    StrataLog.Verbose("[Strata] Exhaust auto-tag skipped (setting off).");
                 }
-                if (ExcludedDefNames.Contains(def.defName) || HasExhaustComp(def))
-                {
-                    continue;
-                }
-                float emission = EmissionFor(def);
-                if (emission <= 0f)
+                return;
+            }
+
+            var tagged = new List<string>();
+            foreach (KeyValuePair<string, float> kv in AllowlistedEmissions)
+            {
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(kv.Key);
+                if (def == null || HasExhaustComp(def))
                 {
                     continue;
                 }
                 def.comps ??= new List<CompProperties>();
-                def.comps.Add(new CompProperties_Exhaust { emissionPerCycle = emission });
+                def.comps.Add(new CompProperties_Exhaust { emissionPerCycle = kv.Value });
+                tagged.Add(def.defName);
             }
-        }
 
-        private static float EmissionFor(ThingDef def)
-        {
-            if (def.GetCompProperties<CompProperties_Refuelable>() != null)
+            if (settings != null && settings.verboseLogging)
             {
-                // Fueled work benches (stove, smithy, smelter...) smoke gently,
-                // and only while a pawn works them (see CompExhaust.Active). A
-                // workshop without ventilation should be uncomfortable, not a
-                // death trap.
-                if (def.IsWorkTable)
+                var sb = new StringBuilder();
+                sb.Append("[Strata] Exhaust auto-tag allowlist: ");
+                if (tagged.Count == 0)
                 {
-                    return 1f;
+                    sb.Append("nothing new (XML already covered, or DLC defs missing).");
                 }
-                if (def.defName.Contains("Torch") || def.defName.Contains("Candle"))
+                else
                 {
-                    return 0.1f;
+                    sb.Append(string.Join(", ", tagged));
                 }
-                if (def.defName.Contains("Campfire") || def.defName.Contains("Fire"))
-                {
-                    return 2.5f;
-                }
-                // Anything else refuelable only smokes with evidence of actual
-                // combustion - a passive cooler burns nothing. Braziers and
-                // other always-lit flames sit at campfire level, not generator
-                // level, so an ideoligion room doesn't smoke itself out.
-                if (LooksLikeFlame(def))
-                {
-                    return 2f;
-                }
-                return 0f;
+                StrataLog.Verbose(sb.ToString());
             }
-            CompProperties_Power power = def.GetCompProperties<CompProperties_Power>();
-            if (power != null && power.PowerConsumption < 0f)
-            {
-                // Producing power is not evidence of combustion by itself -
-                // modded solar arrays, water wheels, and reactors land here
-                // too. Only tag producers that actually look like burners:
-                // a fuel-ish name, a flame overlay, or heat output (every
-                // vanilla combustion generator pushes heat; clean producers
-                // don't).
-                if (def.defName.Contains("Chemfuel") || def.defName.Contains("Portable"))
-                {
-                    return 4.5f;
-                }
-                if (NameSuggestsCombustion(def) || LooksLikeFlame(def))
-                {
-                    return 3.5f;
-                }
-                return 0f;
-            }
-            return 0f;
-        }
-
-        private static bool NameSuggestsCombustion(ThingDef def)
-        {
-            string name = def.defName;
-            // "Chemfuel" is deliberate: the old "Fuel" was too broad and incorrectly
-            // tagged nuclear/hydrogen fuel cells and similar clean generators from
-            // other mods. "Chemfuel" still catches every liquid-combustion generator.
-            return name.Contains("Wood") || name.Contains("Coal") || name.Contains("Diesel")
-                || name.Contains("Chemfuel") || name.Contains("Burn");
-        }
-
-        private static bool LooksLikeFlame(ThingDef def)
-        {
-            if (def.GetCompProperties<CompProperties_FireOverlay>() != null)
-            {
-                return true;
-            }
-            CompProperties_HeatPusher heat = def.GetCompProperties<CompProperties_HeatPusher>();
-            return heat != null && heat.heatPerSecond > 0f;
         }
 
         private static bool HasExhaustComp(ThingDef def)
