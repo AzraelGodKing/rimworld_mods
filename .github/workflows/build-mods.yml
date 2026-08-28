@@ -19,6 +19,9 @@ on:
       - "Deep Colony/Source/**"
       - "Azrael/Source/**"
       - "scripts/build_downloads.ps1"
+      - "scripts/validate_mods.py"
+      - ".gitattributes"
+      - "**/*.xml"
       - ".github/workflows/build-mods.yml"
   pull_request:
     paths:
@@ -31,6 +34,9 @@ on:
       - "Deep Colony/Source/**"
       - "Azrael/Source/**"
       - "scripts/build_downloads.ps1"
+      - "scripts/validate_mods.py"
+      - ".gitattributes"
+      - "**/*.xml"
       - ".github/workflows/build-mods.yml"
   workflow_dispatch:
 
@@ -60,6 +66,9 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "8.0.x"
+
+      - name: Validate XML, texPaths, and Keyed parity
+        run: python3 scripts/validate_mods.py
 
       - name: Build Homesteader
         run: dotnet build Homesteader/Source/Homesteader.csproj -c Release --nologo
@@ -102,10 +111,6 @@ jobs:
             fi
             # Inject / replace assembly inside the archive (paths use forward slashes).
             zip -u "$zip_path" "$dll"
-            # Drop draft Workshop preview options from the public zip.
-            if [[ "$folder" == "DateNight" ]]; then
-              zip -d "$zip_path" "DateNight/About/preview-options/*" 2>/dev/null || true
-            fi
             echo "${zip_name}: $(du -h "$zip_path" | cut -f1)"
           }
           pack_mod Homesteader Homesteader Homesteader

@@ -9,6 +9,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.0 loaded from ...` in Player.log.
 
 ### Added
+- **Which station FAQ** — Workshop description and docs spell out drying rack vs curing rack, cellar vs icehouse vs springhouse, and hearth vs wood stove so similar names are not treated as duplicates.
 - **Homestead architect tab** — crates, barrels, pallet, hayloft, cellars, icehouse, springhouse, cistern, and water tower moved off Furniture (Steam Aug 6). Adaptive Storage Framework does not get those buildings (it has no Storage tab); the Homestead tab stays.
 - **Update idea pool** — Workshop QoL (architect tab, ASF Storage patch, texture audit, settings) plus pantry/yard/farmstand/waterwheel phases. Goat pen stays removed; dairy shed is the livestock follow-up. Spec: [docs/ideas/homesteader-updates.md](../docs/ideas/homesteader-updates.md).
 - **Optional texture refresh** — Mod Options → Homesteader → "Use refreshed textures" (off by default). Original sprites are kept. The new pack gives every building, item, plant, and floor its own unique texture (no more shared jam/cellar/etc. placeholders); orchard trees and composted soil get dedicated art too. `_*_{north,south,east,west}` files are one building from four camera angles, not four different objects. Curing rack refresh redone as one mixed-charcuterie rack (hams, sausages, bacon slab, netted salami) with matching facings. Diggo keeps brought `art/brought/HippoDogPlushie.png`; the 27 statue keeps brought `art/brought/27_2.0.png` (neither is in the refresh swap). Outliers that read as product photos, RPG loot, or true-isometric renders (apparel, power buildings, maypole, monuments, grand 27, shark plushie, chicken coop, beehive, icehouse/root cellar/springhouse, solar still, water tower, orchard trees, crops, jam/mason jar/pie/cans) were redrawn against actual Core sprites (wood-fired generator, cowboy hat, oak/maple, chess table, sculptures): thick dark outlines, muted palette, flattened top-down 3/4 camera. EN/CN/RU settings strings. Restart if sprites look stale after toggling.
@@ -19,6 +20,7 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Hom
 - **CN / RU language packs** — Chinese Simplified and Russian Keyed + full DefInjected (buildings, items, plants, recipes, research, thoughts, hediffs, incidents, and related defs).
 
 ### Fixed
+- **CN / RU Keyed** — added the missing `Homesteader_ScenPart_ForcedStorytellerSummary` string.
 - **Azrael storyteller (1.6)** — comps rewritten to match Cassandra Classic (valid disease / quest / raid-beacon fields); portraits use `CassandraClassic` art so the teller loads without XML / missing-texture errors.
 - **ASF hid Homestead storage** — Adaptive Storage Framework has no `ASF_Architect` tab. The old patch moved crates/cellars/cisterns there and deleted `Homesteader_Storage`, so those buildings vanished whenever ASF was a dependency.
 - **Meal allergies** — flares and food AI now inspect `CompIngredients`, so simple/fine meals cooked with milk, wheat, eggs, or fish match.

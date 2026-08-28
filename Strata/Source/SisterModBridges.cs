@@ -133,33 +133,6 @@ namespace Strata
         }
     }
 
-    // Stormproof fallout scrubbers treat enclosed underground rooms as indoor.
-    // StrataRoomUtility also forces B1+ rooms enclosed for gas; this remains
-    // for Stormproof when UsesOutdoorTemperature was already false.
-    [HarmonyPatch(typeof(Room), "PsychologicallyOutdoors", MethodType.Getter)]
-    public static class Patch_StormproofUndergroundRooms
-    {
-        public static void Postfix(Room __instance, ref bool __result)
-        {
-            if (!__result || !SisterModBridges.StormproofLoaded || __instance?.Map == null)
-            {
-                return;
-            }
-            if (StrataRoomUtility.IsStrataPocketLevel(__instance.Map))
-            {
-                return;
-            }
-            if (!StrataMapUtility.IsUnderground(__instance.Map))
-            {
-                return;
-            }
-            if (!__instance.UsesOutdoorTemperature && __instance.CellCount > 1)
-            {
-                __result = false;
-            }
-        }
-    }
-
     [HarmonyPatch(typeof(Plant), "GrowthRateFactor_Fertility", MethodType.Getter)]
     public static class Patch_WellspringUndergroundIrrigation
     {
