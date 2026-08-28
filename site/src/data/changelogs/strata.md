@@ -5,11 +5,18 @@ Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
 
 Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog.txt) · [`../assets/workshop/strata-update-notes.bbcode`](../assets/workshop/strata-update-notes.bbcode).
 
-**Version:** `3.2.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.2.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.2.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.2.1 Soft-compat build <stamp> loaded from ...`.
 
 **Build stamp:** each DLL logs the stamp after the version. Current stamp is set in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
+
+## [3.2.1]
+
+Player-facing version **3.2.1** (`About.xml` `modVersion`). Startup writes `[Strata] v3.2.1 Soft-compat build v321-v1` in Player.log.
+
+### Fixed
+- **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of leaving Strata half-patched.
 
 ## [3.2.0]
 

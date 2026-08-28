@@ -24,13 +24,15 @@ namespace Homesteader
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            parent.Map?.GetComponent<RootCellarCoolingMapComponent>()?.MarkDirty();
+            if (parent.Map != null)
+                CoolingLookup.For(parent.Map)?.MarkDirty();
         }
 
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             base.PostDeSpawn(map, mode);
-            map?.GetComponent<RootCellarCoolingMapComponent>()?.MarkDirty();
+            if (map != null)
+                CoolingLookup.For(map)?.MarkDirty();
         }
 
         public override string CompInspectStringExtra()
@@ -51,6 +53,12 @@ namespace Homesteader
 
         public RootCellarCoolingMapComponent(Map map) : base(map)
         {
+            CoolingLookup.Register(this);
+        }
+
+        public override void MapRemoved()
+        {
+            CoolingLookup.Unregister(map);
         }
 
         public bool HasAnyCooling => cooledCellTemps.Count > 0;
@@ -130,6 +138,53 @@ namespace Homesteader
         }
     }
 
+    internal static class CoolingLookup
+    {
+        private static readonly Dictionary<int, RootCellarCoolingMapComponent> byMapId =
+            new Dictionary<int, RootCellarCoolingMapComponent>();
+
+        internal static void Register(RootCellarCoolingMapComponent comp)
+        {
+            if (comp?.map == null)
+            {
+                return;
+            }
+
+            byMapId[comp.map.uniqueID] = comp;
+        }
+
+        internal static void Unregister(Map map)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            byMapId.Remove(map.uniqueID);
+        }
+
+        internal static RootCellarCoolingMapComponent For(Map map)
+        {
+            if (map == null)
+            {
+                return null;
+            }
+
+            if (byMapId.TryGetValue(map.uniqueID, out RootCellarCoolingMapComponent cached))
+            {
+                return cached;
+            }
+
+            RootCellarCoolingMapComponent found = map.GetComponent<RootCellarCoolingMapComponent>();
+            if (found != null)
+            {
+                byMapId[map.uniqueID] = found;
+            }
+
+            return found;
+        }
+    }
+
     public static class RootCellarUtility
     {
         public static bool TryGetCoolingCeiling(Thing thing, out float maxTemperature)
@@ -140,7 +195,7 @@ namespace Homesteader
                 return false;
             }
 
-            RootCellarCoolingMapComponent comp = thing.Map.GetComponent<RootCellarCoolingMapComponent>();
+            RootCellarCoolingMapComponent comp = CoolingLookup.For(thing.Map);
             if (comp == null || !comp.HasAnyCooling)
             {
                 return false;
@@ -155,20 +210,19 @@ namespace Homesteader
     {
         public static void Postfix(Thing __instance, ref float __result)
         {
-            // Cheap map-level early-out before CompRottable / cooler lookup.
             Map map = __instance.Map;
             if (map == null || !__instance.Spawned)
             {
                 return;
             }
 
-            RootCellarCoolingMapComponent cooling = map.GetComponent<RootCellarCoolingMapComponent>();
+            RootCellarCoolingMapComponent cooling = CoolingLookup.For(map);
             if (cooling == null || !cooling.HasAnyCooling)
             {
                 return;
             }
 
-            if (__instance.TryGetComp<CompRottable>() == null)
+            if (!HomesteaderHarmony.RottableDefs.Contains(__instance.def))
             {
                 return;
             }

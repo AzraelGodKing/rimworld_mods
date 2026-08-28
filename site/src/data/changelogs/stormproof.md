@@ -6,7 +6,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.0.0 loaded from ...` in Player.log.
+Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.0.1 loaded from ...` in Player.log.
 
 ### Added
 - **Stormfront scenario** — hard-weather showcase start; unlocks storm protection research; locks Azrael when Homesteader is loaded.
@@ -15,6 +15,7 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Sto
 - **Workshop preview** — compressed `About/Preview.png` (~3.0 MB → ~0.94 MB) via palette PNG so Steam uploads stay under size pressure.
 
 ### Fixed
+- **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Stormproof.
 - **Chinese Keyed XML** — closing tag for `Stormproof_NotConnectedPowerNet` now matches the opening tag so the Simplified Chinese pack loads instead of failing the whole file.
 - **Building sprites re-verified (SP1)** — re-ran pack (~90% fill, Armored conduit skipped) + full alpha clean on all Power buildings so Workshop installs match the fixed art.
 - **Building architect icons tiny** — sprites only filled ~10–25% of each PNG; packed content to ~90% canvas fill so Power-tab icons and in-world draw match normal RimWorld scale (Armored conduit atlas unchanged).
