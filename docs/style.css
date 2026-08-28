@@ -809,6 +809,25 @@ code {
   color: var(--mod, var(--brand));
 }
 .sub, .lead { color: var(--ink-muted); margin: 0 0 1.25rem; max-width: 42rem; }
+.faq-table {
+  width: 100%;
+  max-width: 54rem;
+  border-collapse: collapse;
+  margin: 0 0 1.25rem;
+  font-size: 1rem;
+}
+.faq-table th,
+.faq-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.7rem 0.85rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.faq-table th {
+  width: 34%;
+  color: var(--ink);
+  font-weight: 700;
+}
 .mod-workshop-stats {
   margin: 1.25rem 0 0;
   padding: 0.9rem 1.05rem;

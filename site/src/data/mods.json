@@ -26,8 +26,8 @@
           "label": "Winter pantry",
           "features": [
             { "title": "Preserve without a freezer", "body": "Dry, salt, and smoke from day one of a tribal start. The drying rack needs no research; curing and smoking unlock with Primitive homestead. Turn surplus into stores that survive the caravan and the cold snap." },
-            { "title": "Drying rack", "body": "Jerky, fruit leather, dried produce, and pemmican." },
-            { "title": "Curing rack", "body": "Rock salt and salted meat." },
+            { "title": "Drying rack", "body": "No research. Jerky, fruit leather, dried produce, dried mushrooms, and pemmican." },
+            { "title": "Curing rack", "body": "Primitive homestead. Rock salt and salted meat — not the same job as drying." },
             { "title": "Smokehouse", "body": "Smoked meat — and smoked fish with Odyssey." },
             { "title": "Bulk farm storage", "body": "Hayloft and ingredient barrel for bulk farm storage." }
           ]
@@ -38,7 +38,7 @@
           "features": [
             { "title": "A kitchen that earns its keep", "body": "Mill grain, churn butter, press cheese, brew cider, and plate pantry meals at the homestead hearth. Recipes lean on what you grew — cream, sugar, fruit, and smoked leftovers — not a chemfuel factory." },
             { "title": "Workstations", "body": "Grain mill, butter churn, cheese press, pickling crock, jam cauldron, and brewing bench." },
-            { "title": "Hearth meals", "body": "Toast and jam, ploughman's lunch, honey porridge, and pie." },
+            { "title": "Hearth meals", "body": "Toast and jam, ploughman's lunch, honey porridge, and pie. The homestead hearth cooks; the wood stove only heats." },
             { "title": "Favorite foods", "body": "Pawns remember what they love." }
           ]
         },
@@ -93,8 +93,26 @@
         { "src": "img/CompactBattery.png", "caption": "Compact battery" },
         { "src": "img/WoodGenerator.png", "caption": "Wood-burning generator" }
       ],
+      "stationFaq": {
+        "title": "Which station do I want?",
+        "intro": "Similar names, different jobs — nothing here is a duplicate.",
+        "rows": [
+          {
+            "pair": "Drying rack vs curing rack",
+            "answer": "Drying rack needs no research: jerky, dried produce, fruit leather, dried mushrooms, pemmican. Curing rack (Primitive homestead) salts meat and chips rock salt."
+          },
+          {
+            "pair": "Root cellar vs icehouse vs springhouse",
+            "answer": "Root cellar is the large passive larder (≤5°C). Icehouse is colder and smaller (≤0°C). Springhouse is milder (≤8°C) for dairy and produce by the farmhouse."
+          },
+          {
+            "pair": "Homestead hearth vs wood stove",
+            "answer": "Homestead hearth cooks pantry meals. Wood stove only heats the room, off-grid — it does not cook."
+          }
+        ]
+      },
       "goodToKnow": [
-        "The drying rack needs no research — dry, salt, and smoke from day one of a tribal start.",
+        "The drying rack needs no research. Curing and smoking unlock with Primitive homestead.",
         "Smoked fish requires the Odyssey DLC.",
         "Safe to add to an existing save. Before removing, deconstruct Homesteader buildings and use up or sell its items."
       ],

@@ -14,6 +14,8 @@ Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog
 Player-facing version **3.1.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.1.0 Soft-compat build ...` in Player.log. Cavern floors follow Biomes! Caverns climate/depth instead of locking B1–B2 to Earthen Depths.
 
 ### Fixed
+- **CN / RU Keyed** — added B1 infestation settings and the quest-map shaft warning strings that English already had.
+- **Stormproof outdoor-room patch** — one `PsychologicallyOutdoors` Harmony class now covers Strata pocket levels and Stormproof's enclosed-underground rooms, instead of two patches fighting the same getter.
 - **Shaft dig-down on underground floors** (`shaft-temp-map-guard-v1`) — digging deeper from B1 (or any Strata underground/upper level) no longer falsely triggers the "temporary quest map" guard. The guard still blocks shafts on actual quest sites, Ancient Urban Ruins, and caravan maps.
 
 ### Added

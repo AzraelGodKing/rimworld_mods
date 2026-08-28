@@ -14,6 +14,15 @@
   <Nemesis_Settings_MaxAggression>Максимальная агрессия: {0}%</Nemesis_Settings_MaxAggression>
   <Nemesis_Settings_Escalation>Скорость эскалации: {0} в день</Nemesis_Settings_Escalation>
   <Nemesis_Settings_MinCooldown>Минимум между действиями: {0} дн.</Nemesis_Settings_MinCooldown>
+  <Nemesis_Settings_Captain>Рост капитана</Nemesis_Settings_Captain>
+  <Nemesis_Settings_EnableProgression>Включить рост капитана</Nemesis_Settings_EnableProgression>
+  <Nemesis_Settings_EnableProgressionTip>После побегов немезис усиливается (навыки, снаряжение, броня). Охоту всё ещё можно закончить пленом или убийством.</Nemesis_Settings_EnableProgressionTip>
+  <Nemesis_Settings_MaxProgression>Максимальный уровень капитана: {0}</Nemesis_Settings_MaxProgression>
+  <Nemesis_Settings_PostEscapeSabotage>Вес мелкого саботажа после побега: {0}%</Nemesis_Settings_PostEscapeSabotage>
+  <Nemesis_Settings_SoftMounts>Мягкие ездовые / эскорт-животные</Nemesis_Settings_SoftMounts>
+  <Nemesis_Settings_SoftMountsTip>С 2 уровня капитана рядом при возвращении появляется подходящее фракции животное (лучше с Giddy-Up; без него всё равно дерётся рядом).</Nemesis_Settings_SoftMountsTip>
+  <Nemesis_Settings_SoftMechs>Мягкий эскорт механоидов Biotech</Nemesis_Settings_SoftMechs>
+  <Nemesis_Settings_SoftMechsTip>Капитаны-механиторы при загруженном Biotech могут привести 1–3 механоида в рейде «возвращения с армией».</Nemesis_Settings_SoftMechsTip>
   <Nemesis_Settings_ActionMix>Набор действий</Nemesis_Settings_ActionMix>
   <Nemesis_Settings_WeightTaunt>Насмешка по связи: {0}</Nemesis_Settings_WeightTaunt>
   <Nemesis_Settings_WeightRaid>Прямой рейд: {0}</Nemesis_Settings_WeightRaid>
@@ -77,6 +86,15 @@
   <Nemesis_Letter_VengeanceReturnBody4>Хватит красться. Хватит почти-промахов. {0} перестал притворяться, что это дуэль.\n\nЗачем возвращаться в одиночку, если можно вернуться с армией?\n\nДолг перед {1} стал коллективным.</Nemesis_Letter_VengeanceReturnBody4>
   <Nemesis_Letter_VengeanceReturnTitle5>{0} и орда</Nemesis_Letter_VengeanceReturnTitle5>
   <Nemesis_Letter_VengeanceReturnBody5>Они слишком часто от вас уходили, чтобы заботиться о честном бою.\n\n{0} возвращается во главе воинства.\n\nЗачем возвращаться в одиночку, если можно вернуться с армией?\n\n{1} больше не придётся встречаться с ними один на один.</Nemesis_Letter_VengeanceReturnBody5>
+  <Nemesis_Letter_VengeanceCaptainLine>{0} возвращается как {2} {1} уровня.</Nemesis_Letter_VengeanceCaptainLine>
+  <Nemesis_Letter_ProgressionTitle>{0} становится сильнее</Nemesis_Letter_ProgressionTitle>
+  <Nemesis_Letter_ProgressionBody>{0} снова сбежал — и не терял время.\n\nУровень капитана {1}. Уклон: {2}.\n\nОни не вернутся той же угрозой.</Nemesis_Letter_ProgressionBody>
+  <Nemesis_Focus_Destroyer>Разрушитель</Nemesis_Focus_Destroyer>
+  <Nemesis_Focus_Berserker>Берсерк</Nemesis_Focus_Berserker>
+  <Nemesis_Focus_Sniper>Снайпер</Nemesis_Focus_Sniper>
+  <Nemesis_Focus_Psycho>Псих</Nemesis_Focus_Psycho>
+  <Nemesis_Focus_Survivor>Выживший</Nemesis_Focus_Survivor>
+  <Nemesis_Focus_Mechanitor>Механитор</Nemesis_Focus_Mechanitor>
   <Nemesis_Letter_AssaultTitle>{0} прибывает</Nemesis_Letter_AssaultTitle>
   <Nemesis_Letter_AssaultPawn>{0} пришёл за {1} лично. Они отступят, если дела пойдут плохо, — но вернутся.</Nemesis_Letter_AssaultPawn>
   <Nemesis_Letter_AssaultColony>{0} лично ведёт этот штурм. Они не останутся, если шансы обернутся против них.</Nemesis_Letter_AssaultColony>

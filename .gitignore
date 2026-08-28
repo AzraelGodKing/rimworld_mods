@@ -4,18 +4,15 @@
 **/obj/
 **/bin/
 
-# Site download zips — published via GitHub Release, not committed
-docs/downloads/*.zip
-
 # Vue site build artifacts
 site/node_modules/
 site/dist/
 
-# One-off art package duplicate (canonical copy lives under Strata/ArtPackage/)
-/Strata_Art_Package.zip
-
-# Local Homesteader texture dump (not for the repo)
-Homesteader/Textures.rar
+# Local dumps and art packages — do not commit archives
+*.rar
+*.zip
+# Site download zips are published via GitHub Release, not committed
+# (covered by *.zip above)
 
 # Local decompile / reflect scratch (must never re-enter the repo)
 Strata/Tools/_decompile_tmp/
