@@ -21,6 +21,12 @@ namespace Homesteader
         private Dictionary<int, string> discoveredAllergiesPacked = new Dictionary<int, string>();
         private int envAllergyCursor;
 
+        // Runtime-only. Packed strings stay the save format.
+        private readonly Dictionary<int, HashSet<string>> favoriteNameSets = new Dictionary<int, HashSet<string>>();
+        private readonly Dictionary<int, HashSet<string>> allergyIdSets = new Dictionary<int, HashSet<string>>();
+        private readonly Dictionary<int, HashSet<string>> discoveredAllergySets = new Dictionary<int, HashSet<string>>();
+        private readonly HashSet<int> tastesReady = new HashSet<int>();
+
         public GameComponent_HomesteaderFavorites(Game game)
         {
         }
@@ -167,6 +173,7 @@ namespace Homesteader
         private void SetFavoriteNames(int pawnId, List<string> names)
         {
             favoriteListsPacked[pawnId] = Pack(names);
+            favoriteNameSets.Remove(pawnId);
         }
 
         private List<string> GetAllergyNames(int pawnId)
@@ -182,6 +189,7 @@ namespace Homesteader
         private void SetAllergyNames(int pawnId, List<string> names)
         {
             allergiesPacked[pawnId] = Pack(names);
+            allergyIdSets.Remove(pawnId);
         }
 
         private List<string> GetDiscoveredNames(int pawnId)
@@ -197,6 +205,40 @@ namespace Homesteader
         private void SetDiscoveredNames(int pawnId, List<string> names)
         {
             discoveredAllergiesPacked[pawnId] = Pack(names);
+            discoveredAllergySets.Remove(pawnId);
+        }
+
+        private HashSet<string> FavoriteNameSet(int pawnId)
+        {
+            if (!favoriteNameSets.TryGetValue(pawnId, out HashSet<string> set))
+            {
+                set = new HashSet<string>(GetFavoriteNames(pawnId));
+                favoriteNameSets[pawnId] = set;
+            }
+
+            return set;
+        }
+
+        private HashSet<string> AllergyIdSet(int pawnId)
+        {
+            if (!allergyIdSets.TryGetValue(pawnId, out HashSet<string> set))
+            {
+                set = new HashSet<string>(GetAllergyNames(pawnId));
+                allergyIdSets[pawnId] = set;
+            }
+
+            return set;
+        }
+
+        private HashSet<string> DiscoveredAllergySet(int pawnId)
+        {
+            if (!discoveredAllergySets.TryGetValue(pawnId, out HashSet<string> set))
+            {
+                set = new HashSet<string>(GetDiscoveredNames(pawnId));
+                discoveredAllergySets[pawnId] = set;
+            }
+
+            return set;
         }
 
         public List<ThingDef> GetFavorites(Pawn pawn)
@@ -224,7 +266,7 @@ namespace Homesteader
             }
 
             EnsureTastes(pawn);
-            return GetFavoriteNames(pawn.thingIDNumber).Contains(foodDef.defName);
+            return FavoriteNameSet(pawn.thingIDNumber).Contains(foodDef.defName);
         }
 
         public bool HasAllergyId(Pawn pawn, string allergyId)
@@ -235,7 +277,7 @@ namespace Homesteader
             }
 
             EnsureTastes(pawn);
-            return GetAllergyNames(pawn.thingIDNumber).Contains(allergyId);
+            return AllergyIdSet(pawn.thingIDNumber).Contains(allergyId);
         }
 
         public bool IsFoodAllergy(Pawn pawn, ThingDef foodDef)
@@ -246,7 +288,7 @@ namespace Homesteader
             }
 
             EnsureTastes(pawn);
-            return AllergyCatalog.FoodMatchesAny(GetAllergyNames(pawn.thingIDNumber), foodDef);
+            return AllergyCatalog.FoodMatchesAny(AllergyIdSet(pawn.thingIDNumber), foodDef);
         }
 
         public bool IsDiscoveredFoodAllergy(Pawn pawn, ThingDef foodDef)
@@ -257,8 +299,8 @@ namespace Homesteader
             }
 
             EnsureTastes(pawn);
-            string match = AllergyCatalog.MatchingFoodAllergyId(GetAllergyNames(pawn.thingIDNumber), foodDef);
-            return match != null && GetDiscoveredNames(pawn.thingIDNumber).Contains(match);
+            string match = AllergyCatalog.MatchingFoodAllergyId(AllergyIdSet(pawn.thingIDNumber), foodDef);
+            return match != null && DiscoveredAllergySet(pawn.thingIDNumber).Contains(match);
         }
 
         public bool IsDiscoveredFoodAllergy(Pawn pawn, Thing food)
@@ -269,8 +311,8 @@ namespace Homesteader
             }
 
             EnsureTastes(pawn);
-            string match = AllergyCatalog.MatchingFoodAllergyId(GetAllergyNames(pawn.thingIDNumber), food);
-            return match != null && GetDiscoveredNames(pawn.thingIDNumber).Contains(match);
+            string match = AllergyCatalog.MatchingFoodAllergyId(AllergyIdSet(pawn.thingIDNumber), food);
+            return match != null && DiscoveredAllergySet(pawn.thingIDNumber).Contains(match);
         }
 
         public bool IsDiscoveredAllergyId(Pawn pawn, string allergyId)
@@ -280,7 +322,7 @@ namespace Homesteader
                 return false;
             }
 
-            return GetDiscoveredNames(pawn.thingIDNumber).Contains(allergyId);
+            return DiscoveredAllergySet(pawn.thingIDNumber).Contains(allergyId);
         }
 
         public void DiscoverAllergy(Pawn pawn, string allergyId)
@@ -306,12 +348,22 @@ namespace Homesteader
             }
 
             int id = pawn.thingIDNumber;
+            if (tastesReady.Contains(id))
+            {
+                return;
+            }
+
             EnsureAllergiesRolled(id);
 
             List<string> allergies = GetAllergyNames(id);
             List<string> favorites = GetFavoriteNames(id);
+            string packedBefore = favoriteListsPacked.TryGetValue(id, out string existing) ? existing : string.Empty;
             FillUniqueFavorites(favorites, FavoriteCount, allergies);
-            SetFavoriteNames(id, favorites);
+            string packedAfter = Pack(favorites);
+            if (packedAfter != packedBefore)
+            {
+                SetFavoriteNames(id, favorites);
+            }
 
             if (!discoveredAllergiesPacked.ContainsKey(id))
             {
@@ -319,11 +371,14 @@ namespace Homesteader
             }
             else
             {
-                // Drop discoveries that are no longer on this pawn.
                 List<string> discovered = GetDiscoveredNames(id);
-                discovered.RemoveAll(n => !allergies.Contains(n));
-                SetDiscoveredNames(id, discovered);
+                if (discovered.RemoveAll(n => !allergies.Contains(n)) > 0)
+                {
+                    SetDiscoveredNames(id, discovered);
+                }
             }
+
+            tastesReady.Add(id);
         }
 
         private void EnsureAllergiesRolled(int pawnId)
@@ -340,13 +395,11 @@ namespace Homesteader
                 }
             }
 
-            // Missing key, or legacy ThingDef allergy strings → rare weighted roll (often None).
             if (!hasKey || legacyOrInvalid)
             {
                 allergies = AllergyCatalog.RollAllergyIds();
+                SetAllergyNames(pawnId, allergies);
             }
-
-            SetAllergyNames(pawnId, allergies);
         }
 
         public void RerollTastes(Pawn pawn)
@@ -360,6 +413,10 @@ namespace Homesteader
             favoriteListsPacked.Remove(id);
             allergiesPacked.Remove(id);
             discoveredAllergiesPacked.Remove(id);
+            favoriteNameSets.Remove(id);
+            allergyIdSets.Remove(id);
+            discoveredAllergySets.Remove(id);
+            tastesReady.Remove(id);
             EnsureTastes(pawn);
         }
 

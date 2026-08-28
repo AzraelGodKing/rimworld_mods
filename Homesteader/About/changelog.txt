@@ -1,3 +1,16 @@
+1.0.1
+[h1]Homesteader — 1.0.1[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]RimWorld 1.6 only[/b] — dropped the 1.4 / 1.5 listing. The DLL is built for 1.6; those older claims loaded a mismatched assembly.
+[*] [b]Harmony patches[/b] — one failed patch logs and skips instead of taking down cooling and favorite foods with it.
+[*] [b]Food search[/b] — favorite / allergy checks no longer split packed strings on every candidate meal.
+[*] [b]Root cellar cooling[/b] — ambient-temperature checks cache the map cooler and skip non-rottable things.
+[*] [b]Statue art[/b] — 27 statues and monuments downsampled so they do not sit in memory at 1024×1024.
+[/list]
+
+1.0.0
 [h1]Homesteader — 1.0.0[/h1]
 
 [b]Fixed[/b]

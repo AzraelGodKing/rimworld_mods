@@ -13,7 +13,7 @@ namespace DeepColony
         static DeepColonyStartup()
         {
             var harmony = new Harmony("azraelgodking.DeepColony");
-            harmony.PatchAll();
+            HarmonyPatchAll.Apply(harmony, "[DeepColony]");
             InjectComps();
             InjectFamilyTab();
             LongEventHandler.ExecuteWhenFinished(DeepColonyBuildInfo.LogStartup);

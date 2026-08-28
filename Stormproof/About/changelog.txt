@@ -1,3 +1,12 @@
+1.0.1
+[h1]Stormproof — 1.0.1[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Harmony patches[/b] — one failed patch logs and skips instead of taking the rest of Stormproof down with it.
+[/list]
+
+1.0.0
 [h1]Stormproof — 1.0.0[/h1]
 
 [b]Added[/b]
