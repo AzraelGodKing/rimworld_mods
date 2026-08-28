@@ -5,6 +5,8 @@
   <Homesteader_LittleGuyLetterLabel>新特性：小家伙</Homesteader_LittleGuyLetterLabel>
   <Homesteader_LittleGuyLetterText>Homesteader 新增了特性：小家伙（Little guy）。\n\n它没有任何效果。\n\n殖民者可能自然获得；也可在角色创建/编辑器中添加。</Homesteader_LittleGuyLetterText>
 
+  <Homesteader_ScenPart_ForcedStorytellerSummary>叙事者锁定为 {0}。</Homesteader_ScenPart_ForcedStorytellerSummary>
+
   <!-- Wash tub -->
   <Homesteader_NeedsSoapInWashTub>洗衣盆里需要肥皂。</Homesteader_NeedsSoapInWashTub>
   <Homesteader_FountainDry>喷泉干了。把水罐运过来。</Homesteader_FountainDry>
