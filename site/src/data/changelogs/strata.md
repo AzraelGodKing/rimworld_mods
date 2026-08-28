@@ -11,9 +11,10 @@ Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog
 
 ## [Unreleased]
 
-Player-facing version **3.1.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.1.0 Soft-compat build ...` in Player.log. Cavern floors follow Biomes! Caverns climate/depth instead of locking B1–B2 to Earthen Depths.
+Player-facing version **3.1.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.1.0 Soft-compat build rot-state-v1` in Player.log. Cavern floors follow Biomes! Caverns climate/depth instead of locking B1–B2 to Earthen Depths.
 
 ### Fixed
+- **Root cellar rot state** (`rot-state-v1`) — Homesteader root-cellar cooling on underground floors no longer stashes rot progress in statics between Harmony prefix and postfix. Each `CompRottable.TickInterval` keeps its own `__state`, so a throw (or any overlap) cannot make the next stack rot at the wrong rate. Still **3.1.0** until a patch bump.
 - **CN / RU Keyed** — added B1 infestation settings and the quest-map shaft warning strings that English already had.
 - **Stormproof outdoor-room patch** — one `PsychologicallyOutdoors` Harmony class now covers Strata pocket levels and Stormproof's enclosed-underground rooms, instead of two patches fighting the same getter.
 - **Shaft dig-down on underground floors** (`shaft-temp-map-guard-v1`) — digging deeper from B1 (or any Strata underground/upper level) no longer falsely triggers the "temporary quest map" guard. The guard still blocks shafts on actual quest sites, Ancient Urban Ruins, and caravan maps.

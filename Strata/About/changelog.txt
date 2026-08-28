@@ -1,6 +1,14 @@
+3.1.0
 [h1]Strata — 3.1.0[/h1]
 
 [b]Changed[/b]
 [list]
 [*] [b]Biomes! Caverns floors[/b] — B1–B2 are no longer always Earthen Depths. Wet tiles lean fungal forest, cold tiles lean crystalline caverns, and magma-style earthen depths show up more the deeper you dig.
 [/list]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Root cellar rot[/b] — underground Homesteader root-cellar cooling no longer shares Harmony prefix/postfix state between rotting items.
+[/list]
+
+[i]Build stamp (Player.log): rot-state-v1[/i]
