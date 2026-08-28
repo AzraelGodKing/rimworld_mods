@@ -1,3 +1,13 @@
+3.2.1
+[h1]Strata — 3.2.1[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Harmony patches[/b] — one failed patch logs and skips instead of leaving the rest of Strata half-applied.
+[/list]
+
+[i]Build stamp (Player.log): v321-v1[/i]
+
 3.2.0
 [h1]Strata — 3.2.0[/h1]
 
@@ -28,5 +38,3 @@
 [*] [b]Atmosphere[/b] — breath diffusion reuses per-map buffers; cloud-key snapshots no longer allocate a new list each cycle.
 [*] [b]Hibernate check[/b] — vacant-level pawn scans are cached for about a second.
 [/list]
-
-[i]Build stamp (Player.log): v320-v1[/i]
