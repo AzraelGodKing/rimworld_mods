@@ -510,7 +510,7 @@ namespace Strata
                     upper.roofGrid.SetRoof(cell, null);
                 }
             }
-            Log.Message("[Strata] Upper deck: cleared " + toClear.Count
+            StrataLog.Verbose("[Strata] Upper deck: cleared " + toClear.Count
                 + " unsupported deck cell(s) on " + upper.uniqueID + ".");
             return toClear.Count;
         }
@@ -570,7 +570,7 @@ namespace Strata
             }
             if (restored > 0)
             {
-                Log.Message("[Strata] Gravship upper deck: restored roof deck under "
+                StrataLog.Verbose("[Strata] Gravship upper deck: restored roof deck under "
                     + restored + " cell(s).");
             }
         }
@@ -678,7 +678,7 @@ namespace Strata
             }
             if (removed > 0)
             {
-                Log.Message("[Strata] Gravship upper deck: cleared " + removed
+                StrataLog.Verbose("[Strata] Gravship upper deck: cleared " + removed
                     + " empty silhouette cell(s) not connected to the travelling room.");
             }
         }
@@ -746,12 +746,16 @@ namespace Strata
 
         public static void Postfix(RoofGrid __instance, IntVec3 c)
         {
+            Map source = MapRef(__instance);
+            if (source != null)
+            {
+                StrataRoomUtility.NotifyRoofChanged(source);
+            }
             if (UpperDeckUtility.SuspendRoofSync
                 || Scribe.mode == LoadSaveMode.LoadingVars)
             {
                 return;
             }
-            Map source = MapRef(__instance);
             if (source == null || !c.InBounds(source))
             {
                 return;

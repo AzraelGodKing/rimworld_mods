@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Strata_RoomOxygen.label>氧气</Strata_RoomOxygen.label>
+  <Strata_RoomOxygen.scoreStages.0.label>危险</Strata_RoomOxygen.scoreStages.0.label>
+  <Strata_RoomOxygen.scoreStages.1.label>浑浊</Strata_RoomOxygen.scoreStages.1.label>
+  <Strata_RoomOxygen.scoreStages.2.label>良好</Strata_RoomOxygen.scoreStages.2.label>
+  <Strata_RoomCarbonDioxide.label>二氧化碳</Strata_RoomCarbonDioxide.label>
+  <Strata_RoomCarbonDioxide.scoreStages.0.label>良好</Strata_RoomCarbonDioxide.scoreStages.0.label>
+  <Strata_RoomCarbonDioxide.scoreStages.1.label>浑浊</Strata_RoomCarbonDioxide.scoreStages.1.label>
+  <Strata_RoomCarbonDioxide.scoreStages.2.label>危险</Strata_RoomCarbonDioxide.scoreStages.2.label>
+  <Strata_RoomSmoke.label>烟雾</Strata_RoomSmoke.label>
+  <Strata_RoomSmoke.scoreStages.0.label>良好</Strata_RoomSmoke.scoreStages.0.label>
+  <Strata_RoomSmoke.scoreStages.1.label>浑浊</Strata_RoomSmoke.scoreStages.1.label>
+  <Strata_RoomSmoke.scoreStages.2.label>危险</Strata_RoomSmoke.scoreStages.2.label>
+</LanguageData>

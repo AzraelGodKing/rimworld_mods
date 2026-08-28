@@ -33,6 +33,7 @@ namespace Strata
         // ForceDepartNow is one-shot; re-fire when the last traveler for a lord clears.
         private static readonly HashSet<Lord> forceDepartWhenReady = new HashSet<Lord>();
 
+        [StrataSessionReset]
         internal static void ResetSession()
         {
             sessionRemoved.Clear();

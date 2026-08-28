@@ -48,11 +48,11 @@ namespace Strata
 
                 if (patched == 0)
                 {
-                    Log.Message("[Strata] Vehicle Framework loaded; RoofDeck Heavy affordance applies — no extra path hooks matched this VF build.");
+                    StrataLog.Verbose("[Strata] Vehicle Framework loaded; RoofDeck Heavy affordance applies — no extra path hooks matched this VF build.");
                 }
                 else
                 {
-                    Log.Message("[Strata] Vehicle Framework roof-deck soft-compat: patched " + patched + " hook(s).");
+                    StrataLog.Verbose("[Strata] Vehicle Framework roof-deck soft-compat: patched " + patched + " hook(s).");
                 }
             }
             catch (Exception e)

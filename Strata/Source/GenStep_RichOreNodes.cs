@@ -48,7 +48,7 @@ namespace Strata
 
             if (Prefs.DevMode && placed.Count > 0)
             {
-                Log.Message($"[Strata] Rich ore nodes: {placed.Count} seams / {totalCells} cells at depth {depth}.");
+                StrataLog.Verbose($"[Strata] Rich ore nodes: {placed.Count} seams / {totalCells} cells at depth {depth}.");
             }
         }
 

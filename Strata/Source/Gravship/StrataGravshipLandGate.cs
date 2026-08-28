@@ -83,7 +83,7 @@ namespace Strata
             }
             comp.ArmPendingLand(pending);
             MapComponent_StrataGravshipUpperDeckSync.RequestSync(host);
-            Log.Message("[Strata] G3 land gate: deferred CompleteLanding until host substructure is ready ("
+            StrataLog.Verbose("[Strata] G3 land gate: deferred CompleteLanding until host substructure is ready ("
                 + pending.mapIds.Count + " level(s)).");
         }
     }

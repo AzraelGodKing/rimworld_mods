@@ -139,6 +139,11 @@ namespace Strata
 
         public static void DrawBelowStatic(Map map)
         {
+            if (!Enabled)
+            {
+                StrataBelowDrawPosPatcher.UnpatchIfDisabled();
+                return;
+            }
             if (!TryGetBelowContext(map, out Map lower)) return;
             try
             {
@@ -167,6 +172,7 @@ namespace Strata
             if (!LiveEnabled || !TryGetBelowContext(map, out Map lower)) return;
             try
             {
+                StrataBelowDrawPosPatcher.EnsurePatched();
                 RefreshBelowTransform();
                 OffsetActive = true;
                 // Lower map is not CurrentMap, so its DrawDynamicThings never runs.
@@ -623,14 +629,21 @@ namespace Strata
         }
     }
 
-    [StaticConstructorOnStartup]
     public static class StrataBelowDrawPosPatcher
     {
-        static StrataBelowDrawPosPatcher()
+        private const string HarmonyId = "azraelgodking.strata.seebelow.drawpos";
+        private static Harmony harmony;
+        private static bool patched;
+
+        public static void EnsurePatched()
         {
+            if (patched || !StrataBelowRenderer.Enabled)
+            {
+                return;
+            }
             var postfix = new HarmonyMethod(typeof(StrataBelowDrawPosPatcher), nameof(OffsetPostfix));
-            var harmony = new Harmony("azraelgodking.strata.seebelow.drawpos");
-            int patched = 0;
+            harmony = new Harmony(HarmonyId);
+            int count = 0;
             var types = new List<Type> { typeof(Thing) };
             types.AddRange(GenTypes.AllSubclasses(typeof(Thing)));
             foreach (Type type in types)
@@ -653,14 +666,26 @@ namespace Strata
                 try
                 {
                     harmony.Patch(getter, postfix: postfix);
-                    patched++;
+                    count++;
                 }
                 catch
                 {
                     // Some exotic overrides refuse patching; skip.
                 }
             }
-            Log.Message("[Strata] See-below DrawPos patched on " + patched + " type(s).");
+            patched = true;
+            StrataLog.Verbose("[Strata] See-below DrawPos patched on " + count + " type(s).");
+        }
+
+        public static void UnpatchIfDisabled()
+        {
+            if (!patched || StrataBelowRenderer.Enabled)
+            {
+                return;
+            }
+            harmony?.UnpatchAll(HarmonyId);
+            harmony = null;
+            patched = false;
         }
 
         private static void OffsetPostfix(ref Vector3 __result)
