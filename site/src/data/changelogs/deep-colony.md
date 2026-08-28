@@ -6,7 +6,12 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.6.1** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.1 build patch-161-v1` in Player.log.
+Player-facing version **1.6.2** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.2 build patch-162-v1` in Player.log.
+
+### Fixed
+- **Mid-save install** (`patch-162-v1`) — rivalry, touch-need, family life/echo, family join, and ex-lover reconcile now run off `TicksGame % 2500`. The old saved `driftTickCounter` started at 0 when you added the mod to an existing colony and never lined up with the game clock, so those systems never fired.
+- **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Deep Colony.
+- **Toxic trauma** — toxic-buildup checks poll from the game component every 2500 ticks instead of postfixing `Hediff.Tick` for every hediff on every pawn.
 
 ### Changed
 - **Auto skill perks** (`auto-perks-v2`) — **1.6.1**. Perks at skill **5 / 10 / 15 / 20** grant themselves when the colonist reaches that level (no points). If the skill drops below the requirement, the perk lapses. Perk hediffs stay off the Health tab unless **Show perk hediffs** is on in mod settings. Skill-20 capstones default on. Shooting accuracy uses vanilla-scale bonuses (was +0.04, which the inspect rounded to **+0.0**). One-time **1.6.1** letter on load covers perks, family-tab UI, and last-of-the-line. Workshop description updated (`assets/workshop/deep-colony-description.bbcode`); the old 2.0 what's-new block is gone.

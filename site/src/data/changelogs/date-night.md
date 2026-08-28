@@ -6,9 +6,10 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.0.1 loaded from ...` in Player.log.
+Player-facing version **1.0.2** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.0.2 loaded from ...` in Player.log.
 
 ### Fixed
+- **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Date Night.
 - **Schedule tab warning** (`schedule-imgui-v1`) — opening the Schedule tab no longer warns. Date still paints last on the extra row (after Clean / Workout / …) so it is not nested in another dropdown, but it is a postfix after `Priority.Last` instead of a Harmony finalizer (finalizers wrap this OnGUI method in try/catch). Extra-column detection is cached instead of scanning Harmony/`TypeByName` every frame.
 - **Rituals vs Date hours** (`ritual-date-v1`) — scheduled Date / Lovin no longer InterruptForced pawns out of Ideology rituals (or other lords that forbid long-need jobs). The ceremony can finish; the date waits until it does.
 - **Date hours idle apart** (`azr-16-date-together-v2`) — every date activity (walk, picnic, stargaze, dinner, dance, hangout, gift, recreation) could send each partner to a different cell, so they stood rooms apart throwing hearts. Both now share one venue (adjacent seats at a table / campfire; one outdoor cell for walks). The walk leader waits if the partner lags; parked activities wait at the spot. Dates are no longer yanked by casual jobs (hauling floors, etc.). The follower no longer freezes facing one way (the date toil owns facing and now looks at the path while walking and at the partner while standing). (`azr-14-schedule-combo-v3`) — Date is one extra Schedule cell immediately after the last extra button (Clean / Workout / …), drawn last so it is not inside another dropdown. Face is Date; Lovin is in the ▾ menu. The cell is clamped so it cannot cover Manage areas.
