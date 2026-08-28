@@ -3,7 +3,7 @@
 
   <!-- Shared -->
   <Stormproof_OfflineNeedsPower>离线：需要电力。</Stormproof_OfflineNeedsPower>
-  <Stormproof_NotConnectedPowerNet>未连接到电网。</Stormproof_NotConnectedPower>
+  <Stormproof_NotConnectedPowerNet>未连接到电网。</Stormproof_NotConnectedPowerNet>
   <Stormproof_RechargingReadyIn>充能中：{0}后就绪。</Stormproof_RechargingReadyIn>
 
   <!-- Grid monitor -->

@@ -81,6 +81,11 @@ STORYTELLER
 POWER
 - Compact battery, battery bank, advanced battery, ultratech battery, portable chemfuel generator.
 
+WHICH STATION?
+- Drying rack vs curing rack: drying rack needs no research (jerky, dried produce, fruit leather, dried mushrooms, pemmican). Curing rack unlocks with Primitive homestead and salts meat (and chips rock salt). Different jobs — not duplicates.
+- Root cellar vs icehouse vs springhouse: root cellar is the large passive larder (≤5°C). Icehouse is colder and smaller (≤0°C). Springhouse is milder (≤8°C) for dairy and produce by the farmhouse.
+- Homestead hearth vs wood stove: hearth cooks pantry meals. Wood stove only heats the room, off-grid — it does not cook.
+
 Odyssey owners get salted and smoked fish recipes automatically.
 
 Requires the Harmony mod (C# for root cellar cooling and favorite foods). Safe to add to a save. Before removing it, deconstruct the mod's buildings and use up or sell its items.

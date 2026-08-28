@@ -71,6 +71,19 @@ function targetFor(entry) {
       <GalleryLightbox :images="mod.gallery" />
     </section>
 
+    <section class="wrap section" v-if="mod.stationFaq">
+      <h2>{{ mod.stationFaq.title }}</h2>
+      <p class="overview-para">{{ mod.stationFaq.intro }}</p>
+      <table class="faq-table">
+        <tbody>
+          <tr v-for="row in mod.stationFaq.rows" :key="row.pair">
+            <th scope="row">{{ row.pair }}</th>
+            <td>{{ row.answer }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
     <section class="wrap section" v-if="mod.goodToKnow?.length">
       <CollapsibleList :title="t('mod.goodToKnow')" :items="mod.goodToKnow" :open="false" />
     </section>

@@ -1,0 +1,6 @@
+# git archive (CI release zips) should ship the runtime pack only.
+**/Source/ export-ignore
+**/Tools/ export-ignore
+**/ArtPackage/ export-ignore
+**/*.md export-ignore
+DateNight/About/preview-options/ export-ignore

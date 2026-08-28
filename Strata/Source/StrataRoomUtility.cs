@@ -32,15 +32,35 @@ namespace Strata
     [HarmonyPatch(typeof(Room), "PsychologicallyOutdoors", MethodType.Getter)]
     public static class Patch_UndergroundPsychologicallyOutdoors
     {
-        public static bool Prefix(Room __instance, ref bool __result)
+        public static bool Prefix(Room __instance, ref bool __result, ref bool __state)
         {
             Map map = __instance?.Map;
-            if (map == null || !StrataRoomUtility.IsStrataPocketLevel(map))
+            __state = map != null && StrataRoomUtility.IsStrataPocketLevel(map);
+            if (!__state)
             {
                 return true;
             }
             __result = StrataRoomUtility.RoomPsychologicallyOutdoors(__instance);
             return false;
+        }
+
+        // Stormproof fallout scrubbers treat enclosed underground rooms as indoor.
+        // Pocket levels already resolved in Prefix; this remains for Stormproof
+        // when UsesOutdoorTemperature was already false on a non-pocket underground map.
+        public static void Postfix(Room __instance, ref bool __result, bool __state)
+        {
+            if (__state || !__result || !SisterModBridges.StormproofLoaded || __instance?.Map == null)
+            {
+                return;
+            }
+            if (!StrataMapUtility.IsUnderground(__instance.Map))
+            {
+                return;
+            }
+            if (!__instance.UsesOutdoorTemperature && __instance.CellCount > 1)
+            {
+                __result = false;
+            }
         }
     }
 
