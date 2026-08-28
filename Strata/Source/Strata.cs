@@ -55,6 +55,7 @@ namespace Strata
             LongEventHandler.ExecuteWhenFinished(() =>
             {
                 StrataBuildInfo.LogStartup();
+                StrataIncompatibleMods.LogIfNeeded();
                 StrataMultiFloorStairsUtility.ApplyFromSettings();
             });
         }

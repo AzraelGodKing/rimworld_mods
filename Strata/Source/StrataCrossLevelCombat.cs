@@ -28,6 +28,7 @@ namespace Strata
         public static bool Enabled =>
             StrataMod.Settings == null || StrataMod.Settings.crossLevelCombatEnabled;
 
+        [StrataSessionReset]
         public static void ResetSession()
         {
             PendingTargets.Clear();

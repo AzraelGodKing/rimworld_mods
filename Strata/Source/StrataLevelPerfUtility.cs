@@ -15,6 +15,9 @@ namespace Strata
         private static readonly HashSet<int> forcedHibernateMapIds = new HashSet<int>();
         private static int cachedPocketLevelCount = -1;
         private static int cachedPocketLevelCountTick = -1;
+        private static readonly Dictionary<int, (int tick, int count)> presenceCache =
+            new Dictionary<int, (int tick, int count)>();
+        private const int PresenceCacheTicks = 60;
 
         public static int PawnCount(Map map)
         {
@@ -29,20 +32,35 @@ namespace Strata
             {
                 return 0;
             }
-            int count = map.mapPawns.FreeColonistsSpawnedCount;
-            if (count > 0)
+            int now = Find.TickManager?.TicksGame ?? 0;
+            if (presenceCache.TryGetValue(map.uniqueID, out var cached)
+                && now - cached.tick < PresenceCacheTicks)
             {
-                return count;
+                return cached.count;
             }
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            for (int i = 0; i < pawns.Count; i++)
+            int count = map.mapPawns.FreeColonistsSpawnedCount;
+            if (count == 0)
             {
-                if (StrataPawnUtility.IsMiscRobot(pawns[i]))
+                IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+                for (int i = 0; i < pawns.Count; i++)
                 {
-                    count++;
+                    if (StrataPawnUtility.IsMiscRobot(pawns[i]))
+                    {
+                        count++;
+                    }
                 }
             }
+            presenceCache[map.uniqueID] = (now, count);
             return count;
+        }
+
+        [StrataSessionReset]
+        public static void ResetSession()
+        {
+            forcedHibernateMapIds.Clear();
+            presenceCache.Clear();
+            cachedPocketLevelCount = -1;
+            cachedPocketLevelCountTick = -1;
         }
 
         public static bool HibernateEnabled()
@@ -345,7 +363,7 @@ namespace Strata
                     forcedHibernateMapIds.Add(map.uniqueID);
                 }
             }
-            Log.Message("[Strata] Forced hibernate on " + forcedHibernateMapIds.Count + " empty underground level(s).");
+            StrataLog.Verbose("[Strata] Forced hibernate on " + forcedHibernateMapIds.Count + " empty underground level(s).");
         }
 
         public static void ClearForcedHibernate(Map map)

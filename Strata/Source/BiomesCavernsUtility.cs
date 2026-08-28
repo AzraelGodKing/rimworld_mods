@@ -243,12 +243,12 @@ namespace Strata
             int depth = StrataDepth.CountLevelsBelowSurface(map);
             if (usedBiomes)
             {
-                Log.Message("[Strata] Dig cavern layout: Biomes! Caverns profile " + profileName
+                StrataLog.Verbose("[Strata] Dig cavern layout: Biomes! Caverns profile " + profileName
                     + " (depth " + depth + ").");
             }
             else
             {
-                Log.Message("[Strata] Dig cavern layout: native mixed-rock warren"
+                StrataLog.Verbose("[Strata] Dig cavern layout: native mixed-rock warren"
                     + (profile != null ? " (Biomes! profile " + profileName + " failed)" : "")
                     + ".");
             }
@@ -275,7 +275,7 @@ namespace Strata
                     out int cells, out float fraction)
                 && (cells <= 0 || fraction < minMineableFraction))
             {
-                Log.Message("[Strata] Biomes! dig layout too sparse ("
+                StrataLog.Verbose("[Strata] Biomes! dig layout too sparse ("
                     + (fraction * 100f).ToString("F1") + "% mineable sampled) — "
                     + "falling back to Strata rock fill (common under mountains / landforms).");
                 return true;
@@ -288,7 +288,7 @@ namespace Strata
                 && mountainCells >= 40
                 && mountainFraction < minMineableFraction)
             {
-                Log.Message("[Strata] Biomes! dig layout empty under mountain footprint ("
+                StrataLog.Verbose("[Strata] Biomes! dig layout empty under mountain footprint ("
                     + (mountainFraction * 100f).ToString("F1") + "% mineable in "
                     + mountainCells + " mountain-aligned samples) — "
                     + "falling back to Strata rock fill.");

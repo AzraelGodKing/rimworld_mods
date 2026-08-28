@@ -39,6 +39,7 @@ namespace Strata
 
         // Claims are tick-stamped per pawn ID; stale entries from a previous
         // save would count against caps in the next one. Cleared on game load.
+        [StrataSessionReset]
         internal static void ResetSession()
         {
             claims.Clear();

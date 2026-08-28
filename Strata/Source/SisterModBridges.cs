@@ -38,7 +38,7 @@ namespace Strata
                 || ModLister.GetActiveModWithIdentifier(StrataVgeCompat.PackageId) != null;
             if (VanillaGravshipExpandedLoaded)
             {
-                Log.Message("[Strata] Soft-compat: Vanilla Gravship Expanded - Chapter 1 detected ("
+                StrataLog.Verbose("[Strata] Soft-compat: Vanilla Gravship Expanded - Chapter 1 detected ("
                     + StrataVgeCompat.PackageId + "). Gravship underdeck follow uses VGE engine/scaffold awareness.");
             }
 
@@ -73,7 +73,7 @@ namespace Strata
             }
             if (parts.Count > 0)
             {
-                Log.Message("[Strata] Sister-mod bridges active: " + string.Join(", ", parts));
+                StrataLog.Verbose("[Strata] Sister-mod bridges active: " + string.Join(", ", parts));
             }
         }
 
@@ -95,26 +95,28 @@ namespace Strata
     {
         private const float UndergroundRootCellarFactor = 0.5f;
 
-        private static float rotBefore;
-
-        private static bool applyFactor;
-
-        public static void Prefix(CompRottable __instance)
+        public struct RotTickState
         {
-            rotBefore = __instance.RotProgress;
-            applyFactor = ShouldSlow(__instance);
+            public float rot;
+            public bool apply;
         }
 
-        public static void Postfix(CompRottable __instance)
+        public static void Prefix(CompRottable __instance, out RotTickState __state)
         {
-            if (!applyFactor)
+            __state.rot = __instance.RotProgress;
+            __state.apply = ShouldSlow(__instance);
+        }
+
+        public static void Postfix(CompRottable __instance, RotTickState __state)
+        {
+            if (!__state.apply)
             {
                 return;
             }
-            float added = __instance.RotProgress - rotBefore;
+            float added = __instance.RotProgress - __state.rot;
             if (added > 0f)
             {
-                __instance.RotProgress = rotBefore + added * UndergroundRootCellarFactor;
+                __instance.RotProgress = __state.rot + added * UndergroundRootCellarFactor;
             }
         }
 

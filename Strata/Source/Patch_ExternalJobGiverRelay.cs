@@ -133,7 +133,7 @@ namespace Strata
             }
             if (methods.Count > 0)
             {
-                Log.Message("[Strata] External work relay: patched " + methods.Count + " registered JobGiver(s).");
+                StrataLog.Verbose("[Strata] External work relay: patched " + methods.Count + " registered JobGiver(s).");
             }
             return methods;
         }

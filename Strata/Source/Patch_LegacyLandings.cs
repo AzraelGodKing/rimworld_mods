@@ -15,28 +15,10 @@ namespace Strata
     {
         public static void Postfix()
         {
-            // Session statics first: tick-stamped, pawn-ID-keyed state from a
-            // previously loaded save is garbage in this one.
-            // Session statics first: tick-stamped, pawn-ID-keyed state from a
-            // previously loaded save is garbage in this one.
-            PawnRelay.ResetSession();
-            RelayClaims.ResetSession();
-            MapComponent_RaidPursuit.ResetSession();
-            StrataRobotDiagnostics.ResetSession();
-            DraftedPortalPathing.ResetSession();
-            PortalRelayChain.ResetSession();
-            SleepRelay.ResetSession();
-            HaulToLevelTargets.ResetSession();
-            CrossLevelOrderedJobs.ResetSession();
-            StrataCrossLevelCombat.ResetSession();
-            StrataConstructAcrossLevels.ResetSession();
-            CaravanTravelUtility.ResetSession();
-            StrataPortalUtility.ResetHaulDeliverSession();
-            StrataFaultGuard.ResetSession();
-            StrataPocketMapOpen.ResetSession();
-            StrataGravshipPortalTravel.ResetSession();
-            StrataGravshipDeckCargo.ResetSession();
-            StrataResources.ClearCaches();
+            // Tick-stamped / ID-keyed statics from a previously loaded save are
+            // garbage in this one. Methods marked [StrataSessionReset] run here.
+            StrataSessionReset.Run();
+            StrataIncompatibleMods.LetterIfNeeded();
 
             UpgradeVanillaCaveExits();
             RealignAllStairLandings();
@@ -45,7 +27,7 @@ namespace Strata
             int relinked = StrataPortalUtility.RelinkPortalsByPairId();
             if (relinked > 0)
             {
-                Log.Message("[Strata] Relinked " + relinked + " portal pair(s) by pair ID.");
+                StrataLog.Verbose("[Strata] Relinked " + relinked + " portal pair(s) by pair ID.");
             }
             RepairAllPocketMapTiles();
             Building_ShaftConduit.ReconcileAllAfterLoad();
@@ -99,7 +81,7 @@ namespace Strata
             }
             for (int i = 0; i < hosts.Count; i++)
             {
-                Log.Message("[Strata] Load repair: rebinding gravship levels on map "
+                StrataLog.Verbose("[Strata] Load repair: rebinding gravship levels on map "
                     + hosts[i].uniqueID + ".");
                 stacks.RebindOrphans(hosts[i]);
             }
@@ -168,7 +150,7 @@ namespace Strata
                     {
                         PocketMapUtility.currentlyGeneratingPortal = null;
                     }
-                    Log.Message($"[Strata] Upgraded legacy landing under {entrance.LabelCap} to {properDef.defName}.");
+                    StrataLog.Verbose($"[Strata] Upgraded legacy landing under {entrance.LabelCap} to {properDef.defName}.");
                 }
             }
         }
