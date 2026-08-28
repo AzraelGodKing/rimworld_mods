@@ -1,3 +1,16 @@
+1.6.2
+[h1]Deep Colony — 1.6.2[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Mid-save install[/b] — rivalry, touch-need, family life/echo, and ex-lover reconcile now tick when you add the mod to an existing colony (they used to wait on a counter that never lined up with the game clock).
+[*] [b]Harmony patches[/b] — one failed patch logs and skips instead of unloading the rest of Deep Colony.
+[*] [b]Toxic trauma[/b] — toxic-buildup checks run on the colony tick instead of wrapping every hediff on every pawn.
+[/list]
+
+[i]Build stamp (Player.log): patch-162-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]
+
 1.6.1
 [h1]Deep Colony — 1.6.1[/h1]
 
@@ -13,6 +26,3 @@
 [*] [b]Family tree Bio button[/b] — removed from the Bio card so it no longer covers Banish. Use the Family inspect tab.
 [*] [b]Last of the line[/b] — opening a Strata floor no longer throws Collection was modified while scanning living colonists.
 [/list]
-
-[i]Build stamp (Player.log): patch-161-v1[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]

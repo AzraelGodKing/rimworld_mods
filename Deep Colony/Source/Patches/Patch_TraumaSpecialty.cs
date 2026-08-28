@@ -1,4 +1,3 @@
-using HarmonyLib;
 using RimWorld;
 using Verse;
 
@@ -96,18 +95,6 @@ namespace DeepColony.Patches
         private static bool IsInsectAttack(Pawn instigator)
         {
             return instigator?.RaceProps?.Insect == true;
-        }
-    }
-
-    [HarmonyPatch(typeof(Hediff), nameof(Hediff.Tick))]
-    public static class Patch_Hediff_ToxicTrauma
-    {
-        public static void Postfix(Hediff __instance)
-        {
-            if (__instance?.def != HediffDefOf.ToxicBuildup) return;
-            if (__instance.pawn == null) return;
-            if (!__instance.pawn.IsHashIntervalTick(2500)) return;
-            TraumaEventUtility.TryToxicBuildupTrauma(__instance.pawn);
         }
     }
 }

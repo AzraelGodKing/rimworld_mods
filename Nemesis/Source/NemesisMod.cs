@@ -12,7 +12,7 @@ namespace Nemesis
         {
             Settings = GetSettings<NemesisSettings>();
             ModVersionLog.Write("[Nemesis]", content);
-            new Harmony("azraelgodking.nemesis").PatchAll();
+            HarmonyPatchAll.Apply(new Harmony("azraelgodking.nemesis"), "[Nemesis]");
         }
 
         public override string SettingsCategory() => "Nemesis";

@@ -98,7 +98,7 @@ namespace DateNight
 
         static DateNightInit()
         {
-            new Harmony(HarmonyId).PatchAll();
+            HarmonyPatchAll.Apply(new Harmony(HarmonyId), "[DateNight]");
         }
     }
 }
