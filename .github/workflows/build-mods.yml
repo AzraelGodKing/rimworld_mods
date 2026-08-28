@@ -1,7 +1,8 @@
 name: Build mod DLLs
 
-# Build Homesteader / Strata / Stormproof / Nemesis / DateNight / LivingWorld /
-# Deep Colony / Azrael on push to main and on PRs.
+# Build and pack release-ready mods: Homesteader, Strata, Stormproof, Nemesis,
+# DateNight, Deep Colony. LivingWorld and Azrael are in-repo but not release-ready
+# — they are not built, zipped, or published here.
 # On main (and workflow_dispatch): pack download zips with injected DLLs and publish
 # them to the rolling "latest" GitHub Release for the docs site buttons.
 # Assemblies/*.dll stay gitignored — zips are never committed.
@@ -15,9 +16,7 @@ on:
       - "Stormproof/Source/**"
       - "Nemesis/Source/**"
       - "DateNight/Source/**"
-      - "LivingWorld/Source/**"
       - "Deep Colony/Source/**"
-      - "Azrael/Source/**"
       - "scripts/build_downloads.ps1"
       - ".github/workflows/build-mods.yml"
   pull_request:
@@ -27,9 +26,7 @@ on:
       - "Stormproof/Source/**"
       - "Nemesis/Source/**"
       - "DateNight/Source/**"
-      - "LivingWorld/Source/**"
       - "Deep Colony/Source/**"
-      - "Azrael/Source/**"
       - "scripts/build_downloads.ps1"
       - ".github/workflows/build-mods.yml"
   workflow_dispatch:
@@ -76,14 +73,8 @@ jobs:
       - name: Build DateNight
         run: dotnet build DateNight/Source/DateNight.csproj -c Release --nologo
 
-      - name: Build LivingWorld
-        run: dotnet build LivingWorld/Source/LivingWorld.csproj -c Release --nologo
-
       - name: Build Deep Colony
         run: dotnet build "Deep Colony/Source/DeepColony.csproj" -c Release --nologo
-
-      - name: Build Azrael
-        run: dotnet build Azrael/Source/Azrael.csproj -c Release --nologo
 
       - name: Pack docs/downloads zips (with DLLs)
         if: github.event_name != 'pull_request'
@@ -114,8 +105,6 @@ jobs:
           pack_mod Nemesis Nemesis Nemesis
           pack_mod "Deep Colony" DeepColony DeepColony
           pack_mod DateNight DateNight DateNight
-          pack_mod LivingWorld LivingWorld LivingWorld
-          pack_mod Azrael Azrael Azrael
 
       - name: Upload download zips (artifact)
         if: github.event_name != 'pull_request'
@@ -144,7 +133,8 @@ jobs:
           body: |
             Packaged mod folders with CI-built assemblies for the docs site download buttons.
             Rebuilt on each relevant push to `main` (rolling tag — assets are overwritten).
-            Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, DateNight, LivingWorld, and Azrael.
+            Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, and DateNight.
+            LivingWorld and Azrael are not packed (not release-ready).
           files: |
             docs/downloads/Homesteader.zip
             docs/downloads/Stormproof.zip
@@ -152,9 +142,15 @@ jobs:
             docs/downloads/Nemesis.zip
             docs/downloads/DeepColony.zip
             docs/downloads/DateNight.zip
-            docs/downloads/LivingWorld.zip
-            docs/downloads/Azrael.zip
           make_latest: true
           fail_on_unmatched_files: true
           # Replace assets when the rolling `latest` tag is republished.
           overwrite_files: true
+
+      - name: Remove unreleased zip assets from latest
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete-asset latest LivingWorld.zip --yes || true
+          gh release delete-asset latest Azrael.zip --yes || true
