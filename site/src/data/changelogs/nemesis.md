@@ -6,8 +6,9 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## Unreleased (monorepo integration)
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.0.0 loaded from ...` in Player.log.
+Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.0.1 loaded from ...` in Player.log.
 
+- **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Nemesis.
 - **CN / RU Keyed** — filled captain-progression settings, letters, and combat-focus names that English already had.
 - **Fixation after a colonist dies** — uses `MapHeld` (corpse / killer map) so the hunt can still pick a surviving colonist.
 - **Wounded-escape cheat-death** — if `CreateNemesis` no-ops (Rimesis/BFV claim, failed generate), vanilla `Kill` proceeds. Anesthetic is no longer applied during the lethal prefix.

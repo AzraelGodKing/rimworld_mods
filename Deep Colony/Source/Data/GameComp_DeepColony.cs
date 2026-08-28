@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DeepColony.Patches;
 using RimWorld;
 using Verse;
 
@@ -12,7 +13,6 @@ namespace DeepColony
         private HashSet<int> inheritanceProcessed = new HashSet<int>();
         private HashSet<int> formerPlayerColonists = new HashSet<int>();
         private Dictionary<int, float> factionDriftBuffer = new Dictionary<int, float>();
-        private int driftTickCounter;
         public List<FactionRepLedgerEntry> factionRepLedger = new List<FactionRepLedgerEntry>();
 
         /// <summary>B10 — thingIDNumber → owner name (heirloom markers).</summary>
@@ -195,15 +195,22 @@ namespace DeepColony
             {
                 FlashbackUtility.GameTick();
                 RemembranceUtility.GameTick();
-                if (Find.TickManager.TicksGame % DriftIntervalTicks == 0)
-                    TickTraumaSystems();
                 FamilyLetterUtility.GameTick();
                 AnomalyOdysseyTraumaUtility.GameTick();
             }
 
-            driftTickCounter++;
-            if (driftTickCounter < DriftIntervalTicks) return;
-            driftTickCounter = 0;
+            // One clock: TicksGame. A saved driftTickCounter started at 0 on mid-save
+            // install and never lined up with TicksGame % 2500, so rivalry / family /
+            // touch / reconcile never ran. Flashback and letters still self-throttle.
+            if (Find.TickManager.TicksGame % DriftIntervalTicks != 0)
+                return;
+
+            if (DeepColonySettings.Get.enableTrauma)
+            {
+                TickTraumaSystems();
+                TickToxicBuildupTrauma();
+                PruneDeathWindow(Find.TickManager.TicksGame);
+            }
 
             if (DeepColonySettings.Get.enableFactionRep)
             {
@@ -211,8 +218,6 @@ namespace DeepColony
                 FactionEnvoyUtility.GameTick();
                 EnvoyVisitUtility.GameTick();
             }
-            if (DeepColonySettings.Get.enableTrauma)
-                PruneDeathWindow(Find.TickManager.TicksGame);
 
             RivalryUtility.GameTick();
             TickElders();
@@ -255,6 +260,17 @@ namespace DeepColony
                     TraumaRecoveryUtility.TickNaturalRecovery(p);
                     TraumaCombatUtility.TickPawn(p);
                 }
+            }
+        }
+
+        private static void TickToxicBuildupTrauma()
+        {
+            foreach (Map map in Find.Maps)
+            {
+                List<Pawn> colonists = map.mapPawns?.FreeColonistsSpawned;
+                if (colonists == null) continue;
+                for (int i = 0; i < colonists.Count; i++)
+                    TraumaEventUtility.TryToxicBuildupTrauma(colonists[i]);
             }
         }
 
@@ -323,7 +339,6 @@ namespace DeepColony
             Scribe_Collections.Look(ref factionRepLedger, "factionRepLedger", LookMode.Deep);
             Scribe_Collections.Look(ref heirloomOwners, "heirloomOwners", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref heirloomEchoPerks, "heirloomEchoPerks", LookMode.Value, LookMode.Value);
-            Scribe_Values.Look(ref driftTickCounter, "driftTickCounter", 0);
             Scribe_Collections.Look(ref recentColonistDeathTimestamps, "recentColonistDeaths",
                 LookMode.Value);
             Scribe_Values.Look(ref massacreTriggeredThisWindow, "massacreTriggered", false);

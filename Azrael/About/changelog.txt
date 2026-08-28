@@ -1,3 +1,12 @@
+1.0.1
+[h1]Azrael — 1.0.1[/h1]
+
+[b]Changed[/b]
+[list]
+[*] Version stamp 1.0.1 (no gameplay change).
+[/list]
+
+1.0.0
 [h1]Azrael — 1.0.0[/h1]
 
 [b]Fixed[/b]

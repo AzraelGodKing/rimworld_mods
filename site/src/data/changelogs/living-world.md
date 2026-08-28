@@ -2,7 +2,10 @@
 
 ## [Unreleased]
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[LivingWorld] v1.0.0 loaded from ...` in Player.log.
+Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[LivingWorld] v1.0.1 loaded from ...` in Player.log.
+
+### Fixed
+- **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Living World.
 
 ### Changed
 - **CI zip** — Living World is not release-ready; CI no longer builds or publishes `LivingWorld.zip`.
