@@ -35,6 +35,10 @@ namespace Strata
         public bool offThreadWorkRelay = true;
         public AtmosphereQualityLevel atmosphereQuality = AtmosphereQualityLevel.Medium;
         public bool logRobotDiagnostics = false;
+        /// <summary>Startup / diagnostic Log.Message lines (exhaust auto-tag list, later P10).</summary>
+        public bool verboseLogging = false;
+        /// <summary>C# allowlist of vanilla/DLC burners. Off skips auto-tag; XML patches still apply.</summary>
+        public bool autoTagExhaust = true;
         public bool foodRelayEnabled = true;
         public bool restRelayEnabled = true;
         public bool medicalRelayEnabled = true;
@@ -120,6 +124,8 @@ namespace Strata
             Scribe_Values.Look(ref offThreadWorkRelay, "offThreadWorkRelay", defaultValue: true);
             Scribe_Values.Look(ref atmosphereQuality, "atmosphereQuality", AtmosphereQualityLevel.Medium);
             Scribe_Values.Look(ref logRobotDiagnostics, "logRobotDiagnostics", defaultValue: false);
+            Scribe_Values.Look(ref verboseLogging, "verboseLogging", defaultValue: false);
+            Scribe_Values.Look(ref autoTagExhaust, "autoTagExhaust", defaultValue: true);
             Scribe_Values.Look(ref foodRelayEnabled, "foodRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref medicalRelayEnabled, "medicalRelayEnabled", defaultValue: true);
@@ -175,7 +181,7 @@ namespace Strata
 
                 if (hadWorkRelay || hadRobotWorkRelay)
                 {
-                    Log.Message("[Strata] Settings migration v1"
+                    StrataLog.Verbose("[Strata] Settings migration v1"
                         + ": disabled colonist work relay and Misc. Robots work relay"
                         + " (old profiles kept them on; return/recharge soft-compat stays "
                         + (robotSoftCompatEnabled ? "enabled" : "disabled") + ").");
@@ -192,13 +198,13 @@ namespace Strata
             {
                 naturalGasesEnabled = false;
                 pollutantGasesEnabled = false;
-                Log.Message("[Strata] Settings migration: gas systems disabled by default (can cause lag).");
+                StrataLog.Verbose("[Strata] Settings migration: gas systems disabled by default (can cause lag).");
             }
 
             if (settingsVersion < 4)
             {
                 workRelayEnabled = true;
-                Log.Message("[Strata] Settings migration v4: colonist work relay enabled by default.");
+                StrataLog.Verbose("[Strata] Settings migration v4: colonist work relay enabled by default.");
             }
 
             if (settingsVersion >= CurrentSettingsVersion)
@@ -371,6 +377,8 @@ namespace Strata
             GUI.color = Color.white;
             listing.CheckboxLabeled("Strata_Settings_PollutantGases".Translate(), ref Settings.pollutantGasesEnabled,
                 "Strata_Settings_PollutantGasesDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_AutoTagExhaust".Translate(), ref Settings.autoTagExhaust,
+                "Strata_Settings_AutoTagExhaustDesc".Translate());
             if (Settings.pollutantGasesEnabled)
             {
                 listing.Label("Strata_Settings_SmokeSeverity".Translate(Settings.smokeSeverityScale.ToStringPercent()));
@@ -442,6 +450,8 @@ namespace Strata
             Text.Font = GameFont.Medium;
             listing.Label("Strata_Settings_RobotDiagnostics".Translate());
             Text.Font = GameFont.Small;
+            listing.CheckboxLabeled("Strata_Settings_VerboseLogging".Translate(), ref Settings.verboseLogging,
+                "Strata_Settings_VerboseLoggingDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_LogRobotDiagnostics".Translate(), ref Settings.logRobotDiagnostics,
                 "Strata_Settings_LogRobotDiagnosticsDesc".Translate());
             DrawRobotDiagnostics(listing);
@@ -465,6 +475,7 @@ namespace Strata
             }
             listing.CheckboxLabeled("Strata_Settings_SeeBelow".Translate(), ref Settings.seeBelowEnabled,
                 "Strata_Settings_SeeBelowDesc".Translate());
+            StrataBelowDrawPosPatcher.UnpatchIfDisabled();
             if (Settings.seeBelowEnabled)
             {
                 listing.CheckboxLabeled("Strata_Settings_SeeBelowLive".Translate(), ref Settings.seeBelowLive,

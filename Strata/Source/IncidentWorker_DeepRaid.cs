@@ -40,7 +40,7 @@ namespace Strata
         {
             if (Prefs.DevMode && parms.forced)
             {
-                Log.Message("[Strata] Deep raid can't fire: " + reason);
+                StrataLog.Verbose("[Strata] Deep raid can't fire: " + reason);
             }
             return false;
         }

@@ -32,6 +32,7 @@ namespace Strata
 
         private static int CounterCount() => System.Enum.GetValues(typeof(Counter)).Length;
 
+        [StrataSessionReset]
         internal static void ResetSession()
         {
             for (int i = 0; i < totals.Length; i++)
@@ -71,7 +72,7 @@ namespace Strata
             if (StrataMod.Settings?.logRobotDiagnostics == true && tick - lastLogTick >= LogIntervalTicks)
             {
                 lastLogTick = tick;
-                Log.Message(BuildLogLine());
+                StrataLog.Verbose(BuildLogLine());
             }
         }
 

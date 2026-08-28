@@ -49,6 +49,10 @@
   <Strata_Settings_GasSystemWarning>Opt-in: gas simulation is OFF by default. Enable only if you want atmospheric/smoke simulation — it can cost TPS on large or multi-level colonies.</Strata_Settings_GasSystemWarning>
   <Strata_Settings_PollutantGases>Pollutant gases</Strata_Settings_PollutantGases>
   <Strata_Settings_PollutantGasesDesc>Smoke, methane, deep gas pockets, spores, steam, black damp, and other harmful extras. Turning this off clears them, skips emit/drain/harm, and hides them on the gas overlay. Smoke inhalation severity below applies when this is on.</Strata_Settings_PollutantGasesDesc>
+  <Strata_Settings_AutoTagExhaust>Auto-tag known burners</Strata_Settings_AutoTagExhaust>
+  <Strata_Settings_AutoTagExhaustDesc>Add smoke comps to a named vanilla/DLC list (fueled stove and smithy, Ideology braziers and darktorches). Generators, campfires, and Homesteader burners are patched in XML either way. Off never scans other mods' buildings.</Strata_Settings_AutoTagExhaustDesc>
+  <Strata_Settings_VerboseLogging>Verbose log</Strata_Settings_VerboseLogging>
+  <Strata_Settings_VerboseLoggingDesc>Writes extra Strata diagnostics to Player.log (compat, map gen, gravship land/takeoff, exhaust auto-tag). Off by default.</Strata_Settings_VerboseLoggingDesc>
   <Strata_Settings_SmokeSimulation>Smoke simulation</Strata_Settings_SmokeSimulation>
   <Strata_Settings_SmokeSimulationDesc>Burners give off smoke that pools in unventilated rooms. Turning this off clears all existing smoke.</Strata_Settings_SmokeSimulationDesc>
   <Strata_Settings_SmokeSeverity>Smoke inhalation severity: {0} (how fast pawns are harmed by thick smoke)</Strata_Settings_SmokeSeverity>
@@ -360,6 +364,8 @@
   <Strata_Atmos_StatusLine>{0} · O₂ {1}% · CO₂ {2}%</Strata_Atmos_StatusLine>
   <Strata_Letter_FirstB1Air_Label>Underground air</Strata_Letter_FirstB1Air_Label>
   <Strata_Letter_FirstB1Air_Text>Below the surface, sealed rooms do not freely refresh oxygen.\n\nColonists inhale O₂ and exhale CO₂. Growing plants reverse that. Keep air breathable with open shafts, vents to the outdoors, oxygen / CO₂ pumps, lime scrubbers, shaft bellows or exchangers — or leave rooms open to the cavern.\n\nSurface and A+ decks stay safe. Enable Natural gases in Mod Options to use this system (it is opt-in).</Strata_Letter_FirstB1Air_Text>
+  <Strata_IncompatibleStackLetterLabel>Incompatible multi-level mod</Strata_IncompatibleStackLetterLabel>
+  <Strata_IncompatibleStackLetterText>Strata is loaded with {0}. These mods each run their own stacked maps and will fight. Disable the other mod(s) before playing — About.xml also marks them incompatible in the mod list.</Strata_IncompatibleStackLetterText>
   <Strata_Alert_LowOxygen_Label>Low oxygen underground</Strata_Alert_LowOxygen_Label>
   <Strata_Alert_LowOxygen_Explanation>Colony rooms below the surface are running low on oxygen. Ventilate, open a shaft, add plants, or build an oxygen pump before colonists suffocate.</Strata_Alert_LowOxygen_Explanation>
   <Strata_Alert_HighCO2_Label>High CO₂ underground</Strata_Alert_HighCO2_Label>

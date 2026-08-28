@@ -5,15 +5,44 @@ Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
 
 Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog.txt) · [`../assets/workshop/strata-update-notes.bbcode`](../assets/workshop/strata-update-notes.bbcode).
 
-**Version:** `3.1.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.1.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.2.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.2.0 Soft-compat build <stamp> loaded from ...`.
 
 **Build stamp:** each DLL logs the stamp after the version. Current stamp is set in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
 
-Player-facing version **3.1.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.1.0 Soft-compat build ...` in Player.log. Cavern floors follow Biomes! Caverns climate/depth instead of locking B1–B2 to Earthen Depths.
+## [3.2.0]
+
+Player-facing version **3.2.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.2.0 Soft-compat build v320-v1` in Player.log.
+
+### Added
+- **Room air on the stats card** (`v320-v1`) — oxygen, carbon dioxide, and smoke appear on the room stats gizmo with fine / stale / dangerous stages.
+- **AASB / MultiFloors detection** — `About.xml` `incompatibleWith` plus a load letter if those mods are still active.
+
+### Changed
+- **Verbose log** — routine Player.log chatter is gated by **Verbose log** (off by default). One startup line and real errors stay.
+- **See-below DrawPos** — mass `Thing.DrawPos` Harmony patches apply only while see-below is enabled; they unpatch when the setting is off.
+- **Exhaust auto-tag allowlist** — C# no longer walks every `ThingDef`. Only a named vanilla/DLC list is auto-tagged; generators, campfires, and Homesteader burners stay on XML patches.
 
 ### Fixed
+- **Root cellar rot state** — Homesteader root-cellar cooling on underground floors no longer stashes rot progress in statics between Harmony prefix and postfix.
+- **Session statics on save load** — `[StrataSessionReset]` sweeps caches (forced hibernate, caged birds, threat letters, deferred gen, off-thread breath jobs, VEF/VTE pipe nets, and the existing relay list) at `Game.FinalizeInit`.
+- **CN / RU Keyed** — removed 14 leftover gravship keys that English never had. Russian DefInjected now includes gravship life-support buildings.
+
+### Performance
+- **Map kind memoization** — `IsUnderground` / `IsUpperLevel` / depth cache per `map.uniqueID`; biome compared by reference.
+- **OpenRoofCount** — unroofed-cell walks on Strata floors cache until `RoofGrid.SetRoof`.
+- **Breath diffusion** — per-map array buffers instead of cloning ~1.2 MB each enqueue.
+- **Atmosphere cloud keys** — one reused `List<int>` instead of `Keys.ToList()` each cycle.
+- **Hibernate presence** — `ColonyPresenceCount` cached ~60 ticks.
+
+## [3.1.0]
+
+Player-facing version **3.1.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.1.0 Soft-compat build exhaust-allowlist-v1` in Player.log. Cavern floors follow Biomes! Caverns climate/depth instead of locking B1–B2 to Earthen Depths.
+
+### Fixed
+- **Exhaust auto-tag allowlist** (`exhaust-allowlist-v1`) — C# no longer walks every `ThingDef` and tags anything that looks combustive. Only a named vanilla/DLC list (fueled stove/smithy, Ideology braziers and darktorches) is auto-tagged; generators, campfires, and Homesteader burners stay on XML patches. **Auto-tag known burners** in settings (on by default) turns the C# list off. **Verbose log** prints the tagged names at startup. Still **3.1.0** until a patch bump.
+- **Root cellar rot state** (`rot-state-v1`) — Homesteader root-cellar cooling on underground floors no longer stashes rot progress in statics between Harmony prefix and postfix. Each `CompRottable.TickInterval` keeps its own `__state`, so a throw (or any overlap) cannot make the next stack rot at the wrong rate. Still **3.1.0** until a patch bump.
 - **CN / RU Keyed** — added B1 infestation settings and the quest-map shaft warning strings that English already had.
 - **Stormproof outdoor-room patch** — one `PsychologicallyOutdoors` Harmony class now covers Strata pocket levels and Stormproof's enclosed-underground rooms, instead of two patches fighting the same getter.
 - **Shaft dig-down on underground floors** (`shaft-temp-map-guard-v1`) — digging deeper from B1 (or any Strata underground/upper level) no longer falsely triggers the "temporary quest map" guard. The guard still blocks shafts on actual quest sites, Ancient Urban Ruins, and caravan maps.

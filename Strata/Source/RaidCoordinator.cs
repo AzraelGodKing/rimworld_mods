@@ -18,6 +18,13 @@ namespace Strata
         private static readonly List<Map> columnMaps = new List<Map>();
         private static readonly HashSet<Faction> factionBuffer = new HashSet<Faction>();
 
+        [StrataSessionReset]
+        public static void ResetSession()
+        {
+            factionBuffer.Clear();
+            columnMaps.Clear();
+        }
+
         public static void Tick(Map map)
         {
             if (StrataMod.Settings != null && !StrataMod.Settings.raidPursuitEnabled)

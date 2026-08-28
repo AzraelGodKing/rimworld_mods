@@ -81,6 +81,7 @@ namespace Strata
         }
 
         private readonly Dictionary<int, Cloud> clouds = new Dictionary<int, Cloud>();
+        private readonly List<int> cloudKeyScratch = new List<int>();
 
         // Gas injected before rooms exist (map generation seeds pressurized
         // pockets; incidents can queue too) - drained on the next cycle.
@@ -647,9 +648,19 @@ namespace Strata
             ProcessScrubbers();
         }
 
+        private List<int> SnapshotCloudKeys()
+        {
+            cloudKeyScratch.Clear();
+            if (clouds.Count > 0)
+            {
+                cloudKeyScratch.AddRange(clouds.Keys);
+            }
+            return cloudKeyScratch;
+        }
+
         private void MigrateLoadedMixes()
         {
-            foreach (int id in clouds.Keys.ToList())
+            foreach (int id in SnapshotCloudKeys())
             {
                 if (!clouds.TryGetValue(id, out Cloud c))
                 {
@@ -666,7 +677,7 @@ namespace Strata
 
         private void RunDisperseClouds()
         {
-            foreach (int id in clouds.Keys.ToList())
+            foreach (int id in SnapshotCloudKeys())
             {
                 Cloud c = clouds[id];
                 Room r = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
@@ -1001,7 +1012,7 @@ namespace Strata
             {
                 return;
             }
-            List<int> keys = clouds.Keys.ToList();
+            List<int> keys = SnapshotCloudKeys();
             foreach (int id in keys)
             {
                 if (!clouds.TryGetValue(id, out Cloud c))
@@ -1047,7 +1058,7 @@ namespace Strata
 
         private void ZeroGasEverywhere(StrataGasDef gas)
         {
-            foreach (int id in clouds.Keys.ToList())
+            foreach (int id in SnapshotCloudKeys())
             {
                 Cloud c = clouds[id];
                 if (c.density[gas.index] <= 0f)
@@ -1070,7 +1081,7 @@ namespace Strata
             }
             RefreshOutdoorVentCache();
             var countedDoors = new HashSet<Building>();
-            foreach (int id in clouds.Keys.ToList())
+            foreach (int id in SnapshotCloudKeys())
             {
                 if (!clouds.TryGetValue(id, out Cloud c))
                 {
@@ -2003,7 +2014,7 @@ namespace Strata
             {
                 return;
             }
-            foreach (int id in clouds.Keys.ToList())
+            foreach (int id in SnapshotCloudKeys())
             {
                 if (!clouds.TryGetValue(id, out Cloud c))
                 {
@@ -2226,7 +2237,7 @@ namespace Strata
             {
                 return;
             }
-            foreach (int id in clouds.Keys.ToList())
+            foreach (int id in SnapshotCloudKeys())
             {
                 if (!clouds.TryGetValue(id, out Cloud c))
                 {
