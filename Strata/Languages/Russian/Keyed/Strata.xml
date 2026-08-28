@@ -73,6 +73,9 @@
   <Strata_Settings_ThreatsPerf>Угрозы и производительность</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>Преследование рейдеров</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>Рейдеры без целей для боя идут за колонистами через незапечатанные лестницы.</Strata_Settings_RaidPursuitDesc>
+  <Strata_Settings_B1Infestations>Подземные заражения (B1+)</Strata_Settings_B1Infestations>
+  <Strata_Settings_B1InfestationsDesc>Если выкл., заражения (включая стиль глубокого бура) не запускаются ни на одном подземном этаже Strata (B1 и глубже). Поверхность и A+ без изменений.</Strata_Settings_B1InfestationsDesc>
+  <Strata_Place_QuestMapNoShaft>Не копайте шахты Strata на временных картах заданий (Ancient Urban Ruins, мировые площадки и т.п.) — уход с площадки сиротит карманные уровни. Strata — для домашней колонии; чужие этажи оставляйте тому моду.</Strata_Place_QuestMapNoShaft>
   <Strata_Settings_HibernateEmpty>Гибернация пустых уровней</Strata_Settings_HibernateEmpty>
   <Strata_Settings_HibernateEmptyDesc>Пустые карты карманов A+ и B+ крутят ванильные фоновые симы 1 тик из 4, а газ Strata — 1 цикл из 8. Полная жизнь на просматриваемой карте или на любом уровне с пешками.</Strata_Settings_HibernateEmptyDesc>
   <Strata_Settings_ReduceBackground>Ослабить фоновые уровни</Strata_Settings_ReduceBackground>

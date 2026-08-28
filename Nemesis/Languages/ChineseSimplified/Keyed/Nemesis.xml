@@ -14,6 +14,15 @@
   <Nemesis_Settings_MaxAggression>最大侵略强度：{0}%</Nemesis_Settings_MaxAggression>
   <Nemesis_Settings_Escalation>升级速率：每天 {0}</Nemesis_Settings_Escalation>
   <Nemesis_Settings_MinCooldown>行动最短间隔：{0} 天</Nemesis_Settings_MinCooldown>
+  <Nemesis_Settings_Captain>队长成长</Nemesis_Settings_Captain>
+  <Nemesis_Settings_EnableProgression>启用队长成长</Nemesis_Settings_EnableProgression>
+  <Nemesis_Settings_EnableProgressionTip>逃脱后，宿敌会升级（技能、装备、护甲）。狩猎仍可通过俘虏/击杀结束。</Nemesis_Settings_EnableProgressionTip>
+  <Nemesis_Settings_MaxProgression>队长最高等级：{0}</Nemesis_Settings_MaxProgression>
+  <Nemesis_Settings_PostEscapeSabotage>逃脱后琐碎破坏权重：{0}%</Nemesis_Settings_PostEscapeSabotage>
+  <Nemesis_Settings_SoftMounts>软兼容坐骑 / 护卫动物</Nemesis_Settings_SoftMounts>
+  <Nemesis_Settings_SoftMountsTip>从队长 2 级起，返回时在身侧生成一只符合派系的动物（有 Giddy-Up 时更好骑；没有也能并肩作战）。</Nemesis_Settings_SoftMountsTip>
+  <Nemesis_Settings_SoftMechs>软兼容 Biotech 机械护卫</Nemesis_Settings_SoftMechs>
+  <Nemesis_Settings_SoftMechsTip>机械师倾向的队长在加载 Biotech 时，可在率军归来的袭击中带 1–3 台机械体。</Nemesis_Settings_SoftMechsTip>
   <Nemesis_Settings_ActionMix>行动组合</Nemesis_Settings_ActionMix>
   <Nemesis_Settings_WeightTaunt>通讯嘲讽：{0}</Nemesis_Settings_WeightTaunt>
   <Nemesis_Settings_WeightRaid>直接袭击：{0}</Nemesis_Settings_WeightRaid>
@@ -77,6 +86,15 @@
   <Nemesis_Letter_VengeanceReturnBody4>够了鬼祟。够了险些失手。{0}不再假装这是一场决斗。\n\n为何独自归来，当你能带着一支军队？\n\n对{1}的血债，现在成了集体账。</Nemesis_Letter_VengeanceReturnBody4>
   <Nemesis_Letter_VengeanceReturnTitle5>{0}与大军</Nemesis_Letter_VengeanceReturnTitle5>
   <Nemesis_Letter_VengeanceReturnBody5>他们对你们活得太久，早已不在乎公平对决。\n\n{0}率领战团归来。\n\n为何独自归来，当你能带着一支军队？\n\n{1}再也无法与他们一对一交手了。</Nemesis_Letter_VengeanceReturnBody5>
+  <Nemesis_Letter_VengeanceCaptainLine>{0}以 {1} 级{2}的身份归来。</Nemesis_Letter_VengeanceCaptainLine>
+  <Nemesis_Letter_ProgressionTitle>{0}变得更强</Nemesis_Letter_ProgressionTitle>
+  <Nemesis_Letter_ProgressionBody>{0}再次逃脱——并把时间花在了刀刃上。\n\n队长等级 {1}。倾向：{2}。\n\n他们不会以同样的威胁回来。</Nemesis_Letter_ProgressionBody>
+  <Nemesis_Focus_Destroyer>毁灭者</Nemesis_Focus_Destroyer>
+  <Nemesis_Focus_Berserker>狂战士</Nemesis_Focus_Berserker>
+  <Nemesis_Focus_Sniper>狙击手</Nemesis_Focus_Sniper>
+  <Nemesis_Focus_Psycho>疯子</Nemesis_Focus_Psycho>
+  <Nemesis_Focus_Survivor>幸存者</Nemesis_Focus_Survivor>
+  <Nemesis_Focus_Mechanitor>机械师</Nemesis_Focus_Mechanitor>
   <Nemesis_Letter_AssaultTitle>{0}抵达</Nemesis_Letter_AssaultTitle>
   <Nemesis_Letter_AssaultPawn>{0}亲自前来找{1}。局势不妙时他们会撤退，但还会再来。</Nemesis_Letter_AssaultPawn>
   <Nemesis_Letter_AssaultColony>{0}亲自率领这次突击。若形势不利，他们不会久留。</Nemesis_Letter_AssaultColony>

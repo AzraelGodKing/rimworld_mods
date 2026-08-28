@@ -371,6 +371,25 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; }
 .btn-outline:hover { background: color-mix(in srgb, var(--mod) 14%, transparent); }
 .changelog-page .changelog-latest .changelog-body { max-height: none; }
 .overview-para { max-width: 780px; }
+.faq-table {
+  width: 100%;
+  max-width: 860px;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 15px;
+}
+.faq-table th,
+.faq-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.faq-table th {
+  width: 34%;
+  color: var(--ink);
+  font-weight: 700;
+}
 
 /* ---------- feature tabs ---------- */
 .tab-list {
