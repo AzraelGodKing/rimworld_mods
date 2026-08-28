@@ -15,7 +15,7 @@
       "accent": "#7a8f3a",
       "preview": "img/HomesteaderPreview.png",
       "tagline": "Farm-to-table craft, wells and irrigation, cool cellars, and off-grid power for tribal and homestead starts.",
-      "badges": ["RimWorld 1.4 / 1.5 / 1.6", "Requires Harmony"],
+      "badges": ["RimWorld 1.6", "Requires Harmony"],
       "overview": [
         "Grow it, put it by, live off the land. Homesteader brings tribal survival, farm-to-table crafting, wells and irrigation, cool storage, comforts, and off-grid power to colonies far from the glitterworld supply chain.",
         "The Homesteaders scenario starts three settlers with livestock and hand tools. A homestead supplier caravan visits with preserves, seeds, and the occasional Diggo plushie."
@@ -126,7 +126,7 @@
       },
       "changelogPath": "changelogs/homesteader.md",
       "requires": ["Harmony"],
-      "rimworldVersions": "1.4-1.6"
+      "rimworldVersions": "1.6"
     },
     {
       "id": "stormproof",

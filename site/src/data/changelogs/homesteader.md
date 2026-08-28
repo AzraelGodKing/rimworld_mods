@@ -6,7 +6,7 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.0 loaded from ...` in Player.log.
+Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.1 loaded from ...` in Player.log.
 
 ### Added
 - **Which station FAQ** — Workshop description and docs spell out drying rack vs curing rack, cellar vs icehouse vs springhouse, and hearth vs wood stove so similar names are not treated as duplicates.
@@ -20,6 +20,11 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Hom
 - **CN / RU language packs** — Chinese Simplified and Russian Keyed + full DefInjected (buildings, items, plants, recipes, research, thoughts, hediffs, incidents, and related defs).
 
 ### Fixed
+- **RimWorld 1.6 only** — dropped 1.4 / 1.5 from `supportedVersions` and `LoadFolders`. The shipped DLL is built against 1.6 refs; those older listings loaded a mismatched assembly.
+- **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting cooling and favorite foods.
+- **Food search** — favorite / discovered-allergy checks use a runtime `HashSet` per pawn instead of splitting packed strings on every `FoodOptimality` candidate.
+- **Root cellar ambient temp** — map cooler is cached; non-rottable defs skip the postfix; `HasAnyCooling` stays the first real gate.
+- **27 statue / monument textures** — downsampled to 256² (512² for the 2×2 grand statue), including the refresh pack copies.
 - **CN / RU Keyed** — added the missing `Homesteader_ScenPart_ForcedStorytellerSummary` string.
 - **Azrael storyteller (1.6)** — comps rewritten to match Cassandra Classic (valid disease / quest / raid-beacon fields); portraits use `CassandraClassic` art so the teller loads without XML / missing-texture errors.
 - **ASF hid Homestead storage** — Adaptive Storage Framework has no `ASF_Architect` tab. The old patch moved crates/cellars/cisterns there and deleted `Homesteader_Storage`, so those buildings vanished whenever ASF was a dependency.

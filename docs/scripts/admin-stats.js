@@ -3,7 +3,8 @@
 // Never schedules commits — refresh is on-demand only.
 
 const UNLOCK_KEY = "azrael-admin-stats-unlocked-v1";
-const TOKEN_KEY = "azrael-admin-gh-token-v1";
+const TOKEN_STORAGE_KEY = "azrael-admin-gh-token-v1";
+let sessionGhToken = null;
 const REPO = {
   owner: "AzraelGodKing",
   repo: "rimworld_mods",
@@ -254,10 +255,11 @@ function onClear() {
 
 function onLock() {
   setUnlocked(false);
+  sessionGhToken = null;
   try {
-    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(TOKEN_STORAGE_KEY);
   } catch {
-    /* ignore */
+    /* ignore leftover from older builds */
   }
   $("gh-token").value = "";
   showConsole(false);
@@ -275,11 +277,7 @@ async function onPublish() {
     setStatus(status, "Paste a GitHub token first.", "error");
     return;
   }
-  try {
-    sessionStorage.setItem(TOKEN_KEY, token);
-  } catch {
-    /* ignore */
-  }
+  sessionGhToken = token;
   const btn = $("btn-publish");
   btn.disabled = true;
   setStatus(status, "Publishing docs/data/stats-cache.json to main…");
@@ -306,11 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
   $("btn-publish").addEventListener("click", onPublish);
 
   try {
-    const saved = sessionStorage.getItem(TOKEN_KEY);
-    if (saved) $("gh-token").value = saved;
+    sessionStorage.removeItem(TOKEN_STORAGE_KEY);
   } catch {
-    /* ignore */
+    /* ignore leftover from older builds */
   }
+  if (sessionGhToken) $("gh-token").value = sessionGhToken;
 
   if (isUnlocked()) {
     showConsole(true);

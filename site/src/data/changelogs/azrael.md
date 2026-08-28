@@ -6,7 +6,10 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log.
+Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.1 loaded from ...` in Player.log.
+
+### Changed
+- **1.0.1** — version stamp only; no gameplay change.
 
 ### Added
 - **The Deep Homestead** scenario — 3 settlers, farm kit, mountain-foothills opener; forces Azrael; MayRequire Homesteader / Strata start research and rock salt.

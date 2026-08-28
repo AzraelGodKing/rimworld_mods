@@ -12,7 +12,7 @@ namespace LivingWorld
         {
             Settings = GetSettings<LivingWorldSettings>();
             ModVersionLog.Write("[LivingWorld]", content);
-            new Harmony("azraelgodking.livingworld").PatchAll();
+            HarmonyPatchAll.Apply(new Harmony("azraelgodking.livingworld"), "[LivingWorld]");
         }
 
         public override string SettingsCategory() => "LivingWorld_SettingsCategory".Translate();

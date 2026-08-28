@@ -1,28 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
-using RimWorld;
 using Verse;
 
-namespace Homesteader
+namespace Nemesis
 {
-    [StaticConstructorOnStartup]
-    public static class HomesteaderHarmony
-    {
-        internal static HashSet<ThingDef> RottableDefs = new HashSet<ThingDef>();
-
-        static HomesteaderHarmony()
-        {
-            HarmonyPatchAll.Apply(new Harmony("azraelgodking.homesteader"), "[Homesteader]");
-            foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
-            {
-                if (def.HasComp(typeof(CompRottable)))
-                    RottableDefs.Add(def);
-            }
-        }
-    }
-
     internal static class HarmonyPatchAll
     {
         internal static void Apply(Harmony harmony, string logPrefix)
