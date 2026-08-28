@@ -74,6 +74,9 @@
   <Strata_Settings_ThreatsPerf>威胁与性能</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>袭击追击</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>没有可打目标的袭击者会经未密封楼梯井追击你的殖民者。</Strata_Settings_RaidPursuitDesc>
+  <Strata_Settings_B1Infestations>地下虫害（B1+）</Strata_Settings_B1Infestations>
+  <Strata_Settings_B1InfestationsDesc>关闭时，任何 Strata 地下楼层（B1 及更深）都不会触发虫害（含深钻类）。地表与 A+ 不变。</Strata_Settings_B1InfestationsDesc>
+  <Strata_Place_QuestMapNoShaft>不要在临时任务地图（远古都市废墟、世界地点等）上挖 Strata 竖井——放弃地点会让口袋楼层成为孤儿。请在家园殖民地使用 Strata；探索用地图用其他模组的楼层。</Strata_Place_QuestMapNoShaft>
   <Strata_Settings_HibernateEmpty>休眠空楼层</Strata_Settings_HibernateEmpty>
   <Strata_Settings_HibernateEmptyDesc>空置的 A+ / B+ 口袋地图以每 4 tick 跑 1 次原版环境模拟、每 8 周期跑 1 次 Strata 气体。你正在查看的地图或有单位的楼层保持完全运行。</Strata_Settings_HibernateEmptyDesc>
   <Strata_Settings_ReduceBackground>降低后台楼层负载</Strata_Settings_ReduceBackground>
