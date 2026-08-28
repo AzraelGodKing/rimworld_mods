@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <RoomStatDef>
+    <defName>Strata_RoomOxygen</defName>
+    <label>oxygen</label>
+    <workerClass>Strata.RoomStatWorker_StrataGas</workerClass>
+    <updatePriority>3</updatePriority>
+    <displayRounded>true</displayRounded>
+    <roomlessScore>21</roomlessScore>
+    <scoreStages>
+      <li>
+        <label>dangerous</label>
+      </li>
+      <li>
+        <minScore>12</minScore>
+        <label>stale</label>
+      </li>
+      <li>
+        <minScore>16</minScore>
+        <label>fine</label>
+      </li>
+    </scoreStages>
+  </RoomStatDef>
+
+  <RoomStatDef>
+    <defName>Strata_RoomCarbonDioxide</defName>
+    <label>carbon dioxide</label>
+    <workerClass>Strata.RoomStatWorker_StrataGas</workerClass>
+    <updatePriority>3</updatePriority>
+    <displayRounded>true</displayRounded>
+    <roomlessScore>0</roomlessScore>
+    <scoreStages>
+      <li>
+        <label>fine</label>
+      </li>
+      <li>
+        <minScore>4</minScore>
+        <label>stale</label>
+      </li>
+      <li>
+        <minScore>18</minScore>
+        <label>dangerous</label>
+      </li>
+    </scoreStages>
+  </RoomStatDef>
+
+  <RoomStatDef>
+    <defName>Strata_RoomSmoke</defName>
+    <label>smoke</label>
+    <workerClass>Strata.RoomStatWorker_StrataGas</workerClass>
+    <updatePriority>3</updatePriority>
+    <displayRounded>true</displayRounded>
+    <roomlessScore>0</roomlessScore>
+    <scoreStages>
+      <li>
+        <label>fine</label>
+      </li>
+      <li>
+        <minScore>6</minScore>
+        <label>stale</label>
+      </li>
+      <li>
+        <minScore>18</minScore>
+        <label>dangerous</label>
+      </li>
+    </scoreStages>
+  </RoomStatDef>
+
+</Defs>

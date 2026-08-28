@@ -36,7 +36,7 @@ namespace Strata
             {
                 offsets.Add(cell - origin);
             }
-            Log.Message("[Strata] Gravship takeoff: snapshotted " + offsets.Count
+            StrataLog.Verbose("[Strata] Gravship takeoff: snapshotted " + offsets.Count
                 + " substructure cell(s) for linked-floor rebuild.");
         }
 
@@ -121,7 +121,7 @@ namespace Strata
 
             StrataGravshipPortalTravel.RewireHostShafts(host, targets);
 
-            Log.Message("[Strata] Gravship land rebuild: " + targets.Count + " floor(s), snapped "
+            StrataLog.Verbose("[Strata] Gravship land rebuild: " + targets.Count + " floor(s), snapped "
                 + snapped + " thing(s), " + painted + " deck cell(s), " + subCells
                 + " projected substructure cell(s).");
         }

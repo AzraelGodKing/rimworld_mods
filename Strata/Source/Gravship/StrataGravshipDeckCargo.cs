@@ -88,6 +88,7 @@ namespace Strata
 
         public static bool PlacedThisLand => placedThisLand;
 
+        [StrataSessionReset]
         public static void ResetSession()
         {
             pending.Clear();
@@ -146,7 +147,7 @@ namespace Strata
             }
             if (pending.Count > 0)
             {
-                Log.Message("[Strata] G8 deck cargo: packed " + pending.Count
+                StrataLog.Verbose("[Strata] G8 deck cargo: packed " + pending.Count
                     + " linked level(s) for land place (rot-aware).");
             }
         }
@@ -178,7 +179,7 @@ namespace Strata
                 IntVec3 drift = landing.Position - shaftPosAtTakeoff;
                 if (drift != IntVec3.Zero)
                 {
-                    Log.Message("[Strata] G8 deck cargo: pocket " + pocket.uniqueID
+                    StrataLog.Verbose("[Strata] G8 deck cargo: pocket " + pocket.uniqueID
                         + " drift " + drift + " corrected at capture (re-anchored under shaft "
                         + (snap.shaftId ?? snap.defName) + ").");
                 }
@@ -348,7 +349,7 @@ namespace Strata
             placedThisLand = placedThings > 0;
             if (placedThings > 0)
             {
-                Log.Message("[Strata] G8 deck cargo: placed " + placedThings
+                StrataLog.Verbose("[Strata] G8 deck cargo: placed " + placedThings
                     + " thing(s) at landed engine root " + root
                     + " (rotation " + shipRot.ToStringHuman() + ").");
             }
@@ -611,7 +612,7 @@ namespace Strata
             }
             if (cleared > 0)
             {
-                Log.Message("[Strata] G8 deck cargo: cleared " + cleared
+                StrataLog.Verbose("[Strata] G8 deck cargo: cleared " + cleared
                     + " old-footprint cell(s) on pocket " + pocket.uniqueID + ".");
             }
         }

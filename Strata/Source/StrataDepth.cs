@@ -1,5 +1,4 @@
 using HarmonyLib;
-using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -12,11 +11,7 @@ namespace Strata
     {
         public static int Of(Map map)
         {
-            if (!StrataMapUtility.IsUnderground(map))
-            {
-                return 0;
-            }
-            return CountLevelsBelowSurface(map);
+            return StrataMapUtility.CachedDepthBelow(map);
         }
 
         // B1 and any underground pocket without a parent chain (depth 0).
@@ -29,15 +24,7 @@ namespace Strata
         // the biome is fully wired (GenSteps use this for B1 vs B2+ rules).
         public static int CountLevelsBelowSurface(Map map)
         {
-            int depth = 0;
-            Map current = map;
-            int guard = 0;
-            while (current?.Parent is PocketMapParent parent && parent.sourceMap != null && guard++ < 64)
-            {
-                depth++;
-                current = parent.sourceMap;
-            }
-            return depth;
+            return StrataMapUtility.CachedDepthBelow(map);
         }
 
         // Signed stack index: +N upper floors, 0 surface, -N underground.
@@ -60,23 +47,7 @@ namespace Strata
 
         public static int CountLevelsAboveSurface(Map map)
         {
-            if (!StrataMapUtility.IsUpperLevel(map))
-            {
-                return 0;
-            }
-            int height = 0;
-            Map current = map;
-            int guard = 0;
-            while (current?.Parent is PocketMapParent parent && parent.sourceMap != null && guard++ < 64)
-            {
-                height++;
-                current = parent.sourceMap;
-                if (!StrataMapUtility.IsUpperLevel(current))
-                {
-                    break;
-                }
-            }
-            return height;
+            return StrataMapUtility.CachedHeightAbove(map);
         }
 
         // A geothermal gradient: the deeper you dig, the warmer the rock.

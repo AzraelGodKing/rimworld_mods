@@ -77,6 +77,46 @@ def keyed_tags(lang_dir: Path) -> set[str]:
     return tags
 
 
+def definjected_files(lang_dir: Path) -> set[str]:
+    tags: set[str] = set()
+    injected = lang_dir / "DefInjected"
+    if not injected.is_dir():
+        return tags
+    for xml in injected.rglob("*.xml"):
+        tags.add(xml.relative_to(injected).as_posix())
+    return tags
+
+
+def check_definjected_parity(mods: list[Path]) -> list[str]:
+    errors = []
+    for mod in mods:
+        langs = mod / "Languages"
+        if not langs.is_dir():
+            continue
+        file_sets: dict[str, set[str]] = {}
+        for lang_dir in sorted(p for p in langs.iterdir() if p.is_dir()):
+            if lang_dir.name == "English":
+                continue
+            files = definjected_files(lang_dir)
+            if files:
+                file_sets[lang_dir.name] = files
+        if len(file_sets) < 2:
+            continue
+        union: set[str] = set()
+        for files in file_sets.values():
+            union |= files
+        for lang, files in sorted(file_sets.items()):
+            missing = sorted(union - files)
+            if missing:
+                preview = ", ".join(missing[:8])
+                more = f" (+{len(missing) - 8} more)" if len(missing) > 8 else ""
+                errors.append(
+                    f"DefInjected parity: {mod.name}/Languages/{lang} missing "
+                    f"{len(missing)} sibling file(s): {preview}{more}"
+                )
+    return errors
+
+
 def check_keyed_parity(mods: list[Path]) -> list[str]:
     errors = []
     for mod in mods:
@@ -164,6 +204,7 @@ def main() -> int:
     errors: list[str] = []
     errors.extend(check_well_formed(xml_files))
     errors.extend(check_keyed_parity(mods))
+    errors.extend(check_definjected_parity(mods))
     errors.extend(check_texpaths(mods))
 
     print(f"Checked {len(xml_files)} XML files across {len(mods)} mods.")

@@ -24,5 +24,11 @@ namespace Strata
                 Contained.Remove(pawn);
             }
         }
+
+        [StrataSessionReset]
+        public static void ResetSession()
+        {
+            Contained.Clear();
+        }
     }
 }

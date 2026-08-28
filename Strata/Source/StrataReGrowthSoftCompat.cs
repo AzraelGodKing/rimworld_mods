@@ -42,7 +42,7 @@ namespace Strata
                     nameof(RebuildCache_Prefix), nameof(RebuildCache_Finalizer));
                 patched += TryPatch(harmony, utility, "UpdateCache",
                     nameof(UpdateCache_Prefix), finalizer: null);
-                Log.Message("[Strata] ReGrowth SimpleFX splash soft-compat: patched "
+                StrataLog.Verbose("[Strata] ReGrowth SimpleFX splash soft-compat: patched "
                     + patched + " hook(s).");
             }
             catch (Exception e)

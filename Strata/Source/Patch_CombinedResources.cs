@@ -167,6 +167,7 @@ namespace Strata
             return merged;
         }
 
+        [StrataSessionReset]
         internal static void ClearCaches()
         {
             extrasCache.Clear();

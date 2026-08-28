@@ -81,6 +81,27 @@ namespace Strata
 
     internal static class StrataRoomUtility
     {
+        private static readonly Dictionary<int, int> roofEpochByMap = new Dictionary<int, int>();
+        private static readonly Dictionary<long, (int epoch, int count)> openRoofByRoom =
+            new Dictionary<long, (int epoch, int count)>();
+
+        [StrataSessionReset]
+        public static void ResetSession()
+        {
+            roofEpochByMap.Clear();
+            openRoofByRoom.Clear();
+        }
+
+        public static void NotifyRoofChanged(Map map)
+        {
+            if (map == null)
+            {
+                return;
+            }
+            roofEpochByMap.TryGetValue(map.uniqueID, out int epoch);
+            roofEpochByMap[map.uniqueID] = epoch + 1;
+        }
+
         // B1 and every level below (depth >= 1). Surface and non-Strata maps
         // are unchanged.
         public static bool ShouldTreatAsEnclosedUnderground(Map map)
@@ -134,6 +155,12 @@ namespace Strata
                 return 0;
             }
             Map map = room.Map;
+            long key = ((long)map.uniqueID << 32) ^ (uint)room.ID;
+            roofEpochByMap.TryGetValue(map.uniqueID, out int epoch);
+            if (openRoofByRoom.TryGetValue(key, out (int epoch, int count) cached) && cached.epoch == epoch)
+            {
+                return cached.count;
+            }
             int open = 0;
             foreach (IntVec3 cell in room.Cells)
             {
@@ -142,6 +169,7 @@ namespace Strata
                     open++;
                 }
             }
+            openRoofByRoom[key] = (epoch, open);
             return open;
         }
 

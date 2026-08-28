@@ -71,7 +71,7 @@ namespace Strata
                     }
                 }
 
-                Log.Message("[Strata] Combat Extended soft-compat: cross-level fire uses CE verbs/projectiles"
+                StrataLog.Verbose("[Strata] Combat Extended soft-compat: cross-level fire uses CE verbs/projectiles"
                     + (n > 0 ? " (turret hooks " + n + ")." : "."));
             }
             catch (Exception e)
