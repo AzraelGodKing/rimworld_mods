@@ -23,6 +23,13 @@ namespace Strata
         private static readonly List<Thing> hitBuffer = new List<Thing>();
         private static readonly Dictionary<Thing, float> hitDist = new Dictionary<Thing, float>();
 
+        [StrataSessionReset]
+        public static void ResetSession()
+        {
+            hitDist.Clear();
+            hitBuffer.Clear();
+        }
+
         private static float lastClickRealTime = -999f;
         private static ThingDef lastClickDef;
         private static ThingDef lastClickStuff;
@@ -392,6 +399,7 @@ namespace Strata
             }
 
             StrataBelowRenderer.EnsureBelowTransform();
+            StrataBelowDrawPosPatcher.EnsurePatched();
             StrataBelowRenderer.OffsetActive = true;
             __state = true;
             return true;

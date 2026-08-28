@@ -69,6 +69,81 @@
     </match>
   </Operation>
 
+  <!-- Vanilla fueled stove — smokes only while worked (CompExhaust.Active). -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="FueledStove"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="FueledStove"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>1</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Vanilla fueled smithy -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="FueledSmithy"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="FueledSmithy"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>1</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <!-- Ideology braziers / darktorches (skipped if Ideology is not loaded). -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Brazier"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Brazier"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>2</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="DarklightBrazier"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="DarklightBrazier"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>2</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="Darktorch"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="Darktorch"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>0.1</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef[defName="DarktorchFloodlight"]/comps</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/ThingDef[defName="DarktorchFloodlight"]/comps</xpath>
+      <value>
+        <li Class="Strata.CompProperties_Exhaust">
+          <emissionPerCycle>0.1</emissionPerCycle>
+        </li>
+      </value>
+    </match>
+  </Operation>
+
   <!-- Torch lamp -->
   <Operation Class="PatchOperationConditional">
     <xpath>Defs/ThingDef[defName="TorchLamp"]/comps</xpath>

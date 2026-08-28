@@ -107,6 +107,7 @@ namespace Strata
 
         public static void EndTravel() => TravelInProgress = false;
 
+        [StrataSessionReset]
         public static void ResetSession()
         {
             snapshots.Clear();
@@ -255,7 +256,7 @@ namespace Strata
 
             if (swept > 0)
             {
-                Log.Message("[Strata] Gravship takeoff: swept " + swept
+                StrataLog.Verbose("[Strata] Gravship takeoff: swept " + swept
                     + " left-behind host shaft(s) off launch map (GravAnchor-safe).");
             }
         }
@@ -333,7 +334,7 @@ namespace Strata
 
             if (snapshots.Count > 0)
             {
-                Log.Message("[Strata] Gravship takeoff: snapshot "
+                StrataLog.Verbose("[Strata] Gravship takeoff: snapshot "
                     + snapshots.Count + " host shaft(s) for land reconnect (G2 shaft IDs).");
             }
         }
@@ -445,7 +446,7 @@ namespace Strata
 
             if (cleared > 0 || stripped > 0)
             {
-                Log.Message("[Strata] Gravship land: unspawned " + cleared
+                StrataLog.Verbose("[Strata] Gravship land: unspawned " + cleared
                     + " packed host shaft(s), stripped " + stripped
                     + " pocket-side thing(s) before PlaceGravship.");
             }
@@ -561,7 +562,7 @@ namespace Strata
             // used to fake success here).
             if (landing.Spawned && landing.Position == dest)
             {
-                Log.Message("[Strata] Landing snap: " + landing.LabelCap + " " + oldPos
+                StrataLog.Verbose("[Strata] Landing snap: " + landing.LabelCap + " " + oldPos
                     + " -> " + dest + " (under " + shaft.LabelCap + ").");
                 return true;
             }
@@ -623,7 +624,7 @@ namespace Strata
                     {
                         continue;
                     }
-                    Log.Message("[Strata] Gravship pocket cleanup: removed orphaned landing "
+                    StrataLog.Verbose("[Strata] Gravship pocket cleanup: removed orphaned landing "
                         + landing.LabelCap + " at " + landing.Position
                         + " on " + pocket.uniqueID + ".");
                     StrataPortalUtility.ForceDestroyPortal(landing, DestroyMode.Vanish);
@@ -780,7 +781,7 @@ namespace Strata
                                 id.RememberPocket(pocket);
                             }
                         }
-                        Log.Message("[Strata] Gravship land: reclaimed packed shaft "
+                        StrataLog.Verbose("[Strata] Gravship land: reclaimed packed shaft "
                             + def.defName + " at " + cell
                             + (snap.shaftId.NullOrEmpty() ? "" : " (shaftId " + snap.shaftId + ")"));
                         continue;
@@ -821,7 +822,7 @@ namespace Strata
                     continue;
                 }
 
-                Log.Message("[Strata] Gravship land: MakeThing restored shaft "
+                StrataLog.Verbose("[Strata] Gravship land: MakeThing restored shaft "
                     + def.defName + " at " + cell
                     + (snap.shaftId.NullOrEmpty() ? "" : " (shaftId " + snap.shaftId + ")"));
             }
@@ -986,7 +987,7 @@ namespace Strata
                         continue;
                     }
 
-                    Log.Message("[Strata] Gravship land: culled duplicate shaft "
+                    StrataLog.Verbose("[Strata] Gravship land: culled duplicate shaft "
                         + shaft.LabelCap + " at " + shaft.Position
                         + " (kept " + keep.Position + ")");
                     StrataPortalUtility.ForceDestroyPortal(shaft, DestroyMode.Vanish);
@@ -1107,7 +1108,7 @@ namespace Strata
                             host, snap.shaftId);
                         if (byId == null || claimedShafts.Contains(byId))
                         {
-                            Log.Message("[Strata] G5 wiring table: no host shaft for shaftId "
+                            StrataLog.Verbose("[Strata] G5 wiring table: no host shaft for shaftId "
                                 + snap.shaftId + " → " + pocket);
                             continue;
                         }
@@ -1150,7 +1151,7 @@ namespace Strata
                 MapPortal shaft = FindBestShaftForPocket(hostShafts, pocket, landing, claimedShafts);
                 if (shaft == null)
                 {
-                    Log.Message("[Strata] Gravship land: left pocket unwired (no unclaimed matching shaft) "
+                    StrataLog.Verbose("[Strata] Gravship land: left pocket unwired (no unclaimed matching shaft) "
                         + pocket);
                     continue;
                 }

@@ -61,6 +61,121 @@ namespace Strata
     {
         public const string UndergroundBiome = "Strata_Underground";
         public const string UpperBiome = "Strata_Upper";
+        public const string UndergroundGenerator = "Strata_UndergroundLevel";
+        public const string UpperGenerator = "Strata_UpperLevel";
+
+        private struct KindCache
+        {
+            public bool underground;
+            public bool upper;
+            public int depthBelow;
+            public int heightAbove;
+        }
+
+        private static readonly Dictionary<int, KindCache> kindByMapId = new Dictionary<int, KindCache>();
+        private static BiomeDef undergroundBiomeDef;
+        private static BiomeDef upperBiomeDef;
+        private static MapGeneratorDef undergroundGenDef;
+        private static MapGeneratorDef upperGenDef;
+
+        [StrataSessionReset]
+        public static void ResetSession()
+        {
+            kindByMapId.Clear();
+        }
+
+        public static void Invalidate(Map map)
+        {
+            if (map != null)
+            {
+                kindByMapId.Remove(map.uniqueID);
+            }
+        }
+
+        public static int CachedDepthBelow(Map map) => CachedKind(map).depthBelow;
+
+        public static int CachedHeightAbove(Map map) => CachedKind(map).heightAbove;
+
+        private static void EnsureDefs()
+        {
+            if (undergroundBiomeDef == null)
+            {
+                undergroundBiomeDef = DefDatabase<BiomeDef>.GetNamedSilentFail(UndergroundBiome);
+            }
+            if (upperBiomeDef == null)
+            {
+                upperBiomeDef = DefDatabase<BiomeDef>.GetNamedSilentFail(UpperBiome);
+            }
+            if (undergroundGenDef == null)
+            {
+                undergroundGenDef = DefDatabase<MapGeneratorDef>.GetNamedSilentFail(UndergroundGenerator);
+            }
+            if (upperGenDef == null)
+            {
+                upperGenDef = DefDatabase<MapGeneratorDef>.GetNamedSilentFail(UpperGenerator);
+            }
+        }
+
+        private static KindCache CachedKind(Map map)
+        {
+            if (map == null)
+            {
+                return default;
+            }
+            if (kindByMapId.TryGetValue(map.uniqueID, out KindCache cached))
+            {
+                return cached;
+            }
+            cached = ComputeKind(map);
+            if (TryGetBiomeDef(map) != null || map.generatorDef != null)
+            {
+                kindByMapId[map.uniqueID] = cached;
+            }
+            return cached;
+        }
+
+        private static KindCache ComputeKind(Map map)
+        {
+            EnsureDefs();
+            KindCache cache = default;
+            BiomeDef biome = TryGetBiomeDef(map);
+            if (biome != null)
+            {
+                cache.underground = biome == undergroundBiomeDef
+                    || (BiomesCavernsUtility.IsActive && BiomesCavernsUtility.IsStrataCavernBiome(biome));
+                cache.upper = biome == upperBiomeDef;
+            }
+            else
+            {
+                MapGeneratorDef gen = map.generatorDef;
+                cache.underground = gen != null
+                    && (gen == undergroundGenDef || gen.defName == UndergroundGenerator);
+                cache.upper = gen != null
+                    && (gen == upperGenDef || gen.defName == UpperGenerator);
+            }
+            if (cache.underground)
+            {
+                cache.depthBelow = WalkPocketParents(map);
+            }
+            if (cache.upper)
+            {
+                cache.heightAbove = WalkPocketParents(map);
+            }
+            return cache;
+        }
+
+        private static int WalkPocketParents(Map map)
+        {
+            int depth = 0;
+            Map current = map;
+            int guard = 0;
+            while (current?.Parent is PocketMapParent parent && parent.sourceMap != null && guard++ < 64)
+            {
+                depth++;
+                current = parent.sourceMap;
+            }
+            return depth;
+        }
 
         // Pocket maps can carry stale tile IDs during save load; map.Biome walks
         // WorldGrid and throws before FinalizeLoading repairs the parent tile.
@@ -84,26 +199,12 @@ namespace Strata
 
         public static bool IsUnderground(Map map)
         {
-            BiomeDef biome = TryGetBiomeDef(map);
-            if (biome != null)
-            {
-                if (biome.defName == UndergroundBiome)
-                {
-                    return true;
-                }
-                return BiomesCavernsUtility.IsActive && BiomesCavernsUtility.IsStrataCavernBiome(biome);
-            }
-            return map?.generatorDef?.defName == "Strata_UndergroundLevel";
+            return map != null && CachedKind(map).underground;
         }
 
         public static bool IsUpperLevel(Map map)
         {
-            BiomeDef biome = TryGetBiomeDef(map);
-            if (biome != null)
-            {
-                return biome.defName == UpperBiome;
-            }
-            return map?.generatorDef?.defName == "Strata_UpperLevel";
+            return map != null && CachedKind(map).upper;
         }
 
         public static bool IsSurfacePlayerHome(Map map)
@@ -466,7 +567,7 @@ namespace Strata
             catch
             {
             }
-            Log.Message("[Strata] Deep raid blocked. Vanilla gates: "
+            StrataLog.Verbose("[Strata] Deep raid blocked. Vanilla gates: "
                 + $"targetAllowed={__instance.def.TargetAllowed(parms.target)}, "
                 + $"allowBigThreats={Find.Storyteller?.difficulty?.allowBigThreats}, "
                 + $"firedTooRecently={firedRecently}, "

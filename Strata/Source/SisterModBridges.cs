@@ -38,7 +38,7 @@ namespace Strata
                 || ModLister.GetActiveModWithIdentifier(StrataVgeCompat.PackageId) != null;
             if (VanillaGravshipExpandedLoaded)
             {
-                Log.Message("[Strata] Soft-compat: Vanilla Gravship Expanded - Chapter 1 detected ("
+                StrataLog.Verbose("[Strata] Soft-compat: Vanilla Gravship Expanded - Chapter 1 detected ("
                     + StrataVgeCompat.PackageId + "). Gravship underdeck follow uses VGE engine/scaffold awareness.");
             }
 
@@ -73,7 +73,7 @@ namespace Strata
             }
             if (parts.Count > 0)
             {
-                Log.Message("[Strata] Sister-mod bridges active: " + string.Join(", ", parts));
+                StrataLog.Verbose("[Strata] Sister-mod bridges active: " + string.Join(", ", parts));
             }
         }
 

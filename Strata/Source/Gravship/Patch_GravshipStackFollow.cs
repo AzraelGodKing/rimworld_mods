@@ -156,7 +156,7 @@ namespace Strata
             var comp = WorldComponent_StrataGravshipStacks.Get();
             if (comp != null && comp.IsTravelling(map))
             {
-                Log.Message($"[Strata] Blocked DestroyPocketMap on travelling level {map}.");
+                StrataLog.Verbose($"[Strata] Blocked DestroyPocketMap on travelling level {map}.");
                 return false;
             }
             return true;

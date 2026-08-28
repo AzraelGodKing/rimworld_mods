@@ -225,7 +225,7 @@ namespace Strata
             }
             if (restored > 0)
             {
-                Log.Message("[Strata] Gravship underdeck: restored walkable deck under "
+                StrataLog.Verbose("[Strata] Gravship underdeck: restored walkable deck under "
                     + restored + " cell(s) that were impassable hull.");
             }
         }
@@ -350,7 +350,7 @@ namespace Strata
 
             if (moved > 0)
             {
-                Log.Message("[Strata] Gravship underdeck: pulled " + moved
+                StrataLog.Verbose("[Strata] Gravship underdeck: pulled " + moved
                     + " straggler thing(s) onto the live ship footprint.");
             }
             return moved;
@@ -747,7 +747,7 @@ namespace Strata
             }
             if (removed > 0)
             {
-                Log.Message("[Strata] Gravship underdeck: cleared " + removed
+                StrataLog.Verbose("[Strata] Gravship underdeck: cleared " + removed
                     + " off-pad silhouette cell(s).");
             }
         }
