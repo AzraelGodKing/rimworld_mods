@@ -21,6 +21,7 @@ namespace Strata
             StrataCrossLevelCombat.Enabled
             && (StrataMod.Settings == null || StrataMod.Settings.crossLevelAutoEngage);
 
+        [StrataSessionReset]
         public static void ResetSession() => cooldownUntil.Clear();
 
         public static void ScanPair(Map sky, Map surface)

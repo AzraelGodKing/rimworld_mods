@@ -50,7 +50,7 @@ namespace Strata
 
             if (moved > 0)
             {
-                Log.Message($"[Strata] Gravship takeoff: moved {moved} prisoner/baby pawn(s) onto the ship stack.");
+                StrataLog.Verbose($"[Strata] Gravship takeoff: moved {moved} prisoner/baby pawn(s) onto the ship stack.");
                 Messages.Message(
                     "Strata_GravshipRescuedPawns".Translate(moved),
                     MessageTypeDefOf.NeutralEvent,

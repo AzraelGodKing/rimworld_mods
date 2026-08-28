@@ -77,6 +77,12 @@ namespace Strata
 
             list.Add(action);
         }
+
+        [StrataSessionReset]
+        public static void ResetSession()
+        {
+            pendingByMapId.Clear();
+        }
     }
 
     public class MapComponent_StrataDeferredGen : MapComponent

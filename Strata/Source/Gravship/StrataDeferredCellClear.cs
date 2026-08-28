@@ -57,7 +57,7 @@ namespace Strata
             }
             if (added > 0)
             {
-                Log.Message("[Strata] Deferred clear: queued " + added
+                StrataLog.Verbose("[Strata] Deferred clear: queued " + added
                     + " off-pad cell(s) on map " + map.uniqueID
                     + " (" + queue.cells.Count + " pending).");
             }
@@ -146,7 +146,7 @@ namespace Strata
             if (queue.cells.Count == 0)
             {
                 queues.RemoveAt(0);
-                Log.Message("[Strata] Deferred clear: map " + queue.mapId + " drained.");
+                StrataLog.Verbose("[Strata] Deferred clear: map " + queue.mapId + " drained.");
             }
         }
 

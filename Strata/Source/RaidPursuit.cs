@@ -35,6 +35,7 @@ namespace Strata
 
         // Transit credit from one save means nothing in another (pawn IDs
         // collide across saves). Cleared on game load.
+        [StrataSessionReset]
         internal static void ResetSession()
         {
             assaultCredit.Clear();

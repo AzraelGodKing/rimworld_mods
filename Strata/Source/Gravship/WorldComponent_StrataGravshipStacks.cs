@@ -163,7 +163,7 @@ namespace Strata
             // Use takeoff engine cell/facing (not live — may already be mid-pack).
             StrataGravshipDeckCargo.CaptureAll(engine, levels, takeoffPos,
                 pendingTakeoffEngineRot.IsValid ? pendingTakeoffEngineRot : engine.Rotation);
-            Log.Message($"[Strata] Gravship takeoff: {levels.Count} linked level(s) will follow the ship (engine thingID {takeoffThingId}, stack {stackGuid}).");
+            StrataLog.Verbose($"[Strata] Gravship takeoff: {levels.Count} linked level(s) will follow the ship (engine thingID {takeoffThingId}, stack {stackGuid}).");
             Messages.Message(
                 "Strata_GravshipLevelsTravel".Translate(levels.Count),
                 MessageTypeDefOf.PositiveEvent,
@@ -190,7 +190,7 @@ namespace Strata
             StrataGravshipStackUtility.RebindAll(maps, newHost);
             StrataGravshipPortalTravel.ReconnectOrRestore(
                 newHost, maps, restoreMissingShafts: false, landEngine: landEngine);
-            Log.Message($"[Strata] Gravship landing prepare: rebound {maps.Count} linked level(s) to {newHost} (shaft restore deferred).");
+            StrataLog.Verbose($"[Strata] Gravship landing prepare: rebound {maps.Count} linked level(s) to {newHost} (shaft restore deferred).");
         }
 
         public void CompleteLanding(Gravship ship, Map newHost)
@@ -338,7 +338,7 @@ namespace Strata
                 // Hard invariant after everything settles: landing cell == shaft cell.
                 StrataGravshipPortalTravel.SnapAllLandingsUnderShafts(newHost);
                 StrataGravshipPortalTravel.CleanupPocketLeftovers(newHost);
-                Log.Message($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}"
+                StrataLog.Verbose($"[Strata] Gravship landing: rebound {maps.Count} linked level(s) to {newHost}"
                     + (pinnedThingId >= 0 ? $" (engine thingID {pinnedThingId})." : "."));
                 Messages.Message(
                     "Strata_GravshipLevelsDocked".Translate(maps.Count),

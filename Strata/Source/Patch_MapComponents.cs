@@ -12,6 +12,7 @@ namespace Strata
     {
         public static void Postfix(Map __instance)
         {
+            StrataMapUtility.Invalidate(__instance);
             if (__instance.GetComponent<AtmosphereMapComponent>() == null)
             {
                 __instance.components.Add(new AtmosphereMapComponent(__instance));
@@ -84,6 +85,8 @@ namespace Strata
             if (map != null)
             {
                 AtmosphereMapComponent.RemovePendingSeeds(map.uniqueID);
+                StrataMapUtility.Invalidate(map);
+                StrataOffThreadWork.CancelMap(map.uniqueID);
             }
         }
     }

@@ -84,7 +84,7 @@ namespace Strata
             int moved = TranslateMapContents(pocket, delta);
             if (moved > 0)
             {
-                Log.Message("[Strata] Gravship land: snapped " + moved
+                StrataLog.Verbose("[Strata] Gravship land: snapped " + moved
                     + " thing(s) on " + pocket.uniqueID + " by " + delta
                     + " so contents sit on the ship footprint.");
             }
@@ -134,7 +134,7 @@ namespace Strata
             RepaintAll(pockets, newHost, engine);
             StrataGravshipPortalTravel.RewireHostShafts(newHost, pockets);
 
-            Log.Message("[Strata] Gravship land align: engineDelta " + engineDelta
+            StrataLog.Verbose("[Strata] Gravship land align: engineDelta " + engineDelta
                 + ", moved " + shifted + " thing(s) on "
                 + pockets.Count + " linked level(s).");
         }
@@ -176,7 +176,7 @@ namespace Strata
                         IntVec3 combined = engineDelta + residual;
                         if (residual != IntVec3.Zero)
                         {
-                            Log.Message("[Strata] Gravship land align: engineDelta "
+                            StrataLog.Verbose("[Strata] Gravship land align: engineDelta "
                                 + engineDelta + " + shaft fine-tune " + residual
                                 + " -> " + combined);
                         }
@@ -184,7 +184,7 @@ namespace Strata
                     }
                 }
 
-                Log.Message("[Strata] Gravship land align: engineDelta " + engineDelta
+                StrataLog.Verbose("[Strata] Gravship land align: engineDelta " + engineDelta
                     + " (MultiFloors-style pad follow)");
                 return engineDelta;
             }
@@ -195,7 +195,7 @@ namespace Strata
                 IntVec3 snap = shaft.Position - landing.Position;
                 if (snap != IntVec3.Zero)
                 {
-                    Log.Message("[Strata] Gravship land align: shaft-snap "
+                    StrataLog.Verbose("[Strata] Gravship land align: shaft-snap "
                         + landing.LabelCap + " " + landing.Position
                         + " -> " + shaft.Position + " (delta " + snap + ")");
                 }
@@ -312,7 +312,7 @@ namespace Strata
         {
             if (!StrataGravshipUtility.EngineHasSubstructure(engine))
             {
-                Log.Message("[Strata] Gravship land: host substructure not ready yet — "
+                StrataLog.Verbose("[Strata] Gravship land: host substructure not ready yet — "
                     + "keeping linked deck terrain/projected tiles; sync will retry shortly.");
                 MapComponent_StrataGravshipUpperDeckSync.RequestSync(host);
                 ScheduleDeferredRepaint(pockets, host, engine.thingIDNumber);
@@ -457,7 +457,7 @@ namespace Strata
             if (lastAppliedDeltaByPocket.TryGetValue(map.uniqueID, out IntVec3 prior)
                 && prior == delta)
             {
-                Log.Message("[Strata] Gravship land align: skip duplicate delta " + delta
+                StrataLog.Verbose("[Strata] Gravship land align: skip duplicate delta " + delta
                     + " on pocket " + map.uniqueID + " (already applied this land).");
                 return 0;
             }

@@ -25,6 +25,7 @@ namespace Strata
         private static readonly AccessTools.FieldRef<ItemAvailability, Map> itemAvailMap =
             AccessTools.FieldRefAccess<ItemAvailability, Map>("map");
 
+        [StrataSessionReset]
         public static void ResetSession() => pending.Clear();
 
         public static Map MapOf(ItemAvailability availability) => itemAvailMap(availability);
