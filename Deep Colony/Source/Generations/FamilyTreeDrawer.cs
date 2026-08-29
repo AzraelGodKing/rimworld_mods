@@ -28,6 +28,12 @@ namespace DeepColony
             Rect label = new Rect(rect.x, rect.y, Mathf.Max(40f, rect.width - btnW - rightPad - 6f), rect.height);
             Widgets.Label(label, "DC_FamilyTree_Title".Translate(focus.LabelShort.Named("PAWN")));
             Text.Anchor = TextAnchor.UpperLeft;
+            if (FamilyTreeDevUtility.GodMode)
+            {
+                FamilyTreeDevUtility.TryOpenMenu(label, focus, clicked: null);
+                if (Mouse.IsOver(label))
+                    TooltipHandler.TipRegion(label, "DC_FamilyTree_DevClickTip".Translate());
+            }
 
             var settings = DeepColonyMod.Settings ?? DeepColonySettings.Get;
             Rect btn = new Rect(rect.xMax - btnW - rightPad, rect.y, btnW, rect.height);
@@ -198,6 +204,9 @@ namespace DeepColony
 
             TooltipHandler.TipRegion(rect, () => Tip(focus, pawn), pawn.thingIDNumber ^ 0x46A11);
 
+            if (FamilyTreeDevUtility.TryOpenMenu(rect, focus, pawn))
+                return;
+
             if (!self && Widgets.ButtonInvisible(rect))
                 onClick?.Invoke(pawn);
         }
@@ -215,7 +224,10 @@ namespace DeepColony
             string click = pawn == focus
                 ? ""
                 : "\n" + "DC_FamilyTree_ClickTip".Translate();
-            return pawn.NameFullColored + "\n" + rel + "\n" + loc + click;
+            string dev = FamilyTreeDevUtility.GodMode
+                ? "\n" + "DC_FamilyTree_DevClickTip".Translate()
+                : "";
+            return pawn.NameFullColored + "\n" + rel + "\n" + loc + click + dev;
         }
     }
 }

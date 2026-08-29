@@ -6,7 +6,19 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.0.2** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.0.2 loaded from ...` in Player.log.
+Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.1.0 loaded from ...` in Player.log (`azr-81-82-83-v3`).
+
+### Added
+- **Anniversaries** (`azr-81`) — on the anniversary of the current love bond (oldest lover / fiancé / spouse start tick): a letter, a small “anniversary” thought for both (+4 / +6), then one of two specials — **anniversary date** (+10 / +15) if they finish a date that day, or **missed anniversary** (−6 / −8) at the next midnight if they never went out. Dating replaces the small thought. Date quality also gets a +2. Off in settings.
+- **Favourite spots** (`azr-82`) — couples remember the venue of finished dates (table / gather spot / outdoor cell). Wonderful dates pull them back; a ruined date can sour the place (`our spot` / `that place is ruined` thoughts). Off in settings.
+- **Double dates** (`azr-83`) — two couples with overlapping Date hours may share a venue. Quality rolls once for the group; finishing spills opinion onto the other pair (friends vs rivals). Walk/gift activities coerce to hangout so four pawns can sit still. If the other couple never starts within ~1 hour, the hosts date alone (`double date fell through`). Off in settings. Ideology / Biotech reroutes still go through `CanDate`.
+
+### Fixed
+- **Harmony JobDriver.Cleanup** — guarded PatchAll was feeding `JobDriver_Date` / `JobDriver_SelfLovin` to Harmony because they inherit vanilla `Cleanup(JobCondition)`. Harmony treated that as a patch auxiliary and failed both classes at load. Only types with `[HarmonyPatch]` are processed now.
+
+## [1.0.2]
+
+Player-facing version **1.0.2**.
 
 ### Fixed
 - **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Date Night.

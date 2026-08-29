@@ -64,6 +64,10 @@ namespace DateNight
         {
             Pawn partner = Partner;
             string name = partner?.LabelShort ?? "?";
+            if (DateNightDoubleDates.IsDoubleDate(pawn))
+            {
+                return "DateNight_Report_DoubleDate".Translate(name);
+            }
             switch (activity)
             {
                 case DateActivity.Dinner:
@@ -124,7 +128,7 @@ namespace DateNight
                 inHangPhase = true;
                 if (ticksLeft <= 0)
                 {
-                    int seed = DateNightActivities.CoupleSeed(pawn, Partner);
+                    int seed = DateNightDoubleDates.QualitySeed(pawn, Partner);
                     seed = Gen.HashCombineInt(seed, GenDate.DaysPassed);
                     Rand.PushState(seed);
                     ticksLeft = Rand.RangeInclusive(2000, 4000);
@@ -226,7 +230,8 @@ namespace DateNight
             }
 
             Pawn partner = Partner;
-            coupleActivity = DateNightActivities.Resolve(pawn, partner);
+            coupleActivity = DateNightDoubleDates.SharedActivity(
+                pawn, DateNightActivities.Resolve(pawn, partner));
             activity = coupleActivity;
 
             // Only the initiator hands over a gift; the partner waits at the spot.

@@ -19,6 +19,12 @@
   <DateNight_Settings_GiftsTip>一方可以取来小奢侈品（啤酒、巧克力、珍馐……）送给对方，提升心情和好感。物品会进入伴侣的物品栏。</DateNight_Settings_GiftsTip>
   <DateNight_Settings_PostDateBoost>约会后的火花</DateNight_Settings_PostDateBoost>
   <DateNight_Settings_PostDateBoostTip>完成一次约会后，这对伴侣的爱爱几率提升约一个游戏日。</DateNight_Settings_PostDateBoostTip>
+  <DateNight_Settings_Anniversaries>纪念日</DateNight_Settings_Anniversaries>
+  <DateNight_Settings_AnniversariesTip>恋爱关系周年：一封信；当天去约会有特别心情，当天没约会则会难受。关闭：不发日历信件，也没有周年心情。</DateNight_Settings_AnniversariesTip>
+  <DateNight_Settings_FavoriteSpot>记住最爱的地点</DateNight_Settings_FavoriteSpot>
+  <DateNight_Settings_FavoriteSpotTip>伴侣会记住最棒约会发生的地方，并更愿意回去。约会被毁可能让那地方变糟。关闭：每次约会重新选地点。</DateNight_Settings_FavoriteSpotTip>
+  <DateNight_Settings_DoubleDates>允许四人约会</DateNight_Settings_DoubleDates>
+  <DateNight_Settings_DoubleDatesTip>两对伴侣若约会时段重叠，可共用一张桌子、野餐地或聚集点。质量只掷一次；当晚会影响对另一对的好感。另一对没来则各自约会。</DateNight_Settings_DoubleDatesTip>
   <DateNight_Settings_Reset>恢复默认</DateNight_Settings_Reset>
   <DateNight_Report_Hangout>正在和{0}约会。</DateNight_Report_Hangout>
   <DateNight_Report_Dinner>正在和{0}共进晚餐。</DateNight_Report_Dinner>
@@ -28,6 +34,11 @@
   <DateNight_Report_Dance>正在和{0}跳舞。</DateNight_Report_Dance>
   <DateNight_Report_Gift>正在给{0}送礼物。</DateNight_Report_Gift>
   <DateNight_Report_Recreation>正在和{0}消遣。</DateNight_Report_Recreation>
+  <DateNight_Report_DoubleDate>正在和{0}四人约会。</DateNight_Report_DoubleDate>
+  <DateNight_Letter_AnniversaryLabel>纪念日</DateNight_Letter_AnniversaryLabel>
+  <DateNight_Letter_AnniversaryText>{PAWN} 和 {PARTNER} 已经在一起 {YEARS}。今天去约会会很有意义——放过去则会留下遗憾。</DateNight_Letter_AnniversaryText>
+  <DateNight_OneYear>一年</DateNight_OneYear>
+  <DateNight_NYears>{0} 年</DateNight_NYears>
   <DateNight_Alert_Mismatch>作息不一致</DateNight_Alert_Mismatch>
   <DateNight_Alert_MismatchDesc>有人给爱爱或约会涂了时段，但伴侣没有涂，或两人涂的小时不同。请给双方涂上相同的小时。</DateNight_Alert_MismatchDesc>
   <DateNight_Alert_MismatchNone>{0} 涂了{1}；{2} 没有。</DateNight_Alert_MismatchNone>
