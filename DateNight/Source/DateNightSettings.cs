@@ -46,6 +46,22 @@ namespace DateNight
         /// </summary>
         public bool postDateLovinBoost = true;
 
+        /// <summary>
+        /// Letter on the love-bond anniversary; a date that day is a peak mood,
+        /// and skipping it leaves a missed-anniversary thought.
+        /// </summary>
+        public bool enableAnniversaries = true;
+
+        /// <summary>
+        /// Couples remember a favourite venue and prefer to go back; ruined dates can sour it.
+        /// </summary>
+        public bool rememberFavoriteSpot = true;
+
+        /// <summary>
+        /// Two couples with overlapping Date hours may share a venue.
+        /// </summary>
+        public bool allowDoubleDates = true;
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref pregnancySafeCooldown, "pregnancySafeCooldown", true);
@@ -56,6 +72,9 @@ namespace DateNight
             Scribe_Values.Look(ref enableDateQuality, "enableDateQuality", true);
             Scribe_Values.Look(ref allowGiftDates, "allowGiftDates", true);
             Scribe_Values.Look(ref postDateLovinBoost, "postDateLovinBoost", true);
+            Scribe_Values.Look(ref enableAnniversaries, "enableAnniversaries", true);
+            Scribe_Values.Look(ref rememberFavoriteSpot, "rememberFavoriteSpot", true);
+            Scribe_Values.Look(ref allowDoubleDates, "allowDoubleDates", true);
         }
 
         public void ResetToDefaults()
@@ -68,6 +87,9 @@ namespace DateNight
             enableDateQuality = true;
             allowGiftDates = true;
             postDateLovinBoost = true;
+            enableAnniversaries = true;
+            rememberFavoriteSpot = true;
+            allowDoubleDates = true;
         }
     }
 }
