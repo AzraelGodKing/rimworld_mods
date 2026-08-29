@@ -1,0 +1,138 @@
+# =============================================================================
+# Release & Publish — RimWorld mods (GitHub Releases + Nexus)
+# Pattern from SunhavenMod Release & Publish: dispatch → build → zip →
+# optional GitHub tag Name-vVERSION → optional Nexus file version (retries).
+#
+# Version comes from each mod's About.xml modVersion (not a central versions.json).
+# Changelog for the release is the current-version block in About/changelog.txt.
+# Docs-site rolling zips stay on the `latest` tag (Build mod DLLs workflow).
+# =============================================================================
+name: Release & Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (build + zip artifact only; no GitHub Release or Nexus)"
+        required: true
+        type: boolean
+        default: true
+      mod:
+        description: "Which mod to release"
+        required: true
+        type: choice
+        options:
+          - all
+          - homesteader
+          - stormproof
+          - strata
+          - nemesis
+          - deepcolony
+          - datenight
+          - livingworld
+          - azrael
+      create_github_release:
+        description: "Create a versioned GitHub Release (does not replace the rolling latest tag)"
+        required: true
+        type: boolean
+        default: true
+      publish_nexus:
+        description: "Upload the zip to Nexus Mods (needs nexus_file_id + NEXUSMODS_API_KEY)"
+        required: false
+        type: boolean
+        default: false
+      release_anyway:
+        description: "Ignore version gate (re-publish even if this version is already on GitHub/Nexus)"
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-mod-${{ github.event.inputs.mod }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  setup:
+    name: Mod matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: set
+        run: |
+          set -euo pipefail
+          MOD="${{ github.event.inputs.mod }}"
+          if [ "$MOD" = "all" ]; then
+            echo "matrix=$(jq -c '[.[].modKey]' scripts/matrix/mod-matrix.json)" >> "$GITHUB_OUTPUT"
+          else
+            echo "matrix=$(jq -cn --arg k "$MOD" '[$k]')" >> "$GITHUB_OUTPUT"
+          fi
+
+  build:
+    name: Build and pack
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        mod: ${{ fromJson(needs.setup.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Resolve paths
+        id: row
+        run: |
+          set -euo pipefail
+          ROW="$(jq -c --arg k "${{ matrix.mod }}" '.[] | select(.modKey == $k)' scripts/matrix/mod-matrix.json)"
+          echo "mod_dir=$(echo "$ROW" | jq -r '.modDir')" >> "$GITHUB_OUTPUT"
+          echo "dll_name=$(echo "$ROW" | jq -r '.dllName')" >> "$GITHUB_OUTPUT"
+          echo "csproj=$(echo "$ROW" | jq -r '.csproj')" >> "$GITHUB_OUTPUT"
+          echo "configuration=$(echo "$ROW" | jq -r '.configuration // empty')" >> "$GITHUB_OUTPUT"
+          echo "zip_name=$(echo "$ROW" | jq -r '.zipName')" >> "$GITHUB_OUTPUT"
+
+      - name: Build
+        run: |
+          set -euo pipefail
+          CFG="${{ steps.row.outputs.configuration }}"
+          if [ -n "$CFG" ]; then
+            dotnet build "${{ steps.row.outputs.csproj }}" -c "$CFG" --nologo
+          else
+            dotnet build "${{ steps.row.outputs.csproj }}" --nologo
+          fi
+
+      - name: Pack zip
+        run: bash scripts/pack_mod.sh "${{ steps.row.outputs.mod_dir }}" "${{ steps.row.outputs.zip_name }}" "${{ steps.row.outputs.dll_name }}" dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pack-${{ matrix.mod }}
+          path: dist/${{ steps.row.outputs.zip_name }}.zip
+          if-no-files-found: error
+
+  release:
+    name: GitHub + Nexus
+    needs: [setup, build]
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        mod: ${{ fromJson(needs.setup.outputs.matrix) }}
+    uses: ./.github/workflows/reusable-release-mod.yml
+    with:
+      mod: ${{ matrix.mod }}
+      dry_run: ${{ github.event.inputs.dry_run }}
+      create_github_release: ${{ github.event.inputs.create_github_release }}
+      publish_nexus: ${{ github.event.inputs.publish_nexus }}
+      release_anyway: ${{ github.event.inputs.release_anyway }}
+    secrets:
+      NEXUSMODS_API_KEY: ${{ secrets.NEXUSMODS_API_KEY }}
