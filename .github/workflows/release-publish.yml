@@ -29,8 +29,6 @@ on:
           - nemesis
           - deepcolony
           - datenight
-          - livingworld
-          - azrael
       create_github_release:
         description: "Create a versioned GitHub Release (does not replace the rolling latest tag)"
         required: true
@@ -67,8 +65,13 @@ jobs:
           set -euo pipefail
           MOD="${{ github.event.inputs.mod }}"
           if [ "$MOD" = "all" ]; then
-            echo "matrix=$(jq -c '[.[].modKey]' scripts/matrix/mod-matrix.json)" >> "$GITHUB_OUTPUT"
+            echo "matrix=$(jq -c '[.[] | select(.publish != false) | .modKey]' scripts/matrix/mod-matrix.json)" >> "$GITHUB_OUTPUT"
           else
+            PUBLISH="$(jq -r --arg k "$MOD" '.[] | select(.modKey == $k) | .publish' scripts/matrix/mod-matrix.json)"
+            if [ "$PUBLISH" = "false" ]; then
+              echo "::error::$MOD is not release-ready (publish=false). Living World and Azrael stay in-repo only."
+              exit 1
+            fi
             echo "matrix=$(jq -cn --arg k "$MOD" '[$k]')" >> "$GITHUB_OUTPUT"
           fi
 
