@@ -540,6 +540,7 @@
             <li>Homesteader_AppleJuice</li>
             <li>Homesteader_Lard</li>
             <li>Homesteader_Tallow</li>
+            <li>Homesteader_PreserveCrate</li>
           </thingDefs>
         </filter>
       </fixedStorageSettings>
@@ -583,6 +584,7 @@
             <li>Homesteader_AppleJuice</li>
             <li>Homesteader_Lard</li>
             <li>Homesteader_Tallow</li>
+            <li>Homesteader_PreserveCrate</li>
           </thingDefs>
         </filter>
       </defaultStorageSettings>

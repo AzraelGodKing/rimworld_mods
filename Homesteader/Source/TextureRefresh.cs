@@ -8,12 +8,24 @@ using Verse;
 namespace Homesteader
 {
     /// <summary>
-    /// Optional art pack under Textures/HomesteaderRefresh/. Default off; original
-    /// sprites stay on disk and in use until the player enables the setting.
+    /// Optional art pack under Textures/HomesteaderRefresh/. Not in the Workshop zip;
+    /// detect presence so the setting can stay off when the folder is missing.
     /// </summary>
     public static class TextureRefresh
     {
         public const string RefreshRoot = "HomesteaderRefresh";
+
+        /// <summary>One file that always ships with the pack; used to detect install.</summary>
+        public const string PackSentinel = RefreshRoot + "/Apparel/Overalls";
+
+        /// <summary>
+        /// True when HomesteaderRefresh textures are on disk (repo clone, dropped folder,
+        /// or a future optional Workshop item). False for the Workshop-only pack.
+        /// </summary>
+        public static bool PackPresent()
+        {
+            return ContentFinder<Texture2D>.Get(PackSentinel, reportFailure: false) != null;
+        }
 
         private static readonly FieldInfo GraphicDataCachedGraphic =
             AccessTools.Field(typeof(GraphicData), "cachedGraphic");
@@ -52,6 +64,12 @@ namespace Homesteader
 
         public static void Apply(bool useRefresh)
         {
+            if (useRefresh && !PackPresent())
+            {
+                Log.Warning("[Homesteader] Refresh texture pack not installed; using original art.");
+                useRefresh = false;
+            }
+
             EnsureInitialized();
             foreach (KeyValuePair<string, ThingGraphicSnapshot> kv in thingSnapshots)
             {
