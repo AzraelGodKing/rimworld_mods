@@ -2,9 +2,9 @@
 # Download RimWorld from $RIMWORLD_ARCHIVE_URL (secret), extract under /opt/rimworld,
 # install Harmony, and link this repo's mods into the game Mods folder.
 #
-# Idempotent. Safe for Cloud Agent install + start:
-#   install phase: download/extract game + Harmony + env markers
-#   start / --link-only: refresh /workspace mod symlinks + ModsConfig
+# Idempotent. Two phases:
+#   default: download/extract game + Harmony + env markers
+#   --link-only: refresh workspace mod symlinks + ModsConfig
 set -euo pipefail
 
 RW_ROOT="${RIMWORLD_ROOT:-/opt/rimworld}"
@@ -65,8 +65,8 @@ EOF
   fi
 }
 
-# Persist a copy outside /workspace so Cloud Agent \`start\` can re-link mods
-# even when the checked-out branch does not include this script yet.
+# Persist a copy outside the checkout so later --link-only runs can re-link mods
+# even when the current tree does not include this script yet.
 install_self_copy() {
   local self
   self="$(readlink -f "${BASH_SOURCE[0]}")"
