@@ -6,9 +6,10 @@
     "csproj": "Homesteader/Source/Homesteader.csproj",
     "configuration": "",
     "zipName": "Homesteader",
-    "nexus": "",
-    "nexus_mod_id": "",
-    "nexus_file_id": ""
+    "publish": true,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/700",
+    "nexus_mod_id": "700",
+    "nexus_file_id": "7625990"
   },
   {
     "modKey": "stormproof",
@@ -17,9 +18,10 @@
     "csproj": "Stormproof/Source/Stormproof.csproj",
     "configuration": "",
     "zipName": "Stormproof",
-    "nexus": "",
-    "nexus_mod_id": "",
-    "nexus_file_id": ""
+    "publish": true,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/702",
+    "nexus_mod_id": "702",
+    "nexus_file_id": "7630439"
   },
   {
     "modKey": "strata",
@@ -28,9 +30,10 @@
     "csproj": "Strata/Source/Strata.csproj",
     "configuration": "",
     "zipName": "Strata",
-    "nexus": "",
-    "nexus_mod_id": "",
-    "nexus_file_id": ""
+    "publish": true,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/783",
+    "nexus_mod_id": "783",
+    "nexus_file_id": "7882476"
   },
   {
     "modKey": "nemesis",
@@ -39,9 +42,10 @@
     "csproj": "Nemesis/Source/Nemesis.csproj",
     "configuration": "",
     "zipName": "Nemesis",
-    "nexus": "",
-    "nexus_mod_id": "",
-    "nexus_file_id": ""
+    "publish": true,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/782",
+    "nexus_mod_id": "782",
+    "nexus_file_id": "7882455"
   },
   {
     "modKey": "deepcolony",
@@ -50,9 +54,10 @@
     "csproj": "Deep Colony/Source/DeepColony.csproj",
     "configuration": "",
     "zipName": "DeepColony",
-    "nexus": "",
-    "nexus_mod_id": "",
-    "nexus_file_id": ""
+    "publish": true,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/781",
+    "nexus_mod_id": "781",
+    "nexus_file_id": "7882443"
   },
   {
     "modKey": "datenight",
@@ -61,9 +66,10 @@
     "csproj": "DateNight/Source/DateNight.csproj",
     "configuration": "Release",
     "zipName": "DateNight",
-    "nexus": "",
-    "nexus_mod_id": "",
-    "nexus_file_id": ""
+    "publish": true,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/780",
+    "nexus_mod_id": "780",
+    "nexus_file_id": "7882422"
   },
   {
     "modKey": "livingworld",
@@ -72,6 +78,7 @@
     "csproj": "LivingWorld/Source/LivingWorld.csproj",
     "configuration": "",
     "zipName": "LivingWorld",
+    "publish": false,
     "nexus": "",
     "nexus_mod_id": "",
     "nexus_file_id": ""
@@ -83,6 +90,7 @@
     "csproj": "Azrael/Source/Azrael.csproj",
     "configuration": "",
     "zipName": "Azrael",
+    "publish": false,
     "nexus": "",
     "nexus_mod_id": "",
     "nexus_file_id": ""
