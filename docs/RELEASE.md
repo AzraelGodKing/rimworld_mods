@@ -14,7 +14,7 @@ Actions → **Release & Publish** → Run workflow:
 | Input | Typical first run |
 |---|---|
 | `dry_run` | **true** until you have checked the zip artifact |
-| `mod` | `all` or one key (`homesteader`, `datenight`, …) |
+| `mod` | `all` or one key (`homesteader`, `datenight`, …). Living World and Azrael are not in this list. |
 | `create_github_release` | **true** when you are ready to tag |
 | `publish_nexus` | **false** until `nexus_file_id` is filled in |
 | `release_anyway` | **false** (skips if that version is already tagged / already the latest Nexus file version) |
@@ -31,6 +31,8 @@ Nexus cannot create a mod page from CI. Once a page exists and you have uploaded
 4. Re-run **Release & Publish** with `publish_nexus=true`.
 
 Empty `nexus_file_id` → GitHub Release still works; Nexus is skipped with a warning.
+
+Living World and Azrael have `"publish": false` in the matrix. They stay in-repo; **Release & Publish** and the rolling `latest` zips omit them until that flag is flipped.
 
 ## Local pack check
 
