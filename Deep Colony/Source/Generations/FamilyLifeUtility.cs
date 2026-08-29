@@ -180,9 +180,17 @@ namespace DeepColony
         public static void RefreshAllLastOfTheLine(bool announceLast, bool announceContinue)
         {
             if (!Enabled) return;
-            List<Pawn> living = SnapshotLivingColonyHumanlikes();
-            for (int i = 0; i < living.Count; i++)
-                RefreshLastOfTheLine(living[i], living, announceLast, announceContinue);
+            try
+            {
+                List<Pawn> living = SnapshotLivingColonyHumanlikes();
+                for (int i = 0; i < living.Count; i++)
+                    RefreshLastOfTheLine(living[i], living, announceLast, announceContinue);
+            }
+            catch (InvalidOperationException)
+            {
+                // AZR-94 — pawn lists can still mutate on Kill / Recruit / SetFaction,
+                // not only on the interval tick.
+            }
         }
 
         public static bool TryForceLastOfTheLine(Pawn pawn)

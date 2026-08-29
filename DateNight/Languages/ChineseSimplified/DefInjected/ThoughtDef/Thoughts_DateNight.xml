@@ -41,4 +41,44 @@
   <DateNight_StoodUp.stages_0.label>被放鸽子</DateNight_StoodUp.stages_0.label>
   <DateNight_StoodUp.stages_0.description>{0}本该来的。</DateNight_StoodUp.stages_0.description>
 
+  <DateNight_Anniversary.label>纪念日</DateNight_Anniversary.label>
+  <DateNight_Anniversary.description>和{0}又过了一年。日历自己把这一天圈了起来。</DateNight_Anniversary.description>
+  <DateNight_Anniversary.stages_0.label>纪念日</DateNight_Anniversary.stages_0.label>
+  <DateNight_Anniversary.stages_0.description>和{0}又过了一年。日历自己把这一天圈了起来。</DateNight_Anniversary.stages_0.description>
+
+  <DateNight_AnniversaryDate.label>纪念日约会</DateNight_AnniversaryDate.label>
+  <DateNight_AnniversaryDate.description>纪念日我们真的出门了。和{0}的这一年我会记住。</DateNight_AnniversaryDate.description>
+  <DateNight_AnniversaryDate.stages_0.label>纪念日约会</DateNight_AnniversaryDate.stages_0.label>
+  <DateNight_AnniversaryDate.stages_0.description>纪念日我们真的出门了。和{0}的这一年我会记住。</DateNight_AnniversaryDate.stages_0.description>
+
+  <DateNight_AnniversaryMissed.label>错过纪念日</DateNight_AnniversaryMissed.label>
+  <DateNight_AnniversaryMissed.description>纪念日来了又走，我们却没出门。{0}会记住这件事。</DateNight_AnniversaryMissed.description>
+  <DateNight_AnniversaryMissed.stages_0.label>错过纪念日</DateNight_AnniversaryMissed.stages_0.label>
+  <DateNight_AnniversaryMissed.stages_0.description>纪念日来了又走，我们却没出门。{0}会记住这件事。</DateNight_AnniversaryMissed.stages_0.description>
+
+  <DateNight_OurSpot.label>我们的地方</DateNight_OurSpot.label>
+  <DateNight_OurSpot.description>和{0}的那个地方是我们的。我总想再去。</DateNight_OurSpot.description>
+  <DateNight_OurSpot.stages_0.label>我们的地方</DateNight_OurSpot.stages_0.label>
+  <DateNight_OurSpot.stages_0.description>和{0}的那个地方是我们的。我总想再去。</DateNight_OurSpot.stages_0.description>
+
+  <DateNight_VenueSoured.label>那地方毁了</DateNight_VenueSoured.label>
+  <DateNight_VenueSoured.description>我不想再和{0}回那儿。不是在那样收场之后。</DateNight_VenueSoured.description>
+  <DateNight_VenueSoured.stages_0.label>那地方毁了</DateNight_VenueSoured.stages_0.label>
+  <DateNight_VenueSoured.stages_0.description>我不想再和{0}回那儿。不是在那样收场之后。</DateNight_VenueSoured.stages_0.description>
+
+  <DateNight_DoubleDateFriends.label>好同伴</DateNight_DoubleDateFriends.label>
+  <DateNight_DoubleDateFriends.description>和{0}的那晚很轻松。我还想再来。</DateNight_DoubleDateFriends.description>
+  <DateNight_DoubleDateFriends.stages_0.label>好同伴</DateNight_DoubleDateFriends.stages_0.label>
+  <DateNight_DoubleDateFriends.stages_0.description>和{0}的那晚很轻松。我还想再来。</DateNight_DoubleDateFriends.stages_0.description>
+
+  <DateNight_DoubleDateRivals.label>尴尬的同伴</DateNight_DoubleDateRivals.label>
+  <DateNight_DoubleDateRivals.description>和{0}同桌没有好转。要说有变化，是更糟了。</DateNight_DoubleDateRivals.description>
+  <DateNight_DoubleDateRivals.stages_0.label>尴尬的同伴</DateNight_DoubleDateRivals.stages_0.label>
+  <DateNight_DoubleDateRivals.stages_0.description>和{0}同桌没有好转。要说有变化，是更糟了。</DateNight_DoubleDateRivals.stages_0.description>
+
+  <DateNight_DoubleDateNoShow.label>四人约会黄了</DateNight_DoubleDateNoShow.label>
+  <DateNight_DoubleDateNoShow.description>另一对根本没来。行吧。我们自己去。</DateNight_DoubleDateNoShow.description>
+  <DateNight_DoubleDateNoShow.stages_0.label>四人约会黄了</DateNight_DoubleDateNoShow.stages_0.label>
+  <DateNight_DoubleDateNoShow.stages_0.description>另一对根本没来。行吧。我们自己去。</DateNight_DoubleDateNoShow.stages_0.description>
+
 </LanguageData>

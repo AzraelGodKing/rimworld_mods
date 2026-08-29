@@ -295,6 +295,17 @@
   <DC_FamilyTree_Dead>(мёртв)</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>не на карте</DC_FamilyTree_Away>
   <DC_FamilyTree_ClickTip>Нажмите, чтобы выбрать и перейти к этому колонисту.</DC_FamilyTree_ClickTip>
+  <DC_FamilyTree_DevClickTip>Режим бога: ПКМ — призвать семью на карту как колонистов.</DC_FamilyTree_DevClickTip>
+  <DC_FamilyTree_DevBringPawn>Призвать {PAWN} сюда как колониста</DC_FamilyTree_DevBringPawn>
+  <DC_FamilyTree_DevBringAll>Призвать живую семью {PAWN} сюда как колонистов</DC_FamilyTree_DevBringAll>
+  <DC_FamilyTree_DevBrought>Призвано колонистов: {COUNT}.</DC_FamilyTree_DevBrought>
+  <DC_FamilyTree_DevBroughtOne>{PAWN} теперь колонист.</DC_FamilyTree_DevBroughtOne>
+  <DC_FamilyTree_DevAlreadyHere>{PAWN} уже колонист на этой карте.</DC_FamilyTree_DevAlreadyHere>
+  <DC_FamilyTree_DevNeedMap>Нужна карта, чтобы призвать семью.</DC_FamilyTree_DevNeedMap>
+  <DC_FamilyTree_DevNeedGodMode>Включите режим бога, чтобы призвать семью как колонистов.</DC_FamilyTree_DevNeedGodMode>
+  <DC_FamilyTree_DevNone>Нет живой семьи, которую можно призвать (мертвы или уже колонисты здесь).</DC_FamilyTree_DevNone>
+  <DC_FamilyTree_DevDead>{PAWN} мёртв(а).</DC_FamilyTree_DevDead>
+  <DC_FamilyTree_DevFailed>Не удалось призвать {PAWN} на эту карту.</DC_FamilyTree_DevFailed>
   <DC_FamilyTree_PedigreeToggle>Схема с линиями</DC_FamilyTree_PedigreeToggle>
   <DC_FamilyTree_StylePedigree>Схема</DC_FamilyTree_StylePedigree>
   <DC_FamilyTree_StyleRows>Ряды</DC_FamilyTree_StyleRows>
