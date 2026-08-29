@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_PackPreserveCrate.label>打包腌货木箱</Homesteader_PackPreserveCrate.label>
+  <Homesteader_PackPreserveCrate.description>把混装的农庄腌货打进一只箱子，便于贸易或上路。</Homesteader_PackPreserveCrate.description>
+  <Homesteader_PackPreserveCrate.jobString>正在打包腌货木箱。</Homesteader_PackPreserveCrate.jobString>
+
+</LanguageData>

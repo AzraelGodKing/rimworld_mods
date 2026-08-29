@@ -37,12 +37,23 @@
   <Homesteader_Allergy_Mold>霉菌</Homesteader_Allergy_Mold>
   <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
   <Homesteader_SettingsUseRefreshedTextures>使用刷新贴图</Homesteader_SettingsUseRefreshedTextures>
-  <Homesteader_SettingsUseRefreshedTexturesTip>将 Homesteader 建筑、物品、植物和地板切换到可选的独立美术包。原贴图仍保留在模组中；默认关闭。每个定义都有自己的贴图，不再共用占位图。</Homesteader_SettingsUseRefreshedTexturesTip>
+  <Homesteader_SettingsUseRefreshedTexturesTip>将 Homesteader 建筑、物品、植物和地板切换到可选的独立美术包。该包不包含在工坊下载中——请把 GitHub 仓库里的 Textures/HomesteaderRefresh 复制到本模组文件夹。原贴图始终保留；默认关闭。</Homesteader_SettingsUseRefreshedTexturesTip>
   <Homesteader_SettingsUseRefreshedTexturesRestart>如果贴图看起来没更新，请在更改此项后重启 RimWorld。</Homesteader_SettingsUseRefreshedTexturesRestart>
+  <Homesteader_SettingsRefreshPackMissing>未安装可选的独立美术包。工坊与站点压缩包只附带原贴图。若要启用「使用刷新贴图」，请把 GitHub 仓库中的 Textures/HomesteaderRefresh 复制到本模组文件夹后重启。</Homesteader_SettingsRefreshPackMissing>
   <Homesteader_SettingsDevHeader>开发者</Homesteader_SettingsDevHeader>
   <Homesteader_SettingsRevealAllergies>显示过敏</Homesteader_SettingsRevealAllergies>
   <Homesteader_SettingsRevealAllergiesTip>口味页在发现前就显示过敏名称（食用或环境接触触发发现）。仅供测试。</Homesteader_SettingsRevealAllergiesTip>
   <Homesteader_SettingsDevModeHint>启用开发模式以显示 Homesteader 开发者选项。</Homesteader_SettingsDevModeHint>
+  <Homesteader_SettingsSpoilageTriage>先吃快坏的</Homesteader_SettingsSpoilageTriage>
+  <Homesteader_SettingsSpoilageTriageTip>殖民者优先吃最接近腐烂的可食用堆，腌制账单也取快坏的原料。默认开启。</Homesteader_SettingsSpoilageTriageTip>
+  <Homesteader_PantryTitle>储藏室</Homesteader_PantryTitle>
+  <Homesteader_PantryKinds>不同腌制种类：{0}</Homesteader_PantryKinds>
+  <Homesteader_PantryDays>按当前用餐计算的食物天数：{0}（{1} 名殖民者）</Homesteader_PantryDays>
+  <Homesteader_PantryNextRot>最接近变质：{0}（{1} 天）</Homesteader_PantryNextRot>
+  <Homesteader_PantryNextRotNone>储藏室里没有快坏的东西。</Homesteader_PantryNextRotNone>
+  <Homesteader_PantryContents>存货</Homesteader_PantryContents>
+  <Homesteader_PantryEmpty>地窖、冰屋、泉屋、果酱架、板条箱和木桶里没有食物。</Homesteader_PantryEmpty>
+  <Homesteader_LandraceDev>地方品种 +{0}% 产量、+{1}% 抗寒、+{2}% 抗旱（第 {3} 代）</Homesteader_LandraceDev>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>一则异常广播锁定了你殖民地的 27 纪念碑频率。短暂的热穹正在该区域形成，几名殖民者报告短暂的头脑昏沉——他们称之为「脑腐」。</Homesteader_KatsLetter_Open>

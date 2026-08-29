@@ -6,7 +6,7 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">1.0.1</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.0.2</modVersion>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>
@@ -66,6 +66,10 @@ LIVESTOCK, FIBER &amp; PANTRY
 - Compost heap → fertilizer → composted soil (+45% fertility).
 - Icehouse (≤0°C) and springhouse (≤8°C) passive cold storage.
 - Canning kitchen (mason jars, canned stew/jam), cider press (apple juice → cider), wash tub (soap scrub).
+- Pantry tab: preserved kinds in cellar/shelf/crates, days of food, and what's closest to spoiling.
+- Spoilage triage (on by default): eat and preserve the stack closest to turning first.
+- Preserve crate: pack a mixed lot of jam, cheese, cider, and jerky for trade in one click (jam cauldron or canning kitchen).
+- Seed saving: harvest drops saved seed; replant your stock and the line slowly takes to this soil.
 
 RESEARCH &amp; PROGRESSION
 - Primitive homestead, food preservation, farmstead crafting, homestead storage, brewing, comforts, and advanced homestead.
@@ -92,5 +96,5 @@ Note: former Wellspring water content now ships inside Homesteader (Wellspring_*
 
 Optional: Dubs Bad Hygiene soft-compat patches Homesteader water buildings into its plumbing when that mod is present.
 
-Optional: Mod Options → Use refreshed textures (off by default) swaps in a unique art pack. Original sprites are kept.</description>
+Optional: unique refresh art is not in the Workshop download. Copy Textures/HomesteaderRefresh from the GitHub repo into this mod folder, then Mod Options → Use refreshed textures (off by default). Original sprites always ship.</description>
 </ModMetaData>

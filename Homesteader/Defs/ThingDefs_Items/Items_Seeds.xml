@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase" Name="HomesteaderSeedBase" Abstract="True">
+    <thingClass>ThingWithComps</thingClass>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <DeteriorationRate>2</DeteriorationRate>
+      <Mass>0.008</Mass>
+      <MarketValue>1.2</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <comps>
+      <li Class="Homesteader.CompProperties_Landrace" />
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="HomesteaderSeedBase">
+    <defName>Homesteader_SeedBarley</defName>
+    <label>saved barley seed</label>
+    <description>Barley seed from your own harvest. Sow it instead of buying stock and the line may slowly take to this soil — a little more yield, frost, or dry-spell grit, depending on what the plants survived. The quality stays on the seed; there is nothing to manage.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/RawBarley</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="HomesteaderSeedBase">
+    <defName>Homesteader_SeedPumpkin</defName>
+    <label>saved pumpkin seed</label>
+    <description>Pumpkin seed from your own harvest. Replant your stock and the vines slowly adapt to this patch of dirt.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/RawPumpkin</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="HomesteaderSeedBase">
+    <defName>Homesteader_SeedHerbs</defName>
+    <label>saved herb seed</label>
+    <description>Herb seed from your own bushes. Keep replanting your stock and the line becomes yours.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/DriedHerbs</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="HomesteaderSeedBase">
+    <defName>Homesteader_SeedSugarBeet</defName>
+    <label>saved sugar beet seed</label>
+    <description>Sugar beet seed from your own harvest. Replant it and the roots slowly take to this ground.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/SugarBeet</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="HomesteaderSeedBase">
+    <defName>Homesteader_SeedFlax</defName>
+    <label>saved flax seed</label>
+    <description>Flax seed from your own harvest. Keep sowing your stock and the fiber line adapts to the homestead.</description>
+    <graphicData>
+      <texPath>Homesteader/Items/FlaxFiber</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+  </ThingDef>
+
+</Defs>

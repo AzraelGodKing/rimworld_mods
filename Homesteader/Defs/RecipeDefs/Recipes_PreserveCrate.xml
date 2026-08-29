@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <RecipeDef>
+    <defName>Homesteader_PackPreserveCrate</defName>
+    <label>pack preserve crate</label>
+    <description>Pack a mixed lot of homestead preserves into a single crate for trade or the road.</description>
+    <jobString>Packing a preserve crate.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Homesteader_Jam</li>
+            <li>Homesteader_CannedJam</li>
+            <li>Homesteader_Cheese</li>
+            <li>Homesteader_WaxedCheese</li>
+            <li>Homesteader_SmokedCheese</li>
+            <li>Homesteader_Cider</li>
+            <li>Homesteader_Jerky</li>
+            <li>Homesteader_PickledVegetables</li>
+            <li>Homesteader_SmokedMeat</li>
+            <li>Homesteader_SaltedMeat</li>
+            <li>Homesteader_SmokedFish</li>
+            <li>Homesteader_SaltedFish</li>
+            <li>Homesteader_DriedProduce</li>
+            <li>Homesteader_FruitLeather</li>
+            <li>Homesteader_DriedMushrooms</li>
+            <li>Homesteader_Honey</li>
+            <li>Homesteader_MapleSyrup</li>
+            <li>Homesteader_CannedStew</li>
+            <li>Homesteader_Hardtack</li>
+            <li>Homesteader_Sausage</li>
+          </thingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Homesteader_Jam</li>
+        <li>Homesteader_CannedJam</li>
+        <li>Homesteader_Cheese</li>
+        <li>Homesteader_WaxedCheese</li>
+        <li>Homesteader_SmokedCheese</li>
+        <li>Homesteader_Cider</li>
+        <li>Homesteader_Jerky</li>
+        <li>Homesteader_PickledVegetables</li>
+        <li>Homesteader_SmokedMeat</li>
+        <li>Homesteader_SaltedMeat</li>
+        <li>Homesteader_SmokedFish</li>
+        <li>Homesteader_SaltedFish</li>
+        <li>Homesteader_DriedProduce</li>
+        <li>Homesteader_FruitLeather</li>
+        <li>Homesteader_DriedMushrooms</li>
+        <li>Homesteader_Honey</li>
+        <li>Homesteader_MapleSyrup</li>
+        <li>Homesteader_CannedStew</li>
+        <li>Homesteader_Hardtack</li>
+        <li>Homesteader_Sausage</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <Homesteader_PreserveCrate>1</Homesteader_PreserveCrate>
+    </products>
+    <workSkill>Cooking</workSkill>
+    <researchPrerequisite>Homesteader_FoodPreservation</researchPrerequisite>
+  </RecipeDef>
+
+</Defs>
