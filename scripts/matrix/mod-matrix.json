@@ -1,0 +1,90 @@
+[
+  {
+    "modKey": "homesteader",
+    "modDir": "Homesteader",
+    "dllName": "Homesteader",
+    "csproj": "Homesteader/Source/Homesteader.csproj",
+    "configuration": "",
+    "zipName": "Homesteader",
+    "nexus": "",
+    "nexus_mod_id": "",
+    "nexus_file_id": ""
+  },
+  {
+    "modKey": "stormproof",
+    "modDir": "Stormproof",
+    "dllName": "Stormproof",
+    "csproj": "Stormproof/Source/Stormproof.csproj",
+    "configuration": "",
+    "zipName": "Stormproof",
+    "nexus": "",
+    "nexus_mod_id": "",
+    "nexus_file_id": ""
+  },
+  {
+    "modKey": "strata",
+    "modDir": "Strata",
+    "dllName": "Strata",
+    "csproj": "Strata/Source/Strata.csproj",
+    "configuration": "",
+    "zipName": "Strata",
+    "nexus": "",
+    "nexus_mod_id": "",
+    "nexus_file_id": ""
+  },
+  {
+    "modKey": "nemesis",
+    "modDir": "Nemesis",
+    "dllName": "Nemesis",
+    "csproj": "Nemesis/Source/Nemesis.csproj",
+    "configuration": "",
+    "zipName": "Nemesis",
+    "nexus": "",
+    "nexus_mod_id": "",
+    "nexus_file_id": ""
+  },
+  {
+    "modKey": "deepcolony",
+    "modDir": "Deep Colony",
+    "dllName": "DeepColony",
+    "csproj": "Deep Colony/Source/DeepColony.csproj",
+    "configuration": "",
+    "zipName": "DeepColony",
+    "nexus": "",
+    "nexus_mod_id": "",
+    "nexus_file_id": ""
+  },
+  {
+    "modKey": "datenight",
+    "modDir": "DateNight",
+    "dllName": "DateNight",
+    "csproj": "DateNight/Source/DateNight.csproj",
+    "configuration": "Release",
+    "zipName": "DateNight",
+    "nexus": "",
+    "nexus_mod_id": "",
+    "nexus_file_id": ""
+  },
+  {
+    "modKey": "livingworld",
+    "modDir": "LivingWorld",
+    "dllName": "LivingWorld",
+    "csproj": "LivingWorld/Source/LivingWorld.csproj",
+    "configuration": "",
+    "zipName": "LivingWorld",
+    "nexus": "",
+    "nexus_mod_id": "",
+    "nexus_file_id": ""
+  },
+  {
+    "modKey": "azrael",
+    "modDir": "Azrael",
+    "dllName": "Azrael",
+    "csproj": "Azrael/Source/Azrael.csproj",
+    "configuration": "",
+    "zipName": "Azrael",
+    "nexus": "",
+    "nexus_mod_id": "",
+    "nexus_file_id": ""
+  }
+]
