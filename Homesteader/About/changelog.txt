@@ -1,22 +1,18 @@
-1.0.1
-[h1]Homesteader — 1.0.1[/h1]
+1.0.2
+[h1]Homesteader — 1.0.2[/h1]
 
-[b]Fixed[/b]
+[b]Added[/b]
 [list]
-[*] [b]RimWorld 1.6 only[/b] — dropped the 1.4 / 1.5 listing. The DLL is built for 1.6; those older claims loaded a mismatched assembly.
-[*] [b]Harmony patches[/b] — one failed patch logs and skips instead of taking down cooling and favorite foods with it.
-[*] [b]Food search[/b] — favorite / allergy checks no longer split packed strings on every candidate meal.
-[*] [b]Root cellar cooling[/b] — ambient-temperature checks cache the map cooler and skip non-rottable things.
-[*] [b]Statue art[/b] — 27 statues and monuments downsampled so they do not sit in memory at 1024×1024.
+[*] [b]Pantry tab[/b] — preserved kinds in cellars, icehouses, springhouses, shelves, crates, and barrels; days of food; what's closest to spoiling.
+[*] [b]Spoilage triage[/b] — colonists eat the most-spoiled stack first, and preserving bills take produce closest to turning (Mod Options, on by default).
+[*] [b]Preserve crate[/b] — pack a mixed lot of pantry goods into one tradeable crate at the jam cauldron or canning kitchen.
+[*] [b]Saved seed[/b] — harvest barley, pumpkin, herbs, sugar beet, and flax drops seed from your own stock. Replant it and the line slowly picks up yield, frost, or dry-spell grit. No extra UI.
 [/list]
 
-1.0.0
-[h1]Homesteader — 1.0.0[/h1]
-
-[b]Fixed[/b]
+[b]Changed[/b]
 [list]
-[*] [b]Azrael storyteller (1.6)[/b] — loads cleanly (Cassandra Classic comps + portraits).
-[*] Adaptive Storage Framework no longer hides Homestead storage (Homestead tab stays).
-[*] Meal allergies check ingredients (milk / wheat / eggs / fish in cooked meals).
-[*] Storage descriptions match real capacity (hayloft, crates, cellars, etc.).
+[*] [b]Optional art pack[/b] — unique refresh sprites are no longer in the Workshop download. Original art is what you get. Drop [i]Textures/HomesteaderRefresh[/i] from the GitHub repo into the mod folder to enable Use refreshed textures.
+[*] [b]Settings[/b] — if that folder is missing, the toggle is hidden and originals stay on.
 [/list]
+
+[i]Build stamp (Player.log): azr-66-67-68-69-87-v1[/i]

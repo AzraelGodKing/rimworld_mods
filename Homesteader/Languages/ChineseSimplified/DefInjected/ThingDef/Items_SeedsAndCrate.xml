@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_PreserveCrate.label>腌货木箱</Homesteader_PreserveCrate.label>
+  <Homesteader_PreserveCrate.description>一箱打包好的农庄腌货——果酱、奶酪、果酒、肉干和储藏室其余存货——可直接上商队或卖给来访商人。一只箱子，省去十几堆零散货物。</Homesteader_PreserveCrate.description>
+  <Homesteader_SeedBarley.label>自留大麦种</Homesteader_SeedBarley.label>
+  <Homesteader_SeedBarley.description>来自你自己收成的大麦种。拿它播种而不是买种，品系会慢慢适应这片地。</Homesteader_SeedBarley.description>
+  <Homesteader_SeedPumpkin.label>自留南瓜种</Homesteader_SeedPumpkin.label>
+  <Homesteader_SeedPumpkin.description>来自你自己收成的南瓜种。继续种自己的种，藤蔓会慢慢适应这块土。</Homesteader_SeedPumpkin.description>
+  <Homesteader_SeedHerbs.label>自留香草种</Homesteader_SeedHerbs.label>
+  <Homesteader_SeedHerbs.description>来自你自己灌木的香草种。一直种自己的种，这条线就成了你的。</Homesteader_SeedHerbs.description>
+  <Homesteader_SeedSugarBeet.label>自留甜菜种</Homesteader_SeedSugarBeet.label>
+  <Homesteader_SeedSugarBeet.description>来自你自己收成的甜菜种。再种下去，块根会适应这片土。</Homesteader_SeedSugarBeet.description>
+  <Homesteader_SeedFlax.label>自留亚麻种</Homesteader_SeedFlax.label>
+  <Homesteader_SeedFlax.description>来自你自己收成的亚麻种。一直播自己的种，纤维品系会适应农庄。</Homesteader_SeedFlax.description>
+
+</LanguageData>
