@@ -41,4 +41,44 @@
   <DateNight_StoodUp.stages_0.label>оставили ждать</DateNight_StoodUp.stages_0.label>
   <DateNight_StoodUp.stages_0.description>{0} должен был прийти.</DateNight_StoodUp.stages_0.description>
 
+  <DateNight_Anniversary.label>годовщина</DateNight_Anniversary.label>
+  <DateNight_Anniversary.description>Ещё год с {0}. Календарь сам себя обвёл.</DateNight_Anniversary.description>
+  <DateNight_Anniversary.stages_0.label>годовщина</DateNight_Anniversary.stages_0.label>
+  <DateNight_Anniversary.stages_0.description>Ещё год с {0}. Календарь сам себя обвёл.</DateNight_Anniversary.stages_0.description>
+
+  <DateNight_AnniversaryDate.label>свидание в годовщину</DateNight_AnniversaryDate.label>
+  <DateNight_AnniversaryDate.description>Мы правда выбрались в годовщину. Этот год с {0} я запомню.</DateNight_AnniversaryDate.description>
+  <DateNight_AnniversaryDate.stages_0.label>свидание в годовщину</DateNight_AnniversaryDate.stages_0.label>
+  <DateNight_AnniversaryDate.stages_0.description>Мы правда выбрались в годовщину. Этот год с {0} я запомню.</DateNight_AnniversaryDate.stages_0.description>
+
+  <DateNight_AnniversaryMissed.label>пропущенная годовщина</DateNight_AnniversaryMissed.label>
+  <DateNight_AnniversaryMissed.description>Годовщина пришла и ушла, а мы так и не выбрались. {0} это запомнит.</DateNight_AnniversaryMissed.description>
+  <DateNight_AnniversaryMissed.stages_0.label>пропущенная годовщина</DateNight_AnniversaryMissed.stages_0.label>
+  <DateNight_AnniversaryMissed.stages_0.description>Годовщина пришла и ушла, а мы так и не выбрались. {0} это запомнит.</DateNight_AnniversaryMissed.stages_0.description>
+
+  <DateNight_OurSpot.label>наше место</DateNight_OurSpot.label>
+  <DateNight_OurSpot.description>Это место с {0} — наше. Хочется возвращаться.</DateNight_OurSpot.description>
+  <DateNight_OurSpot.stages_0.label>наше место</DateNight_OurSpot.stages_0.label>
+  <DateNight_OurSpot.stages_0.description>Это место с {0} — наше. Хочется возвращаться.</DateNight_OurSpot.stages_0.description>
+
+  <DateNight_VenueSoured.label>это место испорчено</DateNight_VenueSoured.label>
+  <DateNight_VenueSoured.description>Не хочу туда возвращаться с {0}. Не после того, чем всё кончилось.</DateNight_VenueSoured.description>
+  <DateNight_VenueSoured.stages_0.label>это место испорчено</DateNight_VenueSoured.stages_0.label>
+  <DateNight_VenueSoured.stages_0.description>Не хочу туда возвращаться с {0}. Не после того, чем всё кончилось.</DateNight_VenueSoured.stages_0.description>
+
+  <DateNight_DoubleDateFriends.label>приятная компания</DateNight_DoubleDateFriends.label>
+  <DateNight_DoubleDateFriends.description>Вечер с {0} был лёгким. Я бы повторил.</DateNight_DoubleDateFriends.description>
+  <DateNight_DoubleDateFriends.stages_0.label>приятная компания</DateNight_DoubleDateFriends.stages_0.label>
+  <DateNight_DoubleDateFriends.stages_0.description>Вечер с {0} был лёгким. Я бы повторил.</DateNight_DoubleDateFriends.stages_0.description>
+
+  <DateNight_DoubleDateRivals.label>неловкая компания</DateNight_DoubleDateRivals.label>
+  <DateNight_DoubleDateRivals.description>Делить стол с {0} не помогло. Если что, стало хуже.</DateNight_DoubleDateRivals.description>
+  <DateNight_DoubleDateRivals.stages_0.label>неловкая компания</DateNight_DoubleDateRivals.stages_0.label>
+  <DateNight_DoubleDateRivals.stages_0.description>Делить стол с {0} не помогло. Если что, стало хуже.</DateNight_DoubleDateRivals.stages_0.description>
+
+  <DateNight_DoubleDateNoShow.label>двойное свидание сорвалось</DateNight_DoubleDateNoShow.label>
+  <DateNight_DoubleDateNoShow.description>Вторая пара так и не пришла. Ладно. Пойдём вдвоём.</DateNight_DoubleDateNoShow.description>
+  <DateNight_DoubleDateNoShow.stages_0.label>двойное свидание сорвалось</DateNight_DoubleDateNoShow.stages_0.label>
+  <DateNight_DoubleDateNoShow.stages_0.description>Вторая пара так и не пришла. Ладно. Пойдём вдвоём.</DateNight_DoubleDateNoShow.stages_0.description>
+
 </LanguageData>

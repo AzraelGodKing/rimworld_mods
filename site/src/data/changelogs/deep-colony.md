@@ -6,17 +6,20 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.6.2** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.2 build patch-162-v1` in Player.log.
+Player-facing version **1.6.2** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.2 build harmony-jobdriver-v1` in Player.log.
 
 ### Fixed
 - **Mid-save install** (`patch-162-v1`) — rivalry, touch-need, family life/echo, family join, and ex-lover reconcile now run off `TicksGame % 2500`. The old saved `driftTickCounter` started at 0 when you added the mod to an existing colony and never lined up with the game clock, so those systems never fired.
 - **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Deep Colony.
+- **JobDriver Harmony** (`harmony-jobdriver-v1`, AZR-95) — mentor and counsel jobs inherit vanilla `JobDriver.Cleanup`. Harmony treated that as a patch auxiliary and logged four errors. Only types with `[HarmonyPatch]` are patched now.
+- **Last of the line enumeration** (`azr-94`) — `RefreshAllLastOfTheLine` now swallows `Collection was modified` on Kill / Recruit / SetFaction as well as the interval tick. The 1.6.1 snapshot already stopped foreach on live lists.
 - **Toxic trauma** — toxic-buildup checks poll from the game component every 2500 ticks instead of postfixing `Hediff.Tick` for every hediff on every pawn.
 
 ### Changed
 - **Auto skill perks** (`auto-perks-v2`) — **1.6.1**. Perks at skill **5 / 10 / 15 / 20** grant themselves when the colonist reaches that level (no points). If the skill drops below the requirement, the perk lapses. Perk hediffs stay off the Health tab unless **Show perk hediffs** is on in mod settings. Skill-20 capstones default on. Shooting accuracy uses vanilla-scale bonuses (was +0.04, which the inspect rounded to **+0.0**). One-time **1.6.1** letter on load covers perks, family-tab UI, and last-of-the-line. Workshop description updated (`assets/workshop/deep-colony-description.bbcode`); the old 2.0 what's-new block is gone.
 
 ### Added
+- **God-mode bring family** (`godmode-family-v1`, AZR-96) — **debug only**. With DevMode and god mode on, right-click the Family inspect tab title (all living kin) or a node (that relative, plus all-family). Spawns them on this map, recruits as colonists, skips the dead and people who are already colonists here. Also **Bring family here as colonists** on the Deep Colony debug palette. EN/CN/RU. Not shown in normal play.
 - **Touch-need traits** (`touch-need-v1`) — **1.6.0**. Spec F01/F02 in [docs/ideas/deep-colony-touch-averse.md](../docs/ideas/deep-colony-touch-averse.md). Comfort is a named ladder (distant / familiar / at ease / fine with touch / intimate). **Touch-averse** has reserved / touch-averse / touch-intolerant (existing pawns stay degree 0). **Touch-starved** needs trusted contact and romances at "at ease." **Tactile** and **cuddly** are mood-only on the same meter. Romance waits until that person reaches the required tier (earned in touching distance, slowly in the same room; organic attempts also need to be adjacent). Existing couples, scenario pairs, and ex-lovers (D18) are not blocked. Homesteader polyarmory cannot force a bed share they still refuse. Date Night still owns romance schedules. Toggle + days / threshold sliders; Soft faster, Hard slower. EN/CN/RU. Dev: grant each trait, max nearby comfort, log dump.
 - **Despicable 2 / RimPacts diplomacy** (`diplomacy-compat-v1`) — fail-open, no extra dependencies. Tribute, envoy visits, and family join/defect nudge Hero Karma and RimPacts trust when those mods are loaded. Executing kin hits trust only (Despicable already karmas execute/release). Toggle in settings, default on; Soft / Default / Hard do not change this. Empire Refactored is not hooked.
 - **Family tree pedigree** (`family-tree-pedigree-v3`) — **Pedigree** / **Rows** button on the Family tab title row (and the family-tree window). Same setting as mod options. Ancestors above, descendants below, with kin lines. Off keeps generation rows. Soft / Default / Hard do not change this.
@@ -85,7 +88,7 @@ Player-facing version **1.6.2** (`About.xml` `modVersion`). Startup writes `[Dee
 
 ### Fixed
 - **Family tree close button** (`family-tree-close-v1`) — **1.6.1**. **Rows** / **Pedigree** on the Family tab sits left of the inspect **X** so the close button is fully visible.
-- **Family tree Bio button** (`family-tree-bio-v1`) — **1.6.1**. Removed the **Family tree** button on the Bio card so it no longer covers vanilla **Banish**. Use the **Family** inspect tab.
+- **Family tree Bio button** (`family-tree-bio-v1`, AZR-93) — **1.6.1**. Removed the **Family tree** button on the Bio card so it no longer covers vanilla **Banish**. Use the **Family** inspect tab. Still gone in 1.6.2.
 - **Last of the line during floor open** (`lotl-tick-v1`) — **1.6.1**. The periodic last-of-the-line scan no longer foreach-walks live pawn lists. Opening a Strata floor (or any map that adds pawns mid-tick) no longer throws `Collection was modified`.
 - **Empty nest** (`empty-nest-adults-v1`) — only when an adult child leaves the home map, and only if every living child is gone from that home (including carried babies and kids on linked pocket floors). Picking up a newborn no longer gives the thought.
 - **Last of the line** (`last-of-line-v1`) — message only when the last living colony blood kin **dies** (on or off the map). Carried babies, caravans, and other maps still count. Starting pawns with no family stay quiet. "Blood kin again" only after last-of-the-line has fired.

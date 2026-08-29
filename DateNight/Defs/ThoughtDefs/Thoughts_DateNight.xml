@@ -131,4 +131,137 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>DateNight_Anniversary</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>1.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>anniversary</label>
+        <description>Another year with {0}. The calendar circled itself.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+        <baseOpinionOffset>6</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_AnniversaryDate</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>anniversary date</label>
+        <description>We actually went out on our anniversary. I will remember this year with {0}.</description>
+        <baseMoodEffect>10</baseMoodEffect>
+        <baseOpinionOffset>15</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_AnniversaryMissed</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>1.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>missed anniversary</label>
+        <description>Our anniversary came and went, and we never went out. {0} will remember that.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+        <baseOpinionOffset>-8</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_OurSpot</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>our spot</label>
+        <description>That place with {0} is ours. I keep wanting to go back.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+        <baseOpinionOffset>5</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_VenueSoured</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>1.25</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>that place is ruined</label>
+        <description>I don't want to go back there with {0}. Not after how that ended.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+        <baseOpinionOffset>-4</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_DoubleDateFriends</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>1.25</durationDays>
+    <stackLimit>2</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>good company</label>
+        <description>That evening with {0} was easy. I would do it again.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+        <baseOpinionOffset>6</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_DoubleDateRivals</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>1.25</durationDays>
+    <stackLimit>2</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>awkward company</label>
+        <description>Sharing a table with {0} did not help. If anything it got worse.</description>
+        <baseMoodEffect>-2</baseMoodEffect>
+        <baseOpinionOffset>-6</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_DoubleDateNoShow</defName>
+    <durationDays>0.6</durationDays>
+    <stackLimit>1</stackLimit>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>double date fell through</label>
+        <description>The other couple never showed. Fine. We'll go anyway.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

@@ -118,6 +118,27 @@ namespace DateNight
             return x < y ? Gen.HashCombineInt(x, y) : Gen.HashCombineInt(y, x);
         }
 
+        public static long CoupleKey(Pawn a, Pawn b)
+        {
+            return CoupleKey(a.thingIDNumber, b.thingIDNumber);
+        }
+
+        public static long CoupleKey(int x, int y)
+        {
+            if (x > y)
+            {
+                int tmp = x;
+                x = y;
+                y = tmp;
+            }
+            return ((long)x << 32) | (uint)y;
+        }
+
+        public static bool BothCanReachPublic(Pawn pawn, Pawn partner, Thing thing)
+        {
+            return BothCanReach(pawn, partner, thing);
+        }
+
         public static bool IsNight(Map map)
         {
             int hour = GenLocalDate.HourInteger(map);
@@ -411,7 +432,7 @@ namespace DateNight
             {
                 return best;
             }
-            int idx = IsInitiator(pawn, partner) ? 0 : 1;
+            int idx = DateNightDoubleDates.StandIndex(pawn, partner);
             if (idx >= seats.Count)
             {
                 return AdjacentTo(seats[0], pawn, partner);
@@ -419,16 +440,34 @@ namespace DateNight
             return seats[idx];
         }
 
-        /// <summary>Where this activity happens. Falls back to the generic date spot.</summary>
-        public static LocalTargetInfo FindSpotFor(DateActivity activity, Pawn pawn, Pawn partner)
+        /// <summary>Shared venue root (table, gather spot, outdoor cell) before pairing stand cells.</summary>
+        public static LocalTargetInfo FindVenueRoot(DateActivity activity, Pawn pawn, Pawn partner)
         {
-            DateActivity kind = activity == DateActivity.Gift ? DateActivity.Hangout : activity;
-            LocalTargetInfo venue = LocalTargetInfo.Invalid;
+            if (DateNightDoubleDates.TryGetSharedVenue(pawn, out LocalTargetInfo shared) && shared.IsValid)
+            {
+                return shared;
+            }
 
+            DateActivity kind = activity == DateActivity.Gift ? DateActivity.Hangout : activity;
+            if (DateNightVenues.TryGetPreferredRoot(pawn, partner, out LocalTargetInfo fav)
+                && fav.IsValid
+                && VenueFitsActivity(kind, fav, pawn.Map))
+            {
+                return fav;
+            }
+
+            LocalTargetInfo venue = LocalTargetInfo.Invalid;
             switch (kind)
             {
                 case DateActivity.Dinner:
-                    return FindDinnerSpot(pawn, partner);
+                {
+                    LocalTargetInfo dinner = FindDinnerTable(pawn, partner);
+                    if (dinner.IsValid)
+                    {
+                        return dinner;
+                    }
+                    break;
+                }
                 case DateActivity.Picnic:
                 case DateActivity.Walk:
                 {
@@ -462,9 +501,7 @@ namespace DateNight
                     Building joy = FindJoyBuildingFor(pawn, partner);
                     if (joy != null)
                     {
-                        venue = joy.def.hasInteractionCell
-                            ? (LocalTargetInfo)joy.InteractionCell
-                            : joy;
+                        venue = joy;
                     }
                     break;
                 }
@@ -474,13 +511,112 @@ namespace DateNight
             {
                 venue = DateNightDateUtility.FindDateSpot(pawn, partner);
             }
+            return venue;
+        }
 
+        /// <summary>Where this activity happens. Falls back to the generic date spot.</summary>
+        public static LocalTargetInfo FindSpotFor(DateActivity activity, Pawn pawn, Pawn partner)
+        {
+            DateActivity kind = activity == DateActivity.Gift ? DateActivity.Hangout : activity;
+            LocalTargetInfo venue = FindVenueRoot(kind, pawn, partner);
+            if (kind == DateActivity.Dinner)
+            {
+                LocalTargetInfo seat = DinnerSeatAt(venue, pawn, partner);
+                if (seat.IsValid)
+                {
+                    return seat;
+                }
+            }
             if (kind == DateActivity.Walk || !venue.IsValid)
             {
                 return venue;
             }
+            if (kind == DateActivity.Recreation && venue.HasThing && venue.Thing.def.hasInteractionCell
+                && DateNightDoubleDates.StandIndex(pawn, partner) == 0)
+            {
+                return venue.Thing.InteractionCell;
+            }
 
             return PairStandCell(venue, pawn, partner);
+        }
+
+        private static bool VenueFitsActivity(DateActivity kind, LocalTargetInfo venue, Map map)
+        {
+            if (!venue.IsValid || map == null)
+            {
+                return false;
+            }
+            if (kind == DateActivity.Dinner)
+            {
+                Thing thing = venue.Thing ?? venue.Cell.GetEdifice(map);
+                return thing != null && thing.def.IsTable;
+            }
+            if (kind == DateActivity.Stargaze || kind == DateActivity.Picnic || kind == DateActivity.Walk)
+            {
+                IntVec3 cell = venue.HasThing ? venue.Thing.Position : venue.Cell;
+                return cell.InBounds(map) && !cell.Roofed(map);
+            }
+            return true;
+        }
+
+        private static LocalTargetInfo FindDinnerTable(Pawn pawn, Pawn partner)
+        {
+            Building best = null;
+            int bestId = int.MaxValue;
+            foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
+            {
+                if (!building.def.IsTable)
+                {
+                    continue;
+                }
+                if (!BothCanReach(pawn, partner, building))
+                {
+                    continue;
+                }
+                if (building.thingIDNumber < bestId)
+                {
+                    bestId = building.thingIDNumber;
+                    best = building;
+                }
+            }
+            return best == null ? LocalTargetInfo.Invalid : best;
+        }
+
+        private static LocalTargetInfo DinnerSeatAt(LocalTargetInfo table, Pawn pawn, Pawn partner)
+        {
+            if (!table.IsValid)
+            {
+                return LocalTargetInfo.Invalid;
+            }
+
+            Map map = pawn.Map;
+            Thing thing = table.Thing ?? table.Cell.GetEdifice(map);
+            if (thing == null)
+            {
+                return table;
+            }
+
+            var seats = new List<IntVec3>();
+            foreach (IntVec3 side in GenAdj.CellsAdjacentCardinal(thing))
+            {
+                if (side.InBounds(map) && side.Standable(map)
+                    && pawn.CanReach(side, PathEndMode.OnCell, Danger.Some)
+                    && (partner == null || partner.Map != map
+                        || partner.CanReach(side, PathEndMode.OnCell, Danger.Some)))
+                {
+                    seats.Add(side);
+                }
+            }
+            if (seats.Count == 0)
+            {
+                return thing;
+            }
+            int idx = DateNightDoubleDates.StandIndex(pawn, partner);
+            if (idx >= seats.Count)
+            {
+                return AdjacentTo(seats[seats.Count - 1], pawn, partner);
+            }
+            return seats[idx];
         }
 
         /// <summary>
@@ -508,7 +644,7 @@ namespace DateNight
             {
                 return venue;
             }
-            int idx = IsInitiator(pawn, partner) ? 0 : 1;
+            int idx = DateNightDoubleDates.StandIndex(pawn, partner);
             if (idx >= seats.Count)
             {
                 return AdjacentTo(seats[0], pawn, partner);
