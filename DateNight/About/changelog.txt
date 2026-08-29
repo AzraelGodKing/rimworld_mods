@@ -13,6 +13,9 @@
 [*] [b]Harmony[/b] — date and private-time job drivers are no longer treated as patch classes (vanilla JobDriver.Cleanup). Dates apply instead of logging two red errors at load.
 [/list]
 
+[i]Build stamp (Player.log): azr-81-82-83-v3[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]
+
 1.0.2
 [h1]Date Night — 1.0.2[/h1]
 

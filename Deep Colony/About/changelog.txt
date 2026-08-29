@@ -11,7 +11,9 @@
 [*] [b]Mid-save install[/b] — rivalry, touch-need, family life/echo, and ex-lover reconcile now tick when you add the mod to an existing colony (they used to wait on a counter that never lined up with the game clock).
 [*] [b]Harmony patches[/b] — one failed patch logs and skips instead of unloading the rest of Deep Colony.
 [*] [b]Mentor / counsel jobs[/b] — Harmony no longer treats vanilla JobDriver.Cleanup as a patch, so mentoring and counseling load without an error.
-[*] [b]Last of the line[/b] — death / recruit / faction-change scans no longer throw Collection was modified if a pawn list mutates mid-pass (AZR-94).
+[*] [b]Last of the line[/b] — death / recruit / faction-change scans no longer throw Collection was modified if a pawn list mutates mid-pass.
+[*] [b]Toxic trauma[/b] — toxic-buildup checks run on the colony tick instead of wrapping every hediff on every pawn.
+[*] [b]Family tree Bio button[/b] — still off the Bio card so it does not cover Banish (or VE Skills). Use the Family inspect tab.
 [/list]
 
 [i]Build stamp (Player.log): harmony-jobdriver-v1[/i]
