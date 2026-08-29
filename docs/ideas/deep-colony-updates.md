@@ -5,7 +5,7 @@
 **Lane rule:** colonist / colony-facing only. World chronicle, settlement morph, NPC wars → [Living World](living-world.md). Named hunters → [Nemesis](../../Nemesis/ROADMAP.md). Farm brand → Homesteader.  
 **Roadmap:** [Deep Colony/ROADMAP.md](../../Deep%20Colony/ROADMAP.md).
 
-**Sources:** Cursor Batch A; Claude pool from worktree `claude/deep-colony-ideas-554ceb`. Batch C: post-2.0 playtest + DLC/sibling hooks.
+**Sources:** Batch A; later idea pool. Batch C: post-2.0 playtest + DLC/sibling hooks.
 
 ---
 
@@ -38,11 +38,11 @@ Your colonists are more than their stats. Updates should deepen **identity, memo
 
 ---
 
-## Dedupe report (Claude → Batch A)
+## Dedupe report (later pool → Batch A)
 
-Claude’s original 20: **6 hard duplicates** dropped/folded; **12 kept** as B01–B12; **2 over-drops recovered** as B21–B22; **8 fresh** as B13–B20.
+Original extra 20: **6 hard duplicates** dropped/folded; **12 kept** as B01–B12; **2 over-drops recovered** as B21–B22; **8 fresh** as B13–B20.
 
-| Claude # | Claude title | Matched Batch A | Action |
+| # | Title | Matched Batch A | Action |
 |----------|--------------|-----------------|--------|
 | 1 | Mod settings panel | DC-A19 | Folded into A19 |
 | 3 | Perk respec | DC-A03 | Dropped |
@@ -55,7 +55,7 @@ Claude’s original 20: **6 hard duplicates** dropped/folded; **12 kept** as B01
 
 ---
 
-## Batch A — 20 ideas (Cursor)
+## Batch A — 20 ideas
 
 | ID | Phase | Idea | System | Size | Notes |
 |----|-------|------|--------|------|-------|
@@ -82,7 +82,7 @@ Claude’s original 20: **6 hard duplicates** dropped/folded; **12 kept** as B01
 
 ---
 
-## Batch B — 22 ideas (Claude)
+## Batch B — 22 ideas
 
 | ID | Phase | Idea | System | Size | Notes |
 |----|-------|------|--------|------|-------|

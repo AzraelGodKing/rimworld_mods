@@ -115,10 +115,6 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally.
 
-### Cloud Agents
-
-Cloud Agent environments that set `RIMWORLD_ARCHIVE_URL` can install the game with [`scripts/setup-rimworld.sh`](scripts/setup-rimworld.sh) (Harmony + workspace mod symlinks under `/opt/rimworld/RimWorld/Mods`). Pass `--build-mods` to compile all mod DLLs, or run `dotnet build` yourself after checkout.
-
 Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first (resolve an active Nemesis hunt before removing Nemesis).
 
 ## Changelogs
