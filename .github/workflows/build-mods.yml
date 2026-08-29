@@ -108,8 +108,6 @@ jobs:
           bash scripts/pack_mod.sh Nemesis Nemesis Nemesis docs/downloads
           bash scripts/pack_mod.sh "Deep Colony" DeepColony DeepColony docs/downloads
           bash scripts/pack_mod.sh DateNight DateNight DateNight docs/downloads
-          bash scripts/pack_mod.sh LivingWorld LivingWorld LivingWorld docs/downloads
-          bash scripts/pack_mod.sh Azrael Azrael Azrael docs/downloads
 
       - name: Upload download zips (artifact)
         if: github.event_name != 'pull_request'
@@ -138,7 +136,8 @@ jobs:
           body: |
             Packaged mod folders with CI-built assemblies for the docs site download buttons.
             Rebuilt on each relevant push to `main` (rolling tag — assets are overwritten).
-            Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, DateNight, LivingWorld, and Azrael.
+            Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, and DateNight.
+            Living World and Azrael are in-repo only (not release-ready).
           files: |
             docs/downloads/Homesteader.zip
             docs/downloads/Stormproof.zip
@@ -146,8 +145,6 @@ jobs:
             docs/downloads/Nemesis.zip
             docs/downloads/DeepColony.zip
             docs/downloads/DateNight.zip
-            docs/downloads/LivingWorld.zip
-            docs/downloads/Azrael.zip
           make_latest: true
           fail_on_unmatched_files: true
           # Replace assets when the rolling `latest` tag is republished.
