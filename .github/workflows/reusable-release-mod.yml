@@ -1,0 +1,318 @@
+# =============================================================================
+# Reusable — GitHub Release + Nexus upload for one RimWorld mod
+# Mirrors SunhavenMod/.github/workflows/reusable-release-mod.yml
+# (GitHub tag Name-vVERSION, Nexus-Mods/upload-action with retries).
+# The rolling `latest` tag from Build mod DLLs is left alone (make_latest: false).
+# =============================================================================
+name: Reusable — release one RimWorld mod
+
+on:
+  workflow_call:
+    inputs:
+      mod:
+        type: string
+        required: true
+      dry_run:
+        type: string
+        default: "false"
+      create_github_release:
+        type: string
+        default: "true"
+      publish_nexus:
+        type: string
+        default: "false"
+      release_anyway:
+        type: string
+        default: "false"
+    secrets:
+      NEXUSMODS_API_KEY:
+        required: false
+
+jobs:
+  release-mod:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Load matrix row
+        id: matrix
+        run: |
+          set -euo pipefail
+          ROW="$(jq -c --arg k "${{ inputs.mod }}" '.[] | select(.modKey == $k)' scripts/matrix/mod-matrix.json)"
+          if [ -z "$ROW" ] || [ "$ROW" = "null" ]; then
+            echo "::error::Unknown mod key ${{ inputs.mod }}"
+            exit 1
+          fi
+          echo "mod_dir=$(echo "$ROW" | jq -r '.modDir')" >> "$GITHUB_OUTPUT"
+          echo "dll_name=$(echo "$ROW" | jq -r '.dllName')" >> "$GITHUB_OUTPUT"
+          echo "zip_name=$(echo "$ROW" | jq -r '.zipName')" >> "$GITHUB_OUTPUT"
+          echo "nexus_url=$(echo "$ROW" | jq -r '.nexus // empty')" >> "$GITHUB_OUTPUT"
+          echo "nexus_mod_id=$(echo "$ROW" | jq -r '.nexus_mod_id // empty')" >> "$GITHUB_OUTPUT"
+          echo "nexus_file_id=$(echo "$ROW" | jq -r '.nexus_file_id // empty')" >> "$GITHUB_OUTPUT"
+
+      - name: Read About.xml version + changelog
+        id: meta
+        run: python3 scripts/release_meta.py --mod-dir "${{ steps.matrix.outputs.mod_dir }}" --github-output
+
+      - name: Download packed zip
+        uses: actions/download-artifact@v4
+        with:
+          name: pack-${{ inputs.mod }}
+          path: dist
+
+      - name: Name versioned zip
+        id: package
+        run: |
+          set -euo pipefail
+          SRC="dist/${{ steps.matrix.outputs.zip_name }}.zip"
+          test -f "$SRC" || { echo "::error::Missing $SRC"; ls -la dist || true; exit 1; }
+          VER="${{ steps.meta.outputs.version }}"
+          NAMED="dist/${{ steps.matrix.outputs.zip_name }}-${VER}.zip"
+          cp "$SRC" "$NAMED"
+          STAGE="$RUNNER_TEMP/release-pkg"
+          mkdir -p "$STAGE"
+          cp "$NAMED" "$STAGE/"
+          echo "zip_path=$NAMED" >> "$GITHUB_OUTPUT"
+          echo "zip_name=$(basename "$NAMED")" >> "$GITHUB_OUTPUT"
+          ls -lh "$NAMED"
+
+      - name: Upstream version gate (GitHub tags + Nexus files)
+        id: version_check
+        env:
+          NEXUS_API_KEY: ${{ secrets.NEXUSMODS_API_KEY }}
+        run: |
+          set -euo pipefail
+          CUR="${{ steps.meta.outputs.version }}"
+          TAG="${{ steps.matrix.outputs.zip_name }}-v${CUR}"
+          if [ "${{ inputs.dry_run }}" = "true" ] || [ "${{ inputs.release_anyway }}" = "true" ]; then
+            echo "version_unchanged=false" >> "$GITHUB_OUTPUT"
+            echo "version_match_sources=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          MATCH=()
+          GH_JSON="$(curl -sS -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "${{ github.api_url }}/repos/${{ github.repository }}/releases/tags/${TAG}" || true)"
+          GH_TAG="$(echo "$GH_JSON" | jq -r '.tag_name // empty')"
+          if [ "$GH_TAG" = "$TAG" ]; then
+            MATCH+=("github")
+          fi
+          NX_V=""
+          MOD_ID="${{ steps.matrix.outputs.nexus_mod_id }}"
+          if [ -n "$MOD_ID" ] && [ -n "${NEXUS_API_KEY:-}" ]; then
+            NX_BODY="$(curl -sS -H "accept: application/json" -H "apikey: $NEXUS_API_KEY" \
+              "https://api.nexusmods.com/v1/games/rimworld/mods/${MOD_ID}/files.json" || true)"
+            NX_V="$(echo "$NX_BODY" | jq -r '[.files[]? | select((.version // "") != "")] | sort_by(.uploaded_timestamp // 0) | reverse | .[0].version // empty' 2>/dev/null || true)"
+            if [ -n "$NX_V" ] && [ "$NX_V" = "$CUR" ]; then
+              MATCH+=("nexus")
+            fi
+          fi
+          if [ "${#MATCH[@]}" -gt 0 ]; then
+            IFS=,
+            echo "version_unchanged=true" >> "$GITHUB_OUTPUT"
+            echo "version_match_sources=${MATCH[*]}" >> "$GITHUB_OUTPUT"
+            IFS=
+          else
+            echo "version_unchanged=false" >> "$GITHUB_OUTPUT"
+            echo "version_match_sources=" >> "$GITHUB_OUTPUT"
+          fi
+          echo "upstream_nexus_version=$NX_V" >> "$GITHUB_OUTPUT"
+
+      - name: Skip — version already published
+        if: inputs.dry_run != 'true' && steps.version_check.outputs.version_unchanged == 'true'
+        run: |
+          echo "✅ Skipping ${{ steps.meta.outputs.display_name }} v${{ steps.meta.outputs.version }} (already on: ${{ steps.version_check.outputs.version_match_sources }})"
+
+      - name: Upload dry-run zip
+        if: inputs.dry_run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dry-run-${{ steps.matrix.outputs.zip_name }}-${{ steps.meta.outputs.version }}
+          path: ${{ steps.package.outputs.zip_path }}
+          if-no-files-found: error
+
+      - name: Dry run notice
+        if: inputs.dry_run == 'true'
+        run: echo "DRY RUN: zip artifact only. No GitHub Release or Nexus upload."
+
+      - name: Create GitHub Release
+        id: gh_release
+        if: >-
+          inputs.dry_run != 'true' &&
+          inputs.create_github_release == 'true' &&
+          steps.version_check.outputs.version_unchanged != 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "${{ steps.matrix.outputs.zip_name }}-v${{ steps.meta.outputs.version }}"
+          name: "${{ steps.meta.outputs.display_name }} ${{ steps.meta.outputs.version }}"
+          body: |
+            ## ${{ steps.meta.outputs.display_name }} ${{ steps.meta.outputs.version }}
+
+            ${{ steps.meta.outputs.changelog_md }}
+
+            ### Install
+            Extract the zip into your RimWorld `Mods` folder. Requires [Harmony](https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077).
+          files: ${{ steps.package.outputs.zip_path }}
+          draft: false
+          prerelease: false
+          make_latest: false
+          fail_on_unmatched_files: true
+
+      - name: Nexus — restore zip if a later action wiped dist/
+        id: nexus_preflight
+        if: >-
+          inputs.dry_run != 'true' &&
+          inputs.publish_nexus == 'true' &&
+          steps.version_check.outputs.version_unchanged != 'true' &&
+          steps.matrix.outputs.nexus_file_id != ''
+        run: |
+          set -euo pipefail
+          STAGE="$RUNNER_TEMP/release-pkg"
+          NAME="${{ steps.package.outputs.zip_name }}"
+          Z="${{ steps.package.outputs.zip_path }}"
+          if [ ! -f "$Z" ] && [ -f "$STAGE/$NAME" ]; then
+            mkdir -p dist
+            cp "$STAGE/$NAME" "dist/$NAME"
+            Z="dist/$NAME"
+          fi
+          test -f "$Z" || { echo "::error::Missing zip for Nexus"; exit 1; }
+          echo "zip_path=$Z" >> "$GITHUB_OUTPUT"
+          ls -lh "$Z"
+
+      - name: Nexus skipped (no file id)
+        if: inputs.dry_run != 'true' && inputs.publish_nexus == 'true' && steps.matrix.outputs.nexus_file_id == ''
+        run: |
+          echo "::warning::${{ steps.meta.outputs.display_name }} has no nexus_file_id in scripts/matrix/mod-matrix.json. Create the Nexus page, upload one file, copy Files → API Info, then re-run with publish_nexus."
+
+      - name: Nexus upload (1/4)
+        id: nexus_upload_1
+        if: success() && steps.nexus_preflight.outcome == 'success'
+        continue-on-error: true
+        uses: Nexus-Mods/upload-action@v1
+        with:
+          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
+          file_id: ${{ steps.matrix.outputs.nexus_file_id }}
+          filename: ${{ steps.nexus_preflight.outputs.zip_path }}
+          version: ${{ steps.meta.outputs.version }}
+          display_name: ${{ steps.meta.outputs.display_name }} ${{ steps.meta.outputs.version }}.zip
+          description: |
+            ${{ steps.meta.outputs.changelog_bbcode }}
+
+            Extract into RimWorld Mods. Requires Harmony.
+          category: main
+
+      - name: Nexus backoff 30s
+        if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure'
+        run: sleep 30
+
+      - name: Nexus upload (2/4)
+        id: nexus_upload_2
+        if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure'
+        continue-on-error: true
+        uses: Nexus-Mods/upload-action@v1
+        with:
+          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
+          file_id: ${{ steps.matrix.outputs.nexus_file_id }}
+          filename: ${{ steps.nexus_preflight.outputs.zip_path }}
+          version: ${{ steps.meta.outputs.version }}
+          display_name: ${{ steps.meta.outputs.display_name }} ${{ steps.meta.outputs.version }}.zip
+          description: |
+            ${{ steps.meta.outputs.changelog_bbcode }}
+
+            Extract into RimWorld Mods. Requires Harmony.
+          category: main
+
+      - name: Nexus backoff 2m
+        if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure'
+        run: sleep 120
+
+      - name: Nexus upload (3/4)
+        id: nexus_upload_3
+        if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure'
+        continue-on-error: true
+        uses: Nexus-Mods/upload-action@v1
+        with:
+          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
+          file_id: ${{ steps.matrix.outputs.nexus_file_id }}
+          filename: ${{ steps.nexus_preflight.outputs.zip_path }}
+          version: ${{ steps.meta.outputs.version }}
+          display_name: ${{ steps.meta.outputs.display_name }} ${{ steps.meta.outputs.version }}.zip
+          description: |
+            ${{ steps.meta.outputs.changelog_bbcode }}
+
+            Extract into RimWorld Mods. Requires Harmony.
+          category: main
+
+      - name: Nexus backoff 5m
+        if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure' && steps.nexus_upload_3.outcome == 'failure'
+        run: sleep 300
+
+      - name: Nexus upload (4/4 — must succeed)
+        id: nexus_upload_4
+        if: >-
+          success() &&
+          steps.nexus_preflight.outcome == 'success' &&
+          steps.nexus_upload_1.outcome == 'failure' &&
+          steps.nexus_upload_2.outcome == 'failure' &&
+          steps.nexus_upload_3.outcome == 'failure'
+        uses: Nexus-Mods/upload-action@v1
+        with:
+          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
+          file_id: ${{ steps.matrix.outputs.nexus_file_id }}
+          filename: ${{ steps.nexus_preflight.outputs.zip_path }}
+          version: ${{ steps.meta.outputs.version }}
+          display_name: ${{ steps.meta.outputs.display_name }} ${{ steps.meta.outputs.version }}.zip
+          description: |
+            ${{ steps.meta.outputs.changelog_bbcode }}
+
+            Extract into RimWorld Mods. Requires Harmony.
+          category: main
+
+      - name: Nexus — fail if publish requested but no attempt succeeded
+        if: >-
+          always() &&
+          inputs.dry_run != 'true' &&
+          inputs.publish_nexus == 'true' &&
+          steps.version_check.outputs.version_unchanged != 'true' &&
+          steps.matrix.outputs.nexus_file_id != '' &&
+          steps.nexus_preflight.outcome == 'success'
+        run: |
+          set -euo pipefail
+          for o in "${{ steps.nexus_upload_1.outcome }}" "${{ steps.nexus_upload_2.outcome }}" "${{ steps.nexus_upload_3.outcome }}" "${{ steps.nexus_upload_4.outcome }}"; do
+            [ "$o" = "success" ] && exit 0
+          done
+          echo "::error::Nexus upload failed after retries."
+          exit 1
+
+      - name: Release run report
+        if: always()
+        env:
+          VERSION_UNCHANGED: ${{ steps.version_check.outputs.version_unchanged }}
+          VERSION_MATCH_SOURCES: ${{ steps.version_check.outputs.version_match_sources }}
+          GITHUB_RELEASE_OUTCOME: ${{ steps.gh_release.outcome }}
+          NEXUS_OUTCOME_1: ${{ steps.nexus_upload_1.outcome }}
+          NEXUS_OUTCOME_2: ${{ steps.nexus_upload_2.outcome }}
+          NEXUS_OUTCOME_3: ${{ steps.nexus_upload_3.outcome }}
+          NEXUS_OUTCOME_4: ${{ steps.nexus_upload_4.outcome }}
+          PREFLIGHT: ${{ steps.nexus_preflight.outcome }}
+        run: |
+          set -euo pipefail
+          NEXUS_RESULT="not-requested"
+          for i in 1 2 3 4; do
+            VAR="NEXUS_OUTCOME_$i"
+            OUT="${!VAR:-skipped}"
+            if [ "$OUT" = "success" ]; then NEXUS_RESULT="success-attempt-$i"; break; fi
+            if [ "$OUT" = "failure" ]; then NEXUS_RESULT="failed"; fi
+          done
+          {
+            echo "## Release run report"
+            echo ""
+            echo "- Mod: \`${{ inputs.mod }}\` — ${{ steps.meta.outputs.display_name }} \`${{ steps.meta.outputs.version }}\`"
+            echo "- Version gate: \`${VERSION_UNCHANGED:-n/a}\` (sources: \`${VERSION_MATCH_SOURCES:-none}\`)"
+            echo "- GitHub Release: \`${GITHUB_RELEASE_OUTCOME:-skipped}\` tag \`${{ steps.matrix.outputs.zip_name }}-v${{ steps.meta.outputs.version }}\`"
+            echo "- Nexus preflight: \`${PREFLIGHT:-skipped}\`"
+            echo "- Nexus upload: \`${NEXUS_RESULT}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
