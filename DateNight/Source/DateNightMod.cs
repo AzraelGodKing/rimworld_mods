@@ -11,7 +11,7 @@ namespace DateNight
         public DateNightMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<DateNightSettings>();
-            ModVersionLog.Write("[DateNight]", content, extra: "schedule-imgui-v1");
+            ModVersionLog.Write("[DateNight]", content, extra: "azr-81-82-83-v3");
             // PatchAll runs after defs load — Harmony compiling TimeAssignmentSelector
             // patches otherwise touches TimeAssignmentDefOf before DefOfs exist.
         }
@@ -80,6 +80,24 @@ namespace DateNight
                 "DateNight_Settings_PostDateBoost".Translate(),
                 ref Settings.postDateLovinBoost,
                 "DateNight_Settings_PostDateBoostTip".Translate());
+            listing.Gap(6f);
+
+            listing.CheckboxLabeled(
+                "DateNight_Settings_Anniversaries".Translate(),
+                ref Settings.enableAnniversaries,
+                "DateNight_Settings_AnniversariesTip".Translate());
+            listing.Gap(6f);
+
+            listing.CheckboxLabeled(
+                "DateNight_Settings_FavoriteSpot".Translate(),
+                ref Settings.rememberFavoriteSpot,
+                "DateNight_Settings_FavoriteSpotTip".Translate());
+            listing.Gap(6f);
+
+            listing.CheckboxLabeled(
+                "DateNight_Settings_DoubleDates".Translate(),
+                ref Settings.allowDoubleDates,
+                "DateNight_Settings_DoubleDatesTip".Translate());
             listing.Gap(10f);
 
             if (listing.ButtonText("DateNight_Settings_Reset".Translate(), null, 0.25f))

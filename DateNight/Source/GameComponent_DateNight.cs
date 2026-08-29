@@ -18,6 +18,9 @@ namespace DateNight
             base.ExposeData();
             DateNightWindows.ExposeData();
             DateNightDateUtility.ExposeData();
+            DateNightAnniversaries.ExposeData();
+            DateNightVenues.ExposeData();
+            DateNightDoubleDates.ExposeData();
         }
 
         public override void GameComponentTick()
@@ -37,6 +40,9 @@ namespace DateNight
             {
                 TickPawn(colonists[i]);
             }
+
+            DateNightAnniversaries.Tick();
+            DateNightDoubleDates.Tick();
         }
 
         private void TickPawn(Pawn pawn)

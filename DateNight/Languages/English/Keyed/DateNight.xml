@@ -19,6 +19,12 @@
   <DateNight_Settings_GiftsTip>One partner may fetch a small luxury (beer, chocolate, ambrosia...) and hand it over for a mood and opinion boost. The item moves to the partner's inventory.</DateNight_Settings_GiftsTip>
   <DateNight_Settings_PostDateBoost>Post-date lovin spark</DateNight_Settings_PostDateBoost>
   <DateNight_Settings_PostDateBoostTip>A finished date improves the couple's lovin chance for about one in-game day.</DateNight_Settings_PostDateBoostTip>
+  <DateNight_Settings_Anniversaries>Anniversaries</DateNight_Settings_Anniversaries>
+  <DateNight_Settings_AnniversariesTip>On the anniversary of a love bond: a letter, a special mood if they go on a date that day, and a sting if the day passes without one. Off: no calendar letters or anniversary moods.</DateNight_Settings_AnniversariesTip>
+  <DateNight_Settings_FavoriteSpot>Remember favourite spots</DateNight_Settings_FavoriteSpot>
+  <DateNight_Settings_FavoriteSpotTip>Couples remember where their best dates happened and prefer to go back. A ruined date can sour that venue. Off: every date picks a fresh spot.</DateNight_Settings_FavoriteSpotTip>
+  <DateNight_Settings_DoubleDates>Allow double dates</DateNight_Settings_DoubleDates>
+  <DateNight_Settings_DoubleDatesTip>Two couples with overlapping Date hours may share a table, picnic, or gather spot. Quality rolls once for the group; the evening spills into opinions of the other pair. If the other couple never shows, they date alone.</DateNight_Settings_DoubleDatesTip>
   <DateNight_Settings_Reset>Reset to defaults</DateNight_Settings_Reset>
   <DateNight_Report_Hangout>on a date with {0}.</DateNight_Report_Hangout>
   <DateNight_Report_Dinner>having a dinner date with {0}.</DateNight_Report_Dinner>
@@ -28,6 +34,11 @@
   <DateNight_Report_Dance>dancing with {0}.</DateNight_Report_Dance>
   <DateNight_Report_Gift>giving a gift to {0}.</DateNight_Report_Gift>
   <DateNight_Report_Recreation>having fun with {0}.</DateNight_Report_Recreation>
+  <DateNight_Report_DoubleDate>on a double date with {0}.</DateNight_Report_DoubleDate>
+  <DateNight_Letter_AnniversaryLabel>Anniversary</DateNight_Letter_AnniversaryLabel>
+  <DateNight_Letter_AnniversaryText>{PAWN} and {PARTNER} have been together for {YEARS}. A date today would mean the world — letting it pass without one will sting.</DateNight_Letter_AnniversaryText>
+  <DateNight_OneYear>a year</DateNight_OneYear>
+  <DateNight_NYears>{0} years</DateNight_NYears>
   <DateNight_Alert_Mismatch>Schedule mismatch</DateNight_Alert_Mismatch>
   <DateNight_Alert_MismatchDesc>A lover has Date or Lovin painted, but their partner does not — or they painted different hours. Paint the same hours on both.</DateNight_Alert_MismatchDesc>
   <DateNight_Alert_MismatchNone>{0} has {1} painted; {2} does not.</DateNight_Alert_MismatchNone>

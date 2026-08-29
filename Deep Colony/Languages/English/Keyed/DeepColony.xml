@@ -295,6 +295,17 @@
   <DC_FamilyTree_Dead>(dead)</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>not on a map</DC_FamilyTree_Away>
   <DC_FamilyTree_ClickTip>Click to select and jump to this pawn.</DC_FamilyTree_ClickTip>
+  <DC_FamilyTree_DevClickTip>God mode: right-click to bring family here as colonists.</DC_FamilyTree_DevClickTip>
+  <DC_FamilyTree_DevBringPawn>Bring {PAWN} here as a colonist</DC_FamilyTree_DevBringPawn>
+  <DC_FamilyTree_DevBringAll>Bring {PAWN}'s living family here as colonists</DC_FamilyTree_DevBringAll>
+  <DC_FamilyTree_DevBrought>Brought {COUNT} as colonists.</DC_FamilyTree_DevBrought>
+  <DC_FamilyTree_DevBroughtOne>Brought {PAWN} as a colonist.</DC_FamilyTree_DevBroughtOne>
+  <DC_FamilyTree_DevAlreadyHere>{PAWN} is already a colonist on this map.</DC_FamilyTree_DevAlreadyHere>
+  <DC_FamilyTree_DevNeedMap>Need a map to spawn family.</DC_FamilyTree_DevNeedMap>
+  <DC_FamilyTree_DevNeedGodMode>Turn on god mode to bring family here as colonists.</DC_FamilyTree_DevNeedGodMode>
+  <DC_FamilyTree_DevNone>No living family to bring (dead or already colonists here).</DC_FamilyTree_DevNone>
+  <DC_FamilyTree_DevDead>{PAWN} is dead.</DC_FamilyTree_DevDead>
+  <DC_FamilyTree_DevFailed>Could not bring {PAWN} to this map.</DC_FamilyTree_DevFailed>
   <DC_FamilyTree_PedigreeToggle>Pedigree layout</DC_FamilyTree_PedigreeToggle>
   <DC_FamilyTree_StylePedigree>Pedigree</DC_FamilyTree_StylePedigree>
   <DC_FamilyTree_StyleRows>Rows</DC_FamilyTree_StyleRows>

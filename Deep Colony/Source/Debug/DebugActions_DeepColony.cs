@@ -788,5 +788,19 @@ namespace DeepColony
         {
             Log.Message(TouchAverseUtility.DebugDump(p));
         }
+
+        [DebugAction("Deep Colony", "Bring family here as colonists",
+            actionType = DebugActionType.ToolMapForPawns,
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void BringFamilyAsColonists(Pawn p)
+        {
+            if (!FamilyTreeDevUtility.GodMode)
+            {
+                Messages.Message("DC_FamilyTree_DevNeedGodMode".Translate(),
+                    MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            FamilyTreeDevUtility.BringAll(p);
+        }
     }
 }

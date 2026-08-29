@@ -19,6 +19,12 @@
   <DateNight_Settings_GiftsTip>Один из пары может принести небольшой презент (пиво, шоколад, амброзию...) и вручить его — настроение и мнение растут. Предмет переходит в инвентарь партнёра.</DateNight_Settings_GiftsTip>
   <DateNight_Settings_PostDateBoost>Искра после свидания</DateNight_Settings_PostDateBoost>
   <DateNight_Settings_PostDateBoostTip>Завершённое свидание повышает шанс любовных часов примерно на игровой день.</DateNight_Settings_PostDateBoostTip>
+  <DateNight_Settings_Anniversaries>Годовщины</DateNight_Settings_Anniversaries>
+  <DateNight_Settings_AnniversariesTip>В годовщину союза: письмо, особое настроение, если в этот день будет свидание, и обида, если день пройдёт без него. Выкл: без календарных писем и настроения годовщины.</DateNight_Settings_AnniversariesTip>
+  <DateNight_Settings_FavoriteSpot>Помнить любимые места</DateNight_Settings_FavoriteSpot>
+  <DateNight_Settings_FavoriteSpotTip>Пара помнит, где были лучшие свидания, и предпочитает возвращаться. Сорванное свидание может испортить место. Выкл: каждое свидание выбирает новое место.</DateNight_Settings_FavoriteSpotTip>
+  <DateNight_Settings_DoubleDates>Разрешить двойные свидания</DateNight_Settings_DoubleDates>
+  <DateNight_Settings_DoubleDatesTip>Две пары с совпадающими часами свидания могут делить стол, пикник или место сбора. Качество бросается один раз на всех; вечер меняет мнение о другой паре. Если вторая пара не пришла — идут вдвоём.</DateNight_Settings_DoubleDatesTip>
   <DateNight_Settings_Reset>Сбросить</DateNight_Settings_Reset>
   <DateNight_Report_Hangout>на свидании с {0}.</DateNight_Report_Hangout>
   <DateNight_Report_Dinner>ужинает с {0}.</DateNight_Report_Dinner>
@@ -28,6 +34,11 @@
   <DateNight_Report_Dance>танцует с {0}.</DateNight_Report_Dance>
   <DateNight_Report_Gift>дарит подарок {0}.</DateNight_Report_Gift>
   <DateNight_Report_Recreation>развлекается с {0}.</DateNight_Report_Recreation>
+  <DateNight_Report_DoubleDate>на двойном свидании с {0}.</DateNight_Report_DoubleDate>
+  <DateNight_Letter_AnniversaryLabel>Годовщина</DateNight_Letter_AnniversaryLabel>
+  <DateNight_Letter_AnniversaryText>{PAWN} и {PARTNER} вместе уже {YEARS}. Свидание сегодня значило бы очень много — а день без него запомнится не так.</DateNight_Letter_AnniversaryText>
+  <DateNight_OneYear>год</DateNight_OneYear>
+  <DateNight_NYears>{0} лет</DateNight_NYears>
   <DateNight_Alert_Mismatch>Расписание не совпадает</DateNight_Alert_Mismatch>
   <DateNight_Alert_MismatchDesc>У одного из пары стоят часы свидания или любовные часы, а у партнёра нет — или часы разные. Назначьте одни и те же часы обоим.</DateNight_Alert_MismatchDesc>
   <DateNight_Alert_MismatchNone>У {0} стоит {1}; у {2} нет.</DateNight_Alert_MismatchNone>

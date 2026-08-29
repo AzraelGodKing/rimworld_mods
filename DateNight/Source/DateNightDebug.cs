@@ -292,6 +292,116 @@ namespace DateNight
                 historical: false);
         }
 
+        [DebugAction(Cat, "Force anniversary letter (selected pair)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceAnniversaryLetter()
+        {
+            List<Pawn> pair = SelectedHumanlikes();
+            Pawn a;
+            Pawn b;
+            if (pair.Count == 2)
+            {
+                a = pair[0];
+                b = pair[1];
+            }
+            else if (pair.Count == 1)
+            {
+                a = pair[0];
+                b = LovePartnerRelationUtility.ExistingMostLikedLovePartner(a, allowDead: false);
+            }
+            else
+            {
+                a = null;
+                b = null;
+            }
+            if (a == null || b == null)
+            {
+                Messages.Message("[Date Night] Select a couple (or one pawn with a love partner).",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+            DateNightAnniversaries.DebugForceLetter(a, b);
+            Messages.Message($"[Date Night] Anniversary letter for {a.LabelShort} and {b.LabelShort}.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
+        [DebugAction(Cat, "Force missed-anniversary mood (selected pair)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceMissedAnniversary()
+        {
+            List<Pawn> pair = SelectedHumanlikes();
+            Pawn a;
+            Pawn b;
+            if (pair.Count == 2)
+            {
+                a = pair[0];
+                b = pair[1];
+            }
+            else if (pair.Count == 1)
+            {
+                a = pair[0];
+                b = LovePartnerRelationUtility.ExistingMostLikedLovePartner(a, allowDead: false);
+            }
+            else
+            {
+                a = null;
+                b = null;
+            }
+            if (a == null || b == null)
+            {
+                Messages.Message("[Date Night] Select a couple (or one pawn with a love partner).",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+            DateNightAnniversaries.DebugForceMissed(a, b);
+            Messages.Message($"[Date Night] Missed-anniversary mood for {a.LabelShort} and {b.LabelShort}.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
+        [DebugAction(Cat, "Set bond age to 1 year (selected pair)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void SetBondAgeOneYear()
+        {
+            List<Pawn> pair = SelectedHumanlikes();
+            Pawn a;
+            Pawn b;
+            if (pair.Count == 2)
+            {
+                a = pair[0];
+                b = pair[1];
+            }
+            else if (pair.Count == 1)
+            {
+                a = pair[0];
+                b = LovePartnerRelationUtility.ExistingMostLikedLovePartner(a, allowDead: false);
+            }
+            else
+            {
+                a = null;
+                b = null;
+            }
+            if (a == null || b == null)
+            {
+                Messages.Message("[Date Night] Select a couple (or one pawn with a love partner).",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+            DateNightAnniversaries.DebugSetBondAgeYears(a, b, 1);
+            Messages.Message($"[Date Night] {a.LabelShort} and {b.LabelShort} bond set to 1 year ago (next matching day-of-year fires the letter).",
+                MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
+        [DebugAction(Cat, "Log favourite venue for selected",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void LogFavoriteVenue()
+        {
+            foreach (Pawn p in SelectedHumanlikes())
+            {
+                Messages.Message($"[Date Night] {p.LabelShort} venue={DateNightVenues.DebugDescribe(p)}",
+                    MessageTypeDefOf.NeutralEvent, historical: false);
+            }
+        }
+
         private static List<Pawn> SelectedHumanlikes()
         {
             List<Pawn> list = new List<Pawn>();
