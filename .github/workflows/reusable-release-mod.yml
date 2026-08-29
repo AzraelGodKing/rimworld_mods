@@ -136,7 +136,8 @@ jobs:
 
       - name: Dry run notice
         if: inputs.dry_run == 'true'
-        run: echo "DRY RUN: zip artifact only. No GitHub Release or Nexus upload."
+        run: |
+          echo "DRY RUN: zip artifact only. No GitHub Release or Nexus upload."
 
       - name: Create GitHub Release
         id: gh_release
