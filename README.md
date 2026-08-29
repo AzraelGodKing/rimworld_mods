@@ -131,7 +131,7 @@ Steam paste: [Homesteader](Homesteader/About/changelog.txt), [Stormproof](Stormp
 
 Browse the rebuilt docs hub at the [GitHub Pages site](https://azraelgodking.github.io/rimworld_mods/).
 
-- **Direct downloads:** every listed mod has Steam Workshop **and** GitHub release zip buttons (hub `#downloads` + each mod page) for players who cannot use the Workshop.
+- **Direct downloads:** every listed mod has Steam Workshop **and** GitHub release zip buttons (hub `#downloads` + each mod page) for players who cannot use the Workshop. The rolling [`latest`](https://github.com/AzraelGodKing/rimworld_mods/releases/latest) tag is rebuilt on each relevant push to `main`. Versioned GitHub Releases (`Homesteader-v1.0.2`, …) and optional Nexus uploads are the **Release & Publish** workflow — see [docs/RELEASE.md](docs/RELEASE.md).
 - **Steam subscriber tracker:** live in-browser via [`docs/scripts/stats-display.js`](docs/scripts/stats-display.js) (roster: [`docs/data/workshop-mods.json`](docs/data/workshop-mods.json); 1h `localStorage` cache). **Not** driven by GitHub Actions — no hourly bot commits to rebase around. [`docs/data/stats-cache.json`](docs/data/stats-cache.json) is a manual offline fallback only (`node scripts/fetch-workshop-stats.js --force`).
 - **Admin force refresh:** unlisted [`docs/admin-stats.html`](docs/admin-stats.html) (`noindex`, not in nav). Passphrase hash lives in [`docs/data/admin-gate.json`](docs/data/admin-gate.json) — rotate by replacing `passphraseSha256`. Can download or optionally publish the fallback JSON with a PAT you paste for that session only (held in memory, not `sessionStorage`).
 - **Accessibility:** skip link, landmarks, focus styles, keyboardable mobile nav, `prefers-reduced-motion`, and live regions for stats.
