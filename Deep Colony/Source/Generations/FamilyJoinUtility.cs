@@ -200,6 +200,30 @@ namespace DeepColony
             return true;
         }
 
+        /// <summary>God-mode / debug: drop guest status and recruit with no join letter.</summary>
+        public static void ForceMakeColonist(Pawn pawn)
+        {
+            if (pawn == null || pawn.Dead) return;
+            try { pawn.guest?.SetGuestStatus(null); }
+            catch { /* Guest API differs across DLC mixes. */ }
+
+            if (pawn.Faction != null && pawn.Faction.IsPlayer) return;
+
+            try
+            {
+                Lord lord = pawn.GetLord();
+                lord?.Notify_PawnLost(pawn, PawnLostCondition.ChangedFaction);
+            }
+            catch
+            {
+                // Leave-lord is best-effort; Recruit still proceeds.
+            }
+
+            EnterSuppress();
+            try { RecruitToPlayer(pawn); }
+            finally { ExitSuppress(); }
+        }
+
         private static void RecruitToPlayer(Pawn pawn)
         {
             Pawn recruiter = FindRecruiter(pawn);

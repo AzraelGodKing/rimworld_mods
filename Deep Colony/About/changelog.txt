@@ -1,14 +1,20 @@
 1.6.2
 [h1]Deep Colony — 1.6.2[/h1]
 
+[b]Added[/b]
+[list]
+[*] [b]God-mode Family tab[/b] — with DevMode and god mode on, right-click the Family tab title or a relative to bring living kin onto this map as colonists. Dead kin are skipped. Also in the Deep Colony debug palette.
+[/list]
+
 [b]Fixed[/b]
 [list]
 [*] [b]Mid-save install[/b] — rivalry, touch-need, family life/echo, and ex-lover reconcile now tick when you add the mod to an existing colony (they used to wait on a counter that never lined up with the game clock).
 [*] [b]Harmony patches[/b] — one failed patch logs and skips instead of unloading the rest of Deep Colony.
-[*] [b]Toxic trauma[/b] — toxic-buildup checks run on the colony tick instead of wrapping every hediff on every pawn.
+[*] [b]Mentor / counsel jobs[/b] — Harmony no longer treats vanilla JobDriver.Cleanup as a patch, so mentoring and counseling load without an error.
+[*] [b]Last of the line[/b] — death / recruit / faction-change scans no longer throw Collection was modified if a pawn list mutates mid-pass (AZR-94).
 [/list]
 
-[i]Build stamp (Player.log): patch-162-v1[/i]
+[i]Build stamp (Player.log): harmony-jobdriver-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]
 
 1.6.1
