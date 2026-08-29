@@ -328,6 +328,7 @@
     </comps>
     <recipes>
       <li>Homesteader_MakeJam</li>
+      <li>Homesteader_PackPreserveCrate</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
