@@ -1,7 +1,7 @@
 # =============================================================================
 # Reusable — GitHub Release + Nexus upload for one RimWorld mod
 # Mirrors SunhavenMod/.github/workflows/reusable-release-mod.yml
-# (GitHub tag Name-vVERSION, Nexus-Mods/upload-action with retries).
+# (GitHub tag Name-vVERSION, Nexus-Mods/upload-action@v1.0.0-beta.10 with retries).
 # The rolling `latest` tag from Build mod DLLs is left alone (make_latest: false).
 # =============================================================================
 name: Reusable — release one RimWorld mod
@@ -192,7 +192,7 @@ jobs:
         id: nexus_upload_1
         if: success() && steps.nexus_preflight.outcome == 'success'
         continue-on-error: true
-        uses: Nexus-Mods/upload-action@v1
+        uses: Nexus-Mods/upload-action@v1.0.0-beta.10
         with:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
           file_id: ${{ steps.matrix.outputs.nexus_file_id }}
@@ -213,7 +213,7 @@ jobs:
         id: nexus_upload_2
         if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure'
         continue-on-error: true
-        uses: Nexus-Mods/upload-action@v1
+        uses: Nexus-Mods/upload-action@v1.0.0-beta.10
         with:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
           file_id: ${{ steps.matrix.outputs.nexus_file_id }}
@@ -234,7 +234,7 @@ jobs:
         id: nexus_upload_3
         if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure'
         continue-on-error: true
-        uses: Nexus-Mods/upload-action@v1
+        uses: Nexus-Mods/upload-action@v1.0.0-beta.10
         with:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
           file_id: ${{ steps.matrix.outputs.nexus_file_id }}
@@ -259,7 +259,7 @@ jobs:
           steps.nexus_upload_1.outcome == 'failure' &&
           steps.nexus_upload_2.outcome == 'failure' &&
           steps.nexus_upload_3.outcome == 'failure'
-        uses: Nexus-Mods/upload-action@v1
+        uses: Nexus-Mods/upload-action@v1.0.0-beta.10
         with:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
           file_id: ${{ steps.matrix.outputs.nexus_file_id }}
