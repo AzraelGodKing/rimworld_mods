@@ -11,11 +11,15 @@ namespace Homesteader
         /// <summary>Optional unique art pack. Off by default; original sprites are never deleted.</summary>
         public bool useRefreshedTextures = false;
 
+        /// <summary>Prefer closest-to-rot stacks when eating and when preserving.</summary>
+        public bool spoilageTriage = true;
+
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look(ref revealAllergies, "revealAllergies", defaultValue: false);
             Scribe_Values.Look(ref useRefreshedTextures, "useRefreshedTextures", defaultValue: false);
+            Scribe_Values.Look(ref spoilageTriage, "spoilageTriage", defaultValue: true);
         }
     }
 
@@ -28,7 +32,7 @@ namespace Homesteader
         {
             ContentPack = content;
             Settings = GetSettings<HomesteaderSettings>();
-            ModVersionLog.Write("[Homesteader]", content);
+            ModVersionLog.Write("[Homesteader]", content, "azr-66-67-68-69-87-v1");
         }
 
         public override string SettingsCategory() => "Homesteader_SettingsCategory".Translate();
@@ -38,15 +42,33 @@ namespace Homesteader
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(inRect);
 
-            bool previousRefresh = Settings.useRefreshedTextures;
             listing.CheckboxLabeled(
-                "Homesteader_SettingsUseRefreshedTextures".Translate(),
-                ref Settings.useRefreshedTextures,
-                "Homesteader_SettingsUseRefreshedTexturesTip".Translate());
-            listing.Label("Homesteader_SettingsUseRefreshedTexturesRestart".Translate());
-            if (previousRefresh != Settings.useRefreshedTextures)
+                "Homesteader_SettingsSpoilageTriage".Translate(),
+                ref Settings.spoilageTriage,
+                "Homesteader_SettingsSpoilageTriageTip".Translate());
+            listing.GapLine();
+
+            if (!TextureRefresh.PackPresent())
             {
-                TextureRefresh.Apply(Settings.useRefreshedTextures);
+                listing.Label("Homesteader_SettingsRefreshPackMissing".Translate());
+                if (Settings.useRefreshedTextures)
+                {
+                    Settings.useRefreshedTextures = false;
+                    TextureRefresh.Apply(false);
+                }
+            }
+            else
+            {
+                bool previousRefresh = Settings.useRefreshedTextures;
+                listing.CheckboxLabeled(
+                    "Homesteader_SettingsUseRefreshedTextures".Translate(),
+                    ref Settings.useRefreshedTextures,
+                    "Homesteader_SettingsUseRefreshedTexturesTip".Translate());
+                listing.Label("Homesteader_SettingsUseRefreshedTexturesRestart".Translate());
+                if (previousRefresh != Settings.useRefreshedTextures)
+                {
+                    TextureRefresh.Apply(Settings.useRefreshedTextures);
+                }
             }
 
             listing.GapLine();

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_PreserveCrate.label>ящик заготовок</Homesteader_PreserveCrate.label>
+  <Homesteader_PreserveCrate.description>Смешанная партия усадебных заготовок — варенье, сыр, сидр, вяленое мясо и прочая кладовая — готовая к каравану или торговцу. Один ящик вместо десятка стопок.</Homesteader_PreserveCrate.description>
+  <Homesteader_SeedBarley.label>свои семена ячменя</Homesteader_SeedBarley.label>
+  <Homesteader_SeedBarley.description>Семена ячменя с вашего урожая. Сейте их, а не покупной запас — линия медленно привыкает к этой земле.</Homesteader_SeedBarley.description>
+  <Homesteader_SeedPumpkin.label>свои семена тыквы</Homesteader_SeedPumpkin.label>
+  <Homesteader_SeedPumpkin.description>Семена тыквы с вашего урожая. Снова сейте свой запас — лозы привыкают к этому клочку.</Homesteader_SeedPumpkin.description>
+  <Homesteader_SeedHerbs.label>свои семена трав</Homesteader_SeedHerbs.label>
+  <Homesteader_SeedHerbs.description>Семена трав с ваших кустов. Держите свою линию — она станет вашей.</Homesteader_SeedHerbs.description>
+  <Homesteader_SeedSugarBeet.label>свои семена сахарной свёклы</Homesteader_SeedSugarBeet.label>
+  <Homesteader_SeedSugarBeet.description>Семена свёклы с вашего урожая. Сейте снова — корни привыкают к этой почве.</Homesteader_SeedSugarBeet.description>
+  <Homesteader_SeedFlax.label>свои семена льна</Homesteader_SeedFlax.label>
+  <Homesteader_SeedFlax.description>Семена льна с вашего урожая. Сейте свой запас — волокно привыкает к усадьбе.</Homesteader_SeedFlax.description>
+
+</LanguageData>

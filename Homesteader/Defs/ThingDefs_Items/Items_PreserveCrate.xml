@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>Homesteader_PreserveCrate</defName>
+    <label>preserve crate</label>
+    <description>A packed mixed lot of homestead preserves — jam, cheese, cider, jerky, and the rest of the pantry — ready for a caravan or a visiting trader. One crate instead of a dozen stacks.</description>
+    <thingClass>ThingWithComps</thingClass>
+    <graphicData>
+      <texPath>Homesteader/Buildings/StorageCrate</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.85,0.85)</drawSize>
+    </graphicData>
+    <stackLimit>5</stackLimit>
+    <tradeability>All</tradeability>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <DeteriorationRate>0.4</DeteriorationRate>
+      <Mass>8</Mass>
+      <MarketValue>42</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+</Defs>

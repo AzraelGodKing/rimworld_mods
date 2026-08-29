@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Homesteader_PackPreserveCrate.label>упаковать ящик заготовок</Homesteader_PackPreserveCrate.label>
+  <Homesteader_PackPreserveCrate.description>Сложить смешанную партию усадебных заготовок в один ящик для торговли или дороги.</Homesteader_PackPreserveCrate.description>
+  <Homesteader_PackPreserveCrate.jobString>Упаковывает ящик заготовок.</Homesteader_PackPreserveCrate.jobString>
+
+</LanguageData>

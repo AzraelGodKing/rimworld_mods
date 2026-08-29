@@ -37,12 +37,23 @@
   <Homesteader_Allergy_Mold>плесень</Homesteader_Allergy_Mold>
   <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
   <Homesteader_SettingsUseRefreshedTextures>Обновлённые текстуры</Homesteader_SettingsUseRefreshedTextures>
-  <Homesteader_SettingsUseRefreshedTexturesTip>Переключить здания, предметы, растения и полы Homesteader на отдельный набор уникальных спрайтов. Старые файлы остаются в моде; по умолчанию выключено. У каждого дефа своя текстура, без общих заглушек.</Homesteader_SettingsUseRefreshedTexturesTip>
+  <Homesteader_SettingsUseRefreshedTexturesTip>Переключить здания, предметы, растения и полы Homesteader на отдельный набор уникальных спрайтов. Этот набор не входит в загрузку Workshop — скопируйте Textures/HomesteaderRefresh из репозитория GitHub в папку мода. Оригинальные спрайты всегда остаются; по умолчанию выключено.</Homesteader_SettingsUseRefreshedTexturesTip>
   <Homesteader_SettingsUseRefreshedTexturesRestart>После смены этой опции перезапустите RimWorld, если спрайты не обновились.</Homesteader_SettingsUseRefreshedTexturesRestart>
+  <Homesteader_SettingsRefreshPackMissing>Дополнительный набор уникальных спрайтов не установлен. Workshop и zip с сайта поставляют только оригинальные текстуры. Чтобы включить «Обновлённые текстуры», скопируйте Textures/HomesteaderRefresh из репозитория GitHub в папку мода и перезапустите игру.</Homesteader_SettingsRefreshPackMissing>
   <Homesteader_SettingsDevHeader>Разработчик</Homesteader_SettingsDevHeader>
   <Homesteader_SettingsRevealAllergies>Показывать аллергии</Homesteader_SettingsRevealAllergies>
   <Homesteader_SettingsRevealAllergiesTip>Вкладка «Вкусы» показывает названия аллергий до обнаружения (приём пищи или воздействие среды). Только для тестов.</Homesteader_SettingsRevealAllergiesTip>
   <Homesteader_SettingsDevModeHint>Включите режим разработчика, чтобы увидеть параметры Homesteader для разработчиков.</Homesteader_SettingsDevModeHint>
+  <Homesteader_SettingsSpoilageTriage>Сначала портящееся</Homesteader_SettingsSpoilageTriage>
+  <Homesteader_SettingsSpoilageTriageTip>Колонисты берут самую порченую съедобную стопку, а закатки — плоды, которые вот-вот скиснут. По умолчанию включено.</Homesteader_SettingsSpoilageTriageTip>
+  <Homesteader_PantryTitle>Кладовая</Homesteader_PantryTitle>
+  <Homesteader_PantryKinds>Разных заготовок: {0}</Homesteader_PantryKinds>
+  <Homesteader_PantryDays>Дней еды при текущем столе: {0} (колонистов: {1})</Homesteader_PantryDays>
+  <Homesteader_PantryNextRot>Ближе всего к порче: {0} ({1} дн.)</Homesteader_PantryNextRot>
+  <Homesteader_PantryNextRotNone>В кладовой ничего не вот-вот скиснет.</Homesteader_PantryNextRotNone>
+  <Homesteader_PantryContents>В запасе</Homesteader_PantryContents>
+  <Homesteader_PantryEmpty>Нет еды в погребах, ледниках, родниковых погребах, полках, ящиках и бочках.</Homesteader_PantryEmpty>
+  <Homesteader_LandraceDev>Местная линия +{0}% урожай, +{1}% мороз, +{2}% засуха (пок. {3})</Homesteader_LandraceDev>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>Аномальная трансляция зафиксировалась на частоте вашего монумента 27. Над регионом образуется краткий тепловой купол, а несколько колонистов жалуются на короткое помутнение — «гниение мозга», как они это называют.</Homesteader_KatsLetter_Open>

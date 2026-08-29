@@ -857,6 +857,8 @@ namespace Homesteader
                 __result += 40f;
             }
 
+            SpoilageTriage.ApplyEatBias(foodSource, ref __result);
+
             // Only avoid after the allergy has been discovered (hidden until first reaction).
             if (foodSource != null
                 ? FavoriteFoodUtility.IsDiscoveredAllergy(eater, foodSource)

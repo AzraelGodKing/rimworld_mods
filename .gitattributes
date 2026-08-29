@@ -4,3 +4,5 @@
 **/ArtPackage/ export-ignore
 **/*.md export-ignore
 DateNight/About/preview-options/ export-ignore
+# Optional Homesteader art (~7 MB). Stays in git; TextureRefresh.PackPresent() detects it.
+Homesteader/Textures/HomesteaderRefresh/ export-ignore

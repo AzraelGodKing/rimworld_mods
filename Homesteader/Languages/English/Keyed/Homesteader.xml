@@ -37,12 +37,23 @@
   <Homesteader_Allergy_Mold>mold</Homesteader_Allergy_Mold>
   <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
   <Homesteader_SettingsUseRefreshedTextures>Use refreshed textures</Homesteader_SettingsUseRefreshedTextures>
-  <Homesteader_SettingsUseRefreshedTexturesTip>Swap Homesteader buildings, items, plants, and floors to the optional unique art pack. Original sprites stay in the mod; this is off by default. Each def has its own texture (no shared jam/cellar/etc. placeholders).</Homesteader_SettingsUseRefreshedTexturesTip>
+  <Homesteader_SettingsUseRefreshedTexturesTip>Swap Homesteader buildings, items, plants, and floors to the optional unique art pack. That pack is not in the Workshop download — copy Textures/HomesteaderRefresh from the GitHub repo into this mod folder. Original sprites always stay; this is off by default.</Homesteader_SettingsUseRefreshedTexturesTip>
   <Homesteader_SettingsUseRefreshedTexturesRestart>Restart RimWorld after changing this if any sprites look stale.</Homesteader_SettingsUseRefreshedTexturesRestart>
+  <Homesteader_SettingsRefreshPackMissing>The optional unique art pack is not installed. Workshop and site zips ship original sprites only. To enable Use refreshed textures, copy Textures/HomesteaderRefresh from the GitHub repo into this mod folder and restart.</Homesteader_SettingsRefreshPackMissing>
   <Homesteader_SettingsDevHeader>Developer</Homesteader_SettingsDevHeader>
   <Homesteader_SettingsRevealAllergies>Reveal allergies</Homesteader_SettingsRevealAllergies>
   <Homesteader_SettingsRevealAllergiesTip>Tastes tab shows allergy names before discovery (eating the food or environmental exposure). For testing only.</Homesteader_SettingsRevealAllergiesTip>
   <Homesteader_SettingsDevModeHint>Enable Development mode to show Homesteader developer options.</Homesteader_SettingsDevModeHint>
+  <Homesteader_SettingsSpoilageTriage>Use spoiling food first</Homesteader_SettingsSpoilageTriage>
+  <Homesteader_SettingsSpoilageTriageTip>Colonists prefer the most-spoiled edible stack, and preserving bills take produce closest to turning. On by default.</Homesteader_SettingsSpoilageTriageTip>
+  <Homesteader_PantryTitle>Pantry</Homesteader_PantryTitle>
+  <Homesteader_PantryKinds>Distinct preserved kinds: {0}</Homesteader_PantryKinds>
+  <Homesteader_PantryDays>Days of food at current tables: {0} ({1} colonists)</Homesteader_PantryDays>
+  <Homesteader_PantryNextRot>Closest to spoiling: {0} ({1} days)</Homesteader_PantryNextRot>
+  <Homesteader_PantryNextRotNone>Nothing in the pantry is close to turning.</Homesteader_PantryNextRotNone>
+  <Homesteader_PantryContents>In store</Homesteader_PantryContents>
+  <Homesteader_PantryEmpty>No food in root cellars, icehouses, springhouses, preserves shelves, crates, or barrels.</Homesteader_PantryEmpty>
+  <Homesteader_LandraceDev>Landrace +{0}% yield, +{1}% frost, +{2}% drought (gen {3})</Homesteader_LandraceDev>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>An anomalous broadcast has locked onto your colony's 27 monument frequency. A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — "brain rot," they call it.</Homesteader_KatsLetter_Open>

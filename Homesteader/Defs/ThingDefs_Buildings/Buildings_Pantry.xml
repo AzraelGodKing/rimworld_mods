@@ -47,6 +47,7 @@
       <li>Homesteader_MakeMasonJars</li>
       <li>Homesteader_CanStew</li>
       <li>Homesteader_CanJam</li>
+      <li>Homesteader_PackPreserveCrate</li>
     </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>

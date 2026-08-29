@@ -6,9 +6,16 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.1 loaded from ...` in Player.log.
+Player-facing version **1.0.2** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.2 loaded from ...` in Player.log (`azr-66-67-68-69-87-v1`).
+
+### Changed
+- **Optional art pack** — `Textures/HomesteaderRefresh/` stays in git but is `export-ignore` for Workshop / CI zips (~7 MB). `TextureRefresh.PackPresent()` looks for `HomesteaderRefresh/Apparel/Overalls`; if missing, originals stay on and the settings toggle is replaced with a keyed tip (EN/RU/CN). Drop the folder into the installed mod to enable Use refreshed textures.
 
 ### Added
+- **Pantry tab** — colony tab over root cellar / icehouse / springhouse / preserves shelf / crates / barrels: distinct preserved kinds, days of food at 1.6 nutrition per colonist, next stack to rot. EN/RU/CN.
+- **Spoilage triage** — same `FoodOptimality` postfix as favorites (AZR-36); `CompRottable.RotProgressPct` bias. Preserving bills sort ingredient lists rot-first. Setting on by default.
+- **Preserve crate** — `Homesteader_PackPreserveCrate` at jam cauldron and canning kitchen (15 mixed pantry goods). Homestead supplier may stock 0–3 crates.
+- **Seed saving / landrace** — harvest of barley, pumpkin, herbs, sugar beet, flax drops a seed with hidden `CompLandrace`. Sowing consumes the best matching seed on the map. Yield / frost / drought caps at +25%. DevMode inspect only.
 - **Which station FAQ** — Workshop description and docs spell out drying rack vs curing rack, cellar vs icehouse vs springhouse, and hearth vs wood stove so similar names are not treated as duplicates.
 - **Homestead architect tab** — crates, barrels, pallet, hayloft, cellars, icehouse, springhouse, cistern, and water tower moved off Furniture (Steam Aug 6). Adaptive Storage Framework does not get those buildings (it has no Storage tab); the Homestead tab stays.
 - **Update idea pool** — Workshop QoL (architect tab, ASF Storage patch, texture audit, settings) plus pantry/yard/farmstand/waterwheel phases. Goat pen stays removed; dairy shed is the livestock follow-up. Spec: [docs/ideas/homesteader-updates.md](../docs/ideas/homesteader-updates.md).
@@ -21,7 +28,7 @@ Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Hom
 
 ### Fixed
 - **RimWorld 1.6 only** — dropped 1.4 / 1.5 from `supportedVersions` and `LoadFolders`. The shipped DLL is built against 1.6 refs; those older listings loaded a mismatched assembly.
-- **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting cooling and favorite foods.
+- **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting cooling and favorite foods. Classes without `[HarmonyPatch]` are skipped (JobDriver `Cleanup` is not a Harmony auxiliary).
 - **Food search** — favorite / discovered-allergy checks use a runtime `HashSet` per pawn instead of splitting packed strings on every `FoodOptimality` candidate.
 - **Root cellar ambient temp** — map cooler is cached; non-rottable defs skip the postfix; `HasAnyCooling` stays the first real gate.
 - **27 statue / monument textures** — downsampled to 256² (512² for the 2×2 grand statue), including the refresh pack copies.

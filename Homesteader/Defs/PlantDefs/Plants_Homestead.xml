@@ -40,6 +40,9 @@
       <wildOrder>2</wildOrder>
       <purpose>Food</purpose>
     </plant>
+    <comps>
+      <li Class="Homesteader.CompProperties_Landrace" />
+    </comps>
   </ThingDef>
 
   <!-- ============ Pumpkin ============ -->
@@ -81,6 +84,9 @@
       <wildOrder>2</wildOrder>
       <purpose>Food</purpose>
     </plant>
+    <comps>
+      <li Class="Homesteader.CompProperties_Landrace" />
+    </comps>
   </ThingDef>
 
   <!-- ============ Herb bush ============ -->
@@ -122,6 +128,9 @@
       <wildOrder>2</wildOrder>
       <purpose>Food</purpose>
     </plant>
+    <comps>
+      <li Class="Homesteader.CompProperties_Landrace" />
+    </comps>
   </ThingDef>
 
   <!-- ============ Sugar beet ============ -->
@@ -163,6 +172,9 @@
       <wildOrder>2</wildOrder>
       <purpose>Food</purpose>
     </plant>
+    <comps>
+      <li Class="Homesteader.CompProperties_Landrace" />
+    </comps>
   </ThingDef>
 
   <!-- ============ Flax ============ -->
@@ -207,6 +219,9 @@
       <wildOrder>2</wildOrder>
       <purpose>Misc</purpose>
     </plant>
+    <comps>
+      <li Class="Homesteader.CompProperties_Landrace" />
+    </comps>
   </ThingDef>
 
 </Defs>
