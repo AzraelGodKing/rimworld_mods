@@ -120,6 +120,8 @@ namespace DateNight
                 return false;
             }
 
+            DateNightDoubleDates.BindIfPossible(pawn, partner);
+
             LocalTargetInfo spot = FindDateSpot(pawn, partner);
             Job job = JobMaker.MakeJob(DateNightDefOf.DateNight_GoOnDate);
             job.SetTarget(TargetIndex.A, partner);
@@ -236,6 +238,17 @@ namespace DateNight
                 pawn.needs.mood.thoughts.memories.TryGainMemory(def, partner);
             }
 
+            if (DateNightAnniversaries.IsAnniversaryToday(pawn, partner)
+                && DateNightDefOf.DateNight_AnniversaryDate != null)
+            {
+                pawn.needs.mood.thoughts.memories.TryGainMemory(
+                    DateNightDefOf.DateNight_AnniversaryDate, partner);
+                DateNightAnniversaries.NotifyDatedOnAnniversary(pawn, partner);
+            }
+
+            DateNightVenues.NotifyFinished(pawn, partner, spot, def);
+            DateNightDoubleDates.NotifyFinished(pawn, partner, def);
+
             if (DateNightMod.Settings == null || DateNightMod.Settings.postDateLovinBoost)
             {
                 lastGoodDateTicks[pawn.thingIDNumber] = Find.TickManager.TicksGame;
@@ -281,9 +294,19 @@ namespace DateNight
                 }
             }
 
-            Rand.PushState(Gen.HashCombineInt(DateNightActivities.CoupleSeed(pawn, partner), GenDate.DaysPassed));
+            Rand.PushState(Gen.HashCombineInt(
+                DateNightDoubleDates.QualitySeed(pawn, partner), GenDate.DaysPassed));
             score += Rand.RangeInclusive(-1, 1);
             Rand.PopState();
+
+            if (DateNightAnniversaries.IsAnniversaryToday(pawn, partner))
+            {
+                score += 2;
+            }
+            if (DateNightVenues.IsAtFavorite(pawn, partner, spot))
+            {
+                score += 1;
+            }
 
             if (score >= 2 && DateNightDefOf.DateNight_DateWonderful != null)
             {
@@ -322,6 +345,13 @@ namespace DateNight
             {
                 pawn.needs.mood.thoughts.memories.TryGainMemory(def);
             }
+
+            LocalTargetInfo spot = LocalTargetInfo.Invalid;
+            if (pawn.jobs?.curJob != null)
+            {
+                spot = pawn.jobs.curJob.GetTarget(TargetIndex.B);
+            }
+            DateNightVenues.NotifyRuined(pawn, partner, spot);
         }
 
         public static void NotifyGiftGiven(Pawn giver, Pawn receiver)

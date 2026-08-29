@@ -295,6 +295,17 @@
   <DC_FamilyTree_Dead>（已故）</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>不在地图上</DC_FamilyTree_Away>
   <DC_FamilyTree_ClickTip>点击以选中并跳转到该角色。</DC_FamilyTree_ClickTip>
+  <DC_FamilyTree_DevClickTip>上帝模式：右键可将家族带到此地并设为殖民者。</DC_FamilyTree_DevClickTip>
+  <DC_FamilyTree_DevBringPawn>将 {PAWN} 带到此地并设为殖民者</DC_FamilyTree_DevBringPawn>
+  <DC_FamilyTree_DevBringAll>将 {PAWN} 的在世家族带到此地并设为殖民者</DC_FamilyTree_DevBringAll>
+  <DC_FamilyTree_DevBrought>已将 {COUNT} 人设为殖民者。</DC_FamilyTree_DevBrought>
+  <DC_FamilyTree_DevBroughtOne>已将 {PAWN} 设为殖民者。</DC_FamilyTree_DevBroughtOne>
+  <DC_FamilyTree_DevAlreadyHere>{PAWN} 已是此地的殖民者。</DC_FamilyTree_DevAlreadyHere>
+  <DC_FamilyTree_DevNeedMap>需要地图才能召唤家族。</DC_FamilyTree_DevNeedMap>
+  <DC_FamilyTree_DevNeedGodMode>请开启上帝模式，才能将家族带到此地并设为殖民者。</DC_FamilyTree_DevNeedGodMode>
+  <DC_FamilyTree_DevNone>没有可召唤的在世家族（已故，或已是此地殖民者）。</DC_FamilyTree_DevNone>
+  <DC_FamilyTree_DevDead>{PAWN} 已故。</DC_FamilyTree_DevDead>
+  <DC_FamilyTree_DevFailed>无法将 {PAWN} 带到此地。</DC_FamilyTree_DevFailed>
   <DC_FamilyTree_PedigreeToggle>谱系图布局</DC_FamilyTree_PedigreeToggle>
   <DC_FamilyTree_StylePedigree>谱系图</DC_FamilyTree_StylePedigree>
   <DC_FamilyTree_StyleRows>分行</DC_FamilyTree_StyleRows>

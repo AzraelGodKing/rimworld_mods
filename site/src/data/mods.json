@@ -570,9 +570,9 @@
           "label": "How it works",
           "features": [
             { "title": "1. Paint Date or Lovin", "body": "Open Schedule and pick the teal Date or rose Lovin button (vanilla hardcodes that grid, so XML alone never shows a custom slot). With Rimbody, Exosuit, or Schedule Everything, they sit in the next free extra columns so those mods keep Workout / Piloting." },
-            { "title": "2. Date hours", "body": "Assign the same hours on both lovers. They meet at a table, gathering spot, or just walk together. Mood and opinion only — no bed, no pregnancy." },
+            { "title": "2. Date hours", "body": "Assign the same hours on both lovers. They meet at a table, gathering spot, or just walk together. Mood and opinion only — no bed, no pregnancy. Couples remember a favourite venue; two couples with overlapping Date hours may share one (double date)." },
             { "title": "3. Lovin hours", "body": "Each paths to a shared rendezvous double (claimed for the window, then restored). When both are in it, lovin uses a short MTB. Ideology that forbids lovin, or Biotech sterile genes, reroute to a date instead. Adults without a partner in that bed can have private time. Children never qualify.", "tag": "Vanilla partner-in-bed rules" },
-            { "title": "4. Show up", "body": "If a partner is drafted, in a medical bed, or off-map for the window, the one who waited gets a short stood-up thought. If both make it, they get a small boost. Hungry, chemical desire, player-forced jobs, and exhaustion still come first." }
+            { "title": "4. Show up", "body": "If a partner is drafted, in a medical bed, or off-map for the window, the one who waited gets a short stood-up thought. If both make it, they get a small boost. Hungry, chemical desire, player-forced jobs, and exhaustion still come first. The anniversary of a love bond sends a letter — a date that day is the year's peak." }
           ]
         },
         {
@@ -582,7 +582,10 @@
             { "title": "Pregnancy-safe cooldown", "body": "Only shortens lovin chance while scheduled; keeps vanilla post-lovin cooldown so pregnancy rolls stay sane.", "tag": "Default ON" },
             { "title": "Eager mode", "body": "Also shortens post-lovin cooldown like Always Do Lovin. Can spam pregnancy rolls — leave off unless you want that.", "tag": "Optional" },
             { "title": "Allow private time", "body": "Adults on Lovin hours use any bed when a couple job cannot start. Mood thought only — no pregnancy. Same cooldown as lovin. Children never qualify.", "tag": "Default ON" },
-            { "title": "Claim double for Lovin hours", "body": "Temporarily assign the rendezvous double to the couple, then restore their previous beds when the window ends.", "tag": "Default ON" }
+            { "title": "Claim double for Lovin hours", "body": "Temporarily assign the rendezvous double to the couple, then restore their previous beds when the window ends.", "tag": "Default ON" },
+            { "title": "Anniversaries", "body": "Letter and a small mood on the love-bond anniversary. A date that actually lands that day is a much bigger boost.", "tag": "Default ON" },
+            { "title": "Remember favourite spots", "body": "Couples prefer the venue of their best dates. A ruined date can sour that place.", "tag": "Default ON" },
+            { "title": "Allow double dates", "body": "Two couples with overlapping Date hours may share a venue. Quality rolls once; the evening spills into opinions of the other pair. If the other couple never shows, they date alone.", "tag": "Default ON" }
           ]
         },
         {
