@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- DEPRECATED stub: pre-merge Cursor gas defs lived here. All gas buildings
+<!-- DEPRECATED stub: pre-merge gas defs lived here. All gas buildings
      are in Buildings_StrataGas.xml now (Strata_DeepGasVent, Strata_GasWell,
      Strata_DeepGasGenerator, research Strata_GasExtraction). Delete any copy
      of this file from old installs if you still see missing-type errors. -->

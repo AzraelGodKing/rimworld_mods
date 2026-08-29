@@ -23,6 +23,10 @@ Strata/Tools/_reflect_tmp/
 # to do, and these are throwaway anyway.
 .tmp/
 
+# Local editor config — not part of the public repo
+.cursor/
+.claude/
+
 # Local private outputs (never commit)
 .local/
 .local/**
