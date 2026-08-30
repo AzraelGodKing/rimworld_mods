@@ -100,4 +100,50 @@
   <Stormproof_StormCapacitor_Stored>Запас: {0} / {1} Вт·д (только молния, без саморазряда)</Stormproof_StormCapacitor_Stored>
   <Stormproof_StormCapacitor_Discharging>Разряд: {0} Вт на покрытие дефицита сети.</Stormproof_StormCapacitor_Discharging>
 
+  <Stormproof_Brownout_Status>Просадка {0}: свет и верстаки ослаблены, охладители отстают, сеть берёт меньше.</Stormproof_Brownout_Status>
+  <Stormproof_Almanac_Title>Погодный альманах</Stormproof_Almanac_Title>
+  <Stormproof_Almanac_Empty>Сезонов пока нет. Держите пульт включённым.</Stormproof_Almanac_Empty>
+  <Stormproof_Almanac_Ongoing>идёт</Stormproof_Almanac_Ongoing>
+  <Stormproof_Almanac_Line>{0} {1}: {2} ({3})</Stormproof_Almanac_Line>
+  <Stormproof_Almanac_Inspect>Альманах: {0} записей.</Stormproof_Almanac_Inspect>
+  <Stormproof_Almanac_Open>Альманах</Stormproof_Almanac_Open>
+  <Stormproof_Almanac_OpenDesc>Год штормов, вспышек, засух и похолоданий на этой карте.</Stormproof_Almanac_OpenDesc>
+  <Stormproof_StormSpire_FulguriteReady>{0} выплавил фульгурит у основания. Соберите.</Stormproof_StormSpire_FulguriteReady>
+  <Stormproof_StormSpire_CollectFulgurite>Собрать фульгурит ({0})</Stormproof_StormSpire_CollectFulgurite>
+  <Stormproof_StormSpire_CollectFulguriteDesc>Снять сплавленное молнией стекло с основания шпиля.</Stormproof_StormSpire_CollectFulguriteDesc>
+  <Stormproof_StormSpire_Strikes>Ударов поймано: {0} (фульгурит {1}/{2})</Stormproof_StormSpire_Strikes>
+  <Stormproof_StormSpire_FulguriteStored>Фульгурит ждёт: {0}</Stormproof_StormSpire_FulguriteStored>
+  <Stormproof_SettingsCategory>Stormproof</Stormproof_SettingsCategory>
+  <Stormproof_Settings_Intro>Здания остаются; ползунки решают, как сильно небо и сеть давят в ответ.</Stormproof_Settings_Intro>
+  <Stormproof_Settings_PresetSoft>Мягко</Stormproof_Settings_PresetSoft>
+  <Stormproof_Settings_PresetDefault>Обычный</Stormproof_Settings_PresetDefault>
+  <Stormproof_Settings_PresetHard>Жёстко</Stormproof_Settings_PresetHard>
+  <Stormproof_Settings_Grid>Сеть</Stormproof_Settings_Grid>
+  <Stormproof_Settings_Brownout>Плавная просадка</Stormproof_Settings_Brownout>
+  <Stormproof_Settings_BrownoutTip>При низких батареях свет тускнеет, верстаки медленнее, охладители слабее — до полного отключения.</Stormproof_Settings_BrownoutTip>
+  <Stormproof_Settings_BrownoutSeverity>Сила просадки: {0}</Stormproof_Settings_BrownoutSeverity>
+  <Stormproof_Settings_Wear>Износ незащищённой проводки в шторм</Stormproof_Settings_Wear>
+  <Stormproof_Settings_WearTip>Гроза, ионный шторм и сильный ветер медленно портят обычный кабель и батареи. Броня и штормовые конденсаторы не страдают. Чините как обычно.</Stormproof_Settings_WearTip>
+  <Stormproof_Settings_Zzzt>Множитель Zzzt у шпиля: {0}</Stormproof_Settings_Zzzt>
+  <Stormproof_Settings_Sky>Небо и шпили</Stormproof_Settings_Sky>
+  <Stormproof_Settings_Almanac>Погодный альманах</Stormproof_Settings_Almanac>
+  <Stormproof_Settings_AlmanacTip>Пульт ведёт годовой журнал штормов и условий.</Stormproof_Settings_AlmanacTip>
+  <Stormproof_Settings_Fulgurite>Фульгурит у набитых шпилей</Stormproof_Settings_Fulgurite>
+  <Stormproof_Settings_FulguriteTip>После многих ударов у шпиля появляется стекло для торговли или скульптур.</Stormproof_Settings_FulguriteTip>
+  <Stormproof_Settings_Incidents>События Stormproof</Stormproof_Settings_Incidents>
+  <Stormproof_Settings_IonStorm>Ионный шторм</Stormproof_Settings_IonStorm>
+  <Stormproof_Settings_HeatDome>Тепловой купол</Stormproof_Settings_HeatDome>
+  <Stormproof_Settings_PolarFront>Полярный фронт</Stormproof_Settings_PolarFront>
+  <Stormproof_Settings_ToxicSurge>Токсический выброс</Stormproof_Settings_ToxicSurge>
+  <Stormproof_Settings_DryLightning>Сухие молнии</Stormproof_Settings_DryLightning>
+  <Stormproof_Settings_IncidentFreq>Частота событий: {0}</Stormproof_Settings_IncidentFreq>
+  <Stormproof_Settings_Suppressors>Подавители угроз</Stormproof_Settings_Suppressors>
+  <Stormproof_Settings_Barrier>Атмосферный барьер</Stormproof_Settings_Barrier>
+  <Stormproof_Settings_Stabilizer>Климат-стабилизатор</Stormproof_Settings_Stabilizer>
+  <Stormproof_Settings_SkyRestorer>Восстановитель неба</Stormproof_Settings_SkyRestorer>
+  <Stormproof_Settings_FireSuppressor>Огнетушитель</Stormproof_Settings_FireSuppressor>
+  <Stormproof_Settings_Drought>Засушливый конденсатор</Stormproof_Settings_Drought>
+  <Stormproof_Settings_SuppressorTip>Выкл.: здание стоит, но угрозу больше не глушит.</Stormproof_Settings_SuppressorTip>
+  <Stormproof_Settings_Reset>Сбросить</Stormproof_Settings_Reset>
+
 </LanguageData>

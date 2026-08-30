@@ -100,4 +100,51 @@
   <Stormproof_StormCapacitor_Stored>Stored: {0} / {1} Wd (lightning only, no self-discharge)</Stormproof_StormCapacitor_Stored>
   <Stormproof_StormCapacitor_Discharging>Discharging: {0} W to cover grid deficit.</Stormproof_StormCapacitor_Discharging>
 
+  <!-- Brownout / almanac / fulgurite / settings -->
+  <Stormproof_Brownout_Status>Brownout {0}: lights and benches degraded, coolers lag, grid draws less.</Stormproof_Brownout_Status>
+  <Stormproof_Almanac_Title>Weather almanac</Stormproof_Almanac_Title>
+  <Stormproof_Almanac_Empty>No seasons recorded yet. Leave the forecaster running.</Stormproof_Almanac_Empty>
+  <Stormproof_Almanac_Ongoing>ongoing</Stormproof_Almanac_Ongoing>
+  <Stormproof_Almanac_Line>{0} {1}: {2} ({3})</Stormproof_Almanac_Line>
+  <Stormproof_Almanac_Inspect>Almanac: {0} recorded seasons and events.</Stormproof_Almanac_Inspect>
+  <Stormproof_Almanac_Open>Almanac</Stormproof_Almanac_Open>
+  <Stormproof_Almanac_OpenDesc>Read this map's year of storms, flares, droughts, and snaps.</Stormproof_Almanac_OpenDesc>
+  <Stormproof_StormSpire_FulguriteReady>{0} has fused fulgurite at its base. Collect it.</Stormproof_StormSpire_FulguriteReady>
+  <Stormproof_StormSpire_CollectFulgurite>Collect fulgurite ({0})</Stormproof_StormSpire_CollectFulgurite>
+  <Stormproof_StormSpire_CollectFulguriteDesc>Harvest fused lightning-glass from the spire's base.</Stormproof_StormSpire_CollectFulguriteDesc>
+  <Stormproof_StormSpire_Strikes>Strikes caught: {0} (fulgurite {1}/{2})</Stormproof_StormSpire_Strikes>
+  <Stormproof_StormSpire_FulguriteStored>Fulgurite waiting: {0}</Stormproof_StormSpire_FulguriteStored>
+  <Stormproof_SettingsCategory>Stormproof</Stormproof_SettingsCategory>
+  <Stormproof_Settings_Intro>Buildings stay; these sliders decide how hard the sky and grid push back.</Stormproof_Settings_Intro>
+  <Stormproof_Settings_PresetSoft>Soft</Stormproof_Settings_PresetSoft>
+  <Stormproof_Settings_PresetDefault>Default</Stormproof_Settings_PresetDefault>
+  <Stormproof_Settings_PresetHard>Hard</Stormproof_Settings_PresetHard>
+  <Stormproof_Settings_Grid>Grid</Stormproof_Settings_Grid>
+  <Stormproof_Settings_Brownout>Graded brownout</Stormproof_Settings_Brownout>
+  <Stormproof_Settings_BrownoutTip>Low batteries dim lights, slow workbenches, and weaken coolers before a full shed.</Stormproof_Settings_BrownoutTip>
+  <Stormproof_Settings_BrownoutSeverity>Brownout strength: {0}</Stormproof_Settings_BrownoutSeverity>
+  <Stormproof_Settings_Wear>Storm wear on unhardened wiring</Stormproof_Settings_Wear>
+  <Stormproof_Settings_WearTip>Thunder, ion storms, and high wind slowly damage ordinary conduit and batteries. Armored conduit and storm capacitors are immune. Repair as usual.</Stormproof_Settings_WearTip>
+  <Stormproof_Settings_Zzzt>Spire Zzzt chance factor: {0}</Stormproof_Settings_Zzzt>
+  <Stormproof_Settings_Sky>Sky and spires</Stormproof_Settings_Sky>
+  <Stormproof_Settings_Almanac>Weather almanac</Stormproof_Settings_Almanac>
+  <Stormproof_Settings_AlmanacTip>The weather forecaster keeps a year-log of storms and game conditions.</Stormproof_Settings_AlmanacTip>
+  <Stormproof_Settings_Fulgurite>Fulgurite from well-struck spires</Stormproof_Settings_Fulgurite>
+  <Stormproof_Settings_FulguriteTip>After enough strikes, fused glass appears at a spire for trade or sculpture stuff.</Stormproof_Settings_FulguriteTip>
+  <Stormproof_Settings_Incidents>Stormproof incidents</Stormproof_Settings_Incidents>
+  <Stormproof_Settings_IonStorm>Ion storm</Stormproof_Settings_IonStorm>
+  <Stormproof_Settings_HeatDome>Heat dome</Stormproof_Settings_HeatDome>
+  <Stormproof_Settings_PolarFront>Polar front</Stormproof_Settings_PolarFront>
+  <Stormproof_Settings_ToxicSurge>Toxic surge</Stormproof_Settings_ToxicSurge>
+  <Stormproof_Settings_DryLightning>Dry lightning front</Stormproof_Settings_DryLightning>
+  <Stormproof_Settings_IncidentFreq>Incident frequency: {0}</Stormproof_Settings_IncidentFreq>
+  <Stormproof_Settings_Suppressors>Hazard suppressors</Stormproof_Settings_Suppressors>
+  <Stormproof_Settings_Barrier>Atmospheric barrier</Stormproof_Settings_Barrier>
+  <Stormproof_Settings_Stabilizer>Climate stabilizer</Stormproof_Settings_Stabilizer>
+  <Stormproof_Settings_SkyRestorer>Sky restorer</Stormproof_Settings_SkyRestorer>
+  <Stormproof_Settings_FireSuppressor>Fire suppressor</Stormproof_Settings_FireSuppressor>
+  <Stormproof_Settings_Drought>Drought condenser</Stormproof_Settings_Drought>
+  <Stormproof_Settings_SuppressorTip>Off: the building still exists but no longer suppresses its hazard.</Stormproof_Settings_SuppressorTip>
+  <Stormproof_Settings_Reset>Reset to defaults</Stormproof_Settings_Reset>
+
 </LanguageData>
