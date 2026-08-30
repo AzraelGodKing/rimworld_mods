@@ -4,7 +4,8 @@ name: Build mod DLLs
 # Deep Colony / Azrael on push to main and on PRs.
 # On main (and workflow_dispatch): pack download zips with injected DLLs and publish
 # them to the rolling "latest" GitHub Release for the docs site buttons.
-# Assemblies/*.dll stay gitignored — zips are never committed.
+# Also cuts an immutable prerelease tag downloads-YYYY-MM-DD-<sha7> so old zips stay
+# downloadable (AZR-50). Assemblies/*.dll stay gitignored — zips are never committed.
 
 on:
   push:
@@ -61,8 +62,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # Needed so we can force-move the rolling `latest` tag.
+          # History + tags: move rolling `latest`, skip snapshot if that SHA was already tagged.
           fetch-depth: 0
+          fetch-tags: true
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -138,6 +140,8 @@ jobs:
             Rebuilt on each relevant push to `main` (rolling tag — assets are overwritten).
             Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, and DateNight.
             Living World and Azrael are in-repo only (not release-ready).
+            Immutable copies of the same zips are tagged `downloads-YYYY-MM-DD-<sha7>` (prerelease).
+            Shipped Workshop versions use Release & Publish (`Homesteader-v1.0.2`, …). See docs/VERSIONING.md.
           files: |
             docs/downloads/Homesteader.zip
             docs/downloads/Stormproof.zip
@@ -149,3 +153,43 @@ jobs:
           fail_on_unmatched_files: true
           # Replace assets when the rolling `latest` tag is republished.
           overwrite_files: true
+
+      - name: Snapshot tag name
+        if: github.event_name != 'pull_request'
+        id: snap
+        shell: bash
+        run: |
+          set -euo pipefail
+          DATE="$(date -u +%Y-%m-%d)"
+          SHORT="${GITHUB_SHA:0:7}"
+          TAG="downloads-${DATE}-${SHORT}"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "date=${DATE}" >> "$GITHUB_OUTPUT"
+          if git ls-remote --exit-code origin "refs/tags/${TAG}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish immutable download snapshot
+        if: github.event_name != 'pull_request' && steps.snap.outputs.exists != 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.snap.outputs.tag }}
+          name: Downloads ${{ steps.snap.outputs.date }} (${{ github.sha }})
+          body: |
+            Immutable snapshot of the docs-site zips from `${{ github.sha }}`.
+            Does not replace the rolling `latest` tag.
+            Player-facing `modVersion` is inside each zip's `About/About.xml`.
+            Official shipped versions are `{ZipName}-v{modVersion}` from Release & Publish.
+          files: |
+            docs/downloads/Homesteader.zip
+            docs/downloads/Stormproof.zip
+            docs/downloads/Strata.zip
+            docs/downloads/Nemesis.zip
+            docs/downloads/DeepColony.zip
+            docs/downloads/DateNight.zip
+          prerelease: true
+          make_latest: false
+          fail_on_unmatched_files: true
+          overwrite_files: false
