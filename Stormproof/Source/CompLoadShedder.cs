@@ -208,6 +208,11 @@ namespace Stormproof
                         cutoffFraction.ToStringPercent(),
                         ReconnectFraction.ToStringPercent());
             }
+            string brownout = BrownoutUtility.InspectLine(parent);
+            if (brownout != null)
+            {
+                state += "\n" + brownout;
+            }
             return state;
         }
     }

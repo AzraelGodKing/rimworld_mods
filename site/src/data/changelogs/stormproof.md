@@ -4,6 +4,21 @@ Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](
 
 Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
+## [1.1.0]
+
+Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.1.0 loaded from ...` with stamp `azr-49-58-77-78-79-80-v1`.
+
+### Added
+- **Graded brownout** — when batteries fall below 40%, lights and benches degrade and coolers lag; grid draw drops so the remaining charge lasts longer. Load shedders still cut the sub-grid at the trip point.
+- **Storm wear** — thunderstorms, ion storms, and high wind slowly chip ordinary conduit and batteries. Armored conduit and storm capacitor banks are immune. Vanilla repair fixes the damage.
+- **Weather almanac** — weather forecaster gizmo + inspect log of this map's seasons and game conditions.
+- **Fulgurite** — every 8 strikes on a storm spire, fused glass appears at the base (trade / sculpture stuff).
+- **Mod settings** — Soft / Default / Hard, five incident toggles + frequency, suppressor toggles, brownout strength, wear, almanac, fulgurite, spire Zzzt factor.
+
+### Changed
+- **Storm vane (SP2)** — sprite packed to ~90% canvas fill so the decorative vane reads at building scale.
+- **Workshop description** — Homesteader-style building lists, grid stress, research, settings, and which-building notes.
+
 ## [Unreleased]
 
 Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.0.1 loaded from ...` in Player.log.

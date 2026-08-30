@@ -35,6 +35,7 @@ namespace Stormproof
         public bool Active =>
             parent.Spawned &&
             !parent.Destroyed &&
+            (StormproofMod.Settings == null || StormproofMod.Settings.allowFireSuppressor) &&
             (flickComp == null || flickComp.SwitchIsOn) &&
             (breakdownComp == null || !breakdownComp.BrokenDown) &&
             powerComp != null &&
