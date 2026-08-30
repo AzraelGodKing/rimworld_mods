@@ -100,4 +100,50 @@
   <Stormproof_StormCapacitor_Stored>已存：{0} / {1} Wd（仅闪电，无自放电）</Stormproof_StormCapacitor_Stored>
   <Stormproof_StormCapacitor_Discharging>放电中：向电网补给 {0} W 以弥补缺口。</Stormproof_StormCapacitor_Discharging>
 
+  <Stormproof_Brownout_Status>电压跌落 {0}：灯光与工作台减弱，冷却滞后，电网耗电更少。</Stormproof_Brownout_Status>
+  <Stormproof_Almanac_Title>天气年鉴</Stormproof_Almanac_Title>
+  <Stormproof_Almanac_Empty>尚无记录。让预报台保持通电。</Stormproof_Almanac_Empty>
+  <Stormproof_Almanac_Ongoing>进行中</Stormproof_Almanac_Ongoing>
+  <Stormproof_Almanac_Line>{0} {1}：{2}（{3}）</Stormproof_Almanac_Line>
+  <Stormproof_Almanac_Inspect>年鉴：已记录 {0} 条。</Stormproof_Almanac_Inspect>
+  <Stormproof_Almanac_Open>年鉴</Stormproof_Almanac_Open>
+  <Stormproof_Almanac_OpenDesc>查阅本地图一年的风暴、耀斑、干旱与寒潮。</Stormproof_Almanac_OpenDesc>
+  <Stormproof_StormSpire_FulguriteReady>{0} 基部凝出闪电熔岩。可采集。</Stormproof_StormSpire_FulguriteReady>
+  <Stormproof_StormSpire_CollectFulgurite>采集闪电熔岩（{0}）</Stormproof_StormSpire_CollectFulgurite>
+  <Stormproof_StormSpire_CollectFulguriteDesc>从塔基取下雷击熔成的玻璃。</Stormproof_StormSpire_CollectFulguriteDesc>
+  <Stormproof_StormSpire_Strikes>已接闪：{0}（熔岩 {1}/{2}）</Stormproof_StormSpire_Strikes>
+  <Stormproof_StormSpire_FulguriteStored>待取熔岩：{0}</Stormproof_StormSpire_FulguriteStored>
+  <Stormproof_SettingsCategory>Stormproof</Stormproof_SettingsCategory>
+  <Stormproof_Settings_Intro>建筑仍在；滑条决定天空与电网有多狠。</Stormproof_Settings_Intro>
+  <Stormproof_Settings_PresetSoft>温和</Stormproof_Settings_PresetSoft>
+  <Stormproof_Settings_PresetDefault>默认</Stormproof_Settings_PresetDefault>
+  <Stormproof_Settings_PresetHard>严苛</Stormproof_Settings_PresetHard>
+  <Stormproof_Settings_Grid>电网</Stormproof_Settings_Grid>
+  <Stormproof_Settings_Brownout>分级电压跌落</Stormproof_Settings_Brownout>
+  <Stormproof_Settings_BrownoutTip>电量低时灯光变暗、工作台变慢、冷却变弱，然后才全断电。</Stormproof_Settings_BrownoutTip>
+  <Stormproof_Settings_BrownoutSeverity>跌落强度：{0}</Stormproof_Settings_BrownoutSeverity>
+  <Stormproof_Settings_Wear>风暴磨损未加固线路</Stormproof_Settings_Wear>
+  <Stormproof_Settings_WearTip>雷暴、离子风暴与大风缓慢损坏普通导管和蓄电池。装甲导管与风暴电容不受影响。按原方式维修。</Stormproof_Settings_WearTip>
+  <Stormproof_Settings_Zzzt>尖塔短路几率倍率：{0}</Stormproof_Settings_Zzzt>
+  <Stormproof_Settings_Sky>天空与尖塔</Stormproof_Settings_Sky>
+  <Stormproof_Settings_Almanac>天气年鉴</Stormproof_Settings_Almanac>
+  <Stormproof_Settings_AlmanacTip>预报台记录一年的风暴与地图状态。</Stormproof_Settings_AlmanacTip>
+  <Stormproof_Settings_Fulgurite>多雷尖塔产出闪电熔岩</Stormproof_Settings_Fulgurite>
+  <Stormproof_Settings_FulguriteTip>足够雷击后，塔基凝出玻璃，可交易或作雕塑材料。</Stormproof_Settings_FulguriteTip>
+  <Stormproof_Settings_Incidents>Stormproof 事件</Stormproof_Settings_Incidents>
+  <Stormproof_Settings_IonStorm>离子风暴</Stormproof_Settings_IonStorm>
+  <Stormproof_Settings_HeatDome>热穹</Stormproof_Settings_HeatDome>
+  <Stormproof_Settings_PolarFront>极地锋面</Stormproof_Settings_PolarFront>
+  <Stormproof_Settings_ToxicSurge>毒涌</Stormproof_Settings_ToxicSurge>
+  <Stormproof_Settings_DryLightning>干雷锋</Stormproof_Settings_DryLightning>
+  <Stormproof_Settings_IncidentFreq>事件频率：{0}</Stormproof_Settings_IncidentFreq>
+  <Stormproof_Settings_Suppressors>灾害抑制</Stormproof_Settings_Suppressors>
+  <Stormproof_Settings_Barrier>大气屏障</Stormproof_Settings_Barrier>
+  <Stormproof_Settings_Stabilizer>气候稳定器</Stormproof_Settings_Stabilizer>
+  <Stormproof_Settings_SkyRestorer>天空恢复器</Stormproof_Settings_SkyRestorer>
+  <Stormproof_Settings_FireSuppressor>灭火器</Stormproof_Settings_FireSuppressor>
+  <Stormproof_Settings_Drought>干旱冷凝器</Stormproof_Settings_Drought>
+  <Stormproof_Settings_SuppressorTip>关闭后建筑仍在，但不再抑制对应灾害。</Stormproof_Settings_SuppressorTip>
+  <Stormproof_Settings_Reset>恢复默认</Stormproof_Settings_Reset>
+
 </LanguageData>
