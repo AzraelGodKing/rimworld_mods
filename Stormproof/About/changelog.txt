@@ -1,3 +1,28 @@
+1.1.0
+[h1]Stormproof — 1.1.0[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Graded brownout[/b] — low batteries dim lights, slow workbenches, and weaken coolers before a load shedder cuts the sub-grid. Grid monitor shows the level.
+[*] [b]Storm wear[/b] — thunder, ion storms, and high wind slowly damage ordinary conduit and batteries. Armored conduit and storm capacitors are immune. Repair as usual.
+[*] [b]Weather almanac[/b] — the forecaster logs this map's storms and hazards by season.
+[*] [b]Fulgurite[/b] — a well-struck storm spire fuses glass at the base (trade good / sculpture stuff).
+[*] [b]Mod settings[/b] — Soft / Default / Hard, per-incident toggles, suppressor toggles, brownout and wear, spire Zzzt factor.
+[/list]
+
+[b]Changed[/b]
+[list]
+[*] [b]Storm vane[/b] — sprite packed to fill the cell like the rest of the Power art (SP2).
+[*] [b]Workshop description[/b] — rewritten with building lists, grid stress, research, and settings.
+[/list]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Brownout coolers[/b] — Harmony no longer targets a CompTempControl tick that 1.6 never declared. Heaters and coolers lag from Building.TickRare instead.
+[/list]
+
+[i]Build stamp (Player.log): azr-49-58-77-78-79-80-v2[/i]
+
 1.0.1
 [h1]Stormproof — 1.0.1[/h1]
 
