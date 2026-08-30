@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -68,25 +70,44 @@ namespace Stormproof
         }
     }
 
-    [HarmonyPatch(typeof(CompTempControl), nameof(CompTempControl.CompTickRare))]
+    [HarmonyPatch]
     public static class Patch_Brownout_TempControl
     {
-        public static void Prefix(CompTempControl __instance, out float __state)
+        public static IEnumerable<MethodBase> TargetMethods()
         {
-            __state = __instance.targetTemperature;
-            float b = BrownoutUtility.For(__instance.parent);
+            yield return AccessTools.DeclaredMethod(typeof(Building_Heater), nameof(Building_Heater.TickRare));
+            yield return AccessTools.DeclaredMethod(typeof(Building_Cooler), nameof(Building_Cooler.TickRare));
+        }
+
+        public static void Prefix(Building_TempControl __instance, out float __state)
+        {
+            __state = float.NaN;
+            CompTempControl control = __instance?.GetComp<CompTempControl>();
+            if (control == null || __instance.Map == null)
+            {
+                return;
+            }
+            __state = control.targetTemperature;
+            float b = BrownoutUtility.For(__instance);
             if (b <= 0f)
             {
                 return;
             }
-            float room = __instance.parent.Position.GetTemperature(__instance.parent.Map);
-            float target = __instance.targetTemperature;
-            __instance.targetTemperature = target + (room - target) * 0.45f * b;
+            float room = __instance.Position.GetTemperature(__instance.Map);
+            control.targetTemperature = __state + (room - __state) * 0.45f * b;
         }
 
-        public static void Postfix(CompTempControl __instance, float __state)
+        public static void Postfix(Building_TempControl __instance, float __state)
         {
-            __instance.targetTemperature = __state;
+            if (float.IsNaN(__state))
+            {
+                return;
+            }
+            CompTempControl control = __instance?.GetComp<CompTempControl>();
+            if (control != null)
+            {
+                control.targetTemperature = __state;
+            }
         }
     }
 

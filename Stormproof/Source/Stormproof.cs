@@ -50,7 +50,7 @@ namespace Stormproof
             HarmonyPatchAll.Apply(new Harmony("azraelgodking.stormproof"), "[Stormproof]");
             StormproofSettings.CaptureOriginalChances();
             StormproofMod.Settings?.ApplyIncidentChances();
-            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "azr-49-58-77-78-79-80-v1"));
+            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "azr-49-58-77-78-79-80-v2"));
         }
     }
 

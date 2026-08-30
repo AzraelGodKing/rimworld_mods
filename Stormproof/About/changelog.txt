@@ -16,7 +16,12 @@
 [*] [b]Workshop description[/b] — rewritten with building lists, grid stress, research, and settings.
 [/list]
 
-[i]Build stamp (Player.log): azr-49-58-77-78-79-80-v1[/i]
+[b]Fixed[/b]
+[list]
+[*] [b]Brownout coolers[/b] — Harmony no longer targets a CompTempControl tick that 1.6 never declared. Heaters and coolers lag from Building.TickRare instead.
+[/list]
+
+[i]Build stamp (Player.log): azr-49-58-77-78-79-80-v2[/i]
 
 1.0.1
 [h1]Stormproof — 1.0.1[/h1]
