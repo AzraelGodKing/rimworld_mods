@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Fail CI on malformed XML, Keyed translation drift, and missing mod-owned texPaths.
+"""Fail CI on malformed XML, Keyed translation drift, missing texPaths, and
+modVersion/changelog mismatch.
 
 Stdlib only. Run from repo root: python3 scripts/validate_mods.py
 """
@@ -8,6 +9,8 @@ from __future__ import annotations
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
+
+from release_meta import extract_changelog_block, parse_version
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -58,6 +61,29 @@ def check_well_formed(files: list[Path]) -> list[str]:
         except ET.ParseError as exc:
             rel = path.relative_to(REPO).as_posix()
             errors.append(f"malformed XML: {rel}: {exc}")
+    return errors
+
+
+def check_mod_versions(mods: list[Path]) -> list[str]:
+    errors = []
+    for mod in mods:
+        about_path = mod / "About" / "About.xml"
+        log_path = mod / "About" / "changelog.txt"
+        about = about_path.read_text(encoding="utf-8")
+        version = parse_version(about)
+        rel_about = about_path.relative_to(REPO).as_posix()
+        if not version:
+            errors.append(f"missing modVersion: {rel_about}")
+            continue
+        if not log_path.is_file():
+            errors.append(f"missing changelog: {log_path.relative_to(REPO).as_posix()}")
+            continue
+        block = extract_changelog_block(log_path.read_text(encoding="utf-8"), version)
+        if not block:
+            errors.append(
+                f"changelog has no {version} block: {log_path.relative_to(REPO).as_posix()} "
+                f"(must match About.xml modVersion)"
+            )
     return errors
 
 
@@ -203,6 +229,7 @@ def main() -> int:
     mods = mod_dirs()
     errors: list[str] = []
     errors.extend(check_well_formed(xml_files))
+    errors.extend(check_mod_versions(mods))
     errors.extend(check_keyed_parity(mods))
     errors.extend(check_definjected_parity(mods))
     errors.extend(check_texpaths(mods))

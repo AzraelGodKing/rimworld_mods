@@ -5,7 +5,11 @@ Same shape as the Sunhaven **Release & Publish** workflow: you dispatch it, CI b
 1. **GitHub Release** — tag `{ZipName}-v{modVersion}` (example `Homesteader-v1.0.2`). Does **not** replace the rolling `latest` tag the docs site uses.
 2. **Nexus Mods** — new file version on an existing Nexus file (retries with backoff, same as Sunhaven). Needs a Nexus page and IDs in the matrix. Uploads use `Nexus-Mods/upload-action@v1.0.0-beta.10` (there is no `v1` tag).
 
-Version and Steam notes come from each mod’s `About.xml` `modVersion` and the matching block in `About/changelog.txt`. Do not bump versions in this workflow.
+Version and Steam notes come from each mod’s `About.xml` `modVersion` and the matching block in `About/changelog.txt`. Do not bump versions in this workflow. When you *are* ready to ship, bump `modVersion` and the changelog first — see [VERSIONING.md](VERSIONING.md).
+
+## Rollback
+
+The **Build mod DLLs** workflow still force-moves `latest` so the docs site buttons stay stable. Each of those runs also cuts an immutable prerelease `downloads-YYYY-MM-DD-<sha7>` with the same zips. Old snapshots stay on the [Releases](https://github.com/AzraelGodKing/rimworld_mods/releases) page. Shipped Workshop builds are the versioned `{ZipName}-v{modVersion}` tags from this workflow.
 
 ## Run it
 

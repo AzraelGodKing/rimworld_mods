@@ -6,6 +6,7 @@
 # Version comes from each mod's About.xml modVersion (not a central versions.json).
 # Changelog for the release is the current-version block in About/changelog.txt.
 # Docs-site rolling zips stay on the `latest` tag (Build mod DLLs workflow).
+# That workflow also keeps immutable `downloads-YYYY-MM-DD-<sha7>` snapshots (AZR-50).
 # =============================================================================
 name: Release & Publish
 
