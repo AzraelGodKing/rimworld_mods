@@ -10,6 +10,7 @@ namespace Stormproof
     public static class StormproofDefOf
     {
         public static GameConditionDef SolarFlare;
+        public static GameConditionDef Stormproof_IonStorm;
         public static GameConditionDef Stormproof_HeatDome;
         public static GameConditionDef Stormproof_PolarFront;
         public static GameConditionDef Stormproof_ToxicSurge;
@@ -30,6 +31,7 @@ namespace Stormproof
         public static GameConditionDef DeepFreeze;
 
         public static ResearchProjectDef Stormproof_PerfectGrounding;
+        public static ThingDef Stormproof_Fulgurite;
 
         public static WeatherDef RainyThunderstorm;
         public static WeatherDef DryThunderstorm;
@@ -46,7 +48,9 @@ namespace Stormproof
         static StormproofInit()
         {
             HarmonyPatchAll.Apply(new Harmony("azraelgodking.stormproof"), "[Stormproof]");
-            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]"));
+            StormproofSettings.CaptureOriginalChances();
+            StormproofMod.Settings?.ApplyIncidentChances();
+            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "azr-49-58-77-78-79-80-v2"));
         }
     }
 

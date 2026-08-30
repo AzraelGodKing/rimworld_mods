@@ -1,5 +1,6 @@
 using System.Linq;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace Stormproof
@@ -9,6 +10,7 @@ namespace Stormproof
         public float attractRadius = 30f;
         public float energyPerStrike = 1500f; // Wd fed into connected batteries
         public float zzztChancePerStrike = 0.05f;
+        public int fulguriteStrikesNeeded = 8;
 
         public CompProperties_StormSpire()
         {
@@ -21,6 +23,8 @@ namespace Stormproof
         private CompPowerTrader powerComp;
 
         private int suppressFiresUntilTick = -1;
+        private int strikesCaught;
+        private int fulguriteReady;
 
         // Vanilla lightning explosions have a ~1.9 cell flame radius; cover it
         // with a little margin.
@@ -110,6 +114,18 @@ namespace Stormproof
 
         public void Notify_Struck()
         {
+            if (StormproofMod.Settings == null || StormproofMod.Settings.enableFulgurite)
+            {
+                strikesCaught++;
+                int needed = Props.fulguriteStrikesNeeded <= 0 ? 8 : Props.fulguriteStrikesNeeded;
+                if (needed > 0 && strikesCaught % needed == 0)
+                {
+                    fulguriteReady++;
+                    Messages.Message(
+                        "Stormproof_StormSpire_FulguriteReady".Translate(parent.LabelShort),
+                        parent, MessageTypeDefOf.PositiveEvent);
+                }
+            }
             if (!GridConnected)
             {
                 return; // grounded rod: safe, but no harvest
@@ -153,7 +169,7 @@ namespace Stormproof
                     "Stormproof_StormSpire_StrikeHarvested".Translate(parent.LabelShort, harvested.ToString("F0")),
                     parent, MessageTypeDefOf.PositiveEvent);
             }
-            if (!SurgeRiskEliminated && Rand.Chance(Props.zzztChancePerStrike))
+            if (!SurgeRiskEliminated && Rand.Chance(Props.zzztChancePerStrike * ZzztFactor()))
             {
                 IncidentDef zzzt = DefDatabase<IncidentDef>.GetNamedSilentFail("ShortCircuit");
                 if (zzzt != null)
@@ -167,23 +183,77 @@ namespace Stormproof
             }
         }
 
+        public override System.Collections.Generic.IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            foreach (Gizmo gizmo in base.CompGetGizmosExtra())
+            {
+                yield return gizmo;
+            }
+            if (fulguriteReady > 0 && StormproofDefOf.Stormproof_Fulgurite != null)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "Stormproof_StormSpire_CollectFulgurite".Translate(fulguriteReady),
+                    defaultDesc = "Stormproof_StormSpire_CollectFulguriteDesc".Translate(),
+                    icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchReport"),
+                    action = CollectFulgurite
+                };
+            }
+        }
+
+        private void CollectFulgurite()
+        {
+            if (fulguriteReady <= 0 || StormproofDefOf.Stormproof_Fulgurite == null)
+            {
+                return;
+            }
+            int count = fulguriteReady;
+            fulguriteReady = 0;
+            Thing drop = ThingMaker.MakeThing(StormproofDefOf.Stormproof_Fulgurite);
+            drop.stackCount = count;
+            GenPlace.TryPlaceThing(drop, parent.Position, parent.Map, ThingPlaceMode.Near);
+        }
+
+        private static float ZzztFactor()
+        {
+            return StormproofMod.Settings == null ? 1f : StormproofMod.Settings.zzztChanceFactor;
+        }
+
         public override void PostExposeData()
         {
             base.PostExposeData();
             Scribe_Values.Look(ref suppressFiresUntilTick, "stormproof_suppressFiresUntilTick", -1);
+            Scribe_Values.Look(ref strikesCaught, "stormproof_strikesCaught");
+            Scribe_Values.Look(ref fulguriteReady, "stormproof_fulguriteReady");
         }
 
         public override string CompInspectStringExtra()
         {
             if (!GridConnected)
             {
-                return "Stormproof_StormSpire_Grounded".Translate();
+                return "Stormproof_StormSpire_Grounded".Translate() + FulguriteLine();
             }
             string surge = SurgeRiskEliminated
                 ? "Stormproof_StormSpire_SurgeRiskNone".Translate()
-                : "Stormproof_StormSpire_SurgeRiskPercent".Translate((Props.zzztChancePerStrike * 100f).ToString("F0"));
+                : "Stormproof_StormSpire_SurgeRiskPercent".Translate((Props.zzztChancePerStrike * ZzztFactor() * 100f).ToString("F0"));
             return "Stormproof_StormSpire_GridConnected".Translate(
-                Props.energyPerStrike.ToString("F0"), surge);
+                Props.energyPerStrike.ToString("F0"), surge) + FulguriteLine();
+        }
+
+        private string FulguriteLine()
+        {
+            if (StormproofMod.Settings != null && !StormproofMod.Settings.enableFulgurite)
+            {
+                return "";
+            }
+            int needed = Props.fulguriteStrikesNeeded <= 0 ? 8 : Props.fulguriteStrikesNeeded;
+            int toward = needed <= 0 ? 0 : strikesCaught % needed;
+            string line = "\n" + "Stormproof_StormSpire_Strikes".Translate(strikesCaught, toward, needed);
+            if (fulguriteReady > 0)
+            {
+                line += "\n" + "Stormproof_StormSpire_FulguriteStored".Translate(fulguriteReady);
+            }
+            return line;
         }
     }
 }
