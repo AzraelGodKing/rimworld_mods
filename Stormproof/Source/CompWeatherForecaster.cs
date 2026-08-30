@@ -1,5 +1,6 @@
 using HarmonyLib;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace Stormproof
@@ -108,7 +109,39 @@ namespace Stormproof
             s += remaining > 0
                 ? "\n" + "Stormproof_WeatherForecaster_HoldsFor".Translate(remaining.ToStringTicksToPeriod())
                 : "\n" + "Stormproof_WeatherForecaster_AboutToChange".Translate();
+            MapComponent_Stormproof almanac = map.GetComponent<MapComponent_Stormproof>();
+            if (almanac != null && almanac.Almanac.Count > 0
+                && (StormproofMod.Settings == null || StormproofMod.Settings.enableAlmanac))
+            {
+                s += "\n" + "Stormproof_Almanac_Inspect".Translate(almanac.Almanac.Count);
+            }
             return s;
+        }
+
+        public override System.Collections.Generic.IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            foreach (Gizmo gizmo in base.CompGetGizmosExtra())
+            {
+                yield return gizmo;
+            }
+            if (!Active || (StormproofMod.Settings != null && !StormproofMod.Settings.enableAlmanac))
+            {
+                yield break;
+            }
+            yield return new Command_Action
+            {
+                defaultLabel = "Stormproof_Almanac_Open".Translate(),
+                defaultDesc = "Stormproof_Almanac_OpenDesc".Translate(),
+                icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchReport"),
+                action = () =>
+                {
+                    MapComponent_Stormproof comp = parent.Map.GetComponent<MapComponent_Stormproof>();
+                    if (comp != null)
+                    {
+                        Find.WindowStack.Add(new Dialog_Almanac(comp));
+                    }
+                }
+            };
         }
     }
 }

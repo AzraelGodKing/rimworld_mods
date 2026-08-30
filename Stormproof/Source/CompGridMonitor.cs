@@ -139,6 +139,11 @@ namespace Stormproof
                 int ticksToFull = (int)((capacity - stored) / (gainWdPerTick * 0.5f));
                 s += "\n" + "Stormproof_GridMonitor_FullIn".Translate(ticksToFull.ToStringTicksToPeriod());
             }
+            string brownout = BrownoutUtility.InspectLine(parent);
+            if (brownout != null)
+            {
+                s += "\n" + brownout;
+            }
             return s;
         }
     }
