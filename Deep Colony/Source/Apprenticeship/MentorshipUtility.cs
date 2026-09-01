@@ -320,6 +320,9 @@ namespace DeepColony
                 apprenticeComp.SetMentoredSkill(null);
                 apprenticeComp.perkTeachProgress = 0;
                 apprenticeComp.perkBeingTaughtDefName = null;
+                apprenticeComp.retrainFromPerkDefName = null;
+                apprenticeComp.retrainToPerkDefName = null;
+                apprenticeComp.retrainProgress = 0;
             }
 
             if (!silent)
@@ -330,6 +333,68 @@ namespace DeepColony
                         apprentice.LabelShort.Named("APPRENTICE")),
                     apprentice, MessageTypeDefOf.NeutralEvent, false);
             }
+        }
+
+        /// <summary>AZR-73 — sessions needed to swap a branch perk under a mentor.</summary>
+        public const int RetrainSessionsNeeded = 8;
+
+        public static bool RetrainEnabled =>
+            DeepColonySettings.Get.enableMentoring
+            && DeepColonySettings.Get.enablePerks
+            && DeepColonySettings.Get.enablePerkRetrain;
+
+        public struct RetrainPair
+        {
+            public PerkDef from;
+            public PerkDef to;
+        }
+
+        public static List<RetrainPair> RetrainOptions(Pawn mentor, Pawn apprentice)
+        {
+            var list = new List<RetrainPair>();
+            if (!RetrainEnabled || mentor == null || apprentice == null) return list;
+            var mc = mentor.TryGetComp<Comp_DeepColony>();
+            var ac = apprentice.TryGetComp<Comp_DeepColony>();
+            if (mc == null || ac == null) return list;
+
+            for (int i = 0; i < ac.unlockedPerkDefNames.Count; i++)
+            {
+                PerkDef from = DefDatabase<PerkDef>.GetNamedSilentFail(ac.unlockedPerkDefNames[i]);
+                if (from?.exclusiveWith == null) continue;
+                for (int j = 0; j < from.exclusiveWith.Count; j++)
+                {
+                    PerkDef to = DefDatabase<PerkDef>.GetNamedSilentFail(from.exclusiveWith[j]);
+                    if (to == null || ac.HasPerk(to)) continue;
+                    if (!mc.HasPerk(to)) continue;
+                    if (!Comp_DeepColony.PerkVisible(to)) continue;
+                    if (apprentice.skills?.GetSkill(to.skill) == null) continue;
+                    if (apprentice.skills.GetSkill(to.skill).Level < to.requiredLevel) continue;
+                    list.Add(new RetrainPair { from = from, to = to });
+                }
+            }
+            return list;
+        }
+
+        public static void BeginRetrain(Pawn mentor, Pawn apprentice, PerkDef from, PerkDef to)
+        {
+            if (!RetrainEnabled || from == null || to == null) return;
+            if (!CanMentor(mentor, apprentice, to.skill, out _)) return;
+            var ac = apprentice.TryGetComp<Comp_DeepColony>();
+            if (ac == null) return;
+            if (ac.mentor != mentor)
+                SetMentorRelation(mentor, apprentice, to.skill);
+            ac.retrainFromPerkDefName = from.defName;
+            ac.retrainToPerkDefName = to.defName;
+            ac.retrainProgress = 0;
+            Messages.Message(
+                "DC_RetrainStarted".Translate(
+                    mentor.LabelShort.Named("MENTOR"),
+                    apprentice.LabelShort.Named("APPRENTICE"),
+                    from.LabelCap.Named("FROM"),
+                    to.LabelCap.Named("TO")),
+                new LookTargets(mentor, apprentice),
+                MessageTypeDefOf.NeutralEvent,
+                false);
         }
 
         /// <summary>Active mentoring session finished — advance perk-apprenticeship progress.</summary>
@@ -343,6 +408,9 @@ namespace DeepColony
             var mentorComp = mentor.TryGetComp<Comp_DeepColony>();
             if (apprenticeComp == null || mentorComp == null) return;
             if (apprenticeComp.mentor != mentor) return;
+
+            if (TryAdvanceRetrain(mentor, apprentice, apprenticeComp))
+                return;
 
             SkillDef focus = apprenticeComp.GetMentoredSkill();
             PerkDef teachable = FindTier1PerkMentorCanTeach(mentorComp, apprenticeComp, focus);
@@ -386,6 +454,56 @@ namespace DeepColony
 
             apprenticeComp.perkTeachProgress = 0;
             apprenticeComp.perkBeingTaughtDefName = null;
+        }
+
+        private static bool TryAdvanceRetrain(Pawn mentor, Pawn apprentice, Comp_DeepColony ac)
+        {
+            if (!RetrainEnabled) return false;
+            if (ac.retrainFromPerkDefName.NullOrEmpty() || ac.retrainToPerkDefName.NullOrEmpty())
+                return false;
+            PerkDef from = DefDatabase<PerkDef>.GetNamedSilentFail(ac.retrainFromPerkDefName);
+            PerkDef to = DefDatabase<PerkDef>.GetNamedSilentFail(ac.retrainToPerkDefName);
+            if (from == null || to == null || !ac.HasPerk(from) || ac.HasPerk(to))
+            {
+                ClearRetrain(ac);
+                return false;
+            }
+
+            ac.retrainProgress++;
+            if (ac.retrainProgress < RetrainSessionsNeeded)
+            {
+                Messages.Message(
+                    "DC_RetrainProgress".Translate(
+                        apprentice.LabelShort.Named("APPRENTICE"),
+                        from.LabelCap.Named("FROM"),
+                        to.LabelCap.Named("TO"),
+                        ac.retrainProgress,
+                        RetrainSessionsNeeded),
+                    apprentice, MessageTypeDefOf.NeutralEvent, false);
+                return true;
+            }
+
+            ac.RevokePerk(from, false);
+            ac.GrantPerkFromRetrain(to);
+            FamilyEchoUtility.NotifyTraditionTaught(mentor, apprentice, to);
+            Messages.Message(
+                "DC_RetrainComplete".Translate(
+                    mentor.LabelShort.Named("MENTOR"),
+                    apprentice.LabelShort.Named("APPRENTICE"),
+                    from.LabelCap.Named("FROM"),
+                    to.LabelCap.Named("TO")),
+                new LookTargets(mentor, apprentice),
+                MessageTypeDefOf.PositiveEvent,
+                false);
+            ClearRetrain(ac);
+            return true;
+        }
+
+        private static void ClearRetrain(Comp_DeepColony ac)
+        {
+            ac.retrainFromPerkDefName = null;
+            ac.retrainToPerkDefName = null;
+            ac.retrainProgress = 0;
         }
 
         public static PerkDef FindTier1PerkMentorCanTeach(

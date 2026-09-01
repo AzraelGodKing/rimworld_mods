@@ -14,6 +14,7 @@ namespace DeepColony
 
         public bool enablePerks = true;
         public bool showPerkHediffs = false;
+        public bool announceVisitorPerkUnlocks = false;
         public bool enableTrauma = true;
         public bool enableMentoring = true;
         public bool enableInheritance = true;
@@ -67,6 +68,16 @@ namespace DeepColony
         public float touchComfortDays = 4f;
         public float touchComfortThreshold = 0.65f;
 
+        // AZR-65 Quiet Hours (not Hard-only)
+        public bool enableQuietHours = true;
+        public float quietHoursIntensity = 1f;
+
+        // AZR-73 mentor retraining (off on Soft/Default)
+        public bool enablePerkRetrain = false;
+
+        // AZR-70 estate / wills
+        public bool enableEstate = true;
+
         public static DeepColonySettings Get =>
             DeepColonyMod.Settings ?? new DeepColonySettings();
 
@@ -75,6 +86,7 @@ namespace DeepColony
             base.ExposeData();
             Scribe_Values.Look(ref enablePerks, "enablePerks", true);
             Scribe_Values.Look(ref showPerkHediffs, "showPerkHediffs", false);
+            Scribe_Values.Look(ref announceVisitorPerkUnlocks, "announceVisitorPerkUnlocks", false);
             Scribe_Values.Look(ref enableTrauma, "enableTrauma", true);
             Scribe_Values.Look(ref enableMentoring, "enableMentoring", true);
             Scribe_Values.Look(ref enableInheritance, "enableInheritance", true);
@@ -114,6 +126,10 @@ namespace DeepColony
             Scribe_Values.Look(ref enableTouchAverse, "enableTouchAverse", true);
             Scribe_Values.Look(ref touchComfortDays, "touchComfortDays", 4f);
             Scribe_Values.Look(ref touchComfortThreshold, "touchComfortThreshold", 0.65f);
+            Scribe_Values.Look(ref enableQuietHours, "enableQuietHours", true);
+            Scribe_Values.Look(ref quietHoursIntensity, "quietHoursIntensity", 1f);
+            Scribe_Values.Look(ref enablePerkRetrain, "enablePerkRetrain", false);
+            Scribe_Values.Look(ref enableEstate, "enableEstate", true);
         }
 
         public void ApplyPreset(Preset preset)
@@ -147,6 +163,10 @@ namespace DeepColony
             enableTouchAverse = true;
             touchComfortDays = 4f;
             touchComfortThreshold = 0.65f;
+            enableQuietHours = true;
+            quietHoursIntensity = 1f;
+            enablePerkRetrain = false;
+            enableEstate = true;
 
             switch (preset)
             {
@@ -168,6 +188,8 @@ namespace DeepColony
                     familyUnwaveringBreakChance = 0.75f;
                     touchComfortDays = 2.5f;
                     touchComfortThreshold = 0.55f;
+                    quietHoursIntensity = 0.6f;
+                    enablePerkRetrain = false;
                     break;
                 case Preset.Hard:
                     combatShockChance = 0.55f;
@@ -196,6 +218,8 @@ namespace DeepColony
                     familyUnwaveringBreakChance = 0.35f;
                     touchComfortDays = 6.5f;
                     touchComfortThreshold = 0.75f;
+                    quietHoursIntensity = 1.35f;
+                    enablePerkRetrain = true;
                     break;
                 default:
                     ResetToDefaults();
@@ -207,6 +231,7 @@ namespace DeepColony
         {
             enablePerks = true;
             showPerkHediffs = false;
+            announceVisitorPerkUnlocks = false;
             enableTrauma = true;
             enableMentoring = true;
             enableInheritance = true;
@@ -246,6 +271,10 @@ namespace DeepColony
             enableTouchAverse = true;
             touchComfortDays = 4f;
             touchComfortThreshold = 0.65f;
+            enableQuietHours = true;
+            quietHoursIntensity = 1f;
+            enablePerkRetrain = false;
+            enableEstate = true;
         }
     }
 }

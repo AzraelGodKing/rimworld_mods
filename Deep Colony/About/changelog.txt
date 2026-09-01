@@ -3,34 +3,18 @@
 
 [b]Added[/b]
 [list]
-[*] [b]God-mode Family tab[/b] — with DevMode and god mode on, right-click the Family tab title or a relative to bring living kin onto this map as colonists. Dead kin are skipped. Also in the Deep Colony debug palette.
+[*] [b]Known trauma triggers (AZR-72)[/b] — after the first flashback, inspect shows what sets them off (fire, insects, capture, and so on). Hidden until it happens.
+[*] [b]Colony chronicle (AZR-71)[/b] — Export chronicle on the Legacy tab copies a written history and saves it next to your RimWorld saves.
+[*] [b]Mentor retraining (AZR-73)[/b] — a mentor who owns the other branch can retrain an apprentice over many sessions. Off on Soft/Default, on for Hard.
+[*] [b]Divorce (AZR-97)[/b] — right-click a spouse to dissolve the marriage. Breakup wound, children, and a Legacy note follow.
+[*] [b]Quiet Hours (AZR-65)[/b] — work noise in a room hurts sleep, counsel, and mentoring. Bedroom inspect warns first. Not Strata bug noise.
+[*] [b]Estate (AZR-70)[/b] — name an heir on the Legacy tab. Death settles the will; other children take it hard; sleeping in their old bed is its own beat. Heirlooms remember who carried them.
 [/list]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Mid-save install[/b] — rivalry, touch-need, family life/echo, and ex-lover reconcile now tick when you add the mod to an existing colony (they used to wait on a counter that never lined up with the game clock).
-[*] [b]Harmony patches[/b] — one failed patch logs and skips instead of unloading the rest of Deep Colony.
-[*] [b]Mentor / counsel jobs[/b] — Harmony no longer treats vanilla JobDriver.Cleanup as a patch, so mentoring and counseling load without an error.
-[*] [b]Last of the line[/b] — death / recruit / faction-change scans no longer throw Collection was modified if a pawn list mutates mid-pass.
-[*] [b]Toxic trauma[/b] — toxic-buildup checks run on the colony tick instead of wrapping every hediff on every pawn.
-[*] [b]Family tree Bio button[/b] — still off the Bio card so it does not cover Banish (or VE Skills). Use the Family inspect tab.
+[*] [b]Visitor perk popups (AZR-102)[/b] — guests, traders, and raiders no longer spam "reached the skill for …" on spawn (that hitch on slower PCs). Colonist unlocks still show. Optional setting if you want visitor messages back.
 [/list]
 
-[i]Build stamp (Player.log): harmony-jobdriver-v1[/i]
+[i]Build stamp (Player.log): identity-pack-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]
-
-1.6.1
-[h1]Deep Colony — 1.6.1[/h1]
-
-[b]Changed[/b]
-[list]
-[*] [b]Auto skill perks[/b] — perks unlock themselves at skill 5 / 10 / 15 / 20 (no points). If the skill falls below that, the perk lapses. Hediffs stay off Health unless you turn them on in settings. Skill-20 capstones default on.
-[*] [b]Shooting accuracy[/b] — bonuses used to round to +0.0 on inspect. They now use the same scale as vanilla traits.
-[/list]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Family tree close button[/b] — Rows / Pedigree on the Family tab no longer covers the inspect X.
-[*] [b]Family tree Bio button[/b] — removed from the Bio card so it no longer covers Banish. Use the Family inspect tab.
-[*] [b]Last of the line[/b] — opening a Strata floor no longer throws Collection was modified while scanning living colonists.
-[/list]
