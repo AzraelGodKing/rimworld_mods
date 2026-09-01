@@ -371,4 +371,37 @@
   <Strata_Alert_HighCO2_Label>High CO₂ underground</Strata_Alert_HighCO2_Label>
   <Strata_Alert_HighCO2_Explanation>Carbon dioxide is building up around colonists underground. Scrub it, ventilate, or open a path to fresher air.</Strata_Alert_HighCO2_Explanation>
 
+  <!-- Elevator call / hold / priority (AZR-64) -->
+  <Strata_ElevatorCall>Call elevator</Strata_ElevatorCall>
+  <Strata_ElevatorCallDesc>Call this car to this floor. Colonists routing through the shaft prefer a recently called landing, and higher-priority floors are served first.</Strata_ElevatorCallDesc>
+  <Strata_ElevatorCalled>Elevator called to {0}.</Strata_ElevatorCalled>
+  <Strata_ElevatorPriority>Priority {0}</Strata_ElevatorPriority>
+  <Strata_ElevatorPriorityDesc>How urgently this shaft should serve this floor (1 lowest, 5 highest). Workshop floors usually want a higher number than storage.</Strata_ElevatorPriorityDesc>
+  <Strata_ElevatorPrioritySet>Elevator floor priority set to {0}.</Strata_ElevatorPrioritySet>
+  <Strata_ElevatorPriorityInspect>Elevator priority: {0}</Strata_ElevatorPriorityInspect>
+  <Strata_ElevatorHold>Hold at this level</Strata_ElevatorHold>
+  <Strata_ElevatorHoldDesc>Keep the car here. Nobody can ride the powered direction until you release it. Return landings stay open so a blackout or hold can never trap anyone.</Strata_ElevatorHoldDesc>
+  <Strata_ElevatorHeld>The elevator is held at this level.</Strata_ElevatorHeld>
+  <Strata_ElevatorHeldInspect>Held at this level</Strata_ElevatorHeldInspect>
+
+  <!-- Level stamp (AZR-61) -->
+  <Strata_Stamp>Stamp</Strata_Stamp>
+  <Strata_StampOnto>Stamp onto {0}</Strata_StampOnto>
+  <Strata_StampNoDest>No other linked level to stamp onto.</Strata_StampNoDest>
+  <Strata_StampPrompt>Copy walls, doors, and columns from {0} onto {1} as blueprints. Rotate and offset before confirming.</Strata_StampPrompt>
+  <Strata_StampRotate>Rotate: {0}</Strata_StampRotate>
+  <Strata_StampOffsetX>Offset X</Strata_StampOffsetX>
+  <Strata_StampOffsetZ>Offset Z</Strata_StampOffsetZ>
+  <Strata_StampFloors>Include floors</Strata_StampFloors>
+  <Strata_StampStockpiles>Include stockpile zones</Strata_StampStockpiles>
+  <Strata_StampConfirm>Stamp blueprints</Strata_StampConfirm>
+  <Strata_StampDone>Stamped {0} blueprints and {1} stockpiles ({2} skipped).</Strata_StampDone>
+
+  <!-- Shoring overlay / span (AZR-63) -->
+  <Strata_PlaySettings_ShoringOverlayTip>Strata: show span and support\nGreen cells are carried by rock, columns, or shoring. Red cells are over-span — the ceiling will come down if you leave them unsupported.</Strata_PlaySettings_ShoringOverlayTip>
+  <Strata_Alert_UnsupportedSpan_Label>Unsupported ceiling span</Strata_Alert_UnsupportedSpan_Label>
+  <Strata_Alert_UnsupportedSpan_Explanation>Part of an underground ceiling is past its support. Place shoring pillars, leave rock, or shrink the room before it collapses. The span overlay (bottom-right) marks carried cells in green and over-span in red.</Strata_Alert_UnsupportedSpan_Explanation>
+  <Strata_Letter_UnsupportedSpan_Label>Unsupported span</Strata_Letter_UnsupportedSpan_Label>
+  <Strata_Letter_UnsupportedSpan_Text>A stretch of excavated ceiling on this level is no longer carried by rock, columns, or shoring. It will come down if you ignore it — place pillars or leave rock while you still can. Toggle the span overlay from the bottom-right play settings to see which cells are at risk.</Strata_Letter_UnsupportedSpan_Text>
+
 </LanguageData>

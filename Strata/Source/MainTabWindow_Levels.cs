@@ -46,6 +46,7 @@ namespace Strata
         private const float ViewButtonWidth = 64f;
         private const float RenameButtonWidth = 72f;
         private const float RoleButtonWidth = 72f;
+        private const float StampButtonWidth = 56f;
 
         private readonly List<Row> rows = new List<Row>();
         private int lastRowsBuildTick = -9999;
@@ -65,7 +66,7 @@ namespace Strata
         {
             get
             {
-                Vector2 computed = new Vector2(720f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
+                Vector2 computed = new Vector2(780f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
                 return savedSize == Vector2.zero
                     ? computed
                     : new Vector2(Mathf.Max(savedSize.x, 420f), Mathf.Max(savedSize.y, 120f));
@@ -192,7 +193,7 @@ namespace Strata
             Widgets.Label(new Rect(header.x + colLevel + 4f, header.y, colColonists - 8f, HeaderHeight), "Level");
             Widgets.Label(new Rect(header.x + colColonists, header.y, colHostiles - colColonists, HeaderHeight), "Colonists");
             Widgets.Label(new Rect(header.x + colHostiles, header.y, colTemp - colHostiles, HeaderHeight), "Hostiles");
-            Widgets.Label(new Rect(header.x + colTemp, header.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, HeaderHeight), "Temp");
+                Widgets.Label(new Rect(header.x + colTemp, header.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth - StampButtonWidth, HeaderHeight), "Temp");
             GUI.color = Color.white;
             Widgets.DrawLineHorizontal(inRect.x, header.yMax - 2f, inRect.width);
 
@@ -234,10 +235,16 @@ namespace Strata
                 Widgets.Label(new Rect(rowRect.x + colHostiles, rowRect.y, colTemp - colHostiles, RowHeight),
                     hostiles.ToString());
                 GUI.color = Color.white;
-                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, RowHeight),
+                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth - StampButtonWidth, RowHeight),
                     row.map.mapTemperature.OutdoorTemp.ToStringTemperature("F0"));
                 Text.Anchor = TextAnchor.UpperLeft;
 
+                float buttonsLeft = rowRect.xMax - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth - StampButtonWidth;
+                Rect stampRect = new Rect(buttonsLeft, rowRect.y + 3f, StampButtonWidth - 4f, RowHeight - 6f);
+                if (Widgets.ButtonText(stampRect, "Strata_Stamp".Translate()))
+                {
+                    OpenStampMenu(row.map);
+                }
                 Rect roleRect = new Rect(rowRect.xMax - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, rowRect.y + 3f, RoleButtonWidth - 4f, RowHeight - 6f);
                 LevelRole role = LevelRoleUtility.GetRole(row.map);
                 if (Widgets.ButtonText(roleRect, LevelRoleUtility.Label(role)))
@@ -254,13 +261,38 @@ namespace Strata
                 {
                     JumpTo(row.map);
                 }
-                if (Widgets.ButtonInvisible(new Rect(rowRect.x, rowRect.y, rowRect.width - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, RowHeight)))
+                if (Widgets.ButtonInvisible(new Rect(rowRect.x, rowRect.y, rowRect.width - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth - StampButtonWidth, RowHeight)))
                 {
                     JumpTo(row.map);
                 }
                 y += RowHeight;
             }
             Widgets.EndScrollView();
+        }
+
+        private static void OpenStampMenu(Map source)
+        {
+            var options = new List<FloatMenuOption>();
+            List<Map> linked = LevelStampUtility.LinkedMaps(source);
+            for (int i = 0; i < linked.Count; i++)
+            {
+                Map dest = linked[i];
+                if (dest == source)
+                {
+                    continue;
+                }
+                string label = "Strata_StampOnto".Translate(LevelStampUtility.LabelFor(dest));
+                options.Add(new FloatMenuOption(label, () =>
+                {
+                    Find.WindowStack.Add(new Dialog_StampLevel(source, dest));
+                }));
+            }
+            if (options.Count == 0)
+            {
+                Messages.Message("Strata_StampNoDest".Translate(), MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+            Find.WindowStack.Add(new FloatMenu(options));
         }
 
         private static LevelRole NextRole(LevelRole role)

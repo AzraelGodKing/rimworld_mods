@@ -44,6 +44,7 @@
       <li>Strata_RichOreNodes</li>
       <li>Strata_WarrenInfestation</li>
       <li>Strata_PlaceCaveExit</li>
+      <li>Strata_Fog</li>
     </genSteps>
   </MapGeneratorDef>
 

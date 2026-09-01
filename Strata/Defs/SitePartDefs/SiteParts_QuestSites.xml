@@ -42,6 +42,7 @@
       <li>Strata_RichOreNodes</li>
       <li>Strata_MineWarrenOccupants</li>
       <li>Strata_PlaceCaveExit</li>
+      <li>Strata_Fog</li>
     </genSteps>
   </MapGeneratorDef>
 
@@ -85,6 +86,7 @@
       <li>Strata_RichOreNodes</li>
       <li>Strata_VaultOccupants</li>
       <li>Strata_PlaceCaveExit</li>
+      <li>Strata_Fog</li>
     </genSteps>
   </MapGeneratorDef>
 
@@ -129,6 +131,7 @@
       <li>Strata_GeothermalVentFeatures</li>
       <li>Strata_WarrenInfestation</li>
       <li>Strata_PlaceCaveExit</li>
+      <li>Strata_Fog</li>
     </genSteps>
   </MapGeneratorDef>
 

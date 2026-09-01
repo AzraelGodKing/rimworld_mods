@@ -5,9 +5,9 @@ using Verse;
 namespace Strata
 {
     // A section of thick rock ceiling gives way over an excavated space,
-    // crushing whatever is beneath. Only fires on Strata underground levels and
-    // only where there is open floor still capped by heavy rock roof.
-    // Shoring pillars protect nearby cells and reduce how often cave-ins occur.
+    // crushing whatever is beneath. Only fires on Strata underground levels
+    // where the ceiling is actually over-span — after a warning the overlay
+    // and letter already showed. Shoring and vanilla roof holders prevent it.
     public class IncidentWorker_CaveIn : IncidentWorker
     {
         private const int MinBlobCells = 3;
@@ -21,7 +21,7 @@ namespace Strata
                 return false;
             }
             ShoringMapComponent shoring = map.GetComponent<ShoringMapComponent>();
-            if (shoring != null && shoring.ActivePillarCount > 0 && Rand.Chance(0.35f))
+            if (shoring == null || !shoring.HasUnsupportedSpan || !shoring.CaveInGraceElapsed)
             {
                 return false;
             }
@@ -62,10 +62,11 @@ namespace Strata
 
         private static bool IsCollapsible(IntVec3 c, Map map)
         {
-            if (!c.Standable(map)
-                || map.roofGrid.RoofAt(c) != RoofDefOf.RoofRockThick
-                || c.GetEdifice(map) != null
-                || c.Fogged(map))
+            if (!ShoringMapComponent.IsExcavatedThickRoof(c, map))
+            {
+                return false;
+            }
+            if (RoofCollapseUtility.WithinRangeOfRoofHolder(c, map))
             {
                 return false;
             }

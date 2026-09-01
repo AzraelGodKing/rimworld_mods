@@ -401,4 +401,46 @@ namespace Strata
             return cachedReport;
         }
     }
+
+    // Unsupported excavated span — ceiling will come down if ignored.
+    public class Alert_UnsupportedSpan : Alert
+    {
+        private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
+
+        public Alert_UnsupportedSpan()
+        {
+            defaultLabel = "Strata_Alert_UnsupportedSpan_Label".Translate();
+            defaultExplanation = "Strata_Alert_UnsupportedSpan_Explanation".Translate();
+            defaultPriority = AlertPriority.High;
+        }
+
+        public override AlertReport GetReport()
+        {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
+            targets.Clear();
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (!StrataMapUtility.IsUnderground(map))
+                {
+                    continue;
+                }
+                ShoringMapComponent shoring = map.GetComponent<ShoringMapComponent>();
+                IReadOnlyList<IntVec3> atRisk = shoring?.AtRiskCells;
+                if (atRisk == null || atRisk.Count == 0)
+                {
+                    continue;
+                }
+                targets.Add(new GlobalTargetInfo(atRisk[0], map));
+            }
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
+        }
+    }
 }

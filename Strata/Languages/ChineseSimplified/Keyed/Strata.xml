@@ -371,4 +371,34 @@
   <Strata_Alert_HighCO2_Label>地下二氧化碳过高</Strata_Alert_HighCO2_Label>
   <Strata_Alert_HighCO2_Explanation>地下殖民者周围二氧化碳积聚。请洗涤、通风或通往更新鲜的空气。</Strata_Alert_HighCO2_Explanation>
 
+  <Strata_ElevatorCall>呼叫电梯</Strata_ElevatorCall>
+  <Strata_ElevatorCallDesc>将轿厢召至本层。经此竖井通勤的殖民者会优先最近呼叫的落脚点；优先级更高的楼层先被服务。</Strata_ElevatorCallDesc>
+  <Strata_ElevatorCalled>电梯已召至{0}。</Strata_ElevatorCalled>
+  <Strata_ElevatorPriority>优先级 {0}</Strata_ElevatorPriority>
+  <Strata_ElevatorPriorityDesc>本竖井对本层的服务优先级（1 最低，5 最高）。车间通常应高于仓库。</Strata_ElevatorPriorityDesc>
+  <Strata_ElevatorPrioritySet>电梯楼层优先级已设为 {0}。</Strata_ElevatorPrioritySet>
+  <Strata_ElevatorPriorityInspect>电梯优先级：{0}</Strata_ElevatorPriorityInspect>
+  <Strata_ElevatorHold>停靠本层</Strata_ElevatorHold>
+  <Strata_ElevatorHoldDesc>将轿厢留在本层。动力方向无法乘坐，直至解除。回程落脚点始终开放，断电或停靠都不会困住人。</Strata_ElevatorHoldDesc>
+  <Strata_ElevatorHeld>电梯停靠在本层。</Strata_ElevatorHeld>
+  <Strata_ElevatorHeldInspect>已停靠本层</Strata_ElevatorHeldInspect>
+
+  <Strata_Stamp>拓印</Strata_Stamp>
+  <Strata_StampOnto>拓印到 {0}</Strata_StampOnto>
+  <Strata_StampNoDest>没有其他相连楼层可供拓印。</Strata_StampNoDest>
+  <Strata_StampPrompt>将 {0} 的墙、门与柱作为蓝图复制到 {1}。确认前可旋转与偏移。</Strata_StampPrompt>
+  <Strata_StampRotate>旋转：{0}</Strata_StampRotate>
+  <Strata_StampOffsetX>偏移 X</Strata_StampOffsetX>
+  <Strata_StampOffsetZ>偏移 Z</Strata_StampOffsetZ>
+  <Strata_StampFloors>包含地板</Strata_StampFloors>
+  <Strata_StampStockpiles>包含库存区</Strata_StampStockpiles>
+  <Strata_StampConfirm>放置蓝图</Strata_StampConfirm>
+  <Strata_StampDone>已拓印 {0} 个蓝图与 {1} 个库存区（跳过 {2}）。</Strata_StampDone>
+
+  <Strata_PlaySettings_ShoringOverlayTip>Strata：显示跨度与支撑\n绿色格子由岩石、柱或支护承载。红色为超跨——若不支撑，顶板将会塌落。</Strata_PlaySettings_ShoringOverlayTip>
+  <Strata_Alert_UnsupportedSpan_Label>顶板跨度不足</Strata_Alert_UnsupportedSpan_Label>
+  <Strata_Alert_UnsupportedSpan_Explanation>地下顶板有一段已超出支撑。请放置支护柱、留岩或缩小房间，以免塌方。右下角跨度叠加层以绿色标承载、红色标超跨。</Strata_Alert_UnsupportedSpan_Explanation>
+  <Strata_Letter_UnsupportedSpan_Label>跨度不足</Strata_Letter_UnsupportedSpan_Label>
+  <Strata_Letter_UnsupportedSpan_Text>本层有一段开挖顶板已不再由岩石、柱或支护承载。若忽视将会塌落——趁现在放置支柱或留岩。可在右下角游戏设置中打开跨度叠加层查看风险格子。</Strata_Letter_UnsupportedSpan_Text>
+
 </LanguageData>

@@ -370,4 +370,34 @@
   <Strata_Alert_HighCO2_Label>Высокий CO₂ под землёй</Strata_Alert_HighCO2_Label>
   <Strata_Alert_HighCO2_Explanation>Вокруг поселенцев под землёй растёт углекислый газ. Очистите воздух, проветрите или откройте путь к свежему воздуху.</Strata_Alert_HighCO2_Explanation>
 
+  <Strata_ElevatorCall>Вызвать лифт</Strata_ElevatorCall>
+  <Strata_ElevatorCallDesc>Вызвать кабину на этот этаж. Колонисты, идущие через шахту, предпочитают недавно вызванную площадку; этажи с более высоким приоритетом обслуживаются первыми.</Strata_ElevatorCallDesc>
+  <Strata_ElevatorCalled>Лифт вызван на {0}.</Strata_ElevatorCalled>
+  <Strata_ElevatorPriority>Приоритет {0}</Strata_ElevatorPriority>
+  <Strata_ElevatorPriorityDesc>Насколько срочно шахта должна обслуживать этот этаж (1 — низший, 5 — высший). Для мастерской обычно нужно выше, чем для склада.</Strata_ElevatorPriorityDesc>
+  <Strata_ElevatorPrioritySet>Приоритет этажа лифта: {0}.</Strata_ElevatorPrioritySet>
+  <Strata_ElevatorPriorityInspect>Приоритет лифта: {0}</Strata_ElevatorPriorityInspect>
+  <Strata_ElevatorHold>Удержать на этом уровне</Strata_ElevatorHold>
+  <Strata_ElevatorHoldDesc>Оставить кабину здесь. В направлении с питанием нельзя ехать, пока не снимете удержание. Обратные площадки всегда открыты, чтобы отключение или удержание никого не заперло.</Strata_ElevatorHoldDesc>
+  <Strata_ElevatorHeld>Лифт удерживается на этом уровне.</Strata_ElevatorHeld>
+  <Strata_ElevatorHeldInspect>Удерживается на этом уровне</Strata_ElevatorHeldInspect>
+
+  <Strata_Stamp>Штамп</Strata_Stamp>
+  <Strata_StampOnto>Штамп на {0}</Strata_StampOnto>
+  <Strata_StampNoDest>Нет другого связанного уровня для штампа.</Strata_StampNoDest>
+  <Strata_StampPrompt>Скопировать стены, двери и колонны с {0} на {1} как чертежи. Поверните и сместите перед подтверждением.</Strata_StampPrompt>
+  <Strata_StampRotate>Поворот: {0}</Strata_StampRotate>
+  <Strata_StampOffsetX>Сдвиг X</Strata_StampOffsetX>
+  <Strata_StampOffsetZ>Сдвиг Z</Strata_StampOffsetZ>
+  <Strata_StampFloors>Включить полы</Strata_StampFloors>
+  <Strata_StampStockpiles>Включить зоны склада</Strata_StampStockpiles>
+  <Strata_StampConfirm>Поставить чертежи</Strata_StampConfirm>
+  <Strata_StampDone>Штамп: {0} чертежей и {1} складов (пропущено {2}).</Strata_StampDone>
+
+  <Strata_PlaySettings_ShoringOverlayTip>Strata: пролёт и опора\nЗелёные клетки держат скала, колонны или крепь. Красные — сверх пролёта: потолок обрушится, если оставить без опоры.</Strata_PlaySettings_ShoringOverlayTip>
+  <Strata_Alert_UnsupportedSpan_Label>Неподдерживаемый пролёт потолка</Strata_Alert_UnsupportedSpan_Label>
+  <Strata_Alert_UnsupportedSpan_Explanation>Часть подземного потолка вышла за опору. Поставьте крепь, оставьте скалу или уменьшите зал, пока не обрушилось. Оверлей пролёта (справа внизу) красит несущие клетки зелёным, сверх пролёта — красным.</Strata_Alert_UnsupportedSpan_Explanation>
+  <Strata_Letter_UnsupportedSpan_Label>Неподдерживаемый пролёт</Strata_Letter_UnsupportedSpan_Label>
+  <Strata_Letter_UnsupportedSpan_Text>Участок выработанного потолка на этом уровне больше не держат скала, колонны или крепь. Если не исправить — обрушится. Поставьте столбы или оставьте породу, пока можно. Включите оверлей пролёта в настройках справа внизу, чтобы увидеть опасные клетки.</Strata_Letter_UnsupportedSpan_Text>
+
 </LanguageData>

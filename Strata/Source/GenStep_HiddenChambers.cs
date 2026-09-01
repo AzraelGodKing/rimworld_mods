@@ -117,19 +117,37 @@ namespace Strata
         }
     }
 
-    // Fogs the freshly generated solid-rock level, then unfogs the arrival
-    // chamber. Hidden chambers stay dark until a miner breaks through -
-    // discovery by digging, exactly like ore. (Vanilla unfogs on mineable
-    // despawn, so no extra machinery is needed.)
+    // Fogs the freshly generated solid-rock level, then unfogs a small arrival
+    // chamber. Native warrens stay dark until a colonist walks there. Hidden
+    // chambers stay fogged until a miner breaks through (vanilla unfogs on
+    // mineable despawn).
     public class GenStep_StrataFog : GenStep
     {
+        private const float ArrivalUnfogRadius = 8f;
+
         public override int SeedPart => 133731882;
 
         public override void Generate(Map map, GenStepParams parms)
         {
             map.fogGrid.Refog(CellRect.WholeMap(map));
             IntVec3 root = MapGenerator.PlayerStartSpot.IsValid ? MapGenerator.PlayerStartSpot : map.Center;
-            FloodFillerFog.FloodUnfog(root, map);
+            var chamber = new HashSet<IntVec3>();
+            map.floodFiller.FloodFill(
+                root,
+                c => c.InBounds(map) && c.Walkable(map) && c.DistanceTo(root) <= ArrivalUnfogRadius,
+                c => chamber.Add(c));
+            foreach (IntVec3 c in chamber)
+            {
+                map.fogGrid.Unfog(c);
+                foreach (IntVec3 adj in GenAdj.CardinalDirections)
+                {
+                    IntVec3 n = c + adj;
+                    if (n.InBounds(map))
+                    {
+                        map.fogGrid.Unfog(n);
+                    }
+                }
+            }
         }
     }
 }

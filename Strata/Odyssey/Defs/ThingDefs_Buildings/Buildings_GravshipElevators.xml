@@ -45,6 +45,7 @@
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
       <li Class="Strata.CompProperties_StairwellControl"/>
+      <li Class="Strata.CompProperties_ElevatorControls"/>
       <li Class="Strata.CompProperties_StrataGravshipShaft"/>
     </comps>
     <designationCategory>Structure</designationCategory>
@@ -91,6 +92,7 @@
         <basePowerConsumption>0</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
       </li>
+      <li Class="Strata.CompProperties_ElevatorControls"/>
     </comps>
     <building>
       <claimable>false</claimable>
@@ -143,6 +145,7 @@
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
       <li Class="Strata.CompProperties_StairwellControl"/>
+      <li Class="Strata.CompProperties_ElevatorControls"/>
       <li Class="Strata.CompProperties_StrataGravshipShaft"/>
     </comps>
     <designationCategory>Structure</designationCategory>
@@ -189,6 +192,7 @@
         <basePowerConsumption>0</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
       </li>
+      <li Class="Strata.CompProperties_ElevatorControls"/>
     </comps>
     <building>
       <claimable>false</claimable>

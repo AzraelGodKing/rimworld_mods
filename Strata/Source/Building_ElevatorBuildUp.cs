@@ -36,6 +36,11 @@ namespace Strata
 
         public override bool IsEnterable(out string reason)
         {
+            if (CompElevatorControls.BlocksPoweredEntry(this))
+            {
+                reason = "Strata_ElevatorHeld".Translate();
+                return false;
+            }
             if (!Powered)
             {
                 reason = "The elevator has no power.";

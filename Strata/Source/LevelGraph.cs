@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -256,19 +257,29 @@ namespace Strata
                 {
                     continue;
                 }
+                if (CompElevatorControls.BlocksPoweredEntry(portal))
+                {
+                    continue;
+                }
                 if (pawn != null && !pawn.CanReach(portal, PathEndMode.Touch, Danger.Deadly))
                 {
                     continue;
                 }
 
                 float walk = pawnPos.IsValid ? pawnPos.DistanceTo(portal.Position) : 1f;
+                Map other = OtherMapSafe(portal);
                 if (IsPoweredElevator(portal))
                 {
                     walk *= 0.6f;
+                    int hopPriority = CompElevatorControls.BestPriorityOn(other);
+                    walk *= Mathf.Lerp(1.22f, 0.72f, (hopPriority - 1) / 4f);
+                    if (CompElevatorControls.RecentlyCalledToward(portal, other, target))
+                    {
+                        walk *= 0.75f;
+                    }
                 }
 
                 float score = walk;
-                Map other = OtherMapSafe(portal);
                 if (prefer && other == target)
                 {
                     IntVec3 arrival = portal.GetDestinationLocation();

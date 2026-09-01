@@ -11,6 +11,12 @@ Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog
 
 ## [Unreleased]
 
+### Added
+- **Elevator call, hold, and floor priority (AZR-64)** (`azr-57-61-63-64-v1`) — gizmos on both landings: call the car to this floor, set priority 1–5 so a busy shaft serves the workshop before storage, and hold the car here. Return landings stay open so a hold or blackout never traps anyone.
+- **Level stamp (AZR-61)** — Levels tab **Stamp** copies walls, doors, columns, and shoring onto another linked floor as blueprints (optional floors and stockpiles). Rotate and offset before confirming.
+- **Span overlay (AZR-63)** — play-settings toggle paints carried ceiling green and over-span red. Cave-ins only hit unsupported cells after a warning letter, not as random tax on shored rooms.
+- **Fog of war underground (AZR-57)** — new colony and quest levels stay dark beyond a small arrival chamber; walking and mining still reveal. Already-open saves are unchanged.
+
 ### Fixed
 - **Sleep on the ground (AZR-101)** (`azr-101-v1`) — sleepy colonists walking home to a bed on another floor no longer treat a missing allowed-area cell on the shaft as "no path" and pass out in the dirt. Rest commute (and lying down in their assigned bed) ignores that zone; SeekAllowedArea will not yank them back mid-trip.
 

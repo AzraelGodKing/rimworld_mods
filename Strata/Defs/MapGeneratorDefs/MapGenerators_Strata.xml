@@ -87,8 +87,8 @@
     <genStep Class="Strata.GenStep_PlaceLevelExit"/>
   </GenStepDef>
 
-  <!-- Fog everything but the arrival chamber so hidden chambers stay hidden
-       until a miner breaks through (vanilla unfogs on mineable despawn). -->
+  <!-- Fog everything but a small arrival chamber. Native warrens stay dark
+       until a colonist walks there; hidden rock stays fogged until mined. -->
   <GenStepDef>
     <defName>Strata_Fog</defName>
     <order>700</order>
