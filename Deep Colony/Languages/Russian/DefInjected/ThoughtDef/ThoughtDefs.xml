@@ -252,4 +252,26 @@
   <DC_Thought_EmptyNest.stages_0.label>дети ушли</DC_Thought_EmptyNest.stages_0.label>
   <DC_Thought_EmptyNest.stages_0.description>Последний взрослый ребёнок ушёл с домашней карты, и детей там больше нет. В комнатах тише.</DC_Thought_EmptyNest.stages_0.description>
 
+  <DC_Thought_ParentsDivorced.label>родители развелись</DC_Thought_ParentsDivorced.label>
+  <DC_Thought_ParentsDivorced.description>Брак родителей кончился. Дом ощущается иначе.</DC_Thought_ParentsDivorced.description>
+  <DC_Thought_ParentsDivorced.stages_0.label>родители разошлись</DC_Thought_ParentsDivorced.stages_0.label>
+  <DC_Thought_ParentsDivorced.stages_0.description>Брак родителей кончился. Дом ощущается иначе.</DC_Thought_ParentsDivorced.stages_0.description>
+  <DC_Thought_Inherited.label>унаследовал(а)</DC_Thought_Inherited.label>
+  <DC_Thought_Inherited.description>Их назвали — или они следующие по линии — на то, что оставил умерший.</DC_Thought_Inherited.description>
+  <DC_Thought_Inherited.stages_0.label>наследство от {0}</DC_Thought_Inherited.stages_0.label>
+  <DC_Thought_Inherited.stages_0.description>Их назвали — или они следующие по линии — на то, что оставил умерший.</DC_Thought_Inherited.stages_0.description>
+  <DC_Thought_Disinherited.label>обошли</DC_Thought_Disinherited.label>
+  <DC_Thought_Disinherited.description>Кто-то другой получил то, что они считали своим.</DC_Thought_Disinherited.description>
+  <DC_Thought_Disinherited.stages_0.label>обошёл(а) {0}</DC_Thought_Disinherited.stages_0.label>
+  <DC_Thought_Disinherited.stages_0.description>Кто-то другой получил то, что они считали своим.</DC_Thought_Disinherited.stages_0.description>
+  <DC_Thought_MovedIntoDeadRoom.label>въехал(а) в комнату умершего</DC_Thought_MovedIntoDeadRoom.label>
+  <DC_Thought_MovedIntoDeadRoom.description>Эта кровать принадлежала тому, кто умер здесь. Комната всё ещё их.</DC_Thought_MovedIntoDeadRoom.description>
+  <DC_Thought_MovedIntoDeadRoom.stages_0.label>спит в их комнате</DC_Thought_MovedIntoDeadRoom.stages_0.label>
+  <DC_Thought_MovedIntoDeadRoom.stages_0.description>Эта кровать принадлежала тому, кто умер здесь. Комната всё ещё их.</DC_Thought_MovedIntoDeadRoom.stages_0.description>
+  <DC_Thought_NoisyRoom.label>шумная комната</DC_Thought_NoisyRoom.label>
+  <DC_Thought_NoisyRoom.stages_0.label>шумная спальня</DC_Thought_NoisyRoom.stages_0.label>
+  <DC_Thought_NoisyRoom.stages_0.description>Шум работы доходит до этой спальни. Сон здесь будет хуже.</DC_Thought_NoisyRoom.stages_0.description>
+  <DC_Thought_NoisyRoom.stages_1.label>не уснуть из-за шума</DC_Thought_NoisyRoom.stages_1.label>
+  <DC_Thought_NoisyRoom.stages_1.description>Пытаются спать рядом с шумом работы. Дом не даёт восстановиться.</DC_Thought_NoisyRoom.stages_1.description>
+
 </LanguageData>

@@ -75,6 +75,7 @@ namespace DeepColony.Patches
             }
 
             xp *= mult;
+            xp *= QuietHoursUtility.MentorXpMultiplier(pawn);
         }
 
         public static void Postfix(SkillRecord __instance, float xp, bool direct, int __state)

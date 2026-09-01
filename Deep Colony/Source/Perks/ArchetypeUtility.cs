@@ -44,9 +44,12 @@ namespace DeepColony
                 pawn.health.AddHediff(best.hediff);
             }
 
-            Messages.Message(
-                "DC_ArchetypeGained".Translate(pawn.LabelShort.Named("PAWN"), best.LabelCap.Named("ARCH")),
-                pawn, MessageTypeDefOf.PositiveEvent, false);
+            if (Comp_DeepColony.ShouldAnnounceAutoPerk(pawn))
+            {
+                Messages.Message(
+                    "DC_ArchetypeGained".Translate(pawn.LabelShort.Named("PAWN"), best.LabelCap.Named("ARCH")),
+                    pawn, MessageTypeDefOf.PositiveEvent, false);
+            }
         }
 
         private static void ClearArchetype(Pawn pawn, Comp_DeepColony comp)

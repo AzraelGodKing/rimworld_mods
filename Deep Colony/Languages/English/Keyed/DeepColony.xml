@@ -68,6 +68,15 @@
   <DC_Settings_EnablePerksTip>Perks unlock automatically at skill 5 / 10 / 15 / 20 and lapse if the skill falls below that.</DC_Settings_EnablePerksTip>
   <DC_Settings_ShowPerkHediffs>Show perk hediffs on the health tab</DC_Settings_ShowPerkHediffs>
   <DC_Settings_ShowPerkHediffsTip>Default off. Perk bonuses still apply; this only lists them on Health.</DC_Settings_ShowPerkHediffsTip>
+  <DC_Settings_AnnounceVisitorPerks>Announce perk unlocks for visitors</DC_Settings_AnnounceVisitorPerks>
+  <DC_Settings_AnnounceVisitorPerksTip>Default off. Visitors, guests, and raiders can spam "reached the skill for …" on the left of the screen when they spawn, which hitches on slower PCs. Colonist unlocks still show.</DC_Settings_AnnounceVisitorPerksTip>
+  <DC_Settings_EnableQuietHours>Quiet Hours (room noise)</DC_Settings_EnableQuietHours>
+  <DC_Settings_EnableQuietHoursTip>Workbenches, generators, turrets, and mining in a room make sleep, counsel, and mentoring worse. Walls contain the noise. The bedroom inspect warns before the mood hit. Soft is milder, Hard is louder. Not Strata infestation noise.</DC_Settings_EnableQuietHoursTip>
+  <DC_Settings_QuietHoursIntensity>Quiet Hours intensity: {0}</DC_Settings_QuietHoursIntensity>
+  <DC_Settings_EnablePerkRetrain>Mentor retraining (branch swap)</DC_Settings_EnablePerkRetrain>
+  <DC_Settings_EnablePerkRetrainTip>Default off (Hard on). A mentor who owns the other L15/capstone branch can retrain an apprentice over many teaching sessions — not a click. Soft / Default keep this off.</DC_Settings_EnablePerkRetrainTip>
+  <DC_Settings_EnableEstate>Estate (wills and inheritance)</DC_Settings_EnableEstate>
+  <DC_Settings_EnableEstateTip>Name an heir on the Legacy tab. On death, that person inherits; other children take it hard. Sleeping in a dead colonist's bed is its own small event. Heirlooms remember who carried them.</DC_Settings_EnableEstateTip>
   <DC_Settings_EnableTrauma>Enable trauma &amp; therapy</DC_Settings_EnableTrauma>
   <DC_Settings_EnableTraumaTip>Combat shock, loss, captivity, massacre, counsel jobs.</DC_Settings_EnableTraumaTip>
   <DC_Settings_EnableMentoring>Enable apprenticeship</DC_Settings_EnableMentoring>
@@ -313,7 +322,7 @@
   <DC_Settings_FamilyTreePedigreeTip>Ancestors above, descendants below, with connecting lines. Off keeps the generation-row layout.</DC_Settings_FamilyTreePedigreeTip>
   <DC_Settings_FamilyJoin>Family join &amp; reconcile</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>Kin join / defect on the map</DC_Settings_EnableFamilyJoin>
-  <DC_Settings_EnableFamilyJoinTip>Family of colonists may join from visits, or defect from raids. Spouse is the highest chance. Ex-lovers never join this way (0%). Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge. Unwavering prisoners can be reached by family they like (both ways). Also: in-law welcome, kin homecoming, kin dying or executed, breakup wounds, grandchild born, kin taken, tended by family, last of the line, step-family, prison visits, releasing kin, family-tradition teaching, kin downed in a fight, and empty nest.</DC_Settings_EnableFamilyJoinTip>
+  <DC_Settings_EnableFamilyJoinTip>Family of colonists may join from visits, or defect from raids. Spouse is the highest chance. Ex-lovers never join this way (0%). Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge. Unwavering prisoners can be reached by family they like (both ways). Also: in-law welcome, kin homecoming, kin dying or executed, breakup wounds, divorce, grandchild born, kin taken, tended by family, last of the line, step-family, prison visits, releasing kin, family-tradition teaching, kin downed in a fight, and empty nest.</DC_Settings_EnableFamilyJoinTip>
   <DC_Settings_RaidDefect>Raid kin defect chance (spouse): {0}%</DC_Settings_RaidDefect>
   <DC_Settings_VisitJoin>Visit kin join chance (spouse): {0}%</DC_Settings_VisitJoin>
   <DC_Settings_ExLoverReconcile>Ex-lovers may get back together</DC_Settings_ExLoverReconcile>
@@ -384,5 +393,54 @@
   <DC_TouchTier_AtEase>at ease</DC_TouchTier_AtEase>
   <DC_TouchTier_FineWithTouch>fine with touch</DC_TouchTier_FineWithTouch>
   <DC_TouchTier_Intimate>intimate</DC_TouchTier_Intimate>
+
+  <!-- AZR-72 trauma triggers -->
+  <DC_InspectKnownTriggers>Sets off: {0}</DC_InspectKnownTriggers>
+  <DC_Trigger_Combat>combat</DC_Trigger_Combat>
+  <DC_Trigger_Fire>fire</DC_Trigger_Fire>
+  <DC_Trigger_Capture>being captured</DC_Trigger_Capture>
+  <DC_Trigger_Casualties>mass casualties</DC_Trigger_Casualties>
+  <DC_Trigger_Toxins>toxins</DC_Trigger_Toxins>
+  <DC_Trigger_Insects>insects</DC_Trigger_Insects>
+  <DC_Trigger_Betrayal>betrayal</DC_Trigger_Betrayal>
+
+  <!-- AZR-65 Quiet Hours -->
+  <DC_InspectNoisyBedroom>Noisy bedroom ({0}%) — rest will suffer</DC_InspectNoisyBedroom>
+  <DC_InspectNoisySleep>Can't rest through the noise ({0}%)</DC_InspectNoisySleep>
+
+  <!-- AZR-71 chronicle -->
+  <DC_ChronicleExport>Export chronicle</DC_ChronicleExport>
+  <DC_ChronicleFounder>Founder name: {0}</DC_ChronicleFounder>
+  <DC_ChroniclePeople>Living colonists ({0})</DC_ChroniclePeople>
+  <DC_ChronicleHeirlooms>Heirlooms</DC_ChronicleHeirlooms>
+  <DC_ChronicleCopied>Colony chronicle copied to the clipboard.</DC_ChronicleCopied>
+  <DC_ChronicleExported>Colony chronicle copied and saved to {PATH}.</DC_ChronicleExported>
+  <DC_ChronicleFooter>Written by Deep Colony.</DC_ChronicleFooter>
+
+  <!-- AZR-73 retrain -->
+  <DC_RetrainFloat>Retrain {APPRENTICE}: {FROM} → {TO}</DC_RetrainFloat>
+  <DC_RetrainStarted>{MENTOR} began retraining {APPRENTICE} from {FROM} toward {TO}.</DC_RetrainStarted>
+  <DC_RetrainProgress>{APPRENTICE} retraining {FROM} → {TO} ({0}/{1} sessions).</DC_RetrainProgress>
+  <DC_RetrainComplete>{MENTOR} finished retraining {APPRENTICE}: {FROM} became {TO}.</DC_RetrainComplete>
+  <DC_InspectRetrain>Retraining {0} → {1} ({2}/{3})</DC_InspectRetrain>
+
+  <!-- AZR-97 divorce -->
+  <DC_DivorceFloat>Divorce {PAWN}</DC_DivorceFloat>
+  <DC_Divorced>{A} and {B} divorced.</DC_Divorced>
+  <DC_DivorceDisabled>Family systems are off in mod settings.</DC_DivorceDisabled>
+  <DC_DivorceInvalid>Cannot divorce these two.</DC_DivorceInvalid>
+  <DC_DivorceNeedColonists>Both need to be colonists.</DC_DivorceNeedColonists>
+  <DC_DivorceNeedSpouse>They are not married.</DC_DivorceNeedSpouse>
+  <DC_Letter_DivorceLabel>Divorce in the colony</DC_Letter_DivorceLabel>
+  <DC_Letter_DivorceBody>{A} and {B} dissolved their marriage. The Legacy tab keeps the note.</DC_Letter_DivorceBody>
+
+  <!-- AZR-70 estate -->
+  <DC_WillHeirBtn>Heir: {0}</DC_WillHeirBtn>
+  <DC_WillHeirNone>Heir: none</DC_WillHeirNone>
+  <DC_InspectWillHeir>Will: {0}</DC_InspectWillHeir>
+  <DC_InspectHeirloomLine>Heirloom: {0}</DC_InspectHeirloomLine>
+  <DC_MovedIntoDeadRoom>{PAWN} is sleeping in {OWNER}'s old bed.</DC_MovedIntoDeadRoom>
+  <DC_Letter_EstateLabel>Estate: {PAWN}</DC_Letter_EstateLabel>
+  <DC_Letter_EstateBody>{PAWN} died. {HEIR} stands to inherit what they left.</DC_Letter_EstateBody>
 
 </LanguageData>

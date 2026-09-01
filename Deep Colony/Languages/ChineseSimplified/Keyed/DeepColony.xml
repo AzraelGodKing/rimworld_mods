@@ -68,6 +68,15 @@
   <DC_Settings_EnablePerksTip>专长在技能 5 / 10 / 15 / 20 时自动解锁；技能跌破该等级则失效。</DC_Settings_EnablePerksTip>
   <DC_Settings_ShowPerkHediffs>在健康标签显示专长状态</DC_Settings_ShowPerkHediffs>
   <DC_Settings_ShowPerkHediffsTip>默认关闭。专长加成仍然生效，只是不列在健康页。</DC_Settings_ShowPerkHediffsTip>
+  <DC_Settings_AnnounceVisitorPerks>为访客公布专长解锁</DC_Settings_AnnounceVisitorPerks>
+  <DC_Settings_AnnounceVisitorPerksTip>默认关闭。访客、宾客和袭击者生成时会刷屏“达到了……所需的技能”，在低配电脑上会卡顿。殖民者解锁仍会显示。</DC_Settings_AnnounceVisitorPerksTip>
+  <DC_Settings_EnableQuietHours>安静时辰（房间噪音）</DC_Settings_EnableQuietHours>
+  <DC_Settings_EnableQuietHoursTip>工作台、发电机、炮塔和采矿会让睡眠、辅导和指导变差。墙壁挡住噪音。卧室检视会在心情惩罚前发出警告。柔和更轻，困难更响。不是地层的虫灾噪音。</DC_Settings_EnableQuietHoursTip>
+  <DC_Settings_QuietHoursIntensity>安静时辰强度：{0}</DC_Settings_QuietHoursIntensity>
+  <DC_Settings_EnablePerkRetrain>导师改训（专长换支）</DC_Settings_EnablePerkRetrain>
+  <DC_Settings_EnablePerkRetrainTip>默认关闭（困难开启）。拥有另一条 L15/巅峰分支的导师，可通过多次授课把学徒改训过去——不是点一下。柔和/默认保持关闭。</DC_Settings_EnablePerkRetrainTip>
+  <DC_Settings_EnableEstate>遗产（遗嘱与继承）</DC_Settings_EnableEstate>
+  <DC_Settings_EnableEstateTip>在传承页指定继承人。死后由该人继承；其他子女会难过。睡进死者的床是一件小事。传家宝会记住经手之人。</DC_Settings_EnableEstateTip>
   <DC_Settings_EnableTrauma>启用创伤与治疗</DC_Settings_EnableTrauma>
   <DC_Settings_EnableTraumaTip>战斗冲击、丧亲、囚禁、屠杀、辅导工作。</DC_Settings_EnableTraumaTip>
   <DC_Settings_EnableMentoring>启用学徒制</DC_Settings_EnableMentoring>
@@ -384,5 +393,43 @@
   <DC_TouchTier_AtEase>能安心靠近</DC_TouchTier_AtEase>
   <DC_TouchTier_FineWithTouch>能接受触碰</DC_TouchTier_FineWithTouch>
   <DC_TouchTier_Intimate>亲密</DC_TouchTier_Intimate>
+
+  <DC_InspectKnownTriggers>会触发：{0}</DC_InspectKnownTriggers>
+  <DC_Trigger_Combat>战斗</DC_Trigger_Combat>
+  <DC_Trigger_Fire>火焰</DC_Trigger_Fire>
+  <DC_Trigger_Capture>被俘</DC_Trigger_Capture>
+  <DC_Trigger_Casualties>大规模伤亡</DC_Trigger_Casualties>
+  <DC_Trigger_Toxins>毒素</DC_Trigger_Toxins>
+  <DC_Trigger_Insects>昆虫</DC_Trigger_Insects>
+  <DC_Trigger_Betrayal>背叛</DC_Trigger_Betrayal>
+  <DC_InspectNoisyBedroom>嘈杂卧室（{0}%）— 休息会变差</DC_InspectNoisyBedroom>
+  <DC_InspectNoisySleep>噪音中无法好好休息（{0}%）</DC_InspectNoisySleep>
+  <DC_ChronicleExport>导出编年史</DC_ChronicleExport>
+  <DC_ChronicleFounder>创始姓氏：{0}</DC_ChronicleFounder>
+  <DC_ChroniclePeople>在世殖民者（{0}）</DC_ChroniclePeople>
+  <DC_ChronicleHeirlooms>传家宝</DC_ChronicleHeirlooms>
+  <DC_ChronicleCopied>殖民地编年史已复制到剪贴板。</DC_ChronicleCopied>
+  <DC_ChronicleExported>殖民地编年史已复制并保存到 {PATH}。</DC_ChronicleExported>
+  <DC_ChronicleFooter>由 Deep Colony 记录。</DC_ChronicleFooter>
+  <DC_RetrainFloat>改训 {APPRENTICE}：{FROM} → {TO}</DC_RetrainFloat>
+  <DC_RetrainStarted>{MENTOR} 开始把 {APPRENTICE} 从 {FROM} 改训为 {TO}。</DC_RetrainStarted>
+  <DC_RetrainProgress>{APPRENTICE} 改训 {FROM} → {TO}（{0}/{1} 次授课）。</DC_RetrainProgress>
+  <DC_RetrainComplete>{MENTOR} 完成对 {APPRENTICE} 的改训：{FROM} 换成了 {TO}。</DC_RetrainComplete>
+  <DC_InspectRetrain>改训 {0} → {1}（{2}/{3}）</DC_InspectRetrain>
+  <DC_DivorceFloat>与 {PAWN} 离婚</DC_DivorceFloat>
+  <DC_Divorced>{A} 与 {B} 离婚了。</DC_Divorced>
+  <DC_DivorceDisabled>模组设置中关闭了家庭系统。</DC_DivorceDisabled>
+  <DC_DivorceInvalid>这两人无法离婚。</DC_DivorceInvalid>
+  <DC_DivorceNeedColonists>双方都需要是殖民者。</DC_DivorceNeedColonists>
+  <DC_DivorceNeedSpouse>他们并未结婚。</DC_DivorceNeedSpouse>
+  <DC_Letter_DivorceLabel>殖民地离婚</DC_Letter_DivorceLabel>
+  <DC_Letter_DivorceBody>{A} 与 {B} 解除了婚姻。传承页记下了这件事。</DC_Letter_DivorceBody>
+  <DC_WillHeirBtn>继承人：{0}</DC_WillHeirBtn>
+  <DC_WillHeirNone>继承人：无</DC_WillHeirNone>
+  <DC_InspectWillHeir>遗嘱：{0}</DC_InspectWillHeir>
+  <DC_InspectHeirloomLine>传家宝：{0}</DC_InspectHeirloomLine>
+  <DC_MovedIntoDeadRoom>{PAWN} 睡进了 {OWNER} 留下的床。</DC_MovedIntoDeadRoom>
+  <DC_Letter_EstateLabel>遗产：{PAWN}</DC_Letter_EstateLabel>
+  <DC_Letter_EstateBody>{PAWN} 去世了。{HEIR} 将继承其留下的东西。</DC_Letter_EstateBody>
 
 </LanguageData>
