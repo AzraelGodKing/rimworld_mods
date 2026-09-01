@@ -26,7 +26,7 @@ namespace DeepColony
             var settings = Settings;
             if (settings == null) return;
 
-            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 2480f);
+            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 2680f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
 
             var listing = new Listing_Standard();
@@ -62,6 +62,21 @@ namespace DeepColony
                 "DC_Settings_EnablePerksTip".Translate());
             listing.CheckboxLabeled("DC_Settings_ShowPerkHediffs".Translate(), ref settings.showPerkHediffs,
                 "DC_Settings_ShowPerkHediffsTip".Translate());
+            listing.CheckboxLabeled("DC_Settings_AnnounceVisitorPerks".Translate(),
+                ref settings.announceVisitorPerkUnlocks,
+                "DC_Settings_AnnounceVisitorPerksTip".Translate());
+            listing.CheckboxLabeled("DC_Settings_EnableQuietHours".Translate(),
+                ref settings.enableQuietHours,
+                "DC_Settings_EnableQuietHoursTip".Translate());
+            listing.Label("DC_Settings_QuietHoursIntensity".Translate(
+                settings.quietHoursIntensity.ToString("F2")));
+            settings.quietHoursIntensity = listing.Slider(settings.quietHoursIntensity, 0.35f, 2f);
+            listing.CheckboxLabeled("DC_Settings_EnablePerkRetrain".Translate(),
+                ref settings.enablePerkRetrain,
+                "DC_Settings_EnablePerkRetrainTip".Translate());
+            listing.CheckboxLabeled("DC_Settings_EnableEstate".Translate(),
+                ref settings.enableEstate,
+                "DC_Settings_EnableEstateTip".Translate());
             listing.CheckboxLabeled("DC_Settings_EnableTrauma".Translate(), ref settings.enableTrauma,
                 "DC_Settings_EnableTraumaTip".Translate());
             listing.CheckboxLabeled("DC_Settings_EnableMentoring".Translate(), ref settings.enableMentoring,

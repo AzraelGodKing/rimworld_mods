@@ -252,4 +252,26 @@
   <DC_Thought_EmptyNest.stages_0.label>孩子们走了</DC_Thought_EmptyNest.stages_0.label>
   <DC_Thought_EmptyNest.stages_0.description>最后一个成年子女离开了家园地图，而且孩子们都不在那里了。屋子更安静了。</DC_Thought_EmptyNest.stages_0.description>
 
+  <DC_Thought_ParentsDivorced.label>父母离婚</DC_Thought_ParentsDivorced.label>
+  <DC_Thought_ParentsDivorced.description>父母的婚姻结束了。家里的感觉变了。</DC_Thought_ParentsDivorced.description>
+  <DC_Thought_ParentsDivorced.stages_0.label>父母分开了</DC_Thought_ParentsDivorced.stages_0.label>
+  <DC_Thought_ParentsDivorced.stages_0.description>父母的婚姻结束了。家里的感觉变了。</DC_Thought_ParentsDivorced.stages_0.description>
+  <DC_Thought_Inherited.label>继承</DC_Thought_Inherited.label>
+  <DC_Thought_Inherited.description>他们被点名——或按顺序——接手死者留下的东西。</DC_Thought_Inherited.description>
+  <DC_Thought_Inherited.stages_0.label>继承自 {0}</DC_Thought_Inherited.stages_0.label>
+  <DC_Thought_Inherited.stages_0.description>他们被点名——或按顺序——接手死者留下的东西。</DC_Thought_Inherited.stages_0.description>
+  <DC_Thought_Disinherited.label>被越过</DC_Thought_Disinherited.label>
+  <DC_Thought_Disinherited.description>别人拿走了他们以为属于自己的东西。</DC_Thought_Disinherited.description>
+  <DC_Thought_Disinherited.stages_0.label>被 {0} 越过</DC_Thought_Disinherited.stages_0.label>
+  <DC_Thought_Disinherited.stages_0.description>别人拿走了他们以为属于自己的东西。</DC_Thought_Disinherited.stages_0.description>
+  <DC_Thought_MovedIntoDeadRoom.label>搬进死者的房间</DC_Thought_MovedIntoDeadRoom.label>
+  <DC_Thought_MovedIntoDeadRoom.description>这张床曾属于死在这里的人。房间仍像是他们的。</DC_Thought_MovedIntoDeadRoom.description>
+  <DC_Thought_MovedIntoDeadRoom.stages_0.label>睡在他们的房间</DC_Thought_MovedIntoDeadRoom.stages_0.label>
+  <DC_Thought_MovedIntoDeadRoom.stages_0.description>这张床曾属于死在这里的人。房间仍像是他们的。</DC_Thought_MovedIntoDeadRoom.stages_0.description>
+  <DC_Thought_NoisyRoom.label>嘈杂房间</DC_Thought_NoisyRoom.label>
+  <DC_Thought_NoisyRoom.stages_0.label>嘈杂卧室</DC_Thought_NoisyRoom.stages_0.label>
+  <DC_Thought_NoisyRoom.stages_0.description>工作噪音传到这间卧室。在这里睡会休息不好。</DC_Thought_NoisyRoom.stages_0.description>
+  <DC_Thought_NoisyRoom.stages_1.label>噪音里睡不着</DC_Thought_NoisyRoom.stages_1.label>
+  <DC_Thought_NoisyRoom.stages_1.description>想在工作噪音旁睡觉。这屋子不让人缓过来。</DC_Thought_NoisyRoom.stages_1.description>
+
 </LanguageData>

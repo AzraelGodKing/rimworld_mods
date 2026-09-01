@@ -77,6 +77,17 @@ namespace DeepColony
         public bool elderPerkGranted;
         public string familyTraditionSkillDefName;
 
+        /// <summary>AZR-73 — branch being unlearned / learned under a mentor.</summary>
+        public string retrainFromPerkDefName;
+        public string retrainToPerkDefName;
+        public int retrainProgress;
+
+        /// <summary>AZR-70 — named heir thingIDNumber, or -1.</summary>
+        public int willHeirId = -1;
+
+        /// <summary>AZR-72 — flashback trigger keys revealed after the first reaction.</summary>
+        public List<string> discoveredTraumaTriggers = new List<string>();
+
         /// <summary>Past mentor display names for teaching-lineage flavor (newest last).</summary>
         public List<string> teacherLineage = new List<string>();
 
@@ -269,21 +280,29 @@ namespace DeepColony
             ArchetypeUtility.TryRefresh(pawn);
         }
 
+        /// <summary>
+        /// AZR-102 — auto-perk messages hitch when a caravan of visitors spawns
+        /// (one "reached the skill for …" per perk). Colonists still announce.
+        /// Visitors / guests / raiders stay silent unless the setting is on.
+        /// </summary>
+        internal static bool ShouldAnnounceAutoPerk(Pawn pawn)
+        {
+            if (pawn == null) return false;
+            if (pawn.IsColonistPlayerControlled) return true;
+            return DeepColonySettings.Get.announceVisitorPerkUnlocks;
+        }
+
         private void GrantPerkSilent(PerkDef perk, bool announce)
         {
             if (perk == null || HasPerk(perk)) return;
             unlockedPerkDefNames.Add(perk.defName);
             ApplyPerkHediff(perk);
-            if (announce)
-            {
-                var pawn = Pawn;
-                if (pawn != null)
-                {
-                    Messages.Message(
-                        "DC_PerkAutoUnlocked".Translate(pawn.LabelShort.Named("PAWN"), perk.LabelCap.Named("PERK")),
-                        pawn, MessageTypeDefOf.PositiveEvent, false);
-                }
-            }
+            if (!announce) return;
+            var pawn = Pawn;
+            if (!ShouldAnnounceAutoPerk(pawn)) return;
+            Messages.Message(
+                "DC_PerkAutoUnlocked".Translate(pawn.LabelShort.Named("PAWN"), perk.LabelCap.Named("PERK")),
+                pawn, MessageTypeDefOf.PositiveEvent, false);
         }
 
         public void RevokePerk(PerkDef perk, bool announce)
@@ -296,7 +315,7 @@ namespace DeepColony
                 Hediff h = pawn.health.hediffSet.GetFirstHediffOfDef(perk.hediff);
                 if (h != null) pawn.health.RemoveHediff(h);
             }
-            if (announce && pawn != null)
+            if (announce && ShouldAnnounceAutoPerk(pawn))
             {
                 Messages.Message(
                     "DC_PerkLapsed".Translate(pawn.LabelShort.Named("PAWN"), perk.LabelCap.Named("PERK")),
@@ -336,6 +355,12 @@ namespace DeepColony
             }
             lastRespecTick = Find.TickManager?.TicksGame ?? 0;
             GrantPerkSilent(perk, true);
+            ArchetypeUtility.TryRefresh(Pawn);
+        }
+
+        public void GrantPerkFromRetrain(PerkDef perk)
+        {
+            GrantPerkSilent(perk, Comp_DeepColony.ShouldAnnounceAutoPerk(Pawn));
             ArchetypeUtility.TryRefresh(Pawn);
         }
 
@@ -680,6 +705,8 @@ namespace DeepColony
                 parts.Add("DC_InspectTrauma".Translate());
                 string types = TraumaTypesInspect();
                 if (!types.NullOrEmpty()) parts.Add(types);
+                string triggers = TraumaTriggerUtility.InspectLine(pawn);
+                if (!triggers.NullOrEmpty()) parts.Add(triggers);
                 if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_ToxicRelationship))
                     parts.Add("DC_InspectToxicRelationship".Translate());
                 string history = CounselingHistoryInspect();
@@ -694,7 +721,15 @@ namespace DeepColony
             {
                 string teach = TeachProgressInspect();
                 if (!teach.NullOrEmpty()) parts.Add(teach);
+                string retrain = RetrainInspect();
+                if (!retrain.NullOrEmpty()) parts.Add(retrain);
             }
+            string noisy = QuietHoursUtility.InspectLine(pawn);
+            if (!noisy.NullOrEmpty()) parts.Add(noisy);
+            string heir = EstateUtility.InspectHeir(pawn);
+            if (!heir.NullOrEmpty()) parts.Add(heir);
+            string heirloom = EstateUtility.HeirloomInspect(pawn);
+            if (!heirloom.NullOrEmpty()) parts.Add(heirloom);
             if (DeepColonySettings.Get.enableFactionRep)
             {
                 string envoy = EnvoyInspect();
@@ -766,6 +801,19 @@ namespace DeepColony
             PerkDef perk = DefDatabase<PerkDef>.GetNamedSilentFail(perkBeingTaughtDefName);
             string name = perk?.LabelCap ?? perkBeingTaughtDefName;
             return "DC_InspectTeachProgress".Translate(name, perkTeachProgress, 3);
+        }
+
+        public string RetrainInspect()
+        {
+            if (retrainProgress <= 0 || retrainFromPerkDefName.NullOrEmpty()
+                || retrainToPerkDefName.NullOrEmpty())
+                return null;
+            PerkDef from = DefDatabase<PerkDef>.GetNamedSilentFail(retrainFromPerkDefName);
+            PerkDef to = DefDatabase<PerkDef>.GetNamedSilentFail(retrainToPerkDefName);
+            string a = from?.LabelCap ?? retrainFromPerkDefName;
+            string b = to?.LabelCap ?? retrainToPerkDefName;
+            return "DC_InspectRetrain".Translate(a, b, retrainProgress,
+                MentorshipUtility.RetrainSessionsNeeded);
         }
 
         public string EnvoyInspect()
@@ -852,6 +900,11 @@ namespace DeepColony
             Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");
             Scribe_Values.Look(ref perkBeingTaughtDefName, "perkBeingTaughtDefName");
             Scribe_Values.Look(ref perkTeachProgress, "perkTeachProgress", 0);
+            Scribe_Values.Look(ref retrainFromPerkDefName, "retrainFromPerkDefName");
+            Scribe_Values.Look(ref retrainToPerkDefName, "retrainToPerkDefName");
+            Scribe_Values.Look(ref retrainProgress, "retrainProgress", 0);
+            Scribe_Values.Look(ref willHeirId, "willHeirId", -1);
+            Scribe_Collections.Look(ref discoveredTraumaTriggers, "discoveredTraumaTriggers", LookMode.Value);
             Scribe_Values.Look(ref elderPerkGranted, "elderPerkGranted", false);
             Scribe_Values.Look(ref familyTraditionSkillDefName, "familyTraditionSkillDefName");
             Scribe_Collections.Look(ref teacherLineage, "teacherLineage", LookMode.Value);
@@ -873,6 +926,7 @@ namespace DeepColony
             if (touchComfortByPawn == null) touchComfortByPawn = new Dictionary<int, float>();
             if (recoveredTraumaCounts == null) recoveredTraumaCounts = new Dictionary<string, int>();
             if (trackedTraumaDefNames == null) trackedTraumaDefNames = new List<string>();
+            if (discoveredTraumaTriggers == null) discoveredTraumaTriggers = new List<string>();
             if (grudgeFactionIds == null) grudgeFactionIds = new List<int>();
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)

@@ -92,6 +92,17 @@ namespace DeepColony
                 return;
             }
 
+            if (pawn.equipment?.Primary != null)
+                gc.NoteHeirloomCarrier(pawn.equipment.Primary.thingIDNumber, pawn);
+            if (pawn.apparel?.WornApparel != null)
+            {
+                foreach (Apparel a in pawn.apparel.WornApparel)
+                {
+                    if (gc.IsHeirloom(a.thingIDNumber))
+                        gc.NoteHeirloomCarrier(a.thingIDNumber, pawn);
+                }
+            }
+
             if (DC_DefOf.DC_Thought_Heirloom != null && pawn.needs?.mood?.thoughts != null)
             {
                 bool has = false;

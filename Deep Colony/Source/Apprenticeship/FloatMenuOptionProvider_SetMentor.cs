@@ -103,6 +103,23 @@ namespace DeepColony
                             targetPawn.LabelShort.Named("APPRENTICE")),
                         () => MentorshipUtility.ClearMentorRelation(actor, targetPawn));
                 }
+
+                if (MentorshipUtility.RetrainEnabled && targetComp.mentor == actor)
+                {
+                    var retrains = MentorshipUtility.RetrainOptions(actor, targetPawn);
+                    for (int i = 0; i < retrains.Count; i++)
+                    {
+                        MentorshipUtility.RetrainPair pair = retrains[i];
+                        PerkDef from = pair.from;
+                        PerkDef to = pair.to;
+                        yield return new FloatMenuOption(
+                            "DC_RetrainFloat".Translate(
+                                targetPawn.LabelShort.Named("APPRENTICE"),
+                                from.LabelCap.Named("FROM"),
+                                to.LabelCap.Named("TO")),
+                            () => MentorshipUtility.BeginRetrain(actor, targetPawn, from, to));
+                    }
+                }
             }
 
             if (DeepColonySettings.Get.enableTrauma

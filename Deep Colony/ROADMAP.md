@@ -138,3 +138,15 @@ Spec: [deep-colony-touch-averse.md](../docs/ideas/deep-colony-touch-averse.md). 
 
 - [x] **F01 Touch-averse** — no new Lover / fiancé / spouse until that pawn is fine being touched by the other
 - [x] **F02 Comfort tiers + family** — named tiers (distant → intimate). Averse degrees: reserved / touch-averse / touch-intolerant. **Touch-starved**, **tactile**, **cuddly**. Same `DC_TouchNeed` exclusion.
+
+## Identity pack (this branch)
+
+Build stamp `identity-pack-v1`.
+
+- [x] **AZR-102** Visitor perk popups — silent for non-colonists; settings toggle default off
+- [x] **AZR-72** Known trauma triggers — inspect after first flashback
+- [x] **AZR-71** Colony chronicle export — Legacy tab copy + save file
+- [x] **AZR-73** Mentor retraining — 8 sessions, Hard on, Soft/Default off
+- [x] **AZR-97** Divorce — right-click spouse; breakup wound + children + Legacy note
+- [x] **AZR-65** Quiet Hours — room noise, rest/counsel/mentor; not Strata infestation
+- [x] **AZR-70** Estate — wills on Legacy tab, contested kids, unclaimed bed, heirloom lineage
