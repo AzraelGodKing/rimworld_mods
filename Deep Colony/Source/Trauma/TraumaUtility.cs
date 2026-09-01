@@ -171,6 +171,7 @@ namespace DeepColony
 
                 if (IsQuietCounselRoom(room))
                     mult *= 1.10f;
+                mult *= QuietHoursUtility.TherapyMultiplier(room);
             }
 
             return Mathf.Clamp(mult, 0.50f, 2.00f);

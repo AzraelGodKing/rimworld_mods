@@ -38,47 +38,62 @@ namespace DeepColony
             ApplyFlashback(pawn, null);
         }
 
+        internal static bool CombatTriggerPresent(Pawn pawn)
+        {
+            if (pawn.Drafted) return true;
+            if (NearbyHostile(pawn, 12f)) return true;
+            return false;
+        }
+
+        internal static bool FireTriggerPresent(Pawn pawn)
+        {
+            if (pawn.IsBurning()) return true;
+            if (pawn.Drafted) return true;
+            return false;
+        }
+
+        internal static bool CaptivityTriggerPresent(Pawn pawn)
+        {
+            if (pawn.workSettings != null
+                && pawn.workSettings.WorkIsActive(WorkTypeDefOf.Warden))
+                return true;
+            return NearbyPrisoner(pawn, 10f);
+        }
+
+        internal static bool CasualtyTriggerPresent(Pawn pawn) => NearbyHumanCorpse(pawn, 8f);
+
+        internal static bool ToxinTriggerPresent(Pawn pawn) =>
+            pawn.health?.hediffSet?.HasHediff(HediffDefOf.ToxicBuildup) == true;
+
+        internal static bool InsectTriggerPresent(Pawn pawn) => NearbyInsect(pawn, 15f);
+
+        internal static bool BetrayalTriggerPresent(Pawn pawn) => NearbyHostile(pawn, 12f);
+
         private static bool TriggerPresent(Pawn pawn)
         {
             if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_CombatShock)
-                || TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Fire))
-            {
-                if (pawn.Drafted) return true;
-                if (pawn.IsBurning()) return true;
-                if (NearbyHostile(pawn, 12f)) return true;
-            }
-
-            if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Captivity))
-            {
-                if (pawn.workSettings != null
-                    && pawn.workSettings.WorkIsActive(WorkTypeDefOf.Warden))
-                    return true;
-                if (NearbyPrisoner(pawn, 10f)) return true;
-            }
-
-            if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Massacre)
-                || TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_ViolentLoss)
-                || TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_BereavementShock))
-            {
-                if (NearbyHumanCorpse(pawn, 8f)) return true;
-            }
-
-            if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Toxic))
-            {
-                if (pawn.health?.hediffSet?.HasHediff(HediffDefOf.ToxicBuildup) == true)
-                    return true;
-            }
-
-            if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Insect))
-            {
-                if (NearbyInsect(pawn, 15f)) return true;
-            }
-
-            if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Betrayal))
-            {
-                if (NearbyHostile(pawn, 12f)) return true;
-            }
-
+                && CombatTriggerPresent(pawn))
+                return true;
+            if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Fire)
+                && FireTriggerPresent(pawn))
+                return true;
+            if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Captivity)
+                && CaptivityTriggerPresent(pawn))
+                return true;
+            if ((TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Massacre)
+                    || TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_ViolentLoss)
+                    || TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_BereavementShock))
+                && CasualtyTriggerPresent(pawn))
+                return true;
+            if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Toxic)
+                && ToxinTriggerPresent(pawn))
+                return true;
+            if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Insect)
+                && InsectTriggerPresent(pawn))
+                return true;
+            if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Betrayal)
+                && BetrayalTriggerPresent(pawn))
+                return true;
             return false;
         }
 
@@ -103,6 +118,7 @@ namespace DeepColony
                 ? "DC_Flashback".Translate(pawn.LabelShort.Named("PAWN"))
                 : reason;
             Messages.Message(msg, pawn, MessageTypeDefOf.NegativeEvent, false);
+            TraumaTriggerUtility.DiscoverFromFlashback(pawn);
         }
 
         private static bool NearbyHostile(Pawn pawn, float radius)
