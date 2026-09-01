@@ -68,6 +68,15 @@
   <DC_Settings_EnablePerksTip>Перки открываются сами на навыке 5 / 10 / 15 / 20 и пропадают, если навык падает ниже.</DC_Settings_EnablePerksTip>
   <DC_Settings_ShowPerkHediffs>Показывать перки на вкладке здоровья</DC_Settings_ShowPerkHediffs>
   <DC_Settings_ShowPerkHediffsTip>По умолчанию выкл. Бонусы перков всё равно действуют; это только список на Здоровье.</DC_Settings_ShowPerkHediffsTip>
+  <DC_Settings_AnnounceVisitorPerks>Сообщения о перках посетителей</DC_Settings_AnnounceVisitorPerks>
+  <DC_Settings_AnnounceVisitorPerksTip>По умолчанию выкл. Посетители, гости и налётчики могут заспамить «достиг навыка для перка …» слева при появлении — на слабых ПК это тормозит. Сообщения колонистов остаются.</DC_Settings_AnnounceVisitorPerksTip>
+  <DC_Settings_EnableQuietHours>Тихие часы (шум комнаты)</DC_Settings_EnableQuietHours>
+  <DC_Settings_EnableQuietHoursTip>Верстаки, генераторы, турели и добыча ухудшают сон, совет и наставничество. Стены держат шум. Осмотр спальни предупреждает до штрафа настроения. Мягкий слабее, Сложный громче. Это не шум заражения Strata.</DC_Settings_EnableQuietHoursTip>
+  <DC_Settings_QuietHoursIntensity>Интенсивность тихих часов: {0}</DC_Settings_QuietHoursIntensity>
+  <DC_Settings_EnablePerkRetrain>Переобучение у наставника (смена ветки)</DC_Settings_EnablePerkRetrain>
+  <DC_Settings_EnablePerkRetrainTip>По умолчанию выкл. (Сложный — вкл.). Наставник с другой веткой L15/капстоуна может переучить ученика за много занятий — не клик. Мягкий / По умолчанию оставляют выкл.</DC_Settings_EnablePerkRetrainTip>
+  <DC_Settings_EnableEstate>Наследство (завещания)</DC_Settings_EnableEstate>
+  <DC_Settings_EnableEstateTip>На вкладке Наследие назовите наследника. После смерти он получает вещи; другие дети тяжело это переносят. Сон в кровати умершего — отдельное событие. Наследие помнит, кто носил вещь.</DC_Settings_EnableEstateTip>
   <DC_Settings_EnableTrauma>Включить травму и терапию</DC_Settings_EnableTrauma>
   <DC_Settings_EnableTraumaTip>Боевой шок, утраты, плен, резня, работа консультирования.</DC_Settings_EnableTraumaTip>
   <DC_Settings_EnableMentoring>Включить ученичество</DC_Settings_EnableMentoring>
@@ -384,5 +393,43 @@
   <DC_TouchTier_AtEase>спокойно рядом</DC_TouchTier_AtEase>
   <DC_TouchTier_FineWithTouch>можно трогать</DC_TouchTier_FineWithTouch>
   <DC_TouchTier_Intimate>близко</DC_TouchTier_Intimate>
+
+  <DC_InspectKnownTriggers>Срывает: {0}</DC_InspectKnownTriggers>
+  <DC_Trigger_Combat>бой</DC_Trigger_Combat>
+  <DC_Trigger_Fire>огонь</DC_Trigger_Fire>
+  <DC_Trigger_Capture>плен</DC_Trigger_Capture>
+  <DC_Trigger_Casualties>массовые потери</DC_Trigger_Casualties>
+  <DC_Trigger_Toxins>токсины</DC_Trigger_Toxins>
+  <DC_Trigger_Insects>насекомые</DC_Trigger_Insects>
+  <DC_Trigger_Betrayal>предательство</DC_Trigger_Betrayal>
+  <DC_InspectNoisyBedroom>Шумная спальня ({0}%) — отдых пострадает</DC_InspectNoisyBedroom>
+  <DC_InspectNoisySleep>Не уснуть из-за шума ({0}%)</DC_InspectNoisySleep>
+  <DC_ChronicleExport>Экспорт хроники</DC_ChronicleExport>
+  <DC_ChronicleFounder>Фамилия основателей: {0}</DC_ChronicleFounder>
+  <DC_ChroniclePeople>Живые колонисты ({0})</DC_ChroniclePeople>
+  <DC_ChronicleHeirlooms>Наследие</DC_ChronicleHeirlooms>
+  <DC_ChronicleCopied>Хроника колонии скопирована в буфер.</DC_ChronicleCopied>
+  <DC_ChronicleExported>Хроника колонии скопирована и сохранена в {PATH}.</DC_ChronicleExported>
+  <DC_ChronicleFooter>Записано Deep Colony.</DC_ChronicleFooter>
+  <DC_RetrainFloat>Переучить {APPRENTICE}: {FROM} → {TO}</DC_RetrainFloat>
+  <DC_RetrainStarted>{MENTOR} начал(а) переучивать {APPRENTICE} с {FROM} на {TO}.</DC_RetrainStarted>
+  <DC_RetrainProgress>{APPRENTICE} переобучение {FROM} → {TO} ({0}/{1} занятий).</DC_RetrainProgress>
+  <DC_RetrainComplete>{MENTOR} закончил(а) переобучение {APPRENTICE}: {FROM} стал(а) {TO}.</DC_RetrainComplete>
+  <DC_InspectRetrain>Переобучение {0} → {1} ({2}/{3})</DC_InspectRetrain>
+  <DC_DivorceFloat>Развестись с {PAWN}</DC_DivorceFloat>
+  <DC_Divorced>{A} и {B} развелись.</DC_Divorced>
+  <DC_DivorceDisabled>Семейные системы выключены в настройках.</DC_DivorceDisabled>
+  <DC_DivorceInvalid>Этих двоих нельзя развести.</DC_DivorceInvalid>
+  <DC_DivorceNeedColonists>Оба должны быть колонистами.</DC_DivorceNeedColonists>
+  <DC_DivorceNeedSpouse>Они не супруги.</DC_DivorceNeedSpouse>
+  <DC_Letter_DivorceLabel>Развод в колонии</DC_Letter_DivorceLabel>
+  <DC_Letter_DivorceBody>{A} и {B} расторгли брак. Вкладка Наследие сохраняет запись.</DC_Letter_DivorceBody>
+  <DC_WillHeirBtn>Наследник: {0}</DC_WillHeirBtn>
+  <DC_WillHeirNone>Наследник: нет</DC_WillHeirNone>
+  <DC_InspectWillHeir>Завещание: {0}</DC_InspectWillHeir>
+  <DC_InspectHeirloomLine>Наследие: {0}</DC_InspectHeirloomLine>
+  <DC_MovedIntoDeadRoom>{PAWN} спит в старой кровати {OWNER}.</DC_MovedIntoDeadRoom>
+  <DC_Letter_EstateLabel>Наследство: {PAWN}</DC_Letter_EstateLabel>
+  <DC_Letter_EstateBody>{PAWN} умер(ла). {HEIR} наследует то, что осталось.</DC_Letter_EstateBody>
 
 </LanguageData>

@@ -121,6 +121,19 @@ namespace DeepColony
 
         private static void Post(GameComp_DeepColony gc, string title, string body, int now, Pawn look)
         {
+            RecordNote(title, body, look, LetterDefOf.PositiveEvent, now, gc);
+        }
+
+        public static void RecordNote(string title, string body, Pawn look, LetterDef letter)
+        {
+            RecordNote(title, body, look, letter, Find.TickManager?.TicksGame ?? 0,
+                GameComp_DeepColony.Instance);
+        }
+
+        private static void RecordNote(string title, string body, Pawn look, LetterDef letter,
+            int now, GameComp_DeepColony gc)
+        {
+            if (gc == null) return;
             if (gc.familyLetters == null)
                 gc.familyLetters = new List<FamilyLetterEntry>();
             gc.familyLetters.Add(new FamilyLetterEntry
@@ -132,8 +145,28 @@ namespace DeepColony
             while (gc.familyLetters.Count > MaxStored)
                 gc.familyLetters.RemoveAt(0);
             gc.lastFamilyLetterTick = now;
+            if (letter != null)
+                Find.LetterStack.ReceiveLetter(title, body, letter, look);
+        }
 
-            Find.LetterStack.ReceiveLetter(title, body, LetterDefOf.PositiveEvent, look);
+        public static void NotifyDivorce(Pawn a, Pawn b)
+        {
+            if (a == null || b == null) return;
+            string title = "DC_Letter_DivorceLabel".Translate();
+            string body = "DC_Letter_DivorceBody".Translate(
+                a.LabelShort.Named("A"),
+                b.LabelShort.Named("B"));
+            RecordNote(title, body, a, LetterDefOf.NegativeEvent);
+        }
+
+        public static void NotifyEstate(Pawn victim, Pawn heir)
+        {
+            if (victim == null || heir == null) return;
+            string title = "DC_Letter_EstateLabel".Translate(victim.LabelShort.Named("PAWN"));
+            string body = "DC_Letter_EstateBody".Translate(
+                victim.LabelShort.Named("PAWN"),
+                heir.LabelShort.Named("HEIR"));
+            RecordNote(title, body, heir, LetterDefOf.PositiveEvent);
         }
 
         public static void NotifyGrandchildBorn(Pawn baby, Pawn grandparent)

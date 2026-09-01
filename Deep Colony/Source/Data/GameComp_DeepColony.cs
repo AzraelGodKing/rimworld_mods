@@ -18,6 +18,11 @@ namespace DeepColony
         /// <summary>B10 — thingIDNumber → owner name (heirloom markers).</summary>
         private Dictionary<int, string> heirloomOwners = new Dictionary<int, string>();
         private Dictionary<int, string> heirloomEchoPerks = new Dictionary<int, string>();
+        /// <summary>AZR-70 — thingIDNumber → "A → B" carrier history.</summary>
+        private Dictionary<int, string> heirloomLineage = new Dictionary<int, string>();
+        private Dictionary<int, int> heirloomLastCarrier = new Dictionary<int, int>();
+        /// <summary>AZR-70 — bed thingIDNumber → dead owner name.</summary>
+        private Dictionary<int, string> unclaimedBeds = new Dictionary<int, string>();
 
         private List<int> recentColonistDeathTimestamps = new List<int>();
         private bool massacreTriggeredThisWindow;
@@ -234,13 +239,75 @@ namespace DeepColony
         {
             if (heirloomOwners == null) heirloomOwners = new Dictionary<int, string>();
             if (heirloomEchoPerks == null) heirloomEchoPerks = new Dictionary<int, string>();
+            if (heirloomLineage == null) heirloomLineage = new Dictionary<int, string>();
             heirloomOwners[thingId] = ownerName ?? "";
             if (!echoPerkDefName.NullOrEmpty())
                 heirloomEchoPerks[thingId] = echoPerkDefName;
+            if (!ownerName.NullOrEmpty() && !heirloomLineage.ContainsKey(thingId))
+                heirloomLineage[thingId] = ownerName;
         }
 
         public bool IsHeirloom(int thingId) =>
             heirloomOwners != null && heirloomOwners.ContainsKey(thingId);
+
+        public string GetHeirloomLineage(int thingId)
+        {
+            if (heirloomLineage != null && heirloomLineage.TryGetValue(thingId, out string line))
+                return line;
+            if (heirloomOwners != null && heirloomOwners.TryGetValue(thingId, out string owner))
+                return owner;
+            return null;
+        }
+
+        public void NoteHeirloomCarrier(int thingId, Pawn carrier)
+        {
+            if (carrier == null || !IsHeirloom(thingId)) return;
+            if (heirloomLastCarrier == null) heirloomLastCarrier = new Dictionary<int, int>();
+            if (heirloomLineage == null) heirloomLineage = new Dictionary<int, string>();
+            string name = carrier.Name?.ToStringShort ?? carrier.LabelShort;
+            if (heirloomLastCarrier.TryGetValue(thingId, out int lastId) && lastId == carrier.thingIDNumber)
+                return;
+            heirloomLastCarrier[thingId] = carrier.thingIDNumber;
+            if (heirloomLineage.TryGetValue(thingId, out string line) && !line.NullOrEmpty())
+            {
+                if (!line.EndsWith(name))
+                    heirloomLineage[thingId] = line + " → " + name;
+            }
+            else if (heirloomOwners != null && heirloomOwners.TryGetValue(thingId, out string owner)
+                && !owner.NullOrEmpty() && owner != name)
+            {
+                heirloomLineage[thingId] = owner + " → " + name;
+            }
+            else
+            {
+                heirloomLineage[thingId] = name;
+            }
+        }
+
+        public string FormatHeirloomChronicle()
+        {
+            if (heirloomLineage == null || heirloomLineage.Count == 0) return null;
+            var sb = new System.Text.StringBuilder();
+            foreach (var kv in heirloomLineage)
+                sb.Append("- ").AppendLine(kv.Value);
+            return sb.ToString();
+        }
+
+        public void NoteUnclaimedBed(int bedId, string ownerName)
+        {
+            if (unclaimedBeds == null) unclaimedBeds = new Dictionary<int, string>();
+            if (bedId < 0 || ownerName.NullOrEmpty()) return;
+            unclaimedBeds[bedId] = ownerName;
+        }
+
+        public bool TryClaimUnclaimedBed(int bedId, out string formerOwner)
+        {
+            formerOwner = null;
+            if (unclaimedBeds == null) return false;
+            if (!unclaimedBeds.TryGetValue(bedId, out formerOwner)) return false;
+            unclaimedBeds.Remove(bedId);
+            return !formerOwner.NullOrEmpty();
+        }
 
         private static void TickHeirlooms()
         {
@@ -339,6 +406,9 @@ namespace DeepColony
             Scribe_Collections.Look(ref factionRepLedger, "factionRepLedger", LookMode.Deep);
             Scribe_Collections.Look(ref heirloomOwners, "heirloomOwners", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref heirloomEchoPerks, "heirloomEchoPerks", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref heirloomLineage, "heirloomLineage", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref heirloomLastCarrier, "heirloomLastCarrier", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref unclaimedBeds, "unclaimedBeds", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref recentColonistDeathTimestamps, "recentColonistDeaths",
                 LookMode.Value);
             Scribe_Values.Look(ref massacreTriggeredThisWindow, "massacreTriggered", false);
@@ -359,6 +429,9 @@ namespace DeepColony
             if (factionRepLedger == null) factionRepLedger = new List<FactionRepLedgerEntry>();
             if (heirloomOwners == null) heirloomOwners = new Dictionary<int, string>();
             if (heirloomEchoPerks == null) heirloomEchoPerks = new Dictionary<int, string>();
+            if (heirloomLineage == null) heirloomLineage = new Dictionary<int, string>();
+            if (heirloomLastCarrier == null) heirloomLastCarrier = new Dictionary<int, int>();
+            if (unclaimedBeds == null) unclaimedBeds = new Dictionary<int, string>();
             if (recentColonistDeathTimestamps == null)
                 recentColonistDeathTimestamps = new List<int>();
             if (remembranceEntries == null)
@@ -377,6 +450,9 @@ namespace DeepColony
             if (factionRepLedger == null) factionRepLedger = new List<FactionRepLedgerEntry>();
             if (heirloomOwners == null) heirloomOwners = new Dictionary<int, string>();
             if (heirloomEchoPerks == null) heirloomEchoPerks = new Dictionary<int, string>();
+            if (heirloomLineage == null) heirloomLineage = new Dictionary<int, string>();
+            if (heirloomLastCarrier == null) heirloomLastCarrier = new Dictionary<int, int>();
+            if (unclaimedBeds == null) unclaimedBeds = new Dictionary<int, string>();
             if (recentColonistDeathTimestamps == null)
                 recentColonistDeathTimestamps = new List<int>();
             if (remembranceEntries == null)
