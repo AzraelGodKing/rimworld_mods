@@ -775,4 +775,80 @@
     </stages>
   </ThoughtDef>
 
+  <!-- AZR-97 / AZR-70 / AZR-65 -->
+  <ThoughtDef>
+    <defName>DC_Thought_ParentsDivorced</defName>
+    <label>parents divorced</label>
+    <durationDays>8</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>parents split</label>
+        <description>Their parents' marriage ended. The house feels different.</description>
+        <baseMoodEffect>-4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_Inherited</defName>
+    <label>inherited</label>
+    <durationDays>10</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>inherited from {0}</label>
+        <description>They were named — or stood next in line — for what the dead left behind.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_Disinherited</defName>
+    <label>passed over</label>
+    <durationDays>10</durationDays>
+    <stackLimit>2</stackLimit>
+    <stages>
+      <li>
+        <label>passed over by {0}</label>
+        <description>Someone else received what they thought was theirs.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_MovedIntoDeadRoom</defName>
+    <label>moved into a dead room</label>
+    <durationDays>6</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>sleeping in their room</label>
+        <description>This bed belonged to someone who died here. The room still feels like theirs.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DC_Thought_NoisyRoom</defName>
+    <label>noisy room</label>
+    <thoughtClass>Thought_Situational</thoughtClass>
+    <workerClass>DeepColony.ThoughtWorker_NoisyRoom</workerClass>
+    <stages>
+      <li>
+        <label>noisy bedroom</label>
+        <description>Work noise reaches this bedroom. Rest will suffer if they sleep here.</description>
+        <baseMoodEffect>0</baseMoodEffect>
+      </li>
+      <li>
+        <label>can't rest through the noise</label>
+        <description>Trying to sleep next to work noise. The house will not let them recover.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

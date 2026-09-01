@@ -7,7 +7,7 @@ namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "harmony-jobdriver-v1";
+        public const string BuildStamp = "identity-pack-v1";
 
         public static void LogStartup()
         {
