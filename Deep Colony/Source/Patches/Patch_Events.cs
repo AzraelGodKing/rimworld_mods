@@ -99,6 +99,7 @@ namespace DeepColony.Patches
             if (wasColonist)
             {
                 HeirloomUtility.TryCreateFromDeath(__instance);
+                EstateUtility.NotifyDeath(__instance);
                 GameComp_DeepColony.Instance?.NotifyColonistDied(__instance);
             }
 

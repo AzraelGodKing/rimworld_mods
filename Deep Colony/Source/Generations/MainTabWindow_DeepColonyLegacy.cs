@@ -11,14 +11,17 @@ namespace DeepColony
     {
         private Vector2 scrollPos;
 
-        public override Vector2 RequestedTabSize => new Vector2(640f, 480f);
+        public override Vector2 RequestedTabSize => new Vector2(680f, 560f);
 
         public override void DoWindowContents(Rect inRect)
         {
             Text.Font = GameFont.Medium;
-            Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 32f),
+            Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width - 160f, 32f),
                 "DC_LegacyTitle".Translate());
             Text.Font = GameFont.Small;
+            if (Widgets.ButtonText(new Rect(inRect.xMax - 150f, inRect.y, 150f, 28f),
+                    "DC_ChronicleExport".Translate()))
+                ChronicleUtility.Export();
 
             var gameComp = GameComp_DeepColony.Instance;
             string surname = gameComp?.GetFounderSurname() ?? "—";
@@ -28,22 +31,13 @@ namespace DeepColony
                 "DC_LegacySurname".Translate(surname));
             y += 26f;
 
-            var founders = new List<Pawn>();
             var living = new List<Pawn>();
             foreach (Map map in Find.Maps)
             {
                 foreach (Pawn p in map.mapPawns.FreeColonists)
-                {
                     living.Add(p);
-                    if (p.Name is NameTriple t
-                        && !surname.NullOrEmpty()
-                        && surname != "—"
-                        && t.Last == surname)
-                        founders.Add(p); // living with founder surname (proxy)
-                }
             }
 
-            // Founders: earliest colonists approx — those who match surname OR were first
             int withPerks = living.Count(p =>
             {
                 var c = p.TryGetComp<Comp_DeepColony>();
@@ -100,7 +94,7 @@ namespace DeepColony
 
             Rect outRect = new Rect(inRect.x, y, inRect.width, inRect.yMax - y);
             var rows = living.OrderBy(p => p.LabelShort).ToList();
-            float rowH = 24f;
+            float rowH = EstateUtility.Enabled ? 28f : 24f;
             Rect view = new Rect(0, 0, outRect.width - 16f, Mathf.Max(rows.Count * rowH, outRect.height));
             Widgets.BeginScrollView(outRect, ref scrollPos, view);
             float ry = 0f;
@@ -119,10 +113,39 @@ namespace DeepColony
                 }
                 if (comp != null && comp.unlockedPerkDefNames.Count > 0)
                     sb.Append(" · perks ").Append(comp.unlockedPerkDefNames.Count);
-                Widgets.Label(new Rect(4f, ry, view.width - 8f, rowH), sb.ToString());
+
+                float labelW = EstateUtility.Enabled ? view.width - 128f : view.width - 8f;
+                Widgets.Label(new Rect(4f, ry, labelW, rowH), sb.ToString());
+                if (EstateUtility.Enabled && comp != null)
+                {
+                    Pawn heir = EstateUtility.ResolveNamedHeir(p);
+                    string heirLabel = heir != null
+                        ? "DC_WillHeirBtn".Translate(heir.LabelShort)
+                        : "DC_WillHeirNone".Translate();
+                    if (Widgets.ButtonText(new Rect(view.width - 120f, ry + 2f, 112f, 22f), heirLabel))
+                        ShowHeirMenu(p);
+                }
                 ry += rowH;
             }
             Widgets.EndScrollView();
+        }
+
+        private static void ShowHeirMenu(Pawn owner)
+        {
+            var opts = new List<FloatMenuOption>
+            {
+                new FloatMenuOption("DC_WillHeirNone".Translate(),
+                    () => EstateUtility.SetHeir(owner, null))
+            };
+            List<Pawn> heirs = EstateUtility.CandidateHeirs(owner);
+            for (int i = 0; i < heirs.Count; i++)
+            {
+                Pawn captured = heirs[i];
+                opts.Add(new FloatMenuOption(
+                    captured.LabelShort,
+                    () => EstateUtility.SetHeir(owner, captured)));
+            }
+            Find.WindowStack.Add(new FloatMenu(opts));
         }
     }
 }
