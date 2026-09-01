@@ -229,18 +229,21 @@ namespace Strata
                 return;
             }
 
+            if (intent.purpose == RelayPurpose.Rest)
+            {
+                // Keep Rest intent until LayDown starts so allowed-area bypass
+                // still applies on the destination floor.
+                FinishRest(pawn, intent.preferredBedId);
+                intents.Remove(pawnId);
+                return;
+            }
+
             int returnMapId = intent.returnMapId;
             int haulConstructibleId = intent.purpose == RelayPurpose.Haul
                 ? intent.preferredBedId
                 : -1;
             IntVec3 haulPreferCell = intent.preferArrivalNear;
             intents.Remove(pawnId);
-
-            if (intent.purpose == RelayPurpose.Rest)
-            {
-                FinishRest(pawn, intent.preferredBedId);
-                return;
-            }
 
             if (intent.purpose == RelayPurpose.Medical)
             {

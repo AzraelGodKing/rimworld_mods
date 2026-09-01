@@ -11,6 +11,9 @@ Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog
 
 ## [Unreleased]
 
+### Fixed
+- **Sleep on the ground (AZR-101)** (`azr-101-v1`) — sleepy colonists walking home to a bed on another floor no longer treat a missing allowed-area cell on the shaft as "no path" and pass out in the dirt. Rest commute (and lying down in their assigned bed) ignores that zone; SeekAllowedArea will not yank them back mid-trip.
+
 ## [3.2.1]
 
 Player-facing version **3.2.1** (`About.xml` `modVersion`). Startup writes `[Strata] v3.2.1 Soft-compat build v321-v1` in Player.log.

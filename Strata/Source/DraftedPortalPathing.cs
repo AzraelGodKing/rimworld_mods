@@ -67,6 +67,17 @@ namespace Strata
             return pawn != null && routes.ContainsKey(pawn.thingIDNumber);
         }
 
+        public static bool HasActiveRestRoute(Pawn pawn)
+        {
+            if (pawn == null || !routes.TryGetValue(pawn.thingIDNumber, out Route route))
+            {
+                return false;
+            }
+
+            return route.finish == FinishMode.LayDownBed
+                || route.finish == FinishMode.EnterPortalToBedMap;
+        }
+
         // Bed on another floor, but the stair to that floor is sealed off on this
         // map (closed room). Detour underground to a return stair that can reach
         // the upstairs entrance, then EnterPortal + PortalRelayChain to the bed.

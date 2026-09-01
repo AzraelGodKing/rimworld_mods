@@ -20,6 +20,43 @@ namespace Strata
             bedNotFound.Clear();
         }
 
+        private static int evaluatingRestCommuteId;
+
+        // Rest commute to an assigned bed: walk the stairs even when the
+        // allowed area on this floor does not include the shaft.
+        public static bool ShouldBypassAllowedAreaForRest(Pawn pawn)
+        {
+            if (pawn == null || StrataMod.Settings == null || !StrataMod.Settings.restRelayEnabled)
+            {
+                return false;
+            }
+
+            if (evaluatingRestCommuteId == pawn.thingIDNumber)
+            {
+                return true;
+            }
+
+            if (PortalRelayChain.HasIntent(pawn, RelayPurpose.Rest))
+            {
+                return true;
+            }
+
+            if (DraftedPortalPathing.HasActiveRestRoute(pawn))
+            {
+                return true;
+            }
+
+            Job job = pawn.CurJob;
+            if (job?.def == JobDefOf.LayDown
+                && job.targetA.Thing is Building_Bed bed
+                && pawn.ownership?.OwnedBed == bed)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static Job TryMakeJob(Pawn pawn, Job vanillaResult)
         {
             if (pawn == null || !pawn.Spawned
@@ -36,6 +73,21 @@ namespace Strata
             {
                 return null;
             }
+
+            int previousEval = evaluatingRestCommuteId;
+            evaluatingRestCommuteId = pawn.thingIDNumber;
+            try
+            {
+                return TryMakeJobCore(pawn, vanillaResult);
+            }
+            finally
+            {
+                evaluatingRestCommuteId = previousEval;
+            }
+        }
+
+        private static Job TryMakeJobCore(Pawn pawn, Job vanillaResult)
+        {
 
             if (!WantsSleep(pawn, vanillaResult))
             {
