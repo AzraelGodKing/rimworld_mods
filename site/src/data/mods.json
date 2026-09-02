@@ -1,8 +1,8 @@
 {
   "site": {
     "title": "AzraelGodKing — RimWorld Mods",
-    "tagline": "RimWorld mods for colonies that farm, harden, dig, remember, and make time for each other.",
-    "heroIntro": "Six mods. One workshop. Open a mod page for details — or jump straight to Steam or zip downloads if you cannot use the Workshop. Every mod ships as a GitHub release zip; extract into your RimWorld Mods folder. All mods need Harmony.",
+    "tagline": "RimWorld mods for colonies that farm, harden, dig, remember, make time for each other, and keep the small comforts.",
+    "heroIntro": "Seven mods. One workshop. Open a mod page for details — or jump straight to Steam or zip downloads if you cannot use the Workshop. Every mod ships as a GitHub release zip; extract into your RimWorld Mods folder. All mods need Harmony.",
     "author": "AzraelGodKing",
     "github": "https://github.com/AzraelGodKing/rimworld_mods"
   },
@@ -619,6 +619,102 @@
         "notes": []
       },
       "changelogPath": "changelogs/date-night.md",
+      "requires": ["Harmony"],
+      "rimworldVersions": "1.6"
+    },
+    {
+      "id": "niceties",
+      "name": "Niceties",
+      "publishedFileId": "3794727164",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3794727164",
+      "accent": "#c4a056",
+      "preview": "img/NicetiesPreview.png",
+      "tagline": "Small colony comforts: well-kept apparel, throne-room altars, any outfit cut, hidden cryptosleep, and melee hunting.",
+      "badges": ["RimWorld 1.6", "Requires Harmony", "QoL"],
+      "overview": [
+        "Vanilla never shipped these five. Niceties is one Harmony QoL companion: each nicety is its own Mod Options toggle. Soft / Default / Hard only seed the knobs — they are not a forced bundle.",
+        "Combat, fire, and outdoor rot stay vanilla. Royalty and Ideology are optional; those toggles no-op without the DLC. Safe to add or remove mid-save. Inspired by older Workshop ideas, rewritten from scratch for 1.6 — not a port of those mods."
+      ],
+      "featureTabs": [
+        {
+          "id": "apparel",
+          "label": "Well-kept apparel",
+          "features": [
+            { "title": "Daily wear by quality", "body": "Worn clothes skip or scale the daily deterioration tick. Quality and Crafting skill decide how often a piece loses a hit point. Masterwork and legendary stay as they are." },
+            { "title": "Combat still shreds", "body": "Combat, fire, and outdoor rot are left alone. This is wardrobe care, not invincible armor." },
+            { "title": "Corpse clothes", "body": "Optional: apparel on a corpse keeps the same daily-wear rule." }
+          ]
+        },
+        {
+          "id": "throne",
+          "label": "Throne and altar",
+          "features": [
+            { "title": "Altars allowed", "body": "Royalty throne rooms may hold an Ideology altar without failing the no-altars check." },
+            { "title": "Throne wins the room", "body": "If a throne is in the room, it stays a throne room rather than flipping to a temple." }
+          ]
+        },
+        {
+          "id": "outfit",
+          "label": "Wear any outfit",
+          "features": [
+            { "title": "Gender tags off", "body": "Apparel gender tags are captured at load and cleared so mixed royal cuts do not apply the wrong-gender thought." },
+            { "title": "Toggle restores tags", "body": "Turn the nicety off and the original tags come back." }
+          ]
+        },
+        {
+          "id": "crypto",
+          "label": "Hidden cryptosleep",
+          "features": [
+            { "title": "Off the bar", "body": "Pawns already in a cryptosleep casket drop off the colonist bar and reappear when ejected." },
+            { "title": "Carrying in stays visible", "body": "Carrying someone to a casket does not hide them early — that crash is what broke older hide-from-bar mods." }
+          ]
+        },
+        {
+          "id": "hunt",
+          "label": "Melee hunting",
+          "features": [
+            { "title": "Hunt with a melee weapon", "body": "Hunters may hunt with a melee weapon instead of only a ranged one." },
+            { "title": "Body-size cap", "body": "A prey size cap keeps people from charging a thrumbo with a knife unless you raise it." },
+            { "title": "Unarmed optional", "body": "Unarmed hunting is off by default." }
+          ]
+        },
+        {
+          "id": "settings",
+          "label": "Settings",
+          "features": [
+            { "title": "Independent toggles", "body": "Each nicety is its own on/off. Nested knobs (quality scaling, unarmed hunt, body-size cap) only apply while that nicety is on." },
+            { "title": "Soft", "body": "No daily clothing wear, corpse clothes included, unarmed hunting, any prey size. A starting point — not a bundle you must keep." },
+            { "title": "Default", "body": "Quality-scaled wear, melee up to body size 1.5, no unarmed." },
+            { "title": "Hard", "body": "No crafting bonus, melee only small game (0.8)." }
+          ]
+        }
+      ],
+      "gallery": [],
+      "goodToKnow": [
+        "Safe to add or remove mid-save.",
+        "Requires Harmony. Royalty and Ideology are optional.",
+        "Do not run alongside Jecs Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, or Hide Cryptosleep Pawn — they overlap the same jobs.",
+        "Workshop preview is an options-card collage (Homesteader straw-hat sprite + pixel icons), not a painted poster."
+      ],
+      "compatibility": {
+        "compatibleWith": [
+          { "name": "Harmony", "note": "Required" },
+          { "name": "Royalty", "note": "Optional — throne-and-altar no-ops without it" },
+          { "name": "Ideology", "note": "Optional — altar checks no-op without it" },
+          { "name": "Homesteader", "note": "Sister mod in this series" },
+          { "name": "Date Night", "note": "Sister mod in this series" }
+        ],
+        "incompatibleWith": [
+          { "name": "Jecs Everlasting Apparel", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=909429482", "note": "Overlaps well-kept apparel" },
+          { "name": "Allow Altars in Throneroom", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3725636235", "note": "Overlaps throne-and-altar" },
+          { "name": "Wear What You Want", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2079833048", "note": "Overlaps wear-any-outfit" },
+          { "name": "Hide Cryptosleep Pawn", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3401278576", "note": "Overlaps hidden cryptosleep" }
+        ],
+        "notes": [
+          "Harmony patches fail-open: one missing target logs and skips instead of aborting the rest of Niceties."
+        ]
+      },
+      "changelogPath": "changelogs/niceties.md",
       "requires": ["Harmony"],
       "rimworldVersions": "1.6"
     }
