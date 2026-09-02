@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Niceties</name>
+  <author>AzraelGodKing</author>
+  <packageId>AzraelGodKing.Niceties</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <modVersion IgnoreIfNoMatchingField="True">1.0.0</modVersion>
+  <incompatibleWith>
+    <li>Jecrell166.JecsHEverlastingHApparel</li>
+    <li>z4k97b.altarsinthroneroom</li>
+    <li>RelaxedOtter.WearWhatYouWant</li>
+    <li>louze.hiddencryptosleep</li>
+  </incompatibleWith>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>Ludeon.RimWorld</li>
+    <li>Ludeon.RimWorld.Royalty</li>
+    <li>Ludeon.RimWorld.Ideology</li>
+  </loadAfter>
+  <description>My Discord: https://discord.gg/Vwh2y7qMXv
+Site (no Discord): https://azraelgodking.github.io/rimworld_mods/
+
+Small colony comforts vanilla never shipped. Each nicety is its own Mod Options toggle — Harmony, fail-open. Soft / Default / Hard only seed the knobs. Combat, fire, and outdoor rot are left alone.
+
+WELL-KEPT APPAREL
+Worn clothes skip or scale daily deterioration. Quality and Crafting skill decide how often a piece loses a hit point. Masterwork and legendary stay as they are. Combat and fire still shred HP. Optional: clothes on a corpse keep the same rule.
+
+THRONE AND ALTAR
+Royalty throne rooms may hold an Ideology altar without failing the "no altars" check. If a throne is in the room, it stays a throne room rather than flipping to a temple.
+
+WEAR ANY OUTFIT
+Gender tags come off apparel so a colonist can wear the other cut of a royal vest or hat without the wrong-gender thought. Toggle restores the original tags.
+
+HIDDEN CRYPTOSLEEP
+Pawns already in a cryptosleep casket drop off the colonist bar. Carrying someone to a casket does not hide them early (that is what crashed older hide-from-bar mods). They reappear when ejected.
+
+MELEE HUNTING
+Hunters may hunt with a melee weapon. A body-size cap keeps people from charging a thrumbo with a knife unless you raise it. Unarmed hunting is optional and off by default.
+
+SETTINGS
+Each nicety is independently on or off. Extra knobs (quality scaling, unarmed hunt, body-size cap) only apply while that nicety is on.
+Soft / Default / Hard change those knobs, not a forced bundle:
+- Soft: no daily clothing wear, corpse clothes included, unarmed hunting, any prey size.
+- Default: quality-scaled wear, melee up to body size 1.5, no unarmed.
+- Hard: no crafting bonus, melee only small game (0.8).
+
+Requires Harmony. RimWorld 1.6. Royalty and Ideology optional (those toggles no-op without the DLC). Safe to add or remove mid-save.
+
+Inspired by ideas from Jecrell's Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, and Melee Hunting — rewritten from scratch, not a continuation of those mods.</description>
+</ModMetaData>

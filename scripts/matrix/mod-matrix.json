@@ -94,5 +94,17 @@
     "nexus": "",
     "nexus_mod_id": "",
     "nexus_file_id": ""
+  },
+  {
+    "modKey": "niceties",
+    "modDir": "Niceties",
+    "dllName": "Niceties",
+    "csproj": "Niceties/Source/Niceties.csproj",
+    "configuration": "",
+    "zipName": "Niceties",
+    "publish": false,
+    "nexus": "",
+    "nexus_mod_id": "",
+    "nexus_file_id": ""
   }
 ]
