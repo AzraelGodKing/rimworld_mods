@@ -21,6 +21,7 @@ const replaced = {
   "nemesis.html": "nemesis",
   "deep-colony.html": "deep-colony",
   "datenight.html": "date-night",
+  "niceties.html": "niceties",
 };
 
 function copyRecursive(src, dest, skip = () => false) {

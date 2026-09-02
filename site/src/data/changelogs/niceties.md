@@ -13,5 +13,6 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Nic
 - **Melee hunting** — `WorkGiver_HunterHunt.HasHuntingWeapon` also accepts a melee weapon (optional unarmed). Body-size cap rejects oversized prey for melee/unarmed hunters.
 - **Mod settings** — each nicety is its own on/off. Nested knobs only appear while that nicety is enabled. Soft / Default / Hard change the knobs, not which features you must run.
 - **Workshop preview** — options-card collage using the Homesteader straw-hat sprite and chunky pixel icons (no generated painting).
+- **Docs site** — hub page at [`/niceties`](https://azraelgodking.github.io/rimworld_mods/niceties); CI packs `Niceties.zip`. Workshop ID `3794727164`.
 
 Inspired by Workshop ideas (Jecrell Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Melee Hunting). Clean-room 1.6 code — not a port of those mods.
