@@ -3,4 +3,29 @@
 
   <Azrael_ScenPart_ForcedStorytellerSummary>Storyteller locked to {0}.</Azrael_ScenPart_ForcedStorytellerSummary>
 
+  <Azrael_SettingsCategory>Azrael</Azrael_SettingsCategory>
+  <Azrael_Hub_Intro>Series hub. Which Azrael mods are loaded, at what version, which soft-compat bridges are live, and named conflicts. Screenshot this or copy the report when asking for help.</Azrael_Hub_Intro>
+  <Azrael_Hub_Copy>Copy report</Azrael_Hub_Copy>
+  <Azrael_Hub_Copied>Copied to clipboard.</Azrael_Hub_Copied>
+  <Azrael_Hub_Mods>Series mods</Azrael_Hub_Mods>
+  <Azrael_Hub_Loaded>loaded</Azrael_Hub_Loaded>
+  <Azrael_Hub_NotLoaded>not loaded</Azrael_Hub_NotLoaded>
+  <Azrael_Hub_VersionUnknown>—</Azrael_Hub_VersionUnknown>
+  <Azrael_Hub_Bridges>Soft-compat</Azrael_Hub_Bridges>
+  <Azrael_Hub_BridgeLive>live</Azrael_Hub_BridgeLive>
+  <Azrael_Hub_BridgeWaiting>{0} not loaded</Azrael_Hub_BridgeWaiting>
+  <Azrael_Hub_BridgeNoHook>both loaded — no live hook yet</Azrael_Hub_BridgeNoHook>
+  <Azrael_Hub_Bridge_RootCellar>Homesteader ↔ Strata — root cellars</Azrael_Hub_Bridge_RootCellar>
+  <Azrael_Hub_Bridge_Wells>Homesteader ↔ Strata — wells</Azrael_Hub_Bridge_Wells>
+  <Azrael_Hub_Bridge_StormRooms>Strata ↔ Stormproof — underground rooms</Azrael_Hub_Bridge_StormRooms>
+  <Azrael_Hub_Bridge_NemesisDeep>Nemesis ↔ Deep Colony</Azrael_Hub_Bridge_NemesisDeep>
+  <Azrael_Hub_Bridge_LwGoodwill>Living World ↔ Deep Colony — goodwill</Azrael_Hub_Bridge_LwGoodwill>
+  <Azrael_Hub_Conflicts>Conflicts</Azrael_Hub_Conflicts>
+  <Azrael_Hub_ConflictsNone>None detected.</Azrael_Hub_ConflictsNone>
+  <Azrael_Hub_Conflict_Stack>Stacked maps fight Strata. Do not run this with Strata.</Azrael_Hub_Conflict_Stack>
+  <Azrael_Hub_Conflict_Wellspring>Standalone Wellspring leftover; water ships inside Homesteader.</Azrael_Hub_Conflict_Wellspring>
+  <Azrael_Hub_Harmony>Harmony</Azrael_Hub_Harmony>
+  <Azrael_Hub_HarmonyNone>No failed series patch classes in this session's log.</Azrael_Hub_HarmonyNone>
+  <Azrael_Hub_HarmonyCount>{0} failed patch class(es) in the log.</Azrael_Hub_HarmonyCount>
+
 </LanguageData>

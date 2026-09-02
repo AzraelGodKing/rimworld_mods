@@ -6,12 +6,13 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.1 loaded from ...` in Player.log.
+Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.1 loaded from ...` in Player.log (`azr-86-v1`).
 
 ### Changed
 - **1.0.1** — version stamp only; no gameplay change.
 
 ### Added
+- **Series hub** — Mod Options → Azrael lists loaded series mods and About versions, live soft-compat bridges (root cellars, wells, Stormproof rooms, Living World goodwill), named conflicts (AASB / MultiFloors with Strata), and failed Harmony patch classes from this session's log. Copy report for support. Read-only; missing mods show as not loaded. EN/CN/RU.
 - **The Deep Homestead** scenario — 3 settlers, farm kit, mountain-foothills opener; forces Azrael; MayRequire Homesteader / Strata start research and rock salt.
 - **Standalone storyteller fallback** — injects `StorytellerDef` Azrael only when Homesteader is not loaded (Homesteader owns the canonical copy). `PatchOperationFindMod` matches the Homesteader display name so both mods together do not duplicate the def.
 - **CI zip** — ~~`Azrael.zip` with the compiled DLL is packed on `latest` so Deep Homestead's forced-storyteller part loads.~~ **Superseded:** Azrael is not release-ready; CI no longer builds or publishes `Azrael.zip`.
