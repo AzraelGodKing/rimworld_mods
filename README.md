@@ -101,6 +101,12 @@ Adds Date and Lovin timetable slots. Date is a walk / table hangout; Lovin still
 - Site: [datenight.html](https://azraelgodking.github.io/rimworld_mods/datenight.html)
 - [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip)
 
+### Niceties (in-repo)
+
+Small colony comforts: well-kept apparel, throne-room altars, wear any gendered cut, hide cryptosleep from the colonist bar, and melee hunting. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Soft / Default / Hard presets; each toggle is independent. Not in the GitHub Release zips yet.
+
+- [ROADMAP](Niceties/ROADMAP.md) · [changelog](Niceties/About/changelog.txt)
+
 ## Installation
 
 A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a packaged zip:
@@ -111,7 +117,7 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, and **Date Night** require the **Harmony** mod. **Living World** and **Azrael** are in-repo but not release-ready (not in the GitHub Release zips).
+4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, and **Date Night** require the **Harmony** mod. **Living World**, **Azrael**, and **Niceties** are in-repo but not release-ready (not in the GitHub Release zips).
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally.
 
@@ -121,7 +127,7 @@ Safe to add to an existing save. Before removing a mod from a save, deconstruct 
 
 Each mod's `About/changelog.txt` is **latest Steam notes only**. Full history is on the [docs site](https://azraelgodking.github.io/rimworld_mods/) changelog section of each mod page (source: `site/src/data/changelogs/`).
 
-Steam paste: [Homesteader](Homesteader/About/changelog.txt), [Stormproof](Stormproof/About/changelog.txt), [Strata](Strata/About/changelog.txt), [Nemesis](Nemesis/About/changelog.txt), [Deep Colony](Deep%20Colony/About/changelog.txt), [Date Night](DateNight/About/changelog.txt), [Azrael](Azrael/About/changelog.txt), [Living World](LivingWorld/About/changelog.txt).
+Steam paste: [Homesteader](Homesteader/About/changelog.txt), [Stormproof](Stormproof/About/changelog.txt), [Strata](Strata/About/changelog.txt), [Nemesis](Nemesis/About/changelog.txt), [Deep Colony](Deep%20Colony/About/changelog.txt), [Date Night](DateNight/About/changelog.txt), [Azrael](Azrael/About/changelog.txt), [Living World](LivingWorld/About/changelog.txt), [Niceties](Niceties/About/changelog.txt).
 
 ## Website
 
