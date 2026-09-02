@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Niceties_SettingsCategory>Niceties</Niceties_SettingsCategory>
+  <Niceties_Settings_Intro>Each nicety is optional. Off means vanilla for that one rule. Combat, fire, and outdoor rot are never blocked.</Niceties_Settings_Intro>
+  <Niceties_Settings_PresetSoft>Soft</Niceties_Settings_PresetSoft>
+  <Niceties_Settings_PresetDefault>Default</Niceties_Settings_PresetDefault>
+  <Niceties_Settings_PresetHard>Hard</Niceties_Settings_PresetHard>
+  <Niceties_Settings_PresetsTip>Presets only change the knobs. After that, tick the niceties you actually want.</Niceties_Settings_PresetsTip>
+  <Niceties_Settings_ApparelCare>Well-kept apparel</Niceties_Settings_ApparelCare>
+  <Niceties_Settings_ApparelCareTip>Worn clothes skip or scale the daily deterioration tick. Combat and fire still damage hit points. Clothes left on the ground still rot outdoors.</Niceties_Settings_ApparelCareTip>
+  <Niceties_Settings_QualityScale>Scale wear by quality</Niceties_Settings_QualityScale>
+  <Niceties_Settings_QualityScaleTip>Off: no daily wear while worn (Soft). On: awful/poor wear like vanilla; good and excellent wear less; masterwork and legendary skip daily wear.</Niceties_Settings_QualityScaleTip>
+  <Niceties_Settings_CraftingBonus>Crafting skill slows wear</Niceties_Settings_CraftingBonus>
+  <Niceties_Settings_CraftingBonusTip>A pawn's Crafting skill reduces remaining daily wear, up to half at level 20.</Niceties_Settings_CraftingBonusTip>
+  <Niceties_Settings_CorpseApparel>Keep the same rule on corpses</Niceties_Settings_CorpseApparel>
+  <Niceties_Settings_CorpseApparelTip>Off: apparel on a dead pawn deteriorates as vanilla. On: the worn-care rule still applies.</Niceties_Settings_CorpseApparelTip>
+
+  <Niceties_Settings_ThroneAltar>Allow altars in throne rooms</Niceties_Settings_ThroneAltar>
+  <Niceties_Settings_ThroneAltarTip>Royalty throne-room requirements ignore "no altars". A throne in the room keeps it a throne room instead of a temple. Needs Royalty + Ideology to matter.</Niceties_Settings_ThroneAltarTip>
+  <Niceties_Settings_WearAny>Wear any gendered cut</Niceties_Settings_WearAny>
+  <Niceties_Settings_WearAnyTip>Clears apparel gender tags (royal vest/corset, hats, and any mod that uses the same field) so the wrong-gender thought does not apply.</Niceties_Settings_WearAnyTip>
+  <Niceties_Settings_HideCrypto>Hide cryptosleep pawns from the bar</Niceties_Settings_HideCrypto>
+  <Niceties_Settings_HideCryptoTip>Colonists already in a cryptosleep casket are omitted from the colonist bar. They stay visible while being carried to a casket.</Niceties_Settings_HideCryptoTip>
+
+  <Niceties_Settings_MeleeHunt>Melee hunting</Niceties_Settings_MeleeHunt>
+  <Niceties_Settings_MeleeHuntTip>Hunters may hunt with a melee weapon. Ranged hunting is unchanged.</Niceties_Settings_MeleeHuntTip>
+  <Niceties_Settings_UnarmedHunt>Unarmed hunting</Niceties_Settings_UnarmedHunt>
+  <Niceties_Settings_UnarmedHuntTip>Hunters with no weapon may still hunt (fists). Off by default — easy to get someone killed.</Niceties_Settings_UnarmedHuntTip>
+  <Niceties_Settings_MeleeSize>Melee hunt max body size: {0}</Niceties_Settings_MeleeSize>
+  <Niceties_Settings_Reset>Reset to defaults</Niceties_Settings_Reset>
+
+  <Niceties_Apparel_NoWear>Daily wear: none (well kept).</Niceties_Apparel_NoWear>
+  <Niceties_Apparel_VanillaWear>Daily wear: vanilla.</Niceties_Apparel_VanillaWear>
+  <Niceties_Apparel_ReducedWear>Daily wear: {0} of vanilla.</Niceties_Apparel_ReducedWear>
+  <Niceties_Hunt_TooBig>{0} is too large for melee hunting.</Niceties_Hunt_TooBig>
+
+</LanguageData>
