@@ -86,6 +86,7 @@
 [data-theme="nemesis"] { --mod: #a85a4a; --mod-ink: #faf0ee; }
 [data-theme="deep-colony"] { --mod: #5f8a48; --mod-ink: #eef5ea; }
 [data-theme="date-night"] { --mod: #b06078; --mod-ink: #faf0f3; }
+[data-theme="niceties"] { --mod: #c4a056; --mod-ink: #faf6ea; }
 [data-theme="living-world"] { --mod: #3f8a6e; --mod-ink: #eaf6f1; }
 
 [data-color-mode="light"][data-theme="homesteader"],
@@ -106,6 +107,9 @@
 [data-color-mode="light"][data-theme="date-night"],
 [data-color-mode="light"] .mod-link[data-theme="date-night"],
 [data-color-mode="light"] [data-theme="date-night"] { --mod: #b06078; --mod-ink: #1a0c12; }
+[data-color-mode="light"][data-theme="niceties"],
+[data-color-mode="light"] .mod-link[data-theme="niceties"],
+[data-color-mode="light"] [data-theme="niceties"] { --mod: #c4a056; --mod-ink: #1a1408; }
 [data-color-mode="light"][data-theme="living-world"],
 [data-color-mode="light"] .mod-link[data-theme="living-world"],
 [data-color-mode="light"] [data-theme="living-world"] { --mod: #3f8a6e; --mod-ink: #081410; }
