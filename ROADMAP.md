@@ -1,6 +1,6 @@
 # Azrael series — ROADMAP
 
-Cross-mod vision for Strata, Homesteader, Stormproof, Nemesis, Deep Colony, and Living World.
+Cross-mod vision for Strata, Homesteader, Stormproof, Nemesis, Deep Colony, Living World, and Niceties.
 Per-mod later work lives in each mod’s roadmap:
 
 - [Strata V3 checklist (done vs left)](docs/strata-roadmap.html) · [post-V3 ideas](Strata/V3_ROADMAP.md)
@@ -9,6 +9,7 @@ Per-mod later work lives in each mod’s roadmap:
 - [Nemesis](Nemesis/ROADMAP.md)
 - [Deep Colony](Deep%20Colony/ROADMAP.md) — goodwill consumer (DC1 wired); 2.0 shipped; [Batch C](docs/ideas/deep-colony-batch-c.md)
 - [Living World (Phase 1–2 in-repo)](LivingWorld/ROADMAP.md) · [design](docs/ideas/living-world.md) — chronicle, morph, wars, refugees
+- [Niceties](Niceties/ROADMAP.md) — 1.6 QoL companion (apparel care, throne altars, outfit gender, cryptosleep bar, melee hunt)
 
 **This weekend:** [General fixes](docs/ideas/general-fixes.md) (Steam-first). Closed backlog: [weekend-steam-backlog.md](docs/ideas/weekend-steam-backlog.md).
 

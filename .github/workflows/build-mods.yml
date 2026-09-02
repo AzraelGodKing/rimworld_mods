@@ -1,7 +1,7 @@
 name: Build mod DLLs
 
 # Build Homesteader / Strata / Stormproof / Nemesis / DateNight / LivingWorld /
-# Deep Colony / Azrael on push to main and on PRs.
+# Deep Colony / Azrael / Niceties on push to main and on PRs.
 # On main (and workflow_dispatch): pack download zips with injected DLLs and publish
 # them to the rolling "latest" GitHub Release for the docs site buttons.
 # Also cuts an immutable prerelease tag downloads-YYYY-MM-DD-<sha7> so old zips stay
@@ -19,6 +19,7 @@ on:
       - "LivingWorld/Source/**"
       - "Deep Colony/Source/**"
       - "Azrael/Source/**"
+      - "Niceties/Source/**"
       - "scripts/build_downloads.ps1"
       - "scripts/pack_mod.sh"
       - "scripts/validate_mods.py"
@@ -35,6 +36,7 @@ on:
       - "LivingWorld/Source/**"
       - "Deep Colony/Source/**"
       - "Azrael/Source/**"
+      - "Niceties/Source/**"
       - "scripts/build_downloads.ps1"
       - "scripts/pack_mod.sh"
       - "scripts/validate_mods.py"
@@ -98,6 +100,9 @@ jobs:
       - name: Build Azrael
         run: dotnet build Azrael/Source/Azrael.csproj -c Release --nologo
 
+      - name: Build Niceties
+        run: dotnet build Niceties/Source/Niceties.csproj -c Release --nologo
+
       - name: Pack docs/downloads zips (with DLLs)
         if: github.event_name != 'pull_request'
         shell: bash
@@ -139,7 +144,7 @@ jobs:
             Packaged mod folders with CI-built assemblies for the docs site download buttons.
             Rebuilt on each relevant push to `main` (rolling tag — assets are overwritten).
             Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, and DateNight.
-            Living World and Azrael are in-repo only (not release-ready).
+            Living World, Azrael, and Niceties are in-repo only (not release-ready).
             Immutable copies of the same zips are tagged `downloads-YYYY-MM-DD-<sha7>` (prerelease).
             Shipped Workshop versions use Release & Publish (`Homesteader-v1.0.2`, …). See docs/VERSIONING.md.
           files: |
