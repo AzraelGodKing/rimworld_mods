@@ -10,6 +10,7 @@
 [*] [b]Melee hunting[/b] — hunters may hunt with a melee weapon, with a body-size cap. Unarmed hunting optional (off by default).
 [*] [b]Mod settings[/b] — each nicety is its own on/off. Extra knobs only show while that nicety is on. Soft / Default / Hard are starting points, not a bundle.
 [*] [b]Workshop preview[/b] — options-card collage (Homesteader straw-hat sprite + pixel icons), not a painted poster. Under Steam's 1 MB cap.
+[*] [b]Docs site[/b] — hub page and GitHub zip at [url]https://azraelgodking.github.io/rimworld_mods/niceties[/url].
 [/list]
 
 [i]Build stamp (Player.log): azr-105[/i]

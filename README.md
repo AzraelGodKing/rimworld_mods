@@ -101,11 +101,12 @@ Adds Date and Lovin timetable slots. Date is a walk / table hangout; Lovin still
 - Site: [datenight.html](https://azraelgodking.github.io/rimworld_mods/datenight.html)
 - [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip)
 
-### Niceties (in-repo)
+### Niceties
 
-Small colony comforts: well-kept apparel, throne-room altars, wear any gendered cut, hide cryptosleep from the colonist bar, and melee hunting. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Soft / Default / Hard presets; each toggle is independent. Not in the GitHub Release zips yet.
+Small colony comforts: well-kept apparel, throne-room altars, wear any gendered cut, hide cryptosleep from the colonist bar, and melee hunting. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Soft / Default / Hard presets; each toggle is independent.
 
-- [ROADMAP](Niceties/ROADMAP.md) · [changelog](Niceties/About/changelog.txt)
+- Site: [niceties](https://azraelgodking.github.io/rimworld_mods/niceties)
+- [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Niceties.zip)
 
 ## Installation
 
@@ -117,7 +118,7 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, and **Date Night** require the **Harmony** mod. **Living World**, **Azrael**, and **Niceties** are in-repo but not release-ready (not in the GitHub Release zips).
+4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Niceties** require the **Harmony** mod. **Living World** and **Azrael** are in-repo but not release-ready (not in the GitHub Release zips).
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally.
 
