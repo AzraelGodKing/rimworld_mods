@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Azrael_ScenPart_ForcedStorytellerSummary>Рассказчик зафиксирован на {0}.</Azrael_ScenPart_ForcedStorytellerSummary>
+
+  <Azrael_SettingsCategory>Azrael</Azrael_SettingsCategory>
+  <Azrael_Hub_Intro>Центр серии. Какие моды Azrael загружены и каких версий, какие мягкие мосты живы, и названные конфликты. Сделайте снимок или скопируйте отчёт, если нужна помощь.</Azrael_Hub_Intro>
+  <Azrael_Hub_Copy>Копировать отчёт</Azrael_Hub_Copy>
+  <Azrael_Hub_Copied>Скопировано в буфер.</Azrael_Hub_Copied>
+  <Azrael_Hub_Mods>Моды серии</Azrael_Hub_Mods>
+  <Azrael_Hub_Loaded>загружен</Azrael_Hub_Loaded>
+  <Azrael_Hub_NotLoaded>не загружен</Azrael_Hub_NotLoaded>
+  <Azrael_Hub_VersionUnknown>—</Azrael_Hub_VersionUnknown>
+  <Azrael_Hub_Bridges>Мягкая совместимость</Azrael_Hub_Bridges>
+  <Azrael_Hub_BridgeLive>активен</Azrael_Hub_BridgeLive>
+  <Azrael_Hub_BridgeWaiting>{0} не загружен</Azrael_Hub_BridgeWaiting>
+  <Azrael_Hub_BridgeNoHook>оба загружены — живого хука пока нет</Azrael_Hub_BridgeNoHook>
+  <Azrael_Hub_Bridge_RootCellar>Homesteader ↔ Strata — погреба</Azrael_Hub_Bridge_RootCellar>
+  <Azrael_Hub_Bridge_Wells>Homesteader ↔ Strata — колодцы</Azrael_Hub_Bridge_Wells>
+  <Azrael_Hub_Bridge_StormRooms>Strata ↔ Stormproof — подземные комнаты</Azrael_Hub_Bridge_StormRooms>
+  <Azrael_Hub_Bridge_NemesisDeep>Nemesis ↔ Deep Colony</Azrael_Hub_Bridge_NemesisDeep>
+  <Azrael_Hub_Bridge_LwGoodwill>Living World ↔ Deep Colony — расположение</Azrael_Hub_Bridge_LwGoodwill>
+  <Azrael_Hub_Conflicts>Конфликты</Azrael_Hub_Conflicts>
+  <Azrael_Hub_ConflictsNone>Не обнаружено.</Azrael_Hub_ConflictsNone>
+  <Azrael_Hub_Conflict_Stack>Многоуровневые карты конфликтуют со Strata. Не запускайте вместе со Strata.</Azrael_Hub_Conflict_Stack>
+  <Azrael_Hub_Conflict_Wellspring>Остаток отдельного Wellspring; вода теперь в Homesteader.</Azrael_Hub_Conflict_Wellspring>
+  <Azrael_Hub_Harmony>Harmony</Azrael_Hub_Harmony>
+  <Azrael_Hub_HarmonyNone>В журнале этой сессии нет упавших классов патчей серии.</Azrael_Hub_HarmonyNone>
+  <Azrael_Hub_HarmonyCount>В журнале {0} упавших классов патчей.</Azrael_Hub_HarmonyCount>
+
+</LanguageData>
