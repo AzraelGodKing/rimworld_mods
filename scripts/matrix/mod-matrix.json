@@ -102,7 +102,7 @@
     "csproj": "Niceties/Source/Niceties.csproj",
     "configuration": "",
     "zipName": "Niceties",
-    "publish": false,
+    "publish": true,
     "nexus": "",
     "nexus_mod_id": "",
     "nexus_file_id": ""
