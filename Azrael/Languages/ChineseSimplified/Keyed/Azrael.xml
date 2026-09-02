@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Azrael_ScenPart_ForcedStorytellerSummary>叙事者锁定为 {0}。</Azrael_ScenPart_ForcedStorytellerSummary>
+
+  <Azrael_SettingsCategory>Azrael</Azrael_SettingsCategory>
+  <Azrael_Hub_Intro>系列总览。已加载的 Azrael 模组与版本、当前生效的软兼容桥，以及已知冲突。求助时请截此页或复制报告。</Azrael_Hub_Intro>
+  <Azrael_Hub_Copy>复制报告</Azrael_Hub_Copy>
+  <Azrael_Hub_Copied>已复制到剪贴板。</Azrael_Hub_Copied>
+  <Azrael_Hub_Mods>系列模组</Azrael_Hub_Mods>
+  <Azrael_Hub_Loaded>已加载</Azrael_Hub_Loaded>
+  <Azrael_Hub_NotLoaded>未加载</Azrael_Hub_NotLoaded>
+  <Azrael_Hub_VersionUnknown>—</Azrael_Hub_VersionUnknown>
+  <Azrael_Hub_Bridges>软兼容</Azrael_Hub_Bridges>
+  <Azrael_Hub_BridgeLive>生效</Azrael_Hub_BridgeLive>
+  <Azrael_Hub_BridgeWaiting>{0} 未加载</Azrael_Hub_BridgeWaiting>
+  <Azrael_Hub_BridgeNoHook>两者均已加载 — 尚无生效钩子</Azrael_Hub_BridgeNoHook>
+  <Azrael_Hub_Bridge_RootCellar>Homesteader ↔ Strata — 地窖</Azrael_Hub_Bridge_RootCellar>
+  <Azrael_Hub_Bridge_Wells>Homesteader ↔ Strata — 水井</Azrael_Hub_Bridge_Wells>
+  <Azrael_Hub_Bridge_StormRooms>Strata ↔ Stormproof — 地下房间</Azrael_Hub_Bridge_StormRooms>
+  <Azrael_Hub_Bridge_NemesisDeep>Nemesis ↔ Deep Colony</Azrael_Hub_Bridge_NemesisDeep>
+  <Azrael_Hub_Bridge_LwGoodwill>Living World ↔ Deep Colony — 好感</Azrael_Hub_Bridge_LwGoodwill>
+  <Azrael_Hub_Conflicts>冲突</Azrael_Hub_Conflicts>
+  <Azrael_Hub_ConflictsNone>未检测到。</Azrael_Hub_ConflictsNone>
+  <Azrael_Hub_Conflict_Stack>多层地图会与 Strata 冲突。请勿与 Strata 同时启用。</Azrael_Hub_Conflict_Stack>
+  <Azrael_Hub_Conflict_Wellspring>残留的独立 Wellspring；水源内容已并入 Homesteader。</Azrael_Hub_Conflict_Wellspring>
+  <Azrael_Hub_Harmony>Harmony</Azrael_Hub_Harmony>
+  <Azrael_Hub_HarmonyNone>本局日志中没有失败的系列 Harmony 补丁类。</Azrael_Hub_HarmonyNone>
+  <Azrael_Hub_HarmonyCount>日志中有 {0} 个失败的补丁类。</Azrael_Hub_HarmonyCount>
+
+</LanguageData>

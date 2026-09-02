@@ -38,6 +38,11 @@ AZRAEL (storyteller)
 - This mod injects the same storyteller only if Homesteader is not loaded (no duplicate defs when both are active).
 - Cassandra-style pacing with slightly more Misc and ThreatSmall pressure.
 
+SERIES HUB (Mod Options → Azrael)
+- Lists which series mods are loaded and their About versions.
+- Shows live soft-compat bridges and names known conflicts (AASB / MultiFloors with Strata).
+- Copy report for support; screenshot the same panel.
+
 REQUIRES
 - Harmony. RimWorld 1.6.
 
