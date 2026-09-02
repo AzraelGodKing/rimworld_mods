@@ -36,7 +36,7 @@ Nexus cannot create a mod page from CI. Once a page exists and you have uploaded
 
 Empty `nexus_file_id` → GitHub Release still works; Nexus is skipped with a warning.
 
-Living World and Azrael have `"publish": false` in the matrix. They stay in-repo; **Release & Publish** and the rolling `latest` zips omit them until that flag is flipped.
+Living World, Azrael, and Niceties have `"publish": false` in the matrix. They stay in-repo; **Release & Publish** and the rolling `latest` zips omit them until that flag is flipped.
 
 ## Local pack check
 
