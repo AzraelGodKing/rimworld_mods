@@ -4,6 +4,7 @@
 
 - [x] Scenario **The Deep Homestead** (forced Azrael, MayRequire Homesteader/Strata)
 - [x] Standalone **Azrael** storyteller inject when Homesteader absent (canonical teller lives in Homesteader)
+- [x] Series hub (Mod Options → Azrael): loaded mods + versions, live bridges, named conflicts, copy-report
 
 ## Later
 
