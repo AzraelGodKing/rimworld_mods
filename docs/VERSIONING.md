@@ -10,6 +10,8 @@ Do **not** bump on every PR. Do **not** bump inside CI. **Release & Publish** re
 
 CI (`scripts/validate_mods.py`) fails if `modVersion` has no changelog block.
 
+Build stamps in Player.log and `About/changelog.txt` are a short feature name (`shared-rooms-v1`), not a Linear id. Never put `AZR-xx` / `azr-xx` in the stamp.
+
 ## Three GitHub artifacts
 
 | What | Tag | Mutable? |
