@@ -51,7 +51,8 @@ namespace Niceties
     // bar layout matches the filtered list (mutating cachedEntries after layout is what
     // crashed older hide-from-bar mods).
     [HarmonyPatch(typeof(ColonistBarDrawLocsFinder), "CalculateDrawLocs")]
-    [HarmonyPatch(new[] { typeof(List<Vector2>), typeof(float) }, new[] { ArgumentType.Normal, ArgumentType.Ref })]
+    [HarmonyPatch(new[] { typeof(List<Vector2>), typeof(float), typeof(int) },
+        new[] { ArgumentType.Normal, ArgumentType.Ref, ArgumentType.Normal })]
     internal static class Patch_ColonistBarDrawLocs
     {
         private static void Prefix()

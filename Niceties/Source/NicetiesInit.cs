@@ -13,7 +13,7 @@ namespace Niceties
             ApparelGender.Capture();
             ApparelGender.Apply(NicetiesMod.Settings?.wearAnyGender ?? true);
             LongEventHandler.ExecuteWhenFinished(() =>
-                ModVersionLog.Write("[Niceties]", extra: "shared-rooms-v1"));
+                ModVersionLog.Write("[Niceties]", extra: "shared-rooms-v2"));
         }
     }
 }

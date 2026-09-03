@@ -41,7 +41,7 @@ namespace Niceties
             {
                 defaultLabel = "Niceties_ShareRoom".Translate(),
                 defaultDesc = "Niceties_ShareRoomTip".Translate(),
-                icon = SharedRooms.GizmoIcon,
+                icon = ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner", reportFailure: false),
                 isActive = () => SharedRooms.IsMarked(bed),
                 toggleAction = () => SharedRooms.Toggle(bed)
             };
@@ -61,21 +61,6 @@ namespace Niceties
 
     internal static class SharedRooms
     {
-        private static Texture2D gizmoIcon;
-
-        internal static Texture2D GizmoIcon
-        {
-            get
-            {
-                if (gizmoIcon == null)
-                {
-                    gizmoIcon = ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner", reportFailure: false);
-                }
-
-                return gizmoIcon;
-            }
-        }
-
         internal static void InjectComps()
         {
             int injected = 0;
