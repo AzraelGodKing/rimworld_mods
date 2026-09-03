@@ -22,7 +22,7 @@ namespace Niceties
                 return;
             }
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 980f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 1140f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(viewRect);
@@ -84,6 +84,15 @@ namespace Niceties
                 listing.Label("Niceties_Settings_MeleeSize".Translate(
                     Settings.meleeHuntMaxBodySize.ToString("F1")));
                 Settings.meleeHuntMaxBodySize = listing.Slider(Settings.meleeHuntMaxBodySize, 0.2f, 8f);
+            }
+
+            DrawFeature(listing, "Niceties_Settings_SharedRooms", "Niceties_Settings_SharedRoomsTip",
+                ref Settings.enableSharedRooms, null);
+            if (Settings.enableSharedRooms)
+            {
+                listing.CheckboxLabeled("Niceties_Settings_SkipDisturbedSleep".Translate(),
+                    ref Settings.skipDisturbedSleepWhenSharing,
+                    "Niceties_Settings_SkipDisturbedSleepTip".Translate());
             }
 
             listing.GapLine();

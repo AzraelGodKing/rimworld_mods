@@ -9,10 +9,11 @@ namespace Niceties
         static NicetiesInit()
         {
             HarmonyPatchAll.Apply(new Harmony("azraelgodking.niceties"), "[Niceties]");
+            SharedRooms.InjectComps();
             ApparelGender.Capture();
             ApparelGender.Apply(NicetiesMod.Settings?.wearAnyGender ?? true);
             LongEventHandler.ExecuteWhenFinished(() =>
-                ModVersionLog.Write("[Niceties]", extra: "azr-105"));
+                ModVersionLog.Write("[Niceties]", extra: "shared-rooms-v1"));
         }
     }
 }
