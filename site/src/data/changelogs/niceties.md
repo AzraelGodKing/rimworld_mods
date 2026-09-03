@@ -1,8 +1,20 @@
 # Changelog
 
+Detailed notes for **Niceties** only. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
+
+Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
+
 ## [Unreleased]
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.0.0 loaded from ...; azr-105` in Player.log.
+Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.1.0 loaded from ...; shared-rooms-v1` in Player.log.
+
+### Added
+
+- **Shared bedrooms** (`azr-106`) — bed gizmo marks the room as shared. It stays a bedroom instead of barracks, so Slept in bedroom and royal bedroom still apply. Pawns who share a room (marked, or another colonist assigned a bed there) skip `SleepDisturbed`. Does not suppress sharing-a-bed-with-a-non-partner. Inspired by Share Rooms [LWM]; original 1.6 code.
+
+## [1.0.0]
+
+Player-facing version **1.0.0**. Startup wrote `[Niceties] v1.0.0 loaded from ...` in Player.log.
 
 ### Added
 

@@ -28,6 +28,13 @@
   <Niceties_Settings_UnarmedHunt>Unarmed hunting</Niceties_Settings_UnarmedHunt>
   <Niceties_Settings_UnarmedHuntTip>Hunters with no weapon may still hunt (fists). Off by default — easy to get someone killed.</Niceties_Settings_UnarmedHuntTip>
   <Niceties_Settings_MeleeSize>Melee hunt max body size: {0}</Niceties_Settings_MeleeSize>
+  <Niceties_Settings_SharedRooms>Shared bedrooms</Niceties_Settings_SharedRooms>
+  <Niceties_Settings_SharedRoomsTip>A gizmo on a bed marks the room as shared. It stays a bedroom instead of flipping to barracks, so roommates (and royalty) are not punished for living together.</Niceties_Settings_SharedRoomsTip>
+  <Niceties_Settings_SkipDisturbedSleep>No disturbed sleep for roommates</Niceties_Settings_SkipDisturbedSleep>
+  <Niceties_Settings_SkipDisturbedSleepTip>Pawns who share a room (marked shared, or another colonist assigned a bed there) do not gain the disturbed-sleep thought. Walking through someone else's private room still disturbs them.</Niceties_Settings_SkipDisturbedSleepTip>
+  <Niceties_ShareRoom>Share room</Niceties_ShareRoom>
+  <Niceties_ShareRoomTip>Mark this bedroom as shared. Extra beds stay a bedroom instead of a barracks. Roommates skip the sharing-a-room mood hit.</Niceties_ShareRoomTip>
+  <Niceties_ShareRoomInspect>Room is shared.</Niceties_ShareRoomInspect>
   <Niceties_Settings_Reset>Reset to defaults</Niceties_Settings_Reset>
 
   <Niceties_Apparel_NoWear>Daily wear: none (well kept).</Niceties_Apparel_NoWear>
