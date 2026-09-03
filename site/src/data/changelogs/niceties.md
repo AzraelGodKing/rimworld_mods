@@ -6,11 +6,16 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.1.0 loaded from ...; shared-rooms-v1` in Player.log.
+Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.1.0 loaded from ...; shared-rooms-v2` in Player.log.
 
 ### Added
 
 - **Shared bedrooms** (`azr-106`) — bed gizmo marks the room as shared. It stays a bedroom instead of barracks, so Slept in bedroom and royal bedroom still apply. Pawns who share a room (marked, or another colonist assigned a bed there) skip `SleepDisturbed`. Does not suppress sharing-a-bed-with-a-non-partner. Inspired by Share Rooms [LWM]; original 1.6 code.
+
+### Fixed
+
+- **Colonist bar** — `ColonistBarDrawLocsFinder.CalculateDrawLocs` is the 1.6 three-arg overload (`List<Vector2>`, `ref float`, `int`). The old two-arg patch was `method null` and logged red; hidden cryptosleep pawns now filter before layout.
+- **Share-room gizmo** — no cached `Texture2D` static field, so RimWorld does not warn about a missing `StaticConstructorOnStartup`.
 
 ## [1.0.0]
 
