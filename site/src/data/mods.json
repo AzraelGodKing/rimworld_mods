@@ -629,10 +629,10 @@
       "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3794727164",
       "accent": "#c4a056",
       "preview": "img/NicetiesPreview.png",
-      "tagline": "Small colony comforts: well-kept apparel, throne-room altars, any outfit cut, hidden cryptosleep, and melee hunting.",
+      "tagline": "Small colony comforts: well-kept apparel, throne-room altars, any outfit cut, hidden cryptosleep, melee hunting, and shared bedrooms.",
       "badges": ["RimWorld 1.6", "Requires Harmony", "QoL"],
       "overview": [
-        "Vanilla never shipped these five. Niceties is one Harmony QoL companion: each nicety is its own Mod Options toggle. Soft / Default / Hard only seed the knobs — they are not a forced bundle.",
+        "Vanilla never shipped these. Niceties is one Harmony QoL companion: each nicety is its own Mod Options toggle. Soft / Default / Hard only seed the knobs — they are not a forced bundle.",
         "Combat, fire, and outdoor rot stay vanilla. Royalty and Ideology are optional; those toggles no-op without the DLC. Safe to add or remove mid-save. Inspired by older Workshop ideas, rewritten from scratch for 1.6 — not a port of those mods."
       ],
       "featureTabs": [
@@ -679,6 +679,16 @@
           ]
         },
         {
+          "id": "rooms",
+          "label": "Shared bedrooms",
+          "features": [
+            { "title": "Mark the room", "body": "Select a bed and toggle Share room. Every bed in that room shares the flag." },
+            { "title": "Stays a bedroom", "body": "Extra beds no longer flip the room to barracks, so Slept in bedroom and royal bedroom requirements still apply." },
+            { "title": "No disturbed sleep", "body": "Pawns who share a room — marked, or another colonist assigned a bed there — skip the disturbed-sleep thought. A private room still notices haulers walking through." },
+            { "title": "Same mattress", "body": "Sharing one bed with someone who is not a partner is still vanilla." }
+          ]
+        },
+        {
           "id": "settings",
           "label": "Settings",
           "features": [
@@ -693,7 +703,7 @@
       "goodToKnow": [
         "Safe to add or remove mid-save.",
         "Requires Harmony. Royalty and Ideology are optional.",
-        "Do not run alongside Jecs Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, or Hide Cryptosleep Pawn — they overlap the same jobs.",
+        "Do not run alongside Jecs Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, or Share Rooms [LWM] — they overlap the same jobs.",
         "Workshop preview is an options-card collage (Homesteader straw-hat sprite + pixel icons), not a painted poster."
       ],
       "compatibility": {
@@ -708,7 +718,8 @@
           { "name": "Jecs Everlasting Apparel", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=909429482", "note": "Overlaps well-kept apparel" },
           { "name": "Allow Altars in Throneroom", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3725636235", "note": "Overlaps throne-and-altar" },
           { "name": "Wear What You Want", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2079833048", "note": "Overlaps wear-any-outfit" },
-          { "name": "Hide Cryptosleep Pawn", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3401278576", "note": "Overlaps hidden cryptosleep" }
+          { "name": "Hide Cryptosleep Pawn", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3401278576", "note": "Overlaps hidden cryptosleep" },
+          { "name": "Share Rooms [LWM]", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3398139756", "note": "Overlaps shared bedrooms" }
         ],
         "notes": [
           "Harmony patches fail-open: one missing target logs and skips instead of aborting the rest of Niceties."

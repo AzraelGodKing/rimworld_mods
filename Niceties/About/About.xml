@@ -6,7 +6,7 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">1.0.0</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.1.0</modVersion>
   <incompatibleWith>
     <li>Jecrell166.JecsHEverlastingHApparel</li>
     <li>z4k97b.altarsinthroneroom</li>
@@ -47,6 +47,9 @@ Pawns already in a cryptosleep casket drop off the colonist bar. Carrying someon
 MELEE HUNTING
 Hunters may hunt with a melee weapon. A body-size cap keeps people from charging a thrumbo with a knife unless you raise it. Unarmed hunting is optional and off by default.
 
+SHARED BEDROOMS
+Select a bed and mark the room as shared. Extra beds stay a bedroom (not barracks), so roommates and royalty are not punished for living together. Pawns who share a room do not get the disturbed-sleep thought. Sharing one mattress with a non-partner is still vanilla.
+
 SETTINGS
 Each nicety is independently on or off. Extra knobs (quality scaling, unarmed hunt, body-size cap) only apply while that nicety is on.
 Soft / Default / Hard change those knobs, not a forced bundle:
@@ -56,5 +59,5 @@ Soft / Default / Hard change those knobs, not a forced bundle:
 
 Requires Harmony. RimWorld 1.6. Royalty and Ideology optional (those toggles no-op without the DLC). Safe to add or remove mid-save.
 
-Inspired by ideas from Jecrell's Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, and Melee Hunting — rewritten from scratch, not a continuation of those mods.</description>
+Inspired by ideas from Jecrell's Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Melee Hunting, and Share Rooms — rewritten from scratch, not a continuation of those mods.</description>
 </ModMetaData>
