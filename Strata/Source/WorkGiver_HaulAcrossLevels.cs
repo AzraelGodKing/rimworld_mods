@@ -96,6 +96,12 @@ namespace Strata
             {
                 return true;
             }
+            // AZR-100 — Biotech Paramedics (and other mechs) were taking stair
+            // haul jobs on their own and walking cargo to themselves.
+            if (!forced && pawn != null && pawn.RaceProps.IsMechanoid)
+            {
+                return true;
+            }
             return !LevelGraph.AnyLinkFrom(pawn.Map);
         }
 
@@ -400,6 +406,10 @@ namespace Strata
                     continue;
                 }
                 if (dest is not Thing destThing || !destThing.Spawned || destThing.Map != map)
+                {
+                    continue;
+                }
+                if (destThing is Pawn)
                 {
                     continue;
                 }
