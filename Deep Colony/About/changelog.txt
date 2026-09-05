@@ -1,11 +1,6 @@
 1.6.3
 [h1]Deep Colony — 1.6.3[/h1]
 
-[b]Added[/b]
-[list]
-
-[/list]
-
 [b]Fixed[/b]
 [list]
 [*] [b]Perk hediffs on save load (AZR-107)[/b] — loading a colony no longer re-grants or revokes perk hediffs. Existing bonuses stay; new colonists still unlock from skill levels.
