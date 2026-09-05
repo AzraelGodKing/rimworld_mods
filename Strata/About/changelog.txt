@@ -1,3 +1,22 @@
+3.3.0
+[h1]Strata — 3.3.0[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Elevator call, hold, and priority (AZR-64)[/b] — gizmos on both landings. Hold keeps the car off transit hops; priority 1–5 steers automatic routing.
+[*] [b]Level stamp (AZR-61)[/b] — Stamp on the Levels tab copies walls, doors, floors, and stockpiles onto a linked floor as blueprints. Rotate first.
+[*] [b]Support overlay (AZR-63)[/b] — play-settings toggle marks excavated cells past a roof holder or pillar. Cave-ins prefer those cells.
+[/list]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Sleep on the ground (AZR-101)[/b] — assigned beds on another floor no longer lose to a dirt nap when the stair commute fails.
+[*] [b]Paramedic stair hauls (AZR-100)[/b] — mechanoids no longer auto-export items through stairs. Cargo is not dropped on a pawn.
+[*] [b]Undug rock fog (AZR-57)[/b] — mining no longer lights neighboring unmined rock. Walk the tunnel to see it.
+[/list]
+
+[i]Build stamp (Player.log): floors-pack-v1[/i]
+
 3.2.1
 [h1]Strata — 3.2.1[/h1]
 
