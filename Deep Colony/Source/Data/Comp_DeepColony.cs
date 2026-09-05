@@ -246,6 +246,7 @@ namespace DeepColony
         public void SyncPerksToSkillLevels(bool announce)
         {
             if (!DeepColonySettings.Get.enablePerks) return;
+            if (IsScribeLoading) return;
             var pawn = Pawn;
             if (pawn?.skills == null) return;
 
@@ -308,6 +309,7 @@ namespace DeepColony
         public void RevokePerk(PerkDef perk, bool announce)
         {
             if (perk == null || !HasPerk(perk)) return;
+            if (IsScribeLoading) return;
             var pawn = Pawn;
             unlockedPerkDefNames.Remove(perk.defName);
             if (perk.hediff != null && pawn?.health != null)
@@ -464,6 +466,7 @@ namespace DeepColony
 
         public void TryBackfillPerkGatePoints(bool announce = true)
         {
+            if (perkGatesBackfilled) return;
             perkGatesBackfilled = true;
             if (!DeepColonySettings.Get.enablePerks) return;
             SyncPerksToSkillLevels(announce: announce);
@@ -607,9 +610,15 @@ namespace DeepColony
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            TryBackfillPerkGatePoints(announce: !respawningAfterLoad);
             if (!respawningAfterLoad)
+            {
+                TryBackfillPerkGatePoints(announce: true);
                 TryAutoSpendRecruitPerks();
+            }
+            else if (!perkGatesBackfilled)
+            {
+                TryBackfillPerkGatePoints(announce: false);
+            }
             SeedPeakSkillsFromCurrent();
             ReapplyPerkHediffs();
             ArchetypeUtility.TryRefresh(Pawn);
@@ -627,12 +636,34 @@ namespace DeepColony
             }
         }
 
+        private static bool IsScribeLoading =>
+            Scribe.mode == LoadSaveMode.LoadingVars || Scribe.mode == LoadSaveMode.PostLoadInit;
+
+        /// <summary>
+        /// Record perk hediffs already on the pawn (save XML) without AddHediff.
+        /// Load IDs are already registered; a second add duplicates them.
+        /// </summary>
+        private void AdoptExistingPerkHediffs()
+        {
+            var pawn = Pawn;
+            if (pawn?.health?.hediffSet == null) return;
+            if (!DeepColonySettings.Get.enablePerks) return;
+
+            foreach (PerkDef perk in DefDatabase<PerkDef>.AllDefsListForReading)
+            {
+                if (perk?.hediff == null || HasPerk(perk)) continue;
+                if (pawn.health.hediffSet.HasHediff(perk.hediff))
+                    unlockedPerkDefNames.Add(perk.defName);
+            }
+        }
+
         private void ReapplyPerkHediffs()
         {
             var pawn = Pawn;
             if (pawn?.health == null) return;
             if (!DeepColonySettings.Get.enablePerks) return;
 
+            AdoptExistingPerkHediffs();
             for (int i = 0; i < unlockedPerkDefNames.Count; i++)
             {
                 PerkDef perk = DefDatabase<PerkDef>.GetNamedSilentFail(unlockedPerkDefNames[i]);
@@ -644,7 +675,13 @@ namespace DeepColony
         {
             var pawn = Pawn;
             if (pawn?.health == null || perk?.hediff == null) return;
-            if (pawn.health.hediffSet.HasHediff(perk.hediff)) return;
+            if (pawn.health.hediffSet.HasHediff(perk.hediff))
+            {
+                if (!HasPerk(perk)) unlockedPerkDefNames.Add(perk.defName);
+                return;
+            }
+            // HediffSet can miss save-owned hediffs during PostLoadInit.
+            if (IsScribeLoading) return;
 
             Hediff h = HediffMaker.MakeHediff(perk.hediff, pawn);
             pawn.health.AddHediff(h);
@@ -931,10 +968,10 @@ namespace DeepColony
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                TryBackfillPerkGatePoints(announce: false);
+                AdoptExistingPerkHediffs();
+                if (unlockedPerkDefNames.Count > 0)
+                    perkGatesBackfilled = true;
                 SeedPeakSkillsFromCurrent();
-                ReapplyPerkHediffs();
-                ArchetypeUtility.TryRefresh(Pawn);
                 NoteUnspentPointsChanged();
             }
         }
