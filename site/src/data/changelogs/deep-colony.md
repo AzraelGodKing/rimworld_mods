@@ -6,11 +6,12 @@ Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
 
 ## [Unreleased]
 
-Player-facing version **1.6.2** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.2 build identity-pack-v1` in Player.log.
+Player-facing version **1.6.2** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.2 build perk-load-v1` in Player.log.
 
-AZR-102 AZR-72 AZR-71 AZR-73 AZR-97 AZR-65 AZR-70
+AZR-107 AZR-102 AZR-72 AZR-71 AZR-73 AZR-97 AZR-65 AZR-70
 
 ### Fixed
+- **Perk hediffs on save load** (`perk-load-v1`, AZR-107) — `PostLoadInit` no longer runs `SyncPerksToSkillLevels`. That path re-granted perk hediffs already in the save (duplicate load IDs / `Cannot register Hediff_Perk`) and revoked others when skill checks failed mid-load. Existing hediffs are adopted; missing ones are reapplied after spawn. New colonists still auto-grant from skill levels. Soft / Default / Hard do not change this.
 - **Visitor perk popups** (`identity-pack-v1`, AZR-102) — auto-perk messages (`reached the skill for …`) no longer fire for visitors, guests, or raiders when they spawn. A caravan of skilled NPCs used to dump one message per perk and hitch low-end PCs. Colonist unlocks still show. New settings toggle **Announce perk unlocks for visitors** (default off). Soft / Default / Hard do not change this. EN/CN/RU.
 - **Mid-save install** (`patch-162-v1`) — rivalry, touch-need, family life/echo, family join, and ex-lover reconcile now run off `TicksGame % 2500`. The old saved `driftTickCounter` started at 0 when you added the mod to an existing colony and never lined up with the game clock, so those systems never fired.
 - **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Deep Colony.
