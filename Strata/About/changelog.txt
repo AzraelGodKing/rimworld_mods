@@ -13,9 +13,10 @@
 [*] [b]Sleep on the ground (AZR-101)[/b] — assigned beds on another floor no longer lose to a dirt nap when the stair commute fails.
 [*] [b]Paramedic stair hauls (AZR-100)[/b] — mechanoids no longer auto-export items through stairs. Cargo is not dropped on a pawn.
 [*] [b]Undug rock fog (AZR-57)[/b] — mining no longer lights neighboring unmined rock. Walk the tunnel to see it.
+[*] [b]Harmony JobDriver Cleanup[/b] — cross-level jobs no longer log patch errors on inherited Cleanup. Stair jobs still work.
 [/list]
 
-[i]Build stamp (Player.log): floors-pack-v1[/i]
+[i]Build stamp (Player.log): harmony-jobdriver-v1[/i]
 
 3.2.1
 [h1]Strata — 3.2.1[/h1]
