@@ -46,6 +46,7 @@ namespace Strata
         private const float ViewButtonWidth = 64f;
         private const float RenameButtonWidth = 72f;
         private const float RoleButtonWidth = 72f;
+        private const float StampButtonWidth = 64f;
 
         private readonly List<Row> rows = new List<Row>();
         private int lastRowsBuildTick = -9999;
@@ -65,7 +66,7 @@ namespace Strata
         {
             get
             {
-                Vector2 computed = new Vector2(720f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
+                Vector2 computed = new Vector2(784f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
                 return savedSize == Vector2.zero
                     ? computed
                     : new Vector2(Mathf.Max(savedSize.x, 420f), Mathf.Max(savedSize.y, 120f));
@@ -234,10 +235,15 @@ namespace Strata
                 Widgets.Label(new Rect(rowRect.x + colHostiles, rowRect.y, colTemp - colHostiles, RowHeight),
                     hostiles.ToString());
                 GUI.color = Color.white;
-                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, RowHeight),
+                Widgets.Label(new Rect(rowRect.x + colTemp, rowRect.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth - StampButtonWidth, RowHeight),
                     row.map.mapTemperature.OutdoorTemp.ToStringTemperature("F0"));
                 Text.Anchor = TextAnchor.UpperLeft;
 
+                Rect stampRect = new Rect(rowRect.xMax - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth - StampButtonWidth, rowRect.y + 3f, StampButtonWidth - 4f, RowHeight - 6f);
+                if (Widgets.ButtonText(stampRect, "Strata_StampButton".Translate()))
+                {
+                    Find.WindowStack.Add(new Dialog_LevelStamp(row.map));
+                }
                 Rect roleRect = new Rect(rowRect.xMax - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, rowRect.y + 3f, RoleButtonWidth - 4f, RowHeight - 6f);
                 LevelRole role = LevelRoleUtility.GetRole(row.map);
                 if (Widgets.ButtonText(roleRect, LevelRoleUtility.Label(role)))
@@ -254,7 +260,7 @@ namespace Strata
                 {
                     JumpTo(row.map);
                 }
-                if (Widgets.ButtonInvisible(new Rect(rowRect.x, rowRect.y, rowRect.width - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, RowHeight)))
+                if (Widgets.ButtonInvisible(new Rect(rowRect.x, rowRect.y, rowRect.width - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth - StampButtonWidth, RowHeight)))
                 {
                     JumpTo(row.map);
                 }

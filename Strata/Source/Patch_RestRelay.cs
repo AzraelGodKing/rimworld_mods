@@ -27,6 +27,11 @@ namespace Strata
             if (commute != null)
             {
                 __result = commute;
+                return;
+            }
+            if (SleepRelay.ShouldBlockGroundSleep(pawn, __result))
+            {
+                __result = null;
             }
         }
     }
@@ -49,6 +54,11 @@ namespace Strata
             if (commute != null)
             {
                 __result = commute;
+                return;
+            }
+            if (SleepRelay.ShouldBlockGroundSleep(pawn, __result))
+            {
+                __result = null;
             }
         }
     }

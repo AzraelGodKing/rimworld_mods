@@ -25,6 +25,11 @@ namespace Strata
             {
                 __instance.components.Add(new ShoringMapComponent(__instance));
             }
+            if (__instance.GetComponent<MapComponent_SupportOverlay>() == null
+                && StrataMapUtility.IsUnderground(__instance))
+            {
+                __instance.components.Add(new MapComponent_SupportOverlay(__instance));
+            }
             if (__instance.GetComponent<FloodMapComponent>() == null)
             {
                 __instance.components.Add(new FloodMapComponent(__instance));
