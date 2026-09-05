@@ -13,8 +13,9 @@
 
 [b]Fixed[/b]
 [list]
+[*] [b]Perk hediffs on save load (AZR-107)[/b] — loading a colony no longer re-grants or revokes perk hediffs. Existing bonuses stay; new colonists still unlock from skill levels.
 [*] [b]Visitor perk popups (AZR-102)[/b] — guests, traders, and raiders no longer spam "reached the skill for …" on spawn (that hitch on slower PCs). Colonist unlocks still show. Optional setting if you want visitor messages back.
 [/list]
 
-[i]Build stamp (Player.log): identity-pack-v1[/i]
+[i]Build stamp (Player.log): perk-load-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]

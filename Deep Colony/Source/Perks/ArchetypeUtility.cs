@@ -8,6 +8,8 @@ namespace DeepColony
         public static void TryRefresh(Pawn pawn)
         {
             if (pawn == null) return;
+            if (Scribe.mode == LoadSaveMode.LoadingVars || Scribe.mode == LoadSaveMode.PostLoadInit)
+                return;
             var comp = pawn.TryGetComp<Comp_DeepColony>();
             if (comp == null) return;
 
