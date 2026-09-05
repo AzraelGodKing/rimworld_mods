@@ -18,7 +18,7 @@
   <Strata_Settings_OffThreadWorkRelay>Доска работ вне основного потока</Strata_Settings_OffThreadWorkRelay>
   <Strata_Settings_OffThreadWorkRelayDesc>Фоновый сканер заполняет доску работ по этажам; маршрут работы только читает её (без зондов на каждом простое). Флаги грядок могут считаться в рабочем потоке. По умолчанию вкл. при маршруте работы; выкл. в режиме производительности.</Strata_Settings_OffThreadWorkRelayDesc>
   <Strata_Settings_HaulAcrossLevels>Перенос между уровнями</Strata_Settings_HaulAcrossLevels>
-  <Strata_Settings_HaulAcrossLevelsDesc>Колонисты и боты берут задания на перенос через лестницы на склады / стройки связанных этажей. Отдельно от маршрута работы.</Strata_Settings_HaulAcrossLevelsDesc>
+  <Strata_Settings_HaulAcrossLevelsDesc>Колонисты берут задания на перенос через лестницы на склады / стройки связанных этажей. Механоиды (включая парамедика) сами не возят груз по лестницам. Отдельно от маршрута работы.</Strata_Settings_HaulAcrossLevelsDesc>
   <Strata_Settings_RobotSoftCompat>Совместимость с Misc. Robots</Strata_Settings_RobotSoftCompat>
   <Strata_Settings_RobotSoftCompatDesc>Межуровневая маршрутизация роботов Misc. Robots через порталы (возврат на базу, если зарядка на другом уровне). Выключите для проверки, не вызывают ли хуки Strata лаги.</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Маршрут работы Misc. Robots</Strata_Settings_RobotWorkRelay>
@@ -369,5 +369,26 @@
   <Strata_Alert_LowOxygen_Explanation>В подземных комнатах колонии мало кислорода. Вентилируйте, откройте шахту, посадите растения или постройте кислородный насос, пока поселенцы не задохнулись.</Strata_Alert_LowOxygen_Explanation>
   <Strata_Alert_HighCO2_Label>Высокий CO₂ под землёй</Strata_Alert_HighCO2_Label>
   <Strata_Alert_HighCO2_Explanation>Вокруг поселенцев под землёй растёт углекислый газ. Очистите воздух, проветрите или откройте путь к свежему воздуху.</Strata_Alert_HighCO2_Explanation>
+
+  <Strata_ElevatorCall>Вызвать лифт</Strata_ElevatorCall>
+  <Strata_ElevatorCallDesc>Выбранные колонисты на этом этаже сейчас сядут в этот лифт.</Strata_ElevatorCallDesc>
+  <Strata_ElevatorCallNone>Выберите колониста на этом этаже, который может дойти до лифта.</Strata_ElevatorCallNone>
+  <Strata_ElevatorHold>Держать на этаже</Strata_ElevatorHold>
+  <Strata_ElevatorHoldDesc>Кабина остаётся на этом пролёте. Автомаршрут не использует её как путь на третий этаж.</Strata_ElevatorHoldDesc>
+  <Strata_ElevatorPriority>Приоритет {0}</Strata_ElevatorPriority>
+  <Strata_ElevatorPriorityDesc>Более высокий приоритет выбирается при перевозке и переходах. Нажмите, чтобы сменить 1–5.</Strata_ElevatorPriorityDesc>
+  <Strata_ElevatorPriorityInspect>Приоритет лифта: {0}</Strata_ElevatorPriorityInspect>
+  <Strata_ElevatorHeldInspect>Удержан на этом этаже</Strata_ElevatorHeldInspect>
+
+  <Strata_StampButton>Штамп</Strata_StampButton>
+  <Strata_StampTitle>Скопировать этаж на другой уровень</Strata_StampTitle>
+  <Strata_StampSource>Источник: {0}</Strata_StampSource>
+  <Strata_StampNoDest>Нет связанного этажа для штампа.</Strata_StampNoDest>
+  <Strata_StampStockpiles>Включить зоны складов</Strata_StampStockpiles>
+  <Strata_StampRotate>Поворот: {0}</Strata_StampRotate>
+  <Strata_StampConfirm>Поставить чертежи</Strata_StampConfirm>
+  <Strata_StampDone>На целевой этаж нанесено {0} элементов.</Strata_StampDone>
+
+  <Strata_PlaySettings_SupportOverlayTip>Strata: опора\nПодсвечивает выработки под толстой скалой вне держателя крыши или стойки. Обвалы бьют туда в первую очередь.</Strata_PlaySettings_SupportOverlayTip>
 
 </LanguageData>
