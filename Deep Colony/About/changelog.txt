@@ -1,20 +1,14 @@
-1.6.2
-[h1]Deep Colony — 1.6.2[/h1]
+1.6.3
+[h1]Deep Colony — 1.6.3[/h1]
 
 [b]Added[/b]
 [list]
-[*] [b]Known trauma triggers (AZR-72)[/b] — after the first flashback, inspect shows what sets them off (fire, insects, capture, and so on). Hidden until it happens.
-[*] [b]Colony chronicle (AZR-71)[/b] — Export chronicle on the Legacy tab copies a written history and saves it next to your RimWorld saves.
-[*] [b]Mentor retraining (AZR-73)[/b] — a mentor who owns the other branch can retrain an apprentice over many sessions. Off on Soft/Default, on for Hard.
-[*] [b]Divorce (AZR-97)[/b] — right-click a spouse to dissolve the marriage. Breakup wound, children, and a Legacy note follow.
-[*] [b]Quiet Hours (AZR-65)[/b] — work noise in a room hurts sleep, counsel, and mentoring. Bedroom inspect warns first. Not Strata bug noise.
-[*] [b]Estate (AZR-70)[/b] — name an heir on the Legacy tab. Death settles the will; other children take it hard; sleeping in their old bed is its own beat. Heirlooms remember who carried them.
+
 [/list]
 
 [b]Fixed[/b]
 [list]
 [*] [b]Perk hediffs on save load (AZR-107)[/b] — loading a colony no longer re-grants or revokes perk hediffs. Existing bonuses stay; new colonists still unlock from skill levels.
-[*] [b]Visitor perk popups (AZR-102)[/b] — guests, traders, and raiders no longer spam "reached the skill for …" on spawn (that hitch on slower PCs). Colonist unlocks still show. Optional setting if you want visitor messages back.
 [/list]
 
 [i]Build stamp (Player.log): perk-load-v1[/i]
