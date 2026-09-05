@@ -92,6 +92,33 @@ namespace Strata
             return job;
         }
 
+        // Vanilla GetRest / ForceSleepNow often returns LayDown with no bed
+        // when the assigned bed is on another map. If we cannot start a
+        // commute, drop that ground nap — do not let them sleep in the dirt.
+        public static bool ShouldBlockGroundSleep(Pawn pawn, Job vanillaResult)
+        {
+            if (pawn == null || vanillaResult == null)
+            {
+                return false;
+            }
+            if (vanillaResult.def != JobDefOf.LayDown && !vanillaResult.forceSleep)
+            {
+                return false;
+            }
+            if (vanillaResult.targetA.Thing is Building_Bed vanillaBed
+                && vanillaBed.Spawned
+                && vanillaBed.Map == pawn.Map)
+            {
+                Building_Bed owned = GetOwnedSleepBed(pawn);
+                return owned != null && owned != vanillaBed && owned.Map != pawn.Map;
+            }
+
+            Building_Bed home = GetOwnedSleepBed(pawn);
+            return home != null
+                && home.Map != pawn.Map
+                && ColonyBedUtility.MapsLinked(pawn.Map, home.Map);
+        }
+
         public static void CollectBedNotFoundCulprits(List<GlobalTargetInfo> into)
         {
             if (into == null || bedNotFound.Count == 0)
