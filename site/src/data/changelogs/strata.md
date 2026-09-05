@@ -7,13 +7,13 @@ Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog
 
 **Version:** `3.3.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.3.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is set in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `harmony-jobdriver-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
 
 ## [3.3.0]
 
-Player-facing version **3.3.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.3.0 Soft-compat build floors-pack-v1` in Player.log.
+Player-facing version **3.3.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.3.0 Soft-compat build harmony-jobdriver-v1` in Player.log.
 
 AZR-101 AZR-100 AZR-64 AZR-61 AZR-63 AZR-57
 
@@ -26,6 +26,7 @@ AZR-101 AZR-100 AZR-64 AZR-61 AZR-63 AZR-57
 - **Sleep on the ground** (`floors-pack-v1`, AZR-101) — `JobGiver_GetRest` / `ForceSleepNow` no longer keep a no-bed `LayDown` when the assigned bed is on another linked floor. Arrival tries a rest detour if the landing cannot walk to the bed.
 - **Paramedic stair hauls** (`floors-pack-v1`, AZR-100) — mechanoids skip `WorkGiver_HaulAcrossLevels` unless forced. Non-slot haul destinations that are pawns are ignored.
 - **Undug rock fog** (`floors-pack-v1`, AZR-57) — underground `FogGrid.Unfog` on a still-mineable cell is put back. Arrival chambers and mined cells stay visible.
+- **Harmony JobDriver Cleanup** (`harmony-jobdriver-v1`) — `HarmonyPatchAll` only processes types with `[HarmonyPatch]`. Cross-level `JobDriver` / `LordJob` classes inherit vanilla `Cleanup`, which Harmony treated as a patch auxiliary and logged eight errors. Stair jobs were never patched; they still run as written.
 
 ## [3.2.1]
 
