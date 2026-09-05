@@ -370,8 +370,17 @@ namespace Strata
         private static void FinishRest(Pawn pawn, int preferredBedId)
         {
             Building_Bed bed = ResolveRestArrivalBed(pawn, preferredBedId);
-            if (bed == null || !pawn.CanReach(bed, PathEndMode.OnCell, Danger.Deadly))
+            if (bed == null)
             {
+                return;
+            }
+            if (!pawn.CanReach(bed, PathEndMode.OnCell, Danger.Deadly))
+            {
+                Job detour = DraftedPortalPathing.TryMakeRestDetourJob(pawn, bed);
+                if (detour != null)
+                {
+                    pawn.jobs.StartJob(detour, JobCondition.InterruptForced);
+                }
                 return;
             }
 

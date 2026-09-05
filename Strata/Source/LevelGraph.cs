@@ -261,10 +261,24 @@ namespace Strata
                     continue;
                 }
 
+                CompElevatorControls controls = CompElevatorControls.On(portal);
+                if (controls != null && controls.HoldAtLevel)
+                {
+                    Map heldOther = OtherMapSafe(portal);
+                    if (heldOther != target)
+                    {
+                        continue;
+                    }
+                }
+
                 float walk = pawnPos.IsValid ? pawnPos.DistanceTo(portal.Position) : 1f;
                 if (IsPoweredElevator(portal))
                 {
                     walk *= 0.6f;
+                }
+                if (controls != null)
+                {
+                    walk *= 1f - 0.08f * controls.FloorPriority;
                 }
 
                 float score = walk;

@@ -19,7 +19,7 @@
   <Strata_Settings_OffThreadWorkRelay>Off-thread work board</Strata_Settings_OffThreadWorkRelay>
   <Strata_Settings_OffThreadWorkRelayDesc>A background scanner fills a per-floor work board that work relay reads (instead of probing during every idle think). Grow-zone flags can finish on a worker thread. On by default when Work relay is on; off in Performance mode.</Strata_Settings_OffThreadWorkRelayDesc>
   <Strata_Settings_HaulAcrossLevels>Haul across levels</Strata_Settings_HaulAcrossLevels>
-  <Strata_Settings_HaulAcrossLevelsDesc>Colonists and bots take Hauling jobs that carry items through stairwells to better storage / construction demand on linked floors. Separate from Work relay.</Strata_Settings_HaulAcrossLevelsDesc>
+  <Strata_Settings_HaulAcrossLevelsDesc>Colonists take Hauling jobs that carry items through stairwells to better storage / construction demand on linked floors. Mechanoids (Paramedics included) do not auto-export through stairs. Separate from Work relay.</Strata_Settings_HaulAcrossLevelsDesc>
   <Strata_Settings_RobotSoftCompat>Misc. Robots soft-compat</Strata_Settings_RobotSoftCompat>
   <Strata_Settings_RobotSoftCompatDesc>Cross-level portal routing for Misc. Robots (return-to-base when recharge is on another level). Turn off to A/B test whether Strata robot hooks cause lag.</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Misc. Robots work relay</Strata_Settings_RobotWorkRelay>
@@ -370,5 +370,26 @@
   <Strata_Alert_LowOxygen_Explanation>Colony rooms below the surface are running low on oxygen. Ventilate, open a shaft, add plants, or build an oxygen pump before colonists suffocate.</Strata_Alert_LowOxygen_Explanation>
   <Strata_Alert_HighCO2_Label>High CO₂ underground</Strata_Alert_HighCO2_Label>
   <Strata_Alert_HighCO2_Explanation>Carbon dioxide is building up around colonists underground. Scrub it, ventilate, or open a path to fresher air.</Strata_Alert_HighCO2_Explanation>
+
+  <Strata_ElevatorCall>Call elevator</Strata_ElevatorCall>
+  <Strata_ElevatorCallDesc>Selected colonists on this floor take this elevator now.</Strata_ElevatorCallDesc>
+  <Strata_ElevatorCallNone>Select a colonist on this floor who can reach the elevator.</Strata_ElevatorCallNone>
+  <Strata_ElevatorHold>Hold at this level</Strata_ElevatorHold>
+  <Strata_ElevatorHoldDesc>This car stays on this hop. Automatic routing will not use it as a shortcut to a third floor.</Strata_ElevatorHoldDesc>
+  <Strata_ElevatorPriority>Priority {0}</Strata_ElevatorPriority>
+  <Strata_ElevatorPriorityDesc>Higher priority shafts are preferred when haulers and commuters pick a ride. Click to cycle 1–5.</Strata_ElevatorPriorityDesc>
+  <Strata_ElevatorPriorityInspect>Elevator priority: {0}</Strata_ElevatorPriorityInspect>
+  <Strata_ElevatorHeldInspect>Held at this level</Strata_ElevatorHeldInspect>
+
+  <Strata_StampButton>Stamp</Strata_StampButton>
+  <Strata_StampTitle>Stamp this floor onto another level</Strata_StampTitle>
+  <Strata_StampSource>Source: {0}</Strata_StampSource>
+  <Strata_StampNoDest>No linked level to stamp onto.</Strata_StampNoDest>
+  <Strata_StampStockpiles>Include stockpile zones</Strata_StampStockpiles>
+  <Strata_StampRotate>Rotation: {0}</Strata_StampRotate>
+  <Strata_StampConfirm>Place blueprints</Strata_StampConfirm>
+  <Strata_StampDone>Stamped {0} pieces onto the target level.</Strata_StampDone>
+
+  <Strata_PlaySettings_SupportOverlayTip>Strata: support overlay\nHighlights excavated cells under thick rock that are past a roof holder or shoring pillar. Cave-ins prefer those cells.</Strata_PlaySettings_SupportOverlayTip>
 
 </LanguageData>

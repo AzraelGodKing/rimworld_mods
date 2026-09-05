@@ -5,11 +5,27 @@ Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
 
 Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog.txt) · [`../assets/workshop/strata-update-notes.bbcode`](../assets/workshop/strata-update-notes.bbcode).
 
-**Version:** `3.2.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.2.1 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.3.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.3.0 Soft-compat build <stamp> loaded from ...`.
 
 **Build stamp:** each DLL logs the stamp after the version. Current stamp is set in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
+
+## [3.3.0]
+
+Player-facing version **3.3.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.3.0 Soft-compat build floors-pack-v1` in Player.log.
+
+AZR-101 AZR-100 AZR-64 AZR-61 AZR-63 AZR-57
+
+### Added
+- **Elevator call / hold / priority** (`floors-pack-v1`, AZR-64) — gizmos on both elevator landings. Call sends selected colonists through this car. Hold keeps it off transit hops to a third floor. Priority 1–5 weights automatic routing. Soft / Default / Hard do not change this.
+- **Level stamp** (`floors-pack-v1`, AZR-61) — **Stamp** on the Levels tab copies walls, doors, floors, and optional stockpiles onto a linked floor as blueprints. Rotate 90° before confirming. Shafts are not copied.
+- **Support overlay** (`floors-pack-v1`, AZR-63) — play-settings toggle outlines excavated cells under thick rock that are past a roof holder or shoring pillar. Cave-in incidents pick those cells first.
+
+### Fixed
+- **Sleep on the ground** (`floors-pack-v1`, AZR-101) — `JobGiver_GetRest` / `ForceSleepNow` no longer keep a no-bed `LayDown` when the assigned bed is on another linked floor. Arrival tries a rest detour if the landing cannot walk to the bed.
+- **Paramedic stair hauls** (`floors-pack-v1`, AZR-100) — mechanoids skip `WorkGiver_HaulAcrossLevels` unless forced. Non-slot haul destinations that are pawns are ignored.
+- **Undug rock fog** (`floors-pack-v1`, AZR-57) — underground `FogGrid.Unfog` on a still-mineable cell is put back. Arrival chambers and mined cells stay visible.
 
 ## [3.2.1]
 
