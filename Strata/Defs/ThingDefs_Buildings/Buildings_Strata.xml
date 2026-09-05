@@ -288,6 +288,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
       <li Class="Strata.CompProperties_StairwellControl"/>
+      <li Class="Strata.CompProperties_ElevatorControls"/>
     </comps>
     <designationCategory>Structure</designationCategory>
     <canOverlapZones>false</canOverlapZones>
@@ -329,6 +330,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
         <basePowerConsumption>0</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
       </li>
+      <li Class="Strata.CompProperties_ElevatorControls"/>
     </comps>
     <building>
       <claimable>false</claimable>
@@ -379,6 +381,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
       <li Class="Strata.CompProperties_StairwellControl"/>
+      <li Class="Strata.CompProperties_ElevatorControls"/>
     </comps>
     <designationCategory>Structure</designationCategory>
     <canOverlapZones>false</canOverlapZones>
@@ -395,7 +398,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ElevatorUp</defName>
     <label>elevator landing</label>
-    <description>The bottom landing of an elevator, leading back up to the level above. It cannot be deconstructed - it is the way home.</description>
+    <description>The bottom landing of an elevator, leading back up to the level above. It cannot be deconstructed - it is the way home. Call, hold, and floor priority sit on this landing the same as the car above.</description>
     <thingClass>Strata.Building_ElevatorUp</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/ElevatorUp</texPath>
@@ -420,6 +423,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
         <basePowerConsumption>0</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
       </li>
+      <li Class="Strata.CompProperties_ElevatorControls"/>
     </comps>
     <building>
       <claimable>false</claimable>

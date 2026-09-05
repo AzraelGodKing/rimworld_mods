@@ -57,6 +57,13 @@ namespace Strata
 
         private static bool TryFindCollapseCell(Map map, out IntVec3 cell)
         {
+            MapComponent_SupportOverlay overlay = map.GetComponent<MapComponent_SupportOverlay>();
+            IReadOnlyList<IntVec3> atRisk = overlay?.AtRiskCells;
+            if (atRisk != null && atRisk.Count > 0)
+            {
+                cell = atRisk[Rand.Range(0, atRisk.Count)];
+                return true;
+            }
             return CellFinder.TryFindRandomCell(map, c => IsCollapsible(c, map), out cell);
         }
 

@@ -19,7 +19,7 @@
   <Strata_Settings_OffThreadWorkRelay>后台工作看板</Strata_Settings_OffThreadWorkRelay>
   <Strata_Settings_OffThreadWorkRelayDesc>后台扫描器维护各层工作看板，供工作通勤读取（避免每次空闲思考都探测）。种植区标记可在工作线程汇总。默认开启（需开启工作通勤）；性能模式下关闭。</Strata_Settings_OffThreadWorkRelayDesc>
   <Strata_Settings_HaulAcrossLevels>跨层搬运</Strata_Settings_HaulAcrossLevels>
-  <Strata_Settings_HaulAcrossLevelsDesc>殖民者与机器人接取经楼梯井搬到相连楼层更好仓库/工地需求的搬运工作。与工作通勤分开。</Strata_Settings_HaulAcrossLevelsDesc>
+  <Strata_Settings_HaulAcrossLevelsDesc>殖民者接取经楼梯井搬到相连楼层更好仓库/工地需求的搬运工作。机械体（含急救机）不会自动经楼梯外运。与工作通勤分开。</Strata_Settings_HaulAcrossLevelsDesc>
   <Strata_Settings_RobotSoftCompat>Misc. Robots 软兼容</Strata_Settings_RobotSoftCompat>
   <Strata_Settings_RobotSoftCompatDesc>为 Misc. Robots 提供跨层门户路径（充电点在其他楼层时的返回基地）。关闭可对比测试是否由 Strata 机器人钩子导致卡顿。</Strata_Settings_RobotSoftCompatDesc>
   <Strata_Settings_RobotWorkRelay>Misc. Robots 工作通勤</Strata_Settings_RobotWorkRelay>
@@ -370,5 +370,26 @@
   <Strata_Alert_LowOxygen_Explanation>地下殖民地房间氧气偏低。请通风、打开竖井、种植植物或建造氧气泵，以免殖民者窒息。</Strata_Alert_LowOxygen_Explanation>
   <Strata_Alert_HighCO2_Label>地下二氧化碳过高</Strata_Alert_HighCO2_Label>
   <Strata_Alert_HighCO2_Explanation>地下殖民者周围二氧化碳积聚。请洗涤、通风或通往更新鲜的空气。</Strata_Alert_HighCO2_Explanation>
+
+  <Strata_ElevatorCall>呼叫电梯</Strata_ElevatorCall>
+  <Strata_ElevatorCallDesc>本层已选中的殖民者立即乘坐这部电梯。</Strata_ElevatorCallDesc>
+  <Strata_ElevatorCallNone>请先选中本层能走到电梯的殖民者。</Strata_ElevatorCallNone>
+  <Strata_ElevatorHold>停在本层</Strata_ElevatorHold>
+  <Strata_ElevatorHoldDesc>轿厢停在这一段。自动寻路不会把它当作通往第三层的捷径。</Strata_ElevatorHoldDesc>
+  <Strata_ElevatorPriority>优先级 {0}</Strata_ElevatorPriority>
+  <Strata_ElevatorPriorityDesc>搬运与通勤优先选优先级高的井。点击在 1–5 之间循环。</Strata_ElevatorPriorityDesc>
+  <Strata_ElevatorPriorityInspect>电梯优先级：{0}</Strata_ElevatorPriorityInspect>
+  <Strata_ElevatorHeldInspect>停在本层</Strata_ElevatorHeldInspect>
+
+  <Strata_StampButton>拓印</Strata_StampButton>
+  <Strata_StampTitle>把本层拓印到另一层</Strata_StampTitle>
+  <Strata_StampSource>源：{0}</Strata_StampSource>
+  <Strata_StampNoDest>没有可拓印的相连层。</Strata_StampNoDest>
+  <Strata_StampStockpiles>包含库存区</Strata_StampStockpiles>
+  <Strata_StampRotate>旋转：{0}</Strata_StampRotate>
+  <Strata_StampConfirm>放置蓝图</Strata_StampConfirm>
+  <Strata_StampDone>已向目标层拓印 {0} 件。</Strata_StampDone>
+
+  <Strata_PlaySettings_SupportOverlayTip>Strata：支撑叠加\n标出厚岩顶下超出承重或支柱范围的开挖格。塌方优先落在这些格子。</Strata_PlaySettings_SupportOverlayTip>
 
 </LanguageData>
