@@ -3,42 +3,49 @@
     "id": "homesteader",
     "name": "Homesteader",
     "publishedFileId": "3759238501",
+    "nexusModId": "700",
     "page": "homesteader.html"
   },
   {
     "id": "stormproof",
     "name": "Stormproof",
     "publishedFileId": "3760021127",
+    "nexusModId": "702",
     "page": "stormproof.html"
   },
   {
     "id": "strata",
     "name": "Strata",
     "publishedFileId": "3762844292",
+    "nexusModId": "783",
     "page": "strata.html"
   },
   {
     "id": "nemesis",
     "name": "Nemesis",
     "publishedFileId": "3773562126",
+    "nexusModId": "782",
     "page": "nemesis.html"
   },
   {
     "id": "deep-colony",
     "name": "Deep Colony",
     "publishedFileId": "3773568314",
+    "nexusModId": "781",
     "page": "deep-colony.html"
   },
   {
     "id": "date-night",
     "name": "Date Night",
     "publishedFileId": "3774158903",
+    "nexusModId": "780",
     "page": "datenight.html"
   },
   {
     "id": "niceties",
     "name": "Niceties",
     "publishedFileId": "3794727164",
+    "nexusModId": "786",
     "page": "niceties.html"
   }
 ]
