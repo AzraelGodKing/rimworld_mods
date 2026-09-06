@@ -16,20 +16,3 @@
 
 [i]Build stamp (Player.log): update-news-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]
-
-1.0.2
-[h1]Date Night — 1.0.2[/h1]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Harmony patches[/b] — one failed patch logs and skips instead of taking the rest of Date Night down with it.
-[/list]
-
-1.0.1
-[h1]Date Night — 1.0.1[/h1]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Schedule tab warning[/b] — opening the Schedule tab no longer warns. Date still sits last on the extra row so it is not inside another dropdown.
-[*] [b]Rituals vs Date hours[/b] — Date / Lovin hours no longer yank pawns out of Ideology rituals (or other ceremonies that forbid leaving). The ritual can finish; the date waits.
-[/list]

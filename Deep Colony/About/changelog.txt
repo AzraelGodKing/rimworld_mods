@@ -8,21 +8,3 @@
 
 [i]Build stamp (Player.log): empty-nest-floors-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]
-
-1.6.4
-[h1]Deep Colony — 1.6.4[/h1]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Perk hediffs on save load (AZR-107)[/b] — loading a colony no longer re-grants or revokes perk hediffs. Existing bonuses stay; new colonists still unlock from skill levels.
-[*] [b]Hourly tick spike (AZR-123)[/b] — family, trauma, and reputation sweeps no longer all run on the same hour tick.
-[*] [b]Settings scroll (AZR-124)[/b] — the options window grows with its content, so Russian and Chinese labels stay reachable.
-[/list]
-
-[b]Added[/b]
-[list]
-[*] [b]Update letter[/b] — loading a colony shows this version's notes from About/changelog.txt, with a link to the newest full notes. The old 1.6.1 one-shot letter is gone.
-[/list]
-
-[i]Build stamp (Player.log): update-news-v1[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]
