@@ -1,0 +1,41 @@
+# Publishes Steam + Nexus counts to the `stats` branch (live.json only).
+# Does not commit on main — no rebase noise. The site fetches this file
+# with a cache-buster on every visit.
+name: Live workshop stats
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: live-stats
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Steam + Nexus
+        run: node scripts/fetch-workshop-stats.js --force
+
+      - name: Force-push live.json to stats branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          WORK="$(mktemp -d)"
+          cp docs/data/stats-cache.json "$WORK/live.json"
+          cd "$WORK"
+          git init
+          git checkout -b stats
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add live.json
+          git commit -m "live Steam + Nexus stats"
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push -f origin stats
