@@ -7,7 +7,7 @@ namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "update-news-v1";
+        public const string BuildStamp = "empty-nest-floors-v1";
 
         public static void LogStartup()
         {
