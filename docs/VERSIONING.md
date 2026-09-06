@@ -4,7 +4,7 @@ Player-facing version is `<modVersion>` in each mod's `About/About.xml`. RimWorl
 
 ## When to bump
 
-Bump `modVersion` when you **ship** a Workshop, Nexus, or versioned GitHub release. Put a matching block at the top of that mod's `About/changelog.txt` — first line is `X.Y.Z`, then the Steam notes.
+Bump `modVersion` when you **ship** a Workshop, Nexus, or versioned GitHub release. Replace that mod's `About/changelog.txt` with **only** the new version — first line is `X.Y.Z`, then the Steam notes. Older versions stay in `site/src/data/changelogs/`.
 
 Do **not** bump on every PR. Do **not** bump inside CI. **Release & Publish** reads whatever is already in `About.xml`.
 

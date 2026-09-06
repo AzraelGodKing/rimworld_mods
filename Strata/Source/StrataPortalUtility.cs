@@ -395,95 +395,92 @@ namespace Strata
             }
         }
 
-        internal static void TickHaulDeliveries()
+        internal static void TickHaulDeliveries(Map map)
         {
-            if (pendingHaulDeliver.Count == 0)
+            if (map == null)
             {
                 return;
             }
 
-            for (int i = pendingHaulDeliver.Count - 1; i >= 0; i--)
+            if (pendingHaulDeliver.Count > 0)
             {
-                int id = pendingHaulDeliver[i];
-                pendingHaulDeliver.RemoveAt(i);
-                // Haul chain FinishHaul already delivered on dest; skip mid-hop.
-                if (PortalRelayChain.HasIntent(id, RelayPurpose.Haul))
+                for (int i = pendingHaulDeliver.Count - 1; i >= 0; i--)
                 {
-                    continue;
-                }
-
-                Pawn pawn = FindPawnById(id);
-                if (pawn != null)
-                {
-                    if (!TryStartHaulDelivery(pawn)
-                        && pawn.carryTracker?.CarriedThing != null
-                        && pawn.carryTracker.CarriedThing is not Pawn)
+                    int id = pendingHaulDeliver[i];
+                    Pawn pawn = FindPawnById(id);
+                    if (pawn == null || pawn.Map != map)
                     {
-                        TryForceDropCarriedCargo(pawn);
+                        continue;
+                    }
+
+                    pendingHaulDeliver.RemoveAt(i);
+                    // Haul chain FinishHaul already delivered on dest; skip mid-hop.
+                    if (PortalRelayChain.HasIntent(id, RelayPurpose.Haul))
+                    {
+                        continue;
+                    }
+
+                    if (pawn != null)
+                    {
+                        if (!TryStartHaulDelivery(pawn)
+                            && pawn.carryTracker?.CarriedThing != null
+                            && pawn.carryTracker.CarriedThing is not Pawn)
+                        {
+                            TryForceDropCarriedCargo(pawn);
+                        }
                     }
                 }
             }
 
-            // Stuck carriers: Wait spam with cargo after a failed HaulToContainer.
-            TickStuckHaulCarriers();
+            TickStuckHaulCarriers(map);
         }
 
-        private static void TickStuckHaulCarriers()
+        private static void TickStuckHaulCarriers(Map map)
         {
-            if (Find.TickManager.TicksGame % 60 != 0)
+            if (map == null || !map.IsHashIntervalTick(60) || !LevelGraph.AnyLinkFrom(map))
             {
                 return;
             }
 
-            List<Map> maps = Find.Maps;
-            for (int m = 0; m < maps.Count; m++)
+            List<Pawn> pawns = map.mapPawns.SpawnedPawnsInFaction(Faction.OfPlayer);
+            if (pawns == null)
             {
-                Map map = maps[m];
-                if (map == null || !LevelGraph.AnyLinkFrom(map))
+                return;
+            }
+
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn?.carryTracker?.CarriedThing == null
+                    || pawn.carryTracker.CarriedThing is Pawn
+                    || pawn.Downed
+                    || pawn.Dead
+                    || pawn.Drafted)
                 {
                     continue;
                 }
 
-                List<Pawn> pawns = map.mapPawns.SpawnedPawnsInFaction(Faction.OfPlayer);
-                if (pawns == null)
+                // Only recover idle / Wait — do not interrupt an active haul job.
+                JobDef jobDef = pawn.CurJobDef;
+                if (jobDef != null
+                    && jobDef != JobDefOf.Wait_MaintainPosture
+                    && jobDef != JobDefOf.Wait_Combat
+                    && jobDef != JobDefOf.Wait)
                 {
                     continue;
                 }
 
-                for (int i = 0; i < pawns.Count; i++)
+                if (PortalRelayChain.HasIntent(pawn))
                 {
-                    Pawn pawn = pawns[i];
-                    if (pawn?.carryTracker?.CarriedThing == null
-                        || pawn.carryTracker.CarriedThing is Pawn
-                        || pawn.Downed
-                        || pawn.Dead
-                        || pawn.Drafted)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    // Only recover idle / Wait — do not interrupt an active haul job.
-                    JobDef jobDef = pawn.CurJobDef;
-                    if (jobDef != null
-                        && jobDef != JobDefOf.Wait_MaintainPosture
-                        && jobDef != JobDefOf.Wait_Combat
-                        && jobDef != JobDefOf.Wait)
-                    {
-                        continue;
-                    }
-
-                    if (PortalRelayChain.HasIntent(pawn))
-                    {
-                        continue;
-                    }
-
-                    if (!TryStartHaulDelivery(pawn)
-                        && pawn.carryTracker.CarriedThing != null
-                        && !TryStartStorageDelivery(pawn)
-                        && pawn.carryTracker.CarriedThing != null)
-                    {
-                        TryForceDropCarriedCargo(pawn);
-                    }
+                if (!TryStartHaulDelivery(pawn)
+                    && pawn.carryTracker.CarriedThing != null
+                    && !TryStartStorageDelivery(pawn)
+                    && pawn.carryTracker.CarriedThing != null)
+                {
+                    TryForceDropCarriedCargo(pawn);
                 }
             }
         }

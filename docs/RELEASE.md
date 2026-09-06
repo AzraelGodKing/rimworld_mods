@@ -5,7 +5,7 @@ Same shape as the Sunhaven **Release & Publish** workflow: you dispatch it, CI b
 1. **GitHub Release** — tag `{ZipName}-v{modVersion}` (example `Homesteader-v1.0.2`). Does **not** replace the rolling `latest` tag the docs site uses.
 2. **Nexus Mods** — new file version on an existing Nexus file (retries with backoff, same as Sunhaven). Needs a Nexus page and IDs in the matrix. Uploads use `Nexus-Mods/upload-action@v1.0.0-beta.10` (there is no `v1` tag).
 
-Version and Steam notes come from each mod’s `About.xml` `modVersion` and the matching block in `About/changelog.txt`. Do not bump versions in this workflow. When you *are* ready to ship, bump `modVersion` and the changelog first — see [VERSIONING.md](VERSIONING.md).
+Version and Steam notes come from each mod’s `About.xml` `modVersion` and `About/changelog.txt` (current version only). Do not bump versions in this workflow. When you *are* ready to ship, bump `modVersion` and replace the changelog first — see [VERSIONING.md](VERSIONING.md).
 
 ## Rollback
 

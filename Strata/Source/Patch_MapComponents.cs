@@ -21,6 +21,10 @@ namespace Strata
             {
                 __instance.components.Add(new MapComponent_RaidPursuit(__instance));
             }
+            if (__instance.GetComponent<MapComponent_StrataRelayTick>() == null)
+            {
+                __instance.components.Add(new MapComponent_StrataRelayTick(__instance));
+            }
             if (__instance.GetComponent<ShoringMapComponent>() == null)
             {
                 __instance.components.Add(new ShoringMapComponent(__instance));

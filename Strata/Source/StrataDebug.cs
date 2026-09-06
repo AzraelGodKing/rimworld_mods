@@ -277,6 +277,7 @@ namespace Strata
             {
                 Check($"atmosphere component on {map}", map.GetComponent<AtmosphereMapComponent>() != null);
                 Check($"pursuit component on {map}", map.GetComponent<MapComponent_RaidPursuit>() != null);
+                Check($"relay tick component on {map}", map.GetComponent<MapComponent_StrataRelayTick>() != null);
                 if (!StrataMapUtility.IsUnderground(map))
                 {
                     Check($"depth of surface {map} is 0", StrataDepth.Of(map) == 0);

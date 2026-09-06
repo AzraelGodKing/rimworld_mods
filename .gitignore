@@ -1,4 +1,6 @@
 *.dll
+__pycache__/
+*.pyc
 
 # Build outputs (mods + tools)
 **/obj/
