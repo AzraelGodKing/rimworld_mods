@@ -75,8 +75,15 @@ Defend your grid from everything the Rim throws at it. RimWorld 1.6. C# mod (req
 | **Grid monitor console** | Live production/consumption/storage readout with time-to-empty estimates; warns at 25% battery, alarms at 10%. |
 | **Armored conduit** | Fireproof, high-durability power conduit. |
 | **Storm vane** | Decorative copper weather vane. Pure class. |
+| **Atmospheric barrier** | Holds a room's weather at bay — rain, toxic fallout, and heat stay outside. |
+| **Climate stabilizer** | Keeps indoor temperature from swinging with outdoor extremes. |
+| **Sky restorer** | Clears lingering overlay weather (fallout, volcanic winter) in range. |
+| **Fire suppressor** | Automatically fights fires in the room. |
+| **Drought condenser** | Pulls water from dry air when the map is in drought. |
 
-New event — **Ion storm**: batteries bleed charge, random EMP bursts stun powered buildings, and extra "Zzzt!" surges fire. EMP dampeners, surge protectors, and storm capacitor banks counter it.
+Events: **Ion storm** (batteries bleed, EMP bursts, extra Zzzt), **Heat dome**, **Polar front**, **Toxic surge**, and **Dry lightning**. Hazard hardening research unlocks the last four. The weather **almanac** (on the forecaster) logs this map's storms by season.
+
+Research: Stormproof → Storm protection → Flare shielding → Atmospheric control → Perfect grounding → Hazard hardening.
 
 Source lives in `Stormproof/Source`. The compiled `Stormproof.dll` is produced by the **Build mod DLLs** GitHub Action and included in the [release download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Stormproof.zip) (Assemblies are gitignored).
 

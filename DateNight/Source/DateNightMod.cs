@@ -11,7 +11,7 @@ namespace DateNight
         public DateNightMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<DateNightSettings>();
-            ModVersionLog.Write("[DateNight]", content, extra: "azr-81-82-83-v3");
+            ModVersionLog.Write("[DateNight]", content, extra: "update-news-v1");
             // PatchAll runs after defs load — Harmony compiling TimeAssignmentSelector
             // patches otherwise touches TimeAssignmentDefOf before DefOfs exist.
         }

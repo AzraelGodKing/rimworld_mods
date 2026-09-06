@@ -8,14 +8,21 @@ namespace DateNight
     {
         private readonly Dictionary<int, bool> wasOnLovin = new Dictionary<int, bool>();
         private readonly Dictionary<int, bool> wasOnDate = new Dictionary<int, bool>();
+        private string lastNewsVersion;
 
         public GameComponent_DateNight(Game game)
         {
         }
 
+        public override void FinalizeInit()
+        {
+            UpdateNewsLetter.TrySend(ref lastNewsVersion);
+        }
+
         public override void ExposeData()
         {
             base.ExposeData();
+            Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
             DateNightWindows.ExposeData();
             DateNightDateUtility.ExposeData();
             DateNightAnniversaries.ExposeData();

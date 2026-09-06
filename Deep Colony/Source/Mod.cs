@@ -7,6 +7,7 @@ namespace DeepColony
     {
         public static DeepColonySettings Settings;
         private Vector2 settingsScroll;
+        private float settingsContentHeight = 4000f;
 
         public DeepColonyMod(ModContentPack content) : base(content)
         {
@@ -26,11 +27,11 @@ namespace DeepColony
             var settings = Settings;
             if (settings == null) return;
 
-            var viewRect = new Rect(0f, 0f, inRect.width - 16f, 2680f);
+            var listing = new Listing_Standard { maxOneColumn = true };
+            float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
+            var viewRect = new Rect(0f, 0f, inRect.width - 20f, viewHeight);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
-
-            var listing = new Listing_Standard();
-            listing.Begin(viewRect);
+            listing.Begin(new Rect(0f, 0f, viewRect.width, 99999f));
 
             Text.Font = GameFont.Medium;
             listing.Label("DC_Settings_Presets".Translate());
@@ -208,6 +209,7 @@ namespace DeepColony
             if (listing.ButtonText("DC_Settings_Reset".Translate(), null, 0.35f))
                 settings.ResetToDefaults();
 
+            settingsContentHeight = Mathf.Max(listing.MaxColumnHeightSeen + 24f, inRect.height);
             listing.End();
             Widgets.EndScrollView();
             base.DoSettingsWindowContents(inRect);

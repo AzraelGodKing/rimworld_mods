@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <Niceties_UpdateLetterLabel>Niceties {0}</Niceties_UpdateLetterLabel>
+  <Niceties_UpdateLetterFallback>Niceties {0} is loaded.\n\nFull notes: {1}</Niceties_UpdateLetterFallback>
+  <Niceties_UpdateLetterFooter>Full notes: {0}</Niceties_UpdateLetterFooter>
   <Niceties_SettingsCategory>Niceties</Niceties_SettingsCategory>
   <Niceties_Settings_Intro>Each nicety is optional. Off means vanilla for that one rule. Combat, fire, and outdoor rot are never blocked.</Niceties_Settings_Intro>
   <Niceties_Settings_PresetSoft>Soft</Niceties_Settings_PresetSoft>

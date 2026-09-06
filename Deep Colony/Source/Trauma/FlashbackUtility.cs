@@ -13,7 +13,7 @@ namespace DeepColony
         public static void GameTick()
         {
             if (!DeepColonySettings.Get.enableTrauma) return;
-            if (Find.TickManager.TicksGame % CheckInterval != 0) return;
+            if (!TickPhase.Due(1336)) return;
 
             foreach (Map map in Find.Maps)
             {

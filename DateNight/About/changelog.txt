@@ -1,11 +1,12 @@
-1.1.0
-[h1]Date Night — 1.1.0[/h1]
+1.1.1
+[h1]Date Night — 1.1.1[/h1]
 
 [b]Added[/b]
 [list]
 [*] [b]Anniversaries[/b] — letter on the love-bond anniversary. A date that day is a special mood; letting it pass without one stings at midnight.
 [*] [b]Favourite spots[/b] — couples remember where their best dates happened and prefer to go back. A ruined date can sour that venue.
 [*] [b]Double dates[/b] — two couples with overlapping Date hours may share a table, picnic, or gather spot. Quality rolls once for the group; the evening spills into opinions of the other pair. If the other couple never shows, they date alone.
+[*] [b]Update letter[/b] — loading a colony shows this version's notes from About/changelog.txt, with a link to the newest full notes.
 [/list]
 
 [b]Fixed[/b]
@@ -13,7 +14,7 @@
 [*] [b]Harmony[/b] — date and private-time job drivers are no longer treated as patch classes (vanilla JobDriver.Cleanup). Dates apply instead of logging two red errors at load.
 [/list]
 
-[i]Build stamp (Player.log): azr-81-82-83-v3[/i]
+[i]Build stamp (Player.log): update-news-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]
 
 1.0.2

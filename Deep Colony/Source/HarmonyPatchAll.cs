@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using HarmonyLib;
+using RimWorld;
 using Verse;
 
 namespace DeepColony
@@ -9,6 +10,7 @@ namespace DeepColony
     {
         internal static void Apply(Harmony harmony, string logPrefix)
         {
+            int failed = 0;
             foreach (Type type in AccessTools.GetTypesFromAssembly(Assembly.GetExecutingAssembly()))
             {
                 if (!IsHarmonyPatchClass(type))
@@ -22,9 +24,32 @@ namespace DeepColony
                 }
                 catch (Exception e)
                 {
+                    failed++;
                     Log.Error(logPrefix + " Harmony patch class " + type.Name + " failed: " + e.Message);
                 }
             }
+            NotifyIfFailed(logPrefix, failed);
+        }
+
+        private static void NotifyIfFailed(string logPrefix, int failed)
+        {
+            if (failed <= 0)
+            {
+                return;
+            }
+
+            LongEventHandler.ExecuteWhenFinished(() =>
+            {
+                if (Find.LetterStack == null)
+                {
+                    return;
+                }
+
+                Find.LetterStack.ReceiveLetter(
+                    (logPrefix + " Harmony").Trim(),
+                    logPrefix + " " + failed + " Harmony patch(es) failed. The rest of the mod still loaded. See Player.log.",
+                    LetterDefOf.NegativeEvent);
+            });
         }
 
         /// <summary>

@@ -26,11 +26,14 @@ namespace Nemesis
         {
         }
 
+        private string lastNewsVersion;
+
         public override void FinalizeInit()
         {
             base.FinalizeInit();
             SoftCompat.ResetCaches();
             NemesisRegistry.Clear();
+            UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
         public override void GameComponentTick()
@@ -616,6 +619,7 @@ namespace Nemesis
         {
             base.ExposeData();
             Scribe_Deep.Look(ref _data, "nemesisData");
+            Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
             if (_data == null)
                 _data = new NemesisData();
         }

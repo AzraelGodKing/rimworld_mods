@@ -32,7 +32,7 @@ namespace Homesteader
         {
             ContentPack = content;
             Settings = GetSettings<HomesteaderSettings>();
-            ModVersionLog.Write("[Homesteader]", content, "azr-66-67-68-69-87-v1");
+            ModVersionLog.Write("[Homesteader]", content, "update-news-v1");
         }
 
         public override string SettingsCategory() => "Homesteader_SettingsCategory".Translate();
