@@ -260,6 +260,10 @@ namespace Strata
                 {
                     continue;
                 }
+                if (pawn != null && !StrataPawnUtility.PortalInAllowedArea(pawn, portal))
+                {
+                    continue;
+                }
 
                 CompElevatorControls controls = CompElevatorControls.On(portal);
                 if (controls != null && controls.HoldAtLevel)

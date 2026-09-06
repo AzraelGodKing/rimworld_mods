@@ -9,8 +9,7 @@ namespace DeepColony.Patches
     {
         public static void Prefix(Pawn __instance)
         {
-            FamilyBeatsUtility.MarkLeavingHomeMap(__instance);
-            FamilyEchoUtility.NotifyChildLeft(__instance);
+            FamilyEchoUtility.NotifyChildMayHaveLeft(__instance);
         }
     }
 
@@ -20,6 +19,7 @@ namespace DeepColony.Patches
         public static void Postfix(Pawn __instance, Map map, bool respawningAfterLoad)
         {
             if (respawningAfterLoad) return;
+            FamilyEchoUtility.NotifyChildArrived(__instance, map);
             FamilyBeatsUtility.NotifySpawned(__instance);
         }
     }

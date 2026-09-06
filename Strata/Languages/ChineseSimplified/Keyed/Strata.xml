@@ -19,7 +19,7 @@
   <Strata_Settings_Reset>重置</Strata_Settings_Reset>
   <Strata_Settings_ColonistRelays>殖民者跨层通勤</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>工作通勤</Strata_Settings_WorkRelay>
-  <Strata_Settings_WorkRelayDesc>空闲殖民者与殖民地机械体在本层无事可做时前往有工作的其他楼层。默认开启。不控制经楼梯搬运——请用「跨层搬运」。若希望他们留在本层，请在模组选项中关闭。</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_WorkRelayDesc>空闲殖民者与殖民地机械体在本层无事可做时前往有工作的其他楼层。医护机械体留在本层治疗。允许区域外的楼梯不会使用。默认开启。不控制经楼梯搬运——请用「跨层搬运」。若希望他们留在本层，请在模组选项中关闭。</Strata_Settings_WorkRelayDesc>
   <Strata_Settings_OffThreadWorkRelay>后台工作看板</Strata_Settings_OffThreadWorkRelay>
   <Strata_Settings_OffThreadWorkRelayDesc>后台扫描器维护各层工作看板，供工作通勤读取（避免每次空闲思考都探测）。种植区标记可在工作线程汇总。默认开启（需开启工作通勤）；性能模式下关闭。</Strata_Settings_OffThreadWorkRelayDesc>
   <Strata_Settings_HaulAcrossLevels>跨层搬运</Strata_Settings_HaulAcrossLevels>
@@ -36,7 +36,7 @@
   <Strata_Settings_RestRelay>休息通勤</Strata_Settings_RestRelay>
   <Strata_Settings_RestRelayDesc>所在楼层无床的困倦殖民者会前往已分配床铺，或相连楼层的空闲床铺（优先兵营角色）。</Strata_Settings_RestRelayDesc>
   <Strata_Settings_MedicalRelay>医疗通勤</Strata_Settings_MedicalRelay>
-  <Strata_Settings_MedicalRelayDesc>病人与医生前往有医疗床或治疗工作的相连楼层。</Strata_Settings_MedicalRelayDesc>
+  <Strata_Settings_MedicalRelayDesc>病人与人类医生前往有医疗床或治疗工作的相连楼层。医护机械体留在本层。</Strata_Settings_MedicalRelayDesc>
   <Strata_Settings_JoyRelay>娱乐通勤</Strata_Settings_JoyRelay>
   <Strata_Settings_JoyRelayDesc>娱乐不足的殖民者前往有餐饮娱乐或娱乐建筑的其他楼层。</Strata_Settings_JoyRelayDesc>
   <Strata_Settings_CaravanPull>商队从下层取货</Strata_Settings_CaravanPull>
