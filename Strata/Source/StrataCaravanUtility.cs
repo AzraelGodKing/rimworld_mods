@@ -83,7 +83,16 @@ namespace Strata
 
         public static void TickCaravanPull()
         {
+            TickCaravanPull(CaravanFormingMap);
+        }
+
+        internal static void TickCaravanPull(Map map)
+        {
             if (StrataMod.Settings == null || !StrataMod.Settings.caravanPullEnabled)
+            {
+                return;
+            }
+            if (map == null || map != CaravanFormingMap || !StrataMapUtility.IsSurfacePlayerHome(map))
             {
                 return;
             }
@@ -92,13 +101,8 @@ namespace Strata
             {
                 return;
             }
-            Map surface = CaravanFormingMap;
-            if (surface == null || !StrataMapUtility.IsSurfacePlayerHome(surface))
-            {
-                return;
-            }
             lastPulseTick = now;
-            IssueLinkedLevelHaulJobs(surface);
+            IssueLinkedLevelHaulJobs(map);
         }
 
         private static void IssueLinkedLevelHaulJobs(Map surface)

@@ -244,9 +244,9 @@ namespace Strata
             }
         }
 
-        internal static void Tick()
+        internal static void TickMap(Map map)
         {
-            if (pendingContinue.Count == 0)
+            if (map == null || pendingContinue.Count == 0)
             {
                 return;
             }
@@ -254,6 +254,12 @@ namespace Strata
             for (int i = pendingContinue.Count - 1; i >= 0; i--)
             {
                 int id = pendingContinue[i];
+                Pawn pawn = FindPawn(id);
+                if (pawn == null || pawn.Map != map)
+                {
+                    continue;
+                }
+
                 pendingContinue.RemoveAt(i);
                 ContinueRoute(id);
             }

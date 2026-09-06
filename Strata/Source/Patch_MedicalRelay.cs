@@ -72,6 +72,10 @@ namespace Strata
             {
                 return;
             }
+            if (StrataPawnUtility.IsParamedicMech(pawn))
+            {
+                return;
+            }
             if (!PawnRelay.CanRelay(pawn))
             {
                 return;

@@ -18,10 +18,25 @@ namespace DeepColony
         private const int DownedCooldownTicks = 60000;
         private const int EmptyNestCooldownTicks = 600000; // 10 days
 
+        private struct PendingLeave
+        {
+            public int pawnId;
+            public int homeMapId;
+            public int tick;
+        }
+
+        private static readonly List<PendingLeave> pendingLeaves = new List<PendingLeave>();
+
         private static bool Enabled => DeepColonySettings.Get.enableFamilyJoin;
+
+        internal static void ResetSession()
+        {
+            pendingLeaves.Clear();
+        }
 
         public static void GameTick()
         {
+            ConfirmPendingLeaves();
             if (!Enabled) return;
             if (!TickPhase.Due(835)) return;
             foreach (Map map in Find.Maps)
@@ -134,17 +149,81 @@ namespace DeepColony
                 false);
         }
 
-        public static void NotifyChildLeft(Pawn child)
+        /// <summary>
+        /// Stair / elevator hops DeSpawn from the surface then spawn on a pocket
+        /// the same tick. Do not treat that as leaving home.
+        /// </summary>
+        public static void NotifyChildMayHaveLeft(Pawn child)
         {
             if (!Enabled) return;
-            if (child == null || child.Dead) return;
-            if (!child.RaceProps.Humanlike) return;
-            if (!IsAdult(child)) return;
-            if (child.IsPrisonerOfColony) return;
-            var childComp = child.TryGetComp<Comp_DeepColony>();
-            if (childComp != null && childComp.kinTakenTick >= 0) return;
+            if (!IsEmptyNestCandidate(child)) return;
             Map home = child.Map;
-            if (home == null || !home.IsPlayerHome) return;
+            if (home == null || !IsColonyHomeMap(home)) return;
+
+            int id = child.thingIDNumber;
+            for (int i = 0; i < pendingLeaves.Count; i++)
+            {
+                if (pendingLeaves[i].pawnId == id) return;
+            }
+
+            pendingLeaves.Add(new PendingLeave
+            {
+                pawnId = id,
+                homeMapId = home.uniqueID,
+                tick = Find.TickManager?.TicksGame ?? 0
+            });
+        }
+
+        public static void NotifyChildArrived(Pawn child, Map map)
+        {
+            if (child == null || map == null) return;
+            if (!IsColonyHomeMap(map)) return;
+            RemovePending(child.thingIDNumber);
+        }
+
+        public static void NotifyChildLeft(Pawn child)
+        {
+            NotifyChildLeft(child, child?.Map);
+        }
+
+        private static void ConfirmPendingLeaves()
+        {
+            if (pendingLeaves.Count == 0) return;
+            int now = Find.TickManager?.TicksGame ?? 0;
+            for (int i = pendingLeaves.Count - 1; i >= 0; i--)
+            {
+                PendingLeave entry = pendingLeaves[i];
+                if (now <= entry.tick) continue;
+
+                Pawn child = FindPawnAnywhere(entry.pawnId);
+                if (child == null || child.Dead)
+                {
+                    pendingLeaves.RemoveAt(i);
+                    continue;
+                }
+
+                Map current = child.MapHeld ?? child.Map;
+                if (IsColonyHomeMap(current))
+                {
+                    pendingLeaves.RemoveAt(i);
+                    continue;
+                }
+
+                pendingLeaves.RemoveAt(i);
+                FamilyBeatsUtility.MarkLeavingHomeMap(child);
+                NotifyChildLeft(child, FindMapById(entry.homeMapId));
+            }
+        }
+
+        private static void NotifyChildLeft(Pawn child, Map home)
+        {
+            if (!Enabled) return;
+            if (!IsEmptyNestCandidate(child)) return;
+            if (home == null || !IsColonyHomeMap(home))
+            {
+                home = FindFirstPlayerHome();
+            }
+            if (home == null) return;
 
             int now = Find.TickManager?.TicksGame ?? 0;
             Pawn firstParent = null;
@@ -166,6 +245,28 @@ namespace DeepColony
             }
             if (firstParent == null) return;
             FamilyLetterUtility.NotifyEmptyNest(firstParent, child);
+        }
+
+        private static bool IsEmptyNestCandidate(Pawn child)
+        {
+            if (child == null || child.Dead) return false;
+            if (!child.RaceProps.Humanlike) return false;
+            if (!IsAdult(child)) return false;
+            if (child.IsPrisonerOfColony) return false;
+            var childComp = child.TryGetComp<Comp_DeepColony>();
+            if (childComp != null && childComp.kinTakenTick >= 0) return false;
+            return true;
+        }
+
+        private static void RemovePending(int pawnId)
+        {
+            for (int i = pendingLeaves.Count - 1; i >= 0; i--)
+            {
+                if (pendingLeaves[i].pawnId == pawnId)
+                {
+                    pendingLeaves.RemoveAt(i);
+                }
+            }
         }
 
         private static void TryProximityVisit(Pawn prisoner)
@@ -233,12 +334,74 @@ namespace DeepColony
             if (pawn == null || home == null) return false;
             Map map = pawn.MapHeld ?? pawn.Map;
             if (map == null) return false;
-            if (map == home || map.IsPlayerHome) return true;
-            if (map.Parent is PocketMapParent pocket && pocket.sourceMap != null)
+            if (map == home || IsColonyHomeMap(map)) return true;
+            return false;
+        }
+
+        private static bool IsColonyHomeMap(Map map)
+        {
+            if (map == null) return false;
+            if (map.IsPlayerHome) return true;
+            Map source = (map.Parent as PocketMapParent)?.sourceMap;
+            int guard = 0;
+            while (source != null && guard++ < 8)
             {
-                if (pocket.sourceMap == home || pocket.sourceMap.IsPlayerHome) return true;
+                if (source.IsPlayerHome) return true;
+                source = (source.Parent as PocketMapParent)?.sourceMap;
             }
             return false;
+        }
+
+        private static Map FindMapById(int uniqueId)
+        {
+            List<Map> maps = Find.Maps;
+            if (maps == null) return null;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (maps[i] != null && maps[i].uniqueID == uniqueId) return maps[i];
+            }
+            return null;
+        }
+
+        private static Map FindFirstPlayerHome()
+        {
+            List<Map> maps = Find.Maps;
+            if (maps == null) return null;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (maps[i] != null && maps[i].IsPlayerHome) return maps[i];
+            }
+            return null;
+        }
+
+        private static Pawn FindPawnAnywhere(int thingId)
+        {
+            List<Map> maps = Find.Maps;
+            if (maps != null)
+            {
+                for (int i = 0; i < maps.Count; i++)
+                {
+                    IReadOnlyList<Pawn> pawns = maps[i]?.mapPawns?.AllPawns;
+                    if (pawns == null) continue;
+                    for (int j = 0; j < pawns.Count; j++)
+                    {
+                        if (pawns[j] != null && pawns[j].thingIDNumber == thingId)
+                            return pawns[j];
+                    }
+                }
+            }
+
+            List<Pawn> world = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive;
+            if (world != null)
+            {
+                for (int i = 0; i < world.Count; i++)
+                {
+                    if (world[i] != null && world[i].thingIDNumber == thingId)
+                        return world[i];
+                }
+            }
+
+            return null;
         }
 
         private static bool LooksLikeFight(Pawn victim, DamageInfo? dinfo)

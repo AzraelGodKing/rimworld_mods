@@ -40,15 +40,6 @@ namespace Strata
         public static void Postfix()
         {
             StrataRobotDiagnostics.Tick();
-            DraftedPortalPathing.Tick();
-            // Before PortalRelayChain: haul-intent arrivals skip here and finish
-            // in FinishHaul; construction-only arrivals deliver immediately.
-            StrataPortalUtility.TickHaulDeliveries();
-            PortalRelayChain.Tick();
-            if (Find.TickManager.TicksGame % 250 == 0)
-            {
-                StrataCaravanUtility.TickCaravanPull();
-            }
         }
     }
 }

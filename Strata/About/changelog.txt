@@ -1,3 +1,15 @@
+3.3.2
+[h1]Strata — 3.3.2[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Paramedic mechs / allowed areas (AZR-149)[/b] — Paramedic mechanoids no longer idle-commute for work or doctor relay. Auto stair jobs skip a landing outside the pawn's permitted zone.
+[*] [b]Multiplayer stair jobs (AZR-150)[/b] — finishing a stair trip no longer creates jobs on the world clock. That UniqueID split desynced Multiplayer when a pawn arrived from a force-build haul.
+[/list]
+
+[i]Build stamp (Player.log): mp-portal-tick-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
+
 3.3.1
 [h1]Strata — 3.3.1[/h1]
 
