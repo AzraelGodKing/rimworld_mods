@@ -103,8 +103,9 @@
     "configuration": "",
     "zipName": "Niceties",
     "publish": true,
-    "nexus": "",
-    "nexus_mod_id": "",
-    "nexus_file_id": ""
+    "nexus": "https://www.nexusmods.com/rimworld/mods/786",
+    "nexus_mod_id": "786",
+    "nexus_file_id": "7922244",
+    "nexus_publish": false
   }
 ]

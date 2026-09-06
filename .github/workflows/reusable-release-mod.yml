@@ -52,6 +52,7 @@ jobs:
           echo "nexus_url=$(echo "$ROW" | jq -r '.nexus // empty')" >> "$GITHUB_OUTPUT"
           echo "nexus_mod_id=$(echo "$ROW" | jq -r '.nexus_mod_id // empty')" >> "$GITHUB_OUTPUT"
           echo "nexus_file_id=$(echo "$ROW" | jq -r '.nexus_file_id // empty')" >> "$GITHUB_OUTPUT"
+          echo "nexus_publish=$(echo "$ROW" | jq -r 'if .nexus_publish == false then "false" else "true" end')" >> "$GITHUB_OUTPUT"
 
       - name: Read About.xml version + changelog
         id: meta
@@ -102,7 +103,7 @@ jobs:
           fi
           NX_V=""
           MOD_ID="${{ steps.matrix.outputs.nexus_mod_id }}"
-          if [ -n "$MOD_ID" ] && [ -n "${NEXUS_API_KEY:-}" ]; then
+          if [ -n "$MOD_ID" ] && [ -n "${NEXUS_API_KEY:-}" ] && [ "${{ steps.matrix.outputs.nexus_publish }}" != "false" ]; then
             NX_BODY="$(curl -sS -H "accept: application/json" -H "apikey: $NEXUS_API_KEY" \
               "https://api.nexusmods.com/v1/games/rimworld/mods/${MOD_ID}/files.json" || true)"
             NX_V="$(echo "$NX_BODY" | jq -r '[.files[]? | select((.version // "") != "")] | sort_by(.uploaded_timestamp // 0) | reverse | .[0].version // empty' 2>/dev/null || true)"
@@ -168,7 +169,8 @@ jobs:
           inputs.dry_run != 'true' &&
           inputs.publish_nexus == 'true' &&
           steps.version_check.outputs.version_unchanged != 'true' &&
-          steps.matrix.outputs.nexus_file_id != ''
+          steps.matrix.outputs.nexus_file_id != '' &&
+          steps.matrix.outputs.nexus_publish != 'false'
         run: |
           set -euo pipefail
           STAGE="$RUNNER_TEMP/release-pkg"
@@ -187,6 +189,11 @@ jobs:
         if: inputs.dry_run != 'true' && inputs.publish_nexus == 'true' && steps.matrix.outputs.nexus_file_id == ''
         run: |
           echo "::warning::${{ steps.meta.outputs.display_name }} has no nexus_file_id in scripts/matrix/mod-matrix.json. Create the Nexus page, upload one file, copy Files → API Info, then re-run with publish_nexus."
+
+      - name: Nexus skipped (opted out)
+        if: inputs.dry_run != 'true' && inputs.publish_nexus == 'true' && steps.matrix.outputs.nexus_publish == 'false'
+        run: |
+          echo "::warning::${{ steps.meta.outputs.display_name }} has nexus_publish=false in scripts/matrix/mod-matrix.json. IDs are kept; CI will not upload until that flag is true."
 
       - name: Nexus upload (1/4)
         id: nexus_upload_1
