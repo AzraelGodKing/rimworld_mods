@@ -34,7 +34,7 @@ function targetFor(entry) {
             <div class="mod-badges">
               <span v-for="b in mod.badges" :key="b" class="badge">{{ b }}</span>
             </div>
-            <p class="mod-hero-stats" v-if="stats" aria-live="polite">
+            <p class="mod-hero-stats" v-if="stats && (stats.subscriptions || stats.favorited)" aria-live="polite">
               {{ t('mod.workshop') }}:
               <strong>{{ format(stats.subscriptions) }}</strong> {{ t('stats.subscribers') }}
               · <strong>{{ format(stats.favorited) }}</strong> {{ t('stats.favorites') }}
