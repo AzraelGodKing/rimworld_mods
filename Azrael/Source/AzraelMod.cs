@@ -12,7 +12,7 @@ namespace Azrael
 
         public AzraelMod(ModContentPack content) : base(content)
         {
-            ModVersionLog.Write("[Azrael]", content, "azr-86-v1");
+            ModVersionLog.Write("[Azrael]", content, "update-news-v1");
         }
 
         public override string SettingsCategory() => "Azrael_SettingsCategory".Translate();

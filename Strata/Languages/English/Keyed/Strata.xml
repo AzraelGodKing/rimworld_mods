@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <Strata_UpdateLetterLabel>Strata {0}</Strata_UpdateLetterLabel>
+  <Strata_UpdateLetterFallback>Strata {0} is loaded.\n\nFull notes: {1}</Strata_UpdateLetterFallback>
+  <Strata_UpdateLetterFooter>Full notes: {0}</Strata_UpdateLetterFooter>
+
   <!-- Mod settings -->
   <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
   <Strata_Settings_LevelHotkeys>Level view hotkeys</Strata_Settings_LevelHotkeys>
@@ -389,6 +393,8 @@
   <Strata_StampRotate>Rotation: {0}</Strata_StampRotate>
   <Strata_StampConfirm>Place blueprints</Strata_StampConfirm>
   <Strata_StampDone>Stamped {0} pieces onto the target level.</Strata_StampDone>
+  <Strata_StampFailed>Stamp failed. The window was closed.</Strata_StampFailed>
+  <Strata_StampWorking>Stamping floor…</Strata_StampWorking>
 
   <Strata_PlaySettings_SupportOverlayTip>Strata: support overlay\nHighlights excavated cells under thick rock that are past a roof holder or shoring pillar. Cave-ins prefer those cells.</Strata_PlaySettings_SupportOverlayTip>
 

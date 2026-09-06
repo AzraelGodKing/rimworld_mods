@@ -19,7 +19,7 @@ namespace DeepColony
         {
             if (!DeepColonySettings.Get.enableFactionRep) return;
             if (!DeepColonySettings.Get.enableEnvoyVisits) return;
-            if (Find.TickManager.TicksGame % TickInterval != 0) return;
+            if (!TickPhase.Due(1670)) return;
 
             var gc = GameComp_DeepColony.Instance;
             if (gc == null) return;

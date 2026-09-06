@@ -1,15 +1,18 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
+**Version:** `3.3.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.3.1 Soft-compat build <stamp> loaded from ...`.
 
-Paste-ready BBCode for Workshop updates: [`About/changelog.txt`](About/changelog.txt) · [`../assets/workshop/strata-update-notes.bbcode`](../assets/workshop/strata-update-notes.bbcode).
-
-**Version:** `3.3.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.3.0 Soft-compat build <stamp> loaded from ...`.
-
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `harmony-jobdriver-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `update-news-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
+
+## [3.3.1]
+
+Player-facing version **3.3.1** (`About.xml` `modVersion`). Startup writes `[Strata] v3.3.1 Soft-compat build update-news-v1` in Player.log.
+
+### Added
+- **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 
 ## [3.3.0]
 

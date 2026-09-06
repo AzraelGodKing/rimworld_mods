@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <DateNight_UpdateLetterLabel>Date Night {0}</DateNight_UpdateLetterLabel>
+  <DateNight_UpdateLetterFallback>Date Night {0} загружен.\n\nПолные заметки: {1}</DateNight_UpdateLetterFallback>
+  <DateNight_UpdateLetterFooter>Полные заметки: {0}</DateNight_UpdateLetterFooter>
   <DateNight_SettingsCategory>Date Night</DateNight_SettingsCategory>
   <DateNight_Settings_Intro>Назначьте свидание или любовные часы в расписании. Свидание — прогулка / стол / совместный досуг (настроение и мнение, без кровати). Любовные часы по-прежнему требуют двуспальной кровати. Если партнёра нет в кровати, взрослые могут провести личное время. Запрет идеологии на любовные часы и стерильные гены Biotech вместо принуждения отправляют на свидание.</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>Безопасная задержка беременности</DateNight_Settings_PregnancySafe>

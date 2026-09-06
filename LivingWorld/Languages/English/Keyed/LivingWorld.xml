@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <LivingWorld_UpdateLetterLabel>Living World {0}</LivingWorld_UpdateLetterLabel>
+  <LivingWorld_UpdateLetterFallback>Living World {0} is loaded.\n\nFull notes: {1}</LivingWorld_UpdateLetterFallback>
+  <LivingWorld_UpdateLetterFooter>Full notes: {0}</LivingWorld_UpdateLetterFooter>
   <LivingWorld_SettingsCategory>Living World</LivingWorld_SettingsCategory>
   <LivingWorld_Settings_Enabled>Enable Living World</LivingWorld_Settings_Enabled>
   <LivingWorld_Settings_EnabledDesc>Run the off-map settlement sim (chronicle + morph + diplomacy). Turn off to disable everything.</LivingWorld_Settings_EnabledDesc>

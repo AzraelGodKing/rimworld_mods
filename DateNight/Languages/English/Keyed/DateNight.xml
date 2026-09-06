@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <DateNight_UpdateLetterLabel>Date Night {0}</DateNight_UpdateLetterLabel>
+  <DateNight_UpdateLetterFallback>Date Night {0} is loaded.\n\nFull notes: {1}</DateNight_UpdateLetterFallback>
+  <DateNight_UpdateLetterFooter>Full notes: {0}</DateNight_UpdateLetterFooter>
   <DateNight_SettingsCategory>Date Night</DateNight_SettingsCategory>
   <DateNight_Settings_Intro>Schedule Date or Lovin on the Schedule tab. Date is a walk / table / hangout (mood + opinion, no bed). Lovin still uses a shared double. Adults without a partner in that bed can have private time. Ideology that forbids lovin, and Biotech sterile genes, reroute to a date instead of forcing the job.</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>Pregnancy-safe cooldown</DateNight_Settings_PregnancySafe>

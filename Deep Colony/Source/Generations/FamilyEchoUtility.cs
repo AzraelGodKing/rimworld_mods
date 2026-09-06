@@ -23,7 +23,7 @@ namespace DeepColony
         public static void GameTick()
         {
             if (!Enabled) return;
-            if (Find.TickManager.TicksGame % VisitInterval != 0) return;
+            if (!TickPhase.Due(835)) return;
             foreach (Map map in Find.Maps)
             {
                 if (map?.IsPlayerHome != true) continue;

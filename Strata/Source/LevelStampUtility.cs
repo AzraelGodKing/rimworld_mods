@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -135,7 +136,11 @@ namespace Strata
             {
                 return false;
             }
-            return terrain.IsFloor || terrain.natural == false;
+            if (!terrain.BuildableByPlayer || terrain.blueprintDef == null)
+            {
+                return false;
+            }
+            return terrain.IsFloor || !terrain.natural;
         }
 
         private static bool IsStampableBuilding(Building building)
@@ -239,12 +244,30 @@ namespace Strata
             listing.Gap();
             if (listing.ButtonText("Strata_StampConfirm".Translate()))
             {
-                int n = LevelStampUtility.Stamp(source, dest, includeStockpiles, rotation);
-                Messages.Message(
-                    "Strata_StampDone".Translate(n),
-                    MessageTypeDefOf.TaskCompletion,
-                    historical: false);
+                Map stampSource = source;
+                Map stampDest = dest;
+                bool stock = includeStockpiles;
+                Rot4 rot = rotation;
                 Close();
+                LongEventHandler.QueueLongEvent(() =>
+                {
+                    try
+                    {
+                        int n = LevelStampUtility.Stamp(stampSource, stampDest, stock, rot);
+                        Messages.Message(
+                            "Strata_StampDone".Translate(n),
+                            MessageTypeDefOf.TaskCompletion,
+                            historical: false);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error("[Strata] Level stamp failed: " + e);
+                        Messages.Message(
+                            "Strata_StampFailed".Translate(),
+                            MessageTypeDefOf.RejectInput,
+                            historical: false);
+                    }
+                }, "Strata_StampWorking", doAsynchronously: false, exceptionHandler: null);
             }
             listing.End();
         }

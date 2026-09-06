@@ -19,8 +19,9 @@
   <DC_PerkPointGained>{PAWN} gained a perk point from leveling {SKILL}.</DC_PerkPointGained>
   <DC_PerksAvailable>{PAWN} leveled {SKILL} — {2} perk(s) available to unlock.</DC_PerksAvailable>
   <DC_InspectPerks>Perks: {0} unlocked</DC_InspectPerks>
-  <DC_Patch161LetterLabel>Deep Colony 1.6.1</DC_Patch161LetterLabel>
-  <DC_Patch161LetterText>Perk trees no longer use points. Colonists unlock a perk automatically at skill 5, 10, 15, and 20. If a skill falls below that level, the perk lapses.\n\nShooting accuracy bonuses now use the same scale as vanilla traits — they used to round to +0.0 on inspect. Perk effects stay off the Health tab unless you enable "Show perk hediffs" in mod settings. Skill-20 capstones are on by default.\n\nThe Family tree button on the Bio card is gone so it no longer covers Banish — use the Family inspect tab. Rows / Pedigree sits left of the close button.\n\nOpening a Strata floor no longer throws while last-of-the-line scans living colonists.\n\nOpen perk trees from a colonist's inspect pane or the Perks colony tab.</DC_Patch161LetterText>
+  <DC_UpdateLetterLabel>Deep Colony {0}</DC_UpdateLetterLabel>
+  <DC_UpdateLetterFallback>Deep Colony {0} is loaded.\n\nFull notes: {1}</DC_UpdateLetterFallback>
+  <DC_UpdateLetterFooter>Full notes: {0}</DC_UpdateLetterFooter>
 
   <!-- ── Trauma ─────────────────────────────────────────────────────────────── -->
   <DC_TherapyProgress>Making progress...</DC_TherapyProgress>
