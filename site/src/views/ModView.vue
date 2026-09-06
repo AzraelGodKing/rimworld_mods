@@ -40,9 +40,23 @@ function targetFor(entry) {
               · <strong>{{ format(stats.favorited) }}</strong> {{ t('stats.favorites') }}
               · <strong>{{ format(stats.views) }}</strong> {{ t('stats.views') }}
             </p>
+            <p class="mod-hero-stats" v-if="stats && mod.nexusModId" aria-live="polite">
+              {{ t('mod.nexus') }}:
+              <strong>{{ format(stats.nexus_downloads) }}</strong> {{ t('stats.downloads') }}
+              · <strong>{{ format(stats.nexus_endorsements) }}</strong> {{ t('stats.endorsements') }}
+            </p>
             <p class="mod-cta">
               <a class="btn btn-mod" :href="mod.workshopUrl" target="_blank" rel="noopener">
                 {{ t('mod.workshop') }} →
+              </a>
+              <a
+                v-if="mod.nexusUrl"
+                class="btn btn-outline"
+                :href="mod.nexusUrl"
+                target="_blank"
+                rel="noopener"
+              >
+                {{ t('mod.nexus') }} →
               </a>
               <RouterLink class="btn btn-outline" :to="`/${mod.id}/changelog`">
                 {{ t('mod.changelog') }}

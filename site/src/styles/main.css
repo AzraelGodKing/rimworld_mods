@@ -229,6 +229,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; }
   display: inline-block;
 }
 .stats-primary { margin: 0; }
+.stats-primary + .stats-primary { margin-top: 4px; }
 .stat-num { font-weight: 700; color: var(--brand-bright); }
 .stats-detail {
   margin: 6px 0 0;
@@ -313,6 +314,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; }
   font-weight: 700;
   color: var(--brand-bright);
 }
+.mod-card-stats-nexus { font-weight: 600; opacity: 0.9; }
 .mod-card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
 
 .badge {
