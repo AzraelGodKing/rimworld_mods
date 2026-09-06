@@ -10,7 +10,7 @@ const failed = ref(false);
 async function onRefresh() {
   failed.value = false;
   try {
-    localStorage.removeItem("azrael-workshop-stats-v1");
+    localStorage.removeItem("azrael-workshop-stats-v2");
   } catch { /* ignore */ }
   failed.value = !(await refreshStats({ force: true }));
 }
@@ -23,6 +23,12 @@ async function onRefresh() {
       <span class="stat-num">{{ format(state.siteTotal?.subscriptions) }}</span> {{ t('stats.subscribers') }}
       ·
       <span class="stat-num">{{ format(state.siteTotal?.favorited) }}</span> {{ t('stats.favorites') }}
+    </p>
+    <p class="stats-primary">
+      <strong>{{ t('hub.allNexus') }}:</strong>
+      <span class="stat-num">{{ format(state.siteTotal?.nexus_downloads) }}</span> {{ t('stats.downloads') }}
+      ·
+      <span class="stat-num">{{ format(state.siteTotal?.nexus_endorsements) }}</span> {{ t('stats.endorsements') }}
     </p>
     <p class="stats-detail">
       {{ t('stats.updated') }} {{ updatedLabel }} · {{ t('stats.live') }} ·
