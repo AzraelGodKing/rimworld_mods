@@ -24,6 +24,10 @@ const BASE = import.meta.env.BASE_URL;
         <span>{{ format(stats.subscriptions) }} {{ t('stats.subs') }}</span>
         <span>{{ format(stats.favorited) }} {{ t('stats.favs') }}</span>
       </div>
+      <div class="mod-card-stats mod-card-stats-nexus" v-if="stats && mod.nexusModId">
+        <span>{{ format(stats.nexus_downloads) }} {{ t('stats.dls') }}</span>
+        <span>{{ format(stats.nexus_endorsements) }} {{ t('stats.endo') }}</span>
+      </div>
       <div class="mod-card-badges">
         <span v-for="b in mod.badges.slice(0, 3)" :key="b" class="badge">{{ b }}</span>
       </div>
