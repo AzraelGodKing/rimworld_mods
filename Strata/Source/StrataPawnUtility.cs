@@ -140,7 +140,8 @@ namespace Strata
             {
                 return !MiscRobotNeedsRecharge(pawn);
             }
-            // Biotech colony mechs commute stairs for work/charge like colonists.
+            // Biotech colony mechs may use stairs (charge, rescue, draft).
+            // Paramedics are excluded from idle work/medical relay separately.
             if (ModsConfig.BiotechActive && pawn.IsColonyMech
                 && pawn.workSettings?.EverWork == true)
             {
@@ -174,12 +175,57 @@ namespace Strata
 
             if (ModsConfig.BiotechActive && pawn.IsColonyMech
                 && pawn.Faction != null && pawn.Faction.IsPlayer
-                && pawn.workSettings?.EverWork == true)
+                && pawn.workSettings?.EverWork == true
+                && !IsParamedicMech(pawn))
             {
                 return true;
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Biotech Paramedic (and name-alikes). They tend/rescue on their floor
+        /// and do not idle-commute for work or doctor relay.
+        /// </summary>
+        public static bool IsParamedicMech(Pawn pawn)
+        {
+            if (pawn?.def == null || !pawn.RaceProps.IsMechanoid)
+            {
+                return false;
+            }
+
+            if (ContainsParamedic(pawn.def.defName) || ContainsParamedic(pawn.kindDef?.defName))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool ContainsParamedic(string name)
+        {
+            return !string.IsNullOrEmpty(name)
+                && name.IndexOf("Paramedic", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>
+        /// Auto stair jobs honor the pawn's allowed area. Misc. Robots may
+        /// leave a restriction only when robot work relay is on.
+        /// </summary>
+        public static bool PortalInAllowedArea(Pawn pawn, Thing portal)
+        {
+            if (pawn == null || portal == null || !portal.Spawned)
+            {
+                return false;
+            }
+
+            if (RobotShouldBypassAllowedAreaForWork(pawn))
+            {
+                return true;
+            }
+
+            return portal.Position.InAllowedArea(pawn);
         }
 
         /// <summary>

@@ -2,6 +2,15 @@
 
 Detailed notes for Deep Colony only. ## [Unreleased]
 
+## [1.6.5]
+
+Player-facing version **1.6.5** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.5 build empty-nest-floors-v1` in Player.log.
+
+AZR-151
+
+### Fixed
+- **Empty nest on stairs** (`empty-nest-floors-v1`, AZR-151) — DeSpawn from the surface no longer fires Empty Nest during a Strata stair/elevator hop. The thought waits a tick and cancels if the adult child lands on a player-home map or a pocket under one. Real leaves (caravan / world) still fire. Living on another floor no longer stamps homecoming "time away."
+
 ## [1.6.4]
 
 Player-facing version **1.6.4** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.4 build update-news-v1` in Player.log.

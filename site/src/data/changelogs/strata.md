@@ -1,11 +1,21 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.3.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.3.1 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.3.2` in `About.xml` `modVersion`. Player.log: `[Strata] v3.3.2 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `update-news-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `mp-portal-tick-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
+
+## [3.3.2]
+
+Player-facing version **3.3.2** (`About.xml` `modVersion`). Startup writes `[Strata] v3.3.2 Soft-compat build mp-portal-tick-v1` in Player.log.
+
+AZR-149 AZR-150
+
+### Fixed
+- **Paramedic mechs / allowed areas** (`paramedic-zone-v1`, AZR-149) — Biotech Paramedics are out of work relay and doctor medical relay (they still tend/rescue on their floor, and can climb when drafted or carrying a patient). Auto `EnterPortal` jobs require the landing in the pawn's allowed area. Misc. Robots may still leave a restriction when robot work relay is on.
+- **Multiplayer stair jobs** (`mp-portal-tick-v1`, AZR-150) — `PortalRelayChain`, haul-delivery, drafted stair continue, and caravan-pull job creation run on each map's `MapComponentTick` instead of `TickManager.DoSingleTick`. World-clock `MakeJob` desynced UniqueIDs under Multiplayer async time.
 
 ## [3.3.1]
 

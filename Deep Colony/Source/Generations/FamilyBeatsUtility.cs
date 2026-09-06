@@ -22,7 +22,6 @@ namespace DeepColony
         {
             if (pawn == null || pawn.Dead) return;
             if (!pawn.IsColonistPlayerControlled) return;
-            if (pawn.Map == null || !pawn.Map.IsPlayerHome) return;
             var comp = pawn.TryGetComp<Comp_DeepColony>();
             if (comp == null) return;
             comp.leftColonyMapTick = Find.TickManager?.TicksGame ?? 0;
