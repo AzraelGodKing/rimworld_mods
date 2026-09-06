@@ -245,6 +245,10 @@ namespace Strata
             {
                 return null;
             }
+            if (!StrataPawnUtility.PortalInAllowedArea(pawn, firstStep))
+            {
+                return null;
+            }
             // Deadly: exhausted colonists still need to reach a sealed-off stair.
             if (!pawn.CanReach(firstStep, PathEndMode.Touch, Danger.Deadly))
             {

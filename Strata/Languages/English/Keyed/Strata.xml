@@ -19,7 +19,7 @@
   <Strata_Settings_Reset>Reset</Strata_Settings_Reset>
   <Strata_Settings_ColonistRelays>Colonist relays</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Work relay</Strata_Settings_WorkRelay>
-  <Strata_Settings_WorkRelayDesc>Idle colonists and colony mechanoids walk to other levels that have work when their own floor is idle. On by default. Does NOT control hauling through stairs — use Haul across levels for that. Turn this off in Mod Options if pawns should stay on their current floor.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_WorkRelayDesc>Idle colonists and colony mechanoids walk to other levels that have work when their own floor is idle. Paramedic mechs stay put (they tend on their own floor). Stairs outside an allowed area are not used. On by default. Does NOT control hauling through stairs — use Haul across levels for that. Turn this off in Mod Options if pawns should stay on their current floor.</Strata_Settings_WorkRelayDesc>
   <Strata_Settings_OffThreadWorkRelay>Off-thread work board</Strata_Settings_OffThreadWorkRelay>
   <Strata_Settings_OffThreadWorkRelayDesc>A background scanner fills a per-floor work board that work relay reads (instead of probing during every idle think). Grow-zone flags can finish on a worker thread. On by default when Work relay is on; off in Performance mode.</Strata_Settings_OffThreadWorkRelayDesc>
   <Strata_Settings_HaulAcrossLevels>Haul across levels</Strata_Settings_HaulAcrossLevels>
@@ -36,7 +36,7 @@
   <Strata_Settings_RestRelay>Rest relay</Strata_Settings_RestRelay>
   <Strata_Settings_RestRelayDesc>Sleepy colonists on a floor without beds walk to their assigned bed or a free bed on another linked level (Barracks role preferred).</Strata_Settings_RestRelayDesc>
   <Strata_Settings_MedicalRelay>Medical relay</Strata_Settings_MedicalRelay>
-  <Strata_Settings_MedicalRelayDesc>Patients and doctors commute to linked levels with medical beds or tending work.</Strata_Settings_MedicalRelayDesc>
+  <Strata_Settings_MedicalRelayDesc>Patients and human doctors commute to linked levels with medical beds or tending work. Paramedic mechanoids stay on their floor.</Strata_Settings_MedicalRelayDesc>
   <Strata_Settings_JoyRelay>Joy relay</Strata_Settings_JoyRelay>
   <Strata_Settings_JoyRelayDesc>Recreation-starved colonists walk to another level with food joy or recreation buildings.</Strata_Settings_JoyRelayDesc>
   <Strata_Settings_CaravanPull>Caravan pull from below</Strata_Settings_CaravanPull>
