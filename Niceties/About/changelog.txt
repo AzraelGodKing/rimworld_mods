@@ -1,5 +1,5 @@
-1.1.0
-[h1]Niceties — 1.1.0[/h1]
+1.1.1
+[h1]Niceties — 1.1.1[/h1]
 
 [b]Added[/b]
 [list]
@@ -11,7 +11,13 @@
 [list]
 [*] [b]Colonist bar[/b] — hiding cryptosleep pawns patches the 1.6 draw-locs method so the bar loads without a red error.
 [*] [b]Share-room gizmo[/b] — no Texture2D static-field warning at startup.
+[*] [b]Settings scroll (AZR-124)[/b] — the options window grows with its content, so longer translations stay reachable.
 [/list]
 
-[i]Build stamp (Player.log): shared-rooms-v2[/i]
+[b]Added[/b]
+[list]
+[*] [b]Update letter[/b] — loading a colony shows this version's notes from About/changelog.txt, with a link to the newest full notes.
+[/list]
+
+[i]Build stamp (Player.log): update-news-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]

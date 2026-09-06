@@ -4,6 +4,9 @@
   <!-- Update news -->
   <Homesteader_LittleGuyLetterLabel>New trait: Little guy</Homesteader_LittleGuyLetterLabel>
   <Homesteader_LittleGuyLetterText>Homesteader has added a new trait: Little guy.\n\nIt does nothing.\n\nPawns may roll it naturally; you can also add it in character creation / editor.</Homesteader_LittleGuyLetterText>
+  <Homesteader_UpdateLetterLabel>Homesteader {0}</Homesteader_UpdateLetterLabel>
+  <Homesteader_UpdateLetterFallback>Homesteader {0} is loaded.\n\nFull notes: {1}</Homesteader_UpdateLetterFallback>
+  <Homesteader_UpdateLetterFooter>Full notes: {0}</Homesteader_UpdateLetterFooter>
 
   <Homesteader_ScenPart_ForcedStorytellerSummary>Storyteller locked to {0}.</Homesteader_ScenPart_ForcedStorytellerSummary>
 

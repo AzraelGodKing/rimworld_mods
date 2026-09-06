@@ -14,7 +14,7 @@ namespace DeepColony
         public static void GameTick()
         {
             if (!DeepColonySettings.Get.enableMentoring) return;
-            if (Find.TickManager.TicksGame % CheckInterval != 0) return;
+            if (!TickPhase.Due(0)) return;
 
             Scratch.Clear();
             foreach (Map map in Find.Maps)

@@ -6,6 +6,7 @@ Stdlib only. Run from repo root: python3 scripts/validate_mods.py
 """
 from __future__ import annotations
 
+import re
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -224,6 +225,29 @@ def check_texpaths(mods: list[Path]) -> list[str]:
     return errors
 
 
+def check_changelog_links() -> list[str]:
+    errors: list[str] = []
+    folder = REPO / "site" / "src" / "data" / "changelogs"
+    if not folder.is_dir():
+        return errors
+    pattern = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
+    for md in sorted(folder.glob("*.md")):
+        text = md.read_text(encoding="utf-8")
+        for match in pattern.finditer(text):
+            href = match.group(2).strip()
+            if href.startswith(("http://", "https://", "mailto:", "#")):
+                continue
+            target = (md.parent / href).resolve()
+            try:
+                target.relative_to(REPO.resolve())
+            except ValueError:
+                errors.append(f"dead changelog link: {md.relative_to(REPO).as_posix()} -> {href}")
+                continue
+            if not target.exists():
+                errors.append(f"dead changelog link: {md.relative_to(REPO).as_posix()} -> {href}")
+    return errors
+
+
 def main() -> int:
     xml_files = iter_xml_files()
     mods = mod_dirs()
@@ -233,6 +257,7 @@ def main() -> int:
     errors.extend(check_keyed_parity(mods))
     errors.extend(check_definjected_parity(mods))
     errors.extend(check_texpaths(mods))
+    errors.extend(check_changelog_links())
 
     print(f"Checked {len(xml_files)} XML files across {len(mods)} mods.")
     if errors:

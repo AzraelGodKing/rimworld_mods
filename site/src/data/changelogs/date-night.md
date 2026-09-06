@@ -1,14 +1,11 @@
 # Changelog
 
-Detailed notes for **Date Night** only. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
+Detailed notes for **Date Night** only. ## [Unreleased]
 
-Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
-
-## [Unreleased]
-
-Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.1.0 loaded from ...` in Player.log (`azr-81-82-83-v3`).
+Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.1.1 loaded from ...` in Player.log (`update-news-v1`).
 
 ### Added
+- **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 - **Anniversaries** (`azr-81`) — on the anniversary of the current love bond (oldest lover / fiancé / spouse start tick): a letter, a small “anniversary” thought for both (+4 / +6), then one of two specials — **anniversary date** (+10 / +15) if they finish a date that day, or **missed anniversary** (−6 / −8) at the next midnight if they never went out. Dating replaces the small thought. Date quality also gets a +2. Off in settings.
 - **Favourite spots** (`azr-82`) — couples remember the venue of finished dates (table / gather spot / outdoor cell). Wonderful dates pull them back; a ruined date can sour the place (`our spot` / `that place is ruined` thoughts). Off in settings.
 - **Double dates** (`azr-83`) — two couples with overlapping Date hours may share a venue. Quality rolls once for the group; finishing spills opinion onto the other pair (friends vs rivals). Walk/gift activities coerce to hangout so four pawns can sit still. If the other couple never starts within ~1 hour, the hosts date alone (`double date fell through`). Off in settings. Ideology / Biotech reroutes still go through `CanDate`.
@@ -42,7 +39,7 @@ Player-facing version **1.0.2**.
 - **Ideology / Biotech** — no-lovin precepts and sterile genes skip forced lovin and reroute to a date. Missing DLC fails open.
 - **CN / RU** — keyed settings plus DefInjected TimeAssignment, Job, and Thought labels.
 - **Private time (self-lovin)** — adults on Lovin hours can use any bed (including a single) when a partner is not sharing a double. Mood thought only; no pregnancy. Off in settings. Children never qualify.
-- **Docs site** — [`docs/datenight.html`](../docs/datenight.html) (how-it-works, settings, install) wired into the hub nav / comparison table; CI packs `DateNight.zip` for the download button.
+- **Docs site** — [`docs/datenight.html`](https://github.com/AzraelGodKing/rimworld_mods/blob/main/docs/datenight.html) (how-it-works, settings, install) wired into the hub nav / comparison table; CI packs `DateNight.zip` for the download button.
 - **Workshop ID** — `About/PublishedFileId.txt` (`3774158903`) so uploads update the existing item; included in the docs stats roster.
 - **Workshop preview** — `About/Preview.png` (~748 KB, schedule-hero option) for Steam upload size limits.
 - **Lovin schedule** — `DateNight_Lovin` TimeAssignmentDef on the Schedule tab (rose). While assigned, colonists seek bed like Sleep (including no-sleep / full-rest pawns), work priority matches Sleep, and lovin MTB is shortened to Always-Do-Lovin rates when a partner shares the bed. Default keeps vanilla post-lovin cooldown (pregnancy-safer); optional Eager mode shortens cooldown too.

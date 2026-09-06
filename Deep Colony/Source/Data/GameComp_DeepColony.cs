@@ -35,6 +35,7 @@ namespace DeepColony
         public bool firstHarvestLetterSent;
         public bool autoPerksNewsLetterSent;
         public bool patch161NewsLetterSent;
+        private string lastNewsVersion;
         public int lastEnvoyVisitTick = -1;
 
         private const int DriftIntervalTicks = 2500;
@@ -204,29 +205,30 @@ namespace DeepColony
                 AnomalyOdysseyTraumaUtility.GameTick();
             }
 
-            // One clock: TicksGame. A saved driftTickCounter started at 0 on mid-save
-            // install and never lined up with TicksGame % 2500, so rivalry / family /
-            // touch / reconcile never ran. Flashback and letters still self-throttle.
-            if (Find.TickManager.TicksGame % DriftIntervalTicks != 0)
-                return;
-
+            // One TicksGame clock (AZR-31). Phased so the hourly sweeps do not
+            // all land on the same tick (AZR-123).
             if (DeepColonySettings.Get.enableTrauma)
             {
-                TickTraumaSystems();
-                TickToxicBuildupTrauma();
-                PruneDeathWindow(Find.TickManager.TicksGame);
+                if (TickPhase.Due(1837))
+                    TickTraumaSystems();
+                if (TickPhase.Due(2004))
+                    TickToxicBuildupTrauma();
+                if (TickPhase.Due(2171))
+                    PruneDeathWindow(Find.TickManager.TicksGame);
             }
 
             if (DeepColonySettings.Get.enableFactionRep)
             {
-                ProcessFactionDrift();
+                if (TickPhase.Due(2338))
+                    ProcessFactionDrift();
                 FactionEnvoyUtility.GameTick();
                 EnvoyVisitUtility.GameTick();
             }
 
             RivalryUtility.GameTick();
-            TickElders();
-            if (DeepColonySettings.Get.enableHeirlooms)
+            if (TickPhase.Due(83))
+                TickElders();
+            if (DeepColonySettings.Get.enableHeirlooms && TickPhase.Due(250))
                 TickHeirlooms();
             FamilyJoinUtility.GameTick();
             ExLoverReconcileUtility.GameTick();
@@ -422,6 +424,7 @@ namespace DeepColony
             Scribe_Values.Look(ref firstHarvestLetterSent, "firstHarvestLetterSent", false);
             Scribe_Values.Look(ref autoPerksNewsLetterSent, "autoPerksNewsLetterSent", false);
             Scribe_Values.Look(ref patch161NewsLetterSent, "patch161NewsLetterSent", false);
+            Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
 
             if (inheritanceProcessed == null) inheritanceProcessed = new HashSet<int>();
             if (formerPlayerColonists == null) formerPlayerColonists = new HashSet<int>();
@@ -463,21 +466,7 @@ namespace DeepColony
                 funeralProcessedCorpses = new HashSet<int>();
             ActiveMentoringSession.ResetSession();
             EnsureFounderSurname();
-            TrySendPatch161NewsLetter();
-        }
-
-        private void TrySendPatch161NewsLetter()
-        {
-            if (patch161NewsLetterSent) return;
-            if (Find.LetterStack == null) return;
-
-            // Mark first so a letter exception cannot spam every load.
-            patch161NewsLetterSent = true;
-
-            Find.LetterStack.ReceiveLetter(
-                "DC_Patch161LetterLabel".Translate(),
-                "DC_Patch161LetterText".Translate(),
-                LetterDefOf.PositiveEvent);
+            UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
     }
 }

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <Strata_UpdateLetterLabel>Strata {0}</Strata_UpdateLetterLabel>
+  <Strata_UpdateLetterFallback>Strata {0} загружен.\n\nПолные заметки: {1}</Strata_UpdateLetterFallback>
+  <Strata_UpdateLetterFooter>Полные заметки: {0}</Strata_UpdateLetterFooter>
+
   <!-- Mod settings -->
   <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
   <Strata_Settings_LevelHotkeys>Горячие клавиши уровней</Strata_Settings_LevelHotkeys>
@@ -388,6 +392,8 @@
   <Strata_StampRotate>Поворот: {0}</Strata_StampRotate>
   <Strata_StampConfirm>Поставить чертежи</Strata_StampConfirm>
   <Strata_StampDone>На целевой этаж нанесено {0} элементов.</Strata_StampDone>
+  <Strata_StampFailed>Штамп не удался. Окно закрыто.</Strata_StampFailed>
+  <Strata_StampWorking>Штамповка этажа…</Strata_StampWorking>
 
   <Strata_PlaySettings_SupportOverlayTip>Strata: опора\nПодсвечивает выработки под толстой скалой вне держателя крыши или стойки. Обвалы бьют туда в первую очередь.</Strata_PlaySettings_SupportOverlayTip>
 

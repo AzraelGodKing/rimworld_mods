@@ -19,8 +19,9 @@
   <DC_PerkPointGained>{PAWN} 因提升 {SKILL} 获得了专长点数。</DC_PerkPointGained>
   <DC_PerksAvailable>{PAWN} 提升了 {SKILL} — 有 {2} 个专长可解锁。</DC_PerksAvailable>
   <DC_InspectPerks>专长：已解锁 {0}</DC_InspectPerks>
-  <DC_Patch161LetterLabel>Deep Colony 1.6.1</DC_Patch161LetterLabel>
-  <DC_Patch161LetterText>专长树不再使用点数。殖民者在技能达到 5、10、15、20 时自动获得专长。若技能跌破该等级，专长失效。\n\n射击精度加成现与原版特性使用同一尺度 — 过去界面会显示为 +0.0。专长效果默认不出现在健康标签；可在模组设置中开启「在健康标签显示专长状态」。技能 20 巅峰专长默认开启。\n\n人物简介上的「家族树」按钮已移除，不再挡住放逐；请用检视面板的「家族」标签。行排 / 谱系按钮在关闭按钮左侧。\n\n打开 Strata 楼层时，扫描在世殖民者不再抛出异常。\n\n可从殖民者检视面板或殖民地「专长」标签打开专长树。</DC_Patch161LetterText>
+  <DC_UpdateLetterLabel>Deep Colony {0}</DC_UpdateLetterLabel>
+  <DC_UpdateLetterFallback>Deep Colony {0} 已加载。\n\n完整说明：{1}</DC_UpdateLetterFallback>
+  <DC_UpdateLetterFooter>完整说明：{0}</DC_UpdateLetterFooter>
 
   <!-- ── Trauma ─────────────────────────────────────────────────────────────── -->
   <DC_TherapyProgress>正在取得进展…</DC_TherapyProgress>

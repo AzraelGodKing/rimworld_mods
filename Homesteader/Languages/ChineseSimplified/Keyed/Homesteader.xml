@@ -4,6 +4,9 @@
   <!-- Update news -->
   <Homesteader_LittleGuyLetterLabel>新特性：小家伙</Homesteader_LittleGuyLetterLabel>
   <Homesteader_LittleGuyLetterText>Homesteader 新增了特性：小家伙（Little guy）。\n\n它没有任何效果。\n\n殖民者可能自然获得；也可在角色创建/编辑器中添加。</Homesteader_LittleGuyLetterText>
+  <Homesteader_UpdateLetterLabel>Homesteader {0}</Homesteader_UpdateLetterLabel>
+  <Homesteader_UpdateLetterFallback>Homesteader {0} 已加载。\n\n完整说明：{1}</Homesteader_UpdateLetterFallback>
+  <Homesteader_UpdateLetterFooter>完整说明：{0}</Homesteader_UpdateLetterFooter>
 
   <Homesteader_ScenPart_ForcedStorytellerSummary>叙事者锁定为 {0}。</Homesteader_ScenPart_ForcedStorytellerSummary>
 

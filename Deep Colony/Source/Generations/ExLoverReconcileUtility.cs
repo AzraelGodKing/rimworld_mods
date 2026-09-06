@@ -17,6 +17,7 @@ namespace DeepColony
         public static void GameTick()
         {
             if (!DeepColonySettings.Get.enableExLoverReconcile) return;
+            if (!TickPhase.Due(501)) return;
 
             float mtb = DeepColonySettings.Get.exLoverReconcileMtbDays;
             if (mtb <= 0f) return;
