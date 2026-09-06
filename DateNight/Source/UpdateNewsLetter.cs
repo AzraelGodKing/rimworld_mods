@@ -1,52 +1,16 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using RimWorld;
 using Verse;
 
-namespace Homesteader
+namespace DateNight
 {
-    /// <summary>One-shot trait mail plus a version letter that reads About/changelog.txt.</summary>
-    public class GameComponent_HomesteaderNews : GameComponent
-    {
-        private bool littleGuyTraitLetterSent;
-        private string lastNewsVersion;
-
-        public GameComponent_HomesteaderNews(Game game)
-        {
-        }
-
-        public override void FinalizeInit()
-        {
-            UpdateNewsLetter.TrySend(ref lastNewsVersion);
-            TrySendLittleGuyTraitLetter();
-        }
-
-        private void TrySendLittleGuyTraitLetter()
-        {
-            if (littleGuyTraitLetterSent) return;
-            if (Current.Game == null || Find.LetterStack == null) return;
-
-            littleGuyTraitLetterSent = true;
-
-            Find.LetterStack.ReceiveLetter(
-                "Homesteader_LittleGuyLetterLabel".Translate(),
-                "Homesteader_LittleGuyLetterText".Translate(),
-                LetterDefOf.PositiveEvent);
-        }
-
-        public override void ExposeData()
-        {
-            Scribe_Values.Look(ref littleGuyTraitLetterSent, "littleGuyTraitLetterSent", false);
-            Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
-        }
-    }
-
     internal static class UpdateNewsLetter
     {
-        private const string PackageId = "AzraelGodKing.Homesteader";
+        private const string PackageId = "azraelgodking.DateNight";
         private const string ChangelogUrl =
-            "https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md";
+            "https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md";
 
         internal static void TrySend(ref string lastAnnouncedVersion)
         {
@@ -54,9 +18,9 @@ namespace Homesteader
                 ref lastAnnouncedVersion,
                 PackageId,
                 ChangelogUrl,
-                "Homesteader_UpdateLetterLabel",
-                "Homesteader_UpdateLetterFallback",
-                "Homesteader_UpdateLetterFooter");
+                "DateNight_UpdateLetterLabel",
+                "DateNight_UpdateLetterFallback",
+                "DateNight_UpdateLetterFooter");
         }
     }
 

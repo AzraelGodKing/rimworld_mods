@@ -53,7 +53,7 @@ namespace DeepColony
             if (!DeepColonySettings.Get.enableTrauma) return;
             if (!SoftCompat.OdysseyActive) return;
             if (DC_DefOf.DC_Trauma_Isolation == null) return;
-            if (Find.TickManager.TicksGame % IsolationCheck != 0) return;
+            if (!TickPhase.Due(1002)) return;
 
             foreach (Map map in Find.Maps)
             {

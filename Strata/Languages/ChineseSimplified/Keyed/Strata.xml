@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <Strata_UpdateLetterLabel>Strata {0}</Strata_UpdateLetterLabel>
+  <Strata_UpdateLetterFallback>Strata {0} 已加载。\n\n完整说明：{1}</Strata_UpdateLetterFallback>
+  <Strata_UpdateLetterFooter>完整说明：{0}</Strata_UpdateLetterFooter>
+
   <!-- Mod settings -->
   <Strata_SettingsCategory>Strata</Strata_SettingsCategory>
   <Strata_Settings_LevelHotkeys>楼层视角快捷键</Strata_Settings_LevelHotkeys>
@@ -389,6 +393,8 @@
   <Strata_StampRotate>旋转：{0}</Strata_StampRotate>
   <Strata_StampConfirm>放置蓝图</Strata_StampConfirm>
   <Strata_StampDone>已向目标层拓印 {0} 件。</Strata_StampDone>
+  <Strata_StampFailed>拓印失败。窗口已关闭。</Strata_StampFailed>
+  <Strata_StampWorking>正在拓印楼层…</Strata_StampWorking>
 
   <Strata_PlaySettings_SupportOverlayTip>Strata：支撑叠加\n标出厚岩顶下超出承重或支柱范围的开挖格。塌方优先落在这些格子。</Strata_PlaySettings_SupportOverlayTip>
 

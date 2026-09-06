@@ -113,6 +113,9 @@
   <Stormproof_StormSpire_CollectFulguriteDesc>从塔基取下雷击熔成的玻璃。</Stormproof_StormSpire_CollectFulguriteDesc>
   <Stormproof_StormSpire_Strikes>已接闪：{0}（熔岩 {1}/{2}）</Stormproof_StormSpire_Strikes>
   <Stormproof_StormSpire_FulguriteStored>待取熔岩：{0}</Stormproof_StormSpire_FulguriteStored>
+  <Stormproof_UpdateLetterLabel>Stormproof {0}</Stormproof_UpdateLetterLabel>
+  <Stormproof_UpdateLetterFallback>Stormproof {0} 已加载。\n\n完整说明：{1}</Stormproof_UpdateLetterFallback>
+  <Stormproof_UpdateLetterFooter>完整说明：{0}</Stormproof_UpdateLetterFooter>
   <Stormproof_SettingsCategory>Stormproof</Stormproof_SettingsCategory>
   <Stormproof_Settings_Intro>建筑仍在；滑条决定天空与电网有多狠。</Stormproof_Settings_Intro>
   <Stormproof_Settings_PresetSoft>温和</Stormproof_Settings_PresetSoft>

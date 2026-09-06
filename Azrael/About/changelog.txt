@@ -1,15 +1,16 @@
-1.0.1
-[h1]Azrael — 1.0.1[/h1]
-
-[b]Changed[/b]
-[list]
-[*] Version stamp 1.0.1 (no gameplay change).
-[/list]
-
 1.0.0
 [h1]Azrael — 1.0.0[/h1]
 
 [b]Fixed[/b]
 [list]
 [*] [b]RimWorld 1.6[/b] — storyteller comps match Cassandra Classic; portraits use CassandraClassic art so the teller loads without XML / missing-texture errors.
+[*] [b]Series hub (AZR-125)[/b] — Niceties now shows as loaded or not loaded like the rest of the series.
 [/list]
+
+[b]Added[/b]
+[list]
+[*] [b]Update letter[/b] — loading a colony shows this version's notes from About/changelog.txt, with a link to the newest full notes.
+[/list]
+
+[i]Build stamp (Player.log): update-news-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/azrael.md[/i]

@@ -2,12 +2,11 @@
 
 Foundation by **Dredd (Misakabob)** — original design, persistent antagonist pawn, escape/capture loop, aggression pacing, assaults, waste drops, fixation/prison-break triggers, resolution dialog, and settings. Credited with gratitude; this monorepo package extends that work.
 
-Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
-
 ## Unreleased (monorepo integration)
 
-Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.0.1 loaded from ...` in Player.log.
+Player-facing version **1.0.2** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.0.2 loaded from ...` in Player.log (`update-news-v1`).
 
+- **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 - **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Nemesis.
 - **CN / RU Keyed** — filled captain-progression settings, letters, and combat-focus names that English already had.
 - **Fixation after a colonist dies** — uses `MapHeld` (corpse / killer map) so the hunt can still pick a surviving colonist.

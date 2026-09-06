@@ -11,7 +11,7 @@ namespace LivingWorld
         public LivingWorldMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<LivingWorldSettings>();
-            ModVersionLog.Write("[LivingWorld]", content);
+            ModVersionLog.Write("[LivingWorld]", content, extra: "update-news-v1");
             HarmonyPatchAll.Apply(new Harmony("azraelgodking.livingworld"), "[LivingWorld]");
         }
 

@@ -7,6 +7,7 @@ namespace Niceties
     {
         public static NicetiesSettings Settings;
         private Vector2 settingsScroll;
+        private float settingsContentHeight = 2000f;
 
         public NicetiesMod(ModContentPack content) : base(content)
         {
@@ -22,10 +23,11 @@ namespace Niceties
                 return;
             }
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 1140f);
+            Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
+            float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, viewHeight);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
-            Listing_Standard listing = new Listing_Standard();
-            listing.Begin(viewRect);
+            listing.Begin(new Rect(0f, 0f, viewRect.width, 99999f));
 
             listing.Label("Niceties_Settings_Intro".Translate());
             listing.Gap(6f);
@@ -102,6 +104,7 @@ namespace Niceties
                 OnFeatureTogglesChanged();
             }
 
+            settingsContentHeight = Mathf.Max(listing.MaxColumnHeightSeen + 24f, inRect.height);
             listing.End();
             Widgets.EndScrollView();
             Settings.Clamp();

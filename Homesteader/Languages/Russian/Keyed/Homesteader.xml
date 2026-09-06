@@ -4,6 +4,9 @@
   <!-- Update news -->
   <Homesteader_LittleGuyLetterLabel>Новая черта: Little guy</Homesteader_LittleGuyLetterLabel>
   <Homesteader_LittleGuyLetterText>В Homesteader добавлена черта: Little guy.\n\nОна ничего не делает.\n\nПешки могут получить её случайно; также можно добавить в редакторе персонажа.</Homesteader_LittleGuyLetterText>
+  <Homesteader_UpdateLetterLabel>Homesteader {0}</Homesteader_UpdateLetterLabel>
+  <Homesteader_UpdateLetterFallback>Homesteader {0} загружен.\n\nПолные заметки: {1}</Homesteader_UpdateLetterFallback>
+  <Homesteader_UpdateLetterFooter>Полные заметки: {0}</Homesteader_UpdateLetterFooter>
 
   <Homesteader_ScenPart_ForcedStorytellerSummary>Рассказчик зафиксирован: {0}.</Homesteader_ScenPart_ForcedStorytellerSummary>
 

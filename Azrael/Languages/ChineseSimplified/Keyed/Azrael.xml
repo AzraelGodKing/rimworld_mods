@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <Azrael_UpdateLetterLabel>Azrael {0}</Azrael_UpdateLetterLabel>
+  <Azrael_UpdateLetterFallback>Azrael {0} 已加载。\n\n完整说明：{1}</Azrael_UpdateLetterFallback>
+  <Azrael_UpdateLetterFooter>完整说明：{0}</Azrael_UpdateLetterFooter>
   <Azrael_ScenPart_ForcedStorytellerSummary>叙事者锁定为 {0}。</Azrael_ScenPart_ForcedStorytellerSummary>
 
   <Azrael_SettingsCategory>Azrael</Azrael_SettingsCategory>

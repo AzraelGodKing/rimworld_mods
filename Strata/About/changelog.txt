@@ -1,5 +1,5 @@
-3.3.0
-[h1]Strata — 3.3.0[/h1]
+3.3.1
+[h1]Strata — 3.3.1[/h1]
 
 [b]Added[/b]
 [list]
@@ -14,9 +14,16 @@
 [*] [b]Paramedic stair hauls (AZR-100)[/b] — mechanoids no longer auto-export items through stairs. Cargo is not dropped on a pawn.
 [*] [b]Undug rock fog (AZR-57)[/b] — mining no longer lights neighboring unmined rock. Walk the tunnel to see it.
 [*] [b]Harmony JobDriver Cleanup[/b] — cross-level jobs no longer log patch errors on inherited Cleanup. Stair jobs still work.
+[*] [b]Level stamp crash (AZR-122)[/b] — stamping a roof-deck or gravship floor no longer throws. Non-buildable terrain is skipped; a failed stamp closes the window instead of erroring every frame.
 [/list]
 
-[i]Build stamp (Player.log): harmony-jobdriver-v1[/i]
+[b]Added[/b]
+[list]
+[*] [b]Update letter[/b] — loading a colony shows this version's notes from About/changelog.txt, with a link to the newest full notes.
+[/list]
+
+[i]Build stamp (Player.log): update-news-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
 
 3.2.1
 [h1]Strata — 3.2.1[/h1]

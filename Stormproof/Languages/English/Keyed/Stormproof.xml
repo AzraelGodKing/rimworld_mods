@@ -114,6 +114,9 @@
   <Stormproof_StormSpire_CollectFulguriteDesc>Harvest fused lightning-glass from the spire's base.</Stormproof_StormSpire_CollectFulguriteDesc>
   <Stormproof_StormSpire_Strikes>Strikes caught: {0} (fulgurite {1}/{2})</Stormproof_StormSpire_Strikes>
   <Stormproof_StormSpire_FulguriteStored>Fulgurite waiting: {0}</Stormproof_StormSpire_FulguriteStored>
+  <Stormproof_UpdateLetterLabel>Stormproof {0}</Stormproof_UpdateLetterLabel>
+  <Stormproof_UpdateLetterFallback>Stormproof {0} is loaded.\n\nFull notes: {1}</Stormproof_UpdateLetterFallback>
+  <Stormproof_UpdateLetterFooter>Full notes: {0}</Stormproof_UpdateLetterFooter>
   <Stormproof_SettingsCategory>Stormproof</Stormproof_SettingsCategory>
   <Stormproof_Settings_Intro>Buildings stay; these sliders decide how hard the sky and grid push back.</Stormproof_Settings_Intro>
   <Stormproof_Settings_PresetSoft>Soft</Stormproof_Settings_PresetSoft>
