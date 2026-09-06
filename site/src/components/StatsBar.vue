@@ -10,7 +10,7 @@ const failed = ref(false);
 async function onRefresh() {
   failed.value = false;
   try {
-    localStorage.removeItem("azrael-workshop-stats-v2");
+    localStorage.removeItem("azrael-workshop-stats-v3");
   } catch { /* ignore */ }
   failed.value = !(await refreshStats({ force: true }));
 }
@@ -18,7 +18,7 @@ async function onRefresh() {
 
 <template>
   <div class="stats-bar" aria-live="polite">
-    <p class="stats-primary">
+    <p class="stats-primary" v-if="state.siteTotal?.subscriptions || state.siteTotal?.favorited">
       <strong>{{ t('hub.allMods') }}:</strong>
       <span class="stat-num">{{ format(state.siteTotal?.subscriptions) }}</span> {{ t('stats.subscribers') }}
       ·

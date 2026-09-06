@@ -1,19 +1,28 @@
 // Live Steam + Nexus stats.
-// Steam/Nexus APIs block browser CORS. Each visit still tries them, then
-// fills holes from the `stats` branch live.json (refreshed every 15 min,
-// not committed on main). Static docs/data/stats-cache.json is last resort.
+// Steam/Nexus APIs block browser CORS. Do not wait on jina or GraphQL —
+// those hang or write zeros that hide the real counts. Each visit pulls
+// stats/live.json (Actions, every 15 min) and overlays Steam if CORS
+// happens to work. Static docs/data/stats-cache.json is last resort.
 // Last snapshot is painted instantly; it never skips the live pull.
 import { reactive, computed } from "vue";
 import modsData from "../data/mods.json";
 
 const STEAM_API =
   "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/";
-const NEXUS_GQL = "https://api.nexusmods.com/v2/graphql";
-const NEXUS_GAME_ID = "424";
 const LIVE_JSON =
   "https://raw.githubusercontent.com/AzraelGodKing/rimworld_mods/stats/live.json";
-const CACHE_KEY = "azrael-workshop-stats-v2";
+const CACHE_KEY = "azrael-workshop-stats-v3";
 const BASE = import.meta.env.BASE_URL;
+
+const STEAM_FIELDS = [
+  "subscriptions",
+  "favorited",
+  "views",
+  "lifetime_subscriptions",
+  "lifetime_favorited",
+];
+const NEXUS_FIELDS = ["nexus_downloads", "nexus_endorsements"];
+const ALL_FIELDS = [...STEAM_FIELDS, ...NEXUS_FIELDS];
 
 const roster = modsData.mods.map((m) => ({
   id: m.id,
@@ -36,6 +45,12 @@ function num(v, fallback = 0) {
   return Number.isFinite(n) ? n : fallback;
 }
 
+function maybeNum(v) {
+  if (v == null || v === "") return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
+
 function emptyTotal() {
   return {
     subscriptions: 0,
@@ -51,13 +66,7 @@ function emptyTotal() {
 function buildSiteTotal(modsMap) {
   const total = emptyTotal();
   for (const m of Object.values(modsMap)) {
-    total.subscriptions += num(m.subscriptions);
-    total.favorited += num(m.favorited);
-    total.views += num(m.views);
-    total.lifetime_subscriptions += num(m.lifetime_subscriptions);
-    total.lifetime_favorited += num(m.lifetime_favorited);
-    total.nexus_downloads += num(m.nexus_downloads);
-    total.nexus_endorsements += num(m.nexus_endorsements);
+    for (const f of ALL_FIELDS) total[f] += num(m[f]);
   }
   return total;
 }
@@ -85,6 +94,61 @@ function apply(stats) {
   state.source = stats.source || null;
 }
 
+function steamDetailUsable(detail) {
+  return detail != null
+    && Number(detail.result) === 1
+    && (detail.subscriptions != null || detail.favorited != null);
+}
+
+function emptyRow(mod) {
+  return {
+    name: mod.name,
+    publishedFileId: mod.publishedFileId,
+    title: mod.name,
+    subscriptions: null,
+    favorited: null,
+    views: null,
+    lifetime_subscriptions: null,
+    lifetime_favorited: null,
+    nexus_downloads: null,
+    nexus_endorsements: null,
+  };
+}
+
+function detailToModStats(mod, detail) {
+  const row = emptyRow(mod);
+  if (!detail) return row;
+  row.title = detail.title || mod.name;
+  row.subscriptions = maybeNum(detail.subscriptions);
+  row.favorited = maybeNum(detail.favorited);
+  row.views = maybeNum(detail.views);
+  row.lifetime_subscriptions = maybeNum(detail.lifetime_subscriptions) ?? row.subscriptions;
+  row.lifetime_favorited = maybeNum(detail.lifetime_favorited) ?? row.favorited;
+  row.nexus_downloads = maybeNum(detail.nexus_downloads);
+  row.nexus_endorsements = maybeNum(detail.nexus_endorsements);
+  return row;
+}
+
+function mergeHole(target, fill, fields) {
+  if (!fill) return;
+  for (const f of fields) {
+    if (target[f] == null && fill[f] != null) target[f] = maybeNum(fill[f]);
+  }
+}
+
+function settleRow(row) {
+  for (const f of ALL_FIELDS) {
+    if (row[f] == null) row[f] = 0;
+  }
+  return row;
+}
+
+function hasUsefulCounts(stats) {
+  return Object.values(stats?.mods || {}).some(
+    (m) => num(m.subscriptions) > 0 || num(m.nexus_downloads) > 0
+  );
+}
+
 async function fetchSteamApi(ids) {
   const body = new URLSearchParams();
   body.set("itemcount", String(ids.length));
@@ -107,96 +171,6 @@ async function fetchSteamApi(ids) {
   return byId;
 }
 
-function parseCountNearLabel(text, labels) {
-  for (const label of labels) {
-    const before = text.match(
-      new RegExp("([0-9][0-9,]*)\\s*</[^>]+>\\s*<[^>]+>\\s*" + label, "i")
-    );
-    if (before) {
-      const n = Number(String(before[1]).replace(/,/g, ""));
-      if (Number.isFinite(n)) return n;
-    }
-    const after = text.match(new RegExp(label + "[^0-9]{0,80}?([0-9][0-9,]*)", "i"));
-    if (after) {
-      const n = Number(String(after[1]).replace(/,/g, ""));
-      if (Number.isFinite(n)) return n;
-    }
-  }
-  return null;
-}
-
-function steamDetailUsable(detail) {
-  return detail != null
-    && Number(detail.result) === 1
-    && (detail.subscriptions != null || detail.favorited != null);
-}
-
-async function fetchViaWorkshopPage(publishedFileId) {
-  const pageUrl = "https://steamcommunity.com/sharedfiles/filedetails/?id=" + publishedFileId;
-  const res = await fetch("https://r.jina.ai/" + pageUrl, {
-    cache: "no-store",
-    headers: { "X-Return-Format": "html" },
-  });
-  if (!res.ok) throw new Error("jina HTTP " + res.status);
-  const text = await res.text();
-  const subscriptions = parseCountNearLabel(text, ["Current Subscribers", "Subscribers"]);
-  const favorited = parseCountNearLabel(text, ["Current Favorites", "Favorites"]);
-  const views = parseCountNearLabel(text, ["Unique Visitors", "Unique visitors"]);
-  if (subscriptions == null && favorited == null) throw new Error("could not parse workshop page");
-  return {
-    result: 1,
-    publishedfileid: publishedFileId,
-    subscriptions: subscriptions ?? 0,
-    favorited: favorited ?? 0,
-    views: views ?? 0,
-    lifetime_subscriptions: subscriptions ?? 0,
-    lifetime_favorited: favorited ?? 0,
-  };
-}
-
-async function fetchNexusGraphql(nexusModId) {
-  const res = await fetch(NEXUS_GQL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    mode: "cors",
-    cache: "no-store",
-    body: JSON.stringify({
-      query: "query ($gameId: ID!, $modId: ID!) { mod(gameId: $gameId, modId: $modId) { downloads endorsements } }",
-      variables: { gameId: NEXUS_GAME_ID, modId: String(nexusModId) },
-    }),
-  });
-  if (!res.ok) throw new Error("Nexus HTTP " + res.status);
-  const json = await res.json();
-  const row = json?.data?.mod;
-  if (!row) throw new Error("Nexus shape");
-  return {
-    nexus_downloads: num(row.downloads),
-    nexus_endorsements: num(row.endorsements),
-  };
-}
-
-function detailToModStats(mod, detail) {
-  return {
-    name: mod.name,
-    publishedFileId: mod.publishedFileId,
-    title: detail.title || mod.name,
-    subscriptions: num(detail.subscriptions),
-    favorited: num(detail.favorited),
-    views: num(detail.views),
-    lifetime_subscriptions: num(detail.lifetime_subscriptions, num(detail.subscriptions)),
-    lifetime_favorited: num(detail.lifetime_favorited, num(detail.favorited)),
-    nexus_downloads: detail.nexus_downloads != null ? num(detail.nexus_downloads) : null,
-    nexus_endorsements: detail.nexus_endorsements != null ? num(detail.nexus_endorsements) : null,
-  };
-}
-
-function mergeHole(target, fill, fields) {
-  if (!fill) return;
-  for (const f of fields) {
-    if (target[f] == null) target[f] = num(fill[f]);
-  }
-}
-
 async function fetchLiveJson() {
   const res = await fetch(LIVE_JSON + "?t=" + Date.now(), { cache: "no-store" });
   if (!res.ok) throw new Error("live.json HTTP " + res.status);
@@ -209,65 +183,58 @@ async function fetchStaticFallback() {
   return res.json();
 }
 
-async function fetchLiveStats() {
-  let byId = null;
-  try {
-    byId = await fetchSteamApi(roster.map((m) => m.publishedFileId));
-  } catch {
-    byId = null;
-  }
-
+function assemble(byId, feed, cache) {
   const mods = {};
   for (const mod of roster) {
-    try {
-      let detail = byId?.get(mod.publishedFileId);
-      if (!steamDetailUsable(detail)) {
-        detail = await fetchViaWorkshopPage(mod.publishedFileId);
-      }
-      mods[mod.id] = detailToModStats(mod, detail);
-    } catch {
-      mods[mod.id] = detailToModStats(mod, {});
-    }
-    if (mod.nexusModId) {
-      try {
-        const nexus = await fetchNexusGraphql(mod.nexusModId);
-        mods[mod.id].nexus_downloads = nexus.nexus_downloads;
-        mods[mod.id].nexus_endorsements = nexus.nexus_endorsements;
-      } catch { /* CORS — filled from live.json */ }
-    }
+    const detail = byId?.get(mod.publishedFileId);
+    const row = steamDetailUsable(detail)
+      ? detailToModStats(mod, detail)
+      : emptyRow(mod);
+    mergeHole(row, feed?.mods?.[mod.id], ALL_FIELDS);
+    mergeHole(row, cache?.mods?.[mod.id], ALL_FIELDS);
+    mods[mod.id] = settleRow(row);
   }
-
-  let feed = null;
-  try {
-    feed = await fetchLiveJson();
-  } catch { /* branch may not exist yet */ }
-
-  const steamFields = [
-    "subscriptions", "favorited", "views",
-    "lifetime_subscriptions", "lifetime_favorited",
-  ];
-  const nexusFields = ["nexus_downloads", "nexus_endorsements"];
-  for (const mod of roster) {
-    const row = mods[mod.id];
-    const fromFeed = feed?.mods?.[mod.id];
-    mergeHole(row, fromFeed, steamFields);
-    mergeHole(row, fromFeed, nexusFields);
-    for (const f of [...steamFields, ...nexusFields]) {
-      if (row[f] == null) row[f] = 0;
-    }
-  }
-
   const sources = [];
   if (byId) sources.push("steam-api");
-  else sources.push("workshop-page");
   if (feed) sources.push("live-json");
-
+  if (cache) sources.push("stats-cache");
   return {
-    lastFetched: new Date().toISOString(),
-    source: sources.join("+"),
+    lastFetched: feed?.lastFetched || cache?.lastFetched || new Date().toISOString(),
+    source: sources.join("+") || "empty",
     mods,
     site_total: buildSiteTotal(mods),
   };
+}
+
+async function fetchLiveStats() {
+  let feed = null;
+  let cache = null;
+  let byId = null;
+
+  const feedP = fetchLiveJson()
+    .then((json) => {
+      feed = json;
+      if (hasUsefulCounts(json)) apply(assemble(null, json, null));
+      return json;
+    })
+    .catch(() => null);
+
+  const cacheP = fetchStaticFallback()
+    .then((json) => {
+      cache = json;
+      return json;
+    })
+    .catch(() => null);
+
+  const steamP = fetchSteamApi(roster.map((m) => m.publishedFileId))
+    .then((map) => {
+      byId = map;
+      return map;
+    })
+    .catch(() => null);
+
+  await Promise.all([feedP, cacheP, steamP]);
+  return assemble(byId, feed, cache);
 }
 
 let started = false;
@@ -278,23 +245,24 @@ export async function refreshStats({ force = false } = {}) {
     try { localStorage.removeItem(CACHE_KEY); } catch { /* ignore */ }
   } else {
     const snap = readLocalSnapshot();
-    if (snap) apply(snap);
+    if (snap && hasUsefulCounts(snap)) apply(snap);
   }
   state.loading = true;
   state.error = false;
   try {
     const stats = await fetchLiveStats();
-    writeLocalSnapshot(stats);
+    if (hasUsefulCounts(stats)) writeLocalSnapshot(stats);
     apply(stats);
-    return true;
+    return hasUsefulCounts(stats);
   } catch {
     try {
       const feed = await fetchLiveJson();
-      apply(feed);
+      apply(assemble(null, feed, null));
       return true;
     } catch {
       try {
-        apply(await fetchStaticFallback());
+        const cache = await fetchStaticFallback();
+        apply(assemble(null, null, cache));
         return true;
       } catch {
         state.error = true;

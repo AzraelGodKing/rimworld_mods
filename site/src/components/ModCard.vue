@@ -20,7 +20,7 @@ const BASE = import.meta.env.BASE_URL;
     <div class="mod-card-body">
       <h2>{{ mod.name }}</h2>
       <p class="mod-card-tagline">{{ mod.tagline }}</p>
-      <div class="mod-card-stats" v-if="stats">
+      <div class="mod-card-stats" v-if="stats && (stats.subscriptions || stats.favorited)">
         <span>{{ format(stats.subscriptions) }} {{ t('stats.subs') }}</span>
         <span>{{ format(stats.favorited) }} {{ t('stats.favs') }}</span>
       </div>
