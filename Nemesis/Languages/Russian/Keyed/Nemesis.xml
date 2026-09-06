@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <Nemesis_UpdateLetterLabel>Nemesis {0}</Nemesis_UpdateLetterLabel>
+  <Nemesis_UpdateLetterFallback>Nemesis {0} загружен.\n\nПолные заметки: {1}</Nemesis_UpdateLetterFallback>
+  <Nemesis_UpdateLetterFooter>Полные заметки: {0}</Nemesis_UpdateLetterFooter>
+
   <!-- Settings -->
   <Nemesis_Settings_Triggers>Шансы срабатывания</Nemesis_Settings_Triggers>
   <Nemesis_Settings_KilledAlly>Шанс при убийстве союзника: {0}%</Nemesis_Settings_KilledAlly>

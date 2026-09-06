@@ -34,7 +34,7 @@ namespace DeepColony
         public static void GameTick()
         {
             if (!DeepColonySettings.Get.enableTrauma) return;
-            if (Find.TickManager.TicksGame % CheckInterval != 0) return;
+            if (!TickPhase.Due(1169)) return;
 
             var gc = GameComp_DeepColony.Instance;
             if (gc?.remembranceEntries == null || gc.remembranceEntries.Count == 0) return;

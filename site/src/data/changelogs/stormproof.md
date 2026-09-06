@@ -1,14 +1,11 @@
 # Changelog
 
-Detailed notes for **Stormproof** only. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
+Detailed notes for **Stormproof** only. ## [1.1.1]
 
-Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
-
-## [1.1.0]
-
-Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.1.0 loaded from ...` with stamp `azr-49-58-77-78-79-80-v2`.
+Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.1.1 loaded from ...` with stamp `update-news-v1`.
 
 ### Added
+- **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 - **Graded brownout** — when batteries fall below 40%, lights and benches degrade and coolers lag; grid draw drops so the remaining charge lasts longer. Load shedders still cut the sub-grid at the trip point.
 - **Storm wear** — thunderstorms, ion storms, and high wind slowly chip ordinary conduit and batteries. Armored conduit and storm capacitor banks are immune. Vanilla repair fixes the damage.
 - **Weather almanac** — weather forecaster gizmo + inspect log of this map's seasons and game conditions.

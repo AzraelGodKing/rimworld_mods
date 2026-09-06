@@ -16,7 +16,7 @@ namespace DeepColony
         public static void GameTick()
         {
             if (!DeepColonySettings.Get.enableFactionRep) return;
-            if (Find.TickManager.TicksGame % TickInterval != 0) return;
+            if (!TickPhase.Due(1503)) return;
 
             foreach (Map map in Find.Maps)
             {

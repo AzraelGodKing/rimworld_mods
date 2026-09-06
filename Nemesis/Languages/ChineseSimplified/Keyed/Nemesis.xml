@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <Nemesis_UpdateLetterLabel>Nemesis {0}</Nemesis_UpdateLetterLabel>
+  <Nemesis_UpdateLetterFallback>Nemesis {0} 已加载。\n\n完整说明：{1}</Nemesis_UpdateLetterFallback>
+  <Nemesis_UpdateLetterFooter>完整说明：{0}</Nemesis_UpdateLetterFooter>
+
   <!-- Settings -->
   <Nemesis_Settings_Triggers>触发概率</Nemesis_Settings_Triggers>
   <Nemesis_Settings_KilledAlly>击杀盟友概率：{0}%</Nemesis_Settings_KilledAlly>

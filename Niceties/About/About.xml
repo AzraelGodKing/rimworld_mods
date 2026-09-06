@@ -6,7 +6,7 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">1.1.0</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.1.1</modVersion>
   <incompatibleWith>
     <li>Jecrell166.JecsHEverlastingHApparel</li>
     <li>z4k97b.altarsinthroneroom</li>
