@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <Nemesis_UpdateLetterLabel>Nemesis {0}</Nemesis_UpdateLetterLabel>
+  <Nemesis_UpdateLetterFallback>Nemesis {0} is loaded.\n\nFull notes: {1}</Nemesis_UpdateLetterFallback>
+  <Nemesis_UpdateLetterFooter>Full notes: {0}</Nemesis_UpdateLetterFooter>
+
   <!-- Settings -->
   <Nemesis_Settings_Triggers>Trigger chances</Nemesis_Settings_Triggers>
   <Nemesis_Settings_KilledAlly>Killed ally chance: {0}%</Nemesis_Settings_KilledAlly>

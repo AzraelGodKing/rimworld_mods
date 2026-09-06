@@ -46,6 +46,7 @@ namespace Azrael
             new[] { "Deep Colony", "azraelgodking.DeepColony" },
             new[] { "Living World", "azraelgodking.livingworld" },
             new[] { "Date Night", "azraelgodking.DateNight" },
+            new[] { "Niceties", "AzraelGodKing.Niceties" },
         };
 
         internal static List<ModRow> Mods()

@@ -21,9 +21,15 @@ namespace LivingWorld
         private Quadrum lastQuadrum;
         private int lastYear = -1;
         private int pulseIndex;
+        private string lastNewsVersion;
 
         public GameComponent_LivingWorld(Game game)
         {
+        }
+
+        public override void FinalizeInit()
+        {
+            UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
         public static GameComponent_LivingWorld Get =>
@@ -47,6 +53,7 @@ namespace LivingWorld
             Scribe_Values.Look(ref lastQuadrum, "lastQuadrum");
             Scribe_Values.Look(ref lastYear, "lastYear", -1);
             Scribe_Values.Look(ref pulseIndex, "pulseIndex");
+            Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 chronicle ??= new List<WorldEvent>();

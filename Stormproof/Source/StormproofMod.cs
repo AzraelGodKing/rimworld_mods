@@ -7,6 +7,7 @@ namespace Stormproof
     {
         public static StormproofSettings Settings;
         private Vector2 settingsScroll;
+        private float settingsContentHeight = 2000f;
 
         public StormproofMod(ModContentPack content) : base(content)
         {
@@ -22,10 +23,11 @@ namespace Stormproof
                 return;
             }
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, 1180f);
+            Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
+            float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, viewHeight);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
-            Listing_Standard listing = new Listing_Standard();
-            listing.Begin(viewRect);
+            listing.Begin(new Rect(0f, 0f, viewRect.width, 99999f));
 
             listing.Label("Stormproof_Settings_Intro".Translate());
             listing.Gap(6f);
@@ -98,6 +100,7 @@ namespace Stormproof
                 Settings.ResetToDefaults();
             }
 
+            settingsContentHeight = Mathf.Max(listing.MaxColumnHeightSeen + 24f, inRect.height);
             listing.End();
             Widgets.EndScrollView();
             Settings.Clamp();

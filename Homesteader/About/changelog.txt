@@ -1,5 +1,5 @@
-1.0.2
-[h1]Homesteader — 1.0.2[/h1]
+1.0.3
+[h1]Homesteader — 1.0.3[/h1]
 
 [b]Added[/b]
 [list]
@@ -7,6 +7,7 @@
 [*] [b]Spoilage triage[/b] — colonists eat the most-spoiled stack first, and preserving bills take produce closest to turning (Mod Options, on by default).
 [*] [b]Preserve crate[/b] — pack a mixed lot of pantry goods into one tradeable crate at the jam cauldron or canning kitchen.
 [*] [b]Saved seed[/b] — harvest barley, pumpkin, herbs, sugar beet, and flax drops seed from your own stock. Replant it and the line slowly picks up yield, frost, or dry-spell grit. No extra UI.
+[*] [b]Update letter[/b] — loading a colony shows this version's notes from About/changelog.txt, with a link to the newest full notes.
 [/list]
 
 [b]Changed[/b]
@@ -15,4 +16,5 @@
 [*] [b]Settings[/b] — if that folder is missing, the toggle is hidden and originals stay on.
 [/list]
 
-[i]Build stamp (Player.log): azr-66-67-68-69-87-v1[/i]
+[i]Build stamp (Player.log): update-news-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]

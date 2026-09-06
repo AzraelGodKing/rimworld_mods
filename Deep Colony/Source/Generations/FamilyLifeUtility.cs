@@ -20,7 +20,7 @@ namespace DeepColony
         public static void GameTick()
         {
             if (!Enabled) return;
-            if (Find.TickManager.TicksGame % LastOfLineInterval != 0) return;
+            if (!TickPhase.Due(167)) return;
             try
             {
                 RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);
