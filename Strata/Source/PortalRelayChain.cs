@@ -134,9 +134,13 @@ namespace Strata
             }
         }
 
-        internal static void Tick()
+        /// <summary>
+        /// Finish stair arrivals on the pawn's map tick. World DoSingleTick is
+        /// async-world in Multiplayer; MakeJob there desyncs UniqueIDs.
+        /// </summary>
+        internal static void TickMap(Map map)
         {
-            if (pending.Count == 0)
+            if (map == null || pending.Count == 0)
             {
                 return;
             }
@@ -144,6 +148,13 @@ namespace Strata
             for (int i = pending.Count - 1; i >= 0; i--)
             {
                 int id = pending[i];
+                Pawn pawn = FindPawn(id);
+                // Mid-portal pawns are unspawned; wait for the dest map tick.
+                if (pawn == null || pawn.Map != map)
+                {
+                    continue;
+                }
+
                 pending.RemoveAt(i);
                 Continue(id);
             }

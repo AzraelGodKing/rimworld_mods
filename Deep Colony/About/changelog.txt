@@ -1,3 +1,14 @@
+1.6.5
+[h1]Deep Colony — 1.6.5[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Empty nest on stairs (AZR-151)[/b] — an adult child walking to another Strata floor no longer counts as leaving home.
+[/list]
+
+[i]Build stamp (Player.log): empty-nest-floors-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]
+
 1.6.4
 [h1]Deep Colony — 1.6.4[/h1]
 
