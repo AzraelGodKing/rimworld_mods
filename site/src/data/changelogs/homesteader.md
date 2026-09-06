@@ -1,24 +1,21 @@
 # Changelog
 
-Detailed notes for Homesteader only. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
+Detailed notes for Homesteader only. ## [Unreleased]
 
-Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
-
-## [Unreleased]
-
-Player-facing version **1.0.2** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.2 loaded from ...` in Player.log (`azr-66-67-68-69-87-v1`).
+Player-facing version **1.0.3** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.3 loaded from ...` in Player.log (`update-news-v1`).
 
 ### Changed
 - **Optional art pack** — `Textures/HomesteaderRefresh/` stays in git but is `export-ignore` for Workshop / CI zips (~7 MB). `TextureRefresh.PackPresent()` looks for `HomesteaderRefresh/Apparel/Overalls`; if missing, originals stay on and the settings toggle is replaced with a keyed tip (EN/RU/CN). Drop the folder into the installed mod to enable Use refreshed textures.
 
 ### Added
+- **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link. Little-guy trait letter is unchanged.
 - **Pantry tab** — colony tab over root cellar / icehouse / springhouse / preserves shelf / crates / barrels: distinct preserved kinds, days of food at 1.6 nutrition per colonist, next stack to rot. EN/RU/CN.
 - **Spoilage triage** — same `FoodOptimality` postfix as favorites (AZR-36); `CompRottable.RotProgressPct` bias. Preserving bills sort ingredient lists rot-first. Setting on by default.
 - **Preserve crate** — `Homesteader_PackPreserveCrate` at jam cauldron and canning kitchen (15 mixed pantry goods). Homestead supplier may stock 0–3 crates.
 - **Seed saving / landrace** — harvest of barley, pumpkin, herbs, sugar beet, flax drops a seed with hidden `CompLandrace`. Sowing consumes the best matching seed on the map. Yield / frost / drought caps at +25%. DevMode inspect only.
 - **Which station FAQ** — Workshop description and docs spell out drying rack vs curing rack, cellar vs icehouse vs springhouse, and hearth vs wood stove so similar names are not treated as duplicates.
 - **Homestead architect tab** — crates, barrels, pallet, hayloft, cellars, icehouse, springhouse, cistern, and water tower moved off Furniture (Steam Aug 6). Adaptive Storage Framework does not get those buildings (it has no Storage tab); the Homestead tab stays.
-- **Update idea pool** — Workshop QoL (architect tab, ASF Storage patch, texture audit, settings) plus pantry/yard/farmstand/waterwheel phases. Goat pen stays removed; dairy shed is the livestock follow-up. Spec: [docs/ideas/homesteader-updates.md](../docs/ideas/homesteader-updates.md).
+- **Update idea pool** — Workshop QoL (architect tab, ASF Storage patch, texture audit, settings) plus pantry/yard/farmstand/waterwheel phases. Goat pen stays removed; dairy shed is the livestock follow-up. Spec: [docs/ideas/homesteader-updates.md](https://github.com/AzraelGodKing/rimworld_mods/blob/main/docs/ideas/homesteader-updates.md).
 - **Optional texture refresh** — Mod Options → Homesteader → "Use refreshed textures" (off by default). Original sprites are kept. The new pack gives every building, item, plant, and floor its own unique texture (no more shared jam/cellar/etc. placeholders); orchard trees and composted soil get dedicated art too. `_*_{north,south,east,west}` files are one building from four camera angles, not four different objects. Curing rack refresh redone as one mixed-charcuterie rack (hams, sausages, bacon slab, netted salami) with matching facings. Diggo keeps brought `art/brought/HippoDogPlushie.png`; the 27 statue keeps brought `art/brought/27_2.0.png` (neither is in the refresh swap). Outliers that read as product photos, RPG loot, or true-isometric renders (apparel, power buildings, maypole, monuments, grand 27, shark plushie, chicken coop, beehive, icehouse/root cellar/springhouse, solar still, water tower, orchard trees, crops, jam/mason jar/pie/cans) were redrawn against actual Core sprites (wood-fired generator, cowboy hat, oak/maple, chess table, sculptures): thick dark outlines, muted palette, flattened top-down 3/4 camera. EN/CN/RU settings strings. Restart if sprites look stale after toggling.
 - **Azrael storyteller** — Cassandra-style pacing with slightly more Misc / ThreatSmall (series flavor). Canonical package; the optional Azrael showcase mod only injects this teller if Homesteader is not loaded.
 - **ForcedStoryteller scen part** — Homesteader.ScenPart_ForcedStoryteller so Homesteaders (and sibling mod scenarios via MayRequire) can lock Azrael.

@@ -113,6 +113,9 @@
   <Stormproof_StormSpire_CollectFulguriteDesc>Снять сплавленное молнией стекло с основания шпиля.</Stormproof_StormSpire_CollectFulguriteDesc>
   <Stormproof_StormSpire_Strikes>Ударов поймано: {0} (фульгурит {1}/{2})</Stormproof_StormSpire_Strikes>
   <Stormproof_StormSpire_FulguriteStored>Фульгурит ждёт: {0}</Stormproof_StormSpire_FulguriteStored>
+  <Stormproof_UpdateLetterLabel>Stormproof {0}</Stormproof_UpdateLetterLabel>
+  <Stormproof_UpdateLetterFallback>Stormproof {0} загружен.\n\nПолные заметки: {1}</Stormproof_UpdateLetterFallback>
+  <Stormproof_UpdateLetterFooter>Полные заметки: {0}</Stormproof_UpdateLetterFooter>
   <Stormproof_SettingsCategory>Stormproof</Stormproof_SettingsCategory>
   <Stormproof_Settings_Intro>Здания остаются; ползунки решают, как сильно небо и сеть давят в ответ.</Stormproof_Settings_Intro>
   <Stormproof_Settings_PresetSoft>Мягко</Stormproof_Settings_PresetSoft>

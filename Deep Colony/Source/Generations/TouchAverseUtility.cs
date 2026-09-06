@@ -240,7 +240,7 @@ namespace DeepColony
         {
             if (!Enabled) return;
             if (Find.TickManager == null) return;
-            if (Find.TickManager.TicksGame % CheckInterval != 0) return;
+            if (!TickPhase.Due(668)) return;
 
             foreach (Map map in Find.Maps)
             {

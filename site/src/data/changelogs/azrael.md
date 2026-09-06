@@ -1,17 +1,11 @@
 # Changelog
 
-Detailed notes for **Azrael** only. Repo-wide highlights: [../CHANGELOG.md](../CHANGELOG.md).
+Detailed notes for **Azrael** only. ## [Unreleased]
 
-Steam Workshop paste: [`About/changelog.txt`](About/changelog.txt).
-
-## [Unreleased]
-
-Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.1 loaded from ...` in Player.log (`azr-86-v1`).
-
-### Changed
-- **1.0.1** — version stamp only; no gameplay change.
+Player-facing version **1.0.0** (`About.xml` `modVersion`). Unreleased hub. Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log (`update-news-v1`).
 
 ### Added
+- **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 - **Series hub** — Mod Options → Azrael lists loaded series mods and About versions, live soft-compat bridges (root cellars, wells, Stormproof rooms, Living World goodwill), named conflicts (AASB / MultiFloors with Strata), and failed Harmony patch classes from this session's log. Copy report for support. Read-only; missing mods show as not loaded. EN/CN/RU.
 - **The Deep Homestead** scenario — 3 settlers, farm kit, mountain-foothills opener; forces Azrael; MayRequire Homesteader / Strata start research and rock salt.
 - **Standalone storyteller fallback** — injects `StorytellerDef` Azrael only when Homesteader is not loaded (Homesteader owns the canonical copy). `PatchOperationFindMod` matches the Homesteader display name so both mods together do not duplicate the def.

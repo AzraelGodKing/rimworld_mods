@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <DateNight_UpdateLetterLabel>Date Night {0}</DateNight_UpdateLetterLabel>
+  <DateNight_UpdateLetterFallback>Date Night {0} 已加载。\n\n完整说明：{1}</DateNight_UpdateLetterFallback>
+  <DateNight_UpdateLetterFooter>完整说明：{0}</DateNight_UpdateLetterFooter>
   <DateNight_SettingsCategory>约会之夜</DateNight_SettingsCategory>
   <DateNight_Settings_Intro>在作息表上安排“约会”或“爱爱”。约会是散步 / 餐桌 / 一起消遣（心情与好感，不上床）。爱爱仍使用双人床。若伴侣不在同一张床，成人可以独处。意识形态禁止爱爱，或生物科技不育基因，会改去约会，而不是强行开始爱爱。</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>安全怀孕冷却</DateNight_Settings_PregnancySafe>
