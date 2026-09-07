@@ -2,11 +2,22 @@
 
 Detailed notes for **Niceties** only. ## [Unreleased]
 
-Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.1.1 loaded from ...; update-news-v1` in Player.log.
+Player-facing version **1.1.2** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.1.2 loaded from ...; settings-i18n-v1` in Player.log.
 
 ### Added
 
-- **Chinese and Russian** — Keyed packs for settings, letters, and inspect text (parity with English).
+- **Chinese and Russian** (AZR-134) — Keyed packs for settings, letters, and inspect text (parity with English).
+
+### Fixed
+
+- **Settings scroll** (AZR-124) — the options window grows with its content, so longer translations stay reachable.
+
+## [1.1.1]
+
+Player-facing version **1.1.1**. Startup wrote `[Niceties] v1.1.1 loaded from ...; update-news-v1` in Player.log.
+
+### Added
+
 - **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 - **Shared bedrooms** (`azr-106`) — bed gizmo marks the room as shared. It stays a bedroom instead of barracks, so Slept in bedroom and royal bedroom still apply. Pawns who share a room (marked, or another colonist assigned a bed there) skip `SleepDisturbed`. Does not suppress sharing-a-bed-with-a-non-partner. Inspired by Share Rooms [LWM]; original 1.6 code.
 
