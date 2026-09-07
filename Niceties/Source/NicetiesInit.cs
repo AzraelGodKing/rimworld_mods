@@ -14,7 +14,7 @@ namespace Niceties
             ApparelGender.Capture();
             ApparelGender.Apply(NicetiesMod.Settings?.wearAnyGender ?? true);
             LongEventHandler.ExecuteWhenFinished(() =>
-                ModVersionLog.Write("[Niceties]", extra: "update-news-v1"));
+                ModVersionLog.Write("[Niceties]", extra: "settings-i18n-v1"));
         }
     }
 }
