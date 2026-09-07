@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LivingWorld_ListeningPost.label>Пост прослушки</LivingWorld_ListeningPost.label>
+  <LivingWorld_ListeningPost.description>Трое поселенцев ставят колонию на шумном ободе — далёкие войны, меняющие хозяев поселения и новости, которые приходят раньше беженцев.\n\nФиксирует Azrael, если загружен Homesteader.</LivingWorld_ListeningPost.description>
+  <LivingWorld_ListeningPost.scenario.summary>Трое колонистов в живом мире за картой. Azrael, если есть Homesteader.</LivingWorld_ListeningPost.scenario.summary>
+  <LivingWorld_ListeningPost.scenario.parts.4.text>Карта тиха. Планета — нет.
+
+Поселения встают и падают за вашим туманом войны. Фракции враждуют. Слухи идут дальше караванов. Держите радио тёплым — следующее письмо уже может идти к вашим воротам.</LivingWorld_ListeningPost.scenario.parts.4.text>
+</LanguageData>
