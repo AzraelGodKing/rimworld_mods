@@ -1,3 +1,4 @@
+using AzraelCommon;
 using HarmonyLib;
 using UnityEngine;
 using Verse;
@@ -12,7 +13,7 @@ namespace LivingWorld
         {
             Settings = GetSettings<LivingWorldSettings>();
             ModVersionLog.Write("[LivingWorld]", content, extra: "update-news-v1");
-            HarmonyPatchAll.Apply(new Harmony("azraelgodking.livingworld"), "[LivingWorld]");
+            SafePatchAll.Apply(new Harmony("azraelgodking.livingworld"), "[LivingWorld]");
         }
 
         public override string SettingsCategory() => "LivingWorld_SettingsCategory".Translate();

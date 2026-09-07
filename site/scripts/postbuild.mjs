@@ -22,7 +22,19 @@ const replaced = {
   "deep-colony.html": "deep-colony",
   "datenight.html": "date-night",
   "niceties.html": "niceties",
+  "ledger.html": "deep-colony",
+  "signal.html": "nemesis",
+  "strata-roadmap.html": "strata",
 };
+
+// Shipped as-is (AZR-135). Everything else in docs/ is either replaced above
+// or a static asset (img, data, scripts, style.css).
+const keepLegacy = [
+  "admin-stats.html", // unlisted force-refresh; noindex
+  "living-world.html", // unlisted until Living World is on the hub
+  "homesteader-catalog.html", // catalog content lives only here
+];
+void keepLegacy;
 
 function copyRecursive(src, dest, skip = () => false) {
   for (const entry of fs.readdirSync(src, { withFileTypes: true })) {

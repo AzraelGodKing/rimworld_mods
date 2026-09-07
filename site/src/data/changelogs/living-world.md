@@ -12,6 +12,7 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Unreleased. Startup 
 
 ### Added
 
+- **Chinese and Russian** — Keyed packs plus DefInjected for the Listening Post scenario, incidents, and world objects (parity with English).
 - **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 - **Unlisted docs page** — `docs/living-world.html` with `noindex` (not linked from the public hub).
 - **Languages README** — translator stub for Keyed packs (`repo-hygiene-1-6`).
