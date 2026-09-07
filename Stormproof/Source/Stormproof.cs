@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AzraelCommon;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -47,7 +48,7 @@ namespace Stormproof
     {
         static StormproofInit()
         {
-            HarmonyPatchAll.Apply(new Harmony("azraelgodking.stormproof"), "[Stormproof]");
+            SafePatchAll.Apply(new Harmony("azraelgodking.stormproof"), "[Stormproof]");
             StormproofSettings.CaptureOriginalChances();
             StormproofMod.Settings?.ApplyIncidentChances();
             LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "update-news-v1"));

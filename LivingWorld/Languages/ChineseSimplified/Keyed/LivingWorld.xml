@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LivingWorld_UpdateLetterLabel>Living World {0}</LivingWorld_UpdateLetterLabel>
+  <LivingWorld_UpdateLetterFallback>Living World {0} 已加载。\n\n完整说明：{1}</LivingWorld_UpdateLetterFallback>
+  <LivingWorld_UpdateLetterFooter>完整说明：{0}</LivingWorld_UpdateLetterFooter>
+  <LivingWorld_SettingsCategory>Living World</LivingWorld_SettingsCategory>
+  <LivingWorld_Settings_Enabled>启用 Living World</LivingWorld_Settings_Enabled>
+  <LivingWorld_Settings_EnabledDesc>运行地图外聚落模拟（编年 + 演变 + 外交）。关闭则停用全部。</LivingWorld_Settings_EnabledDesc>
+  <LivingWorld_Settings_Chronicle>世界新闻信件</LivingWorld_Settings_Chronicle>
+  <LivingWorld_Settings_ChronicleDesc>传闻规则通过时发信。软消费者仍会收到事件。</LivingWorld_Settings_ChronicleDesc>
+  <LivingWorld_Settings_Morph>聚落演变</LivingWorld_Settings_Morph>
+  <LivingWorld_Settings_MorphDesc>繁荣漂移、易主、废弃、前哨、绰号。</LivingWorld_Settings_MorphDesc>
+  <LivingWorld_Settings_Diplomacy>派系外交</LivingWorld_Settings_Diplomacy>
+  <LivingWorld_Settings_DiplomacyDesc>NPC 派系在和平、紧张、战争与罕见同盟之间漂移，不把你卷进去。</LivingWorld_Settings_DiplomacyDesc>
+  <LivingWorld_Settings_Fallout>战争余波事件</LivingWorld_Settings_Fallout>
+  <LivingWorld_Settings_FalloutDesc>你听说过的惨烈战争之后，难民（以及可选的战团）可能抵达殖民地。</LivingWorld_Settings_FalloutDesc>
+  <LivingWorld_Settings_TradeBlackout>全面战争时中断商队</LivingWorld_Settings_TradeBlackout>
+  <LivingWorld_Settings_TradeBlackoutDesc>陷入激战的派系很少派出商队，直到战事降温。</LivingWorld_Settings_TradeBlackoutDesc>
+  <LivingWorld_Settings_WarSites>普通战争地点</LivingWorld_Settings_WarSites>
+  <LivingWorld_Settings_WarSitesDesc>NPC 决战后，在世界地图上生成短暂的战场 / 难民营图钉（不是 Nemesis 狩猎点）。</LivingWorld_Settings_WarSitesDesc>
+  <LivingWorld_Settings_Warband>过境战团</LivingWorld_Settings_Warband>
+  <LivingWorld_Settings_WarbandDesc>罕见的敌对或紧张战团，追击你听说过的那场战争。默认关闭——请谨慎。</LivingWorld_Settings_WarbandDesc>
+  <LivingWorld_Settings_Verbosity>新闻详细程度</LivingWorld_Settings_Verbosity>
+  <LivingWorld_Verbosity_Low>低（仅重大）</LivingWorld_Verbosity_Low>
+  <LivingWorld_Verbosity_Medium>中（接触 / 附近 / 盟友）</LivingWorld_Verbosity_Medium>
+  <LivingWorld_Verbosity_High>高（大部分新闻）</LivingWorld_Verbosity_High>
+  <LivingWorld_Settings_TickInterval>每 {0}  tick 一次模拟脉冲</LivingWorld_Settings_TickInterval>
+  <LivingWorld_Settings_Resolutions>每次脉冲决议数：{0}</LivingWorld_Settings_Resolutions>
+  <LivingWorld_Settings_MaxLetters>每季最多信件：{0}</LivingWorld_Settings_MaxLetters>
+  <LivingWorld_Settings_MaxMorphs>每年最多演变：{0}</LivingWorld_Settings_MaxMorphs>
+  <LivingWorld_Settings_Proximity>附近新闻半径（格）：{0}</LivingWorld_Settings_Proximity>
+  <LivingWorld_Settings_MaxWars>同时进行的战争上限：{0}</LivingWorld_Settings_MaxWars>
+  <LivingWorld_Settings_WarRate>开战 / 升级速率：{0}</LivingWorld_Settings_WarRate>
+  <LivingWorld_Settings_Reset>重置</LivingWorld_Settings_Reset>
+
+  <LivingWorld_UnknownFaction>未知派系</LivingWorld_UnknownFaction>
+  <LivingWorld_UnknownPlace>远方聚落</LivingWorld_UnknownPlace>
+
+  <LivingWorld_Prosperity_Thriving>Living World：兴盛</LivingWorld_Prosperity_Thriving>
+  <LivingWorld_Prosperity_StablePlus>Living World：繁荣</LivingWorld_Prosperity_StablePlus>
+  <LivingWorld_Prosperity_Stable>Living World：稳定</LivingWorld_Prosperity_Stable>
+  <LivingWorld_Prosperity_Struggling>Living World：艰难</LivingWorld_Prosperity_Struggling>
+  <LivingWorld_Prosperity_Collapsing>Living World：崩溃</LivingWorld_Prosperity_Collapsing>
+
+  <LivingWorld_Epithet_Fortress>要塞</LivingWorld_Epithet_Fortress>
+  <LivingWorld_Epithet_Market>集市</LivingWorld_Epithet_Market>
+  <LivingWorld_Epithet_Watch>守望</LivingWorld_Epithet_Watch>
+  <LivingWorld_Epithet_Haven>避风港</LivingWorld_Epithet_Haven>
+  <LivingWorld_Epithet_Ruinous>废墟</LivingWorld_Epithet_Ruinous>
+
+  <LivingWorld_LetterLabel_Skirmish>远方小冲突</LivingWorld_LetterLabel_Skirmish>
+  <LivingWorld_LetterText_Skirmish>{0} 与 {1} 在 {2} 附近交火。边缘世界几乎没人在意——除非你在听。</LivingWorld_LetterText_Skirmish>
+  <LivingWorld_LetterLabel_DecisiveVictory>决定性胜利</LivingWorld_LetterLabel_DecisiveVictory>
+  <LivingWorld_LetterText_DecisiveVictory>{0} 在 {2} 一带击溃了 {1}。边缘世界的力量平衡刚刚改变。</LivingWorld_LetterText_DecisiveVictory>
+  <LivingWorld_LetterLabel_FamineRumor>饥荒传闻</LivingWorld_LetterLabel_FamineRumor>
+  <LivingWorld_LetterText_FamineRumor>来自 {2} 的消息：{0} 缺粮。旅人说仓库空了，畜群也瘦了。</LivingWorld_LetterText_FamineRumor>
+  <LivingWorld_LetterLabel_Founding>新聚落</LivingWorld_LetterLabel_Founding>
+  <LivingWorld_LetterText_Founding>{0} 建立了 {2}。世界地图上多了一枚昨天还没有的图钉。</LivingWorld_LetterText_Founding>
+  <LivingWorld_LetterLabel_Collapse>聚落崩解</LivingWorld_LetterLabel_Collapse>
+  <LivingWorld_LetterText_Collapse>{0} 的 {2} 沉寂了。难民也许随后到来——或者只有沉默。</LivingWorld_LetterText_Collapse>
+  <LivingWorld_LetterLabel_Alliance>派系同盟</LivingWorld_LetterLabel_Alliance>
+  <LivingWorld_LetterText_Alliance>{0} 与 {1} 宣誓共进退。彼此之间的刀子会少一些——暂时如此。</LivingWorld_LetterText_Alliance>
+  <LivingWorld_LetterLabel_Betrayal>背弃</LivingWorld_LetterLabel_Betrayal>
+  <LivingWorld_LetterText_Betrayal>{0} 背叛了 {1}。旧日承诺与条约一同烧毁。</LivingWorld_LetterText_Betrayal>
+  <LivingWorld_LetterLabel_OwnershipFlip>聚落易主</LivingWorld_LetterLabel_OwnershipFlip>
+  <LivingWorld_LetterText_OwnershipFlip>{0} 从 {1} 手中夺取了 {2}。墙上的旗帜换了。</LivingWorld_LetterText_OwnershipFlip>
+  <LivingWorld_LetterLabel_ProsperityRise>聚落兴盛</LivingWorld_LetterLabel_ProsperityRise>
+  <LivingWorld_LetterText_ProsperityRise>{2}（{0}）日子不错——市集更满，街道更喧闹。</LivingWorld_LetterText_ProsperityRise>
+  <LivingWorld_LetterLabel_ProsperityFall>聚落艰难</LivingWorld_LetterLabel_ProsperityFall>
+  <LivingWorld_LetterText_ProsperityFall>{2}（{0}）正在挣扎。贸易变稀；人们另寻去处。</LivingWorld_LetterText_ProsperityFall>
+  <LivingWorld_LetterLabel_OutpostFounded>建立前哨</LivingWorld_LetterLabel_OutpostFounded>
+  <LivingWorld_LetterText_OutpostFounded>{0} 在 {2} 建起新前哨，伸展势力。</LivingWorld_LetterText_OutpostFounded>
+  <LivingWorld_LetterLabel_SettlementAbandoned>废弃聚落</LivingWorld_LetterLabel_SettlementAbandoned>
+  <LivingWorld_LetterText_SettlementAbandoned>{0} 放弃了 {2}。世界地图上该点已空。</LivingWorld_LetterText_SettlementAbandoned>
+  <LivingWorld_LetterLabel_Epithet>聚落名声</LivingWorld_LetterLabel_Epithet>
+  <LivingWorld_LetterText_Epithet>{0} 的 {2} 在旅人中得了新绰号。</LivingWorld_LetterText_Epithet>
+  <LivingWorld_LetterLabel_WhitePeace>白纸和平</LivingWorld_LetterLabel_WhitePeace>
+  <LivingWorld_LetterText_WhitePeace>{0} 与 {1} 停止了 {2} 附近的公开交战。紧张仍在。</LivingWorld_LetterText_WhitePeace>
+  <LivingWorld_LetterLabel_RefugeeFlight>战争难民</LivingWorld_LetterLabel_RefugeeFlight>
+  <LivingWorld_LetterText_RefugeeFlight>来自 {0} 的幸存者逃离了与 {1} 在 {2} 一带的战事。一群衣衫褴褛的人已抵达你的边境求生。</LivingWorld_LetterText_RefugeeFlight>
+  <LivingWorld_LetterLabel_TradeBlackout>商路中断</LivingWorld_LetterLabel_TradeBlackout>
+  <LivingWorld_LetterText_TradeBlackout>{0} 与 {1} 的战争掐断了 {2} 附近的商队。交战一方的商人会变少。</LivingWorld_LetterText_TradeBlackout>
+  <LivingWorld_LetterLabel_WarbandPass>过境战团</LivingWorld_LetterLabel_WarbandPass>
+  <LivingWorld_LetterText_WarbandPass>{0} 的一支战团正在猎杀 {1} 在 {2} 附近战斗后的残部。他们正穿过你的地区。</LivingWorld_LetterText_WarbandPass>
+
+  <LivingWorld_WarSite_BattlefieldInspect>近期地图外战争留下的战场残骸。</LivingWorld_WarSite_BattlefieldInspect>
+  <LivingWorld_WarSite_RefugeeCampInspect>远方战事催生的临时难民营。</LivingWorld_WarSite_RefugeeCampInspect>
+</LanguageData>

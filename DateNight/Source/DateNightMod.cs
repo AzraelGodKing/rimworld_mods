@@ -1,3 +1,4 @@
+using AzraelCommon;
 using HarmonyLib;
 using UnityEngine;
 using Verse;
@@ -116,7 +117,7 @@ namespace DateNight
 
         static DateNightInit()
         {
-            HarmonyPatchAll.Apply(new Harmony(HarmonyId), "[DateNight]");
+            SafePatchAll.Apply(new Harmony(HarmonyId), "[DateNight]");
         }
     }
 }

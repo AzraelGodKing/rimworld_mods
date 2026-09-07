@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Niceties_UpdateLetterLabel>Niceties {0}</Niceties_UpdateLetterLabel>
+  <Niceties_UpdateLetterFallback>Niceties {0} 已加载。\n\n完整说明：{1}</Niceties_UpdateLetterFallback>
+  <Niceties_UpdateLetterFooter>完整说明：{0}</Niceties_UpdateLetterFooter>
+  <Niceties_SettingsCategory>Niceties</Niceties_SettingsCategory>
+  <Niceties_Settings_Intro>每项体贴都可单独关闭。关闭后该项回到原版。战斗、火灾和露天腐烂从不拦截。</Niceties_Settings_Intro>
+  <Niceties_Settings_PresetSoft>柔和</Niceties_Settings_PresetSoft>
+  <Niceties_Settings_PresetDefault>默认</Niceties_Settings_PresetDefault>
+  <Niceties_Settings_PresetHard>严苛</Niceties_Settings_PresetHard>
+  <Niceties_Settings_PresetsTip>预设只改旋钮。之后再勾选你真正想要的体贴。</Niceties_Settings_PresetsTip>
+  <Niceties_Settings_ApparelCare>妥善保养服装</Niceties_Settings_ApparelCare>
+  <Niceties_Settings_ApparelCareTip>穿着中的衣服跳过或按比例计算每日损耗。战斗和火灾仍会掉耐久。丢在地上的衣服仍会在户外腐烂。</Niceties_Settings_ApparelCareTip>
+  <Niceties_Settings_QualityScale>按品质缩放损耗</Niceties_Settings_QualityScale>
+  <Niceties_Settings_QualityScaleTip>关：穿着时无每日损耗（柔和）。开：劣质/较差与原版相同；良好和优秀更慢；杰作和传奇跳过每日损耗。</Niceties_Settings_QualityScaleTip>
+  <Niceties_Settings_CraftingBonus>制作技能减缓损耗</Niceties_Settings_CraftingBonus>
+  <Niceties_Settings_CraftingBonusTip>殖民者的制作技能会减少剩余每日损耗，20 级最多减半。</Niceties_Settings_CraftingBonusTip>
+  <Niceties_Settings_CorpseApparel>尸体服装沿用同一规则</Niceties_Settings_CorpseApparel>
+  <Niceties_Settings_CorpseApparelTip>关：死者身上的服装按原版损耗。开：仍适用穿着保养规则。</Niceties_Settings_CorpseApparelTip>
+
+  <Niceties_Settings_ThroneAltar>王座厅允许祭坛</Niceties_Settings_ThroneAltar>
+  <Niceties_Settings_ThroneAltarTip>皇权王座厅要求忽略“无祭坛”。厅内有王座则仍算王座厅而非神殿。需同时启用皇权与思想才能生效。</Niceties_Settings_ThroneAltarTip>
+  <Niceties_Settings_WearAny>可穿任何性别剪裁</Niceties_Settings_WearAny>
+  <Niceties_Settings_WearAnyTip>清除服装性别标签（皇家背心/胸衣、帽子，以及使用同一字段的模组），从而不再触发性别不符心情。</Niceties_Settings_WearAnyTip>
+  <Niceties_Settings_HideCrypto>从殖民者栏隐藏冷冻舱中的人</Niceties_Settings_HideCrypto>
+  <Niceties_Settings_HideCryptoTip>已在冷冻休眠舱中的殖民者不出现在殖民者栏。被抬向舱室途中仍可见。</Niceties_Settings_HideCryptoTip>
+
+  <Niceties_Settings_MeleeHunt>近战狩猎</Niceties_Settings_MeleeHunt>
+  <Niceties_Settings_MeleeHuntTip>猎人可用近战武器狩猎。远程狩猎不变。</Niceties_Settings_MeleeHuntTip>
+  <Niceties_Settings_UnarmedHunt>徒手狩猎</Niceties_Settings_UnarmedHunt>
+  <Niceties_Settings_UnarmedHuntTip>没有武器的猎人仍可狩猎（拳头）。默认关闭——容易送命。</Niceties_Settings_UnarmedHuntTip>
+  <Niceties_Settings_MeleeSize>近战狩猎最大体型：{0}</Niceties_Settings_MeleeSize>
+  <Niceties_Settings_SharedRooms>共用卧室</Niceties_Settings_SharedRooms>
+  <Niceties_Settings_SharedRoomsTip>在床上使用指令将房间标为共用。它保持为卧室而不是翻成营房，室友（以及皇权）不会因同住受罚。</Niceties_Settings_SharedRoomsTip>
+  <Niceties_Settings_SkipDisturbedSleep>室友不因打扰睡眠而沮丧</Niceties_Settings_SkipDisturbedSleep>
+  <Niceties_Settings_SkipDisturbedSleepTip>共用一间房的殖民者（已标记共用，或另有殖民者被分配到该房的床）不会获得打扰睡眠的想法。穿过别人的私人房间仍会打扰对方。</Niceties_Settings_SkipDisturbedSleepTip>
+  <Niceties_ShareRoom>共用房间</Niceties_ShareRoom>
+  <Niceties_ShareRoomTip>将此卧室标为共用。额外的床仍算卧室而非营房。室友跳过“合住一室”的心情惩罚。</Niceties_ShareRoomTip>
+  <Niceties_ShareRoomInspect>房间已共用。</Niceties_ShareRoomInspect>
+  <Niceties_Settings_Reset>重置为默认</Niceties_Settings_Reset>
+
+  <Niceties_Apparel_NoWear>每日损耗：无（保养良好）。</Niceties_Apparel_NoWear>
+  <Niceties_Apparel_VanillaWear>每日损耗：原版。</Niceties_Apparel_VanillaWear>
+  <Niceties_Apparel_ReducedWear>每日损耗：原版的 {0}。</Niceties_Apparel_ReducedWear>
+  <Niceties_Hunt_TooBig>{0} 体型过大，不适合近战狩猎。</Niceties_Hunt_TooBig>
+
+</LanguageData>

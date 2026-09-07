@@ -31,6 +31,9 @@ SKIP_DIR_NAMES = {
 
 TEXTURE_SUFFIXES = (".png", ".jpg", ".jpeg")
 DIRECTIONAL = ("_north", "_south", "_east", "_west")
+EXPECTED_LANGUAGES = ("ChineseSimplified", "Russian")
+# Mods that may ship English-only. Empty after AZR-134.
+ENGLISH_ONLY_MODS: set[str] = set()
 
 
 def skip_dir(path: Path) -> bool:
@@ -140,6 +143,25 @@ def check_definjected_parity(mods: list[Path]) -> list[str]:
                 errors.append(
                     f"DefInjected parity: {mod.name}/Languages/{lang} missing "
                     f"{len(missing)} sibling file(s): {preview}{more}"
+                )
+    return errors
+
+
+def check_expected_languages(mods: list[Path]) -> list[str]:
+    errors = []
+    for mod in mods:
+        if mod.name in ENGLISH_ONLY_MODS:
+            continue
+        english = mod / "Languages" / "English"
+        if not english.is_dir() or not keyed_tags(english):
+            continue
+        for lang in EXPECTED_LANGUAGES:
+            keyed = mod / "Languages" / lang / "Keyed"
+            if not keyed.is_dir():
+                errors.append(
+                    f"missing language pack: {mod.name}/Languages/{lang} "
+                    f"(expected {', '.join(EXPECTED_LANGUAGES)}; "
+                    f"add to ENGLISH_ONLY_MODS only if deliberately English-only)"
                 )
     return errors
 
@@ -254,6 +276,7 @@ def main() -> int:
     errors: list[str] = []
     errors.extend(check_well_formed(xml_files))
     errors.extend(check_mod_versions(mods))
+    errors.extend(check_expected_languages(mods))
     errors.extend(check_keyed_parity(mods))
     errors.extend(check_definjected_parity(mods))
     errors.extend(check_texpaths(mods))
