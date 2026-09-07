@@ -165,18 +165,32 @@ namespace Nemesis
             return (QualityCategory)q;
         }
 
+        public static ThingDef PeekWeaponDef(NemesisCombatFocus focus, TechLevel tech) =>
+            PickWeaponDef(focus, tech);
+
         private static void EnsureFocusWeapon(Pawn pawn, NemesisData data, QualityCategory quality)
         {
             if (pawn.equipment == null) return;
             ThingWithComps primary = pawn.equipment.Primary;
-            if (primary != null && WeaponMatchesFocus(primary.def, data.combatFocus))
+            ThingDef locked = !string.IsNullOrEmpty(data?.weaponDefName)
+                ? DefDatabase<ThingDef>.GetNamedSilentFail(data.weaponDefName)
+                : null;
+
+            if (primary != null && (locked == null
+                ? WeaponMatchesFocus(primary.def, data.combatFocus)
+                : primary.def == locked))
             {
                 SetQuality(primary, quality);
+                if (locked == null && data != null)
+                    data.weaponDefName = primary.def.defName;
                 return;
             }
 
-            ThingDef weaponDef = PickWeaponDef(data.combatFocus, pawn.Faction?.def?.techLevel ?? TechLevel.Industrial);
+            ThingDef weaponDef = locked
+                ?? PickWeaponDef(data.combatFocus, pawn.Faction?.def?.techLevel ?? TechLevel.Industrial);
             if (weaponDef == null) return;
+            if (data != null)
+                data.weaponDefName = weaponDef.defName;
 
             if (primary != null)
                 pawn.equipment.DestroyEquipment(primary);

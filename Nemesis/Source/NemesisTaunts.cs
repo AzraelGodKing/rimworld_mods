@@ -20,29 +20,38 @@ namespace Nemesis
             int escapes = data.escapeCount;
             float agg = data.EffectiveAggression;
 
-            if (agg < 3f)
-            {
-                return Rand.RangeInclusive(0, 5) switch
-                {
-                    0 => "Nemesis_Taunt_Low0".Translate(name, target),
-                    1 => "Nemesis_Taunt_Low1".Translate(name, target),
-                    2 => "Nemesis_Taunt_Low2".Translate(name, target),
-                    3 => "Nemesis_Taunt_Low3".Translate(name, target),
-                    4 => "Nemesis_Taunt_Low4".Translate(name, target),
-                    _ => SoftHomesteaderTaunt(data, name, target)
-                        ?? "Nemesis_Taunt_Low5".Translate(name, target),
-                };
-            }
+            string line = PickVoiceLine(data, name, target, escapes, agg);
+            NemesisTells.RecordNote(data, line);
+            return line;
+        }
 
-            return Rand.RangeInclusive(0, 5) switch
+        static string PickVoiceLine(NemesisData data, string name, string target, int escapes, float agg)
+        {
+            bool high = agg >= 3f;
+            return data.voice switch
             {
-                0 => "Nemesis_Taunt_High0".Translate(name, target),
-                1 => "Nemesis_Taunt_High1".Translate(name, target),
-                2 => "Nemesis_Taunt_High2".Translate(name, target),
-                3 => "Nemesis_Taunt_High3".Translate(name, target, escapes),
-                4 => "Nemesis_Taunt_High4".Translate(name, target),
-                _ => SoftStormFlavor(data, name, target)
-                    ?? "Nemesis_Taunt_High5".Translate(name, target),
+                NemesisVoice.Mocking => high
+                    ? (Rand.Bool ? "Nemesis_Taunt_High0".Translate(name, target)
+                        : "Nemesis_Taunt_Low5".Translate(name, target))
+                    : (Rand.Bool ? "Nemesis_Taunt_Low1".Translate(name, target)
+                        : SoftHomesteaderTaunt(data, name, target)
+                            ?? "Nemesis_Taunt_Low5".Translate(name, target)),
+                NemesisVoice.Zealot => high
+                    ? (Rand.Bool
+                        ? "Nemesis_Taunt_High1".Translate(name, target)
+                        : "Nemesis_Taunt_High5".Translate(name, target))
+                    : "Nemesis_Taunt_Low4".Translate(name, target),
+                NemesisVoice.Casual => high
+                    ? (Rand.Bool
+                        ? "Nemesis_Taunt_High4".Translate(name, target)
+                        : SoftStormFlavor(data, name, target)
+                            ?? "Nemesis_Taunt_High3".Translate(name, target, escapes))
+                    : "Nemesis_Taunt_Low3".Translate(name, target),
+                _ => high
+                    ? (Rand.Bool
+                        ? "Nemesis_Taunt_High2".Translate(name, target)
+                        : "Nemesis_Taunt_Low2".Translate(name, target))
+                    : "Nemesis_Taunt_Low0".Translate(name, target),
             };
         }
 
