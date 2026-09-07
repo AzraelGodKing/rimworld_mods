@@ -1,3 +1,4 @@
+using AzraelCommon;
 using HarmonyLib;
 using Verse;
 
@@ -8,7 +9,7 @@ namespace Niceties
     {
         static NicetiesInit()
         {
-            HarmonyPatchAll.Apply(new Harmony("azraelgodking.niceties"), "[Niceties]");
+            SafePatchAll.Apply(new Harmony("azraelgodking.niceties"), "[Niceties]");
             SharedRooms.InjectComps();
             ApparelGender.Capture();
             ApparelGender.Apply(NicetiesMod.Settings?.wearAnyGender ?? true);

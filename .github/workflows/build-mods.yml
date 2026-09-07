@@ -20,6 +20,8 @@ on:
       - "Deep Colony/Source/**"
       - "Azrael/Source/**"
       - "Niceties/Source/**"
+      - "Common/**"
+      - "Tests/**"
       - "scripts/build_downloads.ps1"
       - "scripts/pack_mod.sh"
       - "scripts/validate_mods.py"
@@ -37,6 +39,8 @@ on:
       - "Deep Colony/Source/**"
       - "Azrael/Source/**"
       - "Niceties/Source/**"
+      - "Common/**"
+      - "Tests/**"
       - "scripts/build_downloads.ps1"
       - "scripts/pack_mod.sh"
       - "scripts/validate_mods.py"
@@ -102,6 +106,9 @@ jobs:
 
       - name: Build Niceties
         run: dotnet build Niceties/Source/Niceties.csproj -c Release --nologo
+
+      - name: Headless mod checks
+        run: dotnet test Tests/ModChecks/ModChecks.csproj -c Release --nologo
 
       - name: Pack docs/downloads zips (with DLLs)
         if: github.event_name != 'pull_request'

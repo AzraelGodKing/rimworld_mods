@@ -6,6 +6,7 @@ Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[Nic
 
 ### Added
 
+- **Chinese and Russian** — Keyed packs for settings, letters, and inspect text (parity with English).
 - **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 - **Shared bedrooms** (`azr-106`) — bed gizmo marks the room as shared. It stays a bedroom instead of barracks, so Slept in bedroom and royal bedroom still apply. Pawns who share a room (marked, or another colonist assigned a bed there) skip `SleepDisturbed`. Does not suppress sharing-a-bed-with-a-non-partner. Inspired by Share Rooms [LWM]; original 1.6 code.
 

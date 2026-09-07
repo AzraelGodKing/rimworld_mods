@@ -1,3 +1,4 @@
+using AzraelCommon;
 using HarmonyLib;
 using UnityEngine;
 using Verse;
@@ -12,7 +13,7 @@ namespace Nemesis
         {
             Settings = GetSettings<NemesisSettings>();
             ModVersionLog.Write("[Nemesis]", content, extra: "update-news-v1");
-            HarmonyPatchAll.Apply(new Harmony("azraelgodking.nemesis"), "[Nemesis]");
+            SafePatchAll.Apply(new Harmony("azraelgodking.nemesis"), "[Nemesis]");
         }
 
         public override string SettingsCategory() => "Nemesis";

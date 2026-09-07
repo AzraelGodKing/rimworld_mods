@@ -4,9 +4,14 @@ using HarmonyLib;
 using RimWorld;
 using Verse;
 
-namespace Strata
+namespace AzraelCommon
 {
-    internal static class HarmonyPatchAll
+    /// <summary>
+    /// Per-class PatchAll so one bad patch cannot take the whole mod down
+    /// (AZR-45). Skips JobDriver/LordJob-style types that only inherit Cleanup
+    /// (AZR-95). Linked into each mod from Common/ — do not copy this file.
+    /// </summary>
+    internal static class SafePatchAll
     {
         internal static void Apply(Harmony harmony, string logPrefix)
         {
@@ -54,10 +59,10 @@ namespace Strata
 
         /// <summary>
         /// CreateClassProcessor treats any type with Prefix/Postfix/Cleanup as a patch
-        /// class. JobDriver / LordJob subclasses inherit Cleanup, which is not a
+        /// class. JobDriver subclasses inherit Cleanup(JobCondition), which is not a
         /// Harmony auxiliary — skip them unless they actually have [HarmonyPatch].
         /// </summary>
-        private static bool IsHarmonyPatchClass(Type type)
+        internal static bool IsHarmonyPatchClass(Type type)
         {
             if (type.GetCustomAttributes(typeof(HarmonyPatch), inherit: false).Length > 0)
             {
