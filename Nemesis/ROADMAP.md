@@ -26,7 +26,7 @@ Acceptance-oriented checklist for later implementation:
 - [ ] **Nemesis camp world site / quest** — offer at higher aggression; resolving may be:
   - **Real** — confrontation with the nemesis (and retinue), or
   - **False lead** — empty camp, planted evidence, or trap.
-- [ ] **Progressive intel** — scrap / rumor → last-known world tile → site reveal; each step requires an active hunt.
+- [x] **Progressive intel (first pass)** — dossier + bought leads (tile / gear / warning / false lead). Camp / site reveal still later.
 - [ ] **Caravan-route ambush** — encounter map tied to the active nemesis pawn / faction (not a Living World warband).
 - [ ] **Taunt cache** — abandoned stockpile / note on a route; do **not** reuse Living World generic war-site defs.
 
@@ -68,6 +68,8 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 
 ## Content / UX
 
+- [x] Dossier tab + epitaphs (1.1.0)
+- [x] Tells (voice / weapon / mark / habit)
 - [ ] Preview.png art pass.
 - [ ] Scenario / storyteller hints.
 - [ ] Dev mode force-spawn / force-end debug actions.

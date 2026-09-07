@@ -8,11 +8,13 @@ namespace Nemesis
     public class NemesisMod : Mod
     {
         public static NemesisSettings Settings;
+        private Vector2 settingsScroll;
+        private float settingsContentHeight = 900f;
 
         public NemesisMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<NemesisSettings>();
-            ModVersionLog.Write("[Nemesis]", content, extra: "update-news-v1");
+            ModVersionLog.Write("[Nemesis]", content, extra: "dossier-tells-v1");
             SafePatchAll.Apply(new Harmony("azraelgodking.nemesis"), "[Nemesis]");
         }
 
@@ -20,8 +22,11 @@ namespace Nemesis
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            var listing = new Listing_Standard();
-            listing.Begin(inRect);
+            var listing = new Listing_Standard { maxOneColumn = true };
+            float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
+            var viewRect = new Rect(0f, 0f, inRect.width - 20f, viewHeight);
+            Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
+            listing.Begin(new Rect(0f, 0f, viewRect.width, 99999f));
 
             listing.Label("Nemesis_Settings_Triggers".Translate());
             listing.Gap(4f);
@@ -101,6 +106,19 @@ namespace Nemesis
 
             listing.GapLine();
             Text.Font = GameFont.Medium;
+            listing.Label("Nemesis_Settings_Intel".Translate());
+            Text.Font = GameFont.Small;
+            listing.Gap(4f);
+            listing.CheckboxLabeled(
+                "Nemesis_Settings_EnableInformants".Translate(),
+                ref Settings.enableInformants,
+                "Nemesis_Settings_EnableInformantsTip".Translate());
+            listing.Label("Nemesis_Settings_LeadCost".Translate(Settings.informantLeadCost));
+            Settings.informantLeadCost = (int)listing.Slider(Settings.informantLeadCost, 50f, 800f);
+            listing.Gap(10f);
+
+            listing.GapLine();
+            Text.Font = GameFont.Medium;
             listing.Label("Nemesis_Settings_ActionMix".Translate());
             Text.Font = GameFont.Small;
             listing.Gap(4f);
@@ -133,7 +151,9 @@ namespace Nemesis
             if (listing.ButtonText("Nemesis_Settings_Reset".Translate(), null, 0.25f))
                 Settings.ResetToDefaults();
 
+            settingsContentHeight = Mathf.Max(listing.MaxColumnHeightSeen + 24f, inRect.height);
             listing.End();
+            Widgets.EndScrollView();
         }
     }
 }

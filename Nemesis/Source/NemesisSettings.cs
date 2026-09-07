@@ -32,6 +32,9 @@ namespace Nemesis
         public bool enableSoftMounts = true;
         public bool enableSoftMechs = true;
 
+        public bool enableInformants = true;
+        public int informantLeadCost = 180;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -58,6 +61,8 @@ namespace Nemesis
             Scribe_Values.Look(ref postEscapeSabotageWeightMul, "postEscapeSabotageWeightMul", 0.35f);
             Scribe_Values.Look(ref enableSoftMounts, "enableSoftMounts", true);
             Scribe_Values.Look(ref enableSoftMechs, "enableSoftMechs", true);
+            Scribe_Values.Look(ref enableInformants, "enableInformants", true);
+            Scribe_Values.Look(ref informantLeadCost, "informantLeadCost", 180);
         }
 
         public void ResetToDefaults()
@@ -85,6 +90,8 @@ namespace Nemesis
             postEscapeSabotageWeightMul = 0.35f;
             enableSoftMounts = true;
             enableSoftMechs = true;
+            enableInformants = true;
+            informantLeadCost = 180;
         }
     }
 }

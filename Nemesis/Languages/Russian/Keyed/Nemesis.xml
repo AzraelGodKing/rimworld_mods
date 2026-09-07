@@ -167,4 +167,70 @@
   <Nemesis_Letter_TruceTitle>{0}: перемирие</Nemesis_Letter_TruceTitle>
   <Nemesis_Letter_TruceBody>Вы заключили временный мир с {0}. Они уходят — пока.\n\nЧерез {1} игровых дней охота возобновится. Они никогда по-настоящему не останавливаются.</Nemesis_Letter_TruceBody>
 
+  <Nemesis_Settings_Intel>Осведомители</Nemesis_Settings_Intel>
+  <Nemesis_Settings_EnableInformants>Покупать наводки</Nemesis_Settings_EnableInformants>
+  <Nemesis_Settings_EnableInformantsTip>Платите серебром у консоли или в досье за наводку. Иногда это ложь.</Nemesis_Settings_EnableInformantsTip>
+  <Nemesis_Settings_LeadCost>Базовая цена наводки: {0} серебра</Nemesis_Settings_LeadCost>
+
+  <Nemesis_Voice_Cold>холодный</Nemesis_Voice_Cold>
+  <Nemesis_Voice_Mocking>насмешливый</Nemesis_Voice_Mocking>
+  <Nemesis_Voice_Zealot>фанатичный</Nemesis_Voice_Zealot>
+  <Nemesis_Voice_Casual>разговорный</Nemesis_Voice_Casual>
+  <Nemesis_Mark_CallingCard>визитка</Nemesis_Mark_CallingCard>
+  <Nemesis_Mark_ArrangedCorpse>разложенные тела</Nemesis_Mark_ArrangedCorpse>
+  <Nemesis_Mark_Scrawl>царапина</Nemesis_Mark_Scrawl>
+  <Nemesis_Mark_SabotageToken>оставленный знак</Nemesis_Mark_SabotageToken>
+  <Nemesis_Habit_PowerFirst>сначала бьёт по сети</Nemesis_Habit_PowerFirst>
+  <Nemesis_Habit_FoodFirst>сначала бьёт по кладовой</Nemesis_Habit_FoodFirst>
+  <Nemesis_Habit_LeaveOneAlive>оставляет кого-то в живых</Nemesis_Habit_LeaveOneAlive>
+  <Nemesis_Habit_EarlyRetreat>отступает раньше</Nemesis_Habit_EarlyRetreat>
+  <Nemesis_Habit_SameBuilding>возвращается к тому же типу зданий</Nemesis_Habit_SameBuilding>
+  <Nemesis_Weapon_Unknown>неизвестное оружие</Nemesis_Weapon_Unknown>
+
+  <Nemesis_Note_TellsRolled>Приметы: голос {0}, {1}, {2}, {3}.</Nemesis_Note_TellsRolled>
+  <Nemesis_Note_Sighting>Видели около {0}.</Nemesis_Note_Sighting>
+  <Nemesis_Note_Gear>Видели с {0}.</Nemesis_Note_Gear>
+  <Nemesis_Note_Mark>Оставили {0}.</Nemesis_Note_Mark>
+  <Nemesis_Note_RaidWarning>Кто-то продал предупреждение: они собирают ещё один рейд.</Nemesis_Note_RaidWarning>
+  <Nemesis_Note_FalseLead>Купленная наводка вела в пустоту. Они могли хотеть, чтобы вы смотрели не туда.</Nemesis_Note_FalseLead>
+
+  <Nemesis_Dossier_Title>Досье немезиса</Nemesis_Dossier_Title>
+  <Nemesis_Dossier_Empty>Охоты нет. Эпитафии законченных охот остаются здесь.</Nemesis_Dossier_Empty>
+  <Nemesis_Dossier_Identity>{0} из {1} — {2}</Nemesis_Dossier_Identity>
+  <Nemesis_Dossier_Target>Фиксация: {0}. Агрессия {1}. Побегов {2}. Капитан {3}.</Nemesis_Dossier_Target>
+  <Nemesis_Dossier_Tells>Голос {0}. Оружие {1}. Метка: {2}. Привычка: {3}.</Nemesis_Dossier_Tells>
+  <Nemesis_Dossier_Tile>Последний тайл: {0}</Nemesis_Dossier_Tile>
+  <Nemesis_Dossier_Gear>Виденное снаряжение: {0}</Nemesis_Dossier_Gear>
+  <Nemesis_Dossier_Bounty>Награда: {0} серебра</Nemesis_Dossier_Bounty>
+  <Nemesis_Dossier_BuyLead>Купить наводку ({0})</Nemesis_Dossier_BuyLead>
+  <Nemesis_Dossier_PostBounty>Добавить к награде ({0})</Nemesis_Dossier_PostBounty>
+  <Nemesis_Dossier_Notes>Что вы слышали</Nemesis_Dossier_Notes>
+  <Nemesis_Dossier_NoNotes>Пока ничего не записано.</Nemesis_Dossier_NoNotes>
+  <Nemesis_Dossier_Epitaphs>Эпитафии</Nemesis_Dossier_Epitaphs>
+  <Nemesis_Dossier_NoEpitaphs>Законченных охот нет.</Nemesis_Dossier_NoEpitaphs>
+
+  <Nemesis_Intel_NoHunt>Нет активной охоты, на которую можно купить наводку.</Nemesis_Intel_NoHunt>
+  <Nemesis_Intel_Disabled>Осведомители выключены в настройках мода.</Nemesis_Intel_Disabled>
+  <Nemesis_Intel_NoSilver>Нужно {0} серебра на складе этой карты.</Nemesis_Intel_NoSilver>
+  <Nemesis_Intel_Tile>Их видели около {0}. Стоимость {1} серебра.</Nemesis_Intel_Tile>
+  <Nemesis_Intel_Gear>Они всё ещё носят {0}. Стоимость {1} серебра.</Nemesis_Intel_Gear>
+  <Nemesis_Intel_Warning>Предупреждение: скоро ещё один рейд. Стоимость {0} серебра.</Nemesis_Intel_Warning>
+  <Nemesis_Intel_False>Наводка была ложью. Стоимость {0} серебра.</Nemesis_Intel_False>
+  <Nemesis_Intel_FalseTile>там, где их никогда не было</Nemesis_Intel_FalseTile>
+  <Nemesis_Bounty_Posted>Награда теперь {0} серебра.</Nemesis_Bounty_Posted>
+  <Nemesis_Bounty_Cleared>Награда снята.</Nemesis_Bounty_Cleared>
+  <Nemesis_Comms_BuyLead>Купить наводку на немезиса ({0} серебра)</Nemesis_Comms_BuyLead>
+  <Nemesis_Comms_PostBounty>Добавить {0} серебра к награде за немезиса</Nemesis_Comms_PostBounty>
+
+  <Nemesis_Epitaph_Title>Эпитафия: {0}</Nemesis_Epitaph_Title>
+  <Nemesis_Epitaph_Line>{0} — {1}. Охота шла {2} дн., побегов {3}.</Nemesis_Epitaph_Line>
+  <Nemesis_End_Killed>убит</Nemesis_End_Killed>
+  <Nemesis_End_TheyWon>они получили своё</Nemesis_End_TheyWon>
+  <Nemesis_End_Captured>захвачен</Nemesis_End_Captured>
+  <Nemesis_End_Cleared>снят</Nemesis_End_Cleared>
+  <Nemesis_End_Executed>казнён</Nemesis_End_Executed>
+  <Nemesis_End_Released>отпущен</Nemesis_End_Released>
+  <Nemesis_End_Kept>оставлен в тюрьме</Nemesis_End_Kept>
+  <Nemesis_End_Truce>перемирие</Nemesis_End_Truce>
+
 </LanguageData>

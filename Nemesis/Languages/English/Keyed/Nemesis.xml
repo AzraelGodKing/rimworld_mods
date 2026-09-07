@@ -167,4 +167,71 @@
   <Nemesis_Letter_TruceTitle>{0}: Truce</Nemesis_Letter_TruceTitle>
   <Nemesis_Letter_TruceBody>You struck a temporary peace with {0}. They walk away, for now.\n\nIn {1} in-game days the hunt resumes. They never truly stop.</Nemesis_Letter_TruceBody>
 
+  <!-- Dossier / tells / informants / epitaph (1.1.0) -->
+  <Nemesis_Settings_Intel>Informants</Nemesis_Settings_Intel>
+  <Nemesis_Settings_EnableInformants>Allow buying leads</Nemesis_Settings_EnableInformants>
+  <Nemesis_Settings_EnableInformantsTip>Pay silver at a comms console or the dossier for a lead. Sometimes it is a lie.</Nemesis_Settings_EnableInformantsTip>
+  <Nemesis_Settings_LeadCost>Base lead cost: {0} silver</Nemesis_Settings_LeadCost>
+
+  <Nemesis_Voice_Cold>cold</Nemesis_Voice_Cold>
+  <Nemesis_Voice_Mocking>mocking</Nemesis_Voice_Mocking>
+  <Nemesis_Voice_Zealot>zealous</Nemesis_Voice_Zealot>
+  <Nemesis_Voice_Casual>casual</Nemesis_Voice_Casual>
+  <Nemesis_Mark_CallingCard>calling card</Nemesis_Mark_CallingCard>
+  <Nemesis_Mark_ArrangedCorpse>arranged dead</Nemesis_Mark_ArrangedCorpse>
+  <Nemesis_Mark_Scrawl>a scrawl</Nemesis_Mark_Scrawl>
+  <Nemesis_Mark_SabotageToken>a leftover token</Nemesis_Mark_SabotageToken>
+  <Nemesis_Habit_PowerFirst>hits the grid first</Nemesis_Habit_PowerFirst>
+  <Nemesis_Habit_FoodFirst>hits the pantry first</Nemesis_Habit_FoodFirst>
+  <Nemesis_Habit_LeaveOneAlive>leaves someone standing</Nemesis_Habit_LeaveOneAlive>
+  <Nemesis_Habit_EarlyRetreat>breaks off early</Nemesis_Habit_EarlyRetreat>
+  <Nemesis_Habit_SameBuilding>returns to the same kind of building</Nemesis_Habit_SameBuilding>
+  <Nemesis_Weapon_Unknown>unknown weapon</Nemesis_Weapon_Unknown>
+
+  <Nemesis_Note_TellsRolled>Tells: {0} voice, {1}, {2}, {3}.</Nemesis_Note_TellsRolled>
+  <Nemesis_Note_Sighting>Seen near {0}.</Nemesis_Note_Sighting>
+  <Nemesis_Note_Gear>Seen carrying {0}.</Nemesis_Note_Gear>
+  <Nemesis_Note_Mark>Left {0}.</Nemesis_Note_Mark>
+  <Nemesis_Note_RaidWarning>Someone sold a warning: they are gathering for another raid.</Nemesis_Note_RaidWarning>
+  <Nemesis_Note_FalseLead>A bought lead pointed at nothing. They may have wanted you looking the wrong way.</Nemesis_Note_FalseLead>
+
+  <Nemesis_Dossier_Title>Nemesis dossier</Nemesis_Dossier_Title>
+  <Nemesis_Dossier_Empty>No hunt is active. Epitaphs of finished hunts stay here.</Nemesis_Dossier_Empty>
+  <Nemesis_Dossier_Identity>{0} of {1} — {2}</Nemesis_Dossier_Identity>
+  <Nemesis_Dossier_Target>Fixation: {0}. Aggression {1}. Escapes {2}. Captain {3}.</Nemesis_Dossier_Target>
+  <Nemesis_Dossier_Tells>Voice {0}. Weapon {1}. Mark: {2}. Habit: {3}.</Nemesis_Dossier_Tells>
+  <Nemesis_Dossier_Tile>Last-known tile: {0}</Nemesis_Dossier_Tile>
+  <Nemesis_Dossier_Gear>Gear seen: {0}</Nemesis_Dossier_Gear>
+  <Nemesis_Dossier_Bounty>Standing bounty: {0} silver</Nemesis_Dossier_Bounty>
+  <Nemesis_Dossier_BuyLead>Buy a lead ({0})</Nemesis_Dossier_BuyLead>
+  <Nemesis_Dossier_PostBounty>Add to bounty ({0})</Nemesis_Dossier_PostBounty>
+  <Nemesis_Dossier_Notes>What you have heard</Nemesis_Dossier_Notes>
+  <Nemesis_Dossier_NoNotes>Nothing written yet.</Nemesis_Dossier_NoNotes>
+  <Nemesis_Dossier_Epitaphs>Epitaphs</Nemesis_Dossier_Epitaphs>
+  <Nemesis_Dossier_NoEpitaphs>No finished hunts recorded.</Nemesis_Dossier_NoEpitaphs>
+
+  <Nemesis_Intel_NoHunt>There is no active hunt to buy a lead on.</Nemesis_Intel_NoHunt>
+  <Nemesis_Intel_Disabled>Informants are turned off in Mod Options.</Nemesis_Intel_Disabled>
+  <Nemesis_Intel_NoSilver>Need {0} silver in a stockpile on this map.</Nemesis_Intel_NoSilver>
+  <Nemesis_Intel_Tile>They were last seen near {0}. Cost {1} silver.</Nemesis_Intel_Tile>
+  <Nemesis_Intel_Gear>They still carry {0}. Cost {1} silver.</Nemesis_Intel_Gear>
+  <Nemesis_Intel_Warning>A warning: another raid is coming. Cost {0} silver.</Nemesis_Intel_Warning>
+  <Nemesis_Intel_False>The lead was a lie. Cost {0} silver.</Nemesis_Intel_False>
+  <Nemesis_Intel_FalseTile>somewhere that was never them</Nemesis_Intel_FalseTile>
+  <Nemesis_Bounty_Posted>Bounty is now {0} silver.</Nemesis_Bounty_Posted>
+  <Nemesis_Bounty_Cleared>Bounty withdrawn.</Nemesis_Bounty_Cleared>
+  <Nemesis_Comms_BuyLead>Buy a lead on the nemesis ({0} silver)</Nemesis_Comms_BuyLead>
+  <Nemesis_Comms_PostBounty>Add {0} silver to the nemesis bounty</Nemesis_Comms_PostBounty>
+
+  <Nemesis_Epitaph_Title>Epitaph: {0}</Nemesis_Epitaph_Title>
+  <Nemesis_Epitaph_Line>{0} — {1}. Hunt ran {2} days, {3} escapes.</Nemesis_Epitaph_Line>
+  <Nemesis_End_Killed>killed</Nemesis_End_Killed>
+  <Nemesis_End_TheyWon>they got what they came for</Nemesis_End_TheyWon>
+  <Nemesis_End_Captured>captured</Nemesis_End_Captured>
+  <Nemesis_End_Cleared>cleared</Nemesis_End_Cleared>
+  <Nemesis_End_Executed>executed</Nemesis_End_Executed>
+  <Nemesis_End_Released>released</Nemesis_End_Released>
+  <Nemesis_End_Kept>kept prisoner</Nemesis_End_Kept>
+  <Nemesis_End_Truce>truce</Nemesis_End_Truce>
+
 </LanguageData>

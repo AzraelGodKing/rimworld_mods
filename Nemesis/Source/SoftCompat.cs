@@ -28,6 +28,7 @@ namespace Nemesis
         {
             "Font.Rimesis",
             "font.rimesis",
+            "Font.Rimesis.Core",
             "Rimesis",
         };
 
@@ -35,6 +36,7 @@ namespace Nemesis
         {
             "SmashPhil.BackForVengeance",
             "smashphil.backforvengeance",
+            "SmashPhil.BFV",
             "BackForVengeance",
             "VanillaExpanded.BackForVengeance",
         };
@@ -211,10 +213,44 @@ namespace Nemesis
             {
                 if (ModLister.GetActiveModWithIdentifier(ids[i], ignorePostfix: true) != null)
                 {
+                    Log.Message("[Nemesis] soft-compat package active: " + ids[i]);
                     return true;
                 }
             }
             return false;
+        }
+
+        /// <summary>Fail-open copy of a hunt epitaph onto Deep Colony's Legacy letters.</summary>
+        public static void OfferEpitaphToDeepColony(string title, string body)
+        {
+            if (ModLister.GetActiveModWithIdentifier("azraelgodking.DeepColony", ignorePostfix: true) == null
+                && ModLister.GetActiveModWithIdentifier("AzraelGodKing.DeepColony", ignorePostfix: true) == null)
+                return;
+            try
+            {
+                Type gcType = GenTypes.GetTypeInAnyAssembly("DeepColony.GameComp_DeepColony", "DeepColony");
+                Type entryType = GenTypes.GetTypeInAnyAssembly("DeepColony.FamilyLetterEntry", "DeepColony");
+                if (gcType == null || entryType == null)
+                    return;
+                object instance = gcType.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static)
+                    ?.GetValue(null);
+                if (instance == null)
+                    return;
+                FieldInfo lettersField = gcType.GetField("familyLetters", BindingFlags.Public | BindingFlags.Instance);
+                if (lettersField?.GetValue(instance) is not System.Collections.IList letters)
+                    return;
+                object entry = Activator.CreateInstance(entryType);
+                entryType.GetField("title")?.SetValue(entry, title);
+                entryType.GetField("body")?.SetValue(entry, body);
+                entryType.GetField("ticksGame")?.SetValue(entry, Find.TickManager.TicksGame);
+                letters.Add(entry);
+                while (letters.Count > 8)
+                    letters.RemoveAt(0);
+            }
+            catch (Exception e)
+            {
+                Log.Warning("[Nemesis] Deep Colony epitaph handoff skipped: " + e.Message);
+            }
         }
 
         /// <summary>
