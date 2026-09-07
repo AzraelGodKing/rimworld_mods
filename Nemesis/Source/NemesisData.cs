@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -96,6 +97,17 @@ namespace Nemesis
         /// <summary>Soft Giddy-Up mount animal kind defName, if assigned.</summary>
         public string mountKindDefName;
 
+        public bool tellsRolled;
+        public NemesisVoice voice = NemesisVoice.Cold;
+        public NemesisMark mark = NemesisMark.CallingCard;
+        public NemesisHabit habit = NemesisHabit.PowerFirst;
+        public string weaponDefName;
+        public int huntStartTick;
+        public int lastKnownTile = -1;
+        public string lastKnownTileLabel;
+        public string lastGearSeen;
+        public List<NemesisNote> notes = new List<NemesisNote>();
+
         public float EffectiveAggression
         {
             get
@@ -132,6 +144,18 @@ namespace Nemesis
             Scribe_Values.Look(ref appliedProgressionLevel, "appliedProgressionLevel", -1);
             Scribe_Values.Look(ref combatFocus, "combatFocus", NemesisCombatFocus.Survivor);
             Scribe_Values.Look(ref mountKindDefName, "mountKindDefName", null);
+            Scribe_Values.Look(ref tellsRolled, "tellsRolled", false);
+            Scribe_Values.Look(ref voice, "voice", NemesisVoice.Cold);
+            Scribe_Values.Look(ref mark, "mark", NemesisMark.CallingCard);
+            Scribe_Values.Look(ref habit, "habit", NemesisHabit.PowerFirst);
+            Scribe_Values.Look(ref weaponDefName, "weaponDefName", null);
+            Scribe_Values.Look(ref huntStartTick, "huntStartTick", 0);
+            Scribe_Values.Look(ref lastKnownTile, "lastKnownTile", -1);
+            Scribe_Values.Look(ref lastKnownTileLabel, "lastKnownTileLabel", null);
+            Scribe_Values.Look(ref lastGearSeen, "lastGearSeen", null);
+            Scribe_Collections.Look(ref notes, "notes", LookMode.Deep);
+            if (notes == null)
+                notes = new List<NemesisNote>();
         }
 
         public string FocusLabelKey => combatFocus switch
