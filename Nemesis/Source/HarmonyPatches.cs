@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -257,6 +258,29 @@ namespace Nemesis
         {
             if (__result <= 0f || ___pawn == null || initiator == null) return;
             __result *= NemesisSocial.SocialFightMultiplier(___pawn, initiator);
+        }
+    }
+
+    [HarmonyPatch(typeof(Building_CommsConsole), nameof(Building_CommsConsole.GetFloatMenuOptions))]
+    public static class Patch_Comms_Informants
+    {
+        static void Postfix(Building_CommsConsole __instance, Pawn myPawn, ref IEnumerable<FloatMenuOption> __result)
+        {
+            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            if (!(NemesisMod.Settings?.enableInformants ?? true))
+                return;
+            if (comp?.Data == null || !comp.Data.active)
+                return;
+
+            var extras = new List<FloatMenuOption>();
+            int cost = NemesisInformants.LeadCost(comp.Data);
+            extras.Add(new FloatMenuOption(
+                "Nemesis_Comms_BuyLead".Translate(cost),
+                () => NemesisInformants.TryBuyLead(__instance.Map, out _)));
+            extras.Add(new FloatMenuOption(
+                "Nemesis_Comms_PostBounty".Translate(cost),
+                () => NemesisInformants.TryPostBounty(__instance.Map, cost, out _)));
+            __result = __result == null ? extras : __result.Concat(extras);
         }
     }
 }

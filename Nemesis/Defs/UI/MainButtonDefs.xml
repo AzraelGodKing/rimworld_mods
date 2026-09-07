@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <MainButtonDef>
+    <defName>Nemesis_Dossier</defName>
+    <label>dossier</label>
+    <description>What the colony knows about its nemesis — tells, sightings, leads, and epitaphs.</description>
+    <tabWindowClass>Nemesis.MainTabWindow_NemesisDossier</tabWindowClass>
+    <order>54</order>
+    <closesWorldView>true</closesWorldView>
+  </MainButtonDef>
+
+</Defs>

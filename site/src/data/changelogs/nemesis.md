@@ -4,7 +4,18 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## Unreleased (monorepo integration)
 
-Player-facing version **1.0.2** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.0.2 loaded from ...` in Player.log (`update-news-v1`).
+Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.1.0 loaded from ...` in Player.log (`dossier-tells-v1`).
+
+- **Tells** (`dossier-tells-v1`, AZR-146) — voice register, weapon family, mark, and habit roll at hunt create and never change. Progression upgrades quality, not weapon type. Mid-hunt saves without tells roll once on load.
+- **Dossier** (AZR-74) — main-tab page for the active hunt: identity, tells, sightings, taunts, last-known tile, gear seen, aggression.
+- **Informants and bounty** (AZR-75) — pay silver for a lead (tile / gear / next-raid warning / false lead). Standing bounty is recorded on the dossier. Comms console float menu + dossier button.
+- **Epitaph** (AZR-76) — hunt end writes a permanent record on the dossier. Fail-open copy onto Deep Colony's Legacy letters when that mod is loaded.
+- **Compat IDs** (AZR-59, partial) — extra Rimesis / Back for Vengeance packageId candidates; Player.log notes when a candidate is active. Live Font smoke-test still outstanding. Leader-raid → Rimesis inject (AZR-60) stays blocked on Font's public hook.
+- **Calling-card graphic** — `Nemesis_CallingCard` used Steel as `Graphic_Single`; that path is a stack folder and failed to load. Now uses the vanilla component stack sprite.
+
+## [1.0.2]
+
+Player-facing version **1.0.2**. Startup wrote `[Nemesis] v1.0.2 loaded from ...` in Player.log (`update-news-v1`).
 
 - **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 - **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Nemesis.
