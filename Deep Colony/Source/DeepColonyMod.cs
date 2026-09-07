@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AzraelCommon;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -13,7 +14,7 @@ namespace DeepColony
         static DeepColonyStartup()
         {
             var harmony = new Harmony("azraelgodking.DeepColony");
-            HarmonyPatchAll.Apply(harmony, "[DeepColony]");
+            SafePatchAll.Apply(harmony, "[DeepColony]");
             InjectComps();
             InjectFamilyTab();
             LongEventHandler.ExecuteWhenFinished(DeepColonyBuildInfo.LogStartup);

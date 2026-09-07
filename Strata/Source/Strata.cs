@@ -1,3 +1,4 @@
+using AzraelCommon;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -50,7 +51,7 @@ namespace Strata
             ExhaustAutoPatch.Apply();
             GasNetAdapter.Inject();
             Harmony harmony = new Harmony("azraelgodking.strata");
-            HarmonyPatchAll.Apply(harmony, "[Strata]");
+            SafePatchAll.Apply(harmony, "[Strata]");
             StrataCombatExtendedSoftCompat.TryPatch(new Harmony("azraelgodking.strata.ce"));
             LongEventHandler.ExecuteWhenFinished(() =>
             {
