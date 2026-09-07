@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LivingWorld_ListeningPost.label>监听哨</LivingWorld_ListeningPost.label>
+  <LivingWorld_ListeningPost.description>三名定居者在喧闹的边缘世界扎营——远方战争、易主的聚落，以及比难民更早抵达的消息。\n\n同时加载 Homesteader 时锁定 Azrael 叙事者。</LivingWorld_ListeningPost.description>
+  <LivingWorld_ListeningPost.scenario.summary>三名殖民者身处活的地图外世界。有 Homesteader 时使用 Azrael。</LivingWorld_ListeningPost.scenario.summary>
+  <LivingWorld_ListeningPost.scenario.parts.4.text>地图很安静。星球不是。
+
+战争迷雾外，聚落兴衰。派系相争。谣言比商队走得更远。让电台保持温热——下一封信也许已经走向你的大门。</LivingWorld_ListeningPost.scenario.parts.4.text>
+</LanguageData>

@@ -3,7 +3,7 @@
 Cross-mod vision for Strata, Homesteader, Stormproof, Nemesis, Deep Colony, Living World, and Niceties.
 Per-mod later work lives in each mod’s roadmap:
 
-- [Strata V3 checklist (done vs left)](docs/strata-roadmap.html) · [post-V3 ideas](Strata/V3_ROADMAP.md)
+- [Strata V3 checklist](Strata/V3_ROADMAP.md)
 - [Homesteader](Homesteader/ROADMAP.md) — next pool: [docs/ideas/homesteader-updates.md](docs/ideas/homesteader-updates.md)
 - [Stormproof](Stormproof/ROADMAP.md)
 - [Nemesis](Nemesis/ROADMAP.md)

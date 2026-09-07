@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LivingWorld_UpdateLetterLabel>Living World {0}</LivingWorld_UpdateLetterLabel>
+  <LivingWorld_UpdateLetterFallback>Living World {0} загружен.\n\nПолные заметки: {1}</LivingWorld_UpdateLetterFallback>
+  <LivingWorld_UpdateLetterFooter>Полные заметки: {0}</LivingWorld_UpdateLetterFooter>
+  <LivingWorld_SettingsCategory>Living World</LivingWorld_SettingsCategory>
+  <LivingWorld_Settings_Enabled>Включить Living World</LivingWorld_Settings_Enabled>
+  <LivingWorld_Settings_EnabledDesc>Запускать симуляцию поселений за картой (хроника + морфоз + дипломатия). Выкл отключает всё.</LivingWorld_Settings_EnabledDesc>
+  <LivingWorld_Settings_Chronicle>Письма мировых новостей</LivingWorld_Settings_Chronicle>
+  <LivingWorld_Settings_ChronicleDesc>Письма, когда срабатывают правила слухов. Мягкие потребители всё равно получают события.</LivingWorld_Settings_ChronicleDesc>
+  <LivingWorld_Settings_Morph>Морфоз поселений</LivingWorld_Settings_Morph>
+  <LivingWorld_Settings_MorphDesc>Дрейф процветания, смена хозяев, заброшенность, форпосты, прозвища.</LivingWorld_Settings_MorphDesc>
+  <LivingWorld_Settings_Diplomacy>Дипломатия фракций</LivingWorld_Settings_Diplomacy>
+  <LivingWorld_Settings_DiplomacyDesc>NPC-фракции дрейфуют между миром, напряжением, войной и редкими союзами, не вовлекая вас.</LivingWorld_Settings_DiplomacyDesc>
+  <LivingWorld_Settings_Fallout>Инциденты после войны</LivingWorld_Settings_Fallout>
+  <LivingWorld_Settings_FalloutDesc>После тяжёлых войн, о которых вы слышали, к колонии могут прийти беженцы (и опционально отряды).</LivingWorld_Settings_FalloutDesc>
+  <LivingWorld_Settings_TradeBlackout>Торговое затмение в тотальной войне</LivingWorld_Settings_TradeBlackout>
+  <LivingWorld_Settings_TradeBlackoutDesc>Фракции в ожесточённой войне редко шлют караваны, пока бой не стихнет.</LivingWorld_Settings_TradeBlackoutDesc>
+  <LivingWorld_Settings_WarSites>Обычные военные точки</LivingWorld_Settings_WarSites>
+  <LivingWorld_Settings_WarSitesDesc>После решающих битв NPC на мировой карте появляются краткие метки поля боя / лагеря беженцев (не охотничьи точки Nemesis).</LivingWorld_Settings_WarSitesDesc>
+  <LivingWorld_Settings_Warband>Проходящие отряды</LivingWorld_Settings_Warband>
+  <LivingWorld_Settings_WarbandDesc>Редкие враждебные или напряжённые отряды преследуют войну, о которой вы слышали. По умолчанию выкл — осторожнее.</LivingWorld_Settings_WarbandDesc>
+  <LivingWorld_Settings_Verbosity>Подробность новостей</LivingWorld_Settings_Verbosity>
+  <LivingWorld_Verbosity_Low>Низкая (только важное)</LivingWorld_Verbosity_Low>
+  <LivingWorld_Verbosity_Medium>Средняя (контакт / рядом / союзники)</LivingWorld_Verbosity_Medium>
+  <LivingWorld_Verbosity_High>Высокая (почти всё)</LivingWorld_Verbosity_High>
+  <LivingWorld_Settings_TickInterval>Пульс симуляции каждые {0} тиков</LivingWorld_Settings_TickInterval>
+  <LivingWorld_Settings_Resolutions>Решений за пульс: {0}</LivingWorld_Settings_Resolutions>
+  <LivingWorld_Settings_MaxLetters>Писем за квадром макс.: {0}</LivingWorld_Settings_MaxLetters>
+  <LivingWorld_Settings_MaxMorphs>Морфозов за год макс.: {0}</LivingWorld_Settings_MaxMorphs>
+  <LivingWorld_Settings_Proximity>Радиус ближних новостей (клетки): {0}</LivingWorld_Settings_Proximity>
+  <LivingWorld_Settings_MaxWars>Войн одновременно макс.: {0}</LivingWorld_Settings_MaxWars>
+  <LivingWorld_Settings_WarRate>Темп войны / эскалации: {0}</LivingWorld_Settings_WarRate>
+  <LivingWorld_Settings_Reset>Сбросить</LivingWorld_Settings_Reset>
+
+  <LivingWorld_UnknownFaction>неизвестная фракция</LivingWorld_UnknownFaction>
+  <LivingWorld_UnknownPlace>далёкое поселение</LivingWorld_UnknownPlace>
+
+  <LivingWorld_Prosperity_Thriving>Living World: расцвет</LivingWorld_Prosperity_Thriving>
+  <LivingWorld_Prosperity_StablePlus>Living World: процветание</LivingWorld_Prosperity_StablePlus>
+  <LivingWorld_Prosperity_Stable>Living World: стабильно</LivingWorld_Prosperity_Stable>
+  <LivingWorld_Prosperity_Struggling>Living World: тяжело</LivingWorld_Prosperity_Struggling>
+  <LivingWorld_Prosperity_Collapsing>Living World: распад</LivingWorld_Prosperity_Collapsing>
+
+  <LivingWorld_Epithet_Fortress>Крепость</LivingWorld_Epithet_Fortress>
+  <LivingWorld_Epithet_Market>Рынок</LivingWorld_Epithet_Market>
+  <LivingWorld_Epithet_Watch>Дозор</LivingWorld_Epithet_Watch>
+  <LivingWorld_Epithet_Haven>Пристань</LivingWorld_Epithet_Haven>
+  <LivingWorld_Epithet_Ruinous>Гибельная</LivingWorld_Epithet_Ruinous>
+
+  <LivingWorld_LetterLabel_Skirmish>Далёкая стычка</LivingWorld_LetterLabel_Skirmish>
+  <LivingWorld_LetterText_Skirmish>{0} и {1} столкнулись у {2}. Обод почти не заметил — если только вы не слушали.</LivingWorld_LetterText_Skirmish>
+  <LivingWorld_LetterLabel_DecisiveVictory>Решительная победа</LivingWorld_LetterLabel_DecisiveVictory>
+  <LivingWorld_LetterText_DecisiveVictory>{0} разгромил {1} в боях у {2}. Баланс сил на ободе только что сдвинулся.</LivingWorld_LetterText_DecisiveVictory>
+  <LivingWorld_LetterLabel_FamineRumor>Слух о голоде</LivingWorld_LetterLabel_FamineRumor>
+  <LivingWorld_LetterText_FamineRumor>Вести из {2}: у {0} мало еды. Путники говорят о пустых складах и тощих стадах.</LivingWorld_LetterText_FamineRumor>
+  <LivingWorld_LetterLabel_Founding>Новое поселение</LivingWorld_LetterLabel_Founding>
+  <LivingWorld_LetterText_Founding>{0} основал {2}. Ещё одна метка на карте мира, которой вчера не было.</LivingWorld_LetterText_Founding>
+  <LivingWorld_LetterLabel_Collapse>Крах поселения</LivingWorld_LetterLabel_Collapse>
+  <LivingWorld_LetterText_Collapse>{2} у {0} затих. Беженцы могут последовать — или тишина.</LivingWorld_LetterText_Collapse>
+  <LivingWorld_LetterLabel_Alliance>Союз фракций</LivingWorld_LetterLabel_Alliance>
+  <LivingWorld_LetterText_Alliance>{0} и {1} поклялись в общем деле. Между ними станет меньше ножей — пока что.</LivingWorld_LetterText_Alliance>
+  <LivingWorld_LetterLabel_Betrayal>Предательство</LivingWorld_LetterLabel_Betrayal>
+  <LivingWorld_LetterText_Betrayal>{0} обернулся против {1}. Старые обещания сгорели вместе с договором.</LivingWorld_LetterText_Betrayal>
+  <LivingWorld_LetterLabel_OwnershipFlip>Поселение взято</LivingWorld_LetterLabel_OwnershipFlip>
+  <LivingWorld_LetterText_OwnershipFlip>{0} отбил {2} у {1}. Знамена на стенах сменились.</LivingWorld_LetterText_OwnershipFlip>
+  <LivingWorld_LetterLabel_ProsperityRise>Поселение процветает</LivingWorld_LetterLabel_ProsperityRise>
+  <LivingWorld_LetterText_ProsperityRise>{2} ({0}) живёт хорошо — рынки полнее, улицы шумнее.</LivingWorld_LetterText_ProsperityRise>
+  <LivingWorld_LetterLabel_ProsperityFall>Поселение бедствует</LivingWorld_LetterLabel_ProsperityFall>
+  <LivingWorld_LetterText_ProsperityFall>{2} ({0}) бедствует. Торговля редеет; люди смотрят в сторону.</LivingWorld_LetterText_ProsperityFall>
+  <LivingWorld_LetterLabel_OutpostFounded>Основан форпост</LivingWorld_LetterLabel_OutpostFounded>
+  <LivingWorld_LetterText_OutpostFounded>{0} поднял новый форпост у {2}, расширяя досягаемость.</LivingWorld_LetterText_OutpostFounded>
+  <LivingWorld_LetterLabel_SettlementAbandoned>Поселение брошено</LivingWorld_LetterLabel_SettlementAbandoned>
+  <LivingWorld_LetterText_SettlementAbandoned>{0} бросил {2}. Точка на карте мира пуста.</LivingWorld_LetterText_SettlementAbandoned>
+  <LivingWorld_LetterLabel_Epithet>Слава поселения</LivingWorld_LetterLabel_Epithet>
+  <LivingWorld_LetterText_Epithet>{2} у {0} получил новое прозвище среди путников.</LivingWorld_LetterText_Epithet>
+  <LivingWorld_LetterLabel_WhitePeace>Белый мир</LivingWorld_LetterLabel_WhitePeace>
+  <LivingWorld_LetterText_WhitePeace>{0} и {1} прекратили открытый бой у {2}. Напряжение осталось.</LivingWorld_LetterText_WhitePeace>
+  <LivingWorld_LetterLabel_RefugeeFlight>Военные беженцы</LivingWorld_LetterLabel_RefugeeFlight>
+  <LivingWorld_LetterText_RefugeeFlight>Выжившие из {0} бежали от боёв с {1} у {2}. Оборванная группа дошла до ваших границ в поисках защиты.</LivingWorld_LetterText_RefugeeFlight>
+  <LivingWorld_LetterLabel_TradeBlackout>Торговое затмение</LivingWorld_LetterLabel_TradeBlackout>
+  <LivingWorld_LetterText_TradeBlackout>Война {0} и {1} перерезала караваны у {2}. Ждите меньше торговцев с воюющей стороны.</LivingWorld_LetterText_TradeBlackout>
+  <LivingWorld_LetterLabel_WarbandPass>Проходящий отряд</LivingWorld_LetterLabel_WarbandPass>
+  <LivingWorld_LetterText_WarbandPass>Отряд {0} охотится на остатки {1} после боёв у {2}. Они проходят через ваш регион.</LivingWorld_LetterText_WarbandPass>
+
+  <LivingWorld_WarSite_BattlefieldInspect>Свежие обломки поля боя с войны за картой.</LivingWorld_WarSite_BattlefieldInspect>
+  <LivingWorld_WarSite_RefugeeCampInspect>Временный лагерь беженцев от далёких боёв.</LivingWorld_WarSite_RefugeeCampInspect>
+</LanguageData>
