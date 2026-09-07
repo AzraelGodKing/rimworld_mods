@@ -167,4 +167,70 @@
   <Nemesis_Letter_TruceTitle>{0}：休战</Nemesis_Letter_TruceTitle>
   <Nemesis_Letter_TruceBody>你们与{0}达成了暂时的和平。他们暂时离开。\n\n{1}个游戏日后，狩猎将重新开始。他们从未真正停下。</Nemesis_Letter_TruceBody>
 
+  <Nemesis_Settings_Intel>线人</Nemesis_Settings_Intel>
+  <Nemesis_Settings_EnableInformants>允许购买线索</Nemesis_Settings_EnableInformants>
+  <Nemesis_Settings_EnableInformantsTip>在通讯台或档案页花银币买线索。有时是假的。</Nemesis_Settings_EnableInformantsTip>
+  <Nemesis_Settings_LeadCost>线索基础价：{0} 银币</Nemesis_Settings_LeadCost>
+
+  <Nemesis_Voice_Cold>冷淡</Nemesis_Voice_Cold>
+  <Nemesis_Voice_Mocking>嘲弄</Nemesis_Voice_Mocking>
+  <Nemesis_Voice_Zealot>狂热</Nemesis_Voice_Zealot>
+  <Nemesis_Voice_Casual>随意</Nemesis_Voice_Casual>
+  <Nemesis_Mark_CallingCard>名片</Nemesis_Mark_CallingCard>
+  <Nemesis_Mark_ArrangedCorpse>摆好的尸体</Nemesis_Mark_ArrangedCorpse>
+  <Nemesis_Mark_Scrawl>涂鸦</Nemesis_Mark_Scrawl>
+  <Nemesis_Mark_SabotageToken>留下的信物</Nemesis_Mark_SabotageToken>
+  <Nemesis_Habit_PowerFirst>先打电网</Nemesis_Habit_PowerFirst>
+  <Nemesis_Habit_FoodFirst>先打粮仓</Nemesis_Habit_FoodFirst>
+  <Nemesis_Habit_LeaveOneAlive>总留一个人活着</Nemesis_Habit_LeaveOneAlive>
+  <Nemesis_Habit_EarlyRetreat>提早撤走</Nemesis_Habit_EarlyRetreat>
+  <Nemesis_Habit_SameBuilding>爱回头打同一类建筑</Nemesis_Habit_SameBuilding>
+  <Nemesis_Weapon_Unknown>未知武器</Nemesis_Weapon_Unknown>
+
+  <Nemesis_Note_TellsRolled>特征：{0}口吻，{1}，{2}，{3}。</Nemesis_Note_TellsRolled>
+  <Nemesis_Note_Sighting>曾出现在 {0} 附近。</Nemesis_Note_Sighting>
+  <Nemesis_Note_Gear>见过他们拿着 {0}。</Nemesis_Note_Gear>
+  <Nemesis_Note_Mark>留下了{0}。</Nemesis_Note_Mark>
+  <Nemesis_Note_RaidWarning>有人卖了一条警告：他们正在集结下一次袭击。</Nemesis_Note_RaidWarning>
+  <Nemesis_Note_FalseLead>买来的线索指向空处。他们可能想让你看错方向。</Nemesis_Note_FalseLead>
+
+  <Nemesis_Dossier_Title>仇敌档案</Nemesis_Dossier_Title>
+  <Nemesis_Dossier_Empty>当前没有进行中的狩猎。已结束的狩猎墓志铭会留在这里。</Nemesis_Dossier_Empty>
+  <Nemesis_Dossier_Identity>{1}的{0} — {2}</Nemesis_Dossier_Identity>
+  <Nemesis_Dossier_Target>执念：{0}。敌意 {1}。逃脱 {2}。队长 {3}。</Nemesis_Dossier_Target>
+  <Nemesis_Dossier_Tells>口吻 {0}。武器 {1}。印记：{2}。习惯：{3}。</Nemesis_Dossier_Tells>
+  <Nemesis_Dossier_Tile>最近已知地块：{0}</Nemesis_Dossier_Tile>
+  <Nemesis_Dossier_Gear>见过的装备：{0}</Nemesis_Dossier_Gear>
+  <Nemesis_Dossier_Bounty>悬赏：{0} 银币</Nemesis_Dossier_Bounty>
+  <Nemesis_Dossier_BuyLead>买一条线索（{0}）</Nemesis_Dossier_BuyLead>
+  <Nemesis_Dossier_PostBounty>追加悬赏（{0}）</Nemesis_Dossier_PostBounty>
+  <Nemesis_Dossier_Notes>你们听到的</Nemesis_Dossier_Notes>
+  <Nemesis_Dossier_NoNotes>还没有记录。</Nemesis_Dossier_NoNotes>
+  <Nemesis_Dossier_Epitaphs>墓志铭</Nemesis_Dossier_Epitaphs>
+  <Nemesis_Dossier_NoEpitaphs>还没有结束的狩猎。</Nemesis_Dossier_NoEpitaphs>
+
+  <Nemesis_Intel_NoHunt>没有进行中的狩猎可买线索。</Nemesis_Intel_NoHunt>
+  <Nemesis_Intel_Disabled>模组选项里关闭了线人。</Nemesis_Intel_Disabled>
+  <Nemesis_Intel_NoSilver>这张地图的库存需要 {0} 银币。</Nemesis_Intel_NoSilver>
+  <Nemesis_Intel_Tile>他们最近出现在 {0} 附近。花费 {1} 银币。</Nemesis_Intel_Tile>
+  <Nemesis_Intel_Gear>他们仍带着 {0}。花费 {1} 银币。</Nemesis_Intel_Gear>
+  <Nemesis_Intel_Warning>警告：又一次袭击要来了。花费 {0} 银币。</Nemesis_Intel_Warning>
+  <Nemesis_Intel_False>这条线索是假的。花费 {0} 银币。</Nemesis_Intel_False>
+  <Nemesis_Intel_FalseTile>一个从来不是他们的地方</Nemesis_Intel_FalseTile>
+  <Nemesis_Bounty_Posted>悬赏现为 {0} 银币。</Nemesis_Bounty_Posted>
+  <Nemesis_Bounty_Cleared>悬赏已撤回。</Nemesis_Bounty_Cleared>
+  <Nemesis_Comms_BuyLead>买一条仇敌线索（{0} 银币）</Nemesis_Comms_BuyLead>
+  <Nemesis_Comms_PostBounty>向仇敌悬赏追加 {0} 银币</Nemesis_Comms_PostBounty>
+
+  <Nemesis_Epitaph_Title>墓志铭：{0}</Nemesis_Epitaph_Title>
+  <Nemesis_Epitaph_Line>{0} — {1}。狩猎持续 {2} 天，逃脱 {3} 次。</Nemesis_Epitaph_Line>
+  <Nemesis_End_Killed>被杀</Nemesis_End_Killed>
+  <Nemesis_End_TheyWon>他们得到了想要的</Nemesis_End_TheyWon>
+  <Nemesis_End_Captured>被俘</Nemesis_End_Captured>
+  <Nemesis_End_Cleared>清除</Nemesis_End_Cleared>
+  <Nemesis_End_Executed>处决</Nemesis_End_Executed>
+  <Nemesis_End_Released>释放</Nemesis_End_Released>
+  <Nemesis_End_Kept>关押</Nemesis_End_Kept>
+  <Nemesis_End_Truce>休战</Nemesis_End_Truce>
+
 </LanguageData>

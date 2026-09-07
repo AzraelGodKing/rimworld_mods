@@ -127,6 +127,17 @@ namespace Nemesis
                     break;
             }
 
+            string endKey = outcome switch
+            {
+                NemesisOutcome.Execute => "Nemesis_End_Executed",
+                NemesisOutcome.Release => "Nemesis_End_Released",
+                NemesisOutcome.KeepPrisoner => "Nemesis_End_Kept",
+                NemesisOutcome.Truce => "Nemesis_End_Truce",
+                _ => "Nemesis_End_Captured",
+            };
+            if (outcome != NemesisOutcome.Truce)
+                GameComponent_Nemesis.Instance?.RecordEpitaph(endKey);
+
             NemesisRegistry.Clear();
         }
 
