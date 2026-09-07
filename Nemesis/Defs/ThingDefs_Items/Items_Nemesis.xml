@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>Nemesis_CallingCard</defName>
+    <label>calling card</label>
+    <description>A scrap left where they wanted you to find it. Not evidence you need — just a signature.</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/ComponentIndustrial</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <color>(0.42,0.34,0.28)</color>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>20</MaxHitPoints>
+      <MarketValue>2</MarketValue>
+      <Mass>0.02</Mass>
+    </statBases>
+    <stackLimit>10</stackLimit>
+    <tradeability>None</tradeability>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+  </ThingDef>
+
+</Defs>

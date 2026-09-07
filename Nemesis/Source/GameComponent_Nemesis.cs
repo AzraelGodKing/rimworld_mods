@@ -15,6 +15,8 @@ namespace Nemesis
         public static GameComponent_Nemesis Instance => Current.Game?.GetComponent<GameComponent_Nemesis>();
 
         private NemesisData _data;
+        public List<NemesisEpitaph> epitaphs = new List<NemesisEpitaph>();
+        public int bountySilver;
 
         public NemesisData Data => _data;
 
@@ -33,6 +35,8 @@ namespace Nemesis
             base.FinalizeInit();
             SoftCompat.ResetCaches();
             NemesisRegistry.Clear();
+            if (_data != null && _data.active)
+                NemesisTells.RollIfNeeded(_data, FindNemesisPawn());
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
@@ -166,7 +170,10 @@ namespace Nemesis
             _data.combatFocus = NemesisProgression.RollCombatFocus();
             _data.progressionLevel = 0;
             _data.appliedProgressionLevel = -1;
+            _data.huntStartTick = Find.TickManager.TicksGame;
+            NemesisTells.RollIfNeeded(_data, nemesis);
             NemesisProgression.Apply(nemesis, _data);
+            NemesisTells.RecordGear(_data, nemesis);
 
             SendIntroLetter(targetPawn);
         }
@@ -228,6 +235,8 @@ namespace Nemesis
             _data.aggressionLevel = Mathf.Min(_data.aggressionLevel + 0.5f, 10f);
             _data.lastEscapeTick = Find.TickManager.TicksGame;
             _data.nextActionTick = Find.TickManager.TicksGame + 120000;
+            NemesisTells.RecordSighting(_data, map);
+            NemesisTells.RecordGear(_data, nemesis);
             NemesisProgression.LevelUpOnEscape(_data, nemesis);
 
             GlobalTargetInfo lookTarget = map != null ? new GlobalTargetInfo(pos, map) : GlobalTargetInfo.Invalid;
@@ -297,7 +306,7 @@ namespace Nemesis
                 if (hp < 0.45f && !nemesis.Downed)
                     SubdueNemesis(nemesis, fromLethalDamage: false);
             }
-            else if (hp < 0.3f)
+            else if (hp < NemesisTells.FleeHealth(_data))
             {
                 // Flee-when-losing for on-map assaults (same latch as Kill spam).
                 if (Find.TickManager.TicksGame - _data.lastEscapeTick >= 180)
@@ -345,9 +354,11 @@ namespace Nemesis
             if (_data == null) return;
 
             string name = _data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
+            RecordEpitaph(reason);
             _data.active = false;
             _data.pendingFakeAmbush = false;
             _data.truceUntilTick = -1;
+            bountySilver = 0;
 
             switch (reason)
             {
@@ -504,6 +515,13 @@ namespace Nemesis
             if (SoftCompat.StrataActive)
                 food *= 1.15f;
 
+            if (_data.habit == NemesisHabit.PowerFirst)
+                sabotage *= 2.2f;
+            else if (_data.habit == NemesisHabit.FoodFirst)
+                food *= 2.2f;
+            else if (_data.habit == NemesisHabit.SameBuilding)
+                sabotage *= 1.4f;
+
             float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly;
             float roll = Rand.Value * total;
 
@@ -620,8 +638,58 @@ namespace Nemesis
             base.ExposeData();
             Scribe_Deep.Look(ref _data, "nemesisData");
             Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
+            Scribe_Values.Look(ref bountySilver, "bountySilver", 0);
+            Scribe_Collections.Look(ref epitaphs, "epitaphs", LookMode.Deep);
             if (_data == null)
                 _data = new NemesisData();
+            if (epitaphs == null)
+                epitaphs = new List<NemesisEpitaph>();
         }
+
+        public void RecordEpitaph(NemesisEndReason reason)
+        {
+            RecordEpitaph(EndReasonKey(reason));
+        }
+
+        public void RecordEpitaph(string endKey)
+        {
+            if (_data == null)
+                return;
+            int days = 0;
+            if (_data.huntStartTick > 0)
+                days = Mathf.Max(0, (Find.TickManager.TicksGame - _data.huntStartTick) / 60000);
+            var epitaph = new NemesisEpitaph
+            {
+                name = _data.nemesisName,
+                factionName = _data.factionName,
+                focusKey = _data.FocusLabelKey,
+                voiceKey = NemesisTells.VoiceKey(_data.voice),
+                markKey = NemesisTells.MarkKey(_data.mark),
+                habitKey = NemesisTells.HabitKey(_data.habit),
+                targetName = _data.targetPawnName,
+                endKey = endKey,
+                escapes = _data.escapeCount,
+                days = days,
+                tick = Find.TickManager.TicksGame,
+            };
+            if (epitaphs == null)
+                epitaphs = new List<NemesisEpitaph>();
+            epitaphs.Add(epitaph);
+            while (epitaphs.Count > 12)
+                epitaphs.RemoveAt(0);
+
+            string title = "Nemesis_Epitaph_Title".Translate(epitaph.name ?? "Nemesis_Phrase_Someone".Translate());
+            string body = epitaph.SummaryLine();
+            SoftCompat.OfferEpitaphToDeepColony(title, body);
+        }
+
+        static string EndReasonKey(NemesisEndReason reason) => reason switch
+        {
+            NemesisEndReason.Killed => "Nemesis_End_Killed",
+            NemesisEndReason.TargetDied => "Nemesis_End_TheyWon",
+            NemesisEndReason.TargetHandedOver => "Nemesis_End_TheyWon",
+            NemesisEndReason.Captured => "Nemesis_End_Captured",
+            _ => "Nemesis_End_Cleared",
+        };
     }
 }
