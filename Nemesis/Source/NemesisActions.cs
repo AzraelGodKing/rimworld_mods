@@ -66,6 +66,8 @@ namespace Nemesis
             }
 
             Find.LetterStack.ReceiveLetter(title, body, LetterDefOf.NeutralEvent);
+            if (map != null)
+                NemesisTells.MaybeLeaveMark(data, map, null);
         }
 
         private static bool HasCommsConsole(Map map)
@@ -403,6 +405,7 @@ namespace Nemesis
                 "Nemesis_Letter_SabotageTitle".Translate(data.nemesisName),
                 body,
                 LetterDefOf.ThreatSmall);
+            NemesisTells.MaybeLeaveMark(data, map, map.Center);
         }
 
         private static void FoodStoreRaid(NemesisData data, Map map)

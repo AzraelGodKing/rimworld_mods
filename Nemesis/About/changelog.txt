@@ -1,15 +1,20 @@
-1.0.2
-[h1]Nemesis — 1.0.2[/h1]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Harmony patches[/b] — one failed patch logs and skips instead of taking the rest of Nemesis down with it.
-[/list]
+1.1.0
+[h1]Nemesis — 1.1.0[/h1]
 
 [b]Added[/b]
 [list]
-[*] [b]Update letter[/b] — loading a colony shows this version's notes from About/changelog.txt, with a link to the newest full notes.
+[*] [b]Tells[/b] — each hunt rolls a voice, weapon family, mark, and habit that stay the same until the hunt ends. Gear upgrades quality, not the weapon type.
+[*] [b]Dossier[/b] — a colony tab for name, faction, focus, tells, sightings, taunts, last-known tile, and aggression.
+[*] [b]Informants[/b] — pay silver at a comms console (or the dossier) for a lead. Sometimes it is real. Sometimes they sold you a lie.
+[*] [b]Bounty[/b] — put silver on their head. It is recorded; other factions may or may not care.
+[*] [b]Epitaph[/b] — when a hunt ends, the dossier keeps who they were and how it finished. If Deep Colony is loaded, a copy lands on the Legacy tab.
+[*] [b]Compat IDs[/b] — extra Rimesis / Back for Vengeance packageId candidates, plus a Player.log line when one is actually loaded.
 [/list]
 
-[i]Build stamp (Player.log): update-news-v1[/i]
+[b]Fixed[/b]
+[list]
+[*] Calling-card graphic no longer points at Steel as a single texture (that path is a stack folder). It uses the vanilla component stack sprite so the def loads.
+[/list]
+
+[i]Build stamp (Player.log): dossier-tells-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/nemesis.md[/i]
