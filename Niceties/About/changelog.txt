@@ -1,24 +1,15 @@
-1.1.1
-[h1]Niceties — 1.1.1[/h1]
+1.1.2
+[h1]Niceties — 1.1.2[/h1]
 
 [b]Added[/b]
 [list]
 [*] [b]Chinese and Russian[/b] — settings, letters, and inspect text.
-[*] [b]Shared bedrooms[/b] — select a bed and mark the room as shared. Extra beds stay a bedroom (not barracks), so roommates and royalty are not punished for living together.
-[*] [b]No disturbed sleep[/b] — pawns who share a room skip the disturbed-sleep thought. Sharing one mattress with a non-partner is still vanilla.
 [/list]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Colonist bar[/b] — hiding cryptosleep pawns patches the 1.6 draw-locs method so the bar loads without a red error.
-[*] [b]Share-room gizmo[/b] — no Texture2D static-field warning at startup.
-[*] [b]Settings scroll (AZR-124)[/b] — the options window grows with its content, so longer translations stay reachable.
+[*] [b]Settings scroll[/b] — the options window grows with its content, so longer translations stay reachable.
 [/list]
 
-[b]Added[/b]
-[list]
-[*] [b]Update letter[/b] — loading a colony shows this version's notes from About/changelog.txt, with a link to the newest full notes.
-[/list]
-
-[i]Build stamp (Player.log): update-news-v1[/i]
+[i]Build stamp (Player.log): settings-i18n-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
