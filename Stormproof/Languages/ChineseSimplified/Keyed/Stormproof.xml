@@ -14,6 +14,12 @@
   <Stormproof_GridMonitor_Stored>已存：{0} / {1} Wd（{2}）</Stormproof_GridMonitor_Stored>
   <Stormproof_GridMonitor_EmptyIn>按当前消耗，蓄电池将在 {0} 后耗尽。</Stormproof_GridMonitor_EmptyIn>
   <Stormproof_GridMonitor_FullIn>按当前盈余，蓄电池将在 {0} 后充满。</Stormproof_GridMonitor_FullIn>
+  <Stormproof_GridMonitor_NoForecaster>预测：此电网没有天气预报仪。</Stormproof_GridMonitor_NoForecaster>
+  <Stormproof_GridMonitor_ForecastEmptyIn>预测：计入天气后，蓄电池将在 {0} 后耗尽。</Stormproof_GridMonitor_ForecastEmptyIn>
+  <Stormproof_GridMonitor_ForecastFullIn>预测：计入天气后，蓄电池将在 {0} 后充满。</Stormproof_GridMonitor_ForecastFullIn>
+  <Stormproof_GridMonitor_ForecastHeld>预测（8 小时）：电量至少保持 {0}。</Stormproof_GridMonitor_ForecastHeld>
+  <Stormproof_GridMonitor_ForecastLow>{0}：预测将在 {1} 后进入低电量。</Stormproof_GridMonitor_ForecastLow>
+  <Stormproof_GridMonitor_ForecastCritical>{0}：预测将在 {1} 后进入危急电量。</Stormproof_GridMonitor_ForecastCritical>
 
   <!-- Surge protector -->
   <Stormproof_SurgeProtector_Absorbed>电网遭受电涌冲击，但被 {0} 吸收。需要一天充能（并受到了一些内部损伤）。</Stormproof_SurgeProtector_Absorbed>

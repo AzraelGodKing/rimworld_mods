@@ -1,6 +1,14 @@
 # Changelog
 
-Detailed notes for **Stormproof** only. ## [1.1.1]
+Detailed notes for **Stormproof** only. ## [1.2.0]
+
+Player-facing version **1.2.0** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.2.0 loaded from ...` with stamp `radius-forecast-v1`.
+
+### Added
+- **Coverage rings** (`radius-forecast-v1`, AZR-143) — place and select draw the live CompProperties radius on the storm spire, static pylon, EMP dampener, and fire suppressor. The fallout scrubber highlights its enclosed room (outdoors: no outline).
+- **Grid forecast** (`radius-forecast-v1`, AZR-144) — grid monitor projects battery trajectory for 8 hours using a powered weather forecaster on the same net (solar/wind vs current weather, then a typical sky after it breaks). 25% / 10% alarms can fire on the projection. Falls back to the naive empty-in line with an inspect note if no forecaster is present.
+
+## [1.1.1]
 
 Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.1.1 loaded from ...` with stamp `update-news-v1`.
 
