@@ -80,6 +80,8 @@
   <DC_Settings_EnableEstateTip>在传承页指定继承人。死后由该人继承；其他子女会难过。睡进死者的床是一件小事。传家宝会记住经手之人。</DC_Settings_EnableEstateTip>
   <DC_Settings_EnableBirthSafetyNet>分娩安全网（新生儿种族）</DC_Settings_EnableBirthSafetyNet>
   <DC_Settings_EnableBirthSafetyNetTip>默认开启。部分种族模组会要求婴儿无法满足的技能，导致分娩无声失败、孩子消失。本模组只在生成新生儿时去掉这些要求，成年体不受影响。关闭则恢复原版处理。</DC_Settings_EnableBirthSafetyNetTip>
+  <DC_Letter_LaborWedgeLabel>分娩卡住已解除</DC_Letter_LaborWedgeLabel>
+  <DC_Letter_LaborWedge>{0} 在一次失败的分娩后卡在产程中。已清除卡住的分娩状态，避免每 tick 报错。孩子可能没有出生。</DC_Letter_LaborWedge>
   <DC_Settings_EnableTrauma>启用创伤与治疗</DC_Settings_EnableTrauma>
   <DC_Settings_EnableTraumaTip>战斗冲击、丧亲、囚禁、屠杀、辅导工作。</DC_Settings_EnableTraumaTip>
   <DC_Settings_EnableMentoring>启用学徒制</DC_Settings_EnableMentoring>
