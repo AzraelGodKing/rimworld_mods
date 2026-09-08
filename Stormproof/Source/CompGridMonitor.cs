@@ -28,6 +28,10 @@ namespace Stormproof
         private CompFlickable flickComp;
         private bool warnedLow;
         private bool warnedCritical;
+        private bool warnedForecastLow;
+        private bool warnedForecastCritical;
+        private GridForecast cachedForecast;
+        private int forecastCachedTick = -1;
 
         public CompProperties_GridMonitor Props => (CompProperties_GridMonitor)props;
 
@@ -68,7 +72,8 @@ namespace Stormproof
             {
                 return;
             }
-            float fraction = StoredEnergy(net) / capacity;
+            float stored = StoredEnergy(net);
+            float fraction = stored / capacity;
             if (fraction >= Props.rearmFraction)
             {
                 warnedLow = false;
@@ -89,6 +94,50 @@ namespace Stormproof
                     "Stormproof_GridMonitor_Low".Translate(parent.LabelShort, fraction.ToStringPercent()),
                     parent, MessageTypeDefOf.CautionInput);
             }
+
+            RefreshForecast(net, stored, capacity);
+            if (cachedForecast.HasForecaster)
+            {
+                if (cachedForecast.NadirFraction >= Props.rearmFraction)
+                {
+                    warnedForecastLow = false;
+                    warnedForecastCritical = false;
+                }
+                else if (!warnedForecastCritical && cachedForecast.TicksToCritical >= 0
+                    && fraction >= Props.criticalFraction)
+                {
+                    warnedForecastCritical = true;
+                    warnedForecastLow = true;
+                    Messages.Message(
+                        "Stormproof_GridMonitor_ForecastCritical".Translate(
+                            parent.LabelShort,
+                            cachedForecast.TicksToCritical.ToStringTicksToPeriod()),
+                        parent, MessageTypeDefOf.NegativeEvent);
+                }
+                else if (!warnedForecastLow && cachedForecast.TicksToLow >= 0
+                    && fraction >= Props.lowFraction)
+                {
+                    warnedForecastLow = true;
+                    Messages.Message(
+                        "Stormproof_GridMonitor_ForecastLow".Translate(
+                            parent.LabelShort,
+                            cachedForecast.TicksToLow.ToStringTicksToPeriod()),
+                        parent, MessageTypeDefOf.CautionInput);
+                }
+            }
+        }
+
+        private void RefreshForecast(PowerNet net, float stored, float capacity)
+        {
+            int tick = Find.TickManager.TicksGame;
+            if (forecastCachedTick == tick)
+            {
+                return;
+            }
+            forecastCachedTick = tick;
+            cachedForecast = GridForecastUtility.Project(
+                parent.Map, net, GridForecastUtility.ForecasterOn(net),
+                stored, capacity, Props.lowFraction, Props.criticalFraction);
         }
 
         public override void PostExposeData()
@@ -96,6 +145,8 @@ namespace Stormproof
             base.PostExposeData();
             Scribe_Values.Look(ref warnedLow, "stormproof_monitorWarnedLow", false);
             Scribe_Values.Look(ref warnedCritical, "stormproof_monitorWarnedCritical", false);
+            Scribe_Values.Look(ref warnedForecastLow, "stormproof_monitorWarnedForecastLow", false);
+            Scribe_Values.Look(ref warnedForecastCritical, "stormproof_monitorWarnedForecastCritical", false);
         }
 
         public override string CompInspectStringExtra()
@@ -143,6 +194,26 @@ namespace Stormproof
             if (brownout != null)
             {
                 s += "\n" + brownout;
+            }
+            RefreshForecast(net, stored, capacity);
+            if (!cachedForecast.HasForecaster)
+            {
+                s += "\n" + "Stormproof_GridMonitor_NoForecaster".Translate();
+            }
+            else if (cachedForecast.TicksToEmpty >= 0)
+            {
+                s += "\n" + "Stormproof_GridMonitor_ForecastEmptyIn".Translate(
+                    cachedForecast.TicksToEmpty.ToStringTicksToPeriod());
+            }
+            else if (cachedForecast.TicksToFull >= 0)
+            {
+                s += "\n" + "Stormproof_GridMonitor_ForecastFullIn".Translate(
+                    cachedForecast.TicksToFull.ToStringTicksToPeriod());
+            }
+            else
+            {
+                s += "\n" + "Stormproof_GridMonitor_ForecastHeld".Translate(
+                    cachedForecast.NadirFraction.ToStringPercent());
             }
             return s;
         }
