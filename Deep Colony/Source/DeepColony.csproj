@@ -5,6 +5,8 @@
     <LangVersion>latest</LangVersion>
     <RootNamespace>DeepColony</RootNamespace>
     <AssemblyName>DeepColony</AssemblyName>
+    <Version>1.6.7</Version>
+    <InformationalVersion>1.6.7+labor-wedge-v1</InformationalVersion>
     <OutputPath>../Assemblies/</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <DebugType>none</DebugType>

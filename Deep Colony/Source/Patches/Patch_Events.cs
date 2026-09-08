@@ -1,3 +1,4 @@
+using System;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -213,10 +214,35 @@ namespace DeepColony.Patches
     {
         public static void Postfix(Thing __result, Pawn geneticMother, Pawn father)
         {
-            if (__result is not Pawn baby) return;
-            if (!baby.RaceProps.Humanlike || baby.Dead) return;
-            InheritanceUtility.TryApplyInheritance(baby);
-            FamilyLifeUtility.NotifyBirth(baby);
+            try
+            {
+                if (__result == null) return;
+                if (__result is not Pawn baby) return;
+                if (!baby.RaceProps.Humanlike || baby.Dead) return;
+                InheritanceUtility.TryApplyInheritance(baby);
+                FamilyLifeUtility.NotifyBirth(baby);
+            }
+            catch (Exception e)
+            {
+                Log.Warning("[DeepColony] Birth postfix failed: " + e.Message);
+            }
+        }
+
+        // AZR-158 — a failed GeneratePawn NRE used to abort Hediff_LaborPushing.PreRemoved
+        // and leave the mother wedged forever. Swallow so labor can still tear down.
+        public static Exception Finalizer(Exception __exception, Pawn geneticMother)
+        {
+            if (__exception == null)
+            {
+                return null;
+            }
+
+            string who = geneticMother?.LabelShort ?? "unknown";
+            Log.Warning("[DeepColony] ApplyBirthOutcome failed for " + who
+                + " (" + __exception.GetType().Name + "): " + __exception.Message
+                + ". Labor will still end so the mother is not stuck.");
+            LaborWedgeRecovery.NoteFailedBirth(geneticMother);
+            return null;
         }
     }
 }
