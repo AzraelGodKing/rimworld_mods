@@ -1,6 +1,15 @@
 # Changelog
 
-Detailed notes for Deep Colony only. ## [Unreleased]
+Detailed notes for Deep Colony only.
+
+## [1.6.6]
+
+Player-facing version **1.6.6** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.6 build birth-safety-v1` in Player.log.
+
+AZR-157
+
+### Fixed
+- **Birth safety net** (`birth-safety-v1`, AZR-157) — newborns from pawnkinds that require skills a baby cannot have (AlienRace copies the mother's kind) no longer fail generation with a swallowed NRE and a missing baby. Deep Colony swaps in a cached clone with skill/work-tag gates stripped for Newborn/Baby requests only. Adults still honour the original kind. One Player.log warning per offending def. Settings toggle **Birth safety net** (default on). Soft / Default / Hard leave it on.
 
 ## [1.6.5]
 
