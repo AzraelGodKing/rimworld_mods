@@ -6,7 +6,7 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">1.1.1</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.2.0</modVersion>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>
@@ -25,13 +25,13 @@ The Rim does not care about your freezer. Solar flares, lightning, surges, EMP, 
 
 GRID DEFENSE
 - Solar shield: keeps every electrical device on the map running during a flare. Idles cheap; drinks 2,500W while the sky is red. If batteries empty mid-flare, the shield collapses.
-- Storm spire: steals lightning in a wide radius, cannot burn, and snuffs fires at its base. Wired: each strike dumps up to 1,500 Wd into capacitors then batteries, with a small "Zzzt!" risk until you research perfect grounding. Unwired: just a safe rod.
+- Storm spire: steals lightning in a wide radius (shown on select and while placing), cannot burn, and snuffs fires at its base. Wired: each strike dumps up to 1,500 Wd into capacitors then batteries, with a small "Zzzt!" risk until you research perfect grounding. Unwired: just a safe rod.
 - Storm capacitor bank: lightning-only storage. The grid cannot charge it; "Zzzt!" cannot drain it; it never leaks. Covers deficits up to 2,000W.
 - Surge protector: eats one "Zzzt!" then spends a day recharging.
 - EMP dampener: colony buildings in range shrug off EMP stuns. Turrets keep firing. Does not protect pawns or mechanoids.
 - Armored conduit: fireproof, tough, and immune to storm wear — the wiring for killboxes and exterior walls.
 - Load shedder: automatic breaker between the main grid and a low-priority sub-grid. Trips at an adjustable cutoff so the freezer outlasts the television.
-- Grid monitor: live production, consumption, battery time-to-empty, brownout level, and charge warnings.
+- Grid monitor: live production, consumption, battery time-to-empty, a weather-aware forecast when a forecaster shares the grid, brownout level, and charge warnings.
 
 GRID STRESS
 - Graded brownout: when batteries fall below 40%, lights dim, workbenches slow, and coolers lag — draw drops so the remaining charge lasts longer. A load shedder still cuts the sub-grid at its trip point.
