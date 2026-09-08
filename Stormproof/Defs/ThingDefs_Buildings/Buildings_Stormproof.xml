@@ -73,7 +73,10 @@
     <rotatable>false</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
-    <specialDisplayRadius>30</specialDisplayRadius>
+    <placeWorkers>
+      <li>Stormproof.PlaceWorker_RadiusOverlay</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <statBases>
       <MaxHitPoints>400</MaxHitPoints>
       <WorkToBuild>1800</WorkToBuild>
@@ -177,7 +180,10 @@
     <rotatable>false</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
-    <specialDisplayRadius>14.9</specialDisplayRadius>
+    <placeWorkers>
+      <li>Stormproof.PlaceWorker_RadiusOverlay</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <statBases>
       <MaxHitPoints>150</MaxHitPoints>
       <WorkToBuild>2400</WorkToBuild>
@@ -374,7 +380,10 @@
     <rotatable>false</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
-    <specialDisplayRadius>6.9</specialDisplayRadius>
+    <placeWorkers>
+      <li>Stormproof.PlaceWorker_RadiusOverlay</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <statBases>
       <MaxHitPoints>180</MaxHitPoints>
       <WorkToBuild>2200</WorkToBuild>
@@ -430,6 +439,10 @@
     <rotatable>false</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
+    <placeWorkers>
+      <li>Stormproof.PlaceWorker_EnclosedRoom</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <statBases>
       <MaxHitPoints>150</MaxHitPoints>
       <WorkToBuild>2400</WorkToBuild>
@@ -798,7 +811,10 @@
     <rotatable>false</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
-    <specialDisplayRadius>25</specialDisplayRadius>
+    <placeWorkers>
+      <li>Stormproof.PlaceWorker_RadiusOverlay</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <statBases>
       <MaxHitPoints>220</MaxHitPoints>
       <WorkToBuild>4500</WorkToBuild>
