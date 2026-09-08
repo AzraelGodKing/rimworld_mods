@@ -78,6 +78,8 @@
   <DC_Settings_EnablePerkRetrainTip>Default off (Hard on). A mentor who owns the other L15/capstone branch can retrain an apprentice over many teaching sessions — not a click. Soft / Default keep this off.</DC_Settings_EnablePerkRetrainTip>
   <DC_Settings_EnableEstate>Estate (wills and inheritance)</DC_Settings_EnableEstate>
   <DC_Settings_EnableEstateTip>Name an heir on the Legacy tab. On death, that person inherits; other children take it hard. Sleeping in a dead colonist's bed is its own small event. Heirlooms remember who carried them.</DC_Settings_EnableEstateTip>
+  <DC_Settings_EnableBirthSafetyNet>Birth safety net (newborn pawnkinds)</DC_Settings_EnableBirthSafetyNet>
+  <DC_Settings_EnableBirthSafetyNetTip>Default on. Some race mods require skills a baby cannot have, which silently eats the birth. Deep Colony strips those requirements for newborns only. Adults are unchanged. Turn off to restore vanilla handling.</DC_Settings_EnableBirthSafetyNetTip>
   <DC_Settings_EnableTrauma>Enable trauma &amp; therapy</DC_Settings_EnableTrauma>
   <DC_Settings_EnableTraumaTip>Combat shock, loss, captivity, massacre, counsel jobs.</DC_Settings_EnableTraumaTip>
   <DC_Settings_EnableMentoring>Enable apprenticeship</DC_Settings_EnableMentoring>
