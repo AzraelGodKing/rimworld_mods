@@ -1,10 +1,12 @@
-1.6.6
-[h1]Deep Colony — 1.6.6[/h1]
+1.6.7
+[h1]Deep Colony — 1.6.7[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Birth safety net (AZR-157)[/b] — newborns from race pawnkinds that require skills a baby cannot have no longer vanish with no letter. Adults still honour those requirements. Toggle in settings (default on).
+[*] [b]Failed birth no longer wedges the mother[/b] — if the baby fails to generate, labor ends instead of throwing every tick. Teardown exceptions are swallowed, stuck labor is force-detached, and load plus mid-session sweeps recover already-wedged pawns.
+[*] [b]Birth safety net holds under race mods[/b] — the newborn prefix runs first (before HAR) and is re-applied if Harmony skipped it. Player.log now prints version, assembly, stamp, and whether the prefix is actually applied.
+[*] [b]Trauma ticks fail-open[/b] — one colonist cannot take down the trauma sweep. Combat-habit hediffs are not added while downed.
 [/list]
 
-[i]Build stamp (Player.log): birth-safety-v1[/i]
+[i]Build stamp (Player.log): labor-wedge-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]
