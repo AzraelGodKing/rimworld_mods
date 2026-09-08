@@ -14,6 +14,12 @@
   <Stormproof_GridMonitor_Stored>Stored: {0} / {1} Wd ({2})</Stormproof_GridMonitor_Stored>
   <Stormproof_GridMonitor_EmptyIn>At current drain, batteries empty in {0}.</Stormproof_GridMonitor_EmptyIn>
   <Stormproof_GridMonitor_FullIn>At current surplus, batteries full in {0}.</Stormproof_GridMonitor_FullIn>
+  <Stormproof_GridMonitor_NoForecaster>Forecast: no weather forecaster on this grid.</Stormproof_GridMonitor_NoForecaster>
+  <Stormproof_GridMonitor_ForecastEmptyIn>Forecast: batteries empty in {0} (weather included).</Stormproof_GridMonitor_ForecastEmptyIn>
+  <Stormproof_GridMonitor_ForecastFullIn>Forecast: batteries full in {0} (weather included).</Stormproof_GridMonitor_ForecastFullIn>
+  <Stormproof_GridMonitor_ForecastHeld>Forecast (8h): charge stays at least {0}.</Stormproof_GridMonitor_ForecastHeld>
+  <Stormproof_GridMonitor_ForecastLow>{0}: forecast hits low batteries in {1}.</Stormproof_GridMonitor_ForecastLow>
+  <Stormproof_GridMonitor_ForecastCritical>{0}: forecast hits CRITICAL batteries in {1}.</Stormproof_GridMonitor_ForecastCritical>
 
   <!-- Surge protector -->
   <Stormproof_SurgeProtector_Absorbed>A power surge hit the grid, but {0} absorbed it. It needs a day to recharge (and took some internal damage).</Stormproof_SurgeProtector_Absorbed>
