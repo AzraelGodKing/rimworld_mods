@@ -1,13 +1,15 @@
 using System;
 using System.IO;
 using System.Reflection;
+using DeepColony.Patches;
 using Verse;
 
 namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "birth-safety-v1";
+        public const string BuildStamp = "labor-wedge-v1";
+        public const string SourceRevision = "b22c43a";
 
         public static void LogStartup()
         {
@@ -32,7 +34,21 @@ namespace DeepColony
                 }
                 break;
             }
-            Log.Message($"[DeepColony] v{version} build {BuildStamp} | {writeTime} | {path}");
+
+            string asmVer = asm.GetName().Version?.ToString() ?? "unknown";
+            string infoVer = asm.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion ?? asmVer;
+            bool prefix = BirthSafetyNet.PrefixApplied();
+            bool setting = DeepColonySettings.Get.enableBirthSafetyNet;
+            Log.Message("[DeepColony] v" + version
+                + " asm=" + asmVer
+                + " info=" + infoVer
+                + " sha=" + SourceRevision
+                + " build " + BuildStamp
+                + " | birthSafetyNet=" + (prefix ? "applied" : "MISSING")
+                + " setting=" + (setting ? "on" : "off")
+                + " | " + writeTime
+                + " | " + path);
         }
     }
 }

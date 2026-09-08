@@ -2,9 +2,19 @@
 
 Detailed notes for Deep Colony only.
 
+## [1.6.7]
+
+Player-facing version **1.6.7** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.7 asm=… sha=… build labor-wedge-v1 | birthSafetyNet=applied setting=on`.
+
+AZR-158
+
+### Fixed
+- **Labor wedge after a failed birth** (`labor-wedge-v1`, AZR-158) — `ApplyBirthOutcome` NRE used to abort `Hediff_LaborPushing.PreRemoved`, so the next tick `WorldPawns.RemovePreservedPawnHediff` KeyNotFoundException-looped forever. Layered recovery: swallow birth / `PreRemoved` / `RemoveHediff` / missing preserved-pawn key; `GeneratePawn` newborn fail-open returns null; force-detach from the hediff list if vanilla remove aborts; load sweep plus immediate + periodic mid-session sweeps with a NeutralEvent letter (once per pawn). Trauma combat-habit sync no longer **adds** hediffs on a downed pawn and fail-opens per colonist. `ApplyBirthOutcome` postfix null-guards `__result`.
+- **Birth safety net holds under race mods** — prefix priority is **First** so HAR sees the sanitized kind. If SafePatchAll skips the class, startup reapplies the prefix and logs `birthSafetyNet=MISSING` until it sticks. Startup now prints version, assembly, sha, stamp, prefix, and setting.
+
 ## [1.6.6]
 
-Player-facing version **1.6.6** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.6 build birth-safety-v1` in Player.log.
+Player-facing version **1.6.6**. Startup wrote `[DeepColony] v1.6.6 build birth-safety-v1` in Player.log.
 
 AZR-157
 
