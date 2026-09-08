@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DeepColony.Patches;
 using RimWorld;
@@ -235,6 +236,14 @@ namespace DeepColony
             TouchAverseUtility.GameTick();
             FamilyLifeUtility.GameTick();
             FamilyEchoUtility.GameTick();
+            try
+            {
+                LaborWedgeRecovery.Tick();
+            }
+            catch (Exception e)
+            {
+                Log.Warning("[DeepColony] Labor wedge tick failed: " + e.Message);
+            }
         }
 
         public void RegisterHeirloom(int thingId, string ownerName, string echoPerkDefName)
@@ -322,12 +331,41 @@ namespace DeepColony
 
         private static void TickTraumaSystems()
         {
-            foreach (Map map in Find.Maps)
+            if (Find.Maps == null)
             {
-                foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
+                return;
+            }
+
+            for (int m = 0; m < Find.Maps.Count; m++)
+            {
+                List<Pawn> colonists;
+                try
                 {
-                    TraumaRecoveryUtility.TickNaturalRecovery(p);
-                    TraumaCombatUtility.TickPawn(p);
+                    colonists = Find.Maps[m]?.mapPawns?.FreeColonistsSpawned;
+                }
+                catch
+                {
+                    continue;
+                }
+
+                if (colonists == null)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i < colonists.Count; i++)
+                {
+                    Pawn p = colonists[i];
+                    try
+                    {
+                        TraumaRecoveryUtility.TickNaturalRecovery(p);
+                        TraumaCombatUtility.TickPawn(p);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Warning("[DeepColony] Trauma tick failed on "
+                            + (p?.LabelShort ?? "unknown") + ": " + e.Message);
+                    }
                 }
             }
         }
@@ -467,6 +505,15 @@ namespace DeepColony
             ActiveMentoringSession.ResetSession();
             FamilyEchoUtility.ResetSession();
             BirthSafetyNet.ResetCache();
+            LaborWedgeRecovery.ResetSession();
+            try
+            {
+                LaborWedgeRecovery.RecoverStuckLabor();
+            }
+            catch (Exception e)
+            {
+                Log.Warning("[DeepColony] Labor recovery on load failed: " + e.Message);
+            }
             EnsureFounderSurname();
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
