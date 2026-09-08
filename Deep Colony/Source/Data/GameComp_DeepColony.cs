@@ -466,6 +466,7 @@ namespace DeepColony
                 funeralProcessedCorpses = new HashSet<int>();
             ActiveMentoringSession.ResetSession();
             FamilyEchoUtility.ResetSession();
+            BirthSafetyNet.ResetCache();
             EnsureFounderSurname();
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }

@@ -78,6 +78,9 @@ namespace DeepColony
         // AZR-70 estate / wills
         public bool enableEstate = true;
 
+        // AZR-157 birth safety net (crash fix; not a Soft/Default/Hard power toggle)
+        public bool enableBirthSafetyNet = true;
+
         public static DeepColonySettings Get =>
             DeepColonyMod.Settings ?? new DeepColonySettings();
 
@@ -130,6 +133,7 @@ namespace DeepColony
             Scribe_Values.Look(ref quietHoursIntensity, "quietHoursIntensity", 1f);
             Scribe_Values.Look(ref enablePerkRetrain, "enablePerkRetrain", false);
             Scribe_Values.Look(ref enableEstate, "enableEstate", true);
+            Scribe_Values.Look(ref enableBirthSafetyNet, "enableBirthSafetyNet", true);
         }
 
         public void ApplyPreset(Preset preset)
@@ -167,6 +171,7 @@ namespace DeepColony
             quietHoursIntensity = 1f;
             enablePerkRetrain = false;
             enableEstate = true;
+            enableBirthSafetyNet = true;
 
             switch (preset)
             {
@@ -275,6 +280,7 @@ namespace DeepColony
             quietHoursIntensity = 1f;
             enablePerkRetrain = false;
             enableEstate = true;
+            enableBirthSafetyNet = true;
         }
     }
 }

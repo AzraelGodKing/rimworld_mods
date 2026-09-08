@@ -78,6 +78,8 @@
   <DC_Settings_EnablePerkRetrainTip>По умолчанию выкл. (Сложный — вкл.). Наставник с другой веткой L15/капстоуна может переучить ученика за много занятий — не клик. Мягкий / По умолчанию оставляют выкл.</DC_Settings_EnablePerkRetrainTip>
   <DC_Settings_EnableEstate>Наследство (завещания)</DC_Settings_EnableEstate>
   <DC_Settings_EnableEstateTip>На вкладке Наследие назовите наследника. После смерти он получает вещи; другие дети тяжело это переносят. Сон в кровати умершего — отдельное событие. Наследие помнит, кто носил вещь.</DC_Settings_EnableEstateTip>
+  <DC_Settings_EnableBirthSafetyNet>Страховка родов (виды новорождённых)</DC_Settings_EnableBirthSafetyNet>
+  <DC_Settings_EnableBirthSafetyNetTip>По умолчанию вкл. Некоторые расовые моды требуют навыки, которых не может быть у младенца — роды срываются без письма, ребёнок пропадает. Deep Colony снимает эти требования только для новорождённых. Взрослые не затрагиваются. Выключите, чтобы вернуть ванильную обработку.</DC_Settings_EnableBirthSafetyNetTip>
   <DC_Settings_EnableTrauma>Включить травму и терапию</DC_Settings_EnableTrauma>
   <DC_Settings_EnableTraumaTip>Боевой шок, утраты, плен, резня, работа консультирования.</DC_Settings_EnableTraumaTip>
   <DC_Settings_EnableMentoring>Включить ученичество</DC_Settings_EnableMentoring>
