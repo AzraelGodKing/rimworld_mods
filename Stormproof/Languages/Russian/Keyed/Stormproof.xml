@@ -14,6 +14,12 @@
   <Stormproof_GridMonitor_Stored>Запас: {0} / {1} Вт·д ({2})</Stormproof_GridMonitor_Stored>
   <Stormproof_GridMonitor_EmptyIn>При текущем расходе батареи опустеют через {0}.</Stormproof_GridMonitor_EmptyIn>
   <Stormproof_GridMonitor_FullIn>При текущем избытке батареи заполнятся через {0}.</Stormproof_GridMonitor_FullIn>
+  <Stormproof_GridMonitor_NoForecaster>Прогноз: на этой сети нет метеоролога.</Stormproof_GridMonitor_NoForecaster>
+  <Stormproof_GridMonitor_ForecastEmptyIn>Прогноз: с учётом погоды батареи опустеют через {0}.</Stormproof_GridMonitor_ForecastEmptyIn>
+  <Stormproof_GridMonitor_ForecastFullIn>Прогноз: с учётом погоды батареи заполнятся через {0}.</Stormproof_GridMonitor_ForecastFullIn>
+  <Stormproof_GridMonitor_ForecastHeld>Прогноз (8 ч): заряд не ниже {0}.</Stormproof_GridMonitor_ForecastHeld>
+  <Stormproof_GridMonitor_ForecastLow>{0}: прогноз — низкий заряд через {1}.</Stormproof_GridMonitor_ForecastLow>
+  <Stormproof_GridMonitor_ForecastCritical>{0}: прогноз — КРИТИЧЕСКИЙ заряд через {1}.</Stormproof_GridMonitor_ForecastCritical>
 
   <!-- Surge protector -->
   <Stormproof_SurgeProtector_Absorbed>Скачок напряжения ударил по сети, но {0} поглотил его. Нужен день на перезарядку (и получены внутренние повреждения).</Stormproof_SurgeProtector_Absorbed>

@@ -79,6 +79,12 @@ namespace Stormproof
             }
         }
 
+        internal int RemainingTicks()
+        {
+            Map map = parent.Map;
+            return map == null ? 0 : DurationRef(map.weatherDecider) - map.weatherManager.curWeatherAge;
+        }
+
         private int RemainingTicks(Map map)
         {
             return DurationRef(map.weatherDecider) - map.weatherManager.curWeatherAge;
