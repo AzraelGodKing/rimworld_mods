@@ -1,3 +1,4 @@
+using System;
 using RimWorld;
 using Verse;
 
@@ -8,48 +9,70 @@ namespace DeepColony
     {
         public static void TickPawn(Pawn pawn)
         {
-            if (pawn?.health == null || !pawn.Spawned || pawn.Dead) return;
-            if (!DeepColonySettings.Get.enableTrauma)
+            try
             {
-                RemoveIfPresent(pawn, DC_DefOf.DC_Hediff_CombatHabit);
-                RemoveIfPresent(pawn, DC_DefOf.DC_Hediff_TraumaDraftPenalty);
-                return;
+                if (pawn?.health == null || !pawn.Spawned || pawn.Dead) return;
+                if (!DeepColonySettings.Get.enableTrauma)
+                {
+                    RemoveIfPresent(pawn, DC_DefOf.DC_Hediff_CombatHabit);
+                    RemoveIfPresent(pawn, DC_DefOf.DC_Hediff_TraumaDraftPenalty);
+                    return;
+                }
+
+                bool combatShock = TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_CombatShock)
+                    || TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Fire)
+                    || TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Insect);
+
+                SyncHediff(pawn, DC_DefOf.DC_Hediff_CombatHabit, combatShock);
+
+                bool draftPenalty = DeepColonySettings.Get.enableTraumaPenalties
+                    && pawn.Drafted
+                    && combatShock;
+                SyncHediff(pawn, DC_DefOf.DC_Hediff_TraumaDraftPenalty, draftPenalty);
             }
-
-            bool combatShock = TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_CombatShock)
-                || TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Fire)
-                || TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Insect);
-
-            // A05 — combat habits while carrying combat-linked trauma (always on with trauma system).
-            SyncHediff(pawn, DC_DefOf.DC_Hediff_CombatHabit, combatShock);
-
-            // B21 — heavier draft penalties (default off).
-            bool draftPenalty = DeepColonySettings.Get.enableTraumaPenalties
-                && pawn.Drafted
-                && combatShock;
-            SyncHediff(pawn, DC_DefOf.DC_Hediff_TraumaDraftPenalty, draftPenalty);
+            catch (Exception e)
+            {
+                Log.Warning("[DeepColony] TraumaCombatUtility.TickPawn failed on "
+                    + (pawn?.LabelShort ?? "unknown") + ": " + e.Message);
+            }
         }
 
         private static void SyncHediff(Pawn pawn, HediffDef def, bool want)
         {
-            if (def == null) return;
-            Hediff existing = pawn.health.hediffSet.GetFirstHediffOfDef(def);
-            if (want)
+            try
             {
-                if (existing == null)
-                    pawn.health.AddHediff(def);
+                if (def == null || pawn?.health?.hediffSet == null) return;
+                if (want && pawn.Downed) return;
+                Hediff existing = pawn.health.hediffSet.GetFirstHediffOfDef(def);
+                if (want)
+                {
+                    if (existing == null)
+                        pawn.health.AddHediff(def);
+                }
+                else if (existing != null)
+                {
+                    pawn.health.RemoveHediff(existing);
+                }
             }
-            else if (existing != null)
+            catch (Exception e)
             {
-                pawn.health.RemoveHediff(existing);
+                Log.Warning("[DeepColony] Trauma SyncHediff failed on "
+                    + (pawn?.LabelShort ?? "unknown") + ": " + e.Message);
             }
         }
 
         private static void RemoveIfPresent(Pawn pawn, HediffDef def)
         {
-            if (def == null || pawn.health == null) return;
-            Hediff h = pawn.health.hediffSet.GetFirstHediffOfDef(def);
-            if (h != null) pawn.health.RemoveHediff(h);
+            try
+            {
+                if (def == null || pawn.health == null) return;
+                Hediff h = pawn.health.hediffSet.GetFirstHediffOfDef(def);
+                if (h != null) pawn.health.RemoveHediff(h);
+            }
+            catch (Exception e)
+            {
+                Log.Warning("[DeepColony] Trauma RemoveIfPresent failed: " + e.Message);
+            }
         }
     }
 }
