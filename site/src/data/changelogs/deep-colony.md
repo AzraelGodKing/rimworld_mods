@@ -2,6 +2,15 @@
 
 Detailed notes for Deep Colony only.
 
+## [1.6.8]
+
+Player-facing version **1.6.8** (`About.xml` `modVersion`, pending bump from 1.6.7). Startup writes `build labor-restore-v1`.
+
+AZR-159
+
+### Fixed
+- **Stuck labor restores a healthy pregnancy** (`labor-restore-v1`, AZR-159) — the AZR-158 load sweep force-removed every `Hediff_Pregnant` on colonists and animals. Recovery no longer aborts. Failed or wedged labor is detached without running birth teardown, then a late `Hediff_Pregnant` is put back with the same parents/genes. Healthy pregnancies are left alone. Already-wiped pregnancies from a previous load cannot be reconstructed.
+
 ## [1.6.7]
 
 Player-facing version **1.6.7** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.7 asm=… sha=… build labor-wedge-v1 | birthSafetyNet=applied setting=on`.
