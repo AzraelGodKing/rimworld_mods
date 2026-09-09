@@ -228,9 +228,9 @@ namespace DeepColony.Patches
             }
         }
 
-        // AZR-158 — a failed GeneratePawn NRE used to abort Hediff_LaborPushing.PreRemoved
-        // and leave the mother wedged forever. Swallow so labor can still tear down.
-        public static Exception Finalizer(Exception __exception, Pawn geneticMother)
+        // AZR-158 / AZR-159 — swallow so the mother is not tick-wedged, then
+        // restore a healthy pregnancy instead of ending labor with no baby.
+        public static Exception Finalizer(Exception __exception, Pawn geneticMother, Pawn father)
         {
             if (__exception == null)
             {
@@ -240,8 +240,8 @@ namespace DeepColony.Patches
             string who = geneticMother?.LabelShort ?? "unknown";
             Log.Warning("[DeepColony] ApplyBirthOutcome failed for " + who
                 + " (" + __exception.GetType().Name + "): " + __exception.Message
-                + ". Labor will still end so the mother is not stuck.");
-            LaborWedgeRecovery.NoteFailedBirth(geneticMother);
+                + ". Pregnancy will be restored.");
+            LaborWedgeRecovery.NoteFailedBirth(geneticMother, father: father);
             return null;
         }
     }
