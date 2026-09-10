@@ -16,12 +16,29 @@ namespace Stormproof
         private List<AlmanacEntry> almanac = new List<AlmanacEntry>();
         private Dictionary<int, float> brownoutByNetId = new Dictionary<int, float>();
         private int brownoutCachedTick = -1;
+        private WeatherDef daySkyWeather;
+        private float daySkyMul = -1f;
 
         public MapComponent_Stormproof(Map map) : base(map)
         {
         }
 
         public IReadOnlyList<AlmanacEntry> Almanac => almanac;
+
+        public void RememberDaySkyMul(WeatherDef weather, float mul)
+        {
+            daySkyWeather = weather;
+            daySkyMul = mul;
+        }
+
+        public float DaySkyMulFor(WeatherDef weather)
+        {
+            if (weather == null || weather != daySkyWeather || daySkyMul <= 0f)
+            {
+                return -1f;
+            }
+            return daySkyMul;
+        }
 
         public override void FinalizeInit()
         {
@@ -128,6 +145,71 @@ namespace Stormproof
             AddEntry(started ? "condition" : "conditionEnd", condition.def.label);
         }
 
+        public AlmanacEntry LiveLedger()
+        {
+            for (int i = almanac.Count - 1; i >= 0; i--)
+            {
+                AlmanacEntry e = almanac[i];
+                if (e != null && e.durationTicks <= 0)
+                {
+                    return e;
+                }
+            }
+            return almanac.Count > 0 ? almanac[almanac.Count - 1] : null;
+        }
+
+        public void NoteStrike(bool caught)
+        {
+            AlmanacEntry e = LiveLedger();
+            if (e == null)
+            {
+                return;
+            }
+            if (caught)
+            {
+                e.strikesCaught++;
+            }
+            else
+            {
+                e.strikesMissed++;
+            }
+        }
+
+        public void NoteZzzt(bool absorbed)
+        {
+            AlmanacEntry e = LiveLedger();
+            if (e == null)
+            {
+                return;
+            }
+            if (absorbed)
+            {
+                e.zzztAbsorbed++;
+            }
+            else
+            {
+                e.zzztSuffered++;
+            }
+        }
+
+        public void NoteFireSnuffed()
+        {
+            AlmanacEntry e = LiveLedger();
+            if (e != null)
+            {
+                e.firesSnuffed++;
+            }
+        }
+
+        public void NoteWear()
+        {
+            AlmanacEntry e = LiveLedger();
+            if (e != null)
+            {
+                e.wearHits++;
+            }
+        }
+
         private void CloseWeatherEntry()
         {
             if (almanac.Count == 0 || lastWeather == null)
@@ -204,6 +286,7 @@ namespace Stormproof
                 {
                     thing.HitPoints--;
                     thing.Map.listerBuildingsRepairable.Notify_BuildingTookDamage((Building)thing);
+                    NoteWear();
                 }
             }
             wearCursor = i;
@@ -264,6 +347,15 @@ namespace Stormproof
         public int quadrum;
         public int startTick;
         public int durationTicks;
+        public int strikesCaught;
+        public int strikesMissed;
+        public int zzztAbsorbed;
+        public int zzztSuffered;
+        public int firesSnuffed;
+        public int wearHits;
+
+        public bool HasLedger =>
+            strikesCaught + strikesMissed + zzztAbsorbed + zzztSuffered + firesSnuffed + wearHits > 0;
 
         public void ExposeData()
         {
@@ -273,6 +365,12 @@ namespace Stormproof
             Scribe_Values.Look(ref quadrum, "quadrum");
             Scribe_Values.Look(ref startTick, "startTick");
             Scribe_Values.Look(ref durationTicks, "durationTicks");
+            Scribe_Values.Look(ref strikesCaught, "strikesCaught");
+            Scribe_Values.Look(ref strikesMissed, "strikesMissed");
+            Scribe_Values.Look(ref zzztAbsorbed, "zzztAbsorbed");
+            Scribe_Values.Look(ref zzztSuffered, "zzztSuffered");
+            Scribe_Values.Look(ref firesSnuffed, "firesSnuffed");
+            Scribe_Values.Look(ref wearHits, "wearHits");
         }
     }
 }

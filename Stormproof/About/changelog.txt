@@ -1,11 +1,22 @@
-1.2.0
-[h1]Stormproof — 1.2.0[/h1]
+1.3.0
+[h1]Stormproof — 1.3.0[/h1]
 
 [b]Added[/b]
 [list]
-[*] [b]Coverage rings[/b] — select or place a storm spire, static pylon, EMP dampener, or fire suppressor to see its real radius. The fallout scrubber outlines the enclosed room it would actually scrub.
-[*] [b]Grid forecast[/b] — a powered weather forecaster on the same net adds a projected battery line to the grid monitor (next 8 hours, solar and wind vs the current weather). Low / critical warnings can fire before the cliff, not only at it. No forecaster: the old drain estimate stays, plus a note.
+[*] [b]Load schedule[/b] — the load shedder can run or shed by hour of the day, shed early when a storm or flare is about to land, and Hold Auto / Run / Shed in one click. The battery cutoff still trips first. Old saves keep the old breaker until you set a schedule.
+[*] [b]Almanac ledger[/b] — each recorded storm tracks strikes caught vs missed, Zzzt absorbed vs suffered, fires the suppressor snuffed, and wear hits on unhardened wiring.
 [/list]
 
-[i]Build stamp (Player.log): radius-forecast-v1[/i]
+[b]Changed[/b]
+[list]
+[*] [b]Building art[/b] — Power-tab sprites redrawn and sized at 128 px per cell so tall buildings are no longer squashed. Storm caller, sky restorer, fire suppressor, and drought condenser match their footprints.
+[/list]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Grid forecast[/b] — empty-in no longer trusts brownout-dimmed draw; night forecasts no longer halve the next sunrise; selecting a monitor no longer recomputes every frame; alarms re-arm from current charge; a full grid shows held charge instead of "full in 4 minutes".
+[*] [b]XML load[/b] — the files that crashed some Nexus installs are well-formed UTF-8 with no BOM.
+[/list]
+
+[i]Build stamp (Player.log): schedule-ledger-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/stormproof.md[/i]

@@ -86,7 +86,9 @@ namespace Stormproof
                 }
                 if (fire.Position.DistanceTo(origin) <= radius)
                 {
+                    Map fireMap = fire.Map;
                     fire.Destroy(DestroyMode.Vanish);
+                    fireMap?.GetComponent<MapComponent_Stormproof>()?.NoteFireSnuffed();
                 }
             }
         }

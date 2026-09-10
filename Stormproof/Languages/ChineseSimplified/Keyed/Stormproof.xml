@@ -60,6 +60,20 @@
   <Stormproof_LoadShedder_Open>断路器断开：子电网已切除。</Stormproof_LoadShedder_Open>
   <Stormproof_LoadShedder_NoSupplyBatteries>供电电网没有蓄电池。</Stormproof_LoadShedder_NoSupplyBatteries>
   <Stormproof_LoadShedder_SupplyStatus>供电蓄电池：{0}（低于 {1} 跳闸，恢复至 {2} 重连）。</Stormproof_LoadShedder_SupplyStatus>
+  <Stormproof_LoadShedder_ScheduleLabel>时刻表</Stormproof_LoadShedder_ScheduleLabel>
+  <Stormproof_LoadShedder_ScheduleDesc>按小时设定此子电网运行或切除。蓄电池切断阈值仍优先跳闸。</Stormproof_LoadShedder_ScheduleDesc>
+  <Stormproof_LoadShedder_ScheduleTitle>负荷时刻表</Stormproof_LoadShedder_ScheduleTitle>
+  <Stormproof_LoadShedder_ScheduleHint>点击小时：红色切除，绿色运行。切断阈值仍优先。</Stormproof_LoadShedder_ScheduleHint>
+  <Stormproof_LoadShedder_ScheduleLegend>红=该小时切除。绿=运行。预报覆盖会在风暴或耀斑落地前切除。</Stormproof_LoadShedder_ScheduleLegend>
+  <Stormproof_LoadShedder_ScheduleClear>清除时刻表</Stormproof_LoadShedder_ScheduleClear>
+  <Stormproof_LoadShedder_ForecastOverride>预报覆盖：风暴或耀斑将至时切除</Stormproof_LoadShedder_ForecastOverride>
+  <Stormproof_LoadShedder_HoldAuto>保持：自动</Stormproof_LoadShedder_HoldAuto>
+  <Stormproof_LoadShedder_HoldRun>保持：接通</Stormproof_LoadShedder_HoldRun>
+  <Stormproof_LoadShedder_HoldShed>保持：切除</Stormproof_LoadShedder_HoldShed>
+  <Stormproof_LoadShedder_HoldDesc>一键覆盖。自动跟随时刻表。接通强制子电网供电。切除强制断开。蓄电池切断阈值仍优先。</Stormproof_LoadShedder_HoldDesc>
+  <Stormproof_LoadShedder_HourShed>切除</Stormproof_LoadShedder_HourShed>
+  <Stormproof_LoadShedder_HourRun>运行</Stormproof_LoadShedder_HourRun>
+  <Stormproof_LoadShedder_ScheduleStatus>本小时：{0}</Stormproof_LoadShedder_ScheduleStatus>
 
   <!-- Solar shield -->
   <Stormproof_SolarShield_Standby>待机。太阳耀斑期间此护盾将消耗 {0} W。</Stormproof_SolarShield_Standby>
@@ -114,6 +128,7 @@
   <Stormproof_Almanac_Inspect>年鉴：已记录 {0} 条。</Stormproof_Almanac_Inspect>
   <Stormproof_Almanac_Open>年鉴</Stormproof_Almanac_Open>
   <Stormproof_Almanac_OpenDesc>查阅本地图一年的风暴、耀斑、干旱与寒潮。</Stormproof_Almanac_OpenDesc>
+  <Stormproof_Almanac_Ledger>接闪 {0} / 未接 {1}。吸收短路 {2} / 遭受 {3}。灭火 {4}。磨损 {5}。</Stormproof_Almanac_Ledger>
   <Stormproof_StormSpire_FulguriteReady>{0} 基部凝出闪电熔岩。可采集。</Stormproof_StormSpire_FulguriteReady>
   <Stormproof_StormSpire_CollectFulgurite>采集闪电熔岩（{0}）</Stormproof_StormSpire_CollectFulgurite>
   <Stormproof_StormSpire_CollectFulguriteDesc>从塔基取下雷击熔成的玻璃。</Stormproof_StormSpire_CollectFulguriteDesc>
