@@ -60,6 +60,20 @@
   <Stormproof_LoadShedder_Open>Автомат РАЗОМКНУТ: подсеть отключена.</Stormproof_LoadShedder_Open>
   <Stormproof_LoadShedder_NoSupplyBatteries>На сети питания нет батарей.</Stormproof_LoadShedder_NoSupplyBatteries>
   <Stormproof_LoadShedder_SupplyStatus>Батареи питания: {0} (отключение ниже {1}, подключение при {2}).</Stormproof_LoadShedder_SupplyStatus>
+  <Stormproof_LoadShedder_ScheduleLabel>Расписание</Stormproof_LoadShedder_ScheduleLabel>
+  <Stormproof_LoadShedder_ScheduleDesc>По часам: подсеть работает или отключена. Порог батарей по-прежнему срабатывает первым.</Stormproof_LoadShedder_ScheduleDesc>
+  <Stormproof_LoadShedder_ScheduleTitle>Расписание нагрузки</Stormproof_LoadShedder_ScheduleTitle>
+  <Stormproof_LoadShedder_ScheduleHint>Час: красный — отключить, зелёный — держать. Порог всё равно главный.</Stormproof_LoadShedder_ScheduleHint>
+  <Stormproof_LoadShedder_ScheduleLegend>Красный = отключить в этот час. Зелёный = держать. Прогноз отключает до шторма или вспышки.</Stormproof_LoadShedder_ScheduleLegend>
+  <Stormproof_LoadShedder_ScheduleClear>Сбросить расписание</Stormproof_LoadShedder_ScheduleClear>
+  <Stormproof_LoadShedder_ForecastOverride>Прогноз: отключать, когда шторм или вспышка близко</Stormproof_LoadShedder_ForecastOverride>
+  <Stormproof_LoadShedder_HoldAuto>Удерж.: авто</Stormproof_LoadShedder_HoldAuto>
+  <Stormproof_LoadShedder_HoldRun>Удерж.: вкл</Stormproof_LoadShedder_HoldRun>
+  <Stormproof_LoadShedder_HoldShed>Удерж.: откл</Stormproof_LoadShedder_HoldShed>
+  <Stormproof_LoadShedder_HoldDesc>Один клик. Авто — по расписанию. Вкл — подсеть всегда. Откл — всегда разомкнуто. Порог батарей всё равно первый.</Stormproof_LoadShedder_HoldDesc>
+  <Stormproof_LoadShedder_HourShed>откл</Stormproof_LoadShedder_HourShed>
+  <Stormproof_LoadShedder_HourRun>вкл</Stormproof_LoadShedder_HourRun>
+  <Stormproof_LoadShedder_ScheduleStatus>Этот час: {0}</Stormproof_LoadShedder_ScheduleStatus>
 
   <!-- Solar shield -->
   <Stormproof_SolarShield_Standby>Ожидание. Во время солнечной вспышки щит будет потреблять {0} Вт.</Stormproof_SolarShield_Standby>
@@ -114,6 +128,7 @@
   <Stormproof_Almanac_Inspect>Альманах: {0} записей.</Stormproof_Almanac_Inspect>
   <Stormproof_Almanac_Open>Альманах</Stormproof_Almanac_Open>
   <Stormproof_Almanac_OpenDesc>Год штормов, вспышек, засух и похолоданий на этой карте.</Stormproof_Almanac_OpenDesc>
+  <Stormproof_Almanac_Ledger>Поймано {0} / промах {1} ударов. Поглощено {2} / пропущено {3} Zzzt. Пожаров сбито {4}. Износ {5}.</Stormproof_Almanac_Ledger>
   <Stormproof_StormSpire_FulguriteReady>{0} выплавил фульгурит у основания. Соберите.</Stormproof_StormSpire_FulguriteReady>
   <Stormproof_StormSpire_CollectFulgurite>Собрать фульгурит ({0})</Stormproof_StormSpire_CollectFulgurite>
   <Stormproof_StormSpire_CollectFulguriteDesc>Снять сплавленное молнией стекло с основания шпиля.</Stormproof_StormSpire_CollectFulguriteDesc>

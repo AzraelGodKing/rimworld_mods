@@ -22,6 +22,8 @@ namespace Stormproof
         internal const int HorizonTicks = 2500 * 8;
         private const int StepTicks = 250;
         private const float AfterWeatherSkyMul = 0.9f;
+        private const float BrownoutStart = 0.40f;
+        private const float BrownoutDrawCut = 0.40f;
 
         internal static CompWeatherForecaster ForecasterOn(PowerNet net)
         {
@@ -62,18 +64,25 @@ namespace Stormproof
                 return result;
             }
 
-            SplitPlants(net, out float solarMax, out float windNow, out float windMax, out float constantWatts);
+            SplitPlants(net, out float solarMax, out float windNow, out float windMax,
+                out float otherProd, out float nameplateDraw);
             float weatherMul = WeatherSkyMul(map);
             float windFrac = windMax > 0.01f ? Mathf.Clamp01(windNow / windMax) : 0f;
             float energy = stored;
             float nadir = stored;
+            bool canFill = stored < capacity - 0.05f;
+            float severity = StormproofMod.Settings != null && StormproofMod.Settings.enableBrownout
+                ? Mathf.Clamp01(StormproofMod.Settings.brownoutSeverity)
+                : 0f;
 
             for (int elapsed = 0; elapsed < HorizonTicks; elapsed += StepTicks)
             {
                 bool holds = forecast != null && elapsed < result.WeatherRemaining;
                 float sky = ProjectedSky(map, elapsed, holds, weatherMul);
                 float wind = holds ? windFrac : windFrac * 0.55f;
-                float watts = solarMax * sky + windMax * wind + constantWatts;
+                float brownout = BrownoutAt(energy / capacity, severity);
+                float draw = nameplateDraw * (1f - BrownoutDrawCut * brownout);
+                float watts = solarMax * sky + windMax * wind + otherProd - draw;
                 energy = Mathf.Clamp(energy + watts * CompPower.WattsToWattDaysPerTick * StepTicks, 0f, capacity);
                 if (energy < nadir)
                 {
@@ -95,7 +104,7 @@ namespace Stormproof
                     result.TicksToEmpty = at;
                     break;
                 }
-                if (result.TicksToFull < 0 && energy >= capacity - 0.05f && watts > 0f)
+                if (canFill && result.TicksToFull < 0 && energy >= capacity - 0.05f && watts > 0f)
                 {
                     result.TicksToFull = at;
                 }
@@ -105,14 +114,24 @@ namespace Stormproof
             return result;
         }
 
+        internal static float BrownoutAt(float fraction, float severity)
+        {
+            if (severity <= 0f || fraction >= BrownoutStart)
+            {
+                return 0f;
+            }
+            return ((BrownoutStart - fraction) / BrownoutStart) * severity;
+        }
+
         private static void SplitPlants(PowerNet net,
-            out float solarMax, out float windNow, out float windMax, out float constantWatts)
+            out float solarMax, out float windNow, out float windMax,
+            out float otherProd, out float nameplateDraw)
         {
             solarMax = 0f;
             windNow = 0f;
             windMax = 0f;
-            float otherProd = 0f;
-            float consumption = 0f;
+            otherProd = 0f;
+            nameplateDraw = 0f;
 
             for (int i = 0; i < net.powerComps.Count; i++)
             {
@@ -122,7 +141,6 @@ namespace Stormproof
                     continue;
                 }
 
-                float output = trader.PowerOutput;
                 float nameplate = Mathf.Abs(trader.Props.PowerConsumption);
                 if (trader.parent.GetComp<CompPowerPlantSolar>() != null)
                 {
@@ -131,22 +149,20 @@ namespace Stormproof
                 }
                 if (trader.parent.GetComp<CompPowerPlantWind>() != null)
                 {
-                    windNow += Mathf.Max(output, 0f);
+                    windNow += Mathf.Max(trader.PowerOutput, 0f);
                     windMax += nameplate;
                     continue;
                 }
 
-                if (output > 0f)
+                if (trader.Props.PowerConsumption < 0f)
                 {
-                    otherProd += output;
+                    otherProd += nameplate;
                 }
                 else
                 {
-                    consumption += -output;
+                    nameplateDraw += nameplate;
                 }
             }
-
-            constantWatts = otherProd - consumption;
         }
 
         private static float RoofedFactor(Thing thing)
@@ -164,15 +180,55 @@ namespace Stormproof
             return cells <= 0 ? 1f : (float)(cells - roofed) / cells;
         }
 
-        private static float WeatherSkyMul(Map map)
+        internal static float WeatherSkyMul(Map map)
         {
             float celestial = GenCelestial.CurCelestialSunGlow(map);
-            float sky = map.skyManager.CurSkyGlow;
-            if (celestial < 0.08f)
+            if (celestial >= 0.08f)
             {
-                return 0.5f;
+                float sky = map.skyManager.CurSkyGlow;
+                float mul = Mathf.Clamp(sky / celestial, 0.08f, 1.4f);
+                map.GetComponent<MapComponent_Stormproof>()?.RememberDaySkyMul(
+                    map.weatherManager.curWeather, mul);
+                return mul;
             }
-            return Mathf.Clamp(sky / celestial, 0.08f, 1.4f);
+
+            MapComponent_Stormproof comp = map.GetComponent<MapComponent_Stormproof>();
+            float cached = comp != null
+                ? comp.DaySkyMulFor(map.weatherManager.curWeather)
+                : -1f;
+            if (cached > 0f)
+            {
+                return cached;
+            }
+            return SkyMulFromWeather(map.weatherManager.curWeather);
+        }
+
+        internal static float SkyMulFromWeather(WeatherDef def)
+        {
+            if (def == null)
+            {
+                return 1f;
+            }
+            if (CompWeatherForecaster.BringsLightning(def))
+            {
+                return 0.35f;
+            }
+            string name = def.defName ?? "";
+            if (name.IndexOf("Rain", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Fog", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return 0.55f;
+            }
+            if (name.IndexOf("Snow", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("Blizzard", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return 0.50f;
+            }
+            if (name.IndexOf("Overcast", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return 0.70f;
+            }
+            return 1f;
         }
 
         private static float ProjectedSky(Map map, int ticksFromNow, bool weatherHolds, float weatherMul)

@@ -60,6 +60,20 @@
   <Stormproof_LoadShedder_Open>Breaker OPEN: sub-grid shed.</Stormproof_LoadShedder_Open>
   <Stormproof_LoadShedder_NoSupplyBatteries>No batteries on the supply grid.</Stormproof_LoadShedder_NoSupplyBatteries>
   <Stormproof_LoadShedder_SupplyStatus>Supply batteries: {0} (trips below {1}, reconnects at {2}).</Stormproof_LoadShedder_SupplyStatus>
+  <Stormproof_LoadShedder_ScheduleLabel>Schedule</Stormproof_LoadShedder_ScheduleLabel>
+  <Stormproof_LoadShedder_ScheduleDesc>Set which hours this sub-grid runs or sheds. The battery cutoff still trips first.</Stormproof_LoadShedder_ScheduleDesc>
+  <Stormproof_LoadShedder_ScheduleTitle>Load schedule</Stormproof_LoadShedder_ScheduleTitle>
+  <Stormproof_LoadShedder_ScheduleHint>Click an hour to shed (red) or run (green). Cutoff still wins.</Stormproof_LoadShedder_ScheduleHint>
+  <Stormproof_LoadShedder_ScheduleLegend>Red = shed that hour. Green = run. Forecast override sheds before a storm or flare lands.</Stormproof_LoadShedder_ScheduleLegend>
+  <Stormproof_LoadShedder_ScheduleClear>Clear schedule</Stormproof_LoadShedder_ScheduleClear>
+  <Stormproof_LoadShedder_ForecastOverride>Forecast override: shed when a storm or flare is imminent</Stormproof_LoadShedder_ForecastOverride>
+  <Stormproof_LoadShedder_HoldAuto>Hold: Auto</Stormproof_LoadShedder_HoldAuto>
+  <Stormproof_LoadShedder_HoldRun>Hold: Run</Stormproof_LoadShedder_HoldRun>
+  <Stormproof_LoadShedder_HoldShed>Hold: Shed</Stormproof_LoadShedder_HoldShed>
+  <Stormproof_LoadShedder_HoldDesc>One-click override. Auto follows the schedule. Run keeps the sub-grid on. Shed keeps it off. Battery cutoff still trips first.</Stormproof_LoadShedder_HoldDesc>
+  <Stormproof_LoadShedder_HourShed>shed</Stormproof_LoadShedder_HourShed>
+  <Stormproof_LoadShedder_HourRun>run</Stormproof_LoadShedder_HourRun>
+  <Stormproof_LoadShedder_ScheduleStatus>This hour: {0}</Stormproof_LoadShedder_ScheduleStatus>
 
   <!-- Solar shield -->
   <Stormproof_SolarShield_Standby>Standby. During a solar flare this shield will draw {0} W.</Stormproof_SolarShield_Standby>
@@ -115,6 +129,7 @@
   <Stormproof_Almanac_Inspect>Almanac: {0} recorded seasons and events.</Stormproof_Almanac_Inspect>
   <Stormproof_Almanac_Open>Almanac</Stormproof_Almanac_Open>
   <Stormproof_Almanac_OpenDesc>Read this map's year of storms, flares, droughts, and snaps.</Stormproof_Almanac_OpenDesc>
+  <Stormproof_Almanac_Ledger>Caught {0} / missed {1} strikes. Absorbed {2} / suffered {3} Zzzt. Fires snuffed {4}. Wear hits {5}.</Stormproof_Almanac_Ledger>
   <Stormproof_StormSpire_FulguriteReady>{0} has fused fulgurite at its base. Collect it.</Stormproof_StormSpire_FulguriteReady>
   <Stormproof_StormSpire_CollectFulgurite>Collect fulgurite ({0})</Stormproof_StormSpire_CollectFulgurite>
   <Stormproof_StormSpire_CollectFulguriteDesc>Harvest fused lightning-glass from the spire's base.</Stormproof_StormSpire_CollectFulguriteDesc>
