@@ -10,6 +10,7 @@ namespace Stormproof
     {
         public static readonly Texture2D CutoffLower = ContentFinder<Texture2D>.Get("UI/Commands/TempLower");
         public static readonly Texture2D CutoffRaise = ContentFinder<Texture2D>.Get("UI/Commands/TempRaise");
+        public static readonly Texture2D Schedule = ContentFinder<Texture2D>.Get("UI/Commands/LaunchReport");
     }
 
     // The breaker building itself only reports whether it currently transmits;
@@ -51,10 +52,41 @@ namespace Stormproof
         private CompPower transmitterComp;
         private bool breakerClosed = true;
         private float cutoffFraction;
+        private int shedMask;
+        private bool scheduleEnabled;
+        private bool forecastOverride;
+        private ShedHoldMode holdMode = ShedHoldMode.Auto;
+
+        public enum ShedHoldMode
+        {
+            Auto = 0,
+            HoldRun = 1,
+            HoldShed = 2
+        }
 
         public CompProperties_LoadShedder Props => (CompProperties_LoadShedder)props;
 
         public bool BreakerClosed => breakerClosed;
+
+        public bool ForecastOverride
+        {
+            get => forecastOverride;
+            set => forecastOverride = value;
+        }
+
+        public bool HourSheds(int hour) => (shedMask & (1 << hour)) != 0;
+
+        public void ToggleHour(int hour)
+        {
+            shedMask ^= 1 << hour;
+            scheduleEnabled = true;
+        }
+
+        public void ClearSchedule()
+        {
+            shedMask = 0;
+            scheduleEnabled = false;
+        }
 
         private float ReconnectFraction =>
             Mathf.Min(cutoffFraction + Props.reconnectMargin, 0.95f);
@@ -129,15 +161,71 @@ namespace Stormproof
             {
                 // No batteries anywhere: nothing to protect, act like a conduit.
                 SetBreaker(true, quiet: true);
+                return;
             }
-            else if (breakerClosed && fraction < cutoffFraction)
+
+            bool thresholdShed = fraction < cutoffFraction;
+            bool thresholdReconnect = fraction >= ReconnectFraction;
+            bool wantClosed = WantClosed(supply, thresholdShed, thresholdReconnect);
+            bool quiet = wantClosed == breakerClosed || (!thresholdShed && !wantClosed);
+            SetBreaker(wantClosed, quiet: quiet);
+        }
+
+        private bool WantClosed(PowerNet supply, bool thresholdShed, bool thresholdReconnect)
+        {
+            if (thresholdShed)
             {
-                SetBreaker(false);
+                return false;
             }
-            else if (!breakerClosed && fraction >= ReconnectFraction)
+            if (holdMode == ShedHoldMode.HoldShed)
             {
-                SetBreaker(true);
+                return false;
             }
+            if (holdMode == ShedHoldMode.HoldRun)
+            {
+                return !breakerClosed ? thresholdReconnect : true;
+            }
+            if (scheduleEnabled && HourSheds(GenLocalDate.HourOfDay(parent.Map)))
+            {
+                return false;
+            }
+            if (forecastOverride && StormImminent(supply))
+            {
+                return false;
+            }
+            if (!breakerClosed)
+            {
+                return thresholdReconnect;
+            }
+            return true;
+        }
+
+        private bool StormImminent(PowerNet supply)
+        {
+            Map map = parent.Map;
+            if (map == null)
+            {
+                return false;
+            }
+            if (HazardProtection.ConditionActive(map, StormproofDefOf.SolarFlare)
+                || HazardProtection.ConditionActive(map, StormproofDefOf.Stormproof_IonStorm)
+                || HazardProtection.ConditionActive(map, StormproofDefOf.Stormproof_DryLightning)
+                || HazardProtection.ConditionActive(map, GameConditionDefOf.Flashstorm))
+            {
+                return true;
+            }
+            if (CompWeatherForecaster.BringsLightning(map.weatherManager.curWeather))
+            {
+                return true;
+            }
+            CompWeatherForecaster forecast = GridForecastUtility.ForecasterOn(supply);
+            if (forecast == null || !forecast.Active)
+            {
+                return false;
+            }
+            // WeatherDecider only names the *next* weather at the transition, so
+            // the honest pre-empt is "current weather is about to break".
+            return forecast.RemainingTicks() <= forecast.Props.warningLeadTicks;
         }
 
         private void SetBreaker(bool closed, bool quiet = false)
@@ -183,6 +271,40 @@ namespace Stormproof
                 icon = LoadShedderTex.CutoffRaise,
                 action = () => cutoffFraction = Mathf.Min(0.45f, cutoffFraction + 0.05f),
             };
+            yield return new Command_Action
+            {
+                defaultLabel = "Stormproof_LoadShedder_ScheduleLabel".Translate(),
+                defaultDesc = "Stormproof_LoadShedder_ScheduleDesc".Translate(),
+                icon = LoadShedderTex.Schedule,
+                action = () => Find.WindowStack.Add(new Dialog_LoadSchedule(this)),
+            };
+            yield return new Command_Action
+            {
+                defaultLabel = HoldLabel(),
+                defaultDesc = "Stormproof_LoadShedder_HoldDesc".Translate(),
+                icon = LoadShedderTex.CutoffLower,
+                action = () =>
+                {
+                    holdMode = holdMode == ShedHoldMode.Auto
+                        ? ShedHoldMode.HoldRun
+                        : holdMode == ShedHoldMode.HoldRun
+                            ? ShedHoldMode.HoldShed
+                            : ShedHoldMode.Auto;
+                },
+            };
+        }
+
+        private string HoldLabel()
+        {
+            switch (holdMode)
+            {
+                case ShedHoldMode.HoldRun:
+                    return "Stormproof_LoadShedder_HoldRun".Translate();
+                case ShedHoldMode.HoldShed:
+                    return "Stormproof_LoadShedder_HoldShed".Translate();
+                default:
+                    return "Stormproof_LoadShedder_HoldAuto".Translate();
+            }
         }
 
         public override void PostExposeData()
@@ -190,6 +312,10 @@ namespace Stormproof
             base.PostExposeData();
             Scribe_Values.Look(ref breakerClosed, "stormproof_breakerClosed", true);
             Scribe_Values.Look(ref cutoffFraction, "stormproof_cutoffFraction", 0.20f);
+            Scribe_Values.Look(ref shedMask, "stormproof_shedMask", 0);
+            Scribe_Values.Look(ref scheduleEnabled, "stormproof_scheduleEnabled", false);
+            Scribe_Values.Look(ref forecastOverride, "stormproof_forecastOverride", false);
+            Scribe_Values.Look(ref holdMode, "stormproof_holdMode", ShedHoldMode.Auto);
         }
 
         public override string CompInspectStringExtra()
@@ -207,6 +333,21 @@ namespace Stormproof
                         fraction.ToStringPercent(),
                         cutoffFraction.ToStringPercent(),
                         ReconnectFraction.ToStringPercent());
+            }
+            if (scheduleEnabled)
+            {
+                state += "\n" + "Stormproof_LoadShedder_ScheduleStatus".Translate(
+                    HourSheds(parent.Spawned ? GenLocalDate.HourOfDay(parent.Map) : 0)
+                        ? "Stormproof_LoadShedder_HourShed".Translate()
+                        : "Stormproof_LoadShedder_HourRun".Translate());
+            }
+            if (forecastOverride)
+            {
+                state += "\n" + "Stormproof_LoadShedder_ForecastOverride".Translate();
+            }
+            if (holdMode != ShedHoldMode.Auto)
+            {
+                state += "\n" + HoldLabel();
             }
             string brownout = BrownoutUtility.InspectLine(parent);
             if (brownout != null)

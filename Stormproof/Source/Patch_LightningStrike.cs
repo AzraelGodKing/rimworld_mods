@@ -36,6 +36,7 @@ namespace Stormproof
                 .OrderBy(s => s.parent.Position.DistanceTo(loc))
                 .FirstOrDefault();
             strikeLoc = catcher != null ? catcher.parent.Position : loc;
+            map.GetComponent<MapComponent_Stormproof>()?.NoteStrike(caught: catcher != null);
         }
 
         public static void Postfix(IntVec3 strikeLoc, Map map)
