@@ -1,6 +1,26 @@
 # Changelog
 
-Detailed notes for **Stormproof** only. ## [1.2.0]
+Detailed notes for **Stormproof** only.
+
+## [1.3.0]
+
+Player-facing version **1.3.0** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.3.0 loaded from ...` with stamp `schedule-ledger-v1`.
+
+### Added
+- **Load schedule** — the load shedder gets a 24-hour run/shed timetable, a forecast override that sheds before a storm or flare lands, and a one-click Hold Auto / Run / Shed. The battery cutoff still trips first. Old saves keep the old breaker until you set a schedule.
+- **Almanac ledger** — each recorded storm now tracks strikes caught vs missed, Zzzt absorbed vs suffered, fires the suppressor snuffed, and wear hits on unhardened wiring.
+
+### Changed
+- **Building art and draw size** — Power-tab sprites redrawn and canvases set to 128 px per cell so tall buildings are no longer squashed square textures. Storm caller, sky restorer, fire suppressor, and drought condenser use matching square draw sizes.
+
+### Fixed
+- **Grid forecast brownout** — the 8-hour projection uses nameplate draw and models brownout from projected charge, instead of reading the already-dimmed live `PowerOutput`.
+- **Night solar forecast** — after dark the monitor reuses the last daytime sky multiplier (or the weather's own factor). It no longer hardcodes 0.5 and halves the next sunrise.
+- **Forecast every frame** — inspect and warnings cache on the monitor's 250-tick interval instead of recomputing the whole 8-hour walk while selected.
+- **Forecast alarms and full-in** — warnings re-arm from current charge (same as the live low/critical lines). A grid that is already full shows held charge, not "full in 4 minutes".
+- **XML load** — the three Nexus crash files (`GameConditions`, `Incidents`, `Research`) are well-formed UTF-8 with no BOM. Research already escapes `&amp;` in the tab title. A re-upload from this branch should not hit `unknown parse failure` from encoding.
+
+## [1.2.0]
 
 Player-facing version **1.2.0** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.2.0 loaded from ...` with stamp `radius-forecast-v1`.
 
