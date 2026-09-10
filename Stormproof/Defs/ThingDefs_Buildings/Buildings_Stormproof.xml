@@ -485,7 +485,7 @@
     <graphicData>
       <texPath>Stormproof/Buildings/StormCaller</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2,2.6)</drawSize>
+      <drawSize>(2,2)</drawSize>
       <drawOffset>(0,0,0.3)</drawOffset>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
@@ -747,7 +747,7 @@
     <graphicData>
       <texPath>Stormproof/Buildings/SkyRestorer</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2,2.4)</drawSize>
+      <drawSize>(2,2)</drawSize>
       <drawOffset>(0,0,0.2)</drawOffset>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
@@ -802,7 +802,7 @@
     <graphicData>
       <texPath>Stormproof/Buildings/FireSuppressor</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.6,1.6)</drawSize>
+      <drawSize>(1,1)</drawSize>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
@@ -860,7 +860,7 @@
     <graphicData>
       <texPath>Stormproof/Buildings/DroughtCondenser</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.8,1.8)</drawSize>
+      <drawSize>(2,2)</drawSize>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>

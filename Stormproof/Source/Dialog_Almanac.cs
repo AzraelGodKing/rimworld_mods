@@ -18,7 +18,7 @@ namespace Stormproof
             closeOnClickedOutside = true;
         }
 
-        public override Vector2 InitialSize => new Vector2(520f, 520f);
+        public override Vector2 InitialSize => new Vector2(640f, 560f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -28,7 +28,12 @@ namespace Stormproof
             Text.Font = GameFont.Small;
             Rect listRect = new Rect(inRect.x, inRect.y + 40f, inRect.width, inRect.height - 40f);
             IReadOnlyList<AlmanacEntry> entries = component.Almanac;
-            float viewH = Mathf.Max(listRect.height, entries.Count * 28f + 8f);
+            float viewH = 8f;
+            for (int i = 0; i < entries.Count; i++)
+            {
+                viewH += entries[i].HasLedger ? 48f : 26f;
+            }
+            viewH = Mathf.Max(listRect.height, viewH);
             Rect view = new Rect(0f, 0f, listRect.width - 16f, viewH);
             Widgets.BeginScrollView(listRect, ref scroll, view);
             if (entries.Count == 0)
@@ -47,9 +52,17 @@ namespace Stormproof
                         : "Stormproof_Almanac_Ongoing".Translate().ToString();
                     string line = "Stormproof_Almanac_Line".Translate(
                         e.year.ToString(), season, e.label, dur);
-                    Rect row = new Rect(0f, y, view.width, 26f);
-                    Widgets.Label(row, line);
-                    y += 26f;
+                    float h = e.HasLedger ? 46f : 26f;
+                    Widgets.Label(new Rect(0f, y, view.width, 24f), line);
+                    if (e.HasLedger)
+                    {
+                        Widgets.Label(new Rect(8f, y + 22f, view.width - 8f, 22f),
+                            "Stormproof_Almanac_Ledger".Translate(
+                                e.strikesCaught, e.strikesMissed,
+                                e.zzztAbsorbed, e.zzztSuffered,
+                                e.firesSnuffed, e.wearHits));
+                    }
+                    y += h;
                 }
             }
             Widgets.EndScrollView();

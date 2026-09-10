@@ -1,4 +1,3 @@
-using System.Linq;
 using RimWorld;
 using Verse;
 
@@ -32,6 +31,12 @@ namespace Stormproof
         private bool warnedForecastCritical;
         private GridForecast cachedForecast;
         private int forecastCachedTick = -1;
+        private float cachedProduction;
+        private float cachedConsumption;
+        private float cachedGainWd;
+        private float cachedStored;
+        private float cachedCapacity;
+        private int inspectCachedTick = -1;
 
         public CompProperties_GridMonitor Props => (CompProperties_GridMonitor)props;
 
@@ -49,11 +54,25 @@ namespace Stormproof
             flickComp = parent.GetComp<CompFlickable>();
         }
 
-        private float StoredEnergy(PowerNet net) =>
-            net.batteryComps.Sum(b => b.StoredEnergy);
+        private static float StoredEnergy(PowerNet net)
+        {
+            float sum = 0f;
+            for (int i = 0; i < net.batteryComps.Count; i++)
+            {
+                sum += net.batteryComps[i].StoredEnergy;
+            }
+            return sum;
+        }
 
-        private float StorageCapacity(PowerNet net) =>
-            net.batteryComps.Sum(b => b.Props.storedEnergyMax);
+        private static float StorageCapacity(PowerNet net)
+        {
+            float sum = 0f;
+            for (int i = 0; i < net.batteryComps.Count; i++)
+            {
+                sum += net.batteryComps[i].Props.storedEnergyMax;
+            }
+            return sum;
+        }
 
         public override void CompTick()
         {
@@ -78,6 +97,8 @@ namespace Stormproof
             {
                 warnedLow = false;
                 warnedCritical = false;
+                warnedForecastLow = false;
+                warnedForecastCritical = false;
             }
             else if (!warnedCritical && fraction < Props.criticalFraction)
             {
@@ -95,15 +116,10 @@ namespace Stormproof
                     parent, MessageTypeDefOf.CautionInput);
             }
 
-            RefreshForecast(net, stored, capacity);
+            RefreshForecast(net, stored, capacity, force: true);
             if (cachedForecast.HasForecaster)
             {
-                if (cachedForecast.NadirFraction >= Props.rearmFraction)
-                {
-                    warnedForecastLow = false;
-                    warnedForecastCritical = false;
-                }
-                else if (!warnedForecastCritical && cachedForecast.TicksToCritical >= 0
+                if (!warnedForecastCritical && cachedForecast.TicksToCritical >= 0
                     && fraction >= Props.criticalFraction)
                 {
                     warnedForecastCritical = true;
@@ -127,10 +143,11 @@ namespace Stormproof
             }
         }
 
-        private void RefreshForecast(PowerNet net, float stored, float capacity)
+        private void RefreshForecast(PowerNet net, float stored, float capacity, bool force)
         {
             int tick = Find.TickManager.TicksGame;
-            if (forecastCachedTick == tick)
+            if (!force && forecastCachedTick >= 0
+                && tick - forecastCachedTick < Props.checkIntervalTicks)
             {
                 return;
             }
@@ -138,6 +155,40 @@ namespace Stormproof
             cachedForecast = GridForecastUtility.Project(
                 parent.Map, net, GridForecastUtility.ForecasterOn(net),
                 stored, capacity, Props.lowFraction, Props.criticalFraction);
+        }
+
+        private void RefreshInspect(PowerNet net)
+        {
+            int tick = Find.TickManager.TicksGame;
+            if (inspectCachedTick >= 0 && tick - inspectCachedTick < Props.checkIntervalTicks)
+            {
+                return;
+            }
+            inspectCachedTick = tick;
+            float production = 0f;
+            float consumption = 0f;
+            for (int i = 0; i < net.powerComps.Count; i++)
+            {
+                CompPowerTrader trader = net.powerComps[i];
+                if (trader == null || !trader.PowerOn)
+                {
+                    continue;
+                }
+                float output = trader.PowerOutput;
+                if (output > 0f)
+                {
+                    production += output;
+                }
+                else
+                {
+                    consumption += -output;
+                }
+            }
+            cachedProduction = production;
+            cachedConsumption = consumption;
+            cachedGainWd = net.CurrentEnergyGainRate();
+            cachedStored = StoredEnergy(net);
+            cachedCapacity = StorageCapacity(net);
         }
 
         public override void PostExposeData()
@@ -160,16 +211,13 @@ namespace Stormproof
             {
                 return "Stormproof_NotConnectedPowerNet".Translate();
             }
-            float production = net.powerComps
-                .Where(c => c.PowerOn && c.PowerOutput > 0f)
-                .Sum(c => c.PowerOutput);
-            float consumption = -net.powerComps
-                .Where(c => c.PowerOn && c.PowerOutput < 0f)
-                .Sum(c => c.PowerOutput);
-            float gainWdPerTick = net.CurrentEnergyGainRate();
+            RefreshInspect(net);
+            float production = cachedProduction;
+            float consumption = cachedConsumption;
+            float gainWdPerTick = cachedGainWd;
             float gainWatts = gainWdPerTick / CompPower.WattsToWattDaysPerTick;
-            float stored = StoredEnergy(net);
-            float capacity = StorageCapacity(net);
+            float stored = cachedStored;
+            float capacity = cachedCapacity;
 
             string netGain = (gainWatts >= 0f ? "+" : "") + gainWatts.ToString("F0") + " W";
             string s = "Stormproof_GridMonitor_Header".Translate(
@@ -195,7 +243,7 @@ namespace Stormproof
             {
                 s += "\n" + brownout;
             }
-            RefreshForecast(net, stored, capacity);
+            RefreshForecast(net, stored, capacity, force: false);
             if (!cachedForecast.HasForecaster)
             {
                 s += "\n" + "Stormproof_GridMonitor_NoForecaster".Translate();
