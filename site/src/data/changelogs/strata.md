@@ -1,11 +1,23 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.3.2` in `About.xml` `modVersion`. Player.log: `[Strata] v3.3.2 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.4.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.4.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `mp-portal-tick-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `commissioned-art-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
+
+## [3.4.0]
+
+Player-facing version **3.4.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.4.0 Soft-compat build commissioned-art-v1` in Player.log.
+
+AZR-160 AZR-161
+
+### Changed
+- **Commissioned gravship and ancient shaft art** (`commissioned-art-v1`, AZR-160) — gravship elevators, gravship stairs, and ancient colony stairs use the paid facing pack. Those defs no longer swap to the optional MultiFloors pack. Gravship stairs are 1×2 (existing 2×2 shafts shrink on load). Colony handrail stairs keep the original sprites.
+
+### Fixed
+- **Underground infestations toggle** (`commissioned-art-v1`, AZR-161) — `b1InfestationsEnabled` now treats `Strata_DeepRaid` as an infestation (CanFireNow, ChanceFactorNow, and Deep Raid's own gate). Vanilla `InfestationCellFinder.GetScoreAt` is zeroed on underground maps when the toggle is off.
 
 ## [3.3.2]
 
