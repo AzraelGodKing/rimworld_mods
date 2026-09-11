@@ -9,16 +9,15 @@
     <thingClass>Strata.Building_GravshipElevatorDown</thingClass>
     <bringAlongOnGravship>true</bringAlongOnGravship>
     <graphicData>
-      <texPath>Strata/Buildings/ElevatorDown</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Strata/Buildings/GravshipElevatorTop/GravshipElevatorTop</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(1,1)</drawSize>
-      <color>(0.55, 0.75, 0.95)</color>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>30</pathCost>
     <fillPercent>0.4</fillPercent>
-    <rotatable>false</rotatable>
+    <rotatable>true</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
     <useHitPoints>false</useHitPoints>
@@ -68,16 +67,15 @@
     <description>The landing below a gravship elevator — ride back up to the ship deck. Cannot be deconstructed. Ascending works even without power.</description>
     <thingClass>Strata.Building_GravshipElevatorUp</thingClass>
     <graphicData>
-      <texPath>Strata/Buildings/ElevatorUp</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Strata/Buildings/GravshipElevatorBottom/GravshipElevatorBottom</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(1,1)</drawSize>
-      <color>(0.55, 0.75, 0.95)</color>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>30</pathCost>
     <fillPercent>0.4</fillPercent>
-    <rotatable>false</rotatable>
+    <rotatable>true</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
     <useHitPoints>false</useHitPoints>
@@ -107,16 +105,15 @@
     <thingClass>Strata.Building_GravshipElevatorBuildUp</thingClass>
     <bringAlongOnGravship>true</bringAlongOnGravship>
     <graphicData>
-      <texPath>Strata/Buildings/ElevatorUp</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Strata/Buildings/GravshipElevatorBottom/GravshipElevatorBottom</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(1,1)</drawSize>
-      <color>(0.55, 0.85, 0.75)</color>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>30</pathCost>
     <fillPercent>0.4</fillPercent>
-    <rotatable>false</rotatable>
+    <rotatable>true</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
     <useHitPoints>false</useHitPoints>
@@ -166,16 +163,15 @@
     <description>Upper landing of a gravship tower elevator — ride back down to the ship. Cannot be deconstructed. Descending works even without power.</description>
     <thingClass>Strata.Building_GravshipElevatorBuildUpLanding</thingClass>
     <graphicData>
-      <texPath>Strata/Buildings/ElevatorDown</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Strata/Buildings/GravshipElevatorTop/GravshipElevatorTop</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(1,1)</drawSize>
-      <color>(0.55, 0.85, 0.75)</color>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>30</pathCost>
     <fillPercent>0.4</fillPercent>
-    <rotatable>false</rotatable>
+    <rotatable>true</rotatable>
     <size>(1,1)</size>
     <tickerType>Normal</tickerType>
     <useHitPoints>false</useHitPoints>
