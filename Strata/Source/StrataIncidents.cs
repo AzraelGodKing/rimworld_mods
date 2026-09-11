@@ -482,7 +482,8 @@ namespace Strata
                 PocketMapColonyTileUtility.TryAssign(map);
             }
 
-            // Optional: no infestations on underground floors (B1+).
+            // Optional: no infestations on underground floors (B1+), including
+            // Strata Deep Raid (insects through the floor, not vanilla Infestation).
             if (underground
                 && StrataMod.Settings != null
                 && !StrataMod.Settings.b1InfestationsEnabled
@@ -508,11 +509,23 @@ namespace Strata
             return true;
         }
 
-        private static bool IsInfestationIncident(IncidentDef def)
+        internal static bool InfestationsBlockedOn(Map map)
+        {
+            return map != null
+                && StrataMapUtility.IsUnderground(map)
+                && StrataMod.Settings != null
+                && !StrataMod.Settings.b1InfestationsEnabled;
+        }
+
+        internal static bool IsInfestationIncident(IncidentDef def)
         {
             if (def == null)
             {
                 return false;
+            }
+            if (def == StrataIncidentDefOf.Strata_DeepRaid)
+            {
+                return true;
             }
             if (def.defName != null && def.defName.Contains("Infestation"))
             {
@@ -525,6 +538,13 @@ namespace Strata
         {
             if (!__result || !(parms.target is Map map) || !StrataMapUtility.IsUnderground(map))
             {
+                return;
+            }
+            if (StrataMod.Settings != null
+                && !StrataMod.Settings.b1InfestationsEnabled
+                && IsInfestationIncident(__instance.def))
+            {
+                __result = false;
                 return;
             }
             if (ShouldBlockUndergroundIncident(__instance.def))
@@ -585,7 +605,7 @@ namespace Strata
     {
         public static void Postfix(IncidentWorker __instance, IIncidentTarget target, ref float __result)
         {
-            if (__result <= 0f || !__instance.def.defName.Contains("Infestation"))
+            if (__result <= 0f || !Patch_UndergroundIncidents.IsInfestationIncident(__instance.def))
             {
                 return;
             }
@@ -596,6 +616,12 @@ namespace Strata
             if (StrataMod.Settings != null && !StrataMod.Settings.b1InfestationsEnabled)
             {
                 __result = 0f;
+                return;
+            }
+            // Deep Raid already has its own chance; only vanilla-style
+            // infestations get the extra underground weight.
+            if (__instance.def == StrataIncidentDefOf.Strata_DeepRaid)
+            {
                 return;
             }
             // Deeper levels crawl with more bugs.
