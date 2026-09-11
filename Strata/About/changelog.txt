@@ -1,11 +1,15 @@
-3.3.2
-[h1]Strata — 3.3.2[/h1]
+3.4.0
+[h1]Strata — 3.4.0[/h1]
+
+[b]Changed[/b]
+[list]
+[*] [b]Commissioned gravship and ancient shaft art[/b] — gravship elevators, gravship stairs, and ancient colony stairs use the paid pack (no MultiFloors swap on those defs). Gravship stairs are 1×2.
+[/list]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Paramedic mechs / allowed areas (AZR-149)[/b] — Paramedic mechanoids no longer idle-commute for work or doctor relay. Auto stair jobs skip a landing outside the pawn's permitted zone.
-[*] [b]Multiplayer stair jobs (AZR-150)[/b] — finishing a stair trip no longer creates jobs on the world clock. That UniqueID split desynced Multiplayer when a pawn arrived from a force-build haul.
+[*] [b]Underground infestations toggle[/b] — turning off Underground infestations (B1+) now also blocks Strata deep raids (insects boiling up through the floor), not only vanilla Infestation / deep-drill events.
 [/list]
 
-[i]Build stamp (Player.log): mp-portal-tick-v1[/i]
+[i]Build stamp (Player.log): commissioned-art-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

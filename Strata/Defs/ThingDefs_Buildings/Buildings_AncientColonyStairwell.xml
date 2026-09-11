@@ -3,18 +3,22 @@
 
   <!-- Ancient stairhead sometimes scattered on colony surface maps. Opens B1
        without digging-down research; no cross-level power shaft. -->
-  <ThingDef ParentName="Strata_HandrailStairsDownGraphic">
+  <ThingDef ParentName="BuildingBase">
     <defName>Strata_AncientColonyStairsDown</defName>
     <label>ancient stairwell</label>
     <description>A broad stone staircase sinking into the earth, far older than the colony around it. The worn steps still lead down into solid rock that can be mined into rooms and workshops — but whatever power lines once ran through the shaft are long gone, so each level must be wired on its own unless you build a modern stairwell or shaft conduit nearby.</description>
     <thingClass>Strata.Building_AncientColonyStairsDown</thingClass>
     <graphicData>
-      <color>(148, 158, 138)</color>
+      <texPath>Strata/Buildings/AncientStairsTop/AncientStairsTop</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,2)</drawSize>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>42</pathCost>
     <fillPercent>0.4</fillPercent>
+    <rotatable>true</rotatable>
+    <size>(2,2)</size>
     <tickerType>Normal</tickerType>
     <statBases>
       <MaxHitPoints>900</MaxHitPoints>
@@ -34,18 +38,22 @@
   </ThingDef>
 
   <!-- Bottom landing for an ancient colony stairwell (no power shaft). -->
-  <ThingDef ParentName="Strata_HandrailStairsUpGraphic">
+  <ThingDef ParentName="BuildingBase">
     <defName>Strata_AncientColonyStairsUp</defName>
     <label>ancient stairwell landing</label>
     <description>The bottom landing of an ancient stairwell — worn steps leading back up to the surface. There is no power tie through the shaft; wire this level on its own.</description>
     <thingClass>Strata.Building_AncientColonyStairsUp</thingClass>
     <graphicData>
-      <color>(148, 158, 138)</color>
+      <texPath>Strata/Buildings/AncientStairsBottom/AncientStairsBottom</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,2)</drawSize>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>42</pathCost>
     <fillPercent>0.4</fillPercent>
+    <rotatable>true</rotatable>
+    <size>(2,2)</size>
     <tickerType>Normal</tickerType>
     <useHitPoints>false</useHitPoints>
     <destroyable>false</destroyable>
