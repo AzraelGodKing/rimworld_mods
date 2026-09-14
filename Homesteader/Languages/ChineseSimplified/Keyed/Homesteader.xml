@@ -56,6 +56,20 @@
   <Homesteader_PantryNextRotNone>储藏室里没有快坏的东西。</Homesteader_PantryNextRotNone>
   <Homesteader_PantryContents>存货</Homesteader_PantryContents>
   <Homesteader_PantryEmpty>地窖、冰屋、泉屋、果酱架、板条箱和木桶里没有食物。</Homesteader_PantryEmpty>
+  <Homesteader_PantryTabStock>存货</Homesteader_PantryTabStock>
+  <Homesteader_PantryTabMake>能做什么</Homesteader_PantryTabMake>
+  <Homesteader_PantryMakeNow>现在能做</Homesteader_PantryMakeNow>
+  <Homesteader_PantryMakeShort>还差一种材料</Homesteader_PantryMakeShort>
+  <Homesteader_PantryMakeLocked>需要研究或工作台</Homesteader_PantryMakeLocked>
+  <Homesteader_PantryMakeNone>这一组没有内容。</Homesteader_PantryMakeNone>
+  <Homesteader_PantryMakeBill>加账单</Homesteader_PantryMakeBill>
+  <Homesteader_PantryMakeBillFail>还没有建成可用的工作台。</Homesteader_PantryMakeBillFail>
+  <Homesteader_PantryMakeNeedResearch>研究未完成</Homesteader_PantryMakeNeedResearch>
+  <Homesteader_PantryMakeNeedStation>需要建造{0}</Homesteader_PantryMakeNeedStation>
+  <Homesteader_PantryMakeNeedStationGeneric>没有工作台</Homesteader_PantryMakeNeedStationGeneric>
+  <Homesteader_PantryMakeNeedMore>缺少不止一种材料</Homesteader_PantryMakeNeedMore>
+  <Homesteader_PantryMakeNeedIng>还差 {0} {1}</Homesteader_PantryMakeNeedIng>
+  <Homesteader_PantryMakeUnknownIng>材料</Homesteader_PantryMakeUnknownIng>
   <Homesteader_LandraceDev>地方品种 +{0}% 产量、+{1}% 抗寒、+{2}% 抗旱（第 {3} 代）</Homesteader_LandraceDev>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
