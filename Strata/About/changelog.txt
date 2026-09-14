@@ -9,6 +9,7 @@
 [b]Fixed[/b]
 [list]
 [*] [b]Underground infestations toggle[/b] — turning off Underground infestations (B1+) now also blocks Strata deep raids (insects boiling up through the floor), not only vanilla Infestation / deep-drill events.
+[*] [b]Colony elevator and quest stair sprites[/b] — restored ElevatorUp/Down and Vault/Vent stairs textures that were dropped when the commissioned gravship pack landed.
 [/list]
 
 [i]Build stamp (Player.log): commissioned-art-v1[/i]
