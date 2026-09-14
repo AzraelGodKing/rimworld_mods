@@ -2,9 +2,18 @@
 
 Foundation by **Dredd (Misakabob)** — original design, persistent antagonist pawn, escape/capture loop, aggression pacing, assaults, waste drops, fixation/prison-break triggers, resolution dialog, and settings. Credited with gratitude; this monorepo package extends that work.
 
-## Unreleased (monorepo integration)
+## [1.1.1]
 
-Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.1.0 loaded from ...` in Player.log (`dossier-tells-v1`).
+Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.1.1 loaded from ...` in Player.log (`return-heal-v1`).
+
+AZR-200
+
+### Fixed
+- **Headless nemesis bleedout loop** (`return-heal-v1`, AZR-200) — `RecoverForReturn` healed `Hediff_Injury` and cleared blood loss, but not `Hediff_MissingPart`. A raider who lost their head and became the hunt via wounded-escape stayed alive (Kill is cancelled), returned still headless, bled ~4h, and immediately fled. Park / inject / spawn now restore missing parts (then injuries / blood loss / anesthetic) so they can fight. Player.log: `Restored missing parts on {name} before return.`
+
+## [1.1.0]
+
+Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup wrote `[Nemesis] v1.1.0 loaded from ...` in Player.log (`dossier-tells-v1`).
 
 - **Tells** (`dossier-tells-v1`, AZR-146) — voice register, weapon family, mark, and habit roll at hunt create and never change. Progression upgrades quality, not weapon type. Mid-hunt saves without tells roll once on load.
 - **Dossier** (AZR-74) — main-tab page for the active hunt: identity, tells, sightings, taunts, last-known tile, gear seen, aggression.
