@@ -1,6 +1,6 @@
 # Niceties translations
 
-English keyed strings ship in `English/Keyed/Niceties.xml` (settings, inspect lines, hunt fail reason, share-room gizmo).
+English keyed strings ship in `English/Keyed/Niceties.xml` (settings, letters, inspect lines, hunt fail reason, share-room gizmo).
 
 This mod has no DefInjected packs (no new buildings or research).
 

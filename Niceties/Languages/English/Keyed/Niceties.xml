@@ -38,6 +38,9 @@
   <Niceties_ShareRoom>Share room</Niceties_ShareRoom>
   <Niceties_ShareRoomTip>Mark this bedroom as shared. Extra beds stay a bedroom instead of a barracks. Roommates skip the sharing-a-room mood hit.</Niceties_ShareRoomTip>
   <Niceties_ShareRoomInspect>Room is shared.</Niceties_ShareRoomInspect>
+  <Niceties_Settings_LeaveAWayOut>Leave a way out</Niceties_Settings_LeaveAWayOut>
+  <Niceties_Settings_LeaveAWayOutTip>Pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in. Replace Stuff frames count; in-place wood-to-stone wall swaps stay solid so a freezer can still be replaced from inside. Right-click force construct still builds it. Inspired by Smarter Construction — original 1.6 code, not a port.</Niceties_Settings_LeaveAWayOutTip>
+  <Niceties_OpenBuilds_WouldEnclose>Finishing this would wall someone in.</Niceties_OpenBuilds_WouldEnclose>
   <Niceties_Settings_Reset>Reset to defaults</Niceties_Settings_Reset>
 
   <Niceties_Apparel_NoWear>Daily wear: none (well kept).</Niceties_Apparel_NoWear>

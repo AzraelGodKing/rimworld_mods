@@ -6,6 +6,11 @@
 [*] [b]What can I make[/b] — pantry tab page against colony stockpiles and storage. Homesteader recipes split into can-make-now (with add-bill), one ingredient short, or locked behind research / a missing station.
 [/list]
 
+[b]Changed[/b]
+[list]
+[*] [b]Little guy[/b] — the trait stays. The one-time announcement letter on load is gone.
+[/list]
+
 [b]Fixed[/b]
 [list]
 [*] [b]XML load crash[/b] — storage building defs had a UTF-8 BOM. RimWorld can report that as "unknown parse failure" across later Homesteader XML (recipes, scenarios, backstories). The BOM is gone; CI now fails if any mod XML starts with a BOM.
