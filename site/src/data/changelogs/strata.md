@@ -1,11 +1,23 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.5.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.5.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.6.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.6.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `purpose-tags-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `water-table-v2` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
+
+## [3.6.0]
+
+Player-facing version **3.6.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.6.0 Soft-compat build water-table-v2` in Player.log.
+
+AZR-138 AZR-139 AZR-141
+
+### Added
+- **Sensing pass** (`sensing-pass-v1`) — core sampling drill (Digging down) reads ore/gas/bugs/rock for the next floor down as a research-narrowed band. Deep listening post (Deep infrastructure) hears movement through rock, including sealed stairs; mining noise on its floor shrinks range. Optional **water table** (off by default): floors deeper than the tile table seep into existing flood cells. Optional **noise attracts the dark** (off by default) raises infestation weight on loud floors.
+
+### Fixed
+- **Water table envelope, sump coverage, inspect** (`water-table-v2`, AZR-139) — temperate rainfall (~1200) sits at table **B2** so Unlimited B3 seeps; rainforest still table 1. Saved 3.6.0 table values are ignored so testers pick up the new curve. A powered sump no longer freezes the whole map: seepage skips cells inside any pump radius, leftover puddles outside still spread, and the alert fires on uncovered flood. Stair inspect and the Levels tab print the table (B1 is “always dry”, not “at the table”).
 
 ## [3.5.0]
 

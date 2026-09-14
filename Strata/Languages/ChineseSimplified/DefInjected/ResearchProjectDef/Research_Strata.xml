@@ -9,7 +9,7 @@
   <Strata_BuildingUp.description>框架建造技术，在殖民地上方开辟开放屋顶露台。上层与本图同尺寸，但仅可在下方有屋顶处建造（外加楼梯/电梯周边）。扩展下方屋顶以扩大露台——开阔天空无法承重。额外塔楼楼梯可接入同一上层。</Strata_BuildingUp.description>
 
   <Strata_DiggingDown.label>向下挖掘</Strata_DiggingDown.label>
-  <Strata_DiggingDown.description>支护与开凿楼梯的基础技术，用于打开殖民地下的第一层地下室——与上方地图同尺寸的一整层坚岩。</Strata_DiggingDown.description>
+  <Strata_DiggingDown.description>支护与开凿楼梯的基础技术，用于打开殖民地下的第一层地下室——与上方地图同尺寸的一整层坚岩。同时解锁岩芯取样钻，可在开凿竖井前读取下方岩石。</Strata_DiggingDown.description>
 
   <Strata_Excavation.label>深层挖掘</Strata_Excavation.label>
   <Strata_Excavation.description>在第一层地下室以下开辟稳定居住空间的勘探与加固方法——打开 B2 及每一更深楼层。</Strata_Excavation.description>
@@ -39,7 +39,7 @@
   <Strata_PassiveLifeSupport.description>手动竖井风箱与石灰洗涤器——无需电力即可保持滞留空气流动并从密封房间清除二氧化碳的低科技手段。</Strata_PassiveLifeSupport.description>
 
   <Strata_DeepInfrastructure.label>深层基础设施</Strata_DeepInfrastructure.label>
-  <Strata_DeepInfrastructure.description>气体气闸、矿石吊车、排水泵与安全电动矿灯——在地表深处生活与工作的工业套件。</Strata_DeepInfrastructure.description>
+  <Strata_DeepInfrastructure.description>气体气闸、矿石吊车、排水泵、深层监听站与安全电动矿灯——在地表深处生活与工作的工业套件。</Strata_DeepInfrastructure.description>
 
   <Strata_DeepAgriculture.label>深层农业</Strata_DeepAgriculture.label>
   <Strata_DeepAgriculture.description>在密封地下房间种植可食用蘑菇的暗色真菌农场，用少量二氧化碳换取可呼吸氧气。</Strata_DeepAgriculture.description>

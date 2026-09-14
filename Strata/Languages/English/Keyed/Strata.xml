@@ -283,6 +283,66 @@
   <Strata_SumpNeedsPower>Needs power to pump water.</Strata_SumpNeedsPower>
   <Strata_SumpNoFlood>No flood water in range.</Strata_SumpNoFlood>
   <Strata_SumpPumping>Pumping flood water within {0} tiles.</Strata_SumpPumping>
+  <Strata_SumpHolding>Powered — holding water inside this pump's radius.</Strata_SumpHolding>
+  <Strata_Settings_WaterTable>Water table seepage</Strata_Settings_WaterTable>
+  <Strata_Settings_WaterTableDesc>Levels deeper than the tile's water table take on flood water continuously. A powered sump holds only the cells inside its radius; seepage continues elsewhere. Off by default (existing saves stay dry). Surface and B1 always stay dry. Temperate tiles sit at about B2.</Strata_Settings_WaterTableDesc>
+  <Strata_Settings_WaterTableRate>Seep rate: {0}</Strata_Settings_WaterTableRate>
+  <Strata_Settings_NoiseDark>Noise attracts the dark</Strata_Settings_NoiseDark>
+  <Strata_Settings_NoiseDarkDesc>Mining and industry on a floor raise infestation and deep-raid weight. Listening posts go deaf next to the noise. Off by default.</Strata_Settings_NoiseDarkDesc>
+  <Strata_WaterTable_Below>{0} levels below the water table</Strata_WaterTable_Below>
+  <Strata_WaterTable_Above>{0} levels above the water table</Strata_WaterTable_Above>
+  <Strata_WaterTable_At>At the water table</Strata_WaterTable_At>
+  <Strata_WaterTable_Shallow>Always dry (shallow floor)</Strata_WaterTable_Shallow>
+  <Strata_WaterTable_CompactShallow>always dry</Strata_WaterTable_CompactShallow>
+  <Strata_WaterTable_CompactBelow>{0} below table</Strata_WaterTable_CompactBelow>
+  <Strata_WaterTable_CompactAbove>{0} above table</Strata_WaterTable_CompactAbove>
+  <Strata_WaterTable_CompactAt>at table</Strata_WaterTable_CompactAt>
+  <Strata_WaterTable_LetterLabel>Groundwater seepage</Strata_WaterTable_LetterLabel>
+  <Strata_WaterTable_LetterText>This floor sits below the water table. Shallow water is seeping into the workings. A powered sump holds water inside its radius; uncovered cells keep spreading over hours. Stored goods are not destroyed, but the floor gets harder to use.</Strata_WaterTable_LetterText>
+  <Strata_Alert_WaterTable_Label>Water rising below</Strata_Alert_WaterTable_Label>
+  <Strata_Alert_WaterTable_Explanation>Flood water is spreading on a floor below the water table outside any powered sump radius. Restore power or add pumps so coverage reaches the wet cells.</Strata_Alert_WaterTable_Explanation>
+  <Strata_CoreSampler_NeedsPower>Needs power to drill a core sample.</Strata_CoreSampler_NeedsPower>
+  <Strata_CoreSampler_Working>Coring {0} — {1} remaining</Strata_CoreSampler_Working>
+  <Strata_CoreSampler_ResampleLabel>Resample</Strata_CoreSampler_ResampleLabel>
+  <Strata_CoreSampler_ResampleDesc>Discard this reading and drill another core at this cell.</Strata_CoreSampler_ResampleDesc>
+  <Strata_CoreSampler_Header>Stratum B{0} under this cell:</Strata_CoreSampler_Header>
+  <Strata_CoreSampler_Ore>Ore: {0}</Strata_CoreSampler_Ore>
+  <Strata_CoreSampler_OreLow>lean</Strata_CoreSampler_OreLow>
+  <Strata_CoreSampler_OreMid>mixed</Strata_CoreSampler_OreMid>
+  <Strata_CoreSampler_OreHigh>probably ore-rich</Strata_CoreSampler_OreHigh>
+  <Strata_CoreSampler_Gas>Gas: {0}</Strata_CoreSampler_Gas>
+  <Strata_CoreSampler_GasLow>low risk</Strata_CoreSampler_GasLow>
+  <Strata_CoreSampler_GasMid>some gas risk</Strata_CoreSampler_GasMid>
+  <Strata_CoreSampler_GasHigh>likely gas pocket</Strata_CoreSampler_GasHigh>
+  <Strata_CoreSampler_Bugs>Infestation: {0}</Strata_CoreSampler_Bugs>
+  <Strata_CoreSampler_BugsLow>quiet</Strata_CoreSampler_BugsLow>
+  <Strata_CoreSampler_BugsMid>some pressure</Strata_CoreSampler_BugsMid>
+  <Strata_CoreSampler_BugsHigh>heavy pressure</Strata_CoreSampler_BugsHigh>
+  <Strata_CoreSampler_Rock>Rock: {0}</Strata_CoreSampler_Rock>
+  <Strata_CoreSampler_RockSoft>softer than usual</Strata_CoreSampler_RockSoft>
+  <Strata_CoreSampler_RockMid>typical</Strata_CoreSampler_RockMid>
+  <Strata_CoreSampler_RockHard>hard, slow dig</Strata_CoreSampler_RockHard>
+  <Strata_CoreSampler_WaterWet>Water table: {0} levels below — seepage if you open it.</Strata_CoreSampler_WaterWet>
+  <Strata_CoreSampler_WaterDry>Water table: dry at this depth.</Strata_CoreSampler_WaterDry>
+  <Strata_CoreSampler_LostHint>Faint voids — something may already be down there.</Strata_CoreSampler_LostHint>
+  <Strata_CoreSampler_Band>Uncertainty ±{0} (research narrows this).</Strata_CoreSampler_Band>
+  <Strata_Listen_NeedsPower>Needs power to listen.</Strata_Listen_NeedsPower>
+  <Strata_Listen_Silent>Listening idle — underground infestations and noise-attracts-the-dark are both off.</Strata_Listen_Silent>
+  <Strata_Listen_Range>Effective range {0} tiles</Strata_Listen_Range>
+  <Strata_Listen_Deaf>Too noisy on this floor to hear through the rock.</Strata_Listen_Deaf>
+  <Strata_Listen_Quiet>The rock is quiet.</Strata_Listen_Quiet>
+  <Strata_Listen_Large>something large</Strata_Listen_Large>
+  <Strata_Listen_Something>something</Strata_Listen_Something>
+  <Strata_Listen_Faint>a faint movement</Strata_Listen_Faint>
+  <Strata_Listen_BelowEast>below and east</Strata_Listen_BelowEast>
+  <Strata_Listen_BelowWest>below and west</Strata_Listen_BelowWest>
+  <Strata_Listen_East>east</Strata_Listen_East>
+  <Strata_Listen_West>west</Strata_Listen_West>
+  <Strata_Listen_Imminent>Burrowing nearby: {0}, {1}.</Strata_Listen_Imminent>
+  <Strata_Listen_ThroughRock>Through the rock: {0}, {1}.</Strata_Listen_ThroughRock>
+  <Strata_Listen_Reading>Movement: {0}, {1}.</Strata_Listen_Reading>
+  <Strata_Alert_Listen_Label>Listening post</Strata_Alert_Listen_Label>
+  <Strata_Alert_Listen_Explanation>A deep listening post hears movement through the rock. Direction and size only — not an exact cell. Quiet floors hear farther.</Strata_Alert_Listen_Explanation>
   <Strata_GasScrubberScrubbing>Scrubbing {0} from the room.</Strata_GasScrubberScrubbing>
   <Strata_GasScrubberNone>No {0} to scrub.</Strata_GasScrubberNone>
   <Strata_TremorOpenedStairwell>A tremor jarred a sealed stairwell open.</Strata_TremorOpenedStairwell>

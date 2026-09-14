@@ -401,4 +401,97 @@ namespace Strata
             return cachedReport;
         }
     }
+
+    public class Alert_WaterTableSeep : Alert
+    {
+        private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
+
+        public Alert_WaterTableSeep()
+        {
+            defaultLabel = "Strata_Alert_WaterTable_Label".Translate();
+            defaultExplanation = "Strata_Alert_WaterTable_Explanation".Translate();
+            defaultPriority = AlertPriority.High;
+        }
+
+        public override AlertReport GetReport()
+        {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
+            targets.Clear();
+            if (!WaterTableUtility.Enabled)
+            {
+                cachedReport = false;
+                return cachedReport;
+            }
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (!WaterTableUtility.SeepageActive(map) || !WaterTableUtility.AnyUncoveredFlood(map))
+                {
+                    continue;
+                }
+                targets.Add(new GlobalTargetInfo(map.Center, map));
+            }
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
+        }
+    }
+
+    public class Alert_ListeningPost : Alert
+    {
+        private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private string explanation = string.Empty;
+        private AlertReport cachedReport = false;
+        private int lastScanTick = -9999;
+
+        public Alert_ListeningPost()
+        {
+            defaultLabel = "Strata_Alert_Listen_Label".Translate();
+            defaultPriority = AlertPriority.High;
+        }
+
+        public override TaggedString GetExplanation()
+        {
+            return explanation.NullOrEmpty()
+                ? "Strata_Alert_Listen_Explanation".Translate()
+                : explanation;
+        }
+
+        public override AlertReport GetReport()
+        {
+            if (!StrataAlertScanCache.ShouldRescan(ref lastScanTick))
+            {
+                return cachedReport;
+            }
+            targets.Clear();
+            explanation = string.Empty;
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                List<Building> buildings = map.listerBuildings.allBuildingsColonist;
+                for (int b = 0; b < buildings.Count; b++)
+                {
+                    CompListeningPost post = buildings[b].TryGetComp<CompListeningPost>();
+                    if (post == null || !post.Active || !post.ListeningEnabled)
+                    {
+                        continue;
+                    }
+                    if (!post.TryRead(out string reading))
+                    {
+                        continue;
+                    }
+                    targets.Add(new GlobalTargetInfo(buildings[b]));
+                    explanation = "Strata_Alert_Listen_Explanation".Translate() + "\n\n" + reading;
+                }
+            }
+            cachedReport = targets.Count > 0 ? AlertReport.CulpritsAre(targets) : false;
+            return cachedReport;
+        }
+    }
 }

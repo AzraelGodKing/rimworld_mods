@@ -1,10 +1,13 @@
-3.5.0
-[h1]Strata — 3.5.0[/h1]
+3.6.0
+[h1]Strata — 3.6.0[/h1]
 
 [b]Added[/b]
 [list]
-[*] [b]Level purpose tags[/b] — Farm, Freezer, Workshop, Barracks, Quarry, Storage, Hospital, or none. Set from rename or the Levels tab. Matching tags tilt haul, rest, food, and work relays; untagged floors keep the old order. A wrong tag never blocks a job.
+[*] [b]Core sampling drill[/b] — after a few hours, reports ore, gas, infestation pressure, and rock hardness for the floor below that cell as a range. Research narrows the band. Sample more than one hole; the stratum is not uniform.
+[*] [b]Deep listening post[/b] — hears movement through rock (direction and size, never a cell). Quiet floors hear farther; mining and industry on this floor deafen it. Sealed stairs still carry sound.
+[*] [b]Water table[/b] — optional (off by default). Temperate tiles sit at about B2; B3+ seeps (with Unlimited). Surface and B1 stay dry. A powered sump holds only its radius; stairs and the Levels tab show the table.
+[*] [b]Noise attracts the dark[/b] — optional (off by default). Loud floors raise infestation weight.
 [/list]
 
-[i]Build stamp (Player.log): purpose-tags-v1[/i]
+[i]Build stamp (Player.log): water-table-v2[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

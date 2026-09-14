@@ -225,6 +225,98 @@
     </researchPrerequisites>
   </ThingDef>
 
+  <!-- ============ Core sampling drill ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_CoreSampler</defName>
+    <label>core sampling drill</label>
+    <description>A powered core drill that samples the rock directly below this cell. After a few hours it reports ore, gas, infestation pressure, and hardness for the next level down — a range, not a number. Research narrows the band. Place several holes; the stratum is not uniform.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/GasWell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>20</pathCost>
+    <fillPercent>0.3</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>140</MaxHitPoints>
+      <WorkToBuild>2800</WorkToBuild>
+      <Flammability>0.3</Flammability>
+    </statBases>
+    <costList>
+      <Steel>60</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>220</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_CoreSampler">
+        <sampleTicks>15000</sampleTicks>
+      </li>
+    </comps>
+    <designationCategory>Misc</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_DiggingDown</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Deep listening post ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_ListeningPost</defName>
+    <label>deep listening post</label>
+    <description>A powered geophone that listens outward through rock — direction and a rough size, never an exact cell. Quiet levels hear farther; mining and industry on this floor deafen it. Sealed stairwells stop movement, not sound.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/OxygenPump</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>14</pathCost>
+    <fillPercent>0.25</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>2400</WorkToBuild>
+      <Flammability>0.25</Flammability>
+    </statBases>
+    <costList>
+      <Steel>50</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>90</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_ListeningPost">
+        <baseRange>42</baseRange>
+      </li>
+    </comps>
+    <designationCategory>Misc</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_DeepInfrastructure</li>
+    </researchPrerequisites>
+  </ThingDef>
+
   <!-- ============ Mine lamp ============ -->
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_MineLamp</defName>

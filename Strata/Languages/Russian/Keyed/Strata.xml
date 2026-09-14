@@ -282,6 +282,66 @@
   <Strata_SumpNeedsPower>Нужно питание, чтобы качать воду.</Strata_SumpNeedsPower>
   <Strata_SumpNoFlood>В радиусе нет паводковой воды.</Strata_SumpNoFlood>
   <Strata_SumpPumping>Откачивает воду в радиусе {0} клеток.</Strata_SumpPumping>
+  <Strata_SumpHolding>Под питанием — удерживает воду в радиусе насоса.</Strata_SumpHolding>
+  <Strata_Settings_WaterTable>Просачивание водоносного горизонта</Strata_Settings_WaterTable>
+  <Strata_Settings_WaterTableDesc>Уровни глубже водоносного горизонта тайла непрерывно набирают паводковую воду. Работающий насос удерживает только клетки в своём радиусе; снаружи просачивание продолжается. По умолчанию выкл. (старые сохранения остаются сухими). Поверхность и B1 всегда сухие. На умеренных тайлах горизонт около B2.</Strata_Settings_WaterTableDesc>
+  <Strata_Settings_WaterTableRate>Скорость просачивания: {0}</Strata_Settings_WaterTableRate>
+  <Strata_Settings_NoiseDark>Шум привлекает тьму</Strata_Settings_NoiseDark>
+  <Strata_Settings_NoiseDarkDesc>Добыча и промышленность на этаже повышают вес заражений и глубоких набегов. Посты прослушки глохнут рядом с шумом. По умолчанию выкл.</Strata_Settings_NoiseDarkDesc>
+  <Strata_WaterTable_Below>на {0} ур. ниже водоносного горизонта</Strata_WaterTable_Below>
+  <Strata_WaterTable_Above>на {0} ур. выше водоносного горизонта</Strata_WaterTable_Above>
+  <Strata_WaterTable_At>На уровне водоносного горизонта</Strata_WaterTable_At>
+  <Strata_WaterTable_Shallow>Всегда сухой (мелкий этаж)</Strata_WaterTable_Shallow>
+  <Strata_WaterTable_CompactShallow>всегда сухой</Strata_WaterTable_CompactShallow>
+  <Strata_WaterTable_CompactBelow>на {0} ниже горизонта</Strata_WaterTable_CompactBelow>
+  <Strata_WaterTable_CompactAbove>на {0} выше горизонта</Strata_WaterTable_CompactAbove>
+  <Strata_WaterTable_CompactAt>на горизонте</Strata_WaterTable_CompactAt>
+  <Strata_WaterTable_LetterLabel>Просачивание грунтовых вод</Strata_WaterTable_LetterLabel>
+  <Strata_WaterTable_LetterText>Этот этаж ниже водоносного горизонта. Мелкая вода просачивается в выработки. Работающий насос удерживает воду в своём радиусе; непокрытые клетки продолжают расползаться за часы. Склады не уничтожаются, но этаж становится всё труднее использовать.</Strata_WaterTable_LetterText>
+  <Strata_Alert_WaterTable_Label>Вода поднимается внизу</Strata_Alert_WaterTable_Label>
+  <Strata_Alert_WaterTable_Explanation>Паводковая вода растекается на этаже ниже горизонта вне радиуса любого работающего насоса. Верните питание или добавьте насосы, чтобы покрытие дошло до мокрых клеток.</Strata_Alert_WaterTable_Explanation>
+  <Strata_CoreSampler_NeedsPower>Нужно питание, чтобы взять керн.</Strata_CoreSampler_NeedsPower>
+  <Strata_CoreSampler_Working>Бурение {0} — осталось {1}</Strata_CoreSampler_Working>
+  <Strata_CoreSampler_ResampleLabel>Повторить пробу</Strata_CoreSampler_ResampleLabel>
+  <Strata_CoreSampler_ResampleDesc>Отбросить это показание и пробурить керн в этой клетке снова.</Strata_CoreSampler_ResampleDesc>
+  <Strata_CoreSampler_Header>Пласт B{0} под этой клеткой:</Strata_CoreSampler_Header>
+  <Strata_CoreSampler_Ore>Руда: {0}</Strata_CoreSampler_Ore>
+  <Strata_CoreSampler_OreLow>бедная</Strata_CoreSampler_OreLow>
+  <Strata_CoreSampler_OreMid>смешанная</Strata_CoreSampler_OreMid>
+  <Strata_CoreSampler_OreHigh>вероятно богатая</Strata_CoreSampler_OreHigh>
+  <Strata_CoreSampler_Gas>Газ: {0}</Strata_CoreSampler_Gas>
+  <Strata_CoreSampler_GasLow>низкий риск</Strata_CoreSampler_GasLow>
+  <Strata_CoreSampler_GasMid>есть риск кармана</Strata_CoreSampler_GasMid>
+  <Strata_CoreSampler_GasHigh>вероятен газовый карман</Strata_CoreSampler_GasHigh>
+  <Strata_CoreSampler_Bugs>Заражение: {0}</Strata_CoreSampler_Bugs>
+  <Strata_CoreSampler_BugsLow>тихо</Strata_CoreSampler_BugsLow>
+  <Strata_CoreSampler_BugsMid>есть давление</Strata_CoreSampler_BugsMid>
+  <Strata_CoreSampler_BugsHigh>сильное давление</Strata_CoreSampler_BugsHigh>
+  <Strata_CoreSampler_Rock>Порода: {0}</Strata_CoreSampler_Rock>
+  <Strata_CoreSampler_RockSoft>мягче обычного</Strata_CoreSampler_RockSoft>
+  <Strata_CoreSampler_RockMid>типичная</Strata_CoreSampler_RockMid>
+  <Strata_CoreSampler_RockHard>твёрдая, медленная копка</Strata_CoreSampler_RockHard>
+  <Strata_CoreSampler_WaterWet>Водоносный горизонт: на {0} ур. ниже — будет просачивание, если открыть.</Strata_CoreSampler_WaterWet>
+  <Strata_CoreSampler_WaterDry>Водоносный горизонт: на этой глубине сухо.</Strata_CoreSampler_WaterDry>
+  <Strata_CoreSampler_LostHint>Слабые пустоты — внизу уже может что-то быть.</Strata_CoreSampler_LostHint>
+  <Strata_CoreSampler_Band>Неопределённость ±{0} (исследования сужают полосу).</Strata_CoreSampler_Band>
+  <Strata_Listen_NeedsPower>Нужно питание, чтобы слушать.</Strata_Listen_NeedsPower>
+  <Strata_Listen_Silent>Прослушка простаивает — подземные заражения и «шум привлекает тьму» выключены.</Strata_Listen_Silent>
+  <Strata_Listen_Range>Эффективная дальность {0} кл.</Strata_Listen_Range>
+  <Strata_Listen_Deaf>На этом этаже слишком шумно, чтобы слышать сквозь камень.</Strata_Listen_Deaf>
+  <Strata_Listen_Quiet>Камень тих.</Strata_Listen_Quiet>
+  <Strata_Listen_Large>нечто крупное</Strata_Listen_Large>
+  <Strata_Listen_Something>нечто</Strata_Listen_Something>
+  <Strata_Listen_Faint>слабое движение</Strata_Listen_Faint>
+  <Strata_Listen_BelowEast>ниже и к востоку</Strata_Listen_BelowEast>
+  <Strata_Listen_BelowWest>ниже и к западу</Strata_Listen_BelowWest>
+  <Strata_Listen_East>к востоку</Strata_Listen_East>
+  <Strata_Listen_West>к западу</Strata_Listen_West>
+  <Strata_Listen_Imminent>Роют рядом: {0}, {1}.</Strata_Listen_Imminent>
+  <Strata_Listen_ThroughRock>Сквозь камень: {0}, {1}.</Strata_Listen_ThroughRock>
+  <Strata_Listen_Reading>Движение: {0}, {1}.</Strata_Listen_Reading>
+  <Strata_Alert_Listen_Label>Пост прослушки</Strata_Alert_Listen_Label>
+  <Strata_Alert_Listen_Explanation>Глубинный пост прослушки слышит движение сквозь камень. Только направление и размер — не точная клетка. Тихие этажи слышат дальше.</Strata_Alert_Listen_Explanation>
   <Strata_GasScrubberScrubbing>Очищает {0} из комнаты.</Strata_GasScrubberScrubbing>
   <Strata_GasScrubberNone>Нет {0} для очистки.</Strata_GasScrubberNone>
   <Strata_TremorOpenedStairwell>Толчок расшатал и открыл запечатанную лестницу.</Strata_TremorOpenedStairwell>

@@ -42,16 +42,27 @@ namespace Strata
 
         public override string CompInspectStringExtra()
         {
+            string table = WaterTableUtility.InspectRelative(parent.Map);
+            string status;
             if (!Active)
             {
-                return "Strata_SumpNeedsPower".Translate();
+                status = "Strata_SumpNeedsPower".Translate();
             }
-            FloodMapComponent flood = parent.Map.GetComponent<FloodMapComponent>();
-            if (flood == null || !flood.AnyFloodedInRadius(parent.Position, Props.clearRadius))
+            else
             {
-                return "Strata_SumpNoFlood".Translate();
+                FloodMapComponent flood = parent.Map.GetComponent<FloodMapComponent>();
+                if (flood == null || !flood.AnyFloodedInRadius(parent.Position, Props.clearRadius))
+                {
+                    status = WaterTableUtility.SeepageActive(parent.Map)
+                        ? "Strata_SumpHolding".Translate()
+                        : "Strata_SumpNoFlood".Translate();
+                }
+                else
+                {
+                    status = "Strata_SumpPumping".Translate(Props.clearRadius.ToString("0.#"));
+                }
             }
-            return "Strata_SumpPumping".Translate(Props.clearRadius.ToString("0.#"));
+            return table.NullOrEmpty() ? status : status + "\n" + table;
         }
     }
 }

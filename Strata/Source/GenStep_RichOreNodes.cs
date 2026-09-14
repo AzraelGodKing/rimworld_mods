@@ -31,7 +31,7 @@ namespace Strata
 
             for (int i = 0; i < nodeCount; i++)
             {
-                if (!TryFindNodeSpot(map, placed, out IntVec3 root))
+                if (!TryFindNodeSpot(map, placed, depth, out IntVec3 root))
                 {
                     break;
                 }
@@ -97,7 +97,7 @@ namespace Strata
             return size;
         }
 
-        private static bool TryFindNodeSpot(Map map, List<IntVec3> placed, out IntVec3 spot)
+        private static bool TryFindNodeSpot(Map map, List<IntVec3> placed, int depth, out IntVec3 spot)
         {
             IntVec3 landing = MapGenerator.PlayerStartSpot.IsValid ? MapGenerator.PlayerStartSpot : map.Center;
             for (int i = 0; i < PlacementTries; i++)
@@ -122,17 +122,24 @@ namespace Strata
                 {
                     continue;
                 }
-                if (!OreReveal.IsHostRock(candidate, map, allowFogged: true))
+                if (OreReveal.IsHostRock(candidate, map, allowFogged: true)
+                    && CountNearbyHost(map, candidate, 4.2f) >= 12)
                 {
+                    float ore = StratumSurvey.Truth(
+                        StrataMapUtility.ResolveColonyPlanetTile(map),
+                        depth,
+                        candidate).ore;
+                    if (ore < 0.32f && Rand.Chance(0.72f))
+                    {
+                        continue;
+                    }
+                    if (ore > 0.68f || Rand.Chance(0.35f + ore))
+                    {
+                        spot = candidate;
+                        return true;
+                    }
                     continue;
                 }
-                // Prefer a seed with enough contiguous host rock for a fat node.
-                if (CountNearbyHost(map, candidate, 4.2f) < 12)
-                {
-                    continue;
-                }
-                spot = candidate;
-                return true;
             }
             spot = IntVec3.Invalid;
             return false;

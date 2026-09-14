@@ -498,7 +498,7 @@ namespace Strata
             {
                 state += "\n" + "Strata_StairwellDigHint".Translate();
             }
-            return state;
+            return WaterTableUtility.AppendInspect(state, Map);
         }
 
         // Force pocket-map generation (used by the underground Dig down gizmo).

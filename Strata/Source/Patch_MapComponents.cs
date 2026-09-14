@@ -38,6 +38,16 @@ namespace Strata
             {
                 __instance.components.Add(new FloodMapComponent(__instance));
             }
+            if (__instance.GetComponent<MapComponent_WaterTableSeep>() == null
+                && StrataMapUtility.IsUnderground(__instance))
+            {
+                __instance.components.Add(new MapComponent_WaterTableSeep(__instance));
+            }
+            if (__instance.GetComponent<MapComponent_StrataNoise>() == null
+                && (StrataMapUtility.IsUnderground(__instance) || __instance.IsPlayerHome))
+            {
+                __instance.components.Add(new MapComponent_StrataNoise(__instance));
+            }
             if (ModsConfig.IsActive("Ludeon.RimWorld.Odyssey")
                 && __instance.GetComponent<MapComponent_StrataGravshipUpperDeckSync>() == null)
             {

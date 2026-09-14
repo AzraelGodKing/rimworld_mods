@@ -76,6 +76,12 @@ namespace Strata
 
         public static ThingDef Strata_ShoringPillar;
 
+        public static ThingDef Strata_SumpPump;
+
+        public static ThingDef Strata_CoreSampler;
+
+        public static ThingDef Strata_ListeningPost;
+
         static StrataThingDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataThingDefOf));

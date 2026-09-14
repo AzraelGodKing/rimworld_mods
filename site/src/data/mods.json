@@ -285,7 +285,7 @@
           "label": "Atmosphere & life below",
           "features": [
             { "title": "Atmosphere", "body": "Smoke, deep gas, O₂, and CO₂ share one sim (optional; gases default off for performance). Vent, pipe, or exchange through shafts. Overlay in play settings. Performance mode and vacant-level throttle keep tall colonies playable." },
-            { "title": "Living below", "body": "Shoring, gas airlocks, ore hoists, fungus farms, sump pumps, mine lamps, bellows, lime scrubbers — plus a deep-gas well and smokeless generator." }
+            { "title": "Living below", "body": "Shoring, gas airlocks, ore hoists, fungus farms, sump pumps, core sampling drills, listening posts, mine lamps, bellows, lime scrubbers — plus a deep-gas well and smokeless generator." }
           ]
         },
         {
@@ -305,7 +305,7 @@
           "label": "Quests & events",
           "features": [
             { "title": "Away into the dark", "body": "World sites: sunken ruins, collapsed mines, sealed vaults, geothermal vents." },
-            { "title": "At home", "body": "Cave breakthroughs, gas firestorms, flood seeps, rich ore nodes, optional ancient stairwells." }
+            { "title": "At home", "body": "Cave breakthroughs, gas firestorms, flood seeps or a water-table gradient (optional), rich ore nodes, optional ancient stairwells. Core drills preview the next floor; listening posts hear bugs through the rock." }
           ]
         },
         {

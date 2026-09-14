@@ -66,7 +66,7 @@ namespace Strata
         {
             get
             {
-                Vector2 computed = new Vector2(784f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
+                Vector2 computed = new Vector2(860f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
                 return savedSize == Vector2.zero
                     ? computed
                     : new Vector2(Mathf.Max(savedSize.x, 420f), Mathf.Max(savedSize.y, 120f));
@@ -309,11 +309,16 @@ namespace Strata
             }
 
             LevelRole role = LevelRoleUtility.GetRole(row.map);
-            if (role == LevelRole.None)
+            if (role != LevelRole.None)
             {
-                return name;
+                name += "  ·  " + LevelRoleUtility.Label(role);
             }
-            return name + "  ·  " + LevelRoleUtility.Label(role);
+            string table = WaterTableUtility.CompactLabel(row.map);
+            if (!table.NullOrEmpty())
+            {
+                name += "  ·  " + table;
+            }
+            return name;
         }
 
         private static int HostileCount(Map map)

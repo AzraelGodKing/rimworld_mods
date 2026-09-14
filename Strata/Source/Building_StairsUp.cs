@@ -258,7 +258,9 @@ namespace Strata
                 string hint = "Dig down to designate a dig shaft beside this landing; colonists must finish carving it before the level below opens.";
                 text = text.NullOrEmpty() ? hint : text + "\n" + hint;
             }
-            return LevelRoleUtility.AppendInspect(text, GetOtherMap());
+            return WaterTableUtility.AppendInspect(
+                LevelRoleUtility.AppendInspect(text, GetOtherMap()),
+                Map);
         }
     }
 }

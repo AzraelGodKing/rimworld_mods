@@ -283,6 +283,66 @@
   <Strata_SumpNeedsPower>需要电力才能抽水。</Strata_SumpNeedsPower>
   <Strata_SumpNoFlood>范围内没有积水。</Strata_SumpNoFlood>
   <Strata_SumpPumping>正在抽取 {0} 格范围内的积水。</Strata_SumpPumping>
+  <Strata_SumpHolding>通电中 — 正压住泵覆盖半径内的积水。</Strata_SumpHolding>
+  <Strata_Settings_WaterTable>地下水位渗水</Strata_Settings_WaterTable>
+  <Strata_Settings_WaterTableDesc>深于该地块水位的楼层会持续渗入积水。通电的排水泵只稳住其半径内的格子，半径外仍会渗水。默认关闭（旧存档保持干燥）。地表与 B1 始终干燥。温带地块水位约在 B2。</Strata_Settings_WaterTableDesc>
+  <Strata_Settings_WaterTableRate>渗水速率：{0}</Strata_Settings_WaterTableRate>
+  <Strata_Settings_NoiseDark>噪音招来黑暗</Strata_Settings_NoiseDark>
+  <Strata_Settings_NoiseDarkDesc>本层采矿与工业会提高虫巢与深层突袭权重。监听站在噪音旁会失聪。默认关闭。</Strata_Settings_NoiseDarkDesc>
+  <Strata_WaterTable_Below>低于水位 {0} 层</Strata_WaterTable_Below>
+  <Strata_WaterTable_Above>高于水位 {0} 层</Strata_WaterTable_Above>
+  <Strata_WaterTable_At>正处于水位</Strata_WaterTable_At>
+  <Strata_WaterTable_Shallow>始终干燥（浅层）</Strata_WaterTable_Shallow>
+  <Strata_WaterTable_CompactShallow>始终干燥</Strata_WaterTable_CompactShallow>
+  <Strata_WaterTable_CompactBelow>低于水位 {0} 层</Strata_WaterTable_CompactBelow>
+  <Strata_WaterTable_CompactAbove>高于水位 {0} 层</Strata_WaterTable_CompactAbove>
+  <Strata_WaterTable_CompactAt>正处于水位</Strata_WaterTable_CompactAt>
+  <Strata_WaterTable_LetterLabel>地下水渗入</Strata_WaterTable_LetterLabel>
+  <Strata_WaterTable_LetterText>本层低于地下水位，浅水正渗入巷道。通电的排水泵只稳住其半径内；未覆盖的格子会在数小时内继续蔓延。存货不会被摧毁，但楼层会越来越难用。</Strata_WaterTable_LetterText>
+  <Strata_Alert_WaterTable_Label>下层水位上升</Strata_Alert_WaterTable_Label>
+  <Strata_Alert_WaterTable_Explanation>低于水位的楼层上，积水正在任何通电排水泵半径之外蔓延。恢复电力或加泵，让覆盖范围到达积水格。</Strata_Alert_WaterTable_Explanation>
+  <Strata_CoreSampler_NeedsPower>需要电力才能钻取岩芯。</Strata_CoreSampler_NeedsPower>
+  <Strata_CoreSampler_Working>取样 {0} — 剩余 {1}</Strata_CoreSampler_Working>
+  <Strata_CoreSampler_ResampleLabel>重新取样</Strata_CoreSampler_ResampleLabel>
+  <Strata_CoreSampler_ResampleDesc>丢弃本次读数，在此格再钻一芯。</Strata_CoreSampler_ResampleDesc>
+  <Strata_CoreSampler_Header>此格下方 B{0} 岩层：</Strata_CoreSampler_Header>
+  <Strata_CoreSampler_Ore>矿藏：{0}</Strata_CoreSampler_Ore>
+  <Strata_CoreSampler_OreLow>贫瘠</Strata_CoreSampler_OreLow>
+  <Strata_CoreSampler_OreMid>一般</Strata_CoreSampler_OreMid>
+  <Strata_CoreSampler_OreHigh>可能富矿</Strata_CoreSampler_OreHigh>
+  <Strata_CoreSampler_Gas>气体：{0}</Strata_CoreSampler_Gas>
+  <Strata_CoreSampler_GasLow>风险低</Strata_CoreSampler_GasLow>
+  <Strata_CoreSampler_GasMid>有一定气囊风险</Strata_CoreSampler_GasMid>
+  <Strata_CoreSampler_GasHigh>很可能有气囊</Strata_CoreSampler_GasHigh>
+  <Strata_CoreSampler_Bugs>虫压：{0}</Strata_CoreSampler_Bugs>
+  <Strata_CoreSampler_BugsLow>安静</Strata_CoreSampler_BugsLow>
+  <Strata_CoreSampler_BugsMid>有一定压力</Strata_CoreSampler_BugsMid>
+  <Strata_CoreSampler_BugsHigh>压力很重</Strata_CoreSampler_BugsHigh>
+  <Strata_CoreSampler_Rock>岩石：{0}</Strata_CoreSampler_Rock>
+  <Strata_CoreSampler_RockSoft>偏软</Strata_CoreSampler_RockSoft>
+  <Strata_CoreSampler_RockMid>典型</Strata_CoreSampler_RockMid>
+  <Strata_CoreSampler_RockHard>坚硬，挖掘慢</Strata_CoreSampler_RockHard>
+  <Strata_CoreSampler_WaterWet>水位：再低 {0} 层会渗水。</Strata_CoreSampler_WaterWet>
+  <Strata_CoreSampler_WaterDry>水位：此深度干燥。</Strata_CoreSampler_WaterDry>
+  <Strata_CoreSampler_LostHint>隐约空洞 — 下面可能已有东西。</Strata_CoreSampler_LostHint>
+  <Strata_CoreSampler_Band>不确定度 ±{0}（研究可收窄）。</Strata_CoreSampler_Band>
+  <Strata_Listen_NeedsPower>需要电力才能监听。</Strata_Listen_NeedsPower>
+  <Strata_Listen_Silent>监听闲置 — 地下虫巢与“噪音招来黑暗”均已关闭。</Strata_Listen_Silent>
+  <Strata_Listen_Range>有效范围 {0} 格</Strata_Listen_Range>
+  <Strata_Listen_Deaf>本层太吵，听不透岩石。</Strata_Listen_Deaf>
+  <Strata_Listen_Quiet>岩石安静。</Strata_Listen_Quiet>
+  <Strata_Listen_Large>大型动静</Strata_Listen_Large>
+  <Strata_Listen_Something>有动静</Strata_Listen_Something>
+  <Strata_Listen_Faint>微弱移动</Strata_Listen_Faint>
+  <Strata_Listen_BelowEast>下方偏东</Strata_Listen_BelowEast>
+  <Strata_Listen_BelowWest>下方偏西</Strata_Listen_BelowWest>
+  <Strata_Listen_East>东</Strata_Listen_East>
+  <Strata_Listen_West>西</Strata_Listen_West>
+  <Strata_Listen_Imminent>附近有掘进：{0}，{1}。</Strata_Listen_Imminent>
+  <Strata_Listen_ThroughRock>透过岩石：{0}，{1}。</Strata_Listen_ThroughRock>
+  <Strata_Listen_Reading>移动：{0}，{1}。</Strata_Listen_Reading>
+  <Strata_Alert_Listen_Label>监听站</Strata_Alert_Listen_Label>
+  <Strata_Alert_Listen_Explanation>深层监听站透过岩石听到移动。只有方向与规模，没有精确格子。安静楼层听得更远。</Strata_Alert_Listen_Explanation>
   <Strata_GasScrubberScrubbing>正在从房间清除 {0}。</Strata_GasScrubberScrubbing>
   <Strata_GasScrubberNone>没有可清除的 {0}。</Strata_GasScrubberNone>
   <Strata_TremorOpenedStairwell>震动震开了一座密封楼梯井。</Strata_TremorOpenedStairwell>

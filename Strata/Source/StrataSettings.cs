@@ -52,6 +52,11 @@ namespace Strata
         public bool floodEventsEnabled = true;
         /// <summary>When false, infestations cannot fire on underground floors (B1+).</summary>
         public bool b1InfestationsEnabled = true;
+        /// <summary>Off by default so existing saves stay dry until the player opts in.</summary>
+        public bool waterTableEnabled = false;
+        public float waterTableSeepRate = 1f;
+        /// <summary>Mining/industry noise raises underground infestation weight.</summary>
+        public bool noiseAttractsDarkEnabled = false;
         public bool crossLevelRitualsEnabled = true;
         public bool crossLevelCaravansEnabled = true;
         public bool mergedAbandonWarning = true;
@@ -137,6 +142,9 @@ namespace Strata
             Scribe_Values.Look(ref explorationSitesEnabled, "explorationSitesEnabled", defaultValue: true);
             Scribe_Values.Look(ref floodEventsEnabled, "floodEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref b1InfestationsEnabled, "b1InfestationsEnabled", defaultValue: true);
+            Scribe_Values.Look(ref waterTableEnabled, "waterTableEnabled", defaultValue: false);
+            Scribe_Values.Look(ref waterTableSeepRate, "waterTableSeepRate", defaultValue: 1f);
+            Scribe_Values.Look(ref noiseAttractsDarkEnabled, "noiseAttractsDarkEnabled", defaultValue: false);
             Scribe_Values.Look(ref crossLevelRitualsEnabled, "crossLevelRitualsEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelCaravansEnabled, "crossLevelCaravansEnabled", defaultValue: true);
             Scribe_Values.Look(ref mergedAbandonWarning, "mergedAbandonWarning", defaultValue: true);
@@ -424,6 +432,15 @@ namespace Strata
                 "Strata_Settings_ExplorationSitesDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_FloodEvents".Translate(), ref Settings.floodEventsEnabled,
                 "Strata_Settings_FloodEventsDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_WaterTable".Translate(), ref Settings.waterTableEnabled,
+                "Strata_Settings_WaterTableDesc".Translate());
+            if (Settings.waterTableEnabled)
+            {
+                listing.Label("Strata_Settings_WaterTableRate".Translate(Settings.waterTableSeepRate.ToStringPercent()));
+                Settings.waterTableSeepRate = listing.Slider(Settings.waterTableSeepRate, 0.25f, 2f);
+            }
+            listing.CheckboxLabeled("Strata_Settings_NoiseDark".Translate(), ref Settings.noiseAttractsDarkEnabled,
+                "Strata_Settings_NoiseDarkDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_NativeCavern".Translate(), ref Settings.nativeCavernLayoutEnabled,
                 "Strata_Settings_NativeCavernDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_AncientStairwell".Translate(), ref Settings.ancientColonyStairwellEnabled,

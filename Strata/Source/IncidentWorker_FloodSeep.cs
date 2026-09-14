@@ -17,9 +17,15 @@ namespace Strata
             {
                 return false;
             }
-            return parms.target is Map map
-                && StrataMapUtility.IsUnderground(map)
-                && CellFinder.TryFindRandomCell(map, c => c.Standable(map) && !c.Fogged(map), out _);
+            if (!(parms.target is Map map) || !StrataMapUtility.IsUnderground(map))
+            {
+                return false;
+            }
+            if (WaterTableUtility.SeepageActive(map))
+            {
+                return false;
+            }
+            return CellFinder.TryFindRandomCell(map, c => c.Standable(map) && !c.Fogged(map), out _);
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)

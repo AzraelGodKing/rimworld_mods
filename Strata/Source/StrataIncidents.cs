@@ -620,12 +620,41 @@ namespace Strata
             }
             // Deep Raid already has its own chance; only vanilla-style
             // infestations get the extra underground weight.
-            if (__instance.def == StrataIncidentDefOf.Strata_DeepRaid)
+            if (__instance.def != StrataIncidentDefOf.Strata_DeepRaid)
+            {
+                __result *= Mathf.Min(1.3f + 0.35f * StrataDepth.Of(map), 3f);
+                StratumTruth truth = StratumSurvey.Truth(
+                    StrataMapUtility.ResolveColonyPlanetTile(map),
+                    Mathf.Max(1, StrataDepth.Of(map)),
+                    map.Center);
+                __result *= 0.75f + 0.55f * truth.infestation;
+            }
+            if (StrataMod.Settings != null && StrataMod.Settings.noiseAttractsDarkEnabled)
+            {
+                float noise = MapComponent_StrataNoise.Get(map)?.Noise01 ?? 0f;
+                __result *= 1f + 0.95f * noise;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(IncidentWorker), nameof(IncidentWorker.ChanceFactorNow))]
+    public static class Patch_GasPocketStratumWeight
+    {
+        public static void Postfix(IncidentWorker __instance, IIncidentTarget target, ref float __result)
+        {
+            if (__result <= 0f || __instance.def != StrataIncidentDefOf.Strata_GasPocket)
             {
                 return;
             }
-            // Deeper levels crawl with more bugs.
-            __result *= Mathf.Min(1.3f + 0.35f * StrataDepth.Of(map), 3f);
+            if (!(target is Map map) || !StrataMapUtility.IsUnderground(map))
+            {
+                return;
+            }
+            StratumTruth truth = StratumSurvey.Truth(
+                StrataMapUtility.ResolveColonyPlanetTile(map),
+                Mathf.Max(1, StrataDepth.Of(map)),
+                map.Center);
+            __result *= 0.55f + 0.9f * truth.gas;
         }
     }
 }

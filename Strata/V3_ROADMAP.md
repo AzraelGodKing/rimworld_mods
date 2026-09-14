@@ -24,8 +24,11 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 ## Sensing & threat economy
 
+- [x] **Noise attracts the dark** — mining/industry noise raises infestation weight (settings toggle, off by default); listening posts go deaf next to it
+- [x] **Core sampling drill** — sample the cell below before you commit the shaft (AZR-138)
+- [x] **Water table seepage** — depth gradient into existing flood/sump; temperate ≈ B2; sump holds radius; off by default (AZR-139)
+- [x] **Deep listening post** — directional movement through rock; hears sealed stairs (AZR-141)
 - [ ] **Seismograph station** — building that predicts tremors, cave-ins, and infestation pressure per level (pair with Stormproof weather forecaster + Strata canaries)
-- [ ] **Noise attracts the dark** — mining/industry noise raises infestation weight; sound-dampening walls/floors counter it
 
 ## Logistics & combat toys
 

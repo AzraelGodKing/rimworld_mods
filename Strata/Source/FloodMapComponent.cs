@@ -124,5 +124,23 @@ namespace Strata
         }
 
         public bool AnyFlooded => floodedCells.Count > 0;
+
+        public int FloodedCount => floodedCells.Count;
+
+        public bool AnyFloodedCell(System.Predicate<IntVec3> match)
+        {
+            if (match == null)
+            {
+                return false;
+            }
+            foreach (IntVec3 cell in floodedCells)
+            {
+                if (cell.InBounds(map) && match(cell))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

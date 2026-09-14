@@ -22,7 +22,7 @@
   <ResearchProjectDef>
     <defName>Strata_DiggingDown</defName>
     <label>digging down</label>
-    <description>Basic shoring and stair-cutting to open the first basement beneath your colony — one full level of solid rock the same size as the map above.</description>
+    <description>Basic shoring and stair-cutting to open the first basement beneath your colony — one full level of solid rock the same size as the map above. Also unlocks the core sampling drill, so you can read the rock below before you commit the shaft.</description>
     <baseCost>600</baseCost>
     <techLevel>Medieval</techLevel>
     <tab>Strata</tab>
@@ -161,7 +161,7 @@
   <ResearchProjectDef>
     <defName>Strata_DeepInfrastructure</defName>
     <label>deep infrastructure</label>
-    <description>Gas airlocks, ore skips, sump pumps, and safe electric mine lamps — the industrial kit for living and working far below the surface.</description>
+    <description>Gas airlocks, ore skips, sump pumps, deep listening posts, and safe electric mine lamps — the industrial kit for living and working far below the surface.</description>
     <baseCost>1000</baseCost>
     <techLevel>Industrial</techLevel>
     <tab>Strata</tab>

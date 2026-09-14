@@ -225,11 +225,11 @@ namespace Strata
         public static string AppendInspect(string text, Map dest)
         {
             string line = InspectLine(dest);
-            if (line.NullOrEmpty())
+            if (!line.NullOrEmpty())
             {
-                return text;
+                text = text.NullOrEmpty() ? line : text + "\n" + line;
             }
-            return text.NullOrEmpty() ? line : text + "\n" + line;
+            return WaterTableUtility.AppendInspect(text, dest);
         }
 
         public static string InspectLine(Map map)

@@ -116,6 +116,24 @@ namespace Strata
         [DebugAction(IncidentsCat, "Flood seep", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireFloodSeep() => Fire(StrataIncidentDefOf.Strata_FloodSeep);
 
+        [DebugAction(Cat, "Print water table", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void PrintWaterTable()
+        {
+            Map map = Find.CurrentMap;
+            if (map == null)
+            {
+                return;
+            }
+            PlanetTile tile = StrataMapUtility.ResolveColonyPlanetTile(map);
+            Log.Message("[Strata] water table tile=" + tile
+                + " base=" + WaterTableUtility.BaseTableDepth(tile)
+                + " effective=" + WaterTableUtility.EffectiveTableDepth(map)
+                + " depth=" + StrataDepth.Of(map)
+                + " below=" + WaterTableUtility.LevelsBelowTable(map)
+                + " seep=" + WaterTableUtility.SeepageActive(map)
+                + " noise=" + (MapComponent_StrataNoise.Get(map)?.Noise01 ?? 0f).ToString("0.00"));
+        }
+
         [DebugAction(IncidentsCat, "Lost miners Anomaly", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void FireLostMinersAnomaly() =>
             Fire(DefDatabase<IncidentDef>.GetNamedSilentFail("Strata_LostMinersAnomaly"));
@@ -341,6 +359,9 @@ namespace Strata
                 && StrataThingDefOf.Strata_SteamCondenser != null);
             Check("canary cage loaded", StrataThingDefOf.Strata_CanaryCage != null);
             Check("bird cage loaded", StrataThingDefOf.Strata_BirdCage != null);
+            Check("core sampler loaded", StrataThingDefOf.Strata_CoreSampler != null);
+            Check("listening post loaded", StrataThingDefOf.Strata_ListeningPost != null);
+            Check("sump pump loaded", StrataThingDefOf.Strata_SumpPump != null);
             Check("mine canary loaded", StrataPawnKindDefOf.Strata_Canary != null);
             Check("deep gas is persistent, flammable, extractable",
                 StrataGasDefOf.Strata_DeepGas.passiveLeak <= 0f
