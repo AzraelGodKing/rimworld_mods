@@ -1,15 +1,10 @@
-1.1.2
-[h1]Niceties — 1.1.2[/h1]
+1.2.0
+[h1]Niceties — 1.2.0[/h1]
 
 [b]Added[/b]
 [list]
-[*] [b]Chinese and Russian[/b] — settings, letters, and inspect text.
+[*] [b]Leave a way out[/b] — pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in. Vanilla and Replace Stuff frames both count. In-place wall swaps stay solid so a freezer can still be replaced from inside. Right-click force construct still builds it.
 [/list]
 
-[b]Fixed[/b]
-[list]
-[*] [b]Settings scroll[/b] — the options window grows with its content, so longer translations stay reachable.
-[/list]
-
-[i]Build stamp (Player.log): settings-i18n-v1[/i]
+[i]Build stamp (Player.log): leave-a-way-out-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]

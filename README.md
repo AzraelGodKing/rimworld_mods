@@ -110,7 +110,7 @@ Adds Date and Lovin timetable slots. Date is a walk / table hangout; Lovin still
 
 ### Niceties
 
-Small colony comforts: well-kept apparel, throne-room altars, wear any gendered cut, hide cryptosleep from the colonist bar, melee hunting, and shared bedrooms. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Soft / Default / Hard presets; each toggle is independent.
+Small colony comforts: well-kept apparel, throne-room altars, wear any gendered cut, hide cryptosleep from the colonist bar, melee hunting, shared bedrooms, and leave a way out while building. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Soft / Default / Hard presets; each toggle is independent.
 
 - Site: [niceties](https://azraelgodking.github.io/rimworld_mods/niceties)
 - [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Niceties.zip)

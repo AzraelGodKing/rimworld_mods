@@ -1,6 +1,20 @@
 # Changelog
 
-Detailed notes for **Niceties** only. ## [Unreleased]
+Detailed notes for **Niceties** only.
+
+## [1.2.0]
+
+Player-facing version **1.2.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.2.0 loaded from ...; leave-a-way-out-v1` in Player.log.
+
+### Added
+
+- **Leave a way out** (AZR-201, `leave-a-way-out-v1`) — pawns skip finishing a wall that would trap someone or block leftover frames, and step aside before closing themselves in. Vanilla frames and [Replace Stuff - Continued](https://steamcommunity.com/workshop/filedetails/?id=3526354009) frames both count. In-place wall swaps stay solid so a freezer can still be replaced from inside. Right-click force construct still builds it. Inspired by [Smarter Construction](https://steamcommunity.com/sharedfiles/filedetails/?id=2202185773); original 1.6 code — do not run both.
+
+### Changed
+
+- **Update letter** — Common `UpdateNews` always uses this pack's `About.xml` `modVersion` and the matching `changelog.txt` block. Full notes link to `main` on GitHub (not a Workshop copy of the same package id).
+
+## [1.1.2]
 
 Player-facing version **1.1.2** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.1.2 loaded from ...; settings-i18n-v1` in Player.log.
 

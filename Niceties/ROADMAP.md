@@ -12,9 +12,10 @@ Every nicety ships with a master Mod Options toggle. Nested knobs must no-op whi
 | Hidden cryptosleep | Pawns already in a casket drop off the colonist bar. Carrying in does not hide them early. |
 | Melee hunting | Hunters may hunt with a melee weapon, with a body-size cap. Unarmed optional, off by default. |
 | Shared bedrooms | Bed gizmo marks the room as shared so it stays a bedroom. Roommates skip disturbed sleep. |
+| Leave a way out | Pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in. Replace Stuff frames included. |
 
 Requires [Harmony](https://github.com/pardeike/HarmonyRimWorld). Royalty and Ideology optional. Safe to add or remove mid-save.
 
-Inspired by ideas from Jecrell's Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Melee Hunting, and Share Rooms. Original implementations — not ports of those Workshop zips.
+Inspired by ideas from Jecrell's Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Melee Hunting, Share Rooms, and Smarter Construction. Original implementations — not ports of those Workshop zips.
 
-Linear: [AZR-105](https://linear.app/azraelgodking/issue/AZR-105/niceties-16-qol-pack-from-leftover-workshop-ideas) · [AZR-106](https://linear.app/azraelgodking/issue/AZR-106/niceties-shared-bedrooms-and-no-disturbed-sleep-for-roommates).
+Linear: [AZR-105](https://linear.app/azraelgodking/issue/AZR-105/niceties-16-qol-pack-from-leftover-workshop-ideas) · [AZR-106](https://linear.app/azraelgodking/issue/AZR-106/niceties-shared-bedrooms-and-no-disturbed-sleep-for-roommates) · [AZR-201](https://linear.app/azraelgodking/issue/AZR-201/niceties-smarter-construction-replace-stuff-enclose-bridge).

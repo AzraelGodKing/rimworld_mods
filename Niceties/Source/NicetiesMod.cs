@@ -97,6 +97,9 @@ namespace Niceties
                     "Niceties_Settings_SkipDisturbedSleepTip".Translate());
             }
 
+            DrawFeature(listing, "Niceties_Settings_LeaveAWayOut", "Niceties_Settings_LeaveAWayOutTip",
+                ref Settings.enableLeaveAWayOut, null);
+
             listing.GapLine();
             if (listing.ButtonText("Niceties_Settings_Reset".Translate()))
             {
