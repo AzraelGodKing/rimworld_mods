@@ -4,7 +4,7 @@
   <MainButtonDef>
     <defName>Homesteader_Pantry</defName>
     <label>pantry</label>
-    <description>What's in the cellar and how long it lasts — preserved kinds, days of food, and what's closest to spoiling.</description>
+    <description>What's in the cellar, how long it lasts, and what you can cook from stock — or what's one ingredient short.</description>
     <tabWindowClass>Homesteader.MainTabWindow_HomesteaderPantry</tabWindowClass>
     <order>52</order>
     <closesWorldView>true</closesWorldView>

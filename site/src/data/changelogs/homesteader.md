@@ -2,6 +2,15 @@
 
 Detailed notes for Homesteader only.
 
+## [Unreleased]
+
+Proposed player-facing **1.1.0** (not in `About.xml` until confirmed). Stamp `pantry-make-v1`.
+
+AZR-147
+
+### Added
+- **What can I make** (`pantry-make-v1`, AZR-147) — pantry tab page against player-home slot-group stock (stockpiles and storage, not caravans). Homesteader recipes, recipes on Homesteader worktables, and recipes with an explicit Homesteader product or fixed ingredient, split into can-make-now (batch count + add bill on the first matching work table), one ingredient short (name + amount), and locked (research or unbuilt station). Cached 60 ticks; invalidated on tab open.
+
 ## [1.0.4]
 
 Player-facing version **1.0.4** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.4 loaded from ...` in Player.log (`xml-bom-v1`).
