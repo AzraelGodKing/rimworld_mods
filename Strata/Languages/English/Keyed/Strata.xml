@@ -130,9 +130,6 @@
   <Strata_Settings_BiomesCaverns>Biomes! Caverns features</Strata_Settings_BiomesCaverns>
   <Strata_Settings_BiomesCavernsDesc>Biomes! Caverns always owns dig layout when loaded (plants/fauna/stalagmites when this is on). If Biomes! leaves a hollow contour with almost no rock — common when digging under mountains — Strata falls back to its own rock fill so the floor stays mineable. Also checks the mountain footprint upstairs so edge rock alone cannot hide an empty dig.</Strata_Settings_BiomesCavernsDesc>
   <Strata_Settings_Appearance>Appearance</Strata_Settings_Appearance>
-  <Strata_Settings_MultiFloorStairs>Multifloor Stairs</Strata_Settings_MultiFloorStairs>
-  <Strata_Settings_MultiFloorStairsDesc>Use bundled alternate art from Textures/Strata/Buildings/MultiFloors/ (handrail stairs + modern elevator). Does not require the MultiFloors mod.</Strata_Settings_MultiFloorStairsDesc>
-  <Strata_Settings_MultiFloorCredit>These Assets are from Multifloors, Telardo can ask for it to be removed.</Strata_Settings_MultiFloorCredit>
   <Strata_Settings_DepthDim>Upper-deck depth dim</Strata_Settings_DepthDim>
   <Strata_Settings_DepthDimDesc>When viewing an A+/roof deck, darken the whole screen slightly as a depth mood cue. Separate from see-below, which actually draws the floor under open-sky gaps.</Strata_Settings_DepthDimDesc>
   <Strata_Settings_DepthDimStrength>Depth dim strength: {0}</Strata_Settings_DepthDimStrength>
