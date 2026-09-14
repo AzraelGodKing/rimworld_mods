@@ -1,8 +1,17 @@
 # Changelog
 
-Detailed notes for **Azrael** only. ## [Unreleased]
+## [Unreleased]
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Unreleased hub. Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log (`update-news-v1`).
+Proposed player-facing **1.1.0** (not in `About.xml` until confirmed). Stamp `hub-health-v1`.
+
+AZR-136
+
+### Added
+- **Hub health** (`hub-health-v1`, AZR-136) — Mod Options → Azrael now shows DLC, build stamps, Dubs Bad Hygiene bridges (not loaded vs type missing), and failed Harmony patch classes with the exception summary. Copy report includes RimWorld version, all nine series mods, DLC, bridges, conflicts, and patch failures. Works from the main menu. SafePatchAll logs the full exception and reports into Azrael after startup.
+
+## [1.0.0]
+
+Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log (`update-news-v1`).
 
 ### Added
 - **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
