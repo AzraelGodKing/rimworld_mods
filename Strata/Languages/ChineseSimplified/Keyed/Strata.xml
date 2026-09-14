@@ -130,9 +130,6 @@
   <Strata_Settings_BiomesCaverns>Biomes! Caverns 布局</Strata_Settings_BiomesCaverns>
   <Strata_Settings_BiomesCavernsDesc>启用且已加载 Biomes! Caverns 时，使用 Biomes! 洞穴生成替代 Strata 原生洞穴布局（植物、动物、石笋与晶体）。</Strata_Settings_BiomesCavernsDesc>
   <Strata_Settings_Appearance>外观</Strata_Settings_Appearance>
-  <Strata_Settings_MultiFloorStairs>多层楼梯美术</Strata_Settings_MultiFloorStairs>
-  <Strata_Settings_MultiFloorStairsDesc>使用 Textures/Strata/Buildings/MultiFloors/ 中捆绑的替代美术（扶手楼梯 + 现代电梯）。不需要 MultiFloors 模组。</Strata_Settings_MultiFloorStairsDesc>
-  <Strata_Settings_MultiFloorCredit>这些资源来自 Multifloors，Telardo 可要求移除。</Strata_Settings_MultiFloorCredit>
   <Strata_Settings_DepthDim>上层深度暗化</Strata_Settings_DepthDim>
   <Strata_Settings_DepthDimDesc>查看 A+/屋顶甲板时略微压暗整个画面作为深度氛围。与“透过开阔天空看见下层”分开：后者会真正绘制下层。</Strata_Settings_DepthDimDesc>
   <Strata_Settings_DepthDimStrength>暗化强度：{0}</Strata_Settings_DepthDimStrength>
