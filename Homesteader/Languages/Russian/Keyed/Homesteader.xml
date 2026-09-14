@@ -56,6 +56,20 @@
   <Homesteader_PantryNextRotNone>В кладовой ничего не вот-вот скиснет.</Homesteader_PantryNextRotNone>
   <Homesteader_PantryContents>В запасе</Homesteader_PantryContents>
   <Homesteader_PantryEmpty>Нет еды в погребах, ледниках, родниковых погребах, полках, ящиках и бочках.</Homesteader_PantryEmpty>
+  <Homesteader_PantryTabStock>Запас</Homesteader_PantryTabStock>
+  <Homesteader_PantryTabMake>Что можно сделать</Homesteader_PantryTabMake>
+  <Homesteader_PantryMakeNow>Можно сейчас</Homesteader_PantryMakeNow>
+  <Homesteader_PantryMakeShort>Не хватает одного ингредиента</Homesteader_PantryMakeShort>
+  <Homesteader_PantryMakeLocked>Нужно исследование или верстак</Homesteader_PantryMakeLocked>
+  <Homesteader_PantryMakeNone>В этой группе пусто.</Homesteader_PantryMakeNone>
+  <Homesteader_PantryMakeBill>Счёт</Homesteader_PantryMakeBill>
+  <Homesteader_PantryMakeBillFail>Нет построенного верстака для этого рецепта.</Homesteader_PantryMakeBillFail>
+  <Homesteader_PantryMakeNeedResearch>исследование не завершено</Homesteader_PantryMakeNeedResearch>
+  <Homesteader_PantryMakeNeedStation>постройте {0}</Homesteader_PantryMakeNeedStation>
+  <Homesteader_PantryMakeNeedStationGeneric>верстак не построен</Homesteader_PantryMakeNeedStationGeneric>
+  <Homesteader_PantryMakeNeedMore>не хватает нескольких ингредиентов</Homesteader_PantryMakeNeedMore>
+  <Homesteader_PantryMakeNeedIng>нужно ещё {0} {1}</Homesteader_PantryMakeNeedIng>
+  <Homesteader_PantryMakeUnknownIng>ингредиент</Homesteader_PantryMakeUnknownIng>
   <Homesteader_LandraceDev>Местная линия +{0}% урожай, +{1}% мороз, +{2}% засуха (пок. {3})</Homesteader_LandraceDev>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->

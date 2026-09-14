@@ -56,6 +56,20 @@
   <Homesteader_PantryNextRotNone>Nothing in the pantry is close to turning.</Homesteader_PantryNextRotNone>
   <Homesteader_PantryContents>In store</Homesteader_PantryContents>
   <Homesteader_PantryEmpty>No food in root cellars, icehouses, springhouses, preserves shelves, crates, or barrels.</Homesteader_PantryEmpty>
+  <Homesteader_PantryTabStock>Stock</Homesteader_PantryTabStock>
+  <Homesteader_PantryTabMake>What I can make</Homesteader_PantryTabMake>
+  <Homesteader_PantryMakeNow>Can make now</Homesteader_PantryMakeNow>
+  <Homesteader_PantryMakeShort>One ingredient short</Homesteader_PantryMakeShort>
+  <Homesteader_PantryMakeLocked>Need research or a station</Homesteader_PantryMakeLocked>
+  <Homesteader_PantryMakeNone>Nothing in this group.</Homesteader_PantryMakeNone>
+  <Homesteader_PantryMakeBill>Add bill</Homesteader_PantryMakeBill>
+  <Homesteader_PantryMakeBillFail>No work table for that recipe is built.</Homesteader_PantryMakeBillFail>
+  <Homesteader_PantryMakeNeedResearch>research not finished</Homesteader_PantryMakeNeedResearch>
+  <Homesteader_PantryMakeNeedStation>build a {0}</Homesteader_PantryMakeNeedStation>
+  <Homesteader_PantryMakeNeedStationGeneric>no station built</Homesteader_PantryMakeNeedStationGeneric>
+  <Homesteader_PantryMakeNeedMore>need more than one ingredient</Homesteader_PantryMakeNeedMore>
+  <Homesteader_PantryMakeNeedIng>need {0} {1}</Homesteader_PantryMakeNeedIng>
+  <Homesteader_PantryMakeUnknownIng>ingredient</Homesteader_PantryMakeUnknownIng>
   <Homesteader_LandraceDev>Landrace +{0}% yield, +{1}% frost, +{2}% drought (gen {3})</Homesteader_LandraceDev>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
