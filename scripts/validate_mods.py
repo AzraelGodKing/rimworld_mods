@@ -68,6 +68,18 @@ def check_well_formed(files: list[Path]) -> list[str]:
     return errors
 
 
+def check_utf8_bom(files: list[Path]) -> list[str]:
+    errors = []
+    bom = b"\xef\xbb\xbf"
+    for path in files:
+        with path.open("rb") as fh:
+            head = fh.read(3)
+        if head == bom:
+            rel = path.relative_to(REPO).as_posix()
+            errors.append(f"UTF-8 BOM: {rel}")
+    return errors
+
+
 def check_mod_versions(mods: list[Path]) -> list[str]:
     errors = []
     for mod in mods:
@@ -275,6 +287,7 @@ def main() -> int:
     mods = mod_dirs()
     errors: list[str] = []
     errors.extend(check_well_formed(xml_files))
+    errors.extend(check_utf8_bom(xml_files))
     errors.extend(check_mod_versions(mods))
     errors.extend(check_expected_languages(mods))
     errors.extend(check_keyed_parity(mods))

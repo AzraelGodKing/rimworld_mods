@@ -1,20 +1,10 @@
-1.0.3
-[h1]Homesteader — 1.0.3[/h1]
+1.0.4
+[h1]Homesteader — 1.0.4[/h1]
 
-[b]Added[/b]
+[b]Fixed[/b]
 [list]
-[*] [b]Pantry tab[/b] — preserved kinds in cellars, icehouses, springhouses, shelves, crates, and barrels; days of food; what's closest to spoiling.
-[*] [b]Spoilage triage[/b] — colonists eat the most-spoiled stack first, and preserving bills take produce closest to turning (Mod Options, on by default).
-[*] [b]Preserve crate[/b] — pack a mixed lot of pantry goods into one tradeable crate at the jam cauldron or canning kitchen.
-[*] [b]Saved seed[/b] — harvest barley, pumpkin, herbs, sugar beet, and flax drops seed from your own stock. Replant it and the line slowly picks up yield, frost, or dry-spell grit. No extra UI.
-[*] [b]Update letter[/b] — loading a colony shows this version's notes from About/changelog.txt, with a link to the newest full notes.
+[*] [b]XML load crash[/b] — storage building defs had a UTF-8 BOM. RimWorld can report that as "unknown parse failure" across later Homesteader XML (recipes, scenarios, backstories). The BOM is gone; CI now fails if any mod XML starts with a BOM.
 [/list]
 
-[b]Changed[/b]
-[list]
-[*] [b]Optional art pack[/b] — unique refresh sprites are no longer in the Workshop download. Original art is what you get. Drop [i]Textures/HomesteaderRefresh[/i] from the GitHub repo into the mod folder to enable Use refreshed textures.
-[*] [b]Settings[/b] — if that folder is missing, the toggle is hidden and originals stay on.
-[/list]
-
-[i]Build stamp (Player.log): update-news-v1[/i]
+[i]Build stamp (Player.log): xml-bom-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]

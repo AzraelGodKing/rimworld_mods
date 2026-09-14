@@ -1,8 +1,19 @@
 # Changelog
 
-Detailed notes for Homesteader only. ## [Unreleased]
+Detailed notes for Homesteader only.
 
-Player-facing version **1.0.3** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.3 loaded from ...` in Player.log (`update-news-v1`).
+## [1.0.4]
+
+Player-facing version **1.0.4** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.4 loaded from ...` in Player.log (`xml-bom-v1`).
+
+AZR-108
+
+### Fixed
+- **UTF-8 BOM on storage defs** (`xml-bom-v1`, AZR-108) — `Defs/ThingDefs_Buildings/Buildings_Storage.xml` started with a UTF-8 BOM. Nexus load logs named later files (`Recipes_Fish`, the Homesteaders scenario, 1.5 backstories, designation categories) as `unknown parse failure` during `CombineIntoUnifiedXML`; those files are well-formed. Stripped the BOM. `scripts/validate_mods.py` now fails on a BOM in any mod XML.
+
+## [1.0.3]
+
+Player-facing version **1.0.3** (`About.xml` `modVersion`). Startup wrote `[Homesteader] v1.0.3 loaded from ...` in Player.log (`update-news-v1`).
 
 ### Changed
 - **Optional art pack** — `Textures/HomesteaderRefresh/` stays in git but is `export-ignore` for Workshop / CI zips (~7 MB). `TextureRefresh.PackPresent()` looks for `HomesteaderRefresh/Apparel/Overalls`; if missing, originals stay on and the settings toggle is replaced with a keyed tip (EN/RU/CN). Drop the folder into the installed mod to enable Use refreshed textures.

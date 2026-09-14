@@ -32,7 +32,7 @@ namespace Homesteader
         {
             ContentPack = content;
             Settings = GetSettings<HomesteaderSettings>();
-            ModVersionLog.Write("[Homesteader]", content, "update-news-v1");
+            ModVersionLog.Write("[Homesteader]", content, "xml-bom-v1");
         }
 
         public override string SettingsCategory() => "Homesteader_SettingsCategory".Translate();
