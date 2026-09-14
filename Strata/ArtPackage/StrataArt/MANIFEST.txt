@@ -1,11 +1,10 @@
 ﻿Strata art package — generated 2026-07-16
 
-Included: all PNG art under Strata/Textures except optional MultiFloors toggle assets.
-Excluded: Textures/Strata/Buildings/MultiFloors/ (Telardo / MultiFloors mod — optional in-game toggle only).
+Included: all PNG art under Strata/Textures.
 
 Install back into mod: copy Textures/ to Strata/Textures/ and About/Preview.png to Strata/About/.
 
-File list (86 files):
+File list (79 files):
   About/Preview.png
   Textures/Strata/Buildings/_cargolift_previews/CargoLift_A.png
   Textures/Strata/Buildings/_cargolift_previews/CargoLift_B.png
@@ -51,13 +50,6 @@ File list (86 files):
   Textures/Strata/Buildings/GasPipe_Blueprint_Atlas.png
   Textures/Strata/Buildings/GasPipe_MenuIcon.png
   Textures/Strata/Buildings/GasWell.png
-  Textures/Strata/Buildings/HandrailStairs/ATTRIBUTION.txt
-  Textures/Strata/Buildings/HandrailStairs/StairsDown/StairsDown_east.png
-  Textures/Strata/Buildings/HandrailStairs/StairsDown/StairsDown_north.png
-  Textures/Strata/Buildings/HandrailStairs/StairsDown/StairsDown_south.png
-  Textures/Strata/Buildings/HandrailStairs/StairsUp/StairsUp_east.png
-  Textures/Strata/Buildings/HandrailStairs/StairsUp/StairsUp_north.png
-  Textures/Strata/Buildings/HandrailStairs/StairsUp/StairsUp_south.png
   Textures/Strata/Buildings/HiddenGasPipe_Atlas.png
   Textures/Strata/Buildings/HiddenGasPipe_Blueprint_Atlas.png
   Textures/Strata/Buildings/HiddenGasPipe_MenuIcon.png
