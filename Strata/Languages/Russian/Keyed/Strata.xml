@@ -129,9 +129,6 @@
   <Strata_Settings_BiomesCaverns>Планировка Biomes! Caverns</Strata_Settings_BiomesCaverns>
   <Strata_Settings_BiomesCavernsDesc>Если включено и загружен Biomes! Caverns, используется генерация пещер Biomes! вместо родной пещерной планировки Strata (растения, фауна, сталагмиты и кристаллы).</Strata_Settings_BiomesCavernsDesc>
   <Strata_Settings_Appearance>Внешний вид</Strata_Settings_Appearance>
-  <Strata_Settings_MultiFloorStairs>Лестницы Multifloor</Strata_Settings_MultiFloorStairs>
-  <Strata_Settings_MultiFloorStairsDesc>Использовать альтернативную графику из Textures/Strata/Buildings/MultiFloors/ (лестницы с перилами + современный лифт). Мод MultiFloors не требуется.</Strata_Settings_MultiFloorStairsDesc>
-  <Strata_Settings_MultiFloorCredit>Эти ресурсы из Multifloors; Telardo может попросить их удалить.</Strata_Settings_MultiFloorCredit>
   <Strata_Settings_DepthDim>Затемнение верхних палуб</Strata_Settings_DepthDim>
   <Strata_Settings_DepthDimDesc>При просмотре палубы A+/крыши слегка затемняет весь экран как глубинный акцент. Отдельно от «видеть этаж ниже» — та функция реально рисует карту под открытым небом.</Strata_Settings_DepthDimDesc>
   <Strata_Settings_DepthDimStrength>Сила затемнения: {0}</Strata_Settings_DepthDimStrength>

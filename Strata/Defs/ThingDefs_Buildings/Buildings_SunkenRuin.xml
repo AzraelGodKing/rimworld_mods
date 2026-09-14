@@ -4,7 +4,7 @@
   <!-- ============ Ancient stairhead (sunken ruin sites only) ============ -->
   <!-- Not buildable (no designationCategory). Spawned by the sunken ruin
        site's surface genstep; leads down into the pre-carved warren. -->
-  <ThingDef ParentName="Strata_HandrailStairsDownGraphic">
+  <ThingDef ParentName="Strata_ColonyStairsDownGraphic">
     <defName>Strata_RuinStairsDown</defName>
     <label>ancient stairhead</label>
     <description>A broad stone staircase sinking into the earth, far older than anything standing around it. The steps are worn smooth and the air rising from below is stale and faintly sweet - something has been living down there.</description>

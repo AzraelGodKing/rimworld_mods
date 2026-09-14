@@ -61,7 +61,6 @@ namespace Strata
         public bool ancientColonyStairwellEnabled = true;
         public float ancientColonyStairwellChance = 0.35f;
         public bool cageSustainHunger = false;
-        public bool multiFloorStairs = false;
         /// <summary>Darken the view when looking at A+ roof decks (depth cue).</summary>
         public bool depthDimEnabled = false;
         /// <summary>0–1 strength of the upper-deck depth dim overlay.</summary>
@@ -147,7 +146,6 @@ namespace Strata
             Scribe_Values.Look(ref ancientColonyStairwellEnabled, "ancientColonyStairwellEnabled", defaultValue: true);
             Scribe_Values.Look(ref ancientColonyStairwellChance, "ancientColonyStairwellChance", 0.35f);
             Scribe_Values.Look(ref cageSustainHunger, "cageSustainHunger", defaultValue: false);
-            Scribe_Values.Look(ref multiFloorStairs, "multiFloorStairs", defaultValue: false);
             Scribe_Values.Look(ref depthDimEnabled, "depthDimEnabled", defaultValue: false);
             Scribe_Values.Look(ref depthDimStrength, "depthDimStrength", 0.35f);
             Scribe_Values.Look(ref seeBelowEnabled, "seeBelowEnabled", defaultValue: true);
@@ -249,13 +247,8 @@ namespace Strata
 
         public override void WriteSettings()
         {
-            bool wasMultiFloor = Settings.multiFloorStairs;
             bool wasForeignPortals = Settings.foreignPortalLevelsEnabled;
             base.WriteSettings();
-            if (wasMultiFloor != Settings.multiFloorStairs)
-            {
-                StrataMultiFloorStairsUtility.Apply(Settings.multiFloorStairs);
-            }
             if (wasForeignPortals != Settings.foreignPortalLevelsEnabled)
             {
                 LevelGraph.InvalidateCache();
@@ -460,19 +453,6 @@ namespace Strata
             Text.Font = GameFont.Medium;
             listing.Label("Strata_Settings_Appearance".Translate());
             Text.Font = GameFont.Small;
-            bool previousMultiFloorStairs = Settings.multiFloorStairs;
-            listing.CheckboxLabeled("Strata_Settings_MultiFloorStairs".Translate(), ref Settings.multiFloorStairs,
-                "Strata_Settings_MultiFloorStairsDesc".Translate());
-            if (Settings.multiFloorStairs)
-            {
-                GUI.color = Color.yellow;
-                listing.Label("Strata_Settings_MultiFloorCredit".Translate());
-                GUI.color = Color.white;
-            }
-            if (previousMultiFloorStairs != Settings.multiFloorStairs)
-            {
-                StrataMultiFloorStairsUtility.Apply(Settings.multiFloorStairs);
-            }
             listing.CheckboxLabeled("Strata_Settings_SeeBelow".Translate(), ref Settings.seeBelowEnabled,
                 "Strata_Settings_SeeBelowDesc".Translate());
             StrataBelowDrawPosPatcher.UnpatchIfDisabled();
