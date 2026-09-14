@@ -24,7 +24,9 @@ namespace Strata
             {
                 return;
             }
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
+            var links = LevelGraph.ReachableLevels(pawn.Map);
+            LevelRoleUtility.SortLinksByRoles(links, LevelRole.Freezer, LevelRole.Farm);
+            foreach (LevelGraph.LevelLink link in links)
             {
                 if (!PawnRelay.HasFoodFor(pawn, link.map))
                 {
