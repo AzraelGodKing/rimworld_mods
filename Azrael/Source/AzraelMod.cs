@@ -12,7 +12,7 @@ namespace Azrael
 
         public AzraelMod(ModContentPack content) : base(content)
         {
-            ModVersionLog.Write("[Azrael]", content, "update-news-v1");
+            ModVersionLog.Write("[Azrael]", content, "hub-health-v1");
         }
 
         public override string SettingsCategory() => "Azrael_SettingsCategory".Translate();
@@ -22,9 +22,10 @@ namespace Azrael
             List<SeriesHub.ModRow> mods = SeriesHub.Mods();
             List<SeriesHub.BridgeRow> bridges = SeriesHub.Bridges();
             List<SeriesHub.ConflictRow> conflicts = SeriesHub.Conflicts();
+            List<SeriesHub.DlcRow> dlc = SeriesHub.Dlc();
             List<string> fails = SeriesHub.HarmonyFailures();
 
-            float height = 280f + (mods.Count + bridges.Count + Mathf.Max(1, conflicts.Count) + Mathf.Min(fails.Count, 8) + 1) * 26f;
+            float height = 360f + (mods.Count + dlc.Count + bridges.Count + Mathf.Max(1, conflicts.Count) + Mathf.Min(fails.Count, 8) + 2) * 26f;
             Rect view = new Rect(0f, 0f, inRect.width - 20f, height);
             Widgets.BeginScrollView(inRect, ref scrollPos, view);
             Listing_Standard listing = new Listing_Standard();
@@ -55,7 +56,21 @@ namespace Azrael
                 string status = row.Loaded
                     ? "Azrael_Hub_Loaded".Translate()
                     : "Azrael_Hub_NotLoaded".Translate();
-                listing.Label(row.Display + "  —  " + status + (row.Loaded ? "  v" + row.Version : ""));
+                listing.Label(row.Display + "  —  " + status + (row.Loaded ? "  v" + row.Version : "")
+                    + (row.Loaded && !string.IsNullOrEmpty(row.Stamp) ? "  [" + row.Stamp + "]" : ""));
+                GUI.color = Color.white;
+            }
+
+            listing.GapLine();
+            listing.Label("Azrael_Hub_Dlc".Translate().CapitalizeFirst());
+            listing.Gap(4f);
+            foreach (SeriesHub.DlcRow row in dlc)
+            {
+                GUI.color = SeriesHub.StatusColor(row.Loaded);
+                string status = row.Loaded
+                    ? "Azrael_Hub_Loaded".Translate()
+                    : "Azrael_Hub_NotLoaded".Translate();
+                listing.Label(row.Name + "  —  " + status);
                 GUI.color = Color.white;
             }
 
@@ -64,7 +79,9 @@ namespace Azrael
             listing.Gap(4f);
             foreach (SeriesHub.BridgeRow row in bridges)
             {
-                GUI.color = row.Live ? SeriesHub.StatusColor(true) : SeriesHub.WaitingColor;
+                GUI.color = row.Live
+                    ? SeriesHub.StatusColor(true)
+                    : (row.Degraded ? SeriesHub.ConflictColor : SeriesHub.WaitingColor);
                 listing.Label(row.LabelKey.Translate() + "  —  " + row.Status);
                 GUI.color = Color.white;
             }
