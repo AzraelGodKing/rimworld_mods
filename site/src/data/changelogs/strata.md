@@ -1,13 +1,15 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.4.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.4.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.5.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.5.0 Soft-compat build <stamp> loaded from ...`.
 
 **Build stamp:** each DLL logs the stamp after the version. Current stamp is `purpose-tags-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
 
-Proposed player-facing **3.5.0** (not in `About.xml` until confirmed). Stamp `purpose-tags-v1`.
+## [3.5.0]
+
+Player-facing version **3.5.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.5.0 Soft-compat build purpose-tags-v1` in Player.log.
 
 AZR-140
 
