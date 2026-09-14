@@ -1,10 +1,15 @@
 1.0.4
 [h1]Homesteader — 1.0.4[/h1]
 
+[b]Added[/b]
+[list]
+[*] [b]What can I make[/b] — pantry tab page against colony stockpiles and storage. Homesteader recipes split into can-make-now (with add-bill), one ingredient short, or locked behind research / a missing station.
+[/list]
+
 [b]Fixed[/b]
 [list]
 [*] [b]XML load crash[/b] — storage building defs had a UTF-8 BOM. RimWorld can report that as "unknown parse failure" across later Homesteader XML (recipes, scenarios, backstories). The BOM is gone; CI now fails if any mod XML starts with a BOM.
 [/list]
 
-[i]Build stamp (Player.log): xml-bom-v1[/i]
+[i]Build stamp (Player.log): pantry-make-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]
