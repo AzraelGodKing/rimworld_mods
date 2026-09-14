@@ -643,7 +643,7 @@
       "nexusUrl": "https://www.nexusmods.com/rimworld/mods/786",
       "accent": "#c4a056",
       "preview": "img/NicetiesPreview.png",
-      "tagline": "Small colony comforts: well-kept apparel, throne-room altars, any outfit cut, hidden cryptosleep, melee hunting, and shared bedrooms.",
+      "tagline": "Small colony comforts: well-kept apparel, throne-room altars, any outfit cut, hidden cryptosleep, melee hunting, shared bedrooms, and leave a way out while building.",
       "badges": ["RimWorld 1.6", "Requires Harmony", "QoL"],
       "overview": [
         "Vanilla never shipped these. Niceties is one Harmony QoL companion: each nicety is its own Mod Options toggle. Soft / Default / Hard only seed the knobs — they are not a forced bundle.",
@@ -703,6 +703,15 @@
           ]
         },
         {
+          "id": "builds",
+          "label": "Leave a way out",
+          "features": [
+            { "title": "Don't wall anyone in", "body": "Pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in." },
+            { "title": "Replace Stuff frames", "body": "Unfinished Replace Stuff frames count as open construction, same as vanilla wall frames. In-place wood-to-stone wall replace stays solid, so you can still swap a freezer from inside." },
+            { "title": "Force construct", "body": "Right-click force construct still builds it. Do not run alongside Smarter Construction — they overlap the same job." }
+          ]
+        },
+        {
           "id": "settings",
           "label": "Settings",
           "features": [
@@ -717,7 +726,7 @@
       "goodToKnow": [
         "Safe to add or remove mid-save.",
         "Requires Harmony. Royalty and Ideology are optional.",
-        "Do not run alongside Jecs Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, or Share Rooms [LWM] — they overlap the same jobs.",
+        "Do not run alongside Jecs Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Share Rooms [LWM], or Smarter Construction — they overlap the same jobs.",
         "Workshop preview is an options-card collage (Homesteader straw-hat sprite + pixel icons), not a painted poster."
       ],
       "compatibility": {
@@ -726,14 +735,16 @@
           { "name": "Royalty", "note": "Optional — throne-and-altar no-ops without it" },
           { "name": "Ideology", "note": "Optional — altar checks no-op without it" },
           { "name": "Homesteader", "note": "Sister mod in this series" },
-          { "name": "Date Night", "note": "Sister mod in this series" }
+          { "name": "Date Night", "note": "Sister mod in this series" },
+          { "name": "Replace Stuff - Continued", "url": "https://steamcommunity.com/workshop/filedetails/?id=3526354009", "note": "Optional — leave-a-way-out treats its frames like unfinished walls" }
         ],
         "incompatibleWith": [
           { "name": "Jecs Everlasting Apparel", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=909429482", "note": "Overlaps well-kept apparel" },
           { "name": "Allow Altars in Throneroom", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3725636235", "note": "Overlaps throne-and-altar" },
           { "name": "Wear What You Want", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2079833048", "note": "Overlaps wear-any-outfit" },
           { "name": "Hide Cryptosleep Pawn", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3401278576", "note": "Overlaps hidden cryptosleep" },
-          { "name": "Share Rooms [LWM]", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3398139756", "note": "Overlaps shared bedrooms" }
+          { "name": "Share Rooms [LWM]", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3398139756", "note": "Overlaps shared bedrooms" },
+          { "name": "Smarter Construction", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2202185773", "note": "Overlaps leave a way out" }
         ],
         "notes": [
           "Harmony patches fail-open: one missing target logs and skips instead of aborting the rest of Niceties."

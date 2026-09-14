@@ -38,6 +38,9 @@
   <Niceties_ShareRoom>共用房间</Niceties_ShareRoom>
   <Niceties_ShareRoomTip>将此卧室标为共用。额外的床仍算卧室而非营房。室友跳过“合住一室”的心情惩罚。</Niceties_ShareRoomTip>
   <Niceties_ShareRoomInspect>房间已共用。</Niceties_ShareRoomInspect>
+  <Niceties_Settings_LeaveAWayOut>留出出路</Niceties_Settings_LeaveAWayOut>
+  <Niceties_Settings_LeaveAWayOutTip>殖民者不会完成会困住他人或挡住剩余框架的墙。把自己砌进去之前会先让开。Replace Stuff 的替换框架同样生效；就地换墙材（木墙换石墙）仍视为实心，所以仍可从冷冻室内部替换。右键强制建造仍会砌上。灵感来自 Smarter Construction，1.6 原写，并非移植。</Niceties_Settings_LeaveAWayOutTip>
+  <Niceties_OpenBuilds_WouldEnclose>完成这个会把人砌在里面。</Niceties_OpenBuilds_WouldEnclose>
   <Niceties_Settings_Reset>重置为默认</Niceties_Settings_Reset>
 
   <Niceties_Apparel_NoWear>每日损耗：无（保养良好）。</Niceties_Apparel_NoWear>
