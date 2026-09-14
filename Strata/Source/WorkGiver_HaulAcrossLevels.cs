@@ -240,6 +240,7 @@ namespace Strata
             Map bestMap = null;
             IntVec3 bestCell = IntVec3.Invalid;
             StoragePriority bestPriority = localBest;
+            int bestRole = 0;
             for (int i = 0; i < links.Count; i++)
             {
                 LevelGraph.LevelLink link = links[i];
@@ -249,17 +250,21 @@ namespace Strata
                 }
 
                 if (!TryFindStoreWithPath(
-                        pawn, link.map, t, bestPriority, forced,
+                        pawn, link.map, t, localBest, forced,
                         out StoragePriority p, out MapPortal step, out IntVec3 cell))
                 {
                     continue;
                 }
-                if (p > bestPriority)
+                int role = LevelRoleUtility.HaulMatchScore(t, link.map);
+                if (bestStep == null
+                    || p > bestPriority
+                    || (p == bestPriority && role > bestRole))
                 {
                     bestStep = step;
                     bestMap = link.map;
                     bestCell = cell;
                     bestPriority = p;
+                    bestRole = role;
                 }
             }
 

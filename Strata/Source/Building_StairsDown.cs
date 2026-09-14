@@ -492,6 +492,7 @@ namespace Strata
                 }
                 state += "\n" + SmokeRiseInspectLine();
                 state += "\n" + PowerShaftInspectLine();
+                state = LevelRoleUtility.AppendInspect(state, exit != null ? exit.Map : null);
             }
             else if (StrataMapUtility.IsUnderground(Map))
             {

@@ -289,20 +289,31 @@ namespace Strata
         private static string LevelLabel(Row row)
         {
             string custom = StrataLevelLabels.Get?.GetLabel(row.map);
+            string name;
             if (!custom.NullOrEmpty())
             {
-                return custom;
+                name = custom;
             }
-            if (row.altitude == 0)
+            else if (row.altitude == 0)
             {
-                string name = row.map.Parent?.LabelCap;
-                return name.NullOrEmpty() ? "Strata_LevelSurface".Translate() : "Strata_LevelSurfaceNamed".Translate(name);
+                string parent = row.map.Parent?.LabelCap;
+                name = parent.NullOrEmpty() ? "Strata_LevelSurface".Translate().ToString() : "Strata_LevelSurfaceNamed".Translate(parent).ToString();
             }
-            if (row.altitude > 0)
+            else if (row.altitude > 0)
             {
-                return "Strata_LevelAbove".Translate(row.altitude);
+                name = "Strata_LevelAbove".Translate(row.altitude);
             }
-            return "Strata_LevelBelow".Translate(row.altitude);
+            else
+            {
+                name = "Strata_LevelBelow".Translate(row.altitude);
+            }
+
+            LevelRole role = LevelRoleUtility.GetRole(row.map);
+            if (role == LevelRole.None)
+            {
+                return name;
+            }
+            return name + "  ·  " + LevelRoleUtility.Label(role);
         }
 
         private static int HostileCount(Map map)
