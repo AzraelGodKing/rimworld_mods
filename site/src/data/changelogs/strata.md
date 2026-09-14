@@ -3,9 +3,16 @@
 Player-facing release notes for Strata (Steam Workshop style).
 **Version:** `3.4.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.4.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `drop-multifloor-art-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `purpose-tags-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
+
+Proposed player-facing **3.5.0** (not in `About.xml` until confirmed). Stamp `purpose-tags-v1`.
+
+AZR-140
+
+### Added
+- **Level purpose tags** (`purpose-tags-v1`, AZR-140) — Farm, Freezer, Workshop, Barracks, Quarry, Storage, Hospital, or none. Rename dialog and the Levels tab both set the tag. Untagged floors keep current BFS order. Matching tags only tilt equal-priority hauls (food → freezer/farm, ore → quarry/storage), homeless rest toward barracks, food/work relays toward matching floors, and the tag prints on stair inspect and the level list. Wrong tags never block a job.
 
 ## [3.4.0]
 

@@ -174,6 +174,8 @@
 
   <!-- Levels tab / roles -->
   <Strata_RenameLevelPrompt>Rename this level:</Strata_RenameLevelPrompt>
+  <Strata_PurposePrompt>Purpose (tilts relays; untagged is unchanged):</Strata_PurposePrompt>
+  <Strata_StairwellPurpose>Level purpose: {0}</Strata_StairwellPurpose>
   <Strata_LevelSurface>Surface</Strata_LevelSurface>
   <Strata_LevelSurfaceNamed>Surface — {0}</Strata_LevelSurfaceNamed>
   <Strata_LevelAbove>Level +{0}</Strata_LevelAbove>
@@ -184,6 +186,8 @@
   <Strata_Role_Workshop>Workshop</Strata_Role_Workshop>
   <Strata_Role_Hospital>Hospital</Strata_Role_Hospital>
   <Strata_Role_Storage>Storage</Strata_Role_Storage>
+  <Strata_Role_Farm>Farm</Strata_Role_Farm>
+  <Strata_Role_Quarry>Quarry</Strata_Role_Quarry>
 
   <!-- Stairwells / shafts -->
   <Strata_StairsConnectedBelow>Broke through to the existing level below.</Strata_StairsConnectedBelow>

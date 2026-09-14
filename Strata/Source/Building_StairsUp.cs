@@ -253,12 +253,12 @@ namespace Strata
         public override string GetInspectString()
         {
             string text = base.GetInspectString();
-            if (!StrataMapUtility.IsUnderground(Map) || StairwellDigUtility.LandingHasDownwardShaft(this))
+            if (StrataMapUtility.IsUnderground(Map) && !StairwellDigUtility.LandingHasDownwardShaft(this))
             {
-                return text;
+                string hint = "Dig down to designate a dig shaft beside this landing; colonists must finish carving it before the level below opens.";
+                text = text.NullOrEmpty() ? hint : text + "\n" + hint;
             }
-            string hint = "Dig down to designate a dig shaft beside this landing; colonists must finish carving it before the level below opens.";
-            return text.NullOrEmpty() ? hint : text + "\n" + hint;
+            return LevelRoleUtility.AppendInspect(text, GetOtherMap());
         }
     }
 }
