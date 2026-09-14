@@ -262,6 +262,12 @@ namespace Strata
 
         private static Building_Bed FindFreeBedToClaim(Pawn pawn)
         {
+            Building_Bed barracks = FindBarracksBed(pawn);
+            if (barracks != null)
+            {
+                return barracks;
+            }
+
             Building_Bed best = FindFreeBedOnMap(pawn, pawn.Map);
             if (best != null)
             {
@@ -292,6 +298,66 @@ namespace Strata
                 float dist = link.firstStep != null
                     ? link.firstStep.Position.DistanceToSquared(pawn.Position)
                     : float.MaxValue;
+                if (link.depth < nearestDepth
+                    || (link.depth == nearestDepth && dist < nearestDist))
+                {
+                    nearestDepth = link.depth;
+                    nearestDist = dist;
+                    nearest = bed;
+                }
+            }
+
+            return nearest;
+        }
+
+        private static Building_Bed FindBarracksBed(Pawn pawn)
+        {
+            if (pawn?.Map == null)
+            {
+                return null;
+            }
+
+            if (LevelRoleUtility.GetRole(pawn.Map) == LevelRole.Barracks)
+            {
+                Building_Bed local = FindFreeBedOnMap(pawn, pawn.Map);
+                if (local != null)
+                {
+                    return local;
+                }
+            }
+
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return null;
+            }
+
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(pawn.Map);
+            Building_Bed nearest = null;
+            int nearestDepth = int.MaxValue;
+            float nearestDist = float.MaxValue;
+            for (int i = 0; i < links.Count; i++)
+            {
+                LevelGraph.LevelLink link = links[i];
+                if (LevelRoleUtility.GetRole(link.map) != LevelRole.Barracks)
+                {
+                    continue;
+                }
+
+                Building_Bed bed = FindFreeBedOnMap(pawn, link.map);
+                if (bed == null)
+                {
+                    continue;
+                }
+
+                if (link.firstStep == null
+                    || !link.firstStep.Spawned
+                    || !CanStartPortalTrip(pawn)
+                    || !pawn.CanReach(link.firstStep, PathEndMode.Touch, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                float dist = link.firstStep.Position.DistanceToSquared(pawn.Position);
                 if (link.depth < nearestDepth
                     || (link.depth == nearestDepth && dist < nearestDist))
                 {
@@ -447,8 +513,17 @@ namespace Strata
             }
 
             // Homeless: vanilla may seat them in a free bed on this map.
-            return PawnRelay.IsUsableColonistBedJob(pawn, bed)
-                && bed.OwnersForReading.Count == 0;
+            // Prefer a Barracks floor when one has a free bed (AZR-140).
+            if (!PawnRelay.IsUsableColonistBedJob(pawn, bed)
+                || bed.OwnersForReading.Count != 0)
+            {
+                return false;
+            }
+            if (LevelRoleUtility.GetRole(pawn.Map) == LevelRole.Barracks)
+            {
+                return true;
+            }
+            return FindBarracksBed(pawn) == null;
         }
     }
 }

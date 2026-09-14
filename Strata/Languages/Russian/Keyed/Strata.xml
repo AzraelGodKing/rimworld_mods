@@ -173,6 +173,8 @@
 
   <!-- Levels tab / roles -->
   <Strata_RenameLevelPrompt>Переименовать этот уровень:</Strata_RenameLevelPrompt>
+  <Strata_PurposePrompt>Назначение (слегка клонит маршруты; без метки — как сейчас):</Strata_PurposePrompt>
+  <Strata_StairwellPurpose>Назначение уровня: {0}</Strata_StairwellPurpose>
   <Strata_LevelSurface>Поверхность</Strata_LevelSurface>
   <Strata_LevelSurfaceNamed>Поверхность — {0}</Strata_LevelSurfaceNamed>
   <Strata_LevelAbove>Уровень +{0}</Strata_LevelAbove>
@@ -183,6 +185,8 @@
   <Strata_Role_Workshop>Мастерская</Strata_Role_Workshop>
   <Strata_Role_Hospital>Госпиталь</Strata_Role_Hospital>
   <Strata_Role_Storage>Склад</Strata_Role_Storage>
+  <Strata_Role_Farm>Ферма</Strata_Role_Farm>
+  <Strata_Role_Quarry>Карьер</Strata_Role_Quarry>
 
   <!-- Stairwells / shafts -->
   <Strata_StairsConnectedBelow>Пробились к существующему уровню ниже.</Strata_StairsConnectedBelow>

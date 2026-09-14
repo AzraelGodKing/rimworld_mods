@@ -49,7 +49,7 @@ namespace Strata
             }
 
             var links = LevelGraph.ReachableLevels(pawn.Map);
-            LevelRoleUtility.SortLinksByRole(links, LevelRole.Workshop);
+            LevelRoleUtility.SortLinksForWork(links, pawn);
             bool sawCandidate = false;
             foreach (LevelGraph.LevelLink link in links)
             {
