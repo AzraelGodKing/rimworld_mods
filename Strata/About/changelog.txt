@@ -3,7 +3,7 @@
 
 [b]Changed[/b]
 [list]
-[*] [b]Commissioned gravship and ancient shaft art[/b] — gravship elevators, gravship stairs, and ancient colony stairs use the paid pack (no MultiFloors swap on those defs). Gravship stairs are 1×2.
+[*] [b]Commissioned gravship and ancient shaft art[/b] — gravship elevators, gravship stairs, and ancient colony stairs use the paid pack. Gravship stairs are 1×2. Colony excavated/tower stairs use the same ancient shaft sprites.
 [/list]
 
 [b]Fixed[/b]
@@ -12,5 +12,10 @@
 [*] [b]Colony elevator and quest stair sprites[/b] — restored ElevatorUp/Down and Vault/Vent stairs textures that were dropped when the commissioned gravship pack landed.
 [/list]
 
-[i]Build stamp (Player.log): commissioned-art-v1[/i]
+[b]Removed[/b]
+[list]
+[*] [b]Multifloor Stairs setting[/b] — dropped the optional Telardo handrail / MultiFloors texture packs. The MultiFloors *mod* is still incompatible.
+[/list]
+
+[i]Build stamp (Player.log): drop-multifloor-art-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

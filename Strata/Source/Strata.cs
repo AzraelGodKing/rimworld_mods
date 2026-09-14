@@ -57,7 +57,6 @@ namespace Strata
             {
                 StrataBuildInfo.LogStartup();
                 StrataIncompatibleMods.LogIfNeeded();
-                StrataMultiFloorStairsUtility.ApplyFromSettings();
             });
         }
     }

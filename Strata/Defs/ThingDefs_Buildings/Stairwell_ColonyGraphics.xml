@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Shared colony stair graphics (commissioned ancient shaft pack). Child defs inherit
+       graphicData + size; buildable portals also set rotatable=true. -->
+
+  <ThingDef Name="Strata_ColonyStairsDownGraphic" ParentName="BuildingBase" Abstract="True">
+    <graphicData>
+      <texPath>Strata/Buildings/AncientStairsTop/AncientStairsTop</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <rotatable>true</rotatable>
+    <uiIconScale>0.9</uiIconScale>
+    <uiIconOffset>(0, -0.2)</uiIconOffset>
+  </ThingDef>
+
+  <ThingDef Name="Strata_ColonyStairsUpGraphic" ParentName="BuildingBase" Abstract="True">
+    <graphicData>
+      <texPath>Strata/Buildings/AncientStairsBottom/AncientStairsBottom</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <rotatable>true</rotatable>
+    <uiIconScale>0.9</uiIconScale>
+    <uiIconOffset>(0, -0.2)</uiIconOffset>
+  </ThingDef>
+
+</Defs>
