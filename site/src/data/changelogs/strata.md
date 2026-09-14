@@ -18,6 +18,7 @@ AZR-160 AZR-161
 
 ### Fixed
 - **Underground infestations toggle** (`commissioned-art-v1`, AZR-161) — `b1InfestationsEnabled` now treats `Strata_DeepRaid` as an infestation (CanFireNow, ChanceFactorNow, and Deep Raid's own gate). Vanilla `InfestationCellFinder.GetScoreAt` is zeroed on underground maps when the toggle is off.
+- **Colony elevator and quest stair sprites** — restored `ElevatorUp`/`ElevatorDown` and Vault/Vent stairs textures that 3.4.0 dropped while swapping gravship art. Colony elevators and quest-site shafts still use those `texPath`s.
 
 ## [3.3.2]
 
