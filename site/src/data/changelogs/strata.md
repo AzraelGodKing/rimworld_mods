@@ -3,22 +3,25 @@
 Player-facing release notes for Strata (Steam Workshop style).
 **Version:** `3.4.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.4.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `commissioned-art-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `drop-multifloor-art-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
 
 ## [3.4.0]
 
-Player-facing version **3.4.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.4.0 Soft-compat build commissioned-art-v1` in Player.log.
+Player-facing version **3.4.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.4.0 Soft-compat build drop-multifloor-art-v1` in Player.log.
 
 AZR-160 AZR-161
 
 ### Changed
-- **Commissioned gravship and ancient shaft art** (`commissioned-art-v1`, AZR-160) — gravship elevators, gravship stairs, and ancient colony stairs use the paid facing pack. Those defs no longer swap to the optional MultiFloors pack. Gravship stairs are 1×2 (existing 2×2 shafts shrink on load). Colony handrail stairs keep the original sprites.
+- **Commissioned gravship and ancient shaft art** (`drop-multifloor-art-v1`, AZR-160) — gravship elevators, gravship stairs, and ancient colony stairs use the paid facing pack. Gravship stairs are 1×2 (existing 2×2 shafts shrink on load). Colony excavated/tower stairs and ruin stairheads use the same ancient shaft sprites.
 
 ### Fixed
 - **Underground infestations toggle** (`commissioned-art-v1`, AZR-161) — `b1InfestationsEnabled` now treats `Strata_DeepRaid` as an infestation (CanFireNow, ChanceFactorNow, and Deep Raid's own gate). Vanilla `InfestationCellFinder.GetScoreAt` is zeroed on underground maps when the toggle is off.
 - **Colony elevator and quest stair sprites** — restored `ElevatorUp`/`ElevatorDown` and Vault/Vent stairs textures that 3.4.0 dropped while swapping gravship art. Colony elevators and quest-site shafts still use those `texPath`s.
+
+### Removed
+- **Multifloor Stairs setting** (`drop-multifloor-art-v1`) — removed `Textures/Strata/Buildings/HandrailStairs/` and `Textures/Strata/Buildings/MultiFloors/` plus the mod-options toggle that swapped to them. `About.xml` still lists the MultiFloors *mod* as incompatible.
 
 ## [3.3.2]
 
@@ -167,7 +170,7 @@ Player-facing version **3.1.0** (`About.xml` `modVersion`). Startup writes `[Str
 - Gas pipes and cross-level fluid shafts (DBH, VEF, Rimefeller, and friends).
 - One colony column: work, food, rest, medical, joy, haul, and raid pursuit across floors.
 - Native warren digs or Biomes! Caverns; optional ancient surface stairwell; rich ore / deep gas economy.
-- Rotatable handrail stairs (optional MultiFloors art pack in settings).
+- Rotatable colony stairs (commissioned ancient shaft art).
 
 #### Changed
 - New levels match parent map size (1:1 stack).
