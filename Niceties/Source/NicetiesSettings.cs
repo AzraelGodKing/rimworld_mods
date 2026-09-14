@@ -26,6 +26,8 @@ namespace Niceties
         public bool enableSharedRooms = true;
         public bool skipDisturbedSleepWhenSharing = true;
 
+        public bool enableLeaveAWayOut = true;
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref enableApparelCare, "enableApparelCare", true);
@@ -40,6 +42,7 @@ namespace Niceties
             Scribe_Values.Look(ref meleeHuntMaxBodySize, "meleeHuntMaxBodySize", 1.5f);
             Scribe_Values.Look(ref enableSharedRooms, "enableSharedRooms", true);
             Scribe_Values.Look(ref skipDisturbedSleepWhenSharing, "skipDisturbedSleepWhenSharing", true);
+            Scribe_Values.Look(ref enableLeaveAWayOut, "enableLeaveAWayOut", true);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 Clamp();
@@ -77,6 +80,7 @@ namespace Niceties
             meleeHuntMaxBodySize = 1.5f;
             enableSharedRooms = true;
             skipDisturbedSleepWhenSharing = true;
+            enableLeaveAWayOut = true;
         }
 
         public void ApplyHard()

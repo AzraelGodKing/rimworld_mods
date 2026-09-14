@@ -38,6 +38,9 @@
   <Niceties_ShareRoom>Общая комната</Niceties_ShareRoom>
   <Niceties_ShareRoomTip>Пометить эту спальню как общую. Лишние кровати остаются спальней, а не казармой. Соседи не получают штраф за совместную комнату.</Niceties_ShareRoomTip>
   <Niceties_ShareRoomInspect>Комната общая.</Niceties_ShareRoomInspect>
+  <Niceties_Settings_LeaveAWayOut>Оставить выход</Niceties_Settings_LeaveAWayOut>
+  <Niceties_Settings_LeaveAWayOutTip>Колонисты не заканчивают стену, которая замурует кого-то или перекроет оставшиеся каркасы. Перед тем как закрыть себя, они отходят. Кадры Replace Stuff учитываются; замена материала стены на месте остаётся непроходимой, так что морозильник можно менять изнутри. Принудительная постройка по ПКМ всё равно ставит стену. Идея Smarter Construction — свой код для 1.6, не порт.</Niceties_Settings_LeaveAWayOutTip>
+  <Niceties_OpenBuilds_WouldEnclose>Завершение замурует кого-то внутри.</Niceties_OpenBuilds_WouldEnclose>
   <Niceties_Settings_Reset>Сбросить</Niceties_Settings_Reset>
 
   <Niceties_Apparel_NoWear>Ежедневный износ: нет (ухожено).</Niceties_Apparel_NoWear>
