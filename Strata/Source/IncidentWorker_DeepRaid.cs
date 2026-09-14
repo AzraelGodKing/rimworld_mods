@@ -28,6 +28,10 @@ namespace Strata
             {
                 return Fail(parms, "no insect faction in this game");
             }
+            if (StrataMod.Settings != null && !StrataMod.Settings.b1InfestationsEnabled)
+            {
+                return Fail(parms, "underground infestations disabled in settings");
+            }
             return true;
         }
 

@@ -126,17 +126,9 @@ namespace Strata
             yield return "Strata_ElevatorUp";
             yield return "Strata_ElevatorBuildUp";
             yield return "Strata_ElevatorBuildUpLanding";
-            yield return "Strata_AncientColonyStairsDown";
-            yield return "Strata_AncientColonyStairsUp";
             yield return "Strata_RuinStairsDown";
-            yield return "Strata_GravshipStairsDown";
-            yield return "Strata_GravshipStairsUp";
-            yield return "Strata_GravshipStairsBuildUp";
-            yield return "Strata_GravshipBuildUpLanding";
-            yield return "Strata_GravshipElevatorDown";
-            yield return "Strata_GravshipElevatorUp";
-            yield return "Strata_GravshipElevatorBuildUp";
-            yield return "Strata_GravshipElevatorBuildUpLanding";
+            // Gravship elevators/stairs and ancient colony stairs use commissioned
+            // art. Do not swap them to the optional MultiFloors pack.
         }
 
         private static void ApplyMultiFloorGraphic(StairGraphicSnapshot original, string defName, GraphicData graphic)

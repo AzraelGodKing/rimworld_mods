@@ -29,6 +29,11 @@ namespace Strata
 
         public static void Postfix(IntVec3 cell, Map map, ref float __result)
         {
+            if (Patch_UndergroundIncidents.InfestationsBlockedOn(map))
+            {
+                __result = 0f;
+                return;
+            }
             if (__result > 0f && StrataPortalUtility.CellBlockedByProtectedPortal(map, cell))
             {
                 __result = -1f;
