@@ -21,12 +21,14 @@ namespace Azrael
             public string PackageId;
             public bool Loaded;
             public string Version;
+            public string Stamp;
         }
 
         internal struct BridgeRow
         {
             public string LabelKey;
             public bool Live;
+            public bool Degraded;
             public string Status;
         }
 
@@ -34,6 +36,13 @@ namespace Azrael
         {
             public string Name;
             public string Reason;
+        }
+
+        internal struct DlcRow
+        {
+            public string Name;
+            public string PackageId;
+            public bool Loaded;
         }
 
         internal static readonly string[][] Series =
@@ -62,7 +71,8 @@ namespace Azrael
                     Display = display,
                     PackageId = packageId,
                     Loaded = meta != null,
-                    Version = VersionOf(meta)
+                    Version = VersionOf(meta),
+                    Stamp = meta != null ? StampOf(packageId, display) : null
                 });
             }
             return rows;
@@ -109,9 +119,32 @@ namespace Azrael
             {
                 LabelKey = "Azrael_Hub_Bridge_LwGoodwill",
                 Live = livingWorld && deepColony && lwSignals && dcConsumer,
+                Degraded = livingWorld && deepColony && !(lwSignals && dcConsumer),
                 Status = GoodwillStatus(livingWorld, deepColony, lwSignals, dcConsumer)
             });
+            rows.Add(DubsBridge(
+                "Azrael_Hub_Bridge_DubsHomestead",
+                homesteader,
+                "Homesteader",
+                "DubsBadHygiene.CompProperties_Pipe"));
+            rows.Add(DubsBridge(
+                "Azrael_Hub_Bridge_DubsStrata",
+                strata,
+                "Strata",
+                "DubsBadHygiene.PlumbingNet"));
             return rows;
+        }
+
+        internal static List<DlcRow> Dlc()
+        {
+            return new List<DlcRow>
+            {
+                DlcItem("Royalty", "Ludeon.RimWorld.Royalty"),
+                DlcItem("Ideology", "Ludeon.RimWorld.Ideology"),
+                DlcItem("Biotech", "Ludeon.RimWorld.Biotech"),
+                DlcItem("Anomaly", "Ludeon.RimWorld.Anomaly"),
+                DlcItem("Odyssey", "Ludeon.RimWorld.Odyssey"),
+            };
         }
 
         internal static List<ConflictRow> Conflicts()
@@ -141,6 +174,28 @@ namespace Azrael
         internal static List<string> HarmonyFailures()
         {
             var hits = new List<string>();
+            try
+            {
+                foreach (PatchFailureSink.Row row in PatchFailureSink.Snapshot())
+                {
+                    string line = (row.Prefix + " " + row.ClassName).Trim();
+                    if (!string.IsNullOrEmpty(row.Reason))
+                    {
+                        line += " — " + row.Reason;
+                    }
+                    hits.Add(line);
+                }
+            }
+            catch
+            {
+                // Sink missing: fall through to log scrape.
+            }
+
+            if (hits.Count > 0)
+            {
+                return hits;
+            }
+
             try
             {
                 FieldInfo queueField = AccessTools.Field(typeof(Log), "messageQueue");
@@ -218,8 +273,20 @@ namespace Azrael
                 if (row.Loaded)
                 {
                     sb.Append(" v").Append(row.Version);
+                    if (!string.IsNullOrEmpty(row.Stamp))
+                    {
+                        sb.Append(" [").Append(row.Stamp).Append("]");
+                    }
                 }
                 sb.Append(" (").Append(row.PackageId).AppendLine(")");
+            }
+
+            sb.AppendLine();
+            sb.AppendLine("DLC");
+            foreach (DlcRow row in Dlc())
+            {
+                sb.Append("- ").Append(row.Name).Append(": ");
+                sb.AppendLine(row.Loaded ? "loaded" : "not loaded");
             }
 
             sb.AppendLine();
@@ -245,7 +312,7 @@ namespace Azrael
             }
 
             sb.AppendLine();
-            sb.AppendLine("Harmony");
+            sb.AppendLine("Failed patches");
             List<string> fails = HarmonyFailures();
             if (fails.Count == 0)
             {
@@ -315,7 +382,13 @@ namespace Azrael
                 status = "Azrael_Hub_BridgeNoHook".Translate();
             }
 
-            return new BridgeRow { LabelKey = labelKey, Live = live, Status = status };
+            return new BridgeRow
+            {
+                LabelKey = labelKey,
+                Live = live,
+                Degraded = !live && leftLoaded && rightLoaded,
+                Status = status
+            };
         }
 
         private static BridgeRow NemesisDeepBridge(bool nemesis, bool deepColony)
@@ -326,6 +399,7 @@ namespace Azrael
                 {
                     LabelKey = "Azrael_Hub_Bridge_NemesisDeep",
                     Live = false,
+                    Degraded = true,
                     Status = "Azrael_Hub_BridgeNoHook".Translate()
                 };
             }
@@ -427,6 +501,186 @@ namespace Azrael
             }
         }
 
+        private static DlcRow DlcItem(string name, string packageId)
+        {
+            return new DlcRow
+            {
+                Name = name,
+                PackageId = packageId,
+                Loaded = IsLoaded(packageId)
+            };
+        }
+
+        private static BridgeRow DubsBridge(string labelKey, bool seriesLoaded, string seriesName, string hookType)
+        {
+            bool dubs = IsLoaded("Dubwise.DubsBadHygiene");
+            bool hook = TypePresent(hookType);
+            bool live = seriesLoaded && dubs && hook;
+            string status;
+            if (live)
+            {
+                status = "Azrael_Hub_BridgeLive".Translate();
+            }
+            else if (!seriesLoaded)
+            {
+                status = "Azrael_Hub_BridgeWaiting".Translate(seriesName);
+            }
+            else if (!dubs)
+            {
+                status = "Azrael_Hub_BridgeWaiting".Translate("Dubs Bad Hygiene");
+            }
+            else
+            {
+                status = "Azrael_Hub_BridgeNoType".Translate(hookType);
+            }
+
+            return new BridgeRow
+            {
+                LabelKey = labelKey,
+                Live = live,
+                Degraded = seriesLoaded && dubs && !hook,
+                Status = status
+            };
+        }
+
+        private static string StampOf(string packageId, string display)
+        {
+            if (string.Equals(packageId, "AzraelGodKing.Strata", StringComparison.OrdinalIgnoreCase))
+            {
+                string typed = PublicConst("Strata.StrataBuildInfo", "BuildStamp");
+                if (!string.IsNullOrEmpty(typed))
+                {
+                    return typed;
+                }
+            }
+            if (string.Equals(packageId, "azraelgodking.DeepColony", StringComparison.OrdinalIgnoreCase))
+            {
+                string typed = PublicConst("DeepColony.DeepColonyBuildInfo", "BuildStamp");
+                if (!string.IsNullOrEmpty(typed))
+                {
+                    return typed;
+                }
+            }
+
+            return StampFromLog(LogPrefixFor(display));
+        }
+
+        private static string LogPrefixFor(string display)
+        {
+            if (display == "Deep Colony")
+            {
+                return "[DeepColony]";
+            }
+            if (display == "Living World")
+            {
+                return "[LivingWorld]";
+            }
+            if (display == "Date Night")
+            {
+                return "[DateNight]";
+            }
+            return "[" + display + "]";
+        }
+
+        private static string PublicConst(string typeName, string fieldName)
+        {
+            try
+            {
+                Type type = AccessTools.TypeByName(typeName);
+                FieldInfo field = type == null
+                    ? null
+                    : AccessTools.Field(type, fieldName);
+                return field?.GetValue(null) as string;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static string StampFromLog(string logPrefix)
+        {
+            try
+            {
+                foreach (string text in RecentLogTexts())
+                {
+                    if (text == null || text.IndexOf(logPrefix, StringComparison.Ordinal) < 0)
+                    {
+                        continue;
+                    }
+
+                    int build = text.IndexOf(" build ", StringComparison.Ordinal);
+                    if (build >= 0)
+                    {
+                        int start = build + 7;
+                        int end = text.IndexOf(" loaded", start, StringComparison.Ordinal);
+                        if (end < 0)
+                        {
+                            end = text.IndexOf(' ', start);
+                        }
+                        if (end > start)
+                        {
+                            return text.Substring(start, end - start).Trim();
+                        }
+                    }
+
+                    int semi = text.LastIndexOf("; ", StringComparison.Ordinal);
+                    if (semi >= 0 && text.IndexOf("loaded from", StringComparison.Ordinal) >= 0)
+                    {
+                        string extra = text.Substring(semi + 2).Trim();
+                        if (extra.EndsWith("."))
+                        {
+                            extra = extra.Substring(0, extra.Length - 1);
+                        }
+                        if (!string.IsNullOrEmpty(extra) && extra.IndexOf('\\') < 0 && extra.Length < 48)
+                        {
+                            return extra;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return null;
+        }
+
+        private static IEnumerable<string> RecentLogTexts()
+        {
+            FieldInfo queueField = AccessTools.Field(typeof(Log), "messageQueue");
+            object queue = queueField?.GetValue(null);
+            IEnumerable messages = queue as IEnumerable;
+            if (messages == null && queue != null)
+            {
+                FieldInfo listField = AccessTools.Field(queue.GetType(), "messages")
+                    ?? AccessTools.Field(queue.GetType(), "Messages");
+                messages = listField?.GetValue(queue) as IEnumerable;
+            }
+            if (messages == null)
+            {
+                PropertyInfo messagesProp = AccessTools.Property(typeof(Log), "Messages");
+                messages = messagesProp?.GetValue(null, null) as IEnumerable;
+            }
+            if (messages == null)
+            {
+                yield break;
+            }
+
+            foreach (object item in messages)
+            {
+                if (item == null)
+                {
+                    continue;
+                }
+                string text = MessageText(item);
+                if (!string.IsNullOrEmpty(text))
+                {
+                    yield return text;
+                }
+            }
+        }
+
         private static string MessageText(object logMessage)
         {
             FieldInfo textField = AccessTools.Field(logMessage.GetType(), "text");
@@ -448,6 +702,7 @@ namespace Azrael
                 || text.IndexOf("[DeepColony]", StringComparison.Ordinal) >= 0
                 || text.IndexOf("[LivingWorld]", StringComparison.Ordinal) >= 0
                 || text.IndexOf("[DateNight]", StringComparison.Ordinal) >= 0
+                || text.IndexOf("[Niceties]", StringComparison.Ordinal) >= 0
                 || text.IndexOf("[Azrael]", StringComparison.Ordinal) >= 0;
         }
 
