@@ -30,11 +30,28 @@ namespace Nemesis
 
         /// <summary>
         /// Recover enough body HP that a return raid/assault does not instantly re-flee
-        /// (CheckNemesisHealth flees below 30%).
+        /// (CheckNemesisHealth flees below ~30%). Also restore missing parts: a
+        /// beheaded wounded-escape pawn is still the hunt target (Kill is cancelled)
+        /// and MissingPart bleeding is not a Hediff_Injury, so injury-only heal left
+        /// them headless with a 4h bleedout and an instant retreat loop (AZR-200).
         /// </summary>
         public static void RecoverForReturn(Pawn pawn, float minHealth = 0.7f)
         {
-            if (pawn?.health == null || pawn.Dead || pawn.Destroyed) return;
+            if (pawn?.health == null || pawn.Destroyed) return;
+
+            if (pawn.Dead)
+            {
+                ResurrectionParams parms = new ResurrectionParams
+                {
+                    restoreMissingParts = true,
+                    dontSpawn = true,
+                    removeDiedThoughts = true
+                };
+                if (!ResurrectionUtility.TryResurrect(pawn, parms) || pawn.Dead)
+                    return;
+            }
+
+            RestoreMissingParts(pawn);
 
             HediffDef bloodLossDef = DefDatabase<HediffDef>.GetNamedSilentFail("BloodLoss");
             if (bloodLossDef != null)
@@ -75,6 +92,41 @@ namespace Nemesis
                 if (a != null)
                     pawn.health.RemoveHediff(a);
             }
+        }
+
+        private static void RestoreMissingParts(Pawn pawn)
+        {
+            HediffSet set = pawn.health?.hediffSet;
+            if (set == null) return;
+
+            List<Hediff_MissingPart> missing = set.GetMissingPartsCommonAncestors();
+            if (missing == null || missing.Count == 0) return;
+
+            List<BodyPartRecord> parts = new List<BodyPartRecord>(missing.Count);
+            for (int i = 0; i < missing.Count; i++)
+            {
+                BodyPartRecord part = missing[i]?.Part;
+                if (part != null)
+                    parts.Add(part);
+            }
+
+            if (parts.Count == 0) return;
+
+            for (int i = 0; i < parts.Count; i++)
+            {
+                try
+                {
+                    pawn.health.RestorePart(parts[i], null, checkStateChange: false);
+                }
+                catch (System.Exception e)
+                {
+                    Log.Warning("[Nemesis] RestorePart failed on "
+                        + pawn.LabelShort + " (" + parts[i].def?.defName + "): " + e.Message);
+                }
+            }
+
+            Log.Message("[Nemesis] Restored missing parts on " + pawn.LabelShort
+                + " before return.");
         }
 
         public static void ParkAsWorldNemesis(Pawn pawn)
