@@ -318,9 +318,31 @@ A new system belongs inside an existing mod when that mod already owns the verb.
 | Living World | everything beyond the map edge |
 | Azrael | the series knowing about itself |
 
-Teamster moved because logistics is Strata's verb. Ward moved because a body over time is the same
-verb as a mind over time. Tradecraft and Trailblazer moved because goods and roads both live beyond
-the map edge. **Bulwark survived triage** — holding a perimeter is not any of the nine verbs above.
+Teamster moved because logistics is Strata's verb. Ward and Codex moved because what a colonist
+holds — a body, a body of knowledge — is the same verb as what a colonist becomes. Tradecraft and
+Trailblazer moved because goods and roads both live beyond the map edge.
+
+### Decision record
+
+Eleven systems were proposed across two passes. Five were absorbed into mods that already
+owned the verb; five stand alone; one is held pending another.
+
+| System | Verdict | Home |
+|---|---|---|
+| Teamster — on-map logistics | Absorbed | **Strata 4.0** |
+| Ward — physical health | Absorbed | **Deep Colony 2.0.0** |
+| Codex — knowledge as an asset | Absorbed | **Deep Colony**, toggleable add-on |
+| Tradecraft — goods economy | Absorbed | **Living World** |
+| Trailblazer — expeditions | Absorbed | **Living World** |
+| Bulwark — fortification and siege | Stands alone | new mod |
+| Menagerie — animals as characters | Stands alone | new mod |
+| Charter — the colony as a polity | Stands alone | new mod |
+| Wildland — map ecology | Held | likely Menagerie phase 2 |
+| Revel — culture as output | Held | softest boundary |
+
+Every absorption landed in one of three mods: Strata, Deep Colony (twice), and Living World.
+Those are the three that own a *domain* rather than a feature, which is why they keep pulling
+adjacent systems in.
 
 ---
 
@@ -352,6 +374,25 @@ the pitch writes itself — *your colonists are more than their stats* already p
   for the mind. The symmetry is the point.
 - **Recovery shapes identity** — a long illness leaves resilience or fragility, the same way
   trauma recovery already leaves scars or strength.
+
+### Codex — knowledge as a losable asset (toggleable)
+
+Merged in as a seventh Deep Colony system, off by default, following the **A19** settings pattern
+(per-system on/off, Soft / Default / Hard). It is the clean inversion of what Deep Colony already
+models: its skills live in a head and die with the pawn — that is the premise of inheritance,
+apprenticeship, and the Legacy tab. Codex is knowledge that *outlives* pawns and can be lost anyway.
+
+- **Research that lives somewhere physical** — burnable, stealable, lost with the person who held it.
+- **Libraries and archives** as buildings that matter, with scholars who maintain rather than generate.
+- **Blueprints you can trade** — knowledge as a good.
+- **Tech decay** — the colony forgets how to make steel because the only smith died and left no notes.
+- **Pairs with apprenticeship** — an apprentice inherits a perk *and* a master's notebook. Two
+  routes for knowledge to survive a death, one social and one physical.
+
+**Open question for scoping:** Deep Colony's Workshop description already promises "five
+interlocking systems." Ward and Codex make seven, in a mod that is already 16,242 lines across 110
+files. Consider shipping Ward as 2.0.0 and Codex as 2.1.0 rather than one release — the toggle
+architecture supports either, but a seven-system pitch is hard to write and harder to support.
 
 ### The soft-link web
 
@@ -389,7 +430,7 @@ ambush. Homesteader still owns the preserve crate that provisions the trip.
 
 ---
 
-# Six candidates that resist the fold test
+# Five candidates that resist the fold test
 
 Each one names the verb nobody owns, and — because that's what the triage was actually testing —
 states which mod it would most likely be absorbed into, and why it shouldn't be.
@@ -426,22 +467,7 @@ morph for **NPC** settlements and hands player↔faction goodwill to Deep Colony
 player's own colony-as-a-settlement claimed by nobody. That's a real hole in the ownership map,
 not a gap I'm inventing.
 
-## 3. Codex — knowledge as a losable asset
-
-**The unowned verb: knowing, as a colony rather than as a person.**
-
-**The hook.** Research that lives somewhere physical and can be burned, stolen, or lost with the
-person who held it. Libraries and archives as buildings that matter. Scholars who maintain
-knowledge rather than generating it. Blueprints you can trade. Tech that decays if nobody practises
-it — the colony forgetting how to make steel because the only smith died.
-
-**Nearest neighbour: Deep Colony.** It shouldn't fold, because it's the exact inversion of what
-Deep Colony models. Deep Colony's skills live in a head and die with the pawn — that's the premise
-of inheritance, apprenticeship, and the whole Legacy tab. Codex is knowledge that *outlives* pawns
-and can be lost anyway. Two mods, opposite directions, and they'd pair beautifully: an apprentice
-who inherits a perk *and* a master's notebook.
-
-## 4. Wildland — the map's own ecology
+## 3. Wildland — the map's own ecology
 
 **The unowned verb: the land being alive without you.**
 
@@ -455,7 +481,7 @@ animals, and a reviewer could reasonably merge them. The split, if you want one,
 as Menagerie phase 2 rather than a tenth mod. Stormproof owns weather but not life; Living World
 owns factions but not nature; so the domain is genuinely free either way.
 
-## 5. Revel — culture as output
+## 4. Revel — culture as output
 
 **The unowned verb: performing.**
 
@@ -469,7 +495,7 @@ argument for standalone is that every existing mod models what a colonist *is* o
 model what a colonist *makes* for other people. But it's the one I'd hold back until Charter or
 Menagerie proves out.
 
-## 6. Bulwark — fortification and siege
+## 5. Bulwark — fortification and siege
 
 **The unowned verb: holding a perimeter.** Unchanged from the first pass, and it survived triage.
 
@@ -485,10 +511,9 @@ besieger too.
 
 1. **Menagerie** — verified domain gap, held as a boundary across 110 files of Deep Colony.
 2. **Charter** — a genuine hole in your own ownership map; nobody claims the player settlement.
-3. **Codex** — the clean inversion of Deep Colony's core premise, so it pairs instead of overlapping.
-4. **Bulwark** — already survived one triage.
-5. **Wildland** — real domain, but likely a Menagerie phase rather than a mod.
-6. **Revel** — real gap, softest boundary; hold it.
+3. **Bulwark** — already survived two triages.
+4. **Wildland** — real domain, but likely a Menagerie phase rather than a mod.
+5. **Revel** — real gap, softest boundary; hold it.
 
 ## If you only do five things from this document
 
