@@ -11,7 +11,7 @@ Per-mod later work lives in each mod’s roadmap:
 - [Living World (Phase 1–2 in-repo)](LivingWorld/ROADMAP.md) · [design](docs/ideas/living-world.md) — chronicle, morph, wars, refugees
 - [Niceties](Niceties/ROADMAP.md) — 1.6 QoL companion (apparel care, throne altars, outfit gender, cryptosleep bar, melee hunt, leave a way out)
 
-**Idea sweep (Sep 2026):** [idea-sweep-2026-09.md](docs/ideas/idea-sweep-2026-09.md) — 10 features + 10 simple fixes per mod. Triaged new systems: **Strata 4.0** absorbs on-map logistics (Teamster), **Deep Colony 2.0.0** absorbs physical health (Ward) with a fail-open bridge to all eight siblings plus Codex as a toggleable knowledge system, **Living World** absorbs expeditions and the goods economy (Trailblazer / Tradecraft). Five standalone candidates remain — Menagerie, Charter, Bulwark, Wildland, Revel.
+**Idea sweep (Sep 2026):** [idea-sweep-2026-09.md](docs/ideas/idea-sweep-2026-09.md) — 10 features + 10 simple fixes per mod. Triaged new systems: **Strata 4.0** absorbs on-map logistics (Teamster), **Deep Colony 2.0.0** absorbs physical health (Ward) with a fail-open bridge to all eight siblings plus Codex as a toggleable knowledge system, **Living World** absorbs expeditions and the goods economy (Trailblazer / Tradecraft). The series stays at nine mods; new systems land as updates.
 
 **This weekend:** [General fixes](docs/ideas/general-fixes.md) (Steam-first). Closed backlog: [weekend-steam-backlog.md](docs/ideas/weekend-steam-backlog.md).
 

@@ -298,9 +298,11 @@ in the repo.
 
 # New systems — triaged
 
-The first pass of this document proposed five standalone mods. Four of them were reassigned into
-existing mods on review, because each one shared a **verb** an existing mod already owns. That is
-the useful lesson, so it's recorded here as the test for anything that follows.
+Two passes of this document proposed eleven standalone mods. Every one of them was either
+reassigned into an existing mod or dropped, because each shared a **verb** an existing mod already
+owns. That is the useful lesson, so it's recorded here as the test for anything proposed later.
+
+**The series stays at nine mods.** New systems land as updates.
 
 ## The fold test
 
@@ -324,25 +326,21 @@ Trailblazer moved because goods and roads both live beyond the map edge.
 
 ### Decision record
 
-Eleven systems were proposed across two passes. Five were absorbed into mods that already
-owned the verb; five stand alone; one is held pending another.
+Five systems were absorbed into mods that already owned the verb. A further set of standalone
+candidates was considered in the same pass and cut rather than carried — the series stays at nine.
 
-| System | Verdict | Home |
+| System | Home | Shape |
 |---|---|---|
-| Teamster — on-map logistics | Absorbed | **Strata 4.0** |
-| Ward — physical health | Absorbed | **Deep Colony 2.0.0** |
-| Codex — knowledge as an asset | Absorbed | **Deep Colony**, toggleable add-on |
-| Tradecraft — goods economy | Absorbed | **Living World** |
-| Trailblazer — expeditions | Absorbed | **Living World** |
-| Bulwark — fortification and siege | Stands alone | new mod |
-| Menagerie — animals as characters | Stands alone | new mod |
-| Charter — the colony as a polity | Stands alone | new mod |
-| Wildland — map ecology | Held | likely Menagerie phase 2 |
-| Revel — culture as output | Held | softest boundary |
+| Teamster — on-map logistics | **Strata 4.0** | the movement update |
+| Ward — physical health | **Deep Colony 2.0.0** | the body, plus a bridge to all eight siblings |
+| Codex — knowledge as an asset | **Deep Colony** | seventh system, toggleable, off by default |
+| Tradecraft — goods economy | **Living World** | what travels the road |
+| Trailblazer — expeditions | **Living World** | the road itself |
 
 Every absorption landed in one of three mods: Strata, Deep Colony (twice), and Living World.
 Those are the three that own a *domain* rather than a feature, which is why they keep pulling
-adjacent systems in.
+adjacent systems in. Homesteader, Nemesis, Date Night, and Niceties absorbed nothing — they own a
+bounded thing, and the boundary held.
 
 ---
 
@@ -430,91 +428,6 @@ ambush. Homesteader still owns the preserve crate that provisions the trip.
 
 ---
 
-# Five candidates that resist the fold test
-
-Each one names the verb nobody owns, and — because that's what the triage was actually testing —
-states which mod it would most likely be absorbed into, and why it shouldn't be.
-
-## 1. Menagerie — animals as characters
-
-**The unowned verb: living alongside an animal.**
-
-**[verified]** Deep Colony contains **zero** occurrences of "animal" across 16,242 lines; it is
-entirely humanlike. Homesteader contains one, and its ROADMAP explicitly removed the goat pen with
-*"Do not restore it"* — livestock there is deliberately farm output, not character.
-
-**The hook.** Bonded animals with real personalities and preferences. Training that degrades
-without practice. Working animals with jobs, not just hauling flags. Herd and pack behaviour.
-Veterinary care as its own discipline. An animal that remembers who fed it and who kicked it.
-
-**Nearest neighbour: Deep Colony.** It shouldn't fold, because Deep Colony's entire architecture —
-perks, trauma, apprenticeship, inheritance, family — is built on humanlike social and skill
-systems. Animals need a parallel model, not a branch inside that one. The zero-reference count is
-not an oversight; it's a design boundary that has held for 110 source files.
-
-## 2. Charter — the colony as a polity
-
-**The unowned verb: deciding, as a group.**
-
-**The hook.** The colony grows past the point where one player-voice governs it. Immigration you
-approve or refuse. Districts with their own character. Law: what's a crime here, and what happens
-to someone who commits one. Dissent, factions within the colony, and — at the far end — mutiny.
-Authority that has to be held rather than assumed.
-
-**Nearest neighbour: Deep Colony, and Living World.** It shouldn't fold into either. Deep Colony
-asks *who is this person*; Charter asks *who decides*. Living World explicitly owns settlement
-morph for **NPC** settlements and hands player↔faction goodwill to Deep Colony — which leaves the
-player's own colony-as-a-settlement claimed by nobody. That's a real hole in the ownership map,
-not a gap I'm inventing.
-
-## 3. Wildland — the map's own ecology
-
-**The unowned verb: the land being alive without you.**
-
-**The hook.** Predator and prey populations that respond to each other. Game that depletes if you
-overhunt it and recovers if you don't. Migration seasons. Animal populations as a renewable
-resource you can exhaust — which makes the decision to hunt a decision again.
-
-**Nearest neighbour: Menagerie, above.** This is the honest weak point of the six: both are about
-animals, and a reviewer could reasonably merge them. The split, if you want one, is *owned* animals
-(Menagerie) against *unowned* populations (Wildland). If that line feels thin in practice, ship it
-as Menagerie phase 2 rather than a tenth mod. Stormproof owns weather but not life; Living World
-owns factions but not nature; so the domain is genuinely free either way.
-
-## 4. Revel — culture as output
-
-**The unowned verb: performing.**
-
-**The hook.** Instruments and musicians, performances with quality tiers and an audience, touring
-troupes who visit and whom you can send out. Art that carries a reputation beyond its market value.
-A colony known for something other than its wealth.
-
-**Nearest neighbour: Deep Colony.** This is the second-softest of the six — it could be read as a
-Deep Colony batch, since DC owns identity and Date Night already owns one social ritual well. The
-argument for standalone is that every existing mod models what a colonist *is* or *needs*; none
-model what a colonist *makes* for other people. But it's the one I'd hold back until Charter or
-Menagerie proves out.
-
-## 5. Bulwark — fortification and siege
-
-**The unowned verb: holding a perimeter.** Unchanged from the first pass, and it survived triage.
-
-Stormproof defends the grid, Nemesis sends one person who hates you, Living World starts wars you
-watch from a distance, Strata seals a stairwell. Nobody owns the wall. Wall integrity under
-sustained fire, gates that open for your caravans and not theirs, watchtower sightlines, patrol
-routes on a schedule, and siege attrition that makes a long investment a supply problem for the
-besieger too.
-
----
-
-## Ranking, by how hard they are to fold
-
-1. **Menagerie** — verified domain gap, held as a boundary across 110 files of Deep Colony.
-2. **Charter** — a genuine hole in your own ownership map; nobody claims the player settlement.
-3. **Bulwark** — already survived two triages.
-4. **Wildland** — real domain, but likely a Menagerie phase rather than a mod.
-5. **Revel** — real gap, softest boundary; hold it.
-
 ## If you only do five things from this document
 
 1. **AZR-137 safe removal wizard** (Azrael) — the README currently asks players to do it by hand.
@@ -523,6 +436,7 @@ besieger too.
    in three languages.
 4. **Remove the dead `Wellspring` bridge** in `SeriesHub.cs` — the series hub is the thing that
    tells players what's healthy; it shouldn't be checking for a mod that doesn't exist.
-5. **Scope Deep Colony 2.0.0** — the Ward soft-link web above touches all eight siblings and is the
+5. **Scope Deep Colony 2.0.0** — the Ward soft-link web touches all eight siblings and is the
    strongest integration story the series has. It is also the update that makes Strata's smoke and
-   Stormproof's toxins finally mean something after the incident ends.
+   Stormproof's toxins finally mean something after the incident ends. Ship Ward as 2.0.0 and Codex
+   as 2.1.0 rather than one seven-system release.
