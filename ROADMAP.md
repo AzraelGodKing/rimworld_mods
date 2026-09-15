@@ -11,6 +11,8 @@ Per-mod later work lives in each mod’s roadmap:
 - [Living World (Phase 1–2 in-repo)](LivingWorld/ROADMAP.md) · [design](docs/ideas/living-world.md) — chronicle, morph, wars, refugees
 - [Niceties](Niceties/ROADMAP.md) — 1.6 QoL companion (apparel care, throne altars, outfit gender, cryptosleep bar, melee hunt, leave a way out)
 
+**Idea sweep (Sep 2026):** [idea-sweep-2026-09.md](docs/ideas/idea-sweep-2026-09.md) — 10 features + 10 simple fixes per mod, plus five gap-filling mod concepts (Teamster, Ward, Tradecraft, Bulwark, Trailblazer).
+
 **This weekend:** [General fixes](docs/ideas/general-fixes.md) (Steam-first). Closed backlog: [weekend-steam-backlog.md](docs/ideas/weekend-steam-backlog.md).
 
 ---
