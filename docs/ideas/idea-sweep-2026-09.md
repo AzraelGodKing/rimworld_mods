@@ -329,13 +329,12 @@ Trailblazer moved because goods and roads both live beyond the map edge.
 Five systems were absorbed into mods that already owned the verb. A further set of standalone
 candidates was considered in the same pass and cut rather than carried — the series stays at nine.
 
-| System | Home | Shape |
+| System | Home | Ticket |
 |---|---|---|
-| Teamster — on-map logistics | **Strata 4.0** | the movement update |
-| Ward — physical health | **Deep Colony 2.0.0** | the body, plus a bridge to all eight siblings |
-| Codex — knowledge as an asset | **Deep Colony** | seventh system, toggleable, off by default |
-| Tradecraft — goods economy | **Living World** | what travels the road |
-| Trailblazer — expeditions | **Living World** | the road itself |
+| Teamster — on-map logistics | **Strata 4.0** | [AZR-202](https://linear.app/azraelgodking/issue/AZR-202) |
+| Ward — physical health | **Deep Colony 2.0.0** | [AZR-203](https://linear.app/azraelgodking/issue/AZR-203) |
+| Codex — knowledge as an asset | **Deep Colony** (toggleable) | [AZR-204](https://linear.app/azraelgodking/issue/AZR-204) |
+| Tradecraft + Trailblazer — the road | **Living World** | [AZR-205](https://linear.app/azraelgodking/issue/AZR-205) |
 
 Every absorption landed in one of three mods: Strata, Deep Colony (twice), and Living World.
 Those are the three that own a *domain* rather than a feature, which is why they keep pulling
@@ -345,6 +344,8 @@ bounded thing, and the boundary held.
 ---
 
 ## Strata 4.0 — the movement update (absorbs Teamster)
+
+**Ticket:** [AZR-202](https://linear.app/azraelgodking/issue/AZR-202)
 
 Strata's fluidity engine already relays pawns vertically. 4.0 gives it a horizontal half, so the
 mod owns movement outright rather than owning only the stairs.
@@ -362,6 +363,8 @@ dock rather than from thin air. Stormproof brownouts slow the freight lift befor
 
 ## Deep Colony 2.0.0 — the body (absorbs Ward)
 
+**Ticket:** [AZR-203](https://linear.app/azraelgodking/issue/AZR-203)
+
 Currently 1.6.8, so this is the next major. Deep Colony owns the mind; 2.0 gives it the body, and
 the pitch writes itself — *your colonists are more than their stats* already promises this.
 
@@ -374,6 +377,8 @@ the pitch writes itself — *your colonists are more than their stats* already p
   trauma recovery already leaves scars or strength.
 
 ### Codex — knowledge as a losable asset (toggleable)
+
+**Ticket:** [AZR-204](https://linear.app/azraelgodking/issue/AZR-204)
 
 Merged in as a seventh Deep Colony system, off by default, following the **A19** settings pattern
 (per-system on/off, Soft / Default / Hard). It is the clean inversion of what Deep Colony already
@@ -410,6 +415,8 @@ directions — absent sibling, unchanged behaviour.
 | **Azrael** | The hub shows which Ward bridges are live; the storyteller weights epidemics against the colony's actual medical readiness. |
 
 ## Living World — the road and what travels it (absorbs Tradecraft and Trailblazer)
+
+**Ticket:** [AZR-205](https://linear.app/azraelgodking/issue/AZR-205)
 
 Both reassigned concepts are the same idea from two ends, and LW9 inter-settlement traffic is
 already the pooled item they attach to.
