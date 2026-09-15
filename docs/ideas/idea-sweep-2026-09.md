@@ -296,93 +296,199 @@ in the repo.
 
 ---
 
-# Five new mods that fill the gaps
+# New systems — triaged
 
-Each one is scoped the way your existing ROADMAPs scope things: what it owns, and — more
-importantly — what it must not own, so the series keeps its clean seams.
+The first pass of this document proposed five standalone mods. Four of them were reassigned into
+existing mods on review, because each one shared a **verb** an existing mod already owns. That is
+the useful lesson, so it's recorded here as the test for anything that follows.
 
-## 1. Teamster — on-map bulk logistics
+## The fold test
 
-**The gap.** Strata relays hauling *vertically*. Homesteader gives you places to put things.
-Nothing owns moving mass *horizontally*. A colonist carries 75kg in their arms across a 250-cell
-map, forever, and that's the whole logistics game.
+A new system belongs inside an existing mod when that mod already owns the verb.
 
-**The hook.** Handcarts and sledges a pawn pushes (slow, high capacity), packed roads that speed
-hauling along them, loading docks that batch a stockpile into one trip, and a hand-cranked ropeway
-for crossing terrain that carts can't. Late game: a powered conveyor short-run.
+| Mod | The verb it owns |
+|---|---|
+| Homesteader | growing, preserving, provisioning |
+| Strata | space, and moving through it |
+| Stormproof | weather, and the grid that survives it |
+| Nemesis | being hunted by someone specific |
+| Deep Colony | what happens inside a colonist over time |
+| Date Night | courtship |
+| Niceties | changing a rule you didn't like |
+| Living World | everything beyond the map edge |
+| Azrael | the series knowing about itself |
 
-**Owns:** on-map hauling throughput, cart/dock/road/ropeway buildings, haul batching.
-**Does not own:** vertical transport (Strata's shafts and lifts), storage buildings
-(Homesteader), world-map travel (Trailblazer, below).
-**Bridges:** carts ride Strata elevators; Homesteader crates load onto docks directly.
-
-## 2. Ward — the body after the fight
-
-**The gap.** Deep Colony owns the mind — trauma, therapy, resilience. Strata gives you smoke
-inhalation. Stormproof gives you toxic surges and burns. Three mods generate lasting *physical*
-harm and nothing follows up on it. Vanilla treats recovery as a progress bar in a bed.
-
-**The hook.** Contagion that spreads between pawns and needs quarantine, infirmary quality that
-actually changes outcomes, convalescence as a real phase (light duty, relapse risk if you draft
-them), and long-tail conditions that need managing rather than curing.
-
-**Owns:** illness, contagion, quarantine, recovery arcs, infirmary rooms and medical furniture.
-**Does not own:** psychology and trauma (Deep Colony), the hazards that cause injury
-(Strata, Stormproof), surgery itself (vanilla).
-**Bridges:** Deep Colony trauma reads physical recovery; Strata smoke inhalation and Stormproof
-toxic buildup become Ward conditions rather than dead-end hediffs. This is the strongest
-soft-compat story of the five — it's the missing half of three mods you already ship.
-
-## 3. Tradecraft — tools and the workshop
-
-**The gap.** Deep Colony's apprenticeship teaches skills brilliantly and there is no craft economy
-to spend them in. Homesteader owns farm-to-table; nothing owns bench-to-market. A Crafting 20
-master and a Crafting 8 apprentice differ by a quality roll and nothing else.
-
-**The hook.** Tools as equipment that wear out and get replaced, workshop quality as a room role,
-maker's marks on crafted goods, and commissioned work — a trader asks for a specific item at a
-specific quality and pays for the risk.
-
-**Owns:** tools, tool wear, workshop rooms, maker's marks, commissions.
-**Does not own:** skills and teaching (Deep Colony), food production (Homesteader),
-trade caravans (Trailblazer).
-**Bridges:** an apprentice's first tool comes from their mentor; Homesteader preserves get maker's
-marks and vintage; a master's mark raises Living World prosperity where their goods end up.
-
-## 4. Bulwark — fortification and siege
-
-**The gap.** Stormproof defends the grid. Nemesis sends one person who hates you. Living World
-starts wars you watch from a distance. Strata lets you seal a stairwell. Nobody owns the wall.
-Vanilla sieges are a mortar and a nap.
-
-**The hook.** Wall integrity that degrades under sustained fire, gates that open for your caravans
-and not for theirs, watchtowers with real sightline bonuses, patrol routes colonists walk on
-schedule, and siege attrition that makes a long investment a supply problem for the besieger too.
-
-**Owns:** fortification buildings, wall integrity, gates, patrols, siege mechanics.
-**Does not own:** the antagonist driving the siege (Nemesis), the wars that generate hostility
-(Living World), weather damage to structures (Stormproof), sealing underground (Strata).
-**Bridges:** a Nemesis assault tests your walls specifically; Living World wars produce siege
-warbands; Stormproof storm wear applies to fortifications.
-
-## 5. Trailblazer — the road
-
-**The gap.** Three mods point at the road and none of them own it. Homesteader ships preserve
-crates to "pack a mixed lot for trade in one click." Nemesis wants a caravan-route ambush.
-Living World wants inter-settlement traffic. Meanwhile vanilla caravanning is a spreadsheet
-and a loading screen.
-
-**The hook.** Expedition prep as a real phase (provisioning, pack animals, route planning),
-way-camps you build and return to, route hazards that depend on terrain and season, and returning
-caravans that bring back stories — a veteran hediff, world knowledge, and trade contacts.
-
-**Owns:** caravan preparation, way-camps, route hazards, expedition outcomes.
-**Does not own:** the world map itself and faction movement (Living World), on-map hauling
-(Teamster), the ambushes a nemesis stages (Nemesis owns those, Trailblazer just provides the road).
-**Bridges:** Homesteader preserve crates are the ideal expedition provision; Nemesis route ambushes
-land on Trailblazer routes; Living World's LW9 traffic and your caravans share the same road model.
+Teamster moved because logistics is Strata's verb. Ward moved because a body over time is the same
+verb as a mind over time. Tradecraft and Trailblazer moved because goods and roads both live beyond
+the map edge. **Bulwark survived triage** — holding a perimeter is not any of the nine verbs above.
 
 ---
+
+## Strata 4.0 — the movement update (absorbs Teamster)
+
+Strata's fluidity engine already relays pawns vertically. 4.0 gives it a horizontal half, so the
+mod owns movement outright rather than owning only the stairs.
+
+- **Handcarts and sledges** — a pawn pushes one: slow, high capacity, and it rides the elevator.
+- **Loading docks** — batch a stockpile into a single trip instead of one armful at a time.
+- **Packed roads and rails** — hauling moves faster along them; a reason to shape the base's arteries.
+- **Freight lift** — powered, items-only, real throughput, so the passenger car stops carrying stacks.
+- **Dumbwaiter** and **ore hoist** — already pooled in `V3_ROADMAP.md`; they belong to this update.
+- **Throughput in the haul relay** — the relay currently moves a pawn who carries what their arms
+  hold. Give it a capacity model so a dock, a cart, and a lift actually change the numbers.
+
+**Soft-links:** Homesteader crates load onto docks directly. A Living World caravan loads from a
+dock rather than from thin air. Stormproof brownouts slow the freight lift before they stop it.
+
+## Deep Colony 2.0.0 — the body (absorbs Ward)
+
+Currently 1.6.8, so this is the next major. Deep Colony owns the mind; 2.0 gives it the body, and
+the pitch writes itself — *your colonists are more than their stats* already promises this.
+
+- **Contagion and quarantine** — illness that spreads between pawns and needs isolating.
+- **Infirmary quality as a room role** — the room changes outcomes, not just the medicine tier.
+- **Convalescence as a real phase** — light duty, relapse risk if you draft them early.
+- **Long-tail conditions** — things you manage rather than cure, which is what trauma already does
+  for the mind. The symmetry is the point.
+- **Recovery shapes identity** — a long illness leaves resilience or fragility, the same way
+  trauma recovery already leaves scars or strength.
+
+### The soft-link web
+
+Ward is the strongest integration surface in the series because three mods already *generate*
+lasting physical harm and nothing follows up on it. Every link below is fail-open in both
+directions — absent sibling, unchanged behaviour.
+
+| Sibling | The link |
+|---|---|
+| **Strata** | Smoke inhalation becomes a respiratory condition with a convalescence tail instead of a dead-end hediff. Cave-in crush injuries get recovery arcs. Damp, sunless levels carry an infection modifier — a real cost to living deep. |
+| **Stormproof** | Toxic surge buildup, heat-dome heatstroke, and polar-front frostbite become manageable conditions. The fallout scrubber counts as a quarantine-grade air source. |
+| **Homesteader** | Food quality and preserved-food variety drive recovery speed — the larder finally does something clinical. Tainted well water is a contagion vector. The root cellar stores medicine. |
+| **Nemesis** | Wounds from a nemesis assault carry higher infection and scarring chance; they fight dirty. A convalescing fixation target is a vulnerability the hunt can read and exploit. |
+| **Date Night** | A partner visiting a convalescent speeds recovery. A long illness strains the relationship, and the anniversary system already knows how to model a strained one. |
+| **Living World** | A plague year in the chronicle raises contagion pressure. Refugees can arrive carrying something. |
+| **Niceties** | Colony default medicine tier and the surgery-draft guard become Ward's QoL surface. |
+| **Azrael** | The hub shows which Ward bridges are live; the storyteller weights epidemics against the colony's actual medical readiness. |
+
+## Living World — the road and what travels it (absorbs Tradecraft and Trailblazer)
+
+Both reassigned concepts are the same idea from two ends, and LW9 inter-settlement traffic is
+already the pooled item they attach to.
+
+- **Expeditions** (Trailblazer) — caravan prep as a real phase: provisioning, pack animals, route
+  planning. Way-camps you build and return to. Route hazards by terrain and season. Caravans that
+  come back with a veteran hediff, world knowledge, and trade contacts.
+- **A goods economy** (Tradecraft) — settlements specialise and produce; goods carry an origin;
+  prosperity becomes something made somewhere rather than a number that drifts. Commissions from
+  named settlements. Maker's marks on what leaves your colony.
+- **They meet in the middle** — LW9 traffic, your expeditions, and Nemesis route ambushes all run
+  on one road model instead of three.
+
+**Ownership stays clean:** Living World owns the road and the economy on it. Nemesis still owns the
+ambush. Homesteader still owns the preserve crate that provisions the trip.
+
+---
+
+# Six candidates that resist the fold test
+
+Each one names the verb nobody owns, and — because that's what the triage was actually testing —
+states which mod it would most likely be absorbed into, and why it shouldn't be.
+
+## 1. Menagerie — animals as characters
+
+**The unowned verb: living alongside an animal.**
+
+**[verified]** Deep Colony contains **zero** occurrences of "animal" across 16,242 lines; it is
+entirely humanlike. Homesteader contains one, and its ROADMAP explicitly removed the goat pen with
+*"Do not restore it"* — livestock there is deliberately farm output, not character.
+
+**The hook.** Bonded animals with real personalities and preferences. Training that degrades
+without practice. Working animals with jobs, not just hauling flags. Herd and pack behaviour.
+Veterinary care as its own discipline. An animal that remembers who fed it and who kicked it.
+
+**Nearest neighbour: Deep Colony.** It shouldn't fold, because Deep Colony's entire architecture —
+perks, trauma, apprenticeship, inheritance, family — is built on humanlike social and skill
+systems. Animals need a parallel model, not a branch inside that one. The zero-reference count is
+not an oversight; it's a design boundary that has held for 110 source files.
+
+## 2. Charter — the colony as a polity
+
+**The unowned verb: deciding, as a group.**
+
+**The hook.** The colony grows past the point where one player-voice governs it. Immigration you
+approve or refuse. Districts with their own character. Law: what's a crime here, and what happens
+to someone who commits one. Dissent, factions within the colony, and — at the far end — mutiny.
+Authority that has to be held rather than assumed.
+
+**Nearest neighbour: Deep Colony, and Living World.** It shouldn't fold into either. Deep Colony
+asks *who is this person*; Charter asks *who decides*. Living World explicitly owns settlement
+morph for **NPC** settlements and hands player↔faction goodwill to Deep Colony — which leaves the
+player's own colony-as-a-settlement claimed by nobody. That's a real hole in the ownership map,
+not a gap I'm inventing.
+
+## 3. Codex — knowledge as a losable asset
+
+**The unowned verb: knowing, as a colony rather than as a person.**
+
+**The hook.** Research that lives somewhere physical and can be burned, stolen, or lost with the
+person who held it. Libraries and archives as buildings that matter. Scholars who maintain
+knowledge rather than generating it. Blueprints you can trade. Tech that decays if nobody practises
+it — the colony forgetting how to make steel because the only smith died.
+
+**Nearest neighbour: Deep Colony.** It shouldn't fold, because it's the exact inversion of what
+Deep Colony models. Deep Colony's skills live in a head and die with the pawn — that's the premise
+of inheritance, apprenticeship, and the whole Legacy tab. Codex is knowledge that *outlives* pawns
+and can be lost anyway. Two mods, opposite directions, and they'd pair beautifully: an apprentice
+who inherits a perk *and* a master's notebook.
+
+## 4. Wildland — the map's own ecology
+
+**The unowned verb: the land being alive without you.**
+
+**The hook.** Predator and prey populations that respond to each other. Game that depletes if you
+overhunt it and recovers if you don't. Migration seasons. Animal populations as a renewable
+resource you can exhaust — which makes the decision to hunt a decision again.
+
+**Nearest neighbour: Menagerie, above.** This is the honest weak point of the six: both are about
+animals, and a reviewer could reasonably merge them. The split, if you want one, is *owned* animals
+(Menagerie) against *unowned* populations (Wildland). If that line feels thin in practice, ship it
+as Menagerie phase 2 rather than a tenth mod. Stormproof owns weather but not life; Living World
+owns factions but not nature; so the domain is genuinely free either way.
+
+## 5. Revel — culture as output
+
+**The unowned verb: performing.**
+
+**The hook.** Instruments and musicians, performances with quality tiers and an audience, touring
+troupes who visit and whom you can send out. Art that carries a reputation beyond its market value.
+A colony known for something other than its wealth.
+
+**Nearest neighbour: Deep Colony.** This is the second-softest of the six — it could be read as a
+Deep Colony batch, since DC owns identity and Date Night already owns one social ritual well. The
+argument for standalone is that every existing mod models what a colonist *is* or *needs*; none
+model what a colonist *makes* for other people. But it's the one I'd hold back until Charter or
+Menagerie proves out.
+
+## 6. Bulwark — fortification and siege
+
+**The unowned verb: holding a perimeter.** Unchanged from the first pass, and it survived triage.
+
+Stormproof defends the grid, Nemesis sends one person who hates you, Living World starts wars you
+watch from a distance, Strata seals a stairwell. Nobody owns the wall. Wall integrity under
+sustained fire, gates that open for your caravans and not theirs, watchtower sightlines, patrol
+routes on a schedule, and siege attrition that makes a long investment a supply problem for the
+besieger too.
+
+---
+
+## Ranking, by how hard they are to fold
+
+1. **Menagerie** — verified domain gap, held as a boundary across 110 files of Deep Colony.
+2. **Charter** — a genuine hole in your own ownership map; nobody claims the player settlement.
+3. **Codex** — the clean inversion of Deep Colony's core premise, so it pairs instead of overlapping.
+4. **Bulwark** — already survived one triage.
+5. **Wildland** — real domain, but likely a Menagerie phase rather than a mod.
+6. **Revel** — real gap, softest boundary; hold it.
 
 ## If you only do five things from this document
 
@@ -392,5 +498,6 @@ land on Trailblazer routes; Living World's LW9 traffic and your caravans share t
    in three languages.
 4. **Remove the dead `Wellspring` bridge** in `SeriesHub.cs` — the series hub is the thing that
    tells players what's healthy; it shouldn't be checking for a mod that doesn't exist.
-5. **Ward**, of the five new mods — it's the only one that completes systems in three mods you
-   have already built, rather than opening a sixth front.
+5. **Scope Deep Colony 2.0.0** — the Ward soft-link web above touches all eight siblings and is the
+   strongest integration story the series has. It is also the update that makes Strata's smoke and
+   Stormproof's toxins finally mean something after the incident ends.
