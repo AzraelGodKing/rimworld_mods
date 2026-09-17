@@ -3,12 +3,13 @@
 Player-facing release notes for Strata (Steam Workshop style).
 **Version:** `3.5.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.5.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `purpose-tags-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `dug-floor-fog-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
 
 ### Fixed
 - **Wrong-floor bunk nap** (`rest-wrong-bed-v1`, AZR-231) — while a rest stair commute (or bed detour) is in progress, `JobGiver_GetRest` no longer keeps a vanilla `LayDown` on an unoccupied bed on the current floor. Matches `ForceSleepNow`, which already cleared the whole result while yielding. Sibling of AZR-101 (ground sleep).
+- **Dug floor stuck fog** (`dug-floor-fog-v1`, AZR-232) — after a fog blocker is removed underground, if the cell is still fogged and has no `MakeFog` edifice, force `FloodUnfogAdjacent`. Also heals existing saves on map load when stuck dug fog sits next to already-clear space (sealed hidden chambers stay dark). AZR-57 undug-rock re-fog is unchanged.
 
 ## [3.5.0]
 

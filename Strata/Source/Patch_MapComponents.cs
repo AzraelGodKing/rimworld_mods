@@ -80,6 +80,7 @@ namespace Strata
                 __instance.components.Add(new MapComponent_CrossLevelThreatWatch(__instance));
             }
             StrataDeferredGenUtility.AttachPending(__instance);
+            Patch_FogBlockerRemoved_DugReveal.HealStuckDugFog(__instance);
         }
     }
 
