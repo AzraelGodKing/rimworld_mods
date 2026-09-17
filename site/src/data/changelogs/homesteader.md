@@ -4,6 +4,17 @@ Detailed notes for Homesteader only.
 
 ## [Unreleased]
 
+## [1.0.5]
+
+Player-facing version **1.0.5** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.5 loaded from ...` in Player.log (`pantry-tastes-v1`).
+
+AZR-206 AZR-209 AZR-207
+
+### Fixed
+- **Tastes tab Rand** (`pantry-tastes-v1`, AZR-206) — FillTab queues `EnsureTastes` for the next GameComponent tick instead of rolling favorites/allergies on the UI draw path. SpawnSetup still rolls immediately.
+- **Preserve crate pantry** (AZR-209) — crates estimate nutrition (avg preserve × 15) and credit mixed-lot variety instead of vanishing as a non-ingestible “1 kind”.
+- **Dead Legacy scenario** (AZR-207) — removed unused `Legacy/Defs/ScenarioDefs/Scenario_Homesteaders.xml` (never in LoadFolders; live def is `1.6/`).
+
 ## [1.0.4]
 
 Player-facing version **1.0.4** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.4 loaded from ...` in Player.log (`pantry-make-v1`).

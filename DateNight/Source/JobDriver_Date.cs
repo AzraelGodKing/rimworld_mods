@@ -473,10 +473,19 @@ namespace DateNight
                     FleckMaker.ThrowMetaIcon(partner.Position, pawn.Map, FleckDefOf.Heart, 1.2f);
                 }
             }
-            else
+            else if (pawn.carryTracker.TryDropCarriedThing(
+                    partner.Position, ThingPlaceMode.Near, out Thing _))
             {
+                // Inventory full / rejected — still deliver at their feet so the
+                // gift thought fires instead of silently marking delivered.
                 giftDelivered = true;
+                DateNightDateUtility.NotifyGiftGiven(pawn, partner);
+                if (pawn.Map != null)
+                {
+                    FleckMaker.ThrowMetaIcon(partner.Position, pawn.Map, FleckDefOf.Heart, 1.2f);
+                }
             }
+            // else leave giftDelivered false and retry next tick
         }
 
         private void EatTick()

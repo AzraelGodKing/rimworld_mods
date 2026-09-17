@@ -26,6 +26,7 @@ namespace Homesteader
         private readonly Dictionary<int, HashSet<string>> allergyIdSets = new Dictionary<int, HashSet<string>>();
         private readonly Dictionary<int, HashSet<string>> discoveredAllergySets = new Dictionary<int, HashSet<string>>();
         private readonly HashSet<int> tastesReady = new HashSet<int>();
+        private readonly HashSet<int> pendingEnsure = new HashSet<int>();
 
         public GameComponent_HomesteaderFavorites(Game game)
         {
@@ -53,6 +54,8 @@ namespace Homesteader
 
         public override void GameComponentTick()
         {
+            DrainPendingEnsure();
+
             if (Find.TickManager.TicksGame % EnvironmentalAllergyCheckInterval != 0)
             {
                 return;
@@ -87,6 +90,64 @@ namespace Homesteader
             {
                 CheckEnvironmentalAllergies(chosen);
             }
+        }
+
+        /// <summary>
+        /// Queue a tastes roll for the next GameComponent tick. Safe to call from
+        /// UI (FillTab) — does not consume Rand on the draw path.
+        /// </summary>
+        public void RequestEnsureTastes(Pawn pawn)
+        {
+            if (pawn?.RaceProps?.Humanlike != true || pawn.needs?.mood == null)
+            {
+                return;
+            }
+
+            int id = pawn.thingIDNumber;
+            if (tastesReady.Contains(id))
+            {
+                return;
+            }
+
+            pendingEnsure.Add(id);
+        }
+
+        private void DrainPendingEnsure()
+        {
+            if (pendingEnsure.Count == 0)
+            {
+                return;
+            }
+
+            List<int> batch = new List<int>(pendingEnsure);
+            pendingEnsure.Clear();
+            for (int i = 0; i < batch.Count; i++)
+            {
+                Pawn pawn = FindPawnById(batch[i]);
+                if (pawn != null)
+                {
+                    EnsureTastes(pawn);
+                }
+            }
+        }
+
+        private static Pawn FindPawnById(int id)
+        {
+            List<Pawn> all = PawnsFinder.AllMapsWorldAndTemporary_Alive;
+            if (all == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < all.Count; i++)
+            {
+                if (all[i] != null && all[i].thingIDNumber == id)
+                {
+                    return all[i];
+                }
+            }
+
+            return null;
         }
 
         private void CheckEnvironmentalAllergies(Pawn pawn)
@@ -673,7 +734,7 @@ namespace Homesteader
                 return;
             }
 
-            FavoriteFoodUtility.Comp?.EnsureTastes(pawn);
+            FavoriteFoodUtility.Comp?.RequestEnsureTastes(pawn);
             Rect outRect = new Rect(0f, 0f, size.x, size.y).ContractedBy(10f);
             List<ThingDef> favorites = FavoriteFoodUtility.GetFavorites(pawn);
             List<string> allergies = FavoriteFoodUtility.Comp?.GetAllergyIds(pawn) ?? new List<string>();

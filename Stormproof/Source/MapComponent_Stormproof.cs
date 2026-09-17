@@ -18,6 +18,8 @@ namespace Stormproof
         private int brownoutCachedTick = -1;
         private WeatherDef daySkyWeather;
         private float daySkyMul = -1f;
+        private int pendingStormCallerId = -1;
+        private int pendingStormDuration;
 
         public MapComponent_Stormproof(Map map) : base(map)
         {
@@ -49,12 +51,58 @@ namespace Stormproof
 
         public override void MapComponentTick()
         {
+            TickPendingStormCall();
             TickAlmanac();
             TickWear();
             if (Find.TickManager.TicksGame % 60 == 0)
             {
                 RefreshBrownoutCache();
             }
+        }
+
+        /// <summary>
+        /// Queue a storm-caller discharge for the next map tick (not the UI click).
+        /// Keeps weather writes on the sim clock; Multiplayer still needs a SyncMethod
+        /// bridge for cross-client clicks — this at least avoids mutating from the gizmo.
+        /// </summary>
+        public void QueueStormCall(Thing caller, int durationTicks)
+        {
+            if (caller == null)
+            {
+                return;
+            }
+
+            pendingStormCallerId = caller.thingIDNumber;
+            pendingStormDuration = durationTicks;
+        }
+
+        private void TickPendingStormCall()
+        {
+            if (pendingStormCallerId < 0)
+            {
+                return;
+            }
+
+            int id = pendingStormCallerId;
+            int duration = pendingStormDuration;
+            pendingStormCallerId = -1;
+            pendingStormDuration = 0;
+
+            Thing caller = null;
+            List<Thing> things = map.listerThings?.AllThings;
+            if (things != null)
+            {
+                for (int i = 0; i < things.Count; i++)
+                {
+                    if (things[i] != null && things[i].thingIDNumber == id)
+                    {
+                        caller = things[i];
+                        break;
+                    }
+                }
+            }
+
+            CompStormCaller.ApplyQueuedStorm(map, caller, duration);
         }
 
         public float BrownoutFor(PowerNet net)

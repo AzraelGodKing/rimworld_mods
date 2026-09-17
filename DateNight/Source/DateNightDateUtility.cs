@@ -160,6 +160,62 @@ namespace DateNight
             }
         }
 
+        public static void PruneDeadPawns()
+        {
+            PruneDeadKeys(lastGoodDateTicks);
+            PruneDeadKeys(canDateTicks);
+        }
+
+        private static void PruneDeadKeys(Dictionary<int, int> dict)
+        {
+            if (dict == null || dict.Count == 0)
+            {
+                return;
+            }
+
+            List<int> remove = null;
+            foreach (int id in dict.Keys)
+            {
+                if (!PawnStillAlive(id))
+                {
+                    if (remove == null)
+                    {
+                        remove = new List<int>();
+                    }
+                    remove.Add(id);
+                }
+            }
+
+            if (remove == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < remove.Count; i++)
+            {
+                dict.Remove(remove[i]);
+            }
+        }
+
+        internal static bool PawnStillAlive(int id)
+        {
+            List<Pawn> all = PawnsFinder.AllMapsWorldAndTemporary_Alive;
+            if (all == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < all.Count; i++)
+            {
+                if (all[i] != null && all[i].thingIDNumber == id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Same durations as lovin: 10000–20000 ticks (~4–8 hours) by default,
         /// or ~100 ticks in Eager mode.
