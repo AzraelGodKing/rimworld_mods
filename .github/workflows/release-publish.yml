@@ -1,6 +1,6 @@
 # =============================================================================
 # Release & Publish — RimWorld mods (GitHub Releases + Nexus)
-# Pattern from SunhavenMod Release & Publish: dispatch → build → zip →
+# Pattern from SunhavenMod Release & Publish: dispatch → validate → build → zip →
 # optional GitHub tag Name-vVERSION → optional Nexus file version (retries).
 #
 # Version comes from each mod's About.xml modVersion (not a central versions.json).
@@ -37,12 +37,12 @@ on:
         type: boolean
         default: true
       publish_nexus:
-        description: "Upload the zip to Nexus Mods (needs nexus_file_id + NEXUSMODS_API_KEY)"
+        description: "Upload the zip to Nexus Mods (page version, archive old Main, Vortex default, Changelog tab)"
         required: false
         type: boolean
         default: false
       release_anyway:
-        description: "Ignore version gate (re-publish even if this version is already on GitHub/Nexus)"
+        description: "Ignore GitHub and Nexus version gates (re-publish even if this version is already tagged / already on that Nexus file)"
         required: false
         type: boolean
         default: false
@@ -62,6 +62,8 @@ jobs:
       matrix: ${{ steps.set.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
+      - name: Validate XML, texPaths, and Keyed parity
+        run: python3 scripts/validate_mods.py
       - id: set
         run: |
           set -euo pipefail
