@@ -15,6 +15,11 @@ namespace Niceties
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
+        public override void GameComponentTick()
+        {
+            OpenBuilds.TickDeferred();
+        }
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");

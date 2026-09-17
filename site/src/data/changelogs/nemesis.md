@@ -2,6 +2,15 @@
 
 Foundation by **Dredd (Misakabob)** — original design, persistent antagonist pawn, escape/capture loop, aggression pacing, assaults, waste drops, fixation/prison-break triggers, resolution dialog, and settings. Credited with gratitude; this monorepo package extends that work.
 
+## [1.1.2]
+
+Player-facing version **1.1.2** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.1.2 loaded from ...` in Player.log (`bfv-ferny-id-v1`).
+
+AZR-59 (partial)
+
+### Fixed
+- **BFV packageId** (`bfv-ferny-id-v1`, AZR-59 partial) — soft-compat detects live Workshop `ferny.Vengeance` (ferny Back For Vengeance). Rimesis live id + smoke-test still outstanding; AZR-60 remains blocked on Font's inject surface.
+
 ## [1.1.1]
 
 Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.1.1 loaded from ...` in Player.log (`return-heal-v1`).

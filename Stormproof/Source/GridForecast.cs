@@ -72,7 +72,7 @@ namespace Stormproof
             float nadir = stored;
             bool canFill = stored < capacity - 0.05f;
             float severity = StormproofMod.Settings != null && StormproofMod.Settings.enableBrownout
-                ? Mathf.Clamp01(StormproofMod.Settings.brownoutSeverity)
+                ? Mathf.Clamp(StormproofMod.Settings.brownoutSeverity, 0f, 2f)
                 : 0f;
 
             for (int elapsed = 0; elapsed < HorizonTicks; elapsed += StepTicks)

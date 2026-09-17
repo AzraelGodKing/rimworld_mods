@@ -22,13 +22,57 @@ namespace Niceties
         internal const string SmarterConstructionId = "dhultgren.smarterconstruction";
         private const int MaxRegionSize = 80;
         private const int CacheTicks = 15;
+        private const int CacheSlots = 16;
 
         private static bool scChecked;
         private static bool scLoaded;
-        private static int cacheTick;
-        private static int cacheThingId = -1;
-        private static int cachePawnId = -1;
-        private static OpenBuildsResult cacheResult;
+
+        private struct CacheEntry
+        {
+            public int Tick;
+            public int ThingId;
+            public int PawnId;
+            public OpenBuildsResult Result;
+        }
+
+        private static readonly CacheEntry[] encloseCache = new CacheEntry[CacheSlots];
+
+        private enum PendingKind : byte
+        {
+            None = 0,
+            Incompletable = 1,
+            StepAside = 2,
+        }
+
+        private struct PendingAction
+        {
+            public PendingKind Kind;
+            public int PawnId;
+            public int FrameId;
+            public IntVec3 Dest;
+            public JobDef ResumeDef;
+        }
+
+        private static readonly List<PendingAction> pending = new List<PendingAction>();
+
+        internal static bool HasPendingFor(Pawn pawn)
+        {
+            if (pawn == null || pending.Count == 0)
+            {
+                return false;
+            }
+
+            int id = pawn.thingIDNumber;
+            for (int i = 0; i < pending.Count; i++)
+            {
+                if (pending[i].PawnId == id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         internal static bool Enabled
         {
@@ -74,18 +118,28 @@ namespace Niceties
             }
 
             int tick = Find.TickManager.TicksGame;
-            if (cacheThingId == target.thingIDNumber
-                && cachePawnId == (pawn != null ? pawn.thingIDNumber : -1)
-                && tick - cacheTick < CacheTicks)
+            int thingId = target.thingIDNumber;
+            int pawnId = pawn != null ? pawn.thingIDNumber : -1;
+            for (int i = 0; i < encloseCache.Length; i++)
             {
-                return cacheResult;
+                CacheEntry entry = encloseCache[i];
+                if (entry.ThingId == thingId
+                    && entry.PawnId == pawnId
+                    && tick - entry.Tick < CacheTicks)
+                {
+                    return entry.Result;
+                }
             }
 
             OpenBuildsResult result = Compute(target, pawn);
-            cacheTick = tick;
-            cacheThingId = target.thingIDNumber;
-            cachePawnId = pawn != null ? pawn.thingIDNumber : -1;
-            cacheResult = result;
+            int slot = (thingId ^ (pawnId * 397)) & (CacheSlots - 1);
+            encloseCache[slot] = new CacheEntry
+            {
+                Tick = tick,
+                ThingId = thingId,
+                PawnId = pawnId,
+                Result = result,
+            };
             return result;
         }
 
@@ -115,7 +169,12 @@ namespace Niceties
             return spots;
         }
 
-        internal static bool StepAsideThenRetry(Pawn pawn, Frame frame)
+        /// <summary>
+        /// Queue a step-aside (or incompletable stop) for the next GameComponent
+        /// tick. Must not StartJob/EndCurrentJob here — CompleteConstruction runs
+        /// inside the construct toil, and ReadyForNextToil follows immediately.
+        /// </summary>
+        internal static bool QueueStepAsideThenRetry(Pawn pawn, Frame frame)
         {
             if (pawn?.jobs == null || frame == null)
             {
@@ -125,7 +184,7 @@ namespace Niceties
             HashSet<IntVec3> spots = FindSafeSpots(frame);
             if (spots.Count == 0)
             {
-                pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
+                QueueIncompletable(pawn);
                 return true;
             }
 
@@ -141,18 +200,144 @@ namespace Niceties
                 break;
             }
 
-            if (pawn.CurJob == null)
+            JobDef resumeDef = pawn.CurJob != null ? pawn.CurJob.def : JobDefOf.FinishFrame;
+            pending.Add(new PendingAction
             {
-                pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
-                return true;
+                Kind = PendingKind.StepAside,
+                PawnId = pawn.thingIDNumber,
+                FrameId = frame.thingIDNumber,
+                Dest = dest,
+                ResumeDef = resumeDef,
+            });
+            return true;
+        }
+
+        internal static void QueueIncompletable(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return;
             }
 
-            Job resume = JobMaker.MakeJob(pawn.CurJob.def, frame);
+            pending.Add(new PendingAction
+            {
+                Kind = PendingKind.Incompletable,
+                PawnId = pawn.thingIDNumber,
+            });
+        }
+
+        internal static void TickDeferred()
+        {
+            if (pending.Count == 0)
+            {
+                return;
+            }
+
+            List<PendingAction> batch = new List<PendingAction>(pending);
+            pending.Clear();
+            for (int i = 0; i < batch.Count; i++)
+            {
+                ApplyPending(batch[i]);
+            }
+        }
+
+        private static void ApplyPending(PendingAction action)
+        {
+            Pawn pawn = FindPawnAnyMap(action.PawnId);
+            if (pawn?.jobs == null || pawn.Destroyed)
+            {
+                return;
+            }
+
+            if (action.Kind == PendingKind.Incompletable)
+            {
+                if (pawn.CurJob != null)
+                {
+                    pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
+                }
+
+                return;
+            }
+
+            if (action.Kind != PendingKind.StepAside)
+            {
+                return;
+            }
+
+            Frame frame = FindFrame(pawn.Map, action.FrameId);
+            if (frame == null || frame.Destroyed)
+            {
+                return;
+            }
+
+            Job resume = JobMaker.MakeJob(action.ResumeDef ?? JobDefOf.FinishFrame, frame);
             pawn.jobs.jobQueue.EnqueueFirst(resume);
-            Job walk = JobMaker.MakeJob(JobDefOf.Goto, dest);
+            Job walk = JobMaker.MakeJob(JobDefOf.Goto, action.Dest);
             walk.ignoreForbidden = true;
             pawn.jobs.StartJob(walk, JobCondition.InterruptForced);
-            return true;
+        }
+
+        private static Pawn FindPawnAnyMap(int id)
+        {
+            List<Map> maps = Find.Maps;
+            if (maps == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Pawn pawn = FindPawnOnMap(maps[i], id);
+                if (pawn != null)
+                {
+                    return pawn;
+                }
+            }
+
+            return null;
+        }
+
+        private static Pawn FindPawnOnMap(Map map, int id)
+        {
+            List<Pawn> pawns = map.mapPawns?.AllPawns;
+            if (pawns == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (pawns[i] != null && pawns[i].thingIDNumber == id)
+                {
+                    return pawns[i];
+                }
+            }
+
+            return null;
+        }
+
+        private static Frame FindFrame(Map map, int id)
+        {
+            if (map == null)
+            {
+                return null;
+            }
+
+            List<Thing> frames = map.listerThings?.ThingsInGroup(ThingRequestGroup.BuildingFrame);
+            if (frames == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < frames.Count; i++)
+            {
+                if (frames[i] != null && frames[i].thingIDNumber == id)
+                {
+                    return frames[i] as Frame;
+                }
+            }
+
+            return null;
         }
 
         internal static bool IsConstructionFrame(Thing thing)

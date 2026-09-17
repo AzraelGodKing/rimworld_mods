@@ -27,6 +27,25 @@ namespace DateNight
             }
         }
 
+        public static void PruneDeadPawns()
+        {
+            if (venues == null || venues.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = venues.Count - 1; i >= 0; i--)
+            {
+                FavoriteVenue v = venues[i];
+                if (v == null
+                    || !DateNightDateUtility.PawnStillAlive(v.pawnA)
+                    || !DateNightDateUtility.PawnStillAlive(v.pawnB))
+                {
+                    venues.RemoveAt(i);
+                }
+            }
+        }
+
         public static bool Remembering
         {
             get { return DateNightMod.Settings == null || DateNightMod.Settings.rememberFavoriteSpot; }

@@ -1,10 +1,13 @@
-1.2.0
-[h1]Niceties — 1.2.0[/h1]
+1.2.1
+[h1]Niceties — 1.2.1[/h1]
 
-[b]Added[/b]
+[b]Fixed[/b]
 [list]
-[*] [b]Leave a way out[/b] — pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in. Vanilla and Replace Stuff frames both count. In-place wall swaps stay solid so a freezer can still be replaced from inside. Right-click force construct still builds it.
+[*] Leave-a-way-out no longer StartJob/EndCurrentJob from inside Frame.CompleteConstruction — step-aside is deferred to the next game tick.
+[*] Enclose-check cache keeps multiple (frame, pawn) slots so concurrent builders hit the cache.
+[*] Well-kept apparel: Poor quality daily wear matches vanilla (was a silent 20% reduction).
+[*] Marked Share Rooms [LWM] (`LWM.ShareRooms`) incompatible — shared bedrooms overlaps the same room-role patches.
 [/list]
 
-[i]Build stamp (Player.log): leave-a-way-out-v1[/i]
+[i]Build stamp (Player.log): openbuilds-hard-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]

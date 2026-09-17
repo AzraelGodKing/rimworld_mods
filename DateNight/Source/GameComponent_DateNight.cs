@@ -16,6 +16,9 @@ namespace DateNight
 
         public override void FinalizeInit()
         {
+            // Ephemeral statics survive process lifetime; wipe on every game init.
+            DateNightWindows.ClearEphemeral();
+            DateNightUtility.ClearEphemeral();
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
@@ -50,6 +53,13 @@ namespace DateNight
 
             DateNightAnniversaries.Tick();
             DateNightDoubleDates.Tick();
+
+            if (Find.TickManager.TicksGame % 2500 == 0)
+            {
+                DateNightDateUtility.PruneDeadPawns();
+                DateNightVenues.PruneDeadPawns();
+                DateNightAnniversaries.PruneDeadPawns();
+            }
         }
 
         private void TickPawn(Pawn pawn)
