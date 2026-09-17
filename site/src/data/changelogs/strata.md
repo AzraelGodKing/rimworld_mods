@@ -7,6 +7,9 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 ## [Unreleased]
 
+### Fixed
+- **Wrong-floor bunk nap** (`rest-wrong-bed-v1`, AZR-231) — while a rest stair commute (or bed detour) is in progress, `JobGiver_GetRest` no longer keeps a vanilla `LayDown` on an unoccupied bed on the current floor. Matches `ForceSleepNow`, which already cleared the whole result while yielding. Sibling of AZR-101 (ground sleep).
+
 ## [3.5.0]
 
 Player-facing version **3.5.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.5.0 Soft-compat build purpose-tags-v1` in Player.log.
