@@ -28,4 +28,4 @@ Ask for the `modVersion` line from Player.log. If they installed a GitHub zip be
 
 ## How to ship
 
-See [RELEASE.md](RELEASE.md).
+See [RELEASE.md](RELEASE.md). **Release & Publish** compares each mod’s `modVersion` to the GitHub `{ZipName}-v{modVersion}` tag and to the Nexus page/file version, and skips mods that are not new.
