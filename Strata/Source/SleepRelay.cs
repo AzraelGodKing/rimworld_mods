@@ -93,8 +93,8 @@ namespace Strata
         }
 
         // Vanilla GetRest / ForceSleepNow often returns LayDown with no bed
-        // when the assigned bed is on another map. If we cannot start a
-        // commute, drop that ground nap — do not let them sleep in the dirt.
+        // (or a free bunk on this map) when the assigned bed is elsewhere.
+        // If we cannot start a commute, drop that nap — dirt or wrong bed.
         public static bool ShouldBlockGroundSleep(Pawn pawn, Job vanillaResult)
         {
             if (pawn == null || vanillaResult == null)

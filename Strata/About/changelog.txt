@@ -6,5 +6,10 @@
 [*] [b]Level purpose tags[/b] — Farm, Freezer, Workshop, Barracks, Quarry, Storage, Hospital, or none. Set from rename or the Levels tab. Matching tags tilt haul, rest, food, and work relays; untagged floors keep the old order. A wrong tag never blocks a job.
 [/list]
 
-[i]Build stamp (Player.log): purpose-tags-v1[/i]
+[b]Fixed[/b]
+[list]
+[*] [b]Wrong-floor bunk nap[/b] — while commuting to an assigned bed on another floor, GetRest no longer keeps a LayDown on an unoccupied bed on the current floor (sibling of the AZR-101 ground-sleep fix).
+[/list]
+
+[i]Build stamp (Player.log): rest-wrong-bed-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

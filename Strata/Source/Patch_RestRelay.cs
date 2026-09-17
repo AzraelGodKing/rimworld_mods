@@ -12,10 +12,12 @@ namespace Strata
         {
             if (SleepRelay.ShouldYieldToCommute(pawn))
             {
-                // Do not replace an in-progress stair commute with floor sleep.
+                // Do not replace an in-progress stair commute with floor sleep —
+                // ground OR a random unoccupied bed on this floor (AZR-231).
+                // ForceSleepNow already nulls the whole result while yielding;
+                // GetRest must match or owned-bed trips keep a local bunk.
                 if (__result != null
-                    && __result.def == JobDefOf.LayDown
-                    && __result.targetA.Thing is not Building_Bed)
+                    && (__result.def == JobDefOf.LayDown || __result.forceSleep))
                 {
                     __result = null;
                 }
