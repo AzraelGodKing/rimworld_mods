@@ -1,7 +1,9 @@
 # =============================================================================
 # Reusable — GitHub Release + Nexus upload for one RimWorld mod
 # Mirrors SunhavenMod/.github/workflows/reusable-release-mod.yml
-# (GitHub tag Name-vVERSION, Nexus-Mods/upload-action@v1.0.0-beta.10 with retries).
+# (GitHub tag Name-vVERSION, Nexus-Mods/upload-action@v1.0.0-beta.10 with retries,
+# independent GitHub/Nexus version gates, page version + archive + Vortex primary,
+# Changelog tab via v3 mod id lookup).
 # The rolling `latest` tag from Build mod DLLs is left alone (make_latest: false).
 # =============================================================================
 name: Reusable — release one RimWorld mod
@@ -89,43 +91,67 @@ jobs:
           CUR="${{ steps.meta.outputs.version }}"
           TAG="${{ steps.matrix.outputs.zip_name }}-v${CUR}"
           if [ "${{ inputs.dry_run }}" = "true" ] || [ "${{ inputs.release_anyway }}" = "true" ]; then
-            echo "version_unchanged=false" >> "$GITHUB_OUTPUT"
+            echo "github_unchanged=false" >> "$GITHUB_OUTPUT"
+            echo "nexus_unchanged=false" >> "$GITHUB_OUTPUT"
             echo "version_match_sources=" >> "$GITHUB_OUTPUT"
+            echo "upstream_nexus_version=" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           MATCH=()
+          GH_UNCHANGED=false
+          NX_UNCHANGED=false
           GH_JSON="$(curl -sS -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             "${{ github.api_url }}/repos/${{ github.repository }}/releases/tags/${TAG}" || true)"
           GH_TAG="$(echo "$GH_JSON" | jq -r '.tag_name // empty')"
           if [ "$GH_TAG" = "$TAG" ]; then
             MATCH+=("github")
+            GH_UNCHANGED=true
           fi
           NX_V=""
           MOD_ID="${{ steps.matrix.outputs.nexus_mod_id }}"
+          FILE_ID="${{ steps.matrix.outputs.nexus_file_id }}"
           if [ -n "$MOD_ID" ] && [ -n "${NEXUS_API_KEY:-}" ] && [ "${{ steps.matrix.outputs.nexus_publish }}" != "false" ]; then
             NX_BODY="$(curl -sS -H "accept: application/json" -H "apikey: $NEXUS_API_KEY" \
               "https://api.nexusmods.com/v1/games/rimworld/mods/${MOD_ID}/files.json" || true)"
-            NX_V="$(echo "$NX_BODY" | jq -r '[.files[]? | select((.version // "") != "")] | sort_by(.uploaded_timestamp // 0) | reverse | .[0].version // empty' 2>/dev/null || true)"
+            NX_V="$(echo "$NX_BODY" | jq -r --arg id "$FILE_ID" '
+              [
+                .files[]?
+                | select((.version // "") != "")
+                | select(
+                    $id == ""
+                    or ((.file_id // .fileid // .id[0] // empty) | tostring) == $id
+                  )
+              ]
+              | sort_by(.uploaded_timestamp // 0)
+              | reverse
+              | .[0].version // empty
+            ' 2>/dev/null || true)"
             if [ -n "$NX_V" ] && [ "$NX_V" = "$CUR" ]; then
               MATCH+=("nexus")
+              NX_UNCHANGED=true
             fi
           fi
+          echo "github_unchanged=$GH_UNCHANGED" >> "$GITHUB_OUTPUT"
+          echo "nexus_unchanged=$NX_UNCHANGED" >> "$GITHUB_OUTPUT"
           if [ "${#MATCH[@]}" -gt 0 ]; then
             IFS=,
-            echo "version_unchanged=true" >> "$GITHUB_OUTPUT"
             echo "version_match_sources=${MATCH[*]}" >> "$GITHUB_OUTPUT"
             IFS=
           else
-            echo "version_unchanged=false" >> "$GITHUB_OUTPUT"
             echo "version_match_sources=" >> "$GITHUB_OUTPUT"
           fi
           echo "upstream_nexus_version=$NX_V" >> "$GITHUB_OUTPUT"
 
-      - name: Skip — version already published
-        if: inputs.dry_run != 'true' && steps.version_check.outputs.version_unchanged == 'true'
+      - name: Skip GitHub — version already tagged
+        if: inputs.dry_run != 'true' && inputs.create_github_release == 'true' && steps.version_check.outputs.github_unchanged == 'true'
         run: |
-          echo "✅ Skipping ${{ steps.meta.outputs.display_name }} v${{ steps.meta.outputs.version }} (already on: ${{ steps.version_check.outputs.version_match_sources }})"
+          echo "✅ Skipping GitHub Release ${{ steps.matrix.outputs.zip_name }}-v${{ steps.meta.outputs.version }} (tag already exists)."
+
+      - name: Skip Nexus — version already on that file
+        if: inputs.dry_run != 'true' && inputs.publish_nexus == 'true' && steps.version_check.outputs.nexus_unchanged == 'true'
+        run: |
+          echo "✅ Skipping Nexus upload for ${{ steps.meta.outputs.display_name }} v${{ steps.meta.outputs.version }} (already the latest version of file ${{ steps.matrix.outputs.nexus_file_id }})."
 
       - name: Upload dry-run zip
         if: inputs.dry_run == 'true'
@@ -145,7 +171,7 @@ jobs:
         if: >-
           inputs.dry_run != 'true' &&
           inputs.create_github_release == 'true' &&
-          steps.version_check.outputs.version_unchanged != 'true'
+          steps.version_check.outputs.github_unchanged != 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "${{ steps.matrix.outputs.zip_name }}-v${{ steps.meta.outputs.version }}"
@@ -163,14 +189,16 @@ jobs:
           make_latest: false
           fail_on_unmatched_files: true
 
-      - name: Nexus — restore zip if a later action wiped dist/
+      - name: Nexus — restore zip and resolve v3 mod id
         id: nexus_preflight
         if: >-
           inputs.dry_run != 'true' &&
           inputs.publish_nexus == 'true' &&
-          steps.version_check.outputs.version_unchanged != 'true' &&
+          steps.version_check.outputs.nexus_unchanged != 'true' &&
           steps.matrix.outputs.nexus_file_id != '' &&
           steps.matrix.outputs.nexus_publish != 'false'
+        env:
+          NEXUS_API_KEY: ${{ secrets.NEXUSMODS_API_KEY }}
         run: |
           set -euo pipefail
           STAGE="$RUNNER_TEMP/release-pkg"
@@ -184,6 +212,26 @@ jobs:
           test -f "$Z" || { echo "::error::Missing zip for Nexus"; exit 1; }
           echo "zip_path=$Z" >> "$GITHUB_OUTPUT"
           ls -lh "$Z"
+
+          GAME_SCOPED="${{ steps.matrix.outputs.nexus_mod_id }}"
+          if [ -z "$GAME_SCOPED" ]; then
+            echo "::error::nexus_mod_id is empty; cannot resolve v3 mod id for the Changelog tab."
+            exit 1
+          fi
+          if [ -z "${NEXUS_API_KEY:-}" ]; then
+            echo "::error::NEXUSMODS_API_KEY is missing; cannot resolve v3 mod id."
+            exit 1
+          fi
+          V3_JSON="$(curl -sS -H "accept: application/json" -H "apikey: $NEXUS_API_KEY" \
+            "https://api.nexusmods.com/v3/games/rimworld/mods/${GAME_SCOPED}")"
+          V3_ID="$(echo "$V3_JSON" | jq -r '.data.id // .id // empty')"
+          if [ -z "$V3_ID" ] || [ "$V3_ID" = "null" ]; then
+            echo "::error::Could not resolve Nexus v3 mod id from game-scoped id ${GAME_SCOPED}."
+            echo "$V3_JSON" | head -c 500
+            exit 1
+          fi
+          echo "nexus_v3_mod_id=$V3_ID" >> "$GITHUB_OUTPUT"
+          echo "Nexus v3 mod id for changelog: $V3_ID (page ${GAME_SCOPED})"
 
       - name: Nexus skipped (no file id)
         if: inputs.dry_run != 'true' && inputs.publish_nexus == 'true' && steps.matrix.outputs.nexus_file_id == ''
@@ -211,6 +259,12 @@ jobs:
 
             Extract into RimWorld Mods. Requires Harmony.
           category: main
+          update_mod_version: true
+          archive_existing_version: true
+          primary_mod_manager_download: true
+          mod_id: ${{ steps.nexus_preflight.outputs.nexus_v3_mod_id }}
+          changelog: |
+            ${{ steps.meta.outputs.changelog_bbcode }}
 
       - name: Nexus backoff 30s
         if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure'
@@ -232,6 +286,12 @@ jobs:
 
             Extract into RimWorld Mods. Requires Harmony.
           category: main
+          update_mod_version: true
+          archive_existing_version: true
+          primary_mod_manager_download: true
+          mod_id: ${{ steps.nexus_preflight.outputs.nexus_v3_mod_id }}
+          changelog: |
+            ${{ steps.meta.outputs.changelog_bbcode }}
 
       - name: Nexus backoff 2m
         if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure'
@@ -253,6 +313,12 @@ jobs:
 
             Extract into RimWorld Mods. Requires Harmony.
           category: main
+          update_mod_version: true
+          archive_existing_version: true
+          primary_mod_manager_download: true
+          mod_id: ${{ steps.nexus_preflight.outputs.nexus_v3_mod_id }}
+          changelog: |
+            ${{ steps.meta.outputs.changelog_bbcode }}
 
       - name: Nexus backoff 5m
         if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure' && steps.nexus_upload_3.outcome == 'failure'
@@ -278,13 +344,19 @@ jobs:
 
             Extract into RimWorld Mods. Requires Harmony.
           category: main
+          update_mod_version: true
+          archive_existing_version: true
+          primary_mod_manager_download: true
+          mod_id: ${{ steps.nexus_preflight.outputs.nexus_v3_mod_id }}
+          changelog: |
+            ${{ steps.meta.outputs.changelog_bbcode }}
 
       - name: Nexus — fail if publish requested but no attempt succeeded
         if: >-
           always() &&
           inputs.dry_run != 'true' &&
           inputs.publish_nexus == 'true' &&
-          steps.version_check.outputs.version_unchanged != 'true' &&
+          steps.version_check.outputs.nexus_unchanged != 'true' &&
           steps.matrix.outputs.nexus_file_id != '' &&
           steps.nexus_preflight.outcome == 'success'
         run: |
@@ -298,7 +370,8 @@ jobs:
       - name: Release run report
         if: always()
         env:
-          VERSION_UNCHANGED: ${{ steps.version_check.outputs.version_unchanged }}
+          GITHUB_UNCHANGED: ${{ steps.version_check.outputs.github_unchanged }}
+          NEXUS_UNCHANGED: ${{ steps.version_check.outputs.nexus_unchanged }}
           VERSION_MATCH_SOURCES: ${{ steps.version_check.outputs.version_match_sources }}
           GITHUB_RELEASE_OUTCOME: ${{ steps.gh_release.outcome }}
           NEXUS_OUTCOME_1: ${{ steps.nexus_upload_1.outcome }}
@@ -319,7 +392,7 @@ jobs:
             echo "## Release run report"
             echo ""
             echo "- Mod: \`${{ inputs.mod }}\` — ${{ steps.meta.outputs.display_name }} \`${{ steps.meta.outputs.version }}\`"
-            echo "- Version gate: \`${VERSION_UNCHANGED:-n/a}\` (sources: \`${VERSION_MATCH_SOURCES:-none}\`)"
+            echo "- GitHub gate: \`${GITHUB_UNCHANGED:-n/a}\` — Nexus gate: \`${NEXUS_UNCHANGED:-n/a}\` (already on: \`${VERSION_MATCH_SOURCES:-none}\`)"
             echo "- GitHub Release: \`${GITHUB_RELEASE_OUTCOME:-skipped}\` tag \`${{ steps.matrix.outputs.zip_name }}-v${{ steps.meta.outputs.version }}\`"
             echo "- Nexus preflight: \`${PREFLIGHT:-skipped}\`"
             echo "- Nexus upload: \`${NEXUS_RESULT}\`"
