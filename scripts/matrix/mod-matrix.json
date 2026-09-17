@@ -105,7 +105,6 @@
     "publish": true,
     "nexus": "https://www.nexusmods.com/rimworld/mods/786",
     "nexus_mod_id": "786",
-    "nexus_file_id": "7922244",
-    "nexus_publish": false
+    "nexus_file_id": "7922244"
   }
 ]
