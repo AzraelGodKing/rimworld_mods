@@ -14,7 +14,14 @@ A Nexus upload from this workflow:
 
 Version and Steam notes come from each mod’s `About.xml` `modVersion` and `About/changelog.txt` (current version only). Do not bump versions in this workflow. When you *are* ready to ship, bump `modVersion` and replace the changelog first — see [VERSIONING.md](VERSIONING.md).
 
-GitHub and Nexus gates are independent. A tag that already exists does not skip Nexus, and a Nexus file that already has this version does not skip the GitHub Release. `release_anyway` ignores both gates.
+The version gate compares that `modVersion` to:
+
+- **GitHub** — does release tag `{ZipName}-v{modVersion}` already exist?
+- **Nexus** — is the page version or the latest file version already this number (or newer)?
+
+A real run (not `dry_run`) **does not build or upload** a mod that has nothing left to ship on the channels you ticked. `mod: all` therefore only deploys mods whose About version is new. GitHub and Nexus are independent after that: a GitHub tag that already exists does not skip Nexus, and Nexus already having this version does not skip a missing GitHub tag. `release_anyway` ignores both compares.
+
+`dry_run` still packs every selected mod so you can inspect zips. The setup job summary and each mod’s **Release run report** list **About.xml**, **GitHub**, and **Nexus** versions (`none` = nothing published, `unfetched` = API did not return a number).
 
 ## Rollback
 
@@ -30,7 +37,7 @@ Actions → **Release & Publish** → Run workflow:
 | `mod` | `all` or one key (`homesteader`, `datenight`, `niceties`, …). Living World and Azrael are not in this list. |
 | `create_github_release` | **true** when you are ready to tag |
 | `publish_nexus` | **true** to upload (every published mod already has `nexus_file_id`) |
-| `release_anyway` | **false** unless you are re-publishing a version that is already tagged or already on that Nexus file |
+| `release_anyway` | **false** unless you are re-publishing a version that GitHub and/or Nexus already have |
 
 Repo secret: **`NEXUSMODS_API_KEY`** (same key as Sunhaven). GitHub Releases use `GITHUB_TOKEN`.
 
