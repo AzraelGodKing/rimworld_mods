@@ -1,7 +1,7 @@
 # =============================================================================
 # Release & Publish — RimWorld mods (GitHub Releases + Nexus)
-# Pattern from SunhavenMod Release & Publish: dispatch → validate → build → zip →
-# optional GitHub tag Name-vVERSION → optional Nexus file version (retries).
+# Pattern from SunhavenMod Release & Publish: dispatch → validate → version gate →
+# build → zip → optional GitHub tag Name-vVERSION → optional Nexus file version.
 #
 # Version comes from each mod's About.xml modVersion (not a central versions.json).
 # Changelog for the release is the current-version block in About/changelog.txt.
@@ -42,7 +42,7 @@ on:
         type: boolean
         default: false
       release_anyway:
-        description: "Ignore GitHub and Nexus version gates (re-publish even if this version is already tagged / already on that Nexus file)"
+        description: "Ignore GitHub tag + Nexus version compare (re-publish even if About.xml is already on GitHub and/or Nexus)"
         required: false
         type: boolean
         default: false
@@ -60,28 +60,43 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set.outputs.matrix }}
+      has_mods: ${{ steps.set.outputs.has_mods }}
     steps:
       - uses: actions/checkout@v4
       - name: Validate XML, texPaths, and Keyed parity
         run: python3 scripts/validate_mods.py
       - id: set
+        env:
+          NEXUS_API_KEY: ${{ secrets.NEXUSMODS_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           MOD="${{ github.event.inputs.mod }}"
           if [ "$MOD" = "all" ]; then
-            echo "matrix=$(jq -c '[.[] | select(.publish != false) | .modKey]' scripts/matrix/mod-matrix.json)" >> "$GITHUB_OUTPUT"
+            KEYS="$(jq -r '[.[] | select(.publish != false) | .modKey] | join(",")' scripts/matrix/mod-matrix.json)"
           else
             PUBLISH="$(jq -r --arg k "$MOD" '.[] | select(.modKey == $k) | .publish' scripts/matrix/mod-matrix.json)"
             if [ "$PUBLISH" = "false" ]; then
               echo "::error::$MOD is not release-ready (publish=false). Living World and Azrael stay in-repo only."
               exit 1
             fi
-            echo "matrix=$(jq -cn --arg k "$MOD" '[$k]')" >> "$GITHUB_OUTPUT"
+            KEYS="$MOD"
           fi
+          python3 scripts/release_version_gate.py \
+            --select-new \
+            --keys "$KEYS" \
+            --repo "${{ github.repository }}" \
+            --api-url "${{ github.api_url }}" \
+            --create-github-release "${{ github.event.inputs.create_github_release }}" \
+            --publish-nexus "${{ github.event.inputs.publish_nexus }}" \
+            --dry-run "${{ github.event.inputs.dry_run }}" \
+            --release-anyway "${{ github.event.inputs.release_anyway }}" \
+            --github-output
 
   build:
     name: Build and pack
     needs: setup
+    if: needs.setup.outputs.has_mods == 'true'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -127,6 +142,7 @@ jobs:
   release:
     name: GitHub + Nexus
     needs: [setup, build]
+    if: needs.setup.outputs.has_mods == 'true'
     permissions:
       contents: write
     strategy:

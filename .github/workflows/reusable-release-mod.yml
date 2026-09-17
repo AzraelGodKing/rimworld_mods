@@ -2,8 +2,8 @@
 # Reusable — GitHub Release + Nexus upload for one RimWorld mod
 # Mirrors SunhavenMod/.github/workflows/reusable-release-mod.yml
 # (GitHub tag Name-vVERSION, Nexus-Mods/upload-action@v1.0.0-beta.10 with retries,
-# independent GitHub/Nexus version gates, page version + archive + Vortex primary,
-# Changelog tab via v3 mod id lookup).
+# About.xml vs GitHub tag and Nexus page/file version, page version + archive +
+# Vortex primary, Changelog tab via v3 mod id lookup).
 # The rolling `latest` tag from Build mod DLLs is left alone (make_latest: false).
 # =============================================================================
 name: Reusable — release one RimWorld mod
@@ -82,76 +82,31 @@ jobs:
           echo "zip_name=$(basename "$NAMED")" >> "$GITHUB_OUTPUT"
           ls -lh "$NAMED"
 
-      - name: Upstream version gate (GitHub tags + Nexus files)
+      - name: Version gate (About.xml vs GitHub tag + Nexus)
         id: version_check
         env:
           NEXUS_API_KEY: ${{ secrets.NEXUSMODS_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -euo pipefail
-          CUR="${{ steps.meta.outputs.version }}"
-          TAG="${{ steps.matrix.outputs.zip_name }}-v${CUR}"
-          if [ "${{ inputs.dry_run }}" = "true" ] || [ "${{ inputs.release_anyway }}" = "true" ]; then
-            echo "github_unchanged=false" >> "$GITHUB_OUTPUT"
-            echo "nexus_unchanged=false" >> "$GITHUB_OUTPUT"
-            echo "version_match_sources=" >> "$GITHUB_OUTPUT"
-            echo "upstream_nexus_version=" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          MATCH=()
-          GH_UNCHANGED=false
-          NX_UNCHANGED=false
-          GH_JSON="$(curl -sS -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            "${{ github.api_url }}/repos/${{ github.repository }}/releases/tags/${TAG}" || true)"
-          GH_TAG="$(echo "$GH_JSON" | jq -r '.tag_name // empty')"
-          if [ "$GH_TAG" = "$TAG" ]; then
-            MATCH+=("github")
-            GH_UNCHANGED=true
-          fi
-          NX_V=""
-          MOD_ID="${{ steps.matrix.outputs.nexus_mod_id }}"
-          FILE_ID="${{ steps.matrix.outputs.nexus_file_id }}"
-          if [ -n "$MOD_ID" ] && [ -n "${NEXUS_API_KEY:-}" ] && [ "${{ steps.matrix.outputs.nexus_publish }}" != "false" ]; then
-            NX_BODY="$(curl -sS -H "accept: application/json" -H "apikey: $NEXUS_API_KEY" \
-              "https://api.nexusmods.com/v1/games/rimworld/mods/${MOD_ID}/files.json" || true)"
-            NX_V="$(echo "$NX_BODY" | jq -r --arg id "$FILE_ID" '
-              [
-                .files[]?
-                | select((.version // "") != "")
-                | select(
-                    $id == ""
-                    or ((.file_id // .fileid // .id[0] // empty) | tostring) == $id
-                  )
-              ]
-              | sort_by(.uploaded_timestamp // 0)
-              | reverse
-              | .[0].version // empty
-            ' 2>/dev/null || true)"
-            if [ -n "$NX_V" ] && [ "$NX_V" = "$CUR" ]; then
-              MATCH+=("nexus")
-              NX_UNCHANGED=true
-            fi
-          fi
-          echo "github_unchanged=$GH_UNCHANGED" >> "$GITHUB_OUTPUT"
-          echo "nexus_unchanged=$NX_UNCHANGED" >> "$GITHUB_OUTPUT"
-          if [ "${#MATCH[@]}" -gt 0 ]; then
-            IFS=,
-            echo "version_match_sources=${MATCH[*]}" >> "$GITHUB_OUTPUT"
-            IFS=
-          else
-            echo "version_match_sources=" >> "$GITHUB_OUTPUT"
-          fi
-          echo "upstream_nexus_version=$NX_V" >> "$GITHUB_OUTPUT"
+          python3 scripts/release_version_gate.py \
+            --mod-key "${{ inputs.mod }}" \
+            --repo "${{ github.repository }}" \
+            --api-url "${{ github.api_url }}" \
+            --create-github-release "${{ inputs.create_github_release }}" \
+            --publish-nexus "${{ inputs.publish_nexus }}" \
+            --dry-run "${{ inputs.dry_run }}" \
+            --release-anyway "${{ inputs.release_anyway }}" \
+            --github-output
 
-      - name: Skip GitHub — version already tagged
+      - name: Skip GitHub — this version is already tagged
         if: inputs.dry_run != 'true' && inputs.create_github_release == 'true' && steps.version_check.outputs.github_unchanged == 'true'
         run: |
-          echo "✅ Skipping GitHub Release ${{ steps.matrix.outputs.zip_name }}-v${{ steps.meta.outputs.version }} (tag already exists)."
+          echo "✅ Skipping GitHub. About.xml=${{ steps.version_check.outputs.about_version }} GitHub=${{ steps.version_check.outputs.github_version }} Nexus=${{ steps.version_check.outputs.nexus_version }}"
 
-      - name: Skip Nexus — version already on that file
+      - name: Skip Nexus — About.xml is not newer than Nexus
         if: inputs.dry_run != 'true' && inputs.publish_nexus == 'true' && steps.version_check.outputs.nexus_unchanged == 'true'
         run: |
-          echo "✅ Skipping Nexus upload for ${{ steps.meta.outputs.display_name }} v${{ steps.meta.outputs.version }} (already the latest version of file ${{ steps.matrix.outputs.nexus_file_id }})."
+          echo "✅ Skipping Nexus. About.xml=${{ steps.version_check.outputs.about_version }} GitHub=${{ steps.version_check.outputs.github_version }} Nexus=${{ steps.version_check.outputs.nexus_version }}"
 
       - name: Upload dry-run zip
         if: inputs.dry_run == 'true'
@@ -373,6 +328,11 @@ jobs:
           GITHUB_UNCHANGED: ${{ steps.version_check.outputs.github_unchanged }}
           NEXUS_UNCHANGED: ${{ steps.version_check.outputs.nexus_unchanged }}
           VERSION_MATCH_SOURCES: ${{ steps.version_check.outputs.version_match_sources }}
+          ABOUT_VERSION: ${{ steps.version_check.outputs.about_version }}
+          GITHUB_VERSION: ${{ steps.version_check.outputs.github_version }}
+          NEXUS_VERSION: ${{ steps.version_check.outputs.nexus_version }}
+          NEXUS_PAGE_VERSION: ${{ steps.version_check.outputs.nexus_page_version }}
+          NEXUS_FILE_VERSION: ${{ steps.version_check.outputs.nexus_file_version }}
           GITHUB_RELEASE_OUTCOME: ${{ steps.gh_release.outcome }}
           NEXUS_OUTCOME_1: ${{ steps.nexus_upload_1.outcome }}
           NEXUS_OUTCOME_2: ${{ steps.nexus_upload_2.outcome }}
@@ -391,9 +351,12 @@ jobs:
           {
             echo "## Release run report"
             echo ""
-            echo "- Mod: \`${{ inputs.mod }}\` — ${{ steps.meta.outputs.display_name }} \`${{ steps.meta.outputs.version }}\`"
-            echo "- GitHub gate: \`${GITHUB_UNCHANGED:-n/a}\` — Nexus gate: \`${NEXUS_UNCHANGED:-n/a}\` (already on: \`${VERSION_MATCH_SOURCES:-none}\`)"
-            echo "- GitHub Release: \`${GITHUB_RELEASE_OUTCOME:-skipped}\` tag \`${{ steps.matrix.outputs.zip_name }}-v${{ steps.meta.outputs.version }}\`"
+            echo "- Mod: \`${{ inputs.mod }}\` — ${{ steps.meta.outputs.display_name }}"
+            echo "- **About.xml:** \`${ABOUT_VERSION:-n/a}\`"
+            echo "- **GitHub:** \`${GITHUB_VERSION:-n/a}\` (tag \`${{ steps.version_check.outputs.github_tag }}\`)"
+            echo "- **Nexus:** \`${NEXUS_VERSION:-n/a}\` (page \`${NEXUS_PAGE_VERSION:-n/a}\`, file \`${NEXUS_FILE_VERSION:-n/a}\`)"
+            echo "- Gate: GitHub skip=\`${GITHUB_UNCHANGED:-n/a}\` Nexus skip=\`${NEXUS_UNCHANGED:-n/a}\` (already on: \`${VERSION_MATCH_SOURCES:-none}\`)"
+            echo "- GitHub Release: \`${GITHUB_RELEASE_OUTCOME:-skipped}\`"
             echo "- Nexus preflight: \`${PREFLIGHT:-skipped}\`"
             echo "- Nexus upload: \`${NEXUS_RESULT}\`"
           } >> "$GITHUB_STEP_SUMMARY"
