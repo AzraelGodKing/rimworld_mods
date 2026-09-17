@@ -64,6 +64,7 @@ namespace Homesteader
             Dictionary<ThingDef, int> kindCounts = new Dictionary<ThingDef, int>();
             HashSet<string> seenPreserveDefs = new HashSet<string>();
             int colonists = 0;
+            int crateVariety = 0;
 
             if (Verse.Current.ProgramState != ProgramState.Playing || Find.Maps == null)
             {
@@ -98,14 +99,14 @@ namespace Homesteader
 
                         foreach (Thing thing in storage.GetSlotGroup().HeldThings)
                         {
-                            Tally(thing, report, kindCounts, seenPreserveDefs);
+                            Tally(thing, report, kindCounts, seenPreserveDefs, ref crateVariety);
                         }
                     }
                 }
             }
 
             report.colonistCount = colonists;
-            report.preserveKinds = seenPreserveDefs.Count;
+            report.preserveKinds = seenPreserveDefs.Count + crateVariety;
             if (colonists > 0)
             {
                 report.daysOfFood = report.nutrition / (colonists * NutritionPerColonistPerDay);
@@ -124,10 +125,30 @@ namespace Homesteader
             Thing thing,
             PantryReport report,
             Dictionary<ThingDef, int> kindCounts,
-            HashSet<string> seenPreserveDefs)
+            HashSet<string> seenPreserveDefs,
+            ref int crateVariety)
         {
             if (thing?.def == null)
             {
+                return;
+            }
+
+            if (PreserveCatalog.IsPreserveCrate(thing.def))
+            {
+                int n = thing.stackCount;
+                if (!kindCounts.TryGetValue(thing.def, out int have))
+                {
+                    kindCounts[thing.def] = n;
+                }
+                else
+                {
+                    kindCounts[thing.def] = have + n;
+                }
+
+                // Recipe packs 15 preserves; estimate nutrition and mixed-lot variety.
+                report.nutrition += PreserveCatalog.AverageItemNutrition()
+                    * PreserveCatalog.PreserveCrateItemCount * n;
+                crateVariety += PreserveCatalog.PreserveCrateVarietyKinds * n;
                 return;
             }
 
@@ -138,14 +159,14 @@ namespace Homesteader
                 return;
             }
 
-            int n = thing.stackCount;
-            if (!kindCounts.TryGetValue(thing.def, out int have))
+            int stack = thing.stackCount;
+            if (!kindCounts.TryGetValue(thing.def, out int haveStack))
             {
-                kindCounts[thing.def] = n;
+                kindCounts[thing.def] = stack;
             }
             else
             {
-                kindCounts[thing.def] = have + n;
+                kindCounts[thing.def] = haveStack + stack;
             }
 
             if (preserve)
@@ -155,7 +176,7 @@ namespace Homesteader
 
             if (ingestible)
             {
-                report.nutrition += thing.GetStatValue(StatDefOf.Nutrition) * n;
+                report.nutrition += thing.GetStatValue(StatDefOf.Nutrition) * stack;
             }
 
             CompRottable rot = thing.TryGetComp<CompRottable>();

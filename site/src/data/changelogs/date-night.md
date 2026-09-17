@@ -1,6 +1,17 @@
 # Changelog
 
-Detailed notes for **Date Night** only. ## [Unreleased]
+Detailed notes for **Date Night** only.
+
+## [1.1.2]
+
+Player-facing version **1.1.2** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.1.2 loaded from ...` in Player.log (`date-memory-v1`).
+
+### Fixed
+- **Ephemeral couple caches** (AZR-220, `date-memory-v1`) — lovin-window and rendezvous-bed statics clear on new/loaded game so thing IDs cannot leak into another colony in the same process.
+- **Failed gift transfer** (AZR-222) — if inventory transfer fails, drop at the partner's feet and still grant `DateNight_ReceivedGift` (was marked delivered with no thought).
+- **Dead-pawn prune** (AZR-221) — favourite venues, date cooldowns, and anniversary year maps drop entries whose pawns are no longer alive.
+
+## [1.1.1]
 
 Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.1.1 loaded from ...` in Player.log (`update-news-v1`).
 

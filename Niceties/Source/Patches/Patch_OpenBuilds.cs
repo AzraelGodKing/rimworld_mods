@@ -43,16 +43,37 @@ namespace Niceties
             OpenBuildsResult enclose = OpenBuilds.WouldEnclose(__instance, worker);
             if (enclose.EnclosesThings)
             {
-                worker.jobs.EndCurrentJob(JobCondition.Incompletable);
+                // Skip CompleteConstruction; ReadyForNextToil ends the finish job.
+                // No EndCurrentJob here — that would re-enter mid-toil.
                 return false;
             }
 
             if (__instance.Position == worker.Position || enclose.EnclosesSelf)
             {
-                return !OpenBuilds.StepAsideThenRetry(worker, __instance);
+                return !OpenBuilds.QueueStepAsideThenRetry(worker, __instance);
             }
 
             return true;
+        }
+    }
+
+    /// <summary>
+    /// After a deferred step-aside is queued, CompleteConstruction's caller still
+    /// invokes ReadyForNextToil. Skip that so the finish job stays current until
+    /// GameComponentTick replaces it with Goto + queued resume.
+    /// </summary>
+    [HarmonyPatch(typeof(JobDriver), nameof(JobDriver.ReadyForNextToil))]
+    internal static class Patch_OpenBuilds_ReadyForNextToil
+    {
+        private static bool Prefix(JobDriver __instance)
+        {
+            if (!(__instance is JobDriver_ConstructFinishFrame))
+            {
+                return true;
+            }
+
+            Pawn pawn = __instance.pawn;
+            return pawn == null || !OpenBuilds.HasPendingFor(pawn);
         }
     }
 }

@@ -3,7 +3,8 @@
 **Status:** coexistence shipped; Availability / Missing handshake designed (await Font API names); deeper combat handoff is a later idea (Font).  
 **API:** `Nemesis.NemesisCompatApi` — `HasActiveHunt`, `ActiveNemesisPawn`, `IsNemesisPawn`, `WouldClaim`, `ShouldReportMissingToRimesis`.  
 **Nemesis packageId:** `AzraelGodKing.Nemesis`  
-**Rimesis packageIds tried:** `Font.Rimesis`, `font.rimesis`, `Rimesis` (confirm live id with Font).
+**Rimesis packageIds tried:** `Font.Rimesis`, `font.rimesis`, `Font.Rimesis.Core`, `Rimesis` (still unconfirmed — not in local Workshop; awaiting Font).  
+**BFV packageId (confirmed live 1.6):** `ferny.Vengeance` (Workshop “Back For Vengeance” by ferny). Legacy SmashPhil / VE ids kept as fallbacks in `SoftCompat`.
 
 ---
 

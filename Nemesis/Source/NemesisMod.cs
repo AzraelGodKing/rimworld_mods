@@ -14,7 +14,7 @@ namespace Nemesis
         public NemesisMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<NemesisSettings>();
-            ModVersionLog.Write("[Nemesis]", content, extra: "return-heal-v1");
+            ModVersionLog.Write("[Nemesis]", content, extra: "bfv-ferny-id-v1");
             SafePatchAll.Apply(new Harmony("azraelgodking.nemesis"), "[Nemesis]");
         }
 

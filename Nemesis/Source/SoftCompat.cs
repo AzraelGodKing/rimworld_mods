@@ -34,6 +34,8 @@ namespace Nemesis
 
         private static readonly string[] BfvPackageIds =
         {
+            // Live 1.6 Workshop: ferny "Back For Vengeance" (confirmed AZR-59).
+            "ferny.Vengeance",
             "SmashPhil.BackForVengeance",
             "smashphil.backforvengeance",
             "SmashPhil.BFV",

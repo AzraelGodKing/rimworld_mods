@@ -51,7 +51,7 @@ namespace Niceties
                 case QualityCategory.Awful:
                     return 1f;
                 case QualityCategory.Poor:
-                    return 0.8f;
+                    return 1f;
                 case QualityCategory.Normal:
                     return 0.45f;
                 case QualityCategory.Good:

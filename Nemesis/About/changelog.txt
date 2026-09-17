@@ -1,10 +1,10 @@
-1.1.1
-[h1]Nemesis — 1.1.1[/h1]
+1.1.2
+[h1]Nemesis — 1.1.2[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Headless return / instant retreat[/b] — a wounded-escape nemesis who lost a head (or other parts) no longer comes back still missing them. Between appearances they get missing parts restored, blood loss cleared, and enough HP to actually fight instead of bleeding out and fleeing in ~4 hours.
+[*] Soft-compat detects live [b]Back For Vengeance[/b] packageId `ferny.Vengeance` (1.6 Workshop).
 [/list]
 
-[i]Build stamp (Player.log): return-heal-v1[/i]
+[i]Build stamp (Player.log): bfv-ferny-id-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/nemesis.md[/i]

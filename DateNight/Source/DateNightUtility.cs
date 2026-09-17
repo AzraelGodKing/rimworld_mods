@@ -12,7 +12,13 @@ namespace DateNight
         public const int AlwaysDoLovinCooldownTicks = 100;
 
         // Stable rendezvous bed per couple for the current Lovin window (no claim churn).
+        // Ephemeral — cleared on new/load game (not scribed).
         private static readonly Dictionary<long, int> RendezvousBedIds = new Dictionary<long, int>();
+
+        public static void ClearEphemeral()
+        {
+            RendezvousBedIds.Clear();
+        }
 
         public static bool IsLovinSchedule(Pawn pawn)
         {

@@ -2,6 +2,17 @@
 
 Detailed notes for **Niceties** only.
 
+## [1.2.1]
+
+Player-facing version **1.2.1** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.2.1 loaded from ...; openbuilds-hard-v1` in Player.log.
+
+### Fixed
+
+- **Leave-a-way-out re-entry** (AZR-216) — step-aside / stop is queued for the next `GameComponent` tick instead of calling `StartJob`/`EndCurrentJob` from inside `Frame.CompleteConstruction`.
+- **Enclose-check cache** (AZR-215) — multi-slot cache so concurrent builders do not thrash a single global entry.
+- **Apparel care Poor quality** (AZR-217) — Poor daily wear is vanilla (`1f`), matching the settings tip (was `0.8f`).
+- **Share Rooms incompatible** (AZR-214) — `LWM.ShareRooms` listed alongside Smarter Construction; both patch bedroom/barracks scoring.
+
 ## [1.2.0]
 
 Player-facing version **1.2.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.2.0 loaded from ...; leave-a-way-out-v1` in Player.log.

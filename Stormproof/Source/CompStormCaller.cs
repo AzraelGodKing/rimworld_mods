@@ -64,14 +64,39 @@ namespace Stormproof
         private void CallStorm()
         {
             Map map = parent.Map;
+            if (map == null)
+            {
+                return;
+            }
+
+            lastCallTick = Find.TickManager.TicksGame;
+            MapComponent_Stormproof comp = map.GetComponent<MapComponent_Stormproof>();
+            if (comp == null)
+            {
+                ApplyQueuedStorm(map, parent, Props.stormDurationTicks);
+                return;
+            }
+
+            comp.QueueStormCall(parent, Props.stormDurationTicks);
+        }
+
+        internal static void ApplyQueuedStorm(Map map, Thing caller, int durationTicks)
+        {
+            if (map?.weatherManager == null || map.weatherDecider == null)
+            {
+                return;
+            }
+
             map.weatherManager.TransitionTo(StormproofDefOf.RainyThunderstorm);
             map.weatherManager.curWeatherAge = 0;
-            DurationRef(map.weatherDecider) = Props.stormDurationTicks;
-            lastCallTick = Find.TickManager.TicksGame;
-            FleckMaker.ThrowLightningGlow(parent.DrawPos, map, 3f);
-            Messages.Message(
-                "Stormproof_StormCaller_Discharging".Translate(parent.LabelShort),
-                parent, MessageTypeDefOf.NeutralEvent);
+            DurationRef(map.weatherDecider) = durationTicks;
+            if (caller != null && !caller.Destroyed)
+            {
+                FleckMaker.ThrowLightningGlow(caller.DrawPos, map, 3f);
+                Messages.Message(
+                    "Stormproof_StormCaller_Discharging".Translate(caller.LabelShort),
+                    caller, MessageTypeDefOf.NeutralEvent);
+            }
         }
 
         public override void PostExposeData()
