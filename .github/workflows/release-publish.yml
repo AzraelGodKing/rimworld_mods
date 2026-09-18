@@ -17,7 +17,7 @@ on:
         description: "Dry run (build + zip artifact only; no GitHub Release or Nexus)"
         required: true
         type: boolean
-        default: true
+        default: false
       mod:
         description: "Which mod to release"
         required: true
@@ -37,10 +37,10 @@ on:
         type: boolean
         default: true
       publish_nexus:
-        description: "Upload the zip to Nexus Mods (page version, archive old Main, Vortex default, Changelog tab)"
+        description: "Upload the zip to Nexus Mods (page version, archive old Main, Vortex default; Changelog tab after a successful file)"
         required: false
         type: boolean
-        default: false
+        default: true
       release_anyway:
         description: "Ignore GitHub tag + Nexus version compare (re-publish even if About.xml is already on GitHub and/or Nexus)"
         required: false
