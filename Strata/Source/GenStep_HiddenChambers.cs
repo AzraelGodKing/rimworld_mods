@@ -117,19 +117,25 @@ namespace Strata
         }
     }
 
-    // Fogs the freshly generated solid-rock level, then unfogs the arrival
-    // chamber. Hidden chambers stay dark until a miner breaks through -
-    // discovery by digging, exactly like ore. (Vanilla unfogs on mineable
-    // despawn, so no extra machinery is needed.)
+    // Fogs the freshly generated underground level. When mineables are deferred
+    // (common — rock GenSpawn runs after GetOtherMap), FloodUnfog here would walk
+    // the whole empty map and leave rock revealed after fill. In that case only
+    // Refog; StrataPocketMapOpen applies arrival fog after SpawnMineablesChunked.
     public class GenStep_StrataFog : GenStep
     {
         public override int SeedPart => 133731882;
 
         public override void Generate(Map map, GenStepParams parms)
         {
-            map.fogGrid.Refog(CellRect.WholeMap(map));
-            IntVec3 root = MapGenerator.PlayerStartSpot.IsValid ? MapGenerator.PlayerStartSpot : map.Center;
-            FloodFillerFog.FloodUnfog(root, map);
+            bool deferMineables = MapGenerator.TryGetVar(GenStep_SolidRock.DeferMineablesVar, out bool defer)
+                && defer;
+            if (deferMineables)
+            {
+                map.fogGrid.Refog(CellRect.WholeMap(map));
+                return;
+            }
+
+            StrataUndergroundFog.ApplyArrivalFog(map);
         }
     }
 }

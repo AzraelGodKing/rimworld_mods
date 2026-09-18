@@ -9,8 +9,8 @@
 [b]Fixed[/b]
 [list]
 [*] [b]Wrong-floor bunk nap[/b] — while commuting to an assigned bed on another floor, GetRest no longer keeps a LayDown on an unoccupied bed on the current floor (sibling of the AZR-101 ground-sleep fix).
-[*] [b]Dug floor stuck fog[/b] — mined underground cells that vanilla left fogged (no already-clear neighbor at destroy time) now flood-unfog; existing saves heal on load when the stuck fog borders clear space. Undug mineable rock still stays dark until mined.
+[*] [b]Underground fog[/b] — dug open cells clear; rock wall faces that border open stay visible; deep undug rock stays fogged. Arrival fog runs after deferred rock fill so FloodUnfog no longer reveals the whole rock volume.
 [/list]
 
-[i]Build stamp (Player.log): dug-floor-fog-v1[/i]
+[i]Build stamp (Player.log): edge-rock-fog-v2[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
