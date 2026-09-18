@@ -64,5 +64,5 @@ router.afterEach((to) => {
   document.title =
     to.name === "compat"
       ? `Compatibility — ${modsData.site.title}`
-      : `${modsData.site.title} — ${modsData.site.author}`;
+      : modsData.site.title;
 });
