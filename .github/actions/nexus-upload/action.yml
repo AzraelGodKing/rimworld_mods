@@ -1,0 +1,42 @@
+name: Nexus file upload
+description: One attempt to add a version to an existing Nexus file (no Changelog tab).
+inputs:
+  api_key:
+    description: Nexus API key
+    required: true
+  file_id:
+    description: Nexus file id to version
+    required: true
+  filename:
+    description: Path to the zip
+    required: true
+  version:
+    description: About.xml modVersion
+    required: true
+  display_name:
+    description: Name shown on the Files tab
+    required: true
+  description:
+    description: File description (Steam BBCode changelog)
+    required: true
+outputs:
+  version_id:
+    description: Nexus file version id from a successful upload
+    value: ${{ steps.upload.outputs.version_id }}
+runs:
+  using: composite
+  steps:
+    - id: upload
+      # Pin: v1.0.0-beta.10 (lightweight tag → this commit). Bump SHA when you take a new release.
+      uses: Nexus-Mods/upload-action@c96019556046053aa26044b44396cd38929daf23
+      with:
+        api_key: ${{ inputs.api_key }}
+        file_id: ${{ inputs.file_id }}
+        filename: ${{ inputs.filename }}
+        version: ${{ inputs.version }}
+        display_name: ${{ inputs.display_name }}
+        description: ${{ inputs.description }}
+        category: main
+        update_mod_version: true
+        archive_existing_version: true
+        primary_mod_manager_download: true
