@@ -1,9 +1,10 @@
 # =============================================================================
 # Reusable — GitHub Release + Nexus upload for one RimWorld mod
 # Mirrors SunhavenMod/.github/workflows/reusable-release-mod.yml
-# (GitHub tag Name-vVERSION, Nexus-Mods/upload-action@v1.0.0-beta.10 with retries,
+# (GitHub tag Name-vVERSION, Nexus-Mods/upload-action@c96019556046053aa26044b44396cd38929daf23
+# = v1.0.0-beta.10 SHA pin, retries via composite,
 # About.xml vs GitHub tag and Nexus page/file version, page version + archive +
-# Vortex primary, Changelog tab via v3 mod id lookup).
+# Vortex primary. Changelog tab is a separate POST after a successful file upload.)
 # The rolling `latest` tag from Build mod DLLs is left alone (make_latest: false).
 # =============================================================================
 name: Reusable — release one RimWorld mod
@@ -22,7 +23,7 @@ on:
         default: "true"
       publish_nexus:
         type: string
-        default: "false"
+        default: "true"
       release_anyway:
         type: string
         default: "false"
@@ -202,7 +203,7 @@ jobs:
         id: nexus_upload_1
         if: success() && steps.nexus_preflight.outcome == 'success'
         continue-on-error: true
-        uses: Nexus-Mods/upload-action@v1.0.0-beta.10
+        uses: ./.github/actions/nexus-upload
         with:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
           file_id: ${{ steps.matrix.outputs.nexus_file_id }}
@@ -213,13 +214,6 @@ jobs:
             ${{ steps.meta.outputs.changelog_bbcode }}
 
             Extract into RimWorld Mods. Requires Harmony.
-          category: main
-          update_mod_version: true
-          archive_existing_version: true
-          primary_mod_manager_download: true
-          mod_id: ${{ steps.nexus_preflight.outputs.nexus_v3_mod_id }}
-          changelog: |
-            ${{ steps.meta.outputs.changelog_bbcode }}
 
       - name: Nexus backoff 30s
         if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure'
@@ -229,7 +223,7 @@ jobs:
         id: nexus_upload_2
         if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure'
         continue-on-error: true
-        uses: Nexus-Mods/upload-action@v1.0.0-beta.10
+        uses: ./.github/actions/nexus-upload
         with:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
           file_id: ${{ steps.matrix.outputs.nexus_file_id }}
@@ -240,13 +234,6 @@ jobs:
             ${{ steps.meta.outputs.changelog_bbcode }}
 
             Extract into RimWorld Mods. Requires Harmony.
-          category: main
-          update_mod_version: true
-          archive_existing_version: true
-          primary_mod_manager_download: true
-          mod_id: ${{ steps.nexus_preflight.outputs.nexus_v3_mod_id }}
-          changelog: |
-            ${{ steps.meta.outputs.changelog_bbcode }}
 
       - name: Nexus backoff 2m
         if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure'
@@ -256,7 +243,7 @@ jobs:
         id: nexus_upload_3
         if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure'
         continue-on-error: true
-        uses: Nexus-Mods/upload-action@v1.0.0-beta.10
+        uses: ./.github/actions/nexus-upload
         with:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
           file_id: ${{ steps.matrix.outputs.nexus_file_id }}
@@ -267,13 +254,6 @@ jobs:
             ${{ steps.meta.outputs.changelog_bbcode }}
 
             Extract into RimWorld Mods. Requires Harmony.
-          category: main
-          update_mod_version: true
-          archive_existing_version: true
-          primary_mod_manager_download: true
-          mod_id: ${{ steps.nexus_preflight.outputs.nexus_v3_mod_id }}
-          changelog: |
-            ${{ steps.meta.outputs.changelog_bbcode }}
 
       - name: Nexus backoff 5m
         if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure' && steps.nexus_upload_3.outcome == 'failure'
@@ -287,7 +267,7 @@ jobs:
           steps.nexus_upload_1.outcome == 'failure' &&
           steps.nexus_upload_2.outcome == 'failure' &&
           steps.nexus_upload_3.outcome == 'failure'
-        uses: Nexus-Mods/upload-action@v1.0.0-beta.10
+        uses: ./.github/actions/nexus-upload
         with:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
           file_id: ${{ steps.matrix.outputs.nexus_file_id }}
@@ -298,13 +278,24 @@ jobs:
             ${{ steps.meta.outputs.changelog_bbcode }}
 
             Extract into RimWorld Mods. Requires Harmony.
-          category: main
-          update_mod_version: true
-          archive_existing_version: true
-          primary_mod_manager_download: true
-          mod_id: ${{ steps.nexus_preflight.outputs.nexus_v3_mod_id }}
-          changelog: |
-            ${{ steps.meta.outputs.changelog_bbcode }}
+
+      - name: Nexus Changelog tab (only after a successful file upload)
+        id: nexus_changelog
+        if: >-
+          always() &&
+          steps.nexus_preflight.outcome == 'success' &&
+          (steps.nexus_upload_1.outcome == 'success' ||
+           steps.nexus_upload_2.outcome == 'success' ||
+           steps.nexus_upload_3.outcome == 'success' ||
+           steps.nexus_upload_4.outcome == 'success')
+        continue-on-error: true
+        env:
+          NEXUS_API_KEY: ${{ secrets.NEXUSMODS_API_KEY }}
+          NEXUS_CHANGELOG: ${{ steps.meta.outputs.changelog_bbcode }}
+        run: |
+          python3 scripts/nexus_post_changelog.py \
+            --mod-id "${{ steps.nexus_preflight.outputs.nexus_v3_mod_id }}" \
+            --version "${{ steps.meta.outputs.version }}"
 
       - name: Nexus — fail if publish requested but no attempt succeeded
         if: >-
@@ -339,6 +330,7 @@ jobs:
           NEXUS_OUTCOME_3: ${{ steps.nexus_upload_3.outcome }}
           NEXUS_OUTCOME_4: ${{ steps.nexus_upload_4.outcome }}
           PREFLIGHT: ${{ steps.nexus_preflight.outcome }}
+          NEXUS_CHANGELOG_OUTCOME: ${{ steps.nexus_changelog.outcome }}
         run: |
           set -euo pipefail
           NEXUS_RESULT="not-requested"
@@ -359,4 +351,5 @@ jobs:
             echo "- GitHub Release: \`${GITHUB_RELEASE_OUTCOME:-skipped}\`"
             echo "- Nexus preflight: \`${PREFLIGHT:-skipped}\`"
             echo "- Nexus upload: \`${NEXUS_RESULT}\`"
+            echo "- Nexus Changelog tab: \`${NEXUS_CHANGELOG_OUTCOME:-skipped}\`"
           } >> "$GITHUB_STEP_SUMMARY"
