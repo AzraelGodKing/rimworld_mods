@@ -11,6 +11,7 @@ const { t } = useI18n();
 
 const query = ref("");
 const sortBy = ref("default");
+const BASE = import.meta.env.BASE_URL;
 
 const sortOptions = [
   { id: "default", key: "hub.sort.default" },
@@ -18,6 +19,14 @@ const sortOptions = [
   { id: "favs", key: "hub.sort.favs" },
   { id: "name", key: "hub.sort.name" },
 ];
+
+const heroArt = computed(() =>
+  modsData.mods.slice(0, 4).map((m) => ({
+    id: m.id,
+    src: BASE + m.preview,
+    name: m.name,
+  }))
+);
 
 function haystack(mod) {
   return [
@@ -52,16 +61,50 @@ const filtered = computed(() => {
 
 <template>
   <div class="home">
-    <section class="hero">
-      <div class="wrap">
-        <h1>{{ modsData.site.title }}</h1>
-        <p class="hero-tagline">{{ modsData.site.tagline }}</p>
-        <p class="hero-intro">{{ modsData.site.heroIntro }}</p>
-        <StatsBar />
+    <section class="hero" aria-labelledby="hero-brand">
+      <div class="hero-plane" aria-hidden="true">
+        <div class="hero-wash"></div>
+        <div class="hero-grain"></div>
+        <div class="hero-embers"></div>
+        <div class="hero-collage">
+          <figure
+            v-for="(shot, i) in heroArt"
+            :key="shot.id"
+            class="hero-shot"
+            :class="`hero-shot-${i + 1}`"
+          >
+            <img :src="shot.src" :alt="''" loading="eager">
+          </figure>
+        </div>
+      </div>
+
+      <div class="hero-stage wrap">
+        <div class="hero-copy">
+          <p id="hero-brand" class="hero-brand">{{ modsData.site.author }}</p>
+          <h1 class="hero-headline">{{ t('hub.headline') }}</h1>
+          <p class="hero-lede">{{ modsData.site.tagline }}</p>
+          <div class="hero-cta">
+            <a class="btn btn-ember" href="#workshop">{{ t('hub.cta.browse') }}</a>
+            <a
+              class="btn btn-ghost"
+              :href="modsData.site.github"
+              target="_blank"
+              rel="noopener"
+            >{{ t('hub.cta.source') }}</a>
+            <RouterLink class="btn btn-ghost" to="/compat">{{ t('nav.compat') }}</RouterLink>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="wrap">
+    <section id="workshop" class="workshop wrap">
+      <header class="workshop-head">
+        <h2 class="workshop-title">{{ t('hub.workshop') }}</h2>
+        <p class="workshop-note">{{ modsData.site.heroIntro }}</p>
+      </header>
+
+      <StatsBar />
+
       <div class="hub-controls">
         <input
           v-model="query"
