@@ -113,6 +113,9 @@ namespace Strata
                     {
                         yield return step;
                     }
+                    // GenStep_StrataFog skipped FloodUnfog while rock was deferred.
+                    // With MakeFog present, reveal only the arrival open + wall faces.
+                    StrataUndergroundFog.ApplyArrivalFog(map);
                 }
 
                 StrataLog.Verbose("[Strata] Opened level under " + portal.LabelCap
