@@ -399,4 +399,56 @@
 
   <Strata_PlaySettings_SupportOverlayTip>Strata: support overlay\nHighlights excavated cells under thick rock that are past a roof holder or shoring pillar. Cave-ins prefer those cells.</Strata_PlaySettings_SupportOverlayTip>
 
+  <!-- Sensing suite (AZR-138 / 139 / 141) -->
+  <Strata_Settings_WaterTableSeepage>Water table seepage</Strata_Settings_WaterTableSeepage>
+  <Strata_Settings_WaterTableSeepageDesc>Levels below the water table seep continuously into the existing flood/sump system. Off by default so existing saves stay dry.</Strata_Settings_WaterTableSeepageDesc>
+  <Strata_Settings_WaterTableSeepRate>Seep rate: {0}</Strata_Settings_WaterTableSeepRate>
+  <Strata_SumpBelowTable>Water table: {0} levels below</Strata_SumpBelowTable>
+  <Strata_SumpAboveTable>Water table: at or above this level</Strata_SumpAboveTable>
+  <Strata_Seep_LetterLabel>Groundwater seepage</Strata_Seep_LetterLabel>
+  <Strata_Seep_LetterText>This level sits {0} floors below the water table. Without enough powered sump pumps, shallow flood water is rising. Pump it or the floor will become dangerous.</Strata_Seep_LetterText>
+
+  <Strata_Sample_NeedsPower>Core drill needs power</Strata_Sample_NeedsPower>
+  <Strata_Sample_Ready>Ready to sample the rock below</Strata_Sample_Ready>
+  <Strata_Sample_Working>Sampling… {0} remaining</Strata_Sample_Working>
+  <Strata_Sample_Busy>Already sampling</Strata_Sample_Busy>
+  <Strata_Sample_GizmoLabel>Start core sample</Strata_Sample_GizmoLabel>
+  <Strata_Sample_GizmoDesc>Bore into the stratum below this cell. Takes time and extra power. Results are ranges, not exact numbers.</Strata_Sample_GizmoDesc>
+  <Strata_Sample_Complete>Core sample finished at {0}.</Strata_Sample_Complete>
+  <Strata_Sample_Header>Sample for depth B{0}:</Strata_Sample_Header>
+  <Strata_Sample_TableDepth>Water table depth: B{0}</Strata_Sample_TableDepth>
+  <Strata_Sample_OrePoor>Ore: probably sparse</Strata_Sample_OrePoor>
+  <Strata_Sample_OreModerate>Ore: mixed — some rich pockets likely</Strata_Sample_OreModerate>
+  <Strata_Sample_OreRich>Ore: probably ore-rich</Strata_Sample_OreRich>
+  <Strata_Sample_GasLow>Gas: low pocket risk</Strata_Sample_GasLow>
+  <Strata_Sample_GasSome>Gas: some pocket risk</Strata_Sample_GasSome>
+  <Strata_Sample_GasHigh>Gas: high pocket risk</Strata_Sample_GasHigh>
+  <Strata_Sample_BugsQuiet>Bugs: quiet</Strata_Sample_BugsQuiet>
+  <Strata_Sample_BugsStirring>Bugs: stirring</Strata_Sample_BugsStirring>
+  <Strata_Sample_BugsHeavy>Bugs: heavy infestation pressure</Strata_Sample_BugsHeavy>
+  <Strata_Sample_RockSoft>Rock: softer dig</Strata_Sample_RockSoft>
+  <Strata_Sample_RockMedium>Rock: moderate hardness</Strata_Sample_RockMedium>
+  <Strata_Sample_RockHard>Rock: hard — slow dig</Strata_Sample_RockHard>
+  <Strata_Sample_WaterAbove>Water table: this depth is dry</Strata_Sample_WaterAbove>
+  <Strata_Sample_WaterBelow>Water table: {0} levels below the table (seepage risk if enabled)</Strata_Sample_WaterBelow>
+  <Strata_Sample_LostFloorHint>Faint void signature — something may already be down there</Strata_Sample_LostFloorHint>
+
+  <Strata_Listen_NeedsPower>Listening post needs power</Strata_Listen_NeedsPower>
+  <Strata_Listen_Quiet>Quiet through the rock</Strata_Listen_Quiet>
+  <Strata_Listen_Deaf>Deaf — too much local industry noise</Strata_Listen_Deaf>
+  <Strata_Listen_Disabled>Infestations disabled in settings — post idle</Strata_Listen_Disabled>
+  <Strata_Listen_Range>Effective range: {0} / {1}</Strata_Listen_Range>
+  <Strata_Listen_Noise>Local noise: {0}</Strata_Listen_Noise>
+  <Strata_Listen_Contact>{0}, {1}, {2}</Strata_Listen_Contact>
+  <Strata_Listen_Something>something</Strata_Listen_Something>
+  <Strata_Listen_SomethingLarge>something large</Strata_Listen_SomethingLarge>
+  <Strata_Listen_Below>below</Strata_Listen_Below>
+  <Strata_Listen_ThroughRock>through the rock</Strata_Listen_ThroughRock>
+  <Strata_Listen_North>north</Strata_Listen_North>
+  <Strata_Listen_East>east</Strata_Listen_East>
+  <Strata_Listen_South>south</Strata_Listen_South>
+  <Strata_Listen_West>west</Strata_Listen_West>
+  <Strata_Listen_LetterLabel>Deep listening contact</Strata_Listen_LetterLabel>
+  <Strata_Listen_LetterText>{0} reports: {1}. Direction is approximate — never an exact spawn.</Strata_Listen_LetterText>
+
 </LanguageData>

@@ -398,4 +398,53 @@
 
   <Strata_PlaySettings_SupportOverlayTip>Strata: опора\nПодсвечивает выработки под толстой скалой вне держателя крыши или стойки. Обвалы бьют туда в первую очередь.</Strata_PlaySettings_SupportOverlayTip>
 
+  <Strata_Settings_WaterTableSeepage>Просачивание водного горизонта</Strata_Settings_WaterTableSeepage>
+  <Strata_Settings_WaterTableSeepageDesc>Уровни ниже водного горизонта постоянно подтапливаются через систему затопления/насоса. По умолчанию выкл.</Strata_Settings_WaterTableSeepageDesc>
+  <Strata_Settings_WaterTableSeepRate>Скорость просачивания: {0}</Strata_Settings_WaterTableSeepRate>
+  <Strata_SumpBelowTable>Водный горизонт: на {0} ур. ниже</Strata_SumpBelowTable>
+  <Strata_SumpAboveTable>Водный горизонт: на этом уровне или выше</Strata_SumpAboveTable>
+  <Strata_Seep_LetterLabel>Просачивание грунтовых вод</Strata_Seep_LetterLabel>
+  <Strata_Seep_LetterText>Этот уровень на {0} этаж(ей) ниже водного горизонта. Без насосов растёт мелководье.</Strata_Seep_LetterText>
+  <Strata_Sample_NeedsPower>Буровой нуждается в энергии</Strata_Sample_NeedsPower>
+  <Strata_Sample_Ready>Готов взять пробу породы ниже</Strata_Sample_Ready>
+  <Strata_Sample_Working>Пробоотбор… осталось {0}</Strata_Sample_Working>
+  <Strata_Sample_Busy>Уже идёт пробоотбор</Strata_Sample_Busy>
+  <Strata_Sample_GizmoLabel>Начать керновую пробу</Strata_Sample_GizmoLabel>
+  <Strata_Sample_GizmoDesc>Бурение в пласт под этой клеткой. Занимает время и доп. мощность. Результат — диапазоны.</Strata_Sample_GizmoDesc>
+  <Strata_Sample_Complete>Керновая проба на {0} готова.</Strata_Sample_Complete>
+  <Strata_Sample_Header>Проба для глубины B{0}:</Strata_Sample_Header>
+  <Strata_Sample_TableDepth>Глубина водного горизонта: B{0}</Strata_Sample_TableDepth>
+  <Strata_Sample_OrePoor>Руда: скорее скудно</Strata_Sample_OrePoor>
+  <Strata_Sample_OreModerate>Руда: смешанно — возможны богатые карманы</Strata_Sample_OreModerate>
+  <Strata_Sample_OreRich>Руда: вероятно богато</Strata_Sample_OreRich>
+  <Strata_Sample_GasLow>Газ: низкий риск карманов</Strata_Sample_GasLow>
+  <Strata_Sample_GasSome>Газ: умеренный риск</Strata_Sample_GasSome>
+  <Strata_Sample_GasHigh>Газ: высокий риск карманов</Strata_Sample_GasHigh>
+  <Strata_Sample_BugsQuiet>Насекомые: тихо</Strata_Sample_BugsQuiet>
+  <Strata_Sample_BugsStirring>Насекомые: шевелятся</Strata_Sample_BugsStirring>
+  <Strata_Sample_BugsHeavy>Насекомые: сильное давление</Strata_Sample_BugsHeavy>
+  <Strata_Sample_RockSoft>Порода: мягче</Strata_Sample_RockSoft>
+  <Strata_Sample_RockMedium>Порода: средняя твёрдость</Strata_Sample_RockMedium>
+  <Strata_Sample_RockHard>Порода: твёрдая — медленная копка</Strata_Sample_RockHard>
+  <Strata_Sample_WaterAbove>Водный горизонт: эта глубина сухая</Strata_Sample_WaterAbove>
+  <Strata_Sample_WaterBelow>Водный горизонт: на {0} ур. ниже (риск просачивания)</Strata_Sample_WaterBelow>
+  <Strata_Sample_LostFloorHint>Слабый отзвук пустоты — внизу уже может что-то быть</Strata_Sample_LostFloorHint>
+  <Strata_Listen_NeedsPower>Посту прослушки нужна энергия</Strata_Listen_NeedsPower>
+  <Strata_Listen_Quiet>В скале тихо</Strata_Listen_Quiet>
+  <Strata_Listen_Deaf>Глухо — слишком шумно рядом</Strata_Listen_Deaf>
+  <Strata_Listen_Disabled>Нашествия откл. в настройках — пост простаивает</Strata_Listen_Disabled>
+  <Strata_Listen_Range>Эфф. дальность: {0} / {1}</Strata_Listen_Range>
+  <Strata_Listen_Noise>Местный шум: {0}</Strata_Listen_Noise>
+  <Strata_Listen_Contact>{0}, {1}, {2}</Strata_Listen_Contact>
+  <Strata_Listen_Something>что-то</Strata_Listen_Something>
+  <Strata_Listen_SomethingLarge>что-то крупное</Strata_Listen_SomethingLarge>
+  <Strata_Listen_Below>ниже</Strata_Listen_Below>
+  <Strata_Listen_ThroughRock>сквозь скалу</Strata_Listen_ThroughRock>
+  <Strata_Listen_North>север</Strata_Listen_North>
+  <Strata_Listen_East>восток</Strata_Listen_East>
+  <Strata_Listen_South>юг</Strata_Listen_South>
+  <Strata_Listen_West>запад</Strata_Listen_West>
+  <Strata_Listen_LetterLabel>Контакт глубокой прослушки</Strata_Listen_LetterLabel>
+  <Strata_Listen_LetterText>{0} сообщает: {1}. Направление приблизительное.</Strata_Listen_LetterText>
+
 </LanguageData>

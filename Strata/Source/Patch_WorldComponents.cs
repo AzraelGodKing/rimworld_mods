@@ -31,6 +31,10 @@ namespace Strata
             {
                 __instance.components.Add(new WorldComponent_StrataGravshipStacks(__instance));
             }
+            if (__instance.GetComponent<WorldComponent_StrataStratum>() == null)
+            {
+                __instance.components.Add(new WorldComponent_StrataStratum(__instance));
+            }
         }
     }
 

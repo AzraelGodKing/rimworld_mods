@@ -42,16 +42,35 @@ namespace Strata
 
         public override string CompInspectStringExtra()
         {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            Map map = parent.Map;
+            if (map != null && StrataMod.Settings != null && StrataMod.Settings.waterTableSeepageEnabled)
+            {
+                int below = WorldComponent_StrataStratum.Get?.LevelsBelowTable(map) ?? 0;
+                if (below > 0)
+                {
+                    sb.AppendLine("Strata_SumpBelowTable".Translate(below));
+                }
+                else
+                {
+                    sb.AppendLine("Strata_SumpAboveTable".Translate());
+                }
+            }
             if (!Active)
             {
-                return "Strata_SumpNeedsPower".Translate();
+                sb.Append("Strata_SumpNeedsPower".Translate());
+                return sb.ToString().TrimEnd();
             }
             FloodMapComponent flood = parent.Map.GetComponent<FloodMapComponent>();
             if (flood == null || !flood.AnyFloodedInRadius(parent.Position, Props.clearRadius))
             {
-                return "Strata_SumpNoFlood".Translate();
+                sb.Append("Strata_SumpNoFlood".Translate());
             }
-            return "Strata_SumpPumping".Translate(Props.clearRadius.ToString("0.#"));
+            else
+            {
+                sb.Append("Strata_SumpPumping".Translate(Props.clearRadius.ToString("0.#")));
+            }
+            return sb.ToString().TrimEnd();
         }
     }
 }

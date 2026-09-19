@@ -159,6 +159,21 @@
   </ResearchProjectDef>
 
   <ResearchProjectDef>
+    <defName>Strata_CoreSurvey</defName>
+    <label>core survey</label>
+    <description>Borehole sampling and rock-sound listening so you can read the stratum below before you commit a shaft. Narrows core-drill uncertainty bands and unlocks the deep listening post.</description>
+    <baseCost>700</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
+    <prerequisites>
+      <li>Strata_DiggingDown</li>
+      <li>Electricity</li>
+    </prerequisites>
+    <researchViewX>1.50</researchViewX>
+    <researchViewY>2.80</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>Strata_DeepInfrastructure</defName>
     <label>deep infrastructure</label>
     <description>Gas airlocks, ore skips, sump pumps, and safe electric mine lamps — the industrial kit for living and working far below the surface.</description>
