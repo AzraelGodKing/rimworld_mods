@@ -20,6 +20,9 @@
   <DateNight_Settings_QualityTip>约会结果随活动、场地美观度、天气和运气变化——美妙、愉快或尴尬。关闭：每次约会都给固定的愉快约会心情。</DateNight_Settings_QualityTip>
   <DateNight_Settings_Gifts>允许礼物约会（消耗物品）</DateNight_Settings_Gifts>
   <DateNight_Settings_GiftsTip>一方可以取来小奢侈品（啤酒、巧克力、珍馐……）送给对方，提升心情和好感。物品会进入伴侣的物品栏。</DateNight_Settings_GiftsTip>
+  <DateNight_Settings_GiftExtend>也接受娱乐奢侈品作为礼物</DateNight_Settings_GiftExtend>
+  <DateNight_Settings_GiftExtendTip>扫描小型娱乐食物/饮品，模组巧克力饮料也可作礼物。</DateNight_Settings_GiftExtendTip>
+  <DateNight_Settings_GiftList>礼物 ThingDef 名（逗号分隔；空= Beer, Chocolate, Ambrosia, PsychiteTea, InsectJelly）</DateNight_Settings_GiftList>
   <DateNight_Settings_PostDateBoost>约会后的火花</DateNight_Settings_PostDateBoost>
   <DateNight_Settings_PostDateBoostTip>完成一次约会后，这对伴侣的爱爱几率提升约一个游戏日。</DateNight_Settings_PostDateBoostTip>
   <DateNight_Settings_Anniversaries>纪念日</DateNight_Settings_Anniversaries>
@@ -46,6 +49,9 @@
   <DateNight_Alert_MismatchDesc>有人给爱爱或约会涂了时段，但伴侣没有涂，或两人涂的小时不同。请给双方涂上相同的小时。</DateNight_Alert_MismatchDesc>
   <DateNight_Alert_MismatchNone>{0} 涂了{1}；{2} 没有。</DateNight_Alert_MismatchNone>
   <DateNight_Alert_MismatchHours>{0} 和 {1} 的{2}时段不同。</DateNight_Alert_MismatchHours>
+  <DateNight_Alert_MismatchSyncHint>点击此警报可将伴侣的时段同步过去。</DateNight_Alert_MismatchSyncHint>
+  <DateNight_Alert_SyncOption>将 {2} 从 {0} → {1}</DateNight_Alert_SyncOption>
+  <DateNight_Alert_Synced>已将日程时段从 {0} 复制到 {1}。</DateNight_Alert_Synced>
   <DateNight_Alert_SlotLovin>爱爱</DateNight_Alert_SlotLovin>
   <DateNight_Alert_SlotDate>约会</DateNight_Alert_SlotDate>
   <DateNight_ScheduleComboTip>点击涂约会。爱爱在 ▾ 菜单里。此按钮始终排在作息额外格子的最后。</DateNight_ScheduleComboTip>

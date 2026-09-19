@@ -12,7 +12,7 @@ namespace DateNight
         public DateNightMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<DateNightSettings>();
-            ModVersionLog.Write("[DateNight]", content, extra: "date-memory-v1");
+            ModVersionLog.Write("[DateNight]", content, extra: "schedule-sync-v1");
             // PatchAll runs after defs load — Harmony compiling TimeAssignmentSelector
             // patches otherwise touches TimeAssignmentDefOf before DefOfs exist.
         }
@@ -75,6 +75,35 @@ namespace DateNight
                 "DateNight_Settings_Gifts".Translate(),
                 ref Settings.allowGiftDates,
                 "DateNight_Settings_GiftsTip".Translate());
+            if (Settings.allowGiftDates)
+            {
+                listing.CheckboxLabeled(
+                    "DateNight_Settings_GiftExtend".Translate(),
+                    ref Settings.extendGiftsWithJoyItems,
+                    "DateNight_Settings_GiftExtendTip".Translate());
+                string giftLine = Settings.giftDefNames != null && Settings.giftDefNames.Count > 0
+                    ? string.Join(", ", Settings.giftDefNames)
+                    : "";
+                listing.Label("DateNight_Settings_GiftList".Translate());
+                string edited = Widgets.TextField(listing.GetRect(28f), giftLine);
+                if (edited != giftLine)
+                {
+                    Settings.giftDefNames = new System.Collections.Generic.List<string>();
+                    if (!edited.NullOrEmpty())
+                    {
+                        string[] parts = edited.Split(',');
+                        for (int i = 0; i < parts.Length; i++)
+                        {
+                            string p = parts[i].Trim();
+                            if (!p.NullOrEmpty())
+                            {
+                                Settings.giftDefNames.Add(p);
+                            }
+                        }
+                    }
+                    DateNightActivities.InvalidateGiftCache();
+                }
+            }
             listing.Gap(6f);
 
             listing.CheckboxLabeled(

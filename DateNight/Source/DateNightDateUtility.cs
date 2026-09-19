@@ -199,21 +199,26 @@ namespace DateNight
 
         internal static bool PawnStillAlive(int id)
         {
+            return FindPawnById(id) != null;
+        }
+
+        internal static Pawn FindPawnById(int id)
+        {
             List<Pawn> all = PawnsFinder.AllMapsWorldAndTemporary_Alive;
             if (all == null)
             {
-                return false;
+                return null;
             }
 
             for (int i = 0; i < all.Count; i++)
             {
                 if (all[i] != null && all[i].thingIDNumber == id)
                 {
-                    return true;
+                    return all[i];
                 }
             }
 
-            return false;
+            return null;
         }
 
         /// <summary>

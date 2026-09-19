@@ -2,6 +2,17 @@
 
 Detailed notes for **Date Night** only.
 
+## [1.3.0]
+
+Player-facing version **1.3.0** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.3.0 loaded from ...` in Player.log (`schedule-sync-v1`).
+
+AZR-223 AZR-224 AZR-225
+
+### Added
+- **Schedule sync** (`schedule-sync-v1`, AZR-224) — click the schedule-mismatch alert to copy painted Date/Lovin hours from one partner to the other.
+- **Configurable gifts** (AZR-223) — settings list of gift ThingDef names plus optional joy-luxury scan for modded items.
+- **Favourite venue destroyed** (AZR-225) — one-shot `DateNight_VenueDestroyed` thought when a remembered high-score venue building/cell is gone.
+
 ## [1.2.0]
 
 Player-facing version **1.2.0** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.2.0 loaded from ...` in Player.log (`date-memory-v1`).
