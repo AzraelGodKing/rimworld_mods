@@ -2,6 +2,21 @@
 
 Detailed notes for Homesteader only.
 
+## [1.2.0]
+
+Player-facing version **1.2.0** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.2.0 loaded from ...` in Player.log (`larder-maple-v1`).
+
+AZR-208 AZR-210 AZR-211 AZR-212 AZR-213
+
+### Added
+- **Well-stocked larder mood** (`larder-maple-v1`, AZR-210) — tiered ThoughtWorker over `PantryUtility.Snapshot().preserveKinds` (3 / 6 / 9).
+- **Maple sugaring season** (AZR-211) — sap yield scales by season and outdoor temperature; maple inspect shows run state.
+- **Stormproof drought inspect** (AZR-212) — fail-open inspect lines on wells / cisterns / barrels when a drought condition is active.
+
+### Changed
+- **Root README table** (AZR-208) — pantry, landrace, polyarmory, maple season called out.
+- **Pantry jump-to** (AZR-213) — Jump on the next-to-spoil stock row.
+
 ## [Unreleased]
 
 - **Workshop / About / site copy** — Homesteader descriptions updated for 1.1.0 pantry & tastes (What can I make, preserve-crate nutrition/variety, Tastes tab, Homesteaders scenario). Steam paste at `Homesteader/SteamDescription.txt` and `assets/workshop/homesteader-description.bbcode`. Optional HomesteaderRefresh art still called out as git-only, not Workshop.

@@ -112,5 +112,29 @@
     </stages>
   </ThoughtDef>
 
+  <!-- Well-stocked larder: 3 / 6 / 9 distinct preserved kinds in Homesteader storage. -->
+  <ThoughtDef>
+    <defName>Homesteader_WellStockedLarder</defName>
+    <workerClass>Homesteader.ThoughtWorker_WellStockedLarder</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>stocked larder</label>
+        <description>The pantry has a little variety put by. Winter feels less sharp.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+      <li>
+        <label>well-stocked larder</label>
+        <description>Jars, crates, and shelves of preserves. A homestead that can feed itself.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+      <li>
+        <label>overflowing larder</label>
+        <description>The cellars groan with distinct preserves. Nobody goes hungry here.</description>
+        <baseMoodEffect>9</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>
 
