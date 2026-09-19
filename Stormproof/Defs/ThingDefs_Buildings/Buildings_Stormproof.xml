@@ -315,7 +315,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_WeatherForecaster</defName>
     <label>weather forecaster</label>
-    <description>A barometric console that reads pressure fronts and static charge in the air. Its inspect panel shows how long the current weather will hold, it announces incoming thunderstorms so you can ready your spires, and it warns you an hour before the weather breaks.</description>
+    <description>A barometric console that reads pressure fronts and static charge in the air. Its inspect panel shows how long the current weather will hold, it announces incoming thunderstorms so you can ready your spires, and it warns you an hour before the weather breaks. Open the almanac for this map's storm log and a live ledger of strikes caught vs missed, Zzzt absorbed vs suffered, fires snuffed, and wear hits.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Stormproof/Buildings/WeatherForecaster</texPath>
@@ -480,7 +480,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_StormCaller</defName>
     <label>storm caller</label>
-    <description>An ionospheric agitator that fires charged particles into the upper atmosphere, dragging a rainy thunderstorm over the map on demand. The lightning feeds your storm spires and the rain douses wildfires. Recharges over five days - it supplements a power grid, it doesn't replace one.</description>
+    <description>An ionospheric agitator that fires charged particles into the upper atmosphere, dragging a rainy thunderstorm over the map on demand. The lightning feeds your storm spires and the rain douses wildfires. Discharge queues for the next map tick. Recharges over five days - it supplements a power grid, it doesn't replace one.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Stormproof/Buildings/StormCaller</texPath>
@@ -535,7 +535,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_LoadShedder</defName>
     <label>load shedder</label>
-    <description>An automatic breaker. Wire it between your main grid and a low-priority sub-grid (lamps, entertainment, spare coolers). While the supply side's batteries hold charge it transmits power like a conduit; when they drop below the cutoff it trips open and sheds the sub-grid, so the freezer outlasts the television. Reconnects on its own once the batteries recover. Cutoff threshold is adjustable.</description>
+    <description>An automatic breaker. Wire it between your main grid and a low-priority sub-grid (lamps, entertainment, spare coolers). While the supply side's batteries hold charge it transmits power like a conduit; when they drop below the cutoff it trips open and sheds the sub-grid, so the freezer outlasts the television. Reconnects on its own once the batteries recover. Cutoff threshold is adjustable. Optional 24-hour run/shed schedule, forecast override before a storm or flare, and Hold Auto / Run / Shed - the battery cutoff still trips first.</description>
     <thingClass>Stormproof.Building_LoadShedder</thingClass>
     <graphicData>
       <texPath>Stormproof/Buildings/LoadShedder</texPath>
@@ -582,7 +582,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_GridMonitor</defName>
     <label>grid monitor console</label>
-    <description>A wall of dials and gauges wired into the power net. Its inspect panel shows live production, consumption, battery charge, and how long until the batteries run dry or fill up. Raises a warning when stored charge drops below 25% and an urgent alert below 10%, so a slow overnight drain never surprises you again.</description>
+    <description>A wall of dials and gauges wired into the power net. Its inspect panel shows live production, consumption, battery charge, brownout level, and how long until the batteries run dry or fill up. With a powered weather forecaster on the same net, projects an 8-hour weather-aware forecast that models brownout through Hard severity. Raises a warning when stored charge drops below 25% and an urgent alert below 10%, so a slow overnight drain never surprises you again.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Stormproof/Buildings/GridMonitor</texPath>

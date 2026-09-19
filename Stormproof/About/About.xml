@@ -6,7 +6,7 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">1.3.1</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.4.0</modVersion>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>
@@ -30,25 +30,25 @@ GRID DEFENSE
 - Surge protector: eats one "Zzzt!" then spends a day recharging.
 - EMP dampener: colony buildings in range shrug off EMP stuns. Turrets keep firing. Does not protect pawns or mechanoids.
 - Armored conduit: fireproof, tough, and immune to storm wear — the wiring for killboxes and exterior walls.
-- Load shedder: automatic breaker between the main grid and a low-priority sub-grid. Trips at an adjustable cutoff so the freezer outlasts the television.
-- Grid monitor: live production, consumption, battery time-to-empty, a weather-aware forecast when a forecaster shares the grid, brownout level, and charge warnings.
+- Load shedder: automatic breaker between the main grid and a low-priority sub-grid. Trips at an adjustable cutoff so the freezer outlasts the television. Optional 24-hour run/shed schedule, forecast override before a storm or flare, and Hold Auto / Run / Shed. Battery cutoff still wins.
+- Grid monitor: live production, consumption, battery time-to-empty, brownout level, and charge warnings. With a powered weather forecaster on the same net, an 8-hour weather-aware forecast (solar/wind vs current weather) that models brownout through Hard severity.
 
 GRID STRESS
 - Graded brownout: when batteries fall below 40%, lights dim, workbenches slow, and coolers lag — draw drops so the remaining charge lasts longer. A load shedder still cuts the sub-grid at its trip point.
 - Storm wear: thunder, ion storms, and high wind slowly chip ordinary conduit and batteries. Armored conduit and storm capacitor banks are immune. Repair as usual.
 
 ATMOSPHERE &amp; WEATHER
-- Weather forecaster: how long this weather holds, incoming thunderstorms, an hour's warning before it breaks, and a year-log of this map's storms and hazards.
-- Fallout scrubber: indoor detox for pawns and animals in the enclosed room. Useless outdoors.
-- Storm caller: summon a rainy thunderstorm on demand (half-day storm, five-day recharge) — feeds spires and douses wildfires.
+- Weather forecaster: how long this weather holds, incoming thunderstorms, an hour's warning before it breaks, and an almanac of this map's storms and hazards — with a ledger of strikes caught vs missed, Zzzt absorbed vs suffered, fires snuffed, and wear hits.
+- Fallout scrubber: indoor detox for pawns and animals in the enclosed room (room outline on select). Useless outdoors.
+- Storm caller: summon a rainy thunderstorm on demand (half-day storm, five-day recharge) — feeds spires and douses wildfires. Discharge queues for the next map tick instead of writing weather from the gizmo.
 - Static discharge pylon: stuns and burns raiders and mechanoids on bottled lightning from a storm capacitor. No capacitor charge, no zap.
 
 HAZARD HARDENING (Spacer research)
 Late-game map-wide counters. Idle cheap; pull hard while the event is on. No stored energy, no protection.
-- Atmospheric barrier: toxic fallout, toxic surge, volcanic ash, noxious haze.
+- Atmospheric barrier: toxic fallout, toxic surge, volcanic ash, noxious haze (map-wide while powered).
 - Climate stabilizer: heat wave, cold snap, volcanic winter, heat dome, polar front.
-- Sky restorer: usable daylight during eclipses, volcanic winters, ash, and darkened skies.
-- Fire suppressor: extinguishes fires in a wide radius (flashstorm / dry lightning).
+- Sky restorer: usable daylight during eclipses, volcanic winters, ash, and darkened skies (map-wide while powered).
+- Fire suppressor: extinguishes fires in a wide radius (flashstorm / dry lightning); radius shown on select and while placing.
 - Drought condenser: cancels drought plant-growth penalties (Odyssey). Harmless furniture if droughts never arrive.
 
 EVENTS
@@ -63,7 +63,7 @@ RESEARCH
 Electricity → storm protection → flare shielding → atmospheric control / perfect grounding → hazard hardening. Dedicated Stormproof research tab.
 
 SETTINGS
-Soft / Default / Hard presets. Per-incident toggles and frequency, suppressor toggles, brownout strength, storm wear, almanac, fulgurite, and spire "Zzzt!" chance.
+Soft / Default / Hard presets. Per-incident toggles and frequency, suppressor toggles, brownout strength (Hard pushes forecast and live brownout harder), storm wear, almanac, fulgurite, and spire "Zzzt!" chance.
 
 AROUND THE YARD
 - Fulgurite: a well-struck spire fuses glass at the base every eight strikes — trade good and sculpture stuff.

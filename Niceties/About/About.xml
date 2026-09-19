@@ -6,7 +6,7 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">1.2.1</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.3.0</modVersion>
   <incompatibleWith>
     <li>Jecrell166.JecsHEverlastingHApparel</li>
     <li>z4k97b.altarsinthroneroom</li>
@@ -34,10 +34,10 @@
   <description>My Discord: https://discord.gg/Vwh2y7qMXv
 Site (no Discord): https://azraelgodking.github.io/rimworld_mods/niceties
 
-Small colony comforts vanilla never shipped. Each nicety is its own Mod Options toggle — Harmony, fail-open. Soft / Default / Hard only seed the knobs. Combat, fire, and outdoor rot are left alone.
+Small colony comforts vanilla never shipped. Niceties is one Harmony QoL companion: each nicety is its own Mod Options toggle (fail-open). Soft / Default / Hard only seed the knobs — not a forced bundle. Combat, fire, and outdoor rot stay vanilla.
 
 WELL-KEPT APPAREL
-Worn clothes skip or scale daily deterioration. Quality and Crafting skill decide how often a piece loses a hit point. Masterwork and legendary stay as they are. Combat and fire still shred HP. Optional: clothes on a corpse keep the same rule.
+Worn clothes skip or scale the daily deterioration tick. With quality scaling on, Awful and Poor wear at the vanilla rate; Normal and above wear less; Masterwork and Legendary skip daily wear. Crafting skill can reduce wear further. Combat and fire still shred HP. Optional: clothes on a corpse keep the same rule.
 
 THRONE AND ALTAR
 Royalty throne rooms may hold an Ideology altar without failing the "no altars" check. If a throne is in the room, it stays a throne room rather than flipping to a temple.
@@ -52,10 +52,10 @@ MELEE HUNTING
 Hunters may hunt with a melee weapon. A body-size cap keeps people from charging a thrumbo with a knife unless you raise it. Unarmed hunting is optional and off by default.
 
 SHARED BEDROOMS
-Select a bed and mark the room as shared. Extra beds stay a bedroom (not barracks), so roommates and royalty are not punished for living together. Pawns who share a room do not get the disturbed-sleep thought. Sharing one mattress with a non-partner is still vanilla.
+Select a bed and mark the room as shared. Extra beds stay a bedroom (not barracks), so roommates and royalty are not punished for living together. Pawns who share a room do not get the disturbed-sleep thought. Sharing one mattress with a non-partner is still vanilla. Do not run with Share Rooms [LWM] — same room-role patches.
 
 LEAVE A WAY OUT
-Pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in. Works on vanilla frames and Replace Stuff frames. In-place wall swaps stay solid so a freezer can still be replaced from inside. Right-click force construct still builds it.
+Pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in. Works on vanilla frames and Replace Stuff frames. In-place wall swaps stay solid so a freezer can still be replaced from inside. Right-click force construct still builds it. Do not run with Smarter Construction — same construction job.
 
 SETTINGS
 Each nicety is independently on or off. Extra knobs (quality scaling, unarmed hunt, body-size cap) only apply while that nicety is on.
@@ -64,7 +64,10 @@ Soft / Default / Hard change those knobs, not a forced bundle:
 - Default: quality-scaled wear, melee up to body size 1.5, no unarmed.
 - Hard: no crafting bonus, melee only small game (0.8).
 
-Requires Harmony. RimWorld 1.6. Royalty and Ideology optional (those toggles no-op without the DLC). Safe to add or remove mid-save.
+INCOMPATIBLE
+Jecs Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Share Rooms [LWM], and Smarter Construction — each overlaps one nicety. Prefer Niceties alone for those jobs.
 
-Inspired by ideas from Jecrell's Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Melee Hunting, Share Rooms, and Smarter Construction — rewritten from scratch, not a continuation of those mods.</description>
+Requires Harmony. RimWorld 1.6. Royalty and Ideology optional (those toggles no-op without the DLC). Chinese Simplified and Russian included. Safe to add or remove mid-save.
+
+Inspired by ideas from Jecrell's Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Melee Hunting, Share Rooms, and Smarter Construction — rewritten from scratch for 1.6, not a continuation of those mods.</description>
 </ModMetaData>

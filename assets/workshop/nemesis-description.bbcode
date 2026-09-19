@@ -1,0 +1,77 @@
+My Discord: https://discord.gg/Vwh2y7qMXv
+Site (no Discord): https://azraelgodking.github.io/rimworld_mods/nemesis.html
+Issues: https://github.com/AzraelGodKing/rimworld_mods/issues
+
+[h1]Nemesis[/h1]
+Someone remembers. Someone is coming back.
+
+[b]Credit:[/b] Original design and core runtime by [b]Dredd (Misakabob)[/b]. Expanded and packaged here by AzraelGodKing with gratitude.
+
+A named pawn from a hostile faction becomes a [b]personal antagonist[/b] — not another faceless raid. Early on they harass with taunts, false leads, and sabotage. After each escape they level up as a [b]combat captain[/b] (skills, gear, armor) and prefer returning with an army. The hunt still ends when you capture or kill them… or when they get what they came for.
+
+RimWorld [b]1.6[/b]. Requires [b]Harmony[/b]. Safe to add mid-save.
+
+[h2]How it starts[/h2]
+Trigger chances are configurable in mod settings.
+[list]
+[*] A colonist kills an enemy's ally or kin (chance)
+[*] A prisoner (or Ideology slave) breaks out and someone takes it personally
+[*] An enemy wounds-and-escapes, then comes back for the one who cut them
+[*] An enemy who killed one of yours fixates on a surviving colonist
+[/list]
+
+[h2]What they do[/h2]
+Harassment escalates over time. Settings control aggression pacing and the action mix.
+[list]
+[*] [b]Comms taunts[/b] and paper notes that name your people
+[*] [b]Faction raids[/b] — and after escapes, [b]vengeance army returns[/b] that inject the same nemesis into a heavier assault. [i]Why return alone when you can return with an army?[/i]
+[*] [b]Personal assaults[/b] that pull back when losing; they heal between escapes so the hunt keeps coming
+[*] Early hunt: sabotage, waste, fake distress / trader signals, caravan harassment, food-store vandalism (downweighted after escapes)
+[*] Optional [b]Anomaly[/b] baiting when that DLC is active (fail-open without it)
+[/list]
+
+[h2]Captain progression[/h2]
+Each escape raises captain level. Still killable after enough escapes — [b]no cheat-death[/b].
+[list]
+[*] Combat focus rolled at create: Destroyer, Berserker, Sniper, Psycho, Survivor, Mechanitor (Biotech)
+[*] Better skills, gear quality, and battle-hardened armor; Biotech can add bionics / genes at thresholds
+[*] Soft animal escorts from level 2; Mechanitor mech retinue on army returns when Biotech is loaded
+[*] Raid points scale with captain level; post-escape action mix favors army returns over petty sabotage
+[/list]
+
+[h2]Dossier[/h2]
+A main-tab page for the active hunt.
+[list]
+[*] Identity, [b]tells[/b] (voice, weapon family, mark, habit — rolled once and kept), sightings, taunts, last-known tile, gear seen, aggression
+[*] Pay silver for a lead (tile / gear / next-raid warning / false lead) from the dossier or the comms console
+[*] Standing bounty recorded on the dossier
+[*] Hunt end writes an [b]epitaph[/b]; fail-open copy onto Deep Colony Legacy letters when that mod is loaded
+[/list]
+
+[h2]How it ends[/h2]
+[list]
+[*] Capture them alive — then Execute / Release / Keep / Truce
+[*] Corner them after enough escapes, then kill or arrest
+[*] If they hunt a specific colonist: the hunt also ends if that pawn dies or is handed over — they win, and lose interest
+[/list]
+
+[h2]Soft compat[/h2]
+Optional and fail-open — Nemesis never hard-requires these.
+[list]
+[*] [b]Stormproof[/b] — EMP sabotage respects EMP dampeners; surge protectors blunt grid sabotage; ion flavor when present
+[*] [b]Strata[/b] — prefers surface home maps; aware of underground / upper levels when choosing harassment targets
+[*] [b]Homesteader[/b] — food raids and taunts can reference root cellars and favorite foods when those systems exist
+[*] [b]Giddy-Up[/b] — animal escorts pair better as mounts when present (still spawn as raid escorts without it)
+[*] [b]Biotech[/b] — Mechanitor focus, bionics / genes, waste packs, mech escorts
+[*] [b]Back For Vengeance[/b] — soft-detects live Workshop packageId [b]ferny.Vengeance[/b] (legacy ids kept as fallbacks). Exclusive pawn claim: skip hunt create / raid inject on their captains
+[*] [b]Rimesis[/b] — partial soft-compat via [b]NemesisCompatApi[/b] (exclusive claim / skip; Missing stub). Not a full combat merge; deeper Font inject still outstanding
+[/list]
+
+[h2]Notes[/h2]
+[list]
+[*] Requires [b]Harmony[/b]
+[*] RimWorld [b]1.6[/b]
+[*] Safe to add mid-save
+[*] Before removing: resolve or dismiss any active nemesis (capture / truce / end) so WorldPawn refs are cleaned up
+[*] Fully configurable in mod settings
+[/list]

@@ -1,10 +1,16 @@
-1.1.2
-[h1]Nemesis — 1.1.2[/h1]
+1.2.0
+[h1]Nemesis — 1.2.0[/h1]
 
 [b]Fixed[/b]
 [list]
 [*] Soft-compat detects live [b]Back For Vengeance[/b] packageId `ferny.Vengeance` (1.6 Workshop).
 [/list]
 
+[b]Notes[/b]
+[list]
+[*] Workshop / About / site descriptions refreshed for captain progression, dossier, and BFV / partial Rimesis soft-compat.
+[/list]
+
+[i]QA: passed[/i]
 [i]Build stamp (Player.log): bfv-ferny-id-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/nemesis.md[/i]
