@@ -14,7 +14,7 @@ namespace Niceties
             ApparelGender.Capture();
             ApparelGender.Apply(NicetiesMod.Settings?.wearAnyGender ?? true);
             LongEventHandler.ExecuteWhenFinished(() =>
-                ModVersionLog.Write("[Niceties]", extra: "openbuilds-hard-v1"));
+                ModVersionLog.Write("[Niceties]", extra: "options-fold-v1"));
         }
     }
 }
