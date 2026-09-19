@@ -1,20 +1,12 @@
-1.3.0
-[h1]Niceties — 1.3.0[/h1]
-
-[b]Fixed[/b]
-[list]
-[*] Leave-a-way-out no longer StartJob/EndCurrentJob from inside Frame.CompleteConstruction — step-aside is deferred to the next game tick.
-[*] Enclose-check cache keeps multiple (frame, pawn) slots so concurrent builders hit the cache.
-[*] Well-kept apparel: Poor quality daily wear matches vanilla (was a silent 20% reduction).
-[*] Marked Share Rooms [LWM] (`LWM.ShareRooms`) incompatible — shared bedrooms overlaps the same room-role patches.
-[/list]
+1.3.1
+[h1]Niceties — 1.3.1[/h1]
 
 [b]Changed[/b]
 [list]
-[*] Mod options fold into collapsible sections (AZR-219).
-[*] Shared bedrooms: optional toggle to skip non-partner shared-mattress mood (AZR-218).
+[*] Mod options fold into collapsible sections.
+[*] Shared bedrooms: optional toggle to skip non-partner shared-mattress mood.
 [/list]
 
-[i]QA: passed[/i]
-[i]Build stamp (Player.log): openbuilds-hard-v1[/i]
+[i]QA: pending playtest[/i]
+[i]Build stamp (Player.log): options-fold-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
