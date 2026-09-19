@@ -32,7 +32,7 @@ namespace Homesteader
         {
             ContentPack = content;
             Settings = GetSettings<HomesteaderSettings>();
-            ModVersionLog.Write("[Homesteader]", content, "pantry-tastes-v1");
+            ModVersionLog.Write("[Homesteader]", content, "larder-maple-v1");
         }
 
         public override string SettingsCategory() => "Homesteader_SettingsCategory".Translate();
