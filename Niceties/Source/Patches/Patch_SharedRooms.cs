@@ -40,4 +40,19 @@ namespace Niceties
             return !SharedRooms.ShouldSkipDisturbedSleep(__instance);
         }
     }
+
+    [HarmonyPatch(typeof(ThoughtWorker_SharedBed), "CurrentStateInternal")]
+    internal static class Patch_SharedBedThought
+    {
+        private static bool Prefix(Pawn p, ref ThoughtState __result)
+        {
+            if (!SharedRooms.ShouldSkipNonPartnerBedShare(p))
+            {
+                return true;
+            }
+
+            __result = ThoughtState.Inactive;
+            return false;
+        }
+    }
 }

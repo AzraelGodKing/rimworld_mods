@@ -252,5 +252,27 @@ namespace Niceties
 
             return false;
         }
+
+        internal static bool ShouldSkipNonPartnerBedShare(Pawn sleeper)
+        {
+            if (!Enabled() || NicetiesMod.Settings == null || !NicetiesMod.Settings.skipNonPartnerBedShareMood)
+            {
+                return false;
+            }
+
+            if (sleeper == null)
+            {
+                return false;
+            }
+
+            Building_Bed bed = sleeper.CurrentBed() ?? sleeper.ownership?.OwnedBed;
+            if (bed == null || !bed.Spawned)
+            {
+                return false;
+            }
+
+            Room room = bed.GetRoom();
+            return IsMarked(room) || IsMarked(bed);
+        }
     }
 }

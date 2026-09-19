@@ -35,8 +35,11 @@
   <Niceties_Settings_SharedRoomsTip>Гизмо на кровати помечает комнату как общую. Она остаётся спальней, а не казармой, поэтому соседи (и знать) не штрафуются за совместную жизнь.</Niceties_Settings_SharedRoomsTip>
   <Niceties_Settings_SkipDisturbedSleep>Нет «потревоженного сна» у соседей</Niceties_Settings_SkipDisturbedSleep>
   <Niceties_Settings_SkipDisturbedSleepTip>Колонисты в одной комнате (помечена общей или там назначена ещё одна кровать) не получают мысль о потревоженном сне. Проход через чужую личную комнату по-прежнему мешает.</Niceties_Settings_SkipDisturbedSleepTip>
+  <Niceties_Settings_SkipNonPartnerBed>Без штрафа за одну кровать с не-партнёром</Niceties_Settings_SkipNonPartnerBed>
+  <Niceties_Settings_SkipNonPartnerBedTip>По желанию. В помеченной общей спальне отключает ванильный штраф за общую кровать, если соседи не любовники.</Niceties_Settings_SkipNonPartnerBedTip>
+  <Niceties_Settings_SectionPresets>Пресеты</Niceties_Settings_SectionPresets>
   <Niceties_ShareRoom>Общая комната</Niceties_ShareRoom>
-  <Niceties_ShareRoomTip>Пометить эту спальню как общую. Лишние кровати остаются спальней, а не казармой. Соседи не получают штраф за совместную комнату.</Niceties_ShareRoomTip>
+  <Niceties_ShareRoomTip>Пометить эту спальню как общую. Лишние кровати остаются спальней, а не казармой. Соседи не получают штраф за совместную комнату. В настройках можно отключить потревоженный сон и штраф за одну кровать с не-партнёром.</Niceties_ShareRoomTip>
   <Niceties_ShareRoomInspect>Комната общая.</Niceties_ShareRoomInspect>
   <Niceties_Settings_LeaveAWayOut>Оставить выход</Niceties_Settings_LeaveAWayOut>
   <Niceties_Settings_LeaveAWayOutTip>Колонисты не заканчивают стену, которая замурует кого-то или перекроет оставшиеся каркасы. Перед тем как закрыть себя, они отходят. Кадры Replace Stuff учитываются; замена материала стены на месте остаётся непроходимой, так что морозильник можно менять изнутри. Принудительная постройка по ПКМ всё равно ставит стену. Идея Smarter Construction — свой код для 1.6, не порт.</Niceties_Settings_LeaveAWayOutTip>

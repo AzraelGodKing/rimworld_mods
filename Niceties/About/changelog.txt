@@ -9,6 +9,12 @@
 [*] Marked Share Rooms [LWM] (`LWM.ShareRooms`) incompatible — shared bedrooms overlaps the same room-role patches.
 [/list]
 
+[b]Changed[/b]
+[list]
+[*] Mod options fold into collapsible sections (AZR-219).
+[*] Shared bedrooms: optional toggle to skip non-partner shared-mattress mood (AZR-218).
+[/list]
+
 [i]QA: passed[/i]
 [i]Build stamp (Player.log): openbuilds-hard-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
