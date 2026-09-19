@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -25,7 +26,15 @@ namespace Strata
             }
 
             int depth = Mathf.Max(1, StrataDepth.CountLevelsBelowSurface(map));
-            int nodeCount = NodeCountForDepth(depth);
+            float forecastBias = 1f;
+            PlanetTile tile = StrataMapUtility.ResolveColonyPlanetTile(map);
+            if (StrataMapUtility.IsWorldGridTile(tile))
+            {
+                StratumForecastUtility.Truth truth =
+                    StratumForecastUtility.ComputeLevelTruth(tile, depth);
+                forecastBias = Mathf.Lerp(0.75f, 1.35f, truth.oreDensity);
+            }
+            int nodeCount = Mathf.Max(1, Mathf.RoundToInt(NodeCountForDepth(depth) * forecastBias));
             var placed = new List<IntVec3>();
             int totalCells = 0;
 
@@ -35,7 +44,7 @@ namespace Strata
                 {
                     break;
                 }
-                int target = TargetCellsForDepth(depth);
+                int target = Mathf.RoundToInt(TargetCellsForDepth(depth) * forecastBias);
                 ThingDef ore = OreReveal.PickOreForDepth(depth);
                 int n = OreReveal.PlaceRichNode(map, root, ore, target);
                 if (n <= 0)

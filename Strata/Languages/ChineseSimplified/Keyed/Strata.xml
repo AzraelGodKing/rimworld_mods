@@ -399,4 +399,53 @@
 
   <Strata_PlaySettings_SupportOverlayTip>Strata：支撑叠加\n标出厚岩顶下超出承重或支柱范围的开挖格。塌方优先落在这些格子。</Strata_PlaySettings_SupportOverlayTip>
 
+  <Strata_Settings_WaterTableSeepage>潜水面渗水</Strata_Settings_WaterTableSeepage>
+  <Strata_Settings_WaterTableSeepageDesc>低于潜水面的楼层会持续渗水进入既有积水/泵系统。默认关闭，以免旧存档突然进水。</Strata_Settings_WaterTableSeepageDesc>
+  <Strata_Settings_WaterTableSeepRate>渗水速率：{0}</Strata_Settings_WaterTableSeepRate>
+  <Strata_SumpBelowTable>潜水面：低于本层 {0} 层</Strata_SumpBelowTable>
+  <Strata_SumpAboveTable>潜水面：本层或以上</Strata_SumpAboveTable>
+  <Strata_Seep_LetterLabel>地下水渗入</Strata_Seep_LetterLabel>
+  <Strata_Seep_LetterText>本层低于潜水面 {0} 层。没有足够通电的抽水泵时，浅水会上涨。</Strata_Seep_LetterText>
+  <Strata_Sample_NeedsPower>岩芯钻需要电力</Strata_Sample_NeedsPower>
+  <Strata_Sample_Ready>可以取样下方岩层</Strata_Sample_Ready>
+  <Strata_Sample_Working>取样中…剩余 {0}</Strata_Sample_Working>
+  <Strata_Sample_Busy>正在取样</Strata_Sample_Busy>
+  <Strata_Sample_GizmoLabel>开始岩芯取样</Strata_Sample_GizmoLabel>
+  <Strata_Sample_GizmoDesc>钻入本格下方岩层。耗时并额外耗电。结果是区间而非精确数值。</Strata_Sample_GizmoDesc>
+  <Strata_Sample_Complete>{0} 的岩芯取样完成。</Strata_Sample_Complete>
+  <Strata_Sample_Header>深度 B{0} 取样：</Strata_Sample_Header>
+  <Strata_Sample_TableDepth>潜水面深度：B{0}</Strata_Sample_TableDepth>
+  <Strata_Sample_OrePoor>矿：可能较贫</Strata_Sample_OrePoor>
+  <Strata_Sample_OreModerate>矿：混杂——可能有富矿囊</Strata_Sample_OreModerate>
+  <Strata_Sample_OreRich>矿：可能富矿</Strata_Sample_OreRich>
+  <Strata_Sample_GasLow>气：气囊风险低</Strata_Sample_GasLow>
+  <Strata_Sample_GasSome>气：有一定气囊风险</Strata_Sample_GasSome>
+  <Strata_Sample_GasHigh>气：气囊风险高</Strata_Sample_GasHigh>
+  <Strata_Sample_BugsQuiet>虫：安静</Strata_Sample_BugsQuiet>
+  <Strata_Sample_BugsStirring>虫：有动静</Strata_Sample_BugsStirring>
+  <Strata_Sample_BugsHeavy>虫：侵扰压力大</Strata_Sample_BugsHeavy>
+  <Strata_Sample_RockSoft>岩：较软</Strata_Sample_RockSoft>
+  <Strata_Sample_RockMedium>岩：中等硬度</Strata_Sample_RockMedium>
+  <Strata_Sample_RockHard>岩：硬——开挖慢</Strata_Sample_RockHard>
+  <Strata_Sample_WaterAbove>潜水面：该深度干燥</Strata_Sample_WaterAbove>
+  <Strata_Sample_WaterBelow>潜水面：低于水面 {0} 层（启用渗水时有风险）</Strata_Sample_WaterBelow>
+  <Strata_Sample_LostFloorHint>微弱空腔回声——下方可能已有空间</Strata_Sample_LostFloorHint>
+  <Strata_Listen_NeedsPower>监听站需要电力</Strata_Listen_NeedsPower>
+  <Strata_Listen_Quiet>岩层安静</Strata_Listen_Quiet>
+  <Strata_Listen_Deaf>失聪——附近工业噪音过大</Strata_Listen_Deaf>
+  <Strata_Listen_Disabled>设置中已关闭侵扰——监听站闲置</Strata_Listen_Disabled>
+  <Strata_Listen_Range>有效范围：{0} / {1}</Strata_Listen_Range>
+  <Strata_Listen_Noise>本地噪音：{0}</Strata_Listen_Noise>
+  <Strata_Listen_Contact>{0}，{1}，{2}</Strata_Listen_Contact>
+  <Strata_Listen_Something>某种动静</Strata_Listen_Something>
+  <Strata_Listen_SomethingLarge>较大动静</Strata_Listen_SomethingLarge>
+  <Strata_Listen_Below>下方</Strata_Listen_Below>
+  <Strata_Listen_ThroughRock>透岩</Strata_Listen_ThroughRock>
+  <Strata_Listen_North>北</Strata_Listen_North>
+  <Strata_Listen_East>东</Strata_Listen_East>
+  <Strata_Listen_South>南</Strata_Listen_South>
+  <Strata_Listen_West>西</Strata_Listen_West>
+  <Strata_Listen_LetterLabel>深层监听接触</Strata_Listen_LetterLabel>
+  <Strata_Listen_LetterText>{0} 报告：{1}。方向仅为近似。</Strata_Listen_LetterText>
+
 </LanguageData>

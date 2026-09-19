@@ -1,11 +1,24 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.6.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.6.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.7.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.7.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `edge-rock-fog-v2` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `strata-sensing-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
+
+## [3.7.0]
+
+Player-facing version **3.7.0** (`About.xml` `modVersion`). Startup writes `[Strata] v3.7.0 Soft-compat build strata-sensing-v1` in Player.log.
+
+AZR-138 AZR-139 AZR-141 AZR-233
+
+### Added
+- **Core sampling drill** (`strata-sensing-v1`, AZR-138) — place, power, wait; report ore / gas / infestation / rock / water-table bands for the depth below that cell. Research and building condition narrow the band. Cell-tied so three samples can disagree.
+- **Water table seepage** (`strata-sensing-v1`, AZR-139) — per-tile table from climate; levels below seep into `FloodMapComponent` when the setting is on (default off). Sump inspect shows levels below the table; powered pumps hold the floor.
+- **Deep listening post** (`strata-sensing-v1`, AZR-141) — powered listening with local-noise range shrink, coarse directional contacts, letters before heavy pressure. Idle if underground infestations are disabled.
+- **Core survey** research — improves sample precision and unlocks the listening post.
+- **Hospitality guest rooms** (AZR-233) — soft-compat folds guest beds on linked upper/lower floors into Hospitality visit BedCheck / GetGuestBeds so upstairs guest rooms attract visitors again.
 
 ## [3.6.0]
 
