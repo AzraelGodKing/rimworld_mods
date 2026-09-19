@@ -29,6 +29,9 @@ Strata/Tools/_reflect_tmp/
 .cursor/
 .claude/
 
+# Local hooks 
+.git/hooks/*
+
 # Local private outputs (never commit)
 .local/
 .local/**
