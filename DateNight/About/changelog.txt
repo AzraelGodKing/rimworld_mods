@@ -8,6 +8,13 @@
 [*] Favourite-venue, date-cooldown, and anniversary trackers prune dead pawns.
 [/list]
 
+[b]Added[/b]
+[list]
+[*] Schedule-mismatch alert: click to sync a partner's painted Date/Lovin hours (AZR-224).
+[*] Configurable gift ThingDef list (+ optional joy-luxury scan) (AZR-223).
+[*] Thought when a couple's favourite venue building is destroyed (AZR-225).
+[/list]
+
 [i]QA: passed[/i]
 [i]Build stamp (Player.log): date-memory-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]

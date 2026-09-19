@@ -57,7 +57,67 @@ namespace DateNight
                     sb.AppendLine("  " + row.line);
                 }
             }
+            sb.AppendLine();
+            sb.AppendLine("DateNight_Alert_MismatchSyncHint".Translate());
             return sb.ToString();
+        }
+
+        protected override void OnClick()
+        {
+            Rebuild();
+            if (rows.Count == 0)
+            {
+                base.OnClick();
+                return;
+            }
+
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            HashSet<long> seenPairs = new HashSet<long>();
+            for (int i = 0; i < rows.Count; i++)
+            {
+                MismatchRow row = rows[i];
+                if (row.a == null || row.b == null || row.slot == null)
+                {
+                    continue;
+                }
+
+                long key = DateNightActivities.CoupleKey(row.a, row.b)
+                    ^ ((long)row.slot.shortHash << 16);
+                if (!seenPairs.Add(key))
+                {
+                    continue;
+                }
+
+                Pawn source = DateNightUtility.HasAnyHour(row.a, row.slot) ? row.a : row.b;
+                Pawn target = source == row.a ? row.b : row.a;
+                if (!DateNightUtility.HasAnyHour(source, row.slot))
+                {
+                    continue;
+                }
+
+                string label = "DateNight_Alert_SyncOption".Translate(
+                    source.LabelShort, target.LabelShort, row.slotLabel);
+                Pawn srcCap = source;
+                Pawn dstCap = target;
+                TimeAssignmentDef slotCap = row.slot;
+                options.Add(new FloatMenuOption(label, () =>
+                {
+                    DateNightUtility.CopyHours(srcCap, dstCap, slotCap);
+                    Messages.Message(
+                        "DateNight_Alert_Synced".Translate(srcCap.LabelShort, dstCap.LabelShort),
+                        MessageTypeDefOf.TaskCompletion,
+                        historical: false);
+                    lastScanTick = -9999;
+                }));
+            }
+
+            if (options.Count == 0)
+            {
+                base.OnClick();
+                return;
+            }
+
+            Find.WindowStack.Add(new FloatMenu(options));
         }
 
         private void Rebuild()
@@ -148,7 +208,14 @@ namespace DateNight
                 line = "DateNight_Alert_MismatchHours".Translate(a.LabelShort, b.LabelShort, slotLabel);
             }
 
-            rows.Add(new MismatchRow { line = line });
+            rows.Add(new MismatchRow
+            {
+                line = line,
+                a = a,
+                b = b,
+                slot = def,
+                slotLabel = slotLabel
+            });
             AddCulprit(a);
             AddCulprit(b);
         }
@@ -181,6 +248,10 @@ namespace DateNight
         private struct MismatchRow
         {
             public string line;
+            public Pawn a;
+            public Pawn b;
+            public TimeAssignmentDef slot;
+            public string slotLabel;
         }
     }
 }

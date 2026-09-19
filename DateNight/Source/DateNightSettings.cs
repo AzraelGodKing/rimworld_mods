@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Verse;
 
 namespace DateNight
@@ -42,6 +43,17 @@ namespace DateNight
         public bool allowGiftDates = true;
 
         /// <summary>
+        /// Extra ThingDef names accepted as gift items (comma-edited in settings).
+        /// Empty = use the vanilla defaults (Beer, Chocolate, Ambrosia, PsychiteTea, InsectJelly).
+        /// </summary>
+        public List<string> giftDefNames = new List<string>();
+
+        /// <summary>
+        /// Also accept small joy-giving ingestibles as gifts (modded luxuries).
+        /// </summary>
+        public bool extendGiftsWithJoyItems = true;
+
+        /// <summary>
         /// A finished date improves lovin chance for the next in-game day.
         /// </summary>
         public bool postDateLovinBoost = true;
@@ -71,10 +83,16 @@ namespace DateNight
             Scribe_Values.Look(ref enableDateActivities, "enableDateActivities", true);
             Scribe_Values.Look(ref enableDateQuality, "enableDateQuality", true);
             Scribe_Values.Look(ref allowGiftDates, "allowGiftDates", true);
+            Scribe_Collections.Look(ref giftDefNames, "giftDefNames", LookMode.Value);
+            Scribe_Values.Look(ref extendGiftsWithJoyItems, "extendGiftsWithJoyItems", true);
             Scribe_Values.Look(ref postDateLovinBoost, "postDateLovinBoost", true);
             Scribe_Values.Look(ref enableAnniversaries, "enableAnniversaries", true);
             Scribe_Values.Look(ref rememberFavoriteSpot, "rememberFavoriteSpot", true);
             Scribe_Values.Look(ref allowDoubleDates, "allowDoubleDates", true);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && giftDefNames == null)
+            {
+                giftDefNames = new List<string>();
+            }
         }
 
         public void ResetToDefaults()
@@ -86,10 +104,13 @@ namespace DateNight
             enableDateActivities = true;
             enableDateQuality = true;
             allowGiftDates = true;
+            giftDefNames = new List<string>();
+            extendGiftsWithJoyItems = true;
             postDateLovinBoost = true;
             enableAnniversaries = true;
             rememberFavoriteSpot = true;
             allowDoubleDates = true;
+            DateNightActivities.InvalidateGiftCache();
         }
     }
 }

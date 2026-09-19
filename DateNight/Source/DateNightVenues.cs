@@ -46,6 +46,63 @@ namespace DateNight
             }
         }
 
+        /// <summary>
+        /// When a remembered favourite building/cell is gone, clear it and give a
+        /// one-shot thought so the loss is acknowledged.
+        /// </summary>
+        public static void TickDestroyedVenues()
+        {
+            if (!Remembering || venues == null || venues.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < venues.Count; i++)
+            {
+                FavoriteVenue fav = venues[i];
+                if (fav == null || fav.score < PreferScore || fav.notifiedDestroyed)
+                {
+                    continue;
+                }
+
+                Map map = null;
+                if (Find.Maps != null)
+                {
+                    for (int m = 0; m < Find.Maps.Count; m++)
+                    {
+                        if (Find.Maps[m] != null && Find.Maps[m].uniqueID == fav.mapId)
+                        {
+                            map = Find.Maps[m];
+                            break;
+                        }
+                    }
+                }
+                if (map == null)
+                {
+                    continue;
+                }
+
+                if (fav.IsIntact(map))
+                {
+                    continue;
+                }
+
+                fav.notifiedDestroyed = true;
+                Pawn a = DateNightDateUtility.FindPawnById(fav.pawnA);
+                Pawn b = DateNightDateUtility.FindPawnById(fav.pawnB);
+                ThoughtDef lost = DateNightDefOf.DateNight_VenueDestroyed
+                    ?? DefDatabase<ThoughtDef>.GetNamedSilentFail("DateNight_VenueDestroyed");
+                if (lost != null)
+                {
+                    TryGain(a, b, lost);
+                    TryGain(b, a, lost);
+                }
+                fav.thingId = 0;
+                fav.cell = IntVec3.Invalid;
+                fav.score = Clamp(fav.score * 0.35f);
+            }
+        }
+
         public static bool Remembering
         {
             get { return DateNightMod.Settings == null || DateNightMod.Settings.rememberFavoriteSpot; }
@@ -226,6 +283,7 @@ namespace DateNight
         public int thingId;
         public IntVec3 cell = IntVec3.Invalid;
         public float score;
+        public bool notifiedDestroyed;
 
         public long CoupleKey
         {
@@ -235,6 +293,7 @@ namespace DateNight
         public void Capture(Map map, LocalTargetInfo spot)
         {
             mapId = map.uniqueID;
+            notifiedDestroyed = false;
             if (spot.HasThing && spot.Thing != null && !spot.Thing.Destroyed)
             {
                 Thing root = TableOrBuilding(spot.Thing) ?? spot.Thing;
@@ -245,6 +304,20 @@ namespace DateNight
 
             thingId = 0;
             cell = spot.IsValid ? spot.Cell : IntVec3.Invalid;
+        }
+
+        public bool IsIntact(Map map)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+            if (thingId != 0)
+            {
+                return FindThing(map, thingId) != null;
+            }
+            // Cell-only favourites: treat as gone when the cell is no longer standable.
+            return cell.IsValid && cell.InBounds(map) && cell.Standable(map);
         }
 
         public LocalTargetInfo Resolve(Map map, Pawn pawn, Pawn partner)
@@ -285,6 +358,7 @@ namespace DateNight
             Scribe_Values.Look(ref thingId, "thingId");
             Scribe_Values.Look(ref cell, "cell");
             Scribe_Values.Look(ref score, "score", 0f);
+            Scribe_Values.Look(ref notifiedDestroyed, "notifiedDestroyed", false);
         }
 
         private static Thing TableOrBuilding(Thing thing)
