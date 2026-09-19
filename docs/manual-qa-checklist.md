@@ -84,5 +84,5 @@ Do not treat these as QA failures.
 - [ ] ~~**AZR-59**~~ Skip (partial) — Rimesis half still open; only BFV soft-detect is in this build.
 - [ ] ~~**AZR-60**~~ Skip (blocked) — not in this build.
 - [ ] ~~**AZR-229**~~ Skip (partial) — no multiplayer SyncMethod; SP next-tick weather only.
-- [ ] ~~**AZR-233**~~ Skip — Not fixed — Hospitality floors.
+- [ ] **AZR-233** Hospitality guest rooms on Strata upper/lower floors attract visits (soft-compat BedCheck / GetGuestBeds).
 - [ ] ~~**AZR-227**~~ Skip (docs-only) — verify README/About, no gameplay regression expected.
