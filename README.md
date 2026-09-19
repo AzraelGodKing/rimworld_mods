@@ -60,7 +60,7 @@ Source lives in `Strata/Source`. The compiled `Strata.dll` is produced by the **
 
 ### Stormproof
 
-Defend your grid from everything the Rim throws at it. RimWorld 1.6 (**1.4.0**). C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod). Steam paste: [SteamDescription.txt](Stormproof/SteamDescription.txt).
+Defend your grid from everything the Rim throws at it. RimWorld 1.6 (**1.4.1**). C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod). Steam paste: [SteamDescription.txt](Stormproof/SteamDescription.txt).
 
 | Building | What it does |
 |---|---|
