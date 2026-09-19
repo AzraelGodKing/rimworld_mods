@@ -35,8 +35,11 @@
   <Niceties_Settings_SharedRoomsTip>在床上使用指令将房间标为共用。它保持为卧室而不是翻成营房，室友（以及皇权）不会因同住受罚。</Niceties_Settings_SharedRoomsTip>
   <Niceties_Settings_SkipDisturbedSleep>室友不因打扰睡眠而沮丧</Niceties_Settings_SkipDisturbedSleep>
   <Niceties_Settings_SkipDisturbedSleepTip>共用一间房的殖民者（已标记共用，或另有殖民者被分配到该房的床）不会获得打扰睡眠的想法。穿过别人的私人房间仍会打扰对方。</Niceties_Settings_SkipDisturbedSleepTip>
+  <Niceties_Settings_SkipNonPartnerBed>与非伴侣共床不扣心情</Niceties_Settings_SkipNonPartnerBed>
+  <Niceties_Settings_SkipNonPartnerBedTip>可选。在已标记的共用卧室中，跳过原版“与非伴侣共床”心情惩罚。</Niceties_Settings_SkipNonPartnerBedTip>
+  <Niceties_Settings_SectionPresets>预设</Niceties_Settings_SectionPresets>
   <Niceties_ShareRoom>共用房间</Niceties_ShareRoom>
-  <Niceties_ShareRoomTip>将此卧室标为共用。额外的床仍算卧室而非营房。室友跳过“合住一室”的心情惩罚。</Niceties_ShareRoomTip>
+  <Niceties_ShareRoomTip>将此卧室标为共用。额外的床仍算卧室而非营房。室友跳过“合住一室”的心情惩罚。选项中还可关闭打扰睡眠与非伴侣共床惩罚。</Niceties_ShareRoomTip>
   <Niceties_ShareRoomInspect>房间已共用。</Niceties_ShareRoomInspect>
   <Niceties_Settings_LeaveAWayOut>留出出路</Niceties_Settings_LeaveAWayOut>
   <Niceties_Settings_LeaveAWayOutTip>殖民者不会完成会困住他人或挡住剩余框架的墙。把自己砌进去之前会先让开。Replace Stuff 的替换框架同样生效；就地换墙材（木墙换石墙）仍视为实心，所以仍可从冷冻室内部替换。右键强制建造仍会砌上。灵感来自 Smarter Construction，1.6 原写，并非移植。</Niceties_Settings_LeaveAWayOutTip>
