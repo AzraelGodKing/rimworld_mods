@@ -2,6 +2,16 @@
 
 Detailed notes for **Stormproof** only.
 
+## [1.4.1]
+
+Player-facing version **1.4.1** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.4.1 loaded from ...` with stamp `schedule-forecast-v1`.
+
+AZR-226 AZR-230
+
+### Changed
+- **Schedule forecast tint** (`schedule-forecast-v1`, AZR-230) — `Dialog_LoadSchedule` colors each hour from `GridForecastUtility.ProjectHourFractions` (orange below low, red below critical).
+- **ROADMAP hygiene** (AZR-226) — AZR-142 / AZR-145 / AZR-109 moved into Shipped (already in 1.3.0+ code).
+
 ## [1.4.0]
 
 Player-facing version **1.4.0** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.4.0 loaded from ...` with stamp `forecast-caller-v1`.

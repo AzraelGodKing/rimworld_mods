@@ -114,6 +114,48 @@ namespace Stormproof
             return result;
         }
 
+        // Charge fraction at the end of each of the next 24 in-game hours (for schedule UI).
+        internal static float[] ProjectHourFractions(Map map, PowerNet net, CompWeatherForecaster forecast,
+            float stored, float capacity, float criticalFraction)
+        {
+            float[] hours = new float[24];
+            for (int i = 0; i < 24; i++)
+            {
+                hours[i] = capacity <= 0f ? 0f : stored / capacity;
+            }
+            if (map == null || net == null || capacity <= 0f)
+            {
+                return hours;
+            }
+
+            SplitPlants(net, out float solarMax, out float windNow, out float windMax,
+                out float otherProd, out float nameplateDraw);
+            float weatherMul = WeatherSkyMul(map);
+            float windFrac = windMax > 0.01f ? Mathf.Clamp01(windNow / windMax) : 0f;
+            float energy = stored;
+            int weatherRemaining = forecast != null ? forecast.RemainingTicks() : 0;
+            float severity = StormproofMod.Settings != null && StormproofMod.Settings.enableBrownout
+                ? Mathf.Clamp(StormproofMod.Settings.brownoutSeverity, 0f, 2f)
+                : 0f;
+            const int hourTicks = 2500;
+            for (int h = 0; h < 24; h++)
+            {
+                for (int elapsed = 0; elapsed < hourTicks; elapsed += StepTicks)
+                {
+                    int absolute = h * hourTicks + elapsed;
+                    bool holds = forecast != null && absolute < weatherRemaining;
+                    float sky = ProjectedSky(map, absolute, holds, weatherMul);
+                    float wind = holds ? windFrac : windFrac * 0.55f;
+                    float brownout = BrownoutAt(energy / capacity, severity);
+                    float draw = nameplateDraw * (1f - BrownoutDrawCut * brownout);
+                    float watts = solarMax * sky + windMax * wind + otherProd - draw;
+                    energy = Mathf.Clamp(energy + watts * CompPower.WattsToWattDaysPerTick * StepTicks, 0f, capacity);
+                }
+                hours[h] = energy / capacity;
+            }
+            return hours;
+        }
+
         internal static float BrownoutAt(float fraction, float severity)
         {
             if (severity <= 0f || fraction >= BrownoutStart)

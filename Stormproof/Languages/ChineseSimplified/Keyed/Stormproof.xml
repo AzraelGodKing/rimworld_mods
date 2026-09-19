@@ -65,6 +65,7 @@
   <Stormproof_LoadShedder_ScheduleTitle>负荷时刻表</Stormproof_LoadShedder_ScheduleTitle>
   <Stormproof_LoadShedder_ScheduleHint>点击小时：红色切除，绿色运行。切断阈值仍优先。</Stormproof_LoadShedder_ScheduleHint>
   <Stormproof_LoadShedder_ScheduleLegend>红=该小时切除。绿=运行。预报覆盖会在风暴或耀斑落地前切除。</Stormproof_LoadShedder_ScheduleLegend>
+  <Stormproof_LoadShedder_ForecastTint>橙/红色调 = 该小时电池预计跌破偏低/危急。</Stormproof_LoadShedder_ForecastTint>
   <Stormproof_LoadShedder_ScheduleClear>清除时刻表</Stormproof_LoadShedder_ScheduleClear>
   <Stormproof_LoadShedder_ForecastOverride>预报覆盖：风暴或耀斑将至时切除</Stormproof_LoadShedder_ForecastOverride>
   <Stormproof_LoadShedder_HoldAuto>保持：自动</Stormproof_LoadShedder_HoldAuto>
