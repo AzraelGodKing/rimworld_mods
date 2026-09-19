@@ -52,6 +52,7 @@
   <Homesteader_PantryDays>按当前用餐计算的食物天数：{0}（{1} 名殖民者）</Homesteader_PantryDays>
   <Homesteader_PantryNextRot>最接近变质：{0}（{1} 天）</Homesteader_PantryNextRot>
   <Homesteader_PantryNextRotNone>储藏室里没有快坏的东西。</Homesteader_PantryNextRotNone>
+  <Homesteader_PantryJump>跳转</Homesteader_PantryJump>
   <Homesteader_PantryContents>存货</Homesteader_PantryContents>
   <Homesteader_PantryEmpty>地窖、冰屋、泉屋、果酱架、板条箱和木桶里没有食物。</Homesteader_PantryEmpty>
   <Homesteader_PantryTabStock>存货</Homesteader_PantryTabStock>
@@ -69,6 +70,11 @@
   <Homesteader_PantryMakeNeedIng>还差 {0} {1}</Homesteader_PantryMakeNeedIng>
   <Homesteader_PantryMakeUnknownIng>材料</Homesteader_PantryMakeUnknownIng>
   <Homesteader_LandraceDev>地方品种 +{0}% 产量、+{1}% 抗寒、+{2}% 抗旱（第 {3} 代）</Homesteader_LandraceDev>
+  <Homesteader_MapleSeason_Running>树汁很旺——制糖季节。</Homesteader_MapleSeason_Running>
+  <Homesteader_MapleSeason_Slow>这个季节树汁偏少。</Homesteader_MapleSeason_Slow>
+  <Homesteader_MapleSeason_Dry>树汁几乎干了——等春寒再采。</Homesteader_MapleSeason_Dry>
+  <Homesteader_DroughtInspect_Active>干旱：集水和浅井变少。</Homesteader_DroughtInspect_Active>
+  <Homesteader_DroughtInspect_Protected>干旱：Stormproof 冷凝器正在补湿。</Homesteader_DroughtInspect_Protected>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>一则异常广播锁定了你殖民地的 27 纪念碑频率。短暂的热穹正在该区域形成，几名殖民者报告短暂的头脑昏沉——他们称之为「脑腐」。</Homesteader_KatsLetter_Open>

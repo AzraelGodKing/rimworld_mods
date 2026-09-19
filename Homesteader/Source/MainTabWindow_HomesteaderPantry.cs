@@ -77,10 +77,18 @@ namespace Homesteader
 
             if (report.nearestRot != null && report.nearestRotDays >= 0f)
             {
-                Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
+                Rect rotLine = new Rect(inRect.x, y, inRect.width, 22f);
+                Rect rotLabel = new Rect(rotLine.x, rotLine.y, rotLine.width - 88f, 22f);
+                Rect rotBtn = new Rect(rotLine.xMax - 84f, rotLine.y, 80f, 22f);
+                Widgets.Label(rotLabel,
                     "Homesteader_PantryNextRot".Translate(
                         report.nearestRot.LabelCap,
                         report.nearestRotDays.ToString("F1")));
+                if (report.nearestRot.Spawned
+                    && Widgets.ButtonText(rotBtn, "Homesteader_PantryJump".Translate()))
+                {
+                    CameraJumper.TryJumpAndSelect(report.nearestRot);
+                }
             }
             else
             {

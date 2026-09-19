@@ -1,18 +1,19 @@
-1.1.0
-[h1]Homesteader — 1.1.0[/h1]
+1.2.0
+[h1]Homesteader — 1.2.0[/h1]
 
-[b]Fixed[/b]
+[b]Added[/b]
 [list]
-[*] Tastes tab no longer rolls favorites/allergies from UI draw — rolls queue for the next game tick (SpawnSetup still rolls immediately).
-[*] Preserve crates count estimated nutrition and mixed-lot variety on the pantry tab instead of vanishing as a non-food "1 kind".
-[*] Removed dead unused Legacy scenario XML (live def is under 1.6/).
+[*] Well-stocked larder mood from distinct preserve kinds in storage (3 / 6 / 9).
+[*] Maple sugaring season — sap yield scales with season and outdoor temp.
+[*] Stormproof drought inspect lines on wells and cisterns (fail-open).
 [/list]
 
 [b]Changed[/b]
 [list]
-[*] Workshop / About description updated for pantry & tastes (What can I make, preserve crates, Tastes tab, Homesteaders scenario).
+[*] Root README Homesteader table refreshed (pantry, landrace, polyarmory, maple season).
+[*] Pantry stock "next to spoil" row gains a Jump button.
 [/list]
 
-[i]QA: passed[/i]
-[i]Build stamp (Player.log): pantry-tastes-v1[/i]
+[i]QA: pending playtest[/i]
+[i]Build stamp (Player.log): larder-maple-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]

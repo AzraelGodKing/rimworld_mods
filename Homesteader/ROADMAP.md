@@ -22,7 +22,7 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 ## Phase 1 — Pantry you feel
 
 - [ ] **HS-A01** **Harvest festival** — maypole annual ritual (Ideology-aware, works without); mood, trade attraction, seasonal food
-- [ ] **HS-A02** **Well-stocked larder mood** — ThoughtWorker tiered buff from distinct preserved foods in cellars/pantries
+- [x] **HS-A02** **Well-stocked larder mood** — ThoughtWorker tiered buff from distinct preserved foods in cellars/pantries
 - [ ] **HS-A03** **Aging** — cheese / ham / cider quality tiers over time in the root cellar
 
 ## Phase 2 — Yard & livestock
@@ -42,12 +42,12 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 - [x] **Water building ladder** — barrel trickle → cistern stockpile+catch → tower capacity; hand-dug → deep well; still = boiled sidegrade; fountain drinks jugs
 - [ ] **HS-A11** **Waterwheel** — river water power; interacts with Stormproof droughts
-- [ ] **HS-A12** Maple sugaring season
+- [x] **HS-A12** Maple sugaring season
 - [ ] **HS-A13** Rain-aware barrels / drought empty
 
 ## Phase 5 — Soft-compat consumers (do not move into Living World)
 
 - [ ] **HS-S01** Optional flavor when Living World reports outlander famine / refugees (string hooks only)
-- [ ] **HS-S02** Stormproof drought inspect on wells/cisterns
+- [x] **HS-S02** Stormproof drought inspect on wells/cisterns
 - [ ] **HS-S03** Deep Colony Grand Chef + Homesteader meals (defName list; DC-C09)
 - [ ] **HS-S04** Nemesis pantry / smokehouse targeting remains a **Nemesis** soft-compat item (defName list), not a Homesteader world-sim
