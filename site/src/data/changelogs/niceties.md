@@ -2,6 +2,16 @@
 
 Detailed notes for **Niceties** only.
 
+## [1.3.1]
+
+Player-facing version **1.3.1** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.3.1 loaded from ...; options-fold-v1` in Player.log.
+
+AZR-218 AZR-219
+
+### Changed
+- **Options fold** (`options-fold-v1`, AZR-219) — Mod Options sections collapse/expand.
+- **Non-partner bed share** (AZR-218) — opt-in toggle under Shared bedrooms skips `ThoughtWorker_SharedBed` in marked shared rooms.
+
 ## [1.3.0]
 
 Player-facing version **1.3.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.3.0 loaded from ...; openbuilds-hard-v1` in Player.log.
