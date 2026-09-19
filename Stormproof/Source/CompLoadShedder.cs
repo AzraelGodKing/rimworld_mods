@@ -76,6 +76,31 @@ namespace Stormproof
 
         public bool HourSheds(int hour) => (shedMask & (1 << hour)) != 0;
 
+        public float[] ForecastHourFractions(float criticalFraction)
+        {
+            Map map = parent?.Map;
+            PowerNet supply = parent != null && parent.Spawned ? SupplyNet() : null;
+            if (map == null || supply == null)
+            {
+                return new float[24];
+            }
+            float capacity = 0f;
+            float stored = 0f;
+            for (int i = 0; i < supply.batteryComps.Count; i++)
+            {
+                CompPowerBattery bat = supply.batteryComps[i];
+                if (bat == null)
+                {
+                    continue;
+                }
+                capacity += bat.Props.storedEnergyMax;
+                stored += bat.StoredEnergy;
+            }
+            return GridForecastUtility.ProjectHourFractions(
+                map, supply, GridForecastUtility.ForecasterOn(supply),
+                stored, capacity, criticalFraction);
+        }
+
         public void ToggleHour(int hour)
         {
             shedMask ^= 1 << hour;

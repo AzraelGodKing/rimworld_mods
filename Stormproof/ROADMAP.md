@@ -17,6 +17,10 @@ Playable core is in. Next pool: [docs/ideas/stormproof-updates.md](../docs/ideas
 - [x] Natural-hazard family — dry lightning, heat dome, polar front, toxic surge, plus hazard buildings
 - [x] **AZR-143** Coverage overlays — radius on select and place (spire, pylon, dampener, suppressor); enclosed-room highlight on the fallout scrubber
 - [x] **AZR-144** Power forecast on the grid monitor when a weather forecaster shares the net
+- [x] **AZR-142** Scheduled load profiles on the shedder
+- [x] **AZR-145** Per-storm damage report in the almanac
+- [x] **AZR-109** Nexus `unknown parse failure` on load — not reproduced from these defs; likely packaging / load-order XML poison (same reporter as Homesteader AZR-108)
+- [x] **AZR-230** Color the load-shedder schedule grid with forecast low-power hours
 
 ---
 
@@ -25,7 +29,7 @@ Playable core is in. Next pool: [docs/ideas/stormproof-updates.md](../docs/ideas
 Do not implement the other mod's systems here. Name the hook so each side can fail-open.
 
 - [ ] **Strata** — ion-immune underground grid; surface antenna for comms. Storm surges flooding unpumped levels is a Strata consumer of Stormproof weather, not a Stormproof map.
-- [ ] **Homesteader HS-S02** — drought inspect on wells / cisterns. Drought condenser stays Stormproof; Homesteader only reads the drought.
+- [x] **Homesteader HS-S02** — drought inspect on wells / cisterns. Drought condenser stays Stormproof; Homesteader only reads the drought.
 - [ ] **Nemesis** — optional ion-storm baiting at high hunt aggression (Nemesis owns the hunt; Stormproof only exposes that an ion storm is active).
 
 ---
@@ -34,9 +38,7 @@ Do not implement the other mod's systems here. Name the hook so each side can fa
 
 Tracked in the idea pool and Linear:
 
-- [ ] **AZR-142** Scheduled load profiles on the shedder
-- [ ] **AZR-145** Per-storm damage report in the almanac
-- [ ] **AZR-109** Nexus `unknown parse failure` on load — not reproduced from these defs; likely packaging / load-order XML poison (same reporter as Homesteader AZR-108)
+- [ ] Multiplayer SyncMethod for storm caller (series-wide; no MP API in-tree yet)
 
 ---
 

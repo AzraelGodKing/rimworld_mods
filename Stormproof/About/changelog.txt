@@ -8,6 +8,12 @@
 [*] README building table matches About.xml for atmospheric barrier, sky restorer, and fire suppressor.
 [/list]
 
+[b]Changed[/b]
+[list]
+[*] Load-shedder schedule grid tints hours the forecast expects to run low/critical (AZR-230).
+[*] ROADMAP: AZR-142 / AZR-145 / AZR-109 moved to Shipped (AZR-226).
+[/list]
+
 [i]QA: passed[/i]
 [i]Build stamp (Player.log): forecast-caller-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/stormproof.md[/i]
