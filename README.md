@@ -6,22 +6,24 @@ A collection of RimWorld mods by AzraelGodKing.
 
 ### Homesteader
 
-Everything a growing homestead needs: tribal survival, farm-to-table crafting, wells and irrigation, storage, food preservation, and off-grid power. Supports RimWorld 1.6. C# assembly for root cellar cooling and favorite foods (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
+Grow it, put it by, live off the land. Tribal survival, farm-to-table crafting, wells and irrigation, cool storage, comforts, and off-grid power. RimWorld 1.6. C# for root cellar cooling, pantry, tastes, and favorite foods (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
 
 | Category | Content |
 |---|---|
-| **Tribal survival** | Curing rack (rock salt, salted meat), drying rack (+ fruit leather, dried mushrooms, pemmican without research), smokehouse, hayloft, ingredient barrel |
-| **Farm-to-table** | Grain mill, butter churn (+ buttermilk), pickling crock, homestead hearth (bread, pantry meals, pumpkin pie, biscuits, stews, flapjacks) |
-| **Water & irrigation** | Upgrade ladder: rain barrel trickle → cistern (stores + fills) → water tower (24 stacks); hand-dug well → deep well (20 jugs); solar still yields boiled water; irrigated soil & planter; optional [Dubs Bad Hygiene](https://steamcommunity.com/sharedfiles/filedetails/?id=836308268) plumbing bridge |
-| **Favorites** | Every humanlike rolls a favorite from Homesteader + vanilla foods (+mood when eaten) |
-| **Orchard & apiary** | Apple, cherry, and sugar maple trees (regrow after harvest); maple sap → syrup → flapjacks; beehives produce honey + beeswax; beeswax candle |
-| **Storage** | Storage crate, storage barrel, pallet, hayloft, ingredient barrel, root cellar (passive cool ≤5°C), large storage crate, preserves shelf |
-| **Food preservation** | Jerky, dried produce, fruit leather, salted/smoked meat, pickled vegetables, jam |
-| **Around the farmhouse** | Nesting box (small-animal bed), harvest maypole (gathering spot), beeswax candle |
-| **Research** | Homestead tree + wellcraft → irrigation / waterworks |
-| **Power** | Compact battery (1×1), battery bank (2×2), advanced battery (1×2), ultratech battery (2×2), portable generator (chemfuel), wood-burning generator (wood) |
+| **Tribal survival** | Drying rack (jerky, fruit leather, dried mushrooms, pemmican without research); curing rack + smokehouse (Primitive homestead); hayloft, ingredient barrel |
+| **Farm-to-table** | Grain mill, butter churn (+ buttermilk), cheese press, pickling crock, homestead hearth (pantry meals, pie, biscuits, flapjacks) |
+| **Water & irrigation** | Rain barrel → cistern → water tower; hand-dug well → deep well; solar still; irrigated soil & planter; optional [Dubs Bad Hygiene](https://steamcommunity.com/sharedfiles/filedetails/?id=836308268) plumbing bridge |
+| **Pantry & tastes** | Pantry tab (stock + What can I make); spoilage triage; preserve crates (trade lot + pantry nutrition/variety); Tastes tab (favorites + hidden-until-reaction allergies) |
+| **Orchard & apiary** | Apple, cherry, and sugar maple; maple sap → syrup → flapjacks; beehives (honey + beeswax candles) |
+| **Storage** | Crates, barrels, pallet, root cellar (≤5°C), icehouse (≤0°C), springhouse (≤8°C), preserves shelf |
+| **Around the farmhouse** | Nesting box, harvest maypole, chicken coop, compost → composted soil, seed saving |
+| **Scenario** | Homesteaders (locks Azrael); Azrael storyteller ships here |
+| **Research** | Homestead tree + wellcraft → irrigation / waterworks (dedicated Homesteader tab) |
+| **Power** | Compact / bank / advanced / ultratech batteries; portable chemfuel and wood-burning generators |
 
-Odyssey DLC: salted fish and smoked fish recipes load automatically.
+Odyssey DLC: salted and smoked fish recipes load automatically. Optional refresh art (`Textures/HomesteaderRefresh`) is git-only — not in Workshop / release zips.
+
+Steam paste: [Homesteader/SteamDescription.txt](Homesteader/SteamDescription.txt) · [assets/workshop/homesteader-description.bbcode](assets/workshop/homesteader-description.bbcode).
 
 Source lives in `Homesteader/Source`. The compiled `Homesteader.dll` is produced by the **Build mod DLLs** GitHub Action and included in the [release download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip) (Assemblies are gitignored).
 
@@ -58,30 +60,32 @@ Source lives in `Strata/Source`. The compiled `Strata.dll` is produced by the **
 
 ### Stormproof
 
-Defend your grid from everything the Rim throws at it. RimWorld 1.6. C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod).
+Defend your grid from everything the Rim throws at it. RimWorld 1.6 (**1.4.0**). C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod). Steam paste: [SteamDescription.txt](Stormproof/SteamDescription.txt).
 
 | Building | What it does |
 |---|---|
 | **Solar shield** | Idles at 100W; during a solar flare drains 2,500W continuously to keep all electronics running. If the grid runs dry mid-flare, everything goes dark until it ends. |
-| **Storm spire** | Attracts lightning within a wide radius. Grounded: safe fire protection. Grid-connected: each strike stores up to 1,500 Wd, with a 5% chance of a "Zzzt!" surge (eliminated by perfect grounding research). |
+| **Storm spire** | Attracts lightning within a wide radius (shown on place/select). Grounded: safe fire protection. Grid-connected: each strike stores up to 1,500 Wd, with a 5% chance of a "Zzzt!" surge (eliminated by perfect grounding research). |
 | **Storm capacitor bank** | Lightning-only battery: only spire-caught strikes charge it, it never self-discharges, and "Zzzt!" surges can't touch it. Discharges up to 2,000W to cover grid deficits. |
 | **Surge protector** | Absorbs one "Zzzt!" short circuit, then recharges for a day. |
-| **Weather forecaster** | Shows how long the current weather will hold, announces incoming thunderstorms, and warns an hour before the weather breaks. |
+| **Weather forecaster** | How long weather holds, incoming storms, hour warning before break; almanac + ledger (strikes, Zzzt, fires snuffed, wear). |
 | **Static discharge pylon** | Runs on bottled lightning from capacitor banks: stuns and burns hostiles in a small radius, 50 Wd per shock. |
-| **Fallout scrubber** | Strips toxic buildup from pawns and animals sheltering in its enclosed room. |
-| **Storm caller** | Summons a rainy thunderstorm on demand — lightning for your spires, rain for your wildfires. Five-day recharge. |
+| **Fallout scrubber** | Strips toxic buildup from pawns and animals sheltering in its enclosed room (room outline on select). |
+| **Storm caller** | Summons a rainy thunderstorm on demand — lightning for your spires, rain for your wildfires. Half-day storm, five-day recharge; queues for the next map tick. |
 | **EMP dampener** | Colony buildings in range are immune to EMP stuns. |
-| **Load shedder** | Automatic breaker: sheds a low-priority sub-grid when supply batteries drop below an adjustable cutoff, reconnects when they recover. |
-| **Grid monitor console** | Live production/consumption/storage readout with time-to-empty estimates; warns at 25% battery, alarms at 10%. |
-| **Armored conduit** | Fireproof, high-durability power conduit. |
+| **Load shedder** | Automatic breaker plus optional 24-hour schedule / forecast override / Hold Auto·Run·Shed; battery cutoff still trips first. |
+| **Grid monitor console** | Live production/consumption/storage with time-to-empty; 8-hour weather-aware forecast when a forecaster shares the net (brownout through Hard); 25% / 10% alarms. |
+| **Armored conduit** | Fireproof, high-durability power conduit; immune to storm wear. |
 | **Storm vane** | Decorative copper weather vane. Pure class. |
 | **Atmospheric barrier** | Map-wide: counters toxic fallout, toxic surge, volcanic ash, and noxious haze while powered. |
-| **Climate stabilizer** | Keeps indoor temperature from swinging with outdoor extremes. |
+| **Climate stabilizer** | Cancels temperature offsets from heat waves, cold snaps, volcanic winters, heat domes, and polar fronts while powered. |
 | **Sky restorer** | Map-wide: usable daylight during eclipses, volcanic winters, ash, and darkened skies. |
-| **Fire suppressor** | Extinguishes fires in a wide fixed radius (flashstorm / dry lightning). |
-| **Drought condenser** | Pulls water from dry air when the map is in drought. |
+| **Fire suppressor** | Extinguishes fires in a wide fixed radius (flashstorm / dry lightning); radius shown on place/select. |
+| **Drought condenser** | Cancels drought plant-growth penalties map-wide while powered (Odyssey). |
 
-Events: **Ion storm** (batteries bleed, EMP bursts, extra Zzzt), **Heat dome**, **Polar front**, **Toxic surge**, and **Dry lightning**. Hazard hardening research unlocks the last four. The weather **almanac** (on the forecaster) logs this map's storms by season.
+Grid stress: **graded brownout** below 40% battery; **storm wear** on ordinary conduit and batteries. Soft / Default / Hard settings.
+
+Events: **Ion storm** (batteries bleed, EMP bursts, extra Zzzt), **Heat dome**, **Polar front**, **Toxic surge**, and **Dry lightning**. Hazard hardening covers those plus vanilla fallout / heat / cold / eclipse / volcanic winter / flashstorm / drought.
 
 Research: Stormproof → Storm protection → Flare shielding → Atmospheric control → Perfect grounding → Hazard hardening.
 
@@ -89,7 +93,7 @@ Source lives in `Stormproof/Source`. The compiled `Stormproof.dll` is produced b
 
 ### Nemesis
 
-A named hostile becomes a personal antagonist — taunts, false leads, sabotage, and targeted assaults that flee when losing. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Foundation by **Dredd (Misakabob)**.
+A named hostile becomes a personal antagonist — taunts, sabotage, captain progression after escapes, vengeance army returns, and a dossier for leads. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Foundation by **Dredd (Misakabob)**.
 
 - Site: [nemesis.html](https://azraelgodking.github.io/rimworld_mods/nemesis.html)
 - [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3773562126) · [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Nemesis.zip)
@@ -103,14 +107,14 @@ Perk trees, trauma & therapy, apprenticeship, generational inheritance, and livi
 
 ### Date Night
 
-Adds Date and Lovin timetable slots. Date is a walk / table hangout; Lovin still uses a shared double. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
+Schedule romance: Date and Lovin timetable slots, real date activities (dinner, picnic, walk, gifts…), quality, anniversaries, favourite spots, and double dates. Lovin still uses a shared double; private time when alone. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
 
 - Site: [datenight.html](https://azraelgodking.github.io/rimworld_mods/datenight.html)
-- [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip)
+- [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3774158903) · [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip)
 
 ### Niceties
 
-Small colony comforts: well-kept apparel, throne-room altars, wear any gendered cut, hide cryptosleep from the colonist bar, melee hunting, shared bedrooms, and leave a way out while building. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Soft / Default / Hard presets; each toggle is independent.
+Small colony comforts: well-kept apparel (Poor = vanilla daily wear), throne-room altars, wear any gendered cut, hide cryptosleep from the colonist bar, melee hunting, shared bedrooms, and leave a way out while building. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Soft / Default / Hard presets; each toggle is independent. Incompatible with Share Rooms [LWM] and Smarter Construction.
 
 - Site: [niceties](https://azraelgodking.github.io/rimworld_mods/niceties)
 - [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Niceties.zip)
