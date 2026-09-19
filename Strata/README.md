@@ -31,14 +31,15 @@ stairwells (a level with pawns on it will not be deleted).
 
 | System | Short version |
 | --- | --- |
-| **Levels** | **Down:** excavated stairwell → solid-rock Level −N the size of the map above. **Up:** tower stairwell / tower elevator → outdoor Level +N roof deck (build only where the floor below is roofed, plus the shaft plaza; open sky elsewhere). A second shaft on the same floor joins the SAME linked level. |
-| **Fluidity** | Colonists relay themselves between floors for work, food, rest, medical, joy, hauling, construction materials, and rituals. Work relay covers growing, cleaning, firefighting, hunting, research, warden, handling, and bills — mods can register extra probes. You designate; they commute. |
+| **Levels** | **Down:** excavated stairwell → solid-rock Level −N the size of the map above. Dug cells clear fog; rock wall faces that border open stay visible; deep undug rock stays fogged. **Up:** tower stairwell / tower elevator → outdoor Level +N roof deck (build only where the floor below is roofed, plus the shaft plaza; open sky elsewhere). A second shaft on the same floor joins the SAME linked level. |
+| **Fluidity** | Colonists relay themselves between floors for work, food, rest, medical, joy, hauling, construction materials, and rituals. Rest follows the assigned bed across floors (no wrong-floor bunk nap on the way). Work relay covers growing, cleaning, firefighting, hunting, research, warden, handling, and bills — mods can register extra probes. You designate; they commute. |
+| **Purpose tags** | Tag a floor Farm, Freezer, Workshop, Barracks, Quarry, Storage, Hospital, or none (rename dialog or Levels tab). Matching tags tilt haul, rest, food, and work relays; untagged floors keep BFS order. A wrong tag never blocks a job. |
 | **Logistics** | Stockpile priority works across the whole column. Blueprints pull missing materials from other levels. The build menu and (optional) resource readout see the whole colony. |
 | **Power** | Stairwells and elevators tie the levels' grids (demand-driven, both directions). The shaft conduit gives a dedicated tie point and extends its own lower junction. |
 | **Atmosphere** | A multi-gas room simulation. Burners emit smoke that pools, flows through doors and vents, and chokes unventilated rooms; foul deep gas seeps from breached pockets, pools where it leaks, poisons, and **explodes on open flame**. Any working outlet guarantees a room stays safe — every ventilation tool works on every gas. Tribal-tech smoke hole included. |
 | **The living deep** | New levels hide small chambers sealed in the rock, found by mining like ore: steam geysers (vanilla geothermal just works down there) and pressurized deep-gas pockets. Cap a gas vent with a **gas well** and burn the canisters in the smokeless **deep-gas generator** — or feed a Helixien gas pipe network directly. |
 | **Threats** | Raiders pursue you through unsealed shafts and besiege sealed ones. Infestations scale with depth. Deep raids erupt insect swarms through the floor. Cave-ins, gas-pocket breaches, tremors. |
-| **UI** | Levels tab (resizable) with jump/rename (Level +N / surface / Level −N), Page Up/Down level hotkeys (rebindable), mod settings for every major system, placement guides for vents and ducts. |
+| **UI** | Levels tab (resizable) with jump/rename/purpose tag (Level +N / surface / Level −N), Page Up/Down level hotkeys (rebindable), mod settings for every major system, placement guides for vents and ducts. |
 
 ## Mod settings
 

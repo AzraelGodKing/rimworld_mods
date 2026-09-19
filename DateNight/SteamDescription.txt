@@ -1,0 +1,64 @@
+My Discord: https://discord.gg/Vwh2y7qMXv
+Site (no Discord): https://azraelgodking.github.io/rimworld_mods/datenight.html
+Issues: https://github.com/AzraelGodKing/rimworld_mods/issues
+
+[h1]Date Night[/h1]
+Schedule romance. Make memories.
+
+Adds [b]Date[/b] and [b]Lovin[/b] timetable slots to the Schedule tab. Paint the same hours on both partners — they go out together, or meet in a shared double. Mood and opinion on dates; real lovin when both make it to bed.
+
+[b]Version 1.2.0.[/b] RimWorld 1.6. Requires [b]Harmony[/b]. Chinese Simplified and Russian included. Safe to add mid-save. Before removing: clear Date / Lovin slots back to Sleep / Anything.
+
+[h2]Date hours[/h2]
+Partners pick a real activity from what's around:
+[list]
+[*] Dinner at a table, picnic outdoors, a walk, stargazing at night
+[*] Dancing at a gather spot, recreation near joy furniture, or a simple hangout
+[*] A small gift (beer, chocolate…) — moves to the partner's inventory, or drops at their feet if full
+[/list]
+Mood and opinion only — no bed, no pregnancy.
+
+Dates have quality: venue beauty, weather, and a little luck decide whether it was wonderful, nice, or awkward. Couples remember a favourite spot and prefer to go back; a ruined date can sour that venue. A raid, draft, or mental break mid-date leaves a ruined-date mood. A finished date leaves a spark — better lovin chance for about a day.
+
+On the anniversary of a love bond both partners get a letter. A date that actually lands that day is a special mood; letting the day pass without one stings.
+
+Two couples with overlapping Date hours may share a venue (double date). Quality rolls once for the group, and the evening spills into opinions of the other pair. If the other couple never shows, they date alone.
+
+[h2]Lovin hours[/h2]
+Paint the same hours on both partners. They meet in a shared double. When both are in it, lovin uses a short mean-time-between until the schedule changes. The double is claimed for that window, then previous beds are restored.
+
+Adults without a partner in that bed can have some private time in any bed (including a single). No pregnancy. Toggle it off in mod settings.
+
+If Ideology forbids lovin, or Biotech sterile genes would make a forced lovin job pointless, Date Night reroutes to a date instead. Missing DLC fails open.
+
+Works for no-sleep / low-rest pawns who never hit a Sleep block: Lovin still sends them to bed.
+
+[h2]Show up[/h2]
+If a partner is drafted, in a medical bed, or off-map for the window, the one who showed up gets a short stood-up thought. If both make it, they get a small boost.
+
+A schedule-mismatch alert fires when one lover has Date or Lovin painted and the other does not (or they painted different hours).
+
+[h2]What's new in 1.2.0[/h2]
+[list]
+[*] Ephemeral lovin-window / rendezvous-bed caches clear on new or loaded game so thing IDs cannot leak into another colony
+[*] Failed gift handoff drops the item at the partner's feet and still grants the received-gift thought
+[*] Favourite-venue, date-cooldown, and anniversary trackers prune dead pawns
+[/list]
+
+[h2]Requirements[/h2]
+[list]
+[*] Date: love relationship, both scheduled Date, same map — adults only
+[*] Couples (Lovin): both scheduled Lovin, love relationship, shared double bed
+[*] Private time: adult colonist, Lovin hours, a reachable bed — children never qualify
+[/list]
+
+[h2]Settings[/h2]
+[list]
+[*] Pregnancy-safe cooldown (default ON): keeps vanilla post-lovin cooldown; only shortens the chance MTB while scheduled
+[*] Eager mode (optional): also shortens post-lovin cooldown like Always Do Lovin — can spam pregnancy rolls
+[*] Allow private time (default ON)
+[*] Claim double for Lovin hours (default ON)
+[*] Date activities / quality / gifts / post-date spark / anniversaries / favourite spots / double dates (all default ON)
+[/list]
+
+Soft-compatible with Rimbody, Exosuit Framework, and Schedule Everything (extra Schedule columns coexist). Requires Harmony. RimWorld 1.6.

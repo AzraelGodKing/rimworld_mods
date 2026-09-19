@@ -1,0 +1,86 @@
+My Discord: https://discord.gg/Vwh2y7qMXv
+Site (no Discord): https://azraelgodking.github.io/rimworld_mods/stormproof.html
+Issues: https://github.com/AzraelGodKing/rimworld_mods/issues
+
+[h1]Stormproof[/h1]
+The Rim does not care about your freezer. Solar flares, lightning, surges, EMP, toxic fallout, heat, cold, eclipses, flashstorms, droughts — Stormproof is the Power-tab toolkit that keeps a colony running through all of it.
+
+[b]Version 1.4.0.[/b] RimWorld 1.6. Requires [b]Harmony[/b]. Odyssey optional (drought condenser). Safe to add mid-save.
+
+[h2]What's new in 1.4.0[/h2]
+[list]
+[*] [b]Hard forecast severity[/b] — the grid monitor's 8-hour projection uses the full brownout range (up to Hard), matching live brownout.
+[*] [b]Storm caller queue[/b] — discharge queues for the next map tick instead of mutating weather from the UI gizmo.
+[/list]
+
+[h2]Grid defense[/h2]
+[list]
+[*] [b]Solar shield[/b] — keeps every electrical device on the map running during a flare. Idles cheap; drinks 2,500W while the sky is red. If batteries empty mid-flare, the shield collapses.
+[*] [b]Storm spire[/b] — steals lightning in a wide radius (shown on select and while placing), cannot burn, and snuffs fires at its base. Wired: each strike dumps up to 1,500 Wd into capacitors then batteries, with a small "Zzzt!" risk until you research perfect grounding. Unwired: just a safe rod.
+[*] [b]Storm capacitor bank[/b] — lightning-only storage. The grid cannot charge it; "Zzzt!" cannot drain it; it never leaks. Covers deficits up to 2,000W.
+[*] [b]Surge protector[/b] — eats one "Zzzt!" then spends a day recharging.
+[*] [b]EMP dampener[/b] — colony buildings in range shrug off EMP stuns. Turrets keep firing. Does not protect pawns or mechanoids.
+[*] [b]Armored conduit[/b] — fireproof, tough, and immune to storm wear — the wiring for killboxes and exterior walls.
+[*] [b]Load shedder[/b] — automatic breaker between the main grid and a low-priority sub-grid. Trips at an adjustable cutoff so the freezer outlasts the television. Optional 24-hour run/shed schedule, forecast override before a storm or flare, and Hold Auto / Run / Shed. Battery cutoff still wins.
+[*] [b]Grid monitor[/b] — live production, consumption, battery time-to-empty, brownout level, and charge warnings. With a powered weather forecaster on the same net, an 8-hour weather-aware forecast that models brownout through Hard severity.
+[/list]
+
+[h2]Grid stress[/h2]
+[list]
+[*] [b]Graded brownout[/b] — when batteries fall below 40%, lights dim, workbenches slow, and coolers lag — draw drops so the remaining charge lasts longer. A load shedder still cuts the sub-grid at its trip point.
+[*] [b]Storm wear[/b] — thunder, ion storms, and high wind slowly chip ordinary conduit and batteries. Armored conduit and storm capacitor banks are immune. Repair as usual.
+[/list]
+
+[h2]Atmosphere & weather[/h2]
+[list]
+[*] [b]Weather forecaster[/b] — how long this weather holds, incoming thunderstorms, an hour's warning before it breaks, and an almanac of this map's storms and hazards — with a ledger of strikes caught vs missed, Zzzt absorbed vs suffered, fires snuffed, and wear hits.
+[*] [b]Fallout scrubber[/b] — indoor detox for pawns and animals in the enclosed room (room outline on select). Useless outdoors.
+[*] [b]Storm caller[/b] — summon a rainy thunderstorm on demand (half-day storm, five-day recharge) — feeds spires and douses wildfires.
+[*] [b]Static discharge pylon[/b] — stuns and burns raiders and mechanoids on bottled lightning from a storm capacitor. No capacitor charge, no zap.
+[/list]
+
+[h2]Hazard hardening (Spacer)[/h2]
+Late-game map-wide counters. Idle cheap; pull hard while the event is on. No stored energy, no protection.
+[list]
+[*] [b]Atmospheric barrier[/b] — toxic fallout, toxic surge, volcanic ash, noxious haze (map-wide while powered).
+[*] [b]Climate stabilizer[/b] — heat wave, cold snap, volcanic winter, heat dome, polar front.
+[*] [b]Sky restorer[/b] — usable daylight during eclipses, volcanic winters, ash, and darkened skies (map-wide while powered).
+[*] [b]Fire suppressor[/b] — extinguishes fires in a wide radius (flashstorm / dry lightning); radius shown on select and while placing.
+[*] [b]Drought condenser[/b] — cancels drought plant-growth penalties (Odyssey). Harmless furniture if droughts never arrive.
+[/list]
+
+[h2]Events[/h2]
+Ion storm, dry lightning front, heat dome, polar front, and toxic surge — each with a matching counter. Vanilla flares, fallout, flashstorms, heat/cold, eclipse, volcanic winter, and drought are covered once hazard hardening is online.
+
+An ion storm bleeds batteries, pops EMP bursts, and extra "Zzzt!" shorts. Dampeners, surge protectors, and storm capacitors are the answer.
+
+[h2]Scenario[/h2]
+[b]Stormfront[/b]: a hard-weather showcase start that unlocks storm protection research.
+
+[h2]Research[/h2]
+Electricity → storm protection → flare shielding → atmospheric control / perfect grounding → hazard hardening. Dedicated Stormproof research tab.
+
+[h2]Settings[/h2]
+Soft / Default / Hard presets. Per-incident toggles and frequency, suppressor toggles, brownout strength (Hard pushes forecast and live brownout harder), storm wear, almanac, fulgurite, and spire "Zzzt!" chance.
+
+[h2]Around the yard[/h2]
+[list]
+[*] [b]Fulgurite[/b] — a well-struck spire fuses glass at the base every eight strikes — trade good and sculpture stuff.
+[*] [b]Storm vane[/b] — a copper weather vane. It predicts nothing. Every proper homestead has one.
+[/list]
+
+[h2]Which building?[/h2]
+[list]
+[*] [b]Spire vs solar shield[/b] — the spire is lightning and fire. The shield is flares. You usually want both.
+[*] [b]Capacitor vs battery[/b] — capacitors only fill from spires and survive surges. Batteries run the rest of the colony.
+[*] [b]Barrier vs scrubber[/b] — the barrier holds the sky; the scrubber clears toxin already in the blood. Pair them.
+[*] [b]Forecaster vs vane[/b] — the forecaster is an instrument. The vane is decoration.
+[/list]
+
+[h2]Notes[/h2]
+[list]
+[*] Requires [b]Harmony[/b]. RimWorld [b]1.6[/b]. Odyssey optional (drought condenser).
+[*] Chinese Simplified and Russian included.
+[*] Pairs with Homesteader batteries and generators.
+[*] Safe to add mid-save. Before removing: deconstruct every Stormproof building.
+[/list]

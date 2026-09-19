@@ -1,5 +1,5 @@
-1.3.1
-[h1]Stormproof — 1.3.1[/h1]
+1.4.0
+[h1]Stormproof — 1.4.0[/h1]
 
 [b]Fixed[/b]
 [list]
@@ -8,5 +8,6 @@
 [*] README building table matches About.xml for atmospheric barrier, sky restorer, and fire suppressor.
 [/list]
 
+[i]QA: passed[/i]
 [i]Build stamp (Player.log): forecast-caller-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/stormproof.md[/i]

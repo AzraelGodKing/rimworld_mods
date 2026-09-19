@@ -63,7 +63,7 @@
 
   <section id="overview">
     <h2 class="x">Overview</h2>
-    <p class="sub">A named pawn from a hostile faction becomes a <b>personal antagonist</b> — not another faceless raid. Early on they harass with taunts, false leads, and sabotage. After each escape they level up as a <b>combat captain</b> (skills, gear, armor) and prefer returning with an army. The hunt still ends when you capture or kill them&hellip; or when they get what they came for.</p>
+    <p class="sub">A named pawn from a hostile faction becomes a <b>personal antagonist</b> — not another faceless raid. Early on they harass with taunts, false leads, and sabotage. After each escape they level up as a <b>combat captain</b> (skills, gear, armor) and prefer returning with an army. Track them on the <b>dossier</b>. The hunt still ends when you capture or kill them&hellip; or when they get what they came for.</p>
     <div class="note signal">
       <b>Credit:</b> original design and core runtime by <b>Dredd (Misakabob)</b>. Expanded and packaged here by AzraelGodKing with gratitude.<br>
       <b>Needs:</b> <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a>. Load Nemesis after it. Safe to add mid-save; resolve any active hunt before removing.
@@ -150,6 +150,13 @@
           <p>Optional Anomaly baiting when that DLC is active (fail-open without it).</p>
         </div>
       </div>
+      <div class="card signal wide">
+        <div>
+          <h3>Dossier &amp; leads</h3>
+          <div class="stat">Main tab</div>
+          <p>Identity, <b>tells</b> (voice / weapon family / mark / habit), sightings, taunts, last-known tile, gear seen, aggression. Pay silver for a lead or post a bounty from the dossier or the comms console. Hunt end writes an <b>epitaph</b> (fail-open copy onto Deep Colony Legacy letters when loaded).</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -186,6 +193,9 @@
       <li><b>Homesteader</b> &mdash; food raids and taunts can reference root cellars and favorite foods.</li>
       <li><b>Giddy-Up</b> &mdash; animal escorts pair better as mounts when present (still spawn as raid escorts without it).</li>
       <li><b>Biotech</b> &mdash; Mechanitor focus, bionics/genes thresholds, waste packs, mech escorts.</li>
+      <li><b>Back For Vengeance</b> &mdash; soft-detects live Workshop <code>ferny.Vengeance</code>; exclusive pawn claim (skip create / inject on their captains).</li>
+      <li><b>Rimesis</b> &mdash; partial soft-compat via <code>NemesisCompatApi</code> (exclusive claim / skip). Not a full combat merge.</li>
+      <li><b>Deep Colony</b> &mdash; hunt-end epitaph can copy onto Legacy letters when present.</li>
     </ul>
   </section>
 

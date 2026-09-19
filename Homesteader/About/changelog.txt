@@ -1,5 +1,5 @@
-1.0.5
-[h1]Homesteader — 1.0.5[/h1]
+1.1.0
+[h1]Homesteader — 1.1.0[/h1]
 
 [b]Fixed[/b]
 [list]
@@ -8,5 +8,11 @@
 [*] Removed dead unused Legacy scenario XML (live def is under 1.6/).
 [/list]
 
+[b]Changed[/b]
+[list]
+[*] Workshop / About description updated for pantry & tastes (What can I make, preserve crates, Tastes tab, Homesteaders scenario).
+[/list]
+
+[i]QA: passed[/i]
 [i]Build stamp (Player.log): pantry-tastes-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]

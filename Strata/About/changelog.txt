@@ -1,5 +1,5 @@
-3.5.0
-[h1]Strata — 3.5.0[/h1]
+3.6.0
+[h1]Strata — 3.6.0[/h1]
 
 [b]Added[/b]
 [list]
@@ -12,5 +12,6 @@
 [*] [b]Underground fog[/b] — dug open cells clear; rock wall faces that border open stay visible; deep undug rock stays fogged. Arrival fog runs after deferred rock fill so FloodUnfog no longer reveals the whole rock volume.
 [/list]
 
+[i]QA: passed[/i]
 [i]Build stamp (Player.log): edge-rock-fog-v2[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

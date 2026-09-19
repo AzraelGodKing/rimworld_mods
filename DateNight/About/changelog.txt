@@ -1,5 +1,5 @@
-1.1.2
-[h1]Date Night — 1.1.2[/h1]
+1.2.0
+[h1]Date Night — 1.2.0[/h1]
 
 [b]Fixed[/b]
 [list]
@@ -8,5 +8,6 @@
 [*] Favourite-venue, date-cooldown, and anniversary trackers prune dead pawns.
 [/list]
 
+[i]QA: passed[/i]
 [i]Build stamp (Player.log): date-memory-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]

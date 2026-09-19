@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Date Night — a RimWorld mod by AzraelGodKing</title>
-<meta name="description" content="Date Night: Date and Lovin timetable slots for RimWorld. Dates are walks and tables; Lovin uses a shared double. RimWorld 1.6, requires Harmony.">
+<meta name="description" content="Date Night: schedule romance with Date and Lovin timetable slots, real date activities, quality, anniversaries, and double dates. RimWorld 1.6, requires Harmony.">
 <link rel="stylesheet" href="style.css">
 <script>
 /* Apply saved color mode before CSS paints (dark is default). */
@@ -63,10 +63,11 @@
 
   <section id="overview">
     <h2 class="n">Overview</h2>
-    <p class="sub">Adds <b>Date</b> and <b>Lovin</b> timetable slots to the Schedule tab. Date hours are a walk, a table, or hanging out — mood and opinion, no bed. Paint Lovin on both partners for the same hours and they meet in a shared double; lovin uses a short mean-time-between until the schedule changes. Adults without a partner in that bed can have some <b>private time</b> in any bed. Children never qualify.</p>
+    <p class="sub">Adds <b>Date</b> and <b>Lovin</b> timetable slots to the Schedule tab. Date hours pick a real activity from what&rsquo;s around — dinner, picnic, walk, stargazing, dancing, gifts, recreation, or hangout — with quality, favourite spots, anniversaries, and optional double dates. Mood and opinion only; no bed on dates. Paint Lovin on both partners for the same hours and they meet in a shared double; lovin uses a short mean-time-between until the schedule changes. Adults without a partner in that bed can have some <b>private time</b> in any bed. Children never qualify.</p>
     <div class="note date">
       <b>Dependencies:</b> requires <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a>. Load Date Night after it.<br>
-      <b>Save-safe:</b> safe to add mid-save. Before removing, clear Date / Lovin slots back to Sleep / Anything.
+      <b>Save-safe:</b> safe to add mid-save. Before removing, clear Date / Lovin slots back to Sleep / Anything.<br>
+      <b>1.2.0:</b> couple caches clear across colonies; gifts drop at feet when inventory is full; dead partners are pruned from venue / cooldown / anniversary trackers.
     </div>
   </section>
 
@@ -82,7 +83,7 @@
       <div class="card date">
         <div>
           <h3>2. Date hours</h3>
-          <p>Assign the same hours on both lovers. They meet at a table, gathering spot, or just walk together. Mood and opinion only — no bed, no pregnancy.</p>
+          <p>Assign the same hours on both lovers. They share one venue and pick an activity from the map. Quality rolls with beauty and weather; a finished date can leave a lovin spark. Couples remember a favourite venue; two couples with overlapping Date hours may share one (double date).</p>
         </div>
       </div>
       <div class="card date">
@@ -95,7 +96,7 @@
       <div class="card date">
         <div>
           <h3>4. Show up</h3>
-          <p>If a partner is drafted, in a medical bed, or off-map for the window, the one who waited gets a short stood-up thought. If both make it, they get a small boost. Hungry, chemical desire, player-forced jobs, and exhaustion still come first.</p>
+          <p>If a partner is drafted, in a medical bed, or off-map for the window, the one who waited gets a short stood-up thought. If both make it, they get a small boost. Hungry, chemical desire, player-forced jobs, and exhaustion still come first. The anniversary of a love bond sends a letter — a date that day is the year&rsquo;s peak.</p>
         </div>
       </div>
     </div>
@@ -130,6 +131,55 @@
           <h3>Claim double for Lovin hours</h3>
           <div class="stat">Default ON</div>
           <p>Temporarily assign the rendezvous double to the couple, then restore their previous beds when the window ends.</p>
+        </div>
+      </div>
+      <div class="card date wide">
+        <div>
+          <h3>Date activities</h3>
+          <div class="stat">Default ON</div>
+          <p>Dinner, picnic, walk, stargazing, dancing, gifts, recreation, or hangout from what&rsquo;s available. Off = plain hangout dates.</p>
+        </div>
+      </div>
+      <div class="card date wide">
+        <div>
+          <h3>Date quality</h3>
+          <div class="stat">Default ON</div>
+          <p>Wonderful / nice / awkward outcomes from venue beauty, weather, and luck. Off = flat nice-date thought.</p>
+        </div>
+      </div>
+      <div class="card date wide">
+        <div>
+          <h3>Allow gift dates</h3>
+          <div class="stat">Default ON</div>
+          <p>Consumes a small luxury item; it moves to the partner&rsquo;s inventory, or drops at their feet if full.</p>
+        </div>
+      </div>
+      <div class="card date wide">
+        <div>
+          <h3>Post-date lovin spark</h3>
+          <div class="stat">Default ON</div>
+          <p>A finished date improves lovin chance for about a day.</p>
+        </div>
+      </div>
+      <div class="card date wide">
+        <div>
+          <h3>Anniversaries</h3>
+          <div class="stat">Default ON</div>
+          <p>Letter and a small mood on the love-bond anniversary. A date that day is a much bigger boost; skipping it stings.</p>
+        </div>
+      </div>
+      <div class="card date wide">
+        <div>
+          <h3>Remember favourite spots</h3>
+          <div class="stat">Default ON</div>
+          <p>Couples prefer the venue of their best dates. A ruined date can sour that place.</p>
+        </div>
+      </div>
+      <div class="card date wide">
+        <div>
+          <h3>Allow double dates</h3>
+          <div class="stat">Default ON</div>
+          <p>Two couples with overlapping Date hours may share a venue. Quality rolls once; the evening spills into opinions of the other pair. If the other couple never shows, they date alone.</p>
         </div>
       </div>
     </div>

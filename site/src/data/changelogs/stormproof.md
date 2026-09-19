@@ -2,6 +2,15 @@
 
 Detailed notes for **Stormproof** only.
 
+## [1.4.0]
+
+Player-facing version **1.4.0** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.4.0 loaded from ...` with stamp `forecast-caller-v1`.
+
+### Fixed
+- **Forecast severity clamp** (AZR-228) — projection uses brownout severity up to 2.0 (Hard preset), matching live gameplay.
+- **Storm caller tick path** (AZR-229, partial) — gizmo queues the discharge; weather writes run on `MapComponentTick`. Full Multiplayer SyncMethod still not wired (no MP API in-tree).
+- **README building table** (AZR-227) — atmospheric barrier, sky restorer, and fire suppressor match `About.xml` (map-wide / radius, not room/range fallout myths).
+
 ## [1.3.1]
 
 Player-facing version **1.3.1** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.3.1 loaded from ...` with stamp `forecast-caller-v1`.

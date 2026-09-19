@@ -63,7 +63,7 @@
 
   <section id="overview">
     <h2 class="s">Overview</h2>
-    <p class="sub">Custom C# components patch vanilla events to keep your power grid running through everything the Rim throws at it. Pairs naturally with <a href="homesteader.html">Homesteader</a> batteries and generators.</p>
+    <p class="sub">Custom C# components patch vanilla events to keep your power grid running through everything the Rim throws at it. Soft / Default / Hard presets, graded brownout, and storm wear. Pairs naturally with <a href="homesteader.html">Homesteader</a> batteries and generators.</p>
     <div class="note storm">
       <b>Dependencies:</b> requires the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077">Harmony</a> mod. Load Stormproof after Harmony in your mod list.
     </div>
@@ -133,7 +133,7 @@
         <div>
           <h3>Weather forecaster</h3>
           <div class="stat">100W &middot; Storm protection research</div>
-          <p>Shows how long the current weather will hold, announces incoming thunderstorms so you can ready your spires, and warns you an hour before the weather breaks.</p>
+          <p>Shows how long the current weather will hold, announces incoming thunderstorms so you can ready your spires, warns you an hour before the weather breaks, and keeps an almanac with a ledger of strikes caught vs missed, Zzzt absorbed vs suffered, fires snuffed, and wear hits.</p>
         </div>
       </div>
 
@@ -151,7 +151,7 @@
         <div>
           <h3>Fallout scrubber</h3>
           <div class="stat">150W &middot; enclosed rooms only &middot; Flare shielding research</div>
-          <p>Strips airborne toxins from an enclosed room. Pawns and animals inside slowly <b>shed toxic buildup</b>, faster than serious fallout adds it.</p>
+          <p>Strips airborne toxins from an enclosed room (room outline on select). Pawns and animals inside slowly <b>shed toxic buildup</b>, faster than serious fallout adds it.</p>
         </div>
       </div>
 
@@ -160,7 +160,7 @@
         <div>
           <h3>Storm caller</h3>
           <div class="stat">2&times;2 &middot; 400W &middot; Atmospheric control research (Spacer)</div>
-          <p>An ionospheric agitator that <b>summons a rainy thunderstorm on demand</b>: lightning to feed your storm spires, rain to douse wildfires. Half-day storm, five-day recharge &mdash; a supplement to your grid, not a replacement for it.</p>
+          <p>An ionospheric agitator that <b>summons a rainy thunderstorm on demand</b>: lightning to feed your storm spires, rain to douse wildfires. Half-day storm, five-day recharge &mdash; a supplement to your grid, not a replacement for it. Discharge queues for the next map tick instead of writing weather from the gizmo.</p>
         </div>
       </div>
 
@@ -169,7 +169,7 @@
         <div>
           <h3>Load shedder</h3>
           <div class="stat">adjustable cutoff &middot; Storm protection research</div>
-          <p>An automatic breaker for wiring between the main grid and a low-priority sub-grid. Transmits like a conduit while supply batteries hold charge; <b>trips open and sheds the sub-grid</b> when they fall below the cutoff (default 20%), then reconnects on its own once they recover.</p>
+          <p>An automatic breaker for wiring between the main grid and a low-priority sub-grid. Transmits like a conduit while supply batteries hold charge; <b>trips open and sheds the sub-grid</b> when they fall below the cutoff (default 20%), then reconnects on its own once they recover. Optional 24-hour run/shed schedule, forecast override before a storm or flare, and Hold Auto / Run / Shed &mdash; the battery cutoff still trips first.</p>
         </div>
       </div>
 
@@ -178,7 +178,7 @@
         <div>
           <h3>Grid monitor console</h3>
           <div class="stat">75W &middot; Storm protection research</div>
-          <p>Live production, consumption, battery charge, and <b>time until the batteries run dry</b> (or fill up) in its inspect panel. Warns at 25% stored charge, sounds the alarm at 10%.</p>
+          <p>Live production, consumption, battery charge, brownout level, and <b>time until the batteries run dry</b> (or fill up) in its inspect panel. With a powered weather forecaster on the same net, an 8-hour weather-aware forecast that models brownout through Hard severity. Warns at 25% stored charge, sounds the alarm at 10%.</p>
         </div>
       </div>
 
@@ -328,7 +328,7 @@
         <div class="icon">&#9928;</div>
         <div>
           <h3>Storms on demand</h3>
-          <p>The storm caller transitions the map's weather to a rainy thunderstorm and pins it there for half a day &mdash; feeding every spire and pylon you own.</p>
+          <p>The storm caller queues a rainy thunderstorm for the next map tick and pins it for half a day &mdash; feeding every spire and pylon you own.</p>
         </div>
       </div>
       <div class="card storm">
@@ -349,7 +349,7 @@
         <div class="icon">&#128268;</div>
         <div>
           <h3>Automatic load shedding</h3>
-          <p>The load shedder watches its supply grid's battery charge and rewires the power net on the fly &mdash; shedding the sub-grid below the cutoff, reconnecting once charge recovers past a hysteresis margin so it never chatters.</p>
+          <p>The load shedder watches its supply grid's battery charge and rewires the power net on the fly &mdash; shedding the sub-grid below the cutoff, reconnecting once charge recovers past a hysteresis margin so it never chatters. Optional schedule and forecast override.</p>
         </div>
       </div>
       <div class="card storm">

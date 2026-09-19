@@ -6,7 +6,7 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">1.1.2</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.2.0</modVersion>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>
@@ -23,24 +23,33 @@
     <li>AzraelGodKing.Strata</li>
     <li>AzraelGodKing.Homesteader</li>
   </loadAfter>
-  <description>A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. They harass your colony with taunts, false leads, and assaults that flee when losing. After each escape they level up as a combat captain — better skills, gear, and armor — and prefer returning with an army. The hunt still ends when you capture or kill them… or when they get what they came for.
+  <description>My Discord: https://discord.gg/Vwh2y7qMXv
+Site (no Discord): https://azraelgodking.github.io/rimworld_mods/nemesis.html
+
+Someone remembers. Someone is coming back. A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. Early on they harass with taunts, false leads, and sabotage. After each escape they level up as a combat captain (skills, gear, armor) and prefer returning with an army. The hunt still ends when you capture or kill them… or when they get what they came for.
 
 FOUNDATION
 Original design and core runtime by Dredd (Misakabob). Expanded and packaged here with credit.
 
 HOW IT STARTS
 - A colonist kills an enemy's ally or kin (chance).
-- A prisoner (or slave) breaks out and someone takes it personally.
+- A prisoner (or Ideology slave) breaks out and someone takes it personally.
 - An enemy wounds-and-escapes, then comes back for the one who cut them.
 - An enemy who killed one of yours fixates on a surviving colonist.
 
 WHAT THEY DO
 - Comms taunts and paper notes that name your people.
-- Early hunt: sabotage, waste, fake signals, caravan harassment (downweighted after escapes).
-- Personal assaults that pull back when losing.
-- After escapes: vengeance army raids that inject the same pawn; captain progression (skills, gear quality, battle-hardened armor; Biotech bionics/genes when present).
-- Combat focus rolled at create (Destroyer, Berserker, Sniper, Psycho, Survivor, Mechanitor with Biotech).
+- Early hunt: sabotage, waste, fake signals, caravan harassment, food-store vandalism (downweighted after escapes).
+- Personal assaults that pull back when losing; heal between escapes.
+- After escapes: vengeance army raids that inject the same pawn; raid points scale with captain level.
+- Captain progression: combat focus at create (Destroyer, Berserker, Sniper, Psycho, Survivor, Mechanitor with Biotech); skills, gear quality, battle-hardened armor; Biotech bionics/genes when present.
 - Soft escorts: animal mount/escort from level 2; Mechanitor mech retinue on army returns when Biotech is loaded.
+- Optional Anomaly baiting when that DLC is active (fail-open without it).
+
+DOSSIER
+- Main-tab page for the active hunt: identity, tells (voice / weapon family / mark / habit), sightings, taunts, last-known tile, gear seen, aggression.
+- Pay silver for a lead (tile / gear / next-raid warning / false lead) from the dossier or comms console; standing bounty on the dossier.
+- Hunt end writes an epitaph (fail-open copy onto Deep Colony Legacy letters when loaded).
 
 HOW IT ENDS
 - Capture them alive (execute / release / keep / truce).
@@ -52,7 +61,9 @@ SOFT COMPAT (optional, fail-open)
 - Strata: prefers surface home maps; aware of underground / upper levels when choosing harassment targets.
 - Homesteader: food raids and taunts can reference root cellars and favorite foods when those systems exist.
 - Giddy-Up: animal escorts pair better as mounts when present (still spawn as escorts without it).
-- Rimesis / Back for Vengeance: exclusive pawn claim via NemesisCompatApi; skip create/inject on their captains.
+- Biotech: Mechanitor focus, bionics/genes, waste packs, mech escorts.
+- Back For Vengeance: soft-detects live Workshop packageId ferny.Vengeance (legacy ids as fallbacks); exclusive pawn claim — skip create/inject on their captains.
+- Rimesis: partial soft-compat via NemesisCompatApi (exclusive claim / skip; Missing stub). Not a full combat merge.
 
 Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: resolve or dismiss any active nemesis (capture/truce/end) so WorldPawn refs are cleaned up.</description>
 </ModMetaData>
