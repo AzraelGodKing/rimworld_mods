@@ -1,13 +1,13 @@
-1.2.0
-[h1]Date Night — 1.2.0[/h1]
+1.3.0
+[h1]Date Night — 1.3.0[/h1]
 
-[b]Fixed[/b]
+[b]Added[/b]
 [list]
-[*] Ephemeral lovin-window / rendezvous-bed caches clear on new or loaded game so thing IDs cannot leak into another colony.
-[*] Failed gift handoff drops the item at the partner's feet and still grants the received-gift thought (was silently marked delivered).
-[*] Favourite-venue, date-cooldown, and anniversary trackers prune dead pawns.
+[*] Schedule-mismatch alert: click to sync a partner's painted Date/Lovin hours.
+[*] Configurable gift ThingDef list (+ optional joy-luxury scan).
+[*] Thought when a couple's favourite venue building is destroyed.
 [/list]
 
-[i]QA: passed[/i]
-[i]Build stamp (Player.log): date-memory-v1[/i]
+[i]QA: pending playtest[/i]
+[i]Build stamp (Player.log): schedule-sync-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]

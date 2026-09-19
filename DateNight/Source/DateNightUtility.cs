@@ -209,6 +209,34 @@ namespace DateNight
             return true;
         }
 
+        /// <summary>
+        /// Copy painted hours of <paramref name="def"/> from source onto target.
+        /// Hours where source has the slot are painted on target; hours where
+        /// only the target had it are cleared back to Anything.
+        /// </summary>
+        public static void CopyHours(Pawn source, Pawn target, TimeAssignmentDef def)
+        {
+            if (source?.timetable == null || target?.timetable == null || def == null)
+            {
+                return;
+            }
+
+            TimeAssignmentDef anything = TimeAssignmentDefOf.Anything;
+            for (int h = 0; h < 24; h++)
+            {
+                bool srcHas = source.timetable.GetAssignment(h) == def;
+                bool dstHas = target.timetable.GetAssignment(h) == def;
+                if (srcHas)
+                {
+                    target.timetable.SetAssignment(h, def);
+                }
+                else if (dstHas)
+                {
+                    target.timetable.SetAssignment(h, anything);
+                }
+            }
+        }
+
         public static bool ShouldBoostLovinChance(Pawn pawn, Pawn partner)
         {
             return IsLovinSchedule(pawn) || IsLovinSchedule(partner);

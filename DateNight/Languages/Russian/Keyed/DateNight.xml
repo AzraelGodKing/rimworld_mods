@@ -20,6 +20,9 @@
   <DateNight_Settings_QualityTip>Итог свидания зависит от занятия, красоты места, погоды и удачи — чудесное, приятное или неловкое. ВЫКЛ: всегда обычная мысль о свидании.</DateNight_Settings_QualityTip>
   <DateNight_Settings_Gifts>Разрешить подарки (расходует предметы)</DateNight_Settings_Gifts>
   <DateNight_Settings_GiftsTip>Один из пары может принести небольшой презент (пиво, шоколад, амброзию...) и вручить его — настроение и мнение растут. Предмет переходит в инвентарь партнёра.</DateNight_Settings_GiftsTip>
+  <DateNight_Settings_GiftExtend>Также принимать радостные предметы как подарки</DateNight_Settings_GiftExtend>
+  <DateNight_Settings_GiftExtendTip>Ищет мелкие ingestibles с радостью — модовые шоколадки и напитки тоже подойдут.</DateNight_Settings_GiftExtendTip>
+  <DateNight_Settings_GiftList>Имена ThingDef подарков (через запятую; пусто = Beer, Chocolate, Ambrosia, PsychiteTea, InsectJelly)</DateNight_Settings_GiftList>
   <DateNight_Settings_PostDateBoost>Искра после свидания</DateNight_Settings_PostDateBoost>
   <DateNight_Settings_PostDateBoostTip>Завершённое свидание повышает шанс любовных часов примерно на игровой день.</DateNight_Settings_PostDateBoostTip>
   <DateNight_Settings_Anniversaries>Годовщины</DateNight_Settings_Anniversaries>
@@ -46,6 +49,9 @@
   <DateNight_Alert_MismatchDesc>У одного из пары стоят часы свидания или любовные часы, а у партнёра нет — или часы разные. Назначьте одни и те же часы обоим.</DateNight_Alert_MismatchDesc>
   <DateNight_Alert_MismatchNone>У {0} стоит {1}; у {2} нет.</DateNight_Alert_MismatchNone>
   <DateNight_Alert_MismatchHours>У {0} и {1} разные часы: {2}.</DateNight_Alert_MismatchHours>
+  <DateNight_Alert_MismatchSyncHint>Нажмите на предупреждение, чтобы скопировать часы партнёру.</DateNight_Alert_MismatchSyncHint>
+  <DateNight_Alert_SyncOption>Скопировать {2} с {0} → {1}</DateNight_Alert_SyncOption>
+  <DateNight_Alert_Synced>Часы расписания скопированы с {0} на {1}.</DateNight_Alert_Synced>
   <DateNight_Alert_SlotLovin>любовные</DateNight_Alert_SlotLovin>
   <DateNight_Alert_SlotDate>свидание</DateNight_Alert_SlotDate>
   <DateNight_ScheduleComboTip>Свидание (клик). Любовные часы — в меню ▾. Эта кнопка всегда последняя в дополнительном ряду расписания.</DateNight_ScheduleComboTip>
