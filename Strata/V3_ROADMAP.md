@@ -24,6 +24,9 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 ## Sensing & threat economy
 
+- [x] **Core sampling drill** (AZR-138) — scouting building for levels you have not dug; cell-tied ranged reports
+- [x] **Water table seepage** (AZR-139) — continuous seep below table depth; sump as standing infrastructure (settings off by default)
+- [x] **Deep listening post** (AZR-141) — directional rock listening; noise shrinks range
 - [ ] **Seismograph station** — building that predicts tremors, cave-ins, and infestation pressure per level (pair with Stormproof weather forecaster + Strata canaries)
 - [ ] **Noise attracts the dark** — mining/industry noise raises infestation weight; sound-dampening walls/floors counter it
 

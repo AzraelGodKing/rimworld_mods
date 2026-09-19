@@ -22,7 +22,7 @@ namespace Strata
         public bool gasOverlayRoomLabels = false;
         public bool gasEventsEnabled = false;
         public bool raidPursuitEnabled = true;
-        public const int CurrentSettingsVersion = 4;
+        public const int CurrentSettingsVersion = 5;
 
         public int settingsVersion = CurrentSettingsVersion;
         public bool workRelayEnabled = true;
@@ -50,6 +50,10 @@ namespace Strata
         public bool showLevelPerfInTab = false;
         public bool explorationSitesEnabled = true;
         public bool floodEventsEnabled = true;
+        /// <summary>Continuous seepage below the water table (AZR-139). Off by default.</summary>
+        public bool waterTableSeepageEnabled = false;
+        /// <summary>Multiplier on seep cell count per interval.</summary>
+        public float waterTableSeepRate = 1f;
         /// <summary>When false, infestations cannot fire on underground floors (B1+).</summary>
         public bool b1InfestationsEnabled = true;
         public bool crossLevelRitualsEnabled = true;
@@ -136,6 +140,8 @@ namespace Strata
             Scribe_Values.Look(ref showLevelPerfInTab, "showLevelPerfInTab", defaultValue: false);
             Scribe_Values.Look(ref explorationSitesEnabled, "explorationSitesEnabled", defaultValue: true);
             Scribe_Values.Look(ref floodEventsEnabled, "floodEventsEnabled", defaultValue: true);
+            Scribe_Values.Look(ref waterTableSeepageEnabled, "waterTableSeepageEnabled", defaultValue: false);
+            Scribe_Values.Look(ref waterTableSeepRate, "waterTableSeepRate", 1f);
             Scribe_Values.Look(ref b1InfestationsEnabled, "b1InfestationsEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelRitualsEnabled, "crossLevelRitualsEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelCaravansEnabled, "crossLevelCaravansEnabled", defaultValue: true);
@@ -424,6 +430,14 @@ namespace Strata
                 "Strata_Settings_ExplorationSitesDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_FloodEvents".Translate(), ref Settings.floodEventsEnabled,
                 "Strata_Settings_FloodEventsDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_WaterTableSeepage".Translate(), ref Settings.waterTableSeepageEnabled,
+                "Strata_Settings_WaterTableSeepageDesc".Translate());
+            if (Settings.waterTableSeepageEnabled)
+            {
+                listing.Label("Strata_Settings_WaterTableSeepRate".Translate(
+                    Settings.waterTableSeepRate.ToStringPercent()));
+                Settings.waterTableSeepRate = listing.Slider(Settings.waterTableSeepRate, 0.25f, 2f);
+            }
             listing.CheckboxLabeled("Strata_Settings_NativeCavern".Translate(), ref Settings.nativeCavernLayoutEnabled,
                 "Strata_Settings_NativeCavernDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_AncientStairwell".Translate(), ref Settings.ancientColonyStairwellEnabled,
