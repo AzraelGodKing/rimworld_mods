@@ -52,6 +52,7 @@
   <Homesteader_PantryDays>Days of food at current tables: {0} ({1} colonists)</Homesteader_PantryDays>
   <Homesteader_PantryNextRot>Closest to spoiling: {0} ({1} days)</Homesteader_PantryNextRot>
   <Homesteader_PantryNextRotNone>Nothing in the pantry is close to turning.</Homesteader_PantryNextRotNone>
+  <Homesteader_PantryJump>Jump</Homesteader_PantryJump>
   <Homesteader_PantryContents>In store</Homesteader_PantryContents>
   <Homesteader_PantryEmpty>No food in root cellars, icehouses, springhouses, preserves shelves, crates, or barrels.</Homesteader_PantryEmpty>
   <Homesteader_PantryTabStock>Stock</Homesteader_PantryTabStock>
@@ -69,6 +70,11 @@
   <Homesteader_PantryMakeNeedIng>need {0} {1}</Homesteader_PantryMakeNeedIng>
   <Homesteader_PantryMakeUnknownIng>ingredient</Homesteader_PantryMakeUnknownIng>
   <Homesteader_LandraceDev>Landrace +{0}% yield, +{1}% frost, +{2}% drought (gen {3})</Homesteader_LandraceDev>
+  <Homesteader_MapleSeason_Running>Sap is running hard — sugaring season.</Homesteader_MapleSeason_Running>
+  <Homesteader_MapleSeason_Slow>Sap is slow this season.</Homesteader_MapleSeason_Slow>
+  <Homesteader_MapleSeason_Dry>Sap run is nearly dry — wait for spring chill.</Homesteader_MapleSeason_Dry>
+  <Homesteader_DroughtInspect_Active>Drought: catchment and shallow wells run thin.</Homesteader_DroughtInspect_Active>
+  <Homesteader_DroughtInspect_Protected>Drought: a Stormproof condenser is keeping moisture up.</Homesteader_DroughtInspect_Protected>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>An anomalous broadcast has locked onto your colony's 27 monument frequency. A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — "brain rot," they call it.</Homesteader_KatsLetter_Open>

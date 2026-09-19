@@ -52,6 +52,7 @@
   <Homesteader_PantryDays>Дней еды при текущем столе: {0} (колонистов: {1})</Homesteader_PantryDays>
   <Homesteader_PantryNextRot>Ближе всего к порче: {0} ({1} дн.)</Homesteader_PantryNextRot>
   <Homesteader_PantryNextRotNone>В кладовой ничего не вот-вот скиснет.</Homesteader_PantryNextRotNone>
+  <Homesteader_PantryJump>К нему</Homesteader_PantryJump>
   <Homesteader_PantryContents>В запасе</Homesteader_PantryContents>
   <Homesteader_PantryEmpty>Нет еды в погребах, ледниках, родниковых погребах, полках, ящиках и бочках.</Homesteader_PantryEmpty>
   <Homesteader_PantryTabStock>Запас</Homesteader_PantryTabStock>
@@ -69,6 +70,11 @@
   <Homesteader_PantryMakeNeedIng>нужно ещё {0} {1}</Homesteader_PantryMakeNeedIng>
   <Homesteader_PantryMakeUnknownIng>ингредиент</Homesteader_PantryMakeUnknownIng>
   <Homesteader_LandraceDev>Местная линия +{0}% урожай, +{1}% мороз, +{2}% засуха (пок. {3})</Homesteader_LandraceDev>
+  <Homesteader_MapleSeason_Running>Сок бежит сильно — сезон сахароварения.</Homesteader_MapleSeason_Running>
+  <Homesteader_MapleSeason_Slow>Сок в этом сезоне слабый.</Homesteader_MapleSeason_Slow>
+  <Homesteader_MapleSeason_Dry>Сок почти иссяк — ждите весенней прохлады.</Homesteader_MapleSeason_Dry>
+  <Homesteader_DroughtInspect_Active>Засуха: сбор и мелкие колодцы скудеют.</Homesteader_DroughtInspect_Active>
+  <Homesteader_DroughtInspect_Protected>Засуха: конденсатор Stormproof держит влагу.</Homesteader_DroughtInspect_Protected>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>Аномальная трансляция зафиксировалась на частоте вашего монумента 27. Над регионом образуется краткий тепловой купол, а несколько колонистов жалуются на короткое помутнение — «гниение мозга», как они это называют.</Homesteader_KatsLetter_Open>

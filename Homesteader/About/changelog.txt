@@ -11,6 +11,10 @@
 [b]Changed[/b]
 [list]
 [*] Workshop / About description updated for pantry & tastes (What can I make, preserve crates, Tastes tab, Homesteaders scenario).
+[*] Root README Homesteader table refreshed (pantry, landrace, polyarmory, maple season) (AZR-208).
+[*] Pantry stock "next to spoil" row gains a Jump button (AZR-213).
+[*] Maple sap yield scales by season; wells/cisterns show drought inspect when Stormproof drought is active (AZR-211 / AZR-212).
+[*] Well-stocked larder mood from distinct preserve kinds in storage (AZR-210).
 [/list]
 
 [i]QA: passed[/i]
