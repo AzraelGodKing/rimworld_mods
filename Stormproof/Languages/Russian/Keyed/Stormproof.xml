@@ -65,6 +65,7 @@
   <Stormproof_LoadShedder_ScheduleTitle>Расписание нагрузки</Stormproof_LoadShedder_ScheduleTitle>
   <Stormproof_LoadShedder_ScheduleHint>Час: красный — отключить, зелёный — держать. Порог всё равно главный.</Stormproof_LoadShedder_ScheduleHint>
   <Stormproof_LoadShedder_ScheduleLegend>Красный = отключить в этот час. Зелёный = держать. Прогноз отключает до шторма или вспышки.</Stormproof_LoadShedder_ScheduleLegend>
+  <Stormproof_LoadShedder_ForecastTint>Оранжевый/красный оттенок = прогноз падения батареи ниже низкого/критического в этот час.</Stormproof_LoadShedder_ForecastTint>
   <Stormproof_LoadShedder_ScheduleClear>Сбросить расписание</Stormproof_LoadShedder_ScheduleClear>
   <Stormproof_LoadShedder_ForecastOverride>Прогноз: отключать, когда шторм или вспышка близко</Stormproof_LoadShedder_ForecastOverride>
   <Stormproof_LoadShedder_HoldAuto>Удерж.: авто</Stormproof_LoadShedder_HoldAuto>

@@ -1,13 +1,12 @@
-1.4.0
-[h1]Stormproof — 1.4.0[/h1]
+1.4.1
+[h1]Stormproof — 1.4.1[/h1]
 
-[b]Fixed[/b]
+[b]Changed[/b]
 [list]
-[*] Grid forecast uses the full brownout severity range (up to 2.0 / Hard preset), matching live brownout.
-[*] Storm caller applies weather on the next map tick instead of mutating from the UI gizmo.
-[*] README building table matches About.xml for atmospheric barrier, sky restorer, and fire suppressor.
+[*] Load-shedder schedule grid tints hours the forecast expects to run low/critical.
+[*] ROADMAP: scheduled load profiles, almanac ledger, and Nexus parse note moved to Shipped.
 [/list]
 
-[i]QA: passed[/i]
-[i]Build stamp (Player.log): forecast-caller-v1[/i]
+[i]QA: pending playtest[/i]
+[i]Build stamp (Player.log): schedule-forecast-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/stormproof.md[/i]

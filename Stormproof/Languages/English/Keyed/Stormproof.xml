@@ -65,6 +65,7 @@
   <Stormproof_LoadShedder_ScheduleTitle>Load schedule</Stormproof_LoadShedder_ScheduleTitle>
   <Stormproof_LoadShedder_ScheduleHint>Click an hour to shed (red) or run (green). Cutoff still wins.</Stormproof_LoadShedder_ScheduleHint>
   <Stormproof_LoadShedder_ScheduleLegend>Red = shed that hour. Green = run. Forecast override sheds before a storm or flare lands.</Stormproof_LoadShedder_ScheduleLegend>
+  <Stormproof_LoadShedder_ForecastTint>Orange/red tint = forecast battery drop below low/critical that hour.</Stormproof_LoadShedder_ForecastTint>
   <Stormproof_LoadShedder_ScheduleClear>Clear schedule</Stormproof_LoadShedder_ScheduleClear>
   <Stormproof_LoadShedder_ForecastOverride>Forecast override: shed when a storm or flare is imminent</Stormproof_LoadShedder_ForecastOverride>
   <Stormproof_LoadShedder_HoldAuto>Hold: Auto</Stormproof_LoadShedder_HoldAuto>

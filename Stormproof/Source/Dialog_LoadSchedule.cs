@@ -7,6 +7,7 @@ namespace Stormproof
     public class Dialog_LoadSchedule : Window
     {
         private readonly CompLoadShedder shedder;
+        private float[] forecastHours;
 
         public Dialog_LoadSchedule(CompLoadShedder shedder)
         {
@@ -14,9 +15,11 @@ namespace Stormproof
             doCloseX = true;
             absorbInputAroundWindow = false;
             closeOnClickedOutside = true;
+            const float critical = 0.10f;
+            forecastHours = shedder.ForecastHourFractions(critical);
         }
 
-        public override Vector2 InitialSize => new Vector2(640f, 320f);
+        public override Vector2 InitialSize => new Vector2(640f, 340f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -27,20 +30,30 @@ namespace Stormproof
             Widgets.Label(new Rect(inRect.x, inRect.y + 34f, inRect.width, 22f),
                 "Stormproof_LoadShedder_ScheduleHint".Translate());
 
+            const float critical = 0.10f;
+            const float low = 0.25f;
+
             float cellW = (inRect.width - 23f) / 24f;
             float y = inRect.y + 62f;
             for (int h = 0; h < 24; h++)
             {
                 Rect cell = new Rect(inRect.x + h * (cellW + 1f), y, cellW, 36f);
                 bool shed = shedder.HourSheds(h);
-                if (shed)
+                float frac = forecastHours != null && h < forecastHours.Length
+                    ? forecastHours[h]
+                    : 1f;
+                Color baseColor = shed
+                    ? new Color(0.55f, 0.22f, 0.18f, 0.85f)
+                    : new Color(0.22f, 0.42f, 0.28f, 0.85f);
+                if (frac < critical)
                 {
-                    Widgets.DrawBoxSolid(cell, new Color(0.55f, 0.22f, 0.18f, 0.85f));
+                    baseColor = Color.Lerp(baseColor, new Color(0.85f, 0.12f, 0.1f, 0.95f), 0.55f);
                 }
-                else
+                else if (frac < low)
                 {
-                    Widgets.DrawBoxSolid(cell, new Color(0.22f, 0.42f, 0.28f, 0.85f));
+                    baseColor = Color.Lerp(baseColor, new Color(0.85f, 0.55f, 0.12f, 0.9f), 0.4f);
                 }
+                Widgets.DrawBoxSolid(cell, baseColor);
                 if (Widgets.ButtonInvisible(cell))
                 {
                     shedder.ToggleHour(h);
@@ -57,9 +70,10 @@ namespace Stormproof
                 ref forecast);
             shedder.ForecastOverride = forecast;
 
-            Widgets.Label(new Rect(inRect.x, y + 80f, inRect.width, 36f),
-                "Stormproof_LoadShedder_ScheduleLegend".Translate());
-            if (Widgets.ButtonText(new Rect(inRect.x, y + 118f, 180f, 28f),
+            Widgets.Label(new Rect(inRect.x, y + 80f, inRect.width, 48f),
+                "Stormproof_LoadShedder_ScheduleLegend".Translate()
+                + "\n" + "Stormproof_LoadShedder_ForecastTint".Translate());
+            if (Widgets.ButtonText(new Rect(inRect.x, y + 132f, 180f, 28f),
                 "Stormproof_LoadShedder_ScheduleClear".Translate()))
             {
                 shedder.ClearSchedule();
