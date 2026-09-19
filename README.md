@@ -13,10 +13,11 @@ Grow it, put it by, live off the land. Tribal survival, farm-to-table crafting, 
 | **Tribal survival** | Drying rack (jerky, fruit leather, dried mushrooms, pemmican without research); curing rack + smokehouse (Primitive homestead); hayloft, ingredient barrel |
 | **Farm-to-table** | Grain mill, butter churn (+ buttermilk), cheese press, pickling crock, homestead hearth (pantry meals, pie, biscuits, flapjacks) |
 | **Water & irrigation** | Rain barrel → cistern → water tower; hand-dug well → deep well; solar still; irrigated soil & planter; optional [Dubs Bad Hygiene](https://steamcommunity.com/sharedfiles/filedetails/?id=836308268) plumbing bridge |
-| **Pantry & tastes** | Pantry tab (stock + What can I make); spoilage triage; preserve crates (trade lot + pantry nutrition/variety); Tastes tab (favorites + hidden-until-reaction allergies) |
-| **Orchard & apiary** | Apple, cherry, and sugar maple; maple sap → syrup → flapjacks; beehives (honey + beeswax candles) |
+| **Pantry & tastes** | Pantry tab (stock + What can I make); spoilage triage; preserve crates (trade lot + pantry nutrition/variety); Tastes tab (favorites + hidden-until-reaction allergies); well-stocked larder mood |
+| **Orchard & apiary** | Apple, cherry, and sugar maple (seasonal sap yield); maple sap → syrup → flapjacks; beehives (honey + beeswax candles) |
 | **Storage** | Crates, barrels, pallet, root cellar (≤5°C), icehouse (≤0°C), springhouse (≤8°C), preserves shelf |
-| **Around the farmhouse** | Nesting box, harvest maypole, chicken coop, compost → composted soil, seed saving |
+| **Around the farmhouse** | Nesting box, harvest maypole, chicken coop, compost → composted soil, seed saving / landrace crops |
+| **Polyarmory** | Soft multi-weapon carry for colonists who want more than one sidearm (toggleable) |
 | **Scenario** | Homesteaders (locks Azrael); Azrael storyteller ships here |
 | **Research** | Homestead tree + wellcraft → irrigation / waterworks (dedicated Homesteader tab) |
 | **Power** | Compact / bank / advanced / ultratech batteries; portable chemfuel and wood-burning generators |
