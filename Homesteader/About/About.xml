@@ -21,80 +21,11 @@
     <li>Dubwise.DubsBadHygiene</li>
     <li>adaptive.storage.framework</li>
   </loadAfter>
-  <description>Everything a growing homestead needs: tribal survival, farm-to-table crafting, wells and irrigation, storage, food preservation, and off-grid power.
+  <description>Grow it, put it by, live off the land. Homesteader is the farmstead kit: tribal drying from day one, dairy and hearth meals, orchard and bees, wells and irrigation, cool cellars, livestock, and off-grid power.
 
-TRIBAL SURVIVAL (no research)
-- Drying rack: jerky, dried produce, fruit leather, dried mushrooms, and pemmican without needing pemmican research.
-- Field crops, basic storage crates, barrels, and pallets.
+Homesteaders scenario included. Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: deconstruct buildings and use up or sell its items.
 
-PRIMITIVE HOMESTEAD
-- Curing rack and smokehouse for salted and smoked meat.
-- Hayloft and ingredient barrel for bulk farm storage.
-- Orchard trees (apple, cherry, sugar maple).
+Full notes: https://azraelgodking.github.io/rimworld_mods/homesteader
+Discord: https://discord.gg/Vwh2y7qMXv</description>
 
-FARMSTEAD CRAFTING
-- Grain mill, butter churn, cheese press, pickling crock, and homestead hearth.
-- Dairy pipeline: skim cream → churn butter (+ buttermilk) or press cheese; wax or smoke cheese.
-- Sugar, honey, or maple syrup for jam, porridge, and cider; butter for bread and flapjacks.
-- Pantry meals: toast and jam, ploughman's lunch, honey porridge, pumpkin pie, buttermilk biscuits.
-- Cider vinegar, vinegar pickles, apple cider, and homestead soap.
-- Favorite food mood for every humanlike (Homesteader + vanilla pool); maypole harvest cheer.
-
-WATER &amp; IRRIGATION
-- Rain barrel (cheap trickle) → cistern (sheltered stockpile that also fills itself) → water tower (24 stacks, faster catch, critical haul). Wellcraft then waterworks.
-- Hand-dug well (5 jugs on demand) → deep well (20 jugs a haul). Solar still is the arid sidegrade: boiled water without a stove.
-- Stone fountain drinks about two water jugs a day; the courtyard beauty only counts while it is flowing.
-- Irrigated soil and irrigated planter (+30% fertility) (irrigation research).
-- Boiled water, mud bricks, and clean bandages crafted from water.
-- Optional Dubs Bad Hygiene: rain barrel / cistern / water tower store plumbing water; hand-dug well acts as a primitive groundwater source; deep well is a piped deep inlet. Jug water for irrigation still works.
-
-ORCHARD &amp; APIARY
-- Apple and cherry trees: slow-growing, regrowing orchard fruit for cider, jam, and eating fresh.
-- Sugar maple: tap for maple sap and boil it into maple syrup at the hearth - then griddle flapjacks.
-- Beehives produce beeswax alongside honey; render it into slow-burning beeswax candles.
-
-AROUND THE FARMHOUSE
-- Preserves shelf: beautiful display storage for jams, pickles, cheese, dairy, honey, and syrup.
-- Nesting box: a snug straw-lined bed for small animals.
-- Harvest maypole: a ribboned gathering spot colonists celebrate around.
-- Polyarmory trait: polycule members (lovers and metamours with the trait) are fine sharing multi-person beds (works with Polyamory Beds).
-
-LIVESTOCK, FIBER &amp; PANTRY
-- Chicken coop (eggs); animal mash from barley, pumpkin, or hay.
-- Render lard/tallow and stuff sausage from cured meats and herbs.
-- Flax crop, spinning wheel, loom, and homestead quilts (quilted beds need a quilt).
-- Compost heap → fertilizer → composted soil (+45% fertility).
-- Icehouse (≤0°C) and springhouse (≤8°C) passive cold storage.
-- Canning kitchen (mason jars, canned stew/jam), cider press (apple juice → cider), wash tub (soap scrub).
-- Pantry tab: preserved kinds in cellar/shelf/crates, days of food, and what's closest to spoiling.
-- Spoilage triage (on by default): eat and preserve the stack closest to turning first.
-- Preserve crate: pack a mixed lot of jam, cheese, cider, and jerky for trade in one click (jam cauldron or canning kitchen).
-- Seed saving: harvest drops saved seed; replant your stock and the line slowly takes to this soil.
-
-RESEARCH &amp; PROGRESSION
-- Primitive homestead, food preservation, farmstead crafting, homestead storage, brewing, comforts, and advanced homestead.
-- Livestock, textiles, soil and cold storage, pantry craft.
-- Wellcraft → irrigation / waterworks.
-- Root cellar (passive cool storage ≤5°C), large storage crate, jam cauldron, and wood-burning generator.
-
-STORYTELLER
-- Azrael: Cassandra-style pacing with a bit more Misc / ThreatSmall for series flavor (Living World, Stormproof, homestead life). Canonical copy ships here; the optional Azrael showcase mod adds The Deep Homestead scenario.
-
-POWER
-- Compact battery, battery bank, advanced battery, ultratech battery, portable chemfuel generator.
-
-WHICH STATION?
-- Drying rack vs curing rack: drying rack needs no research (jerky, dried produce, fruit leather, dried mushrooms, pemmican). Curing rack unlocks with Primitive homestead and salts meat (and chips rock salt). Different jobs — not duplicates.
-- Root cellar vs icehouse vs springhouse: root cellar is the large passive larder (≤5°C). Icehouse is colder and smaller (≤0°C). Springhouse is milder (≤8°C) for dairy and produce by the farmhouse.
-- Homestead hearth vs wood stove: hearth cooks pantry meals. Wood stove only heats the room, off-grid — it does not cook.
-
-Odyssey owners get salted and smoked fish recipes automatically.
-
-Requires the Harmony mod (C# for root cellar cooling and favorite foods). Safe to add to a save. Before removing it, deconstruct the mod's buildings and use up or sell its items.
-
-Note: former Wellspring water content now ships inside Homesteader (Wellspring_* defNames preserved). Disable any old standalone Wellspring mod.
-
-Optional: Dubs Bad Hygiene soft-compat patches Homesteader water buildings into its plumbing when that mod is present.
-
-Optional: unique refresh art is not in the Workshop download. Copy Textures/HomesteaderRefresh from the GitHub repo into this mod folder, then Mod Options → Use refreshed textures (off by default). Original sprites always ship.</description>
 </ModMetaData>

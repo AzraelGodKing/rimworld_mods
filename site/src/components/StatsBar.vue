@@ -18,18 +18,24 @@ async function onRefresh() {
 
 <template>
   <div class="stats-bar" aria-live="polite">
-    <p class="stats-primary" v-if="state.siteTotal?.subscriptions || state.siteTotal?.favorited">
-      <strong>{{ t('hub.allMods') }}:</strong>
-      <span class="stat-num">{{ format(state.siteTotal?.subscriptions) }}</span> {{ t('stats.subscribers') }}
-      ·
-      <span class="stat-num">{{ format(state.siteTotal?.favorited) }}</span> {{ t('stats.favorites') }}
-    </p>
-    <p class="stats-primary">
-      <strong>{{ t('hub.allNexus') }}:</strong>
-      <span class="stat-num">{{ format(state.siteTotal?.nexus_downloads) }}</span> {{ t('stats.downloads') }}
-      ·
-      <span class="stat-num">{{ format(state.siteTotal?.nexus_endorsements) }}</span> {{ t('stats.endorsements') }}
-    </p>
+    <div class="stats-metrics">
+      <div class="stat">
+        <span class="stat-label">{{ t('stats.subscribers') }}</span>
+        <span class="stat-num">{{ format(state.siteTotal?.subscriptions) }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">{{ t('stats.favorites') }}</span>
+        <span class="stat-num">{{ format(state.siteTotal?.favorited) }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">{{ t('stats.downloads') }}</span>
+        <span class="stat-num">{{ format(state.siteTotal?.nexus_downloads) }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">{{ t('stats.endorsements') }}</span>
+        <span class="stat-num">{{ format(state.siteTotal?.nexus_endorsements) }}</span>
+      </div>
+    </div>
     <p class="stats-detail">
       {{ t('stats.updated') }} {{ updatedLabel }} · {{ t('stats.live') }} ·
       <button class="stats-refresh" :disabled="state.loading" @click="onRefresh">

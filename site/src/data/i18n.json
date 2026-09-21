@@ -2,7 +2,9 @@
   "en": {
     "nav.mods": "Mods",
     "nav.compat": "Compatibility",
+    "nav.workshop": "Workshop",
     "nav.theme": "Toggle light / dark",
+    "hub.kicker": "RimWorld 1.6 · Harmony",
     "hub.search": "Search mods…",
     "hub.sort.default": "Featured order",
     "hub.sort.subs": "Most subscribers",
@@ -66,7 +68,9 @@
   "ru": {
     "nav.mods": "Моды",
     "nav.compat": "Совместимость",
+    "nav.workshop": "Мастерская",
     "nav.theme": "Светлая / тёмная тема",
+    "hub.kicker": "RimWorld 1.6 · Harmony",
     "hub.search": "Поиск модов…",
     "hub.sort.default": "По порядку",
     "hub.sort.subs": "Больше подписчиков",
@@ -130,7 +134,9 @@
   "zh": {
     "nav.mods": "模组",
     "nav.compat": "兼容性",
+    "nav.workshop": "工坊",
     "nav.theme": "切换明暗主题",
+    "hub.kicker": "RimWorld 1.6 · Harmony",
     "hub.search": "搜索模组…",
     "hub.sort.default": "默认排序",
     "hub.sort.subs": "订阅最多",

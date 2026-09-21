@@ -24,45 +24,10 @@
     <li>AOBA.MechsuitFramework</li>
     <li>Mazo.Schedules</li>
   </loadAfter>
-  <description>Adds Date and Lovin timetable slots to the Schedule tab.
+  <description>Adds Date and Lovin slots to the Schedule tab. Dates are dinner, walks, stars, gifts — mood and opinion, no bed. Lovin uses a shared double.
 
-Date hours: partners pick a real date activity based on what's around — dinner at a table, a picnic, a walk, stargazing at night, dancing at a gather spot, a small gift (beer, chocolate...), recreation, or a simple hangout. Mood and opinion only — no bed, no pregnancy.
+Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: clear Date / Lovin slots back to Sleep / Anything.
 
-Dates have quality: venue beauty, weather, and a little luck decide whether it was a wonderful, nice, or awkward date. Couples remember a favourite spot and prefer to go back; a ruined date can sour that venue. A raid, draft, or mental break mid-date leaves a ruined-date mood. A finished date leaves a spark — better lovin chance for about a day.
-
-On the anniversary of a love bond both partners get a letter. A date that actually lands that day is a special mood; letting the day pass without one stings.
-
-Two couples with overlapping Date hours may share a venue (double date). Quality rolls once for the group, and the evening spills into opinions of the other pair. If the other couple never shows, they date alone.
-
-Lovin hours: paint the same hours on both partners. They meet in a shared double. When both are in it, lovin uses a short mean-time-between until the schedule changes. The double is claimed for that window, then previous beds are restored.
-
-Adults without a partner in that bed can have some private time in any bed (including a single). No pregnancy. Toggle it off in mod settings.
-
-If Ideology forbids lovin, or Biotech sterile genes would make a forced lovin job pointless, Date Night reroutes to a date instead of forcing the job. Missing DLC fails open.
-
-If a partner is drafted, in a medical bed, or off-map for the window, the one who showed up gets a short stood-up thought. If both make it, they get a small boost.
-
-A schedule-mismatch alert fires when one lover has Date or Lovin painted and the other does not (or they painted different hours).
-
-Works for no-sleep / low-rest pawns who never hit a Sleep block: Lovin still sends them to bed.
-
-REQUIREMENTS
-- Date: love relationship, both scheduled Date, same map. Adults only.
-- Couples (Lovin): both scheduled Lovin, love relationship, shared double bed.
-- Private time: adult colonist, Lovin hours, a reachable bed. Children never qualify.
-
-SETTINGS
-- Pregnancy-safe cooldown (default ON): keeps vanilla post-lovin cooldown; only shortens the chance MTB while scheduled.
-- Eager mode (optional): also shortens post-lovin cooldown like Always Do Lovin — can spam pregnancy rolls.
-- Allow private time (default ON): self-lovin when a partner is not sharing a double.
-- Claim double for Lovin hours (default ON): temporary rendezvous bed, then restore.
-- Date activities (default ON): dinner / picnic / walk / stargazing / dancing / gifts / recreation. Off = plain hangout dates.
-- Date quality (default ON): wonderful / nice / awkward outcomes. Off = flat nice-date thought.
-- Allow gift dates (default ON): consumes a small luxury item; it moves to the partner's inventory.
-- Post-date lovin spark (default ON): a finished date improves lovin chance for about a day.
-- Anniversaries (default ON): letter on the bond anniversary; a date that day is a special mood, skipping it stings.
-- Remember favourite spots (default ON): couples prefer the venue of their best dates; ruined dates can sour it.
-- Allow double dates (default ON): two couples with overlapping Date hours may share a venue.
-
-Chinese Simplified and Russian included. Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: clear Date / Lovin schedule slots back to Sleep/Anything.</description>
+Full notes: https://azraelgodking.github.io/rimworld_mods/date-night
+Discord: https://discord.gg/Vwh2y7qMXv</description>
 </ModMetaData>

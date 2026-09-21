@@ -30,40 +30,10 @@
     <!-- Soft: Replace Stuff frames participate in leave-a-way-out (AZR-201). -->
     <li>Memegoddess.ReplaceStuff</li>
   </loadAfter>
-  <description>My Discord: https://discord.gg/Vwh2y7qMXv
-Site (no Discord): https://azraelgodking.github.io/rimworld_mods/niceties
+  <description>Small colony comforts vanilla never shipped. Each nicety is its own toggle: well-kept apparel, throne-room altars, any outfit cut, hidden cryptosleep, melee hunting, shared bedrooms, and leave a way out.
 
-Small colony comforts vanilla never shipped. Each nicety is its own Mod Options toggle — Harmony, fail-open. Soft / Default / Hard only seed the knobs. Combat, fire, and outdoor rot are left alone.
+Requires Harmony. RimWorld 1.6. Royalty and Ideology optional. Safe to add or remove mid-save.
 
-WELL-KEPT APPAREL
-Worn clothes skip or scale daily deterioration. Quality and Crafting skill decide how often a piece loses a hit point. Masterwork and legendary stay as they are. Combat and fire still shred HP. Optional: clothes on a corpse keep the same rule.
-
-THRONE AND ALTAR
-Royalty throne rooms may hold an Ideology altar without failing the "no altars" check. If a throne is in the room, it stays a throne room rather than flipping to a temple.
-
-WEAR ANY OUTFIT
-Gender tags come off apparel so a colonist can wear the other cut of a royal vest or hat without the wrong-gender thought. Toggle restores the original tags.
-
-HIDDEN CRYPTOSLEEP
-Pawns already in a cryptosleep casket drop off the colonist bar. Carrying someone to a casket does not hide them early (that is what crashed older hide-from-bar mods). They reappear when ejected.
-
-MELEE HUNTING
-Hunters may hunt with a melee weapon. A body-size cap keeps people from charging a thrumbo with a knife unless you raise it. Unarmed hunting is optional and off by default.
-
-SHARED BEDROOMS
-Select a bed and mark the room as shared. Extra beds stay a bedroom (not barracks), so roommates and royalty are not punished for living together. Pawns who share a room do not get the disturbed-sleep thought. Sharing one mattress with a non-partner is still vanilla.
-
-LEAVE A WAY OUT
-Pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in. Works on vanilla frames and Replace Stuff frames. In-place wall swaps stay solid so a freezer can still be replaced from inside. Right-click force construct still builds it.
-
-SETTINGS
-Each nicety is independently on or off. Extra knobs (quality scaling, unarmed hunt, body-size cap) only apply while that nicety is on.
-Soft / Default / Hard change those knobs, not a forced bundle:
-- Soft: no daily clothing wear, corpse clothes included, unarmed hunting, any prey size.
-- Default: quality-scaled wear, melee up to body size 1.5, no unarmed.
-- Hard: no crafting bonus, melee only small game (0.8).
-
-Requires Harmony. RimWorld 1.6. Royalty and Ideology optional (those toggles no-op without the DLC). Safe to add or remove mid-save.
-
-Inspired by ideas from Jecrell's Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Melee Hunting, Share Rooms, and Smarter Construction — rewritten from scratch, not a continuation of those mods.</description>
+Full notes: https://azraelgodking.github.io/rimworld_mods/niceties
+Discord: https://discord.gg/Vwh2y7qMXv</description>
 </ModMetaData>

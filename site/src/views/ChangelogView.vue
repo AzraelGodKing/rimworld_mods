@@ -7,6 +7,7 @@ import { useI18n } from "../composables/useI18n.js";
 
 const route = useRoute();
 const { t } = useI18n();
+const BASE = import.meta.env.BASE_URL;
 
 const mod = computed(() => modsData.mods.find((m) => m.id === route.params.id));
 const backLabel = computed(() =>
@@ -16,7 +17,10 @@ const backLabel = computed(() =>
 
 <template>
   <article v-if="mod" class="mod-page changelog-page" :style="{ '--mod': mod.accent }">
-    <section class="hero mod-hero">
+    <section
+      class="hero mod-hero"
+      :style="{ '--hero-art': `url('${BASE}${mod.preview}')` }"
+    >
       <div class="wrap">
         <RouterLink class="back-link" :to="`/${mod.id}`">{{ backLabel }}</RouterLink>
         <h1>{{ mod.name }}</h1>

@@ -24,7 +24,10 @@ function targetFor(entry) {
 
 <template>
   <article v-if="mod" class="mod-page" :style="{ '--mod': mod.accent }">
-    <section class="hero mod-hero">
+    <section
+      class="hero mod-hero"
+      :style="{ '--hero-art': `url('${BASE}${mod.preview}')` }"
+    >
       <div class="wrap">
         <RouterLink class="back-link" to="/">← {{ t('mod.backToMods') }}</RouterLink>
         <div class="mod-hero-grid">
