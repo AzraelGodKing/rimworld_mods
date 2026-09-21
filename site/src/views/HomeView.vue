@@ -53,10 +53,13 @@ const filtered = computed(() => {
 <template>
   <div class="home">
     <section class="hero">
-      <div class="wrap">
-        <h1>{{ modsData.site.title }}</h1>
-        <p class="hero-tagline">{{ modsData.site.tagline }}</p>
-        <p class="hero-intro">{{ modsData.site.heroIntro }}</p>
+      <div class="wrap hero-layout">
+        <div class="hero-copy">
+          <p class="hero-kicker">{{ t('hub.kicker') }}</p>
+          <h1>{{ modsData.site.title }}</h1>
+          <p class="hero-tagline">{{ modsData.site.tagline }}</p>
+          <p class="hero-intro">{{ modsData.site.heroIntro }}</p>
+        </div>
         <StatsBar />
       </div>
     </section>

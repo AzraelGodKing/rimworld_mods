@@ -14,7 +14,10 @@ const open = ref(false);
     <div class="nav-inner">
       <RouterLink class="brand" to="/" @click="open = false">
         <span class="brand-mark">AZ</span>
-        <span class="brand-name">{{ modsData.site.author }}</span>
+        <span class="brand-copy">
+          <span class="brand-kicker">{{ t('nav.workshop') }}</span>
+          <span class="brand-name">{{ modsData.site.author }}</span>
+        </span>
       </RouterLink>
 
       <button

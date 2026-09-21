@@ -27,27 +27,7 @@
     <li>azraelgodking.DateNight</li>
     <li>AzraelGodKing.Niceties</li>
   </loadAfter>
-  <description>Series showcase package for the Azrael RimWorld mods.
+  <description>Series showcase: The Deep Homestead scenario and Hub health in Mod Options. Canonical Azrael storyteller still ships with Homesteader.
 
-THE DEEP HOMESTEAD (scenario)
-- Three settlers, farm kit, mountain-foothills fantasy.
-- Forces the Azrael storyteller.
-- Soft start parts when Homesteader / Strata are loaded (MayRequire).
-
-AZRAEL (storyteller)
-- Canonical copy ships with Homesteader.
-- This mod injects the same storyteller only if Homesteader is not loaded (no duplicate defs when both are active).
-- Cassandra-style pacing with slightly more Misc and ThreatSmall pressure.
-
-SERIES HUB (Mod Options → Azrael)
-- Lists which series mods are loaded (versions and build stamps), DLC, live vs broken soft-compat (including Dubs), named conflicts, and failed Harmony patches.
-- Copy report from the main menu or in a colony; paste into a GitHub issue or Steam comment.
-
-REQUIRES
-- Harmony. RimWorld 1.6.
-
-RECOMMENDED (soft)
-- Homesteader (owns the storyteller), Strata, Stormproof, Living World, Nemesis, Deep Colony.
-
-Safe to add mid-save for the storyteller alone; start a new game for the scenario.</description>
+Requires Harmony. RimWorld 1.6. Safe to add mid-save for the storyteller; start a new game for the scenario.</description>
 </ModMetaData>
