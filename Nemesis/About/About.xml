@@ -23,36 +23,10 @@
     <li>AzraelGodKing.Strata</li>
     <li>AzraelGodKing.Homesteader</li>
   </loadAfter>
-  <description>A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. They harass your colony with taunts, false leads, and assaults that flee when losing. After each escape they level up as a combat captain — better skills, gear, and armor — and prefer returning with an army. The hunt still ends when you capture or kill them… or when they get what they came for.
+  <description>A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. They harass, level up after each escape, and prefer coming back with an army. The hunt ends when you capture or kill them… or when they get what they came for.
 
-FOUNDATION
-Original design and core runtime by Dredd (Misakabob). Expanded and packaged here with credit.
+Foundation by Dredd (Misakabob). Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: resolve any active hunt.
 
-HOW IT STARTS
-- A colonist kills an enemy's ally or kin (chance).
-- A prisoner (or slave) breaks out and someone takes it personally.
-- An enemy wounds-and-escapes, then comes back for the one who cut them.
-- An enemy who killed one of yours fixates on a surviving colonist.
-
-WHAT THEY DO
-- Comms taunts and paper notes that name your people.
-- Early hunt: sabotage, waste, fake signals, caravan harassment (downweighted after escapes).
-- Personal assaults that pull back when losing.
-- After escapes: vengeance army raids that inject the same pawn; captain progression (skills, gear quality, battle-hardened armor; Biotech bionics/genes when present).
-- Combat focus rolled at create (Destroyer, Berserker, Sniper, Psycho, Survivor, Mechanitor with Biotech).
-- Soft escorts: animal mount/escort from level 2; Mechanitor mech retinue on army returns when Biotech is loaded.
-
-HOW IT ENDS
-- Capture them alive (execute / release / keep / truce).
-- Corner them after enough escapes, then kill or arrest (no cheat-death).
-- If they hunt a specific colonist: the hunt also ends if that pawn dies or is handed over — they win, and lose interest.
-
-SOFT COMPAT (optional, fail-open)
-- Stormproof: EMP sabotage respects EMP dampeners; surge protectors blunt grid sabotage; ion flavor when present.
-- Strata: prefers surface home maps; aware of underground / upper levels when choosing harassment targets.
-- Homesteader: food raids and taunts can reference root cellars and favorite foods when those systems exist.
-- Giddy-Up: animal escorts pair better as mounts when present (still spawn as escorts without it).
-- Rimesis / Back for Vengeance: exclusive pawn claim via NemesisCompatApi; skip create/inject on their captains.
-
-Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: resolve or dismiss any active nemesis (capture/truce/end) so WorldPawn refs are cleaned up.</description>
+Full notes: https://azraelgodking.github.io/rimworld_mods/nemesis
+Discord: https://discord.gg/Vwh2y7qMXv</description>
 </ModMetaData>

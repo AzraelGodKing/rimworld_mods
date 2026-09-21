@@ -16,68 +16,71 @@
       "nexusUrl": "https://www.nexusmods.com/rimworld/mods/700",
       "accent": "#7a8f3a",
       "preview": "img/HomesteaderPreview.png",
-      "tagline": "Farm-to-table craft, wells and irrigation, cool cellars, and off-grid power for tribal and homestead starts.",
+      "tagline": "Tribal pantry, orchard and dairy, wells and irrigation, cool cellars, livestock, and off-grid power for homestead starts.",
       "badges": ["RimWorld 1.6", "Requires Harmony"],
       "overview": [
-        "Grow it, put it by, live off the land. Homesteader brings tribal survival, farm-to-table crafting, wells and irrigation, cool storage, comforts, and off-grid power to colonies far from the glitterworld supply chain.",
-        "The Homesteaders scenario starts three settlers with livestock and hand tools. A homestead supplier caravan visits with preserves, seeds, and the occasional Diggo plushie."
+        "Grow it, put it by, live off the land. Homesteader is the farmstead kit: tribal drying from day one, dairy and hearth meals, orchard trees and bees, wells and irrigation, cool cellars, livestock and textiles, and batteries when the glitterworld grid is a rumor.",
+        "The Homesteaders scenario starts three settlers with livestock and hand tools, and locks the Azrael storyteller. A homestead supplier caravan visits with preserves, seeds, and the occasional Diggo plushie. The Pantry colony tab tracks what you put by and what is about to turn."
       ],
       "featureTabs": [
         {
           "id": "pantry",
           "label": "Winter pantry",
           "features": [
-            { "title": "Preserve without a freezer", "body": "Dry, salt, and smoke from day one of a tribal start. The drying rack needs no research; curing and smoking unlock with Primitive homestead. Turn surplus into stores that survive the caravan and the cold snap." },
-            { "title": "Drying rack", "body": "No research. Jerky, fruit leather, dried produce, dried mushrooms, and pemmican." },
-            { "title": "Curing rack", "body": "Primitive homestead. Rock salt and salted meat — not the same job as drying." },
-            { "title": "Smokehouse", "body": "Smoked meat — and smoked fish with Odyssey." },
-            { "title": "Bulk farm storage", "body": "Hayloft and ingredient barrel for bulk farm storage." }
+            { "title": "Preserve without a freezer", "body": "Dry, salt, smoke, can, and pack from a tribal start. The drying rack needs no research; curing and smoking unlock with Primitive homestead. Surplus becomes stores that survive the caravan and the cold snap." },
+            { "title": "Drying, curing, smoking", "body": "Drying rack: jerky, fruit leather, dried produce, dried mushrooms, and pemmican. Curing rack: rock salt and salted meat. Smokehouse: smoked meat — and smoked fish with Odyssey." },
+            { "title": "Cool storage", "body": "Root cellar (≤5°C, the large larder), icehouse (≤0°C, colder and smaller), and springhouse (≤8°C, dairy and produce by the farmhouse). Hayloft and ingredient barrels for bulk farm storage." },
+            { "title": "Pantry tab", "body": "Colony tab over cellar, icehouse, springhouse, preserves shelf, crates, and barrels: distinct preserved kinds, days of food, and the next stack to rot." },
+            { "title": "Spoilage triage & crates", "body": "On by default, colonists eat and preserve the stack closest to turning. Pack a mixed preserve crate at the jam cauldron or canning kitchen for trade in one click." }
           ]
         },
         {
           "id": "kitchen",
           "label": "Farm to table",
           "features": [
-            { "title": "A kitchen that earns its keep", "body": "Mill grain, churn butter, press cheese, brew cider, and plate pantry meals at the homestead hearth. Recipes lean on what you grew — cream, sugar, fruit, and smoked leftovers — not a chemfuel factory." },
-            { "title": "Workstations", "body": "Grain mill, butter churn, cheese press, pickling crock, jam cauldron, and brewing bench." },
-            { "title": "Hearth meals", "body": "Toast and jam, ploughman's lunch, honey porridge, and pie. The homestead hearth cooks; the wood stove only heats." },
-            { "title": "Favorite foods", "body": "Pawns remember what they love." }
+            { "title": "A kitchen that earns its keep", "body": "Mill grain, churn butter, press cheese, pickle, jam, brew, and plate pantry meals at the homestead hearth. Recipes lean on cream, sugar, fruit, maple, honey, and smoked leftovers — not a chemfuel factory." },
+            { "title": "Dairy and hearth", "body": "Skim cream, churn butter (+ buttermilk) or press cheese; wax or smoke the cheese. Pantry meals: toast and jam, ploughman's lunch, honey porridge, pumpkin pie, buttermilk biscuits. The hearth cooks; the wood stove only heats." },
+            { "title": "Orchard and apiary", "body": "Apple and cherry trees for cider, jam, and eating fresh. Tap sugar maple and boil sap into syrup, then griddle flapjacks. Beehives make honey and beeswax; render slow-burning candles." },
+            { "title": "Canning, cider, soap", "body": "Canning kitchen (mason jars, canned stew and jam), cider press (juice then cider), wash tub and homestead soap. Favorite-food mood for every humanlike — Homesteader and vanilla pool." }
+          ]
+        },
+        {
+          "id": "yard",
+          "label": "Yard & livestock",
+          "features": [
+            { "title": "Livestock and fiber", "body": "Chicken coop for eggs; animal mash from barley, pumpkin, or hay. Render lard and stuff sausage. Flax, spinning wheel, loom, and homestead quilts — quilted beds need a quilt." },
+            { "title": "Soil", "body": "Compost heap → fertilizer → composted soil (+45% fertility). Seed saving: harvest drops saved seed; replant and the line slowly takes to this soil." },
+            { "title": "Around the farmhouse", "body": "Preserves shelf for jams, pickles, cheese, dairy, honey, and syrup. Nesting box for small animals. Harvest maypole for gathering cheer." },
+            { "title": "Polyarmory", "body": "Polycule members with the trait are fine sharing multi-person beds (works with Polyamory Beds)." }
           ]
         },
         {
           "id": "water",
           "label": "Wellcraft",
           "features": [
-            { "title": "Water that feeds the fields", "body": "Former Wellspring content ships inside Homesteader. Draw, catch, store, and trench water into irrigated soil." },
-            { "title": "Wells and barrels", "body": "Hand-dug and deep wells, rain barrel, cistern, and solar still." },
-            { "title": "Irrigation", "body": "Irrigated soil and planter for reliable crops." },
-            { "title": "Wellcraft goods", "body": "Boiled water, mud bricks, and clean bandages." },
-            { "title": "Plumbing bridge", "body": "With Dubs Bad Hygiene, tanks join the plumbing net — an optional Bad Hygiene plumbing bridge." }
+            { "title": "Water that feeds the fields", "body": "Former Wellspring content ships inside Homesteader. Catch, store, haul, and trench water into irrigated soil. Disable any old standalone Wellspring mod." },
+            { "title": "Catch and store", "body": "Rain barrel is a cheap trickle. Cistern stores eight stacks, stops rot, and fills itself. Water tower holds twenty-four stacks, catches faster, and hauls as Critical." },
+            { "title": "Wells and still", "body": "Hand-dug well: five jugs on demand. Deep well: twenty jugs a haul. Solar still is the arid sidegrade — boiled water without a stove. Stone fountain drinks about two jugs a day; courtyard beauty only while it flows." },
+            { "title": "Irrigation and goods", "body": "Irrigated soil and planter (+30% fertility). Boiled water, mud bricks, and clean bandages from water." },
+            { "title": "Plumbing bridge", "body": "With Dubs Bad Hygiene, rain barrel / cistern / water tower store plumbing water; the hand-dug well is a primitive groundwater source and the deep well a piped inlet. Jug irrigation still works." }
           ]
         },
         {
           "id": "power",
           "label": "Off-grid power",
           "features": [
-            { "title": "Power without the glitterworld", "body": "Compact batteries and wood-fired generators keep a homestead lit when the grid fails." },
+            { "title": "Power without the glitterworld", "body": "Compact batteries and wood-fired generators keep a homestead lit when the grid fails. Stormproof grid defense runs on these cells." },
             { "title": "Batteries", "body": "Compact, bank, advanced, and ultratech cells for tight footprints." },
-            { "title": "Generators", "body": "Chemfuel portable and wood-burning options for rural power." }
+            { "title": "Generators", "body": "Portable chemfuel and wood-burning options for rural power." }
           ]
         },
         {
           "id": "research",
-          "label": "Research",
+          "label": "Research & start",
           "features": [
-            { "title": "Primitive homestead", "body": "Unlocks curing, smoking, and dairy." },
-            { "title": "Advanced homestead", "body": "Unlocks the wood-burning generator." },
-            { "title": "Wellcraft / Irrigation / Waterworks", "body": "Unlock wells and irrigated land." }
-          ]
-        },
-        {
-          "id": "scenario",
-          "label": "Homesteaders scenario",
-          "features": [
-            { "title": "Start here", "body": "Three settlers, livestock, and hand tools — far from the glitterworld supply chain. A homestead supplier caravan visits with preserves, seeds, and the occasional Diggo plushie." }
+            { "title": "Homestead techs", "body": "Primitive homestead, food preservation, farmstead crafting, homestead storage, brewing, comforts, advanced homestead, livestock, textiles, soil and cold storage, pantry craft. Wellcraft → irrigation / waterworks." },
+            { "title": "Homesteaders scenario", "body": "Three settlers, livestock, and hand tools — far from the glitterworld supply chain. Locks the Azrael storyteller. A homestead supplier visits with preserves, seeds, and the occasional Diggo plushie." },
+            { "title": "Azrael storyteller", "body": "Cassandra-style pacing with a bit more Misc / ThreatSmall for series flavor. Canonical copy ships here; sibling scenarios lock it when Homesteader is loaded." }
           ]
         }
       ],
@@ -116,12 +119,17 @@
       "goodToKnow": [
         "The drying rack needs no research. Curing and smoking unlock with Primitive homestead.",
         "Smoked fish requires the Odyssey DLC.",
+        "Former Wellspring water content lives here — disable any old standalone Wellspring mod.",
+        "Optional refresh art is not in the Workshop zip. Copy Textures/HomesteaderRefresh from GitHub into the mod folder, then Mod Options → Use refreshed textures.",
+        "Chinese Simplified and Russian are included.",
         "Safe to add to an existing save. Before removing, deconstruct Homesteader buildings and use up or sell its items."
       ],
       "compatibility": {
         "compatibleWith": [
-          { "name": "Dubs Bad Hygiene", "note": "Optional plumbing bridge — water tanks join the plumbing net" },
-          { "name": "Stormproof", "note": "Pairs naturally — Stormproof grid defense runs on Homesteader batteries and generators" }
+          { "name": "Dubs Bad Hygiene", "note": "Optional plumbing bridge — rain barrel / cistern / water tower store plumbing water; wells become groundwater / deep inlets" },
+          { "name": "Stormproof", "note": "Pairs naturally — Stormproof grid defense runs on Homesteader batteries and generators" },
+          { "name": "Polyamory Beds", "note": "Polyarmory trait members are fine sharing multi-person beds" },
+          { "name": "Adaptive Storage Framework", "note": "Homestead storage stays on the Homestead architect tab — ASF has no Storage tab to move it to" }
         ],
         "incompatibleWith": [],
         "notes": []
@@ -142,70 +150,71 @@
       "tagline": "Defend the power grid from flares, lightning, short circuits, EMP, and fallout — then call the storm yourself.",
       "badges": ["RimWorld 1.6", "Requires Harmony", "18 buildings"],
       "overview": [
-        "Natural disasters. Grid defense. Hazard hardening. Custom C# components patch vanilla events to keep your power grid running through everything the Rim throws at it.",
-        "Seventeen tools for a disaster-hardened colony — plus one purely decorative weather vane. Pairs naturally with Homesteader batteries and generators."
+        "The Rim does not care about your freezer. Stormproof is the Power-tab toolkit that keeps a colony running through flares, lightning, surges, EMP, fallout, heat, cold, eclipses, flashstorms, and droughts.",
+        "Eighteen tools for a disaster-hardened colony — plus brownout, storm wear, a weather almanac, and the Stormfront showcase start. Pairs naturally with Homesteader batteries and generators."
       ],
       "featureTabs": [
         {
           "id": "grid",
           "label": "Grid defense",
           "features": [
-            { "title": "Storm spire", "body": "Attracts lightning strikes within a 30-tile radius, keeping fires away from your base. It cannot burn and snuffs out flames a caught strike sparks around its base. Grid-connected, each strike dumps up to 1,500 Wd into your capacitors and batteries — with a 5% chance of a \"Zzzt!\" surge, eliminated entirely by perfect grounding research." },
-            { "title": "Surge protector", "body": "Absorbs one \"Zzzt!\" short circuit, then needs a day to recharge and takes internal damage. Pairs dangerously well with a grid-connected storm spire." },
-            { "title": "Armored conduit", "body": "Power conduit sheathed in riveted steel. Fireproof and far tougher than standard conduit — the wiring of choice for killboxes and exterior walls." },
-            { "title": "Storm capacitor bank", "body": "A lightning-only battery. The grid can't charge it — only spire-caught strikes can — but it never self-discharges and \"Zzzt!\" surges can't drain it. When grid production falls short it automatically discharges up to 2,000W to cover the deficit." },
-            { "title": "Load shedder", "body": "An automatic breaker between the main grid and a low-priority sub-grid. Transmits like a conduit while supply batteries hold charge; trips open and sheds the sub-grid when they fall below the cutoff (default 20%), then reconnects once they recover." },
-            { "title": "Grid monitor console", "body": "Live production, consumption, battery charge, and time until the batteries run dry (or fill up) in its inspect panel. Warns at 25% stored charge, sounds the alarm at 10%." },
-            { "title": "Weather forecaster", "body": "Shows how long the current weather will hold, announces incoming thunderstorms so you can ready your spires, and warns you an hour before the weather breaks." }
+            { "title": "Solar shield", "body": "Keeps every electrical device on the map running during a solar flare. Idles cheap; drinks 2,500W while the sky is red. If batteries empty mid-flare, the shield collapses and everything stays dark until the flare ends." },
+            { "title": "Storm spire", "body": "Steals lightning in a wide radius (shown on select and while placing), cannot burn, and snuffs fires at its base. Wired: each strike dumps up to 1,500 Wd into capacitors then batteries, with a small Zzzt risk until Perfect grounding. Unwired: just a safe rod. Every eight strikes fuses fulgurite at the base." },
+            { "title": "Storm capacitor bank", "body": "Lightning-only storage. The grid cannot charge it; Zzzt cannot drain it; it never leaks. Covers deficits up to 2,000W." },
+            { "title": "Surge protector", "body": "Eats one Zzzt, then spends a day recharging. Pairs dangerously well with a grid-connected storm spire." },
+            { "title": "Armored conduit", "body": "Fireproof, tough, and immune to storm wear — the wiring for killboxes and exterior walls." },
+            { "title": "Load shedder", "body": "Automatic breaker between the main grid and a low-priority sub-grid. Battery cutoff still trips first. Add a 24-hour run/shed timetable, a forecast override that sheds before a storm or flare, and Hold Auto / Run / Shed. Old saves keep the old breaker until you set a schedule." },
+            { "title": "Grid monitor", "body": "Live production, consumption, battery time-to-empty, brownout level, and charge warnings. With a forecaster on the same net it projects eight hours of solar/wind vs weather, then a typical sky after it breaks." }
+          ]
+        },
+        {
+          "id": "stress",
+          "label": "Grid stress",
+          "features": [
+            { "title": "Graded brownout", "body": "When batteries fall below 40%, lights dim, workbenches slow, and coolers lag — draw drops so remaining charge lasts longer. A load shedder still cuts the sub-grid at its trip point." },
+            { "title": "Storm wear", "body": "Thunder, ion storms, and high wind slowly chip ordinary conduit and batteries. Armored conduit and storm capacitor banks are immune. Repair as usual." },
+            { "title": "Coverage rings", "body": "Place and select draw the live radius on the storm spire, static pylon, EMP dampener, and fire suppressor. The fallout scrubber highlights its enclosed room." }
           ]
         },
         {
           "id": "flare-emp",
-          "label": "Flare & EMP",
+          "label": "Flare, EMP & air",
           "features": [
-            { "title": "Solar shield", "body": "A field generator that keeps every electrical device on the map running during a solar flare by drawing 2,500W continuously. Stockpile battery charge before the sky goes red — if the grid runs dry mid-flare, the shield collapses and everything stays dark until the flare ends." },
-            { "title": "EMP dampener", "body": "Colony buildings in a ~15-tile radius shrug off EMP stuns. Turrets keep firing through EMP mortar barrages. Does not protect pawns or mechanoids." },
-            { "title": "Static discharge pylon", "body": "Runs exclusively on bottled lightning: every shock drains 50 Wd from a storm capacitor bank on its power net, repeatedly stunning and burning raiders and mechanoids in its radius. No capacitor charge, no zap." },
-            { "title": "Fallout scrubber", "body": "Strips airborne toxins from an enclosed room. Pawns and animals inside slowly shed toxic buildup, faster than serious fallout adds it." }
+            { "title": "EMP dampener", "body": "Colony buildings in range shrug off EMP stuns. Turrets keep firing. Does not protect pawns or mechanoids." },
+            { "title": "Static discharge pylon", "body": "Runs on bottled lightning: every shock drains a storm capacitor bank on its power net, stunning and burning raiders and mechanoids. No capacitor charge, no zap." },
+            { "title": "Fallout scrubber", "body": "Indoor detox for pawns and animals in the enclosed room. Useless outdoors. Pair with the atmospheric barrier to clear toxin already in the blood." },
+            { "title": "Weather forecaster", "body": "How long this weather holds, incoming thunderstorms, an hour's warning before it breaks, and a year-log of this map's storms and hazards. The almanac ledger tracks strikes caught vs missed, Zzzt absorbed vs suffered, fires snuffed, and wear hits." }
           ]
         },
         {
           "id": "hazard",
           "label": "Hazard hardening",
           "features": [
-            { "title": "Atmospheric barrier", "body": "Map-wide toxin hardener. Suppresses toxic fallout, toxic surge, volcanic ash, and noxious haze while the grid holds charge. Pair with fallout scrubbers to clear buildup already in the blood." },
-            { "title": "Climate stabilizer", "body": "Cancels temperature offsets from heat waves, cold snaps, volcanic winters, heat domes, and polar fronts — as long as batteries can feed it." },
-            { "title": "Sky restorer", "body": "Restores usable daylight during eclipses, volcanic winters and ash, and darkened skies so crops and colonists aren't stuck in permanent dusk." },
-            { "title": "Fire suppressor", "body": "Extinguishes fires in a ~25-tile radius while powered. Pairs with storm spires during flashstorms and dry lightning fronts." },
-            { "title": "Drought condenser", "body": "Cancels drought plant-growth penalties map-wide while powered. Most useful with Odyssey grasslands droughts." }
+            { "title": "Spacer counters", "body": "Late-game map-wide buildings. Idle cheap; pull hard while the event is on. No stored energy, no protection." },
+            { "title": "Atmospheric barrier", "body": "Toxic fallout, toxic surge, volcanic ash, and noxious haze." },
+            { "title": "Climate stabilizer", "body": "Heat wave, cold snap, volcanic winter, heat dome, polar front." },
+            { "title": "Sky restorer", "body": "Usable daylight during eclipses, volcanic winters, ash, and darkened skies." },
+            { "title": "Fire suppressor", "body": "Extinguishes fires in a wide radius (flashstorm / dry lightning)." },
+            { "title": "Drought condenser", "body": "Cancels drought plant-growth penalties (Odyssey). Harmless furniture if droughts never arrive." }
           ]
         },
         {
           "id": "storm-control",
           "label": "Storm control",
           "features": [
-            { "title": "Storm caller", "body": "An ionospheric agitator that summons a rainy thunderstorm on demand: lightning to feed your storm spires, rain to douse wildfires. Half-day storm, five-day recharge — a supplement to your grid, not a replacement for it.", "tag": "Spacer tech" },
-            { "title": "Storm vane", "body": "A handsome copper weather vane. It doesn't predict anything, prevent anything, or power anything. But every proper homestead has one." }
+            { "title": "Storm caller", "body": "Summon a rainy thunderstorm on demand: lightning to feed spires, rain to douse wildfires. Half-day storm, five-day recharge — a supplement to the grid, not a replacement.", "tag": "Spacer tech" },
+            { "title": "Storm vane", "body": "A handsome copper weather vane. It predicts nothing. Every proper homestead has one." },
+            { "title": "Stormfront scenario", "body": "A hard-weather showcase start that unlocks storm protection research, and locks Azrael when Homesteader is loaded." }
           ]
         },
         {
           "id": "events",
-          "label": "Events",
+          "label": "Events & research",
           "features": [
-            { "title": "Ion storm", "body": "A new small-threat event (0.75-1.5 days): batteries bleed ~20% of stored charge per day, random EMP bursts pop at powered buildings, and extra \"Zzzt!\" surges fire. EMP dampeners, surge protectors, and storm capacitor banks are the counters." },
-            { "title": "More events to earn the kit", "body": "Heat dome, polar front, toxic surge, and dry lightning front each pressure a different counter. Vanilla fallout, heat/cold, eclipse, volcanic winter, flashstorm, and drought are covered too once hazard hardening is online." }
-          ]
-        },
-        {
-          "id": "how",
-          "label": "How it works",
-          "features": [
-            { "title": "Solar flare bypass", "body": "While active, the solar shield patches the global electricity-disabled flag so your colony keeps running — as long as the grid can feed 2,500W." },
-            { "title": "Lightning harvesting", "body": "The storm spire intercepts lightning strikes in range and sweeps its base clear of fire after each hit. Wired spires charge capacitors first, then batteries; unwired spires simply ground the bolt safely." },
-            { "title": "Weather awareness", "body": "The forecaster reads the map's weather engine directly — its inspect panel shows exactly how long the current weather will last, and it pings you when storms roll in or the weather is about to break." },
-            { "title": "EMP immunity", "body": "The EMP dampener patches building stun logic so turrets, doors, and production buildings inside its radius ignore EMP effects." },
-            { "title": "Automatic load shedding", "body": "The load shedder watches its supply grid's battery charge and rewires the power net on the fly — shedding the sub-grid below the cutoff, reconnecting once charge recovers past a hysteresis margin so it never chatters." },
-            { "title": "Natural hazard hardening", "body": "Late-game buildings cancel toxic fallout, extreme heat/cold, eclipses, flashstorm fires, and drought growth penalties while they have grid power — the same solar-shield fantasy applied to most natural incidents." }
+            { "title": "Ion storm", "body": "Batteries bleed, EMP bursts pop at powered buildings, and extra Zzzt shorts fire. Dampeners, surge protectors, and storm capacitors are the answer." },
+            { "title": "Matching weather", "body": "Dry lightning front, heat dome, polar front, and toxic surge each pressure a different counter. Vanilla flares, fallout, flashstorms, heat/cold, eclipse, volcanic winter, and drought are covered once hazard hardening is online." },
+            { "title": "Research tab", "body": "Electricity → storm protection → flare shielding → atmospheric control / perfect grounding → hazard hardening. Dedicated Stormproof research tab." },
+            { "title": "Settings", "body": "Soft / Default / Hard. Per-incident toggles and frequency, suppressor toggles, brownout strength, storm wear, almanac, fulgurite, and spire Zzzt chance." }
           ]
         }
       ],
@@ -224,10 +233,11 @@
         { "src": "img/StormVane.png", "caption": "Storm vane" }
       ],
       "goodToKnow": [
-        "Stockpile battery charge before the sky goes red — if the grid runs dry mid-flare, the solar shield collapses and everything stays dark until the flare ends.",
-        "A grid-connected storm spire has a 5% chance per caught strike of triggering a \"Zzzt!\" surge; perfect grounding research eliminates it entirely.",
+        "Stockpile battery charge before the sky goes red — if the grid runs dry mid-flare, the solar shield collapses until the flare ends.",
+        "A grid-connected storm spire has a small Zzzt chance per caught strike until Perfect grounding; Soft / Default / Hard change that factor.",
         "Storm capacitor banks are lightning-only — the grid cannot charge them, and spires fill capacitors before regular batteries.",
-        "Load Stormproof after Harmony in your mod list.",
+        "Spire vs shield: the spire is lightning and fire. The shield is flares. You usually want both.",
+        "Chinese Simplified and Russian are included. Odyssey is optional (drought condenser).",
         "Safe to add mid-save. Deconstruct all Stormproof buildings before removing the mod."
       ],
       "compatibility": {
@@ -252,40 +262,41 @@
       "accent": "#b07830",
       "preview": "img/StrataPreview.png",
       "tagline": "Dig down, build up, breathe deep. Multistory bases with commuting colonists and Odyssey-ready stacks.",
-      "badges": ["RimWorld 1.6", "Requires Harmony", "V3 complete", "Odyssey optional"],
+      "badges": ["RimWorld 1.6", "Requires Harmony", "3.5", "Odyssey optional"],
       "overview": [
-        "One home, many floors. Carve rock under your colony, frame a roof deck above it, and treat every floor as one settlement. Colonists commute for work, food, rest, hauling, medicine, and rituals. Power, smoke, and (optionally) pipes follow the shafts with them.",
-        "V3 hardens that column — see-through decks, cross-level combat and construction, and Odyssey gravship stacks that actually stay linked through launch and land.",
-        "Odyssey unlocks gravship stairwells and ship stacks only — dig, tower decks, atmosphere, and colony logistics work without the DLC. Default level cap is ±2 (Unlimited off)."
+        "One home, many floors. Carve rock under your colony, frame a roof deck above it, and treat every floor as one settlement. Colonists commute for work, food, rest, hauling, medicine, combat, and construction. Heat, power, smoke, and (optionally) pipes follow the shafts with them.",
+        "Tag floors as Farm, Freezer, Workshop, Barracks, Quarry, Storage, or Hospital so hauls and rest tilt the right way. Stamp walls onto the next level. Call the elevator. See and shoot through open sky. Odyssey gravship stacks stay linked through launch and land.",
+        "Odyssey unlocks gravship stairwells and ship stacks only — dig, tower decks, atmosphere, and colony logistics work without the DLC. Default level cap is ±2 (Unlimited off). Do not run alongside AASB, AASB 2, or MultiFloors."
       ],
       "featureTabs": [
         {
-          "id": "v3",
-          "label": "New in V3",
+          "id": "column",
+          "label": "One colony column",
           "features": [
-            { "title": "See-below roof decks", "body": "Look through open sky and see-through roof deck into the map below — terrain, buildings, live pawns and projectiles. Click-select, double-click select-similar, forbidden overlays, and float menus work on what you can see. A+ weather syncs from the floor underneath.", "tag": "New in V3" },
-            { "title": "Cross-level combat", "body": "Pawns, turrets, and mortars can fire through open shafts and sky holes. Auto-engage keeps decks and underfloors in the fight without hopping maps by hand.", "tag": "New in V3" },
-            { "title": "Force-build across floors", "body": "Prioritize or construct when steel or wood only exists on another linked stockpile. Pawns walk the stairs, haul, and deliver — including Ideology gates and turret history. Work relay defaults on.", "tag": "New in V3" },
-            { "title": "One inventory column", "body": "Combined resources (default on) sum linked stockpiles for the readout and build menu. Install minified buildings onto blueprints on other floors. Medical beds and rest can pin across the stack.", "tag": "New in V3" },
-            { "title": "Gravship stacks", "body": "Ship-only stairwells open A+/B+ pockets that travel on launch and reattach on landing. Stable shaft IDs, travel entitlement toggle, cargo pack/place, land polish, and pilot the ship from a linked underdeck.", "tag": "Odyssey" },
-            { "title": "Living colony polish", "body": "Mental breaks and raiders chase through shafts. Visitors use stairs. Depth-dim slider for upper decks. Fault guards auto-kill broken subsystems. Native cavern biome when Biomes! Caverns is absent.", "tag": "New in V3" }
+            { "title": "They commute", "body": "Idle colonists notice mining, blueprints, hauling, and bills on other levels and walk the stairs. Hungry and sleepy pawns find meals and beds across the stack. Haulers deliver through shafts; force-build pulls materials from linked stockpiles." },
+            { "title": "Level purpose tags", "body": "Farm, Freezer, Workshop, Barracks, Quarry, Storage, Hospital, or none — set from the rename dialog or the Levels tab. Matching tags only tilt equal-priority hauls and rest; wrong tags never block a job.", "tag": "3.5" },
+            { "title": "Levels tab tools", "body": "Rename floors, stamp walls/doors/floors (and optional stockpiles) onto a linked floor as blueprints, call / hold / priority elevators, and toggle a support overlay for excavated cells past a roof holder." },
+            { "title": "See-below roof decks", "body": "Look through open sky and see-through deck into the map below — terrain, buildings, live pawns and projectiles. Click-select, float menus, and forbidden overlays work on what you can see." },
+            { "title": "Cross-level combat", "body": "Pawns, turrets, and mortars fire through open shafts and sky holes. Combat Extended guns included. Auto-engage keeps decks and underfloors in the fight without hopping maps by hand." }
           ]
         },
         {
           "id": "dig-build",
           "label": "Dig & build",
           "features": [
-            { "title": "Dig down", "body": "Research digging down, build an excavated stairwell, open a full-size rock level under your map. Deeper floors need deep excavation. Second shafts join the same level." },
-            { "title": "Build up", "body": "Research building up, frame a tower stairwell, open outdoor Level +N as a roof deck — walk and build where the floor below is roofed. Expand roofs downstairs to grow the deck." },
-            { "title": "One colony column", "body": "Work, food, rest, medical, joy, schedule, storage priority, construction pull, ritual escorts, caravan pull, raid pursuit — across every linked floor." }
+            { "title": "Dig down", "body": "Research digging down, build an excavated stairwell, open a full-size rock level under your map. Deeper floors need deep excavation. Extra shafts join the same level. Thick rock roof — no drop pods, mortars, or weather from the sky." },
+            { "title": "Build up", "body": "Research building up, frame a tower stairwell, open outdoor Level +N as a roof deck — walk and build where the floor below is roofed. Expand roofs downstairs to grow the deck. Page Up / Page Down jump floors." },
+            { "title": "Elevators", "body": "Compact 1×1 cars — power to descend; ride up even if power fails. Call sends selected colonists through this car. Hold keeps it off hops to a third floor. Priority 1–5 weights automatic routing." },
+            { "title": "Deep Shafts scenario", "body": "Mountain/shaft showcase start; unlocks Digging Down + Building Up; locks Azrael when Homesteader is loaded." }
           ]
         },
         {
           "id": "atmosphere",
           "label": "Atmosphere & life below",
           "features": [
-            { "title": "Atmosphere", "body": "Smoke, deep gas, O₂, and CO₂ share one sim (optional; gases default off for performance). Vent, pipe, or exchange through shafts. Overlay in play settings. Performance mode and vacant-level throttle keep tall colonies playable." },
-            { "title": "Living below", "body": "Shoring, gas airlocks, ore hoists, fungus farms, sump pumps, mine lamps, bellows, lime scrubbers — plus a deep-gas well and smokeless generator." }
+            { "title": "Heat and gases", "body": "Stairwells exchange temperature — heat rises fast, cold pools below. Buoyant gases rise through open shafts; heavy gases sink. Optional atmosphere sim (gases default off): smoke, deep gas, O₂, CO₂ in sealed rooms. Overlay in play settings." },
+            { "title": "Living below", "body": "Shoring, gas airlocks, ore hoists, fungus farms, sump pumps, mine lamps, bellows, lime scrubbers — plus a deep-gas well and smokeless generator." },
+            { "title": "Support overlay", "body": "Play-settings toggle outlines excavated cells under thick rock that are past a roof holder or shoring pillar. Cave-in incidents pick those cells first." }
           ]
         },
         {
@@ -296,8 +307,8 @@
             { "title": "Shaft power conduit", "body": "Optional dedicated tie away from the stair footprint — builds its partner below automatically. Tankless pockets still wake from shaft surplus." },
             { "title": "Ventilation kit", "body": "Smoke hole (no research), louvers, exhaust fans, updraft filters, gas pipes. A working outlet keeps a room under harmful smoke." },
             { "title": "Life support", "body": "O₂ / CO₂ pumps, shaft exchangers, canary cages. Medieval bellows and lime scrubbers if you're not industrial yet. Gravship O₂ reclaimers and tanks when Odyssey is loaded." },
-            { "title": "Elevators", "body": "Compact powered shafts for the same dig / tower / gravship roles as stairwells — faster transit, smaller footprint." },
-            { "title": "Deep gas & wells", "body": "Cap a vent, burn canisters in the deep-gas generator, or feed Helixien pipes when Vanilla Helixien Gas Expanded is present." }
+            { "title": "Deep gas & wells", "body": "Cap a vent, burn canisters in the deep-gas generator, or feed Helixien pipes when Vanilla Helixien Gas Expanded is present." },
+            { "title": "Gravship stacks", "body": "Ship-only stairwells open A+/B+ pockets that travel on launch and reattach on landing. Colony dig/tower stairs cannot sit on substructure — use gravship shafts on the ship. Soft-compatible with Vanilla Gravship Expanded — Chapter 1.", "tag": "Odyssey" }
           ]
         },
         {
@@ -305,7 +316,7 @@
           "label": "Quests & events",
           "features": [
             { "title": "Away into the dark", "body": "World sites: sunken ruins, collapsed mines, sealed vaults, geothermal vents." },
-            { "title": "At home", "body": "Cave breakthroughs, gas firestorms, flood seeps, rich ore nodes, optional ancient stairwells." }
+            { "title": "At home", "body": "Cave breakthroughs, gas firestorms, flood seeps, rich ore nodes, deep sieges, burrowing raiders, optional ancient stairwells. Sky threats stay upstairs. Seal a stairwell to contain gas or bugs — and your own colonists." }
           ]
         },
         {
@@ -313,7 +324,7 @@
           "label": "Fluids & modding",
           "features": [
             { "title": "Fluid shafts", "body": "Soft-dep junctions for Dubs Bad Hygiene, Dubs Central Heating, Rimatomics, Vanilla Helixien Gas Expanded, Rimefeller, and VEF chemfuel — meter across levels without merging pipe nets." },
-            { "title": "Modder API & soft-compat", "body": "Strata.StrataModderApi for reachable maps and link listeners. Soft bridges for Vehicle Framework roof decks, VGE Chapter 1, ReGrowth underdecks, and sister mods in this series. Cave mods (Deep And Deeper, Anomaly undercaves) stay invisible to Strata's relays by default — an opt-in setting extends relays into their caves." }
+            { "title": "Modder API & soft-compat", "body": "Strata.StrataModderApi for reachable maps and link listeners. Soft bridges for Vehicle Framework roof decks, VGE Chapter 1, ReGrowth underdecks, Combat Extended cross-floor fire, and sister mods in this series. Cave mods (Deep And Deeper, Anomaly undercaves) stay invisible to Strata's relays by default — an opt-in setting extends relays into their caves." }
           ]
         },
         {
@@ -344,13 +355,14 @@
         { "src": "img/GasAirlock.png", "caption": "Gas airlock" }
       ],
       "goodToKnow": [
-        "Leave pillars under thick rock roof — or research shoring.",
-        "Seal a shaft to stop raiders and gas; it also traps your own people.",
+        "Leave pillars under thick rock roof — or research shoring. The support overlay shows cells past a holder.",
+        "Seal a shaft to stop raiders and gas; it also traps your own people. Stairwells cannot be torn down while anyone is still on the linked level.",
         "Grow A+ by expanding roofs downstairs; open sky never holds buildings, but you can see and shoot through it.",
         "On Odyssey ships, only gravship stairwells place on the footprint; dig/tower stairs stay planet-side.",
-        "Prefer a smaller map size if you plan many deep floors — each level is a full same-size map.",
+        "Don't dig Strata shafts on temporary quest maps (Ancient Urban Ruins, world sites) — Strata is for your home colony.",
+        "Every level is a full same-size map. Prefer a smaller map if you plan many deep floors. Default cap ±2.",
         "Leave Natural / Pollutant gases off unless you want the atmosphere sim; use Performance mode to A/B lag.",
-        "Safe to add mid-save. Before removing: bring everyone up, haul what you care about, deconstruct all stairwells (Abandon confirm if a linked level still has colony presence)."
+        "Safe to add mid-save. Before removing: bring everyone up, haul what you care about, deconstruct all stairwells."
       ],
       "compatibility": {
         "compatibleWith": [
@@ -370,6 +382,7 @@
           { "name": "Homesteader", "note": "Sister mod in this series" },
           { "name": "Stormproof", "note": "Sister mod in this series" },
           { "name": "Misc. Robots", "note": "Compatible" },
+          { "name": "Combat Extended", "note": "Cross-level combat uses CE verbs, ammo, and ballistic angle when CE is loaded" },
           { "name": "Deep And Deeper", "note": "Caves stay invisible to Strata's relays by default; an opt-in setting extends relays into them" }
         ],
         "incompatibleWith": [
@@ -400,18 +413,29 @@
       "tagline": "A named antagonist who taunts, sabotages, and returns with an army — until you end the hunt.",
       "badges": ["RimWorld 1.6", "Requires Harmony", "Foundation by Dredd (Misakabob)"],
       "overview": [
-        "Someone remembers. Someone is coming back. A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. Early on they harass with taunts, false leads, and sabotage. After each escape they level up as a combat captain (skills, gear, armor) and prefer returning with an army. The hunt still ends when you capture or kill them… or when they get what they came for.",
-        "Original design and core runtime by Dredd (Misakabob). Expanded and packaged here by AzraelGodKing with gratitude."
+        "Someone remembers. Someone is coming back. A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. Early on they harass with taunts, false leads, and sabotage. After each escape they level up as a combat captain and prefer returning with an army. The hunt still ends when you capture or kill them… or when they get what they came for.",
+        "The Dossier tab tracks identity, tells, sightings, and a standing bounty. Original design and core runtime by Dredd (Misakabob). Expanded and packaged here by AzraelGodKing with gratitude."
       ],
       "featureTabs": [
         {
           "id": "starts",
           "label": "How it starts",
           "features": [
-            { "title": "Killed ally or kin", "body": "A colonist kills someone's ally or kin. Someone takes it personally." },
+            { "title": "Killed ally or kin", "body": "A colonist kills someone's ally or kin. Someone takes it personally. Colony executions of prisoners do not start this hunt." },
             { "title": "Prison break / slave escape", "body": "A prisoner (or Ideology slave) breaks out — and a former friend of the colony does not forgive it." },
-            { "title": "Wounded escape", "body": "An enemy is wounded, escapes the map, then comes back for the colonist who cut them." },
-            { "title": "Fixation", "body": "An enemy who killed one of yours fixates on a surviving colonist and makes it personal." }
+            { "title": "Wounded escape", "body": "An enemy is wounded, escapes the map, then comes back for the colonist who cut them. Headless returns restore missing parts so they can actually fight." },
+            { "title": "Fixation", "body": "An enemy who killed one of yours fixates on a surviving colonist and makes it personal." },
+            { "title": "Marked scenario", "body": "Personal-antagonist showcase start (flak + revolvers); locks Azrael when Homesteader is loaded." }
+          ]
+        },
+        {
+          "id": "dossier",
+          "label": "Dossier",
+          "features": [
+            { "title": "Main tab", "body": "Identity, tells, sightings, taunts, last-known tile, gear seen, and aggression for the active hunt." },
+            { "title": "Tells", "body": "Voice register, weapon family, mark, and habit roll at hunt create and never change. Progression upgrades quality, not weapon type." },
+            { "title": "Informants and bounty", "body": "Pay silver at a comms console (or the dossier) for a lead: tile, gear, next-raid warning, or a false lead. Standing bounty is recorded on the dossier." },
+            { "title": "Epitaph", "body": "Hunt end writes a permanent record on the dossier. Fail-open copy onto Deep Colony's Legacy letters when that mod is loaded." }
           ]
         },
         {
@@ -441,6 +465,7 @@
       "goodToKnow": [
         "Trigger chances, aggression pacing, and the action mix are configurable in mod settings.",
         "No cheat-death — the nemesis is still killable after enough escapes.",
+        "Chinese Simplified and Russian are included.",
         "Safe to add mid-save; resolve any active hunt before removing the mod."
       ],
       "compatibility": {
@@ -449,7 +474,9 @@
           { "name": "Strata", "note": "Prefers surface home maps; aware of underground / upper levels when choosing targets" },
           { "name": "Homesteader", "note": "Food raids and taunts can reference root cellars and favorite foods" },
           { "name": "Giddy-Up", "note": "Animal escorts pair better as mounts when present (still spawn as raid escorts without it)" },
-          { "name": "Biotech", "note": "Mechanitor focus, bionics/genes thresholds, waste packs, mech escorts" }
+          { "name": "Biotech", "note": "Mechanitor focus, bionics/genes thresholds, waste packs, mech escorts" },
+          { "name": "Deep Colony", "note": "Hunt epitaph can copy onto Legacy letters when Deep Colony is loaded" },
+          { "name": "Rimesis / Back for Vengeance", "note": "Exclusive pawn claim via NemesisCompatApi; skip create/inject on their captains" }
         ],
         "incompatibleWith": [],
         "notes": [
@@ -470,31 +497,30 @@
       "nexusUrl": "https://www.nexusmods.com/rimworld/mods/781",
       "accent": "#5f8a48",
       "preview": "img/DeepColonyPreview.png",
-      "tagline": "Perks, trauma & therapy, apprenticeship, inheritance, and a living faction reputation ledger.",
+      "tagline": "Auto skill perks, trauma & therapy, apprenticeship, family life, and a living faction reputation ledger.",
       "badges": ["RimWorld 1.6", "Requires Harmony", "Five systems"],
       "overview": [
-        "Your colonists are more than their stats. Five interlocking systems give each colonist a real identity — and make your colony feel like it has a living history. Not more furniture. Not another raid timer.",
-        "Inspect panels show perk points, mentor / apprentices, and active trauma."
+        "Your colonists are more than their stats. Five interlocking systems give each colonist a real identity — and make the colony feel like it has a living history. Not more furniture. Not another raid timer.",
+        "Four surfaces: Perks, Legacy, Reputation, and a Family inspect tab (Rows or Pedigree). Soft and Default keep power systems and attitude consequences off; Hard enables skill-20 capstones, branching perks, chronic trauma, and attitude-driven trade / caravan / raid pressure."
       ],
       "featureTabs": [
         {
-          "id": "whats-new",
-          "label": "New in 2.0",
+          "id": "tabs",
+          "label": "Colony tabs",
           "features": [
-            { "title": "Three colony tabs", "body": "See every colonist's perks and unspent points, trace founder bloodlines and teaching lineages, and read the full goodwill ledger per faction.", "tag": "Perks · Legacy · Reputation" },
-            { "title": "Mod settings & presets", "body": "Every system has its own toggle, plus sliders for combat shock, mentor XP, drift pacing, inheritance, and therapy strength.", "tag": "Soft / Default / Hard" },
-            { "title": "Power tier (opt-in)", "body": "Skill-20 capstones, branching level-15 picks, respec, cross-skill archetypes, chronic trauma, and attitude-driven consequences.", "tag": "Hard preset" }
+            { "title": "Perks", "body": "Every colonist's trees at a glance, filters, and archetypes on each row. Perks grant themselves at skill 5 / 10 / 15 / 20 — no points to spend. If the skill drops, that perk lapses." },
+            { "title": "Legacy", "body": "Founder bloodlines, teaching lineages, traumatized count, remembrance names, estate heir, and Export chronicle (clipboard + a text file next to RimWorld saves)." },
+            { "title": "Reputation", "body": "Per-faction ledger: what moved goodwill, when, and what drift is still pending. Ally / hostile filter, tribute, envoy visit." },
+            { "title": "Family inspect", "body": "Kin on the Character pane — Rows or Pedigree. Click a relative to jump to them. Dead kin included; teaching line listed separately." }
           ]
         },
         {
           "id": "perks",
           "label": "Perk trees",
           "features": [
-            { "title": "Perk points", "body": "At skill levels 5 and 15, colonists earn perk points for permanent passive bonuses. Every skill has its own tree, with exact numbers in the tooltips." },
-            { "title": "Combat & medicine", "body": "Practiced eye to crack shot. Brawler's instinct to battle hardened. First aid mastery to surgeon's touch." },
-            { "title": "Craft & colony", "body": "Construction, Crafting, Plants, Animals, Mining, Intellectual, Social, Cooking, and Artistic — each with its own path." },
-            { "title": "Muscle memory", "body": "Perks slow skill rust — and reclaiming lost levels earns double XP. Recruits who join past a gate arrive with points (or a modest pre-pick).", "tag": "New in 2.0" },
-            { "title": "Capstones & branches", "body": "Skill 20 unlocks a capstone perk; level 15 becomes a branching pick. Respec at the cost of a cooldown and a bruised ego.", "tag": "Hard preset" },
+            { "title": "Auto skill perks", "body": "At skill 5, 10, 15, and 20 the matching perk grants itself. Hediffs stay off the Health tab unless Show perk hediffs is on. Every skill has its own tree, with exact numbers in the tooltips." },
+            { "title": "Muscle memory", "body": "Perks slow skill rust — and reclaiming lost levels earns double XP." },
+            { "title": "Capstones & branches", "body": "Skill 20 unlocks a capstone (on by default). Level 15 can be a branching pick. Respec at the cost of a cooldown and a bruised ego. Mentor retraining (Hard) lets a mentor who owns the other branch retrain an apprentice over eight sessions.", "tag": "Hard branching" },
             { "title": "Cross-skill archetypes", "body": "Colonists whose perks span the right skills grow into archetypes — a named identity with its own bonus, earned from how they actually lived.", "tag": "Hard preset" }
           ]
         },
@@ -502,57 +528,66 @@
           "id": "trauma",
           "label": "Trauma & therapy",
           "features": [
-            { "title": "Trauma types", "body": "Combat shock, violent loss, captivity trauma, massacre survivor, and bereavement shock when grief stacks. Trauma fades over weeks." },
-            { "title": "Specialty trauma", "body": "Fire, toxic exposure, insect swarms, and betrayal each leave their own mark — and their own triggers to avoid.", "tag": "New in 2.0" },
-            { "title": "Counsel", "body": "Doctors can counsel the wounded mind (workgiver or right-click). Therapy quality scales with the counselor's Social skill, opinion, and the room. Casual therapy chats still help as a light supplement." },
-            { "title": "Group counseling", "body": "One counselor, several patients — slower per pawn, but it keeps a shaken colony moving after a bad raid.", "tag": "New in 2.0" },
-            { "title": "Scars & resilience", "body": "Recovery leaves something behind: sometimes a lingering scar, sometimes resilience — a colonist genuinely hardened by what they survived.", "tag": "New in 2.0" },
-            { "title": "Living with it", "body": "Contextual flashbacks, combat habits shaped by old wounds, grudges against the faction responsible, and days of remembrance for the dead. Three counsel sessions forge a confidant bond that makes future therapy stronger.", "tag": "New in 2.0" }
+            { "title": "Trauma types", "body": "Combat shock, violent loss, captivity, massacre survivor, bereavement, fire, toxins, insects, and betrayal. Anomaly horror and Odyssey isolation when those DLCs are loaded. Trauma fades over weeks." },
+            { "title": "Known triggers", "body": "After the first flashback, inspect names what sets the colonist off — hidden until that first reaction, same discovery habit as Homesteader allergies." },
+            { "title": "Counsel", "body": "Doctors run one-on-one or group counseling (or right-click Counsel). Quality scales with Social, opinion, and the room. Casual therapy chats still help. Quiet indoor rooms bonus; Quiet Hours noise from benches and generators makes sleep and counsel worse." },
+            { "title": "Scars & resilience", "body": "Recovery leaves a lingering scar — or resilience. Three counsel sessions forge a confidant bond. On Hard, untreated trauma can settle into chronic stress." },
+            { "title": "Untreated alert", "body": "An alert nudges you after a one-day grace if trauma is still sitting." }
           ]
         },
         {
           "id": "apprenticeship",
           "label": "Apprenticeship",
           "features": [
-            { "title": "Pair veteran and rookie", "body": "Pair a veteran with a rookie via right-click — pick the skill to focus on. Mentors must lead by 3+ skill levels; family only needs 2." },
-            { "title": "Passive learning", "body": "Apprentices earn bonus XP while working near their mentor." },
-            { "title": "Mentoring work", "body": "Dedicated Mentoring work type runs active teaching sessions. Multiple pairs can run at once — and a Biotech blackboard in the room boosts the XP." },
-            { "title": "Elders", "body": "Colonists past 60 slow down at labor but shine as mentors, and earn one late perk point. Your founders stay valuable to the end.", "tag": "New in 2.0" },
-            { "title": "Graduation & rivalry", "body": "Graduating apprentices can pick up their mentor's first perk — and maybe a new passion. Professional rivals in the same craft push each other's XP.", "tag": "New in 2.0" }
+            { "title": "Pair veteran and rookie", "body": "Right-click to pick the skill. Mentors must lead by 3+ skill levels; family only needs 2. Sibling bonds discount the gap further." },
+            { "title": "Mentoring work", "body": "Dedicated Mentoring work type. A Biotech blackboard in the room boosts XP; two or more apprentices plus a blackboard is a classroom extra." },
+            { "title": "Elders", "body": "Colonists past 60 slow down at labor but shine as mentors, and earn one late perk. A dying mentor can finish one last teach." },
+            { "title": "Graduation & rivalry", "body": "Graduating apprentices can pick up their mentor's first perk — and maybe a new passion. Professional rivals in the same craft push each other's XP." }
           ]
         },
         {
           "id": "generations",
-          "label": "Generational colonies",
+          "label": "Family & generations",
           "features": [
-            { "title": "Inherited traits and passions", "body": "Children and recruits with colonist parents can inherit traits and passions. Build long enough and you'll see echoes of your founders." },
-            { "title": "Deeper inheritance", "body": "Dead parents and grandparents count too, families develop skill traditions, and adoptive caregivers can echo a passion onto their wards.", "tag": "New in 2.0" },
-            { "title": "Founder surnames", "body": "Colony-born children carry founder and parent surnames, so your bloodlines read like bloodlines.", "tag": "New in 2.0" },
-            { "title": "Heirlooms", "body": "When a colonist dies, a treasured possession passes to their kin — a small comfort with a long memory.", "tag": "New in 2.0" }
+            { "title": "Inheritance", "body": "Children and recruits with colonist parents or grandparents can inherit traits and passions. Families develop skill traditions. Colony-born children carry founder surnames. Heirlooms pass on death." },
+            { "title": "Estate", "body": "Name an heir on the Legacy tab. On death, named heir (else oldest child, else spouse) inherits; other children get a passed-over thought." },
+            { "title": "Family join & beats", "body": "Kin on the map may join from visits or defect from raids. Ex-lovers may reconcile. Family meals, homecoming, empty nest, last of the line, in-law welcome, and more sit on the same toggle." },
+            { "title": "Touch-need traits", "body": "Touch-averse, touch-starved, tactile, and cuddly share a closeness meter. Romance waits until that person reaches the required comfort tier. Date Night still owns romance schedules." },
+            { "title": "Divorce", "body": "Right-click a spouse to dissolve the marriage. Children get a short thought; Legacy letter. Date Night still owns romance jobs." }
           ]
         },
         {
           "id": "reputation",
           "label": "Faction reputation",
           "features": [
-            { "title": "Living goodwill", "body": "Raids, trades, gifts, and shared-enemy kills nudge goodwill. Strong friendships and deep enmities slowly drift over time without constant contact — allies don't collapse overnight from idle drift." },
-            { "title": "Reputation ledger", "body": "The Reputation tab shows every faction's ledger: what moved goodwill, when, and what drift is still pending.", "tag": "New in 2.0" },
-            { "title": "Personal envoys", "body": "Assign a colonist as envoy to a faction for steady goodwill — but if they die, the relationship takes it personally.", "tag": "New in 2.0" },
-            { "title": "Settlement epithets", "body": "Settlements earn epithets from your shared history — grudges and favors written on the world map.", "tag": "New in 2.0" }
+            { "title": "Living goodwill", "body": "Raids, trades, gifts, and shared-enemy kills nudge goodwill. Strong friendships and deep enmities slowly drift — allies don't collapse overnight from idle drift." },
+            { "title": "Personal envoys", "body": "Assign a colonist as envoy for steady goodwill — but if they die, the relationship takes it personally. Titled Royalty envoys add a little extra. Envoy visit is a settings-gated pulse to an allied settlement." },
+            { "title": "Tribute", "body": "Right-click silver / gold / jade as tribute, or spend 200 silver from the Reputation tab for a ledger goodwill row." },
+            { "title": "Settlement epithets", "body": "Settlements earn epithets from your shared history — grudges and favors written on the world map." },
+            { "title": "Attitude has teeth", "body": "On Hard, trade prices, caravan access, and raid pressure follow how factions actually feel about you.", "tag": "Hard preset" }
           ]
         }
       ],
       "gallery": [],
       "goodToKnow": [
-        "Soft and Default presets keep power systems and attitude consequences off; Hard enables skill-20 capstones, branching perks, chronic trauma, and attitude-driven trade / caravan / raid pressure.",
-        "The Perks tab shows every colonist's trees at a glance, and an alert nudges you when points sit unspent.",
-        "The Legacy tab traces founder lines, family traditions, and who taught whom.",
-        "On the Hard preset, trauma left untreated until it expires can settle into chronic stress — counseling eases it back down.",
-        "On the Hard preset, attitude has teeth — trade prices, caravan access, and raid pressure follow how factions actually feel about you."
+        "Soft and Default keep branching power systems and attitude consequences off; Hard enables branching L15 picks, chronic trauma, and attitude-driven trade / caravan / raid pressure. Skill-20 capstones default on.",
+        "Perk hediffs stay off the Health tab unless Show perk hediffs is on.",
+        "Birth safety net (default on) keeps race-mod newborns from failing generation.",
+        "Deep Roots scenario is a generational-colony showcase start; locks Azrael when Homesteader is loaded.",
+        "Safe to add mid-save. Requires Harmony."
       ],
       "compatibility": {
         "compatibleWith": [
-          { "name": "Biotech", "note": "A blackboard in the room boosts mentoring XP" }
+          { "name": "Biotech", "note": "A blackboard in the room boosts mentoring XP" },
+          { "name": "Homesteader", "note": "Grand Chef extra mood on pantry foods; polyarmory cannot force a bed share a touch-averse pawn still refuses" },
+          { "name": "Date Night", "note": "Date Night owns romance jobs; lovers reach confidant in two counsel sessions" },
+          { "name": "Strata", "note": "Empty-nest and homecoming ignore stair hops; cave-in / gas downs use existing trauma" },
+          { "name": "Stormproof", "note": "Ion-storm downs apply existing trauma with a keyed reason" },
+          { "name": "Nemesis", "note": "Hunt epitaph can copy onto Legacy letters" },
+          { "name": "Living World", "note": "Fail-open goodwill consumer for decisive victories / betrayals / refugee flights" },
+          { "name": "Royalty", "note": "Titles sort envoy candidates first; titled envoys add a little extra goodwill" },
+          { "name": "Ideology", "note": "Counseling sacred vs stoic precepts; funerals ease violent-loss trauma" },
+          { "name": "Humanoid Alien Races", "note": "Birth safety net sanitizes newborn kinds so HAR babies generate" }
         ],
         "incompatibleWith": [],
         "notes": []
@@ -570,21 +605,33 @@
       "nexusUrl": "https://www.nexusmods.com/rimworld/mods/780",
       "accent": "#b06078",
       "preview": "img/DateNightPreview.png",
-      "tagline": "Paint Date or Lovin on the Schedule tab. Dates are walks and tables; Lovin still uses a double.",
+      "tagline": "Paint Date or Lovin on the Schedule tab. Dates are dinner, walks, and stars; Lovin still uses a double.",
       "badges": ["RimWorld 1.6", "Requires Harmony"],
       "overview": [
-        "Schedule romance. Make memories. Adds Date and Lovin timetable slots to the Schedule tab. Date hours are a walk, a table, or hanging out — mood and opinion, no bed. Paint Lovin on both partners for the same hours and they meet in a shared double; lovin uses a short mean-time-between until the schedule changes.",
-        "Adults without a partner in that bed can have some private time in any bed. Children never qualify."
+        "Schedule romance. Make memories. Date hours pick a real activity from what's around — dinner, picnic, walk, stargazing, dancing, a small gift, recreation, or a hangout. Mood and opinion only. No bed, no pregnancy. Paint Lovin on both partners for the same hours and they meet in a shared double.",
+        "Dates have quality. Couples remember a favourite spot. A finished date leaves a spark. Adults without a partner in that bed can have some private time. Children never qualify."
       ],
       "featureTabs": [
         {
           "id": "how",
           "label": "How it works",
           "features": [
-            { "title": "1. Paint Date or Lovin", "body": "Open Schedule and pick the teal Date or rose Lovin button (vanilla hardcodes that grid, so XML alone never shows a custom slot). With Rimbody, Exosuit, or Schedule Everything, they sit in the next free extra columns so those mods keep Workout / Piloting." },
-            { "title": "2. Date hours", "body": "Assign the same hours on both lovers. They meet at a table, gathering spot, or just walk together. Mood and opinion only — no bed, no pregnancy. Couples remember a favourite venue; two couples with overlapping Date hours may share one (double date)." },
+            { "title": "1. Paint Date or Lovin", "body": "Open Schedule: Date is the extra-row face; Lovin sits in the ▾ menu. Vanilla hardcodes that grid, so XML alone never shows a custom slot. With Rimbody, Exosuit, or Schedule Everything, they sit in the next free extra columns so those mods keep Workout / Piloting." },
+            { "title": "2. Date hours", "body": "Assign the same hours on both lovers. They pick one shared venue — dinner at a table, picnic outdoors, a walk, stargazing at night, dancing at a gather spot, a small gift (beer, chocolate…), recreation, or hangout. Mood and opinion only. Ideology rituals are not yanked mid-ceremony." },
             { "title": "3. Lovin hours", "body": "Each paths to a shared rendezvous double (claimed for the window, then restored). When both are in it, lovin uses a short MTB. Ideology that forbids lovin, or Biotech sterile genes, reroute to a date instead. Adults without a partner in that bed can have private time. Children never qualify.", "tag": "Vanilla partner-in-bed rules" },
-            { "title": "4. Show up", "body": "If a partner is drafted, in a medical bed, or off-map for the window, the one who waited gets a short stood-up thought. If both make it, they get a small boost. Hungry, chemical desire, player-forced jobs, and exhaustion still come first. The anniversary of a love bond sends a letter — a date that day is the year's peak." }
+            { "title": "4. Show up", "body": "If a partner is drafted, in a medical bed, or off-map for the window, the one who waited gets a short stood-up thought. Hungry, chemical desire, player-forced jobs, and exhaustion still come first. After a finished date the couple waits a lovin-length cooldown before another scheduled date." }
+          ]
+        },
+        {
+          "id": "quality",
+          "label": "Date quality",
+          "features": [
+            { "title": "Wonderful / nice / awkward", "body": "Venue beauty, weather, activity, and a little luck decide the evening. Off in settings for a flat nice-date thought." },
+            { "title": "Ruined date", "body": "A raid, draft, or mental break after the date properly started leaves a ruined-date mood." },
+            { "title": "Favourite spots", "body": "Couples remember the venue of finished dates and prefer to go back. A ruined date can sour that place." },
+            { "title": "Post-date spark", "body": "A finished date improves lovin chance for about a day." },
+            { "title": "Anniversaries", "body": "Letter on the love-bond anniversary. A date that actually lands that day is a special mood; letting the day pass without one stings." },
+            { "title": "Double dates", "body": "Two couples with overlapping Date hours may share a venue. Quality rolls once; the evening spills into opinions of the other pair. If the other couple never shows, they date alone." }
           ]
         },
         {
@@ -595,9 +642,7 @@
             { "title": "Eager mode", "body": "Also shortens post-lovin cooldown like Always Do Lovin. Can spam pregnancy rolls — leave off unless you want that.", "tag": "Optional" },
             { "title": "Allow private time", "body": "Adults on Lovin hours use any bed when a couple job cannot start. Mood thought only — no pregnancy. Same cooldown as lovin. Children never qualify.", "tag": "Default ON" },
             { "title": "Claim double for Lovin hours", "body": "Temporarily assign the rendezvous double to the couple, then restore their previous beds when the window ends.", "tag": "Default ON" },
-            { "title": "Anniversaries", "body": "Letter and a small mood on the love-bond anniversary. A date that actually lands that day is a much bigger boost.", "tag": "Default ON" },
-            { "title": "Remember favourite spots", "body": "Couples prefer the venue of their best dates. A ruined date can sour that place.", "tag": "Default ON" },
-            { "title": "Allow double dates", "body": "Two couples with overlapping Date hours may share a venue. Quality rolls once; the evening spills into opinions of the other pair. If the other couple never shows, they date alone.", "tag": "Default ON" }
+            { "title": "Date activities / quality / gifts", "body": "Turn activities off for plain hangout dates. Quality off for a flat nice thought. Gift dates consume a small luxury item.", "tag": "Default ON" }
           ]
         },
         {
@@ -606,7 +651,7 @@
           "features": [
             { "title": "Date", "body": "Love relationship, both scheduled Date, same map — adults only." },
             { "title": "Lovin", "body": "Both scheduled Lovin, reachable shared double (claimed for the window)." },
-            { "title": "Mismatch alert", "body": "A schedule mismatch alert fires if only one lover has Date or Lovin painted." },
+            { "title": "Mismatch alert", "body": "A schedule mismatch alert fires if only one lover has Date or Lovin painted (or they painted different hours)." },
             { "title": "Private time", "body": "Adult colonist, Lovin hours, any reachable bed (toggle in settings)." },
             { "title": "Ideology / Biotech", "body": "No-lovin precepts and sterile genes reroute to Date." },
             { "title": "No-sleep pawns", "body": "Works for no-sleep / low-rest pawns who never hit a Sleep block." }
@@ -616,8 +661,9 @@
       "gallery": [],
       "goodToKnow": [
         "Safe to add mid-save. Before removing, clear Date / Lovin slots back to Sleep / Anything.",
+        "Chinese Simplified and Russian are included.",
         "With Dev mode on, a Date Night menu can make a selected pair lovers, click-to-pair, paint Lovin or Date all day, force lovin / private time / date now, and log the rendezvous bed.",
-        "After installing, open a colonist's Schedule tab — Date and Lovin appear beside Sleep."
+        "After installing, open a colonist's Schedule tab — Date is the extra-row face; Lovin is in the ▾ menu."
       ],
       "compatibility": {
         "compatibleWith": [
@@ -725,6 +771,7 @@
       "gallery": [],
       "goodToKnow": [
         "Safe to add or remove mid-save.",
+        "Chinese Simplified and Russian are included.",
         "Requires Harmony. Royalty and Ideology are optional.",
         "Do not run alongside Jecs Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Share Rooms [LWM], or Smarter Construction — they overlap the same jobs.",
         "Workshop preview is an options-card collage (Homesteader straw-hat sprite + pixel icons), not a painted poster."
