@@ -1,19 +1,8 @@
-1.0.0
-[h1]Living World — 1.0.0[/h1]
-
+1.1.0
+[h1]Living World — 1.1.0[/h1]
 [b]Added[/b]
 [list]
-[*] [b]Chinese and Russian[/b] — settings, letters, and world-object / incident / scenario text.
-[*] [b]Listening Post scenario[/b] — off-map world showcase start; locks Azrael when Homesteader is loaded.
-[*] [b]Wars and fallout[/b] — NPC factions move between peace, tension, war, and rare alliance. Skirmishes and battles write the chronicle and nudge settlement prosperity. Optional refugees, war sites, trade blackout, and warbands (warbands default off).
-[*] [b]Off-map chronicle[/b] — settlements drift, flip ownership, abandon, or grow outposts. You hear news by rumor, proximity, allies, or comms.
-[*] [b]Update letter[/b] — loading a colony shows this version's notes from About/changelog.txt, with a link to the newest full notes.
+[*] [b]Chronicle tab[/b] — a scrollable world history, filterable by faction/place and by how you heard it (rumour, nearby, radio).
+[*] [b]Unreliable rumours[/b] — distant news can arrive wrong ("word is…") and later correct itself in the chronicle.
+[*] [b]The road[/b] — player caravan tiles are remembered as travelled routes (first slice of expeditions / goods).
 [/list]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Harmony patches[/b] — one failed patch logs and skips instead of taking the rest of Living World down with it.
-[/list]
-
-[i]Build stamp (Player.log): update-news-v1[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/living-world.md[/i]

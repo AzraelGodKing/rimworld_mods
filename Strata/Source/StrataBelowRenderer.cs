@@ -147,14 +147,10 @@ namespace Strata
             if (!TryGetBelowContext(map, out Map lower)) return;
             try
             {
-                Camera cam = Find.Camera;
-                if (cam != null && cam.farClipPlane < 70f)
-                {
-                    cam.farClipPlane = 70f;
-                }
-
+                // AZR-236: MapMeshDrawerUpdate_First on a non-current map while
+                // the camera is drawing CurrentMap corrupts section RGB. Draw
+                // already-built meshes only. Do not permanently raise far clip.
                 lower.waterInfo?.SetTextures();
-                lower.mapDrawer.MapMeshDrawerUpdate_First();
 
                 CellRect view = Find.CameraDriver.CurrentViewRect.ExpandedBy(1).ClipInsideMap(lower);
                 DrawSections(lower, view);

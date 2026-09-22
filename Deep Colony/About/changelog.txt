@@ -1,10 +1,7 @@
-1.6.8
-[h1]Deep Colony — 1.6.8[/h1]
-
-[b]Fixed[/b]
+1.7.0
+[h1]Deep Colony — 1.7.0[/h1]
+[b]Added[/b]
 [list]
-[*] [b]Load no longer wipes pregnancies[/b] — stuck or failed labor restores a healthy pregnancy instead of stripping Hediff_Pregnant from colonists and animals. Healthy pregnancies are left alone.
+[*] [b]The body[/b] — optional (off by default). Serious infections can spread in the same room; convalescence hediff for light duty afterwards.
+[*] [b]Codex[/b] — optional (off by default). Colony notebook item that can record the current research project; burnable and stealable.
 [/list]
-
-[i]Build stamp (Player.log): labor-restore-v1[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]

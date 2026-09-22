@@ -12,7 +12,7 @@ namespace Azrael
 
         public AzraelMod(ModContentPack content) : base(content)
         {
-            ModVersionLog.Write("[Azrael]", content, "hub-health-v1");
+            ModVersionLog.Write("[Azrael]", content, "removal-wizard-v1");
         }
 
         public override string SettingsCategory() => "Azrael_SettingsCategory".Translate();
@@ -25,7 +25,7 @@ namespace Azrael
             List<SeriesHub.DlcRow> dlc = SeriesHub.Dlc();
             List<string> fails = SeriesHub.HarmonyFailures();
 
-            float height = 360f + (mods.Count + dlc.Count + bridges.Count + Mathf.Max(1, conflicts.Count) + Mathf.Min(fails.Count, 8) + 2) * 26f;
+            float height = 520f + (mods.Count + dlc.Count + bridges.Count + Mathf.Max(1, conflicts.Count) + Mathf.Min(fails.Count, 8) + 2) * 26f;
             Rect view = new Rect(0f, 0f, inRect.width - 20f, height);
             Widgets.BeginScrollView(inRect, ref scrollPos, view);
             Listing_Standard listing = new Listing_Standard();
@@ -122,6 +122,24 @@ namespace Azrael
                     listing.Label(fails[i]);
                 }
                 GUI.color = Color.white;
+            }
+
+            listing.GapLine();
+            listing.Label("Azrael_Removal_Section".Translate());
+            listing.Gap(4f);
+            listing.Label("Azrael_Removal_SectionHint".Translate());
+            foreach (SeriesHub.ModRow row in mods)
+            {
+                if (!row.Loaded || row.PackageId == "azraelgodking.Azrael")
+                {
+                    continue;
+                }
+                Rect r = listing.GetRect(26f);
+                if (Widgets.ButtonText(new Rect(r.x, r.y, Mathf.Min(420f, r.width), 24f),
+                        "Azrael_Removal_Prep".Translate(row.Display)))
+                {
+                    Find.WindowStack.Add(new Dialog_RemovalPrep(SeriesRemoval.Scan(row.Display, row.PackageId)));
+                }
             }
 
             listing.End();

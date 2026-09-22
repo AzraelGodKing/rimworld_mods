@@ -22,7 +22,7 @@ namespace Stormproof
     // wildfires - on a long cooldown so it can't replace a real power grid.
     public class CompStormCaller : ThingComp
     {
-        private static readonly AccessTools.FieldRef<WeatherDecider, int> DurationRef =
+        internal static readonly AccessTools.FieldRef<WeatherDecider, int> DurationRef =
             AccessTools.FieldRefAccess<WeatherDecider, int>("curWeatherDuration");
 
         private CompPowerTrader powerComp;
@@ -64,10 +64,8 @@ namespace Stormproof
         private void CallStorm()
         {
             Map map = parent.Map;
-            map.weatherManager.TransitionTo(StormproofDefOf.RainyThunderstorm);
-            map.weatherManager.curWeatherAge = 0;
-            DurationRef(map.weatherDecider) = Props.stormDurationTicks;
             lastCallTick = Find.TickManager.TicksGame;
+            map.GetComponent<MapComponent_Stormproof>()?.QueueStormCall(Props.stormDurationTicks);
             FleckMaker.ThrowLightningGlow(parent.DrawPos, map, 3f);
             Messages.Message(
                 "Stormproof_StormCaller_Discharging".Translate(parent.LabelShort),

@@ -44,6 +44,10 @@ namespace LivingWorld
             return verbosity >= 2;
         }
 
+        internal static bool IsNearbyPublic(WorldEvent ev) => IsNearby(ev);
+
+        internal static bool HasCommsConsole() => HasComms();
+
         private static bool HasPriorContact(WorldEvent ev)
         {
             return Contacted(ev.FactionA()) || Contacted(ev.FactionB());

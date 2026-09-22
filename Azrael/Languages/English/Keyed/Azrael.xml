@@ -35,4 +35,24 @@
   <Azrael_Hub_HarmonyNone>No failed series patch classes this session.</Azrael_Hub_HarmonyNone>
   <Azrael_Hub_HarmonyCount>{0} failed patch class(es).</Azrael_Hub_HarmonyCount>
 
+  <Azrael_Removal_Section>Safe removal</Azrael_Removal_Section>
+  <Azrael_Removal_SectionHint>Does not edit the save. Lists what would orphan if you uninstall a series mod, then can queue deconstruction.</Azrael_Removal_SectionHint>
+  <Azrael_Removal_Prep>Prepare to remove {0}</Azrael_Removal_Prep>
+  <Azrael_Removal_Title>Remove {0}</Azrael_Removal_Title>
+  <Azrael_Removal_Intro>Per map and caravan. This does not strip save data.</Azrael_Removal_Intro>
+  <Azrael_Removal_Jump>Jump</Azrael_Removal_Jump>
+  <Azrael_Removal_Deconstruct>Designate buildings for deconstruction</Azrael_Removal_Deconstruct>
+  <Azrael_Removal_Designated>Queued deconstruction on {0} {1} building(s).</Azrael_Removal_Designated>
+  <Azrael_Removal_NeedSave>Load a colony first.</Azrael_Removal_NeedSave>
+  <Azrael_Removal_Empty>Nothing from this mod is on the maps or caravans.</Azrael_Removal_Empty>
+  <Azrael_Removal_Blocked>Resolve the named blockers first.</Azrael_Removal_Blocked>
+  <Azrael_Removal_NemesisHunt>Active Nemesis hunt — resolve it in play before removing Nemesis.</Azrael_Removal_NemesisHunt>
+  <Azrael_Removal_StrataPawns>{0} colonist(s) still on a pocket floor — bring them up first.</Azrael_Removal_StrataPawns>
+  <Azrael_Removal_DeepHediffs>Pawn perks / trauma hediffs from Deep Colony (cleaned by uninstall; expect lost history).</Azrael_Removal_DeepHediffs>
+  <Azrael_Removal_Caravan>{0}: {1}</Azrael_Removal_Caravan>
+  <Azrael_Removal_V_Deconstruct>deconstruct these</Azrael_Removal_V_Deconstruct>
+  <Azrael_Removal_V_Sell>consume or sell these</Azrael_Removal_V_Sell>
+  <Azrael_Removal_V_Resolve>resolve this first</Azrael_Removal_V_Resolve>
+  <Azrael_Removal_V_Safe>safe — cleaned up automatically</Azrael_Removal_V_Safe>
+
 </LanguageData>

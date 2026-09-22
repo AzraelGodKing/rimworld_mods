@@ -119,6 +119,27 @@ namespace Strata
                 && ColonyBedUtility.MapsLinked(pawn.Map, home.Map);
         }
 
+        // Mid-commute GetRest still returned LayDown into any free bed on this
+        // floor. Clear that so the assigned bed (other map) remains the target.
+        public static bool ShouldBlockYieldingLocalSleep(Pawn pawn, Job job)
+        {
+            if (pawn == null || job == null)
+            {
+                return false;
+            }
+            if (job.def != JobDefOf.LayDown && !job.forceSleep)
+            {
+                return false;
+            }
+            if (job.targetA.Thing is not Building_Bed bed)
+            {
+                return true;
+            }
+
+            Building_Bed owned = GetOwnedSleepBed(pawn);
+            return owned != null && bed != owned;
+        }
+
         public static void CollectBedNotFoundCulprits(List<GlobalTargetInfo> into)
         {
             if (into == null || bedNotFound.Count == 0)

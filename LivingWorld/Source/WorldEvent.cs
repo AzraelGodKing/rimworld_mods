@@ -17,6 +17,14 @@ namespace LivingWorld
         public string factionAName;
         public string factionBName;
         public bool seenByPlayer;
+        public bool distorted;
+        public bool isCorrection;
+        public bool corrected;
+        public int correctionTick = -1;
+        public WorldEventKind trueKind;
+        public string trueFactionAName;
+        public string trueFactionBName;
+        public HearChannel channel = HearChannel.Rumour;
 
         public void ExposeData()
         {
@@ -30,6 +38,14 @@ namespace LivingWorld
             Scribe_Values.Look(ref factionAName, "factionAName");
             Scribe_Values.Look(ref factionBName, "factionBName");
             Scribe_Values.Look(ref seenByPlayer, "seenByPlayer");
+            Scribe_Values.Look(ref distorted, "distorted");
+            Scribe_Values.Look(ref isCorrection, "isCorrection");
+            Scribe_Values.Look(ref corrected, "corrected");
+            Scribe_Values.Look(ref correctionTick, "correctionTick", -1);
+            Scribe_Values.Look(ref trueKind, "trueKind");
+            Scribe_Values.Look(ref trueFactionAName, "trueFactionAName");
+            Scribe_Values.Look(ref trueFactionBName, "trueFactionBName");
+            Scribe_Values.Look(ref channel, "channel", HearChannel.Rumour);
         }
 
         public static WorldEvent Create(

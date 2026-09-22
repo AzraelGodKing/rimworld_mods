@@ -6,7 +6,7 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">3.5.0</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">3.6.0</modVersion>
   <incompatibleWith>
     <li>astryl.AsAboveSoBelow</li>
     <li>astryl.AsAboveSoBelow2</li>

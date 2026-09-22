@@ -12,10 +12,9 @@ namespace Strata
         {
             if (SleepRelay.ShouldYieldToCommute(pawn))
             {
-                // Do not replace an in-progress stair commute with floor sleep.
-                if (__result != null
-                    && __result.def == JobDefOf.LayDown
-                    && __result.targetA.Thing is not Building_Bed)
+                // AZR-237: yield must also drop a free local bunk. Owned bed
+                // on another floor wins; only ground LayDown was cleared before.
+                if (SleepRelay.ShouldBlockYieldingLocalSleep(pawn, __result))
                 {
                     __result = null;
                 }

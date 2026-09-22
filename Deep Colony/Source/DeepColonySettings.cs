@@ -80,6 +80,8 @@ namespace DeepColony
 
         // AZR-157 birth safety net (crash fix; not a Soft/Default/Hard power toggle)
         public bool enableBirthSafetyNet = true;
+        public bool enableBody = false;
+        public bool enableCodex = false;
 
         public static DeepColonySettings Get =>
             DeepColonyMod.Settings ?? new DeepColonySettings();
@@ -134,6 +136,8 @@ namespace DeepColony
             Scribe_Values.Look(ref enablePerkRetrain, "enablePerkRetrain", false);
             Scribe_Values.Look(ref enableEstate, "enableEstate", true);
             Scribe_Values.Look(ref enableBirthSafetyNet, "enableBirthSafetyNet", true);
+            Scribe_Values.Look(ref enableBody, "enableBody", false);
+            Scribe_Values.Look(ref enableCodex, "enableCodex", false);
         }
 
         public void ApplyPreset(Preset preset)
@@ -172,6 +176,8 @@ namespace DeepColony
             enablePerkRetrain = false;
             enableEstate = true;
             enableBirthSafetyNet = true;
+            enableBody = false;
+            enableCodex = false;
 
             switch (preset)
             {
@@ -281,6 +287,8 @@ namespace DeepColony
             enablePerkRetrain = false;
             enableEstate = true;
             enableBirthSafetyNet = true;
+            enableBody = false;
+            enableCodex = false;
         }
     }
 }

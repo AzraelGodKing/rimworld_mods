@@ -19,6 +19,14 @@ namespace LivingWorld
         RefugeeFlight = 14,
         TradeBlackout = 15,
         WarbandPass = 16,
+        Correction = 17,
+    }
+
+    public enum HearChannel : byte
+    {
+        Rumour = 0,
+        Proximity = 1,
+        Radio = 2,
     }
 
     public enum NewsSeverity : byte

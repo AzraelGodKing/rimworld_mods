@@ -19,7 +19,7 @@ namespace LivingWorld
             }
 
             string label = LabelFor(ev.kind);
-            string text = TextFor(ev);
+            string text = PrefixFor(ev) + "\n\n" + TextFor(ev);
             LetterDef letterDef = LetterDefFor(ev.severity);
             Find.LetterStack.ReceiveLetter(label, text, letterDef);
             ev.seenByPlayer = true;
@@ -56,6 +56,27 @@ namespace LivingWorld
                 : ev.settlementLabel;
 
             return ("LivingWorld_LetterText_" + ev.kind).Translate(a, b, place);
+        }
+
+        public static string PrefixFor(WorldEvent ev)
+        {
+            if (ev == null)
+            {
+                return string.Empty;
+            }
+            if (ev.distorted && !ev.corrected)
+            {
+                return "LivingWorld_RumourPrefix".Translate();
+            }
+            switch (ev.channel)
+            {
+                case HearChannel.Radio:
+                    return "LivingWorld_Channel_Radio".Translate();
+                case HearChannel.Proximity:
+                    return "LivingWorld_Channel_Proximity".Translate();
+                default:
+                    return "LivingWorld_Channel_Rumour".Translate();
+            }
         }
     }
 }
