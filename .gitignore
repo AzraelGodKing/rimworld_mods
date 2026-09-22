@@ -27,7 +27,6 @@ Strata/Tools/_reflect_tmp/
 
 # Local editor config — not part of the public repo
 .cursor/
-.claude/
 
 # Local private outputs (never commit)
 .local/
