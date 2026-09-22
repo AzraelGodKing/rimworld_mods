@@ -74,6 +74,7 @@ namespace LivingWorld
             int now = Find.TickManager.TicksGame;
             RefreshBudgets(now);
             LivingWorldWarSites.TickExpire();
+            LivingWorldRumour.TickCorrections(this);
 
             int interval = settings.tickInterval <= 0 ? 10000 : settings.tickInterval;
             if (now % interval != 0)
@@ -158,6 +159,8 @@ namespace LivingWorld
             {
                 return;
             }
+
+            LivingWorldRumour.StampOnPublish(ev);
 
             chronicle.Add(ev);
             while (chronicle.Count > ChronicleCapacity)

@@ -113,6 +113,7 @@ namespace Strata
                     {
                         yield return step;
                     }
+                    StrataArrivalFog.ApplyAfterRockFill(map);
                 }
 
                 StrataLog.Verbose("[Strata] Opened level under " + portal.LabelCap

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <MainButtonDef>
+    <defName>LivingWorld_Chronicle</defName>
+    <label>chronicle</label>
+    <description>Off-map world history: wars, settlements, and how the colony heard each story.</description>
+    <tabWindowClass>LivingWorld.MainTabWindow_LivingWorldChronicle</tabWindowClass>
+    <order>56</order>
+    <closesWorldView>false</closesWorldView>
+  </MainButtonDef>
+</Defs>

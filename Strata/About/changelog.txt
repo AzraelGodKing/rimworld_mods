@@ -1,10 +1,12 @@
-3.5.0
-[h1]Strata — 3.5.0[/h1]
-
+3.6.0
+[h1]Strata — 3.6.0[/h1]
+[b]Fixed[/b]
+[list]
+[*] [b]Assigned beds[/b] — pawns commuting between floors no longer nap in a free bunk on the current floor when their assigned bed is elsewhere.
+[*] [b]Underground fog[/b] — new rock floors start unexplored; mining opens the dug chamber instead of fogging the walls you just broke.
+[*] [b]See-below colours[/b] — drawing the map below no longer updates that floor's mesh on the live camera (the RGB / artefact break with two or more floors).
+[/list]
 [b]Added[/b]
 [list]
-[*] [b]Level purpose tags[/b] — Farm, Freezer, Workshop, Barracks, Quarry, Storage, Hospital, or none. Set from rename or the Levels tab. Matching tags tilt haul, rest, food, and work relays; untagged floors keep the old order. A wrong tag never blocks a job.
+[*] [b]Loading dock[/b] — stand beside one to carry extra mass onto the stairs (first slice of the movement / haul-relay update).
 [/list]
-
-[i]Build stamp (Player.log): purpose-tags-v1[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

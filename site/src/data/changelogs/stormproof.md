@@ -2,6 +2,15 @@
 
 Detailed notes for **Stormproof** only.
 
+## [1.3.1]
+
+Player-facing version **1.3.1** (`About.xml` `modVersion`). Stamp `storm-call-tick-v1`.
+
+AZR-229
+
+### Fixed
+- **Storm caller tick** (`storm-call-tick-v1`, AZR-229) — weather TransitionTo runs on MapComponentTick, not the gizmo click.
+
 ## [1.3.0]
 
 Player-facing version **1.3.0** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.3.0 loaded from ...` with stamp `schedule-ledger-v1`.

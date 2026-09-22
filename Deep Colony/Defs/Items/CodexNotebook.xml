@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>DC_CodexNotebook</defName>
+    <label>colony notebook</label>
+    <description>A bound notebook. When Codex is enabled in Deep Colony, a scholar can record the colony's current research here. Burnable and stealable.</description>
+    <graphicData>
+      <texPath>Things/Item/Book/Book</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>40</MarketValue>
+      <Mass>0.4</Mass>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <stackLimit>1</stackLimit>
+    <thingCategories>
+      <li>Items</li>
+    </thingCategories>
+    <comps>
+      <li Class="DeepColony.CompProperties_CodexNotebook"/>
+    </comps>
+  </ThingDef>
+</Defs>

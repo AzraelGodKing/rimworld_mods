@@ -1,8 +1,19 @@
 # Changelog
 
-## [Unreleased]
+## [1.1.0]
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Unreleased. Startup writes `[LivingWorld] v1.0.0 loaded from ...` in Player.log (`update-news-v1`).
+Player-facing version **1.1.0** (`About.xml` `modVersion`). Stamp `chronicle-rumour-v1`.
+
+AZR-84 AZR-85 AZR-205
+
+### Added
+- **Chronicle tab** (AZR-84) — world history UI with faction and hear-channel filters.
+- **Rumour distortion** (AZR-85) — far news can arrive wrong and later correct in the chronicle.
+- **The road** (AZR-205 first slice) — remember player caravan tiles.
+
+## [1.0.0]
+
+Player-facing version **1.0.0**. Startup writes `[LivingWorld] v1.0.0 loaded from ...` in Player.log (`update-news-v1`).
 
 ### Fixed
 - **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Living World.

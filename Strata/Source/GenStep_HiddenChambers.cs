@@ -128,8 +128,15 @@ namespace Strata
         public override void Generate(Map map, GenStepParams parms)
         {
             map.fogGrid.Refog(CellRect.WholeMap(map));
-            IntVec3 root = MapGenerator.PlayerStartSpot.IsValid ? MapGenerator.PlayerStartSpot : map.Center;
-            FloodFillerFog.FloodUnfog(root, map);
+            // Deferred rock fill happens after this genstep. FloodUnfog on an
+            // empty shell reveals the whole map; rock then spawns already seen
+            // (AZR-235). Arrival flood runs after SpawnMineablesChunked.
+            bool defer = MapGenerator.TryGetVar(GenStep_SolidRock.DeferMineablesVar, out bool d) && d;
+            if (defer)
+            {
+                return;
+            }
+            StrataArrivalFog.FloodArrival(map);
         }
     }
 }

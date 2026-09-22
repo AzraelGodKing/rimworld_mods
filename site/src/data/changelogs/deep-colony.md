@@ -2,6 +2,16 @@
 
 Detailed notes for Deep Colony only.
 
+## [1.7.0]
+
+Player-facing version **1.7.0** (`About.xml` `modVersion`). Stamp `body-codex-v1`.
+
+AZR-203 AZR-204
+
+### Added
+- **The body** (`body-codex-v1`, AZR-203 first slice) — optional contagion in-room + convalescence hediff. Off by default.
+- **Codex** (AZR-204 first slice) — optional notebook that records the current research project. Off by default.
+
 ## [1.6.8]
 
 Player-facing version **1.6.8** (`About.xml` `modVersion`). Startup writes `[DeepColony] v1.6.8 asm=… sha=… build labor-restore-v1 | birthSafetyNet=applied setting=on`.

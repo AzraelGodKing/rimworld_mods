@@ -81,6 +81,12 @@ namespace DeepColony
             listing.CheckboxLabeled("DC_Settings_EnableBirthSafetyNet".Translate(),
                 ref settings.enableBirthSafetyNet,
                 "DC_Settings_EnableBirthSafetyNetTip".Translate());
+            listing.CheckboxLabeled("DC_Settings_EnableBody".Translate(),
+                ref settings.enableBody,
+                "DC_Settings_EnableBodyTip".Translate());
+            listing.CheckboxLabeled("DC_Settings_EnableCodex".Translate(),
+                ref settings.enableCodex,
+                "DC_Settings_EnableCodexTip".Translate());
             listing.CheckboxLabeled("DC_Settings_EnableTrauma".Translate(), ref settings.enableTrauma,
                 "DC_Settings_EnableTraumaTip".Translate());
             listing.CheckboxLabeled("DC_Settings_EnableMentoring".Translate(), ref settings.enableMentoring,
