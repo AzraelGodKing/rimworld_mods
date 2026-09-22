@@ -1,11 +1,23 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.5.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.5.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.6.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.6.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `purpose-tags-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `floors-fog-bed-v1` in `StrataBuildInfo.BuildStamp`.
 
-## [Unreleased]
+## [3.6.0]
+
+Player-facing version **3.6.0** (`About.xml` `modVersion`). Stamp `floors-fog-bed-v1`.
+
+AZR-237 AZR-235 AZR-236 AZR-202
+
+### Fixed
+- **Assigned beds on other floors** (`floors-fog-bed-v1`, AZR-237) — yielding to a rest commute no longer keeps a free local bunk.
+- **Underground fog invert** (AZR-235) — fog after deferred rock fill; mining flood-unfogs the dug cell.
+- **See-below colour artefacts** (AZR-236) — no longer run `MapMeshDrawerUpdate_First` on the lower map while drawing the current one.
+
+### Added
+- **Loading dock** (AZR-202 first slice) — extra carry mass beside a dock.
 
 ## [3.5.0]
 

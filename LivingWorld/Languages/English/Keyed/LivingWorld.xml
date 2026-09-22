@@ -82,6 +82,17 @@
   <LivingWorld_LetterText_TradeBlackout>War between {0} and {1} has choked caravans near {2}. Expect fewer traders from the embattled side.</LivingWorld_LetterText_TradeBlackout>
   <LivingWorld_LetterLabel_WarbandPass>Pass-through warband</LivingWorld_LetterLabel_WarbandPass>
   <LivingWorld_LetterText_WarbandPass>A warband of {0} is hunting remnants of {1} from the fighting near {2}. They are passing through your region.</LivingWorld_LetterText_WarbandPass>
+  <LivingWorld_LetterLabel_Correction>Word arrives later</LivingWorld_LetterLabel_Correction>
+  <LivingWorld_LetterText_Correction>A caravan or radio contact corrected earlier news about {0} and {1} near {2}. The chronicle has been updated.</LivingWorld_LetterText_Correction>
+  <LivingWorld_RumourPrefix>Word is… a trader claims…</LivingWorld_RumourPrefix>
+  <LivingWorld_Channel_Rumour>rumour</LivingWorld_Channel_Rumour>
+  <LivingWorld_Channel_Proximity>nearby</LivingWorld_Channel_Proximity>
+  <LivingWorld_Channel_Radio>radio</LivingWorld_Channel_Radio>
+  <LivingWorld_Chronicle_Title>World chronicle</LivingWorld_Chronicle_Title>
+  <LivingWorld_Chronicle_Filter>Filter</LivingWorld_Chronicle_Filter>
+  <LivingWorld_Chronicle_Empty>No world events recorded yet.</LivingWorld_Chronicle_Empty>
+  <LivingWorld_Chronicle_Corrected>(corrected)</LivingWorld_Chronicle_Corrected>
+  <LivingWorld_Chronicle_AllChannels>all channels</LivingWorld_Chronicle_AllChannels>
 
   <LivingWorld_WarSite_BattlefieldInspect>Recent battlefield debris from an off-map war.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>A temporary refugee camp spawned by distant fighting.</LivingWorld_WarSite_RefugeeCampInspect>

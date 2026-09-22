@@ -18,12 +18,34 @@ namespace Stormproof
         private int brownoutCachedTick = -1;
         private WeatherDef daySkyWeather;
         private float daySkyMul = -1f;
+        private bool stormQueued;
+        private int pendingStormDuration;
 
         public MapComponent_Stormproof(Map map) : base(map)
         {
         }
 
         public IReadOnlyList<AlmanacEntry> Almanac => almanac;
+
+        public void QueueStormCall(int durationTicks)
+        {
+            stormQueued = true;
+            pendingStormDuration = durationTicks;
+        }
+
+        private void DrainPendingStorm()
+        {
+            if (!stormQueued)
+            {
+                return;
+            }
+            stormQueued = false;
+            int duration = pendingStormDuration > 0 ? pendingStormDuration : 30000;
+            pendingStormDuration = 0;
+            map.weatherManager.TransitionTo(StormproofDefOf.RainyThunderstorm);
+            map.weatherManager.curWeatherAge = 0;
+            CompStormCaller.DurationRef(map.weatherDecider) = duration;
+        }
 
         public void RememberDaySkyMul(WeatherDef weather, float mul)
         {
@@ -51,6 +73,7 @@ namespace Stormproof
         {
             TickAlmanac();
             TickWear();
+            DrainPendingStorm();
             if (Find.TickManager.TicksGame % 60 == 0)
             {
                 RefreshBrownoutCache();
@@ -332,6 +355,8 @@ namespace Stormproof
             Scribe_Defs.Look(ref lastWeather, "stormproofAlmanacWeather");
             Scribe_Values.Look(ref weatherStartedTick, "stormproofAlmanacWeatherStart");
             Scribe_Values.Look(ref wearCursor, "stormproofWearCursor");
+            Scribe_Values.Look(ref stormQueued, "stormproofStormQueued");
+            Scribe_Values.Look(ref pendingStormDuration, "stormproofPendingStormDuration");
             if (Scribe.mode == LoadSaveMode.PostLoadInit && almanac == null)
             {
                 almanac = new List<AlmanacEntry>();

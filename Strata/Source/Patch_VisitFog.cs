@@ -9,7 +9,7 @@ namespace Strata
     [HarmonyPatch(typeof(FogGrid), nameof(FogGrid.Unfog))]
     public static class Patch_VisitFog
     {
-        private static readonly AccessTools.FieldRef<FogGrid, Map> MapField =
+        internal static readonly AccessTools.FieldRef<FogGrid, Map> MapField =
             AccessTools.FieldRefAccess<FogGrid, Map>("map");
 
         private static bool suppressing;
@@ -42,6 +42,22 @@ namespace Strata
             {
                 suppressing = false;
             }
+        }
+    }
+
+    // Mining a fog blocker should open the adjacent walkable cells. Vanilla
+    // does this; VisitFog's Refog on leftover rock made dug walls look inverted.
+    [HarmonyPatch(typeof(FogGrid), nameof(FogGrid.Notify_FogBlockerRemoved))]
+    public static class Patch_VisitFog_BlockerRemoved
+    {
+        public static void Postfix(FogGrid __instance, IntVec3 c)
+        {
+            Map map = Patch_VisitFog.MapField(__instance);
+            if (map == null || !StrataMapUtility.IsUnderground(map))
+            {
+                return;
+            }
+            FloodFillerFog.FloodUnfog(c, map);
         }
     }
 }
