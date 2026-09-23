@@ -10,7 +10,7 @@ AZR-203 AZR-204
 
 ### Added
 - **The body** (`body-codex-v1`, AZR-203 first slice) — optional contagion in-room + convalescence hediff. Off by default.
-- **Codex** (AZR-204 first slice) — optional notebook that records the current research project. Off by default.
+- **Codex** (AZR-204 first slice) — optional notebook that records the current research project. Off by default. CN/RU for body + Codex.
 
 ## [1.6.8]
 

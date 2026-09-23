@@ -82,6 +82,17 @@
   <LivingWorld_LetterText_TradeBlackout>Война {0} и {1} перерезала караваны у {2}. Ждите меньше торговцев с воюющей стороны.</LivingWorld_LetterText_TradeBlackout>
   <LivingWorld_LetterLabel_WarbandPass>Проходящий отряд</LivingWorld_LetterLabel_WarbandPass>
   <LivingWorld_LetterText_WarbandPass>Отряд {0} охотится на остатки {1} после боёв у {2}. Они проходят через ваш регион.</LivingWorld_LetterText_WarbandPass>
+  <LivingWorld_LetterLabel_Correction>Весть пришла позже</LivingWorld_LetterLabel_Correction>
+  <LivingWorld_LetterText_Correction>Караван или радио поправили прежние слухи о {0} и {1} у {2}. Хроника обновлена.</LivingWorld_LetterText_Correction>
+  <LivingWorld_RumourPrefix>Говорят… торговец клянётся…</LivingWorld_RumourPrefix>
+  <LivingWorld_Channel_Rumour>слух</LivingWorld_Channel_Rumour>
+  <LivingWorld_Channel_Proximity>рядом</LivingWorld_Channel_Proximity>
+  <LivingWorld_Channel_Radio>радио</LivingWorld_Channel_Radio>
+  <LivingWorld_Chronicle_Title>Мировая хроника</LivingWorld_Chronicle_Title>
+  <LivingWorld_Chronicle_Filter>Фильтр</LivingWorld_Chronicle_Filter>
+  <LivingWorld_Chronicle_Empty>Пока нет записей о мире.</LivingWorld_Chronicle_Empty>
+  <LivingWorld_Chronicle_Corrected>(исправлено)</LivingWorld_Chronicle_Corrected>
+  <LivingWorld_Chronicle_AllChannels>все каналы</LivingWorld_Chronicle_AllChannels>
 
   <LivingWorld_WarSite_BattlefieldInspect>Свежие обломки поля боя с войны за картой.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>Временный лагерь беженцев от далёких боёв.</LivingWorld_WarSite_RefugeeCampInspect>

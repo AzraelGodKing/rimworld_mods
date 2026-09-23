@@ -4,4 +4,5 @@
 [list]
 [*] [b]The body[/b] — optional (off by default). Serious infections can spread in the same room; convalescence hediff for light duty afterwards.
 [*] [b]Codex[/b] — optional (off by default). Colony notebook item that can record the current research project; burnable and stealable.
+[*] [b]Chinese and Russian[/b] — body and Codex option/notebook strings.
 [/list]

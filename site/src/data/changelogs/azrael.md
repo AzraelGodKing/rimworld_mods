@@ -7,7 +7,7 @@ Player-facing version **1.1.0** (`About.xml` `modVersion`). Stamp `removal-wizar
 AZR-137 AZR-136
 
 ### Added
-- **Safe removal wizard** (`removal-wizard-v1`, AZR-137) — hub action lists orphan buildings/items/blockers and can queue deconstruction. Not a save scrubber.
+- **Safe removal wizard** (`removal-wizard-v1`, AZR-137) — hub action lists orphan buildings/items/blockers and can queue deconstruction. Not a save scrubber. CN/RU keys for the hub.
 - **Hub health** (`hub-health-v1`, AZR-136) — Mod Options → Azrael now shows DLC, build stamps, Dubs Bad Hygiene bridges (not loaded vs type missing), and failed Harmony patch classes with the exception summary. Copy report includes RimWorld version, all nine series mods, DLC, bridges, conflicts, and patch failures. Works from the main menu. SafePatchAll logs the full exception and reports into Azrael after startup.
 
 ## [1.0.0]

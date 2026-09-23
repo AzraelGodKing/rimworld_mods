@@ -80,6 +80,16 @@
   <DC_Settings_EnableEstateTip>在传承页指定继承人。死后由该人继承；其他子女会难过。睡进死者的床是一件小事。传家宝会记住经手之人。</DC_Settings_EnableEstateTip>
   <DC_Settings_EnableBirthSafetyNet>分娩安全网（新生儿种族）</DC_Settings_EnableBirthSafetyNet>
   <DC_Settings_EnableBirthSafetyNetTip>默认开启。部分种族模组会要求婴儿无法满足的技能，导致分娩无声失败、孩子消失。本模组只在生成新生儿时去掉这些要求，成年体不受影响。关闭则恢复原版处理。</DC_Settings_EnableBirthSafetyNetTip>
+  <DC_Settings_EnableBody>身体（康复 / 传染）</DC_Settings_EnableBody>
+  <DC_Settings_EnableBodyTip>默认关闭。疾病可在同一房间传播。严重感染后会进入康复，工作能力下降，直到消退。</DC_Settings_EnableBodyTip>
+  <DC_Settings_EnableCodex>典籍（会丢失的笔记）</DC_Settings_EnableCodex>
+  <DC_Settings_EnableCodexTip>默认关闭。笔记本物品可记下当前研究项目。可燃烧、可被偷走。</DC_Settings_EnableCodexTip>
+  <DC_Codex_Empty>笔记：空白</DC_Codex_Empty>
+  <DC_Codex_Holds>笔记：{0}</DC_Codex_Holds>
+  <DC_Codex_Record>记录研究</DC_Codex_Record>
+  <DC_Codex_RecordDesc>把当前选中的研究项目写入这本笔记。</DC_Codex_RecordDesc>
+  <DC_Codex_NoProject>当前没有选中的研究。</DC_Codex_NoProject>
+  <DC_Codex_Wrote>已将 {0} 抄入笔记。</DC_Codex_Wrote>
   <DC_Letter_LaborWedgeLabel>妊娠已恢复</DC_Letter_LaborWedgeLabel>
   <DC_Letter_LaborWedge>{0} 在失败分娩后卡在产程中。已将状态恢复为健康怀孕，孩子不会因此消失。之后会再次进入产程。</DC_Letter_LaborWedge>
   <DC_Settings_EnableTrauma>启用创伤与治疗</DC_Settings_EnableTrauma>

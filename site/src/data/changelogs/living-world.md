@@ -7,7 +7,7 @@ Player-facing version **1.1.0** (`About.xml` `modVersion`). Stamp `chronicle-rum
 AZR-84 AZR-85 AZR-205
 
 ### Added
-- **Chronicle tab** (AZR-84) — world history UI with faction and hear-channel filters.
+- **Chronicle tab** (AZR-84) — world history UI with faction and hear-channel filters. CN/RU keys.
 - **Rumour distortion** (AZR-85) — far news can arrive wrong and later correct in the chronicle.
 - **The road** (AZR-205 first slice) — remember player caravan tiles.
 
