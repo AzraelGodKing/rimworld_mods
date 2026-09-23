@@ -80,6 +80,16 @@
   <DC_Settings_EnableEstateTip>На вкладке Наследие назовите наследника. После смерти он получает вещи; другие дети тяжело это переносят. Сон в кровати умершего — отдельное событие. Наследие помнит, кто носил вещь.</DC_Settings_EnableEstateTip>
   <DC_Settings_EnableBirthSafetyNet>Страховка родов (виды новорождённых)</DC_Settings_EnableBirthSafetyNet>
   <DC_Settings_EnableBirthSafetyNetTip>По умолчанию вкл. Некоторые расовые моды требуют навыки, которых не может быть у младенца — роды срываются без письма, ребёнок пропадает. Deep Colony снимает эти требования только для новорождённых. Взрослые не затрагиваются. Выключите, чтобы вернуть ванильную обработку.</DC_Settings_EnableBirthSafetyNetTip>
+  <DC_Settings_EnableBody>Тело (выздоровление / зараза)</DC_Settings_EnableBody>
+  <DC_Settings_EnableBodyTip>По умолчанию выкл. Болезнь может передаваться в одной комнате. После тяжёлой инфекции — восстановление: меньше работы, пока статус не спадёт.</DC_Settings_EnableBodyTip>
+  <DC_Settings_EnableCodex>Кодекс (теряемые тетради)</DC_Settings_EnableCodex>
+  <DC_Settings_EnableCodexTip>По умолчанию выкл. Тетрадь хранит текущий исследовательский проект. Её можно сжечь или украсть.</DC_Settings_EnableCodexTip>
+  <DC_Codex_Empty>Тетрадь: пусто</DC_Codex_Empty>
+  <DC_Codex_Holds>Тетрадь: {0}</DC_Codex_Holds>
+  <DC_Codex_Record>Записать исследование</DC_Codex_Record>
+  <DC_Codex_RecordDesc>Записать выбранный сейчас проект в эту тетрадь.</DC_Codex_RecordDesc>
+  <DC_Codex_NoProject>Исследование не выбрано.</DC_Codex_NoProject>
+  <DC_Codex_Wrote>{0} скопировано в тетрадь.</DC_Codex_Wrote>
   <DC_Letter_LaborWedgeLabel>Беременность восстановлена</DC_Letter_LaborWedgeLabel>
   <DC_Letter_LaborWedge>{0} застряла в родах после сбоя. Deep Colony вернул здоровую беременность, чтобы ребёнок не пропал. Схватки начнутся снова позже.</DC_Letter_LaborWedge>
   <DC_Settings_EnableTrauma>Включить травму и терапию</DC_Settings_EnableTrauma>

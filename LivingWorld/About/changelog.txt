@@ -5,4 +5,5 @@
 [*] [b]Chronicle tab[/b] — a scrollable world history, filterable by faction/place and by how you heard it (rumour, nearby, radio).
 [*] [b]Unreliable rumours[/b] — distant news can arrive wrong ("word is…") and later correct itself in the chronicle.
 [*] [b]The road[/b] — player caravan tiles are remembered as travelled routes (first slice of expeditions / goods).
+[*] [b]Chinese and Russian[/b] — chronicle tab, rumour channels, and correction letters.
 [/list]
