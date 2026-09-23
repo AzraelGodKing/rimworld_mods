@@ -35,4 +35,24 @@
   <Azrael_Hub_HarmonyNone>本局没有失败的系列 Harmony 补丁类。</Azrael_Hub_HarmonyNone>
   <Azrael_Hub_HarmonyCount>{0} 个失败的补丁类。</Azrael_Hub_HarmonyCount>
 
+  <Azrael_Removal_Section>安全移除</Azrael_Removal_Section>
+  <Azrael_Removal_SectionHint>不会改存档。列出卸载系列模组后会孤立的内容，并可批量指定拆除。</Azrael_Removal_SectionHint>
+  <Azrael_Removal_Prep>准备移除 {0}</Azrael_Removal_Prep>
+  <Azrael_Removal_Title>移除 {0}</Azrael_Removal_Title>
+  <Azrael_Removal_Intro>按地图与商队列出。不会剥离存档数据。</Azrael_Removal_Intro>
+  <Azrael_Removal_Jump>跳转</Azrael_Removal_Jump>
+  <Azrael_Removal_Deconstruct>将建筑指定为拆除</Azrael_Removal_Deconstruct>
+  <Azrael_Removal_Designated>已为 {1} 的 {0} 座建筑排队拆除。</Azrael_Removal_Designated>
+  <Azrael_Removal_NeedSave>请先载入一个殖民地。</Azrael_Removal_NeedSave>
+  <Azrael_Removal_Empty>地图与商队上没有该模组的东西。</Azrael_Removal_Empty>
+  <Azrael_Removal_Blocked>请先处理标出的阻碍项。</Azrael_Removal_Blocked>
+  <Azrael_Removal_NemesisHunt>Nemesis 狩猎仍在进行 — 请先在游戏里结束，再移除 Nemesis。</Azrael_Removal_NemesisHunt>
+  <Azrael_Removal_StrataPawns>仍有 {0} 名殖民者在口袋层 — 请先把他们带上来。</Azrael_Removal_StrataPawns>
+  <Azrael_Removal_DeepHediffs>殖民者身上的 Deep Colony 天赋/创伤（卸载会清掉；历史会丢）。</Azrael_Removal_DeepHediffs>
+  <Azrael_Removal_Caravan>{0}：{1}</Azrael_Removal_Caravan>
+  <Azrael_Removal_V_Deconstruct>拆除这些</Azrael_Removal_V_Deconstruct>
+  <Azrael_Removal_V_Sell>消耗或卖掉这些</Azrael_Removal_V_Sell>
+  <Azrael_Removal_V_Resolve>请先自行处理</Azrael_Removal_V_Resolve>
+  <Azrael_Removal_V_Safe>安全 — 卸载时会自动清理</Azrael_Removal_V_Safe>
+
 </LanguageData>

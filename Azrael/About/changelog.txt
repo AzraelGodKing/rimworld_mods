@@ -3,4 +3,5 @@
 [b]Added[/b]
 [list]
 [*] [b]Safe removal[/b] — Mod Options lists each loaded series mod. Open a report of buildings, items, caravan cargo, and blockers (active Nemesis hunt, colonists still on a Strata pocket floor), then queue deconstruction. It does not edit the save.
+[*] [b]Chinese and Russian[/b] — safe-removal hub strings.
 [/list]
