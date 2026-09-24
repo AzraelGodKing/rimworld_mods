@@ -28,6 +28,13 @@ namespace Azrael.ModChecks
 
             using (RefPack pack = RefPack.Load(repo))
             {
+                TypeDefinition frame = pack.FindType("Frame");
+                if (frame == null || !pack.HasMethod(frame, "CompleteConstruction"))
+                {
+                    errors.Add(
+                        "FindType(\"Frame\") must be RimWorld.Frame (CompleteConstruction), "
+                        + "not a colliding type such as TMPro TexturePacker Frame");
+                }
                 CheckHarmonyStringTargets(repo, pack, errors);
                 DefXml.CheckFields(repo, pack, errors);
             }

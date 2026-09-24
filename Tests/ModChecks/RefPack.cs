@@ -197,10 +197,25 @@ namespace Azrael.ModChecks
                 return;
             if (!_byFull.ContainsKey(type.FullName))
                 _byFull[type.FullName] = type;
-            if (!_byName.ContainsKey(type.Name))
+            if (!_byName.TryGetValue(type.Name, out TypeDefinition existing)
+                || NameLookupRank(type) < NameLookupRank(existing))
                 _byName[type.Name] = type;
             foreach (TypeDefinition nested in type.NestedTypes)
                 Index(nested);
+        }
+
+        // Directory.GetFiles order is not stable. Unity.TextMeshPro ships a nested
+        // type named Frame; prefer Verse/RimWorld so Harmony lookups hit the game.
+        static int NameLookupRank(TypeDefinition t)
+        {
+            string ns = t.Namespace ?? "";
+            if (ns == "Verse" || ns == "RimWorld"
+                || ns.StartsWith("Verse.", StringComparison.Ordinal)
+                || ns.StartsWith("RimWorld.", StringComparison.Ordinal))
+                return 0;
+            if (t.IsNested)
+                return 2;
+            return 1;
         }
 
         static string FindAssemblyCSharp()
