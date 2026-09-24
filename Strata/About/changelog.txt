@@ -1,12 +1,9 @@
-3.6.0
-[h1]Strata — 3.6.0[/h1]
-[b]Fixed[/b]
-[list]
-[*] [b]Assigned beds[/b] — pawns commuting between floors no longer nap in a free bunk on the current floor when their assigned bed is elsewhere.
-[*] [b]Underground fog[/b] — new rock floors start unexplored; mining opens the dug chamber instead of fogging the walls you just broke.
-[*] [b]See-below colours[/b] — drawing the map below no longer updates that floor's mesh on the live camera (the RGB / artefact break with two or more floors).
-[/list]
+3.7.0
+[h1]Strata — 3.7.0[/h1]
 [b]Added[/b]
 [list]
-[*] [b]Loading dock[/b] — stand beside one to carry extra mass onto the stairs (first slice of the movement / haul-relay update).
+[*] [b]Packed haulway[/b] — floor that speeds pawns who are carrying a stack (Homesteader packed gravel counts too).
+[*] [b]Dumbwaiter[/b] — cheap 1×1 item shaft between linked floors (meals and stacks, not pawns).
+[*] [b]Handcart / sledge[/b] — inventory carts: more carry mass, slower walk, they go through stairs. Homesteader crates at a dock add a little extra mass.
+[*] [b]Freight lift[/b] — powered goods shaft. Stormproof brownouts slow it before they stop it.
 [/list]

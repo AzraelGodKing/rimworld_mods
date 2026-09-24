@@ -93,6 +93,10 @@
   <LivingWorld_Chronicle_Empty>Пока нет записей о мире.</LivingWorld_Chronicle_Empty>
   <LivingWorld_Chronicle_Corrected>(исправлено)</LivingWorld_Chronicle_Corrected>
   <LivingWorld_Chronicle_AllChannels>все каналы</LivingWorld_Chronicle_AllChannels>
+  <LivingWorld_LetterLabel_RoadStretch>Дорога</LivingWorld_LetterLabel_RoadStretch>
+  <LivingWorld_LetterText_RoadStretch>Караваны прошли уже {0} клеток мира. Living World запомнит этот след как дорогу — дальше по ней пойдут экспедиции и угрозы пути.</LivingWorld_LetterText_RoadStretch>
+  <LivingWorld_WayCamp_Inspect>Придорожный стан на вашей дороге. Ночёвка здесь чуть легче.</LivingWorld_WayCamp_Inspect>
+  <LivingWorld_RoadVeteran>У {0} вид человека, долго шедшего по дороге.</LivingWorld_RoadVeteran>
 
   <LivingWorld_WarSite_BattlefieldInspect>Свежие обломки поля боя с войны за картой.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>Временный лагерь беженцев от далёких боёв.</LivingWorld_WarSite_RefugeeCampInspect>

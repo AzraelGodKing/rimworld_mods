@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Strata_Handcart.label>тележка</Strata_Handcart.label>
+  <Strata_Handcart.description>Двухколёсная тележка. В инвентаре грузчика: больше массы, медленнее шаг, проходит по лестницам.</Strata_Handcart.description>
+  <Strata_Sledge.label>сани</Strata_Sledge.label>
+  <Strata_Sledge.description>Ещё больше груза, чем у тележки, ещё медленнее. Едет в лифте как предмет.</Strata_Sledge.description>
+</LanguageData>

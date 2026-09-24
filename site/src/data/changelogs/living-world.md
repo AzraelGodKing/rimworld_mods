@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.0]
+
+Player-facing version **1.2.0** (`About.xml` `modVersion`). Stamp `road-veteran-v1`.
+
+AZR-205
+
+### Added
+- **The road** (AZR-205) — letter after eight unique caravan tiles; way-camps on every fourth tile; road-worn hediff on long trips.
+
 ## [1.1.0]
 
 Player-facing version **1.1.0** (`About.xml` `modVersion`). Stamp `chronicle-rumour-v1`.

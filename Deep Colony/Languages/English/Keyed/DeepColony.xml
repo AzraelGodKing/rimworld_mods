@@ -90,6 +90,14 @@
   <DC_Codex_RecordDesc>Write the currently selected research project into this notebook.</DC_Codex_RecordDesc>
   <DC_Codex_NoProject>No research is selected.</DC_Codex_NoProject>
   <DC_Codex_Wrote>Copied {0} into the notebook.</DC_Codex_Wrote>
+  <DC_Codex_Resume>Resume from notebook</DC_Codex_Resume>
+  <DC_Codex_ResumeDesc>Set the colony's current research to the project stored in this notebook.</DC_Codex_ResumeDesc>
+  <DC_Codex_Unknown>The notebook names {0}, which is not loaded.</DC_Codex_Unknown>
+  <DC_Codex_AlreadyDone>{0} is already finished.</DC_Codex_AlreadyDone>
+  <DC_Codex_Resumed>Resumed research: {0}.</DC_Codex_Resumed>
+  <DC_Body_Relapse>{0} was drafted while convalescing and the recovery slipped.</DC_Body_Relapse>
+  <DC_Body_Chronic>{0} kept a lingering weakness after the illness.</DC_Body_Chronic>
+  <DC_Codex_TechDecay>{0} died. Without an archive, research into {1} slipped.</DC_Codex_TechDecay>
   <DC_Letter_LaborWedgeLabel>Pregnancy restored</DC_Letter_LaborWedgeLabel>
   <DC_Letter_LaborWedge>{0} was stuck mid-labor after a failed birth. Deep Colony rolled that back to a healthy pregnancy so the baby is not lost. Labor will start again later.</DC_Letter_LaborWedge>
   <DC_Settings_EnableTrauma>Enable trauma &amp; therapy</DC_Settings_EnableTrauma>
@@ -152,6 +160,7 @@
   <DC_GraduationLetter_Body>{APPRENTICE} has caught up with mentor {MENTOR}. The apprenticeship ends — both keep the bond they built, and {APPRENTICE} may carry forward a spark of their teacher's passion.</DC_GraduationLetter_Body>
   <DC_GraduationMessage>{APPRENTICE} graduated from {MENTOR}'s apprenticeship.</DC_GraduationMessage>
   <DC_GraduationPassion>{APPRENTICE} inherited a passion for {SKILL} from mentor {MENTOR}.</DC_GraduationPassion>
+  <DC_Codex_GraduationGift>{MENTOR} left {APPRENTICE} a notebook of what the colony is studying.</DC_Codex_GraduationGift>
   <DC_ConfidantFormed>{A} and {B} have become confidants through counseling.</DC_ConfidantFormed>
   <DC_InspectTaughtBy>Taught by {0}</DC_InspectTaughtBy>
   <DC_InspectLineage>Teaching line: {0}</DC_InspectLineage>

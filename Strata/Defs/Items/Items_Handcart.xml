@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>Strata_Handcart</defName>
+    <label>handcart</label>
+    <description>A two-wheel cart. Keep it in a hauler's inventory: they carry much more, walk slower, and can take it through the stairs.</description>
+    <graphicData>
+      <texPath>Strata/Buildings/CargoLift</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.85,0.85)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>90</MarketValue>
+      <Mass>12</Mass>
+      <Flammability>0.8</Flammability>
+      <WorkToMake>2000</WorkToMake>
+    </statBases>
+    <stackLimit>1</stackLimit>
+    <thingCategories>
+      <li>Items</li>
+    </thingCategories>
+    <costList>
+      <WoodLog>40</WoodLog>
+      <Steel>20</Steel>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <recipeUsers>
+        <li>CraftingSpot</li>
+        <li>FueledSmithy</li>
+        <li>ElectricSmithy</li>
+      </recipeUsers>
+    </recipeMaker>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>Strata_Sledge</defName>
+    <label>sledge</label>
+    <description>A winter sledge. Even more capacity than a handcart, even slower. Rides the elevator as inventory.</description>
+    <graphicData>
+      <texPath>Strata/Buildings/CargoLift</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.95,0.95)</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>110</MarketValue>
+      <Mass>16</Mass>
+      <Flammability>0.7</Flammability>
+      <WorkToMake>2400</WorkToMake>
+    </statBases>
+    <stackLimit>1</stackLimit>
+    <thingCategories>
+      <li>Items</li>
+    </thingCategories>
+    <costList>
+      <WoodLog>50</WoodLog>
+      <Steel>15</Steel>
+    </costList>
+    <recipeMaker>
+      <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <recipeUsers>
+        <li>CraftingSpot</li>
+        <li>FueledSmithy</li>
+        <li>ElectricSmithy</li>
+      </recipeUsers>
+    </recipeMaker>
+  </ThingDef>
+</Defs>

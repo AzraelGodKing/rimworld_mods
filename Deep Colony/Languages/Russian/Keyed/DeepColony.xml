@@ -90,6 +90,14 @@
   <DC_Codex_RecordDesc>Записать выбранный сейчас проект в эту тетрадь.</DC_Codex_RecordDesc>
   <DC_Codex_NoProject>Исследование не выбрано.</DC_Codex_NoProject>
   <DC_Codex_Wrote>{0} скопировано в тетрадь.</DC_Codex_Wrote>
+  <DC_Codex_Resume>Возобновить по тетради</DC_Codex_Resume>
+  <DC_Codex_ResumeDesc>Назначить текущим исследованием проект, записанный в тетради.</DC_Codex_ResumeDesc>
+  <DC_Codex_Unknown>В тетради указано {0}, но проект не загружен.</DC_Codex_Unknown>
+  <DC_Codex_AlreadyDone>{0} уже завершено.</DC_Codex_AlreadyDone>
+  <DC_Codex_Resumed>Исследование возобновлено: {0}.</DC_Codex_Resumed>
+  <DC_Body_Relapse>{0} призвали во время восстановления — оно дало сбой.</DC_Body_Relapse>
+  <DC_Body_Chronic>После болезни у {0} осталась слабость.</DC_Body_Chronic>
+  <DC_Codex_TechDecay>{0} умер(ла). Без архива исследование {1} откатилось.</DC_Codex_TechDecay>
   <DC_Letter_LaborWedgeLabel>Беременность восстановлена</DC_Letter_LaborWedgeLabel>
   <DC_Letter_LaborWedge>{0} застряла в родах после сбоя. Deep Colony вернул здоровую беременность, чтобы ребёнок не пропал. Схватки начнутся снова позже.</DC_Letter_LaborWedge>
   <DC_Settings_EnableTrauma>Включить травму и терапию</DC_Settings_EnableTrauma>
@@ -152,6 +160,7 @@
   <DC_GraduationLetter_Body>{APPRENTICE} догнал(а) наставника {MENTOR}. Ученичество заканчивается — оба сохраняют связь, и {APPRENTICE} может унести искру страсти учителя.</DC_GraduationLetter_Body>
   <DC_GraduationMessage>{APPRENTICE} окончил(а) ученичество у {MENTOR}.</DC_GraduationMessage>
   <DC_GraduationPassion>{APPRENTICE} унаследовал(а) страсть к {SKILL} от наставника {MENTOR}.</DC_GraduationPassion>
+  <DC_Codex_GraduationGift>{MENTOR} оставил(а) {APPRENTICE} тетрадь с тем, что колония изучает.</DC_Codex_GraduationGift>
   <DC_ConfidantFormed>{A} и {B} стали доверенными через консультирование.</DC_ConfidantFormed>
   <DC_InspectTaughtBy>Учил(а) {0}</DC_InspectTaughtBy>
   <DC_InspectLineage>Линия обучения: {0}</DC_InspectLineage>

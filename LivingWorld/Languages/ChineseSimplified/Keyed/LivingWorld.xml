@@ -93,6 +93,10 @@
   <LivingWorld_Chronicle_Empty>尚无世界事件记录。</LivingWorld_Chronicle_Empty>
   <LivingWorld_Chronicle_Corrected>（已更正）</LivingWorld_Chronicle_Corrected>
   <LivingWorld_Chronicle_AllChannels>全部渠道</LivingWorld_Chronicle_AllChannels>
+  <LivingWorld_LetterLabel_RoadStretch>路</LivingWorld_LetterLabel_RoadStretch>
+  <LivingWorld_LetterText_RoadStretch>商队已走过 {0} 个世界格。Living World 会把这条足迹记为道路，之后的远征与路途风险会用到它。</LivingWorld_LetterText_RoadStretch>
+  <LivingWorld_WayCamp_Inspect>道路上的路营。在此过夜稍易恢复。</LivingWorld_WayCamp_Inspect>
+  <LivingWorld_RoadVeteran>{0} 一副走了很远路的样子。</LivingWorld_RoadVeteran>
 
   <LivingWorld_WarSite_BattlefieldInspect>近期地图外战争留下的战场残骸。</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>远方战事催生的临时难民营。</LivingWorld_WarSite_RefugeeCampInspect>

@@ -10,6 +10,12 @@
   <Strata_OreHoist.label>矿石吊车</Strata_OreHoist.label>
   <Strata_OreHoist.description>电动吊斗，把开采的矿石与废渣运到上/下层相连的吊车。建在楼梯或电梯五格之内——会像竖井导管一样自动连接对端吊车。</Strata_OreHoist.description>
 
+  <Strata_Dumbwaiter.label>餐梯</Strata_Dumbwaiter.label>
+  <Strata_Dumbwaiter.description>廉价 1×1 货物竖井，不能载人。建在楼梯或电梯五格内，对层会出现对应舱口。无需电力，比矿石吊车慢，但可运送餐食、药品等堆叠物，不限于矿石。</Strata_Dumbwaiter.description>
+
+  <Strata_FreightLift.label>货运升降机</Strata_FreightLift.label>
+  <Strata_FreightLift.description>电动货井，比餐梯快，只运货物。Stormproof 电压不足时会先变慢再停。建在楼梯或电梯五格内。</Strata_FreightLift.description>
+
   <Strata_FungusFarm.label>真菌农场</Strata_FungusFarm.label>
   <Strata_FungusFarm.description>可食用洞穴蘑菇的暗色苗床。在地下或无光房间运作，缓慢吸收二氧化碳并释放少量氧气，产出蘑菇收成。</Strata_FungusFarm.description>
 

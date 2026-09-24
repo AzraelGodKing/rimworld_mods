@@ -13,6 +13,12 @@
   <Strata_OreHoist.label>рудная бадья</Strata_OreHoist.label>
   <Strata_OreHoist.description>Электрическая бадья, перевозящая добытую руду и шлак к связанной бадье на уровне выше или ниже. Постройте в пределах пяти клеток от лестницы или лифта — она автоматически соединяется с ответной бадьёй на другом уровне, как шахтный кабель.</Strata_OreHoist.description>
 
+  <Strata_Dumbwaiter.label>кухонный подъёмник</Strata_Dumbwaiter.label>
+  <Strata_Dumbwaiter.description>Дешёвая шахта 1×1 только для грузов, без людей. Стройте в пяти клетках от лестницы или лифта — на связанном этаже появится парный люк. Без питания и медленнее рудной бадьи, но возит еду, медикаменты и прочие стопки, не только обломки.</Strata_Dumbwaiter.description>
+
+  <Strata_FreightLift.label>грузовой подъёмник</Strata_FreightLift.label>
+  <Strata_FreightLift.description>Электрическая шахта для грузов, быстрее кухонного подъёмника, без людей. Просадка Stormproof сначала замедляет цикл. Стройте в пяти клетках от лестницы или лифта.</Strata_FreightLift.description>
+
   <!-- ============ Грибная ферма ============ -->
   <Strata_FungusFarm.label>грибная ферма</Strata_FungusFarm.label>
   <Strata_FungusFarm.description>Тёмная грядка для съедобных пещерных грибов. Работает под землёй или в неосвещённых комнатах, медленно поглощая углекислый газ и выделяя немного кислорода, производя урожай грибов.</Strata_FungusFarm.description>

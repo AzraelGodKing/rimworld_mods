@@ -239,7 +239,12 @@ namespace Strata
             cell.GetFirstMineable(other)?.Destroy(DestroyMode.Vanish);
             var child = (Building_OreHoist)GenSpawn.Spawn(ThingMaker.MakeThing(def), cell, other);
             child.SetFaction(Faction.OfPlayer);
-            Messages.Message("Strata_OreHoistExtended".Translate(), child, MessageTypeDefOf.PositiveEvent);
+            Messages.Message(
+                (def.defName == "Strata_Dumbwaiter"
+                    ? "Strata_DumbwaiterExtended"
+                    : "Strata_OreHoistExtended").Translate(),
+                child,
+                MessageTypeDefOf.PositiveEvent);
             return child;
         }
 

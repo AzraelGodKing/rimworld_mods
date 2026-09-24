@@ -12,4 +12,15 @@
     <expandingIconColor>(0.75, 0.45, 0.25)</expandingIconColor>
   </WorldObjectDef>
 
+  <WorldObjectDef>
+    <defName>LivingWorld_WayCamp</defName>
+    <label>way-camp</label>
+    <description>A camp your caravans founded on a known stretch of road. Resting here overnight recovers a little faster.</description>
+    <worldObjectClass>LivingWorld.WorldObject_LivingWorldWayCamp</worldObjectClass>
+    <texture>World/WorldObjects/Expanding/Sites</texture>
+    <expandingIcon>true</expandingIcon>
+    <expandingIconPriority>28</expandingIconPriority>
+    <expandingIconColor>(0.45, 0.62, 0.38)</expandingIconColor>
+  </WorldObjectDef>
+
 </Defs>

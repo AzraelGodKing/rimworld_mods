@@ -12,6 +12,8 @@ namespace Strata
 
         public int maxItemsPerTransfer = 5;
 
+        public bool chunksOnly = true;
+
         public CompProperties_OreHoist()
         {
             compClass = typeof(CompOreHoist);
@@ -22,19 +24,41 @@ namespace Strata
     {
         public CompProperties_OreHoist Props => (CompProperties_OreHoist)props;
 
+        private int TransferInterval
+        {
+            get
+            {
+                int ticks = Props.transferIntervalTicks;
+                if (parent.def.defName != "Strata_FreightLift")
+                {
+                    return ticks;
+                }
+                float brown = StormproofBrownout.For(parent);
+                if (brown <= 0.01f)
+                {
+                    return ticks;
+                }
+                return (int)(ticks * (1f + brown * 1.5f));
+            }
+        }
+
         public bool Active
         {
             get
             {
                 CompPowerTrader power = parent.GetComp<CompPowerTrader>();
-                return power != null && power.PowerOn;
+                if (power == null)
+                {
+                    return true;
+                }
+                return power.PowerOn;
             }
         }
 
         public override void CompTick()
         {
             base.CompTick();
-            if (!parent.IsHashIntervalTick(Props.transferIntervalTicks) || !Active)
+            if (!parent.IsHashIntervalTick(TransferInterval) || !Active)
             {
                 return;
             }
@@ -96,9 +120,13 @@ namespace Strata
             return IntVec3.Invalid;
         }
 
-        private static bool IsHoistable(Thing thing)
+        private bool IsHoistable(Thing thing)
         {
             if (thing == null || !thing.def.EverHaulable || thing.def.category != ThingCategory.Item)
+            {
+                return false;
+            }
+            if (thing is Corpse)
             {
                 return false;
             }
@@ -106,7 +134,11 @@ namespace Strata
             {
                 return true;
             }
-            return thing.def.defName.Contains("Slag") || thing.def.defName.Contains("Chunk");
+            if (thing.def.defName.Contains("Slag") || thing.def.defName.Contains("Chunk"))
+            {
+                return true;
+            }
+            return !Props.chunksOnly;
         }
 
         public override string CompInspectStringExtra()
@@ -115,9 +147,22 @@ namespace Strata
             {
                 return null;
             }
+            bool waiter = parent.def.defName == "Strata_Dumbwaiter";
             if (hoist.Partner == null)
             {
-                return "Strata_OreHoistNeedsPartner".Translate();
+                return waiter
+                    ? "Strata_DumbwaiterNeedsPartner".Translate()
+                    : "Strata_OreHoistNeedsPartner".Translate();
+            }
+            if (waiter)
+            {
+                return "Strata_DumbwaiterHauling".Translate();
+            }
+            if (parent.def.defName == "Strata_FreightLift")
+            {
+                return Active
+                    ? "Strata_FreightLiftPowered".Translate()
+                    : "Strata_OreHoistNeedsPowerSkip".Translate();
             }
             return Active
                 ? "Strata_OreHoistPowered".Translate()

@@ -12,7 +12,7 @@ namespace LivingWorld
         public LivingWorldMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<LivingWorldSettings>();
-            ModVersionLog.Write("[LivingWorld]", content, extra: "chronicle-rumour-v1");
+            ModVersionLog.Write("[LivingWorld]", content, extra: "road-veteran-v1");
             SafePatchAll.Apply(new Harmony("azraelgodking.livingworld"), "[LivingWorld]");
         }
 

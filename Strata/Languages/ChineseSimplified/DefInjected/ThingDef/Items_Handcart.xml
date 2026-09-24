@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Strata_Handcart.label>手推车</Strata_Handcart.label>
+  <Strata_Handcart.description>两轮手推车。放在搬运工物品栏：负重更大、走得更慢，可随楼梯上下。</Strata_Handcart.description>
+  <Strata_Sledge.label>雪橇</Strata_Sledge.label>
+  <Strata_Sledge.description>比手推车更能装，也更慢。作为物品可乘电梯。</Strata_Sledge.description>
+</LanguageData>

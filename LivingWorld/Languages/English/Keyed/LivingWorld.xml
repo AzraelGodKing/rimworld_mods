@@ -93,6 +93,10 @@
   <LivingWorld_Chronicle_Empty>No world events recorded yet.</LivingWorld_Chronicle_Empty>
   <LivingWorld_Chronicle_Corrected>(corrected)</LivingWorld_Chronicle_Corrected>
   <LivingWorld_Chronicle_AllChannels>all channels</LivingWorld_Chronicle_AllChannels>
+  <LivingWorld_LetterLabel_RoadStretch>The road</LivingWorld_LetterLabel_RoadStretch>
+  <LivingWorld_LetterText_RoadStretch>Your caravans have now walked {0} world tiles. Living World will remember that trail as the road — later expeditions and route hazards use it.</LivingWorld_LetterText_RoadStretch>
+  <LivingWorld_WayCamp_Inspect>A way-camp on your road. Overnight rest here is a little easier.</LivingWorld_WayCamp_Inspect>
+  <LivingWorld_RoadVeteran>{0} has the look of someone who has walked the road for a long time.</LivingWorld_RoadVeteran>
 
   <LivingWorld_WarSite_BattlefieldInspect>Recent battlefield debris from an off-map war.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>A temporary refugee camp spawned by distant fighting.</LivingWorld_WarSite_RefugeeCampInspect>

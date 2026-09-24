@@ -1,9 +1,21 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.6.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.6.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.7.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.7.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `floors-fog-bed-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `logistics-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.7.0]
+
+Player-facing version **3.7.0** (`About.xml` `modVersion`). Stamp `logistics-v1`.
+
+AZR-202
+
+### Added
+- **Packed haulway** (AZR-202) — carrying a stack on packed haulway (or Homesteader packed gravel) is faster.
+- **Dumbwaiter** (AZR-202) — unpowered 1×1 item hatch to the linked floor.
+- **Handcart / sledge** (AZR-202) — inventory capacity vs speed; Homesteader crates get a dock bonus.
+- **Freight lift** (AZR-202) — powered item shaft; Stormproof brownout lengthens the cycle.
 
 ## [3.6.0]
 
