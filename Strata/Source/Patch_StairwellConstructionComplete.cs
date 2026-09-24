@@ -4,7 +4,7 @@ using Verse;
 
 namespace Strata
 {
-    [HarmonyPatch(typeof(Frame), "CompleteConstruction")]
+    [HarmonyPatch(typeof(Frame), nameof(Frame.CompleteConstruction))]
     public static class Patch_StairwellConstructionComplete
     {
         public static void Postfix(Frame __instance)
