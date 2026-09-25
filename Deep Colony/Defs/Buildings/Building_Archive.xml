@@ -6,8 +6,9 @@
     <description>Wooden shelves for the colony's notes. With Codex on, if a researcher dies and these still stand, the current project does not slip. Burn the archive and the next death can cost you the work.</description>
     <thingClass>Building</thingClass>
     <graphicData>
+      <!-- Vanilla dresser is Graphic_Multi (directional atlas). Graphic_Single cannot resolve that path. AZR-345. -->
       <texPath>Things/Building/Furniture/Dresser</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>

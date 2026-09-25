@@ -1,3 +1,12 @@
+3.6.1
+[h1]Strata — 3.6.1[/h1]
+[b]Fixed[/b]
+[list]
+[*] [b]Packed haulway / cart move[/b] — Harmony matches 1.6 float TicksPerMove (AZR-345).
+[*] [b]Mining unfog[/b] — fog-blocker notify takes Thing in 1.6; dig cells unfog again (AZR-345).
+[*] [b]Harmony failure letter[/b] — no longer NRE if Find is not ready yet (AZR-345).
+[/list]
+
 3.6.0
 [h1]Strata — 3.6.0[/h1]
 [b]Fixed[/b]

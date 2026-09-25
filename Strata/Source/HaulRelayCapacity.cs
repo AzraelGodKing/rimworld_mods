@@ -195,24 +195,25 @@ namespace Strata
         }
     }
 
+    // 1.6: TicksPerMove returns float (was int). AZR-345.
     [HarmonyPatch(typeof(Pawn), "TicksPerMove")]
     public static class Patch_PackedHaulwayMove
     {
-        public static void Postfix(Pawn __instance, ref int __result)
+        public static void Postfix(Pawn __instance, ref float __result)
         {
-            if (__result <= 1)
+            if (__result <= 1f)
             {
                 return;
             }
             if (HaulRelayCapacity.PushingCart(__instance))
             {
                 float slow = HaulRelayCapacity.HasCart(__instance, "Strata_Sledge") ? 1.45f : 1.28f;
-                __result = Math.Max(1, (int)(__result * slow));
+                __result = Math.Max(1f, __result * slow);
             }
             if (HaulRelayCapacity.IsCarryingHaul(__instance)
                 && HaulRelayCapacity.OnPackedHaulway(__instance))
             {
-                __result = Math.Max(1, (int)(__result * 0.82f));
+                __result = Math.Max(1f, __result * 0.82f);
             }
         }
     }

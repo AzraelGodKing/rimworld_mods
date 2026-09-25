@@ -77,15 +77,23 @@ namespace AzraelCommon
             LongEventHandler.ExecuteWhenFinished(FlushToHub);
             LongEventHandler.ExecuteWhenFinished(() =>
             {
-                if (Find.LetterStack == null)
+                // Early load can run before the game/world exists — LetterStack getter NREs. AZR-345.
+                try
                 {
-                    return;
-                }
+                    if (Current.Game == null || Find.LetterStack == null)
+                    {
+                        return;
+                    }
 
-                Find.LetterStack.ReceiveLetter(
-                    (logPrefix + " Harmony").Trim(),
-                    logPrefix + " " + failed + " Harmony patch(es) failed. The rest of the mod still loaded. See Player.log or Mod Options → Azrael.",
-                    LetterDefOf.NegativeEvent);
+                    Find.LetterStack.ReceiveLetter(
+                        (logPrefix + " Harmony").Trim(),
+                        logPrefix + " " + failed + " Harmony patch(es) failed. The rest of the mod still loaded. See Player.log or Mod Options → Azrael.",
+                        LetterDefOf.NegativeEvent);
+                }
+                catch (NullReferenceException)
+                {
+                    // Still too early; Player.log already has the patch failure.
+                }
             });
         }
 
