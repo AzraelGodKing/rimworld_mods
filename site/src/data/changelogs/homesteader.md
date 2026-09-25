@@ -4,6 +4,12 @@ Detailed notes for Homesteader only.
 
 ## [Unreleased]
 
+
+## [1.3.0]
+
+### Changed
+- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+
 ## [1.0.4]
 
 Player-facing version **1.0.4** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.0.4 loaded from ...` in Player.log (`pantry-make-v1`).

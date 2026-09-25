@@ -1,18 +1,14 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.6.0` in `About.xml` `modVersion` (proposed ship: **3.6.1**). Player.log: `[Strata] v3.6.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.8.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.0 Soft-compat build <stamp> loaded from ...`.
 
 **Build stamp:** each DLL logs the stamp after the version. Current stamp is `haul-dock-v1` in `StrataBuildInfo.BuildStamp`.
 
-## [3.6.1]
+## [3.8.0]
 
-AZR-345 (About.xml bump pending explicit yes).
-
-### Fixed
-- **Packed haulway / cart move** — `Pawn.TicksPerMove` is float in 1.6; Harmony postfix matched.
-- **Mining unfog** — `FogGrid.Notify_FogBlockerRemoved(Thing)` signature; dig cells unfog again.
-- **Harmony failure letter** — Shared `SafePatchAll` no longer NRE when `Find` is not ready.
+### Changed
+- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
 
 ## [3.6.0]
 
