@@ -2,6 +2,11 @@
 
 Detailed notes for Deep Colony only.
 
+## [1.8.0]
+
+### Changed
+- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+
 ## [1.7.0]
 
 Player-facing version **1.7.0** (`About.xml` `modVersion`). Stamp `body-codex-v4`.

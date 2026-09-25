@@ -1,3 +1,10 @@
+3.8.0
+[h1]Strata — 3.8.0[/h1]
+[b]Changed[/b]
+[list]
+[*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+[/list]
+
 3.6.0
 [h1]Strata — 3.6.0[/h1]
 [b]Fixed[/b]

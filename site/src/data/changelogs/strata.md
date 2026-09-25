@@ -1,9 +1,14 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.6.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.6.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.8.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.0 Soft-compat build <stamp> loaded from ...`.
 
 **Build stamp:** each DLL logs the stamp after the version. Current stamp is `haul-dock-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.8.0]
+
+### Changed
+- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
 
 ## [3.6.0]
 
