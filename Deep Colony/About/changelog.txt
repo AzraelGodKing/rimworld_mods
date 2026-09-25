@@ -2,7 +2,12 @@
 [h1]Deep Colony — 1.7.0[/h1]
 [b]Added[/b]
 [list]
-[*] [b]The body[/b] — optional (off by default). Serious infections can spread in the same room; convalescence hediff for light duty afterwards.
-[*] [b]Codex[/b] — optional (off by default). Colony notebook item that can record the current research project; burnable and stealable.
-[*] [b]Chinese and Russian[/b] — body and Codex option/notebook strings.
+[*] [b]The body[/b] — optional contagion in-room and convalescence. Off by default.
+[*] [b]Infirmary[/b] — a room of medical beds (or a vanilla hospital) slows contagion and eases convalescence. Drafting outside that room can slip recovery.
+[*] [b]Lingering weakness[/b] — some recoveries leave a long-tail hediff (less likely if convalescence ended in an infirmary).
+[*] [b]Codex[/b] — optional notebook that records the current research project. Off by default.
+[*] [b]Notebook resume[/b] — a Codex notebook can set the colony's current research back to what it stored.
+[*] [b]Graduation gift[/b] — finishing an apprenticeship can leave a notebook of the current project.
+[*] [b]Archive[/b] — shelves for the notes. Codex on: researcher dies, shelves still stand, the current project does not slip.
+[*] [b]Chinese and Russian[/b] — body, codex, infirmary, and archive strings.
 [/list]

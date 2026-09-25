@@ -47,6 +47,34 @@ namespace DeepColony
                 defaultDesc = "DC_Codex_RecordDesc".Translate(),
                 action = RecordCurrent,
             };
+            yield return new Command_Action
+            {
+                defaultLabel = "DC_Codex_Resume".Translate(),
+                defaultDesc = "DC_Codex_ResumeDesc".Translate(),
+                action = ResumeStored,
+            };
+        }
+
+        private void ResumeStored()
+        {
+            if (string.IsNullOrEmpty(projectDefName))
+            {
+                Messages.Message("DC_Codex_Empty".Translate(), MessageTypeDefOf.RejectInput);
+                return;
+            }
+            ResearchProjectDef proj = DefDatabase<ResearchProjectDef>.GetNamedSilentFail(projectDefName);
+            if (proj == null)
+            {
+                Messages.Message("DC_Codex_Unknown".Translate(projectDefName), MessageTypeDefOf.RejectInput);
+                return;
+            }
+            if (proj.IsFinished)
+            {
+                Messages.Message("DC_Codex_AlreadyDone".Translate(proj.LabelCap), MessageTypeDefOf.NeutralEvent);
+                return;
+            }
+            Find.ResearchManager.SetCurrentProject(proj);
+            Messages.Message("DC_Codex_Resumed".Translate(proj.LabelCap), parent, MessageTypeDefOf.TaskCompletion);
         }
 
         private void RecordCurrent()

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <TerrainDef ParentName="FloorBase">
+    <defName>Strata_PackedHaulway</defName>
+    <label>packed haulway</label>
+    <description>Tamped gravel and board on the run from stockpile to stair. A pawn actually carrying a stack moves faster here than on dirt — empty hands do not. A loading dock at the shaft still helps the last armful onto the stairs.</description>
+    <texturePath>Terrain/Surfaces/PackedDirt</texturePath>
+    <renderPrecedence>227</renderPrecedence>
+    <pathCost>0</pathCost>
+    <statBases>
+      <WorkToBuild>280</WorkToBuild>
+      <Flammability>0</Flammability>
+      <Beauty>0</Beauty>
+    </statBases>
+    <costList>
+      <WoodLog>1</WoodLog>
+      <Steel>1</Steel>
+    </costList>
+    <researchPrerequisites Inherit="False" />
+  </TerrainDef>
+</Defs>

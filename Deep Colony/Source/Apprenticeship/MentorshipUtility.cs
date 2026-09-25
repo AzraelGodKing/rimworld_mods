@@ -206,6 +206,44 @@ namespace DeepColony
                 new LookTargets(apprentice, mentor),
                 MessageTypeDefOf.PositiveEvent,
                 false);
+
+            TryGiftCodexNotebook(mentor, apprentice);
+        }
+
+        private static void TryGiftCodexNotebook(Pawn mentor, Pawn apprentice)
+        {
+            if (!DeepColonySettings.Get.enableCodex)
+            {
+                return;
+            }
+            if (apprentice?.Map == null || !apprentice.Spawned)
+            {
+                return;
+            }
+            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail("DC_CodexNotebook");
+            if (def == null)
+            {
+                return;
+            }
+            Thing book = ThingMaker.MakeThing(def);
+            CompCodexNotebook comp = book.TryGetComp<CompCodexNotebook>();
+            if (comp != null)
+            {
+                ResearchProjectDef cur = Find.ResearchManager.GetProject();
+                if (cur != null && !cur.IsFinished)
+                {
+                    comp.projectDefName = cur.defName;
+                }
+            }
+            if (GenPlace.TryPlaceThing(book, apprentice.Position, apprentice.Map, ThingPlaceMode.Near))
+            {
+                Messages.Message(
+                    "DC_Codex_GraduationGift".Translate(
+                        apprentice.LabelShort.Named("APPRENTICE"),
+                        mentor.LabelShort.Named("MENTOR")),
+                    book,
+                    MessageTypeDefOf.PositiveEvent);
+            }
         }
 
         private static void TryInheritMentorPassion(Pawn mentor, Pawn apprentice, SkillDef focus)

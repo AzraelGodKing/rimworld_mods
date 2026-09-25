@@ -138,7 +138,7 @@ namespace Strata
                         continue;
                     }
                     Job job = JobMaker.MakeJob(StrataDefOf.Strata_HaulToLevel, thing, portal);
-                    job.count = thing.stackCount;
+                    job.count = HaulRelayCapacity.CountForStairHaul(hauler, thing, portal);
                     hauler.jobs.TryTakeOrderedJob(job, JobTag.Misc);
                     issued++;
                 }

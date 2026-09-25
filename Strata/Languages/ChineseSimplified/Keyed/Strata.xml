@@ -278,6 +278,10 @@
   <Strata_GasWellNoVent>下方无深层气体喷口——没有产出。</Strata_GasWellNoVent>
   <Strata_ShoringInspect>在 {0} 格范围内加固岩顶。</Strata_ShoringInspect>
   <Strata_OreHoistNeedsPartner>需要另一楼层的相连伙伴吊车。</Strata_OreHoistNeedsPartner>
+  <Strata_DumbwaiterNeedsPartner>需要另一楼层的相连舱口。</Strata_DumbwaiterNeedsPartner>
+  <Strata_DumbwaiterHauling>正在把货物送到相连舱口。</Strata_DumbwaiterHauling>
+  <Strata_DumbwaiterExtended>餐梯已在相连楼层打开舱口。</Strata_DumbwaiterExtended>
+  <Strata_FreightLiftPowered>已通电 — 正在向相连楼层运送货物。</Strata_FreightLiftPowered>
   <Strata_OreHoistPowered>已通电 — 正在向伙伴楼层运送矿石块。</Strata_OreHoistPowered>
   <Strata_OreHoistNeedsPowerSkip>需要电力以运行吊斗。</Strata_OreHoistNeedsPowerSkip>
   <Strata_SumpNeedsPower>需要电力才能抽水。</Strata_SumpNeedsPower>

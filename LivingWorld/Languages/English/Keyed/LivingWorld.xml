@@ -20,6 +20,8 @@
   <LivingWorld_Settings_WarSitesDesc>After decisive NPC battles, spawn short-lived battlefield / refugee-camp pins on the world map (not Nemesis hunt sites).</LivingWorld_Settings_WarSitesDesc>
   <LivingWorld_Settings_Warband>Pass-through warbands</LivingWorld_Settings_Warband>
   <LivingWorld_Settings_WarbandDesc>Rare hostile or tense warbands chasing a war you heard about. Off by default — keep cautious.</LivingWorld_Settings_WarbandDesc>
+  <LivingWorld_Settings_RoadHazards>Route hazards on the road</LivingWorld_Settings_RoadHazards>
+  <LivingWorld_Settings_RoadHazardsDesc>Season and biome on tiles you already walked. Mud, heat, cold, or wind. Way-camps make it rarer. Off the road, nothing fires.</LivingWorld_Settings_RoadHazardsDesc>
   <LivingWorld_Settings_Verbosity>News verbosity</LivingWorld_Settings_Verbosity>
   <LivingWorld_Verbosity_Low>Low (major only)</LivingWorld_Verbosity_Low>
   <LivingWorld_Verbosity_Medium>Medium (contact / nearby / allies)</LivingWorld_Verbosity_Medium>
@@ -93,6 +95,16 @@
   <LivingWorld_Chronicle_Empty>No world events recorded yet.</LivingWorld_Chronicle_Empty>
   <LivingWorld_Chronicle_Corrected>(corrected)</LivingWorld_Chronicle_Corrected>
   <LivingWorld_Chronicle_AllChannels>all channels</LivingWorld_Chronicle_AllChannels>
+  <LivingWorld_LetterLabel_RoadStretch>The road</LivingWorld_LetterLabel_RoadStretch>
+  <LivingWorld_LetterText_RoadStretch>Your caravans have now walked {0} world tiles. Living World will remember that trail as the road — later expeditions and route hazards use it.</LivingWorld_LetterText_RoadStretch>
+  <LivingWorld_WayCamp_Inspect>A way-camp on your road. Overnight rest here is a little easier.</LivingWorld_WayCamp_Inspect>
+  <LivingWorld_RoadVeteran>{0} has the look of someone who has walked the road for a long time.</LivingWorld_RoadVeteran>
+  <LivingWorld_LetterLabel_RouteHazard>The road</LivingWorld_LetterLabel_RouteHazard>
+  <LivingWorld_LetterText_RouteHazard>{0} hit {1} on a stretch they already walked. The march takes it out of them. A way-camp would have helped.</LivingWorld_LetterText_RouteHazard>
+  <LivingWorld_Hazard_Mud>mud</LivingWorld_Hazard_Mud>
+  <LivingWorld_Hazard_Heat>heat</LivingWorld_Hazard_Heat>
+  <LivingWorld_Hazard_Cold>cold</LivingWorld_Hazard_Cold>
+  <LivingWorld_Hazard_Wind>wind</LivingWorld_Hazard_Wind>
 
   <LivingWorld_WarSite_BattlefieldInspect>Recent battlefield debris from an off-map war.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>A temporary refugee camp spawned by distant fighting.</LivingWorld_WarSite_RefugeeCampInspect>

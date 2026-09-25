@@ -20,6 +20,8 @@
   <LivingWorld_Settings_WarSitesDesc>После решающих битв NPC на мировой карте появляются краткие метки поля боя / лагеря беженцев (не охотничьи точки Nemesis).</LivingWorld_Settings_WarSitesDesc>
   <LivingWorld_Settings_Warband>Проходящие отряды</LivingWorld_Settings_Warband>
   <LivingWorld_Settings_WarbandDesc>Редкие враждебные или напряжённые отряды преследуют войну, о которой вы слышали. По умолчанию выкл — осторожнее.</LivingWorld_Settings_WarbandDesc>
+  <LivingWorld_Settings_RoadHazards>Препятствия на дороге</LivingWorld_Settings_RoadHazards>
+  <LivingWorld_Settings_RoadHazardsDesc>Сезон и биом на уже пройденных клетках: грязь, жара, холод, ветер. Придорожный стан делает это реже. С чужой дороги не стреляет.</LivingWorld_Settings_RoadHazardsDesc>
   <LivingWorld_Settings_Verbosity>Подробность новостей</LivingWorld_Settings_Verbosity>
   <LivingWorld_Verbosity_Low>Низкая (только важное)</LivingWorld_Verbosity_Low>
   <LivingWorld_Verbosity_Medium>Средняя (контакт / рядом / союзники)</LivingWorld_Verbosity_Medium>
@@ -93,6 +95,16 @@
   <LivingWorld_Chronicle_Empty>Пока нет записей о мире.</LivingWorld_Chronicle_Empty>
   <LivingWorld_Chronicle_Corrected>(исправлено)</LivingWorld_Chronicle_Corrected>
   <LivingWorld_Chronicle_AllChannels>все каналы</LivingWorld_Chronicle_AllChannels>
+  <LivingWorld_LetterLabel_RoadStretch>Дорога</LivingWorld_LetterLabel_RoadStretch>
+  <LivingWorld_LetterText_RoadStretch>Караваны прошли уже {0} клеток мира. Living World запомнит этот след как дорогу — дальше по ней пойдут экспедиции и угрозы пути.</LivingWorld_LetterText_RoadStretch>
+  <LivingWorld_WayCamp_Inspect>Придорожный стан на вашей дороге. Ночёвка здесь чуть легче.</LivingWorld_WayCamp_Inspect>
+  <LivingWorld_RoadVeteran>У {0} вид человека, долго шедшего по дороге.</LivingWorld_RoadVeteran>
+  <LivingWorld_LetterLabel_RouteHazard>Дорога</LivingWorld_LetterLabel_RouteHazard>
+  <LivingWorld_LetterText_RouteHazard>{0} попал(а) в {1} на уже пройденном участке. Марш выматывает. Стан помог бы.</LivingWorld_LetterText_RouteHazard>
+  <LivingWorld_Hazard_Mud>грязь</LivingWorld_Hazard_Mud>
+  <LivingWorld_Hazard_Heat>жару</LivingWorld_Hazard_Heat>
+  <LivingWorld_Hazard_Cold>холод</LivingWorld_Hazard_Cold>
+  <LivingWorld_Hazard_Wind>ветер</LivingWorld_Hazard_Wind>
 
   <LivingWorld_WarSite_BattlefieldInspect>Свежие обломки поля боя с войны за картой.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>Временный лагерь беженцев от далёких боёв.</LivingWorld_WarSite_RefugeeCampInspect>

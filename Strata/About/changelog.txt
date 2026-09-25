@@ -2,11 +2,15 @@
 [h1]Strata — 3.6.0[/h1]
 [b]Fixed[/b]
 [list]
-[*] [b]Assigned beds[/b] — pawns commuting between floors no longer nap in a free bunk on the current floor when their assigned bed is elsewhere.
-[*] [b]Underground fog[/b] — new rock floors start unexplored; mining opens the dug chamber instead of fogging the walls you just broke.
-[*] [b]See-below colours[/b] — drawing the map below no longer updates that floor's mesh on the live camera (the RGB / artefact break with two or more floors).
+[*] [b]Assigned beds on other floors[/b] — yielding to a rest commute no longer keeps a free local bunk.
+[*] [b]Underground fog invert[/b] — fog after deferred rock fill; mining flood-unfogs the dug cell.
+[*] [b]See-below colour artefacts[/b] — no longer redraw the lower map while drawing the one you are looking at.
 [/list]
 [b]Added[/b]
 [list]
-[*] [b]Loading dock[/b] — stand beside one to carry extra mass onto the stairs (first slice of the movement / haul-relay update).
+[*] [b]Loading dock[/b] — a pad by the shaft. Stair hauls count that extra mass from the stockpile, not only when you already stand on the pad.
+[*] [b]Packed haulway[/b] — tamped run from stockpile to stair. Faster only while you are actually carrying a stack (Homesteader packed gravel counts too).
+[*] [b]Dumbwaiter[/b] — one-tile hatch. Meals and stacks, not people. No power. Slower than the ore skip.
+[*] [b]Handcart / sledge[/b] — they live in inventory, so they take the stairs. More mass, slower walk. Homesteader crates at a dock add a little extra.
+[*] [b]Freight lift[/b] — powered goods shaft. Stormproof brownout slows the cycle before it dies.
 [/list]

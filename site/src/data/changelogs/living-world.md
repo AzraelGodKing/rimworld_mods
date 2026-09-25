@@ -1,19 +1,15 @@
 # Changelog
 
-## [1.1.0]
+## [1.0.0]
 
-Player-facing version **1.1.0** (`About.xml` `modVersion`). Stamp `chronicle-rumour-v1`.
+Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `road-hazard-v1`.
 
 AZR-84 AZR-85 AZR-205
 
 ### Added
 - **Chronicle tab** (AZR-84) — world history UI with faction and hear-channel filters. CN/RU keys.
 - **Rumour distortion** (AZR-85) — far news can arrive wrong and later correct in the chronicle.
-- **The road** (AZR-205 first slice) — remember player caravan tiles.
-
-## [1.0.0]
-
-Player-facing version **1.0.0**. Startup writes `[LivingWorld] v1.0.0 loaded from ...` in Player.log (`update-news-v1`).
+- **The road** (AZR-205) — letter after eight unique caravan tiles; way-camps on a stretch they already walked; road-worn hediff on long trips. Route hazards (mud/heat/cold/wind) on that trail; camps make them rarer.
 
 ### Fixed
 - **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Living World.
@@ -21,8 +17,7 @@ Player-facing version **1.0.0**. Startup writes `[LivingWorld] v1.0.0 loaded fro
 ### Changed
 - **CI zip** — Living World is not release-ready; CI no longer builds or publishes `LivingWorld.zip`.
 
-### Added
-
+### Also
 - **Chinese and Russian** — Keyed packs plus DefInjected for the Listening Post scenario, incidents, and world objects (parity with English).
 - **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 - **Unlisted docs page** — `docs/living-world.html` with `noindex` (not linked from the public hub).

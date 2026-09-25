@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -31,7 +32,22 @@ namespace DeepColony
                     continue;
                 }
                 Hediff infection = pawn.health.hediffSet.hediffs.Find(h => h.def.makesAlert && h.def.isBad && h.def.lethalSeverity > 0f && h.Severity > 0.35f);
-                if (infection != null && conval != null && pawn.health.hediffSet.GetFirstHediffOfDef(conval) == null && Rand.Chance(0.08f))
+                Hediff convalHediff = conval != null ? pawn.health.hediffSet.GetFirstHediffOfDef(conval) : null;
+                Room room = pawn.GetRoom();
+                bool infirmary = BodyRooms.IsInfirmary(room);
+                if (convalHediff != null && infirmary)
+                {
+                    convalHediff.Severity = Math.Max(0.05f, convalHediff.Severity - 0.04f);
+                }
+                if (convalHediff != null && pawn.Drafted && !infirmary)
+                {
+                    convalHediff.Severity = Math.Min(1f, convalHediff.Severity + 0.08f);
+                    if (Rand.Chance(0.12f))
+                    {
+                        Messages.Message("DC_Body_Relapse".Translate(pawn.LabelShortCap), pawn, MessageTypeDefOf.NegativeEvent);
+                    }
+                }
+                if (infection != null && conval != null && convalHediff == null && Rand.Chance(0.08f))
                 {
                     pawn.health.AddHediff(conval);
                 }
@@ -39,11 +55,11 @@ namespace DeepColony
                 {
                     continue;
                 }
-                Room room = pawn.GetRoom();
                 if (room == null || room.PsychologicallyOutdoors)
                 {
                     continue;
                 }
+                float spread = infirmary ? 0.012f : 0.04f;
                 for (int j = 0; j < pawns.Count; j++)
                 {
                     Pawn other = pawns[j];
@@ -51,7 +67,7 @@ namespace DeepColony
                     {
                         continue;
                     }
-                    if (Rand.Chance(0.04f) && other.health.hediffSet.GetFirstHediffOfDef(infection.def) == null)
+                    if (Rand.Chance(spread) && other.health.hediffSet.GetFirstHediffOfDef(infection.def) == null)
                     {
                         Hediff copy = HediffMaker.MakeHediff(infection.def, other);
                         copy.Severity = 0.12f;

@@ -8,7 +8,7 @@ namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "body-codex-v1";
+        public const string BuildStamp = "body-codex-v4";
         public const string SourceRevision = "b22c43a";
 
         public static void LogStartup()
