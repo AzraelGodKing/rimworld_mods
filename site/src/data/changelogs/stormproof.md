@@ -2,6 +2,11 @@
 
 Detailed notes for **Stormproof** only.
 
+## [1.5.0]
+
+### Changed
+- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+
 ## [1.3.1]
 
 Player-facing version **1.3.1** (`About.xml` `modVersion`). Stamp `storm-call-tick-v1`.
@@ -57,6 +62,12 @@ Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[Sto
 - **Brownout cooler Harmony** — `CompTempControl` has no `CompTickRare` in 1.6, so the patch hit a null method. Brownout now prefixes `Building_Heater.TickRare` and `Building_Cooler.TickRare`.
 
 ## [Unreleased]
+
+
+## [1.5.0]
+
+### Changed
+- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
 
 Player-facing version **1.0.1** (`About.xml` `modVersion`). Startup writes `[Stormproof] v1.0.1 loaded from ...` in Player.log.
 

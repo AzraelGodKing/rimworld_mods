@@ -2,6 +2,11 @@
 
 Detailed notes for **Date Night** only. ## [Unreleased]
 
+## [1.4.0]
+
+### Changed
+- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+
 Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.1.1 loaded from ...` in Player.log (`update-news-v1`).
 
 ### Added

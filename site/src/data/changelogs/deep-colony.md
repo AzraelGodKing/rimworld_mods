@@ -2,13 +2,10 @@
 
 Detailed notes for Deep Colony only.
 
-## [1.7.1]
+## [1.8.0]
 
-AZR-345 (About.xml bump pending explicit yes).
-
-### Fixed
-- **Archive graphic** — `Graphic_Multi` on dresser atlas (was `Graphic_Single` → missing tex).
-- **Codex notebook graphic** — `Things/Item/Book/Textbook/Textbook` (1.6; `Things/Item/Book/Book` gone).
+### Changed
+- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
 
 ## [1.7.0]
 

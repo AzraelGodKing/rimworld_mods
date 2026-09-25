@@ -2,6 +2,11 @@
 
 Foundation by **Dredd (Misakabob)** — original design, persistent antagonist pawn, escape/capture loop, aggression pacing, assaults, waste drops, fixation/prison-break triggers, resolution dialog, and settings. Credited with gratitude; this monorepo package extends that work.
 
+## [1.3.0]
+
+### Changed
+- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+
 ## [1.1.1]
 
 Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.1.1 loaded from ...` in Player.log (`return-heal-v1`).
