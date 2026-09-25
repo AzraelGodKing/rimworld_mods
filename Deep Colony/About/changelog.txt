@@ -1,13 +1,4 @@
-1.7.1
-[h1]Deep Colony — 1.7.1[/h1]
-[b]Fixed[/b]
-[list]
-[*] [b]Archive graphic[/b] — uses dresser multi atlas (was Graphic_Single on a multi path — pink missing tex) (AZR-345).
-[*] [b]Codex notebook graphic[/b] — Textbook path; Things/Item/Book/Book is gone in 1.6 (AZR-345).
-[/list]
-
-1.7.0
-[h1]Deep Colony — 1.7.0[/h1]
+1.8.0
 [b]Added[/b]
 [list]
 [*] [b]The body[/b] — optional contagion in-room and convalescence. Off by default.

@@ -2,6 +2,11 @@
 
 Detailed notes for **Niceties** only.
 
+## [1.4.0]
+
+### Changed
+- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+
 ## [1.2.0]
 
 Player-facing version **1.2.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.2.0 loaded from ...; leave-a-way-out-v1` in Player.log.
