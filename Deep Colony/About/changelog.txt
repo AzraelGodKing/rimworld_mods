@@ -1,12 +1,4 @@
 1.8.0
-[h1]Deep Colony — 1.8.0[/h1]
-[b]Changed[/b]
-[list]
-[*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
-[/list]
-
-1.7.0
-[h1]Deep Colony — 1.7.0[/h1]
 [b]Added[/b]
 [list]
 [*] [b]The body[/b] — optional contagion in-room and convalescence. Off by default.

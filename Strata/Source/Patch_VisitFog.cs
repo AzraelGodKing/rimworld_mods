@@ -47,17 +47,23 @@ namespace Strata
 
     // Mining a fog blocker should open the adjacent walkable cells. Vanilla
     // does this; VisitFog's Refog on leftover rock made dug walls look inverted.
+    // 1.6: Notify_FogBlockerRemoved(Thing) — was IntVec3. AZR-345.
     [HarmonyPatch(typeof(FogGrid), nameof(FogGrid.Notify_FogBlockerRemoved))]
     public static class Patch_VisitFog_BlockerRemoved
     {
-        public static void Postfix(FogGrid __instance, IntVec3 c)
+        public static void Postfix(FogGrid __instance, Thing thing)
         {
+            if (thing == null)
+            {
+                return;
+            }
+
             Map map = Patch_VisitFog.MapField(__instance);
             if (map == null || !StrataMapUtility.IsUnderground(map))
             {
                 return;
             }
-            FloodFillerFog.FloodUnfog(c, map);
+            FloodFillerFog.FloodUnfog(thing.Position, map);
         }
     }
 }
