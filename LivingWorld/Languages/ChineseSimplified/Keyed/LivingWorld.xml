@@ -20,6 +20,8 @@
   <LivingWorld_Settings_WarSitesDesc>NPC 决战后，在世界地图上生成短暂的战场 / 难民营图钉（不是 Nemesis 狩猎点）。</LivingWorld_Settings_WarSitesDesc>
   <LivingWorld_Settings_Warband>过境战团</LivingWorld_Settings_Warband>
   <LivingWorld_Settings_WarbandDesc>罕见的敌对或紧张战团，追击你听说过的那场战争。默认关闭——请谨慎。</LivingWorld_Settings_WarbandDesc>
+  <LivingWorld_Settings_RoadHazards>路上的路况</LivingWorld_Settings_RoadHazards>
+  <LivingWorld_Settings_RoadHazardsDesc>已经走过的格子上按季节和生物群系：泥、热、冷、风。路营会让它更少。没走过的路不触发。</LivingWorld_Settings_RoadHazardsDesc>
   <LivingWorld_Settings_Verbosity>新闻详细程度</LivingWorld_Settings_Verbosity>
   <LivingWorld_Verbosity_Low>低（仅重大）</LivingWorld_Verbosity_Low>
   <LivingWorld_Verbosity_Medium>中（接触 / 附近 / 盟友）</LivingWorld_Verbosity_Medium>
@@ -97,6 +99,12 @@
   <LivingWorld_LetterText_RoadStretch>商队已走过 {0} 个世界格。Living World 会把这条足迹记为道路，之后的远征与路途风险会用到它。</LivingWorld_LetterText_RoadStretch>
   <LivingWorld_WayCamp_Inspect>道路上的路营。在此过夜稍易恢复。</LivingWorld_WayCamp_Inspect>
   <LivingWorld_RoadVeteran>{0} 一副走了很远路的样子。</LivingWorld_RoadVeteran>
+  <LivingWorld_LetterLabel_RouteHazard>路</LivingWorld_LetterLabel_RouteHazard>
+  <LivingWorld_LetterText_RouteHazard>{0} 在已经走过的路段碰上了{1}。这一程把人掏空了。有路营会好过些。</LivingWorld_LetterText_RouteHazard>
+  <LivingWorld_Hazard_Mud>泥</LivingWorld_Hazard_Mud>
+  <LivingWorld_Hazard_Heat>热</LivingWorld_Hazard_Heat>
+  <LivingWorld_Hazard_Cold>冷</LivingWorld_Hazard_Cold>
+  <LivingWorld_Hazard_Wind>风</LivingWorld_Hazard_Wind>
 
   <LivingWorld_WarSite_BattlefieldInspect>近期地图外战争留下的战场残骸。</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>远方战事催生的临时难民营。</LivingWorld_WarSite_RefugeeCampInspect>

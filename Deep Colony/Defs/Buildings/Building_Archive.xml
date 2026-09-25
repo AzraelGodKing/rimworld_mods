@@ -3,7 +3,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>DC_Archive</defName>
     <label>colony archive</label>
-    <description>Shelves that keep written knowledge in the colony. When Codex is on, losing a skilled researcher does not eat current research progress if an archive still stands.</description>
+    <description>Wooden shelves for the colony's notes. With Codex on, if a researcher dies and these still stand, the current project does not slip. Burn the archive and the next death can cost you the work.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Things/Building/Furniture/Dresser</texPath>

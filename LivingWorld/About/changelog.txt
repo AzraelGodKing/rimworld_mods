@@ -1,8 +1,12 @@
-1.2.0
-[h1]Living World — 1.2.0[/h1]
+1.0.0
+[h1]Living World — 1.0.0[/h1]
 [b]Added[/b]
 [list]
+[*] [b]Chronicle tab[/b] — world history with faction and hear-channel filters.
+[*] [b]Rumour distortion[/b] — far news can arrive wrong and later correct in the chronicle.
 [*] [b]The road[/b] — a letter once your caravans have walked eight unique tiles.
-[*] [b]Way-camps[/b] — every fourth unique tile can found a camp; overnight rest there is a little easier.
+[*] [b]Way-camps[/b] — every fourth unique tile can found a camp on a stretch they already walked. Overnight rest is a little easier — not a settlement.
 [*] [b]Road-worn[/b] — long-running caravans can pick up a hediff: slightly faster on the march, fades over a season.
+[*] [b]Route hazards[/b] — mud, heat, cold, or wind on tiles you already walked. Way-camps make it rarer. Rest and food take a hit; road-worn pawns take less. Toggle in Mod Options.
+[*] [b]Chinese and Russian[/b] — chronicle and rumour strings.
 [/list]

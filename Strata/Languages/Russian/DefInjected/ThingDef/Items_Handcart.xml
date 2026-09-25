@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <Strata_Handcart.label>тележка</Strata_Handcart.label>
-  <Strata_Handcart.description>Двухколёсная тележка. В инвентаре грузчика: больше массы, медленнее шаг, проходит по лестницам.</Strata_Handcart.description>
+  <Strata_Handcart.description>Двухколёсная тележка на грузчике. За рейс больше, шаг как у того, кто несёт. Это предмет, не машина — лестницы и лифт проходят.</Strata_Handcart.description>
   <Strata_Sledge.label>сани</Strata_Sledge.label>
-  <Strata_Sledge.description>Ещё больше груза, чем у тележки, ещё медленнее. Едет в лифте как предмет.</Strata_Sledge.description>
+  <Strata_Sledge.description>Зимние сани. Больше тележки, медленнее тележки. Всё ещё предмет — едут в лифте в чьём-то рюкзаке.</Strata_Sledge.description>
 </LanguageData>

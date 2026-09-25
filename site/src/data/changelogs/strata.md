@@ -1,25 +1,13 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.7.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.7.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.6.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.6.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `logistics-v1` in `StrataBuildInfo.BuildStamp`.
-
-## [3.7.0]
-
-Player-facing version **3.7.0** (`About.xml` `modVersion`). Stamp `logistics-v1`.
-
-AZR-202
-
-### Added
-- **Packed haulway** (AZR-202) — carrying a stack on packed haulway (or Homesteader packed gravel) is faster.
-- **Dumbwaiter** (AZR-202) — unpowered 1×1 item hatch to the linked floor.
-- **Handcart / sledge** (AZR-202) — inventory capacity vs speed; Homesteader crates get a dock bonus.
-- **Freight lift** (AZR-202) — powered item shaft; Stormproof brownout lengthens the cycle.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `haul-dock-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [3.6.0]
 
-Player-facing version **3.6.0** (`About.xml` `modVersion`). Stamp `floors-fog-bed-v1`.
+Player-facing version **3.6.0** (`About.xml` `modVersion`). Stamp `haul-dock-v1`.
 
 AZR-237 AZR-235 AZR-236 AZR-202
 
@@ -29,7 +17,11 @@ AZR-237 AZR-235 AZR-236 AZR-202
 - **See-below colour artefacts** (AZR-236) — no longer run `MapMeshDrawerUpdate_First` on the lower map while drawing the current one.
 
 ### Added
-- **Loading dock** (AZR-202 first slice) — extra carry mass beside a dock.
+- **Loading dock** (AZR-202) — extra carry mass beside a dock, and stair-haul jobs use that mass from the stockpile if the shaft has a dock.
+- **Packed haulway** (AZR-202) — faster only while carrying a stack (Homesteader packed gravel counts). Empty hands do not.
+- **Dumbwaiter** (AZR-202) — unpowered one-tile hatch. Meals and stacks, not people.
+- **Handcart / sledge** (AZR-202) — inventory, so they take the stairs; more mass, slower walk. Homesteader crates at a dock add a little extra.
+- **Freight lift** (AZR-202) — powered shaft; Stormproof brownout slows the cycle before it dies.
 
 ## [3.5.0]
 

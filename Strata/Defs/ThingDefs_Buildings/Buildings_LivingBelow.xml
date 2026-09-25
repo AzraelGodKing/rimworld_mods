@@ -5,7 +5,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ShoringPillar</defName>
     <label>shoring pillar</label>
-    <description>A reinforced stone column that holds up excavated rock like a vanilla column, but braces twice as wide a span. Protects against cave-ins and roof collapse over a large chamber — wide workings still need several pillars.</description>
+    <description>Stone you leave standing. It braces about twice the span of a vanilla column. A wide hall still wants several — one pillar does not hold a whole roof.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <drawSize>(0.5,1.25)</drawSize>
@@ -60,7 +60,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_GasAirlock</defName>
     <label>gas airlock</label>
-    <description>A sealed wall fitting that blocks room-to-room gas equalization when engaged. Colonists can still walk through — only the atmosphere is stopped. Flick to open for ventilation or close to isolate a pocket of foul air.</description>
+    <description>A sealed wall piece. On, rooms stop mixing air and people still walk through. Off, it is a hole. Use it to keep a poison pocket where it is.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/GasAirlock</texPath>
@@ -101,7 +101,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_OreHoist</defName>
     <label>ore skip hoist</label>
-    <description>A powered skip that hauls mined chunks and slag to a linked partner hoist on the level above or below. Build within five tiles of a stairwell or elevator — it extends a matching skip to the landing on the other level, like a shaft conduit.</description>
+    <description>A powered skip for chunks and slag. Build within five tiles of stairs or an elevator; the other landing grows a matching skip and they talk to each other.</description>
     <thingClass>Strata.Building_OreHoist</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/OreHoist</texPath>
@@ -144,7 +144,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_Dumbwaiter</defName>
     <label>dumbwaiter</label>
-    <description>A cheap 1×1 item shaft. No pawns — only hauled goods. Build within five tiles of stairs or an elevator; a matching hatch appears on the linked floor. Unpowered and slower than the ore skip, but it will move meals, medicine, and other stacks, not just chunks.</description>
+    <description>One-tile hatch. Food, medicine, stacks — not people. Five tiles of stairs or elevator, matching hatch on the other floor. No power. Slower than the ore skip.</description>
     <thingClass>Strata.Building_OreHoist</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/CargoLift</texPath>
@@ -183,7 +183,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_FreightLift</defName>
     <label>freight lift</label>
-    <description>A powered goods shaft. Faster than the dumbwaiter, items only — colonists still take the stairs. Stormproof brownouts slow the cycle before they stop it. Build within five tiles of stairs or an elevator.</description>
+    <description>Powered goods shaft. Faster than the dumbwaiter; still no passengers. Stormproof brownout slows the cycle before it dies. Five tiles of stairs or elevator.</description>
     <thingClass>Strata.Building_OreHoist</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/OreHoist</texPath>
@@ -232,7 +232,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_FungusFarm</defName>
     <label>fungus farm</label>
-    <description>A dark grow bed for edible cave fungus. Works underground or in unlit rooms, slowly consuming carbon dioxide and releasing a little oxygen while producing harvestable mushrooms.</description>
+    <description>A dark bed for cave mushrooms. No sun needed. It eats a little CO₂, leaks a little oxygen, and you harvest the crop.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/FungusFarm</texPath>
@@ -270,7 +270,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_SumpPump</defName>
     <label>sump pump</label>
-    <description>A powered pump that drains groundwater seep from excavated floors. Clears shallow flood water in a radius while running — essential when a level starts taking on water from below.</description>
+    <description>Powered pump. Pulls seep and shallow flood off excavated floor in a radius. When a level starts taking water from below, this is the thing you wanted yesterday.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/SumpPump</texPath>
@@ -316,7 +316,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_MineLamp</defName>
     <label>mine lamp</label>
-    <description>An enclosed electric lamp for deep workings. Provides bright light without an open flame — safe to run near gas seeps where torches would be suicide.</description>
+    <description>Sealed electric lamp. Bright, no open flame. Run it next to a gas seep; a torch there is how you write the next letter home.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/MineLamp</texPath>
@@ -361,7 +361,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_ShaftBellows</defName>
     <label>shaft bellows</label>
-    <description>Hand-operated bellows beside a stairwell. No power required — they slowly boost oxygen rising and carbon dioxide sinking through an open shaft, weaker than a powered gas exchanger but enough for a small crew.</description>
+    <description>Hand bellows by a stair. No power. They nudge oxygen up the shaft and CO₂ down. Weaker than a powered exchanger; enough for a small crew.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/ShaftBellows</texPath>
@@ -405,7 +405,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_LimeScrubber</defName>
     <label>lime scrubber</label>
-    <description>A tray of lime that slowly absorbs carbon dioxide from a sealed room. Consumes lime over time; no electricity needed — the oldest trick for keeping stale mine air breathable.</description>
+    <description>A tray of lime. It eats CO₂ in a sealed room and the lime goes with it. No power. Oldest trick that still works.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/LimeScrubber</texPath>
@@ -457,7 +457,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_MethaneFlare</defName>
     <label>methane flare</label>
-    <description>A controlled flare stack that burns buoyant firedamp out of a sealed room before it can flash on a torch. Powered; keep it away from deep-gas pockets you still want to extract.</description>
+    <description>Powered flare. Burns light firedamp out of a sealed room before a torch does it for you. Keep it off pockets you still mean to tap.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/ExhaustFan</texPath>
@@ -506,7 +506,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_BlackDampScrubber</defName>
     <label>black-damp scrubber</label>
-    <description>Pulls stale black damp out of a sealed room and meters a little oxygen back in. Use after gas fires, or in flooded pits where the air has gone dead.</description>
+    <description>Pulls dead black damp out of a sealed room and meters a little oxygen back. After a gas fire, or a flooded pit where the air just stopped.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/CO2Pump</texPath>
@@ -557,7 +557,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_SporeFilter</defName>
     <label>spore filter</label>
-    <description>Cloth and charcoal filters that scrub airborne fungal spores from a sealed room. Pair with fungus farms and fungal warren clearances so colonists keep their lungs.</description>
+    <description>Cloth and charcoal. Scrubs fungal spores out of a sealed room. Run it with the farms and the warren jobs if you want lungs that last.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/LimeScrubber</texPath>
@@ -606,7 +606,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_SteamCondenser</defName>
     <label>steam condenser</label>
-    <description>Cooled plates that condense geothermal steam out of a sealed room. Keeps geyser chambers and volcanic warrens from filling with scalding haze.</description>
+    <description>Cooled plates. Steam from a geyser chamber or volcanic warren hits them and drops out as water instead of scalding haze.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/OxygenPump</texPath>

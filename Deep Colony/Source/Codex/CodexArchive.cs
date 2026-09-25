@@ -5,6 +5,8 @@ using Verse;
 
 namespace DeepColony
 {
+    // When convalescence wears off it can leave lingering weakness.
+    // Infirmary recoveries roll that less often.
     public class HediffCompProperties_LeaveChronic : HediffCompProperties
     {
         public HediffCompProperties_LeaveChronic()
@@ -38,6 +40,9 @@ namespace DeepColony
 
     public static class CodexArchive
     {
+        // Researcher died with Codex on and no archive on the map → the
+        // current project slips. An archive still standing means the notes
+        // survived. Do not touch progress if Codex is off.
         public static bool MapHasArchive(Map map)
         {
             if (map == null)

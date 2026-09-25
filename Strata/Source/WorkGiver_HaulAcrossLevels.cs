@@ -119,7 +119,7 @@ namespace Strata
 
             HaulToLevelTargets.Remember(pawn, destMap, pawn.Map, preferArrivalNear: storeCell);
             Job job = JobMaker.MakeJob(StrataDefOf.Strata_HaulToLevel, t, portal);
-            job.count = t.stackCount;
+            job.count = HaulRelayCapacity.CountForStairHaul(pawn, t, portal);
             return job;
         }
 

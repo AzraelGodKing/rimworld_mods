@@ -204,8 +204,9 @@ namespace Azrael.ModChecks
                 Index(nested);
         }
 
-        // Directory.GetFiles order is not stable. Unity.TextMeshPro ships a nested
-        // type named Frame; prefer Verse/RimWorld so Harmony lookups hit the game.
+        // Directory.GetFiles order is not stable. TextMeshPro has a nested type
+        // named Frame. Prefer Verse / RimWorld or Harmony thinks Frame.CompleteConstruction
+        // is missing when it is sitting on RimWorld.Frame.
         static int NameLookupRank(TypeDefinition t)
         {
             string ns = t.Namespace ?? "";

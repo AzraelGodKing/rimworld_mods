@@ -5,11 +5,14 @@ using Verse;
 
 namespace LivingWorld
 {
-    // AZR-205 first slice — remember player caravan tiles as "the road".
+    // Tiles player caravans actually walked. That trail is "the road" —
+    // letters, way-camps, and later hazards hang off it. Not a painted
+    // world-path overlay.
     public class GameComponent_LivingWorldRoad : GameComponent
     {
         private List<int> roadTiles = new List<int>();
         private bool stretchLetterSent;
+        private int lastHazardTick = -999999;
 
         public GameComponent_LivingWorldRoad(Game game)
         {
@@ -19,6 +22,7 @@ namespace LivingWorld
         {
             Scribe_Collections.Look(ref roadTiles, "lwRoadTiles", LookMode.Value);
             Scribe_Values.Look(ref stretchLetterSent, "lwRoadLetterSent", false);
+            Scribe_Values.Look(ref lastHazardTick, "lwRoadHazardTick", -999999);
             roadTiles ??= new List<int>();
         }
 
@@ -62,7 +66,19 @@ namespace LivingWorld
                 {
                     TryMarkVeterans(c, veteran);
                 }
+                LivingWorldRoadHazards.TryOn(c, this);
             }
+        }
+
+        public bool TryConsumeHazardCooldown(int minTicks)
+        {
+            int now = Find.TickManager.TicksGame;
+            if (now - lastHazardTick < minTicks)
+            {
+                return false;
+            }
+            lastHazardTick = now;
+            return true;
         }
 
         private static void TryMarkVeterans(Caravan caravan, HediffDef veteran)

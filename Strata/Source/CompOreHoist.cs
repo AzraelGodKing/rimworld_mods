@@ -12,6 +12,8 @@ namespace Strata
 
         public int maxItemsPerTransfer = 5;
 
+        // Ore skip: chunks and slag only. Dumbwaiter / freight lift: any
+        // haulable stack except corpses.
         public bool chunksOnly = true;
 
         public CompProperties_OreHoist()

@@ -15,7 +15,7 @@
   <WorldObjectDef>
     <defName>LivingWorld_WayCamp</defName>
     <label>way-camp</label>
-    <description>A camp your caravans founded on a known stretch of road. Resting here overnight recovers a little faster.</description>
+    <description>A camp your caravans founded on a stretch of road they already walked. Overnight rest here is a little easier — not a settlement, not a war scar.</description>
     <worldObjectClass>LivingWorld.WorldObject_LivingWorldWayCamp</worldObjectClass>
     <texture>World/WorldObjects/Expanding/Sites</texture>
     <expandingIcon>true</expandingIcon>

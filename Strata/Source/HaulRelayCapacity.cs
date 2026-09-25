@@ -2,11 +2,15 @@ using System;
 using HarmonyLib;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace Strata
 {
-    // AZR-202 first slice — extra carry mass at a loading dock so the haul
-    // relay moves more than one armful per stair trip.
+    // Extra carry at a dock so a stair trip is more than one armful.
+    // Handcart / sledge in inventory: more mass, slower walk — they ride
+    // the shaft because they are items, not a second pawn. Homesteader
+    // crates at the dock add a little more if that mod is in; without it
+    // the crate check just does nothing.
     internal static class HaulRelayCapacity
     {
         private const float DockBonusKg = 35f;
@@ -18,13 +22,20 @@ namespace Strata
                 return 0f;
             }
             float bonus = 0f;
-            if (NearDock(pawn.Position, pawn.Map))
+            bool pawnAtDock = NearDock(pawn.Position, pawn.Map);
+            if (pawnAtDock)
             {
                 bonus += DockBonusKg;
                 if (HasHomesteaderCrate(pawn))
                 {
                     bonus += 15f;
                 }
+            }
+            else if (StairJobPortalNearDock(pawn))
+            {
+                // Shaft has a dock: one trip from the stockpile, not an armful
+                // that only fattens when you already stand on the pad.
+                bonus += DockBonusKg;
             }
             if (HasCart(pawn, "Strata_Handcart"))
             {
@@ -96,7 +107,7 @@ namespace Strata
             {
                 return false;
             }
-            // Homesteader packed gravel is the same idea — fail-open if that mod is absent.
+            // Homesteader packed gravel is the same idea. No Homesteader → skip.
             return t.defName == "Strata_PackedHaulway"
                 || t.defName == "Homesteader_PackedGravel";
         }
@@ -104,6 +115,52 @@ namespace Strata
         public static bool IsCarryingHaul(Pawn pawn)
         {
             return pawn?.carryTracker?.CarriedThing != null;
+        }
+
+        public static bool StairJobPortalNearDock(Pawn pawn)
+        {
+            Job job = pawn?.jobs?.curJob;
+            if (job == null || job.def != StrataDefOf.Strata_HaulToLevel)
+            {
+                return false;
+            }
+            Thing portal = job.targetB.Thing;
+            return portal != null && portal.Spawned && NearDock(portal.Position, portal.Map);
+        }
+
+        public static int CountForStairHaul(Pawn pawn, Thing t, MapPortal portal)
+        {
+            if (pawn == null || t == null)
+            {
+                return 1;
+            }
+            float cap = MassUtility.Capacity(pawn);
+            if (portal != null && portal.Spawned
+                && !NearDock(pawn.Position, pawn.Map)
+                && NearDock(portal.Position, portal.Map))
+            {
+                cap += DockBonusKg;
+            }
+            float used = MassUtility.GearAndInventoryMass(pawn);
+            float mass = t.GetStatValue(StatDefOf.Mass);
+            int n;
+            if (mass <= 0.0001f)
+            {
+                n = t.stackCount;
+            }
+            else
+            {
+                n = (int)((cap - used) / mass);
+            }
+            if (n < 1)
+            {
+                n = 1;
+            }
+            if (n > t.stackCount)
+            {
+                n = t.stackCount;
+            }
+            return n;
         }
 
         public static bool NearDock(IntVec3 cell, Map map)

@@ -3,7 +3,7 @@
   <TerrainDef ParentName="FloorBase">
     <defName>Strata_PackedHaulway</defName>
     <label>packed haulway</label>
-    <description>Tamped gravel and board for loaded haulers. Pawns carrying a stack move faster on this than on dirt. Pair with a loading dock at the stair.</description>
+    <description>Tamped gravel and board on the run from stockpile to stair. A pawn actually carrying a stack moves faster here than on dirt — empty hands do not. A loading dock at the shaft still helps the last armful onto the stairs.</description>
     <texturePath>Terrain/Surfaces/PackedDirt</texturePath>
     <renderPrecedence>227</renderPrecedence>
     <pathCost>0</pathCost>

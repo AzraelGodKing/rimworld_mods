@@ -5,6 +5,7 @@ namespace DeepColony
 {
     public class RoomRoleWorker_Infirmary : RoomRoleWorker
     {
+        // Score medical beds; cleanliness is a tie-break, not the role.
         public override float GetScore(Room room)
         {
             if (room == null || room.PsychologicallyOutdoors)

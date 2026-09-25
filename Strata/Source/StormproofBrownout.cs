@@ -4,7 +4,9 @@ using Verse;
 
 namespace Strata
 {
-    // Fail-open: Stormproof brownout slows the freight lift; no Stormproof → 0.
+    // Stormproof brownout stretches the freight-lift cycle. No Stormproof,
+    // or no map component yet → full speed. Do not stall the lift because
+    // a sister mod is missing.
     internal static class StormproofBrownout
     {
         public static float For(Thing thing)

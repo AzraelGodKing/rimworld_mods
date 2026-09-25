@@ -6,7 +6,7 @@
     <RootNamespace>DeepColony</RootNamespace>
     <AssemblyName>DeepColony</AssemblyName>
     <Version>1.8.0</Version>
-    <InformationalVersion>1.8.0+body-codex-v4</InformationalVersion>
+    <InformationalVersion>1.7.0+body-codex-v4</InformationalVersion>
     <OutputPath>../Assemblies/</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <DebugType>none</DebugType>

@@ -3,5 +3,5 @@
   <LivingWorld_WarSite.label>шрам войны</LivingWorld_WarSite.label>
   <LivingWorld_WarSite.description>Краткий след битвы за картой — обломки, лагеря или спорная земля. Не личная точка Nemesis.</LivingWorld_WarSite.description>
   <LivingWorld_WayCamp.label>придорожный стан</LivingWorld_WayCamp.label>
-  <LivingWorld_WayCamp.description>Лагерь, который ваши караваны основали на известном участке дороги. Ночёвка здесь чуть быстрее восстанавливает силы.</LivingWorld_WayCamp.description>
+  <LivingWorld_WayCamp.description>Лагерь, который караван основал на уже пройденной дороге. Ночёвка чуть легче — не поселение и не шрам войны.</LivingWorld_WayCamp.description>
 </LanguageData>

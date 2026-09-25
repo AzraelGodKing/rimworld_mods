@@ -3,7 +3,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Strata_Handcart</defName>
     <label>handcart</label>
-    <description>A two-wheel cart. Keep it in a hauler's inventory: they carry much more, walk slower, and can take it through the stairs.</description>
+    <description>A two-wheel cart you keep on a hauler. They take more in one trip and they walk like it. It goes through stairs and elevators because it is inventory, not a vehicle.</description>
     <graphicData>
       <texPath>Strata/Buildings/CargoLift</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -36,7 +36,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>Strata_Sledge</defName>
     <label>sledge</label>
-    <description>A winter sledge. Even more capacity than a handcart, even slower. Rides the elevator as inventory.</description>
+    <description>A winter sledge. More than a handcart will hold, slower than a handcart will walk. Still just an item — it rides the elevator in someone's pack.</description>
     <graphicData>
       <texPath>Strata/Buildings/CargoLift</texPath>
       <graphicClass>Graphic_Single</graphicClass>
