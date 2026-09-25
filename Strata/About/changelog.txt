@@ -1,8 +1,18 @@
+<<<<<<< HEAD
 3.8.0
 [h1]Strata — 3.8.0[/h1]
 [b]Changed[/b]
 [list]
 [*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+=======
+3.6.1
+[h1]Strata — 3.6.1[/h1]
+[b]Fixed[/b]
+[list]
+[*] [b]Packed haulway / cart move[/b] — Harmony matches 1.6 float TicksPerMove (AZR-345).
+[*] [b]Mining unfog[/b] — fog-blocker notify takes Thing in 1.6; dig cells unfog again (AZR-345).
+[*] [b]Harmony failure letter[/b] — no longer NRE if Find is not ready yet (AZR-345).
+>>>>>>> fdd247c (AZR-345: fix Strata 1.6 Harmony patches and Deep Colony graphics)
 [/list]
 
 3.6.0

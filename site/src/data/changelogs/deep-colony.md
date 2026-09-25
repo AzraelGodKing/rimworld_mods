@@ -7,6 +7,10 @@ Detailed notes for Deep Colony only.
 ### Changed
 - **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
 
+### Fixed
+- **Archive graphic** — `Graphic_Multi` on dresser atlas (was `Graphic_Single` → missing tex) (AZR-345).
+- **Codex notebook graphic** — `Things/Item/Book/Textbook/Textbook` (1.6; `Things/Item/Book/Book` gone) (AZR-345).
+
 ## [1.7.0]
 
 Player-facing version **1.7.0** (`About.xml` `modVersion`). Stamp `body-codex-v4`.

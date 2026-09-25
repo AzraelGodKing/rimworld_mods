@@ -10,6 +10,11 @@ Player-facing release notes for Strata (Steam Workshop style).
 ### Changed
 - **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
 
+### Fixed
+- **Packed haulway / cart move** — `Pawn.TicksPerMove` is float in 1.6; Harmony postfix matched (AZR-345).
+- **Mining unfog** — `FogGrid.Notify_FogBlockerRemoved(Thing)` signature; dig cells unfog again (AZR-345).
+- **Harmony failure letter** — Shared `SafePatchAll` no longer NRE when `Find` is not ready (AZR-345).
+
 ## [3.6.0]
 
 Player-facing version **3.6.0** (`About.xml` `modVersion`). Stamp `haul-dock-v1`.

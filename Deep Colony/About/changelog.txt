@@ -4,6 +4,11 @@
 [list]
 [*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
 [/list]
+[b]Fixed[/b]
+[list]
+[*] [b]Archive graphic[/b] — uses dresser multi atlas (was Graphic_Single on a multi path — pink missing tex) (AZR-345).
+[*] [b]Codex notebook graphic[/b] — Textbook path; Things/Item/Book/Book is gone in 1.6 (AZR-345).
+[/list]
 
 1.7.0
 [h1]Deep Colony — 1.7.0[/h1]
