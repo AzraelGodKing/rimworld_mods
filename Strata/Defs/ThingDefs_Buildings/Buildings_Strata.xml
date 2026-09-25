@@ -1031,7 +1031,7 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
   <ThingDef ParentName="BuildingBase">
     <defName>Strata_LoadingDock</defName>
     <label>loading dock</label>
-    <description>A staging pad beside a stockpile. Pawns standing here can carry extra mass onto the stairs (haul-relay capacity).</description>
+    <description>A pad by a stockpile. Stand here and a hauler takes more onto the stairs than their arms would allow — one trip, not a parade of armfuls.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Strata/Buildings/CargoLift</texPath>

@@ -4,13 +4,15 @@ Detailed notes for Deep Colony only.
 
 ## [1.7.0]
 
-Player-facing version **1.7.0** (`About.xml` `modVersion`). Stamp `body-codex-v1`.
+Player-facing version **1.7.0** (`About.xml` `modVersion`). Stamp `body-codex-v4`.
 
 AZR-203 AZR-204
 
 ### Added
-- **The body** (`body-codex-v1`, AZR-203 first slice) — optional contagion in-room + convalescence hediff. Off by default.
-- **Codex** (AZR-204 first slice) — optional notebook that records the current research project. Off by default. CN/RU for body + Codex.
+- **The body** (`body-codex-v1`, AZR-203) — optional contagion in-room + convalescence hediff. Off by default.
+- **Infirmary / lingering weakness** (AZR-203) — medical-bed rooms (or vanilla hospital) slow contagion and ease convalescence; drafting outside can relapse; some recoveries leave a long-tail hediff.
+- **Codex** (AZR-204) — optional notebook that records the current research project. Off by default.
+- **Codex resume, graduation gift, archive** (AZR-204) — notebook can resume stored research; apprenticeship can drop a notebook; archive shelves keep the current project if a researcher dies (Codex on). CN/RU.
 
 ## [1.6.8]
 

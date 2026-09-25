@@ -13,6 +13,7 @@
         <disappearsAfterTicks>60000~120000</disappearsAfterTicks>
         <showRemainingTime>true</showRemainingTime>
       </li>
+      <li Class="DeepColony.HediffCompProperties_LeaveChronic"/>
     </comps>
     <stages>
       <li>
@@ -25,6 +26,32 @@
           <li>
             <capacity>Moving</capacity>
             <offset>-0.06</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>DC_Hediff_LingeringWeakness</defName>
+    <label>lingering weakness</label>
+    <description>The illness is gone; the body is not fully back. Managed, not cured — rest and an infirmary help.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <chronic>true</chronic>
+    <initialSeverity>0.35</initialSeverity>
+    <maxSeverity>1</maxSeverity>
+    <stages>
+      <li>
+        <label>lingering</label>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.04</offset>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.03</offset>
           </li>
         </capMods>
       </li>

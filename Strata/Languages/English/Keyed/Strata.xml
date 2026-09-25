@@ -278,6 +278,10 @@
   <Strata_GasWellNoVent>No deep gas vent below - producing nothing.</Strata_GasWellNoVent>
   <Strata_ShoringInspect>Reinforces rock ceiling within {0} tiles.</Strata_ShoringInspect>
   <Strata_OreHoistNeedsPartner>Needs a linked partner hoist on another level.</Strata_OreHoistNeedsPartner>
+  <Strata_DumbwaiterNeedsPartner>Needs a linked hatch on another level.</Strata_DumbwaiterNeedsPartner>
+  <Strata_DumbwaiterHauling>Moving stacks to the linked hatch.</Strata_DumbwaiterHauling>
+  <Strata_DumbwaiterExtended>Dumbwaiter opened a hatch on the linked level.</Strata_DumbwaiterExtended>
+  <Strata_FreightLiftPowered>Powered — shuttling stacks to the linked floor.</Strata_FreightLiftPowered>
   <Strata_OreHoistPowered>Powered — shuttling ore chunks to partner level.</Strata_OreHoistPowered>
   <Strata_OreHoistNeedsPowerSkip>Needs power to run the skip.</Strata_OreHoistNeedsPowerSkip>
   <Strata_SumpNeedsPower>Needs power to pump water.</Strata_SumpNeedsPower>

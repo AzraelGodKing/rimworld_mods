@@ -277,6 +277,10 @@
   <Strata_GasWellNoVent>Нет жерла глубинного газа внизу — ничего не производится.</Strata_GasWellNoVent>
   <Strata_ShoringInspect>Укрепляет каменный потолок в радиусе {0} клеток.</Strata_ShoringInspect>
   <Strata_OreHoistNeedsPartner>Нужен связанный парный подъёмник на другом уровне.</Strata_OreHoistNeedsPartner>
+  <Strata_DumbwaiterNeedsPartner>Нужен связанный люк на другом уровне.</Strata_DumbwaiterNeedsPartner>
+  <Strata_DumbwaiterHauling>Передаёт стопки на связанный люк.</Strata_DumbwaiterHauling>
+  <Strata_DumbwaiterExtended>Кухонный подъёмник открыл люк на связанном уровне.</Strata_DumbwaiterExtended>
+  <Strata_FreightLiftPowered>Под питанием — переправляет стопки на связанный этаж.</Strata_FreightLiftPowered>
   <Strata_OreHoistPowered>Под питанием — переправляет куски руды на парный уровень.</Strata_OreHoistPowered>
   <Strata_OreHoistNeedsPowerSkip>Нужно питание для работы бадьи.</Strata_OreHoistNeedsPowerSkip>
   <Strata_SumpNeedsPower>Нужно питание, чтобы качать воду.</Strata_SumpNeedsPower>

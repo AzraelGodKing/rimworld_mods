@@ -3,7 +3,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>DC_CodexNotebook</defName>
     <label>colony notebook</label>
-    <description>A bound notebook. When Codex is enabled in Deep Colony, a scholar can record the colony's current research here. Burnable and stealable.</description>
+    <description>A bound notebook. With Codex on, write the current project into it — or resume from it later. It burns. It can be stolen.</description>
     <graphicData>
       <texPath>Things/Item/Book/Book</texPath>
       <graphicClass>Graphic_Single</graphicClass>

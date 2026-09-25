@@ -13,6 +13,7 @@ namespace LivingWorld
         public bool tradeBlackoutEnabled = true;
         public bool warSitesEnabled = true;
         public bool warbandFalloutEnabled = false;
+        public bool roadHazardsEnabled = true;
 
         /// <summary>0 = major only, 1 = medium, 2 = high.</summary>
         public int newsVerbosity = 1;
@@ -37,6 +38,7 @@ namespace LivingWorld
             Scribe_Values.Look(ref tradeBlackoutEnabled, "tradeBlackoutEnabled", true);
             Scribe_Values.Look(ref warSitesEnabled, "warSitesEnabled", true);
             Scribe_Values.Look(ref warbandFalloutEnabled, "warbandFalloutEnabled", false);
+            Scribe_Values.Look(ref roadHazardsEnabled, "roadHazardsEnabled", true);
             Scribe_Values.Look(ref newsVerbosity, "newsVerbosity", 1);
             Scribe_Values.Look(ref tickInterval, "tickInterval", 10000);
             Scribe_Values.Look(ref resolutionsPerPulse, "resolutionsPerPulse", 1);
@@ -57,6 +59,7 @@ namespace LivingWorld
             tradeBlackoutEnabled = true;
             warSitesEnabled = true;
             warbandFalloutEnabled = false;
+            roadHazardsEnabled = true;
             newsVerbosity = 1;
             tickInterval = 10000;
             resolutionsPerPulse = 1;
@@ -89,6 +92,8 @@ namespace LivingWorld
                 "LivingWorld_Settings_WarSitesDesc".Translate());
             listing.CheckboxLabeled("LivingWorld_Settings_Warband".Translate(), ref s.warbandFalloutEnabled,
                 "LivingWorld_Settings_WarbandDesc".Translate());
+            listing.CheckboxLabeled("LivingWorld_Settings_RoadHazards".Translate(), ref s.roadHazardsEnabled,
+                "LivingWorld_Settings_RoadHazardsDesc".Translate());
             listing.GapLine();
 
             listing.Label("LivingWorld_Settings_Verbosity".Translate() + ": "

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Strata_Handcart.label>手推车</Strata_Handcart.label>
+  <Strata_Handcart.description>两轮车，挂在搬运工身上。一趟能多装，走起来也像那么回事。是物品不是车，所以能上楼梯、进电梯。</Strata_Handcart.description>
+  <Strata_Sledge.label>雪橇</Strata_Sledge.label>
+  <Strata_Sledge.description>冬天的雪橇。比手推车更能装，也更慢。还是物品——跟着某人的背包坐电梯。</Strata_Sledge.description>
+</LanguageData>

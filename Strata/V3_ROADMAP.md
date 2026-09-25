@@ -29,7 +29,7 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 ## Logistics & combat toys
 
-- [ ] **Dumbwaiter** — cheap early 1×1 item-only mini-shaft (no pawns); early sibling of the ore hoist
+- [x] **Dumbwaiter** — cheap early 1×1 item-only mini-shaft (no pawns); early sibling of the ore hoist
 - [ ] **Collapse trap** — player-rigged tunnel cave-in on pursuers
 
 ## UX & story content
