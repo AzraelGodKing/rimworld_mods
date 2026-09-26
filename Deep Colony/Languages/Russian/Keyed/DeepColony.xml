@@ -149,8 +149,6 @@
   <DC_PerkOverview_ColStatus>Статус</DC_PerkOverview_ColStatus>
   <DC_PerkOverview_Unspent>Непотраченные очки</DC_PerkOverview_Unspent>
   <DC_PerkOverview_CaughtUp>В курсе</DC_PerkOverview_CaughtUp>
-  <DC_Alert_UnspentPerks>Непотраченные очки перков</DC_Alert_UnspentPerks>
-  <DC_Alert_UnspentPerksDesc>У этих колонистов больше суток лежат непотраченные очки перков. Откройте их дерево перков (или вкладку Перки), чтобы потратить.</DC_Alert_UnspentPerksDesc>
   <DC_Epithet_TrustedPartners>Репутация: надёжные партнёры</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>Репутация: приветливые соседи</DC_Epithet_Cordial>
   <DC_Epithet_DeepEnmity>Репутация: глубокая вражда</DC_Epithet_DeepEnmity>

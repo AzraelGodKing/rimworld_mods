@@ -149,8 +149,6 @@
   <DC_PerkOverview_ColStatus>状态</DC_PerkOverview_ColStatus>
   <DC_PerkOverview_Unspent>未花费点数</DC_PerkOverview_Unspent>
   <DC_PerkOverview_CaughtUp>已跟上</DC_PerkOverview_CaughtUp>
-  <DC_Alert_UnspentPerks>未花费的专长点</DC_Alert_UnspentPerks>
-  <DC_Alert_UnspentPerksDesc>这些殖民者已有超过一天未花费的专长点。打开其专长树（或专长标签页）进行分配。</DC_Alert_UnspentPerksDesc>
   <DC_Epithet_TrustedPartners>声望：可信伙伴</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>声望：和睦邻邦</DC_Epithet_Cordial>
   <DC_Epithet_DeepEnmity>声望：深仇大恨</DC_Epithet_DeepEnmity>
