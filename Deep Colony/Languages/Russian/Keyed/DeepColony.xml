@@ -149,8 +149,6 @@
   <DC_PerkOverview_ColStatus>Статус</DC_PerkOverview_ColStatus>
   <DC_PerkOverview_Unspent>Непотраченные очки</DC_PerkOverview_Unspent>
   <DC_PerkOverview_CaughtUp>В курсе</DC_PerkOverview_CaughtUp>
-  <DC_Alert_UnspentPerks>Непотраченные очки перков</DC_Alert_UnspentPerks>
-  <DC_Alert_UnspentPerksDesc>У этих колонистов больше суток лежат непотраченные очки перков. Откройте их дерево перков (или вкладку Перки), чтобы потратить.</DC_Alert_UnspentPerksDesc>
   <DC_Epithet_TrustedPartners>Репутация: надёжные партнёры</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>Репутация: приветливые соседи</DC_Epithet_Cordial>
   <DC_Epithet_DeepEnmity>Репутация: глубокая вражда</DC_Epithet_DeepEnmity>
@@ -195,6 +193,7 @@
   <DC_RepNoEnvoy>Посланник: нет</DC_RepNoEnvoy>
   <DC_RepEnvoyShort>посланник {0}</DC_RepEnvoyShort>
   <DC_RepLedgerHeader>Журнал (сначала новые)</DC_RepLedgerHeader>
+  <DC_RepReasonTotals>Итого по причинам</DC_RepReasonTotals>
   <DC_RepLedgerEmpty>Записей о репутации пока нет.</DC_RepLedgerEmpty>
   <DC_RepLedgerLine>{0}: {1} ×{2}  (~{3} дн. назад)</DC_RepLedgerLine>
   <DC_RepReason_Other>Прочее</DC_RepReason_Other>
@@ -432,6 +431,7 @@
   <DC_ChronicleFounder>Фамилия основателей: {0}</DC_ChronicleFounder>
   <DC_ChroniclePeople>Живые колонисты ({0})</DC_ChroniclePeople>
   <DC_ChronicleHeirlooms>Наследие</DC_ChronicleHeirlooms>
+  <DC_ChronicleReputation>Репутация</DC_ChronicleReputation>
   <DC_ChronicleCopied>Хроника колонии скопирована в буфер.</DC_ChronicleCopied>
   <DC_ChronicleExported>Хроника колонии скопирована и сохранена в {PATH}.</DC_ChronicleExported>
   <DC_ChronicleFooter>Записано Deep Colony.</DC_ChronicleFooter>

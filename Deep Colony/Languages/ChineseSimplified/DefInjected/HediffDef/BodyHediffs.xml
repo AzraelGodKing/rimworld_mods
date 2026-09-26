@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <DC_Hediff_Convalescence.label>康复期</DC_Hediff_Convalescence.label>
+  <DC_Hediff_Convalescence.description>仍在恢复。宜轻活——过早征召以后可能复发。</DC_Hediff_Convalescence.description>
+  <DC_Hediff_Convalescence.stages_0.label>康复中</DC_Hediff_Convalescence.stages_0.label>
+  <DC_Hediff_LingeringWeakness.label>残留虚弱</DC_Hediff_LingeringWeakness.label>
+  <DC_Hediff_LingeringWeakness.description>病已退去，身体尚未完全回来。可控，未根除——休息与医务室有帮助。</DC_Hediff_LingeringWeakness.description>
+  <DC_Hediff_LingeringWeakness.stages_0.label>残留</DC_Hediff_LingeringWeakness.stages_0.label>
+</LanguageData>

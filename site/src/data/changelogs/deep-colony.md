@@ -2,6 +2,21 @@
 
 Detailed notes for Deep Colony only.
 
+## [1.8.1]
+
+### Added
+- CN/RU DefInjected for body hediffs, Codex notebook, counseling Ideology precepts/issue, 12 tier-1 perk hediffs, Horror + Isolation thoughts (AZR-306).
+- Reputation tab per-reason ledger totals (AZR-310).
+- Chronicle export includes faction reputation summary when enabled (AZR-309).
+- Clickable pawn names on Legacy and Reputation tabs (Family Tree jump pattern) (AZR-311).
+
+### Changed
+- Player Codex / divorce / envoy / mentor / tribute actions enqueue and apply on the next game tick (MP-safer, no Multiplayer.API) (AZR-307).
+- Assembly InformationalVersion aligned to `1.8.1+body-codex-v4` (AZR-308).
+
+### Fixed
+- Unspent perk points alert removed — perks auto-allocate; alert must never fire (AZR-305).
+
 ## [1.8.0]
 
 ### Changed

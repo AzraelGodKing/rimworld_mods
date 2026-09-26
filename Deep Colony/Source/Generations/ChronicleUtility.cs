@@ -84,6 +84,37 @@ namespace DeepColony
                 }
             }
 
+            if (DeepColonySettings.Get.enableFactionRep && gc != null
+                && Find.FactionManager != null)
+            {
+                sb.AppendLine("DC_ChronicleReputation".Translate());
+                var factions = Find.FactionManager.AllFactionsListForReading;
+                for (int i = 0; i < factions.Count; i++)
+                {
+                    Faction f = factions[i];
+                    if (f == null || f.IsPlayer || f.Hidden || f.defeated) continue;
+                    int gw = f.GoodwillWith(Faction.OfPlayer);
+                    float pending = gc.GetPendingDrift(f);
+                    sb.Append("- ").Append(f.Name)
+                        .Append(" goodwill=").Append(gw.ToString("+0;-0;0"))
+                        .Append(" pending=").Append(pending.ToString("+0.00;-0.00"))
+                        .AppendLine();
+                    foreach (FactionRepReason reason in System.Enum.GetValues(typeof(FactionRepReason)))
+                    {
+                        if (reason == FactionRepReason.Other || reason == FactionRepReason.Debug)
+                            continue;
+                        float sum = gc.SumLedger(f, reason);
+                        if (UnityEngine.Mathf.Abs(sum) < 0.01f) continue;
+                        sb.Append("    ")
+                            .Append(("DC_RepReason_" + reason).Translate())
+                            .Append(": ")
+                            .Append(sum.ToString("+0.00;-0.00"))
+                            .AppendLine();
+                    }
+                }
+                sb.AppendLine();
+            }
+
             sb.AppendLine("DC_ChronicleFooter".Translate());
             return sb.ToString();
         }

@@ -149,8 +149,6 @@
   <DC_PerkOverview_ColStatus>状态</DC_PerkOverview_ColStatus>
   <DC_PerkOverview_Unspent>未花费点数</DC_PerkOverview_Unspent>
   <DC_PerkOverview_CaughtUp>已跟上</DC_PerkOverview_CaughtUp>
-  <DC_Alert_UnspentPerks>未花费的专长点</DC_Alert_UnspentPerks>
-  <DC_Alert_UnspentPerksDesc>这些殖民者已有超过一天未花费的专长点。打开其专长树（或专长标签页）进行分配。</DC_Alert_UnspentPerksDesc>
   <DC_Epithet_TrustedPartners>声望：可信伙伴</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>声望：和睦邻邦</DC_Epithet_Cordial>
   <DC_Epithet_DeepEnmity>声望：深仇大恨</DC_Epithet_DeepEnmity>
@@ -195,6 +193,7 @@
   <DC_RepNoEnvoy>使者：无</DC_RepNoEnvoy>
   <DC_RepEnvoyShort>使者 {0}</DC_RepEnvoyShort>
   <DC_RepLedgerHeader>账本（最新在前）</DC_RepLedgerHeader>
+  <DC_RepReasonTotals>按原因汇总</DC_RepReasonTotals>
   <DC_RepLedgerEmpty>尚无记录的声望事件。</DC_RepLedgerEmpty>
   <DC_RepLedgerLine>{0}：{1} ×{2}  （约 {3} 天前）</DC_RepLedgerLine>
   <DC_RepReason_Other>其他</DC_RepReason_Other>
@@ -432,6 +431,7 @@
   <DC_ChronicleFounder>创始姓氏：{0}</DC_ChronicleFounder>
   <DC_ChroniclePeople>在世殖民者（{0}）</DC_ChroniclePeople>
   <DC_ChronicleHeirlooms>传家宝</DC_ChronicleHeirlooms>
+  <DC_ChronicleReputation>派系声望</DC_ChronicleReputation>
   <DC_ChronicleCopied>殖民地编年史已复制到剪贴板。</DC_ChronicleCopied>
   <DC_ChronicleExported>殖民地编年史已复制并保存到 {PATH}。</DC_ChronicleExported>
   <DC_ChronicleFooter>由 Deep Colony 记录。</DC_ChronicleFooter>
