@@ -73,8 +73,7 @@ namespace DeepColony
                 Messages.Message("DC_Codex_AlreadyDone".Translate(proj.LabelCap), MessageTypeDefOf.NeutralEvent);
                 return;
             }
-            Find.ResearchManager.SetCurrentProject(proj);
-            Messages.Message("DC_Codex_Resumed".Translate(proj.LabelCap), parent, MessageTypeDefOf.TaskCompletion);
+            DeepColonyPlayerCommand.EnqueueResumeCodex(parent);
         }
 
         private void RecordCurrent()
@@ -85,8 +84,7 @@ namespace DeepColony
                 Messages.Message("DC_Codex_NoProject".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
-            projectDefName = cur.defName;
-            Messages.Message("DC_Codex_Wrote".Translate(cur.LabelCap), parent, MessageTypeDefOf.TaskCompletion);
+            DeepColonyPlayerCommand.EnqueueRecordCodex(parent);
         }
     }
 }

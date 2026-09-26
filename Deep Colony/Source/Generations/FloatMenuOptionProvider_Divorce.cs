@@ -29,7 +29,7 @@ namespace DeepColony
 
             yield return new FloatMenuOption(
                 "DC_DivorceFloat".Translate(targetPawn.LabelShort.Named("PAWN")),
-                () => DivorceUtility.TryDivorce(actor, targetPawn));
+                () => DeepColonyPlayerCommand.EnqueueDivorce(actor, targetPawn));
         }
     }
 }

@@ -41,7 +41,7 @@ namespace DeepColony
                 {
                     sub.Add(new FloatMenuOption(
                         "DC_TributeThingTo".Translate(local.Name.Named("FACTION")),
-                        () => TributeUtility.TrySendTributeThing(thing, local)));
+                        () => DeepColonyPlayerCommand.EnqueueTributeThing(thing, local)));
                 }
             }
 

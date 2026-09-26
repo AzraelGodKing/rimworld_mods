@@ -179,4 +179,41 @@
   <DC_Hediff_TraumaDraftPenalty.description>Призван с боевой травмой — точность и концентрация страдают. (Настройки: штрафы травмы при призыве.)</DC_Hediff_TraumaDraftPenalty.description>
   <DC_Hediff_TraumaDraftPenalty.stages_0.label>активно</DC_Hediff_TraumaDraftPenalty.stages_0.label>
 
+  <DC_PerkHediff_SteadyBead.label>верная мушка</DC_PerkHediff_SteadyBead.label>
+  <DC_PerkHediff_SteadyBead.description>Спокойная картинка прицела — точность и время прицеливания лучше.</DC_PerkHediff_SteadyBead.description>
+  <DC_PerkHediff_SteadyBead.stages_0.label>активно</DC_PerkHediff_SteadyBead.stages_0.label>
+  <DC_PerkHediff_SeasonedBrawler.label>опытный драчун</DC_PerkHediff_SeasonedBrawler.label>
+  <DC_PerkHediff_SeasonedBrawler.description>Знает, когда бить и когда ускользнуть.</DC_PerkHediff_SeasonedBrawler.description>
+  <DC_PerkHediff_SeasonedBrawler.stages_0.label>активно</DC_PerkHediff_SeasonedBrawler.stages_0.label>
+  <DC_PerkHediff_CarefulTend.label>аккуратная перевязка</DC_PerkHediff_CarefulTend.label>
+  <DC_PerkHediff_CarefulTend.description>Терпеливая ровная перевязка — лечение быстрее и чище.</DC_PerkHediff_CarefulTend.description>
+  <DC_PerkHediff_CarefulTend.stages_0.label>активно</DC_PerkHediff_CarefulTend.stages_0.label>
+  <DC_PerkHediff_SquareFrame.label>ровный каркас</DC_PerkHediff_SquareFrame.label>
+  <DC_PerkHediff_SquareFrame.description>Конструкции встают ровно.</DC_PerkHediff_SquareFrame.description>
+  <DC_PerkHediff_SquareFrame.stages_0.label>активно</DC_PerkHediff_SquareFrame.stages_0.label>
+  <DC_PerkHediff_SteadyCraft.label>верное ремесло</DC_PerkHediff_SteadyCraft.label>
+  <DC_PerkHediff_SteadyCraft.description>Ритм у верстака.</DC_PerkHediff_SteadyCraft.description>
+  <DC_PerkHediff_SteadyCraft.stages_0.label>активно</DC_PerkHediff_SteadyCraft.stages_0.label>
+  <DC_PerkHediff_CropSense.label>чутьё к урожаю</DC_PerkHediff_CropSense.label>
+  <DC_PerkHediff_CropSense.description>Чувствует, когда растение готово.</DC_PerkHediff_CropSense.description>
+  <DC_PerkHediff_CropSense.stages_0.label>активно</DC_PerkHediff_CropSense.stages_0.label>
+  <DC_PerkHediff_HerdSense.label>чутьё к стаду</DC_PerkHediff_HerdSense.label>
+  <DC_PerkHediff_HerdSense.description>Читает стадо.</DC_PerkHediff_HerdSense.description>
+  <DC_PerkHediff_HerdSense.stages_0.label>активно</DC_PerkHediff_HerdSense.stages_0.label>
+  <DC_PerkHediff_SeamReader.label>чтение жилы</DC_PerkHediff_SeamReader.label>
+  <DC_PerkHediff_SeamReader.description>Видит зерно камня.</DC_PerkHediff_SeamReader.description>
+  <DC_PerkHediff_SeamReader.stages_0.label>активно</DC_PerkHediff_SeamReader.stages_0.label>
+  <DC_PerkHediff_DeepFocus.label>глубокий фокус</DC_PerkHediff_DeepFocus.label>
+  <DC_PerkHediff_DeepFocus.description>Держит задачу в уме, пока она не поддастся.</DC_PerkHediff_DeepFocus.description>
+  <DC_PerkHediff_DeepFocus.stages_0.label>активно</DC_PerkHediff_DeepFocus.stages_0.label>
+  <DC_PerkHediff_EasyManner.label>лёгкая манера</DC_PerkHediff_EasyManner.label>
+  <DC_PerkHediff_EasyManner.description>Располагает людей.</DC_PerkHediff_EasyManner.description>
+  <DC_PerkHediff_EasyManner.stages_0.label>активно</DC_PerkHediff_EasyManner.stages_0.label>
+  <DC_PerkHediff_KitchenRhythm.label>кухонный ритм</DC_PerkHediff_KitchenRhythm.label>
+  <DC_PerkHediff_KitchenRhythm.description>Каждая сковорода на месте.</DC_PerkHediff_KitchenRhythm.description>
+  <DC_PerkHediff_KitchenRhythm.stages_0.label>активно</DC_PerkHediff_KitchenRhythm.stages_0.label>
+  <DC_PerkHediff_PracticedStroke.label>уверенный штрих</DC_PerkHediff_PracticedStroke.label>
+  <DC_PerkHediff_PracticedStroke.description>Рука знает следующую линию.</DC_PerkHediff_PracticedStroke.description>
+  <DC_PerkHediff_PracticedStroke.stages_0.label>активно</DC_PerkHediff_PracticedStroke.stages_0.label>
+
 </LanguageData>

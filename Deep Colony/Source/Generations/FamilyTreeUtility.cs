@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace DeepColony
@@ -79,6 +80,48 @@ namespace DeepColony
                 return;
             }
             CameraJumper.TryJumpAndSelect(pawn);
+        }
+
+        /// <summary>AZR-311 — Label + invisible click → JumpTo, with family-tree tip.</summary>
+        public static void DrawClickablePawnName(Rect rect, Pawn pawn, string label = null)
+        {
+            string text = label ?? (pawn != null ? pawn.LabelShortCap : "");
+            Widgets.Label(rect, text);
+            if (pawn == null) return;
+            TooltipHandler.TipRegion(rect, "DC_FamilyTree_ClickTip".Translate());
+            if (Widgets.ButtonInvisible(rect))
+                JumpTo(pawn);
+        }
+
+        public static Pawn FindPawnById(int id)
+        {
+            if (id <= 0) return null;
+            if (Find.Maps != null)
+            {
+                for (int i = 0; i < Find.Maps.Count; i++)
+                {
+                    Map map = Find.Maps[i];
+                    if (map?.mapPawns?.AllPawns == null) continue;
+                    List<Pawn> pawns = map.mapPawns.AllPawns;
+                    for (int j = 0; j < pawns.Count; j++)
+                    {
+                        if (pawns[j] != null && pawns[j].thingIDNumber == id)
+                            return pawns[j];
+                    }
+                }
+            }
+            if (Find.WorldPawns != null)
+            {
+                foreach (Pawn p in Find.WorldPawns.AllPawnsAlive)
+                {
+                    if (p != null && p.thingIDNumber == id) return p;
+                }
+                foreach (Pawn p in Find.WorldPawns.AllPawnsDead)
+                {
+                    if (p != null && p.thingIDNumber == id) return p;
+                }
+            }
+            return null;
         }
 
         public static string RelationLabel(Pawn focus, Pawn other)

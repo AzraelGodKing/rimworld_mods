@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -122,10 +123,16 @@ namespace DeepColony
             dy += 22f;
 
             Pawn selectedEnvoy = FactionEnvoyUtility.FindEnvoy(selected);
-            Widgets.Label(new Rect(inner.x, dy, inner.width, 22f),
-                selectedEnvoy != null
-                    ? "DC_RepEnvoy".Translate(selectedEnvoy.LabelShort)
-                    : "DC_RepNoEnvoy".Translate());
+            Rect envoyRect = new Rect(inner.x, dy, inner.width, 22f);
+            if (selectedEnvoy != null)
+            {
+                FamilyTreeUtility.DrawClickablePawnName(envoyRect, selectedEnvoy,
+                    "DC_RepEnvoy".Translate(selectedEnvoy.LabelShort));
+            }
+            else
+            {
+                Widgets.Label(envoyRect, "DC_RepNoEnvoy".Translate());
+            }
             dy += 24f;
 
             float btnW = 140f;
@@ -139,8 +146,9 @@ namespace DeepColony
                     string label = local.LabelShortCap;
                     if (SoftCompat.HasAnyRoyalTitle(local))
                         label += " " + "DC_EnvoyTitled".Translate();
+                    Faction faction = selected;
                     opts.Add(new FloatMenuOption(label,
-                        () => FactionEnvoyUtility.SetEnvoy(local, selected)));
+                        () => DeepColonyPlayerCommand.EnqueueSetEnvoy(local, faction)));
                 }
                 if (opts.Count == 0)
                 {
@@ -152,7 +160,7 @@ namespace DeepColony
             {
                 Rect clearRect = new Rect(inner.x + btnW + 8f, dy, btnW, 28f);
                 if (Widgets.ButtonText(clearRect, "DC_ClearEnvoyButton".Translate()))
-                    FactionEnvoyUtility.ClearEnvoy(selectedEnvoy);
+                    DeepColonyPlayerCommand.EnqueueClearEnvoy(selectedEnvoy);
             }
             dy += 36f;
 
@@ -160,14 +168,29 @@ namespace DeepColony
             {
                 Rect tributeRect = new Rect(inner.x, dy, btnW + 40f, 28f);
                 if (Widgets.ButtonText(tributeRect, "DC_SendTribute".Translate()))
-                    TributeUtility.TrySendTribute(selected);
+                    DeepColonyPlayerCommand.EnqueueTributeFaction(selected);
                 dy += 36f;
             }
+
+            // AZR-310 — per-reason totals between attitude/envoy controls and ledger.
+            Widgets.Label(new Rect(inner.x, dy, inner.width, 22f), "DC_RepReasonTotals".Translate());
+            dy += 22f;
+            var gc = GameComp_DeepColony.Instance;
+            foreach (FactionRepReason reason in Enum.GetValues(typeof(FactionRepReason)))
+            {
+                if (reason == FactionRepReason.Other || reason == FactionRepReason.Debug) continue;
+                float sum = gc?.SumLedger(selected, reason) ?? 0f;
+                if (Mathf.Abs(sum) < 0.01f) continue;
+                Widgets.Label(new Rect(inner.x + 8f, dy, inner.width - 8f, 20f),
+                    ("DC_RepReason_" + reason).Translate() + ": " + sum.ToString("+0.00;-0.00"));
+                dy += 20f;
+            }
+            dy += 6f;
 
             Widgets.Label(new Rect(inner.x, dy, inner.width, 22f), "DC_RepLedgerHeader".Translate());
             dy += 24f;
 
-            var entries = GameComp_DeepColony.Instance?.GetLedger(selected)?.ToList()
+            var entries = gc?.GetLedger(selected)?.ToList()
                 ?? new List<FactionRepLedgerEntry>();
             Rect ledgerOut = new Rect(inner.x, dy, inner.width, inner.yMax - dy);
             float entryH = 22f;
