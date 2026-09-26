@@ -35,7 +35,7 @@ Deep Colony owns **player↔faction goodwill memory and drift** (raids, trades, 
 ### Phase 1 — Quick wins
 
 - [x] **A04** Perk numeric tooltips
-- [x] **B03** Colony perk overview + idle-points alert
+- [x] **B03** Colony perk overview shipped; idle-points alert permanently disabled (perks auto-allocate; AZR-305)
 - [x] **B19** Skill rust / muscle memory
 - [x] **A18** Grudge / favor epithets
 - [x] **B22** Founder surnames
