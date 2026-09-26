@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <DC_Precept_CounselingSacred.label>священное</DC_Precept_CounselingSacred.label>
+  <DC_Precept_CounselingSacred.description>Говорить о ранах разума — священный долг. Терапия исцеляет быстрее.</DC_Precept_CounselingSacred.description>
+  <DC_Precept_CounselingStoic.label>стоическое</DC_Precept_CounselingStoic.label>
+  <DC_Precept_CounselingStoic.description>Нужно терпеть. Автоматическое консультирование пропускается; травма сама угасает медленнее.</DC_Precept_CounselingStoic.description>
+</LanguageData>

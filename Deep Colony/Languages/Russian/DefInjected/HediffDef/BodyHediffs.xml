@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <DC_Hediff_Convalescence.label>выздоровление</DC_Hediff_Convalescence.label>
+  <DC_Hediff_Convalescence.description>Ещё восстанавливается. Лёгкая служба — слишком ранний призыв грозит рецидивом позже.</DC_Hediff_Convalescence.description>
+  <DC_Hediff_Convalescence.stages_0.label>выздоравливает</DC_Hediff_Convalescence.stages_0.label>
+  <DC_Hediff_LingeringWeakness.label>затяжная слабость</DC_Hediff_LingeringWeakness.label>
+  <DC_Hediff_LingeringWeakness.description>Болезнь ушла; тело ещё не полностью вернулось. Держится, не излечено — отдых и лазарет помогают.</DC_Hediff_LingeringWeakness.description>
+  <DC_Hediff_LingeringWeakness.stages_0.label>затяжное</DC_Hediff_LingeringWeakness.stages_0.label>
+</LanguageData>

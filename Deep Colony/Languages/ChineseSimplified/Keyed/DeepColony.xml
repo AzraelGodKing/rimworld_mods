@@ -193,6 +193,7 @@
   <DC_RepNoEnvoy>使者：无</DC_RepNoEnvoy>
   <DC_RepEnvoyShort>使者 {0}</DC_RepEnvoyShort>
   <DC_RepLedgerHeader>账本（最新在前）</DC_RepLedgerHeader>
+  <DC_RepReasonTotals>按原因汇总</DC_RepReasonTotals>
   <DC_RepLedgerEmpty>尚无记录的声望事件。</DC_RepLedgerEmpty>
   <DC_RepLedgerLine>{0}：{1} ×{2}  （约 {3} 天前）</DC_RepLedgerLine>
   <DC_RepReason_Other>其他</DC_RepReason_Other>
@@ -430,6 +431,7 @@
   <DC_ChronicleFounder>创始姓氏：{0}</DC_ChronicleFounder>
   <DC_ChroniclePeople>在世殖民者（{0}）</DC_ChroniclePeople>
   <DC_ChronicleHeirlooms>传家宝</DC_ChronicleHeirlooms>
+  <DC_ChronicleReputation>派系声望</DC_ChronicleReputation>
   <DC_ChronicleCopied>殖民地编年史已复制到剪贴板。</DC_ChronicleCopied>
   <DC_ChronicleExported>殖民地编年史已复制并保存到 {PATH}。</DC_ChronicleExported>
   <DC_ChronicleFooter>由 Deep Colony 记录。</DC_ChronicleFooter>

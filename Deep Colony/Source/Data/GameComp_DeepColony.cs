@@ -198,6 +198,8 @@ namespace DeepColony
 
         public override void GameComponentTick()
         {
+            DeepColonyPlayerCommand.Drain();
+
             if (DeepColonySettings.Get.enableTrauma)
             {
                 FlashbackUtility.GameTick();

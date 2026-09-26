@@ -32,7 +32,7 @@ namespace DeepColony
             {
                 sub.Add(new FloatMenuOption(
                     "DC_ClearEnvoy".Translate(envoy.LabelShort.Named("PAWN"), current.Name.Named("FACTION")),
-                    () => FactionEnvoyUtility.ClearEnvoy(envoy)));
+                    () => DeepColonyPlayerCommand.EnqueueClearEnvoy(envoy)));
             }
 
             foreach (Faction f in factions.OrderBy(x => x.Name))
@@ -41,7 +41,8 @@ namespace DeepColony
                 string label = "DC_SetEnvoy".Translate(envoy.LabelShort.Named("PAWN"), local.Name.Named("FACTION"));
                 if (current == local)
                     label += " " + "DC_EnvoyCurrent".Translate();
-                sub.Add(new FloatMenuOption(label, () => FactionEnvoyUtility.SetEnvoy(envoy, local)));
+                sub.Add(new FloatMenuOption(label,
+                    () => DeepColonyPlayerCommand.EnqueueSetEnvoy(envoy, local)));
             }
 
             yield return new FloatMenuOption(
