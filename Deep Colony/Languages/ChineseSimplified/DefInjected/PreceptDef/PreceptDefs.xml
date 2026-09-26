@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <DC_Precept_CounselingSacred.label>神圣</DC_Precept_CounselingSacred.label>
+  <DC_Precept_CounselingSacred.description>倾诉心灵创伤是神圣职责。治疗恢复更快。</DC_Precept_CounselingSacred.description>
+  <DC_Precept_CounselingStoic.label>坚忍</DC_Precept_CounselingStoic.label>
+  <DC_Precept_CounselingStoic.description>人当承受。自动辅导会被跳过；创伤自行消退更慢。</DC_Precept_CounselingStoic.description>
+</LanguageData>

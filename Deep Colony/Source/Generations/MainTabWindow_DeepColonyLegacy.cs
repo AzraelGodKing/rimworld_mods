@@ -85,8 +85,15 @@ namespace DeepColony
                 int shown = 0;
                 for (int i = remembrance.Count - 1; i >= 0 && shown < 6; i--, shown++)
                 {
-                    Widgets.Label(new Rect(inRect.x, y, inRect.width, 18f),
-                        "  " + remembrance[i].name);
+                    RemembranceEntry entry = remembrance[i];
+                    Rect remRect = new Rect(inRect.x, y, inRect.width, 18f);
+                    Pawn remPawn = entry.pawnId > 0
+                        ? FamilyTreeUtility.FindPawnById(entry.pawnId)
+                        : null;
+                    if (remPawn != null)
+                        FamilyTreeUtility.DrawClickablePawnName(remRect, remPawn, "  " + entry.name);
+                    else
+                        Widgets.Label(remRect, "  " + entry.name);
                     y += 18f;
                 }
                 y += 6f;
@@ -115,7 +122,7 @@ namespace DeepColony
                     sb.Append(" · perks ").Append(comp.unlockedPerkDefNames.Count);
 
                 float labelW = EstateUtility.Enabled ? view.width - 128f : view.width - 8f;
-                Widgets.Label(new Rect(4f, ry, labelW, rowH), sb.ToString());
+                FamilyTreeUtility.DrawClickablePawnName(new Rect(4f, ry, labelW, rowH), p, sb.ToString());
                 if (EstateUtility.Enabled && comp != null)
                 {
                     Pawn heir = EstateUtility.ResolveNamedHeir(p);

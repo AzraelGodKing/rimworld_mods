@@ -274,4 +274,20 @@
   <DC_Thought_NoisyRoom.stages_1.label>не уснуть из-за шума</DC_Thought_NoisyRoom.stages_1.label>
   <DC_Thought_NoisyRoom.stages_1.description>Пытаются спать рядом с шумом работы. Дом не даёт восстановиться.</DC_Thought_NoisyRoom.stages_1.description>
 
+  <DC_Thought_Horror.label>травма ужаса</DC_Thought_Horror.label>
+  <DC_Thought_Horror.stages_0.label>преследуем(а) пустотой (сырое)</DC_Thought_Horror.stages_0.label>
+  <DC_Thought_Horror.stages_0.description>Что-то нечеловеческое коснулось разума и не уходит.</DC_Thought_Horror.stages_0.description>
+  <DC_Thought_Horror.stages_1.label>переваривает ужас</DC_Thought_Horror.stages_1.label>
+  <DC_Thought_Horror.stages_1.description>Консультирование помогает, но облик сущности всё ещё возвращается ночью.</DC_Thought_Horror.stages_1.description>
+  <DC_Thought_Horror.stages_2.label>угасающий ужас</DC_Thought_Horror.stages_2.label>
+  <DC_Thought_Horror.stages_2.description>Худшее из памяти о пустоте ослабевает.</DC_Thought_Horror.stages_2.description>
+
+  <DC_Thought_Isolation.label>травма изоляции</DC_Thought_Isolation.label>
+  <DC_Thought_Isolation.stages_0.label>в дрейфе (сырое)</DC_Thought_Isolation.stages_0.label>
+  <DC_Thought_Isolation.stages_0.description>Слишком долго в одиночестве вне мира, или обломки гравкорабля.</DC_Thought_Isolation.stages_0.description>
+  <DC_Thought_Isolation.stages_1.label>переваривает изоляцию</DC_Thought_Isolation.stages_1.label>
+  <DC_Thought_Isolation.stages_1.description>Тишина орбиты всё ещё звенит.</DC_Thought_Isolation.stages_1.description>
+  <DC_Thought_Isolation.stages_2.label>угасающая изоляция</DC_Thought_Isolation.stages_2.label>
+  <DC_Thought_Isolation.stages_2.description>Земля и компания медленно убеждают, что они вернулись.</DC_Thought_Isolation.stages_2.description>
+
 </LanguageData>

@@ -66,7 +66,7 @@ namespace DeepColony
                                 captured.LabelCap.Named("SKILL"));
                         yield return new FloatMenuOption(
                             label,
-                            () => MentorshipUtility.SetMentorRelation(actor, targetPawn, captured));
+                            () => DeepColonyPlayerCommand.EnqueueSetMentor(actor, targetPawn, captured));
                     }
                     else
                     {
@@ -85,7 +85,7 @@ namespace DeepColony
                                     captured.LabelCap.Named("SKILL"));
                             sub.Add(new FloatMenuOption(
                                 label,
-                                () => MentorshipUtility.SetMentorRelation(actor, targetPawn, captured)));
+                                () => DeepColonyPlayerCommand.EnqueueSetMentor(actor, targetPawn, captured)));
                         }
 
                         yield return new FloatMenuOption(
@@ -101,7 +101,7 @@ namespace DeepColony
                     yield return new FloatMenuOption(
                         "DC_RemoveMentor".Translate(actor.LabelShort.Named("PAWN"),
                             targetPawn.LabelShort.Named("APPRENTICE")),
-                        () => MentorshipUtility.ClearMentorRelation(actor, targetPawn));
+                        () => DeepColonyPlayerCommand.EnqueueClearMentor(actor, targetPawn));
                 }
 
                 if (MentorshipUtility.RetrainEnabled && targetComp.mentor == actor)
@@ -117,7 +117,7 @@ namespace DeepColony
                                 targetPawn.LabelShort.Named("APPRENTICE"),
                                 from.LabelCap.Named("FROM"),
                                 to.LabelCap.Named("TO")),
-                            () => MentorshipUtility.BeginRetrain(actor, targetPawn, from, to));
+                            () => DeepColonyPlayerCommand.EnqueueBeginRetrain(actor, targetPawn, from, to));
                     }
                 }
             }
