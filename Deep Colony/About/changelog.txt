@@ -10,3 +10,7 @@
 [*] [b]Archive[/b] — shelves for the notes. Codex on: researcher dies, shelves still stand, the current project does not slip.
 [*] [b]Chinese and Russian[/b] — body, codex, infirmary, and archive strings.
 [/list]
+[b]Fixed[/b]
+[list]
+[*] Unspent perk points alert removed — perks auto-allocate; alert must never fire (AZR-305).
+[/list]

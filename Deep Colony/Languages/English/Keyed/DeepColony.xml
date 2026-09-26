@@ -149,8 +149,6 @@
   <DC_PerkOverview_ColStatus>Status</DC_PerkOverview_ColStatus>
   <DC_PerkOverview_Unspent>Unspent points</DC_PerkOverview_Unspent>
   <DC_PerkOverview_CaughtUp>Caught up</DC_PerkOverview_CaughtUp>
-  <DC_Alert_UnspentPerks>Unspent perk points</DC_Alert_UnspentPerks>
-  <DC_Alert_UnspentPerksDesc>These colonists have had unspent perk points for more than a day. Open their perk tree (or the Perks tab) to spend them.</DC_Alert_UnspentPerksDesc>
   <DC_Epithet_TrustedPartners>Reputation: trusted partners</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>Reputation: cordial neighbors</DC_Epithet_Cordial>
   <DC_Epithet_DeepEnmity>Reputation: deep enmity</DC_Epithet_DeepEnmity>
