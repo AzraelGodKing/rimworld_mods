@@ -1,0 +1,98 @@
+{
+  "lastFetched": "2026-09-26T19:24:45.680Z",
+  "mods": {
+    "homesteader": {
+      "name": "Homesteader",
+      "publishedFileId": "3759238501",
+      "title": "Homesteader",
+      "subscriptions": 443,
+      "favorited": 74,
+      "views": 4461,
+      "lifetime_subscriptions": 624,
+      "lifetime_favorited": 82,
+      "nexus_downloads": 365,
+      "nexus_endorsements": 5
+    },
+    "stormproof": {
+      "name": "Stormproof",
+      "publishedFileId": "3760021127",
+      "title": "Stormproof",
+      "subscriptions": 390,
+      "favorited": 49,
+      "views": 1615,
+      "lifetime_subscriptions": 484,
+      "lifetime_favorited": 56,
+      "nexus_downloads": 299,
+      "nexus_endorsements": 6
+    },
+    "strata": {
+      "name": "Strata",
+      "publishedFileId": "3762844292",
+      "title": "Strata",
+      "subscriptions": 2140,
+      "favorited": 493,
+      "views": 12572,
+      "lifetime_subscriptions": 3001,
+      "lifetime_favorited": 535,
+      "nexus_downloads": 190,
+      "nexus_endorsements": 0
+    },
+    "nemesis": {
+      "name": "Nemesis",
+      "publishedFileId": "3773562126",
+      "title": "Nemesis",
+      "subscriptions": 218,
+      "favorited": 53,
+      "views": 1936,
+      "lifetime_subscriptions": 301,
+      "lifetime_favorited": 60,
+      "nexus_downloads": 47,
+      "nexus_endorsements": 0
+    },
+    "deep-colony": {
+      "name": "Deep Colony",
+      "publishedFileId": "3773568314",
+      "title": "Deep Colony",
+      "subscriptions": 298,
+      "favorited": 86,
+      "views": 2857,
+      "lifetime_subscriptions": 379,
+      "lifetime_favorited": 90,
+      "nexus_downloads": 231,
+      "nexus_endorsements": 2
+    },
+    "date-night": {
+      "name": "Date Night",
+      "publishedFileId": "3774158903",
+      "title": "Date Night",
+      "subscriptions": 411,
+      "favorited": 56,
+      "views": 1965,
+      "lifetime_subscriptions": 518,
+      "lifetime_favorited": 62,
+      "nexus_downloads": 94,
+      "nexus_endorsements": 0
+    },
+    "niceties": {
+      "name": "Niceties",
+      "publishedFileId": "3794727164",
+      "title": "Niceties",
+      "subscriptions": 61,
+      "favorited": 15,
+      "views": 939,
+      "lifetime_subscriptions": 80,
+      "lifetime_favorited": 16,
+      "nexus_downloads": 24,
+      "nexus_endorsements": 0
+    }
+  },
+  "site_total": {
+    "subscriptions": 3961,
+    "favorited": 826,
+    "views": 26345,
+    "lifetime_subscriptions": 5387,
+    "lifetime_favorited": 901,
+    "nexus_downloads": 1250,
+    "nexus_endorsements": 13
+  }
+}
