@@ -1,0 +1,19 @@
+{
+  "slug": "stormproof",
+  "name": "Stormproof",
+  "game": "rimworld",
+  "description": "Defend the power grid from flares, lightning, short circuits, EMP, and fallout — then call the storm yourself.",
+  "version": "1.5.0",
+  "screenshots": [
+    "About/Preview.png"
+  ],
+  "download": {
+    "file": "Stormproof.zip",
+    "url": "https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Stormproof.zip"
+  },
+  "links": {
+    "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3760021127",
+    "thunderstore": null,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/702"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "slug": "strata",
+  "name": "Strata",
+  "game": "rimworld",
+  "description": "Dig down, build up, breathe deep. Multistory bases with commuting colonists and Odyssey-ready stacks.",
+  "version": "3.8.0",
+  "screenshots": [
+    "About/Preview.png"
+  ],
+  "download": {
+    "file": "Strata.zip",
+    "url": "https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Strata.zip"
+  },
+  "links": {
+    "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3762844292",
+    "thunderstore": null,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/783"
+  }
+}

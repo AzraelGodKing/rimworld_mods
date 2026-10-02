@@ -1,0 +1,18 @@
+{
+  "slug": "azrael",
+  "name": "Azrael",
+  "game": "rimworld",
+  "description": "Series showcase: The Deep Homestead scenario and Hub health in Mod Options. Canonical Azrael storyteller still ships with Homesteader.",
+  "version": "1.2.0",
+  "screenshots": [
+    "About/Preview.png"
+  ],
+  "download": {
+    "file": "Azrael-1.2.0.zip"
+  },
+  "links": {
+    "steam": null,
+    "thunderstore": null,
+    "nexus": null
+  }
+}

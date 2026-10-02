@@ -1,0 +1,19 @@
+{
+  "slug": "homesteader",
+  "name": "Homesteader",
+  "game": "rimworld",
+  "description": "Tribal pantry, orchard and dairy, wells and irrigation, cool cellars, livestock, and off-grid power for homestead starts.",
+  "version": "1.3.0",
+  "screenshots": [
+    "About/Preview.png"
+  ],
+  "download": {
+    "file": "Homesteader.zip",
+    "url": "https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Homesteader.zip"
+  },
+  "links": {
+    "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3759238501",
+    "thunderstore": null,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/700"
+  }
+}

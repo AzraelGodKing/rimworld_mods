@@ -1,0 +1,19 @@
+{
+  "slug": "niceties",
+  "name": "Niceties",
+  "game": "rimworld",
+  "description": "Small colony comforts: well-kept apparel, throne-room altars, any outfit cut, hidden cryptosleep, melee hunting, shared bedrooms, and leave a way out while building.",
+  "version": "1.4.0",
+  "screenshots": [
+    "About/Preview.png"
+  ],
+  "download": {
+    "file": "Niceties.zip",
+    "url": "https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Niceties.zip"
+  },
+  "links": {
+    "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3794727164",
+    "thunderstore": null,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/786"
+  }
+}
