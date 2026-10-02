@@ -1,0 +1,19 @@
+{
+  "slug": "deep-colony",
+  "name": "Deep Colony",
+  "game": "rimworld",
+  "description": "Auto skill perks, trauma & therapy, apprenticeship, family life, and a living faction reputation ledger.",
+  "version": "1.8.1",
+  "screenshots": [
+    "About/Preview.png"
+  ],
+  "download": {
+    "file": "DeepColony.zip",
+    "url": "https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DeepColony.zip"
+  },
+  "links": {
+    "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3773568314",
+    "thunderstore": null,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/781"
+  }
+}
