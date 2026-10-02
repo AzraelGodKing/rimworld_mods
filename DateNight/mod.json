@@ -1,0 +1,19 @@
+{
+  "slug": "date-night",
+  "name": "Date Night",
+  "game": "rimworld",
+  "description": "Paint Date or Lovin on the Schedule tab. Dates are dinner, walks, and stars; Lovin still uses a double.",
+  "version": "1.4.0",
+  "screenshots": [
+    "About/Preview.png"
+  ],
+  "download": {
+    "file": "DateNight.zip",
+    "url": "https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip"
+  },
+  "links": {
+    "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3774158903",
+    "thunderstore": null,
+    "nexus": "https://www.nexusmods.com/rimworld/mods/780"
+  }
+}

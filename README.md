@@ -2,6 +2,8 @@
 
 A collection of RimWorld mods by AzraelGodKing.
 
+Each mod folder has a `mod.json` for the public mod website. It records the name, version, description, preview, and download links. It is not part of the Workshop zip.
+
 ## Mods
 
 ### Homesteader
