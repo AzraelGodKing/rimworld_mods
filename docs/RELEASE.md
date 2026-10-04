@@ -4,6 +4,7 @@ Same shape as the Sunhaven **Release & Publish** workflow: you dispatch it, CI v
 
 1. **GitHub Release** — tag `{ZipName}-v{modVersion}` (example `Homesteader-v1.0.2`). Does **not** replace the rolling `latest` tag the docs site uses.
 2. **Nexus Mods** — new file version on an existing Nexus file (retries with backoff, same as Sunhaven). Needs a Nexus page and IDs in the matrix. Uploads use `Nexus-Mods/upload-action` pinned to commit `c96019556046053aa26044b44396cd38929daf23` (`v1.0.0-beta.10`; there is no `v1` tag). Changelog is a separate POST after that file succeeds.
+3. **Mods website** — the same zip is published to `downloads.azraelsmods.com/rimworld/<slug>/<version>/<slug>-<version>.zip`, with a checksum and a record in `downloads.json`. Needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. If either secret is missing, the GitHub and Nexus steps still run and the website file is left as it is.
 
 A Nexus upload from this workflow:
 
