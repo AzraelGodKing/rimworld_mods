@@ -671,7 +671,8 @@
           { "name": "Exosuit Framework", "note": "Extra schedule columns coexist so Piloting is kept" },
           { "name": "Schedule Everything", "note": "Extra schedule columns coexist" },
           { "name": "Ideology", "note": "Precepts that forbid lovin reroute the couple to a date instead" },
-          { "name": "Biotech", "note": "Sterile genes reroute to a date instead" }
+          { "name": "Biotech", "note": "Sterile genes reroute to a date instead" },
+          { "name": "RimJobWorld", "note": "Scheduled Lovin starts RJW's bed job; private time uses RJW masturbation. Missing RJW is a no-op" }
         ],
         "incompatibleWith": [],
         "notes": []

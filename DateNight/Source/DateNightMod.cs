@@ -12,7 +12,7 @@ namespace DateNight
         public DateNightMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<DateNightSettings>();
-            ModVersionLog.Write("[DateNight]", content, extra: "update-news-v1");
+            ModVersionLog.Write("[DateNight]", content, extra: "rjw-soft-v1");
             // PatchAll runs after defs load — Harmony compiling TimeAssignmentSelector
             // patches otherwise touches TimeAssignmentDefOf before DefOfs exist.
         }
@@ -118,6 +118,7 @@ namespace DateNight
         static DateNightInit()
         {
             SafePatchAll.Apply(new Harmony(HarmonyId), "[DateNight]");
+            _ = DateNightRjwSoftCompat.Active;
         }
     }
 }

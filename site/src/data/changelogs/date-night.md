@@ -4,10 +4,17 @@ Detailed notes for **Date Night** only. ## [Unreleased]
 
 ## [1.4.0]
 
+Player-facing version **1.4.0** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.4.0 loaded from ...` in Player.log (`rjw-soft-v1`).
+
+### Added
+- **RimJobWorld** (`rjw-soft-v1`) — fail-open soft-compat (`rim.job.world`). When RJW's `override_lovin` is on (the default), scheduled couple lovin starts `JoinInBed` instead of vanilla `Lovin`, so RJW's Harmony prefix cannot cancel the job and leave a gap Date Night would refill. Private time starts `RJW_Masturbate` (`JobMaker` targets match RJW's own job giver: pawn, bed, cell) so the sex need is satisfied; Date Night's mood thought and lovin cooldown apply when that job succeeds during Lovin hours. Couple eligibility also fail-opens through `xxx.can_fuck` / `can_be_fucked`. No RJW project reference; missing RJW is a no-op.
+
 ### Changed
 - **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
 
-Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[DateNight] v1.1.1 loaded from ...` in Player.log (`update-news-v1`).
+## [1.1.1]
+
+Player-facing version **1.1.1**. Startup writes `[DateNight] v1.1.1 loaded from ...` in Player.log (`update-news-v1`).
 
 ### Added
 - **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.

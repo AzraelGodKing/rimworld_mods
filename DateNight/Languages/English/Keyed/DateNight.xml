@@ -5,7 +5,7 @@
   <DateNight_UpdateLetterFallback>Date Night {0} is loaded.\n\nFull notes: {1}</DateNight_UpdateLetterFallback>
   <DateNight_UpdateLetterFooter>Full notes: {0}</DateNight_UpdateLetterFooter>
   <DateNight_SettingsCategory>Date Night</DateNight_SettingsCategory>
-  <DateNight_Settings_Intro>Schedule Date or Lovin on the Schedule tab. Date is a walk / table / hangout (mood + opinion, no bed). Lovin still uses a shared double. Adults without a partner in that bed can have private time. Ideology that forbids lovin, and Biotech sterile genes, reroute to a date instead of forcing the job.</DateNight_Settings_Intro>
+  <DateNight_Settings_Intro>Schedule Date or Lovin on the Schedule tab. Date is a walk / table / hangout (mood + opinion, no bed). Lovin still uses a shared double. Adults without a partner in that bed can have private time. Ideology that forbids lovin, and Biotech sterile genes, reroute to a date instead of forcing the job. With RimJobWorld, Lovin hours start RJW's bed job (private time uses RJW masturbation) instead of fighting vanilla Lovin. Missing RJW is a no-op.</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>Pregnancy-safe cooldown</DateNight_Settings_PregnancySafe>
   <DateNight_Settings_PregnancySafeTip>ON (recommended): only shortens lovin chance while scheduled; keeps vanilla post-lovin cooldown. Date uses the same wait (~4–8 hours) after a finished date. OFF with Eager: mirrors Always Do Lovin cooldown (~100 ticks) for lovin and dating.</DateNight_Settings_PregnancySafeTip>
   <DateNight_Settings_Eager>Eager mode (short cooldown)</DateNight_Settings_Eager>
