@@ -4,7 +4,8 @@ using Verse;
 namespace DateNight
 {
     /// <summary>
-    /// Ideology / Biotech gates. Missing DLC or defs fail open (never block).
+    /// Ideology / Biotech / RimJobWorld gates. Missing DLC, defs, or RJW fail open
+    /// (never block). RJW genital checks fail closed only when those methods bind.
     /// </summary>
     public static class DateNightHooks
     {
@@ -62,6 +63,10 @@ namespace DateNight
                 return false;
             }
             if (BiotechBlocksForcedLovin(pawn) || BiotechBlocksForcedLovin(partner))
+            {
+                return false;
+            }
+            if (!DateNightRjwSoftCompat.CoupleCanDoCasualSex(pawn, partner))
             {
                 return false;
             }

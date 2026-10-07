@@ -5,7 +5,7 @@
   <DateNight_UpdateLetterFallback>Date Night {0} 已加载。\n\n完整说明：{1}</DateNight_UpdateLetterFallback>
   <DateNight_UpdateLetterFooter>完整说明：{0}</DateNight_UpdateLetterFooter>
   <DateNight_SettingsCategory>约会之夜</DateNight_SettingsCategory>
-  <DateNight_Settings_Intro>在作息表上安排“约会”或“爱爱”。约会是散步 / 餐桌 / 一起消遣（心情与好感，不上床）。爱爱仍使用双人床。若伴侣不在同一张床，成人可以独处。意识形态禁止爱爱，或生物科技不育基因，会改去约会，而不是强行开始爱爱。</DateNight_Settings_Intro>
+  <DateNight_Settings_Intro>在作息表上安排“约会”或“爱爱”。约会是散步 / 餐桌 / 一起消遣（心情与好感，不上床）。爱爱仍使用双人床。若伴侣不在同一张床，成人可以独处。意识形态禁止爱爱，或生物科技不育基因，会改去约会，而不是强行开始爱爱。若同时启用 RimJobWorld，爱爱时段会改走 RJW 的上床工作，独处则走 RJW 自慰；没有 RJW 时行为不变。</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>安全怀孕冷却</DateNight_Settings_PregnancySafe>
   <DateNight_Settings_PregnancySafeTip>开启（推荐）：只在排班时提高爱爱几率，保留原版爱爱后冷却。约会结束后同样等待约 4–8 小时。关闭并开启急切模式：爱爱与约会冷却约 100 tick，可能频繁判定怀孕。</DateNight_Settings_PregnancySafeTip>
   <DateNight_Settings_Eager>急切模式（短冷却）</DateNight_Settings_Eager>

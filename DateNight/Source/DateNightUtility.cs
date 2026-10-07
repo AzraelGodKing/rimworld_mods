@@ -63,6 +63,10 @@ namespace DateNight
             {
                 return true;
             }
+            if (DateNightRjwSoftCompat.IsRjwSexJob(pawn))
+            {
+                return true;
+            }
 
             return LooksLikeLovinJob(def, pawn.jobs.curDriver);
         }
@@ -151,6 +155,14 @@ namespace DateNight
                 return true;
             }
             if (name.IndexOf("GettinLoved", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (name.IndexOf("Masturbate", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+            if (name.IndexOf("Quickie", System.StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 return true;
             }
@@ -419,10 +431,21 @@ namespace DateNight
                 return false;
             }
 
-            Job lovin = JobMaker.MakeJob(JobDefOf.Lovin, partner, bed);
+            JobDef jobDef = DateNightRjwSoftCompat.ScheduledCoupleJobDef;
+            if (jobDef != JobDefOf.Lovin)
+            {
+                if (DateNightRjwSoftCompat.TryStartJoinInBed(pawn, partner, bed))
+                {
+                    DateNightWindows.NotifyLovinSuccess(pawn, partner);
+                    return true;
+                }
+                return false;
+            }
+
+            Job lovin = JobMaker.MakeJob(jobDef, partner, bed);
             lovin.ignoreForbidden = true;
             pawn.jobs.StartJob(lovin, JobCondition.InterruptForced, null, resumeCurJobAfterwards: false);
-            if (pawn.CurJobDef == JobDefOf.Lovin)
+            if (DateNightRjwSoftCompat.IsScheduledCoupleJob(pawn.CurJobDef))
             {
                 DateNightWindows.NotifyLovinSuccess(pawn, partner);
                 return true;
@@ -490,6 +513,11 @@ namespace DateNight
             if (LovePartnerRelationUtility.GetPartnerInMyBed(pawn) != null)
             {
                 return false;
+            }
+
+            if (DateNightRjwSoftCompat.TryStartMasturbate(pawn, bed))
+            {
+                return true;
             }
 
             if (DateNightDefOf.DateNight_SelfLovin == null)
