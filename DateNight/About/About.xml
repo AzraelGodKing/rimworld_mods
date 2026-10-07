@@ -23,8 +23,10 @@
     <li>AOBA.ExosuitFramework</li>
     <li>AOBA.MechsuitFramework</li>
     <li>Mazo.Schedules</li>
+            <!-- Soft: scheduled Lovin uses JoinInBed / RJW_Masturbate when present. -->
+    <li>rim.job.world</li>
   </loadAfter>
-  <description>Adds Date and Lovin slots to the Schedule tab. Dates are dinner, walks, stars, gifts — mood and opinion, no bed. Lovin uses a shared double.
+  <description>Adds Date and Lovin slots to the Schedule tab. Dates are dinner, walks, stars, gifts — mood and opinion, no bed. Lovin uses a shared double. Optional RimJobWorld: Lovin hours start RJW's bed job instead of fighting vanilla Lovin.
 
 Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: clear Date / Lovin slots back to Sleep / Anything.
 

@@ -13,6 +13,7 @@
 - Missed-date / made-it thoughts
 - Temporary rendezvous double claim for the Lovin window
 - Ideology no-lovin + Biotech sterile reroute (fail-open)
+- RimJobWorld fail-open soft-compat (JoinInBed / RJW_Masturbate; no project reference)
 - Chinese Simplified and Russian packs
 - Schedule mismatch alert when one lover has Date/Lovin painted and the other does not
 
