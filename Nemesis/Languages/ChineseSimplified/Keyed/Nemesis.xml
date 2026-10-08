@@ -36,6 +36,7 @@
   <Nemesis_Settings_WeightCaravan>商队骚扰：{0}</Nemesis_Settings_WeightCaravan>
   <Nemesis_Settings_WeightSabotage>电力破坏：{0}</Nemesis_Settings_WeightSabotage>
   <Nemesis_Settings_WeightFood>粮仓突袭：{0}</Nemesis_Settings_WeightFood>
+  <Nemesis_Settings_WeightAnomaly>异象诱饵：{0}</Nemesis_Settings_WeightAnomaly>
   <Nemesis_Settings_Reset>重置</Nemesis_Settings_Reset>
 
   <!-- Phrases -->
@@ -121,6 +122,7 @@
   <Nemesis_Letter_FoodTitle>粮仓遇袭：{0}</Nemesis_Letter_FoodTitle>
   <Nemesis_Letter_FoodBody>{0}腐坏或偷走了你们的食物储备（损坏{1}堆）。饥饿也是武器。</Nemesis_Letter_FoodBody>
   <Nemesis_Letter_FoodCellar>{0}摸进了你们的仓库——包括靠近地窖根的地方。{1}堆食物被毁。</Nemesis_Letter_FoodCellar>
+  <Nemesis_Letter_FoodPantry>{0}袭击了你们的家园储藏室、烟熏房或地窖。{1}堆食物被毁。</Nemesis_Letter_FoodPantry>
   <Nemesis_Letter_FoodFavoriteNote>{0}给{1}留了字条：「再也没有{2}给你吃了。」</Nemesis_Letter_FoodFavoriteNote>
   <Nemesis_Letter_AnomalyTitle>错误的关注：{0}</Nemesis_Letter_AnomalyTitle>
   <Nemesis_Letter_AnomalyBody>{0}惊动了本该沉睡的东西。即将到来的未必全是他们的手笔——但他们就是要让你们忙起来。</Nemesis_Letter_AnomalyBody>
@@ -221,6 +223,25 @@
   <Nemesis_Bounty_Cleared>悬赏已撤回。</Nemesis_Bounty_Cleared>
   <Nemesis_Comms_BuyLead>买一条仇敌线索（{0} 银币）</Nemesis_Comms_BuyLead>
   <Nemesis_Comms_PostBounty>向仇敌悬赏追加 {0} 银币</Nemesis_Comms_PostBounty>
+  <Nemesis_Comms_TauntBack>向 {0} 回传嘲讽</Nemesis_Comms_TauntBack>
+  <Nemesis_Comms_OfferTruce>向 {0} 提出休战</Nemesis_Comms_OfferTruce>
+  <Nemesis_Comms_DemandSurrender>要求 {0} 投降</Nemesis_Comms_DemandSurrender>
+
+  <Nemesis_Dossier_PendingResolution>{0} 已被俘——决定其命运。</Nemesis_Dossier_PendingResolution>
+  <Nemesis_Dossier_OpenResolution>打开决议对话框</Nemesis_Dossier_OpenResolution>
+
+  <Nemesis_Note_TauntBack>你们向对方回传了嘲讽。</Nemesis_Note_TauntBack>
+  <Nemesis_Note_TruceOffer>休战被接受，为期 {0} 天。</Nemesis_Note_TruceOffer>
+  <Nemesis_Note_SurrenderDemand>对方回应了投降要求——即将到来。</Nemesis_Note_SurrenderDemand>
+
+  <Nemesis_Letter_TauntBackTitle>已回传嘲讽：{0}</Nemesis_Letter_TauntBackTitle>
+  <Nemesis_Letter_TauntBackBody>你们在通讯中嘲讽了 {0}。对方会记住这事。</Nemesis_Letter_TauntBackBody>
+  <Nemesis_Letter_TruceRefuseTitle>休战被拒：{0}</Nemesis_Letter_TruceRefuseTitle>
+  <Nemesis_Letter_TruceRefuseBody>{0} 嘲笑了你们的提议。准备迎接更糟的局面。</Nemesis_Letter_TruceRefuseBody>
+  <Nemesis_Letter_SurrenderOkTitle>对方软化：{0}</Nemesis_Letter_SurrenderOkTitle>
+  <Nemesis_Letter_SurrenderOkBody>{0} 回应了你们的要求。一场对峙即将来临——准备活捉他们。</Nemesis_Letter_SurrenderOkBody>
+  <Nemesis_Letter_SurrenderRefuseTitle>投降被拒：{0}</Nemesis_Letter_SurrenderRefuseTitle>
+  <Nemesis_Letter_SurrenderRefuseBody>{0} 唾弃了你们的要求。敌意上升。</Nemesis_Letter_SurrenderRefuseBody>
 
   <Nemesis_Epitaph_Title>墓志铭：{0}</Nemesis_Epitaph_Title>
   <Nemesis_Epitaph_Line>{0} — {1}。狩猎持续 {2} 天，逃脱 {3} 次。</Nemesis_Epitaph_Line>

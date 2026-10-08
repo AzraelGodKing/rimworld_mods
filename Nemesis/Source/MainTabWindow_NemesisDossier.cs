@@ -22,11 +22,25 @@ namespace Nemesis
             Text.Font = GameFont.Small;
 
             float y = inRect.y + 36f;
-            if (data == null || (!data.active && data.truceUntilTick <= 0))
+            if (data == null || (!data.active && data.truceUntilTick <= 0 && !data.pendingResolution))
             {
                 Widgets.Label(new Rect(inRect.x, y, inRect.width, 44f),
                     "Nemesis_Dossier_Empty".Translate());
                 y += 52f;
+                DrawEpitaphs(comp, inRect, ref y);
+                return;
+            }
+
+            if (data.pendingResolution)
+            {
+                Widgets.Label(new Rect(inRect.x, y, inRect.width, 44f),
+                    "Nemesis_Dossier_PendingResolution".Translate(
+                        data.nemesisName ?? "Nemesis_Phrase_Someone".Translate()));
+                y += 52f;
+                if (Widgets.ButtonText(new Rect(inRect.x, y, 240f, 28f),
+                        "Nemesis_Dossier_OpenResolution".Translate()))
+                    comp.TryOpenResolutionDialog();
+                y += 36f;
                 DrawEpitaphs(comp, inRect, ref y);
                 return;
             }
@@ -65,12 +79,13 @@ namespace Nemesis
             if (data.active && (NemesisMod.Settings?.enableInformants ?? true))
             {
                 int cost = NemesisInformants.LeadCost(data);
+                Map map = Find.CurrentMap;
                 if (Widgets.ButtonText(new Rect(inRect.x, y, 200f, 28f),
                         "Nemesis_Dossier_BuyLead".Translate(cost)))
-                    NemesisInformants.TryBuyLead(Find.CurrentMap, out _);
+                    NemesisPlayerCommand.EnqueueBuyLead(map);
                 if (Widgets.ButtonText(new Rect(inRect.x + 210f, y, 200f, 28f),
                         "Nemesis_Dossier_PostBounty".Translate(cost)))
-                    NemesisInformants.TryPostBounty(Find.CurrentMap, cost, out _);
+                    NemesisPlayerCommand.EnqueuePostBounty(map, cost);
                 y += 36f;
             }
 

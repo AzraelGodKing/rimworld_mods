@@ -411,6 +411,7 @@ namespace Nemesis
         private static void FoodStoreRaid(NemesisData data, Map map)
         {
             List<Thing> foods = new List<Thing>();
+            List<Thing> preferred = new List<Thing>();
             List<Thing> candidates = map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
             if (candidates != null)
             {
@@ -421,16 +422,20 @@ namespace Nemesis
                     if (!t.def.IsNutritionGivingIngestible) continue;
                     if (t.stackCount < 5) continue;
                     foods.Add(t);
+                    // AZR-303 — prefer Homesteader pantry / smokehouse / cellar stacks by defName.
+                    if (SoftCompat.IsOnHomesteaderFoodStorage(t))
+                        preferred.Add(t);
                 }
             }
 
-            // Prefer cellar-adjacent stacks when Homesteader is present.
-            bool cellar = SoftCompat.MapHasRootCellar(map);
+            List<Thing> pool = preferred.Count > 0 ? preferred : foods;
+            bool hitPantry = preferred.Count > 0;
+            bool cellar = !hitPantry && SoftCompat.MapHasRootCellar(map);
             int ruined = 0;
             int targetCount = Rand.RangeInclusive(1, 3);
-            for (int i = 0; i < foods.Count && ruined < targetCount; i++)
+            for (int i = 0; i < pool.Count && ruined < targetCount; i++)
             {
-                Thing t = foods[Rand.Range(0, foods.Count)];
+                Thing t = pool[Rand.Range(0, pool.Count)];
                 if (t == null || t.Destroyed) continue;
                 int lose = Mathf.Clamp(t.stackCount / 3, 1, 25);
                 t.SplitOff(lose).Destroy(DestroyMode.Vanish);
@@ -443,9 +448,11 @@ namespace Nemesis
                 return;
             }
 
-            string body = cellar
-                ? "Nemesis_Letter_FoodCellar".Translate(data.nemesisName, ruined)
-                : "Nemesis_Letter_FoodBody".Translate(data.nemesisName, ruined);
+            string body = hitPantry
+                ? "Nemesis_Letter_FoodPantry".Translate(data.nemesisName, ruined)
+                : cellar
+                    ? "Nemesis_Letter_FoodCellar".Translate(data.nemesisName, ruined)
+                    : "Nemesis_Letter_FoodBody".Translate(data.nemesisName, ruined);
 
             Pawn victim = GameComponent_Nemesis.Instance?.FindTargetPawn();
             string fav = SoftCompat.TryFavoriteFoodLabel(victim);

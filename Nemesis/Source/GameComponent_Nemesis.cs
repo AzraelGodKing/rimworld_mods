@@ -20,7 +20,8 @@ namespace Nemesis
 
         public NemesisData Data => _data;
 
-        public bool IsEngaged => _data != null && (_data.active || _data.truceUntilTick > 0);
+        public bool IsEngaged =>
+            _data != null && (_data.active || _data.truceUntilTick > 0 || _data.pendingResolution);
 
         private static int MaxEscapes => NemesisMod.Settings?.maxEscapes ?? 4;
 
@@ -35,19 +36,27 @@ namespace Nemesis
             base.FinalizeInit();
             SoftCompat.ResetCaches();
             NemesisRegistry.Clear();
-            if (_data != null && _data.active)
+            if (_data != null && _data.pendingResolution)
+                TryOpenResolutionDialog();
+            else if (_data != null && _data.active)
                 NemesisTells.RollIfNeeded(_data, FindNemesisPawn());
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
         public override void GameComponentTick()
         {
+            NemesisPlayerCommand.Drain();
             if (_data == null) return;
 
             int tick = Find.TickManager.TicksGame;
 
             if (!_data.active)
             {
+                if (_data.pendingResolution)
+                {
+                    TryOpenResolutionDialog();
+                    return;
+                }
                 if (_data.truceUntilTick > 0 && tick >= _data.truceUntilTick)
                     ResumeFromTruce();
                 return;
@@ -345,8 +354,26 @@ namespace Nemesis
             Pawn nemesis = FindNemesisPawn();
             if (nemesis == null || !nemesis.IsPrisonerOfColony) return;
 
+            // AZR-296 — keep pendingResolution across save so the dialog can reopen.
+            _data.pendingResolution = true;
             _data.active = false;
+            TryOpenResolutionDialog(nemesis);
+        }
+
+        /// <summary>Reopen capture dialog after load / if the modal was dismissed by a crash.</summary>
+        public void TryOpenResolutionDialog(Pawn nemesis = null)
+        {
+            if (_data == null || !_data.pendingResolution) return;
+            nemesis ??= FindNemesisPawn();
+            if (nemesis == null || nemesis.Destroyed || !nemesis.IsPrisonerOfColony) return;
+            if (Find.WindowStack?.WindowOfType<Dialog_NemesisResolution>() != null) return;
             Find.WindowStack.Add(new Dialog_NemesisResolution(_data, nemesis));
+        }
+
+        public void ClearPendingResolution()
+        {
+            if (_data != null)
+                _data.pendingResolution = false;
         }
 
         public void EndHunt(NemesisEndReason reason, Thing look = null)
@@ -356,6 +383,7 @@ namespace Nemesis
             string name = _data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
             RecordEpitaph(reason);
             _data.active = false;
+            _data.pendingResolution = false;
             _data.pendingFakeAmbush = false;
             _data.truceUntilTick = -1;
             bountySilver = 0;
@@ -488,7 +516,9 @@ namespace Nemesis
             float caravan = s?.actionWeightCaravan ?? 0.07f;
             float sabotage = agg >= 2f ? (s?.actionWeightSabotage ?? 0.05f) : 0f;
             float food = s?.actionWeightFood ?? 0.05f;
-            float anomaly = ModsConfig.AnomalyActive && agg >= 4f ? 0.06f : 0f;
+            float anomaly = ModsConfig.AnomalyActive && agg >= 4f
+                ? (s?.actionWeightAnomaly ?? 0.06f)
+                : 0f;
 
             if (_data.rogue)
             {

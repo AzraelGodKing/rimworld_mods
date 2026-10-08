@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Nemesis_Marked.label>Меченые</Nemesis_Marked.label>
+  <Nemesis_Marked.description>Трое выживших поднимают колонию, зная, что где-то снаружи у кого-то есть на них имя. Ждите насмешек, ложных следов и охотника, который крепнет после каждого побега.\n\nБлокирует рассказчика Azrael, если также загружен Homesteader.</Nemesis_Marked.description>
+  <Nemesis_Marked.scenario.summary>Трое колонистов под личным антагонистом. Azrael при наличии Homesteader.</Nemesis_Marked.scenario.summary>
+  <Nemesis_Marked.scenario.parts.4.text>Вы больше не анонимны.
+
+Где-то за ободом именованный враг учит ваши привычки. Он будет зондировать. Он будет бежать. Он вернётся жёстче.
+
+Постройте колонию, способную пережить кровную обиду.</Nemesis_Marked.scenario.parts.4.text>
+</LanguageData>

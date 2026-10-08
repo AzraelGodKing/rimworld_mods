@@ -24,6 +24,7 @@ namespace Nemesis
         public float actionWeightCaravan = 0.07f;
         public float actionWeightSabotage = 0.05f;
         public float actionWeightFood = 0.05f;
+        public float actionWeightAnomaly = 0.06f;
 
         // Hybrid captain progression
         public bool enableCaptainProgression = true;
@@ -56,6 +57,7 @@ namespace Nemesis
             Scribe_Values.Look(ref actionWeightCaravan, "actionWeightCaravan", 0.07f);
             Scribe_Values.Look(ref actionWeightSabotage, "actionWeightSabotage", 0.05f);
             Scribe_Values.Look(ref actionWeightFood, "actionWeightFood", 0.05f);
+            Scribe_Values.Look(ref actionWeightAnomaly, "actionWeightAnomaly", 0.06f);
             Scribe_Values.Look(ref enableCaptainProgression, "enableCaptainProgression", true);
             Scribe_Values.Look(ref maxProgressionLevel, "maxProgressionLevel", 8);
             Scribe_Values.Look(ref postEscapeSabotageWeightMul, "postEscapeSabotageWeightMul", 0.35f);
@@ -85,6 +87,7 @@ namespace Nemesis
             actionWeightCaravan = 0.07f;
             actionWeightSabotage = 0.05f;
             actionWeightFood = 0.05f;
+            actionWeightAnomaly = 0.06f;
             enableCaptainProgression = true;
             maxProgressionLevel = 8;
             postEscapeSabotageWeightMul = 0.35f;
