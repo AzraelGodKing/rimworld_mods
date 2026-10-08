@@ -17,6 +17,7 @@ Player-facing version **1.5.1** (`About.xml` `modVersion`). Stamp `forecast-ramp
 - **Compat hooks** — `StormproofCompatApi` exposes ion storm, grid surge, and drought for other mods. Missing Stormproof stays a no-op for the caller.
 - **Grid monitor** — inspect shows the predicted brownout at the forecast low point.
 - **Almanac** — lifetime totals across recorded storms.
+
 ## [1.5.0]
 
 ### Changed
