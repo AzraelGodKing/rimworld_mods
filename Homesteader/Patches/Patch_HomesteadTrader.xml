@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
 
-  <!-- Add the homestead supplier caravan to outlander factions.
-       caravanTraderKinds is defined on the abstract OutlanderFactionBase, so we
-       add a new list node to OutlanderCivil itself; XML inheritance merges it
-       with the inherited entries. -->
+  <!-- Append the homestead supplier to the abstract outlander base list.
+       Adding a fresh <caravanTraderKinds> node on a concrete child (e.g. OutlanderCivil)
+       replaces the inherited list instead of merging. Patching the base <li> list keeps
+       vanilla traders and covers every faction that inherits OutlanderFactionBase. -->
   <Operation Class="PatchOperationAdd">
-    <xpath>/Defs/FactionDef[defName="OutlanderCivil"]</xpath>
+    <xpath>/Defs/FactionDef[@Name="OutlanderFactionBase"]/caravanTraderKinds</xpath>
     <value>
-      <caravanTraderKinds>
-        <li>Homesteader_Caravan_HomesteadSupplier</li>
-      </caravanTraderKinds>
+      <li>Homesteader_Caravan_HomesteadSupplier</li>
     </value>
   </Operation>
 

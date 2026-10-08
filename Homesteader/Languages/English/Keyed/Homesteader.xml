@@ -47,6 +47,14 @@
   <Homesteader_SettingsDevModeHint>Enable Development mode to show Homesteader developer options.</Homesteader_SettingsDevModeHint>
   <Homesteader_SettingsSpoilageTriage>Use spoiling food first</Homesteader_SettingsSpoilageTriage>
   <Homesteader_SettingsSpoilageTriageTip>Colonists prefer the most-spoiled edible stack, and preserving bills take produce closest to turning. On by default.</Homesteader_SettingsSpoilageTriageTip>
+  <Homesteader_SettingsGameplayHeader>Gameplay dials</Homesteader_SettingsGameplayHeader>
+  <Homesteader_SettingsAllergyFlare>Allergy flare intensity (0 = discover only)</Homesteader_SettingsAllergyFlare>
+  <Homesteader_SettingsFavoriteMood>Favorite-food mood strength (0 = off)</Homesteader_SettingsFavoriteMood>
+  <Homesteader_SettingsCoopEggInterval>Chicken coop egg interval (higher = fewer eggs)</Homesteader_SettingsCoopEggInterval>
+  <Homesteader_SettingsEnableKats>Enable Kats Effect incident</Homesteader_SettingsEnableKats>
+  <Homesteader_SettingsEnableKatsTip>Rare Misc event when a finished 27 statue or monument is on the home map. Off disables it entirely.</Homesteader_SettingsEnableKatsTip>
+  <Homesteader_SettingsShowCoolingInspect>Show passive-cooling inspect line</Homesteader_SettingsShowCoolingInspect>
+  <Homesteader_SettingsShowCoolingInspectTip>Root cellar, icehouse, and springhouse show the passive cool-storage ceiling in the inspect pane.</Homesteader_SettingsShowCoolingInspectTip>
   <Homesteader_PantryTitle>Pantry</Homesteader_PantryTitle>
   <Homesteader_PantryKinds>Distinct preserved kinds: {0}</Homesteader_PantryKinds>
   <Homesteader_PantryDays>Days of food at current tables: {0} ({1} colonists)</Homesteader_PantryDays>

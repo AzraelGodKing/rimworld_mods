@@ -47,6 +47,14 @@
   <Homesteader_SettingsDevModeHint>启用开发模式以显示 Homesteader 开发者选项。</Homesteader_SettingsDevModeHint>
   <Homesteader_SettingsSpoilageTriage>先吃快坏的</Homesteader_SettingsSpoilageTriage>
   <Homesteader_SettingsSpoilageTriageTip>殖民者优先吃最接近腐烂的可食用堆，腌制账单也取快坏的原料。默认开启。</Homesteader_SettingsSpoilageTriageTip>
+  <Homesteader_SettingsGameplayHeader>玩法调节</Homesteader_SettingsGameplayHeader>
+  <Homesteader_SettingsAllergyFlare>过敏发作强度（0 = 仅发现）</Homesteader_SettingsAllergyFlare>
+  <Homesteader_SettingsFavoriteMood>最爱食物心情强度（0 = 关闭）</Homesteader_SettingsFavoriteMood>
+  <Homesteader_SettingsCoopEggInterval>鸡舍产蛋间隔（越高蛋越少）</Homesteader_SettingsCoopEggInterval>
+  <Homesteader_SettingsEnableKats>启用 Kats 效应事件</Homesteader_SettingsEnableKats>
+  <Homesteader_SettingsEnableKatsTip>家用地图上有完工的 27 雕像或纪念碑时偶发的杂项事件。关闭则完全禁用。</Homesteader_SettingsEnableKatsTip>
+  <Homesteader_SettingsShowCoolingInspect>显示被动冷却检视行</Homesteader_SettingsShowCoolingInspect>
+  <Homesteader_SettingsShowCoolingInspectTip>根窖、冰屋与泉屋在检视面板显示被动冷藏上限温度。</Homesteader_SettingsShowCoolingInspectTip>
   <Homesteader_PantryTitle>储藏室</Homesteader_PantryTitle>
   <Homesteader_PantryKinds>不同腌制种类：{0}</Homesteader_PantryKinds>
   <Homesteader_PantryDays>按当前用餐计算的食物天数：{0}（{1} 名殖民者）</Homesteader_PantryDays>

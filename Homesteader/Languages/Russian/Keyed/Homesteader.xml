@@ -47,6 +47,14 @@
   <Homesteader_SettingsDevModeHint>Включите режим разработчика, чтобы увидеть параметры Homesteader для разработчиков.</Homesteader_SettingsDevModeHint>
   <Homesteader_SettingsSpoilageTriage>Сначала портящееся</Homesteader_SettingsSpoilageTriage>
   <Homesteader_SettingsSpoilageTriageTip>Колонисты берут самую порченую съедобную стопку, а закатки — плоды, которые вот-вот скиснут. По умолчанию включено.</Homesteader_SettingsSpoilageTriageTip>
+  <Homesteader_SettingsGameplayHeader>Настройки геймплея</Homesteader_SettingsGameplayHeader>
+  <Homesteader_SettingsAllergyFlare>Сила аллергии (0 = только обнаружение)</Homesteader_SettingsAllergyFlare>
+  <Homesteader_SettingsFavoriteMood>Сила настроения от любимой еды (0 = выкл.)</Homesteader_SettingsFavoriteMood>
+  <Homesteader_SettingsCoopEggInterval>Интервал яиц в курятнике (выше = меньше яиц)</Homesteader_SettingsCoopEggInterval>
+  <Homesteader_SettingsEnableKats>Включить инцидент Kats Effect</Homesteader_SettingsEnableKats>
+  <Homesteader_SettingsEnableKatsTip>Редкое событие Misc при готовой статуе или монументе 27 на домашней карте. Выключение полностью отключает его.</Homesteader_SettingsEnableKatsTip>
+  <Homesteader_SettingsShowCoolingInspect>Строка пассивного охлаждения в осмотре</Homesteader_SettingsShowCoolingInspect>
+  <Homesteader_SettingsShowCoolingInspectTip>Погреб, ледник и родниковый погреб показывают потолок пассивного холода в панели осмотра.</Homesteader_SettingsShowCoolingInspectTip>
   <Homesteader_PantryTitle>Кладовая</Homesteader_PantryTitle>
   <Homesteader_PantryKinds>Разных заготовок: {0}</Homesteader_PantryKinds>
   <Homesteader_PantryDays>Дней еды при текущем столе: {0} (колонистов: {1})</Homesteader_PantryDays>

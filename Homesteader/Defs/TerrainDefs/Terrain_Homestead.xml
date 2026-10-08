@@ -60,7 +60,7 @@
     <defName>Homesteader_CompostedSoil</defName>
     <label>composted soil</label>
     <description>Cropland worked with compost fertilizer until it turns rich and dark. Plants grow even faster than on irrigated soil alone.</description>
-    <texturePath>Wellspring/Terrain/IrrigatedSoil</texturePath>
+    <texturePath>Homesteader/Terrain/CompostedSoil</texturePath>
     <edgeType>FadeRough</edgeType>
     <renderPrecedence>363</renderPrecedence>
     <layerable>true</layerable>

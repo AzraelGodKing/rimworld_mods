@@ -19,6 +19,8 @@ namespace Homesteader
                 if (def.HasComp(typeof(CompRottable)))
                     RottableDefs.Add(def);
             }
+
+            HomesteaderMod.Settings?.ApplyGameplaySettings();
         }
     }
 }
