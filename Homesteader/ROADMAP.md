@@ -17,7 +17,7 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 - [x] **HS-Q01** Homesteader architect tab (storage/cellars off Furniture)
 - [x] **HS-Q02** Keep Homestead tab (do not hijack Adaptive Storage Framework — it has no Storage category)
 - [x] **HS-Q03** Texture audit (directional drying rack / missing `_north` files are in `Textures/Homesteader/Buildings`)
-- [ ] **HS-Q04** Player settings pack (allergies, favorites, coop, Kats, cooling)
+- [x] **HS-Q04** Player settings pack (allergies, favorites, coop, Kats, cooling)
 
 ## Phase 1 — Pantry you feel
 

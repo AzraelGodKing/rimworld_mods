@@ -604,6 +604,26 @@ namespace Homesteader
                 return;
             }
 
+            float flareIntensity = HomesteaderMod.Settings != null
+                ? HomesteaderMod.Settings.allergyFlareIntensity
+                : 1f;
+
+            bool firstDiscovery = !Comp.IsDiscoveredAllergyId(pawn, allergyId);
+            // Intensity 0: discover only — no hediff / mood flare.
+            if (flareIntensity <= 0.01f)
+            {
+                Comp.DiscoverAllergy(pawn, allergyId);
+                if (firstDiscovery)
+                {
+                    Messages.Message(
+                        "Homesteader_AllergyDiscovered".Translate(pawn.LabelShort, AllergyCatalog.LabelFor(allergyId)),
+                        pawn,
+                        MessageTypeDefOf.NegativeEvent);
+                }
+
+                return;
+            }
+
             HediffDef hediff = DefDatabase<HediffDef>.GetNamedSilentFail("Homesteader_AllergicReaction");
             if (hediff != null && pawn.health.hediffSet.HasHediff(hediff))
             {
@@ -620,7 +640,6 @@ namespace Homesteader
                 return;
             }
 
-            bool firstDiscovery = !Comp.IsDiscoveredAllergyId(pawn, allergyId);
             Comp.DiscoverAllergy(pawn, allergyId);
 
             ThoughtDef thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_AteAllergen");
@@ -795,6 +814,11 @@ namespace Homesteader
             }
 
             if (!FavoriteFoodUtility.IsFavorite(ingester, foodDef))
+            {
+                return;
+            }
+
+            if (HomesteaderMod.Settings != null && HomesteaderMod.Settings.favoriteFoodMoodFactor <= 0.01f)
             {
                 return;
             }

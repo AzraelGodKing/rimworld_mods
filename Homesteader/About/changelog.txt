@@ -1,3 +1,22 @@
+1.3.1
+[h1]Homesteader — 1.3.1[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Gameplay settings pack[/b] (AZR-265, HS-Q04) — allergy flare intensity, favorite-food mood strength, chicken-coop egg interval, Kats Effect on/off, and passive-cooling inspect verbosity. EN/CN/RU.
+[*] [b]Composted soil texture[/b] (AZR-266) — default art uses Homesteader/Terrain/CompostedSoil instead of sharing IrrigatedSoil.
+[/list]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Homestead supplier caravan[/b] (AZR-260) — append to OutlanderFactionBase caravanTraderKinds so all outlander factions inherit the supplier without wiping the vanilla list.
+[*] [b]Passive cooling cache[/b] (AZR-261) — invalidate cooled cells when regions/rooms rebuild (wall/door layout changes), not only when a cooler spawns or despawns.
+[*] [b]Research tab CN/RU[/b] (AZR-262) — DefInjected generalTitle and generalDescription for the Homesteader research tab.
+[/list]
+
+[i]Deferred: harvest festival ritual (AZR-263 / HS-A01), aging preserve quality tiers (AZR-264 / HS-A03).[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]
+
 1.3.0
 [h1]Homesteader — 1.3.0[/h1]
 [b]Changed[/b]

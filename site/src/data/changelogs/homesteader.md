@@ -5,6 +5,23 @@ Detailed notes for Homesteader only.
 ## [Unreleased]
 
 
+## [1.3.1]
+
+AZR-260 AZR-261 AZR-262 AZR-265 AZR-266
+
+### Added
+- **Gameplay settings pack** (AZR-265, HS-Q04) — allergy flare intensity, favorite-food mood strength, chicken-coop egg interval multiplier, Kats Effect on/off, and passive-cooling inspect verbosity. EN/CN/RU keyed strings.
+- **Composted soil default texture** (AZR-266) — `Homesteader_CompostedSoil` uses `Homesteader/Terrain/CompostedSoil` instead of sharing `Wellspring/Terrain/IrrigatedSoil`.
+
+### Fixed
+- **Homestead supplier caravan** (AZR-260) — patch appends to `OutlanderFactionBase`/`caravanTraderKinds` so every outlander faction inherits the supplier without replacing the inherited list.
+- **Passive cooling cache** (AZR-261) — cooled-cell map rebuilds when `RegionAndRoomUpdater` rebuilds rooms (layout changes), not only on cooler spawn/despawn.
+- **Research tab CN/RU** (AZR-262) — DefInjected `generalTitle` / `generalDescription` for `ResearchTabDef` Homesteader.
+
+### Deferred
+- **Harvest festival ritual** (AZR-263 / HS-A01) — Ideology-aware maypole ritual is a larger feature ship.
+- **Aging preserve quality tiers** (AZR-264 / HS-A03) — cellar aging quality tiers need dedicated tick/comp work.
+
 ## [1.3.0]
 
 ### Changed

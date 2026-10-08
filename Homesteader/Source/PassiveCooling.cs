@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -37,6 +38,11 @@ namespace Homesteader
 
         public override string CompInspectStringExtra()
         {
+            if (HomesteaderMod.Settings != null && !HomesteaderMod.Settings.showCoolingInspect)
+            {
+                return null;
+            }
+
             return "Homesteader_PassiveCoolStorage".Translate(Props.maxTemperature.ToStringTemperature());
         }
     }
@@ -233,6 +239,60 @@ namespace Homesteader
             }
 
             __result = Mathf.Min(__result, ceiling);
+        }
+    }
+
+    /// <summary>
+    /// Room splits/merges rebuild regions without spawning/despawning a cooler.
+    /// Invalidate the cooled-cell cache whenever rooms actually rebuild.
+    /// </summary>
+    [HarmonyPatch(typeof(RegionAndRoomUpdater), nameof(RegionAndRoomUpdater.RebuildAllRegionsAndRooms))]
+    public static class Patch_PassiveCooling_RebuildAllRegions
+    {
+        private static readonly FieldInfo MapField =
+            AccessTools.Field(typeof(RegionAndRoomUpdater), "map");
+
+        public static void Postfix(RegionAndRoomUpdater __instance)
+        {
+            MarkCoolingDirty(__instance);
+        }
+
+        internal static void MarkCoolingDirty(RegionAndRoomUpdater updater)
+        {
+            if (updater == null || MapField == null)
+            {
+                return;
+            }
+
+            Map map = MapField.GetValue(updater) as Map;
+            CoolingLookup.For(map)?.MarkDirty();
+        }
+    }
+
+    [HarmonyPatch(typeof(RegionAndRoomUpdater), "TryRebuildDirtyRegionsAndRooms")]
+    public static class Patch_PassiveCooling_TryRebuildDirtyRegions
+    {
+        public static void Prefix(RegionAndRoomUpdater __instance, ref bool __state)
+        {
+            __state = false;
+            FieldInfo mapField = AccessTools.Field(typeof(RegionAndRoomUpdater), "map");
+            if (mapField == null)
+            {
+                return;
+            }
+
+            Map map = mapField.GetValue(__instance) as Map;
+            __state = map?.regionDirtyer != null && map.regionDirtyer.AnyDirty;
+        }
+
+        public static void Postfix(RegionAndRoomUpdater __instance, bool __state)
+        {
+            if (!__state)
+            {
+                return;
+            }
+
+            Patch_PassiveCooling_RebuildAllRegions.MarkCoolingDirty(__instance);
         }
     }
 }
