@@ -32,9 +32,54 @@ namespace LivingWorld
                 Faction b = pairs[i].FactionB();
                 if (!IsEligible(a) || !IsEligible(b))
                 {
+                    // AZR-332 — publish once when a tracked NPC faction leaves the rim.
+                    if (!IsEligible(a))
+                    {
+                        MaybePublishFactionCollapse(comp, a);
+                    }
+                    if (!IsEligible(b))
+                    {
+                        MaybePublishFactionCollapse(comp, b);
+                    }
                     pairs.RemoveAt(i);
                 }
             }
+        }
+
+        /// <summary>
+        /// AZR-332 — Major Collapse when an NPC faction is defeated or has no settlements left.
+        /// Deduped via GameComponent collapsed-faction ids.
+        /// </summary>
+        public static void MaybePublishFactionCollapse(
+            GameComponent_LivingWorld comp,
+            Faction faction,
+            Faction victor = null,
+            Settlement lastSite = null)
+        {
+            if (comp == null || faction == null || faction.IsPlayer)
+            {
+                return;
+            }
+            if (!faction.defeated && SettlementCount(faction) > 0)
+            {
+                return;
+            }
+            if (!comp.TryMarkFactionCollapsed(faction))
+            {
+                return;
+            }
+
+            WorldEvent ev = WorldEvent.Create(
+                WorldEventKind.Collapse,
+                NewsSeverity.Major,
+                faction,
+                victor,
+                lastSite);
+            if (lastSite == null && string.IsNullOrEmpty(ev.settlementLabel))
+            {
+                ev.settlementLabel = faction.Name;
+            }
+            comp.RecordAndPublish(ev);
         }
 
         public static bool TryResolveRandom(GameComponent_LivingWorld comp)

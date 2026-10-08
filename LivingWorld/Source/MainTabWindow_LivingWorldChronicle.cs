@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -60,6 +61,16 @@ namespace LivingWorld
             for (int i = 0; i < shown.Count; i++)
             {
                 WorldEvent ev = shown[i];
+                Rect row = new Rect(0f, ly, outRect.width - 20f, 70f);
+                // AZR-333 — clickable row jumps the world camera to the event tile.
+                if (ev.tile >= 0)
+                {
+                    Widgets.DrawHighlightIfMouseover(row);
+                    if (Widgets.ButtonInvisible(row))
+                    {
+                        CameraJumper.TryJump(new GlobalTargetInfo(ev.tile));
+                    }
+                }
                 string when = (Find.TickManager.TicksGame - ev.tick).ToStringTicksToPeriod();
                 string head = LivingWorldLetters.LabelFor(ev.kind) + "  (" + when + ")";
                 if (ev.corrected)

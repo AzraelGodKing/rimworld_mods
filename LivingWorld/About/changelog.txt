@@ -1,5 +1,23 @@
 1.1.0
 [h1]Living World — 1.1.0[/h1]
+[b]Fixed[/b]
+[list]
+[*] Yearly morph budget only consumes on a successful morph (AZR-326).
+[*] Major chronicle letters bypass the per-quadrum letter budget so big news is never silently dropped (AZR-327).
+[*] Settlement Label postfix caches the GameComponent and epithet suffix (AZR-328).
+[*] Russian / Chinese DefInjected for road-worn hediff and chronicle main-button (AZR-330).
+[/list]
+[b]Added[/b]
+[list]
+[*] Major Collapse chronicle when an NPC faction loses its last settlement / is defeated (AZR-332).
+[*] Distinct FamineRumor event when prosperity drifts into struggle (AZR-331).
+[*] Chronicle rows jump the world camera to the event tile on click (AZR-333).
+[*] Debug morph/diplomacy actions enqueue and apply on the next GameComponent tick (AZR-329).
+[/list]
+[b]Deferred[/b]
+[list]
+[*] LW9 inter-settlement traffic (AZR-334) — large roadmap item with no scaffolding yet; parked in LivingWorld/ROADMAP.md Phase Later.
+[/list]
 [b]Changed[/b]
 [list]
 [*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
