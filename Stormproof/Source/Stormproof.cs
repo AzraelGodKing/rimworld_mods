@@ -51,7 +51,7 @@ namespace Stormproof
             SafePatchAll.Apply(new Harmony("azraelgodking.stormproof"), "[Stormproof]");
             StormproofSettings.CaptureOriginalChances();
             StormproofMod.Settings?.ApplyIncidentChances();
-            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "storm-call-tick-v1"));
+            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "forecast-ramp-v1"));
         }
     }
 

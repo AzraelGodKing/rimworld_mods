@@ -2,28 +2,14 @@
 [h1]Stormproof — 1.5.1[/h1]
 [b]Fixed[/b]
 [list]
-[*] [b]AZR-319[/b] Grid forecast now uses hazard-active power draw on suppressor buildings (solar shield, fire suppressor, atmospheric barrier, climate stabilizer, sky restorer, drought condenser) instead of idle nameplate.
-[*] [b]AZR-321[/b] Short-circuit absorb handoff uses Harmony __state instead of a static flag.
+[*] Grid forecast uses the higher power draw of the solar shield, fire suppressor, atmospheric barrier, climate stabilizer, sky restorer, and drought condenser while their hazard is active.
 [/list]
 [b]Improved[/b]
 [list]
-[*] [b]AZR-320[/b] Settings window only Write()s when values change (no per-frame disk writes).
-[*] [b]AZR-322[/b] Comp registries clear when a new Game starts so prior-session refs do not accumulate.
-[*] [b]AZR-323[/b] Public StormproofCompatApi for Strata / Homesteader / Nemesis fail-open hooks (ion storm, grid surge, drought).
-[*] [b]AZR-324[/b] Grid monitor forecast inspect shows predicted brownout severity at nadir.
-[*] [b]AZR-325[/b] Weather almanac dialog shows lifetime totals across recorded entries.
+[*] Settings save only when a value changes.
+[*] Grid monitor inspect shows the predicted brownout at the lowest forecast charge.
+[*] Weather almanac shows lifetime totals for strikes, Zzzt, fires, and wear.
 [/list]
 
-1.5.0
-[h1]Stormproof — 1.5.0[/h1]
-[b]Changed[/b]
-[list]
-[*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
-[/list]
-
-1.3.1
-[h1]Stormproof — 1.3.1[/h1]
-[b]Fixed[/b]
-[list]
-[*] [b]Storm caller[/b] — the discharge button now queues the storm; weather changes on the map tick instead of inside the gizmo click.
-[/list]
+[i]Build stamp (Player.log): forecast-ramp-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/stormproof.md[/i]
