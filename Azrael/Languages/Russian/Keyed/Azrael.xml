@@ -31,6 +31,7 @@
   <Azrael_Hub_ConflictsNone>Не обнаружено.</Azrael_Hub_ConflictsNone>
   <Azrael_Hub_Conflict_Stack>Многоуровневые карты конфликтуют со Strata. Не запускайте вместе со Strata.</Azrael_Hub_Conflict_Stack>
   <Azrael_Hub_Conflict_Wellspring>Остаток отдельного Wellspring; вода теперь в Homesteader.</Azrael_Hub_Conflict_Wellspring>
+  <Azrael_Hub_Conflict_LoadOrder>Загружайте Azrael после контента серии. Сейчас {0} идёт после Azrael — переместите Azrael в конец серии.</Azrael_Hub_Conflict_LoadOrder>
   <Azrael_Hub_Harmony>Упавшие патчи</Azrael_Hub_Harmony>
   <Azrael_Hub_HarmonyNone>В этой сессии нет упавших классов патчей серии.</Azrael_Hub_HarmonyNone>
   <Azrael_Hub_HarmonyCount>{0} упавших классов патчей.</Azrael_Hub_HarmonyCount>
@@ -46,9 +47,11 @@
   <Azrael_Removal_NeedSave>Сначала загрузите колонию.</Azrael_Removal_NeedSave>
   <Azrael_Removal_Empty>На картах и в караванах нет вещей этого мода.</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>Сначала разберите указанные препятствия.</Azrael_Removal_Blocked>
-  <Azrael_Removal_NemesisHunt>Охота Nemesis ещё идёт — завершите её в игре, прежде чем снимать Nemesis.</Azrael_Removal_NemesisHunt>
+  <Azrael_Removal_NemesisHunt>Охота Nemesis ещё идёт (или перемирие) — завершите её в игре, прежде чем снимать Nemesis.</Azrael_Removal_NemesisHunt>
+  <Azrael_Removal_NemesisWorldPawn>Пешка Nemesis всё ещё на мировой карте (снимется при удалении).</Azrael_Removal_NemesisWorldPawn>
   <Azrael_Removal_StrataPawns>{0} колонист(ов) всё ещё на карманном этаже — сначала поднимите их.</Azrael_Removal_StrataPawns>
   <Azrael_Removal_DeepHediffs>Перки и травмы Deep Colony на пешках (снимутся при удалении; история пропадёт).</Azrael_Removal_DeepHediffs>
+  <Azrael_Removal_DeepLetters>Семейные / наследие-письма Deep Colony в мире (снимутся при удалении).</Azrael_Removal_DeepLetters>
   <Azrael_Removal_Caravan>{0}: {1}</Azrael_Removal_Caravan>
   <Azrael_Removal_V_Deconstruct>разберите эти</Azrael_Removal_V_Deconstruct>
   <Azrael_Removal_V_Sell>съешьте или продайте</Azrael_Removal_V_Sell>

@@ -1,3 +1,20 @@
+1.3.0
+[h1]Azrael — 1.3.0[/h1]
+[b]Fixed[/b]
+[list]
+[*] [b]Hub cache (AZR-339)[/b] — series inventory, build stamps, and Harmony failure scans build once per settings open instead of every GUI frame.
+[*] [b]Nemesis ↔ Deep Colony bridge (AZR-335)[/b] — hub detects the live epitaph→familyLetters hook instead of always showing broken.
+[*] [b]Removal hunt blocker (AZR-337)[/b] — Nemesis truce (IsEngaged) blocks uninstall prep, not only active=true.
+[*] [b]Safe-removal scroll (AZR-338)[/b] — content height includes Prepare-to-remove button rows so the last buttons stay reachable.
+[*] [b]Deep Colony hediffs (AZR-336)[/b] — AutoSafe hediff line only when pawns actually carry Deep Colony hediffs.
+[/list]
+[b]Added[/b]
+[list]
+[*] [b]RU/CN DefInjected (AZR-340)[/b] — Deep Homestead scenario, forced-storyteller scen part, and Azrael storyteller text.
+[*] [b]Load-order conflict (AZR-341)[/b] — hub warns when a series mod loads after Azrael.
+[*] [b]World-state removal scan (AZR-342)[/b] — Deep Colony family letters and parked Nemesis world pawn appear in the safe-removal report.
+[/list]
+
 1.2.0
 [h1]Azrael — 1.2.0[/h1]
 [b]Changed[/b]
