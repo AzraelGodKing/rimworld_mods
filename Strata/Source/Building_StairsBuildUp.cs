@@ -10,9 +10,9 @@ namespace Strata
     // one is already open — never the underground pocket under StairsDown.
     public class Building_StairsBuildUp : Building_StairsDown
     {
-        public override string EnterString => "Go upstairs";
+        public override string EnterString => "Strata_Enter_GoUpstairs".Translate();
 
-        public override string EnteringString => "going upstairs";
+        public override string EnteringString => "Strata_Entering_GoUpstairs".Translate();
 
         protected override bool CanOpenPortalLevel(out string reason)
         {

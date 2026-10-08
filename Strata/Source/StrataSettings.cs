@@ -52,6 +52,12 @@ namespace Strata
         public bool floodEventsEnabled = true;
         /// <summary>When false, infestations cannot fire on underground floors (B1+).</summary>
         public bool b1InfestationsEnabled = true;
+        /// <summary>Mining/industry noise raises underground infestation weight (AZR-272).</summary>
+        public bool noiseInfestationEnabled = true;
+        /// <summary>Scales how strongly noise multiplies infestation chance (0–2).</summary>
+        public float noiseInfestationScale = 1f;
+        /// <summary>Hours for map noise to halve when quiet.</summary>
+        public float noiseHalfLifeHours = 4f;
         public bool crossLevelRitualsEnabled = true;
         public bool crossLevelCaravansEnabled = true;
         public bool mergedAbandonWarning = true;
@@ -137,6 +143,9 @@ namespace Strata
             Scribe_Values.Look(ref explorationSitesEnabled, "explorationSitesEnabled", defaultValue: true);
             Scribe_Values.Look(ref floodEventsEnabled, "floodEventsEnabled", defaultValue: true);
             Scribe_Values.Look(ref b1InfestationsEnabled, "b1InfestationsEnabled", defaultValue: true);
+            Scribe_Values.Look(ref noiseInfestationEnabled, "noiseInfestationEnabled", defaultValue: true);
+            Scribe_Values.Look(ref noiseInfestationScale, "noiseInfestationScale", 1f);
+            Scribe_Values.Look(ref noiseHalfLifeHours, "noiseHalfLifeHours", 4f);
             Scribe_Values.Look(ref crossLevelRitualsEnabled, "crossLevelRitualsEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelCaravansEnabled, "crossLevelCaravansEnabled", defaultValue: true);
             Scribe_Values.Look(ref mergedAbandonWarning, "mergedAbandonWarning", defaultValue: true);
@@ -399,6 +408,15 @@ namespace Strata
                 "Strata_Settings_RaidPursuitDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_B1Infestations".Translate(), ref Settings.b1InfestationsEnabled,
                 "Strata_Settings_B1InfestationsDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_NoiseInfestation".Translate(), ref Settings.noiseInfestationEnabled,
+                "Strata_Settings_NoiseInfestationDesc".Translate());
+            if (Settings.noiseInfestationEnabled)
+            {
+                listing.Label("Strata_Settings_NoiseInfestationScale".Translate(Settings.noiseInfestationScale.ToStringPercent()));
+                Settings.noiseInfestationScale = listing.Slider(Settings.noiseInfestationScale, 0f, 2f);
+                listing.Label("Strata_Settings_NoiseHalfLife".Translate(Settings.noiseHalfLifeHours.ToString("0.#")));
+                Settings.noiseHalfLifeHours = listing.Slider(Settings.noiseHalfLifeHours, 1f, 12f);
+            }
             listing.CheckboxLabeled("Strata_Settings_HibernateEmpty".Translate(), ref Settings.hibernateEmptyLevels,
                 "Strata_Settings_HibernateEmptyDesc".Translate());
             // Note: throttleVacantLevels is kept in ExposeData for save compat but is no

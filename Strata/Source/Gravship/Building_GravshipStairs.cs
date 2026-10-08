@@ -12,9 +12,9 @@ namespace Strata
 
         public bool IsOnGravship => Spawned && StrataGravshipUtility.CellOnGravship(Map, Position);
 
-        public override string EnterString => "Go below decks";
+        public override string EnterString => "Strata_Enter_BelowDecks".Translate();
 
-        public override string EnteringString => "going below decks";
+        public override string EnteringString => "Strata_Entering_BelowDecks".Translate();
 
         // Never join a colony dig pocket — only other gravship shafts.
         protected override Map GeneratePocketMapInt()
@@ -77,9 +77,9 @@ namespace Strata
         public bool IsOnGravship =>
             entrance is IStrataGravshipPortal gp && gp.IsOnGravship;
 
-        public override string EnterString => "Go up to the ship";
+        public override string EnterString => "Strata_Enter_UpToShip".Translate();
 
-        public override string EnteringString => "returning to the ship";
+        public override string EnteringString => "Strata_Entering_UpToShip".Translate();
 
         // Prefer the landed ship host when entrance still points at a left-behind
         // shaft (GravAnchor) or a discarded departure map cell.
@@ -113,9 +113,9 @@ namespace Strata
 
         public bool IsOnGravship => Spawned && StrataGravshipUtility.CellOnGravship(Map, Position);
 
-        public override string EnterString => "Go to upper decks";
+        public override string EnterString => "Strata_Enter_UpperDecks".Translate();
 
-        public override string EnteringString => "going to upper decks";
+        public override string EnteringString => "Strata_Entering_UpperDecks".Translate();
 
         protected override Map GeneratePocketMapInt()
         {
@@ -181,9 +181,9 @@ namespace Strata
         public bool IsOnGravship =>
             entrance is IStrataGravshipPortal gp && gp.IsOnGravship;
 
-        public override string EnterString => "Go down to the ship";
+        public override string EnterString => "Strata_Enter_DownToShip".Translate();
 
-        public override string EnteringString => "returning to the ship";
+        public override string EnteringString => "Strata_Entering_DownToShip".Translate();
 
         public override Map GetOtherMap()
         {

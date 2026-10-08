@@ -12,9 +12,9 @@ namespace Strata
 
         public bool IsOnGravship => Spawned && StrataGravshipUtility.CellOnGravship(Map, Position);
 
-        public override string EnterString => "Take elevator below decks";
+        public override string EnterString => "Strata_Enter_ElevatorBelowDecks".Translate();
 
-        public override string EnteringString => "taking the elevator below decks";
+        public override string EnteringString => "Strata_Entering_ElevatorBelowDecks".Translate();
 
         protected override Map GeneratePocketMapInt()
         {
@@ -75,9 +75,9 @@ namespace Strata
         public bool IsOnGravship =>
             entrance is IStrataGravshipPortal gp && gp.IsOnGravship;
 
-        public override string EnterString => "Take elevator up to the ship";
+        public override string EnterString => "Strata_Enter_ElevatorUpToShip".Translate();
 
-        public override string EnteringString => "taking the elevator up to the ship";
+        public override string EnteringString => "Strata_Entering_ElevatorUpToShip".Translate();
 
         public override Map GetOtherMap()
         {
@@ -108,9 +108,9 @@ namespace Strata
 
         public bool IsOnGravship => Spawned && StrataGravshipUtility.CellOnGravship(Map, Position);
 
-        public override string EnterString => "Take elevator to upper decks";
+        public override string EnterString => "Strata_Enter_ElevatorUpperDecks".Translate();
 
-        public override string EnteringString => "taking the elevator to upper decks";
+        public override string EnteringString => "Strata_Entering_ElevatorUpperDecks".Translate();
 
         protected override Map GeneratePocketMapInt()
         {
@@ -176,9 +176,9 @@ namespace Strata
         public bool IsOnGravship =>
             entrance is IStrataGravshipPortal gp && gp.IsOnGravship;
 
-        public override string EnterString => "Take elevator down to the ship";
+        public override string EnterString => "Strata_Enter_ElevatorDownToShip".Translate();
 
-        public override string EnteringString => "taking the elevator down to the ship";
+        public override string EnteringString => "Strata_Entering_ElevatorDownToShip".Translate();
 
         public override Map GetOtherMap()
         {

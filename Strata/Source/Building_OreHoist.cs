@@ -334,12 +334,12 @@ namespace Strata
         {
             string text = base.GetInspectString();
             string state = IsAutoSpawned
-                ? "Skip: driven by the hoist on the level above"
+                ? "Strata_Inspect_OreHoistDriven".Translate()
                 : PartnerValid()
-                    ? "Skip: linked to partner hoist on another level"
+                    ? "Strata_Inspect_OreHoistLinked".Translate()
                     : NearestPortal() == null
-                        ? "Skip: build within " + ShaftSearchRadius + " tiles of a stairwell or elevator"
-                        : "Skip: waiting for a partner on the linked level";
+                        ? "Strata_Inspect_OreHoistNeedPortal".Translate(ShaftSearchRadius)
+                        : "Strata_Inspect_OreHoistWaiting".Translate();
             return text.NullOrEmpty() ? state : text + "\n" + state;
         }
     }
