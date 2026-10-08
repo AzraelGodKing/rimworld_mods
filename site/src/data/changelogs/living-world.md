@@ -1,5 +1,11 @@
 # Changelog
 
+
+## [1.1.1]
+
+Player-facing version **1.1.1** (`About.xml` `modVersion`).
+
+See `About/changelog.txt` for the full player-facing notes for this ship.
 ## [1.1.0]
 
 ### Changed
