@@ -2,6 +2,12 @@
 
 Foundation by **Dredd (Misakabob)** — original design, persistent antagonist pawn, escape/capture loop, aggression pacing, assaults, waste drops, fixation/prison-break triggers, resolution dialog, and settings. Credited with gratitude; this monorepo package extends that work.
 
+
+## [1.3.1]
+
+Player-facing version **1.3.1** (`About.xml` `modVersion`).
+
+See `About/changelog.txt` for the full player-facing notes for this ship.
 ## [1.3.0]
 
 ### Changed
