@@ -154,6 +154,12 @@ namespace Strata
             {
                 return 0;
             }
+            // B1+: enclosed rock. Biomes! cavern "holes" are not sky — atmosphere
+            // vents through shafts, doors, fans, and ducts only (AZR-354 / AZR-355).
+            if (ShouldTreatAsEnclosedUnderground(room.Map))
+            {
+                return 0;
+            }
             Map map = room.Map;
             long key = ((long)map.uniqueID << 32) ^ (uint)room.ID;
             roofEpochByMap.TryGetValue(map.uniqueID, out int epoch);
