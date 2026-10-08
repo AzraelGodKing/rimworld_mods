@@ -1,9 +1,18 @@
-1.5.0
-[h1]Date Night — 1.5.0[/h1]
+1.5.1
+[h1]Date Night — 1.5.1[/h1]
 [b]Added[/b]
 [list]
-[*] [b]RimJobWorld[/b] — scheduled Lovin starts RJW's bed job instead of vanilla Lovin, so RJW's override cannot cancel the job and loop. Private time starts RJW masturbation so the sex need is satisfied. Missing RJW is a no-op.
+[*] [b]Schedule sync[/b] — click the schedule-mismatch alert to copy painted Date/Lovin hours from one partner to the other.
+[*] [b]Configurable gift list[/b] — settings list of gift ThingDef names plus optional joy-luxury scan.
+[*] [b]Favourite venue destroyed[/b] — thought when a remembered high-score venue is gone.
+[*] [b]Anniversary gift bias[/b] — activity picker prefers Gift on anniversary days.
+[/list]
+[b]Fixed[/b]
+[list]
+[*] [b]Gift handoff[/b] — failed inventory transfer drops the gift at the partner's feet and still grants the gift thought.
+[*] [b]Ephemeral caches[/b] — rendezvous-bed and social-window caches clear on new/load game.
+[*] [b]Self-lovin ageTracker[/b] — null-guard before Adult check.
 [/list]
 
-[i]Build stamp (Player.log): rjw-soft-v1[/i]
+[i]Build stamp (Player.log): schedule-sync-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]
