@@ -6,10 +6,10 @@ namespace Niceties
 {
     internal static class ApparelCare
     {
-        internal static float DailyWearChance(Apparel apparel, Pawn wearer)
+        internal static float DailyWearChance(ThingWithComps gear, Pawn wearer)
         {
-            NicetiesSettings settings = NicetiesMod.Settings;
-            if (settings == null || !settings.enableApparelCare)
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (settings == null || !settings.enableApparelCare || gear == null)
             {
                 return 1f;
             }
@@ -29,7 +29,7 @@ namespace Niceties
                 return 0f;
             }
 
-            float chance = ChanceForQuality(apparel);
+            float chance = ChanceForQuality(gear);
             if (settings.apparelCraftingBonus && wearer.skills != null)
             {
                 SkillRecord crafting = wearer.skills.GetSkill(SkillDefOf.Crafting);
@@ -42,9 +42,9 @@ namespace Niceties
             return chance < 0f ? 0f : (chance > 1f ? 1f : chance);
         }
 
-        private static float ChanceForQuality(Apparel apparel)
+        private static float ChanceForQuality(ThingWithComps gear)
         {
-            CompQuality quality = apparel.TryGetComp<CompQuality>();
+            CompQuality quality = gear.TryGetComp<CompQuality>();
             QualityCategory q = quality != null ? quality.Quality : QualityCategory.Normal;
             switch (q)
             {
@@ -67,31 +67,69 @@ namespace Niceties
             }
         }
 
-        internal static string InspectLine(Apparel apparel)
+        internal static Pawn EquipmentOwner(Thing thing)
         {
-            if (NicetiesMod.Settings == null || !NicetiesMod.Settings.enableApparelCare)
+            if (thing?.ParentHolder is Pawn_EquipmentTracker tracker)
+            {
+                return tracker.pawn;
+            }
+
+            return null;
+        }
+
+        internal static string InspectLine(ThingWithComps gear, Pawn wearer, bool weapon)
+        {
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (settings == null || !settings.enableApparelCare)
             {
                 return null;
             }
 
-            Pawn wearer = apparel.Wearer;
+            if (weapon && !settings.enableWeaponCare)
+            {
+                return null;
+            }
+
             if (wearer == null)
             {
                 return null;
             }
 
-            float chance = DailyWearChance(apparel, wearer);
+            float chance = DailyWearChance(gear, wearer);
             if (chance <= 0.001f)
             {
-                return "Niceties_Apparel_NoWear".Translate();
+                return weapon
+                    ? "Niceties_Weapon_NoWear".Translate()
+                    : "Niceties_Apparel_NoWear".Translate();
             }
 
             if (chance >= 0.999f)
             {
-                return "Niceties_Apparel_VanillaWear".Translate();
+                return weapon
+                    ? "Niceties_Weapon_VanillaWear".Translate()
+                    : "Niceties_Apparel_VanillaWear".Translate();
             }
 
-            return "Niceties_Apparel_ReducedWear".Translate(chance.ToStringPercent());
+            return weapon
+                ? "Niceties_Weapon_ReducedWear".Translate(chance.ToStringPercent())
+                : "Niceties_Apparel_ReducedWear".Translate(chance.ToStringPercent());
+        }
+
+        internal static void AppendInspect(ref string result, string line)
+        {
+            if (line.NullOrEmpty())
+            {
+                return;
+            }
+
+            if (result.NullOrEmpty())
+            {
+                result = line;
+            }
+            else
+            {
+                result = result + "\n" + line;
+            }
         }
     }
 
@@ -106,19 +144,47 @@ namespace Niceties
                 return true;
             }
 
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (settings == null || !settings.enableApparelCare)
+            {
+                return true;
+            }
+
             Apparel apparel = __instance as Apparel;
-            if (apparel == null)
+            if (apparel != null)
+            {
+                Pawn wearer = apparel.Wearer;
+                if (wearer == null)
+                {
+                    return true;
+                }
+
+                return RollWear(apparel, wearer);
+            }
+
+            if (!settings.enableWeaponCare)
             {
                 return true;
             }
 
-            Pawn wearer = apparel.Wearer;
-            if (wearer == null)
+            ThingWithComps gear = __instance as ThingWithComps;
+            if (gear == null || gear.def == null || !gear.def.IsWeapon)
             {
                 return true;
             }
 
-            float chance = ApparelCare.DailyWearChance(apparel, wearer);
+            Pawn owner = ApparelCare.EquipmentOwner(gear);
+            if (owner == null)
+            {
+                return true;
+            }
+
+            return RollWear(gear, owner);
+        }
+
+        private static bool RollWear(ThingWithComps gear, Pawn wearer)
+        {
+            float chance = ApparelCare.DailyWearChance(gear, wearer);
             if (chance <= 0f)
             {
                 return false;
@@ -138,20 +204,24 @@ namespace Niceties
     {
         private static void Postfix(Apparel __instance, ref string __result)
         {
-            string line = ApparelCare.InspectLine(__instance);
-            if (line.NullOrEmpty())
+            string line = ApparelCare.InspectLine(__instance, __instance.Wearer, weapon: false);
+            ApparelCare.AppendInspect(ref __result, line);
+        }
+    }
+
+    [HarmonyPatch(typeof(ThingWithComps), nameof(ThingWithComps.GetInspectString))]
+    internal static class Patch_Weapon_GetInspectString
+    {
+        private static void Postfix(ThingWithComps __instance, ref string __result)
+        {
+            if (__instance is Apparel || __instance.def == null || !__instance.def.IsWeapon)
             {
                 return;
             }
 
-            if (__result.NullOrEmpty())
-            {
-                __result = line;
-            }
-            else
-            {
-                __result = __result + "\n" + line;
-            }
+            Pawn owner = ApparelCare.EquipmentOwner(__instance);
+            string line = ApparelCare.InspectLine(__instance, owner, weapon: true);
+            ApparelCare.AppendInspect(ref __result, line);
         }
     }
 }

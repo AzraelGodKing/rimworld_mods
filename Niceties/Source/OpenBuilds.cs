@@ -9,6 +9,9 @@ namespace Niceties
     {
         public bool EnclosesThings;
         public bool EnclosesSelf;
+
+        /// <summary>True when finishing would enclose the builder (possibly alone).</summary>
+        public bool EnclosesBuilder => EnclosesSelf;
     }
 
     /// <summary>
@@ -34,7 +37,8 @@ namespace Niceties
         {
             get
             {
-                if (NicetiesMod.Settings == null || !NicetiesMod.Settings.enableLeaveAWayOut)
+                NicetiesSettings settings = NicetiesSim.Settings;
+                if (settings == null || !settings.enableLeaveAWayOut)
                 {
                     return false;
                 }
@@ -125,6 +129,7 @@ namespace Niceties
             HashSet<IntVec3> spots = FindSafeSpots(frame);
             if (spots.Count == 0)
             {
+                JobFailReason.Is("Niceties_OpenBuilds_WouldTrapSelf".Translate());
                 pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
                 return true;
             }
