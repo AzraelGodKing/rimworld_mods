@@ -20,6 +20,9 @@
   <DateNight_Settings_QualityTip>Date outcomes vary with the activity, venue beauty, weather, and a little luck — wonderful, nice, or awkward. Off: every finished date gives the flat nice-date thought.</DateNight_Settings_QualityTip>
   <DateNight_Settings_Gifts>Allow gift dates (consumes items)</DateNight_Settings_Gifts>
   <DateNight_Settings_GiftsTip>One partner may fetch a small luxury (beer, chocolate, ambrosia...) and hand it over for a mood and opinion boost. The item moves to the partner's inventory.</DateNight_Settings_GiftsTip>
+  <DateNight_Settings_GiftExtend>Also accept joy luxuries as gifts</DateNight_Settings_GiftExtend>
+  <DateNight_Settings_GiftExtendTip>Scans for small joy-giving ingestibles so modded chocolates and drinks can be gifts too.</DateNight_Settings_GiftExtendTip>
+  <DateNight_Settings_GiftList>Gift ThingDef names (comma-separated; empty = Beer, Chocolate, Ambrosia, PsychiteTea, InsectJelly)</DateNight_Settings_GiftList>
   <DateNight_Settings_PostDateBoost>Post-date lovin spark</DateNight_Settings_PostDateBoost>
   <DateNight_Settings_PostDateBoostTip>A finished date improves the couple's lovin chance for about one in-game day.</DateNight_Settings_PostDateBoostTip>
   <DateNight_Settings_Anniversaries>Anniversaries</DateNight_Settings_Anniversaries>
@@ -46,6 +49,9 @@
   <DateNight_Alert_MismatchDesc>A lover has Date or Lovin painted, but their partner does not — or they painted different hours. Paint the same hours on both.</DateNight_Alert_MismatchDesc>
   <DateNight_Alert_MismatchNone>{0} has {1} painted; {2} does not.</DateNight_Alert_MismatchNone>
   <DateNight_Alert_MismatchHours>{0} and {1} have {2} on different hours.</DateNight_Alert_MismatchHours>
+  <DateNight_Alert_MismatchSyncHint>Click this alert to sync a partner's painted hours.</DateNight_Alert_MismatchSyncHint>
+  <DateNight_Alert_SyncOption>Copy {2} hours from {0} → {1}</DateNight_Alert_SyncOption>
+  <DateNight_Alert_Synced>Copied schedule hours from {0} to {1}.</DateNight_Alert_Synced>
   <DateNight_Alert_SlotLovin>Lovin</DateNight_Alert_SlotLovin>
   <DateNight_Alert_SlotDate>Date</DateNight_Alert_SlotDate>
   <DateNight_ScheduleComboTip>Date (click). Lovin is in the ▾ menu. This button stays last on the extra schedule row.</DateNight_ScheduleComboTip>

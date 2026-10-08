@@ -65,6 +65,10 @@
   <DateNight_VenueSoured.description>我不想再和{0}回那儿。不是在那样收场之后。</DateNight_VenueSoured.description>
   <DateNight_VenueSoured.stages_0.label>那地方毁了</DateNight_VenueSoured.stages_0.label>
   <DateNight_VenueSoured.stages_0.description>我不想再和{0}回那儿。不是在那样收场之后。</DateNight_VenueSoured.stages_0.description>
+  <DateNight_VenueDestroyed.label>我们的地方没了</DateNight_VenueDestroyed.label>
+  <DateNight_VenueDestroyed.description>我和{0}喜欢的地方没了。像被人撕掉了一页。</DateNight_VenueDestroyed.description>
+  <DateNight_VenueDestroyed.stages_0.label>我们的地方没了</DateNight_VenueDestroyed.stages_0.label>
+  <DateNight_VenueDestroyed.stages_0.description>我和{0}喜欢的地方没了。像被人撕掉了一页。</DateNight_VenueDestroyed.stages_0.description>
 
   <DateNight_DoubleDateFriends.label>好同伴</DateNight_DoubleDateFriends.label>
   <DateNight_DoubleDateFriends.description>和{0}的那晚很轻松。我还想再来。</DateNight_DoubleDateFriends.description>

@@ -217,6 +217,23 @@
   </ThoughtDef>
 
   <ThoughtDef>
+    <defName>DateNight_VenueDestroyed</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>1.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>our spot is gone</label>
+        <description>The place {0} and I loved is gone. Feels like someone tore a page out.</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+        <baseOpinionOffset>2</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
     <defName>DateNight_DoubleDateFriends</defName>
     <thoughtClass>Thought_MemorySocial</thoughtClass>
     <durationDays>1.25</durationDays>

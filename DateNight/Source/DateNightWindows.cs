@@ -26,6 +26,8 @@ namespace DateNight
             Scribe_Collections.Look(ref list, "dateNightBedClaims", LookMode.Deep);
             if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
+                // Unsaved ephemeral windows must not survive into a loaded/new game.
+                Windows.Clear();
                 Claims.Clear();
                 if (list != null)
                 {
@@ -39,6 +41,15 @@ namespace DateNight
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Clears in-memory window state that is not scribed. Call when a game
+        /// starts or loads so thingIDNumbers from a prior colony cannot collide.
+        /// </summary>
+        public static void ClearEphemeral()
+        {
+            Windows.Clear();
         }
 
         public static void NotifyScheduleTick(Pawn pawn, bool onLovin, bool onDate)

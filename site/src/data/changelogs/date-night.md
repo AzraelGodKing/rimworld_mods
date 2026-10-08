@@ -9,6 +9,21 @@ Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Dat
 ### Added
 - **RimJobWorld** (`rjw-soft-v1`) — fail-open soft-compat (`rim.job.world`). When RJW's `override_lovin` is on (the default), scheduled couple lovin starts `JoinInBed` instead of vanilla `Lovin`, so RJW's Harmony prefix cannot cancel the job and leave a gap Date Night would refill. Private time starts `RJW_Masturbate` (`JobMaker` targets match RJW's own job giver: pawn, bed, cell) so the sex need is satisfied; Date Night's mood thought and lovin cooldown apply when that job succeeds during Lovin hours. Couple eligibility also fail-opens through `xxx.can_fuck` / `can_be_fucked`. No RJW project reference; missing RJW is a no-op.
 
+## [1.4.1] (proposed)
+
+AZR-312 AZR-313 AZR-314 AZR-315 AZR-316
+
+### Added
+- **Schedule sync** (`schedule-sync-v1`, AZR-313 / formerly AZR-224) — click the schedule-mismatch alert to copy painted Date/Lovin hours from one partner to the other.
+- **Configurable gifts** (AZR-313 / formerly AZR-223) — settings list of gift ThingDef names plus optional joy-luxury scan for modded items.
+- **Favourite venue destroyed** (AZR-313 / formerly AZR-225) — one-shot `DateNight_VenueDestroyed` thought when a remembered high-score venue building/cell is gone.
+- **Anniversary gift bias** (AZR-316) — activity picker prefers Gift on anniversary days.
+
+### Fixed
+- **Gift handoff** (AZR-312) — failed inventory transfer drops the gift at the partner's feet and still grants the gift thought (no silent "delivered").
+- **Ephemeral caches** (AZR-314) — rendezvous-bed and social-window caches clear on new/load game so thing IDs cannot collide across colonies.
+- **Self-lovin ageTracker** (AZR-315) — null-guard before Adult check in `NotifySelfLovinFinished`.
+
 ## [1.4.0]
 
 Player-facing version **1.4.0**.

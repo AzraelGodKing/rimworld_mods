@@ -23,6 +23,7 @@ namespace DateNight
         public static ThoughtDef DateNight_AnniversaryMissed;
         public static ThoughtDef DateNight_OurSpot;
         public static ThoughtDef DateNight_VenueSoured;
+        public static ThoughtDef DateNight_VenueDestroyed;
         public static ThoughtDef DateNight_DoubleDateFriends;
         public static ThoughtDef DateNight_DoubleDateRivals;
         public static ThoughtDef DateNight_DoubleDateNoShow;
