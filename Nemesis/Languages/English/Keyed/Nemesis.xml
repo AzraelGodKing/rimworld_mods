@@ -36,6 +36,7 @@
   <Nemesis_Settings_WeightCaravan>Caravan harassment: {0}</Nemesis_Settings_WeightCaravan>
   <Nemesis_Settings_WeightSabotage>Power sabotage: {0}</Nemesis_Settings_WeightSabotage>
   <Nemesis_Settings_WeightFood>Food store raid: {0}</Nemesis_Settings_WeightFood>
+  <Nemesis_Settings_WeightAnomaly>Anomaly bait: {0}</Nemesis_Settings_WeightAnomaly>
   <Nemesis_Settings_Reset>Reset</Nemesis_Settings_Reset>
 
   <!-- Phrases -->
@@ -121,6 +122,7 @@
   <Nemesis_Letter_FoodTitle>Food Stores Hit: {0}</Nemesis_Letter_FoodTitle>
   <Nemesis_Letter_FoodBody>{0} spoiled or stole from your food stores ({1} stacks damaged). Hunger is a weapon.</Nemesis_Letter_FoodBody>
   <Nemesis_Letter_FoodCellar>{0} found their way into your stores — including near the root cellar. {1} stacks were ruined.</Nemesis_Letter_FoodCellar>
+  <Nemesis_Letter_FoodPantry>{0} hit your Homesteader pantry, smokehouse, or cellar stores. {1} stacks were ruined.</Nemesis_Letter_FoodPantry>
   <Nemesis_Letter_FoodFavoriteNote>{0} left a note for {1}: "No more {2} for you."</Nemesis_Letter_FoodFavoriteNote>
   <Nemesis_Letter_AnomalyTitle>Wrong Kind of Attention: {0}</Nemesis_Letter_AnomalyTitle>
   <Nemesis_Letter_AnomalyBody>{0} stirred something that should have stayed buried. Whatever is coming may not be entirely their doing — but they wanted you busy.</Nemesis_Letter_AnomalyBody>
@@ -222,6 +224,25 @@
   <Nemesis_Bounty_Cleared>Bounty withdrawn.</Nemesis_Bounty_Cleared>
   <Nemesis_Comms_BuyLead>Buy a lead on the nemesis ({0} silver)</Nemesis_Comms_BuyLead>
   <Nemesis_Comms_PostBounty>Add {0} silver to the nemesis bounty</Nemesis_Comms_PostBounty>
+  <Nemesis_Comms_TauntBack>Broadcast a taunt back at {0}</Nemesis_Comms_TauntBack>
+  <Nemesis_Comms_OfferTruce>Offer {0} a truce</Nemesis_Comms_OfferTruce>
+  <Nemesis_Comms_DemandSurrender>Demand {0} surrender</Nemesis_Comms_DemandSurrender>
+
+  <Nemesis_Dossier_PendingResolution>{0} is captured — choose their fate.</Nemesis_Dossier_PendingResolution>
+  <Nemesis_Dossier_OpenResolution>Open resolution dialog</Nemesis_Dossier_OpenResolution>
+
+  <Nemesis_Note_TauntBack>You broadcast a taunt back at them.</Nemesis_Note_TauntBack>
+  <Nemesis_Note_TruceOffer>A truce was accepted for {0} days.</Nemesis_Note_TruceOffer>
+  <Nemesis_Note_SurrenderDemand>They answered a surrender demand — coming soon.</Nemesis_Note_SurrenderDemand>
+
+  <Nemesis_Letter_TauntBackTitle>Taunt sent: {0}</Nemesis_Letter_TauntBackTitle>
+  <Nemesis_Letter_TauntBackBody>You mocked {0} over the air. They will remember.</Nemesis_Letter_TauntBackBody>
+  <Nemesis_Letter_TruceRefuseTitle>Truce refused: {0}</Nemesis_Letter_TruceRefuseTitle>
+  <Nemesis_Letter_TruceRefuseBody>{0} laughed at your offer. Expect worse.</Nemesis_Letter_TruceRefuseBody>
+  <Nemesis_Letter_SurrenderOkTitle>They fold: {0}</Nemesis_Letter_SurrenderOkTitle>
+  <Nemesis_Letter_SurrenderOkBody>{0} answered your demand. A confrontation is coming — stay ready to take them alive.</Nemesis_Letter_SurrenderOkBody>
+  <Nemesis_Letter_SurrenderRefuseTitle>Surrender refused: {0}</Nemesis_Letter_SurrenderRefuseTitle>
+  <Nemesis_Letter_SurrenderRefuseBody>{0} spat on your demand. Aggression rises.</Nemesis_Letter_SurrenderRefuseBody>
 
   <Nemesis_Epitaph_Title>Epitaph: {0}</Nemesis_Epitaph_Title>
   <Nemesis_Epitaph_Line>{0} — {1}. Hunt ran {2} days, {3} escapes.</Nemesis_Epitaph_Line>

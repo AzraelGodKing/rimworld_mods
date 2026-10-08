@@ -138,6 +138,7 @@ namespace Nemesis
             if (outcome != NemesisOutcome.Truce)
                 GameComponent_Nemesis.Instance?.RecordEpitaph(endKey);
 
+            GameComponent_Nemesis.Instance?.ClearPendingResolution();
             NemesisRegistry.Clear();
         }
 

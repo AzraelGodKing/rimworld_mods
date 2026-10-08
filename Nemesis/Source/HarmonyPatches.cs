@@ -267,19 +267,35 @@ namespace Nemesis
         static void Postfix(Building_CommsConsole __instance, Pawn myPawn, ref IEnumerable<FloatMenuOption> __result)
         {
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (!(NemesisMod.Settings?.enableInformants ?? true))
-                return;
             if (comp?.Data == null || !comp.Data.active)
                 return;
 
             var extras = new List<FloatMenuOption>();
-            int cost = NemesisInformants.LeadCost(comp.Data);
+
+            // AZR-301 — reply options (taunt / truce / demand surrender).
             extras.Add(new FloatMenuOption(
-                "Nemesis_Comms_BuyLead".Translate(cost),
-                () => NemesisInformants.TryBuyLead(__instance.Map, out _)));
+                "Nemesis_Comms_TauntBack".Translate(comp.Data.nemesisName),
+                () => NemesisPlayerCommand.EnqueueReplyTaunt()));
             extras.Add(new FloatMenuOption(
-                "Nemesis_Comms_PostBounty".Translate(cost),
-                () => NemesisInformants.TryPostBounty(__instance.Map, cost, out _)));
+                "Nemesis_Comms_OfferTruce".Translate(comp.Data.nemesisName),
+                () => NemesisPlayerCommand.EnqueueReplyTruce()));
+            extras.Add(new FloatMenuOption(
+                "Nemesis_Comms_DemandSurrender".Translate(comp.Data.nemesisName),
+                () => NemesisPlayerCommand.EnqueueReplySurrender()));
+
+            // AZR-300 — informant purchases go through the tick-drain queue.
+            if (NemesisMod.Settings?.enableInformants ?? true)
+            {
+                int cost = NemesisInformants.LeadCost(comp.Data);
+                Map map = __instance.Map;
+                extras.Add(new FloatMenuOption(
+                    "Nemesis_Comms_BuyLead".Translate(cost),
+                    () => NemesisPlayerCommand.EnqueueBuyLead(map)));
+                extras.Add(new FloatMenuOption(
+                    "Nemesis_Comms_PostBounty".Translate(cost),
+                    () => NemesisPlayerCommand.EnqueuePostBounty(map, cost)));
+            }
+
             __result = __result == null ? extras : __result.Concat(extras);
         }
     }

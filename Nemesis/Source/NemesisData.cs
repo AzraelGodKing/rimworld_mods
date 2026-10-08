@@ -88,6 +88,8 @@ namespace Nemesis
         public int harassmentCount;
         public bool pendingFakeAmbush;
         public int fakeAmbushTick = -1;
+        /// <summary>AZR-296 — capture resolution dialog awaiting player choice; survives save/reload.</summary>
+        public bool pendingResolution;
 
         /// <summary>Captain tier — rises on each escape (capped by settings).</summary>
         public int progressionLevel;
@@ -140,6 +142,7 @@ namespace Nemesis
             Scribe_Values.Look(ref harassmentCount, "harassmentCount", 0);
             Scribe_Values.Look(ref pendingFakeAmbush, "pendingFakeAmbush", false);
             Scribe_Values.Look(ref fakeAmbushTick, "fakeAmbushTick", -1);
+            Scribe_Values.Look(ref pendingResolution, "pendingResolution", false);
             Scribe_Values.Look(ref progressionLevel, "progressionLevel", 0);
             Scribe_Values.Look(ref appliedProgressionLevel, "appliedProgressionLevel", -1);
             Scribe_Values.Look(ref combatFocus, "combatFocus", NemesisCombatFocus.Survivor);

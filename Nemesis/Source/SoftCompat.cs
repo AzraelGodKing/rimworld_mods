@@ -32,13 +32,30 @@ namespace Nemesis
             "Rimesis",
         };
 
+        // Live Workshop BFV (ferny Back For Vengeance) confirmed as ferny.Vengeance (AZR-59).
+        // Other ids kept as fail-open candidates. Rimesis packageId still unconfirmed — do not invent.
         private static readonly string[] BfvPackageIds =
         {
+            "ferny.Vengeance",
             "SmashPhil.BackForVengeance",
             "smashphil.backforvengeance",
             "SmashPhil.BFV",
             "BackForVengeance",
             "VanillaExpanded.BackForVengeance",
+        };
+
+        /// <summary>Homesteader pantry / smokehouse / cellar storage buildings for food raids (AZR-303).</summary>
+        private static readonly string[] HomesteaderFoodStorageDefNames =
+        {
+            "Homesteader_Smokehouse",
+            "Homesteader_RootCellar",
+            "Homesteader_PreservesShelf",
+            "Homesteader_StorageCrate",
+            "Homesteader_StorageBarrel",
+            "Homesteader_LargeStorageCrate",
+            "Homesteader_IngredientBarrel",
+            "Homesteader_Icehouse",
+            "Homesteader_Springhouse",
         };
 
         private static bool _stormChecked;
@@ -412,6 +429,64 @@ namespace Nemesis
             if (def == null) return false;
             List<Thing> things = map.listerThings.ThingsOfDef(def);
             return things != null && things.Count > 0;
+        }
+
+        public static bool IsHomesteaderFoodStorageDef(string defName)
+        {
+            if (string.IsNullOrEmpty(defName)) return false;
+            for (int i = 0; i < HomesteaderFoodStorageDefNames.Length; i++)
+            {
+                if (HomesteaderFoodStorageDefNames[i] == defName)
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>True when the stack sits in / on a Homesteader pantry, cellar, or smokehouse.</summary>
+        public static bool IsOnHomesteaderFoodStorage(Thing thing)
+        {
+            if (thing?.Map == null || !HomesteaderActive) return false;
+            try
+            {
+                // Haulable stacks in Building_Storage slot groups.
+                SlotGroup group = thing.GetSlotGroup();
+                if (group?.parent is Building storage
+                    && IsHomesteaderFoodStorageDef(storage.def?.defName))
+                    return true;
+
+                // Smokehouse / workbench: food sitting on the building's cells.
+                Building edifice = thing.Position.GetEdifice(thing.Map);
+                if (edifice != null && IsHomesteaderFoodStorageDef(edifice.def?.defName))
+                    return true;
+
+                // Fallback: same cell as a Homesteader food-storage building.
+                List<Thing> at = thing.Map.thingGrid.ThingsListAtFast(thing.Position);
+                if (at == null) return false;
+                for (int i = 0; i < at.Count; i++)
+                {
+                    if (at[i] is Building b && IsHomesteaderFoodStorageDef(b.def?.defName))
+                        return true;
+                }
+            }
+            catch
+            {
+                /* fail open */
+            }
+            return false;
+        }
+
+        public static bool MapHasHomesteaderFoodStorage(Map map)
+        {
+            if (map == null || !HomesteaderActive) return false;
+            for (int i = 0; i < HomesteaderFoodStorageDefNames.Length; i++)
+            {
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(HomesteaderFoodStorageDefNames[i]);
+                if (def == null) continue;
+                List<Thing> things = map.listerThings.ThingsOfDef(def);
+                if (things != null && things.Count > 0)
+                    return true;
+            }
+            return false;
         }
     }
 }

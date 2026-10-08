@@ -1,3 +1,30 @@
+1.3.1
+[h1]Nemesis — 1.3.1[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Capture resolution survives save[/b] (AZR-296) — pending-resolution state is Scribed; the dialog reopens after reload instead of orphaning a captured nemesis.
+[*] [b]GeneratePawns early-out[/b] (AZR-299) — raid inject postfix returns the original enumerable when no nemesis is pending.
+[/list]
+
+[b]Added[/b]
+[list]
+[*] [b]Homesteader food targeting[/b] (AZR-303) — food raids prefer pantry / smokehouse / cellar stacks by defName.
+[*] [b]Anomaly bait weight[/b] (AZR-302) — action-mix slider (default 0.06).
+[*] [b]Comms reply options[/b] (AZR-301) — taunt back / offer truce / demand surrender.
+[*] [b]Informant tick-queue[/b] (AZR-300) — buy lead / bounty enqueue and apply on GameComponentTick (MP-safer).
+[*] [b]CN/RU HediffDef + ScenarioDef[/b] (AZR-298) — BattleHardened + Marked scenario injects.
+[*] [b]BFV packageId[/b] (AZR-59) — confirmed live id ferny.Vengeance added to SoftCompat.
+[/list]
+
+[b]Changed[/b]
+[list]
+[*] [b]ROADMAP[/b] (AZR-297) — mark already-shipped checklist items.
+[/list]
+
+[i]Deferred: AZR-304 hunt-base camp/quest (large); AZR-60 Rimesis inject (blocked on public hook). Rimesis packageId still unconfirmed.[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/nemesis.md[/i]
+
 1.3.0
 [h1]Nemesis — 1.3.0[/h1]
 [b]Changed[/b]

@@ -45,9 +45,9 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 
 ## More personal systems
 
-- [ ] Nemesis relationship / social memory with the fixation target (opinion, social fight chance).
+- [x] Nemesis relationship / social memory with the fixation target (opinion, social fight chance) — `NemesisSocial` + social-fight Harmony patch.
 - [ ] Apparel / weapon tint polish (focus gear upgrades already ship).
-- [ ] Comms console interaction: reply options (taunt back / offer truce / demand surrender).
+- [x] Comms console interaction: reply options (taunt back / offer truce / demand surrender) — AZR-301.
 
 ## Assault polish
 
@@ -60,10 +60,10 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 - [x] **Deep Colony capture / truce goodwill** — reviewed with DC ledger; no conflict (Execute/Release = vanilla goodwill only; Truce = timer only). Same spec.
 - [x] **Rimesis Availability / Missing (design + stub)** — Font owns Availability (`Available` vs busy: AwaitingInvestigation / LocatedCampsite / LocatedSettlement / IncomingRaid / DispatchingRaid / EncounterActive). Nemesis exposes `ShouldReportMissingToRimesis` (`IsNemesisPawn`) for Font to mark Missing; soft-read of Availability via reflection still TBD (fail-open; need Font type/method names). Same spec.
 - [ ] **Rimesis Availability soft-read** — when Font publishes the API, fail-open reflection in `SoftCompat` so Nemesis never steals a busy Rimesis pawn; no hard require.
-- [ ] **Rimesis leader-raid handoff (Font)** — when Nemesis fires a vengeance / “leader” army return, call into Rimesis raid injection so Rimesis combat style/tactics apply. More work than coexistence; not scheduled until Font confirms packageId + public inject surface.
+- [ ] **Rimesis leader-raid handoff (Font)** — when Nemesis fires a vengeance / “leader” army return, call into Rimesis raid injection so Rimesis combat style/tactics apply. More work than coexistence; not scheduled until Font confirms packageId + public inject surface. (AZR-60 — deferred, blocked on public hook.)
 - [ ] Stormproof: optional ion-storm baiting when aggression is high (still fail-open).
 - [ ] Strata: harassment on underground levels via stairs awareness; don’t break pocket maps.
-- [ ] Homesteader: target pantry / smokehouse stacks by defName list.
+- [x] Homesteader: target pantry / smokehouse stacks by defName list (AZR-303).
 - [ ] Living World: consume faction crushed / victory chronicle signals only (see above).
 
 ## Content / UX
@@ -71,8 +71,8 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 - [x] Dossier tab + epitaphs (1.1.0)
 - [x] Tells (voice / weapon / mark / habit)
 - [ ] Preview.png art pass.
-- [ ] Scenario / storyteller hints.
-- [ ] Dev mode force-spawn / force-end debug actions.
+- [x] Scenario / storyteller hints — `Nemesis_Marked` scenario ships.
+- [x] Dev mode force-spawn / force-end debug actions — `NemesisDebug`.
 - [ ] Steam description + screenshots.
 
 ## Balance
