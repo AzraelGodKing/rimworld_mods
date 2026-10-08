@@ -1,3 +1,13 @@
+3.8.1
+[h1]Strata — 3.8.1[/h1]
+[b]Fixed[/b]
+[list]
+[*] [b]Underground mining fog[/b] — border rock faces stay visible after digging; only deep undug rock stays fogged (AZR-349).
+[*] [b]Stairwell door gas wipe[/b] — opening a door into a shaft no longer instantly clears smoke/O₂ in the connected rooms; shaft flow scales with aperture and outdoor shafts vent pollutants without stripping breathable air (AZR-353).
+[*] [b]Gas pocket whole-layer fill[/b] — deep-gas bursts dilute across large Biomes! caverns; permanent vents skip map-sized rooms; deep gas slowly bleeds without a source (AZR-354).
+[*] [b]O₂ by atmosphere quality[/b] — viewed map runs full cycle rate on Low/Medium/High; underground open-roof holes are not treated as sky vents (AZR-355).
+[/list]
+
 3.8.0
 [h1]Strata — 3.8.0[/h1]
 [b]Fixed[/b]

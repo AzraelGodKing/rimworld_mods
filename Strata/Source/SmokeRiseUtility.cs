@@ -9,8 +9,12 @@ namespace Strata
     {
         // Fraction of a stairwell room's buoyant gas that convects up each
         // cycle (unsealed shaft). Heavy gases sink down at the same rate.
+        // Scaled by shaft aperture vs room size so opening a door into a
+        // large hall does not flush the whole volume in one cycle (AZR-353).
         public const float NaturalShaftRise = 0.15f;
         public const float NaturalShaftSink = 0.15f;
+        // One portal ≈ this many cells of effective stack aperture.
+        private const float ShaftApertureCells = 8f;
 
         public static bool RoomContainsLevelExit(Room room, Map map)
         {
@@ -69,10 +73,11 @@ namespace Strata
                     continue;
                 }
                 Room upperRoom = upperEntrance.Position.GetRoom(upperEntrance.Map);
-                float rate = NaturalShaftRise;
+                float rate = ScaledShaftRate(NaturalShaftRise, lowerRoom, map);
                 if (RoomContainsLevelExit(lowerRoom, map))
                 {
-                    rate = Mathf.Clamp01(rate + atmosphere.ShaftRiseBoostForRoom(lowerRoom));
+                    rate = Mathf.Clamp01(rate + atmosphere.ShaftRiseBoostForRoom(lowerRoom)
+                        * ShaftApertureFactor(lowerRoom, map));
                 }
                 // Sample must be an UPPER-map cell (it anchors the receiving
                 // cloud there); the entrance's own cell resolves to its room.
@@ -113,8 +118,9 @@ namespace Strata
                     continue;
                 }
                 Room lowerRoom = lowerLanding.Position.GetRoom(lowerMap);
-                float rate = NaturalShaftSink;
-                rate = Mathf.Clamp01(rate + atmosphere.ShaftSinkBoostForRoom(upperRoom));
+                float rate = ScaledShaftRate(NaturalShaftSink, upperRoom, map);
+                rate = Mathf.Clamp01(rate + atmosphere.ShaftSinkBoostForRoom(upperRoom)
+                    * ShaftApertureFactor(upperRoom, map));
                 atmosphere.TransferGasDown(upperRoom, lowerRoom, lowerMap, rate, lowerLanding.Position);
             }
         }
@@ -150,11 +156,12 @@ namespace Strata
 
                 if (lowerRoom != null && !lowerRoom.UsesOutdoorTemperature)
                 {
-                    float rise = NaturalShaftRise;
+                    float rise = ScaledShaftRate(NaturalShaftRise, lowerRoom, map);
                     if (RoomContainsLevelExit(lowerRoom, map)
                         || (upperRoom != null && RoomContainsLevelExit(upperRoom, upperMap)))
                     {
-                        rise = Mathf.Clamp01(rise + atmosphere.ShaftRiseBoostForRoom(lowerRoom));
+                        rise = Mathf.Clamp01(rise + atmosphere.ShaftRiseBoostForRoom(lowerRoom)
+                            * ShaftApertureFactor(lowerRoom, map));
                     }
                     atmosphere.TransferGasUp(lowerRoom, upperRoom, upperMap, rise, landing.Position);
                 }
@@ -166,11 +173,47 @@ namespace Strata
                     {
                         continue;
                     }
-                    float sink = NaturalShaftSink;
-                    sink = Mathf.Clamp01(sink + upperAtmo.ShaftSinkBoostForRoom(upperRoom));
+                    float sink = ScaledShaftRate(NaturalShaftSink, upperRoom, upperMap);
+                    sink = Mathf.Clamp01(sink + upperAtmo.ShaftSinkBoostForRoom(upperRoom)
+                        * ShaftApertureFactor(upperRoom, upperMap));
                     upperAtmo.TransferGasDown(upperRoom, lowerRoom, map, sink, tower.Position);
                 }
             }
+        }
+
+        // Small shaft rooms keep full NaturalShaftRise; merging into a large
+        // hall (open door) throttles mass flow by aperture / room size.
+        internal static float ShaftApertureFactor(Room room, Map map)
+        {
+            if (room == null || map == null)
+            {
+                return 1f;
+            }
+            int portals = CountPortalsInRoom(room, map);
+            float roomCells = Mathf.Max(room.CellCount, 1);
+            return Mathf.Clamp(portals * ShaftApertureCells / roomCells, 0.02f, 1f);
+        }
+
+        internal static float ScaledShaftRate(float natural, Room room, Map map)
+        {
+            return Mathf.Clamp01(natural * ShaftApertureFactor(room, map));
+        }
+
+        private static int CountPortalsInRoom(Room room, Map map)
+        {
+            int count = 0;
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing == null || !thing.Spawned || thing.Position.GetRoom(map) != room)
+                {
+                    continue;
+                }
+                if (thing is PocketMapExit || thing is Building_StairsDown || thing is Building_StairsBuildUp)
+                {
+                    count++;
+                }
+            }
+            return Mathf.Max(count, 1);
         }
 
         private static MapPortal FindLinkedLanding(Building_StairsDown entrance, Map otherMap)

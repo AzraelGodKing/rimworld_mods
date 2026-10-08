@@ -97,7 +97,7 @@
   <Strata_Settings_AtmosphereQuality>Atmosphere quality</Strata_Settings_AtmosphereQuality>
   <Strata_Settings_AtmosphereQualityDesc>Controls how often gas and O₂/CO₂ sim runs on background levels. Low is cheapest; High keeps the viewed level snappy.</Strata_Settings_AtmosphereQualityDesc>
   <Strata_Settings_AtmosphereQualityLow>Low (background lite)</Strata_Settings_AtmosphereQualityLow>
-  <Strata_Settings_AtmosphereQualityLowDesc>Background levels run atmosphere 8× slower with batched room/plant passes. Animals skip gas harm unless already affected.</Strata_Settings_AtmosphereQualityLowDesc>
+  <Strata_Settings_AtmosphereQualityLowDesc>Background levels run atmosphere 8× slower with batched room/plant passes. The viewed level stays at full rate. Animals skip gas harm unless already affected.</Strata_Settings_AtmosphereQualityLowDesc>
   <Strata_Settings_AtmosphereQualityMedium>Medium (default)</Strata_Settings_AtmosphereQualityMedium>
   <Strata_Settings_AtmosphereQualityMediumDesc>Viewed level full speed; background occupied levels 4× slower with phased work spread across ticks.</Strata_Settings_AtmosphereQualityMediumDesc>
   <Strata_Settings_AtmosphereQualityHigh>High (full fidelity)</Strata_Settings_AtmosphereQualityHigh>

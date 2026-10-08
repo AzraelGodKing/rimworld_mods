@@ -191,8 +191,9 @@ namespace Strata
             return multiplier;
         }
 
-        // Viewed level stays snappy on Medium/High; background levels run much
-        // less often on Low or when performance mode is on.
+        // Quality throttles background levels only. The viewed map always runs
+        // at full cycle rate so Low/Medium/High converge to the same steady
+        // atmosphere (AZR-355) — fidelity must not change O₂ equilibrium.
         public static int AtmosphereQualityCycleMultiplier(Map map)
         {
             StrataSettings settings = StrataMod.Settings;
@@ -201,18 +202,22 @@ namespace Strata
                 return 1;
             }
             bool viewed = Find.CurrentMap == map;
-            if (settings.performanceModeEnabled && !viewed)
+            if (viewed)
+            {
+                return 1;
+            }
+            if (settings.performanceModeEnabled)
             {
                 return 2;
             }
             switch (settings.atmosphereQuality)
             {
                 case AtmosphereQualityLevel.Low:
-                    return viewed ? 2 : 8;
+                    return 8;
                 case AtmosphereQualityLevel.High:
                     return 1;
                 default:
-                    return viewed ? 1 : 4;
+                    return 4;
             }
         }
 

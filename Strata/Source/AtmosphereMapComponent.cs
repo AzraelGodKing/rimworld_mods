@@ -681,7 +681,25 @@ namespace Strata
             {
                 Cloud c = clouds[id];
                 Room r = c.sample.IsValid && c.sample.InBounds(map) ? c.sample.GetRoom(map) : null;
-                if (r == null || r.UsesOutdoorTemperature)
+                // Door/region rebuild can orphan a sample for a tick — do not
+                // treat that as open sky or smoke resets on every door swing (AZR-353).
+                if (r == null)
+                {
+                    if (TryReanchorCloudSample(c) && c.sample.IsValid && c.sample.InBounds(map))
+                    {
+                        r = c.sample.GetRoom(map);
+                    }
+                    if (r == null)
+                    {
+                        foreach (StrataGasDef gas in Gases)
+                        {
+                            c.density[gas.index] *= 1f - Mathf.Clamp01(gas.passiveLeak);
+                        }
+                        CullOrStore(id, c);
+                        continue;
+                    }
+                }
+                if (r.UsesOutdoorTemperature)
                 {
                     AtmosphericMix.ApplyOutdoorVentDrain(c.density, map, OutdoorDisperse);
                 }
@@ -699,6 +717,29 @@ namespace Strata
                 }
                 CullOrStore(id, c);
             }
+        }
+
+        private bool TryReanchorCloudSample(Cloud cloud)
+        {
+            if (cloud == null || !cloud.sample.IsValid || !cloud.sample.InBounds(map))
+            {
+                return false;
+            }
+            foreach (IntVec3 dir in GenAdj.CardinalDirections)
+            {
+                IntVec3 n = cloud.sample + dir;
+                if (!n.InBounds(map))
+                {
+                    continue;
+                }
+                Room room = n.GetRoom(map);
+                if (room != null && !room.IsDoorway)
+                {
+                    cloud.sample = n;
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void RunEmitters()
@@ -1630,6 +1671,9 @@ namespace Strata
         }
 
         // Move every buoyant gas up an unsealed shaft.
+        // Outdoor dump (surface open to sky): pollutants leave; breathable mix
+        // is NOT stripped — fresh air replaces vented pollutant volume (AZR-353 /
+        // AZR-355). Enclosed upper rooms still receive the rising column.
         internal void TransferGasUp(Room sourceRoom, Room upperRoom, Map upperMap, float rate, IntVec3 sample)
         {
             if (sourceRoom == null || rate <= 0f || !clouds.TryGetValue(sourceRoom.ID, out Cloud cloud))
@@ -1637,11 +1681,17 @@ namespace Strata
                 return;
             }
             rate = Mathf.Clamp01(rate);
-            AtmosphereMapComponent upperAtmosphere = upperMap.GetComponent<AtmosphereMapComponent>();
+            AtmosphereMapComponent upperAtmosphere = upperMap?.GetComponent<AtmosphereMapComponent>();
             bool upperReceives = upperRoom != null && !upperRoom.UsesOutdoorTemperature && upperAtmosphere != null;
+            float ventedPollutant = 0f;
             foreach (StrataGasDef gas in Gases)
             {
                 if (!gas.buoyant)
+                {
+                    continue;
+                }
+                // Dumping into open sky must not vacuum O₂/N₂ out of the shaft room.
+                if (!upperReceives && AtmosphericMix.IsAtmosphericComponent(gas))
                 {
                     continue;
                 }
@@ -1655,11 +1705,21 @@ namespace Strata
                 {
                     upperAtmosphere.AddGasToRoom(upperRoom, gas, moved, sample);
                 }
+                else if (AtmosphericMix.IsPollutantGas(gas))
+                {
+                    ventedPollutant += moved;
+                }
+            }
+            if (!upperReceives && ventedPollutant > 0f)
+            {
+                AtmosphericMix.RefillWithAmbient(cloud.density, map, ventedPollutant);
+                AtmosphericMix.IntakeFreshAir(cloud.density, map, Mathf.Clamp01(rate * 0.85f));
             }
             CullOrStore(sourceRoom.ID, cloud);
         }
 
         // Move every heavy (non-buoyant) gas down an unsealed shaft.
+        // Outdoor / missing lower: pollutants leave; atmospheric components stay.
         internal void TransferGasDown(Room sourceRoom, Room lowerRoom, Map lowerMap, float rate, IntVec3 sample)
         {
             if (sourceRoom == null || rate <= 0f || !clouds.TryGetValue(sourceRoom.ID, out Cloud cloud))
@@ -1667,11 +1727,16 @@ namespace Strata
                 return;
             }
             rate = Mathf.Clamp01(rate);
-            AtmosphereMapComponent lowerAtmosphere = lowerMap.GetComponent<AtmosphereMapComponent>();
+            AtmosphereMapComponent lowerAtmosphere = lowerMap?.GetComponent<AtmosphereMapComponent>();
             bool lowerReceives = lowerRoom != null && !lowerRoom.UsesOutdoorTemperature && lowerAtmosphere != null;
+            float ventedPollutant = 0f;
             foreach (StrataGasDef gas in Gases)
             {
                 if (gas.buoyant)
+                {
+                    continue;
+                }
+                if (!lowerReceives && AtmosphericMix.IsAtmosphericComponent(gas))
                 {
                     continue;
                 }
@@ -1685,6 +1750,15 @@ namespace Strata
                 {
                     lowerAtmosphere.AddGasToRoom(lowerRoom, gas, moved, sample);
                 }
+                else if (AtmosphericMix.IsPollutantGas(gas))
+                {
+                    ventedPollutant += moved;
+                }
+            }
+            if (!lowerReceives && ventedPollutant > 0f)
+            {
+                AtmosphericMix.RefillWithAmbient(cloud.density, map, ventedPollutant);
+                AtmosphericMix.IntakeFreshAir(cloud.density, map, Mathf.Clamp01(rate * 0.85f));
             }
             CullOrStore(sourceRoom.ID, cloud);
         }

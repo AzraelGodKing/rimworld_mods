@@ -39,9 +39,19 @@ namespace Strata
             }
             // Deeper levels split richer seams. Match hidden-chamber pockets:
             // a heavy initial burst plus an uncapped fissure that keeps seeping.
-            float density = Mathf.Min(1.2f + 0.25f * StrataDepth.Of(map) + Rand.Range(0f, 0.35f), 3f);
-            atmosphere.AddGasBurst(room, StrataGasDefOf.Strata_DeepGas, density, inside);
-            TrySpawnBreachedVent(map, inside, breach);
+            // Dilute by room size so Biomes! open caverns get a local pocket,
+            // not a whole-layer 100% fill (AZR-354).
+            float pocketDensity = Mathf.Min(1.2f + 0.25f * StrataDepth.Of(map) + Rand.Range(0f, 0.35f), 3f);
+            const int LocalBurstCells = 36;
+            float roomCells = Mathf.Max(room.CellCount, 1);
+            float diluted = pocketDensity * Mathf.Min(LocalBurstCells, roomCells) / roomCells;
+            atmosphere.AddGasBurst(room, StrataGasDefOf.Strata_DeepGas, diluted, inside);
+            // Permanent seep only in modest workings — a vent in a map-sized
+            // cavern would pressurize the whole layer and never clear.
+            if (roomCells <= 250)
+            {
+                TrySpawnBreachedVent(map, inside, breach);
+            }
 
             for (int i = 0; i < 6; i++)
             {
