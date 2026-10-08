@@ -1,9 +1,19 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.8.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.8.0` in `About.xml` `modVersion` (proposed ship: `3.8.1`). Player.log: `[Strata] v3.8.0 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `haul-dock-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `gas-fog-azr349-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.8.1] (proposed — About.xml not bumped yet)
+
+AZR-349 AZR-353 AZR-354 AZR-355
+
+### Fixed
+- **Underground mining fog** (AZR-349) — border rock faces stay visible after digging; only deep undug rock stays fogged.
+- **Stairwell door gas wipe** (AZR-353) — opening a door into a shaft no longer instantly clears smoke/O₂; shaft flow scales with aperture; outdoor shafts vent pollutants without stripping breathable air.
+- **Gas pocket whole-layer fill** (AZR-354) — deep-gas bursts dilute across large Biomes! caverns; permanent vents skip map-sized rooms; deep gas slowly bleeds without a source.
+- **O₂ by atmosphere quality** (AZR-355) — viewed map runs full cycle rate on Low/Medium/High; underground open-roof holes are not treated as sky vents.
 
 ## [3.8.0]
 

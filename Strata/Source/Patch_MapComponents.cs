@@ -80,6 +80,8 @@ namespace Strata
                 __instance.components.Add(new MapComponent_CrossLevelThreatWatch(__instance));
             }
             StrataDeferredGenUtility.AttachPending(__instance);
+            // Load heal: dug cells stuck fogged next to clear space (AZR-232 / AZR-349).
+            Patch_FogBlockerRemoved_Underground.HealStuckDugFog(__instance);
         }
     }
 
