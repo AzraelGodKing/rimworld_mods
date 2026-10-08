@@ -1,12 +1,8 @@
-1.4.0
-[h1]Date Night — 1.4.0[/h1]
+1.5.0
+[h1]Date Night — 1.5.0[/h1]
 [b]Added[/b]
 [list]
 [*] [b]RimJobWorld[/b] — scheduled Lovin starts RJW's bed job instead of vanilla Lovin, so RJW's override cannot cancel the job and loop. Private time starts RJW masturbation so the sex need is satisfied. Missing RJW is a no-op.
-[/list]
-[b]Changed[/b]
-[list]
-[*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
 [/list]
 
 [i]Build stamp (Player.log): rjw-soft-v1[/i]
