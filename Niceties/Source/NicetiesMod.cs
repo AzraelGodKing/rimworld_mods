@@ -23,6 +23,8 @@ namespace Niceties
                 return;
             }
 
+            int before = Settings.ContentFingerprint();
+
             Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
             float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
             Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, viewHeight);
@@ -54,6 +56,7 @@ namespace Niceties
             }
 
             listing.Gap(4f);
+            listing.Label("Niceties_Settings_ActivePreset".Translate(Settings.ActivePresetLabelKey().Translate()));
             listing.Label("Niceties_Settings_PresetsTip".Translate());
 
             DrawFeature(listing, "Niceties_Settings_ApparelCare", "Niceties_Settings_ApparelCareTip",
@@ -66,6 +69,8 @@ namespace Niceties
                     ref Settings.apparelCraftingBonus, "Niceties_Settings_CraftingBonusTip".Translate());
                 listing.CheckboxLabeled("Niceties_Settings_CorpseApparel".Translate(),
                     ref Settings.protectCorpseApparel, "Niceties_Settings_CorpseApparelTip".Translate());
+                listing.CheckboxLabeled("Niceties_Settings_WeaponCare".Translate(),
+                    ref Settings.enableWeaponCare, "Niceties_Settings_WeaponCareTip".Translate());
             }
 
             DrawFeature(listing, "Niceties_Settings_ThroneAltar", "Niceties_Settings_ThroneAltarTip",
@@ -111,7 +116,11 @@ namespace Niceties
             listing.End();
             Widgets.EndScrollView();
             Settings.Clamp();
-            Settings.Write();
+            if (Settings.ContentFingerprint() != before)
+            {
+                Settings.Write();
+                NicetiesSim.SyncFromModSettings();
+            }
         }
 
         private static void DrawFeature(Listing_Standard listing, string labelKey, string tipKey,

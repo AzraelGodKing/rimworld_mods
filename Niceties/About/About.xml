@@ -12,6 +12,9 @@
     <li>z4k97b.altarsinthroneroom</li>
     <li>RelaxedOtter.WearWhatYouWant</li>
     <li>louze.hiddencryptosleep</li>
+    <!-- AZR-295: original Melee Hunting (melee.hunting) is discontinued/removed from Workshop;
+         Hunters Use Melee! (Continued) is the maintained counterpart that overlaps melee hunting. -->
+    <li>Mlie.HuntersUseMelee</li>
     <li>dhultgren.smarterconstruction</li>
   </incompatibleWith>
   <modDependencies>

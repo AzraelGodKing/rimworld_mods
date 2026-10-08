@@ -20,6 +20,16 @@ namespace Niceties
             {
                 __result = null;
                 JobFailReason.Is("Niceties_OpenBuilds_WouldEnclose".Translate());
+                return;
+            }
+
+            // Fail up front when the frame would trap only the builder with no step-aside cell
+            // (AZR-276). Otherwise StepAsideThenRetry ends the job silently and the work giver
+            // re-issues forever.
+            if (enclose.EnclosesBuilder && OpenBuilds.FindSafeSpots(t).Count == 0)
+            {
+                __result = null;
+                JobFailReason.Is("Niceties_OpenBuilds_WouldTrapSelf".Translate());
             }
         }
     }
@@ -47,7 +57,7 @@ namespace Niceties
                 return false;
             }
 
-            if (__instance.Position == worker.Position || enclose.EnclosesSelf)
+            if (__instance.Position == worker.Position || enclose.EnclosesBuilder)
             {
                 return !OpenBuilds.StepAsideThenRetry(worker, __instance);
             }

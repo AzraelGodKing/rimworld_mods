@@ -18,4 +18,9 @@ Requires [Harmony](https://github.com/pardeike/HarmonyRimWorld). Royalty and Ide
 
 Inspired by ideas from Jecrell's Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Melee Hunting, Share Rooms, and Smarter Construction. Original implementations — not ports of those Workshop zips.
 
+## Compat notes
+
+- **Melee Hunting (AZR-295)** — the credited Workshop inspiration (`melee.hunting` / Steam “Melee Hunting”) is discontinued and removed from the community Workshop. The maintained counterpart that overlaps Niceties melee hunting is [Hunters Use Melee! (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2900108163) (`Mlie.HuntersUseMelee`), listed in `About.xml` `incompatibleWith`.
+- **Multiplayer (AZR-292)** — sim-gating settings bake into `GameComponent_NicetiesSim` for join-time host authority. Live mid-session Mod Options sync would need Multiplayer.API; Niceties does not depend on it.
+
 Linear: [AZR-105](https://linear.app/azraelgodking/issue/AZR-105/niceties-16-qol-pack-from-leftover-workshop-ideas) · [AZR-106](https://linear.app/azraelgodking/issue/AZR-106/niceties-shared-bedrooms-and-no-disturbed-sleep-for-roommates) · [AZR-201](https://linear.app/azraelgodking/issue/AZR-201/niceties-smarter-construction-replace-stuff-enclose-bridge).

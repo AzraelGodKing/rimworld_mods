@@ -9,7 +9,8 @@ namespace Niceties
     {
         private static void Postfix(ref bool __result)
         {
-            if (NicetiesMod.Settings != null && NicetiesMod.Settings.allowThroneAltars)
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (settings != null && settings.allowThroneAltars)
             {
                 __result = true;
             }
@@ -26,7 +27,8 @@ namespace Niceties
                 return;
             }
 
-            if (NicetiesMod.Settings == null || !NicetiesMod.Settings.allowThroneAltars)
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (settings == null || !settings.allowThroneAltars)
             {
                 return;
             }

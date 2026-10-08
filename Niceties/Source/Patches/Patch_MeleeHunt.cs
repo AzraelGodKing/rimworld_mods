@@ -9,12 +9,13 @@ namespace Niceties
     {
         internal static bool AllowsMelee(Pawn hunter)
         {
-            return NicetiesMod.Settings != null && NicetiesMod.Settings.meleeHunting && hunter != null;
+            NicetiesSettings settings = NicetiesSim.Settings;
+            return settings != null && settings.meleeHunting && hunter != null;
         }
 
         internal static bool AllowsUnarmed()
         {
-            NicetiesSettings settings = NicetiesMod.Settings;
+            NicetiesSettings settings = NicetiesSim.Settings;
             return settings != null && settings.meleeHunting && settings.unarmedHunting;
         }
 
@@ -25,7 +26,8 @@ namespace Niceties
                 return true;
             }
 
-            float cap = NicetiesMod.Settings != null ? NicetiesMod.Settings.meleeHuntMaxBodySize : 1.5f;
+            NicetiesSettings settings = NicetiesSim.Settings;
+            float cap = settings != null ? settings.meleeHuntMaxBodySize : 1.5f;
             return prey.RaceProps.baseBodySize <= cap;
         }
 

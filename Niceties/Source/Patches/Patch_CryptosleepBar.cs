@@ -8,6 +8,8 @@ namespace Niceties
 {
     internal static class CryptosleepBar
     {
+        private static bool entriesMissingLogged;
+
         internal static void MarkDirty()
         {
             Find.ColonistBar?.MarkColonistsDirty();
@@ -15,7 +17,8 @@ namespace Niceties
 
         internal static bool ShouldHide(Pawn pawn)
         {
-            if (pawn == null || NicetiesMod.Settings == null || !NicetiesMod.Settings.hideCryptosleep)
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (pawn == null || settings == null || !settings.hideCryptosleep)
             {
                 return false;
             }
@@ -25,14 +28,27 @@ namespace Niceties
 
         internal static void FilterEntries(ColonistBar bar)
         {
-            if (bar == null || NicetiesMod.Settings == null || !NicetiesMod.Settings.hideCryptosleep)
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (bar == null || settings == null || !settings.hideCryptosleep)
             {
                 return;
             }
 
-            List<ColonistBar.Entry> entries = AccessTools.Field(typeof(ColonistBar), "cachedEntries")
-                ?.GetValue(bar) as List<ColonistBar.Entry>;
-            if (entries == null || entries.Count == 0)
+            // Prefer the public Entries property over AccessTools.Field("cachedEntries")
+            // so a Ludeon rename fails loudly once instead of silently (AZR-291).
+            List<ColonistBar.Entry> entries = bar.Entries;
+            if (entries == null)
+            {
+                if (!entriesMissingLogged)
+                {
+                    entriesMissingLogged = true;
+                    Log.Warning("[Niceties] ColonistBar.Entries was null; hide-cryptosleep filter skipped.");
+                }
+
+                return;
+            }
+
+            if (entries.Count == 0)
             {
                 return;
             }
@@ -66,7 +82,8 @@ namespace Niceties
     {
         private static void Postfix(bool __result)
         {
-            if (__result && NicetiesMod.Settings != null && NicetiesMod.Settings.hideCryptosleep)
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (__result && settings != null && settings.hideCryptosleep)
             {
                 CryptosleepBar.MarkDirty();
             }
@@ -78,7 +95,8 @@ namespace Niceties
     {
         private static void Postfix()
         {
-            if (NicetiesMod.Settings != null && NicetiesMod.Settings.hideCryptosleep)
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (settings != null && settings.hideCryptosleep)
             {
                 CryptosleepBar.MarkDirty();
             }
