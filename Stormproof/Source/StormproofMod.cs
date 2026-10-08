@@ -23,6 +23,8 @@ namespace Stormproof
                 return;
             }
 
+            int before = Settings.ContentFingerprint();
+
             Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
             float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
             Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, viewHeight);
@@ -104,8 +106,11 @@ namespace Stormproof
             listing.End();
             Widgets.EndScrollView();
             Settings.Clamp();
-            Settings.ApplyIncidentChances();
-            Settings.Write();
+            if (Settings.ContentFingerprint() != before)
+            {
+                Settings.ApplyIncidentChances();
+                Settings.Write();
+            }
         }
     }
 }

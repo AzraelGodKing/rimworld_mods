@@ -15,7 +15,7 @@ namespace Stormproof
 
     // Restores usable daylight during eclipses, volcanic winters/ash, and
     // darkened skies so grow lamps and mood aren't the only counters.
-    public class CompSkyRestorer : ThingComp, IHazardDefender
+    public class CompSkyRestorer : ThingComp, IHazardDefender, IHazardPowerRamp
     {
         private CompPowerTrader powerComp;
         private CompFlickable flickComp;
@@ -31,6 +31,9 @@ namespace Stormproof
                 GameConditionDefOf.VolcanicWinter,
                 StormproofDefOf.VolcanicAsh,
                 StormproofDefOf.DarkenedSkies);
+
+        public float ForecastDrawWatts =>
+            HazardActive ? Props.activePowerConsumption : (powerComp?.Props.PowerConsumption ?? 0f);
 
         public bool Protecting =>
             HazardActive &&

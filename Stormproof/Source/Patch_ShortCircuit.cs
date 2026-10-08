@@ -10,11 +10,10 @@ namespace Stormproof
     [HarmonyPatch(typeof(IncidentWorker_ShortCircuit), "TryExecuteWorker")]
     public static class Patch_ShortCircuit
     {
-        private static bool absorbedThisCall;
-
-        public static bool Prefix(IncidentWorker_ShortCircuit __instance, IncidentParms parms, ref bool __result)
+        public static bool Prefix(IncidentWorker_ShortCircuit __instance, IncidentParms parms,
+            ref bool __result, ref bool __state)
         {
-            absorbedThisCall = false;
+            __state = false;
             Map map = (Map)parms.target;
             if (map == null)
             {
@@ -34,16 +33,15 @@ namespace Stormproof
             }
             protector.Absorb();
             map.GetComponent<MapComponent_Stormproof>()?.NoteZzzt(absorbed: true);
-            absorbedThisCall = true;
+            __state = true;
             __result = true;
             return false;
         }
 
-        public static void Postfix(IncidentParms parms, bool __result)
+        public static void Postfix(IncidentParms parms, bool __result, bool __state)
         {
-            if (absorbedThisCall)
+            if (__state)
             {
-                absorbedThisCall = false;
                 return;
             }
             if (!__result)

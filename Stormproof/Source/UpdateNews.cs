@@ -8,6 +8,10 @@ namespace Stormproof
 
         public GameComponent_UpdateNews(Game game)
         {
+            // New Game object: drop stale registry refs left from a previous
+            // session that exited to the main menu without despawning (AZR-322).
+            // Must run in the ctor (before map PostSpawnSetup), not FinalizeInit.
+            StormproofRegistry.Clear();
         }
 
         public override void FinalizeInit()

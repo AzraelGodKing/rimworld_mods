@@ -69,6 +69,20 @@ namespace Stormproof
         public static readonly HashSet<CompFireSuppressor> FireSuppressors = new HashSet<CompFireSuppressor>();
         public static readonly HashSet<CompDroughtCondenser> DroughtCondensers = new HashSet<CompDroughtCondenser>();
 
+        public static void Clear()
+        {
+            Shields.Clear();
+            SurgeProtectors.Clear();
+            Spires.Clear();
+            Dampeners.Clear();
+            Capacitors.Clear();
+            AtmosphericBarriers.Clear();
+            ClimateStabilizers.Clear();
+            SkyRestorers.Clear();
+            FireSuppressors.Clear();
+            DroughtCondensers.Clear();
+        }
+
         public static IEnumerable<T> On<T>(HashSet<T> set, Map map) where T : ThingComp
         {
             return set.Where(c => c.parent != null && c.parent.Spawned && c.parent.Map == map);
