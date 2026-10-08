@@ -76,9 +76,26 @@ namespace Strata
 
         public static ThingDef Strata_ShoringPillar;
 
+        public static ThingDef Strata_Seismograph;
+
+        public static ThingDef Strata_CollapseTrap;
+
+        public static ThingDef Strata_SoundDampeningWall;
+
         static StrataThingDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataThingDefOf));
+        }
+    }
+
+    [DefOf]
+    public static class StrataTerrainDefOf
+    {
+        public static TerrainDef Strata_SoundDampeningFloor;
+
+        static StrataTerrainDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(StrataTerrainDefOf));
         }
     }
 

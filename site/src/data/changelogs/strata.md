@@ -7,13 +7,22 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 ## [3.8.1]
 
-AZR-349 AZR-353 AZR-354 AZR-355
+AZR-267 AZR-268 AZR-269 AZR-270 AZR-271 AZR-272 AZR-273 AZR-274 AZR-349 AZR-353 AZR-354 AZR-355
 
 ### Fixed
 - **Underground mining fog** (AZR-349) — border rock faces stay visible after digging; only deep undug rock stays fogged.
 - **Stairwell door gas wipe** (AZR-353) — opening a door into a shaft no longer instantly clears smoke/O₂; shaft flow scales with aperture; outdoor shafts vent pollutants without stripping breathable air.
 - **Gas pocket whole-layer fill** (AZR-354) — deep-gas bursts dilute across large Biomes! caverns; permanent vents skip map-sized rooms; deep gas slowly bleeds without a source.
 - **O₂ by atmosphere quality** (AZR-355) — viewed map runs full cycle rate on Low/Medium/High; underground open-roof holes are not treated as sky vents.
+- **Portal / inspect localization** (AZR-267, AZR-268) — enter/entering and stairs/hoist/conduit inspect text use translation keys.
+- **Ore hoist transfer skip** (AZR-269) — snapshot candidate list so DeSpawn no longer skips the next item.
+- **README fluid junctions** (AZR-270) — removed dangling V2 roadmap fragment.
+
+### Added
+- **Seismograph station** (AZR-271) — powered forecast for tremor, cave-in, and infestation pressure.
+- **Noise attracts the dark** (AZR-272) — mining/industry noise raises underground infestation weight; sound-dampening wall/floor counters it.
+- **Collapse trap** (AZR-273) — player-rigged thick-roof cave-in on pursuers.
+- **Stack panel** (AZR-274) — Levels tab side-view cross-section with click-to-jump.
 
 ## [3.8.0]
 
