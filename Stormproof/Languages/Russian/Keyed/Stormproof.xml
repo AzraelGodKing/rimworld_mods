@@ -18,6 +18,7 @@
   <Stormproof_GridMonitor_ForecastEmptyIn>Прогноз: с учётом погоды батареи опустеют через {0}.</Stormproof_GridMonitor_ForecastEmptyIn>
   <Stormproof_GridMonitor_ForecastFullIn>Прогноз: с учётом погоды батареи заполнятся через {0}.</Stormproof_GridMonitor_ForecastFullIn>
   <Stormproof_GridMonitor_ForecastHeld>Прогноз (8 ч): заряд не ниже {0}.</Stormproof_GridMonitor_ForecastHeld>
+  <Stormproof_GridMonitor_ForecastBrownout>Прогноз: просадка на надире {0}.</Stormproof_GridMonitor_ForecastBrownout>
   <Stormproof_GridMonitor_ForecastLow>{0}: прогноз — низкий заряд через {1}.</Stormproof_GridMonitor_ForecastLow>
   <Stormproof_GridMonitor_ForecastCritical>{0}: прогноз — КРИТИЧЕСКИЙ заряд через {1}.</Stormproof_GridMonitor_ForecastCritical>
 
@@ -129,6 +130,7 @@
   <Stormproof_Almanac_Open>Альманах</Stormproof_Almanac_Open>
   <Stormproof_Almanac_OpenDesc>Год штормов, вспышек, засух и похолоданий на этой карте.</Stormproof_Almanac_OpenDesc>
   <Stormproof_Almanac_Ledger>Поймано {0} / промах {1} ударов. Поглощено {2} / пропущено {3} Zzzt. Пожаров сбито {4}. Износ {5}.</Stormproof_Almanac_Ledger>
+  <Stormproof_Almanac_Lifetime>Итого: поймано {0} / промах {1} ударов. Поглощено {2} / пропущено {3} Zzzt. Пожаров сбито {4}. Износ {5}.</Stormproof_Almanac_Lifetime>
   <Stormproof_StormSpire_FulguriteReady>{0} выплавил фульгурит у основания. Соберите.</Stormproof_StormSpire_FulguriteReady>
   <Stormproof_StormSpire_CollectFulgurite>Собрать фульгурит ({0})</Stormproof_StormSpire_CollectFulgurite>
   <Stormproof_StormSpire_CollectFulguriteDesc>Снять сплавленное молнией стекло с основания шпиля.</Stormproof_StormSpire_CollectFulguriteDesc>

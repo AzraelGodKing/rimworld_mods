@@ -17,7 +17,7 @@ namespace Stormproof
 
     // Local firefighting emitter. Always snuffs fires in radius while powered;
     // during flashstorms it draws hard and pairs with storm spires.
-    public class CompFireSuppressor : ThingComp
+    public class CompFireSuppressor : ThingComp, IHazardPowerRamp
     {
         private CompPowerTrader powerComp;
         private CompFlickable flickComp;
@@ -31,6 +31,9 @@ namespace Stormproof
             parent.Spawned &&
             (HazardProtection.ConditionActive(parent.Map, GameConditionDefOf.Flashstorm) ||
              HazardProtection.ConditionActive(parent.Map, StormproofDefOf.Stormproof_DryLightning));
+
+        public float ForecastDrawWatts =>
+            HighDemand ? Props.activePowerConsumption : (powerComp?.Props.PowerConsumption ?? 0f);
 
         public bool Active =>
             parent.Spawned &&

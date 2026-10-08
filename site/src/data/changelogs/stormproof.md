@@ -2,6 +2,22 @@
 
 Detailed notes for **Stormproof** only.
 
+
+## [1.5.1]
+
+Player-facing version **1.5.1** (`About.xml` `modVersion`). Stamp `forecast-ramp-v1`.
+
+### Fixed
+- **Grid forecast** (`forecast-ramp-v1`) — solar shield, fire suppressor, atmospheric barrier, climate stabilizer, sky restorer, and drought condenser are counted at their hazard draw, not the idle nameplate.
+- **Short-circuit absorb** — the handoff uses Harmony `__state` instead of a static flag.
+
+### Improved
+- **Settings** — the window writes to disk only when a value changes.
+- **Registries** — comp lists clear when a new game starts, so a previous session's buildings are not kept.
+- **Compat hooks** — `StormproofCompatApi` exposes ion storm, grid surge, and drought for other mods. Missing Stormproof stays a no-op for the caller.
+- **Grid monitor** — inspect shows the predicted brownout at the forecast low point.
+- **Almanac** — lifetime totals across recorded storms.
+
 ## [1.5.0]
 
 ### Changed

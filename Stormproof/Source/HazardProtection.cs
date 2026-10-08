@@ -69,4 +69,12 @@ namespace Stormproof
     {
         bool Protecting { get; }
     }
+
+    // Buildings that jump from idle nameplate draw to activePowerConsumption
+    // while their triggering hazard is on. Grid forecasts must use this, not
+    // Props.PowerConsumption alone (AZR-319).
+    public interface IHazardPowerRamp
+    {
+        float ForecastDrawWatts { get; }
+    }
 }
