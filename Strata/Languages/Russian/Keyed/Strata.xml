@@ -402,4 +402,45 @@
 
   <Strata_PlaySettings_SupportOverlayTip>Strata: опора\nПодсвечивает выработки под толстой скалой вне держателя крыши или стойки. Обвалы бьют туда в первую очередь.</Strata_PlaySettings_SupportOverlayTip>
 
+  <!-- AZR-271 seismograph -->
+  <Strata_Seismograph_Unpowered>Seismograph offline — needs power.</Strata_Seismograph_Unpowered>
+  <Strata_Seismograph_Tremor>Tremor risk: {0}</Strata_Seismograph_Tremor>
+  <Strata_Seismograph_CaveIn>Cave-in risk: {0}</Strata_Seismograph_CaveIn>
+  <Strata_Seismograph_Infestation>Infestation pressure: {0}</Strata_Seismograph_Infestation>
+  <Strata_Seismograph_Noise>Local noise: {0}</Strata_Seismograph_Noise>
+  <Strata_Seismograph_RiskLow>low</Strata_Seismograph_RiskLow>
+  <Strata_Seismograph_RiskModerate>moderate</Strata_Seismograph_RiskModerate>
+  <Strata_Seismograph_RiskHigh>high</Strata_Seismograph_RiskHigh>
+  <Strata_Seismograph_RiskCritical>critical</Strata_Seismograph_RiskCritical>
+  <Strata_Seismograph_Alert>{0} reports elevated underground risk.</Strata_Seismograph_Alert>
+  <Strata_Alert_Seismograph_Label>Seismograph warning</Strata_Alert_Seismograph_Label>
+  <Strata_Alert_Seismograph_Explanation>A powered seismograph station is reading high tremor, cave-in, or infestation pressure on its floor. Check the inspect pane and shore, quiet the mine, or prepare for bugs.</Strata_Alert_Seismograph_Explanation>
+
+  <!-- AZR-272 noise infestation settings -->
+  <Strata_Settings_NoiseInfestation>Noise attracts infestations</Strata_Settings_NoiseInfestation>
+  <Strata_Settings_NoiseInfestationDesc>Mining and powered machinery underground build a noise meter that raises infestation chance. Sound-dampening floors/walls and thick-walled rooms reduce it. Off disables the mechanic.</Strata_Settings_NoiseInfestationDesc>
+  <Strata_Settings_NoiseInfestationScale>Noise infestation strength: {0}</Strata_Settings_NoiseInfestationScale>
+  <Strata_Settings_NoiseHalfLife>Noise half-life (hours quiet): {0}</Strata_Settings_NoiseHalfLife>
+
+  <!-- AZR-273 collapse trap -->
+  <Strata_CollapseTrap_Armed>Armed — hostiles adjacent will drop the roof.</Strata_CollapseTrap_Armed>
+  <Strata_CollapseTrap_Disarmed>Disarmed.</Strata_CollapseTrap_Disarmed>
+  <Strata_CollapseTrap_Spent>Already triggered.</Strata_CollapseTrap_Spent>
+  <Strata_CollapseTrap_NoRoof>Needs thick rock roof overhead.</Strata_CollapseTrap_NoRoof>
+  <Strata_CollapseTrap_ArmLabel>Armed</Strata_CollapseTrap_ArmLabel>
+  <Strata_CollapseTrap_ArmDesc>When armed, a hostile walking next to this charge collapses the roof.</Strata_CollapseTrap_ArmDesc>
+  <Strata_CollapseTrap_ManualLabel>Trigger now</Strata_CollapseTrap_ManualLabel>
+  <Strata_CollapseTrap_ManualDesc>Immediately drop the roof in a small blob and destroy this trap.</Strata_CollapseTrap_ManualDesc>
+  <Strata_CollapseTrap_TriggeredHostile>{0} collapsed on a hostile.</Strata_CollapseTrap_TriggeredHostile>
+  <Strata_CollapseTrap_TriggeredManual>{0} was triggered — roof collapsing.</Strata_CollapseTrap_TriggeredManual>
+  <Strata_CollapseTrap_NeedUnderground>Collapse traps only work underground.</Strata_CollapseTrap_NeedUnderground>
+  <Strata_CollapseTrap_NeedThickRoof>Needs thick rock roof.</Strata_CollapseTrap_NeedThickRoof>
+
+  <!-- AZR-274 stack panel -->
+  <Strata_StackPanel_Title>Stack</Strata_StackPanel_Title>
+  <Strata_StackPanel_Empty>No linked levels.</Strata_StackPanel_Empty>
+  <Strata_StackPanel_Counts>{0} / {1}</Strata_StackPanel_Counts>
+  <Strata_StackPanel_ClickTip>Click to jump the camera.</Strata_StackPanel_ClickTip>
+  <Strata_StackPanel_SurfaceShort>S</Strata_StackPanel_SurfaceShort>
+
 </LanguageData>

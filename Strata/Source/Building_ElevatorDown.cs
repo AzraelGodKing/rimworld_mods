@@ -9,9 +9,9 @@ namespace Strata
     // the bottom landing, so a power failure can never trap colonists below.
     public class Building_ElevatorDown : Building_StairsDown
     {
-        public override string EnterString => "Take elevator down";
+        public override string EnterString => "Strata_Enter_ElevatorDown".Translate();
 
-        public override string EnteringString => "taking the elevator down";
+        public override string EnteringString => "Strata_Entering_ElevatorDown".Translate();
 
         // PowerOn alone can't gate the ride: the shaft comp is a power
         // TRANSMITTER, so it always has a net (its own, if unwired) and

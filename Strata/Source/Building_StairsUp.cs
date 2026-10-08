@@ -33,9 +33,9 @@ namespace Strata
 
         private bool EntranceValid => entrance != null && !entrance.Destroyed && entrance.Spawned;
 
-        public override string EnterString => "Go upstairs";
+        public override string EnterString => "Strata_Enter_GoUpstairs".Translate();
 
-        public override string EnteringString => "going upstairs";
+        public override string EnteringString => "Strata_Entering_GoUpstairs".Translate();
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
@@ -108,7 +108,7 @@ namespace Strata
         {
             if ((entrance as Building_StairsDown)?.Sealed == true)
             {
-                reason = "The stairwell is sealed.";
+                reason = "Strata_Reason_StairwellSealed".Translate();
                 return false;
             }
             Map dest = GetOtherMap();
@@ -255,7 +255,7 @@ namespace Strata
             string text = base.GetInspectString();
             if (StrataMapUtility.IsUnderground(Map) && !StairwellDigUtility.LandingHasDownwardShaft(this))
             {
-                string hint = "Dig down to designate a dig shaft beside this landing; colonists must finish carving it before the level below opens.";
+                string hint = "Strata_Inspect_DigDownHint".Translate();
                 text = text.NullOrEmpty() ? hint : text + "\n" + hint;
             }
             return LevelRoleUtility.AppendInspect(text, GetOtherMap());

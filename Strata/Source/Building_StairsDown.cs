@@ -82,9 +82,9 @@ namespace Strata
 
         public override bool AutoDraftOnEnter => false;
 
-        public override string EnterString => "Go downstairs";
+        public override string EnterString => "Strata_Enter_GoDownstairs".Translate();
 
-        public override string EnteringString => "going downstairs";
+        public override string EnteringString => "Strata_Entering_GoDownstairs".Translate();
 
         public bool Sealed => GetComp<CompStairwellControl>()?.Sealed ?? false;
 
@@ -95,7 +95,7 @@ namespace Strata
         {
             if (Sealed)
             {
-                reason = "The stairwell is sealed.";
+                reason = "Strata_Reason_StairwellSealed".Translate();
                 return false;
             }
             // Rock fill continues after PocketMapExists — keep Enter blocked.

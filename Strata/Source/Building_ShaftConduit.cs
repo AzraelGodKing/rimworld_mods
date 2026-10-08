@@ -463,12 +463,12 @@ namespace Strata
         {
             string text = base.GetInspectString();
             string state = IsAutoSpawned
-                ? "Tie: driven by the conduit on the level above"
+                ? "Strata_Inspect_ShaftDriven".Translate()
                 : PartnerValid()
-                    ? "Tie: linked to the junction on the level below"
+                    ? "Strata_Inspect_ShaftLinked".Translate()
                     : NearestDownPortal() == null
-                        ? "Tie: no shaft within reach - build within a few tiles of a stairwell or elevator"
-                        : "Tie: waiting for the level below to be opened";
+                        ? "Strata_Inspect_ShaftNoPortal".Translate()
+                        : "Strata_Inspect_ShaftWaiting".Translate();
             return text.NullOrEmpty() ? state : text + "\n" + state;
         }
     }

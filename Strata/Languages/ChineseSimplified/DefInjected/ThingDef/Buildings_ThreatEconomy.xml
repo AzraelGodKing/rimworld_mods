@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Strata_Seismograph.label>seismograph station</Strata_Seismograph.label>
+  <Strata_Seismograph.description>A powered listening post. When running it forecasts tremor risk, cave-in pressure under thick rock, and infestation weight on this floor — useful with canaries and the support overlay.</Strata_Seismograph.description>
+
+  <Strata_CollapseTrap.label>collapse trap</Strata_CollapseTrap.label>
+  <Strata_CollapseTrap.description>Charges under thick rock roof on an underground floor. When armed, a hostile stepping adjacent (or a manual trigger) drops a cave-in blob of ceiling — the trap is destroyed with the roof.</Strata_CollapseTrap.description>
+
+  <Strata_SoundDampeningWall.label>sound-dampening wall</Strata_SoundDampeningWall.label>
+  <Strata_SoundDampeningWall.description>A packed wall of felt, boards, and rubble. Cuts mining and machine noise that carries through rock and draws infestations. Place around drills and workshops underground.</Strata_SoundDampeningWall.description>
+</LanguageData>

@@ -200,4 +200,19 @@
     <researchViewY>0.80</researchViewY>
   </ResearchProjectDef>
 
+  <ResearchProjectDef>
+    <defName>Strata_Seismology</defName>
+    <label>mine seismology</label>
+    <description>Listening gear that reads tremor risk, unsupported thick roof, and infestation pressure on a floor. Pair with canaries and the support overlay.</description>
+    <baseCost>900</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
+    <prerequisites>
+      <li>Strata_DeepInfrastructure</li>
+      <li>Electricity</li>
+    </prerequisites>
+    <researchViewX>4.50</researchViewX>
+    <researchViewY>1.60</researchViewY>
+  </ResearchProjectDef>
+
 </Defs>

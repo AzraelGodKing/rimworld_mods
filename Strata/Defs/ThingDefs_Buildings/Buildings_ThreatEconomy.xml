@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Seismograph station (AZR-271) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_Seismograph</defName>
+    <label>seismograph station</label>
+    <description>A powered listening post. When running it forecasts tremor risk, cave-in pressure under thick rock, and infestation weight on this floor — useful with canaries and the support overlay.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ExhaustFan</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.55, 0.72, 0.78)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <fillPercent>0.35</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <WorkToBuild>2800</WorkToBuild>
+      <Flammability>0.4</Flammability>
+      <Beauty>1</Beauty>
+    </statBases>
+    <costList>
+      <Steel>60</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>80</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="Strata.CompProperties_Seismograph"/>
+    </comps>
+    <designationCategory>Misc</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_Seismology</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Collapse trap (AZR-273) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_CollapseTrap</defName>
+    <label>collapse trap</label>
+    <description>Charges under thick rock roof on an underground floor. When armed, a hostile stepping adjacent (or a manual trigger) drops a cave-in blob of ceiling — the trap is destroyed with the roof.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/ShoringPillar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.72, 0.38, 0.28)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>20</pathCost>
+    <fillPercent>0.2</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <WorkToBuild>900</WorkToBuild>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <costList>
+      <Steel>25</Steel>
+      <WoodLog>20</WoodLog>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="Strata.CompProperties_CollapseTrap">
+        <minBlobCells>3</minBlobCells>
+        <maxBlobCells>7</maxBlobCells>
+        <blobRadius>2.0</blobRadius>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_CollapseTrap</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <designationCategory>Security</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_Shoring</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <!-- ============ Sound-dampening wall (AZR-272) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_SoundDampeningWall</defName>
+    <label>sound-dampening wall</label>
+    <description>A packed wall of felt, boards, and rubble. Cuts mining and machine noise that carries through rock and draws infestations. Place around drills and workshops underground.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/GasAirlock</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <color>(0.55, 0.48, 0.40)</color>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>1</fillPercent>
+    <coversFloor>true</coversFloor>
+    <holdsRoof>true</holdsRoof>
+    <blockLight>true</blockLight>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <canOverlapZones>false</canOverlapZones>
+    <statBases>
+      <MaxHitPoints>280</MaxHitPoints>
+      <WorkToBuild>500</WorkToBuild>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <costList>
+      <WoodLog>15</WoodLog>
+      <Cloth>8</Cloth>
+      <Steel>5</Steel>
+    </costList>
+    <building>
+      <isInert>true</isInert>
+      <ai_chillDestination>false</ai_chillDestination>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
+    <designationCategory>Structure</designationCategory>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_DeepInfrastructure</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>

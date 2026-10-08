@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <TerrainDef ParentName="FloorBase">
+    <defName>Strata_SoundDampeningFloor</defName>
+    <label>sound-dampening floor</label>
+    <description>Felt and packed grit underfoot. Softens mining and machine noise on underground floors so infestations hear less of your work.</description>
+    <texturePath>Terrain/Surfaces/WoodPlankFloor</texturePath>
+    <renderPrecedence>230</renderPrecedence>
+    <pathCost>0</pathCost>
+    <statBases>
+      <WorkToBuild>320</WorkToBuild>
+      <Flammability>0.2</Flammability>
+      <Beauty>0</Beauty>
+    </statBases>
+    <costList>
+      <Cloth>1</Cloth>
+      <WoodLog>1</WoodLog>
+    </costList>
+    <researchPrerequisites>
+      <li>Strata_DeepInfrastructure</li>
+    </researchPrerequisites>
+  </TerrainDef>
+</Defs>

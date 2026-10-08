@@ -24,15 +24,15 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 ## Sensing & threat economy
 
-- [ ] **Seismograph station** — building that predicts tremors, cave-ins, and infestation pressure per level (pair with Stormproof weather forecaster + Strata canaries)
-- [ ] **Noise attracts the dark** — mining/industry noise raises infestation weight; sound-dampening walls/floors counter it
+- [x] **Seismograph station** — building that predicts tremors, cave-ins, and infestation pressure per level (pair with Stormproof weather forecaster + Strata canaries)
+- [x] **Noise attracts the dark** — mining/industry noise raises infestation weight; sound-dampening walls/floors counter it
 
 ## Logistics & combat toys
 
 - [x] **Dumbwaiter** — cheap early 1×1 item-only mini-shaft (no pawns); early sibling of the ore hoist
-- [ ] **Collapse trap** — player-rigged tunnel cave-in on pursuers
+- [x] **Collapse trap** — player-rigged tunnel cave-in on pursuers
 
 ## UX & story content
 
-- [ ] **Stack panel** — side-view cross-section UX (levels as slices, alerts, click to jump); Workshop screenshot flagship
+- [x] **Stack panel** — side-view cross-section UX (levels as slices, alerts, click to jump); Workshop screenshot flagship
 - [ ] **Lost floor** — rare sealed multi-room story level from ancient inhabitants (diary/fate; teaches the noise rule via fiction)

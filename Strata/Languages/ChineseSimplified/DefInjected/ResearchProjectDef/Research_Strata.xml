@@ -47,4 +47,7 @@
   <Strata_MineAtmosphere.label>矿井大气</Strata_MineAtmosphere.label>
   <Strata_MineAtmosphere.description>应对深层毒气的装备：烧掉轻质矿井气的甲烷火炬、火灾后恢复氧气的黑潮洗涤器、真菌悬浮物的孢子过滤器，以及地热腔室的蒸汽冷凝器。</Strata_MineAtmosphere.description>
 
+  <Strata_Seismology.label>mine seismology</Strata_Seismology.label>
+  <Strata_Seismology.description>Listening gear that reads tremor risk, unsupported thick roof, and infestation pressure on a floor. Pair with canaries and the support overlay.</Strata_Seismology.description>
+
 </LanguageData>

@@ -49,4 +49,7 @@
   <Strata_MineAtmosphere.label>шахтная атмосфера</Strata_MineAtmosphere.label>
   <Strata_MineAtmosphere.description>Снаряжение для ядовитых газов глубин: метановые факелы для лёгкого рудничного газа, скрубберы чёрного газа, восстанавливающие кислород после пожаров, споровые фильтры для грибной взвеси и паровые конденсаторы для геотермальных камер.</Strata_MineAtmosphere.description>
 
+  <Strata_Seismology.label>mine seismology</Strata_Seismology.label>
+  <Strata_Seismology.description>Listening gear that reads tremor risk, unsupported thick roof, and infestation pressure on a floor. Pair with canaries and the support overlay.</Strata_Seismology.description>
+
 </LanguageData>

@@ -11,15 +11,14 @@ namespace Strata
     {
         protected override bool BypassFirstLevelResearch => true;
 
-        public override string EnterString => "Descend the ancient stairwell";
+        public override string EnterString => "Strata_Enter_AncientDown".Translate();
 
-        public override string EnteringString => "descending the ancient stairwell";
+        public override string EnteringString => "Strata_Entering_AncientDown".Translate();
 
         public override string GetInspectString()
         {
             string text = base.GetInspectString();
-            const string note = "An ancient shaft — no power ties between levels. "
-                + "Digging-down research is not required to open the first level below.";
+            string note = "Strata_Inspect_AncientStairs".Translate();
             return text.NullOrEmpty() ? note : text + "\n" + note;
         }
     }

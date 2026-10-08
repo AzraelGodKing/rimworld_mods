@@ -47,6 +47,9 @@ namespace Strata
         private const float RenameButtonWidth = 72f;
         private const float RoleButtonWidth = 72f;
         private const float StampButtonWidth = 64f;
+        private const float StackPanelWidth = 148f;
+        private const float StackSliceHeight = 36f;
+        private const float StackPanelGap = 10f;
 
         private readonly List<Row> rows = new List<Row>();
         private int lastRowsBuildTick = -9999;
@@ -56,6 +59,7 @@ namespace Strata
         private static Vector2 savedSize = Vector2.zero;
         private Vector2 openedSize;
         private Vector2 scroll;
+        private Vector2 stackScroll;
 
         public MainTabWindow_Levels()
         {
@@ -66,10 +70,14 @@ namespace Strata
         {
             get
             {
-                Vector2 computed = new Vector2(784f, HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + Margin * 2f + 8f);
+                float stackH = Mathf.Max(rows.Count, 1) * StackSliceHeight + HeaderHeight + 16f;
+                float listH = HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + 8f;
+                Vector2 computed = new Vector2(
+                    784f + StackPanelWidth + StackPanelGap,
+                    Mathf.Max(stackH, listH) + Margin * 2f);
                 return savedSize == Vector2.zero
                     ? computed
-                    : new Vector2(Mathf.Max(savedSize.x, 420f), Mathf.Max(savedSize.y, 120f));
+                    : new Vector2(Mathf.Max(savedSize.x, 560f), Mathf.Max(savedSize.y, 140f));
             }
         }
 
@@ -182,15 +190,121 @@ namespace Strata
             EnsureRowsFresh();
 
             Text.Font = GameFont.Small;
+            float panelW = Mathf.Min(StackPanelWidth, inRect.width * 0.28f);
+            Rect stackRect = new Rect(inRect.x, inRect.y, panelW, inRect.height);
+            Rect listRect = new Rect(
+                stackRect.xMax + StackPanelGap,
+                inRect.y,
+                inRect.width - panelW - StackPanelGap,
+                inRect.height);
+
+            DrawStackPanel(stackRect);
+            DrawLevelList(listRect);
+        }
+
+        private void DrawStackPanel(Rect rect)
+        {
+            Widgets.DrawMenuSection(rect);
+            Rect inner = rect.ContractedBy(4f);
+            Text.Font = GameFont.Tiny;
+            GUI.color = Color.gray;
+            Widgets.Label(new Rect(inner.x, inner.y, inner.width, 18f), "Strata_StackPanel_Title".Translate());
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            if (rows.Count == 0)
+            {
+                Widgets.Label(new Rect(inner.x, inner.y + 22f, inner.width, 40f), "Strata_StackPanel_Empty".Translate());
+                return;
+            }
+
+            Rect scrollOut = new Rect(inner.x, inner.y + 20f, inner.width, inner.height - 20f);
+            Rect scrollView = new Rect(0f, 0f, inner.width - 16f, rows.Count * StackSliceHeight + 4f);
+            Widgets.BeginScrollView(scrollOut, ref stackScroll, scrollView);
+            float y = 2f;
+            for (int i = 0; i < rows.Count; i++)
+            {
+                Row row = rows[i];
+                Rect slice = new Rect(2f, y, scrollView.width - 4f, StackSliceHeight - 4f);
+                Color fill = SliceColor(row);
+                if (row.map == Find.CurrentMap)
+                {
+                    fill = Color.Lerp(fill, new Color(0.95f, 0.85f, 0.35f), 0.45f);
+                }
+                Widgets.DrawBoxSolid(slice, fill);
+                Widgets.DrawBox(slice);
+
+                int colonists = row.map.mapPawns.FreeColonistsSpawnedCount;
+                int hostiles = HostileCount(row.map);
+                Text.Anchor = TextAnchor.MiddleLeft;
+                GUI.color = Color.white;
+                Widgets.Label(
+                    new Rect(slice.x + 6f, slice.y, slice.width * 0.55f, slice.height),
+                    ShortAltitudeLabel(row));
+                Text.Anchor = TextAnchor.MiddleRight;
+                GUI.color = hostiles > 0 ? ColorLibrary.RedReadable : Color.white;
+                Widgets.Label(
+                    new Rect(slice.x + slice.width * 0.45f, slice.y, slice.width * 0.5f - 4f, slice.height),
+                    "Strata_StackPanel_Counts".Translate(colonists, hostiles));
+                Text.Anchor = TextAnchor.UpperLeft;
+                GUI.color = Color.white;
+
+                if (Mouse.IsOver(slice))
+                {
+                    Widgets.DrawHighlight(slice);
+                    TooltipHandler.TipRegion(slice, LevelLabel(row) + "\n" + "Strata_StackPanel_ClickTip".Translate());
+                }
+                if (Widgets.ButtonInvisible(slice))
+                {
+                    JumpTo(row.map);
+                }
+                y += StackSliceHeight;
+            }
+            Widgets.EndScrollView();
+        }
+
+        private static Color SliceColor(Row row)
+        {
+            if (row.altitude > 0)
+            {
+                return new Color(0.35f, 0.48f, 0.62f, 0.85f);
+            }
+            if (row.altitude < 0)
+            {
+                float t = Mathf.Clamp01((-row.altitude - 1) / 4f);
+                return Color.Lerp(new Color(0.42f, 0.34f, 0.26f, 0.9f), new Color(0.28f, 0.18f, 0.14f, 0.95f), t);
+            }
+            return new Color(0.32f, 0.52f, 0.34f, 0.85f);
+        }
+
+        private static string ShortAltitudeLabel(Row row)
+        {
+            string custom = StrataLevelLabels.Get?.GetLabel(row.map);
+            if (!custom.NullOrEmpty())
+            {
+                return custom.Length <= 10 ? custom : custom.Substring(0, 9) + "…";
+            }
+            if (row.altitude > 0)
+            {
+                return "A" + row.altitude;
+            }
+            if (row.altitude < 0)
+            {
+                return "B" + (-row.altitude);
+            }
+            return "Strata_StackPanel_SurfaceShort".Translate();
+        }
+
+        private void DrawLevelList(Rect inRect)
+        {
             float contentWidth = inRect.width - 16f; // leave room for a scrollbar
-            float colLevel = 0f;
             float colColonists = contentWidth * 0.42f;
             float colHostiles = contentWidth * 0.58f;
             float colTemp = contentWidth * 0.74f;
 
             Rect header = new Rect(inRect.x, inRect.y, contentWidth, HeaderHeight);
             GUI.color = Color.gray;
-            Widgets.Label(new Rect(header.x + colLevel + 4f, header.y, colColonists - 8f, HeaderHeight), "Level");
+            Widgets.Label(new Rect(header.x + 4f, header.y, colColonists - 8f, HeaderHeight), "Level");
             Widgets.Label(new Rect(header.x + colColonists, header.y, colHostiles - colColonists, HeaderHeight), "Colonists");
             Widgets.Label(new Rect(header.x + colHostiles, header.y, colTemp - colHostiles, HeaderHeight), "Hostiles");
             Widgets.Label(new Rect(header.x + colTemp, header.y, contentWidth - colTemp - ViewButtonWidth - RenameButtonWidth - RoleButtonWidth, HeaderHeight), "Temp");

@@ -9,9 +9,9 @@ namespace Strata
     // none of the colony extras (no power shaft, no seal, no sibling adoption).
     public class Building_RuinStairsDown : MapPortal
     {
-        public override string EnterString => "Descend into the ruin";
+        public override string EnterString => "Strata_Enter_RuinDown".Translate();
 
-        public override string EnteringString => "descending into the ruin";
+        public override string EnteringString => "Strata_Entering_RuinDown".Translate();
 
         // The warren below is hostile ground: arrive weapons-out.
         public override bool AutoDraftOnEnter => true;
@@ -53,8 +53,8 @@ namespace Strata
         {
             string text = base.GetInspectString();
             string state = PocketMapExists
-                ? "The warren below has been opened."
-                : "Stale air drifts up from the darkness below.";
+                ? "Strata_Inspect_RuinOpened".Translate()
+                : "Strata_Inspect_RuinSealed".Translate();
             return text.NullOrEmpty() ? state : text + "\n" + state;
         }
     }
