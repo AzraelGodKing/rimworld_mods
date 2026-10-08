@@ -26,8 +26,24 @@ namespace Stormproof
             Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 32f),
                 "Stormproof_Almanac_Title".Translate());
             Text.Font = GameFont.Small;
-            Rect listRect = new Rect(inRect.x, inRect.y + 40f, inRect.width, inRect.height - 40f);
+
             IReadOnlyList<AlmanacEntry> entries = component.Almanac;
+            SumLifetime(entries, out int strikesCaught, out int strikesMissed,
+                out int zzztAbsorbed, out int zzztSuffered, out int firesSnuffed, out int wearHits);
+            bool hasTotals = strikesCaught + strikesMissed + zzztAbsorbed + zzztSuffered
+                + firesSnuffed + wearHits > 0;
+            float headerH = hasTotals ? 28f : 0f;
+            if (hasTotals)
+            {
+                Widgets.Label(new Rect(inRect.x, inRect.y + 36f, inRect.width, 24f),
+                    "Stormproof_Almanac_Lifetime".Translate(
+                        strikesCaught, strikesMissed,
+                        zzztAbsorbed, zzztSuffered,
+                        firesSnuffed, wearHits));
+            }
+
+            Rect listRect = new Rect(inRect.x, inRect.y + 40f + headerH, inRect.width,
+                inRect.height - 40f - headerH);
             float viewH = 8f;
             for (int i = 0; i < entries.Count; i++)
             {
@@ -66,6 +82,34 @@ namespace Stormproof
                 }
             }
             Widgets.EndScrollView();
+        }
+
+        private static void SumLifetime(IReadOnlyList<AlmanacEntry> entries,
+            out int strikesCaught, out int strikesMissed,
+            out int zzztAbsorbed, out int zzztSuffered,
+            out int firesSnuffed, out int wearHits)
+        {
+            strikesCaught = strikesMissed = 0;
+            zzztAbsorbed = zzztSuffered = 0;
+            firesSnuffed = wearHits = 0;
+            if (entries == null)
+            {
+                return;
+            }
+            for (int i = 0; i < entries.Count; i++)
+            {
+                AlmanacEntry e = entries[i];
+                if (e == null)
+                {
+                    continue;
+                }
+                strikesCaught += e.strikesCaught;
+                strikesMissed += e.strikesMissed;
+                zzztAbsorbed += e.zzztAbsorbed;
+                zzztSuffered += e.zzztSuffered;
+                firesSnuffed += e.firesSnuffed;
+                wearHits += e.wearHits;
+            }
         }
     }
 }

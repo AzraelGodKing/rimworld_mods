@@ -104,6 +104,32 @@ namespace Stormproof
             zzztChanceFactor = zzztChanceFactor < 0f ? 0f : (zzztChanceFactor > 3f ? 3f : zzztChanceFactor);
         }
 
+        // Cheap dirty check so the settings window only Write()s when values change.
+        public int ContentFingerprint()
+        {
+            unchecked
+            {
+                int h = enableBrownout ? 1 : 0;
+                h = (h * 397) ^ brownoutSeverity.GetHashCode();
+                h = (h * 397) ^ (enableStormWear ? 1 : 0);
+                h = (h * 397) ^ (enableAlmanac ? 1 : 0);
+                h = (h * 397) ^ (enableFulgurite ? 1 : 0);
+                h = (h * 397) ^ (incidentIonStorm ? 1 : 0);
+                h = (h * 397) ^ (incidentHeatDome ? 1 : 0);
+                h = (h * 397) ^ (incidentPolarFront ? 1 : 0);
+                h = (h * 397) ^ (incidentToxicSurge ? 1 : 0);
+                h = (h * 397) ^ (incidentDryLightning ? 1 : 0);
+                h = (h * 397) ^ incidentFrequency.GetHashCode();
+                h = (h * 397) ^ (allowAtmosphericBarrier ? 1 : 0);
+                h = (h * 397) ^ (allowClimateStabilizer ? 1 : 0);
+                h = (h * 397) ^ (allowSkyRestorer ? 1 : 0);
+                h = (h * 397) ^ (allowFireSuppressor ? 1 : 0);
+                h = (h * 397) ^ (allowDroughtCondenser ? 1 : 0);
+                h = (h * 397) ^ zzztChanceFactor.GetHashCode();
+                return h;
+            }
+        }
+
         public bool IncidentEnabled(string defName)
         {
             switch (defName)

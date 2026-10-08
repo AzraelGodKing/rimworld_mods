@@ -51,7 +51,7 @@ namespace Stormproof
             SafePatchAll.Apply(new Harmony("azraelgodking.stormproof"), "[Stormproof]");
             StormproofSettings.CaptureOriginalChances();
             StormproofMod.Settings?.ApplyIncidentChances();
-            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "storm-call-tick-v1"));
+            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "forecast-ramp-v1"));
         }
     }
 
@@ -68,6 +68,20 @@ namespace Stormproof
         public static readonly HashSet<CompSkyRestorer> SkyRestorers = new HashSet<CompSkyRestorer>();
         public static readonly HashSet<CompFireSuppressor> FireSuppressors = new HashSet<CompFireSuppressor>();
         public static readonly HashSet<CompDroughtCondenser> DroughtCondensers = new HashSet<CompDroughtCondenser>();
+
+        public static void Clear()
+        {
+            Shields.Clear();
+            SurgeProtectors.Clear();
+            Spires.Clear();
+            Dampeners.Clear();
+            Capacitors.Clear();
+            AtmosphericBarriers.Clear();
+            ClimateStabilizers.Clear();
+            SkyRestorers.Clear();
+            FireSuppressors.Clear();
+            DroughtCondensers.Clear();
+        }
 
         public static IEnumerable<T> On<T>(HashSet<T> set, Map map) where T : ThingComp
         {

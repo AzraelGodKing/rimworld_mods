@@ -16,7 +16,7 @@ namespace Stormproof
     // Map-wide toxic / ash / haze hardener. While powered through a fallout or
     // similar atmospheric poison event, outdoor toxic damage and cell corrosion
     // are suppressed for the whole map.
-    public class CompAtmosphericBarrier : ThingComp, IHazardDefender
+    public class CompAtmosphericBarrier : ThingComp, IHazardDefender, IHazardPowerRamp
     {
         private CompPowerTrader powerComp;
         private CompFlickable flickComp;
@@ -33,6 +33,9 @@ namespace Stormproof
                 StormproofDefOf.Stormproof_ToxicSurge,
                 StormproofDefOf.NoxiousHaze,
                 StormproofDefOf.VolcanicAsh);
+
+        public float ForecastDrawWatts =>
+            HazardActive ? Props.activePowerConsumption : (powerComp?.Props.PowerConsumption ?? 0f);
 
         public bool Protecting =>
             HazardActive &&

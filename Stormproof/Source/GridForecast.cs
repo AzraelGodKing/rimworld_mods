@@ -13,6 +13,7 @@ namespace Stormproof
         public int TicksToLow;
         public int TicksToCritical;
         public float NadirFraction;
+        public float NadirBrownout;
     }
 
     // Crosses the weather forecaster with live solar/wind so the monitor's
@@ -48,6 +49,10 @@ namespace Stormproof
         internal static GridForecast Project(Map map, PowerNet net, CompWeatherForecaster forecast,
             float stored, float capacity, float lowFraction, float criticalFraction)
         {
+            float severity = StormproofMod.Settings != null && StormproofMod.Settings.enableBrownout
+                ? Mathf.Clamp01(StormproofMod.Settings.brownoutSeverity)
+                : 0f;
+            float startFraction = capacity <= 0f ? 0f : stored / capacity;
             var result = new GridForecast
             {
                 HasForecaster = forecast != null,
@@ -56,7 +61,8 @@ namespace Stormproof
                 TicksToFull = -1,
                 TicksToLow = -1,
                 TicksToCritical = -1,
-                NadirFraction = capacity <= 0f ? 0f : stored / capacity
+                NadirFraction = startFraction,
+                NadirBrownout = BrownoutAt(startFraction, severity)
             };
 
             if (map == null || net == null || capacity <= 0f)
@@ -71,9 +77,6 @@ namespace Stormproof
             float energy = stored;
             float nadir = stored;
             bool canFill = stored < capacity - 0.05f;
-            float severity = StormproofMod.Settings != null && StormproofMod.Settings.enableBrownout
-                ? Mathf.Clamp01(StormproofMod.Settings.brownoutSeverity)
-                : 0f;
 
             for (int elapsed = 0; elapsed < HorizonTicks; elapsed += StepTicks)
             {
@@ -111,6 +114,7 @@ namespace Stormproof
             }
 
             result.NadirFraction = nadir / capacity;
+            result.NadirBrownout = BrownoutAt(result.NadirFraction, severity);
             return result;
         }
 
@@ -160,9 +164,27 @@ namespace Stormproof
                 }
                 else
                 {
-                    nameplateDraw += nameplate;
+                    // Hazard suppressors overwrite PowerOutput to active draw while
+                    // their event is on; forecasts must use that, not idle nameplate.
+                    nameplateDraw += ConsumerForecastDraw(trader.parent, nameplate);
                 }
             }
+        }
+
+        private static float ConsumerForecastDraw(ThingWithComps parent, float nameplate)
+        {
+            if (parent?.AllComps == null)
+            {
+                return nameplate;
+            }
+            for (int i = 0; i < parent.AllComps.Count; i++)
+            {
+                if (parent.AllComps[i] is IHazardPowerRamp ramp)
+                {
+                    return Mathf.Max(nameplate, ramp.ForecastDrawWatts);
+                }
+            }
+            return nameplate;
         }
 
         private static float RoofedFactor(Thing thing)

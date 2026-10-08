@@ -15,7 +15,7 @@ namespace Stormproof
 
     // Cancels map-wide temperature offsets from heat waves, cold snaps,
     // volcanic winter, and Stormproof extreme climate events.
-    public class CompClimateStabilizer : ThingComp, IHazardDefender
+    public class CompClimateStabilizer : ThingComp, IHazardDefender, IHazardPowerRamp
     {
         private CompPowerTrader powerComp;
         private CompFlickable flickComp;
@@ -34,6 +34,9 @@ namespace Stormproof
                 StormproofDefOf.Stormproof_HeatDome,
                 StormproofDefOf.Stormproof_PolarFront,
                 StormproofDefOf.DeepFreeze);
+
+        public float ForecastDrawWatts =>
+            HazardActive ? Props.activePowerConsumption : (powerComp?.Props.PowerConsumption ?? 0f);
 
         public bool Protecting =>
             HazardActive &&

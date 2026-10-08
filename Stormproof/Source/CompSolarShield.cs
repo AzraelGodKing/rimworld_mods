@@ -13,7 +13,7 @@ namespace Stormproof
         }
     }
 
-    public class CompSolarShield : ThingComp
+    public class CompSolarShield : ThingComp, IHazardPowerRamp
     {
         private CompPowerTrader powerComp;
         private CompFlickable flickComp;
@@ -24,6 +24,9 @@ namespace Stormproof
         private bool FlareActive =>
             parent.Spawned &&
             parent.Map.gameConditionManager.ConditionIsActive(StormproofDefOf.SolarFlare);
+
+        public float ForecastDrawWatts =>
+            FlareActive ? Props.activePowerConsumption : (powerComp?.Props.PowerConsumption ?? 0f);
 
         // Protection must not depend on PowerOn: when a flare begins, the game
         // turns every trader off before we get a chance to veto it. Instead we

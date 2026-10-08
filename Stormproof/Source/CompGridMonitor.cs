@@ -263,6 +263,11 @@ namespace Stormproof
                 s += "\n" + "Stormproof_GridMonitor_ForecastHeld".Translate(
                     cachedForecast.NadirFraction.ToStringPercent());
             }
+            if (cachedForecast.HasForecaster && cachedForecast.NadirBrownout > 0.02f)
+            {
+                s += "\n" + "Stormproof_GridMonitor_ForecastBrownout".Translate(
+                    cachedForecast.NadirBrownout.ToStringPercent());
+            }
             return s;
         }
     }

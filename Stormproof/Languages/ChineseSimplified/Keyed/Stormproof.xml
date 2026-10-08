@@ -18,6 +18,7 @@
   <Stormproof_GridMonitor_ForecastEmptyIn>预测：计入天气后，蓄电池将在 {0} 后耗尽。</Stormproof_GridMonitor_ForecastEmptyIn>
   <Stormproof_GridMonitor_ForecastFullIn>预测：计入天气后，蓄电池将在 {0} 后充满。</Stormproof_GridMonitor_ForecastFullIn>
   <Stormproof_GridMonitor_ForecastHeld>预测（8 小时）：电量至少保持 {0}。</Stormproof_GridMonitor_ForecastHeld>
+  <Stormproof_GridMonitor_ForecastBrownout>预测：最低点预计限电 {0}。</Stormproof_GridMonitor_ForecastBrownout>
   <Stormproof_GridMonitor_ForecastLow>{0}：预测将在 {1} 后进入低电量。</Stormproof_GridMonitor_ForecastLow>
   <Stormproof_GridMonitor_ForecastCritical>{0}：预测将在 {1} 后进入危急电量。</Stormproof_GridMonitor_ForecastCritical>
 
@@ -129,6 +130,7 @@
   <Stormproof_Almanac_Open>年鉴</Stormproof_Almanac_Open>
   <Stormproof_Almanac_OpenDesc>查阅本地图一年的风暴、耀斑、干旱与寒潮。</Stormproof_Almanac_OpenDesc>
   <Stormproof_Almanac_Ledger>接闪 {0} / 未接 {1}。吸收短路 {2} / 遭受 {3}。灭火 {4}。磨损 {5}。</Stormproof_Almanac_Ledger>
+  <Stormproof_Almanac_Lifetime>累计：接闪 {0} / 未接 {1}。吸收短路 {2} / 遭受 {3}。灭火 {4}。磨损 {5}。</Stormproof_Almanac_Lifetime>
   <Stormproof_StormSpire_FulguriteReady>{0} 基部凝出闪电熔岩。可采集。</Stormproof_StormSpire_FulguriteReady>
   <Stormproof_StormSpire_CollectFulgurite>采集闪电熔岩（{0}）</Stormproof_StormSpire_CollectFulgurite>
   <Stormproof_StormSpire_CollectFulguriteDesc>从塔基取下雷击熔成的玻璃。</Stormproof_StormSpire_CollectFulguriteDesc>
