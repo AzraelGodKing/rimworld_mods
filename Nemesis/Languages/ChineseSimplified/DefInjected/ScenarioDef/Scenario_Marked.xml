@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Nemesis_Marked.label>被盯上</Nemesis_Marked.label>
+  <Nemesis_Marked.description>三名幸存者建起殖民地，知道外面有人叫得出他们的名字。准备好嘲讽、假线索，以及每次逃脱都会变强的猎人。\n\n同时加载 Homesteader 时锁定 Azrael 叙事者。</Nemesis_Marked.description>
+  <Nemesis_Marked.scenario.summary>三名殖民者面对一名私人宿敌。有 Homesteader 时使用 Azrael。</Nemesis_Marked.scenario.summary>
+  <Nemesis_Marked.scenario.parts.4.text>你们不再匿名。
+
+在边缘之外，某个有名字的敌人正在摸清你们的习惯。他们会试探。他们会逃跑。他们会带着更硬的手段回来。
+
+建一座能扛住仇恨的殖民地。</Nemesis_Marked.scenario.parts.4.text>
+</LanguageData>

@@ -36,6 +36,7 @@
   <Nemesis_Settings_WeightCaravan>Травля каравана: {0}</Nemesis_Settings_WeightCaravan>
   <Nemesis_Settings_WeightSabotage>Саботаж питания: {0}</Nemesis_Settings_WeightSabotage>
   <Nemesis_Settings_WeightFood>Налёт на склады еды: {0}</Nemesis_Settings_WeightFood>
+  <Nemesis_Settings_WeightAnomaly>Приманка аномалии: {0}</Nemesis_Settings_WeightAnomaly>
   <Nemesis_Settings_Reset>Сброс</Nemesis_Settings_Reset>
 
   <!-- Phrases -->
@@ -121,6 +122,7 @@
   <Nemesis_Letter_FoodTitle>Удар по складам еды: {0}</Nemesis_Letter_FoodTitle>
   <Nemesis_Letter_FoodBody>{0} испортил или украл из ваших запасов еды (повреждено стопок: {1}). Голод — оружие.</Nemesis_Letter_FoodBody>
   <Nemesis_Letter_FoodCellar>{0} пробрался на ваши склады — в том числе к корневому погребу. Испорчено стопок: {1}.</Nemesis_Letter_FoodCellar>
+  <Nemesis_Letter_FoodPantry>{0} ударил по кладовой, коптильне или погребу Homesteader. Испорчено стопок: {1}.</Nemesis_Letter_FoodPantry>
   <Nemesis_Letter_FoodFavoriteNote>{0} оставил записку для {1}: «Больше никакого {2} для тебя».</Nemesis_Letter_FoodFavoriteNote>
   <Nemesis_Letter_AnomalyTitle>Не то внимание: {0}</Nemesis_Letter_AnomalyTitle>
   <Nemesis_Letter_AnomalyBody>{0} разворошил то, что должно было остаться погребённым. То, что идёт, может быть не целиком их рук дело — но они хотели, чтобы вы были заняты.</Nemesis_Letter_AnomalyBody>
@@ -221,6 +223,25 @@
   <Nemesis_Bounty_Cleared>Награда снята.</Nemesis_Bounty_Cleared>
   <Nemesis_Comms_BuyLead>Купить наводку на немезиса ({0} серебра)</Nemesis_Comms_BuyLead>
   <Nemesis_Comms_PostBounty>Добавить {0} серебра к награде за немезиса</Nemesis_Comms_PostBounty>
+  <Nemesis_Comms_TauntBack>Ответить насмешкой {0}</Nemesis_Comms_TauntBack>
+  <Nemesis_Comms_OfferTruce>Предложить перемирие {0}</Nemesis_Comms_OfferTruce>
+  <Nemesis_Comms_DemandSurrender>Потребовать сдачи у {0}</Nemesis_Comms_DemandSurrender>
+
+  <Nemesis_Dossier_PendingResolution>{0} захвачен — решите его участь.</Nemesis_Dossier_PendingResolution>
+  <Nemesis_Dossier_OpenResolution>Открыть диалог решения</Nemesis_Dossier_OpenResolution>
+
+  <Nemesis_Note_TauntBack>Вы ответили насмешкой по связи.</Nemesis_Note_TauntBack>
+  <Nemesis_Note_TruceOffer>Перемирие принято на {0} дн.</Nemesis_Note_TruceOffer>
+  <Nemesis_Note_SurrenderDemand>Они ответили на требование сдачи — скоро будут.</Nemesis_Note_SurrenderDemand>
+
+  <Nemesis_Letter_TauntBackTitle>Насмешка отправлена: {0}</Nemesis_Letter_TauntBackTitle>
+  <Nemesis_Letter_TauntBackBody>Вы насмехались над {0} по связи. Они это запомнят.</Nemesis_Letter_TauntBackBody>
+  <Nemesis_Letter_TruceRefuseTitle>Перемирие отклонено: {0}</Nemesis_Letter_TruceRefuseTitle>
+  <Nemesis_Letter_TruceRefuseBody>{0} рассмеялся над вашим предложением. Ждите худшего.</Nemesis_Letter_TruceRefuseBody>
+  <Nemesis_Letter_SurrenderOkTitle>Они сдаются: {0}</Nemesis_Letter_SurrenderOkTitle>
+  <Nemesis_Letter_SurrenderOkBody>{0} ответил на ваше требование. Столкновение близко — готовьтесь взять их живыми.</Nemesis_Letter_SurrenderOkBody>
+  <Nemesis_Letter_SurrenderRefuseTitle>Сдача отклонена: {0}</Nemesis_Letter_SurrenderRefuseTitle>
+  <Nemesis_Letter_SurrenderRefuseBody>{0} плюнул на ваше требование. Агрессия растёт.</Nemesis_Letter_SurrenderRefuseBody>
 
   <Nemesis_Epitaph_Title>Эпитафия: {0}</Nemesis_Epitaph_Title>
   <Nemesis_Epitaph_Line>{0} — {1}. Охота шла {2} дн., побегов {3}.</Nemesis_Epitaph_Line>
