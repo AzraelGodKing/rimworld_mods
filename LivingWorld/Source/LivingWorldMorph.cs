@@ -25,7 +25,8 @@ namespace LivingWorld
             {
                 return false;
             }
-            if (!comp.TryConsumeMorphBudget())
+            // AZR-326 — check budget before work, but only consume on a successful morph.
+            if (!comp.HasMorphBudget())
             {
                 return false;
             }
@@ -38,23 +39,33 @@ namespace LivingWorld
 
             // Weighted picks: prosperity often, flip/abandon/outpost rarer.
             float roll = Rand.Value;
+            bool ok;
             if (roll < 0.55f)
             {
-                return TryProsperityDrift(comp, settlements.RandomElement());
+                ok = TryProsperityDrift(comp, settlements.RandomElement());
             }
-            if (roll < 0.75f)
+            else if (roll < 0.75f)
             {
-                return TryOwnershipFlip(comp, settlements);
+                ok = TryOwnershipFlip(comp, settlements);
             }
-            if (roll < 0.85f)
+            else if (roll < 0.85f)
             {
-                return TryAbandon(comp, settlements);
+                ok = TryAbandon(comp, settlements);
             }
-            if (roll < 0.93f)
+            else if (roll < 0.93f)
             {
-                return TryOutpost(comp, settlements);
+                ok = TryOutpost(comp, settlements);
             }
-            return TryEpithet(comp, settlements.RandomElement());
+            else
+            {
+                ok = TryEpithet(comp, settlements.RandomElement());
+            }
+
+            if (ok)
+            {
+                comp.ConsumeMorphBudget();
+            }
+            return ok;
         }
 
         public static bool TryForce(GameComponent_LivingWorld comp, MorphKind kind)
@@ -146,7 +157,20 @@ namespace LivingWorld
             mood.prosperity = next;
             TouchMorph(comp, settlement);
 
-            WorldEventKind kind = delta > 0 ? WorldEventKind.ProsperityRise : WorldEventKind.ProsperityFall;
+            // AZR-331 — distinct FamineRumor when prosperity drifts into struggle/collapse.
+            WorldEventKind kind;
+            if (delta < 0 && mood.prosperity <= -1)
+            {
+                kind = WorldEventKind.FamineRumor;
+            }
+            else if (delta > 0)
+            {
+                kind = WorldEventKind.ProsperityRise;
+            }
+            else
+            {
+                kind = WorldEventKind.ProsperityFall;
+            }
             NewsSeverity sev = System.Math.Abs(mood.prosperity) >= 2
                 ? NewsSeverity.Normal
                 : NewsSeverity.Minor;
@@ -190,6 +214,9 @@ namespace LivingWorld
                 winner,
                 loser,
                 target));
+
+            // AZR-332 — last settlement taken: faction is gone from the rim.
+            LivingWorldDiplomacy.MaybePublishFactionCollapse(comp, loser, winner, target);
             return true;
         }
 

@@ -38,13 +38,14 @@ namespace LivingWorld
     {
         public static void Postfix(Settlement __instance, ref string __result)
         {
-            GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            SettlementMood mood = comp?.TryGetMood(__instance);
-            if (mood == null || string.IsNullOrEmpty(mood.epithet))
+            // AZR-328 — GameComponent.Get is game-instance cached; epithet suffix is mood-cached.
+            SettlementMood mood = GameComponent_LivingWorld.Get?.TryGetMood(__instance);
+            string suffix = mood?.EpithetLabelSuffix();
+            if (suffix == null)
             {
                 return;
             }
-            __result = __result + " (" + mood.epithet.Translate() + ")";
+            __result = __result + suffix;
         }
     }
 }

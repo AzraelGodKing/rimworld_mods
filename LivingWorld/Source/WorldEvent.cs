@@ -99,6 +99,10 @@ namespace LivingWorld
         public int lastMorphTick;
         public string epithet;
 
+        // AZR-328 — cached " (epithet)" suffix; not scribed (rebuilt lazily).
+        private string epithetLabelCacheKey;
+        private string epithetLabelCache;
+
         public void ExposeData()
         {
             Scribe_Values.Look(ref settlementId, "settlementId", -1);
@@ -106,6 +110,11 @@ namespace LivingWorld
             Scribe_Values.Look(ref prosperity, "prosperity");
             Scribe_Values.Look(ref lastMorphTick, "lastMorphTick");
             Scribe_Values.Look(ref epithet, "epithet");
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                epithetLabelCacheKey = null;
+                epithetLabelCache = null;
+            }
         }
 
         public string ProsperityLabelKey()
@@ -115,6 +124,21 @@ namespace LivingWorld
             if (prosperity <= -2) return "LivingWorld_Prosperity_Collapsing";
             if (prosperity == -1) return "LivingWorld_Prosperity_Struggling";
             return "LivingWorld_Prosperity_Stable";
+        }
+
+        /// <summary>AZR-328 — cached translated epithet suffix for Settlement.Label.</summary>
+        public string EpithetLabelSuffix()
+        {
+            if (string.IsNullOrEmpty(epithet))
+            {
+                return null;
+            }
+            if (epithetLabelCacheKey != epithet || epithetLabelCache == null)
+            {
+                epithetLabelCacheKey = epithet;
+                epithetLabelCache = " (" + epithet.Translate() + ")";
+            }
+            return epithetLabelCache;
         }
     }
 }
