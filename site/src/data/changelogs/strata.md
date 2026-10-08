@@ -1,11 +1,11 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.8.0` in `About.xml` `modVersion` (proposed ship: `3.8.1`). Player.log: `[Strata] v3.8.0 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.8.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.1 Soft-compat build <stamp> loaded from ...`.
 
 **Build stamp:** each DLL logs the stamp after the version. Current stamp is `gas-fog-azr349-v1` in `StrataBuildInfo.BuildStamp`.
 
-## [3.8.1] (proposed — About.xml not bumped yet)
+## [3.8.1]
 
 AZR-349 AZR-353 AZR-354 AZR-355
 
