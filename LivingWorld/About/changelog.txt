@@ -1,5 +1,5 @@
-1.1.0
-[h1]Living World — 1.1.0[/h1]
+1.1.1
+[h1]Living World — 1.1.1[/h1]
 [b]Fixed[/b]
 [list]
 [*] Yearly morph budget only consumes on a successful morph (AZR-326).
@@ -18,10 +18,6 @@
 [list]
 [*] LW9 inter-settlement traffic (AZR-334) — large roadmap item with no scaffolding yet; parked in LivingWorld/ROADMAP.md Phase Later.
 [/list]
-[b]Changed[/b]
-[list]
-[*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
-[/list]
 
 1.0.0
 [h1]Living World — 1.0.0[/h1]
@@ -34,4 +30,11 @@
 [*] [b]Road-worn[/b] — long-running caravans can pick up a hediff: slightly faster on the march, fades over a season.
 [*] [b]Route hazards[/b] — mud, heat, cold, or wind on tiles you already walked. Way-camps make it rarer. Rest and food take a hit; road-worn pawns take less. Toggle in Mod Options.
 [*] [b]Chinese and Russian[/b] — chronicle and rumour strings.
+[/list]
+
+1.1.0
+[h1]Living World — 1.1.0[/h1]
+[b]Changed[/b]
+[list]
+[*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
 [/list]
