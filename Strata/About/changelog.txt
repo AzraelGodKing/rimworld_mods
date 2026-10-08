@@ -9,6 +9,7 @@
 [*] [b]Portal / inspect localization[/b] — enter/entering and sealed-shaft / hoist / conduit / stairs inspect text use translation keys, including Simplified Chinese and Russian (AZR-267, AZR-268).
 [*] [b]Ore hoist transfer skip[/b] — snapshot candidate list so DeSpawn no longer skips the next item (AZR-269).
 [*] [b]README fluid junctions[/b] — removed dangling V2 roadmap fragment (AZR-270).
+[*] [b]Sound-dampening floor[/b] — uses the 1.6 wood floor texture (`Terrain/Surfaces/WoodFloor`). The old `WoodPlankFloor` path no longer exists.
 [/list]
 [b]Added[/b]
 [list]

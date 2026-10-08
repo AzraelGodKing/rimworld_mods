@@ -17,6 +17,7 @@ AZR-267 AZR-268 AZR-269 AZR-270 AZR-271 AZR-272 AZR-273 AZR-274 AZR-349 AZR-353 
 - **Portal / inspect localization** (AZR-267, AZR-268) — enter/entering and stairs/hoist/conduit inspect text use translation keys, including Simplified Chinese and Russian.
 - **Ore hoist transfer skip** (AZR-269) — snapshot candidate list so DeSpawn no longer skips the next item.
 - **README fluid junctions** (AZR-270) — removed dangling V2 roadmap fragment.
+- **Sound-dampening floor** — texture path is the 1.6 wood floor (`Terrain/Surfaces/WoodFloor`). `WoodPlankFloor` is no longer a texture file.
 
 ### Added
 - **Seismograph station** (AZR-271) — powered forecast for tremor, cave-in, and infestation pressure.
