@@ -23,10 +23,11 @@ Playable core is in. Next pool: [docs/ideas/stormproof-updates.md](../docs/ideas
 ## Soft-compat (Stormproof side)
 
 Do not implement the other mod's systems here. Name the hook so each side can fail-open.
+Public surface: `Stormproof.StormproofCompatApi` (AZR-323).
 
-- [ ] **Strata** — ion-immune underground grid; surface antenna for comms. Storm surges flooding unpumped levels is a Strata consumer of Stormproof weather, not a Stormproof map.
-- [ ] **Homesteader HS-S02** — drought inspect on wells / cisterns. Drought condenser stays Stormproof; Homesteader only reads the drought.
-- [ ] **Nemesis** — optional ion-storm baiting at high hunt aggression (Nemesis owns the hunt; Stormproof only exposes that an ion storm is active).
+- [x] **Strata** — `IsIonStormActive` / `IsGridSurgeActive` for ion-immune underground grid and surge awareness. Surface antenna / flood logic stays in Strata.
+- [x] **Homesteader HS-S02** — `IsDroughtActive` for well / cistern inspect. Drought condenser stays Stormproof; Homesteader only reads the drought.
+- [x] **Nemesis** — `IsIonStormActiveForBaiting` for high-aggression baiting (Nemesis owns the hunt).
 
 ---
 

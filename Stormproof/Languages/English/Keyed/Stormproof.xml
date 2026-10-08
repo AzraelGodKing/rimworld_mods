@@ -18,6 +18,7 @@
   <Stormproof_GridMonitor_ForecastEmptyIn>Forecast: batteries empty in {0} (weather included).</Stormproof_GridMonitor_ForecastEmptyIn>
   <Stormproof_GridMonitor_ForecastFullIn>Forecast: batteries full in {0} (weather included).</Stormproof_GridMonitor_ForecastFullIn>
   <Stormproof_GridMonitor_ForecastHeld>Forecast (8h): charge stays at least {0}.</Stormproof_GridMonitor_ForecastHeld>
+  <Stormproof_GridMonitor_ForecastBrownout>Forecast: predicted brownout at nadir {0}.</Stormproof_GridMonitor_ForecastBrownout>
   <Stormproof_GridMonitor_ForecastLow>{0}: forecast hits low batteries in {1}.</Stormproof_GridMonitor_ForecastLow>
   <Stormproof_GridMonitor_ForecastCritical>{0}: forecast hits CRITICAL batteries in {1}.</Stormproof_GridMonitor_ForecastCritical>
 
@@ -130,6 +131,7 @@
   <Stormproof_Almanac_Open>Almanac</Stormproof_Almanac_Open>
   <Stormproof_Almanac_OpenDesc>Read this map's year of storms, flares, droughts, and snaps.</Stormproof_Almanac_OpenDesc>
   <Stormproof_Almanac_Ledger>Caught {0} / missed {1} strikes. Absorbed {2} / suffered {3} Zzzt. Fires snuffed {4}. Wear hits {5}.</Stormproof_Almanac_Ledger>
+  <Stormproof_Almanac_Lifetime>Lifetime: caught {0} / missed {1} strikes. Absorbed {2} / suffered {3} Zzzt. Fires snuffed {4}. Wear hits {5}.</Stormproof_Almanac_Lifetime>
   <Stormproof_StormSpire_FulguriteReady>{0} has fused fulgurite at its base. Collect it.</Stormproof_StormSpire_FulguriteReady>
   <Stormproof_StormSpire_CollectFulgurite>Collect fulgurite ({0})</Stormproof_StormSpire_CollectFulgurite>
   <Stormproof_StormSpire_CollectFulguriteDesc>Harvest fused lightning-glass from the spire's base.</Stormproof_StormSpire_CollectFulguriteDesc>

@@ -1,3 +1,19 @@
+1.5.1
+[h1]Stormproof — 1.5.1[/h1]
+[b]Fixed[/b]
+[list]
+[*] [b]AZR-319[/b] Grid forecast now uses hazard-active power draw on suppressor buildings (solar shield, fire suppressor, atmospheric barrier, climate stabilizer, sky restorer, drought condenser) instead of idle nameplate.
+[*] [b]AZR-321[/b] Short-circuit absorb handoff uses Harmony __state instead of a static flag.
+[/list]
+[b]Improved[/b]
+[list]
+[*] [b]AZR-320[/b] Settings window only Write()s when values change (no per-frame disk writes).
+[*] [b]AZR-322[/b] Comp registries clear when a new Game starts so prior-session refs do not accumulate.
+[*] [b]AZR-323[/b] Public StormproofCompatApi for Strata / Homesteader / Nemesis fail-open hooks (ion storm, grid surge, drought).
+[*] [b]AZR-324[/b] Grid monitor forecast inspect shows predicted brownout severity at nadir.
+[*] [b]AZR-325[/b] Weather almanac dialog shows lifetime totals across recorded entries.
+[/list]
+
 1.5.0
 [h1]Stormproof — 1.5.0[/h1]
 [b]Changed[/b]
