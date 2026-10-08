@@ -12,7 +12,13 @@ namespace DateNight
         public const int AlwaysDoLovinCooldownTicks = 100;
 
         // Stable rendezvous bed per couple for the current Lovin window (no claim churn).
+        // Ephemeral — cleared on new/load game (not scribed); thing IDs reset across colonies.
         private static readonly Dictionary<long, int> RendezvousBedIds = new Dictionary<long, int>();
+
+        public static void ClearEphemeral()
+        {
+            RendezvousBedIds.Clear();
+        }
 
         public static bool IsLovinSchedule(Pawn pawn)
         {
@@ -213,6 +219,34 @@ namespace DateNight
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        /// Copy painted hours of <paramref name="def"/> from source onto target.
+        /// Hours where source has the slot are painted on target; hours where
+        /// only the target had it are cleared back to Anything.
+        /// </summary>
+        public static void CopyHours(Pawn source, Pawn target, TimeAssignmentDef def)
+        {
+            if (source?.timetable == null || target?.timetable == null || def == null)
+            {
+                return;
+            }
+
+            TimeAssignmentDef anything = TimeAssignmentDefOf.Anything;
+            for (int h = 0; h < 24; h++)
+            {
+                bool srcHas = source.timetable.GetAssignment(h) == def;
+                bool dstHas = target.timetable.GetAssignment(h) == def;
+                if (srcHas)
+                {
+                    target.timetable.SetAssignment(h, def);
+                }
+                else if (dstHas)
+                {
+                    target.timetable.SetAssignment(h, anything);
+                }
+            }
         }
 
         public static bool ShouldBoostLovinChance(Pawn pawn, Pawn partner)
@@ -537,7 +571,7 @@ namespace DateNight
             {
                 return;
             }
-            if (!pawn.ageTracker.Adult)
+            if (pawn.ageTracker == null || !pawn.ageTracker.Adult)
             {
                 return;
             }

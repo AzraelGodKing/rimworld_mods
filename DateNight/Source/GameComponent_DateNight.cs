@@ -12,10 +12,15 @@ namespace DateNight
 
         public GameComponent_DateNight(Game game)
         {
+            // Ephemeral couple caches must not leak thing IDs across colonies/sessions.
+            DateNightUtility.ClearEphemeral();
+            DateNightWindows.ClearEphemeral();
         }
 
         public override void FinalizeInit()
         {
+            DateNightUtility.ClearEphemeral();
+            DateNightWindows.ClearEphemeral();
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
@@ -50,6 +55,14 @@ namespace DateNight
 
             DateNightAnniversaries.Tick();
             DateNightDoubleDates.Tick();
+
+            if (Find.TickManager.TicksGame % 2500 == 0)
+            {
+                DateNightDateUtility.PruneDeadPawns();
+                DateNightVenues.PruneDeadPawns();
+                DateNightVenues.TickDestroyedVenues();
+                DateNightAnniversaries.PruneDeadPawns();
+            }
         }
 
         private void TickPawn(Pawn pawn)
