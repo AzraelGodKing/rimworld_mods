@@ -22,6 +22,11 @@ namespace LivingWorld
         private int lastYear = -1;
         private int pulseIndex;
         private string lastNewsVersion;
+        private List<int> collapsedFactionIds = new List<int>();
+
+        // AZR-328 — cache Get across Label/inspect hot paths for the current Game.
+        private static Game cachedGame;
+        private static GameComponent_LivingWorld cachedComp;
 
         public GameComponent_LivingWorld(Game game)
         {
@@ -32,8 +37,25 @@ namespace LivingWorld
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
-        public static GameComponent_LivingWorld Get =>
-            Current.Game?.GetComponent<GameComponent_LivingWorld>();
+        public static GameComponent_LivingWorld Get
+        {
+            get
+            {
+                Game game = Current.Game;
+                if (game == null)
+                {
+                    cachedGame = null;
+                    cachedComp = null;
+                    return null;
+                }
+                if (game != cachedGame)
+                {
+                    cachedGame = game;
+                    cachedComp = game.GetComponent<GameComponent_LivingWorld>();
+                }
+                return cachedComp;
+            }
+        }
 
         public IReadOnlyList<WorldEvent> Chronicle => chronicle;
 
@@ -47,6 +69,7 @@ namespace LivingWorld
             Scribe_Collections.Look(ref moods, "moods", LookMode.Deep);
             Scribe_Collections.Look(ref pairs, "pairs", LookMode.Deep);
             Scribe_Collections.Look(ref pendingFallout, "pendingFallout", LookMode.Deep);
+            Scribe_Collections.Look(ref collapsedFactionIds, "collapsedFactionIds", LookMode.Value);
             Scribe_Values.Look(ref lettersThisQuadrum, "lettersThisQuadrum");
             Scribe_Values.Look(ref morphsThisYear, "morphsThisYear");
             Scribe_Values.Look(ref budgetsInitialized, "budgetsInitialized");
@@ -60,6 +83,7 @@ namespace LivingWorld
                 moods ??= new List<SettlementMood>();
                 pairs ??= new List<FactionPairState>();
                 pendingFallout ??= new List<PendingFallout>();
+                collapsedFactionIds ??= new List<int>();
             }
         }
 
@@ -72,6 +96,7 @@ namespace LivingWorld
             }
 
             int now = Find.TickManager.TicksGame;
+            LivingWorldDebugCommand.Drain();
             RefreshBudgets(now);
             LivingWorldWarSites.TickExpire();
             LivingWorldRumour.TickCorrections(this);
@@ -141,15 +166,42 @@ namespace LivingWorld
             return true;
         }
 
-        public bool TryConsumeMorphBudget()
+        public bool HasMorphBudget()
         {
             LivingWorldSettings s = LivingWorldMod.Settings;
             int max = s?.maxMorphsPerYear ?? 6;
-            if (morphsThisYear >= max)
+            return morphsThisYear < max;
+        }
+
+        public void ConsumeMorphBudget()
+        {
+            morphsThisYear++;
+        }
+
+        /// <summary>Legacy helper — prefer HasMorphBudget + ConsumeMorphBudget (AZR-326).</summary>
+        public bool TryConsumeMorphBudget()
+        {
+            if (!HasMorphBudget())
             {
                 return false;
             }
-            morphsThisYear++;
+            ConsumeMorphBudget();
+            return true;
+        }
+
+        /// <summary>AZR-332 — one Collapse letter per faction lost to the rim.</summary>
+        public bool TryMarkFactionCollapsed(Faction faction)
+        {
+            if (faction == null)
+            {
+                return false;
+            }
+            int id = faction.loadID;
+            if (collapsedFactionIds.Contains(id))
+            {
+                return false;
+            }
+            collapsedFactionIds.Add(id);
             return true;
         }
 

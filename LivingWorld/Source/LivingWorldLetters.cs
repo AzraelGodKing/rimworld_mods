@@ -12,8 +12,11 @@ namespace LivingWorld
                 return;
             }
 
+            // AZR-327 — Major always reaches the letter stack; do not silently drop on budget.
             GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            if (comp != null && !comp.TryConsumeLetterBudget())
+            if (ev.severity != NewsSeverity.Major
+                && comp != null
+                && !comp.TryConsumeLetterBudget())
             {
                 return;
             }

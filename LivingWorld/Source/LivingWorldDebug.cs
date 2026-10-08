@@ -46,17 +46,9 @@ namespace LivingWorld
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ForceRandomMorph()
         {
-            GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            if (comp == null)
-            {
-                return;
-            }
-            bool ok = LivingWorldMorph.TryResolveRandom(comp)
-                || LivingWorldMorph.TryForce(comp, LivingWorldMorph.MorphKind.ProsperityDrift);
-            Messages.Message(ok
-                    ? "[Living World] Forced a morph resolution."
-                    : "[Living World] Morph failed (no eligible settlements / budget).",
-                ok ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
+            // AZR-329 — enqueue; apply on next GameComponentTick.
+            LivingWorldDebugCommand.EnqueueRandomMorph();
+            Messages.Message("[Living World] Morph queued for next tick.", MessageTypeDefOf.NeutralEvent,
                 historical: false);
         }
 
@@ -92,17 +84,9 @@ namespace LivingWorld
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ForceDiplomacy()
         {
-            GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            if (comp == null)
-            {
-                return;
-            }
-            bool ok = LivingWorldDiplomacy.TryResolveRandom(comp);
-            Messages.Message(ok
-                    ? "[Living World] Forced a diplomacy resolution."
-                    : "[Living World] Diplomacy resolve failed (no pairs / cool).",
-                ok ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
-                historical: false);
+            LivingWorldDebugCommand.EnqueueDiplomacyResolve();
+            Messages.Message("[Living World] Diplomacy resolve queued for next tick.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
         }
 
         [DebugAction(Cat, "Force tension (random pair)",
@@ -123,30 +107,15 @@ namespace LivingWorld
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ForceWarBattle()
         {
-            GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            if (comp == null)
-            {
-                return;
-            }
-            bool ok = LivingWorldDiplomacy.ForceTone(comp, FactionRelationTone.War, thenBattle: true);
-            Messages.Message(ok
-                    ? "[Living World] Forced war + battle."
-                    : "[Living World] Force battle failed.",
-                ok ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
-                historical: false);
+            LivingWorldDebugCommand.EnqueueForceWarBattle();
+            Messages.Message("[Living World] War + battle queued for next tick.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
         }
 
         [DebugAction(Cat, "Force refugees (enqueue + fire)",
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ForceRefugees()
         {
-            GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            Map map = Find.AnyPlayerHomeMap;
-            if (comp == null || map == null)
-            {
-                return;
-            }
-
             Faction loser = Find.FactionManager.AllFactionsVisible
                 .FirstOrDefault(f => !f.IsPlayer && !f.defeated && f.def.humanlikeFaction);
             Faction winner = Find.FactionManager.AllFactionsVisible
@@ -157,30 +126,8 @@ namespace LivingWorld
                     historical: false);
                 return;
             }
-
-            comp.EnqueueFallout(new PendingFallout
-            {
-                loserFactionId = loser.loadID,
-                winnerFactionId = winner?.loadID ?? -1,
-                enqueueTick = Find.TickManager.TicksGame - 40000,
-                kind = FalloutKind.Refugees,
-                settlementLabel = "debug front",
-            });
-
-            IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail("LivingWorld_Refugees");
-            if (def == null)
-            {
-                Messages.Message("[Living World] LivingWorld_Refugees def missing.", MessageTypeDefOf.RejectInput,
-                    historical: false);
-                return;
-            }
-            IncidentParms parms = StorytellerUtility.DefaultParmsNow(def.category, map);
-            parms.forced = true;
-            bool ok = def.Worker.TryExecute(parms);
-            Messages.Message(ok
-                    ? "[Living World] Forced refugees."
-                    : "[Living World] Refugee incident failed.",
-                ok ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
+            LivingWorldDebugCommand.EnqueueForceRefugees(loser, winner);
+            Messages.Message("[Living World] Refugees queued for next tick.", MessageTypeDefOf.NeutralEvent,
                 historical: false);
         }
 
@@ -188,49 +135,27 @@ namespace LivingWorld
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ForceSkirmishLetter()
         {
-            GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            if (comp == null)
-            {
-                return;
-            }
             Faction a = Find.FactionManager.AllFactionsVisible
                 .FirstOrDefault(f => !f.IsPlayer && !f.defeated && f.def.humanlikeFaction);
             Faction b = Find.FactionManager.AllFactionsVisible
                 .FirstOrDefault(f => !f.IsPlayer && !f.defeated && f.def.humanlikeFaction && f != a);
-            WorldEvent ev = WorldEvent.Create(WorldEventKind.Skirmish, NewsSeverity.Normal, a, b);
-            comp.RecordAndPublish(ev);
-            Messages.Message("[Living World] Published fake skirmish.", MessageTypeDefOf.NeutralEvent,
-                historical: false);
+            LivingWorldDebugCommand.EnqueueFakeSkirmish(a, b);
+            Messages.Message("[Living World] Fake skirmish queued for next tick.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
         }
 
         private static void ForceTone(FactionRelationTone tone)
         {
-            GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            if (comp == null)
-            {
-                return;
-            }
-            bool ok = LivingWorldDiplomacy.ForceTone(comp, tone);
-            Messages.Message(ok
-                    ? $"[Living World] Forced pair → {tone}."
-                    : $"[Living World] Force {tone} failed.",
-                ok ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
-                historical: false);
+            LivingWorldDebugCommand.EnqueueForceTone(tone);
+            Messages.Message($"[Living World] Force {tone} queued for next tick.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
         }
 
         private static void ForceKind(LivingWorldMorph.MorphKind kind)
         {
-            GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            if (comp == null)
-            {
-                return;
-            }
-            bool ok = LivingWorldMorph.TryForce(comp, kind);
-            Messages.Message(ok
-                    ? $"[Living World] Forced {kind}."
-                    : $"[Living World] {kind} failed.",
-                ok ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
-                historical: false);
+            LivingWorldDebugCommand.EnqueueMorphKind(kind);
+            Messages.Message($"[Living World] Force {kind} queued for next tick.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
         }
     }
 }
