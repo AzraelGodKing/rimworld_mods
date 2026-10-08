@@ -14,7 +14,7 @@ AZR-267 AZR-268 AZR-269 AZR-270 AZR-271 AZR-272 AZR-273 AZR-274 AZR-349 AZR-353 
 - **Stairwell door gas wipe** (AZR-353) — opening a door into a shaft no longer instantly clears smoke/O₂; shaft flow scales with aperture; outdoor shafts vent pollutants without stripping breathable air.
 - **Gas pocket whole-layer fill** (AZR-354) — deep-gas bursts dilute across large Biomes! caverns; permanent vents skip map-sized rooms; deep gas slowly bleeds without a source.
 - **O₂ by atmosphere quality** (AZR-355) — viewed map runs full cycle rate on Low/Medium/High; underground open-roof holes are not treated as sky vents.
-- **Portal / inspect localization** (AZR-267, AZR-268) — enter/entering and stairs/hoist/conduit inspect text use translation keys.
+- **Portal / inspect localization** (AZR-267, AZR-268) — enter/entering and stairs/hoist/conduit inspect text use translation keys, including Simplified Chinese and Russian.
 - **Ore hoist transfer skip** (AZR-269) — snapshot candidate list so DeSpawn no longer skips the next item.
 - **README fluid junctions** (AZR-270) — removed dangling V2 roadmap fragment.
 

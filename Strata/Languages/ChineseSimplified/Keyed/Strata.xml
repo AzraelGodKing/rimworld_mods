@@ -444,4 +444,49 @@
   <Strata_StackPanel_ClickTip>Click to jump the camera.</Strata_StackPanel_ClickTip>
   <Strata_StackPanel_SurfaceShort>S</Strata_StackPanel_SurfaceShort>
 
+  <!-- AZR-267 portal enter / sealed -->
+  <Strata_Enter_GoDownstairs>下楼</Strata_Enter_GoDownstairs>
+  <Strata_Entering_GoDownstairs>正在下楼</Strata_Entering_GoDownstairs>
+  <Strata_Enter_GoUpstairs>上楼</Strata_Enter_GoUpstairs>
+  <Strata_Entering_GoUpstairs>正在上楼</Strata_Entering_GoUpstairs>
+  <Strata_Enter_ElevatorDown>乘电梯下行</Strata_Enter_ElevatorDown>
+  <Strata_Entering_ElevatorDown>正在乘电梯下行</Strata_Entering_ElevatorDown>
+  <Strata_Enter_ElevatorUp>乘电梯上行</Strata_Enter_ElevatorUp>
+  <Strata_Entering_ElevatorUp>正在乘电梯上行</Strata_Entering_ElevatorUp>
+  <Strata_Enter_AncientDown>沿古代楼梯井下行</Strata_Enter_AncientDown>
+  <Strata_Entering_AncientDown>正在沿古代楼梯井下行</Strata_Entering_AncientDown>
+  <Strata_Enter_RuinDown>下入废墟</Strata_Enter_RuinDown>
+  <Strata_Entering_RuinDown>正在下入废墟</Strata_Entering_RuinDown>
+  <Strata_Enter_BelowDecks>前往下层甲板</Strata_Enter_BelowDecks>
+  <Strata_Entering_BelowDecks>正在前往下层甲板</Strata_Entering_BelowDecks>
+  <Strata_Enter_UpToShip>返回飞船</Strata_Enter_UpToShip>
+  <Strata_Entering_UpToShip>正在返回飞船</Strata_Entering_UpToShip>
+  <Strata_Enter_UpperDecks>前往上层甲板</Strata_Enter_UpperDecks>
+  <Strata_Entering_UpperDecks>正在前往上层甲板</Strata_Entering_UpperDecks>
+  <Strata_Enter_DownToShip>下行返回飞船</Strata_Enter_DownToShip>
+  <Strata_Entering_DownToShip>正在返回飞船</Strata_Entering_DownToShip>
+  <Strata_Enter_ElevatorBelowDecks>乘电梯前往下层甲板</Strata_Enter_ElevatorBelowDecks>
+  <Strata_Entering_ElevatorBelowDecks>正在乘电梯前往下层甲板</Strata_Entering_ElevatorBelowDecks>
+  <Strata_Enter_ElevatorUpToShip>乘电梯返回飞船</Strata_Enter_ElevatorUpToShip>
+  <Strata_Entering_ElevatorUpToShip>正在乘电梯返回飞船</Strata_Entering_ElevatorUpToShip>
+  <Strata_Enter_ElevatorUpperDecks>乘电梯前往上层甲板</Strata_Enter_ElevatorUpperDecks>
+  <Strata_Entering_ElevatorUpperDecks>正在乘电梯前往上层甲板</Strata_Entering_ElevatorUpperDecks>
+  <Strata_Enter_ElevatorDownToShip>乘电梯下行返回飞船</Strata_Enter_ElevatorDownToShip>
+  <Strata_Entering_ElevatorDownToShip>正在乘电梯下行返回飞船</Strata_Entering_ElevatorDownToShip>
+  <Strata_Reason_StairwellSealed>楼梯井已密封。</Strata_Reason_StairwellSealed>
+
+  <!-- AZR-268 inspect strings -->
+  <Strata_Inspect_OreHoistDriven>吊斗：由上层吊车驱动</Strata_Inspect_OreHoistDriven>
+  <Strata_Inspect_OreHoistLinked>吊斗：已连接另一楼层的伙伴吊车</Strata_Inspect_OreHoistLinked>
+  <Strata_Inspect_OreHoistNeedPortal>吊斗：请建在楼梯井或电梯 {0} 格以内</Strata_Inspect_OreHoistNeedPortal>
+  <Strata_Inspect_OreHoistWaiting>吊斗：等待相连楼层的伙伴吊车</Strata_Inspect_OreHoistWaiting>
+  <Strata_Inspect_ShaftDriven>接线：由上层导管驱动</Strata_Inspect_ShaftDriven>
+  <Strata_Inspect_ShaftLinked>接线：已连接下层接头</Strata_Inspect_ShaftLinked>
+  <Strata_Inspect_ShaftNoPortal>接线：附近没有竖井——请建在楼梯井或电梯数格以内</Strata_Inspect_ShaftNoPortal>
+  <Strata_Inspect_ShaftWaiting>接线：等待下层开启</Strata_Inspect_ShaftWaiting>
+  <Strata_Inspect_AncientStairs>古代竖井——楼层间不通电。打开第一层地下无需向下挖掘研究。</Strata_Inspect_AncientStairs>
+  <Strata_Inspect_DigDownHint>在此平台旁指定向下挖掘的竖井；殖民者必须挖完，下层才会开启。</Strata_Inspect_DigDownHint>
+  <Strata_Inspect_RuinOpened>下方巢穴已开启。</Strata_Inspect_RuinOpened>
+  <Strata_Inspect_RuinSealed>陈腐空气从下方黑暗中升起。</Strata_Inspect_RuinSealed>
+
 </LanguageData>
