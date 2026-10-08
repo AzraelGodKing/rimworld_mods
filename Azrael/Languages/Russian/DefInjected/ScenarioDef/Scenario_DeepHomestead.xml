@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Azrael_DeepHomestead.label>Глубокая усадьба</Azrael_DeepHomestead.label>
+  <Azrael_DeepHomestead.description>Трое поселенцев закрепляются у подножия гор — колодцы и зерно сверху, шахты снизу, бури на горизонте и войны, о которых вы слышите, пока беженцы не дойдут до ваших ворот.\n\nРекомендуется: горная или пещерная клетка. Включите Homesteader, Strata, Stormproof, Living World и Nemesis для полного ощущения серии. Мягкие стартовые части применяются, когда эти моды загружены.</Azrael_DeepHomestead.description>
+  <Azrael_DeepHomestead.scenario.summary>Трое усадебников под Azrael. Рекомендуются горные предгорья. Моды серии — мягко необязательны.</Azrael_DeepHomestead.scenario.summary>
+  <!-- GameStartDialog index without Odyssey (3) and with Odyssey PlanetLayer (4). -->
+  <Azrael_DeepHomestead.scenario.parts.3.text>Предгорья поднимаются за вами. Повозка разгружена. Почва готова к семенам — камень готов к шахтам.
+
+Далёкие войны гудят в радио. Погода попытается вас сломать. Копайте глубже, если нужно; пашите твёрдо, если можете.
+
+Azrael смотрит. Постройте усадьбу, которая переживёт гору.</Azrael_DeepHomestead.scenario.parts.3.text>
+  <Azrael_DeepHomestead.scenario.parts.4.text>Предгорья поднимаются за вами. Повозка разгружена. Почва готова к семенам — камень готов к шахтам.
+
+Далёкие войны гудят в радио. Погода попытается вас сломать. Копайте глубже, если нужно; пашите твёрдо, если можете.
+
+Azrael смотрит. Постройте усадьбу, которая переживёт гору.</Azrael_DeepHomestead.scenario.parts.4.text>
+</LanguageData>

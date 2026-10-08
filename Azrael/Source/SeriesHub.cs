@@ -58,7 +58,73 @@ namespace Azrael
             new[] { "Niceties", "AzraelGodKing.Niceties" },
         };
 
+        // Hub inventory is static for the session; rebuild once per open (dirty flag).
+        private static bool hubDirty = true;
+        private static List<ModRow> cachedMods;
+        private static List<BridgeRow> cachedBridges;
+        private static List<ConflictRow> cachedConflicts;
+        private static List<DlcRow> cachedDlc;
+        private static List<string> cachedFails;
+        private static List<string> cachedLogTexts;
+
+        internal static void InvalidateHub()
+        {
+            hubDirty = true;
+            cachedMods = null;
+            cachedBridges = null;
+            cachedConflicts = null;
+            cachedDlc = null;
+            cachedFails = null;
+            cachedLogTexts = null;
+        }
+
+        private static void EnsureHub()
+        {
+            if (!hubDirty)
+            {
+                return;
+            }
+
+            cachedLogTexts = null;
+            cachedMods = BuildMods();
+            cachedBridges = BuildBridges();
+            cachedConflicts = BuildConflicts();
+            cachedDlc = BuildDlc();
+            cachedFails = BuildHarmonyFailures();
+            hubDirty = false;
+        }
+
         internal static List<ModRow> Mods()
+        {
+            EnsureHub();
+            return cachedMods;
+        }
+
+        internal static List<BridgeRow> Bridges()
+        {
+            EnsureHub();
+            return cachedBridges;
+        }
+
+        internal static List<DlcRow> Dlc()
+        {
+            EnsureHub();
+            return cachedDlc;
+        }
+
+        internal static List<ConflictRow> Conflicts()
+        {
+            EnsureHub();
+            return cachedConflicts;
+        }
+
+        internal static List<string> HarmonyFailures()
+        {
+            EnsureHub();
+            return cachedFails;
+        }
+
+        private static List<ModRow> BuildMods()
         {
             var rows = new List<ModRow>(Series.Length);
             for (int i = 0; i < Series.Length; i++)
@@ -78,7 +144,7 @@ namespace Azrael
             return rows;
         }
 
-        internal static List<BridgeRow> Bridges()
+        private static List<BridgeRow> BuildBridges()
         {
             bool homesteader = IsLoaded("AzraelGodKing.Homesteader");
             bool strata = IsLoaded("AzraelGodKing.Strata");
@@ -135,7 +201,7 @@ namespace Azrael
             return rows;
         }
 
-        internal static List<DlcRow> Dlc()
+        private static List<DlcRow> BuildDlc()
         {
             return new List<DlcRow>
             {
@@ -147,7 +213,7 @@ namespace Azrael
             };
         }
 
-        internal static List<ConflictRow> Conflicts()
+        private static List<ConflictRow> BuildConflicts()
         {
             var rows = new List<ConflictRow>();
             bool strata = IsLoaded("AzraelGodKing.Strata");
@@ -168,10 +234,11 @@ namespace Azrael
                 });
             }
 
+            TryLoadOrderConflict(rows);
             return rows;
         }
 
-        internal static List<string> HarmonyFailures()
+        private static List<string> BuildHarmonyFailures()
         {
             var hits = new List<string>();
             try
@@ -198,39 +265,8 @@ namespace Azrael
 
             try
             {
-                FieldInfo queueField = AccessTools.Field(typeof(Log), "messageQueue");
-                object queue = queueField?.GetValue(null);
-                IEnumerable messages = null;
-                if (queue != null)
+                foreach (string text in RecentLogTextsCached())
                 {
-                    messages = queue as IEnumerable;
-                    if (messages == null)
-                    {
-                        FieldInfo listField = AccessTools.Field(queue.GetType(), "messages")
-                            ?? AccessTools.Field(queue.GetType(), "Messages");
-                        messages = listField?.GetValue(queue) as IEnumerable;
-                    }
-                }
-
-                if (messages == null)
-                {
-                    PropertyInfo messagesProp = AccessTools.Property(typeof(Log), "Messages");
-                    messages = messagesProp?.GetValue(null, null) as IEnumerable;
-                }
-
-                if (messages == null)
-                {
-                    return hits;
-                }
-
-                foreach (object item in messages)
-                {
-                    if (item == null)
-                    {
-                        continue;
-                    }
-
-                    string text = MessageText(item);
                     if (string.IsNullOrEmpty(text))
                     {
                         continue;
@@ -260,6 +296,8 @@ namespace Azrael
 
         internal static string ClipboardReport()
         {
+            // Fresh scan for support paste; GUI keeps the per-open cache.
+            InvalidateHub();
             var sb = new StringBuilder();
             sb.AppendLine("Azrael series hub");
             sb.AppendLine("RimWorld " + RimWorldVersion());
@@ -393,24 +431,77 @@ namespace Azrael
 
         private static BridgeRow NemesisDeepBridge(bool nemesis, bool deepColony)
         {
-            if (nemesis && deepColony)
-            {
-                return new BridgeRow
-                {
-                    LabelKey = "Azrael_Hub_Bridge_NemesisDeep",
-                    Live = false,
-                    Degraded = true,
-                    Status = "Azrael_Hub_BridgeNoHook".Translate()
-                };
-            }
-
+            // Live hook: Nemesis.SoftCompat.OfferEpitaphToDeepColony → DeepColony familyLetters.
+            bool hook = MethodPresent("Nemesis.SoftCompat", "OfferEpitaphToDeepColony")
+                && TypePresent("DeepColony.GameComp_DeepColony")
+                && TypePresent("DeepColony.FamilyLetterEntry");
             return Bridge(
                 "Azrael_Hub_Bridge_NemesisDeep",
-                false,
+                nemesis && deepColony && hook,
                 nemesis,
                 deepColony,
                 "Nemesis",
                 "Deep Colony");
+        }
+
+        private static void TryLoadOrderConflict(List<ConflictRow> rows)
+        {
+            int azraelIndex = -1;
+            int lastSeriesAfter = -1;
+            string lastSeriesName = null;
+            List<ModContentPack> running = LoadedModManager.RunningModsListForReading;
+            for (int i = 0; i < running.Count; i++)
+            {
+                ModContentPack pack = running[i];
+                if (pack == null)
+                {
+                    continue;
+                }
+
+                if (!IsSeriesPack(pack, out bool isAzrael, out string display))
+                {
+                    continue;
+                }
+
+                if (isAzrael)
+                {
+                    azraelIndex = i;
+                }
+                else if (azraelIndex >= 0 && i > azraelIndex)
+                {
+                    lastSeriesAfter = i;
+                    lastSeriesName = display;
+                }
+            }
+
+            if (azraelIndex >= 0 && lastSeriesAfter > azraelIndex)
+            {
+                rows.Add(new ConflictRow
+                {
+                    Name = "Azrael",
+                    Reason = "Azrael_Hub_Conflict_LoadOrder".Translate(lastSeriesName ?? "series mod")
+                });
+            }
+        }
+
+        private static bool IsSeriesPack(ModContentPack pack, out bool isAzrael, out string display)
+        {
+            isAzrael = false;
+            display = pack.Name;
+            string id = pack.PackageId;
+            string facing = pack.PackageIdPlayerFacing;
+            for (int i = 0; i < Series.Length; i++)
+            {
+                string packageId = Series[i][1];
+                if (string.Equals(id, packageId, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(facing, packageId, StringComparison.OrdinalIgnoreCase))
+                {
+                    display = Series[i][0];
+                    isAzrael = i == 0;
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static string GoodwillStatus(bool livingWorld, bool deepColony, bool signals, bool consumer)
@@ -494,6 +585,19 @@ namespace Azrael
             try
             {
                 return AccessTools.TypeByName(fullName) != null;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static bool MethodPresent(string typeName, string methodName)
+        {
+            try
+            {
+                Type type = AccessTools.TypeByName(typeName);
+                return type != null && AccessTools.Method(type, methodName) != null;
             }
             catch
             {
@@ -602,8 +706,10 @@ namespace Azrael
         {
             try
             {
-                foreach (string text in RecentLogTexts())
+                List<string> texts = RecentLogTextsCached();
+                for (int i = 0; i < texts.Count; i++)
                 {
+                    string text = texts[i];
                     if (text == null || text.IndexOf(logPrefix, StringComparison.Ordinal) < 0)
                     {
                         continue;
@@ -646,39 +752,53 @@ namespace Azrael
             return null;
         }
 
-        private static IEnumerable<string> RecentLogTexts()
+        private static List<string> RecentLogTextsCached()
         {
-            FieldInfo queueField = AccessTools.Field(typeof(Log), "messageQueue");
-            object queue = queueField?.GetValue(null);
-            IEnumerable messages = queue as IEnumerable;
-            if (messages == null && queue != null)
+            if (cachedLogTexts != null)
             {
-                FieldInfo listField = AccessTools.Field(queue.GetType(), "messages")
-                    ?? AccessTools.Field(queue.GetType(), "Messages");
-                messages = listField?.GetValue(queue) as IEnumerable;
-            }
-            if (messages == null)
-            {
-                PropertyInfo messagesProp = AccessTools.Property(typeof(Log), "Messages");
-                messages = messagesProp?.GetValue(null, null) as IEnumerable;
-            }
-            if (messages == null)
-            {
-                yield break;
+                return cachedLogTexts;
             }
 
-            foreach (object item in messages)
+            cachedLogTexts = new List<string>();
+            try
             {
-                if (item == null)
+                FieldInfo queueField = AccessTools.Field(typeof(Log), "messageQueue");
+                object queue = queueField?.GetValue(null);
+                IEnumerable messages = queue as IEnumerable;
+                if (messages == null && queue != null)
                 {
-                    continue;
+                    FieldInfo listField = AccessTools.Field(queue.GetType(), "messages")
+                        ?? AccessTools.Field(queue.GetType(), "Messages");
+                    messages = listField?.GetValue(queue) as IEnumerable;
                 }
-                string text = MessageText(item);
-                if (!string.IsNullOrEmpty(text))
+                if (messages == null)
                 {
-                    yield return text;
+                    PropertyInfo messagesProp = AccessTools.Property(typeof(Log), "Messages");
+                    messages = messagesProp?.GetValue(null, null) as IEnumerable;
+                }
+                if (messages == null)
+                {
+                    return cachedLogTexts;
+                }
+
+                foreach (object item in messages)
+                {
+                    if (item == null)
+                    {
+                        continue;
+                    }
+                    string text = MessageText(item);
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        cachedLogTexts.Add(text);
+                    }
                 }
             }
+            catch
+            {
+            }
+
+            return cachedLogTexts;
         }
 
         private static string MessageText(object logMessage)
