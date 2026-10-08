@@ -443,4 +443,49 @@
   <Strata_StackPanel_ClickTip>Click to jump the camera.</Strata_StackPanel_ClickTip>
   <Strata_StackPanel_SurfaceShort>S</Strata_StackPanel_SurfaceShort>
 
+  <!-- AZR-267 portal enter / sealed -->
+  <Strata_Enter_GoDownstairs>Спуститься вниз</Strata_Enter_GoDownstairs>
+  <Strata_Entering_GoDownstairs>спускается вниз</Strata_Entering_GoDownstairs>
+  <Strata_Enter_GoUpstairs>Подняться наверх</Strata_Enter_GoUpstairs>
+  <Strata_Entering_GoUpstairs>поднимается наверх</Strata_Entering_GoUpstairs>
+  <Strata_Enter_ElevatorDown>Спуститься на лифте</Strata_Enter_ElevatorDown>
+  <Strata_Entering_ElevatorDown>спускается на лифте</Strata_Entering_ElevatorDown>
+  <Strata_Enter_ElevatorUp>Подняться на лифте</Strata_Enter_ElevatorUp>
+  <Strata_Entering_ElevatorUp>поднимается на лифте</Strata_Entering_ElevatorUp>
+  <Strata_Enter_AncientDown>Спуститься по древней лестнице</Strata_Enter_AncientDown>
+  <Strata_Entering_AncientDown>спускается по древней лестнице</Strata_Entering_AncientDown>
+  <Strata_Enter_RuinDown>Спуститься в руины</Strata_Enter_RuinDown>
+  <Strata_Entering_RuinDown>спускается в руины</Strata_Entering_RuinDown>
+  <Strata_Enter_BelowDecks>Спуститься под палубу</Strata_Enter_BelowDecks>
+  <Strata_Entering_BelowDecks>спускается под палубу</Strata_Entering_BelowDecks>
+  <Strata_Enter_UpToShip>Подняться на корабль</Strata_Enter_UpToShip>
+  <Strata_Entering_UpToShip>возвращается на корабль</Strata_Entering_UpToShip>
+  <Strata_Enter_UpperDecks>Перейти на верхние палубы</Strata_Enter_UpperDecks>
+  <Strata_Entering_UpperDecks>переходит на верхние палубы</Strata_Entering_UpperDecks>
+  <Strata_Enter_DownToShip>Спуститься на корабль</Strata_Enter_DownToShip>
+  <Strata_Entering_DownToShip>возвращается на корабль</Strata_Entering_DownToShip>
+  <Strata_Enter_ElevatorBelowDecks>На лифте под палубу</Strata_Enter_ElevatorBelowDecks>
+  <Strata_Entering_ElevatorBelowDecks>спускается на лифте под палубу</Strata_Entering_ElevatorBelowDecks>
+  <Strata_Enter_ElevatorUpToShip>На лифте вверх на корабль</Strata_Enter_ElevatorUpToShip>
+  <Strata_Entering_ElevatorUpToShip>поднимается на лифте на корабль</Strata_Entering_ElevatorUpToShip>
+  <Strata_Enter_ElevatorUpperDecks>На лифте на верхние палубы</Strata_Enter_ElevatorUpperDecks>
+  <Strata_Entering_ElevatorUpperDecks>поднимается на лифте на верхние палубы</Strata_Entering_ElevatorUpperDecks>
+  <Strata_Enter_ElevatorDownToShip>На лифте вниз на корабль</Strata_Enter_ElevatorDownToShip>
+  <Strata_Entering_ElevatorDownToShip>спускается на лифте на корабль</Strata_Entering_ElevatorDownToShip>
+  <Strata_Reason_StairwellSealed>Лестница запечатана.</Strata_Reason_StairwellSealed>
+
+  <!-- AZR-268 inspect strings -->
+  <Strata_Inspect_OreHoistDriven>Бадья: управляется подъёмником на уровне выше</Strata_Inspect_OreHoistDriven>
+  <Strata_Inspect_OreHoistLinked>Бадья: связана с парным подъёмником на другом уровне</Strata_Inspect_OreHoistLinked>
+  <Strata_Inspect_OreHoistNeedPortal>Бадья: постройте в пределах {0} клеток от лестницы или лифта</Strata_Inspect_OreHoistNeedPortal>
+  <Strata_Inspect_OreHoistWaiting>Бадья: ожидает парный подъёмник на связанном уровне</Strata_Inspect_OreHoistWaiting>
+  <Strata_Inspect_ShaftDriven>Связь: управляется проводником на уровне выше</Strata_Inspect_ShaftDriven>
+  <Strata_Inspect_ShaftLinked>Связь: связана с узлом на уровне ниже</Strata_Inspect_ShaftLinked>
+  <Strata_Inspect_ShaftNoPortal>Связь: шахты рядом нет — постройте в нескольких клетках от лестницы или лифта</Strata_Inspect_ShaftNoPortal>
+  <Strata_Inspect_ShaftWaiting>Связь: ожидает открытия уровня ниже</Strata_Inspect_ShaftWaiting>
+  <Strata_Inspect_AncientStairs>Древняя шахта — между уровнями нет энергосвязи. Чтобы открыть первый уровень ниже, исследование копки вниз не требуется.</Strata_Inspect_AncientStairs>
+  <Strata_Inspect_DigDownHint>Копайте вниз, чтобы назначить шахту рядом с этой площадкой; колонисты должны закончить вырубку, прежде чем откроется уровень ниже.</Strata_Inspect_DigDownHint>
+  <Strata_Inspect_RuinOpened>Норы внизу открыты.</Strata_Inspect_RuinOpened>
+  <Strata_Inspect_RuinSealed>Затхлый воздух поднимается из темноты внизу.</Strata_Inspect_RuinSealed>
+
 </LanguageData>
