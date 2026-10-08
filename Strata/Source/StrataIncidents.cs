@@ -625,7 +625,13 @@ namespace Strata
                 return;
             }
             // Deeper levels crawl with more bugs.
-            __result *= Mathf.Min(1.3f + 0.35f * StrataDepth.Of(map), 3f);
+            __result *= MapComponent_MiningNoise.DepthInfestationFactor(map);
+            // Mining / industry noise pulls more infestations (AZR-272).
+            MapComponent_MiningNoise noise = MapComponent_MiningNoise.For(map);
+            if (noise != null)
+            {
+                __result *= noise.InfestationNoiseMultiplier;
+            }
         }
     }
 }

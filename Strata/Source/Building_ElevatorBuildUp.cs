@@ -8,9 +8,9 @@ namespace Strata
     // always lets colonists ride back down so a blackout never traps anyone above.
     public class Building_ElevatorBuildUp : Building_StairsBuildUp
     {
-        public override string EnterString => "Take elevator up";
+        public override string EnterString => "Strata_Enter_ElevatorUp".Translate();
 
-        public override string EnteringString => "taking the elevator up";
+        public override string EnteringString => "Strata_Entering_ElevatorUp".Translate();
 
         public bool Powered
         {

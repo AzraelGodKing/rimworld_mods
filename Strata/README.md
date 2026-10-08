@@ -57,7 +57,6 @@ raid pursuit, and the vacant-level performance throttle.
   directly instead of ejecting canisters. Reflection-based; nothing breaks
   when VHGE is absent.
 - **Fluid shaft junctions** (optional): cross-level ties for **Dubs Bad Hygiene** plumbing, **Dubs Central Heating**, **Dubs Rimatomics** coolant, **Vanilla Helixien Gas Expanded**, and **Rimefeller** crude-oil / chemfuel pipes when those mods are loaded.
-  integration yet; cross-level pipe ties are Pillar 2 of the V2 roadmap.
 - **Cave / pocket-map mods** (Deep And Deeper, Anomaly undercaves, and
   similar) — compatible. Their portal maps are invisible to Strata's level
   system by default: cross-level relays and alerts only follow Strata

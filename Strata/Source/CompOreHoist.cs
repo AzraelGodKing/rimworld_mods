@@ -80,11 +80,22 @@ namespace Strata
         {
             Map fromMap = from.Map;
             Map toMap = to.Map;
-            List<Thing> candidates = fromMap.listerThings.AllThings;
+            // Snapshot: DeSpawn of a stackCount==1 item mutates AllThings mid-loop
+            // and would skip the next candidate (AZR-269).
+            List<Thing> live = fromMap.listerThings.AllThings;
+            var candidates = new List<Thing>(live.Count);
+            for (int i = 0; i < live.Count; i++)
+            {
+                candidates.Add(live[i]);
+            }
             int moved = 0;
             for (int i = 0; i < candidates.Count && moved < Props.maxItemsPerTransfer; i++)
             {
                 Thing thing = candidates[i];
+                if (thing == null || thing.Destroyed || !thing.Spawned)
+                {
+                    continue;
+                }
                 if (!IsHoistable(thing) || !thing.Position.InHorDistOf(from.Position, Props.pickupRadius))
                 {
                     continue;
