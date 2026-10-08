@@ -36,6 +36,45 @@ namespace DateNight
             }
         }
 
+        public static void PruneDeadPawns()
+        {
+            PruneCoupleDict(lastCelebratedYear);
+            PruneCoupleDict(lastOutcomeYear);
+        }
+
+        private static void PruneCoupleDict(Dictionary<long, int> dict)
+        {
+            if (dict == null || dict.Count == 0)
+            {
+                return;
+            }
+
+            List<long> remove = null;
+            foreach (long key in dict.Keys)
+            {
+                int a = (int)(key >> 32);
+                int b = (int)(key & 0xffffffffL);
+                if (!DateNightDateUtility.PawnStillAlive(a) || !DateNightDateUtility.PawnStillAlive(b))
+                {
+                    if (remove == null)
+                    {
+                        remove = new List<long>();
+                    }
+                    remove.Add(key);
+                }
+            }
+
+            if (remove == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < remove.Count; i++)
+            {
+                dict.Remove(remove[i]);
+            }
+        }
+
         public static void Tick()
         {
             if (DateNightMod.Settings != null && !DateNightMod.Settings.enableAnniversaries)

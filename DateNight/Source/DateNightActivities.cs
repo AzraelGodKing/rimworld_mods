@@ -96,7 +96,18 @@ namespace DateNight
             // Same seed on both partners: couple key + day + schedule hour block.
             int seed = Gen.HashCombineInt(CoupleSeed(pawn, partner), GenDate.DaysPassed * 31 + GenLocalDate.HourInteger(map) / 6);
             Rand.PushState(seed);
-            DateActivity picked = candidates[Rand.Range(0, candidates.Count)];
+            DateActivity picked;
+            // Anniversary days bias toward Gift when it is a candidate (AZR-316).
+            if (candidates.Contains(DateActivity.Gift)
+                && DateNightAnniversaries.IsAnniversaryToday(pawn, partner)
+                && Rand.Chance(0.55f))
+            {
+                picked = DateActivity.Gift;
+            }
+            else
+            {
+                picked = candidates[Rand.Range(0, candidates.Count)];
+            }
             Rand.PopState();
             return picked;
         }
@@ -214,10 +225,67 @@ namespace DateNight
             return best;
         }
 
-        private static readonly string[] GiftDefNames =
+        private static readonly string[] DefaultGiftDefNames =
         {
             "Beer", "Chocolate", "Ambrosia", "PsychiteTea", "InsectJelly",
         };
+
+        private static HashSet<string> resolvedGiftNames;
+
+        internal static void InvalidateGiftCache()
+        {
+            resolvedGiftNames = null;
+        }
+
+        private static HashSet<string> GiftNames()
+        {
+            if (resolvedGiftNames != null)
+            {
+                return resolvedGiftNames;
+            }
+
+            resolvedGiftNames = new HashSet<string>();
+            List<string> configured = DateNightMod.Settings?.giftDefNames;
+            if (configured != null && configured.Count > 0)
+            {
+                for (int i = 0; i < configured.Count; i++)
+                {
+                    if (!configured[i].NullOrEmpty())
+                    {
+                        resolvedGiftNames.Add(configured[i].Trim());
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < DefaultGiftDefNames.Length; i++)
+                {
+                    resolvedGiftNames.Add(DefaultGiftDefNames[i]);
+                }
+            }
+
+            if (DateNightMod.Settings == null || DateNightMod.Settings.extendGiftsWithJoyItems)
+            {
+                foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
+                {
+                    if (def?.ingestible == null || def.ingestible.joy <= 0.05f)
+                    {
+                        continue;
+                    }
+                    if (def.ingestible.preferability >= FoodPreferability.MealAwful)
+                    {
+                        continue;
+                    }
+                    if (def.BaseMarketValue < 1.5f || def.BaseMarketValue > 80f)
+                    {
+                        continue;
+                    }
+                    resolvedGiftNames.Add(def.defName);
+                }
+            }
+
+            return resolvedGiftNames;
+        }
 
         /// <summary>A small luxury the giver can fetch and hand over.</summary>
         public static Thing FindGiftFor(Pawn giver, Pawn receiver)
@@ -229,9 +297,9 @@ namespace DateNight
 
             Thing best = null;
             float bestDist = float.MaxValue;
-            for (int d = 0; d < GiftDefNames.Length; d++)
+            foreach (string defName in GiftNames())
             {
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(GiftDefNames[d]);
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
                 if (def == null)
                 {
                     continue;
