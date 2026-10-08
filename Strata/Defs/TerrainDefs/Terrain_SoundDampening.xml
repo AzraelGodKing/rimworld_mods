@@ -4,7 +4,7 @@
     <defName>Strata_SoundDampeningFloor</defName>
     <label>sound-dampening floor</label>
     <description>Felt and packed grit underfoot. Softens mining and machine noise on underground floors so infestations hear less of your work.</description>
-    <texturePath>Terrain/Surfaces/WoodPlankFloor</texturePath>
+    <texturePath>Terrain/Surfaces/WoodFloor</texturePath>
     <renderPrecedence>230</renderPrecedence>
     <pathCost>0</pathCost>
     <statBases>
