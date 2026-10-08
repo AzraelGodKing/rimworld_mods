@@ -2,6 +2,12 @@
 
 Detailed notes for **Niceties** only.
 
+
+## [1.4.1]
+
+Player-facing version **1.4.1** (`About.xml` `modVersion`).
+
+See `About/changelog.txt` for the full player-facing notes for this ship.
 ## [1.4.0]
 
 ### Changed
