@@ -105,7 +105,8 @@ namespace Niceties
 
         internal static bool Enabled()
         {
-            return NicetiesMod.Settings != null && NicetiesMod.Settings.enableSharedRooms;
+            NicetiesSettings settings = NicetiesSim.Settings;
+            return settings != null && settings.enableSharedRooms;
         }
 
         internal static bool ShowsGizmo(Building_Bed bed)
@@ -234,7 +235,8 @@ namespace Niceties
 
         internal static bool ShouldSkipDisturbedSleep(Pawn sleeper)
         {
-            if (!Enabled() || NicetiesMod.Settings == null || !NicetiesMod.Settings.skipDisturbedSleepWhenSharing)
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (!Enabled() || settings == null || !settings.skipDisturbedSleepWhenSharing)
             {
                 return false;
             }

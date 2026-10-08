@@ -9,6 +9,8 @@
   <Niceties_Settings_PresetSoft>柔和</Niceties_Settings_PresetSoft>
   <Niceties_Settings_PresetDefault>默认</Niceties_Settings_PresetDefault>
   <Niceties_Settings_PresetHard>严苛</Niceties_Settings_PresetHard>
+  <Niceties_Settings_PresetCustom>自定义</Niceties_Settings_PresetCustom>
+  <Niceties_Settings_ActivePreset>当前预设：{0}</Niceties_Settings_ActivePreset>
   <Niceties_Settings_PresetsTip>预设只改旋钮。之后再勾选你真正想要的体贴。</Niceties_Settings_PresetsTip>
   <Niceties_Settings_ApparelCare>妥善保养服装</Niceties_Settings_ApparelCare>
   <Niceties_Settings_ApparelCareTip>穿着中的衣服跳过或按比例计算每日损耗。战斗和火灾仍会掉耐久。丢在地上的衣服仍会在户外腐烂。</Niceties_Settings_ApparelCareTip>
@@ -18,6 +20,8 @@
   <Niceties_Settings_CraftingBonusTip>殖民者的制作技能会减少剩余每日损耗，20 级最多减半。</Niceties_Settings_CraftingBonusTip>
   <Niceties_Settings_CorpseApparel>尸体服装沿用同一规则</Niceties_Settings_CorpseApparel>
   <Niceties_Settings_CorpseApparelTip>关：死者身上的服装按原版损耗。开：仍适用穿着保养规则。</Niceties_Settings_CorpseApparelTip>
+  <Niceties_Settings_WeaponCare>妥善保养已装备武器</Niceties_Settings_WeaponCare>
+  <Niceties_Settings_WeaponCareTip>已装备武器沿用与服装相同的品质/制作技能每日损耗规则。默认关闭。战斗和火灾仍会掉耐久。</Niceties_Settings_WeaponCareTip>
 
   <Niceties_Settings_ThroneAltar>王座厅允许祭坛</Niceties_Settings_ThroneAltar>
   <Niceties_Settings_ThroneAltarTip>皇权王座厅要求忽略“无祭坛”。厅内有王座则仍算王座厅而非神殿。需同时启用皇权与思想才能生效。</Niceties_Settings_ThroneAltarTip>
@@ -41,11 +45,15 @@
   <Niceties_Settings_LeaveAWayOut>留出出路</Niceties_Settings_LeaveAWayOut>
   <Niceties_Settings_LeaveAWayOutTip>殖民者不会完成会困住他人或挡住剩余框架的墙。把自己砌进去之前会先让开。Replace Stuff 的替换框架同样生效；就地换墙材（木墙换石墙）仍视为实心，所以仍可从冷冻室内部替换。右键强制建造仍会砌上。灵感来自 Smarter Construction，1.6 原写，并非移植。</Niceties_Settings_LeaveAWayOutTip>
   <Niceties_OpenBuilds_WouldEnclose>完成这个会把人砌在里面。</Niceties_OpenBuilds_WouldEnclose>
+  <Niceties_OpenBuilds_WouldTrapSelf>完成这个会把建造者困在里面且无出路。</Niceties_OpenBuilds_WouldTrapSelf>
   <Niceties_Settings_Reset>重置为默认</Niceties_Settings_Reset>
 
   <Niceties_Apparel_NoWear>每日损耗：无（保养良好）。</Niceties_Apparel_NoWear>
   <Niceties_Apparel_VanillaWear>每日损耗：原版。</Niceties_Apparel_VanillaWear>
   <Niceties_Apparel_ReducedWear>每日损耗：原版的 {0}。</Niceties_Apparel_ReducedWear>
+  <Niceties_Weapon_NoWear>每日损耗：无（武器保养良好）。</Niceties_Weapon_NoWear>
+  <Niceties_Weapon_VanillaWear>每日损耗：原版。</Niceties_Weapon_VanillaWear>
+  <Niceties_Weapon_ReducedWear>每日损耗：原版的 {0}。</Niceties_Weapon_ReducedWear>
   <Niceties_Hunt_TooBig>{0} 体型过大，不适合近战狩猎。</Niceties_Hunt_TooBig>
 
 </LanguageData>

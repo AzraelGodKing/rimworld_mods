@@ -1,3 +1,22 @@
+1.4.1
+[h1]Niceties — 1.4.1[/h1]
+[b]Fixed[/b]
+[list]
+[*] [b]Settings disk writes (AZR-275)[/b] — Mod Options Write() only when a setting actually changed (fingerprint), not every GUI frame.
+[*] [b]Leave a way out trap-self (AZR-276)[/b] — frames that would trap only the builder with no step-aside cell fail at job assignment with a clear reason instead of retrying forever.
+[*] [b]Cryptosleep bar reflection (AZR-291)[/b] — hide-cryptosleep uses ColonistBar.Entries instead of AccessTools.Field by string; warns once if null.
+[/list]
+[b]Added[/b]
+[list]
+[*] [b]Active preset label (AZR-293)[/b] — Soft / Default / Hard / Custom shown under the preset buttons.
+[*] [b]Well-kept weapons (AZR-294)[/b] — optional toggle under well-kept apparel; equipped weapons reuse the same quality/Crafting wear formula.
+[*] [b]Sim settings snapshot (AZR-292)[/b] — GameComponent bakes settings that gate deterministic sim so Multiplayer joiners share the host values from the save. Mid-session Mod Options edits still need Multiplayer.API for live sync (not a dependency).
+[*] [b]Hunters Use Melee incompat (AZR-295)[/b] — About.xml incompatibleWith adds Mlie.HuntersUseMelee (maintained Workshop counterpart; original Melee Hunting package is discontinued/removed).
+[/list]
+
+[i]Build stamp (Player.log): niceties-azr-275-295-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
+
 1.4.0
 [h1]Niceties — 1.4.0[/h1]
 [b]Changed[/b]
