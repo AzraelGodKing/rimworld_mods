@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Azrael_DeepHomestead.label>深居家园</Azrael_DeepHomestead.label>
+  <Azrael_DeepHomestead.description>三名定居者在山麓扎根——地上是水井与谷物，地下是竖井，风暴在地平线酝酿，远处的战争你们只能从广播里听见，直到难民涌到门前。\n\n建议：选择山地或利于洞穴的地块。启用 Homesteader、Strata、Stormproof、Living World 与 Nemesis 可获得完整系列体验。上述模组存在时会应用软起始内容。</Azrael_DeepHomestead.description>
+  <Azrael_DeepHomestead.scenario.summary>三名家园开拓者，由 Azrael 叙事。建议山麓地块。系列模组为软可选。</Azrael_DeepHomestead.scenario.summary>
+  <!-- GameStartDialog index without Odyssey (3) and with Odyssey PlanetLayer (4). -->
+  <Azrael_DeepHomestead.scenario.parts.3.text>山麓在身后升起。马车已卸。土壤待播——岩石待掘。
+
+远处的战争在电台里轰鸣。天气会试图击垮你们。必要时往下挖；能耕则勤耕。
+
+Azrael 在注视。建一座比山更久的家园。</Azrael_DeepHomestead.scenario.parts.3.text>
+  <Azrael_DeepHomestead.scenario.parts.4.text>山麓在身后升起。马车已卸。土壤待播——岩石待掘。
+
+远处的战争在电台里轰鸣。天气会试图击垮你们。必要时往下挖；能耕则勤耕。
+
+Azrael 在注视。建一座比山更久的家园。</Azrael_DeepHomestead.scenario.parts.4.text>
+</LanguageData>

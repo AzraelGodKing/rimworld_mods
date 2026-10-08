@@ -31,6 +31,7 @@
   <Azrael_Hub_ConflictsNone>未检测到。</Azrael_Hub_ConflictsNone>
   <Azrael_Hub_Conflict_Stack>多层地图会与 Strata 冲突。请勿与 Strata 同时启用。</Azrael_Hub_Conflict_Stack>
   <Azrael_Hub_Conflict_Wellspring>残留的独立 Wellspring；水源内容已并入 Homesteader。</Azrael_Hub_Conflict_Wellspring>
+  <Azrael_Hub_Conflict_LoadOrder>请将 Azrael 放在系列内容之后加载。当前 {0} 排在 Azrael 之后 — 请把 Azrael 移到系列末尾。</Azrael_Hub_Conflict_LoadOrder>
   <Azrael_Hub_Harmony>失败的补丁</Azrael_Hub_Harmony>
   <Azrael_Hub_HarmonyNone>本局没有失败的系列 Harmony 补丁类。</Azrael_Hub_HarmonyNone>
   <Azrael_Hub_HarmonyCount>{0} 个失败的补丁类。</Azrael_Hub_HarmonyCount>
@@ -46,9 +47,11 @@
   <Azrael_Removal_NeedSave>请先载入一个殖民地。</Azrael_Removal_NeedSave>
   <Azrael_Removal_Empty>地图与商队上没有该模组的东西。</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>请先处理标出的阻碍项。</Azrael_Removal_Blocked>
-  <Azrael_Removal_NemesisHunt>Nemesis 狩猎仍在进行 — 请先在游戏里结束，再移除 Nemesis。</Azrael_Removal_NemesisHunt>
+  <Azrael_Removal_NemesisHunt>Nemesis 狩猎仍在进行（或休战中）— 请先在游戏里结束，再移除 Nemesis。</Azrael_Removal_NemesisHunt>
+  <Azrael_Removal_NemesisWorldPawn>仍有停泊在世界地图上的 Nemesis 小人（卸载会清掉）。</Azrael_Removal_NemesisWorldPawn>
   <Azrael_Removal_StrataPawns>仍有 {0} 名殖民者在口袋层 — 请先把他们带上来。</Azrael_Removal_StrataPawns>
   <Azrael_Removal_DeepHediffs>殖民者身上的 Deep Colony 天赋/创伤（卸载会清掉；历史会丢）。</Azrael_Removal_DeepHediffs>
+  <Azrael_Removal_DeepLetters>Deep Colony 家族/遗产信件（世界状态；卸载会清掉）。</Azrael_Removal_DeepLetters>
   <Azrael_Removal_Caravan>{0}：{1}</Azrael_Removal_Caravan>
   <Azrael_Removal_V_Deconstruct>拆除这些</Azrael_Removal_V_Deconstruct>
   <Azrael_Removal_V_Sell>消耗或卖掉这些</Azrael_Removal_V_Sell>

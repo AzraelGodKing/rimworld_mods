@@ -31,6 +31,7 @@
   <Azrael_Hub_ConflictsNone>None detected.</Azrael_Hub_ConflictsNone>
   <Azrael_Hub_Conflict_Stack>Stacked maps fight Strata. Do not run this with Strata.</Azrael_Hub_Conflict_Stack>
   <Azrael_Hub_Conflict_Wellspring>Standalone Wellspring leftover; water ships inside Homesteader.</Azrael_Hub_Conflict_Wellspring>
+  <Azrael_Hub_Conflict_LoadOrder>Load Azrael after series content. {0} is currently after Azrael — move Azrael last among the series.</Azrael_Hub_Conflict_LoadOrder>
   <Azrael_Hub_Harmony>Failed patches</Azrael_Hub_Harmony>
   <Azrael_Hub_HarmonyNone>No failed series patch classes this session.</Azrael_Hub_HarmonyNone>
   <Azrael_Hub_HarmonyCount>{0} failed patch class(es).</Azrael_Hub_HarmonyCount>
@@ -46,9 +47,11 @@
   <Azrael_Removal_NeedSave>Load a colony first.</Azrael_Removal_NeedSave>
   <Azrael_Removal_Empty>Nothing from this mod is on the maps or caravans.</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>Resolve the named blockers first.</Azrael_Removal_Blocked>
-  <Azrael_Removal_NemesisHunt>Active Nemesis hunt — resolve it in play before removing Nemesis.</Azrael_Removal_NemesisHunt>
+  <Azrael_Removal_NemesisHunt>Active Nemesis hunt (or truce) — resolve it in play before removing Nemesis.</Azrael_Removal_NemesisHunt>
+  <Azrael_Removal_NemesisWorldPawn>A Nemesis world pawn is still parked (cleaned by uninstall).</Azrael_Removal_NemesisWorldPawn>
   <Azrael_Removal_StrataPawns>{0} colonist(s) still on a pocket floor — bring them up first.</Azrael_Removal_StrataPawns>
   <Azrael_Removal_DeepHediffs>Pawn perks / trauma hediffs from Deep Colony (cleaned by uninstall; expect lost history).</Azrael_Removal_DeepHediffs>
+  <Azrael_Removal_DeepLetters>Deep Colony family / legacy letters in world state (cleaned by uninstall).</Azrael_Removal_DeepLetters>
   <Azrael_Removal_Caravan>{0}: {1}</Azrael_Removal_Caravan>
   <Azrael_Removal_V_Deconstruct>deconstruct these</Azrael_Removal_V_Deconstruct>
   <Azrael_Removal_V_Sell>consume or sell these</Azrael_Removal_V_Sell>

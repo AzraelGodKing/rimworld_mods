@@ -12,7 +12,7 @@ namespace Azrael
 
         public AzraelMod(ModContentPack content) : base(content)
         {
-            ModVersionLog.Write("[Azrael]", content, "removal-wizard-v1");
+            ModVersionLog.Write("[Azrael]", content, "hub-fix-azr339-v1");
         }
 
         public override string SettingsCategory() => "Azrael_SettingsCategory".Translate();
@@ -25,7 +25,22 @@ namespace Azrael
             List<SeriesHub.DlcRow> dlc = SeriesHub.Dlc();
             List<string> fails = SeriesHub.HarmonyFailures();
 
-            float height = 520f + (mods.Count + dlc.Count + bridges.Count + Mathf.Max(1, conflicts.Count) + Mathf.Min(fails.Count, 8) + 2) * 26f;
+            int removalButtons = 0;
+            for (int i = 0; i < mods.Count; i++)
+            {
+                SeriesHub.ModRow row = mods[i];
+                if (row.Loaded && row.PackageId != "azraelgodking.Azrael")
+                {
+                    removalButtons++;
+                }
+            }
+
+            float height = 520f
+                + (mods.Count + dlc.Count + bridges.Count
+                    + Mathf.Max(1, conflicts.Count)
+                    + Mathf.Min(fails.Count, 8)
+                    + 2
+                    + removalButtons) * 26f;
             Rect view = new Rect(0f, 0f, inRect.width - 20f, height);
             Widgets.BeginScrollView(inRect, ref scrollPos, view);
             Listing_Standard listing = new Listing_Standard();
