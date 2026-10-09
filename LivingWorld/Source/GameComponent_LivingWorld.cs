@@ -98,7 +98,6 @@ namespace LivingWorld
             int now = Find.TickManager.TicksGame;
             LivingWorldDebugCommand.Drain();
             RefreshBudgets(now);
-            LivingWorldWarSites.TickExpire();
             LivingWorldRumour.TickCorrections(this);
 
             int interval = settings.tickInterval <= 0 ? 10000 : settings.tickInterval;
@@ -176,17 +175,6 @@ namespace LivingWorld
         public void ConsumeMorphBudget()
         {
             morphsThisYear++;
-        }
-
-        /// <summary>Legacy helper — prefer HasMorphBudget + ConsumeMorphBudget (AZR-326).</summary>
-        public bool TryConsumeMorphBudget()
-        {
-            if (!HasMorphBudget())
-            {
-                return false;
-            }
-            ConsumeMorphBudget();
-            return true;
         }
 
         /// <summary>AZR-332 — one Collapse letter per faction lost to the rim.</summary>

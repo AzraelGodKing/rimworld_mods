@@ -161,8 +161,8 @@ namespace LivingWorld
                 }
                 case Kind.FakeSkirmish:
                 {
-                    Faction a = FindFaction(e.loserId);
-                    Faction b = FindFaction(e.winnerId);
+                    Faction a = WorldEvent.FindFaction(e.loserId);
+                    Faction b = WorldEvent.FindFaction(e.winnerId);
                     WorldEvent ev = WorldEvent.Create(WorldEventKind.Skirmish, NewsSeverity.Normal, a, b);
                     comp.RecordAndPublish(ev);
                     Messages.Message("[Living World] Published fake skirmish.", MessageTypeDefOf.NeutralEvent,
@@ -175,7 +175,7 @@ namespace LivingWorld
         private static void ApplyForceRefugees(GameComponent_LivingWorld comp, int loserId, int winnerId)
         {
             Map map = Find.AnyPlayerHomeMap;
-            Faction loser = FindFaction(loserId);
+            Faction loser = WorldEvent.FindFaction(loserId);
             if (comp == null || map == null || loser == null)
             {
                 Messages.Message("[Living World] No faction for refugees.", MessageTypeDefOf.RejectInput,
@@ -183,7 +183,7 @@ namespace LivingWorld
                 return;
             }
 
-            Faction winner = FindFaction(winnerId);
+            Faction winner = WorldEvent.FindFaction(winnerId);
             comp.EnqueueFallout(new PendingFallout
             {
                 loserFactionId = loser.loadID,
@@ -210,21 +210,5 @@ namespace LivingWorld
                 historical: false);
         }
 
-        private static Faction FindFaction(int loadId)
-        {
-            if (loadId < 0 || Find.FactionManager == null)
-            {
-                return null;
-            }
-            List<Faction> all = Find.FactionManager.AllFactionsListForReading;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i] != null && all[i].loadID == loadId)
-                {
-                    return all[i];
-                }
-            }
-            return null;
-        }
     }
 }

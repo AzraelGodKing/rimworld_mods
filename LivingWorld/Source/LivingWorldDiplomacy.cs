@@ -17,10 +17,7 @@ namespace LivingWorld
             {
                 for (int j = i + 1; j < factions.Count; j++)
                 {
-                    if (comp.GetOrCreatePair(factions[i], factions[j]) == null)
-                    {
-                        // GetOrCreatePair always creates when missing.
-                    }
+                    comp.GetOrCreatePair(factions[i], factions[j]);
                 }
             }
 
