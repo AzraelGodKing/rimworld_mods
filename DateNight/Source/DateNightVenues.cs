@@ -94,8 +94,8 @@ namespace DateNight
                     ?? DefDatabase<ThoughtDef>.GetNamedSilentFail("DateNight_VenueDestroyed");
                 if (lost != null)
                 {
-                    TryGain(a, b, lost);
-                    TryGain(b, a, lost);
+                    DateNightDateUtility.TryGainThought(a, b, lost);
+                    DateNightDateUtility.TryGainThought(b, a, lost);
                 }
                 fav.thingId = 0;
                 fav.cell = IntVec3.Invalid;
@@ -140,8 +140,8 @@ namespace DateNight
                 // Old breakups from saves made before this existed reset silently.
                 if (over != null && EndedRecently(a, b))
                 {
-                    TryGain(a, b, over);
-                    TryGain(b, a, over);
+                    DateNightDateUtility.TryGainThought(a, b, over);
+                    DateNightDateUtility.TryGainThought(b, a, over);
                 }
             }
         }
@@ -267,7 +267,7 @@ namespace DateNight
 
             if (wasFavorite && fav.score >= OurSpotScore && DateNightDefOf.DateNight_OurSpot != null)
             {
-                TryGain(pawn, partner, DateNightDefOf.DateNight_OurSpot);
+                DateNightDateUtility.TryGainThought(pawn, partner, DateNightDefOf.DateNight_OurSpot);
             }
         }
 
@@ -284,7 +284,7 @@ namespace DateNight
             fav.score = Clamp(fav.score - 2.5f);
             if (wasHere && fav.score < 0f && DateNightDefOf.DateNight_VenueSoured != null)
             {
-                TryGain(pawn, partner, DateNightDefOf.DateNight_VenueSoured);
+                DateNightDateUtility.TryGainThought(pawn, partner, DateNightDefOf.DateNight_VenueSoured);
             }
         }
 
@@ -316,19 +316,6 @@ namespace DateNight
             created.Capture(map, spot);
             venues.Add(created);
             return created;
-        }
-
-        private static void TryGain(Pawn pawn, Pawn other, ThoughtDef def)
-        {
-            if (pawn?.needs?.mood?.thoughts?.memories == null || def == null || other == null)
-            {
-                return;
-            }
-            if (pawn.ageTracker == null || !pawn.ageTracker.Adult || !pawn.DevelopmentalStage.Adult())
-            {
-                return;
-            }
-            pawn.needs.mood.thoughts.memories.TryGainMemory(def, other);
         }
 
         private static float Clamp(float v)
@@ -397,7 +384,7 @@ namespace DateNight
             if (thingId != 0)
             {
                 Thing thing = FindThing(map, thingId);
-                if (thing != null && DateNightActivities.BothCanReachPublic(pawn, partner, thing))
+                if (thing != null && DateNightActivities.BothCanReach(pawn, partner, thing))
                 {
                     return thing;
                 }
