@@ -145,11 +145,6 @@ namespace DateNight
             return ((long)x << 32) | (uint)y;
         }
 
-        public static bool BothCanReachPublic(Pawn pawn, Pawn partner, Thing thing)
-        {
-            return BothCanReach(pawn, partner, thing);
-        }
-
         public static bool IsNight(Map map)
         {
             int hour = GenLocalDate.HourInteger(map);
@@ -445,7 +440,7 @@ namespace DateNight
             return true;
         }
 
-        private static bool BothCanReach(Pawn pawn, Pawn partner, Thing thing)
+        internal static bool BothCanReach(Pawn pawn, Pawn partner, Thing thing)
         {
             if (!pawn.CanReach(thing, PathEndMode.Touch, Danger.Some))
             {
@@ -457,55 +452,6 @@ namespace DateNight
                 return false;
             }
             return true;
-        }
-
-        /// <summary>Shared table; initiator and partner take adjacent seats.</summary>
-        public static LocalTargetInfo FindDinnerSpot(Pawn pawn, Pawn partner)
-        {
-            Building best = null;
-            int bestId = int.MaxValue;
-            foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
-            {
-                if (!building.def.IsTable)
-                {
-                    continue;
-                }
-                if (!BothCanReach(pawn, partner, building))
-                {
-                    continue;
-                }
-                if (building.thingIDNumber < bestId)
-                {
-                    bestId = building.thingIDNumber;
-                    best = building;
-                }
-            }
-            if (best == null)
-            {
-                return LocalTargetInfo.Invalid;
-            }
-
-            var seats = new List<IntVec3>();
-            foreach (IntVec3 side in GenAdj.CellsAdjacentCardinal(best))
-            {
-                if (side.InBounds(pawn.Map) && side.Standable(pawn.Map)
-                    && pawn.CanReach(side, PathEndMode.OnCell, Danger.Some)
-                    && (partner == null || partner.Map != pawn.Map
-                        || partner.CanReach(side, PathEndMode.OnCell, Danger.Some)))
-                {
-                    seats.Add(side);
-                }
-            }
-            if (seats.Count == 0)
-            {
-                return best;
-            }
-            int idx = DateNightDoubleDates.StandIndex(pawn, partner);
-            if (idx >= seats.Count)
-            {
-                return AdjacentTo(seats[0], pawn, partner);
-            }
-            return seats[idx];
         }
 
         /// <summary>Shared venue root (table, gather spot, outdoor cell) before pairing stand cells.</summary>

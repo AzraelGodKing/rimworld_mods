@@ -36,7 +36,7 @@ namespace DateNight
                         BedClaim claim = list[i];
                         if (claim != null)
                         {
-                            Claims[CoupleKey(claim.pawnA, claim.pawnB)] = claim;
+                            Claims[DateNightActivities.CoupleKey(claim.pawnA, claim.pawnB)] = claim;
                         }
                     }
                 }
@@ -65,7 +65,7 @@ namespace DateNight
             bool overlapLovin = onLovin && partnerLovin;
             bool overlapDate = onDate && partnerDate;
 
-            long key = CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
+            long key = DateNightActivities.CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
             if (overlapLovin || overlapDate)
             {
                 if (Windows.TryGetValue(key, out SocialWindow existing)
@@ -123,7 +123,7 @@ namespace DateNight
                 return;
             }
 
-            long key = CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
+            long key = DateNightActivities.CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
             if (Windows.TryGetValue(key, out SocialWindow window))
             {
                 FinalizeWindow(window);
@@ -175,7 +175,7 @@ namespace DateNight
                 return;
             }
 
-            long key = CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
+            long key = DateNightActivities.CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
             if (Claims.ContainsKey(key))
             {
                 return;
@@ -291,7 +291,7 @@ namespace DateNight
                 return;
             }
 
-            long key = CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
+            long key = DateNightActivities.CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
             if (!Windows.TryGetValue(key, out SocialWindow window))
             {
                 window = new SocialWindow
@@ -306,8 +306,8 @@ namespace DateNight
             window.success = true;
             if (lovinOnly && !window.awarded)
             {
-                GiveThought(pawn, partner, DateNightDefOf.DateNight_MadeIt);
-                GiveThought(partner, pawn, DateNightDefOf.DateNight_MadeIt);
+                DateNightDateUtility.TryGainThought(pawn, partner, DateNightDefOf.DateNight_MadeIt);
+                DateNightDateUtility.TryGainThought(partner, pawn, DateNightDefOf.DateNight_MadeIt);
                 window.awarded = true;
             }
         }
@@ -331,8 +331,8 @@ namespace DateNight
             {
                 if (window.lovin)
                 {
-                    GiveThought(a, b, DateNightDefOf.DateNight_MadeIt);
-                    GiveThought(b, a, DateNightDefOf.DateNight_MadeIt);
+                    DateNightDateUtility.TryGainThought(a, b, DateNightDefOf.DateNight_MadeIt);
+                    DateNightDateUtility.TryGainThought(b, a, DateNightDefOf.DateNight_MadeIt);
                 }
                 return;
             }
@@ -341,11 +341,11 @@ namespace DateNight
             bool bUnavail = window.unavailB > window.availB;
             if (window.availA >= MinWaitTicks && bUnavail && !aUnavail)
             {
-                GiveThought(a, b, DateNightDefOf.DateNight_StoodUp);
+                DateNightDateUtility.TryGainThought(a, b, DateNightDefOf.DateNight_StoodUp);
             }
             if (window.availB >= MinWaitTicks && aUnavail && !bUnavail)
             {
-                GiveThought(b, a, DateNightDefOf.DateNight_StoodUp);
+                DateNightDateUtility.TryGainThought(b, a, DateNightDefOf.DateNight_StoodUp);
             }
         }
 
@@ -415,18 +415,6 @@ namespace DateNight
             return false;
         }
 
-        private static void GiveThought(Pawn pawn, Pawn other, ThoughtDef def)
-        {
-            if (pawn?.needs?.mood?.thoughts?.memories == null || def == null || other == null)
-            {
-                return;
-            }
-            if (pawn.ageTracker == null || !pawn.ageTracker.Adult || !pawn.DevelopmentalStage.Adult())
-            {
-                return;
-            }
-            pawn.needs.mood.thoughts.memories.TryGainMemory(def, other);
-        }
 
         private static Pawn FindPawn(int id)
         {
@@ -474,16 +462,6 @@ namespace DateNight
             return null;
         }
 
-        private static long CoupleKey(int x, int y)
-        {
-            if (x > y)
-            {
-                int tmp = x;
-                x = y;
-                y = tmp;
-            }
-            return ((long)x << 32) | (uint)y;
-        }
 
         private class SocialWindow
         {

@@ -273,21 +273,8 @@ namespace DateNight
                 {
                     def = DateNightDefOf.DateNight_DoubleDateFriends;
                 }
-                TryGain(pawn, other, def);
+                DateNightDateUtility.TryGainThought(pawn, other, def);
             }
-        }
-
-        private static void TryGain(Pawn pawn, Pawn other, ThoughtDef def)
-        {
-            if (pawn?.needs?.mood?.thoughts?.memories == null || def == null || other == null)
-            {
-                return;
-            }
-            if (pawn.ageTracker == null || !pawn.ageTracker.Adult || !pawn.DevelopmentalStage.Adult())
-            {
-                return;
-            }
-            pawn.needs.mood.thoughts.memories.TryGainMemory(def, other);
         }
 
         private static void GiveMood(Pawn pawn, ThoughtDef def)

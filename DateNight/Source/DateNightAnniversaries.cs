@@ -277,8 +277,8 @@ namespace DateNight
 
         private static void Celebrate(Pawn pawn, Pawn partner, int years)
         {
-            GiveAnniversaryThought(pawn, partner);
-            GiveAnniversaryThought(partner, pawn);
+            DateNightDateUtility.TryGainThought(pawn, partner, DateNightDefOf.DateNight_Anniversary);
+            DateNightDateUtility.TryGainThought(partner, pawn, DateNightDefOf.DateNight_Anniversary);
 
             string yearsText = years == 1
                 ? "DateNight_OneYear".Translate()
@@ -293,21 +293,6 @@ namespace DateNight
                 body,
                 LetterDefOf.PositiveEvent,
                 new LookTargets(pawn, partner));
-        }
-
-        private static void GiveAnniversaryThought(Pawn pawn, Pawn other)
-        {
-            if (pawn?.needs?.mood?.thoughts?.memories == null
-                || DateNightDefOf.DateNight_Anniversary == null
-                || other == null)
-            {
-                return;
-            }
-            if (pawn.ageTracker == null || !pawn.ageTracker.Adult || !pawn.DevelopmentalStage.Adult())
-            {
-                return;
-            }
-            pawn.needs.mood.thoughts.memories.TryGainMemory(DateNightDefOf.DateNight_Anniversary, other);
         }
 
         private static void ResolveMissedDate(Pawn pawn, Pawn partner, long key)

@@ -795,7 +795,7 @@ namespace DateNight
             Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
             if (partner != null)
             {
-                RendezvousBedIds.Remove(CoupleKey(pawn, partner));
+                RendezvousBedIds.Remove(DateNightActivities.CoupleKey(pawn, partner));
             }
         }
 
@@ -804,7 +804,7 @@ namespace DateNight
             Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
             if (partner != null && !IsLovinSchedule(partner))
             {
-                RendezvousBedIds.Remove(CoupleKey(pawn, partner));
+                RendezvousBedIds.Remove(DateNightActivities.CoupleKey(pawn, partner));
             }
         }
 
@@ -824,7 +824,7 @@ namespace DateNight
                 return DoubleBedOrNull(pawn.ownership?.OwnedBed) ?? RestUtility.FindBedFor(pawn);
             }
 
-            long key = CoupleKey(pawn, partner);
+            long key = DateNightActivities.CoupleKey(pawn, partner);
             if (RendezvousBedIds.TryGetValue(key, out int bedId))
             {
                 Building_Bed cached = FindBedById(pawn.Map, bedId);
@@ -972,17 +972,5 @@ namespace DateNight
             return null;
         }
 
-        private static long CoupleKey(Pawn a, Pawn b)
-        {
-            int x = a.thingIDNumber;
-            int y = b.thingIDNumber;
-            if (x > y)
-            {
-                int tmp = x;
-                x = y;
-                y = tmp;
-            }
-            return ((long)x << 32) | (uint)y;
-        }
     }
 }
