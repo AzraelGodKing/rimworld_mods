@@ -147,6 +147,8 @@ link_workspace_mods() {
   link_mod "$WORKSPACE_ROOT/DateNight" DateNight
   link_mod "$WORKSPACE_ROOT/LivingWorld" LivingWorld
   link_mod "$WORKSPACE_ROOT/Deep Colony" "Deep Colony"
+  link_mod "$WORKSPACE_ROOT/Azrael" Azrael
+  link_mod "$WORKSPACE_ROOT/Niceties" Niceties
 }
 
 write_mods_config() {
@@ -173,6 +175,8 @@ write_mods_config() {
     <li>azraelgodking.livingworld</li>
     <li>azraelgodking.DeepColony</li>
     <li>azraelgodking.DateNight</li>
+    <li>AzraelGodKing.Niceties</li>
+    <li>azraelgodking.Azrael</li>
   </activeMods>
   <knownExpansions>
     <li>ludeon.rimworld.royalty</li>
@@ -200,6 +204,8 @@ build_workspace_mods() {
     "$WORKSPACE_ROOT/DateNight/Source/DateNight.csproj"
     "$WORKSPACE_ROOT/LivingWorld/Source/LivingWorld.csproj"
     "$WORKSPACE_ROOT/Deep Colony/Source/DeepColony.csproj"
+    "$WORKSPACE_ROOT/Azrael/Source/Azrael.csproj"
+    "$WORKSPACE_ROOT/Niceties/Source/Niceties.csproj"
   )
   for proj in "${projects[@]}"; do
     if [[ ! -f "$proj" ]]; then
