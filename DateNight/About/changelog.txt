@@ -13,6 +13,10 @@
 [*] [b]Ephemeral caches[/b] — rendezvous-bed and social-window caches clear on new/load game.
 [*] [b]Self-lovin ageTracker[/b] — null-guard before Adult check.
 [/list]
+[b]Internal[/b]
+[list]
+[*] Deduplicated CoupleKey, TryGainThought, and BothCanReach helpers; removed unused FindDinnerSpot.
+[/list]
 
 [i]Build stamp (Player.log): schedule-sync-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]
