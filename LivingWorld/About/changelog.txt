@@ -1,3 +1,11 @@
+1.1.2
+[h1]Living World — 1.1.2[/h1]
+[b]Internal[/b]
+[list]
+[*] Remove dead code: TryConsumeMorphBudget, LivingWorldWarSites.TickExpire, LivingWorldSignals.ResetSession (AZR-326).
+[*] Consolidate four identical FindFaction(int) helpers into one on WorldEvent.
+[/list]
+
 1.1.1
 [h1]Living World — 1.1.1[/h1]
 [b]Fixed[/b]
