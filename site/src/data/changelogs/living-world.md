@@ -1,6 +1,8 @@
 # Changelog
 
-## [Unreleased]
+## [1.2.0]
+
+Player-facing version **1.2.0** (`About.xml` `modVersion`).
 
 AZR-334 AZR-417 AZR-418 AZR-419 AZR-421 AZR-422 AZR-423 AZR-424 AZR-425 AZR-426
 
@@ -18,7 +20,7 @@ Stamp `world-traffic-v1`.
 - **Refugees and warbands** no longer fire early with a random faction. They wait for the intended delay and always come from the war you heard about.
 - **Rumour corrections** still arrive when the original news has aged out of the chronicle.
 - Debug "Force" morph actions now ignore the per-settlement cooldown, as intended.
-- `mod.json` download filename now matches 1.1.1.
+- `mod.json` download filename now matches the shipped version.
 
 ### Changed
 - Settlement label and inspect lookups are now constant-time on large worlds.
