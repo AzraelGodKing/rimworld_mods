@@ -46,6 +46,11 @@
   <DateNight_Anniversary.stages_0.label>годовщина</DateNight_Anniversary.stages_0.label>
   <DateNight_Anniversary.stages_0.description>Ещё год с {0}. Календарь сам себя обвёл.</DateNight_Anniversary.stages_0.description>
 
+  <DateNight_AnniversaryMilestone.label>юбилей отношений</DateNight_AnniversaryMilestone.label>
+  <DateNight_AnniversaryMilestone.description>Столько лет с {0}. Иногда до сих пор не верится.</DateNight_AnniversaryMilestone.description>
+  <DateNight_AnniversaryMilestone.stages_0.label>юбилей отношений</DateNight_AnniversaryMilestone.stages_0.label>
+  <DateNight_AnniversaryMilestone.stages_0.description>Столько лет с {0}. Иногда до сих пор не верится.</DateNight_AnniversaryMilestone.stages_0.description>
+
   <DateNight_AnniversaryDate.label>свидание в годовщину</DateNight_AnniversaryDate.label>
   <DateNight_AnniversaryDate.description>Мы правда выбрались в годовщину. Этот год с {0} я запомню.</DateNight_AnniversaryDate.description>
   <DateNight_AnniversaryDate.stages_0.label>свидание в годовщину</DateNight_AnniversaryDate.stages_0.label>

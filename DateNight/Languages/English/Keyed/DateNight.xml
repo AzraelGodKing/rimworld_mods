@@ -43,6 +43,8 @@
   <DateNight_Report_DoubleDate>on a double date with {0}.</DateNight_Report_DoubleDate>
   <DateNight_Letter_AnniversaryLabel>Anniversary</DateNight_Letter_AnniversaryLabel>
   <DateNight_Letter_AnniversaryText>{PAWN} and {PARTNER} have been together for {YEARS}. A date today would mean the world — letting it pass without one will sting.</DateNight_Letter_AnniversaryText>
+  <DateNight_Letter_AnniversaryMilestoneLabel>Milestone anniversary</DateNight_Letter_AnniversaryMilestoneLabel>
+  <DateNight_Letter_AnniversaryMilestoneText>{PAWN} and {PARTNER} have been together for {YEARS} — a milestone. A date today would mean the world — letting it pass without one will sting.</DateNight_Letter_AnniversaryMilestoneText>
   <DateNight_OneYear>a year</DateNight_OneYear>
   <DateNight_NYears>{0} years</DateNight_NYears>
   <DateNight_Alert_Mismatch>Schedule mismatch</DateNight_Alert_Mismatch>

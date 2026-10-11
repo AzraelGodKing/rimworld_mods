@@ -43,6 +43,8 @@
   <DateNight_Report_DoubleDate>на двойном свидании с {0}.</DateNight_Report_DoubleDate>
   <DateNight_Letter_AnniversaryLabel>Годовщина</DateNight_Letter_AnniversaryLabel>
   <DateNight_Letter_AnniversaryText>{PAWN} и {PARTNER} вместе уже {YEARS}. Свидание сегодня значило бы очень много — а день без него запомнится не так.</DateNight_Letter_AnniversaryText>
+  <DateNight_Letter_AnniversaryMilestoneLabel>Юбилей отношений</DateNight_Letter_AnniversaryMilestoneLabel>
+  <DateNight_Letter_AnniversaryMilestoneText>{PAWN} и {PARTNER} вместе уже {YEARS} — настоящий юбилей. Свидание сегодня значило бы очень много — а день без него запомнится не так.</DateNight_Letter_AnniversaryMilestoneText>
   <DateNight_OneYear>год</DateNight_OneYear>
   <DateNight_NYears>{0} лет</DateNight_NYears>
   <DateNight_Alert_Mismatch>Расписание не совпадает</DateNight_Alert_Mismatch>

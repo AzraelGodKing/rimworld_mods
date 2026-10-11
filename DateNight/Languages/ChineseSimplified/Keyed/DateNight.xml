@@ -43,6 +43,8 @@
   <DateNight_Report_DoubleDate>正在和{0}四人约会。</DateNight_Report_DoubleDate>
   <DateNight_Letter_AnniversaryLabel>纪念日</DateNight_Letter_AnniversaryLabel>
   <DateNight_Letter_AnniversaryText>{PAWN} 和 {PARTNER} 已经在一起 {YEARS}。今天去约会会很有意义——放过去则会留下遗憾。</DateNight_Letter_AnniversaryText>
+  <DateNight_Letter_AnniversaryMilestoneLabel>里程碑纪念日</DateNight_Letter_AnniversaryMilestoneLabel>
+  <DateNight_Letter_AnniversaryMilestoneText>{PAWN} 和 {PARTNER} 已经在一起 {YEARS}——这是一个里程碑。今天去约会会很有意义——放过去则会留下遗憾。</DateNight_Letter_AnniversaryMilestoneText>
   <DateNight_OneYear>一年</DateNight_OneYear>
   <DateNight_NYears>{0} 年</DateNight_NYears>
   <DateNight_Alert_Mismatch>作息不一致</DateNight_Alert_Mismatch>

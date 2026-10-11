@@ -46,6 +46,11 @@
   <DateNight_Anniversary.stages_0.label>纪念日</DateNight_Anniversary.stages_0.label>
   <DateNight_Anniversary.stages_0.description>和{0}又过了一年。日历自己把这一天圈了起来。</DateNight_Anniversary.stages_0.description>
 
+  <DateNight_AnniversaryMilestone.label>里程碑纪念日</DateNight_AnniversaryMilestone.label>
+  <DateNight_AnniversaryMilestone.description>和{0}在一起这么多年了。有时我还是不敢相信。</DateNight_AnniversaryMilestone.description>
+  <DateNight_AnniversaryMilestone.stages_0.label>里程碑纪念日</DateNight_AnniversaryMilestone.stages_0.label>
+  <DateNight_AnniversaryMilestone.stages_0.description>和{0}在一起这么多年了。有时我还是不敢相信。</DateNight_AnniversaryMilestone.stages_0.description>
+
   <DateNight_AnniversaryDate.label>纪念日约会</DateNight_AnniversaryDate.label>
   <DateNight_AnniversaryDate.description>纪念日我们真的出门了。和{0}的这一年我会记住。</DateNight_AnniversaryDate.description>
   <DateNight_AnniversaryDate.stages_0.label>纪念日约会</DateNight_AnniversaryDate.stages_0.label>
