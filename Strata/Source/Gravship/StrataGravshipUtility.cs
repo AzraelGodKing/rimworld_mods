@@ -345,12 +345,6 @@ namespace Strata
             return IsGravshipHostMap(portalHostMap) ? portalHostMap : null;
         }
 
-        // True for the ship host map, or a Strata level tied to gravship stairs.
-        public static bool IsGravshipContext(Map map)
-        {
-            return IsGravshipHostMap(map) || IsInGravshipStack(map);
-        }
-
         public static bool EngineHasSubstructure(Building_GravEngine engine)
         {
             if (engine == null)
@@ -422,11 +416,6 @@ namespace Strata
 
             // Linked underdeck / tower deck cells (launch ritual reach from below).
             return TryStrataOnboardCell(cell, engine, skipHost: true);
-        }
-
-        public static void ApplyOnboardPostfix(IntVec3 cell, Building_GravEngine engine, ref bool __result)
-        {
-            // Prefix fully replaces vanilla — Postfix is a no-op keep for Harmony wiring.
         }
 
         private static bool TryStrataOnboardCell(

@@ -29,8 +29,6 @@ namespace Strata
             return cell.InBounds(thing.Map) ? cell.GetRoom(thing.Map) : null;
         }
 
-        public static IntVec3 IntakeCell(Thing thing) => thing.Position - thing.Rotation.FacingCell;
-
         public static IntVec3 ExhaustCell(Thing thing) => thing.Position + thing.Rotation.FacingCell;
 
         public static bool CellIsOutdoor(Map map, IntVec3 cell)
@@ -342,11 +340,6 @@ namespace Strata
             return name.IndexOf("WallMountedVent", StringComparison.OrdinalIgnoreCase) >= 0
                 || name.EndsWith("WallVent", StringComparison.OrdinalIgnoreCase)
                 || name.EndsWith("_WallVent", StringComparison.OrdinalIgnoreCase);
-        }
-
-        public static void CollectDuctNetwork(Map map, IntVec3 start, HashSet<IntVec3> network)
-        {
-            GasPipeUtility.CollectNetwork(map, start, network);
         }
 
         public static bool DuctNetworkReachesOutdoor(Map map, HashSet<IntVec3> network)

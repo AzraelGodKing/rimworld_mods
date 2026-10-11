@@ -31,31 +31,6 @@ namespace Strata
             }
         }
 
-        public static IEnumerable<Thing> AllColonyItems(Map surface)
-        {
-            if (surface == null)
-            {
-                yield break;
-            }
-            foreach (Thing thing in surface.listerThings.AllThings)
-            {
-                if (thing.Faction == Faction.OfPlayer && thing.def.category == ThingCategory.Item)
-                {
-                    yield return thing;
-                }
-            }
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(surface))
-            {
-                foreach (Thing thing in link.map.listerThings.AllThings)
-                {
-                    if (thing.Faction == Faction.OfPlayer && thing.def.category == ThingCategory.Item)
-                    {
-                        yield return thing;
-                    }
-                }
-            }
-        }
-
         public static int CountValuableBelow(Map surface)
         {
             if (surface == null || !StrataMapUtility.IsSurfacePlayerHome(surface))

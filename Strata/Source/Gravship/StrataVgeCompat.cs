@@ -60,18 +60,6 @@ namespace Strata
             _mechanoidSubstructure = DefDatabase<TerrainDef>.GetNamedSilentFail("VGE_MechanoidSubstructure");
         }
 
-        /// <summary>True when this engine def is a known VGE (or vanilla) grav engine.</summary>
-        public static bool IsGravEngineDef(ThingDef def)
-        {
-            if (def == null) return false;
-            if (def == ThingDefOf.GravEngine) return true;
-            if (!Active) return def.thingClass != null
-                && typeof(Building_GravEngine).IsAssignableFrom(def.thingClass);
-            EnsureDefs();
-            return def == _gravjumperEngine || def == _gravhulkEngine || def == _mechanoidEngine
-                || (def.thingClass != null && typeof(Building_GravEngine).IsAssignableFrom(def.thingClass));
-        }
-
         /// <summary>
         /// VGE scaffold / damaged / mechanoid substructure terrains (and any terrain tagged Substructure).
         /// Used as a placement/footprint fallback when engine cell sets are momentarily empty.
@@ -156,16 +144,6 @@ namespace Strata
                 score += foundation;
             }
             return score;
-        }
-
-        /// <summary>VGE jumper/hulk launch precepts — treat like vanilla GravshipLaunch for Strata follow.</summary>
-        public static bool IsGravshipLaunchPrecept(PreceptDef precept)
-        {
-            if (precept == null) return false;
-            if (precept == PreceptDefOf.GravshipLaunch) return true;
-            if (!Active) return false;
-            string name = precept.defName ?? "";
-            return name == "VGE_GravjumperLaunch" || name == "VGE_GravhulkLaunch";
         }
     }
 }

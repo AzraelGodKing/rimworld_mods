@@ -11,8 +11,6 @@ namespace Strata
     {
         private static readonly List<IntVec3> offsets = new List<IntVec3>();
 
-        public static IReadOnlyList<IntVec3> PeekOffsets() => offsets;
-
         public static void Clear() => offsets.Clear();
 
         public static void Capture(Building_GravEngine engine)

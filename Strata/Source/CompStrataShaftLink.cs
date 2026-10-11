@@ -103,17 +103,6 @@ namespace Strata
             return thing?.TryGetComp<CompStrataShaftLink>();
         }
 
-        public static string GetOrMintPairGuid(Thing thing)
-        {
-            CompStrataShaftLink comp = CompOf(thing);
-            if (comp == null)
-            {
-                return null;
-            }
-            comp.EnsurePairGuid();
-            return comp.pairGuid;
-        }
-
         public static void SyncPairIds(Thing shaft, Thing landing)
         {
             CompStrataShaftLink shaftLink = CompOf(shaft);
