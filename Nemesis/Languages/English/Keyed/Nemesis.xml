@@ -37,6 +37,7 @@
   <Nemesis_Settings_WeightSabotage>Power sabotage: {0}</Nemesis_Settings_WeightSabotage>
   <Nemesis_Settings_WeightFood>Food store raid: {0}</Nemesis_Settings_WeightFood>
   <Nemesis_Settings_WeightAnomaly>Anomaly bait: {0}</Nemesis_Settings_WeightAnomaly>
+  <Nemesis_Settings_WeightKidnap>Kidnap attempt (personal hunts, high aggression): {0}</Nemesis_Settings_WeightKidnap>
   <Nemesis_Settings_Reset>Reset</Nemesis_Settings_Reset>
 
   <!-- Phrases -->
@@ -103,6 +104,8 @@
   <Nemesis_Letter_AssaultTitle>{0} Arrives</Nemesis_Letter_AssaultTitle>
   <Nemesis_Letter_AssaultPawn>{0} has come for {1} personally. They will pull back if things turn, but they will be back.</Nemesis_Letter_AssaultPawn>
   <Nemesis_Letter_AssaultColony>{0} is leading this assault in person. They won't stay if the odds turn against them.</Nemesis_Letter_AssaultColony>
+  <Nemesis_Letter_KidnapTitle>{0} Came to Take {1}</Nemesis_Letter_KidnapTitle>
+  <Nemesis_Letter_KidnapBody>{0} is not here to fight the colony. They are here for {1}.\n\nAnyone who goes down may be dragged off. If {1} is carried away, the hunt ends — and they win.</Nemesis_Letter_KidnapBody>
   <Nemesis_Letter_WasteTitle>Waste Drop: {0}</Nemesis_Letter_WasteTitle>
   <Nemesis_Letter_WasteBody>Chemical waste has been airdropped near your colony.\n\nA short message accompanied it: "{0} sends their regards."</Nemesis_Letter_WasteBody>
   <Nemesis_Fake_Trader>a trade caravan requesting docking clearance</Nemesis_Fake_Trader>
@@ -211,6 +214,9 @@
   <Nemesis_Dossier_NoNotes>Nothing written yet.</Nemesis_Dossier_NoNotes>
   <Nemesis_Dossier_Epitaphs>Epitaphs</Nemesis_Dossier_Epitaphs>
   <Nemesis_Dossier_NoEpitaphs>No finished hunts recorded.</Nemesis_Dossier_NoEpitaphs>
+  <Nemesis_Dossier_TileJumpTip>Click to show this tile on the world map.</Nemesis_Dossier_TileJumpTip>
+  <Nemesis_Dossier_EpitaphArchive>View all ({0})</Nemesis_Dossier_EpitaphArchive>
+  <Nemesis_Dossier_EpitaphArchiveTitle>Epitaph archive</Nemesis_Dossier_EpitaphArchiveTitle>
 
   <Nemesis_Intel_NoHunt>There is no active hunt to buy a lead on.</Nemesis_Intel_NoHunt>
   <Nemesis_Intel_Disabled>Informants are turned off in Mod Options.</Nemesis_Intel_Disabled>
@@ -254,5 +260,16 @@
   <Nemesis_End_Released>released</Nemesis_End_Released>
   <Nemesis_End_Kept>kept prisoner</Nemesis_End_Kept>
   <Nemesis_End_Truce>truce</Nemesis_End_Truce>
+
+  <!-- Custody lost before the resolution choice -->
+  <Nemesis_Dossier_ResolutionUnavailable>Nothing to decide right now. Their fate is already chosen, or they are no longer in your custody.</Nemesis_Dossier_ResolutionUnavailable>
+  <Nemesis_End_DiedInCustody>died in custody</Nemesis_End_DiedInCustody>
+  <Nemesis_End_LostCustody>lost from custody</Nemesis_End_LostCustody>
+  <Nemesis_Note_CustodyEscaped>Slipped out of custody before you decided their fate.</Nemesis_Note_CustodyEscaped>
+  <Nemesis_Letter_CustodyEscapedTitle>{0} Is Free</Nemesis_Letter_CustodyEscapedTitle>
+  <Nemesis_Letter_CustodyEscapedBody>{0} is no longer in your cells, and you never decided what to do with them.\n\nThe hunt is back on.</Nemesis_Letter_CustodyEscapedBody>
+  <Nemesis_Letter_CustodyLostTitle>{0}: Hunt Over</Nemesis_Letter_CustodyLostTitle>
+  <Nemesis_Letter_CustodyLostBody>{0} is no longer in your custody, and you never decided their fate.\n\nThe hunt ends here. A new nemesis can rise.</Nemesis_Letter_CustodyLostBody>
+  <Nemesis_Letter_CustodyDiedBody>{0} died in your cells before you decided their fate.\n\nThe hunt ends here. A new nemesis can rise.</Nemesis_Letter_CustodyDiedBody>
 
 </LanguageData>

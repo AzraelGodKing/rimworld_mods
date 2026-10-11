@@ -43,6 +43,9 @@ namespace Nemesis
                 case NemesisAction.AnomalyBait:
                     AnomalyBait(data, map);
                     break;
+                case NemesisAction.KidnapAttempt:
+                    KidnapAttempt(data, map);
+                    break;
                 default:
                     CommsTaunt(data, map);
                     break;
@@ -163,7 +166,28 @@ namespace Nemesis
             }
         }
 
-        private static void NemesisAssault(NemesisData data, Map map)
+        /// <summary>
+        /// AZR-389 — Pawn-mode only: the nemesis leads a kidnap-enabled assault while the fixation
+        /// target is on the map. Uses vanilla kidnap duty (any downed colonist), not a target-only LordJob.
+        /// </summary>
+        public static bool CanKidnap(NemesisData data, Map map)
+        {
+            if (data == null || map == null || data.targetMode != NemesisTargetMode.Pawn) return false;
+            Pawn target = GameComponent_Nemesis.Instance?.FindTargetPawn();
+            return target != null && target.Spawned && !target.Dead && target.Map == map;
+        }
+
+        private static void KidnapAttempt(NemesisData data, Map map)
+        {
+            if (!CanKidnap(data, map))
+            {
+                NemesisAssault(data, map);
+                return;
+            }
+            NemesisAssault(data, map, kidnap: true);
+        }
+
+        private static void NemesisAssault(NemesisData data, Map map, bool kidnap = false)
         {
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
             Pawn nemesis = comp?.FindNemesisPawn();
@@ -201,7 +225,7 @@ namespace Nemesis
             {
                 LordMaker.MakeNewLord(
                     nemesis.Faction,
-                    new LordJob_AssaultColony(nemesis.Faction, canKidnap: false, canTimeoutOrFlee: true),
+                    new LordJob_AssaultColony(nemesis.Faction, canKidnap: kidnap, canTimeoutOrFlee: true),
                     map,
                     new[] { nemesis });
             }
@@ -219,12 +243,18 @@ namespace Nemesis
                 }
             }
 
-            string body = data.targetMode == NemesisTargetMode.Pawn && data.targetPawnName != null
-                ? "Nemesis_Letter_AssaultPawn".Translate(data.nemesisName, data.targetPawnName)
-                : "Nemesis_Letter_AssaultColony".Translate(data.nemesisName);
+            string targetName = data.targetPawnName ?? "Nemesis_Phrase_Someone".Translate();
+            string title = kidnap
+                ? "Nemesis_Letter_KidnapTitle".Translate(data.nemesisName, targetName)
+                : "Nemesis_Letter_AssaultTitle".Translate(data.nemesisName);
+            string body = kidnap
+                ? "Nemesis_Letter_KidnapBody".Translate(data.nemesisName, targetName)
+                : data.targetMode == NemesisTargetMode.Pawn && data.targetPawnName != null
+                    ? "Nemesis_Letter_AssaultPawn".Translate(data.nemesisName, data.targetPawnName)
+                    : "Nemesis_Letter_AssaultColony".Translate(data.nemesisName);
 
             Find.LetterStack.ReceiveLetter(
-                "Nemesis_Letter_AssaultTitle".Translate(data.nemesisName),
+                title,
                 body,
                 LetterDefOf.ThreatBig,
                 nemesis);

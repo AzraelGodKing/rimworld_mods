@@ -37,6 +37,7 @@
   <Nemesis_Settings_WeightSabotage>Саботаж питания: {0}</Nemesis_Settings_WeightSabotage>
   <Nemesis_Settings_WeightFood>Налёт на склады еды: {0}</Nemesis_Settings_WeightFood>
   <Nemesis_Settings_WeightAnomaly>Приманка аномалии: {0}</Nemesis_Settings_WeightAnomaly>
+  <Nemesis_Settings_WeightKidnap>Попытка похищения (личная охота, высокая агрессия): {0}</Nemesis_Settings_WeightKidnap>
   <Nemesis_Settings_Reset>Сброс</Nemesis_Settings_Reset>
 
   <!-- Phrases -->
@@ -103,6 +104,8 @@
   <Nemesis_Letter_AssaultTitle>{0} прибывает</Nemesis_Letter_AssaultTitle>
   <Nemesis_Letter_AssaultPawn>{0} пришёл за {1} лично. Они отступят, если дела пойдут плохо, — но вернутся.</Nemesis_Letter_AssaultPawn>
   <Nemesis_Letter_AssaultColony>{0} лично ведёт этот штурм. Они не останутся, если шансы обернутся против них.</Nemesis_Letter_AssaultColony>
+  <Nemesis_Letter_KidnapTitle>{0} пришёл за {1}</Nemesis_Letter_KidnapTitle>
+  <Nemesis_Letter_KidnapBody>{0} пришёл не воевать с колонией. Он пришёл за {1}.\n\nЛюбого упавшего могут утащить. Если {1} унесут, охота окончена — и они победили.</Nemesis_Letter_KidnapBody>
   <Nemesis_Letter_WasteTitle>Сброс отходов: {0}</Nemesis_Letter_WasteTitle>
   <Nemesis_Letter_WasteBody>Химические отходы сброшены с воздуха у вашей колонии.\n\nКороткое сообщение сопровождало их: «{0} передаёт привет».</Nemesis_Letter_WasteBody>
   <Nemesis_Fake_Trader>торговый караван, запрашивающий разрешение на стыковку</Nemesis_Fake_Trader>
@@ -210,6 +213,9 @@
   <Nemesis_Dossier_NoNotes>Пока ничего не записано.</Nemesis_Dossier_NoNotes>
   <Nemesis_Dossier_Epitaphs>Эпитафии</Nemesis_Dossier_Epitaphs>
   <Nemesis_Dossier_NoEpitaphs>Законченных охот нет.</Nemesis_Dossier_NoEpitaphs>
+  <Nemesis_Dossier_TileJumpTip>Нажмите, чтобы показать эту клетку на карте мира.</Nemesis_Dossier_TileJumpTip>
+  <Nemesis_Dossier_EpitaphArchive>Показать все ({0})</Nemesis_Dossier_EpitaphArchive>
+  <Nemesis_Dossier_EpitaphArchiveTitle>Архив эпитафий</Nemesis_Dossier_EpitaphArchiveTitle>
 
   <Nemesis_Intel_NoHunt>Нет активной охоты, на которую можно купить наводку.</Nemesis_Intel_NoHunt>
   <Nemesis_Intel_Disabled>Осведомители выключены в настройках мода.</Nemesis_Intel_Disabled>
@@ -253,5 +259,16 @@
   <Nemesis_End_Released>отпущен</Nemesis_End_Released>
   <Nemesis_End_Kept>оставлен в тюрьме</Nemesis_End_Kept>
   <Nemesis_End_Truce>перемирие</Nemesis_End_Truce>
+
+  <!-- Custody lost before the resolution choice -->
+  <Nemesis_Dossier_ResolutionUnavailable>Сейчас нечего решать. Их участь уже выбрана, или они больше не под вашей стражей.</Nemesis_Dossier_ResolutionUnavailable>
+  <Nemesis_End_DiedInCustody>умер под стражей</Nemesis_End_DiedInCustody>
+  <Nemesis_End_LostCustody>ушёл из-под стражи</Nemesis_End_LostCustody>
+  <Nemesis_Note_CustodyEscaped>Ушёл из-под стражи раньше, чем вы решили его участь.</Nemesis_Note_CustodyEscaped>
+  <Nemesis_Letter_CustodyEscapedTitle>{0} на свободе</Nemesis_Letter_CustodyEscapedTitle>
+  <Nemesis_Letter_CustodyEscapedBody>{0} больше не в ваших камерах, а вы так и не решили, что с ним делать.\n\nОхота возобновляется.</Nemesis_Letter_CustodyEscapedBody>
+  <Nemesis_Letter_CustodyLostTitle>{0}: охота окончена</Nemesis_Letter_CustodyLostTitle>
+  <Nemesis_Letter_CustodyLostBody>{0} больше не под вашей стражей, а вы так и не решили его участь.\n\nОхота окончена. Может появиться новый немезис.</Nemesis_Letter_CustodyLostBody>
+  <Nemesis_Letter_CustodyDiedBody>{0} умер в ваших камерах раньше, чем вы решили его участь.\n\nОхота окончена. Может появиться новый немезис.</Nemesis_Letter_CustodyDiedBody>
 
 </LanguageData>

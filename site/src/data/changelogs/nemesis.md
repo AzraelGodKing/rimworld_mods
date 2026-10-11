@@ -2,6 +2,25 @@
 
 Foundation by **Dredd (Misakabob)** — original design, persistent antagonist pawn, escape/capture loop, aggression pacing, assaults, waste drops, fixation/prison-break triggers, resolution dialog, and settings. Credited with gratitude; this monorepo package extends that work.
 
+## [Unreleased]
+
+AZR-382 AZR-383 AZR-384 AZR-385 AZR-386 AZR-387 AZR-388 AZR-389 AZR-390
+
+Build stamp (Player.log): `custody-sync-v1`.
+
+### Fixed
+- **Capture soft-lock** (AZR-383) — if a captured nemesis dies, vanishes, is traded away, or leaves your cells before you pick their fate, the hunt no longer stays stuck forever. A nemesis who got loose and is still hostile resumes the hunt; otherwise the hunt ends with a letter and an epitaph ("died in custody" / "lost from custody") so a new nemesis can rise. The dossier's *Open resolution dialog* button now explains when there is nothing to decide instead of doing nothing.
+- **Resolution choice sync** (AZR-382) — Execute / Release / Keep / Truce now apply on the next game tick through the same command queue as informants and comms replies, instead of straight from the button click (Multiplayer-safer). A second click cannot apply a second outcome.
+- **Strata tick cost** (AZR-384) — with Strata loaded, the harassment-map lookup (reflection per map) no longer runs every tick during a hunt; it only runs on the health-check ticks that need it.
+- **Clear diagnostic if a RimWorld update breaks Kill hooks** (AZR-385) — all `Pawn.Kill` patches share one lookup. If the signature changes, Player.log gets one `[Nemesis]` error naming exactly what is disabled, and those patches skip cleanly instead of failing as a group.
+- **Escort spawn failures logged** (AZR-386) — mech and mount escort spawn errors now write a `[Nemesis]` warning with the PawnKind instead of failing silently.
+
+### Added
+- **Kidnap attempt** (AZR-389) — personal (fixation) hunts at aggression 5+ can roll a new action while the target is on the map: the nemesis leads a kidnap-enabled assault with its own letter. If the fixation target is carried off, the hunt ends as *they got what they came for*. New action-mix slider (default 0.05) and dev action. Kidnapping uses vanilla raid kidnap rules (any downed colonist), not a target-only AI.
+- **Escape mood fallout** (AZR-388) — from the nemesis's second escape on, colonists get a 4-day "nemesis escaped again" memory (-3); the fixation target takes it harder (-8).
+- **Dossier tile jump** (AZR-387) — click the last-known tile to show it on the world map.
+- **Epitaph archive** (AZR-390) — *View all* opens a scrollable list of every recorded epitaph (the dossier still previews the latest three).
+- CN / RU strings for everything above.
 
 ## [1.3.1]
 
