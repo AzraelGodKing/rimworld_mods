@@ -17,6 +17,13 @@ Playable core is in. Next pool: [docs/ideas/stormproof-updates.md](../docs/ideas
 - [x] Natural-hazard family — dry lightning, heat dome, polar front, toxic surge, plus hazard buildings
 - [x] **AZR-143** Coverage overlays — radius on select and place (spire, pylon, dampener, suppressor); enclosed-room highlight on the fallout scrubber
 - [x] **AZR-144** Power forecast on the grid monitor when a weather forecaster shares the net
+- [x] **AZR-142** Scheduled load profiles on the shedder (24-hour run/shed timetable, forecast override, hold)
+- [x] **AZR-145** Per-storm damage report in the almanac (strikes, Zzzt, fires, wear per entry)
+- [x] **AZR-408** Load schedule hours colored by the supply grid forecast
+- [x] **AZR-409** Almanac lifetime totals kept as running counters
+- [x] **AZR-414** Grid forecast models the load shedder's schedule and cutoff
+- [x] **AZR-415** Longest clean stretch in the almanac
+- [x] **AZR-416** Forecast charge sparkline in the almanac
 
 ---
 
@@ -35,8 +42,6 @@ Public surface: `Stormproof.StormproofCompatApi` (AZR-323).
 
 Tracked in the idea pool and Linear:
 
-- [ ] **AZR-142** Scheduled load profiles on the shedder
-- [ ] **AZR-145** Per-storm damage report in the almanac
 - [ ] **AZR-109** Nexus `unknown parse failure` on load — not reproduced from these defs; likely packaging / load-order XML poison (same reporter as Homesteader AZR-108)
 
 ---
