@@ -94,10 +94,14 @@ namespace Nemesis
             }
 
             // Stagger health / end-condition work. Faster on the viewed map.
-            Map home = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
-            int healthInterval = NemesisRegistry.MapIsViewed(home) ? 120 : 300;
-            if (tick % healthInterval == 0)
-                CheckNemesisHealth();
+            // PreferHarassmentMap reflects into Strata per map, so only resolve it on candidate ticks.
+            if (tick % 120 == 0 || tick % 300 == 0)
+            {
+                Map home = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+                int healthInterval = NemesisRegistry.MapIsViewed(home) ? 120 : 300;
+                if (tick % healthInterval == 0)
+                    CheckNemesisHealth();
+            }
 
             if (tick % 500 == 0 || NemesisRegistry.ResolutionDirty)
             {
