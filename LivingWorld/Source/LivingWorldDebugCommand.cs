@@ -19,6 +19,7 @@ namespace LivingWorld
             ForceWarBattle = 4,
             ForceRefugees = 5,
             FakeSkirmish = 6,
+            SpawnTraffic = 7,
         }
 
         private struct Entry
@@ -75,6 +76,11 @@ namespace LivingWorld
                 loserId = a?.loadID ?? -1,
                 winnerId = b?.loadID ?? -1,
             });
+        }
+
+        public static void EnqueueSpawnTraffic()
+        {
+            queue.Add(new Entry { kind = Kind.SpawnTraffic });
         }
 
         public static void Drain()
@@ -166,6 +172,16 @@ namespace LivingWorld
                     WorldEvent ev = WorldEvent.Create(WorldEventKind.Skirmish, NewsSeverity.Normal, a, b);
                     comp.RecordAndPublish(ev);
                     Messages.Message("[Living World] Published fake skirmish.", MessageTypeDefOf.NeutralEvent,
+                        historical: false);
+                    break;
+                }
+                case Kind.SpawnTraffic:
+                {
+                    bool ok = LivingWorldTraffic.TrySpawn(comp);
+                    Messages.Message(ok
+                            ? "[Living World] Spawned a traffic caravan."
+                            : "[Living World] Traffic spawn failed (cap / no friendly route).",
+                        ok ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
                         historical: false);
                     break;
                 }

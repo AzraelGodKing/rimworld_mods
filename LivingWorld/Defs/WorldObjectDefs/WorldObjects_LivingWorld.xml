@@ -23,4 +23,16 @@
     <expandingIconColor>(0.45, 0.62, 0.38)</expandingIconColor>
   </WorldObjectDef>
 
+  <WorldObjectDef>
+    <defName>LivingWorld_TrafficCaravan</defName>
+    <label>traveling caravan</label>
+    <description>An NPC caravan on its way from one settlement to another. It is not headed for you, usually.</description>
+    <worldObjectClass>LivingWorld.WorldObject_LivingWorldTraffic</worldObjectClass>
+    <texture>World/WorldObjects/Caravan</texture>
+    <useDynamicDrawer>true</useDynamicDrawer>
+    <expandingIcon>true</expandingIcon>
+    <expandingIconTexture>World/WorldObjects/Expanding/Caravan</expandingIconTexture>
+    <expandingIconPriority>60</expandingIconPriority>
+  </WorldObjectDef>
+
 </Defs>

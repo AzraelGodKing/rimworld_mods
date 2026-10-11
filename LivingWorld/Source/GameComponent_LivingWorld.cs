@@ -9,9 +9,13 @@ namespace LivingWorld
     public class GameComponent_LivingWorld : GameComponent
     {
         private const int ChronicleCapacity = 96;
+        private const int EvictedCorrectionCapacity = 64;
 
         private List<WorldEvent> chronicle = new List<WorldEvent>();
+        private List<WorldEvent> evictedPendingCorrections = new List<WorldEvent>();
         private List<SettlementMood> moods = new List<SettlementMood>();
+        // Not scribed; rebuilt from moods on first lookup after load.
+        private Dictionary<int, SettlementMood> moodIndex;
         private List<FactionPairState> pairs = new List<FactionPairState>();
         private List<PendingFallout> pendingFallout = new List<PendingFallout>();
 
@@ -59,6 +63,9 @@ namespace LivingWorld
 
         public IReadOnlyList<WorldEvent> Chronicle => chronicle;
 
+        /// <summary>Distorted events evicted from the chronicle before their correction was due.</summary>
+        internal List<WorldEvent> EvictedPendingCorrections => evictedPendingCorrections;
+
         public IReadOnlyList<FactionPairState> Pairs => pairs;
 
         internal List<FactionPairState> PairsMutable => pairs;
@@ -66,6 +73,7 @@ namespace LivingWorld
         public override void ExposeData()
         {
             Scribe_Collections.Look(ref chronicle, "chronicle", LookMode.Deep);
+            Scribe_Collections.Look(ref evictedPendingCorrections, "evictedPendingCorrections", LookMode.Deep);
             Scribe_Collections.Look(ref moods, "moods", LookMode.Deep);
             Scribe_Collections.Look(ref pairs, "pairs", LookMode.Deep);
             Scribe_Collections.Look(ref pendingFallout, "pendingFallout", LookMode.Deep);
@@ -80,10 +88,12 @@ namespace LivingWorld
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 chronicle ??= new List<WorldEvent>();
+                evictedPendingCorrections ??= new List<WorldEvent>();
                 moods ??= new List<SettlementMood>();
                 pairs ??= new List<FactionPairState>();
                 pendingFallout ??= new List<PendingFallout>();
                 collapsedFactionIds ??= new List<int>();
+                moodIndex = null;
             }
         }
 
@@ -126,6 +136,8 @@ namespace LivingWorld
                 }
                 pulseIndex++;
             }
+
+            LivingWorldTraffic.TryResolvePulse(this);
 
             // Delayed fallout: give letters a beat, then try to fire.
             TryFirePendingFallout();
@@ -205,22 +217,32 @@ namespace LivingWorld
             return true;
         }
 
-        public void RecordAndPublish(WorldEvent ev)
+        /// <param name="sendLetter">False for routine chronicle-only entries (no letter, no rumour distortion).</param>
+        public void RecordAndPublish(WorldEvent ev, bool sendLetter = true)
         {
             if (ev == null)
             {
                 return;
             }
 
-            LivingWorldRumour.StampOnPublish(ev);
+            LivingWorldRumour.StampOnPublish(ev, allowDistortion: sendLetter);
 
             chronicle.Add(ev);
             while (chronicle.Count > ChronicleCapacity)
             {
+                WorldEvent evicted = chronicle[0];
                 chronicle.RemoveAt(0);
+                if (evicted != null && evicted.distorted && !evicted.corrected && evicted.correctionTick >= 0)
+                {
+                    evictedPendingCorrections.Add(evicted);
+                    if (evictedPendingCorrections.Count > EvictedCorrectionCapacity)
+                    {
+                        evictedPendingCorrections.RemoveAt(0);
+                    }
+                }
             }
 
-            if (LivingWorldMod.Settings == null || !LivingWorldMod.Settings.chronicleEnabled)
+            if (!sendLetter || LivingWorldMod.Settings == null || !LivingWorldMod.Settings.chronicleEnabled)
             {
                 LivingWorldSignals.Raise(ev);
                 return;
@@ -257,36 +279,39 @@ namespace LivingWorld
             pendingFallout.Add(fallout);
         }
 
+        private const int FalloutDelayTicks = 30000;
+
         public PendingFallout TryDequeueFallout(FalloutKind kind)
         {
-            for (int i = 0; i < pendingFallout.Count; i++)
+            int i = IndexOfReadyFallout(kind);
+            if (i < 0)
             {
-                if (pendingFallout[i].kind != kind)
-                {
-                    continue;
-                }
-                // Wait at least ~half a day so the war letter can land first.
-                if (Find.TickManager.TicksGame - pendingFallout[i].enqueueTick < 30000)
-                {
-                    continue;
-                }
-                PendingFallout hit = pendingFallout[i];
-                pendingFallout.RemoveAt(i);
-                return hit;
+                return null;
             }
-            return null;
+            PendingFallout hit = pendingFallout[i];
+            pendingFallout.RemoveAt(i);
+            return hit;
         }
 
+        /// <summary>Only entries past the delay; matches what TryDequeueFallout will return.</summary>
         public PendingFallout PeekFallout(FalloutKind kind)
         {
+            int i = IndexOfReadyFallout(kind);
+            return i < 0 ? null : pendingFallout[i];
+        }
+
+        private int IndexOfReadyFallout(FalloutKind kind)
+        {
+            int now = Find.TickManager.TicksGame;
             for (int i = 0; i < pendingFallout.Count; i++)
             {
-                if (pendingFallout[i].kind == kind)
+                // Wait at least ~half a day so the war letter can land first.
+                if (pendingFallout[i].kind == kind && now - pendingFallout[i].enqueueTick >= FalloutDelayTicks)
                 {
-                    return pendingFallout[i];
+                    return i;
                 }
             }
-            return null;
+            return -1;
         }
 
         private void TryFirePendingFallout()
@@ -323,8 +348,10 @@ namespace LivingWorld
                 {
                     IncidentParms parms = StorytellerUtility.DefaultParmsNow(warband.category, map);
                     parms.forced = true;
-                    warband.Worker.CanFireNow(parms);
-                    warband.Worker.TryExecute(parms);
+                    if (warband.Worker.CanFireNow(parms))
+                    {
+                        warband.Worker.TryExecute(parms);
+                    }
                 }
             }
         }
@@ -335,13 +362,10 @@ namespace LivingWorld
             {
                 return null;
             }
-            for (int i = 0; i < moods.Count; i++)
+            if (MoodIndex.TryGetValue(settlement.ID, out SettlementMood existing))
             {
-                if (moods[i].settlementId == settlement.ID)
-                {
-                    moods[i].tile = settlement.Tile;
-                    return moods[i];
-                }
+                existing.tile = settlement.Tile;
+                return existing;
             }
             var mood = new SettlementMood
             {
@@ -349,6 +373,7 @@ namespace LivingWorld
                 tile = settlement.Tile,
             };
             moods.Add(mood);
+            moodIndex[mood.settlementId] = mood;
             return mood;
         }
 
@@ -358,14 +383,7 @@ namespace LivingWorld
             {
                 return null;
             }
-            for (int i = 0; i < moods.Count; i++)
-            {
-                if (moods[i].settlementId == settlement.ID)
-                {
-                    return moods[i];
-                }
-            }
-            return null;
+            return MoodIndex.TryGetValue(settlement.ID, out SettlementMood mood) ? mood : null;
         }
 
         public void RemoveMood(Settlement settlement)
@@ -375,6 +393,27 @@ namespace LivingWorld
                 return;
             }
             moods.RemoveAll(m => m.settlementId == settlement.ID);
+            moodIndex?.Remove(settlement.ID);
+        }
+
+        private Dictionary<int, SettlementMood> MoodIndex
+        {
+            get
+            {
+                if (moodIndex == null)
+                {
+                    moodIndex = new Dictionary<int, SettlementMood>(moods.Count);
+                    for (int i = 0; i < moods.Count; i++)
+                    {
+                        SettlementMood m = moods[i];
+                        if (m != null && !moodIndex.ContainsKey(m.settlementId))
+                        {
+                            moodIndex[m.settlementId] = m;
+                        }
+                    }
+                }
+                return moodIndex;
+            }
         }
 
         public string DumpChronicle()

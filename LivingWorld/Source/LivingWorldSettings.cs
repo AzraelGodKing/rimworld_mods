@@ -14,6 +14,7 @@ namespace LivingWorld
         public bool warSitesEnabled = true;
         public bool warbandFalloutEnabled = false;
         public bool roadHazardsEnabled = true;
+        public bool trafficEnabled = true;
 
         /// <summary>0 = major only, 1 = medium, 2 = high.</summary>
         public int newsVerbosity = 1;
@@ -39,6 +40,7 @@ namespace LivingWorld
             Scribe_Values.Look(ref warSitesEnabled, "warSitesEnabled", true);
             Scribe_Values.Look(ref warbandFalloutEnabled, "warbandFalloutEnabled", false);
             Scribe_Values.Look(ref roadHazardsEnabled, "roadHazardsEnabled", true);
+            Scribe_Values.Look(ref trafficEnabled, "trafficEnabled", true);
             Scribe_Values.Look(ref newsVerbosity, "newsVerbosity", 1);
             Scribe_Values.Look(ref tickInterval, "tickInterval", 10000);
             Scribe_Values.Look(ref resolutionsPerPulse, "resolutionsPerPulse", 1);
@@ -60,6 +62,7 @@ namespace LivingWorld
             warSitesEnabled = true;
             warbandFalloutEnabled = false;
             roadHazardsEnabled = true;
+            trafficEnabled = true;
             newsVerbosity = 1;
             tickInterval = 10000;
             resolutionsPerPulse = 1;
@@ -94,6 +97,8 @@ namespace LivingWorld
                 "LivingWorld_Settings_WarbandDesc".Translate());
             listing.CheckboxLabeled("LivingWorld_Settings_RoadHazards".Translate(), ref s.roadHazardsEnabled,
                 "LivingWorld_Settings_RoadHazardsDesc".Translate());
+            listing.CheckboxLabeled("LivingWorld_Settings_Traffic".Translate(), ref s.trafficEnabled,
+                "LivingWorld_Settings_TrafficDesc".Translate());
             listing.GapLine();
 
             listing.Label("LivingWorld_Settings_Verbosity".Translate() + ": "

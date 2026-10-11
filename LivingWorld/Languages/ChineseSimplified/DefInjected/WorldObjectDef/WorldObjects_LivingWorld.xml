@@ -4,4 +4,6 @@
   <LivingWorld_WarSite.description>地图外战役留下的短暂伤痕——残骸、营地或争夺地。不是个人仇敌地点。</LivingWorld_WarSite.description>
   <LivingWorld_WayCamp.label>路营</LivingWorld_WayCamp.label>
   <LivingWorld_WayCamp.description>商队在已经走过的路上扎的营。在这儿过夜稍轻松一点——不是定居点，也不是战场疤。</LivingWorld_WayCamp.description>
+  <LivingWorld_TrafficCaravan.label>行进中的商队</LivingWorld_TrafficCaravan.label>
+  <LivingWorld_TrafficCaravan.description>一支NPC商队正从一个聚落前往另一个聚落。通常不是冲着你来的。</LivingWorld_TrafficCaravan.description>
 </LanguageData>
