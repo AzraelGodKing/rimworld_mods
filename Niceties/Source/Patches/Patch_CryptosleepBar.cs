@@ -9,6 +9,9 @@ namespace Niceties
     internal static class CryptosleepBar
     {
         private static bool entriesMissingLogged;
+        private static int hiddenCount;
+
+        internal static int HiddenCount => hiddenCount;
 
         internal static void MarkDirty()
         {
@@ -28,6 +31,7 @@ namespace Niceties
 
         internal static void FilterEntries(ColonistBar bar)
         {
+            hiddenCount = 0;
             NicetiesSettings settings = NicetiesSim.Settings;
             if (bar == null || settings == null || !settings.hideCryptosleep)
             {
@@ -58,8 +62,54 @@ namespace Niceties
                 if (ShouldHide(entries[i].pawn))
                 {
                     entries.RemoveAt(i);
+                    hiddenCount++;
                 }
             }
+        }
+
+        internal static void DrawHiddenCount(ColonistBar bar)
+        {
+            NicetiesSettings local = NicetiesMod.Settings;
+            NicetiesSettings settings = NicetiesSim.Settings;
+            if (hiddenCount <= 0 || bar == null || local == null || !local.showCryptosleepCount
+                || settings == null || !settings.hideCryptosleep)
+            {
+                return;
+            }
+
+            List<Vector2> locs = bar.DrawLocs;
+            Vector2 size = bar.Size;
+            Rect rect;
+            if (locs != null && locs.Count > 0)
+            {
+                Vector2 last = locs[locs.Count - 1];
+                rect = new Rect(last.x + size.x + 6f, last.y, 150f, size.y);
+            }
+            else
+            {
+                rect = new Rect(UI.screenWidth / 2f - 75f, 12f, 150f, 24f);
+            }
+
+            TextAnchor anchor = Text.Anchor;
+            GameFont font = Text.Font;
+            Color color = GUI.color;
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleLeft;
+            GUI.color = new Color(0.75f, 0.85f, 1f);
+            Widgets.Label(rect, "Niceties_CryptoHiddenCount".Translate(hiddenCount));
+            GUI.color = color;
+            Text.Anchor = anchor;
+            Text.Font = font;
+            TooltipHandler.TipRegion(rect, "Niceties_CryptoHiddenCountTip".Translate());
+        }
+    }
+
+    [HarmonyPatch(typeof(ColonistBar), nameof(ColonistBar.ColonistBarOnGUI))]
+    internal static class Patch_ColonistBarOnGUI
+    {
+        private static void Postfix(ColonistBar __instance)
+        {
+            CryptosleepBar.DrawHiddenCount(__instance);
         }
     }
 
@@ -71,6 +121,13 @@ namespace Niceties
         new[] { ArgumentType.Normal, ArgumentType.Ref, ArgumentType.Normal })]
     internal static class Patch_ColonistBarDrawLocs
     {
+        private static bool Prepare()
+        {
+            return PatchTargets.Exists(typeof(ColonistBarDrawLocsFinder), "CalculateDrawLocs",
+                new[] { typeof(List<Vector2>), typeof(float).MakeByRefType(), typeof(int) },
+                "hide cryptosleep pawns from the colonist bar");
+        }
+
         private static void Prefix()
         {
             CryptosleepBar.FilterEntries(Find.ColonistBar);

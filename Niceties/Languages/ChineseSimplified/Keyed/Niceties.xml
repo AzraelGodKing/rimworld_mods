@@ -12,6 +12,9 @@
   <Niceties_Settings_PresetCustom>自定义</Niceties_Settings_PresetCustom>
   <Niceties_Settings_ActivePreset>当前预设：{0}</Niceties_Settings_ActivePreset>
   <Niceties_Settings_PresetsTip>预设只改旋钮。之后再勾选你真正想要的体贴。</Niceties_Settings_PresetsTip>
+  <Niceties_Settings_SnapshotDiffers>此存档仍在使用比下方选项更旧的已存设置。</Niceties_Settings_SnapshotDiffers>
+  <Niceties_Settings_SnapshotApply>立即应用到此存档</Niceties_Settings_SnapshotApply>
+  <Niceties_Settings_SnapshotHost>多人游戏：此存档使用主机已存的设置。你在这里的修改只影响单人游戏。</Niceties_Settings_SnapshotHost>
   <Niceties_Settings_ApparelCare>妥善保养服装</Niceties_Settings_ApparelCare>
   <Niceties_Settings_ApparelCareTip>穿着中的衣服跳过或按比例计算每日损耗。战斗和火灾仍会掉耐久。丢在地上的衣服仍会在户外腐烂。</Niceties_Settings_ApparelCareTip>
   <Niceties_Settings_QualityScale>按品质缩放损耗</Niceties_Settings_QualityScale>
@@ -29,12 +32,16 @@
   <Niceties_Settings_WearAnyTip>清除服装性别标签（皇家背心/胸衣、帽子，以及使用同一字段的模组），从而不再触发性别不符心情。</Niceties_Settings_WearAnyTip>
   <Niceties_Settings_HideCrypto>从殖民者栏隐藏冷冻舱中的人</Niceties_Settings_HideCrypto>
   <Niceties_Settings_HideCryptoTip>已在冷冻休眠舱中的殖民者不出现在殖民者栏。被抬向舱室途中仍可见。</Niceties_Settings_HideCryptoTip>
+  <Niceties_Settings_CryptoCount>显示隐藏的冷冻休眠人数</Niceties_Settings_CryptoCount>
+  <Niceties_Settings_CryptoCountTip>在殖民者栏旁显示一个小小的“+N 冷冻休眠中”，让你知道栏为何变短。</Niceties_Settings_CryptoCountTip>
 
   <Niceties_Settings_MeleeHunt>近战狩猎</Niceties_Settings_MeleeHunt>
   <Niceties_Settings_MeleeHuntTip>猎人可用近战武器狩猎。远程狩猎不变。</Niceties_Settings_MeleeHuntTip>
   <Niceties_Settings_UnarmedHunt>徒手狩猎</Niceties_Settings_UnarmedHunt>
   <Niceties_Settings_UnarmedHuntTip>没有武器的猎人仍可狩猎（拳头）。默认关闭——容易送命。</Niceties_Settings_UnarmedHuntTip>
   <Niceties_Settings_MeleeSize>近战狩猎最大体型：{0}</Niceties_Settings_MeleeSize>
+  <Niceties_Settings_MeleeSizeExample>大约最大到：{0}</Niceties_Settings_MeleeSizeExample>
+  <Niceties_Settings_MeleeSizeTiny>比任何参考动物都小。</Niceties_Settings_MeleeSizeTiny>
   <Niceties_Settings_SharedRooms>共用卧室</Niceties_Settings_SharedRooms>
   <Niceties_Settings_SharedRoomsTip>在床上使用指令将房间标为共用。它保持为卧室而不是翻成营房，室友（以及皇权）不会因同住受罚。</Niceties_Settings_SharedRoomsTip>
   <Niceties_Settings_SkipDisturbedSleep>室友不因打扰睡眠而沮丧</Niceties_Settings_SkipDisturbedSleep>
@@ -42,6 +49,7 @@
   <Niceties_ShareRoom>共用房间</Niceties_ShareRoom>
   <Niceties_ShareRoomTip>将此卧室标为共用。额外的床仍算卧室而非营房。室友跳过“合住一室”的心情惩罚。</Niceties_ShareRoomTip>
   <Niceties_ShareRoomInspect>房间已共用。</Niceties_ShareRoomInspect>
+  <Niceties_ShareRoomInspectWith>房间已共用：{0}。</Niceties_ShareRoomInspectWith>
   <Niceties_Settings_LeaveAWayOut>留出出路</Niceties_Settings_LeaveAWayOut>
   <Niceties_Settings_LeaveAWayOutTip>殖民者不会完成会困住他人或挡住剩余框架的墙。把自己砌进去之前会先让开。Replace Stuff 的替换框架同样生效；就地换墙材（木墙换石墙）仍视为实心，所以仍可从冷冻室内部替换。右键强制建造仍会砌上。灵感来自 Smarter Construction，1.6 原写，并非移植。</Niceties_Settings_LeaveAWayOutTip>
   <Niceties_OpenBuilds_WouldEnclose>完成这个会把人砌在里面。</Niceties_OpenBuilds_WouldEnclose>
@@ -55,5 +63,7 @@
   <Niceties_Weapon_VanillaWear>每日损耗：原版。</Niceties_Weapon_VanillaWear>
   <Niceties_Weapon_ReducedWear>每日损耗：原版的 {0}。</Niceties_Weapon_ReducedWear>
   <Niceties_Hunt_TooBig>{0} 体型过大，不适合近战狩猎。</Niceties_Hunt_TooBig>
+  <Niceties_CryptoHiddenCount>+{0} 冷冻休眠中</Niceties_CryptoHiddenCount>
+  <Niceties_CryptoHiddenCountTip>冷冻休眠舱中的殖民者已被 Niceties 从殖民者栏隐藏。可在模组选项中关闭。</Niceties_CryptoHiddenCountTip>
 
 </LanguageData>

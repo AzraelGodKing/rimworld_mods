@@ -19,6 +19,16 @@ namespace Niceties
             }
         }
 
+        /// <summary>
+        /// Def-level gender tags are shared by every client, so they follow the
+        /// host-baked snapshot in a loaded game and Mod Options only at the main menu.
+        /// </summary>
+        internal static void ApplyEffective()
+        {
+            NicetiesSettings settings = NicetiesSim.Settings;
+            Apply(settings == null || settings.wearAnyGender);
+        }
+
         internal static void Apply(bool wearAny)
         {
             if (Original.Count == 0)
