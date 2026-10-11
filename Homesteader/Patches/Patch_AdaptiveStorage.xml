@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Patch>
-  <!-- Adaptive Storage Framework does not add an architect tab. An earlier
-       patch moved Homesteader crates/cellars/cisterns to ASF_Architect and
-       deleted Homesteader_Storage, which hid those buildings whenever ASF
-       was loaded as a dependency. Keep the Homestead tab. -->
-</Patch>
