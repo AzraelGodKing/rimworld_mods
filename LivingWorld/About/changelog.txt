@@ -1,24 +1,19 @@
-1.2.0
-[h1]Living World - 1.2.0[/h1]
+1.0.0
+[h1]Living World - 1.0.0[/h1]
+
+First release.
 
 [b]Added[/b]
 [list]
-[*] [b]Inter-settlement caravans[/b] - NPC caravans travel between friendly settlements on the world map. Arrivals go in the chronicle without a letter. Rarely, one passing near your colony turns aside to trade. Toggle in Mod Options.
-[*] [b]World state view[/b] - a button on the Chronicle tab shows current wars, tensions, and alliances between NPC factions.
-[*] [b]Severity filter[/b] - the Chronicle tab can show all news, normal and major, or major only.
-[*] [b]War scar timer[/b] - war-site inspect text says how long until the site fades.
-[/list]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Refugees and warbands[/b] no longer fire early with a random faction. They wait for the intended delay and always come from the war you heard about.
-[*] [b]Rumour corrections[/b] still arrive when the original news has aged out of the chronicle.
-[*] Debug "Force" morph actions ignore the per-settlement cooldown, as intended.
-[/list]
-
-[b]Changed[/b]
-[list]
-[*] Settlement label and inspect lookups are constant-time on large worlds.
+[*] [b]Off-map world life[/b] - other settlements grow, shrink, change hands, get abandoned, found outposts, and earn epithets over time. You hear about it depending on distance, contact, and comms. Mod Options control pace and how much news reaches you.
+[*] [b]Chronicle tab[/b] - world history with faction, channel, and severity filters, plus a World state view of current wars, tensions, and alliances between NPC factions.
+[*] [b]Wars and fallout[/b] - NPC factions feud, fight, make peace, and rarely betray each other. Severe wars can send refugees your way, an optional warband can pass through, war sites appear on the world map for a while, and trade caravans from factions at total war can dry up.
+[*] [b]Rumours[/b] - far-off news can arrive wrong and get corrected later.
+[*] [b]Inter-settlement caravans[/b] - NPC caravans travel between friendly settlements. Rarely, one passing near your colony turns aside to trade. Toggle in Mod Options.
+[*] [b]The road[/b] - long caravan trips bring route hazards, way-camps on familiar stretches, and a road-worn condition.
+[*] [b]Listening Post[/b] scenario - an off-map start that shows the world sim.
+[*] [b]Chinese and Russian[/b] translations.
+[*] [b]Update letter[/b] - loading a colony sends a letter with these notes and a link to the full changelog.
 [/list]
 
 [i]Build stamp (Player.log): world-traffic-v1[/i]
