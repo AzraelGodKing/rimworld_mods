@@ -12,7 +12,7 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 ## [3.8.2]
 
-AZR-268 AZR-269 AZR-270 AZR-271 AZR-272 AZR-273 AZR-274 AZR-353 AZR-354 AZR-355 AZR-448 AZR-449
+AZR-268 AZR-269 AZR-270 AZR-271 AZR-272 AZR-273 AZR-274 AZR-353 AZR-354 AZR-355 AZR-448 AZR-449 AZR-451
 
 ### Fixed
 - **Cavern oxygen collapse on Medium/High** (`cavern-breath-v1`, AZR-355): breathing, plants, and animal methane now scale with room size. A huge Biomes! cavern full of wildlife no longer drains the whole layer to about 2% O₂. Before, Low only looked healthy because it skipped animal breathing on the viewed map.
@@ -20,6 +20,7 @@ AZR-268 AZR-269 AZR-270 AZR-271 AZR-272 AZR-273 AZR-274 AZR-353 AZR-354 AZR-355 
 - **Deep drill noise** (AZR-272): drilling out a portion now adds its noise burst on 1.6. The patch was aiming at a renamed method and never ran.
 - **Levels tab too small on first open** (AZR-448, [#192](https://github.com/AzraelGodKing/rimworld_mods/issues/192)): the tab measured its height before it had built the level list, so the first open had room for zero rows. It now builds the rows first and always leaves room for at least three.
 - **Red and green glitch at full zoom-out** (AZR-449, [#191](https://github.com/AzraelGodKing/rimworld_mods/issues/191)): at maximum zoom the camera's far clip cut off the map below, so open-sky gaps on upper levels showed leftover screen garbage. Strata now extends the far clip while you view an upper level and restores it everywhere else.
+- **Building underground with materials on another floor** (AZR-451): force-building downstairs with the wood upstairs sent the colonist up the stairs, then back down empty-handed to idle. When picking a stack on another floor, the cross-level fetch only checked that it was unforbidden and reservable, so it could choose one the colonist couldn't walk to. The colonist arrived, the carry job failed its first step, and nothing was logged. Stacks on other floors must now be reachable from that floor's stair landing (`LevelGraph` arrival cell, `TraverseMode.PassDoors`), and on arrival the colonist re-checks reach and swaps to another stack if needed. Each branch where `TryFinishFetch` gives up, plus a `Strata_HaulToLevel` that ends Incompletable/Errored, now writes a line when verbose logging is on.
 
 ### Changed
 - **Seismograph station** (AZR-271): the readout now lists tremor, cave-in, and infestation risk for every linked underground level, not just the floor it stands on. It refreshes about every 4 seconds instead of every second.

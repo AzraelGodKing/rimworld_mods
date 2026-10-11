@@ -172,11 +172,18 @@ namespace Strata
                     }
 
                     Thing mat = FindBestMaterial(pawn, need.thingDef, site.Map, excludeMap: null, forced);
-                    if (mat == null) continue;
+                    if (mat == null)
+                    {
+                        StrataLog.Verbose("[Strata] Construct fetch: " + pawn.LabelShort + " found no reachable "
+                            + need.thingDef.defName + " for " + site.LabelShort + " on any linked floor.");
+                        continue;
+                    }
 
                     int take = Math.Min(mat.stackCount, want);
                     Job job = MakeFetchOrCommute(pawn, mat, site, take, forced);
                     if (job != null) return job;
+                    StrataLog.Verbose("[Strata] Construct fetch: " + pawn.LabelShort + " could not start a trip for "
+                        + mat.LabelShort + " on " + mat.Map + " (no stair route or relay).");
                 }
             }
             catch (Exception e)
@@ -252,18 +259,29 @@ namespace Strata
             if (pawn == null || def == null) return null;
             Thing best = null;
             int bestDist = int.MaxValue;
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(pawn.Map);
+            var landings = new List<IntVec3>();
 
             void ConsiderMap(Map map)
             {
                 if (map == null || map.Disposed || map == excludeMap) return;
                 List<Thing> list = map.listerThings.ThingsOfDef(def);
+                if (list.Count == 0) return;
+                if (map != pawn.Map)
+                {
+                    LandingsOn(map, links, landings);
+                    if (landings.Count == 0) return;
+                }
                 for (int i = 0; i < list.Count; i++)
                 {
                     Thing t = list[i];
                     if (t == null || !t.Spawned || t.IsForbidden(pawn)) continue;
                     if (!pawn.CanReserve(t)) continue;
-                    if (map == pawn.Map
-                        && !HaulAIUtility.PawnCanAutomaticallyHaulFast(pawn, t, forced))
+                    if (map == pawn.Map)
+                    {
+                        if (!HaulAIUtility.PawnCanAutomaticallyHaulFast(pawn, t, forced)) continue;
+                    }
+                    else if (!ReachableFromAnyLanding(map, t, landings))
                     {
                         continue;
                     }
@@ -285,6 +303,37 @@ namespace Strata
                 ConsiderMap(link.map);
             }
             return best;
+        }
+
+        // Stair landings on `map` as seen from the pawn's floor. A pawn can't path-check
+        // another map, so stacks there must be reachable from where the stairs drop it.
+        private static void LandingsOn(Map map, List<LevelGraph.LevelLink> links, List<IntVec3> into)
+        {
+            into.Clear();
+            for (int i = 0; i < links.Count; i++)
+            {
+                LevelGraph.LevelLink link = links[i];
+                if (link.map == map && link.arrivalCell.IsValid && link.arrivalCell.InBounds(map))
+                {
+                    into.Add(link.arrivalCell);
+                }
+            }
+        }
+
+        private static bool ReachableFromAnyLanding(Map map, Thing t, List<IntVec3> landings)
+        {
+            for (int i = 0; i < landings.Count; i++)
+            {
+                if (map.reachability.CanReach(
+                        landings[i],
+                        t,
+                        PathEndMode.ClosestTouch,
+                        TraverseParms.For(TraverseMode.PassDoors)))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static Job MakeFetchOrCommute(Pawn pawn, Thing mat, Thing site, int count, bool forced)
@@ -364,15 +413,26 @@ namespace Strata
 
             Map matMap = FindMap(fetch.matMapId);
             Map siteMap = FindMap(fetch.siteMapId);
-            if (matMap == null || siteMap == null || pawn.Map != matMap) return false;
+            if (matMap == null || siteMap == null || pawn.Map != matMap)
+            {
+                StrataLog.Verbose("[Strata] Construct fetch: " + pawn.LabelShort
+                    + " arrived on the wrong floor or a level is gone; dropping the fetch.");
+                return false;
+            }
 
             Thing mat = FindThing(matMap, fetch.matThingId);
-            if (mat == null || !mat.Spawned || (mat.Spawned && !pawn.CanReserve(mat)))
+            if (mat == null || !mat.Spawned || !pawn.CanReserve(mat)
+                || !pawn.CanReach(mat, PathEndMode.ClosestTouch, Danger.Deadly))
             {
-                // Stack moved/merged/claimed — recover another free stack of the same def.
+                // Stack moved/merged/claimed/walled off — recover another free stack of the same def.
                 if (fetch.matDef == null) return false;
                 mat = FindBestMaterial(pawn, fetch.matDef, siteMap, excludeMap: null, fetch.forced);
-                if (mat == null || !mat.Spawned) return false;
+                if (mat == null || !mat.Spawned)
+                {
+                    StrataLog.Verbose("[Strata] Construct fetch: " + pawn.LabelShort + " reached " + matMap
+                        + " but no reachable " + fetch.matDef.defName + " is left to carry.");
+                    return false;
+                }
                 matMap = mat.Map;
                 if (matMap == null) return false;
 
@@ -383,14 +443,19 @@ namespace Strata
                     Thing siteForHop = fetch.siteThingId > 0
                         ? StrataPortalUtility.FindThingByIdAcrossMaps(fetch.siteThingId)
                         : null;
-                    if (siteForHop == null || siteForHop.Map == null) return false;
+                    if (siteForHop == null || siteForHop.Map == null)
+                    {
+                        StrataLog.Verbose("[Strata] Construct fetch: " + pawn.LabelShort
+                            + "'s build site is gone; dropping the fetch.");
+                        return false;
+                    }
                     Job hop = MakeFetchOrCommute(
                         pawn,
                         mat,
                         siteForHop,
                         Math.Min(mat.stackCount, Math.Max(1, fetch.count)),
                         fetch.forced);
-                    return hop != null && pawn.jobs.TryTakeOrderedJob(hop, JobTag.MiscWork);
+                    return StartFetchJob(pawn, hop, "commute to " + matMap);
                 }
             }
 
@@ -404,25 +469,49 @@ namespace Strata
                 if (!pawn.CanReserve(mat)
                     || !pawn.CanReserveAndReach(site, PathEndMode.Touch, Danger.Deadly))
                 {
+                    StrataLog.Verbose("[Strata] Construct fetch: " + pawn.LabelShort + " cannot reserve "
+                        + mat.LabelShort + " or reach " + site.LabelShort + "; dropping the fetch.");
                     return false;
                 }
                 Job deliver = JobMaker.MakeJob(JobDefOf.HaulToContainer, mat, site);
                 deliver.count = Math.Min(mat.stackCount, Math.Max(1, fetch.count));
                 deliver.haulMode = HaulMode.ToContainer;
                 deliver.playerForced = fetch.forced;
-                return pawn.jobs.TryTakeOrderedJob(deliver, JobTag.MiscWork);
+                return StartFetchJob(pawn, deliver, "deliver into " + site.LabelShort);
             }
 
-            if (!pawn.CanReserve(mat)) return false;
+            if (!pawn.CanReserve(mat))
+            {
+                StrataLog.Verbose("[Strata] Construct fetch: " + pawn.LabelShort + " cannot reserve "
+                    + mat.LabelShort + "; dropping the fetch.");
+                return false;
+            }
 
             MapPortal portal = LevelGraph.BestFirstStep(matMap, siteMap, pawn.Position, pawn);
-            if (portal == null) return false;
+            if (portal == null)
+            {
+                StrataLog.Verbose("[Strata] Construct fetch: " + pawn.LabelShort + " has no stair route from "
+                    + matMap + " back to " + siteMap + "; dropping the fetch.");
+                return false;
+            }
 
             HaulToLevelTargets.Remember(pawn, siteMap, matMap, site);
             Job haul = JobMaker.MakeJob(StrataDefOf.Strata_HaulToLevel, mat, portal);
             haul.count = Math.Min(mat.stackCount, Math.Max(1, fetch.count));
             haul.playerForced = fetch.forced;
-            return pawn.jobs.TryTakeOrderedJob(haul, JobTag.MiscWork);
+            return StartFetchJob(pawn, haul, "carry " + mat.LabelShort + " to " + siteMap);
+        }
+
+        private static bool StartFetchJob(Pawn pawn, Job job, string what)
+        {
+            if (job != null && pawn.jobs.TryTakeOrderedJob(job, JobTag.MiscWork))
+            {
+                StrataLog.Verbose("[Strata] Construct fetch: " + pawn.LabelShort + " started " + what + ".");
+                return true;
+            }
+            StrataLog.Verbose("[Strata] Construct fetch: " + pawn.LabelShort + " could not start " + what
+                + (job == null ? " (no route)." : " (job refused, possibly by another mod's patch)."));
+            return false;
         }
 
         private static Map FindMap(int id)

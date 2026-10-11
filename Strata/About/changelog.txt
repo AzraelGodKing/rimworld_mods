@@ -8,15 +8,13 @@
 [*] [b]Deep drill noise[/b] (AZR-272) - drilling out a portion now adds its noise burst on RimWorld 1.6.
 [*] [b]Levels tab too small on first open[/b] (AZR-448) - the tab now sizes to your levels (at least three rows) the first time you open it, instead of opening as a thin strip you had to drag open.
 [*] [b]Red and green glitch at full zoom-out[/b] (AZR-449) - open-sky gaps on upper levels keep showing the floor below at maximum zoom instead of flickering red and green.
-[/list]
-[b]Changed[/b]
-[list]
-[*] [b]Unused helpers[/b] — removed unused gravship, work-relay, portal, and shaft utility methods that had no callers.
+[*] [b]Building underground with materials on another floor[/b] (AZR-451) - colonists no longer walk up the stairs and come back empty-handed. Strata only sends them for stacks they can actually walk to from the stairs, and picks another stack if the first one turns out to be out of reach. With verbose logging on (Mod Options), Player.log says why a trip was dropped.
 [/list]
 
 [b]Changed[/b]
 [list]
 [*] [b]Seismograph station[/b] (AZR-271) - the readout lists tremor, cave-in, and infestation risk for every linked underground level, not just its own floor. It refreshes about every 4 seconds.
+[*] [b]Unused helpers[/b] - removed unused gravship, work-relay, portal, and shaft utility methods that had no callers.
 [/list]
 
 [i]Build stamp (Player.log): cavern-breath-v1[/i]
