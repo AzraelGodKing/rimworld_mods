@@ -3,10 +3,10 @@
   "name": "Living World",
   "game": "rimworld",
   "description": "Off-map faction life: other settlements drift, flip ownership, feud, and make news \u2014 without a second storyteller dumping threat at you.",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "screenshots": [],
   "download": {
-    "file": "LivingWorld-1.2.0.zip"
+    "file": "LivingWorld-1.0.0.zip"
   },
   "links": {
     "steam": null,
