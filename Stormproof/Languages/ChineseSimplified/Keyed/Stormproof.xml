@@ -131,6 +131,7 @@
   <Stormproof_Almanac_OpenDesc>查阅本地图一年的风暴、耀斑、干旱与寒潮。</Stormproof_Almanac_OpenDesc>
   <Stormproof_Almanac_Ledger>接闪 {0} / 未接 {1}。吸收短路 {2} / 遭受 {3}。灭火 {4}。磨损 {5}。</Stormproof_Almanac_Ledger>
   <Stormproof_Almanac_Lifetime>累计：接闪 {0} / 未接 {1}。吸收短路 {2} / 遭受 {3}。灭火 {4}。磨损 {5}。</Stormproof_Almanac_Lifetime>
+  <Stormproof_Almanac_CleanStretch>最长无事故期（无未接闪、无遭受短路）：{0}。当前：{1}。</Stormproof_Almanac_CleanStretch>
   <Stormproof_StormSpire_FulguriteReady>{0} 基部凝出闪电熔岩。可采集。</Stormproof_StormSpire_FulguriteReady>
   <Stormproof_StormSpire_CollectFulgurite>采集闪电熔岩（{0}）</Stormproof_StormSpire_CollectFulgurite>
   <Stormproof_StormSpire_CollectFulguriteDesc>从塔基取下雷击熔成的玻璃。</Stormproof_StormSpire_CollectFulguriteDesc>

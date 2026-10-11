@@ -28,18 +28,28 @@ namespace Stormproof
             Text.Font = GameFont.Small;
 
             IReadOnlyList<AlmanacEntry> entries = component.Almanac;
-            SumLifetime(entries, out int strikesCaught, out int strikesMissed,
-                out int zzztAbsorbed, out int zzztSuffered, out int firesSnuffed, out int wearHits);
-            bool hasTotals = strikesCaught + strikesMissed + zzztAbsorbed + zzztSuffered
-                + firesSnuffed + wearHits > 0;
-            float headerH = hasTotals ? 28f : 0f;
-            if (hasTotals)
+            AlmanacTotals t = component.Lifetime;
+            float headerH = 0f;
+            if (t != null && t.Any)
             {
-                Widgets.Label(new Rect(inRect.x, inRect.y + 36f, inRect.width, 24f),
+                Widgets.Label(new Rect(inRect.x, inRect.y + 36f + headerH, inRect.width, 24f),
                     "Stormproof_Almanac_Lifetime".Translate(
-                        strikesCaught, strikesMissed,
-                        zzztAbsorbed, zzztSuffered,
-                        firesSnuffed, wearHits));
+                        t.strikesCaught, t.strikesMissed,
+                        t.zzztAbsorbed, t.zzztSuffered,
+                        t.firesSnuffed, t.wearHits));
+                headerH += 26f;
+            }
+            if (component.LongestCleanTicks > 0)
+            {
+                Widgets.Label(new Rect(inRect.x, inRect.y + 36f + headerH, inRect.width, 24f),
+                    "Stormproof_Almanac_CleanStretch".Translate(
+                        component.LongestCleanTicks.ToStringTicksToPeriod(),
+                        component.CurrentCleanTicks.ToStringTicksToPeriod()));
+                headerH += 26f;
+            }
+            if (headerH > 0f)
+            {
+                headerH += 2f;
             }
 
             Rect listRect = new Rect(inRect.x, inRect.y + 40f + headerH, inRect.width,
@@ -82,34 +92,6 @@ namespace Stormproof
                 }
             }
             Widgets.EndScrollView();
-        }
-
-        private static void SumLifetime(IReadOnlyList<AlmanacEntry> entries,
-            out int strikesCaught, out int strikesMissed,
-            out int zzztAbsorbed, out int zzztSuffered,
-            out int firesSnuffed, out int wearHits)
-        {
-            strikesCaught = strikesMissed = 0;
-            zzztAbsorbed = zzztSuffered = 0;
-            firesSnuffed = wearHits = 0;
-            if (entries == null)
-            {
-                return;
-            }
-            for (int i = 0; i < entries.Count; i++)
-            {
-                AlmanacEntry e = entries[i];
-                if (e == null)
-                {
-                    continue;
-                }
-                strikesCaught += e.strikesCaught;
-                strikesMissed += e.strikesMissed;
-                zzztAbsorbed += e.zzztAbsorbed;
-                zzztSuffered += e.zzztSuffered;
-                firesSnuffed += e.firesSnuffed;
-                wearHits += e.wearHits;
-            }
         }
     }
 }
