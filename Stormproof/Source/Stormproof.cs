@@ -68,9 +68,11 @@ namespace Stormproof
         public static readonly HashSet<CompSkyRestorer> SkyRestorers = new HashSet<CompSkyRestorer>();
         public static readonly HashSet<CompFireSuppressor> FireSuppressors = new HashSet<CompFireSuppressor>();
         public static readonly HashSet<CompDroughtCondenser> DroughtCondensers = new HashSet<CompDroughtCondenser>();
+        public static readonly HashSet<CompLoadShedder> LoadShedders = new HashSet<CompLoadShedder>();
 
         public static void Clear()
         {
+            LoadShedders.Clear();
             Shields.Clear();
             SurgeProtectors.Clear();
             Spires.Clear();

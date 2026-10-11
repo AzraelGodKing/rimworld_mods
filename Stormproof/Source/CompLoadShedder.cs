@@ -56,6 +56,10 @@ namespace Stormproof
         private bool scheduleEnabled;
         private bool forecastOverride;
         private ShedHoldMode holdMode = ShedHoldMode.Auto;
+        private float shedSideDraw;
+        private int shedSideDrawTick = -1;
+        private bool shedSideDrawStale;
+        private const int ShedSideDrawInterval = 2500;
 
         public enum ShedHoldMode
         {
@@ -101,6 +105,37 @@ namespace Stormproof
         {
             base.PostSpawnSetup(respawningAfterLoad);
             transmitterComp = parent.GetComp<CompPower>();
+            StormproofRegistry.LoadShedders.Add(this);
+        }
+
+        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
+        {
+            base.PostDeSpawn(map, mode);
+            StormproofRegistry.LoadShedders.Remove(this);
+        }
+
+        internal float CutoffFraction => cutoffFraction;
+
+        internal PowerNet ForecastSupplyNet => parent.Spawned && transmitterComp != null ? SupplyNet() : null;
+
+        // Nameplate draw of the consumers this breaker cuts off when it opens.
+        internal float ShedSideDraw
+        {
+            get
+            {
+                if (shedSideDrawTick < 0 && parent.Spawned)
+                {
+                    RefreshShedSideDraw();
+                }
+                return shedSideDraw;
+            }
+        }
+
+        // Forecast twin of WantClosed: no storm pre-empt, since that is not predictable.
+        internal bool ProjectClosed(bool wasClosed, float fraction, int hourOfDay)
+        {
+            return DecideClosed(wasClosed, fraction < cutoffFraction, fraction >= ReconnectFraction,
+                hourOfDay, stormImminent: false);
         }
 
         // The grid we watch. Closed: our own net (both sides are one net).
@@ -150,6 +185,12 @@ namespace Stormproof
             {
                 return;
             }
+            // Nets rebuild after a breaker flip, so a stale split waits one check.
+            if (shedSideDrawStale || shedSideDrawTick < 0
+                || Find.TickManager.TicksGame - shedSideDrawTick >= ShedSideDrawInterval)
+            {
+                RefreshShedSideDraw();
+            }
             PowerNet supply = SupplyNet();
             if (supply == null)
             {
@@ -166,12 +207,14 @@ namespace Stormproof
 
             bool thresholdShed = fraction < cutoffFraction;
             bool thresholdReconnect = fraction >= ReconnectFraction;
-            bool wantClosed = WantClosed(supply, thresholdShed, thresholdReconnect);
+            bool wantClosed = DecideClosed(breakerClosed, thresholdShed, thresholdReconnect,
+                GenLocalDate.HourOfDay(parent.Map), forecastOverride && StormImminent(supply));
             bool quiet = wantClosed == breakerClosed || (!thresholdShed && !wantClosed);
             SetBreaker(wantClosed, quiet: quiet);
         }
 
-        private bool WantClosed(PowerNet supply, bool thresholdShed, bool thresholdReconnect)
+        private bool DecideClosed(bool wasClosed, bool thresholdShed, bool thresholdReconnect,
+            int hourOfDay, bool stormImminent)
         {
             if (thresholdShed)
             {
@@ -183,21 +226,163 @@ namespace Stormproof
             }
             if (holdMode == ShedHoldMode.HoldRun)
             {
-                return !breakerClosed ? thresholdReconnect : true;
+                return !wasClosed ? thresholdReconnect : true;
             }
-            if (scheduleEnabled && HourSheds(GenLocalDate.HourOfDay(parent.Map)))
+            if (scheduleEnabled && HourSheds(hourOfDay))
             {
                 return false;
             }
-            if (forecastOverride && StormImminent(supply))
+            if (stormImminent)
             {
                 return false;
             }
-            if (!breakerClosed)
+            if (!wasClosed)
             {
                 return thresholdReconnect;
             }
             return true;
+        }
+
+        private void RefreshShedSideDraw()
+        {
+            shedSideDrawTick = Find.TickManager.TicksGame;
+            shedSideDrawStale = false;
+            shedSideDraw = breakerClosed ? ClosedShedSideDraw() : OpenShedSideDraw();
+        }
+
+        // Open: the shed side is every neighbouring net that isn't the supply.
+        private float OpenShedSideDraw()
+        {
+            PowerNet supply = SupplyNet();
+            float draw = 0f;
+            var seen = new System.Collections.Generic.HashSet<PowerNet>();
+            foreach (IntVec3 cell in GenAdj.CellsAdjacentCardinal(parent))
+            {
+                if (!cell.InBounds(parent.Map))
+                {
+                    continue;
+                }
+                PowerNet net = parent.Map.powerNetGrid.TransmittedPowerNetAt(cell);
+                if (net == null || net == supply || !seen.Add(net))
+                {
+                    continue;
+                }
+                for (int i = 0; i < net.powerComps.Count; i++)
+                {
+                    draw += ConsumerDraw(net.powerComps[i], requirePowered: false);
+                }
+            }
+            return draw;
+        }
+
+        // Closed: both sides share one net, so split it by flooding transmitters
+        // from each neighbour without crossing this breaker. The side with the
+        // most battery capacity is the supply (same rule as SupplyNet).
+        private float ClosedShedSideDraw()
+        {
+            Map map = parent.Map;
+            var visited = new System.Collections.Generic.HashSet<Thing> { parent };
+            int sides = 0;
+            float total = 0f;
+            float supplyDraw = 0f;
+            float supplyCapacity = -1f;
+            foreach (IntVec3 cell in GenAdj.CellsAdjacentCardinal(parent))
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+                var start = new System.Collections.Generic.List<Thing>();
+                AddTransmittersAt(map, cell, visited, start);
+                if (start.Count == 0)
+                {
+                    continue;
+                }
+                FloodSide(map, start, visited, out float capacity, out float draw);
+                sides++;
+                total += draw;
+                if (capacity > supplyCapacity)
+                {
+                    supplyCapacity = capacity;
+                    supplyDraw = draw;
+                }
+            }
+            return sides < 2 ? 0f : total - supplyDraw;
+        }
+
+        private static void FloodSide(Map map, System.Collections.Generic.List<Thing> start,
+            System.Collections.Generic.HashSet<Thing> visited, out float capacity, out float draw)
+        {
+            capacity = 0f;
+            draw = 0f;
+            var queue = new System.Collections.Generic.Queue<Thing>(start);
+            var next = new System.Collections.Generic.List<Thing>();
+            while (queue.Count > 0)
+            {
+                Thing t = queue.Dequeue();
+                CompPowerBattery battery = t.TryGetComp<CompPowerBattery>();
+                if (battery != null)
+                {
+                    capacity += battery.Props.storedEnergyMax;
+                }
+                CompPower power = t.TryGetComp<CompPower>();
+                draw += ConsumerDraw(power, requirePowered: true);
+                if (power?.connectChildren != null)
+                {
+                    for (int i = 0; i < power.connectChildren.Count; i++)
+                    {
+                        draw += ConsumerDraw(power.connectChildren[i], requirePowered: true);
+                    }
+                }
+                foreach (IntVec3 cell in GenAdj.CellsAdjacentCardinal(t))
+                {
+                    if (!cell.InBounds(map))
+                    {
+                        continue;
+                    }
+                    next.Clear();
+                    AddTransmittersAt(map, cell, visited, next);
+                    for (int i = 0; i < next.Count; i++)
+                    {
+                        queue.Enqueue(next[i]);
+                    }
+                }
+            }
+        }
+
+        private static void AddTransmittersAt(Map map, IntVec3 cell,
+            System.Collections.Generic.HashSet<Thing> visited, System.Collections.Generic.List<Thing> into)
+        {
+            System.Collections.Generic.List<Thing> things = map.thingGrid.ThingsListAtFast(cell);
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing t = things[i];
+                CompPower power = t.TryGetComp<CompPower>();
+                if (power != null && power.TransmitsPowerNow && visited.Add(t))
+                {
+                    into.Add(t);
+                }
+            }
+        }
+
+        private static float ConsumerDraw(CompPower power, bool requirePowered)
+        {
+            if (!(power is CompPowerTrader trader) || trader.parent == null
+                || trader.Props.PowerConsumption <= 0f)
+            {
+                return 0f;
+            }
+            if (requirePowered ? !trader.PowerOn : !FlickedOn(trader.parent))
+            {
+                return 0f;
+            }
+            return GridForecastUtility.ConsumerForecastDraw(trader.parent, trader.Props.PowerConsumption);
+        }
+
+        private static bool FlickedOn(ThingWithComps thing)
+        {
+            CompFlickable flick = thing.GetComp<CompFlickable>();
+            return flick == null || flick.SwitchIsOn;
         }
 
         private bool StormImminent(PowerNet supply)
@@ -236,6 +421,7 @@ namespace Stormproof
                 return;
             }
             breakerClosed = closed;
+            shedSideDrawStale = true;
             if (parent.Spawned)
             {
                 parent.Map.powerNetManager.Notfiy_TransmitterTransmitsPowerNowChanged(transmitterComp);
