@@ -1,21 +1,10 @@
-3.8.2
-[h1]Strata - 3.8.2[/h1]
+3.8.3
+[h1]Strata - 3.8.3[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Cavern oxygen collapse on Medium/High[/b] (AZR-355) - breathing, plants, and animal methane now scale with room size. A huge Biomes! cavern full of wildlife no longer drains the whole layer to about 2% O2. Low only looked healthy before because it skipped animal breathing on the viewed map.
-[*] [b]Low-oxygen rooms that never recovered[/b] (AZR-355) - fresh-air top-up no longer lowers its own target when a room is short on O2, so a depleted room refills to normal air.
-[*] [b]Deep drill noise[/b] (AZR-272) - drilling out a portion now adds its noise burst on RimWorld 1.6.
-[*] [b]Levels tab too small on first open[/b] (AZR-448) - the tab now sizes to your levels (at least three rows) the first time you open it, instead of opening as a thin strip you had to drag open.
-[*] [b]Red and green glitch at full zoom-out[/b] (AZR-449) - open-sky gaps on upper levels keep showing the floor below at maximum zoom instead of flickering red and green.
 [*] [b]Building underground with materials on another floor[/b] (AZR-451) - colonists no longer walk up the stairs and come back empty-handed. Strata only sends them for stacks they can actually walk to from the stairs, and picks another stack if the first one turns out to be out of reach. With verbose logging on (Mod Options), Player.log says why a trip was dropped.
 [/list]
 
-[b]Changed[/b]
-[list]
-[*] [b]Seismograph station[/b] (AZR-271) - the readout lists tremor, cave-in, and infestation risk for every linked underground level, not just its own floor. It refreshes about every 4 seconds.
-[*] [b]Unused helpers[/b] - removed unused gravship, work-relay, portal, and shaft utility methods that had no callers.
-[/list]
-
-[i]Build stamp (Player.log): cavern-breath-v1[/i]
+[i]Build stamp (Player.log): construct-fetch-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
