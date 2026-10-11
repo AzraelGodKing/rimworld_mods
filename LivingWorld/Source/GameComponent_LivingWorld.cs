@@ -257,36 +257,39 @@ namespace LivingWorld
             pendingFallout.Add(fallout);
         }
 
+        private const int FalloutDelayTicks = 30000;
+
         public PendingFallout TryDequeueFallout(FalloutKind kind)
         {
-            for (int i = 0; i < pendingFallout.Count; i++)
+            int i = IndexOfReadyFallout(kind);
+            if (i < 0)
             {
-                if (pendingFallout[i].kind != kind)
-                {
-                    continue;
-                }
-                // Wait at least ~half a day so the war letter can land first.
-                if (Find.TickManager.TicksGame - pendingFallout[i].enqueueTick < 30000)
-                {
-                    continue;
-                }
-                PendingFallout hit = pendingFallout[i];
-                pendingFallout.RemoveAt(i);
-                return hit;
+                return null;
             }
-            return null;
+            PendingFallout hit = pendingFallout[i];
+            pendingFallout.RemoveAt(i);
+            return hit;
         }
 
+        /// <summary>Only entries past the delay; matches what TryDequeueFallout will return.</summary>
         public PendingFallout PeekFallout(FalloutKind kind)
         {
+            int i = IndexOfReadyFallout(kind);
+            return i < 0 ? null : pendingFallout[i];
+        }
+
+        private int IndexOfReadyFallout(FalloutKind kind)
+        {
+            int now = Find.TickManager.TicksGame;
             for (int i = 0; i < pendingFallout.Count; i++)
             {
-                if (pendingFallout[i].kind == kind)
+                // Wait at least ~half a day so the war letter can land first.
+                if (pendingFallout[i].kind == kind && now - pendingFallout[i].enqueueTick >= FalloutDelayTicks)
                 {
-                    return pendingFallout[i];
+                    return i;
                 }
             }
-            return null;
+            return -1;
         }
 
         private void TryFirePendingFallout()
@@ -323,8 +326,10 @@ namespace LivingWorld
                 {
                     IncidentParms parms = StorytellerUtility.DefaultParmsNow(warband.category, map);
                     parms.forced = true;
-                    warband.Worker.CanFireNow(parms);
-                    warband.Worker.TryExecute(parms);
+                    if (warband.Worker.CanFireNow(parms))
+                    {
+                        warband.Worker.TryExecute(parms);
+                    }
                 }
             }
         }

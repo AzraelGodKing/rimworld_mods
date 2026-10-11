@@ -24,8 +24,7 @@ namespace LivingWorld
                 return false;
             }
             GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            return comp?.PeekFallout(FalloutKind.Refugees) != null
-                || parms.forced;
+            return comp?.PeekFallout(FalloutKind.Refugees) != null;
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -35,13 +34,6 @@ namespace LivingWorld
             PendingFallout fallout = comp?.TryDequeueFallout(FalloutKind.Refugees);
             Faction faction = fallout?.Loser();
             if (faction == null || faction.defeated || faction.IsPlayer)
-            {
-                faction = Find.FactionManager.RandomNonHostileFaction(
-                    allowHidden: false,
-                    allowNonHumanlike: false,
-                    allowDefeated: false);
-            }
-            if (faction == null)
             {
                 return false;
             }
@@ -141,7 +133,7 @@ namespace LivingWorld
                 return false;
             }
             GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            return comp?.PeekFallout(FalloutKind.Warband) != null || parms.forced;
+            return comp?.PeekFallout(FalloutKind.Warband) != null;
         }
 
         protected override bool TryExecuteWorker(IncidentParms parms)
@@ -150,9 +142,8 @@ namespace LivingWorld
             GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
             PendingFallout fallout = comp?.TryDequeueFallout(FalloutKind.Warband);
             // Warband is from the winner chasing remnants — hostile if that faction hates player.
-            Faction faction = fallout?.Winner()
-                ?? Find.FactionManager.RandomEnemyFaction(allowHidden: false, allowDefeated: false);
-            if (faction == null)
+            Faction faction = fallout?.Winner();
+            if (faction == null || faction.defeated || faction.IsPlayer)
             {
                 return false;
             }
