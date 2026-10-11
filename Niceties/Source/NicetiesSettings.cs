@@ -19,6 +19,7 @@ namespace Niceties
         public bool wearAnyGender = true;
 
         public bool hideCryptosleep = true;
+        public bool showCryptosleepCount = true;
 
         public bool meleeHunting = true;
         public bool unarmedHunting = false;
@@ -39,6 +40,7 @@ namespace Niceties
             Scribe_Values.Look(ref allowThroneAltars, "allowThroneAltars", true);
             Scribe_Values.Look(ref wearAnyGender, "wearAnyGender", true);
             Scribe_Values.Look(ref hideCryptosleep, "hideCryptosleep", true);
+            Scribe_Values.Look(ref showCryptosleepCount, "showCryptosleepCount", true);
             Scribe_Values.Look(ref meleeHunting, "meleeHunting", true);
             Scribe_Values.Look(ref unarmedHunting, "unarmedHunting", false);
             Scribe_Values.Look(ref meleeHuntMaxBodySize, "meleeHuntMaxBodySize", 1.5f);
@@ -73,6 +75,7 @@ namespace Niceties
             allowThroneAltars = other.allowThroneAltars;
             wearAnyGender = other.wearAnyGender;
             hideCryptosleep = other.hideCryptosleep;
+            showCryptosleepCount = other.showCryptosleepCount;
             meleeHunting = other.meleeHunting;
             unarmedHunting = other.unarmedHunting;
             meleeHuntMaxBodySize = other.meleeHuntMaxBodySize;
@@ -121,7 +124,17 @@ namespace Niceties
             meleeHuntMaxBodySize = 0.8f;
         }
 
+        /// <summary>Every saved field; drives Mod Options disk writes.</summary>
         public int ContentFingerprint()
+        {
+            unchecked
+            {
+                return (SimFingerprint() * 397) ^ (showCryptosleepCount ? 1 : 0);
+            }
+        }
+
+        /// <summary>Fields baked into the save snapshot; excludes UI-only preferences.</summary>
+        public int SimFingerprint()
         {
             unchecked
             {

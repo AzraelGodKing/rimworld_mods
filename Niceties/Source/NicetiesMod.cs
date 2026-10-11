@@ -40,27 +40,25 @@ namespace Niceties
                     "Niceties_Settings_PresetSoft".Translate()))
             {
                 Settings.ApplySoft();
-                OnFeatureTogglesChanged();
             }
             if (Widgets.ButtonText(new Rect(presetRow.x + bw + 8f, presetRow.y, bw, 28f),
                     "Niceties_Settings_PresetDefault".Translate()))
             {
                 Settings.ResetToDefaults();
-                OnFeatureTogglesChanged();
             }
             if (Widgets.ButtonText(new Rect(presetRow.x + 2f * (bw + 8f), presetRow.y, bw, 28f),
                     "Niceties_Settings_PresetHard".Translate()))
             {
                 Settings.ApplyHard();
-                OnFeatureTogglesChanged();
             }
 
             listing.Gap(4f);
             listing.Label("Niceties_Settings_ActivePreset".Translate(Settings.ActivePresetLabelKey().Translate()));
             listing.Label("Niceties_Settings_PresetsTip".Translate());
+            DrawSaveSnapshotNotice(listing);
 
             DrawFeature(listing, "Niceties_Settings_ApparelCare", "Niceties_Settings_ApparelCareTip",
-                ref Settings.enableApparelCare, null);
+                ref Settings.enableApparelCare);
             if (Settings.enableApparelCare)
             {
                 listing.CheckboxLabeled("Niceties_Settings_QualityScale".Translate(),
@@ -74,16 +72,21 @@ namespace Niceties
             }
 
             DrawFeature(listing, "Niceties_Settings_ThroneAltar", "Niceties_Settings_ThroneAltarTip",
-                ref Settings.allowThroneAltars, null);
+                ref Settings.allowThroneAltars);
 
             DrawFeature(listing, "Niceties_Settings_WearAny", "Niceties_Settings_WearAnyTip",
-                ref Settings.wearAnyGender, () => ApparelGender.Apply(Settings.wearAnyGender));
+                ref Settings.wearAnyGender);
 
             DrawFeature(listing, "Niceties_Settings_HideCrypto", "Niceties_Settings_HideCryptoTip",
-                ref Settings.hideCryptosleep, CryptosleepBar.MarkDirty);
+                ref Settings.hideCryptosleep);
+            if (Settings.hideCryptosleep)
+            {
+                listing.CheckboxLabeled("Niceties_Settings_CryptoCount".Translate(),
+                    ref Settings.showCryptosleepCount, "Niceties_Settings_CryptoCountTip".Translate());
+            }
 
             DrawFeature(listing, "Niceties_Settings_MeleeHunt", "Niceties_Settings_MeleeHuntTip",
-                ref Settings.meleeHunting, null);
+                ref Settings.meleeHunting);
             if (Settings.meleeHunting)
             {
                 listing.CheckboxLabeled("Niceties_Settings_UnarmedHunt".Translate(),
@@ -91,10 +94,14 @@ namespace Niceties
                 listing.Label("Niceties_Settings_MeleeSize".Translate(
                     Settings.meleeHuntMaxBodySize.ToString("F1")));
                 Settings.meleeHuntMaxBodySize = listing.Slider(Settings.meleeHuntMaxBodySize, 0.2f, 8f);
+                string example = MeleeHunt.ReferenceAnimalLabel(Settings.meleeHuntMaxBodySize);
+                listing.Label(example != null
+                    ? "Niceties_Settings_MeleeSizeExample".Translate(example)
+                    : "Niceties_Settings_MeleeSizeTiny".Translate());
             }
 
             DrawFeature(listing, "Niceties_Settings_SharedRooms", "Niceties_Settings_SharedRoomsTip",
-                ref Settings.enableSharedRooms, null);
+                ref Settings.enableSharedRooms);
             if (Settings.enableSharedRooms)
             {
                 listing.CheckboxLabeled("Niceties_Settings_SkipDisturbedSleep".Translate(),
@@ -103,13 +110,13 @@ namespace Niceties
             }
 
             DrawFeature(listing, "Niceties_Settings_LeaveAWayOut", "Niceties_Settings_LeaveAWayOutTip",
-                ref Settings.enableLeaveAWayOut, null);
+                ref Settings.enableLeaveAWayOut);
 
             listing.GapLine();
             if (listing.ButtonText("Niceties_Settings_Reset".Translate()))
             {
                 Settings.ResetToDefaults();
-                OnFeatureTogglesChanged();
+                Settings.showCryptosleepCount = true;
             }
 
             settingsContentHeight = Mathf.Max(listing.MaxColumnHeightSeen + 24f, inRect.height);
@@ -120,24 +127,43 @@ namespace Niceties
             {
                 Settings.Write();
                 NicetiesSim.SyncFromModSettings();
+                OnFeatureTogglesChanged();
+            }
+        }
+
+        private static void DrawSaveSnapshotNotice(Listing_Standard listing)
+        {
+            GameComponent_NicetiesSim gc = GameComponent_NicetiesSim.Get();
+            if (gc == null || !gc.DiffersFromModSettings())
+            {
+                return;
+            }
+
+            listing.Gap(4f);
+            if (!NicetiesSim.CanApplyModSettingsNow)
+            {
+                listing.Label("Niceties_Settings_SnapshotHost".Translate());
+                return;
+            }
+
+            listing.Label("Niceties_Settings_SnapshotDiffers".Translate());
+            if (listing.ButtonText("Niceties_Settings_SnapshotApply".Translate()))
+            {
+                gc.PullFromModSettings();
+                OnFeatureTogglesChanged();
             }
         }
 
         private static void DrawFeature(Listing_Standard listing, string labelKey, string tipKey,
-            ref bool enabled, System.Action onChanged)
+            ref bool enabled)
         {
             listing.GapLine();
-            bool was = enabled;
             listing.CheckboxLabeled(labelKey.Translate(), ref enabled, tipKey.Translate());
-            if (onChanged != null && was != enabled)
-            {
-                onChanged();
-            }
         }
 
         private static void OnFeatureTogglesChanged()
         {
-            ApparelGender.Apply(Settings.wearAnyGender);
+            ApparelGender.ApplyEffective();
             CryptosleepBar.MarkDirty();
         }
     }
