@@ -96,16 +96,23 @@ namespace Homesteader
 
         public override string CompInspectStringExtra()
         {
-            if (!Prefs.DevMode || Total <= 0.001f)
+            if (Total <= 0.001f)
             {
                 return null;
             }
 
-            return "Homesteader_LandraceDev".Translate(
+            string line = "Homesteader_Landrace".Translate(
                 (yieldBonus * 100f).ToString("F0"),
                 (frostBonus * 100f).ToString("F0"),
                 (droughtBonus * 100f).ToString("F0"),
                 generations);
+            if ((frostBonus > 0f && !PatchHealth.LandraceFrostHooked)
+                || (droughtBonus > 0f && !PatchHealth.LandraceDroughtHooked))
+            {
+                line += "\n" + "Homesteader_LandraceGrowthInactive".Translate();
+            }
+
+            return line;
         }
 
         private static int Bucket(float v) => Mathf.RoundToInt(v * 100f);
@@ -192,7 +199,7 @@ namespace Homesteader
         }
     }
 
-    [HarmonyPatch(typeof(Plant), "get_GrowthRateFactor_Temperature")]
+    [HarmonyPatch(typeof(Plant), nameof(Plant.GrowthRateFactor_Temperature), MethodType.Getter)]
     public static class Patch_LandraceFrost
     {
         public static void Postfix(Plant __instance, ref float __result)
@@ -207,7 +214,7 @@ namespace Homesteader
         }
     }
 
-    [HarmonyPatch(typeof(Plant), "get_GrowthRateFactor_Fertility")]
+    [HarmonyPatch(typeof(Plant), nameof(Plant.GrowthRateFactor_Fertility), MethodType.Getter)]
     public static class Patch_LandraceDrought
     {
         public static void Postfix(Plant __instance, ref float __result)

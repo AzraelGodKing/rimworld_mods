@@ -82,6 +82,30 @@
     </stages>
   </ThoughtDef>
 
+  <!-- Annual autumn harvest festival at the maypole; stage = pantry preserve variety. -->
+  <ThoughtDef>
+    <defName>Homesteader_HarvestFestival</defName>
+    <durationDays>3</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>lean harvest festival</label>
+        <description>We danced around the maypole, even if the cellar looks thin this year.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+      <li>
+        <label>harvest festival</label>
+        <description>Ribbons, music, and a table of our own preserves. A good year on the homestead.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+      <li>
+        <label>bountiful harvest festival</label>
+        <description>Jars on every shelf and a feast around the maypole. We are ready for winter.</description>
+        <baseMoodEffect>10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
   <!-- Situational mood while Homesteader_NearMonument27 is active. -->
   <ThoughtDef>
     <defName>Homesteader_Monument27Mood</defName>

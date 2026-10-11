@@ -4,6 +4,26 @@ Detailed notes for Homesteader only.
 
 ## [Unreleased]
 
+AZR-263 AZR-264 AZR-362 AZR-363 AZR-364 AZR-365 AZR-366 AZR-367 AZR-368 AZR-369 AZR-370
+
+Build stamp (Player.log): `harvest-aging-v1`.
+
+### Added
+- **Harvest festival** (AZR-263, HS-A01) — once a year, on the first autumn day a home map has a harvest maypole, colonists there celebrate. Mood lasts 3 days and scales with pantry variety: lean (+3), festival with 3+ preserve kinds (+6), bountiful with 6+ (+10). Letter points at the maypole. Biomes without autumn hold it in Septober. Not an Ideology ritual yet.
+- **Cellar aging** (AZR-264, HS-A03) — cheese, waxed cheese, smoked cheese, and cider age while stored in a root cellar, springhouse, or icehouse range: aged at 5 days (x1.1 value), well-aged at 15 (x1.25), vintage at 30 (x1.5). The icehouse ages at half speed. Tier shows in the item label and inspect pane; stacks merge as a weighted average.
+- **Maple sugaring season** (AZR-363, HS-A12) — sugar maple sap yield follows the season: strongest in a cool spring, slower in fall and winter, nearly dry in summer. The tree's inspect pane says how the sap is running.
+- **Pantry Contents sort** (AZR-370) — sort the In store list by most stock, name, or spoiling soonest.
+- **Pick the workbench** (AZR-369) — on What I can make, Add bill opens a list when more than one station qualifies (with map name and current bill count); hovering highlights the station.
+- **Saved seed progress** (AZR-368) — landrace yield / frost / drought bonuses and generation now show on seeds and crops for every player, not only in Developer mode.
+
+### Fixed
+- **Pantry jump button** (AZR-362) — the "closest to spoiling" row has its Jump button back.
+- **Passive cooling after a game update** (AZR-364) — the room-rebuild hook targets the public method by compile-checked name. If the hook is ever missing, cooled cells rescan every 250 ticks instead of going stale.
+- **Landrace frost/drought after a game update** (AZR-365) — growth hooks use compile-checked property names. If either hook is missing, the inspect pane says those bonuses are inactive instead of showing numbers that do nothing.
+- **Spoilage-first bills after a game update** (AZR-366) — if the private bill-ingredient hooks fail to apply, the settings page says preserving bills no longer sort rot-first, and Player.log gets a warning.
+
+### Changed
+- **Settings window** (AZR-367) — gameplay dials are pushed into defs only when a value changes, not every frame the page is open.
 
 ## [1.3.1]
 
