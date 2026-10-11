@@ -34,12 +34,6 @@ namespace DeepColony
             }
         }
 
-        public static bool AreRivals(Pawn a, Pawn b)
-        {
-            if (a?.relations == null || b == null) return false;
-            return a.relations.DirectRelationExists(DC_DefOf.DC_Rival, b);
-        }
-
         public static Pawn FirstLivingRival(Pawn pawn)
         {
             if (pawn?.relations == null) return null;

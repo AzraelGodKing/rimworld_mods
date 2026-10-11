@@ -34,8 +34,6 @@ namespace DeepColony
         public int lastFamilyLetterTick = -1;
         public HashSet<int> funeralProcessedCorpses = new HashSet<int>();
         public bool firstHarvestLetterSent;
-        public bool autoPerksNewsLetterSent;
-        public bool patch161NewsLetterSent;
         private string lastNewsVersion;
         public int lastEnvoyVisitTick = -1;
 
@@ -462,8 +460,6 @@ namespace DeepColony
             Scribe_Collections.Look(ref funeralProcessedCorpses, "funeralProcessedCorpses", LookMode.Value);
             Scribe_Values.Look(ref lastEnvoyVisitTick, "lastEnvoyVisitTick", -1);
             Scribe_Values.Look(ref firstHarvestLetterSent, "firstHarvestLetterSent", false);
-            Scribe_Values.Look(ref autoPerksNewsLetterSent, "autoPerksNewsLetterSent", false);
-            Scribe_Values.Look(ref patch161NewsLetterSent, "patch161NewsLetterSent", false);
             Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
 
             if (inheritanceProcessed == null) inheritanceProcessed = new HashSet<int>();

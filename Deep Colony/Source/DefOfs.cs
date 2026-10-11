@@ -69,7 +69,6 @@ namespace DeepColony
         public static ThoughtDef DC_Thought_Inherited;
         public static ThoughtDef DC_Thought_Disinherited;
         public static ThoughtDef DC_Thought_MovedIntoDeadRoom;
-        public static ThoughtDef DC_Thought_NoisyRoom;
 
         // ── Hediffs ───────────────────────────────────────────────────────────────
         public static HediffDef DC_Hediff_Elder;

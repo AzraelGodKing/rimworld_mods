@@ -17,12 +17,6 @@ namespace DeepColony
             return 1f;
         }
 
-        public static float NaturalFadeMultiplier()
-        {
-            if (CounselingIsStoic) return 0.65f;
-            return 1f;
-        }
-
         public static bool AutoCounselBlocked => CounselingIsStoic;
     }
 }
