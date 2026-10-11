@@ -14,7 +14,7 @@
 [*] [b]Hunters Use Melee incompat (AZR-295)[/b] — About.xml incompatibleWith adds Mlie.HuntersUseMelee (maintained Workshop counterpart; original Melee Hunting package is discontinued/removed).
 [/list]
 
-[i]Build stamp (Player.log): niceties-azr-275-295-v1[/i]
+[i]Build stamp (Player.log): sim-snapshot-v2[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
 
 1.4.0

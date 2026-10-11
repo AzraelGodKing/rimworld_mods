@@ -2,6 +2,28 @@
 
 Detailed notes for **Niceties** only.
 
+## [Unreleased]
+
+AZR-371 AZR-372 AZR-373 AZR-374 AZR-375 AZR-376 AZR-377 AZR-378 AZR-379 AZR-380 AZR-381
+
+Build stamp: `sim-snapshot-v2` (Player.log).
+
+### Added
+- **Hidden cryptosleep count** — a small "+N in cryptosleep" note beside the colonist bar says how many colonists the filter is hiding. Own checkbox under Hidden cryptosleep, on by default.
+- **Melee hunt size example** — the body-size cap slider names a vanilla reference animal (for example "warg (1.4)") so the number means something.
+- **Roommates on inspect** — a shared bedroom's beds now list who sleeps in the room.
+- **Save settings notice** — Mod Options says when the loaded save is running on different baked settings, with an "Apply to this save now" button (single-player). In Multiplayer it explains that the host's settings are in charge.
+
+### Fixed
+- **Wear any outfit in Multiplayer** — gender tags now follow the save's host-baked settings like every other nicety, instead of each player's own Mod Options.
+- **Share room in Multiplayer** — the bed gizmo now syncs to every player when the Multiplayer mod is loaded, so rooms do not end up as a bedroom for one player and barracks for another.
+- **Stale save settings** — in single-player, loading a save now picks up your current Mod Options. You no longer have to reopen Mod Options and change something for a save to notice.
+- **Patch target renames** — if a RimWorld update renames the private methods behind "no disturbed sleep for roommates" or the cryptosleep bar filter, Niceties skips just that feature and names it in the log.
+
+### Changed
+- **Leave a way out performance** — wall enclosure checks are cached per frame, so several builders finishing walls at once no longer redo the same flood fill, and the step-aside check reuses it.
+- **Roadmap** — feature table lists Well-kept weapons and the presets.
+
 
 ## [1.4.1]
 
