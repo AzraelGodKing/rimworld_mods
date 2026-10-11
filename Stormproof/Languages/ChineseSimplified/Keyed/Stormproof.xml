@@ -75,6 +75,9 @@
   <Stormproof_LoadShedder_HourShed>切除</Stormproof_LoadShedder_HourShed>
   <Stormproof_LoadShedder_HourRun>运行</Stormproof_LoadShedder_HourRun>
   <Stormproof_LoadShedder_ScheduleStatus>本小时：{0}</Stormproof_LoadShedder_ScheduleStatus>
+  <Stormproof_LoadShedder_ForecastLegend>底部色条 = 供电侧蓄电池未来 8 小时的预测。黄色 = 限电。橙色 = 触发切断阈值。</Stormproof_LoadShedder_ForecastLegend>
+  <Stormproof_LoadShedder_ForecastNone>供电电网上没有通电的天气预报仪，因此不显示预测时段。</Stormproof_LoadShedder_ForecastNone>
+  <Stormproof_LoadShedder_ForecastHourTip>预测：本小时供电侧蓄电池至少 {0}。</Stormproof_LoadShedder_ForecastHourTip>
 
   <!-- Solar shield -->
   <Stormproof_SolarShield_Standby>待机。太阳耀斑期间此护盾将消耗 {0} W。</Stormproof_SolarShield_Standby>

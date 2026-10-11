@@ -75,6 +75,9 @@
   <Stormproof_LoadShedder_HourShed>откл</Stormproof_LoadShedder_HourShed>
   <Stormproof_LoadShedder_HourRun>вкл</Stormproof_LoadShedder_HourRun>
   <Stormproof_LoadShedder_ScheduleStatus>Этот час: {0}</Stormproof_LoadShedder_ScheduleStatus>
+  <Stormproof_LoadShedder_ForecastLegend>Нижняя полоса = прогноз батарей питающей сети на 8 часов. Жёлтая = просадка. Оранжевая = сработает порог.</Stormproof_LoadShedder_ForecastLegend>
+  <Stormproof_LoadShedder_ForecastNone>В питающей сети нет включённого метеорологического пульта, прогноз по часам не показан.</Stormproof_LoadShedder_ForecastNone>
+  <Stormproof_LoadShedder_ForecastHourTip>Прогноз: батареи питающей сети не ниже {0} в этот час.</Stormproof_LoadShedder_ForecastHourTip>
 
   <!-- Solar shield -->
   <Stormproof_SolarShield_Standby>Ожидание. Во время солнечной вспышки щит будет потреблять {0} Вт.</Stormproof_SolarShield_Standby>

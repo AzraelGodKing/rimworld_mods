@@ -75,6 +75,9 @@
   <Stormproof_LoadShedder_HourShed>shed</Stormproof_LoadShedder_HourShed>
   <Stormproof_LoadShedder_HourRun>run</Stormproof_LoadShedder_HourRun>
   <Stormproof_LoadShedder_ScheduleStatus>This hour: {0}</Stormproof_LoadShedder_ScheduleStatus>
+  <Stormproof_LoadShedder_ForecastLegend>Bottom bar = forecast for the supply batteries over the next 8 hours. Amber = brownout. Orange = trips the cutoff.</Stormproof_LoadShedder_ForecastLegend>
+  <Stormproof_LoadShedder_ForecastNone>No powered weather forecaster on the supply grid, so forecast hours are not shown.</Stormproof_LoadShedder_ForecastNone>
+  <Stormproof_LoadShedder_ForecastHourTip>Forecast: supply batteries at least {0} this hour.</Stormproof_LoadShedder_ForecastHourTip>
 
   <!-- Solar shield -->
   <Stormproof_SolarShield_Standby>Standby. During a solar flare this shield will draw {0} W.</Stormproof_SolarShield_Standby>
