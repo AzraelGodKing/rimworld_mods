@@ -449,5 +449,18 @@ namespace DateNight
 
             return partner;
         }
+
+        internal static void TryGainThought(Pawn pawn, Pawn other, ThoughtDef def)
+        {
+            if (pawn?.needs?.mood?.thoughts?.memories == null || def == null || other == null)
+            {
+                return;
+            }
+            if (pawn.ageTracker == null || !pawn.ageTracker.Adult || !pawn.DevelopmentalStage.Adult())
+            {
+                return;
+            }
+            pawn.needs.mood.thoughts.memories.TryGainMemory(def, other);
+        }
     }
 }
