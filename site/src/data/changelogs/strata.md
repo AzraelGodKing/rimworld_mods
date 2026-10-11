@@ -1,14 +1,16 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.8.2` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.2 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.8.3` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.3 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `cavern-breath-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `construct-fetch-v1` in `StrataBuildInfo.BuildStamp`.
 
-## [Unreleased]
+## [3.8.3]
 
-### Changed
-- **Retired breath grid**: removed unused per-cell O₂/CO₂ diffusion (`AtmosphereBreathGrid`, no-op `AtmosphereMapComponent` hooks, and the off-thread breath job). Room-volume clouds and the live overlay are unchanged.
+AZR-451
+
+### Fixed
+- **Building underground with materials on another floor** (`construct-fetch-v1`, AZR-451): force-building downstairs with the wood upstairs sent the colonist up the stairs, then back down empty-handed to idle. When picking a stack on another floor, the cross-level fetch only checked that it was unforbidden and reservable, so it could choose one the colonist couldn't walk to. The colonist arrived, the carry job failed its first step, and nothing was logged. Stacks on other floors must now be reachable from that floor's stair landing (`LevelGraph` arrival cell, `TraverseMode.PassDoors`), and on arrival the colonist re-checks reach and swaps to another stack if needed. Each branch where `TryFinishFetch` gives up, plus a `Strata_HaulToLevel` that ends Incompletable/Errored, now writes a line when verbose logging is on.
 
 ## [3.8.2]
 
@@ -23,6 +25,7 @@ AZR-268 AZR-269 AZR-270 AZR-271 AZR-272 AZR-273 AZR-274 AZR-353 AZR-354 AZR-355 
 
 ### Changed
 - **Seismograph station** (AZR-271): the readout now lists tremor, cave-in, and infestation risk for every linked underground level, not just the floor it stands on. It refreshes about every 4 seconds instead of every second.
+- **Retired breath grid**: removed unused per-cell O₂/CO₂ diffusion (`AtmosphereBreathGrid`, no-op `AtmosphereMapComponent` hooks, and the off-thread breath job). Room-volume clouds and the live overlay are unchanged.
 
 ## [3.8.1]
 

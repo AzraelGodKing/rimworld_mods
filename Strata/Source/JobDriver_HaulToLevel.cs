@@ -28,6 +28,14 @@ namespace Strata
             // The player can seal the shaft mid-haul; drop the job instead of
             // walking cargo to a door that won't open.
             this.FailOn(() => StrataPortalUtility.IsSealedPortal(Portal));
+            AddFinishAction(condition =>
+            {
+                if (condition == JobCondition.Incompletable || condition == JobCondition.Errored)
+                {
+                    StrataLog.Verbose("[Strata] Haul to level: " + pawn.LabelShort + " gave up carrying "
+                        + (Item?.LabelShort ?? "cargo") + " (" + condition + ").");
+                }
+            });
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch)
                 .FailOnSomeonePhysicallyInteracting(TargetIndex.A);
             yield return Toils_Haul.StartCarryThing(TargetIndex.A);
