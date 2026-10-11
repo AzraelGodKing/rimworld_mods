@@ -144,6 +144,15 @@ namespace LivingWorld
                 MessageTypeDefOf.NeutralEvent, historical: false);
         }
 
+        [DebugAction(Cat, "Spawn traffic caravan",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void SpawnTraffic()
+        {
+            LivingWorldDebugCommand.EnqueueSpawnTraffic();
+            Messages.Message("[Living World] Traffic caravan queued for next tick.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
         private static void ForceTone(FactionRelationTone tone)
         {
             LivingWorldDebugCommand.EnqueueForceTone(tone);

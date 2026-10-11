@@ -33,6 +33,11 @@ namespace LivingWorld
                 ? "LivingWorld_WarSite_RefugeeCampInspect"
                 : "LivingWorld_WarSite_BattlefieldInspect";
             string line = key.Translate();
+            int remaining = expiresTick - Find.TickManager.TicksGame;
+            if (expiresTick > 0 && remaining > 0)
+            {
+                line += "\n" + "LivingWorld_WarSite_FadesIn".Translate(remaining.ToStringTicksToPeriod());
+            }
             return string.IsNullOrEmpty(baseStr) ? line : baseStr + "\n" + line;
         }
     }

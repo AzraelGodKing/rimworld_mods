@@ -4,4 +4,6 @@
   <LivingWorld_WarSite.description>Краткий след битвы за картой — обломки, лагеря или спорная земля. Не личная точка Nemesis.</LivingWorld_WarSite.description>
   <LivingWorld_WayCamp.label>придорожный стан</LivingWorld_WayCamp.label>
   <LivingWorld_WayCamp.description>Лагерь, который караван основал на уже пройденной дороге. Ночёвка чуть легче — не поселение и не шрам войны.</LivingWorld_WayCamp.description>
+  <LivingWorld_TrafficCaravan.label>караван в пути</LivingWorld_TrafficCaravan.label>
+  <LivingWorld_TrafficCaravan.description>Караван NPC идёт из одного поселения в другое. Обычно не к вам.</LivingWorld_TrafficCaravan.description>
 </LanguageData>

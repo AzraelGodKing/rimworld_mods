@@ -22,6 +22,8 @@
   <LivingWorld_Settings_WarbandDesc>Редкие враждебные или напряжённые отряды преследуют войну, о которой вы слышали. По умолчанию выкл — осторожнее.</LivingWorld_Settings_WarbandDesc>
   <LivingWorld_Settings_RoadHazards>Препятствия на дороге</LivingWorld_Settings_RoadHazards>
   <LivingWorld_Settings_RoadHazardsDesc>Сезон и биом на уже пройденных клетках: грязь, жара, холод, ветер. Придорожный стан делает это реже. С чужой дороги не стреляет.</LivingWorld_Settings_RoadHazardsDesc>
+  <LivingWorld_Settings_Traffic>Караваны между поселениями</LivingWorld_Settings_Traffic>
+  <LivingWorld_Settings_TrafficDesc>Караваны NPC ходят между дружественными поселениями по карте мира. Прибытия попадают в хронику без писем. Изредка караван, проходящий рядом с колонией, сворачивает к вам торговать.</LivingWorld_Settings_TrafficDesc>
   <LivingWorld_Settings_Verbosity>Подробность новостей</LivingWorld_Settings_Verbosity>
   <LivingWorld_Verbosity_Low>Низкая (только важное)</LivingWorld_Verbosity_Low>
   <LivingWorld_Verbosity_Medium>Средняя (контакт / рядом / союзники)</LivingWorld_Verbosity_Medium>
@@ -86,6 +88,11 @@
   <LivingWorld_LetterText_WarbandPass>Отряд {0} охотится на остатки {1} после боёв у {2}. Они проходят через ваш регион.</LivingWorld_LetterText_WarbandPass>
   <LivingWorld_LetterLabel_Correction>Весть пришла позже</LivingWorld_LetterLabel_Correction>
   <LivingWorld_LetterText_Correction>Караван или радио поправили прежние слухи о {0} и {1} у {2}. Хроника обновлена.</LivingWorld_LetterText_Correction>
+  <LivingWorld_LetterLabel_TradeCaravan>Караван прибыл</LivingWorld_LetterLabel_TradeCaravan>
+  <LivingWorld_LetterText_TradeCaravan>Караван {0} добрался до {2} после многих дней в пути.</LivingWorld_LetterText_TradeCaravan>
+  <LivingWorld_LetterLabel_CaravanDiverted>Караван свернул</LivingWorld_LetterLabel_CaravanDiverted>
+  <LivingWorld_LetterText_CaravanDiverted>Караван {0}, шедший в {2}, свернул, чтобы навестить вашу колонию.</LivingWorld_LetterText_CaravanDiverted>
+  <LivingWorld_Traffic_Inspect>Из {0}, путь в {1}. Прибудет примерно через {2}.</LivingWorld_Traffic_Inspect>
   <LivingWorld_RumourPrefix>Говорят… торговец клянётся…</LivingWorld_RumourPrefix>
   <LivingWorld_Channel_Rumour>слух</LivingWorld_Channel_Rumour>
   <LivingWorld_Channel_Proximity>рядом</LivingWorld_Channel_Proximity>
@@ -95,6 +102,20 @@
   <LivingWorld_Chronicle_Empty>Пока нет записей о мире.</LivingWorld_Chronicle_Empty>
   <LivingWorld_Chronicle_Corrected>(исправлено)</LivingWorld_Chronicle_Corrected>
   <LivingWorld_Chronicle_AllChannels>все каналы</LivingWorld_Chronicle_AllChannels>
+  <LivingWorld_Chronicle_SeverityAll>любая важность</LivingWorld_Chronicle_SeverityAll>
+  <LivingWorld_Chronicle_SeverityNormal>обычные и важные</LivingWorld_Chronicle_SeverityNormal>
+  <LivingWorld_Chronicle_SeverityMajor>только важные</LivingWorld_Chronicle_SeverityMajor>
+  <LivingWorld_Chronicle_ViewChronicle>Хроника</LivingWorld_Chronicle_ViewChronicle>
+  <LivingWorld_Chronicle_ViewWorldState>Состояние мира</LivingWorld_Chronicle_ViewWorldState>
+  <LivingWorld_WorldState_Empty>Отношения фракций пока не отслеживаются.</LivingWorld_WorldState_Empty>
+  <LivingWorld_WorldState_Summary>Войны: {0} · Напряжённость: {1} · Союзы: {2} · Мир: {3}</LivingWorld_WorldState_Summary>
+  <LivingWorld_WorldState_PeaceHidden>Пары фракций в мире не показаны.</LivingWorld_WorldState_PeaceHidden>
+  <LivingWorld_WorldState_Intensity>накал {0}/3</LivingWorld_WorldState_Intensity>
+  <LivingWorld_WorldState_Blackout>торговая блокада</LivingWorld_WorldState_Blackout>
+  <LivingWorld_Tone_Peace>мир</LivingWorld_Tone_Peace>
+  <LivingWorld_Tone_Tension>напряжённость</LivingWorld_Tone_Tension>
+  <LivingWorld_Tone_War>война</LivingWorld_Tone_War>
+  <LivingWorld_Tone_Alliance>союз</LivingWorld_Tone_Alliance>
   <LivingWorld_LetterLabel_RoadStretch>Дорога</LivingWorld_LetterLabel_RoadStretch>
   <LivingWorld_LetterText_RoadStretch>Караваны прошли уже {0} клеток мира. Living World запомнит этот след как дорогу — дальше по ней пойдут экспедиции и угрозы пути.</LivingWorld_LetterText_RoadStretch>
   <LivingWorld_WayCamp_Inspect>Придорожный стан на вашей дороге. Ночёвка здесь чуть легче.</LivingWorld_WayCamp_Inspect>
@@ -108,4 +129,5 @@
 
   <LivingWorld_WarSite_BattlefieldInspect>Свежие обломки поля боя с войны за картой.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>Временный лагерь беженцев от далёких боёв.</LivingWorld_WarSite_RefugeeCampInspect>
+  <LivingWorld_WarSite_FadesIn>Исчезнет через {0}.</LivingWorld_WarSite_FadesIn>
 </LanguageData>
