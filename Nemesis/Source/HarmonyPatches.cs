@@ -7,14 +7,61 @@ using Verse;
 
 namespace Nemesis
 {
+    /// <summary>
+    /// AZR-385 — one shared lookup for the private-signature targets several patches depend on,
+    /// so a RimWorld update that changes them yields one Nemesis-specific diagnostic instead of
+    /// five silently skipped classes behind SafePatchAll's generic failure letter.
+    /// </summary>
+    internal static class NemesisPatchTargets
+    {
+        private static bool _killResolved;
+        private static MethodInfo _pawnKill;
+        private static bool _guestPawnResolved;
+        private static bool _guestPawnFieldExists;
+
+        internal static MethodInfo PawnKill
+        {
+            get
+            {
+                if (_killResolved) return _pawnKill;
+                _killResolved = true;
+                _pawnKill = AccessTools.Method(typeof(Pawn), "Kill", new[] { typeof(DamageInfo?), typeof(Hediff) });
+                if (_pawnKill == null)
+                {
+                    Log.Error("[Nemesis] Pawn.Kill(DamageInfo?, Hediff) not found (RimWorld update?). "
+                        + "Disabled: nemesis cheat-death/escape intercept, killed-ally / fixation / wounded-escape triggers, "
+                        + "and instant kill end-checks. Prison-break and slave triggers still run; hunt end falls back to the periodic check.");
+                }
+                return _pawnKill;
+            }
+        }
+
+        internal static bool GuestTrackerHasPawnField
+        {
+            get
+            {
+                if (_guestPawnResolved) return _guestPawnFieldExists;
+                _guestPawnResolved = true;
+                _guestPawnFieldExists = AccessTools.Field(typeof(Pawn_GuestTracker), "pawn") != null;
+                if (!_guestPawnFieldExists)
+                {
+                    Log.Warning("[Nemesis] Pawn_GuestTracker.pawn field not found (RimWorld update?). "
+                        + "Capture is still detected by the periodic resolution check, just less promptly.");
+                }
+                return _guestPawnFieldExists;
+            }
+        }
+    }
+
     // --- Nemesis cannot die until the hunt is over (Dredd foundation) ---
 
     [HarmonyPatch]
     public static class Patch_Pawn_Kill_Nemesis
     {
+        static bool Prepare() => NemesisPatchTargets.PawnKill != null;
+
         [HarmonyTargetMethod]
-        static MethodBase TargetMethod() =>
-            AccessTools.Method(typeof(Pawn), "Kill", new[] { typeof(DamageInfo?), typeof(Hediff) });
+        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
 
         [HarmonyPrefix]
         [HarmonyPriority(Priority.First)]
@@ -32,9 +79,10 @@ namespace Nemesis
     [HarmonyPatch]
     public static class Patch_Pawn_Kill_TriggerNemesis
     {
+        static bool Prepare() => NemesisPatchTargets.PawnKill != null;
+
         [HarmonyTargetMethod]
-        static MethodBase TargetMethod() =>
-            AccessTools.Method(typeof(Pawn), "Kill", new[] { typeof(DamageInfo?), typeof(Hediff) });
+        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
 
         [HarmonyPostfix]
         static void Postfix(Pawn __instance, DamageInfo? dinfo)
@@ -58,9 +106,10 @@ namespace Nemesis
     [HarmonyPatch]
     public static class Patch_Pawn_Kill_FixationTrigger
     {
+        static bool Prepare() => NemesisPatchTargets.PawnKill != null;
+
         [HarmonyTargetMethod]
-        static MethodBase TargetMethod() =>
-            AccessTools.Method(typeof(Pawn), "Kill", new[] { typeof(DamageInfo?), typeof(Hediff) });
+        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
 
         [HarmonyPostfix]
         static void Postfix(Pawn __instance, DamageInfo? dinfo)
@@ -100,9 +149,10 @@ namespace Nemesis
     [HarmonyPatch]
     public static class Patch_Pawn_Kill_WoundedEscape
     {
+        static bool Prepare() => NemesisPatchTargets.PawnKill != null;
+
         [HarmonyTargetMethod]
-        static MethodBase TargetMethod() =>
-            AccessTools.Method(typeof(Pawn), "Kill", new[] { typeof(DamageInfo?), typeof(Hediff) });
+        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
 
         [HarmonyPrefix]
         [HarmonyPriority(Priority.High)]
@@ -198,9 +248,10 @@ namespace Nemesis
     [HarmonyPatch]
     public static class Patch_Pawn_Kill_EndConditionDirty
     {
+        static bool Prepare() => NemesisPatchTargets.PawnKill != null;
+
         [HarmonyTargetMethod]
-        static MethodBase TargetMethod() =>
-            AccessTools.Method(typeof(Pawn), "Kill", new[] { typeof(DamageInfo?), typeof(Hediff) });
+        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
 
         [HarmonyPostfix]
         static void Postfix(Pawn __instance)
@@ -229,6 +280,8 @@ namespace Nemesis
     [HarmonyPatch(typeof(Pawn_GuestTracker), nameof(Pawn_GuestTracker.SetGuestStatus))]
     public static class Patch_GuestStatus_ResolutionDirty
     {
+        static bool Prepare() => NemesisPatchTargets.GuestTrackerHasPawnField;
+
         [HarmonyPostfix]
         static void Postfix(Pawn ___pawn)
         {
