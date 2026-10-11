@@ -105,7 +105,16 @@ namespace DeepColony
             {
                 return;
             }
-            add.Invoke(Find.ResearchManager, args);
+            try
+            {
+                add.Invoke(Find.ResearchManager, args);
+            }
+            catch (System.Exception e)
+            {
+                Log.WarningOnce("[DeepColony] Codex research loss skipped (AddProgress call failed): "
+                    + (e.InnerException ?? e).Message, 0x5DC0DE01);
+                return;
+            }
             Messages.Message("DC_Codex_TechDecay".Translate(pawn.LabelShortCap, proj.LabelCap),
                 pawn, MessageTypeDefOf.NegativeEvent);
         }
@@ -114,9 +123,17 @@ namespace DeepColony
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
     public static class Patch_Pawn_Kill_TechDecay
     {
+        // A throw here would abort Pawn.Kill itself, not just the Codex feature.
         public static void Prefix(Pawn __instance)
         {
-            CodexArchive.LoseProgressOnDeath(__instance);
+            try
+            {
+                CodexArchive.LoseProgressOnDeath(__instance);
+            }
+            catch (System.Exception e)
+            {
+                Log.WarningOnce("[DeepColony] Codex death hook failed: " + e.Message, 0x5DC0DE02);
+            }
         }
     }
 }
