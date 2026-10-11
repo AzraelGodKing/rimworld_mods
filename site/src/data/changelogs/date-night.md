@@ -2,9 +2,9 @@
 
 Detailed notes for **Date Night** only.
 
-## [Unreleased]
+## [1.6.0]
 
-Stamp `couple-lifecycle-v1`.
+Player-facing version **1.6.0** (`About.xml` `modVersion`). Stamp `couple-lifecycle-v1`.
 
 AZR-313 AZR-314 AZR-315 AZR-316 AZR-317 AZR-318 AZR-401 AZR-402 AZR-403 AZR-404 AZR-405 AZR-406 AZR-407
 
