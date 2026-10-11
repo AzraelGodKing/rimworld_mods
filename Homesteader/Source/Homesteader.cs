@@ -13,7 +13,9 @@ namespace Homesteader
 
         static HomesteaderHarmony()
         {
-            SafePatchAll.Apply(new Harmony("azraelgodking.homesteader"), "[Homesteader]");
+            SafePatchAll.Apply(new Harmony(PatchHealth.HarmonyId), "[Homesteader]");
+            PatchHealth.Check();
+            StatPart_PreserveAging.Register();
             foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
             {
                 if (def.HasComp(typeof(CompRottable)))

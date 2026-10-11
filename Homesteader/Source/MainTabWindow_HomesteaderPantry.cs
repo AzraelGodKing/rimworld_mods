@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -9,6 +10,9 @@ namespace Homesteader
         private Vector2 stockScroll;
         private Vector2 makeScroll;
         private int page;
+        private PantrySortMode sortMode = PantrySortMode.Count;
+        private PantryReport sortedReport;
+        private PantrySortMode sortedMode;
 
         public override Vector2 RequestedTabSize => new Vector2(620f, 540f);
 
@@ -77,10 +81,17 @@ namespace Homesteader
 
             if (report.nearestRot != null && report.nearestRotDays >= 0f)
             {
-                Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
+                Rect rotLabel = new Rect(inRect.x, y, inRect.width - 88f, 22f);
+                Rect rotBtn = new Rect(inRect.xMax - 84f, y, 80f, 22f);
+                Widgets.Label(rotLabel,
                     "Homesteader_PantryNextRot".Translate(
                         report.nearestRot.LabelCap,
                         report.nearestRotDays.ToString("F1")));
+                if (report.nearestRot.Spawned
+                    && Widgets.ButtonText(rotBtn, "Homesteader_PantryJump".Translate()))
+                {
+                    CameraJumper.TryJumpAndSelect(report.nearestRot);
+                }
             }
             else
             {
@@ -89,8 +100,27 @@ namespace Homesteader
             }
 
             y += 28f;
-            Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
+            Widgets.Label(new Rect(inRect.x, y, inRect.width - 168f, 22f),
                 "Homesteader_PantryContents".Translate());
+            if (Widgets.ButtonText(new Rect(inRect.xMax - 164f, y, 160f, 22f), SortLabel(sortMode)))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                foreach (PantrySortMode mode in new[] { PantrySortMode.Count, PantrySortMode.Name, PantrySortMode.RotSoonest })
+                {
+                    PantrySortMode chosen = mode;
+                    options.Add(new FloatMenuOption(SortLabel(chosen), () => sortMode = chosen));
+                }
+
+                Find.WindowStack.Add(new FloatMenu(options));
+            }
+
+            if (report != sortedReport || sortMode != sortedMode)
+            {
+                PantryUtility.SortKinds(report, sortMode);
+                sortedReport = report;
+                sortedMode = sortMode;
+            }
+
             y += 24f;
 
             Rect view = new Rect(inRect.x, y, inRect.width, inRect.yMax - y);
@@ -172,15 +202,15 @@ namespace Homesteader
                     Rect label = new Rect(line.x, line.y, line.width - 88f, h);
                     Rect btn = new Rect(line.xMax - 84f, line.y, 80f, 24f);
                     Widgets.Label(label, text);
+                    List<Building_WorkTable> stations = row.stations;
+                    if (stations.Count > 1)
+                    {
+                        TooltipHandler.TipRegion(btn, "Homesteader_PantryMakeChooseStation".Translate(stations.Count));
+                    }
+
                     if (Widgets.ButtonText(btn, "Homesteader_PantryMakeBill".Translate()))
                     {
-                        if (!PantryMakeUtility.TryAddBill(row.recipe))
-                        {
-                            Messages.Message(
-                                "Homesteader_PantryMakeBillFail".Translate(),
-                                MessageTypeDefOf.RejectInput,
-                                historical: false);
-                        }
+                        AddBillOrChoose(row.recipe, stations);
                     }
                 }
                 else
@@ -192,6 +222,67 @@ namespace Homesteader
             }
 
             return y + 8f;
+        }
+
+        private static void AddBillOrChoose(RecipeDef recipe, List<Building_WorkTable> stations)
+        {
+            stations = stations.FindAll(t => t != null && t.Spawned && t.billStack != null);
+            if (stations.Count == 0)
+            {
+                Messages.Message(
+                    "Homesteader_PantryMakeBillFail".Translate(),
+                    MessageTypeDefOf.RejectInput,
+                    historical: false);
+                return;
+            }
+
+            if (stations.Count == 1)
+            {
+                PantryMakeUtility.AddBillAt(recipe, stations[0]);
+                return;
+            }
+
+            bool multiMap = false;
+            for (int i = 1; i < stations.Count; i++)
+            {
+                if (stations[i].Map != stations[0].Map)
+                {
+                    multiMap = true;
+                    break;
+                }
+            }
+
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            for (int i = 0; i < stations.Count; i++)
+            {
+                Building_WorkTable table = stations[i];
+                string label = table.LabelCap;
+                if (multiMap && table.Map?.Parent != null)
+                {
+                    label += " (" + table.Map.Parent.LabelCap + ")";
+                }
+
+                label += "  —  " + "Homesteader_PantryMakeBillCount".Translate(table.billStack.Count);
+                options.Add(new FloatMenuOption(
+                    label,
+                    () => PantryMakeUtility.AddBillAt(recipe, table),
+                    mouseoverGuiAction: _ => TargetHighlighter.Highlight(table)));
+            }
+
+            Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        private static string SortLabel(PantrySortMode mode)
+        {
+            switch (mode)
+            {
+                case PantrySortMode.Name:
+                    return "Homesteader_PantrySortName".Translate();
+                case PantrySortMode.RotSoonest:
+                    return "Homesteader_PantrySortRot".Translate();
+                default:
+                    return "Homesteader_PantrySortCount".Translate();
+            }
         }
 
         private static string LineText(PantryMakeRow row)

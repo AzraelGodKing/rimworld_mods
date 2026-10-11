@@ -11,6 +11,7 @@
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <rotatable>false</rotatable>
+    <tickerType>Rare</tickerType>
     <stackLimit>25</stackLimit>
     <statBases>
       <DeteriorationRate>0.5</DeteriorationRate>
@@ -48,6 +49,7 @@
         <needLevelOffset>0.9</needLevelOffset>
         <listOrder>11</listOrder>
       </li>
+      <li Class="Homesteader.CompProperties_PreserveAging" />
     </comps>
   </ThingDef>
 

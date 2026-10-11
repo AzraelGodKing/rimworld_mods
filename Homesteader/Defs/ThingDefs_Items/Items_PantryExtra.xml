@@ -92,6 +92,7 @@
         <daysToRotStart>240</daysToRotStart>
         <rotDestroys>true</rotDestroys>
       </li>
+      <li Class="Homesteader.CompProperties_PreserveAging" />
     </comps>
     <thingCategories>
       <li>FoodMeals</li>
@@ -130,6 +131,7 @@
         <daysToRotStart>150</daysToRotStart>
         <rotDestroys>true</rotDestroys>
       </li>
+      <li Class="Homesteader.CompProperties_PreserveAging" />
     </comps>
     <thingCategories>
       <li>FoodMeals</li>

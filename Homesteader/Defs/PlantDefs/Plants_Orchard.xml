@@ -141,6 +141,9 @@
       <wildOrder>2</wildOrder>
       <purpose>Food</purpose>
     </plant>
+    <comps>
+      <li Class="Homesteader.CompProperties_MapleSap" />
+    </comps>
   </ThingDef>
 
 </Defs>

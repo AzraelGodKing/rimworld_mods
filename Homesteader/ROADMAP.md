@@ -21,9 +21,9 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 ## Phase 1 — Pantry you feel
 
-- [ ] **HS-A01** **Harvest festival** — maypole annual ritual (Ideology-aware, works without); mood, trade attraction, seasonal food
+- [ ] **HS-A01** **Harvest festival** — maypole annual ritual (Ideology-aware, works without); mood, trade attraction, seasonal food. Annual autumn mood event shipped; Ideology ritual, trade attraction, and seasonal food still open.
 - [ ] **HS-A02** **Well-stocked larder mood** — ThoughtWorker tiered buff from distinct preserved foods in cellars/pantries
-- [ ] **HS-A03** **Aging** — cheese / ham / cider quality tiers over time in the root cellar
+- [x] **HS-A03** **Aging** — cheese / cider value tiers over time in cool storage (no ham def exists)
 
 ## Phase 2 — Yard & livestock
 
@@ -42,7 +42,7 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 - [x] **Water building ladder** — barrel trickle → cistern stockpile+catch → tower capacity; hand-dug → deep well; still = boiled sidegrade; fountain drinks jugs
 - [ ] **HS-A11** **Waterwheel** — river water power; interacts with Stormproof droughts
-- [ ] **HS-A12** Maple sugaring season
+- [x] **HS-A12** Maple sugaring season
 - [ ] **HS-A13** Rain-aware barrels / drought empty
 
 ## Phase 5 — Soft-compat consumers (do not move into Living World)

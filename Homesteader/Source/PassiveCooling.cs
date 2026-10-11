@@ -55,6 +55,8 @@ namespace Homesteader
     {
         private readonly Dictionary<IntVec3, float> cooledCellTemps = new Dictionary<IntVec3, float>();
 
+        private const int FallbackRescanTicks = 250;
+
         private bool dirty = true;
 
         public RootCellarCoolingMapComponent(Map map) : base(map)
@@ -79,6 +81,12 @@ namespace Homesteader
 
         public override void MapComponentTick()
         {
+            if (!PatchHealth.RoomRebuildHooked
+                && (Find.TickManager.TicksGame + map.uniqueID) % FallbackRescanTicks == 0)
+            {
+                dirty = true;
+            }
+
             if (!dirty)
             {
                 return;
@@ -249,7 +257,7 @@ namespace Homesteader
     [HarmonyPatch(typeof(RegionAndRoomUpdater), nameof(RegionAndRoomUpdater.RebuildAllRegionsAndRooms))]
     public static class Patch_PassiveCooling_RebuildAllRegions
     {
-        private static readonly FieldInfo MapField =
+        internal static readonly FieldInfo MapField =
             AccessTools.Field(typeof(RegionAndRoomUpdater), "map");
 
         public static void Postfix(RegionAndRoomUpdater __instance)
@@ -269,13 +277,13 @@ namespace Homesteader
         }
     }
 
-    [HarmonyPatch(typeof(RegionAndRoomUpdater), "TryRebuildDirtyRegionsAndRooms")]
+    [HarmonyPatch(typeof(RegionAndRoomUpdater), nameof(RegionAndRoomUpdater.TryRebuildDirtyRegionsAndRooms))]
     public static class Patch_PassiveCooling_TryRebuildDirtyRegions
     {
         public static void Prefix(RegionAndRoomUpdater __instance, ref bool __state)
         {
             __state = false;
-            FieldInfo mapField = AccessTools.Field(typeof(RegionAndRoomUpdater), "map");
+            FieldInfo mapField = Patch_PassiveCooling_RebuildAllRegions.MapField;
             if (mapField == null)
             {
                 return;
