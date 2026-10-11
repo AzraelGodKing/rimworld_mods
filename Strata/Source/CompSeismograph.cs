@@ -16,14 +16,19 @@ namespace Strata
     }
 
     // Powered console that forecasts tremor, cave-in, and infestation pressure
-    // for the map it sits on (AZR-271).
+    // for the map it sits on, plus a summary line for every linked underground
+    // level (AZR-271).
     public class CompSeismograph : ThingComp
     {
+        private const int SampleIntervalTicks = 250;
+
         private int lastSampleTick = -9999;
         private float tremorRisk;
         private float caveInRisk;
         private float infestationPressure;
         private bool alertLatch;
+        private int lastOtherLevelsTick = -9999;
+        private readonly List<string> otherLevelLines = new List<string>();
 
         public CompProperties_Seismograph Props => (CompProperties_Seismograph)props;
 
@@ -45,7 +50,7 @@ namespace Strata
 
         public override void CompTick()
         {
-            if (!parent.IsHashIntervalTick(60) || !Powered)
+            if (!parent.IsHashIntervalTick(SampleIntervalTicks) || !Powered)
             {
                 return;
             }
@@ -88,13 +93,69 @@ namespace Strata
                 sb.AppendLine();
                 sb.Append("Strata_Seismograph_Noise".Translate(noise.Pressure01.ToStringPercent()));
             }
+            List<string> others = OtherLevelLines();
+            if (others.Count > 0)
+            {
+                sb.AppendLine();
+                sb.Append("Strata_Seismograph_OtherLevels".Translate());
+                for (int i = 0; i < others.Count; i++)
+                {
+                    sb.AppendLine();
+                    sb.Append("  ").Append(others[i]);
+                }
+            }
             return sb.ToString();
+        }
+
+        private List<string> OtherLevelLines()
+        {
+            int tick = Find.TickManager.TicksGame;
+            if (tick - lastOtherLevelsTick < SampleIntervalTicks)
+            {
+                return otherLevelLines;
+            }
+            lastOtherLevelsTick = tick;
+            otherLevelLines.Clear();
+            Map here = parent.Map;
+            Map surface = StrataMapUtility.IsSurfacePlayerHome(here) ? here : FindSurfaceHome(here);
+            if (surface == null)
+            {
+                return otherLevelLines;
+            }
+            var levels = new List<Map>();
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(surface))
+            {
+                if (link.map != null && link.map != here && StrataMapUtility.IsUnderground(link.map)
+                    && !levels.Contains(link.map))
+                {
+                    levels.Add(link.map);
+                }
+            }
+            levels.Sort((a, b) => StrataDepth.Altitude(b).CompareTo(StrataDepth.Altitude(a)));
+            for (int i = 0; i < levels.Count; i++)
+            {
+                Map level = levels[i];
+                otherLevelLines.Add("Strata_Seismograph_LevelLine".Translate(
+                    LevelName(level),
+                    RiskLabel(ComputeTremorRisk(level)),
+                    RiskLabel(ComputeCaveInRisk(level)),
+                    RiskLabel(ComputeInfestationPressure(level))));
+            }
+            return otherLevelLines;
+        }
+
+        private static string LevelName(Map level)
+        {
+            string custom = StrataLevelLabels.Get?.GetLabel(level);
+            return custom.NullOrEmpty()
+                ? "Strata_LevelBelow".Translate(StrataDepth.Altitude(level)).ToString()
+                : custom;
         }
 
         private Sample EnsureFresh(bool force = false)
         {
             int tick = Find.TickManager.TicksGame;
-            if (!force && tick - lastSampleTick < 120)
+            if (!force && tick - lastSampleTick < SampleIntervalTicks)
             {
                 return new Sample(tremorRisk, caveInRisk, infestationPressure);
             }
