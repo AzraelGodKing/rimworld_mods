@@ -149,6 +149,23 @@
   </ThoughtDef>
 
   <ThoughtDef>
+    <defName>DateNight_AnniversaryMilestone</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>3</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>milestone anniversary</label>
+        <description>All these years with {0}. Some days I still can't believe it.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+        <baseOpinionOffset>12</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
     <defName>DateNight_AnniversaryDate</defName>
     <thoughtClass>Thought_MemorySocial</thoughtClass>
     <durationDays>2</durationDays>
@@ -276,6 +293,39 @@
       <li>
         <label>double date fell through</label>
         <description>The other couple never showed. Fine. We'll go anyway.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_Reunited</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>1.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>reunited</label>
+        <description>{0} is back. I didn't realise how much I missed them until now.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+        <baseOpinionOffset>6</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_DatesOver</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>no more date nights</label>
+        <description>All those evenings with {0}, and our spots... that's over now.</description>
         <baseMoodEffect>-3</baseMoodEffect>
       </li>
     </stages>

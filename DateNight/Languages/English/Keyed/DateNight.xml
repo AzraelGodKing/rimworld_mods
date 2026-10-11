@@ -26,11 +26,11 @@
   <DateNight_Settings_PostDateBoost>Post-date lovin spark</DateNight_Settings_PostDateBoost>
   <DateNight_Settings_PostDateBoostTip>A finished date improves the couple's lovin chance for about one in-game day.</DateNight_Settings_PostDateBoostTip>
   <DateNight_Settings_Anniversaries>Anniversaries</DateNight_Settings_Anniversaries>
-  <DateNight_Settings_AnniversariesTip>On the anniversary of a love bond: a letter, a special mood if they go on a date that day, and a sting if the day passes without one. Off: no calendar letters or anniversary moods.</DateNight_Settings_AnniversariesTip>
+  <DateNight_Settings_AnniversariesTip>On the anniversary of a love bond: a letter, a special mood if they go on a date that day, and a sting if the day passes without one. Every fifth year is a milestone with a bigger mood. Off: no calendar letters or anniversary moods.</DateNight_Settings_AnniversariesTip>
   <DateNight_Settings_FavoriteSpot>Remember favourite spots</DateNight_Settings_FavoriteSpot>
-  <DateNight_Settings_FavoriteSpotTip>Couples remember where their best dates happened and prefer to go back. A ruined date can sour that venue. Off: every date picks a fresh spot.</DateNight_Settings_FavoriteSpotTip>
+  <DateNight_Settings_FavoriteSpotTip>Couples remember where their best dates happened and prefer to go back. A ruined date can sour that venue, and a breakup wipes the couple's spot. Off: every date picks a fresh spot.</DateNight_Settings_FavoriteSpotTip>
   <DateNight_Settings_DoubleDates>Allow double dates</DateNight_Settings_DoubleDates>
-  <DateNight_Settings_DoubleDatesTip>Two couples with overlapping Date hours may share a table, picnic, or gather spot. Quality rolls once for the group; the evening spills into opinions of the other pair. If the other couple never shows, they date alone.</DateNight_Settings_DoubleDatesTip>
+  <DateNight_Settings_DoubleDatesTip>Two couples with overlapping Date hours may share a table, picnic, or gather spot. Quality rolls once for the group; the evening spills into opinions of the other pair. If the other couple never shows, they date alone. Couples remember how past double dates went: pairs who hit it off pick each other again, pairs who keep clashing stop pairing up.</DateNight_Settings_DoubleDatesTip>
   <DateNight_Settings_Reset>Reset to defaults</DateNight_Settings_Reset>
   <DateNight_Report_Hangout>on a date with {0}.</DateNight_Report_Hangout>
   <DateNight_Report_Dinner>having a dinner date with {0}.</DateNight_Report_Dinner>
@@ -43,6 +43,8 @@
   <DateNight_Report_DoubleDate>on a double date with {0}.</DateNight_Report_DoubleDate>
   <DateNight_Letter_AnniversaryLabel>Anniversary</DateNight_Letter_AnniversaryLabel>
   <DateNight_Letter_AnniversaryText>{PAWN} and {PARTNER} have been together for {YEARS}. A date today would mean the world — letting it pass without one will sting.</DateNight_Letter_AnniversaryText>
+  <DateNight_Letter_AnniversaryMilestoneLabel>Milestone anniversary</DateNight_Letter_AnniversaryMilestoneLabel>
+  <DateNight_Letter_AnniversaryMilestoneText>{PAWN} and {PARTNER} have been together for {YEARS} — a milestone. A date today would mean the world — letting it pass without one will sting.</DateNight_Letter_AnniversaryMilestoneText>
   <DateNight_OneYear>a year</DateNight_OneYear>
   <DateNight_NYears>{0} years</DateNight_NYears>
   <DateNight_Alert_Mismatch>Schedule mismatch</DateNight_Alert_Mismatch>

@@ -1,6 +1,25 @@
 # Changelog
 
-Detailed notes for **Date Night** only. ## [Unreleased]
+Detailed notes for **Date Night** only.
+
+## [Unreleased]
+
+Stamp `couple-lifecycle-v1`.
+
+AZR-313 AZR-314 AZR-315 AZR-316 AZR-317 AZR-318 AZR-401 AZR-402 AZR-403 AZR-404 AZR-405 AZR-406 AZR-407
+
+### Added
+- **Milestone anniversaries** — every fifth year together gets its own letter and a bigger, longer-lasting anniversary mood.
+- **Double-date rapport** — couples remember how their double dates went. Pairs who get along pick each other again (and stay friendly even if one of them is a bit prickly); pairs who keep clashing stop being paired up.
+- **Reunions** — when partners have been apart for two days or more (caravan, kidnapping, another map) and end up together again, both get a "reunited" mood.
+- **Breakups** — when a couple who went on dates breaks up or divorces, both get a short "no more date nights" mood and their favourite date spot is forgotten.
+
+### Changed
+- **Thoughtful gifts** — a partner no longer gifts something the receiver would refuse: no drinks or drugs for teetotalers, nothing their drug policy or ideoligion forbids, and no food they wouldn't eat.
+
+### Fixed
+- **Double date no-show** — the "double date fell through" mood now uses the same adults-only check as every other Date Night mood.
+- **Dev tools** — the "Force private time" debug action no longer errors on a pawn without an age tracker.
 
 ## [1.5.1]
 

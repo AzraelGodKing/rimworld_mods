@@ -21,12 +21,15 @@ namespace DateNight
         public static ThoughtDef DateNight_Anniversary;
         public static ThoughtDef DateNight_AnniversaryDate;
         public static ThoughtDef DateNight_AnniversaryMissed;
+        public static ThoughtDef DateNight_AnniversaryMilestone;
         public static ThoughtDef DateNight_OurSpot;
         public static ThoughtDef DateNight_VenueSoured;
         public static ThoughtDef DateNight_VenueDestroyed;
         public static ThoughtDef DateNight_DoubleDateFriends;
         public static ThoughtDef DateNight_DoubleDateRivals;
         public static ThoughtDef DateNight_DoubleDateNoShow;
+        public static ThoughtDef DateNight_Reunited;
+        public static ThoughtDef DateNight_DatesOver;
 
         static DateNightDefOf()
         {

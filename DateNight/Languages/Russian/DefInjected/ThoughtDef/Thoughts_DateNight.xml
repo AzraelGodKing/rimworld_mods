@@ -46,6 +46,11 @@
   <DateNight_Anniversary.stages_0.label>годовщина</DateNight_Anniversary.stages_0.label>
   <DateNight_Anniversary.stages_0.description>Ещё год с {0}. Календарь сам себя обвёл.</DateNight_Anniversary.stages_0.description>
 
+  <DateNight_AnniversaryMilestone.label>юбилей отношений</DateNight_AnniversaryMilestone.label>
+  <DateNight_AnniversaryMilestone.description>Столько лет с {0}. Иногда до сих пор не верится.</DateNight_AnniversaryMilestone.description>
+  <DateNight_AnniversaryMilestone.stages_0.label>юбилей отношений</DateNight_AnniversaryMilestone.stages_0.label>
+  <DateNight_AnniversaryMilestone.stages_0.description>Столько лет с {0}. Иногда до сих пор не верится.</DateNight_AnniversaryMilestone.stages_0.description>
+
   <DateNight_AnniversaryDate.label>свидание в годовщину</DateNight_AnniversaryDate.label>
   <DateNight_AnniversaryDate.description>Мы правда выбрались в годовщину. Этот год с {0} я запомню.</DateNight_AnniversaryDate.description>
   <DateNight_AnniversaryDate.stages_0.label>свидание в годовщину</DateNight_AnniversaryDate.stages_0.label>
@@ -84,5 +89,15 @@
   <DateNight_DoubleDateNoShow.description>Вторая пара так и не пришла. Ладно. Пойдём вдвоём.</DateNight_DoubleDateNoShow.description>
   <DateNight_DoubleDateNoShow.stages_0.label>двойное свидание сорвалось</DateNight_DoubleDateNoShow.stages_0.label>
   <DateNight_DoubleDateNoShow.stages_0.description>Вторая пара так и не пришла. Ладно. Пойдём вдвоём.</DateNight_DoubleDateNoShow.stages_0.description>
+
+  <DateNight_Reunited.label>снова вместе</DateNight_Reunited.label>
+  <DateNight_Reunited.description>{0} вернулся. Только сейчас понимаю, как сильно скучал.</DateNight_Reunited.description>
+  <DateNight_Reunited.stages_0.label>снова вместе</DateNight_Reunited.stages_0.label>
+  <DateNight_Reunited.stages_0.description>{0} вернулся. Только сейчас понимаю, как сильно скучал.</DateNight_Reunited.stages_0.description>
+
+  <DateNight_DatesOver.label>свиданий больше не будет</DateNight_DatesOver.label>
+  <DateNight_DatesOver.description>Все эти вечера с {0}, наши места... теперь всё кончено.</DateNight_DatesOver.description>
+  <DateNight_DatesOver.stages_0.label>свиданий больше не будет</DateNight_DatesOver.stages_0.label>
+  <DateNight_DatesOver.stages_0.description>Все эти вечера с {0}, наши места... теперь всё кончено.</DateNight_DatesOver.stages_0.description>
 
 </LanguageData>
