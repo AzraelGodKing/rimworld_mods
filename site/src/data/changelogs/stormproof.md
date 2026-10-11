@@ -3,9 +3,9 @@
 Detailed notes for **Stormproof** only.
 
 
-## [Unreleased]
+## [1.6.0]
 
-Stamp `forecast-schedule-v1`.
+Player-facing version **1.6.0** (`About.xml` `modVersion`). Stamp `forecast-schedule-v1`.
 
 AZR-325 AZR-408 AZR-409 AZR-410 AZR-411 AZR-412 AZR-413 AZR-414 AZR-415 AZR-416
 
