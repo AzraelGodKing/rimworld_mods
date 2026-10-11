@@ -1,18 +1,21 @@
-1.5.1
-[h1]Date Night — 1.5.1[/h1]
+1.6.0
+[h1]Date Night — 1.6.0[/h1]
 [b]Added[/b]
 [list]
-[*] [b]Schedule sync[/b] — click the schedule-mismatch alert to copy painted Date/Lovin hours from one partner to the other.
-[*] [b]Configurable gift list[/b] — settings list of gift ThingDef names plus optional joy-luxury scan.
-[*] [b]Favourite venue destroyed[/b] — thought when a remembered high-score venue is gone.
-[*] [b]Anniversary gift bias[/b] — activity picker prefers Gift on anniversary days.
+[*] [b]Milestone anniversaries[/b] — every fifth year together gets its own letter and a bigger, longer-lasting mood.
+[*] [b]Double-date rapport[/b] — couples who get along pick each other again; couples who keep clashing stop being paired.
+[*] [b]Reunions[/b] — partners apart for two days or more (caravan, kidnapping, another map) get a "reunited" mood when they're back together.
+[*] [b]Breakups[/b] — a breakup or divorce gives a short "no more date nights" mood and forgets the couple's favourite date spot.
+[/list]
+[b]Changed[/b]
+[list]
+[*] [b]Thoughtful gifts[/b] — no gifts the receiver would refuse: no drinks or drugs for teetotalers, nothing their drug policy or ideoligion forbids, no food they wouldn't eat.
 [/list]
 [b]Fixed[/b]
 [list]
-[*] [b]Gift handoff[/b] — failed inventory transfer drops the gift at the partner's feet and still grants the gift thought.
-[*] [b]Ephemeral caches[/b] — rendezvous-bed and social-window caches clear on new/load game.
-[*] [b]Self-lovin ageTracker[/b] — null-guard before Adult check.
+[*] [b]Double date no-show[/b] — the "double date fell through" mood is adults-only like every other Date Night mood.
+[*] [b]Dev tools[/b] — "Force private time" no longer errors on a pawn without an age tracker.
 [/list]
 
-[i]Build stamp (Player.log): schedule-sync-v1[/i]
+[i]Build stamp (Player.log): couple-lifecycle-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]
