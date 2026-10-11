@@ -254,12 +254,13 @@ namespace Strata
     {
         public static bool Prepare()
         {
-            return AccessTools.Method(typeof(CompDeepDrill), "ProducePortion") != null;
+            return TargetMethod() != null;
         }
 
         private static System.Reflection.MethodBase TargetMethod()
         {
-            return AccessTools.Method(typeof(CompDeepDrill), "ProducePortion");
+            return AccessTools.Method(typeof(CompDeepDrill), "TryProducePortion")
+                ?? AccessTools.Method(typeof(CompDeepDrill), "ProducePortion");
         }
 
         public static void Postfix(CompDeepDrill __instance)
