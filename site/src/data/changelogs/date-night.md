@@ -4,6 +4,9 @@ Detailed notes for **Date Night** only.
 
 ## [Unreleased]
 
+### Fixed
+- **Partner's name in thought descriptions** (forum report from Victorraze): mood thoughts like "our spot" read "That place with *[own name]* is ours" instead of naming the partner. Vanilla fills `{0}` in a thought description with the pawn who has the thought. The 17 social Date Night thoughts now use `DateNight.Thought_DateNightSocial`, which fills `{0}` with the other pawn (partner, or the other couple on a double date). English, Chinese, and Russian text is unchanged. Memories already in a save keep the old wording until they expire.
+
 ### Internal
 - One shared `TryGainThought` helper replaces five identical copies (windows, double dates, venues, anniversaries, reunions). `CoupleKey` and `BothCanReach` copies are merged, and the unused `FindDinnerSpot` is removed. No behavior change.
 
