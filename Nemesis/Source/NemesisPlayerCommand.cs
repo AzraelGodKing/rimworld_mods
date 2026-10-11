@@ -5,7 +5,7 @@ using Verse;
 namespace Nemesis
 {
     /// <summary>
-    /// AZR-300 — enqueue informant UI mutations; drain on GameComponentTick
+    /// AZR-300 — enqueue informant / comms / resolution UI mutations; drain on GameComponentTick
     /// (MP-safer, same pattern as DeepColonyPlayerCommand; no Multiplayer.API).
     /// </summary>
     public static class NemesisPlayerCommand
@@ -17,6 +17,7 @@ namespace Nemesis
             ReplyTaunt = 2,
             ReplyTruce = 3,
             ReplySurrender = 4,
+            Resolve = 5,
         }
 
         private struct Entry
@@ -24,9 +25,24 @@ namespace Nemesis
             public Kind kind;
             public int mapId;
             public int silver;
+            public NemesisOutcome outcome;
+            public int pawnId;
         }
 
         private static readonly List<Entry> queue = new List<Entry>();
+
+        public static bool HasQueuedResolution
+        {
+            get
+            {
+                for (int i = 0; i < queue.Count; i++)
+                {
+                    if (queue[i].kind == Kind.Resolve)
+                        return true;
+                }
+                return false;
+            }
+        }
 
         public static void EnqueueBuyLead(Map map)
         {
@@ -58,6 +74,18 @@ namespace Nemesis
             queue.Add(new Entry { kind = Kind.ReplySurrender });
         }
 
+        /// <summary>AZR-382 — capture resolution choice (execute / release / keep / truce).</summary>
+        public static void EnqueueResolution(NemesisOutcome outcome, Pawn nemesis)
+        {
+            if (HasQueuedResolution) return;
+            queue.Add(new Entry
+            {
+                kind = Kind.Resolve,
+                outcome = outcome,
+                pawnId = nemesis?.thingIDNumber ?? -1,
+            });
+        }
+
         public static void Drain()
         {
             if (queue.Count == 0) return;
@@ -85,6 +113,9 @@ namespace Nemesis
                     break;
                 case Kind.ReplySurrender:
                     NemesisCommsReplies.DoDemandSurrender();
+                    break;
+                case Kind.Resolve:
+                    Dialog_NemesisResolution.ApplyQueuedOutcome(e.outcome, e.pawnId);
                     break;
             }
         }

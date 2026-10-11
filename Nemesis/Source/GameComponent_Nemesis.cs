@@ -54,7 +54,17 @@ namespace Nemesis
             {
                 if (_data.pendingResolution)
                 {
-                    TryOpenResolutionDialog();
+                    if (tick % 250 == 0)
+                    {
+                        Pawn captive = FindNemesisPawnAnywhere();
+                        if (!IsHeldCaptive(captive))
+                        {
+                            HandleLostCustody(captive);
+                            return;
+                        }
+                    }
+                    if (tick % 60 == 0)
+                        TryOpenResolutionDialog();
                     return;
                 }
                 if (_data.truceUntilTick > 0 && tick >= _data.truceUntilTick)
@@ -361,13 +371,73 @@ namespace Nemesis
         }
 
         /// <summary>Reopen capture dialog after load / if the modal was dismissed by a crash.</summary>
-        public void TryOpenResolutionDialog(Pawn nemesis = null)
+        public bool TryOpenResolutionDialog(Pawn nemesis = null)
         {
-            if (_data == null || !_data.pendingResolution) return;
+            if (_data == null || !_data.pendingResolution) return false;
+            if (NemesisPlayerCommand.HasQueuedResolution) return false;
             nemesis ??= FindNemesisPawn();
-            if (nemesis == null || nemesis.Destroyed || !nemesis.IsPrisonerOfColony) return;
-            if (Find.WindowStack?.WindowOfType<Dialog_NemesisResolution>() != null) return;
+            if (!IsHeldCaptive(nemesis)) return false;
+            if (Find.WindowStack?.WindowOfType<Dialog_NemesisResolution>() != null) return true;
             Find.WindowStack.Add(new Dialog_NemesisResolution(_data, nemesis));
+            return true;
+        }
+
+        private static bool IsHeldCaptive(Pawn pawn) =>
+            pawn != null && !pawn.Dead && !pawn.Destroyed && pawn.IsPrisonerOfColony;
+
+        /// <summary>Also checks carried / caravan / transporter / dead pawns that <see cref="FindNemesisPawn"/> skips.</summary>
+        private Pawn FindNemesisPawnAnywhere()
+        {
+            Pawn found = FindNemesisPawn();
+            if (found != null) return found;
+            int id = _data.nemesisPawnId;
+            if (id < 0) return null;
+            foreach (Pawn p in PawnsFinder.AllMapsWorldAndTemporary_AliveOrDead)
+            {
+                if (p != null && p.thingIDNumber == id)
+                    return p;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Captive left custody before the player chose a fate (died, destroyed, traded, freed by
+        /// another mod). Without this the hunt stays pending forever and no new hunt can start.
+        /// </summary>
+        private void HandleLostCustody(Pawn nemesis)
+        {
+            string name = _data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
+            int now = Find.TickManager.TicksGame;
+
+            if (nemesis != null && !nemesis.Dead && !nemesis.Destroyed
+                && nemesis.Faction != null && !nemesis.Faction.IsPlayer)
+            {
+                _data.pendingResolution = false;
+                _data.active = true;
+                _data.lastEscapeTick = now;
+                _data.nextActionTick = now + 120000;
+                NemesisRegistry.Clear();
+                NemesisTells.RecordNote(_data, "Nemesis_Note_CustodyEscaped".Translate());
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_CustodyEscapedTitle".Translate(name),
+                    "Nemesis_Letter_CustodyEscapedBody".Translate(name),
+                    LetterDefOf.ThreatBig,
+                    nemesis.Spawned ? nemesis : null);
+                return;
+            }
+
+            bool died = nemesis != null && nemesis.Dead;
+            RecordEpitaph(died ? "Nemesis_End_DiedInCustody" : "Nemesis_End_LostCustody");
+            _data.active = false;
+            _data.pendingResolution = false;
+            _data.pendingFakeAmbush = false;
+            _data.truceUntilTick = -1;
+            bountySilver = 0;
+            NemesisRegistry.Clear();
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_CustodyLostTitle".Translate(name),
+                (died ? "Nemesis_Letter_CustodyDiedBody" : "Nemesis_Letter_CustodyLostBody").Translate(name),
+                LetterDefOf.NeutralEvent);
         }
 
         public void ClearPendingResolution()

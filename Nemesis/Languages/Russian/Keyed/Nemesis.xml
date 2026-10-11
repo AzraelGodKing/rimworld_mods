@@ -254,4 +254,15 @@
   <Nemesis_End_Kept>оставлен в тюрьме</Nemesis_End_Kept>
   <Nemesis_End_Truce>перемирие</Nemesis_End_Truce>
 
+  <!-- Custody lost before the resolution choice -->
+  <Nemesis_Dossier_ResolutionUnavailable>Сейчас нечего решать. Их участь уже выбрана, или они больше не под вашей стражей.</Nemesis_Dossier_ResolutionUnavailable>
+  <Nemesis_End_DiedInCustody>умер под стражей</Nemesis_End_DiedInCustody>
+  <Nemesis_End_LostCustody>ушёл из-под стражи</Nemesis_End_LostCustody>
+  <Nemesis_Note_CustodyEscaped>Ушёл из-под стражи раньше, чем вы решили его участь.</Nemesis_Note_CustodyEscaped>
+  <Nemesis_Letter_CustodyEscapedTitle>{0} на свободе</Nemesis_Letter_CustodyEscapedTitle>
+  <Nemesis_Letter_CustodyEscapedBody>{0} больше не в ваших камерах, а вы так и не решили, что с ним делать.\n\nОхота возобновляется.</Nemesis_Letter_CustodyEscapedBody>
+  <Nemesis_Letter_CustodyLostTitle>{0}: охота окончена</Nemesis_Letter_CustodyLostTitle>
+  <Nemesis_Letter_CustodyLostBody>{0} больше не под вашей стражей, а вы так и не решили его участь.\n\nОхота окончена. Может появиться новый немезис.</Nemesis_Letter_CustodyLostBody>
+  <Nemesis_Letter_CustodyDiedBody>{0} умер в ваших камерах раньше, чем вы решили его участь.\n\nОхота окончена. Может появиться новый немезис.</Nemesis_Letter_CustodyDiedBody>
+
 </LanguageData>

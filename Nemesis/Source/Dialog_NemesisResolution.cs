@@ -48,81 +48,87 @@ namespace Nemesis
             listing.Gap(18f);
 
             if (listing.ButtonText("Nemesis_Dialog_Execute".Translate()))
-            {
-                ApplyOutcome(NemesisOutcome.Execute);
-                Close();
-            }
+                Choose(NemesisOutcome.Execute);
             listing.Gap(6f);
             if (listing.ButtonText("Nemesis_Dialog_Release".Translate()))
-            {
-                ApplyOutcome(NemesisOutcome.Release);
-                Close();
-            }
+                Choose(NemesisOutcome.Release);
             listing.Gap(6f);
             if (listing.ButtonText("Nemesis_Dialog_Keep".Translate()))
-            {
-                ApplyOutcome(NemesisOutcome.KeepPrisoner);
-                Close();
-            }
+                Choose(NemesisOutcome.KeepPrisoner);
             listing.Gap(6f);
             int truceDays = NemesisMod.Settings?.truceDurationDays ?? 30;
             if (listing.ButtonText("Nemesis_Dialog_Truce".Translate(truceDays)))
-            {
-                ApplyOutcome(NemesisOutcome.Truce);
-                Close();
-            }
+                Choose(NemesisOutcome.Truce);
 
             listing.End();
         }
 
-        private void ApplyOutcome(NemesisOutcome outcome)
+        private void Choose(NemesisOutcome outcome)
         {
-            Faction faction = (_data.faction != null && !_data.faction.IsPlayer)
-                ? _data.faction
-                : NemesisActions.FindFaction(_data);
+            NemesisPlayerCommand.EnqueueResolution(outcome, _nemesis);
+            Close();
+        }
+
+        /// <summary>AZR-382 — runs from the tick drain, never from the button handler.</summary>
+        internal static void ApplyQueuedOutcome(NemesisOutcome outcome, int pawnId)
+        {
+            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            NemesisData data = comp?.Data;
+            if (data == null || !data.pendingResolution) return;
+            if (pawnId < 0 || pawnId != data.nemesisPawnId) return;
+            Pawn nemesis = comp.FindNemesisPawn();
+            if (nemesis == null || nemesis.Destroyed) return;
+            ApplyOutcome(data, nemesis, outcome);
+        }
+
+        private static void ApplyOutcome(NemesisData data, Pawn nemesis, NemesisOutcome outcome)
+        {
+            Faction faction = (data.faction != null && !data.faction.IsPlayer)
+                ? data.faction
+                : NemesisActions.FindFaction(data);
 
             switch (outcome)
             {
                 case NemesisOutcome.Execute:
-                    if (_nemesis != null && !_nemesis.Dead)
-                        _nemesis.Kill(null);
+                    if (!nemesis.Dead)
+                        nemesis.Kill(null);
 
                     faction?.TryAffectGoodwillWith(Faction.OfPlayer, -30, canSendMessage: true, canSendHostilityLetter: true);
 
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_ExecutedTitle".Translate(_data.nemesisName),
-                        "Nemesis_Letter_ExecutedBody".Translate(_data.nemesisName, faction != null ? _data.factionName : ""),
+                        "Nemesis_Letter_ExecutedTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_ExecutedBody".Translate(data.nemesisName, faction != null ? data.factionName : ""),
                         LetterDefOf.NeutralEvent);
                     break;
 
                 case NemesisOutcome.Release:
-                    SendNemesisAway(PawnDiscardDecideMode.Decide);
+                    SendNemesisAway(nemesis, PawnDiscardDecideMode.Decide);
 
                     faction?.TryAffectGoodwillWith(Faction.OfPlayer, 20, canSendMessage: true, canSendHostilityLetter: false);
 
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_ReleasedTitle".Translate(_data.nemesisName),
-                        "Nemesis_Letter_ReleasedBody".Translate(_data.nemesisName, faction != null ? _data.factionName : ""),
+                        "Nemesis_Letter_ReleasedTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_ReleasedBody".Translate(data.nemesisName, faction != null ? data.factionName : ""),
                         LetterDefOf.PositiveEvent);
                     break;
 
                 case NemesisOutcome.KeepPrisoner:
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_KeptTitle".Translate(_data.nemesisName),
-                        "Nemesis_Letter_KeptBody".Translate(_data.nemesisName),
+                        "Nemesis_Letter_KeptTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_KeptBody".Translate(data.nemesisName),
                         LetterDefOf.NeutralEvent,
-                        _nemesis);
+                        nemesis);
                     break;
 
                 case NemesisOutcome.Truce:
-                    SendNemesisAway(PawnDiscardDecideMode.KeepForever);
+                    SendNemesisAway(nemesis, PawnDiscardDecideMode.KeepForever);
 
                     int days = NemesisMod.Settings?.truceDurationDays ?? 30;
-                    _data.truceUntilTick = Find.TickManager.TicksGame + days * 60000;
+                    data.truceUntilTick = Find.TickManager.TicksGame + days * 60000;
 
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_TruceTitle".Translate(_data.nemesisName),
-                        "Nemesis_Letter_TruceBody".Translate(_data.nemesisName, days),
+                        "Nemesis_Letter_TruceTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_TruceBody".Translate(data.nemesisName, days),
                         LetterDefOf.NeutralEvent);
                     break;
             }
@@ -142,16 +148,16 @@ namespace Nemesis
             NemesisRegistry.Clear();
         }
 
-        private void SendNemesisAway(PawnDiscardDecideMode discardMode)
+        private static void SendNemesisAway(Pawn nemesis, PawnDiscardDecideMode discardMode)
         {
-            if (_nemesis == null || _nemesis.Dead) return;
+            if (nemesis == null || nemesis.Dead) return;
 
-            _nemesis.guest?.SetGuestStatus(null);
+            nemesis.guest?.SetGuestStatus(null);
 
-            if (_nemesis.Spawned)
-                _nemesis.DeSpawn(DestroyMode.WillReplace);
-            if (!_nemesis.IsWorldPawn())
-                Find.WorldPawns.PassToWorld(_nemesis, discardMode);
+            if (nemesis.Spawned)
+                nemesis.DeSpawn(DestroyMode.WillReplace);
+            if (!nemesis.IsWorldPawn())
+                Find.WorldPawns.PassToWorld(nemesis, discardMode);
         }
     }
 }

@@ -319,7 +319,8 @@ namespace Nemesis
                 return;
             }
             data.active = false;
-            Find.WindowStack.Add(new Dialog_NemesisResolution(data, nemesis));
+            data.pendingResolution = true;
+            comp.TryOpenResolutionDialog(nemesis);
         }
 
         [DebugAction(Cat, "Resolve pending fake ambush now", allowedGameStates = AllowedGameStates.PlayingOnMap)]

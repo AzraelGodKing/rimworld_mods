@@ -254,4 +254,15 @@
   <Nemesis_End_Kept>关押</Nemesis_End_Kept>
   <Nemesis_End_Truce>休战</Nemesis_End_Truce>
 
+  <!-- Custody lost before the resolution choice -->
+  <Nemesis_Dossier_ResolutionUnavailable>现在没有需要决定的事。其命运已定，或其已不在你们的关押之下。</Nemesis_Dossier_ResolutionUnavailable>
+  <Nemesis_End_DiedInCustody>死于关押中</Nemesis_End_DiedInCustody>
+  <Nemesis_End_LostCustody>脱离关押</Nemesis_End_LostCustody>
+  <Nemesis_Note_CustodyEscaped>在你们决定其命运之前就脱离了关押。</Nemesis_Note_CustodyEscaped>
+  <Nemesis_Letter_CustodyEscapedTitle>{0} 重获自由</Nemesis_Letter_CustodyEscapedTitle>
+  <Nemesis_Letter_CustodyEscapedBody>{0} 已不在你们的牢房里，而你们始终没有决定如何处置。\n\n狩猎重新开始。</Nemesis_Letter_CustodyEscapedBody>
+  <Nemesis_Letter_CustodyLostTitle>{0}：狩猎结束</Nemesis_Letter_CustodyLostTitle>
+  <Nemesis_Letter_CustodyLostBody>{0} 已不在你们的关押之下，而你们始终没有决定其命运。\n\n狩猎到此结束。新的仇敌可能出现。</Nemesis_Letter_CustodyLostBody>
+  <Nemesis_Letter_CustodyDiedBody>{0} 在你们决定其命运之前死在了牢房里。\n\n狩猎到此结束。新的仇敌可能出现。</Nemesis_Letter_CustodyDiedBody>
+
 </LanguageData>

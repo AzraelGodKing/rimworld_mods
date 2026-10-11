@@ -38,8 +38,10 @@ namespace Nemesis
                         data.nemesisName ?? "Nemesis_Phrase_Someone".Translate()));
                 y += 52f;
                 if (Widgets.ButtonText(new Rect(inRect.x, y, 240f, 28f),
-                        "Nemesis_Dossier_OpenResolution".Translate()))
-                    comp.TryOpenResolutionDialog();
+                        "Nemesis_Dossier_OpenResolution".Translate())
+                    && !comp.TryOpenResolutionDialog())
+                    Messages.Message("Nemesis_Dossier_ResolutionUnavailable".Translate(),
+                        MessageTypeDefOf.RejectInput, historical: false);
                 y += 36f;
                 DrawEpitaphs(comp, inRect, ref y);
                 return;
