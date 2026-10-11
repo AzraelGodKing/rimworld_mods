@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace DateNight
@@ -11,16 +12,105 @@ namespace DateNight
     public static class DateNightDoubleDates
     {
         private const int GuestWaitTicks = 2500;
+        private const int MinRapport = -5;
+        private const int MaxRapport = 5;
+        private const int AvoidRapport = -3;
+        private const int FriendlyRapport = 3;
 
         private static List<DoubleDateSession> sessions = new List<DoubleDateSession>();
+        private static List<CoupleRapport> rapport = new List<CoupleRapport>();
 
         public static void ExposeData()
         {
             Scribe_Collections.Look(ref sessions, "dateNightDoubleDates", LookMode.Deep);
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && sessions == null)
+            Scribe_Collections.Look(ref rapport, "dateNightDoubleDateRapport", LookMode.Deep);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                sessions = new List<DoubleDateSession>();
+                if (sessions == null)
+                {
+                    sessions = new List<DoubleDateSession>();
+                }
+                if (rapport == null)
+                {
+                    rapport = new List<CoupleRapport>();
+                }
             }
+        }
+
+        public static void PruneDeadPawns()
+        {
+            if (rapport == null || rapport.Count == 0)
+            {
+                return;
+            }
+            for (int i = rapport.Count - 1; i >= 0; i--)
+            {
+                CoupleRapport r = rapport[i];
+                if (r == null
+                    || !DateNightDateUtility.PawnStillAlive(r.a1)
+                    || !DateNightDateUtility.PawnStillAlive(r.b1)
+                    || !DateNightDateUtility.PawnStillAlive(r.a2)
+                    || !DateNightDateUtility.PawnStillAlive(r.b2))
+                {
+                    rapport.RemoveAt(i);
+                }
+            }
+        }
+
+        /// <summary>How well two couples have got on across past double dates (-5..5).</summary>
+        public static int RapportBetween(Pawn a1, Pawn b1, Pawn a2, Pawn b2)
+        {
+            CoupleRapport r = FindRapport(a1.thingIDNumber, b1.thingIDNumber, a2.thingIDNumber, b2.thingIDNumber);
+            return r?.score ?? 0;
+        }
+
+        private static CoupleRapport FindRapport(int a1, int b1, int a2, int b2)
+        {
+            if (rapport == null)
+            {
+                return null;
+            }
+            long first = DateNightActivities.CoupleKey(a1, b1);
+            long second = DateNightActivities.CoupleKey(a2, b2);
+            for (int i = 0; i < rapport.Count; i++)
+            {
+                if (rapport[i] != null && rapport[i].Matches(first, second))
+                {
+                    return rapport[i];
+                }
+            }
+            return null;
+        }
+
+        private static void AdjustRapport(DoubleDateSession session, ThoughtDef quality)
+        {
+            int delta;
+            if (quality == DateNightDefOf.DateNight_DateAwkward || quality == DateNightDefOf.DateNight_DateRuined)
+            {
+                delta = -1;
+            }
+            else if (quality == DateNightDefOf.DateNight_DateWonderful)
+            {
+                delta = 2;
+            }
+            else
+            {
+                delta = 1;
+            }
+
+            CoupleRapport r = FindRapport(session.hostA, session.hostB, session.guestA, session.guestB);
+            if (r == null)
+            {
+                r = new CoupleRapport
+                {
+                    a1 = session.hostA,
+                    b1 = session.hostB,
+                    a2 = session.guestA,
+                    b2 = session.guestB
+                };
+                rapport.Add(r);
+            }
+            r.score = Mathf.Clamp(r.score + delta, MinRapport, MaxRapport);
         }
 
         public static bool Allowed
@@ -145,6 +235,11 @@ namespace DateNight
                 return;
             }
             session.MarkFinished(pawn);
+            if (!session.rapportApplied)
+            {
+                session.rapportApplied = true;
+                AdjustRapport(session, quality);
+            }
             ApplySpillover(pawn, session, quality);
         }
 
@@ -192,6 +287,7 @@ namespace DateNight
 
             Pawn bestA = null;
             Pawn bestB = null;
+            int bestRapport = int.MinValue;
             int bestSeed = int.MaxValue;
             for (int i = 0; i < colonists.Count; i++)
             {
@@ -223,9 +319,16 @@ namespace DateNight
                     continue;
                 }
 
-                int seed = DateNightActivities.CoupleSeed(a, b);
-                if (seed < bestSeed)
+                int score = RapportBetween(pawn, partner, a, b);
+                if (score <= AvoidRapport)
                 {
+                    continue;
+                }
+
+                int seed = DateNightActivities.CoupleSeed(a, b);
+                if (score > bestRapport || (score == bestRapport && seed < bestSeed))
+                {
+                    bestRapport = score;
                     bestSeed = seed;
                     bestA = a;
                     bestB = b;
@@ -255,6 +358,8 @@ namespace DateNight
 
             bool awkward = quality == DateNightDefOf.DateNight_DateAwkward
                 || quality == DateNightDefOf.DateNight_DateRuined;
+            CoupleRapport pairRapport = FindRapport(session.hostA, session.hostB, session.guestA, session.guestB);
+            bool friendly = pairRapport != null && pairRapport.score >= FriendlyRapport;
             for (int i = 0; i < others.Count; i++)
             {
                 Pawn other = FindPawn(others[i]);
@@ -265,7 +370,7 @@ namespace DateNight
 
                 int opinion = pawn.relations?.OpinionOf(other) ?? 0;
                 ThoughtDef def;
-                if (awkward || opinion < 0)
+                if (awkward || (opinion < 0 && !friendly))
                 {
                     def = DateNightDefOf.DateNight_DoubleDateRivals;
                 }
@@ -337,6 +442,7 @@ namespace DateNight
         public bool noShowChecked;
         public bool finishedHost;
         public bool finishedGuest;
+        public bool rapportApplied;
 
         public static DoubleDateSession Create(Pawn hostA, Pawn hostB, Pawn guestA, Pawn guestB)
         {
@@ -478,6 +584,7 @@ namespace DateNight
             Scribe_Values.Look(ref noShowChecked, "noShowChecked");
             Scribe_Values.Look(ref finishedHost, "finishedHost");
             Scribe_Values.Look(ref finishedGuest, "finishedGuest");
+            Scribe_Values.Look(ref rapportApplied, "rapportApplied");
         }
 
         private void CaptureVenue(LocalTargetInfo venue)
@@ -521,6 +628,33 @@ namespace DateNight
                 }
             }
             return false;
+        }
+    }
+
+    /// <summary>Persisted "gets along with this couple" score between two couples.</summary>
+    public class CoupleRapport : IExposable
+    {
+        public int a1;
+        public int b1;
+        public int a2;
+        public int b2;
+        public int score;
+
+        public bool Matches(long coupleKey, long otherCoupleKey)
+        {
+            long mine = DateNightActivities.CoupleKey(a1, b1);
+            long theirs = DateNightActivities.CoupleKey(a2, b2);
+            return (mine == coupleKey && theirs == otherCoupleKey)
+                || (mine == otherCoupleKey && theirs == coupleKey);
+        }
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref a1, "a1");
+            Scribe_Values.Look(ref b1, "b1");
+            Scribe_Values.Look(ref a2, "a2");
+            Scribe_Values.Look(ref b2, "b2");
+            Scribe_Values.Look(ref score, "score", 0);
         }
     }
 }

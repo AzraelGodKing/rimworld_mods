@@ -61,6 +61,7 @@ namespace DateNight
                 DateNightDateUtility.PruneDeadPawns();
                 DateNightVenues.PruneDeadPawns();
                 DateNightVenues.TickDestroyedVenues();
+                DateNightDoubleDates.PruneDeadPawns();
                 DateNightAnniversaries.PruneDeadPawns();
             }
         }
