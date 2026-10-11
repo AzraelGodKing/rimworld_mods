@@ -1,5 +1,26 @@
 # Changelog
 
+## [Unreleased]
+
+Stamp `removal-queue-v1`.
+
+AZR-344 AZR-427 AZR-428 AZR-429 AZR-430 AZR-431 AZR-432 AZR-433 AZR-434 AZR-435 AZR-436
+
+### Added
+- **Mountain start for The Deep Homestead** - the default and "Random" starting site now favor large hills or mountains. You can still pick any tile, and the part can be removed in the scenario editor. EN/CN/RU.
+- **Safe removal summary** - the removal report opens with one line: how many things to deconstruct, consume or sell, need attention, and are safe.
+- **Multiplayer notice** - with the Multiplayer mod active, Conflicts warns that safe-removal deconstruct only acts on your client.
+- **New series mods show up on their own** - any other active AzraelGodKing mod is listed in the hub (with its own "Prepare to remove" button) without waiting for an Azrael update.
+
+### Fixed
+- **Living World ↔ Deep Colony goodwill** - the hub only says "live" when Deep Colony's goodwill listener actually registered with Living World, not just when both mods are loaded.
+- **Hub scrolling** - the settings page no longer cuts off the last "Prepare to remove" buttons when the failed-patches section is shown.
+- **Safe removal off-map pawns** - Deep Colony perks and trauma on kidnapped colonists, quest guests, and other off-map pawns now count in the report.
+
+### Changed
+- **Safe removal deconstruct** - the button now queues the designations and applies them on the next game tick (series multiplayer-safer pattern) instead of editing the map straight from Mod Options. If the game is paused, they appear when you unpause.
+- **Build stamps** - the hub reads `BuildStamp` from any series mod that follows the `XBuildInfo` convention (Azrael now does too) before falling back to the log.
+- **Release metadata** - `mod.json` download now names the 1.3.0 zip; ROADMAP lists everything shipped through 1.3.0.
 
 ## [1.3.0]
 
