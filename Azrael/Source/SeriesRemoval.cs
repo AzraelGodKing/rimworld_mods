@@ -74,10 +74,16 @@ namespace Azrael
             {
                 return;
             }
+            AzraelPlayerCommand.EnqueueDeconstruct(report.Deconstructables, report.Display);
+            Messages.Message("Azrael_Removal_Queued".Translate(), MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
+        internal static int ApplyDeconstruct(List<Thing> things)
+        {
             int n = 0;
-            for (int i = 0; i < report.Deconstructables.Count; i++)
+            for (int i = 0; i < things.Count; i++)
             {
-                Thing t = report.Deconstructables[i];
+                Thing t = things[i];
                 if (t == null || t.Destroyed || t.Map == null)
                 {
                     continue;
@@ -89,7 +95,7 @@ namespace Azrael
                 t.Map.designationManager.AddDesignation(new Designation(t, DesignationDefOf.Deconstruct));
                 n++;
             }
-            Messages.Message("Azrael_Removal_Designated".Translate(n, report.Display), MessageTypeDefOf.TaskCompletion);
+            return n;
         }
 
         private static bool Owns(Def def, string packageId)
@@ -273,6 +279,7 @@ namespace Azrael
         private static int CountOwnedHediffs(string packageId)
         {
             int n = 0;
+            var seen = new HashSet<Pawn>();
             List<Map> maps = Find.Maps;
             for (int m = 0; m < maps.Count; m++)
             {
@@ -281,11 +288,7 @@ namespace Azrael
                 {
                     continue;
                 }
-                List<Pawn> pawns = map.mapPawns.AllPawns;
-                for (int i = 0; i < pawns.Count; i++)
-                {
-                    n += CountPawnHediffs(pawns[i], packageId);
-                }
+                n += CountPawnsHediffs(map.mapPawns.AllPawns, packageId, seen);
             }
 
             List<Caravan> caravans = Find.WorldObjects.Caravans;
@@ -296,13 +299,28 @@ namespace Azrael
                 {
                     continue;
                 }
-                List<Pawn> pawns = caravan.PawnsListForReading;
-                for (int i = 0; i < pawns.Count; i++)
-                {
-                    n += CountPawnHediffs(pawns[i], packageId);
-                }
+                n += CountPawnsHediffs(caravan.PawnsListForReading, packageId, seen);
             }
 
+            // Kidnapped colonists, quest lodgers, and other off-map pawns live here.
+            if (Find.WorldPawns != null)
+            {
+                n += CountPawnsHediffs(Find.WorldPawns.AllPawnsAlive, packageId, seen);
+            }
+
+            return n;
+        }
+
+        private static int CountPawnsHediffs(IEnumerable<Pawn> pawns, string packageId, HashSet<Pawn> seen)
+        {
+            int n = 0;
+            foreach (Pawn pawn in pawns)
+            {
+                if (pawn != null && seen.Add(pawn))
+                {
+                    n += CountPawnHediffs(pawn, packageId);
+                }
+            }
             return n;
         }
 
@@ -408,6 +426,7 @@ namespace Azrael
     {
         private readonly RemovalReport report;
         private Vector2 scroll;
+        private string summary;
 
         public override Vector2 InitialSize => new Vector2(640f, 520f);
 
@@ -427,6 +446,13 @@ namespace Azrael
             float y = inRect.y + 32f;
             Widgets.Label(new Rect(inRect.x, y, inRect.width, 40f), "Azrael_Removal_Intro".Translate());
             y += 44f;
+            if (report.Lines.Count > 0)
+            {
+                GUI.color = report.Blockers.Count > 0 ? SeriesHub.ConflictColor : Color.white;
+                Widgets.Label(new Rect(inRect.x, y, inRect.width, 24f), summary ?? (summary = Summary(report)));
+                GUI.color = Color.white;
+                y += 26f;
+            }
 
             Rect list = new Rect(inRect.x, y, inRect.width, inRect.height - y - 40f);
             float viewH = 8f + report.Lines.Count * 26f + report.Blockers.Count * 22f;
@@ -471,6 +497,34 @@ namespace Azrael
                     Close();
                 }
             }
+        }
+
+        private static string Summary(RemovalReport report)
+        {
+            int deconstruct = 0;
+            int sell = 0;
+            int attention = 0;
+            int safe = 0;
+            for (int i = 0; i < report.Lines.Count; i++)
+            {
+                RemovalLine line = report.Lines[i];
+                switch (line.Verdict)
+                {
+                    case RemovalVerdict.Deconstruct:
+                        deconstruct += line.Count;
+                        break;
+                    case RemovalVerdict.ConsumeOrSell:
+                        sell += line.Count;
+                        break;
+                    case RemovalVerdict.ResolveFirst:
+                        attention++;
+                        break;
+                    default:
+                        safe++;
+                        break;
+                }
+            }
+            return "Azrael_Removal_Summary".Translate(deconstruct, sell, attention, safe);
         }
 
         private static string VerdictLabel(RemovalVerdict v)

@@ -288,8 +288,8 @@ namespace DateNight
             ThoughtDef thought = milestone
                 ? DateNightDefOf.DateNight_AnniversaryMilestone
                 : DateNightDefOf.DateNight_Anniversary;
-            GiveAnniversaryThought(pawn, partner, thought);
-            GiveAnniversaryThought(partner, pawn, thought);
+            DateNightDateUtility.TryGainThought(pawn, partner, thought);
+            DateNightDateUtility.TryGainThought(partner, pawn, thought);
 
             string yearsText = years == 1
                 ? "DateNight_OneYear".Translate()
@@ -308,21 +308,6 @@ namespace DateNight
                 body,
                 LetterDefOf.PositiveEvent,
                 new LookTargets(pawn, partner));
-        }
-
-        private static void GiveAnniversaryThought(Pawn pawn, Pawn other, ThoughtDef thought)
-        {
-            if (pawn?.needs?.mood?.thoughts?.memories == null
-                || thought == null
-                || other == null)
-            {
-                return;
-            }
-            if (pawn.ageTracker == null || !pawn.ageTracker.Adult || !pawn.DevelopmentalStage.Adult())
-            {
-                return;
-            }
-            pawn.needs.mood.thoughts.memories.TryGainMemory(thought, other);
         }
 
         private static void RemoveDayThoughts(Pawn pawn, Pawn other)

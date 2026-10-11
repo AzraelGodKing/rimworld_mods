@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using Verse;
 
-namespace DateNight
+namespace AzraelCommon
 {
     internal static class ModVersionLog
     {

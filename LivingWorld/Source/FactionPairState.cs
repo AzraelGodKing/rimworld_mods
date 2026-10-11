@@ -68,30 +68,13 @@ namespace LivingWorld
             return factionAId == idA && factionBId == idB;
         }
 
-        public Faction FactionA() => FindFaction(factionAId);
+        public Faction FactionA() => WorldEvent.FindFaction(factionAId);
 
-        public Faction FactionB() => FindFaction(factionBId);
+        public Faction FactionB() => WorldEvent.FindFaction(factionBId);
 
         public bool TradeBlackoutActive =>
             tradeBlackoutUntilTick > 0
             && Find.TickManager.TicksGame < tradeBlackoutUntilTick;
-
-        private static Faction FindFaction(int id)
-        {
-            if (id < 0)
-            {
-                return null;
-            }
-            List<Faction> all = Find.FactionManager.AllFactionsListForReading;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i].loadID == id)
-                {
-                    return all[i];
-                }
-            }
-            return null;
-        }
 
         public string DumpLine()
         {
@@ -127,25 +110,8 @@ namespace LivingWorld
             Scribe_Values.Look(ref settlementLabel, "settlementLabel");
         }
 
-        public Faction Loser() => FindFaction(loserFactionId);
+        public Faction Loser() => WorldEvent.FindFaction(loserFactionId);
 
-        public Faction Winner() => FindFaction(winnerFactionId);
-
-        private static Faction FindFaction(int id)
-        {
-            if (id < 0)
-            {
-                return null;
-            }
-            List<Faction> all = Find.FactionManager.AllFactionsListForReading;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i].loadID == id)
-                {
-                    return all[i];
-                }
-            }
-            return null;
-        }
+        public Faction Winner() => WorldEvent.FindFaction(winnerFactionId);
     }
 }

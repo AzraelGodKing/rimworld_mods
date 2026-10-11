@@ -157,15 +157,7 @@ namespace DateNight
                     continue;
                 }
 
-                int x = pawn.thingIDNumber;
-                int y = partner.thingIDNumber;
-                if (x > y)
-                {
-                    int tmp = x;
-                    x = y;
-                    y = tmp;
-                }
-                long key = ((long)x << 32) | (uint)y;
+                long key = DateNightActivities.CoupleKey(pawn, partner);
                 if (!seen.Add(key))
                 {
                     continue;

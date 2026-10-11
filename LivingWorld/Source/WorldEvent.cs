@@ -73,7 +73,7 @@ namespace LivingWorld
 
         public Faction FactionB() => FindFaction(factionBId);
 
-        private static Faction FindFaction(int id)
+        internal static Faction FindFaction(int id)
         {
             if (id < 0)
             {

@@ -2,9 +2,9 @@
 
 Detailed notes for Deep Colony only.
 
-## [Unreleased]
+## [1.9.0]
 
-Stamp `colony-overview-v1`.
+Player-facing version **1.9.0** (`About.xml` `modVersion`). Stamp `colony-overview-v1`.
 
 AZR-391 AZR-392 AZR-393 AZR-394 AZR-395 AZR-396 AZR-397 AZR-398 AZR-399 AZR-400
 
