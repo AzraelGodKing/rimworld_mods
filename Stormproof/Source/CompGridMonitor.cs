@@ -191,6 +191,16 @@ namespace Stormproof
             cachedCapacity = StorageCapacity(net);
         }
 
+        // A nearly balanced grid divides by ~0; cap before the int cast wraps.
+        private static int ClampTicks(float ticks)
+        {
+            if (float.IsNaN(ticks) || ticks <= 0f)
+            {
+                return 0;
+            }
+            return ticks >= GenDate.TicksPerYear ? GenDate.TicksPerYear : (int)ticks;
+        }
+
         public override void PostExposeData()
         {
             base.PostExposeData();
@@ -230,12 +240,12 @@ namespace Stormproof
                 stored.ToString("F0"), capacity.ToString("F0"), (stored / capacity).ToStringPercent());
             if (gainWdPerTick < 0f && stored > 0f)
             {
-                int ticksToEmpty = (int)(stored / -gainWdPerTick);
+                int ticksToEmpty = ClampTicks(stored / -gainWdPerTick);
                 s += "\n" + "Stormproof_GridMonitor_EmptyIn".Translate(ticksToEmpty.ToStringTicksToPeriod());
             }
             else if (gainWdPerTick > 0f && stored < capacity)
             {
-                int ticksToFull = (int)((capacity - stored) / (gainWdPerTick * 0.5f));
+                int ticksToFull = ClampTicks((capacity - stored) / (gainWdPerTick * 0.5f));
                 s += "\n" + "Stormproof_GridMonitor_FullIn".Translate(ticksToFull.ToStringTicksToPeriod());
             }
             string brownout = BrownoutUtility.InspectLine(parent);

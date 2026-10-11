@@ -75,6 +75,9 @@
   <Stormproof_LoadShedder_HourShed>откл</Stormproof_LoadShedder_HourShed>
   <Stormproof_LoadShedder_HourRun>вкл</Stormproof_LoadShedder_HourRun>
   <Stormproof_LoadShedder_ScheduleStatus>Этот час: {0}</Stormproof_LoadShedder_ScheduleStatus>
+  <Stormproof_LoadShedder_ForecastLegend>Нижняя полоса = прогноз батарей питающей сети на 8 часов. Жёлтая = просадка. Оранжевая = сработает порог.</Stormproof_LoadShedder_ForecastLegend>
+  <Stormproof_LoadShedder_ForecastNone>В питающей сети нет включённого метеорологического пульта, прогноз по часам не показан.</Stormproof_LoadShedder_ForecastNone>
+  <Stormproof_LoadShedder_ForecastHourTip>Прогноз: батареи питающей сети не ниже {0} в этот час.</Stormproof_LoadShedder_ForecastHourTip>
 
   <!-- Solar shield -->
   <Stormproof_SolarShield_Standby>Ожидание. Во время солнечной вспышки щит будет потреблять {0} Вт.</Stormproof_SolarShield_Standby>
@@ -131,6 +134,9 @@
   <Stormproof_Almanac_OpenDesc>Год штормов, вспышек, засух и похолоданий на этой карте.</Stormproof_Almanac_OpenDesc>
   <Stormproof_Almanac_Ledger>Поймано {0} / промах {1} ударов. Поглощено {2} / пропущено {3} Zzzt. Пожаров сбито {4}. Износ {5}.</Stormproof_Almanac_Ledger>
   <Stormproof_Almanac_Lifetime>Итого: поймано {0} / промах {1} ударов. Поглощено {2} / пропущено {3} Zzzt. Пожаров сбито {4}. Износ {5}.</Stormproof_Almanac_Lifetime>
+  <Stormproof_Almanac_ChargeForecast>Прогноз заряда сети (8 часов): сейчас {0}, минимум {1}.</Stormproof_Almanac_ChargeForecast>
+  <Stormproof_Almanac_ChargeForecastTip>Прогноз заряда батарей в сети пульта с учётом погоды и расписаний нагрузки. Жёлтая линия = начало просадки.</Stormproof_Almanac_ChargeForecastTip>
+  <Stormproof_Almanac_CleanStretch>Самая долгая чистая полоса (без промахов и пропущенных Zzzt): {0}. Сейчас: {1}.</Stormproof_Almanac_CleanStretch>
   <Stormproof_StormSpire_FulguriteReady>{0} выплавил фульгурит у основания. Соберите.</Stormproof_StormSpire_FulguriteReady>
   <Stormproof_StormSpire_CollectFulgurite>Собрать фульгурит ({0})</Stormproof_StormSpire_CollectFulgurite>
   <Stormproof_StormSpire_CollectFulguriteDesc>Снять сплавленное молнией стекло с основания шпиля.</Stormproof_StormSpire_CollectFulguriteDesc>

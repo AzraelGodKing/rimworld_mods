@@ -14,18 +14,30 @@ namespace Stormproof
         private WeatherDef lastWeather;
         private int weatherStartedTick;
         private List<AlmanacEntry> almanac = new List<AlmanacEntry>();
-        private Dictionary<int, float> brownoutByNetId = new Dictionary<int, float>();
+        private readonly Dictionary<PowerNet, float> brownoutByNet = new Dictionary<PowerNet, float>();
         private int brownoutCachedTick = -1;
         private WeatherDef daySkyWeather;
         private float daySkyMul = -1f;
         private bool stormQueued;
         private int pendingStormDuration;
+        private AlmanacTotals lifetime = new AlmanacTotals();
+        private bool lifetimeSeeded;
+        private int cleanSinceTick = -1;
+        private int longestCleanTicks;
 
         public MapComponent_Stormproof(Map map) : base(map)
         {
         }
 
         public IReadOnlyList<AlmanacEntry> Almanac => almanac;
+
+        public AlmanacTotals Lifetime => lifetime;
+
+        // "Clean" = no missed strike and no suffered Zzzt.
+        public int CurrentCleanTicks =>
+            cleanSinceTick < 0 ? 0 : Find.TickManager.TicksGame - cleanSinceTick;
+
+        public int LongestCleanTicks => UnityEngine.Mathf.Max(longestCleanTicks, CurrentCleanTicks);
 
         public void QueueStormCall(int durationTicks)
         {
@@ -44,7 +56,7 @@ namespace Stormproof
             pendingStormDuration = 0;
             map.weatherManager.TransitionTo(StormproofDefOf.RainyThunderstorm);
             map.weatherManager.curWeatherAge = 0;
-            CompStormCaller.DurationRef(map.weatherDecider) = duration;
+            WeatherDeciderAccess.TrySetDuration(map.weatherDecider, duration);
         }
 
         public void RememberDaySkyMul(WeatherDef weather, float mul)
@@ -67,6 +79,20 @@ namespace Stormproof
             base.FinalizeInit();
             lastWeather = map.weatherManager?.curWeather;
             weatherStartedTick = Find.TickManager.TicksGame;
+            if (cleanSinceTick < 0)
+            {
+                cleanSinceTick = Find.TickManager.TicksGame;
+            }
+        }
+
+        private void BreakCleanStretch()
+        {
+            int now = Find.TickManager.TicksGame;
+            if (cleanSinceTick >= 0)
+            {
+                longestCleanTicks = UnityEngine.Mathf.Max(longestCleanTicks, now - cleanSinceTick);
+            }
+            cleanSinceTick = now;
         }
 
         public override void MapComponentTick()
@@ -90,8 +116,7 @@ namespace Stormproof
             {
                 RefreshBrownoutCache();
             }
-            int id = net.GetHashCode();
-            return brownoutByNetId.TryGetValue(id, out float v) ? v : 0f;
+            return brownoutByNet.TryGetValue(net, out float v) ? v : 0f;
         }
 
         public float BrownoutFor(Thing thing)
@@ -103,7 +128,7 @@ namespace Stormproof
         private void RefreshBrownoutCache()
         {
             brownoutCachedTick = Find.TickManager.TicksGame / 60;
-            brownoutByNetId.Clear();
+            brownoutByNet.Clear();
             if (StormproofMod.Settings == null || !StormproofMod.Settings.enableBrownout || map.powerNetManager == null)
             {
                 return;
@@ -135,7 +160,7 @@ namespace Stormproof
                 {
                     raw = (0.40f - fraction) / 0.40f;
                 }
-                brownoutByNetId[net.GetHashCode()] = raw * severity;
+                brownoutByNet[net] = raw * severity;
             }
         }
 
@@ -191,10 +216,13 @@ namespace Stormproof
             if (caught)
             {
                 e.strikesCaught++;
+                lifetime.strikesCaught++;
             }
             else
             {
                 e.strikesMissed++;
+                lifetime.strikesMissed++;
+                BreakCleanStretch();
             }
         }
 
@@ -208,10 +236,13 @@ namespace Stormproof
             if (absorbed)
             {
                 e.zzztAbsorbed++;
+                lifetime.zzztAbsorbed++;
             }
             else
             {
                 e.zzztSuffered++;
+                lifetime.zzztSuffered++;
+                BreakCleanStretch();
             }
         }
 
@@ -221,6 +252,7 @@ namespace Stormproof
             if (e != null)
             {
                 e.firesSnuffed++;
+                lifetime.firesSnuffed++;
             }
         }
 
@@ -230,6 +262,7 @@ namespace Stormproof
             if (e != null)
             {
                 e.wearHits++;
+                lifetime.wearHits++;
             }
         }
 
@@ -357,10 +390,77 @@ namespace Stormproof
             Scribe_Values.Look(ref wearCursor, "stormproofWearCursor");
             Scribe_Values.Look(ref stormQueued, "stormproofStormQueued");
             Scribe_Values.Look(ref pendingStormDuration, "stormproofPendingStormDuration");
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && almanac == null)
+            if (Scribe.mode == LoadSaveMode.Saving)
             {
-                almanac = new List<AlmanacEntry>();
+                lifetimeSeeded = true;
             }
+            Scribe_Deep.Look(ref lifetime, "stormproofAlmanacLifetime");
+            Scribe_Values.Look(ref lifetimeSeeded, "stormproofAlmanacLifetimeSeeded");
+            Scribe_Values.Look(ref cleanSinceTick, "stormproofCleanSinceTick", -1);
+            Scribe_Values.Look(ref longestCleanTicks, "stormproofLongestCleanTicks");
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                if (almanac == null)
+                {
+                    almanac = new List<AlmanacEntry>();
+                }
+                if (lifetime == null)
+                {
+                    lifetime = new AlmanacTotals();
+                }
+                if (!lifetimeSeeded)
+                {
+                    // Pre-counter saves: the trimmed ring buffer is the best history left.
+                    lifetime.SeedFrom(almanac);
+                    lifetimeSeeded = true;
+                }
+            }
+        }
+    }
+
+    public class AlmanacTotals : IExposable
+    {
+        public int strikesCaught;
+        public int strikesMissed;
+        public int zzztAbsorbed;
+        public int zzztSuffered;
+        public int firesSnuffed;
+        public int wearHits;
+
+        public bool Any =>
+            strikesCaught + strikesMissed + zzztAbsorbed + zzztSuffered + firesSnuffed + wearHits > 0;
+
+        public void SeedFrom(List<AlmanacEntry> entries)
+        {
+            strikesCaught = strikesMissed = zzztAbsorbed = zzztSuffered = firesSnuffed = wearHits = 0;
+            if (entries == null)
+            {
+                return;
+            }
+            for (int i = 0; i < entries.Count; i++)
+            {
+                AlmanacEntry e = entries[i];
+                if (e == null)
+                {
+                    continue;
+                }
+                strikesCaught += e.strikesCaught;
+                strikesMissed += e.strikesMissed;
+                zzztAbsorbed += e.zzztAbsorbed;
+                zzztSuffered += e.zzztSuffered;
+                firesSnuffed += e.firesSnuffed;
+                wearHits += e.wearHits;
+            }
+        }
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref strikesCaught, "strikesCaught");
+            Scribe_Values.Look(ref strikesMissed, "strikesMissed");
+            Scribe_Values.Look(ref zzztAbsorbed, "zzztAbsorbed");
+            Scribe_Values.Look(ref zzztSuffered, "zzztSuffered");
+            Scribe_Values.Look(ref firesSnuffed, "firesSnuffed");
+            Scribe_Values.Look(ref wearHits, "wearHits");
         }
     }
 

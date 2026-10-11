@@ -3,6 +3,26 @@
 Detailed notes for **Stormproof** only.
 
 
+## [Unreleased]
+
+Stamp `forecast-schedule-v1`.
+
+AZR-325 AZR-408 AZR-409 AZR-410 AZR-411 AZR-412 AZR-413 AZR-414 AZR-415 AZR-416
+
+### Added
+- **Load schedule forecast** (`forecast-schedule-v1`) — with a weather forecaster on the supply grid, each hour in the schedule shows a bottom bar where the forecast dips: amber for brownout, orange where the cutoff would trip. Hover an hour for its lowest predicted charge.
+- **Forecast sparkline** — the weather almanac opened from a forecaster draws the next 8 hours of predicted battery charge for its grid.
+- **Longest clean stretch** — the almanac shows the longest run without a missed strike or a suffered Zzzt, plus the current one.
+
+### Fixed
+- **Almanac lifetime totals** — totals are kept as running counts and no longer shrink when old almanac entries roll off. Existing saves start from the entries still in the almanac.
+- **Brownout per grid** — brownout strength is tracked per power grid object, so one grid's brownout can never land on another.
+- **Grid monitor** — "empty in" / "full in" on a nearly balanced grid no longer shows a garbled or negative time.
+- **Weather forecaster and storm caller** — if a RimWorld update changes the weather timer they rely on, the forecast lines go quiet instead of throwing errors.
+
+### Changed
+- **Grid forecast** — the monitor's forecast now follows load shedders on the grid: scheduled shed hours, holds, and the battery cutoff drop or restore the sub-grid's draw over the 8-hour window.
+
 ## [1.5.1]
 
 Player-facing version **1.5.1** (`About.xml` `modVersion`). Stamp `forecast-ramp-v1`.

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -12,6 +13,7 @@ namespace Stormproof
         public int TicksToFull;
         public int TicksToLow;
         public int TicksToCritical;
+        public float StartFraction;
         public float NadirFraction;
         public float NadirBrownout;
     }
@@ -21,10 +23,21 @@ namespace Stormproof
     internal static class GridForecastUtility
     {
         internal const int HorizonTicks = 2500 * 8;
-        private const int StepTicks = 250;
+        internal const int StepTicks = 250;
+        internal const int CurveSteps = HorizonTicks / StepTicks;
+        internal const float BrownoutStart = 0.40f;
         private const float AfterWeatherSkyMul = 0.9f;
-        private const float BrownoutStart = 0.40f;
         private const float BrownoutDrawCut = 0.40f;
+
+        private struct ShedderSim
+        {
+            public CompLoadShedder Shedder;
+            public float SideDraw;
+            public bool StartClosed;
+            public bool Closed;
+        }
+
+        private static readonly List<ShedderSim> shedderSims = new List<ShedderSim>();
 
         internal static CompWeatherForecaster ForecasterOn(PowerNet net)
         {
@@ -46,8 +59,9 @@ namespace Stormproof
             return null;
         }
 
+        // curve (optional, CurveSteps long) receives the charge fraction at the end of each step.
         internal static GridForecast Project(Map map, PowerNet net, CompWeatherForecaster forecast,
-            float stored, float capacity, float lowFraction, float criticalFraction)
+            float stored, float capacity, float lowFraction, float criticalFraction, float[] curve = null)
         {
             float severity = StormproofMod.Settings != null && StormproofMod.Settings.enableBrownout
                 ? Mathf.Clamp01(StormproofMod.Settings.brownoutSeverity)
@@ -61,6 +75,7 @@ namespace Stormproof
                 TicksToFull = -1,
                 TicksToLow = -1,
                 TicksToCritical = -1,
+                StartFraction = startFraction,
                 NadirFraction = startFraction,
                 NadirBrownout = BrownoutAt(startFraction, severity)
             };
@@ -77,14 +92,19 @@ namespace Stormproof
             float energy = stored;
             float nadir = stored;
             bool canFill = stored < capacity - 0.05f;
+            CollectShedders(map, net);
+            long ticksAbs = Find.TickManager.TicksAbs;
+            float longitude = Find.WorldGrid.LongLatOf(map.Tile).x;
 
             for (int elapsed = 0; elapsed < HorizonTicks; elapsed += StepTicks)
             {
                 bool holds = forecast != null && elapsed < result.WeatherRemaining;
                 float sky = ProjectedSky(map, elapsed, holds, weatherMul);
                 float wind = holds ? windFrac : windFrac * 0.55f;
-                float brownout = BrownoutAt(energy / capacity, severity);
-                float draw = nameplateDraw * (1f - BrownoutDrawCut * brownout);
+                float startFrac = energy / capacity;
+                float shedDelta = StepShedders(startFrac, GenDate.HourOfDay(ticksAbs + elapsed, longitude));
+                float brownout = BrownoutAt(startFrac, severity);
+                float draw = Mathf.Max(0f, nameplateDraw + shedDelta) * (1f - BrownoutDrawCut * brownout);
                 float watts = solarMax * sky + windMax * wind + otherProd - draw;
                 energy = Mathf.Clamp(energy + watts * CompPower.WattsToWattDaysPerTick * StepTicks, 0f, capacity);
                 if (energy < nadir)
@@ -94,6 +114,10 @@ namespace Stormproof
 
                 float fraction = energy / capacity;
                 int at = elapsed + StepTicks;
+                if (curve != null)
+                {
+                    curve[elapsed / StepTicks] = fraction;
+                }
                 if (result.TicksToCritical < 0 && fraction < criticalFraction)
                 {
                     result.TicksToCritical = at;
@@ -105,6 +129,13 @@ namespace Stormproof
                 if (result.TicksToEmpty < 0 && energy <= 0.05f)
                 {
                     result.TicksToEmpty = at;
+                    if (curve != null)
+                    {
+                        for (int i = elapsed / StepTicks + 1; i < CurveSteps; i++)
+                        {
+                            curve[i] = 0f;
+                        }
+                    }
                     break;
                 }
                 if (canFill && result.TicksToFull < 0 && energy >= capacity - 0.05f && watts > 0f)
@@ -116,6 +147,70 @@ namespace Stormproof
             result.NadirFraction = nadir / capacity;
             result.NadirBrownout = BrownoutAt(result.NadirFraction, severity);
             return result;
+        }
+
+        // Fills curve and returns the projection for any battery-backed net; false without batteries.
+        internal static bool TryProjectNet(Map map, PowerNet net, float[] curve, out GridForecast forecast)
+        {
+            forecast = default;
+            if (map == null || net?.batteryComps == null)
+            {
+                return false;
+            }
+            float stored = 0f;
+            float capacity = 0f;
+            for (int i = 0; i < net.batteryComps.Count; i++)
+            {
+                stored += net.batteryComps[i].StoredEnergy;
+                capacity += net.batteryComps[i].Props.storedEnergyMax;
+            }
+            if (capacity <= 0f)
+            {
+                return false;
+            }
+            forecast = Project(map, net, ForecasterOn(net), stored, capacity, 0.25f, 0.10f, curve);
+            return true;
+        }
+
+        private static void CollectShedders(Map map, PowerNet net)
+        {
+            shedderSims.Clear();
+            foreach (CompLoadShedder shedder in StormproofRegistry.On(StormproofRegistry.LoadShedders, map))
+            {
+                if (shedder.ForecastSupplyNet != net)
+                {
+                    continue;
+                }
+                float side = shedder.ShedSideDraw;
+                if (side <= 0f)
+                {
+                    continue;
+                }
+                shedderSims.Add(new ShedderSim
+                {
+                    Shedder = shedder,
+                    SideDraw = side,
+                    StartClosed = shedder.BreakerClosed,
+                    Closed = shedder.BreakerClosed
+                });
+            }
+        }
+
+        // Watts to add to today's draw: a shed sub-grid leaves, a reconnecting one rejoins.
+        private static float StepShedders(float fraction, int hourOfDay)
+        {
+            float delta = 0f;
+            for (int i = 0; i < shedderSims.Count; i++)
+            {
+                ShedderSim sim = shedderSims[i];
+                sim.Closed = sim.Shedder.ProjectClosed(sim.Closed, fraction, hourOfDay);
+                shedderSims[i] = sim;
+                if (sim.Closed != sim.StartClosed)
+                {
+                    delta += sim.Closed ? sim.SideDraw : -sim.SideDraw;
+                }
+            }
+            return delta;
         }
 
         internal static float BrownoutAt(float fraction, float severity)
@@ -171,7 +266,7 @@ namespace Stormproof
             }
         }
 
-        private static float ConsumerForecastDraw(ThingWithComps parent, float nameplate)
+        internal static float ConsumerForecastDraw(ThingWithComps parent, float nameplate)
         {
             if (parent?.AllComps == null)
             {
