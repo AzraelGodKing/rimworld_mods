@@ -37,6 +37,7 @@
   <Nemesis_Settings_WeightSabotage>Power sabotage: {0}</Nemesis_Settings_WeightSabotage>
   <Nemesis_Settings_WeightFood>Food store raid: {0}</Nemesis_Settings_WeightFood>
   <Nemesis_Settings_WeightAnomaly>Anomaly bait: {0}</Nemesis_Settings_WeightAnomaly>
+  <Nemesis_Settings_WeightKidnap>Kidnap attempt (personal hunts, high aggression): {0}</Nemesis_Settings_WeightKidnap>
   <Nemesis_Settings_Reset>Reset</Nemesis_Settings_Reset>
 
   <!-- Phrases -->
@@ -103,6 +104,8 @@
   <Nemesis_Letter_AssaultTitle>{0} Arrives</Nemesis_Letter_AssaultTitle>
   <Nemesis_Letter_AssaultPawn>{0} has come for {1} personally. They will pull back if things turn, but they will be back.</Nemesis_Letter_AssaultPawn>
   <Nemesis_Letter_AssaultColony>{0} is leading this assault in person. They won't stay if the odds turn against them.</Nemesis_Letter_AssaultColony>
+  <Nemesis_Letter_KidnapTitle>{0} Came to Take {1}</Nemesis_Letter_KidnapTitle>
+  <Nemesis_Letter_KidnapBody>{0} is not here to fight the colony. They are here for {1}.\n\nAnyone who goes down may be dragged off. If {1} is carried away, the hunt ends — and they win.</Nemesis_Letter_KidnapBody>
   <Nemesis_Letter_WasteTitle>Waste Drop: {0}</Nemesis_Letter_WasteTitle>
   <Nemesis_Letter_WasteBody>Chemical waste has been airdropped near your colony.\n\nA short message accompanied it: "{0} sends their regards."</Nemesis_Letter_WasteBody>
   <Nemesis_Fake_Trader>a trade caravan requesting docking clearance</Nemesis_Fake_Trader>

@@ -369,6 +369,13 @@ namespace Nemesis
                     return;
                 }
 
+                // Kidnapped colonists keep the player faction, so the hand-over check below misses them.
+                if (target.IsKidnapped())
+                {
+                    EndHunt(NemesisEndReason.TargetHandedOver, look: null);
+                    return;
+                }
+
                 // Handed over: no longer a colonist / player faction pawn.
                 if (target.Faction != Faction.OfPlayer && !target.IsColonist && !target.IsPrisonerOfColony)
                 {
@@ -592,12 +599,12 @@ namespace Nemesis
                 return;
             }
 
-            NemesisAction action = PickAction();
+            NemesisAction action = PickAction(map);
             NemesisActions.Execute(action, _data, map);
             _data.nextActionTick = Find.TickManager.TicksGame + ActionInterval();
         }
 
-        private NemesisAction PickAction()
+        private NemesisAction PickAction(Map map)
         {
             float agg = _data.EffectiveAggression;
             NemesisSettings s = NemesisMod.Settings;
@@ -611,6 +618,9 @@ namespace Nemesis
             float food = s?.actionWeightFood ?? 0.05f;
             float anomaly = ModsConfig.AnomalyActive && agg >= 4f
                 ? (s?.actionWeightAnomaly ?? 0.06f)
+                : 0f;
+            float kidnap = agg >= 5f && NemesisActions.CanKidnap(_data, map)
+                ? (s?.actionWeightKidnap ?? 0.05f)
                 : 0f;
 
             if (_data.rogue)
@@ -645,7 +655,7 @@ namespace Nemesis
             else if (_data.habit == NemesisHabit.SameBuilding)
                 sabotage *= 1.4f;
 
-            float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly;
+            float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly + kidnap;
             float roll = Rand.Value * total;
 
             if ((roll -= taunt) < 0f) return NemesisAction.CommsTaunt;
@@ -656,6 +666,7 @@ namespace Nemesis
             if ((roll -= caravan) < 0f) return NemesisAction.CaravanHarass;
             if ((roll -= sabotage) < 0f) return NemesisAction.PowerSabotage;
             if ((roll -= food) < 0f) return NemesisAction.FoodStoreRaid;
+            if ((roll -= kidnap) < 0f) return NemesisAction.KidnapAttempt;
             return NemesisAction.AnomalyBait;
         }
 

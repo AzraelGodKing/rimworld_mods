@@ -37,6 +37,7 @@
   <Nemesis_Settings_WeightSabotage>电力破坏：{0}</Nemesis_Settings_WeightSabotage>
   <Nemesis_Settings_WeightFood>粮仓突袭：{0}</Nemesis_Settings_WeightFood>
   <Nemesis_Settings_WeightAnomaly>异象诱饵：{0}</Nemesis_Settings_WeightAnomaly>
+  <Nemesis_Settings_WeightKidnap>绑架企图（针对个人的狩猎，高敌意）：{0}</Nemesis_Settings_WeightKidnap>
   <Nemesis_Settings_Reset>重置</Nemesis_Settings_Reset>
 
   <!-- Phrases -->
@@ -103,6 +104,8 @@
   <Nemesis_Letter_AssaultTitle>{0}抵达</Nemesis_Letter_AssaultTitle>
   <Nemesis_Letter_AssaultPawn>{0}亲自前来找{1}。局势不妙时他们会撤退，但还会再来。</Nemesis_Letter_AssaultPawn>
   <Nemesis_Letter_AssaultColony>{0}亲自率领这次突击。若形势不利，他们不会久留。</Nemesis_Letter_AssaultColony>
+  <Nemesis_Letter_KidnapTitle>{0} 前来带走 {1}</Nemesis_Letter_KidnapTitle>
+  <Nemesis_Letter_KidnapBody>{0} 不是来和殖民地交战的。他们是冲着 {1} 来的。\n\n任何倒下的人都可能被拖走。如果 {1} 被带走，狩猎就此结束——他们赢了。</Nemesis_Letter_KidnapBody>
   <Nemesis_Letter_WasteTitle>废料空投：{0}</Nemesis_Letter_WasteTitle>
   <Nemesis_Letter_WasteBody>化学废料被空投到了殖民地附近。\n\n附带一句短讯：「{0}向你们问好。」</Nemesis_Letter_WasteBody>
   <Nemesis_Fake_Trader>请求停靠许可的贸易商队</Nemesis_Fake_Trader>

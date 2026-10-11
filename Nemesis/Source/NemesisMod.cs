@@ -149,6 +149,9 @@ namespace Nemesis
             listing.Gap(4f);
             listing.Label("Nemesis_Settings_WeightAnomaly".Translate(Settings.actionWeightAnomaly.ToString("F2")));
             Settings.actionWeightAnomaly = listing.Slider(Settings.actionWeightAnomaly, 0f, 1f);
+            listing.Gap(4f);
+            listing.Label("Nemesis_Settings_WeightKidnap".Translate(Settings.actionWeightKidnap.ToString("F2")));
+            Settings.actionWeightKidnap = listing.Slider(Settings.actionWeightKidnap, 0f, 1f);
             listing.Gap(12f);
 
             if (listing.ButtonText("Nemesis_Settings_Reset".Translate(), null, 0.25f))

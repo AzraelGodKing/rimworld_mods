@@ -37,6 +37,7 @@
   <Nemesis_Settings_WeightSabotage>Саботаж питания: {0}</Nemesis_Settings_WeightSabotage>
   <Nemesis_Settings_WeightFood>Налёт на склады еды: {0}</Nemesis_Settings_WeightFood>
   <Nemesis_Settings_WeightAnomaly>Приманка аномалии: {0}</Nemesis_Settings_WeightAnomaly>
+  <Nemesis_Settings_WeightKidnap>Попытка похищения (личная охота, высокая агрессия): {0}</Nemesis_Settings_WeightKidnap>
   <Nemesis_Settings_Reset>Сброс</Nemesis_Settings_Reset>
 
   <!-- Phrases -->
@@ -103,6 +104,8 @@
   <Nemesis_Letter_AssaultTitle>{0} прибывает</Nemesis_Letter_AssaultTitle>
   <Nemesis_Letter_AssaultPawn>{0} пришёл за {1} лично. Они отступят, если дела пойдут плохо, — но вернутся.</Nemesis_Letter_AssaultPawn>
   <Nemesis_Letter_AssaultColony>{0} лично ведёт этот штурм. Они не останутся, если шансы обернутся против них.</Nemesis_Letter_AssaultColony>
+  <Nemesis_Letter_KidnapTitle>{0} пришёл за {1}</Nemesis_Letter_KidnapTitle>
+  <Nemesis_Letter_KidnapBody>{0} пришёл не воевать с колонией. Он пришёл за {1}.\n\nЛюбого упавшего могут утащить. Если {1} унесут, охота окончена — и они победили.</Nemesis_Letter_KidnapBody>
   <Nemesis_Letter_WasteTitle>Сброс отходов: {0}</Nemesis_Letter_WasteTitle>
   <Nemesis_Letter_WasteBody>Химические отходы сброшены с воздуха у вашей колонии.\n\nКороткое сообщение сопровождало их: «{0} передаёт привет».</Nemesis_Letter_WasteBody>
   <Nemesis_Fake_Trader>торговый караван, запрашивающий разрешение на стыковку</Nemesis_Fake_Trader>

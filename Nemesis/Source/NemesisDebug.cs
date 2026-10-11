@@ -393,5 +393,8 @@ namespace Nemesis
 
         [DebugAction(ActionsCat, "Anomaly bait", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ActionAnomaly() => FireAction(NemesisAction.AnomalyBait);
+
+        [DebugAction(ActionsCat, "Kidnap attempt (pawn hunts)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ActionKidnap() => FireAction(NemesisAction.KidnapAttempt);
     }
 }
