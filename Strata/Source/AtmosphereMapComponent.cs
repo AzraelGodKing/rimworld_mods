@@ -44,6 +44,10 @@ namespace Strata
         internal const float MinPlantGrowth = 0.12f;
         internal const float MethanePerAnimalCycle = 0.00075f;
         internal const float CowMethaneMultiplier = 3.5f;
+        // Per-body rates above are tuned for a room about this size. Larger
+        // rooms dilute each breath so a cavern-sized room full of wildlife
+        // does not drain the whole layer like a sealed closet.
+        internal const float MetabolismReferenceRoomCells = 64f;
 
         public readonly HashSet<CompExhaust> Emitters = new HashSet<CompExhaust>();
         public readonly HashSet<CompExhaustVent> Vents = new HashSet<CompExhaustVent>();
@@ -1963,7 +1967,7 @@ namespace Strata
                 {
                     continue;
                 }
-                float bodyScale = pawn.BodySize;
+                float bodyScale = pawn.BodySize * MetabolismVolumeScale(room);
                 if (StrataPawnUtility.IsPlantBreather(pawn))
                 {
                     ConsumeGasFromRoom(room, co2, PlantCo2PerCycle * bodyScale);
@@ -1998,7 +2002,7 @@ namespace Strata
                 {
                     continue;
                 }
-                float scale = plant.Growth;
+                float scale = plant.Growth * MetabolismVolumeScale(room);
                 ConsumeGasFromRoom(room, co2, PlantCo2PerCycle * scale);
                 AddGasToRoom(room, oxygen, PlantO2PerCycle * scale, plant.Position, bypassCap: true);
             }
@@ -2039,7 +2043,7 @@ namespace Strata
                 {
                     continue;
                 }
-                float rate = MethanePerAnimalCycle * pawn.BodySize;
+                float rate = MethanePerAnimalCycle * pawn.BodySize * MetabolismVolumeScale(room);
                 if (IsMethaneHeavyAnimal(pawn))
                 {
                     rate *= CowMethaneMultiplier;
@@ -2047,6 +2051,17 @@ namespace Strata
                 AddGasToRoom(room, methane, rate, pawn.Position);
             }
             animalMethaneCursor = end >= pawns.Count ? 0 : end;
+        }
+
+        // Gravship life-support decks keep the flat per-body rate their tanks
+        // and reclaimers are balanced against.
+        private float MetabolismVolumeScale(Room room)
+        {
+            if (room == null || StrataGravshipLifeSupport.IsLifeSupportDeck(map))
+            {
+                return 1f;
+            }
+            return Mathf.Min(1f, MetabolismReferenceRoomCells / Mathf.Max(room.CellCount, 1));
         }
 
         private static bool IsMethaneHeavyAnimal(Pawn pawn)

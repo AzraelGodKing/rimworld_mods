@@ -413,6 +413,8 @@
   <Strata_Seismograph_RiskHigh>high</Strata_Seismograph_RiskHigh>
   <Strata_Seismograph_RiskCritical>critical</Strata_Seismograph_RiskCritical>
   <Strata_Seismograph_Alert>{0} reports elevated underground risk.</Strata_Seismograph_Alert>
+  <Strata_Seismograph_OtherLevels>Other levels:</Strata_Seismograph_OtherLevels>
+  <Strata_Seismograph_LevelLine>{0}: tremor {1}, cave-in {2}, infestation {3}</Strata_Seismograph_LevelLine>
   <Strata_Alert_Seismograph_Label>Seismograph warning</Strata_Alert_Seismograph_Label>
   <Strata_Alert_Seismograph_Explanation>A powered seismograph station is reading high tremor, cave-in, or infestation pressure on its floor. Check the inspect pane and shore, quiet the mine, or prepare for bugs.</Strata_Alert_Seismograph_Explanation>
 
