@@ -12,4 +12,15 @@
     <maxUses>1</maxUses>
   </ScenPartDef>
 
+  <ScenPartDef>
+    <defName>Azrael_PreferMountainStart</defName>
+    <label>prefer mountain start</label>
+    <description>The default and random starting site favor large hills or mountains. You can still pick any tile.</description>
+    <scenPartClass>Azrael.ScenPart_PreferMountainStart</scenPartClass>
+    <category>Misc</category>
+    <selectionWeight>0</selectionWeight>
+    <summaryPriority>404</summaryPriority>
+    <maxUses>1</maxUses>
+  </ScenPartDef>
+
 </Defs>
