@@ -95,6 +95,20 @@
   <LivingWorld_Chronicle_Empty>尚无世界事件记录。</LivingWorld_Chronicle_Empty>
   <LivingWorld_Chronicle_Corrected>（已更正）</LivingWorld_Chronicle_Corrected>
   <LivingWorld_Chronicle_AllChannels>全部渠道</LivingWorld_Chronicle_AllChannels>
+  <LivingWorld_Chronicle_SeverityAll>全部重要度</LivingWorld_Chronicle_SeverityAll>
+  <LivingWorld_Chronicle_SeverityNormal>普通及重大</LivingWorld_Chronicle_SeverityNormal>
+  <LivingWorld_Chronicle_SeverityMajor>仅重大</LivingWorld_Chronicle_SeverityMajor>
+  <LivingWorld_Chronicle_ViewChronicle>编年史</LivingWorld_Chronicle_ViewChronicle>
+  <LivingWorld_Chronicle_ViewWorldState>世界局势</LivingWorld_Chronicle_ViewWorldState>
+  <LivingWorld_WorldState_Empty>尚未记录任何派系关系。</LivingWorld_WorldState_Empty>
+  <LivingWorld_WorldState_Summary>战争：{0} · 紧张：{1} · 同盟：{2} · 和平：{3}</LivingWorld_WorldState_Summary>
+  <LivingWorld_WorldState_PeaceHidden>和平状态的派系不予列出。</LivingWorld_WorldState_PeaceHidden>
+  <LivingWorld_WorldState_Intensity>烈度 {0}/3</LivingWorld_WorldState_Intensity>
+  <LivingWorld_WorldState_Blackout>贸易封锁</LivingWorld_WorldState_Blackout>
+  <LivingWorld_Tone_Peace>和平</LivingWorld_Tone_Peace>
+  <LivingWorld_Tone_Tension>紧张</LivingWorld_Tone_Tension>
+  <LivingWorld_Tone_War>交战</LivingWorld_Tone_War>
+  <LivingWorld_Tone_Alliance>同盟</LivingWorld_Tone_Alliance>
   <LivingWorld_LetterLabel_RoadStretch>路</LivingWorld_LetterLabel_RoadStretch>
   <LivingWorld_LetterText_RoadStretch>商队已走过 {0} 个世界格。Living World 会把这条足迹记为道路，之后的远征与路途风险会用到它。</LivingWorld_LetterText_RoadStretch>
   <LivingWorld_WayCamp_Inspect>道路上的路营。在此过夜稍易恢复。</LivingWorld_WayCamp_Inspect>
@@ -108,4 +122,5 @@
 
   <LivingWorld_WarSite_BattlefieldInspect>近期地图外战争留下的战场残骸。</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>远方战事催生的临时难民营。</LivingWorld_WarSite_RefugeeCampInspect>
+  <LivingWorld_WarSite_FadesIn>将在{0}后消失。</LivingWorld_WarSite_FadesIn>
 </LanguageData>

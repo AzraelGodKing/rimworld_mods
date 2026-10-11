@@ -95,6 +95,20 @@
   <LivingWorld_Chronicle_Empty>No world events recorded yet.</LivingWorld_Chronicle_Empty>
   <LivingWorld_Chronicle_Corrected>(corrected)</LivingWorld_Chronicle_Corrected>
   <LivingWorld_Chronicle_AllChannels>all channels</LivingWorld_Chronicle_AllChannels>
+  <LivingWorld_Chronicle_SeverityAll>all severities</LivingWorld_Chronicle_SeverityAll>
+  <LivingWorld_Chronicle_SeverityNormal>normal and major</LivingWorld_Chronicle_SeverityNormal>
+  <LivingWorld_Chronicle_SeverityMajor>major only</LivingWorld_Chronicle_SeverityMajor>
+  <LivingWorld_Chronicle_ViewChronicle>Chronicle</LivingWorld_Chronicle_ViewChronicle>
+  <LivingWorld_Chronicle_ViewWorldState>World state</LivingWorld_Chronicle_ViewWorldState>
+  <LivingWorld_WorldState_Empty>No faction relations tracked yet.</LivingWorld_WorldState_Empty>
+  <LivingWorld_WorldState_Summary>Wars: {0} · Tensions: {1} · Alliances: {2} · At peace: {3}</LivingWorld_WorldState_Summary>
+  <LivingWorld_WorldState_PeaceHidden>Pairs at peace are not listed.</LivingWorld_WorldState_PeaceHidden>
+  <LivingWorld_WorldState_Intensity>intensity {0}/3</LivingWorld_WorldState_Intensity>
+  <LivingWorld_WorldState_Blackout>trade blackout</LivingWorld_WorldState_Blackout>
+  <LivingWorld_Tone_Peace>peace</LivingWorld_Tone_Peace>
+  <LivingWorld_Tone_Tension>tension</LivingWorld_Tone_Tension>
+  <LivingWorld_Tone_War>at war</LivingWorld_Tone_War>
+  <LivingWorld_Tone_Alliance>alliance</LivingWorld_Tone_Alliance>
   <LivingWorld_LetterLabel_RoadStretch>The road</LivingWorld_LetterLabel_RoadStretch>
   <LivingWorld_LetterText_RoadStretch>Your caravans have now walked {0} world tiles. Living World will remember that trail as the road — later expeditions and route hazards use it.</LivingWorld_LetterText_RoadStretch>
   <LivingWorld_WayCamp_Inspect>A way-camp on your road. Overnight rest here is a little easier.</LivingWorld_WayCamp_Inspect>
@@ -108,4 +122,5 @@
 
   <LivingWorld_WarSite_BattlefieldInspect>Recent battlefield debris from an off-map war.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>A temporary refugee camp spawned by distant fighting.</LivingWorld_WarSite_RefugeeCampInspect>
+  <LivingWorld_WarSite_FadesIn>Fades in {0}.</LivingWorld_WarSite_FadesIn>
 </LanguageData>

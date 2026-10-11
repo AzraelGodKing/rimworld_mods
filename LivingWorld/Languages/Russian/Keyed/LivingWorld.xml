@@ -95,6 +95,20 @@
   <LivingWorld_Chronicle_Empty>Пока нет записей о мире.</LivingWorld_Chronicle_Empty>
   <LivingWorld_Chronicle_Corrected>(исправлено)</LivingWorld_Chronicle_Corrected>
   <LivingWorld_Chronicle_AllChannels>все каналы</LivingWorld_Chronicle_AllChannels>
+  <LivingWorld_Chronicle_SeverityAll>любая важность</LivingWorld_Chronicle_SeverityAll>
+  <LivingWorld_Chronicle_SeverityNormal>обычные и важные</LivingWorld_Chronicle_SeverityNormal>
+  <LivingWorld_Chronicle_SeverityMajor>только важные</LivingWorld_Chronicle_SeverityMajor>
+  <LivingWorld_Chronicle_ViewChronicle>Хроника</LivingWorld_Chronicle_ViewChronicle>
+  <LivingWorld_Chronicle_ViewWorldState>Состояние мира</LivingWorld_Chronicle_ViewWorldState>
+  <LivingWorld_WorldState_Empty>Отношения фракций пока не отслеживаются.</LivingWorld_WorldState_Empty>
+  <LivingWorld_WorldState_Summary>Войны: {0} · Напряжённость: {1} · Союзы: {2} · Мир: {3}</LivingWorld_WorldState_Summary>
+  <LivingWorld_WorldState_PeaceHidden>Пары фракций в мире не показаны.</LivingWorld_WorldState_PeaceHidden>
+  <LivingWorld_WorldState_Intensity>накал {0}/3</LivingWorld_WorldState_Intensity>
+  <LivingWorld_WorldState_Blackout>торговая блокада</LivingWorld_WorldState_Blackout>
+  <LivingWorld_Tone_Peace>мир</LivingWorld_Tone_Peace>
+  <LivingWorld_Tone_Tension>напряжённость</LivingWorld_Tone_Tension>
+  <LivingWorld_Tone_War>война</LivingWorld_Tone_War>
+  <LivingWorld_Tone_Alliance>союз</LivingWorld_Tone_Alliance>
   <LivingWorld_LetterLabel_RoadStretch>Дорога</LivingWorld_LetterLabel_RoadStretch>
   <LivingWorld_LetterText_RoadStretch>Караваны прошли уже {0} клеток мира. Living World запомнит этот след как дорогу — дальше по ней пойдут экспедиции и угрозы пути.</LivingWorld_LetterText_RoadStretch>
   <LivingWorld_WayCamp_Inspect>Придорожный стан на вашей дороге. Ночёвка здесь чуть легче.</LivingWorld_WayCamp_Inspect>
@@ -108,4 +122,5 @@
 
   <LivingWorld_WarSite_BattlefieldInspect>Свежие обломки поля боя с войны за картой.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>Временный лагерь беженцев от далёких боёв.</LivingWorld_WarSite_RefugeeCampInspect>
+  <LivingWorld_WarSite_FadesIn>Исчезнет через {0}.</LivingWorld_WarSite_FadesIn>
 </LanguageData>
