@@ -12,6 +12,9 @@
   <Niceties_Settings_PresetCustom>Свой</Niceties_Settings_PresetCustom>
   <Niceties_Settings_ActivePreset>Активный пресет: {0}</Niceties_Settings_ActivePreset>
   <Niceties_Settings_PresetsTip>Пресеты меняют только ползунки. Потом отметьте те мелочи, которые вам нужны.</Niceties_Settings_PresetsTip>
+  <Niceties_Settings_SnapshotDiffers>Это сохранение всё ещё использует старые зашитые настройки, а не параметры ниже.</Niceties_Settings_SnapshotDiffers>
+  <Niceties_Settings_SnapshotApply>Применить к этому сохранению</Niceties_Settings_SnapshotApply>
+  <Niceties_Settings_SnapshotHost>Мультиплеер: это сохранение работает на зашитых настройках хоста. Ваши изменения здесь действуют в одиночной игре.</Niceties_Settings_SnapshotHost>
   <Niceties_Settings_ApparelCare>Ухоженная одежда</Niceties_Settings_ApparelCare>
   <Niceties_Settings_ApparelCareTip>Надетая одежда пропускает или снижает ежедневный износ. Бой и огонь по-прежнему снимают прочность. Одежда на земле гниёт снаружи как обычно.</Niceties_Settings_ApparelCareTip>
   <Niceties_Settings_QualityScale>Износ по качеству</Niceties_Settings_QualityScale>
@@ -29,12 +32,16 @@
   <Niceties_Settings_WearAnyTip>Снимает гендерные теги одежды (королевский жилет/корсет, шляпы и моды с тем же полем), чтобы мысль «не тот пол» не срабатывала.</Niceties_Settings_WearAnyTip>
   <Niceties_Settings_HideCrypto>Скрыть спящих в криптосне из панели</Niceties_Settings_HideCrypto>
   <Niceties_Settings_HideCryptoTip>Колонисты уже в капсуле криптосна не показываются на панели колонистов. Пока их несут к капсуле, они видны.</Niceties_Settings_HideCryptoTip>
+  <Niceties_Settings_CryptoCount>Показывать число скрытых в криптосне</Niceties_Settings_CryptoCount>
+  <Niceties_Settings_CryptoCountTip>Небольшая надпись «+N в криптосне» рядом с панелью колонистов, чтобы было понятно, почему она короче.</Niceties_Settings_CryptoCountTip>
 
   <Niceties_Settings_MeleeHunt>Охота в ближнем бою</Niceties_Settings_MeleeHunt>
   <Niceties_Settings_MeleeHuntTip>Охотники могут охотиться с оружием ближнего боя. Дальная охота не меняется.</Niceties_Settings_MeleeHuntTip>
   <Niceties_Settings_UnarmedHunt>Охота без оружия</Niceties_Settings_UnarmedHunt>
   <Niceties_Settings_UnarmedHuntTip>Охотники без оружия всё равно могут охотиться (кулаки). По умолчанию выкл — легко погубить человека.</Niceties_Settings_UnarmedHuntTip>
   <Niceties_Settings_MeleeSize>Макс. размер тела для ближней охоты: {0}</Niceties_Settings_MeleeSize>
+  <Niceties_Settings_MeleeSizeExample>Примерно до: {0}</Niceties_Settings_MeleeSizeExample>
+  <Niceties_Settings_MeleeSizeTiny>Меньше любого эталонного животного.</Niceties_Settings_MeleeSizeTiny>
   <Niceties_Settings_SharedRooms>Общие спальни</Niceties_Settings_SharedRooms>
   <Niceties_Settings_SharedRoomsTip>Гизмо на кровати помечает комнату как общую. Она остаётся спальней, а не казармой, поэтому соседи (и знать) не штрафуются за совместную жизнь.</Niceties_Settings_SharedRoomsTip>
   <Niceties_Settings_SkipDisturbedSleep>Нет «потревоженного сна» у соседей</Niceties_Settings_SkipDisturbedSleep>
@@ -42,6 +49,7 @@
   <Niceties_ShareRoom>Общая комната</Niceties_ShareRoom>
   <Niceties_ShareRoomTip>Пометить эту спальню как общую. Лишние кровати остаются спальней, а не казармой. Соседи не получают штраф за совместную комнату.</Niceties_ShareRoomTip>
   <Niceties_ShareRoomInspect>Комната общая.</Niceties_ShareRoomInspect>
+  <Niceties_ShareRoomInspectWith>Комната общая: {0}.</Niceties_ShareRoomInspectWith>
   <Niceties_Settings_LeaveAWayOut>Оставить выход</Niceties_Settings_LeaveAWayOut>
   <Niceties_Settings_LeaveAWayOutTip>Колонисты не заканчивают стену, которая замурует кого-то или перекроет оставшиеся каркасы. Перед тем как закрыть себя, они отходят. Кадры Replace Stuff учитываются; замена материала стены на месте остаётся непроходимой, так что морозильник можно менять изнутри. Принудительная постройка по ПКМ всё равно ставит стену. Идея Smarter Construction — свой код для 1.6, не порт.</Niceties_Settings_LeaveAWayOutTip>
   <Niceties_OpenBuilds_WouldEnclose>Завершение замурует кого-то внутри.</Niceties_OpenBuilds_WouldEnclose>
@@ -55,5 +63,7 @@
   <Niceties_Weapon_VanillaWear>Ежедневный износ: ваниль.</Niceties_Weapon_VanillaWear>
   <Niceties_Weapon_ReducedWear>Ежедневный износ: {0} от ванили.</Niceties_Weapon_ReducedWear>
   <Niceties_Hunt_TooBig>{0} слишком крупный для охоты в ближнем бою.</Niceties_Hunt_TooBig>
+  <Niceties_CryptoHiddenCount>+{0} в криптосне</Niceties_CryptoHiddenCount>
+  <Niceties_CryptoHiddenCountTip>Колонисты в капсулах криптосна скрыты с панели модом Niceties. Отключается в настройках мода.</Niceties_CryptoHiddenCountTip>
 
 </LanguageData>

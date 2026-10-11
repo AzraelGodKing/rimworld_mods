@@ -6,7 +6,7 @@ namespace LivingWorld
 {
     internal static class LivingWorldRumour
     {
-        public static void StampOnPublish(WorldEvent ev)
+        public static void StampOnPublish(WorldEvent ev, bool allowDistortion = true)
         {
             if (ev == null || ev.isCorrection)
             {
@@ -17,6 +17,10 @@ namespace LivingWorld
             ev.trueKind = ev.kind;
             ev.trueFactionAName = ev.factionAName;
             ev.trueFactionBName = ev.factionBName;
+            if (!allowDistortion)
+            {
+                return;
+            }
 
             float chance = ev.channel switch
             {
@@ -45,28 +49,16 @@ namespace LivingWorld
             IReadOnlyList<WorldEvent> list = comp.Chronicle;
             for (int i = 0; i < list.Count; i++)
             {
-                WorldEvent ev = list[i];
-                if (ev == null || !ev.distorted || ev.corrected || ev.correctionTick < 0 || now < ev.correctionTick)
+                TryCorrect(list[i], now, ref due);
+            }
+            List<WorldEvent> evicted = comp.EvictedPendingCorrections;
+            for (int i = evicted.Count - 1; i >= 0; i--)
+            {
+                WorldEvent ev = evicted[i];
+                if (ev == null || ev.corrected || TryCorrect(ev, now, ref due))
                 {
-                    continue;
+                    evicted.RemoveAt(i);
                 }
-                ev.corrected = true;
-                ev.kind = ev.trueKind;
-                ev.factionAName = ev.trueFactionAName;
-                ev.factionBName = ev.trueFactionBName;
-                due ??= new List<WorldEvent>();
-                due.Add(new WorldEvent
-                {
-                    tick = now,
-                    kind = WorldEventKind.Correction,
-                    severity = NewsSeverity.Minor,
-                    isCorrection = true,
-                    factionAName = ev.trueFactionAName,
-                    factionBName = ev.trueFactionBName,
-                    settlementLabel = ev.settlementLabel,
-                    tile = ev.tile,
-                    channel = HearChannel.Radio,
-                });
             }
             if (due == null)
             {
@@ -76,6 +68,32 @@ namespace LivingWorld
             {
                 comp.RecordAndPublish(due[i]);
             }
+        }
+
+        private static bool TryCorrect(WorldEvent ev, int now, ref List<WorldEvent> due)
+        {
+            if (ev == null || !ev.distorted || ev.corrected || ev.correctionTick < 0 || now < ev.correctionTick)
+            {
+                return false;
+            }
+            ev.corrected = true;
+            ev.kind = ev.trueKind;
+            ev.factionAName = ev.trueFactionAName;
+            ev.factionBName = ev.trueFactionBName;
+            due ??= new List<WorldEvent>();
+            due.Add(new WorldEvent
+            {
+                tick = now,
+                kind = WorldEventKind.Correction,
+                severity = NewsSeverity.Minor,
+                isCorrection = true,
+                factionAName = ev.trueFactionAName,
+                factionBName = ev.trueFactionBName,
+                settlementLabel = ev.settlementLabel,
+                tile = ev.tile,
+                channel = HearChannel.Radio,
+            });
+            return true;
         }
 
         private static HearChannel ChannelFor(WorldEvent ev)

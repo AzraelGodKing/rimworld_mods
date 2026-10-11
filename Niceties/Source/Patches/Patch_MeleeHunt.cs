@@ -7,6 +7,43 @@ namespace Niceties
 {
     internal static class MeleeHunt
     {
+        private static readonly string[] ReferenceAnimals =
+        {
+            "Squirrel", "Chicken", "Cat", "Turkey", "Husky", "Alpaca", "Deer", "Warg", "Pig", "Elk",
+            "Muffalo", "Rhinoceros", "Elephant"
+        };
+
+        private static float cachedCap = -1f;
+        private static string cachedLabel;
+
+        /// <summary>Largest vanilla reference animal at or under the cap, or null if none fit.</summary>
+        internal static string ReferenceAnimalLabel(float cap)
+        {
+            if (cap == cachedCap)
+            {
+                return cachedLabel;
+            }
+
+            ThingDef best = null;
+            for (int i = 0; i < ReferenceAnimals.Length; i++)
+            {
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(ReferenceAnimals[i]);
+                if (def?.race == null || def.race.baseBodySize > cap + 0.001f)
+                {
+                    continue;
+                }
+
+                if (best == null || def.race.baseBodySize > best.race.baseBodySize)
+                {
+                    best = def;
+                }
+            }
+
+            cachedCap = cap;
+            cachedLabel = best != null ? best.label + " (" + best.race.baseBodySize.ToString("0.##") + ")" : null;
+            return cachedLabel;
+        }
+
         internal static bool AllowsMelee(Pawn hunter)
         {
             NicetiesSettings settings = NicetiesSim.Settings;

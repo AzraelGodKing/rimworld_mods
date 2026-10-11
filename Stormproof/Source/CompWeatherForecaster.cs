@@ -1,4 +1,3 @@
-using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -20,18 +19,16 @@ namespace Stormproof
     // moment a lightning-bearing storm rolls in (so spire owners can top off).
     public class CompWeatherForecaster : ThingComp
     {
-        // WeatherDecider.curWeatherDuration is private; the decider rolls the
-        // *next* weather only at transition time, so the honest forecast is
-        // "when the current weather ends", not what comes after.
-        private static readonly AccessTools.FieldRef<WeatherDecider, int> DurationRef =
-            AccessTools.FieldRefAccess<WeatherDecider, int>("curWeatherDuration");
-
+        // The decider rolls the *next* weather only at transition time, so the
+        // honest forecast is "when the current weather ends", not what comes after.
         private CompPowerTrader powerComp;
         private CompFlickable flickComp;
         private WeatherDef lastSeenWeather;
         private bool warnedThisCycle;
 
         public CompProperties_WeatherForecaster Props => (CompProperties_WeatherForecaster)props;
+
+        internal PowerNet PowerNet => powerComp?.PowerNet;
 
         public bool Active =>
             parent.Spawned &&
@@ -70,7 +67,8 @@ namespace Stormproof
                 }
             }
 
-            if (!warnedThisCycle && RemainingTicks(map) <= Props.warningLeadTicks)
+            int remaining = RemainingTicks(map);
+            if (!warnedThisCycle && remaining >= 0 && remaining <= Props.warningLeadTicks)
             {
                 warnedThisCycle = true;
                 Messages.Message(
@@ -79,15 +77,20 @@ namespace Stormproof
             }
         }
 
+        // -1 when the decider's duration can't be read.
         internal int RemainingTicks()
         {
             Map map = parent.Map;
-            return map == null ? 0 : DurationRef(map.weatherDecider) - map.weatherManager.curWeatherAge;
+            return map == null ? 0 : RemainingTicks(map);
         }
 
-        private int RemainingTicks(Map map)
+        private static int RemainingTicks(Map map)
         {
-            return DurationRef(map.weatherDecider) - map.weatherManager.curWeatherAge;
+            if (!WeatherDeciderAccess.TryGetDuration(map.weatherDecider, out int duration))
+            {
+                return -1;
+            }
+            return Mathf.Max(0, duration - map.weatherManager.curWeatherAge);
         }
 
         public static bool BringsLightning(WeatherDef def)
@@ -112,9 +115,14 @@ namespace Stormproof
             WeatherDef cur = map.weatherManager.curWeather;
             int remaining = RemainingTicks(map);
             string s = "Stormproof_WeatherForecaster_Current".Translate(cur.label);
-            s += remaining > 0
-                ? "\n" + "Stormproof_WeatherForecaster_HoldsFor".Translate(remaining.ToStringTicksToPeriod())
-                : "\n" + "Stormproof_WeatherForecaster_AboutToChange".Translate();
+            if (remaining > 0)
+            {
+                s += "\n" + "Stormproof_WeatherForecaster_HoldsFor".Translate(remaining.ToStringTicksToPeriod());
+            }
+            else if (remaining == 0)
+            {
+                s += "\n" + "Stormproof_WeatherForecaster_AboutToChange".Translate();
+            }
             MapComponent_Stormproof almanac = map.GetComponent<MapComponent_Stormproof>();
             if (almanac != null && almanac.Almanac.Count > 0
                 && (StormproofMod.Settings == null || StormproofMod.Settings.enableAlmanac))
@@ -144,7 +152,7 @@ namespace Stormproof
                     MapComponent_Stormproof comp = parent.Map.GetComponent<MapComponent_Stormproof>();
                     if (comp != null)
                     {
-                        Find.WindowStack.Add(new Dialog_Almanac(comp));
+                        Find.WindowStack.Add(new Dialog_Almanac(comp, this));
                     }
                 }
             };

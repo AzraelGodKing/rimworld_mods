@@ -33,6 +33,7 @@ namespace Nemesis
         PowerSabotage,
         FoodStoreRaid,
         AnomalyBait,
+        KidnapAttempt,
     }
 
     public enum NemesisOutcome

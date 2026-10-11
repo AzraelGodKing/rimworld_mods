@@ -75,6 +75,9 @@
   <Stormproof_LoadShedder_HourShed>切除</Stormproof_LoadShedder_HourShed>
   <Stormproof_LoadShedder_HourRun>运行</Stormproof_LoadShedder_HourRun>
   <Stormproof_LoadShedder_ScheduleStatus>本小时：{0}</Stormproof_LoadShedder_ScheduleStatus>
+  <Stormproof_LoadShedder_ForecastLegend>底部色条 = 供电侧蓄电池未来 8 小时的预测。黄色 = 限电。橙色 = 触发切断阈值。</Stormproof_LoadShedder_ForecastLegend>
+  <Stormproof_LoadShedder_ForecastNone>供电电网上没有通电的天气预报仪，因此不显示预测时段。</Stormproof_LoadShedder_ForecastNone>
+  <Stormproof_LoadShedder_ForecastHourTip>预测：本小时供电侧蓄电池至少 {0}。</Stormproof_LoadShedder_ForecastHourTip>
 
   <!-- Solar shield -->
   <Stormproof_SolarShield_Standby>待机。太阳耀斑期间此护盾将消耗 {0} W。</Stormproof_SolarShield_Standby>
@@ -131,6 +134,9 @@
   <Stormproof_Almanac_OpenDesc>查阅本地图一年的风暴、耀斑、干旱与寒潮。</Stormproof_Almanac_OpenDesc>
   <Stormproof_Almanac_Ledger>接闪 {0} / 未接 {1}。吸收短路 {2} / 遭受 {3}。灭火 {4}。磨损 {5}。</Stormproof_Almanac_Ledger>
   <Stormproof_Almanac_Lifetime>累计：接闪 {0} / 未接 {1}。吸收短路 {2} / 遭受 {3}。灭火 {4}。磨损 {5}。</Stormproof_Almanac_Lifetime>
+  <Stormproof_Almanac_ChargeForecast>电网电量预测（未来 8 小时）：当前 {0}，最低 {1}。</Stormproof_Almanac_ChargeForecast>
+  <Stormproof_Almanac_ChargeForecastTip>预报仪所在电网的蓄电池电量预测，已计入天气与负荷时刻表。黄线 = 开始限电。</Stormproof_Almanac_ChargeForecastTip>
+  <Stormproof_Almanac_CleanStretch>最长无事故期（无未接闪、无遭受短路）：{0}。当前：{1}。</Stormproof_Almanac_CleanStretch>
   <Stormproof_StormSpire_FulguriteReady>{0} 基部凝出闪电熔岩。可采集。</Stormproof_StormSpire_FulguriteReady>
   <Stormproof_StormSpire_CollectFulgurite>采集闪电熔岩（{0}）</Stormproof_StormSpire_CollectFulgurite>
   <Stormproof_StormSpire_CollectFulguriteDesc>从塔基取下雷击熔成的玻璃。</Stormproof_StormSpire_CollectFulguriteDesc>

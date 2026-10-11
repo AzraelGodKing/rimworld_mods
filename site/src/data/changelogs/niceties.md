@@ -2,12 +2,43 @@
 
 Detailed notes for **Niceties** only.
 
+## [1.5.0]
+
+Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.5.0 loaded from ...; sim-snapshot-v2` in Player.log.
+
+AZR-371 AZR-372 AZR-373 AZR-374 AZR-375 AZR-376 AZR-377 AZR-378 AZR-379 AZR-380 AZR-381
+
+### Added
+- **Hidden cryptosleep count** — a small "+N in cryptosleep" note beside the colonist bar says how many colonists the filter is hiding. Own checkbox under Hidden cryptosleep, on by default.
+- **Melee hunt size example** — the body-size cap slider names a vanilla reference animal (for example "warg (1.4)") so the number means something.
+- **Roommates on inspect** — a shared bedroom's beds now list who sleeps in the room.
+- **Save settings notice** — Mod Options says when the loaded save is running on different baked settings, with an "Apply to this save now" button (single-player). In Multiplayer it explains that the host's settings are in charge.
+
+### Fixed
+- **Wear any outfit in Multiplayer** — gender tags now follow the save's host-baked settings like every other nicety, instead of each player's own Mod Options.
+- **Share room in Multiplayer** — the bed gizmo now syncs to every player when the Multiplayer mod is loaded, so rooms do not end up as a bedroom for one player and barracks for another.
+- **Stale save settings** — in single-player, loading a save now picks up your current Mod Options. You no longer have to reopen Mod Options and change something for a save to notice.
+- **Patch target renames** — if a RimWorld update renames the private methods behind "no disturbed sleep for roommates" or the cryptosleep bar filter, Niceties skips just that feature and names it in the log.
+
+### Changed
+- **Leave a way out performance** — wall enclosure checks are cached per frame, so several builders finishing walls at once no longer redo the same flood fill, and the step-aside check reuses it.
+- **Roadmap** — feature table lists Well-kept weapons and the presets.
+
 
 ## [1.4.1]
 
 Player-facing version **1.4.1** (`About.xml` `modVersion`).
 
-See `About/changelog.txt` for the full player-facing notes for this ship.
+### Fixed
+- **Settings disk writes** (AZR-275) — Mod Options writes only when a setting actually changed, not every GUI frame.
+- **Leave a way out trap-self** (AZR-276) — frames that would trap only the builder with no step-aside cell fail at job assignment with a clear reason instead of retrying forever.
+- **Cryptosleep bar reflection** (AZR-291) — hide-cryptosleep uses `ColonistBar.Entries` instead of a private field by string; warns once if null.
+
+### Added
+- **Active preset label** (AZR-293) — Soft / Default / Hard / Custom shown under the preset buttons.
+- **Well-kept weapons** (AZR-294) — optional toggle under well-kept apparel; equipped weapons reuse the same quality/Crafting wear formula.
+- **Sim settings snapshot** (AZR-292) — a GameComponent bakes settings that gate deterministic sim so Multiplayer joiners share the host values from the save.
+- **Hunters Use Melee incompat** (AZR-295) — `About.xml` `incompatibleWith` adds `Mlie.HuntersUseMelee` (the original Melee Hunting is discontinued).
 ## [1.4.0]
 
 ### Changed

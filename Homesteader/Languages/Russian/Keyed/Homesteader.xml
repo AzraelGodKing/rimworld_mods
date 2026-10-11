@@ -76,7 +76,27 @@
   <Homesteader_PantryMakeNeedMore>не хватает нескольких ингредиентов</Homesteader_PantryMakeNeedMore>
   <Homesteader_PantryMakeNeedIng>нужно ещё {0} {1}</Homesteader_PantryMakeNeedIng>
   <Homesteader_PantryMakeUnknownIng>ингредиент</Homesteader_PantryMakeUnknownIng>
-  <Homesteader_LandraceDev>Местная линия +{0}% урожай, +{1}% мороз, +{2}% засуха (пок. {3})</Homesteader_LandraceDev>
+  <Homesteader_Landrace>Своя линия семян: +{0}% урожай, +{1}% мороз, +{2}% засуха (поколение {3})</Homesteader_Landrace>
+  <Homesteader_LandraceGrowthInactive>Бонусы к морозу и засухе не работают в этой версии RimWorld.</Homesteader_LandraceGrowthInactive>
+  <Homesteader_SettingsSpoilageTriageBillsInactive>Эта версия RimWorld заблокировала перехват ингредиентов счетов: закатки больше не берут портящееся первым. При еде правило работает.</Homesteader_SettingsSpoilageTriageBillsInactive>
+  <Homesteader_PantryJump>К нему</Homesteader_PantryJump>
+  <Homesteader_PantrySortCount>Сорт.: больше всего</Homesteader_PantrySortCount>
+  <Homesteader_PantrySortName>Сорт.: по имени</Homesteader_PantrySortName>
+  <Homesteader_PantrySortRot>Сорт.: скоро испортится</Homesteader_PantrySortRot>
+  <Homesteader_PantryMakeChooseStation>Это могут делать верстаков: {0}. Нажмите, чтобы выбрать.</Homesteader_PantryMakeChooseStation>
+  <Homesteader_PantryMakeBillCount>счетов: {0}</Homesteader_PantryMakeBillCount>
+  <Homesteader_MapleSeason_Running>Сок бежит сильно — сезон сахароварения.</Homesteader_MapleSeason_Running>
+  <Homesteader_MapleSeason_Slow>Сок в этом сезоне слабый.</Homesteader_MapleSeason_Slow>
+  <Homesteader_MapleSeason_Dry>Сок почти иссяк — ждите весенней прохлады.</Homesteader_MapleSeason_Dry>
+  <Homesteader_AgingNotStarted>Выдерживается в погребе, родниковом погребе или леднике.</Homesteader_AgingNotStarted>
+  <Homesteader_AgingInspect>Выдержка: {0} ({1} дн. в холоде), цена {2}</Homesteader_AgingInspect>
+  <Homesteader_AgingTier0>молодой</Homesteader_AgingTier0>
+  <Homesteader_AgingTier1>выдержанный</Homesteader_AgingTier1>
+  <Homesteader_AgingTier2>хорошо выдержанный</Homesteader_AgingTier2>
+  <Homesteader_AgingTier3>марочный</Homesteader_AgingTier3>
+  <Homesteader_AgingStatExplain>Выдержка в погребе ({0}): x{1}</Homesteader_AgingStatExplain>
+  <Homesteader_HarvestFestivalLetterLabel>Праздник урожая</Homesteader_HarvestFestivalLetterLabel>
+  <Homesteader_HarvestFestivalLetterText>Пришла осень, и колония собирается у майского столба, чтобы отпраздновать труды года.\n\nВ кладовой разных заготовок: {0} — {1}.\n\nЗапасите больше видов заготовок к следующему году (3+ вида — полный праздник, 6+ — щедрый).</Homesteader_HarvestFestivalLetterText>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>Аномальная трансляция зафиксировалась на частоте вашего монумента 27. Над регионом образуется краткий тепловой купол, а несколько колонистов жалуются на короткое помутнение — «гниение мозга», как они это называют.</Homesteader_KatsLetter_Open>

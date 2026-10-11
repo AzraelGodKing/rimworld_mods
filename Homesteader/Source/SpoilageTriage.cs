@@ -73,15 +73,15 @@ namespace Homesteader
                 return float.MinValue;
             }
 
-            float rot = 0f;
-            CompRottable comp = t.TryGetComp<CompRottable>();
-            if (comp != null && comp.Stage == RotStage.Fresh)
-            {
-                rot = comp.RotProgressPct;
-            }
-
             float dist = t.Position.DistanceTo(rootCell);
-            return rot * 100f - dist * 0.35f;
+            return FreshRotProgress(t) * 100f - dist * 0.35f;
+        }
+
+        /// <summary>0 for non-rotting or already-rotten stacks; otherwise 0..1 toward spoiling.</summary>
+        internal static float FreshRotProgress(Thing t)
+        {
+            CompRottable comp = t?.TryGetComp<CompRottable>();
+            return comp != null && comp.Stage == RotStage.Fresh ? comp.RotProgressPct : 0f;
         }
     }
 

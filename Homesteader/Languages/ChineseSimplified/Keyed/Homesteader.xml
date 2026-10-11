@@ -76,7 +76,27 @@
   <Homesteader_PantryMakeNeedMore>缺少不止一种材料</Homesteader_PantryMakeNeedMore>
   <Homesteader_PantryMakeNeedIng>还差 {0} {1}</Homesteader_PantryMakeNeedIng>
   <Homesteader_PantryMakeUnknownIng>材料</Homesteader_PantryMakeUnknownIng>
-  <Homesteader_LandraceDev>地方品种 +{0}% 产量、+{1}% 抗寒、+{2}% 抗旱（第 {3} 代）</Homesteader_LandraceDev>
+  <Homesteader_Landrace>留种品系：+{0}% 产量、+{1}% 抗寒、+{2}% 抗旱（第 {3} 代）</Homesteader_Landrace>
+  <Homesteader_LandraceGrowthInactive>在此 RimWorld 版本中，抗寒/抗旱加成未生效。</Homesteader_LandraceGrowthInactive>
+  <Homesteader_SettingsSpoilageTriageBillsInactive>此 RimWorld 版本阻止了账单取料钩子：腌制账单不再优先取快坏的原料。进食仍然优先快坏的。</Homesteader_SettingsSpoilageTriageBillsInactive>
+  <Homesteader_PantryJump>跳转</Homesteader_PantryJump>
+  <Homesteader_PantrySortCount>排序：数量最多</Homesteader_PantrySortCount>
+  <Homesteader_PantrySortName>排序：名称</Homesteader_PantrySortName>
+  <Homesteader_PantrySortRot>排序：最快变质</Homesteader_PantrySortRot>
+  <Homesteader_PantryMakeChooseStation>有 {0} 个工作台能做这个。点击选择一个。</Homesteader_PantryMakeChooseStation>
+  <Homesteader_PantryMakeBillCount>{0} 个账单</Homesteader_PantryMakeBillCount>
+  <Homesteader_MapleSeason_Running>树汁很旺——制糖季节。</Homesteader_MapleSeason_Running>
+  <Homesteader_MapleSeason_Slow>这个季节树汁偏少。</Homesteader_MapleSeason_Slow>
+  <Homesteader_MapleSeason_Dry>树汁几乎干了——等春寒再采。</Homesteader_MapleSeason_Dry>
+  <Homesteader_AgingNotStarted>放在根窖、泉屋或冰屋里会陈化。</Homesteader_AgingNotStarted>
+  <Homesteader_AgingInspect>陈化：{0}（冷藏 {1} 天），价值 {2}</Homesteader_AgingInspect>
+  <Homesteader_AgingTier0>新制</Homesteader_AgingTier0>
+  <Homesteader_AgingTier1>陈化</Homesteader_AgingTier1>
+  <Homesteader_AgingTier2>久陈</Homesteader_AgingTier2>
+  <Homesteader_AgingTier3>珍藏</Homesteader_AgingTier3>
+  <Homesteader_AgingStatExplain>地窖陈化（{0}）：x{1}</Homesteader_AgingStatExplain>
+  <Homesteader_HarvestFestivalLetterLabel>丰收节</Homesteader_HarvestFestivalLetterLabel>
+  <Homesteader_HarvestFestivalLetterText>秋天到了，殖民地围着丰收五月柱庆祝这一年的劳作。\n\n储藏室里有 {0} 种不同的腌货：{1}。\n\n多储备几种腌货，明年的节日会更热闹（3 种以上为完整丰收节，6 种以上为丰盛丰收节）。</Homesteader_HarvestFestivalLetterText>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>一则异常广播锁定了你殖民地的 27 纪念碑频率。短暂的热穹正在该区域形成，几名殖民者报告短暂的头脑昏沉——他们称之为「脑腐」。</Homesteader_KatsLetter_Open>

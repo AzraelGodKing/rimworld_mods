@@ -46,6 +46,11 @@
   <DateNight_Anniversary.stages_0.label>纪念日</DateNight_Anniversary.stages_0.label>
   <DateNight_Anniversary.stages_0.description>和{0}又过了一年。日历自己把这一天圈了起来。</DateNight_Anniversary.stages_0.description>
 
+  <DateNight_AnniversaryMilestone.label>里程碑纪念日</DateNight_AnniversaryMilestone.label>
+  <DateNight_AnniversaryMilestone.description>和{0}在一起这么多年了。有时我还是不敢相信。</DateNight_AnniversaryMilestone.description>
+  <DateNight_AnniversaryMilestone.stages_0.label>里程碑纪念日</DateNight_AnniversaryMilestone.stages_0.label>
+  <DateNight_AnniversaryMilestone.stages_0.description>和{0}在一起这么多年了。有时我还是不敢相信。</DateNight_AnniversaryMilestone.stages_0.description>
+
   <DateNight_AnniversaryDate.label>纪念日约会</DateNight_AnniversaryDate.label>
   <DateNight_AnniversaryDate.description>纪念日我们真的出门了。和{0}的这一年我会记住。</DateNight_AnniversaryDate.description>
   <DateNight_AnniversaryDate.stages_0.label>纪念日约会</DateNight_AnniversaryDate.stages_0.label>
@@ -84,5 +89,15 @@
   <DateNight_DoubleDateNoShow.description>另一对根本没来。行吧。我们自己去。</DateNight_DoubleDateNoShow.description>
   <DateNight_DoubleDateNoShow.stages_0.label>四人约会黄了</DateNight_DoubleDateNoShow.stages_0.label>
   <DateNight_DoubleDateNoShow.stages_0.description>另一对根本没来。行吧。我们自己去。</DateNight_DoubleDateNoShow.stages_0.description>
+
+  <DateNight_Reunited.label>重逢</DateNight_Reunited.label>
+  <DateNight_Reunited.description>{0}回来了。直到现在我才意识到自己有多想念。</DateNight_Reunited.description>
+  <DateNight_Reunited.stages_0.label>重逢</DateNight_Reunited.stages_0.label>
+  <DateNight_Reunited.stages_0.description>{0}回来了。直到现在我才意识到自己有多想念。</DateNight_Reunited.stages_0.description>
+
+  <DateNight_DatesOver.label>不再有约会之夜</DateNight_DatesOver.label>
+  <DateNight_DatesOver.description>和{0}的那些夜晚，我们的地方……现在都结束了。</DateNight_DatesOver.description>
+  <DateNight_DatesOver.stages_0.label>不再有约会之夜</DateNight_DatesOver.stages_0.label>
+  <DateNight_DatesOver.stages_0.description>和{0}的那些夜晚，我们的地方……现在都结束了。</DateNight_DatesOver.stages_0.description>
 
 </LanguageData>

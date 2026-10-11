@@ -12,9 +12,10 @@ namespace Niceties
             SafePatchAll.Apply(new Harmony("azraelgodking.niceties"), "[Niceties]");
             SharedRooms.InjectComps();
             ApparelGender.Capture();
-            ApparelGender.Apply(NicetiesMod.Settings?.wearAnyGender ?? true);
+            ApparelGender.ApplyEffective();
+            NicetiesMultiplayer.RegisterSyncMethod(typeof(SharedRooms), nameof(SharedRooms.SetMarkedForBed));
             LongEventHandler.ExecuteWhenFinished(() =>
-                ModVersionLog.Write("[Niceties]", extra: "niceties-azr-275-295-v1"));
+                ModVersionLog.Write("[Niceties]", extra: "sim-snapshot-v2"));
         }
     }
 }

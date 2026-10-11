@@ -22,7 +22,7 @@ Playable core is in. Remaining fantasy for later passes.
 
 Acceptance-oriented checklist for later implementation:
 
-- [ ] **Aggression gate** — camp / quest content only above hunt aggression threshold X (Mod Options).
+- [ ] **Aggression gate** — camp / quest content only above hunt aggression threshold X (Mod Options). (AZR-304 — still open; needs site/quest defs.)
 - [ ] **Nemesis camp world site / quest** — offer at higher aggression; resolving may be:
   - **Real** — confrontation with the nemesis (and retinue), or
   - **False lead** — empty camp, planted evidence, or trap.
@@ -48,10 +48,12 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 - [x] Nemesis relationship / social memory with the fixation target (opinion, social fight chance) — `NemesisSocial` + social-fight Harmony patch.
 - [ ] Apparel / weapon tint polish (focus gear upgrades already ship).
 - [x] Comms console interaction: reply options (taunt back / offer truce / demand surrender) — AZR-301.
+- [x] Colony mood fallout on repeat escapes (fixation target hit hardest) — AZR-388.
 
 ## Assault polish
 
 - [ ] Dedicated `LordJob` that prioritizes the fixation pawn, then flees to map edge when raid points collapse.
+- [x] Kidnap-attempt action for Pawn-mode hunts (vanilla kidnap duty; kidnapped target ends the hunt) — AZR-389. Target-only AI is the item above.
 - [ ] Shuttle drop + extract when Odyssey present (soft).
 
 ## Soft compat depth
@@ -69,6 +71,7 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 ## Content / UX
 
 - [x] Dossier tab + epitaphs (1.1.0)
+- [x] Dossier last-known tile jump + full epitaph archive — AZR-387, AZR-390.
 - [x] Tells (voice / weapon / mark / habit)
 - [ ] Preview.png art pass.
 - [x] Scenario / storyteller hints — `Nemesis_Marked` scenario ships.

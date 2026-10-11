@@ -75,7 +75,19 @@ namespace DeepColony
         // Must match LivingWorld.LivingWorldSignals.WorldEventHandler(WorldEvent).
         private static void OnLivingWorldEvent(object ev)
         {
-            if (ev == null || !(bool)seenField.GetValue(ev))
+            try
+            {
+                HandleEvent(ev);
+            }
+            catch (Exception e)
+            {
+                Log.WarningOnce("[DeepColony] Living World event ignored (fail-open): " + e.Message, 0x5DC0DE03);
+            }
+        }
+
+        private static void HandleEvent(object ev)
+        {
+            if (ev == null || !(seenField.GetValue(ev) is bool seen) || !seen)
             {
                 return;
             }
@@ -87,8 +99,8 @@ namespace DeepColony
                 return;
             }
 
-            int aId = factionAIdField != null ? (int)factionAIdField.GetValue(ev) : -1;
-            int bId = factionBIdField != null ? (int)factionBIdField.GetValue(ev) : -1;
+            int aId = ReadInt(factionAIdField, ev);
+            int bId = ReadInt(factionBIdField, ev);
             Faction a = FindFaction(aId);
             Faction b = FindFaction(bId);
 
@@ -113,6 +125,11 @@ namespace DeepColony
             {
                 ApplyAllySympathy(loser: a, magnitude: 1f, reason: FactionRepReason.LwRefugee);
             }
+        }
+
+        private static int ReadInt(FieldInfo field, object ev)
+        {
+            return field?.GetValue(ev) is int value ? value : -1;
         }
 
         private static void ApplySharedEnemyBoost(Faction winner, Faction loser)

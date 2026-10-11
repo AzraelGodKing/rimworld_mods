@@ -1,36 +1,23 @@
-1.4.1
-[h1]Niceties — 1.4.1[/h1]
+1.5.0
+[h1]Niceties — 1.5.0[/h1]
+[b]Added[/b]
+[list]
+[*] [b]Hidden cryptosleep count[/b] — a small "+N in cryptosleep" note beside the colonist bar says how many colonists are hidden. Own checkbox under Hidden cryptosleep, on by default.
+[*] [b]Melee hunt size example[/b] — the body-size cap slider names a vanilla reference animal so the number means something.
+[*] [b]Roommates on inspect[/b] — a shared bedroom's beds list who sleeps in the room.
+[*] [b]Save settings notice[/b] — Mod Options says when the loaded save runs on different settings, with an "Apply to this save now" button in single-player.
+[/list]
 [b]Fixed[/b]
 [list]
-[*] [b]Settings disk writes (AZR-275)[/b] — Mod Options Write() only when a setting actually changed (fingerprint), not every GUI frame.
-[*] [b]Leave a way out trap-self (AZR-276)[/b] — frames that would trap only the builder with no step-aside cell fail at job assignment with a clear reason instead of retrying forever.
-[*] [b]Cryptosleep bar reflection (AZR-291)[/b] — hide-cryptosleep uses ColonistBar.Entries instead of AccessTools.Field by string; warns once if null.
+[*] [b]Wear any outfit in Multiplayer[/b] — gender tags follow the save's host settings like every other nicety.
+[*] [b]Share room in Multiplayer[/b] — the bed gizmo syncs to every player when the Multiplayer mod is loaded.
+[*] [b]Stale save settings[/b] — in single-player, loading a save picks up your current Mod Options.
+[*] [b]Patch target renames[/b] — if a RimWorld update renames a private method Niceties relies on, only that feature turns off and the log names it.
 [/list]
-[b]Added[/b]
-[list]
-[*] [b]Active preset label (AZR-293)[/b] — Soft / Default / Hard / Custom shown under the preset buttons.
-[*] [b]Well-kept weapons (AZR-294)[/b] — optional toggle under well-kept apparel; equipped weapons reuse the same quality/Crafting wear formula.
-[*] [b]Sim settings snapshot (AZR-292)[/b] — GameComponent bakes settings that gate deterministic sim so Multiplayer joiners share the host values from the save. Mid-session Mod Options edits still need Multiplayer.API for live sync (not a dependency).
-[*] [b]Hunters Use Melee incompat (AZR-295)[/b] — About.xml incompatibleWith adds Mlie.HuntersUseMelee (maintained Workshop counterpart; original Melee Hunting package is discontinued/removed).
-[/list]
-
-[i]Build stamp (Player.log): niceties-azr-275-295-v1[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
-
-1.4.0
-[h1]Niceties — 1.4.0[/h1]
 [b]Changed[/b]
 [list]
-[*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+[*] [b]Leave a way out performance[/b] — wall enclosure checks are cached per frame, so several builders finishing walls at once no longer repeat the same work.
 [/list]
 
-1.2.0
-[h1]Niceties — 1.2.0[/h1]
-
-[b]Added[/b]
-[list]
-[*] [b]Leave a way out[/b] — pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in. Vanilla and Replace Stuff frames both count. In-place wall swaps stay solid so a freezer can still be replaced from inside. Right-click force construct still builds it.
-[/list]
-
-[i]Build stamp (Player.log): leave-a-way-out-v1[/i]
+[i]Build stamp (Player.log): sim-snapshot-v2[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]

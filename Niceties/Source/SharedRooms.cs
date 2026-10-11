@@ -55,7 +55,10 @@ namespace Niceties
                 return null;
             }
 
-            return "Niceties_ShareRoomInspect".Translate();
+            string names = SharedRooms.RoommateNames(bed.GetRoom());
+            return names.NullOrEmpty()
+                ? "Niceties_ShareRoomInspect".Translate().Resolve()
+                : "Niceties_ShareRoomInspectWith".Translate(names).Resolve();
         }
     }
 
@@ -161,7 +164,57 @@ namespace Niceties
                 return;
             }
 
-            SetMarked(bed.GetRoom(), !IsMarked(bed));
+            SetMarkedForBed(bed, !IsMarked(bed));
+        }
+
+        /// <summary>
+        /// Registered as a Multiplayer sync method when Multiplayer is loaded, so a click
+        /// marks the room on every client in the same tick. Takes the target state, not a
+        /// flip, so a replayed call cannot invert it.
+        /// </summary>
+        public static void SetMarkedForBed(Building_Bed bed, bool marked)
+        {
+            if (!ShowsGizmo(bed))
+            {
+                return;
+            }
+
+            SetMarked(bed.GetRoom(), marked);
+        }
+
+        internal static string RoommateNames(Room room)
+        {
+            if (room == null)
+            {
+                return null;
+            }
+
+            List<string> names = new List<string>();
+            HashSet<Pawn> seen = new HashSet<Pawn>();
+            foreach (Building_Bed bed in room.ContainedBeds)
+            {
+                if (bed.Medical || bed.ForPrisoners)
+                {
+                    continue;
+                }
+
+                List<Pawn> owners = bed.OwnersForReading;
+                if (owners == null)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i < owners.Count; i++)
+                {
+                    Pawn owner = owners[i];
+                    if (owner != null && seen.Add(owner))
+                    {
+                        names.Add(owner.LabelShort);
+                    }
+                }
+            }
+
+            return names.Count == 0 ? null : string.Join(", ", names);
         }
 
         internal static void SetMarked(Room room, bool marked)
