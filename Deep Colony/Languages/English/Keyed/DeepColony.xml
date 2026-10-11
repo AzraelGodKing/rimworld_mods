@@ -118,7 +118,7 @@
   <DC_Settings_Branching>Branching L15 perk picks</DC_Settings_Branching>
   <DC_Settings_BranchingTip>Default off. Choose one of two L15 perks per skill. Hard preset enables this.</DC_Settings_BranchingTip>
   <DC_Settings_Respec>Perk respec (forget)</DC_Settings_Respec>
-  <DC_Settings_RespecTip>Allow forgetting an unlocked perk (refunds a point; mood hit + cooldown). Default on.</DC_Settings_RespecTip>
+  <DC_Settings_RespecTip>Allow forgetting an unlocked perk from the perk tree (mood hit + cooldown). A forgotten perk stays off until relearned. Default on.</DC_Settings_RespecTip>
   <DC_Settings_RespecCooldown>Respec cooldown (days): {0}</DC_Settings_RespecCooldown>
   <DC_Settings_Archetypes>Cross-skill archetypes</DC_Settings_Archetypes>
   <DC_Settings_ArchetypesTip>Default off. Unlocking L15 in paired skills grants a titled archetype bonus. Hard preset enables this.</DC_Settings_ArchetypesTip>
@@ -466,5 +466,11 @@
   <DC_MovedIntoDeadRoom>{PAWN} is sleeping in {OWNER}'s old bed.</DC_MovedIntoDeadRoom>
   <DC_Letter_EstateLabel>Estate: {PAWN}</DC_Letter_EstateLabel>
   <DC_Letter_EstateBody>{PAWN} died. {HEIR} stands to inherit what they left.</DC_Letter_EstateBody>
+
+  <!-- Perk forget / relearn -->
+  <DC_PerkForgetConfirm>{PAWN} will forget {PERK}. They take a short reflective mood, the respec cooldown starts, and the perk will not come back on its own until relearned.</DC_PerkForgetConfirm>
+  <DC_PerkRelearnBtn>Relearn</DC_PerkRelearnBtn>
+  <DC_PerkRelearned>{PAWN} relearned the perk: {PERK}.</DC_PerkRelearned>
+  <DC_PerkStatus_Forgotten>Forgotten</DC_PerkStatus_Forgotten>
 
 </LanguageData>

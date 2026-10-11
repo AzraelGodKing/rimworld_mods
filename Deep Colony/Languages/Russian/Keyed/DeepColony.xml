@@ -118,7 +118,7 @@
   <DC_Settings_Branching>Ветвление выбора L15</DC_Settings_Branching>
   <DC_Settings_BranchingTip>По умолчанию выкл. Выберите один из двух перков L15 на навык. Сложный пресет включает.</DC_Settings_BranchingTip>
   <DC_Settings_Respec>Сброс перков (забыть)</DC_Settings_Respec>
-  <DC_Settings_RespecTip>Позволяет забыть разблокированный перк (возврат очка; удар по настроению + перезарядка). По умолчанию вкл.</DC_Settings_RespecTip>
+  <DC_Settings_RespecTip>Позволяет забыть разблокированный перк в дереве перков (удар по настроению + перезарядка). Забытый перк не вернётся сам, пока его не изучат заново. По умолчанию вкл.</DC_Settings_RespecTip>
   <DC_Settings_RespecCooldown>Перезарядка сброса (дни): {0}</DC_Settings_RespecCooldown>
   <DC_Settings_Archetypes>Межнавыковые архетипы</DC_Settings_Archetypes>
   <DC_Settings_ArchetypesTip>По умолчанию выкл. Разблокировка L15 в парных навыках даёт титульный бонус архетипа. Сложный пресет включает.</DC_Settings_ArchetypesTip>
@@ -455,5 +455,11 @@
   <DC_MovedIntoDeadRoom>{PAWN} спит в старой кровати {OWNER}.</DC_MovedIntoDeadRoom>
   <DC_Letter_EstateLabel>Наследство: {PAWN}</DC_Letter_EstateLabel>
   <DC_Letter_EstateBody>{PAWN} умер(ла). {HEIR} наследует то, что осталось.</DC_Letter_EstateBody>
+
+  <!-- Perk forget / relearn -->
+  <DC_PerkForgetConfirm>{PAWN} забудет перк «{PERK}». Будет краткое задумчивое настроение, начнётся перезарядка сброса, и перк не вернётся сам, пока его не изучат заново.</DC_PerkForgetConfirm>
+  <DC_PerkRelearnBtn>Вспомнить</DC_PerkRelearnBtn>
+  <DC_PerkRelearned>{PAWN} вновь освоил(а) перк: {PERK}.</DC_PerkRelearned>
+  <DC_PerkStatus_Forgotten>Забыт</DC_PerkStatus_Forgotten>
 
 </LanguageData>

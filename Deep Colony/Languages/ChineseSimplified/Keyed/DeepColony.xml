@@ -118,7 +118,7 @@
   <DC_Settings_Branching>分支 L15 专长选择</DC_Settings_Branching>
   <DC_Settings_BranchingTip>默认关闭。每项技能在 L15 二选一。困难预设启用。</DC_Settings_BranchingTip>
   <DC_Settings_Respec>专长重置（遗忘）</DC_Settings_Respec>
-  <DC_Settings_RespecTip>允许遗忘已解锁专长（返还点数；心情打击 + 冷却）。默认开启。</DC_Settings_RespecTip>
+  <DC_Settings_RespecTip>允许在专长树中遗忘已解锁专长（心情打击 + 冷却）。遗忘的专长在重新习得前不会自动恢复。默认开启。</DC_Settings_RespecTip>
   <DC_Settings_RespecCooldown>重置冷却（天）：{0}</DC_Settings_RespecCooldown>
   <DC_Settings_Archetypes>跨技能原型</DC_Settings_Archetypes>
   <DC_Settings_ArchetypesTip>默认关闭。在配对技能解锁 L15 后获得称号型原型加成。困难预设启用。</DC_Settings_ArchetypesTip>
@@ -455,5 +455,11 @@
   <DC_MovedIntoDeadRoom>{PAWN} 睡进了 {OWNER} 留下的床。</DC_MovedIntoDeadRoom>
   <DC_Letter_EstateLabel>遗产：{PAWN}</DC_Letter_EstateLabel>
   <DC_Letter_EstateBody>{PAWN} 去世了。{HEIR} 将继承其留下的东西。</DC_Letter_EstateBody>
+
+  <!-- Perk forget / relearn -->
+  <DC_PerkForgetConfirm>{PAWN} 将遗忘 {PERK}。会获得短暂的反思心情，重置冷却开始计时；在重新习得之前，该专长不会自动恢复。</DC_PerkForgetConfirm>
+  <DC_PerkRelearnBtn>重新习得</DC_PerkRelearnBtn>
+  <DC_PerkRelearned>{PAWN} 重新习得了专长：{PERK}。</DC_PerkRelearned>
+  <DC_PerkStatus_Forgotten>已遗忘</DC_PerkStatus_Forgotten>
 
 </LanguageData>

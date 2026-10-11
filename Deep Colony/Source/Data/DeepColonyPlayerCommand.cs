@@ -18,7 +18,11 @@ namespace DeepColony
             ClearMentor = 6,
             BeginRetrain = 7,
             TributeFaction = 8,
-            TributeThing = 9
+            TributeThing = 9,
+            SwitchPerk = 10,
+            SetHeir = 11,
+            ForgetPerk = 12,
+            RelearnPerk = 13
         }
 
         private struct Entry
@@ -120,6 +124,38 @@ namespace DeepColony
             });
         }
 
+        public static void EnqueueSwitchPerk(Pawn pawn, PerkDef perk)
+        {
+            EnqueuePerk(Kind.SwitchPerk, pawn, perk);
+        }
+
+        public static void EnqueueForgetPerk(Pawn pawn, PerkDef perk)
+        {
+            EnqueuePerk(Kind.ForgetPerk, pawn, perk);
+        }
+
+        public static void EnqueueRelearnPerk(Pawn pawn, PerkDef perk)
+        {
+            EnqueuePerk(Kind.RelearnPerk, pawn, perk);
+        }
+
+        private static void EnqueuePerk(Kind kind, Pawn pawn, PerkDef perk)
+        {
+            if (pawn == null || perk == null) return;
+            queue.Add(new Entry { kind = kind, aId = pawn.thingIDNumber, s1 = perk.defName });
+        }
+
+        public static void EnqueueSetHeir(Pawn owner, Pawn heir)
+        {
+            if (owner == null) return;
+            queue.Add(new Entry
+            {
+                kind = Kind.SetHeir,
+                aId = owner.thingIDNumber,
+                bId = heir?.thingIDNumber ?? -1
+            });
+        }
+
         public static void Drain()
         {
             if (queue.Count == 0) return;
@@ -206,7 +242,33 @@ namespace DeepColony
                         TributeUtility.TrySendTributeThing(thing, faction);
                     break;
                 }
+                case Kind.SwitchPerk:
+                case Kind.ForgetPerk:
+                case Kind.RelearnPerk:
+                    ApplyPerk(e);
+                    break;
+                case Kind.SetHeir:
+                {
+                    Pawn owner = FindPawn(e.aId);
+                    Pawn heir = e.bId > 0 ? FindPawn(e.bId) : null;
+                    if (owner != null && (e.bId <= 0 || heir != null))
+                        EstateUtility.SetHeir(owner, heir);
+                    break;
+                }
             }
+        }
+
+        private static void ApplyPerk(Entry e)
+        {
+            Comp_DeepColony comp = FindPawn(e.aId)?.TryGetComp<Comp_DeepColony>();
+            PerkDef perk = e.s1.NullOrEmpty() ? null : DefDatabase<PerkDef>.GetNamedSilentFail(e.s1);
+            if (comp == null || perk == null) return;
+            if (e.kind == Kind.SwitchPerk)
+                comp.SwitchToPerk(perk);
+            else if (e.kind == Kind.ForgetPerk)
+                comp.ForgetPerk(perk);
+            else
+                comp.RelearnPerk(perk);
         }
 
         private static void ApplyResumeCodex(int notebookId)
