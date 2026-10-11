@@ -225,7 +225,8 @@ namespace Stormproof
             }
             // WeatherDecider only names the *next* weather at the transition, so
             // the honest pre-empt is "current weather is about to break".
-            return forecast.RemainingTicks() <= forecast.Props.warningLeadTicks;
+            int remaining = forecast.RemainingTicks();
+            return remaining >= 0 && remaining <= forecast.Props.warningLeadTicks;
         }
 
         private void SetBreaker(bool closed, bool quiet = false)

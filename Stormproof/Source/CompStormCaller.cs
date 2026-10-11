@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -22,9 +21,6 @@ namespace Stormproof
     // wildfires - on a long cooldown so it can't replace a real power grid.
     public class CompStormCaller : ThingComp
     {
-        internal static readonly AccessTools.FieldRef<WeatherDecider, int> DurationRef =
-            AccessTools.FieldRefAccess<WeatherDecider, int>("curWeatherDuration");
-
         private CompPowerTrader powerComp;
         private int lastCallTick = -999999;
 

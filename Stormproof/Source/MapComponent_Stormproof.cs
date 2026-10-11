@@ -44,7 +44,7 @@ namespace Stormproof
             pendingStormDuration = 0;
             map.weatherManager.TransitionTo(StormproofDefOf.RainyThunderstorm);
             map.weatherManager.curWeatherAge = 0;
-            CompStormCaller.DurationRef(map.weatherDecider) = duration;
+            WeatherDeciderAccess.TrySetDuration(map.weatherDecider, duration);
         }
 
         public void RememberDaySkyMul(WeatherDef weather, float mul)
