@@ -18,7 +18,6 @@ namespace DeepColony
         public List<string> unlockedPerkDefNames = new List<string>();
         public int availablePerkPoints;
         public bool perkGatesBackfilled;
-        public int unspentPerkPointsSinceTick = -1;
         public int untreatedTraumaSinceTick = -1;
         public string lastCounselorName;
         public int lastCounselorId = -1;
@@ -488,19 +487,6 @@ namespace DeepColony
             SyncPerksToSkillLevels(announce: true);
         }
 
-        public void NoteUnspentPointsChanged()
-        {
-            if (availablePerkPoints > 0)
-            {
-                if (unspentPerkPointsSinceTick < 0)
-                    unspentPerkPointsSinceTick = Find.TickManager?.TicksGame ?? 0;
-            }
-            else
-            {
-                unspentPerkPointsSinceTick = -1;
-            }
-        }
-
         public void TryBackfillPerkGatePoints(bool announce = true)
         {
             if (perkGatesBackfilled) return;
@@ -508,7 +494,6 @@ namespace DeepColony
             if (!DeepColonySettings.Get.enablePerks) return;
             SyncPerksToSkillLevels(announce: announce);
             availablePerkPoints = 0;
-            NoteUnspentPointsChanged();
         }
 
         public static int CountPassedPerkGates(Pawn pawn)
@@ -659,7 +644,6 @@ namespace DeepColony
             SeedPeakSkillsFromCurrent();
             ReapplyPerkHediffs();
             ArchetypeUtility.TryRefresh(Pawn);
-            NoteUnspentPointsChanged();
         }
 
         private void SeedPeakSkillsFromCurrent()
@@ -945,7 +929,6 @@ namespace DeepColony
             Scribe_Collections.Look(ref unlockedPerkDefNames, "unlockedPerks", LookMode.Value);
             Scribe_Values.Look(ref availablePerkPoints, "availablePerkPoints", 0);
             Scribe_Values.Look(ref perkGatesBackfilled, "perkGatesBackfilled", false);
-            Scribe_Values.Look(ref unspentPerkPointsSinceTick, "unspentPerkPointsSinceTick", -1);
             Scribe_Values.Look(ref untreatedTraumaSinceTick, "untreatedTraumaSinceTick", -1);
             Scribe_Values.Look(ref lastCounselorName, "lastCounselorName");
             Scribe_Values.Look(ref lastCounselorId, "lastCounselorId", -1);
@@ -1011,7 +994,6 @@ namespace DeepColony
                 if (unlockedPerkDefNames.Count > 0)
                     perkGatesBackfilled = true;
                 SeedPeakSkillsFromCurrent();
-                NoteUnspentPointsChanged();
             }
         }
     }

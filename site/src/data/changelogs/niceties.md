@@ -2,11 +2,11 @@
 
 Detailed notes for **Niceties** only.
 
-## [Unreleased]
+## [1.5.0]
+
+Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.5.0 loaded from ...; sim-snapshot-v2` in Player.log.
 
 AZR-371 AZR-372 AZR-373 AZR-374 AZR-375 AZR-376 AZR-377 AZR-378 AZR-379 AZR-380 AZR-381
-
-Build stamp: `sim-snapshot-v2` (Player.log).
 
 ### Added
 - **Hidden cryptosleep count** — a small "+N in cryptosleep" note beside the colonist bar says how many colonists the filter is hiding. Own checkbox under Hidden cryptosleep, on by default.
@@ -29,7 +29,16 @@ Build stamp: `sim-snapshot-v2` (Player.log).
 
 Player-facing version **1.4.1** (`About.xml` `modVersion`).
 
-See `About/changelog.txt` for the full player-facing notes for this ship.
+### Fixed
+- **Settings disk writes** (AZR-275) — Mod Options writes only when a setting actually changed, not every GUI frame.
+- **Leave a way out trap-self** (AZR-276) — frames that would trap only the builder with no step-aside cell fail at job assignment with a clear reason instead of retrying forever.
+- **Cryptosleep bar reflection** (AZR-291) — hide-cryptosleep uses `ColonistBar.Entries` instead of a private field by string; warns once if null.
+
+### Added
+- **Active preset label** (AZR-293) — Soft / Default / Hard / Custom shown under the preset buttons.
+- **Well-kept weapons** (AZR-294) — optional toggle under well-kept apparel; equipped weapons reuse the same quality/Crafting wear formula.
+- **Sim settings snapshot** (AZR-292) — a GameComponent bakes settings that gate deterministic sim so Multiplayer joiners share the host values from the save.
+- **Hunters Use Melee incompat** (AZR-295) — `About.xml` `incompatibleWith` adds `Mlie.HuntersUseMelee` (the original Melee Hunting is discontinued).
 ## [1.4.0]
 
 ### Changed

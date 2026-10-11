@@ -14,13 +14,8 @@ namespace Stormproof
         }
     }
 
-    // Watches the map's weather decider and gives the player advance notice:
-    // a heads-up shortly before the current weather breaks, and an alert the
-    // moment a lightning-bearing storm rolls in (so spire owners can top off).
     public class CompWeatherForecaster : ThingComp
     {
-        // The decider rolls the *next* weather only at transition time, so the
-        // honest forecast is "when the current weather ends", not what comes after.
         private CompPowerTrader powerComp;
         private CompFlickable flickComp;
         private WeatherDef lastSeenWeather;

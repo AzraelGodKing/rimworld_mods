@@ -16,9 +16,6 @@ namespace Stormproof
         }
     }
 
-    // Filters airborne toxins out of an enclosed room, slowly reducing the
-    // toxic buildup of every pawn and animal inside. Useless outdoors - it
-    // can't scrub a whole open sky.
     public class CompFalloutScrubber : ThingComp
     {
         private CompPowerTrader powerComp;

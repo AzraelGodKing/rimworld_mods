@@ -1,31 +1,26 @@
-1.3.0
-[h1]Azrael — 1.3.0[/h1]
+1.4.0
+[h1]Azrael — 1.4.0[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Mountain start for The Deep Homestead[/b] - the default and Random starting site favor large hills or mountains. You can still pick any tile, and the part can be removed in the scenario editor. EN/CN/RU.
+[*] [b]Safe removal summary[/b] - the removal report opens with one line: how many things to deconstruct, consume or sell, need attention, and are safe.
+[*] [b]Multiplayer notice[/b] - with the Multiplayer mod active, Conflicts warns that safe-removal deconstruct only acts on your client.
+[*] [b]New series mods show up on their own[/b] - any other active AzraelGodKing mod is listed in the hub, with its own Prepare to remove button.
+[/list]
+
 [b]Fixed[/b]
 [list]
-[*] [b]Hub cache (AZR-339)[/b] — series inventory, build stamps, and Harmony failure scans build once per settings open instead of every GUI frame.
-[*] [b]Nemesis ↔ Deep Colony bridge (AZR-335)[/b] — hub detects the live epitaph→familyLetters hook instead of always showing broken.
-[*] [b]Removal hunt blocker (AZR-337)[/b] — Nemesis truce (IsEngaged) blocks uninstall prep, not only active=true.
-[*] [b]Safe-removal scroll (AZR-338)[/b] — content height includes Prepare-to-remove button rows so the last buttons stay reachable.
-[*] [b]Deep Colony hediffs (AZR-336)[/b] — AutoSafe hediff line only when pawns actually carry Deep Colony hediffs.
-[/list]
-[b]Added[/b]
-[list]
-[*] [b]RU/CN DefInjected (AZR-340)[/b] — Deep Homestead scenario, forced-storyteller scen part, and Azrael storyteller text.
-[*] [b]Load-order conflict (AZR-341)[/b] — hub warns when a series mod loads after Azrael.
-[*] [b]World-state removal scan (AZR-342)[/b] — Deep Colony family letters and parked Nemesis world pawn appear in the safe-removal report.
+[*] [b]Living World ↔ Deep Colony goodwill[/b] - the hub only says live when Deep Colony's goodwill listener actually registered with Living World.
+[*] [b]Hub scrolling[/b] - the settings page no longer cuts off the last Prepare to remove buttons when the failed-patches section is shown.
+[*] [b]Safe removal off-map pawns[/b] - Deep Colony perks and trauma on kidnapped colonists, quest guests, and other off-map pawns now count in the report.
 [/list]
 
-1.2.0
-[h1]Azrael — 1.2.0[/h1]
 [b]Changed[/b]
 [list]
-[*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+[*] [b]Safe removal deconstruct[/b] - designations are queued and applied on the next game tick instead of straight from Mod Options. If the game is paused, they appear when you unpause.
+[*] [b]Build stamps[/b] - the hub reads each series mod's BuildStamp when the mod exposes one, before falling back to the log.
 [/list]
 
-1.1.0
-[h1]Azrael — 1.1.0[/h1]
-[b]Added[/b]
-[list]
-[*] [b]Safe removal[/b] — Mod Options lists each loaded series mod. Open a report of buildings, items, caravan cargo, and blockers (active Nemesis hunt, colonists still on a Strata pocket floor), then queue deconstruction. It does not edit the save.
-[*] [b]Chinese and Russian[/b] — safe-removal hub strings.
-[/list]
+[i]Build stamp (Player.log): removal-queue-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/azrael.md[/i]

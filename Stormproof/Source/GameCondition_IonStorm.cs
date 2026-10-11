@@ -5,12 +5,6 @@ using Verse;
 
 namespace Stormproof
 {
-    // Charged particles saturate the atmosphere: batteries bleed stored energy,
-    // random EMP bursts stun electronics, and overloaded circuits pop extra
-    // "Zzzt!" surges. Every Stormproof counter earns its keep at once - EMP
-    // dampeners shield nearby batteries and buildings from the static bleed
-    // and bursts, surge protectors eat the extra Zzzts, and storm capacitor
-    // banks ride out the whole event untouched.
     public class GameCondition_IonStorm : GameCondition
     {
         private const int CheckIntervalTicks = 60;

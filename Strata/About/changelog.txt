@@ -1,33 +1,21 @@
-3.8.1
-[h1]Strata — 3.8.1[/h1]
+3.8.2
+[h1]Strata - 3.8.2[/h1]
+
 [b]Fixed[/b]
 [list]
-[*] [b]Underground mining fog[/b] — border rock faces stay visible after digging; only deep undug rock stays fogged (AZR-349).
-[*] [b]Stairwell door gas wipe[/b] — opening a door into a shaft no longer instantly clears smoke/O₂; shaft flow scales with aperture; outdoor shafts vent pollutants without stripping breathable air (AZR-353).
-[*] [b]Gas pocket whole-layer fill[/b] — deep-gas bursts dilute across large Biomes! caverns; permanent vents skip map-sized rooms; deep gas slowly bleeds without a source (AZR-354).
-[*] [b]O₂ by atmosphere quality[/b] — viewed map runs full cycle rate on Low/Medium/High; underground open-roof holes are not treated as sky vents (AZR-355).
-[*] [b]Portal / inspect localization[/b] — enter/entering and sealed-shaft / hoist / conduit / stairs inspect text use translation keys, including Simplified Chinese and Russian (AZR-267, AZR-268).
-[*] [b]Ore hoist transfer skip[/b] — snapshot candidate list so DeSpawn no longer skips the next item (AZR-269).
-[*] [b]README fluid junctions[/b] — removed dangling V2 roadmap fragment (AZR-270).
-[*] [b]Sound-dampening floor[/b] — uses the 1.6 wood floor texture (`Terrain/Surfaces/WoodFloor`). The old `WoodPlankFloor` path no longer exists.
-[/list]
-[b]Added[/b]
-[list]
-[*] [b]Seismograph station[/b] — powered forecast for tremor, cave-in, and infestation pressure (AZR-271).
-[*] [b]Noise attracts the dark[/b] — mining/industry noise raises underground infestation weight; sound-dampening wall/floor counters it (AZR-272).
-[*] [b]Collapse trap[/b] — player-rigged thick-roof cave-in on pursuers (AZR-273).
-[*] [b]Stack panel[/b] — Levels tab side-view cross-section with click-to-jump (AZR-274).
+[*] [b]Cavern oxygen collapse on Medium/High[/b] (AZR-355) - breathing, plants, and animal methane now scale with room size. A huge Biomes! cavern full of wildlife no longer drains the whole layer to about 2% O2. Low only looked healthy before because it skipped animal breathing on the viewed map.
+[*] [b]Low-oxygen rooms that never recovered[/b] (AZR-355) - fresh-air top-up no longer lowers its own target when a room is short on O2, so a depleted room refills to normal air.
+[*] [b]Deep drill noise[/b] (AZR-272) - drilling out a portion now adds its noise burst on RimWorld 1.6.
 [/list]
 [b]Changed[/b]
 [list]
 [*] [b]Unused helpers[/b] — removed unused gravship, work-relay, portal, and shaft utility methods that had no callers.
 [/list]
 
-3.8.0
-[h1]Strata — 3.8.0[/h1]
-[b]Fixed[/b]
+[b]Changed[/b]
 [list]
-[*] [b]Packed haulway / cart move[/b] — Harmony matches 1.6 float TicksPerMove (AZR-345).
-[*] [b]Mining unfog[/b] — fog-blocker notify takes Thing in 1.6; dig cells unfog again (AZR-345).
-[*] [b]Harmony failure letter[/b] — no longer NRE if Find is not ready yet (AZR-345).
+[*] [b]Seismograph station[/b] (AZR-271) - the readout lists tremor, cave-in, and infestation risk for every linked underground level, not just its own floor. It refreshes about every 4 seconds.
 [/list]
+
+[i]Build stamp (Player.log): cavern-breath-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

@@ -121,11 +121,6 @@ namespace Strata
         private float[][] cellDensity;
         private Color[] overlayColorCache;
         private CellBoolDrawer drawer;
-        // Retired breath-grid fields kept unused so old saves don't confuse scribes.
-#pragma warning disable CS0169
-        private AtmosphereBreathGrid breathGrid;
-        private bool breathGridSeeded;
-#pragma warning restore CS0169
         private int atmosphereCyclePhase = -1;
         private int animalMethaneCursor;
         private int plantBatchCursor;
@@ -778,22 +773,6 @@ namespace Strata
                     || gas == StrataGasDefOf.Strata_Oxygen || gas == StrataGasDefOf.Strata_CarbonDioxide;
                 AddGasToRoom(r, gas, add, emitter.parent.Position, bypassCap: bypassCap);
             }
-        }
-
-        private void RunBreathPhase(AtmosphereBreathGrid.BreathWorkPhase phase)
-        {
-            // Retained no-op for call-site compatibility; V3.5 uses room volumes only.
-        }
-
-        private AtmosphereBreathGrid EnsureBreathGrid()
-        {
-            // Breath grid retired as simulation SOT (atmosphere-v35).
-            return null;
-        }
-
-        private void SeedBreathGridFromClouds()
-        {
-            // No-op: room clouds are the only mix store.
         }
 
         private void FinishAtmosphereCycle()

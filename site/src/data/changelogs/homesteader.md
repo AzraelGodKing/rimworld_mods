@@ -4,10 +4,14 @@ Detailed notes for Homesteader only.
 
 ## [Unreleased]
 
+### Changed
+- Removed unused content: the old Legacy scenario def, an empty Adaptive Storage patch, and the unread `letterText` on the Kats incident (plus its Chinese and Russian lines). No gameplay change.
+
+## [1.4.0]
+
+Player-facing version **1.4.0** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.4.0 loaded from ...` in Player.log (`harvest-aging-v1`).
+
 AZR-263 AZR-264 AZR-362 AZR-363 AZR-364 AZR-365 AZR-366 AZR-367 AZR-368 AZR-369 AZR-370
-
-Build stamp (Player.log): `harvest-aging-v1`.
-
 ### Added
 - **Harvest festival** (AZR-263, HS-A01) — once a year, on the first autumn day a home map has a harvest maypole, colonists there celebrate. Mood lasts 3 days and scales with pantry variety: lean (+3), festival with 3+ preserve kinds (+6), bountiful with 6+ (+10). Letter points at the maypole. Biomes without autumn hold it in Septober. Not an Ideology ritual yet.
 - **Cellar aging** (AZR-264, HS-A03) — cheese, waxed cheese, smoked cheese, and cider age while stored in a root cellar, springhouse, or icehouse range: aged at 5 days (x1.1 value), well-aged at 15 (x1.25), vintage at 30 (x1.5). The icehouse ages at half speed. Tier shows in the item label and inspect pane; stacks merge as a weighted average.

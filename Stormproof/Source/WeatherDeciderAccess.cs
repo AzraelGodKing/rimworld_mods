@@ -11,8 +11,6 @@ namespace Stormproof
     {
         private static readonly AccessTools.FieldRef<WeatherDecider, int> DurationRef = Resolve();
 
-        internal static bool Available => DurationRef != null;
-
         private static AccessTools.FieldRef<WeatherDecider, int> Resolve()
         {
             try
