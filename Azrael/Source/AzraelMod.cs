@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using HarmonyLib;
 using UnityEngine;
 using Verse;
 
@@ -12,7 +13,8 @@ namespace Azrael
 
         public AzraelMod(ModContentPack content) : base(content)
         {
-            ModVersionLog.Write("[Azrael]", content, "hub-fix-azr339-v1");
+            ModVersionLog.Write("[Azrael]", content, AzraelBuildInfo.BuildStamp);
+            AzraelCommon.SafePatchAll.Apply(new Harmony("azraelgodking.azrael"), "[Azrael]");
         }
 
         public override string SettingsCategory() => "Azrael_SettingsCategory".Translate();
@@ -35,10 +37,11 @@ namespace Azrael
                 }
             }
 
+            int harmonyRows = fails.Count == 0 ? 1 : 1 + Mathf.Min(fails.Count, 8);
             float height = 520f
                 + (mods.Count + dlc.Count + bridges.Count
                     + Mathf.Max(1, conflicts.Count)
-                    + Mathf.Min(fails.Count, 8)
+                    + harmonyRows
                     + 2
                     + removalButtons) * 26f;
             Rect view = new Rect(0f, 0f, inRect.width - 20f, height);
