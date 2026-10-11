@@ -298,4 +298,21 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>DateNight_Reunited</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>1.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>reunited</label>
+        <description>{0} is back. I didn't realise how much I missed them until now.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+        <baseOpinionOffset>6</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

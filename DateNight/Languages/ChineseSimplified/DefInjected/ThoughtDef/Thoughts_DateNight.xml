@@ -90,4 +90,9 @@
   <DateNight_DoubleDateNoShow.stages_0.label>四人约会黄了</DateNight_DoubleDateNoShow.stages_0.label>
   <DateNight_DoubleDateNoShow.stages_0.description>另一对根本没来。行吧。我们自己去。</DateNight_DoubleDateNoShow.stages_0.description>
 
+  <DateNight_Reunited.label>重逢</DateNight_Reunited.label>
+  <DateNight_Reunited.description>{0}回来了。直到现在我才意识到自己有多想念。</DateNight_Reunited.description>
+  <DateNight_Reunited.stages_0.label>重逢</DateNight_Reunited.stages_0.label>
+  <DateNight_Reunited.stages_0.description>{0}回来了。直到现在我才意识到自己有多想念。</DateNight_Reunited.stages_0.description>
+
 </LanguageData>

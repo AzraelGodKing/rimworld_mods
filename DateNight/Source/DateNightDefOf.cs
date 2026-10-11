@@ -28,6 +28,7 @@ namespace DateNight
         public static ThoughtDef DateNight_DoubleDateFriends;
         public static ThoughtDef DateNight_DoubleDateRivals;
         public static ThoughtDef DateNight_DoubleDateNoShow;
+        public static ThoughtDef DateNight_Reunited;
 
         static DateNightDefOf()
         {

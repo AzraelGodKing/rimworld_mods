@@ -15,6 +15,8 @@ namespace DateNight
             // Ephemeral couple caches must not leak thing IDs across colonies/sessions.
             DateNightUtility.ClearEphemeral();
             DateNightWindows.ClearEphemeral();
+            DateNightReunions.Reset();
+            DateNightDoubleDates.ResetRapport();
         }
 
         public override void FinalizeInit()
@@ -33,6 +35,7 @@ namespace DateNight
             DateNightAnniversaries.ExposeData();
             DateNightVenues.ExposeData();
             DateNightDoubleDates.ExposeData();
+            DateNightReunions.ExposeData();
         }
 
         public override void GameComponentTick()
@@ -62,6 +65,8 @@ namespace DateNight
                 DateNightVenues.PruneDeadPawns();
                 DateNightVenues.TickDestroyedVenues();
                 DateNightDoubleDates.PruneDeadPawns();
+                DateNightReunions.PruneDeadPawns();
+                DateNightReunions.Tick();
                 DateNightAnniversaries.PruneDeadPawns();
             }
         }

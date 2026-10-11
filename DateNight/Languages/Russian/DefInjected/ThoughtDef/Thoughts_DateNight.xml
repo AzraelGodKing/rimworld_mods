@@ -90,4 +90,9 @@
   <DateNight_DoubleDateNoShow.stages_0.label>двойное свидание сорвалось</DateNight_DoubleDateNoShow.stages_0.label>
   <DateNight_DoubleDateNoShow.stages_0.description>Вторая пара так и не пришла. Ладно. Пойдём вдвоём.</DateNight_DoubleDateNoShow.stages_0.description>
 
+  <DateNight_Reunited.label>снова вместе</DateNight_Reunited.label>
+  <DateNight_Reunited.description>{0} вернулся. Только сейчас понимаю, как сильно скучал.</DateNight_Reunited.description>
+  <DateNight_Reunited.stages_0.label>снова вместе</DateNight_Reunited.stages_0.label>
+  <DateNight_Reunited.stages_0.description>{0} вернулся. Только сейчас понимаю, как сильно скучал.</DateNight_Reunited.stages_0.description>
+
 </LanguageData>
