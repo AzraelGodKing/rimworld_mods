@@ -21,5 +21,5 @@ Design: [../docs/ideas/living-world.md](../docs/ideas/living-world.md) (§8b com
 ## Later
 
 - [ ] Sibling flavor (Homesteader HS1, Nemesis N3 listen)
-- [ ] LW9 Inter-settlement traffic
+- [x] LW9 Inter-settlement traffic (v1: world-map caravans, chronicle arrivals, rare divert to the player)
 - [ ] Azrael storyteller weights (series)

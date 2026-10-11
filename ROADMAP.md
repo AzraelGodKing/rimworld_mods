@@ -31,7 +31,7 @@ Per-mod later work lives in each mod’s roadmap:
 
 ## Living World (Phase 1–2)
 
-Mod package in-repo. Owns world chronicle, settlement morph, NPC diplomacy, and war fallout. Later: traffic / Azrael weights.
+Mod package in-repo. Owns world chronicle, settlement morph, NPC diplomacy, war fallout, and inter-settlement traffic (LW9 v1). Later: Azrael weights.
 
 - Personal antagonists / hunt sites → [Nemesis](Nemesis/ROADMAP.md)
 - Player goodwill memory → [Deep Colony](Deep%20Colony/ROADMAP.md) (listens to LW wars)

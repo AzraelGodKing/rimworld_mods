@@ -1,5 +1,27 @@
 # Changelog
 
+## [Unreleased]
+
+AZR-334 AZR-417 AZR-418 AZR-419 AZR-421 AZR-422 AZR-423 AZR-424 AZR-425 AZR-426
+
+Stamp `world-traffic-v1`.
+
+### Added
+- **Inter-settlement caravans** (LW9) — NPC caravans now travel between friendly settlements on the world map. Arrivals go in the chronicle without a letter and sometimes lift the destination's prosperity. Rarely, one passing near your colony turns aside to trade. Toggle in Mod Options.
+- **World state view** — a button on the Chronicle tab shows current wars, tensions, and alliances between NPC factions, with intensity and trade blackouts.
+- **Severity filter** — the Chronicle tab can show all news, normal and major, or major only.
+- **War scar timer** — war-site inspect text says how long until the site fades.
+- **Sibling-mod hooks** — `LivingWorldSignals.StableHookKinds` lists the event kinds other mods can safely listen for.
+- Debug action: spawn a traffic caravan.
+
+### Fixed
+- **Refugees and warbands** no longer fire early with a random faction. They wait for the intended delay and always come from the war you heard about.
+- **Rumour corrections** still arrive when the original news has aged out of the chronicle.
+- Debug "Force" morph actions now ignore the per-settlement cooldown, as intended.
+- `mod.json` download filename now matches 1.1.1.
+
+### Changed
+- Settlement label and inspect lookups are now constant-time on large worlds.
 
 ## [1.1.1]
 
