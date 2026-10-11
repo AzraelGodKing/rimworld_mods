@@ -55,31 +55,6 @@ namespace Strata
             }
         }
 
-        public static void RebuildNeighbors(Thing thing)
-        {
-            if (thing?.Map == null)
-            {
-                return;
-            }
-            Map map = thing.Map;
-            foreach (IntVec3 cell in thing.OccupiedRect().ExpandedBy(1))
-            {
-                if (!cell.InBounds(map))
-                {
-                    continue;
-                }
-                List<Thing> list = cell.GetThingList(map);
-                for (int i = 0; i < list.Count; i++)
-                {
-                    Thing other = list[i];
-                    if (other != null && other != thing && other.Spawned && IsPipeRelevant(other))
-                    {
-                        RebuildFor(other);
-                    }
-                }
-            }
-        }
-
         private static bool RimatomicsActive
         {
             get

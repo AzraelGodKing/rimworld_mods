@@ -89,42 +89,6 @@ namespace Strata
             return true;
         }
 
-        // True when this colonist has an assigned bed or a claimable bed on any
-        // linked level — surface pawns with beds only on B1 should not alert.
-        public static bool PawnHasBedAccessInNetwork(Pawn pawn)
-        {
-            if (pawn == null || !pawn.IsFreeColonist)
-            {
-                return true;
-            }
-            Map map = pawn.Map;
-            if (map == null || !MapInStrataColony(map))
-            {
-                return false;
-            }
-
-            Building_Bed ownBed = pawn.ownership?.OwnedBed;
-            if (ownBed != null && ownBed.Spawned && IsValidColonistBed(ownBed)
-                && MapsLinked(map, ownBed.Map))
-            {
-                return true;
-            }
-
-            if (PawnRelay.HasUsableBedOnMap(pawn, map))
-            {
-                return true;
-            }
-
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(map))
-            {
-                if (PawnRelay.HasClaimableBedFor(pawn, link.map))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public static bool MapsLinked(Map from, Map to)
         {
             if (from == null || to == null)

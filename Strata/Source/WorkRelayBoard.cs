@@ -54,23 +54,9 @@ namespace Strata
             dirtyMaps.Add(id);
         }
 
-        public static void InvalidateAll()
-        {
-            entries.Clear();
-            dirtyMaps.Clear();
-        }
-
         public static bool IsDirty(Map map)
         {
             return map != null && dirtyMaps.Contains(map.uniqueID);
-        }
-
-        public static void ClearDirty(Map map)
-        {
-            if (map != null)
-            {
-                dirtyMaps.Remove(map.uniqueID);
-            }
         }
 
         public static void Publish(BoardEntry entry)

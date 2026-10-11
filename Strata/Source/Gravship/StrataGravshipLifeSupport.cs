@@ -189,16 +189,6 @@ namespace Strata
             Distribute(engine);
         }
 
-        public static float PeekHeat(Building_GravEngine engine)
-        {
-            if (engine == null)
-            {
-                return 0f;
-            }
-            heatByEngineId.TryGetValue(engine.thingIDNumber, out float h);
-            return h;
-        }
-
         public static void Distribute(Building_GravEngine engine)
         {
             if (engine?.Map == null)

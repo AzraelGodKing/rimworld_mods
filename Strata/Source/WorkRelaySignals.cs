@@ -328,13 +328,7 @@ namespace Strata
 
         public static bool HasResearch(Map map) => map != null && GetSignals(map).research;
 
-        public static bool HasWardenWork(Map map) => map != null && GetSignals(map).warden;
-
-        public static bool HasHandling(Map map) => map != null && GetSignals(map).handling;
-
         public static bool HasFlickWork(Map map) => map != null && GetSignals(map).flick;
-
-        public static bool HasChildcare(Map map) => map != null && GetSignals(map).childcare;
 
         internal static bool ProbeConstruction(Map map)
         {

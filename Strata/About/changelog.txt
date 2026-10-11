@@ -7,6 +7,10 @@
 [*] [b]Low-oxygen rooms that never recovered[/b] (AZR-355) - fresh-air top-up no longer lowers its own target when a room is short on O2, so a depleted room refills to normal air.
 [*] [b]Deep drill noise[/b] (AZR-272) - drilling out a portion now adds its noise burst on RimWorld 1.6.
 [/list]
+[b]Changed[/b]
+[list]
+[*] [b]Unused helpers[/b] — removed unused gravship, work-relay, portal, and shaft utility methods that had no callers.
+[/list]
 
 [b]Changed[/b]
 [list]

@@ -50,16 +50,6 @@ namespace Strata
 
         private static bool fieldsResolved;
 
-        public static float BufferOnNet(object plumbingNet)
-        {
-            float sum = 0f;
-            foreach (CompShaftFluidTie tie in TiesOnNet(plumbingNet))
-            {
-                sum += tie.ShaftResourceBuffer;
-            }
-            return sum;
-        }
-
         public static bool TryPull(object plumbingNet, float amount)
         {
             if (amount <= 0f || plumbingNet == null)

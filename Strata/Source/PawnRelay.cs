@@ -291,19 +291,6 @@ namespace Strata
             return job;
         }
 
-        public static int ClaimableBedCount(Pawn pawn, Map map)
-        {
-            int count = 0;
-            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
-            {
-                if (thing is Building_Bed bed && IsClaimableColonistBed(pawn, bed))
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
-
         // Cheap, conservative "is there plausibly work for this pawn over there?"
         // checks. Deliberately approximate: a false positive just costs a walk
         // down the stairs, and the cooldown stops it from repeating.
@@ -426,11 +413,6 @@ namespace Strata
                 && !bed.ForPrisoners
                 && !bed.IsForbidden(pawn)
                 && !bed.IsBurning();
-        }
-
-        public static bool HasMedicalBedFor(Pawn pawn, Map map)
-        {
-            return FindMedicalBedFor(pawn, map) != null;
         }
 
         // First free medical colonist bed on the map (arrival cell reachability
