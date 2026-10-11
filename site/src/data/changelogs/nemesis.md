@@ -2,6 +2,11 @@
 
 Foundation by **Dredd (Misakabob)** — original design, persistent antagonist pawn, escape/capture loop, aggression pacing, assaults, waste drops, fixation/prison-break triggers, resolution dialog, and settings. Credited with gratitude; this monorepo package extends that work.
 
+## [Unreleased]
+
+### Changed
+- **Dead SoftCompat flags** — removed unused Giddy-Up / Rimesis / BFV package-id probes (`GiddyUpActive`, `RimesisActive`, `BackForVengeanceActive`) and unread `LastHeavyCheckTick`. Foreign-antagonist skip still uses hediff markers; mount escorts still assign by faction tech. No gameplay change.
+
 ## [1.4.0]
 
 Player-facing version **1.4.0** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.4.0 loaded from ...` in Player.log (`custody-sync-v1`).
