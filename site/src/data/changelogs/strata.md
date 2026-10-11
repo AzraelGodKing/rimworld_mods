@@ -3,7 +3,19 @@
 Player-facing release notes for Strata (Steam Workshop style).
 **Version:** `3.8.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.1 Soft-compat build <stamp> loaded from ...`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `gas-fog-azr349-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp after the version. Current stamp is `cavern-breath-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [Unreleased]
+
+AZR-268 AZR-269 AZR-270 AZR-271 AZR-272 AZR-273 AZR-274 AZR-353 AZR-354 AZR-355
+
+### Fixed
+- **Cavern oxygen collapse on Medium/High** (`cavern-breath-v1`, AZR-355): breathing, plants, and animal methane now scale with room size. A huge Biomes! cavern full of wildlife no longer drains the whole layer to about 2% O₂. Before, Low only looked healthy because it skipped animal breathing on the viewed map.
+- **Low-oxygen rooms that never recovered** (AZR-355): fresh-air top-up no longer lowers its own target when a room is short on O₂, so a depleted room refills to normal air instead of staying partly empty.
+- **Deep drill noise** (AZR-272): drilling out a portion now adds its noise burst on 1.6. The patch was aiming at a renamed method and never ran.
+
+### Changed
+- **Seismograph station** (AZR-271): the readout now lists tremor, cave-in, and infestation risk for every linked underground level, not just the floor it stands on. It refreshes about every 4 seconds instead of every second.
 
 ## [3.8.1]
 
