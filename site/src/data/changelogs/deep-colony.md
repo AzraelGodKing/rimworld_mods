@@ -2,6 +2,11 @@
 
 Detailed notes for Deep Colony only.
 
+## [Unreleased]
+
+### Changed
+- Removed unused save flags, perk-alert bookkeeping, unused helpers, unused NoisyRoom DefOf, and a stale build SHA. No gameplay change; old saves still load.
+
 ## [1.9.0]
 
 Player-facing version **1.9.0** (`About.xml` `modVersion`). Stamp `colony-overview-v1`.
