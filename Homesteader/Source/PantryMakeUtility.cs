@@ -20,6 +20,7 @@ namespace Homesteader
         public int missingCount;
         public string lockReason;
         public ThingDef stationDef;
+        public List<Building_WorkTable> stations = new List<Building_WorkTable>();
     }
 
     internal sealed class PantryMakeReport
@@ -56,22 +57,48 @@ namespace Homesteader
             cachedTick = -99999;
         }
 
-        internal static bool TryAddBill(RecipeDef recipe)
+        internal static void AddBillAt(RecipeDef recipe, Building_WorkTable table)
         {
-            if (recipe == null)
+            if (recipe == null || table?.billStack == null || !table.Spawned)
             {
-                return false;
-            }
-
-            Building_WorkTable table = FindStation(recipe);
-            if (table?.billStack == null)
-            {
-                return false;
+                return;
             }
 
             table.billStack.AddBill(new Bill_Production(recipe));
             CameraJumper.TryJumpAndSelect(table);
-            return true;
+        }
+
+        internal static List<Building_WorkTable> FindStations(RecipeDef recipe)
+        {
+            List<Building_WorkTable> found = new List<Building_WorkTable>();
+            if (recipe == null || Find.Maps == null)
+            {
+                return found;
+            }
+
+            for (int m = 0; m < Find.Maps.Count; m++)
+            {
+                Map map = Find.Maps[m];
+                if (map == null || !map.IsPlayerHome)
+                {
+                    continue;
+                }
+
+                foreach (ThingDef user in RecipeUsers(recipe))
+                {
+                    List<Thing> things = map.listerThings.ThingsOfDef(user);
+                    for (int i = 0; i < things.Count; i++)
+                    {
+                        if (things[i] is Building_WorkTable table && table.Spawned && table.billStack != null
+                            && !found.Contains(table))
+                        {
+                            found.Add(table);
+                        }
+                    }
+                }
+            }
+
+            return found;
         }
 
         private static PantryMakeReport Scan()
@@ -206,7 +233,8 @@ namespace Homesteader
                 return row;
             }
 
-            if (FindStation(recipe) == null)
+            row.stations = FindStations(recipe);
+            if (row.stations.Count == 0)
             {
                 row.status = PantryMakeStatus.Locked;
                 row.lockReason = row.stationDef != null
@@ -366,37 +394,6 @@ namespace Homesteader
             foreach (ThingDef user in RecipeUsers(recipe))
             {
                 return user;
-            }
-
-            return null;
-        }
-
-        private static Building_WorkTable FindStation(RecipeDef recipe)
-        {
-            if (Find.Maps == null)
-            {
-                return null;
-            }
-
-            for (int m = 0; m < Find.Maps.Count; m++)
-            {
-                Map map = Find.Maps[m];
-                if (map == null || !map.IsPlayerHome)
-                {
-                    continue;
-                }
-
-                foreach (ThingDef user in RecipeUsers(recipe))
-                {
-                    List<Thing> things = map.listerThings.ThingsOfDef(user);
-                    for (int i = 0; i < things.Count; i++)
-                    {
-                        if (things[i] is Building_WorkTable table && table.Spawned && table.billStack != null)
-                        {
-                            return table;
-                        }
-                    }
-                }
             }
 
             return null;
