@@ -5,6 +5,11 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 **Build stamp:** each DLL logs the stamp after the version. Current stamp is `cavern-breath-v1` in `StrataBuildInfo.BuildStamp`.
 
+## [Unreleased]
+
+### Changed
+- **Retired breath grid**: removed unused per-cell O₂/CO₂ diffusion (`AtmosphereBreathGrid`, no-op `AtmosphereMapComponent` hooks, and the off-thread breath job). Room-volume clouds and the live overlay are unchanged.
+
 ## [3.8.2]
 
 AZR-268 AZR-269 AZR-270 AZR-271 AZR-272 AZR-273 AZR-274 AZR-353 AZR-354 AZR-355
