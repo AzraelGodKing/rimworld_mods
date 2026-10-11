@@ -16,34 +16,6 @@ namespace Nemesis
         public const string StrataId = "AzraelGodKing.Strata";
         public const string HomesteaderId = "AzraelGodKing.Homesteader";
 
-        private static readonly string[] GiddyUpPackageIds =
-        {
-            "Owlchemist.GiddyUp",
-            "roolo.giddyupcore",
-            "roolo.giddyuprideandroll",
-            "roolo.giddyupcaravan",
-        };
-
-        private static readonly string[] RimesisPackageIds =
-        {
-            "Font.Rimesis",
-            "font.rimesis",
-            "Font.Rimesis.Core",
-            "Rimesis",
-        };
-
-        // Live Workshop BFV (ferny Back For Vengeance) confirmed as ferny.Vengeance (AZR-59).
-        // Other ids kept as fail-open candidates. Rimesis packageId still unconfirmed — do not invent.
-        private static readonly string[] BfvPackageIds =
-        {
-            "ferny.Vengeance",
-            "SmashPhil.BackForVengeance",
-            "smashphil.backforvengeance",
-            "SmashPhil.BFV",
-            "BackForVengeance",
-            "VanillaExpanded.BackForVengeance",
-        };
-
         /// <summary>Homesteader pantry / smokehouse / cellar storage buildings for food raids (AZR-303).</summary>
         private static readonly string[] HomesteaderFoodStorageDefNames =
         {
@@ -64,12 +36,6 @@ namespace Nemesis
         private static bool _strataActive;
         private static bool _homeChecked;
         private static bool _homeActive;
-        private static bool _giddyChecked;
-        private static bool _giddyActive;
-        private static bool _rimesisChecked;
-        private static bool _rimesisActive;
-        private static bool _bfvChecked;
-        private static bool _bfvActive;
 
         private static MethodInfo _strataIsUnderground;
         private static MethodInfo _strataIsUpper;
@@ -128,53 +94,6 @@ namespace Nemesis
             }
         }
 
-        public static bool GiddyUpActive
-        {
-            get
-            {
-                if (!_giddyChecked)
-                {
-                    _giddyChecked = true;
-                    _giddyActive = false;
-                    for (int i = 0; i < GiddyUpPackageIds.Length; i++)
-                    {
-                        if (ModLister.GetActiveModWithIdentifier(GiddyUpPackageIds[i]) != null)
-                        {
-                            _giddyActive = true;
-                            break;
-                        }
-                    }
-                }
-                return _giddyActive;
-            }
-        }
-
-        public static bool RimesisActive
-        {
-            get
-            {
-                if (!_rimesisChecked)
-                {
-                    _rimesisChecked = true;
-                    _rimesisActive = AnyPackageActive(RimesisPackageIds);
-                }
-                return _rimesisActive;
-            }
-        }
-
-        public static bool BackForVengeanceActive
-        {
-            get
-            {
-                if (!_bfvChecked)
-                {
-                    _bfvChecked = true;
-                    _bfvActive = AnyPackageActive(BfvPackageIds);
-                }
-                return _bfvActive;
-            }
-        }
-
         /// <summary>
         /// True if another antagonist mod already owns this pawn (hediff/comp name
         /// markers). Fail-open: unknown markers → false.
@@ -216,25 +135,10 @@ namespace Nemesis
 
         public static void ResetCaches()
         {
-            _stormChecked = _strataChecked = _homeChecked = _giddyChecked = false;
-            _rimesisChecked = _bfvChecked = false;
-            _stormActive = _strataActive = _homeActive = _giddyActive = false;
-            _rimesisActive = _bfvActive = false;
+            _stormChecked = _strataChecked = _homeChecked = false;
+            _stormActive = _strataActive = _homeActive = false;
             _strataIsUnderground = _strataIsUpper = null;
             _homeGetFavorites = null;
-        }
-
-        private static bool AnyPackageActive(string[] ids)
-        {
-            for (int i = 0; i < ids.Length; i++)
-            {
-                if (ModLister.GetActiveModWithIdentifier(ids[i], ignorePostfix: true) != null)
-                {
-                    Log.Message("[Nemesis] soft-compat package active: " + ids[i]);
-                    return true;
-                }
-            }
-            return false;
         }
 
         /// <summary>Fail-open copy of a hunt epitaph onto Deep Colony's Legacy letters.</summary>
@@ -272,7 +176,7 @@ namespace Nemesis
 
         /// <summary>
         /// Remember a faction-appropriate animal kind for later escort spawn.
-        /// Fail-open without Giddy-Up (animal still fights beside the captain).
+        /// The animal fights beside the captain; no Giddy-Up gate.
         /// </summary>
         public static void TryAssignMountKind(Pawn rider, NemesisData data, int level)
         {
@@ -280,7 +184,6 @@ namespace Nemesis
             if (!(NemesisMod.Settings?.enableSoftMounts ?? true)) return;
             if (!string.IsNullOrEmpty(data.mountKindDefName)) return;
 
-            // Prefer assigning when Giddy-Up is present; still allow animal escort without it.
             TechLevel tech = rider?.Faction?.def?.techLevel ?? TechLevel.Neolithic;
             string kindName;
             if (tech <= TechLevel.Neolithic)

@@ -14,7 +14,6 @@ namespace Nemesis
         public static int CachedNemesisId = -1;
         public static int CachedTargetId = -1;
         public static bool ResolutionDirty;
-        public static int LastHeavyCheckTick = -999999;
 
         public static void InvalidateNemesis()
         {
@@ -33,7 +32,6 @@ namespace Nemesis
             InvalidateNemesis();
             InvalidateTarget();
             ResolutionDirty = false;
-            LastHeavyCheckTick = -999999;
         }
 
         public static bool MapIsViewed(Map map)
