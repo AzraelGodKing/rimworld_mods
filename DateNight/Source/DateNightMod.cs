@@ -12,7 +12,7 @@ namespace DateNight
         public DateNightMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<DateNightSettings>();
-            ModVersionLog.Write("[DateNight]", content, extra: "couple-lifecycle-v1");
+            ModVersionLog.Write("[DateNight]", content, extra: "thought-partner-v1");
             // PatchAll runs after defs load — Harmony compiling TimeAssignmentSelector
             // patches otherwise touches TimeAssignmentDefOf before DefOfs exist.
         }
