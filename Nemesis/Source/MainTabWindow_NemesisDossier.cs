@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -68,8 +69,7 @@ namespace Nemesis
                     NemesisTells.MarkKey(data.mark).Translate(),
                     NemesisTells.HabitKey(data.habit).Translate()));
             y += 42f;
-            Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
-                "Nemesis_Dossier_Tile".Translate(data.lastKnownTileLabel ?? "—"));
+            DrawLastKnownTile(data, new Rect(inRect.x, y, inRect.width, 22f));
             y += 22f;
             Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
                 "Nemesis_Dossier_Gear".Translate(data.lastGearSeen ?? "—"));
@@ -119,11 +119,38 @@ namespace Nemesis
             DrawEpitaphs(comp, inRect, ref y);
         }
 
+        static void DrawLastKnownTile(NemesisData data, Rect rect)
+        {
+            string text = "Nemesis_Dossier_Tile".Translate(data.lastKnownTileLabel ?? "—");
+            int tile = data.lastKnownTile;
+            if (tile < 0 || Find.WorldGrid == null || tile >= Find.WorldGrid.TilesCount)
+            {
+                Widgets.Label(rect, text);
+                return;
+            }
+
+            Rect clickRect = new Rect(rect.x, rect.y, Mathf.Min(rect.width, Text.CalcSize(text).x + 8f), rect.height);
+            Widgets.DrawHighlightIfMouseover(clickRect);
+            TooltipHandler.TipRegion(clickRect, "Nemesis_Dossier_TileJumpTip".Translate());
+            GUI.color = Widgets.NormalOptionColor;
+            Widgets.Label(rect, text);
+            GUI.color = Color.white;
+            if (Widgets.ButtonInvisible(clickRect))
+                CameraJumper.TryJump(new GlobalTargetInfo(tile));
+        }
+
         static void DrawEpitaphs(GameComponent_Nemesis comp, Rect inRect, ref float y)
         {
             List<NemesisEpitaph> list = comp?.epitaphs;
             Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
                 "Nemesis_Dossier_Epitaphs".Translate());
+            if (list != null && list.Count > 3)
+            {
+                const float buttonWidth = 160f;
+                if (Widgets.ButtonText(new Rect(inRect.xMax - buttonWidth, y, buttonWidth, 22f),
+                        "Nemesis_Dossier_EpitaphArchive".Translate(list.Count)))
+                    Find.WindowStack.Add(new Dialog_NemesisEpitaphs(list));
+            }
             y += 22f;
             if (list == null || list.Count == 0)
             {

@@ -210,6 +210,9 @@
   <Nemesis_Dossier_NoNotes>还没有记录。</Nemesis_Dossier_NoNotes>
   <Nemesis_Dossier_Epitaphs>墓志铭</Nemesis_Dossier_Epitaphs>
   <Nemesis_Dossier_NoEpitaphs>还没有结束的狩猎。</Nemesis_Dossier_NoEpitaphs>
+  <Nemesis_Dossier_TileJumpTip>点击在世界地图上显示该地块。</Nemesis_Dossier_TileJumpTip>
+  <Nemesis_Dossier_EpitaphArchive>查看全部（{0}）</Nemesis_Dossier_EpitaphArchive>
+  <Nemesis_Dossier_EpitaphArchiveTitle>墓志铭档案</Nemesis_Dossier_EpitaphArchiveTitle>
 
   <Nemesis_Intel_NoHunt>没有进行中的狩猎可买线索。</Nemesis_Intel_NoHunt>
   <Nemesis_Intel_Disabled>模组选项里关闭了线人。</Nemesis_Intel_Disabled>

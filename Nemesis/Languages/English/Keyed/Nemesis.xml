@@ -211,6 +211,9 @@
   <Nemesis_Dossier_NoNotes>Nothing written yet.</Nemesis_Dossier_NoNotes>
   <Nemesis_Dossier_Epitaphs>Epitaphs</Nemesis_Dossier_Epitaphs>
   <Nemesis_Dossier_NoEpitaphs>No finished hunts recorded.</Nemesis_Dossier_NoEpitaphs>
+  <Nemesis_Dossier_TileJumpTip>Click to show this tile on the world map.</Nemesis_Dossier_TileJumpTip>
+  <Nemesis_Dossier_EpitaphArchive>View all ({0})</Nemesis_Dossier_EpitaphArchive>
+  <Nemesis_Dossier_EpitaphArchiveTitle>Epitaph archive</Nemesis_Dossier_EpitaphArchiveTitle>
 
   <Nemesis_Intel_NoHunt>There is no active hunt to buy a lead on.</Nemesis_Intel_NoHunt>
   <Nemesis_Intel_Disabled>Informants are turned off in Mod Options.</Nemesis_Intel_Disabled>

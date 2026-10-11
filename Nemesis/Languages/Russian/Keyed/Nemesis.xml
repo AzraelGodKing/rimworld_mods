@@ -210,6 +210,9 @@
   <Nemesis_Dossier_NoNotes>Пока ничего не записано.</Nemesis_Dossier_NoNotes>
   <Nemesis_Dossier_Epitaphs>Эпитафии</Nemesis_Dossier_Epitaphs>
   <Nemesis_Dossier_NoEpitaphs>Законченных охот нет.</Nemesis_Dossier_NoEpitaphs>
+  <Nemesis_Dossier_TileJumpTip>Нажмите, чтобы показать эту клетку на карте мира.</Nemesis_Dossier_TileJumpTip>
+  <Nemesis_Dossier_EpitaphArchive>Показать все ({0})</Nemesis_Dossier_EpitaphArchive>
+  <Nemesis_Dossier_EpitaphArchiveTitle>Архив эпитафий</Nemesis_Dossier_EpitaphArchiveTitle>
 
   <Nemesis_Intel_NoHunt>Нет активной охоты, на которую можно купить наводку.</Nemesis_Intel_NoHunt>
   <Nemesis_Intel_Disabled>Осведомители выключены в настройках мода.</Nemesis_Intel_Disabled>
