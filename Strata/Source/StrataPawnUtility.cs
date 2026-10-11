@@ -328,15 +328,6 @@ namespace Strata
             return false;
         }
 
-        public static bool IsWorkSeekingJobGiver(ThinkNode_JobGiver giver)
-        {
-            if (WorkRelaySignals.IsRegisteredWorkSeekingGiver(giver))
-            {
-                return true;
-            }
-            return IsWorkSeekingJobGiverType(giver?.GetType());
-        }
-
         public static bool IsWorkSeekingJobGiverType(Type type)
         {
             if (type == null)

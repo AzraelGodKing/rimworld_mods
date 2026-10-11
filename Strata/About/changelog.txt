@@ -18,6 +18,10 @@
 [*] [b]Collapse trap[/b] — player-rigged thick-roof cave-in on pursuers (AZR-273).
 [*] [b]Stack panel[/b] — Levels tab side-view cross-section with click-to-jump (AZR-274).
 [/list]
+[b]Changed[/b]
+[list]
+[*] [b]Unused helpers[/b] — removed unused gravship, work-relay, portal, and shaft utility methods that had no callers.
+[/list]
 
 3.8.0
 [h1]Strata — 3.8.0[/h1]

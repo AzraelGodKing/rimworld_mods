@@ -83,15 +83,5 @@ namespace Strata
 
         public const float SurfaceWorkToBuild = 12000f;
         public const float DeepWorkOffset = 8000f;
-
-        public static float WorkToBuildForMap(Map map)
-        {
-            float work = SurfaceWorkToBuild;
-            if (map != null && StrataDepth.Of(map) >= 1)
-            {
-                work += DeepWorkOffset;
-            }
-            return work;
-        }
     }
 }

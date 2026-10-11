@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -244,39 +243,6 @@ namespace Strata
                 MaxOverlayAlpha,
                 Mathf.Clamp01(Mathf.Sqrt(blendWeight)));
             return new Color(color.r, color.g, color.b, alpha);
-        }
-
-        public static bool TryFormatRoomMix(
-            AtmosphereMapComponent atmosphere,
-            Room room,
-            out string line)
-        {
-            line = null;
-            if (!TryCollectRoomSlices(atmosphere, room, out List<GasSlice> slices, out float pollutantLoad, out bool openAir))
-            {
-                return false;
-            }
-            if (openAir)
-            {
-                line = "Strata_GasOverlay_OpenAir".Translate();
-                return true;
-            }
-
-            string status = AtmosphereSimulator.FormatRoomStatusLine(atmosphere.map, room, atmosphere);
-            var sb = new StringBuilder(status);
-            sb.Append("\n");
-            sb.Append("Strata_GasOverlay_GasPrefix".Translate());
-            for (int i = 0; i < slices.Count; i++)
-            {
-                if (i > 0)
-                {
-                    sb.Append(" · ");
-                }
-                sb.Append(FormatSliceLabel(slices[i]));
-            }
-            sb.Append("Strata_GasOverlay_LoadParen".Translate(FormatLoadPercent(pollutantLoad)));
-            line = sb.ToString();
-            return true;
         }
 
         // Gas mix panel that follows the mouse so percentages stay on screen.

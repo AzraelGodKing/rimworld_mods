@@ -1306,10 +1306,5 @@ namespace Strata
             }
             return false;
         }
-
-        public static bool GasBlockedBetween(Map map, IntVec3 from, IntVec3 to)
-        {
-            return CellBlockedBySealedPortal(map, from) || CellBlockedBySealedPortal(map, to);
-        }
     }
 }

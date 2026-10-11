@@ -53,11 +53,6 @@ namespace Strata
                 && (terrain.defName == RoofDeckDefName || terrain.defName == OpenSkyDefName);
         }
 
-        public static bool SourceHasRoofUnder(Map upper, IntVec3 upperCell, Map source = null)
-        {
-            return SourceSupportsUpperDeck(upper, upperCell, source);
-        }
-
         public static bool SourceSupportsUpperDeck(Map upper, IntVec3 upperCell, Map source = null)
         {
             source ??= SourceMapFor(upper);
