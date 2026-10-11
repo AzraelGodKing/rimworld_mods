@@ -107,7 +107,7 @@ namespace DateNight
             int n = 0;
             foreach (Pawn p in SelectedHumanlikes())
             {
-                string why = !p.ageTracker.Adult || !p.DevelopmentalStage.Adult() ? "not an adult"
+                string why = p.ageTracker == null || !p.ageTracker.Adult || !p.DevelopmentalStage.Adult() ? "not an adult"
                     : p.CurJobDef == DateNightDefOf.DateNight_SelfLovin ? "already private time"
                     : p.CurJobDef == JobDefOf.Lovin ? "already lovin"
                     : LovePartnerRelationUtility.GetPartnerInMyBed(p) != null ? "love partner is in this bed — use Force lovin"

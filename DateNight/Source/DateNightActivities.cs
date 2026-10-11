@@ -312,6 +312,10 @@ namespace DateNight
                     {
                         continue;
                     }
+                    if (!ReceiverWouldWelcome(receiver, thing))
+                    {
+                        continue;
+                    }
                     if (!giver.CanReserveAndReach(thing, PathEndMode.ClosestTouch, Danger.Some, 10, 1))
                     {
                         continue;
@@ -325,6 +329,46 @@ namespace DateNight
                 }
             }
             return best;
+        }
+
+        /// <summary>
+        /// Skip gifts the receiver would refuse: teetotalers and drug policy
+        /// for drugs, ideoligion drug precepts, and food they would not eat.
+        /// </summary>
+        public static bool ReceiverWouldWelcome(Pawn receiver, Thing thing)
+        {
+            if (receiver == null || thing == null)
+            {
+                return true;
+            }
+
+            ThingDef def = thing.def;
+            if (def.IsDrug)
+            {
+                if (receiver.story?.traits != null
+                    && receiver.story.traits.DegreeOfTrait(TraitDefOf.DrugDesire) < 0)
+                {
+                    return false;
+                }
+                if (receiver.drugs?.CurrentPolicy != null
+                    && !receiver.drugs.CurrentPolicy[def].allowedForJoy)
+                {
+                    return false;
+                }
+                if (ModsConfig.IdeologyActive && def.IsNonMedicalDrug
+                    && (!IdeoUtility.DoerWillingToDo(HistoryEventDefOf.IngestedDrug, receiver)
+                        || !IdeoUtility.DoerWillingToDo(HistoryEventDefOf.IngestedRecreationalDrug, receiver)))
+                {
+                    return false;
+                }
+            }
+
+            if (def.ingestible != null
+                && !FoodUtility.WillEat(receiver, thing, null, careIfNotAcceptableForTitle: false))
+            {
+                return false;
+            }
+            return true;
         }
 
         public static Thing FindGatherSpotFor(Pawn pawn, Pawn partner)
