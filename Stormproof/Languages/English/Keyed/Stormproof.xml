@@ -135,6 +135,8 @@
   <Stormproof_Almanac_OpenDesc>Read this map's year of storms, flares, droughts, and snaps.</Stormproof_Almanac_OpenDesc>
   <Stormproof_Almanac_Ledger>Caught {0} / missed {1} strikes. Absorbed {2} / suffered {3} Zzzt. Fires snuffed {4}. Wear hits {5}.</Stormproof_Almanac_Ledger>
   <Stormproof_Almanac_Lifetime>Lifetime: caught {0} / missed {1} strikes. Absorbed {2} / suffered {3} Zzzt. Fires snuffed {4}. Wear hits {5}.</Stormproof_Almanac_Lifetime>
+  <Stormproof_Almanac_ChargeForecast>Grid charge forecast (next 8 hours): {0} now, lowest {1}.</Stormproof_Almanac_ChargeForecast>
+  <Stormproof_Almanac_ChargeForecastTip>Projected battery charge on this forecaster's grid, weather and load schedules included. Yellow line = brownout starts.</Stormproof_Almanac_ChargeForecastTip>
   <Stormproof_Almanac_CleanStretch>Longest clean stretch (no missed strike or suffered Zzzt): {0}. Current: {1}.</Stormproof_Almanac_CleanStretch>
   <Stormproof_StormSpire_FulguriteReady>{0} has fused fulgurite at its base. Collect it.</Stormproof_StormSpire_FulguriteReady>
   <Stormproof_StormSpire_CollectFulgurite>Collect fulgurite ({0})</Stormproof_StormSpire_CollectFulgurite>

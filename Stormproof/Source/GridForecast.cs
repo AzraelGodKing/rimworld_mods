@@ -13,6 +13,7 @@ namespace Stormproof
         public int TicksToFull;
         public int TicksToLow;
         public int TicksToCritical;
+        public float StartFraction;
         public float NadirFraction;
         public float NadirBrownout;
     }
@@ -74,6 +75,7 @@ namespace Stormproof
                 TicksToFull = -1,
                 TicksToLow = -1,
                 TicksToCritical = -1,
+                StartFraction = startFraction,
                 NadirFraction = startFraction,
                 NadirBrownout = BrownoutAt(startFraction, severity)
             };

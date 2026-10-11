@@ -28,6 +28,8 @@ namespace Stormproof
 
         public CompProperties_WeatherForecaster Props => (CompProperties_WeatherForecaster)props;
 
+        internal PowerNet PowerNet => powerComp?.PowerNet;
+
         public bool Active =>
             parent.Spawned &&
             !parent.Destroyed &&
@@ -150,7 +152,7 @@ namespace Stormproof
                     MapComponent_Stormproof comp = parent.Map.GetComponent<MapComponent_Stormproof>();
                     if (comp != null)
                     {
-                        Find.WindowStack.Add(new Dialog_Almanac(comp));
+                        Find.WindowStack.Add(new Dialog_Almanac(comp, this));
                     }
                 }
             };
