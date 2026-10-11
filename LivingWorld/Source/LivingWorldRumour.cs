@@ -6,7 +6,7 @@ namespace LivingWorld
 {
     internal static class LivingWorldRumour
     {
-        public static void StampOnPublish(WorldEvent ev)
+        public static void StampOnPublish(WorldEvent ev, bool allowDistortion = true)
         {
             if (ev == null || ev.isCorrection)
             {
@@ -17,6 +17,10 @@ namespace LivingWorld
             ev.trueKind = ev.kind;
             ev.trueFactionAName = ev.factionAName;
             ev.trueFactionBName = ev.factionBName;
+            if (!allowDistortion)
+            {
+                return;
+            }
 
             float chance = ev.channel switch
             {

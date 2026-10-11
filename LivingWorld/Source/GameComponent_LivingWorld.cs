@@ -137,6 +137,8 @@ namespace LivingWorld
                 pulseIndex++;
             }
 
+            LivingWorldTraffic.TryResolvePulse(this);
+
             // Delayed fallout: give letters a beat, then try to fire.
             TryFirePendingFallout();
         }
@@ -215,14 +217,15 @@ namespace LivingWorld
             return true;
         }
 
-        public void RecordAndPublish(WorldEvent ev)
+        /// <param name="sendLetter">False for routine chronicle-only entries (no letter, no rumour distortion).</param>
+        public void RecordAndPublish(WorldEvent ev, bool sendLetter = true)
         {
             if (ev == null)
             {
                 return;
             }
 
-            LivingWorldRumour.StampOnPublish(ev);
+            LivingWorldRumour.StampOnPublish(ev, allowDistortion: sendLetter);
 
             chronicle.Add(ev);
             while (chronicle.Count > ChronicleCapacity)
@@ -239,7 +242,7 @@ namespace LivingWorld
                 }
             }
 
-            if (LivingWorldMod.Settings == null || !LivingWorldMod.Settings.chronicleEnabled)
+            if (!sendLetter || LivingWorldMod.Settings == null || !LivingWorldMod.Settings.chronicleEnabled)
             {
                 LivingWorldSignals.Raise(ev);
                 return;

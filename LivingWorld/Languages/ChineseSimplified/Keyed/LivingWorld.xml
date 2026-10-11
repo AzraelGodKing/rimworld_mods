@@ -22,6 +22,8 @@
   <LivingWorld_Settings_WarbandDesc>罕见的敌对或紧张战团，追击你听说过的那场战争。默认关闭——请谨慎。</LivingWorld_Settings_WarbandDesc>
   <LivingWorld_Settings_RoadHazards>路上的路况</LivingWorld_Settings_RoadHazards>
   <LivingWorld_Settings_RoadHazardsDesc>已经走过的格子上按季节和生物群系：泥、热、冷、风。路营会让它更少。没走过的路不触发。</LivingWorld_Settings_RoadHazardsDesc>
+  <LivingWorld_Settings_Traffic>聚落间商队</LivingWorld_Settings_Traffic>
+  <LivingWorld_Settings_TrafficDesc>NPC商队在世界地图上往来于友好聚落之间。抵达只记入编年史，不发信件。偶尔，路过你殖民地附近的商队会转道来交易。</LivingWorld_Settings_TrafficDesc>
   <LivingWorld_Settings_Verbosity>新闻详细程度</LivingWorld_Settings_Verbosity>
   <LivingWorld_Verbosity_Low>低（仅重大）</LivingWorld_Verbosity_Low>
   <LivingWorld_Verbosity_Medium>中（接触 / 附近 / 盟友）</LivingWorld_Verbosity_Medium>
@@ -86,6 +88,11 @@
   <LivingWorld_LetterText_WarbandPass>{0} 的一支战团正在猎杀 {1} 在 {2} 附近战斗后的残部。他们正穿过你的地区。</LivingWorld_LetterText_WarbandPass>
   <LivingWorld_LetterLabel_Correction>事后传来的消息</LivingWorld_LetterLabel_Correction>
   <LivingWorld_LetterText_Correction>商队或无线电更正了此前关于 {0} 与 {1} 在 {2} 附近的传闻。编年史已更新。</LivingWorld_LetterText_Correction>
+  <LivingWorld_LetterLabel_TradeCaravan>商队抵达</LivingWorld_LetterLabel_TradeCaravan>
+  <LivingWorld_LetterText_TradeCaravan>{0}的商队在路上走了多日后抵达了{2}。</LivingWorld_LetterText_TradeCaravan>
+  <LivingWorld_LetterLabel_CaravanDiverted>商队转道</LivingWorld_LetterLabel_CaravanDiverted>
+  <LivingWorld_LetterText_CaravanDiverted>一支前往{2}的{0}商队转道来拜访你的殖民地。</LivingWorld_LetterText_CaravanDiverted>
+  <LivingWorld_Traffic_Inspect>来自{0}，前往{1}。约{2}后抵达。</LivingWorld_Traffic_Inspect>
   <LivingWorld_RumourPrefix>有人说……商人声称……</LivingWorld_RumourPrefix>
   <LivingWorld_Channel_Rumour>传闻</LivingWorld_Channel_Rumour>
   <LivingWorld_Channel_Proximity>邻近</LivingWorld_Channel_Proximity>

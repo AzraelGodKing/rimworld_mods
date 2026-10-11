@@ -20,6 +20,8 @@ namespace LivingWorld
         TradeBlackout = 15,
         WarbandPass = 16,
         Correction = 17,
+        TradeCaravan = 18,
+        CaravanDiverted = 19,
     }
 
     public enum HearChannel : byte
