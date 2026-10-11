@@ -5,6 +5,7 @@
   <Azrael_UpdateLetterFallback>Azrael {0} 已加载。\n\n完整说明：{1}</Azrael_UpdateLetterFallback>
   <Azrael_UpdateLetterFooter>完整说明：{0}</Azrael_UpdateLetterFooter>
   <Azrael_ScenPart_ForcedStorytellerSummary>叙事者锁定为 {0}。</Azrael_ScenPart_ForcedStorytellerSummary>
+  <Azrael_ScenPart_PreferMountainSummary>默认与随机起始地点优先选择大丘陵或山地。</Azrael_ScenPart_PreferMountainSummary>
 
   <Azrael_SettingsCategory>Azrael</Azrael_SettingsCategory>
   <Azrael_Hub_Intro>系列总览。已加载的模组与版本、DLC、软兼容桥（含未加载 vs 类型缺失）、已知冲突，以及失败的 Harmony 补丁。主菜单或游戏内均可复制报告。</Azrael_Hub_Intro>
@@ -32,6 +33,7 @@
   <Azrael_Hub_Conflict_Stack>多层地图会与 Strata 冲突。请勿与 Strata 同时启用。</Azrael_Hub_Conflict_Stack>
   <Azrael_Hub_Conflict_Wellspring>残留的独立 Wellspring；水源内容已并入 Homesteader。</Azrael_Hub_Conflict_Wellspring>
   <Azrael_Hub_Conflict_LoadOrder>请将 Azrael 放在系列内容之后加载。当前 {0} 排在 Azrael 之后 — 请把 Azrael 移到系列末尾。</Azrael_Hub_Conflict_LoadOrder>
+  <Azrael_Hub_Conflict_Multiplayer>安全移除的拆除指令只作用于你的客户端。多人联机时请在游戏内手动指定拆除。</Azrael_Hub_Conflict_Multiplayer>
   <Azrael_Hub_Harmony>失败的补丁</Azrael_Hub_Harmony>
   <Azrael_Hub_HarmonyNone>本局没有失败的系列 Harmony 补丁类。</Azrael_Hub_HarmonyNone>
   <Azrael_Hub_HarmonyCount>{0} 个失败的补丁类。</Azrael_Hub_HarmonyCount>
@@ -44,6 +46,8 @@
   <Azrael_Removal_Jump>跳转</Azrael_Removal_Jump>
   <Azrael_Removal_Deconstruct>将建筑指定为拆除</Azrael_Removal_Deconstruct>
   <Azrael_Removal_Designated>已为 {1} 的 {0} 座建筑排队拆除。</Azrael_Removal_Designated>
+  <Azrael_Removal_Queued>游戏取消暂停后将指定拆除。</Azrael_Removal_Queued>
+  <Azrael_Removal_Summary>待拆除 {0} · 待消耗或出售 {1} · 需处理 {2} · 安全 {3}</Azrael_Removal_Summary>
   <Azrael_Removal_NeedSave>请先载入一个殖民地。</Azrael_Removal_NeedSave>
   <Azrael_Removal_Empty>地图与商队上没有该模组的东西。</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>请先处理标出的阻碍项。</Azrael_Removal_Blocked>

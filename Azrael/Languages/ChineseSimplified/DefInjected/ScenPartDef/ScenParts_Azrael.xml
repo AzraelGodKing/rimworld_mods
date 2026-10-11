@@ -2,4 +2,6 @@
 <LanguageData>
   <Azrael_ForcedStoryteller.label>强制叙事者</Azrael_ForcedStoryteller.label>
   <Azrael_ForcedStoryteller.description>开局后将游戏锁定为指定叙事者。</Azrael_ForcedStoryteller.description>
+  <Azrael_PreferMountainStart.label>优先山地开局</Azrael_PreferMountainStart.label>
+  <Azrael_PreferMountainStart.description>默认与随机起始地点优先选择大丘陵或山地。你仍可选择任意地块。</Azrael_PreferMountainStart.description>
 </LanguageData>
