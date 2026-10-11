@@ -18,6 +18,9 @@ namespace Strata
         private const int MaskPadCells = 8;
         private const int BelowThingsOffset = 200;
         private const int BelowDefaultOffset = 150;
+        private const float BelowFarClip = 70f;
+
+        private static float restoreFarClip = -1f;
 
         public static volatile bool OffsetActive;
         public static float BelowThingScale = 0.85f;
@@ -141,15 +144,21 @@ namespace Strata
         {
             if (!Enabled)
             {
+                SyncFarClip(false);
                 StrataBelowDrawPosPatcher.UnpatchIfDisabled();
                 return;
             }
-            if (!TryGetBelowContext(map, out Map lower)) return;
+            if (!TryGetBelowContext(map, out Map lower))
+            {
+                SyncFarClip(false);
+                return;
+            }
             try
             {
+                SyncFarClip(true);
                 // AZR-236: MapMeshDrawerUpdate_First on a non-current map while
                 // the camera is drawing CurrentMap corrupts section RGB. Draw
-                // already-built meshes only. Do not permanently raise far clip.
+                // already-built meshes only.
                 lower.waterInfo?.SetTextures();
 
                 CellRect view = Find.CameraDriver.CurrentViewRect.ExpandedBy(1).ClipInsideMap(lower);
@@ -160,6 +169,28 @@ namespace Strata
             catch (Exception e)
             {
                 DisableSession(e, "see-below static");
+            }
+        }
+
+        // Vanilla parks the camera at y=65 at max zoom with a 65.5 far clip, which
+        // culls everything drawn at BelowOffset and leaves OpenSky holes unpainted.
+        // Raised only while an upper level is drawing; restored on any other map.
+        private static void SyncFarClip(bool seeBelow)
+        {
+            Camera cam = Find.Camera;
+            if (cam == null) return;
+            if (seeBelow)
+            {
+                if (cam.farClipPlane < BelowFarClip)
+                {
+                    if (restoreFarClip < 0f) restoreFarClip = cam.farClipPlane;
+                    cam.farClipPlane = BelowFarClip;
+                }
+            }
+            else if (restoreFarClip >= 0f)
+            {
+                cam.farClipPlane = restoreFarClip;
+                restoreFarClip = -1f;
             }
         }
 

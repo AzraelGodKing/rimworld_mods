@@ -50,6 +50,7 @@ namespace Strata
         private const float StackPanelWidth = 148f;
         private const float StackSliceHeight = 36f;
         private const float StackPanelGap = 10f;
+        private const int MinVisibleRows = 3;
 
         private readonly List<Row> rows = new List<Row>();
         private int lastRowsBuildTick = -9999;
@@ -70,21 +71,24 @@ namespace Strata
         {
             get
             {
-                float stackH = Mathf.Max(rows.Count, 1) * StackSliceHeight + HeaderHeight + 16f;
-                float listH = HeaderHeight + Mathf.Max(rows.Count, 1) * RowHeight + 8f;
+                int shown = Mathf.Max(rows.Count, MinVisibleRows);
+                float stackH = shown * StackSliceHeight + HeaderHeight + 16f;
+                float listH = HeaderHeight + shown * RowHeight + 8f;
+                float minH = MinVisibleRows * StackSliceHeight + HeaderHeight + 16f + Margin * 2f;
                 Vector2 computed = new Vector2(
                     784f + StackPanelWidth + StackPanelGap,
-                    Mathf.Max(stackH, listH) + Margin * 2f);
+                    Mathf.Min(Mathf.Max(stackH, listH) + Margin * 2f, UI.screenHeight * 0.6f));
                 return savedSize == Vector2.zero
                     ? computed
-                    : new Vector2(Mathf.Max(savedSize.x, 560f), Mathf.Max(savedSize.y, 140f));
+                    : new Vector2(Mathf.Max(savedSize.x, 560f), Mathf.Max(savedSize.y, minH));
             }
         }
 
         public override void PreOpen()
         {
-            base.PreOpen();
+            // base.PreOpen sizes the window from RequestedTabSize, which needs the rows.
             BuildRows();
+            base.PreOpen();
             openedSize = new Vector2(windowRect.width, windowRect.height);
         }
 
