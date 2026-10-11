@@ -14,7 +14,7 @@ namespace Stormproof
         private WeatherDef lastWeather;
         private int weatherStartedTick;
         private List<AlmanacEntry> almanac = new List<AlmanacEntry>();
-        private Dictionary<int, float> brownoutByNetId = new Dictionary<int, float>();
+        private readonly Dictionary<PowerNet, float> brownoutByNet = new Dictionary<PowerNet, float>();
         private int brownoutCachedTick = -1;
         private WeatherDef daySkyWeather;
         private float daySkyMul = -1f;
@@ -90,8 +90,7 @@ namespace Stormproof
             {
                 RefreshBrownoutCache();
             }
-            int id = net.GetHashCode();
-            return brownoutByNetId.TryGetValue(id, out float v) ? v : 0f;
+            return brownoutByNet.TryGetValue(net, out float v) ? v : 0f;
         }
 
         public float BrownoutFor(Thing thing)
@@ -103,7 +102,7 @@ namespace Stormproof
         private void RefreshBrownoutCache()
         {
             brownoutCachedTick = Find.TickManager.TicksGame / 60;
-            brownoutByNetId.Clear();
+            brownoutByNet.Clear();
             if (StormproofMod.Settings == null || !StormproofMod.Settings.enableBrownout || map.powerNetManager == null)
             {
                 return;
@@ -135,7 +134,7 @@ namespace Stormproof
                 {
                     raw = (0.40f - fraction) / 0.40f;
                 }
-                brownoutByNetId[net.GetHashCode()] = raw * severity;
+                brownoutByNet[net] = raw * severity;
             }
         }
 
