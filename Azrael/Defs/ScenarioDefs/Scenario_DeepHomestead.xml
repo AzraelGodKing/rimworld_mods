@@ -43,6 +43,10 @@
           <storyteller>Azrael</storyteller>
         </li>
 
+        <li Class="Azrael.ScenPart_PreferMountainStart">
+          <def>Azrael_PreferMountainStart</def>
+        </li>
+
         <li Class="ScenPart_ConfigPage_ConfigureStartingPawns">
           <def>ConfigPage_ConfigureStartingPawns</def>
           <pawnCount>3</pawnCount>

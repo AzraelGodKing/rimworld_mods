@@ -8,11 +8,17 @@ namespace Azrael
 
         public GameComponent_UpdateNews(Game game)
         {
+            AzraelPlayerCommand.Clear();
         }
 
         public override void FinalizeInit()
         {
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
+        }
+
+        public override void GameComponentTick()
+        {
+            AzraelPlayerCommand.Drain();
         }
 
         public override void ExposeData()
