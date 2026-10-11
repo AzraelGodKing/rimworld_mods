@@ -1,26 +1,17 @@
-1.4.0
-[h1]Azrael — 1.4.0[/h1]
+1.0.0
+[h1]Azrael — 1.0.0[/h1]
+
+First release.
 
 [b]Added[/b]
 [list]
-[*] [b]Mountain start for The Deep Homestead[/b] - the default and Random starting site favor large hills or mountains. You can still pick any tile, and the part can be removed in the scenario editor. EN/CN/RU.
-[*] [b]Safe removal summary[/b] - the removal report opens with one line: how many things to deconstruct, consume or sell, need attention, and are safe.
+[*] [b]Series hub[/b] - Mod Options → Azrael lists loaded series mods and versions, DLC, build stamps, live soft-compat bridges, named conflicts, and failed patches. Copy report for support. Works from the main menu. EN/CN/RU.
+[*] [b]Safe removal[/b] - Prepare to remove for each series mod lists leftover buildings, items, and pawn effects, opens with a one-line summary, and can queue deconstruction. Not a save scrubber. Any other active AzraelGodKing mod shows up with its own button.
+[*] [b]The Deep Homestead[/b] scenario - 3 settlers, farm kit, Azrael storyteller. The default and Random starting site favor large hills or mountains. Strata and Homesteader start research when those mods are loaded. EN/CN/RU.
+[*] [b]Azrael storyteller without Homesteader[/b] - the storyteller is added on its own when Homesteader is not loaded, with no duplicate when both are.
+[*] [b]Series events under the Azrael storyteller[/b] - Living World refugees and warbands, Homesteader's Kats event, Stormproof weather, and Strata discoveries are picked more often when an event of their kind fires. How often events fire is unchanged, and big threats stay close to Cassandra. Other storytellers are unaffected.
 [*] [b]Multiplayer notice[/b] - with the Multiplayer mod active, Conflicts warns that safe-removal deconstruct only acts on your client.
-[*] [b]New series mods show up on their own[/b] - any other active AzraelGodKing mod is listed in the hub, with its own Prepare to remove button.
-[*] [b]Series events under the Azrael storyteller[/b] (AZR-343) - Living World refugees and warbands, Homesteader's Kats event, Stormproof weather, and Strata discoveries are picked more often when an event of their kind fires. How often events fire is unchanged, and big threats stay close to Cassandra. Other storytellers are unaffected.
-[/list]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Living World ↔ Deep Colony goodwill[/b] - the hub only says live when Deep Colony's goodwill listener actually registered with Living World.
-[*] [b]Hub scrolling[/b] - the settings page no longer cuts off the last Prepare to remove buttons when the failed-patches section is shown.
-[*] [b]Safe removal off-map pawns[/b] - Deep Colony perks and trauma on kidnapped colonists, quest guests, and other off-map pawns now count in the report.
-[/list]
-
-[b]Changed[/b]
-[list]
-[*] [b]Safe removal deconstruct[/b] - designations are queued and applied on the next game tick instead of straight from Mod Options. If the game is paused, they appear when you unpause.
-[*] [b]Build stamps[/b] - the hub reads each series mod's BuildStamp when the mod exposes one, before falling back to the log.
+[*] [b]Update letter[/b] - loading a colony sends a letter with these notes and a link to the full changelog.
 [/list]
 
 [i]Build stamp (Player.log): removal-queue-v1[/i]

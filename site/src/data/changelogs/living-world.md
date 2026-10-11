@@ -1,22 +1,27 @@
 # Changelog
 
-## [Unreleased]
+## [1.0.0]
+
+Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `world-traffic-v1`.
+
+Not released yet: Living World stays at 1.0.0 until its first Workshop / Nexus / GitHub release. The 1.1.0–1.2.0 numbers below were internal pre-release bumps that never shipped; their notes are kept as development history.
+
+### Development history (after formerly 1.2.0)
 
 AZR-326
 
-### Internal
+#### Changed
+- **Version reset** - `modVersion` and `mod.json` go back to 1.0.0 (download `LivingWorld-1.0.0.zip`) until the first release; `About/changelog.txt` is now a first-release summary.
+
+#### Internal
 - Removed dead code: `TryConsumeMorphBudget`, `LivingWorldWarSites.TickExpire`, `LivingWorldSignals.ResetSession`.
 - Merged four identical `FindFaction(int)` helpers into one on `WorldEvent`.
 
-## [1.2.0]
-
-Player-facing version **1.2.0** (`About.xml` `modVersion`).
+### Development history (formerly 1.2.0)
 
 AZR-334 AZR-417 AZR-418 AZR-419 AZR-421 AZR-422 AZR-423 AZR-424 AZR-425 AZR-426
 
-Stamp `world-traffic-v1`.
-
-### Added
+#### Added
 - **Inter-settlement caravans** (LW9) — NPC caravans now travel between friendly settlements on the world map. Arrivals go in the chronicle without a letter and sometimes lift the destination's prosperity. Rarely, one passing near your colony turns aside to trade. Toggle in Mod Options.
 - **World state view** — a button on the Chronicle tab shows current wars, tensions, and alliances between NPC factions, with intensity and trade blackouts.
 - **Severity filter** — the Chronicle tab can show all news, normal and major, or major only.
@@ -24,43 +29,32 @@ Stamp `world-traffic-v1`.
 - **Sibling-mod hooks** — `LivingWorldSignals.StableHookKinds` lists the event kinds other mods can safely listen for.
 - Debug action: spawn a traffic caravan.
 
-### Fixed
+#### Fixed
 - **Refugees and warbands** no longer fire early with a random faction. They wait for the intended delay and always come from the war you heard about.
 - **Rumour corrections** still arrive when the original news has aged out of the chronicle.
 - Debug "Force" morph actions now ignore the per-settlement cooldown, as intended.
-- `mod.json` download filename now matches the shipped version.
 
-### Changed
+#### Changed
 - Settlement label and inspect lookups are now constant-time on large worlds.
 
-## [1.1.1]
+### Initial build
 
-Player-facing version **1.1.1** (`About.xml` `modVersion`).
-
-See `About/changelog.txt` for the full player-facing notes for this ship.
-## [1.1.0]
-
-### Changed
-- **Version baseline** — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
-
-## [1.0.0]
-
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `road-hazard-v1`.
+Stamp `road-hazard-v1`.
 
 AZR-84 AZR-85 AZR-205
 
-### Added
+#### Added
 - **Chronicle tab** (AZR-84) — world history UI with faction and hear-channel filters. CN/RU keys.
 - **Rumour distortion** (AZR-85) — far news can arrive wrong and later correct in the chronicle.
 - **The road** (AZR-205) — letter after eight unique caravan tiles; way-camps on a stretch they already walked; road-worn hediff on long trips. Route hazards (mud/heat/cold/wind) on that trail; camps make them rarer.
 
-### Fixed
+#### Fixed
 - **Guarded Harmony** — each patch class is applied on its own; one missing target logs and skips instead of aborting the rest of Living World.
 
-### Changed
+#### Changed
 - **CI zip** — Living World is not release-ready; CI no longer builds or publishes `LivingWorld.zip`.
 
-### Also
+#### Also
 - **Chinese and Russian** — Keyed packs plus DefInjected for the Listening Post scenario, incidents, and world objects (parity with English).
 - **Update letter** (`update-news-v1`) — loading a colony sends a PositiveEvent letter with the current `About/changelog.txt` block and a Full notes link.
 - **Unlisted docs page** — `docs/living-world.html` with `noindex` (not linked from the public hub).
