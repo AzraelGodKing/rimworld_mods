@@ -37,6 +37,12 @@ namespace DateNight
             }
         }
 
+        /// <summary>Call from the GameComponent ctor; a new game never runs ExposeData.</summary>
+        public static void ResetRapport()
+        {
+            rapport = new List<CoupleRapport>();
+        }
+
         public static void PruneDeadPawns()
         {
             if (rapport == null || rapport.Count == 0)
