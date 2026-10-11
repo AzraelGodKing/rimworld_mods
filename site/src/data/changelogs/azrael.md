@@ -4,13 +4,14 @@
 
 Player-facing version **1.4.0** (`About.xml` `modVersion`). Stamp `removal-queue-v1`.
 
-AZR-344 AZR-427 AZR-428 AZR-429 AZR-430 AZR-431 AZR-432 AZR-433 AZR-434 AZR-435 AZR-436
+AZR-343 AZR-344 AZR-427 AZR-428 AZR-429 AZR-430 AZR-431 AZR-432 AZR-433 AZR-434 AZR-435 AZR-436
 
 ### Added
 - **Mountain start for The Deep Homestead** - the default and "Random" starting site now favor large hills or mountains. You can still pick any tile, and the part can be removed in the scenario editor. EN/CN/RU.
 - **Safe removal summary** - the removal report opens with one line: how many things to deconstruct, consume or sell, need attention, and are safe.
 - **Multiplayer notice** - with the Multiplayer mod active, Conflicts warns that safe-removal deconstruct only acts on your client.
 - **New series mods show up on their own** - any other active AzraelGodKing mod is listed in the hub (with its own "Prepare to remove" button) without waiting for an Azrael update.
+- **Series events under the Azrael storyteller** (AZR-343) - while Azrael is your storyteller, series incidents win the pick inside their category more often: Living World refugees ×6 and warbands ×5 (their base chances of 0.05 and 0.02 almost never won before), Homesteader's Kats event ×2, Stormproof ion storms and dry lightning ×1.5, Stormproof heat dome, polar front, and toxic surge ×1.25, and Strata's deep vein, prospector, cave breakthrough, and lost miners discoveries ×1.25. Event timing (how often a Misc or threat event fires) is unchanged. Weights live in `Defs/StorytellerIncidentWeightsDefs/Azrael_SeriesIncidentWeights.xml` (`Azrael.StorytellerIncidentWeightsDef`), so other mods can patch them. Other storytellers are untouched.
 
 ### Fixed
 - **Living World ↔ Deep Colony goodwill** - the hub only says "live" when Deep Colony's goodwill listener actually registered with Living World, not just when both mods are loaded.

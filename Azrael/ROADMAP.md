@@ -16,6 +16,6 @@
 ## Later
 
 - [ ] Custom Azrael portraits (stop reusing Cassandra art) — preferably once, in Homesteader
-- [ ] Per-incident chance patches if playtest shows series events still invisible
+- [x] Per-incident chance weights for series events under the Azrael storyteller (`Azrael_SeriesIncidentWeights`)
 - [ ] `XBuildInfo.BuildStamp` in Homesteader, Stormproof, Nemesis, Living World, Date Night, Niceties (hub already reads the convention; log scrape is the fallback)
 - [ ] Living World traffic weights tied to Azrael (see series ROADMAP)
