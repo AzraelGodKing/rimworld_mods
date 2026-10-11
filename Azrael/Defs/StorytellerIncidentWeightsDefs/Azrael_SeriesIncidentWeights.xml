@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Pick-weight multipliers for series incidents while the Azrael storyteller runs.
+       Only the choice inside a category changes; Misc/ThreatSmall/ThreatBig timing stays
+       on the storyteller comps. Missing mods are skipped. Big threats stay near 1. -->
+  <Azrael.StorytellerIncidentWeightsDef>
+    <defName>Azrael_SeriesIncidentWeights</defName>
+    <storyteller>Azrael</storyteller>
+    <weights>
+      <!-- Living World: base 0.05 / 0.02 almost never won a Misc or ThreatSmall pick. -->
+      <li><incident>LivingWorld_Refugees</incident><factor>6</factor></li>
+      <li><incident>LivingWorld_Warband</incident><factor>5</factor></li>
+
+      <!-- Homesteader -->
+      <li><incident>Homesteader_KatsEffect</incident><factor>2</factor></li>
+
+      <!-- Stormproof -->
+      <li><incident>Stormproof_IonStorm</incident><factor>1.5</factor></li>
+      <li><incident>Stormproof_DryLightning</incident><factor>1.5</factor></li>
+      <li><incident>Stormproof_HeatDome</incident><factor>1.25</factor></li>
+      <li><incident>Stormproof_PolarFront</incident><factor>1.25</factor></li>
+      <li><incident>Stormproof_ToxicSurge</incident><factor>1.25</factor></li>
+
+      <!-- Strata: discoveries only; cave-ins and deep raids already fire often enough. -->
+      <li><incident>Strata_DeepVein</incident><factor>1.25</factor></li>
+      <li><incident>Strata_ProspectorTip</incident><factor>1.25</factor></li>
+      <li><incident>Strata_ProspectorDig</incident><factor>1.25</factor></li>
+      <li><incident>Strata_CaveBreakthrough</incident><factor>1.25</factor></li>
+      <li><incident>Strata_LostMiners</incident><factor>1.25</factor></li>
+    </weights>
+  </Azrael.StorytellerIncidentWeightsDef>
+
+</Defs>
