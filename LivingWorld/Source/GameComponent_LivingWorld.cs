@@ -9,9 +9,13 @@ namespace LivingWorld
     public class GameComponent_LivingWorld : GameComponent
     {
         private const int ChronicleCapacity = 96;
+        private const int EvictedCorrectionCapacity = 64;
 
         private List<WorldEvent> chronicle = new List<WorldEvent>();
+        private List<WorldEvent> evictedPendingCorrections = new List<WorldEvent>();
         private List<SettlementMood> moods = new List<SettlementMood>();
+        // Not scribed; rebuilt from moods on first lookup after load.
+        private Dictionary<int, SettlementMood> moodIndex;
         private List<FactionPairState> pairs = new List<FactionPairState>();
         private List<PendingFallout> pendingFallout = new List<PendingFallout>();
 
@@ -59,6 +63,9 @@ namespace LivingWorld
 
         public IReadOnlyList<WorldEvent> Chronicle => chronicle;
 
+        /// <summary>Distorted events evicted from the chronicle before their correction was due.</summary>
+        internal List<WorldEvent> EvictedPendingCorrections => evictedPendingCorrections;
+
         public IReadOnlyList<FactionPairState> Pairs => pairs;
 
         internal List<FactionPairState> PairsMutable => pairs;
@@ -66,6 +73,7 @@ namespace LivingWorld
         public override void ExposeData()
         {
             Scribe_Collections.Look(ref chronicle, "chronicle", LookMode.Deep);
+            Scribe_Collections.Look(ref evictedPendingCorrections, "evictedPendingCorrections", LookMode.Deep);
             Scribe_Collections.Look(ref moods, "moods", LookMode.Deep);
             Scribe_Collections.Look(ref pairs, "pairs", LookMode.Deep);
             Scribe_Collections.Look(ref pendingFallout, "pendingFallout", LookMode.Deep);
@@ -80,10 +88,12 @@ namespace LivingWorld
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 chronicle ??= new List<WorldEvent>();
+                evictedPendingCorrections ??= new List<WorldEvent>();
                 moods ??= new List<SettlementMood>();
                 pairs ??= new List<FactionPairState>();
                 pendingFallout ??= new List<PendingFallout>();
                 collapsedFactionIds ??= new List<int>();
+                moodIndex = null;
             }
         }
 
@@ -217,7 +227,16 @@ namespace LivingWorld
             chronicle.Add(ev);
             while (chronicle.Count > ChronicleCapacity)
             {
+                WorldEvent evicted = chronicle[0];
                 chronicle.RemoveAt(0);
+                if (evicted != null && evicted.distorted && !evicted.corrected && evicted.correctionTick >= 0)
+                {
+                    evictedPendingCorrections.Add(evicted);
+                    if (evictedPendingCorrections.Count > EvictedCorrectionCapacity)
+                    {
+                        evictedPendingCorrections.RemoveAt(0);
+                    }
+                }
             }
 
             if (LivingWorldMod.Settings == null || !LivingWorldMod.Settings.chronicleEnabled)
@@ -340,13 +359,10 @@ namespace LivingWorld
             {
                 return null;
             }
-            for (int i = 0; i < moods.Count; i++)
+            if (MoodIndex.TryGetValue(settlement.ID, out SettlementMood existing))
             {
-                if (moods[i].settlementId == settlement.ID)
-                {
-                    moods[i].tile = settlement.Tile;
-                    return moods[i];
-                }
+                existing.tile = settlement.Tile;
+                return existing;
             }
             var mood = new SettlementMood
             {
@@ -354,6 +370,7 @@ namespace LivingWorld
                 tile = settlement.Tile,
             };
             moods.Add(mood);
+            moodIndex[mood.settlementId] = mood;
             return mood;
         }
 
@@ -363,14 +380,7 @@ namespace LivingWorld
             {
                 return null;
             }
-            for (int i = 0; i < moods.Count; i++)
-            {
-                if (moods[i].settlementId == settlement.ID)
-                {
-                    return moods[i];
-                }
-            }
-            return null;
+            return MoodIndex.TryGetValue(settlement.ID, out SettlementMood mood) ? mood : null;
         }
 
         public void RemoveMood(Settlement settlement)
@@ -380,6 +390,27 @@ namespace LivingWorld
                 return;
             }
             moods.RemoveAll(m => m.settlementId == settlement.ID);
+            moodIndex?.Remove(settlement.ID);
+        }
+
+        private Dictionary<int, SettlementMood> MoodIndex
+        {
+            get
+            {
+                if (moodIndex == null)
+                {
+                    moodIndex = new Dictionary<int, SettlementMood>(moods.Count);
+                    for (int i = 0; i < moods.Count; i++)
+                    {
+                        SettlementMood m = moods[i];
+                        if (m != null && !moodIndex.ContainsKey(m.settlementId))
+                        {
+                            moodIndex[m.settlementId] = m;
+                        }
+                    }
+                }
+                return moodIndex;
+            }
         }
 
         public string DumpChronicle()
