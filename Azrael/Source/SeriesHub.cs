@@ -58,6 +58,14 @@ namespace Azrael
             new[] { "Niceties", "AzraelGodKing.Niceties" },
         };
 
+        private const string SeriesIdPrefix = "azraelgodking.";
+
+        // Standalone leftovers that the Conflicts section already names; not series rows.
+        private static readonly string[] NotSeries =
+        {
+            "AzraelGodKing.Wellspring",
+        };
+
         // Hub inventory is static for the session; rebuild once per open (dirty flag).
         private static bool hubDirty = true;
         private static List<ModRow> cachedMods;
@@ -66,10 +74,12 @@ namespace Azrael
         private static List<DlcRow> cachedDlc;
         private static List<string> cachedFails;
         private static List<string> cachedLogTexts;
+        private static List<string[]> cachedRoster;
 
         internal static void InvalidateHub()
         {
             hubDirty = true;
+            cachedRoster = null;
             cachedMods = null;
             cachedBridges = null;
             cachedConflicts = null;
@@ -86,6 +96,7 @@ namespace Azrael
             }
 
             cachedLogTexts = null;
+            cachedRoster = BuildRoster();
             cachedMods = BuildMods();
             cachedBridges = BuildBridges();
             cachedConflicts = BuildConflicts();
@@ -124,13 +135,56 @@ namespace Azrael
             return cachedFails;
         }
 
+        /// <summary>
+        /// Canonical <see cref="Series"/> first (stable order, shows "not loaded" rows),
+        /// then any other active azraelgodking.* mod so a new sister mod appears without a hub edit.
+        /// </summary>
+        private static List<string[]> BuildRoster()
+        {
+            var roster = new List<string[]>(Series);
+            try
+            {
+                foreach (ModMetaData meta in ModsConfig.ActiveModsInLoadOrder)
+                {
+                    string id = meta?.PackageIdPlayerFacing ?? meta?.PackageId;
+                    if (string.IsNullOrEmpty(id)
+                        || !id.StartsWith(SeriesIdPrefix, StringComparison.OrdinalIgnoreCase)
+                        || RosterIndex(roster, id) >= 0
+                        || Array.FindIndex(NotSeries, n => string.Equals(n, id, StringComparison.OrdinalIgnoreCase)) >= 0)
+                    {
+                        continue;
+                    }
+                    string display = string.IsNullOrEmpty(meta.Name) ? id.Substring(SeriesIdPrefix.Length) : meta.Name;
+                    roster.Add(new[] { display, id });
+                }
+            }
+            catch
+            {
+                // Fail-open: canonical roster only.
+            }
+            return roster;
+        }
+
+        private static int RosterIndex(List<string[]> roster, string packageId)
+        {
+            for (int i = 0; i < roster.Count; i++)
+            {
+                if (string.Equals(roster[i][1], packageId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         private static List<ModRow> BuildMods()
         {
-            var rows = new List<ModRow>(Series.Length);
-            for (int i = 0; i < Series.Length; i++)
+            List<string[]> roster = cachedRoster ?? BuildRoster();
+            var rows = new List<ModRow>(roster.Count);
+            for (int i = 0; i < roster.Count; i++)
             {
-                string display = Series[i][0];
-                string packageId = Series[i][1];
+                string display = roster[i][0];
+                string packageId = roster[i][1];
                 ModMetaData meta = FindActive(packageId);
                 rows.Add(new ModRow
                 {
@@ -138,7 +192,7 @@ namespace Azrael
                     PackageId = packageId,
                     Loaded = meta != null,
                     Version = VersionOf(meta),
-                    Stamp = meta != null ? StampOf(packageId, display) : null
+                    Stamp = meta != null ? StampOf(display) : null
                 });
             }
             return rows;
@@ -156,7 +210,8 @@ namespace Azrael
             bool rootCellar = DefPresent("Homesteader_RootCellar");
             bool wells = DefPresent("Homesteader_HandDugWell") || DefPresent("Wellspring_HandDugWell");
             bool lwSignals = TypePresent("LivingWorld.LivingWorldSignals");
-            bool dcConsumer = TypePresent("DeepColony.LivingWorldSoftCompat");
+            bool dcConsumer = TypePresent("DeepColony.LivingWorldSoftCompat")
+                && GoodwillHandlerRegistered() != false;
 
             var rows = new List<BridgeRow>();
             rows.Add(Bridge(
@@ -235,6 +290,7 @@ namespace Azrael
             }
 
             TryLoadOrderConflict(rows);
+            TryConflict(rows, "rwmt.Multiplayer", "Multiplayer", "Azrael_Hub_Conflict_Multiplayer");
             return rows;
         }
 
@@ -248,7 +304,7 @@ namespace Azrael
                     string line = (row.Prefix + " " + row.ClassName).Trim();
                     if (!string.IsNullOrEmpty(row.Reason))
                     {
-                        line += " — " + row.Reason;
+                        line += " â€” " + row.Reason;
                     }
                     hits.Add(line);
                 }
@@ -431,7 +487,7 @@ namespace Azrael
 
         private static BridgeRow NemesisDeepBridge(bool nemesis, bool deepColony)
         {
-            // Live hook: Nemesis.SoftCompat.OfferEpitaphToDeepColony → DeepColony familyLetters.
+            // Live hook: Nemesis.SoftCompat.OfferEpitaphToDeepColony â†’ DeepColony familyLetters.
             bool hook = MethodPresent("Nemesis.SoftCompat", "OfferEpitaphToDeepColony")
                 && TypePresent("DeepColony.GameComp_DeepColony")
                 && TypePresent("DeepColony.FamilyLetterEntry");
@@ -490,18 +546,54 @@ namespace Azrael
             display = pack.Name;
             string id = pack.PackageId;
             string facing = pack.PackageIdPlayerFacing;
-            for (int i = 0; i < Series.Length; i++)
+            List<string[]> roster = cachedRoster ?? BuildRoster();
+            for (int i = 0; i < roster.Count; i++)
             {
-                string packageId = Series[i][1];
+                string packageId = roster[i][1];
                 if (string.Equals(id, packageId, StringComparison.OrdinalIgnoreCase)
                     || string.Equals(facing, packageId, StringComparison.OrdinalIgnoreCase))
                 {
-                    display = Series[i][0];
+                    display = roster[i][0];
                     isAzrael = i == 0;
                     return true;
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// True/false when LivingWorldSignals.handlers is readable; null when it is not
+        /// (renamed field), so the bridge falls back to type presence.
+        /// </summary>
+        private static bool? GoodwillHandlerRegistered()
+        {
+            try
+            {
+                Type signals = AccessTools.TypeByName("LivingWorld.LivingWorldSignals");
+                Type consumer = AccessTools.TypeByName("DeepColony.LivingWorldSoftCompat");
+                if (signals == null || consumer == null)
+                {
+                    return false;
+                }
+                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(consumer.TypeHandle);
+
+                if (!(AccessTools.Field(signals, "handlers")?.GetValue(null) is IEnumerable handlers))
+                {
+                    return null;
+                }
+                foreach (object h in handlers)
+                {
+                    if (h is Delegate d && d.Method?.DeclaringType == consumer)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private static string GoodwillStatus(bool livingWorld, bool deepColony, bool signals, bool consumer)
@@ -546,7 +638,7 @@ namespace Azrael
             }
             catch
             {
-                // Older GetActiveModWithIdentifier overloads — fall through.
+                // Older GetActiveModWithIdentifier overloads â€” fall through.
             }
 
             if (ModsConfig.IsActive(packageId))
@@ -647,43 +739,25 @@ namespace Azrael
             };
         }
 
-        private static string StampOf(string packageId, string display)
+        /// <summary>
+        /// Series convention: namespace X exposes X.XBuildInfo.BuildStamp (StrataBuildInfo,
+        /// DeepColonyBuildInfo, AzraelBuildInfo). Log scraping stays as fallback for mods without one.
+        /// </summary>
+        private static string StampOf(string display)
         {
-            if (string.Equals(packageId, "AzraelGodKing.Strata", StringComparison.OrdinalIgnoreCase))
+            string ns = NamespaceFor(display);
+            string typed = PublicConst(ns + "." + ns + "BuildInfo", "BuildStamp");
+            if (!string.IsNullOrEmpty(typed))
             {
-                string typed = PublicConst("Strata.StrataBuildInfo", "BuildStamp");
-                if (!string.IsNullOrEmpty(typed))
-                {
-                    return typed;
-                }
-            }
-            if (string.Equals(packageId, "azraelgodking.DeepColony", StringComparison.OrdinalIgnoreCase))
-            {
-                string typed = PublicConst("DeepColony.DeepColonyBuildInfo", "BuildStamp");
-                if (!string.IsNullOrEmpty(typed))
-                {
-                    return typed;
-                }
+                return typed;
             }
 
-            return StampFromLog(LogPrefixFor(display));
+            return StampFromLog("[" + ns + "]");
         }
 
-        private static string LogPrefixFor(string display)
+        private static string NamespaceFor(string display)
         {
-            if (display == "Deep Colony")
-            {
-                return "[DeepColony]";
-            }
-            if (display == "Living World")
-            {
-                return "[LivingWorld]";
-            }
-            if (display == "Date Night")
-            {
-                return "[DateNight]";
-            }
-            return "[" + display + "]";
+            return (display ?? string.Empty).Replace(" ", string.Empty);
         }
 
         private static string PublicConst(string typeName, string fieldName)
