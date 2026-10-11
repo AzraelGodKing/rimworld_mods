@@ -484,4 +484,9 @@
   <DC_Alert_CodexAtRisk>Исследование под угрозой</DC_Alert_CodexAtRisk>
   <DC_Alert_CodexAtRiskDesc>Если кто-то из этих исследователей погибнет, колония потеряет {POINTS} очков исследования проекта «{PROJECT}». На их карте нет архива. Постройте архив, чтобы сохранить записи.</DC_Alert_CodexAtRiskDesc>
 
+  <!-- Remembrance epitaphs -->
+  <DC_RemembranceAge>возраст {0}</DC_RemembranceAge>
+  <DC_RemembranceKilledBy>убит(а): {0}</DC_RemembranceKilledBy>
+  <DC_RemembranceDiedOf>причина смерти: {0}</DC_RemembranceDiedOf>
+
 </LanguageData>

@@ -91,9 +91,9 @@ namespace DeepColony
                         ? FamilyTreeUtility.FindPawnById(entry.pawnId)
                         : null;
                     if (remPawn != null)
-                        FamilyTreeUtility.DrawClickablePawnName(remRect, remPawn, "  " + entry.name);
+                        FamilyTreeUtility.DrawClickablePawnName(remRect, remPawn, "  " + entry.Epitaph());
                     else
-                        Widgets.Label(remRect, "  " + entry.name);
+                        Widgets.Label(remRect, "  " + entry.Epitaph());
                     y += 18f;
                 }
                 y += 6f;

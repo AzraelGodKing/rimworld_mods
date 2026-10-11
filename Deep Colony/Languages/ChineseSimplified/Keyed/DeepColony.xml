@@ -484,4 +484,9 @@
   <DC_Alert_CodexAtRisk>研究面临风险</DC_Alert_CodexAtRisk>
   <DC_Alert_CodexAtRiskDesc>若这些研究者中有人死亡，殖民地在 {PROJECT} 上将损失 {POINTS} 点研究进度。他们所在的地图没有档案架。建造档案架可保住笔记。</DC_Alert_CodexAtRiskDesc>
 
+  <!-- Remembrance epitaphs -->
+  <DC_RemembranceAge>享年 {0} 岁</DC_RemembranceAge>
+  <DC_RemembranceKilledBy>被 {0} 杀害</DC_RemembranceKilledBy>
+  <DC_RemembranceDiedOf>死于{0}</DC_RemembranceDiedOf>
+
 </LanguageData>

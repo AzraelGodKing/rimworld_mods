@@ -495,4 +495,9 @@
   <DC_Alert_CodexAtRisk>Research at risk</DC_Alert_CodexAtRisk>
   <DC_Alert_CodexAtRiskDesc>If one of these researchers dies, the colony loses {POINTS} research points on {PROJECT}. There is no archive on their map. Build an archive to keep the notes safe.</DC_Alert_CodexAtRiskDesc>
 
+  <!-- Remembrance epitaphs -->
+  <DC_RemembranceAge>aged {0}</DC_RemembranceAge>
+  <DC_RemembranceKilledBy>killed by {0}</DC_RemembranceKilledBy>
+  <DC_RemembranceDiedOf>died of {0}</DC_RemembranceDiedOf>
+
 </LanguageData>
