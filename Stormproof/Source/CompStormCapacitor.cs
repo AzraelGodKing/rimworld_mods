@@ -14,14 +14,6 @@ namespace Stormproof
         }
     }
 
-    // A lightning-only battery. It is NOT a CompPowerBattery, which is the
-    // whole point: the grid can't charge it (only spire-caught strikes can),
-    // it never self-discharges, and "Zzzt!" surges can't see it because the
-    // short circuit incident only drains real batteries.
-    //
-    // Discharge works by acting as a generator that covers exactly the grid's
-    // current deficit, so it kicks in when production drops (eclipse, flare,
-    // night) and stays quiet while the grid is self-sufficient.
     public class CompStormCapacitor : ThingComp
     {
         private const int UpdateIntervalTicks = 30;

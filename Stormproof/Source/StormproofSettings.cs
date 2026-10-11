@@ -130,19 +130,6 @@ namespace Stormproof
             }
         }
 
-        public bool IncidentEnabled(string defName)
-        {
-            switch (defName)
-            {
-                case "Stormproof_IonStorm": return incidentIonStorm;
-                case "Stormproof_HeatDome": return incidentHeatDome;
-                case "Stormproof_PolarFront": return incidentPolarFront;
-                case "Stormproof_ToxicSurge": return incidentToxicSurge;
-                case "Stormproof_DryLightning": return incidentDryLightning;
-                default: return true;
-            }
-        }
-
         public static void CaptureOriginalChances()
         {
             Remember("Stormproof_IonStorm");
