@@ -1,21 +1,9 @@
-1.6.0
-[h1]Date Night — 1.6.0[/h1]
-[b]Added[/b]
-[list]
-[*] [b]Milestone anniversaries[/b] — every fifth year together gets its own letter and a bigger, longer-lasting mood.
-[*] [b]Double-date rapport[/b] — couples who get along pick each other again; couples who keep clashing stop being paired.
-[*] [b]Reunions[/b] — partners apart for two days or more (caravan, kidnapping, another map) get a "reunited" mood when they're back together.
-[*] [b]Breakups[/b] — a breakup or divorce gives a short "no more date nights" mood and forgets the couple's favourite date spot.
-[/list]
-[b]Changed[/b]
-[list]
-[*] [b]Thoughtful gifts[/b] — no gifts the receiver would refuse: no drinks or drugs for teetotalers, nothing their drug policy or ideoligion forbids, no food they wouldn't eat.
-[/list]
+1.6.1
+[h1]Date Night — 1.6.1[/h1]
 [b]Fixed[/b]
 [list]
-[*] [b]Double date no-show[/b] — the "double date fell through" mood is adults-only like every other Date Night mood.
-[*] [b]Dev tools[/b] — "Force private time" no longer errors on a pawn without an age tracker.
+[*] [b]Partner's name in mood thoughts[/b] — "our spot", anniversaries, reunions, double dates and the other Date Night thoughts now name the partner (or the other couple) instead of the pawn themselves. Thoughts a pawn already has keep the old wording until they wear off.
 [/list]
 
-[i]Build stamp (Player.log): couple-lifecycle-v1[/i]
+[i]Build stamp (Player.log): thought-partner-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]

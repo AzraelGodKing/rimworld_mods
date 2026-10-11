@@ -17,7 +17,7 @@
 
   <ThoughtDef>
     <defName>DateNight_HadADate</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1.25</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -34,7 +34,7 @@
 
   <ThoughtDef>
     <defName>DateNight_DateWonderful</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1.5</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -51,7 +51,7 @@
 
   <ThoughtDef>
     <defName>DateNight_DateAwkward</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -82,7 +82,7 @@
 
   <ThoughtDef>
     <defName>DateNight_ReceivedGift</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1.5</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -99,7 +99,7 @@
 
   <ThoughtDef>
     <defName>DateNight_MadeIt</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>0.75</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -116,7 +116,7 @@
 
   <ThoughtDef>
     <defName>DateNight_StoodUp</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>0.6</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -133,7 +133,7 @@
 
   <ThoughtDef>
     <defName>DateNight_Anniversary</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1.5</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -150,7 +150,7 @@
 
   <ThoughtDef>
     <defName>DateNight_AnniversaryMilestone</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>3</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -167,7 +167,7 @@
 
   <ThoughtDef>
     <defName>DateNight_AnniversaryDate</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>2</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -184,7 +184,7 @@
 
   <ThoughtDef>
     <defName>DateNight_AnniversaryMissed</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1.5</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -201,7 +201,7 @@
 
   <ThoughtDef>
     <defName>DateNight_OurSpot</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>2</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -218,7 +218,7 @@
 
   <ThoughtDef>
     <defName>DateNight_VenueSoured</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1.25</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -235,7 +235,7 @@
 
   <ThoughtDef>
     <defName>DateNight_VenueDestroyed</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1.5</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -252,7 +252,7 @@
 
   <ThoughtDef>
     <defName>DateNight_DoubleDateFriends</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1.25</durationDays>
     <stackLimit>2</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -269,7 +269,7 @@
 
   <ThoughtDef>
     <defName>DateNight_DoubleDateRivals</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1.25</durationDays>
     <stackLimit>2</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -300,7 +300,7 @@
 
   <ThoughtDef>
     <defName>DateNight_Reunited</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>1.5</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
@@ -317,7 +317,7 @@
 
   <ThoughtDef>
     <defName>DateNight_DatesOver</defName>
-    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
     <durationDays>2</durationDays>
     <stackLimit>1</stackLimit>
     <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
