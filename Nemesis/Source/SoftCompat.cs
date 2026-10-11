@@ -332,9 +332,9 @@ namespace Nemesis
                         new[] { animal });
                 }
             }
-            catch
+            catch (Exception e)
             {
-                /* fail open */
+                Log.Warning("[Nemesis] Mount escort spawn failed (" + kind.defName + "): " + e.Message);
             }
         }
 
