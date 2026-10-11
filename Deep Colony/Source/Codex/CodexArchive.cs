@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -57,27 +58,65 @@ namespace DeepColony
             return map.listerBuildings.ColonistsHaveBuilding(def);
         }
 
+        public const int MinIntellectual = 8;
+        public const float LostProgress = 400f;
+
+        public static ResearchProjectDef ProjectAtRisk()
+        {
+            if (!DeepColonySettings.Get.enableCodex)
+            {
+                return null;
+            }
+            ResearchProjectDef proj = Find.ResearchManager?.GetProject();
+            return proj == null || proj.IsFinished ? null : proj;
+        }
+
+        public static bool IsKeyResearcher(Pawn pawn)
+        {
+            SkillRecord intellectual = pawn?.skills?.GetSkill(SkillDefOf.Intellectual);
+            return intellectual != null && !intellectual.TotallyDisabled && intellectual.Level >= MinIntellectual;
+        }
+
+        public static bool IsAtRisk(Pawn pawn)
+        {
+            return pawn?.Faction == Faction.OfPlayer && IsKeyResearcher(pawn) && !MapHasArchive(pawn.MapHeld);
+        }
+
+        public static void AtRiskResearchers(List<Pawn> into)
+        {
+            into.Clear();
+            if (ProjectAtRisk() == null)
+            {
+                return;
+            }
+            foreach (Map map in Find.Maps)
+            {
+                if (!map.IsPlayerHome || MapHasArchive(map))
+                {
+                    continue;
+                }
+                foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
+                {
+                    if (IsKeyResearcher(p))
+                    {
+                        into.Add(p);
+                    }
+                }
+            }
+        }
+
         public static void LoseProgressOnDeath(Pawn pawn)
         {
-            if (!DeepColonySettings.Get.enableCodex || pawn?.Faction != Faction.OfPlayer)
+            if (!IsAtRisk(pawn))
             {
                 return;
             }
-            if (pawn.skills?.GetSkill(SkillDefOf.Intellectual) == null
-                || pawn.skills.GetSkill(SkillDefOf.Intellectual).Level < 8)
+            ResearchProjectDef proj = ProjectAtRisk();
+            if (proj == null)
             {
                 return;
             }
-            if (MapHasArchive(pawn.MapHeld))
-            {
-                return;
-            }
-            ResearchProjectDef proj = Find.ResearchManager.GetProject();
-            if (proj == null || proj.IsFinished)
-            {
-                return;
-            }
-            float lost = 400f;
+            float lost = LostProgress;
             MethodInfo add = AccessTools.Method(typeof(ResearchManager), "AddProgress");
             if (add == null)
             {
@@ -105,7 +144,16 @@ namespace DeepColony
             {
                 return;
             }
-            add.Invoke(Find.ResearchManager, args);
+            try
+            {
+                add.Invoke(Find.ResearchManager, args);
+            }
+            catch (System.Exception e)
+            {
+                Log.WarningOnce("[DeepColony] Codex research loss skipped (AddProgress call failed): "
+                    + (e.InnerException ?? e).Message, 0x5DC0DE01);
+                return;
+            }
             Messages.Message("DC_Codex_TechDecay".Translate(pawn.LabelShortCap, proj.LabelCap),
                 pawn, MessageTypeDefOf.NegativeEvent);
         }
@@ -114,9 +162,17 @@ namespace DeepColony
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
     public static class Patch_Pawn_Kill_TechDecay
     {
+        // A throw here would abort Pawn.Kill itself, not just the Codex feature.
         public static void Prefix(Pawn __instance)
         {
-            CodexArchive.LoseProgressOnDeath(__instance);
+            try
+            {
+                CodexArchive.LoseProgressOnDeath(__instance);
+            }
+            catch (System.Exception e)
+            {
+                Log.WarningOnce("[DeepColony] Codex death hook failed: " + e.Message, 0x5DC0DE02);
+            }
         }
     }
 }

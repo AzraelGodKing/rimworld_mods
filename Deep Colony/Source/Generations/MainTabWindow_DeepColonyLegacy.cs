@@ -91,9 +91,9 @@ namespace DeepColony
                         ? FamilyTreeUtility.FindPawnById(entry.pawnId)
                         : null;
                     if (remPawn != null)
-                        FamilyTreeUtility.DrawClickablePawnName(remRect, remPawn, "  " + entry.name);
+                        FamilyTreeUtility.DrawClickablePawnName(remRect, remPawn, "  " + entry.Epitaph());
                     else
-                        Widgets.Label(remRect, "  " + entry.name);
+                        Widgets.Label(remRect, "  " + entry.Epitaph());
                     y += 18f;
                 }
                 y += 6f;
@@ -142,7 +142,7 @@ namespace DeepColony
             var opts = new List<FloatMenuOption>
             {
                 new FloatMenuOption("DC_WillHeirNone".Translate(),
-                    () => EstateUtility.SetHeir(owner, null))
+                    () => DeepColonyPlayerCommand.EnqueueSetHeir(owner, null))
             };
             List<Pawn> heirs = EstateUtility.CandidateHeirs(owner);
             for (int i = 0; i < heirs.Count; i++)
@@ -150,7 +150,7 @@ namespace DeepColony
                 Pawn captured = heirs[i];
                 opts.Add(new FloatMenuOption(
                     captured.LabelShort,
-                    () => EstateUtility.SetHeir(owner, captured)));
+                    () => DeepColonyPlayerCommand.EnqueueSetHeir(owner, captured)));
             }
             Find.WindowStack.Add(new FloatMenu(opts));
         }

@@ -118,7 +118,7 @@
   <DC_Settings_Branching>Branching L15 perk picks</DC_Settings_Branching>
   <DC_Settings_BranchingTip>Default off. Choose one of two L15 perks per skill. Hard preset enables this.</DC_Settings_BranchingTip>
   <DC_Settings_Respec>Perk respec (forget)</DC_Settings_Respec>
-  <DC_Settings_RespecTip>Allow forgetting an unlocked perk (refunds a point; mood hit + cooldown). Default on.</DC_Settings_RespecTip>
+  <DC_Settings_RespecTip>Allow forgetting an unlocked perk from the perk tree (mood hit + cooldown). A forgotten perk stays off until relearned. Default on.</DC_Settings_RespecTip>
   <DC_Settings_RespecCooldown>Respec cooldown (days): {0}</DC_Settings_RespecCooldown>
   <DC_Settings_Archetypes>Cross-skill archetypes</DC_Settings_Archetypes>
   <DC_Settings_ArchetypesTip>Default off. Unlocking L15 in paired skills grants a titled archetype bonus. Hard preset enables this.</DC_Settings_ArchetypesTip>
@@ -466,5 +466,38 @@
   <DC_MovedIntoDeadRoom>{PAWN} is sleeping in {OWNER}'s old bed.</DC_MovedIntoDeadRoom>
   <DC_Letter_EstateLabel>Estate: {PAWN}</DC_Letter_EstateLabel>
   <DC_Letter_EstateBody>{PAWN} died. {HEIR} stands to inherit what they left.</DC_Letter_EstateBody>
+
+  <!-- Perk forget / relearn -->
+  <DC_PerkForgetConfirm>{PAWN} will forget {PERK}. They take a short reflective mood, the respec cooldown starts, and the perk will not come back on its own until relearned.</DC_PerkForgetConfirm>
+  <DC_PerkRelearnBtn>Relearn</DC_PerkRelearnBtn>
+  <DC_PerkRelearned>{PAWN} relearned the perk: {PERK}.</DC_PerkRelearned>
+  <DC_PerkStatus_Forgotten>Forgotten</DC_PerkStatus_Forgotten>
+
+  <!-- Body & Codex tab -->
+  <DC_BodyCodexTitle>Body &amp; Codex</DC_BodyCodexTitle>
+  <DC_BodyCodex_Body>Body</DC_BodyCodex_Body>
+  <DC_BodyCodex_BodyOff>The body system is off in mod settings.</DC_BodyCodex_BodyOff>
+  <DC_BodyCodex_BodyNone>No colonist is ill, convalescing, or weakened.</DC_BodyCodex_BodyNone>
+  <DC_BodyCodex_Contagious>contagious: {0} {1}</DC_BodyCodex_Contagious>
+  <DC_BodyCodex_Convalescing>convalescing {0}</DC_BodyCodex_Convalescing>
+  <DC_BodyCodex_Weakness>lingering weakness</DC_BodyCodex_Weakness>
+  <DC_BodyCodex_InInfirmary>in an infirmary</DC_BodyCodex_InInfirmary>
+  <DC_BodyCodex_Codex>Codex</DC_BodyCodex_Codex>
+  <DC_BodyCodex_CodexOff>The Codex is off in mod settings.</DC_BodyCodex_CodexOff>
+  <DC_BodyCodex_Project>Current research: {0}</DC_BodyCodex_Project>
+  <DC_BodyCodex_NoProject>Current research: none</DC_BodyCodex_NoProject>
+  <DC_BodyCodex_Archives>{0} — archives: {1}</DC_BodyCodex_Archives>
+  <DC_BodyCodex_AtRisk>At risk if they die (no archive on their map): {0}</DC_BodyCodex_AtRisk>
+  <DC_BodyCodex_Notebooks>Notebooks</DC_BodyCodex_Notebooks>
+  <DC_BodyCodex_NoNotebooks>No notebooks on colony maps.</DC_BodyCodex_NoNotebooks>
+
+  <!-- Codex research-at-risk alert -->
+  <DC_Alert_CodexAtRisk>Research at risk</DC_Alert_CodexAtRisk>
+  <DC_Alert_CodexAtRiskDesc>If one of these researchers dies, the colony loses {POINTS} research points on {PROJECT}. There is no archive on their map. Build an archive to keep the notes safe.</DC_Alert_CodexAtRiskDesc>
+
+  <!-- Remembrance epitaphs -->
+  <DC_RemembranceAge>aged {0}</DC_RemembranceAge>
+  <DC_RemembranceKilledBy>killed by {0}</DC_RemembranceKilledBy>
+  <DC_RemembranceDiedOf>died of {0}</DC_RemembranceDiedOf>
 
 </LanguageData>

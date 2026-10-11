@@ -145,14 +145,34 @@ namespace DeepColony
             Rect btnRect = new Rect(r.x + 4f, r.yMax - 22f, r.width - 8f, 18f);
             if (unlocked)
             {
+                bool canForget = comp.CanForget(perk);
+                Rect labelRect = canForget ? new Rect(btnRect.x, btnRect.y, btnRect.width - 64f, btnRect.height) : btnRect;
                 GUI.color = ColorUnlocked;
-                Widgets.Label(btnRect, "DC_PerkStatus_Unlocked".Translate());
+                Widgets.Label(labelRect, "DC_PerkStatus_Unlocked".Translate());
                 GUI.color = Color.white;
+                if (canForget
+                    && Widgets.ButtonText(new Rect(btnRect.xMax - 60f, btnRect.y, 60f, btnRect.height),
+                        "DC_PerkForgetBtn".Translate()))
+                    ConfirmForget(perk);
             }
             else if (comp.CanSwitchTo(perk))
             {
                 if (Widgets.ButtonText(btnRect, "DC_PerkSwitchBtn".Translate()))
-                    comp.SwitchToPerk(perk);
+                    DeepColonyPlayerCommand.EnqueueSwitchPerk(pawn, perk);
+            }
+            else if (comp.IsForgotten(perk))
+            {
+                if (comp.CanRelearn(perk))
+                {
+                    if (Widgets.ButtonText(btnRect, "DC_PerkRelearnBtn".Translate()))
+                        DeepColonyPlayerCommand.EnqueueRelearnPerk(pawn, perk);
+                }
+                else
+                {
+                    GUI.color = ColorLocked;
+                    Widgets.Label(btnRect, "DC_PerkStatus_Forgotten".Translate());
+                    GUI.color = Color.white;
+                }
             }
             else
             {
@@ -166,6 +186,14 @@ namespace DeepColony
             Text.Font = GameFont.Small;
             if (Mouse.IsOver(r))
                 TooltipHandler.TipRegion(r, new TipSignal(PerkTipUtility.TipFor(perk)));
+        }
+
+        private void ConfirmForget(PerkDef perk)
+        {
+            Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                "DC_PerkForgetConfirm".Translate(pawn.LabelShort.Named("PAWN"), perk.LabelCap.Named("PERK")),
+                () => DeepColonyPlayerCommand.EnqueueForgetPerk(pawn, perk),
+                destructive: true));
         }
     }
 }

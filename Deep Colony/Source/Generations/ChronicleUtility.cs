@@ -57,7 +57,7 @@ namespace DeepColony
             {
                 sb.AppendLine("DC_LegacyRemembrance".Translate());
                 for (int i = 0; i < remembrance.Count; i++)
-                    sb.Append("- ").AppendLine(remembrance[i].name);
+                    sb.Append("- ").AppendLine(remembrance[i].Epitaph());
                 sb.AppendLine();
             }
 

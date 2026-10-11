@@ -89,7 +89,7 @@ namespace DeepColony.Patches
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
     public static class Patch_Pawn_Kill_Trauma
     {
-        public static void Postfix(Pawn __instance, DamageInfo? dinfo)
+        public static void Postfix(Pawn __instance, DamageInfo? dinfo, Hediff exactCulprit)
         {
             if (!__instance.RaceProps.Humanlike) return;
 
@@ -101,7 +101,7 @@ namespace DeepColony.Patches
             {
                 HeirloomUtility.TryCreateFromDeath(__instance);
                 EstateUtility.NotifyDeath(__instance);
-                GameComp_DeepColony.Instance?.NotifyColonistDied(__instance);
+                GameComp_DeepColony.Instance?.NotifyColonistDied(__instance, dinfo, exactCulprit);
             }
 
             // Shared-enemy goodwill crumbs when the player kills hostiles.
