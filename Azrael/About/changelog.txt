@@ -7,6 +7,7 @@
 [*] [b]Safe removal summary[/b] - the removal report opens with one line: how many things to deconstruct, consume or sell, need attention, and are safe.
 [*] [b]Multiplayer notice[/b] - with the Multiplayer mod active, Conflicts warns that safe-removal deconstruct only acts on your client.
 [*] [b]New series mods show up on their own[/b] - any other active AzraelGodKing mod is listed in the hub, with its own Prepare to remove button.
+[*] [b]Series events under the Azrael storyteller[/b] (AZR-343) - Living World refugees and warbands, Homesteader's Kats event, Stormproof weather, and Strata discoveries are picked more often when an event of their kind fires. How often events fire is unchanged, and big threats stay close to Cassandra. Other storytellers are unaffected.
 [/list]
 
 [b]Fixed[/b]
