@@ -2,7 +2,7 @@
   "slug": "deep-colony",
   "name": "Deep Colony",
   "game": "rimworld",
-  "description": "Auto skill perks, trauma & therapy, apprenticeship, family life, and a living faction reputation ledger.",
+  "description": "Auto skill perks, trauma & therapy, apprenticeship, family life, a living faction reputation ledger, plus optional body (contagion, convalescence) and Codex (research notebooks) systems.",
   "version": "1.8.1",
   "screenshots": [
     "About/Preview.png"

@@ -10,7 +10,7 @@ namespace DeepColony
         private const int TicksPerYear = 3600000; // 60 days
         private const int CheckInterval = 2500;
 
-        public static void NotifyColonistDied(Pawn victim)
+        public static void NotifyColonistDied(Pawn victim, DamageInfo? dinfo = null, Hediff culprit = null)
         {
             if (victim == null) return;
             var gc = GameComp_DeepColony.Instance;
@@ -23,12 +23,42 @@ namespace DeepColony
             {
                 deathTick = Find.TickManager.TicksGame,
                 name = victim.Name?.ToStringShort ?? victim.LabelShort,
-                pawnId = victim.thingIDNumber
+                pawnId = victim.thingIDNumber,
+                ageYears = victim.ageTracker?.AgeBiologicalYears ?? 0,
+                cause = DescribeCause(victim, dinfo, culprit)
             });
 
             // Cap history.
             while (gc.remembranceEntries.Count > 40)
                 gc.remembranceEntries.RemoveAt(0);
+        }
+
+        private static string DescribeCause(Pawn victim, DamageInfo? dinfo, Hediff culprit)
+        {
+            Thing instigator = dinfo?.Instigator;
+            if (instigator != null && instigator != victim)
+                return "DC_RemembranceKilledBy".Translate(instigator.LabelShort).ToString();
+
+            Hediff fatal = culprit;
+            if (fatal == null && victim.health?.hediffSet != null)
+            {
+                float worst = 0f;
+                foreach (Hediff h in victim.health.hediffSet.hediffs)
+                {
+                    if (h.def.lethalSeverity <= 0f) continue;
+                    float frac = h.Severity / h.def.lethalSeverity;
+                    if (frac > worst)
+                    {
+                        worst = frac;
+                        fatal = h;
+                    }
+                }
+            }
+            if (fatal != null)
+                return "DC_RemembranceDiedOf".Translate(fatal.LabelBase).ToString();
+
+            string damage = dinfo?.Def?.label;
+            return damage.NullOrEmpty() ? null : "DC_RemembranceDiedOf".Translate(damage).ToString();
         }
 
         public static void GameTick()
@@ -114,12 +144,26 @@ namespace DeepColony
         public int deathTick;
         public string name;
         public int pawnId;
+        public int ageYears;
+        public string cause;
+
+        public string Epitaph()
+        {
+            string line = name;
+            if (ageYears > 0)
+                line += " (" + "DC_RemembranceAge".Translate(ageYears) + ")";
+            if (!cause.NullOrEmpty())
+                line += " — " + cause;
+            return line;
+        }
 
         public void ExposeData()
         {
             Scribe_Values.Look(ref deathTick, "deathTick", 0);
             Scribe_Values.Look(ref name, "name");
             Scribe_Values.Look(ref pawnId, "pawnId", 0);
+            Scribe_Values.Look(ref ageYears, "ageYears", 0);
+            Scribe_Values.Look(ref cause, "cause");
         }
     }
 }

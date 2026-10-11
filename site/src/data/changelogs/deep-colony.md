@@ -2,6 +2,28 @@
 
 Detailed notes for Deep Colony only.
 
+## [Unreleased]
+
+Stamp `colony-overview-v1`.
+
+AZR-391 AZR-392 AZR-393 AZR-394 AZR-395 AZR-396 AZR-397 AZR-398 AZR-399 AZR-400
+
+### Added
+- **Body & Codex tab** — one colony-wide view of who is ill, convalescing, or weakened (and whether they are in an infirmary), archives per home map, researchers at risk, and what each notebook holds. Click a name or notebook to jump to it. Hidden while both systems are off.
+- **Research at risk alert** — with the Codex on, warns while a skilled researcher (Intellectual 8+) has no archive on their map and a project is in progress, before a death costs the colony progress.
+- **Forget a perk** — the perk tree has a Forget button (with confirmation) when respec is on. The perk stays off until you press Relearn; auto-allocation no longer brings it back by itself. Turning respec off lets auto-allocation restore forgotten perks.
+- **Epitaphs** — remembered colonists now show their age and how they died (killer, illness, or injury) in the Legacy tab and the chronicle export. Deaths recorded before this update keep just the name.
+
+### Fixed
+- **Contagion only spreads real diseases** — roommates now catch flu, plague, and other disease-incident illnesses only. Tumors and wound infections no longer jump to healthy colonists.
+- **Pawn death can no longer break on a Codex error** — if the research-loss call fails on a future game build, Deep Colony logs one warning and the death goes through normally.
+- **Living World events fail open** — a changed event field type in Living World is ignored with one warning instead of throwing on every event.
+
+### Changed
+- **Perk switch and heir choice apply on the next tick** — the perk tree Switch button and the Legacy tab heir menu now go through the same queued command path as the other player actions (multiplayer-safer).
+- **Mod description** lists all seven systems, including the optional body and Codex.
+- Respec setting tooltip no longer mentions refunded points (perks auto-allocate).
+
 ## [1.8.1]
 
 ### Added

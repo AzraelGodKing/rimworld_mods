@@ -114,6 +114,9 @@ namespace DeepColony
         /// <summary>A03 — last respec tick (-1 = never).</summary>
         public int lastRespecTick = -1;
 
+        /// <summary>A03 — perks given up by choice; auto-sync must not re-grant them.</summary>
+        public List<string> forgottenPerkDefNames = new List<string>();
+
         /// <summary>B02 — active archetype defName, if any.</summary>
         public string activeArchetypeDefName;
 
@@ -210,6 +213,7 @@ namespace DeepColony
             if (!PerkVisible(perk)) return;
             var pawn = Pawn;
             if (pawn == null) return;
+            forgottenPerkDefNames.Remove(perk.defName);
             unlockedPerkDefNames.Add(perk.defName);
             ApplyPerkHediff(perk);
             ArchetypeUtility.TryRefresh(pawn);
@@ -268,6 +272,7 @@ namespace DeepColony
             {
                 if (perk == null || HasPerk(perk) || !PerkVisible(perk)) continue;
                 if (perk.alternateBranch) continue;
+                if (DeepColonySettings.Get.enablePerkRespec && IsForgotten(perk)) continue;
                 if (!CanUnlock(perk)) continue;
                 toGrant.Add(perk);
             }
@@ -296,6 +301,7 @@ namespace DeepColony
         private void GrantPerkSilent(PerkDef perk, bool announce)
         {
             if (perk == null || HasPerk(perk)) return;
+            forgottenPerkDefNames.Remove(perk.defName);
             unlockedPerkDefNames.Add(perk.defName);
             ApplyPerkHediff(perk);
             if (!announce) return;
@@ -372,12 +378,41 @@ namespace DeepColony
             if (!DeepColonySettings.Get.enablePerkRespec) return false;
             if (perk == null || !HasPerk(perk)) return false;
             if (HasDependentUnlocked(perk)) return false;
+            return !RespecOnCooldown;
+        }
 
-            int cooldown = Mathf.RoundToInt(DeepColonySettings.Get.respecCooldownDays * 60000f);
-            if (lastRespecTick >= 0 && Find.TickManager != null
-                && Find.TickManager.TicksGame - lastRespecTick < cooldown)
-                return false;
-            return true;
+        public bool RespecOnCooldown
+        {
+            get
+            {
+                int cooldown = Mathf.RoundToInt(DeepColonySettings.Get.respecCooldownDays * 60000f);
+                return lastRespecTick >= 0 && Find.TickManager != null
+                    && Find.TickManager.TicksGame - lastRespecTick < cooldown;
+            }
+        }
+
+        public bool IsForgotten(PerkDef perk) =>
+            perk != null && forgottenPerkDefNames.Contains(perk.defName);
+
+        public bool CanRelearn(PerkDef perk)
+        {
+            if (!DeepColonySettings.Get.enablePerks) return false;
+            if (!DeepColonySettings.Get.enablePerkRespec) return false;
+            if (!IsForgotten(perk) || HasPerk(perk)) return false;
+            if (RespecOnCooldown) return false;
+            return CanUnlock(perk);
+        }
+
+        public void RelearnPerk(PerkDef perk)
+        {
+            if (!CanRelearn(perk)) return;
+            var pawn = Pawn;
+            lastRespecTick = Find.TickManager?.TicksGame ?? 0;
+            GrantPerkSilent(perk, false);
+            SyncPerksToSkillLevels(announce: false);
+            Messages.Message(
+                "DC_PerkRelearned".Translate(pawn.LabelShort.Named("PAWN"), perk.LabelCap.Named("PERK")),
+                pawn, MessageTypeDefOf.PositiveEvent, false);
         }
 
         public bool HasDependentUnlocked(PerkDef perk)
@@ -403,6 +438,8 @@ namespace DeepColony
             if (pawn == null) return;
 
             unlockedPerkDefNames.Remove(perk.defName);
+            if (!forgottenPerkDefNames.Contains(perk.defName))
+                forgottenPerkDefNames.Add(perk.defName);
             lastRespecTick = Find.TickManager?.TicksGame ?? 0;
 
             if (perk.hediff != null && pawn.health != null)
@@ -953,9 +990,11 @@ namespace DeepColony
             Scribe_Values.Look(ref seasonedGrowthGranted, "seasonedGrowthGranted", false);
             Scribe_Values.Look(ref envoyFactionId, "envoyFactionId", -1);
             Scribe_Values.Look(ref lastRespecTick, "lastRespecTick", -1);
+            Scribe_Collections.Look(ref forgottenPerkDefNames, "forgottenPerks", LookMode.Value);
             Scribe_Values.Look(ref activeArchetypeDefName, "activeArchetypeDefName");
 
             if (unlockedPerkDefNames == null) unlockedPerkDefNames = new List<string>();
+            if (forgottenPerkDefNames == null) forgottenPerkDefNames = new List<string>();
             if (teacherLineage == null) teacherLineage = new List<string>();
             if (peakSkillLevels == null) peakSkillLevels = new Dictionary<string, int>();
             if (counselCountsByPawn == null) counselCountsByPawn = new Dictionary<int, int>();
