@@ -2,4 +2,6 @@
 <LanguageData>
   <Azrael_ForcedStoryteller.label>фиксированный рассказчик</Azrael_ForcedStoryteller.label>
   <Azrael_ForcedStoryteller.description>После старта фиксирует игру на выбранном рассказчике.</Azrael_ForcedStoryteller.description>
+  <Azrael_PreferMountainStart.label>горный старт</Azrael_PreferMountainStart.label>
+  <Azrael_PreferMountainStart.description>Стартовая точка по умолчанию и случайная выбираются среди больших холмов или гор. Можно выбрать любую клетку.</Azrael_PreferMountainStart.description>
 </LanguageData>
