@@ -28,4 +28,14 @@
     <closesWorldView>true</closesWorldView>
   </MainButtonDef>
 
+  <MainButtonDef>
+    <defName>DC_BodyCodex</defName>
+    <label>body &amp; codex</label>
+    <description>Who is ill or convalescing, archives per map, researchers at risk, and what each Codex notebook holds. Hidden while both systems are off.</description>
+    <workerClass>DeepColony.MainButtonWorker_DeepColonyBodyCodex</workerClass>
+    <tabWindowClass>DeepColony.MainTabWindow_DeepColonyBodyCodex</tabWindowClass>
+    <order>61</order>
+    <closesWorldView>true</closesWorldView>
+  </MainButtonDef>
+
 </Defs>

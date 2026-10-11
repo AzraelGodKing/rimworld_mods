@@ -462,4 +462,26 @@
   <DC_PerkRelearned>{PAWN} 重新习得了专长：{PERK}。</DC_PerkRelearned>
   <DC_PerkStatus_Forgotten>已遗忘</DC_PerkStatus_Forgotten>
 
+  <!-- Body & Codex tab -->
+  <DC_BodyCodexTitle>身体与典籍</DC_BodyCodexTitle>
+  <DC_BodyCodex_Body>身体</DC_BodyCodex_Body>
+  <DC_BodyCodex_BodyOff>身体系统已在模组设置中关闭。</DC_BodyCodex_BodyOff>
+  <DC_BodyCodex_BodyNone>没有殖民者生病、处于康复期或虚弱。</DC_BodyCodex_BodyNone>
+  <DC_BodyCodex_Contagious>传染性：{0} {1}</DC_BodyCodex_Contagious>
+  <DC_BodyCodex_Convalescing>康复期 {0}</DC_BodyCodex_Convalescing>
+  <DC_BodyCodex_Weakness>残留虚弱</DC_BodyCodex_Weakness>
+  <DC_BodyCodex_InInfirmary>在医务室中</DC_BodyCodex_InInfirmary>
+  <DC_BodyCodex_Codex>典籍</DC_BodyCodex_Codex>
+  <DC_BodyCodex_CodexOff>典籍系统已在模组设置中关闭。</DC_BodyCodex_CodexOff>
+  <DC_BodyCodex_Project>当前研究：{0}</DC_BodyCodex_Project>
+  <DC_BodyCodex_NoProject>当前研究：无</DC_BodyCodex_NoProject>
+  <DC_BodyCodex_Archives>{0} — 档案架：{1}</DC_BodyCodex_Archives>
+  <DC_BodyCodex_AtRisk>若其死亡将造成损失（所在地图没有档案架）：{0}</DC_BodyCodex_AtRisk>
+  <DC_BodyCodex_Notebooks>笔记本</DC_BodyCodex_Notebooks>
+  <DC_BodyCodex_NoNotebooks>殖民地地图上没有笔记本。</DC_BodyCodex_NoNotebooks>
+
+  <!-- Codex research-at-risk alert -->
+  <DC_Alert_CodexAtRisk>研究面临风险</DC_Alert_CodexAtRisk>
+  <DC_Alert_CodexAtRiskDesc>若这些研究者中有人死亡，殖民地在 {PROJECT} 上将损失 {POINTS} 点研究进度。他们所在的地图没有档案架。建造档案架可保住笔记。</DC_Alert_CodexAtRiskDesc>
+
 </LanguageData>

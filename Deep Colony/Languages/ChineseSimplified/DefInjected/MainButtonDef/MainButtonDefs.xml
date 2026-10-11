@@ -7,5 +7,7 @@
   <DC_Legacy.description>创始姓氏、在世殖民者、长者、传统与专长统计。</DC_Legacy.description>
   <DC_Reputation.label>声望</DC_Reputation.label>
   <DC_Reputation.description>派系好感账本 — 声望为何漂移、使者与态度。</DC_Reputation.description>
+  <DC_BodyCodex.label>身体与典籍</DC_BodyCodex.label>
+  <DC_BodyCodex.description>谁在生病或康复、各地图的档案架、面临风险的研究者，以及每本典籍笔记本记下的内容。两个系统都关闭时隐藏。</DC_BodyCodex.description>
 
 </LanguageData>
