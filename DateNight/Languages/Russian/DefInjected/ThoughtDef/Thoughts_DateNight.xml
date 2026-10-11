@@ -95,4 +95,9 @@
   <DateNight_Reunited.stages_0.label>снова вместе</DateNight_Reunited.stages_0.label>
   <DateNight_Reunited.stages_0.description>{0} вернулся. Только сейчас понимаю, как сильно скучал.</DateNight_Reunited.stages_0.description>
 
+  <DateNight_DatesOver.label>свиданий больше не будет</DateNight_DatesOver.label>
+  <DateNight_DatesOver.description>Все эти вечера с {0}, наши места... теперь всё кончено.</DateNight_DatesOver.description>
+  <DateNight_DatesOver.stages_0.label>свиданий больше не будет</DateNight_DatesOver.stages_0.label>
+  <DateNight_DatesOver.stages_0.description>Все эти вечера с {0}, наши места... теперь всё кончено.</DateNight_DatesOver.stages_0.description>
+
 </LanguageData>

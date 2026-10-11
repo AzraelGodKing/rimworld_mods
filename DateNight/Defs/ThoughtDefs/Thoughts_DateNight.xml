@@ -315,4 +315,20 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>DateNight_DatesOver</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>no more date nights</label>
+        <description>All those evenings with {0}, and our spots... that's over now.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

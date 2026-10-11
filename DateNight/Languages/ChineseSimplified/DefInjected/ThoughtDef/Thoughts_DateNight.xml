@@ -95,4 +95,9 @@
   <DateNight_Reunited.stages_0.label>重逢</DateNight_Reunited.stages_0.label>
   <DateNight_Reunited.stages_0.description>{0}回来了。直到现在我才意识到自己有多想念。</DateNight_Reunited.stages_0.description>
 
+  <DateNight_DatesOver.label>不再有约会之夜</DateNight_DatesOver.label>
+  <DateNight_DatesOver.description>和{0}的那些夜晚，我们的地方……现在都结束了。</DateNight_DatesOver.description>
+  <DateNight_DatesOver.stages_0.label>不再有约会之夜</DateNight_DatesOver.stages_0.label>
+  <DateNight_DatesOver.stages_0.description>和{0}的那些夜晚，我们的地方……现在都结束了。</DateNight_DatesOver.stages_0.description>
+
 </LanguageData>

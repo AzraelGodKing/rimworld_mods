@@ -103,6 +103,76 @@ namespace DateNight
             }
         }
 
+        /// <summary>
+        /// When a couple who dated stops being love partners (breakup, divorce),
+        /// reset their favourite-venue score and give each a one-shot thought.
+        /// The entry is kept so the spot can be re-earned if they reconcile.
+        /// </summary>
+        public static void TickBreakups()
+        {
+            if (!Remembering || venues == null || venues.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < venues.Count; i++)
+            {
+                FavoriteVenue fav = venues[i];
+                if (fav == null || fav.notifiedBreakup)
+                {
+                    continue;
+                }
+
+                Pawn a = DateNightDateUtility.FindPawnById(fav.pawnA);
+                Pawn b = DateNightDateUtility.FindPawnById(fav.pawnB);
+                if (a == null || b == null || a.Dead || b.Dead)
+                {
+                    continue;
+                }
+                if (LovePartnerRelationUtility.LovePartnerRelationExists(a, b))
+                {
+                    continue;
+                }
+
+                fav.notifiedBreakup = true;
+                fav.score = 0f;
+                ThoughtDef over = DateNightDefOf.DateNight_DatesOver;
+                // Old breakups from saves made before this existed reset silently.
+                if (over != null && EndedRecently(a, b))
+                {
+                    TryGain(a, b, over);
+                    TryGain(b, a, over);
+                }
+            }
+        }
+
+        private static bool EndedRecently(Pawn a, Pawn b)
+        {
+            List<DirectPawnRelation> relations = a.relations?.DirectRelations;
+            if (relations == null)
+            {
+                return false;
+            }
+            int now = Find.TickManager.TicksGame;
+            for (int i = 0; i < relations.Count; i++)
+            {
+                DirectPawnRelation rel = relations[i];
+                if (rel.otherPawn != b)
+                {
+                    continue;
+                }
+                if (rel.def != PawnRelationDefOf.ExLover && rel.def != PawnRelationDefOf.ExSpouse)
+                {
+                    continue;
+                }
+                if (now - rel.startTicks <= GenDate.TicksPerDay)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static bool Remembering
         {
             get { return DateNightMod.Settings == null || DateNightMod.Settings.rememberFavoriteSpot; }
@@ -284,6 +354,7 @@ namespace DateNight
         public IntVec3 cell = IntVec3.Invalid;
         public float score;
         public bool notifiedDestroyed;
+        public bool notifiedBreakup;
 
         public long CoupleKey
         {
@@ -294,6 +365,7 @@ namespace DateNight
         {
             mapId = map.uniqueID;
             notifiedDestroyed = false;
+            notifiedBreakup = false;
             if (spot.HasThing && spot.Thing != null && !spot.Thing.Destroyed)
             {
                 Thing root = TableOrBuilding(spot.Thing) ?? spot.Thing;
@@ -359,6 +431,7 @@ namespace DateNight
             Scribe_Values.Look(ref cell, "cell");
             Scribe_Values.Look(ref score, "score", 0f);
             Scribe_Values.Look(ref notifiedDestroyed, "notifiedDestroyed", false);
+            Scribe_Values.Look(ref notifiedBreakup, "notifiedBreakup", false);
         }
 
         private static Thing TableOrBuilding(Thing thing)

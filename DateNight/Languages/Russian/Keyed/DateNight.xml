@@ -28,7 +28,7 @@
   <DateNight_Settings_Anniversaries>Годовщины</DateNight_Settings_Anniversaries>
   <DateNight_Settings_AnniversariesTip>В годовщину союза: письмо, особое настроение, если в этот день будет свидание, и обида, если день пройдёт без него. Выкл: без календарных писем и настроения годовщины.</DateNight_Settings_AnniversariesTip>
   <DateNight_Settings_FavoriteSpot>Помнить любимые места</DateNight_Settings_FavoriteSpot>
-  <DateNight_Settings_FavoriteSpotTip>Пара помнит, где были лучшие свидания, и предпочитает возвращаться. Сорванное свидание может испортить место. Выкл: каждое свидание выбирает новое место.</DateNight_Settings_FavoriteSpotTip>
+  <DateNight_Settings_FavoriteSpotTip>Пара помнит, где были лучшие свидания, и предпочитает возвращаться. Сорванное свидание может испортить место, а расставание стирает место пары. Выкл: каждое свидание выбирает новое место.</DateNight_Settings_FavoriteSpotTip>
   <DateNight_Settings_DoubleDates>Разрешить двойные свидания</DateNight_Settings_DoubleDates>
   <DateNight_Settings_DoubleDatesTip>Две пары с совпадающими часами свидания могут делить стол, пикник или место сбора. Качество бросается один раз на всех; вечер меняет мнение о другой паре. Если вторая пара не пришла — идут вдвоём. Пары помнят, как прошли прошлые двойные свидания: те, кто поладил, снова выбирают друг друга, а те, кто постоянно ссорится, перестают встречаться вчетвером.</DateNight_Settings_DoubleDatesTip>
   <DateNight_Settings_Reset>Сбросить</DateNight_Settings_Reset>
