@@ -296,6 +296,10 @@ namespace DateNight
             {
                 return;
             }
+            if (pawn.ageTracker == null || !pawn.ageTracker.Adult || !pawn.DevelopmentalStage.Adult())
+            {
+                return;
+            }
             pawn.needs.mood.thoughts.memories.TryGainMemory(def);
         }
 
