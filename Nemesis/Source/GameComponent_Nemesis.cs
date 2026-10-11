@@ -24,6 +24,7 @@ namespace Nemesis
             _data != null && (_data.active || _data.truceUntilTick > 0 || _data.pendingResolution);
 
         private static int MaxEscapes => NemesisMod.Settings?.maxEscapes ?? 4;
+        private const int EscapeMoodThreshold = 2;
 
         public GameComponent_Nemesis(Game game)
         {
@@ -261,6 +262,7 @@ namespace Nemesis
             NemesisTells.RecordSighting(_data, map);
             NemesisTells.RecordGear(_data, nemesis);
             NemesisProgression.LevelUpOnEscape(_data, nemesis);
+            ApplyEscapeMoodFallout();
 
             GlobalTargetInfo lookTarget = map != null ? new GlobalTargetInfo(pos, map) : GlobalTargetInfo.Invalid;
 
@@ -269,6 +271,23 @@ namespace Nemesis
                 NemesisTaunts.EscapeLetterBody(_data),
                 LetterDefOf.NeutralEvent,
                 lookTarget);
+        }
+
+        /// <summary>AZR-388 — repeat escapes cost colony mood; the fixation target takes it hardest.</summary>
+        private void ApplyEscapeMoodFallout()
+        {
+            if (_data.escapeCount < EscapeMoodThreshold) return;
+            ThoughtDef def = DefDatabase<ThoughtDef>.GetNamedSilentFail("Nemesis_EscapedAgain");
+            if (def == null) return;
+
+            List<Pawn> colonists = PawnsFinder.AllMaps_FreeColonistsSpawned;
+            for (int i = 0; i < colonists.Count; i++)
+            {
+                Pawn p = colonists[i];
+                if (p?.needs?.mood?.thoughts?.memories == null) continue;
+                int stage = IsTargetPawn(p) ? 1 : 0;
+                p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(def, stage));
+            }
         }
 
         private void SubdueNemesis(Pawn nemesis, bool fromLethalDamage)
