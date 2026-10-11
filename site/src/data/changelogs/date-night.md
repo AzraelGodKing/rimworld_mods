@@ -2,6 +2,11 @@
 
 Detailed notes for **Date Night** only.
 
+## [Unreleased]
+
+### Internal
+- One shared `TryGainThought` helper replaces five identical copies (windows, double dates, venues, anniversaries, reunions). `CoupleKey` and `BothCanReach` copies are merged, and the unused `FindDinnerSpot` is removed. No behavior change.
+
 ## [1.6.0]
 
 Player-facing version **1.6.0** (`About.xml` `modVersion`). Stamp `couple-lifecycle-v1`.

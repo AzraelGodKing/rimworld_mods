@@ -74,8 +74,8 @@ namespace DateNight
                 separatedSince.Remove(key);
                 if (now - since >= MinSeparationTicks)
                 {
-                    GiveThought(pawn, partner);
-                    GiveThought(partner, pawn);
+                    DateNightDateUtility.TryGainThought(pawn, partner, DateNightDefOf.DateNight_Reunited);
+                    DateNightDateUtility.TryGainThought(partner, pawn, DateNightDefOf.DateNight_Reunited);
                 }
             }
         }
@@ -124,20 +124,6 @@ namespace DateNight
             }
             Caravan caravan = a.GetCaravan();
             return caravan != null && caravan == b.GetCaravan();
-        }
-
-        private static void GiveThought(Pawn pawn, Pawn other)
-        {
-            ThoughtDef def = DateNightDefOf.DateNight_Reunited;
-            if (pawn?.needs?.mood?.thoughts?.memories == null || def == null || other == null)
-            {
-                return;
-            }
-            if (pawn.ageTracker == null || !pawn.ageTracker.Adult || !pawn.DevelopmentalStage.Adult())
-            {
-                return;
-            }
-            pawn.needs.mood.thoughts.memories.TryGainMemory(def, other);
         }
     }
 }
