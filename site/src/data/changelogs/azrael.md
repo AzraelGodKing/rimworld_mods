@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased]
+## [1.4.0]
 
-Stamp `removal-queue-v1`.
+Player-facing version **1.4.0** (`About.xml` `modVersion`). Stamp `removal-queue-v1`.
 
 AZR-344 AZR-427 AZR-428 AZR-429 AZR-430 AZR-431 AZR-432 AZR-433 AZR-434 AZR-435 AZR-436
 
@@ -20,7 +20,7 @@ AZR-344 AZR-427 AZR-428 AZR-429 AZR-430 AZR-431 AZR-432 AZR-433 AZR-434 AZR-435 
 ### Changed
 - **Safe removal deconstruct** - the button now queues the designations and applies them on the next game tick (series multiplayer-safer pattern) instead of editing the map straight from Mod Options. If the game is paused, they appear when you unpause.
 - **Build stamps** - the hub reads `BuildStamp` from any series mod that follows the `XBuildInfo` convention (Azrael now does too) before falling back to the log.
-- **Release metadata** - `mod.json` download now names the 1.3.0 zip; ROADMAP lists everything shipped through 1.3.0.
+- **Release metadata** - `mod.json` download now names the 1.4.0 zip; ROADMAP lists everything shipped through 1.3.0.
 
 ## [1.3.0]
 
