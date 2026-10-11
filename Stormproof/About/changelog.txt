@@ -1,14 +1,21 @@
-1.5.1
-[h1]Stormproof — 1.5.1[/h1]
+1.6.0
+[h1]Stormproof — 1.6.0[/h1]
+[b]Added[/b]
+[list]
+[*] Load schedule shows the forecast: with a weather forecaster on the supply grid, each hour gets a bar where batteries dip (amber = brownout, orange = cutoff trips). Hover an hour for its lowest predicted charge.
+[*] Weather almanac draws the next 8 hours of predicted battery charge for the forecaster's grid.
+[*] Weather almanac shows the longest stretch without a missed strike or a suffered Zzzt, plus the current one.
+[/list]
 [b]Fixed[/b]
 [list]
-[*] Grid forecast uses the higher power draw of the solar shield, fire suppressor, atmospheric barrier, climate stabilizer, sky restorer, and drought condenser while their hazard is active.
+[*] Almanac lifetime totals no longer shrink when old entries roll off. Existing saves start from the entries still in the almanac.
+[*] Brownout strength can no longer leak from one power grid to another.
+[*] Grid monitor "empty in" / "full in" no longer shows a garbled time on a nearly balanced grid.
+[*] Weather forecaster and storm caller fail quietly instead of erroring if a RimWorld update changes the weather timer.
 [/list]
-[b]Improved[/b]
+[b]Changed[/b]
 [list]
-[*] Settings save only when a value changes.
-[*] Grid monitor inspect shows the predicted brownout at the lowest forecast charge.
-[*] Weather almanac shows lifetime totals for strikes, Zzzt, fires, and wear.
+[*] Grid forecast follows load shedders: scheduled shed hours, holds, and the battery cutoff drop or restore the sub-grid's draw.
 [/list]
 
 [i]Build stamp (Player.log): forecast-schedule-v1[/i]

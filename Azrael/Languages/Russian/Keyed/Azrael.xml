@@ -5,6 +5,7 @@
   <Azrael_UpdateLetterFallback>Azrael {0} загружен.\n\nПолные заметки: {1}</Azrael_UpdateLetterFallback>
   <Azrael_UpdateLetterFooter>Полные заметки: {0}</Azrael_UpdateLetterFooter>
   <Azrael_ScenPart_ForcedStorytellerSummary>Рассказчик зафиксирован на {0}.</Azrael_ScenPart_ForcedStorytellerSummary>
+  <Azrael_ScenPart_PreferMountainSummary>Стартовая точка по умолчанию и случайная выбираются среди больших холмов или гор.</Azrael_ScenPart_PreferMountainSummary>
 
   <Azrael_SettingsCategory>Azrael</Azrael_SettingsCategory>
   <Azrael_Hub_Intro>Центр серии. Что загружено, DLC, живые и сломанные мосты, конфликты и упавшие Harmony-патчи. Скопируйте отчёт из меню или из колонии — без лога.</Azrael_Hub_Intro>
@@ -32,6 +33,7 @@
   <Azrael_Hub_Conflict_Stack>Многоуровневые карты конфликтуют со Strata. Не запускайте вместе со Strata.</Azrael_Hub_Conflict_Stack>
   <Azrael_Hub_Conflict_Wellspring>Остаток отдельного Wellspring; вода теперь в Homesteader.</Azrael_Hub_Conflict_Wellspring>
   <Azrael_Hub_Conflict_LoadOrder>Загружайте Azrael после контента серии. Сейчас {0} идёт после Azrael — переместите Azrael в конец серии.</Azrael_Hub_Conflict_LoadOrder>
+  <Azrael_Hub_Conflict_Multiplayer>Разбор из безопасного удаления действует только на вашем клиенте. В сетевой игре назначайте разбор вручную в игре.</Azrael_Hub_Conflict_Multiplayer>
   <Azrael_Hub_Harmony>Упавшие патчи</Azrael_Hub_Harmony>
   <Azrael_Hub_HarmonyNone>В этой сессии нет упавших классов патчей серии.</Azrael_Hub_HarmonyNone>
   <Azrael_Hub_HarmonyCount>{0} упавших классов патчей.</Azrael_Hub_HarmonyCount>
@@ -44,6 +46,8 @@
   <Azrael_Removal_Jump>К месту</Azrael_Removal_Jump>
   <Azrael_Removal_Deconstruct>Назначить здания на разбор</Azrael_Removal_Deconstruct>
   <Azrael_Removal_Designated>В очередь на разбор: {0} зданий ({1}).</Azrael_Removal_Designated>
+  <Azrael_Removal_Queued>Разбор будет назначен, когда игра снимется с паузы.</Azrael_Removal_Queued>
+  <Azrael_Removal_Summary>Разобрать: {0} · съесть или продать: {1} · требует внимания: {2} · безопасно: {3}</Azrael_Removal_Summary>
   <Azrael_Removal_NeedSave>Сначала загрузите колонию.</Azrael_Removal_NeedSave>
   <Azrael_Removal_Empty>На картах и в караванах нет вещей этого мода.</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>Сначала разберите указанные препятствия.</Azrael_Removal_Blocked>

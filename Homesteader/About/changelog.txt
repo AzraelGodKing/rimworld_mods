@@ -1,46 +1,26 @@
-1.3.1
-[h1]Homesteader — 1.3.1[/h1]
+1.4.0
+[h1]Homesteader — 1.4.0[/h1]
 
 [b]Added[/b]
 [list]
-[*] [b]Gameplay settings pack[/b] (AZR-265, HS-Q04) — allergy flare intensity, favorite-food mood strength, chicken-coop egg interval, Kats Effect on/off, and passive-cooling inspect verbosity. EN/CN/RU.
-[*] [b]Composted soil texture[/b] (AZR-266) — default art uses Homesteader/Terrain/CompostedSoil instead of sharing IrrigatedSoil.
+[*] [b]Harvest festival[/b] — once a year, on the first autumn day with a harvest maypole, colonists celebrate. Mood lasts 3 days and grows with pantry variety: lean (+3), festival with 3+ preserve kinds (+6), bountiful with 6+ (+10).
+[*] [b]Cellar aging[/b] — cheese, waxed cheese, smoked cheese, and cider age in a root cellar, springhouse, or icehouse: aged at 5 days (x1.1 value), well-aged at 15 (x1.25), vintage at 30 (x1.5). The icehouse ages at half speed.
+[*] [b]Maple sugaring season[/b] — sugar maple sap is strongest in a cool spring, slower in fall and winter, nearly dry in summer. The tree shows how the sap is running.
+[*] [b]Pantry sort[/b] — sort the In store list by most stock, name, or spoiling soonest.
+[*] [b]Pick the workbench[/b] — Add bill on What I can make lets you choose when more than one station qualifies.
+[*] [b]Saved seed progress[/b] — landrace yield / frost / drought bonuses now show for every player, not only in Developer mode.
 [/list]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Homestead supplier caravan[/b] (AZR-260) — append to OutlanderFactionBase caravanTraderKinds so all outlander factions inherit the supplier without wiping the vanilla list.
-[*] [b]Passive cooling cache[/b] (AZR-261) — invalidate cooled cells when regions/rooms rebuild (wall/door layout changes), not only when a cooler spawns or despawns.
-[*] [b]Research tab CN/RU[/b] (AZR-262) — DefInjected generalTitle and generalDescription for the Homesteader research tab.
-[/list]
-
-[i]Deferred: harvest festival ritual (AZR-263 / HS-A01), aging preserve quality tiers (AZR-264 / HS-A03).[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]
-
-1.3.0
-[h1]Homesteader — 1.3.0[/h1]
-[b]Changed[/b]
-[list]
-[*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
-[/list]
-
-1.0.4
-[h1]Homesteader — 1.0.4[/h1]
-
-[b]Added[/b]
-[list]
-[*] [b]What can I make[/b] — pantry tab page against colony stockpiles and storage. Homesteader recipes split into can-make-now (with add-bill), one ingredient short, or locked behind research / a missing station.
+[*] [b]Pantry jump button[/b] — the closest-to-spoiling row has its Jump button back.
+[*] [b]Future game updates[/b] — passive cooling, landrace frost/drought, and spoiling-first bills now detect a broken hook: cooling rescans on its own, and the inspect pane or settings page says when a bonus is inactive.
 [/list]
 
 [b]Changed[/b]
 [list]
-[*] [b]Little guy[/b] — the trait stays. The one-time announcement letter on load is gone.
+[*] [b]Settings window[/b] — gameplay dials apply only when a value changes, not every frame.
 [/list]
 
-[b]Fixed[/b]
-[list]
-[*] [b]XML load crash[/b] — storage building defs had a UTF-8 BOM. RimWorld can report that as "unknown parse failure" across later Homesteader XML (recipes, scenarios, backstories). The BOM is gone; CI now fails if any mod XML starts with a BOM.
-[/list]
-
-[i]Build stamp (Player.log): pantry-make-v1[/i]
+[i]Build stamp (Player.log): harvest-aging-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]

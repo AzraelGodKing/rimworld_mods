@@ -1,36 +1,28 @@
-1.8.1
+1.9.0
+[h1]Deep Colony — 1.9.0[/h1]
+
 [b]Added[/b]
 [list]
-[*] CN/RU DefInjected for body hediffs, Codex notebook, counseling Ideology precepts/issue, 12 tier-1 perk hediffs, Horror + Isolation thoughts (AZR-306).
-[*] Reputation tab per-reason ledger totals (AZR-310).
-[*] Chronicle export includes faction reputation summary when enabled (AZR-309).
-[*] Clickable pawn names on Legacy and Reputation tabs (Family Tree jump pattern) (AZR-311).
+[*] [b]Body & Codex tab[/b] — one colony-wide view of who is ill, convalescing, or weakened (and whether they are in an infirmary), archives per home map, researchers at risk, and what each notebook holds. Click a name or notebook to jump to it. Hidden while both systems are off.
+[*] [b]Research at risk alert[/b] — with the Codex on, warns while a skilled researcher (Intellectual 8+) has no archive on their map and a project is in progress.
+[*] [b]Forget a perk[/b] — the perk tree has a Forget button (with confirmation) when respec is on. The perk stays off until you press Relearn.
+[*] [b]Epitaphs[/b] — remembered colonists show their age and how they died in the Legacy tab and the chronicle export.
+[*] [b]Chinese and Russian[/b] — all new tab, alert, perk, and epitaph strings.
 [/list]
-[b]Changed[/b]
-[list]
-[*] Player Codex / divorce / envoy / mentor / tribute actions enqueue and apply on the next game tick (MP-safer, no Multiplayer.API) (AZR-307).
-[*] Assembly InformationalVersion aligned to 1.8.1+body-codex-v4 (AZR-308).
-[/list]
+
 [b]Fixed[/b]
 [list]
-[*] Unspent perk points alert removed — perks auto-allocate; alert must never fire (AZR-305).
+[*] [b]Contagion only spreads real diseases[/b] — flu, plague, and other disease-incident illnesses. Tumors and wound infections no longer jump to roommates.
+[*] [b]Pawn death is safe from Codex errors[/b] — a failed research-loss call logs one warning; the death goes through.
+[*] [b]Living World events fail open[/b] — a changed event field is ignored with one warning instead of throwing.
 [/list]
 
-1.8.0
 [b]Changed[/b]
 [list]
-[*] [b]Version baseline[/b] — minor bump to start the next ship cycle above current Steam / Nexus / GitHub releases. No Workshop/Nexus upload in this change.
+[*] [b]Perk switch and heir choice[/b] apply on the next tick, like the other player actions (multiplayer-safer).
+[*] [b]Mod description[/b] lists all seven systems, including the optional body and Codex.
+[*] Respec setting tooltip no longer mentions refunded points.
 [/list]
 
-1.7.0
-[b]Added[/b]
-[list]
-[*] [b]The body[/b] — optional contagion in-room and convalescence. Off by default.
-[*] [b]Infirmary[/b] — a room of medical beds (or a vanilla hospital) slows contagion and eases convalescence. Drafting outside that room can slip recovery.
-[*] [b]Lingering weakness[/b] — some recoveries leave a long-tail hediff (less likely if convalescence ended in an infirmary).
-[*] [b]Codex[/b] — optional notebook that records the current research project. Off by default.
-[*] [b]Notebook resume[/b] — a Codex notebook can set the colony's current research back to what it stored.
-[*] [b]Graduation gift[/b] — finishing an apprenticeship can leave a notebook of the current project.
-[*] [b]Archive[/b] — shelves for the notes. Codex on: researcher dies, shelves still stand, the current project does not slip.
-[*] [b]Chinese and Russian[/b] — body, codex, infirmary, and archive strings.
-[/list]
+[i]Build stamp (Player.log): colony-overview-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]

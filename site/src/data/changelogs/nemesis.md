@@ -4,9 +4,14 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## [Unreleased]
 
-AZR-382 AZR-383 AZR-384 AZR-385 AZR-386 AZR-387 AZR-388 AZR-389 AZR-390
+### Changed
+- **Dead SoftCompat flags** — removed unused Giddy-Up / Rimesis / BFV package-id probes (`GiddyUpActive`, `RimesisActive`, `BackForVengeanceActive`) and unread `LastHeavyCheckTick`. Foreign-antagonist skip still uses hediff markers; mount escorts still assign by faction tech. No gameplay change.
 
-Build stamp (Player.log): `custody-sync-v1`.
+## [1.4.0]
+
+Player-facing version **1.4.0** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.4.0 loaded from ...` in Player.log (`custody-sync-v1`).
+
+AZR-382 AZR-383 AZR-384 AZR-385 AZR-386 AZR-387 AZR-388 AZR-389 AZR-390
 
 ### Fixed
 - **Capture soft-lock** (AZR-383) — if a captured nemesis dies, vanishes, is traded away, or leaves your cells before you pick their fate, the hunt no longer stays stuck forever. A nemesis who got loose and is still hostile resumes the hunt; otherwise the hunt ends with a letter and an epitaph ("died in custody" / "lost from custody") so a new nemesis can rise. The dossier's *Open resolution dialog* button now explains when there is nothing to decide instead of doing nothing.

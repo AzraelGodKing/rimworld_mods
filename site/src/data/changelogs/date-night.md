@@ -4,7 +4,12 @@ Detailed notes for **Date Night** only.
 
 ## [Unreleased]
 
-Stamp `couple-lifecycle-v1`.
+### Internal
+- One shared `TryGainThought` helper replaces five identical copies (windows, double dates, venues, anniversaries, reunions). `CoupleKey` and `BothCanReach` copies are merged, and the unused `FindDinnerSpot` is removed. No behavior change.
+
+## [1.6.0]
+
+Player-facing version **1.6.0** (`About.xml` `modVersion`). Stamp `couple-lifecycle-v1`.
 
 AZR-313 AZR-314 AZR-315 AZR-316 AZR-317 AZR-318 AZR-401 AZR-402 AZR-403 AZR-404 AZR-405 AZR-406 AZR-407
 

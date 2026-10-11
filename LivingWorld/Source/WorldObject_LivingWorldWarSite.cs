@@ -73,11 +73,6 @@ namespace LivingWorld
             Find.WorldObjects.Add(site);
         }
 
-        public static void TickExpire()
-        {
-            // Expiry handled in WorldObject.Tick; keep hook for future batch work.
-        }
-
         private static PlanetTile? FindOpenTileNear(int nearTile)
         {
             PlanetTile center = nearTile;
