@@ -304,7 +304,7 @@ namespace Azrael
                     string line = (row.Prefix + " " + row.ClassName).Trim();
                     if (!string.IsNullOrEmpty(row.Reason))
                     {
-                        line += " â€” " + row.Reason;
+                        line += " — " + row.Reason;
                     }
                     hits.Add(line);
                 }
@@ -487,7 +487,7 @@ namespace Azrael
 
         private static BridgeRow NemesisDeepBridge(bool nemesis, bool deepColony)
         {
-            // Live hook: Nemesis.SoftCompat.OfferEpitaphToDeepColony â†’ DeepColony familyLetters.
+            // Live hook: Nemesis.SoftCompat.OfferEpitaphToDeepColony → DeepColony familyLetters.
             bool hook = MethodPresent("Nemesis.SoftCompat", "OfferEpitaphToDeepColony")
                 && TypePresent("DeepColony.GameComp_DeepColony")
                 && TypePresent("DeepColony.FamilyLetterEntry");
@@ -638,7 +638,7 @@ namespace Azrael
             }
             catch
             {
-                // Older GetActiveModWithIdentifier overloads â€” fall through.
+                // Older GetActiveModWithIdentifier overloads — fall through.
             }
 
             if (ModsConfig.IsActive(packageId))
