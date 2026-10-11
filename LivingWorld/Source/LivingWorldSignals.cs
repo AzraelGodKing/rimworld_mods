@@ -99,9 +99,5 @@ namespace LivingWorld
             }
         }
 
-        internal static void ResetSession()
-        {
-            // Registrations are process-lifetime; nothing to clear per save.
-        }
     }
 }

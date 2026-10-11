@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+AZR-326
+
+### Internal
+- Removed dead code: `TryConsumeMorphBudget`, `LivingWorldWarSites.TickExpire`, `LivingWorldSignals.ResetSession`.
+- Merged four identical `FindFaction(int)` helpers into one on `WorldEvent`.
+
 ## [1.2.0]
 
 Player-facing version **1.2.0** (`About.xml` `modVersion`).
