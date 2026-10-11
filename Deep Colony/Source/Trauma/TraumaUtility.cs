@@ -208,17 +208,6 @@ namespace DeepColony
             return false;
         }
 
-        public static void CollectActiveTraumas(Pawn pawn, List<TraumaDef> into)
-        {
-            into.Clear();
-            if (pawn?.needs?.mood?.thoughts == null) return;
-            foreach (Thought_Memory mem in pawn.needs.mood.thoughts.memories.Memories)
-            {
-                if (mem is Thought_Trauma tt && tt.traumaDef != null && !into.Contains(tt.traumaDef))
-                    into.Add(tt.traumaDef);
-            }
-        }
-
         public static int CountTraumatizedInRoom(Pawn pawn)
         {
             if (pawn?.Map == null || !pawn.Spawned) return 0;

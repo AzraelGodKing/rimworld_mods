@@ -9,7 +9,6 @@ namespace DeepColony
     public static class DeepColonyBuildInfo
     {
         public const string BuildStamp = "colony-overview-v1";
-        public const string SourceRevision = "b22c43a";
 
         public static void LogStartup()
         {
@@ -43,7 +42,6 @@ namespace DeepColony
             Log.Message("[DeepColony] v" + version
                 + " asm=" + asmVer
                 + " info=" + infoVer
-                + " sha=" + SourceRevision
                 + " build " + BuildStamp
                 + " | birthSafetyNet=" + (prefix ? "applied" : "MISSING")
                 + " setting=" + (setting ? "on" : "off")
