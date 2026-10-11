@@ -17,10 +17,6 @@ namespace Stormproof
         }
     }
 
-    // A wall of dials for the whole power net: live production, consumption,
-    // battery charge, and how long until the batteries run dry (or fill up).
-    // Raises a warning when stored charge drops low and an urgent alert when
-    // it goes critical, so a slow overnight drain never surprises you again.
     public class CompGridMonitor : ThingComp
     {
         private CompPowerTrader powerComp;

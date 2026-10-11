@@ -16,9 +16,6 @@ namespace Stormproof
         }
     }
 
-    // An ionospheric agitator: dumps charge into the sky and drags a rainy
-    // thunderstorm over the map on demand. Feed for storm spires, douse for
-    // wildfires - on a long cooldown so it can't replace a real power grid.
     public class CompStormCaller : ThingComp
     {
         private CompPowerTrader powerComp;

@@ -19,9 +19,6 @@ namespace Stormproof
         }
     }
 
-    // Runs exclusively on bottled lightning: every shock drains stored energy
-    // from a storm capacitor bank on the same power net. No capacitor charge,
-    // no zap - the grid itself can't feed it, so keep your spires fed.
     public class CompStaticPylon : ThingComp
     {
         private CompPowerTrader powerComp;
@@ -129,9 +126,6 @@ namespace Stormproof
             }
         }
 
-        // Visible arc from the pylon to the victim, sparks and a flash on the
-        // pawn, plus the EMP-disabled effecter (crackling electricity overlay)
-        // maintained on them for the stun duration.
         private void PlayStrikeEffects(Pawn pawn, Map map)
         {
             FleckMaker.ConnectingLine(

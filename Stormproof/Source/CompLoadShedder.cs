@@ -42,11 +42,6 @@ namespace Stormproof
         }
     }
 
-    // An automatic breaker: wire it between the main grid and a low-priority
-    // sub-grid. While the supply side's batteries hold charge it transmits like
-    // a conduit; when they fall below the cutoff it trips open, shedding the
-    // sub-grid so life support outlasts the lamps. Reconnects on its own once
-    // the batteries recover.
     public class CompLoadShedder : ThingComp
     {
         private CompPower transmitterComp;
