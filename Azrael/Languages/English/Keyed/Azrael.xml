@@ -5,6 +5,7 @@
   <Azrael_UpdateLetterFallback>Azrael {0} is loaded.\n\nFull notes: {1}</Azrael_UpdateLetterFallback>
   <Azrael_UpdateLetterFooter>Full notes: {0}</Azrael_UpdateLetterFooter>
   <Azrael_ScenPart_ForcedStorytellerSummary>Storyteller locked to {0}.</Azrael_ScenPart_ForcedStorytellerSummary>
+  <Azrael_ScenPart_PreferMountainSummary>Default and random starting sites favor large hills or mountains.</Azrael_ScenPart_PreferMountainSummary>
 
   <Azrael_SettingsCategory>Azrael</Azrael_SettingsCategory>
   <Azrael_Hub_Intro>Series hub. What's loaded, DLC, live vs broken soft-compat, named conflicts, and failed Harmony patches. Copy the report from the main menu or in a colony — no log diving.</Azrael_Hub_Intro>
@@ -32,6 +33,7 @@
   <Azrael_Hub_Conflict_Stack>Stacked maps fight Strata. Do not run this with Strata.</Azrael_Hub_Conflict_Stack>
   <Azrael_Hub_Conflict_Wellspring>Standalone Wellspring leftover; water ships inside Homesteader.</Azrael_Hub_Conflict_Wellspring>
   <Azrael_Hub_Conflict_LoadOrder>Load Azrael after series content. {0} is currently after Azrael — move Azrael last among the series.</Azrael_Hub_Conflict_LoadOrder>
+  <Azrael_Hub_Conflict_Multiplayer>Safe-removal deconstruct acts on your client only. In a multiplayer session, designate by hand in play instead.</Azrael_Hub_Conflict_Multiplayer>
   <Azrael_Hub_Harmony>Failed patches</Azrael_Hub_Harmony>
   <Azrael_Hub_HarmonyNone>No failed series patch classes this session.</Azrael_Hub_HarmonyNone>
   <Azrael_Hub_HarmonyCount>{0} failed patch class(es).</Azrael_Hub_HarmonyCount>
@@ -44,6 +46,8 @@
   <Azrael_Removal_Jump>Jump</Azrael_Removal_Jump>
   <Azrael_Removal_Deconstruct>Designate buildings for deconstruction</Azrael_Removal_Deconstruct>
   <Azrael_Removal_Designated>Queued deconstruction on {0} {1} building(s).</Azrael_Removal_Designated>
+  <Azrael_Removal_Queued>Deconstruction will be designated when the game unpauses.</Azrael_Removal_Queued>
+  <Azrael_Removal_Summary>{0} to deconstruct · {1} to consume or sell · {2} need attention · {3} safe</Azrael_Removal_Summary>
   <Azrael_Removal_NeedSave>Load a colony first.</Azrael_Removal_NeedSave>
   <Azrael_Removal_Empty>Nothing from this mod is on the maps or caravans.</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>Resolve the named blockers first.</Azrael_Removal_Blocked>
