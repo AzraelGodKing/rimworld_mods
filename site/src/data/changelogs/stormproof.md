@@ -22,6 +22,7 @@ AZR-325 AZR-408 AZR-409 AZR-410 AZR-411 AZR-412 AZR-413 AZR-414 AZR-415 AZR-416
 
 ### Changed
 - **Grid forecast** — the monitor's forecast now follows load shedders on the grid: scheduled shed hours, holds, and the battery cutoff drop or restore the sub-grid's draw over the 8-hour window.
+- **Code cleanup** — dropped the unused fire-suppressor registry, unused incident-enabled helper, unread weather-decider `Available` flag, and flavor-text class headers that restated building copy.
 
 ## [1.5.1]
 

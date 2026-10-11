@@ -50,13 +50,6 @@ namespace Stormproof
             powerComp = parent.GetComp<CompPowerTrader>();
             flickComp = parent.GetComp<CompFlickable>();
             breakdownComp = parent.GetComp<CompBreakdownable>();
-            StormproofRegistry.FireSuppressors.Add(this);
-        }
-
-        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
-        {
-            base.PostDeSpawn(map, mode);
-            StormproofRegistry.FireSuppressors.Remove(this);
         }
 
         public override void CompTick()

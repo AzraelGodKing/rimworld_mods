@@ -66,7 +66,6 @@ namespace Stormproof
         public static readonly HashSet<CompAtmosphericBarrier> AtmosphericBarriers = new HashSet<CompAtmosphericBarrier>();
         public static readonly HashSet<CompClimateStabilizer> ClimateStabilizers = new HashSet<CompClimateStabilizer>();
         public static readonly HashSet<CompSkyRestorer> SkyRestorers = new HashSet<CompSkyRestorer>();
-        public static readonly HashSet<CompFireSuppressor> FireSuppressors = new HashSet<CompFireSuppressor>();
         public static readonly HashSet<CompDroughtCondenser> DroughtCondensers = new HashSet<CompDroughtCondenser>();
         public static readonly HashSet<CompLoadShedder> LoadShedders = new HashSet<CompLoadShedder>();
 
@@ -81,7 +80,6 @@ namespace Stormproof
             AtmosphericBarriers.Clear();
             ClimateStabilizers.Clear();
             SkyRestorers.Clear();
-            FireSuppressors.Clear();
             DroughtCondensers.Clear();
         }
 
