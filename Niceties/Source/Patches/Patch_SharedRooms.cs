@@ -35,6 +35,12 @@ namespace Niceties
     [HarmonyPatch(typeof(Pawn), "CheckForDisturbedSleep")]
     internal static class Patch_CheckForDisturbedSleep
     {
+        private static bool Prepare()
+        {
+            return PatchTargets.Exists(typeof(Pawn), "CheckForDisturbedSleep", new[] { typeof(Pawn) },
+                "no disturbed sleep for roommates");
+        }
+
         private static bool Prefix(Pawn __instance)
         {
             return !SharedRooms.ShouldSkipDisturbedSleep(__instance);
