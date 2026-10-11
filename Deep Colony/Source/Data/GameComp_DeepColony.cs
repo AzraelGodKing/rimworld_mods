@@ -159,12 +159,12 @@ namespace DeepColony
                 factionRepLedger.RemoveAt(0);
         }
 
-        public void NotifyColonistDied(Pawn victim)
+        public void NotifyColonistDied(Pawn victim, DamageInfo? dinfo = null, Hediff culprit = null)
         {
             if (!DeepColonySettings.Get.enableTrauma) return;
             if (victim == null || !victim.RaceProps.Humanlike) return;
 
-            RemembranceUtility.NotifyColonistDied(victim);
+            RemembranceUtility.NotifyColonistDied(victim, dinfo, culprit);
 
             int now = Find.TickManager.TicksGame;
             recentColonistDeathTimestamps.Add(now);

@@ -150,3 +150,14 @@ Build stamp `identity-pack-v1`.
 - [x] **AZR-97** Divorce — right-click spouse; breakup wound + children + Legacy note
 - [x] **AZR-65** Quiet Hours — room noise, rest/counsel/mentor; not Strata infestation
 - [x] **AZR-70** Estate — wills on Legacy tab, contested kids, unclaimed bed, heirloom lineage
+
+## Colony overview
+
+Build stamp `colony-overview-v1`.
+
+- [x] **AZR-398** Body & Codex main tab
+- [x] **AZR-399** Research-at-risk alert
+- [x] **AZR-394** Perk Forget / Relearn in the perk tree
+- [x] **AZR-400** Remembrance epitaphs (age + cause of death)
+- [x] **AZR-391 / AZR-392** Perk switch and heir menu through the command queue
+- [x] **AZR-393 / AZR-395 / AZR-396** Contagion limited to diseases; fail-open guards on Codex death hook and Living World events

@@ -26,12 +26,22 @@ namespace Niceties
         private const int MaxRegionSize = 80;
         private const int CacheTicks = 15;
 
+        private const int CachePruneSize = 64;
+
         private static bool scChecked;
         private static bool scLoaded;
-        private static int cacheTick;
-        private static int cacheThingId = -1;
-        private static int cachePawnId = -1;
-        private static OpenBuildsResult cacheResult;
+
+        private sealed class Geometry
+        {
+            public int Tick;
+            public int MapId;
+            public HashSet<IntVec3> Blockers;
+            public HashSet<IntVec3> Enclosed;
+            public HashSet<IntVec3> SafeSpots;
+        }
+
+        private static readonly Dictionary<int, Geometry> GeometryCache = new Dictionary<int, Geometry>();
+        private static readonly List<int> PruneScratch = new List<int>();
 
         internal static bool Enabled
         {
@@ -77,46 +87,93 @@ namespace Niceties
                 return empty;
             }
 
-            int tick = Find.TickManager.TicksGame;
-            if (cacheThingId == target.thingIDNumber
-                && cachePawnId == (pawn != null ? pawn.thingIDNumber : -1)
-                && tick - cacheTick < CacheTicks)
-            {
-                return cacheResult;
-            }
-
-            OpenBuildsResult result = Compute(target, pawn);
-            cacheTick = tick;
-            cacheThingId = target.thingIDNumber;
-            cachePawnId = pawn != null ? pawn.thingIDNumber : -1;
-            cacheResult = result;
-            return result;
+            return Compute(target, pawn, GeometryFor(target));
         }
 
         internal static HashSet<IntVec3> FindSafeSpots(Thing target)
         {
-            HashSet<IntVec3> spots = new HashSet<IntVec3>();
             if (target?.Map == null)
             {
-                return spots;
+                return new HashSet<IntVec3>();
             }
 
-            HashSet<IntVec3> blockers = Occupied(target);
-            HashSet<IntVec3> enclosed = ClosedRegion(target.Map, blockers);
-            foreach (IntVec3 cell in CardinalNeighbors(blockers))
+            Geometry geo = GeometryFor(target);
+            if (geo.SafeSpots != null)
             {
-                if (enclosed.Contains(cell))
+                return geo.SafeSpots;
+            }
+
+            HashSet<IntVec3> spots = new HashSet<IntVec3>();
+            foreach (IntVec3 cell in CardinalNeighbors(geo.Blockers))
+            {
+                if (geo.Enclosed.Contains(cell))
                 {
                     continue;
                 }
 
-                if (WalkableForEnclose(target.Map, cell, blockers))
+                if (WalkableForEnclose(target.Map, cell, geo.Blockers))
                 {
                     spots.Add(cell);
                 }
             }
 
+            geo.SafeSpots = spots;
             return spots;
+        }
+
+        /// <summary>
+        /// Flood fill per frame, reused by every builder and by FindSafeSpots for a few ticks.
+        /// Keyed by frame so several colonists finishing different walls do not evict each other.
+        /// </summary>
+        private static Geometry GeometryFor(Thing target)
+        {
+            int tick = Find.TickManager.TicksGame;
+            int mapId = target.Map.uniqueID;
+            if (GeometryCache.TryGetValue(target.thingIDNumber, out Geometry cached)
+                && cached.MapId == mapId
+                && tick >= cached.Tick
+                && tick - cached.Tick < CacheTicks)
+            {
+                return cached;
+            }
+
+            if (GeometryCache.Count >= CachePruneSize)
+            {
+                Prune(tick);
+            }
+
+            HashSet<IntVec3> blockers = Occupied(target);
+            Geometry geo = new Geometry
+            {
+                Tick = tick,
+                MapId = mapId,
+                Blockers = blockers,
+                Enclosed = ClosedRegion(target.Map, blockers)
+            };
+            GeometryCache[target.thingIDNumber] = geo;
+            return geo;
+        }
+
+        private static void Prune(int tick)
+        {
+            PruneScratch.Clear();
+            foreach (KeyValuePair<int, Geometry> kv in GeometryCache)
+            {
+                if (tick < kv.Value.Tick || tick - kv.Value.Tick >= CacheTicks)
+                {
+                    PruneScratch.Add(kv.Key);
+                }
+            }
+
+            for (int i = 0; i < PruneScratch.Count; i++)
+            {
+                GeometryCache.Remove(PruneScratch[i]);
+            }
+
+            if (GeometryCache.Count >= CachePruneSize)
+            {
+                GeometryCache.Clear();
+            }
         }
 
         internal static bool StepAsideThenRetry(Pawn pawn, Frame frame)
@@ -175,11 +232,10 @@ namespace Niceties
             return thing.def != null && thing.def.IsFrame;
         }
 
-        private static OpenBuildsResult Compute(Thing target, Pawn pawn)
+        private static OpenBuildsResult Compute(Thing target, Pawn pawn, Geometry geo)
         {
             OpenBuildsResult result = new OpenBuildsResult();
-            HashSet<IntVec3> blockers = Occupied(target);
-            HashSet<IntVec3> enclosed = ClosedRegion(target.Map, blockers);
+            HashSet<IntVec3> enclosed = geo.Enclosed;
             if (enclosed.Count == 0)
             {
                 return result;

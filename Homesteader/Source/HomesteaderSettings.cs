@@ -168,7 +168,7 @@ namespace Homesteader
         {
             ContentPack = content;
             Settings = GetSettings<HomesteaderSettings>();
-            ModVersionLog.Write("[Homesteader]", content, "pantry-make-v1");
+            ModVersionLog.Write("[Homesteader]", content, "harvest-aging-v1");
         }
 
         public override string SettingsCategory() => "Homesteader_SettingsCategory".Translate();
@@ -178,10 +178,20 @@ namespace Homesteader
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(inRect);
 
+            float prevAllergy = Settings.allergyFlareIntensity;
+            float prevFavorite = Settings.favoriteFoodMoodFactor;
+            float prevCoop = Settings.coopEggIntervalFactor;
+            bool prevKats = Settings.enableKatsEffect;
+
             listing.CheckboxLabeled(
                 "Homesteader_SettingsSpoilageTriage".Translate(),
                 ref Settings.spoilageTriage,
                 "Homesteader_SettingsSpoilageTriageTip".Translate());
+            if (!PatchHealth.SpoilageBillSortHooked)
+            {
+                listing.Label("Homesteader_SettingsSpoilageTriageBillsInactive".Translate());
+            }
+
             listing.GapLine();
 
             listing.Label("Homesteader_SettingsGameplayHeader".Translate());
@@ -243,7 +253,14 @@ namespace Homesteader
             }
 
             listing.End();
-            Settings.ApplyGameplaySettings();
+            if (prevAllergy != Settings.allergyFlareIntensity
+                || prevFavorite != Settings.favoriteFoodMoodFactor
+                || prevCoop != Settings.coopEggIntervalFactor
+                || prevKats != Settings.enableKatsEffect)
+            {
+                Settings.ApplyGameplaySettings();
+            }
+
             base.DoSettingsWindowContents(inRect);
         }
     }

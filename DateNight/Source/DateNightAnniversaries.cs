@@ -16,6 +16,7 @@ namespace DateNight
         // couple key -> year we already applied dated-or-missed outcome
         private static Dictionary<long, int> lastOutcomeYear = new Dictionary<long, int>();
         private static int lastScanDay = -1;
+        private const int MilestoneEveryYears = 5;
 
         public static void ExposeData()
         {
@@ -189,8 +190,8 @@ namespace DateNight
                 return;
             }
             lastOutcomeYear[DateNightActivities.CoupleKey(pawn, partner)] = CurrentYear(pawn);
-            RemoveAbout(pawn, DateNightDefOf.DateNight_Anniversary, partner);
-            RemoveAbout(partner, DateNightDefOf.DateNight_Anniversary, pawn);
+            RemoveDayThoughts(pawn, partner);
+            RemoveDayThoughts(partner, pawn);
             RemoveAbout(pawn, DateNightDefOf.DateNight_AnniversaryMissed, partner);
             RemoveAbout(partner, DateNightDefOf.DateNight_AnniversaryMissed, pawn);
         }
@@ -275,16 +276,30 @@ namespace DateNight
             }
         }
 
+        public static bool IsMilestoneYear(int years)
+        {
+            return years >= MilestoneEveryYears && years % MilestoneEveryYears == 0;
+        }
+
         private static void Celebrate(Pawn pawn, Pawn partner, int years)
         {
-            GiveAnniversaryThought(pawn, partner);
-            GiveAnniversaryThought(partner, pawn);
+            bool milestone = IsMilestoneYear(years)
+                && DateNightDefOf.DateNight_AnniversaryMilestone != null;
+            ThoughtDef thought = milestone
+                ? DateNightDefOf.DateNight_AnniversaryMilestone
+                : DateNightDefOf.DateNight_Anniversary;
+            GiveAnniversaryThought(pawn, partner, thought);
+            GiveAnniversaryThought(partner, pawn, thought);
 
             string yearsText = years == 1
                 ? "DateNight_OneYear".Translate()
                 : "DateNight_NYears".Translate(years);
-            TaggedString title = "DateNight_Letter_AnniversaryLabel".Translate();
-            TaggedString body = "DateNight_Letter_AnniversaryText".Translate(
+            TaggedString title = milestone
+                ? "DateNight_Letter_AnniversaryMilestoneLabel".Translate()
+                : "DateNight_Letter_AnniversaryLabel".Translate();
+            TaggedString body = (milestone
+                ? "DateNight_Letter_AnniversaryMilestoneText"
+                : "DateNight_Letter_AnniversaryText").Translate(
                 pawn.Named("PAWN"),
                 partner.Named("PARTNER"),
                 yearsText.Named("YEARS"));
@@ -295,10 +310,10 @@ namespace DateNight
                 new LookTargets(pawn, partner));
         }
 
-        private static void GiveAnniversaryThought(Pawn pawn, Pawn other)
+        private static void GiveAnniversaryThought(Pawn pawn, Pawn other, ThoughtDef thought)
         {
             if (pawn?.needs?.mood?.thoughts?.memories == null
-                || DateNightDefOf.DateNight_Anniversary == null
+                || thought == null
                 || other == null)
             {
                 return;
@@ -307,7 +322,13 @@ namespace DateNight
             {
                 return;
             }
-            pawn.needs.mood.thoughts.memories.TryGainMemory(DateNightDefOf.DateNight_Anniversary, other);
+            pawn.needs.mood.thoughts.memories.TryGainMemory(thought, other);
+        }
+
+        private static void RemoveDayThoughts(Pawn pawn, Pawn other)
+        {
+            RemoveAbout(pawn, DateNightDefOf.DateNight_Anniversary, other);
+            RemoveAbout(pawn, DateNightDefOf.DateNight_AnniversaryMilestone, other);
         }
 
         private static void ResolveMissedDate(Pawn pawn, Pawn partner, long key)
@@ -316,8 +337,8 @@ namespace DateNight
                 Find.TickManager.TicksAbs - GenDate.TicksPerDay, Longitude(pawn));
             if (lastOutcomeYear.TryGetValue(key, out int already) && already >= year)
             {
-                RemoveAbout(pawn, DateNightDefOf.DateNight_Anniversary, partner);
-                RemoveAbout(partner, DateNightDefOf.DateNight_Anniversary, pawn);
+                RemoveDayThoughts(pawn, partner);
+                RemoveDayThoughts(partner, pawn);
                 return;
             }
 
@@ -325,8 +346,8 @@ namespace DateNight
             if (HasThought(pawn, DateNightDefOf.DateNight_AnniversaryDate, partner)
                 || HasThought(partner, DateNightDefOf.DateNight_AnniversaryDate, pawn))
             {
-                RemoveAbout(pawn, DateNightDefOf.DateNight_Anniversary, partner);
-                RemoveAbout(partner, DateNightDefOf.DateNight_Anniversary, pawn);
+                RemoveDayThoughts(pawn, partner);
+                RemoveDayThoughts(partner, pawn);
                 return;
             }
 
@@ -346,7 +367,7 @@ namespace DateNight
             {
                 return;
             }
-            RemoveAbout(pawn, DateNightDefOf.DateNight_Anniversary, other);
+            RemoveDayThoughts(pawn, other);
             pawn.needs.mood.thoughts.memories.TryGainMemory(
                 DateNightDefOf.DateNight_AnniversaryMissed, other);
         }

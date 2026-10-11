@@ -76,7 +76,27 @@
   <Homesteader_PantryMakeNeedMore>need more than one ingredient</Homesteader_PantryMakeNeedMore>
   <Homesteader_PantryMakeNeedIng>need {0} {1}</Homesteader_PantryMakeNeedIng>
   <Homesteader_PantryMakeUnknownIng>ingredient</Homesteader_PantryMakeUnknownIng>
-  <Homesteader_LandraceDev>Landrace +{0}% yield, +{1}% frost, +{2}% drought (gen {3})</Homesteader_LandraceDev>
+  <Homesteader_Landrace>Saved seed line: +{0}% yield, +{1}% frost, +{2}% drought (generation {3})</Homesteader_Landrace>
+  <Homesteader_LandraceGrowthInactive>Frost/drought bonuses are inactive on this RimWorld version.</Homesteader_LandraceGrowthInactive>
+  <Homesteader_SettingsSpoilageTriageBillsInactive>This RimWorld version blocked the bill-ingredient hook: preserving bills no longer take spoiling produce first. Eating still does.</Homesteader_SettingsSpoilageTriageBillsInactive>
+  <Homesteader_PantryJump>Jump</Homesteader_PantryJump>
+  <Homesteader_PantrySortCount>Sort: most stock</Homesteader_PantrySortCount>
+  <Homesteader_PantrySortName>Sort: name</Homesteader_PantrySortName>
+  <Homesteader_PantrySortRot>Sort: spoiling soonest</Homesteader_PantrySortRot>
+  <Homesteader_PantryMakeChooseStation>{0} stations can make this. Click to choose one.</Homesteader_PantryMakeChooseStation>
+  <Homesteader_PantryMakeBillCount>{0} bills</Homesteader_PantryMakeBillCount>
+  <Homesteader_MapleSeason_Running>Sap is running hard — sugaring season.</Homesteader_MapleSeason_Running>
+  <Homesteader_MapleSeason_Slow>Sap is slow this season.</Homesteader_MapleSeason_Slow>
+  <Homesteader_MapleSeason_Dry>Sap run is nearly dry — wait for spring chill.</Homesteader_MapleSeason_Dry>
+  <Homesteader_AgingNotStarted>Ages in a root cellar, springhouse, or icehouse.</Homesteader_AgingNotStarted>
+  <Homesteader_AgingInspect>Aging: {0} ({1} days in cool storage), value {2}</Homesteader_AgingInspect>
+  <Homesteader_AgingTier0>young</Homesteader_AgingTier0>
+  <Homesteader_AgingTier1>aged</Homesteader_AgingTier1>
+  <Homesteader_AgingTier2>well-aged</Homesteader_AgingTier2>
+  <Homesteader_AgingTier3>vintage</Homesteader_AgingTier3>
+  <Homesteader_AgingStatExplain>Cellar aging ({0}): x{1}</Homesteader_AgingStatExplain>
+  <Homesteader_HarvestFestivalLetterLabel>Harvest festival</Homesteader_HarvestFestivalLetterLabel>
+  <Homesteader_HarvestFestivalLetterText>Autumn is here, and the colony gathers around the harvest maypole to celebrate the year's work.\n\nThe pantry holds {0} distinct preserves: {1}.\n\nStock more kinds of preserves for a bigger festival next year (3+ kinds for a full festival, 6+ for a bountiful one).</Homesteader_HarvestFestivalLetterText>
 
   <!-- Kats Effect incident letter (body; title comes from IncidentDef) -->
   <Homesteader_KatsLetter_Open>An anomalous broadcast has locked onto your colony's 27 monument frequency. A brief heat dome is forming over the region, and several colonists report a short-lived fogginess — "brain rot," they call it.</Homesteader_KatsLetter_Open>

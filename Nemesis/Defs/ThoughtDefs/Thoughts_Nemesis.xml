@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Repeat-escape fallout. Stage 0: colony at large; stage 1: the fixation target. -->
+  <ThoughtDef>
+    <defName>Nemesis_EscapedAgain</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>4</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>nemesis escaped again</label>
+        <description>That hunter slipped through our fingers again. How many more times?</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+      <li>
+        <label>my nemesis escaped again</label>
+        <description>They got away again. They are still out there, and they are coming back for me.</description>
+        <baseMoodEffect>-8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

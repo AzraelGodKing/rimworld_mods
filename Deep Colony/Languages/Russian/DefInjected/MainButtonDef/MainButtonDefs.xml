@@ -7,5 +7,7 @@
   <DC_Legacy.description>Фамилия основателя, живые колонисты, старейшины, традиции и счётчики перков.</DC_Legacy.description>
   <DC_Reputation.label>репутация</DC_Reputation.label>
   <DC_Reputation.description>Журнал расположения фракций — почему дрейфовала репутация, посланники и отношение.</DC_Reputation.description>
+  <DC_BodyCodex.label>тело и кодекс</DC_BodyCodex.label>
+  <DC_BodyCodex.description>Кто болен или выздоравливает, архивы на картах, исследователи под угрозой и что записано в каждой тетради Кодекса. Скрыта, когда обе системы выключены.</DC_BodyCodex.description>
 
 </LanguageData>

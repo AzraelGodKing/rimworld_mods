@@ -319,7 +319,8 @@ namespace Nemesis
                 return;
             }
             data.active = false;
-            Find.WindowStack.Add(new Dialog_NemesisResolution(data, nemesis));
+            data.pendingResolution = true;
+            comp.TryOpenResolutionDialog(nemesis);
         }
 
         [DebugAction(Cat, "Resolve pending fake ambush now", allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -392,5 +393,8 @@ namespace Nemesis
 
         [DebugAction(ActionsCat, "Anomaly bait", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ActionAnomaly() => FireAction(NemesisAction.AnomalyBait);
+
+        [DebugAction(ActionsCat, "Kidnap attempt (pawn hunts)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ActionKidnap() => FireAction(NemesisAction.KidnapAttempt);
     }
 }

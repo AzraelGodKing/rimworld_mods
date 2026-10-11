@@ -412,9 +412,9 @@ namespace Nemesis
                     GenSpawn.Spawn(mech, cell, map);
                     mechs.Add(mech);
                 }
-                catch
+                catch (System.Exception e)
                 {
-                    /* fail open */
+                    Log.Warning("[Nemesis] Mech escort spawn failed (" + kind.defName + "): " + e.Message);
                 }
             }
 

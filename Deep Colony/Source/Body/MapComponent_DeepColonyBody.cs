@@ -7,8 +7,29 @@ namespace DeepColony
 {
     public class MapComponent_DeepColonyBody : MapComponent
     {
+        private static HashSet<HediffDef> contagious;
+
         public MapComponent_DeepColonyBody(Map map) : base(map)
         {
+        }
+
+        // Only illnesses an incident can spread (flu, plague, modded epidemics).
+        // Tumors and wound infections also alert and can kill, but are not caught.
+        public static bool IsContagious(HediffDef def)
+        {
+            if (contagious == null)
+            {
+                contagious = new HashSet<HediffDef>();
+                foreach (IncidentDef inc in DefDatabase<IncidentDef>.AllDefsListForReading)
+                {
+                    HediffDef d = inc?.diseaseIncident;
+                    if (d != null && d.isBad && d.lethalSeverity > 0f)
+                    {
+                        contagious.Add(d);
+                    }
+                }
+            }
+            return def != null && contagious.Contains(def);
         }
 
         public override void MapComponentTick()
@@ -31,7 +52,8 @@ namespace DeepColony
                 {
                     continue;
                 }
-                Hediff infection = pawn.health.hediffSet.hediffs.Find(h => h.def.makesAlert && h.def.isBad && h.def.lethalSeverity > 0f && h.Severity > 0.35f);
+                Hediff illness = pawn.health.hediffSet.hediffs.Find(h => h.def.makesAlert && h.def.isBad && h.def.lethalSeverity > 0f && h.Severity > 0.35f);
+                Hediff infection = pawn.health.hediffSet.hediffs.Find(h => IsContagious(h.def) && h.Severity > 0.35f);
                 Hediff convalHediff = conval != null ? pawn.health.hediffSet.GetFirstHediffOfDef(conval) : null;
                 Room room = pawn.GetRoom();
                 bool infirmary = BodyRooms.IsInfirmary(room);
@@ -47,7 +69,7 @@ namespace DeepColony
                         Messages.Message("DC_Body_Relapse".Translate(pawn.LabelShortCap), pawn, MessageTypeDefOf.NegativeEvent);
                     }
                 }
-                if (infection != null && conval != null && convalHediff == null && Rand.Chance(0.08f))
+                if (illness != null && conval != null && convalHediff == null && Rand.Chance(0.08f))
                 {
                     pawn.health.AddHediff(conval);
                 }

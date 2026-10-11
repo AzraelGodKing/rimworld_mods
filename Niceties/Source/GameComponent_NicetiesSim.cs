@@ -5,9 +5,9 @@ namespace Niceties
     /// <summary>
     /// Host-authoritative snapshot of Niceties settings that affect deterministic sim.
     /// Scribed with the game so Multiplayer joiners receive the host values even when
-    /// their local Mod Options file differs. Mid-session Mod Options edits still need
-    /// Multiplayer.API SyncField for live cross-client sync — without that dependency
-    /// this covers join-time / save-bake only (AZR-292).
+    /// their local Mod Options file differs. Outside a Multiplayer session the snapshot
+    /// follows Mod Options on every load and edit; inside one it stays as the host baked it,
+    /// because a local Mod Options edit would only change this client's sim.
     /// </summary>
     public class GameComponent_NicetiesSim : GameComponent
     {
@@ -16,6 +16,8 @@ namespace Niceties
 
         public GameComponent_NicetiesSim(Game game)
         {
+            // Starting pawns are generated before FinalizeInit; drop the previous game's tags.
+            ApparelGender.Apply(NicetiesMod.Settings == null || NicetiesMod.Settings.wearAnyGender);
         }
 
         public NicetiesSettings Snapshot => snapshot;
@@ -37,10 +39,13 @@ namespace Niceties
 
         public override void FinalizeInit()
         {
-            if (snapshot == null || !loadedFromSave)
+            if (snapshot == null || !loadedFromSave || !NicetiesMultiplayer.InSession)
             {
                 PullFromModSettings();
             }
+
+            ApparelGender.ApplyEffective();
+            CryptosleepBar.MarkDirty();
         }
 
         public void PullFromModSettings()
@@ -57,6 +62,12 @@ namespace Niceties
             }
 
             snapshot.CopyFrom(src);
+        }
+
+        public bool DiffersFromModSettings()
+        {
+            NicetiesSettings src = NicetiesMod.Settings;
+            return snapshot != null && src != null && snapshot.SimFingerprint() != src.SimFingerprint();
         }
 
         public static GameComponent_NicetiesSim Get()
@@ -84,8 +95,15 @@ namespace Niceties
             }
         }
 
+        internal static bool CanApplyModSettingsNow => !NicetiesMultiplayer.InSession;
+
         internal static void SyncFromModSettings()
         {
+            if (!CanApplyModSettingsNow)
+            {
+                return;
+            }
+
             GameComponent_NicetiesSim.Get()?.PullFromModSettings();
         }
     }

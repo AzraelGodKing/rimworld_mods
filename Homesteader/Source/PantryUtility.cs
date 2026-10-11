@@ -19,7 +19,15 @@ namespace Homesteader
         {
             public ThingDef def;
             public int count;
+            public float rotProgress;
         }
+    }
+
+    internal enum PantrySortMode
+    {
+        Count,
+        Name,
+        RotSoonest
     }
 
     internal static class PantryUtility
@@ -62,6 +70,7 @@ namespace Homesteader
         {
             PantryReport report = new PantryReport();
             Dictionary<ThingDef, int> kindCounts = new Dictionary<ThingDef, int>();
+            Dictionary<ThingDef, float> kindRot = new Dictionary<ThingDef, float>();
             HashSet<string> seenPreserveDefs = new HashSet<string>();
             int colonists = 0;
 
@@ -98,7 +107,7 @@ namespace Homesteader
 
                         foreach (Thing thing in storage.GetSlotGroup().HeldThings)
                         {
-                            Tally(thing, report, kindCounts, seenPreserveDefs);
+                            Tally(thing, report, kindCounts, kindRot, seenPreserveDefs);
                         }
                     }
                 }
@@ -113,17 +122,44 @@ namespace Homesteader
 
             foreach (KeyValuePair<ThingDef, int> kv in kindCounts)
             {
-                report.kinds.Add(new PantryReport.KindRow { def = kv.Key, count = kv.Value });
+                kindRot.TryGetValue(kv.Key, out float rot);
+                report.kinds.Add(new PantryReport.KindRow { def = kv.Key, count = kv.Value, rotProgress = rot });
             }
 
-            report.kinds.Sort((a, b) => b.count.CompareTo(a.count));
+            SortKinds(report, PantrySortMode.Count);
             return report;
+        }
+
+        internal static void SortKinds(PantryReport report, PantrySortMode mode)
+        {
+            if (report == null)
+            {
+                return;
+            }
+
+            switch (mode)
+            {
+                case PantrySortMode.Name:
+                    report.kinds.Sort((a, b) => string.Compare(a.def?.label, b.def?.label, System.StringComparison.CurrentCultureIgnoreCase));
+                    break;
+                case PantrySortMode.RotSoonest:
+                    report.kinds.Sort((a, b) =>
+                    {
+                        int c = b.rotProgress.CompareTo(a.rotProgress);
+                        return c != 0 ? c : b.count.CompareTo(a.count);
+                    });
+                    break;
+                default:
+                    report.kinds.Sort((a, b) => b.count.CompareTo(a.count));
+                    break;
+            }
         }
 
         private static void Tally(
             Thing thing,
             PantryReport report,
             Dictionary<ThingDef, int> kindCounts,
+            Dictionary<ThingDef, float> kindRot,
             HashSet<string> seenPreserveDefs)
         {
             if (thing?.def == null)
@@ -151,6 +187,12 @@ namespace Homesteader
             if (preserve)
             {
                 seenPreserveDefs.Add(thing.def.defName);
+            }
+
+            float rotProgress = SpoilageTriage.FreshRotProgress(thing);
+            if (!kindRot.TryGetValue(thing.def, out float worst) || rotProgress > worst)
+            {
+                kindRot[thing.def] = rotProgress;
             }
 
             if (ingestible)

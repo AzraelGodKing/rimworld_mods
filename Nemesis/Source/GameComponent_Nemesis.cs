@@ -24,6 +24,7 @@ namespace Nemesis
             _data != null && (_data.active || _data.truceUntilTick > 0 || _data.pendingResolution);
 
         private static int MaxEscapes => NemesisMod.Settings?.maxEscapes ?? 4;
+        private const int EscapeMoodThreshold = 2;
 
         public GameComponent_Nemesis(Game game)
         {
@@ -54,7 +55,17 @@ namespace Nemesis
             {
                 if (_data.pendingResolution)
                 {
-                    TryOpenResolutionDialog();
+                    if (tick % 250 == 0)
+                    {
+                        Pawn captive = FindNemesisPawnAnywhere();
+                        if (!IsHeldCaptive(captive))
+                        {
+                            HandleLostCustody(captive);
+                            return;
+                        }
+                    }
+                    if (tick % 60 == 0)
+                        TryOpenResolutionDialog();
                     return;
                 }
                 if (_data.truceUntilTick > 0 && tick >= _data.truceUntilTick)
@@ -84,10 +95,14 @@ namespace Nemesis
             }
 
             // Stagger health / end-condition work. Faster on the viewed map.
-            Map home = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
-            int healthInterval = NemesisRegistry.MapIsViewed(home) ? 120 : 300;
-            if (tick % healthInterval == 0)
-                CheckNemesisHealth();
+            // PreferHarassmentMap reflects into Strata per map, so only resolve it on candidate ticks.
+            if (tick % 120 == 0 || tick % 300 == 0)
+            {
+                Map home = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+                int healthInterval = NemesisRegistry.MapIsViewed(home) ? 120 : 300;
+                if (tick % healthInterval == 0)
+                    CheckNemesisHealth();
+            }
 
             if (tick % 500 == 0 || NemesisRegistry.ResolutionDirty)
             {
@@ -247,6 +262,7 @@ namespace Nemesis
             NemesisTells.RecordSighting(_data, map);
             NemesisTells.RecordGear(_data, nemesis);
             NemesisProgression.LevelUpOnEscape(_data, nemesis);
+            ApplyEscapeMoodFallout();
 
             GlobalTargetInfo lookTarget = map != null ? new GlobalTargetInfo(pos, map) : GlobalTargetInfo.Invalid;
 
@@ -255,6 +271,23 @@ namespace Nemesis
                 NemesisTaunts.EscapeLetterBody(_data),
                 LetterDefOf.NeutralEvent,
                 lookTarget);
+        }
+
+        /// <summary>AZR-388 — repeat escapes cost colony mood; the fixation target takes it hardest.</summary>
+        private void ApplyEscapeMoodFallout()
+        {
+            if (_data.escapeCount < EscapeMoodThreshold) return;
+            ThoughtDef def = DefDatabase<ThoughtDef>.GetNamedSilentFail("Nemesis_EscapedAgain");
+            if (def == null) return;
+
+            List<Pawn> colonists = PawnsFinder.AllMaps_FreeColonistsSpawned;
+            for (int i = 0; i < colonists.Count; i++)
+            {
+                Pawn p = colonists[i];
+                if (p?.needs?.mood?.thoughts?.memories == null) continue;
+                int stage = IsTargetPawn(p) ? 1 : 0;
+                p.needs.mood.thoughts.memories.TryGainMemory(ThoughtMaker.MakeThought(def, stage));
+            }
         }
 
         private void SubdueNemesis(Pawn nemesis, bool fromLethalDamage)
@@ -336,6 +369,13 @@ namespace Nemesis
                     return;
                 }
 
+                // Kidnapped colonists keep the player faction, so the hand-over check below misses them.
+                if (target.IsKidnapped())
+                {
+                    EndHunt(NemesisEndReason.TargetHandedOver, look: null);
+                    return;
+                }
+
                 // Handed over: no longer a colonist / player faction pawn.
                 if (target.Faction != Faction.OfPlayer && !target.IsColonist && !target.IsPrisonerOfColony)
                 {
@@ -361,13 +401,73 @@ namespace Nemesis
         }
 
         /// <summary>Reopen capture dialog after load / if the modal was dismissed by a crash.</summary>
-        public void TryOpenResolutionDialog(Pawn nemesis = null)
+        public bool TryOpenResolutionDialog(Pawn nemesis = null)
         {
-            if (_data == null || !_data.pendingResolution) return;
+            if (_data == null || !_data.pendingResolution) return false;
+            if (NemesisPlayerCommand.HasQueuedResolution) return false;
             nemesis ??= FindNemesisPawn();
-            if (nemesis == null || nemesis.Destroyed || !nemesis.IsPrisonerOfColony) return;
-            if (Find.WindowStack?.WindowOfType<Dialog_NemesisResolution>() != null) return;
+            if (!IsHeldCaptive(nemesis)) return false;
+            if (Find.WindowStack?.WindowOfType<Dialog_NemesisResolution>() != null) return true;
             Find.WindowStack.Add(new Dialog_NemesisResolution(_data, nemesis));
+            return true;
+        }
+
+        private static bool IsHeldCaptive(Pawn pawn) =>
+            pawn != null && !pawn.Dead && !pawn.Destroyed && pawn.IsPrisonerOfColony;
+
+        /// <summary>Also checks carried / caravan / transporter / dead pawns that <see cref="FindNemesisPawn"/> skips.</summary>
+        private Pawn FindNemesisPawnAnywhere()
+        {
+            Pawn found = FindNemesisPawn();
+            if (found != null) return found;
+            int id = _data.nemesisPawnId;
+            if (id < 0) return null;
+            foreach (Pawn p in PawnsFinder.AllMapsWorldAndTemporary_AliveOrDead)
+            {
+                if (p != null && p.thingIDNumber == id)
+                    return p;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Captive left custody before the player chose a fate (died, destroyed, traded, freed by
+        /// another mod). Without this the hunt stays pending forever and no new hunt can start.
+        /// </summary>
+        private void HandleLostCustody(Pawn nemesis)
+        {
+            string name = _data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
+            int now = Find.TickManager.TicksGame;
+
+            if (nemesis != null && !nemesis.Dead && !nemesis.Destroyed
+                && nemesis.Faction != null && !nemesis.Faction.IsPlayer)
+            {
+                _data.pendingResolution = false;
+                _data.active = true;
+                _data.lastEscapeTick = now;
+                _data.nextActionTick = now + 120000;
+                NemesisRegistry.Clear();
+                NemesisTells.RecordNote(_data, "Nemesis_Note_CustodyEscaped".Translate());
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_CustodyEscapedTitle".Translate(name),
+                    "Nemesis_Letter_CustodyEscapedBody".Translate(name),
+                    LetterDefOf.ThreatBig,
+                    nemesis.Spawned ? nemesis : null);
+                return;
+            }
+
+            bool died = nemesis != null && nemesis.Dead;
+            RecordEpitaph(died ? "Nemesis_End_DiedInCustody" : "Nemesis_End_LostCustody");
+            _data.active = false;
+            _data.pendingResolution = false;
+            _data.pendingFakeAmbush = false;
+            _data.truceUntilTick = -1;
+            bountySilver = 0;
+            NemesisRegistry.Clear();
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_CustodyLostTitle".Translate(name),
+                (died ? "Nemesis_Letter_CustodyDiedBody" : "Nemesis_Letter_CustodyLostBody").Translate(name),
+                LetterDefOf.NeutralEvent);
         }
 
         public void ClearPendingResolution()
@@ -499,12 +599,12 @@ namespace Nemesis
                 return;
             }
 
-            NemesisAction action = PickAction();
+            NemesisAction action = PickAction(map);
             NemesisActions.Execute(action, _data, map);
             _data.nextActionTick = Find.TickManager.TicksGame + ActionInterval();
         }
 
-        private NemesisAction PickAction()
+        private NemesisAction PickAction(Map map)
         {
             float agg = _data.EffectiveAggression;
             NemesisSettings s = NemesisMod.Settings;
@@ -518,6 +618,9 @@ namespace Nemesis
             float food = s?.actionWeightFood ?? 0.05f;
             float anomaly = ModsConfig.AnomalyActive && agg >= 4f
                 ? (s?.actionWeightAnomaly ?? 0.06f)
+                : 0f;
+            float kidnap = agg >= 5f && NemesisActions.CanKidnap(_data, map)
+                ? (s?.actionWeightKidnap ?? 0.05f)
                 : 0f;
 
             if (_data.rogue)
@@ -552,7 +655,7 @@ namespace Nemesis
             else if (_data.habit == NemesisHabit.SameBuilding)
                 sabotage *= 1.4f;
 
-            float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly;
+            float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly + kidnap;
             float roll = Rand.Value * total;
 
             if ((roll -= taunt) < 0f) return NemesisAction.CommsTaunt;
@@ -563,6 +666,7 @@ namespace Nemesis
             if ((roll -= caravan) < 0f) return NemesisAction.CaravanHarass;
             if ((roll -= sabotage) < 0f) return NemesisAction.PowerSabotage;
             if ((roll -= food) < 0f) return NemesisAction.FoodStoreRaid;
+            if ((roll -= kidnap) < 0f) return NemesisAction.KidnapAttempt;
             return NemesisAction.AnomalyBait;
         }
 

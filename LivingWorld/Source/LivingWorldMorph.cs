@@ -78,15 +78,15 @@ namespace LivingWorld
             switch (kind)
             {
                 case MorphKind.OwnershipFlip:
-                    return TryOwnershipFlip(comp, settlements, ignoreBudget: true);
+                    return TryOwnershipFlip(comp, settlements, ignoreCooldown: true);
                 case MorphKind.Abandon:
-                    return TryAbandon(comp, settlements, ignoreBudget: true);
+                    return TryAbandon(comp, settlements, ignoreCooldown: true);
                 case MorphKind.Outpost:
-                    return TryOutpost(comp, settlements, ignoreBudget: true);
+                    return TryOutpost(comp, settlements, ignoreCooldown: true);
                 case MorphKind.Epithet:
-                    return TryEpithet(comp, settlements.RandomElement(), ignoreBudget: true);
+                    return TryEpithet(comp, settlements.RandomElement(), ignoreCooldown: true);
                 default:
-                    return TryProsperityDrift(comp, settlements.RandomElement(), ignoreBudget: true);
+                    return TryProsperityDrift(comp, settlements.RandomElement(), ignoreCooldown: true);
             }
         }
 
@@ -125,8 +125,12 @@ namespace LivingWorld
             return false;
         }
 
-        private static bool OnCooldown(GameComponent_LivingWorld comp, Settlement settlement)
+        private static bool OnCooldown(GameComponent_LivingWorld comp, Settlement settlement, bool ignoreCooldown = false)
         {
+            if (ignoreCooldown)
+            {
+                return false;
+            }
             SettlementMood mood = comp.GetOrCreateMood(settlement);
             return Find.TickManager.TicksGame - mood.lastMorphTick < MorphCooldownTicks
                 && mood.lastMorphTick > 0;
@@ -141,9 +145,9 @@ namespace LivingWorld
         private static bool TryProsperityDrift(
             GameComponent_LivingWorld comp,
             Settlement settlement,
-            bool ignoreBudget = false)
+            bool ignoreCooldown = false)
         {
-            if (settlement == null || OnCooldown(comp, settlement))
+            if (settlement == null || OnCooldown(comp, settlement, ignoreCooldown))
             {
                 return false;
             }
@@ -181,9 +185,9 @@ namespace LivingWorld
         private static bool TryOwnershipFlip(
             GameComponent_LivingWorld comp,
             List<Settlement> settlements,
-            bool ignoreBudget = false)
+            bool ignoreCooldown = false)
         {
-            Settlement target = settlements.Where(s => !OnCooldown(comp, s)).RandomElementWithFallback();
+            Settlement target = settlements.Where(s => !OnCooldown(comp, s, ignoreCooldown)).RandomElementWithFallback();
             if (target == null)
             {
                 return false;
@@ -223,11 +227,11 @@ namespace LivingWorld
         private static bool TryAbandon(
             GameComponent_LivingWorld comp,
             List<Settlement> settlements,
-            bool ignoreBudget = false)
+            bool ignoreCooldown = false)
         {
             // Prefer factions that still have another settlement.
             Settlement target = settlements
-                .Where(s => !OnCooldown(comp, s)
+                .Where(s => !OnCooldown(comp, s, ignoreCooldown)
                     && settlements.Count(o => o.Faction == s.Faction) >= 2)
                 .RandomElementWithFallback();
             if (target == null)
@@ -258,10 +262,10 @@ namespace LivingWorld
         private static bool TryOutpost(
             GameComponent_LivingWorld comp,
             List<Settlement> settlements,
-            bool ignoreBudget = false)
+            bool ignoreCooldown = false)
         {
             Settlement parent = settlements
-                .Where(s => !OnCooldown(comp, s)
+                .Where(s => !OnCooldown(comp, s, ignoreCooldown)
                     && settlements.Count(o => o.Faction == s.Faction) < 4)
                 .RandomElementWithFallback();
             if (parent?.Faction == null)
@@ -319,9 +323,9 @@ namespace LivingWorld
         private static bool TryEpithet(
             GameComponent_LivingWorld comp,
             Settlement settlement,
-            bool ignoreBudget = false)
+            bool ignoreCooldown = false)
         {
-            if (settlement == null || OnCooldown(comp, settlement))
+            if (settlement == null || OnCooldown(comp, settlement, ignoreCooldown))
             {
                 return false;
             }

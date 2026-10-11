@@ -508,7 +508,9 @@ namespace Strata
             }
             else
             {
-                float reserved = ReservedFraction(density, target);
+                // Only pollutants reserve volume; an O₂ deficit must not
+                // lower its own refill goal.
+                float reserved = PollutantReservedFraction(density, target);
                 float ambientBudget = Mathf.Max(0f, 1f - reserved);
                 float goalN2 = target.nitrogen * ambientBudget;
                 float goalO2 = target.oxygen * ambientBudget;
@@ -625,17 +627,6 @@ namespace Strata
             if (co2Idx >= 0)
             {
                 reserved += Mathf.Max(0f, density[co2Idx] - target.carbonDioxide);
-            }
-            return Mathf.Clamp(reserved, 0f, 1f);
-        }
-
-        private static float ReservedFraction(float[] density, TargetMix target)
-        {
-            float reserved = PollutantReservedFraction(density, target);
-            int o2Idx = IndexOf(StrataGasDefOf.Strata_Oxygen);
-            if (o2Idx >= 0)
-            {
-                reserved += Mathf.Max(0f, target.oxygen - density[o2Idx]);
             }
             return Mathf.Clamp(reserved, 0f, 1f);
         }
