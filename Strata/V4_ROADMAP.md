@@ -42,6 +42,15 @@ Strata uses no draw paths the engine leaves unsupported (no `DrawMeshNow`, `Rend
 - [ ] **Off-thread work modernisation** (`Lock`, `Parallel`, cancellation) — [AZR-464](https://linear.app/azraelgodking/issue/AZR-464)
 - [ ] **Series-wide tick/draw pass** — [AZR-463](https://linear.app/azraelgodking/issue/AZR-463)
 
+## Smarter commuting (cross-floor jobs and pathing)
+
+- [ ] **Cross-floor trips survive save/load** (carried prisoners and babies, haul return trips, drafted routes); also ships to 1.6 as **3.8.4** — [AZR-477](https://linear.app/azraelgodking/issue/AZR-477)
+- [ ] **Work signals per `WorkTypeDef`** instead of 14 hard-coded flags, so modded work types relay without custom probes — [AZR-478](https://linear.app/azraelgodking/issue/AZR-478)
+- [ ] **Priority-aware work across floors**: a priority-1 doctor leaves priority-4 cleaning for a patient downstairs — [AZR-481](https://linear.app/azraelgodking/issue/AZR-481)
+- [ ] **Navigation graph using real travel cost**: pick floors and stairs by walking cost instead of stairwell count and straight-line distance; drafted orders across any number of floors — [AZR-479](https://linear.app/azraelgodking/issue/AZR-479)
+- [ ] **Fewer wasted trips**: keep the motivating work type on arrival; lift the blacklist when the floor's work changes — [AZR-482](https://linear.app/azraelgodking/issue/AZR-482)
+- [ ] **`ReachableLevels` per-map cache**, no list copy per call — [AZR-480](https://linear.app/azraelgodking/issue/AZR-480)
+
 ## Content (V3 leftovers, headline features)
 
 These can be built on 1.6 now and ship in 4.0.
