@@ -79,24 +79,6 @@ namespace Strata
             }
         }
 
-        private static bool IsPipeRelevant(Thing thing)
-        {
-            if (thing is not ThingWithComps twc)
-            {
-                return false;
-            }
-            List<ThingComp> comps = twc.AllComps;
-            for (int i = 0; i < comps.Count; i++)
-            {
-                ThingComp comp = comps[i];
-                if (comp is CompShaftFluidTie || LooksLikePipeComp(comp))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         private static bool LooksLikePipeComp(ThingComp comp)
         {
             string name = comp.GetType().Name;

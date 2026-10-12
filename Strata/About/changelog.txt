@@ -6,5 +6,10 @@
 [*] [b]Building underground with materials on another floor[/b] (AZR-451) - colonists no longer walk up the stairs and come back empty-handed. Strata only sends them for stacks they can actually walk to from the stairs, and picks another stack if the first one turns out to be out of reach. With verbose logging on (Mod Options), Player.log says why a trip was dropped.
 [/list]
 
+[b]Changed[/b]
+[list]
+[*] [b]Dead-code sweep[/b] - removed unused atmosphere wrappers, empty off-thread session hooks, leftover helpers, and unused keyed inspect strings. No player-facing change.
+[/list]
+
 [i]Build stamp (Player.log): construct-fetch-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
