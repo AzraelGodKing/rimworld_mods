@@ -21,6 +21,7 @@ Strata uses no draw paths the engine leaves unsupported (no `DrawMeshNow`, `Rend
 
 ## Build and compat (blocking)
 
+- [ ] **Gate: RimWorld 1.7 stable release** — every V4 ticket is blocked by [AZR-483](https://linear.app/azraelgodking/issue/AZR-483) until 1.7 leaves the unstable branch (only the 1.6 fix AZR-477 is exempt)
 - [ ] **1.7 in-game test + `supportedVersions` 1.7** — [AZR-457](https://linear.app/azraelgodking/issue/AZR-457)
 - [ ] **Transpilers still match** (`Patch_CombinedResources`, `RitualTravel`) — [AZR-458](https://linear.app/azraelgodking/issue/AZR-458)
 - [ ] **See-below rendering on the new engine** — [AZR-459](https://linear.app/azraelgodking/issue/AZR-459)
