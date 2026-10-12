@@ -202,25 +202,6 @@ namespace Strata
             return tracker;
         }
 
-        private static bool IsLocalWalkableDeck(Map pocket, IntVec3 cell)
-        {
-            if (StrataMapUtility.IsUpperLevel(pocket))
-            {
-                return cell.GetTerrain(pocket)?.defName == UpperDeckUtility.RoofDeckDefName;
-            }
-            return GravshipDeckUtility.IsWalkableDeckCell(pocket, cell);
-        }
-
-        private static bool HostSubstructureProjectsTo(Map pocket, Map host, IntVec3 pocketCell)
-        {
-            if (host == null || pocket == null)
-            {
-                return false;
-            }
-            // Raw 1:1 — never proportional on gravship pockets.
-            return StrataGravshipUtility.CellOnGravship(host, pocketCell);
-        }
-
         private static void EnsureProjectedSubstructure(
             Map map,
             IntVec3 cell,

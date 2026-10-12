@@ -1,6 +1,6 @@
 namespace Strata
 {
-    // Off-thread atmosphere flag + session cleanup. Density/overlay work lives
+    // Off-thread atmosphere flag. Density/overlay work lives
     // in StrataOffThreadDensity; the retired per-cell breath job was removed.
     internal static class StrataOffThreadWork
     {
@@ -14,15 +14,6 @@ namespace Strata
                 + " workRelayBoard=" + (StrataMod.Settings?.OffThreadWorkRelayActive == true)
                 + " (A1 buoyancy, A2 density, A3 overlay; B1–B3 rock/cavern plans use Parallel/ThreadPool;"
                 + " work board packs grow cells on main, aggregates on worker).");
-        }
-
-        [StrataSessionReset]
-        public static void ResetSession()
-        {
-        }
-
-        public static void CancelMap(int mapUniqueId)
-        {
         }
     }
 }

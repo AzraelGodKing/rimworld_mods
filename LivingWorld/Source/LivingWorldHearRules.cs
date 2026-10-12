@@ -36,11 +36,6 @@ namespace LivingWorld
                 return true;
             }
 
-            if (verbosity >= 2 && HasComms())
-            {
-                return true;
-            }
-
             return verbosity >= 2;
         }
 

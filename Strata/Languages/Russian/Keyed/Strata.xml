@@ -362,14 +362,6 @@
   <Strata_ExhaustBreathable>Воздух в комнате пригоден для дыхания.</Strata_ExhaustBreathable>
   <Strata_ExhaustEnriching>Насыщение комнаты: {0} ({1}).</Strata_ExhaustEnriching>
 
-  <Strata_Atmos_Unknown>Неизвестный воздух</Strata_Atmos_Unknown>
-  <Strata_Atmos_AmbientLocked>Поверхностный воздух (безопасно)</Strata_Atmos_AmbientLocked>
-  <Strata_Atmos_Outdoor>Открытый воздух</Strata_Atmos_Outdoor>
-  <Strata_Atmos_OpenCavern>Открытая пещера</Strata_Atmos_OpenCavern>
-  <Strata_Atmos_Ventilated>Вентилируется</Strata_Atmos_Ventilated>
-  <Strata_Atmos_ShaftLinked>Связано шахтой</Strata_Atmos_ShaftLinked>
-  <Strata_Atmos_Sealed>Герметично</Strata_Atmos_Sealed>
-  <Strata_Atmos_StatusLine>{0} · O₂ {1}% · CO₂ {2}%</Strata_Atmos_StatusLine>
   <Strata_Letter_FirstB1Air_Label>Подземный воздух</Strata_Letter_FirstB1Air_Label>
   <Strata_Letter_FirstB1Air_Text>Под поверхностью герметичные комнаты не получают свободный кислород.\n\nПоселенцы вдыхают O₂ и выдыхают CO₂; растения — наоборот. Держите воздух дыхательным через открытые шахты, вентиляцию наружу, насосы O₂/CO₂, известковые скрубберы, мехи или обменники — или оставьте комнаты открытыми в пещеру.\n\nПоверхность и палубы A+ всегда безопасны. Система включается в настройках мода («природные газы», по умолчанию выкл.).</Strata_Letter_FirstB1Air_Text>
   <Strata_IncompatibleStackLetterLabel>Несовместимый многоуровневый мод</Strata_IncompatibleStackLetterLabel>

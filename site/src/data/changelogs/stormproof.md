@@ -2,6 +2,10 @@
 
 Detailed notes for **Stormproof** only.
 
+## [Unreleased]
+
+### Changed
+- Dropped the unused `ArmoredConduit.png` texture (defs use `_Atlas` and `_MenuIcon` only). Atlas script writes the segment preview to `docs/img` instead of `Textures/`. No gameplay change.
 
 ## [1.6.0]
 

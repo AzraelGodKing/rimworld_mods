@@ -18,15 +18,6 @@ namespace Niceties
         private static PropertyInfo isInMultiplayer;
         private static MethodInfo registerSyncMethod;
 
-        internal static bool Loaded
-        {
-            get
-            {
-                Resolve();
-                return loaded;
-            }
-        }
-
         /// <summary>
         /// True inside a Multiplayer session. If the mod is loaded but the session flag
         /// cannot be read, report true so the save's host snapshot is kept.

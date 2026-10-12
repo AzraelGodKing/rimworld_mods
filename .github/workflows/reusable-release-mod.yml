@@ -215,74 +215,9 @@ jobs:
         run: |
           echo "::warning::${{ steps.meta.outputs.display_name }} has nexus_publish=false in scripts/matrix/mod-matrix.json. IDs are kept; CI will not upload until that flag is true."
 
-      - name: Nexus upload (1/4)
-        id: nexus_upload_1
+      - name: Nexus upload
+        id: nexus_upload
         if: success() && steps.nexus_preflight.outcome == 'success'
-        continue-on-error: true
-        uses: ./.github/actions/nexus-upload
-        with:
-          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
-          file_id: ${{ steps.matrix.outputs.nexus_file_id }}
-          filename: ${{ steps.nexus_preflight.outputs.zip_path }}
-          version: ${{ steps.meta.outputs.version }}
-          display_name: ${{ steps.meta.outputs.display_name }} ${{ steps.meta.outputs.version }}.zip
-          description: |
-            ${{ steps.meta.outputs.changelog_bbcode }}
-
-            Extract into RimWorld Mods. Requires Harmony.
-
-      - name: Nexus backoff 30s
-        if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure'
-        run: sleep 30
-
-      - name: Nexus upload (2/4)
-        id: nexus_upload_2
-        if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure'
-        continue-on-error: true
-        uses: ./.github/actions/nexus-upload
-        with:
-          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
-          file_id: ${{ steps.matrix.outputs.nexus_file_id }}
-          filename: ${{ steps.nexus_preflight.outputs.zip_path }}
-          version: ${{ steps.meta.outputs.version }}
-          display_name: ${{ steps.meta.outputs.display_name }} ${{ steps.meta.outputs.version }}.zip
-          description: |
-            ${{ steps.meta.outputs.changelog_bbcode }}
-
-            Extract into RimWorld Mods. Requires Harmony.
-
-      - name: Nexus backoff 2m
-        if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure'
-        run: sleep 120
-
-      - name: Nexus upload (3/4)
-        id: nexus_upload_3
-        if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure'
-        continue-on-error: true
-        uses: ./.github/actions/nexus-upload
-        with:
-          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
-          file_id: ${{ steps.matrix.outputs.nexus_file_id }}
-          filename: ${{ steps.nexus_preflight.outputs.zip_path }}
-          version: ${{ steps.meta.outputs.version }}
-          display_name: ${{ steps.meta.outputs.display_name }} ${{ steps.meta.outputs.version }}.zip
-          description: |
-            ${{ steps.meta.outputs.changelog_bbcode }}
-
-            Extract into RimWorld Mods. Requires Harmony.
-
-      - name: Nexus backoff 5m
-        if: success() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload_1.outcome == 'failure' && steps.nexus_upload_2.outcome == 'failure' && steps.nexus_upload_3.outcome == 'failure'
-        run: sleep 300
-
-      - name: Nexus upload (4/4 — must succeed)
-        id: nexus_upload_4
-        if: >-
-          success() &&
-          steps.nexus_preflight.outcome == 'success' &&
-          steps.nexus_upload_1.outcome == 'failure' &&
-          steps.nexus_upload_2.outcome == 'failure' &&
-          steps.nexus_upload_3.outcome == 'failure'
         uses: ./.github/actions/nexus-upload
         with:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
@@ -297,13 +232,7 @@ jobs:
 
       - name: Nexus Changelog tab (only after a successful file upload)
         id: nexus_changelog
-        if: >-
-          always() &&
-          steps.nexus_preflight.outcome == 'success' &&
-          (steps.nexus_upload_1.outcome == 'success' ||
-           steps.nexus_upload_2.outcome == 'success' ||
-           steps.nexus_upload_3.outcome == 'success' ||
-           steps.nexus_upload_4.outcome == 'success')
+        if: always() && steps.nexus_preflight.outcome == 'success' && steps.nexus_upload.outcome == 'success'
         continue-on-error: true
         env:
           NEXUS_API_KEY: ${{ secrets.NEXUSMODS_API_KEY }}
@@ -323,9 +252,7 @@ jobs:
           steps.nexus_preflight.outcome == 'success'
         run: |
           set -euo pipefail
-          for o in "${{ steps.nexus_upload_1.outcome }}" "${{ steps.nexus_upload_2.outcome }}" "${{ steps.nexus_upload_3.outcome }}" "${{ steps.nexus_upload_4.outcome }}"; do
-            [ "$o" = "success" ] && exit 0
-          done
+          [ "${{ steps.nexus_upload.outcome }}" = "success" ] && exit 0
           echo "::error::Nexus upload failed after retries."
           exit 1
 
@@ -341,21 +268,16 @@ jobs:
           NEXUS_PAGE_VERSION: ${{ steps.version_check.outputs.nexus_page_version }}
           NEXUS_FILE_VERSION: ${{ steps.version_check.outputs.nexus_file_version }}
           GITHUB_RELEASE_OUTCOME: ${{ steps.gh_release.outcome }}
-          NEXUS_OUTCOME_1: ${{ steps.nexus_upload_1.outcome }}
-          NEXUS_OUTCOME_2: ${{ steps.nexus_upload_2.outcome }}
-          NEXUS_OUTCOME_3: ${{ steps.nexus_upload_3.outcome }}
-          NEXUS_OUTCOME_4: ${{ steps.nexus_upload_4.outcome }}
+          NEXUS_OUTCOME: ${{ steps.nexus_upload.outcome }}
+          NEXUS_ATTEMPT: ${{ steps.nexus_upload.outputs.attempt }}
           PREFLIGHT: ${{ steps.nexus_preflight.outcome }}
           NEXUS_CHANGELOG_OUTCOME: ${{ steps.nexus_changelog.outcome }}
         run: |
           set -euo pipefail
           NEXUS_RESULT="not-requested"
-          for i in 1 2 3 4; do
-            VAR="NEXUS_OUTCOME_$i"
-            OUT="${!VAR:-skipped}"
-            if [ "$OUT" = "success" ]; then NEXUS_RESULT="success-attempt-$i"; break; fi
-            if [ "$OUT" = "failure" ]; then NEXUS_RESULT="failed"; fi
-          done
+          OUT="${NEXUS_OUTCOME:-skipped}"
+          if [ "$OUT" = "success" ]; then NEXUS_RESULT="success-attempt-${NEXUS_ATTEMPT:-1}"; fi
+          if [ "$OUT" = "failure" ]; then NEXUS_RESULT="failed"; fi
           {
             echo "## Release run report"
             echo ""

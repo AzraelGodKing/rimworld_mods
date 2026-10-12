@@ -28,7 +28,7 @@ namespace LivingWorld
         private string lastNewsVersion;
         private List<int> collapsedFactionIds = new List<int>();
 
-        // AZR-328 — cache Get across Label/inspect hot paths for the current Game.
+        // Cache Get across Label/inspect hot paths for the current Game.
         private static Game cachedGame;
         private static GameComponent_LivingWorld cachedComp;
 
@@ -189,7 +189,7 @@ namespace LivingWorld
             morphsThisYear++;
         }
 
-        /// <summary>AZR-332 — one Collapse letter per faction lost to the rim.</summary>
+        /// <summary>One Collapse letter per faction lost to the rim.</summary>
         public bool TryMarkFactionCollapsed(Faction faction)
         {
             if (faction == null)

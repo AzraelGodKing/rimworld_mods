@@ -5,7 +5,7 @@ Detailed notes for Homesteader only.
 ## [Unreleased]
 
 ### Changed
-- Removed unused content: the old Legacy scenario def, an empty Adaptive Storage patch, and the unread `letterText` on the Kats incident (plus its Chinese and Russian lines). No gameplay change.
+- Removed unused content: the old Legacy scenario def, an empty Adaptive Storage patch, the leftover Adaptive Storage `loadAfter` entry, unused allergy helpers, and the unread `letterText` on the Kats incident (plus its Chinese and Russian lines). Pointed monument comments at `Thoughts_Homestead.xml`. No gameplay change.
 
 ## [1.4.0]
 
