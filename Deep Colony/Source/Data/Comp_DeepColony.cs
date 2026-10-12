@@ -218,11 +218,6 @@ namespace DeepColony
             ArchetypeUtility.TryRefresh(pawn);
         }
 
-        public bool QualifiesFor(PerkDef perk)
-        {
-            return CanUnlock(perk) || (perk != null && HasPerk(perk) && MeetsSkillAndPrereq(perk));
-        }
-
         private bool MeetsSkillAndPrereq(PerkDef perk)
         {
             if (!DeepColonySettings.Get.enablePerks) return false;

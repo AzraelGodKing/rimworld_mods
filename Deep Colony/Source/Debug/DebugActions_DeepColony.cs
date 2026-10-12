@@ -16,8 +16,6 @@ namespace DeepColony
         // Needed so the class is picked up — the [DebugAction] methods must live in a loaded assembly.
         static DebugActions_DeepColony() { }
 
-        // ── PERKS ─────────────────────────────────────────────────────────────────
-
         [DebugAction("Deep Colony", "Grant perk point",
             actionType = DebugActionType.ToolMapForPawns,
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -118,8 +116,6 @@ namespace DeepColony
             Find.WindowStack.Add(new Window_PerkTree(p));
         }
 
-        // ── TRAUMA ────────────────────────────────────────────────────────────────
-
         [DebugAction("Deep Colony", "Apply trauma: combat shock",
             actionType = DebugActionType.ToolMapForPawns,
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -219,8 +215,6 @@ namespace DeepColony
                 p, MessageTypeDefOf.NegativeEvent, false);
         }
 
-        // ── APPRENTICESHIP ────────────────────────────────────────────────────────
-
         [DebugAction("Deep Colony", "Force set mentor (click mentor, then apprentice)",
             actionType = DebugActionType.ToolMapForPawns,
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -289,8 +283,6 @@ namespace DeepColony
                 " | Active session: " + ActiveMentoringSession.IsBeingMentored(p));
         }
 
-        // ── GENERATIONS ───────────────────────────────────────────────────────────
-
         [DebugAction("Deep Colony", "Force inheritance check",
             actionType = DebugActionType.ToolMapForPawns,
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -333,8 +325,6 @@ namespace DeepColony
             sb.AppendLine("  Inheritance enabled: " + DeepColonySettings.Get.enableInheritance);
             Log.Message(sb.ToString());
         }
-
-        // ── FACTION REPUTATION ────────────────────────────────────────────────────
 
         [DebugAction("Deep Colony", "Inject +5 faction drift (selected pawn's faction)",
             actionType = DebugActionType.ToolMapForPawns,
@@ -408,8 +398,6 @@ namespace DeepColony
             Messages.Message("[DeepColony] Simulated raid rep effect from " + p.Faction.Name + ".",
                 MessageTypeDefOf.NeutralEvent, false);
         }
-
-        // ── GENERAL ───────────────────────────────────────────────────────────────
 
         [DebugAction("Deep Colony", "Log settings snapshot",
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
@@ -708,8 +696,6 @@ namespace DeepColony
             var thought = (Thought_Memory)ThoughtMaker.MakeThought(DC_DefOf.DC_Thought_TraditionTaught);
             p.needs.mood.thoughts.memories.TryGainMemory(thought, p);
         }
-
-        // ── TOUCH-AVERSE ──────────────────────────────────────────────────────────
 
         [DebugAction("Deep Colony", "Grant touch-averse trait",
             actionType = DebugActionType.ToolMapForPawns,

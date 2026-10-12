@@ -1,9 +1,14 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.8.3` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.3 Soft-compat build <stamp> loaded from ...`.
+**Version:** `3.8.3` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.3 loaded from ... (modified ...); construct-fetch-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp after the version. Current stamp is `construct-fetch-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `construct-fetch-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [Unreleased]
+
+### Changed
+- Startup version line uses shared `ModVersionLog.Write`; stamp stays `construct-fetch-v1`. No gameplay change.
 
 ## [3.8.3]
 
