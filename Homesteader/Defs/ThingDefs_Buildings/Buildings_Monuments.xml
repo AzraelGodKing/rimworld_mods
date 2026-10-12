@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
-  <!-- Shared aura: +27 mood to colonists in range (see Thoughts_Statue27.xml). -->
+  <!-- Shared aura: +27 mood to colonists in range (see Thoughts_Homestead.xml). -->
   <ThingDef ParentName="BuildingBase" Name="Homesteader_Monument27Base" Abstract="True">
     <thingClass>Building</thingClass>
     <altitudeLayer>Building</altitudeLayer>

@@ -300,11 +300,6 @@ namespace Homesteader
             return MatchingFoodAllergyId(allergyIds, foodDef) != null;
         }
 
-        public static bool FoodMatchesAny(IEnumerable<string> allergyIds, Thing food)
-        {
-            return MatchingFoodAllergyId(allergyIds, food) != null;
-        }
-
         public static string MatchingFoodAllergyId(IEnumerable<string> allergyIds, ThingDef foodDef)
         {
             if (allergyIds == null || foodDef == null)

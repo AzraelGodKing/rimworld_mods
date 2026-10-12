@@ -11,8 +11,6 @@ namespace Niceties
         private static bool entriesMissingLogged;
         private static int hiddenCount;
 
-        internal static int HiddenCount => hiddenCount;
-
         internal static void MarkDirty()
         {
             Find.ColonistBar?.MarkColonistsDirty();
