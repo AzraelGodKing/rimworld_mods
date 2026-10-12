@@ -9,6 +9,9 @@
 
 ## After V3 (future vision)
 
+The open items below (Magma layer, Flooded level, Lost floor) moved to
+[V4_ROADMAP.md](V4_ROADMAP.md) for Strata 4 on RimWorld 1.7.
+
 Bugs and small ideas also track on
 [GitHub issues](https://github.com/AzraelGodKing/rimworld_mods/issues).
 
