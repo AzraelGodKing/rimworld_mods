@@ -221,7 +221,7 @@ namespace Strata
             }
         }
 
-        // Lite breath grid: batched room/plant passes and less frequent sync.
+        // Lite: batched room/plant passes and less frequent sync.
         public static bool LiteAtmosphereOnMap(Map map)
         {
             if (map == null)
@@ -308,15 +308,6 @@ namespace Strata
                 }
             }
             return false;
-        }
-
-        public static int BreathRoomsPerBatch(Map map)
-        {
-            if (LiteAtmosphereOnMap(map))
-            {
-                return 12;
-            }
-            return Find.CurrentMap == map ? 48 : 24;
         }
 
         public static int BreathPlantsPerBatch(Map map)

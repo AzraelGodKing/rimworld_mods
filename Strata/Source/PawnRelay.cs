@@ -329,42 +329,6 @@ namespace Strata
             return false;
         }
 
-        // A bed the pawn could walk downstairs and claim: colonist-type, not
-        // medical, with a free slot. Vanilla claims it once they arrive.
-        public static bool HasClaimableBedFor(Pawn pawn, Map map)
-        {
-            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
-            {
-                if (thing is Building_Bed bed && IsClaimableColonistBed(pawn, bed))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        // A colonist bed on this map the pawn can actually reach right now.
-        public static bool HasUsableBedOnMap(Pawn pawn, Map map)
-        {
-            if (pawn == null || map == null)
-            {
-                return false;
-            }
-            Building_Bed ownBed = pawn.ownership?.OwnedBed;
-            if (ownBed != null && ownBed.Spawned && ownBed.Map == map && IsUsableColonistBed(pawn, ownBed))
-            {
-                return true;
-            }
-            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.Bed))
-            {
-                if (thing is Building_Bed bed && IsUsableColonistBed(pawn, bed))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public static bool ShouldCommuteForRest(Pawn pawn, Job vanillaResult)
         {
             if (vanillaResult?.def == JobDefOf.LayDown)

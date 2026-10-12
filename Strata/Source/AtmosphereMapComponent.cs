@@ -823,48 +823,6 @@ namespace Strata
             ThrowMotes();
         }
 
-        // CompExhaust.PostSpawnSetup can run before this MapComponent exists
-        // (FinalizeInit adds us later). One scan picks up anything missed.
-        internal float GetBreathRoomDensity(Room room, StrataGasDef gas)
-        {
-            return room != null && gas != null && clouds.TryGetValue(room.ID, out Cloud c)
-                ? c.density[gas.index]
-                : 0f;
-        }
-
-        internal void AddBreathGasToRoom(Room room, StrataGasDef gas, float amount, IntVec3 sample, bool bypassCap = false)
-        {
-            AddGasToRoom(room, gas, amount, sample, bypassCap);
-        }
-
-        internal void ConsumeBreathGasFromRoom(Room room, StrataGasDef gas, float amount)
-        {
-            ConsumeGasFromRoom(room, gas, amount);
-        }
-
-        internal void SetRoomGasDensity(Room room, StrataGasDef gas, float density, IntVec3 sample)
-        {
-            SetBreathRoomDensity(room, gas, density, sample);
-            MarkCellDensityDirty();
-        }
-
-        internal void SetBreathRoomDensity(Room room, StrataGasDef gas, float density, IntVec3 sample)
-        {
-            if (room == null || gas == null)
-            {
-                return;
-            }
-            if (!TryGetOrCreateCloud(room, sample, out Cloud c))
-            {
-                return;
-            }
-            c.density[gas.index] = ClampGasDensity(gas, density);
-            AtmosphericMix.FinalizeMix(c.density, map);
-            c.sample = sample.IsValid ? sample : c.sample;
-            c.cells = Mathf.Max(room.CellCount, 1);
-            CullOrStore(room.ID, c);
-        }
-
         internal bool TryGetRoomDensity(Room room, out float[] density)
         {
             density = null;
@@ -1422,30 +1380,6 @@ namespace Strata
                 return true;
             }
             return false;
-        }
-
-        // Combined harmful-gas worry in a room (for sister-mod bridges).
-        public float TotalHarmfulLoad(Room room)
-        {
-            if (room == null)
-            {
-                return 0f;
-            }
-            float total = 0f;
-            List<StrataGasDef> gases = Gases;
-            for (int g = 0; g < gases.Count; g++)
-            {
-                StrataGasDef gas = gases[g];
-                if (gas.harmHediff == null)
-                {
-                    continue;
-                }
-                float density = DensityInRoom(room, gas);
-                total += gas.harmWhenBelow
-                    ? Mathf.Max(0f, gas.harmThreshold - density)
-                    : density;
-            }
-            return total;
         }
 
         // Draw the gas overlay while the play-settings toggle is on.
@@ -2053,11 +1987,6 @@ namespace Strata
             return name == "Cow" || name == "Boomalope" || name.Contains("Cow");
         }
 
-        private bool SurfaceMapHasAmbientAir()
-        {
-            return !StrataLevelPerfUtility.IsStrataPocketLevel(map) || AtmosphericMix.ForcesAmbientInEnclosedRooms(map);
-        }
-
         private static bool TryGetSampleCell(Room room, out IntVec3 cell)
         {
             cell = IntVec3.Invalid;
@@ -2570,10 +2499,6 @@ namespace Strata
             StrataOffThreadDensity.FillPlanesParallel(
                 cellDensity,
                 fills,
-                breathO2: null,
-                breathCo2: null,
-                oxygenIndex: -1,
-                carbonDioxideIndex: -1,
                 fogged);
 
             StrataOffThreadDensity.GasOverlayMeta[] gasMeta = StrataOffThreadDensity.SnapshotGasMeta(map);

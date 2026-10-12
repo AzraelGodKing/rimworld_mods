@@ -72,24 +72,6 @@ namespace Strata
             return innerContainer;
         }
 
-        public bool CanStore(Thing thing)
-        {
-            if (thing == null || UsesSustainMode)
-            {
-                return false;
-            }
-            if (!IsBirdFoodDef(thing.def))
-            {
-                return false;
-            }
-            if (innerContainer.TotalStackCount >= Props.maxStacks
-                && !innerContainer.Contains(thing.def))
-            {
-                return false;
-            }
-            return innerContainer.CanAcceptAnyOf(thing, canMergeWithExistingStacks: true);
-        }
-
         public bool TryFeed(Pawn bird)
         {
             if (bird?.needs?.food == null || UsesSustainMode)

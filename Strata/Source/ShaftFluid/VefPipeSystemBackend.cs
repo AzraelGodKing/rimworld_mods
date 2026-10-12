@@ -435,11 +435,6 @@ namespace Strata
             return DrawableAmount(net);
         }
 
-        private float OfflineDemand(object net)
-        {
-            return SumOfflineDemand(net);
-        }
-
         // Partner has more drawable gas — trickle toward equal fill (incl. overflow).
         private float EqualizeWant(object mine, object other)
         {
@@ -459,21 +454,6 @@ namespace Strata
             }
             float transfer = EqualizeDamping * (storedOther * capMine - storedMine * capOther) / Mathf.Max(FeedMin, capMine + capOther);
             return transfer > EqualizeMinTransfer ? transfer : 0f;
-        }
-
-        // Partner has live surplus and this net has tank/junction room — charge it.
-        private float StorageChargeWant(object mine, float partnerLiveExcess)
-        {
-            if (partnerLiveExcess < FeedMin)
-            {
-                return 0f;
-            }
-            float room = NetStorageRoom(mine);
-            if (room < FeedMin)
-            {
-                return 0f;
-            }
-            return Mathf.Min(partnerLiveExcess, room);
         }
 
         private float SumOfflineDemand(object net)
