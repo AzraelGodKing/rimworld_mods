@@ -29,7 +29,7 @@ namespace LivingWorld
                 Faction b = pairs[i].FactionB();
                 if (!IsEligible(a) || !IsEligible(b))
                 {
-                    // AZR-332 — publish once when a tracked NPC faction leaves the rim.
+                    // Publish once when a tracked NPC faction leaves the rim.
                     if (!IsEligible(a))
                     {
                         MaybePublishFactionCollapse(comp, a);
@@ -44,7 +44,7 @@ namespace LivingWorld
         }
 
         /// <summary>
-        /// AZR-332 — Major Collapse when an NPC faction is defeated or has no settlements left.
+        /// Major Collapse when an NPC faction is defeated or has no settlements left.
         /// Deduped via GameComponent collapsed-faction ids.
         /// </summary>
         public static void MaybePublishFactionCollapse(

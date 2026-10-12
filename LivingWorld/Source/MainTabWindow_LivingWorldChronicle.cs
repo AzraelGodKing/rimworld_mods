@@ -84,7 +84,6 @@ namespace LivingWorld
             {
                 WorldEvent ev = shown[i];
                 Rect row = new Rect(0f, ly, outRect.width - 20f, 70f);
-                // AZR-333 — clickable row jumps the world camera to the event tile.
                 if (ev.tile >= 0)
                 {
                     Widgets.DrawHighlightIfMouseover(row);
