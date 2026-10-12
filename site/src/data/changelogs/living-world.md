@@ -16,6 +16,10 @@ AZR-326
 #### Internal
 - Removed dead code: `TryConsumeMorphBudget`, `LivingWorldWarSites.TickExpire`, `LivingWorldSignals.ResetSession`.
 - Merged four identical `FindFaction(int)` helpers into one on `WorldEvent`.
+- Dropped unused Founding letter Keyed pair (EN/RU/CN); `WorldEventKind.Founding` stays for scribed saves.
+- Removed redundant `HasComms()` short-circuit in `PlayerShouldHear` (same as `return verbosity >= 2`).
+- Stripped AZR-326–333 ticket-id prefixes from source comments.
+- Languages README no longer implies DefInjected packs are future work.
 
 ### Development history (formerly 1.2.0)
 

@@ -25,7 +25,7 @@ namespace LivingWorld
             {
                 return false;
             }
-            // AZR-326 — check budget before work, but only consume on a successful morph.
+            // Check budget before work, but only consume on a successful morph.
             if (!comp.HasMorphBudget())
             {
                 return false;
@@ -161,7 +161,7 @@ namespace LivingWorld
             mood.prosperity = next;
             TouchMorph(comp, settlement);
 
-            // AZR-331 — distinct FamineRumor when prosperity drifts into struggle/collapse.
+            // Distinct FamineRumor when prosperity drifts into struggle/collapse.
             WorldEventKind kind;
             if (delta < 0 && mood.prosperity <= -1)
             {
@@ -219,7 +219,7 @@ namespace LivingWorld
                 loser,
                 target));
 
-            // AZR-332 — last settlement taken: faction is gone from the rim.
+            // Last settlement taken: faction is gone from the rim.
             LivingWorldDiplomacy.MaybePublishFactionCollapse(comp, loser, winner, target);
             return true;
         }

@@ -12,7 +12,7 @@ namespace LivingWorld
                 return;
             }
 
-            // AZR-327 — Major always reaches the letter stack; do not silently drop on budget.
+            // Major always reaches the letter stack; do not silently drop on budget.
             GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
             if (ev.severity != NewsSeverity.Major
                 && comp != null

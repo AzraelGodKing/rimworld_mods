@@ -99,7 +99,7 @@ namespace LivingWorld
         public int lastMorphTick;
         public string epithet;
 
-        // AZR-328 — cached " (epithet)" suffix; not scribed (rebuilt lazily).
+        // Cached " (epithet)" suffix; not scribed (rebuilt lazily).
         private string epithetLabelCacheKey;
         private string epithetLabelCache;
 
@@ -126,7 +126,7 @@ namespace LivingWorld
             return "LivingWorld_Prosperity_Stable";
         }
 
-        /// <summary>AZR-328 — cached translated epithet suffix for Settlement.Label.</summary>
+        /// <summary>Cached translated epithet suffix for Settlement.Label.</summary>
         public string EpithetLabelSuffix()
         {
             if (string.IsNullOrEmpty(epithet))

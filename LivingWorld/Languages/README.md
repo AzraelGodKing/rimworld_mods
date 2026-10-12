@@ -2,8 +2,6 @@
 
 English keyed strings ship in `English/Keyed/LivingWorld.xml` (letters, debug, diplomacy UI copy).
 
-DefInjected packs can follow the same layout as Nemesis / Homesteader when translating settlement inspect text and related defs.
-
 ## Add a language (example: Russian)
 
 ```
