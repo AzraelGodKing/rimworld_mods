@@ -46,7 +46,7 @@ namespace LivingWorld
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ForceRandomMorph()
         {
-            // AZR-329 — enqueue; apply on next GameComponentTick.
+            // Enqueue; apply on next GameComponentTick.
             LivingWorldDebugCommand.EnqueueRandomMorph();
             Messages.Message("[Living World] Morph queued for next tick.", MessageTypeDefOf.NeutralEvent,
                 historical: false);

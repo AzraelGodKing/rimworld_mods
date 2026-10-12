@@ -4,8 +4,6 @@ using Verse;
 
 namespace DeepColony.Patches
 {
-    // ── C07 kids at the raid / C10 sibling disaster flavor / C05 Anomaly ─────────
-
     [HarmonyPatch(typeof(Pawn_HealthTracker), "MakeDowned")]
     public static class Patch_MakeDowned_BatchC
     {
@@ -37,8 +35,6 @@ namespace DeepColony.Patches
         }
     }
 
-    // ── C09 Homesteader meals ───────────────────────────────────────────────────
-
     [HarmonyPatch(typeof(Thing), nameof(Thing.Ingested))]
     public static class Patch_Thing_Ingested_GrandChef
     {
@@ -48,8 +44,6 @@ namespace DeepColony.Patches
             HomesteaderMealUtility.NotifyIngested(ingester, __instance);
         }
     }
-
-    // ── C17 adulthood ───────────────────────────────────────────────────────────
 
     [HarmonyPatch(typeof(Pawn_AgeTracker), "BirthdayBiological")]
     public static class Patch_BirthdayBiological_Childhood
@@ -76,8 +70,6 @@ namespace DeepColony.Patches
         }
     }
 
-    // ── C18 funerals ────────────────────────────────────────────────────────────
-
     [HarmonyPatch(typeof(Building_Casket), nameof(Building_Casket.TryAcceptThing))]
     public static class Patch_Casket_TryAcceptThing_Funeral
     {
@@ -101,8 +93,6 @@ namespace DeepColony.Patches
             FuneralUtility.NotifyBodyLaidToRest(__instance.InnerPawn, "DC_FuneralBurn");
         }
     }
-
-    // ── C06 Odyssey crash incidents ─────────────────────────────────────────────
 
     [HarmonyPatch(typeof(IncidentWorker), "TryExecuteWorker")]
     public static class Patch_IncidentWorker_OdysseyCrash

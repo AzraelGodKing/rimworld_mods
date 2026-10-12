@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -46,14 +45,10 @@ namespace Strata
 
         public static bool OffThreadEnabled => StrataOffThreadWork.OffThreadAtmosphereEnabled;
 
-        // A2: fill density planes from snapshotted room cells + breath grids.
+        // A2: fill density planes from snapshotted room cells.
         public static void FillPlanesParallel(
             float[][] planes,
             List<RoomDensityFill> roomFills,
-            float[] breathO2,
-            float[] breathCo2,
-            int oxygenIndex,
-            int carbonDioxideIndex,
             bool[] foggedOrInvalid)
         {
             if (planes == null)
@@ -91,36 +86,6 @@ namespace Strata
                     }
                 });
             }
-
-            PaintBreathPlane(planes, breathO2, oxygenIndex, foggedOrInvalid);
-            PaintBreathPlane(planes, breathCo2, carbonDioxideIndex, foggedOrInvalid);
-        }
-
-        private static void PaintBreathPlane(
-            float[][] planes,
-            float[] source,
-            int gasIndex,
-            bool[] foggedOrInvalid)
-        {
-            if (source == null || gasIndex < 0 || gasIndex >= planes.Length || planes[gasIndex] == null)
-            {
-                return;
-            }
-            float[] plane = planes[gasIndex];
-            int len = Math.Min(plane.Length, source.Length);
-            Parallel.For(0, len, i =>
-            {
-                float value = source[i];
-                if (value <= 0f)
-                {
-                    return;
-                }
-                if (foggedOrInvalid != null && foggedOrInvalid[i])
-                {
-                    return;
-                }
-                plane[i] = value;
-            });
         }
 
         // A3: bake per-cell overlay colors from density planes + gas meta.

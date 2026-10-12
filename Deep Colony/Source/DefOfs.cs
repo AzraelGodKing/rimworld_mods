@@ -6,19 +6,16 @@ namespace DeepColony
     [DefOf]
     public static class DC_DefOf
     {
-        // ── Relations ─────────────────────────────────────────────────────────────
         public static PawnRelationDef DC_MentorOf;
         public static PawnRelationDef DC_ApprenticeOf;
         public static PawnRelationDef DC_Confidant;
         public static PawnRelationDef DC_Rival;
 
-        // ── Jobs ─────────────────────────────────────────────────────────────────
         public static JobDef DC_Job_Mentor;
         public static JobDef DC_Job_CounselTrauma;
         public static JobDef DC_Job_GroupCounsel;
         public static JobDef DC_Job_CounselPrisoner;
 
-        // ── Traumas ──────────────────────────────────────────────────────────────
         public static TraumaDef DC_Trauma_CombatShock;
         public static TraumaDef DC_Trauma_ViolentLoss;
         public static TraumaDef DC_Trauma_Captivity;
@@ -34,7 +31,6 @@ namespace DeepColony
         [MayRequire("Ludeon.RimWorld.Odyssey")]
         public static TraumaDef DC_Trauma_Isolation;
 
-        // ── Thoughts (non-trauma class) ───────────────────────────────────────────
         public static ThoughtDef DC_Thought_TraumaScar;
         public static ThoughtDef DC_Thought_Seasoned;
         public static ThoughtDef DC_Thought_Flashback;
@@ -70,7 +66,6 @@ namespace DeepColony
         public static ThoughtDef DC_Thought_Disinherited;
         public static ThoughtDef DC_Thought_MovedIntoDeadRoom;
 
-        // ── Hediffs ───────────────────────────────────────────────────────────────
         public static HediffDef DC_Hediff_Elder;
         public static HediffDef DC_Hediff_Flashback;
         public static HediffDef DC_Hediff_CombatHabit;

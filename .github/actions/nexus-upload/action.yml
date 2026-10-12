@@ -1,5 +1,5 @@
 name: Nexus file upload
-description: One attempt to add a version to an existing Nexus file (no Changelog tab).
+description: Add a version to an existing Nexus file (no Changelog tab). Four attempts with 30s/2m/5m backoff; fails only if all attempts fail.
 inputs:
   api_key:
     description: Nexus API key
@@ -22,12 +22,16 @@ inputs:
 outputs:
   version_id:
     description: Nexus file version id from a successful upload
-    value: ${{ steps.upload.outputs.version_id }}
+    value: ${{ steps.result.outputs.version_id }}
+  attempt:
+    description: Which attempt succeeded (1-4)
+    value: ${{ steps.result.outputs.attempt }}
 runs:
   using: composite
   steps:
-    - id: upload
-      # Pin: v1.0.0-beta.10 (lightweight tag → this commit). Bump SHA when you take a new release.
+    # Pin: v1.0.0-beta.10 (lightweight tag → this commit). Bump SHA when you take a new release.
+    - id: upload_1
+      continue-on-error: true
       uses: Nexus-Mods/upload-action@c96019556046053aa26044b44396cd38929daf23
       with:
         api_key: ${{ inputs.api_key }}
@@ -40,3 +44,94 @@ runs:
         update_mod_version: true
         archive_existing_version: true
         primary_mod_manager_download: true
+
+    - name: Backoff 30s
+      if: steps.upload_1.outcome == 'failure'
+      shell: bash
+      run: sleep 30
+
+    - id: upload_2
+      if: steps.upload_1.outcome == 'failure'
+      continue-on-error: true
+      uses: Nexus-Mods/upload-action@c96019556046053aa26044b44396cd38929daf23
+      with:
+        api_key: ${{ inputs.api_key }}
+        file_id: ${{ inputs.file_id }}
+        filename: ${{ inputs.filename }}
+        version: ${{ inputs.version }}
+        display_name: ${{ inputs.display_name }}
+        description: ${{ inputs.description }}
+        category: main
+        update_mod_version: true
+        archive_existing_version: true
+        primary_mod_manager_download: true
+
+    - name: Backoff 2m
+      if: steps.upload_1.outcome == 'failure' && steps.upload_2.outcome == 'failure'
+      shell: bash
+      run: sleep 120
+
+    - id: upload_3
+      if: steps.upload_1.outcome == 'failure' && steps.upload_2.outcome == 'failure'
+      continue-on-error: true
+      uses: Nexus-Mods/upload-action@c96019556046053aa26044b44396cd38929daf23
+      with:
+        api_key: ${{ inputs.api_key }}
+        file_id: ${{ inputs.file_id }}
+        filename: ${{ inputs.filename }}
+        version: ${{ inputs.version }}
+        display_name: ${{ inputs.display_name }}
+        description: ${{ inputs.description }}
+        category: main
+        update_mod_version: true
+        archive_existing_version: true
+        primary_mod_manager_download: true
+
+    - name: Backoff 5m
+      if: steps.upload_1.outcome == 'failure' && steps.upload_2.outcome == 'failure' && steps.upload_3.outcome == 'failure'
+      shell: bash
+      run: sleep 300
+
+    - id: upload_4
+      if: steps.upload_1.outcome == 'failure' && steps.upload_2.outcome == 'failure' && steps.upload_3.outcome == 'failure'
+      continue-on-error: true
+      uses: Nexus-Mods/upload-action@c96019556046053aa26044b44396cd38929daf23
+      with:
+        api_key: ${{ inputs.api_key }}
+        file_id: ${{ inputs.file_id }}
+        filename: ${{ inputs.filename }}
+        version: ${{ inputs.version }}
+        display_name: ${{ inputs.display_name }}
+        description: ${{ inputs.description }}
+        category: main
+        update_mod_version: true
+        archive_existing_version: true
+        primary_mod_manager_download: true
+
+    - id: result
+      if: always()
+      shell: bash
+      env:
+        OUT1: ${{ steps.upload_1.outcome }}
+        OUT2: ${{ steps.upload_2.outcome }}
+        OUT3: ${{ steps.upload_3.outcome }}
+        OUT4: ${{ steps.upload_4.outcome }}
+        ID1: ${{ steps.upload_1.outputs.version_id }}
+        ID2: ${{ steps.upload_2.outputs.version_id }}
+        ID3: ${{ steps.upload_3.outputs.version_id }}
+        ID4: ${{ steps.upload_4.outputs.version_id }}
+      run: |
+        set -euo pipefail
+        for i in 1 2 3 4; do
+          var="OUT$i"
+          out="${!var:-skipped}"
+          if [ "$out" = "success" ]; then
+            idvar="ID$i"
+            echo "attempt=$i" >> "$GITHUB_OUTPUT"
+            echo "version_id=${!idvar}" >> "$GITHUB_OUTPUT"
+            echo "Nexus upload succeeded on attempt $i"
+            exit 0
+          fi
+        done
+        echo "::error::Nexus upload failed after retries."
+        exit 1

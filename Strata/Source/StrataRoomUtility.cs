@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using HarmonyLib;
-using RimWorld;
 using Verse;
 
 namespace Strata
@@ -177,50 +176,6 @@ namespace Strata
             }
             openRoofByRoom[key] = (epoch, open);
             return open;
-        }
-
-        // Player-walled, fully roofed rooms (workshops, bedrooms) share a
-        // uniform gas mix. Natural caverns use per-cell falloff instead.
-        public static bool RoomIsColonyBuiltEnclosure(Room room)
-        {
-            if (room == null || !room.ProperRoom || room.IsDoorway || room.Map == null
-                || !ShouldTreatAsEnclosedUnderground(room.Map))
-            {
-                return false;
-            }
-            Map map = room.Map;
-            bool hasPlayerStructure = false;
-            foreach (IntVec3 cell in room.Cells)
-            {
-                if (!cell.InBounds(map))
-                {
-                    return false;
-                }
-                if (!map.roofGrid.Roofed(cell))
-                {
-                    return false;
-                }
-                List<Thing> things = cell.GetThingList(map);
-                for (int i = 0; i < things.Count; i++)
-                {
-                    Thing thing = things[i];
-                    if (thing.Faction != Faction.OfPlayer || thing.def?.building == null)
-                    {
-                        continue;
-                    }
-                    if (thing is MapPortal)
-                    {
-                        continue;
-                    }
-                    if (thing.def.building.isNaturalRock)
-                    {
-                        continue;
-                    }
-                    hasPlayerStructure = true;
-                    break;
-                }
-            }
-            return hasPlayerStructure;
         }
     }
 }

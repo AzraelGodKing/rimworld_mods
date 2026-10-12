@@ -58,8 +58,6 @@
   <LivingWorld_LetterText_DecisiveVictory>{0} crushed {1} in fighting around {2}. The balance of power on the rim just shifted.</LivingWorld_LetterText_DecisiveVictory>
   <LivingWorld_LetterLabel_FamineRumor>Famine rumor</LivingWorld_LetterLabel_FamineRumor>
   <LivingWorld_LetterText_FamineRumor>Word from {2}: {0} is short on food. Travelers speak of empty stores and thin herds.</LivingWorld_LetterText_FamineRumor>
-  <LivingWorld_LetterLabel_Founding>New settlement</LivingWorld_LetterLabel_Founding>
-  <LivingWorld_LetterText_Founding>{0} founded {2}. Another pin on the world map that was not there yesterday.</LivingWorld_LetterText_Founding>
   <LivingWorld_LetterLabel_Collapse>Settlement collapse</LivingWorld_LetterLabel_Collapse>
   <LivingWorld_LetterText_Collapse>{2} of {0} has gone quiet. Refugees may follow — or silence.</LivingWorld_LetterText_Collapse>
   <LivingWorld_LetterLabel_Alliance>Faction alliance</LivingWorld_LetterLabel_Alliance>
