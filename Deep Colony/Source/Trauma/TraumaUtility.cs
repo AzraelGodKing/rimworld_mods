@@ -37,16 +37,12 @@ namespace DeepColony
             if (existing != null)
             {
                 existing.Renew();
-                if (faction != null && !faction.IsPlayer)
-                    existing.RememberFaction(faction);
                 return;
             }
 
             var thought = (Thought_Trauma)ThoughtMaker.MakeThought(def.thoughtDef);
             thought.traumaDef = def;
             thought.otherPawn = source;
-            if (faction != null && !faction.IsPlayer)
-                thought.RememberFaction(faction);
             victim.needs.mood.thoughts.memories.TryGainMemory(thought, source);
 
             // Resilience: start partway healed on re-occurrence.
