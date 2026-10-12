@@ -126,7 +126,7 @@
 
     <details class="admin-field">
       <summary><strong>Optional:</strong> publish fallback to GitHub (uses your PAT, once)</summary>
-      <p class="admin-warn">Paste a fine-grained token with Contents write on this repo. It stays in <code>sessionStorage</code> only for this tab session and is never written into the site. Creates one commit on <code>main</code> when you click Publish.</p>
+      <p class="admin-warn">Paste a fine-grained token with Contents write on this repo. It is held in memory only (not <code>sessionStorage</code>) and is never written into the site. Creates one commit on <code>main</code> when you click Publish.</p>
       <div class="admin-field">
         <label for="gh-token">GitHub token</label>
         <input id="gh-token" type="password" autocomplete="off" placeholder="github_pat_…">

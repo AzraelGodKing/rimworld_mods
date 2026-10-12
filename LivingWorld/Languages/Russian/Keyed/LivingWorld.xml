@@ -58,8 +58,6 @@
   <LivingWorld_LetterText_DecisiveVictory>{0} разгромил {1} в боях у {2}. Баланс сил на ободе только что сдвинулся.</LivingWorld_LetterText_DecisiveVictory>
   <LivingWorld_LetterLabel_FamineRumor>Слух о голоде</LivingWorld_LetterLabel_FamineRumor>
   <LivingWorld_LetterText_FamineRumor>Вести из {2}: у {0} мало еды. Путники говорят о пустых складах и тощих стадах.</LivingWorld_LetterText_FamineRumor>
-  <LivingWorld_LetterLabel_Founding>Новое поселение</LivingWorld_LetterLabel_Founding>
-  <LivingWorld_LetterText_Founding>{0} основал {2}. Ещё одна метка на карте мира, которой вчера не было.</LivingWorld_LetterText_Founding>
   <LivingWorld_LetterLabel_Collapse>Крах поселения</LivingWorld_LetterLabel_Collapse>
   <LivingWorld_LetterText_Collapse>{2} у {0} затих. Беженцы могут последовать — или тишина.</LivingWorld_LetterText_Collapse>
   <LivingWorld_LetterLabel_Alliance>Союз фракций</LivingWorld_LetterLabel_Alliance>

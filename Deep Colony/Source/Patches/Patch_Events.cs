@@ -5,8 +5,6 @@ using Verse;
 
 namespace DeepColony.Patches
 {
-    // ── Faction reputation ───────────────────────────────────────────────────────
-
     [HarmonyPatch(typeof(IncidentWorker_RaidEnemy), "TryExecuteWorker")]
     public static class Patch_RaidEnemy_TryExecute
     {
@@ -52,8 +50,6 @@ namespace DeepColony.Patches
             FactionRepUtility.OnGiftFromFaction(faction);
         }
     }
-
-    // ── Trauma ───────────────────────────────────────────────────────────────────
 
     [HarmonyPatch(typeof(Pawn_HealthTracker), "MakeDowned")]
     public static class Patch_MakeDowned_Trauma
@@ -154,8 +150,6 @@ namespace DeepColony.Patches
             }
         }
     }
-
-    // ── Generations + captivity ──────────────────────────────────────────────────
 
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.SetFaction))]
     public static class Patch_Pawn_SetFaction_DeepColony

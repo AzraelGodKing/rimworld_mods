@@ -363,14 +363,6 @@
   <Strata_ExhaustBreathable>Room air is breathable.</Strata_ExhaustBreathable>
   <Strata_ExhaustEnriching>Enriching room with {0} ({1}).</Strata_ExhaustEnriching>
 
-  <Strata_Atmos_Unknown>Unknown air</Strata_Atmos_Unknown>
-  <Strata_Atmos_AmbientLocked>Surface air (safe)</Strata_Atmos_AmbientLocked>
-  <Strata_Atmos_Outdoor>Open air</Strata_Atmos_Outdoor>
-  <Strata_Atmos_OpenCavern>Open cavern</Strata_Atmos_OpenCavern>
-  <Strata_Atmos_Ventilated>Ventilated</Strata_Atmos_Ventilated>
-  <Strata_Atmos_ShaftLinked>Shaft-linked</Strata_Atmos_ShaftLinked>
-  <Strata_Atmos_Sealed>Sealed</Strata_Atmos_Sealed>
-  <Strata_Atmos_StatusLine>{0} · O₂ {1}% · CO₂ {2}%</Strata_Atmos_StatusLine>
   <Strata_Letter_FirstB1Air_Label>Underground air</Strata_Letter_FirstB1Air_Label>
   <Strata_Letter_FirstB1Air_Text>Below the surface, sealed rooms do not freely refresh oxygen.\n\nColonists inhale O₂ and exhale CO₂. Growing plants reverse that. Keep air breathable with open shafts, vents to the outdoors, oxygen / CO₂ pumps, lime scrubbers, shaft bellows or exchangers — or leave rooms open to the cavern.\n\nSurface and A+ decks stay safe. Enable Natural gases in Mod Options to use this system (it is opt-in).</Strata_Letter_FirstB1Air_Text>
   <Strata_IncompatibleStackLetterLabel>Incompatible multi-level mod</Strata_IncompatibleStackLetterLabel>

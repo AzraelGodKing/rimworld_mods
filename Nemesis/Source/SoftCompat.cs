@@ -377,19 +377,5 @@ namespace Nemesis
             }
             return false;
         }
-
-        public static bool MapHasHomesteaderFoodStorage(Map map)
-        {
-            if (map == null || !HomesteaderActive) return false;
-            for (int i = 0; i < HomesteaderFoodStorageDefNames.Length; i++)
-            {
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(HomesteaderFoodStorageDefNames[i]);
-                if (def == null) continue;
-                List<Thing> things = map.listerThings.ThingsOfDef(def);
-                if (things != null && things.Count > 0)
-                    return true;
-            }
-            return false;
-        }
     }
 }

@@ -5,7 +5,7 @@ using Verse;
 namespace LivingWorld
 {
     /// <summary>
-    /// AZR-329 — enqueue debug mutations; drain on GameComponentTick (same MP-safer
+    /// Enqueue debug mutations; drain on GameComponentTick (same MP-safer
     /// pattern as DeepColonyPlayerCommand; no Multiplayer.API dependency).
     /// </summary>
     public static class LivingWorldDebugCommand

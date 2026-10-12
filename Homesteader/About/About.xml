@@ -19,7 +19,6 @@
     <li>brrainz.harmony</li>
     <!-- Optional: when Dubs Bad Hygiene is present, Homesteader water buildings join its plumbing. -->
     <li>Dubwise.DubsBadHygiene</li>
-    <li>adaptive.storage.framework</li>
   </loadAfter>
   <description>Grow it, put it by, live off the land. Homesteader is the farmstead kit: tribal drying from day one, dairy and hearth meals, orchard and bees, wells and irrigation, cool cellars, livestock, and off-grid power.
 

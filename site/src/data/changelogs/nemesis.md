@@ -6,6 +6,7 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ### Changed
 - **Dead SoftCompat flags** — removed unused Giddy-Up / Rimesis / BFV package-id probes (`GiddyUpActive`, `RimesisActive`, `BackForVengeanceActive`) and unread `LastHeavyCheckTick`. Foreign-antagonist skip still uses hediff markers; mount escorts still assign by faction tech. No gameplay change.
+- **Unused Homesteader map probe** — deleted `MapHasHomesteaderFoodStorage`. The food-storage defName list is still used by `IsHomesteaderFoodStorageDef` / `IsOnHomesteaderFoodStorage`. No gameplay change.
 
 ## [1.4.0]
 

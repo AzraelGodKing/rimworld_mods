@@ -38,7 +38,7 @@ namespace LivingWorld
     {
         public static void Postfix(Settlement __instance, ref string __result)
         {
-            // AZR-328 — GameComponent.Get is game-instance cached; epithet suffix is mood-cached.
+            // GameComponent.Get is game-instance cached; epithet suffix is mood-cached.
             SettlementMood mood = GameComponent_LivingWorld.Get?.TryGetMood(__instance);
             string suffix = mood?.EpithetLabelSuffix();
             if (suffix == null)

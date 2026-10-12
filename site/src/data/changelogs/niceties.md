@@ -2,6 +2,11 @@
 
 Detailed notes for **Niceties** only.
 
+## [Unreleased]
+
+### Changed
+- Removed unused `CryptosleepBar.HiddenCount` getter and `NicetiesMultiplayer.Loaded` property. No gameplay change.
+
 ## [1.5.0]
 
 Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.5.0 loaded from ...; sim-snapshot-v2` in Player.log.

@@ -10,7 +10,6 @@ namespace DeepColony
     public class Thought_Trauma : Thought_Memory
     {
         public TraumaDef traumaDef;
-        public int rememberedFactionId = -1;
 
         public override int CurStageIndex
         {
@@ -24,24 +23,10 @@ namespace DeepColony
             }
         }
 
-        public void RememberFaction(Faction faction)
-        {
-            if (faction == null || faction.IsPlayer) return;
-            rememberedFactionId = faction.loadID;
-        }
-
-        public Faction GetRememberedFaction()
-        {
-            if (rememberedFactionId < 0) return null;
-            return Find.FactionManager?.AllFactionsListForReading
-                ?.Find(f => f.loadID == rememberedFactionId);
-        }
-
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Defs.Look(ref traumaDef, "traumaDef");
-            Scribe_Values.Look(ref rememberedFactionId, "rememberedFactionId", -1);
         }
     }
 }

@@ -280,17 +280,6 @@ namespace Homesteader
             return AllergyIdSet(pawn.thingIDNumber).Contains(allergyId);
         }
 
-        public bool IsFoodAllergy(Pawn pawn, ThingDef foodDef)
-        {
-            if (pawn == null || foodDef == null)
-            {
-                return false;
-            }
-
-            EnsureTastes(pawn);
-            return AllergyCatalog.FoodMatchesAny(AllergyIdSet(pawn.thingIDNumber), foodDef);
-        }
-
         public bool IsDiscoveredFoodAllergy(Pawn pawn, ThingDef foodDef)
         {
             if (pawn == null || foodDef == null)
@@ -583,8 +572,6 @@ namespace Homesteader
         public static List<ThingDef> GetFavorites(Pawn pawn) => Comp?.GetFavorites(pawn) ?? new List<ThingDef>();
 
         public static bool IsFavorite(Pawn pawn, ThingDef foodDef) => Comp != null && Comp.IsFavorite(pawn, foodDef);
-
-        public static bool IsAllergy(Pawn pawn, ThingDef foodDef) => Comp != null && Comp.IsFoodAllergy(pawn, foodDef);
 
         public static bool IsDiscoveredAllergy(Pawn pawn, ThingDef foodDef) =>
             Comp != null && Comp.IsDiscoveredFoodAllergy(pawn, foodDef);

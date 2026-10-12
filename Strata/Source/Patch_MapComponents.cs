@@ -102,7 +102,6 @@ namespace Strata
             {
                 AtmosphereMapComponent.RemovePendingSeeds(map.uniqueID);
                 StrataMapUtility.Invalidate(map);
-                StrataOffThreadWork.CancelMap(map.uniqueID);
             }
         }
     }

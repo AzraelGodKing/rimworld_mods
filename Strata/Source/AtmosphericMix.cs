@@ -21,7 +21,7 @@ namespace Strata
         public const float ArgonFraction = 0.0093f;
         public const float CarbonDioxideFraction = 0.0004f;
 
-        // Legacy alias used by breath grid and pumps.
+        // Legacy alias used by pumps.
         public const float AmbientOxygen = OxygenFraction;
 
         private const float MinDeepOxygenFraction = 0.07f;
@@ -156,11 +156,6 @@ namespace Strata
                 return 0f;
             }
             return Mathf.Max(0f, density[deepIdx] - 1f);
-        }
-
-        public static float DisplayTotal(float[] density)
-        {
-            return ComposableTotal(density) + PressurizedOverage(density);
         }
 
         // Pollutant / non-breathable share for overlay "load" (smoke, deep gas,

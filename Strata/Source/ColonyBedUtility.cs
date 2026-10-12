@@ -300,15 +300,5 @@ namespace Strata
             }
             return maps.Contains(mapA) && maps.Contains(mapB);
         }
-
-        private static bool IsValidColonistBed(Building_Bed bed)
-        {
-            return bed != null
-                && bed.Spawned
-                && bed.Faction == Faction.OfPlayer
-                && bed.def.building.bed_humanlike
-                && !bed.Medical
-                && !bed.ForPrisoners;
-        }
     }
 }

@@ -58,8 +58,6 @@
   <LivingWorld_LetterText_DecisiveVictory>{0} 在 {2} 一带击溃了 {1}。边缘世界的力量平衡刚刚改变。</LivingWorld_LetterText_DecisiveVictory>
   <LivingWorld_LetterLabel_FamineRumor>饥荒传闻</LivingWorld_LetterLabel_FamineRumor>
   <LivingWorld_LetterText_FamineRumor>来自 {2} 的消息：{0} 缺粮。旅人说仓库空了，畜群也瘦了。</LivingWorld_LetterText_FamineRumor>
-  <LivingWorld_LetterLabel_Founding>新聚落</LivingWorld_LetterLabel_Founding>
-  <LivingWorld_LetterText_Founding>{0} 建立了 {2}。世界地图上多了一枚昨天还没有的图钉。</LivingWorld_LetterText_Founding>
   <LivingWorld_LetterLabel_Collapse>聚落崩解</LivingWorld_LetterLabel_Collapse>
   <LivingWorld_LetterText_Collapse>{0} 的 {2} 沉寂了。难民也许随后到来——或者只有沉默。</LivingWorld_LetterText_Collapse>
   <LivingWorld_LetterLabel_Alliance>派系同盟</LivingWorld_LetterLabel_Alliance>

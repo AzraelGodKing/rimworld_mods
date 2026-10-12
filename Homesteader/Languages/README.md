@@ -23,7 +23,7 @@ Homesteader/
         ResearchProjectDef/
           …
         ThoughtDef/
-          Thoughts_Statue27.xml
+          Thoughts_Homestead.xml
 ```
 
 ### Keyed
