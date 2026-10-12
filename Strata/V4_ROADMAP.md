@@ -60,6 +60,17 @@ These can be built on 1.6 now and ship in 4.0.
 - [ ] **Flooded level**: underground lake floor; sump/flood promoted to a level type, Odyssey fishing, Homesteader wells, Stormproof surges — [AZR-475](https://linear.app/azraelgodking/issue/AZR-475)
 - [ ] **Lost floor**: rare sealed story level that teaches the noise rule — [AZR-476](https://linear.app/azraelgodking/issue/AZR-476)
 
+## Release and quality
+
+- [ ] **Workshop package with both versions**: `1.6/` = frozen 3.8.x, `1.7/` = 4.0, so 1.6 subscribers aren't broken by the update — [AZR-484](https://linear.app/azraelgodking/issue/AZR-484)
+- [ ] **3.8.x saves load cleanly in 4.0** (Scribe handling for old fields, settings migration) — [AZR-485](https://linear.app/azraelgodking/issue/AZR-485)
+- [ ] **1.7 compatibility matrix** for the mods Strata supports (keep, update or drop each) — [AZR-486](https://linear.app/azraelgodking/issue/AZR-486)
+- [ ] **Test project** for logic that doesn't need the game: cave seed snapshots, navigation graph, priority decisions, gas maths — [AZR-487](https://linear.app/azraelgodking/issue/AZR-487)
+- [ ] **Multiplayer decision**: support it, or state it's not supported — [AZR-488](https://linear.app/azraelgodking/issue/AZR-488)
+- [ ] **Settings presets and tabs** (59 settings today) — [AZR-489](https://linear.app/azraelgodking/issue/AZR-489)
+- [ ] **Stable public `Strata.API`** for sister and third-party mods — [AZR-490](https://linear.app/azraelgodking/issue/AZR-490)
+- [ ] **Workshop launch assets** (preview, screenshots, description, site) — [AZR-491](https://linear.app/azraelgodking/issue/AZR-491)
+
 ## Rules for V4 work
 
 - Keep 1.7-only assets (shaders, `ShaderDef`/`MaterialDef`) in `1.7/` load folders.
