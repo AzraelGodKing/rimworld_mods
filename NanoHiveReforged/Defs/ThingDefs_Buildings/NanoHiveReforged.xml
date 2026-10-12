@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>NanoHiveReforged</defName>
+    <label>regenerator nanohive</label>
+    <thingClass>NanoHiveReforged.Building_NanoHiveReforged</thingClass>
+    <graphicData>
+      <texPath>Buildings/RepairingAura</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <statBases>
+      <MaxHitPoints>350</MaxHitPoints>
+      <WorkToBuild>3000</WorkToBuild>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <tickerType>Rare</tickerType>
+    <description>A nanobot port that fits into a wall and automatically repairs nearby friendly buildings and items. Effective range is 12 by default.</description>
+    <size>(1,1)</size>
+    <costList>
+      <Plasteel>200</Plasteel>
+      <ComponentIndustrial>20</ComponentIndustrial>
+      <Gold>5</Gold>
+    </costList>
+    <stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+    <costStuffCount>200</costStuffCount>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>1600</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable" />
+    </comps>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <holdsRoof>true</holdsRoof>
+    <blockLight>true</blockLight>
+    <blockWind>true</blockWind>
+    <coversFloor>true</coversFloor>
+    <rotatable>false</rotatable>
+    <canOverlapZones>false</canOverlapZones>
+    <castEdgeShadows>true</castEdgeShadows>
+    <designationCategory>Security</designationCategory>
+    <staticSunShadowHeight>1.0</staticSunShadowHeight>
+    <constructionSkillPrerequisite>12</constructionSkillPrerequisite>
+    <researchPrerequisites>
+      <li>MultiAnalyzer</li>
+    </researchPrerequisites>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
+    <specialDisplayRadius>12</specialDisplayRadius>
+  </ThingDef>
+</Defs>
