@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <WSR_WaveSurvivalScenario.label>波次生存</WSR_WaveSurvivalScenario.label>
+  <WSR_WaveSurvivalScenario.description>请搭配波次生存叙事者使用此剧本。\n\n- 开局有 4 名殖民者。\n- 开局有 1 把栓动步枪、2 把左轮手枪和 1 把玻璃钢小刀。\n- 已完成微电子基础与机枪炮塔研究。\n- 殖民者开局不会患上低温休眠症。</WSR_WaveSurvivalScenario.description>
+  <WSR_WaveSurvivalScenario.scenario.summary>四名殖民者、炮塔研究领先一步，还有一座信标等着建造。波次生存的默认剧本。</WSR_WaveSurvivalScenario.scenario.summary>
+</LanguageData>

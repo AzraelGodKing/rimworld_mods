@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Random threats are off: the wave timer in WaveSurvivalComponent brings the raids.
+       BaseStoryteller still adds the endgame quests and deep-drill infestations. -->
+  <StorytellerDef ParentName="BaseStoryteller">
+    <defName>WSR_WaveSurvival</defName>
+    <label>Wave Survival</label>
+    <description>Wave Survival is faster-paced and more combat-focused than the standard game. Supplies drop in daily at your orbital trade beacon, so build your base quickly, then defend it from wave after wave of raiders until your colony inevitably collapses spectacularly.</description>
+    <portraitLarge>UI/Storyteller/WSR_WaveOutlined</portraitLarge>
+    <portraitTiny>UI/Storyteller/WSR_WaveTiny</portraitTiny>
+    <listOrder>40</listOrder>
+    <comps>
+      <li Class="StorytellerCompProperties_Disease">
+        <category>DiseaseHuman</category>
+        <minDaysPassed>0</minDaysPassed>
+      </li>
+      <li Class="StorytellerCompProperties_Disease">
+        <category>DiseaseAnimal</category>
+        <minDaysPassed>0</minDaysPassed>
+      </li>
+    </comps>
+  </StorytellerDef>
+
+</Defs>

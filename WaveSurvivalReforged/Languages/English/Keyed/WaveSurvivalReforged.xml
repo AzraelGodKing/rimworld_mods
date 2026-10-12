@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <WSR_GameStartDialog>Less grinding. Less downtime. More action!\n\nWave Survival skips most of the slow early-game gathering of vanilla RimWorld. Build your base quickly, then defend it from wave after wave of raiders until your colony inevitably collapses spectacularly.\n\nBuild an orbital trade beacon to receive the daily supply drops. The first wave arrives in five days.</WSR_GameStartDialog>
+
+  <WSR_WaveTimerLabel>Wave {0}: {1}</WSR_WaveTimerLabel>
+  <WSR_WaveTimerExplanation>Wave {0} arrives in {1}.</WSR_WaveTimerExplanation>
+  <WSR_WaveTimerSpecial>This is a special wave: expect a siege, sappers, or maddened animals.</WSR_WaveTimerSpecial>
+
+  <WSR_NeedBeaconLabel>Build a trade beacon</WSR_NeedBeaconLabel>
+  <WSR_NeedBeaconExplanation>Wave Survival drops supplies by pod at your orbital trade beacon once a day. Until you build one, no supplies arrive.\n\nBuild one as soon as you can.</WSR_NeedBeaconExplanation>
+
+  <WSR_WaveArrived>Wave {0} has arrived!</WSR_WaveArrived>
+  <WSR_SpecialWaveArrived>Special wave {0} has arrived!</WSR_SpecialWaveArrived>
+  <WSR_SupplyDropArrived>A supply drop has landed at the trade beacon.</WSR_SupplyDropArrived>
+
+</LanguageData>
