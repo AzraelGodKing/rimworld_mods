@@ -14,7 +14,8 @@ $repo = Split-Path $PSScriptRoot -Parent
 if (-not $SegmentPath) { $SegmentPath = Join-Path $repo 'assets\ArmoredConduit_segment_proc.png' }
 if (-not $HubPath) { $HubPath = Join-Path $repo 'assets\ArmoredConduit_hub_proc.png' }
 if (-not $OutAtlas) { $OutAtlas = Join-Path $repo 'Stormproof\Textures\Stormproof\Buildings\ArmoredConduit_Atlas.png' }
-if (-not $OutSegment) { $OutSegment = Join-Path $repo 'Stormproof\Textures\Stormproof\Buildings\ArmoredConduit.png' }
+$docsSegment = Join-Path $repo 'docs\img\ArmoredConduit.png'
+if (-not $OutSegment) { $OutSegment = $docsSegment }
 if (-not $OutMenu) { $OutMenu = Join-Path $repo 'Stormproof\Textures\Stormproof\Buildings\ArmoredConduit_MenuIcon.png' }
 
 Add-Type -AssemblyName System.Drawing
@@ -160,7 +161,9 @@ $menu.Save($OutMenu, [Drawing.Imaging.ImageFormat]::Png)
 
 $atlas.Dispose(); $segment.Dispose(); $menu.Dispose(); $seg.Dispose(); $hub.Dispose()
 
-Copy-Item $OutSegment (Join-Path $repo 'docs\img\ArmoredConduit.png') -Force
+if ($OutSegment -ne $docsSegment) {
+    Copy-Item $OutSegment $docsSegment -Force
+}
 Copy-Item $OutAtlas (Join-Path $repo 'docs\img\ArmoredConduit_Atlas.png') -Force
 
 Write-Output "Atlas:   $OutAtlas"
