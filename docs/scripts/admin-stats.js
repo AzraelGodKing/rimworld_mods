@@ -3,7 +3,6 @@
 // Never schedules commits — refresh is on-demand only.
 
 const UNLOCK_KEY = "azrael-admin-stats-unlocked-v1";
-const TOKEN_STORAGE_KEY = "azrael-admin-gh-token-v1";
 let sessionGhToken = null;
 const REPO = {
   owner: "AzraelGodKing",
@@ -256,11 +255,6 @@ function onClear() {
 function onLock() {
   setUnlocked(false);
   sessionGhToken = null;
-  try {
-    sessionStorage.removeItem(TOKEN_STORAGE_KEY);
-  } catch {
-    /* ignore leftover from older builds */
-  }
   $("gh-token").value = "";
   showConsole(false);
   setStatus($("gate-status"), "Locked.", "ok");
@@ -303,11 +297,6 @@ document.addEventListener("DOMContentLoaded", () => {
   $("btn-lock").addEventListener("click", onLock);
   $("btn-publish").addEventListener("click", onPublish);
 
-  try {
-    sessionStorage.removeItem(TOKEN_STORAGE_KEY);
-  } catch {
-    /* ignore leftover from older builds */
-  }
   if (sessionGhToken) $("gh-token").value = sessionGhToken;
 
   if (isUnlocked()) {
