@@ -9,6 +9,7 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 ### Changed
 - Startup version line uses shared `ModVersionLog.Write`; stamp stays `construct-fetch-v1`. No gameplay change.
+- **Dead-code sweep**: removed unused atmosphere wrappers, empty off-thread session hooks, leftover helpers, and unused keyed inspect strings. No player-facing change.
 
 ## [3.8.3]
 
@@ -16,9 +17,6 @@ AZR-451
 
 ### Fixed
 - **Building underground with materials on another floor** (`construct-fetch-v1`, AZR-451): force-building downstairs with the wood upstairs sent the colonist up the stairs, then back down empty-handed to idle. When picking a stack on another floor, the cross-level fetch only checked that it was unforbidden and reservable, so it could choose one the colonist couldn't walk to. The colonist arrived, the carry job failed its first step, and nothing was logged. Stacks on other floors must now be reachable from that floor's stair landing (`LevelGraph` arrival cell, `TraverseMode.PassDoors`), and on arrival the colonist re-checks reach and swaps to another stack if needed. Each branch where `TryFinishFetch` gives up, plus a `Strata_HaulToLevel` that ends Incompletable/Errored, now writes a line when verbose logging is on.
-
-### Changed
-- **Dead-code sweep**: removed unused atmosphere wrappers, empty off-thread session hooks, leftover helpers, and unused keyed inspect strings. No player-facing change.
 
 ## [3.8.2]
 
