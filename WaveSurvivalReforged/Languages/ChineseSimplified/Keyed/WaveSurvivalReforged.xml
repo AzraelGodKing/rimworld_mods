@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <WSR_GameStartDialog>少些刷资源，少些空闲，多些战斗！\n\n波次生存模式跳过了原版边缘世界前期大部分缓慢的采集。尽快建好基地，然后抵御一波又一波的袭击者，直到你的殖民地不可避免地轰然崩溃。\n\n建造一座轨道贸易信标来接收每日补给空投。第一波袭击将在五天后到来。</WSR_GameStartDialog>
+
+  <WSR_WaveTimerLabel>第 {0} 波：{1}</WSR_WaveTimerLabel>
+  <WSR_WaveTimerExplanation>第 {0} 波将在 {1} 后到来。</WSR_WaveTimerExplanation>
+  <WSR_WaveTimerSpecial>这是一个特殊波次：可能是围攻、工兵，或发狂的动物。</WSR_WaveTimerSpecial>
+
+  <WSR_NeedBeaconLabel>建造贸易信标</WSR_NeedBeaconLabel>
+  <WSR_NeedBeaconExplanation>波次生存模式每天通过空投舱把补给投放到你的轨道贸易信标处。在你建好信标之前，不会有补给送达。\n\n请尽快建造一座。</WSR_NeedBeaconExplanation>
+
+  <WSR_WaveArrived>第 {0} 波来袭！</WSR_WaveArrived>
+  <WSR_SpecialWaveArrived>特殊波次第 {0} 波来袭！</WSR_SpecialWaveArrived>
+  <WSR_SupplyDropArrived>一批补给已空投到贸易信标处。</WSR_SupplyDropArrived>
+
+</LanguageData>

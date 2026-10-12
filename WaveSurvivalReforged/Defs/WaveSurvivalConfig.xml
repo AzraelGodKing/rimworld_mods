@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <WaveSurvivalReforged.WaveSurvivalConfigDef>
+    <defName>WSR_Config</defName>
+    <label>wave survival settings</label>
+
+    <daysBeforeFirstWave>5</daysBeforeFirstWave>
+    <daysBetweenWaves>2</daysBetweenWaves>
+    <!-- Hours after landing that waves land. Landing at 6 AM with 6 here means noon raids. -->
+    <raidHourOffset>6</raidHourOffset>
+
+    <!-- Special waves: sieges, sappers, manhunter packs, and mass animal insanity. -->
+    <specialWaveInterval>4</specialWaveInterval>
+    <specialWaveMinWave>1</specialWaveMinWave>
+
+    <!-- The per-wave increase is scaled by the difficulty's threat scale. -->
+    <startingThreatPoints>50</startingThreatPoints>
+    <threatPointIncreasePerWave>50</threatPointIncreasePerWave>
+    <siegeBonusPoints>150</siegeBonusPoints>
+    <doubleRaidChance>0.25</doubleRaidChance>
+
+    <!-- Daily chances (0 to 1). -->
+    <traderChance>0.2</traderChance>
+    <weaponDropChance>0.2</weaponDropChance>
+    <weaponBudget>200~400</weaponBudget>
+    <weaponBudgetPerWave>25</weaponBudgetPerWave>
+
+    <!-- Rolled once a day and dropped at the orbital trade beacon. Nothing drops while the
+         colony already holds maxStockpile of that item. Survival meals drop whenever food
+         runs low; that is not tunable here. -->
+    <supplyDrops>
+      <li>
+        <thing>MedicineIndustrial</thing>
+        <chance>0.15</chance>
+        <count>2~6</count>
+        <maxStockpile>15</maxStockpile>
+      </li>
+      <li>
+        <thing>WoodLog</thing>
+        <chance>0.33</chance>
+        <count>25~200</count>
+        <maxStockpile>500</maxStockpile>
+      </li>
+      <li>
+        <thing>Steel</thing>
+        <chance>0.33</chance>
+        <count>50~250</count>
+        <maxStockpile>1000</maxStockpile>
+      </li>
+      <li>
+        <thing>BlocksGranite</thing>
+        <chance>0.15</chance>
+        <count>25~100</count>
+        <maxStockpile>500</maxStockpile>
+      </li>
+      <li>
+        <thing>BlocksLimestone</thing>
+        <chance>0.10</chance>
+        <count>25~100</count>
+        <maxStockpile>500</maxStockpile>
+      </li>
+      <li>
+        <thing>Silver</thing>
+        <chance>0.10</chance>
+        <count>25~100</count>
+        <maxStockpile>5000</maxStockpile>
+      </li>
+      <li>
+        <thing>ComponentIndustrial</thing>
+        <chance>0.20</chance>
+        <count>1~10</count>
+        <maxStockpile>300</maxStockpile>
+      </li>
+    </supplyDrops>
+  </WaveSurvivalReforged.WaveSurvivalConfigDef>
+
+</Defs>

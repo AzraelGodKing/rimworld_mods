@@ -49,13 +49,19 @@ namespace Azrael.ModChecks
         public static readonly string[] ModFolders =
         {
             "Azrael", "DateNight", "Deep Colony", "Homesteader", "LivingWorld",
-            "Nemesis", "Niceties", "Stormproof", "Strata",
+            "Nemesis", "Niceties", "Stormproof", "Strata", "WaveSurvivalReforged",
+        };
+
+        // Not pinned in SeriesHub.Series; the hub still lists them at runtime via the azraelgodking.* scan.
+        static readonly string[] OutsideSeriesRoster =
+        {
+            "WaveSurvivalReforged",
         };
 
         static readonly string[] OurDefPrefixes =
         {
             "Strata_", "DC_", "HS_", "Stormproof_", "Nemesis_", "DateNight_",
-            "LivingWorld_", "Niceties_", "Azrael_", "Homesteader_",
+            "LivingWorld_", "Niceties_", "Azrael_", "Homesteader_", "WSR_",
         };
 
         static readonly Regex HarmonyTyped = new Regex(
@@ -67,15 +73,15 @@ namespace Azrael.ModChecks
             RegexOptions.Compiled);
 
         static readonly Regex ConstDefName = new Regex(
-            @"const string \w*DefName\w* = ""((?:Strata_|DC_|HS_|Stormproof_|Nemesis_|DateNight_|LivingWorld_|Niceties_|Azrael_|Homesteader_)[A-Za-z0-9_]+)""",
+            @"const string \w*DefName\w* = ""((?:Strata_|DC_|HS_|Stormproof_|Nemesis_|DateNight_|LivingWorld_|Niceties_|Azrael_|Homesteader_|WSR_)[A-Za-z0-9_]+)""",
             RegexOptions.Compiled);
 
         static readonly Regex GetNamedStrict = new Regex(
-            @"GetNamed\s*\(\s*""((?:Strata_|DC_|HS_|Stormproof_|Nemesis_|DateNight_|LivingWorld_|Niceties_|Azrael_|Homesteader_)[A-Za-z0-9_]+)""",
+            @"GetNamed\s*\(\s*""((?:Strata_|DC_|HS_|Stormproof_|Nemesis_|DateNight_|LivingWorld_|Niceties_|Azrael_|Homesteader_|WSR_)[A-Za-z0-9_]+)""",
             RegexOptions.Compiled);
 
         static readonly Regex QuotedOurDef = new Regex(
-            @"""((?:Strata_|DC_|HS_|Stormproof_|Nemesis_|DateNight_|LivingWorld_|Niceties_|Azrael_|Homesteader_)[A-Za-z0-9_]+)""",
+            @"""((?:Strata_|DC_|HS_|Stormproof_|Nemesis_|DateNight_|LivingWorld_|Niceties_|Azrael_|Homesteader_|WSR_)[A-Za-z0-9_]+)""",
             RegexOptions.Compiled);
 
         static string FindRepoRoot()
@@ -186,6 +192,8 @@ namespace Azrael.ModChecks
             string text = File.ReadAllText(file);
             foreach (string folder in ModFolders)
             {
+                if (Array.IndexOf(OutsideSeriesRoster, folder) >= 0)
+                    continue;
                 string display = folder == "DateNight" ? "Date Night"
                     : folder == "LivingWorld" ? "Living World"
                     : folder;

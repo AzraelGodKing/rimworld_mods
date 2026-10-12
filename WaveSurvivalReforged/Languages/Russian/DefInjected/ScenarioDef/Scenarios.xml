@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <WSR_WaveSurvivalScenario.label>Выживание волнами</WSR_WaveSurvivalScenario.label>
+  <WSR_WaveSurvivalScenario.description>Выберите с этим сценарием рассказчика «Выживание волнами».\n\n- 4 колониста на старте.\n- Продольно-скользящая винтовка, 2 револьвера и нож из пластали.\n- Основы микроэлектроники и пулемётные турели уже изучены.\n- Колонисты начинают без криптосонной болезни.</WSR_WaveSurvivalScenario.description>
+  <WSR_WaveSurvivalScenario.scenario.summary>Четыре колониста, фора в изучении турелей и маяк, который нужно построить. Стандартный сценарий для «Выживания волнами».</WSR_WaveSurvivalScenario.scenario.summary>
+</LanguageData>
