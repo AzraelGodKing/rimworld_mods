@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Wave Survival Reforged</name>
+  <author>AzraelGodKing, Justin C (original), Philbro (art)</author>
+  <packageId>AzraelGodKing.WaveSurvivalReforged</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <modVersion IgnoreIfNoMatchingField="True">1.0.0</modVersion>
+  <loadAfter>
+    <li>Ludeon.RimWorld</li>
+  </loadAfter>
+  <description>A RimWorld 1.6 rebuild of Wave Survival [Game Mode] by Justin C.
+
+Pick the Wave Survival storyteller for a faster, combat-focused game. Random events are off. Instead, raids come in waves on a fixed timer, each a little stronger than the last, and every fourth wave is a siege, sappers, or maddened animals. Supplies drop in by pod at your orbital trade beacon every day, so you spend less time gathering and more time building defences.
+
+- Raid waves: the first after 5 days, then every 2 days.
+- Daily drops of steel, wood, stone blocks, silver, components and medicine, plus survival meals when food runs low and the odd weapon.
+- Orbital traders, and wanderers joining when the colony is small.
+- A Wave Survival scenario: 4 colonists, starting weapons, and turret research done.
+- An alert counting down to the next wave.
+
+All the numbers live in Defs/WaveSurvivalConfig.xml. RimWorld 1.6. No other mods needed.
+
+Original mod by Justin C. Storyteller art by Philbro: http://philbro.deviantart.com/
+Discord: https://discord.gg/Vwh2y7qMXv</description>
+</ModMetaData>

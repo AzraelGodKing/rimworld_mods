@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <WSR_GameStartDialog>Меньше рутины. Меньше простоя. Больше действия!\n\nРежим «Выживание волнами» избавляет от долгого сбора ресурсов в начале игры. Быстро отстройте базу, а затем отбивайтесь от волны за волной налётчиков, пока ваша колония неизбежно и эффектно не падёт.\n\nПостройте орбитальный торговый маяк, чтобы получать ежедневные посылки с припасами. Первая волна прибудет через пять дней.</WSR_GameStartDialog>
+
+  <WSR_WaveTimerLabel>Волна {0}: {1}</WSR_WaveTimerLabel>
+  <WSR_WaveTimerExplanation>Волна {0} прибудет через {1}.</WSR_WaveTimerExplanation>
+  <WSR_WaveTimerSpecial>Это особая волна: ждите осаду, сапёров или обезумевших животных.</WSR_WaveTimerSpecial>
+
+  <WSR_NeedBeaconLabel>Постройте торговый маяк</WSR_NeedBeaconLabel>
+  <WSR_NeedBeaconExplanation>В режиме «Выживание волнами» припасы раз в день доставляются капсулами к вашему орбитальному торговому маяку. Пока маяка нет, припасы не приходят.\n\nПостройте его как можно скорее.</WSR_NeedBeaconExplanation>
+
+  <WSR_WaveArrived>Волна {0} прибыла!</WSR_WaveArrived>
+  <WSR_SpecialWaveArrived>Особая волна {0} прибыла!</WSR_SpecialWaveArrived>
+  <WSR_SupplyDropArrived>Посылка с припасами приземлилась у торгового маяка.</WSR_SupplyDropArrived>
+
+</LanguageData>

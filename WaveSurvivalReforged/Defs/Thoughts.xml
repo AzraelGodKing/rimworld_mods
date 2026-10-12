@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThoughtDef>
+    <defName>WSR_StillAlive</defName>
+    <workerClass>WaveSurvivalReforged.ThoughtWorker_StillAlive</workerClass>
+    <stages>
+      <li>
+        <label>still alive</label>
+        <description>Every day above ground is a good one!</description>
+        <baseMoodEffect>35</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>

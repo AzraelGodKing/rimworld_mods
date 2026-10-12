@@ -1,0 +1,16 @@
+1.0.0
+[h1]Wave Survival Reforged — 1.0.0[/h1]
+[b]Added[/b]
+[list]
+[*] [b]RimWorld 1.6 rebuild[/b] — Wave Survival [Game Mode] by Justin C, rebuilt from scratch with the same design. Storyteller art by Philbro.
+[*] [b]Wave Survival storyteller[/b] — random events are off; raid waves arrive on a timer and grow each time, and every fourth wave is a siege, sappers, a manhunter pack or mass animal insanity.
+[*] [b]Daily supply drops[/b] — pods land at your orbital trade beacon with resources, survival meals when food runs low, and the odd weapon.
+[*] [b]Wave Survival scenario[/b] — four colonists, starting weapons, and turret research done.
+[*] [b]Alerts[/b] — a countdown to the next wave, and a reminder to build a trade beacon.
+[/list]
+[b]Fixed[/b]
+[list]
+[*] [b]Component drops[/b] — the original checked your silver instead of your components before dropping more.
+[*] [b]Missed drops[/b] — a supply drop due before you have a beacon now lands as soon as you build one, instead of being lost for the day.
+[*] [b]Special waves[/b] — a siege or sapper wave that no enemy faction can carry out falls back to a normal raid instead of skipping the wave.
+[/list]
