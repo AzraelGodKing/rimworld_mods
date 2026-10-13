@@ -45,7 +45,6 @@
   <DC_MentorRemoved>{MENTOR} is no longer mentoring {APPRENTICE}.</DC_MentorRemoved>
   <DC_MentoringComplete>Session complete.</DC_MentoringComplete>
   <DC_MentorInvalid>Cannot assign this mentoring relationship.</DC_MentorInvalid>
-  <DC_MentorSelf>A colonist cannot mentor themselves.</DC_MentorSelf>
   <DC_MentorMutual>Cannot create mutual mentoring loops.</DC_MentorMutual>
   <DC_MentorSkillGap>Mentor must lead by at least {0} levels in one skill.</DC_MentorSkillGap>
   <DC_InspectMentor>Apprentice of {0}</DC_InspectMentor>
@@ -191,7 +190,6 @@
   <DC_RepAttitude>Attitude: {0}</DC_RepAttitude>
   <DC_RepEnvoy>Envoy: {0}</DC_RepEnvoy>
   <DC_RepNoEnvoy>Envoy: none</DC_RepNoEnvoy>
-  <DC_RepEnvoyShort>envoy {0}</DC_RepEnvoyShort>
   <DC_RepLedgerHeader>Ledger (newest first)</DC_RepLedgerHeader>
   <DC_RepReasonTotals>Totals by reason</DC_RepReasonTotals>
   <DC_RepLedgerEmpty>No recorded reputation events yet.</DC_RepLedgerEmpty>
@@ -338,7 +336,6 @@
   <DC_FamilyTree_DevNone>No living family to bring (dead or already colonists here).</DC_FamilyTree_DevNone>
   <DC_FamilyTree_DevDead>{PAWN} is dead.</DC_FamilyTree_DevDead>
   <DC_FamilyTree_DevFailed>Could not bring {PAWN} to this map.</DC_FamilyTree_DevFailed>
-  <DC_FamilyTree_PedigreeToggle>Pedigree layout</DC_FamilyTree_PedigreeToggle>
   <DC_FamilyTree_StylePedigree>Pedigree</DC_FamilyTree_StylePedigree>
   <DC_FamilyTree_StyleRows>Rows</DC_FamilyTree_StyleRows>
   <DC_Settings_FamilyTreePedigree>Family tree: pedigree layout</DC_Settings_FamilyTreePedigree>
@@ -404,12 +401,10 @@
   <DC_InspectTactile>Tactile — {0}</DC_InspectTactile>
   <DC_InspectCuddly>Cuddly — {0}</DC_InspectCuddly>
   <DC_InspectTouchNeedNone>not yet at ease with anyone</DC_InspectTouchNeedNone>
-  <DC_InspectTouchAverseNone>not yet at ease with anyone</DC_InspectTouchAverseNone>
   <DC_InspectTouchStarvedNow>in trusted contact</DC_InspectTouchStarvedNow>
   <DC_InspectTouchStarvedGrace>has not gone without contact yet</DC_InspectTouchStarvedGrace>
   <DC_InspectTouchStarvedLast>last trusted contact {0}h ago</DC_InspectTouchStarvedLast>
   <DC_TouchAverseNowFine>{PAWN} is now {TIER} with {OTHER}.</DC_TouchAverseNowFine>
-  <DC_RomanceBlockedTouchAverse>{PAWN} is not fine being touched by {OTHER} yet. They need more time in touching distance first.</DC_RomanceBlockedTouchAverse>
   <DC_RomanceBlockedTouchTier>{PAWN} is {TIER} with {OTHER} — romance waits until {NEED}.</DC_RomanceBlockedTouchTier>
   <DC_TouchTier_Distant>distant</DC_TouchTier_Distant>
   <DC_TouchTier_Familiar>familiar</DC_TouchTier_Familiar>
