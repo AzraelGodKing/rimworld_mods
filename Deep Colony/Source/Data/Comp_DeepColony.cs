@@ -30,43 +30,43 @@ namespace DeepColony
         public bool parentReunionGranted;
         public bool familyJoinRolled;
 
-        /// <summary>D21 — last tick this colonist despawned from a player home map (-1 = never).</summary>
+        /// <summary>Last tick this colonist despawned from a player home map (-1 = never).</summary>
         public int leftColonyMapTick = -1;
 
-        /// <summary>D21 — last kin-homecoming thought tick (-1 = never).</summary>
+        /// <summary>Last kin-homecoming thought tick (-1 = never).</summary>
         public int lastHomecomingTick = -1;
 
-        /// <summary>E03 — last family-tend comfort tick (-1 = never).</summary>
+        /// <summary>Last family-tend comfort tick (-1 = never).</summary>
         public int lastFamilyTendTick = -1;
 
-        /// <summary>E02 — last kidnapped/captured tick (-1 = not currently taken).</summary>
+        /// <summary>Last kidnapped/captured tick (-1 = not currently taken).</summary>
         public int kinTakenTick = -1;
 
-        /// <summary>E04 — true once this pawn has had living blood kin as colonists.</summary>
+        /// <summary>True once this pawn has had living blood kin as colonists.</summary>
         public bool sawColonyBloodKin;
 
-        /// <summary>E04 — true while this colonist is the last blood kin in the colony.</summary>
+        /// <summary>True while this colonist is the last blood kin in the colony.</summary>
         public bool lastOfTheLine;
 
-        /// <summary>E06 — last family prison-visit tick (-1 = never).</summary>
+        /// <summary>Last family prison-visit tick (-1 = never).</summary>
         public int lastFamilyVisitTick = -1;
 
-        /// <summary>E09 — last kin-downed-beside-you tick (-1 = never).</summary>
+        /// <summary>Last kin-downed-beside-you tick (-1 = never).</summary>
         public int lastKinDownedTick = -1;
 
-        /// <summary>E10 — last empty-nest thought tick (-1 = never).</summary>
+        /// <summary>Last empty-nest thought tick (-1 = never).</summary>
         public int lastEmptyNestTick = -1;
 
-        /// <summary>E08 — one-shot family-tradition teach letter.</summary>
+        /// <summary>One-shot family-tradition teach letter.</summary>
         public bool traditionTeachNoted;
 
-        /// <summary>D18 — how many times this pawn got back together with another (keyed by thingIDNumber).</summary>
+        /// <summary>How many times this pawn got back together with another (keyed by thingIDNumber).</summary>
         public Dictionary<int, int> reconcileCountsByPawn = new Dictionary<int, int>();
 
-        /// <summary>F01 — touch-comfort 0–1 keyed by other pawn thingIDNumber.</summary>
+        /// <summary>Touch-comfort 0–1 keyed by other pawn thingIDNumber.</summary>
         public Dictionary<int, float> touchComfortByPawn = new Dictionary<int, float>();
 
-        /// <summary>F02 — last tick a touch-starved pawn had trusted contact (-1 = never).</summary>
+        /// <summary>Last tick a touch-starved pawn had trusted contact (-1 = never).</summary>
         public int lastTrustedTouchTick = -1;
 
         public Pawn mentor;
@@ -76,15 +76,15 @@ namespace DeepColony
         public bool elderPerkGranted;
         public string familyTraditionSkillDefName;
 
-        /// <summary>AZR-73 — branch being unlearned / learned under a mentor.</summary>
+        /// <summary>Branch being unlearned / learned under a mentor.</summary>
         public string retrainFromPerkDefName;
         public string retrainToPerkDefName;
         public int retrainProgress;
 
-        /// <summary>AZR-70 — named heir thingIDNumber, or -1.</summary>
+        /// <summary>Named heir thingIDNumber, or -1.</summary>
         public int willHeirId = -1;
 
-        /// <summary>AZR-72 — flashback trigger keys revealed after the first reaction.</summary>
+        /// <summary>Flashback trigger keys revealed after the first reaction.</summary>
         public List<string> discoveredTraumaTriggers = new List<string>();
 
         /// <summary>Past mentor display names for teaching-lineage flavor (newest last).</summary>
@@ -96,27 +96,27 @@ namespace DeepColony
         /// <summary>Counsel session counts keyed by counselor thingIDNumber.</summary>
         public Dictionary<int, int> counselCountsByPawn = new Dictionary<int, int>();
 
-        /// <summary>B06 — recoveries per TraumaDef.defName.</summary>
+        /// <summary>Recoveries per TraumaDef.defName.</summary>
         public Dictionary<string, int> recoveredTraumaCounts = new Dictionary<string, int>();
 
         /// <summary>Active trauma defNames for natural-expiry detection.</summary>
         public List<string> trackedTraumaDefNames = new List<string>();
 
-        /// <summary>B17 — faction loadIDs remembered from trauma.</summary>
+        /// <summary>Faction loadIDs remembered from trauma.</summary>
         public List<int> grudgeFactionIds = new List<int>();
 
         public bool seasonedGrowthGranted;
 
-        /// <summary>A17 — Faction.loadID this pawn is envoy for, or -1.</summary>
+        /// <summary>Faction.loadID this pawn is envoy for, or -1.</summary>
         public int envoyFactionId = -1;
 
-        /// <summary>A03 — last respec tick (-1 = never).</summary>
+        /// <summary>Last respec tick (-1 = never).</summary>
         public int lastRespecTick = -1;
 
-        /// <summary>A03 — perks given up by choice; auto-sync must not re-grant them.</summary>
+        /// <summary>Perks given up by choice; auto-sync must not re-grant them.</summary>
         public List<string> forgottenPerkDefNames = new List<string>();
 
-        /// <summary>B02 — active archetype defName, if any.</summary>
+        /// <summary>Active archetype defName, if any.</summary>
         public string activeArchetypeDefName;
 
         public Pawn Pawn => parent as Pawn;
@@ -281,7 +281,7 @@ namespace DeepColony
         }
 
         /// <summary>
-        /// AZR-102 — auto-perk messages hitch when a caravan of visitors spawns
+        /// Auto-perk messages hitch when a caravan of visitors spawns
         /// (one "reached the skill for …" per perk). Colonists still announce.
         /// Visitors / guests / raiders stay silent unless the setting is on.
         /// </summary>
@@ -455,7 +455,7 @@ namespace DeepColony
                 pawn, MessageTypeDefOf.NeutralEvent, false);
         }
 
-        /// <summary>B14 — auto-spend backfilled points on L5 perks only (conservative).</summary>
+        /// <summary>Auto-spend backfilled points on L5 perks only (conservative).</summary>
         public void TryAutoSpendRecruitPerks()
         {
             if (!DeepColonySettings.Get.enablePerks) return;

@@ -6,7 +6,7 @@ using Verse.AI;
 namespace DeepColony
 {
     /// <summary>
-    /// AZR-70 — wills, contested inheritance, unclaimed beds, heirloom lineage.
+    /// Wills, contested inheritance, unclaimed beds, heirloom lineage.
     /// HeirloomUtility still marks the item; this decides who it is for.
     /// </summary>
     public static class EstateUtility

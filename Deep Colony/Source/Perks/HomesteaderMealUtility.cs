@@ -3,7 +3,7 @@ using Verse;
 
 namespace DeepColony
 {
-    /// <summary>C09 — Grand Chef extra mood only on Homesteader pantry foods. Fail-open.</summary>
+    /// <summary>Grand Chef extra mood only on Homesteader pantry foods. Fail-open.</summary>
     public static class HomesteaderMealUtility
     {
         public static void NotifyIngested(Pawn eater, Thing food)
