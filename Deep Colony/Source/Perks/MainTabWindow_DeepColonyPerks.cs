@@ -9,7 +9,7 @@ namespace DeepColony
     public class MainTabWindow_DeepColonyPerks : MainTabWindow
     {
         private Vector2 scrollPos;
-        private int filterMode; // 0 all, 1 unspent, 2 hard-only
+        private int filterMode; // 0 all, 1 hard-only
         private SkillDef filterSkill;
 
         public override Vector2 RequestedTabSize => new Vector2(760f, 580f);
@@ -26,14 +26,11 @@ namespace DeepColony
             if (Widgets.ButtonText(new Rect(inRect.x, fy, bw, 26f),
                     FilterLabel(0)))
                 filterMode = 0;
-            if (Widgets.ButtonText(new Rect(inRect.x + bw + 6f, fy, bw, 26f),
+            if (Widgets.ButtonText(new Rect(inRect.x + bw + 6f, fy, bw + 20f, 26f),
                     FilterLabel(1)))
                 filterMode = 1;
-            if (Widgets.ButtonText(new Rect(inRect.x + 2f * (bw + 6f), fy, bw + 20f, 26f),
-                    FilterLabel(2)))
-                filterMode = 2;
 
-            Rect skillRect = new Rect(inRect.x + 3f * (bw + 6f) + 24f, fy, 180f, 26f);
+            Rect skillRect = new Rect(inRect.x + 2f * (bw + 6f) + 24f, fy, 180f, 26f);
             string skillLabel = filterSkill == null
                 ? "DC_PerkFilter_AllSkills".Translate().ToString()
                 : filterSkill.LabelCap.ToString();
@@ -65,11 +62,7 @@ namespace DeepColony
                     rows.Add(p);
             }
 
-            rows = rows.Where(MatchesFilter).OrderByDescending(p =>
-            {
-                var c = p.TryGetComp<Comp_DeepColony>();
-                return c?.availablePerkPoints ?? 0;
-            }).ThenBy(p => p.LabelShort).ToList();
+            rows = rows.Where(MatchesFilter).OrderBy(p => p.LabelShort).ToList();
 
             float rowH = 28f;
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, Mathf.Max(rows.Count * rowH + 40f, outRect.height));
@@ -77,10 +70,9 @@ namespace DeepColony
 
             float y = 0f;
             Widgets.Label(new Rect(4f, y, 180f, rowH), "DC_PerkOverview_ColName".Translate());
-            Widgets.Label(new Rect(190f, y, 80f, rowH), "DC_PerkOverview_ColPoints".Translate());
-            Widgets.Label(new Rect(280f, y, 80f, rowH), "DC_PerkOverview_ColUnlocked".Translate());
-            Widgets.Label(new Rect(370f, y, 140f, rowH), "DC_PerkOverview_ColStatus".Translate());
-            Widgets.Label(new Rect(520f, y, 140f, rowH), "DC_PerkOverview_ColArchetype".Translate());
+            Widgets.Label(new Rect(190f, y, 80f, rowH), "DC_PerkOverview_ColUnlocked".Translate());
+            Widgets.Label(new Rect(280f, y, 140f, rowH), "DC_PerkOverview_ColStatus".Translate());
+            Widgets.Label(new Rect(430f, y, 140f, rowH), "DC_PerkOverview_ColArchetype".Translate());
             y += rowH;
             Widgets.DrawLineHorizontal(0f, y, viewRect.width);
             y += 4f;
@@ -88,20 +80,11 @@ namespace DeepColony
             foreach (Pawn p in rows)
             {
                 var comp = p.TryGetComp<Comp_DeepColony>();
-                int points = comp?.availablePerkPoints ?? 0;
                 int unlocked = comp?.unlockedPerkDefNames?.Count ?? 0;
 
-                if (points > 0)
-                    GUI.color = new Color(0.95f, 0.8f, 0.2f);
                 Widgets.Label(new Rect(4f, y, 180f, rowH), p.LabelShort);
-                Widgets.Label(new Rect(190f, y, 80f, rowH), points.ToString());
-                Widgets.Label(new Rect(280f, y, 80f, rowH), unlocked.ToString());
-                GUI.color = Color.white;
-
-                string status = points > 0
-                    ? "DC_PerkOverview_Unspent".Translate()
-                    : "DC_PerkOverview_CaughtUp".Translate();
-                Widgets.Label(new Rect(370f, y, 140f, rowH), status);
+                Widgets.Label(new Rect(190f, y, 80f, rowH), unlocked.ToString());
+                Widgets.Label(new Rect(280f, y, 140f, rowH), "DC_PerkOverview_CaughtUp".Translate());
 
                 string arch = "—";
                 if (comp != null && !comp.activeArchetypeDefName.NullOrEmpty())
@@ -109,7 +92,7 @@ namespace DeepColony
                     ArchetypeDef a = DefDatabase<ArchetypeDef>.GetNamedSilentFail(comp.activeArchetypeDefName);
                     if (a != null) arch = a.LabelCap;
                 }
-                Widgets.Label(new Rect(520f, y, 140f, rowH), arch);
+                Widgets.Label(new Rect(430f, y, 140f, rowH), arch);
 
                 Rect btn = new Rect(viewRect.width - 110f, y + 2f, 100f, rowH - 4f);
                 if (comp != null && Widgets.ButtonText(btn, "DC_ViewPerks".Translate()))
@@ -123,9 +106,7 @@ namespace DeepColony
 
         private string FilterLabel(int mode)
         {
-            string key = mode == 1 ? "DC_PerkFilter_Unspent"
-                : mode == 2 ? "DC_PerkFilter_Hard"
-                : "DC_PerkFilter_All";
+            string key = mode == 1 ? "DC_PerkFilter_Hard" : "DC_PerkFilter_All";
             string label = key.Translate();
             return filterMode == mode ? "[" + label + "]" : label;
         }
@@ -134,8 +115,7 @@ namespace DeepColony
         {
             var comp = p.TryGetComp<Comp_DeepColony>();
             if (comp == null) return false;
-            if (filterMode == 1 && comp.availablePerkPoints <= 0) return false;
-            if (filterMode == 2 && !HasHardNode(comp)) return false;
+            if (filterMode == 1 && !HasHardNode(comp)) return false;
             if (filterSkill != null && !TouchesSkill(comp, filterSkill)) return false;
             return true;
         }

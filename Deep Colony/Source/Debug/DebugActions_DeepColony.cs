@@ -16,16 +16,16 @@ namespace DeepColony
         // Needed so the class is picked up — the [DebugAction] methods must live in a loaded assembly.
         static DebugActions_DeepColony() { }
 
-        [DebugAction("Deep Colony", "Grant perk point",
+        [DebugAction("Deep Colony", "Sync perks to skill levels",
             actionType = DebugActionType.ToolMapForPawns,
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        private static void GrantPerkPoint(Pawn p)
+        private static void SyncPerksToSkillLevels(Pawn p)
         {
             var comp = p.TryGetComp<Comp_DeepColony>();
             if (comp == null) { Log.Warning("[DeepColony] No Comp_DeepColony on " + p.LabelShort); return; }
-            comp.availablePerkPoints++;
-            Messages.Message("[DeepColony] Granted 1 perk point to " + p.LabelShort +
-                " (now " + comp.availablePerkPoints + ").", p, MessageTypeDefOf.NeutralEvent, false);
+            comp.SyncPerksToSkillLevels(announce: true);
+            Messages.Message("[DeepColony] Synced perks to skill levels for " + p.LabelShort + ".",
+                p, MessageTypeDefOf.NeutralEvent, false);
         }
 
         [DebugAction("Deep Colony", "Unlock all available perks",
@@ -36,9 +36,7 @@ namespace DeepColony
             var comp = p.TryGetComp<Comp_DeepColony>();
             if (comp == null) { Log.Warning("[DeepColony] No Comp_DeepColony on " + p.LabelShort); return; }
 
-            // Give enough points then unlock everything that qualifies
             int unlocked = 0;
-            comp.availablePerkPoints += 99;
             foreach (var perk in DefDatabase<PerkDef>.AllDefs
                 .Where(pk => comp.CanUnlock(pk)).ToList())
             {
@@ -65,7 +63,6 @@ namespace DeepColony
                 if (h != null) p.health.RemoveHediff(h);
             }
             comp.unlockedPerkDefNames.Clear();
-            comp.availablePerkPoints = 0;
             Messages.Message("[DeepColony] Perk tree reset for " + p.LabelShort + ".",
                 p, MessageTypeDefOf.NeutralEvent, false);
         }
@@ -80,7 +77,6 @@ namespace DeepColony
 
             var sb = new StringBuilder();
             sb.AppendLine("[DeepColony] Perk state for " + p.LabelShort + ":");
-            sb.AppendLine("  Available points: " + comp.availablePerkPoints);
             sb.AppendLine("  Unlocked (" + comp.unlockedPerkDefNames.Count + "):");
             foreach (string n in comp.unlockedPerkDefNames) sb.AppendLine("    - " + n);
 
@@ -90,17 +86,6 @@ namespace DeepColony
             foreach (var pk in available) sb.AppendLine("    - " + pk.defName);
 
             Log.Message(sb.ToString());
-        }
-
-        [DebugAction("Deep Colony", "Backfill perk gate points now",
-            actionType = DebugActionType.ToolMapForPawns,
-            allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        private static void ForceBackfillPerkPoints(Pawn p)
-        {
-            var comp = p.TryGetComp<Comp_DeepColony>();
-            if (comp == null) { Log.Warning("[DeepColony] No Comp_DeepColony on " + p.LabelShort); return; }
-            comp.perkGatesBackfilled = false;
-            comp.TryBackfillPerkGatePoints(announce: true);
         }
 
         [DebugAction("Deep Colony", "Open perk tree window",
@@ -433,7 +418,6 @@ namespace DeepColony
                     var comp = p.TryGetComp<Comp_DeepColony>();
                     if (comp == null) { sb.AppendLine("  " + p.LabelShort + ": NO COMP"); continue; }
                     sb.AppendLine("  " + p.LabelShort +
-                        " | Points: " + comp.availablePerkPoints +
                         " | Perks: " + comp.unlockedPerkDefNames.Count +
                         " | Gates: " + Comp_DeepColony.CountPassedPerkGates(p) +
                         " | Backfilled: " + comp.perkGatesBackfilled +

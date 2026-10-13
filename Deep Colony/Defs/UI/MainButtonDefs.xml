@@ -4,7 +4,7 @@
   <MainButtonDef>
     <defName>DC_Perks</defName>
     <label>perks</label>
-    <description>Colony perk overview — unspent points and tree progress for every colonist.</description>
+    <description>Colony perk overview — tree progress for every colonist.</description>
     <tabWindowClass>DeepColony.MainTabWindow_DeepColonyPerks</tabWindowClass>
     <order>58</order>
     <closesWorldView>true</closesWorldView>
