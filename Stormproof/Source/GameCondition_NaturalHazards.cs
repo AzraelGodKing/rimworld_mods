@@ -4,7 +4,6 @@ using RimWorld;
 
 namespace Stormproof
 {
-    // Extreme heat event (+28°C). Climate stabilizer zeroes the offset.
     public class GameCondition_HeatDome : GameCondition
     {
         private const float TempOffsetCelsius = 28f;
@@ -26,7 +25,6 @@ namespace Stormproof
             new SkyTarget(0.95f, HeatDomeSkyColors, 1f, 1f);
     }
 
-    // Extreme cold event (-28°C). Climate stabilizer zeroes the offset.
     public class GameCondition_PolarFront : GameCondition
     {
         private const float TempOffsetCelsius = -28f;
@@ -48,8 +46,6 @@ namespace Stormproof
             new SkyTarget(0.75f, PolarSkyColors, 1f, 1f);
     }
 
-    // Dry thunderstorm forced over the map - lightning without rain.
-    // Storm spires harvest; fire suppressors and storm callers counter the fires.
     public class GameCondition_DryLightning : GameCondition
     {
         public override WeatherDef ForcedWeather() => StormproofDefOf.DryThunderstorm;
