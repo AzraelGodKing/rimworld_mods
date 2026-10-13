@@ -1,6 +1,5 @@
 {
   "en": {
-    "nav.mods": "Mods",
     "nav.compat": "Compatibility",
     "nav.workshop": "Workshop",
     "nav.theme": "Toggle light / dark",
@@ -10,8 +9,6 @@
     "hub.sort.subs": "Most subscribers",
     "hub.sort.favs": "Most favorites",
     "hub.sort.name": "Name A–Z",
-    "hub.allMods": "Steam Workshop (all mods)",
-    "hub.allNexus": "Nexus Mods (all mods)",
     "stats.subscribers": "subscribers",
     "stats.favorites": "favorites",
     "stats.subs": "subs",
@@ -41,7 +38,6 @@
     "mod.compat": "Compatibility",
     "mod.compatibleWith": "Compatible with",
     "mod.incompatibleWith": "Not compatible with",
-    "mod.requires": "Requires",
     "mod.backToMods": "All mods",
     "compat.title": "Compatibility",
     "compat.pageIntro": "Lists we keep on this site — not Steam's compatibility tab. Use them when you want a single place to send people.",
@@ -66,7 +62,6 @@
     "lightbox.next": "Next image"
   },
   "ru": {
-    "nav.mods": "Моды",
     "nav.compat": "Совместимость",
     "nav.workshop": "Мастерская",
     "nav.theme": "Светлая / тёмная тема",
@@ -76,8 +71,6 @@
     "hub.sort.subs": "Больше подписчиков",
     "hub.sort.favs": "Больше избранных",
     "hub.sort.name": "Имя А–Я",
-    "hub.allMods": "Steam Workshop (все моды)",
-    "hub.allNexus": "Nexus Mods (все моды)",
     "stats.subscribers": "подписчиков",
     "stats.favorites": "в избранном",
     "stats.subs": "подп.",
@@ -107,7 +100,6 @@
     "mod.compat": "Совместимость",
     "mod.compatibleWith": "Совместим с",
     "mod.incompatibleWith": "Несовместим с",
-    "mod.requires": "Требует",
     "mod.backToMods": "Все моды",
     "compat.title": "Совместимость",
     "compat.pageIntro": "Списки, которые мы ведём на этом сайте — не вкладка совместимости Steam. Сюда можно отправлять людей.",
@@ -132,7 +124,6 @@
     "lightbox.next": "Следующее изображение"
   },
   "zh": {
-    "nav.mods": "模组",
     "nav.compat": "兼容性",
     "nav.workshop": "工坊",
     "nav.theme": "切换明暗主题",
@@ -142,8 +133,6 @@
     "hub.sort.subs": "订阅最多",
     "hub.sort.favs": "收藏最多",
     "hub.sort.name": "名称排序",
-    "hub.allMods": "Steam 创意工坊（全部模组）",
-    "hub.allNexus": "Nexus Mods（全部模组）",
     "stats.subscribers": "订阅者",
     "stats.favorites": "收藏",
     "stats.subs": "订阅",
@@ -173,7 +162,6 @@
     "mod.compat": "兼容性",
     "mod.compatibleWith": "兼容",
     "mod.incompatibleWith": "不兼容",
-    "mod.requires": "前置需求",
     "mod.backToMods": "全部模组",
     "compat.title": "兼容性",
     "compat.pageIntro": "我们在本站维护的名单，不是 Steam 兼容性标签。可以把玩家直接带到这里。",
