@@ -27,6 +27,9 @@ AZR-343 AZR-344 AZR-427 AZR-428 AZR-429 AZR-430 AZR-431 AZR-432 AZR-433 AZR-434 
 - **Build stamps** - the hub reads `BuildStamp` from any series mod that follows the `XBuildInfo` convention (Azrael now does too) before falling back to the log.
 - **Version reset** - `modVersion` and `mod.json` go back to 1.0.0 (download `Azrael-1.0.0.zip`) until the first release; `About/changelog.txt` is now a first-release summary.
 
+#### Internal
+- Hub Harmony failures come only from `PatchFailureSink` (`SafePatchAll` already records every series patch). Log scrape remains for build stamps.
+
 ### Development history (formerly 1.1.0)
 
 AZR-137 AZR-136
