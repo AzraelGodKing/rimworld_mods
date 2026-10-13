@@ -6,6 +6,7 @@ Detailed notes for Homesteader only.
 
 ### Changed
 - Removed unused content: the old Legacy scenario def, an empty Adaptive Storage patch, the leftover Adaptive Storage `loadAfter` entry, unused allergy helpers, and the unread `letterText` on the Kats incident (plus its Chinese and Russian lines). Pointed monument comments at `Thoughts_Homestead.xml`. No gameplay change.
+- Languages README no longer lists `1.5/` as a scenario folder (`1.5/` is backstories only; scenarios live under `1.6/`).
 
 ## [1.4.0]
 
