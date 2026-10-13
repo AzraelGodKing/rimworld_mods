@@ -80,7 +80,6 @@ function loadRoster() {
       name: String(row.name || row.id),
       publishedFileId: String(row.publishedFileId),
       nexusModId: row.nexusModId ? String(row.nexusModId) : "",
-      page: row.page || null,
     };
   });
 }
