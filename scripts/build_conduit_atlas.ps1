@@ -164,7 +164,6 @@ $atlas.Dispose(); $segment.Dispose(); $menu.Dispose(); $seg.Dispose(); $hub.Disp
 if ($OutSegment -ne $docsSegment) {
     Copy-Item $OutSegment $docsSegment -Force
 }
-Copy-Item $OutAtlas (Join-Path $repo 'docs\img\ArmoredConduit_Atlas.png') -Force
 
 Write-Output "Atlas:   $OutAtlas"
 Write-Output "Segment: $OutSegment"
