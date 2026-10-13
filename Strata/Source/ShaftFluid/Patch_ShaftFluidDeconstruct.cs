@@ -16,7 +16,7 @@ namespace Strata
             CompShaftFluidJunctionLink link = __instance.TryGetComp<CompShaftFluidJunctionLink>();
             if (link != null && link.IsAutoSpawned)
             {
-                __result = "It is driven by the junction on the level above.";
+                __result = "Strata_FluidLink_DeconstructBlocked".Translate();
             }
         }
     }

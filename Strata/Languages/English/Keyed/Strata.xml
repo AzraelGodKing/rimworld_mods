@@ -57,8 +57,6 @@
   <Strata_Settings_AutoTagExhaustDesc>Add smoke comps to a named vanilla/DLC list (fueled stove and smithy, Ideology braziers and darktorches). Generators, campfires, and Homesteader burners are patched in XML either way. Off never scans other mods' buildings.</Strata_Settings_AutoTagExhaustDesc>
   <Strata_Settings_VerboseLogging>Verbose log</Strata_Settings_VerboseLogging>
   <Strata_Settings_VerboseLoggingDesc>Writes extra Strata diagnostics to Player.log (compat, map gen, gravship land/takeoff, exhaust auto-tag). Off by default.</Strata_Settings_VerboseLoggingDesc>
-  <Strata_Settings_SmokeSimulation>Smoke simulation</Strata_Settings_SmokeSimulation>
-  <Strata_Settings_SmokeSimulationDesc>Burners give off smoke that pools in unventilated rooms. Turning this off clears all existing smoke.</Strata_Settings_SmokeSimulationDesc>
   <Strata_Settings_SmokeSeverity>Smoke inhalation severity: {0} (how fast pawns are harmed by thick smoke)</Strata_Settings_SmokeSeverity>
   <Strata_Settings_UndergroundGas>Underground gas</Strata_Settings_UndergroundGas>
   <Strata_Settings_UndergroundGasDesc>Gas hazards of the deep: excavation can breach pockets of foul deep gas, and sunken ruin sites can appear. Sealed stairwells always contain gas either way.</Strata_Settings_UndergroundGasDesc>
@@ -69,16 +67,12 @@
   <Strata_Settings_GravshipLifeSupportDesc>When on (default), gravship-linked underdecks and ship towers do not free-replenish oxygen. Use oxygen tanks/reclaimers, ordinary O₂ pumps, or an open stair umbilical to the host. Launches dump heat into gravship heatsinks (or ship rooms). Skips Strata launch heat when Vanilla Gravship Expanded already manages heat. Requires Natural gases for the O₂ half.</Strata_Settings_GravshipLifeSupportDesc>
   <Strata_GravshipOxygenStored>Oxygen stored: {0} / {1}</Strata_GravshipOxygenStored>
   <Strata_GravshipHeatsinkStored>Heat stored: {0} / {1}</Strata_GravshipHeatsinkStored>
-  <Strata_Settings_BreathingSimulation>O₂ / CO₂ simulation</Strata_Settings_BreathingSimulation>
-  <Strata_Settings_BreathingSimulationDesc>Underground levels track oxygen and carbon dioxide: colonists breathe O₂, exhale CO₂, O₂ rises through shafts, and CO₂ sinks. Turning this off clears both gases.</Strata_Settings_BreathingSimulationDesc>
   <Strata_Settings_GasOverlayLabels>Gas overlay room labels</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>While the play-settings gas overlay is on, draw color-coded percentage labels on each enclosed room (top three gases + load). The cursor panel is always available when the overlay is on.</Strata_Settings_GasOverlayLabelsDesc>
   <Strata_PlaySettings_GasOverlayTip>Strata: show gas overlay\nTints each room by its dominant hazardous gas. Move the mouse over a room for a cursor-attached gas mix panel. Optional per-room labels: Strata mod settings → Gas overlay room labels.</Strata_PlaySettings_GasOverlayTip>
   <Strata_PlaySettings_CombinedResourcesTip>Strata: combined level resources (off by default)\nWhen on, resource readout, build costs, and “until you have X” bills count items in stockpiles/shelves on every linked floor. No cost while only one map is linked.</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>load {0}%</Strata_GasOverlay_Load>
-  <Strata_GasOverlay_LoadParen>  (load {0}%)</Strata_GasOverlay_LoadParen>
   <Strata_GasOverlay_OpenAir>Gas: open air</Strata_GasOverlay_OpenAir>
-  <Strata_GasOverlay_GasPrefix>Gas: </Strata_GasOverlay_GasPrefix>
   <Strata_Settings_ThreatsPerf>Threats &amp; performance</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>Raid pursuit</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>Raiders with nobody left to fight follow your colonists through unsealed stairwells.</Strata_Settings_RaidPursuitDesc>

@@ -57,8 +57,6 @@
   <Strata_Settings_AutoTagExhaustDesc>只给一份原版/DLC 名单加上烟雾组件（燃料灶与铁匠台、意识形态火盆与暗火把）。发电机、篝火和 Homesteader 燃烧物仍由 XML 补丁处理。关闭后不会扫描其他模组的建筑。</Strata_Settings_AutoTagExhaustDesc>
   <Strata_Settings_VerboseLogging>详细日志</Strata_Settings_VerboseLogging>
   <Strata_Settings_VerboseLoggingDesc>向 Player.log 写入额外 Strata 诊断（兼容检测、地图生成、重力飞船起降、烟雾自动标记）。默认关闭。</Strata_Settings_VerboseLoggingDesc>
-  <Strata_Settings_SmokeSimulation>烟雾模拟</Strata_Settings_SmokeSimulation>
-  <Strata_Settings_SmokeSimulationDesc>燃烧装置产生烟雾并在不通风房间中积聚。关闭会清除所有现有烟雾。</Strata_Settings_SmokeSimulationDesc>
   <Strata_Settings_SmokeSeverity>吸入烟雾严重度：{0}（浓烟对单位造成伤害的速度）</Strata_Settings_SmokeSeverity>
   <Strata_Settings_UndergroundGas>地下气体</Strata_Settings_UndergroundGas>
   <Strata_Settings_UndergroundGasDesc>深层气体危险：挖掘可能打穿恶臭深层气囊，也可能出现沉没废墟遗址。密封楼梯井无论此设置如何都含有气体。</Strata_Settings_UndergroundGasDesc>
@@ -69,16 +67,12 @@
   <Strata_Settings_GravshipLifeSupportDesc>开启时（默认），与重力飞船相连的下层甲板与舰塔不会免费补充氧气。请使用氧气罐/回收器、普通氧气泵，或通往主机的开放楼梯脐带。发射会把热量排入飞船散热器（或舰内房间）。若 Vanilla Gravship Expanded 已管理热量，则跳过 Strata 发射热量。氧气部分需要启用天然气体。</Strata_Settings_GravshipLifeSupportDesc>
   <Strata_GravshipOxygenStored>氧气储量：{0} / {1}</Strata_GravshipOxygenStored>
   <Strata_GravshipHeatsinkStored>热量储量：{0} / {1}</Strata_GravshipHeatsinkStored>
-  <Strata_Settings_BreathingSimulation>氧气 / 二氧化碳模拟</Strata_Settings_BreathingSimulation>
-  <Strata_Settings_BreathingSimulationDesc>地下楼层追踪氧气与二氧化碳：殖民者吸入氧气、呼出二氧化碳，氧气沿竖井上升，二氧化碳下沉。关闭会清除这两种气体。</Strata_Settings_BreathingSimulationDesc>
   <Strata_Settings_GasOverlayLabels>气体叠加房间标签</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>开启游戏设置中的气体叠加时，在每个封闭房间绘制彩色百分比标签（前三种气体 + 负载）。叠加开启时，光标面板始终可用。</Strata_Settings_GasOverlayLabelsDesc>
   <Strata_PlaySettings_GasOverlayTip>Strata：显示气体叠加\n按主要有害气体为房间着色。将鼠标移到房间上可查看附着于光标的气体混合面板。可选每房间标签：Strata 模组设置 → 气体叠加房间标签。</Strata_PlaySettings_GasOverlayTip>
   <Strata_PlaySettings_CombinedResourcesTip>Strata：合并楼层资源（默认关闭）\n开启后，资源读数、建造成本与“直到拥有 X”账单会计入每个相连楼层货堆/货架上的物品。仅一层时无额外开销。</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>负载 {0}%</Strata_GasOverlay_Load>
-  <Strata_GasOverlay_LoadParen>  （负载 {0}%）</Strata_GasOverlay_LoadParen>
   <Strata_GasOverlay_OpenAir>气体：开阔空气</Strata_GasOverlay_OpenAir>
-  <Strata_GasOverlay_GasPrefix>气体：</Strata_GasOverlay_GasPrefix>
   <Strata_Settings_ThreatsPerf>威胁与性能</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>袭击追击</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>没有可打目标的袭击者会经未密封楼梯井追击你的殖民者。</Strata_Settings_RaidPursuitDesc>
