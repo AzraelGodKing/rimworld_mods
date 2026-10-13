@@ -25,7 +25,6 @@ A faithful-plus rebuild of Nanohive2 for RimWorld.
 ## Texture
 
 - Building texture file: `Textures/Buildings/RepairingAura.png` (matches `texPath` `Buildings/RepairingAura` in the ThingDef).
-- See `Textures/Buildings/README.txt` for the same note.
 
 ## Build notes
 
