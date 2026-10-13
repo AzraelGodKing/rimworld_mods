@@ -47,18 +47,6 @@ namespace LivingWorld
             WorldEventKind.CaravanDiverted,
         };
 
-        public static bool IsStableHookKind(WorldEventKind kind)
-        {
-            for (int i = 0; i < StableHookKinds.Count; i++)
-            {
-                if (StableHookKinds[i] == kind)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         private static readonly List<WorldEventHandler> handlers = new List<WorldEventHandler>();
 
         public static void Register(WorldEventHandler handler)

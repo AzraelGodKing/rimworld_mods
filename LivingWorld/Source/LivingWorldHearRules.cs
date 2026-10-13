@@ -39,10 +39,6 @@ namespace LivingWorld
             return verbosity >= 2;
         }
 
-        internal static bool IsNearbyPublic(WorldEvent ev) => IsNearby(ev);
-
-        internal static bool HasCommsConsole() => HasComms();
-
         private static bool HasPriorContact(WorldEvent ev)
         {
             return Contacted(ev.FactionA()) || Contacted(ev.FactionB());
@@ -63,7 +59,7 @@ namespace LivingWorld
             return faction.PlayerRelationKind != FactionRelationKind.Neutral;
         }
 
-        private static bool IsNearby(WorldEvent ev)
+        internal static bool IsNearby(WorldEvent ev)
         {
             if (ev.tile < 0)
             {
@@ -94,7 +90,7 @@ namespace LivingWorld
                 || faction.GoodwillWith(Faction.OfPlayer) >= 50;
         }
 
-        private static bool HasComms()
+        internal static bool HasComms()
         {
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
