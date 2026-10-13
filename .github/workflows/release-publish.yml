@@ -77,7 +77,7 @@ jobs:
           else
             PUBLISH="$(jq -r --arg k "$MOD" '.[] | select(.modKey == $k) | .publish' scripts/matrix/mod-matrix.json)"
             if [ "$PUBLISH" = "false" ]; then
-              echo "::error::$MOD is not release-ready (publish=false). Living World and Azrael stay in-repo only."
+              echo "::error::$MOD is not release-ready (publish=false). Living World, Azrael, and Wave Survival Reforged stay in-repo only."
               exit 1
             fi
             KEYS="$MOD"
