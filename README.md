@@ -2,7 +2,7 @@
 
 A collection of RimWorld mods by AzraelGodKing.
 
-Each mod folder has a `mod.json` for the public mod website. It records the name, version, description, preview, and download links. It is not part of the Workshop zip.
+Each mod folder has a `mod.json` for the public mod website, except Wave Survival Reforged and NanoHive Reforged (in-repo only). It records the name, version, description, preview, and download links. It is not part of the Workshop zip.
 
 ## Mods
 
@@ -127,9 +127,9 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Niceties** require the **Harmony** mod. **Living World** and **Azrael** are in-repo but not release-ready (not in the GitHub Release zips).
+4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Niceties** require the **Harmony** mod. **Living World**, **Azrael**, and **Wave Survival Reforged** are in-repo but not release-ready (not in the GitHub Release zips).
 
-Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally. After the nine builds, `dotnet test Tests/ModChecks/ModChecks.csproj -c Release` checks Harmony string targets, DefOf/defName literals, Scribe parity, Series hub roster, Keyed literals, and def XML fields against the Krafs ref pack (no RimWorld install).
+Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally. After the ten builds, `dotnet test Tests/ModChecks/ModChecks.csproj -c Release` checks Harmony string targets, DefOf/defName literals, Scribe parity, Series hub roster, Keyed literals, and def XML fields against the Krafs ref pack (no RimWorld install).
 
 Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first (resolve an active Nemesis hunt before removing Nemesis).
 
