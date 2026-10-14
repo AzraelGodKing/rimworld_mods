@@ -159,8 +159,6 @@ namespace Azrael.ModChecks
             return null;
         }
 
-        public bool IsListLike(TypeReference tr) => ListElementType(tr) != null;
-
         void TryAdd(string path)
         {
             if (!File.Exists(path))

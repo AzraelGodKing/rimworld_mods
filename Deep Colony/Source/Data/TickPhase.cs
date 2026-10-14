@@ -2,7 +2,7 @@ using Verse;
 
 namespace DeepColony
 {
-    // AZR-123 — one TicksGame clock, staggered so fifteen sweeps
+    // One TicksGame clock, staggered so fifteen sweeps
     // do not all land on the same hour tick.
     internal static class TickPhase
     {

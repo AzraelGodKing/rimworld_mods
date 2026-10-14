@@ -45,7 +45,6 @@
   <DC_MentorRemoved>{MENTOR} 不再指导 {APPRENTICE}。</DC_MentorRemoved>
   <DC_MentoringComplete>指导结束。</DC_MentoringComplete>
   <DC_MentorInvalid>无法建立此指导关系。</DC_MentorInvalid>
-  <DC_MentorSelf>殖民者不能指导自己。</DC_MentorSelf>
   <DC_MentorMutual>不能形成互相指导的循环。</DC_MentorMutual>
   <DC_MentorSkillGap>导师至少有一项技能领先 {0} 级。</DC_MentorSkillGap>
   <DC_InspectMentor>{0} 的学徒</DC_InspectMentor>
@@ -191,7 +190,6 @@
   <DC_RepAttitude>态度：{0}</DC_RepAttitude>
   <DC_RepEnvoy>使者：{0}</DC_RepEnvoy>
   <DC_RepNoEnvoy>使者：无</DC_RepNoEnvoy>
-  <DC_RepEnvoyShort>使者 {0}</DC_RepEnvoyShort>
   <DC_RepLedgerHeader>账本（最新在前）</DC_RepLedgerHeader>
   <DC_RepReasonTotals>按原因汇总</DC_RepReasonTotals>
   <DC_RepLedgerEmpty>尚无记录的声望事件。</DC_RepLedgerEmpty>
@@ -338,7 +336,6 @@
   <DC_FamilyTree_DevNone>没有可召唤的在世家族（已故，或已是此地殖民者）。</DC_FamilyTree_DevNone>
   <DC_FamilyTree_DevDead>{PAWN} 已故。</DC_FamilyTree_DevDead>
   <DC_FamilyTree_DevFailed>无法将 {PAWN} 带到此地。</DC_FamilyTree_DevFailed>
-  <DC_FamilyTree_PedigreeToggle>谱系图布局</DC_FamilyTree_PedigreeToggle>
   <DC_FamilyTree_StylePedigree>谱系图</DC_FamilyTree_StylePedigree>
   <DC_FamilyTree_StyleRows>分行</DC_FamilyTree_StyleRows>
   <DC_Settings_FamilyTreePedigree>家族树：谱系图布局</DC_Settings_FamilyTreePedigree>
@@ -404,12 +401,10 @@
   <DC_InspectTactile>触觉型 — {0}</DC_InspectTactile>
   <DC_InspectCuddly>爱依偎 — {0}</DC_InspectCuddly>
   <DC_InspectTouchNeedNone>尚不能与任何人安心相处</DC_InspectTouchNeedNone>
-  <DC_InspectTouchAverseNone>尚不能与任何人安心相处</DC_InspectTouchAverseNone>
   <DC_InspectTouchStarvedNow>正在与信任的人接触</DC_InspectTouchStarvedNow>
   <DC_InspectTouchStarvedGrace>还没有缺过接触</DC_InspectTouchStarvedGrace>
   <DC_InspectTouchStarvedLast>上次信任接触在 {0} 小时前</DC_InspectTouchStarvedLast>
   <DC_TouchAverseNowFine>{PAWN} 对 {OTHER} 已是「{TIER}」。</DC_TouchAverseNowFine>
-  <DC_RomanceBlockedTouchAverse>{PAWN} 还不能接受 {OTHER} 的触碰。需要再靠近相处一段时间。</DC_RomanceBlockedTouchAverse>
   <DC_RomanceBlockedTouchTier>{PAWN} 对 {OTHER} 目前是{TIER} — 恋爱要等到「{NEED}」。</DC_RomanceBlockedTouchTier>
   <DC_TouchTier_Distant>疏远</DC_TouchTier_Distant>
   <DC_TouchTier_Familiar>熟悉</DC_TouchTier_Familiar>

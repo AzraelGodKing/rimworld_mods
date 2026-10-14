@@ -13,8 +13,6 @@ namespace Stormproof
         }
     }
 
-    // Restores usable daylight during eclipses, volcanic winters/ash, and
-    // darkened skies so grow lamps and mood aren't the only counters.
     public class CompSkyRestorer : ThingComp, IHazardDefender, IHazardPowerRamp
     {
         private CompPowerTrader powerComp;

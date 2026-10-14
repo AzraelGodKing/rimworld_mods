@@ -7,6 +7,7 @@ Detailed notes for Deep Colony only.
 ### Changed
 - Removed unused save flags, perk-alert bookkeeping, unused helpers, unused NoisyRoom DefOf, and a stale build SHA. No gameplay change; old saves still load.
 - Dropped unused `Thought_Trauma.rememberedFactionId` (grudges still use `GrudgeUtility` / `comp.grudgeFactionIds`; old saves ignore the removed scribe field) and unused `Comp_DeepColony.QualifiesFor`. Startup uses `ModVersionLog.Write` (stamp `colony-overview-v1`); the duplicate short version log in the Mod constructor is gone. Trimmed decorative `// ──` banners in Patch_BatchC, Patch_Events, DefOfs, and DebugActions.
+- Dropped unused EN/RU/CN keyed leftovers (`DC_MentorSelf`, `DC_FamilyTree_PedigreeToggle`, `DC_InspectTouchAverseNone`, `DC_RomanceBlockedTouchAverse`, `DC_RepEnvoyShort`). Live copies remain (`DC_MentorInvalid`, `DC_FamilyTree_StylePedigree`, `DC_InspectTouchNeedNone`, `DC_RomanceBlockedTouchTier`, `DC_RepEnvoy`). Ticket-ID prefixes stripped from `Comp_DeepColony` field comments and a few utility headers. No gameplay change.
 
 ## [1.9.0]
 

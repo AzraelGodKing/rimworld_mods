@@ -45,7 +45,6 @@
   <DC_MentorRemoved>{MENTOR} больше не наставляет {APPRENTICE}.</DC_MentorRemoved>
   <DC_MentoringComplete>Сессия завершена.</DC_MentoringComplete>
   <DC_MentorInvalid>Нельзя назначить эту наставническую связь.</DC_MentorInvalid>
-  <DC_MentorSelf>Колонист не может наставлять самого себя.</DC_MentorSelf>
   <DC_MentorMutual>Нельзя создавать взаимные циклы наставничества.</DC_MentorMutual>
   <DC_MentorSkillGap>Наставник должен опережать хотя бы на {0} ур. в одном навыке.</DC_MentorSkillGap>
   <DC_InspectMentor>Ученик у {0}</DC_InspectMentor>
@@ -191,7 +190,6 @@
   <DC_RepAttitude>Отношение: {0}</DC_RepAttitude>
   <DC_RepEnvoy>Посланник: {0}</DC_RepEnvoy>
   <DC_RepNoEnvoy>Посланник: нет</DC_RepNoEnvoy>
-  <DC_RepEnvoyShort>посланник {0}</DC_RepEnvoyShort>
   <DC_RepLedgerHeader>Журнал (сначала новые)</DC_RepLedgerHeader>
   <DC_RepReasonTotals>Итого по причинам</DC_RepReasonTotals>
   <DC_RepLedgerEmpty>Записей о репутации пока нет.</DC_RepLedgerEmpty>
@@ -338,7 +336,6 @@
   <DC_FamilyTree_DevNone>Нет живой семьи, которую можно призвать (мертвы или уже колонисты здесь).</DC_FamilyTree_DevNone>
   <DC_FamilyTree_DevDead>{PAWN} мёртв(а).</DC_FamilyTree_DevDead>
   <DC_FamilyTree_DevFailed>Не удалось призвать {PAWN} на эту карту.</DC_FamilyTree_DevFailed>
-  <DC_FamilyTree_PedigreeToggle>Схема с линиями</DC_FamilyTree_PedigreeToggle>
   <DC_FamilyTree_StylePedigree>Схема</DC_FamilyTree_StylePedigree>
   <DC_FamilyTree_StyleRows>Ряды</DC_FamilyTree_StyleRows>
   <DC_Settings_FamilyTreePedigree>Родословная: схема с линиями</DC_Settings_FamilyTreePedigree>
@@ -404,12 +401,10 @@
   <DC_InspectTactile>Тактильность — {0}</DC_InspectTactile>
   <DC_InspectCuddly>Ласковость — {0}</DC_InspectCuddly>
   <DC_InspectTouchNeedNone>пока ни с кем не спокойно</DC_InspectTouchNeedNone>
-  <DC_InspectTouchAverseNone>пока ни с кем не спокойно</DC_InspectTouchAverseNone>
   <DC_InspectTouchStarvedNow>есть доверенный контакт</DC_InspectTouchStarvedNow>
   <DC_InspectTouchStarvedGrace>ещё не оставался(ась) без контакта</DC_InspectTouchStarvedGrace>
   <DC_InspectTouchStarvedLast>последний доверенный контакт {0} ч назад</DC_InspectTouchStarvedLast>
   <DC_TouchAverseNowFine>{PAWN} теперь {TIER} с {OTHER}.</DC_TouchAverseNowFine>
-  <DC_RomanceBlockedTouchAverse>{PAWN} ещё не готов(а) к прикосновениям {OTHER}. Нужно больше времени рядом.</DC_RomanceBlockedTouchAverse>
   <DC_RomanceBlockedTouchTier>{PAWN} сейчас {TIER} с {OTHER} — роман ждёт ступени «{NEED}».</DC_RomanceBlockedTouchTier>
   <DC_TouchTier_Distant>на дистанции</DC_TouchTier_Distant>
   <DC_TouchTier_Familiar>знаком(а)</DC_TouchTier_Familiar>

@@ -13,8 +13,6 @@ namespace Stormproof
         }
     }
 
-    // Atmospheric moisture recovery during droughts (Odyssey). While powered,
-    // outdoor plant drought penalties are cancelled map-wide.
     public class CompDroughtCondenser : ThingComp, IHazardDefender, IHazardPowerRamp
     {
         private CompPowerTrader powerComp;

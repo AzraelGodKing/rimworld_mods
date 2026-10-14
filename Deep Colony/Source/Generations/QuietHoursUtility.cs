@@ -7,7 +7,7 @@ using Verse.AI;
 namespace DeepColony
 {
     /// <summary>
-    /// AZR-65 — cheap room-level noise. Walls contain it (room cells only).
+    /// Cheap room-level noise. Walls contain it (room cells only).
     /// Loud rooms hurt rest, counsel, and mentoring. Not Strata infestation noise.
     /// </summary>
     public static class QuietHoursUtility
