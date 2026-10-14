@@ -11,6 +11,9 @@ Player-facing release notes for Strata (Steam Workshop style).
 - Startup version line uses shared `ModVersionLog.Write`; stamp stays `construct-fetch-v1`. No gameplay change.
 - **Dead-code sweep**: removed unused atmosphere wrappers, empty off-thread session hooks, leftover helpers, and unused keyed inspect strings. No player-facing change.
 
+### Docs
+- **Strata 4 roadmap** (AZR-467): `V4_ROADMAP.md` plans Strata 4 as a RimWorld 1.7-only release with new shader visuals, a performance pass, smarter cross-floor commuting, and the Magma, Flooded and Lost floor levels. No gameplay change.
+
 ## [3.8.3]
 
 AZR-451
