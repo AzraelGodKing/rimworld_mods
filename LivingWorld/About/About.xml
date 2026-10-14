@@ -5,6 +5,7 @@
   <packageId>azraelgodking.livingworld</packageId>
   <supportedVersions>
     <li>1.6</li>
+    <li>1.7</li>
   </supportedVersions>
   <modVersion IgnoreIfNoMatchingField="True">1.0.0</modVersion>
   <modDependencies>
@@ -21,5 +22,5 @@
   </loadAfter>
   <description>Off-map faction life: other settlements drift, flip ownership, feud, and make news — without a second storyteller dumping threat at you.
 
-Personal antagonists stay in Nemesis. Player goodwill stays in Deep Colony. Requires Harmony. RimWorld 1.6. Safe to add mid-save.</description>
+Personal antagonists stay in Nemesis. Player goodwill stays in Deep Colony. Requires Harmony. RimWorld 1.6 and 1.7. Safe to add mid-save.</description>
 </ModMetaData>

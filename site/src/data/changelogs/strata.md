@@ -8,6 +8,7 @@ Player-facing release notes for Strata (Steam Workshop style).
 ## [Unreleased]
 
 ### Changed
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change. `modVersion` bump pending approval.
 - Startup version line uses shared `ModVersionLog.Write`; stamp stays `construct-fetch-v1`. No gameplay change.
 - **Dead-code sweep**: removed unused atmosphere wrappers, empty off-thread session hooks, leftover helpers, and unused keyed inspect strings. No player-facing change.
 

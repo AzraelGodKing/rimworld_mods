@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change. `modVersion` bump pending approval.
+
 ## [1.0.0]
 
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `world-traffic-v1`.
