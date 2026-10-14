@@ -311,40 +311,7 @@ namespace Azrael
             }
             catch
             {
-                // Sink missing: fall through to log scrape.
-            }
-
-            if (hits.Count > 0)
-            {
-                return hits;
-            }
-
-            try
-            {
-                foreach (string text in RecentLogTextsCached())
-                {
-                    if (string.IsNullOrEmpty(text))
-                    {
-                        continue;
-                    }
-
-                    if (text.IndexOf("Harmony patch class", StringComparison.Ordinal) < 0
-                        || text.IndexOf(" failed", StringComparison.Ordinal) < 0)
-                    {
-                        continue;
-                    }
-
-                    if (!LooksLikeSeriesLog(text))
-                    {
-                        continue;
-                    }
-
-                    hits.Add(text);
-                }
-            }
-            catch
-            {
-                // Fail-open: an inaccessible log is not a hub error.
+                // Fail-open: a missing sink is not a hub error.
             }
 
             return hits;
@@ -885,19 +852,6 @@ namespace Azrael
             PropertyInfo textProp = AccessTools.Property(logMessage.GetType(), "text")
                 ?? AccessTools.Property(logMessage.GetType(), "Text");
             return textProp?.GetValue(logMessage, null) as string;
-        }
-
-        private static bool LooksLikeSeriesLog(string text)
-        {
-            return text.IndexOf("[Homesteader]", StringComparison.Ordinal) >= 0
-                || text.IndexOf("[Strata]", StringComparison.Ordinal) >= 0
-                || text.IndexOf("[Stormproof]", StringComparison.Ordinal) >= 0
-                || text.IndexOf("[Nemesis]", StringComparison.Ordinal) >= 0
-                || text.IndexOf("[DeepColony]", StringComparison.Ordinal) >= 0
-                || text.IndexOf("[LivingWorld]", StringComparison.Ordinal) >= 0
-                || text.IndexOf("[DateNight]", StringComparison.Ordinal) >= 0
-                || text.IndexOf("[Niceties]", StringComparison.Ordinal) >= 0
-                || text.IndexOf("[Azrael]", StringComparison.Ordinal) >= 0;
         }
 
         internal static Color StatusColor(bool ok)

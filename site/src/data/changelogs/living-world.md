@@ -18,6 +18,7 @@ AZR-326
 - Merged four identical `FindFaction(int)` helpers into one on `WorldEvent`.
 - Dropped unused Founding letter Keyed pair (EN/RU/CN); `WorldEventKind.Founding` stays for scribed saves.
 - Removed redundant `HasComms()` short-circuit in `PlayerShouldHear` (same as `return verbosity >= 2`).
+- Dropped unused `IsStableHookKind` (`StableHookKinds` stays). `ChannelFor` calls `IsNearby` / `HasComms` directly.
 - Stripped AZR-326–333 ticket-id prefixes from source comments.
 - Languages README no longer implies DefInjected packs are future work.
 

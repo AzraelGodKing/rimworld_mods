@@ -98,11 +98,11 @@ namespace LivingWorld
 
         private static HearChannel ChannelFor(WorldEvent ev)
         {
-            if (LivingWorldHearRules.HasCommsConsole())
+            if (LivingWorldHearRules.HasComms())
             {
                 return HearChannel.Radio;
             }
-            if (LivingWorldHearRules.IsNearbyPublic(ev))
+            if (LivingWorldHearRules.IsNearby(ev))
             {
                 return HearChannel.Proximity;
             }
