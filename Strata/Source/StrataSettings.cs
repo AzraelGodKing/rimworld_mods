@@ -44,7 +44,6 @@ namespace Strata
         public bool medicalRelayEnabled = true;
         public bool joyRelayEnabled = true;
         public bool caravanPullEnabled = true;
-        public bool throttleVacantLevels = true;
         public bool hibernateEmptyLevels = true;
         public bool reduceBackgroundLevels = true;
         public bool showLevelPerfInTab = false;
@@ -113,8 +112,10 @@ namespace Strata
             Scribe_Values.Look(ref smokeSeverityScale, "smokeSeverityScale", 1f);
             bool legacySmokeEnabled = true;
             bool legacyBreathingEnabled = true;
+            bool legacyThrottleVacantLevels = true;
             Scribe_Values.Look(ref legacySmokeEnabled, "smokeEnabled", defaultValue: true);
             Scribe_Values.Look(ref legacyBreathingEnabled, "breathingEnabled", defaultValue: true);
+            Scribe_Values.Look(ref legacyThrottleVacantLevels, "throttleVacantLevels", defaultValue: true);
             Scribe_Values.Look(ref gasOverlayRoomLabels, "gasOverlayRoomLabels", defaultValue: false);
             Scribe_Values.Look(ref gasEventsEnabled, "gasEventsEnabled", defaultValue: false);
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
@@ -136,7 +137,6 @@ namespace Strata
             Scribe_Values.Look(ref medicalRelayEnabled, "medicalRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref joyRelayEnabled, "joyRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref caravanPullEnabled, "caravanPullEnabled", defaultValue: true);
-            Scribe_Values.Look(ref throttleVacantLevels, "throttleVacantLevels", defaultValue: true);
             Scribe_Values.Look(ref hibernateEmptyLevels, "hibernateEmptyLevels", defaultValue: true);
             Scribe_Values.Look(ref reduceBackgroundLevels, "reduceBackgroundLevels", defaultValue: true);
             Scribe_Values.Look(ref showLevelPerfInTab, "showLevelPerfInTab", defaultValue: false);
@@ -419,8 +419,6 @@ namespace Strata
             }
             listing.CheckboxLabeled("Strata_Settings_HibernateEmpty".Translate(), ref Settings.hibernateEmptyLevels,
                 "Strata_Settings_HibernateEmptyDesc".Translate());
-            // Note: throttleVacantLevels is kept in ExposeData for save compat but is no
-            // longer read at runtime. HibernateEnabled() reads hibernateEmptyLevels directly.
             listing.CheckboxLabeled("Strata_Settings_ReduceBackground".Translate(), ref Settings.reduceBackgroundLevels,
                 "Strata_Settings_ReduceBackgroundDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_PerformanceMode".Translate(), ref Settings.performanceModeEnabled,

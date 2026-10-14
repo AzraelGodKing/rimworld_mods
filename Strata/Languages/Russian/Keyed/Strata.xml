@@ -56,8 +56,6 @@
   <Strata_Settings_AutoTagExhaustDesc>Добавляет дымовые компоненты только к списку ванили/DLC (топливная плита и кузница, идеологические жаровни и тёмные факелы). Генераторы, костры и горелки Homesteader всё равно патчатся XML. Выключение не сканирует здания других модов.</Strata_Settings_AutoTagExhaustDesc>
   <Strata_Settings_VerboseLogging>Подробный лог</Strata_Settings_VerboseLogging>
   <Strata_Settings_VerboseLoggingDesc>Пишет дополнительные диагностики Strata в Player.log (совместимость, генерация карт, посадка/взлёт гравикорабля, автопометка дыма). По умолчанию выкл.</Strata_Settings_VerboseLoggingDesc>
-  <Strata_Settings_SmokeSimulation>Симуляция дыма</Strata_Settings_SmokeSimulation>
-  <Strata_Settings_SmokeSimulationDesc>Горелки выделяют дым, который скапливается в непроветриваемых комнатах. Выключение очищает весь существующий дым.</Strata_Settings_SmokeSimulationDesc>
   <Strata_Settings_SmokeSeverity>Сила отравления дымом: {0} (как быстро густой дым вредит пешкам)</Strata_Settings_SmokeSeverity>
   <Strata_Settings_UndergroundGas>Подземный газ</Strata_Settings_UndergroundGas>
   <Strata_Settings_UndergroundGasDesc>Газовые угрозы глубин: при копке могут вскрыться карманы зловонного глубинного газа, возможны руины. Запечатанные лестницы всё равно содержат газ.</Strata_Settings_UndergroundGasDesc>
@@ -68,16 +66,12 @@
   <Strata_Settings_GravshipLifeSupportDesc>При включении (по умолчанию) связанные уровни гравикорабля и башни не пополняют кислород сами. Нужны баллоны/рекуператоры, обычные O₂-насосы или открытая шахта к палубе. Запуски сбрасывают тепло в теплоотводы (или в комнаты корабля). Тепло Strata пропускается, если VGE уже управляет теплом. Для O₂ нужны «Природные газы».</Strata_Settings_GravshipLifeSupportDesc>
   <Strata_GravshipOxygenStored>Запас кислорода: {0} / {1}</Strata_GravshipOxygenStored>
   <Strata_GravshipHeatsinkStored>Запас тепла: {0} / {1}</Strata_GravshipHeatsinkStored>
-  <Strata_Settings_BreathingSimulation>Симуляция O₂ / CO₂</Strata_Settings_BreathingSimulation>
-  <Strata_Settings_BreathingSimulationDesc>Подземные уровни отслеживают кислород и углекислый газ: колонисты дышат O₂, выдыхают CO₂, O₂ поднимается по шахтам, CO₂ оседает. Выключение очищает оба газа.</Strata_Settings_BreathingSimulationDesc>
   <Strata_Settings_GasOverlayLabels>Подписи комнат на оверлее газа</Strata_Settings_GasOverlayLabels>
   <Strata_Settings_GasOverlayLabelsDesc>При включённом оверлее газа в настройках игры рисует цветные процентные подписи на каждой закрытой комнате (топ-3 газа + нагрузка). Панель у курсора доступна всегда, когда оверлей включён.</Strata_Settings_GasOverlayLabelsDesc>
   <Strata_PlaySettings_GasOverlayTip>Strata: отображение наложения данных о газе\nКаждую комнату окрашивает в цвет преобладающего в ней опасного газа. Наведите указатель мыши на комнату, чтобы открыть прикрепленную к курсору панель с данными о газовой смеси. Дополнительные подписи для каждой комнаты: настройки мода Strata → Подписи для комнат с наложением данных о газе.</Strata_PlaySettings_GasOverlayTip>
   <Strata_PlaySettings_CombinedResourcesTip>Strata: комбинированные ресурсы уровня (по умолчанию выкл.)\nПри включении учёт ресурсов и затрат на строительство суммирует предметы на каждом связанном этаже. Без второй карты нагрузки нет.</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>Нагрузка {0}%</Strata_GasOverlay_Load>
-  <Strata_GasOverlay_LoadParen>  (Нагрузка {0}%)</Strata_GasOverlay_LoadParen>
   <Strata_GasOverlay_OpenAir>Газ: открытый воздух</Strata_GasOverlay_OpenAir>
-  <Strata_GasOverlay_GasPrefix>Газ: </Strata_GasOverlay_GasPrefix>
   <Strata_Settings_ThreatsPerf>Угрозы и производительность</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>Преследование рейдеров</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>Рейдеры без целей для боя идут за колонистами через незапечатанные лестницы.</Strata_Settings_RaidPursuitDesc>
