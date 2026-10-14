@@ -1,10 +1,8 @@
 # Changelog
 
+Detailed notes for **Date Night** only.
 
 ## [Unreleased]
-
-### Changed
-Detailed notes for **Date Night** only.
 
 ## [1.6.2]
 
