@@ -3,7 +3,7 @@
 ## [Unreleased]
 
 ### Changed
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change. `modVersion` bump pending approval.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change. No `modVersion` bump (Myleek).
 
 ## [1.0.0]
 

@@ -4,9 +4,16 @@
 ## [Unreleased]
 
 ### Changed
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change. `modVersion` bump pending approval.
-
 Detailed notes for **Date Night** only.
+
+## [1.6.2]
+
+Player-facing version **1.6.2** (`About.xml` `modVersion`).
+
+AZR-457
+
+### Changed
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 
 ## [1.6.1]
 

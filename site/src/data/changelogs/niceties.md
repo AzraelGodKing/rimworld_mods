@@ -5,8 +5,16 @@ Detailed notes for **Niceties** only.
 ## [Unreleased]
 
 ### Changed
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change. `modVersion` bump pending approval.
 - Removed unused `CryptosleepBar.HiddenCount` getter and `NicetiesMultiplayer.Loaded` property. No gameplay change.
+
+## [1.5.1]
+
+Player-facing version **1.5.1** (`About.xml` `modVersion`).
+
+AZR-457
+
+### Changed
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 
 ## [1.5.0]
 
