@@ -109,8 +109,6 @@ namespace DeepColony
             settings.respecCooldownDays = listing.Slider(settings.respecCooldownDays, 5f, 30f);
             listing.CheckboxLabeled("DC_Settings_Archetypes".Translate(), ref settings.enableCrossSkillArchetypes,
                 "DC_Settings_ArchetypesTip".Translate());
-            listing.CheckboxLabeled("DC_Settings_RecruitPrePerks".Translate(), ref settings.enableRecruitPrePerks,
-                "DC_Settings_RecruitPrePerksTip".Translate());
             listing.CheckboxLabeled("DC_Settings_Heirlooms".Translate(), ref settings.enableHeirlooms,
                 "DC_Settings_HeirloomsTip".Translate());
             listing.CheckboxLabeled("DC_Settings_ChronicTrauma".Translate(), ref settings.enableChronicTrauma,

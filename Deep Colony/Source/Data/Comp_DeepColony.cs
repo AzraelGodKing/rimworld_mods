@@ -16,7 +16,6 @@ namespace DeepColony
     public class Comp_DeepColony : ThingComp
     {
         public List<string> unlockedPerkDefNames = new List<string>();
-        public int availablePerkPoints;
         public bool perkGatesBackfilled;
         public int untreatedTraumaSinceTick = -1;
         public string lastCounselorName;
@@ -73,7 +72,6 @@ namespace DeepColony
         public string mentoredSkillDefName;
         public string perkBeingTaughtDefName;
         public int perkTeachProgress;
-        public bool elderPerkGranted;
         public string familyTraditionSkillDefName;
 
         /// <summary>Branch being unlearned / learned under a mentor.</summary>
@@ -204,7 +202,7 @@ namespace DeepColony
                 pawn, MessageTypeDefOf.PositiveEvent, false);
         }
 
-        /// <summary>Grant a perk without spending a point (perk apprenticeship).</summary>
+        /// <summary>Grant a perk from perk apprenticeship.</summary>
         public void UnlockPerkFree(PerkDef perk)
         {
             if (perk == null || HasPerk(perk)) return;
@@ -455,13 +453,6 @@ namespace DeepColony
                 pawn, MessageTypeDefOf.NeutralEvent, false);
         }
 
-        /// <summary>Auto-spend backfilled points on L5 perks only (conservative).</summary>
-        public void TryAutoSpendRecruitPerks()
-        {
-            if (!DeepColonySettings.Get.enablePerks) return;
-            SyncPerksToSkillLevels(announce: false);
-        }
-
         public SkillDef GetMentoredSkill()
         {
             if (mentoredSkillDefName.NullOrEmpty()) return null;
@@ -488,7 +479,6 @@ namespace DeepColony
             perkGatesBackfilled = true;
             if (!DeepColonySettings.Get.enablePerks) return;
             SyncPerksToSkillLevels(announce: announce);
-            availablePerkPoints = 0;
         }
 
         public static int CountPassedPerkGates(Pawn pawn)
@@ -630,7 +620,6 @@ namespace DeepColony
             if (!respawningAfterLoad)
             {
                 TryBackfillPerkGatePoints(announce: true);
-                TryAutoSpendRecruitPerks();
             }
             else if (!perkGatesBackfilled)
             {
@@ -922,7 +911,9 @@ namespace DeepColony
         public override void PostExposeData()
         {
             Scribe_Collections.Look(ref unlockedPerkDefNames, "unlockedPerks", LookMode.Value);
-            Scribe_Values.Look(ref availablePerkPoints, "availablePerkPoints", 0);
+            // Old perk-point economy. Still Look so 1.8/1.9 saves load.
+            int unusedPerkPoints = 0;
+            Scribe_Values.Look(ref unusedPerkPoints, "availablePerkPoints", 0);
             Scribe_Values.Look(ref perkGatesBackfilled, "perkGatesBackfilled", false);
             Scribe_Values.Look(ref untreatedTraumaSinceTick, "untreatedTraumaSinceTick", -1);
             Scribe_Values.Look(ref lastCounselorName, "lastCounselorName");
@@ -957,7 +948,8 @@ namespace DeepColony
             Scribe_Values.Look(ref retrainProgress, "retrainProgress", 0);
             Scribe_Values.Look(ref willHeirId, "willHeirId", -1);
             Scribe_Collections.Look(ref discoveredTraumaTriggers, "discoveredTraumaTriggers", LookMode.Value);
-            Scribe_Values.Look(ref elderPerkGranted, "elderPerkGranted", false);
+            bool unusedElderPerkGranted = false;
+            Scribe_Values.Look(ref unusedElderPerkGranted, "elderPerkGranted", false);
             Scribe_Values.Look(ref familyTraditionSkillDefName, "familyTraditionSkillDefName");
             Scribe_Collections.Look(ref teacherLineage, "teacherLineage", LookMode.Value);
             Scribe_Collections.Look(ref peakSkillLevels, "peakSkillLevels", LookMode.Value, LookMode.Value);

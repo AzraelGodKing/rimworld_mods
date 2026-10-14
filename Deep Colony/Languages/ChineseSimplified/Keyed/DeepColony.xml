@@ -5,19 +5,15 @@
   <DC_ViewPerks>查看专长</DC_ViewPerks>
   <DC_ViewPerksDesc>打开该殖民者的专长树。已解锁：{0}。专长在技能 5 / 10 / 15 / 20 时自动获得。</DC_ViewPerksDesc>
   <DC_PerkTreeTitle>专长 — {PAWN}</DC_PerkTreeTitle>
-  <DC_PerkPoints>专长随技能：5 / 10 / 15 / 20</DC_PerkPoints>
   <DC_PerkAutoHint>技能 5 / 10 / 15 / 20 自动解锁</DC_PerkAutoHint>
   <DC_PerkSwitchBtn>切换</DC_PerkSwitchBtn>
   <DC_PerkAutoUnlocked>{PAWN} 达到了 {PERK} 所需的技能。</DC_PerkAutoUnlocked>
   <DC_PerkLapsed>{PAWN} 的技能已低于 {PERK} — 该专长失效。</DC_PerkLapsed>
   <DC_PerkRequires>需要：{0} 等级 {1}</DC_PerkRequires>
-  <DC_PerkUnlockBtn>解锁</DC_PerkUnlockBtn>
   <DC_PerkStatus_Unlocked>✓ 已解锁</DC_PerkStatus_Unlocked>
   <DC_PerkStatus_NeedPrereq>需要前置专长</DC_PerkStatus_NeedPrereq>
   <DC_PerkStatus_NeedLevel>等级不足</DC_PerkStatus_NeedLevel>
   <DC_PerkUnlocked>{PAWN} 解锁了专长：{PERK}。</DC_PerkUnlocked>
-  <DC_PerkPointGained>{PAWN} 因提升 {SKILL} 获得了专长点数。</DC_PerkPointGained>
-  <DC_PerksAvailable>{PAWN} 提升了 {SKILL} — 有 {2} 个专长可解锁。</DC_PerksAvailable>
   <DC_InspectPerks>专长：已解锁 {0}</DC_InspectPerks>
   <DC_UpdateLetterLabel>Deep Colony {0}</DC_UpdateLetterLabel>
   <DC_UpdateLetterFallback>Deep Colony {0} 已加载。\n\n完整说明：{1}</DC_UpdateLetterFallback>
@@ -121,8 +117,6 @@
   <DC_Settings_RespecCooldown>重置冷却（天）：{0}</DC_Settings_RespecCooldown>
   <DC_Settings_Archetypes>跨技能原型</DC_Settings_Archetypes>
   <DC_Settings_ArchetypesTip>默认关闭。在配对技能解锁 L15 后获得称号型原型加成。困难预设启用。</DC_Settings_ArchetypesTip>
-  <DC_Settings_RecruitPrePerks>招募者自带起步专长</DC_Settings_RecruitPrePerks>
-  <DC_Settings_RecruitPrePerksTip>默认关闭。新殖民者自动花费补发点数，仅解锁 L5 专长。</DC_Settings_RecruitPrePerksTip>
   <DC_Settings_Heirlooms>传家宝</DC_Settings_Heirlooms>
   <DC_Settings_HeirloomsTip>默认关闭。殖民者死亡可将装备标记为传家宝（携带时心情 + 微小加成）。困难预设启用。</DC_Settings_HeirloomsTip>
   <DC_Settings_ChronicTrauma>慢性创伤状态</DC_Settings_ChronicTrauma>
@@ -138,15 +132,11 @@
   <DC_Settings_TraitInherit>特性遗传几率：{0}%</DC_Settings_TraitInherit>
   <DC_Settings_TherapyScale>治疗愈合倍率：{0}</DC_Settings_TherapyScale>
   <DC_Settings_Reset>重置为默认</DC_Settings_Reset>
-  <DC_PerkPointsBackfilled>{PAWN} 因技能已越过专长门槛，获得了 {0} 点补发专长点。</DC_PerkPointsBackfilled>
-
   <!-- ── Phase 1 ────────────────────────────────────────────────────────────── -->
   <DC_PerkOverviewTitle>殖民地专长</DC_PerkOverviewTitle>
   <DC_PerkOverview_ColName>殖民者</DC_PerkOverview_ColName>
-  <DC_PerkOverview_ColPoints>点数</DC_PerkOverview_ColPoints>
   <DC_PerkOverview_ColUnlocked>已解锁</DC_PerkOverview_ColUnlocked>
   <DC_PerkOverview_ColStatus>状态</DC_PerkOverview_ColStatus>
-  <DC_PerkOverview_Unspent>未花费点数</DC_PerkOverview_Unspent>
   <DC_PerkOverview_CaughtUp>已跟上</DC_PerkOverview_CaughtUp>
   <DC_Epithet_TrustedPartners>声望：可信伙伴</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>声望：和睦邻邦</DC_Epithet_Cordial>
@@ -168,7 +158,6 @@
   <DC_PerkTeachProgress>{APPRENTICE} 专长课进度：{PERK}（{0}/{1}）</DC_PerkTeachProgress>
   <DC_PerkTaught>{MENTOR} 将专长传授给了 {APPRENTICE}：{PERK}。</DC_PerkTaught>
   <DC_RivalFormed>{A} 与 {B} 在 {SKILL} 上成为了对手。</DC_RivalFormed>
-  <DC_ElderPerkPoint>{PAWN} 被尊为长者，获得一点专长点。</DC_ElderPerkPoint>
   <DC_FamilyTradition>来自 {PARENT} 的 {SKILL} 家族传统</DC_FamilyTradition>
   <DC_AdoptivePassion>从照料者 {PARENT} 学到了对 {SKILL} 的热情</DC_AdoptivePassion>
   <DC_LegacyTitle>殖民地传承</DC_LegacyTitle>
@@ -231,7 +220,6 @@
   <DC_PerkForgotten>{PAWN} 遗忘了专长：{PERK}。</DC_PerkForgotten>
   <DC_ArchetypeGained>{PAWN} 成为了{ARCH}。</DC_ArchetypeGained>
   <DC_InspectArchetype>原型：{0}</DC_InspectArchetype>
-  <DC_RecruitPrePerked>{PAWN} 抵达时已解锁起步专长。</DC_RecruitPrePerked>
   <DC_HeirloomCreated>{PAWN} 的 {ITEM} 现已成为殖民地传家宝。</DC_HeirloomCreated>
   <DC_ChronicTrauma>{PAWN} 未治疗的创伤沉淀为慢性压力。</DC_ChronicTrauma>
 
@@ -241,7 +229,6 @@
   <DC_InspectCounsel>疏导：最近 {0}，共 {1} 次（羁绊 {2}/{3}）</DC_InspectCounsel>
   <DC_InspectGeneVsBlood>外源基因与家族{0}传统相悖</DC_InspectGeneVsBlood>
   <DC_PerkFilter_All>全部</DC_PerkFilter_All>
-  <DC_PerkFilter_Unspent>未花费</DC_PerkFilter_Unspent>
   <DC_PerkFilter_Hard>仅困难</DC_PerkFilter_Hard>
   <DC_PerkFilter_AllSkills>全部技能</DC_PerkFilter_AllSkills>
   <DC_EnvoyTitled>（有头衔）</DC_EnvoyTitled>

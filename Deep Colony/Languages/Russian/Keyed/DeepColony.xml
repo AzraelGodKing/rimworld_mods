@@ -5,19 +5,15 @@
   <DC_ViewPerks>Просмотреть перки</DC_ViewPerks>
   <DC_ViewPerksDesc>Открыть дерево перков этого колониста. Разблокировано: {0}. Перки выдаются автоматически на навыке 5 / 10 / 15 / 20.</DC_ViewPerksDesc>
   <DC_PerkTreeTitle>Перки — {PAWN}</DC_PerkTreeTitle>
-  <DC_PerkPoints>Перки по навыку: 5 / 10 / 15 / 20</DC_PerkPoints>
   <DC_PerkAutoHint>Авто на навыке 5 / 10 / 15 / 20</DC_PerkAutoHint>
   <DC_PerkSwitchBtn>Сменить</DC_PerkSwitchBtn>
   <DC_PerkAutoUnlocked>{PAWN} достиг(ла) навыка для перка {PERK}.</DC_PerkAutoUnlocked>
   <DC_PerkLapsed>Навык {PAWN} упал ниже требования для {PERK} — перк утрачен.</DC_PerkLapsed>
   <DC_PerkRequires>Треб.: {0} ур.{1}</DC_PerkRequires>
-  <DC_PerkUnlockBtn>Разблокировать</DC_PerkUnlockBtn>
   <DC_PerkStatus_Unlocked>✓ Разблокировано</DC_PerkStatus_Unlocked>
   <DC_PerkStatus_NeedPrereq>Нужен предварительный перк</DC_PerkStatus_NeedPrereq>
   <DC_PerkStatus_NeedLevel>Слишком низкий уровень</DC_PerkStatus_NeedLevel>
   <DC_PerkUnlocked>{PAWN} разблокировал(а) перк: {PERK}.</DC_PerkUnlocked>
-  <DC_PerkPointGained>{PAWN} получил(а) очко перка за повышение {SKILL}.</DC_PerkPointGained>
-  <DC_PerksAvailable>{PAWN} повысил(а) {SKILL} — доступно перков для разблокировки: {2}.</DC_PerksAvailable>
   <DC_InspectPerks>Перки: разблокировано {0}</DC_InspectPerks>
   <DC_UpdateLetterLabel>Deep Colony {0}</DC_UpdateLetterLabel>
   <DC_UpdateLetterFallback>Deep Colony {0} загружен.\n\nПолные заметки: {1}</DC_UpdateLetterFallback>
@@ -121,8 +117,6 @@
   <DC_Settings_RespecCooldown>Перезарядка сброса (дни): {0}</DC_Settings_RespecCooldown>
   <DC_Settings_Archetypes>Межнавыковые архетипы</DC_Settings_Archetypes>
   <DC_Settings_ArchetypesTip>По умолчанию выкл. Разблокировка L15 в парных навыках даёт титульный бонус архетипа. Сложный пресет включает.</DC_Settings_ArchetypesTip>
-  <DC_Settings_RecruitPrePerks>Рекруты приходят с перками</DC_Settings_RecruitPrePerks>
-  <DC_Settings_RecruitPrePerksTip>По умолчанию выкл. Новые колонисты автоматически тратят наверстанные очки только на перки L5.</DC_Settings_RecruitPrePerksTip>
   <DC_Settings_Heirlooms>Наследные вещи</DC_Settings_Heirlooms>
   <DC_Settings_HeirloomsTip>По умолчанию выкл. Смерть колониста может отметить снаряжение как наследную вещь (настроение + крошечный бонус при ношении). Сложный пресет включает.</DC_Settings_HeirloomsTip>
   <DC_Settings_ChronicTrauma>Хедiff хронической травмы</DC_Settings_ChronicTrauma>
@@ -138,15 +132,11 @@
   <DC_Settings_TraitInherit>Шанс наследования черты: {0}%</DC_Settings_TraitInherit>
   <DC_Settings_TherapyScale>Множитель лечения терапией: {0}</DC_Settings_TherapyScale>
   <DC_Settings_Reset>Сбросить к умолчаниям</DC_Settings_Reset>
-  <DC_PerkPointsBackfilled>{PAWN} получил(а) {0} ретроактивных очк. перков за навыки уже выше порогов.</DC_PerkPointsBackfilled>
-
   <!-- ── Phase 1 ────────────────────────────────────────────────────────────── -->
   <DC_PerkOverviewTitle>Перки колонии</DC_PerkOverviewTitle>
   <DC_PerkOverview_ColName>Колонист</DC_PerkOverview_ColName>
-  <DC_PerkOverview_ColPoints>Очки</DC_PerkOverview_ColPoints>
   <DC_PerkOverview_ColUnlocked>Разблокировано</DC_PerkOverview_ColUnlocked>
   <DC_PerkOverview_ColStatus>Статус</DC_PerkOverview_ColStatus>
-  <DC_PerkOverview_Unspent>Непотраченные очки</DC_PerkOverview_Unspent>
   <DC_PerkOverview_CaughtUp>В курсе</DC_PerkOverview_CaughtUp>
   <DC_Epithet_TrustedPartners>Репутация: надёжные партнёры</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>Репутация: приветливые соседи</DC_Epithet_Cordial>
@@ -168,7 +158,6 @@
   <DC_PerkTeachProgress>Прогресс урока перка {APPRENTICE}: {PERK} ({0}/{1})</DC_PerkTeachProgress>
   <DC_PerkTaught>{MENTOR} обучил(а) {APPRENTICE} перку: {PERK}.</DC_PerkTaught>
   <DC_RivalFormed>{A} и {B} стали соперниками в {SKILL}.</DC_RivalFormed>
-  <DC_ElderPerkPoint>{PAWN} признан(а) старейшиной и получает очко перка.</DC_ElderPerkPoint>
   <DC_FamilyTradition>Семейная традиция {SKILL} от {PARENT}</DC_FamilyTradition>
   <DC_AdoptivePassion>Перенял(а) страсть к {SKILL} от опекуна {PARENT}</DC_AdoptivePassion>
   <DC_LegacyTitle>Наследие колонии</DC_LegacyTitle>
@@ -231,7 +220,6 @@
   <DC_PerkForgotten>{PAWN} забыл(а) перк: {PERK}.</DC_PerkForgotten>
   <DC_ArchetypeGained>{PAWN} стал(а) {ARCH}.</DC_ArchetypeGained>
   <DC_InspectArchetype>Архетип: {0}</DC_InspectArchetype>
-  <DC_RecruitPrePerked>{PAWN} прибыл(а) со стартовыми перками.</DC_RecruitPrePerked>
   <DC_HeirloomCreated>{ITEM} {PAWN} теперь наследная вещь колонии.</DC_HeirloomCreated>
   <DC_ChronicTrauma>Невылеченная травма {PAWN} перешла в хронический стресс.</DC_ChronicTrauma>
 
@@ -241,7 +229,6 @@
   <DC_InspectCounsel>Консультации: последняя {0}, сессий {1} (связь {2}/{3})</DC_InspectCounsel>
   <DC_InspectGeneVsBlood>Ксеногены спорят с семейной традицией ({0})</DC_InspectGeneVsBlood>
   <DC_PerkFilter_All>Все</DC_PerkFilter_All>
-  <DC_PerkFilter_Unspent>Непотраченные</DC_PerkFilter_Unspent>
   <DC_PerkFilter_Hard>Только сложные</DC_PerkFilter_Hard>
   <DC_PerkFilter_AllSkills>Все навыки</DC_PerkFilter_AllSkills>
   <DC_EnvoyTitled>(титул)</DC_EnvoyTitled>

@@ -20,13 +20,7 @@ namespace DeepColony
             if (pawn?.IsColonistPlayerControlled != true) return;
             if (!IsElder(pawn)) return;
 
-            var comp = pawn.TryGetComp<Comp_DeepColony>();
-            if (comp == null) return;
-
-            if (!comp.elderPerkGranted && DeepColonySettings.Get.enablePerks)
-            {
-                comp.elderPerkGranted = true;
-            }
+            if (pawn.TryGetComp<Comp_DeepColony>() == null) return;
 
             EnsureElderHediff(pawn);
         }

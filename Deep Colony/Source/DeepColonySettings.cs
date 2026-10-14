@@ -38,7 +38,6 @@ namespace DeepColony
         public bool enablePerkRespec = true;
         public float respecCooldownDays = 15f;
         public bool enableCrossSkillArchetypes = false;
-        public bool enableRecruitPrePerks = false;
         public bool enableHeirlooms = false;
         public bool enableChronicTrauma = false;
 
@@ -112,7 +111,6 @@ namespace DeepColony
             Scribe_Values.Look(ref enablePerkRespec, "enablePerkRespec", true);
             Scribe_Values.Look(ref respecCooldownDays, "respecCooldownDays", 15f);
             Scribe_Values.Look(ref enableCrossSkillArchetypes, "enableCrossSkillArchetypes", false);
-            Scribe_Values.Look(ref enableRecruitPrePerks, "enableRecruitPrePerks", false);
             Scribe_Values.Look(ref enableHeirlooms, "enableHeirlooms", false);
             Scribe_Values.Look(ref enableChronicTrauma, "enableChronicTrauma", false);
             Scribe_Values.Look(ref childRaidWitnessChance, "childRaidWitnessChance", 0.55f);
@@ -154,7 +152,6 @@ namespace DeepColony
             enablePerkRespec = true;
             respecCooldownDays = 15f;
             enableCrossSkillArchetypes = false;
-            enableRecruitPrePerks = false;
             enableHeirlooms = false;
             enableChronicTrauma = false;
             childRaidWitnessChance = 0.55f;
@@ -263,7 +260,6 @@ namespace DeepColony
             enablePerkRespec = true;
             respecCooldownDays = 15f;
             enableCrossSkillArchetypes = false;
-            enableRecruitPrePerks = false;
             enableHeirlooms = false;
             enableChronicTrauma = false;
             childRaidWitnessChance = 0.55f;

@@ -5,19 +5,15 @@
   <DC_ViewPerks>View perks</DC_ViewPerks>
   <DC_ViewPerksDesc>Open the perk tree for this colonist. Unlocked: {0}. Perks grant automatically at skill 5 / 10 / 15 / 20.</DC_ViewPerksDesc>
   <DC_PerkTreeTitle>Perks — {PAWN}</DC_PerkTreeTitle>
-  <DC_PerkPoints>Perks follow skill: 5 / 10 / 15 / 20</DC_PerkPoints>
   <DC_PerkAutoHint>Auto at skill 5 / 10 / 15 / 20</DC_PerkAutoHint>
   <DC_PerkSwitchBtn>Switch</DC_PerkSwitchBtn>
   <DC_PerkAutoUnlocked>{PAWN} reached the skill for {PERK}.</DC_PerkAutoUnlocked>
   <DC_PerkLapsed>{PAWN} no longer meets the skill for {PERK} — the perk lapsed.</DC_PerkLapsed>
   <DC_PerkRequires>Req: {0} lv.{1}</DC_PerkRequires>
-  <DC_PerkUnlockBtn>Unlock</DC_PerkUnlockBtn>
   <DC_PerkStatus_Unlocked>✓ Unlocked</DC_PerkStatus_Unlocked>
   <DC_PerkStatus_NeedPrereq>Need prerequisite</DC_PerkStatus_NeedPrereq>
   <DC_PerkStatus_NeedLevel>Level too low</DC_PerkStatus_NeedLevel>
   <DC_PerkUnlocked>{PAWN} unlocked the perk: {PERK}.</DC_PerkUnlocked>
-  <DC_PerkPointGained>{PAWN} gained a perk point from leveling {SKILL}.</DC_PerkPointGained>
-  <DC_PerksAvailable>{PAWN} leveled {SKILL} — {2} perk(s) available to unlock.</DC_PerksAvailable>
   <DC_InspectPerks>Perks: {0} unlocked</DC_InspectPerks>
   <DC_UpdateLetterLabel>Deep Colony {0}</DC_UpdateLetterLabel>
   <DC_UpdateLetterFallback>Deep Colony {0} is loaded.\n\nFull notes: {1}</DC_UpdateLetterFallback>
@@ -121,8 +117,6 @@
   <DC_Settings_RespecCooldown>Respec cooldown (days): {0}</DC_Settings_RespecCooldown>
   <DC_Settings_Archetypes>Cross-skill archetypes</DC_Settings_Archetypes>
   <DC_Settings_ArchetypesTip>Default off. Unlocking L15 in paired skills grants a titled archetype bonus. Hard preset enables this.</DC_Settings_ArchetypesTip>
-  <DC_Settings_RecruitPrePerks>Recruits arrive pre-perked</DC_Settings_RecruitPrePerks>
-  <DC_Settings_RecruitPrePerksTip>Default off. New colonists auto-spend backfilled points on L5 perks only.</DC_Settings_RecruitPrePerksTip>
   <DC_Settings_Heirlooms>Heirlooms</DC_Settings_Heirlooms>
   <DC_Settings_HeirloomsTip>Default off. Colonist deaths can mark gear as heirlooms (mood + tiny bonus while carried). Hard preset enables this.</DC_Settings_HeirloomsTip>
   <DC_Settings_ChronicTrauma>Chronic trauma hediff</DC_Settings_ChronicTrauma>
@@ -138,15 +132,12 @@
   <DC_Settings_TraitInherit>Trait inherit chance: {0}%</DC_Settings_TraitInherit>
   <DC_Settings_TherapyScale>Therapy heal scale: {0}</DC_Settings_TherapyScale>
   <DC_Settings_Reset>Reset to defaults</DC_Settings_Reset>
-  <DC_PerkPointsBackfilled>{PAWN} received {0} retroactive perk point(s) for skills already past perk gates.</DC_PerkPointsBackfilled>
 
   <!-- ── Phase 1 ────────────────────────────────────────────────────────────── -->
   <DC_PerkOverviewTitle>Colony perks</DC_PerkOverviewTitle>
   <DC_PerkOverview_ColName>Colonist</DC_PerkOverview_ColName>
-  <DC_PerkOverview_ColPoints>Points</DC_PerkOverview_ColPoints>
   <DC_PerkOverview_ColUnlocked>Unlocked</DC_PerkOverview_ColUnlocked>
   <DC_PerkOverview_ColStatus>Status</DC_PerkOverview_ColStatus>
-  <DC_PerkOverview_Unspent>Unspent points</DC_PerkOverview_Unspent>
   <DC_PerkOverview_CaughtUp>Caught up</DC_PerkOverview_CaughtUp>
   <DC_Epithet_TrustedPartners>Reputation: trusted partners</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>Reputation: cordial neighbors</DC_Epithet_Cordial>
@@ -168,7 +159,6 @@
   <DC_PerkTeachProgress>{APPRENTICE} perk lesson progress: {PERK} ({0}/{1})</DC_PerkTeachProgress>
   <DC_PerkTaught>{MENTOR} taught {APPRENTICE} the perk: {PERK}.</DC_PerkTaught>
   <DC_RivalFormed>{A} and {B} have become rivals in {SKILL}.</DC_RivalFormed>
-  <DC_ElderPerkPoint>{PAWN} is recognized as an elder and gains a perk point.</DC_ElderPerkPoint>
   <DC_FamilyTradition>Family tradition of {SKILL} from {PARENT}</DC_FamilyTradition>
   <DC_AdoptivePassion>Learned a passion for {SKILL} from caregiver {PARENT}</DC_AdoptivePassion>
   <DC_LegacyTitle>Colony legacy</DC_LegacyTitle>
@@ -231,7 +221,6 @@
   <DC_PerkForgotten>{PAWN} forgot the perk: {PERK}.</DC_PerkForgotten>
   <DC_ArchetypeGained>{PAWN} became a {ARCH}.</DC_ArchetypeGained>
   <DC_InspectArchetype>Archetype: {0}</DC_InspectArchetype>
-  <DC_RecruitPrePerked>{PAWN} arrived with starter perks unlocked.</DC_RecruitPrePerked>
   <DC_HeirloomCreated>{PAWN}'s {ITEM} is now a colony heirloom.</DC_HeirloomCreated>
   <DC_ChronicTrauma>{PAWN}'s untreated trauma settled into chronic stress.</DC_ChronicTrauma>
 
@@ -241,7 +230,6 @@
   <DC_InspectCounsel>Counsel: last {0}, {1} sessions (bond {2}/{3})</DC_InspectCounsel>
   <DC_InspectGeneVsBlood>Xenogenes pull against the family {0} tradition</DC_InspectGeneVsBlood>
   <DC_PerkFilter_All>All</DC_PerkFilter_All>
-  <DC_PerkFilter_Unspent>Unspent</DC_PerkFilter_Unspent>
   <DC_PerkFilter_Hard>Hard-only</DC_PerkFilter_Hard>
   <DC_PerkFilter_AllSkills>All skills</DC_PerkFilter_AllSkills>
   <DC_EnvoyTitled>(titled)</DC_EnvoyTitled>
