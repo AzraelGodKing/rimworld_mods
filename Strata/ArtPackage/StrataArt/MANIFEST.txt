@@ -4,7 +4,7 @@ Included: all PNG art under Strata/Textures.
 
 Install back into mod: copy Textures/ to Strata/Textures/ and About/Preview.png to Strata/About/.
 
-File list (79 files):
+File list (70 files):
   About/Preview.png
   Textures/Strata/Buildings/_cargolift_previews/CargoLift_A.png
   Textures/Strata/Buildings/_cargolift_previews/CargoLift_B.png
@@ -56,25 +56,16 @@ File list (79 files):
   Textures/Strata/Buildings/LimeScrubber.png
   Textures/Strata/Buildings/MineLamp.png
   Textures/Strata/Buildings/MineStairsDown.png
-  Textures/Strata/Buildings/MineStairsUp.png
   Textures/Strata/Buildings/OreHoist.png
   Textures/Strata/Buildings/OxygenPump.png
   Textures/Strata/Buildings/ShaftBellows.png
   Textures/Strata/Buildings/ShaftConduit.png
   Textures/Strata/Buildings/ShoringPillar.png
-  Textures/Strata/Buildings/SmokeDuct.png
-  Textures/Strata/Buildings/SmokeDuct_Atlas.png
-  Textures/Strata/Buildings/SmokeDuct_Blueprint_Atlas.png
-  Textures/Strata/Buildings/SmokeDuct_MenuIcon.png
   Textures/Strata/Buildings/SmokeHole.png
-  Textures/Strata/Buildings/StairsDown.png
-  Textures/Strata/Buildings/StairsUp.png
   Textures/Strata/Buildings/SumpPump.png
   Textures/Strata/Buildings/UpdraftFilter.png
   Textures/Strata/Buildings/VaultStairsDown.png
-  Textures/Strata/Buildings/VaultStairsUp.png
   Textures/Strata/Buildings/VentStairsDown.png
-  Textures/Strata/Buildings/VentStairsUp.png
   Textures/Strata/Items/DeepGasCanister.png
   Textures/Strata/Items/Lime.png
   Textures/Things/Pawn/Animal/Canary/Canary_east.png
