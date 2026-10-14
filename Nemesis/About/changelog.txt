@@ -1,3 +1,12 @@
+1.4.1
+[h1]Nemesis — 1.4.1[/h1]
+[b]Changed[/b]
+[list]
+[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+[/list]
+
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/nemesis.md[/i]
+
 1.4.0
 [h1]Nemesis — 1.4.0[/h1]
 

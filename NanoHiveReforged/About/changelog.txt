@@ -1,3 +1,10 @@
+1.0.1
+[h1]NanoHive Reforged — 1.0.1[/h1]
+[b]Changed[/b]
+[list]
+[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+[/list]
+
 1.0.0
 [h1]NanoHive Reforged — 1.0.0[/h1]
 [b]Added[/b]
