@@ -96,6 +96,18 @@
     "nexus_file_id": ""
   },
   {
+    "modKey": "wavesurvival",
+    "modDir": "WaveSurvivalReforged",
+    "dllName": "WaveSurvivalReforged",
+    "csproj": "WaveSurvivalReforged/Source/WaveSurvivalReforged.csproj",
+    "configuration": "",
+    "zipName": "WaveSurvivalReforged",
+    "publish": false,
+    "nexus": "",
+    "nexus_mod_id": "",
+    "nexus_file_id": ""
+  },
+  {
     "modKey": "niceties",
     "modDir": "Niceties",
     "dllName": "Niceties",

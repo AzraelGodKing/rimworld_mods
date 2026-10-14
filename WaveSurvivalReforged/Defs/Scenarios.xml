@@ -9,21 +9,18 @@
       <summary>Four colonists, a head start on turrets, and a beacon to build. The default scenario for Wave Survival.</summary>
       <parts>
 
-        <!-- Config pages -->
         <li Class="ScenPart_ConfigPage_ConfigureStartingPawns">
           <def>ConfigPage_ConfigureStartingPawns</def>
           <pawnCount>4</pawnCount>
           <pawnChoiceCount>8</pawnChoiceCount>
         </li>
 
-        <!-- Player starting stuff spawn method -->
         <li Class="ScenPart_PlayerPawnsArriveMethod">
           <def>PlayerPawnsArriveMethod</def>
           <method>DropPods</method>
           <visible>false</visible>
         </li>
 
-        <!-- Starting research -->
         <li Class="ScenPart_StartingResearch">
           <def>StartingResearch</def>
           <project>MicroelectronicsBasics</project>
@@ -33,7 +30,6 @@
           <project>GunTurrets</project>
         </li>
 
-        <!-- Player starting things -->
         <li Class="ScenPart_StartingThing_Defined">
           <def>StartingThing_Defined</def>
           <thingDef>Silver</thingDef>
@@ -74,7 +70,6 @@
           <bondToRandomPlayerPawnChance>1.0</bondToRandomPlayerPawnChance>
         </li>
 
-        <!-- Scatter some things near player start -->
         <li Class="ScenPart_ScatterThingsNearPlayerStart">
           <def>ScatterThingsNearPlayerStart</def>
           <thingDef>Steel</thingDef>
@@ -86,7 +81,6 @@
           <count>300</count>
         </li>
 
-        <!-- Scatter some things anywhere -->
         <li Class="ScenPart_ScatterThingsAnywhere">
           <def>ScatterThingsAnywhere</def>
           <thingDef>ShipChunk</thingDef>
@@ -104,7 +98,6 @@
           <count>10</count>
         </li>
 
-        <!-- Game start dialog -->
         <li Class="ScenPart_GameStartDialog">
           <def>GameStartDialog</def>
           <textKey>WSR_GameStartDialog</textKey>
