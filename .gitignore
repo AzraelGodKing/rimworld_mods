@@ -32,3 +32,5 @@ Strata/Tools/_reflect_tmp/
 .local/
 .local/**
 **/discord*webhook*
+# Local SteamCMD install (holds the Steam login cache - never commit)
+_tools/steamcmd/
