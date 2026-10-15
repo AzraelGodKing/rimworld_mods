@@ -5,6 +5,7 @@
   <packageId>azraelgodking.DateNight</packageId>
   <supportedVersions>
     <li>1.6</li>
+    <li>1.7</li>
   </supportedVersions>
   <modVersion IgnoreIfNoMatchingField="True">1.7.1</modVersion>
   <modDependencies>
@@ -28,8 +29,9 @@
   </loadAfter>
   <description>Adds Date and Lovin slots to the Schedule tab. Dates are dinner, walks, stars, gifts — mood and opinion, no bed. Lovin uses a shared double. Optional RimJobWorld: Lovin hours start RJW's bed job instead of fighting vanilla Lovin.
 
-Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: clear Date / Lovin slots back to Sleep / Anything.
+Requires Harmony. RimWorld 1.6 and 1.7. Safe to add mid-save. Before removing: clear Date / Lovin slots back to Sleep / Anything.
 
 Full notes: https://azraelgodking.github.io/rimworld_mods/date-night
 Discord: https://discord.gg/Vwh2y7qMXv</description>
 </ModMetaData>
+

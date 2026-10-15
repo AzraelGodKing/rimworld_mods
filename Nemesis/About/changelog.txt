@@ -4,6 +4,7 @@
 [b]Changed[/b]
 [list]
 [*] [b]Workshop preview[/b] — new preview image of the hunter and the cabin.
+[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 [/list]
 
 [i]Build stamp (Player.log): custody-sync-v1[/i]

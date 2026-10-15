@@ -8,10 +8,23 @@ Detailed notes for Homesteader only.
 
 Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.5.0 loaded from ...` in Player.log (`harvest-aging-v1`).
 
+### Fixed
+- **Landrace drought** — the drought bonus now offsets drought.
+
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (farmstead and root cellar). Docs card synced.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 - Removed unused content: the old Legacy scenario def, an empty Adaptive Storage patch, the leftover Adaptive Storage `loadAfter` entry, unused allergy helpers, and the unread `letterText` on the Kats incident (plus its Chinese and Russian lines). Pointed monument comments at `Thoughts_Homestead.xml`. No gameplay change.
 - Languages README no longer lists `1.5/` as a scenario folder (`1.5/` is backstories only; scenarios live under `1.6/`).
+
+## [1.4.1]
+
+Player-facing version **1.4.1** (`About.xml` `modVersion`).
+
+AZR-457
+
+### Changed
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 
 ## [1.4.0]
 

@@ -30,7 +30,7 @@ namespace Homesteader
             LandraceFrostHooked = IsPatched(AccessTools.PropertyGetter(typeof(Plant),
                 nameof(Plant.GrowthRateFactor_Temperature)));
             LandraceDroughtHooked = IsPatched(AccessTools.PropertyGetter(typeof(Plant),
-                nameof(Plant.GrowthRateFactor_Fertility)));
+                nameof(Plant.GrowthRateFactor_Drought)));
             SpoilageBillSortHooked =
                 IsPatched(AccessTools.Method(typeof(WorkGiver_DoBill), "TryFindBestBillIngredientsInSet"))
                 || IsPatched(AccessTools.Method(typeof(WorkGiver_DoBill), "TryFindBestBillIngredientsInSet_AllowMix"));

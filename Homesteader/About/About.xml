@@ -5,6 +5,7 @@
   <packageId>AzraelGodKing.Homesteader</packageId>
   <supportedVersions>
     <li>1.6</li>
+    <li>1.7</li>
   </supportedVersions>
   <modVersion IgnoreIfNoMatchingField="True">1.5.0</modVersion>
   <modDependencies>
@@ -22,7 +23,7 @@
   </loadAfter>
   <description>Grow it, put it by, live off the land. Homesteader is the farmstead kit: tribal drying from day one, dairy and hearth meals, orchard and bees, wells and irrigation, cool cellars, livestock, and off-grid power.
 
-Homesteaders scenario included. Requires Harmony. RimWorld 1.6. Safe to add mid-save. Before removing: deconstruct buildings and use up or sell its items.
+Homesteaders scenario included. Requires Harmony. RimWorld 1.6 and 1.7. Safe to add mid-save. Before removing: deconstruct buildings and use up or sell its items.
 
 Full notes: https://azraelgodking.github.io/rimworld_mods/homesteader
 Discord: https://discord.gg/Vwh2y7qMXv</description>

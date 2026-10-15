@@ -5,8 +5,6 @@
     <LangVersion>latest</LangVersion>
     <RootNamespace>DeepColony</RootNamespace>
     <AssemblyName>DeepColony</AssemblyName>
-    <Version>1.9.0</Version>
-    <InformationalVersion>1.9.0+colony-overview-v1</InformationalVersion>
     <OutputPath>../Assemblies/</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <DebugType>none</DebugType>

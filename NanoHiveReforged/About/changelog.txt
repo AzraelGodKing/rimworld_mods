@@ -3,4 +3,5 @@
 [b]Changed[/b]
 [list]
 [*] [b]Workshop preview[/b] — new preview image of the hive repairing a cracked helm.
+[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 [/list]

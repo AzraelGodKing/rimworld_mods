@@ -10,6 +10,16 @@ Player-facing version **1.7.1** (`About.xml` `modVersion`). Stamp `thought-partn
 
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (evening table, walk, and stars). Docs card synced.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+
+## [1.6.2]
+
+Player-facing version **1.6.2** (`About.xml` `modVersion`).
+
+AZR-457
+
+### Changed
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 
 ## [1.6.1]
 

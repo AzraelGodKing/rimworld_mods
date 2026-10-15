@@ -5,6 +5,7 @@
 [list]
 [*] [b]Workshop preview[/b] — new preview image of the perk-tree constellation over a hearth.
 [*] [b]Perk points[/b] — the always-empty Points column, Unspent filter, and unused recruits-arrive-pre-perked option are gone. Perks still grant themselves at skill 5, 10, 15, and 20. Old saves still load.
+[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 [/list]
 
 [i]Build stamp (Player.log): colony-overview-v1[/i]

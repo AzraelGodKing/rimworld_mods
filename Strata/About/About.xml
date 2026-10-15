@@ -5,6 +5,7 @@
   <packageId>AzraelGodKing.Strata</packageId>
   <supportedVersions>
     <li>1.6</li>
+    <li>1.7</li>
   </supportedVersions>
   <modVersion IgnoreIfNoMatchingField="True">3.9.3</modVersion>
   <incompatibleWith>
@@ -49,7 +50,7 @@
   </loadAfter>
   <description>Dig down. Build up. One colony — many floors. Colonists commute for work, food, rest, hauling, combat, and construction. Odyssey optional for gravship stacks.
 
-Do not run alongside AASB, AASB 2, or MultiFloors. Requires Harmony. RimWorld 1.6. Safe to add mid-save.
+Do not run alongside AASB, AASB 2, or MultiFloors. Requires Harmony. RimWorld 1.6 and 1.7. Safe to add mid-save.
 
 Full notes: https://azraelgodking.github.io/rimworld_mods/strata
 Discord: https://discord.gg/Vwh2y7qMXv</description>

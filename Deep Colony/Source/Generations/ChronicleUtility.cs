@@ -34,7 +34,7 @@ namespace DeepColony
                 Pawn p = living[i];
                 var comp = p.TryGetComp<Comp_DeepColony>();
                 sb.Append("- ").Append(p.Name?.ToStringFull ?? p.LabelShort);
-                if (ElderUtility.IsElder(p)) sb.Append(" [elder]");
+                if (ElderUtility.IsElder(p)) sb.Append("DC_LegacyElderTag".Translate());
                 sb.AppendLine();
                 if (comp?.mentor != null)
                     sb.Append("    ").AppendLine("DC_InspectMentor".Translate(comp.mentor.LabelShort));
