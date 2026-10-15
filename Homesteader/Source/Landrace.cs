@@ -214,7 +214,7 @@ namespace Homesteader
         }
     }
 
-    [HarmonyPatch(typeof(Plant), nameof(Plant.GrowthRateFactor_Fertility), MethodType.Getter)]
+    [HarmonyPatch(typeof(Plant), nameof(Plant.GrowthRateFactor_Drought), MethodType.Getter)]
     public static class Patch_LandraceDrought
     {
         public static void Postfix(Plant __instance, ref float __result)
