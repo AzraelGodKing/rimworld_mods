@@ -4,8 +4,13 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## [Unreleased]
 
+## [1.5.0]
+
+Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.5.0 loaded from ...` in Player.log (`custody-sync-v1`).
+
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (the hunter and the cabin). Docs card synced.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 - **Dead SoftCompat flags** — removed unused Giddy-Up / Rimesis / BFV package-id probes (`GiddyUpActive`, `RimesisActive`, `BackForVengeanceActive`) and unread `LastHeavyCheckTick`. Foreign-antagonist skip still uses hediff markers; mount escorts still assign by faction tech. No gameplay change.
 - **Unused Homesteader map probe** — deleted `MapHasHomesteaderFoodStorage`. The food-storage defName list is still used by `IsHomesteaderFoodStorageDef` / `IsOnHomesteaderFoodStorage`. No gameplay change.
 

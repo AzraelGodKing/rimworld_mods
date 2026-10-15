@@ -1,29 +1,10 @@
-1.4.1
-[h1]Nemesis — 1.4.1[/h1]
+1.5.0
+[h1]Nemesis — 1.5.0[/h1]
+
 [b]Changed[/b]
 [list]
+[*] [b]Workshop preview[/b] — new preview image of the hunter and the cabin.
 [*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
-[/list]
-
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/nemesis.md[/i]
-
-1.4.0
-[h1]Nemesis — 1.4.0[/h1]
-
-[b]Added[/b]
-[list]
-[*] [b]Kidnap attempt[/b] — personal hunts at high aggression can roll an assault where the nemesis tries to drag someone off while their target is on the map. If the target is carried away, the hunt ends and they win. New action-mix slider.
-[*] [b]Escape mood fallout[/b] — from the nemesis's second escape, colonists feel it (-3 mood for 4 days); the fixation target takes it harder (-8).
-[*] [b]Dossier tile jump[/b] — click the last-known tile to show it on the world map.
-[*] [b]Epitaph archive[/b] — View all opens every recorded epitaph, not just the latest three.
-[/list]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Stuck after capture[/b] — if a captured nemesis died, vanished, or left your cells before you chose their fate, no new hunt could ever start. A still-hostile nemesis now resumes the hunt; otherwise the hunt ends with a letter so a new one can rise.
-[*] [b]Resolution choices[/b] — Execute / Release / Keep / Truce now apply on the next tick through the same queue as informants (Multiplayer-safer); a second click can't apply twice.
-[*] [b]Strata performance[/b] — no more per-tick map reflection during a hunt when Strata is loaded.
-[*] [b]Clearer logs[/b] — one clear Player.log error if a RimWorld update breaks the Kill hooks; escort spawn failures are now logged.
 [/list]
 
 [i]Build stamp (Player.log): custody-sync-v1[/i]

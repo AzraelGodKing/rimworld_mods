@@ -112,6 +112,9 @@ jobs:
       - name: Build Wave Survival Reforged
         run: dotnet build WaveSurvivalReforged/Source/WaveSurvivalReforged.csproj -c Release --nologo
 
+      - name: Build NanoHive Reforged
+        run: dotnet build NanoHiveReforged/Source/NanoHiveReforged.csproj -c Release --nologo
+
       - name: Headless mod checks
         run: dotnet test Tests/ModChecks/ModChecks.csproj -c Release --nologo
 

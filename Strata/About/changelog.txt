@@ -1,18 +1,10 @@
-3.8.4
-[h1]Strata - 3.8.4[/h1]
+3.9.3
+[h1]Strata - 3.9.3[/h1]
+
 [b]Changed[/b]
 [list]
+[*] [b]Workshop preview[/b] — new preview image of the surface and two floors.
 [*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
-[/list]
-
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
-
-3.8.3
-[h1]Strata - 3.8.3[/h1]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Building underground with materials on another floor[/b] (AZR-451) - colonists no longer walk up the stairs and come back empty-handed. Strata only sends them for stacks they can actually walk to from the stairs, and picks another stack if the first one turns out to be out of reach. With verbose logging on (Mod Options), Player.log says why a trip was dropped.
 [/list]
 
 [i]Build stamp (Player.log): construct-fetch-v1[/i]

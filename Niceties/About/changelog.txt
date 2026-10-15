@@ -1,31 +1,9 @@
-1.5.1
-[h1]Niceties — 1.5.1[/h1]
+1.6.0
+[h1]Niceties — 1.6.0[/h1]
 [b]Changed[/b]
 [list]
+[*] [b]Workshop preview[/b] — new preview image of the comforts.
 [*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
-[/list]
-
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
-
-1.5.0
-[h1]Niceties — 1.5.0[/h1]
-[b]Added[/b]
-[list]
-[*] [b]Hidden cryptosleep count[/b] — a small "+N in cryptosleep" note beside the colonist bar says how many colonists are hidden. Own checkbox under Hidden cryptosleep, on by default.
-[*] [b]Melee hunt size example[/b] — the body-size cap slider names a vanilla reference animal so the number means something.
-[*] [b]Roommates on inspect[/b] — a shared bedroom's beds list who sleeps in the room.
-[*] [b]Save settings notice[/b] — Mod Options says when the loaded save runs on different settings, with an "Apply to this save now" button in single-player.
-[/list]
-[b]Fixed[/b]
-[list]
-[*] [b]Wear any outfit in Multiplayer[/b] — gender tags follow the save's host settings like every other nicety.
-[*] [b]Share room in Multiplayer[/b] — the bed gizmo syncs to every player when the Multiplayer mod is loaded.
-[*] [b]Stale save settings[/b] — in single-player, loading a save picks up your current Mod Options.
-[*] [b]Patch target renames[/b] — if a RimWorld update renames a private method Niceties relies on, only that feature turns off and the log names it.
-[/list]
-[b]Changed[/b]
-[list]
-[*] [b]Leave a way out performance[/b] — wall enclosure checks are cached per frame, so several builders finishing walls at once no longer repeat the same work.
 [/list]
 
 [i]Build stamp (Player.log): sim-snapshot-v2[/i]

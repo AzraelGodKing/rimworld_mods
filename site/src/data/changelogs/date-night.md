@@ -4,8 +4,13 @@ Detailed notes for **Date Night** only.
 
 ## [Unreleased]
 
+## [1.7.1]
+
+Player-facing version **1.7.1** (`About.xml` `modVersion`). Stamp `thought-partner-v1`.
+
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (evening table, walk, and stars). Docs card synced.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 
 ## [1.6.2]
 

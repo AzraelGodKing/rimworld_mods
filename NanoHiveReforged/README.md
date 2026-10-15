@@ -28,12 +28,8 @@ A faithful-plus rebuild of Nanohive2 for RimWorld.
 
 ## Build notes
 
-The `.csproj` uses references like:
-- `..\\..\\..\\RimWorldWin64_Data\\Managed\\Assembly-CSharp.dll`
-- `..\\..\\..\\RimWorldWin64_Data\\Managed\\UnityEngine.dll`
+```bash
+dotnet build NanoHiveReforged/Source/NanoHiveReforged.csproj -c Release
+```
 
-If your RimWorld install path differs, update the HintPath entries in `Source/NanoHiveReforged.csproj`.
-
-### Requirement
-
-Building this project currently targets ` .NET Framework 4.8`. On machines without the 3.5 targeting pack, build fails with `MSB3644`. Install the  .NET Framework 4.8 Developer Pack or retarget the project to match your RimWorld modding toolchain.
+The project references RimWorld through `Krafs.Rimworld.Ref` (1.6.4871), same as the other mods. The DLL is written to `Assemblies/NanoHiveReforged.dll`.

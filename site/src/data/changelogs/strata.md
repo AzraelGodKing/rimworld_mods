@@ -1,14 +1,19 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.8.4` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.4 loaded from ... (modified ...); construct-fetch-v1.` via `ModVersionLog.Write`.
+**Version:** `3.9.3` in `About.xml` `modVersion`. Player.log: `[Strata] v3.9.3 loaded from ... (modified ...); construct-fetch-v1.` via `ModVersionLog.Write`.
 
 **Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `construct-fetch-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
 
+## [3.9.3]
+
+Player-facing version **3.9.3** (`About.xml` `modVersion`). Stamp `construct-fetch-v1`.
+
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (surface and two floors). Optional art-pack preview updated to match. Docs card synced.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 - Startup version line uses shared `ModVersionLog.Write`; stamp stays `construct-fetch-v1`. No gameplay change.
 - **Dead-code sweep**: removed unused atmosphere wrappers, empty off-thread session hooks, leftover helpers, and unused keyed inspect strings. No player-facing change.
 
