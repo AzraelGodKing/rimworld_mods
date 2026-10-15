@@ -14,3 +14,7 @@
 [*] [b]Missed drops[/b] — a supply drop due before you have a beacon now lands as soon as you build one, instead of being lost for the day.
 [*] [b]Special waves[/b] — a siege or sapper wave that no enemy faction can carry out falls back to a normal raid instead of skipping the wave.
 [/list]
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] — Workshop image retitled Wave Survival, with the colony holding a wave.
+[/list]
