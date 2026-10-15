@@ -1,5 +1,11 @@
 # Changelog
 
+
+## [Unreleased]
+
+### Changed
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change. No `modVersion` bump (Myleek).
+
 ## [1.0.0]
 
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `removal-queue-v1`. Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log.

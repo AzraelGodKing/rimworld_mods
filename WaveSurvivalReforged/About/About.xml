@@ -5,6 +5,7 @@
   <packageId>AzraelGodKing.WaveSurvivalReforged</packageId>
   <supportedVersions>
     <li>1.6</li>
+    <li>1.7</li>
   </supportedVersions>
   <modVersion IgnoreIfNoMatchingField="True">1.0.0</modVersion>
   <loadAfter>
@@ -20,7 +21,7 @@ Pick the Wave Survival storyteller for a faster, combat-focused game. Random eve
 - A Wave Survival scenario: 4 colonists, starting weapons, and turret research done.
 - An alert counting down to the next wave.
 
-All the numbers live in Defs/WaveSurvivalConfig.xml. RimWorld 1.6. No other mods needed.
+All the numbers live in Defs/WaveSurvivalConfig.xml. RimWorld 1.6 and 1.7. No other mods needed.
 
 Original mod by Justin C. Storyteller art by Philbro: http://philbro.deviantart.com/
 Discord: https://discord.gg/Vwh2y7qMXv</description>

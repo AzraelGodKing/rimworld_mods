@@ -1,7 +1,7 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.8.3` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.3 loaded from ... (modified ...); construct-fetch-v1.` via `ModVersionLog.Write`.
+**Version:** `3.8.4` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.4 loaded from ... (modified ...); construct-fetch-v1.` via `ModVersionLog.Write`.
 
 **Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `construct-fetch-v1` in `StrataBuildInfo.BuildStamp`.
 
@@ -13,6 +13,15 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 ### Docs
 - **Strata 4 roadmap** (AZR-467): `V4_ROADMAP.md` plans Strata 4 as a RimWorld 1.7-only release with new shader visuals, a performance pass, smarter cross-floor commuting, and the Magma, Flooded and Lost floor levels. No gameplay change.
+
+## [3.8.4]
+
+Player-facing version **3.8.4** (`About.xml` `modVersion`).
+
+AZR-457
+
+### Changed
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
 
 ## [3.8.3]
 

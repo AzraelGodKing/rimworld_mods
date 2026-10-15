@@ -10,6 +10,15 @@ Detailed notes for Deep Colony only.
 - Dropped unused EN/RU/CN keyed leftovers (`DC_MentorSelf`, `DC_FamilyTree_PedigreeToggle`, `DC_InspectTouchAverseNone`, `DC_RomanceBlockedTouchAverse`, `DC_RepEnvoyShort`). Live copies remain (`DC_MentorInvalid`, `DC_FamilyTree_StylePedigree`, `DC_InspectTouchNeedNone`, `DC_RomanceBlockedTouchTier`, `DC_RepEnvoy`). Ticket-ID prefixes stripped from `Comp_DeepColony` field comments and a few utility headers. No gameplay change.
 - Removed the leftover perk-points economy (always-zero Points column, Unspent filter, dead Recruits-arrive-pre-perked checkbox, unused point-grant debug). Perks still auto-grant at skill 5/10/15/20. Old saves still load: `availablePerkPoints` and `elderPerkGranted` are swallowed by dummy `Scribe_Values.Look` locals.
 
+## [1.9.1]
+
+Player-facing version **1.9.1** (`About.xml` `modVersion`).
+
+AZR-457
+
+### Changed
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+
 ## [1.9.0]
 
 Player-facing version **1.9.0** (`About.xml` `modVersion`). Stamp `colony-overview-v1`.

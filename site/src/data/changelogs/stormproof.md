@@ -8,6 +8,15 @@ Detailed notes for **Stormproof** only.
 - Dropped the unused `ArmoredConduit.png` texture (defs use `_Atlas` and `_MenuIcon` only). Atlas script writes the segment preview to `docs/img` instead of `Textures/` and no longer copies the unused atlas PNG into `docs/img`. No gameplay change.
 - Dropped flavor-text class headers on atmospheric barrier, climate stabilizer, sky restorer, drought condenser, fire suppressor, and natural-hazard game conditions. No gameplay change.
 
+## [1.6.1]
+
+Player-facing version **1.6.1** (`About.xml` `modVersion`).
+
+AZR-457
+
+### Changed
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+
 ## [1.6.0]
 
 Player-facing version **1.6.0** (`About.xml` `modVersion`). Stamp `forecast-schedule-v1`.
