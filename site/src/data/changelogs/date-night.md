@@ -4,6 +4,9 @@ Detailed notes for **Date Night** only.
 
 ## [Unreleased]
 
+### Changed
+- **Workshop preview** — new `About/Preview.png` (evening table, walk, and stars). Docs card synced.
+
 ## [1.6.2]
 
 Player-facing version **1.6.2** (`About.xml` `modVersion`).

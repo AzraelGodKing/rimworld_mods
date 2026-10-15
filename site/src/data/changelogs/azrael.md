@@ -8,6 +8,9 @@
 
 ## [1.0.0]
 
+### Changed
+- **Workshop preview** — `About/Preview.png` is Azrael's own image (the overlook), no longer a copy of Homesteader's.
+
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `removal-queue-v1`. Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log.
 
 Not released yet: Azrael stays at 1.0.0 until its first Workshop / Nexus / GitHub release. The 1.1.0–1.4.0 numbers below were internal pre-release bumps that never shipped; their notes are kept as development history.

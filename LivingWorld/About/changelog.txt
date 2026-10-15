@@ -3,6 +3,11 @@
 
 First release.
 
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] - Workshop image of settlements, roads, and a passing caravan.
+[/list]
+
 [b]Added[/b]
 [list]
 [*] [b]Off-map world life[/b] - other settlements grow, shrink, change hands, get abandoned, found outposts, and earn epithets over time. You hear about it depending on distance, contact, and comms. Mod Options control pace and how much news reaches you.
