@@ -77,11 +77,11 @@ Defend your grid from everything the Rim throws at it. RimWorld 1.6. C# mod (req
 | **Grid monitor console** | Live production/consumption/storage readout with time-to-empty estimates; warns at 25% battery, alarms at 10%. |
 | **Armored conduit** | Fireproof, high-durability power conduit. |
 | **Storm vane** | Decorative copper weather vane. Pure class. |
-| **Atmospheric barrier** | Holds a room's weather at bay — rain, toxic fallout, and heat stay outside. |
-| **Climate stabilizer** | Keeps indoor temperature from swinging with outdoor extremes. |
-| **Sky restorer** | Clears lingering overlay weather (fallout, volcanic winter) in range. |
-| **Fire suppressor** | Automatically fights fires in the room. |
-| **Drought condenser** | Pulls water from dry air when the map is in drought. |
+| **Atmospheric barrier** | Suppresses outdoor toxins and ash map-wide while powered. |
+| **Climate stabilizer** | Cancels map-wide heat-wave / cold-snap / polar / heat-dome temperature swings while powered. |
+| **Sky restorer** | Restores usable daylight map-wide during eclipse, ash, and volcanic winter. |
+| **Fire suppressor** | Automatically extinguishes fires within a wide radius. |
+| **Drought condenser** | Cancels drought plant-growth penalties map-wide while powered. |
 
 Events: **Ion storm** (batteries bleed, EMP bursts, extra Zzzt), **Heat dome**, **Polar front**, **Toxic surge**, and **Dry lightning**. Hazard hardening research unlocks the last four. The weather **almanac** (on the forecaster) logs this map's storms by season.
 
