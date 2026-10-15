@@ -3,6 +3,11 @@
 
 First release.
 
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] - the Workshop image is Azrael's own overlook, not Homesteader's art.
+[/list]
+
 [b]Added[/b]
 [list]
 [*] [b]Series hub[/b] - Mod Options → Azrael lists loaded series mods and versions, DLC, build stamps, live soft-compat bridges, named conflicts, and failed patches. Copy report for support. Works from the main menu. EN/CN/RU.

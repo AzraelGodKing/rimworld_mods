@@ -13,3 +13,7 @@
 [*] [b]Colonist gear repair[/b] — mends apparel and equipment worn by colonists in range, with an optional toggle for inventory items.
 [*] [b]Settings[/b] — repair points per rare tick, gear and inventory toggles, and an optional repair radius override.
 [/list]
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] - Workshop image of the hive repairing a cracked helm.
+[/list]

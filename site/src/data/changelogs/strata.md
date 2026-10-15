@@ -8,6 +8,7 @@ Player-facing release notes for Strata (Steam Workshop style).
 ## [Unreleased]
 
 ### Changed
+- **Workshop preview** — new `About/Preview.png` (surface and two floors). Optional art-pack preview updated to match. Docs card synced.
 - Startup version line uses shared `ModVersionLog.Write`; stamp stays `construct-fetch-v1`. No gameplay change.
 - **Dead-code sweep**: removed unused atmosphere wrappers, empty off-thread session hooks, leftover helpers, and unused keyed inspect strings. No player-facing change.
 
