@@ -107,7 +107,7 @@
   <DC_Settings_TraumaPenaltiesTip>默认关闭。战斗创伤会降低征召时精度；囚禁创伤在狱卒工作时有心情惩罚。困难预设启用。</DC_Settings_TraumaPenaltiesTip>
   <DC_Settings_AttitudeConsequences>态度后果</DC_Settings_AttitudeConsequences>
   <DC_Settings_AttitudeConsequencesTip>默认关闭。友好/亏欠/戒备/复仇态度会影响贸易价格、商队与袭击强度。困难预设启用。</DC_Settings_AttitudeConsequencesTip>
-  <DC_Settings_Phase5>力量系统（阶段 5）</DC_Settings_Phase5>
+  <DC_Settings_Phase5>力量系统</DC_Settings_Phase5>
   <DC_Settings_Capstones>技能 20 巅峰专长</DC_Settings_Capstones>
   <DC_Settings_CapstonesTip>在技能 20 增加专长节点。默认开启，到达该等级仍自动授予。</DC_Settings_CapstonesTip>
   <DC_Settings_Branching>分支 L15 专长选择</DC_Settings_Branching>
@@ -136,8 +136,6 @@
   <DC_PerkOverviewTitle>殖民地专长</DC_PerkOverviewTitle>
   <DC_PerkOverview_ColName>殖民者</DC_PerkOverview_ColName>
   <DC_PerkOverview_ColUnlocked>已解锁</DC_PerkOverview_ColUnlocked>
-  <DC_PerkOverview_ColStatus>状态</DC_PerkOverview_ColStatus>
-  <DC_PerkOverview_CaughtUp>已跟上</DC_PerkOverview_CaughtUp>
   <DC_Epithet_TrustedPartners>声望：可信伙伴</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>声望：和睦邻邦</DC_Epithet_Cordial>
   <DC_Epithet_DeepEnmity>声望：深仇大恨</DC_Epithet_DeepEnmity>
@@ -164,6 +162,9 @@
   <DC_LegacySurname>创始姓氏：{0}</DC_LegacySurname>
   <DC_LegacyStats>在世殖民者：{0} · 有专长：{1} · 学徒：{2} · 长者：{3}</DC_LegacyStats>
   <DC_LegacyColonists>殖民者</DC_LegacyColonists>
+  <DC_LegacyElderTag> [长者]</DC_LegacyElderTag>
+  <DC_LegacyTraditionTag> · 传统：{0}</DC_LegacyTraditionTag>
+  <DC_LegacyPerkCountTag> · 专长 {0}</DC_LegacyPerkCountTag>
 
   <!-- ── Phase 4 reputation ─────────────────────────────────────────────────── -->
   <DC_RepTitle>派系声望</DC_RepTitle>
@@ -246,7 +247,7 @@
   <DC_FuneralBurn>为 {PAWN} 举行的火化减轻了暴死之痛。</DC_FuneralBurn>
   <DC_FuneralEaseMote>入土为安…</DC_FuneralEaseMote>
   <DC_ChildRaidWitness>{PAWN} 看见了战斗，一时难以忘记。</DC_ChildRaidWitness>
-  <DC_Settings_BatchC>后续系统（批次 C）</DC_Settings_BatchC>
+  <DC_Settings_BatchC>后续系统</DC_Settings_BatchC>
   <DC_Settings_ChildRaid>儿童目击袭击几率：{0}%</DC_Settings_ChildRaid>
   <DC_Settings_PrisonerCounsel>囚犯疏导（招募途径）</DC_Settings_PrisonerCounsel>
   <DC_Settings_PrisonerCounselTip>默认关闭。医生可疏导囚犯，作为缓慢的社交招募。不会取代狱卒交谈。</DC_Settings_PrisonerCounselTip>

@@ -107,7 +107,7 @@
   <DC_Settings_TraumaPenaltiesTip>По умолчанию выкл. Боевая травма снижает точность в призыве; травма плена даёт штраф настроения на работе надзирателя. Сложный пресет включает.</DC_Settings_TraumaPenaltiesTip>
   <DC_Settings_AttitudeConsequences>Последствия отношения</DC_Settings_AttitudeConsequences>
   <DC_Settings_AttitudeConsequencesTip>По умолчанию выкл. Приветливое/обязанное/настороженное/мстительное отношение влияет на цены, караваны торговцев и силу набегов. Сложный пресет включает.</DC_Settings_AttitudeConsequencesTip>
-  <DC_Settings_Phase5>Системы силы (фаза 5)</DC_Settings_Phase5>
+  <DC_Settings_Phase5>Системы силы</DC_Settings_Phase5>
   <DC_Settings_Capstones>Капстоун-перки навыка 20</DC_Settings_Capstones>
   <DC_Settings_CapstonesTip>Добавляет узел перка на навыке 20. По умолчанию вкл. Перк всё равно выдаётся автоматически.</DC_Settings_CapstonesTip>
   <DC_Settings_Branching>Ветвление выбора L15</DC_Settings_Branching>
@@ -136,8 +136,6 @@
   <DC_PerkOverviewTitle>Перки колонии</DC_PerkOverviewTitle>
   <DC_PerkOverview_ColName>Колонист</DC_PerkOverview_ColName>
   <DC_PerkOverview_ColUnlocked>Разблокировано</DC_PerkOverview_ColUnlocked>
-  <DC_PerkOverview_ColStatus>Статус</DC_PerkOverview_ColStatus>
-  <DC_PerkOverview_CaughtUp>В курсе</DC_PerkOverview_CaughtUp>
   <DC_Epithet_TrustedPartners>Репутация: надёжные партнёры</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>Репутация: приветливые соседи</DC_Epithet_Cordial>
   <DC_Epithet_DeepEnmity>Репутация: глубокая вражда</DC_Epithet_DeepEnmity>
@@ -164,6 +162,9 @@
   <DC_LegacySurname>Фамилия основателя: {0}</DC_LegacySurname>
   <DC_LegacyStats>Живые колонисты: {0} · С перками: {1} · Ученики: {2} · Старейшины: {3}</DC_LegacyStats>
   <DC_LegacyColonists>Колонисты</DC_LegacyColonists>
+  <DC_LegacyElderTag> [старейшина]</DC_LegacyElderTag>
+  <DC_LegacyTraditionTag> · традиция: {0}</DC_LegacyTraditionTag>
+  <DC_LegacyPerkCountTag> · перки {0}</DC_LegacyPerkCountTag>
 
   <!-- ── Phase 4 reputation ─────────────────────────────────────────────────── -->
   <DC_RepTitle>Репутация фракций</DC_RepTitle>
@@ -246,7 +247,7 @@
   <DC_FuneralBurn>Костёр для {PAWN} смягчает травму насильственной потери.</DC_FuneralBurn>
   <DC_FuneralEaseMote>Предали земле…</DC_FuneralEaseMote>
   <DC_ChildRaidWitness>{PAWN} видел(а) бой и так скоро не забудет.</DC_ChildRaidWitness>
-  <DC_Settings_BatchC>Поздние системы (партия C)</DC_Settings_BatchC>
+  <DC_Settings_BatchC>Поздние системы</DC_Settings_BatchC>
   <DC_Settings_ChildRaid>Шанс детского свидетеля рейда: {0}%</DC_Settings_ChildRaid>
   <DC_Settings_PrisonerCounsel>Консультации пленников (путь вербовки)</DC_Settings_PrisonerCounsel>
   <DC_Settings_PrisonerCounselTip>По умолчанию выкл. Врачи могут консультировать пленников как медленную вербовку через общение. Не заменяет разговор надзирателя.</DC_Settings_PrisonerCounselTip>
