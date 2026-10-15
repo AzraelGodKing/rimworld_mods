@@ -1,11 +1,15 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.8.3` in `About.xml` `modVersion`. Player.log: `[Strata] v3.8.3 loaded from ... (modified ...); construct-fetch-v1.` via `ModVersionLog.Write`.
+**Version:** `3.9.3` in `About.xml` `modVersion`. Player.log: `[Strata] v3.9.3 loaded from ... (modified ...); construct-fetch-v1.` via `ModVersionLog.Write`.
 
 **Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `construct-fetch-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [Unreleased]
+
+## [3.9.3]
+
+Player-facing version **3.9.3** (`About.xml` `modVersion`). Stamp `construct-fetch-v1`.
 
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (surface and two floors). Optional art-pack preview updated to match. Docs card synced.

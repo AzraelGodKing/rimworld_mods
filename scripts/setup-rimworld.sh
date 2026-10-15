@@ -206,6 +206,8 @@ build_workspace_mods() {
     "$WORKSPACE_ROOT/Deep Colony/Source/DeepColony.csproj"
     "$WORKSPACE_ROOT/Azrael/Source/Azrael.csproj"
     "$WORKSPACE_ROOT/Niceties/Source/Niceties.csproj"
+    "$WORKSPACE_ROOT/WaveSurvivalReforged/Source/WaveSurvivalReforged.csproj"
+    "$WORKSPACE_ROOT/NanoHiveReforged/Source/NanoHiveReforged.csproj"
   )
   for proj in "${projects[@]}"; do
     if [[ ! -f "$proj" ]]; then

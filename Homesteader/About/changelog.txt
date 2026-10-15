@@ -1,25 +1,9 @@
-1.4.0
-[h1]Homesteader — 1.4.0[/h1]
-
-[b]Added[/b]
-[list]
-[*] [b]Harvest festival[/b] — once a year, on the first autumn day with a harvest maypole, colonists celebrate. Mood lasts 3 days and grows with pantry variety: lean (+3), festival with 3+ preserve kinds (+6), bountiful with 6+ (+10).
-[*] [b]Cellar aging[/b] — cheese, waxed cheese, smoked cheese, and cider age in a root cellar, springhouse, or icehouse: aged at 5 days (x1.1 value), well-aged at 15 (x1.25), vintage at 30 (x1.5). The icehouse ages at half speed.
-[*] [b]Maple sugaring season[/b] — sugar maple sap is strongest in a cool spring, slower in fall and winter, nearly dry in summer. The tree shows how the sap is running.
-[*] [b]Pantry sort[/b] — sort the In store list by most stock, name, or spoiling soonest.
-[*] [b]Pick the workbench[/b] — Add bill on What I can make lets you choose when more than one station qualifies.
-[*] [b]Saved seed progress[/b] — landrace yield / frost / drought bonuses now show for every player, not only in Developer mode.
-[/list]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Pantry jump button[/b] — the closest-to-spoiling row has its Jump button back.
-[*] [b]Future game updates[/b] — passive cooling, landrace frost/drought, and spoiling-first bills now detect a broken hook: cooling rescans on its own, and the inspect pane or settings page says when a bonus is inactive.
-[/list]
+1.5.0
+[h1]Homesteader — 1.5.0[/h1]
 
 [b]Changed[/b]
 [list]
-[*] [b]Settings window[/b] — gameplay dials apply only when a value changes, not every frame.
+[*] [b]Workshop preview[/b] — new preview image of the farmstead and root cellar.
 [/list]
 
 [i]Build stamp (Player.log): harvest-aging-v1[/i]

@@ -1,27 +1,10 @@
-1.9.0
-[h1]Deep Colony — 1.9.0[/h1]
-
-[b]Added[/b]
-[list]
-[*] [b]Body & Codex tab[/b] — one colony-wide view of who is ill, convalescing, or weakened (and whether they are in an infirmary), archives per home map, researchers at risk, and what each notebook holds. Click a name or notebook to jump to it. Hidden while both systems are off.
-[*] [b]Research at risk alert[/b] — with the Codex on, warns while a skilled researcher (Intellectual 8+) has no archive on their map and a project is in progress.
-[*] [b]Forget a perk[/b] — the perk tree has a Forget button (with confirmation) when respec is on. The perk stays off until you press Relearn.
-[*] [b]Epitaphs[/b] — remembered colonists show their age and how they died in the Legacy tab and the chronicle export.
-[*] [b]Chinese and Russian[/b] — all new tab, alert, perk, and epitaph strings.
-[/list]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Contagion only spreads real diseases[/b] — flu, plague, and other disease-incident illnesses. Tumors and wound infections no longer jump to roommates.
-[*] [b]Pawn death is safe from Codex errors[/b] — a failed research-loss call logs one warning; the death goes through.
-[*] [b]Living World events fail open[/b] — a changed event field is ignored with one warning instead of throwing.
-[/list]
+1.10.0
+[h1]Deep Colony — 1.10.0[/h1]
 
 [b]Changed[/b]
 [list]
-[*] [b]Perk switch and heir choice[/b] apply on the next tick, like the other player actions (multiplayer-safer).
-[*] [b]Mod description[/b] lists all seven systems, including the optional body and Codex.
-[*] Respec setting tooltip no longer mentions refunded points.
+[*] [b]Workshop preview[/b] — new preview image of the perk-tree constellation over a hearth.
+[*] [b]Perk points[/b] — the always-empty Points column, Unspent filter, and unused recruits-arrive-pre-perked option are gone. Perks still grant themselves at skill 5, 10, 15, and 20. Old saves still load.
 [/list]
 
 [i]Build stamp (Player.log): colony-overview-v1[/i]

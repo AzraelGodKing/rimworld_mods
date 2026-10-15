@@ -4,6 +4,10 @@ Detailed notes for **Stormproof** only.
 
 ## [Unreleased]
 
+## [1.7.0]
+
+Player-facing version **1.7.0** (`About.xml` `modVersion`). Stamp `forecast-schedule-v1`.
+
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (grid under a flare and lightning). Docs card synced.
 - Dropped the unused `ArmoredConduit.png` texture (defs use `_Atlas` and `_MenuIcon` only). Atlas script writes the segment preview to `docs/img` instead of `Textures/` and no longer copies the unused atlas PNG into `docs/img`. No gameplay change.

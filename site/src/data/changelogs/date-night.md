@@ -4,6 +4,10 @@ Detailed notes for **Date Night** only.
 
 ## [Unreleased]
 
+## [1.7.1]
+
+Player-facing version **1.7.1** (`About.xml` `modVersion`). Stamp `thought-partner-v1`.
+
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (evening table, walk, and stars). Docs card synced.
 

@@ -1,8 +1,8 @@
-1.6.1
-[h1]Date Night — 1.6.1[/h1]
-[b]Fixed[/b]
+1.7.1
+[h1]Date Night — 1.7.1[/h1]
+[b]Changed[/b]
 [list]
-[*] [b]Partner's name in mood thoughts[/b] — "our spot", anniversaries, reunions, double dates and the other Date Night thoughts now name the partner (or the other couple) instead of the pawn themselves. Thoughts a pawn already has keep the old wording until they wear off.
+[*] [b]Workshop preview[/b] — new preview image of the evening table, walk, and stars.
 [/list]
 
 [i]Build stamp (Player.log): thought-partner-v1[/i]

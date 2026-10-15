@@ -4,6 +4,10 @@ Detailed notes for Deep Colony only.
 
 ## [Unreleased]
 
+## [1.10.0]
+
+Player-facing version **1.10.0** (`About.xml` `modVersion`). Stamp `colony-overview-v1`.
+
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (perk-tree constellation over a hearth). Docs card synced.
 - Removed unused save flags, perk-alert bookkeeping, unused helpers, unused NoisyRoom DefOf, and a stale build SHA. No gameplay change; old saves still load.

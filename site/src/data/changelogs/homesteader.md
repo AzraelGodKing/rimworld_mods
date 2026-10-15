@@ -4,6 +4,10 @@ Detailed notes for Homesteader only.
 
 ## [Unreleased]
 
+## [1.5.0]
+
+Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.5.0 loaded from ...` in Player.log (`harvest-aging-v1`).
+
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (farmstead and root cellar). Docs card synced.
 - Removed unused content: the old Legacy scenario def, an empty Adaptive Storage patch, the leftover Adaptive Storage `loadAfter` entry, unused allergy helpers, and the unread `letterText` on the Kats incident (plus its Chinese and Russian lines). Pointed monument comments at `Thoughts_Homestead.xml`. No gameplay change.

@@ -4,6 +4,10 @@ Detailed notes for **Niceties** only.
 
 ## [Unreleased]
 
+## [1.6.0]
+
+Player-facing version **1.6.0** (`About.xml` `modVersion`). Startup writes `[Niceties] v1.6.0 loaded from ...; sim-snapshot-v2` in Player.log.
+
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (the comforts, without the old options card). Docs card synced.
 - Removed unused `CryptosleepBar.HiddenCount` getter and `NicetiesMultiplayer.Loaded` property. No gameplay change.
