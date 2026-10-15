@@ -103,66 +103,41 @@ namespace Stormproof
         }
     }
 
-    // Odyssey / Biotech hooks applied only when those types exist.
-    [StaticConstructorOnStartup]
-    public static class Patch_OptionalHazardTypes
+    // Odyssey / Biotech hooks. Prepare skips when the type is missing so
+    // SafePatchAll can apply them on the shared azraelgodking.stormproof id.
+    [HarmonyPatch]
+    public static class Patch_VolcanicAsh_GiveOrUpdateHediff
     {
-        static Patch_OptionalHazardTypes()
-        {
-            Harmony harmony = new Harmony("azraelgodking.stormproof.optionalhazards");
-            TryPatch(harmony, "GameCondition_VolcanicAsh", "GiveOrUpdateHediff",
-                typeof(Patch_OptionalHazardTypes), nameof(SkipAshHediffIfBarrier));
-            TryPatch(harmony, "GameCondition_VolcanicAsh", "SkyTarget",
-                typeof(Patch_OptionalHazardTypes), nameof(RestoreAshSky));
-            TryPatchGetter(harmony, "Plant", "GrowthRateFactor_Drought",
-                typeof(Patch_OptionalHazardTypes), nameof(DroughtGrowthPostfix));
-            TryPatchGetter(harmony, "Plant", "GrowthRateFactor_NoxiousHaze",
-                typeof(Patch_OptionalHazardTypes), nameof(NoxiousGrowthPostfix));
-        }
+        static bool Prepare() => TargetMethod() != null;
 
-        private static void TryPatch(Harmony harmony, string typeName, string methodName,
-            Type patchType, string patchMethod)
-        {
-            Type type = AccessTools.TypeByName(typeName) ?? AccessTools.TypeByName("RimWorld." + typeName);
-            MethodInfo target = type != null ? AccessTools.Method(type, methodName) : null;
-            MethodInfo patch = AccessTools.Method(patchType, patchMethod);
-            if (target == null || patch == null)
-            {
-                return;
-            }
-            if (patchMethod.StartsWith("Skip"))
-            {
-                harmony.Patch(target, prefix: new HarmonyMethod(patch));
-            }
-            else
-            {
-                harmony.Patch(target, postfix: new HarmonyMethod(patch));
-            }
-        }
+        static MethodBase TargetMethod() =>
+            OptionalHazardTargets.Method("GameCondition_VolcanicAsh", "GiveOrUpdateHediff");
 
-        private static void TryPatchGetter(Harmony harmony, string typeName, string propertyName,
-            Type patchType, string patchMethod)
-        {
-            Type type = AccessTools.TypeByName(typeName) ?? AccessTools.TypeByName("RimWorld." + typeName);
-            PropertyInfo prop = type?.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            MethodInfo getter = prop?.GetGetMethod(true);
-            MethodInfo patch = AccessTools.Method(patchType, patchMethod);
-            if (getter == null || patch == null)
-            {
-                return;
-            }
-            harmony.Patch(getter, postfix: new HarmonyMethod(patch));
-        }
+        public static bool Prefix(Pawn target) =>
+            target?.Map == null || !HazardProtection.BarrierProtecting(target.Map);
+    }
 
-        public static bool SkipAshHediffIfBarrier(Pawn target)
-        {
-            return target?.Map == null || !HazardProtection.BarrierProtecting(target.Map);
-        }
+    [HarmonyPatch]
+    public static class Patch_VolcanicAsh_SkyTarget
+    {
+        static bool Prepare() => TargetMethod() != null;
 
-        public static void RestoreAshSky(Map map, ref SkyTarget? __result) =>
+        static MethodBase TargetMethod() =>
+            OptionalHazardTargets.Method("GameCondition_VolcanicAsh", "SkyTarget");
+
+        public static void Postfix(Map map, ref SkyTarget? __result) =>
             SkyRestoreUtility.RestoreSky(map, ref __result);
+    }
 
-        public static void DroughtGrowthPostfix(Plant __instance, ref float __result)
+    [HarmonyPatch]
+    public static class Patch_Plant_GrowthRateFactor_Drought
+    {
+        static bool Prepare() => TargetMethod() != null;
+
+        static MethodBase TargetMethod() =>
+            OptionalHazardTargets.PlantGetter("GrowthRateFactor_Drought");
+
+        public static void Postfix(Plant __instance, ref float __result)
         {
             if (__result >= 0.999f || __instance?.Map == null)
             {
@@ -173,8 +148,17 @@ namespace Stormproof
                 __result = 1f;
             }
         }
+    }
 
-        public static void NoxiousGrowthPostfix(Plant __instance, ref float __result)
+    [HarmonyPatch]
+    public static class Patch_Plant_GrowthRateFactor_NoxiousHaze
+    {
+        static bool Prepare() => TargetMethod() != null;
+
+        static MethodBase TargetMethod() =>
+            OptionalHazardTargets.PlantGetter("GrowthRateFactor_NoxiousHaze");
+
+        public static void Postfix(Plant __instance, ref float __result)
         {
             if (__result >= 0.999f || __instance?.Map == null)
             {
@@ -184,6 +168,24 @@ namespace Stormproof
             {
                 __result = 1f;
             }
+        }
+    }
+
+    internal static class OptionalHazardTargets
+    {
+        internal static MethodInfo Method(string typeName, string methodName)
+        {
+            Type type = AccessTools.TypeByName(typeName) ?? AccessTools.TypeByName("RimWorld." + typeName);
+            return type != null ? AccessTools.Method(type, methodName) : null;
+        }
+
+        internal static MethodInfo PlantGetter(string propertyName)
+        {
+            Type type = AccessTools.TypeByName("Plant") ?? AccessTools.TypeByName("RimWorld.Plant");
+            PropertyInfo prop = type?.GetProperty(
+                propertyName,
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            return prop?.GetGetMethod(true);
         }
     }
 }
