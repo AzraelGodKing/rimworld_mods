@@ -71,8 +71,7 @@ namespace DeepColony
             float y = 0f;
             Widgets.Label(new Rect(4f, y, 180f, rowH), "DC_PerkOverview_ColName".Translate());
             Widgets.Label(new Rect(190f, y, 80f, rowH), "DC_PerkOverview_ColUnlocked".Translate());
-            Widgets.Label(new Rect(280f, y, 140f, rowH), "DC_PerkOverview_ColStatus".Translate());
-            Widgets.Label(new Rect(430f, y, 140f, rowH), "DC_PerkOverview_ColArchetype".Translate());
+            Widgets.Label(new Rect(280f, y, 140f, rowH), "DC_PerkOverview_ColArchetype".Translate());
             y += rowH;
             Widgets.DrawLineHorizontal(0f, y, viewRect.width);
             y += 4f;
@@ -84,7 +83,6 @@ namespace DeepColony
 
                 Widgets.Label(new Rect(4f, y, 180f, rowH), p.LabelShort);
                 Widgets.Label(new Rect(190f, y, 80f, rowH), unlocked.ToString());
-                Widgets.Label(new Rect(280f, y, 140f, rowH), "DC_PerkOverview_CaughtUp".Translate());
 
                 string arch = "—";
                 if (comp != null && !comp.activeArchetypeDefName.NullOrEmpty())
@@ -92,7 +90,7 @@ namespace DeepColony
                     ArchetypeDef a = DefDatabase<ArchetypeDef>.GetNamedSilentFail(comp.activeArchetypeDefName);
                     if (a != null) arch = a.LabelCap;
                 }
-                Widgets.Label(new Rect(430f, y, 140f, rowH), arch);
+                Widgets.Label(new Rect(280f, y, 140f, rowH), arch);
 
                 Rect btn = new Rect(viewRect.width - 110f, y + 2f, 100f, rowH - 4f);
                 if (comp != null && Widgets.ButtonText(btn, "DC_ViewPerks".Translate()))

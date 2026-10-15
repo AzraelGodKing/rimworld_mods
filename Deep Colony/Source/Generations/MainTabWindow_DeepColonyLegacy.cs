@@ -112,14 +112,14 @@ namespace DeepColony
                 sb.Append(p.LabelShort);
                 if (p.Name is NameTriple nt && !nt.Last.NullOrEmpty())
                     sb.Append(" (").Append(nt.Last).Append(")");
-                if (ElderUtility.IsElder(p)) sb.Append(" [elder]");
+                if (ElderUtility.IsElder(p)) sb.Append("DC_LegacyElderTag".Translate());
                 if (comp?.familyTraditionSkillDefName != null)
                 {
                     var skill = DefDatabase<SkillDef>.GetNamedSilentFail(comp.familyTraditionSkillDefName);
-                    if (skill != null) sb.Append(" · tradition: ").Append(skill.label);
+                    if (skill != null) sb.Append("DC_LegacyTraditionTag".Translate(skill.label));
                 }
                 if (comp != null && comp.unlockedPerkDefNames.Count > 0)
-                    sb.Append(" · perks ").Append(comp.unlockedPerkDefNames.Count);
+                    sb.Append("DC_LegacyPerkCountTag".Translate(comp.unlockedPerkDefNames.Count));
 
                 float labelW = EstateUtility.Enabled ? view.width - 128f : view.width - 8f;
                 FamilyTreeUtility.DrawClickablePawnName(new Rect(4f, ry, labelW, rowH), p, sb.ToString());

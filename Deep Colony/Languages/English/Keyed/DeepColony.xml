@@ -107,7 +107,7 @@
   <DC_Settings_TraumaPenaltiesTip>Default off. Combat trauma reduces accuracy while drafted; captivity trauma mood penalty on Warden work. Hard preset enables this.</DC_Settings_TraumaPenaltiesTip>
   <DC_Settings_AttitudeConsequences>Attitude consequences</DC_Settings_AttitudeConsequences>
   <DC_Settings_AttitudeConsequencesTip>Default off. Cordial/indebted/wary/vengeful attitudes affect trade prices, trader caravans, and raid strength. Hard preset enables this.</DC_Settings_AttitudeConsequencesTip>
-  <DC_Settings_Phase5>Power systems (Phase 5)</DC_Settings_Phase5>
+  <DC_Settings_Phase5>Power systems</DC_Settings_Phase5>
   <DC_Settings_Capstones>Skill-20 capstone perks</DC_Settings_Capstones>
   <DC_Settings_CapstonesTip>Adds a perk node at skill 20. Default on. Perks still auto-grant at that level.</DC_Settings_CapstonesTip>
   <DC_Settings_Branching>Branching L15 perk picks</DC_Settings_Branching>
@@ -137,8 +137,6 @@
   <DC_PerkOverviewTitle>Colony perks</DC_PerkOverviewTitle>
   <DC_PerkOverview_ColName>Colonist</DC_PerkOverview_ColName>
   <DC_PerkOverview_ColUnlocked>Unlocked</DC_PerkOverview_ColUnlocked>
-  <DC_PerkOverview_ColStatus>Status</DC_PerkOverview_ColStatus>
-  <DC_PerkOverview_CaughtUp>Caught up</DC_PerkOverview_CaughtUp>
   <DC_Epithet_TrustedPartners>Reputation: trusted partners</DC_Epithet_TrustedPartners>
   <DC_Epithet_Cordial>Reputation: cordial neighbors</DC_Epithet_Cordial>
   <DC_Epithet_DeepEnmity>Reputation: deep enmity</DC_Epithet_DeepEnmity>
@@ -165,6 +163,9 @@
   <DC_LegacySurname>Founder surname: {0}</DC_LegacySurname>
   <DC_LegacyStats>Living colonists: {0} · With perks: {1} · Apprentices: {2} · Elders: {3}</DC_LegacyStats>
   <DC_LegacyColonists>Colonists</DC_LegacyColonists>
+  <DC_LegacyElderTag> [elder]</DC_LegacyElderTag>
+  <DC_LegacyTraditionTag> · tradition: {0}</DC_LegacyTraditionTag>
+  <DC_LegacyPerkCountTag> · perks {0}</DC_LegacyPerkCountTag>
 
   <!-- ── Phase 4 reputation ─────────────────────────────────────────────────── -->
   <DC_RepTitle>Faction reputation</DC_RepTitle>
@@ -247,7 +248,7 @@
   <DC_FuneralBurn>The pyre for {PAWN} eases violent loss.</DC_FuneralBurn>
   <DC_FuneralEaseMote>Laid to rest…</DC_FuneralEaseMote>
   <DC_ChildRaidWitness>{PAWN} saw the fighting and will not forget it soon.</DC_ChildRaidWitness>
-  <DC_Settings_BatchC>Later systems (Batch C)</DC_Settings_BatchC>
+  <DC_Settings_BatchC>Later systems</DC_Settings_BatchC>
   <DC_Settings_ChildRaid>Child raid-witness chance: {0}%</DC_Settings_ChildRaid>
   <DC_Settings_PrisonerCounsel>Prisoner counseling (recruit path)</DC_Settings_PrisonerCounsel>
   <DC_Settings_PrisonerCounselTip>Default off. Doctors can counsel prisoners as a slow Social-gated recruit. Does not replace Warden chat.</DC_Settings_PrisonerCounselTip>
