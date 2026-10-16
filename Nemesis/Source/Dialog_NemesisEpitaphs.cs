@@ -4,7 +4,7 @@ using Verse;
 
 namespace Nemesis
 {
-    /// <summary>AZR-390 — full scrollable epitaph history; the dossier only previews the latest three.</summary>
+    /// <summary>Full scrollable epitaph history; the dossier only previews the latest three.</summary>
     public class Dialog_NemesisEpitaphs : Window
     {
         private const float RowHeight = 24f;

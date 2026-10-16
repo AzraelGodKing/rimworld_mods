@@ -3,7 +3,7 @@
 Cross-mod vision for Strata, Homesteader, Stormproof, Nemesis, Deep Colony, Living World, and Niceties.
 Per-mod later work lives in each mod’s roadmap:
 
-- [Strata V3 checklist](Strata/V3_ROADMAP.md) · [Strata V4 (RimWorld 1.7)](Strata/V4_ROADMAP.md)
+- [Strata V4 (RimWorld 1.7)](Strata/V4_ROADMAP.md)
 - [Homesteader](Homesteader/ROADMAP.md) — next pool: [docs/ideas/homesteader-updates.md](docs/ideas/homesteader-updates.md)
 - [Stormproof](Stormproof/ROADMAP.md)
 - [Nemesis](Nemesis/ROADMAP.md)
@@ -11,7 +11,7 @@ Per-mod later work lives in each mod’s roadmap:
 - [Living World (Phase 1–2 in-repo)](LivingWorld/ROADMAP.md) · [design](docs/ideas/living-world.md) — chronicle, morph, wars, refugees
 - [Niceties](Niceties/ROADMAP.md) — 1.6 QoL companion (apparel care, throne altars, outfit gender, cryptosleep bar, melee hunt, leave a way out)
 
-**This weekend:** [General fixes](docs/ideas/general-fixes.md) (Steam-first). Closed backlog: [weekend-steam-backlog.md](docs/ideas/weekend-steam-backlog.md).
+Weekend Steam backlog and the general-fixes batch have shipped.
 
 ---
 

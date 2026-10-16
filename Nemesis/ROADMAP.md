@@ -88,4 +88,4 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 
 - [Series roadmap](../ROADMAP.md) — soft-compat web, Azrael storyteller, “The Deep Homestead”, Living World
 - [Living World design](../docs/ideas/living-world.md) — world news, settlement morph, NPC diplomacy (not personal hunts)
-- [Strata V3](../Strata/V3_ROADMAP.md) · [Homesteader](../Homesteader/ROADMAP.md) · [Stormproof](../Stormproof/ROADMAP.md)
+- [Strata V4](../Strata/V4_ROADMAP.md) · [Homesteader](../Homesteader/ROADMAP.md) · [Stormproof](../Stormproof/ROADMAP.md)

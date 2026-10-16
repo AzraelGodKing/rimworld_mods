@@ -34,19 +34,6 @@ namespace DeepColony.Patches
         }
     }
 
-    [HarmonyPatch(typeof(IncidentWorker_RaidEnemy), "TryExecuteWorker")]
-    public static class Patch_RaidEnemy_AttitudePoints
-    {
-        public static void Prefix(IncidentParms parms)
-        {
-            if (!FactionAttitudeUtility.ConsequencesActive) return;
-            if (parms?.faction == null) return;
-            float factor = FactionAttitudeUtility.RaidPointsFactor(parms.faction);
-            if (System.Math.Abs(factor - 1f) < 0.001f) return;
-            parms.points *= factor;
-        }
-    }
-
     [HarmonyPatch(typeof(TradeDeal), nameof(TradeDeal.TryExecute))]
     public static class Patch_TradeDeal_AttitudeRefuse
     {

@@ -1,3 +1,24 @@
+3.9.4 (proposed — About.xml not bumped until confirmed)
+[h1]Strata - 3.9.4[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Stairwell construction postfix[/b] — skip when Niceties leave-a-way-out cancels CompleteConstruction (`__runOriginal` false) (AZR-548).
+[/list]
+
+[b]Changed[/b]
+[list]
+[*] [b]Harmony consolidation[/b] — one play-settings postfix, one mental-break job-giver patch, one GetRest postfix, explicit session ResetAll, WorkTypeDefOf for vanilla work types, unused ArtPackage preview folders removed. No gameplay change.
+[/list]
+
+[b]Docs[/b]
+[list]
+[*] Comment and docs cleanup: removed narrating file-header essays, per-field gas-def narration, and restating settings xml-docs. Deleted stale V3_ROADMAP.md (pointers now go to V4_ROADMAP.md) and the empty-English-folder section in Languages/README.md. No gameplay change.
+[/list]
+
+[i]Build stamp (Player.log): construct-fetch-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
+
 3.9.3
 [h1]Strata - 3.9.3[/h1]
 

@@ -33,8 +33,9 @@ namespace Azrael.ModChecks
             {
                 doc = XDocument.Load(file, LoadOptions.SetLineInfo);
             }
-            catch
+            catch (Exception ex)
             {
+                errors.Add("XML parse error: " + rel + ": " + ex.Message);
                 return;
             }
 

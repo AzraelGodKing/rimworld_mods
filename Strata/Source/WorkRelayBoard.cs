@@ -36,7 +36,6 @@ namespace Strata
 
         private static readonly HashSet<int> dirtyMaps = new HashSet<int>();
 
-        [StrataSessionReset]
         internal static void ResetSession()
         {
             entries.Clear();

@@ -59,12 +59,11 @@ namespace Strata
         }
     }
 
-    [HarmonyPatch(typeof(JobGiver_GetRest), "TryGiveJob")]
     public static class Patch_VisitorRestAcrossLevels
     {
-        public static void Postfix(Pawn pawn, ref Job __result)
+        public static void Apply(Pawn pawn, ref Job result)
         {
-            if (__result != null || !VisitorPortalUtility.IsVisitor(pawn))
+            if (result != null || !VisitorPortalUtility.IsVisitor(pawn))
             {
                 return;
             }
@@ -96,7 +95,7 @@ namespace Strata
                     pawn, link.map, touchCooldown: false, RelayPurpose.Rest);
                 if (hop != null)
                 {
-                    __result = hop;
+                    result = hop;
                     return;
                 }
             }
@@ -104,7 +103,7 @@ namespace Strata
             Job escape = EscapePortalUtility.MakeEscapeJob(pawn);
             if (escape != null)
             {
-                __result = escape;
+                result = escape;
             }
         }
     }

@@ -65,6 +65,11 @@ namespace Strata
 
     public static class LevelRoleUtility
     {
+        private static WorkTypeDef cookingWork;
+
+        private static WorkTypeDef CookingWork =>
+            cookingWork ??= DefDatabase<WorkTypeDef>.GetNamedSilentFail("Cooking");
+
         // Display / cycle order (AZR-140). Enum values append Farm/Quarry so
         // existing saves that stored Storage as 5 stay Storage.
         private static readonly LevelRole[] AllRoles =
@@ -268,11 +273,12 @@ namespace Strata
 
             int bestPri = 100;
             LevelRole best = LevelRole.None;
-            Consider(pawn, StrataDefOf.Mining, LevelRole.Quarry, ref bestPri, ref best);
+            Consider(pawn, WorkTypeDefOf.Mining, LevelRole.Quarry, ref bestPri, ref best);
             Consider(pawn, WorkTypeDefOf.Growing, LevelRole.Farm, ref bestPri, ref best);
-            Consider(pawn, StrataDefOf.PlantCutting, LevelRole.Farm, ref bestPri, ref best);
-            Consider(pawn, StrataDefOf.Cooking, LevelRole.Freezer, ref bestPri, ref best);
-            Consider(pawn, StrataDefOf.Crafting, LevelRole.Workshop, ref bestPri, ref best);
+            Consider(pawn, WorkTypeDefOf.PlantCutting, LevelRole.Farm, ref bestPri, ref best);
+            // WorkTypeDefOf has no Cooking field; vanilla defName is still "Cooking".
+            Consider(pawn, CookingWork, LevelRole.Freezer, ref bestPri, ref best);
+            Consider(pawn, WorkTypeDefOf.Crafting, LevelRole.Workshop, ref bestPri, ref best);
             Consider(pawn, WorkTypeDefOf.Construction, LevelRole.Workshop, ref bestPri, ref best);
             Consider(pawn, WorkTypeDefOf.Doctor, LevelRole.Hospital, ref bestPri, ref best);
             return best == LevelRole.None ? LevelRole.Workshop : best;

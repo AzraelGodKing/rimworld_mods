@@ -10,27 +10,33 @@ namespace Strata
     {
         public static void Postfix(Pawn pawn, ref Job __result)
         {
+            ApplyColonistRest(pawn, ref __result);
+            Patch_VisitorRestAcrossLevels.Apply(pawn, ref __result);
+        }
+
+        private static void ApplyColonistRest(Pawn pawn, ref Job result)
+        {
             if (SleepRelay.ShouldYieldToCommute(pawn))
             {
                 // AZR-237: yield must also drop a free local bunk. Owned bed
                 // on another floor wins; only ground LayDown was cleared before.
-                if (SleepRelay.ShouldBlockYieldingLocalSleep(pawn, __result))
+                if (SleepRelay.ShouldBlockYieldingLocalSleep(pawn, result))
                 {
-                    __result = null;
+                    result = null;
                 }
 
                 return;
             }
 
-            Job commute = SleepRelay.TryMakeJob(pawn, __result);
+            Job commute = SleepRelay.TryMakeJob(pawn, result);
             if (commute != null)
             {
-                __result = commute;
+                result = commute;
                 return;
             }
-            if (SleepRelay.ShouldBlockGroundSleep(pawn, __result))
+            if (SleepRelay.ShouldBlockGroundSleep(pawn, result))
             {
-                __result = null;
+                result = null;
             }
         }
     }

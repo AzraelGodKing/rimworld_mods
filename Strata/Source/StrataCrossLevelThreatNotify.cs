@@ -19,7 +19,6 @@ namespace Strata
 
         private static readonly Dictionary<int, int> lastLetterTickByMap = new Dictionary<int, int>();
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             lastLetterTickByMap.Clear();

@@ -1,3 +1,17 @@
+1.5.1 (proposed — About.xml not bumped until confirmed)
+[h1]Homesteader — 1.5.1[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Landrace seed save[/b] — harvesting mature landrace crops that despawn on collect still drops an improved saved seed (AZR-526).
+[*] [b]Maypole / statue auras[/b] — maypole, 27 statues, and monuments now tick so the cheer hediff refreshes instead of vanishing after 50 ticks (AZR-526).
+[*] [b]Kats Super Chat silver[/b] — takes silver from stockpiles when there is no orbital trade beacon; letter only claims silver when it was actually removed (AZR-528).
+[*] [b]Allergy matcher[/b] — Egg / Nuts / Crab tokens use word and camelCase boundaries so Veggie meals, donuts, and crabapples no longer false-match (AZR-528).
+[/list]
+
+[i]Build stamp (Player.log): landrace-aura-kats-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]
+
 1.5.0
 [h1]Homesteader — 1.5.0[/h1]
 

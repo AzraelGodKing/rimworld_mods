@@ -10,7 +10,7 @@ Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Nem
 
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (the hunter and the cabin). Docs card synced.
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6. Existing 1.6 DLL; no gameplay change.
 - **Dead SoftCompat flags** — removed unused Giddy-Up / Rimesis / BFV package-id probes (`GiddyUpActive`, `RimesisActive`, `BackForVengeanceActive`) and unread `LastHeavyCheckTick`. Foreign-antagonist skip still uses hediff markers; mount escorts still assign by faction tech. No gameplay change.
 - **Unused Homesteader map probe** — deleted `MapHasHomesteaderFoodStorage`. The food-storage defName list is still used by `IsHomesteaderFoodStorageDef` / `IsOnHomesteaderFoodStorage`. No gameplay change.
 
@@ -18,29 +18,25 @@ Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Nem
 
 Player-facing version **1.4.1** (`About.xml` `modVersion`).
 
-AZR-457
-
 ### Changed
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6. Existing 1.6 DLL; no gameplay change.
 
 ## [1.4.0]
 
 Player-facing version **1.4.0** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.4.0 loaded from ...` in Player.log (`custody-sync-v1`).
 
-AZR-382 AZR-383 AZR-384 AZR-385 AZR-386 AZR-387 AZR-388 AZR-389 AZR-390
-
 ### Fixed
-- **Capture soft-lock** (AZR-383) — if a captured nemesis dies, vanishes, is traded away, or leaves your cells before you pick their fate, the hunt no longer stays stuck forever. A nemesis who got loose and is still hostile resumes the hunt; otherwise the hunt ends with a letter and an epitaph ("died in custody" / "lost from custody") so a new nemesis can rise. The dossier's *Open resolution dialog* button now explains when there is nothing to decide instead of doing nothing.
-- **Resolution choice sync** (AZR-382) — Execute / Release / Keep / Truce now apply on the next game tick through the same command queue as informants and comms replies, instead of straight from the button click (Multiplayer-safer). A second click cannot apply a second outcome.
-- **Strata tick cost** (AZR-384) — with Strata loaded, the harassment-map lookup (reflection per map) no longer runs every tick during a hunt; it only runs on the health-check ticks that need it.
-- **Clear diagnostic if a RimWorld update breaks Kill hooks** (AZR-385) — all `Pawn.Kill` patches share one lookup. If the signature changes, Player.log gets one `[Nemesis]` error naming exactly what is disabled, and those patches skip cleanly instead of failing as a group.
-- **Escort spawn failures logged** (AZR-386) — mech and mount escort spawn errors now write a `[Nemesis]` warning with the PawnKind instead of failing silently.
+- **Capture soft-lock** — if a captured nemesis dies, vanishes, is traded away, or leaves your cells before you pick their fate, the hunt no longer stays stuck forever. A nemesis who got loose and is still hostile resumes the hunt; otherwise the hunt ends with a letter and an epitaph ("died in custody" / "lost from custody") so a new nemesis can rise. The dossier's *Open resolution dialog* button now explains when there is nothing to decide instead of doing nothing.
+- **Resolution choice sync** — Execute / Release / Keep / Truce now apply on the next game tick through the same command queue as informants and comms replies, instead of straight from the button click (Multiplayer-safer). A second click cannot apply a second outcome.
+- **Strata tick cost** — with Strata loaded, the harassment-map lookup (reflection per map) no longer runs every tick during a hunt; it only runs on the health-check ticks that need it.
+- **Clear diagnostic if a RimWorld update breaks Kill hooks** — all `Pawn.Kill` patches share one lookup. If the signature changes, Player.log gets one `[Nemesis]` error naming exactly what is disabled, and those patches skip cleanly instead of failing as a group.
+- **Escort spawn failures logged** — mech and mount escort spawn errors now write a `[Nemesis]` warning with the PawnKind instead of failing silently.
 
 ### Added
-- **Kidnap attempt** (AZR-389) — personal (fixation) hunts at aggression 5+ can roll a new action while the target is on the map: the nemesis leads a kidnap-enabled assault with its own letter. If the fixation target is carried off, the hunt ends as *they got what they came for*. New action-mix slider (default 0.05) and dev action. Kidnapping uses vanilla raid kidnap rules (any downed colonist), not a target-only AI.
-- **Escape mood fallout** (AZR-388) — from the nemesis's second escape on, colonists get a 4-day "nemesis escaped again" memory (-3); the fixation target takes it harder (-8).
-- **Dossier tile jump** (AZR-387) — click the last-known tile to show it on the world map.
-- **Epitaph archive** (AZR-390) — *View all* opens a scrollable list of every recorded epitaph (the dossier still previews the latest three).
+- **Kidnap attempt** — personal (fixation) hunts at aggression 5+ can roll a new action while the target is on the map: the nemesis leads a kidnap-enabled assault with its own letter. If the fixation target is carried off, the hunt ends as *they got what they came for*. New action-mix slider (default 0.05) and dev action. Kidnapping uses vanilla raid kidnap rules (any downed colonist), not a target-only AI.
+- **Escape mood fallout** — from the nemesis's second escape on, colonists get a 4-day "nemesis escaped again" memory (-3); the fixation target takes it harder (-8).
+- **Dossier tile jump** — click the last-known tile to show it on the world map.
+- **Epitaph archive** — *View all* opens a scrollable list of every recorded epitaph (the dossier still previews the latest three).
 - CN / RU strings for everything above.
 
 ## [1.3.1]
@@ -48,6 +44,7 @@ AZR-382 AZR-383 AZR-384 AZR-385 AZR-386 AZR-387 AZR-388 AZR-389 AZR-390
 Player-facing version **1.3.1** (`About.xml` `modVersion`).
 
 See `About/changelog.txt` for the full player-facing notes for this ship.
+
 ## [1.3.0]
 
 ### Changed
@@ -57,20 +54,18 @@ See `About/changelog.txt` for the full player-facing notes for this ship.
 
 Player-facing version **1.1.1** (`About.xml` `modVersion`). Startup writes `[Nemesis] v1.1.1 loaded from ...` in Player.log (`return-heal-v1`).
 
-AZR-200
-
 ### Fixed
-- **Headless nemesis bleedout loop** (`return-heal-v1`, AZR-200) — `RecoverForReturn` healed `Hediff_Injury` and cleared blood loss, but not `Hediff_MissingPart`. A raider who lost their head and became the hunt via wounded-escape stayed alive (Kill is cancelled), returned still headless, bled ~4h, and immediately fled. Park / inject / spawn now restore missing parts (then injuries / blood loss / anesthetic) so they can fight. Player.log: `Restored missing parts on {name} before return.`
+- **Headless nemesis bleedout loop** (`return-heal-v1`) — `RecoverForReturn` healed `Hediff_Injury` and cleared blood loss, but not `Hediff_MissingPart`. A raider who lost their head and became the hunt via wounded-escape stayed alive (Kill is cancelled), returned still headless, bled ~4h, and immediately fled. Park / inject / spawn now restore missing parts (then injuries / blood loss / anesthetic) so they can fight. Player.log: `Restored missing parts on {name} before return.`
 
 ## [1.1.0]
 
 Player-facing version **1.1.0** (`About.xml` `modVersion`). Startup wrote `[Nemesis] v1.1.0 loaded from ...` in Player.log (`dossier-tells-v1`).
 
-- **Tells** (`dossier-tells-v1`, AZR-146) — voice register, weapon family, mark, and habit roll at hunt create and never change. Progression upgrades quality, not weapon type. Mid-hunt saves without tells roll once on load.
-- **Dossier** (AZR-74) — main-tab page for the active hunt: identity, tells, sightings, taunts, last-known tile, gear seen, aggression.
-- **Informants and bounty** (AZR-75) — pay silver for a lead (tile / gear / next-raid warning / false lead). Standing bounty is recorded on the dossier. Comms console float menu + dossier button.
-- **Epitaph** (AZR-76) — hunt end writes a permanent record on the dossier. Fail-open copy onto Deep Colony's Legacy letters when that mod is loaded.
-- **Compat IDs** (AZR-59, partial) — extra Rimesis / Back for Vengeance packageId candidates; Player.log notes when a candidate is active. Live Font smoke-test still outstanding. Leader-raid → Rimesis inject (AZR-60) stays blocked on Font's public hook.
+- **Tells** (`dossier-tells-v1`) — voice register, weapon family, mark, and habit roll at hunt create and never change. Progression upgrades quality, not weapon type. Mid-hunt saves without tells roll once on load.
+- **Dossier** — main-tab page for the active hunt: identity, tells, sightings, taunts, last-known tile, gear seen, aggression.
+- **Informants and bounty** — pay silver for a lead (tile / gear / next-raid warning / false lead). Standing bounty is recorded on the dossier. Comms console float menu + dossier button.
+- **Epitaph** — hunt end writes a permanent record on the dossier. Fail-open copy onto Deep Colony's Legacy letters when that mod is loaded.
+- **Compat IDs** (partial) — extra Rimesis / Back for Vengeance packageId candidates; Player.log notes when a candidate is active. Live Font smoke-test still outstanding. Leader-raid → Rimesis inject stays blocked on Font's public hook.
 - **Calling-card graphic** — `Nemesis_CallingCard` used Steel as `Graphic_Single`; that path is a stack folder and failed to load. Now uses the vanilla component stack sprite.
 
 ## [1.0.2]

@@ -8,8 +8,8 @@ StrataArt/ contains every texture PNG shipped as Strata-owned art:
   - Textures/UI/Strata/
   - About/Preview.png
 
-WIP preview folders (_vault_previews, _cargolift_previews, _sumppump_previews) are
-included for reference; they are not referenced by current ThingDefs.
+Unused WIP preview folders (_vault_previews, _cargolift_previews, _sumppump_previews)
+were dropped; live textures such as CargoLift.png remain.
 
 To refresh this package after art edits, re-run the export from repo root or ask
 the agent to repackage.

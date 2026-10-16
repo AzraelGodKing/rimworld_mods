@@ -46,6 +46,7 @@ namespace Niceties
 
             ApparelGender.ApplyEffective();
             CryptosleepBar.MarkDirty();
+            OpenBuilds.ClearCache();
         }
 
         public void PullFromModSettings()

@@ -224,7 +224,7 @@
   <DC_HeirloomCreated>{PAWN} 的 {ITEM} 现已成为殖民地传家宝。</DC_HeirloomCreated>
   <DC_ChronicTrauma>{PAWN} 未治疗的创伤沉淀为慢性压力。</DC_ChronicTrauma>
 
-  <!-- ── Batch C ────────────────────────────────────────────────────────────── -->
+  <!-- ── Later systems ─────────────────────────────────────────────────────── -->
   <DC_Alert_UntreatedTrauma>未治疗的创伤</DC_Alert_UntreatedTrauma>
   <DC_Alert_UntreatedTraumaDesc>这些殖民者已携带心理创伤超过一天且未经疏导。医生可通过医生工作类型或右键进行疏导。</DC_Alert_UntreatedTraumaDesc>
   <DC_InspectCounsel>疏导：最近 {0}，共 {1} 次（羁绊 {2}/{3}）</DC_InspectCounsel>
@@ -247,7 +247,7 @@
   <DC_FuneralBurn>为 {PAWN} 举行的火化减轻了暴死之痛。</DC_FuneralBurn>
   <DC_FuneralEaseMote>入土为安…</DC_FuneralEaseMote>
   <DC_ChildRaidWitness>{PAWN} 看见了战斗，一时难以忘记。</DC_ChildRaidWitness>
-  <DC_Settings_BatchC>后续系统</DC_Settings_BatchC>
+  <DC_Settings_LaterSystems>后续系统</DC_Settings_LaterSystems>
   <DC_Settings_ChildRaid>儿童目击袭击几率：{0}%</DC_Settings_ChildRaid>
   <DC_Settings_PrisonerCounsel>囚犯疏导（招募途径）</DC_Settings_PrisonerCounsel>
   <DC_Settings_PrisonerCounselTip>默认关闭。医生可疏导囚犯，作为缓慢的社交招募。不会取代狱卒交谈。</DC_Settings_PrisonerCounselTip>

@@ -12,18 +12,54 @@ namespace DateNight
 
         public GameComponent_DateNight(Game game)
         {
-            // Ephemeral couple caches must not leak thing IDs across colonies/sessions.
-            DateNightUtility.ClearEphemeral();
-            DateNightWindows.ClearEphemeral();
-            DateNightReunions.Reset();
-            DateNightDoubleDates.ResetRapport();
+            // Persisted statics must not leak thing IDs across colonies/sessions.
+            // A new game never runs ExposeData, so reset everything here (AZR-522).
+            ResetAllStaticState();
         }
 
         public override void FinalizeInit()
         {
+            // Reload: ExposeData already restored scribed collections. Only clear
+            // ephemeral windows; Claims were rebuilt from the save.
             DateNightUtility.ClearEphemeral();
-            DateNightWindows.ClearEphemeral();
+            DateNightWindows.ClearWindowsOnly();
+            // Seed schedule flags without firing enter/leave transitions (AZR-523).
+            SeedScheduleFlags();
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
+        }
+
+        private static void ResetAllStaticState()
+        {
+            DateNightUtility.ClearEphemeral();
+            DateNightWindows.Reset();
+            DateNightDateUtility.Reset();
+            DateNightAnniversaries.Reset();
+            DateNightVenues.Reset();
+            DateNightDoubleDates.Reset();
+            DateNightReunions.Reset();
+        }
+
+        private void SeedScheduleFlags()
+        {
+            wasOnLovin.Clear();
+            wasOnDate.Clear();
+            List<Pawn> colonists = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
+            if (colonists == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < colonists.Count; i++)
+            {
+                Pawn pawn = colonists[i];
+                if (pawn == null)
+                {
+                    continue;
+                }
+                int id = pawn.thingIDNumber;
+                wasOnLovin[id] = DateNightUtility.IsLovinSchedule(pawn);
+                wasOnDate[id] = DateNightUtility.IsDateSchedule(pawn);
+            }
         }
 
         public override void ExposeData()

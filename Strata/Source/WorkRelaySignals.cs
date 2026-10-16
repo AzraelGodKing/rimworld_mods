@@ -98,7 +98,6 @@ namespace Strata
             workSeekingGiverMarkers.Remove(typeNameContains);
         }
 
-        [StrataSessionReset]
         internal static void ResetSession()
         {
             workVersion = 1;
@@ -170,11 +169,11 @@ namespace Strata
             {
                 return true;
             }
-            if (Active(StrataDefOf.Mining) && signals.mining)
+            if (Active(WorkTypeDefOf.Mining) && signals.mining)
             {
                 return true;
             }
-            if (Active(StrataDefOf.PlantCutting) && signals.plantCutting)
+            if (Active(WorkTypeDefOf.PlantCutting) && signals.plantCutting)
             {
                 return true;
             }

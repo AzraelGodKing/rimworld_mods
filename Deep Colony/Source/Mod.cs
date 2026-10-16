@@ -116,7 +116,7 @@ namespace DeepColony
 
             listing.Gap(8f);
             Text.Font = GameFont.Medium;
-            listing.Label("DC_Settings_BatchC".Translate());
+            listing.Label("DC_Settings_LaterSystems".Translate());
             Text.Font = GameFont.Small;
             listing.Gap(4f);
             listing.Label("DC_Settings_ChildRaid".Translate((int)(settings.childRaidWitnessChance * 100f)));

@@ -6,21 +6,38 @@ using Verse;
 namespace DeepColony.Patches
 {
     [HarmonyPatch(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.AddDirectRelation))]
-    public static class Patch_AddDirectRelation_TouchAverse
+    public static class Patch_AddDirectRelation
     {
-        private static readonly AccessTools.FieldRef<Pawn_RelationsTracker, Pawn> PawnField =
-            AccessTools.FieldRefAccess<Pawn_RelationsTracker, Pawn>("pawn");
-
         public static bool Prefix(Pawn_RelationsTracker __instance, PawnRelationDef def, Pawn otherPawn)
         {
             if (!TouchAverseUtility.IsLoveRelation(def)) return true;
-            Pawn pawn = PawnField(__instance);
+            Pawn pawn = TrackerFields.RelationsPawn(__instance);
             if (TouchAverseUtility.CanFormLoveRelation(pawn, otherPawn))
             {
                 TouchAverseUtility.NotifyLoveRelationFormed(pawn, otherPawn);
                 return true;
             }
             return false;
+        }
+
+        public static void Postfix(Pawn_RelationsTracker __instance, PawnRelationDef def, Pawn otherPawn)
+        {
+            Pawn pawn = TrackerFields.RelationsPawn(__instance);
+            if (def == PawnRelationDefOf.Spouse)
+                FamilyLetterUtility.NotifyMarriage(pawn, otherPawn);
+
+            if (pawn == null || otherPawn == null || def == null) return;
+            if (def == PawnRelationDefOf.Spouse)
+            {
+                FamilyBeatsUtility.NotifyMarriage(pawn, otherPawn);
+                FamilyLifeUtility.NotifyStepFamily(pawn, otherPawn);
+                return;
+            }
+            if (def == PawnRelationDefOf.ExLover
+                || (PawnRelationDefOf.ExSpouse != null && def == PawnRelationDefOf.ExSpouse))
+            {
+                FamilyBeatsUtility.NotifyBreakup(pawn, otherPawn);
+            }
         }
     }
 

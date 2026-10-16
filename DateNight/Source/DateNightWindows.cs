@@ -44,12 +44,25 @@ namespace DateNight
         }
 
         /// <summary>
-        /// Clears in-memory window state that is not scribed. Call when a game
-        /// starts or loads so thingIDNumbers from a prior colony cannot collide.
+        /// Clears unsaved window state. On load, ExposeData already rebuilt Claims;
+        /// call <see cref="ClearWindowsOnly"/> from FinalizeInit instead of Reset.
         /// </summary>
         public static void ClearEphemeral()
         {
             Windows.Clear();
+        }
+
+        /// <summary>Clears only ephemeral SocialWindows (keeps bed Claims).</summary>
+        public static void ClearWindowsOnly()
+        {
+            Windows.Clear();
+        }
+
+        /// <summary>Call from the GameComponent ctor; a new game never runs ExposeData.</summary>
+        public static void Reset()
+        {
+            Windows.Clear();
+            Claims.Clear();
         }
 
         public static void NotifyScheduleTick(Pawn pawn, bool onLovin, bool onDate)

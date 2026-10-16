@@ -225,7 +225,7 @@
   <DC_HeirloomCreated>{PAWN}'s {ITEM} is now a colony heirloom.</DC_HeirloomCreated>
   <DC_ChronicTrauma>{PAWN}'s untreated trauma settled into chronic stress.</DC_ChronicTrauma>
 
-  <!-- ── Batch C ────────────────────────────────────────────────────────────── -->
+  <!-- ── Later systems ─────────────────────────────────────────────────────── -->
   <DC_Alert_UntreatedTrauma>Untreated trauma</DC_Alert_UntreatedTrauma>
   <DC_Alert_UntreatedTraumaDesc>These colonists have carried psychological trauma for more than a day without counseling. Doctors can Counsel from the Doctor work type or right-click.</DC_Alert_UntreatedTraumaDesc>
   <DC_InspectCounsel>Counsel: last {0}, {1} sessions (bond {2}/{3})</DC_InspectCounsel>
@@ -248,7 +248,7 @@
   <DC_FuneralBurn>The pyre for {PAWN} eases violent loss.</DC_FuneralBurn>
   <DC_FuneralEaseMote>Laid to rest…</DC_FuneralEaseMote>
   <DC_ChildRaidWitness>{PAWN} saw the fighting and will not forget it soon.</DC_ChildRaidWitness>
-  <DC_Settings_BatchC>Later systems</DC_Settings_BatchC>
+  <DC_Settings_LaterSystems>Later systems</DC_Settings_LaterSystems>
   <DC_Settings_ChildRaid>Child raid-witness chance: {0}%</DC_Settings_ChildRaid>
   <DC_Settings_PrisonerCounsel>Prisoner counseling (recruit path)</DC_Settings_PrisonerCounsel>
   <DC_Settings_PrisonerCounselTip>Default off. Doctors can counsel prisoners as a slow Social-gated recruit. Does not replace Warden chat.</DC_Settings_PrisonerCounselTip>

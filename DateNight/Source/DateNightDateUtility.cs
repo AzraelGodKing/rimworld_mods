@@ -141,6 +141,13 @@ namespace DateNight
         // pawn id -> tick when they may start another date (mirrors canLovinTick).
         private static Dictionary<int, int> canDateTicks = new Dictionary<int, int>();
 
+        /// <summary>Call from the GameComponent ctor; a new game never runs ExposeData.</summary>
+        public static void Reset()
+        {
+            lastGoodDateTicks = new Dictionary<int, int>();
+            canDateTicks = new Dictionary<int, int>();
+        }
+
         public static void ExposeData()
         {
             Scribe_Collections.Look(ref lastGoodDateTicks, "dateNightLastGoodDateTicks",

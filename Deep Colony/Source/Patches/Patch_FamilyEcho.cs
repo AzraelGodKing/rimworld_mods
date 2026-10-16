@@ -25,16 +25,4 @@ namespace DeepColony.Patches
             FamilyEchoUtility.NotifyReleased(p);
         }
     }
-
-    [HarmonyPatch(typeof(Pawn_HealthTracker), "MakeDowned")]
-    public static class Patch_MakeDowned_FamilyEcho
-    {
-        private static readonly AccessTools.FieldRef<Pawn_HealthTracker, Pawn> PawnField =
-            AccessTools.FieldRefAccess<Pawn_HealthTracker, Pawn>("pawn");
-
-        public static void Postfix(Pawn_HealthTracker __instance, DamageInfo? dinfo)
-        {
-            FamilyEchoUtility.NotifyKinDowned(PawnField(__instance), dinfo);
-        }
-    }
 }

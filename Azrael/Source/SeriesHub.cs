@@ -73,7 +73,6 @@ namespace Azrael
         private static List<ConflictRow> cachedConflicts;
         private static List<DlcRow> cachedDlc;
         private static List<string> cachedFails;
-        private static List<string> cachedLogTexts;
         private static List<string[]> cachedRoster;
 
         internal static void InvalidateHub()
@@ -85,7 +84,6 @@ namespace Azrael
             cachedConflicts = null;
             cachedDlc = null;
             cachedFails = null;
-            cachedLogTexts = null;
         }
 
         private static void EnsureHub()
@@ -95,7 +93,6 @@ namespace Azrael
                 return;
             }
 
-            cachedLogTexts = null;
             cachedRoster = BuildRoster();
             cachedMods = BuildMods();
             cachedBridges = BuildBridges();
@@ -708,18 +705,12 @@ namespace Azrael
 
         /// <summary>
         /// Series convention: namespace X exposes X.XBuildInfo.BuildStamp (StrataBuildInfo,
-        /// DeepColonyBuildInfo, AzraelBuildInfo). Log scraping stays as fallback for mods without one.
+        /// DeepColonyBuildInfo, AzraelBuildInfo). Mods without a typed stamp stay blank.
         /// </summary>
         private static string StampOf(string display)
         {
             string ns = NamespaceFor(display);
-            string typed = PublicConst(ns + "." + ns + "BuildInfo", "BuildStamp");
-            if (!string.IsNullOrEmpty(typed))
-            {
-                return typed;
-            }
-
-            return StampFromLog("[" + ns + "]");
+            return PublicConst(ns + "." + ns + "BuildInfo", "BuildStamp");
         }
 
         private static string NamespaceFor(string display)
@@ -741,117 +732,6 @@ namespace Azrael
             {
                 return null;
             }
-        }
-
-        private static string StampFromLog(string logPrefix)
-        {
-            try
-            {
-                List<string> texts = RecentLogTextsCached();
-                for (int i = 0; i < texts.Count; i++)
-                {
-                    string text = texts[i];
-                    if (text == null || text.IndexOf(logPrefix, StringComparison.Ordinal) < 0)
-                    {
-                        continue;
-                    }
-
-                    int build = text.IndexOf(" build ", StringComparison.Ordinal);
-                    if (build >= 0)
-                    {
-                        int start = build + 7;
-                        int end = text.IndexOf(" loaded", start, StringComparison.Ordinal);
-                        if (end < 0)
-                        {
-                            end = text.IndexOf(' ', start);
-                        }
-                        if (end > start)
-                        {
-                            return text.Substring(start, end - start).Trim();
-                        }
-                    }
-
-                    int semi = text.LastIndexOf("; ", StringComparison.Ordinal);
-                    if (semi >= 0 && text.IndexOf("loaded from", StringComparison.Ordinal) >= 0)
-                    {
-                        string extra = text.Substring(semi + 2).Trim();
-                        if (extra.EndsWith("."))
-                        {
-                            extra = extra.Substring(0, extra.Length - 1);
-                        }
-                        if (!string.IsNullOrEmpty(extra) && extra.IndexOf('\\') < 0 && extra.Length < 48)
-                        {
-                            return extra;
-                        }
-                    }
-                }
-            }
-            catch
-            {
-            }
-
-            return null;
-        }
-
-        private static List<string> RecentLogTextsCached()
-        {
-            if (cachedLogTexts != null)
-            {
-                return cachedLogTexts;
-            }
-
-            cachedLogTexts = new List<string>();
-            try
-            {
-                FieldInfo queueField = AccessTools.Field(typeof(Log), "messageQueue");
-                object queue = queueField?.GetValue(null);
-                IEnumerable messages = queue as IEnumerable;
-                if (messages == null && queue != null)
-                {
-                    FieldInfo listField = AccessTools.Field(queue.GetType(), "messages")
-                        ?? AccessTools.Field(queue.GetType(), "Messages");
-                    messages = listField?.GetValue(queue) as IEnumerable;
-                }
-                if (messages == null)
-                {
-                    PropertyInfo messagesProp = AccessTools.Property(typeof(Log), "Messages");
-                    messages = messagesProp?.GetValue(null, null) as IEnumerable;
-                }
-                if (messages == null)
-                {
-                    return cachedLogTexts;
-                }
-
-                foreach (object item in messages)
-                {
-                    if (item == null)
-                    {
-                        continue;
-                    }
-                    string text = MessageText(item);
-                    if (!string.IsNullOrEmpty(text))
-                    {
-                        cachedLogTexts.Add(text);
-                    }
-                }
-            }
-            catch
-            {
-            }
-
-            return cachedLogTexts;
-        }
-
-        private static string MessageText(object logMessage)
-        {
-            FieldInfo textField = AccessTools.Field(logMessage.GetType(), "text");
-            if (textField != null)
-            {
-                return textField.GetValue(logMessage) as string;
-            }
-            PropertyInfo textProp = AccessTools.Property(logMessage.GetType(), "text")
-                ?? AccessTools.Property(logMessage.GetType(), "Text");
-            return textProp?.GetValue(logMessage, null) as string;
         }
 
         internal static Color StatusColor(bool ok)

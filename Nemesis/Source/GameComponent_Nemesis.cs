@@ -273,7 +273,7 @@ namespace Nemesis
                 lookTarget);
         }
 
-        /// <summary>AZR-388 — repeat escapes cost colony mood; the fixation target takes it hardest.</summary>
+        /// <summary>Repeat escapes cost colony mood; the fixation target takes it hardest.</summary>
         private void ApplyEscapeMoodFallout()
         {
             if (_data.escapeCount < EscapeMoodThreshold) return;
@@ -394,7 +394,7 @@ namespace Nemesis
             Pawn nemesis = FindNemesisPawn();
             if (nemesis == null || !nemesis.IsPrisonerOfColony) return;
 
-            // AZR-296 — keep pendingResolution across save so the dialog can reopen.
+            // Keep pendingResolution across save so the dialog can reopen.
             _data.pendingResolution = true;
             _data.active = false;
             TryOpenResolutionDialog(nemesis);

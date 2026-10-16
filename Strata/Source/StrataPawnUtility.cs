@@ -60,7 +60,6 @@ namespace Strata
             return miscRobotRechargeField?.GetValue(pawn) as Thing;
         }
 
-        [StrataSessionReset]
         internal static void ResetMiscRobotCaches()
         {
             miscRobotRechargeCache.Clear();

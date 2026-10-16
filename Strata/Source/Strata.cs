@@ -9,14 +9,6 @@ namespace Strata
     [DefOf]
     public static class StrataDefOf
     {
-        public static WorkTypeDef Mining;
-
-        public static WorkTypeDef PlantCutting;
-
-        public static WorkTypeDef Cooking;
-
-        public static WorkTypeDef Crafting;
-
         public static JobDef Strata_HaulToLevel;
 
         public static JobDef Strata_EscortToPortal;

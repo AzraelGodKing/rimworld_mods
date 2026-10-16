@@ -936,8 +936,21 @@ namespace DeepColony
             Scribe_Values.Look(ref lastKinDownedTick, "lastKinDownedTick", -1);
             Scribe_Values.Look(ref lastEmptyNestTick, "lastEmptyNestTick", -1);
             Scribe_Values.Look(ref traditionTeachNoted, "traditionTeachNoted", false);
-            Scribe_Collections.Look(ref reconcileCountsByPawn, "reconcileCountsByPawn", LookMode.Value, LookMode.Value);
-            Scribe_Collections.Look(ref touchComfortByPawn, "touchComfortByPawn", LookMode.Value, LookMode.Value);
+            // Skip empty ID-keyed collections on save to curb XML bloat (AZR-618).
+            Dictionary<int, int> reconcileSave = reconcileCountsByPawn;
+            Dictionary<int, float> comfortSave = touchComfortByPawn;
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                if (reconcileSave != null && reconcileSave.Count == 0) reconcileSave = null;
+                if (comfortSave != null && comfortSave.Count == 0) comfortSave = null;
+            }
+            Scribe_Collections.Look(ref reconcileSave, "reconcileCountsByPawn", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref comfortSave, "touchComfortByPawn", LookMode.Value, LookMode.Value);
+            if (Scribe.mode != LoadSaveMode.Saving)
+            {
+                reconcileCountsByPawn = reconcileSave;
+                touchComfortByPawn = comfortSave;
+            }
             Scribe_Values.Look(ref lastTrustedTouchTick, "lastTrustedTouchTick", -1);
             Scribe_References.Look(ref mentor, "mentor");
             Scribe_Values.Look(ref mentoredSkillDefName, "mentoredSkillDefName");
@@ -953,7 +966,15 @@ namespace DeepColony
             Scribe_Values.Look(ref familyTraditionSkillDefName, "familyTraditionSkillDefName");
             Scribe_Collections.Look(ref teacherLineage, "teacherLineage", LookMode.Value);
             Scribe_Collections.Look(ref peakSkillLevels, "peakSkillLevels", LookMode.Value, LookMode.Value);
-            Scribe_Collections.Look(ref counselCountsByPawn, "counselCountsByPawn", LookMode.Value, LookMode.Value);
+            Dictionary<int, int> counselSave = counselCountsByPawn;
+            if (Scribe.mode == LoadSaveMode.Saving
+                && counselSave != null && counselSave.Count == 0)
+            {
+                counselSave = null;
+            }
+            Scribe_Collections.Look(ref counselSave, "counselCountsByPawn", LookMode.Value, LookMode.Value);
+            if (Scribe.mode != LoadSaveMode.Saving)
+                counselCountsByPawn = counselSave;
             Scribe_Collections.Look(ref recoveredTraumaCounts, "recoveredTraumaCounts", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref trackedTraumaDefNames, "trackedTraumaDefNames", LookMode.Value);
             Scribe_Collections.Look(ref grudgeFactionIds, "grudgeFactionIds", LookMode.Value);

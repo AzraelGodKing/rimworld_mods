@@ -3,10 +3,7 @@ using Verse;
 
 namespace Strata
 {
-    // Spawns the entrance portal's own exitDef (stairwell or elevator landing)
-    // in the chamber GenStep_SolidRock carved. Vanilla GenStep_PlaceCaveExit
-    // ignores exitDef and always spawns its 3x3 rope cave exit, which has no
-    // power shaft and none of Strata's seal or safety behavior.
+    // Vanilla GenStep_PlaceCaveExit ignores portal exitDef (always the 3x3 rope cave exit).
     public class GenStep_PlaceLevelExit : GenStep
     {
         public override int SeedPart => 847291043;

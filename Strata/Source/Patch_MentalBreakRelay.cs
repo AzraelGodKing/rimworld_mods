@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -392,110 +394,76 @@ namespace Strata
 
     // --- JobGiver patches: after local fail, chase target or wander to another floor ---
 
-    [HarmonyPatch(typeof(JobGiver_Binge), "TryGiveJob")]
-    public static class Patch_BingeAcrossLevels
-    {
-        public static void Postfix(Pawn pawn, ref Job __result)
-        {
-            if (!MentalBreakRelay.TryRelayForFoodStash(pawn, ref __result))
-            {
-                MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref __result);
-            }
-        }
-    }
-
-    [HarmonyPatch(typeof(JobGiver_Berserk), "TryGiveJob")]
-    public static class Patch_BerserkAcrossLevels
-    {
-        public static void Postfix(Pawn pawn, ref Job __result)
-        {
-            if (!MentalBreakRelay.TryRelayForHostiles(pawn, ref __result))
-            {
-                MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref __result);
-            }
-        }
-    }
-
-    [HarmonyPatch(typeof(JobGiver_MurderousRage), "TryGiveJob")]
-    public static class Patch_MurderousRageAcrossLevels
-    {
-        public static void Postfix(Pawn pawn, ref Job __result)
-        {
-            if (!MentalBreakRelay.TryRelayForMurderTarget(pawn, ref __result))
-            {
-                MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref __result);
-            }
-        }
-    }
-
-    [HarmonyPatch(typeof(JobGiver_Tantrum), "TryGiveJob")]
-    public static class Patch_TantrumAcrossLevels
-    {
-        public static void Postfix(Pawn pawn, ref Job __result)
-        {
-            MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref __result);
-        }
-    }
-
-    [HarmonyPatch(typeof(JobGiver_InsultingSpree), "TryGiveJob")]
-    public static class Patch_InsultingSpreeAcrossLevels
-    {
-        public static void Postfix(Pawn pawn, ref Job __result)
-        {
-            MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref __result);
-        }
-    }
-
-    [HarmonyPatch(typeof(JobGiver_Manhunter), "TryGiveJob")]
-    public static class Patch_ManhunterAcrossLevels
-    {
-        public static void Postfix(Pawn pawn, ref Job __result)
-        {
-            if (!MentalBreakRelay.TryRelayForHostiles(pawn, ref __result))
-            {
-                MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref __result);
-            }
-        }
-    }
-
     [HarmonyPatch]
-    public static class Patch_FireStartingSpreeAcrossLevels
+    public static class Patch_MentalBreakJobGivers
     {
-        private static System.Reflection.MethodBase TargetMethod()
+        public static IEnumerable<MethodBase> TargetMethods()
         {
-            return AccessTools.Method(
-                AccessTools.TypeByName("RimWorld.JobGiver_FireStartingSpree"),
-                "TryGiveJob");
+            MethodBase[] methods =
+            {
+                AccessTools.Method(typeof(JobGiver_Binge), "TryGiveJob"),
+                AccessTools.Method(typeof(JobGiver_Berserk), "TryGiveJob"),
+                AccessTools.Method(typeof(JobGiver_MurderousRage), "TryGiveJob"),
+                AccessTools.Method(typeof(JobGiver_Tantrum), "TryGiveJob"),
+                AccessTools.Method(typeof(JobGiver_InsultingSpree), "TryGiveJob"),
+                AccessTools.Method(typeof(JobGiver_Manhunter), "TryGiveJob"),
+                AccessTools.Method(typeof(JobGiver_SlaughterRandomAnimal), "TryGiveJob"),
+                AccessTools.Method(typeof(JobGiver_SocialFighting), "TryGiveJob"),
+                AccessTools.Method(typeof(JobGiver_Wander), "TryGiveJob"),
+            };
+            for (int i = 0; i < methods.Length; i++)
+            {
+                if (methods[i] != null)
+                {
+                    yield return methods[i];
+                }
+            }
+
+            Type fireSpree = AccessTools.TypeByName("RimWorld.JobGiver_FireStartingSpree");
+            if (fireSpree != null)
+            {
+                MethodInfo fire = AccessTools.Method(fireSpree, "TryGiveJob");
+                if (fire != null)
+                {
+                    yield return fire;
+                }
+            }
         }
 
-        public static void Postfix(Pawn pawn, ref Job __result)
+        public static void Postfix(MethodBase __originalMethod, Pawn pawn, ref Job __result)
         {
+            Type giver = __originalMethod?.DeclaringType;
+            if (giver == typeof(JobGiver_Wander))
+            {
+                ApplyWander(pawn, ref __result);
+                return;
+            }
+            if (giver == typeof(JobGiver_Binge))
+            {
+                if (MentalBreakRelay.TryRelayForFoodStash(pawn, ref __result))
+                {
+                    return;
+                }
+            }
+            else if (giver == typeof(JobGiver_Berserk) || giver == typeof(JobGiver_Manhunter))
+            {
+                if (MentalBreakRelay.TryRelayForHostiles(pawn, ref __result))
+                {
+                    return;
+                }
+            }
+            else if (giver == typeof(JobGiver_MurderousRage))
+            {
+                if (MentalBreakRelay.TryRelayForMurderTarget(pawn, ref __result))
+                {
+                    return;
+                }
+            }
+
             MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref __result);
         }
-    }
 
-    [HarmonyPatch(typeof(JobGiver_SlaughterRandomAnimal), "TryGiveJob")]
-    public static class Patch_SlaughterAcrossLevels
-    {
-        public static void Postfix(Pawn pawn, ref Job __result)
-        {
-            MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref __result);
-        }
-    }
-
-    [HarmonyPatch(typeof(JobGiver_SocialFighting), "TryGiveJob")]
-    public static class Patch_SocialFightingAcrossLevels
-    {
-        public static void Postfix(Pawn pawn, ref Job __result)
-        {
-            MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref __result);
-        }
-    }
-
-    [HarmonyPatch(typeof(JobGiver_Wander), "TryGiveJob")]
-    public static class Patch_WanderMentalAcrossLevels
-    {
-        public static void Postfix(Pawn pawn, ref Job __result)
+        private static void ApplyWander(Pawn pawn, ref Job result)
         {
             if (pawn?.InMentalState != true)
             {
@@ -503,18 +471,18 @@ namespace Strata
             }
             // Local wander usually succeeds — sometimes take stairs so the break
             // can roam the whole column. Always escalate when empty-handed.
-            if (__result != null && !Rand.Chance(0.12f))
+            if (result != null && !Rand.Chance(0.12f))
             {
                 return;
             }
             Job relay = null;
             if (MentalBreakRelay.TryRelayAnywhere(pawn, ref relay) && relay != null)
             {
-                __result = relay;
+                result = relay;
             }
-            else if (__result == null)
+            else if (result == null)
             {
-                MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref __result);
+                MentalBreakRelay.TryGiveMentalBreakJobOrRelay(pawn, ref result);
             }
         }
     }

@@ -32,7 +32,6 @@ namespace Strata
 
         private static int CounterCount() => System.Enum.GetValues(typeof(Counter)).Length;
 
-        [StrataSessionReset]
         internal static void ResetSession()
         {
             for (int i = 0; i < totals.Length; i++)

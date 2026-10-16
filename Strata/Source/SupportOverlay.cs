@@ -1,13 +1,10 @@
 using System.Collections.Generic;
-using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
 namespace Strata
 {
-    [StaticConstructorOnStartup]
-    [HarmonyPatch(typeof(PlaySettings), nameof(PlaySettings.DoPlaySettingsGlobalControls))]
     public static class Patch_SupportOverlay
     {
         public static bool ShowSupportOverlay;
@@ -18,7 +15,7 @@ namespace Strata
             icon ??= ContentFinder<Texture2D>.Get("UI/Commands/SetTargetFuelLevel", reportFailure: false)
                 ?? BaseContent.WhiteTex;
 
-        public static void Postfix(WidgetRow row, bool worldView)
+        public static void DrawToggle(WidgetRow row, bool worldView)
         {
             if (worldView || row == null)
             {

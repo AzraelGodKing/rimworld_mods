@@ -405,6 +405,8 @@ namespace DeepColony
             {
                 Pawn other = spawned[i];
                 if (!IsHumanlikeAlive(other) || other == pawn) continue;
+                // Only colonists, prisoners, and guests — not raiders/traders (AZR-618).
+                if (!IsColonyRelevant(other)) continue;
                 EnsureSeeded(pawn, other);
                 if (AlreadyLovePartners(pawn, other))
                 {
@@ -461,6 +463,7 @@ namespace DeepColony
 
         private static void EnsureSeeded(Pawn self, Pawn other)
         {
+            if (!IsColonyRelevant(other)) return;
             var comp = self.TryGetComp<Comp_DeepColony>();
             if (comp == null) return;
             if (comp.touchComfortByPawn == null)
@@ -474,6 +477,35 @@ namespace DeepColony
             else if (MentorshipUtility.IsLineagePair(self, other))
                 seed = TierMin(TouchComfortTier.Intimate);
             comp.touchComfortByPawn[other.thingIDNumber] = seed;
+        }
+
+        /// <summary>Colonists, prisoners of the colony, and guests — not raid/trader passersby.</summary>
+        internal static bool IsColonyRelevant(Pawn pawn)
+        {
+            if (pawn == null || pawn.Dead) return false;
+            if (pawn.Faction == Faction.OfPlayer) return true;
+            if (pawn.IsPrisonerOfColony) return true;
+            if (pawn.HostFaction == Faction.OfPlayer) return true;
+            return false;
+        }
+
+        /// <summary>Drop comfort entries whose pawns are gone or no longer colony-relevant (AZR-618).</summary>
+        public static void PruneComfortEntries(Comp_DeepColony comp)
+        {
+            if (comp?.touchComfortByPawn == null || comp.touchComfortByPawn.Count == 0) return;
+            List<int> remove = null;
+            foreach (var kv in comp.touchComfortByPawn)
+            {
+                Pawn other = FindPawn(kv.Key);
+                if (other == null || other.Destroyed || !IsColonyRelevant(other))
+                {
+                    if (remove == null) remove = new List<int>();
+                    remove.Add(kv.Key);
+                }
+            }
+            if (remove == null) return;
+            for (int i = 0; i < remove.Count; i++)
+                comp.touchComfortByPawn.Remove(remove[i]);
         }
 
         private static bool IsExLovePartner(Pawn a, Pawn b)

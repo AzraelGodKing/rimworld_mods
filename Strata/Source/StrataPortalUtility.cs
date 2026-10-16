@@ -376,7 +376,6 @@ namespace Strata
         // next tick (same pattern as PortalRelayChain / DraftedPortalPathing).
         private static readonly List<int> pendingHaulDeliver = new List<int>();
 
-        [StrataSessionReset]
         internal static void ResetHaulDeliverSession()
         {
             pendingHaulDeliver.Clear();

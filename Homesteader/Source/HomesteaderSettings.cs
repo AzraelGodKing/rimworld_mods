@@ -168,7 +168,7 @@ namespace Homesteader
         {
             ContentPack = content;
             Settings = GetSettings<HomesteaderSettings>();
-            ModVersionLog.Write("[Homesteader]", content, "harvest-aging-v1");
+            ModVersionLog.Write("[Homesteader]", content, "landrace-aura-kats-v1");
         }
 
         public override string SettingsCategory() => "Homesteader_SettingsCategory".Translate();

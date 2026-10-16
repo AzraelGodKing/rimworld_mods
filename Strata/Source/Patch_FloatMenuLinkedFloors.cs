@@ -6,11 +6,7 @@ using Verse.AI.Group;
 
 namespace Strata
 {
-    // Vanilla float menus require the selected pawn to be on Find.CurrentMap, so
-    // selecting a colonist on B1 and viewing the surface (or vice versa) shows
-    // nothing when right-clicking babies, filth, etc. Allow linked floors, treat
-    // those targets as reachable while the menu builds, then commute + run the
-    // ordered job via CrossLevelOrderedJobs / RelayPurpose.ForcedOrder.
+    // Vanilla ShouldGenerateFloatMenuForPawn requires pawn.Map == Find.CurrentMap.
     [HarmonyPatch(typeof(FloatMenuMakerMap), nameof(FloatMenuMakerMap.ShouldGenerateFloatMenuForPawn))]
     public static class Patch_FloatMenu_AllowLinkedFloors
     {
@@ -51,9 +47,7 @@ namespace Strata
         }
     }
 
-    // While building the menu for an off-floor pawn, pretend linked-map targets
-    // are reachable so prioritize / childcare options enable (real pathing is
-    // the stair commute started when the option is chosen).
+    // Float-menu build only: linked-map targets must look reachable so options enable.
     [HarmonyPatch(typeof(ReachabilityUtility), nameof(ReachabilityUtility.CanReach), new[]
     {
         typeof(Pawn),

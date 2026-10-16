@@ -1,7 +1,8 @@
 name: Build mod DLLs
 
 # Build Homesteader / Strata / Stormproof / Nemesis / DateNight / LivingWorld /
-# Deep Colony / Azrael / Niceties / Wave Survival Reforged on push to main and on PRs.
+# Deep Colony / Azrael / Niceties / Wave Survival Reforged / NanoHive Reforged
+# on push to main and on PRs.
 # On main (and workflow_dispatch): pack download zips with injected DLLs and publish
 # them to the rolling "latest" GitHub Release for the docs site buttons.
 # Also cuts an immutable prerelease tag downloads-YYYY-MM-DD-<sha7> so old zips stay
@@ -21,6 +22,7 @@ on:
       - "Azrael/Source/**"
       - "Niceties/Source/**"
       - "WaveSurvivalReforged/Source/**"
+      - "NanoHiveReforged/Source/**"
       - "Common/**"
       - "Tests/**"
       - "scripts/build_downloads.ps1"
@@ -41,6 +43,7 @@ on:
       - "Azrael/Source/**"
       - "Niceties/Source/**"
       - "WaveSurvivalReforged/Source/**"
+      - "NanoHiveReforged/Source/**"
       - "Common/**"
       - "Tests/**"
       - "scripts/build_downloads.ps1"
