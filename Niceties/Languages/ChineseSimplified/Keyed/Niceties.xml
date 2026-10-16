@@ -45,7 +45,7 @@
   <Niceties_Settings_SharedRooms>共用卧室</Niceties_Settings_SharedRooms>
   <Niceties_Settings_SharedRoomsTip>在床上使用指令将房间标为共用。它保持为卧室而不是翻成营房，室友（以及皇权）不会因同住受罚。</Niceties_Settings_SharedRoomsTip>
   <Niceties_Settings_SkipDisturbedSleep>室友不因打扰睡眠而沮丧</Niceties_Settings_SkipDisturbedSleep>
-  <Niceties_Settings_SkipDisturbedSleepTip>共用一间房的殖民者（已标记共用，或另有殖民者被分配到该房的床）不会获得打扰睡眠的想法。穿过别人的私人房间仍会打扰对方。</Niceties_Settings_SkipDisturbedSleepTip>
+  <Niceties_Settings_SkipDisturbedSleepTip>仅当打扰者在同一房间拥有床位时才忽略打扰睡眠。访客和其他殖民者仍会吵醒睡眠者。户外睡眠使用原版打扰规则。</Niceties_Settings_SkipDisturbedSleepTip>
   <Niceties_ShareRoom>共用房间</Niceties_ShareRoom>
   <Niceties_ShareRoomTip>将此卧室标为共用。额外的床仍算卧室而非营房。室友跳过“合住一室”的心情惩罚。</Niceties_ShareRoomTip>
   <Niceties_ShareRoomInspect>房间已共用。</Niceties_ShareRoomInspect>

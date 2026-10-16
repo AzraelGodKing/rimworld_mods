@@ -15,7 +15,7 @@ namespace Niceties
             ApparelGender.ApplyEffective();
             NicetiesMultiplayer.RegisterSyncMethod(typeof(SharedRooms), nameof(SharedRooms.SetMarkedForBed));
             LongEventHandler.ExecuteWhenFinished(() =>
-                ModVersionLog.Write("[Niceties]", extra: "sim-snapshot-v2"));
+                ModVersionLog.Write("[Niceties]", extra: "openbuilds-roommate-v1"));
         }
     }
 }

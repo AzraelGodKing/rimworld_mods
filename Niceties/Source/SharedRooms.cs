@@ -248,20 +248,20 @@ namespace Niceties
                 return false;
             }
 
+            // Outdoor / caravan sleepers use vanilla disturbance — no owned-bed fallback (AZR-567).
             Room room = sleeper.GetRoom();
             if (room == null || room.PsychologicallyOutdoors)
-            {
-                Building_Bed owned = sleeper.ownership?.OwnedBed;
-                room = owned != null && owned.Spawned ? owned.GetRoom() : null;
-            }
-
-            if (room == null)
             {
                 return false;
             }
 
             foreach (Building_Bed bed in room.ContainedBeds)
             {
+                if (bed.Medical || bed.ForPrisoners)
+                {
+                    continue;
+                }
+
                 if (bed.def?.building == null || !bed.def.building.bed_humanlike)
                 {
                     continue;
@@ -286,7 +286,11 @@ namespace Niceties
             return false;
         }
 
-        internal static bool ShouldSkipDisturbedSleep(Pawn sleeper)
+        /// <summary>
+        /// Skip disturbance only when the disturber owns a bed in the sleeper's room (AZR-567).
+        /// Visitors and non-roommate colonists still wake the sleeper.
+        /// </summary>
+        internal static bool ShouldSkipDisturbedSleep(Pawn sleeper, Pawn source)
         {
             NicetiesSettings settings = NicetiesSim.Settings;
             if (!Enabled() || settings == null || !settings.skipDisturbedSleepWhenSharing)
@@ -294,15 +298,47 @@ namespace Niceties
                 return false;
             }
 
-            if (sleeper == null)
+            if (sleeper == null || source == null || source == sleeper)
             {
                 return false;
             }
 
             Room room = sleeper.GetRoom();
-            if (IsMarked(room) || HasRoommate(sleeper))
+            if (room == null || room.PsychologicallyOutdoors)
             {
-                return true;
+                return false;
+            }
+
+            if (!IsMarked(room) && !HasRoommate(sleeper))
+            {
+                return false;
+            }
+
+            return SourceOwnsBedInRoom(source, room);
+        }
+
+        private static bool SourceOwnsBedInRoom(Pawn source, Room room)
+        {
+            foreach (Building_Bed bed in room.ContainedBeds)
+            {
+                if (bed.Medical || bed.ForPrisoners)
+                {
+                    continue;
+                }
+
+                List<Pawn> owners = bed.OwnersForReading;
+                if (owners == null)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i < owners.Count; i++)
+                {
+                    if (owners[i] == source)
+                    {
+                        return true;
+                    }
+                }
             }
 
             return false;
