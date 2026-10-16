@@ -50,7 +50,8 @@ namespace Niceties
                 return true;
             }
 
-            OpenBuildsResult enclose = OpenBuilds.WouldEnclose(__instance, worker);
+            // Fresh geometry — do not reuse JobOnThing cache across two builders (AZR-548).
+            OpenBuildsResult enclose = OpenBuilds.WouldEncloseFresh(__instance, worker);
             if (enclose.EnclosesThings)
             {
                 worker.jobs.EndCurrentJob(JobCondition.Incompletable);
@@ -62,6 +63,7 @@ namespace Niceties
                 return !OpenBuilds.StepAsideThenRetry(worker, __instance);
             }
 
+            OpenBuilds.ClearCache();
             return true;
         }
     }

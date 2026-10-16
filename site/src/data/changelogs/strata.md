@@ -7,6 +7,18 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 ## [Unreleased]
 
+### Fixed
+- **Stairwell construction postfix** (AZR-548) — return early when `__runOriginal` is false so Niceties leave-a-way-out skips do not scan unfinished walls.
+
+## [3.9.4] (proposed)
+
+Player-facing version **3.9.4** pending Myleek confirmation (`About.xml` still **3.9.3**).
+
+AZR-548
+
+### Fixed
+- Same as Unreleased above.
+
 ## [3.9.3]
 
 Player-facing version **3.9.3** (`About.xml` `modVersion`). Stamp `construct-fetch-v1`.

@@ -31,7 +31,9 @@ namespace DateNight
         private DateActivity activity = DateActivity.Unresolved;
         private DateActivity coupleActivity = DateActivity.Unresolved;
         private bool giftDelivered;
-        private bool inHangPhase;
+        // Grace while the partner's DateNight_GoOnDate job is starting (AZR-523).
+        private const int PartnerJobGraceTicks = 250;
+        private int partnerGraceStartTick = -1;
 
         private Pawn Partner => job.GetTarget(PartnerInd).Pawn;
 
@@ -49,7 +51,10 @@ namespace DateNight
             Scribe_Values.Look(ref activity, "activity", DateActivity.Unresolved);
             Scribe_Values.Look(ref coupleActivity, "coupleActivity", DateActivity.Unresolved);
             Scribe_Values.Look(ref giftDelivered, "giftDelivered", false);
-            Scribe_Values.Look(ref inHangPhase, "inHangPhase", false);
+            // Legacy key from older saves; field removed (AZR-523).
+            bool inHangPhaseLegacy = false;
+            Scribe_Values.Look(ref inHangPhaseLegacy, "inHangPhase", false);
+            Scribe_Values.Look(ref partnerGraceStartTick, "partnerGraceStartTick", -1);
         }
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
@@ -93,6 +98,7 @@ namespace DateNight
         {
             this.FailOnDespawnedNullOrForbidden(PartnerInd);
             this.FailOn(() => pawn.Drafted);
+            this.FailOn(() => PartnerFailedDateJob());
             this.FailOn(() => DateNightUtility.IsBusyWithRitual(pawn)
                 || DateNightUtility.IsBusyWithRitual(Partner));
             this.FailOn(() => !DateNightDateUtility.CanDate(pawn, Partner, force: true));
@@ -125,7 +131,6 @@ namespace DateNight
             hang.handlingFacing = true;
             hang.initAction = () =>
             {
-                inHangPhase = true;
                 if (ticksLeft <= 0)
                 {
                     int seed = DateNightDoubleDates.QualitySeed(pawn, Partner);
@@ -203,23 +208,50 @@ namespace DateNight
             };
             hang.AddFinishAction(() =>
             {
-                inHangPhase = false;
                 if (activity == DateActivity.Stargaze && pawn.jobs != null)
                 {
                     pawn.jobs.posture = PawnPosture.Standing;
                 }
                 DropUneatenItem();
+                Pawn partner = Partner;
+                // Partner death: grief only — no "date ruined" / venue penalty (AZR-523).
+                if (partner != null && partner.Dead)
+                {
+                    return;
+                }
                 if (ticksLeft <= 0 && totalTicks > 0)
                 {
-                    DateNightDateUtility.NotifyDateFinished(pawn, Partner, CoupleActivity, job.GetTarget(SpotInd));
-                    DateNightDateUtility.ApplyDateCooldown(pawn, Partner);
+                    DateNightDateUtility.NotifyDateFinished(pawn, partner, CoupleActivity, job.GetTarget(SpotInd));
+                    DateNightDateUtility.ApplyDateCooldown(pawn, partner);
                 }
                 else if (totalTicks > 0 && totalTicks - ticksLeft > 600)
                 {
-                    DateNightDateUtility.NotifyDateInterrupted(pawn, Partner);
+                    DateNightDateUtility.NotifyDateInterrupted(pawn, partner);
                 }
             });
             yield return hang;
+        }
+
+        /// <summary>
+        /// End the date when the partner is drafted or leaves the date job.
+        /// Short grace so both partners can start DateNight_GoOnDate.
+        /// </summary>
+        private bool PartnerFailedDateJob()
+        {
+            Pawn partner = Partner;
+            if (partner == null || partner.Dead || partner.Drafted)
+            {
+                return true;
+            }
+            if (partner.CurJobDef == DateNightDefOf.DateNight_GoOnDate)
+            {
+                return false;
+            }
+            if (partnerGraceStartTick < 0)
+            {
+                partnerGraceStartTick = Find.TickManager.TicksGame;
+            }
+            return Find.TickManager.TicksGame >= partnerGraceStartTick + PartnerJobGraceTicks;
         }
 
         private void ResolveActivity()

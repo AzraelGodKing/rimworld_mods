@@ -4,6 +4,7 @@
   <!-- Shared aura: +27 mood to colonists in range (see Thoughts_Homestead.xml). -->
   <ThingDef ParentName="BuildingBase" Name="Homesteader_Monument27Base" Abstract="True">
     <thingClass>Building</thingClass>
+    <tickerType>Normal</tickerType>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>

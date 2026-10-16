@@ -240,6 +240,7 @@ Congrats to a dognamedKats for 1k followers!</description>
     <label>27 statue</label>
     <description>A gilded numeral 27 mounted on a carved stone plinth, molten gold frozen mid-drip down its strokes. Nobody remembers exactly what the 27 commemorates, but it feels important. Pawns within its reach feel inexplicably cheerful (+27 mood).</description>
     <thingClass>Building</thingClass>
+    <tickerType>Normal</tickerType>
     <graphicData>
       <texPath>Homesteader/Buildings/Statue27</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -289,6 +290,7 @@ Congrats to a dognamedKats for 1k followers!</description>
     <label>grand 27 statue</label>
     <description>A towering gilded 27 on a monumental stone plinth, gold dripping from every stroke. Whatever the 27 means, this version means it twice as hard. Pawns within its reach feel inexplicably cheerful (+27 mood).</description>
     <thingClass>Building</thingClass>
+    <tickerType>Normal</tickerType>
     <graphicData>
       <texPath>Homesteader/Buildings/Statue27Grand</texPath>
       <graphicClass>Graphic_Single</graphicClass>

@@ -158,11 +158,29 @@ namespace Homesteader
         }
     }
 
+    /// <summary>
+    /// Snapshot before PlantCollected destroys or resets the plant (AZR-526).
+    /// Harvest that despawns the plant leaves Map null / Growth reset in the postfix.
+    /// </summary>
+    public struct LandraceHarvestState
+    {
+        public bool valid;
+        public Map map;
+        public IntVec3 pos;
+        public ThingDef plantDef;
+        public float growth;
+        public float yieldBonus;
+        public float frostBonus;
+        public float droughtBonus;
+        public int generations;
+    }
+
     [HarmonyPatch(typeof(Plant), nameof(Plant.PlantCollected))]
     public static class Patch_LandraceOnHarvest
     {
-        public static void Postfix(Plant __instance, Pawn by)
+        public static void Prefix(Plant __instance, out LandraceHarvestState __state)
         {
+            __state = default;
             if (__instance?.Map == null)
             {
                 return;
@@ -174,13 +192,33 @@ namespace Homesteader
                 return;
             }
 
-            if (__instance.Growth < 0.85f)
+            __state.valid = true;
+            __state.map = __instance.Map;
+            __state.pos = __instance.Position;
+            __state.plantDef = __instance.def;
+            __state.growth = __instance.Growth;
+            __state.yieldBonus = plantComp.yieldBonus;
+            __state.frostBonus = plantComp.frostBonus;
+            __state.droughtBonus = plantComp.droughtBonus;
+            __state.generations = plantComp.generations;
+        }
+
+        public static void Postfix(Plant __instance, Pawn by, LandraceHarvestState __state)
+        {
+            if (!__state.valid || __state.growth < 0.85f || __state.map == null || __state.plantDef == null)
             {
                 return;
             }
 
-            plantComp.ImproveOnHarvest(__instance.Map, __instance.Position);
-            LandraceUtility.DropSavedSeed(__instance, plantComp);
+            CompLandrace snap = new CompLandrace
+            {
+                yieldBonus = __state.yieldBonus,
+                frostBonus = __state.frostBonus,
+                droughtBonus = __state.droughtBonus,
+                generations = __state.generations,
+            };
+            snap.ImproveOnHarvest(__state.map, __state.pos);
+            LandraceUtility.DropSavedSeed(__state.plantDef, __state.map, __state.pos, snap);
         }
     }
 
@@ -304,7 +342,22 @@ namespace Homesteader
 
         internal static void DropSavedSeed(Plant plant, CompLandrace plantComp)
         {
-            ThingDef seedDef = SeedDefFor(plant.def);
+            if (plant == null)
+            {
+                return;
+            }
+
+            DropSavedSeed(plant.def, plant.Map, plant.Position, plantComp);
+        }
+
+        internal static void DropSavedSeed(ThingDef plantDef, Map map, IntVec3 pos, CompLandrace plantComp)
+        {
+            if (plantDef == null || map == null || plantComp == null)
+            {
+                return;
+            }
+
+            ThingDef seedDef = SeedDefFor(plantDef);
             if (seedDef == null)
             {
                 return;
@@ -313,7 +366,7 @@ namespace Homesteader
             Thing seed = ThingMaker.MakeThing(seedDef);
             seed.stackCount = 1;
             seed.TryGetComp<CompLandrace>()?.CopyFrom(plantComp);
-            GenPlace.TryPlaceThing(seed, plant.Position, plant.Map, ThingPlaceMode.Near);
+            GenPlace.TryPlaceThing(seed, pos, map, ThingPlaceMode.Near);
         }
     }
 }
