@@ -19,7 +19,7 @@ namespace Azrael.ModChecks
             Assert.False(string.IsNullOrEmpty(repo), "Could not find repo root (no Common/SafePatchAll.cs).");
 
             CheckNoDuplicateBootstrap(repo, errors);
-            var xmlDefNames = CollectDefNames(repo);
+            var xmlDefNames = CollectDefNames(repo, errors);
             CheckDefOfsFromSource(repo, xmlDefNames, errors);
             CheckDefNameLiterals(repo, xmlDefNames, errors);
             CheckSeriesRosterFromSource(repo, errors);
@@ -36,6 +36,7 @@ namespace Azrael.ModChecks
                         + "not a colliding type such as TMPro TexturePacker Frame");
                 }
                 CheckHarmonyStringTargets(repo, pack, errors);
+                CheckAccessToolsStringTargets(repo, pack, errors);
                 DefXml.CheckFields(repo, pack, errors);
             }
 
@@ -68,8 +69,16 @@ namespace Azrael.ModChecks
             @"HarmonyPatch\s*\(\s*typeof\s*\(\s*([A-Za-z0-9_]+)\s*\)\s*,\s*(?:nameof\s*\(|""([^""]+)"")",
             RegexOptions.Compiled);
 
+        static readonly Regex AccessToolsTyped = new Regex(
+            @"AccessTools\.Method\s*\(\s*typeof\s*\(\s*([A-Za-z0-9_]+)\s*\)\s*,\s*(?:nameof\s*\(|""([^""]+)"")",
+            RegexOptions.Compiled);
+
         static readonly Regex KeyedLiteral = new Regex(
             @"""([A-Za-z][A-Za-z0-9_]*)""\s*\)?\s*\.Translate\s*\(",
+            RegexOptions.Compiled);
+
+        static readonly Regex KeyedConcatPrefix = new Regex(
+            @"""([A-Za-z][A-Za-z0-9_]*_)""\s*\+",
             RegexOptions.Compiled);
 
         static readonly Regex ConstDefName = new Regex(
@@ -205,6 +214,24 @@ namespace Azrael.ModChecks
 
         static void CheckHarmonyStringTargets(string repo, RefPack pack, List<string> errors)
         {
+            ScanTypedStringMethods(
+                repo, pack, errors, HarmonyTyped, skipSoftTargetClass: true, label: "Harmony");
+        }
+
+        static void CheckAccessToolsStringTargets(string repo, RefPack pack, List<string> errors)
+        {
+            ScanTypedStringMethods(
+                repo, pack, errors, AccessToolsTyped, skipSoftTargetClass: false, label: "AccessTools");
+        }
+
+        static void ScanTypedStringMethods(
+            string repo,
+            RefPack pack,
+            List<string> errors,
+            Regex pattern,
+            bool skipSoftTargetClass,
+            string label)
+        {
             foreach (string folder in ModFolders)
             {
                 string src = Path.Combine(repo, folder, "Source");
@@ -215,7 +242,7 @@ namespace Azrael.ModChecks
                     if (file.Replace('\\', '/').Contains("/obj/"))
                         continue;
                     string text = File.ReadAllText(file);
-                    foreach (Match m in HarmonyTyped.Matches(text))
+                    foreach (Match m in pattern.Matches(text))
                     {
                         if (!m.Groups[2].Success)
                             continue;
@@ -223,10 +250,12 @@ namespace Azrael.ModChecks
                         string method = m.Groups[2].Value;
                         if (string.IsNullOrWhiteSpace(method))
                         {
-                            errors.Add("empty HarmonyPatch method name in " + Rel(repo, file));
+                            errors.Add("empty " + label + " method name in " + Rel(repo, file));
                             continue;
                         }
-                        if (ClassAllowsSoftTarget(text, m.Index))
+                        if (skipSoftTargetClass && ClassAllowsSoftTarget(text, m.Index))
+                            continue;
+                        if (IsRightHandOfNullCoalesce(text, m.Index))
                             continue;
 
                         string look = method;
@@ -244,14 +273,22 @@ namespace Azrael.ModChecks
                         TypeDefinition type = pack.FindType(typeName);
                         if (type == null)
                         {
-                            errors.Add("Harmony type not in ref pack: " + typeName + " (" + Rel(repo, file) + ")");
+                            errors.Add(label + " type not in ref pack: " + typeName + " (" + Rel(repo, file) + ")");
                             continue;
                         }
                         if (!pack.HasMethod(type, look))
-                            errors.Add("Harmony method missing: " + typeName + "." + look + " (" + Rel(repo, file) + ")");
+                            errors.Add(label + " method missing: " + typeName + "." + look + " (" + Rel(repo, file) + ")");
                     }
                 }
             }
+        }
+
+        static bool IsRightHandOfNullCoalesce(string text, int index)
+        {
+            int i = index - 1;
+            while (i >= 0 && char.IsWhiteSpace(text[i]))
+                i--;
+            return i >= 1 && text[i] == '?' && text[i - 1] == '?';
         }
 
         static bool ClassAllowsSoftTarget(string text, int index)
@@ -364,7 +401,10 @@ namespace Azrael.ModChecks
                         foreach (XElement el in XDocument.Load(xml).Root.Elements())
                             keys.Add(el.Name.LocalName);
                     }
-                    catch { /* validate_mods.py */ }
+                    catch (Exception ex)
+                    {
+                        errors.Add("XML parse error: " + Rel(repo, xml) + ": " + ex.Message);
+                    }
                 }
             }
 
@@ -389,9 +429,25 @@ namespace Azrael.ModChecks
                     {
                         string key = m.Groups[1].Value;
                         if (key.Length > 2 && key.IndexOf('_') >= 0
-                            && !keys.Contains(key) && !allow.Contains(key))
+                            && !keys.Contains(key) && !allow.Contains(key)
+                            && !HasKeyedPrefixFamily(keys, key))
                             errors.Add("Translate() key missing in English Keyed: " + key
                                 + " (" + Rel(repo, file) + ")");
+                    }
+                    foreach (Match m in KeyedConcatPrefix.Matches(text))
+                    {
+                        int after = m.Index + m.Length;
+                        string window = after < text.Length
+                            ? text.Substring(after, Math.Min(120, text.Length - after))
+                            : "";
+                        if (window.IndexOf(".Translate", StringComparison.Ordinal) < 0)
+                            continue;
+                        string prefix = m.Groups[1].Value;
+                        if (keys.Contains(prefix) || allow.Contains(prefix)
+                            || HasKeyedPrefixFamily(keys, prefix))
+                            continue;
+                        errors.Add("Translate() prefix missing in English Keyed: " + prefix
+                            + " (" + Rel(repo, file) + ")");
                     }
                 }
             }
@@ -411,7 +467,19 @@ namespace Azrael.ModChecks
             }
         }
 
-        static HashSet<string> CollectDefNames(string repo)
+        static bool HasKeyedPrefixFamily(HashSet<string> keys, string prefix)
+        {
+            if (string.IsNullOrEmpty(prefix) || prefix[prefix.Length - 1] != '_')
+                return false;
+            foreach (string key in keys)
+            {
+                if (key.StartsWith(prefix, StringComparison.Ordinal))
+                    return true;
+            }
+            return false;
+        }
+
+        static HashSet<string> CollectDefNames(string repo, List<string> errors)
         {
             var names = new HashSet<string>(StringComparer.Ordinal);
             foreach (string folder in ModFolders)
@@ -433,7 +501,10 @@ namespace Azrael.ModChecks
                                     names.Add(n);
                             }
                         }
-                        catch { /* validate_mods.py */ }
+                        catch (Exception ex)
+                        {
+                            errors.Add("XML parse error: " + Rel(repo, file) + ": " + ex.Message);
+                        }
                     }
                 }
             }
