@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- No Harmony: link only the Common files that do not need it. -->
+    <Compile Include="..\..\Common\ModPack.cs" Link="Common\ModPack.cs" />
     <Compile Include="..\..\Common\ModVersionLog.cs" Link="Common\ModVersionLog.cs" />
   </ItemGroup>
   <ItemGroup>
