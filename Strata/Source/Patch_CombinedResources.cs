@@ -167,7 +167,6 @@ namespace Strata
             return merged;
         }
 
-        [StrataSessionReset]
         internal static void ClearCaches()
         {
             extrasCache.Clear();
@@ -289,8 +288,6 @@ namespace Strata
     }
 
     // Play-settings toggle for the combined readout, next to the smoke toggle.
-    [StaticConstructorOnStartup]
-    [HarmonyPatch(typeof(PlaySettings), nameof(PlaySettings.DoPlaySettingsGlobalControls))]
     public static class Patch_CombinedResourcesToggle
     {
         private static Texture2D icon;
@@ -302,7 +299,7 @@ namespace Strata
                 ?? ContentFinder<Texture2D>.Get("UI/Buttons/ResourceReadoutCategorized", reportFailure: false)
                 ?? BaseContent.WhiteTex;
 
-        public static void Postfix(WidgetRow row, bool worldView)
+        public static void DrawToggle(WidgetRow row, bool worldView)
         {
             if (worldView || row == null)
             {

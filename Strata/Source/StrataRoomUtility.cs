@@ -84,7 +84,6 @@ namespace Strata
         private static readonly Dictionary<long, (int epoch, int count)> openRoofByRoom =
             new Dictionary<long, (int epoch, int count)>();
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             roofEpochByMap.Clear();

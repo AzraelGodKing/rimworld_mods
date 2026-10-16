@@ -32,7 +32,6 @@ namespace Strata
 
         private static readonly Dictionary<int, OffThreadJob> pending = new Dictionary<int, OffThreadJob>();
 
-        [StrataSessionReset]
         internal static void ResetSession()
         {
             lock (gate)

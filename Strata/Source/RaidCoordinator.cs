@@ -18,7 +18,6 @@ namespace Strata
         private static readonly List<Map> columnMaps = new List<Map>();
         private static readonly HashSet<Faction> factionBuffer = new HashSet<Faction>();
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             factionBuffer.Clear();

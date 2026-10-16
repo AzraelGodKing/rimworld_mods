@@ -78,7 +78,6 @@ namespace Strata
         private static MapGeneratorDef undergroundGenDef;
         private static MapGeneratorDef upperGenDef;
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             kindByMapId.Clear();

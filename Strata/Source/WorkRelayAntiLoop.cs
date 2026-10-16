@@ -25,7 +25,6 @@ namespace Strata
 
         private static readonly HashSet<int> pendingEmptyCheck = new HashSet<int>();
 
-        [StrataSessionReset]
         internal static void ResetSession()
         {
             blacklists.Clear();

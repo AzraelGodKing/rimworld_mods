@@ -78,7 +78,6 @@ namespace Strata
             list.Add(action);
         }
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             pendingByMapId.Clear();

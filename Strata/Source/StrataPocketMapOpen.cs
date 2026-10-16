@@ -22,7 +22,6 @@ namespace Strata
 
         private static readonly HashSet<int> failedPortalIds = new HashSet<int>();
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             generatingPortalIds.Clear();

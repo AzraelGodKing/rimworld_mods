@@ -23,7 +23,6 @@ namespace Strata
         private static readonly List<Thing> hitBuffer = new List<Thing>();
         private static readonly Dictionary<Thing, float> hitDist = new Dictionary<Thing, float>();
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             hitDist.Clear();
