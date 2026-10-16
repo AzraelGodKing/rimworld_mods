@@ -10,16 +10,14 @@ Player-facing version **1.7.1** (`About.xml` `modVersion`). Stamp `thought-partn
 
 ### Changed
 - **Workshop preview** — new `About/Preview.png` (evening table, walk, and stars). Docs card synced.
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6. Existing 1.6 DLL; no gameplay change.
 
 ## [1.6.2]
 
 Player-facing version **1.6.2** (`About.xml` `modVersion`).
 
-AZR-457
-
 ### Changed
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6. Existing 1.6 DLL; no gameplay change.
 
 ## [1.6.1]
 
@@ -31,8 +29,6 @@ Player-facing version **1.6.1** (`About.xml` `modVersion`). Stamp `thought-partn
 ## [1.6.0]
 
 Player-facing version **1.6.0** (`About.xml` `modVersion`). Stamp `couple-lifecycle-v1`.
-
-AZR-313 AZR-314 AZR-315 AZR-316 AZR-317 AZR-318 AZR-401 AZR-402 AZR-403 AZR-404 AZR-405 AZR-406 AZR-407
 
 ### Added
 - **Milestone anniversaries** — every fifth year together gets its own letter and a bigger, longer-lasting anniversary mood.
@@ -54,18 +50,16 @@ AZR-313 AZR-314 AZR-315 AZR-316 AZR-317 AZR-318 AZR-401 AZR-402 AZR-403 AZR-404 
 
 Player-facing version **1.5.1** (`About.xml` `modVersion`). Stamp `schedule-sync-v1`.
 
-AZR-312 AZR-313 AZR-314 AZR-315 AZR-316
-
 ### Added
-- **Schedule sync** (`schedule-sync-v1`, AZR-313) — click the schedule-mismatch alert to copy painted Date/Lovin hours from one partner to the other.
-- **Configurable gifts** (AZR-313) — settings list of gift ThingDef names plus optional joy-luxury scan for modded items.
-- **Favourite venue destroyed** (AZR-313) — one-shot `DateNight_VenueDestroyed` thought when a remembered high-score venue building/cell is gone.
-- **Anniversary gift bias** (AZR-316) — activity picker prefers Gift on anniversary days.
+- **Schedule sync** (`schedule-sync-v1`) — click the schedule-mismatch alert to copy painted Date/Lovin hours from one partner to the other.
+- **Configurable gifts** — settings list of gift ThingDef names plus optional joy-luxury scan for modded items.
+- **Favourite venue destroyed** — one-shot `DateNight_VenueDestroyed` thought when a remembered high-score venue building/cell is gone.
+- **Anniversary gift bias** — activity picker prefers Gift on anniversary days.
 
 ### Fixed
-- **Gift handoff** (AZR-312) — failed inventory transfer drops the gift at the partner's feet and still grants the gift thought (no silent "delivered").
-- **Ephemeral caches** (AZR-314) — rendezvous-bed and social-window caches clear on new/load game so thing IDs cannot collide across colonies.
-- **Self-lovin ageTracker** (AZR-315) — null-guard before Adult check in `NotifySelfLovinFinished`.
+- **Gift handoff** — failed inventory transfer drops the gift at the partner's feet and still grants the gift thought (no silent "delivered").
+- **Ephemeral caches** — rendezvous-bed and social-window caches clear on new/load game so thing IDs cannot collide across colonies.
+- **Self-lovin ageTracker** — null-guard before Adult check in `NotifySelfLovinFinished`.
 
 ## [1.5.0]
 

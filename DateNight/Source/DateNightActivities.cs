@@ -97,7 +97,7 @@ namespace DateNight
             int seed = Gen.HashCombineInt(CoupleSeed(pawn, partner), GenDate.DaysPassed * 31 + GenLocalDate.HourInteger(map) / 6);
             Rand.PushState(seed);
             DateActivity picked;
-            // Anniversary days bias toward Gift when it is a candidate (AZR-316).
+            // Anniversary days bias toward Gift when it is a candidate.
             if (candidates.Contains(DateActivity.Gift)
                 && DateNightAnniversaries.IsAnniversaryToday(pawn, partner)
                 && Rand.Chance(0.55f))

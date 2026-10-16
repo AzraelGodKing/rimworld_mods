@@ -167,7 +167,7 @@ namespace Nemesis
         }
 
         /// <summary>
-        /// AZR-389 — Pawn-mode only: the nemesis leads a kidnap-enabled assault while the fixation
+        /// Pawn-mode only: the nemesis leads a kidnap-enabled assault while the fixation
         /// target is on the map. Uses vanilla kidnap duty (any downed colonist), not a target-only LordJob.
         /// </summary>
         public static bool CanKidnap(NemesisData data, Map map)
@@ -452,7 +452,7 @@ namespace Nemesis
                     if (!t.def.IsNutritionGivingIngestible) continue;
                     if (t.stackCount < 5) continue;
                     foods.Add(t);
-                    // AZR-303 — prefer Homesteader pantry / smokehouse / cellar stacks by defName.
+                    // Prefer Homesteader pantry / smokehouse / cellar stacks by defName.
                     if (SoftCompat.IsOnHomesteaderFoodStorage(t))
                         preferred.Add(t);
                 }

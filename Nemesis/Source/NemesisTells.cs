@@ -81,7 +81,7 @@ namespace Nemesis
         }
     }
 
-    /// <summary>Persistent signatures for one hunt (AZR-146). Never required to end it.</summary>
+    /// <summary>Persistent signatures for one hunt. Never required to end it.</summary>
     public static class NemesisTells
     {
         public static void RollIfNeeded(NemesisData data, Pawn pawn)

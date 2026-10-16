@@ -16,7 +16,7 @@ namespace Nemesis
         public const string StrataId = "AzraelGodKing.Strata";
         public const string HomesteaderId = "AzraelGodKing.Homesteader";
 
-        /// <summary>Homesteader pantry / smokehouse / cellar storage buildings for food raids (AZR-303).</summary>
+        /// <summary>Homesteader pantry / smokehouse / cellar storage buildings for food raids.</summary>
         private static readonly string[] HomesteaderFoodStorageDefNames =
         {
             "Homesteader_Smokehouse",
