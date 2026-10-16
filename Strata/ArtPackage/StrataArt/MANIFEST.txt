@@ -4,36 +4,8 @@ Included: all PNG art under Strata/Textures.
 
 Install back into mod: copy Textures/ to Strata/Textures/ and About/Preview.png to Strata/About/.
 
-File list (70 files):
+File list (42 files):
   About/Preview.png
-  Textures/Strata/Buildings/_cargolift_previews/CargoLift_A.png
-  Textures/Strata/Buildings/_cargolift_previews/CargoLift_B.png
-  Textures/Strata/Buildings/_cargolift_previews/CargoLift_C.png
-  Textures/Strata/Buildings/_sumppump_previews/SumpPump_B.png
-  Textures/Strata/Buildings/_sumppump_previews/SumpPump_C.png
-  Textures/Strata/Buildings/_sumppump_previews/SumpPump_D.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair00_Live_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair00_Live_Up.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair01_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair01_Up.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair02_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair02_Up.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair03_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair03_Up.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair04_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair04_Up.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair05_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair05_Up.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair06_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair06_Up.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair07_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair07_Up.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair08_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair08_Up.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair09_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair09_Up.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair10_Down.png
-  Textures/Strata/Buildings/_vault_previews/VaultPair10_Up.png
   Textures/Strata/Buildings/BirdCage.png
   Textures/Strata/Buildings/CargoLift.png
   Textures/Strata/Buildings/CO2Pump.png

@@ -1,3 +1,11 @@
+Unreleased
+[h1]Strata - Unreleased[/h1]
+
+[b]Changed[/b]
+[list]
+[*] [b]Harmony consolidation[/b] — one play-settings postfix, one mental-break job-giver patch, one GetRest postfix, explicit session ResetAll, WorkTypeDefOf for vanilla work types, unused ArtPackage preview folders removed. No gameplay change.
+[/list]
+
 3.9.3
 [h1]Strata - 3.9.3[/h1]
 

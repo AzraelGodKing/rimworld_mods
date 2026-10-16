@@ -7,6 +7,9 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 ## [Unreleased]
 
+### Changed
+- **Harmony consolidation**: one `PlaySettings` postfix draws the gas, combined-resources, and support overlays; mental-break `TryGiveJob` relays share one `TargetMethods()` patch plus dispatcher; colonist and visitor rest share one `JobGiver_GetRest` postfix. Session statics reset from an explicit `ResetAll` list instead of an attribute scan. Vanilla work types use `WorkTypeDefOf` instead of duplicate `StrataDefOf` fields. Dropped unused ArtPackage `_*-previews` folders (live `CargoLift.png` kept). No player-facing change.
+
 ## [3.9.3]
 
 Player-facing version **3.9.3** (`About.xml` `modVersion`). Stamp `construct-fetch-v1`.
