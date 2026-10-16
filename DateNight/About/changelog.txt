@@ -9,3 +9,14 @@
 
 [i]Build stamp (Player.log): date-state-gifts-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]
+
+1.7.1
+[h1]Date Night — 1.7.1[/h1]
+[b]Changed[/b]
+[list]
+[*] [b]Workshop preview[/b] — new preview image of the evening table, walk, and stars.
+[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+[/list]
+
+[i]Build stamp (Player.log): thought-partner-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]
