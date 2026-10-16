@@ -1,29 +1,27 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.9.3` in `About.xml` `modVersion`. Player.log: `[Strata] v3.9.3 loaded from ... (modified ...); construct-fetch-v1.` via `ModVersionLog.Write`.
+**Version:** `3.9.4` in `About.xml` `modVersion`. Player.log: `[Strata] v3.9.4 loaded from ... (modified ...); upper-floor-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `construct-fetch-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `upper-floor-v1` in `StrataBuildInfo.BuildStamp`.
 
-## [Unreleased]
+## [3.9.4]
+
+Player-facing version **3.9.4** (`About.xml` `modVersion`). Stamp `upper-floor-v1`.
+
+AZR-548 AZR-636 AZR-637 AZR-477
 
 ### Fixed
 - **Stairwell construction postfix** (AZR-548) — return early when `__runOriginal` is false so Niceties leave-a-way-out skips do not scan unfinished walls.
+- **Upper-deck gravpanels** (AZR-636) — substructure on a linked gravship floor uses the host engine, so the overlay draws it connected instead of red.
+- **Ideology altar on another floor** (AZR-637) — a styled altar on a linked floor counts as present, including its room, when you are on the surface.
+- **Cross-floor trips** (AZR-477) — relay intents and drafted stair routes are saved. On load, trips whose pawn, map, bed, or carried pawn is gone are dropped. Old saves load with nothing in flight.
 
 ### Changed
 - **Harmony consolidation**: one `PlaySettings` postfix draws the gas, combined-resources, and support overlays; mental-break `TryGiveJob` relays share one `TargetMethods()` patch plus dispatcher; colonist and visitor rest share one `JobGiver_GetRest` postfix. Session statics reset from an explicit `ResetAll` list instead of an attribute scan. Vanilla work types use `WorkTypeDefOf` instead of duplicate `StrataDefOf` fields. Dropped unused ArtPackage `_*-previews` folders (live `CargoLift.png` kept). No player-facing change.
 
 ### Docs
 - Comment and docs cleanup: removed narrating file-header essays, per-field `StrataGasDef` narration, and restating settings xml-docs. Deleted stale `V3_ROADMAP.md` (pointers now go to `V4_ROADMAP.md`) and the empty-English-folder section in `Languages/README.md`. Harmony/save/compat trap comments kept. No gameplay change.
-
-## [3.9.4] (proposed)
-
-Player-facing version **3.9.4** pending Myleek confirmation (`About.xml` still **3.9.3**).
-
-AZR-548
-
-### Fixed / Changed / Docs
-- Same as Unreleased above.
 
 ## [3.9.3]
 

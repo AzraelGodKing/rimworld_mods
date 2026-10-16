@@ -702,5 +702,135 @@ namespace Strata
 
             return null;
         }
+
+        internal static List<CrossFloorIntentRecord> CaptureIntents()
+        {
+            var saved = new List<CrossFloorIntentRecord>(intents.Count);
+            foreach (KeyValuePair<int, Intent> pair in intents)
+            {
+                Intent intent = pair.Value;
+                saved.Add(new CrossFloorIntentRecord
+                {
+                    pawnId = pair.Key,
+                    destMapId = intent.destMapId,
+                    purpose = intent.purpose,
+                    preferredBedId = intent.preferredBedId,
+                    returnMapId = intent.returnMapId,
+                    carriedPawnId = intent.carriedPawnId,
+                    preferArrivalNear = intent.preferArrivalNear,
+                });
+            }
+            return saved;
+        }
+
+        // Called from LoadedGame, after session reset has cleared this dictionary.
+        internal static void RestoreIntents(List<CrossFloorIntentRecord> saved)
+        {
+            if (saved == null || saved.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < saved.Count; i++)
+            {
+                CrossFloorIntentRecord record = saved[i];
+                if (record == null)
+                {
+                    continue;
+                }
+                Pawn pawn = FindPawn(record.pawnId);
+                Map dest = FindMap(record.destMapId);
+                if (pawn == null || pawn.Dead || dest == null)
+                {
+                    continue;
+                }
+                if (record.carriedPawnId > 0 && !PawnStillExists(record.carriedPawnId))
+                {
+                    continue;
+                }
+                if (PurposePinsBed(record.purpose)
+                    && record.preferredBedId > 0
+                    && FindBedById(dest, record.preferredBedId) == null)
+                {
+                    continue;
+                }
+                if (record.purpose == RelayPurpose.Containment
+                    && record.preferredBedId > 0
+                    && FindThingById(dest, record.preferredBedId) == null)
+                {
+                    continue;
+                }
+
+                int returnMapId = record.returnMapId;
+                if (returnMapId > 0 && FindMap(returnMapId) == null)
+                {
+                    returnMapId = -1;
+                }
+
+                intents[pawn.thingIDNumber] = new Intent
+                {
+                    destMapId = dest.uniqueID,
+                    purpose = record.purpose,
+                    preferredBedId = record.preferredBedId,
+                    returnMapId = returnMapId,
+                    carriedPawnId = record.carriedPawnId,
+                    preferArrivalNear = record.preferArrivalNear,
+                };
+                NotifyPortalArrival(pawn);
+            }
+        }
+
+        private static bool PurposePinsBed(RelayPurpose purpose)
+        {
+            return purpose == RelayPurpose.Rest
+                || purpose == RelayPurpose.Medical
+                || purpose == RelayPurpose.Childcare
+                || purpose == RelayPurpose.Warden
+                || purpose == RelayPurpose.Rescue;
+        }
+
+        private static bool PawnStillExists(int thingId)
+        {
+            if (FindPawn(thingId) != null)
+            {
+                return true;
+            }
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                IReadOnlyList<Pawn> pawns = maps[i].mapPawns.AllPawnsSpawned;
+                for (int j = 0; j < pawns.Count; j++)
+                {
+                    if (pawns[j].thingIDNumber == thingId)
+                    {
+                        return true;
+                    }
+                    if (pawns[j].carryTracker?.CarriedThing is Pawn carried
+                        && carried.thingIDNumber == thingId)
+                    {
+                        return true;
+                    }
+                }
+                foreach (Pawn mapPawn in maps[i].mapPawns.AllPawns)
+                {
+                    if (mapPawn.thingIDNumber == thingId)
+                    {
+                        return true;
+                    }
+                }
+            }
+            if (Find.WorldPawns == null)
+            {
+                return false;
+            }
+            foreach (Pawn worldPawn in Find.WorldPawns.AllPawnsAlive)
+            {
+                if (worldPawn.thingIDNumber == thingId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
