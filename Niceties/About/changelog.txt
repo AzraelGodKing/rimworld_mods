@@ -1,3 +1,14 @@
+1.6.1 (proposed — About.xml not bumped until confirmed)
+[h1]Niceties — 1.6.1[/h1]
+[b]Fixed[/b]
+[list]
+[*] [b]Leave-a-way-out[/b] — final enclose check uses fresh geometry; safe spots must be reachable; step-aside queues walk via EndCurrentJob instead of mid-toil StartJob; geometry cache clears on new game (AZR-548).
+[*] [b]Roommate disturbed sleep[/b] — only a bed-owning roommate is ignored; outdoor sleepers and visitors use normal disturbance; medical/prisoner beds skipped (AZR-567).
+[/list]
+
+[i]Build stamp (Player.log): openbuilds-roommate-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
+
 1.6.0
 [h1]Niceties — 1.6.0[/h1]
 [b]Changed[/b]

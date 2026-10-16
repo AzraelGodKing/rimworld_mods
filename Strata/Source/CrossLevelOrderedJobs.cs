@@ -20,7 +20,6 @@ namespace Strata
 
         private static readonly Dictionary<int, Pending> pending = new Dictionary<int, Pending>();
 
-        [StrataSessionReset]
         internal static void ResetSession()
         {
             pending.Clear();

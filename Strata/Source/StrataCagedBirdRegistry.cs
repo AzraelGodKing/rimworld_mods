@@ -25,7 +25,6 @@ namespace Strata
             }
         }
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             Contained.Clear();

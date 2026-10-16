@@ -3,8 +3,6 @@ using Verse;
 
 namespace Strata
 {
-    // Atmosphere sim fidelity vs CPU. Low spreads work and throttles background
-    // levels; High keeps the viewed level snappy.
     public enum AtmosphereQualityLevel
     {
         Low = 0,
@@ -35,9 +33,8 @@ namespace Strata
         public bool offThreadWorkRelay = true;
         public AtmosphereQualityLevel atmosphereQuality = AtmosphereQualityLevel.Medium;
         public bool logRobotDiagnostics = false;
-        /// <summary>Startup / diagnostic Log.Message lines (exhaust auto-tag list, later P10).</summary>
         public bool verboseLogging = false;
-        /// <summary>C# allowlist of vanilla/DLC burners. Off skips auto-tag; XML patches still apply.</summary>
+        // Off skips C# auto-tag; XML exhaust patches still apply.
         public bool autoTagExhaust = true;
         public bool foodRelayEnabled = true;
         public bool restRelayEnabled = true;
@@ -49,13 +46,9 @@ namespace Strata
         public bool showLevelPerfInTab = false;
         public bool explorationSitesEnabled = true;
         public bool floodEventsEnabled = true;
-        /// <summary>When false, infestations cannot fire on underground floors (B1+).</summary>
         public bool b1InfestationsEnabled = true;
-        /// <summary>Mining/industry noise raises underground infestation weight (AZR-272).</summary>
         public bool noiseInfestationEnabled = true;
-        /// <summary>Scales how strongly noise multiplies infestation chance (0–2).</summary>
         public float noiseInfestationScale = 1f;
-        /// <summary>Hours for map noise to halve when quiet.</summary>
         public float noiseHalfLifeHours = 4f;
         public bool crossLevelRitualsEnabled = true;
         public bool crossLevelCaravansEnabled = true;
@@ -66,29 +59,19 @@ namespace Strata
         public bool ancientColonyStairwellEnabled = true;
         public float ancientColonyStairwellChance = 0.35f;
         public bool cageSustainHunger = false;
-        /// <summary>Darken the view when looking at A+ roof decks (depth cue).</summary>
         public bool depthDimEnabled = false;
-        /// <summary>0–1 strength of the upper-deck depth dim overlay.</summary>
         public float depthDimStrength = 0.35f;
-        /// <summary>Draw the map below through Strata_OpenSky holes on A+ decks.</summary>
         public bool seeBelowEnabled = true;
-        /// <summary>Also draw live pawns/projectiles from the map below through open sky.</summary>
         public bool seeBelowLive = true;
-        /// <summary>0–0.6 darken of the underlay seen through open-sky holes.</summary>
         public float belowDim = 0.12f;
-        /// <summary>Scale of printed/live things drawn from below (looks farther down).</summary>
         public float belowThingScale = 0.85f;
-        /// <summary>Resource readout / build costs count stockpiles on every linked floor.</summary>
         public bool combinedLevelResources = false;
-        /// <summary>Pawns can shoot through open sky up/down between A+ and the map below.</summary>
         public bool crossLevelCombatEnabled = true;
-        /// <summary>Auto-engage hostiles/colonists/turrets across open-sky gaps.</summary>
         public bool crossLevelAutoEngage = true;
-        /// <summary>Gravship underdecks need pumps/tanks/heatsinks (VGE-inspired). Default ON.</summary>
         public bool gravshipLifeSupportEnabled = true;
-        /// <summary>When false (default), new digs/towers stop at ±2 from the stack root. Existing floors keep working.</summary>
+        // Default off: new digs/towers stop at ±2 from the stack root. Existing floors keep working.
         public bool unlimitedLevelsEnabled = false;
-        /// <summary>Treat other mods' portal maps (Anomaly undercaves, Deep And Deeper caves, ...) as linked floors for relays. Default off.</summary>
+        // Other mods' portal maps as linked floors for relays. Default off.
         public bool foreignPortalLevelsEnabled = false;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;

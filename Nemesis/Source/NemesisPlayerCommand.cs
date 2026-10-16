@@ -5,7 +5,7 @@ using Verse;
 namespace Nemesis
 {
     /// <summary>
-    /// AZR-300 — enqueue informant / comms / resolution UI mutations; drain on GameComponentTick
+    /// Enqueue informant / comms / resolution UI mutations; drain on GameComponentTick
     /// (MP-safer, same pattern as DeepColonyPlayerCommand; no Multiplayer.API).
     /// </summary>
     public static class NemesisPlayerCommand
@@ -74,7 +74,7 @@ namespace Nemesis
             queue.Add(new Entry { kind = Kind.ReplySurrender });
         }
 
-        /// <summary>AZR-382 — capture resolution choice (execute / release / keep / truce).</summary>
+        /// <summary>Capture resolution choice (execute / release / keep / truce).</summary>
         public static void EnqueueResolution(NemesisOutcome outcome, Pawn nemesis)
         {
             if (HasQueuedResolution) return;

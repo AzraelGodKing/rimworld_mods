@@ -7,6 +7,24 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 ## [Unreleased]
 
+### Fixed
+- **Stairwell construction postfix** (AZR-548) — return early when `__runOriginal` is false so Niceties leave-a-way-out skips do not scan unfinished walls.
+
+### Changed
+- **Harmony consolidation**: one `PlaySettings` postfix draws the gas, combined-resources, and support overlays; mental-break `TryGiveJob` relays share one `TargetMethods()` patch plus dispatcher; colonist and visitor rest share one `JobGiver_GetRest` postfix. Session statics reset from an explicit `ResetAll` list instead of an attribute scan. Vanilla work types use `WorkTypeDefOf` instead of duplicate `StrataDefOf` fields. Dropped unused ArtPackage `_*-previews` folders (live `CargoLift.png` kept). No player-facing change.
+
+### Docs
+- Comment and docs cleanup: removed narrating file-header essays, per-field `StrataGasDef` narration, and restating settings xml-docs. Deleted stale `V3_ROADMAP.md` (pointers now go to `V4_ROADMAP.md`) and the empty-English-folder section in `Languages/README.md`. Harmony/save/compat trap comments kept. No gameplay change.
+
+## [3.9.4] (proposed)
+
+Player-facing version **3.9.4** pending Myleek confirmation (`About.xml` still **3.9.3**).
+
+AZR-548
+
+### Fixed / Changed / Docs
+- Same as Unreleased above.
+
 ## [3.9.3]
 
 Player-facing version **3.9.3** (`About.xml` `modVersion`). Stamp `construct-fetch-v1`.

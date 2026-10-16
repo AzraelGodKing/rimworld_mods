@@ -27,7 +27,7 @@ namespace Nemesis
     [HarmonyPatch(typeof(PawnGroupMakerUtility), nameof(PawnGroupMakerUtility.GeneratePawns))]
     public static class Patch_GeneratePawns_InjectNemesis
     {
-        // AZR-299 — early-out when nothing to inject; avoid re-wrapping every group gen.
+        // Early-out when nothing to inject; avoid re-wrapping every group gen.
         public static IEnumerable<Pawn> Postfix(IEnumerable<Pawn> __result, PawnGroupMakerParms parms)
         {
             if (NemesisRaidInject.Pending == null)

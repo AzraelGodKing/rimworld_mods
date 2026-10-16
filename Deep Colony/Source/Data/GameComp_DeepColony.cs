@@ -234,6 +234,8 @@ namespace DeepColony
             FamilyJoinUtility.GameTick();
             ExLoverReconcileUtility.GameTick();
             TouchAverseUtility.GameTick();
+            if (TickPhase.Due(2689))
+                PruneIdKeyedCollections();
             FamilyLifeUtility.GameTick();
             FamilyEchoUtility.GameTick();
             try
@@ -512,8 +514,70 @@ namespace DeepColony
             {
                 Log.Warning("[DeepColony] Labor recovery on load failed: " + e.Message);
             }
+            PruneIdKeyedCollections();
             EnsureFounderSurname();
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
+        }
+
+        /// <summary>
+        /// Drop destroyed/discarded pawn IDs from comfort and counsel dictionaries (AZR-618).
+        /// Shared with the save-upgrade path. Heirloom/funeral sets stay until AZR-624.
+        /// </summary>
+        public void PruneIdKeyedCollections()
+        {
+            if (Find.Maps == null) return;
+            foreach (Map map in Find.Maps)
+            {
+                if (map?.mapPawns?.AllPawnsSpawned == null) continue;
+                foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
+                {
+                    Comp_DeepColony comp = pawn?.TryGetComp<Comp_DeepColony>();
+                    if (comp == null) continue;
+                    TouchAverseUtility.PruneComfortEntries(comp);
+                    PruneDestroyedPawnKeys(comp.reconcileCountsByPawn);
+                    PruneDestroyedPawnKeys(comp.counselCountsByPawn);
+                }
+            }
+        }
+
+        private static void PruneDestroyedPawnKeys<T>(Dictionary<int, T> dict)
+        {
+            if (dict == null || dict.Count == 0) return;
+            List<int> remove = null;
+            foreach (int id in dict.Keys)
+            {
+                if (!PawnIdStillTracked(id))
+                {
+                    if (remove == null) remove = new List<int>();
+                    remove.Add(id);
+                }
+            }
+            if (remove == null) return;
+            for (int i = 0; i < remove.Count; i++)
+                dict.Remove(remove[i]);
+        }
+
+        private static bool PawnIdStillTracked(int id)
+        {
+            if (Find.Maps != null)
+            {
+                foreach (Map map in Find.Maps)
+                {
+                    if (map?.mapPawns?.AllPawnsSpawned == null) continue;
+                    foreach (Pawn p in map.mapPawns.AllPawnsSpawned)
+                    {
+                        if (p != null && p.thingIDNumber == id) return true;
+                    }
+                }
+            }
+            if (Find.WorldPawns != null)
+            {
+                foreach (Pawn p in Find.WorldPawns.AllPawnsAliveOrDead)
+                {
+                    if (p != null && p.thingIDNumber == id) return true;
+                }
+            }
+            return false;
         }
     }
 }

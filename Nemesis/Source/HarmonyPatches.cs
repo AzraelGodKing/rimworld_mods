@@ -8,7 +8,7 @@ using Verse;
 namespace Nemesis
 {
     /// <summary>
-    /// AZR-385 — one shared lookup for the private-signature targets several patches depend on,
+    /// One shared lookup for the private-signature targets several patches depend on,
     /// so a RimWorld update that changes them yields one Nemesis-specific diagnostic instead of
     /// five silently skipped classes behind SafePatchAll's generic failure letter.
     /// </summary>
@@ -325,7 +325,7 @@ namespace Nemesis
 
             var extras = new List<FloatMenuOption>();
 
-            // AZR-301 — reply options (taunt / truce / demand surrender).
+            // Reply options (taunt / truce / demand surrender).
             extras.Add(new FloatMenuOption(
                 "Nemesis_Comms_TauntBack".Translate(comp.Data.nemesisName),
                 () => NemesisPlayerCommand.EnqueueReplyTaunt()));
@@ -336,7 +336,7 @@ namespace Nemesis
                 "Nemesis_Comms_DemandSurrender".Translate(comp.Data.nemesisName),
                 () => NemesisPlayerCommand.EnqueueReplySurrender()));
 
-            // AZR-300 — informant purchases go through the tick-drain queue.
+            // Informant purchases go through the tick-drain queue.
             if (NemesisMod.Settings?.enableInformants ?? true)
             {
                 int cost = NemesisInformants.LeadCost(comp.Data);

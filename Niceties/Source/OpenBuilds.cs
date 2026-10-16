@@ -43,6 +43,11 @@ namespace Niceties
         private static readonly Dictionary<int, Geometry> GeometryCache = new Dictionary<int, Geometry>();
         private static readonly List<int> PruneScratch = new List<int>();
 
+        internal static void ClearCache()
+        {
+            GeometryCache.Clear();
+        }
+
         internal static bool Enabled
         {
             get
@@ -87,7 +92,19 @@ namespace Niceties
                 return empty;
             }
 
-            return Compute(target, pawn, GeometryFor(target));
+            return Compute(target, pawn, GeometryFor(target, allowCache: true));
+        }
+
+        /// <summary>Final CompleteConstruction check must not reuse a stale cache (AZR-548).</summary>
+        internal static OpenBuildsResult WouldEncloseFresh(Thing target, Pawn pawn)
+        {
+            OpenBuildsResult empty = new OpenBuildsResult();
+            if (target == null || target.Map == null)
+            {
+                return empty;
+            }
+
+            return Compute(target, pawn, GeometryFor(target, allowCache: false));
         }
 
         internal static HashSet<IntVec3> FindSafeSpots(Thing target)
@@ -97,7 +114,7 @@ namespace Niceties
                 return new HashSet<IntVec3>();
             }
 
-            Geometry geo = GeometryFor(target);
+            Geometry geo = GeometryFor(target, allowCache: true);
             if (geo.SafeSpots != null)
             {
                 return geo.SafeSpots;
@@ -125,11 +142,12 @@ namespace Niceties
         /// Flood fill per frame, reused by every builder and by FindSafeSpots for a few ticks.
         /// Keyed by frame so several colonists finishing different walls do not evict each other.
         /// </summary>
-        private static Geometry GeometryFor(Thing target)
+        private static Geometry GeometryFor(Thing target, bool allowCache)
         {
             int tick = Find.TickManager.TicksGame;
             int mapId = target.Map.uniqueID;
-            if (GeometryCache.TryGetValue(target.thingIDNumber, out Geometry cached)
+            if (allowCache
+                && GeometryCache.TryGetValue(target.thingIDNumber, out Geometry cached)
                 && cached.MapId == mapId
                 && tick >= cached.Tick
                 && tick - cached.Tick < CacheTicks)
@@ -150,7 +168,11 @@ namespace Niceties
                 Blockers = blockers,
                 Enclosed = ClosedRegion(target.Map, blockers)
             };
-            GeometryCache[target.thingIDNumber] = geo;
+            if (allowCache)
+            {
+                GeometryCache[target.thingIDNumber] = geo;
+            }
+
             return geo;
         }
 
@@ -196,11 +218,31 @@ namespace Niceties
                 return false;
             }
 
-            IntVec3 dest = default(IntVec3);
+            IntVec3 dest = IntVec3.Invalid;
+            float bestDist = float.MaxValue;
+            int bestHash = int.MaxValue;
             foreach (IntVec3 cell in spots)
             {
-                dest = cell;
-                break;
+                if (!pawn.CanReach(cell, PathEndMode.OnCell, Danger.Some))
+                {
+                    continue;
+                }
+
+                float dist = pawn.Position.DistanceToSquared(cell);
+                int hash = cell.GetHashCode();
+                if (dist < bestDist || (dist == bestDist && hash < bestHash))
+                {
+                    bestDist = dist;
+                    bestHash = hash;
+                    dest = cell;
+                }
+            }
+
+            if (!dest.IsValid)
+            {
+                JobFailReason.Is("Niceties_OpenBuilds_WouldTrapSelf".Translate());
+                pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
+                return true;
             }
 
             if (pawn.CurJob == null)
@@ -209,11 +251,14 @@ namespace Niceties
                 return true;
             }
 
+            // Prefer ending incompletable and queueing resume+walk so ReadyForNextToil
+            // cannot clobber a mid-toil StartJob (AZR-548).
             Job resume = JobMaker.MakeJob(pawn.CurJob.def, frame);
-            pawn.jobs.jobQueue.EnqueueFirst(resume);
             Job walk = JobMaker.MakeJob(JobDefOf.Goto, dest);
             walk.ignoreForbidden = true;
-            pawn.jobs.StartJob(walk, JobCondition.InterruptForced);
+            pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
+            pawn.jobs.jobQueue.EnqueueFirst(resume);
+            pawn.jobs.jobQueue.EnqueueFirst(walk);
             return true;
         }
 

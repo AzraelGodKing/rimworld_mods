@@ -50,7 +50,6 @@ namespace Strata
         // the next tick instead (same reason RaidPursuit defers enrollment).
         private static readonly List<int> pendingContinue = new List<int>();
 
-        [StrataSessionReset]
         internal static void ResetSession()
         {
             routes.Clear();

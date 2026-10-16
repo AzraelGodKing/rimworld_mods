@@ -158,21 +158,4 @@ namespace DeepColony
                 pawn, MessageTypeDefOf.NegativeEvent);
         }
     }
-
-    [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
-    public static class Patch_Pawn_Kill_TechDecay
-    {
-        // A throw here would abort Pawn.Kill itself, not just the Codex feature.
-        public static void Prefix(Pawn __instance)
-        {
-            try
-            {
-                CodexArchive.LoseProgressOnDeath(__instance);
-            }
-            catch (System.Exception e)
-            {
-                Log.WarningOnce("[DeepColony] Codex death hook failed: " + e.Message, 0x5DC0DE02);
-            }
-        }
-    }
 }

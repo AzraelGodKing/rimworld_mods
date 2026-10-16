@@ -18,6 +18,12 @@ namespace DateNight
 
         private static List<FavoriteVenue> venues = new List<FavoriteVenue>();
 
+        /// <summary>Call from the GameComponent ctor; a new game never runs ExposeData.</summary>
+        public static void Reset()
+        {
+            venues = new List<FavoriteVenue>();
+        }
+
         public static void ExposeData()
         {
             Scribe_Collections.Look(ref venues, "dateNightFavoriteVenues", LookMode.Deep);

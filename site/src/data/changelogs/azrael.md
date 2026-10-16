@@ -4,7 +4,11 @@
 ## [Unreleased]
 
 ### Changed
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change. No `modVersion` bump (Myleek).
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6. Existing 1.6 DLL; no gameplay change. No `modVersion` bump (Myleek).
+- **Build stamps** — the hub no longer scrapes Player.log for a stamp. Only mods that expose `XBuildInfo.BuildStamp` show one.
+
+### Internal
+- Shared `ModPack.ForExecutingAssembly` for the UpdateNews and ModVersionLog pack lookup. No gameplay change.
 
 ## [1.0.0]
 
@@ -33,11 +37,11 @@ AZR-343 AZR-344 AZR-427 AZR-428 AZR-429 AZR-430 AZR-431 AZR-432 AZR-433 AZR-434 
 
 #### Changed
 - **Safe removal deconstruct** - the button now queues the designations and applies them on the next game tick (series multiplayer-safer pattern) instead of editing the map straight from Mod Options. If the game is paused, they appear when you unpause.
-- **Build stamps** - the hub reads `BuildStamp` from any series mod that follows the `XBuildInfo` convention (Azrael now does too) before falling back to the log.
+- **Build stamps** - the hub reads `BuildStamp` from any series mod that follows the `XBuildInfo` convention (Azrael now does too).
 - **Version reset** - `modVersion` and `mod.json` go back to 1.0.0 (download `Azrael-1.0.0.zip`) until the first release; `About/changelog.txt` is now a first-release summary.
 
 #### Internal
-- Hub Harmony failures come only from `PatchFailureSink` (`SafePatchAll` already records every series patch). Log scrape remains for build stamps.
+- Hub Harmony failures come only from `PatchFailureSink` (`SafePatchAll` already records every series patch).
 
 ### Development history (formerly 1.1.0)
 

@@ -69,7 +69,7 @@ namespace Nemesis
             Close();
         }
 
-        /// <summary>AZR-382 — runs from the tick drain, never from the button handler.</summary>
+        /// <summary>Runs from the tick drain, never from the button handler.</summary>
         internal static void ApplyQueuedOutcome(NemesisOutcome outcome, int pawnId)
         {
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;

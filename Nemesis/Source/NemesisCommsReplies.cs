@@ -5,7 +5,7 @@ using Verse;
 
 namespace Nemesis
 {
-    /// <summary>AZR-301 — lean comms reply options (taunt back / truce / demand surrender).</summary>
+    /// <summary>Lean comms reply options (taunt back / truce / demand surrender).</summary>
     public static class NemesisCommsReplies
     {
         public static void DoTauntBack()

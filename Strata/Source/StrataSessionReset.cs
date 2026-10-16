@@ -1,12 +1,10 @@
 using System;
-using System.Reflection;
-using HarmonyLib;
 using Verse;
 
 namespace Strata
 {
-    // Marks a static parameterless method that must run on Game.FinalizeInit so
-    // tick-stamped / ID-keyed statics from a previously loaded save cannot leak.
+    // Optional marker. ResetAll is the source of truth; ShaftFluid and Gravship
+    // reset methods still carry this attribute and are invoked from that list.
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class StrataSessionResetAttribute : Attribute
     {
@@ -14,41 +12,58 @@ namespace Strata
 
     public static class StrataSessionReset
     {
+        static readonly Action[] ResetAll =
+        {
+            StrataLevelPerfUtility.ResetSession,
+            StrataPawnUtility.ResetMiscRobotCaches,
+            StrataBelowSelection.ResetSession,
+            StrataCrossLevelCombat.ResetSession,
+            StrataRoomUtility.ResetSession,
+            VefPipeSystemBackend.ResetSession,
+            VteAcPipeBackend.ResetSession,
+            StrataGravshipPortalTravel.ResetSession,
+            StrataGravshipDeckCargo.ResetSession,
+            StrataCrossLevelAutoEngage.ResetSession,
+            StrataResources.ClearCaches,
+            WorkRelaySignals.ResetSession,
+            WorkRelayBoardBuilder.ResetSession,
+            SleepRelay.ResetSession,
+            StrataConstructAcrossLevels.ResetSession,
+            HaulToLevelTargets.ResetSession,
+            RelayClaims.ResetSession,
+            StrataMapUtility.ResetSession,
+            StrataDeferredGenUtility.ResetSession,
+            WorkRelayAntiLoop.ResetSession,
+            StrataRobotDiagnostics.ResetSession,
+            DraftedPortalPathing.ResetSession,
+            StrataPortalUtility.ResetHaulDeliverSession,
+            CrossLevelOrderedJobs.ResetSession,
+            MapComponent_RaidPursuit.ResetSession,
+            StrataCagedBirdRegistry.ResetSession,
+            CaravanTravelUtility.ResetSession,
+            RaidCoordinator.ResetSession,
+            WorkRelayBoard.ResetSession,
+            PortalRelayChain.ResetSession,
+            StrataFaultGuard.ResetSession,
+            StrataPocketMapOpen.ResetSession,
+            StrataCrossLevelThreatNotify.ResetSession,
+            PawnRelay.ResetSession,
+        };
+
         public static void Run()
         {
-            Assembly asm = typeof(StrataSessionResetAttribute).Assembly;
-            foreach (Type type in AccessTools.GetTypesFromAssembly(asm))
+            for (int i = 0; i < ResetAll.Length; i++)
             {
-                MethodInfo[] methods;
+                Action reset = ResetAll[i];
                 try
                 {
-                    methods = type.GetMethods(
-                        BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                    reset();
                 }
-                catch
+                catch (Exception e)
                 {
-                    continue;
-                }
-                for (int i = 0; i < methods.Length; i++)
-                {
-                    MethodInfo method = methods[i];
-                    if (method.GetCustomAttribute<StrataSessionResetAttribute>() == null)
-                    {
-                        continue;
-                    }
-                    if (method.GetParameters().Length != 0)
-                    {
-                        continue;
-                    }
-                    try
-                    {
-                        method.Invoke(null, null);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Warning("[Strata] Session reset failed on "
-                            + type.FullName + "." + method.Name + ": " + e);
-                    }
+                    Log.Warning("[Strata] Session reset failed on "
+                        + reset.Method.DeclaringType.FullName + "."
+                        + reset.Method.Name + ": " + e);
                 }
             }
         }

@@ -41,9 +41,9 @@ namespace Niceties
                 "no disturbed sleep for roommates");
         }
 
-        private static bool Prefix(Pawn __instance)
+        private static bool Prefix(Pawn __instance, Pawn source)
         {
-            return !SharedRooms.ShouldSkipDisturbedSleep(__instance);
+            return !SharedRooms.ShouldSkipDisturbedSleep(__instance, source);
         }
     }
 }

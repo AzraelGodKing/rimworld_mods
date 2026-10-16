@@ -4,6 +4,22 @@ Detailed notes for Deep Colony only.
 
 ## [Unreleased]
 
+### Fixed
+- **Odyssey crash trauma** (AZR-626) — patch `IncidentWorker.TryExecute`; allowlist Odyssey gravship-crash incidents (no bare `"Crash"` substring).
+- **Touch comfort save growth** (AZR-618) — seed only colonists/prisoners/guests; daily prune of stale pawn IDs; skip empty ID-keyed collections on save.
+
+### Changed
+- One Harmony patch class per vanilla method for `Pawn.Kill`, `SpawnSetup`, `MakeDowned`, `Ingested`, `SetFaction`, `AddDirectRelation`, and raid `TryExecuteWorker` (AZR-627). Same utility calls in the same order. Shared one `FieldRef` per tracker. Deleted leftover `Patch_BatchC` / `Patch_BatchD` dump files. Settings heading key is `DC_Settings_LaterSystems`. Odyssey crash hook lives in `Patch_Events` on `TryExecute`.
+
+## [1.10.1] (proposed)
+
+Player-facing version **1.10.1** pending Myleek confirmation (`About.xml` still **1.10.0**). Stamp `odyssey-save-growth-v1`.
+
+AZR-618 AZR-626 AZR-627
+
+### Fixed / Changed
+- Same as Unreleased above.
+
 ## [1.10.0]
 
 Player-facing version **1.10.0** (`About.xml` `modVersion`). Stamp `colony-overview-v1`.

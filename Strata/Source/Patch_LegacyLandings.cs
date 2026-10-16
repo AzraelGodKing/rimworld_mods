@@ -16,7 +16,7 @@ namespace Strata
         public static void Postfix()
         {
             // Tick-stamped / ID-keyed statics from a previously loaded save are
-            // garbage in this one. Methods marked [StrataSessionReset] run here.
+            // garbage in this one. StrataSessionReset.ResetAll runs here.
             StrataSessionReset.Run();
             StrataIncompatibleMods.LetterIfNeeded();
 

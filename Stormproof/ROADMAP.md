@@ -45,4 +45,4 @@ Tracked in the idea pool and Linear:
 
 ---
 
-[Strata V3](../Strata/V3_ROADMAP.md) · [Homesteader](../Homesteader/ROADMAP.md) · [Nemesis](../Nemesis/ROADMAP.md)
+[Strata V4](../Strata/V4_ROADMAP.md) · [Homesteader](../Homesteader/ROADMAP.md) · [Nemesis](../Nemesis/ROADMAP.md)

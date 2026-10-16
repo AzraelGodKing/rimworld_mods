@@ -7,8 +7,14 @@ namespace Strata
     [HarmonyPatch(typeof(Frame), nameof(Frame.CompleteConstruction))]
     public static class Patch_StairwellConstructionComplete
     {
-        public static void Postfix(Frame __instance)
+        public static void Postfix(Frame __instance, bool __runOriginal)
         {
+            // Niceties leave-a-way-out can skip CompleteConstruction; do not scan (AZR-548).
+            if (!__runOriginal)
+            {
+                return;
+            }
+
             Map map = __instance.Map;
             if (map == null)
             {

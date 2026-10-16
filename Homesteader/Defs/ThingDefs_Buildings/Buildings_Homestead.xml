@@ -120,6 +120,7 @@
     <label>harvest maypole</label>
     <description>A tall carved pole hung with bright ribbons, raised in celebration of a good harvest. Colonists gather around it for parties, and anyone nearby feels a little harvest cheer (+6 mood).</description>
     <thingClass>Building</thingClass>
+    <tickerType>Normal</tickerType>
     <graphicData>
       <texPath>Homesteader/Buildings/HarvestMaypole</texPath>
       <graphicClass>Graphic_Single</graphicClass>

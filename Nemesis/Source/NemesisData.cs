@@ -89,7 +89,7 @@ namespace Nemesis
         public int harassmentCount;
         public bool pendingFakeAmbush;
         public int fakeAmbushTick = -1;
-        /// <summary>AZR-296 — capture resolution dialog awaiting player choice; survives save/reload.</summary>
+        /// <summary>Capture resolution dialog awaiting player choice; survives save/reload.</summary>
         public bool pendingResolution;
 
         /// <summary>Captain tier — rises on each escape (capped by settings).</summary>

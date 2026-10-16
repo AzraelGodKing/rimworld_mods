@@ -145,7 +145,6 @@ namespace Strata
             return destMap != null;
         }
 
-        [StrataSessionReset]
         internal static void ResetSession()
         {
             pending.Clear();

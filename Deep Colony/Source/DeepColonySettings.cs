@@ -41,7 +41,7 @@ namespace DeepColony
         public bool enableHeirlooms = false;
         public bool enableChronicTrauma = false;
 
-        // Batch C
+        // Later systems
         public float childRaidWitnessChance = 0.55f;
         public bool enablePrisonerCounsel = false;
         public bool enableEnvoyVisits = false;

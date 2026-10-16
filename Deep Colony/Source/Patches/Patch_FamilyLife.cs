@@ -1,3 +1,4 @@
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -25,13 +26,10 @@ namespace DeepColony.Patches
     [HarmonyPatch(typeof(Pawn_GuestTracker), nameof(Pawn_GuestTracker.CapturedBy))]
     public static class Patch_CapturedBy_FamilyLife
     {
-        private static readonly AccessTools.FieldRef<Pawn_GuestTracker, Pawn> PawnField =
-            AccessTools.FieldRefAccess<Pawn_GuestTracker, Pawn>("pawn");
-
         public static void Postfix(Pawn_GuestTracker __instance, Faction by)
         {
             if (by == null || by.IsPlayer) return;
-            FamilyLifeUtility.NotifyTaken(PawnField(__instance));
+            FamilyLifeUtility.NotifyTaken(TrackerFields.GuestPawn(__instance));
         }
     }
 
@@ -61,35 +59,55 @@ namespace DeepColony.Patches
         }
     }
 
-    [HarmonyPatch(typeof(Pawn), nameof(Pawn.SetFaction))]
-    public static class Patch_SetFaction_FamilyLife
+    [HarmonyPatch(typeof(Thing), nameof(Thing.Ingested))]
+    public static class Patch_Thing_Ingested
     {
-        public static void Postfix(Pawn __instance, Faction newFaction)
+        public static void Postfix(Thing __instance, Pawn ingester, float __result)
         {
-            if (__instance?.RaceProps == null || !__instance.RaceProps.Humanlike) return;
-            if (newFaction == null || !newFaction.IsPlayer) return;
-            FamilyLifeUtility.NotifyReturned(__instance);
-            FamilyLifeUtility.RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);
+            if (__result <= 0f || ingester == null) return;
+            HomesteaderMealUtility.NotifyIngested(ingester, __instance);
+            FamilyMealUtility.NotifyIngested(ingester, __instance);
         }
     }
 
-    [HarmonyPatch(typeof(Pawn), nameof(Pawn.SpawnSetup))]
-    public static class Patch_SpawnSetup_FamilyLife
+    [HarmonyPatch(typeof(Pawn_AgeTracker), "BirthdayBiological")]
+    public static class Patch_BirthdayBiological_Childhood
     {
-        public static void Postfix(Pawn __instance, bool respawningAfterLoad)
+        public static void Postfix(Pawn_AgeTracker __instance)
         {
-            if (respawningAfterLoad) return;
-            FamilyLifeUtility.NotifyReturned(__instance);
+            ChildhoodUtility.TryGrant(TrackerFields.AgePawn(__instance));
         }
     }
 
-    [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
-    public static class Patch_Kill_FamilyLife
+    [HarmonyPatch(typeof(Hediff), nameof(Hediff.PostAdd))]
+    public static class Patch_Hediff_PostAdd_Vat
     {
-        public static void Postfix(Pawn __instance)
+        public static void Postfix(Hediff __instance)
         {
-            if (__instance == null || !__instance.RaceProps.Humanlike) return;
-            FamilyLifeUtility.RefreshAllLastOfTheLine(announceLast: true, announceContinue: false);
+            if (__instance?.pawn == null || __instance.def == null) return;
+            string n = __instance.def.defName;
+            if (n == "VatLearning" || n == "VatGrowing" || n == "Gestated")
+                ChildhoodUtility.NoteGrowthVat(__instance.pawn);
+        }
+    }
+
+    [HarmonyPatch]
+    public static class Patch_PlantCollected_FirstHarvest
+    {
+        public static bool Prepare()
+        {
+            return TargetMethod() != null;
+        }
+
+        public static MethodBase TargetMethod()
+        {
+            return AccessTools.Method(typeof(Plant), "PlantCollected", new[] { typeof(Pawn) })
+                ?? AccessTools.Method(typeof(Plant), "PlantCollected", new[] { typeof(Pawn), typeof(bool) });
+        }
+
+        public static void Postfix(Plant __instance, Pawn by)
+        {
+            FamilyLetterUtility.NotifyFirstHarvest(by, __instance);
         }
     }
 }

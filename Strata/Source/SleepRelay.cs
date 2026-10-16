@@ -14,7 +14,6 @@ namespace Strata
     {
         private static readonly HashSet<int> bedNotFound = new HashSet<int>();
 
-        [StrataSessionReset]
         internal static void ResetSession()
         {
             bedNotFound.Clear();

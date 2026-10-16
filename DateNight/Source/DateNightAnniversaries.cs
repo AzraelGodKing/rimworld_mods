@@ -18,6 +18,14 @@ namespace DateNight
         private static int lastScanDay = -1;
         private const int MilestoneEveryYears = 5;
 
+        /// <summary>Call from the GameComponent ctor; a new game never runs ExposeData.</summary>
+        public static void Reset()
+        {
+            lastCelebratedYear = new Dictionary<long, int>();
+            lastOutcomeYear = new Dictionary<long, int>();
+            lastScanDay = -1;
+        }
+
         public static void ExposeData()
         {
             Scribe_Collections.Look(ref lastCelebratedYear, "dateNightAnniversaryYears",

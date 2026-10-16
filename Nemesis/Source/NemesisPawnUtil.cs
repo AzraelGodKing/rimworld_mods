@@ -33,7 +33,7 @@ namespace Nemesis
         /// (CheckNemesisHealth flees below ~30%). Also restore missing parts: a
         /// beheaded wounded-escape pawn is still the hunt target (Kill is cancelled)
         /// and MissingPart bleeding is not a Hediff_Injury, so injury-only heal left
-        /// them headless with a 4h bleedout and an instant retreat loop (AZR-200).
+        /// them headless with a 4h bleedout and an instant retreat loop.
         /// </summary>
         public static void RecoverForReturn(Pawn pawn, float minHealth = 0.7f)
         {

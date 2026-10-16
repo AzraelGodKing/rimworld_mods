@@ -4,11 +4,6 @@ using Verse;
 
 namespace Strata
 {
-    // Excavation splits a seam and breaches a pocket of foul deep gas: a burst
-    // of the persistent atmosphere gas floods a dug-out room from a rock face.
-    // It is the same gas the hidden chambers hold - toxic to breathe,
-    // explosive around open flames, and cleared by the same ventilation tools
-    // as smoke. Venting keeps pawns safe but wastes the resource.
     public class IncidentWorker_GasPocket : IncidentWorker
     {
         protected override bool CanFireNowSub(IncidentParms parms)

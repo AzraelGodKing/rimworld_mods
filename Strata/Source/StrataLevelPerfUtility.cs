@@ -54,7 +54,6 @@ namespace Strata
             return count;
         }
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             forcedHibernateMapIds.Clear();

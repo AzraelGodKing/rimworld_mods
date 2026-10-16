@@ -1,9 +1,21 @@
+1.7.2 (proposed — About.xml not bumped until confirmed)
+[h1]Date Night — 1.7.2[/h1]
+[b]Fixed[/b]
+[list]
+[*] [b]New-game state leak[/b] — starting a second colony in the same session no longer carries over date cooldowns, venues, double-date sessions, or bed claims (AZR-522).
+[*] [b]Deterministic gifts[/b] — gift picks are stable across processes (sorted defs + thing ID tie-break) for Multiplayer and .NET 10 (AZR-540).
+[*] [b]Date robustness[/b] — drafting the partner or leaving the date job ends both sides; partner death skips the "date ruined" penalty; schedule flags seed on load without resetting lovin cooldowns (AZR-523).
+[/list]
+
+[i]Build stamp (Player.log): date-state-gifts-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]
+
 1.7.1
 [h1]Date Night — 1.7.1[/h1]
 [b]Changed[/b]
 [list]
 [*] [b]Workshop preview[/b] — new preview image of the evening table, walk, and stars.
-[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
+[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6. Existing 1.6 DLL; no gameplay change.
 [/list]
 
 [i]Build stamp (Player.log): thought-partner-v1[/i]

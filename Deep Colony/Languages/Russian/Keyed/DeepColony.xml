@@ -224,7 +224,7 @@
   <DC_HeirloomCreated>{ITEM} {PAWN} теперь наследная вещь колонии.</DC_HeirloomCreated>
   <DC_ChronicTrauma>Невылеченная травма {PAWN} перешла в хронический стресс.</DC_ChronicTrauma>
 
-  <!-- ── Batch C ────────────────────────────────────────────────────────────── -->
+  <!-- ── Later systems ─────────────────────────────────────────────────────── -->
   <DC_Alert_UntreatedTrauma>Невылеченная травма</DC_Alert_UntreatedTrauma>
   <DC_Alert_UntreatedTraumaDesc>Эти колонисты несут психологическую травму больше суток без консультации. Врачи могут провести беседу через работу врача или ПКМ.</DC_Alert_UntreatedTraumaDesc>
   <DC_InspectCounsel>Консультации: последняя {0}, сессий {1} (связь {2}/{3})</DC_InspectCounsel>
@@ -247,7 +247,7 @@
   <DC_FuneralBurn>Костёр для {PAWN} смягчает травму насильственной потери.</DC_FuneralBurn>
   <DC_FuneralEaseMote>Предали земле…</DC_FuneralEaseMote>
   <DC_ChildRaidWitness>{PAWN} видел(а) бой и так скоро не забудет.</DC_ChildRaidWitness>
-  <DC_Settings_BatchC>Поздние системы</DC_Settings_BatchC>
+  <DC_Settings_LaterSystems>Поздние системы</DC_Settings_LaterSystems>
   <DC_Settings_ChildRaid>Шанс детского свидетеля рейда: {0}%</DC_Settings_ChildRaid>
   <DC_Settings_PrisonerCounsel>Консультации пленников (путь вербовки)</DC_Settings_PrisonerCounsel>
   <DC_Settings_PrisonerCounselTip>По умолчанию выкл. Врачи могут консультировать пленников как медленную вербовку через общение. Не заменяет разговор надзирателя.</DC_Settings_PrisonerCounselTip>

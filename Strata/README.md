@@ -6,7 +6,7 @@ colonists commute between floors on their own to work, eat, sleep, haul, and
 attend rituals.
 
 - **Website & downloads:** https://azraelgodking.github.io/rimworld_mods/strata
-- **V3 checklist:** [V3_ROADMAP.md](V3_ROADMAP.md)
+- **V4 roadmap:** [V4_ROADMAP.md](V4_ROADMAP.md)
 - **Bug reports:** https://github.com/AzraelGodKing/rimworld_mods/issues
 
 ## Requirements
