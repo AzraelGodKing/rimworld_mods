@@ -38,9 +38,16 @@ namespace DateNight
         }
 
         /// <summary>Call from the GameComponent ctor; a new game never runs ExposeData.</summary>
+        public static void Reset()
+        {
+            sessions = new List<DoubleDateSession>();
+            rapport = new List<CoupleRapport>();
+        }
+
+        /// <summary>Legacy name; clears sessions and rapport.</summary>
         public static void ResetRapport()
         {
-            rapport = new List<CoupleRapport>();
+            Reset();
         }
 
         public static void PruneDeadPawns()

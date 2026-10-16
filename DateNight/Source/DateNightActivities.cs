@@ -225,21 +225,23 @@ namespace DateNight
             "Beer", "Chocolate", "Ambrosia", "PsychiteTea", "InsectJelly",
         };
 
-        private static HashSet<string> resolvedGiftNames;
+        // Sorted by defName (ordinal) so CoreCLR per-process HashSet order cannot
+        // desync Multiplayer clients or change picks between launches (AZR-540).
+        private static ThingDef[] resolvedGiftDefs;
 
         internal static void InvalidateGiftCache()
         {
-            resolvedGiftNames = null;
+            resolvedGiftDefs = null;
         }
 
-        private static HashSet<string> GiftNames()
+        private static ThingDef[] GiftDefs()
         {
-            if (resolvedGiftNames != null)
+            if (resolvedGiftDefs != null)
             {
-                return resolvedGiftNames;
+                return resolvedGiftDefs;
             }
 
-            resolvedGiftNames = new HashSet<string>();
+            HashSet<string> names = new HashSet<string>();
             List<string> configured = DateNightMod.Settings?.giftDefNames;
             if (configured != null && configured.Count > 0)
             {
@@ -247,7 +249,7 @@ namespace DateNight
                 {
                     if (!configured[i].NullOrEmpty())
                     {
-                        resolvedGiftNames.Add(configured[i].Trim());
+                        names.Add(configured[i].Trim());
                     }
                 }
             }
@@ -255,7 +257,7 @@ namespace DateNight
             {
                 for (int i = 0; i < DefaultGiftDefNames.Length; i++)
                 {
-                    resolvedGiftNames.Add(DefaultGiftDefNames[i]);
+                    names.Add(DefaultGiftDefNames[i]);
                 }
             }
 
@@ -275,11 +277,22 @@ namespace DateNight
                     {
                         continue;
                     }
-                    resolvedGiftNames.Add(def.defName);
+                    names.Add(def.defName);
                 }
             }
 
-            return resolvedGiftNames;
+            List<ThingDef> defs = new List<ThingDef>(names.Count);
+            foreach (string defName in names)
+            {
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+                if (def != null)
+                {
+                    defs.Add(def);
+                }
+            }
+            defs.Sort((a, b) => string.CompareOrdinal(a.defName, b.defName));
+            resolvedGiftDefs = defs.ToArray();
+            return resolvedGiftDefs;
         }
 
         /// <summary>A small luxury the giver can fetch and hand over.</summary>
@@ -292,13 +305,11 @@ namespace DateNight
 
             Thing best = null;
             float bestDist = float.MaxValue;
-            foreach (string defName in GiftNames())
+            int bestId = int.MaxValue;
+            ThingDef[] defs = GiftDefs();
+            for (int d = 0; d < defs.Length; d++)
             {
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
-                if (def == null)
-                {
-                    continue;
-                }
+                ThingDef def = defs[d];
                 List<Thing> things = giver.Map.listerThings.ThingsOfDef(def);
                 for (int i = 0; i < things.Count; i++)
                 {
@@ -316,9 +327,11 @@ namespace DateNight
                         continue;
                     }
                     float dist = giver.Position.DistanceToSquared(thing.Position);
-                    if (dist < bestDist)
+                    if (dist < bestDist
+                        || (dist == bestDist && thing.thingIDNumber < bestId))
                     {
                         bestDist = dist;
+                        bestId = thing.thingIDNumber;
                         best = thing;
                     }
                 }

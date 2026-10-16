@@ -4,6 +4,20 @@ Detailed notes for **Date Night** only.
 
 ## [Unreleased]
 
+### Fixed
+- **New-game state leak** (AZR-522) — GameComponent ctor resets date ticks, anniversary years, venues, double-date sessions, and bed claims (a new game never runs ExposeData).
+- **Deterministic gift selection** (AZR-540) — gifts resolve to a `ThingDef[]` sorted by `defName`; equal-distance tie-break uses `thingIDNumber`.
+- **Date robustness** (AZR-523) — FailOn when the partner is drafted or not on `DateNight_GoOnDate` (250-tick start grace); partner death skips ruined thought/venue penalty; schedule flags seed in FinalizeInit without enter transitions.
+
+## [1.7.2] (proposed)
+
+Player-facing version **1.7.2** pending Myleek confirmation (`About.xml` still **1.7.1**). Stamp `date-state-gifts-v1`.
+
+AZR-522 AZR-523 AZR-540
+
+### Fixed
+- Same as Unreleased above.
+
 ## [1.7.1]
 
 Player-facing version **1.7.1** (`About.xml` `modVersion`). Stamp `thought-partner-v1`.
