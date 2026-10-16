@@ -4,6 +4,9 @@ Detailed notes for Homesteader only.
 
 ## [Unreleased]
 
+### Fixed
+- **RimWorld 1.7 load folders** — `LoadFolders.xml` now has a `v1.7` block matching `v1.6` (root, `1.5` backstories, `1.6` Homesteaders scenario, Odyssey fish when Odyssey is active). 1.7 previously had no matching block, so those folders likely did not load.
+
 ## [1.5.0]
 
 Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.5.0 loaded from ...` in Player.log (`harvest-aging-v1`).
