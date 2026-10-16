@@ -1,3 +1,15 @@
+1.10.1 (proposed — About.xml not bumped until confirmed)
+[h1]Deep Colony — 1.10.1[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Odyssey crash trauma[/b] — hooks IncidentWorker.TryExecute (not the dead base TryExecuteWorker) and matches an explicit Odyssey gravship-crash allowlist instead of any "Crash" substring (AZR-626).
+[*] [b]Touch comfort save growth[/b] — only seeds comfort for colonists, prisoners, and guests; prunes stale pawn IDs daily; skips empty comfort/counsel/reconcile collections on save (AZR-618).
+[/list]
+
+[i]Build stamp (Player.log): odyssey-save-growth-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]
+
 1.10.0
 [h1]Deep Colony — 1.10.0[/h1]
 

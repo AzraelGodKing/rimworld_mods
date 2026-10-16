@@ -94,7 +94,9 @@ namespace DeepColony.Patches
         }
     }
 
-    [HarmonyPatch(typeof(IncidentWorker), "TryExecuteWorker")]
+    // Public non-virtual wrapper — concrete workers override TryExecuteWorker, so
+    // patching the base virtual body never runs (AZR-626).
+    [HarmonyPatch(typeof(IncidentWorker), nameof(IncidentWorker.TryExecute))]
     public static class Patch_IncidentWorker_OdysseyCrash
     {
         public static void Postfix(IncidentWorker __instance, IncidentParms parms, bool __result)

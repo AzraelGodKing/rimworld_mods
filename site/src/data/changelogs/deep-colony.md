@@ -4,6 +4,19 @@ Detailed notes for Deep Colony only.
 
 ## [Unreleased]
 
+### Fixed
+- **Odyssey crash trauma** (AZR-626) — patch `IncidentWorker.TryExecute`; allowlist Odyssey gravship-crash incidents (no bare `"Crash"` substring).
+- **Touch comfort save growth** (AZR-618) — seed only colonists/prisoners/guests; daily prune of stale pawn IDs; skip empty ID-keyed collections on save.
+
+## [1.10.1] (proposed)
+
+Player-facing version **1.10.1** pending Myleek confirmation (`About.xml` still **1.10.0**). Stamp `odyssey-save-growth-v1`.
+
+AZR-618 AZR-626
+
+### Fixed
+- Same as Unreleased above.
+
 ## [1.10.0]
 
 Player-facing version **1.10.0** (`About.xml` `modVersion`). Stamp `colony-overview-v1`.
