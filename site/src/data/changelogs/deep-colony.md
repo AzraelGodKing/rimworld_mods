@@ -4,6 +4,9 @@ Detailed notes for Deep Colony only.
 
 ## [Unreleased]
 
+### Changed
+- One Harmony patch class per vanilla method for `Pawn.Kill`, `SpawnSetup`, `MakeDowned`, `Ingested`, `SetFaction`, `AddDirectRelation`, and raid `TryExecuteWorker` (AZR-627). Same utility calls in the same order. Shared one `FieldRef` per tracker. Deleted leftover `Patch_BatchC` / `Patch_BatchD` dump files. Settings heading key is `DC_Settings_LaterSystems`.
+
 ## [1.10.0]
 
 Player-facing version **1.10.0** (`About.xml` `modVersion`). Stamp `colony-overview-v1`.
