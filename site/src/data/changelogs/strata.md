@@ -7,6 +7,9 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 ## [Unreleased]
 
+### Docs
+- Comment and docs cleanup: removed narrating file-header essays, per-field `StrataGasDef` narration, and restating settings xml-docs. Deleted stale `V3_ROADMAP.md` (pointers now go to `V4_ROADMAP.md`) and the empty-English-folder section in `Languages/README.md`. Harmony/save/compat trap comments kept. No gameplay change.
+
 ## [3.9.3]
 
 Player-facing version **3.9.3** (`About.xml` `modVersion`). Stamp `construct-fetch-v1`.

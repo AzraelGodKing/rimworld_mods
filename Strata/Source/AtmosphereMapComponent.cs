@@ -6,11 +6,6 @@ using Verse;
 
 namespace Strata
 {
-    // V3.5 room-volume multi-gas atmosphere (atmosphere-v35). One mix per room;
-    // O₂/CO₂ metabolism on B1+ sealed rooms only (surface/A+ ambient-locked).
-    // Opt-in via Mod Options (natural/pollutant gases default OFF). Cycle:
-    // prep → transport (vents, ducts, shafts, doors) → sources (emitters,
-    // breathing, scrubbers) → overlay / pawn affect. Per-cell breath grid retired.
     public class AtmosphereMapComponent : MapComponent, ICellBoolGiver
     {
         private const int CycleTicks = 60;

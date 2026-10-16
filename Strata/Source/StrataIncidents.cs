@@ -304,8 +304,6 @@ namespace Strata
             return PlanetTile.Invalid;
         }
 
-        // Same relative position on another level's grid — used for landings,
-        // shaft junctions, and camera jumps so things stack vertically.
         public static IntVec3 ProportionalCell(IntVec3 pos, Map from, Map to)
         {
             if (from == null || to == null || from.Size.x <= 0 || from.Size.z <= 0)
@@ -317,7 +315,6 @@ namespace Strata
             return new IntVec3(x, 0, z);
         }
 
-        // Proportional alignment, nudging inward when the spot hugs the map edge.
         public static IntVec3 VerticalAlign(IntVec3 pos, Map from, Map to, float searchRadius = 25f, int edgeMargin = 8)
         {
             IntVec3 target = ProportionalCell(pos, from, to);
@@ -418,12 +415,7 @@ namespace Strata
         }
     }
 
-    // Enforces the "underground is sealed rock" fiction: sky and weather
-    // conditions and raids/threats that can't physically reach a buried level
-    // never fire down there. Infestations (which erupt from within) and
-    // Strata's own underground events are always allowed. Without this filter,
-    // the target tag above would let the storyteller drop solar flares and
-    // mech clusters on a rock vault.
+    // Map_PlayerHome on pocket maps would otherwise let solar flares and mech clusters fire underground.
     [HarmonyPatch(typeof(IncidentWorker), nameof(IncidentWorker.CanFireNow))]
     public static class Patch_UndergroundIncidents
     {
@@ -597,9 +589,6 @@ namespace Strata
         }
     }
 
-    // With every other threat suppressed underground, lean into bugs as the
-    // defining danger of the deep: infestations are meaningfully more likely on
-    // a Strata level than they would be under an ordinary mountain.
     [HarmonyPatch(typeof(IncidentWorker), nameof(IncidentWorker.ChanceFactorNow))]
     public static class Patch_UndergroundInfestationWeight
     {

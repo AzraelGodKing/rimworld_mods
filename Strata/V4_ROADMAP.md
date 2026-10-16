@@ -4,7 +4,7 @@
 
 Tracking: [AZR-467](https://linear.app/azraelgodking/issue/AZR-467) · Linear milestone **Strata 4 (RimWorld 1.7)** in the RimWorld Mods project.
 
-Earlier work: [V3_ROADMAP.md](V3_ROADMAP.md) · Series roadmap: [../ROADMAP.md](../ROADMAP.md)
+V3 shipped. Series roadmap: [../ROADMAP.md](../ROADMAP.md)
 
 ---
 

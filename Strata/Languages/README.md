@@ -70,12 +70,3 @@ Package id: `AzraelGodKing.Strata`
 |----------|-------------|-------|
 | **Russian** | Yes (community) | Community: `ShaftFluidStrings.xml` (do not overwrite). Fill-in: `Strata.xml` for remaining English Keyed keys. |
 | **ChineseSimplified** (简体中文) | Yes (full pack mirroring Russian coverage) | `Strata.xml`, `ShaftFluidStrings.xml` |
-
-## Why an empty English folder did not work
-
-RimWorld loads `Languages/&lt;LanguageName&gt;/` for the **active game language**. Translators need:
-
-1. **Keyed** entries for every string emitted from C# via `"KeyName".Translate()`.
-2. **DefInjected** overrides for def labels/descriptions when the game language is not English.
-
-An empty `Languages/English/.gitkeep` folder does not break English (defs + hardcoded C# still show), but it gave no keys to copy and C# strings were not wired through the translation system — so non-English packs could not override them.
