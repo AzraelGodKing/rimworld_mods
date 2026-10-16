@@ -261,35 +261,56 @@ namespace Homesteader
                 for (int i = 0; i < kind.DefNameContains.Length; i++)
                 {
                     string token = kind.DefNameContains[i];
-                    if (name.IndexOf(token, StringComparison.OrdinalIgnoreCase) < 0)
+                    if (!DefNameContainsToken(name, token))
                     {
                         continue;
                     }
 
-                    if (kind.Id == "TreeNuts" && name.IndexOf("Peanut", StringComparison.OrdinalIgnoreCase) >= 0)
+                    if (kind.Id == "TreeNuts" && DefNameContainsToken(name, "Peanut"))
                     {
-                        continue;
-                    }
-
-                    // "Egg" in "Eggplant" etc. — require Egg at start or after underscore for eggs.
-                    if (kind.Id == "Eggs")
-                    {
-                        if (name.StartsWith("Egg", StringComparison.OrdinalIgnoreCase)
-                            || name.IndexOf("Egg", StringComparison.OrdinalIgnoreCase) >= 0)
-                        {
-                            if (name.IndexOf("Eggplant", StringComparison.OrdinalIgnoreCase) >= 0)
-                            {
-                                continue;
-                            }
-
-                            return true;
-                        }
-
                         continue;
                     }
 
                     return true;
                 }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Match allergy tokens on word / camelCase boundaries so "Egg" does not
+        /// hit Veggie*, "Nuts" does not hit Donuts, "Crab" does not hit Crabapple (AZR-528).
+        /// </summary>
+        internal static bool DefNameContainsToken(string defName, string token)
+        {
+            if (string.IsNullOrEmpty(defName) || string.IsNullOrEmpty(token))
+            {
+                return false;
+            }
+
+            int idx = 0;
+            while (idx <= defName.Length - token.Length)
+            {
+                int found = defName.IndexOf(token, idx, StringComparison.OrdinalIgnoreCase);
+                if (found < 0)
+                {
+                    return false;
+                }
+
+                bool startOk = found == 0
+                    || !char.IsLetter(defName[found - 1])
+                    || (char.IsLower(defName[found - 1]) && char.IsUpper(defName[found]));
+                int end = found + token.Length;
+                bool endOk = end >= defName.Length
+                    || !char.IsLetter(defName[end])
+                    || char.IsUpper(defName[end]);
+                if (startOk && endOk)
+                {
+                    return true;
+                }
+
+                idx = found + 1;
             }
 
             return false;

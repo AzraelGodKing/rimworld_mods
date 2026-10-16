@@ -53,14 +53,9 @@ namespace Homesteader
                 durationTicks);
             map.gameConditionManager.RegisterCondition(condition);
 
-            int silverTaken = 0;
+            int silverTaken = TryTakeSilver(map, SuperChatCost);
             Pawn kats = null;
-            if (map.resourceCounter.GetCount(ThingDefOf.Silver) >= SuperChatCost)
-            {
-                TradeUtility.LaunchSilver(map, SuperChatCost);
-                silverTaken = SuperChatCost;
-            }
-            else
+            if (silverTaken < SuperChatCost)
             {
                 kats = TrySpawnHostileKats(map);
             }
@@ -100,13 +95,81 @@ namespace Homesteader
             return true;
         }
 
+        /// <summary>
+        /// Take silver for Super Chat. Prefer orbital-trade launchables; fall back
+        /// to any map silver (stockpiles) so beacon-less colonies still pay (AZR-528).
+        /// </summary>
+        private static int TryTakeSilver(Map map, int amount)
+        {
+            if (map == null || amount <= 0)
+            {
+                return 0;
+            }
+
+            int launchable = 0;
+            foreach (Thing t in TradeUtility.AllLaunchableThingsForTrade(map))
+            {
+                if (t?.def == ThingDefOf.Silver)
+                {
+                    launchable += t.stackCount;
+                }
+            }
+
+            if (launchable >= amount)
+            {
+                TradeUtility.LaunchSilver(map, amount);
+                return amount;
+            }
+
+            List<Thing> piles = map.listerThings.ThingsOfDef(ThingDefOf.Silver);
+            if (piles == null || piles.Count == 0)
+            {
+                return 0;
+            }
+
+            int available = 0;
+            for (int i = 0; i < piles.Count; i++)
+            {
+                Thing t = piles[i];
+                if (t != null && !t.Destroyed)
+                {
+                    available += t.stackCount;
+                }
+            }
+
+            if (available < amount)
+            {
+                return 0;
+            }
+
+            // Deterministic order: thingIDNumber ascending.
+            List<Thing> ordered = new List<Thing>(piles);
+            ordered.Sort((a, b) => a.thingIDNumber.CompareTo(b.thingIDNumber));
+            int remaining = amount;
+            for (int i = 0; i < ordered.Count && remaining > 0; i++)
+            {
+                Thing pile = ordered[i];
+                if (pile == null || pile.Destroyed || pile.stackCount <= 0)
+                {
+                    continue;
+                }
+
+                int take = Mathf.Min(remaining, pile.stackCount);
+                Thing split = pile.SplitOff(take);
+                split.Destroy(DestroyMode.Vanish);
+                remaining -= take;
+            }
+
+            return amount - remaining;
+        }
+
         private static string BuildLetterText(int silverTaken, Pawn kats)
         {
             var sb = new StringBuilder();
             sb.Append("Homesteader_KatsLetter_Open".Translate());
             sb.AppendLine();
             sb.AppendLine();
-            if (silverTaken > 0)
+            if (silverTaken >= SuperChatCost)
             {
                 sb.Append("Homesteader_KatsLetter_SilverTaken".Translate(silverTaken));
             }
