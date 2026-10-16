@@ -1,0 +1,90 @@
+using System.Collections.Generic;
+using RimWorld;
+using Verse;
+
+namespace Strata
+{
+    public sealed class CrossFloorIntentRecord : IExposable
+    {
+        public int pawnId;
+        public int destMapId;
+        public RelayPurpose purpose;
+        public int preferredBedId = -1;
+        public int returnMapId = -1;
+        public int carriedPawnId = -1;
+        public IntVec3 preferArrivalNear = IntVec3.Invalid;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref pawnId, "pawnId");
+            Scribe_Values.Look(ref destMapId, "destMapId");
+            Scribe_Values.Look(ref purpose, "purpose");
+            Scribe_Values.Look(ref preferredBedId, "preferredBedId", -1);
+            Scribe_Values.Look(ref returnMapId, "returnMapId", -1);
+            Scribe_Values.Look(ref carriedPawnId, "carriedPawnId", -1);
+            Scribe_Values.Look(ref preferArrivalNear, "preferArrivalNear", IntVec3.Invalid);
+        }
+    }
+
+    public sealed class CrossFloorRouteRecord : IExposable
+    {
+        public int pawnId;
+        public int destMapId;
+        public IntVec3 destCell;
+        public int returnPortalId;
+        public int stage;
+        public int finish;
+        public int bedId = -1;
+        public int destPortalId;
+        public int bedMapId;
+        public bool requireDrafted;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref pawnId, "pawnId");
+            Scribe_Values.Look(ref destMapId, "destMapId");
+            Scribe_Values.Look(ref destCell, "destCell");
+            Scribe_Values.Look(ref returnPortalId, "returnPortalId");
+            Scribe_Values.Look(ref stage, "stage");
+            Scribe_Values.Look(ref finish, "finish");
+            Scribe_Values.Look(ref bedId, "bedId", -1);
+            Scribe_Values.Look(ref destPortalId, "destPortalId");
+            Scribe_Values.Look(ref bedMapId, "bedMapId");
+            Scribe_Values.Look(ref requireDrafted, "requireDrafted");
+        }
+    }
+
+    // PortalRelayChain and DraftedPortalPathing keep trip state in static
+    // dictionaries. FinalizeInit clears those on every load; this component
+    // writes them into the save and puts back the ones that still make sense
+    // from LoadedGame, which runs after that clear.
+    public class GameComponent_StrataCrossFloorTrips : GameComponent
+    {
+        private List<CrossFloorIntentRecord> intents;
+        private List<CrossFloorRouteRecord> routes;
+
+        public GameComponent_StrataCrossFloorTrips(Game game)
+        {
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                intents = PortalRelayChain.CaptureIntents();
+                routes = DraftedPortalPathing.CaptureRoutes();
+            }
+            Scribe_Collections.Look(ref intents, "strataRelayIntents", LookMode.Deep);
+            Scribe_Collections.Look(ref routes, "strataDraftedRoutes", LookMode.Deep);
+        }
+
+        public override void LoadedGame()
+        {
+            PortalRelayChain.RestoreIntents(intents);
+            DraftedPortalPathing.RestoreRoutes(routes);
+            intents = null;
+            routes = null;
+        }
+    }
+}

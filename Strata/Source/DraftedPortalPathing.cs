@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -562,6 +563,119 @@ namespace Strata
                 }
             }
 
+            return null;
+        }
+
+        internal static List<CrossFloorRouteRecord> CaptureRoutes()
+        {
+            var saved = new List<CrossFloorRouteRecord>(routes.Count);
+            foreach (KeyValuePair<int, Route> pair in routes)
+            {
+                Route route = pair.Value;
+                saved.Add(new CrossFloorRouteRecord
+                {
+                    pawnId = pair.Key,
+                    destMapId = route.destMap?.uniqueID ?? -1,
+                    destCell = route.destCell,
+                    returnPortalId = route.returnPortalId,
+                    stage = (int)route.stage,
+                    finish = (int)route.finish,
+                    bedId = route.bedId,
+                    destPortalId = route.destPortalId,
+                    bedMapId = route.bedMapId,
+                    requireDrafted = route.requireDrafted,
+                });
+            }
+            return saved;
+        }
+
+        // Called from LoadedGame, after session reset has cleared this dictionary.
+        internal static void RestoreRoutes(List<CrossFloorRouteRecord> saved)
+        {
+            if (saved == null || saved.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < saved.Count; i++)
+            {
+                CrossFloorRouteRecord record = saved[i];
+                if (record == null)
+                {
+                    continue;
+                }
+                Pawn pawn = FindPawn(record.pawnId);
+                Map dest = FindMapById(record.destMapId);
+                if (pawn == null || pawn.Dead || dest == null)
+                {
+                    continue;
+                }
+                if (record.returnPortalId > 0 && FindPortalAnywhere(record.returnPortalId) == null)
+                {
+                    continue;
+                }
+                if (record.destPortalId > 0 && FindPortalAnywhere(record.destPortalId) == null)
+                {
+                    continue;
+                }
+                if (record.bedId > 0 && !BedStillExists(record))
+                {
+                    continue;
+                }
+                if (!System.Enum.IsDefined(typeof(Stage), record.stage)
+                    || !System.Enum.IsDefined(typeof(FinishMode), record.finish))
+                {
+                    continue;
+                }
+
+                var stage = (Stage)record.stage;
+                routes[pawn.thingIDNumber] = new Route
+                {
+                    destMap = dest,
+                    destCell = record.destCell,
+                    returnPortalId = record.returnPortalId,
+                    stage = stage,
+                    finish = (FinishMode)record.finish,
+                    bedId = record.bedId,
+                    destPortalId = record.destPortalId,
+                    bedMapId = record.bedMapId,
+                    requireDrafted = record.requireDrafted,
+                };
+
+                // EnterFirst on the middle floor, or back on the destination
+                // waiting for the finish job. Jobs still in the pawn's queue
+                // (walking to the first stair) are left to vanilla.
+                bool resume = (stage == Stage.EnterFirst && pawn.Map != dest)
+                    || (stage == Stage.CrossAndReturn && pawn.Map == dest);
+                if (resume && !pendingContinue.Contains(pawn.thingIDNumber))
+                {
+                    pendingContinue.Add(pawn.thingIDNumber);
+                }
+            }
+        }
+
+        private static bool BedStillExists(CrossFloorRouteRecord record)
+        {
+            Map bedMap = record.bedMapId > 0 ? FindMapById(record.bedMapId) : null;
+            if (bedMap != null && FindBedById(bedMap, record.bedId) != null)
+            {
+                return true;
+            }
+            Map dest = FindMapById(record.destMapId);
+            return FindBedById(dest, record.bedId) != null;
+        }
+
+        private static MapPortal FindPortalAnywhere(int thingId)
+        {
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                MapPortal portal = FindPortalById(maps[i], thingId);
+                if (portal != null)
+                {
+                    return portal;
+                }
+            }
             return null;
         }
     }
