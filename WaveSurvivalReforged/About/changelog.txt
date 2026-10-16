@@ -3,6 +3,7 @@ Unreleased
 [b]Changed[/b]
 [list]
 [*] Declared RimWorld 1.7 in supportedVersions alongside 1.6. Existing 1.6 DLL; no gameplay change. No modVersion bump (Myleek).
+[*] [b]Mod description[/b] — shorter workshop text. Same storyteller, waves, and drops.
 [/list]
 
 1.0.0
