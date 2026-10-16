@@ -11,19 +11,7 @@ namespace AzraelCommon
         {
             if (content == null)
             {
-                Assembly asm = Assembly.GetExecutingAssembly();
-                foreach (ModContentPack pack in LoadedModManager.RunningModsListForReading)
-                {
-                    if (pack.assemblies?.loadedAssemblies == null)
-                    {
-                        continue;
-                    }
-                    if (pack.assemblies.loadedAssemblies.Contains(asm))
-                    {
-                        content = pack;
-                        break;
-                    }
-                }
+                content = ModPack.ForExecutingAssembly();
             }
 
             string version = content?.ModMetaData?.ModVersion;

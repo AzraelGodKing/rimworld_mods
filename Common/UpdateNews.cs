@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using RimWorld;
 using Verse;
@@ -27,7 +26,7 @@ namespace AzraelCommon
                 return;
             }
 
-            ModContentPack pack = PackForExecutingAssembly() ?? PackForPackageId(packageId);
+            ModContentPack pack = ModPack.ForExecutingAssembly() ?? PackForPackageId(packageId);
             if (pack?.ModMetaData == null)
             {
                 return;
@@ -66,25 +65,6 @@ namespace AzraelCommon
                 labelKey.Translate(version),
                 body,
                 LetterDefOf.PositiveEvent);
-        }
-
-        internal static ModContentPack PackForExecutingAssembly()
-        {
-            Assembly asm = Assembly.GetExecutingAssembly();
-            foreach (ModContentPack pack in LoadedModManager.RunningModsListForReading)
-            {
-                if (pack.assemblies?.loadedAssemblies == null)
-                {
-                    continue;
-                }
-
-                if (pack.assemblies.loadedAssemblies.Contains(asm))
-                {
-                    return pack;
-                }
-            }
-
-            return null;
         }
 
         private static ModContentPack PackForPackageId(string packageId)
