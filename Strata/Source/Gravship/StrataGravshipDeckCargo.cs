@@ -88,7 +88,6 @@ namespace Strata
 
         public static bool PlacedThisLand => placedThisLand;
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             pending.Clear();

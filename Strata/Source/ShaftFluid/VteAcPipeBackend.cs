@@ -26,7 +26,6 @@ namespace Strata
 
         private static readonly Dictionary<object, object> pairedNets = new Dictionary<object, object>();
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             pairedNets.Clear();

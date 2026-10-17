@@ -44,12 +44,6 @@ namespace DateNight
             rapport = new List<CoupleRapport>();
         }
 
-        /// <summary>Legacy name; clears sessions and rapport.</summary>
-        public static void ResetRapport()
-        {
-            Reset();
-        }
-
         public static void PruneDeadPawns()
         {
             if (rapport == null || rapport.Count == 0)

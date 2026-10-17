@@ -3,13 +3,6 @@ using Verse;
 
 namespace Strata
 {
-    // Optional marker. ResetAll is the source of truth; ShaftFluid and Gravship
-    // reset methods still carry this attribute and are invoked from that list.
-    [AttributeUsage(AttributeTargets.Method)]
-    public sealed class StrataSessionResetAttribute : Attribute
-    {
-    }
-
     public static class StrataSessionReset
     {
         static readonly Action[] ResetAll =
