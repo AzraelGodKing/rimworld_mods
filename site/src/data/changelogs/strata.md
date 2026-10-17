@@ -1,9 +1,25 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.9.4` in `About.xml` `modVersion`. Player.log: `[Strata] v3.9.4 loaded from ... (modified ...); upper-floor-v1.` via `ModVersionLog.Write`.
+**Version:** `3.10.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.10.0 loaded from ... (modified ...); shared-fixes-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `upper-floor-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `shared-fixes-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.10.0]
+
+Player-facing version **3.10.0** (`About.xml` `modVersion`). Stamp `shared-fixes-v1`.
+
+AZR-466 AZR-472 AZR-478 AZR-480 AZR-481 AZR-482
+
+### Fixed
+- **Haul delivery crash** — a pawn finishing a cross-level haul no longer throws inside `HaulToCellStorageJob` and stops the map tick. A storage cell with no slot group (deep-storage shelf, LWM's stack-space patch) now gets a container job. If the vanilla call still throws, Strata uses a plain cell haul, and the delivery tick drops the stack instead of killing the game.
+
+### Changed
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies/Strata.dll`. Unstable 1.7 loads `1.7/Assemblies/Strata.dll`. Shared defs stay at the mod root. Building the 1.7 project does not replace the 1.6 DLL.
+- **Floor list cache** (AZR-480) — each map keeps its own stair list, so pawns on different floors do not rebuild it on every job check. Sorting a floor list no longer reorders the shared copy.
+- **Gas overlay labels** (AZR-472) — room mix text is rebuilt when the atmosphere cycle or the room changes, not on every interface pass.
+- **Pipe and compat reflection** (AZR-466) — member lookups are cached, so shaft fluid and soft-compat reads do not search for the same property on every tick.
+- **Work relay** (AZR-478 AZR-481 AZR-482) — modded work types can send a pawn upstairs or downstairs. With numbered priorities on, a pawn leaves lower-priority local work for better work within the stairwell limit (default 2; 0 keeps them on the current job). Fires and bleeding patients can pull them off that job. Checkbox priorities are unchanged. An empty arrival blacklist lifts when that floor's work changes, and the pawn tries the work type that sent them before taking some other job.
 
 ## [3.9.4]
 

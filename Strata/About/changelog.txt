@@ -1,23 +1,19 @@
-3.9.4
-[h1]Strata - 3.9.4[/h1]
+3.10.0
+[h1]Strata - 3.10.0[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Stairwell construction postfix[/b] — skip when Niceties leave-a-way-out cancels CompleteConstruction (`__runOriginal` false) (AZR-548).
-[*] [b]Upper-deck gravpanels[/b] — substructure on a linked gravship floor counts as connected, so the overlay no longer paints it red (AZR-636).
-[*] [b]Ideology altar on another floor[/b] — an altar on a linked floor counts for the colony, including when you are back on the surface (AZR-637).
-[*] [b]Cross-floor trips[/b] — carried prisoners, babies, and drafted stair routes survive save/load (AZR-477).
+[*] [b]Haul delivery crash[/b] — a pawn finishing a cross-level haul no longer throws inside HaulToCellStorageJob and stops the map tick. A storage cell with no slot group gets a container job. If the vanilla call still throws, Strata uses a plain cell haul, and the delivery tick drops the stack instead of killing the game.
 [/list]
 
 [b]Changed[/b]
 [list]
-[*] [b]Harmony consolidation[/b] — one play-settings postfix, one mental-break job-giver patch, one GetRest postfix, explicit session ResetAll, WorkTypeDefOf for vanilla work types, unused ArtPackage preview folders removed. No gameplay change.
+[*] [b]Separate 1.6 and 1.7 assemblies.[/b] Official 1.6 loads 1.6/Assemblies/Strata.dll. Unstable 1.7 loads 1.7/Assemblies/Strata.dll. Shared defs stay at the mod root.
+[*] [b]Floor list cache[/b] — each map keeps its own stair list, so job checks stop rebuilding it whenever a pawn on another floor asks (AZR-480).
+[*] [b]Gas overlay labels[/b] — room mix text rebuilds when the atmosphere cycle or the room changes, not on every interface pass (AZR-472).
+[*] [b]Pipe and compat reflection[/b] — member lookups are cached, so shaft fluid and soft-compat reads do not search for the same property on every tick (AZR-466).
+[*] [b]Work relay[/b] — modded work types can send a pawn to another floor. With numbered priorities on, a pawn leaves lower-priority local work for better work within the stairwell limit (default 2; set the slider to 0 to keep them on the current job). Fires and bleeding patients can pull them off that job. Checkbox priorities are unchanged. An empty arrival stops blocking a floor as soon as that floor's work changes, and the pawn tries the work type that sent them before taking some other job (AZR-478 AZR-481 AZR-482).
 [/list]
 
-[b]Docs[/b]
-[list]
-[*] Comment and docs cleanup: removed narrating file-header essays, per-field gas-def narration, and restating settings xml-docs. Deleted stale V3_ROADMAP.md (pointers now go to V4_ROADMAP.md) and the empty-English-folder section in Languages/README.md. No gameplay change.
-[/list]
-
-[i]Build stamp (Player.log): upper-floor-v1[/i]
+[i]Build stamp (Player.log): shared-fixes-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

@@ -11,13 +11,11 @@ namespace Strata
     {
         // Reusable buffers; game logic is single-threaded.
         private static readonly Queue<Map> openQueue = new Queue<Map>();
-        private static readonly List<LevelLink> resultBuffer = new List<LevelLink>();
         private static readonly HashSet<Map> reachesVisited = new HashSet<Map>();
         private static readonly Queue<Map> reachesQueue = new Queue<Map>();
 
-        // ReachableLevels BFS scratch. The public API returns a fresh list so
-        // nested callers (e.g. LevelDemand.Build → AddStorageUpgradePulls while
-        // HaulAcrossLevels is still walking links) cannot clear a live enumerator.
+        // ReachableLevels BFS scratch. Each map keeps its own result list so a
+        // nested call for a different floor cannot clear the list being walked.
         private static readonly HashSet<Map> bfsVisited = new HashSet<Map>();
         private static readonly Dictionary<Map, MapPortal> bfsFirstSteps = new Dictionary<Map, MapPortal>();
         private static readonly Dictionary<Map, int> bfsDepths = new Dictionary<Map, int>();
@@ -27,11 +25,12 @@ namespace Strata
         private static int graphEpoch;
         private static readonly Dictionary<long, RouteCacheEntry> routeCache = new Dictionary<long, RouteCacheEntry>();
 
-        // ReachableLevels is called from many relay paths in the same tick;
-        // cache the BFS result per map until portal topology changes.
-        private static Map cachedReachableFrom;
-        private static int cachedReachableEpoch = -1;
-        private static readonly List<LevelLink> reachableCache = new List<LevelLink>();
+        // One cached BFS result per map, reused until portal topology changes.
+        // Callers must not add, remove, or sort the returned list. Sort a copy.
+        private static int reachableEpoch = -1;
+        private static readonly Dictionary<int, List<LevelLink>> reachableByMapId =
+            new Dictionary<int, List<LevelLink>>();
+        private static readonly List<LevelLink> emptyLinks = new List<LevelLink>();
 
         // AnyLinkFrom is hit from many Harmony postfixes; cache per map until
         // InvalidateCache (portal spawn/despawn) bumps graphEpoch.
@@ -57,9 +56,8 @@ namespace Strata
         {
             graphEpoch++;
             routeCache.Clear();
-            cachedReachableFrom = null;
-            cachedReachableEpoch = -1;
-            reachableCache.Clear();
+            reachableEpoch = -1;
+            reachableByMapId.Clear();
             anyLinkByMapId.Clear();
             anyLinkEpoch = graphEpoch;
         }
@@ -114,20 +112,25 @@ namespace Strata
         }
 
         // All levels reachable from 'from', nearest first, each paired with the
-        // first portal to walk into. Returns a new list each call (safe to nest
-        // or store for the current tick); topology is cached until InvalidateCache.
+        // first portal to walk into. The list is cached per map until
+        // InvalidateCache. Do not mutate it; LevelRoleUtility sorts a copy.
         public static List<LevelLink> ReachableLevels(Map from)
         {
             if (from == null)
             {
-                return new List<LevelLink>();
+                return emptyLinks;
             }
-            if (cachedReachableFrom == from && cachedReachableEpoch == graphEpoch)
+            if (reachableEpoch != graphEpoch)
             {
-                return new List<LevelLink>(reachableCache);
+                reachableByMapId.Clear();
+                reachableEpoch = graphEpoch;
+            }
+            if (reachableByMapId.TryGetValue(from.uniqueID, out List<LevelLink> cached))
+            {
+                return cached;
             }
 
-            resultBuffer.Clear();
+            var built = new List<LevelLink>();
             bfsVisited.Clear();
             bfsVisited.Add(from);
             bfsFirstSteps.Clear();
@@ -154,7 +157,7 @@ namespace Strata
                     MapPortal firstStep = current == from ? portal : bfsFirstSteps[current];
                     bfsFirstSteps[other] = firstStep;
                     bfsDepths[other] = bfsDepths[current] + 1;
-                    resultBuffer.Add(new LevelLink
+                    built.Add(new LevelLink
                     {
                         map = other,
                         firstStep = firstStep,
@@ -164,11 +167,25 @@ namespace Strata
                     openQueue.Enqueue(other);
                 }
             }
-            reachableCache.Clear();
-            reachableCache.AddRange(resultBuffer);
-            cachedReachableFrom = from;
-            cachedReachableEpoch = graphEpoch;
-            return new List<LevelLink>(resultBuffer);
+
+            reachableByMapId[from.uniqueID] = built;
+            return built;
+        }
+
+        // A list the caller may sort. The cached ReachableLevels list must stay
+        // in BFS order for every other reader.
+        public static List<LevelLink> CopyLinks(IReadOnlyList<LevelLink> links)
+        {
+            if (links == null || links.Count == 0)
+            {
+                return emptyLinks;
+            }
+            var copy = new List<LevelLink>(links.Count);
+            for (int i = 0; i < links.Count; i++)
+            {
+                copy.Add(links[i]);
+            }
+            return copy;
         }
 
         // The best portal on 'from' for a pawn heading toward 'target': among

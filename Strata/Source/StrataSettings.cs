@@ -24,6 +24,11 @@ namespace Strata
 
         public int settingsVersion = CurrentSettingsVersion;
         public bool workRelayEnabled = true;
+
+        // 0 disables leaving a local job for better work on another floor.
+        public int priorityWorkMaxDepth = 2;
+
+        public bool priorityWorkEmergency = true;
         public bool haulAcrossLevelsEnabled = true;
         public bool robotSoftCompatEnabled = true;
         public bool robotWorkRelayEnabled = false;
@@ -104,6 +109,8 @@ namespace Strata
             Scribe_Values.Look(ref raidPursuitEnabled, "raidPursuitEnabled", defaultValue: true);
             Scribe_Values.Look(ref settingsVersion, "settingsVersion", defaultValue: 0);
             Scribe_Values.Look(ref workRelayEnabled, "workRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref priorityWorkMaxDepth, "priorityWorkMaxDepth", defaultValue: 2);
+            Scribe_Values.Look(ref priorityWorkEmergency, "priorityWorkEmergency", defaultValue: true);
             Scribe_Values.Look(ref haulAcrossLevelsEnabled, "haulAcrossLevelsEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotSoftCompatEnabled, "robotSoftCompatEnabled", defaultValue: true);
             Scribe_Values.Look(ref robotWorkRelayEnabled, "robotWorkRelayEnabled", defaultValue: false);
@@ -324,6 +331,11 @@ namespace Strata
             Text.Font = GameFont.Small;
             listing.CheckboxLabeled("Strata_Settings_WorkRelay".Translate(), ref Settings.workRelayEnabled,
                 "Strata_Settings_WorkRelayDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_PriorityWorkEmergency".Translate(), ref Settings.priorityWorkEmergency,
+                "Strata_Settings_PriorityWorkEmergencyDesc".Translate());
+            listing.Label("Strata_Settings_PriorityWorkDepth".Translate(Settings.priorityWorkMaxDepth));
+            Settings.priorityWorkMaxDepth = UnityEngine.Mathf.RoundToInt(
+                listing.Slider(Settings.priorityWorkMaxDepth, 0f, 8f));
             listing.CheckboxLabeled("Strata_Settings_OffThreadWorkRelay".Translate(), ref Settings.offThreadWorkRelay,
                 "Strata_Settings_OffThreadWorkRelayDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_HaulAcrossLevels".Translate(), ref Settings.haulAcrossLevelsEnabled,

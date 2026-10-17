@@ -89,7 +89,9 @@ jobs:
         run: dotnet build Homesteader/Source/Homesteader.csproj -c Release --nologo
 
       - name: Build Strata
-        run: dotnet build Strata/Source/Strata.csproj -c Release --nologo
+        run: |
+          dotnet build Strata/Source/Strata.csproj -c Release --nologo
+          dotnet build Strata/Source/Strata.1.7.csproj -c Release --nologo
 
       - name: Build Stormproof
         run: dotnet build Stormproof/Source/Stormproof.csproj -c Release --nologo

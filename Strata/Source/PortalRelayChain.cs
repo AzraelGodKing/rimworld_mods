@@ -19,6 +19,7 @@ namespace Strata
             public int returnMapId; // Haul: go back for another load; -1 = none
             public int carriedPawnId; // Warden / childcare / containment captive; -1 = none
             public IntVec3 preferArrivalNear; // pick stair landing that can reach this
+            public string intendedWorkDefName; // Work relay: try this work type on arrival
         }
 
         private static readonly Dictionary<int, Intent> intents = new Dictionary<int, Intent>();
@@ -37,7 +38,8 @@ namespace Strata
             Building_Bed preferredBed = null,
             Map returnMap = null,
             IntVec3 preferArrivalNear = default,
-            Thing preferredThing = null)
+            Thing preferredThing = null,
+            string intendedWorkDefName = null)
         {
             if (pawn == null || destMap == null)
             {
@@ -83,6 +85,14 @@ namespace Strata
                 }
             }
 
+            if (intendedWorkDefName == null
+                && purpose == RelayPurpose.Work
+                && intents.TryGetValue(pawn.thingIDNumber, out Intent priorWork)
+                && priorWork.purpose == RelayPurpose.Work)
+            {
+                intendedWorkDefName = priorWork.intendedWorkDefName;
+            }
+
             intents[pawn.thingIDNumber] = new Intent
             {
                 destMapId = destMap.uniqueID,
@@ -91,12 +101,30 @@ namespace Strata
                 returnMapId = returnId,
                 carriedPawnId = carriedId,
                 preferArrivalNear = preferArrivalNear,
+                intendedWorkDefName = intendedWorkDefName,
             };
         }
 
         public static bool HasIntent(Pawn pawn)
         {
             return pawn != null && intents.ContainsKey(pawn.thingIDNumber);
+        }
+
+        public static string IntendedWorkDefName(Pawn pawn)
+        {
+            if (pawn == null || !intents.TryGetValue(pawn.thingIDNumber, out Intent intent))
+            {
+                return null;
+            }
+            return intent.purpose == RelayPurpose.Work ? intent.intendedWorkDefName : null;
+        }
+
+        public static void ClearIntendedWork(Pawn pawn)
+        {
+            if (pawn != null && intents.TryGetValue(pawn.thingIDNumber, out Intent intent))
+            {
+                intent.intendedWorkDefName = null;
+            }
         }
 
         public static bool HasIntent(Pawn pawn, RelayPurpose purpose)
@@ -718,6 +746,7 @@ namespace Strata
                     returnMapId = intent.returnMapId,
                     carriedPawnId = intent.carriedPawnId,
                     preferArrivalNear = intent.preferArrivalNear,
+                    intendedWorkDefName = intent.intendedWorkDefName,
                 });
             }
             return saved;
@@ -775,6 +804,7 @@ namespace Strata
                     returnMapId = returnMapId,
                     carriedPawnId = record.carriedPawnId,
                     preferArrivalNear = record.preferArrivalNear,
+                    intendedWorkDefName = record.intendedWorkDefName,
                 };
                 NotifyPortalArrival(pawn);
             }

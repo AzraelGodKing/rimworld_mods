@@ -30,6 +30,22 @@ namespace Strata
             public bool childcare;
             public int blueprintFrames;
             public int haulableCount;
+
+            // Per WorkTypeDef.index. Vanilla types keep the bools above; this
+            // also covers modded work types the bools cannot name.
+            public WorkTypeSignal[] byType;
+
+            // Changes when the bools or per-type signals change, so a blacklist
+            // can lift as soon as that floor's work changes.
+            public int signalStamp;
+        }
+
+        public struct WorkTypeSignal
+        {
+            public bool available;
+            public bool needsSkill;
+            public int count;
+            public bool vanilla;
         }
 
         private static readonly Dictionary<int, BoardEntry> entries = new Dictionary<int, BoardEntry>();

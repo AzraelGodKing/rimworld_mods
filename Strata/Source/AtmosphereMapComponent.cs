@@ -117,6 +117,10 @@ namespace Strata
         private Color[] overlayColorCache;
         private CellBoolDrawer drawer;
         private int atmosphereCyclePhase = -1;
+
+        // Bumped when an atmosphere cycle finishes so gas labels rebuild once,
+        // not on every OnGUI pass.
+        public int ReadoutGeneration { get; private set; }
         private int animalMethaneCursor;
         private int plantBatchCursor;
         private int pawnAffectCooldown;
@@ -492,6 +496,7 @@ namespace Strata
                 if (atmosphereCyclePhase >= StrataLevelPerfUtility.AtmospherePhaseCount(map))
                 {
                     atmosphereCyclePhase = -1;
+                    ReadoutGeneration++;
                 }
                 return;
             }
