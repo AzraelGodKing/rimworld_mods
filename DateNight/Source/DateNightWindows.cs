@@ -43,15 +43,6 @@ namespace DateNight
             }
         }
 
-        /// <summary>
-        /// Clears unsaved window state. On load, ExposeData already rebuilt Claims;
-        /// call <see cref="ClearWindowsOnly"/> from FinalizeInit instead of Reset.
-        /// </summary>
-        public static void ClearEphemeral()
-        {
-            Windows.Clear();
-        }
-
         /// <summary>Clears only ephemeral SocialWindows (keeps bed Claims).</summary>
         public static void ClearWindowsOnly()
         {
