@@ -4,6 +4,8 @@ Detailed notes for **Stormproof** only.
 
 ## [Unreleased]
 
+- Dropped unused `docs/img/ArmoredConduit.png`. Atlas script segment output is opt-in (`-OutSegment`); default writes atlas + menu icon only. No gameplay change.
+
 ## [1.7.0]
 
 Player-facing version **1.7.0** (`About.xml` `modVersion`). Stamp `forecast-schedule-v1`.

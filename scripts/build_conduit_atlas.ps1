@@ -14,8 +14,6 @@ $repo = Split-Path $PSScriptRoot -Parent
 if (-not $SegmentPath) { $SegmentPath = Join-Path $repo 'assets\ArmoredConduit_segment_proc.png' }
 if (-not $HubPath) { $HubPath = Join-Path $repo 'assets\ArmoredConduit_hub_proc.png' }
 if (-not $OutAtlas) { $OutAtlas = Join-Path $repo 'Stormproof\Textures\Stormproof\Buildings\ArmoredConduit_Atlas.png' }
-$docsSegment = Join-Path $repo 'docs\img\ArmoredConduit.png'
-if (-not $OutSegment) { $OutSegment = $docsSegment }
 if (-not $OutMenu) { $OutMenu = Join-Path $repo 'Stormproof\Textures\Stormproof\Buildings\ArmoredConduit_MenuIcon.png' }
 
 Add-Type -AssemblyName System.Drawing
@@ -149,22 +147,24 @@ if (-not (Test-Path $HubPath)) { throw "Missing hub: $HubPath" }
 $seg = [Drawing.Bitmap]::FromFile($SegmentPath)
 $hub = [Drawing.Bitmap]::FromFile($HubPath)
 $atlas = [HeavyConduitAtlas]::Build($seg, $hub, $Cell)
-$segment = [HeavyConduitAtlas]::RenderCell($seg, $hub, $Cell, 10)  # LeftRight straight
 $menu = [HeavyConduitAtlas]::RenderCell($seg, $hub, $Cell, 10)
 
 $dir = Split-Path $OutAtlas -Parent
 if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
 
 $atlas.Save($OutAtlas, [Drawing.Imaging.ImageFormat]::Png)
-$segment.Save($OutSegment, [Drawing.Imaging.ImageFormat]::Png)
 $menu.Save($OutMenu, [Drawing.Imaging.ImageFormat]::Png)
 
-$atlas.Dispose(); $segment.Dispose(); $menu.Dispose(); $seg.Dispose(); $hub.Dispose()
-
-if ($OutSegment -ne $docsSegment) {
-    Copy-Item $OutSegment $docsSegment -Force
+if ($OutSegment) {
+    $segment = [HeavyConduitAtlas]::RenderCell($seg, $hub, $Cell, 10)  # LeftRight straight
+    $segDir = Split-Path $OutSegment -Parent
+    if ($segDir -and -not (Test-Path $segDir)) { New-Item -ItemType Directory -Path $segDir -Force | Out-Null }
+    $segment.Save($OutSegment, [Drawing.Imaging.ImageFormat]::Png)
+    $segment.Dispose()
 }
 
+$atlas.Dispose(); $menu.Dispose(); $seg.Dispose(); $hub.Dispose()
+
 Write-Output "Atlas:   $OutAtlas"
-Write-Output "Segment: $OutSegment"
+if ($OutSegment) { Write-Output "Segment: $OutSegment" }
 Write-Output "Menu:    $OutMenu"
