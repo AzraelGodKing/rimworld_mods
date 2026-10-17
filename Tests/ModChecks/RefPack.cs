@@ -48,9 +48,22 @@ namespace Azrael.ModChecks
 
             foreach ((string folder, string asm) in ModAssemblies)
             {
-                string path = Path.Combine(repo, folder, "Assemblies", asm + ".dll");
-                if (File.Exists(path))
-                    pack.TryAdd(path);
+                string file = asm + ".dll";
+                // Root Assemblies, then version folders. Strata ships 1.6 and 1.7
+                // DLLs and no root DLL. Later folders only add types the earlier
+                // DLL did not already define.
+                string[] rels =
+                {
+                    Path.Combine("Assemblies", file),
+                    Path.Combine("1.6", "Assemblies", file),
+                    Path.Combine("1.7", "Assemblies", file),
+                };
+                foreach (string rel in rels)
+                {
+                    string path = Path.Combine(repo, folder, rel);
+                    if (File.Exists(path))
+                        pack.TryAdd(path);
+                }
             }
 
             return pack;
