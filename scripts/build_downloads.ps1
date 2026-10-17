@@ -50,14 +50,22 @@ foreach ($mod in $mods) {
     git -C $repo archive --format=zip -o $zip HEAD $mod.Folder
     if ($LASTEXITCODE -ne 0) { throw "git archive failed for $($mod.Folder)" }
 
-    $dll = Join-Path $repo "$($mod.Folder)\Assemblies\$($mod.DllName).dll"
-    if (Test-Path -LiteralPath $dll) {
-        $entry = "$($mod.Folder)/Assemblies/$($mod.DllName).dll"
-        Set-ZipEntryFile -ZipPath $zip -EntryName $entry -FilePath $dll
-        Write-Output ("{0}: injected {1}" -f $mod.ZipName, $entry)
+    $dllCandidates = @(
+        @{ Rel = "Assemblies\$($mod.DllName).dll"; Entry = "$($mod.Folder)/Assemblies/$($mod.DllName).dll" },
+        @{ Rel = "1.6\Assemblies\$($mod.DllName).dll"; Entry = "$($mod.Folder)/1.6/Assemblies/$($mod.DllName).dll" },
+        @{ Rel = "1.7\Assemblies\$($mod.DllName).dll"; Entry = "$($mod.Folder)/1.7/Assemblies/$($mod.DllName).dll" }
+    )
+    $injected = $false
+    foreach ($cand in $dllCandidates) {
+        $dll = Join-Path $repo "$($mod.Folder)\$($cand.Rel)"
+        if (Test-Path -LiteralPath $dll) {
+            Set-ZipEntryFile -ZipPath $zip -EntryName $cand.Entry -FilePath $dll
+            Write-Output ("{0}: injected {1}" -f $mod.ZipName, $cand.Entry)
+            $injected = $true
+        }
     }
-    else {
-        Write-Warning ("{0}: no {1} — zip has no assembly (build the mod first)" -f $mod.ZipName, $dll)
+    if (-not $injected) {
+        Write-Warning ("{0}: no {1}.dll — zip has no assembly (build the mod first)" -f $mod.ZipName, $mod.DllName)
     }
 
     Write-Output ("{0}: {1:N0} KB" -f $mod.ZipName, ((Get-Item $zip).Length / 1KB))

@@ -8,11 +8,22 @@ dll_name="$3"
 dest_dir="${4:-docs/downloads}"
 mkdir -p "$dest_dir"
 zip_path="${dest_dir}/${zip_name}.zip"
-dll="${folder}/Assemblies/${dll_name}.dll"
 git archive --format=zip -o "$zip_path" HEAD "$folder"
-if [[ ! -f "$dll" ]]; then
-  echo "Missing $dll" >&2
+injected=0
+# Root Assemblies, plus version folders when a mod ships separate 1.6 and 1.7 DLLs.
+candidates=(
+  "${folder}/Assemblies/${dll_name}.dll"
+  "${folder}/1.6/Assemblies/${dll_name}.dll"
+  "${folder}/1.7/Assemblies/${dll_name}.dll"
+)
+for dll in "${candidates[@]}"; do
+  if [[ -f "$dll" ]]; then
+    zip -u "$zip_path" "$dll"
+    injected=1
+  fi
+done
+if [[ "$injected" -eq 0 ]]; then
+  echo "Missing ${folder} assembly (${dll_name}.dll)" >&2
   exit 1
 fi
-zip -u "$zip_path" "$dll"
 echo "${zip_name}: $(du -h "$zip_path" | cut -f1) -> ${zip_path}"

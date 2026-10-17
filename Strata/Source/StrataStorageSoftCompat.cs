@@ -120,18 +120,83 @@ namespace Strata
 
             if (dest is Building building && building.Spawned && building.Map == pawn.Map)
             {
-                Job containerJob = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, building);
-                containerJob.count = cargo.stackCount;
-                containerJob.haulMode = HaulMode.ToContainer;
-                return containerJob;
+                return MakeContainerJob(cargo, building);
             }
 
             if (cell.IsValid)
             {
-                return HaulAIUtility.HaulToCellStorageJob(pawn, cargo, cell, fitInStoreCell: true);
+                return TryHaulToCellStorageJob(pawn, cargo, cell);
             }
 
             return null;
+        }
+
+        // HaulToCellStorageJob (and LWM Deep Storage's stack-space replacement)
+        // reads SlotGroupAt(cell).Settings. A shelf cell with no slot group
+        // throws out of MapComponentTick.
+        private static Job TryHaulToCellStorageJob(Pawn pawn, Thing cargo, IntVec3 cell)
+        {
+            Map map = pawn.Map;
+            if (cargo.def == null || !cell.IsValid || !cell.InBounds(map))
+            {
+                return null;
+            }
+
+            if (map.haulDestinationManager?.SlotGroupAt(cell) == null)
+            {
+                return TryContainerJobOnCell(pawn, cargo, cell);
+            }
+
+            try
+            {
+                return HaulAIUtility.HaulToCellStorageJob(pawn, cargo, cell, fitInStoreCell: true);
+            }
+            catch (Exception ex)
+            {
+                Log.WarningOnce(
+                    "[Strata] HaulToCellStorageJob failed for " + cargo.def.defName
+                    + " at " + cell + ": " + ex.GetType().Name + ". Using a plain cell haul.",
+                    cargo.def.shortHash ^ 0x48A01CE1);
+                return MakePlainCellHaul(cargo, cell);
+            }
+        }
+
+        private static Job TryContainerJobOnCell(Pawn pawn, Thing cargo, IntVec3 cell)
+        {
+            List<Thing> things = cell.GetThingList(pawn.Map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (things[i] is Building building
+                    && building.Spawned
+                    && building.Map == pawn.Map
+                    && building.Faction == Faction.OfPlayer
+                    && building is IHaulDestination haulDest
+                    && haulDest.HaulDestinationEnabled
+                    && haulDest.Accepts(cargo)
+                    && building.TryGetInnerInteractableThingOwner() != null)
+                {
+                    return MakeContainerJob(cargo, building);
+                }
+            }
+
+            return null;
+        }
+
+        private static Job MakeContainerJob(Thing cargo, Building building)
+        {
+            Job job = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, building);
+            job.count = cargo.stackCount;
+            job.haulMode = HaulMode.ToContainer;
+            return job;
+        }
+
+        private static Job MakePlainCellHaul(Thing cargo, IntVec3 cell)
+        {
+            Job job = JobMaker.MakeJob(JobDefOf.HaulToCell, cargo, cell);
+            job.count = cargo.stackCount;
+            job.haulMode = HaulMode.ToCellStorage;
+            job.haulOpportunisticDuplicates = false;
+            return job;
         }
 
         private static bool TryMakePreferredStoreJob(
@@ -157,30 +222,18 @@ namespace Strata
                 return false;
             }
 
-            // Container / ASF shelf occupying the remembered cell.
-            List<Thing> things = preferStoreCell.GetThingList(map);
-            for (int i = 0; i < things.Count; i++)
+            job = TryContainerJobOnCell(pawn, cargo, preferStoreCell);
+            if (job != null)
             {
-                if (things[i] is Building building
-                    && building.Faction == Faction.OfPlayer
-                    && building is IHaulDestination haulDest
-                    && haulDest.HaulDestinationEnabled
-                    && haulDest.Accepts(cargo)
-                    && building.TryGetInnerInteractableThingOwner() != null)
-                {
-                    job = JobMaker.MakeJob(JobDefOf.HaulToContainer, cargo, building);
-                    job.count = cargo.stackCount;
-                    job.haulMode = HaulMode.ToContainer;
-                    return true;
-                }
+                return true;
             }
 
-            if (!StoreUtility.IsGoodStoreCell(preferStoreCell, map, cargo, pawn, pawn.Faction))
+            if (!CellIsGoodStore(preferStoreCell, map, cargo, pawn))
             {
                 return false;
             }
 
-            job = HaulAIUtility.HaulToCellStorageJob(pawn, cargo, preferStoreCell, fitInStoreCell: true);
+            job = TryHaulToCellStorageJob(pawn, cargo, preferStoreCell);
             return job != null;
         }
 

@@ -115,4 +115,7 @@ live colony that catch registration, gas-def, and level-graph problems.
 
 `Strata/Source/Strata.csproj` targets .NET Framework 4.7.2 and references
 [Krafs.Rimworld.Ref](https://www.nuget.org/packages/Krafs.Rimworld.Ref) 1.6.
-`dotnet build -c Release` outputs to `Strata/Assemblies/`.
+`dotnet build Source/Strata.csproj -c Release` writes `1.6/Assemblies/Strata.dll`.
+`dotnet build Source/Strata.1.7.csproj -c Release` writes `1.7/Assemblies/Strata.dll`.
+Official 1.6 loads the first DLL. Unstable 1.7 loads the second. Shared defs stay at the mod root.
+1.7-only code goes in `Source/RimWorld17/` (compiled only by the 1.7 project) or behind `RIMWORLD_1_7`.

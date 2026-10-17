@@ -22,6 +22,27 @@ namespace Strata
         private const float MaxOverlayAlpha = 0.42f;
         private const float MinOverlayAlpha = 0.04f;
 
+        // One readout per room, rebuilt when the atmosphere cycle or the room changes.
+        private sealed class RoomReadout
+        {
+            public int generation;
+            public int roomId;
+            public int cells;
+            public int settingsStamp;
+            public bool openAir;
+            public bool ok;
+            public bool filled;
+            public float pollutantLoad;
+            public readonly List<GasSlice> slices = new List<GasSlice>(4);
+            public readonly List<string> labels = new List<string>(4);
+            public readonly List<Color> colors = new List<Color>(4);
+            public string loadLabel;
+        }
+
+        private static readonly Dictionary<long, RoomReadout> readouts = new Dictionary<long, RoomReadout>();
+        private static readonly List<string> mixTextScratch = new List<string>(8);
+        private static readonly List<Color> mixColorScratch = new List<Color>(8);
+
         public static string OverlayLabel(StrataGasDef gas)
         {
             if (gas == null)
@@ -249,7 +270,8 @@ namespace Strata
         public static bool DrawCursorMixReadout(AtmosphereMapComponent atmosphere, Room room)
         {
             if (Event.current.type != EventType.Repaint
-                || !TryCollectRoomSlices(atmosphere, room, out List<GasSlice> slices, out float pollutantLoad, out bool openAir))
+                || !TryGetRoomReadout(atmosphere, room, out RoomReadout readout)
+                || !readout.ok)
             {
                 return false;
             }
@@ -263,7 +285,7 @@ namespace Strata
             const float padH = 8f;
             const float padV = 5f;
 
-            if (openAir)
+            if (readout.openAir)
             {
                 string line = "Strata_GasOverlay_OpenAir".Translate();
                 Vector2 size = Text.CalcSize(line);
@@ -280,7 +302,7 @@ namespace Strata
                 return true;
             }
 
-            if (!TryMeasureMixLabel(slices, pollutantLoad, ReadoutLineHeight, padH, padV,
+            if (!TryMeasureReadout(readout, ReadoutLineHeight, padH, padV,
                 maxGasLines: 99, showLoadLine: true, out float width, out float height))
             {
                 Text.Font = savedFont;
@@ -294,10 +316,9 @@ namespace Strata
                 width,
                 height));
             labelRect = PreferCursorSide(labelRect, mouse, cursorPad);
-            DrawMixLines(
+            DrawReadout(
                 labelRect,
-                slices,
-                pollutantLoad,
+                readout,
                 ReadoutLineHeight,
                 maxGasLines: 99,
                 showLoadLine: true,
@@ -352,11 +373,7 @@ namespace Strata
                 {
                     continue;
                 }
-                if (!TryCollectRoomSlices(atmosphere, room, out List<GasSlice> slices, out float pollutantLoad, out bool openAir))
-                {
-                    continue;
-                }
-                if (openAir)
+                if (!TryGetRoomReadout(atmosphere, room, out RoomReadout readout) || !readout.ok || readout.openAir)
                 {
                     continue;
                 }
@@ -364,7 +381,7 @@ namespace Strata
                 {
                     continue;
                 }
-                if (!TryMeasureMixLabel(slices, pollutantLoad, MapLabelLineHeight, MapLabelPadH, MapLabelPadV,
+                if (!TryMeasureReadout(readout, MapLabelLineHeight, MapLabelPadH, MapLabelPadV,
                     maxGasLines: 3, showLoadLine: true, out float width, out float height))
                 {
                     continue;
@@ -374,10 +391,9 @@ namespace Strata
                     screenPos.y - height / 2f,
                     width,
                     height));
-                DrawMixLines(
+                DrawReadout(
                     labelRect,
-                    slices,
-                    pollutantLoad,
+                    readout,
                     MapLabelLineHeight,
                     maxGasLines: 3,
                     showLoadLine: true,
@@ -489,39 +505,6 @@ namespace Strata
             return rect;
         }
 
-        private static bool TryMeasureMixLabel(
-            List<GasSlice> slices,
-            float pollutantLoad,
-            float lineHeight,
-            float padH,
-            float padV,
-            int maxGasLines,
-            bool showLoadLine,
-            out float width,
-            out float height)
-        {
-            width = 0f;
-            height = 0f;
-            if (slices == null || slices.Count == 0)
-            {
-                return false;
-            }
-            int gasLines = Mathf.Min(maxGasLines, slices.Count);
-            int lineCount = gasLines + (showLoadLine ? 1 : 0);
-            for (int i = 0; i < gasLines; i++)
-            {
-                width = Mathf.Max(width, Text.CalcSize(FormatSliceLabel(slices[i])).x);
-            }
-            if (showLoadLine)
-            {
-                string load = FormatLoadLabel(pollutantLoad);
-                width = Mathf.Max(width, Text.CalcSize(load).x);
-            }
-            width += padH * 2f;
-            height = lineCount * lineHeight + padV * 2f;
-            return width > 0f;
-        }
-
         private static string FormatLoadLabel(float pollutantLoad)
         {
             return "Strata_GasOverlay_Load".Translate(FormatLoadPercent(pollutantLoad));
@@ -533,70 +516,6 @@ namespace Strata
             return pollutantLoad >= 0.001f
                 ? Mathf.RoundToInt(pollutantLoad * 100f).ToString()
                 : pollutantLoad.ToStringPercent().TrimEnd('%');
-        }
-
-        private static void DrawMixLines(
-            Rect area,
-            List<GasSlice> slices,
-            float pollutantLoad,
-            float lineHeight,
-            int maxGasLines = 99,
-            bool showLoadLine = true,
-            bool drawBackground = false,
-            float padH = 0f,
-            float padV = 0f,
-            float wrapWidth = 0f)
-        {
-            if (slices == null || slices.Count == 0)
-            {
-                return;
-            }
-            int gasLines = Mathf.Min(maxGasLines, slices.Count);
-            int lineCount = gasLines + (showLoadLine ? 1 : 0);
-            var texts = new List<string>(lineCount);
-            var colors = new List<Color>(lineCount);
-            for (int i = 0; i < gasLines; i++)
-            {
-                texts.Add(FormatSliceLabel(slices[i]));
-                colors.Add(LabelTextColor(slices[i].gas, slices[i].density));
-            }
-            if (showLoadLine)
-            {
-                texts.Add(FormatLoadLabel(pollutantLoad));
-                colors.Add(LabelTextFill);
-            }
-
-            float maxWidth = 0f;
-            for (int i = 0; i < texts.Count; i++)
-            {
-                maxWidth = Mathf.Max(maxWidth, Text.CalcSize(texts[i]).x);
-            }
-            float blockWidth = wrapWidth > 0f ? Mathf.Min(maxWidth, wrapWidth) : maxWidth;
-            float blockHeight = lineCount * lineHeight;
-            float startX = area.x + padH + Mathf.Max(0f, (area.width - padH * 2f - blockWidth) / 2f);
-            float startY = area.y + padV + Mathf.Max(0f, (area.height - padV * 2f - blockHeight) / 2f);
-
-            if (drawBackground)
-            {
-                GUI.DrawTexture(
-                    new Rect(startX - padH, startY - padV, blockWidth + padH * 2f, blockHeight + padV * 2f),
-                    TexUI.GrayTextBG);
-            }
-
-            TextAnchor savedAnchor = Text.Anchor;
-            Text.Anchor = TextAnchor.MiddleLeft;
-            Color saved = GUI.color;
-            float lineY = startY;
-            for (int i = 0; i < texts.Count; i++)
-            {
-                DrawOutlinedLabel(
-                    new Rect(startX, lineY, blockWidth + 2f, lineHeight),
-                    texts[i],
-                    colors[i]);
-                lineY += lineHeight;
-            }
-            GUI.color = saved;
-            Text.Anchor = savedAnchor;
         }
 
         private static void DrawOutlinedLabel(Rect rect, string text, Color fill)
@@ -630,44 +549,194 @@ namespace Strata
             return Color.Lerp(LabelTextFill, light, 0.35f);
         }
 
-        // Room composition for labels and readouts — significant fractions only;
-        // load = pollutant / non-breathable share (smoke, deep gas, excess CO₂, …).
-        private static bool TryCollectRoomSlices(
+        private static long ReadoutKey(Map map, Room room)
+        {
+            return ((long)map.uniqueID << 32) ^ (uint)room.ID;
+        }
+
+        private static int SettingsStamp()
+        {
+            if (StrataMod.Settings == null)
+            {
+                return 0;
+            }
+            int stamp = 0;
+            if (StrataMod.Settings.NaturalGasesActive)
+            {
+                stamp |= 1;
+            }
+            if (StrataMod.Settings.PollutantGasesActive)
+            {
+                stamp |= 2;
+            }
+            return stamp;
+        }
+
+        private static bool TryGetRoomReadout(
             AtmosphereMapComponent atmosphere,
             Room room,
-            out List<GasSlice> slices,
-            out float pollutantLoad,
-            out bool openAir)
+            out RoomReadout readout)
         {
-            slices = null;
-            pollutantLoad = 0f;
-            openAir = false;
-            if (atmosphere == null || room == null)
+            readout = null;
+            if (atmosphere?.map == null || room == null)
             {
                 return false;
             }
+            long key = ReadoutKey(atmosphere.map, room);
+            if (!readouts.TryGetValue(key, out readout))
+            {
+                readout = new RoomReadout();
+                readouts[key] = readout;
+            }
+            int generation = atmosphere.ReadoutGeneration;
+            int cells = room.CellCount;
+            int settings = SettingsStamp();
+            if (readout.filled
+                && readout.generation == generation
+                && readout.roomId == room.ID
+                && readout.cells == cells
+                && readout.settingsStamp == settings)
+            {
+                return readout.ok || readout.openAir;
+            }
+            FillReadout(atmosphere, room, readout, generation, cells, settings);
+            return readout.ok || readout.openAir;
+        }
+
+        private static bool TryMeasureReadout(
+            RoomReadout readout,
+            float lineHeight,
+            float padH,
+            float padV,
+            int maxGasLines,
+            bool showLoadLine,
+            out float width,
+            out float height)
+        {
+            width = 0f;
+            height = 0f;
+            if (readout == null || readout.labels.Count == 0)
+            {
+                return false;
+            }
+            int gasLines = Mathf.Min(maxGasLines, readout.labels.Count);
+            int lineCount = gasLines + (showLoadLine ? 1 : 0);
+            for (int i = 0; i < gasLines; i++)
+            {
+                width = Mathf.Max(width, Text.CalcSize(readout.labels[i]).x);
+            }
+            if (showLoadLine && readout.loadLabel != null)
+            {
+                width = Mathf.Max(width, Text.CalcSize(readout.loadLabel).x);
+            }
+            width += padH * 2f;
+            height = lineCount * lineHeight + padV * 2f;
+            return width > 0f;
+        }
+
+        private static void DrawReadout(
+            Rect area,
+            RoomReadout readout,
+            float lineHeight,
+            int maxGasLines,
+            bool showLoadLine,
+            bool drawBackground,
+            float padH,
+            float padV)
+        {
+            if (readout == null || readout.labels.Count == 0)
+            {
+                return;
+            }
+            int gasLines = Mathf.Min(maxGasLines, readout.labels.Count);
+            mixTextScratch.Clear();
+            mixColorScratch.Clear();
+            for (int i = 0; i < gasLines; i++)
+            {
+                mixTextScratch.Add(readout.labels[i]);
+                mixColorScratch.Add(readout.colors[i]);
+            }
+            if (showLoadLine && readout.loadLabel != null)
+            {
+                mixTextScratch.Add(readout.loadLabel);
+                mixColorScratch.Add(LabelTextFill);
+            }
+            int lineCount = mixTextScratch.Count;
+            float maxWidth = 0f;
+            for (int i = 0; i < lineCount; i++)
+            {
+                maxWidth = Mathf.Max(maxWidth, Text.CalcSize(mixTextScratch[i]).x);
+            }
+            float blockHeight = lineCount * lineHeight;
+            float startX = area.x + padH + Mathf.Max(0f, (area.width - padH * 2f - maxWidth) / 2f);
+            float startY = area.y + padV + Mathf.Max(0f, (area.height - padV * 2f - blockHeight) / 2f);
+            if (drawBackground)
+            {
+                GUI.DrawTexture(
+                    new Rect(startX - padH, startY - padV, maxWidth + padH * 2f, blockHeight + padV * 2f),
+                    TexUI.GrayTextBG);
+            }
+            TextAnchor savedAnchor = Text.Anchor;
+            Text.Anchor = TextAnchor.MiddleLeft;
+            Color saved = GUI.color;
+            float lineY = startY;
+            for (int i = 0; i < lineCount; i++)
+            {
+                DrawOutlinedLabel(
+                    new Rect(startX, lineY, maxWidth + 2f, lineHeight),
+                    mixTextScratch[i],
+                    mixColorScratch[i]);
+                lineY += lineHeight;
+            }
+            GUI.color = saved;
+            Text.Anchor = savedAnchor;
+        }
+
+        private static readonly Dictionary<int, GasSlice> sliceScratch = new Dictionary<int, GasSlice>();
+
+        // Room composition for labels and readouts — significant fractions only;
+        // load = pollutant / non-breathable share (smoke, deep gas, excess CO₂, …).
+        private static void FillReadout(
+            AtmosphereMapComponent atmosphere,
+            Room room,
+            RoomReadout readout,
+            int generation,
+            int cells,
+            int settings)
+        {
+            readout.generation = generation;
+            readout.roomId = room.ID;
+            readout.cells = cells;
+            readout.settingsStamp = settings;
+            readout.filled = true;
+            readout.ok = false;
+            readout.openAir = false;
+            readout.pollutantLoad = 0f;
+            readout.slices.Clear();
+            readout.labels.Clear();
+            readout.colors.Clear();
+            readout.loadLabel = null;
             if (room.UsesOutdoorTemperature)
             {
-                openAir = true;
-                slices = new List<GasSlice>();
-                return true;
+                readout.openAir = true;
+                return;
             }
 
             Map map = atmosphere.map;
             if (!atmosphere.TryGetRoomDensity(room, out float[] density)
                 && !TrySynthesizeAmbientDensity(atmosphere, room, out density))
             {
-                return false;
+                return;
             }
 
-            pollutantLoad = AtmosphericMix.PollutantFraction(density, map);
+            readout.pollutantLoad = AtmosphericMix.PollutantFraction(density, map);
             float composableTotal = AtmosphericMix.ComposableTotal(density);
-            if (composableTotal <= 0.001f && pollutantLoad <= 0.001f)
+            if (composableTotal <= 0.001f && readout.pollutantLoad <= 0.001f)
             {
-                return false;
+                return;
             }
 
-            var sliceByGas = new Dictionary<int, GasSlice>();
+            sliceScratch.Clear();
             List<StrataGasDef> gases = AtmosphereMapComponent.Gases;
             for (int i = 0; i < gases.Count; i++)
             {
@@ -688,21 +757,31 @@ namespace Strata
                 {
                     continue;
                 }
-                sliceByGas[gas.index] = new GasSlice { gas = gas, density = d };
+                sliceScratch[gas.index] = new GasSlice { gas = gas, density = d };
             }
-            if (sliceByGas.Count == 0 && TryAppendAmbientBaselineSlices(map, density, sliceByGas))
+            if (sliceScratch.Count == 0 && TryAppendAmbientBaselineSlices(map, density, sliceScratch))
             {
                 // Healthy ambient mix: SignificantForReadout hides ~21% O₂ until
                 // something deviates — still show the baseline for sealed rooms.
             }
-            else if (sliceByGas.Count == 0)
+            else if (sliceScratch.Count == 0)
             {
-                return false;
+                return;
             }
-            TryAppendForcedSurfaceOxygen(map, density, sliceByGas);
-            slices = new List<GasSlice>(sliceByGas.Values);
-            slices.Sort((a, b) => b.density.CompareTo(a.density));
-            return true;
+            TryAppendForcedSurfaceOxygen(map, density, sliceScratch);
+            foreach (KeyValuePair<int, GasSlice> pair in sliceScratch)
+            {
+                readout.slices.Add(pair.Value);
+            }
+            readout.slices.Sort((a, b) => b.density.CompareTo(a.density));
+            for (int i = 0; i < readout.slices.Count; i++)
+            {
+                GasSlice slice = readout.slices[i];
+                readout.labels.Add(FormatSliceLabel(slice));
+                readout.colors.Add(LabelTextColor(slice.gas, slice.density));
+            }
+            readout.loadLabel = FormatLoadLabel(readout.pollutantLoad);
+            readout.ok = true;
         }
 
         // Surface/A+: always list O₂ once when natural gases are on — even at

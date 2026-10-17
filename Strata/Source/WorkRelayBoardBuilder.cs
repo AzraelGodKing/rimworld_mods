@@ -72,6 +72,7 @@ namespace Strata
             entry.growing = GrowingFromPacked(growCells);
             entry.workVersion = WorkRelaySignals.WorkVersion;
             entry.builtTick = Find.TickManager.TicksGame;
+            WorkRelaySignals.SealBoard(entry, map);
             WorkRelayBoard.Publish(entry);
             return entry;
         }
@@ -96,6 +97,7 @@ namespace Strata
                 partial.growing = GrowingFromPacked(growCells);
                 partial.workVersion = version;
                 partial.builtTick = now;
+                WorkRelaySignals.SealBoard(partial, map);
                 WorkRelayBoard.Publish(partial);
                 return false;
             }
@@ -167,6 +169,7 @@ namespace Strata
                 }
                 if (job.result != null)
                 {
+                    WorkRelaySignals.SealBoard(job.result, MapById(job.mapId));
                     WorkRelayBoard.Publish(job.result);
                 }
             }
@@ -285,6 +288,19 @@ namespace Strata
                 Array.Resize(ref packed, write);
             }
             return packed;
+        }
+
+        private static Map MapById(int mapId)
+        {
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (maps[i].uniqueID == mapId)
+                {
+                    return maps[i];
+                }
+            }
+            return null;
         }
     }
 }

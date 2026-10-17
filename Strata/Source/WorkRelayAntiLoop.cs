@@ -18,6 +18,7 @@ namespace Strata
         {
             public int mapId;
             public int untilTick;
+            public int signalStamp;
         }
 
         private static readonly Dictionary<int, List<BlacklistEntry>> blacklists =
@@ -98,6 +99,11 @@ namespace Strata
                 }
                 if (list[i].mapId == mapId)
                 {
+                    if (WorkChanged(map, list[i].signalStamp))
+                    {
+                        list.RemoveAt(i);
+                        continue;
+                    }
                     return true;
                 }
             }
@@ -121,6 +127,7 @@ namespace Strata
 
             int now = Find.TickManager.TicksGame;
             int mapId = map.uniqueID;
+            int stamp = CurrentStamp(map);
             if (!blacklists.TryGetValue(pawn.thingIDNumber, out List<BlacklistEntry> list))
             {
                 list = new List<BlacklistEntry>(2);
@@ -134,7 +141,9 @@ namespace Strata
                     {
                         mapId = mapId,
                         untilTick = now + BlacklistTicks,
+                        signalStamp = stamp,
                     };
+                    LogWaste(pawn, map);
                     return;
                 }
             }
@@ -142,7 +151,37 @@ namespace Strata
             {
                 mapId = mapId,
                 untilTick = now + BlacklistTicks,
+                signalStamp = stamp,
             });
+            LogWaste(pawn, map);
+        }
+
+        private static int CurrentStamp(Map map)
+        {
+            return WorkRelayBoard.TryGet(map, out WorkRelayBoard.BoardEntry entry) ? entry.signalStamp : 0;
+        }
+
+        // A rebuilt board with a different stamp means new work appeared.
+        private static bool WorkChanged(Map map, int stamped)
+        {
+            if (stamped == 0 || !WorkRelayBoard.TryGet(map, out WorkRelayBoard.BoardEntry entry))
+            {
+                return false;
+            }
+            return entry.signalStamp != 0 && entry.signalStamp != stamped;
+        }
+
+        private static void LogWaste(Pawn pawn, Map map)
+        {
+            if (StrataMod.Settings == null || !StrataMod.Settings.verboseLogging)
+            {
+                return;
+            }
+            string work = PortalRelayChain.IntendedWorkDefName(pawn);
+            StrataLog.Verbose("[Strata] Empty work arrival for " + pawn.LabelShort
+                + " on map " + map.uniqueID
+                + (work != null ? " (intended " + work + ")" : "")
+                + ". Blacklisted until the floor's work changes or 5000 ticks.");
         }
     }
 }

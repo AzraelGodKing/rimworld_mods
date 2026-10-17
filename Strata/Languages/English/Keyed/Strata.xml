@@ -20,6 +20,9 @@
   <Strata_Settings_ColonistRelays>Colonist relays</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>Work relay</Strata_Settings_WorkRelay>
   <Strata_Settings_WorkRelayDesc>Idle colonists and colony mechanoids walk to other levels that have work when their own floor is idle. Paramedic mechs stay put (they tend on their own floor). Stairs outside an allowed area are not used. On by default. Does NOT control hauling through stairs — use Haul across levels for that. Turn this off in Mod Options if pawns should stay on their current floor.</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_PriorityWorkEmergency>Leave for fires and bleeding patients</Strata_Settings_PriorityWorkEmergency>
+  <Strata_Settings_PriorityWorkEmergencyDesc>A pawn doing ordinary work will walk to another floor to fight a fire or tend a bleeding patient, even if that work is not a higher priority number.</Strata_Settings_PriorityWorkEmergencyDesc>
+  <Strata_Settings_PriorityWorkDepth>Max stairwells for higher-priority work: {0}</Strata_Settings_PriorityWorkDepth>
   <Strata_Settings_OffThreadWorkRelay>Off-thread work board</Strata_Settings_OffThreadWorkRelay>
   <Strata_Settings_OffThreadWorkRelayDesc>A background scanner fills a per-floor work board that work relay reads (instead of probing during every idle think). Grow-zone flags can finish on a worker thread. On by default when Work relay is on; off in Performance mode.</Strata_Settings_OffThreadWorkRelayDesc>
   <Strata_Settings_HaulAcrossLevels>Haul across levels</Strata_Settings_HaulAcrossLevels>

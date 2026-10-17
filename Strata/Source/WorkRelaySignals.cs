@@ -222,6 +222,10 @@ namespace Strata
             {
                 return true;
             }
+            if (HasModdedWork(pawn, work, signals))
+            {
+                return true;
+            }
 
             for (int i = 0; i < externalProbes.Count; i++)
             {
@@ -637,6 +641,307 @@ namespace Strata
                 }
             }
             return count;
+        }
+
+        /// <summary>
+        /// Fills per-work-type signals from the vanilla bools, then any modded
+        /// work type whose scanner can list work without a pawn.
+        /// </summary>
+        internal static void SealBoard(WorkRelayBoard.BoardEntry entry, Map map)
+        {
+            if (entry == null)
+            {
+                return;
+            }
+            int size = DefDatabase<WorkTypeDef>.DefCount;
+            if (entry.byType == null || entry.byType.Length < size)
+            {
+                entry.byType = new WorkRelayBoard.WorkTypeSignal[size];
+            }
+            else
+            {
+                Array.Clear(entry.byType, 0, entry.byType.Length);
+            }
+
+            SetSignal(entry, WorkTypeDefOf.Construction, entry.construction, entry.blueprintFrames, needsSkill: true);
+            SetSignal(entry, WorkTypeDefOf.Growing, entry.growing, entry.growing ? 1 : 0, needsSkill: true);
+            SetSignal(entry, WorkTypeDefOf.Mining, entry.mining, entry.mining ? 1 : 0, needsSkill: true);
+            SetSignal(entry, WorkTypeDefOf.PlantCutting, entry.plantCutting, entry.plantCutting ? 1 : 0, needsSkill: false);
+            SetSignal(entry, WorkTypeDefOf.Hunting, entry.hunting, entry.hunting ? 1 : 0, needsSkill: true);
+            SetSignal(entry, WorkTypeDefOf.Hauling, entry.hauling || entry.haulExports, entry.haulableCount, needsSkill: false);
+            SetSignal(entry, WorkTypeDefOf.Cleaning, entry.cleaning, entry.cleaning ? 1 : 0, needsSkill: false);
+            SetSignal(entry, WorkTypeDefOf.Firefighter, entry.firefighting, entry.firefighting ? 1 : 0, needsSkill: false);
+            SetSignal(entry, WorkTypeDefOf.Research, entry.research, entry.research ? 1 : 0, needsSkill: true);
+            SetSignal(entry, WorkTypeDefOf.Warden, entry.warden, entry.warden ? 1 : 0, needsSkill: false);
+            SetSignal(entry, WorkTypeDefOf.Handling, entry.handling, entry.handling ? 1 : 0, needsSkill: true);
+            SetSignal(entry, WorkTypeDefOf.Childcare, entry.childcare, entry.childcare ? 1 : 0, needsSkill: false);
+            bool doctor = map != null && (PawnRelay.HasPatientsNeedingTend(map) || HasMedicalBedsNeedingPatients(map));
+            SetSignal(entry, WorkTypeDefOf.Doctor, doctor, doctor ? 1 : 0, needsSkill: true);
+
+            if (map != null)
+            {
+                ScanModdedWorkTypes(entry, map);
+            }
+            entry.signalStamp = ComputeStamp(entry);
+        }
+
+        internal static bool TryBestSignalled(
+            Pawn pawn,
+            Map map,
+            out int priority,
+            out WorkTypeDef workType,
+            out bool emergency)
+        {
+            priority = int.MaxValue;
+            workType = null;
+            emergency = false;
+            if (pawn?.workSettings == null || map == null || !pawn.workSettings.EverWork)
+            {
+                return false;
+            }
+            WorkRelayBoard.BoardEntry signals = GetSignals(map);
+            Pawn_WorkSettings work = pawn.workSettings;
+            Consider(work, WorkTypeDefOf.Construction, signals.construction, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.Growing, signals.growing, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.Mining, signals.mining, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.PlantCutting, signals.plantCutting, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.Hunting, signals.hunting, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.Hauling, signals.hauling || signals.haulExports, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.Cleaning, signals.cleaning, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.Firefighter, signals.firefighting, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.Research, signals.research, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.Warden, signals.warden, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.Handling, signals.handling, ref priority, ref workType);
+            Consider(work, WorkTypeDefOf.Childcare, signals.childcare, ref priority, ref workType);
+            bool doctor = PawnRelay.HasPatientsNeedingTend(map) || HasMedicalBedsNeedingPatients(map);
+            Consider(work, WorkTypeDefOf.Doctor, doctor, ref priority, ref workType);
+            if (signals.byType != null)
+            {
+                for (int i = 0; i < signals.byType.Length; i++)
+                {
+                    WorkRelayBoard.WorkTypeSignal signal = signals.byType[i];
+                    if (!signal.available || signal.vanilla)
+                    {
+                        continue;
+                    }
+                    WorkTypeDef type = WorkTypeAt(i);
+                    if (type == null || !SkillAllows(pawn, type, signal.needsSkill))
+                    {
+                        continue;
+                    }
+                    Consider(work, type, true, ref priority, ref workType);
+                }
+            }
+            emergency = (signals.firefighting && work.WorkIsActive(WorkTypeDefOf.Firefighter))
+                || (doctor && work.WorkIsActive(WorkTypeDefOf.Doctor));
+            return workType != null;
+        }
+
+        private static void Consider(
+            Pawn_WorkSettings work,
+            WorkTypeDef type,
+            bool available,
+            ref int priority,
+            ref WorkTypeDef workType)
+        {
+            if (!available || type == null || work == null || !work.WorkIsActive(type))
+            {
+                return;
+            }
+            int next = work.GetPriority(type);
+            if (next <= 0 || next >= priority)
+            {
+                return;
+            }
+            priority = next;
+            workType = type;
+        }
+
+        private static bool HasModdedWork(Pawn pawn, Pawn_WorkSettings work, WorkRelayBoard.BoardEntry signals)
+        {
+            if (signals?.byType == null || work == null)
+            {
+                return false;
+            }
+            for (int i = 0; i < signals.byType.Length; i++)
+            {
+                WorkRelayBoard.WorkTypeSignal signal = signals.byType[i];
+                if (!signal.available || signal.vanilla)
+                {
+                    continue;
+                }
+                WorkTypeDef type = WorkTypeAt(i);
+                if (type == null || !work.WorkIsActive(type) || !SkillAllows(pawn, type, signal.needsSkill))
+                {
+                    continue;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private static void SetSignal(
+            WorkRelayBoard.BoardEntry entry,
+            WorkTypeDef type,
+            bool available,
+            int count,
+            bool needsSkill)
+        {
+            if (type == null || entry.byType == null || type.index < 0 || type.index >= entry.byType.Length)
+            {
+                return;
+            }
+            entry.byType[type.index] = new WorkRelayBoard.WorkTypeSignal
+            {
+                available = available,
+                needsSkill = needsSkill,
+                count = count,
+                vanilla = true,
+            };
+        }
+
+        private static void ScanModdedWorkTypes(WorkRelayBoard.BoardEntry entry, Map map)
+        {
+            List<WorkTypeDef> types = DefDatabase<WorkTypeDef>.AllDefsListForReading;
+            for (int i = 0; i < types.Count; i++)
+            {
+                WorkTypeDef type = types[i];
+                if (type == null || type.index < 0 || type.index >= entry.byType.Length)
+                {
+                    continue;
+                }
+                if (entry.byType[type.index].vanilla)
+                {
+                    continue;
+                }
+                int count = CountScannerWork(map, type);
+                if (count <= 0)
+                {
+                    continue;
+                }
+                bool needsSkill = type.relevantSkills != null && type.relevantSkills.Count > 0;
+                entry.byType[type.index] = new WorkRelayBoard.WorkTypeSignal
+                {
+                    available = true,
+                    needsSkill = needsSkill,
+                    count = count,
+                    vanilla = false,
+                };
+            }
+        }
+
+        private static int CountScannerWork(Map map, WorkTypeDef type)
+        {
+            if (type.workGiversByPriority == null)
+            {
+                return 0;
+            }
+            int count = 0;
+            for (int i = 0; i < type.workGiversByPriority.Count; i++)
+            {
+                WorkGiverDef giver = type.workGiversByPriority[i];
+                if (giver?.Worker is not WorkGiver_Scanner scanner)
+                {
+                    continue;
+                }
+                System.Reflection.MethodInfo method = scanner.GetType().GetMethod(
+                    "PotentialWorkThingsGlobal",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.DeclaredOnly);
+                if (method == null)
+                {
+                    continue;
+                }
+                try
+                {
+                    if (scanner.PotentialWorkThingsGlobal(null) is not System.Collections.IEnumerable things)
+                    {
+                        continue;
+                    }
+                    foreach (object thing in things)
+                    {
+                        if (thing == null)
+                        {
+                            continue;
+                        }
+                        count++;
+                        if (count >= 8)
+                        {
+                            return count;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    // A scanner that needs a pawn is not a cheap global probe.
+                }
+            }
+            return count;
+        }
+
+        private static WorkTypeDef WorkTypeAt(int index)
+        {
+            List<WorkTypeDef> types = DefDatabase<WorkTypeDef>.AllDefsListForReading;
+            for (int i = 0; i < types.Count; i++)
+            {
+                if (types[i] != null && types[i].index == index)
+                {
+                    return types[i];
+                }
+            }
+            return null;
+        }
+
+        private static bool SkillAllows(Pawn pawn, WorkTypeDef type, bool needsSkill)
+        {
+            if (!needsSkill || type.relevantSkills == null || pawn?.skills == null)
+            {
+                return true;
+            }
+            for (int i = 0; i < type.relevantSkills.Count; i++)
+            {
+                SkillDef skill = type.relevantSkills[i];
+                if (skill != null && pawn.skills.GetSkill(skill).TotallyDisabled)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static int ComputeStamp(WorkRelayBoard.BoardEntry entry)
+        {
+            unchecked
+            {
+                int stamp = 17;
+                stamp = stamp * 31 + (entry.construction ? 1 : 0);
+                stamp = stamp * 31 + (entry.mining ? 1 : 0);
+                stamp = stamp * 31 + (entry.plantCutting ? 1 : 0);
+                stamp = stamp * 31 + (entry.growing ? 1 : 0);
+                stamp = stamp * 31 + (entry.hunting ? 1 : 0);
+                stamp = stamp * 31 + (entry.hauling ? 1 : 0);
+                stamp = stamp * 31 + (entry.haulExports ? 1 : 0);
+                stamp = stamp * 31 + (entry.cleaning ? 1 : 0);
+                stamp = stamp * 31 + (entry.firefighting ? 1 : 0);
+                stamp = stamp * 31 + (entry.research ? 1 : 0);
+                stamp = stamp * 31 + (entry.flick ? 1 : 0);
+                stamp = stamp * 31 + (entry.warden ? 1 : 0);
+                stamp = stamp * 31 + (entry.handling ? 1 : 0);
+                stamp = stamp * 31 + (entry.childcare ? 1 : 0);
+                stamp = stamp * 31 + entry.blueprintFrames;
+                stamp = stamp * 31 + entry.haulableCount;
+                if (entry.byType != null)
+                {
+                    for (int i = 0; i < entry.byType.Length; i++)
+                    {
+                        if (entry.byType[i].available)
+                        {
+                            stamp = stamp * 31 + i + 1;
+                            stamp = stamp * 31 + entry.byType[i].count;
+                        }
+                    }
+                }
+                return stamp;
+            }
         }
     }
 }

@@ -76,7 +76,7 @@ These can be built on 1.6 now and ship in 4.0.
 - Keep 1.7-only assets (shaders, `ShaderDef`/`MaterialDef`) in `1.7/` load folders.
 - Multiplayer determinism: keep `Verse.Rand` for game logic; seeded `System.Random` cave plans must produce the same layout as 3.8.x; no game-state access off the main thread.
 - 1.7 is still an unstable branch, so the shader API (`ShaderProgramDefinition`) may change before release. Re-check before shipping.
-- Version: 3.9.4 → **4.0.0** at ship; `About.xml` is edited only after an explicit yes.
+- Version: 3.10.0 → **4.0.0** at ship; `About.xml` is edited only after an explicit yes.
 
 ## Performance baseline
 

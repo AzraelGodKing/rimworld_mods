@@ -24,7 +24,7 @@ namespace Strata
             {
                 return;
             }
-            var links = LevelGraph.ReachableLevels(pawn.Map);
+            var links = LevelGraph.CopyLinks(LevelGraph.ReachableLevels(pawn.Map));
             LevelRoleUtility.SortLinksByRoles(links, LevelRole.Freezer, LevelRole.Farm);
             foreach (LevelGraph.LevelLink link in links)
             {

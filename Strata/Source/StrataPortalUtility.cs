@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
@@ -421,12 +422,7 @@ namespace Strata
 
                     if (pawn != null)
                     {
-                        if (!TryStartHaulDelivery(pawn)
-                            && pawn.carryTracker?.CarriedThing != null
-                            && pawn.carryTracker.CarriedThing is not Pawn)
-                        {
-                            TryForceDropCarriedCargo(pawn);
-                        }
+                        DeliverCarriedOrDrop(pawn);
                     }
                 }
             }
@@ -474,13 +470,28 @@ namespace Strata
                     continue;
                 }
 
+                DeliverCarriedOrDrop(pawn);
+            }
+        }
+
+        // One bad storage cell must not escape MapComponentTick.
+        private static void DeliverCarriedOrDrop(Pawn pawn)
+        {
+            try
+            {
                 if (!TryStartHaulDelivery(pawn)
-                    && pawn.carryTracker.CarriedThing != null
-                    && !TryStartStorageDelivery(pawn)
-                    && pawn.carryTracker.CarriedThing != null)
+                    && pawn.carryTracker?.CarriedThing != null
+                    && pawn.carryTracker.CarriedThing is not Pawn)
                 {
                     TryForceDropCarriedCargo(pawn);
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.WarningOnce(
+                    "[Strata] Haul delivery failed for " + pawn.LabelShort + ": " + ex.GetType().Name,
+                    pawn.thingIDNumber ^ 0x4841554C);
+                TryForceDropCarriedCargo(pawn);
             }
         }
 

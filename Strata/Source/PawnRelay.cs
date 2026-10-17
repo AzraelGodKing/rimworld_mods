@@ -268,7 +268,8 @@ namespace Strata
             LevelGraph.LevelLink link,
             RelayPurpose purpose,
             int cap,
-            Building_Bed preferredBed = null)
+            Building_Bed preferredBed = null,
+            WorkTypeDef intendedWork = null)
         {
             if (!RelayClaims.CanClaim(pawn, link.map, purpose, cap))
             {
@@ -285,7 +286,13 @@ namespace Strata
             if (job != null)
             {
                 RelayClaims.Register(pawn, link.map, purpose);
-                PortalRelayChain.Mark(pawn, link.map, purpose, preferredBed, preferArrivalNear: preferNear);
+                PortalRelayChain.Mark(
+                    pawn,
+                    link.map,
+                    purpose,
+                    preferredBed,
+                    preferArrivalNear: preferNear,
+                    intendedWorkDefName: intendedWork?.defName);
             }
             return job;
         }

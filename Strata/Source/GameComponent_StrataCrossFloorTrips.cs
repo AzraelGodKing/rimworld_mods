@@ -13,6 +13,7 @@ namespace Strata
         public int returnMapId = -1;
         public int carriedPawnId = -1;
         public IntVec3 preferArrivalNear = IntVec3.Invalid;
+        public string intendedWorkDefName;
 
         public void ExposeData()
         {
@@ -23,6 +24,7 @@ namespace Strata
             Scribe_Values.Look(ref returnMapId, "returnMapId", -1);
             Scribe_Values.Look(ref carriedPawnId, "carriedPawnId", -1);
             Scribe_Values.Look(ref preferArrivalNear, "preferArrivalNear", IntVec3.Invalid);
+            Scribe_Values.Look(ref intendedWorkDefName, "intendedWorkDefName");
         }
     }
 

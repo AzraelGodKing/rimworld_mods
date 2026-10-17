@@ -20,6 +20,9 @@
   <Strata_Settings_ColonistRelays>殖民者跨层通勤</Strata_Settings_ColonistRelays>
   <Strata_Settings_WorkRelay>工作通勤</Strata_Settings_WorkRelay>
   <Strata_Settings_WorkRelayDesc>空闲殖民者与殖民地机械体在本层无事可做时前往有工作的其他楼层。医护机械体留在本层治疗。允许区域外的楼梯不会使用。默认开启。不控制经楼梯搬运——请用「跨层搬运」。若希望他们留在本层，请在模组选项中关闭。</Strata_Settings_WorkRelayDesc>
+  <Strata_Settings_PriorityWorkEmergency>离开去灭火或救治出血伤员</Strata_Settings_PriorityWorkEmergency>
+  <Strata_Settings_PriorityWorkEmergencyDesc>正在做普通工作的人会前往其他楼层灭火或救治出血伤员，即使那项工作的优先级数字并不更高。</Strata_Settings_PriorityWorkEmergencyDesc>
+  <Strata_Settings_PriorityWorkDepth>为更高优先级工作最多走的楼梯层数：{0}</Strata_Settings_PriorityWorkDepth>
   <Strata_Settings_OffThreadWorkRelay>后台工作看板</Strata_Settings_OffThreadWorkRelay>
   <Strata_Settings_OffThreadWorkRelayDesc>后台扫描器维护各层工作看板，供工作通勤读取（避免每次空闲思考都探测）。种植区标记可在工作线程汇总。默认开启（需开启工作通勤）；性能模式下关闭。</Strata_Settings_OffThreadWorkRelayDesc>
   <Strata_Settings_HaulAcrossLevels>跨层搬运</Strata_Settings_HaulAcrossLevels>

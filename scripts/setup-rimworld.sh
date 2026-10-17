@@ -199,6 +199,7 @@ build_workspace_mods() {
   local projects=(
     "$WORKSPACE_ROOT/Homesteader/Source/Homesteader.csproj"
     "$WORKSPACE_ROOT/Strata/Source/Strata.csproj"
+    "$WORKSPACE_ROOT/Strata/Source/Strata.1.7.csproj"
     "$WORKSPACE_ROOT/Stormproof/Source/Stormproof.csproj"
     "$WORKSPACE_ROOT/Nemesis/Source/Nemesis.csproj"
     "$WORKSPACE_ROOT/DateNight/Source/DateNight.csproj"
