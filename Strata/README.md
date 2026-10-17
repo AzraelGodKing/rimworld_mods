@@ -11,7 +11,7 @@ attend rituals.
 
 ## Requirements
 
-- RimWorld **1.6**
+- RimWorld **1.6** and **1.7**
 - [Harmony](https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077) — load before Strata
 
 No DLC required. Works with all DLC.
