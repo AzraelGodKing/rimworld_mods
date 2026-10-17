@@ -107,7 +107,6 @@ namespace Strata
 
         public static void EndTravel() => TravelInProgress = false;
 
-        [StrataSessionReset]
         public static void ResetSession()
         {
             snapshots.Clear();
