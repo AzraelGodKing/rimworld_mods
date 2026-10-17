@@ -134,8 +134,7 @@
         "incompatibleWith": [],
         "notes": []
       },
-      "changelogPath": "changelogs/homesteader.md",
-      "rimworldVersions": "1.6"
+      "changelogPath": "changelogs/homesteader.md"
     },
     {
       "id": "stormproof",
@@ -247,8 +246,7 @@
         "incompatibleWith": [],
         "notes": []
       },
-      "changelogPath": "changelogs/stormproof.md",
-      "rimworldVersions": "1.6"
+      "changelogPath": "changelogs/stormproof.md"
     },
     {
       "id": "strata",
@@ -395,8 +393,7 @@
           "Multi-level mods that patch pathfinding or map generation globally are the most likely source of conflicts; Strata deliberately patches neither."
         ]
       },
-      "changelogPath": "changelogs/strata.md",
-      "rimworldVersions": "1.6"
+      "changelogPath": "changelogs/strata.md"
     },
     {
       "id": "nemesis",
@@ -481,8 +478,7 @@
           "Optional Anomaly baiting when that DLC is active (fail-open without it)."
         ]
       },
-      "changelogPath": "changelogs/nemesis.md",
-      "rimworldVersions": "1.6"
+      "changelogPath": "changelogs/nemesis.md"
     },
     {
       "id": "deep-colony",
@@ -588,8 +584,7 @@
         "incompatibleWith": [],
         "notes": []
       },
-      "changelogPath": "changelogs/deep-colony.md",
-      "rimworldVersions": "1.6"
+      "changelogPath": "changelogs/deep-colony.md"
     },
     {
       "id": "date-night",
@@ -672,8 +667,7 @@
         "incompatibleWith": [],
         "notes": []
       },
-      "changelogPath": "changelogs/date-night.md",
-      "rimworldVersions": "1.6"
+      "changelogPath": "changelogs/date-night.md"
     },
     {
       "id": "niceties",
@@ -792,8 +786,7 @@
           "Harmony patches fail-open: one missing target logs and skips instead of aborting the rest of Niceties."
         ]
       },
-      "changelogPath": "changelogs/niceties.md",
-      "rimworldVersions": "1.6"
+      "changelogPath": "changelogs/niceties.md"
     }
   ]
 }
