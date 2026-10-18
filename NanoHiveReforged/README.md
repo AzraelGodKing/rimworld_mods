@@ -19,7 +19,7 @@ A faithful-plus rebuild of Nanohive2 for RimWorld.
 ## Install
 
 1. Copy the `NanoHiveReforged` folder into your RimWorld `Mods` directory.
-2. Build `Source/NanoHiveReforged.csproj` so `Assemblies/NanoHiveReforged.dll` exists.
+2. Build `Source/NanoHiveReforged.csproj` so `1.6/Assemblies/NanoHiveReforged.dll` exists.
 3. Enable **NanoHive Reforged** in mod list.
 
 ## Texture
@@ -32,4 +32,4 @@ A faithful-plus rebuild of Nanohive2 for RimWorld.
 dotnet build NanoHiveReforged/Source/NanoHiveReforged.csproj -c Release
 ```
 
-The project references RimWorld through `Krafs.Rimworld.Ref` (1.6.4871), same as the other mods. The DLL is written to `Assemblies/NanoHiveReforged.dll`.
+The project references RimWorld through `Krafs.Rimworld.Ref` (1.6.4871), same as the other mods. The DLL is written to `1.6/Assemblies/NanoHiveReforged.dll`.

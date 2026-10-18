@@ -8,7 +8,7 @@ Each mod folder has a `mod.json` for the public mod website, except Wave Surviva
 
 ### Homesteader
 
-Everything a growing homestead needs: tribal survival, farm-to-table crafting, wells and irrigation, storage, food preservation, and off-grid power. Supports RimWorld 1.6. C# assembly for root cellar cooling and favorite foods (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
+Everything a growing homestead needs: tribal survival, farm-to-table crafting, wells and irrigation, storage, food preservation, and off-grid power. Supports RimWorld 1.6 / 1.7. C# assembly for root cellar cooling and favorite foods (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
 
 | Category | Content |
 |---|---|
@@ -29,7 +29,7 @@ Source lives in `Homesteader/Source`. The compiled `Homesteader.dll` is produced
 
 ### Strata (experimental)
 
-Dig down and build a true multistory base — one home, many floors. RimWorld 1.6. C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod).
+Dig down and build a true multistory base — one home, many floors. RimWorld 1.6 / 1.7. C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod).
 
 Build an **excavated stairwell** and a new underground level opens beneath your base: a solid stratum of mineable rock under a thick roof, ready to be carved into bedrooms, workshops, and freezers. Build another stairwell down there and keep going deeper.
 
@@ -60,7 +60,7 @@ Source lives in `Strata/Source`. The compiled `Strata.dll` is produced by the **
 
 ### Stormproof
 
-Defend your grid from everything the Rim throws at it. RimWorld 1.6. C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod).
+Defend your grid from everything the Rim throws at it. RimWorld 1.6 / 1.7. C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod).
 
 | Building | What it does |
 |---|---|
@@ -91,28 +91,28 @@ Source lives in `Stormproof/Source`. The compiled `Stormproof.dll` is produced b
 
 ### Nemesis
 
-A named hostile becomes a personal antagonist — taunts, false leads, sabotage, and targeted assaults that flee when losing. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Foundation by **Dredd (Misakabob)**.
+A named hostile becomes a personal antagonist — taunts, false leads, sabotage, and targeted assaults that flee when losing. RimWorld 1.6 / 1.7 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Foundation by **Dredd (Misakabob)**.
 
 - Site: [nemesis.html](https://azraelgodking.github.io/rimworld_mods/nemesis.html)
 - [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3773562126) · [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Nemesis.zip)
 
 ### Deep Colony
 
-Perk trees, trauma & therapy, apprenticeship, generational inheritance, and living faction reputation. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
+Perk trees, trauma & therapy, apprenticeship, generational inheritance, and living faction reputation. RimWorld 1.6 / 1.7 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
 
 - Site: [deep-colony.html](https://azraelgodking.github.io/rimworld_mods/deep-colony.html)
 - [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3773568314) · [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DeepColony.zip)
 
 ### Date Night
 
-Adds Date and Lovin timetable slots. Date is a walk / table hangout; Lovin still uses a shared double. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
+Adds Date and Lovin timetable slots. Date is a walk / table hangout; Lovin still uses a shared double. RimWorld 1.6 / 1.7 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)).
 
 - Site: [datenight.html](https://azraelgodking.github.io/rimworld_mods/datenight.html)
 - [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/DateNight.zip)
 
 ### Niceties
 
-Small colony comforts: well-kept apparel, throne-room altars, wear any gendered cut, hide cryptosleep from the colonist bar, melee hunting, shared bedrooms, and leave a way out while building. RimWorld 1.6 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Soft / Default / Hard presets; each toggle is independent.
+Small colony comforts: well-kept apparel, throne-room altars, wear any gendered cut, hide cryptosleep from the colonist bar, melee hunting, shared bedrooms, and leave a way out while building. RimWorld 1.6 / 1.7 (requires [Harmony](https://github.com/pardeike/HarmonyRimWorld)). Soft / Default / Hard presets; each toggle is independent.
 
 - Site: [niceties](https://azraelgodking.github.io/rimworld_mods/niceties)
 - [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Niceties.zip)

@@ -9,7 +9,8 @@ Detailed notes for Deep Colony only.
 - **Touch comfort save growth** (AZR-618) — seed only colonists/prisoners/guests; daily prune of stale pawn IDs; skip empty ID-keyed collections on save.
 
 ### Changed
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.- One Harmony patch class per vanilla method for `Pawn.Kill`, `SpawnSetup`, `MakeDowned`, `Ingested`, `SetFaction`, `AddDirectRelation`, and raid `TryExecuteWorker` (AZR-627). Same utility calls in the same order. Shared one `FieldRef` per tracker. Deleted leftover `Patch_BatchC` / `Patch_BatchD` dump files. Settings heading key is `DC_Settings_LaterSystems`. Odyssey crash hook lives in `Patch_Events` on `TryExecute`.
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
+- One Harmony patch class per vanilla method for `Pawn.Kill`, `SpawnSetup`, `MakeDowned`, `Ingested`, `SetFaction`, `AddDirectRelation`, and raid `TryExecuteWorker` (AZR-627). Same utility calls in the same order. Shared one `FieldRef` per tracker. Deleted leftover `Patch_BatchC` / `Patch_BatchD` dump files. Settings heading key is `DC_Settings_LaterSystems`. Odyssey crash hook lives in `Patch_Events` on `TryExecute`.
 
 ## [1.10.1] (proposed)
 

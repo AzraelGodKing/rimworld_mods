@@ -17,7 +17,7 @@
       "accent": "#7a8f3a",
       "preview": "img/HomesteaderPreview.png",
       "tagline": "Tribal pantry, orchard and dairy, wells and irrigation, cool cellars, livestock, and off-grid power for homestead starts.",
-      "badges": ["RimWorld 1.6", "Requires Harmony"],
+      "badges": ["RimWorld 1.6 / 1.7", "Requires Harmony"],
       "overview": [
         "Grow it, put it by, live off the land. Homesteader is the farmstead kit: tribal drying from day one, dairy and hearth meals, orchard trees and bees, wells and irrigation, cool cellars, livestock and textiles, and batteries when the glitterworld grid is a rumor.",
         "The Homesteaders scenario starts three settlers with livestock and hand tools, and locks the Azrael storyteller. A homestead supplier caravan visits with preserves, seeds, and the occasional Diggo plushie. The Pantry colony tab tracks what you put by and what is about to turn."
@@ -146,7 +146,7 @@
       "accent": "#3d7eb8",
       "preview": "img/StormproofPreview.png",
       "tagline": "Defend the power grid from flares, lightning, short circuits, EMP, and fallout — then call the storm yourself.",
-      "badges": ["RimWorld 1.6", "Requires Harmony", "18 buildings"],
+      "badges": ["RimWorld 1.6 / 1.7", "Requires Harmony", "18 buildings"],
       "overview": [
         "The Rim does not care about your freezer. Stormproof is the Power-tab toolkit that keeps a colony running through flares, lightning, surges, EMP, fallout, heat, cold, eclipses, flashstorms, and droughts.",
         "Eighteen tools for a disaster-hardened colony — plus brownout, storm wear, a weather almanac, and the Stormfront showcase start. Pairs naturally with Homesteader batteries and generators."
@@ -258,7 +258,7 @@
       "accent": "#b07830",
       "preview": "img/StrataPreview.png",
       "tagline": "Dig down, build up, breathe deep. Multistory bases with commuting colonists and Odyssey-ready stacks.",
-      "badges": ["RimWorld 1.6", "Requires Harmony", "3.5", "Odyssey optional"],
+      "badges": ["RimWorld 1.6 / 1.7", "Requires Harmony", "3.5", "Odyssey optional"],
       "overview": [
         "One home, many floors. Carve rock under your colony, frame a roof deck above it, and treat every floor as one settlement. Colonists commute for work, food, rest, hauling, medicine, combat, and construction. Heat, power, smoke, and (optionally) pipes follow the shafts with them.",
         "Tag floors as Farm, Freezer, Workshop, Barracks, Quarry, Storage, or Hospital so hauls and rest tilt the right way. Stamp walls onto the next level. Call the elevator. See and shoot through open sky. Odyssey gravship stacks stay linked through launch and land.",
@@ -405,7 +405,7 @@
       "accent": "#a85a4a",
       "preview": "img/NemesisPreview.png",
       "tagline": "A named antagonist who taunts, sabotages, and returns with an army — until you end the hunt.",
-      "badges": ["RimWorld 1.6", "Requires Harmony", "Foundation by Dredd (Misakabob)"],
+      "badges": ["RimWorld 1.6 / 1.7", "Requires Harmony", "Foundation by Dredd (Misakabob)"],
       "overview": [
         "Someone remembers. Someone is coming back. A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. Early on they harass with taunts, false leads, and sabotage. After each escape they level up as a combat captain and prefer returning with an army. The hunt still ends when you capture or kill them… or when they get what they came for.",
         "The Dossier tab tracks identity, tells, sightings, and a standing bounty. Original design and core runtime by Dredd (Misakabob). Expanded and packaged here by AzraelGodKing with gratitude."
@@ -490,7 +490,7 @@
       "accent": "#5f8a48",
       "preview": "img/DeepColonyPreview.png",
       "tagline": "Auto skill perks, trauma & therapy, apprenticeship, family life, and a living faction reputation ledger.",
-      "badges": ["RimWorld 1.6", "Requires Harmony", "Five systems"],
+      "badges": ["RimWorld 1.6 / 1.7", "Requires Harmony", "Five systems"],
       "overview": [
         "Your colonists are more than their stats. Five interlocking systems give each colonist a real identity — and make the colony feel like it has a living history. Not more furniture. Not another raid timer.",
         "Four surfaces: Perks, Legacy, Reputation, and a Family inspect tab (Rows or Pedigree). Soft and Default keep power systems and attitude consequences off; Hard enables skill-20 capstones, branching perks, chronic trauma, and attitude-driven trade / caravan / raid pressure."
@@ -596,7 +596,7 @@
       "accent": "#b06078",
       "preview": "img/DateNightPreview.png",
       "tagline": "Paint Date or Lovin on the Schedule tab. Dates are dinner, walks, and stars; Lovin still uses a double.",
-      "badges": ["RimWorld 1.6", "Requires Harmony"],
+      "badges": ["RimWorld 1.6 / 1.7", "Requires Harmony"],
       "overview": [
         "Schedule romance. Make memories. Date hours pick a real activity from what's around — dinner, picnic, walk, stargazing, dancing, a small gift, recreation, or a hangout. Mood and opinion only. No bed, no pregnancy. Paint Lovin on both partners for the same hours and they meet in a shared double.",
         "Dates have quality. Couples remember a favourite spot. A finished date leaves a spark. Adults without a partner in that bed can have some private time. Children never qualify."
@@ -679,7 +679,7 @@
       "accent": "#c4a056",
       "preview": "img/NicetiesPreview.png",
       "tagline": "Small colony comforts: well-kept apparel, throne-room altars, any outfit cut, hidden cryptosleep, melee hunting, shared bedrooms, and leave a way out while building.",
-      "badges": ["RimWorld 1.6", "Requires Harmony", "QoL"],
+      "badges": ["RimWorld 1.6 / 1.7", "Requires Harmony", "QoL"],
       "overview": [
         "Vanilla never shipped these. Niceties is one Harmony QoL companion: each nicety is its own Mod Options toggle. Soft / Default / Hard only seed the knobs — they are not a forced bundle.",
         "Combat, fire, and outdoor rot stay vanilla. Royalty and Ideology are optional; those toggles no-op without the DLC. Safe to add or remove mid-save. Inspired by older Workshop ideas, rewritten from scratch for 1.6 — not a port of those mods."
