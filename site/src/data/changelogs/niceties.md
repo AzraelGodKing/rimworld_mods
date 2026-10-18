@@ -2,22 +2,18 @@
 
 Detailed notes for **Niceties** only.
 
-## [Unreleased]
+## [1.6.1]
 
-### Changed
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
-### Fixed
-- **Leave-a-way-out** (AZR-548) — fresh enclose check on CompleteConstruction; reachable safe spots; EndCurrentJob + queue instead of mid-toil StartJob; clear geometry cache on FinalizeInit. Strata stairwell postfix respects `__runOriginal`.
-- **Roommate disturbed sleep** (AZR-567) — skip only when disturber owns a bed in the sleeper's room; no outdoor owned-bed fallback; skip medical/prisoner beds. Tooltip updated EN/CN/RU.
-
-## [1.6.1] (proposed)
-
-Player-facing version **1.6.1** pending Myleek confirmation (`About.xml` still **1.6.0**). Stamp `openbuilds-roommate-v1`.
+Player-facing version **1.6.1** (`About.xml` `modVersion`). Stamp `openbuilds-roommate-v1`.
 
 AZR-548 AZR-567
 
+### Changed
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
+
 ### Fixed
-- Same as Unreleased above.
+- **Leave-a-way-out** (AZR-548) — fresh enclose check on CompleteConstruction; reachable safe spots; EndCurrentJob + queue instead of mid-toil StartJob; clear geometry cache on FinalizeInit. Strata stairwell postfix respects `__runOriginal`.
+- **Roommate disturbed sleep** (AZR-567) — skip only when disturber owns a bed in the sleeper's room; no outdoor owned-bed fallback; skip medical/prisoner beds. Tooltip updated EN/CN/RU.
 
 ## [1.6.0]
 

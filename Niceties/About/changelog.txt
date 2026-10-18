@@ -1,5 +1,9 @@
-1.6.1 (proposed — About.xml not bumped until confirmed)
+1.6.1
 [h1]Niceties — 1.6.1[/h1]
+[b]Changed[/b]
+[list]
+[*] [b]Separate 1.6 and 1.7 assemblies.[/b] Official 1.6 loads 1.6/Assemblies. Unstable 1.7 loads 1.7/Assemblies.
+[/list]
 [b]Fixed[/b]
 [list]
 [*] [b]Leave-a-way-out[/b] — final enclose check uses fresh geometry; safe spots must be reachable; step-aside queues walk via EndCurrentJob instead of mid-toil StartJob; geometry cache clears on new game (AZR-548).
@@ -7,15 +11,4 @@
 [/list]
 
 [i]Build stamp (Player.log): openbuilds-roommate-v1[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
-
-1.6.0
-[h1]Niceties — 1.6.0[/h1]
-[b]Changed[/b]
-[list]
-[*] [b]Workshop preview[/b] — new preview image of the comforts.
-[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
-[/list]
-
-[i]Build stamp (Player.log): sim-snapshot-v2[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]

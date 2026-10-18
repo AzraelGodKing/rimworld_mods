@@ -2,10 +2,21 @@
 
 Detailed notes for Homesteader only.
 
-## [Unreleased]
+## [1.5.1]
+
+Player-facing version **1.5.1** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.5.1 loaded from ...` in Player.log (`landrace-aura-kats-v1`).
+
+AZR-526 AZR-528
+
+### Changed
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies/Homesteader.dll` with the 1.6 scenario folder. Unstable 1.7 loads `1.7/Assemblies/Homesteader.dll` and still reads the Homesteaders scenario from `1.6/Defs` without loading the 1.6 DLL.
 
 ### Fixed
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies/Homesteader.dll` with the 1.6 scenario folder. Unstable 1.7 loads `1.7/Assemblies/Homesteader.dll` and still reads the Homesteaders scenario from `1.6/Defs` without loading the 1.6 DLL.
+- **Landrace seed save** (AZR-526) — harvesting mature landrace crops that despawn on collect still drops an improved saved seed.
+- **Maypole / statue auras** (AZR-526) — maypole, 27 statues, and monuments now tick so the cheer hediff refreshes instead of vanishing after 50 ticks.
+- **Kats Super Chat silver** (AZR-528) — takes silver from stockpiles when there is no orbital trade beacon; letter only claims silver when it was actually removed.
+- **Allergy matcher** (AZR-528) — Egg / Nuts / Crab tokens use word and camelCase boundaries so Veggie meals, donuts, and crabapples no longer false-match.
+
 ## [1.5.0]
 
 Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.5.0 loaded from ...` in Player.log (`harvest-aging-v1`).
