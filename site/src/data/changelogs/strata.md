@@ -1,9 +1,16 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.11.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.1 loaded from ... (modified ...); job-relay-v1.` via `ModVersionLog.Write`.
+**Version:** `3.11.2` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.2 loaded from ... (modified ...); relay-errors-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `job-relay-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `relay-errors-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.11.2]
+
+Player-facing version **3.11.2** (`About.xml` `modVersion`). Stamp `relay-errors-v1`.
+
+### Fixed
+- **Work think no longer errors.** Checking a production bill uses the current ingredient search, so an assigned pawn does not throw "parameter count mismatch" and stop taking jobs. Right-clicking a stair that says "no path" patches the enter-portal menu, so that option can take the detour.
 
 ## [3.11.1]
 

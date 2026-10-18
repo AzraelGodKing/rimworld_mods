@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -59,60 +58,45 @@ namespace Strata
 
     // Right-click on a stair the pawn cannot walk to ("no path") uses the same
     // bunker detour as a drafted click on a cell, then enters that stair.
-    [HarmonyPatch(typeof(MapPortal), nameof(MapPortal.GetFloatMenuOptions))]
-    public static class Patch_MapPortal_NoPathDetour
+    // Enter is a float-menu provider, not a method on MapPortal.
+    [HarmonyPatch(typeof(FloatMenuOptionProvider_EnterMapPortal), "GetSingleOptionFor")]
+    public static class Patch_EnterMapPortal_NoPathDetour
     {
-        public static void Postfix(MapPortal __instance, Pawn selPawn, ref IEnumerable<FloatMenuOption> __result)
+        public static void Postfix(Thing clickedThing, FloatMenuContext context, ref FloatMenuOption __result)
         {
-            if (__instance == null || selPawn == null || !selPawn.Spawned || selPawn.Map != __instance.Map)
+            if (__result == null || clickedThing is not MapPortal portal || context == null)
             {
                 return;
             }
 
-            if (!StrataPawnUtility.CanUseLevelPortals(selPawn))
+            Pawn pawn = context.FirstSelectedPawn;
+            if (pawn == null || !pawn.Spawned || pawn.Map != portal.Map)
             {
                 return;
             }
 
-            if (selPawn.CanReach(__instance, PathEndMode.Touch, Danger.Deadly))
+            if (!StrataPawnUtility.CanUseLevelPortals(pawn))
             {
                 return;
             }
 
-            if (!DraftedPortalPathing.HasDetour(selPawn, __instance.Position))
+            if (pawn.CanReach(portal, PathEndMode.Touch, Danger.Deadly))
             {
                 return;
             }
 
-            string blocked = ("CannotEnterPortal".Translate(__instance.Label) + ": " + "NoPath".Translate()).Resolve();
-            var options = new List<FloatMenuOption>();
-            bool replaced = false;
-            if (__result != null)
+            if (!DraftedPortalPathing.HasDetour(pawn, portal.Position))
             {
-                foreach (FloatMenuOption option in __result)
-                {
-                    if (!replaced && option != null && option.Label == blocked)
-                    {
-                        options.Add(EnterViaDetour(__instance, selPawn));
-                        replaced = true;
-                        continue;
-                    }
-
-                    options.Add(option);
-                }
+                return;
             }
 
-            if (!replaced)
+            string blocked = ("CannotEnterPortal".Translate(portal.Label) + ": " + "NoPath".Translate()).Resolve();
+            if (__result.Label != blocked)
             {
-                options.Add(EnterViaDetour(__instance, selPawn));
+                return;
             }
 
-            __result = options;
-        }
-
-        private static FloatMenuOption EnterViaDetour(MapPortal portal, Pawn pawn)
-        {
-            return new FloatMenuOption(portal.EnterString, delegate
+            __result = new FloatMenuOption(portal.EnterString, delegate
             {
                 Job job = DraftedPortalPathing.TryMakeEnterPortalDetourJob(pawn, portal);
                 if (job != null)

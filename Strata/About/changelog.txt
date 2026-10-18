@@ -1,11 +1,10 @@
-3.11.1
-[h1]Strata - 3.11.1[/h1]
+3.11.2
+[h1]Strata - 3.11.2[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]No path around a walled stair.[/b] A drafted click on a stair that says "no path", a Guards For Me post or follow on the other side of that wall, and a work trip whose job is walled off all take the same detour as a drafted move. The pawn goes through a linked floor, comes out where the stair or job can be reached, and finishes it instead of walking upstairs and straight back down. A guard trip is not cancelled if they are drafted on the way.
-[*] [b]Cross-floor work stays put.[/b] Automatic work assigns a pawn to one floor and one work type, walks them there, and keeps giving them that work until the floor is finished with it. An empty scan does not send them back up or down. Firefighting and doctoring still interrupt. A player order can still take over.
+[*] [b]Work think no longer errors.[/b] Checking a production bill uses the current ingredient search, so an assigned pawn does not throw "parameter count mismatch" and stop taking jobs. Right-clicking a stair that says "no path" patches the enter-portal menu, so that option can take the detour.
 [/list]
 
-[i]Build stamp (Player.log): job-relay-v1[/i]
+[i]Build stamp (Player.log): relay-errors-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

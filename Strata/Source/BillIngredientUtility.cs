@@ -30,17 +30,33 @@ namespace Strata
             if (pawn != null && pawn.Map == map && pawn.CanReserve(billGiver))
             {
                 tryFindIngredients ??= AccessTools.Method(typeof(WorkGiver_DoBill), "TryFindBestBillIngredients");
-                if (tryFindIngredients != null)
+                if (tryFindIngredients != null && TryInvokeFindIngredients(bill, pawn, billGiver))
                 {
-                    var chosen = new List<ThingCount>();
-                    var worker = new WorkGiver_DoBill();
-                    if ((bool)tryFindIngredients.Invoke(worker, new object[] { bill, pawn, billGiver, chosen }))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return !HasShortfall(bill, map);
+        }
+
+        // 1.6 takes a fifth missing-ingredients list. Passing the old four
+        // arguments throws inside every work think once a pawn is assigned.
+        private static bool TryInvokeFindIngredients(Bill bill, Pawn pawn, Thing billGiver)
+        {
+            var chosen = new List<ThingCount>();
+            var worker = new WorkGiver_DoBill();
+            int count = tryFindIngredients.GetParameters().Length;
+            object[] args = count >= 5
+                ? new object[] { bill, pawn, billGiver, chosen, new List<IngredientCount>() }
+                : new object[] { bill, pawn, billGiver, chosen };
+            try
+            {
+                return args.Length == count && (bool)tryFindIngredients.Invoke(worker, args);
+            }
+            catch (System.Exception e)
+            {
+                StrataLog.Verbose("[Strata] TryFindBestBillIngredients failed: " + e.GetType().Name);
+                return false;
+            }
         }
 
         public static bool PawnCanDoBill(Pawn pawn, Bill bill)
