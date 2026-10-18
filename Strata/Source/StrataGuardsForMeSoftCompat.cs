@@ -180,22 +180,38 @@ namespace Strata
         public static bool GuardSpotPrefix(Pawn pawn, ref Job __result)
         {
             Thing spot = GuardTarget(pawn);
-            if (!NeedsStairs(pawn, spot))
+            if (NeedsStairs(pawn, spot))
+            {
+                __result = Relay(pawn, spot.Map, spot.Position);
+                return false;
+            }
+
+            Job detour = DetourOnThisMap(pawn, spot);
+            if (detour == null)
             {
                 return true;
             }
-            __result = Relay(pawn, spot.Map, spot.Position);
+
+            __result = detour;
             return false;
         }
 
         public static bool PatrolPrefix(Pawn pawn, ref Job __result)
         {
             Thing waypoint = Waypoint(pawn);
-            if (!NeedsStairs(pawn, waypoint))
+            if (NeedsStairs(pawn, waypoint))
+            {
+                __result = Relay(pawn, waypoint.Map, waypoint.Position);
+                return false;
+            }
+
+            Job detour = DetourOnThisMap(pawn, waypoint);
+            if (detour == null)
             {
                 return true;
             }
-            __result = Relay(pawn, waypoint.Map, waypoint.Position);
+
+            __result = detour;
             return false;
         }
 
@@ -205,14 +221,24 @@ namespace Strata
             {
                 return;
             }
-            if (guardedPawnField?.GetValue(CompOf(pawn)) is not Pawn vip || !NeedsStairs(pawn, vip))
+            if (guardedPawnField?.GetValue(CompOf(pawn)) is not Pawn vip)
             {
                 return;
             }
-            Job hop = Relay(pawn, vip.Map, vip.Position);
-            if (hop != null)
+            if (NeedsStairs(pawn, vip))
             {
-                __result = hop;
+                Job hop = Relay(pawn, vip.Map, vip.Position);
+                if (hop != null)
+                {
+                    __result = hop;
+                }
+                return;
+            }
+
+            Job detour = DetourOnThisMap(pawn, vip);
+            if (detour != null)
+            {
+                __result = detour;
             }
         }
 
@@ -235,6 +261,15 @@ namespace Strata
                     __result = hop;
                 }
                 return;
+            }
+            if (forcedTargetField?.GetValue(comp) is Thing here)
+            {
+                Job detour = DetourOnThisMap(pawn, here);
+                if (detour != null)
+                {
+                    __result = detour;
+                    return;
+                }
             }
             if (!TryNearestThreat(pawn, out Thing threat))
             {
@@ -412,7 +447,7 @@ namespace Strata
             {
                 return null;
             }
-            if (!pawn.Spawned || pawn.Dead || pawn.Downed || pawn.Drafted || pawn.InMentalState)
+            if (!pawn.Spawned || pawn.Dead || pawn.Downed || pawn.InMentalState)
             {
                 return null;
             }
@@ -424,16 +459,45 @@ namespace Strata
             {
                 return null;
             }
-            if (pawn.CurJobDef == JobDefOf.EnterPortal || PortalRelayChain.HasIntent(pawn))
+            if (pawn.CurJobDef == JobDefOf.EnterPortal
+                || PortalRelayChain.HasIntent(pawn)
+                || DraftedPortalPathing.HasActiveRoute(pawn))
             {
                 return null;
             }
-            return PawnRelay.TryRelayToMap(
+
+            Job direct = PawnRelay.TryRelayToMap(
                 pawn,
                 dest,
                 touchCooldown: false,
                 RelayPurpose.Guard,
                 preferArrivalNear: near);
+            if (direct != null)
+            {
+                return direct;
+            }
+
+            // The stair to that floor has no path. Same detour a drafted click uses.
+            return DraftedPortalPathing.TryMakeCrossMapDetourJob(
+                pawn,
+                dest,
+                near,
+                RelayPurpose.Guard);
+        }
+
+        private static Job DetourOnThisMap(Pawn pawn, Thing target)
+        {
+            if (pawn?.Map == null || target?.Map != pawn.Map || !target.Spawned)
+            {
+                return null;
+            }
+
+            if (pawn.CanReach(target, PathEndMode.OnCell, Danger.Deadly))
+            {
+                return null;
+            }
+
+            return DraftedPortalPathing.TryMakeSameMapDetourJob(pawn, target.Position);
         }
 
         private static bool NeedsStairs(Pawn pawn, Thing target)

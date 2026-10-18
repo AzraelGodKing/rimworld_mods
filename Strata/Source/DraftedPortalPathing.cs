@@ -29,6 +29,9 @@ namespace Strata
             // After bunker bypass, enter the (previously unreachable) stair to
             // the bed's map — G1 → B1 → G1 near A1 stair → A1 → bed.
             EnterPortalToBedMap,
+            // After the bunker bypass, enter the stair that had no path, then
+            // hand the trip to PortalRelayChain (guard post, work, follow).
+            EnterPortalThenRelay,
         }
 
         private class Route
@@ -42,6 +45,8 @@ namespace Strata
             public int destPortalId; // stair toward bed map (EnterPortalToBedMap)
             public int bedMapId;
             public bool requireDrafted;
+            public RelayPurpose handoff;
+            public int handoffMapId;
         }
 
         private static readonly Dictionary<int, Route> routes = new Dictionary<int, Route>();
@@ -137,6 +142,143 @@ namespace Strata
                 destPortalId = bestStair.thingIDNumber,
                 bedMapId = bed.Map.uniqueID,
                 requireDrafted = false,
+            };
+
+            return MakeForcedJob(JobDefOf.EnterPortal, bestExit, pawn);
+        }
+
+        // Same-map cell behind walls. Undrafted jobs (guard post, work) use this
+        // the same way a drafted click does.
+        public static Job TryMakeSameMapDetourJob(Pawn pawn, IntVec3 destCell)
+        {
+            if (pawn == null || !destCell.IsValid)
+            {
+                return null;
+            }
+
+            return TryMakeDetourJob(
+                pawn,
+                destCell,
+                FinishMode.GotoCell,
+                bedId: -1,
+                requireDrafted: false);
+        }
+
+        // Clicked stair has no path on this map. Detour, then enter it.
+        public static Job TryMakeEnterPortalDetourJob(Pawn pawn, MapPortal portal)
+        {
+            if (pawn == null || portal == null || !portal.Spawned || portal.Map != pawn.Map)
+            {
+                return null;
+            }
+
+            if (pawn.CanReach(portal, PathEndMode.Touch, Danger.Deadly))
+            {
+                return null;
+            }
+
+            if (!TryFindDetour(pawn, portal.Position, out MapPortal exit, out MapPortal ret))
+            {
+                return null;
+            }
+
+            routes[pawn.thingIDNumber] = new Route
+            {
+                destMap = pawn.Map,
+                destCell = portal.Position,
+                returnPortalId = ret.thingIDNumber,
+                stage = Stage.EnterFirst,
+                finish = FinishMode.EnterPortalThenRelay,
+                destPortalId = portal.thingIDNumber,
+                requireDrafted = false,
+                handoffMapId = -1,
+            };
+
+            return MakeForcedJob(JobDefOf.EnterPortal, exit, pawn);
+        }
+
+        // Stair to destMap exists but this pawn cannot walk to it. Detour to
+        // that stair, then continue the relay (guard, work, follow).
+        public static Job TryMakeCrossMapDetourJob(
+            Pawn pawn,
+            Map destMap,
+            IntVec3 near,
+            RelayPurpose purpose)
+        {
+            if (pawn == null || destMap == null || destMap == pawn.Map
+                || !StrataPawnUtility.CanUseLevelPortals(pawn))
+            {
+                return null;
+            }
+
+            List<MapPortal> stairs = LevelGraph.FirstStepCandidates(pawn.Map, destMap);
+            if (stairs == null || stairs.Count == 0)
+            {
+                return null;
+            }
+
+            MapPortal bestStair = null;
+            MapPortal bestExit = null;
+            MapPortal bestReturn = null;
+            float bestScore = float.MaxValue;
+            IntVec3 aim = near.IsValid && near.InBounds(destMap) ? near : IntVec3.Invalid;
+
+            for (int i = 0; i < stairs.Count; i++)
+            {
+                MapPortal stair = stairs[i];
+                if (stair == null || !stair.Spawned || stair.Map != pawn.Map
+                    || StrataPortalUtility.IsSealedPortal(stair)
+                    || !stair.IsEnterable(out _))
+                {
+                    continue;
+                }
+
+                if (pawn.CanReach(stair, PathEndMode.Touch, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                if (!TryFindDetour(pawn, stair.Position, out MapPortal exit, out MapPortal ret))
+                {
+                    continue;
+                }
+
+                float score = pawn.Position.DistanceTo(exit.Position)
+                    + ret.Position.DistanceTo(stair.Position);
+                if (aim.IsValid)
+                {
+                    IntVec3 land = stair.GetDestinationLocation();
+                    if (land.IsValid)
+                    {
+                        score += land.DistanceTo(aim);
+                    }
+                }
+
+                if (score < bestScore)
+                {
+                    bestScore = score;
+                    bestStair = stair;
+                    bestExit = exit;
+                    bestReturn = ret;
+                }
+            }
+
+            if (bestStair == null || bestExit == null || bestReturn == null)
+            {
+                return null;
+            }
+
+            routes[pawn.thingIDNumber] = new Route
+            {
+                destMap = pawn.Map,
+                destCell = aim.IsValid ? aim : bestStair.Position,
+                returnPortalId = bestReturn.thingIDNumber,
+                stage = Stage.EnterFirst,
+                finish = FinishMode.EnterPortalThenRelay,
+                destPortalId = bestStair.thingIDNumber,
+                requireDrafted = false,
+                handoff = purpose,
+                handoffMapId = destMap.uniqueID,
             };
 
             return MakeForcedJob(JobDefOf.EnterPortal, bestExit, pawn);
@@ -322,6 +464,32 @@ namespace Strata
 
                     pawn.jobs.StartJob(
                         JobMaker.MakeJob(JobDefOf.LayDown, bed),
+                        JobCondition.InterruptForced);
+                    return;
+                }
+
+                if (route.finish == FinishMode.EnterPortalThenRelay)
+                {
+                    MapPortal stair = FindPortalById(pawn.Map, route.destPortalId);
+                    if (stair == null || !stair.Spawned || !stair.IsEnterable(out _)
+                        || StrataPortalUtility.IsSealedPortal(stair)
+                        || !pawn.CanReach(stair, PathEndMode.Touch, Danger.Deadly))
+                    {
+                        return;
+                    }
+
+                    Map handoffMap = route.handoffMapId > 0 ? FindMapById(route.handoffMapId) : null;
+                    if (handoffMap != null && handoffMap != pawn.Map)
+                    {
+                        PortalRelayChain.Mark(
+                            pawn,
+                            handoffMap,
+                            route.handoff,
+                            preferArrivalNear: route.destCell);
+                    }
+
+                    pawn.jobs.StartJob(
+                        MakeForcedJob(JobDefOf.EnterPortal, stair, pawn),
                         JobCondition.InterruptForced);
                     return;
                 }
@@ -584,6 +752,8 @@ namespace Strata
                     destPortalId = route.destPortalId,
                     bedMapId = route.bedMapId,
                     requireDrafted = route.requireDrafted,
+                    handoff = route.handoff,
+                    handoffMapId = route.handoffMapId,
                 });
             }
             return saved;
@@ -640,6 +810,8 @@ namespace Strata
                     destPortalId = record.destPortalId,
                     bedMapId = record.bedMapId,
                     requireDrafted = record.requireDrafted,
+                    handoff = record.handoff,
+                    handoffMapId = record.handoffMapId,
                 };
 
                 // EnterFirst on the middle floor, or back on the destination

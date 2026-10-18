@@ -329,7 +329,7 @@ namespace Strata
                 order.nextTryTick = now + 60;
                 return;
             }
-            if (!fromArrival && PortalRelayChain.HasArrivalWork(pawn))
+            if (!fromArrival && PortalRelayChain.DeferringOrderedJobs(pawn))
             {
                 order.retry = true;
                 order.nextTryTick = now + 120;

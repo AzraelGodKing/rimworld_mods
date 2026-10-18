@@ -293,6 +293,10 @@ namespace Strata
                     preferredBed,
                     preferArrivalNear: preferNear,
                     intendedWorkDefName: intendedWork?.defName);
+                if (purpose == RelayPurpose.Work && intendedWork != null && !StrataPawnUtility.IsMiscRobot(pawn))
+                {
+                    JobRelay.Remember(pawn, link.map, intendedWork);
+                }
             }
             return job;
         }
@@ -307,65 +311,8 @@ namespace Strata
         {
             result = default;
             sawCandidate = false;
-            if (pawn?.Map == null || node == null)
-            {
-                return false;
-            }
-            List<LevelGraph.LevelLink> links = LevelGraph.CopyLinks(LevelGraph.ReachableLevels(pawn.Map));
-            int count = links.Count;
-            if (count == 0)
-            {
-                return false;
-            }
-            var open = new bool[count];
-            var priorities = new int[count];
-            var types = new WorkTypeDef[count];
-            for (int i = 0; i < count; i++)
-            {
-                Map map = links[i].map;
-                if (map == null || !HasWorkFor(pawn, map))
-                {
-                    continue;
-                }
-                open[i] = true;
-                priorities[i] = 4;
-                if (WorkRelaySignals.TryBestSignalled(pawn, map, out int priority, out WorkTypeDef type, out _))
-                {
-                    priorities[i] = priority;
-                    types[i] = type;
-                }
-            }
-            while (true)
-            {
-                int best = -1;
-                for (int i = 0; i < count; i++)
-                {
-                    if (!open[i])
-                    {
-                        continue;
-                    }
-                    if (best < 0
-                        || priorities[i] < priorities[best]
-                        || (priorities[i] == priorities[best] && links[i].depth < links[best].depth))
-                    {
-                        best = i;
-                    }
-                }
-                if (best < 0)
-                {
-                    return false;
-                }
-                sawCandidate = true;
-                open[best] = false;
-                int cap = WorkRelaySignals.WorkClaimCap(links[best].map);
-                Job job = TryClaimAndRelay(pawn, links[best], RelayPurpose.Work, cap, intendedWork: types[best]);
-                if (job == null)
-                {
-                    continue;
-                }
-                result = new ThinkResult(job, node, JobTag.MiscWork);
-                return true;
-            }
+            JobRelay.Apply(pawn, node, emergency: false, ref result);
+            return result.Job != null;
         }
 
         public static bool HasWorkFor(Pawn pawn, Map map) => WorkRelaySignals.HasWorkFor(pawn, map);

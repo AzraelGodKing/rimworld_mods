@@ -829,6 +829,38 @@ namespace Strata
             return workType != null;
         }
 
+        // The work type that sent this pawn here is still on the board.
+        // Ignores the arrival blacklist: that list is what used to send them home.
+        internal static bool WorkTypeRemains(Pawn pawn, Map map, WorkTypeDef type)
+        {
+            if (pawn?.workSettings == null || map == null || type == null)
+            {
+                return false;
+            }
+            if (!pawn.workSettings.EverWork || !pawn.workSettings.WorkIsActive(type))
+            {
+                return false;
+            }
+
+            WorkRelayBoard.BoardEntry signals = GetSignals(map);
+            if (signals.byType != null && type.index >= 0 && type.index < signals.byType.Length)
+            {
+                WorkRelayBoard.WorkTypeSignal signal = signals.byType[type.index];
+                if (signal.available && SkillAllows(pawn, type, signal.needsSkill))
+                {
+                    return true;
+                }
+            }
+
+            if (signals.flick
+                && (type == WorkTypeDefOf.Hauling || type == WorkTypeDefOf.Construction))
+            {
+                return true;
+            }
+
+            return TryBillWorkType(pawn, map, out WorkTypeDef billType) && billType == type;
+        }
+
         private static void Consider(
             Pawn_WorkSettings work,
             WorkTypeDef type,

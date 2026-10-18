@@ -50,33 +50,7 @@ namespace Strata
             {
                 return;
             }
-            if (!PawnRelay.CanRelay(pawn))
-            {
-                return;
-            }
-            if (!LevelGraph.AnyLinkFrom(pawn.Map))
-            {
-                return;
-            }
-            if (PawnRelay.IsColonistWorkScanCooldown(pawn))
-            {
-                return;
-            }
-
-            if (PawnRelay.TryIssueBestWork(pawn, __instance, out ThinkResult relay, out bool sawCandidate))
-            {
-                __result = relay;
-                return;
-            }
-
-            if (sawCandidate)
-            {
-                PawnRelay.TouchColonistWorkScanFailed(pawn);
-            }
-            else
-            {
-                PawnRelay.TouchColonistWorkScanEmpty(pawn);
-            }
+            JobRelay.Apply(pawn, __instance, emergency: false, ref __result);
         }
 
         private static List<MethodBase> DiscoverTargetMethods()
