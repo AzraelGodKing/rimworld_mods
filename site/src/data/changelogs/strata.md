@@ -15,6 +15,7 @@ Player-facing version **3.11.0** (`About.xml` `modVersion`). Stamp `floor-jobs-v
 ### Fixed
 - **Work relay.** An idle pawn goes to the linked floor where their own best job is, then the nearest of those, instead of the first floor with any chore. Benches and switches count. On arrival they search that work the way the game does, including nearby designations, not a short list. A fire check no longer clears the arrival check, and a floor that just had nothing does not pull them straight back.
 - **Jobs survive a level change.** Every shift-clicked order is kept, not just the last one, and started again on arrival. If that start fails, or ruin stairs draft the pawn on the way in, the order is retried instead of dropped. A work trip keeps looking for that work type, including mining and other cell jobs, instead of taking the first unrelated job. Queued jobs for the floor they left wait and resume back there. Orders in flight are saved with the colony.
+- **Mod list load.** About.xml no longer has a WorkshopTags block. RimWorld 1.7 logged that block as an unknown field for every mod.
 
 ## [3.10.0]
 

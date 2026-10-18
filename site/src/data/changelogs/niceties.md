@@ -5,8 +5,7 @@ Detailed notes for **Niceties** only.
 ## [Unreleased]
 
 ### Changed
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`. Workshop tags include 1.6 and 1.7.
-
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
 ### Fixed
 - **Leave-a-way-out** (AZR-548) — fresh enclose check on CompleteConstruction; reachable safe spots; EndCurrentJob + queue instead of mid-toil StartJob; clear geometry cache on FinalizeInit. Strata stairwell postfix respects `__runOriginal`.
 - **Roommate disturbed sleep** (AZR-567) — skip only when disturber owns a bed in the sleeper's room; no outdoor owned-bed fallback; skip medical/prisoner beds. Tooltip updated EN/CN/RU.

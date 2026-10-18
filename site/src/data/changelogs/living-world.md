@@ -3,8 +3,7 @@
 ## [Unreleased]
 
 ### Changed
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`. Workshop tags include 1.6 and 1.7.
-- **Settlements in use stay put** (AZR-513) — abandon and faction flips skip a settlement with a generated map, a player caravan, an open trade request, or a quest look target. New outposts need a valid settlement tile at least 10 tiles from a player base.
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.- **Settlements in use stay put** (AZR-513) — abandon and faction flips skip a settlement with a generated map, a player caravan, an open trade request, or a quest look target. New outposts need a valid settlement tile at least 10 tiles from a player base.
 - **Refugee and warband fallout** (AZR-514) — refugees visit, then leave, and a hostile losing faction does not arrive as a neutral event. Warbands are a combat group scaled by threat points (capped at 600). Fallout lands on the player home nearest the event, later when the trip is longer. News counts as nearby if any colony is in range.
 - Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change. No `modVersion` bump (Myleek).
 
