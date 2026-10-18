@@ -22,6 +22,7 @@ namespace Strata
             WorkRelayBoardBuilder.ResetSession,
             SleepRelay.ResetSession,
             StrataConstructAcrossLevels.ResetSession,
+            BillIngredientUtility.ResetSession,
             HaulToLevelTargets.ResetSession,
             RelayClaims.ResetSession,
             StrataMapUtility.ResetSession,

@@ -43,6 +43,75 @@ namespace Strata
             return false;
         }
 
+        public static bool HasPending(Pawn pawn)
+        {
+            return pawn != null && pending.ContainsKey(pawn.thingIDNumber);
+        }
+
+        public static void ClearPending(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                pending.Remove(pawn.thingIDNumber);
+            }
+        }
+
+        // A stack on another floor is reserved on that floor's manager.
+        // Pawn.CanReserve asks the pawn's map and always says no.
+        public static bool CanReserveFromHere(Pawn pawn, Thing thing)
+        {
+            if (pawn == null || thing?.Map == null || !thing.Spawned)
+            {
+                return false;
+            }
+            return pawn.CanReserve(thing);
+        }
+
+        public static Job TryFetchForLocalSites(Pawn pawn)
+        {
+            if (pawn?.Map == null || pawn.workSettings == null
+                || !pawn.workSettings.WorkIsActive(WorkTypeDefOf.Construction))
+            {
+                return null;
+            }
+
+            Job frames = FetchFromGroup(pawn, ThingRequestGroup.BuildingFrame);
+            if (frames != null)
+            {
+                return frames;
+            }
+            return FetchFromGroup(pawn, ThingRequestGroup.Blueprint);
+        }
+
+        private static Job FetchFromGroup(Pawn pawn, ThingRequestGroup group)
+        {
+            List<Thing> things = pawn.Map.listerThings.ThingsInGroup(group);
+            int seen = 0;
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                seen++;
+                if (seen > 40)
+                {
+                    break;
+                }
+                if (thing is not IConstructible constructible || thing.IsForbidden(pawn))
+                {
+                    continue;
+                }
+                if (thing.Faction != null && thing.Faction != pawn.Faction)
+                {
+                    continue;
+                }
+                Job job = TryMakeFetchJob(pawn, constructible, forced: false);
+                if (job != null)
+                {
+                    return job;
+                }
+            }
+            return null;
+        }
+
         public static int CountAvailableOnMap(Map map, ThingDef need, Pawn pawn)
         {
             if (map == null || need == null) return 0;
@@ -55,7 +124,9 @@ namespace Strata
                 if (pawn != null && t.IsForbidden(pawn)) continue;
                 // Reserved stacks are not available — counting them made fetch jobs
                 // target wood another builder already claimed (StartJob reserve spam).
-                if (pawn != null && !pawn.CanReserve(t)) continue;
+                // pawn.CanReserve only consults the pawn's own map, so a stack
+                // upstairs looked unavailable and the builder never left.
+                if (pawn != null && !CanReserveFromHere(pawn, t)) continue;
                 n += t.stackCount;
             }
             return n;
@@ -275,7 +346,7 @@ namespace Strata
                 {
                     Thing t = list[i];
                     if (t == null || !t.Spawned || t.IsForbidden(pawn)) continue;
-                    if (!pawn.CanReserve(t)) continue;
+                    if (!CanReserveFromHere(pawn, t)) continue;
                     if (map == pawn.Map)
                     {
                         if (!HaulAIUtility.PawnCanAutomaticallyHaulFast(pawn, t, forced)) continue;
@@ -340,7 +411,7 @@ namespace Strata
             Map siteMap = site?.Map;
             Map matMap = mat.Map;
             if (matMap == null || siteMap == null || site == null) return null;
-            if (mat.Spawned && !pawn.CanReserve(mat)) return null;
+            if (mat.Spawned && !CanReserveFromHere(pawn, mat)) return null;
 
             if (pawn.Map == matMap)
             {
@@ -396,6 +467,8 @@ namespace Strata
                 return null;
             }
             hop.playerForced = forced;
+            // Hold the stack on its own floor while they walk there.
+            pawn.Reserve(mat, hop, stackCount: count, errorOnFailed: false);
             return hop;
         }
 

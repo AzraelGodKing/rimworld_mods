@@ -322,6 +322,32 @@ namespace Strata
             return saved;
         }
 
+        public static bool IsBreakableWorkCommute(Pawn pawn)
+        {
+            if (pawn == null || !intents.TryGetValue(pawn.thingIDNumber, out Intent intent))
+            {
+                return false;
+            }
+
+            return intent.purpose == RelayPurpose.Work
+                || intent.purpose == RelayPurpose.Haul
+                || intent.purpose == RelayPurpose.ForcedOrder;
+        }
+
+        // Sleep, food, joy, or a drug need. Drop the stair chain. The floor
+        // assignment stays, so they come back after the need is met.
+        public static void ReleaseWorkCommute(Pawn pawn)
+        {
+            if (!IsBreakableWorkCommute(pawn))
+            {
+                return;
+            }
+
+            intents.Remove(pawn.thingIDNumber);
+            StrataConstructAcrossLevels.ClearPending(pawn);
+            BillIngredientUtility.ClearPending(pawn);
+        }
+
         public static bool HasIntent(Pawn pawn, RelayPurpose purpose)
         {
             return pawn != null
@@ -401,6 +427,17 @@ namespace Strata
                 {
                     CrossLevelOrderedJobs.ArmRetry(pawnId);
                 }
+                return;
+            }
+
+            if ((intent.purpose == RelayPurpose.Work
+                    || intent.purpose == RelayPurpose.Haul
+                    || intent.purpose == RelayPurpose.ForcedOrder)
+                && NeedsBreak.ShouldBreak(pawn))
+            {
+                intents.Remove(pawnId);
+                StrataConstructAcrossLevels.ClearPending(pawn);
+                BillIngredientUtility.ClearPending(pawn);
                 return;
             }
 
@@ -538,7 +575,8 @@ namespace Strata
 
             if (intent.purpose == RelayPurpose.ForcedOrder)
             {
-                if (StrataConstructAcrossLevels.TryFinishFetch(pawn))
+                if (StrataConstructAcrossLevels.TryFinishFetch(pawn)
+                    || BillIngredientUtility.TryFinishFetch(pawn))
                 {
                     return;
                 }
@@ -586,6 +624,13 @@ namespace Strata
 
             Map returnMap = returnMapId > 0 ? FindMap(returnMapId) : null;
             if (returnMap == null || returnMap == pawn.Map)
+            {
+                return;
+            }
+
+            // This floor is their work. Stay and build or cook. A return trip
+            // for "another load" sent them up and down a few times first.
+            if (JobRelay.AssignedTo(pawn, pawn.Map))
             {
                 return;
             }

@@ -73,6 +73,15 @@ namespace Strata
             }
         }
 
+        // True when this pawn was sent to this floor for work and should stay.
+        internal static bool AssignedTo(Pawn pawn, Map map)
+        {
+            return pawn != null
+                && map != null
+                && assigned.TryGetValue(pawn.thingIDNumber, out Assignment assignment)
+                && assignment.mapId == map.uniqueID;
+        }
+
         // One decision for every work-seeking think pass.
         public static void Apply(Pawn pawn, ThinkNode node, bool emergency, ref ThinkResult result)
         {
@@ -85,6 +94,19 @@ namespace Strata
             {
                 result = default;
                 return;
+            }
+
+            // Emergency work sits above sleep and food in the think tree.
+            // Holding a floor assignment there meant they never got the need.
+            if (NeedsBreak.ShouldBreak(pawn))
+            {
+                WorkTypeDef issued = result.Job?.workGiverDef?.workType;
+                if (issued != WorkTypeDefOf.Firefighter && issued != WorkTypeDefOf.Doctor)
+                {
+                    PortalRelayChain.ReleaseWorkCommute(pawn);
+                    result = default;
+                    return;
+                }
             }
 
             if (TryHold(pawn, node, ref result))
@@ -108,6 +130,25 @@ namespace Strata
             if (result.Job != null)
             {
                 TryLeaveForBetterWork(pawn, node, ref result);
+                return;
+            }
+
+            Job materials = StrataConstructAcrossLevels.TryFetchForLocalSites(pawn);
+            if (materials != null)
+            {
+                Remember(pawn, pawn.Map, WorkTypeDefOf.Construction);
+                result = new ThinkResult(materials, node, JobTag.MiscWork);
+                return;
+            }
+
+            Job ingredients = BillIngredientUtility.TryFetchForLocalBills(pawn, null, out WorkTypeDef billWork);
+            if (ingredients != null)
+            {
+                if (billWork != null)
+                {
+                    Remember(pawn, pawn.Map, billWork);
+                }
+                result = new ThinkResult(ingredients, node, JobTag.MiscWork);
                 return;
             }
 
@@ -147,14 +188,20 @@ namespace Strata
                 return false;
             }
 
-            if (pawn.Drafted || pawn.CurJobDef == JobDefOf.EnterPortal)
+            if (pawn.Drafted
+                || pawn.CurJobDef == JobDefOf.EnterPortal
+                || pawn.CurJobDef == StrataDefOf.Strata_HaulToLevel
+                || StrataConstructAcrossLevels.HasPending(pawn)
+                || BillIngredientUtility.HasPending(pawn))
             {
                 return true;
             }
 
             if (pawn.Map != dest)
             {
-                if (PortalRelayChain.HasIntent(pawn, RelayPurpose.Work))
+                // A material run uses ForcedOrder, not Work. Sending them back
+                // to the build floor here drops the wood pickup.
+                if (PortalRelayChain.HasIntent(pawn))
                 {
                     return true;
                 }
@@ -180,6 +227,15 @@ namespace Strata
 
             if (!WorkRelaySignals.WorkTypeRemains(pawn, dest, wanted))
             {
+                // A bill stays even when the ingredients are on another floor.
+                // The pawn goes and gets them instead of dropping the work.
+                Job missing = BillIngredientUtility.TryFetchForLocalBills(pawn, wanted, out _);
+                if (missing != null)
+                {
+                    result = new ThinkResult(missing, node, JobTag.MiscWork);
+                    assignment.stuckSince = 0;
+                    return true;
+                }
                 assigned.Remove(pawn.thingIDNumber);
                 return false;
             }
@@ -190,19 +246,38 @@ namespace Strata
                 return true;
             }
 
-            if (TryMakeWorkJob(pawn, wanted, out Job job))
+            bool madeJob = TryMakeWorkJob(pawn, wanted, out Job job);
+            if (madeJob && JobTargetReachable(pawn, job))
             {
-                if (JobTargetReachable(pawn, job))
+                result = new ThinkResult(job, node, JobTag.MiscWork);
+                assignment.stuckSince = 0;
+                return true;
+            }
+
+            // Missing materials are a carry, not a walled-off job. Fetch first
+            // so they do not detour upstairs and straight back down.
+            if (wanted == WorkTypeDefOf.Construction)
+            {
+                Job fetch = StrataConstructAcrossLevels.TryFetchForLocalSites(pawn);
+                if (fetch != null)
                 {
-                    result = new ThinkResult(job, node, JobTag.MiscWork);
+                    result = new ThinkResult(fetch, node, JobTag.MiscWork);
                     assignment.stuckSince = 0;
                     return true;
                 }
+            }
 
-                if (TryDetourToJob(pawn, job, node, ref result))
-                {
-                    return true;
-                }
+            Job billFetch = BillIngredientUtility.TryFetchForLocalBills(pawn, wanted, out _);
+            if (billFetch != null)
+            {
+                result = new ThinkResult(billFetch, node, JobTag.MiscWork);
+                assignment.stuckSince = 0;
+                return true;
+            }
+
+            if (madeJob && TryDetourToJob(pawn, job, node, ref result))
+            {
+                return true;
             }
 
             if (TryDetourToBlockedWork(pawn, wanted, node, ref result))

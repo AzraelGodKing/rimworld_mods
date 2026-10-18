@@ -215,10 +215,21 @@ namespace Strata
                 return false;
             }
 
+            if (!pawn.Spawned || pawn.Map == null)
+            {
+                return true;
+            }
+
             if (PortalRelayChain.HasIntent(pawn, RelayPurpose.Rest)
                 || DraftedPortalPathing.HasActiveRoute(pawn))
             {
                 return true;
+            }
+
+            // A work or supply stair trip gives way when they actually need bed.
+            if (NeedsBreak.WantsRest(pawn) && PortalRelayChain.IsBreakableWorkCommute(pawn))
+            {
+                return false;
             }
 
             if (pawn.CurJobDef == JobDefOf.EnterPortal)
