@@ -109,21 +109,29 @@ namespace Nemesis
                 map = Find.AnyPlayerHomeMap;
             if (map == null || cost <= 0)
                 return false;
-            List<Thing> silver = map.listerThings.ThingsOfDef(ThingDefOf.Silver);
+            List<Thing> live = map.listerThings.ThingsOfDef(ThingDefOf.Silver);
+            var silver = new List<Thing>(live.Count);
             int have = 0;
-            for (int i = 0; i < silver.Count; i++)
-                have += silver[i].stackCount;
+            for (int i = 0; i < live.Count; i++)
+            {
+                Thing stack = live[i];
+                if (stack == null || stack.Destroyed || !stack.Spawned) continue;
+                if (!stack.IsInAnyStorage() && !map.areaManager.Home[stack.Position]) continue;
+                silver.Add(stack);
+                have += stack.stackCount;
+            }
             if (have < cost)
                 return false;
             int left = cost;
             for (int i = 0; i < silver.Count && left > 0; i++)
             {
                 Thing t = silver[i];
+                if (t == null || t.Destroyed) continue;
                 int take = Mathf.Min(t.stackCount, left);
                 t.SplitOff(take).Destroy(DestroyMode.Vanish);
                 left -= take;
             }
-            return true;
+            return left <= 0;
         }
     }
 }

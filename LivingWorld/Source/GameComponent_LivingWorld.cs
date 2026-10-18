@@ -268,6 +268,58 @@ namespace LivingWorld
         }
 
         private const int FalloutDelayTicks = 30000;
+        private const int FalloutTicksPerTile = 250;
+        private const int FalloutTravelCapTicks = 120000;
+
+        public static Map NearestPlayerHome(int tile)
+        {
+            List<Map> maps = Find.Maps;
+            Map best = null;
+            int bestDist = int.MaxValue;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (map == null || !map.IsPlayerHome)
+                {
+                    continue;
+                }
+                if (tile < 0)
+                {
+                    return map;
+                }
+                int dist = Find.WorldGrid.TraversalDistanceBetween(map.Tile, tile);
+                if (dist < 0)
+                {
+                    continue;
+                }
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    best = map;
+                }
+            }
+            return best ?? Find.AnyPlayerHomeMap;
+        }
+
+        private static int FalloutReadyDelay(int tile)
+        {
+            if (tile < 0)
+            {
+                return FalloutDelayTicks;
+            }
+            Map home = NearestPlayerHome(tile);
+            if (home == null)
+            {
+                return FalloutDelayTicks;
+            }
+            int dist = Find.WorldGrid.TraversalDistanceBetween(home.Tile, tile);
+            if (dist < 0)
+            {
+                dist = 0;
+            }
+            int travel = System.Math.Min(FalloutTravelCapTicks, dist * FalloutTicksPerTile);
+            return FalloutDelayTicks + travel;
+        }
 
         public PendingFallout TryDequeueFallout(FalloutKind kind)
         {
@@ -294,7 +346,8 @@ namespace LivingWorld
             for (int i = 0; i < pendingFallout.Count; i++)
             {
                 // Wait at least ~half a day so the war letter can land first.
-                if (pendingFallout[i].kind == kind && now - pendingFallout[i].enqueueTick >= FalloutDelayTicks)
+                if (pendingFallout[i].kind == kind
+                    && now - pendingFallout[i].enqueueTick >= FalloutReadyDelay(pendingFallout[i].tile))
                 {
                     return i;
                 }
@@ -308,16 +361,12 @@ namespace LivingWorld
             {
                 return;
             }
-            Map map = Find.AnyPlayerHomeMap;
-            if (map == null)
+            PendingFallout refugeesPending = PeekFallout(FalloutKind.Refugees);
+            if (refugeesPending != null)
             {
-                return;
-            }
-
-            if (PeekFallout(FalloutKind.Refugees) != null)
-            {
+                Map map = NearestPlayerHome(refugeesPending.tile);
                 IncidentDef refugees = DefDatabase<IncidentDef>.GetNamedSilentFail("LivingWorld_Refugees");
-                if (refugees != null)
+                if (map != null && refugees != null)
                 {
                     IncidentParms parms = StorytellerUtility.DefaultParmsNow(refugees.category, map);
                     parms.forced = true;
@@ -331,8 +380,10 @@ namespace LivingWorld
             if (LivingWorldMod.Settings.warbandFalloutEnabled
                 && PeekFallout(FalloutKind.Warband) != null)
             {
+                PendingFallout warbandPending = PeekFallout(FalloutKind.Warband);
+                Map map = NearestPlayerHome(warbandPending.tile);
                 IncidentDef warband = DefDatabase<IncidentDef>.GetNamedSilentFail("LivingWorld_Warband");
-                if (warband != null)
+                if (map != null && warband != null)
                 {
                     IncidentParms parms = StorytellerUtility.DefaultParmsNow(warband.category, map);
                     parms.forced = true;

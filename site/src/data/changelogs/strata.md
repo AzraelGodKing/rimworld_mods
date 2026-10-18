@@ -1,9 +1,20 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.10.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.10.0 loaded from ... (modified ...); shared-fixes-v1.` via `ModVersionLog.Write`.
+**Version:** `3.11.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.0 loaded from ... (modified ...); floor-jobs-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `shared-fixes-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `floor-jobs-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.11.0]
+
+Player-facing version **3.11.0** (`About.xml` `modVersion`). Stamp `floor-jobs-v1`.
+
+### Added
+- **Guards For Me.** A standing guard walks to a post on another floor, a bodyguard follows their person through the stairs and stays assigned when that person changes floors, a patrol continues to a waypoint on another floor, and a reaction force takes the stairs toward a threat on a linked floor. A guard post can take a guard from a linked floor. Guards on duty are not pulled away by work relay.
+
+### Fixed
+- **Work relay.** An idle pawn goes to the linked floor where their own best job is, then the nearest of those, instead of the first floor with any chore. Benches and switches count. On arrival they search that work the way the game does, including nearby designations, not a short list. A fire check no longer clears the arrival check, and a floor that just had nothing does not pull them straight back.
+- **Jobs survive a level change.** Every shift-clicked order is kept, not just the last one, and started again on arrival. If that start fails, or ruin stairs draft the pawn on the way in, the order is retried instead of dropped. A work trip keeps looking for that work type, including mining and other cell jobs, instead of taking the first unrelated job. Queued jobs for the floor they left wait and resume back there. Orders in flight are saved with the colony.
 
 ## [3.10.0]
 

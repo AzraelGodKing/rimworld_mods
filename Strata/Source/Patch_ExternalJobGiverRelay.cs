@@ -63,21 +63,10 @@ namespace Strata
                 return;
             }
 
-            bool sawCandidate = false;
-            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
+            if (PawnRelay.TryIssueBestWork(pawn, __instance, out ThinkResult relay, out bool sawCandidate))
             {
-                if (!PawnRelay.HasWorkFor(pawn, link.map))
-                {
-                    continue;
-                }
-                sawCandidate = true;
-                int cap = WorkRelaySignals.WorkClaimCap(link.map);
-                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Work, cap);
-                if (job != null)
-                {
-                    __result = new ThinkResult(job, __instance, JobTag.MiscWork);
-                    return;
-                }
+                __result = relay;
+                return;
             }
 
             if (sawCandidate)

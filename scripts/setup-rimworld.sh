@@ -198,17 +198,27 @@ build_workspace_mods() {
   local proj
   local projects=(
     "$WORKSPACE_ROOT/Homesteader/Source/Homesteader.csproj"
+    "$WORKSPACE_ROOT/Homesteader/Source/Homesteader.1.7.csproj"
     "$WORKSPACE_ROOT/Strata/Source/Strata.csproj"
     "$WORKSPACE_ROOT/Strata/Source/Strata.1.7.csproj"
     "$WORKSPACE_ROOT/Stormproof/Source/Stormproof.csproj"
+    "$WORKSPACE_ROOT/Stormproof/Source/Stormproof.1.7.csproj"
     "$WORKSPACE_ROOT/Nemesis/Source/Nemesis.csproj"
+    "$WORKSPACE_ROOT/Nemesis/Source/Nemesis.1.7.csproj"
     "$WORKSPACE_ROOT/DateNight/Source/DateNight.csproj"
+    "$WORKSPACE_ROOT/DateNight/Source/DateNight.1.7.csproj"
     "$WORKSPACE_ROOT/LivingWorld/Source/LivingWorld.csproj"
+    "$WORKSPACE_ROOT/LivingWorld/Source/LivingWorld.1.7.csproj"
     "$WORKSPACE_ROOT/Deep Colony/Source/DeepColony.csproj"
+    "$WORKSPACE_ROOT/Deep Colony/Source/DeepColony.1.7.csproj"
     "$WORKSPACE_ROOT/Azrael/Source/Azrael.csproj"
+    "$WORKSPACE_ROOT/Azrael/Source/Azrael.1.7.csproj"
     "$WORKSPACE_ROOT/Niceties/Source/Niceties.csproj"
+    "$WORKSPACE_ROOT/Niceties/Source/Niceties.1.7.csproj"
     "$WORKSPACE_ROOT/WaveSurvivalReforged/Source/WaveSurvivalReforged.csproj"
+    "$WORKSPACE_ROOT/WaveSurvivalReforged/Source/WaveSurvivalReforged.1.7.csproj"
     "$WORKSPACE_ROOT/NanoHiveReforged/Source/NanoHiveReforged.csproj"
+    "$WORKSPACE_ROOT/NanoHiveReforged/Source/NanoHiveReforged.1.7.csproj"
   )
   for proj in "${projects[@]}"; do
     if [[ ! -f "$proj" ]]; then

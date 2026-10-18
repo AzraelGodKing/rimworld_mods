@@ -126,6 +126,9 @@ namespace Nemesis
             listing.Label("Nemesis_Settings_WeightTaunt".Translate(Settings.actionWeightTaunt.ToString("F2")));
             Settings.actionWeightTaunt = listing.Slider(Settings.actionWeightTaunt, 0f, 1f);
             listing.Gap(4f);
+            listing.Label("Nemesis_Settings_WeightIdle".Translate(Settings.actionWeightIdle.ToString("F2")));
+            Settings.actionWeightIdle = listing.Slider(Settings.actionWeightIdle, 0f, 1f);
+            listing.Gap(4f);
             listing.Label("Nemesis_Settings_WeightRaid".Translate(Settings.actionWeightRaid.ToString("F2")));
             Settings.actionWeightRaid = listing.Slider(Settings.actionWeightRaid, 0f, 1f);
             listing.Gap(4f);

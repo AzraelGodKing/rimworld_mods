@@ -29,6 +29,7 @@
   <Nemesis_Settings_SoftMechsTip>Капитаны-механиторы при загруженном Biotech могут привести 1–3 механоида в рейде «возвращения с армией».</Nemesis_Settings_SoftMechsTip>
   <Nemesis_Settings_ActionMix>Набор действий</Nemesis_Settings_ActionMix>
   <Nemesis_Settings_WeightTaunt>Насмешка по связи: {0}</Nemesis_Settings_WeightTaunt>
+  <Nemesis_Settings_WeightIdle>Ничего не делать: {0}</Nemesis_Settings_WeightIdle>
   <Nemesis_Settings_WeightRaid>Прямой рейд: {0}</Nemesis_Settings_WeightRaid>
   <Nemesis_Settings_WeightAssault>Штурм немезиса: {0}</Nemesis_Settings_WeightAssault>
   <Nemesis_Settings_WeightWaste>Сброс отходов: {0}</Nemesis_Settings_WeightWaste>
@@ -149,6 +150,8 @@
   <Nemesis_Letter_EndedTargetDiedBody>{1} мёртв. {0} получил то, за чем пришёл — в каком-то смысле.\n\nОхота кончается. Они не празднуют. Они просто останавливаются.</Nemesis_Letter_EndedTargetDiedBody>
   <Nemesis_Letter_EndedHandedTitle>{0}: забрал добычу</Nemesis_Letter_EndedHandedTitle>
   <Nemesis_Letter_EndedHandedBody>{1} больше не ваш. {0} считает долг уплаченным.\n\nНасмешки прекращаются. Рейды прекращаются. Они победили.</Nemesis_Letter_EndedHandedBody>
+  <Nemesis_Letter_EndedVanishedTitle>{0}: исчез</Nemesis_Letter_EndedVanishedTitle>
+  <Nemesis_Letter_EndedVanishedBody>{0} исчез. Ни тела, ни насмешек, ни рейдов.\n\nОхота кончается.</Nemesis_Letter_EndedVanishedBody>
 
   <!-- Resolution dialog -->
   <Nemesis_Dialog_Title>{0} в ваших руках.</Nemesis_Dialog_Title>
@@ -255,6 +258,7 @@
   <Nemesis_End_TheyWon>они получили своё</Nemesis_End_TheyWon>
   <Nemesis_End_Captured>захвачен</Nemesis_End_Captured>
   <Nemesis_End_Cleared>снят</Nemesis_End_Cleared>
+  <Nemesis_End_Vanished>исчез</Nemesis_End_Vanished>
   <Nemesis_End_Executed>казнён</Nemesis_End_Executed>
   <Nemesis_End_Released>отпущен</Nemesis_End_Released>
   <Nemesis_End_Kept>оставлен в тюрьме</Nemesis_End_Kept>

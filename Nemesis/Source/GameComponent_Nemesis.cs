@@ -40,7 +40,10 @@ namespace Nemesis
             if (_data != null && _data.pendingResolution)
                 TryOpenResolutionDialog();
             else if (_data != null && _data.active)
+            {
                 NemesisTells.RollIfNeeded(_data, FindNemesisPawn());
+                CheckNemesisStillExists();
+            }
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
@@ -111,8 +114,12 @@ namespace Nemesis
                 CheckResolution();
             }
 
-            if (tick % 2500 == 0 && !_data.rogue)
-                CheckRogue();
+            if (tick % 2500 == 0)
+            {
+                CheckNemesisStillExists();
+                if (!_data.rogue)
+                    CheckRogue();
+            }
 
             if (tick >= _data.nextActionTick)
                 FireNextAction();
@@ -223,11 +230,24 @@ namespace Nemesis
             && pawn != null
             && pawn.thingIDNumber == _data.targetPawnId;
 
+        /// <summary>True cancels the killing blow. Off-map and unspawned hits are allowed to land.</summary>
+        public bool CancelLethalHit(Pawn nemesis)
+        {
+            if (_data == null || !_data.active || nemesis == null || nemesis.Destroyed) return false;
+            if (!nemesis.Spawned || nemesis.Map == null)
+            {
+                EndHunt(NemesisEndReason.Killed, nemesis);
+                return false;
+            }
+            HandleLethalDamage(nemesis);
+            return true;
+        }
+
         public void HandleLethalDamage(Pawn nemesis)
         {
             if (_data == null || !_data.active || nemesis == null || nemesis.Destroyed) return;
             // Already fled — multi-hit Kill spam must not re-letter.
-            if (!nemesis.Spawned) return;
+            if (!nemesis.Spawned || nemesis.Map == null) return;
             if (Find.TickManager.TicksGame - _data.lastEscapeTick < 180) return;
 
             if (_data.escapeCount >= MaxEscapes)
@@ -240,7 +260,6 @@ namespace Nemesis
         {
             if (_data == null || !_data.active || nemesis == null || nemesis.Destroyed) return;
             if (!nemesis.Spawned || nemesis.Map == null) return;
-            if (!nemesis.Map.IsPlayerHome) return;
             if (nemesis.Faction == null || nemesis.Faction.IsPlayer || nemesis.IsPrisonerOfColony) return;
             if (Find.TickManager.TicksGame - _data.lastEscapeTick < 180) return;
 
@@ -389,6 +408,16 @@ namespace Nemesis
                 EndHunt(NemesisEndReason.Killed, nemesis);
         }
 
+        private void CheckNemesisStillExists()
+        {
+            if (_data == null || !_data.active || _data.nemesisPawnId <= 0) return;
+            Pawn nemesis = FindNemesisPawnAnywhere();
+            if (nemesis == null)
+                EndHunt(NemesisEndReason.Vanished, null);
+            else if (nemesis.Dead)
+                EndHunt(NemesisEndReason.Killed, nemesis);
+        }
+
         private void CheckResolution()
         {
             Pawn nemesis = FindNemesisPawn();
@@ -496,6 +525,15 @@ namespace Nemesis
                         "Nemesis_Letter_EndedKilledBody".Translate(name),
                         LetterDefOf.PositiveEvent,
                         look);
+                    if (look is not Pawn body || !body.Spawned)
+                        ReleaseNemesisWorldPawn();
+                    break;
+                case NemesisEndReason.Vanished:
+                    Find.LetterStack.ReceiveLetter(
+                        "Nemesis_Letter_EndedVanishedTitle".Translate(name),
+                        "Nemesis_Letter_EndedVanishedBody".Translate(name),
+                        LetterDefOf.NeutralEvent);
+                    ReleaseNemesisWorldPawn();
                     break;
                 case NemesisEndReason.TargetDied:
                     Find.LetterStack.ReceiveLetter(
@@ -526,14 +564,17 @@ namespace Nemesis
             if (nemesis == null || nemesis.Dead) return;
             if (nemesis.IsPrisonerOfColony) return;
             NemesisPawnUtil.DetachFromLord(nemesis);
-            if (nemesis.Spawned)
+            if (nemesis.Spawned && !nemesis.Dead)
                 nemesis.DeSpawn(DestroyMode.Vanish);
-            // Leave KeepForever pin if present — WorldPawns has no clean unpin API.
-            // Cache clear below is enough for hunt end; pawn can GC later if unpinned elsewhere.
+            if (nemesis.IsWorldPawn())
+                Find.WorldPawns.RemovePawn(nemesis);
+            if (!nemesis.Dead && !nemesis.Destroyed && !nemesis.IsWorldPawn())
+                Find.WorldPawns.PassToWorld(nemesis, PawnDiscardDecideMode.Decide);
         }
 
         private void CheckRogue()
         {
+            if (_data == null || !_data.active) return;
             if (_data.faction != null && !_data.faction.HostileTo(Faction.OfPlayer))
                 GoRogue();
         }
@@ -547,9 +588,19 @@ namespace Nemesis
             foreach (Faction f in Find.FactionManager.AllFactions)
             {
                 if (f == null || f.IsPlayer || f.defeated || f.Hidden || f == old) continue;
-                if (!f.HostileTo(Faction.OfPlayer)) continue;
+                if (!f.def.humanlikeFaction || !f.HostileTo(Faction.OfPlayer)) continue;
                 rogueFaction = f;
                 break;
+            }
+
+            if (rogueFaction == null)
+            {
+                Find.LetterStack.ReceiveLetter(
+                    "Nemesis_Letter_RogueTitle".Translate(_data.nemesisName),
+                    "Nemesis_Letter_RogueBodyAlone".Translate(_data.nemesisName, old?.Name ?? "Nemesis_Phrase_TheirFaction".Translate()),
+                    LetterDefOf.ThreatBig);
+                EndHunt(NemesisEndReason.Cleared, null);
+                return;
             }
 
             Pawn nemesis = FindNemesisPawn();
@@ -601,7 +652,12 @@ namespace Nemesis
 
             NemesisAction action = PickAction(map);
             NemesisActions.Execute(action, _data, map);
-            _data.nextActionTick = Find.TickManager.TicksGame + ActionInterval();
+            int wait = ActionInterval();
+            if (action == NemesisAction.DoNothing)
+            {
+                wait = Mathf.Max(15000, Mathf.RoundToInt(wait * Rand.Range(0.5f, 1.85f)));
+            }
+            _data.nextActionTick = Find.TickManager.TicksGame + wait;
         }
 
         private NemesisAction PickAction(Map map)
@@ -609,6 +665,7 @@ namespace Nemesis
             float agg = _data.EffectiveAggression;
             NemesisSettings s = NemesisMod.Settings;
             float taunt = s?.actionWeightTaunt ?? 0.35f;
+            float idle = s?.actionWeightIdle ?? 0.22f;
             float raid = s?.actionWeightRaid ?? 0.15f;
             float assault = agg >= 3f ? (s?.actionWeightAssault ?? 0.15f) : 0f;
             float waste = ModsConfig.BiotechActive ? (s?.actionWeightWaste ?? 0.08f) : 0f;
@@ -648,6 +705,12 @@ namespace Nemesis
             if (SoftCompat.StrataActive)
                 food *= 1.15f;
 
+            if (!NemesisActions.HasCommsConsole(map))
+            {
+                idle += taunt;
+                taunt = 0f;
+            }
+
             if (_data.habit == NemesisHabit.PowerFirst)
                 sabotage *= 2.2f;
             else if (_data.habit == NemesisHabit.FoodFirst)
@@ -655,9 +718,14 @@ namespace Nemesis
             else if (_data.habit == NemesisHabit.SameBuilding)
                 sabotage *= 1.4f;
 
-            float total = taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly + kidnap;
+            float total = idle + taunt + raid + assault + waste + fake + caravan + sabotage + food + anomaly + kidnap;
+            if (total <= 0f)
+            {
+                return NemesisAction.DoNothing;
+            }
             float roll = Rand.Value * total;
 
+            if ((roll -= idle) < 0f) return NemesisAction.DoNothing;
             if ((roll -= taunt) < 0f) return NemesisAction.CommsTaunt;
             if ((roll -= raid) < 0f) return NemesisAction.DirectRaid;
             if ((roll -= assault) < 0f) return NemesisAction.NemesisAssault;
@@ -823,6 +891,7 @@ namespace Nemesis
             NemesisEndReason.TargetDied => "Nemesis_End_TheyWon",
             NemesisEndReason.TargetHandedOver => "Nemesis_End_TheyWon",
             NemesisEndReason.Captured => "Nemesis_End_Captured",
+            NemesisEndReason.Vanished => "Nemesis_End_Vanished",
             _ => "Nemesis_End_Cleared",
         };
     }

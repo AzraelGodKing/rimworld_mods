@@ -37,6 +37,7 @@ namespace Strata
             RaidCoordinator.ResetSession,
             WorkRelayBoard.ResetSession,
             PortalRelayChain.ResetSession,
+            Patch_EnterPortalKeepJobs.ResetSession,
             StrataFaultGuard.ResetSession,
             StrataPocketMapOpen.ResetSession,
             StrataCrossLevelThreatNotify.ResetSession,

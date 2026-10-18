@@ -359,6 +359,9 @@ namespace Nemesis
         [DebugAction(ActionsCat, "Comms taunt", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ActionTaunt() => FireAction(NemesisAction.CommsTaunt);
 
+        [DebugAction(ActionsCat, "Do nothing", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ActionIdle() => FireAction(NemesisAction.DoNothing);
+
         [DebugAction(ActionsCat, "Direct raid", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ActionRaid() => FireAction(NemesisAction.DirectRaid);
 

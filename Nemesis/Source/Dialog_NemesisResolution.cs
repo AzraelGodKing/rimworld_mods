@@ -155,7 +155,7 @@ namespace Nemesis
             nemesis.guest?.SetGuestStatus(null);
 
             if (nemesis.Spawned)
-                nemesis.DeSpawn(DestroyMode.WillReplace);
+                nemesis.DeSpawn(DestroyMode.Vanish);
             if (!nemesis.IsWorldPawn())
                 Find.WorldPawns.PassToWorld(nemesis, discardMode);
         }

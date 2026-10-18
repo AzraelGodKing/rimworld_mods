@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace Strata
 {
@@ -56,6 +57,46 @@ namespace Strata
         }
     }
 
+    public sealed class CrossFloorOrderedJobRecord : IExposable
+    {
+        public int pawnId;
+        public int destMapId;
+        public Job job;
+        public JobTag tag;
+        public bool hasTag;
+        public bool prioritized;
+        public string giverDefName;
+        public IntVec3 cell = IntVec3.Invalid;
+        public int attempts;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref pawnId, "pawnId");
+            Scribe_Values.Look(ref destMapId, "destMapId");
+            Scribe_Deep.Look(ref job, "job");
+            Scribe_Values.Look(ref tag, "tag");
+            Scribe_Values.Look(ref hasTag, "hasTag");
+            Scribe_Values.Look(ref prioritized, "prioritized");
+            Scribe_Values.Look(ref giverDefName, "giverDefName");
+            Scribe_Values.Look(ref cell, "cell", IntVec3.Invalid);
+            Scribe_Values.Look(ref attempts, "attempts");
+        }
+    }
+
+    public sealed class CrossFloorArrivalWorkRecord : IExposable
+    {
+        public int pawnId;
+        public string workDefName;
+        public int untilTick;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref pawnId, "pawnId");
+            Scribe_Values.Look(ref workDefName, "workDefName");
+            Scribe_Values.Look(ref untilTick, "untilTick");
+        }
+    }
+
     // PortalRelayChain and DraftedPortalPathing keep trip state in static
     // dictionaries. FinalizeInit clears those on every load; this component
     // writes them into the save and puts back the ones that still make sense
@@ -64,6 +105,8 @@ namespace Strata
     {
         private List<CrossFloorIntentRecord> intents;
         private List<CrossFloorRouteRecord> routes;
+        private List<CrossFloorOrderedJobRecord> orderedJobs;
+        private List<CrossFloorArrivalWorkRecord> arrivalWork;
 
         public GameComponent_StrataCrossFloorTrips(Game game)
         {
@@ -76,17 +119,36 @@ namespace Strata
             {
                 intents = PortalRelayChain.CaptureIntents();
                 routes = DraftedPortalPathing.CaptureRoutes();
+                orderedJobs = CrossLevelOrderedJobs.CaptureOrdered();
+                arrivalWork = PortalRelayChain.CaptureArrivalWork();
             }
             Scribe_Collections.Look(ref intents, "strataRelayIntents", LookMode.Deep);
             Scribe_Collections.Look(ref routes, "strataDraftedRoutes", LookMode.Deep);
+            Scribe_Collections.Look(ref orderedJobs, "strataOrderedJobs", LookMode.Deep);
+            Scribe_Collections.Look(ref arrivalWork, "strataArrivalWork", LookMode.Deep);
         }
 
         public override void LoadedGame()
         {
+            CrossLevelOrderedJobs.RestoreOrdered(orderedJobs);
             PortalRelayChain.RestoreIntents(intents);
+            if (arrivalWork != null)
+            {
+                for (int i = 0; i < arrivalWork.Count; i++)
+                {
+                    CrossFloorArrivalWorkRecord record = arrivalWork[i];
+                    if (record == null)
+                    {
+                        continue;
+                    }
+                    PortalRelayChain.RememberArrivalWork(record.pawnId, record.workDefName, record.untilTick);
+                }
+            }
             DraftedPortalPathing.RestoreRoutes(routes);
             intents = null;
             routes = null;
+            orderedJobs = null;
+            arrivalWork = null;
         }
     }
 }

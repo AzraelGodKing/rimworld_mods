@@ -190,7 +190,7 @@ namespace LivingWorld
 
         private static void ApplyForceRefugees(GameComponent_LivingWorld comp, int loserId, int winnerId)
         {
-            Map map = Find.AnyPlayerHomeMap;
+            Map map = GameComponent_LivingWorld.NearestPlayerHome(-1);
             Faction loser = WorldEvent.FindFaction(loserId);
             if (comp == null || map == null || loser == null)
             {
