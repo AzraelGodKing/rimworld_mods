@@ -1,9 +1,17 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.11.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.0 loaded from ... (modified ...); floor-jobs-v1.` via `ModVersionLog.Write`.
+**Version:** `3.11.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.1 loaded from ... (modified ...); job-relay-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `floor-jobs-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `job-relay-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.11.1]
+
+Player-facing version **3.11.1** (`About.xml` `modVersion`). Stamp `job-relay-v1`.
+
+### Fixed
+- **No path around a walled stair.** A drafted click on a stair that says "no path", a Guards For Me post or follow on the other side of that wall, and a work trip whose job is walled off all use the same floor detour as a drafted move. The pawn goes through a linked floor, comes out where the stair or job can be reached, and finishes it instead of walking upstairs and straight back down. A guard trip is not cancelled if they are drafted on the way.
+- **Cross-floor work stays put.** Automatic work assigns a pawn to one floor and one work type, walks them there, and keeps giving them that work until the floor is finished with it. An empty scan does not send them back up or down. Firefighting and doctoring still interrupt. A player order can still take over.
 
 ## [3.11.0]
 
@@ -14,8 +22,6 @@ Player-facing version **3.11.0** (`About.xml` `modVersion`). Stamp `floor-jobs-v
 
 ### Fixed
 - **Work relay.** An idle pawn goes to the linked floor where their own best job is, then the nearest of those, instead of the first floor with any chore. Benches and switches count. On arrival they search that work the way the game does, including nearby designations, not a short list. A fire check no longer clears the arrival check, and a floor that just had nothing does not pull them straight back.
-- **No path around a walled stair.** A drafted click on a stair that says "no path", a Guards For Me post or follow on the other side of that wall, and a work trip whose job is walled off all use the same floor detour as a drafted move. The pawn goes through a linked floor, comes out where the stair or job can be reached, and finishes it instead of walking upstairs and straight back down. A guard trip is not cancelled if they are drafted on the way.
-- **Cross-floor work stays put.** Automatic work now assigns a pawn to one floor and one work type, walks them there, and keeps giving them that work until the floor is finished with it. An empty scan does not send them back up or down. Firefighting and doctoring still interrupt. A player order can still take over.
 - **Jobs survive a level change.** Every shift-clicked order is kept, not just the last one, and started again on arrival. If that start fails, or ruin stairs draft the pawn on the way in, the order is retried instead of dropped. A work trip keeps looking for that work type, including mining and other cell jobs, instead of taking the first unrelated job. Queued jobs for the floor they left wait and resume back there. Orders in flight are saved with the colony.
 - **Mod list load.** About.xml no longer has a WorkshopTags block. RimWorld 1.7 logged that block as an unknown field for every mod.
 
