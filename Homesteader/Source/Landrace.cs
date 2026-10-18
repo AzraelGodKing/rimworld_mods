@@ -340,16 +340,6 @@ namespace Homesteader
             }
         }
 
-        internal static void DropSavedSeed(Plant plant, CompLandrace plantComp)
-        {
-            if (plant == null)
-            {
-                return;
-            }
-
-            DropSavedSeed(plant.def, plant.Map, plant.Position, plantComp);
-        }
-
         internal static void DropSavedSeed(ThingDef plantDef, Map map, IntVec3 pos, CompLandrace plantComp)
         {
             if (plantDef == null || map == null || plantComp == null)

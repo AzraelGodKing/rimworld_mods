@@ -9,6 +9,7 @@
 
 ### Internal
 - Shared `ModPack.ForExecutingAssembly` for the UpdateNews and ModVersionLog pack lookup. No gameplay change.
+- Removed unread `RemovalLine.CanDeconstruct` and the hub probe for nonexistent `Homesteader_HandDugWell` (the well is `Wellspring_HandDugWell`). No gameplay change.
 
 ## [1.0.0]
 

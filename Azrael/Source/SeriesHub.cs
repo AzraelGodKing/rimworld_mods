@@ -205,7 +205,7 @@ namespace Azrael
             bool livingWorld = IsLoaded("azraelgodking.livingworld");
 
             bool rootCellar = DefPresent("Homesteader_RootCellar");
-            bool wells = DefPresent("Homesteader_HandDugWell") || DefPresent("Wellspring_HandDugWell");
+            bool wells = DefPresent("Wellspring_HandDugWell");
             bool lwSignals = TypePresent("LivingWorld.LivingWorldSignals");
             bool dcConsumer = TypePresent("DeepColony.LivingWorldSoftCompat")
                 && GoodwillHandlerRegistered() != false;
