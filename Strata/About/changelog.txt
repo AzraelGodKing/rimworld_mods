@@ -1,24 +1,11 @@
-3.11.0
-[h1]Strata - 3.11.0[/h1]
-
-[b]Added[/b]
-[list]
-[*] [b]Guards For Me.[/b] A standing guard walks to a post on another floor, and that post can take a guard from a linked floor. A bodyguard follows their person through the stairs and stays assigned when that person changes floors. A patrol continues to a waypoint on another floor. A reaction force takes the stairs toward a threat on a linked floor. Guards on duty are not pulled away by work relay.
-[/list]
+3.11.1
+[h1]Strata - 3.11.1[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Jobs survive a level change.[/b] Shift-clicked orders are all kept and started again on arrival. If the first one cannot start, or ruin stairs draft the pawn on the way in, the order is retried. A work trip keeps looking for that work type, including mining and other cell jobs. Queued jobs for the floor they left resume back there. Orders still in flight are saved with the colony.
-[*] [b]Work relay.[/b] An idle pawn goes to the linked floor where their own best job is, then the nearest of those. Benches and switches count. On arrival they search that work the way the game does, including nearby designations. A fire check no longer clears the arrival check, and a floor that just had nothing does not pull them straight back.
 [*] [b]No path around a walled stair.[/b] A drafted click on a stair that says "no path", a Guards For Me post or follow on the other side of that wall, and a work trip whose job is walled off all take the same detour as a drafted move. The pawn goes through a linked floor, comes out where the stair or job can be reached, and finishes it instead of walking upstairs and straight back down. A guard trip is not cancelled if they are drafted on the way.
-[*] [b]Cross-floor work stays put.[/b] Automatic work now assigns a pawn to one floor and one work type, walks them there, and keeps giving them that work until the floor is finished with it. An empty scan does not send them back up or down. Firefighting and doctoring still interrupt. A player order can still take over.
-[*] [b]Mod list load.[/b] About.xml no longer has a WorkshopTags block. RimWorld 1.7 logged that block as an unknown field for every mod.
+[*] [b]Cross-floor work stays put.[/b] Automatic work assigns a pawn to one floor and one work type, walks them there, and keeps giving them that work until the floor is finished with it. An empty scan does not send them back up or down. Firefighting and doctoring still interrupt. A player order can still take over.
 [/list]
 
-[b]Changed[/b]
-[list]
-[*] [b]Dead leftovers.[/b] Dropped the unused gas-pipe marker comp, an empty DeepGas defs tombstone, a magenta canary dessicated stub, and an unused Cancel wrapper. Pipes, canaries, and cross-level orders are unchanged.
-[/list]
-
-[i]Build stamp (Player.log): floor-jobs-v1[/i]
+[i]Build stamp (Player.log): job-relay-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
