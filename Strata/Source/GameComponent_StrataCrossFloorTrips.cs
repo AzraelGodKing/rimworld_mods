@@ -41,6 +41,8 @@ namespace Strata
         public int destPortalId;
         public int bedMapId;
         public bool requireDrafted;
+        public RelayPurpose handoff;
+        public int handoffMapId = -1;
 
         public void ExposeData()
         {
@@ -54,6 +56,8 @@ namespace Strata
             Scribe_Values.Look(ref destPortalId, "destPortalId");
             Scribe_Values.Look(ref bedMapId, "bedMapId");
             Scribe_Values.Look(ref requireDrafted, "requireDrafted");
+            Scribe_Values.Look(ref handoff, "handoff");
+            Scribe_Values.Look(ref handoffMapId, "handoffMapId", -1);
         }
     }
 
@@ -83,17 +87,35 @@ namespace Strata
         }
     }
 
+    public sealed class JobRelayAssignmentRecord : IExposable
+    {
+        public int pawnId;
+        public int mapId;
+        public string workDefName;
+        public int stuckSince;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref pawnId, "pawnId");
+            Scribe_Values.Look(ref mapId, "mapId");
+            Scribe_Values.Look(ref workDefName, "workDefName");
+            Scribe_Values.Look(ref stuckSince, "stuckSince");
+        }
+    }
+
     public sealed class CrossFloorArrivalWorkRecord : IExposable
     {
         public int pawnId;
         public string workDefName;
         public int untilTick;
+        public int mapId;
 
         public void ExposeData()
         {
             Scribe_Values.Look(ref pawnId, "pawnId");
             Scribe_Values.Look(ref workDefName, "workDefName");
             Scribe_Values.Look(ref untilTick, "untilTick");
+            Scribe_Values.Look(ref mapId, "mapId");
         }
     }
 
@@ -107,6 +129,7 @@ namespace Strata
         private List<CrossFloorRouteRecord> routes;
         private List<CrossFloorOrderedJobRecord> orderedJobs;
         private List<CrossFloorArrivalWorkRecord> arrivalWork;
+        private List<JobRelayAssignmentRecord> jobRelay;
 
         public GameComponent_StrataCrossFloorTrips(Game game)
         {
@@ -121,17 +144,20 @@ namespace Strata
                 routes = DraftedPortalPathing.CaptureRoutes();
                 orderedJobs = CrossLevelOrderedJobs.CaptureOrdered();
                 arrivalWork = PortalRelayChain.CaptureArrivalWork();
+                jobRelay = JobRelay.Capture();
             }
             Scribe_Collections.Look(ref intents, "strataRelayIntents", LookMode.Deep);
             Scribe_Collections.Look(ref routes, "strataDraftedRoutes", LookMode.Deep);
             Scribe_Collections.Look(ref orderedJobs, "strataOrderedJobs", LookMode.Deep);
             Scribe_Collections.Look(ref arrivalWork, "strataArrivalWork", LookMode.Deep);
+            Scribe_Collections.Look(ref jobRelay, "strataJobRelay", LookMode.Deep);
         }
 
         public override void LoadedGame()
         {
             CrossLevelOrderedJobs.RestoreOrdered(orderedJobs);
             PortalRelayChain.RestoreIntents(intents);
+            JobRelay.Restore(jobRelay);
             if (arrivalWork != null)
             {
                 for (int i = 0; i < arrivalWork.Count; i++)
@@ -141,7 +167,8 @@ namespace Strata
                     {
                         continue;
                     }
-                    PortalRelayChain.RememberArrivalWork(record.pawnId, record.workDefName, record.untilTick);
+                    PortalRelayChain.RememberArrivalWork(record.pawnId, record.workDefName, record.untilTick, record.mapId);
+                    JobRelay.Remember(record.pawnId, record.mapId, record.workDefName);
                 }
             }
             DraftedPortalPathing.RestoreRoutes(routes);
@@ -149,6 +176,7 @@ namespace Strata
             routes = null;
             orderedJobs = null;
             arrivalWork = null;
+            jobRelay = null;
         }
     }
 }
