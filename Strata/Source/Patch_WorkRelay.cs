@@ -14,20 +14,27 @@ namespace Strata
     {
         public static void Postfix(JobGiver_Work __instance, Pawn pawn, ref ThinkResult __result)
         {
-            // Work-relay arrival: real job clears the check; null → blacklist floor.
-            if (WorkRelayAntiLoop.ConsumePendingEmptyCheck(pawn))
+            // The emergency giver runs first and often finds nothing. It must not
+            // eat the arrival check, or a later empty normal pass never blacklists
+            // and the pawn climbs the same stairs again.
+            bool arriving = false;
+            if (!__instance.emergency)
             {
-                if (__result.Job == null && !__instance.emergency && pawn?.Map != null)
-                {
-                    WorkRelayAntiLoop.Blacklist(pawn, pawn.Map);
-                }
+                arriving = WorkRelayAntiLoop.ConsumePendingEmptyCheck(pawn);
+                TryPreferIntendedWork(pawn, __instance, ref __result);
+            }
+
+            if (arriving && __result.Job == null && pawn?.Map != null)
+            {
+                WorkRelayAntiLoop.Blacklist(pawn, pawn.Map);
             }
 
             if (__result.Job != null)
             {
-                if (!__instance.emergency)
+                if (!__instance.emergency
+                    && PortalRelayChain.IntendedWorkDefName(pawn) == null
+                    && !StrataGuardsForMeSoftCompat.IsOnDuty(pawn))
                 {
-                    TryPreferIntendedWork(pawn, __instance, ref __result);
                     TryLeaveForBetterWork(pawn, __instance, ref __result);
                 }
                 return;
@@ -49,6 +56,10 @@ namespace Strata
             {
                 return;
             }
+            if (StrataGuardsForMeSoftCompat.IsOnDuty(pawn))
+            {
+                return;
+            }
             if (!PawnRelay.CanRelay(pawn))
             {
                 return;
@@ -58,24 +69,10 @@ namespace Strata
                 return;
             }
 
-            var links = LevelGraph.CopyLinks(LevelGraph.ReachableLevels(pawn.Map));
-            LevelRoleUtility.SortLinksForWork(links, pawn);
-            bool sawCandidate = false;
-            foreach (LevelGraph.LevelLink link in links)
+            if (PawnRelay.TryIssueBestWork(pawn, __instance, out ThinkResult relay, out bool sawCandidate))
             {
-                if (!PawnRelay.HasWorkFor(pawn, link.map))
-                {
-                    continue;
-                }
-                sawCandidate = true;
-                int cap = WorkRelaySignals.WorkClaimCap(link.map);
-                WorkRelaySignals.TryBestSignalled(pawn, link.map, out _, out WorkTypeDef intended, out _);
-                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Work, cap, intendedWork: intended);
-                if (job != null)
-                {
-                    __result = new ThinkResult(job, __instance, JobTag.MiscWork);
-                    return;
-                }
+                __result = relay;
+                return;
             }
 
             // Match Misc. Robots: only cooldown after we actually looked / found
@@ -100,15 +97,23 @@ namespace Strata
                 return;
             }
             WorkTypeDef wanted = DefDatabase<WorkTypeDef>.GetNamedSilentFail(name);
-            PortalRelayChain.ClearIntendedWork(pawn);
-            if (wanted == null || result.Job?.workGiverDef?.workType == wanted)
+            if (wanted == null)
             {
+                PortalRelayChain.ClearIntendedWork(pawn);
+                return;
+            }
+            if (result.Job?.workGiverDef?.workType == wanted)
+            {
+                PortalRelayChain.ClearIntendedWork(pawn);
                 return;
             }
             if (TryMakeWorkJob(pawn, wanted, out Job job))
             {
                 result = new ThinkResult(job, giver, JobTag.MiscWork);
+                PortalRelayChain.ClearIntendedWork(pawn);
+                return;
             }
+            PortalRelayChain.NoteIntendedWorkMiss(pawn);
         }
 
         private static void TryLeaveForBetterWork(Pawn pawn, JobGiver_Work giver, ref ThinkResult result)
@@ -145,9 +150,17 @@ namespace Strata
                 ? pawn.workSettings.GetPriority(localType)
                 : 4;
             List<LevelGraph.LevelLink> links = LevelGraph.CopyLinks(LevelGraph.ReachableLevels(pawn.Map));
+            int best = -1;
+            int bestPriority = int.MaxValue;
+            WorkTypeDef bestType = null;
+            bool bestEmergency = false;
             for (int i = 0; i < links.Count; i++)
             {
                 LevelGraph.LevelLink link = links[i];
+                if (link.map == null || WorkRelayAntiLoop.IsBlacklisted(pawn, link.map))
+                {
+                    continue;
+                }
                 if (!WorkRelaySignals.TryBestSignalled(pawn, link.map, out int remotePriority, out WorkTypeDef remoteType, out bool emergency))
                 {
                     continue;
@@ -159,17 +172,28 @@ namespace Strata
                 {
                     continue;
                 }
-                if (emergencyTrip && remoteType != WorkTypeDefOf.Firefighter && remoteType != WorkTypeDefOf.Doctor)
+                bool wins = best < 0
+                    || (emergencyTrip && !bestEmergency)
+                    || (emergencyTrip == bestEmergency && remotePriority < bestPriority)
+                    || (emergencyTrip == bestEmergency && remotePriority == bestPriority && link.depth < links[best].depth);
+                if (!wins)
                 {
                     continue;
                 }
-                int cap = WorkRelaySignals.WorkClaimCap(link.map);
-                Job job = PawnRelay.TryClaimAndRelay(pawn, link, RelayPurpose.Work, cap, intendedWork: remoteType);
-                if (job != null)
-                {
-                    result = new ThinkResult(job, giver, JobTag.MiscWork);
-                    return;
-                }
+                best = i;
+                bestPriority = remotePriority;
+                bestType = remoteType;
+                bestEmergency = emergencyTrip;
+            }
+            if (best < 0)
+            {
+                return;
+            }
+            int cap = WorkRelaySignals.WorkClaimCap(links[best].map);
+            Job job = PawnRelay.TryClaimAndRelay(pawn, links[best], RelayPurpose.Work, cap, intendedWork: bestType);
+            if (job != null)
+            {
+                result = new ThinkResult(job, giver, JobTag.MiscWork);
             }
         }
 
@@ -180,48 +204,161 @@ namespace Strata
             {
                 return false;
             }
-            try
+            for (int i = 0; i < type.workGiversByPriority.Count; i++)
             {
-                for (int i = 0; i < type.workGiversByPriority.Count; i++)
+                WorkGiver giver = type.workGiversByPriority[i]?.Worker;
+                if (giver == null || !GiverUsable(pawn, giver) || giver.ShouldSkip(pawn))
                 {
-                    WorkGiverDef giverDef = type.workGiversByPriority[i];
-                    if (giverDef?.Worker is not WorkGiver_Scanner scanner)
+                    continue;
+                }
+                try
+                {
+                    Job direct = giver.NonScanJob(pawn);
+                    if (direct != null)
                     {
-                        continue;
+                        job = direct;
+                        return true;
                     }
-                    if (scanner.ShouldSkip(pawn))
+                    if (giver is WorkGiver_Scanner scanner
+                        && (TryScanThings(pawn, scanner, out job) || TryScanCells(pawn, scanner, out job)))
                     {
-                        continue;
-                    }
-                    System.Collections.IEnumerable things = scanner.PotentialWorkThingsGlobal(pawn);
-                    if (things == null)
-                    {
-                        continue;
-                    }
-                    int seen = 0;
-                    foreach (Thing thing in things)
-                    {
-                        seen++;
-                        if (seen > 12)
-                        {
-                            break;
-                        }
-                        if (thing == null || !thing.Spawned || thing.Map != pawn.Map)
-                        {
-                            continue;
-                        }
-                        Job next = scanner.JobOnThing(pawn, thing);
-                        if (next != null)
-                        {
-                            job = next;
-                            return true;
-                        }
+                        return true;
                     }
                 }
+                catch (System.Exception e)
+                {
+                    StrataLog.Verbose("[Strata] Intended work giver " + giver.def.defName
+                        + " failed: " + e.GetType().Name);
+                }
             }
-            catch (System.Exception e)
+            return false;
+        }
+
+        private static bool GiverUsable(Pawn pawn, WorkGiver giver)
+        {
+            WorkTypeDef type = giver.def?.workType;
+            if (type != null && pawn.workSettings != null && !pawn.workSettings.WorkIsActive(type))
             {
-                StrataLog.Verbose("[Strata] Intended work " + type.defName + " could not be issued: " + e.GetType().Name);
+                return false;
+            }
+            return giver.MissingRequiredCapacity(pawn) == null;
+        }
+
+        private const int WorkScanCap = 80;
+        private const int WorkCellCheckCap = 16;
+
+        private static bool TryScanThings(Pawn pawn, WorkGiver_Scanner scanner, out Job job)
+        {
+            job = null;
+            System.Collections.IEnumerable globals = scanner.PotentialWorkThingsGlobal(pawn);
+            if (globals != null)
+            {
+                int seen = 0;
+                foreach (Thing thing in globals)
+                {
+                    seen++;
+                    if (seen > WorkScanCap)
+                    {
+                        break;
+                    }
+                    if (thing == null || !thing.Spawned || thing.Map != pawn.Map || thing.IsForbidden(pawn))
+                    {
+                        continue;
+                    }
+                    if (!scanner.HasJobOnThing(pawn, thing))
+                    {
+                        continue;
+                    }
+                    Job next = scanner.JobOnThing(pawn, thing);
+                    if (next != null)
+                    {
+                        job = next;
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            ThingRequest request = scanner.PotentialWorkThingRequest;
+            if (request.group == ThingRequestGroup.Undefined)
+            {
+                return false;
+            }
+            Thing found = GenClosest.ClosestThingReachable(
+                pawn.Position,
+                pawn.Map,
+                request,
+                scanner.PathEndMode,
+                TraverseParms.For(pawn, pawn.NormalMaxDanger()),
+                9999f,
+                thing => thing != null && !thing.IsForbidden(pawn) && scanner.HasJobOnThing(pawn, thing));
+            if (found == null)
+            {
+                return false;
+            }
+            job = scanner.JobOnThing(pawn, found);
+            return job != null;
+        }
+
+        private static bool TryScanCells(Pawn pawn, WorkGiver_Scanner scanner, out Job job)
+        {
+            job = null;
+            System.Collections.Generic.IEnumerable<IntVec3> cells = scanner.PotentialWorkCellsGlobal(pawn);
+            if (cells == null)
+            {
+                return false;
+            }
+            var nearest = new List<IntVec3>(WorkCellCheckCap);
+            var nearestDist = new List<int>(WorkCellCheckCap);
+            int seen = 0;
+            foreach (IntVec3 cell in cells)
+            {
+                seen++;
+                if (seen > WorkScanCap)
+                {
+                    break;
+                }
+                if (!cell.InBounds(pawn.Map) || !cell.InAllowedArea(pawn))
+                {
+                    continue;
+                }
+                int dist = pawn.Position.DistanceToSquared(cell);
+                int slot = nearest.Count;
+                if (slot < WorkCellCheckCap)
+                {
+                    nearest.Add(cell);
+                    nearestDist.Add(dist);
+                }
+                else
+                {
+                    int worst = 0;
+                    for (int i = 1; i < nearestDist.Count; i++)
+                    {
+                        if (nearestDist[i] > nearestDist[worst])
+                        {
+                            worst = i;
+                        }
+                    }
+                    if (dist >= nearestDist[worst])
+                    {
+                        continue;
+                    }
+                    nearest[worst] = cell;
+                    nearestDist[worst] = dist;
+                }
+            }
+            for (int i = 0; i < nearest.Count; i++)
+            {
+                if (!scanner.HasJobOnCell(pawn, nearest[i]))
+                {
+                    continue;
+                }
+                Job next = scanner.JobOnCell(pawn, nearest[i]);
+                if (next != null)
+                {
+                    job = next;
+                    return true;
+                }
             }
             return false;
         }

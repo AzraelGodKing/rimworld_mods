@@ -29,6 +29,7 @@
   <Nemesis_Settings_SoftMechsTip>Mechanitor-focus captains can bring 1–3 Biotech mechs on army-return raids when Biotech is loaded.</Nemesis_Settings_SoftMechsTip>
   <Nemesis_Settings_ActionMix>Action mix</Nemesis_Settings_ActionMix>
   <Nemesis_Settings_WeightTaunt>Comms taunt: {0}</Nemesis_Settings_WeightTaunt>
+  <Nemesis_Settings_WeightIdle>Do nothing: {0}</Nemesis_Settings_WeightIdle>
   <Nemesis_Settings_WeightRaid>Direct raid: {0}</Nemesis_Settings_WeightRaid>
   <Nemesis_Settings_WeightAssault>Nemesis assault: {0}</Nemesis_Settings_WeightAssault>
   <Nemesis_Settings_WeightWaste>Waste pack drop: {0}</Nemesis_Settings_WeightWaste>
@@ -149,6 +150,8 @@
   <Nemesis_Letter_EndedTargetDiedBody>{1} is dead. {0} got what they came for — in a way.\n\nThe hunt ends. They do not celebrate. They simply stop.</Nemesis_Letter_EndedTargetDiedBody>
   <Nemesis_Letter_EndedHandedTitle>{0}: Claimed Their Prize</Nemesis_Letter_EndedHandedTitle>
   <Nemesis_Letter_EndedHandedBody>{1} is no longer yours. {0} considers the debt paid.\n\nThe taunts stop. The raids stop. They won.</Nemesis_Letter_EndedHandedBody>
+  <Nemesis_Letter_EndedVanishedTitle>{0}: Gone</Nemesis_Letter_EndedVanishedTitle>
+  <Nemesis_Letter_EndedVanishedBody>{0} is gone. No body, no taunt, no raid.\n\nThe hunt ends.</Nemesis_Letter_EndedVanishedBody>
 
   <!-- Resolution dialog -->
   <Nemesis_Dialog_Title>{0} is in your hands.</Nemesis_Dialog_Title>
@@ -256,6 +259,7 @@
   <Nemesis_End_TheyWon>they got what they came for</Nemesis_End_TheyWon>
   <Nemesis_End_Captured>captured</Nemesis_End_Captured>
   <Nemesis_End_Cleared>cleared</Nemesis_End_Cleared>
+  <Nemesis_End_Vanished>vanished</Nemesis_End_Vanished>
   <Nemesis_End_Executed>executed</Nemesis_End_Executed>
   <Nemesis_End_Released>released</Nemesis_End_Released>
   <Nemesis_End_Kept>kept prisoner</Nemesis_End_Kept>

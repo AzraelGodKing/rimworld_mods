@@ -17,6 +17,7 @@ namespace Strata
         {
             StrataPortalUtility.TickHaulDeliveries(map);
             PortalRelayChain.TickMap(map);
+            CrossLevelOrderedJobs.TickMap(map);
             DraftedPortalPathing.TickMap(map);
             StrataCaravanUtility.TickCaravanPull(map);
         }

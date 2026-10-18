@@ -25,10 +25,25 @@ namespace Strata
         private static readonly Dictionary<int, Intent> intents = new Dictionary<int, Intent>();
         private static readonly List<int> pending = new List<int>();
 
+        // The trip intent is cleared on arrival, before JobGiver_Work runs.
+        // Without this, the work type that caused the climb is already gone
+        // and the pawn takes some other job.
+        private static readonly Dictionary<int, string> arrivalWork = new Dictionary<int, string>();
+        private static readonly Dictionary<int, int> arrivalWorkMisses = new Dictionary<int, int>();
+        private static readonly Dictionary<int, int> arrivalWorkUntil = new Dictionary<int, int>();
+        private static readonly Dictionary<int, int> departureMap = new Dictionary<int, int>();
+
+        private const int ArrivalWorkHoldTicks = 3600;
+        private const int ArrivalWorkMissLimit = 8;
+
         internal static void ResetSession()
         {
             intents.Clear();
             pending.Clear();
+            arrivalWork.Clear();
+            arrivalWorkMisses.Clear();
+            arrivalWorkUntil.Clear();
+            departureMap.Clear();
         }
 
         public static void Mark(
@@ -44,6 +59,14 @@ namespace Strata
             if (pawn == null || destMap == null)
             {
                 return;
+            }
+
+            arrivalWork.Remove(pawn.thingIDNumber);
+            arrivalWorkMisses.Remove(pawn.thingIDNumber);
+            arrivalWorkUntil.Remove(pawn.thingIDNumber);
+            if (pawn.Map != null && pawn.Map != destMap)
+            {
+                departureMap[pawn.thingIDNumber] = pawn.Map.uniqueID;
             }
 
             int carriedId = -1;
@@ -112,7 +135,28 @@ namespace Strata
 
         public static string IntendedWorkDefName(Pawn pawn)
         {
-            if (pawn == null || !intents.TryGetValue(pawn.thingIDNumber, out Intent intent))
+            if (pawn == null)
+            {
+                return null;
+            }
+            if (arrivalWork.TryGetValue(pawn.thingIDNumber, out string staged)
+                && !string.IsNullOrEmpty(staged))
+            {
+                int id = pawn.thingIDNumber;
+                int now = Find.TickManager?.TicksGame ?? 0;
+                bool expired = arrivalWorkUntil.TryGetValue(id, out int until) && until > 0 && now > until;
+                bool exhausted = arrivalWorkMisses.TryGetValue(id, out int misses)
+                    && misses >= ArrivalWorkMissLimit;
+                if (expired || exhausted)
+                {
+                    ClearIntendedWork(pawn);
+                }
+                else
+                {
+                    return staged;
+                }
+            }
+            if (!intents.TryGetValue(pawn.thingIDNumber, out Intent intent))
             {
                 return null;
             }
@@ -121,10 +165,77 @@ namespace Strata
 
         public static void ClearIntendedWork(Pawn pawn)
         {
-            if (pawn != null && intents.TryGetValue(pawn.thingIDNumber, out Intent intent))
+            if (pawn == null)
+            {
+                return;
+            }
+            arrivalWork.Remove(pawn.thingIDNumber);
+            arrivalWorkMisses.Remove(pawn.thingIDNumber);
+            arrivalWorkUntil.Remove(pawn.thingIDNumber);
+            if (intents.TryGetValue(pawn.thingIDNumber, out Intent intent))
             {
                 intent.intendedWorkDefName = null;
             }
+        }
+
+        public static int DepartureMapId(Pawn pawn)
+        {
+            if (pawn != null && departureMap.TryGetValue(pawn.thingIDNumber, out int mapId))
+            {
+                return mapId;
+            }
+            return -1;
+        }
+
+        public static bool HasArrivalWork(Pawn pawn)
+        {
+            return !string.IsNullOrEmpty(IntendedWorkDefName(pawn));
+        }
+
+        public static void NoteIntendedWorkMiss(Pawn pawn)
+        {
+            if (pawn == null || !arrivalWork.ContainsKey(pawn.thingIDNumber))
+            {
+                return;
+            }
+            arrivalWorkMisses.TryGetValue(pawn.thingIDNumber, out int misses);
+            arrivalWorkMisses[pawn.thingIDNumber] = misses + 1;
+        }
+
+        internal static void RememberArrivalWork(int pawnId, string workDefName, int untilTick)
+        {
+            if (pawnId <= 0 || string.IsNullOrEmpty(workDefName))
+            {
+                return;
+            }
+            arrivalWork[pawnId] = workDefName;
+            arrivalWorkUntil[pawnId] = untilTick;
+            arrivalWorkMisses.Remove(pawnId);
+        }
+
+        internal static List<CrossFloorArrivalWorkRecord> CaptureArrivalWork()
+        {
+            var saved = new List<CrossFloorArrivalWorkRecord>(arrivalWork.Count);
+            int now = Find.TickManager?.TicksGame ?? 0;
+            foreach (KeyValuePair<int, string> pair in arrivalWork)
+            {
+                if (string.IsNullOrEmpty(pair.Value))
+                {
+                    continue;
+                }
+                arrivalWorkUntil.TryGetValue(pair.Key, out int until);
+                if (until > 0 && now > until)
+                {
+                    continue;
+                }
+                saved.Add(new CrossFloorArrivalWorkRecord
+                {
+                    pawnId = pair.Key,
+                    workDefName = pair.Value,
+                    untilTick = until,
+                });
+            }
+            return saved;
         }
 
         public static bool HasIntent(Pawn pawn, RelayPurpose purpose)
@@ -198,11 +309,20 @@ namespace Strata
             if (pawn?.jobs == null || !pawn.Spawned || pawn.Downed || pawn.Dead)
             {
                 intents.Remove(pawnId);
+                if (pawn == null || pawn.Dead)
+                {
+                    CrossLevelOrderedJobs.Release(pawnId);
+                }
+                else
+                {
+                    CrossLevelOrderedJobs.ArmRetry(pawnId);
+                }
                 return;
             }
 
-            // Drafted colonists drop automated relays; robots have no draft.
-            if (pawn.Drafted && pawn.IsColonist)
+            // Drafted colonists drop automated relays. A player order still
+            // finishes: ruin stairs draft on the way in, and that was cancelling it.
+            if (pawn.Drafted && pawn.IsColonist && intent.purpose != RelayPurpose.ForcedOrder)
             {
                 intents.Remove(pawnId);
                 return;
@@ -265,6 +385,15 @@ namespace Strata
 
                 intents.Remove(pawnId);
                 return;
+            }
+
+            if (intent.purpose == RelayPurpose.Work
+                && !string.IsNullOrEmpty(intent.intendedWorkDefName))
+            {
+                int pawnIdNow = pawn.thingIDNumber;
+                arrivalWork[pawnIdNow] = intent.intendedWorkDefName;
+                arrivalWorkMisses.Remove(pawnIdNow);
+                arrivalWorkUntil[pawnIdNow] = (Find.TickManager?.TicksGame ?? 0) + ArrivalWorkHoldTicks;
             }
 
             int returnMapId = intent.returnMapId;
@@ -788,6 +917,10 @@ namespace Strata
                     && FindThingById(dest, record.preferredBedId) == null)
                 {
                     continue;
+                }
+                if (record.purpose == RelayPurpose.ForcedOrder)
+                {
+                    CrossLevelOrderedJobs.HoldForArrival(pawn);
                 }
 
                 int returnMapId = record.returnMapId;

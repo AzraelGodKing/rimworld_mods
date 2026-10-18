@@ -479,4 +479,9 @@
   <Strata_Inspect_RuinOpened>Норы внизу открыты.</Strata_Inspect_RuinOpened>
   <Strata_Inspect_RuinSealed>Затхлый воздух поднимается из темноты внизу.</Strata_Inspect_RuinSealed>
 
+  <Strata_GFM_AssignFromFloor>Назначить стража с другого уровня</Strata_GFM_AssignFromFloor>
+  <Strata_GFM_AssignFromFloorDesc>Поселенцы на связанном уровне с этим типом поста. Они дойдут по лестнице.</Strata_GFM_AssignFromFloorDesc>
+  <Strata_GFM_BodyguardOtherFloor>Охранять кого-то на другом уровне</Strata_GFM_BodyguardOtherFloor>
+  <Strata_GFM_BodyguardOtherFloorDesc>Идти за ним по лестницам. Смена уровня не снимает охрану.</Strata_GFM_BodyguardOtherFloorDesc>
+
 </LanguageData>

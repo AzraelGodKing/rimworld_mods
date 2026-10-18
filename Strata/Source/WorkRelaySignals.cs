@@ -600,6 +600,89 @@ namespace Strata
             return false;
         }
 
+        private static bool TryBillWorkType(Pawn pawn, Map map, out WorkTypeDef workType)
+        {
+            workType = null;
+            if (pawn?.workSettings == null || map == null)
+            {
+                return false;
+            }
+            int best = int.MaxValue;
+            foreach (Building building in map.listerBuildings.allBuildingsColonist)
+            {
+                if (building is not IBillGiver billGiver || billGiver.BillStack == null
+                    || !billGiver.BillStack.AnyShouldDoNow)
+                {
+                    continue;
+                }
+                foreach (Bill bill in billGiver.BillStack)
+                {
+                    if (!bill.ShouldDoNow() || !BillIngredientUtility.PawnCanDoBill(pawn, bill))
+                    {
+                        continue;
+                    }
+                    if (!BillIngredientUtility.CanStartOnMap(bill, building, map, pawn))
+                    {
+                        continue;
+                    }
+                    WorkTypeDef type = WorkTypeForBill(pawn, bill);
+                    if (type == null)
+                    {
+                        continue;
+                    }
+                    int next = pawn.workSettings.GetPriority(type);
+                    if (next <= 0 || next >= best)
+                    {
+                        continue;
+                    }
+                    best = next;
+                    workType = type;
+                }
+            }
+            return workType != null;
+        }
+
+        private static WorkTypeDef WorkTypeForBill(Pawn pawn, Bill bill)
+        {
+            SkillDef skill = bill?.recipe?.workSkill;
+            if (skill == null || pawn?.workSettings == null)
+            {
+                return null;
+            }
+            WorkTypeDef best = null;
+            int bestPriority = int.MaxValue;
+            List<WorkTypeDef> types = DefDatabase<WorkTypeDef>.AllDefsListForReading;
+            for (int i = 0; i < types.Count; i++)
+            {
+                WorkTypeDef type = types[i];
+                if (type?.relevantSkills == null || !pawn.workSettings.WorkIsActive(type))
+                {
+                    continue;
+                }
+                bool matches = false;
+                for (int s = 0; s < type.relevantSkills.Count; s++)
+                {
+                    if (type.relevantSkills[s] == skill)
+                    {
+                        matches = true;
+                        break;
+                    }
+                }
+                if (!matches)
+                {
+                    continue;
+                }
+                int next = pawn.workSettings.GetPriority(type);
+                if (next <= 0 || next >= bestPriority)
+                {
+                    continue;
+                }
+                bestPriority = next;
+                best = type;
+            }
+            return best;
+        }
+
         private static bool HasBillsFor(Pawn pawn, Map map)
         {
             foreach (Building building in map.listerBuildings.allBuildingsColonist)
@@ -731,6 +814,15 @@ namespace Strata
                     }
                     Consider(work, type, true, ref priority, ref workType);
                 }
+            }
+            if (TryBillWorkType(pawn, map, out WorkTypeDef billType))
+            {
+                Consider(work, billType, true, ref priority, ref workType);
+            }
+            if (signals.flick)
+            {
+                Consider(work, WorkTypeDefOf.Hauling, true, ref priority, ref workType);
+                Consider(work, WorkTypeDefOf.Construction, true, ref priority, ref workType);
             }
             emergency = (signals.firefighting && work.WorkIsActive(WorkTypeDefOf.Firefighter))
                 || (doctor && work.WorkIsActive(WorkTypeDefOf.Doctor));

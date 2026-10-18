@@ -5,7 +5,7 @@ Detailed notes for Homesteader only.
 ## [Unreleased]
 
 ### Fixed
-- **RimWorld 1.7 load folders** — `LoadFolders.xml` now has a `v1.7` block matching `v1.6` (root, `1.5` backstories, `1.6` Homesteaders scenario, Odyssey fish when Odyssey is active). 1.7 previously had no matching block, so those folders likely did not load.
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies/Homesteader.dll` with the 1.6 scenario folder. Unstable 1.7 loads `1.7/Assemblies/Homesteader.dll` and still reads the Homesteaders scenario from `1.6/Defs` without loading the 1.6 DLL. Workshop tags include 1.6 and 1.7.
 
 ## [1.5.0]
 

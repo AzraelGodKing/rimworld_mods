@@ -301,6 +301,73 @@ namespace Strata
         // checks. Deliberately approximate: a false positive just costs a walk
         // down the stairs, and the cooldown stops it from repeating.
         // Mods can extend via WorkRelaySignals.RegisterWorkProbe.
+        // Floor whose best job for this pawn is the most important, then the
+        // nearest stairwell. A capped floor is skipped so the next one is used.
+        public static bool TryIssueBestWork(Pawn pawn, ThinkNode node, out ThinkResult result, out bool sawCandidate)
+        {
+            result = default;
+            sawCandidate = false;
+            if (pawn?.Map == null || node == null)
+            {
+                return false;
+            }
+            List<LevelGraph.LevelLink> links = LevelGraph.CopyLinks(LevelGraph.ReachableLevels(pawn.Map));
+            int count = links.Count;
+            if (count == 0)
+            {
+                return false;
+            }
+            var open = new bool[count];
+            var priorities = new int[count];
+            var types = new WorkTypeDef[count];
+            for (int i = 0; i < count; i++)
+            {
+                Map map = links[i].map;
+                if (map == null || !HasWorkFor(pawn, map))
+                {
+                    continue;
+                }
+                open[i] = true;
+                priorities[i] = 4;
+                if (WorkRelaySignals.TryBestSignalled(pawn, map, out int priority, out WorkTypeDef type, out _))
+                {
+                    priorities[i] = priority;
+                    types[i] = type;
+                }
+            }
+            while (true)
+            {
+                int best = -1;
+                for (int i = 0; i < count; i++)
+                {
+                    if (!open[i])
+                    {
+                        continue;
+                    }
+                    if (best < 0
+                        || priorities[i] < priorities[best]
+                        || (priorities[i] == priorities[best] && links[i].depth < links[best].depth))
+                    {
+                        best = i;
+                    }
+                }
+                if (best < 0)
+                {
+                    return false;
+                }
+                sawCandidate = true;
+                open[best] = false;
+                int cap = WorkRelaySignals.WorkClaimCap(links[best].map);
+                Job job = TryClaimAndRelay(pawn, links[best], RelayPurpose.Work, cap, intendedWork: types[best]);
+                if (job == null)
+                {
+                    continue;
+                }
+                result = new ThinkResult(job, node, JobTag.MiscWork);
+                return true;
+            }
+        }
+
         public static bool HasWorkFor(Pawn pawn, Map map) => WorkRelaySignals.HasWorkFor(pawn, map);
 
         /// <summary>Mods: see <see cref="WorkRelaySignals.RegisterWorkProbe"/>.</summary>

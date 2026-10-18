@@ -65,14 +65,22 @@ namespace LivingWorld
             {
                 return false;
             }
-            int playerTile = Find.AnyPlayerHomeMap?.Tile ?? -1;
-            if (playerTile < 0)
-            {
-                return false;
-            }
-            int dist = Find.WorldGrid.TraversalDistanceBetween(playerTile, ev.tile);
             int max = LivingWorldMod.Settings?.proximityTiles ?? 30;
-            return dist >= 0 && dist <= max;
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (map == null || !map.IsPlayerHome)
+                {
+                    continue;
+                }
+                int dist = Find.WorldGrid.TraversalDistanceBetween(map.Tile, ev.tile);
+                if (dist >= 0 && dist <= max)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static bool HasAllyInvolved(WorldEvent ev)

@@ -5,12 +5,17 @@
     <LangVersion>latest</LangVersion>
     <RootNamespace>LivingWorld</RootNamespace>
     <AssemblyName>LivingWorld</AssemblyName>
-    <OutputPath>../Assemblies/</OutputPath>
+    <!-- Official 1.6. Do not point this at 1.7/Assemblies. -->
+    <OutputPath>../1.6/Assemblies/</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <DebugType>none</DebugType>
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- 1.7-only sources. The 1.7 project compiles these; this project does not. -->
+    <Compile Remove="RimWorld17\**" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" />
     <PackageReference Include="Lib.Harmony" Version="2.3.*" ExcludeAssets="runtime" />

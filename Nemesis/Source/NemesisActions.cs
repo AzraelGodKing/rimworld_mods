@@ -11,6 +11,11 @@ namespace Nemesis
     {
         public static void Execute(NemesisAction action, NemesisData data, Map map)
         {
+            if (action == NemesisAction.DoNothing)
+            {
+                return;
+            }
+
             data.lastActionKind = (int)action;
             data.harassmentCount++;
 
@@ -47,44 +52,66 @@ namespace Nemesis
                     KidnapAttempt(data, map);
                     break;
                 default:
-                    CommsTaunt(data, map);
                     break;
             }
         }
 
-        public static void CommsTaunt(NemesisData data, Map map)
+        public static bool HasCommsConsole(Map map)
         {
-            string taunt = NemesisTaunts.PickCommsLine(data);
-            string title;
-            string body;
-            if (HasCommsConsole(map))
+            if (ConsoleCanCall(map))
             {
-                title = "Nemesis_Letter_CommsTitle".Translate();
-                body = "Nemesis_Letter_CommsBody".Translate(taunt);
-            }
-            else
-            {
-                title = "Nemesis_Letter_NoteTitle".Translate(data.nemesisName);
-                body = "Nemesis_Letter_NoteBody".Translate(taunt);
+                return true;
             }
 
-            Find.LetterStack.ReceiveLetter(title, body, LetterDefOf.NeutralEvent);
-            if (map != null)
-                NemesisTells.MaybeLeaveMark(data, map, null);
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map other = maps[i];
+                if (other == null || other == map || !other.IsPlayerHome)
+                {
+                    continue;
+                }
+                if (ConsoleCanCall(other))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        private static bool HasCommsConsole(Map map)
+        // Live check. A flicked-off, unpowered, or solar-flared console cannot call,
+        // so the taunt locks again until one can.
+        private static bool ConsoleCanCall(Map map)
         {
-            if (map == null) return false;
+            if (map == null)
+            {
+                return false;
+            }
             List<Building> buildings = map.listerBuildings.allBuildingsColonist;
             for (int i = 0; i < buildings.Count; i++)
             {
-                Building b = buildings[i];
-                if (!(b is Building_CommsConsole)) continue;
-                CompPowerTrader power = b.TryGetComp<CompPowerTrader>();
-                if (power == null || power.PowerOn) return true;
+                if (buildings[i] is Building_CommsConsole console && console.CanUseCommsNow)
+                {
+                    return true;
+                }
             }
             return false;
+        }
+
+        public static void CommsTaunt(NemesisData data, Map map)
+        {
+            if (!HasCommsConsole(map))
+            {
+                return;
+            }
+
+            string taunt = NemesisTaunts.PickCommsLine(data);
+            Find.LetterStack.ReceiveLetter(
+                "Nemesis_Letter_CommsTitle".Translate(),
+                "Nemesis_Letter_CommsBody".Translate(taunt),
+                LetterDefOf.NeutralEvent);
+            if (map != null)
+                NemesisTells.MaybeLeaveMark(data, map, null);
         }
 
         private static void DirectRaid(NemesisData data, Map map)
@@ -138,9 +165,17 @@ namespace Nemesis
 
             parms.points = points;
 
-            bool ok = raidDef.Worker.TryExecute(parms);
-            bool injectMissed = canInject && NemesisRaidInject.Pending != null;
-            NemesisRaidInject.Clear();
+            bool ok;
+            bool injectMissed;
+            try
+            {
+                ok = raidDef.Worker.TryExecute(parms);
+                injectMissed = canInject && NemesisRaidInject.Pending != null;
+            }
+            finally
+            {
+                NemesisRaidInject.Clear();
+            }
             if (!ok)
             {
                 CommsTaunt(data, map);

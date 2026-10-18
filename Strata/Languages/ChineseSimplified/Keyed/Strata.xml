@@ -480,4 +480,9 @@
   <Strata_Inspect_RuinOpened>下方巢穴已开启。</Strata_Inspect_RuinOpened>
   <Strata_Inspect_RuinSealed>陈腐空气从下方黑暗中升起。</Strata_Inspect_RuinSealed>
 
+  <Strata_GFM_AssignFromFloor>从其他楼层指派守卫</Strata_GFM_AssignFromFloor>
+  <Strata_GFM_AssignFromFloorDesc>相连楼层上已设为此哨位类型的殖民者。他们会走楼梯到岗。</Strata_GFM_AssignFromFloorDesc>
+  <Strata_GFM_BodyguardOtherFloor>护送其他楼层的人</Strata_GFM_BodyguardOtherFloor>
+  <Strata_GFM_BodyguardOtherFloorDesc>穿过楼梯跟随。对方换层时不会解除护送。</Strata_GFM_BodyguardOtherFloorDesc>
+
 </LanguageData>

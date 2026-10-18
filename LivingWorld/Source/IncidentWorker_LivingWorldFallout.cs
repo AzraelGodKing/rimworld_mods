@@ -37,6 +37,10 @@ namespace LivingWorld
             {
                 return false;
             }
+            if (faction.HostileTo(Faction.OfPlayer))
+            {
+                return false;
+            }
 
             if (!RCellFinder.TryFindRandomPawnEntryCell(
                     out IntVec3 entry,
@@ -79,7 +83,7 @@ namespace LivingWorld
 
             LordMaker.MakeNewLord(
                 faction,
-                new LordJob_DefendPoint(spawned[0].Position),
+                new LordJob_VisitColony(faction, spawned[0].Position, 45000),
                 map,
                 spawned);
 
@@ -116,9 +120,6 @@ namespace LivingWorld
 
     public class IncidentWorker_LivingWorldWarband : IncidentWorker
     {
-        private const int MinPawns = 3;
-        private const int MaxPawns = 6;
-
         protected override bool CanFireNowSub(IncidentParms parms)
         {
             if (LivingWorldMod.Settings == null
@@ -161,13 +162,21 @@ namespace LivingWorld
                 return false;
             }
 
-            int count = Rand.RangeInclusive(MinPawns, MaxPawns);
-            var spawned = new List<Pawn>();
-            for (int i = 0; i < count; i++)
+            var group = new PawnGroupMakerParms
             {
-                PawnKindDef kind = faction.RandomPawnKind() ?? PawnKindDefOf.Drifter;
-                Pawn pawn = PawnGenerator.GeneratePawn(kind, faction);
-                GenSpawn.Spawn(pawn, CellFinder.RandomClosewalkCellNear(entry, map, 4), map);
+                groupKind = PawnGroupKindDefOf.Combat,
+                tile = map.Tile,
+                faction = faction,
+                points = parms.points,
+            };
+            var spawned = new List<Pawn>();
+            foreach (Pawn pawn in PawnGroupMakerUtility.GeneratePawns(group, false))
+            {
+                if (pawn == null)
+                {
+                    continue;
+                }
+                GenSpawn.Spawn(pawn, CellFinder.RandomClosewalkCellNear(entry, map, 8), map);
                 spawned.Add(pawn);
             }
 

@@ -45,6 +45,7 @@ namespace Strata
             Harmony harmony = new Harmony("azraelgodking.strata");
             SafePatchAll.Apply(harmony, "[Strata]");
             StrataCombatExtendedSoftCompat.TryPatch(new Harmony("azraelgodking.strata.ce"));
+            StrataGuardsForMeSoftCompat.TryPatch(new Harmony("azraelgodking.strata.gfm"));
             LongEventHandler.ExecuteWhenFinished(() =>
             {
                 StrataBuildInfo.LogStartup();

@@ -104,7 +104,7 @@ namespace LivingWorld
                 {
                     continue;
                 }
-                if (IsPlayerHomeTile(s.Tile))
+                if (IsPlayerHomeTile(s.Tile) || InActiveUse(s))
                 {
                     continue;
                 }
@@ -120,6 +120,51 @@ namespace LivingWorld
                 if (maps[i].IsPlayerHome && maps[i].Tile == tile)
                 {
                     return true;
+                }
+            }
+            return false;
+        }
+
+        // A generated map, a parked caravan, an open trade request, or a quest
+        // look-target. Abandon destroys the settlement; a flip changes its faction.
+        private static bool InActiveUse(Settlement settlement)
+        {
+            if (settlement.HasMap)
+            {
+                return true;
+            }
+            if (Find.WorldObjects.PlayerControlledCaravanAt(settlement.Tile) != null)
+            {
+                return true;
+            }
+            TradeRequestComp trade = settlement.GetComponent<TradeRequestComp>();
+            if (trade?.ActiveRequest != null)
+            {
+                return true;
+            }
+            return QuestLooksAt(settlement);
+        }
+
+        private static bool QuestLooksAt(WorldObject worldObject)
+        {
+            List<Quest> quests = Find.QuestManager.QuestsListForReading;
+            for (int i = 0; i < quests.Count; i++)
+            {
+                Quest quest = quests[i];
+                if (quest == null)
+                {
+                    continue;
+                }
+                if (quest.State != QuestState.Ongoing && quest.State != QuestState.NotYetAccepted)
+                {
+                    continue;
+                }
+                foreach (GlobalTargetInfo target in quest.QuestLookTargets)
+                {
+                    if (target.HasWorldObject && target.WorldObject == worldObject)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -315,9 +360,49 @@ namespace LivingWorld
                 {
                     continue;
                 }
+                if (!TileFinder.IsValidTileForNewSettlement(tile, null, false))
+                {
+                    continue;
+                }
+                if (TooCloseToPlayer(tile))
+                {
+                    continue;
+                }
                 return tile;
             }
             return null;
+        }
+
+        private const int OutpostMinTilesFromPlayer = 10;
+
+        private static bool TooCloseToPlayer(PlanetTile tile)
+        {
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (maps[i] != null && maps[i].IsPlayerHome && NearPlayerTile(tile, maps[i].Tile))
+                {
+                    return true;
+                }
+            }
+            List<Settlement> settlements = Find.WorldObjects.Settlements;
+            for (int i = 0; i < settlements.Count; i++)
+            {
+                Settlement settlement = settlements[i];
+                if (settlement?.Faction != null
+                    && settlement.Faction.IsPlayer
+                    && NearPlayerTile(tile, settlement.Tile))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool NearPlayerTile(PlanetTile tile, PlanetTile playerTile)
+        {
+            int dist = Find.WorldGrid.TraversalDistanceBetween(playerTile, tile);
+            return dist >= 0 && dist < OutpostMinTilesFromPlayer;
         }
 
         private static bool TryEpithet(

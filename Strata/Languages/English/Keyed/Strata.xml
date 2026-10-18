@@ -481,4 +481,9 @@
   <Strata_Inspect_RuinOpened>The warren below has been opened.</Strata_Inspect_RuinOpened>
   <Strata_Inspect_RuinSealed>Stale air drifts up from the darkness below.</Strata_Inspect_RuinSealed>
 
+  <Strata_GFM_AssignFromFloor>Assign guard from another floor</Strata_GFM_AssignFromFloor>
+  <Strata_GFM_AssignFromFloorDesc>Colonists on a linked floor who are set to this spot type. They walk the stairs to the post.</Strata_GFM_AssignFromFloorDesc>
+  <Strata_GFM_BodyguardOtherFloor>Bodyguard someone on another floor</Strata_GFM_BodyguardOtherFloor>
+  <Strata_GFM_BodyguardOtherFloorDesc>Follow them through the stairs. Changing floors does not clear the bodyguard.</Strata_GFM_BodyguardOtherFloorDesc>
+
 </LanguageData>

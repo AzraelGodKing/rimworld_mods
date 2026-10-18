@@ -25,6 +25,7 @@ namespace Nemesis
     public enum NemesisAction
     {
         CommsTaunt,
+        DoNothing,
         DirectRaid,
         NemesisAssault,
         WastePackDrop,
@@ -50,7 +51,8 @@ namespace Nemesis
         Killed,
         TargetDied,
         TargetHandedOver,
-        Cleared
+        Cleared,
+        Vanished
     }
 
     /// <summary>Captain combat specialty — rolled once at hunt create; steers gear/skills/escorts.</summary>

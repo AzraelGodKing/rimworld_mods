@@ -69,8 +69,7 @@ namespace Nemesis
         {
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
             if (comp == null || !comp.IsNemesisPawn(__instance)) return true;
-            comp.HandleLethalDamage(__instance);
-            return false;
+            return !comp.CancelLethalHit(__instance);
         }
     }
 
@@ -319,6 +318,9 @@ namespace Nemesis
     {
         static void Postfix(Building_CommsConsole __instance, Pawn myPawn, ref IEnumerable<FloatMenuOption> __result)
         {
+            if (__instance == null || !__instance.CanUseCommsNow)
+                return;
+
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
             if (comp?.Data == null || !comp.Data.active)
                 return;
