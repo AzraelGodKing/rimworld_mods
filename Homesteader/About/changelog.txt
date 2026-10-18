@@ -1,5 +1,10 @@
-1.5.1 (proposed — About.xml not bumped until confirmed)
+1.5.1
 [h1]Homesteader — 1.5.1[/h1]
+
+[b]Changed[/b]
+[list]
+[*] [b]Separate 1.6 and 1.7 assemblies.[/b] Official 1.6 loads 1.6/Assemblies with the 1.6 scenario folder. Unstable 1.7 loads 1.7/Assemblies and still reads the Homesteaders scenario from 1.6/Defs.
+[/list]
 
 [b]Fixed[/b]
 [list]
@@ -10,21 +15,4 @@
 [/list]
 
 [i]Build stamp (Player.log): landrace-aura-kats-v1[/i]
-[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]
-
-1.5.0
-[h1]Homesteader — 1.5.0[/h1]
-
-[b]Fixed[/b]
-[list]
-[*] [b]Landrace drought[/b] — the drought bonus now offsets drought.
-[/list]
-
-[b]Changed[/b]
-[list]
-[*] [b]Workshop preview[/b] — new preview image of the farmstead and root cellar.
-[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6 (AZR-457). Existing 1.6 DLL; no gameplay change.
-[/list]
-
-[i]Build stamp (Player.log): harvest-aging-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]
