@@ -13,5 +13,10 @@
 [*] [b]Mod list load.[/b] About.xml no longer has a WorkshopTags block. RimWorld 1.7 logged that block as an unknown field for every mod.
 [/list]
 
+[b]Changed[/b]
+[list]
+[*] [b]Dead leftovers.[/b] Dropped the unused gas-pipe marker comp, an empty DeepGas defs tombstone, a magenta canary dessicated stub, and an unused Cancel wrapper. Pipes, canaries, and cross-level orders are unchanged.
+[/list]
+
 [i]Build stamp (Player.log): floor-jobs-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

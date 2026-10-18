@@ -691,9 +691,6 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
       </damageData>
     </graphicData>
     <uiIconPath>Strata/Buildings/GasPipe_MenuIcon</uiIconPath>
-    <comps>
-      <li Class="Strata.CompProperties_GasPipe"/>
-    </comps>
     <building>
       <blueprintGraphicData>
         <texPath>Strata/Buildings/GasPipe_Blueprint_Atlas</texPath>
@@ -728,11 +725,6 @@ Colonists will use the stairwell on their own to work, eat, and sleep across lev
     <costList>
       <Steel>12</Steel>
     </costList>
-    <comps>
-      <li Class="Strata.CompProperties_GasPipe">
-        <hidden>true</hidden>
-      </li>
-    </comps>
     <building>
       <blueprintGraphicData>
         <texPath>Strata/Buildings/HiddenGasPipe_Blueprint_Atlas</texPath>
