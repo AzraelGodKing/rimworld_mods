@@ -4,7 +4,8 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## [Unreleased]
 
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.- **Quieter hunt schedule.** A comms taunt only happens while a colony comms console can call. Depowering the last one, flicking it off, or a solar flare locks the taunt again until a console can call. The same lock hides the nemesis options on that console's menu. The action mix includes a do-nothing weight (default 0.22); a quiet pick waits a random slice of the usual cooldown and does not count as harassment. With no usable console, the taunt weight is added to do-nothing instead of the other actions.
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
+- **Quieter hunt schedule.** A comms taunt only happens while a colony comms console can call. Depowering the last one, flicking it off, or a solar flare locks the taunt again until a console can call. The same lock hides the nemesis options on that console's menu. The action mix includes a do-nothing weight (default 0.22); a quiet pick waits a random slice of the usual cooldown and does not count as harassment. With no usable console, the taunt weight is added to do-nothing instead of the other actions.
 - **Hunt lifecycle** (AZR-520) — a lethal hit off the home map still lets the captain slip away; an unspawned killing blow is allowed and ends the hunt. A missing captain ends the hunt as vanished. Ending a hunt unpins the world pawn. A rogue captain only joins a hostile humanlike faction, or the hunt ends. Raid injection clears if the raid throws, and does not rewrite the faction when it does not match. Informant silver is taken from stored or home silver, and a short payment does not count.
 
 ## [1.5.0]

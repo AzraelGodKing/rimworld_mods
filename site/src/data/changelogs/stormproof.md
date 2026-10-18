@@ -4,7 +4,8 @@ Detailed notes for **Stormproof** only.
 
 ## [Unreleased]
 
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.- Dropped unused `docs/img/ArmoredConduit.png`. Atlas script segment output is opt-in (`-OutSegment`); default writes atlas + menu icon only. No gameplay change.
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
+- Dropped unused `docs/img/ArmoredConduit.png`. Atlas script segment output is opt-in (`-OutSegment`); default writes atlas + menu icon only. No gameplay change.
 
 ## [1.7.0]
 
