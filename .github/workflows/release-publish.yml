@@ -124,10 +124,20 @@ jobs:
         run: |
           set -euo pipefail
           CFG="${{ steps.row.outputs.configuration }}"
+          CSPROJ="${{ steps.row.outputs.csproj }}"
+          CSPROJ17="${CSPROJ%.csproj}.1.7.csproj"
           if [ -n "$CFG" ]; then
-            dotnet build "${{ steps.row.outputs.csproj }}" -c "$CFG" --nologo
+            dotnet build "$CSPROJ" -c "$CFG" --nologo
           else
-            dotnet build "${{ steps.row.outputs.csproj }}" --nologo
+            dotnet build "$CSPROJ" --nologo
+          fi
+          # Same sibling as build-mods.yml / setup-rimworld.sh. pack_mod.sh injects 1.7/Assemblies/*.dll when present.
+          if [ -f "$CSPROJ17" ]; then
+            if [ -n "$CFG" ]; then
+              dotnet build "$CSPROJ17" -c "$CFG" --nologo
+            else
+              dotnet build "$CSPROJ17" --nologo
+            fi
           fi
 
       - name: Pack zip
