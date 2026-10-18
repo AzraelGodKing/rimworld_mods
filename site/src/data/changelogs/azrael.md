@@ -4,8 +4,7 @@
 ## [Unreleased]
 
 ### Changed
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`. Workshop tags include 1.6 and 1.7.
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6. Existing 1.6 DLL; no gameplay change. No `modVersion` bump (Myleek).
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6. Existing 1.6 DLL; no gameplay change. No `modVersion` bump (Myleek).
 - **Build stamps** — the hub no longer scrapes Player.log for a stamp. Only mods that expose `XBuildInfo.BuildStamp` show one.
 
 ### Internal

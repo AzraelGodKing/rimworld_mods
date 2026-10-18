@@ -5,8 +5,7 @@ Detailed notes for **Date Night** only.
 ## [Unreleased]
 
 ### Changed
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`. Workshop tags include 1.6 and 1.7.
-
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
 ### Fixed
 - **New-game state leak** (AZR-522) — GameComponent ctor resets date ticks, anniversary years, venues, double-date sessions, and bed claims (a new game never runs ExposeData).
 - **Deterministic gift selection** (AZR-540) — gifts resolve to a `ThingDef[]` sorted by `defName`; equal-distance tie-break uses `thingIDNumber`.

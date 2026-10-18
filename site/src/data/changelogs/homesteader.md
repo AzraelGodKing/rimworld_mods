@@ -5,8 +5,7 @@ Detailed notes for Homesteader only.
 ## [Unreleased]
 
 ### Fixed
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies/Homesteader.dll` with the 1.6 scenario folder. Unstable 1.7 loads `1.7/Assemblies/Homesteader.dll` and still reads the Homesteaders scenario from `1.6/Defs` without loading the 1.6 DLL. Workshop tags include 1.6 and 1.7.
-
+- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies/Homesteader.dll` with the 1.6 scenario folder. Unstable 1.7 loads `1.7/Assemblies/Homesteader.dll` and still reads the Homesteaders scenario from `1.6/Defs` without loading the 1.6 DLL.
 ## [1.5.0]
 
 Player-facing version **1.5.0** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.5.0 loaded from ...` in Player.log (`harvest-aging-v1`).
