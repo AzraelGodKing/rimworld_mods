@@ -642,7 +642,7 @@ namespace Strata
             return workType != null;
         }
 
-        private static WorkTypeDef WorkTypeForBill(Pawn pawn, Bill bill)
+        internal static WorkTypeDef WorkTypeForBill(Pawn pawn, Bill bill)
         {
             SkillDef skill = bill?.recipe?.workSkill;
             if (skill == null || pawn?.workSettings == null)

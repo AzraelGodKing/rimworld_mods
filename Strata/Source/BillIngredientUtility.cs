@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
@@ -334,6 +335,258 @@ namespace Strata
                 count += things[i].stackCount;
             }
             return count;
+        }
+
+        private struct PendingBillFetch
+        {
+            public int thingId;
+            public int thingMapId;
+            public int destMapId;
+            public int giverId;
+            public int count;
+            public ThingDef def;
+        }
+
+        private static readonly Dictionary<int, PendingBillFetch> pending =
+            new Dictionary<int, PendingBillFetch>();
+
+        public static void ResetSession() => pending.Clear();
+
+        public static bool HasPending(Pawn pawn)
+        {
+            return pawn != null && pending.ContainsKey(pawn.thingIDNumber);
+        }
+
+        public static void ClearPending(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                pending.Remove(pawn.thingIDNumber);
+            }
+        }
+
+        // The bench is on this floor and the ingredient is on another. Walk
+        // there, carry it back, then the normal bill job can start.
+        public static Job TryFetchForLocalBills(Pawn pawn, WorkTypeDef onlyType, out WorkTypeDef workType)
+        {
+            workType = null;
+            if (pawn?.Map == null || pawn.workSettings == null || !pawn.workSettings.EverWork)
+            {
+                return null;
+            }
+
+            Map home = pawn.Map;
+            int scanned = 0;
+            foreach (Building building in home.listerBuildings.allBuildingsColonist)
+            {
+                if (++scanned > 24)
+                {
+                    break;
+                }
+                if (building is not IBillGiver billGiver || billGiver.BillStack == null)
+                {
+                    continue;
+                }
+                foreach (Bill bill in billGiver.BillStack)
+                {
+                    if (bill.suspended || !bill.ShouldDoNow() || !UsesStandardIngredients(bill)
+                        || !PawnCanDoBill(pawn, bill) || !HasShortfall(bill, home))
+                    {
+                        continue;
+                    }
+                    WorkTypeDef type = WorkRelaySignals.WorkTypeForBill(pawn, bill);
+                    if (type == null || (onlyType != null && type != onlyType))
+                    {
+                        continue;
+                    }
+                    if (TryFindOffMapIngredient(pawn, bill, home, out Thing ingredient, out int count)
+                        && TryMakeBillFetch(pawn, ingredient, building, count, out Job job))
+                    {
+                        workType = type;
+                        return job;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static bool TryFinishFetch(Pawn pawn)
+        {
+            if (pawn?.Map == null || !pending.TryGetValue(pawn.thingIDNumber, out PendingBillFetch fetch))
+            {
+                return false;
+            }
+            pending.Remove(pawn.thingIDNumber);
+
+            Map thingMap = FindMap(fetch.thingMapId);
+            Map destMap = FindMap(fetch.destMapId);
+            if (thingMap == null || destMap == null || pawn.Map != thingMap)
+            {
+                return false;
+            }
+
+            Thing ingredient = FindThing(thingMap, fetch.thingId);
+            if (ingredient == null || !ingredient.Spawned || !pawn.CanReserve(ingredient)
+                || !pawn.CanReach(ingredient, PathEndMode.ClosestTouch, Danger.Deadly))
+            {
+                return false;
+            }
+
+            Thing giver = fetch.giverId > 0
+                ? StrataPortalUtility.FindThingByIdAcrossMaps(fetch.giverId)
+                : null;
+            MapPortal portal = LevelGraph.BestFirstStep(thingMap, destMap, pawn.Position, pawn);
+            if (portal == null)
+            {
+                return false;
+            }
+
+            HaulToLevelTargets.Remember(pawn, destMap, thingMap, giver);
+            Job haul = JobMaker.MakeJob(StrataDefOf.Strata_HaulToLevel, ingredient, portal);
+            haul.count = Math.Min(ingredient.stackCount, Math.Max(1, fetch.count));
+            return pawn.jobs.TryTakeOrderedJob(haul, JobTag.MiscWork);
+        }
+
+        private static bool TryFindOffMapIngredient(
+            Pawn pawn,
+            Bill bill,
+            Map home,
+            out Thing ingredient,
+            out int count)
+        {
+            ingredient = null;
+            count = 0;
+            RecipeDef recipe = bill.recipe;
+            var landings = new List<IntVec3>();
+            foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(home))
+            {
+                Map map = link.map;
+                if (map == null || map == home)
+                {
+                    continue;
+                }
+                landings.Clear();
+                landings.Add(link.arrivalCell);
+                for (int i = 0; i < recipe.ingredients.Count; i++)
+                {
+                    IngredientCount ing = recipe.ingredients[i];
+                    int needed = NeededCount(ing);
+                    if (needed <= 0)
+                    {
+                        continue;
+                    }
+                    int have = 0;
+                    Thing stack = null;
+                    int looked = 0;
+                    foreach (ThingDef def in MatchingDefs(bill, ing))
+                    {
+                        if (++looked > 16)
+                        {
+                            break;
+                        }
+                        have += CountOf(home, def);
+                        if (stack != null || CountOf(map, def) <= 0)
+                        {
+                            continue;
+                        }
+                        stack = FirstReachableStack(pawn, map, def, landings);
+                    }
+                    if (have >= needed || stack == null)
+                    {
+                        continue;
+                    }
+                    ingredient = stack;
+                    count = Math.Min(stack.stackCount, Math.Max(1, needed - have));
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static Thing FirstReachableStack(Pawn pawn, Map map, ThingDef def, List<IntVec3> landings)
+        {
+            List<Thing> list = map.listerThings.ThingsOfDef(def);
+            for (int i = 0; i < list.Count && i < 40; i++)
+            {
+                Thing thing = list[i];
+                if (thing == null || !thing.Spawned || thing.IsForbidden(pawn) || !pawn.CanReserve(thing))
+                {
+                    continue;
+                }
+                for (int c = 0; c < landings.Count; c++)
+                {
+                    if (!landings[c].IsValid || !landings[c].InBounds(map))
+                    {
+                        continue;
+                    }
+                    if (map.reachability.CanReach(
+                        landings[c], thing, PathEndMode.ClosestTouch, TraverseParms.For(TraverseMode.PassDoors)))
+                    {
+                        return thing;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private static bool TryMakeBillFetch(Pawn pawn, Thing ingredient, Thing giver, int count, out Job job)
+        {
+            job = null;
+            Map ingredientMap = ingredient.Map;
+            Map destMap = giver.Map;
+            if (ingredientMap == null || destMap == null
+                || LevelGraph.BestFirstStep(pawn.Map, ingredientMap, pawn.Position, pawn) == null)
+            {
+                return false;
+            }
+
+            pending[pawn.thingIDNumber] = new PendingBillFetch
+            {
+                thingId = ingredient.thingIDNumber,
+                thingMapId = ingredientMap.uniqueID,
+                destMapId = destMap.uniqueID,
+                giverId = giver.thingIDNumber,
+                count = count,
+                def = ingredient.def,
+            };
+
+            job = PawnRelay.TryRelayToMap(
+                pawn,
+                ingredientMap,
+                touchCooldown: false,
+                RelayPurpose.ForcedOrder,
+                preferArrivalNear: ingredient.Position);
+            if (job == null)
+            {
+                pending.Remove(pawn.thingIDNumber);
+                return false;
+            }
+
+            pawn.Reserve(ingredient, job, stackCount: count, errorOnFailed: false);
+            return true;
+        }
+
+        private static Map FindMap(int id)
+        {
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (maps[i].uniqueID == id)
+                {
+                    return maps[i];
+                }
+            }
+            return null;
+        }
+
+        private static Thing FindThing(Map map, int id)
+        {
+            if (id <= 0 || map == null)
+            {
+                return null;
+            }
+            Thing thing = StrataPortalUtility.FindThingByIdAcrossMaps(id);
+            return thing != null && thing.MapHeld == map ? thing : null;
         }
     }
 }

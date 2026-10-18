@@ -11,6 +11,8 @@ Player-facing version **3.11.2** (`About.xml` `modVersion`). Stamp `relay-errors
 
 ### Fixed
 - **Work think no longer errors.** Checking a production bill uses the current ingredient search, so an assigned pawn does not throw "parameter count mismatch" and stop taking jobs. Right-clicking a stair that says "no path" patches the enter-portal menu, so that option can take the detour.
+- **Build materials on another floor.** A pawn with a construction site on their floor goes up or down for the materials, then comes back and builds. Stacks on another floor count as available, and that trip is not cancelled to wander at the site.
+- **One colony, every floor.** A pawn can reserve a thing on any linked floor, walk to the job, and finish it. A builder fetches materials. A cook, crafter, or tailor fetches whatever the bench is short of, carries it back, and then does the bill. After that carry they stay and do the job, instead of climbing back for another load first. Sleep, hunger, recreation, and a drug need stop the job and the stair trip. The floor assignment is still there when the need is met. Sleep sends them to their assigned bed on any floor, and only looks for another bed when they do not have one.
 
 ## [3.11.1]
 

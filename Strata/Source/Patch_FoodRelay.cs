@@ -12,7 +12,7 @@ namespace Strata
     {
         public static void Postfix(Pawn pawn, ref Job __result)
         {
-            if (__result != null || !PawnRelay.CanRelay(pawn))
+            if (__result != null || !PawnRelay.CanLeaveWorkForNeed(pawn))
             {
                 return;
             }

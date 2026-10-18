@@ -146,6 +146,33 @@ namespace Strata
             return CanRelayBasics(pawn) && !IsOnRelayCooldown(pawn);
         }
 
+        // Food, rest, and joy may leave a work stair trip immediately. The
+        // work cooldown and the in-progress EnterPortal do not apply.
+        public static bool CanLeaveWorkForNeed(Pawn pawn)
+        {
+            if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed || pawn.Drafted)
+            {
+                return false;
+            }
+
+            if (!StrataPawnUtility.CanUseLevelPortals(pawn) || pawn.IsBurning() || pawn.InMentalState)
+            {
+                return false;
+            }
+
+            if (!LevelGraph.AnyLinkFrom(pawn.Map))
+            {
+                return false;
+            }
+
+            if (PortalRelayChain.HasIntent(pawn) && !PortalRelayChain.IsBreakableWorkCommute(pawn))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         // Portal-capable and linked, ignoring the general relay cooldown.
         // Used for owned-bed home commute so a recent food/work trip can't leave
         // someone sleeping on the floor of the wrong level all night.
