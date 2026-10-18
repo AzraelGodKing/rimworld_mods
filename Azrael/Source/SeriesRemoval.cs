@@ -22,7 +22,6 @@ namespace Azrael
         public int Count;
         public RemovalVerdict Verdict;
         public GlobalTargetInfo Jump;
-        public bool CanDeconstruct;
     }
 
     internal class RemovalReport
@@ -129,7 +128,6 @@ namespace Azrael
                         Label = t.def.LabelCap,
                         Verdict = RemovalVerdict.Deconstruct,
                         Jump = t,
-                        CanDeconstruct = true,
                     };
                 }
                 line.Count++;

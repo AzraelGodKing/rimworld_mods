@@ -2,6 +2,11 @@
 
 Detailed notes for Homesteader only.
 
+## [Unreleased]
+
+### Internal
+- Removed unused `LandraceUtility.DropSavedSeed(Plant, CompLandrace)` overload. Harvest still calls the four-argument form. No gameplay change.
+
 ## [1.5.1]
 
 Player-facing version **1.5.1** (`About.xml` `modVersion`). Startup writes `[Homesteader] v1.5.1 loaded from ...` in Player.log (`landrace-aura-kats-v1`).

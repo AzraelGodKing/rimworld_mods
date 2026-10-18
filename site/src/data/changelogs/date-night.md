@@ -2,6 +2,11 @@
 
 Detailed notes for **Date Night** only.
 
+## [Unreleased]
+
+### Internal
+- Removed unread `SocialWindow.startTick`. Windows stay ephemeral and unsaved. No gameplay change.
+
 ## [1.7.2]
 
 Player-facing version **1.7.2** (`About.xml` `modVersion`). Stamp `date-state-gifts-v1`.

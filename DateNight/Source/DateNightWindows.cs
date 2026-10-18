@@ -89,7 +89,6 @@ namespace DateNight
                     {
                         pawnA = pawn.thingIDNumber,
                         pawnB = partner.thingIDNumber,
-                        startTick = Find.TickManager.TicksGame,
                         lovin = overlapLovin
                     };
                     Windows[key] = window;
@@ -302,7 +301,6 @@ namespace DateNight
                 {
                     pawnA = pawn.thingIDNumber,
                     pawnB = partner.thingIDNumber,
-                    startTick = Find.TickManager.TicksGame,
                     lovin = lovinOnly
                 };
                 Windows[key] = window;
@@ -471,7 +469,6 @@ namespace DateNight
         {
             public int pawnA;
             public int pawnB;
-            public int startTick;
             public bool lovin;
             public bool success;
             public bool awarded;
