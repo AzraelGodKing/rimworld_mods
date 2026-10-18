@@ -17,6 +17,9 @@ Player-facing version **3.11.0** (`About.xml` `modVersion`). Stamp `floor-jobs-v
 - **Jobs survive a level change.** Every shift-clicked order is kept, not just the last one, and started again on arrival. If that start fails, or ruin stairs draft the pawn on the way in, the order is retried instead of dropped. A work trip keeps looking for that work type, including mining and other cell jobs, instead of taking the first unrelated job. Queued jobs for the floor they left wait and resume back there. Orders in flight are saved with the colony.
 - **Mod list load.** About.xml no longer has a WorkshopTags block. RimWorld 1.7 logged that block as an unknown field for every mod.
 
+### Changed
+- **Dead leftovers**: removed unused `CompGasPipe` / `CompProperties_GasPipe` (routing already uses `Building_GasPipe.At` / `GasPipeUtility`), the empty `Buildings_DeepGas.xml` tombstone, the magenta unsuffixed `Dessicated_Canary.png` stub, and unused `CrossLevelOrderedJobs.Cancel`. No player-facing change.
+
 ## [3.10.0]
 
 Player-facing version **3.10.0** (`About.xml` `modVersion`). Stamp `shared-fixes-v1`.

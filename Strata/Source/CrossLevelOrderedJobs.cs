@@ -700,14 +700,6 @@ namespace Strata
             return true;
         }
 
-        public static void Cancel(Pawn pawn)
-        {
-            if (pawn != null)
-            {
-                Release(pawn.thingIDNumber);
-            }
-        }
-
         private static bool ShouldIntercept(Pawn pawn, Job job, out Map destMap)
         {
             destMap = null;
