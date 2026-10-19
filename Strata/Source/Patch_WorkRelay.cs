@@ -5,8 +5,7 @@ using Verse.AI;
 
 namespace Strata
 {
-    // Colonist work decisions go through JobRelay. This patch only hands the
-    // vanilla result across.
+    // Colonist work decisions go through JobRelay.Apply.
     [HarmonyPatch(typeof(JobGiver_Work), nameof(JobGiver_Work.TryIssueJobPackage))]
     public static class Patch_WorkRelay
     {

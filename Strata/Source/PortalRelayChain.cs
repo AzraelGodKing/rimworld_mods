@@ -29,26 +29,20 @@ namespace Strata
         // Without this, the work type that caused the climb is already gone
         // and the pawn takes some other job.
         private static readonly Dictionary<int, string> arrivalWork = new Dictionary<int, string>();
-        private static readonly Dictionary<int, int> arrivalWorkMisses = new Dictionary<int, int>();
         private static readonly Dictionary<int, int> arrivalWorkUntil = new Dictionary<int, int>();
         private static readonly Dictionary<int, int> arrivalWorkMap = new Dictionary<int, int>();
-        private static readonly Dictionary<int, int> arrivalWorkStuckSince = new Dictionary<int, int>();
         private static readonly Dictionary<int, int> departureMap = new Dictionary<int, int>();
 
-        // Brief pause so a job stored before the climb can start. The assignment
-        // itself lasts until that work type is gone, not until this window ends.
+        // Brief pause so a job stored before the climb can start.
         private const int ArrivalWorkDeferTicks = 180;
-        private const int AssignmentStuckTicks = 12000;
 
         internal static void ResetSession()
         {
             intents.Clear();
             pending.Clear();
             arrivalWork.Clear();
-            arrivalWorkMisses.Clear();
             arrivalWorkUntil.Clear();
             arrivalWorkMap.Clear();
-            arrivalWorkStuckSince.Clear();
             departureMap.Clear();
         }
 
@@ -75,10 +69,8 @@ namespace Strata
             }
 
             arrivalWork.Remove(pawn.thingIDNumber);
-            arrivalWorkMisses.Remove(pawn.thingIDNumber);
             arrivalWorkUntil.Remove(pawn.thingIDNumber);
             arrivalWorkMap.Remove(pawn.thingIDNumber);
-            arrivalWorkStuckSince.Remove(pawn.thingIDNumber);
             if (pawn.Map != null && pawn.Map != destMap)
             {
                 departureMap[pawn.thingIDNumber] = pawn.Map.uniqueID;
@@ -166,23 +158,6 @@ namespace Strata
             return intent.purpose == RelayPurpose.Work ? intent.intendedWorkDefName : null;
         }
 
-        public static void ClearIntendedWork(Pawn pawn)
-        {
-            if (pawn == null)
-            {
-                return;
-            }
-            arrivalWork.Remove(pawn.thingIDNumber);
-            arrivalWorkMisses.Remove(pawn.thingIDNumber);
-            arrivalWorkUntil.Remove(pawn.thingIDNumber);
-            arrivalWorkMap.Remove(pawn.thingIDNumber);
-            arrivalWorkStuckSince.Remove(pawn.thingIDNumber);
-            if (intents.TryGetValue(pawn.thingIDNumber, out Intent intent))
-            {
-                intent.intendedWorkDefName = null;
-            }
-        }
-
         public static int DepartureMapId(Pawn pawn)
         {
             if (pawn != null && departureMap.TryGetValue(pawn.thingIDNumber, out int mapId))
@@ -190,11 +165,6 @@ namespace Strata
                 return mapId;
             }
             return -1;
-        }
-
-        public static bool HasArrivalWork(Pawn pawn)
-        {
-            return !string.IsNullOrEmpty(IntendedWorkDefName(pawn));
         }
 
         // True only for a moment after arrival, so a player order stored before
@@ -209,68 +179,6 @@ namespace Strata
             return arrivalWorkUntil.TryGetValue(pawn.thingIDNumber, out int until) && until > now;
         }
 
-        public static int AssignedWorkMapId(Pawn pawn)
-        {
-            if (pawn == null)
-            {
-                return -1;
-            }
-            if (arrivalWorkMap.TryGetValue(pawn.thingIDNumber, out int mapId) && mapId > 0)
-            {
-                return mapId;
-            }
-            if (intents.TryGetValue(pawn.thingIDNumber, out Intent intent)
-                && intent.purpose == RelayPurpose.Work
-                && !string.IsNullOrEmpty(intent.intendedWorkDefName))
-            {
-                return intent.destMapId;
-            }
-            return -1;
-        }
-
-        public static Map AssignedWorkMap(Pawn pawn)
-        {
-            int mapId = AssignedWorkMapId(pawn);
-            return mapId > 0 ? FindMap(mapId) : null;
-        }
-
-        public static void NoteAssignmentProgress(Pawn pawn)
-        {
-            if (pawn != null)
-            {
-                arrivalWorkStuckSince.Remove(pawn.thingIDNumber);
-            }
-        }
-
-        // The floor still lists this work, but the pawn cannot start it and
-        // cannot walk around to it. Release after a while so a stale signal
-        // does not pin them on the stairs.
-        public static bool NoteAssignmentStuck(Pawn pawn)
-        {
-            if (pawn == null || !arrivalWork.ContainsKey(pawn.thingIDNumber))
-            {
-                return false;
-            }
-            int id = pawn.thingIDNumber;
-            int now = Find.TickManager?.TicksGame ?? 0;
-            if (!arrivalWorkStuckSince.TryGetValue(id, out int since) || since <= 0)
-            {
-                arrivalWorkStuckSince[id] = now;
-                return false;
-            }
-            return now - since >= AssignmentStuckTicks;
-        }
-
-        public static void NoteIntendedWorkMiss(Pawn pawn)
-        {
-            if (pawn == null || !arrivalWork.ContainsKey(pawn.thingIDNumber))
-            {
-                return;
-            }
-            arrivalWorkMisses.TryGetValue(pawn.thingIDNumber, out int misses);
-            arrivalWorkMisses[pawn.thingIDNumber] = misses + 1;
-        }
-
         internal static void RememberArrivalWork(int pawnId, string workDefName, int untilTick, int mapId)
         {
             if (pawnId <= 0 || string.IsNullOrEmpty(workDefName))
@@ -279,7 +187,6 @@ namespace Strata
             }
             arrivalWork[pawnId] = workDefName;
             arrivalWorkUntil[pawnId] = untilTick;
-            arrivalWorkMisses.Remove(pawnId);
             if (mapId > 0)
             {
                 arrivalWorkMap[pawnId] = mapId;
@@ -296,8 +203,6 @@ namespace Strata
             arrivalWork[pawnId] = workDefName;
             arrivalWorkMap[pawnId] = mapId;
             arrivalWorkUntil[pawnId] = now + ArrivalWorkDeferTicks;
-            arrivalWorkMisses.Remove(pawnId);
-            arrivalWorkStuckSince.Remove(pawnId);
         }
 
         internal static List<CrossFloorArrivalWorkRecord> CaptureArrivalWork()
@@ -586,9 +491,8 @@ namespace Strata
 
             if (intent.purpose == RelayPurpose.Work)
             {
-                // Free stampede slot; check next JobGiver_Work for false-positive loop.
+                // Free stampede slot.
                 RelayClaims.Release(pawn);
-                WorkRelayAntiLoop.MarkPendingEmptyCheck(pawn);
             }
 
             // Food / work / joy: idle so vanilla jobgivers take over.

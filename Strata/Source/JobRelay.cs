@@ -27,11 +27,6 @@ namespace Strata
             assigned.Clear();
         }
 
-        public static bool IsAssigned(Pawn pawn)
-        {
-            return pawn != null && assigned.ContainsKey(pawn.thingIDNumber);
-        }
-
         public static void Remember(Pawn pawn, Map map, WorkTypeDef type)
         {
             if (pawn == null || map == null || type == null)
@@ -63,14 +58,6 @@ namespace Strata
                 mapId = mapId,
                 workDefName = workDefName,
             };
-        }
-
-        public static void Release(Pawn pawn)
-        {
-            if (pawn != null)
-            {
-                assigned.Remove(pawn.thingIDNumber);
-            }
         }
 
         // True when this pawn was sent to this floor for work and should stay.
