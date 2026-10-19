@@ -22,13 +22,8 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Website slugs follow the mod folder name, except this Sun Haven package.
-SLUG_OVERRIDES = {"SunHavenMuseumUtilityTracker": "smut"}
-
 
 def slug_from_mod_dir(mod_dir: str) -> str:
-    if mod_dir in SLUG_OVERRIDES:
-        return SLUG_OVERRIDES[mod_dir]
     slug = re.sub(r"([a-z0-9])([A-Z])", r"\1-\2", mod_dir)
     slug = re.sub(r"[^a-zA-Z0-9]+", "-", slug).strip("-").lower()
     return slug
