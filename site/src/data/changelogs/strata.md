@@ -19,6 +19,9 @@ Player-facing version **3.11.3** (`About.xml` `modVersion`). Stamp `cross-floor-
 
 Player-facing version **3.11.2** (`About.xml` `modVersion`). Stamp `relay-errors-v1`.
 
+### Changed
+- **Dead leftovers**: removed unwired relay helpers left after the rework (`JobRelay.IsAssigned`/`Release`, `PawnRelay.TryIssueBestWork`, unused `PortalRelayChain` assignment notes, pending-empty-check, always-false medical-bed probe). No player-facing change.
+
 ### Fixed
 - **Work think no longer errors.** Checking a production bill uses the current ingredient search, so an assigned pawn does not throw "parameter count mismatch" and stop taking jobs. Right-clicking a stair that says "no path" patches the enter-portal menu, so that option can take the detour.
 - **Build materials on another floor.** A pawn with a construction site on their floor goes up or down for the materials, then comes back and builds. Stacks on another floor count as available, and that trip is not cancelled to wander at the site.

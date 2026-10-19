@@ -105,11 +105,6 @@ namespace Strata
             WorkRelayBoardBuilder.ResetSession();
         }
 
-        public static bool IsRegisteredWorkSeekingGiver(ThinkNode_JobGiver giver)
-        {
-            return IsRegisteredWorkSeekingGiverType(giver?.GetType());
-        }
-
         public static bool IsRegisteredWorkSeekingGiverType(Type type)
         {
             if (type == null || workSeekingGiverMarkers.Count == 0)
@@ -205,8 +200,7 @@ namespace Strata
             {
                 return true;
             }
-            if (Active(WorkTypeDefOf.Doctor) && (PawnRelay.HasPatientsNeedingTend(map)
-                || HasMedicalBedsNeedingPatients(map)))
+            if (Active(WorkTypeDefOf.Doctor) && PawnRelay.HasPatientsNeedingTend(map))
             {
                 return true;
             }
@@ -595,11 +589,6 @@ namespace Strata
         internal static int CountPlayerThingsPublic(Map map, ThingRequestGroup group)
             => CountPlayerThings(map, group);
 
-        private static bool HasMedicalBedsNeedingPatients(Map map)
-        {
-            return false;
-        }
-
         private static bool TryBillWorkType(Pawn pawn, Map map, out WorkTypeDef workType)
         {
             workType = null;
@@ -758,7 +747,7 @@ namespace Strata
             SetSignal(entry, WorkTypeDefOf.Warden, entry.warden, entry.warden ? 1 : 0, needsSkill: false);
             SetSignal(entry, WorkTypeDefOf.Handling, entry.handling, entry.handling ? 1 : 0, needsSkill: true);
             SetSignal(entry, WorkTypeDefOf.Childcare, entry.childcare, entry.childcare ? 1 : 0, needsSkill: false);
-            bool doctor = map != null && (PawnRelay.HasPatientsNeedingTend(map) || HasMedicalBedsNeedingPatients(map));
+            bool doctor = map != null && PawnRelay.HasPatientsNeedingTend(map);
             SetSignal(entry, WorkTypeDefOf.Doctor, doctor, doctor ? 1 : 0, needsSkill: true);
 
             if (map != null)
@@ -796,7 +785,7 @@ namespace Strata
             Consider(work, WorkTypeDefOf.Warden, signals.warden, ref priority, ref workType);
             Consider(work, WorkTypeDefOf.Handling, signals.handling, ref priority, ref workType);
             Consider(work, WorkTypeDefOf.Childcare, signals.childcare, ref priority, ref workType);
-            bool doctor = PawnRelay.HasPatientsNeedingTend(map) || HasMedicalBedsNeedingPatients(map);
+            bool doctor = PawnRelay.HasPatientsNeedingTend(map);
             Consider(work, WorkTypeDefOf.Doctor, doctor, ref priority, ref workType);
             if (signals.byType != null)
             {

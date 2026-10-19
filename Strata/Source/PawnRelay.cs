@@ -328,20 +328,6 @@ namespace Strata
             return job;
         }
 
-        // Cheap, conservative "is there plausibly work for this pawn over there?"
-        // checks. Deliberately approximate: a false positive just costs a walk
-        // down the stairs, and the cooldown stops it from repeating.
-        // Mods can extend via WorkRelaySignals.RegisterWorkProbe.
-        // Floor whose best job for this pawn is the most important, then the
-        // nearest stairwell. A capped floor is skipped so the next one is used.
-        public static bool TryIssueBestWork(Pawn pawn, ThinkNode node, out ThinkResult result, out bool sawCandidate)
-        {
-            result = default;
-            sawCandidate = false;
-            JobRelay.Apply(pawn, node, emergency: false, ref result);
-            return result.Job != null;
-        }
-
         public static bool HasWorkFor(Pawn pawn, Map map) => WorkRelaySignals.HasWorkFor(pawn, map);
 
         /// <summary>Mods: see <see cref="WorkRelaySignals.RegisterWorkProbe"/>.</summary>

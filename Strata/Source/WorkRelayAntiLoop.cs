@@ -24,12 +24,9 @@ namespace Strata
         private static readonly Dictionary<int, List<BlacklistEntry>> blacklists =
             new Dictionary<int, List<BlacklistEntry>>();
 
-        private static readonly HashSet<int> pendingEmptyCheck = new HashSet<int>();
-
         internal static void ResetSession()
         {
             blacklists.Clear();
-            pendingEmptyCheck.Clear();
         }
 
         public static void ClearForMap(Map map)
@@ -65,19 +62,6 @@ namespace Strata
             {
                 blacklists.Remove(emptyPawns[i]);
             }
-        }
-
-        public static void MarkPendingEmptyCheck(Pawn pawn)
-        {
-            if (pawn != null)
-            {
-                pendingEmptyCheck.Add(pawn.thingIDNumber);
-            }
-        }
-
-        public static bool ConsumePendingEmptyCheck(Pawn pawn)
-        {
-            return pawn != null && pendingEmptyCheck.Remove(pawn.thingIDNumber);
         }
 
         public static bool IsBlacklisted(Pawn pawn, Map map)
