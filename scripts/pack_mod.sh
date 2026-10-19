@@ -10,9 +10,7 @@ mkdir -p "$dest_dir"
 zip_path="${dest_dir}/${zip_name}.zip"
 git archive --format=zip -o "$zip_path" HEAD "$folder"
 injected=0
-# Root Assemblies, plus version folders when a mod ships separate 1.6 and 1.7 DLLs.
 candidates=(
-  "${folder}/Assemblies/${dll_name}.dll"
   "${folder}/1.6/Assemblies/${dll_name}.dll"
   "${folder}/1.7/Assemblies/${dll_name}.dll"
 )
