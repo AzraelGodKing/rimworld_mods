@@ -129,7 +129,7 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
 3. Enable the mod(s) in the in-game mod list.
 4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Niceties** require the **Harmony** mod. **Living World**, **Azrael**, and **Wave Survival Reforged** are in-repo but not release-ready (not in the GitHub Release zips).
 
-Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes the DLL under `<Mod>/Assemblies/` locally. After the eleven builds, `dotnet test Tests/ModChecks/ModChecks.csproj -c Release` checks Harmony string targets, DefOf/defName literals, Scribe parity, Series hub roster, Keyed literals, and def XML fields against the Krafs ref pack (no RimWorld install).
+Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes `1.6/Assemblies/`; the sibling `<Mod>.1.7.csproj` writes `1.7/Assemblies/`. After the eleven builds, `dotnet test Tests/ModChecks/ModChecks.csproj -c Release` checks Harmony string targets, DefOf/defName literals, Scribe parity, Series hub roster, Keyed literals, and def XML fields against the Krafs ref pack (no RimWorld install).
 
 Safe to add to an existing save. Before removing a mod from a save, deconstruct its buildings and consume/sell its items first (resolve an active Nemesis hunt before removing Nemesis).
 
