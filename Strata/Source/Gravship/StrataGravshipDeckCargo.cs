@@ -501,6 +501,14 @@ namespace Strata
             // Move scope lifts the portal despawn-immunity patch;
             // currentlyGeneratingPortal keeps PocketMapExit.SpawnSetup wiring.
             MapPortal entrance = (thing as PocketMapExit)?.entrance;
+            if (thing is PocketMapExit && (entrance == null || entrance.Destroyed || !entrance.Spawned))
+            {
+                // Host shaft gone or not rewired yet — leave the landing where it
+                // is. Despawning without a portal throws and drops the elevator.
+                StrataLog.Verbose("[Strata] G8 deck cargo: skip move for " + thing.LabelCap
+                    + " — no live host shaft to reconnect.");
+                return false;
+            }
             StrataPortalUtility.BeginPortalMove();
             PocketMapUtility.currentlyGeneratingPortal = entrance;
             try

@@ -1,9 +1,19 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.11.2` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.2 loaded from ... (modified ...); relay-errors-v1.` via `ModVersionLog.Write`.
+**Version:** `3.11.3` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.3 loaded from ... (modified ...); cross-floor-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `relay-errors-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `cross-floor-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.11.3]
+
+Player-facing version **3.11.3** (`About.xml` `modVersion`). Stamp `cross-floor-v1`.
+
+### Fixed
+- **Several gravship tower elevators stay after travel.** Extra tower elevators on the first floor of a gravship no longer vanish when you land on another map. Each elevator is kept and reconnected, including with Gravship Expanded Chapter 1.
+- **Stair looping stops, then they work.** After a material run they stay on that floor and do the job, instead of climbing back for another load. Sleep, hunger, recreation, and a drug need break the stair trip. The floor assignment is still there when the need is met.
+- **Pets take the stairs home.** A colony animal walks to its assigned bed or allowed area on another linked floor. Development mode can teleport a selected pawn to a linked floor, not only the current map.
+- **Meditation spots on other floors.** A pawn goes to their assigned meditation spot on any linked floor, and will use a free colonist spot upstairs or downstairs when this floor has none.
 
 ## [3.11.2]
 

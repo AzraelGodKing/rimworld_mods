@@ -678,16 +678,21 @@ namespace Strata
 
         private static void EnsureHostShafts(Map host, Building_GravEngine engine, Gravship landShip)
         {
+            // Each snapshot owns one host shaft. Without this, the second tower
+            // elevator of the same def matched the first and was never restored.
+            var claimed = new HashSet<MapPortal>();
             for (int i = 0; i < snapshots.Count; i++)
             {
                 PortalSnapshot snap = snapshots[i];
-                if (!snap.shaftId.NullOrEmpty()
-                    && StrataGravshipShaftIdentity.FindHostShaftById(host, snap.shaftId) != null)
+                MapPortal already = null;
+                if (!snap.shaftId.NullOrEmpty())
                 {
-                    continue;
+                    already = StrataGravshipShaftIdentity.FindHostShaftById(host, snap.shaftId);
                 }
-                if (FindHostShaftMatching(host, engine, snap) != null)
+                already ??= FindHostShaftMatching(host, engine, snap, claimed);
+                if (already != null)
                 {
+                    claimed.Add(already);
                     continue;
                 }
 
@@ -736,15 +741,20 @@ namespace Strata
                 }
 
                 // G2: reclaim by shaftId from cargo first — never MakeThing a twin
-                // unless that instance is already destroyed.
+                // unless that instance is already destroyed. Never reuse a packed
+                // shaft already claimed for another snapshot of the same def.
                 MapPortal existing = StrataGravshipShaftIdentity.FindPackedShaftById(
-                        landShip, snap.shaftId)
-                    ?? FindPackedShaft(landShip, snap.defName)
-                    ?? FindShaftThingAnywhere(snap.defName);
+                        landShip, snap.shaftId);
+                if (existing == null || claimed.Contains(existing))
+                {
+                    existing = FindPackedShaft(landShip, snap.defName, claimed)
+                        ?? FindShaftThingAnywhere(snap.defName, claimed);
+                }
                 if (existing != null && !existing.Destroyed)
                 {
                     if (existing.Spawned && existing.Map == host)
                     {
+                        claimed.Add(existing);
                         continue;
                     }
 
@@ -759,6 +769,7 @@ namespace Strata
                         StrataLog.Warning("[Strata] Gravship land: packed shaft " + snap.defName
                             + " still spawned on " + existing.Map
                             + " — skipping MakeThing to avoid a duplicate.");
+                        claimed.Add(existing);
                         continue;
                     }
                     else
@@ -780,6 +791,7 @@ namespace Strata
                                 id.RememberPocket(pocket);
                             }
                         }
+                        claimed.Add(existing);
                         StrataLog.Verbose("[Strata] Gravship land: reclaimed packed shaft "
                             + def.defName + " at " + cell
                             + (snap.shaftId.NullOrEmpty() ? "" : " (shaftId " + snap.shaftId + ")"));
@@ -821,6 +833,7 @@ namespace Strata
                     continue;
                 }
 
+                claimed.Add(portal);
                 StrataLog.Verbose("[Strata] Gravship land: MakeThing restored shaft "
                     + def.defName + " at " + cell
                     + (snap.shaftId.NullOrEmpty() ? "" : " (shaftId " + snap.shaftId + ")"));
@@ -829,7 +842,10 @@ namespace Strata
             CullOffShipDuplicateShafts(host, engine);
         }
 
-        private static MapPortal FindPackedShaft(Gravship ship, string defName)
+        private static MapPortal FindPackedShaft(
+            Gravship ship,
+            string defName,
+            HashSet<MapPortal> claimed = null)
         {
             if (ship == null || string.IsNullOrEmpty(defName))
             {
@@ -848,7 +864,8 @@ namespace Strata
                 if (thing is MapPortal portal
                     && portal.def.defName == defName
                     && portal is IStrataGravshipPortal
-                    && StrataGravshipUtility.IsGravshipHostShaft(portal))
+                    && StrataGravshipUtility.IsGravshipHostShaft(portal)
+                    && (claimed == null || !claimed.Contains(portal)))
                 {
                     return portal;
                 }
@@ -884,7 +901,7 @@ namespace Strata
             return false;
         }
 
-        private static MapPortal FindShaftThingAnywhere(string defName)
+        private static MapPortal FindShaftThingAnywhere(string defName, HashSet<MapPortal> claimed = null)
         {
             if (string.IsNullOrEmpty(defName) || Find.Maps == null)
             {
@@ -904,7 +921,8 @@ namespace Strata
                     if (thing is MapPortal portal && portal.Spawned
                         && portal.def.defName == defName
                         && portal is IStrataGravshipPortal
-                        && StrataGravshipUtility.IsGravshipHostShaft(portal))
+                        && StrataGravshipUtility.IsGravshipHostShaft(portal)
+                        && (claimed == null || !claimed.Contains(portal)))
                     {
                         return portal;
                     }
@@ -914,7 +932,8 @@ namespace Strata
             return null;
         }
 
-        // Drop extra host shafts of the same def that sit off the ship after a bad restore.
+        // Only drop off-ship copies left by a bad restore. Several tower
+        // elevators of the same def on the ship are valid and must stay.
         private static void CullOffShipDuplicateShafts(Map host, Building_GravEngine engine)
         {
             if (host == null)
@@ -950,45 +969,58 @@ namespace Strata
                     continue;
                 }
 
-                MapPortal keep = null;
-                int bestScore = int.MinValue;
+                bool anyOnShip = false;
                 for (int i = 0; i < list.Count; i++)
                 {
-                    MapPortal shaft = list[i];
-                    int score = 0;
-                    if (StrataGravshipUtility.CellOnGravship(host, shaft.Position))
+                    if (StrataGravshipUtility.CellOnGravship(host, list[i].Position))
                     {
-                        score += 1000;
-                    }
-
-                    if (engine != null)
-                    {
-                        score -= (shaft.Position - engine.Position).LengthManhattan;
-                    }
-
-                    if (shaft.PocketMapExists)
-                    {
-                        score += 50;
-                    }
-
-                    if (score > bestScore)
-                    {
-                        bestScore = score;
-                        keep = shaft;
+                        anyOnShip = true;
+                        break;
                     }
                 }
 
                 for (int i = 0; i < list.Count; i++)
                 {
                     MapPortal shaft = list[i];
-                    if (shaft == keep || shaft.Destroyed)
+                    if (shaft.Destroyed)
                     {
                         continue;
                     }
 
-                    StrataLog.Verbose("[Strata] Gravship land: culled duplicate shaft "
-                        + shaft.LabelCap + " at " + shaft.Position
-                        + " (kept " + keep.Position + ")");
+                    // Keep every shaft that sits on the landed ship.
+                    if (StrataGravshipUtility.CellOnGravship(host, shaft.Position))
+                    {
+                        continue;
+                    }
+
+                    // Nothing on the ship for this def — keep the nearest
+                    // off-ship copy so the floor is not left without a shaft.
+                    if (!anyOnShip)
+                    {
+                        MapPortal keep = null;
+                        int bestScore = int.MinValue;
+                        for (int j = 0; j < list.Count; j++)
+                        {
+                            MapPortal candidate = list[j];
+                            int score = candidate.PocketMapExists ? 50 : 0;
+                            if (engine != null)
+                            {
+                                score -= (candidate.Position - engine.Position).LengthManhattan;
+                            }
+                            if (score > bestScore)
+                            {
+                                bestScore = score;
+                                keep = candidate;
+                            }
+                        }
+                        if (shaft == keep)
+                        {
+                            continue;
+                        }
+                    }
+
+                    StrataLog.Verbose("[Strata] Gravship land: culled off-ship duplicate shaft "
+                        + shaft.LabelCap + " at " + shaft.Position);
                     StrataPortalUtility.ForceDestroyPortal(shaft, DestroyMode.Vanish);
                 }
             }
