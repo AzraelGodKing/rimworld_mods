@@ -153,6 +153,37 @@ namespace Strata
             return false;
         }
 
+        // Colony pets take stairs to an assigned bed or allowed area. They
+        // do not join work, food, or joy relay.
+        public static bool IsColonyPet(Pawn pawn)
+        {
+            return pawn != null
+                && pawn.Spawned
+                && !pawn.Dead
+                && pawn.Faction != null
+                && pawn.Faction.IsPlayer
+                && pawn.RaceProps != null
+                && pawn.RaceProps.Animal
+                && !pawn.RaceProps.Humanlike;
+        }
+
+        public static bool CanCommuteHome(Pawn pawn)
+        {
+            if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed || pawn.Drafted)
+            {
+                return false;
+            }
+            if (pawn.IsBurning() || pawn.InMentalState)
+            {
+                return false;
+            }
+            if (CanUseLevelPortals(pawn))
+            {
+                return true;
+            }
+            return IsColonyPet(pawn);
+        }
+
         // Idle work-relay seekers: free colonists/slaves and Biotech colony mechs.
         // Misc. Robots use Patch_RobotWorkRelay instead.
         public static bool CanWorkRelay(Pawn pawn)
@@ -220,6 +251,12 @@ namespace Strata
             }
 
             if (RobotShouldBypassAllowedAreaForWork(pawn))
+            {
+                return true;
+            }
+
+            // Pets walk the stairs even when this floor is outside their area.
+            if (IsColonyPet(pawn))
             {
                 return true;
             }

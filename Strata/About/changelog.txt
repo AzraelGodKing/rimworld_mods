@@ -1,12 +1,13 @@
-3.11.2
-[h1]Strata - 3.11.2[/h1]
+3.11.3
+[h1]Strata - 3.11.3[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Work think no longer errors.[/b] Checking a production bill uses the current ingredient search, so an assigned pawn does not throw "parameter count mismatch" and stop taking jobs. Right-clicking a stair that says "no path" patches the enter-portal menu, so that option can take the detour.
-[*] [b]Build materials on another floor.[/b] A pawn with a construction site on their floor goes up or down for the materials, then comes back and builds. Stacks on another floor count as available, and that trip is not cancelled to wander at the site.
-[*] [b]One colony, every floor.[/b] A pawn can reserve a thing on any linked floor, walk to the job, and finish it. A builder fetches materials. A cook, crafter, or tailor fetches whatever the bench is short of, carries it back, and then does the bill. After that carry they stay and do the job, instead of climbing back for another load first. Sleep, hunger, recreation, and a drug need stop the job and the stair trip. The floor assignment is still there when the need is met. Sleep sends them to their assigned bed on any floor, and only looks for another bed when they do not have one.
+[*] [b]Several gravship tower elevators stay after travel.[/b] Extra tower elevators on the first floor of a gravship no longer vanish when you land on another map. Each elevator is kept and reconnected, including with Gravship Expanded Chapter 1.
+[*] [b]Stair looping stops, then they work.[/b] After a material run they stay on that floor and do the job, instead of climbing back for another load. Sleep, hunger, recreation, and a drug need break the stair trip. The floor assignment is still there when the need is met.
+[*] [b]Pets take the stairs home.[/b] A colony animal walks to its assigned bed or allowed area on another linked floor. Development mode can teleport a selected pawn to a linked floor, not only the current map.
+[*] [b]Meditation spots on other floors.[/b] A pawn goes to their assigned meditation spot on any linked floor, and will use a free colonist spot upstairs or downstairs when this floor has none.
 [/list]
 
-[i]Build stamp (Player.log): relay-errors-v1[/i]
+[i]Build stamp (Player.log): cross-floor-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
