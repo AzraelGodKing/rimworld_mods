@@ -637,6 +637,51 @@ namespace Strata
                 MessageTypeDefOf.TaskCompletion, historical: false);
         }
 
+        [DebugAction(Cat, "Teleport selected to a linked floor", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void TeleportSelectedToLinkedFloor()
+        {
+            List<Pawn> pawns = SelectedPawns();
+            Map from = Find.CurrentMap ?? (pawns.Count > 0 ? pawns[0].MapHeld : null);
+            if (from == null || pawns.Count == 0)
+            {
+                Messages.Message("[Strata] Open a map and select one or more pawns.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            List<LevelGraph.LevelLink> links = LevelGraph.CopyLinks(LevelGraph.ReachableLevels(from));
+            if (links.Count == 0)
+            {
+                Messages.Message("[Strata] No linked floor from this map.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            var options = new List<DebugMenuOption>();
+            for (int i = 0; i < links.Count; i++)
+            {
+                Map dest = links[i].map;
+                if (dest == null)
+                {
+                    continue;
+                }
+
+                options.Add(new DebugMenuOption(
+                    dest.ToString(),
+                    DebugMenuOptionMode.Action,
+                    () => TeleportPawnsToMap(pawns, dest)));
+            }
+
+            if (options.Count == 0)
+            {
+                Messages.Message("[Strata] No linked floor from this map.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            Find.WindowStack.Add(new Dialog_DebugOptionListLister(options));
+        }
+
         [DebugAction(Cat, "Teleport selected to current map center", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void TeleportSelectedToCurrentMap()
         {
@@ -663,6 +708,28 @@ namespace Strata
                 }
             }
             Messages.Message($"[Strata] Teleported {moved} pawn(s) to {map}.",
+                MessageTypeDefOf.TaskCompletion, historical: false);
+        }
+
+        private static void TeleportPawnsToMap(List<Pawn> pawns, Map map)
+        {
+            if (map == null || pawns == null || pawns.Count == 0)
+            {
+                return;
+            }
+
+            IntVec3 dest = FindSurfaceTeleportCell(map, Find.CurrentMap ?? pawns[0].MapHeld);
+            int moved = 0;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (TeleportPawnTo(pawns[i], map, dest))
+                {
+                    moved++;
+                }
+            }
+
+            CameraJumper.TryJump(dest, map);
+            Messages.Message($"[Strata] Teleported {moved} pawn(s) to {map} near {dest}.",
                 MessageTypeDefOf.TaskCompletion, historical: false);
         }
 

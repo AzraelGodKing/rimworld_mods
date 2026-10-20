@@ -117,27 +117,17 @@ jobs:
           echo "mod_dir=$(echo "$ROW" | jq -r '.modDir')" >> "$GITHUB_OUTPUT"
           echo "dll_name=$(echo "$ROW" | jq -r '.dllName')" >> "$GITHUB_OUTPUT"
           echo "csproj=$(echo "$ROW" | jq -r '.csproj')" >> "$GITHUB_OUTPUT"
-          echo "configuration=$(echo "$ROW" | jq -r '.configuration // empty')" >> "$GITHUB_OUTPUT"
           echo "zip_name=$(echo "$ROW" | jq -r '.zipName')" >> "$GITHUB_OUTPUT"
 
       - name: Build
         run: |
           set -euo pipefail
-          CFG="${{ steps.row.outputs.configuration }}"
           CSPROJ="${{ steps.row.outputs.csproj }}"
           CSPROJ17="${CSPROJ%.csproj}.1.7.csproj"
-          if [ -n "$CFG" ]; then
-            dotnet build "$CSPROJ" -c "$CFG" --nologo
-          else
-            dotnet build "$CSPROJ" --nologo
-          fi
+          dotnet build "$CSPROJ" -c Release --nologo
           # Same sibling as build-mods.yml / setup-rimworld.sh. pack_mod.sh injects 1.7/Assemblies/*.dll when present.
           if [ -f "$CSPROJ17" ]; then
-            if [ -n "$CFG" ]; then
-              dotnet build "$CSPROJ17" -c "$CFG" --nologo
-            else
-              dotnet build "$CSPROJ17" --nologo
-            fi
+            dotnet build "$CSPROJ17" -c Release --nologo
           fi
 
       - name: Pack zip
