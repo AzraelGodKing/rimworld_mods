@@ -51,7 +51,6 @@ foreach ($mod in $mods) {
     if ($LASTEXITCODE -ne 0) { throw "git archive failed for $($mod.Folder)" }
 
     $dllCandidates = @(
-        @{ Rel = "Assemblies\$($mod.DllName).dll"; Entry = "$($mod.Folder)/Assemblies/$($mod.DllName).dll" },
         @{ Rel = "1.6\Assemblies\$($mod.DllName).dll"; Entry = "$($mod.Folder)/1.6/Assemblies/$($mod.DllName).dll" },
         @{ Rel = "1.7\Assemblies\$($mod.DllName).dll"; Entry = "$($mod.Folder)/1.7/Assemblies/$($mod.DllName).dll" }
     )

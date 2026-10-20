@@ -8,7 +8,7 @@ Dig down. Build up. One colony — many floors.
 
 Carve rock under your base, frame a roof deck above it, and let colonists treat every linked level as home. Work, food, sleep, hauling, medicine, combat, and construction commute through the shafts on their own.
 
-[b]Version 3 complete.[/b] RimWorld 1.6. Requires [b]Harmony[/b]. Odyssey optional (gravship stacks only). Safe to add mid-save.
+[b]Version 3 complete.[/b] RimWorld 1.6 and 1.7. Requires [b]Harmony[/b]. Odyssey optional (gravship stacks only). Safe to add mid-save.
 Do [b]not[/b] run alongside AASB (deprecated), AASB 2, or MultiFloors.
 
 [h2]Dig down[/h2]
@@ -80,4 +80,4 @@ Every level is a full map matching your map size. On large maps (300×300+), eac
 [*] Don't dig Strata shafts on temporary quest maps (Ancient Urban Ruins, world sites) — use their floors; Strata is for your home colony
 [/list]
 
-Requires Harmony. RimWorld 1.6. Odyssey optional.
+Requires Harmony. RimWorld 1.6 and 1.7. Odyssey optional.

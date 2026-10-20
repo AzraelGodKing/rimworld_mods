@@ -64,6 +64,7 @@ Living World, Azrael, and Wave Survival Reforged have `"publish": false` in the 
 ```bash
 python3 scripts/validate_mods.py
 dotnet build Homesteader/Source/Homesteader.csproj
+dotnet build Homesteader/Source/Homesteader.1.7.csproj
 bash scripts/pack_mod.sh Homesteader Homesteader Homesteader dist
 python3 scripts/release_meta.py --mod-dir Homesteader
 ```

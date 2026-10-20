@@ -1,7 +1,7 @@
 # Azrael — Steam / Workshop notes
 
 **Package ID:** `azraelgodking.Azrael`  
-**Requires:** Harmony, RimWorld 1.6  
+**Requires:** Harmony, RimWorld 1.6 and 1.7  
 **Hard deps:** none beyond Harmony  
 **Recommended (soft):** Homesteader (canonical Azrael teller), Strata, Stormproof, Living World, Nemesis, Deep Colony
 

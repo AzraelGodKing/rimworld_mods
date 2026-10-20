@@ -35,6 +35,7 @@ Everything only runs while the Wave Survival storyteller is selected, so switchi
 
 ```
 dotnet build WaveSurvivalReforged/Source/WaveSurvivalReforged.csproj -c Release
+dotnet build WaveSurvivalReforged/Source/WaveSurvivalReforged.1.7.csproj -c Release
 ```
 
-Output goes to `WaveSurvivalReforged/1.6/Assemblies/` (gitignored).
+Output goes to `WaveSurvivalReforged/1.6/Assemblies/` and `WaveSurvivalReforged/1.7/Assemblies/` (gitignored).

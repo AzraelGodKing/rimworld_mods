@@ -496,7 +496,7 @@ namespace Strata
                 return JobMaker.MakeJob(JobDefOf.LayDown, bed);
             }
 
-            if (StrataPawnUtility.CanUseLevelPortals(pawn) && !pawn.Drafted)
+            if (StrataPawnUtility.CanCommuteHome(pawn))
             {
                 return DraftedPortalPathing.TryMakeRestDetourJob(pawn, bed);
             }
@@ -507,10 +507,7 @@ namespace Strata
         // Sleep must not be gated by work-relay HasIntent / cooldown.
         private static bool CanStartPortalTrip(Pawn pawn)
         {
-            return StrataPawnUtility.CanUseLevelPortals(pawn)
-                && !pawn.Drafted
-                && !pawn.InMentalState
-                && !pawn.IsBurning()
+            return StrataPawnUtility.CanCommuteHome(pawn)
                 && LevelGraph.AnyLinkFrom(pawn.Map);
         }
 
