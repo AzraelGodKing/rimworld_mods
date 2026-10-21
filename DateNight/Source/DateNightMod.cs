@@ -12,7 +12,7 @@ namespace DateNight
         public DateNightMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<DateNightSettings>();
-            ModVersionLog.Write("[DateNight]", content, extra: "date-state-gifts-v1");
+            ModVersionLog.Write("[DateNight]", content, extra: "gradual-romance-v1");
             // PatchAll runs after defs load — Harmony compiling TimeAssignmentSelector
             // patches otherwise touches TimeAssignmentDefOf before DefOfs exist.
         }
@@ -128,6 +128,12 @@ namespace DateNight
                 "DateNight_Settings_DoubleDates".Translate(),
                 ref Settings.allowDoubleDates,
                 "DateNight_Settings_DoubleDatesTip".Translate());
+            listing.Gap(6f);
+
+            listing.CheckboxLabeled(
+                "DateNight_Settings_GradualRomance".Translate(),
+                ref Settings.enableGradualRomance,
+                "DateNight_Settings_GradualRomanceTip".Translate());
             listing.Gap(10f);
 
             if (listing.ButtonText("DateNight_Settings_Reset".Translate(), null, 0.25f))
@@ -148,6 +154,7 @@ namespace DateNight
         {
             SafePatchAll.Apply(new Harmony(HarmonyId), "[DateNight]");
             _ = DateNightRjwSoftCompat.Active;
+            _ = DateNightRotrSoftCompat.Active;
         }
     }
 }

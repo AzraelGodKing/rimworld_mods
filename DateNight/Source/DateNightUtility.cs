@@ -350,6 +350,19 @@ namespace DateNight
                 return;
             }
 
+            // Friends / sweethearts painted Lovin: date instead of private time.
+            if (partner == null)
+            {
+                Pawn dateMate = DateNightRomance.FindDatePartner(pawn);
+                if (dateMate != null
+                    && !LovePartnerRelationUtility.LovePartnerRelationExists(pawn, dateMate)
+                    && DateNightDateUtility.CanDate(pawn, dateMate))
+                {
+                    DateNightDateUtility.TryStartDateNow(pawn);
+                    return;
+                }
+            }
+
             Building_Bed target = GetScheduledBed(pawn);
             if (target == null)
             {

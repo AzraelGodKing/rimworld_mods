@@ -58,7 +58,7 @@ namespace DateNight
 
         public static void NotifyScheduleTick(Pawn pawn, bool onLovin, bool onDate)
         {
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn partner = DateNightRomance.FindDatePartner(pawn);
             if (partner == null)
             {
                 return;
@@ -116,7 +116,7 @@ namespace DateNight
 
         public static void NotifyLeftSharedSchedule(Pawn pawn)
         {
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn partner = DateNightRomance.FindDatePartner(pawn);
             if (partner == null)
             {
                 return;

@@ -4,8 +4,25 @@ Detailed notes for **Date Night** only.
 
 ## [Unreleased]
 
+## [1.8.0]
+
+Player-facing version **1.8.0** (`About.xml` `modVersion`). Stamp `gradual-romance-v1`.
+
+AZR-651 AZR-652 AZR-521 AZR-538 AZR-539 AZR-542 AZR-575
+
+### Added
+- **Gradual romance** (AZR-651) — adults without a lover can date as friends, then sweethearts, then boyfriend/girlfriend. Two good dates plus opinion (15 / 25 / 40 / 50) climb each rung; a wonderful date counts double and an awkward date does not count. The last step adds a vanilla Lover relation and a letter. Lovin stays locked until they are lovers or spouses. Existing couples skip the ladder. Opinion collapse steps the pair down. Toggle in settings.
+- **Romance on the Rim soft-compat** (AZR-652) — fail-open. Date Night does not start a date while RotR is already running a kiss, stroll, proposal, or other `RomanceOnTheRim_*` / `RotR_Job_*` job. A finished date calls `RomanceUtility.TryAffectRomanceNeedLevelForPawn` (stroll / lovin / kiss Tuning amounts; +0.10 on an anniversary date). Pawns without RotR's romance need (usually not lovers yet) are a no-op. `loadAfter` when present; no hard dependency.
+
+### Changed
+- **1.6 / 1.7 dual package** (AZR-521 AZR-538) — confirmed: official 1.6 loads `1.6/Assemblies`, unstable 1.7 loads `1.7/Assemblies`.
+- **Save upgrade** (AZR-539) — new romance bonds scribe as `dateNightRomanceBonds` with PostLoadInit null-guards. Older 1.6.1+ saves load; missing keys start empty.
+
+### Fixed
+- **Pawn id lookups** (AZR-542) — `FindPawnById` builds a per-tick dictionary instead of scanning the world list per key.
+
 ### Internal
-- Removed unread `SocialWindow.startTick`. Windows stay ephemeral and unsaved. No gameplay change.
+- English, Chinese Simplified, and Russian keys plus four new stage thoughts (AZR-575).
 
 ## [1.7.2]
 

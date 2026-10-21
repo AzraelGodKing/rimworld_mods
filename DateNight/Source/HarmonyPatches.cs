@@ -556,7 +556,7 @@ namespace DateNight
                 return false;
             }
 
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn partner = DateNightRomance.FindDatePartner(pawn);
             if (partner == null || !DateNightUtility.IsDateSchedule(partner)
                 || !DateNightDateUtility.CanDate(pawn, partner))
             {
@@ -575,6 +575,25 @@ namespace DateNight
             job.ignoreForbidden = true;
             __result = job;
             return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.GetInspectString))]
+    public static class Patch_Pawn_GetInspectString_Romance
+    {
+        public static void Postfix(Pawn __instance, ref string __result)
+        {
+            string line = DateNightRomance.InspectLine(__instance);
+            if (line.NullOrEmpty())
+            {
+                return;
+            }
+            if (__result.NullOrEmpty())
+            {
+                __result = line;
+                return;
+            }
+            __result = __result + "\n" + line;
         }
     }
 }

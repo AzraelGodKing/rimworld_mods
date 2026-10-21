@@ -148,7 +148,7 @@ namespace DateNight
                 }
                 else
                 {
-                    Messages.Message($"[Date Night] {p.LabelShort}: could not start a date (need a love partner on the map).",
+                    Messages.Message($"[Date Night] {p.LabelShort}: could not start a date (need a date partner on the map).",
                         MessageTypeDefOf.RejectInput, historical: false);
                 }
             }
@@ -212,6 +212,39 @@ namespace DateNight
             DateNightActivities.ForcedActivityExpireTick = -1;
             Messages.Message("[Date Night] Forced date activity cleared.",
                 MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
+        [DebugAction(Cat, "Log romance stage for selected",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void LogRomanceStage()
+        {
+            foreach (Pawn p in SelectedHumanlikes())
+            {
+                Messages.Message(
+                    $"[Date Night] {p.LabelShort}: {DateNightRomance.DebugDescribe(p)}",
+                    MessageTypeDefOf.NeutralEvent, historical: false);
+            }
+        }
+
+        [DebugAction(Cat, "Set selected as friends (need 2)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void SetSelectedFriends()
+        {
+            SetSelectedStage(DateNightRomanceStage.Friends);
+        }
+
+        [DebugAction(Cat, "Set selected as sweethearts (need 2)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void SetSelectedSweethearts()
+        {
+            SetSelectedStage(DateNightRomanceStage.Sweethearts);
+        }
+
+        [DebugAction(Cat, "Set selected as partners (need 2)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void SetSelectedPartners()
+        {
+            SetSelectedStage(DateNightRomanceStage.Partners);
         }
 
         [DebugAction(Cat, "Log rendezvous bed for selected",
@@ -417,6 +450,29 @@ namespace DateNight
                 }
             }
             return list;
+        }
+
+        private static void SetSelectedStage(DateNightRomanceStage stage)
+        {
+            List<Pawn> pair = SelectedHumanlikes();
+            if (pair.Count != 2)
+            {
+                Messages.Message("[Date Night] Select exactly two living humanlikes.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+
+            if (DateNightRomance.TrySetStage(pair[0], pair[1], stage))
+            {
+                Messages.Message(
+                    $"[Date Night] {pair[0].LabelShort} and {pair[1].LabelShort} are now {stage}.",
+                    MessageTypeDefOf.NeutralEvent, historical: false);
+            }
+            else
+            {
+                Messages.Message("[Date Night] Could not set romance stage.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+            }
         }
 
         private static bool TryMakeLovers(Pawn a, Pawn b, out string detail)

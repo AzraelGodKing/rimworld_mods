@@ -74,6 +74,12 @@ namespace DateNight
         /// </summary>
         public bool allowDoubleDates = true;
 
+        /// <summary>
+        /// Adults without a lover can date as friends, then sweethearts, then
+        /// boyfriend/girlfriend, then become lovers. Lovin still needs a real pair.
+        /// </summary>
+        public bool enableGradualRomance = true;
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref pregnancySafeCooldown, "pregnancySafeCooldown", true);
@@ -89,6 +95,7 @@ namespace DateNight
             Scribe_Values.Look(ref enableAnniversaries, "enableAnniversaries", true);
             Scribe_Values.Look(ref rememberFavoriteSpot, "rememberFavoriteSpot", true);
             Scribe_Values.Look(ref allowDoubleDates, "allowDoubleDates", true);
+            Scribe_Values.Look(ref enableGradualRomance, "enableGradualRomance", true);
             if (Scribe.mode == LoadSaveMode.PostLoadInit && giftDefNames == null)
             {
                 giftDefNames = new List<string>();
@@ -110,6 +117,7 @@ namespace DateNight
             enableAnniversaries = true;
             rememberFavoriteSpot = true;
             allowDoubleDates = true;
+            enableGradualRomance = true;
             DateNightActivities.InvalidateGiftCache();
         }
     }

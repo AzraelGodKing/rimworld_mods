@@ -24,6 +24,8 @@
 - Chinese Simplified and Russian packs
 - Schedule mismatch alert when one lover has Date/Lovin painted and the other does not
 - Schedule sync (click the mismatch alert to copy a partner's painted hours)
+- Gradual romance (friends → sweethearts → boyfriend/girlfriend → lovers)
+- Romance on the Rim fail-open soft-compat (yield on RotR romance jobs; dates fill the romance need)
 
 ## Later
 - Better Pawn Control smoke tests

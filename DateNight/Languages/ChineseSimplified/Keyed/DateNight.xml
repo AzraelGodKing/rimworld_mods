@@ -5,7 +5,7 @@
   <DateNight_UpdateLetterFallback>Date Night {0} 已加载。\n\n完整说明：{1}</DateNight_UpdateLetterFallback>
   <DateNight_UpdateLetterFooter>完整说明：{0}</DateNight_UpdateLetterFooter>
   <DateNight_SettingsCategory>约会之夜</DateNight_SettingsCategory>
-  <DateNight_Settings_Intro>在作息表上安排“约会”或“爱爱”。约会是散步 / 餐桌 / 一起消遣（心情与好感，不上床）。爱爱仍使用双人床。若伴侣不在同一张床，成人可以独处。意识形态禁止爱爱，或生物科技不育基因，会改去约会，而不是强行开始爱爱。若同时启用 RimJobWorld，爱爱时段会改走 RJW 的上床工作，独处则走 RJW 自慰；没有 RJW 时行为不变。</DateNight_Settings_Intro>
+  <DateNight_Settings_Intro>在作息表上安排“约会”或“爱爱”。约会是散步 / 餐桌 / 一起消遣（心情与好感，不上床）。爱爱仍使用双人床。若伴侣不在同一张床，成人可以独处。还没有恋人的成人可以一步步发展：朋友、恋人萌芽、男女朋友，再到正式恋人。爱爱要等真正结成一对才会开始。意识形态禁止爱爱，或生物科技不育基因，会改去约会，而不是强行开始爱爱。若同时启用 Romance on the Rim，RotR 正在接吻、散步或求婚时，约会之夜会让开；完成一次约会会填充 RotR 的浪漫需求。若同时启用 RimJobWorld，爱爱时段会改走 RJW 的上床工作，独处则走 RJW 自慰；没有这些模组时行为不变。</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>安全怀孕冷却</DateNight_Settings_PregnancySafe>
   <DateNight_Settings_PregnancySafeTip>开启（推荐）：只在排班时提高爱爱几率，保留原版爱爱后冷却。约会结束后同样等待约 4–8 小时。关闭并开启急切模式：爱爱与约会冷却约 100 tick，可能频繁判定怀孕。</DateNight_Settings_PregnancySafeTip>
   <DateNight_Settings_Eager>急切模式（短冷却）</DateNight_Settings_Eager>
@@ -31,6 +31,19 @@
   <DateNight_Settings_FavoriteSpotTip>伴侣会记住最棒约会发生的地方，并更愿意回去。约会被毁可能让那地方变糟，分手则会清除这对伴侣的地点。关闭：每次约会重新选地点。</DateNight_Settings_FavoriteSpotTip>
   <DateNight_Settings_DoubleDates>允许四人约会</DateNight_Settings_DoubleDates>
   <DateNight_Settings_DoubleDatesTip>两对伴侣若约会时段重叠，可共用一张桌子、野餐地或聚集点。质量只掷一次；当晚会影响对另一对的好感。另一对没来则各自约会。伴侣会记住以往四人约会的情况：合得来的两对会再次结伴，总是闹僵的两对则不再一起约会。</DateNight_Settings_DoubleDatesTip>
+  <DateNight_Settings_GradualRomance>逐步恋爱（朋友 → 伴侣）</DateNight_Settings_GradualRomance>
+  <DateNight_Settings_GradualRomanceTip>还没有恋人的成人可以先以朋友身份约会，再到恋人萌芽，再到男女朋友。几次愉快约会加上足够好感会升一级；最后一级会结成原版恋人。爱爱要到那时才解锁。已有恋人的配对会跳过阶梯。关闭：只有恋人和配偶能约会。</DateNight_Settings_GradualRomanceTip>
+  <DateNight_Inspect_Friends>和{0}是朋友</DateNight_Inspect_Friends>
+  <DateNight_Inspect_Sweethearts>和{0}是恋人萌芽</DateNight_Inspect_Sweethearts>
+  <DateNight_Inspect_Partners>{0}的{1}</DateNight_Inspect_Partners>
+  <DateNight_Boyfriend>男朋友</DateNight_Boyfriend>
+  <DateNight_Girlfriend>女朋友</DateNight_Girlfriend>
+  <DateNight_Partner>伴侣</DateNight_Partner>
+  <DateNight_Message_BecameFriends>{0}和{1}开始成为朋友。</DateNight_Message_BecameFriends>
+  <DateNight_Message_BecameSweethearts>{0}和{1}现在是恋人萌芽。</DateNight_Message_BecameSweethearts>
+  <DateNight_Message_BecamePartners>{0}和{1}现在是一对了。</DateNight_Message_BecamePartners>
+  <DateNight_Letter_BecameLoversLabel>在一起了</DateNight_Letter_BecameLoversLabel>
+  <DateNight_Letter_BecameLoversText>{PAWN}和{PARTNER}现在是恋人了。那些约会没有白费。</DateNight_Letter_BecameLoversText>
   <DateNight_Settings_Reset>恢复默认</DateNight_Settings_Reset>
   <DateNight_Report_Hangout>正在和{0}约会。</DateNight_Report_Hangout>
   <DateNight_Report_Dinner>正在和{0}共进晚餐。</DateNight_Report_Dinner>
@@ -48,7 +61,7 @@
   <DateNight_OneYear>一年</DateNight_OneYear>
   <DateNight_NYears>{0} 年</DateNight_NYears>
   <DateNight_Alert_Mismatch>作息不一致</DateNight_Alert_Mismatch>
-  <DateNight_Alert_MismatchDesc>有人给爱爱或约会涂了时段，但伴侣没有涂，或两人涂的小时不同。请给双方涂上相同的小时。</DateNight_Alert_MismatchDesc>
+  <DateNight_Alert_MismatchDesc>恋人、朋友或约会对象涂了约会或爱爱，但对方没有涂，或两人涂的小时不同。请给双方涂上相同的小时。</DateNight_Alert_MismatchDesc>
   <DateNight_Alert_MismatchNone>{0} 涂了{1}；{2} 没有。</DateNight_Alert_MismatchNone>
   <DateNight_Alert_MismatchHours>{0} 和 {1} 的{2}时段不同。</DateNight_Alert_MismatchHours>
   <DateNight_Alert_MismatchSyncHint>点击此警报可将伴侣的时段同步过去。</DateNight_Alert_MismatchSyncHint>

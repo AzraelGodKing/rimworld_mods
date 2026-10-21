@@ -5,7 +5,7 @@
   <DateNight_UpdateLetterFallback>Date Night {0} загружен.\n\nПолные заметки: {1}</DateNight_UpdateLetterFallback>
   <DateNight_UpdateLetterFooter>Полные заметки: {0}</DateNight_UpdateLetterFooter>
   <DateNight_SettingsCategory>Date Night</DateNight_SettingsCategory>
-  <DateNight_Settings_Intro>Назначьте свидание или любовные часы в расписании. Свидание — прогулка / стол / совместный досуг (настроение и мнение, без кровати). Любовные часы по-прежнему требуют двуспальной кровати. Если партнёра нет в кровати, взрослые могут провести личное время. Запрет идеологии на любовные часы и стерильные гены Biotech вместо принуждения отправляют на свидание. Если загружен RimJobWorld, любовные часы запускают его постельную работу, а личное время — его мастурбацию; без RJW всё как обычно.</DateNight_Settings_Intro>
+  <DateNight_Settings_Intro>Назначьте свидание или любовные часы в расписании. Свидание — прогулка / стол / совместный досуг (настроение и мнение, без кровати). Любовные часы по-прежнему требуют двуспальной кровати. Если партнёра нет в кровати, взрослые могут провести личное время. Взрослые без любовника могут развивать отношения шаг за шагом: друзья, возлюбленные, затем парень/девушка, затем любовники. Любовные часы открываются только настоящей паре. Запрет идеологии на любовные часы и стерильные гены Biotech вместо принуждения отправляют на свидание. Если загружен Romance on the Rim, Date Night ждёт, пока RotR занят поцелуем, прогулкой или предложением, а завершённое свидание заполняет его потребность в романтике. Если загружен RimJobWorld, любовные часы запускают его постельную работу, а личное время — его мастурбацию; без доп. модов всё как обычно.</DateNight_Settings_Intro>
   <DateNight_Settings_PregnancySafe>Безопасная задержка беременности</DateNight_Settings_PregnancySafe>
   <DateNight_Settings_PregnancySafeTip>ВКЛ (рекомендуется): только повышает шанс любовных часов по расписанию; ванильная пауза после них сохраняется. После свидания та же пауза (~4–8 часов). ВЫКЛ с нетерпеливым режимом: пауза около 100 тиков для любовных часов и свиданий, возможны частые проверки беременности.</DateNight_Settings_PregnancySafeTip>
   <DateNight_Settings_Eager>Нетерпеливый режим (короткая пауза)</DateNight_Settings_Eager>
@@ -31,6 +31,19 @@
   <DateNight_Settings_FavoriteSpotTip>Пара помнит, где были лучшие свидания, и предпочитает возвращаться. Сорванное свидание может испортить место, а расставание стирает место пары. Выкл: каждое свидание выбирает новое место.</DateNight_Settings_FavoriteSpotTip>
   <DateNight_Settings_DoubleDates>Разрешить двойные свидания</DateNight_Settings_DoubleDates>
   <DateNight_Settings_DoubleDatesTip>Две пары с совпадающими часами свидания могут делить стол, пикник или место сбора. Качество бросается один раз на всех; вечер меняет мнение о другой паре. Если вторая пара не пришла — идут вдвоём. Пары помнят, как прошли прошлые двойные свидания: те, кто поладил, снова выбирают друг друга, а те, кто постоянно ссорится, перестают встречаться вчетвером.</DateNight_Settings_DoubleDatesTip>
+  <DateNight_Settings_GradualRomance>Постепенный роман (друзья → пара)</DateNight_Settings_GradualRomance>
+  <DateNight_Settings_GradualRomanceTip>Взрослые без любовника могут ходить на свидания как друзья, затем как возлюбленные, затем как парень и девушка. Удачные свидания и мнение поднимают ступень; последняя делает их ванильными любовниками. Любовные часы до этого закрыты. Существующие пары лестницу пропускают. Выкл: свидания только у любовников и супругов.</DateNight_Settings_GradualRomanceTip>
+  <DateNight_Inspect_Friends>Друзья с {0}</DateNight_Inspect_Friends>
+  <DateNight_Inspect_Sweethearts>Возлюбленные с {0}</DateNight_Inspect_Sweethearts>
+  <DateNight_Inspect_Partners>{1} {0}</DateNight_Inspect_Partners>
+  <DateNight_Boyfriend>парень</DateNight_Boyfriend>
+  <DateNight_Girlfriend>девушка</DateNight_Girlfriend>
+  <DateNight_Partner>партнёр</DateNight_Partner>
+  <DateNight_Message_BecameFriends>{0} и {1} становятся друзьями.</DateNight_Message_BecameFriends>
+  <DateNight_Message_BecameSweethearts>{0} и {1} теперь возлюбленные.</DateNight_Message_BecameSweethearts>
+  <DateNight_Message_BecamePartners>{0} и {1} теперь пара.</DateNight_Message_BecamePartners>
+  <DateNight_Letter_BecameLoversLabel>Вместе</DateNight_Letter_BecameLoversLabel>
+  <DateNight_Letter_BecameLoversText>{PAWN} и {PARTNER} теперь любовники. Свидания себя оправдали.</DateNight_Letter_BecameLoversText>
   <DateNight_Settings_Reset>Сбросить</DateNight_Settings_Reset>
   <DateNight_Report_Hangout>на свидании с {0}.</DateNight_Report_Hangout>
   <DateNight_Report_Dinner>ужинает с {0}.</DateNight_Report_Dinner>
@@ -48,7 +61,7 @@
   <DateNight_OneYear>год</DateNight_OneYear>
   <DateNight_NYears>{0} лет</DateNight_NYears>
   <DateNight_Alert_Mismatch>Расписание не совпадает</DateNight_Alert_Mismatch>
-  <DateNight_Alert_MismatchDesc>У одного из пары стоят часы свидания или любовные часы, а у партнёра нет — или часы разные. Назначьте одни и те же часы обоим.</DateNight_Alert_MismatchDesc>
+  <DateNight_Alert_MismatchDesc>У любовника, возлюбленного или партнёра по свиданию стоят часы свидания или любовные часы, а у другого нет — или часы разные. Назначьте одни и те же часы обоим.</DateNight_Alert_MismatchDesc>
   <DateNight_Alert_MismatchNone>У {0} стоит {1}; у {2} нет.</DateNight_Alert_MismatchNone>
   <DateNight_Alert_MismatchHours>У {0} и {1} разные часы: {2}.</DateNight_Alert_MismatchHours>
   <DateNight_Alert_MismatchSyncHint>Нажмите на предупреждение, чтобы скопировать часы партнёру.</DateNight_Alert_MismatchSyncHint>

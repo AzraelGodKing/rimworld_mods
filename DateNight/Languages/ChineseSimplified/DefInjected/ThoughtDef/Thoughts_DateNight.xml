@@ -100,4 +100,24 @@
   <DateNight_DatesOver.stages_0.label>不再有约会之夜</DateNight_DatesOver.stages_0.label>
   <DateNight_DatesOver.stages_0.description>和{0}的那些夜晚，我们的地方……现在都结束了。</DateNight_DatesOver.stages_0.description>
 
+  <DateNight_BecameFriends.label>新朋友</DateNight_BecameFriends.label>
+  <DateNight_BecameFriends.description>我和{0}开始一起玩。感觉像是什么的开始。</DateNight_BecameFriends.description>
+  <DateNight_BecameFriends.stages_0.label>新朋友</DateNight_BecameFriends.stages_0.label>
+  <DateNight_BecameFriends.stages_0.description>我和{0}开始一起玩。感觉像是什么的开始。</DateNight_BecameFriends.stages_0.description>
+
+  <DateNight_BecameSweethearts.label>恋人萌芽</DateNight_BecameSweethearts.label>
+  <DateNight_BecameSweethearts.description>和{0}的那些夜晚变得更甜了。我一直在笑。</DateNight_BecameSweethearts.description>
+  <DateNight_BecameSweethearts.stages_0.label>恋人萌芽</DateNight_BecameSweethearts.stages_0.label>
+  <DateNight_BecameSweethearts.stages_0.description>和{0}的那些夜晚变得更甜了。我一直在笑。</DateNight_BecameSweethearts.stages_0.description>
+
+  <DateNight_BecamePartners.label>在一起了</DateNight_BecamePartners.label>
+  <DateNight_BecamePartners.description>我和{0}是一对了。不再只是约会。</DateNight_BecamePartners.description>
+  <DateNight_BecamePartners.stages_0.label>在一起了</DateNight_BecamePartners.stages_0.label>
+  <DateNight_BecamePartners.stages_0.description>我和{0}是一对了。不再只是约会。</DateNight_BecamePartners.stages_0.description>
+
+  <DateNight_BecameLovers.label>我们是恋人</DateNight_BecameLovers.label>
+  <DateNight_BecameLovers.description>和{0}的那些约会走到了这里。我们真的在一起了。</DateNight_BecameLovers.description>
+  <DateNight_BecameLovers.stages_0.label>我们是恋人</DateNight_BecameLovers.stages_0.label>
+  <DateNight_BecameLovers.stages_0.description>和{0}的那些约会走到了这里。我们真的在一起了。</DateNight_BecameLovers.stages_0.description>
+
 </LanguageData>
