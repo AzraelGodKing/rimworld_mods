@@ -37,6 +37,7 @@ namespace DateNight
             DateNightVenues.Reset();
             DateNightDoubleDates.Reset();
             DateNightReunions.Reset();
+            DateNightRomance.Reset();
         }
 
         private void SeedScheduleFlags()
@@ -72,6 +73,7 @@ namespace DateNight
             DateNightVenues.ExposeData();
             DateNightDoubleDates.ExposeData();
             DateNightReunions.ExposeData();
+            DateNightRomance.ExposeData();
         }
 
         public override void GameComponentTick()
@@ -105,6 +107,8 @@ namespace DateNight
                 DateNightReunions.PruneDeadPawns();
                 DateNightReunions.Tick();
                 DateNightAnniversaries.PruneDeadPawns();
+                DateNightRomance.PruneDeadPawns();
+                DateNightRomance.TickBonds();
             }
         }
 

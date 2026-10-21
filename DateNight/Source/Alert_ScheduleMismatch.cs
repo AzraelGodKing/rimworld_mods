@@ -147,7 +147,7 @@ namespace DateNight
                     continue;
                 }
 
-                Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+                Pawn partner = DateNightRomance.FindDatePartner(pawn);
                 if (!IsEligible(partner) || partner.thingIDNumber == pawn.thingIDNumber)
                 {
                     continue;

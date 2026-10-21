@@ -30,6 +30,10 @@ namespace DateNight
         public static ThoughtDef DateNight_DoubleDateNoShow;
         public static ThoughtDef DateNight_Reunited;
         public static ThoughtDef DateNight_DatesOver;
+        public static ThoughtDef DateNight_BecameFriends;
+        public static ThoughtDef DateNight_BecameSweethearts;
+        public static ThoughtDef DateNight_BecamePartners;
+        public static ThoughtDef DateNight_BecameLovers;
 
         static DateNightDefOf()
         {

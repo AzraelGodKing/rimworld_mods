@@ -331,4 +331,72 @@
     </stages>
   </ThoughtDef>
 
+  <ThoughtDef>
+    <defName>DateNight_BecameFriends</defName>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
+    <durationDays>1.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>new friend</label>
+        <description>{0} and I started hanging out. Feels like the start of something.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+        <baseOpinionOffset>6</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_BecameSweethearts</defName>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>sweethearts</label>
+        <description>Those evenings with {0} turned into something sweeter. I keep smiling about it.</description>
+        <baseMoodEffect>5</baseMoodEffect>
+        <baseOpinionOffset>10</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_BecamePartners</defName>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
+    <durationDays>2</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>together now</label>
+        <description>{0} and I are a couple. Not just dates anymore.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+        <baseOpinionOffset>12</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DateNight_BecameLovers</defName>
+    <thoughtClass>DateNight.Thought_DateNightSocial</thoughtClass>
+    <durationDays>2.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
+    <developmentalStageFilter>Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>we are lovers</label>
+        <description>All those dates with {0} led here. We are really together now.</description>
+        <baseMoodEffect>8</baseMoodEffect>
+        <baseOpinionOffset>15</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

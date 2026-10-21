@@ -142,6 +142,7 @@ namespace DateNight
 
                 fav.notifiedBreakup = true;
                 fav.score = 0f;
+                DateNightRomance.NotifyBreakup(a, b);
                 ThoughtDef over = DateNightDefOf.DateNight_DatesOver;
                 // Old breakups from saves made before this existed reset silently.
                 if (over != null && EndedRecently(a, b))

@@ -100,4 +100,24 @@
   <DateNight_DatesOver.stages_0.label>свиданий больше не будет</DateNight_DatesOver.stages_0.label>
   <DateNight_DatesOver.stages_0.description>Все эти вечера с {0}, наши места... теперь всё кончено.</DateNight_DatesOver.stages_0.description>
 
+  <DateNight_BecameFriends.label>новый друг</DateNight_BecameFriends.label>
+  <DateNight_BecameFriends.description>Мы с {0} начали проводить время вместе. Похоже на начало чего-то.</DateNight_BecameFriends.description>
+  <DateNight_BecameFriends.stages_0.label>новый друг</DateNight_BecameFriends.stages_0.label>
+  <DateNight_BecameFriends.stages_0.description>Мы с {0} начали проводить время вместе. Похоже на начало чего-то.</DateNight_BecameFriends.stages_0.description>
+
+  <DateNight_BecameSweethearts.label>возлюбленные</DateNight_BecameSweethearts.label>
+  <DateNight_BecameSweethearts.description>Вечера с {0} стали слаще. Всё ещё улыбаюсь.</DateNight_BecameSweethearts.description>
+  <DateNight_BecameSweethearts.stages_0.label>возлюбленные</DateNight_BecameSweethearts.stages_0.label>
+  <DateNight_BecameSweethearts.stages_0.description>Вечера с {0} стали слаще. Всё ещё улыбаюсь.</DateNight_BecameSweethearts.stages_0.description>
+
+  <DateNight_BecamePartners.label>теперь пара</DateNight_BecamePartners.label>
+  <DateNight_BecamePartners.description>Мы с {0} пара. Это уже не просто свидания.</DateNight_BecamePartners.description>
+  <DateNight_BecamePartners.stages_0.label>теперь пара</DateNight_BecamePartners.stages_0.label>
+  <DateNight_BecamePartners.stages_0.description>Мы с {0} пара. Это уже не просто свидания.</DateNight_BecamePartners.stages_0.description>
+
+  <DateNight_BecameLovers.label>мы любовники</DateNight_BecameLovers.label>
+  <DateNight_BecameLovers.description>Все эти свидания с {0} привели сюда. Мы по-настоящему вместе.</DateNight_BecameLovers.description>
+  <DateNight_BecameLovers.stages_0.label>мы любовники</DateNight_BecameLovers.stages_0.label>
+  <DateNight_BecameLovers.stages_0.description>Все эти свидания с {0} привели сюда. Мы по-настоящему вместе.</DateNight_BecameLovers.stages_0.description>
+
 </LanguageData>

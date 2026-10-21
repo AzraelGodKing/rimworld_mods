@@ -39,7 +39,11 @@ namespace DateNight
             {
                 return false;
             }
-            if (!LovePartnerRelationUtility.LovePartnerRelationExists(pawn, partner))
+            if (!DateNightRomance.CanDateTogether(pawn, partner))
+            {
+                return false;
+            }
+            if (!force && DateNightRotrSoftCompat.ShouldYieldDate(pawn, partner))
             {
                 return false;
             }
@@ -82,7 +86,7 @@ namespace DateNight
                 return;
             }
 
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn partner = DateNightRomance.FindDatePartner(pawn);
             if (partner == null || !DateNightUtility.IsDateSchedule(partner))
             {
                 return;
@@ -106,7 +110,7 @@ namespace DateNight
                 return true;
             }
 
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn partner = DateNightRomance.FindDatePartner(pawn);
             if (!CanDate(pawn, partner, force))
             {
                 return false;
@@ -120,6 +124,7 @@ namespace DateNight
                 return false;
             }
 
+            DateNightRomance.EnsureBondStarted(pawn, partner);
             DateNightDoubleDates.BindIfPossible(pawn, partner);
 
             LocalTargetInfo spot = FindDateSpot(pawn, partner);
@@ -209,23 +214,32 @@ namespace DateNight
             return FindPawnById(id) != null;
         }
 
+        private static Dictionary<int, Pawn> pawnById;
+        private static int pawnByIdTick = -1;
+
         internal static Pawn FindPawnById(int id)
         {
-            List<Pawn> all = PawnsFinder.AllMapsWorldAndTemporary_Alive;
-            if (all == null)
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : -1;
+            if (pawnById == null || pawnByIdTick != now)
             {
-                return null;
-            }
-
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i] != null && all[i].thingIDNumber == id)
+                pawnById = new Dictionary<int, Pawn>();
+                pawnByIdTick = now;
+                List<Pawn> all = PawnsFinder.AllMapsWorldAndTemporary_Alive;
+                if (all != null)
                 {
-                    return all[i];
+                    for (int i = 0; i < all.Count; i++)
+                    {
+                        Pawn p = all[i];
+                        if (p != null)
+                        {
+                            pawnById[p.thingIDNumber] = p;
+                        }
+                    }
                 }
             }
 
-            return null;
+            pawnById.TryGetValue(id, out Pawn found);
+            return found;
         }
 
         /// <summary>
@@ -316,6 +330,9 @@ namespace DateNight
 
             DateNightVenues.NotifyFinished(pawn, partner, spot, def);
             DateNightDoubleDates.NotifyFinished(pawn, partner, def);
+            DateNightRomance.NotifyDateFinished(pawn, partner, def);
+            DateNightRotrSoftCompat.NotifyDateFinished(pawn, def,
+                DateNightAnniversaries.IsAnniversaryToday(pawn, partner));
 
             if (DateNightMod.Settings == null || DateNightMod.Settings.postDateLovinBoost)
             {
