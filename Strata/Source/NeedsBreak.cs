@@ -10,7 +10,23 @@ namespace Strata
     {
         public static bool ShouldBreak(Pawn pawn)
         {
-            return WantsFood(pawn) || WantsRest(pawn) || WantsJoy(pawn) || WantsChemical(pawn);
+            return WantsFood(pawn) || WantsRest(pawn) || WantsJoy(pawn)
+                || WantsChemical(pawn) || WantsMeditate(pawn);
+        }
+
+        public static bool WantsMeditate(Pawn pawn)
+        {
+            if (!ModsConfig.RoyaltyActive || pawn?.timetable == null)
+            {
+                return false;
+            }
+
+            if (pawn.timetable.CurrentAssignment != TimeAssignmentDefOf.Meditate)
+            {
+                return false;
+            }
+
+            return MeditationUtility.CanMeditateNow(pawn);
         }
 
         public static bool WantsFood(Pawn pawn)
