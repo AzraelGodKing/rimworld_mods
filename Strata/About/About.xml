@@ -7,7 +7,7 @@
     <li>1.6</li>
     <li>1.7</li>
   </supportedVersions>
-  <modVersion IgnoreIfNoMatchingField="True">3.11.4</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">3.11.5</modVersion>
   <incompatibleWith>
     <li>astryl.AsAboveSoBelow</li>
     <li>astryl.AsAboveSoBelow2</li>
@@ -47,6 +47,8 @@
     <li>Helixien.ReGrowthCore</li>
     <!-- Optional: Combat Extended replaces shoot verbs; load Strata after so turret patches attach. -->
     <li>CETeam.CombatExtended</li>
+    <!-- Optional: Open The Windows needs Strata after so underground roof fakes attach. -->
+    <li>JPT.OpenTheWindows</li>
   </loadAfter>
   <description>Dig down. Build up. One colony — many floors. Colonists commute for work, food, rest, hauling, combat, and construction. Odyssey optional for gravship stacks.
 

@@ -1,9 +1,16 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.11.4` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.4 loaded from ... (modified ...); orbital-trade-v1.` via `ModVersionLog.Write`.
+**Version:** `3.11.5` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.5 loaded from ... (modified ...); otw-compat-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `orbital-trade-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `otw-compat-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.11.5]
+
+Player-facing version **3.11.5** (`About.xml` `modVersion`). Stamp `otw-compat-v1`.
+
+### Added
+- **Open The Windows** (`JPT.OpenTheWindows`): windows decide facing with "one side blocked, the other unroofed". Underground maps are mountain-roofed, so they never faced and never added sky glow. During that scan only, excavated cells count as open sky. Glow under those windows uses the linked surface day/night cycle when the pocket map's own sky is dark. Upper decks are unchanged.
 
 ## [3.11.4]
 
