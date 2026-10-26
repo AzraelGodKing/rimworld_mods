@@ -1,9 +1,20 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.11.3` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.3 loaded from ... (modified ...); cross-floor-v1.` via `ModVersionLog.Write`.
+**Version:** `3.11.4` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.4 loaded from ... (modified ...); orbital-trade-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `cross-floor-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `orbital-trade-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.11.4]
+
+Player-facing version **3.11.4** (`About.xml` `modVersion`). Stamp `orbital-trade-v1`.
+
+AZR-691 AZR-649 AZR-650
+
+### Fixed
+- **Orbital trade across floors** (AZR-691): a comms console only saw beacons on its own map, and drop pods aimed at a mountain-roofed underground floor vanished. Linked-floor beacons now count for selling, and incoming pods land on the surface (or another open-sky floor).
+- **Pets walk the stairs during the day** (AZR-649): animal think trees wander instead of using `JobGiver_SeekAllowedArea`, so the 3.11.3 pet patch never ran for them. Wander now sends a colony animal to its assigned bed or allowed area on another linked floor.
+- **Meditation foci on other floors** (AZR-650): the search only looked at the vanilla meditation pad. Anima trees, Ideology shrines, and other `MeditationFocus` buildings on linked floors now count. A Meditate schedule yields work so they actually go.
 
 ## [3.11.3]
 

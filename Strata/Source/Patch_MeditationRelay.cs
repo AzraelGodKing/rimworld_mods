@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -74,18 +75,12 @@ namespace Strata
                 pawn,
                 spot.Map,
                 touchCooldown: false,
-                RelayPurpose.ForcedOrder,
+                RelayPurpose.Joy,
                 preferArrivalNear: spot.Position);
         }
 
         private static Building FindSpotOnLinkedFloor(Pawn pawn)
         {
-            ThingDef def = ThingDefOf.MeditationSpot;
-            if (def == null)
-            {
-                return null;
-            }
-
             Building best = null;
             int bestDepth = int.MaxValue;
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(pawn.Map))
@@ -96,7 +91,7 @@ namespace Strata
                     continue;
                 }
 
-                foreach (Building building in map.listerBuildings.AllBuildingsColonistOfDef(def))
+                foreach (Building building in MeditationSpotsOn(map))
                 {
                     if (building == null || !building.Spawned)
                     {
@@ -120,6 +115,17 @@ namespace Strata
             }
 
             return best;
+        }
+
+        private static IEnumerable<Building> MeditationSpotsOn(Map map)
+        {
+            foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MeditationFocus))
+            {
+                if (thing is Building building)
+                {
+                    yield return building;
+                }
+            }
         }
     }
 }

@@ -1,13 +1,12 @@
-3.11.3
-[h1]Strata - 3.11.3[/h1]
+3.11.4
+[h1]Strata - 3.11.4[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Several gravship tower elevators stay after travel.[/b] Extra tower elevators on the first floor of a gravship no longer vanish when you land on another map. Each elevator is kept and reconnected, including with Gravship Expanded Chapter 1.
-[*] [b]Stair looping stops, then they work.[/b] After a material run they stay on that floor and do the job, instead of climbing back for another load. Sleep, hunger, recreation, and a drug need break the stair trip. The floor assignment is still there when the need is met.
-[*] [b]Pets take the stairs home.[/b] A colony animal walks to its assigned bed or allowed area on another linked floor. Development mode can teleport a selected pawn to a linked floor, not only the current map.
-[*] [b]Meditation spots on other floors.[/b] A pawn goes to their assigned meditation spot on any linked floor, and will use a free colonist spot upstairs or downstairs when this floor has none.
+[*] [b]Orbital trade across floors[/b] (AZR-691) - a comms console on any linked floor sees orbital beacons and stockpiles on every other linked floor. Bought goods land on the surface (or another open-sky floor) instead of vanishing under mountain roof. Sold stacks are taken from those beacons, not only the console's map.
+[*] [b]Pets walk the stairs during the day[/b] (AZR-649) - colony animals use wander, not the colonist "leave this cell" job, so they now take the stairs to an assigned bed or allowed area on another floor while wandering.
+[*] [b]Meditation spots that are not the vanilla pad[/b] (AZR-650) - anima trees, shrines, and other meditation foci on linked floors count. A pawn on a Meditate schedule leaves work to go there.
 [/list]
 
-[i]Build stamp (Player.log): cross-floor-v1[/i]
+[i]Build stamp (Player.log): orbital-trade-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
