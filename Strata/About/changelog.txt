@@ -1,12 +1,10 @@
-3.11.4
-[h1]Strata - 3.11.4[/h1]
+3.11.5
+[h1]Strata - 3.11.5[/h1]
 
-[b]Fixed[/b]
+[b]Added[/b]
 [list]
-[*] [b]Orbital trade across floors[/b] (AZR-691) - a comms console on any linked floor sees orbital beacons and stockpiles on every other linked floor. Bought goods land on the surface (or another open-sky floor) instead of vanishing under mountain roof. Sold stacks are taken from those beacons, not only the console's map.
-[*] [b]Pets walk the stairs during the day[/b] (AZR-649) - colony animals use wander, not the colonist "leave this cell" job, so they now take the stairs to an assigned bed or allowed area on another floor while wandering.
-[*] [b]Meditation spots that are not the vanilla pad[/b] (AZR-650) - anima trees, shrines, and other meditation foci on linked floors count. A pawn on a Meditate schedule leaves work to go there.
+[*] [b]Open The Windows[/b] — windows on underground floors now face excavated rooms the same way they face open sky on the surface. They cast daylight (from the surface sky) and count for the outdoors need. Upper decks already had real unroofed cells; they are unchanged.
 [/list]
 
-[i]Build stamp (Player.log): orbital-trade-v1[/i]
+[i]Build stamp (Player.log): otw-compat-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
