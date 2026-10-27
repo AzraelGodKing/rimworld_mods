@@ -19,6 +19,10 @@ namespace Strata
             public readonly Dictionary<ThingDef, int> missing = new Dictionary<ThingDef, int>();
             // Construction / bills / refuel only — may pull from any local priority.
             public readonly Dictionary<ThingDef, int> hardMissing = new Dictionary<ThingDef, int>();
+            // Construction / bills / refuel total, before what the level holds.
+            public readonly Dictionary<ThingDef, int> hardNeeded = new Dictionary<ThingDef, int>();
+            // What the level holds beyond hardNeeded. Below zero while still short.
+            public readonly Dictionary<ThingDef, int> hardSpare = new Dictionary<ThingDef, int>();
             public readonly Dictionary<ThingDef, List<IntVec3>> sites = new Dictionary<ThingDef, List<IntVec3>>();
 
             public void AddShortfall(ThingDef def, int amount, IntVec3 site, bool hardNeed = false)
@@ -29,6 +33,8 @@ namespace Strata
                 {
                     hardMissing.TryGetValue(def, out int hardTotal);
                     hardMissing[def] = hardTotal + amount;
+                    hardNeeded.TryGetValue(def, out int neededTotal);
+                    hardNeeded[def] = neededTotal + amount;
                 }
                 if (!sites.TryGetValue(def, out List<IntVec3> list))
                 {
@@ -51,6 +57,21 @@ namespace Strata
         public static int HardMissingOn(Map map, ThingDef def)
         {
             return Get(map).hardMissing.TryGetValue(def, out int missing) ? missing : 0;
+        }
+
+        // True when carrying this stack off its floor would leave that floor's
+        // construction, bills, or refuelling short. HardMissingOn alone drops
+        // to zero the moment the stack arrives, so a delivered load was hauled
+        // straight back to better storage upstairs and the shortfall pulled it
+        // down again: a hauler riding the stairs nonstop.
+        public static bool KeepForHardNeed(Thing t)
+        {
+            if (t?.def == null || !t.Spawned || t.Map == null)
+            {
+                return false;
+            }
+            return Get(t.Map).hardSpare.TryGetValue(t.def, out int spare)
+                && spare < t.stackCount;
         }
 
         // Whether any site that needs the def can be reached from a cell -
@@ -121,9 +142,7 @@ namespace Strata
                 // sitting in a Normal dump does not hide a Critical armory.
                 foreach (ThingDef def in new List<ThingDef>(entry.missing.Keys))
                 {
-                    int have = def.CountAsResource
-                        ? StrataResources.RawGetCount(map, def)
-                        : CountOnMap(map, def);
+                    int have = HaveOnMap(map, def);
                     int missing = entry.missing[def] - have;
                     if (missing > 0)
                     {
@@ -151,6 +170,15 @@ namespace Strata
             }
 
             AddRefuelShortfalls(entry, map);
+            foreach (KeyValuePair<ThingDef, int> kv in entry.hardNeeded)
+            {
+                entry.hardSpare[kv.Key] = HaveOnMap(map, kv.Key) - kv.Value;
+            }
+
+            // Upgrade pulls ask linked floors what they must keep, and those
+            // floors ask this one back. Publish the hard part first so the
+            // nested build reads it instead of rebuilding this map forever.
+            cache[map] = entry;
             AddStorageUpgradePulls(entry, map);
             return entry;
         }
@@ -261,6 +289,11 @@ namespace Strata
             {
                 return;
             }
+            // Its own floor needs it, so it is not on offer here.
+            if (KeepForHardNeed(t))
+            {
+                return;
+            }
 
             StoragePriority current = StoreUtility.CurrentStoragePriorityOf(t);
             if (!TryBestAcceptingCell(destMap, destGroups, t, current, out IntVec3 cell, out _))
@@ -360,6 +393,13 @@ namespace Strata
             }
             System.Type type = thing.GetType();
             return type != null && type.Name == "Blueprint_Install";
+        }
+
+        private static int HaveOnMap(Map map, ThingDef def)
+        {
+            return def.CountAsResource
+                ? StrataResources.RawGetCount(map, def)
+                : CountOnMap(map, def);
         }
 
         private static int CountOnMap(Map map, ThingDef def)

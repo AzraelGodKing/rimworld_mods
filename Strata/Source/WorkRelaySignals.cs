@@ -380,8 +380,7 @@ namespace Strata
             {
                 foreach (ThingDef def in wanted)
                 {
-                    List<Thing> things = map.listerThings.ThingsOfDef(def);
-                    if (things != null && things.Count > 0)
+                    if (AnyExportable(map.listerThings.ThingsOfDef(def)))
                     {
                         return true;
                     }
@@ -394,7 +393,7 @@ namespace Strata
             // so HaulAcrossLevels can decide (including "local full, B1 same
             // priority with room" — vanilla would haul there if it were one map).
             ICollection<Thing> haulables = map.listerHaulables.ThingsPotentiallyNeedingHauling();
-            if (haulables != null && haulables.Count > 0)
+            if (AnyExportable(haulables))
             {
                 StoragePriority maxLocal = MaxStoragePriorityOn(map);
                 List<LevelGraph.LevelLink> linksForPriority = LevelGraph.ReachableLevels(map);
@@ -430,6 +429,30 @@ namespace Strata
                 }
             }
 
+            return false;
+        }
+
+        // Things this floor's construction, bills, or refuelling need stay put,
+        // so they are no reason to send a hauler down the stairs.
+        private static bool AnyExportable(IEnumerable<Thing> things)
+        {
+            if (things == null)
+            {
+                return false;
+            }
+            const int MaxChecked = 200;
+            int checkedCount = 0;
+            foreach (Thing t in things)
+            {
+                if (++checkedCount > MaxChecked)
+                {
+                    return true;
+                }
+                if (!LevelDemand.KeepForHardNeed(t))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 

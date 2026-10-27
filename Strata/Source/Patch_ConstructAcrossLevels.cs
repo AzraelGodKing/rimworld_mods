@@ -567,7 +567,8 @@ namespace Strata
                 return false;
             }
 
-            HaulToLevelTargets.Remember(pawn, siteMap, matMap, site);
+            // They came up from the build floor for this; no return trip.
+            HaulToLevelTargets.Remember(pawn, siteMap, returnMap: null, site);
             Job haul = JobMaker.MakeJob(StrataDefOf.Strata_HaulToLevel, mat, portal);
             haul.count = Math.Min(mat.stackCount, Math.Max(1, fetch.count));
             haul.playerForced = fetch.forced;

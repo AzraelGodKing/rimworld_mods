@@ -1,10 +1,11 @@
-3.11.5
-[h1]Strata - 3.11.5[/h1]
+3.11.6
+[h1]Strata - 3.11.6[/h1]
 
-[b]Added[/b]
+[b]Fixed[/b]
 [list]
-[*] [b]Open The Windows[/b] — windows on underground floors now face excavated rooms the same way they face open sky on the surface. They cast daylight (from the surface sky) and count for the outdoors need. Upper decks already had real unroofed cells; they are unchanged.
+[*] [b]Haulers no longer ride the stairs nonstop.[/b] Materials or ingredients carried to a floor for a build, a bill, or refuelling now stay on that floor. Before, the stack was hauled straight back to better storage upstairs, the floor came up short again, and it was carried back down, over and over.
+[*] [b]No empty trip back after a fetch.[/b] A builder or cook who goes to another floor for materials carries them home and stays there, instead of climbing back to the material floor empty-handed.
 [/list]
 
-[i]Build stamp (Player.log): otw-compat-v1[/i]
+[i]Build stamp (Player.log): stair-loop-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

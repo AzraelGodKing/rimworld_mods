@@ -151,8 +151,9 @@ namespace Strata
             {
                 return false;
             }
-            // Hard need keeps first claim on auto-haul; prioritize may still export.
-            if (!forced && LevelDemand.HardMissingOn(pawn.Map, t.def) > 0)
+            // Hard need keeps first claim on auto-haul, including the stack that
+            // just arrived to meet it; prioritize may still export.
+            if (!forced && LevelDemand.KeepForHardNeed(t))
             {
                 return false;
             }
