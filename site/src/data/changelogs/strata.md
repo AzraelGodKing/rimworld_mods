@@ -1,9 +1,17 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.11.5` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.5 loaded from ... (modified ...); otw-compat-v1.` via `ModVersionLog.Write`.
+**Version:** `3.11.6` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.6 loaded from ... (modified ...); stair-loop-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `otw-compat-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `stair-loop-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.11.6]
+
+Player-facing version **3.11.6** (`About.xml` `modVersion`). Stamp `stair-loop-v1`.
+
+### Fixed
+- **Haulers no longer ride the stairs nonstop.** Materials or ingredients carried to a floor for a build, a bill, or refuelling now stay on that floor. Before, the stack was hauled straight back to better storage upstairs, the floor came up short again, and it was carried back down, over and over.
+- **No empty trip back after a fetch.** A builder or cook who goes to another floor for materials carries them home and stays there, instead of climbing back to the material floor empty-handed.
 
 ## [3.11.5]
 

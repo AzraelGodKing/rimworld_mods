@@ -441,7 +441,8 @@ namespace Strata
                 return false;
             }
 
-            HaulToLevelTargets.Remember(pawn, destMap, thingMap, giver);
+            // They came from the bench floor for this; no return trip.
+            HaulToLevelTargets.Remember(pawn, destMap, returnMap: null, giver);
             Job haul = JobMaker.MakeJob(StrataDefOf.Strata_HaulToLevel, ingredient, portal);
             haul.count = Math.Min(ingredient.stackCount, Math.Max(1, fetch.count));
             return pawn.jobs.TryTakeOrderedJob(haul, JobTag.MiscWork);
