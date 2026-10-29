@@ -237,18 +237,34 @@ namespace Strata
     [HarmonyPatch(typeof(TradeUtility), nameof(TradeUtility.LaunchThingsOfType))]
     public static class Patch_TradeUtility_LaunchThingsOfType_Linked
     {
+        // 1.7 renamed countNeeded → debt. Harmony matches prefix args by name.
+#if RIMWORLD_1_7
+        public static bool Prefix(ThingDef resDef, int debt, Map map, TradeShip trader)
+        {
+            return !StrataOrbitalTrade.TryLaunchFromLinkedFloors(resDef, debt, map, trader);
+        }
+#else
         public static bool Prefix(ThingDef resDef, int countNeeded, Map map, TradeShip trader)
         {
             return !StrataOrbitalTrade.TryLaunchFromLinkedFloors(resDef, countNeeded, map, trader);
         }
+#endif
     }
 
     [HarmonyPatch(typeof(TradeUtility), nameof(TradeUtility.SpawnDropPod))]
     public static class Patch_TradeUtility_SpawnDropPod_Linked
     {
+        // 1.7 renamed dropCenter → dropSpot.
+#if RIMWORLD_1_7
+        public static void Prefix(ref IntVec3 dropSpot, ref Map map)
+        {
+            StrataOrbitalTrade.RedirectDrop(ref dropSpot, ref map);
+        }
+#else
         public static void Prefix(ref IntVec3 dropCenter, ref Map map)
         {
             StrataOrbitalTrade.RedirectDrop(ref dropCenter, ref map);
         }
+#endif
     }
 }

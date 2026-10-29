@@ -1,9 +1,17 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.11.6` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.6 loaded from ... (modified ...); stair-loop-v1.` via `ModVersionLog.Write`.
+**Version:** `3.11.7` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.7 loaded from ... (modified ...); portal-keep-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `stair-loop-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `portal-keep-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.11.7]
+
+Player-facing version **3.11.7** (`About.xml` `modVersion`). Stamp `portal-keep-v1`.
+
+### Fixed
+- **RimWorld 1.7 orbital-trade patches:** `TradeUtility.LaunchThingsOfType` renamed `countNeeded` to `debt`, and `SpawnDropPod` renamed `dropCenter` to `dropSpot`. Harmony binds prefix arguments by name, so both patches threw at boot on 1.7.4990 and linked-floor trade never applied. The 1.7 DLL now uses the new names.
+- **Stairs no longer dump inventory:** 1.7 `JobDriver_EnterPortal` sets `UnloadEverything` when the destination is not a pocket map. Walking down onto the surface therefore unpacked inventory (spare weapons, loot, packed gear) at the landing every trip. Colony floors keep inventory.
 
 ## [3.11.6]
 

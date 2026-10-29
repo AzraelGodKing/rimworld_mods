@@ -70,4 +70,34 @@ namespace Strata
             return true;
         }
     }
+
+    // 1.7 JobDriver_EnterPortal sets UnloadEverything when the dest is not a
+    // pocket map. Stairs down onto the surface therefore dump inventory (spare
+    // weapons, loot, packed gear) every trip. Colony floors are one base —
+    // do not unpack at the landing.
+    [HarmonyPatch(typeof(Pawn_InventoryTracker), nameof(Pawn_InventoryTracker.UnloadEverything), MethodType.Setter)]
+    public static class Patch_EnterPortalKeepInventory
+    {
+        public static bool Prefix(Pawn_InventoryTracker __instance, bool value)
+        {
+            if (!value)
+            {
+                return true;
+            }
+
+            Pawn pawn = __instance.pawn;
+            if (pawn?.CurJobDef != JobDefOf.EnterPortal)
+            {
+                return true;
+            }
+
+            Map map = pawn.Map;
+            if (map == null || !ColonyBedUtility.MapInStrataColony(map))
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
 }
