@@ -1,11 +1,10 @@
-3.11.7
-[h1]Strata - 3.11.7[/h1]
+3.11.8
+[h1]Strata - 3.11.8[/h1]
 
-[b]Fixed[/b]
+[b]Changed[/b]
 [list]
-[*] [b]RimWorld 1.7 orbital-trade patches[/b] — selling and drop-pod landing across floors no longer fail to apply at boot. 1.7 renamed two TradeUtility arguments; the 1.7 DLL now matches them.
-[*] [b]Stairs no longer dump inventory[/b] — 1.7 unpacks a pawn's inventory when they step onto a non-pocket map. Coming down from an upper floor onto the surface was emptying pockets and spare weapons at the landing every trip.
+[*] [b]Pathfinding Avoidance is now marked incompatible[/b] — the mod list warns about it, and Strata logs an error and sends a letter if it is still loaded. Do not run it with Strata.
 [/list]
 
-[i]Build stamp (Player.log): portal-keep-v1[/i]
+[i]Build stamp (Player.log): pathavoid-incompat-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

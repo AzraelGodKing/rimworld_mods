@@ -1,9 +1,16 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.11.7` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.7 loaded from ... (modified ...); portal-keep-v1.` via `ModVersionLog.Write`.
+**Version:** `3.11.8` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.8 loaded from ... (modified ...); pathavoid-incompat-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `portal-keep-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `pathavoid-incompat-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.11.8]
+
+Player-facing version **3.11.8** (`About.xml` `modVersion`). Stamp `pathavoid-incompat-v1`.
+
+### Changed
+- **Pathfinding Avoidance is incompatible** (`llunak.PathfindingAvoidance`): added to `About.xml` `incompatibleWith`, so the mod list warns. If it is still loaded, Strata logs an error at startup and sends an "Incompatible mod" letter on load. Do not run it with Strata.
 
 ## [3.11.7]
 

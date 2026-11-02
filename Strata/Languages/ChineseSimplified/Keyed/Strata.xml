@@ -364,6 +364,8 @@
   <Strata_Letter_FirstB1Air_Text>地表以下，密封房间不会自动补充氧气。\n\n殖民者吸入 O₂、呼出 CO₂；植物相反。用开放竖井、通向室外的通风口、氧气/二氧化碳泵、石灰洗涤器、竖井风箱或交换器保持可呼吸——或让房间通向洞穴。\n\n地表与 A+ 甲板始终安全。此系统需在模组选项中启用「天然气体」（默认关闭）。</Strata_Letter_FirstB1Air_Text>
   <Strata_IncompatibleStackLetterLabel>不兼容的多层模组</Strata_IncompatibleStackLetterLabel>
   <Strata_IncompatibleStackLetterText>Strata 与 {0} 同时加载。这些模组各自堆叠地图，会互相冲突。游玩前请禁用对方模组——About.xml 也会在模组列表中标为不兼容。</Strata_IncompatibleStackLetterText>
+  <Strata_IncompatibleModLetterLabel>不兼容的模组</Strata_IncompatibleModLetterLabel>
+  <Strata_IncompatibleModLetterText>Strata 与 {0} 同时加载，已知该模组无法与 Strata 一起使用。游玩前请禁用它——About.xml 也会在模组列表中标为不兼容。</Strata_IncompatibleModLetterText>
   <Strata_Alert_LowOxygen_Label>地下氧气不足</Strata_Alert_LowOxygen_Label>
   <Strata_Alert_LowOxygen_Explanation>地下殖民地房间氧气偏低。请通风、打开竖井、种植植物或建造氧气泵，以免殖民者窒息。</Strata_Alert_LowOxygen_Explanation>
   <Strata_Alert_HighCO2_Label>地下二氧化碳过高</Strata_Alert_HighCO2_Label>

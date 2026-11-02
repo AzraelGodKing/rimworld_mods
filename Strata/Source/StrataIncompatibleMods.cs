@@ -4,14 +4,17 @@ using Verse;
 
 namespace Strata
 {
-    // AASB / MultiFloors stack maps the same way Strata does. About.xml
-    // incompatibleWith warns in the mod list; this catches players who click past.
+    // AASB / MultiFloors stack maps the same way Strata does. Pathfinding
+    // Avoidance rewrites path costs and clashes with Strata's cross-floor
+    // pathing. About.xml incompatibleWith warns in the mod list; this catches
+    // players who click past.
     public static class StrataIncompatibleMods
     {
         public const string Aasb = "astryl.AsAboveSoBelow";
         public const string Aasb2 = "astryl.AsAboveSoBelow2";
         public const string MultiFloors = "telardo.MultiFloors";
         public const string MultiFloorsDev = "telardo.MultiFloorsDev";
+        public const string PathfindingAvoidance = "llunak.PathfindingAvoidance";
 
         private static bool letterSent;
 
@@ -25,16 +28,29 @@ namespace Strata
             return names;
         }
 
+        public static List<string> ActiveOtherConflicts()
+        {
+            var names = new List<string>();
+            TryAdd(PathfindingAvoidance, "Pathfinding Avoidance", names);
+            return names;
+        }
+
         public static void LogIfNeeded()
         {
             List<string> conflicts = ActiveConflicts();
-            if (conflicts.Count == 0)
+            if (conflicts.Count > 0)
             {
-                return;
+                Log.Error("[Strata] Incompatible multi-level mod(s) loaded: "
+                    + string.Join(", ", conflicts)
+                    + ". Do not run these with Strata — stacked maps will fight.");
             }
-            Log.Error("[Strata] Incompatible multi-level mod(s) loaded: "
-                + string.Join(", ", conflicts)
-                + ". Do not run these with Strata — stacked maps will fight.");
+            List<string> others = ActiveOtherConflicts();
+            if (others.Count > 0)
+            {
+                Log.Error("[Strata] Incompatible mod(s) loaded: "
+                    + string.Join(", ", others)
+                    + ". Do not run these with Strata.");
+            }
         }
 
         public static void LetterIfNeeded()
@@ -44,15 +60,26 @@ namespace Strata
                 return;
             }
             List<string> conflicts = ActiveConflicts();
-            if (conflicts.Count == 0)
+            List<string> others = ActiveOtherConflicts();
+            if (conflicts.Count == 0 && others.Count == 0)
             {
                 return;
             }
             letterSent = true;
-            Find.LetterStack.ReceiveLetter(
-                "Strata_IncompatibleStackLetterLabel".Translate(),
-                "Strata_IncompatibleStackLetterText".Translate(string.Join(", ", conflicts)),
-                LetterDefOf.NeutralEvent);
+            if (conflicts.Count > 0)
+            {
+                Find.LetterStack.ReceiveLetter(
+                    "Strata_IncompatibleStackLetterLabel".Translate(),
+                    "Strata_IncompatibleStackLetterText".Translate(string.Join(", ", conflicts)),
+                    LetterDefOf.NeutralEvent);
+            }
+            if (others.Count > 0)
+            {
+                Find.LetterStack.ReceiveLetter(
+                    "Strata_IncompatibleModLetterLabel".Translate(),
+                    "Strata_IncompatibleModLetterText".Translate(string.Join(", ", others)),
+                    LetterDefOf.NeutralEvent);
+            }
         }
 
         private static void TryAdd(string packageId, string display, List<string> names)
