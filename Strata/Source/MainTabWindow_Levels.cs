@@ -339,12 +339,19 @@ namespace Strata
 
                 Text.Anchor = TextAnchor.MiddleLeft;
                 Widgets.Label(new Rect(rowRect.x + 4f, rowRect.y, colColonists - 8f, RowHeight), LevelLabel(row));
-                if (StrataMod.Settings?.showLevelPerfInTab == true)
+                if (StrataMod.Settings?.showLevelPerfInTab == true || Prefs.DevMode)
                 {
-                    string perf = StrataLevelPerfUtility.IsHibernating(row.map)
-                        ? "hibernating"
+                    LevelTickTier tier = StrataLevelPerfUtility.TickTier(row.map);
+                    string perf = tier == LevelTickTier.Throttled
+                        ? StrataLevelPerfUtility.TickTierLabel(tier)
                         : StrataLevelPerfUtility.PawnCount(row.map) + " pawns";
-                    Widgets.Label(new Rect(rowRect.x + colColonists * 0.55f, rowRect.y, colColonists * 0.45f, RowHeight), perf);
+                    if (Prefs.DevMode && tier != LevelTickTier.Throttled)
+                    {
+                        perf += " | " + StrataLevelPerfUtility.TickTierLabel(tier);
+                    }
+                    Rect perfRect = new Rect(rowRect.x + colColonists * 0.55f, rowRect.y, colColonists * 0.45f, RowHeight);
+                    Widgets.Label(perfRect, perf);
+                    TooltipHandler.TipRegion(perfRect, "Strata_TickTier_Tip".Translate(StrataLevelPerfUtility.TickTierLabel(tier)));
                 }
                 Widgets.Label(new Rect(rowRect.x + colColonists, rowRect.y, colHostiles - colColonists, RowHeight),
                     row.map.mapPawns.FreeColonistsSpawnedCount.ToString());

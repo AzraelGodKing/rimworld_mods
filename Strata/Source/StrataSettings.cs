@@ -48,6 +48,7 @@ namespace Strata
         public bool caravanPullEnabled = true;
         public bool hibernateEmptyLevels = true;
         public bool reduceBackgroundLevels = true;
+        public bool lightweightOccupiedLevels = true;
         public bool showLevelPerfInTab = false;
         public bool explorationSitesEnabled = true;
         public bool floodEventsEnabled = true;
@@ -129,6 +130,7 @@ namespace Strata
             Scribe_Values.Look(ref caravanPullEnabled, "caravanPullEnabled", defaultValue: true);
             Scribe_Values.Look(ref hibernateEmptyLevels, "hibernateEmptyLevels", defaultValue: true);
             Scribe_Values.Look(ref reduceBackgroundLevels, "reduceBackgroundLevels", defaultValue: true);
+            Scribe_Values.Look(ref lightweightOccupiedLevels, "lightweightOccupiedLevels", defaultValue: true);
             Scribe_Values.Look(ref showLevelPerfInTab, "showLevelPerfInTab", defaultValue: false);
             Scribe_Values.Look(ref explorationSitesEnabled, "explorationSitesEnabled", defaultValue: true);
             Scribe_Values.Look(ref floodEventsEnabled, "floodEventsEnabled", defaultValue: true);
@@ -416,6 +418,8 @@ namespace Strata
                 "Strata_Settings_HibernateEmptyDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_ReduceBackground".Translate(), ref Settings.reduceBackgroundLevels,
                 "Strata_Settings_ReduceBackgroundDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_LightweightLevels".Translate(), ref Settings.lightweightOccupiedLevels,
+                "Strata_Settings_LightweightLevelsDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_PerformanceMode".Translate(), ref Settings.performanceModeEnabled,
                 "Strata_Settings_PerformanceModeDesc".Translate());
             if (Settings.performanceModeEnabled)
