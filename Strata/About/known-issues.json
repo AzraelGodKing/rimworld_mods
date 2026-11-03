@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "issues": [
+    {
+      "id": "strata-subsystem-tripped",
+      "title": "Strata: a system turned itself off after errors",
+      "explanation": "Strata splits into separate systems (work relay, atmosphere, see-below, cross-level combat, flooding, incidents, gravship stacks, level generation, power shafts, the generic job scan, and each mod bridge). When one keeps throwing errors, Strata logs it once with the system name and what it was doing, then turns off only that system. Vanilla and the rest of Strata keep running. You also get an in-game message.",
+      "fix": "Open Mod options > Strata > Diagnostics. It shows each system's health and last error, and has a Re-arm button. Restarting the game re-arms everything. If it trips again, please report the Player.log line on GitHub or Discord."
+    },
+    {
+      "id": "strata-level-fps",
+      "title": "Each level costs FPS on big maps",
+      "explanation": "Every Strata level is a real map. By default a new level is the same size as your home map, so on 300x300 and larger maps each open floor adds real work every tick.",
+      "fix": "Keep 'Lightweight ticking on occupied levels' and 'Hibernate empty levels' on. For new levels, set 'Size of new B levels' to 75% or 50%, and turn on 'Compact roof decks (A+)'. Levels you already opened keep their size."
+    },
+    {
+      "id": "strata-compact-deck-no-grow",
+      "title": "A compact roof deck does not grow when I roof more of the floor below",
+      "explanation": "With 'Compact roof decks (A+)' on, a new deck covers the built roofs below plus a margin. A RimWorld map cannot change size after it opens, so roofs built later outside that area get no deck. Strata shows a warning when this happens.",
+      "fix": "Plan the roofs below before opening the deck, or leave the option off (full-size decks) for towers you expect to grow. Decks opened with the option off still grow with the roofs below."
+    },
+    {
+      "id": "strata-small-level-second-stair",
+      "title": "A second stairwell will not connect to a smaller level",
+      "explanation": "A level opened at 75% or 50% only sits under part of the home map. A stairwell built outside that footprint has nothing below it to land on, so it reports that it found no landing cell.",
+      "fix": "Build extra stairwells inside the footprint of the existing level (near the first stairwell of that depth)."
+    },
+    {
+      "id": "strata-gas-lag",
+      "title": "Turning on gases makes the game slower",
+      "explanation": "The atmosphere sim (smoke, deep gas, O2 / CO2) tracks every room on every level. It is off by default for that reason.",
+      "fix": "Leave natural and pollutant gases off unless you want them. If you do use them, set Atmosphere quality to Low and keep 'Reduce background levels' on."
+    },
+    {
+      "id": "strata-generic-scan-experimental",
+      "title": "Generic cross-floor job scan is experimental",
+      "explanation": "This option runs the game's own job search on linked levels instead of Strata's per-need relays. It is new, off by default, and has had little play-testing. Mods that cache pawn position during job search may misbehave with it.",
+      "fix": "Turn it off in Mod options > Strata if colonists act oddly. The normal relays take over at once. If it trips, Diagnostics shows the error."
+    },
+    {
+      "id": "strata-cannot-remove-stair",
+      "title": "A stairwell will not deconstruct",
+      "explanation": "A stairwell cannot be removed while anyone is still on the level it links to, so nobody gets stranded. Unlinked or orphan shafts can still be cleared.",
+      "fix": "Bring everyone up (or down) to this side first, then deconstruct."
+    },
+    {
+      "id": "strata-remove-mod",
+      "title": "Removing Strata from a save",
+      "explanation": "Levels are pocket maps that only exist while Strata is loaded. Removing the mod drops everything on them.",
+      "fix": "Before removing: bring every pawn to the home map, haul what you want to keep, and deconstruct every Strata stairwell and elevator."
+    },
+    {
+      "id": "strata-roof-collapse",
+      "title": "The roof caved in on a big underground hall",
+      "explanation": "Underground levels have thick rock roofs, and vanilla collapses unsupported roof spans.",
+      "fix": "Leave rock pillars in large rooms, or use Strata shoring."
+    },
+    {
+      "id": "strata-quest-maps",
+      "title": "Shafts on temporary quest maps",
+      "explanation": "Strata levels belong to your home colony. A level dug from a temporary map (ancient ruins, world sites) is lost when that map closes.",
+      "fix": "Do not dig Strata shafts on temporary maps. Use their own floors and stairs."
+    },
+    {
+      "id": "strata-gravship-substructure",
+      "title": "Colony stairwells cannot go on gravship substructure",
+      "explanation": "Colony dig and tower stairwells link fixed levels. A gravship moves, so its levels must travel with it.",
+      "fix": "Use the gravship stairs and elevators on the ship. They open levels that launch and land with it."
+    },
+    {
+      "id": "strata-incompatible",
+      "title": "Other multi-level mods",
+      "explanation": "As Above So Below, As Above So Below 2, MultiFloors, True Z-Levels, True Levels, Z-Levels and Pathfinding Avoidance change the same systems Strata does (pocket maps, portals, pathing). Running them together breaks travel between floors.",
+      "fix": "Use only one multi-level mod. The mod list warns about these, and Strata sends a letter if one is loaded."
+    }
+  ]
+}

@@ -50,6 +50,7 @@ namespace Strata
             LongEventHandler.ExecuteWhenFinished(() =>
             {
                 StrataBuildInfo.LogStartup();
+                StrataBridgeGuard.Apply();
                 StrataIncompatibleMods.LogIfNeeded();
             });
         }

@@ -56,6 +56,11 @@ namespace Strata
             {
                 return false;
             }
+            if (StrataFaultGuard.IsTripped(StrataFaultGuard.System.LevelGeneration))
+            {
+                Messages.Message("Strata_LevelGenTripped".Translate(), portal, MessageTypeDefOf.RejectInput, historical: false);
+                return false;
+            }
 
             int id = portal.thingIDNumber;
             generatingPortalIds.Add(id);
@@ -99,6 +104,7 @@ namespace Strata
                 catch (Exception e)
                 {
                     failedPortalIds.Add(id);
+                    StrataFaultGuard.Report(StrataFaultGuard.System.LevelGeneration, "opening a level under " + portal.LabelCap, e);
                     Log.Error("[Strata] Pocket map generation failed for "
                         + portal.LabelCap + ": " + e);
                     StrataRockFillScheduler.Clear();

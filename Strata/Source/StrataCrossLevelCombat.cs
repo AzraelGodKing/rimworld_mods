@@ -26,7 +26,8 @@ namespace Strata
         private static readonly List<IntVec3> tmpCandidates = new List<IntVec3>();
 
         public static bool Enabled =>
-            StrataMod.Settings == null || StrataMod.Settings.crossLevelCombatEnabled;
+            (StrataMod.Settings == null || StrataMod.Settings.crossLevelCombatEnabled)
+            && !StrataFaultGuard.IsTripped(StrataFaultGuard.System.CrossLevelCombat);
 
         public static void ResetSession()
         {
@@ -192,6 +193,7 @@ namespace Strata
             }
             catch (Exception e)
             {
+                StrataFaultGuard.Report(StrataFaultGuard.System.CrossLevelCombat, "firing an arc shot", e);
                 Log.WarningOnce("[Strata] Cross-level arc fire failed: " + e.Message, 0x5B71007);
                 return false;
             }
@@ -427,6 +429,7 @@ namespace Strata
             }
             catch (Exception e)
             {
+                StrataFaultGuard.Report(StrataFaultGuard.System.CrossLevelCombat, "firing across levels", e);
                 Log.WarningOnce("[Strata] Cross-level fire failed: " + e.Message, 0x5B71005);
                 return false;
             }
@@ -486,6 +489,7 @@ namespace Strata
             }
             catch (Exception e)
             {
+                StrataFaultGuard.Report(StrataFaultGuard.System.CrossLevelCombat, "starting a cross-level attack", e);
                 Log.WarningOnce("[Strata] Start cross-level attack failed: " + e.Message, 0x5B71006);
                 return false;
             }

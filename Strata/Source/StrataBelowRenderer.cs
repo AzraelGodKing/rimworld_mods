@@ -62,7 +62,7 @@ namespace Strata
         {
             get
             {
-                if (sessionDisabled) return false;
+                if (sessionDisabled || StrataFaultGuard.IsTripped(StrataFaultGuard.System.SeeBelow)) return false;
                 StrataSettings s = StrataMod.Settings;
                 return s == null || s.seeBelowEnabled;
             }

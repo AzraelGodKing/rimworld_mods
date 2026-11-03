@@ -107,7 +107,7 @@ namespace Strata
             int i = (int)system;
             int now = Find.TickManager?.TicksGame ?? 0;
             totalErrors[i]++;
-            lastError[i] = detail.NullOrEmpty() ? e?.Message : detail;
+            lastError[i] = (detail ?? "") + (e != null ? (detail.NullOrEmpty() ? "" : ": ") + e.GetType().Name + ": " + e.Message : "");
             lastErrorTick[i] = now;
             if (e != null && totalErrors[i] == 1)
             {
