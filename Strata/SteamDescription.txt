@@ -66,7 +66,8 @@ Ship-only stairwells open A+/B+ pockets that travel on launch and reattach on la
 Sky threats stay upstairs. Below: infestations, cave-ins, gas pockets, firestorms, deep sieges, cave breakthroughs, rich ore, burrowing raiders. World sites (collapsed mine, sealed vault, geothermal vent, sunken ruins) and optional ancient surface stairheads. Seal a stairwell to contain gas or bugs — and your own colonists.
 
 [h2]Performance[/h2]
-Every level is a full map matching your map size. On large maps (300×300+), each opened floor costs real FPS. Vacant-level and background throttles help; prefer a smaller map if you dig deep. Default level cap ±2 (Unlimited off).
+Every level is a full map. By default it matches your map size, so on large maps (300×300+) each opened floor costs real FPS. Lightweight ticking and the vacant-level and background throttles help, and in mod options you can open new B levels at 75% or 50% and size new roof decks to the roofs below. Default level cap ±2 (Unlimited off).
+If one Strata system ever keeps erroring, it turns itself off and the rest keeps running. Mod options > Diagnostics shows what happened and can re-arm it.
 
 [h2]Tips[/h2]
 [list]

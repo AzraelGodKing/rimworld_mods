@@ -1,15 +1,24 @@
-3.11.8
-[h1]Strata - 3.11.8[/h1]
+3.12.0
+[h1]Strata - 3.12.0[/h1]
+
+[b]Added[/b]
+[list]
+[*] [b]Lightweight ticking on occupied levels[/b] (on by default) — A+ and B+ levels skip vanilla systems that do nothing there: wild animal and plant spawners everywhere, and weather, wind and snow underground. Gas, smoke, flooding, mining noise, raid pursuit, power and roof-deck weather keep running. Dev mode shows each level's tick tier in the Levels tab.
+[*] [b]Smaller levels[/b] (off by default) — new B levels can be 75% or 50% of the home map, chosen in mod options, from an optional menu when a new depth opens, or with a button on the unopened stairwell. [b]Compact roof decks[/b] size new A+ decks to the built roofs below plus a margin. Fewer cells means more FPS on big maps. Existing levels keep their size.
+[*] [b]Generic cross-floor job scan[/b] (prototype, off by default) — when a colonist finds no work, food, recreation or medical bed on their level, Strata runs the game's own job search on linked levels and sends them to the first real job. Replaces the work, food, joy and patient relays while on.
+[*] [b]Diagnostics tab[/b] in mod options — every major system (see-below, cross-level combat, flooding, incidents, gravship stacks, level generation, power shafts, each mod bridge) now shuts itself off after repeated errors instead of spamming the log. The tab shows each system's health and last error, with a re-arm button. Known issues ship in About/known-issues.json.
+[*] [b]Any Vanilla Expanded pipe network crosses shafts[/b] — every VEF pipe net gets a link on the omni connector and on a new shaft pipe-network junction, including mods with no Strata patch. Each network on a junction can be unlinked on its own.
+[/list]
 
 [b]Changed[/b]
 [list]
-[*] [b]Pathfinding Avoidance is now marked incompatible[/b] — the mod list warns about it, and Strata logs an error and sends a letter if it is still loaded. Do not run it with Strata.
+[*] [b]True Z-Levels, True Levels and Z-Levels are now marked incompatible[/b] — the mod list warns, and Strata logs an error and sends a letter if one is loaded.
 [/list]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Orbital trade across floors works on RimWorld 1.6 again[/b] — paying with silver from linked floors and landing drop pods on them failed to apply at boot ("Parameter countNeeded not found"). The renamed TradeUtility arguments arrived in a 1.6 update, not just 1.7, and the fix now covers every version.
+[*] [b]Batteries on empty levels no longer charge and drain too fast[/b] — on RimWorld 1.6 the vacant-level throttle ticked their power nets twice on most ticks.
 [/list]
 
-[i]Build stamp (Player.log): trade-args-v1[/i]
+[i]Build stamp (Player.log): perf-levels-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

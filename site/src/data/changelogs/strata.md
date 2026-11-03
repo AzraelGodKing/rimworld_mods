@@ -1,9 +1,28 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.11.8` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.8 loaded from ... (modified ...); trade-args-v1.` via `ModVersionLog.Write`.
+**Version:** `3.12.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.12.0 loaded from ... (modified ...); perf-levels-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `trade-args-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `perf-levels-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.12.0]
+
+Player-facing version **3.12.0** (`About.xml` `modVersion`). Stamp `perf-levels-v1`.
+
+### Added
+- **Lightweight ticking on occupied levels** (`lightweightOccupiedLevels`, default on): every A+/B+ level skips `WildAnimalSpawnerTick` and `WildPlantSpawnerTick`; underground levels also skip `WeatherManagerTick`, `WeatherDeciderTick`, `WindManagerTick` and `SteadyEnvironmentEffectsTick`. Each system is trimmed by its own prefix instead of replacing `MapPostTick`, so anything a game update adds keeps running. Kept on purpose: `gasGrid`, lords (raid pursuit), every MapComponent (atmosphere, smoke, flood, mining noise, weather sync), power nets, temperature, resource counter, fire watcher, temporary terrain, Odyssey water bodies, and A+ weather/wind/snow. Dev mode (or "Show level performance") shows each level's tier in the Levels tab.
+- **Smaller levels:** `StrataLevelCoords` is now the single place cross-map cells are converted (stairs and landings, see-below rendering and selection, cross-level combat, turrets, auto-engage, shaft conduits, ore hoists, fluid junctions, roof-deck sync; gravship stacks stay raw 1:1). A level opened smaller than its source map saves a cell offset (`MapComponent_StrataLevelFrame`); levels without one keep the old same-size / proportional mapping, so existing saves are untouched.
+  - **B levels:** `belowLevelSizePercent` (100 / 75 / 50, default 100), optional ask-on-open menu with cell cost (`askBelowLevelSize`), and a size button on each unopened first stairwell of a depth. The level is centred on that stairwell inside the home map.
+  - **A+ decks:** `compactRoofDecks` (default off) sizes new decks to the constructed-roof bounding box below plus 15 cells. Vanilla maps cannot resize, so a roof built later outside the deck shows a warning instead of growing it.
+- **Generic cross-floor job scan (prototype):** `genericCrossFloorScan`, default off. Runs the vanilla job giver with the pawn parked on a linked level's stair cell for one call (restored in `finally`, thrown away if a tick passed), then relays through `PawnRelay.TryClaimAndRelay` and queues the found job behind `EnterPortal`. Replaces the work (`TryAssignBest`), doctor, patient-bed, food and joy relays while on. Write-up of which relays it can replace and which must stay: `docs/ideas/strata-generic-job-scan.md`.
+- **Fault guard for every major system:** see-below, cross-level combat, flooding, Strata incidents, gravship stacks, level generation (report-only; a trip blocks opening new levels), power shafts, the generic scan, and each soft-compat bridge (CE, Guards For Me, Open The Windows, ReGrowth, Vehicle Framework, Pick Up And Haul, storage, sister-mod bridges). On trip it logs once with the system and what it was doing, turns off only that system, and keeps vanilla running. New **Diagnostics** tab in mod options with health, last error and re-arm. New `About/known-issues.json`.
+- **Auto-detected VEF pipe networks:** before defs resolve, every `PipeSystem.PipeNetDef` without a dedicated junction gets a `CompProperties_Resource` and a shaft tie on the omni connector and on the new **shaft pipe-network junction** (`Strata_ShaftFluid_VefAuto`, hidden when no such net is loaded). Dubs Bad Hygiene, Central Heating, Rimatomics and Rimefeller keep their dedicated backends (not VEF), as do helixien (storage junction), VTE AC and VCE chemfuel. Each tie has its own **Link** toggle to shut off one network at a junction.
+
+### Changed
+- **More incompatible multi-level mods:** True Z-Levels (`gamma.truezlevels`), True Levels (`TrueLevels.Mod`) and Z-Levels (`ZLevels1.1`) added to `incompatibleWith` and to the startup error and letter.
+
+### Fixed
+- **Vacant-level power on 1.6:** the throttle called `PowerNetsTick` from the `MapPreTick` prefix, but 1.6 ticks power nets in `MapPostTick`, so batteries on empty levels charged and drained twice on 3 ticks in 4. The prefix now only ticks power nets when vanilla `MapPreTick` is the one that does it.
 
 ## [3.11.8]
 
