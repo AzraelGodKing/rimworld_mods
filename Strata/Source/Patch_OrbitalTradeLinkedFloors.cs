@@ -237,34 +237,21 @@ namespace Strata
     [HarmonyPatch(typeof(TradeUtility), nameof(TradeUtility.LaunchThingsOfType))]
     public static class Patch_TradeUtility_LaunchThingsOfType_Linked
     {
-        // 1.7 renamed countNeeded → debt. Harmony matches prefix args by name.
-#if RIMWORLD_1_7
-        public static bool Prefix(ThingDef resDef, int debt, Map map, TradeShip trader)
+        // RimWorld renamed countNeeded to debt during 1.6. Harmony binds prefix
+        // args by name, so take the count by position (__1) to work either way.
+        public static bool Prefix(ThingDef resDef, int __1, Map map, TradeShip trader)
         {
-            return !StrataOrbitalTrade.TryLaunchFromLinkedFloors(resDef, debt, map, trader);
+            return !StrataOrbitalTrade.TryLaunchFromLinkedFloors(resDef, __1, map, trader);
         }
-#else
-        public static bool Prefix(ThingDef resDef, int countNeeded, Map map, TradeShip trader)
-        {
-            return !StrataOrbitalTrade.TryLaunchFromLinkedFloors(resDef, countNeeded, map, trader);
-        }
-#endif
     }
 
     [HarmonyPatch(typeof(TradeUtility), nameof(TradeUtility.SpawnDropPod))]
     public static class Patch_TradeUtility_SpawnDropPod_Linked
     {
-        // 1.7 renamed dropCenter → dropSpot.
-#if RIMWORLD_1_7
-        public static void Prefix(ref IntVec3 dropSpot, ref Map map)
+        // RimWorld renamed dropCenter to dropSpot during 1.6. Bind by position (__0).
+        public static void Prefix(ref IntVec3 __0, ref Map map)
         {
-            StrataOrbitalTrade.RedirectDrop(ref dropSpot, ref map);
+            StrataOrbitalTrade.RedirectDrop(ref __0, ref map);
         }
-#else
-        public static void Prefix(ref IntVec3 dropCenter, ref Map map)
-        {
-            StrataOrbitalTrade.RedirectDrop(ref dropCenter, ref map);
-        }
-#endif
     }
 }
