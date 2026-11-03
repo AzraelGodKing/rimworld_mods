@@ -230,6 +230,16 @@ namespace Strata
     {
         public static StrataSettings Settings;
 
+        private static int settingsTab;
+
+        private static string DiagnosticsTabLabel()
+        {
+            int tripped = StrataDiagnosticsTab.TrippedCount();
+            return tripped > 0
+                ? "Strata_Settings_TabDiagnosticsTripped".Translate(tripped).Resolve()
+                : "Strata_Settings_TabDiagnostics".Translate().Resolve();
+        }
+
         // Which key picker is waiting for a keypress ("up", "down", or null).
         private static string listeningFor;
 
@@ -304,6 +314,23 @@ namespace Strata
                 listeningFor = null;
                 Event.current.Use();
             }
+
+            Rect body = new Rect(inRect.x, inRect.y + TabDrawer.TabHeight + 4f, inRect.width,
+                inRect.height - TabDrawer.TabHeight - 4f);
+            var tabs = new System.Collections.Generic.List<TabRecord>
+            {
+                new TabRecord("Strata_Settings_TabOptions".Translate(), () => settingsTab = 0, settingsTab == 0),
+                new TabRecord(DiagnosticsTabLabel(), () => settingsTab = 1, settingsTab == 1),
+            };
+            Widgets.DrawMenuSection(body);
+            TabDrawer.DrawTabs(body, tabs);
+            body = body.ContractedBy(6f);
+            if (settingsTab == 1)
+            {
+                StrataDiagnosticsTab.Draw(body);
+                return;
+            }
+            inRect = body;
 
             // Listing defaults to multi-column when content exceeds listingRect.height.
             // A short scroll viewRect then parks every option after the first row in a

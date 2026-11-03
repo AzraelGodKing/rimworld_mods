@@ -76,6 +76,7 @@ namespace Strata
             }
             catch (Exception e)
             {
+                StrataFaultGuard.Report(StrataFaultGuard.System.CombatExtendedCompat, "patching CE turrets: " + e.Message);
                 Log.Warning("[Strata] Combat Extended turret patches failed: " + e.Message);
             }
         }
@@ -326,6 +327,7 @@ namespace Strata
             }
             catch (Exception e)
             {
+                StrataFaultGuard.Report(StrataFaultGuard.System.CombatExtendedCompat, "firing a CE projectile across levels", e);
                 WarnOnce("cross-level CE fire failed: " + (e.InnerException?.Message ?? e.Message));
                 return false;
             }

@@ -157,6 +157,7 @@ namespace Strata
                     "[Strata] HaulToCellStorageJob failed for " + cargo.def.defName
                     + " at " + cell + ": " + ex.GetType().Name + ". Using a plain cell haul.",
                     cargo.def.shortHash ^ 0x48A01CE1);
+                StrataFaultGuard.Report(StrataFaultGuard.System.StorageCompat, "making a storage haul for " + cargo.def.defName, ex);
                 return MakePlainCellHaul(cargo, cell);
             }
         }

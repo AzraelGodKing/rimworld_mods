@@ -494,6 +494,19 @@
   <Strata_TickTier_Full>full tick</Strata_TickTier_Full>
   <Strata_TickTier_Lightweight>lightweight</Strata_TickTier_Lightweight>
   <Strata_TickTier_Throttled>hibernating</Strata_TickTier_Throttled>
+  <!-- Diagnostics -->
+  <Strata_Settings_TabOptions>Options</Strata_Settings_TabOptions>
+  <Strata_Settings_TabDiagnostics>Diagnostics</Strata_Settings_TabDiagnostics>
+  <Strata_Settings_TabDiagnosticsTripped>Diagnostics ({0} off)</Strata_Settings_TabDiagnosticsTripped>
+  <Strata_Diag_Header>Each Strata system turns itself off after repeated errors. Vanilla and the other systems keep running. Re-arm gives a system another try; restarting the game re-arms everything. Known issues: About/known-issues.json.</Strata_Diag_Header>
+  <Strata_Diag_RearmAll>Re-arm all</Strata_Diag_RearmAll>
+  <Strata_Diag_Rearm>Re-arm</Strata_Diag_Rearm>
+  <Strata_Diag_Healthy>OK</Strata_Diag_Healthy>
+  <Strata_Diag_Errors>{0} error(s), still on</Strata_Diag_Errors>
+  <Strata_Diag_Tripped>OFF after {0} error(s)</Strata_Diag_Tripped>
+  <Strata_Diag_LastError>{0} ago: {1}</Strata_Diag_LastError>
+  <Strata_LevelGenTripped>Strata turned level generation off after repeated errors. See Mod options > Diagnostics.</Strata_LevelGenTripped>
+
   <!-- Generic cross-floor scan -->
   <Strata_Settings_GenericScan>Generic cross-floor job scan (prototype)</Strata_Settings_GenericScan>
   <Strata_Settings_GenericScanDesc>Experimental. When a colonist finds no work, food, recreation or medical bed on their level, Strata runs the game's own job search on the linked levels and sends them to the first real job it finds. Replaces the work, food, joy and patient relays while on. Rest, meditation, carrying pawns, rituals, pets and robots keep their own relays. Off by default.</Strata_Settings_GenericScanDesc>
