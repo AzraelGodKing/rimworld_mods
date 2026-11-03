@@ -4,7 +4,7 @@ using Verse;
 
 namespace Strata
 {
-    // AASB / MultiFloors stack maps the same way Strata does. Pathfinding
+    // AASB / MultiFloors / True Z-Levels / True Levels / Z-Levels stack maps the same way Strata does. Pathfinding
     // Avoidance rewrites path costs and clashes with Strata's cross-floor
     // pathing. About.xml incompatibleWith warns in the mod list; this catches
     // players who click past.
@@ -14,6 +14,9 @@ namespace Strata
         public const string Aasb2 = "astryl.AsAboveSoBelow2";
         public const string MultiFloors = "telardo.MultiFloors";
         public const string MultiFloorsDev = "telardo.MultiFloorsDev";
+        public const string TrueZLevels = "gamma.truezlevels";
+        public const string TrueLevels = "TrueLevels.Mod";
+        public const string ZLevels = "ZLevels1.1";
         public const string PathfindingAvoidance = "llunak.PathfindingAvoidance";
 
         private static bool letterSent;
@@ -25,6 +28,9 @@ namespace Strata
             TryAdd(Aasb2, "As above, So below 2", names);
             TryAdd(MultiFloors, "MultiFloors", names);
             TryAdd(MultiFloorsDev, "MultiFloors (dev)", names);
+            TryAdd(TrueZLevels, "True Z-Levels", names);
+            TryAdd(TrueLevels, "True Levels", names);
+            TryAdd(ZLevels, "Z-Levels", names);
             return names;
         }
 
