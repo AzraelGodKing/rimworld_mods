@@ -121,23 +121,14 @@ namespace Strata
         public static IntVec3 SkyToLowerCell(Map sky, Map lower, IntVec3 skyCell)
         {
             if (sky == null || lower == null) return skyCell;
-            // Gravship A+/B+ decks paint 1:1 with the host even when sizes differ.
-            if (sky.Size == lower.Size || UsesRawOneToOne(sky, lower)) return skyCell;
-            return StrataMapUtility.ProportionalCell(skyCell, sky, lower);
+            // Raw for framed decks: cells past the deck edge stay out of bounds.
+            return StrataLevelCoords.Translate(skyCell, sky, lower);
         }
 
         public static IntVec3 LowerToSkyCell(Map lower, Map sky, IntVec3 lowerCell)
         {
             if (sky == null || lower == null) return lowerCell;
-            if (sky.Size == lower.Size || UsesRawOneToOne(sky, lower)) return lowerCell;
-            return StrataMapUtility.ProportionalCell(lowerCell, lower, sky);
-        }
-
-        private static bool UsesRawOneToOne(Map sky, Map lower)
-        {
-            if (!StrataGravshipUtility.OdysseyActive) return false;
-            return StrataGravshipUtility.IsInGravshipStack(sky)
-                || StrataGravshipUtility.IsInGravshipStack(lower);
+            return StrataLevelCoords.Translate(lowerCell, lower, sky);
         }
 
         public static void DrawBelowStatic(Map map)

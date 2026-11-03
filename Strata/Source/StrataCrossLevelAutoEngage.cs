@@ -201,7 +201,7 @@ namespace Strata
             }
             if (tmpTargets.Count == 0) return false;
 
-            IntVec3 origin = shooter.Position;
+            IntVec3 origin = StrataLevelCoords.Translate(shooter.Position, shooter.Map, targetMap);
             tmpTargets.Sort((a, b) =>
                 (a.Position - origin).LengthHorizontalSquared.CompareTo((b.Position - origin).LengthHorizontalSquared));
 

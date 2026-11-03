@@ -26,6 +26,7 @@ namespace Strata
             HaulToLevelTargets.ResetSession,
             RelayClaims.ResetSession,
             StrataMapUtility.ResetSession,
+            StrataLevelCoords.ResetSession,
             StrataDeferredGenUtility.ResetSession,
             WorkRelayAntiLoop.ResetSession,
             StrataRobotDiagnostics.ResetSession,

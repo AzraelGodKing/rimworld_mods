@@ -41,7 +41,14 @@ namespace Strata
             {
                 return;
             }
-            OpenLevelBelow();
+            if (StrataMod.Settings?.askBelowLevelSize == true && levelSizePct <= 0 && OpensNewDepth)
+            {
+                AskLevelSizeThenOpen();
+            }
+            else
+            {
+                OpenLevelBelow();
+            }
             if (def.defName == "Strata_DigDownShaft")
             {
                 LinkNearbyLanding();
@@ -265,9 +272,90 @@ namespace Strata
                 Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
                 return null;
             }
+            if (StrataLevelCoords.TryPlanBelowLevel(Map, Position, ChosenLevelSizePct / 100f,
+                    out IntVec3 size, out IntVec3 offset))
+            {
+                return GenerateFramedLevel(size, offset);
+            }
             return PocketMapUtility.GeneratePocketMap(
                 new IntVec3(Map.Size.x, 1, Map.Size.z),
                 def.portal.pocketMapGenerator, null, Map);
+        }
+
+        // Smaller-than-home level: register its cell offset before gen steps
+        // run so the landing and rock plan line up 1:1 with the map above.
+        protected Map GenerateFramedLevel(IntVec3 size, IntVec3 offset)
+        {
+            Map generated = null;
+            StrataLevelCoords.BeginPendingFrame(offset);
+            try
+            {
+                generated = PocketMapUtility.GeneratePocketMap(size, def.portal.pocketMapGenerator, null, Map);
+            }
+            finally
+            {
+                StrataLevelCoords.EndPendingFrame(generated);
+            }
+            StrataLog.Verbose("[Strata] Opened framed level " + StrataLevelCoords.CellCostLabel(size)
+                + " at offset " + offset + " under " + Map);
+            return generated;
+        }
+
+        private int levelSizePct = -1;
+
+        protected int ChosenLevelSizePct
+        {
+            get
+            {
+                int pct = levelSizePct > 0 ? levelSizePct : StrataMod.Settings?.belowLevelSizePercent ?? 100;
+                return Mathf.Clamp(pct, 25, 100);
+            }
+        }
+
+        // First stairwell of a new depth (not joining a sibling, not a gravship shaft).
+        private bool OpensNewDepth =>
+            Spawned && !PocketMapExists && this is not IStrataGravshipPortal
+            && this is not Building_StairsBuildUp && ExistingLevelBelow() == null;
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref levelSizePct, "strataLevelSizePct", -1);
+        }
+
+        private void AskLevelSizeThenOpen()
+        {
+            var options = new List<FloatMenuOption>();
+            foreach (int pct in StrataMod.LevelSizeChoices)
+            {
+                int chosen = pct;
+                StrataLevelCoords.TryPlanBelowLevel(Map, Position, chosen / 100f, out IntVec3 size, out _);
+                options.Add(new FloatMenuOption(
+                    "Strata_LevelSizeOption".Translate(chosen, StrataLevelCoords.CellCostLabel(size)),
+                    () =>
+                    {
+                        levelSizePct = chosen;
+                        OpenLevelBelow();
+                    }));
+            }
+            Find.WindowStack.Add(new FloatMenu(options, "Strata_LevelSizeTitle".Translate()));
+        }
+
+        private Command LevelSizeGizmo()
+        {
+            int pct = ChosenLevelSizePct;
+            StrataLevelCoords.TryPlanBelowLevel(Map, Position, pct / 100f, out IntVec3 size, out _);
+            return new Command_Action
+            {
+                defaultLabel = "Strata_LevelSizeGizmo".Translate(pct),
+                defaultDesc = "Strata_LevelSizeGizmoDesc".Translate(StrataLevelCoords.CellCostLabel(size)),
+                icon = ContentFinder<Texture2D>.Get("UI/Commands/ViewQuest", reportFailure: false) ?? BaseContent.BadTex,
+                action = () =>
+                {
+                    int i = System.Array.IndexOf(StrataMod.LevelSizeChoices, pct);
+                    levelSizePct = StrataMod.LevelSizeChoices[(i + 1) % StrataMod.LevelSizeChoices.Length];
+                },
+            };
         }
 
         private Map ExistingLevelBelow()
@@ -296,6 +384,12 @@ namespace Strata
 
         internal IntVec3 FindLandingCell(Map level)
         {
+            // A smaller level only exists under part of this map.
+            if (StrataLevelCoords.HasFrame(level)
+                && !StrataLevelCoords.Translate(Position, Map, level).InBounds(level))
+            {
+                return IntVec3.Invalid;
+            }
             IntVec3 target = StrataMapUtility.VerticalAlign(Position, Map, level);
             if (LandingSpotClear(target, level))
             {
@@ -530,6 +624,10 @@ namespace Strata
             foreach (Gizmo gizmo in ExtraGizmos())
             {
                 yield return gizmo;
+            }
+            if (OpensNewDepth)
+            {
+                yield return LevelSizeGizmo();
             }
         }
 
