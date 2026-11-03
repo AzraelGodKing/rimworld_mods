@@ -112,6 +112,10 @@ namespace Strata
                 {
                     continue;
                 }
+                if (tie.Props.channel.StartsWith("vef_auto_"))
+                {
+                    return true;
+                }
                 for (int c = 0; c < ShaftChannels.Length; c++)
                 {
                     if (tie.Props.channel == ShaftChannels[c])
@@ -259,6 +263,14 @@ namespace Strata
             for (int i = 0; i < ShaftNetDefNames.Length; i++)
             {
                 if (PipeNetDefMatches(pipeNetDef, ShaftNetDefNames[i]))
+                {
+                    return true;
+                }
+            }
+            IReadOnlyList<string> auto = VefPipeNetDiscovery.AutoNetDefNames;
+            for (int i = 0; i < auto.Count; i++)
+            {
+                if (PipeNetDefMatches(pipeNetDef, auto[i]))
                 {
                     return true;
                 }

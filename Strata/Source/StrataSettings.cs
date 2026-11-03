@@ -252,6 +252,8 @@ namespace Strata
         {
             Settings = GetSettings<StrataSettings>();
             StrataResources.SyncFromSettings();
+            // Must hook before defs load so auto pipe-net junction comps resolve with the rest.
+            VefPipeNetDiscovery.PatchDefInjection(new HarmonyLib.Harmony("azraelgodking.strata.early"));
         }
 
         public override string SettingsCategory()

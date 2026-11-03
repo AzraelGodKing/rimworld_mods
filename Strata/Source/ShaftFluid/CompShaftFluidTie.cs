@@ -72,9 +72,31 @@ namespace Strata
             return false;
         }
 
+        // Per-network shut-off: an unlinked tie stops this one network only.
+        private bool linkEnabled = true;
+
+        public bool LinkEnabled => linkEnabled;
+
+        public override System.Collections.Generic.IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            ShaftFluidBackend backend = Backend;
+            if (backend == null || !backend.IsActive || parent.Faction != RimWorld.Faction.OfPlayer)
+            {
+                yield break;
+            }
+            yield return new Command_Toggle
+            {
+                defaultLabel = "Strata_FluidTie_LinkToggle".Translate(backend.Label),
+                defaultDesc = "Strata_FluidTie_LinkToggleDesc".Translate(backend.Label),
+                icon = ContentFinder<Texture2D>.Get("UI/Commands/TryReconnect", reportFailure: false) ?? BaseContent.BadTex,
+                isActive = () => linkEnabled,
+                toggleAction = () => linkEnabled = !linkEnabled,
+            };
+        }
+
         public void DriveTie(CompShaftFluidTie partner)
         {
-            if (!StrataFaultGuard.ShaftFluidActive)
+            if (!StrataFaultGuard.ShaftFluidActive || !linkEnabled || partner?.linkEnabled == false)
             {
                 return;
             }
@@ -145,6 +167,7 @@ namespace Strata
             base.PostExposeData();
             Scribe_Values.Look(ref shaftCoolingBuffer, "strataShaftCoolingBuffer", 0f);
             Scribe_Values.Look(ref shaftResourceBuffer, "strataShaftResourceBuffer", 0f);
+            Scribe_Values.Look(ref linkEnabled, "strataLinkEnabled_" + Props.channel, true);
         }
 
         public override string CompInspectStringExtra()

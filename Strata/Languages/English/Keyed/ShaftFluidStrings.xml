@@ -9,4 +9,8 @@
   <!-- Patch_ShaftFluidDeconstruct -->
   <Strata_FluidLink_DeconstructBlocked>It is driven by the junction on the level above.</Strata_FluidLink_DeconstructBlocked>
 
+  <!-- Per-network link toggle -->
+  <Strata_FluidTie_LinkToggle>Link {0}</Strata_FluidTie_LinkToggle>
+  <Strata_FluidTie_LinkToggleDesc>When on, this junction moves {0} between this level and the one below. Turn off to shut off just this network here; other networks on the junction keep flowing.</Strata_FluidTie_LinkToggleDesc>
+
 </LanguageData>
