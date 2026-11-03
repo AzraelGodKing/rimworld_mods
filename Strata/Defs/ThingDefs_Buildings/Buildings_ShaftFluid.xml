@@ -159,6 +159,32 @@
     </comps>
   </ThingDef>
 
+  <!-- Any other VEF PipeSystem net (mods without a Strata patch). Pipe comps and
+       ties are added in C# before defs resolve (VefPipeNetDiscovery); hidden from
+       the build menu when no such net is loaded. -->
+  <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="OskarPotocki.VanillaFactionsExpanded.Core">
+    <defName>Strata_ShaftFluid_VefAuto</defName>
+    <label>shaft pipe-network junction</label>
+    <description>Ties every Vanilla Expanded Framework pipe network between levels, including networks from mods Strata has no dedicated junction for. Build beside a shaft and run each network's pipes onto this junction on each floor. Each network can be unlinked on its own.</description>
+    <designationCategory>Power</designationCategory>
+    <graphicData>
+      <color>(0.75,0.9,0.6)</color>
+    </graphicData>
+    <altitudeLayer>BuildingOnTop</altitudeLayer>
+    <passability>Standable</passability>
+    <pathCost>0</pathCost>
+    <building>
+      <isEdifice>false</isEdifice>
+      <canPlaceOverWall>true</canPlaceOverWall>
+    </building>
+    <researchPrerequisites>
+      <li>Strata_FluidShafts</li>
+    </researchPrerequisites>
+    <comps>
+      <li Class="Strata.CompProperties_ShaftFluidJunctionLink"/>
+    </comps>
+  </ThingDef>
+
   <ThingDef ParentName="Strata_ShaftFluidJunctionBase" MayRequire="Dubwise.Rimefeller">
     <defName>Strata_ShaftFluid_RimefellerCrude</defName>
     <label>shaft crude-oil junction</label>
