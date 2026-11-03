@@ -77,6 +77,11 @@ namespace Strata
         public bool gravshipLifeSupportEnabled = true;
         // Default off: new digs/towers stop at ±2 from the stack root. Existing floors keep working.
         public bool unlimitedLevelsEnabled = false;
+        // New B levels as a share of the home map (100 = same size, the old behaviour).
+        public int belowLevelSizePercent = 100;
+        public bool askBelowLevelSize = false;
+        // New A+ decks sized to the roofed area below instead of the whole map.
+        public bool compactRoofDecks = false;
         // Other mods' portal maps as linked floors for relays. Default off.
         public bool foreignPortalLevelsEnabled = false;
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
@@ -158,6 +163,9 @@ namespace Strata
             Scribe_Values.Look(ref crossLevelAutoEngage, "crossLevelAutoEngage", defaultValue: true);
             Scribe_Values.Look(ref gravshipLifeSupportEnabled, "gravshipLifeSupportEnabled", defaultValue: true);
             Scribe_Values.Look(ref unlimitedLevelsEnabled, "unlimitedLevelsEnabled", defaultValue: false);
+            Scribe_Values.Look(ref belowLevelSizePercent, "belowLevelSizePercent", 100);
+            Scribe_Values.Look(ref askBelowLevelSize, "askBelowLevelSize", defaultValue: false);
+            Scribe_Values.Look(ref compactRoofDecks, "compactRoofDecks", defaultValue: false);
             Scribe_Values.Look(ref foreignPortalLevelsEnabled, "foreignPortalLevelsEnabled", defaultValue: false);
             Scribe_Values.Look(ref viewLevelUpKey, "viewLevelUpKey", KeyCode.PageUp);
             Scribe_Values.Look(ref viewLevelDownKey, "viewLevelDownKey", KeyCode.PageDown);
@@ -326,6 +334,11 @@ namespace Strata
             KeyPickerRow(listing, "Strata_Settings_ViewLevelBelow".Translate(), ref Settings.viewLevelDownKey, "down", KeyCode.PageDown);
             listing.CheckboxLabeled("Strata_Settings_UnlimitedLevels".Translate(), ref Settings.unlimitedLevelsEnabled,
                 "Strata_Settings_UnlimitedLevelsDesc".Translate(StrataLevelCap.HardMaxOffset));
+            DrawLevelSizeSelector(listing);
+            listing.CheckboxLabeled("Strata_Settings_AskBelowLevelSize".Translate(), ref Settings.askBelowLevelSize,
+                "Strata_Settings_AskBelowLevelSizeDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_CompactRoofDecks".Translate(), ref Settings.compactRoofDecks,
+                "Strata_Settings_CompactRoofDecksDesc".Translate(StrataLevelCoords.DeckMargin));
             listing.Gap();
 
             Text.Font = GameFont.Medium;
@@ -521,6 +534,27 @@ namespace Strata
             {
                 key = defaultKey;
                 listeningFor = null;
+            }
+            listing.Gap(2f);
+        }
+
+        public static readonly int[] LevelSizeChoices = { 100, 75, 50 };
+
+        private static void DrawLevelSizeSelector(Listing_Standard listing)
+        {
+            Rect rect = listing.GetRect(30f);
+            Widgets.Label(rect.LeftPart(0.6f), "Strata_Settings_BelowLevelSize".Translate());
+            TooltipHandler.TipRegion(rect, "Strata_Settings_BelowLevelSizeDesc".Translate());
+            Rect button = new Rect(rect.x + rect.width * 0.6f, rect.y, rect.width * 0.4f, 28f);
+            if (Widgets.ButtonText(button, Settings.belowLevelSizePercent + "%"))
+            {
+                var options = new System.Collections.Generic.List<FloatMenuOption>();
+                foreach (int pct in LevelSizeChoices)
+                {
+                    int chosen = pct;
+                    options.Add(new FloatMenuOption(chosen + "%", () => Settings.belowLevelSizePercent = chosen));
+                }
+                Find.WindowStack.Add(new FloatMenu(options));
             }
             listing.Gap(2f);
         }

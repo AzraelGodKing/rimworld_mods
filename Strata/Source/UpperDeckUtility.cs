@@ -64,7 +64,7 @@ namespace Strata
             // Gravship decks are raw 1:1 with the host regardless of map size.
             IntVec3 below = gravship
                 ? upperCell
-                : StrataMapUtility.ProportionalCell(upperCell, upper, source);
+                : StrataLevelCoords.Translate(upperCell, upper, source);
             return SourceCellSupportsDeck(source, below, gravship);
         }
 
@@ -251,7 +251,7 @@ namespace Strata
 
             foreach (IntVec3 cell in upper.AllCells)
             {
-                IntVec3 below = StrataMapUtility.ProportionalCell(cell, upper, source);
+                IntVec3 below = StrataLevelCoords.Translate(cell, upper, source);
                 if (!gravshipLinked && below.InBounds(source)
                     && sourceMountain[source.cellIndices.CellToIndex(below)])
                 {
@@ -286,6 +286,31 @@ namespace Strata
             }
         }
 
+        private static readonly Dictionary<int, int> pastDeckMessageTick = new Dictionary<int, int>();
+
+        // A compact deck cannot grow (vanilla maps have a fixed size), so tell
+        // the player when a new roof downstairs lands outside its footprint.
+        public static void NotifyRoofPastDeck(Map upper, Map source, IntVec3 sourceCell)
+        {
+            if (!StrataLevelCoords.HasFrame(upper) || Current.ProgramState != ProgramState.Playing)
+            {
+                return;
+            }
+            RoofDef roof = source.roofGrid.RoofAt(sourceCell);
+            if (roof == null || roof.isThickRoof)
+            {
+                return;
+            }
+            int now = Find.TickManager.TicksGame;
+            if (pastDeckMessageTick.TryGetValue(upper.uniqueID, out int last) && now - last < 2500)
+            {
+                return;
+            }
+            pastDeckMessageTick[upper.uniqueID] = now;
+            Messages.Message("Strata_RoofPastDeck".Translate(), new TargetInfo(sourceCell, source),
+                MessageTypeDefOf.CautionInput, historical: false);
+        }
+
         // Live sync when a roof is added/removed on the floor below.
         public static void SyncCell(Map upper, IntVec3 upperCell, bool allowShrink = true)
         {
@@ -299,7 +324,7 @@ namespace Strata
             IntVec3 below = gravship
                 ? upperCell
                 : source != null
-                    ? StrataMapUtility.ProportionalCell(upperCell, upper, source)
+                    ? StrataLevelCoords.Translate(upperCell, upper, source)
                     : IntVec3.Invalid;
             bool mountain = !gravship && source != null && below.IsValid
                 && StrataRockUtility.CellIsMountainMass(source, below);
@@ -774,9 +799,10 @@ namespace Strata
                 }
                 IntVec3 upperCell = StrataGravshipUtility.IsGravshipLinkedLevel(upper)
                     ? c
-                    : StrataMapUtility.ProportionalCell(c, source, upper);
+                    : StrataLevelCoords.Translate(c, source, upper);
                 if (!upperCell.InBounds(upper))
                 {
+                    UpperDeckUtility.NotifyRoofPastDeck(upper, source, c);
                     continue;
                 }
                 UpperDeckUtility.SyncCell(upper, upperCell);

@@ -13,6 +13,7 @@ namespace Strata
         public static void Postfix(Map __instance)
         {
             StrataMapUtility.Invalidate(__instance);
+            StrataLevelCoords.Invalidate();
             if (__instance.GetComponent<AtmosphereMapComponent>() == null)
             {
                 __instance.components.Add(new AtmosphereMapComponent(__instance));
@@ -102,6 +103,7 @@ namespace Strata
             {
                 AtmosphereMapComponent.RemovePendingSeeds(map.uniqueID);
                 StrataMapUtility.Invalidate(map);
+                StrataLevelCoords.Invalidate();
             }
         }
     }

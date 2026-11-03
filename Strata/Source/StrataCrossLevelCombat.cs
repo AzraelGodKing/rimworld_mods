@@ -116,8 +116,8 @@ namespace Strata
                 : ToSkyCell(shooterMap, skyMap, sCol);
             if (!IsOpenSky(skyMap, gapOnSky)) return false;
 
-            IntVec3 delta = tCol - sCol;
-            float dist = Mathf.Sqrt(delta.LengthHorizontalSquared + GapHeight * GapHeight);
+            IntVec3 delta = tCol - StrataLevelCoords.Translate(sCol, shooterMap, targetMap);
+            float dist =Mathf.Sqrt(delta.LengthHorizontalSquared + GapHeight * GapHeight);
             float range = verb.EffectiveRange;
             if (range <= 1.42f || dist > range) return false;
             float min = verb.verbProps.minRange;
@@ -141,8 +141,8 @@ namespace Strata
                 if (projDef == null) return false;
 
                 IntVec3 dest = target.Cell;
-                IntVec3 spawn = shooter.Position;
-                spawn.x = Mathf.Clamp(spawn.x, 0, targetMap.Size.x - 1);
+                IntVec3 spawn = StrataLevelCoords.Translate(shooter.Position, shooter.Map, targetMap);
+                spawn.x =Mathf.Clamp(spawn.x, 0, targetMap.Size.x - 1);
                 spawn.z = Mathf.Clamp(spawn.z, 0, targetMap.Size.z - 1);
                 Vector3 launchPos = spawn.ToVector3Shifted();
 
@@ -220,8 +220,7 @@ namespace Strata
 
         private static IntVec3 ToSkyCell(Map fromMap, Map skyMap, IntVec3 cell)
         {
-            if (fromMap == skyMap || fromMap.Size == skyMap.Size) return cell;
-            return StrataBelowRenderer.LowerToSkyCell(fromMap, skyMap, cell);
+            return StrataLevelCoords.Translate(cell, fromMap, skyMap);
         }
 
         private static bool IsOpenSky(Map sky, IntVec3 cell)
@@ -376,7 +375,7 @@ namespace Strata
                 if (projDef == null) return false;
 
                 Map targetMap = shot.targetMap;
-                IntVec3 delta = shooter.Position - target.Position;
+                IntVec3 delta = StrataLevelCoords.Translate(shooter.Position, shooter.Map, targetMap) - target.Position;
                 Vector3 away = delta.ToVector3();
                 away.y = 0f;
                 away = away.sqrMagnitude > 0.001f ? away.normalized : Vector3.forward;

@@ -494,6 +494,18 @@
   <Strata_TickTier_Full>full tick</Strata_TickTier_Full>
   <Strata_TickTier_Lightweight>lightweight</Strata_TickTier_Lightweight>
   <Strata_TickTier_Throttled>hibernating</Strata_TickTier_Throttled>
+  <!-- Level size -->
+  <Strata_Settings_BelowLevelSize>Size of new B levels</Strata_Settings_BelowLevelSize>
+  <Strata_Settings_BelowLevelSizeDesc>Share of the home map a newly opened underground depth covers, centred on its first stairwell. Smaller levels cost fewer cells and less FPS on big maps. Existing levels keep their size. 100% is the old behaviour.</Strata_Settings_BelowLevelSizeDesc>
+  <Strata_Settings_AskBelowLevelSize>Ask for the size when a new depth opens</Strata_Settings_AskBelowLevelSize>
+  <Strata_Settings_AskBelowLevelSizeDesc>When the first stairwell of a new depth finishes, pick 100%, 75% or 50% from a menu showing the cell cost. Otherwise the size above is used (each unopened stairwell also has a size button).</Strata_Settings_AskBelowLevelSizeDesc>
+  <Strata_Settings_CompactRoofDecks>Compact roof decks (A+)</Strata_Settings_CompactRoofDecks>
+  <Strata_Settings_CompactRoofDecksDesc>New A+ decks only cover the built roofs below plus {0} cells, instead of the whole map. A map cannot grow after it opens: roofs built later outside the deck show a warning and get no deck. Existing decks keep their size.</Strata_Settings_CompactRoofDecksDesc>
+  <Strata_LevelSizeTitle>Size of the new level</Strata_LevelSizeTitle>
+  <Strata_LevelSizeOption>{0}% of the home map: {1}</Strata_LevelSizeOption>
+  <Strata_LevelSizeGizmo>Level size: {0}%</Strata_LevelSizeGizmo>
+  <Strata_LevelSizeGizmoDesc>Size of the level this stairwell will open: {0}. Click to cycle 100% / 75% / 50%. Only the first stairwell of a depth sets it.</Strata_LevelSizeGizmoDesc>
+  <Strata_RoofPastDeck>This roof is outside the roof deck above, so it gets no deck. Roof decks keep the size they opened with.</Strata_RoofPastDeck>
   <Strata_TickTier_Tip>Tick tier: {0}.\n\nFull: everything vanilla runs.\nLightweight: wild spawners (and underground weather, wind, snow) skipped.\nHibernating: vacant level, most ambient work runs 1 tick in 4.</Strata_TickTier_Tip>
 
 </LanguageData>

@@ -65,6 +65,11 @@ namespace Strata
                 Messages.Message(reason, this, MessageTypeDefOf.RejectInput, historical: false);
                 return null;
             }
+            if (StrataMod.Settings?.compactRoofDecks == true && this is not IStrataGravshipPortal
+                && StrataLevelCoords.TryPlanRoofDeck(Map, Position, out IntVec3 size, out IntVec3 offset))
+            {
+                return GenerateFramedLevel(size, offset);
+            }
             return PocketMapUtility.GeneratePocketMap(
                 new IntVec3(Map.Size.x, 1, Map.Size.z),
                 def.portal.pocketMapGenerator, null, Map);

@@ -303,15 +303,15 @@ namespace Strata
             return PlanetTile.Invalid;
         }
 
+        // Name kept for callers; every conversion goes through StrataLevelCoords
+        // so framed (smaller) levels line up 1:1 instead of stretching.
         public static IntVec3 ProportionalCell(IntVec3 pos, Map from, Map to)
         {
-            if (from == null || to == null || from.Size.x <= 0 || from.Size.z <= 0)
+            if (from == null || to == null)
             {
                 return to?.Center ?? IntVec3.Invalid;
             }
-            int x = Mathf.Clamp(Mathf.RoundToInt((float)pos.x / from.Size.x * to.Size.x), 0, to.Size.x - 1);
-            int z = Mathf.Clamp(Mathf.RoundToInt((float)pos.z / from.Size.z * to.Size.z), 0, to.Size.z - 1);
-            return new IntVec3(x, 0, z);
+            return StrataLevelCoords.TranslateClamped(pos, from, to);
         }
 
         public static IntVec3 VerticalAlign(IntVec3 pos, Map from, Map to, float searchRadius = 25f, int edgeMargin = 8)

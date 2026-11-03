@@ -321,9 +321,7 @@ namespace Strata
                     IntVec3 cell = new IntVec3(x, 0, z);
                     if (mountainAlignedOnly)
                     {
-                        IntVec3 below = source.Size == map.Size
-                            ? cell
-                            : StrataMapUtility.ProportionalCell(cell, map, source);
+                        IntVec3 below = StrataLevelCoords.Translate(cell, map, source);
                         if (!below.InBounds(source) || !StrataRockUtility.CellIsMountainMass(source, below))
                         {
                             continue;

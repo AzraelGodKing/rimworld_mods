@@ -253,7 +253,7 @@ namespace Strata
             }
             if (tmpTargets.Count == 0) return null;
 
-            IntVec3 origin = turret.Position;
+            IntVec3 origin = StrataLevelCoords.Translate(turret.Position, turret.Map, targetMap);
             tmpTargets.Sort((a, b) =>
                 (a.Position - origin).LengthHorizontalSquared.CompareTo((b.Position - origin).LengthHorizontalSquared));
 
@@ -381,7 +381,7 @@ namespace Strata
 
         private static void FaceTarget(Building_Turret turret, Entry e)
         {
-            IntVec3 delta = e.target.Cell - turret.Position;
+            IntVec3 delta = e.target.Cell - StrataLevelCoords.Translate(turret.Position, turret.Map, e.targetMap);
             Vector3 v = delta.ToVector3();
             if (v.sqrMagnitude <= 0.01f) return;
             float angle = v.AngleFlat();
