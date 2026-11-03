@@ -21,6 +21,9 @@
 
   <Strata_ShaftFluid_VefChemfuel.label>竖井化合燃料接头</Strata_ShaftFluid_VefChemfuel.label>
   <Strata_ShaftFluid_VefChemfuel.description>在楼层间传输 Vanilla Chemfuel Expanded 管道网络。建在竖井旁，并在每层把化合燃料管道接到此节点。</Strata_ShaftFluid_VefChemfuel.description>
+  <!-- 3.12.0: machine-translated, needs review. -->
+  <Strata_ShaftFluid_VefAuto.label>竖井管道网络接头</Strata_ShaftFluid_VefAuto.label>
+  <Strata_ShaftFluid_VefAuto.description>在楼层间连接所有 Vanilla Expanded Framework 管道网络，包括 Strata 没有专用接头的模组网络。建在竖井旁，并在每层把各网络的管道接到此接头。每个网络都可以单独断开。</Strata_ShaftFluid_VefAuto.description>
 
   <Strata_ShaftFluid_RimefellerCrude.label>竖井原油接头</Strata_ShaftFluid_RimefellerCrude.label>
   <Strata_ShaftFluid_RimefellerCrude.description>在楼层间传输 Rimefeller 原油管道。建在竖井旁，并在每层把原油管道接到此节点。</Strata_ShaftFluid_RimefellerCrude.description>

@@ -486,4 +486,36 @@
   <Strata_GFM_BodyguardOtherFloor>Охранять кого-то на другом уровне</Strata_GFM_BodyguardOtherFloor>
   <Strata_GFM_BodyguardOtherFloorDesc>Идти за ним по лестницам. Смена уровня не снимает охрану.</Strata_GFM_BodyguardOtherFloorDesc>
 
+  <!-- 3.12.0: machine-translated, needs review by a native speaker. -->
+  <Strata_Settings_LightweightLevels>Облегчённый расчёт занятых уровней</Strata_Settings_LightweightLevels>
+  <Strata_Settings_LightweightLevelsDesc>Уровни A+ и B+ пропускают ванильные системы, которые там ничего не делают: появление диких животных и растений на всех уровнях, а также погоду, ветер и снег/износ под землёй. Газы, дым, затопление, шум добычи, преследование рейдеров, электричество, температура и погода на крышах продолжают работать. Выключите, чтобы каждый уровень считался как домашняя карта.</Strata_Settings_LightweightLevelsDesc>
+  <Strata_TickTier_Full>полный расчёт</Strata_TickTier_Full>
+  <Strata_TickTier_Lightweight>облегчённый</Strata_TickTier_Lightweight>
+  <Strata_TickTier_Throttled>спящий</Strata_TickTier_Throttled>
+  <Strata_TickTier_Tip>Режим расчёта: {0}.\n\nПолный: работает всё ванильное.\nОблегчённый: пропускается появление дикой природы (и под землёй погода, ветер, снег).\nСпящий: пустой уровень, большая часть фоновых расчётов идёт 1 тик из 4.</Strata_TickTier_Tip>
+  <Strata_Settings_TabOptions>Настройки</Strata_Settings_TabOptions>
+  <Strata_Settings_TabDiagnostics>Диагностика</Strata_Settings_TabDiagnostics>
+  <Strata_Settings_TabDiagnosticsTripped>Диагностика (отключено: {0})</Strata_Settings_TabDiagnosticsTripped>
+  <Strata_Diag_Header>Каждая система Strata отключается сама после повторных ошибок. Ваниль и остальные системы продолжают работать. «Перезапустить» даёт системе ещё одну попытку; перезапуск игры включает всё снова. Известные проблемы: About/known-issues.json.</Strata_Diag_Header>
+  <Strata_Diag_RearmAll>Перезапустить все</Strata_Diag_RearmAll>
+  <Strata_Diag_Rearm>Перезапустить</Strata_Diag_Rearm>
+  <Strata_Diag_Healthy>ОК</Strata_Diag_Healthy>
+  <Strata_Diag_Errors>Ошибок: {0}, работает</Strata_Diag_Errors>
+  <Strata_Diag_Tripped>ВЫКЛ после ошибок: {0}</Strata_Diag_Tripped>
+  <Strata_Diag_LastError>{0} назад: {1}</Strata_Diag_LastError>
+  <Strata_LevelGenTripped>Strata отключила создание уровней после повторных ошибок. См. Настройки модов > Диагностика.</Strata_LevelGenTripped>
+  <Strata_Settings_GenericScan>Общий поиск работы на других этажах (прототип)</Strata_Settings_GenericScan>
+  <Strata_Settings_GenericScanDesc>Экспериментально. Если колонист не находит на своём уровне работу, еду, отдых или медицинскую кровать, Strata запускает собственный поиск работы игры на связанных уровнях и отправляет его к первой найденной настоящей работе. Пока включено, заменяет передачу работы, еды, отдыха и пациентов. Сон, медитация, переноска пешек, ритуалы, питомцы и роботы сохраняют свои передачи. По умолчанию выключено.</Strata_Settings_GenericScanDesc>
+  <Strata_Settings_BelowLevelSize>Размер новых уровней B</Strata_Settings_BelowLevelSize>
+  <Strata_Settings_BelowLevelSizeDesc>Доля домашней карты, которую покрывает новая подземная глубина, с центром на её первой лестнице. Меньшие уровни содержат меньше клеток и меньше нагружают FPS на больших картах. Существующие уровни сохраняют свой размер. 100% — прежнее поведение.</Strata_Settings_BelowLevelSizeDesc>
+  <Strata_Settings_AskBelowLevelSize>Спрашивать размер при открытии новой глубины</Strata_Settings_AskBelowLevelSize>
+  <Strata_Settings_AskBelowLevelSizeDesc>Когда первая лестница новой глубины достроена, выберите 100%, 75% или 50% в меню с количеством клеток. Иначе используется размер выше (у каждой неоткрытой лестницы также есть кнопка размера).</Strata_Settings_AskBelowLevelSizeDesc>
+  <Strata_Settings_CompactRoofDecks>Компактные палубы крыш (A+)</Strata_Settings_CompactRoofDecks>
+  <Strata_Settings_CompactRoofDecksDesc>Новые палубы A+ покрывают только построенные крыши внизу плюс {0} клеток, а не всю карту. Крыши, построенные позже за пределами палубы, вызывают предупреждение и не получают палубы. Существующие палубы сохраняют свой размер.</Strata_Settings_CompactRoofDecksDesc>
+  <Strata_LevelSizeTitle>Размер нового уровня</Strata_LevelSizeTitle>
+  <Strata_LevelSizeOption>{0}% домашней карты: {1}</Strata_LevelSizeOption>
+  <Strata_LevelSizeGizmo>Размер уровня: {0}%</Strata_LevelSizeGizmo>
+  <Strata_LevelSizeGizmoDesc>Размер уровня, который откроет эта лестница: {0}. Нажмите, чтобы переключать 100% / 75% / 50%. Размер задаёт только первая лестница глубины.</Strata_LevelSizeGizmoDesc>
+  <Strata_RoofPastDeck>Эта крыша за пределами палубы выше, поэтому палубы над ней нет. Палубы крыш сохраняют размер, с которым открылись.</Strata_RoofPastDeck>
+
 </LanguageData>

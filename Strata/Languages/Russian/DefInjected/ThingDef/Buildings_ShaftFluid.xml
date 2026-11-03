@@ -23,6 +23,9 @@
 
   <Strata_ShaftFluid_VefChemfuel.label>шахтный химтопливный узел</Strata_ShaftFluid_VefChemfuel.label>
   <Strata_ShaftFluid_VefChemfuel.description>Передаёт трубопроводные сети Vanilla Chemfuel Expanded между уровнями. Постройте рядом с шахтой и подключите химтопливные трубы к этому узлу на каждом этаже.</Strata_ShaftFluid_VefChemfuel.description>
+  <!-- 3.12.0: machine-translated, needs review. -->
+  <Strata_ShaftFluid_VefAuto.label>шахтный узел трубопроводных сетей</Strata_ShaftFluid_VefAuto.label>
+  <Strata_ShaftFluid_VefAuto.description>Связывает между уровнями все трубопроводные сети Vanilla Expanded Framework, включая сети модов, для которых у Strata нет отдельного узла. Постройте рядом с шахтой и подключите трубы каждой сети к этому узлу на каждом этаже. Каждую сеть можно отключить отдельно.</Strata_ShaftFluid_VefAuto.description>
 
   <Strata_ShaftFluid_RimefellerCrude.label>шахтный нефтяной узел</Strata_ShaftFluid_RimefellerCrude.label>
   <Strata_ShaftFluid_RimefellerCrude.description>Передаёт нефтепроводы Rimefeller между уровнями. Постройте рядом с шахтой и подключите нефтяные трубы к этому узлу на каждом этаже.</Strata_ShaftFluid_RimefellerCrude.description>

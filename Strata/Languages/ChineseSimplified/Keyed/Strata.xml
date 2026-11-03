@@ -487,4 +487,36 @@
   <Strata_GFM_BodyguardOtherFloor>护送其他楼层的人</Strata_GFM_BodyguardOtherFloor>
   <Strata_GFM_BodyguardOtherFloorDesc>穿过楼梯跟随。对方换层时不会解除护送。</Strata_GFM_BodyguardOtherFloorDesc>
 
+  <!-- 3.12.0: machine-translated, needs review by a native speaker. -->
+  <Strata_Settings_LightweightLevels>有人楼层的轻量运算</Strata_Settings_LightweightLevels>
+  <Strata_Settings_LightweightLevelsDesc>A+ 和 B+ 楼层跳过在那里没有作用的原版系统：所有楼层的野生动物与植物生成，以及地下的天气、风和积雪/损耗。气体、烟雾、洪水、采矿噪音、袭击追击、电力、温度和屋顶甲板天气照常运行。关闭后每个楼层都像主地图一样完整运算。</Strata_Settings_LightweightLevelsDesc>
+  <Strata_TickTier_Full>完整运算</Strata_TickTier_Full>
+  <Strata_TickTier_Lightweight>轻量</Strata_TickTier_Lightweight>
+  <Strata_TickTier_Throttled>休眠</Strata_TickTier_Throttled>
+  <Strata_TickTier_Tip>运算等级：{0}。\n\n完整：原版所有系统都运行。\n轻量：跳过野生生成（以及地下的天气、风、积雪）。\n休眠：无人楼层，大部分环境运算每 4 刻运行 1 次。</Strata_TickTier_Tip>
+  <Strata_Settings_TabOptions>选项</Strata_Settings_TabOptions>
+  <Strata_Settings_TabDiagnostics>诊断</Strata_Settings_TabDiagnostics>
+  <Strata_Settings_TabDiagnosticsTripped>诊断（{0} 项已关闭）</Strata_Settings_TabDiagnosticsTripped>
+  <Strata_Diag_Header>Strata 的每个系统在反复出错后会自行关闭。原版和其他系统继续运行。"重新启用"会让该系统再试一次；重启游戏会重新启用所有系统。已知问题：About/known-issues.json。</Strata_Diag_Header>
+  <Strata_Diag_RearmAll>全部重新启用</Strata_Diag_RearmAll>
+  <Strata_Diag_Rearm>重新启用</Strata_Diag_Rearm>
+  <Strata_Diag_Healthy>正常</Strata_Diag_Healthy>
+  <Strata_Diag_Errors>{0} 个错误，仍在运行</Strata_Diag_Errors>
+  <Strata_Diag_Tripped>{0} 个错误后已关闭</Strata_Diag_Tripped>
+  <Strata_Diag_LastError>{0}前：{1}</Strata_Diag_LastError>
+  <Strata_LevelGenTripped>Strata 在反复出错后关闭了楼层生成。请查看模组选项 > 诊断。</Strata_LevelGenTripped>
+  <Strata_Settings_GenericScan>通用跨楼层工作扫描（原型）</Strata_Settings_GenericScan>
+  <Strata_Settings_GenericScanDesc>实验性功能。当殖民者在所在楼层找不到工作、食物、娱乐或医疗床位时，Strata 会在相连楼层上运行游戏自身的工作搜索，并把他们派去找到的第一个真实工作。开启时取代工作、食物、娱乐和病人中继。休息、冥想、搬运人员、仪式、宠物和机器人保留各自的中继。默认关闭。</Strata_Settings_GenericScanDesc>
+  <Strata_Settings_BelowLevelSize>新 B 层的大小</Strata_Settings_BelowLevelSize>
+  <Strata_Settings_BelowLevelSizeDesc>新开启的地下深度占主地图的比例，以其第一个楼梯井为中心。较小的楼层格子更少，在大地图上更省帧数。已有楼层保持原大小。100% 为旧行为。</Strata_Settings_BelowLevelSizeDesc>
+  <Strata_Settings_AskBelowLevelSize>开启新深度时询问大小</Strata_Settings_AskBelowLevelSize>
+  <Strata_Settings_AskBelowLevelSizeDesc>新深度的第一个楼梯井完成时，从显示格子成本的菜单中选择 100%、75% 或 50%。否则使用上面的大小（每个未开启的楼梯井也有大小按钮）。</Strata_Settings_AskBelowLevelSizeDesc>
+  <Strata_Settings_CompactRoofDecks>紧凑屋顶甲板（A+）</Strata_Settings_CompactRoofDecks>
+  <Strata_Settings_CompactRoofDecksDesc>新 A+ 甲板只覆盖下方已建屋顶外加 {0} 格，而不是整张地图。之后在甲板外建造的屋顶会显示警告且没有甲板。已有甲板保持原大小。</Strata_Settings_CompactRoofDecksDesc>
+  <Strata_LevelSizeTitle>新楼层的大小</Strata_LevelSizeTitle>
+  <Strata_LevelSizeOption>主地图的 {0}%：{1}</Strata_LevelSizeOption>
+  <Strata_LevelSizeGizmo>楼层大小：{0}%</Strata_LevelSizeGizmo>
+  <Strata_LevelSizeGizmoDesc>此楼梯井将开启的楼层大小：{0}。点击在 100% / 75% / 50% 间切换。只有该深度的第一个楼梯井决定大小。</Strata_LevelSizeGizmoDesc>
+  <Strata_RoofPastDeck>此屋顶在上方屋顶甲板之外，因此没有甲板。屋顶甲板保持开启时的大小。</Strata_RoofPastDeck>
+
 </LanguageData>

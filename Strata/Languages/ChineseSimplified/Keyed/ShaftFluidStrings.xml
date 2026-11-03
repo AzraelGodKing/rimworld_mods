@@ -9,4 +9,8 @@
   <!-- Patch_ShaftFluidDeconstruct -->
   <Strata_FluidLink_DeconstructBlocked>它由上层节点驱动。</Strata_FluidLink_DeconstructBlocked>
 
+  <!-- 3.12.0: machine-translated, needs review. -->
+  <Strata_FluidTie_LinkToggle>连接{0}</Strata_FluidTie_LinkToggle>
+  <Strata_FluidTie_LinkToggleDesc>开启时，此节点在本层与下层之间输送{0}。关闭可只切断这里的这一个网络；节点上的其他网络继续流动。</Strata_FluidTie_LinkToggleDesc>
+
 </LanguageData>

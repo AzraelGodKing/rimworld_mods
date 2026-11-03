@@ -9,4 +9,8 @@
   <!-- Patch_ShaftFluidDeconstruct -->
   <Strata_FluidLink_DeconstructBlocked>Он управляется узлом на уровне выше.</Strata_FluidLink_DeconstructBlocked>
 
+  <!-- 3.12.0: machine-translated, needs review. -->
+  <Strata_FluidTie_LinkToggle>Связь: {0}</Strata_FluidTie_LinkToggle>
+  <Strata_FluidTie_LinkToggleDesc>Когда включено, этот узел передаёт {0} между этим уровнем и уровнем ниже. Выключите, чтобы перекрыть здесь только эту сеть; остальные сети узла продолжают работать.</Strata_FluidTie_LinkToggleDesc>
+
 </LanguageData>
