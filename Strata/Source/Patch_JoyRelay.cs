@@ -11,7 +11,7 @@ namespace Strata
     [HarmonyPatch(typeof(JobGiver_GetJoy), "TryGiveJob")]
     public static class Patch_JoyRelay
     {
-        public static void Postfix(Pawn pawn, ref Job __result)
+        public static void Postfix(JobGiver_GetJoy __instance, Pawn pawn, ref Job __result)
         {
             if (__result != null || !PawnRelay.CanLeaveWorkForNeed(pawn))
             {
@@ -23,6 +23,11 @@ namespace Strata
             }
             if (StrataMod.Settings == null || !StrataMod.Settings.joyRelayEnabled)
             {
+                return;
+            }
+            if (CrossFloorJobScan.Replaces(RelayPurpose.Joy))
+            {
+                __result = CrossFloorJobScan.TryScanJobGiver(pawn, __instance, RelayPurpose.Joy, 2);
                 return;
             }
             var links = new List<LevelGraph.LevelLink>(LevelGraph.ReachableLevels(pawn.Map));

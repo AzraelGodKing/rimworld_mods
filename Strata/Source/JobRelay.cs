@@ -70,7 +70,8 @@ namespace Strata
         }
 
         // One decision for every work-seeking think pass.
-        public static void Apply(Pawn pawn, ThinkNode node, bool emergency, ref ThinkResult result)
+        public static void Apply(Pawn pawn, ThinkNode node, bool emergency, ref ThinkResult result,
+            JobIssueParams jobParams = default)
         {
             if (!CanConsider(pawn) || node == null)
             {
@@ -141,6 +142,20 @@ namespace Strata
 
             if (PawnRelay.IsColonistWorkScanCooldown(pawn))
             {
+                return;
+            }
+
+            if (CrossFloorJobScan.Replaces(RelayPurpose.Work) && node is JobGiver_Work workGiver)
+            {
+                Job hop = CrossFloorJobScan.TryScanWork(pawn, workGiver, jobParams);
+                if (hop != null)
+                {
+                    result = new ThinkResult(hop, node, JobTag.MiscWork);
+                }
+                else
+                {
+                    PawnRelay.TouchColonistWorkScanEmpty(pawn);
+                }
                 return;
             }
 
@@ -449,7 +464,8 @@ namespace Strata
 
         private static bool CanConsider(Pawn pawn)
         {
-            return pawn != null && pawn.Spawned && !pawn.Dead && !pawn.Downed && pawn.Map != null && pawn.jobs != null;
+            return pawn != null && pawn.Spawned && !pawn.Dead && !pawn.Downed && pawn.Map != null && pawn.jobs != null
+                && !CrossFloorJobScan.IsScanning;
         }
 
         private static Map FindMap(int mapId)
