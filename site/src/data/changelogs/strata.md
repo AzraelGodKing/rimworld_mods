@@ -1,16 +1,19 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.11.8` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.8 loaded from ... (modified ...); pathavoid-incompat-v1.` via `ModVersionLog.Write`.
+**Version:** `3.11.8` in `About.xml` `modVersion`. Player.log: `[Strata] v3.11.8 loaded from ... (modified ...); trade-args-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `pathavoid-incompat-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `trade-args-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [3.11.8]
 
-Player-facing version **3.11.8** (`About.xml` `modVersion`). Stamp `pathavoid-incompat-v1`.
+Player-facing version **3.11.8** (`About.xml` `modVersion`). Stamp `trade-args-v1`.
 
 ### Changed
 - **Pathfinding Avoidance is incompatible** (`llunak.PathfindingAvoidance`): added to `About.xml` `incompatibleWith`, so the mod list warns. If it is still loaded, Strata logs an error at startup and sends an "Incompatible mod" letter on load. Do not run it with Strata.
+
+### Fixed
+- **Orbital-trade patches on 1.6:** the `countNeeded` → `debt` and `dropCenter` → `dropSpot` renames in `TradeUtility.LaunchThingsOfType` / `SpawnDropPod` shipped in a 1.6 update (present in 1.6.4871), not only 1.7. 3.11.7 used the new names only in the 1.7 DLL, so the 1.6 DLL threw `Parameter "countNeeded" not found` at boot. Both prefixes now bind those arguments by position (`__1`, `__0`), so they apply on every version.
 
 ## [3.11.7]
 

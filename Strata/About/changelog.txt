@@ -6,5 +6,10 @@
 [*] [b]Pathfinding Avoidance is now marked incompatible[/b] — the mod list warns about it, and Strata logs an error and sends a letter if it is still loaded. Do not run it with Strata.
 [/list]
 
-[i]Build stamp (Player.log): pathavoid-incompat-v1[/i]
+[b]Fixed[/b]
+[list]
+[*] [b]Orbital trade across floors works on RimWorld 1.6 again[/b] — paying with silver from linked floors and landing drop pods on them failed to apply at boot ("Parameter countNeeded not found"). The renamed TradeUtility arguments arrived in a 1.6 update, not just 1.7, and the fix now covers every version.
+[/list]
+
+[i]Build stamp (Player.log): trade-args-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
