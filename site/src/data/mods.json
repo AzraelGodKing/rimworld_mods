@@ -262,7 +262,7 @@
       "overview": [
         "One home, many floors. Carve rock under your colony, frame a roof deck above it, and treat every floor as one settlement. Colonists commute for work, food, rest, hauling, medicine, combat, and construction. Heat, power, smoke, and (optionally) pipes follow the shafts with them.",
         "Tag floors as Farm, Freezer, Workshop, Barracks, Quarry, Storage, or Hospital so hauls and rest tilt the right way. Stamp walls onto the next level. Call the elevator. See and shoot through open sky. Odyssey gravship stacks stay linked through launch and land.",
-        "Odyssey unlocks gravship stairwells and ship stacks only — dig, tower decks, atmosphere, and colony logistics work without the DLC. Default level cap is ±2 (Unlimited off). Do not run alongside AASB, AASB 2, MultiFloors, or Pathfinding Avoidance."
+        "Odyssey unlocks gravship stairwells and ship stacks only — dig, tower decks, atmosphere, and colony logistics work without the DLC. Default level cap is ±2 (Unlimited off). Do not run alongside AASB, AASB 2, MultiFloors, True Z-Levels, True Levels, Z-Levels, or Pathfinding Avoidance."
       ],
       "featureTabs": [
         {
@@ -383,7 +383,9 @@
         ],
         "incompatibleWith": [
           { "name": "MultiFloors", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3384660931", "note": "Do not run alongside Strata" },
-          { "name": "Z-Levels", "note": "Do not run alongside Strata" },
+          { "name": "Z-Levels", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2127428910", "note": "Do not run alongside Strata" },
+          { "name": "True Z-Levels", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3827217277", "note": "Do not run alongside Strata" },
+          { "name": "True Levels", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3827919030", "note": "Do not run alongside Strata" },
           { "name": "As Above So Below", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3767572810", "note": "Deprecated — replaced by As above, So below 2. Do not run alongside Strata" },
           { "name": "As above, So below 2", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3776015553", "note": "Do not run alongside Strata (replaces the original AASB)" },
           { "name": "Pathfinding Avoidance", "url": "https://github.com/llunak/rimworld-pathfindingavoidance", "note": "Do not run alongside Strata" }

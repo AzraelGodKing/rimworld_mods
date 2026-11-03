@@ -13,6 +13,9 @@
     <li>astryl.AsAboveSoBelow2</li>
     <li>telardo.MultiFloors</li>
     <li>telardo.MultiFloorsDev</li>
+    <li>gamma.truezlevels</li>
+    <li>TrueLevels.Mod</li>
+    <li>ZLevels1.1</li>
     <li>llunak.PathfindingAvoidance</li>
   </incompatibleWith>
   <modDependencies>
@@ -53,7 +56,7 @@
   </loadAfter>
   <description>Dig down. Build up. One colony — many floors. Colonists commute for work, food, rest, hauling, combat, and construction. Odyssey optional for gravship stacks.
 
-Do not run alongside AASB, AASB 2, MultiFloors, or Pathfinding Avoidance. Requires Harmony. RimWorld 1.6 and 1.7. Safe to add mid-save.
+Do not run alongside AASB, AASB 2, MultiFloors, True Z-Levels, True Levels, Z-Levels, or Pathfinding Avoidance. Requires Harmony. RimWorld 1.6 and 1.7. Safe to add mid-save.
 
 Full notes: https://azraelgodking.github.io/rimworld_mods/strata
 Discord: https://discord.gg/Vwh2y7qMXv</description>
