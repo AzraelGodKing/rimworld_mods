@@ -45,6 +45,8 @@ namespace Strata
         public bool restRelayEnabled = true;
         public bool medicalRelayEnabled = true;
         public bool joyRelayEnabled = true;
+        // Prototype: vanilla job scan on linked levels replaces work/food/joy/patient relays.
+        public bool genericCrossFloorScan = false;
         public bool caravanPullEnabled = true;
         public bool hibernateEmptyLevels = true;
         public bool reduceBackgroundLevels = true;
@@ -132,6 +134,7 @@ namespace Strata
             Scribe_Values.Look(ref restRelayEnabled, "restRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref medicalRelayEnabled, "medicalRelayEnabled", defaultValue: true);
             Scribe_Values.Look(ref joyRelayEnabled, "joyRelayEnabled", defaultValue: true);
+            Scribe_Values.Look(ref genericCrossFloorScan, "genericCrossFloorScan", defaultValue: false);
             Scribe_Values.Look(ref caravanPullEnabled, "caravanPullEnabled", defaultValue: true);
             Scribe_Values.Look(ref hibernateEmptyLevels, "hibernateEmptyLevels", defaultValue: true);
             Scribe_Values.Look(ref reduceBackgroundLevels, "reduceBackgroundLevels", defaultValue: true);
@@ -369,6 +372,8 @@ namespace Strata
                 "Strata_Settings_MedicalRelayDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_JoyRelay".Translate(), ref Settings.joyRelayEnabled,
                 "Strata_Settings_JoyRelayDesc".Translate());
+            listing.CheckboxLabeled("Strata_Settings_GenericScan".Translate(), ref Settings.genericCrossFloorScan,
+                "Strata_Settings_GenericScanDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_CaravanPull".Translate(), ref Settings.caravanPullEnabled,
                 "Strata_Settings_CaravanPullDesc".Translate());
             listing.CheckboxLabeled("Strata_Settings_CrossLevelRituals".Translate(), ref Settings.crossLevelRitualsEnabled,

@@ -494,6 +494,10 @@
   <Strata_TickTier_Full>full tick</Strata_TickTier_Full>
   <Strata_TickTier_Lightweight>lightweight</Strata_TickTier_Lightweight>
   <Strata_TickTier_Throttled>hibernating</Strata_TickTier_Throttled>
+  <!-- Generic cross-floor scan -->
+  <Strata_Settings_GenericScan>Generic cross-floor job scan (prototype)</Strata_Settings_GenericScan>
+  <Strata_Settings_GenericScanDesc>Experimental. When a colonist finds no work, food, recreation or medical bed on their level, Strata runs the game's own job search on the linked levels and sends them to the first real job it finds. Replaces the work, food, joy and patient relays while on. Rest, meditation, carrying pawns, rituals, pets and robots keep their own relays. Off by default.</Strata_Settings_GenericScanDesc>
+
   <!-- Level size -->
   <Strata_Settings_BelowLevelSize>Size of new B levels</Strata_Settings_BelowLevelSize>
   <Strata_Settings_BelowLevelSizeDesc>Share of the home map a newly opened underground depth covers, centred on its first stairwell. Smaller levels cost fewer cells and less FPS on big maps. Existing levels keep their size. 100% is the old behaviour.</Strata_Settings_BelowLevelSizeDesc>

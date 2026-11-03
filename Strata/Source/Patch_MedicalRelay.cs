@@ -11,7 +11,7 @@ namespace Strata
     [HarmonyPatch(typeof(JobGiver_PatientGoToBed), "TryGiveJob")]
     public static class Patch_MedicalRelay_Patient
     {
-        public static void Postfix(Pawn pawn, ref Job __result)
+        public static void Postfix(JobGiver_PatientGoToBed __instance, Pawn pawn, ref Job __result)
         {
             if (__result != null || !NeedsMedicalBed(pawn))
             {
@@ -19,6 +19,14 @@ namespace Strata
             }
             if (StrataMod.Settings == null || !StrataMod.Settings.medicalRelayEnabled)
             {
+                return;
+            }
+            if (CrossFloorJobScan.Replaces(RelayPurpose.Medical))
+            {
+                if (PawnRelay.CanRelay(pawn))
+                {
+                    __result = CrossFloorJobScan.TryScanJobGiver(pawn, __instance, RelayPurpose.Medical, 2);
+                }
                 return;
             }
             if (!PawnRelay.CanRelay(pawn))
@@ -60,7 +68,7 @@ namespace Strata
     {
         public static void Postfix(JobGiver_Work __instance, Pawn pawn, ref ThinkResult __result)
         {
-            if (__result.Job != null || __instance.emergency)
+            if (__result.Job != null || __instance.emergency || CrossFloorJobScan.Replaces(RelayPurpose.Medical))
             {
                 return;
             }

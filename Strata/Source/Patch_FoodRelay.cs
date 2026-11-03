@@ -10,7 +10,7 @@ namespace Strata
     [HarmonyPatch(typeof(JobGiver_GetFood), "TryGiveJob")]
     public static class Patch_FoodRelay
     {
-        public static void Postfix(Pawn pawn, ref Job __result)
+        public static void Postfix(JobGiver_GetFood __instance, Pawn pawn, ref Job __result)
         {
             if (__result != null || !PawnRelay.CanLeaveWorkForNeed(pawn))
             {
@@ -22,6 +22,11 @@ namespace Strata
             }
             if (StrataMod.Settings != null && !StrataMod.Settings.foodRelayEnabled)
             {
+                return;
+            }
+            if (CrossFloorJobScan.Replaces(RelayPurpose.Food))
+            {
+                __result = CrossFloorJobScan.TryScanJobGiver(pawn, __instance, RelayPurpose.Food, 3);
                 return;
             }
             var links = LevelGraph.CopyLinks(LevelGraph.ReachableLevels(pawn.Map));

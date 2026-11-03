@@ -150,7 +150,8 @@ namespace Strata
         // work cooldown and the in-progress EnterPortal do not apply.
         public static bool CanLeaveWorkForNeed(Pawn pawn)
         {
-            if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed || pawn.Drafted)
+            if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed || pawn.Drafted
+                || CrossFloorJobScan.IsScanning)
             {
                 return false;
             }
@@ -179,7 +180,9 @@ namespace Strata
         // allowMentalState: binge/berserk chase (A2) — normal relays stay blocked.
         public static bool CanRelayBasics(Pawn pawn, bool allowMentalState = false)
         {
-            if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed)
+            // A generic cross-floor scan is running vanilla with the pawn
+            // parked on another map: no relay may fire from that position.
+            if (pawn == null || !pawn.Spawned || pawn.Dead || pawn.Downed || CrossFloorJobScan.IsScanning)
             {
                 return false;
             }
