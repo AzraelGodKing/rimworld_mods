@@ -488,4 +488,12 @@
   <Strata_GFM_BodyguardOtherFloor>Bodyguard someone on another floor</Strata_GFM_BodyguardOtherFloor>
   <Strata_GFM_BodyguardOtherFloorDesc>Follow them through the stairs. Changing floors does not clear the bodyguard.</Strata_GFM_BodyguardOtherFloorDesc>
 
+  <!-- Tick tiers -->
+  <Strata_Settings_LightweightLevels>Lightweight ticking on occupied levels</Strata_Settings_LightweightLevels>
+  <Strata_Settings_LightweightLevelsDesc>A+ and B+ levels skip vanilla systems that do nothing there: wild animal and plant spawners on every level, and weather, wind and snow/deterioration underground. Gas, smoke, flood, mining noise, raid pursuit, power, temperature and roof-deck weather keep running. Turn off to tick every level like the home map.</Strata_Settings_LightweightLevelsDesc>
+  <Strata_TickTier_Full>full tick</Strata_TickTier_Full>
+  <Strata_TickTier_Lightweight>lightweight</Strata_TickTier_Lightweight>
+  <Strata_TickTier_Throttled>hibernating</Strata_TickTier_Throttled>
+  <Strata_TickTier_Tip>Tick tier: {0}.\n\nFull: everything vanilla runs.\nLightweight: wild spawners (and underground weather, wind, snow) skipped.\nHibernating: vacant level, most ambient work runs 1 tick in 4.</Strata_TickTier_Tip>
+
 </LanguageData>

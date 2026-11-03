@@ -4,6 +4,13 @@ using Verse;
 
 namespace Strata
 {
+    public enum LevelTickTier
+    {
+        Full,
+        Lightweight,
+        Throttled,
+    }
+
     // Tracks per-level hibernation for the Levels tab and dev tools.
     public static class StrataLevelPerfUtility
     {
@@ -80,6 +87,45 @@ namespace Strata
                 return true;
             }
             return settings.reduceBackgroundLevels;
+        }
+
+        public static bool LightweightTickEnabled()
+        {
+            StrataSettings settings = StrataMod.Settings;
+            if (settings == null)
+            {
+                return true;
+            }
+            return settings.lightweightOccupiedLevels;
+        }
+
+        // Every A+/B+ pocket level skips the vanilla systems listed in
+        // LevelTicking; vacant ones are additionally throttled.
+        public static bool ShouldTickLightweight(Map map)
+        {
+            return LightweightTickEnabled() && IsStrataPocketLevel(map);
+        }
+
+        public static LevelTickTier TickTier(Map map)
+        {
+            if (IsHibernating(map))
+            {
+                return LevelTickTier.Throttled;
+            }
+            return ShouldTickLightweight(map) ? LevelTickTier.Lightweight : LevelTickTier.Full;
+        }
+
+        public static string TickTierLabel(LevelTickTier tier)
+        {
+            switch (tier)
+            {
+                case LevelTickTier.Throttled:
+                    return "Strata_TickTier_Throttled".Translate();
+                case LevelTickTier.Lightweight:
+                    return "Strata_TickTier_Lightweight".Translate();
+                default:
+                    return "Strata_TickTier_Full".Translate();
+            }
         }
 
         public static bool IsForcedHibernate(Map map)
