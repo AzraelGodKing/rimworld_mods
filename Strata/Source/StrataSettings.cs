@@ -89,9 +89,11 @@ namespace Strata
         public KeyCode viewLevelUpKey = KeyCode.PageUp;
         public KeyCode viewLevelDownKey = KeyCode.PageDown;
 
-        public bool WorkRelayActive => workRelayEnabled && !performanceModeEnabled;
+        public bool WorkRelayActive => workRelayEnabled && !performanceModeEnabled
+            && !StrataFaultGuard.IsTripped(StrataFaultGuard.System.WorkRelay);
 
-        public bool RobotSoftCompatActive => robotSoftCompatEnabled && !performanceModeEnabled;
+        public bool RobotSoftCompatActive => robotSoftCompatEnabled && !performanceModeEnabled
+            && !StrataFaultGuard.IsTripped(StrataFaultGuard.System.RobotSoftCompat);
 
         public bool OffThreadWorkRelayActive =>
             offThreadWorkRelay && WorkRelayActive;

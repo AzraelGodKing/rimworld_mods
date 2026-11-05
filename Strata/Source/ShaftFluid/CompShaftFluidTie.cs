@@ -127,7 +127,7 @@ namespace Strata
             }
             catch (System.Exception e)
             {
-                StrataFaultGuard.Report(StrataFaultGuard.System.ShaftFluid, e.GetType().Name + ": " + e.Message);
+                StrataFaultGuard.Report(StrataFaultGuard.System.ShaftFluid, "shaft fluid tie", e);
             }
         }
 

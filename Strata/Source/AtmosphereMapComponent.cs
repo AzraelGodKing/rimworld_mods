@@ -441,13 +441,19 @@ namespace Strata
             {
                 return;
             }
+            // Tripped: hold every room's gas as it is. Never zero it, so a
+            // re-arm (or restart) resumes from the same atmosphere.
+            if (StrataFaultGuard.IsTripped(StrataFaultGuard.System.Atmosphere))
+            {
+                return;
+            }
             try
             {
                 MapComponentTickInner();
             }
             catch (System.Exception e)
             {
-                StrataFaultGuard.Report(StrataFaultGuard.System.Atmosphere, e.GetType().Name + ": " + e.Message);
+                StrataFaultGuard.Report(StrataFaultGuard.System.Atmosphere, "atmosphere tick", e);
             }
         }
 

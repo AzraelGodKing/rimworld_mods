@@ -9,9 +9,9 @@ namespace Strata
     // stops, and vanilla plus the rest of Strata keep running. The Diagnostics
     // tab in mod options lists health and last error and can re-arm a system.
     //
-    // The first four predate this and also flip their mod option off so the
-    // trip survives a restart; re-arming turns that option back on. The rest
-    // are session-only: a restart re-arms them.
+    // A trip only pauses the system for this session; it never changes mod
+    // options (turning gases off used to zero every room's atmosphere). A
+    // restart or the Diagnostics re-arm button resumes it where it stopped.
     public static class StrataFaultGuard
     {
         public enum System
@@ -48,8 +48,6 @@ namespace Strata
         private static readonly bool[] tripped = new bool[Count];
         private static readonly string[] lastError = new string[Count];
         private static readonly int[] lastErrorTick = new int[Count];
-        private static bool hadNaturalGases;
-        private static bool hadPollutantGases;
 
         public static void ResetSession()
         {
@@ -139,26 +137,6 @@ namespace Strata
             {
                 return;
             }
-            StrataSettings s = StrataMod.Settings;
-            if (s != null)
-            {
-                switch (system)
-                {
-                    case System.WorkRelay:
-                        s.workRelayEnabled = true;
-                        break;
-                    case System.Atmosphere:
-                        s.naturalGasesEnabled |= hadNaturalGases;
-                        s.pollutantGasesEnabled |= hadPollutantGases;
-                        break;
-                    case System.ShaftFluid:
-                        s.shaftFluidEnabled = true;
-                        break;
-                    case System.RobotSoftCompat:
-                        s.robotSoftCompatEnabled = true;
-                        break;
-                }
-            }
             Log.Message("[Strata] Re-armed " + Label(system) + ".");
         }
 
@@ -192,43 +170,11 @@ namespace Strata
 
         private static void ApplyTrip(System system, string detail)
         {
-            StrataSettings s = StrataMod.Settings;
-            switch (system)
-            {
-                case System.WorkRelay:
-                    if (s != null)
-                    {
-                        s.workRelayEnabled = false;
-                    }
-                    break;
-                case System.Atmosphere:
-                    if (s != null)
-                    {
-                        hadNaturalGases = s.naturalGasesEnabled;
-                        hadPollutantGases = s.pollutantGasesEnabled;
-                        s.naturalGasesEnabled = false;
-                        s.pollutantGasesEnabled = false;
-                    }
-                    break;
-                case System.ShaftFluid:
-                    if (s != null)
-                    {
-                        s.shaftFluidEnabled = false;
-                    }
-                    break;
-                case System.RobotSoftCompat:
-                    if (s != null)
-                    {
-                        s.robotSoftCompatEnabled = false;
-                    }
-                    break;
-            }
-
             string label = Label(system);
             Log.Warning("[Strata] Auto-disabled " + label
                 + " after repeated errors"
                 + (detail.NullOrEmpty() ? "." : " while " + detail + ".")
-                + " Vanilla and the rest of Strata keep running. Mod options > Diagnostics can re-arm it.");
+                + " Vanilla and the rest of Strata keep running. Mod options > Diagnostics can re-arm it; a restart also re-arms it.");
             if (Current.ProgramState == ProgramState.Playing)
             {
                 Messages.Message(
