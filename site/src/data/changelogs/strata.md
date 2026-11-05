@@ -1,9 +1,24 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.12.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.12.0 loaded from ... (modified ...); perf-levels-v1.` via `ModVersionLog.Write`.
+**Version:** `3.12.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.12.1 loaded from ... (modified ...); guard-haul-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `perf-levels-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `guard-haul-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.12.1]
+
+Player-facing version **3.12.1** (`About.xml` `modVersion`). Stamp `guard-haul-v1`. No save-format change.
+
+### Fixed
+- **Fault guard no longer wipes the atmosphere:** tripping `Atmosphere` used to set `naturalGasesEnabled` / `pollutantGasesEnabled` false, and the next cycle's `ApplyGasToggleZeros` zeroed every room on every map. `Rearm` also could not restore those options after a restart (trip state is session-only). A trip now only pauses the system for the session and never touches settings: `AtmosphereMapComponent.MapComponentTick` returns early while tripped, and `WorkRelayActive` / `RobotSoftCompatActive` check the trip. Atmosphere, shaft-fluid tie and work-relay errors now pass the exception, so the first one logs a stack trace.
+- **Cross-level haul scan cost:** `WorkGiver_HaulAcrossLevels.PotentialWorkThingsGlobal` yielded every held thing in every lower-priority group, per hauler per scan, whenever a linked level had a higher-priority group. Candidates are now built once per map every 250 ticks (or on a level-graph change), filtered to things a higher-priority linked group `AllowedToAccept`s plus `LevelDemand` defs, and deduped.
+- **Hibernation presence:** `ColonyPresenceCount` now counts every spawned player-faction pawn (colonists, slaves, tame animals, mechs) plus prisoners of the colony and Misc. Robots. Wild animals, visitors and raiders still let a level hibernate.
+- **Atmosphere cycle plan latched:** lite/full mode and the phase count are read once when a cycle starts. Switching the viewed map mid-cycle could skip `FinishAtmosphereCycle` (no `AffectPawns`) or run emitters twice.
+- **Canary cage load:** the cage scribed `contained` under two labels, so saves with only `strataCagedCanary` lost the bird. It now reads `strataCagedBird`, falls back to the old label, and writes one label.
+- **Compact roof decks:** `TryPlanRoofDeck` skips natural roofs (`isNatural`), not only thick ones.
+
+### Changed
+- `Pawn.TicksPerMove` and `MassUtility.Capacity` postfixes compare cached def references and walk the inventory once.
 
 ## [3.12.0]
 
