@@ -232,7 +232,9 @@ namespace Strata
             foreach (IntVec3 cell in source.AllCells)
             {
                 RoofDef roof = roofs.RoofAt(cell);
-                if (roof == null || roof.isThickRoof)
+                // Constructed roofs only: natural thin rock roof near
+                // mountains would stretch the deck over bare cave ceiling.
+                if (roof == null || roof.isNatural)
                 {
                     continue;
                 }

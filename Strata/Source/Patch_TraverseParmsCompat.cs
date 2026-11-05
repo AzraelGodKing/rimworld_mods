@@ -7,8 +7,9 @@ namespace Strata
 {
     // RimWorld 1.6 added avoidPersistentDanger to TraverseParms.For(Pawn, …).
     // Mods compiled against the old 6-arg signature throw MissingMethodException
-    // inside JobGiver_Work / AIRobot work seekers and leave pawns (incl. mechs
-    // and Misc. Robots) idle after undraft. Swallow that specific failure so
+    // inside job givers (e.g. AIRobot work seekers) and leave pawns (incl.
+    // mechs and Misc. Robots) idle after undraft. JobGiver_Work is a plain
+    // ThinkNode, not covered here; vanilla already catches per-WorkGiver errors. Swallow that specific failure so
     // Strata relays and vanilla jobs keep running; the outdated mod still needs
     // an update.
     [HarmonyPatch(typeof(ThinkNode_JobGiver), nameof(ThinkNode_JobGiver.TryIssueJobPackage))]
@@ -29,8 +30,7 @@ namespace Strata
             }
 
             string message = mme.Message ?? string.Empty;
-            if (message.IndexOf("TraverseParms", StringComparison.Ordinal) < 0
-                && message.IndexOf("TraverseParms.For", StringComparison.Ordinal) < 0)
+            if (message.IndexOf("TraverseParms", StringComparison.Ordinal) < 0)
             {
                 return __exception;
             }
