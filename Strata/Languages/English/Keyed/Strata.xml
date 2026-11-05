@@ -33,7 +33,7 @@
   <Strata_Settings_RobotWorkRelayDesc>When a bot finds no local haul/clean work, send it through stairwells toward linked levels that have work. Also lets bots leave an allowed-area restriction (e.g. underground station) to work upstairs. Off by default.</Strata_Settings_RobotWorkRelayDesc>
   <Strata_Settings_ShaftFluid>Shaft fluid junctions</Strata_Settings_ShaftFluid>
   <Strata_Settings_ShaftFluidDesc>Cross-level fluid ties (water, helixien, coolant, etc.). Auto-disabled if repeated errors trip the fault guard.</Strata_Settings_ShaftFluidDesc>
-  <Strata_FaultGuardTripped>Strata auto-disabled {0} after repeated errors. Re-enable in mod options if needed.</Strata_FaultGuardTripped>
+  <Strata_FaultGuardTripped>Strata auto-disabled {0} after repeated errors. Re-arm it in mod options > Diagnostics, or restart the game.</Strata_FaultGuardTripped>
   <Strata_Settings_FoodRelay>Food relay</Strata_Settings_FoodRelay>
   <Strata_Settings_FoodRelayDesc>Hungry colonists go find a meal on another level.</Strata_Settings_FoodRelayDesc>
   <Strata_Settings_RestRelay>Rest relay</Strata_Settings_RestRelay>
@@ -83,7 +83,7 @@
   <Strata_Settings_B1InfestationsDesc>When off, infestations (including deep-drill style and Strata deep raids) cannot fire on any underground Strata floor (B1 and deeper). Surface and A+ are unchanged.</Strata_Settings_B1InfestationsDesc>
   <Strata_Place_QuestMapNoShaft>Don't dig Strata shafts on temporary quest maps (Ancient Urban Ruins, world sites, etc.) — abandoning the site orphans the pocket levels. Use Strata on your home colony; use the other mod's floors for exploration.</Strata_Place_QuestMapNoShaft>
   <Strata_Settings_HibernateEmpty>Hibernate empty levels</Strata_Settings_HibernateEmpty>
-  <Strata_Settings_HibernateEmptyDesc>Vacant A+ and B+ pocket maps run vanilla ambient sims 1 tick in 4 and Strata gas 1 cycle in 8. Fully live on the map you are viewing or any level with pawns on it.</Strata_Settings_HibernateEmptyDesc>
+  <Strata_Settings_HibernateEmptyDesc>Vacant A+ and B+ pocket maps run vanilla ambient sims 1 tick in 4 and Strata gas 1 cycle in 8. Fully live on the map you are viewing or any level holding colonists, tame animals, mechs or prisoners.</Strata_Settings_HibernateEmptyDesc>
   <Strata_Settings_ReduceBackground>Reduce background levels</Strata_Settings_ReduceBackground>
   <Strata_Settings_ReduceBackgroundDesc>When colonists are on a linked level you are not viewing, Strata gas and O₂/CO₂ run 8× slower and skip overlay rebuilds. The map you are looking at stays full speed.</Strata_Settings_ReduceBackgroundDesc>
   <Strata_Settings_PerformanceMode>Performance mode (master kill-switch)</Strata_Settings_PerformanceMode>

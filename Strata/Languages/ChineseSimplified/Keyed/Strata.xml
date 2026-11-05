@@ -33,7 +33,7 @@
   <Strata_Settings_RobotWorkRelayDesc>当机器人在本地找不到搬运/清洁工作时，经楼梯井前往有工作的相连楼层。默认关闭——需要机器人跨层通勤时再启用。</Strata_Settings_RobotWorkRelayDesc>
   <Strata_Settings_ShaftFluid>竖井流体接头</Strata_Settings_ShaftFluid>
   <Strata_Settings_ShaftFluidDesc>跨层流体连接。反复出错时会由故障保护自动关闭。</Strata_Settings_ShaftFluidDesc>
-  <Strata_FaultGuardTripped>Strata 因反复出错已自动关闭 {0}。如需可在模组选项中重新启用。</Strata_FaultGuardTripped>
+  <Strata_FaultGuardTripped>Strata 因反复出错已自动关闭 {0}。可在模组选项 > 诊断中重新启用，或重启游戏。</Strata_FaultGuardTripped>
   <Strata_Settings_FoodRelay>觅食通勤</Strata_Settings_FoodRelay>
   <Strata_Settings_FoodRelayDesc>饥饿的殖民者会去其他楼层寻找餐食。</Strata_Settings_FoodRelayDesc>
   <Strata_Settings_RestRelay>休息通勤</Strata_Settings_RestRelay>
@@ -83,7 +83,7 @@
   <Strata_Settings_B1InfestationsDesc>关闭时，任何 Strata 地下楼层（B1 及更深）都不会触发虫害（含深钻类与深层袭击）。地表与 A+ 不变。</Strata_Settings_B1InfestationsDesc>
   <Strata_Place_QuestMapNoShaft>不要在临时任务地图（远古都市废墟、世界地点等）上挖 Strata 竖井——放弃地点会让口袋楼层成为孤儿。请在家园殖民地使用 Strata；探索用地图用其他模组的楼层。</Strata_Place_QuestMapNoShaft>
   <Strata_Settings_HibernateEmpty>休眠空楼层</Strata_Settings_HibernateEmpty>
-  <Strata_Settings_HibernateEmptyDesc>空置的 A+ / B+ 口袋地图以每 4 tick 跑 1 次原版环境模拟、每 8 周期跑 1 次 Strata 气体。你正在查看的地图或有单位的楼层保持完全运行。</Strata_Settings_HibernateEmptyDesc>
+  <Strata_Settings_HibernateEmptyDesc>空置的 A+ / B+ 口袋地图以每 4 tick 跑 1 次原版环境模拟、每 8 周期跑 1 次 Strata 气体。你正在查看的地图，或有殖民者、驯服动物、机械体或囚犯的楼层保持完全运行。</Strata_Settings_HibernateEmptyDesc>
   <Strata_Settings_ReduceBackground>降低后台楼层负载</Strata_Settings_ReduceBackground>
   <Strata_Settings_ReduceBackgroundDesc>当殖民者在你未查看的相连楼层上时，Strata 气体与氧气/二氧化碳以 8× 降速运行并跳过叠加重建。当前查看的地图保持全速。</Strata_Settings_ReduceBackgroundDesc>
   <Strata_Settings_PerformanceMode>性能模式（总开关）</Strata_Settings_PerformanceMode>

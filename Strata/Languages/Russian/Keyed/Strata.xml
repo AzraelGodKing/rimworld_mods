@@ -32,7 +32,7 @@
   <Strata_Settings_RobotWorkRelayDesc>Если у робота нет локальной работы по переноске/уборке, отправить его через лестницы к связанным уровням с работой. По умолчанию выключено.</Strata_Settings_RobotWorkRelayDesc>
   <Strata_Settings_ShaftFluid>Жидкостные шахтные узлы</Strata_Settings_ShaftFluid>
   <Strata_Settings_ShaftFluidDesc>Перенос жидкостей между этажами. Автоотключение при повторяющихся ошибках.</Strata_Settings_ShaftFluidDesc>
-  <Strata_FaultGuardTripped>Strata автоматически отключила {0} после повторяющихся ошибок. Включите снова в настройках мода при необходимости.</Strata_FaultGuardTripped>
+  <Strata_FaultGuardTripped>Strata автоматически отключила {0} после повторяющихся ошибок. Перезапустите её в настройках мода > Диагностика или перезапустите игру.</Strata_FaultGuardTripped>
   <Strata_Settings_FoodRelay>Маршрут еды</Strata_Settings_FoodRelay>
   <Strata_Settings_FoodRelayDesc>Голодные колонисты ищут еду на другом уровне.</Strata_Settings_FoodRelayDesc>
   <Strata_Settings_RestRelay>Маршрут отдыха</Strata_Settings_RestRelay>
@@ -82,7 +82,7 @@
   <Strata_Settings_B1InfestationsDesc>Если выкл., заражения (включая стиль глубокого бура и глубокие рейды Strata) не запускаются ни на одном подземном этаже Strata (B1 и глубже). Поверхность и A+ без изменений.</Strata_Settings_B1InfestationsDesc>
   <Strata_Place_QuestMapNoShaft>Не копайте шахты Strata на временных картах заданий (Ancient Urban Ruins, мировые площадки и т.п.) — уход с площадки сиротит карманные уровни. Strata — для домашней колонии; чужие этажи оставляйте тому моду.</Strata_Place_QuestMapNoShaft>
   <Strata_Settings_HibernateEmpty>Гибернация пустых уровней</Strata_Settings_HibernateEmpty>
-  <Strata_Settings_HibernateEmptyDesc>Пустые карты карманов A+ и B+ крутят ванильные фоновые симы 1 тик из 4, а газ Strata — 1 цикл из 8. Полная жизнь на просматриваемой карте или на любом уровне с пешками.</Strata_Settings_HibernateEmptyDesc>
+  <Strata_Settings_HibernateEmptyDesc>Пустые карты карманов A+ и B+ крутят ванильные фоновые симы 1 тик из 4, а газ Strata — 1 цикл из 8. Полная жизнь на просматриваемой карте или на любом уровне с колонистами, ручными животными, механоидами или заключёнными.</Strata_Settings_HibernateEmptyDesc>
   <Strata_Settings_ReduceBackground>Ослабить фоновые уровни</Strata_Settings_ReduceBackground>
   <Strata_Settings_ReduceBackgroundDesc>Когда колонисты на связанном уровне, который вы не смотрите, газ Strata и O₂/CO₂ идут в 8× медленнее и пропускают перестройку оверлея. Просматриваемая карта остаётся полной скоростью.</Strata_Settings_ReduceBackgroundDesc>
   <Strata_Settings_PerformanceMode>Режим производительности (главный выключатель)</Strata_Settings_PerformanceMode>
