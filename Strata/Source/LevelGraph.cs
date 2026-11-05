@@ -25,13 +25,18 @@ namespace Strata
 
         // One cached BFS result per map, reused until portal topology changes.
         // Callers must not add, remove, or sort the returned list. Sort a copy.
+        // Walk costs come from the pathfinder, and walls change without the
+        // portal topology changing, so both caches also expire after
+        // LevelWalkCost.RefreshTicks.
         private static int reachableEpoch = -1;
+        private static int reachableTick;
         private static readonly Dictionary<int, List<LevelLink>> reachableByMapId =
             new Dictionary<int, List<LevelLink>>();
         private static readonly List<LevelLink> emptyLinks = new List<LevelLink>();
 
         // CostAfter per (portal, target), valid until the topology changes.
         private static int costAfterEpoch = -1;
+        private static int costAfterTick;
         private static readonly Dictionary<long, float> costAfter = new Dictionary<long, float>();
 
         // AnyLinkFrom is hit from many Harmony postfixes; cache per map until
@@ -64,6 +69,8 @@ namespace Strata
             routeCache.Clear();
             reachableEpoch = -1;
             reachableByMapId.Clear();
+            costAfterEpoch = -1;
+            LevelWalkCost.Clear();
             anyLinkByMapId.Clear();
             anyLinkEpoch = graphEpoch;
         }
@@ -128,10 +135,12 @@ namespace Strata
             {
                 return emptyLinks;
             }
-            if (reachableEpoch != graphEpoch)
+            int now = LevelWalkCost.Now;
+            if (reachableEpoch != graphEpoch || now - reachableTick >= LevelWalkCost.RefreshTicks)
             {
                 reachableByMapId.Clear();
                 reachableEpoch = graphEpoch;
+                reachableTick = now;
             }
             if (reachableByMapId.TryGetValue(from.uniqueID, out List<LevelLink> cached))
             {
@@ -143,7 +152,8 @@ namespace Strata
             if (component.Count > 0)
             {
                 LevelPathSearch.Portal[] nav = ToNav(component);
-                List<LevelPathSearch.Route> routes = LevelPathSearch.FromMap(nav, from.uniqueID);
+                List<LevelPathSearch.Route> routes = LevelPathSearch.FromMap(nav, from.uniqueID,
+                    (u, v) => LevelWalkCost.Between(component[u], component[v]));
                 for (int i = 0; i < routes.Count; i++)
                 {
                     LevelPathSearch.Route route = routes[i];
@@ -177,10 +187,12 @@ namespace Strata
                 return 0f;
             }
             long key = ((long)portal.thingIDNumber << 32) | (uint)target.uniqueID;
-            if (costAfterEpoch != graphEpoch)
+            int now = LevelWalkCost.Now;
+            if (costAfterEpoch != graphEpoch || now - costAfterTick >= LevelWalkCost.RefreshTicks)
             {
                 costAfter.Clear();
                 costAfterEpoch = graphEpoch;
+                costAfterTick = now;
             }
             if (costAfter.TryGetValue(key, out float cachedCost))
             {
@@ -193,7 +205,8 @@ namespace Strata
             if (component.Count > 0 && arrival.IsValid)
             {
                 List<LevelPathSearch.Route> routes = LevelPathSearch.FromCell(
-                    ToNav(component), other.uniqueID, arrival.x, arrival.z);
+                    ToNav(component), other.uniqueID, arrival.x, arrival.z,
+                    (u, v) => LevelWalkCost.Between(component[u], component[v]));
                 for (int i = 0; i < routes.Count; i++)
                 {
                     if (routes[i].map == target.uniqueID)

@@ -37,18 +37,25 @@ namespace Strata
         // is not known, so the first walk is left to the caller). Returns the
         // cheapest route to every other reachable map, cheapest first; ties go
         // to the lower portal id, so every client picks the same route.
-        public static List<Route> FromMap(Portal[] portals, int startMap)
+        //
+        // legCost(u, v) is the walk from portal u's arrival cell to portal v on
+        // the same map: positive infinity when v cannot be reached from there.
+        // Null means a straight line.
+        public static List<Route> FromMap(Portal[] portals, int startMap, Func<int, int, float> legCost = null)
         {
-            return Search(portals, startMap, startX: 0, startZ: 0, walkFromStart: false);
+            return Search(portals, startMap, startX: 0, startZ: 0, walkFromStart: false, legCost);
         }
 
-        // From a cell on startMap; the walk to the first portal counts.
-        public static List<Route> FromCell(Portal[] portals, int startMap, int startX, int startZ)
+        // From a cell on startMap; the walk to the first portal counts (as a
+        // straight line: the caller knows the pawn, this search does not).
+        public static List<Route> FromCell(Portal[] portals, int startMap, int startX, int startZ,
+            Func<int, int, float> legCost = null)
         {
-            return Search(portals, startMap, startX, startZ, walkFromStart: true);
+            return Search(portals, startMap, startX, startZ, walkFromStart: true, legCost);
         }
 
-        private static List<Route> Search(Portal[] portals, int startMap, int startX, int startZ, bool walkFromStart)
+        private static List<Route> Search(Portal[] portals, int startMap, int startX, int startZ, bool walkFromStart,
+            Func<int, int, float> legCost)
         {
             int n = portals?.Length ?? 0;
             var routes = new List<Route>();
@@ -120,9 +127,14 @@ namespace Strata
                     {
                         continue;
                     }
-                    float next = cost[u]
-                        + Walk(portals[u].arrivalX, portals[u].arrivalZ, portals[v].x, portals[v].z)
-                        + portals[v].rideCost;
+                    float leg = legCost != null
+                        ? legCost(u, v)
+                        : Walk(portals[u].arrivalX, portals[u].arrivalZ, portals[v].x, portals[v].z);
+                    if (float.IsPositiveInfinity(leg))
+                    {
+                        continue;
+                    }
+                    float next = cost[u] + leg + portals[v].rideCost;
                     if (next < cost[v] || (next == cost[v] && portals[first[u]].id < portals[first[v]].id))
                     {
                         cost[v] = next;

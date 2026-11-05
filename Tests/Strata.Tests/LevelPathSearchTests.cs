@@ -128,5 +128,40 @@ namespace Strata.Tests
             Assert.Equal(5, RouteTo(routes, 6).hops);
             Assert.Equal(5 * Stair, RouteTo(routes, 6).cost, 3);
         }
+
+        [Fact]
+        public void BlockedLegIsSkippedAndRealCostIsUsed()
+        {
+            // Same two shafts as CheaperShaftWinsOverFewerStairs, but shaft B
+            // lands in a walled-off room on B1, and shaft A's landing cannot walk
+            // to shaft B's B2 stair either. Shaft A wins, at the pathfinder's cost.
+            var portals = new[]
+            {
+                P(10, 1, 0, 0, 2, 0, 0),
+                P(11, 2, 0, 0, 1, 0, 0),
+                P(12, 2, 200, 0, 3, 200, 0),
+                P(13, 3, 200, 0, 2, 200, 0),
+                P(20, 1, 50, 0, 2, 50, 0),
+                P(21, 2, 50, 0, 1, 50, 0),
+                P(22, 2, 52, 0, 3, 52, 0),
+                P(23, 3, 52, 0, 2, 52, 0),
+            };
+            float Leg(int u, int v)
+            {
+                if ((u == 4 && v != 5) || (u == 0 && v == 6))
+                {
+                    return float.PositiveInfinity;
+                }
+                if (u == 0 && v == 2)
+                {
+                    return 230f;
+                }
+                return LevelPathSearch.Walk(portals[u].arrivalX, portals[u].arrivalZ, portals[v].x, portals[v].z);
+            }
+            List<LevelPathSearch.Route> routes = LevelPathSearch.FromMap(portals, 1, Leg);
+            LevelPathSearch.Route b2 = RouteTo(routes, 3);
+            Assert.Equal(0, b2.firstPortal);     // index of portal 10
+            Assert.Equal(Stair + 230f + Stair, b2.cost, 3);
+        }
     }
 }

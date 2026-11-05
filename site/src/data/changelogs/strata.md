@@ -1,9 +1,21 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.17.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.17.0 loaded from ... (modified ...); lost-floor-v1.` via `ModVersionLog.Write`.
+**Version:** `3.18.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.18.0 loaded from ... (modified ...); nav-paths-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `lost-floor-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `nav-paths-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.18.0]
+
+Player-facing version **3.18.0** (`About.xml` `modVersion`). Stamp `nav-paths-v1`. No save-format change.
+
+AZR-479
+
+### Changed
+- **Region path cost** (AZR-479, part 2): `LevelPathSearch.FromMap` / `FromCell` take an optional leg cost. In game, `LevelWalkCost.Between` asks the pathfinder (`FindPathNow`, `PassDoors`, touch) for the walk from one portal's landing to the next portal, in cells (`TotalCost / 13`), and returns infinity when it cannot be reached, so a landing in a walled-off room no longer counts as a route. Cached per portal pair for 2500 ticks; `ReachableLevels` and `CostAfter` caches now also expire after 2500 ticks, because walls change without the topology changing. Straight line before the game is playing. New test for a blocked leg (26 tests).
+
+### Added
+- **Drafted orders across several floors** (AZR-479, part 3): `DraftedPortalPathing.TryFindDetour` also looks for the return stair on floors past the exit's floor (`LevelGraph.ReachableLevels` from the exit's landing, never back through the start floor), scored with that route's cost. On each arrival the route takes `BestFirstStep` toward the return stair's floor until it is there, then carries on as before. Saved routes resume the same way (`FindPortalAnywhere`).
 
 ## [3.17.0]
 

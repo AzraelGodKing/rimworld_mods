@@ -424,12 +424,30 @@ namespace Strata
 
             if (route.stage == Stage.EnterFirst)
             {
-                MapPortal ret = FindPortalById(pawn.Map, route.returnPortalId);
+                MapPortal ret = FindPortalAnywhere(route.returnPortalId);
                 if (ret == null || !ret.Spawned || !ret.IsEnterable(out _)
                     || StrataPortalUtility.IsSealedPortal(ret)
                     || LevelGraph.OtherMapSafe(ret) != route.destMap)
                 {
                     routes.Remove(pawnId);
+                    return;
+                }
+
+                // Return stair is further along: take the next stair toward
+                // its floor and continue on arrival.
+                if (ret.Map != pawn.Map)
+                {
+                    MapPortal step = pawn.Map == route.destMap
+                        ? null
+                        : LevelGraph.BestFirstStep(pawn.Map, ret.Map, pawn.Position, pawn, ret.Position);
+                    if (step == null || LevelGraph.OtherMapSafe(step) == route.destMap
+                        || !pawn.CanReach(step, PathEndMode.Touch, Danger.Deadly))
+                    {
+                        routes.Remove(pawnId);
+                        return;
+                    }
+                    pawn.jobs.StartJob(MakeForcedJob(JobDefOf.Goto, step, pawn), JobCondition.InterruptForced);
+                    pawn.jobs.jobQueue.EnqueueFirst(MakeForcedJob(JobDefOf.EnterPortal, step, pawn), JobTag.Misc);
                     return;
                 }
 
@@ -652,10 +670,13 @@ namespace Strata
                     break;
                 }
 
+                // The return stair can be on the floor below the exit or on
+                // any floor past it (drafted orders across several floors).
+                // Floors past it add the cheapest route there.
                 int returnsChecked = 0;
-                foreach (Thing midThing in mid.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+                foreach ((MapPortal ret, IntVec3 retArrive, float beyond) in ReturnCandidates(exit, mid, midArrive, map))
                 {
-                    if (midThing is not MapPortal ret || !ret.Spawned || ret == exit)
+                    if (ret == exit)
                     {
                         continue;
                     }
@@ -687,8 +708,8 @@ namespace Strata
                         continue;
                     }
 
-                    if (!mid.reachability.CanReach(
-                            midArrive,
+                    if (!ret.Map.reachability.CanReach(
+                            retArrive,
                             ret,
                             PathEndMode.Touch,
                             TraverseParms.For(TraverseMode.PassDoors)))
@@ -702,7 +723,8 @@ namespace Strata
                     }
 
                     float score = pawn.Position.DistanceTo(exit.Position)
-                        + midArrive.DistanceTo(ret.Position)
+                        + beyond
+                        + retArrive.DistanceTo(ret.Position)
                         + backArrive.DistanceTo(destCell);
                     if (score < bestScore)
                     {
@@ -714,6 +736,43 @@ namespace Strata
             }
 
             return bestExit != null && bestReturn != null;
+        }
+
+        // Portals that could take the pawn back to 'home': first on the floor
+        // the exit lands on, then on floors further along (never 'home'
+        // itself), each with where the pawn arrives on that floor and the
+        // route cost to get there from the exit's landing.
+        private static IEnumerable<(MapPortal ret, IntVec3 arrive, float beyond)> ReturnCandidates(
+            MapPortal exit, Map mid, IntVec3 midArrive, Map home)
+        {
+            foreach (Thing thing in mid.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+            {
+                if (thing is MapPortal ret && ret.Spawned)
+                {
+                    yield return (ret, midArrive, 0f);
+                }
+            }
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(mid);
+            for (int i = 0; i < links.Count; i++)
+            {
+                LevelGraph.LevelLink link = links[i];
+                if (link.map == null || link.map == home || link.map == mid
+                    || LevelGraph.OtherMapSafe(link.firstStep) == home
+                    || !mid.reachability.CanReach(midArrive, link.firstStep, PathEndMode.Touch,
+                        TraverseParms.For(TraverseMode.PassDoors)))
+                {
+                    continue;
+                }
+                IntVec3 arrive = link.arrivalCell.IsValid ? link.arrivalCell : midArrive;
+                float beyond = midArrive.DistanceTo(link.firstStep.Position) + link.travelCost;
+                foreach (Thing thing in link.map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
+                {
+                    if (thing is MapPortal ret && ret.Spawned)
+                    {
+                        yield return (ret, arrive, beyond);
+                    }
+                }
+            }
         }
 
         private static MapPortal FindPortalById(Map map, int thingId)
