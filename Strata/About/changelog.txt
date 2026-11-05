@@ -1,5 +1,5 @@
-3.19.1
-[h1]Strata - 3.19.1[/h1]
+3.19.2
+[h1]Strata - 3.19.2[/h1]
 
 [b]Added[/b]
 [list]
@@ -15,6 +15,7 @@
 
 [b]Changed[/b]
 [list]
+[*] [b]Moving a colony from 1.6 to 1.7[/b] — Strata reads every save field that 3.8 and later wrote, so a Strata save from 1.6 loads on 1.7 as far as Strata is concerned. Whether the whole save moves also depends on RimWorld itself and your other mods, so keep a backup.
 [*] [b]Lighter gas overlay[/b] — the gas overlay keeps its colours in a quarter of the memory, and new levels plan their caves without a needless hand-off to another thread.
 [*] [b]Multiplayer[/b] — Strata is not Multiplayer compatible. The Workshop page and mod description now say so.
 [/list]

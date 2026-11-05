@@ -5,7 +5,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "offthread-v1";
+        public const string BuildStamp = "save-compat-v1";
 
         public static void LogStartup()
         {

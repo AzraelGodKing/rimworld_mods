@@ -1,9 +1,24 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.19.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.19.1 loaded from ... (modified ...); offthread-v1.` via `ModVersionLog.Write`.
+**Version:** `3.19.2` in `About.xml` `modVersion`. Player.log: `[Strata] v3.19.2 loaded from ... (modified ...); save-compat-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `offthread-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `save-compat-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.19.2]
+
+Player-facing version **3.19.2** (`About.xml` `modVersion`). Stamp `save-compat-v1`. No save-format change.
+
+AZR-485 (static part)
+
+### Checked
+- **3.8.3 saves against the current source:** every `Scribe_*.Look` key and every saved class (`MapComponent`, `GameComponent`, `WorldComponent`, `IExposable`) that 3.8.3 wrote is still read; 64 keys and classes were added since, none renamed or removed. No defName was removed since 3.8.3 either, so saved things all still resolve. `StrataSettings` only gained fields, which fall back to their defaults. No migration code is needed yet.
+
+### Tests
+- `SaveCompatTests` reads `SavedKeys-3.8.3.txt` (the 156 keys and 30 classes in 3.8.3) and fails if the source stops reading any of them. A deliberate rename goes on its `Migrated` list together with code that reads the old name (34 tests).
+
+### Still to do in game
+- Load real 3.8.x saves (multi-level colony with gases, gravship stack, shaft fluid ties, a pawn mid-trip, prisoners on another floor) on 1.7, then save and reload.
 
 ## [3.19.1]
 
