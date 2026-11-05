@@ -56,4 +56,9 @@
   <Strata_SteamScald.stages_1.label>ошпарен</Strata_SteamScald.stages_1.label>
   <Strata_SteamScald.stages_2.label>тяжёлый ожог</Strata_SteamScald.stages_2.label>
 
+  <Strata_Drowning.label>вода в лёгких</Strata_Drowning.label>
+  <Strata_Drowning.description>Паводковая вода, вдохнутая лёжа беспомощно в ней. Вне воды проходит за несколько часов, но если остаться в воде, можно утонуть.</Strata_Drowning.description>
+  <Strata_Drowning.stages_0.label>кашель</Strata_Drowning.stages_0.label>
+  <Strata_Drowning.stages_1.label>утопление</Strata_Drowning.stages_1.label>
+
 </LanguageData>

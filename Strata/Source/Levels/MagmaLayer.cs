@@ -211,7 +211,7 @@ namespace Strata
             GenSpawn.Spawn(StrataMagmaDefOf.Strata_MagmaVent, center, map);
         }
 
-        private static IntVec3 FindLanding(Map map)
+        internal static IntVec3 FindLanding(Map map)
         {
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {

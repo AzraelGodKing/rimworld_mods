@@ -84,6 +84,9 @@ namespace Strata
         public bool magmaLayerEnabled = true;
 
         public int magmaLayerDepth = MagmaLayer.DefaultUnlimitedDepth;
+
+        // Rare special levels (flooded lake) when a new level is dug.
+        public bool specialLevelsEnabled = true;
         // New B levels as a share of the home map (100 = same size, the old behaviour).
         public int belowLevelSizePercent = 100;
         public bool askBelowLevelSize = false;
@@ -175,6 +178,7 @@ namespace Strata
             Scribe_Values.Look(ref unlimitedLevelsEnabled, "unlimitedLevelsEnabled", defaultValue: false);
             Scribe_Values.Look(ref magmaLayerEnabled, "magmaLayerEnabled", defaultValue: true);
             Scribe_Values.Look(ref magmaLayerDepth, "magmaLayerDepth", defaultValue: MagmaLayer.DefaultUnlimitedDepth);
+            Scribe_Values.Look(ref specialLevelsEnabled, "specialLevelsEnabled", defaultValue: true);
             Scribe_Values.Look(ref belowLevelSizePercent, "belowLevelSizePercent", 100);
             Scribe_Values.Look(ref askBelowLevelSize, "askBelowLevelSize", defaultValue: false);
             Scribe_Values.Look(ref compactRoofDecks, "compactRoofDecks", defaultValue: false);
@@ -548,6 +552,8 @@ namespace Strata
                     "Strata_Settings_MagmaLayerDepth".Translate(Settings.magmaLayerDepth),
                     Settings.magmaLayerDepth, StrataLevelCap.HardMaxOffset + 1, MagmaLayer.MaxSettingDepth));
             }
+            Check(listing, "Strata_Settings_SpecialLevels", ref Settings.specialLevelsEnabled,
+                "Strata_Settings_SpecialLevelsDesc", FloodedLevel.Chance.ToStringPercent(), FloodedLevel.MinDepth);
             DrawLevelSizeSelector(listing);
             Check(listing, "Strata_Settings_AskBelowLevelSize", ref Settings.askBelowLevelSize, "Strata_Settings_AskBelowLevelSizeDesc");
             Check(listing, "Strata_Settings_CompactRoofDecks", ref Settings.compactRoofDecks,

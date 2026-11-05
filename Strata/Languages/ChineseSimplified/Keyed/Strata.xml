@@ -23,6 +23,10 @@
   <Strata_Settings_MagmaLayer>底部为岩浆层</Strata_Settings_MagmaLayer>
   <Strata_Settings_MagmaLayerDesc>开启时（默认），最深的一层是岩浆层：有岩浆池、黑曜石和地热井，且无法再向下挖掘。未开启无限楼层时它位于 B{0}，比正常上限多一层，需要「深层钻探」研究。关闭时没有底部。</Strata_Settings_MagmaLayerDesc>
   <Strata_Settings_MagmaLayerDepth>岩浆层深度（无限楼层）：B{0}</Strata_Settings_MagmaLayerDepth>
+  <Strata_FloodedLetterTitle>地下湖</Strata_FloodedLetterTitle>
+  <Strata_FloodedLetterText>这一层的岩石中藏着一个地下湖。一旦矿工挖通它，湖水就会漫延到整层。\n\n只要这一层任何地方有一台通电的排水泵在运转，湖水就不会扩散。没有排水泵时，水会不断蔓延，地表下大雨时更快。倒地或睡着躺在洪水中的人可能会溺水。\n\n可以在湖里钓鱼（Odyssey）；装有 Homesteader 时，上一层的水井打水量翻倍。</Strata_FloodedLetterText>
+  <Strata_Settings_SpecialLevels>特殊楼层</Strata_Settings_SpecialLevels>
+  <Strata_Settings_SpecialLevelsDesc>开启时（默认），从 B{1} 起新挖的楼层有 {0} 的几率成为带地下湖的淹水楼层。已挖好的楼层不会改变。</Strata_Settings_SpecialLevelsDesc>
   <Strata_Settings_ViewLevelAbove>查看上层</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>查看下层</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>请按键…</Strata_Settings_PressKey>

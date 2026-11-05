@@ -11,6 +11,7 @@ namespace Strata
     {
         Standard,
         Magma,
+        Flooded,
     }
 
     public static class StrataLevelKinds
@@ -99,6 +100,10 @@ namespace Strata
             {
                 return StrataLevelKind.Magma;
             }
+            if (FloodedLevel.Enabled && depth >= FloodedLevel.MinDepth && Rand.Chance(FloodedLevel.Chance))
+            {
+                return StrataLevelKind.Flooded;
+            }
             return StrataLevelKind.Standard;
         }
     }
@@ -128,6 +133,7 @@ namespace Strata
         private bool featuresPlaced;
         private List<IntVec3> poolCenters = new List<IntVec3>();
         private List<float> poolRadii = new List<float>();
+        private List<IntVec3> lakeCells = new List<IntVec3>();
 
         public MapComponent_StrataLevelKind(Map map) : base(map)
         {
@@ -138,6 +144,13 @@ namespace Strata
         public IReadOnlyList<IntVec3> PoolCenters => poolCenters;
 
         public IReadOnlyList<float> PoolRadii => poolRadii;
+
+        public IReadOnlyList<IntVec3> LakeCells => lakeCells;
+
+        internal void AddLakeCell(IntVec3 cell)
+        {
+            lakeCells.Add(cell);
+        }
 
         internal void AddPool(IntVec3 center, float radius)
         {
@@ -169,11 +182,27 @@ namespace Strata
                     StrataFaultGuard.Run(StrataFaultGuard.System.LevelGeneration, "placing the magma layer",
                         () => MagmaLayer.PlaceFeatures(map, this));
                 }
+                else if (kind == StrataLevelKind.Flooded)
+                {
+                    StrataFaultGuard.Run(StrataFaultGuard.System.LevelGeneration, "placing the flooded lake",
+                        () => FloodedLevel.PlaceFeatures(map, this));
+                }
                 return;
             }
             if (kind == StrataLevelKind.Magma && map.IsHashIntervalTick(MagmaLayer.HazardIntervalTicks))
             {
                 MagmaLayer.TickHazards(map, this);
+            }
+            else if (kind == StrataLevelKind.Flooded)
+            {
+                if (map.IsHashIntervalTick(FloodedLevel.RiseIntervalTicks))
+                {
+                    FloodedLevel.TickRise(map, this);
+                }
+                if (map.IsHashIntervalTick(FloodedLevel.DrownIntervalTicks))
+                {
+                    FloodedLevel.TickDrowning(map);
+                }
             }
         }
 
@@ -190,10 +219,12 @@ namespace Strata
             Scribe_Values.Look(ref featuresPlaced, "strataLevelFeaturesPlaced");
             Scribe_Collections.Look(ref poolCenters, "strataMagmaPoolCenters", LookMode.Value);
             Scribe_Collections.Look(ref poolRadii, "strataMagmaPoolRadii", LookMode.Value);
+            Scribe_Collections.Look(ref lakeCells, "strataLakeCells", LookMode.Value);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 poolCenters ??= new List<IntVec3>();
                 poolRadii ??= new List<float>();
+                lakeCells ??= new List<IntVec3>();
                 if (poolRadii.Count != poolCenters.Count)
                 {
                     poolCenters.Clear();

@@ -1,9 +1,27 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.15.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.15.0 loaded from ... (modified ...); magma-layer-v1.` via `ModVersionLog.Write`.
+**Version:** `3.16.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.16.0 loaded from ... (modified ...); flooded-level-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `magma-layer-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `flooded-level-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.16.0]
+
+Player-facing version **3.16.0** (`About.xml` `modVersion`). Stamp `flooded-level-v1`. No save-format break: the level-kind component gains a saved lake-cell list.
+
+AZR-475
+
+### Added
+- **Flooded level** (AZR-475), built now for Strata 4, on the level kinds from 3.15.0.
+  - **Pick:** a fresh dig-down level at B2 or deeper (never the magma layer) has a 20% chance to be `StrataLevelKind.Flooded`. New setting `specialLevelsEnabled` (default on).
+  - **Lake:** on the level's first tick a chain of 4 to 6 basins (radius 4 to 5.5, inside thick-roof support reach) is carved into the rock at least 22 cells from the landing: deep water inside, shallow at the shore. The cells are saved so the seep knows where the lake is.
+  - **Seep:** every 2500 ticks with no powered `Strata_SumpPump` anywhere on the level, 3 standable cells next to the lake or the existing flood become flood water (`FloodMapComponent`, so sump pumps drain them as before). Doubled while the surface weather's rain rate is 1 or more, which covers Stormproof and other storm mods without a hard dependency. Stops at 500 flooded cells.
+  - **Drowning:** every 250 ticks, downed or in-bed pawns on flood water gain `Strata_Drowning` (lethal at 1, recovers 4 per day out of the water).
+  - **Fishing (Odyssey):** at startup the underground biome borrows the temperate forest's fish types and fish population, so lake water bodies have fish.
+  - **Homesteader:** `Wellspring_DrawWater` and `Wellspring_DrawWaterDeep` bills on a well whose map has a flooded level directly below yield twice the water.
+  - Letter on arrival. Keyed and DefInjected text in English, ChineseSimplified and Russian.
+
+Not tested in game yet.
 
 ## [3.15.0]
 

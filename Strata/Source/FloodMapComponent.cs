@@ -124,5 +124,24 @@ namespace Strata
         }
 
         public bool AnyFlooded => floodedCells.Count > 0;
+
+        public int FloodedCount => floodedCells.Count;
+
+        public IntVec3 RandomFloodedCell()
+        {
+            if (floodedCells.Count == 0)
+            {
+                return IntVec3.Invalid;
+            }
+            int pick = Rand.Range(0, floodedCells.Count);
+            foreach (IntVec3 cell in floodedCells)
+            {
+                if (pick-- == 0)
+                {
+                    return cell;
+                }
+            }
+            return IntVec3.Invalid;
+        }
     }
 }

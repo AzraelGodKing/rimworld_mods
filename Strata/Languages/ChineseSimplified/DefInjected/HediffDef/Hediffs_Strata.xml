@@ -48,4 +48,9 @@
   <Strata_SteamScald.stages_1.label>烫伤</Strata_SteamScald.stages_1.label>
   <Strata_SteamScald.stages_2.label>严重烫伤</Strata_SteamScald.stages_2.label>
 
+  <Strata_Drowning.label>肺部进水</Strata_Drowning.label>
+  <Strata_Drowning.description>无助地躺在洪水中时吸入了水。离开水后几小时内会恢复，但一直待在水里会溺死。</Strata_Drowning.description>
+  <Strata_Drowning.stages_0.label>咳嗽</Strata_Drowning.stages_0.label>
+  <Strata_Drowning.stages_1.label>溺水</Strata_Drowning.stages_1.label>
+
 </LanguageData>

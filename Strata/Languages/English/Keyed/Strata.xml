@@ -23,6 +23,10 @@
   <Strata_Settings_MagmaLayer>Magma layer at the bottom</Strata_Settings_MagmaLayer>
   <Strata_Settings_MagmaLayerDesc>When on (default), the deepest level is the magma layer: lava pools, obsidian and geothermal taps, and nothing can be dug below it. Without unlimited levels it is B{0}, one level past the normal cap, and needs deep bore research. When off, there is no bottom.</Strata_Settings_MagmaLayerDesc>
   <Strata_Settings_MagmaLayerDepth>Magma layer depth (unlimited levels): B{0}</Strata_Settings_MagmaLayerDepth>
+  <Strata_FloodedLetterTitle>Underground lake</Strata_FloodedLetterTitle>
+  <Strata_FloodedLetterText>This level holds an underground lake somewhere in the rock. Once your miners break into it, water will seep out across the level.\n\nKeep a powered sump pump running anywhere on this level and the lake stays put. With no pump, the water keeps spreading, faster while it rains hard on the surface. Anyone lying in the flood water, downed or asleep, can drown.\n\nThe lake can be fished (Odyssey), and with Homesteader a well on the level above draws twice the water.</Strata_FloodedLetterText>
+  <Strata_Settings_SpecialLevels>Special levels</Strata_Settings_SpecialLevels>
+  <Strata_Settings_SpecialLevelsDesc>When on (default), a newly dug level from B{1} down has a {0} chance to be a flooded level with an underground lake. Levels already dug do not change.</Strata_Settings_SpecialLevelsDesc>
   <Strata_Settings_ViewLevelAbove>View level above</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>View level below</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>Press a key...</Strata_Settings_PressKey>

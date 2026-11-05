@@ -1,8 +1,9 @@
-3.15.0
-[h1]Strata - 3.15.0[/h1]
+3.16.0
+[h1]Strata - 3.16.0[/h1]
 
 [b]Added[/b]
 [list]
+[*] [b]Flooded levels[/b] — a newly dug level from B2 down sometimes holds an underground lake in the rock. Once your miners break into it, the water seeps out across the level unless a powered sump pump is running somewhere on that level, and it spreads faster while it rains hard on the surface. Anyone lying in the flood water, downed or asleep, can drown. With Odyssey you can fish the lake, and with Homesteader a well on the level above draws twice the water. Turn it off with "Special levels" in the Levels settings.
 [*] [b]The magma layer, the bottom of the world[/b] — dig one level past the usual limit (B3, after the new deep bore research) and you reach the magma layer. Nothing can be dug below it. The rock sits at 52°C, so colonists need cooling down there. Magma pools light up the dark and set fire to anything flammable left beside them. Build a geothermal tap on a magma vent for 6000 W of free power, and a lot of heat and steam. Mine the obsidian seams beside the pools for obsidian, a tough and beautiful building stone. With Unlimited levels on, choose how deep the magma layer is (B8 by default), or turn it off in the Levels settings.
 [*] [b]Pawns take the shorter way between floors[/b] — floors and stairwells are now picked by how far a pawn actually walks on the floors in between, not by how many stairwells it passes. With two shafts down, they use the one whose stairs line up instead of a closer stair that means crossing a whole level. Elevators count as a quicker ride than stairs.
 [*] [b]Settings presets, tabs and search[/b] — Mod options now open on tabs (Levels, Commuting, Atmosphere, Threats, Performance, Visuals, Advanced, Diagnostics) with a search box that finds any option by name. Performance, Balanced and Immersive presets set the costly options in one click; change one yourself and it shows Custom.
@@ -22,5 +23,5 @@
 [*] Automated tests now check that cave layouts, deep-level oxygen and the "leave for better work" choice stay the same between versions. No gameplay change.
 [/list]
 
-[i]Build stamp (Player.log): magma-layer-v1[/i]
+[i]Build stamp (Player.log): flooded-level-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
