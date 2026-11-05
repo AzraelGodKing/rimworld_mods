@@ -117,6 +117,11 @@ namespace Strata
         private Color[] overlayColorCache;
         private CellBoolDrawer drawer;
         private int atmosphereCyclePhase = -1;
+        // Latched when a cycle starts. Lite/full and the phase count depend on
+        // the viewed map; re-reading them mid-cycle after a floor switch could
+        // skip FinishAtmosphereCycle or run emitters twice in one cycle.
+        private bool cycleLite;
+        private int cyclePhaseCount;
 
         // Bumped when an atmosphere cycle finishes so gas labels rebuild once,
         // not on every OnGUI pass.
@@ -499,7 +504,7 @@ namespace Strata
             {
                 RunAtmospherePhase(atmosphereCyclePhase);
                 atmosphereCyclePhase++;
-                if (atmosphereCyclePhase >= StrataLevelPerfUtility.AtmospherePhaseCount(map))
+                if (atmosphereCyclePhase >= cyclePhaseCount)
                 {
                     atmosphereCyclePhase = -1;
                     ReadoutGeneration++;
@@ -512,14 +517,15 @@ namespace Strata
                 return;
             }
 
+            cycleLite = StrataLevelPerfUtility.LiteAtmosphereOnMap(map);
+            cyclePhaseCount = StrataLevelPerfUtility.AtmospherePhaseCount(map);
             atmosphereCyclePhase = 1;
             RunAtmospherePhase(0);
         }
 
         private void RunAtmospherePhase(int phase)
         {
-            bool lite = StrataLevelPerfUtility.LiteAtmosphereOnMap(map);
-            if (lite)
+            if (cycleLite)
             {
                 RunLiteAtmospherePhase(phase);
                 return;
@@ -538,7 +544,7 @@ namespace Strata
                     break;
                 case 3:
                     // V3.5: room-volume sim only — no per-cell breath grid phases.
-                    if (StrataLevelPerfUtility.AtmospherePhaseCount(map) <= 4)
+                    if (cyclePhaseCount <= 4)
                     {
                         FinishAtmosphereCycle();
                     }
