@@ -16,15 +16,31 @@ namespace Strata
             public int stuckSince;
         }
 
-        private const int StuckTicks = 12000;
+        // About one in-game hour before a floor assignment whose work cannot
+        // start is given up. It was 12000 ticks, half a day of idling.
+        private const int StuckTicks = 2500;
+
+        // A detour through another floor that still leaves the target out of
+        // reach is not tried again for the same cell within this window.
+        private const int DetourRetryTicks = 5000;
         private const int WorkScanCap = 80;
         private const int WorkCellCheckCap = 16;
 
         private static readonly Dictionary<int, Assignment> assigned = new Dictionary<int, Assignment>();
 
+        private struct DetourRecord
+        {
+            public int mapId;
+            public IntVec3 cell;
+            public int tick;
+        }
+
+        private static readonly Dictionary<int, DetourRecord> lastDetour = new Dictionary<int, DetourRecord>();
+
         internal static void ResetSession()
         {
             assigned.Clear();
+            lastDetour.Clear();
         }
 
         public static void Remember(Pawn pawn, Map map, WorkTypeDef type)
@@ -181,6 +197,14 @@ namespace Strata
             {
                 return false;
             }
+            // Turning the work relay off (or a fault-guard trip) must also let
+            // go of floors pawns were already assigned to, including ones
+            // restored from the save.
+            if (StrataMod.Settings == null || !StrataMod.Settings.WorkRelayActive)
+            {
+                assigned.Remove(pawn.thingIDNumber);
+                return false;
+            }
 
             WorkTypeDef wanted = DefDatabase<WorkTypeDef>.GetNamedSilentFail(assignment.workDefName);
             Map dest = FindMap(assignment.mapId);
@@ -216,8 +240,7 @@ namespace Strata
                     return true;
                 }
 
-                result = default;
-                return !ReleaseIfStuck(pawn, assignment);
+                return HoldStuck(pawn, assignment, ref result);
             }
 
             WorkTypeDef issued = result.Job?.workGiverDef?.workType;
@@ -287,8 +310,21 @@ namespace Strata
                 return true;
             }
 
+            return HoldStuck(pawn, assignment, ref result);
+        }
+
+        // The assigned work cannot start right now. Keep any local job vanilla
+        // found so the pawn works instead of wandering until the assignment
+        // times out; only a pawn with nothing else to do waits.
+        private static bool HoldStuck(Pawn pawn, Assignment assignment, ref ThinkResult result)
+        {
+            bool released = ReleaseIfStuck(pawn, assignment);
+            if (result.Job != null)
+            {
+                return true;
+            }
             result = default;
-            return !ReleaseIfStuck(pawn, assignment);
+            return !released;
         }
 
         private static bool ReleaseIfStuck(Pawn pawn, Assignment assignment)
@@ -492,20 +528,26 @@ namespace Strata
                 return false;
             }
 
-            Job detour = DraftedPortalPathing.TryMakeSameMapDetourJob(pawn, cell);
-            if (detour == null)
-            {
-                return false;
-            }
-
-            result = new ThinkResult(detour, node, JobTag.MiscWork);
-            return true;
+            return TryDetour(pawn, cell, node, ref result);
         }
 
         private static bool TryDetourToJob(Pawn pawn, Job job, ThinkNode node, ref ThinkResult result)
         {
             IntVec3 cell = job.targetA.Cell;
-            if (!cell.IsValid)
+            return cell.IsValid && TryDetour(pawn, cell, node, ref result);
+        }
+
+        // A detour that came back still blocked (a wall going up on the upper
+        // floor sealed the far side, say) would otherwise be retried on every
+        // think pass, so the pawn rode the stairs down and up again forever.
+        private static bool TryDetour(Pawn pawn, IntVec3 cell, ThinkNode node, ref ThinkResult result)
+        {
+            int now = Find.TickManager?.TicksGame ?? 0;
+            int mapId = pawn.Map.uniqueID;
+            if (lastDetour.TryGetValue(pawn.thingIDNumber, out DetourRecord last)
+                && last.mapId == mapId
+                && last.cell == cell
+                && now - last.tick < DetourRetryTicks)
             {
                 return false;
             }
@@ -516,6 +558,7 @@ namespace Strata
                 return false;
             }
 
+            lastDetour[pawn.thingIDNumber] = new DetourRecord { mapId = mapId, cell = cell, tick = now };
             result = new ThinkResult(detour, node, JobTag.MiscWork);
             return true;
         }

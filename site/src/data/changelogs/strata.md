@@ -1,9 +1,21 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.12.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.12.1 loaded from ... (modified ...); guard-haul-v1.` via `ModVersionLog.Write`.
+**Version:** `3.12.2` in `About.xml` `modVersion`. Player.log: `[Strata] v3.12.2 loaded from ... (modified ...); stair-hold-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `guard-haul-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `stair-hold-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.12.2]
+
+Player-facing version **3.12.2** (`About.xml` `modVersion`). Stamp `stair-hold-v1`. No save-format change.
+
+AZR-648 AZR-632
+
+### Fixed
+- **Idle after a work trip** (AZR-648): `JobRelay.TryHold` blanked the think result whenever the assigned work type could not start, so a pawn assigned to a floor for Construction (say) ignored every other local job and wandered until `StuckTicks` (12000) ran out. A stuck hold now keeps any job vanilla found, and `StuckTicks` is 2500.
+- **Blacklist lifted too easily** (AZR-648, AZR-632): `WorkRelayAntiLoop` lifted an empty-arrival blacklist on any `signalStamp` change, including counts going down or a haulable stack moving. Each entry now snapshots the per-`WorkTypeDef` counts and lifts only when a work type the pawn has active appears or its count rises. 5000 ticks is still the upper bound.
+- **Repeated stair detours** (AZR-648): `TryDetourToJob` / `TryDetourToBlockedWork` could rebuild the same through-another-floor detour every think pass when it ended still out of reach. The same map and cell are not detoured to again for 5000 ticks.
+- **Work relay off still held pawns:** `TryHold` ran before the `WorkRelayActive` check, so assignments (including ones restored from the save) kept pawns idle with the relay turned off. The hold now drops the assignment when the relay is inactive.
 
 ## [3.12.1]
 

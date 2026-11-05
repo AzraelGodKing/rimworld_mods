@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using RimWorld;
 using Verse;
 
 namespace Strata
@@ -19,6 +20,10 @@ namespace Strata
             public int mapId;
             public int untilTick;
             public int signalStamp;
+
+            // Per WorkTypeDef.index work count when the floor was blacklisted,
+            // -1 where that type had no work. Null when no board was built.
+            public int[] counts;
         }
 
         private static readonly Dictionary<int, List<BlacklistEntry>> blacklists =
@@ -83,7 +88,7 @@ namespace Strata
                 }
                 if (list[i].mapId == mapId)
                 {
-                    if (WorkChanged(map, list[i].signalStamp))
+                    if (WorkGrew(pawn, map, list[i]))
                     {
                         list.RemoveAt(i);
                         continue;
@@ -111,7 +116,9 @@ namespace Strata
 
             int now = Find.TickManager.TicksGame;
             int mapId = map.uniqueID;
-            int stamp = CurrentStamp(map);
+            WorkRelayBoard.TryGet(map, out WorkRelayBoard.BoardEntry board);
+            int stamp = board?.signalStamp ?? 0;
+            int[] counts = Snapshot(board);
             if (!blacklists.TryGetValue(pawn.thingIDNumber, out List<BlacklistEntry> list))
             {
                 list = new List<BlacklistEntry>(2);
@@ -126,6 +133,7 @@ namespace Strata
                         mapId = mapId,
                         untilTick = now + BlacklistTicks,
                         signalStamp = stamp,
+                        counts = counts,
                     };
                     LogWaste(pawn, map);
                     return;
@@ -136,23 +144,57 @@ namespace Strata
                 mapId = mapId,
                 untilTick = now + BlacklistTicks,
                 signalStamp = stamp,
+                counts = counts,
             });
             LogWaste(pawn, map);
         }
 
-        private static int CurrentStamp(Map map)
+        private static int[] Snapshot(WorkRelayBoard.BoardEntry board)
         {
-            return WorkRelayBoard.TryGet(map, out WorkRelayBoard.BoardEntry entry) ? entry.signalStamp : 0;
+            WorkRelayBoard.WorkTypeSignal[] byType = board?.byType;
+            if (byType == null)
+            {
+                return null;
+            }
+            var counts = new int[byType.Length];
+            for (int i = 0; i < byType.Length; i++)
+            {
+                counts[i] = byType[i].available ? byType[i].count : -1;
+            }
+            return counts;
         }
 
-        // A rebuilt board with a different stamp means new work appeared.
-        private static bool WorkChanged(Map map, int stamped)
+        // Lift the blacklist only when that floor gained work this pawn does:
+        // a type that had none now has some, or its count went up. Any stamp
+        // change used to lift it, so other pawns finishing jobs or a stack
+        // being moved sent the pawn straight back to the floor it just left.
+        private static bool WorkGrew(Pawn pawn, Map map, BlacklistEntry entry)
         {
-            if (stamped == 0 || !WorkRelayBoard.TryGet(map, out WorkRelayBoard.BoardEntry entry))
+            if (entry.signalStamp == 0 || entry.counts == null
+                || !WorkRelayBoard.TryGet(map, out WorkRelayBoard.BoardEntry board)
+                || board.signalStamp == 0 || board.signalStamp == entry.signalStamp
+                || board.byType == null)
             {
                 return false;
             }
-            return entry.signalStamp != 0 && entry.signalStamp != stamped;
+
+            Pawn_WorkSettings work = pawn.workSettings;
+            List<WorkTypeDef> types = DefDatabase<WorkTypeDef>.AllDefsListForReading;
+            int n = System.Math.Min(entry.counts.Length, board.byType.Length);
+            for (int i = 0; i < n; i++)
+            {
+                WorkRelayBoard.WorkTypeSignal now = board.byType[i];
+                if (!now.available || now.count <= entry.counts[i])
+                {
+                    continue;
+                }
+                WorkTypeDef type = i < types.Count ? types[i] : null;
+                if (type == null || work == null || work.WorkIsActive(type))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private static void LogWaste(Pawn pawn, Map map)

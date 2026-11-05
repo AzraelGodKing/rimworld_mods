@@ -35,8 +35,8 @@ namespace Strata
             // also covers modded work types the bools cannot name.
             public WorkTypeSignal[] byType;
 
-            // Changes when the bools or per-type signals change, so a blacklist
-            // can lift as soon as that floor's work changes.
+            // Changes when the bools or per-type signals change. The anti-loop
+            // blacklist only compares counts when this differs.
             public int signalStamp;
         }
 

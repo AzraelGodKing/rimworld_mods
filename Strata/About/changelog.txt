@@ -1,20 +1,13 @@
-3.12.1
-[h1]Strata - 3.12.1[/h1]
+3.12.2
+[h1]Strata - 3.12.2[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Gas no longer vanishes when the atmosphere system hits errors[/b] — the error guard used to switch both gas options off, which emptied the gas in every room on every map, and re-arm could not switch them back on after a restart. A tripped system now just pauses until you re-arm it in Mod options > Diagnostics or restart. Your options are never changed.
-[*] [b]Faster hauling between levels in big bases[/b] — with a higher-priority stockpile on another level, every hauler rescanned every stored item on the map. Strata now builds that list once every few seconds per level.
-[*] [b]Barns, prisons and mech crews below ground stay awake[/b] — levels with tame animals, mechs or prisoners but no colonists were treated as empty, so their temperature and haul lists ran slowly.
-[*] [b]Switching floors no longer skips a gas update[/b] — changing the viewed level in the middle of an atmosphere cycle could skip gas effects on pawns or run gas sources twice.
-[*] [b]Caged canaries from older saves stay in their cage[/b].
-[*] [b]Compact roof decks ignore natural rock roof[/b] — only built roofs set the deck size.
+[*] [b]Colonists no longer stand idle after a work trip[/b] — a pawn sent to another floor for one kind of work refused every other job while that work was blocked (no materials, out of reach, taken by someone else), for up to half a day. They now do whatever local work they can, and give the trip up after about an hour.
+[*] [b]Fewer trips up and down the stairs[/b] — a floor a pawn just left empty-handed stays off their list until it actually gains work they do. Before, any change there (another colonist finishing a job, a stack being moved) sent them straight back.
+[*] [b]No endless detours[/b] — when a job is only reachable by going around through another floor and the detour still can't reach it (for example walls going up on the upper floor), the pawn stops trying that detour for a while.
+[*] [b]Turning the work relay off now takes effect at once[/b] — pawns already assigned to another floor, including ones from your save, are let go.
 [/list]
 
-[b]Changed[/b]
-[list]
-[*] Small speed-ups for carts, loading docks and packed haulways.
-[/list]
-
-[i]Build stamp (Player.log): guard-haul-v1[/i]
+[i]Build stamp (Player.log): stair-hold-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
