@@ -5,7 +5,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "perf-levels-v1";
+        public const string BuildStamp = "guard-haul-v1";
 
         public static void LogStartup()
         {

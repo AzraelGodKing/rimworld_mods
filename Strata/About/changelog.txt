@@ -1,24 +1,20 @@
-3.12.0
-[h1]Strata - 3.12.0[/h1]
+3.12.1
+[h1]Strata - 3.12.1[/h1]
 
-[b]Added[/b]
+[b]Fixed[/b]
 [list]
-[*] [b]Lightweight ticking on occupied levels[/b] (on by default) — A+ and B+ levels skip vanilla systems that do nothing there: wild animal and plant spawners everywhere, and weather, wind and snow underground. Gas, smoke, flooding, mining noise, raid pursuit, power and roof-deck weather keep running. Dev mode shows each level's tick tier in the Levels tab.
-[*] [b]Smaller levels[/b] (off by default) — new B levels can be 75% or 50% of the home map, chosen in mod options, from an optional menu when a new depth opens, or with a button on the unopened stairwell. [b]Compact roof decks[/b] size new A+ decks to the built roofs below plus a margin. Fewer cells means more FPS on big maps. Existing levels keep their size.
-[*] [b]Generic cross-floor job scan[/b] (prototype, off by default) — when a colonist finds no work, food, recreation or medical bed on their level, Strata runs the game's own job search on linked levels and sends them to the first real job. Replaces the work, food, joy and patient relays while on.
-[*] [b]Diagnostics tab[/b] in mod options — every major system (see-below, cross-level combat, flooding, incidents, gravship stacks, level generation, power shafts, each mod bridge) now shuts itself off after repeated errors instead of spamming the log. The tab shows each system's health and last error, with a re-arm button. Known issues ship in About/known-issues.json.
-[*] [b]Any Vanilla Expanded pipe network crosses shafts[/b] — every VEF pipe net gets a link on the omni connector and on a new shaft pipe-network junction, including mods with no Strata patch. Each network on a junction can be unlinked on its own.
+[*] [b]Gas no longer vanishes when the atmosphere system hits errors[/b] — the error guard used to switch both gas options off, which emptied the gas in every room on every map, and re-arm could not switch them back on after a restart. A tripped system now just pauses until you re-arm it in Mod options > Diagnostics or restart. Your options are never changed.
+[*] [b]Faster hauling between levels in big bases[/b] — with a higher-priority stockpile on another level, every hauler rescanned every stored item on the map. Strata now builds that list once every few seconds per level.
+[*] [b]Barns, prisons and mech crews below ground stay awake[/b] — levels with tame animals, mechs or prisoners but no colonists were treated as empty, so their temperature and haul lists ran slowly.
+[*] [b]Switching floors no longer skips a gas update[/b] — changing the viewed level in the middle of an atmosphere cycle could skip gas effects on pawns or run gas sources twice.
+[*] [b]Caged canaries from older saves stay in their cage[/b].
+[*] [b]Compact roof decks ignore natural rock roof[/b] — only built roofs set the deck size.
 [/list]
 
 [b]Changed[/b]
 [list]
-[*] [b]True Z-Levels, True Levels and Z-Levels are now marked incompatible[/b] — the mod list warns, and Strata logs an error and sends a letter if one is loaded.
+[*] Small speed-ups for carts, loading docks and packed haulways.
 [/list]
 
-[b]Fixed[/b]
-[list]
-[*] [b]Batteries on empty levels no longer charge and drain too fast[/b] — on RimWorld 1.6 the vacant-level throttle ticked their power nets twice on most ticks.
-[/list]
-
-[i]Build stamp (Player.log): perf-levels-v1[/i]
+[i]Build stamp (Player.log): guard-haul-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
