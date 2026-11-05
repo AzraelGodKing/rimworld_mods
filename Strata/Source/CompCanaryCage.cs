@@ -88,8 +88,17 @@ namespace Strata
             Scribe_Values.Look(ref distressed, "strataCanaryDistressed", defaultValue: false);
             Scribe_Defs.Look(ref threatGas, "strataCanaryThreatGas");
             Scribe_Values.Look(ref legacyCanaryAlive, "strataCanaryAlive", defaultValue: true);
-            Scribe_References.Look(ref contained, "strataCagedCanary");
             Scribe_References.Look(ref contained, "strataCagedBird");
+            // Saves from before the shared bird cage only have the canary label.
+            if (Scribe.mode != LoadSaveMode.Saving)
+            {
+                Pawn legacy = null;
+                Scribe_References.Look(ref legacy, "strataCagedCanary");
+                if (contained == null && legacy != null)
+                {
+                    contained = legacy;
+                }
+            }
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
