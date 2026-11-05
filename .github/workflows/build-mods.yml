@@ -143,6 +143,9 @@ jobs:
       - name: Headless mod checks
         run: dotnet test Tests/ModChecks/ModChecks.csproj -c Release --nologo
 
+      - name: Strata logic tests
+        run: dotnet test Tests/Strata.Tests/Strata.Tests.csproj -c Release --nologo
+
       - name: Pack docs/downloads zips (with DLLs)
         if: github.event_name != 'pull_request'
         shell: bash

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Logic tests for Strata code that does not need the game. Strata
+       source files are compiled in directly; Shims/ stands in for the few
+       Verse and Unity types they use. No game DLL is loaded. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>Strata.Tests</RootNamespace>
+    <AssemblyName>Strata.Tests</AssemblyName>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Strata/Source/Pure/*.cs" Link="Strata/Pure/%(Filename)%(Extension)" />
+    <Compile Include="../../Strata/Source/Geometry/*.cs" Link="Strata/Geometry/%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

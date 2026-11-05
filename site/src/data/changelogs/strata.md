@@ -1,9 +1,21 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.13.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.13.0 loaded from ... (modified ...); modder-api-v2.` via `ModVersionLog.Write`.
+**Version:** `3.13.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.13.1 loaded from ... (modified ...); logic-tests-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `modder-api-v2` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `logic-tests-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.13.1]
+
+Player-facing version **3.13.1** (`About.xml` `modVersion`). Stamp `logic-tests-v1`. No save-format change, no gameplay change.
+
+AZR-487
+
+### Changed
+- **Logic tests** (AZR-487): new `Tests/Strata.Tests` (xunit, net8.0, runs in CI after ModChecks, no game DLLs). It compiles `Strata/Source/Pure/*` and `Strata/Source/Geometry/*` directly, with `Shims/` standing in for `Verse.IntVec3` and `UnityEngine.Mathf`.
+  - `StrataCavernPlan` geometry (`PlanWarren`, `PlanVault` and helpers) moved unchanged into `Geometry/StrataCavernGeometry.cs` (partial class). Seed snapshot tests pin the carve-mask and chamber hash for five seeds. This also covers the seeded `System.Random` legacy algorithm on CoreCLR.
+  - `RelayChoice` holds the priority-trip decision from `JobRelay.TryLeaveForBetterWork` (strictly better only, depth limit, emergency first, then priority, then nearer).
+  - `AtmosphereDepth.OxygenForDepth` holds the depth-scarce O2 maths from `AtmosphericMix.TargetForMap`.
 
 ## [3.13.0]
 

@@ -17,15 +17,13 @@ namespace Strata
     {
         // Mole / volume fractions (sum ≈ 1.0).
         public const float NitrogenFraction = 0.7808f;
-        public const float OxygenFraction = 0.2095f;
+        public const float OxygenFraction = AtmosphereDepth.OxygenFraction;
         public const float ArgonFraction = 0.0093f;
         public const float CarbonDioxideFraction = 0.0004f;
 
         // Legacy alias used by pumps.
         public const float AmbientOxygen = OxygenFraction;
 
-        private const float MinDeepOxygenFraction = 0.07f;
-        private const float DepthOxygenFalloff = 0.11f;
         private const float NormalizeEpsilon = 0.0005f;
         private const float OversumMigrateThreshold = 1.05f;
         private const float MaxDeepGasDensity = 3f;
@@ -45,12 +43,7 @@ namespace Strata
             float o2 = OxygenFraction;
             if (map != null && StrataMapUtility.IsUnderground(map) && !StrataMapUtility.IsUpperLevel(map))
             {
-                int depth = StrataDepth.Of(map);
-                if (depth > 1)
-                {
-                    float scarcity = Mathf.Clamp01((depth - 1) * DepthOxygenFalloff);
-                    o2 = Mathf.Max(MinDeepOxygenFraction, OxygenFraction * (1f - scarcity));
-                }
+                o2 = AtmosphereDepth.OxygenForDepth(StrataDepth.Of(map));
             }
 
             float remainder = 1f - o2 - ArgonFraction - CarbonDioxideFraction;

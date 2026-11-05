@@ -1,5 +1,5 @@
-3.13.0
-[h1]Strata - 3.13.0[/h1]
+3.13.1
+[h1]Strata - 3.13.1[/h1]
 
 [b]Added[/b]
 [list]
@@ -15,5 +15,10 @@
 [*] [b]Turning the work relay off now takes effect at once[/b] — pawns already assigned to another floor, including ones from your save, are let go.
 [/list]
 
-[i]Build stamp (Player.log): modder-api-v2[/i]
+[b]Changed[/b]
+[list]
+[*] Automated tests now check that cave layouts, deep-level oxygen and the "leave for better work" choice stay the same between versions. No gameplay change.
+[/list]
+
+[i]Build stamp (Player.log): logic-tests-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

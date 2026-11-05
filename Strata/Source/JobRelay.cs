@@ -394,17 +394,12 @@ namespace Strata
 
                 bool emergencyTrip = emergencyOverride && emergency && remoteType != null
                     && (remoteType == WorkTypeDefOf.Firefighter || remoteType == WorkTypeDefOf.Doctor);
-                bool better = maxDepth > 0 && link.depth <= maxDepth && remotePriority < localPriority;
-                if (!emergencyTrip && !better)
+                if (!RelayChoice.Qualifies(localPriority, remotePriority, link.depth, maxDepth, emergencyTrip))
                 {
                     continue;
                 }
-
-                bool wins = best < 0
-                    || (emergencyTrip && !bestEmergency)
-                    || (emergencyTrip == bestEmergency && remotePriority < bestPriority)
-                    || (emergencyTrip == bestEmergency && remotePriority == bestPriority && link.depth < links[best].depth);
-                if (!wins)
+                if (!RelayChoice.Wins(best >= 0, emergencyTrip, remotePriority, link.depth,
+                        bestEmergency, bestPriority, best >= 0 ? links[best].depth : 0))
                 {
                     continue;
                 }
