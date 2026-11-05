@@ -101,6 +101,10 @@ namespace Strata
         {
             if (map != null)
             {
+                if (StrataModderApi.IsLevel(map))
+                {
+                    StrataModderApi.NotifyLevelRemoved(map);
+                }
                 AtmosphereMapComponent.RemovePendingSeeds(map.uniqueID);
                 StrataMapUtility.Invalidate(map);
                 StrataLevelCoords.Invalidate();

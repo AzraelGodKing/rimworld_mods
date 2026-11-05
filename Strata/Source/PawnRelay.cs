@@ -333,15 +333,15 @@ namespace Strata
 
         public static bool HasWorkFor(Pawn pawn, Map map) => WorkRelaySignals.HasWorkFor(pawn, map);
 
-        /// <summary>Mods: see <see cref="WorkRelaySignals.RegisterWorkProbe"/>.</summary>
+        [System.Obsolete("Use StrataModderApi.RegisterWorkProbe. Kept for mods built against 3.x.")]
         public static void RegisterWorkProbe(WorkRelaySignals.WorkProbe probe)
             => WorkRelaySignals.RegisterWorkProbe(probe);
 
-        /// <summary>Mods: see <see cref="WorkRelaySignals.UnregisterWorkProbe"/>.</summary>
+        [System.Obsolete("Use StrataModderApi.UnregisterWorkProbe. Kept for mods built against 3.x.")]
         public static void UnregisterWorkProbe(WorkRelaySignals.WorkProbe probe)
             => WorkRelaySignals.UnregisterWorkProbe(probe);
 
-        /// <summary>Mods: see <see cref="WorkRelaySignals.RegisterWorkSeekingJobGiverMarker"/>.</summary>
+        [System.Obsolete("Use StrataModderApi.RegisterWorkSeekingJobGiverMarker. Kept for mods built against 3.x.")]
         public static void RegisterWorkSeekingJobGiverMarker(string typeNameContains)
             => WorkRelaySignals.RegisterWorkSeekingJobGiverMarker(typeNameContains);
 

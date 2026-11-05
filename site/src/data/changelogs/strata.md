@@ -1,9 +1,21 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.12.2` in `About.xml` `modVersion`. Player.log: `[Strata] v3.12.2 loaded from ... (modified ...); stair-hold-v1.` via `ModVersionLog.Write`.
+**Version:** `3.13.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.13.0 loaded from ... (modified ...); modder-api-v2.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `stair-hold-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `modder-api-v2` in `StrataBuildInfo.BuildStamp`.
+
+## [3.13.0]
+
+Player-facing version **3.13.0** (`About.xml` `modVersion`). Stamp `modder-api-v2`. No save-format change.
+
+AZR-490
+
+### Added
+- **`StrataModderApi` v2** (AZR-490): `ApiVersion` constant, `IsLevel`, `LevelIndex` (signed altitude), `LevelLabel`, `TravelCost` (portal hops), `RegisterWorkProbe` / `UnregisterWorkProbe` / `RegisterWorkSeekingJobGiverMarker`, and level-created / level-removed listeners. Strata now raises the vertical-link listeners for its own stairs and elevators (on build, and for every portal on a newly generated level); before, only `NotifyVerticalLink` from another mod reached them. Documented in `Strata/API.md`.
+
+### Changed
+- `PawnRelay.RegisterWorkProbe`, `UnregisterWorkProbe` and `RegisterWorkSeekingJobGiverMarker` are `[Obsolete]` and forward as before.
 
 ## [3.12.2]
 
