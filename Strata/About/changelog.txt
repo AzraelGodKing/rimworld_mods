@@ -1,8 +1,9 @@
-3.18.1
-[h1]Strata - 3.18.1[/h1]
+3.19.0
+[h1]Strata - 3.19.0[/h1]
 
 [b]Added[/b]
 [list]
+[*] [b]Built for RimWorld 1.7 on .NET 10[/b] — the 1.7 version of Strata is now built against the 1.7 game files and the new .NET runtime it uses, instead of reusing the 1.6 build. Nothing changes on 1.6.
 [*] [b]Drafted orders across several floors[/b] — when a drafted pawn cannot walk to the spot you clicked, it can now go down, cross more than one linked floor, and come back up a stair that reaches it. Before, only a single floor in between was tried.
 [*] [b]Lost floors[/b] — rarely, a newly dug level from B2 down hides sealed rooms cut long ago by people who dug down before you. Break in to find their remains, their loot, and what killed them: insects still nest in the far rooms. Their diaries tell the story, and the lesson: noise underground draws infestations. Part of "Special levels" in the Levels settings.
 [*] [b]Flooded levels[/b] — a newly dug level from B2 down sometimes holds an underground lake in the rock. Once your miners break into it, the water seeps out across the level unless a powered sump pump is running somewhere on that level, and it spreads faster while it rains hard on the surface. Anyone lying in the flood water, downed or asleep, can drown. With Odyssey you can fish the lake, and with Homesteader a well on the level above draws twice the water. Turn it off with "Special levels" in the Levels settings.
@@ -10,6 +11,11 @@
 [*] [b]Pawns take the shorter way between floors[/b] — floors and stairwells are now picked by how far a pawn actually walks on the floors in between (walls, doors and slow ground included), not by how many stairwells it passes. A stair that cannot be walked to from where the pawn lands is not used at all. With two shafts down, they use the one whose stairs line up instead of a closer stair that means crossing a whole level. Elevators count as a quicker ride than stairs.
 [*] [b]Settings presets, tabs and search[/b] — Mod options now open on tabs (Levels, Commuting, Atmosphere, Threats, Performance, Visuals, Advanced, Diagnostics) with a search box that finds any option by name. Performance, Balanced and Immersive presets set the costly options in one click; change one yourself and it shows Custom.
 [*] [b]Modder API v2[/b] — other mods can ask which level a map is, its name, how many stairs away another level is, register their own work for the work relay, and hear when a level is created, removed or linked. Docs: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Strata/API.md
+[/list]
+
+[b]Changed[/b]
+[list]
+[*] [b]Multiplayer[/b] — Strata is not Multiplayer compatible. The Workshop page and mod description now say so.
 [/list]
 
 [b]Fixed[/b]

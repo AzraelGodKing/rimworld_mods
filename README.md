@@ -29,7 +29,7 @@ Source lives in `Homesteader/Source`. The compiled `Homesteader.dll` is produced
 
 ### Strata (experimental)
 
-Dig down and build a true multistory base — one home, many floors. RimWorld 1.6 / 1.7. C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod).
+Dig down and build a true multistory base — one home, many floors. RimWorld 1.6 / 1.7. C# mod (requires the [Harmony](https://github.com/pardeike/HarmonyRimWorld) mod). Not Multiplayer compatible.
 
 Build an **excavated stairwell** and a new underground level opens beneath your base: a solid stratum of mineable rock under a thick roof, ready to be carved into bedrooms, workshops, and freezers. Build another stairwell down there and keep going deeper.
 

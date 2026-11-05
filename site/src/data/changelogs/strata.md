@@ -1,9 +1,19 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.18.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.18.1 loaded from ... (modified ...); buried-chambers-v1.` via `ModVersionLog.Write`.
+**Version:** `3.19.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.19.0 loaded from ... (modified ...); net10-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `buried-chambers-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `net10-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.19.0]
+
+Player-facing version **3.19.0** (`About.xml` `modVersion`). Stamp `net10-v1`. No save-format change.
+
+AZR-461 (Strata part), AZR-488
+
+### Changed
+- **1.7 build on .NET 10:** `Strata.1.7.csproj` now targets `net10.0` against `Krafs.Rimworld.Ref` `1.7.4998-unstable` (the Waylith / CoreCLR game) and `Lib.Harmony` `3.0.0-rc.4`, instead of building a second net472 DLL from the 1.6 refs. The whole source tree compiles against 1.7 with no changes. Strata builds net10 only for 1.7 (no dual net472/net10 build), as the Strata 4 plan says. `build-mods.yml` and `release-publish.yml` install the .NET 10 SDK next to .NET 8.
+- **Multiplayer:** not supported (AZR-488, option B). Stated in `About.xml`, the Steam description and the README.
 
 ## [3.18.1]
 
