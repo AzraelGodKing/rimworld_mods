@@ -14,11 +14,9 @@ namespace Strata
         private static readonly HashSet<Map> reachesVisited = new HashSet<Map>();
         private static readonly Queue<Map> reachesQueue = new Queue<Map>();
 
-        // ReachableLevels BFS scratch. Each map keeps its own result list so a
+        // ComponentPortals scratch. Each map keeps its own result list so a
         // nested call for a different floor cannot clear the list being walked.
         private static readonly HashSet<Map> bfsVisited = new HashSet<Map>();
-        private static readonly Dictionary<Map, MapPortal> bfsFirstSteps = new Dictionary<Map, MapPortal>();
-        private static readonly Dictionary<Map, int> bfsDepths = new Dictionary<Map, int>();
 
         // Cached first-step portal lists per (from, target). Pawn position still
         // picks the nearest candidate at call time; topology is shared by all bots.
@@ -31,6 +29,10 @@ namespace Strata
         private static readonly Dictionary<int, List<LevelLink>> reachableByMapId =
             new Dictionary<int, List<LevelLink>>();
         private static readonly List<LevelLink> emptyLinks = new List<LevelLink>();
+
+        // CostAfter per (portal, target), valid until the topology changes.
+        private static int costAfterEpoch = -1;
+        private static readonly Dictionary<long, float> costAfter = new Dictionary<long, float>();
 
         // AnyLinkFrom is hit from many Harmony postfixes; cache per map until
         // InvalidateCache (portal spawn/despawn) bumps graphEpoch.
@@ -50,6 +52,7 @@ namespace Strata
             public MapPortal firstStep; // the portal to take first from the start map
             public int depth;        // number of stairwells between here and there
             public IntVec3 arrivalCell; // where a pawn lands on that level (last leg's exit)
+            public float travelCost; // walk between portals on the floors in between plus each ride
         }
 
         // Bumped whenever portal topology changes; callers key their own caches on it.
@@ -114,9 +117,11 @@ namespace Strata
             return false;
         }
 
-        // All levels reachable from 'from', nearest first, each paired with the
-        // first portal to walk into. The list is cached per map until
-        // InvalidateCache. Do not mutate it; LevelRoleUtility sorts a copy.
+        // All levels reachable from 'from', cheapest first, each paired with the
+        // first portal to walk into. Cost is the walk between portals on the
+        // floors in between plus each ride (LevelPathSearch); the walk to the
+        // first portal is left out because it depends on the pawn. Cached per
+        // map until InvalidateCache. Do not mutate it; LevelRoleUtility sorts a copy.
         public static List<LevelLink> ReachableLevels(Map from)
         {
             if (from == null)
@@ -133,15 +138,83 @@ namespace Strata
                 return cached;
             }
 
+            List<MapPortal> component = ComponentPortals(from);
             var built = new List<LevelLink>();
-            bfsVisited.Clear();
-            bfsVisited.Add(from);
-            bfsFirstSteps.Clear();
-            bfsDepths.Clear();
-            bfsDepths[from] = 0;
-            openQueue.Clear();
-            openQueue.Enqueue(from);
+            if (component.Count > 0)
+            {
+                LevelPathSearch.Portal[] nav = ToNav(component);
+                List<LevelPathSearch.Route> routes = LevelPathSearch.FromMap(nav, from.uniqueID);
+                for (int i = 0; i < routes.Count; i++)
+                {
+                    LevelPathSearch.Route route = routes[i];
+                    MapPortal last = component[route.lastPortal];
+                    built.Add(new LevelLink
+                    {
+                        map = OtherMapSafe(last),
+                        firstStep = component[route.firstPortal],
+                        depth = route.hops,
+                        arrivalCell = last.GetDestinationLocation(),
+                        travelCost = route.cost,
+                    });
+                }
+            }
 
+            reachableByMapId[from.uniqueID] = built;
+            return built;
+        }
+
+        // Walking cost from a portal's landing to 'target' along the cheapest
+        // route, 0 when the portal lands on 'target', -1 when it cannot get there.
+        public static float CostAfter(MapPortal portal, Map target)
+        {
+            Map other = OtherMapSafe(portal);
+            if (other == null || target == null)
+            {
+                return -1f;
+            }
+            if (other == target)
+            {
+                return 0f;
+            }
+            long key = ((long)portal.thingIDNumber << 32) | (uint)target.uniqueID;
+            if (costAfterEpoch != graphEpoch)
+            {
+                costAfter.Clear();
+                costAfterEpoch = graphEpoch;
+            }
+            if (costAfter.TryGetValue(key, out float cachedCost))
+            {
+                return cachedCost;
+            }
+
+            float result = -1f;
+            List<MapPortal> component = ComponentPortals(other);
+            IntVec3 arrival = portal.GetDestinationLocation();
+            if (component.Count > 0 && arrival.IsValid)
+            {
+                List<LevelPathSearch.Route> routes = LevelPathSearch.FromCell(
+                    ToNav(component), other.uniqueID, arrival.x, arrival.z);
+                for (int i = 0; i < routes.Count; i++)
+                {
+                    if (routes[i].map == target.uniqueID)
+                    {
+                        result = routes[i].cost;
+                        break;
+                    }
+                }
+            }
+            costAfter[key] = result;
+            return result;
+        }
+
+        // Every level portal on maps linked to 'start', in a stable order.
+        private static List<MapPortal> ComponentPortals(Map start)
+        {
+            var portals = new List<MapPortal>();
+            bfsVisited.Clear();
+            bfsVisited.Add(start);
+            openQueue.Clear();
+            openQueue.Enqueue(start);
             while (openQueue.Count > 0)
             {
                 Map current = openQueue.Dequeue();
@@ -152,27 +225,48 @@ namespace Strata
                         continue;
                     }
                     Map other = OtherMapSafe(portal);
-                    if (other == null || bfsVisited.Contains(other))
+                    if (other == null)
                     {
                         continue;
                     }
-                    bfsVisited.Add(other);
-                    MapPortal firstStep = current == from ? portal : bfsFirstSteps[current];
-                    bfsFirstSteps[other] = firstStep;
-                    bfsDepths[other] = bfsDepths[current] + 1;
-                    built.Add(new LevelLink
+                    portals.Add(portal);
+                    if (bfsVisited.Add(other))
                     {
-                        map = other,
-                        firstStep = firstStep,
-                        depth = bfsDepths[other],
-                        arrivalCell = portal.GetDestinationLocation(),
-                    });
-                    openQueue.Enqueue(other);
+                        openQueue.Enqueue(other);
+                    }
                 }
             }
+            return portals;
+        }
 
-            reachableByMapId[from.uniqueID] = built;
-            return built;
+        private static LevelPathSearch.Portal[] ToNav(List<MapPortal> portals)
+        {
+            var nav = new LevelPathSearch.Portal[portals.Count];
+            for (int i = 0; i < portals.Count; i++)
+            {
+                MapPortal portal = portals[i];
+                IntVec3 arrival = portal.GetDestinationLocation();
+                nav[i] = new LevelPathSearch.Portal
+                {
+                    id = portal.thingIDNumber,
+                    map = portal.Map.uniqueID,
+                    x = portal.Position.x,
+                    z = portal.Position.z,
+                    otherMap = OtherMapSafe(portal).uniqueID,
+                    arrivalX = arrival.IsValid ? arrival.x : portal.Position.x,
+                    arrivalZ = arrival.IsValid ? arrival.z : portal.Position.z,
+                    rideCost = IsElevator(portal) ? LevelPathSearch.ElevatorRideCost : LevelPathSearch.StairRideCost,
+                };
+            }
+            return nav;
+        }
+
+        // By type, not power, so the cached graph does not depend on the grid.
+        // BestFirstStep still favours a powered elevator for the first leg.
+        private static bool IsElevator(MapPortal portal)
+        {
+            return portal is Building_ElevatorDown || portal is Building_ElevatorUp
+                || portal is Building_ElevatorBuildUp || portal is Building_ElevatorBuildUpLanding;
         }
 
         // A list the caller may sort. The cached ReachableLevels list must stay
@@ -307,6 +401,17 @@ namespace Strata
 
                 float score = walk;
                 Map other = OtherMapSafe(portal);
+                if (other != target)
+                {
+                    // Through another floor: count the walk and rides still ahead,
+                    // so a near stair with a long way round loses to the right shaft.
+                    float after = CostAfter(portal, target);
+                    if (after < 0f)
+                    {
+                        continue;
+                    }
+                    score += after;
+                }
                 if (prefer && other == target)
                 {
                     IntVec3 arrival = portal.GetDestinationLocation();

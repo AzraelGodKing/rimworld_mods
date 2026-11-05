@@ -13,8 +13,9 @@ Strata is an optional dependency for most mods, so call it through reflection or
 | `LevelIndex(Map)` | +N for the Nth upper floor, 0 for the surface, -N for the Nth level down |
 | `LevelLabel(Map)` | the player's name for the level, or the map label |
 | `AnyLinkFrom(Map)` | true when the map has a stair or elevator link |
-| `ReachableMaps(Map)` | linked maps, nearest first (a fresh list) |
-| `TravelCost(Map from, Map to)` | stair/elevator hops, 0 for the same map, -1 when not linked |
+| `ReachableMaps(Map)` | linked maps, cheapest route first (a fresh list) |
+| `TravelCost(Map from, Map to)` | cheapest route in walked cells (walk between portals on floors in between, plus 20 per stair ride and 8 per elevator ride; not the walk to the first portal), 0 for the same map, -1 when not linked |
+| `Hops(Map from, Map to)` | stair/elevator rides on that route, 0 for the same map, -1 when not linked |
 | `BestFirstStep(from, target, near, pawn)` / `FirstStepCandidates(from, target)` | which portal to walk into |
 
 ## Work relay

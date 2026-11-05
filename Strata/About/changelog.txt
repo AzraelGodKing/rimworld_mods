@@ -1,8 +1,9 @@
-3.13.1
-[h1]Strata - 3.13.1[/h1]
+3.14.0
+[h1]Strata - 3.14.0[/h1]
 
 [b]Added[/b]
 [list]
+[*] [b]Pawns take the shorter way between floors[/b] — floors and stairwells are now picked by how far a pawn actually walks on the floors in between, not by how many stairwells it passes. With two shafts down, they use the one whose stairs line up instead of a closer stair that means crossing a whole level. Elevators count as a quicker ride than stairs.
 [*] [b]Settings presets, tabs and search[/b] — Mod options now open on tabs (Levels, Commuting, Atmosphere, Threats, Performance, Visuals, Advanced, Diagnostics) with a search box that finds any option by name. Performance, Balanced and Immersive presets set the costly options in one click; change one yourself and it shows Custom.
 [*] [b]Modder API v2[/b] — other mods can ask which level a map is, its name, how many stairs away another level is, register their own work for the work relay, and hear when a level is created, removed or linked. Docs: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Strata/API.md
 [/list]
@@ -20,5 +21,5 @@
 [*] Automated tests now check that cave layouts, deep-level oxygen and the "leave for better work" choice stay the same between versions. No gameplay change.
 [/list]
 
-[i]Build stamp (Player.log): logic-tests-v1[/i]
+[i]Build stamp (Player.log): nav-cost-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

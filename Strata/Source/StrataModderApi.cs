@@ -55,11 +55,38 @@ namespace Strata
         }
 
         /// <summary>
-        /// Stair and elevator hops from <paramref name="from"/> to <paramref name="to"/>:
-        /// 0 for the same map, -1 when not linked. This counts portals, not
-        /// walking distance.
+        /// Cost of the cheapest route from <paramref name="from"/> to <paramref name="to"/>,
+        /// in walked cells: the walk between portals on the floors in between
+        /// plus each stair or elevator ride (a stair counts as 20 cells, an
+        /// elevator as 8). The walk to the first portal is not included. 0 for
+        /// the same map, -1 when not linked.
         /// </summary>
-        public static int TravelCost(Map from, Map to)
+        public static float TravelCost(Map from, Map to)
+        {
+            if (from == null || to == null)
+            {
+                return -1f;
+            }
+            if (from == to)
+            {
+                return 0f;
+            }
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(from);
+            for (int i = 0; i < links.Count; i++)
+            {
+                if (links[i].map == to)
+                {
+                    return links[i].travelCost;
+                }
+            }
+            return -1f;
+        }
+
+        /// <summary>
+        /// Stair and elevator rides on that cheapest route: 0 for the same map,
+        /// -1 when not linked.
+        /// </summary>
+        public static int Hops(Map from, Map to)
         {
             if (from == null || to == null)
             {
@@ -113,7 +140,7 @@ namespace Strata
         public static bool AnyLinkFrom(Map from) => LevelGraph.AnyLinkFrom(from);
 
         /// <summary>
-        /// Linked destination maps reachable from <paramref name="from"/> (BFS order).
+        /// Linked destination maps reachable from <paramref name="from"/>, cheapest route first.
         /// Fresh list each call — safe to store or mutate.
         /// </summary>
         public static List<Map> ReachableMaps(Map from)

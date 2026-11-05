@@ -1,9 +1,22 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.13.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.13.1 loaded from ... (modified ...); logic-tests-v1.` via `ModVersionLog.Write`.
+**Version:** `3.14.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.14.0 loaded from ... (modified ...); nav-cost-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `logic-tests-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `nav-cost-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.14.0]
+
+Player-facing version **3.14.0** (`About.xml` `modVersion`). Stamp `nav-cost-v1`. No save-format change.
+
+AZR-479
+
+### Changed
+- **Routes by travel cost** (AZR-479): `LevelGraph.ReachableLevels` was a breadth-first search, so floors were ranked by stairwell count and each floor's first step was whichever portal the search met first. It now runs `LevelPathSearch` (Dijkstra over level portals; `Pure/`, tested) on the linked component: straight-line walk from each landing to the next portal plus a ride cost (stairs 20 cells, elevators 8 by type). Links come out cheapest first with `travelCost`; `depth` is the hop count on that route. Ties go to the lower `thingIDNumber`, so it is deterministic. Still cached per map until the portal topology changes.
+- **First step looks past the next floor:** `PickBestFirstStep` adds `LevelGraph.CostAfter(portal, target)` (cached per portal and target) for portals that do not land on the target, so a near stair whose route crosses a whole level loses to the shaft that lines up.
+- **Modder API:** `TravelCost` now returns that cost in walked cells (float, -1 when not linked); new `Hops` returns the ride count. `ApiVersion` stays 2 (3.13.0 is unreleased).
+
+Not covered yet: drafted orders across more than one linked floor still use the two-stage `DraftedPortalPathing` route, and the walk is straight-line, not region path cost.
 
 ## [3.13.1]
 
