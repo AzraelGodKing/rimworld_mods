@@ -89,12 +89,12 @@ namespace Strata
         }
 
         // A3: bake per-cell overlay colors from density planes + gas meta.
-        public static Color[] BakeOverlayColorsParallel(
+        public static Color32[] BakeOverlayColorsParallel(
             float[][] planes,
             GasOverlayMeta[] gases,
             int cellCount)
         {
-            var colors = new Color[cellCount];
+            var colors = new Color32[cellCount];
             if (planes == null || gases == null || cellCount <= 0)
             {
                 return colors;

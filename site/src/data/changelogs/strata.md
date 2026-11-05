@@ -1,9 +1,28 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.19.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.19.0 loaded from ... (modified ...); net10-v1.` via `ModVersionLog.Write`.
+**Version:** `3.19.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.19.1 loaded from ... (modified ...); offthread-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `net10-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `offthread-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.19.1]
+
+Player-facing version **3.19.1** (`About.xml` `modVersion`). Stamp `offthread-v1`. No save-format change.
+
+AZR-464, AZR-473 (the parts that do not need the profiler)
+
+### Changed
+- **Cave plans run inline:** `StrataCavernPlan.RunOnWorker` queued the plan on the ThreadPool and then blocked the main thread until it finished, so it gave no parallelism, only a hand-off. `GenStep_CarveWarren` and `GenStep_CarveVault` now call `PlanWarren` / `PlanVault` directly. Same seed, same cave.
+- **Overlay colour cache is `Color32[]`:** 4 bytes a cell instead of 16 (about 3 MB less on a 250×250 level with gas).
+- **`System.Threading.Lock`** guards the off-thread work board on .NET 10 (a `using` alias falls back to `object` on net472).
+- **Pending gas seeds are cleared on game load** (`AtmosphereMapComponent.ResetSession`), so seeds keyed by a map ID from the last game cannot land on a new map with the same ID.
+
+### Tests
+- `SeededRandomTests`: `System.Random(seed)` on CoreCLR matches a copy of the .NET Framework algorithm for `Next`, `Next(max)`, `Next(min, max)` and `NextDouble`, so 1.6 (Mono) and 1.7 (CoreCLR) carve the same caves (33 tests).
+
+### Not done, and why
+- **Flattening `cellDensity` to one `float[]`:** gas planes are allocated only for gases that are present. A flat cell × gas array would allocate every gas for every cell, about 10 times the memory on a typical level. That would need a profiler run first (AZR-471).
+- **`Vector256` overlay fill, `CollectionsMarshal` cloud updates, `Parallel.For` partitioning and `CancellationToken` for the work board:** the board's worker job is a single pass over a byte array, and the ticket asks to measure first. Left for the AZR-471 baseline.
 
 ## [3.19.0]
 

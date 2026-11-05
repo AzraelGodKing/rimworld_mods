@@ -20,6 +20,7 @@ namespace Strata
             StrataResources.ClearCaches,
             WorkRelaySignals.ResetSession,
             WorkRelayBoardBuilder.ResetSession,
+            AtmosphereMapComponent.ResetSession,
             SleepRelay.ResetSession,
             StrataConstructAcrossLevels.ResetSession,
             BillIngredientUtility.ResetSession,

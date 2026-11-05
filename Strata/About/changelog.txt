@@ -1,5 +1,5 @@
-3.19.0
-[h1]Strata - 3.19.0[/h1]
+3.19.1
+[h1]Strata - 3.19.1[/h1]
 
 [b]Added[/b]
 [list]
@@ -15,6 +15,7 @@
 
 [b]Changed[/b]
 [list]
+[*] [b]Lighter gas overlay[/b] — the gas overlay keeps its colours in a quarter of the memory, and new levels plan their caves without a needless hand-off to another thread.
 [*] [b]Multiplayer[/b] — Strata is not Multiplayer compatible. The Workshop page and mod description now say so.
 [/list]
 

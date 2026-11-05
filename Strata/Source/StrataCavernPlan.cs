@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using Verse;
 
 namespace Strata
 {
-    // Cave-system planner for native warren/vault digs. Geometry runs on a
-    // worker from a deterministic mix of map.ConstantRandSeed + GenStep SeedPart
-    // (same world/map seed → same cave). Main thread applies Destroy / floors.
+    // Cave-system planner for native warren/vault digs. Geometry is plain
+    // values from a deterministic mix of map.ConstantRandSeed + GenStep SeedPart
+    // (same world/map seed → same cave), so the gen step runs it inline and
+    // then applies Destroy / floors.
     internal static partial class StrataCavernPlan
     {
         public static int MixCaveSeed(Map map, int seedPart, IntVec3 start)
@@ -25,36 +25,6 @@ namespace Strata
             seed = Gen.HashCombineInt(seed, start.z);
             seed = Gen.HashCombineInt(seed, StrataDepth.CountLevelsBelowSurface(map));
             return seed;
-        }
-
-        public static Result RunOnWorker(Func<Result> plan)
-        {
-            Result result = default;
-            Exception error = null;
-            using (var done = new ManualResetEventSlim(false))
-            {
-                ThreadPool.QueueUserWorkItem(_ =>
-                {
-                    try
-                    {
-                        result = plan();
-                    }
-                    catch (Exception e)
-                    {
-                        error = e;
-                    }
-                    finally
-                    {
-                        done.Set();
-                    }
-                });
-                done.Wait();
-            }
-            if (error != null)
-            {
-                throw error;
-            }
-            return result;
         }
 
         public static void CopyMaskToBoolGrid(bool[] mask, BoolGrid grid, Map map)

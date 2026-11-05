@@ -26,16 +26,15 @@ namespace Strata
 
             int target = Rand.RangeInclusive(3, 5);
             int seed = StrataCavernPlan.MixCaveSeed(map, SeedPart, start);
-            StrataCavernPlan.Result plan = StrataCavernPlan.RunOnWorker(() =>
-                StrataCavernPlan.PlanVault(
-                    map.Size.x,
-                    map.Size.z,
-                    start,
-                    target,
-                    MinChamberRadius,
-                    MaxChamberRadius,
-                    EdgeMargin,
-                    seed));
+            StrataCavernPlan.Result plan = StrataCavernPlan.PlanVault(
+                map.Size.x,
+                map.Size.z,
+                start,
+                target,
+                MinChamberRadius,
+                MaxChamberRadius,
+                EdgeMargin,
+                seed);
 
             StrataCavernPlan.ApplyMineableDestroy(plan.carveMask, map);
             MapGenerator.SetVar(GenStep_CarveWarren.ChambersVar, plan.chambers ?? new List<IntVec3> { start });

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Threading;
 using RimWorld;
 using Verse;
+#if NET9_0_OR_GREATER
+using GateLock = System.Threading.Lock;
+#else
+using GateLock = System.Object;
+#endif
 
 namespace Strata
 {
@@ -28,7 +33,8 @@ namespace Strata
             public string error;
         }
 
-        private static readonly object gate = new object();
+        // System.Threading.Lock on .NET 10 (1.7): cheaper than locking an object.
+        private static readonly GateLock gate = new GateLock();
 
         private static readonly Dictionary<int, OffThreadJob> pending = new Dictionary<int, OffThreadJob>();
 

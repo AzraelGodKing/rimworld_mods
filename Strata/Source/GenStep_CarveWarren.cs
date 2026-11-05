@@ -45,17 +45,16 @@ namespace Strata
                 : Rand.RangeInclusive(4, 7);
             // Seed-stable cave system from map.ConstantRandSeed (+ SeedPart / depth / size).
             int seed = StrataCavernPlan.MixCaveSeed(map, SeedPart, start);
-            StrataCavernPlan.Result plan = StrataCavernPlan.RunOnWorker(() =>
-                StrataCavernPlan.PlanWarren(
-                    map.Size.x,
-                    map.Size.z,
-                    start,
-                    target,
-                    ArrivalZoneUtility.ChamberRadius,
-                    MinChamberRadius,
-                    MaxChamberRadius,
-                    EdgeMargin,
-                    seed));
+            StrataCavernPlan.Result plan = StrataCavernPlan.PlanWarren(
+                map.Size.x,
+                map.Size.z,
+                start,
+                target,
+                ArrivalZoneUtility.ChamberRadius,
+                MinChamberRadius,
+                MaxChamberRadius,
+                EdgeMargin,
+                seed);
 
             var carveMask = new BoolGrid(map);
             StrataCavernPlan.CopyMaskToBoolGrid(plan.carveMask, carveMask, map);

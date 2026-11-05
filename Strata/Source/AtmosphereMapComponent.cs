@@ -114,7 +114,8 @@ namespace Strata
         // Per-cell density mirror for the drawn overlay (lazy-allocated),
         // one plane per gas.
         private float[][] cellDensity;
-        private Color[] overlayColorCache;
+        // Color32: 4 bytes a cell instead of 16 for Color.
+        private Color32[] overlayColorCache;
         private CellBoolDrawer drawer;
         private int atmosphereCyclePhase = -1;
         // Latched when a cycle starts. Lite/full and the phase count depend on
@@ -201,11 +202,18 @@ namespace Strata
             pendingSeedsByMap.Remove(mapUniqueId);
         }
 
+        // Map IDs restart with each game, so seeds left from the last game
+        // must not land on a new map that reuses the ID.
+        public static void ResetSession()
+        {
+            pendingSeedsByMap.Clear();
+        }
+
         public bool GetCellBool(int index)
         {
             if (overlayColorCache != null && index >= 0 && index < overlayColorCache.Length)
             {
-                return overlayColorCache[index].a > 0.001f;
+                return overlayColorCache[index].a > 0;
             }
             return GasOverlayUtility.CellHasOverlayGas(cellDensity, index, map);
         }
