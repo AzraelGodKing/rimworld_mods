@@ -130,7 +130,7 @@ namespace Strata
             }
             catch (Exception e)
             {
-                StrataFaultGuard.Report(StrataFaultGuard.System.WorkRelay, e.GetType().Name + ": " + e.Message);
+                StrataFaultGuard.Report(StrataFaultGuard.System.WorkRelay, "work relay signals", e);
                 return false;
             }
         }
