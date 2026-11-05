@@ -31,8 +31,10 @@ namespace Strata
             return map?.mapPawns.AllPawnsSpawned.Count ?? 0;
         }
 
-        // Colonists plus Misc. Robots — wild animals and raiders should not
-        // keep a vacant pocket level from hibernating.
+        // Anything the colony is responsible for: colonists, slaves, tame
+        // animals, mechs, Misc. Robots and prisoners. Barns, prisons and mech
+        // crews below ground need full-rate temperature and haul lists. Wild
+        // animals, visitors and raiders still let a level hibernate.
         public static int ColonyPresenceCount(Map map)
         {
             if (map == null)
@@ -41,20 +43,26 @@ namespace Strata
             }
             int now = Find.TickManager?.TicksGame ?? 0;
             if (presenceCache.TryGetValue(map.uniqueID, out var cached)
-                && now - cached.tick < PresenceCacheTicks)
+                && now - cached.tick < PresenceCacheTicks
+                && now >= cached.tick)
             {
                 return cached.count;
             }
-            int count = map.mapPawns.FreeColonistsSpawnedCount;
-            if (count == 0)
+            int count = 0;
+            Faction player = Faction.OfPlayerSilentFail;
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
             {
-                IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-                for (int i = 0; i < pawns.Count; i++)
+                Pawn p = pawns[i];
+                if (p == null || p.Dead)
                 {
-                    if (StrataPawnUtility.IsMiscRobot(pawns[i]))
-                    {
-                        count++;
-                    }
+                    continue;
+                }
+                if ((player != null && p.Faction == player)
+                    || p.IsPrisonerOfColony
+                    || StrataPawnUtility.IsMiscRobot(p))
+                {
+                    count++;
                 }
             }
             presenceCache[map.uniqueID] = (now, count);
