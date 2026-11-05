@@ -25,8 +25,22 @@
   <Strata_Settings_MagmaLayerDepth>岩浆层深度（无限楼层）：B{0}</Strata_Settings_MagmaLayerDepth>
   <Strata_FloodedLetterTitle>地下湖</Strata_FloodedLetterTitle>
   <Strata_FloodedLetterText>这一层的岩石中藏着一个地下湖。一旦矿工挖通它，湖水就会漫延到整层。\n\n只要这一层任何地方有一台通电的排水泵在运转，湖水就不会扩散。没有排水泵时，水会不断蔓延，地表下大雨时更快。倒地或睡着躺在洪水中的人可能会溺水。\n\n可以在湖里钓鱼（Odyssey）；装有 Homesteader 时，上一层的水井打水量翻倍。</Strata_FloodedLetterText>
+  <Strata_LostFloorLetterTitle>失落楼层</Strata_LostFloorLetterTitle>
+  <Strata_LostFloorLetterText>你的矿工在岩石深处挖进了很久以前凿出的封闭房间。曾经有人住在这里。他们的遗骸还在，杀死他们的东西也还在：昆虫正在远处的房间里筑巢。\n\n找找他们的日记。日记讲述了发生的事，也是一个警告：采矿和机器会产生噪音，地下的噪音会引来虫群。隔音地板和墙壁可以降低噪音。</Strata_LostFloorLetterText>
+  <Strata_LostDiary_Read>阅读</Strata_LostDiary_Read>
+  <Strata_LostDiary_ReadDesc>阅读日记的这一页。</Strata_LostDiary_ReadDesc>
+  <Strata_LostDiary_Title1>第 1 页</Strata_LostDiary_Title1>
+  <Strata_LostDiary_Entry1>我们下来了。地面上只有袭击、严寒和饥饿，所以我们拿起镐子钻到了地下。四周都是厚厚的岩石，唯一的门就是竖井。没人能在这里找到我们。几周来第一次有人睡了个好觉。</Strata_LostDiary_Entry1>
+  <Strata_LostDiary_Title2>第 2 页</Strata_LostDiary_Title2>
+  <Strata_LostDiary_Entry2>在东边隔两个房间的地方挖到了一条富矿脉。布兰架起了深层钻机，我们从那以后日夜不停地开着它。整层都在嗡嗡作响。玛拉说她想睡觉时连牙齿都能感觉到。这点代价不算什么。</Strata_LostDiary_Entry2>
+  <Strata_LostDiary_Title3>第 3 页</Strata_LostDiary_Title3>
+  <Strata_LostDiary_Entry3>今晚墙里有抓挠声。布兰说是岩石在沉降。那不是岩石在沉降。钻机一停它就停，钻机一开它又响，就像下面有什么东西在听着我们。</Strata_LostDiary_Entry3>
+  <Strata_LostDiary_Title4>第 4 页</Strata_LostDiary_Title4>
+  <Strata_LostDiary_Entry4>它们从钻机最吵的东墙钻了进来。很大，带着硬壳，有几十只。我们失去了布兰和那对双胞胎。我们用岩石封住了东边的房间，关掉钻机，安静了三天。后来奥斯卡为了多挖一车矿又把它开了起来。</Strata_LostDiary_Entry4>
+  <Strata_LostDiary_Title5>第 5 页</Strata_LostDiary_Title5>
+  <Strata_LostDiary_Entry5>灯油用完了。除了这个房间，每个房间里都有它们。如果有人在我们之后挖到这里：保持安静。不要整天开着机器。给地板隔音，能封的都封上。是噪音把它们引来的。我们明白得太晚了。</Strata_LostDiary_Entry5>
   <Strata_Settings_SpecialLevels>特殊楼层</Strata_Settings_SpecialLevels>
-  <Strata_Settings_SpecialLevelsDesc>开启时（默认），从 B{1} 起新挖的楼层有 {0} 的几率成为带地下湖的淹水楼层。已挖好的楼层不会改变。</Strata_Settings_SpecialLevelsDesc>
+  <Strata_Settings_SpecialLevelsDesc>开启时（默认），从 B{1} 起新挖的楼层有 {0} 的几率成为带地下湖的淹水楼层，有 {2} 的几率藏着一个失落楼层：带有故事、遗骸、战利品和昆虫的封闭房间。已挖好的楼层不会改变。</Strata_Settings_SpecialLevelsDesc>
   <Strata_Settings_ViewLevelAbove>查看上层</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>查看下层</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>请按键…</Strata_Settings_PressKey>

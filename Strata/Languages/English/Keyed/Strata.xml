@@ -25,8 +25,22 @@
   <Strata_Settings_MagmaLayerDepth>Magma layer depth (unlimited levels): B{0}</Strata_Settings_MagmaLayerDepth>
   <Strata_FloodedLetterTitle>Underground lake</Strata_FloodedLetterTitle>
   <Strata_FloodedLetterText>This level holds an underground lake somewhere in the rock. Once your miners break into it, water will seep out across the level.\n\nKeep a powered sump pump running anywhere on this level and the lake stays put. With no pump, the water keeps spreading, faster while it rains hard on the surface. Anyone lying in the flood water, downed or asleep, can drown.\n\nThe lake can be fished (Odyssey), and with Homesteader a well on the level above draws twice the water.</Strata_FloodedLetterText>
+  <Strata_LostFloorLetterTitle>A lost floor</Strata_LostFloorLetterTitle>
+  <Strata_LostFloorLetterText>Your miners have broken into sealed rooms cut long ago, deep in the rock. Someone lived down here once. Their remains are still here, and so is whatever killed them: insects are nesting in the far rooms.\n\nLook for their diaries. They tell what happened, and they are a warning: mining and machinery make noise, and noise underground draws infestations. Sound-dampening floors and walls keep it down.</Strata_LostFloorLetterText>
+  <Strata_LostDiary_Read>Read</Strata_LostDiary_Read>
+  <Strata_LostDiary_ReadDesc>Read this page of the diary.</Strata_LostDiary_ReadDesc>
+  <Strata_LostDiary_Title1>page 1</Strata_LostDiary_Title1>
+  <Strata_LostDiary_Entry1>We made it down. The surface was raids and cold and nothing to eat, so we took the picks and went under. Thick rock all around, the only door is the shaft. Nobody will find us here. First night anyone has slept in weeks.</Strata_LostDiary_Entry1>
+  <Strata_LostDiary_Title2>page 2</Strata_LostDiary_Title2>
+  <Strata_LostDiary_Entry2>Struck a rich seam two rooms east. Brann rigged the deep drill and we have run it day and night since. The whole floor hums with it. Mara says she can feel it in her teeth when she tries to sleep. Small price.</Strata_LostDiary_Entry2>
+  <Strata_LostDiary_Title3>page 3</Strata_LostDiary_Title3>
+  <Strata_LostDiary_Entry3>Scratching in the walls tonight. Brann says it is the rock settling. It is not the rock settling. It stops when the drill stops and starts again when it runs, like something down there is listening to us.</Strata_LostDiary_Entry3>
+  <Strata_LostDiary_Title4>page 4</Strata_LostDiary_Title4>
+  <Strata_LostDiary_Entry4>They came through the east wall where the drill was loudest. Big, shelled, dozens of them. We lost Brann and the twins. We sealed the east rooms with rock and kept the drill off, and for three days it was quiet. Then Oskar ran it again for one more load of ore.</Strata_LostDiary_Entry4>
+  <Strata_LostDiary_Title5>page 5</Strata_LostDiary_Title5>
+  <Strata_LostDiary_Entry5>Last of the lamp oil. They are in every room but this one. If anyone digs down here after us: keep it quiet. Do not run the machines all day. Muffle the floors, wall in what you can. The noise is what calls them. We learned it too late.</Strata_LostDiary_Entry5>
   <Strata_Settings_SpecialLevels>Special levels</Strata_Settings_SpecialLevels>
-  <Strata_Settings_SpecialLevelsDesc>When on (default), a newly dug level from B{1} down has a {0} chance to be a flooded level with an underground lake. Levels already dug do not change.</Strata_Settings_SpecialLevelsDesc>
+  <Strata_Settings_SpecialLevelsDesc>When on (default), a newly dug level from B{1} down has a {0} chance to be a flooded level with an underground lake, and a {2} chance to hide a lost floor: sealed rooms with a story, remains, loot and insects. Levels already dug do not change.</Strata_Settings_SpecialLevelsDesc>
   <Strata_Settings_ViewLevelAbove>View level above</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>View level below</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>Press a key...</Strata_Settings_PressKey>

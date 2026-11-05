@@ -1,9 +1,25 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.16.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.16.0 loaded from ... (modified ...); flooded-level-v1.` via `ModVersionLog.Write`.
+**Version:** `3.17.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.17.0 loaded from ... (modified ...); lost-floor-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `flooded-level-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `lost-floor-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.17.0]
+
+Player-facing version **3.17.0** (`About.xml` `modVersion`). Stamp `lost-floor-v1`. No save-format break: the level-kind component gains the lost floor anchor and a found flag.
+
+AZR-476
+
+### Added
+- **Lost floor** (AZR-476), built now for Strata 4, on the level kinds from 3.15.0.
+  - **Pick:** a fresh dig-down level at B2 or deeper that is not the magma layer or flooded has an 8% chance to be `StrataLevelKind.LostFloor` (under the `specialLevelsEnabled` setting).
+  - **Rooms:** on the first tick, `StrataCavernPlan.PlanVault` (3 to 4 rooms, radius 4.2 to 5.6 so the thick roof holds) is planned at least 45 cells from the landing. It is only used if every planned cell and its neighbours are still rock, so the floor is sealed and fogged until a miner breaks in. Floors use the host rock's smoothed terrain.
+  - **Contents:** five `Strata_LostDiary` pages (a Read gizmo opens each entry), 3 to 5 desiccated Ancients corpses, insect hives with megascarabs and spelopedes on a depth-scaled point budget, and reward loot in the last room.
+  - **Discovery:** a letter fires the first time the first room is unfogged. The story and the letter teach the mining-noise rule.
+  - New diary art. Keyed (story text) and DefInjected text in English, ChineseSimplified and Russian.
+
+Not tested in game yet.
 
 ## [3.16.0]
 

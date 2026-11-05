@@ -85,7 +85,7 @@ namespace Strata
 
         public int magmaLayerDepth = MagmaLayer.DefaultUnlimitedDepth;
 
-        // Rare special levels (flooded lake) when a new level is dug.
+        // Rare special levels (flooded lake, lost floor) when a new level is dug.
         public bool specialLevelsEnabled = true;
         // New B levels as a share of the home map (100 = same size, the old behaviour).
         public int belowLevelSizePercent = 100;
@@ -553,7 +553,8 @@ namespace Strata
                     Settings.magmaLayerDepth, StrataLevelCap.HardMaxOffset + 1, MagmaLayer.MaxSettingDepth));
             }
             Check(listing, "Strata_Settings_SpecialLevels", ref Settings.specialLevelsEnabled,
-                "Strata_Settings_SpecialLevelsDesc", FloodedLevel.Chance.ToStringPercent(), FloodedLevel.MinDepth);
+                "Strata_Settings_SpecialLevelsDesc", FloodedLevel.Chance.ToStringPercent(), FloodedLevel.MinDepth,
+                LostFloor.Chance.ToStringPercent());
             DrawLevelSizeSelector(listing);
             Check(listing, "Strata_Settings_AskBelowLevelSize", ref Settings.askBelowLevelSize, "Strata_Settings_AskBelowLevelSizeDesc");
             Check(listing, "Strata_Settings_CompactRoofDecks", ref Settings.compactRoofDecks,

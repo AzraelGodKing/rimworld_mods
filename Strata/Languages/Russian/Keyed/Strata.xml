@@ -24,8 +24,22 @@
   <Strata_Settings_MagmaLayerDepth>Глубина магматического слоя (неограниченные уровни): B{0}</Strata_Settings_MagmaLayerDepth>
   <Strata_FloodedLetterTitle>Подземное озеро</Strata_FloodedLetterTitle>
   <Strata_FloodedLetterText>Где-то в породе этого уровня скрыто подземное озеро. Как только шахтёры вскроют его, вода начнёт растекаться по уровню.\n\nПока где-нибудь на уровне работает запитанный дренажный насос, озеро не растекается. Без насоса вода продолжает прибывать, быстрее во время сильного дождя на поверхности. Тот, кто лежит в воде без сознания или спит, может утонуть.\n\nВ озере можно рыбачить (Odyssey), а с Homesteader колодец на уровне выше даёт вдвое больше воды.</Strata_FloodedLetterText>
+  <Strata_LostFloorLetterTitle>Затерянный этаж</Strata_LostFloorLetterTitle>
+  <Strata_LostFloorLetterText>Ваши шахтёры вскрыли запечатанные комнаты, вырубленные давным-давно глубоко в породе. Когда-то здесь жили люди. Их останки всё ещё здесь, как и то, что их убило: в дальних комнатах гнездятся насекомые.\n\nИщите их дневники. Они рассказывают, что случилось, и предупреждают: добыча и машины шумят, а шум под землёй привлекает нашествия. Звукопоглощающие полы и стены его снижают.</Strata_LostFloorLetterText>
+  <Strata_LostDiary_Read>Читать</Strata_LostDiary_Read>
+  <Strata_LostDiary_ReadDesc>Прочитать эту страницу дневника.</Strata_LostDiary_ReadDesc>
+  <Strata_LostDiary_Title1>страница 1</Strata_LostDiary_Title1>
+  <Strata_LostDiary_Entry1>Мы спустились. Наверху были набеги, холод и голод, так что мы взяли кирки и ушли под землю. Вокруг толстая порода, единственная дверь — шахта. Здесь нас никто не найдёт. Первая ночь за много недель, когда кто-то выспался.</Strata_LostDiary_Entry1>
+  <Strata_LostDiary_Title2>страница 2</Strata_LostDiary_Title2>
+  <Strata_LostDiary_Entry2>Нашли богатую жилу через две комнаты к востоку. Бранн собрал глубинный бур, и с тех пор мы гоняем его день и ночь. Весь этаж гудит. Мара говорит, что чувствует это зубами, когда пытается уснуть. Невелика цена.</Strata_LostDiary_Entry2>
+  <Strata_LostDiary_Title3>страница 3</Strata_LostDiary_Title3>
+  <Strata_LostDiary_Entry3>Ночью в стенах что-то скребётся. Бранн говорит, это порода оседает. Это не порода. Стихает, когда бур стоит, и начинается снова, когда он работает, будто что-то там внизу нас слушает.</Strata_LostDiary_Entry3>
+  <Strata_LostDiary_Title4>страница 4</Strata_LostDiary_Title4>
+  <Strata_LostDiary_Entry4>Они прошли через восточную стену, где бур шумел громче всего. Большие, в панцирях, десятки. Мы потеряли Бранна и близнецов. Замуровали восточные комнаты породой, выключили бур, и три дня было тихо. Потом Оскар запустил его снова ради ещё одной партии руды.</Strata_LostDiary_Entry4>
+  <Strata_LostDiary_Title5>страница 5</Strata_LostDiary_Title5>
+  <Strata_LostDiary_Entry5>Последнее масло для лампы. Они в каждой комнате, кроме этой. Если кто-то докопается сюда после нас: не шумите. Не гоняйте машины весь день. Глушите полы, замуровывайте что можете. Их зовёт шум. Мы поняли это слишком поздно.</Strata_LostDiary_Entry5>
   <Strata_Settings_SpecialLevels>Особые уровни</Strata_Settings_SpecialLevels>
-  <Strata_Settings_SpecialLevelsDesc>Если включено (по умолчанию), новый уровень начиная с B{1} с шансом {0} оказывается затопленным уровнем с подземным озером. Уже выкопанные уровни не меняются.</Strata_Settings_SpecialLevelsDesc>
+  <Strata_Settings_SpecialLevelsDesc>Если включено (по умолчанию), новый уровень начиная с B{1} с шансом {0} оказывается затопленным уровнем с подземным озером и с шансом {2} скрывает затерянный этаж: запечатанные комнаты с историей, останками, добычей и насекомыми. Уже выкопанные уровни не меняются.</Strata_Settings_SpecialLevelsDesc>
   <Strata_Settings_ViewLevelAbove>Смотреть уровень выше</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>Смотреть уровень ниже</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>Нажмите клавишу...</Strata_Settings_PressKey>
