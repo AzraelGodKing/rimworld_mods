@@ -15,6 +15,66 @@ namespace Strata
     {
         private const float DockBonusKg = 35f;
 
+        // Resolved once: these run from TicksPerMove and MassUtility.Capacity
+        // for every pawn, so compare def references, not defName strings.
+        private static bool defsResolved;
+        private static ThingDef handcartDef;
+        private static ThingDef sledgeDef;
+        private static ThingDef loadingDockDef;
+        private static TerrainDef packedHaulwayDef;
+        private static TerrainDef homesteaderGravelDef;
+
+        private static void ResolveDefs()
+        {
+            if (defsResolved)
+            {
+                return;
+            }
+            handcartDef = DefDatabase<ThingDef>.GetNamedSilentFail("Strata_Handcart");
+            sledgeDef = DefDatabase<ThingDef>.GetNamedSilentFail("Strata_Sledge");
+            loadingDockDef = DefDatabase<ThingDef>.GetNamedSilentFail("Strata_LoadingDock");
+            packedHaulwayDef = DefDatabase<TerrainDef>.GetNamedSilentFail("Strata_PackedHaulway");
+            // Homesteader packed gravel is the same idea. No Homesteader -> null.
+            homesteaderGravelDef = DefDatabase<TerrainDef>.GetNamedSilentFail("Homesteader_PackedGravel");
+            defsResolved = true;
+        }
+
+        private const int Handcart = 1;
+        private const int Sledge = 2;
+
+        // Bit flags: Handcart and/or Sledge in hand or inventory.
+        private static int Carts(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return 0;
+            }
+            ResolveDefs();
+            int carts = CartFlag(pawn.carryTracker?.CarriedThing?.def);
+            ThingOwner inv = pawn.inventory?.innerContainer;
+            if (inv != null)
+            {
+                for (int i = 0; i < inv.Count && carts != (Handcart | Sledge); i++)
+                {
+                    carts |= CartFlag(inv[i]?.def);
+                }
+            }
+            return carts;
+        }
+
+        private static int CartFlag(ThingDef def)
+        {
+            if (def == null)
+            {
+                return 0;
+            }
+            if (def == handcartDef)
+            {
+                return Handcart;
+            }
+            return def == sledgeDef ? Sledge : 0;
+        }
+
         public static float BonusKg(Pawn pawn)
         {
             if (pawn?.Map == null || !pawn.Spawned)
@@ -37,44 +97,27 @@ namespace Strata
                 // that only fattens when you already stand on the pad.
                 bonus += DockBonusKg;
             }
-            if (HasCart(pawn, "Strata_Handcart"))
+            int carts = Carts(pawn);
+            if ((carts & Handcart) != 0)
             {
                 bonus += 80f;
             }
-            if (HasCart(pawn, "Strata_Sledge"))
+            if ((carts & Sledge) != 0)
             {
                 bonus += 120f;
             }
             return bonus;
         }
 
-        public static bool PushingCart(Pawn pawn)
+        // Movement multiplier for a cart in hand or inventory; 1 when none.
+        public static float CartSlowdown(Pawn pawn)
         {
-            return HasCart(pawn, "Strata_Handcart") || HasCart(pawn, "Strata_Sledge");
-        }
-
-        public static bool HasCart(Pawn pawn, string defName)
-        {
-            if (pawn == null)
+            int carts = Carts(pawn);
+            if ((carts & Sledge) != 0)
             {
-                return false;
+                return 1.45f;
             }
-            if (pawn.carryTracker?.CarriedThing?.def?.defName == defName)
-            {
-                return true;
-            }
-            if (pawn.inventory?.innerContainer == null)
-            {
-                return false;
-            }
-            foreach (Thing thing in pawn.inventory.innerContainer)
-            {
-                if (thing?.def?.defName == defName)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return (carts & Handcart) != 0 ? 1.28f : 1f;
         }
 
         public static bool HasHomesteaderCrate(Pawn pawn)
@@ -102,14 +145,9 @@ namespace Strata
             {
                 return false;
             }
+            ResolveDefs();
             TerrainDef t = pawn.Position.GetTerrain(pawn.Map);
-            if (t == null)
-            {
-                return false;
-            }
-            // Homesteader packed gravel is the same idea. No Homesteader → skip.
-            return t.defName == "Strata_PackedHaulway"
-                || t.defName == "Homesteader_PackedGravel";
+            return t != null && (t == packedHaulwayDef || t == homesteaderGravelDef);
         }
 
         public static bool IsCarryingHaul(Pawn pawn)
@@ -165,7 +203,8 @@ namespace Strata
 
         public static bool NearDock(IntVec3 cell, Map map)
         {
-            if (map == null)
+            ResolveDefs();
+            if (map == null || loadingDockDef == null)
             {
                 return false;
             }
@@ -177,7 +216,7 @@ namespace Strata
                     continue;
                 }
                 Building b = n.GetEdifice(map);
-                if (b != null && b.def.defName == "Strata_LoadingDock")
+                if (b != null && b.def == loadingDockDef)
                 {
                     return true;
                 }
@@ -205,9 +244,9 @@ namespace Strata
             {
                 return;
             }
-            if (HaulRelayCapacity.PushingCart(__instance))
+            float slow = HaulRelayCapacity.CartSlowdown(__instance);
+            if (slow > 1f)
             {
-                float slow = HaulRelayCapacity.HasCart(__instance, "Strata_Sledge") ? 1.45f : 1.28f;
                 __result = Math.Max(1f, __result * slow);
             }
             if (HaulRelayCapacity.IsCarryingHaul(__instance)
