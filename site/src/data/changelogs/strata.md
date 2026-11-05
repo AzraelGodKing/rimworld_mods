@@ -1,9 +1,19 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.19.2` in `About.xml` `modVersion`. Player.log: `[Strata] v3.19.2 loaded from ... (modified ...); save-compat-v1.` via `ModVersionLog.Write`.
+**Version:** `4.0.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.0.0 loaded from ... (modified ...); strata4-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `save-compat-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `strata4-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [4.0.0]
+
+Player-facing version **4.0.0** (`About.xml` `modVersion`). Stamp `strata4-v1`. No save-format change.
+
+AZR-484, AZR-467
+
+### Changed
+- **Strata 4 ships for 1.6 and 1.7.** Azrael decided on 2026-11-05 not to freeze 1.6. This replaces the earlier plan of "1.7-only, with 1.6 frozen at 3.8.x". One source tree builds two DLLs: `1.6/Assemblies` (net472, Krafs 1.6, Harmony 2.x) and `1.7/Assemblies` (net10.0, Krafs 1.7, Harmony 3.x), which `LoadFolders.xml` already picks per game version. Defs, Patches, Textures and Languages stay shared at the root. Code that only exists in .NET 10 goes behind `#if NET9_0_OR_GREATER` (or a `using` alias), so the 1.6 build still compiles. `pack_mod.sh` already puts both DLLs into the zip.
+- The 4.0 line covers 3.12.1 through 3.19.2 (stair hold, modder API v2, settings tabs, logic tests, travel cost, magma layer, flooded level, lost floor, buried chambers fix, .NET 10 build, save compat guard).
 
 ## [3.19.2]
 
