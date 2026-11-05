@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- ============ Obsidian (mined on the magma layer) ============ -->
+  <ThingDef ParentName="ResourceBase">
+    <defName>Strata_Obsidian</defName>
+    <label>obsidian</label>
+    <description>Black volcanic glass mined from the magma layer, where lava cooled against the rock. It is hard to work, but walls and sculptures made from it are tough and strikingly beautiful. Traders pay well for it.</description>
+    <graphicData>
+      <texPath>Strata/Items/Obsidian</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.8,0.8)</drawSize>
+    </graphicData>
+    <stackLimit>75</stackLimit>
+    <healthAffectsPrice>false</healthAffectsPrice>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <MarketValue>6</MarketValue>
+      <Mass>0.8</Mass>
+      <Flammability>0</Flammability>
+      <DeteriorationRate>0</DeteriorationRate>
+      <StuffPower_Armor_Sharp>1.1</StuffPower_Armor_Sharp>
+      <StuffPower_Armor_Blunt>0.8</StuffPower_Armor_Blunt>
+      <StuffPower_Armor_Heat>1.0</StuffPower_Armor_Heat>
+      <StuffPower_Insulation_Cold>0</StuffPower_Insulation_Cold>
+      <StuffPower_Insulation_Heat>0</StuffPower_Insulation_Heat>
+    </statBases>
+    <thingCategories>
+      <li>StoneBlocks</li>
+    </thingCategories>
+    <stuffProps>
+      <categories>
+        <li>Stony</li>
+      </categories>
+      <commonality>0</commonality>
+      <color>(46,38,58)</color>
+      <constructEffect>ConstructDirt</constructEffect>
+      <soundImpactBullet>BulletImpact_Ground</soundImpactBullet>
+      <soundMeleeHitSharp>MeleeHit_Stone</soundMeleeHitSharp>
+      <soundMeleeHitBlunt>MeleeHit_Stone</soundMeleeHitBlunt>
+      <statFactors>
+        <MaxHitPoints>1.8</MaxHitPoints>
+        <Beauty>2</Beauty>
+        <WorkToBuild>2.4</WorkToBuild>
+        <WorkToMake>2.4</WorkToMake>
+        <Flammability>0</Flammability>
+      </statFactors>
+    </stuffProps>
+    <tradeability>All</tradeability>
+    <tradeTags>
+      <li>ExoticMisc</li>
+    </tradeTags>
+  </ThingDef>
+
+  <!-- Seam of obsidian in the rock. Only placed on the magma layer. -->
+  <ThingDef ParentName="RockBase">
+    <defName>Strata_MineableObsidian</defName>
+    <label>obsidian seam</label>
+    <description>A seam of volcanic glass where lava cooled against the rock. Mine it for obsidian.</description>
+    <graphicData>
+      <texPath>Strata/Buildings/ObsidianSeam_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>1800</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>Strata_Obsidian</mineableThing>
+      <mineableYield>25</mineableYield>
+    </building>
+  </ThingDef>
+
+</Defs>

@@ -13,6 +13,16 @@
   <Strata_LevelCap_MaxBelow>Level cap: cannot dig below B{0}. Enable Unlimited levels in Strata settings, or dig from a shallower floor.</Strata_LevelCap_MaxBelow>
   <Strata_LevelCap_MaxAbove>Level cap: cannot build above A{0}. Enable Unlimited levels in Strata settings, or build from a lower floor.</Strata_LevelCap_MaxAbove>
   <Strata_LevelCap_GravshipMax>Gravship level cap: ship stacks are limited to {0} level above and {0} level below the ship deck. Enable Unlimited levels in Strata settings, or land and dig from a colony floor.</Strata_LevelCap_GravshipMax>
+  <Strata_LevelCap_BottomOfWorld>This is the magma layer, the bottom of the world. Nothing can be dug below it.</Strata_LevelCap_BottomOfWorld>
+  <Strata_MagmaNeedsResearch>The next level down is the magma layer. Research deep bore to dig down to it.</Strata_MagmaNeedsResearch>
+  <Strata_MagmaLetterTitle>The bottom of the world</Strata_MagmaLetterTitle>
+  <Strata_MagmaLetterText>Your miners have broken through to the magma layer. This is as deep as anyone can dig: below lies only molten rock.\n\nThe rock here sits at {0}. Colonists need cooling to live and work down here, and anything flammable left next to a magma pool will catch fire.\n\nLook for:\n- Magma vents: build a geothermal tap on one for a huge amount of free power (and a lot of heat).\n- Obsidian seams beside the pools: mine them for obsidian, a tough and beautiful building stone.</Strata_MagmaLetterText>
+  <Strata_MagmaVentCapped>Capped by a geothermal tap.</Strata_MagmaVentCapped>
+  <Strata_MagmaVentOpen>Breathing carbon dioxide into the room. Cap it with a geothermal tap.</Strata_MagmaVentOpen>
+  <Strata_Place_MustBeOnMagmaVent>Must be placed on a magma vent.</Strata_Place_MustBeOnMagmaVent>
+  <Strata_Settings_MagmaLayer>Magma layer at the bottom</Strata_Settings_MagmaLayer>
+  <Strata_Settings_MagmaLayerDesc>When on (default), the deepest level is the magma layer: lava pools, obsidian and geothermal taps, and nothing can be dug below it. Without unlimited levels it is B{0}, one level past the normal cap, and needs deep bore research. When off, there is no bottom.</Strata_Settings_MagmaLayerDesc>
+  <Strata_Settings_MagmaLayerDepth>Magma layer depth (unlimited levels): B{0}</Strata_Settings_MagmaLayerDepth>
   <Strata_Settings_ViewLevelAbove>View level above</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>View level below</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>Press a key...</Strata_Settings_PressKey>

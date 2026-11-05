@@ -38,6 +38,7 @@
       <canBeCleaned>true</canBeCleaned>
     </pocketMapProperties>
     <genSteps>
+      <li>Strata_LevelKind</li>
       <li>Strata_SolidRock</li>
       <li>Strata_CarveWarren</li>
       <li>Strata_HiddenChambers</li>
@@ -48,6 +49,13 @@
       <li>Strata_Fog</li>
     </genSteps>
   </MapGeneratorDef>
+
+  <!-- Picks a special level kind (the magma layer at the bottom). -->
+  <GenStepDef>
+    <defName>Strata_LevelKind</defName>
+    <order>90</order>
+    <genStep Class="Strata.GenStep_StrataLevelKind"/>
+  </GenStepDef>
 
   <GenStepDef>
     <defName>Strata_SolidRock</defName>

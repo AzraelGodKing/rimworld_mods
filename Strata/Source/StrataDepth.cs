@@ -81,7 +81,9 @@ namespace Strata
             }
             if (StrataMapUtility.IsUnderground(map))
             {
-                __result = StrataDepth.GeothermalOutdoorTemp(StrataDepth.Of(map));
+                __result = StrataLevelKinds.IsMagma(map)
+                    ? MagmaLayer.OutdoorTemp
+                    : StrataDepth.GeothermalOutdoorTemp(StrataDepth.Of(map));
             }
         }
     }

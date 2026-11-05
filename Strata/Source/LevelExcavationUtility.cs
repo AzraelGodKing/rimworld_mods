@@ -78,6 +78,11 @@ namespace Strata
                 reason = "Requires deep excavation research to dig below the first underground level.";
                 return false;
             }
+            if (!DebugSettings.godMode && MagmaLayer.NextLevelBelowIsMagma(map) && !MagmaLayer.IsResearchFinished())
+            {
+                reason = "Strata_MagmaNeedsResearch".Translate();
+                return false;
+            }
             return true;
         }
 

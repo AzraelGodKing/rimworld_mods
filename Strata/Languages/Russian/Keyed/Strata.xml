@@ -12,6 +12,16 @@
   <Strata_LevelCap_MaxBelow>Лимит уровней: нельзя копать ниже B{0}. Включите «Безлимитные уровни» в настройках Strata или копайте с более мелкого этажа.</Strata_LevelCap_MaxBelow>
   <Strata_LevelCap_MaxAbove>Лимит уровней: нельзя строить выше A{0}. Включите «Безлимитные уровни» в настройках Strata или стройте с более низкого этажа.</Strata_LevelCap_MaxAbove>
   <Strata_LevelCap_GravshipMax>Лимит уровней гравикорабля: не более {0} уровня выше и {0} уровня ниже палубы корабля. Включите «Безлимитные уровни» в настройках Strata или посадите корабль и копайте с этажа колонии.</Strata_LevelCap_GravshipMax>
+  <Strata_LevelCap_BottomOfWorld>Это магматический слой, дно мира. Копать ниже нельзя.</Strata_LevelCap_BottomOfWorld>
+  <Strata_MagmaNeedsResearch>Следующий уровень вниз — магматический слой. Изучите глубокое бурение, чтобы докопаться до него.</Strata_MagmaNeedsResearch>
+  <Strata_MagmaLetterTitle>Дно мира</Strata_MagmaLetterTitle>
+  <Strata_MagmaLetterText>Ваши шахтёры пробились к магматическому слою. Глубже копать некуда: ниже только расплавленная порода.\n\nТемпература породы здесь {0}. Колонистам нужно охлаждение, чтобы жить и работать тут, а всё горючее рядом с магмой рано или поздно загорится.\n\nИщите:\n- Магматические жерла: постройте на одном геотермальный отвод и получите огромное количество бесплатной энергии (и много тепла).\n- Жилы обсидиана рядом с магмой: добывайте обсидиан, прочный и красивый строительный камень.</Strata_MagmaLetterText>
+  <Strata_MagmaVentCapped>Закрыто геотермальным отводом.</Strata_MagmaVentCapped>
+  <Strata_MagmaVentOpen>Выпускает углекислый газ в помещение. Закройте его геотермальным отводом.</Strata_MagmaVentOpen>
+  <Strata_Place_MustBeOnMagmaVent>Нужно ставить на магматическое жерло.</Strata_Place_MustBeOnMagmaVent>
+  <Strata_Settings_MagmaLayer>Магматический слой на дне</Strata_Settings_MagmaLayer>
+  <Strata_Settings_MagmaLayerDesc>Если включено (по умолчанию), самый глубокий уровень — магматический слой: магма, обсидиан и геотермальные отводы, а копать ниже нельзя. Без неограниченных уровней это B{0}, на один уровень ниже обычного лимита, и нужно исследование глубокого бурения. Если выключено, дна нет.</Strata_Settings_MagmaLayerDesc>
+  <Strata_Settings_MagmaLayerDepth>Глубина магматического слоя (неограниченные уровни): B{0}</Strata_Settings_MagmaLayerDepth>
   <Strata_Settings_ViewLevelAbove>Смотреть уровень выше</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>Смотреть уровень ниже</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>Нажмите клавишу...</Strata_Settings_PressKey>

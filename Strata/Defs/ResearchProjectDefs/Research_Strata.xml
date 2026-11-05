@@ -215,4 +215,19 @@
     <researchViewY>1.60</researchViewY>
   </ResearchProjectDef>
 
+  <ResearchProjectDef>
+    <defName>Strata_DeepBore</defName>
+    <label>deep bore</label>
+    <description>Heat-proof shoring and cooled drill heads for boring one level past the deepest workings, down to the magma layer at the bottom of the world. Also teaches you to build geothermal taps over its magma vents.</description>
+    <baseCost>2400</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>Strata</tab>
+    <prerequisites>
+      <li>Strata_Excavation</li>
+      <li>Electricity</li>
+    </prerequisites>
+    <researchViewX>3.00</researchViewX>
+    <researchViewY>1.60</researchViewY>
+  </ResearchProjectDef>
+
 </Defs>

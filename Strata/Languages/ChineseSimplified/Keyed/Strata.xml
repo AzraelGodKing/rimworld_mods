@@ -13,6 +13,16 @@
   <Strata_LevelCap_MaxBelow>楼层上限：无法挖到 B{0} 以下。请在 Strata 设置中启用无限楼层，或从较浅楼层挖掘。</Strata_LevelCap_MaxBelow>
   <Strata_LevelCap_MaxAbove>楼层上限：无法建到 A{0} 以上。请在 Strata 设置中启用无限楼层，或从较低楼层建造。</Strata_LevelCap_MaxAbove>
   <Strata_LevelCap_GravshipMax>重力飞船楼层上限：飞船堆叠仅允许甲板上下各 {0} 层。请在 Strata 设置中启用「无限楼层」，或着陆后从殖民地楼层继续挖掘。</Strata_LevelCap_GravshipMax>
+  <Strata_LevelCap_BottomOfWorld>这里是岩浆层，世界的底部。无法再向下挖掘。</Strata_LevelCap_BottomOfWorld>
+  <Strata_MagmaNeedsResearch>下一层是岩浆层。研究「深层钻探」后才能挖到那里。</Strata_MagmaNeedsResearch>
+  <Strata_MagmaLetterTitle>世界的底部</Strata_MagmaLetterTitle>
+  <Strata_MagmaLetterText>你的矿工已经挖穿到岩浆层。这是任何人能挖到的最深处：下面只有熔岩。\n\n这里的岩石温度为 {0}。殖民者需要降温才能在此生活和工作，放在岩浆池旁边的可燃物迟早会起火。\n\n留意：\n- 岩浆喷口：在上面建造地热井，可获得大量免费电力（以及大量热量）。\n- 岩浆池旁的黑曜石矿脉：开采获得黑曜石，一种坚固而美观的建筑石材。</Strata_MagmaLetterText>
+  <Strata_MagmaVentCapped>已被地热井封住。</Strata_MagmaVentCapped>
+  <Strata_MagmaVentOpen>正向房间释放二氧化碳。用地热井封住它。</Strata_MagmaVentOpen>
+  <Strata_Place_MustBeOnMagmaVent>必须放置在岩浆喷口上。</Strata_Place_MustBeOnMagmaVent>
+  <Strata_Settings_MagmaLayer>底部为岩浆层</Strata_Settings_MagmaLayer>
+  <Strata_Settings_MagmaLayerDesc>开启时（默认），最深的一层是岩浆层：有岩浆池、黑曜石和地热井，且无法再向下挖掘。未开启无限楼层时它位于 B{0}，比正常上限多一层，需要「深层钻探」研究。关闭时没有底部。</Strata_Settings_MagmaLayerDesc>
+  <Strata_Settings_MagmaLayerDepth>岩浆层深度（无限楼层）：B{0}</Strata_Settings_MagmaLayerDepth>
   <Strata_Settings_ViewLevelAbove>查看上层</Strata_Settings_ViewLevelAbove>
   <Strata_Settings_ViewLevelBelow>查看下层</Strata_Settings_ViewLevelBelow>
   <Strata_Settings_PressKey>请按键…</Strata_Settings_PressKey>

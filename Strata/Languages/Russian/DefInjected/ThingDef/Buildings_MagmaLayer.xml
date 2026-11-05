@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_MagmaGlow.label>свечение магмы</Strata_MagmaGlow.label>
+  <Strata_MagmaGlow.description>Свет и жар над магмой.</Strata_MagmaGlow.description>
+  <Strata_MagmaVent.label>магматическое жерло</Strata_MagmaVent.label>
+  <Strata_MagmaVent.description>Трещина над расплавленной породой на дне мира. Открытая, она выпускает углекислый газ на уровень. Закройте её геотермальным отводом и получите много бесплатной энергии.</Strata_MagmaVent.description>
+  <Strata_GeothermalTap.label>геотермальный отвод</Strata_GeothermalTap.label>
+  <Strata_GeothermalTap.description>Тяжёлая турбина, вбуренная в магматическое жерло. Она даёт огромное количество бесплатной энергии и всё время выделяет жар и пар. Передавайте энергию наверх через шахтный кабелепровод и охлаждайте или проветривайте помещение.</Strata_GeothermalTap.description>
+
+</LanguageData>

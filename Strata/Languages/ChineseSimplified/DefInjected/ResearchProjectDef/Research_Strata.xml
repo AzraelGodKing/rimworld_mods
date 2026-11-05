@@ -50,4 +50,7 @@
   <Strata_Seismology.label>mine seismology</Strata_Seismology.label>
   <Strata_Seismology.description>Listening gear that reads tremor risk, unsupported thick roof, and infestation pressure on a floor. Pair with canaries and the support overlay.</Strata_Seismology.description>
 
+  <Strata_DeepBore.label>深层钻探</Strata_DeepBore.label>
+  <Strata_DeepBore.description>耐热支护和冷却钻头，可以在最深的矿道之下再钻一层，直达世界底部的岩浆层。同时学会在岩浆喷口上建造地热井。</Strata_DeepBore.description>
+
 </LanguageData>

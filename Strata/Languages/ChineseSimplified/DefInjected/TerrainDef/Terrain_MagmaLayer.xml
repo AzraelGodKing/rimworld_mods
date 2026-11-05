@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_MagmaPool.label>岩浆</Strata_MagmaPool.label>
+  <Strata_MagmaPool.description>从世界底部涌出的熔岩。无法通行，也无法在上面建造，放在旁边的可燃物迟早会起火。</Strata_MagmaPool.description>
+  <Strata_BasaltCrust.label>玄武岩壳</Strata_BasaltCrust.label>
+  <Strata_BasaltCrust.description>熔岩冷却后形成的深色、布满裂纹的硬壳。踩上去还是温热的，但足够坚固，可以在上面建造。</Strata_BasaltCrust.description>
+
+</LanguageData>

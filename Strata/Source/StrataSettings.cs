@@ -79,6 +79,11 @@ namespace Strata
         public bool gravshipLifeSupportEnabled = true;
         // Default off: new digs/towers stop at ±2 from the stack root. Existing floors keep working.
         public bool unlimitedLevelsEnabled = false;
+
+        // The magma layer is the bottom of the world (B3, or this depth with unlimited levels).
+        public bool magmaLayerEnabled = true;
+
+        public int magmaLayerDepth = MagmaLayer.DefaultUnlimitedDepth;
         // New B levels as a share of the home map (100 = same size, the old behaviour).
         public int belowLevelSizePercent = 100;
         public bool askBelowLevelSize = false;
@@ -168,6 +173,8 @@ namespace Strata
             Scribe_Values.Look(ref crossLevelAutoEngage, "crossLevelAutoEngage", defaultValue: true);
             Scribe_Values.Look(ref gravshipLifeSupportEnabled, "gravshipLifeSupportEnabled", defaultValue: true);
             Scribe_Values.Look(ref unlimitedLevelsEnabled, "unlimitedLevelsEnabled", defaultValue: false);
+            Scribe_Values.Look(ref magmaLayerEnabled, "magmaLayerEnabled", defaultValue: true);
+            Scribe_Values.Look(ref magmaLayerDepth, "magmaLayerDepth", defaultValue: MagmaLayer.DefaultUnlimitedDepth);
             Scribe_Values.Look(ref belowLevelSizePercent, "belowLevelSizePercent", 100);
             Scribe_Values.Look(ref askBelowLevelSize, "askBelowLevelSize", defaultValue: false);
             Scribe_Values.Look(ref compactRoofDecks, "compactRoofDecks", defaultValue: false);
@@ -533,6 +540,14 @@ namespace Strata
             Header(listing, "Strata_Settings_NewLevels");
             Check(listing, "Strata_Settings_UnlimitedLevels", ref Settings.unlimitedLevelsEnabled,
                 "Strata_Settings_UnlimitedLevelsDesc", StrataLevelCap.HardMaxOffset);
+            Check(listing, "Strata_Settings_MagmaLayer", ref Settings.magmaLayerEnabled,
+                "Strata_Settings_MagmaLayerDesc", StrataLevelCap.HardMaxOffset + 1);
+            if (Settings.magmaLayerEnabled && Settings.unlimitedLevelsEnabled)
+            {
+                Settings.magmaLayerDepth = Mathf.RoundToInt(Slider(listing,
+                    "Strata_Settings_MagmaLayerDepth".Translate(Settings.magmaLayerDepth),
+                    Settings.magmaLayerDepth, StrataLevelCap.HardMaxOffset + 1, MagmaLayer.MaxSettingDepth));
+            }
             DrawLevelSizeSelector(listing);
             Check(listing, "Strata_Settings_AskBelowLevelSize", ref Settings.askBelowLevelSize, "Strata_Settings_AskBelowLevelSizeDesc");
             Check(listing, "Strata_Settings_CompactRoofDecks", ref Settings.compactRoofDecks,

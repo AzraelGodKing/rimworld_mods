@@ -1,9 +1,28 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.14.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.14.0 loaded from ... (modified ...); nav-cost-v1.` via `ModVersionLog.Write`.
+**Version:** `3.15.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.15.0 loaded from ... (modified ...); magma-layer-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `nav-cost-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `magma-layer-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.15.0]
+
+Player-facing version **3.15.0** (`About.xml` `modVersion`). Stamp `magma-layer-v1`. No save-format break: adds one saved map component (`MapComponent_StrataLevelKind`), old saves load as before.
+
+AZR-474
+
+### Added
+- **Magma layer** (AZR-474): the bottom-of-the-world dig endpoint, built now for Strata 4.
+  - **Level kinds:** new `GenStep_StrataLevelKind` (order 90, `Strata_UndergroundLevel` only, never gravship decks or quest levels) picks a `StrataLevelKind` per fresh level. `MapComponent_StrataLevelKind` saves it and places the kind's features on the level's first tick, after the long-event rock fill. Flooded and lost-floor kinds will use the same path.
+  - **Depth:** the magma layer is B3 (one past `StrataLevelCap.HardMaxOffset`) with the normal cap, or `magmaLayerDepth` (default B8, B3 to B20) with Unlimited levels. `StrataLevelCap.AllowsNewLevelBelow` lets B2 open B3 only as the magma layer, and blocks digging below a magma level even with Unlimited levels. Existing deeper Unlimited stacks keep digging; a new level at or past the depth becomes the magma layer. Setting `magmaLayerEnabled` (default on) turns it off.
+  - **Research:** `Strata_DeepBore` (Industrial, 2400, after deep excavation and electricity) is needed to open the magma layer and to build geothermal taps.
+  - **Features:** 3 to 5 lava pools (`Strata_MagmaPool` terrain, impassable, ringed by buildable `Strata_BasaltCrust`) with an invisible `Strata_MagmaGlow` light and heat source each; an obsidian seam (`Strata_MineableObsidian`, yields 25 `Strata_Obsidian`) beside each pool; 2 to 3 `Strata_MagmaVent`s (2x2, breathe CO2 until capped); a "bottom of the world" letter.
+  - **Heat and hazards:** outdoor temperature on the magma layer is 52°C instead of the depth gradient. Every 250 ticks, cells by each pool may set flammable things alight, and pawns standing next to magma may catch fire (4%).
+  - **Geothermal tap:** 2x2 power plant on a magma vent, 6000 W, 30 heat/s, emits steam, caps the vent's CO2. Power goes up through the existing shaft conduits.
+  - **Obsidian:** Stony stuff (beauty x2, hit points x1.8, work x2.4), in the stone blocks category, sellable.
+  - New art: magma vent, geothermal tap, obsidian, obsidian seam atlas, magma and basalt terrain. Keyed and DefInjected text in English, ChineseSimplified and Russian.
+
+Not tested in game yet.
 
 ## [3.14.0]
 

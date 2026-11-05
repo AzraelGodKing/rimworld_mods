@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_Obsidian.label>обсидиан</Strata_Obsidian.label>
+  <Strata_Obsidian.description>Чёрное вулканическое стекло из магматического слоя, где лава остыла о породу. Его трудно обрабатывать, но стены и скульптуры из него прочные и очень красивые. Торговцы хорошо за него платят.</Strata_Obsidian.description>
+  <Strata_MineableObsidian.label>жила обсидиана</Strata_MineableObsidian.label>
+  <Strata_MineableObsidian.description>Жила вулканического стекла там, где лава остыла о породу. Добывайте её ради обсидиана.</Strata_MineableObsidian.description>
+
+</LanguageData>

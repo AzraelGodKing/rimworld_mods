@@ -28,6 +28,7 @@ namespace Strata
             StrataMapUtility.ResetSession,
             StrataLevelCoords.ResetSession,
             StrataDeferredGenUtility.ResetSession,
+            StrataLevelKinds.ResetSession,
             WorkRelayAntiLoop.ResetSession,
             StrataRobotDiagnostics.ResetSession,
             DraftedPortalPathing.ResetSession,

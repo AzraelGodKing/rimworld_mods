@@ -52,4 +52,7 @@
   <Strata_Seismology.label>mine seismology</Strata_Seismology.label>
   <Strata_Seismology.description>Listening gear that reads tremor risk, unsupported thick roof, and infestation pressure on a floor. Pair with canaries and the support overlay.</Strata_Seismology.description>
 
+  <Strata_DeepBore.label>глубокое бурение</Strata_DeepBore.label>
+  <Strata_DeepBore.description>Жаропрочное крепление и охлаждаемые буровые головки, чтобы пробиться на уровень ниже самых глубоких выработок, к магматическому слою на дне мира. Также открывает геотермальные отводы на магматических жерлах.</Strata_DeepBore.description>
+
 </LanguageData>

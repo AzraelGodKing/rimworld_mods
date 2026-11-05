@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Invisible light and heat source at the centre of each magma pool. -->
+  <ThingDef>
+    <defName>Strata_MagmaGlow</defName>
+    <label>magma glow</label>
+    <description>Light and heat rising off a magma pool.</description>
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <drawerType>None</drawerType>
+    <altitudeLayer>Floor</altitudeLayer>
+    <passability>Standable</passability>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <size>(1,1)</size>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>9</glowRadius>
+        <glowColor>(255,120,40,0)</glowColor>
+      </li>
+      <li Class="CompProperties_HeatPusher">
+        <heatPerSecond>14</heatPerSecond>
+        <heatPushMaxTemperature>90</heatPushMaxTemperature>
+      </li>
+    </comps>
+    <building>
+      <isEdifice>false</isEdifice>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+    </building>
+  </ThingDef>
+
+  <!-- ============ Magma vent (natural, on the magma layer) ============ -->
+  <ThingDef>
+    <defName>Strata_MagmaVent</defName>
+    <label>magma vent</label>
+    <description>A fissure over molten rock at the bottom of the world. Left open it breathes carbon dioxide into the level. Cap it with a geothermal tap for a lot of free power.</description>
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <graphicData>
+      <texPath>Strata/Buildings/MagmaVent</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.4,2.4)</drawSize>
+    </graphicData>
+    <altitudeLayer>Floor</altitudeLayer>
+    <passability>Standable</passability>
+    <pathCost>20</pathCost>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <size>(2,2)</size>
+    <useHitPoints>false</useHitPoints>
+    <destroyable>false</destroyable>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="Strata.CompProperties_Exhaust">
+        <compClass>Strata.CompMagmaVent</compClass>
+        <gas>Strata_CarbonDioxide</gas>
+        <emissionPerCycle>2</emissionPerCycle>
+      </li>
+      <li Class="CompProperties_Glower">
+        <glowRadius>4</glowRadius>
+        <glowColor>(255,120,40,0)</glowColor>
+      </li>
+    </comps>
+    <building>
+      <isEdifice>false</isEdifice>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+    </building>
+  </ThingDef>
+
+  <!-- ============ Geothermal tap (built over a magma vent) ============ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>Strata_GeothermalTap</defName>
+    <label>geothermal tap</label>
+    <description>A heavy turbine bored into a magma vent. It makes a huge amount of power for free, and it pours out heat and steam the whole time. Run the power up through a shaft conduit, and keep the room cooled or vented.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>Strata/Buildings/GeothermalTap</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <fillPercent>1</fillPercent>
+    <rotatable>false</rotatable>
+    <size>(2,2)</size>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>500</MaxHitPoints>
+      <WorkToBuild>12000</WorkToBuild>
+      <Flammability>0</Flammability>
+    </statBases>
+    <costList>
+      <Steel>300</Steel>
+      <Plasteel>40</Plasteel>
+      <ComponentIndustrial>6</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerPlant</compClass>
+        <basePowerConsumption>-6000</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_HeatPusher">
+        <compClass>CompHeatPusherPowered</compClass>
+        <heatPerSecond>30</heatPerSecond>
+      </li>
+      <li Class="Strata.CompProperties_Exhaust">
+        <gas>Strata_Steam</gas>
+        <emissionPerCycle>1.5</emissionPerCycle>
+      </li>
+      <li Class="CompProperties_Glower">
+        <glowRadius>6</glowRadius>
+        <glowColor>(255,140,60,0)</glowColor>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>Strata.PlaceWorker_OnMagmaVent</li>
+    </placeWorkers>
+    <designationCategory>Power</designationCategory>
+    <canOverlapZones>false</canOverlapZones>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <researchPrerequisites>
+      <li>Strata_DeepBore</li>
+    </researchPrerequisites>
+    <building>
+      <ai_chillDestination>false</ai_chillDestination>
+    </building>
+  </ThingDef>
+
+</Defs>

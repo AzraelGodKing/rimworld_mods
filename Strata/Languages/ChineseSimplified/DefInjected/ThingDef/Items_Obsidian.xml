@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_Obsidian.label>黑曜石</Strata_Obsidian.label>
+  <Strata_Obsidian.description>从岩浆层开采的黑色火山玻璃，是熔岩贴着岩石冷却形成的。它很难加工，但用它建造的墙和雕塑坚固而且非常美观。商人愿意出高价收购。</Strata_Obsidian.description>
+  <Strata_MineableObsidian.label>黑曜石矿脉</Strata_MineableObsidian.label>
+  <Strata_MineableObsidian.description>熔岩贴着岩石冷却形成的火山玻璃矿脉。开采可获得黑曜石。</Strata_MineableObsidian.description>
+
+</LanguageData>

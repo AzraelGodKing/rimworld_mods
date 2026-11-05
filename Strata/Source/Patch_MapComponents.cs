@@ -44,6 +44,15 @@ namespace Strata
             {
                 __instance.components.Add(new FloodMapComponent(__instance));
             }
+            // Loaded maps already ran the component's FinalizeInit; a new one
+            // added here runs it now to claim the kind picked during map gen.
+            if (__instance.GetComponent<MapComponent_StrataLevelKind>() == null
+                && (StrataLevelKinds.HasPending(__instance) || StrataMapUtility.IsUnderground(__instance)))
+            {
+                var levelKind = new MapComponent_StrataLevelKind(__instance);
+                __instance.components.Add(levelKind);
+                levelKind.FinalizeInit();
+            }
             if (ModsConfig.IsActive("Ludeon.RimWorld.Odyssey")
                 && __instance.GetComponent<MapComponent_StrataGravshipUpperDeckSync>() == null)
             {

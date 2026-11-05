@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_MagmaPool.label>магма</Strata_MagmaPool.label>
+  <Strata_MagmaPool.description>Расплавленная порода, поднимающаяся со дна мира. Её нельзя пересечь и на ней нельзя строить, а всё горючее рядом рано или поздно загорится.</Strata_MagmaPool.description>
+  <Strata_BasaltCrust.label>базальтовая корка</Strata_BasaltCrust.label>
+  <Strata_BasaltCrust.description>Лава, остывшая в тёмную потрескавшуюся корку. Под ногами ещё тёплая, но достаточно прочная, чтобы строить.</Strata_BasaltCrust.description>
+
+</LanguageData>

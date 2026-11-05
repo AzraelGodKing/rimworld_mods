@@ -49,12 +49,18 @@ namespace Strata
             {
                 return false;
             }
+            // The magma layer is the bottom of the world, even with unlimited levels.
+            if (StrataLevelKinds.IsMagma(map))
+            {
+                reason = "Strata_LevelCap_BottomOfWorld".Translate();
+                return false;
+            }
             if (Unlimited)
             {
                 return true;
             }
-            // Surface/host = 0; B3 = 3 → next would be 4 (ok); B4 = 4 → next 5 (blocked).
-            if (StrataDepth.Of(map) >= HardMaxOffset)
+            // Surface/host = 0; B1 → B2 is ok; B2 → B3 only opens the magma layer.
+            if (StrataDepth.Of(map) >= HardMaxOffset && !MagmaLayer.NextLevelBelowIsMagma(map))
             {
                 reason = "Strata_LevelCap_MaxBelow".Translate(HardMaxOffset);
                 return false;

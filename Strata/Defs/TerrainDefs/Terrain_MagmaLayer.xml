@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Molten rock on the magma layer. Nothing walks or builds on it. -->
+  <TerrainDef>
+    <defName>Strata_MagmaPool</defName>
+    <label>magma</label>
+    <description>Molten rock welling up from the bottom of the world. Nothing can cross it or be built on it, and anything flammable left beside it will catch fire sooner or later.</description>
+    <texturePath>Strata/Terrain/MagmaPool</texturePath>
+    <edgeType>Hard</edgeType>
+    <renderPrecedence>395</renderPrecedence>
+    <pathCost>10000</pathCost>
+    <passability>Impassable</passability>
+    <fertility>0</fertility>
+    <takeFootprints>false</takeFootprints>
+    <avoidWander>true</avoidWander>
+    <extinguishesFire>false</extinguishesFire>
+  </TerrainDef>
+
+  <!-- Cooled lava around the pools and vents. Solid enough to build on. -->
+  <TerrainDef>
+    <defName>Strata_BasaltCrust</defName>
+    <label>basalt crust</label>
+    <description>Lava that cooled into a dark, cracked crust. Still warm underfoot, but solid enough to build on.</description>
+    <texturePath>Strata/Terrain/BasaltCrust</texturePath>
+    <edgeType>Hard</edgeType>
+    <renderPrecedence>340</renderPrecedence>
+    <pathCost>2</pathCost>
+    <fertility>0</fertility>
+    <affordances>
+      <li>Light</li>
+      <li>Medium</li>
+      <li>Heavy</li>
+      <li>Walkable</li>
+      <li>Diggable</li>
+    </affordances>
+  </TerrainDef>
+
+</Defs>

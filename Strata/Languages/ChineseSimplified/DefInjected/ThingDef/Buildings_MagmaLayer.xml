@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Strata_MagmaGlow.label>岩浆辉光</Strata_MagmaGlow.label>
+  <Strata_MagmaGlow.description>岩浆池散发出的光和热。</Strata_MagmaGlow.description>
+  <Strata_MagmaVent.label>岩浆喷口</Strata_MagmaVent.label>
+  <Strata_MagmaVent.description>世界底部熔岩之上的裂缝。不封住的话会向这一层释放二氧化碳。在上面建造地热井可获得大量免费电力。</Strata_MagmaVent.description>
+  <Strata_GeothermalTap.label>地热井</Strata_GeothermalTap.label>
+  <Strata_GeothermalTap.description>钻入岩浆喷口的重型涡轮机。它能免费产生巨量电力，同时不断散发热量和蒸汽。用竖井导管把电力送上去，并让房间保持降温或通风。</Strata_GeothermalTap.description>
+
+</LanguageData>
