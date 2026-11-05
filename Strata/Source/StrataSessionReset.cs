@@ -45,6 +45,7 @@ namespace Strata
             StrataPocketMapOpen.ResetSession,
             StrataCrossLevelThreatNotify.ResetSession,
             PawnRelay.ResetSession,
+            WorkGiver_HaulAcrossLevels.ResetSession,
         };
 
         public static void Run()

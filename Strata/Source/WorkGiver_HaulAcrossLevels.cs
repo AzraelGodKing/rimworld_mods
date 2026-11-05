@@ -30,64 +30,137 @@ namespace Strata
             {
                 yield return t;
             }
-            // Materialize both before yielding: ReachableLevels reuses a shared
-            // buffer that HasJobOnThing clobbers between yields. Demand must
-            // not be gated on maxLinked - a fresh level below with blueprints
-            // and no stockpiles yet is exactly when demand matters most.
-            StoragePriority maxLinked = MaxStoragePriorityOnLinkedLevels(map);
-            HashSet<ThingDef> wanted = LevelDemand.DefsWantedByLinkedLevels(map);
-            if (maxLinked == StoragePriority.Unstored && wanted.Count == 0)
+            // Stored items another level would take at a higher priority, and
+            // materials another level's construction or bills are short of.
+            // Built once per map every CandidateRefreshTicks and shared by all
+            // haulers: walking every stockpile per hauler per scan was the
+            // biggest cross-level TPS cost in large bases.
+            List<Thing> candidates = Candidates(map);
+            for (int i = 0; i < candidates.Count; i++)
             {
-                yield break;
-            }
-            // listerHaulables drops an item once it sits in storage with no
-            // better cell on its own map, so priority upgrades to another
-            // level have to scan stored things directly.
-            if (maxLinked > StoragePriority.Unstored)
-            {
-                List<SlotGroup> groups = map.haulDestinationManager.AllGroupsListForReading;
-                for (int i = 0; i < groups.Count; i++)
+                Thing t = candidates[i];
+                if (t.Spawned && t.Map == map)
                 {
-                    SlotGroup group = groups[i];
-                    if (group.Settings.Priority >= maxLinked)
-                    {
-                        continue;
-                    }
-                    foreach (Thing held in group.HeldThings)
-                    {
-                        yield return held;
-                    }
-                }
-            }
-            // Materials another level's construction is short of - loose or in
-            // storage at any priority, neither of which is guaranteed to appear
-            // in the yields above.
-            foreach (ThingDef def in wanted)
-            {
-                List<Thing> ofDef = map.listerThings.ThingsOfDef(def);
-                for (int i = 0; i < ofDef.Count; i++)
-                {
-                    yield return ofDef[i];
+                    yield return t;
                 }
             }
         }
 
-        private static StoragePriority MaxStoragePriorityOnLinkedLevels(Map from)
+        private const int CandidateRefreshTicks = 250;
+
+        private sealed class CandidateCache
         {
-            StoragePriority max = StoragePriority.Unstored;
-            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(from);
+            public int tick;
+            public int epoch;
+            public List<Thing> things;
+        }
+
+        private static readonly Dictionary<int, CandidateCache> candidateCache = new Dictionary<int, CandidateCache>();
+
+        internal static void ResetSession()
+        {
+            candidateCache.Clear();
+        }
+
+        private static List<Thing> Candidates(Map map)
+        {
+            int now = Find.TickManager.TicksGame;
+            if (candidateCache.TryGetValue(map.uniqueID, out CandidateCache cached)
+                && cached.epoch == LevelGraph.Epoch
+                && now - cached.tick < CandidateRefreshTicks
+                && now >= cached.tick)
+            {
+                return cached.things;
+            }
+            // A fresh list each rebuild, never cleared in place, so an
+            // enumerator still walking the old one is never invalidated.
+            List<Thing> things = BuildCandidates(map);
+            candidateCache[map.uniqueID] = new CandidateCache { tick = now, epoch = LevelGraph.Epoch, things = things };
+            return things;
+        }
+
+        private static List<Thing> BuildCandidates(Map map)
+        {
+            var things = new List<Thing>();
+            var seen = new HashSet<Thing>();
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(map);
+
+            // Higher-priority groups on linked levels, best first, so the
+            // accept check below usually stops at the first match.
+            var linkedGroups = new List<SlotGroup>();
             for (int i = 0; i < links.Count; i++)
             {
-                List<SlotGroup> groups = links[i].map.haulDestinationManager.AllGroupsListForReading;
+                Map other = links[i].map;
+                if (other == null || other.Disposed || other == map)
+                {
+                    continue;
+                }
+                List<SlotGroup> groups = other.haulDestinationManager.AllGroupsListForReading;
                 for (int g = 0; g < groups.Count; g++)
                 {
-                    if (groups[g].Settings.Priority > max)
+                    if (groups[g].Settings.Priority > StoragePriority.Unstored)
                     {
-                        max = groups[g].Settings.Priority;
+                        linkedGroups.Add(groups[g]);
                     }
                 }
             }
-            return max;
+            linkedGroups.SortByDescending(g => (int)g.Settings.Priority);
+
+            // listerHaulables drops an item once it sits in storage with no
+            // better cell on its own map, so priority upgrades to another
+            // level have to come from stored things directly.
+            if (linkedGroups.Count > 0)
+            {
+                StoragePriority maxLinked = linkedGroups[0].Settings.Priority;
+                List<SlotGroup> local = map.haulDestinationManager.AllGroupsListForReading;
+                for (int i = 0; i < local.Count; i++)
+                {
+                    StoragePriority here = local[i].Settings.Priority;
+                    if (here >= maxLinked)
+                    {
+                        continue;
+                    }
+                    foreach (Thing held in local[i].HeldThings)
+                    {
+                        if (AnyLinkedGroupTakes(linkedGroups, held, here) && seen.Add(held))
+                        {
+                            things.Add(held);
+                        }
+                    }
+                }
+            }
+
+            // Demand must not be gated on linked storage: a fresh level below
+            // with blueprints and no stockpiles yet is exactly when it matters.
+            foreach (ThingDef def in LevelDemand.DefsWantedByLinkedLevels(map))
+            {
+                List<Thing> ofDef = map.listerThings.ThingsOfDef(def);
+                for (int i = 0; i < ofDef.Count; i++)
+                {
+                    if (seen.Add(ofDef[i]))
+                    {
+                        things.Add(ofDef[i]);
+                    }
+                }
+            }
+            return things;
+        }
+
+        private static bool AnyLinkedGroupTakes(List<SlotGroup> linkedGroups, Thing t, StoragePriority here)
+        {
+            for (int i = 0; i < linkedGroups.Count; i++)
+            {
+                StorageSettings settings = linkedGroups[i].Settings;
+                if (settings.Priority <= here)
+                {
+                    return false;
+                }
+                if (settings.AllowedToAccept(t))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override bool ShouldSkip(Pawn pawn, bool forced = false)

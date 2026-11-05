@@ -52,6 +52,9 @@ namespace Strata
             public IntVec3 arrivalCell; // where a pawn lands on that level (last leg's exit)
         }
 
+        // Bumped whenever portal topology changes; callers key their own caches on it.
+        internal static int Epoch => graphEpoch;
+
         internal static void InvalidateCache()
         {
             graphEpoch++;
