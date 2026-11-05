@@ -75,7 +75,6 @@
   <Strata_PlaySettings_CombinedResourcesTip>Strata: комбинированные ресурсы уровня (по умолчанию выкл.)\nПри включении учёт ресурсов и затрат на строительство суммирует предметы на каждом связанном этаже. Без второй карты нагрузки нет.</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>Нагрузка {0}%</Strata_GasOverlay_Load>
   <Strata_GasOverlay_OpenAir>Газ: открытый воздух</Strata_GasOverlay_OpenAir>
-  <Strata_Settings_ThreatsPerf>Угрозы и производительность</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>Преследование рейдеров</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>Рейдеры без целей для боя идут за колонистами через незапечатанные лестницы.</Strata_Settings_RaidPursuitDesc>
   <Strata_Settings_B1Infestations>Подземные заражения (B1+)</Strata_Settings_B1Infestations>
@@ -493,9 +492,28 @@
   <Strata_TickTier_Lightweight>облегчённый</Strata_TickTier_Lightweight>
   <Strata_TickTier_Throttled>спящий</Strata_TickTier_Throttled>
   <Strata_TickTier_Tip>Режим расчёта: {0}.\n\nПолный: работает всё ванильное.\nОблегчённый: пропускается появление дикой природы (и под землёй погода, ветер, снег).\nСпящий: пустой уровень, большая часть фоновых расчётов идёт 1 тик из 4.</Strata_TickTier_Tip>
-  <Strata_Settings_TabOptions>Настройки</Strata_Settings_TabOptions>
   <Strata_Settings_TabDiagnostics>Диагностика</Strata_Settings_TabDiagnostics>
   <Strata_Settings_TabDiagnosticsTripped>Диагностика (отключено: {0})</Strata_Settings_TabDiagnosticsTripped>
+  <Strata_Settings_TabLevels>Уровни</Strata_Settings_TabLevels>
+  <Strata_Settings_TabCommuting>Маршруты</Strata_Settings_TabCommuting>
+  <Strata_Settings_TabAtmosphere>Атмосфера</Strata_Settings_TabAtmosphere>
+  <Strata_Settings_TabThreats>Угрозы</Strata_Settings_TabThreats>
+  <Strata_Settings_TabPerformance>Производительность</Strata_Settings_TabPerformance>
+  <Strata_Settings_TabVisuals>Вид</Strata_Settings_TabVisuals>
+  <Strata_Settings_TabAdvanced>Дополнительно</Strata_Settings_TabAdvanced>
+  <Strata_Settings_NewLevels>Новые уровни</Strata_Settings_NewLevels>
+  <Strata_Settings_Search>Поиск настроек…</Strata_Settings_Search>
+  <Strata_Settings_SearchNoResults>Ничего не найдено.</Strata_Settings_SearchNoResults>
+  <Strata_Settings_Preset>Пресет: {0}</Strata_Settings_Preset>
+  <Strata_Settings_PresetDesc>Пресеты меняют только самые затратные настройки: газы, качество атмосферы, фоновые уровни, живой вид снизу, затемнение глубины и несколько событий. Если изменить любую из них, пресет станет «Свой». Остальное остаётся как вы настроили.</Strata_Settings_PresetDesc>
+  <Strata_Settings_PresetCustom>Свой</Strata_Settings_PresetCustom>
+  <Strata_Settings_PresetPerformance>Производительность</Strata_Settings_PresetPerformance>
+  <Strata_Settings_PresetBalanced>Баланс</Strata_Settings_PresetBalanced>
+  <Strata_Settings_PresetImmersive>Погружение</Strata_Settings_PresetImmersive>
+  <Strata_Settings_PresetCustomDesc>Ваш собственный набор.</Strata_Settings_PresetCustomDesc>
+  <Strata_Settings_PresetPerformanceDesc>Для больших колоний и слабых ПК: газы выключены, низкое качество атмосферы, фоновые уровни замедлены, вид снизу не обновляется вживую, без затемнения глубины и без автобоя между уровнями.</Strata_Settings_PresetPerformanceDesc>
+  <Strata_Settings_PresetBalancedDesc>Настройки Strata по умолчанию.</Strata_Settings_PresetBalancedDesc>
+  <Strata_Settings_PresetImmersiveDesc>Всё включено: природные и загрязняющие газы, подземные газовые события, подписи газа в комнатах, высокое качество атмосферы, живой вид снизу, затемнение глубины, наводнения и заражения от шума.</Strata_Settings_PresetImmersiveDesc>
   <Strata_Diag_Header>Каждая система Strata отключается сама после повторных ошибок. Ваниль и остальные системы продолжают работать. «Перезапустить» даёт системе ещё одну попытку; перезапуск игры включает всё снова. Известные проблемы: About/known-issues.json.</Strata_Diag_Header>
   <Strata_Diag_RearmAll>Перезапустить все</Strata_Diag_RearmAll>
   <Strata_Diag_Rearm>Перезапустить</Strata_Diag_Rearm>

@@ -76,7 +76,6 @@
   <Strata_PlaySettings_CombinedResourcesTip>Strata：合并楼层资源（默认关闭）\n开启后，资源读数、建造成本与“直到拥有 X”账单会计入每个相连楼层货堆/货架上的物品。仅一层时无额外开销。</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>负载 {0}%</Strata_GasOverlay_Load>
   <Strata_GasOverlay_OpenAir>气体：开阔空气</Strata_GasOverlay_OpenAir>
-  <Strata_Settings_ThreatsPerf>威胁与性能</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>袭击追击</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>没有可打目标的袭击者会经未密封楼梯井追击你的殖民者。</Strata_Settings_RaidPursuitDesc>
   <Strata_Settings_B1Infestations>地下虫害（B1+）</Strata_Settings_B1Infestations>
@@ -494,9 +493,28 @@
   <Strata_TickTier_Lightweight>轻量</Strata_TickTier_Lightweight>
   <Strata_TickTier_Throttled>休眠</Strata_TickTier_Throttled>
   <Strata_TickTier_Tip>运算等级：{0}。\n\n完整：原版所有系统都运行。\n轻量：跳过野生生成（以及地下的天气、风、积雪）。\n休眠：无人楼层，大部分环境运算每 4 刻运行 1 次。</Strata_TickTier_Tip>
-  <Strata_Settings_TabOptions>选项</Strata_Settings_TabOptions>
   <Strata_Settings_TabDiagnostics>诊断</Strata_Settings_TabDiagnostics>
   <Strata_Settings_TabDiagnosticsTripped>诊断（{0} 项已关闭）</Strata_Settings_TabDiagnosticsTripped>
+  <Strata_Settings_TabLevels>楼层</Strata_Settings_TabLevels>
+  <Strata_Settings_TabCommuting>通勤</Strata_Settings_TabCommuting>
+  <Strata_Settings_TabAtmosphere>大气</Strata_Settings_TabAtmosphere>
+  <Strata_Settings_TabThreats>威胁</Strata_Settings_TabThreats>
+  <Strata_Settings_TabPerformance>性能</Strata_Settings_TabPerformance>
+  <Strata_Settings_TabVisuals>视觉</Strata_Settings_TabVisuals>
+  <Strata_Settings_TabAdvanced>高级</Strata_Settings_TabAdvanced>
+  <Strata_Settings_NewLevels>新楼层</Strata_Settings_NewLevels>
+  <Strata_Settings_Search>搜索选项…</Strata_Settings_Search>
+  <Strata_Settings_SearchNoResults>没有匹配的选项。</Strata_Settings_SearchNoResults>
+  <Strata_Settings_Preset>预设：{0}</Strata_Settings_Preset>
+  <Strata_Settings_PresetDesc>预设只修改最耗性能的选项：气体、大气质量、后台楼层、实时下层视图、深度变暗以及部分事件。修改其中任意一项，预设会显示为自定义。其他选项保持你的设置。</Strata_Settings_PresetDesc>
+  <Strata_Settings_PresetCustom>自定义</Strata_Settings_PresetCustom>
+  <Strata_Settings_PresetPerformance>性能</Strata_Settings_PresetPerformance>
+  <Strata_Settings_PresetBalanced>均衡</Strata_Settings_PresetBalanced>
+  <Strata_Settings_PresetImmersive>沉浸</Strata_Settings_PresetImmersive>
+  <Strata_Settings_PresetCustomDesc>你自己的组合。</Strata_Settings_PresetCustomDesc>
+  <Strata_Settings_PresetPerformanceDesc>适合大型殖民地或较慢的电脑：关闭气体，低大气质量，后台楼层减速，下层视图不实时，无深度变暗，无跨层自动交战。</Strata_Settings_PresetPerformanceDesc>
+  <Strata_Settings_PresetBalancedDesc>Strata 的默认设置。</Strata_Settings_PresetBalancedDesc>
+  <Strata_Settings_PresetImmersiveDesc>全部开启：天然与污染气体、地下气体事件、气体房间标签、高大气质量、实时下层视图、深度变暗、洪水与噪音虫害。</Strata_Settings_PresetImmersiveDesc>
   <Strata_Diag_Header>Strata 的每个系统在反复出错后会自行关闭。原版和其他系统继续运行。"重新启用"会让该系统再试一次；重启游戏会重新启用所有系统。已知问题：About/known-issues.json。</Strata_Diag_Header>
   <Strata_Diag_RearmAll>全部重新启用</Strata_Diag_RearmAll>
   <Strata_Diag_Rearm>重新启用</Strata_Diag_Rearm>

@@ -76,7 +76,6 @@
   <Strata_PlaySettings_CombinedResourcesTip>Strata: combined level resources (off by default)\nWhen on, resource readout, build costs, and “until you have X” bills count items in stockpiles/shelves on every linked floor. No cost while only one map is linked.</Strata_PlaySettings_CombinedResourcesTip>
   <Strata_GasOverlay_Load>load {0}%</Strata_GasOverlay_Load>
   <Strata_GasOverlay_OpenAir>Gas: open air</Strata_GasOverlay_OpenAir>
-  <Strata_Settings_ThreatsPerf>Threats &amp; performance</Strata_Settings_ThreatsPerf>
   <Strata_Settings_RaidPursuit>Raid pursuit</Strata_Settings_RaidPursuit>
   <Strata_Settings_RaidPursuitDesc>Raiders with nobody left to fight follow your colonists through unsealed stairwells.</Strata_Settings_RaidPursuitDesc>
   <Strata_Settings_B1Infestations>Underground infestations (B1+)</Strata_Settings_B1Infestations>
@@ -495,9 +494,28 @@
   <Strata_TickTier_Lightweight>lightweight</Strata_TickTier_Lightweight>
   <Strata_TickTier_Throttled>hibernating</Strata_TickTier_Throttled>
   <!-- Diagnostics -->
-  <Strata_Settings_TabOptions>Options</Strata_Settings_TabOptions>
   <Strata_Settings_TabDiagnostics>Diagnostics</Strata_Settings_TabDiagnostics>
   <Strata_Settings_TabDiagnosticsTripped>Diagnostics ({0} off)</Strata_Settings_TabDiagnosticsTripped>
+  <Strata_Settings_TabLevels>Levels</Strata_Settings_TabLevels>
+  <Strata_Settings_TabCommuting>Commuting</Strata_Settings_TabCommuting>
+  <Strata_Settings_TabAtmosphere>Atmosphere</Strata_Settings_TabAtmosphere>
+  <Strata_Settings_TabThreats>Threats</Strata_Settings_TabThreats>
+  <Strata_Settings_TabPerformance>Performance</Strata_Settings_TabPerformance>
+  <Strata_Settings_TabVisuals>Visuals</Strata_Settings_TabVisuals>
+  <Strata_Settings_TabAdvanced>Advanced</Strata_Settings_TabAdvanced>
+  <Strata_Settings_NewLevels>New levels</Strata_Settings_NewLevels>
+  <Strata_Settings_Search>Search options…</Strata_Settings_Search>
+  <Strata_Settings_SearchNoResults>No options match.</Strata_Settings_SearchNoResults>
+  <Strata_Settings_Preset>Preset: {0}</Strata_Settings_Preset>
+  <Strata_Settings_PresetDesc>Presets set the options that cost the most: gases, atmosphere quality, background levels, live see-below, depth dim and a few events. Change any of them and the preset shows Custom. Everything else stays as you set it.</Strata_Settings_PresetDesc>
+  <Strata_Settings_PresetCustom>Custom</Strata_Settings_PresetCustom>
+  <Strata_Settings_PresetPerformance>Performance</Strata_Settings_PresetPerformance>
+  <Strata_Settings_PresetBalanced>Balanced</Strata_Settings_PresetBalanced>
+  <Strata_Settings_PresetImmersive>Immersive</Strata_Settings_PresetImmersive>
+  <Strata_Settings_PresetCustomDesc>Your own mix.</Strata_Settings_PresetCustomDesc>
+  <Strata_Settings_PresetPerformanceDesc>For big colonies or slower PCs: gases off, low atmosphere quality, background levels slowed, see-below not live, no depth dim, no cross-level auto-engage.</Strata_Settings_PresetPerformanceDesc>
+  <Strata_Settings_PresetBalancedDesc>The defaults Strata ships with.</Strata_Settings_PresetBalancedDesc>
+  <Strata_Settings_PresetImmersiveDesc>Everything on: natural and pollutant gases, underground gas events, gas room labels, high atmosphere quality, live see-below, depth dim, floods and noise infestations.</Strata_Settings_PresetImmersiveDesc>
   <Strata_Diag_Header>Each Strata system turns itself off after repeated errors. Vanilla and the other systems keep running. Re-arm gives a system another try; restarting the game re-arms everything. Known issues: About/known-issues.json.</Strata_Diag_Header>
   <Strata_Diag_RearmAll>Re-arm all</Strata_Diag_RearmAll>
   <Strata_Diag_Rearm>Re-arm</Strata_Diag_Rearm>

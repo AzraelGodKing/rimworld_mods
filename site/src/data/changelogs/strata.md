@@ -9,9 +9,10 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 Player-facing version **3.13.0** (`About.xml` `modVersion`). Stamp `modder-api-v2`. No save-format change.
 
-AZR-490
+AZR-490 AZR-489
 
 ### Added
+- **Settings tabs, presets and search** (AZR-489): the single Options list is split into Levels, Commuting, Atmosphere, Threats, Performance, Visuals and Advanced tabs (Diagnostics unchanged). A search box filters every tab by label and tooltip. `StrataSettingsPresets` defines Performance / Balanced (shipped defaults) / Immersive over 15 cost-heavy options; the active preset is derived from current values, so editing one shows Custom and nothing new is saved. Keyed text in English, ChineseSimplified and Russian; `Strata_Settings_TabOptions` and `Strata_Settings_ThreatsPerf` removed.
 - **`StrataModderApi` v2** (AZR-490): `ApiVersion` constant, `IsLevel`, `LevelIndex` (signed altitude), `LevelLabel`, `TravelCost` (portal hops), `RegisterWorkProbe` / `UnregisterWorkProbe` / `RegisterWorkSeekingJobGiverMarker`, and level-created / level-removed listeners. Strata now raises the vertical-link listeners for its own stairs and elevators (on build, and for every portal on a newly generated level); before, only `NotifyVerticalLink` from another mod reached them. Documented in `Strata/API.md`.
 
 ### Changed
