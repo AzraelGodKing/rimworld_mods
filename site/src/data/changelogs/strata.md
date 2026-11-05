@@ -1,9 +1,16 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `3.18.0` in `About.xml` `modVersion`. Player.log: `[Strata] v3.18.0 loaded from ... (modified ...); nav-paths-v1.` via `ModVersionLog.Write`.
+**Version:** `3.18.1` in `About.xml` `modVersion`. Player.log: `[Strata] v3.18.1 loaded from ... (modified ...); buried-chambers-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `nav-paths-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `buried-chambers-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [3.18.1]
+
+Player-facing version **3.18.1** (`About.xml` `modVersion`). Stamp `buried-chambers-v1`. No save-format change.
+
+### Fixed
+- **Hidden chambers and rich ore nodes were buried:** `GenStep_SolidRock` only lays a terrain and roof shell and defers the rock (`DeferMineablesVar`, filled by `StrataRockFillScheduler` in a long event after map gen). `GenStep_HiddenChambers` (order 300) carved chambers in that empty shell and spawned geysers and deep gas vents, which the fill then covered with rock, and its gas seeds never found a room. `GenStep_RichOreNodes` (order 330) found no host rock, so it placed nothing. On deferred levels both now hand their work to `StrataDeferredGenUtility.ScheduleAfterRockFill`, which runs after the fill. The landing spot is captured at gen time. Non-deferred generators run as before.
 
 ## [3.18.0]
 

@@ -27,6 +27,14 @@ namespace Strata
             Schedule(map, DbhGroundwaterUtility.SeedIfNeeded);
         }
 
+        // Work that has to find the rock in place. On deferred levels the rock
+        // is spawned in a long event after map gen, so gen steps that carve or
+        // seed it hand their work over here instead.
+        public static void ScheduleAfterRockFill(Map map, Action<Map> action)
+        {
+            Schedule(map, action);
+        }
+
         public static bool HasPending(Map map)
         {
             return map != null

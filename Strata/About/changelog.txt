@@ -1,5 +1,5 @@
-3.18.0
-[h1]Strata - 3.18.0[/h1]
+3.18.1
+[h1]Strata - 3.18.1[/h1]
 
 [b]Added[/b]
 [list]
@@ -14,6 +14,7 @@
 
 [b]Fixed[/b]
 [list]
+[*] [b]Hidden chambers and rich ore seams are back[/b] — on newly dug levels the geothermal and gas chambers, and the big ore seams, were placed before the rock was laid, so the rock buried them. They are now placed after the rock. Levels you have already dug keep what they have.
 [*] [b]Colonists no longer stand idle after a work trip[/b] — a pawn sent to another floor for one kind of work refused every other job while that work was blocked (no materials, out of reach, taken by someone else), for up to half a day. They now do whatever local work they can, and give the trip up after about an hour.
 [*] [b]Fewer trips up and down the stairs[/b] — a floor a pawn just left empty-handed stays off their list until it actually gains work they do. Before, any change there (another colonist finishing a job, a stack being moved) sent them straight back.
 [*] [b]No endless detours[/b] — when a job is only reachable by going around through another floor and the detour still can't reach it (for example walls going up on the upper floor), the pawn stops trying that detour for a while.
@@ -25,5 +26,5 @@
 [*] Automated tests now check that cave layouts, deep-level oxygen and the "leave for better work" choice stay the same between versions. No gameplay change.
 [/list]
 
-[i]Build stamp (Player.log): nav-paths-v1[/i]
+[i]Build stamp (Player.log): buried-chambers-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

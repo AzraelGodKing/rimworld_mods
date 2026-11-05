@@ -23,6 +23,19 @@ namespace Strata
             {
                 return;
             }
+            IntVec3 landing = MapGenerator.PlayerStartSpot.IsValid ? MapGenerator.PlayerStartSpot : map.Center;
+            // With deferred rock there is no host rock yet; seed the nodes
+            // once the fill has spawned it.
+            if (MapGenerator.TryGetVar(GenStep_SolidRock.DeferMineablesVar, out bool defer) && defer)
+            {
+                StrataDeferredGenUtility.ScheduleAfterRockFill(map, m => Place(m, landing));
+                return;
+            }
+            Place(map, landing);
+        }
+
+        private static void Place(Map map, IntVec3 landing)
+        {
 
             int depth = Mathf.Max(1, StrataDepth.CountLevelsBelowSurface(map));
             int nodeCount = NodeCountForDepth(depth);
@@ -31,7 +44,7 @@ namespace Strata
 
             for (int i = 0; i < nodeCount; i++)
             {
-                if (!TryFindNodeSpot(map, placed, out IntVec3 root))
+                if (!TryFindNodeSpot(map, landing, placed, out IntVec3 root))
                 {
                     break;
                 }
@@ -97,9 +110,8 @@ namespace Strata
             return size;
         }
 
-        private static bool TryFindNodeSpot(Map map, List<IntVec3> placed, out IntVec3 spot)
+        private static bool TryFindNodeSpot(Map map, IntVec3 landing, List<IntVec3> placed, out IntVec3 spot)
         {
-            IntVec3 landing = MapGenerator.PlayerStartSpot.IsValid ? MapGenerator.PlayerStartSpot : map.Center;
             for (int i = 0; i < PlacementTries; i++)
             {
                 var candidate = new IntVec3(

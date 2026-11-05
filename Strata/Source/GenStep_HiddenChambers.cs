@@ -24,7 +24,20 @@ namespace Strata
 
         public override void Generate(Map map, GenStepParams parms)
         {
+            IntVec3 landing = MapGenerator.PlayerStartSpot.IsValid ? MapGenerator.PlayerStartSpot : map.Center;
             int depth = StrataDepth.CountLevelsBelowSurface(map);
+            // With deferred rock there is no rock to carve yet, and the fill
+            // would bury the chambers, geysers and vents. Place them after it.
+            if (MapGenerator.TryGetVar(GenStep_SolidRock.DeferMineablesVar, out bool defer) && defer)
+            {
+                StrataDeferredGenUtility.ScheduleAfterRockFill(map, m => Place(m, landing, depth));
+                return;
+            }
+            Place(map, landing, depth);
+        }
+
+        private static void Place(Map map, IntVec3 landing, int depth)
+        {
             var placed = new List<IntVec3>();
 
             int geoCount = 0;
@@ -34,7 +47,7 @@ namespace Strata
             }
             for (int i = 0; i < geoCount; i++)
             {
-                if (TryFindChamberSpot(map, placed, out IntVec3 spot))
+                if (TryFindChamberSpot(map, landing, placed, out IntVec3 spot))
                 {
                     CarveChamber(map, spot, Rand.Range(3.6f, 4.2f));
                     GenSpawn.Spawn(ThingDefOf.SteamGeyser, spot, map);
@@ -51,7 +64,7 @@ namespace Strata
             }
             for (int i = 0; i < gasCount; i++)
             {
-                if (!TryFindChamberSpot(map, placed, out IntVec3 spot))
+                if (!TryFindChamberSpot(map, landing, placed, out IntVec3 spot))
                 {
                     continue;
                 }
@@ -77,9 +90,8 @@ namespace Strata
             }
         }
 
-        private static bool TryFindChamberSpot(Map map, List<IntVec3> placed, out IntVec3 spot)
+        private static bool TryFindChamberSpot(Map map, IntVec3 landing, List<IntVec3> placed, out IntVec3 spot)
         {
-            IntVec3 landing = MapGenerator.PlayerStartSpot.IsValid ? MapGenerator.PlayerStartSpot : map.Center;
             for (int i = 0; i < PlacementTries; i++)
             {
                 var candidate = new IntVec3(
