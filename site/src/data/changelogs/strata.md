@@ -1,15 +1,15 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.1.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.1.0 loaded from ... (modified ...); shaders-v1.` via `ModVersionLog.Write`.
+**Version:** `4.0.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.0.0 loaded from ... (modified ...); shaders-v1.` via `ModVersionLog.Write`.
 
 **Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `shaders-v1` in `StrataBuildInfo.BuildStamp`.
 
-## [4.1.0]
+## [4.0.0]
 
-Player-facing version **4.1.0** (`About.xml` `modVersion`). Stamp `shaders-v1`. No save-format change.
+Player-facing version **4.0.0** (`About.xml` `modVersion`). Stamp `shaders-v1`. No save-format change. The shader work was first numbered 4.1.0; it ships together with the rest of Strata 4 as 4.0.0.
 
-AZR-468, AZR-469, AZR-470, AZR-458
+AZR-468, AZR-469, AZR-470, AZR-458, AZR-484, AZR-467
 
 ### Added (RimWorld 1.7 only)
 - **Strata shaders:** `1.7/Defs/ShaderDefs/Strata_Shaders.xml` declares `Strata_BelowMask`, `Strata_GasOverlay`, `Strata_Caustics` and `Strata_DepthVignette`. Their GLSL 450 is in `1.7/Shaders/Strata` and follows vanilla 1.7.4998 conventions: `StrataOverlay.vert.glsl` is a copy of vanilla `Transparent.vert.glsl`; material uniforms are in set 2, binding 0 with `@color`/`@default` annotations; `_MainTex` is at set 2, binding 1; the `InstanceTransforms.glsl` include sits behind `INSTANCED`. Every file compiles to SPIR-V with `glslangValidator`, with and without `INSTANCED`. `Source/Render17` (`#if RIMWORLD_1_7`) holds `StrataShaders17` (material from a `ShaderDef`, `_StrataParams` = time / map size / motion, per-draw render queue) and `StrataMapTexture` (one RGBA32 texel per cell, bilinear, one quad over the map, uploaded only when its data changes). If a shader fails to load, Strata logs one warning and falls back to the 1.6 drawing.
@@ -24,12 +24,6 @@ AZR-468, AZR-469, AZR-470, AZR-458
 - Heat shimmer near magma and geothermal taps. It needs a scene-grab distortion pass (`SceneGrabDeclaration`), which needs an in-game test before it ships.
 - Seeing two or more levels down (the see-below stretch goal).
 - Folding the flat depth dim into the shader. The depth dim is for upper decks, and the vignette is for underground levels.
-
-## [4.0.0]
-
-Player-facing version **4.0.0** (`About.xml` `modVersion`). Stamp `strata4-v1`. No save-format change.
-
-AZR-484, AZR-467
 
 ### Changed
 - **Strata 4 ships for 1.6 and 1.7.** Azrael decided on 2026-11-05 not to freeze 1.6. This replaces the earlier plan of "1.7-only, with 1.6 frozen at 3.8.x". One source tree builds two DLLs: `1.6/Assemblies` (net472, Krafs 1.6, Harmony 2.x) and `1.7/Assemblies` (net10.0, Krafs 1.7, Harmony 3.x), which `LoadFolders.xml` already picks per game version. Defs, Patches, Textures and Languages stay shared at the root. Code that only exists in .NET 10 goes behind `#if NET9_0_OR_GREATER` (or a `using` alias), so the 1.6 build still compiles. `pack_mod.sh` already puts both DLLs into the zip.

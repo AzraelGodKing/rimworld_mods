@@ -1,5 +1,5 @@
-4.1.0
-[h1]Strata - 4.1.0[/h1]
+4.0.0
+[h1]Strata - 4.0.0[/h1]
 
 Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and a Strata save carries over to 1.7.
 
