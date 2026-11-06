@@ -1,4 +1,3 @@
-using System.Linq;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -21,10 +20,7 @@ namespace Stormproof
             {
                 return true;
             }
-            bool shielded = StormproofRegistry
-                .On(StormproofRegistry.Dampeners, building.Map)
-                .Any(d => d.Covers(building));
-            if (shielded)
+            if (CompEmpDampener.Shielded(building))
             {
                 FleckMaker.ThrowMicroSparks(building.DrawPos, building.Map);
                 return false;

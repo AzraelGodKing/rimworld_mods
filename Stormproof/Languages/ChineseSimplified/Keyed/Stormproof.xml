@@ -35,7 +35,7 @@
 
   <!-- Storm caller -->
   <Stormproof_StormCaller_Label>召唤风暴</Stormproof_StormCaller_Label>
-  <Stormproof_StormCaller_Desc>扰动电离层，在本地图召唤一场带雨雷暴。闪电为风暴尖塔供电，雨水扑灭火灾。充能需五天。</Stormproof_StormCaller_Desc>
+  <Stormproof_StormCaller_Desc>扰动电离层，在本地图召唤一场带雨雷暴。闪电为风暴尖塔供电，雨水扑灭火灾。若正处于干雷锋面，召唤会先驱散锋面。充能需五天。</Stormproof_StormCaller_Desc>
   <Stormproof_StormCaller_NoPower>没有电力。</Stormproof_StormCaller_NoPower>
   <Stormproof_StormCaller_Discharging>{0} 向天空放电。雷暴正在形成。</Stormproof_StormCaller_Discharging>
   <Stormproof_StormCaller_Charged>已充能：可以召唤风暴。</Stormproof_StormCaller_Charged>
@@ -177,5 +177,7 @@
   <Stormproof_Settings_Drought>干旱冷凝器</Stormproof_Settings_Drought>
   <Stormproof_Settings_SuppressorTip>关闭后建筑仍在，但不再抑制对应灾害。</Stormproof_Settings_SuppressorTip>
   <Stormproof_Settings_Reset>恢复默认</Stormproof_Settings_Reset>
+  <Stormproof_StormCaller_BrokeFront>{0} 驱散了干雷锋面。雨要来了。</Stormproof_StormCaller_BrokeFront>
+  <Stormproof_DisabledInSettings>已在模组设置中禁用：仅待机耗电。</Stormproof_DisabledInSettings>
 
 </LanguageData>

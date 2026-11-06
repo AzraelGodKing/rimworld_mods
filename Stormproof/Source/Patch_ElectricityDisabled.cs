@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -34,9 +33,14 @@ namespace Stormproof
                     return;
                 }
             }
-            if (StormproofRegistry.On(StormproofRegistry.Shields, map).Any(s => s.Protecting))
+            List<CompSolarShield> shields = StormproofRegistry.Shields.On(map);
+            for (int i = 0; i < shields.Count; i++)
             {
-                __result = false;
+                if (shields[i].Protecting)
+                {
+                    __result = false;
+                    return;
+                }
             }
         }
     }

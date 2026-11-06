@@ -16,7 +16,8 @@ namespace Stormproof
 
         public override int TransitionTicks => 120;
 
-        public override float TemperatureOffset() => TempOffsetCelsius;
+        // Our own conditions: the stabilizer check lives here, not in a Harmony patch.
+        public override float TemperatureOffset() => HazardProtection.ClimateOffset(this, TempOffsetCelsius);
 
         public override float SkyTargetLerpFactor(Map map) =>
             GameConditionUtility.LerpInOutValue(this, TransitionTicks);
@@ -37,7 +38,7 @@ namespace Stormproof
 
         public override int TransitionTicks => 120;
 
-        public override float TemperatureOffset() => TempOffsetCelsius;
+        public override float TemperatureOffset() => HazardProtection.ClimateOffset(this, TempOffsetCelsius);
 
         public override float SkyTargetLerpFactor(Map map) =>
             GameConditionUtility.LerpInOutValue(this, TransitionTicks);

@@ -9,6 +9,11 @@ namespace Stormproof
         private const int WearInterval = 2500;
         private const float WearChance = 0.08f;
         private const int AlmanacMaxEntries = 80;
+        // 1 = saves before Stormproof 2 (no key written). 2 = Stormproof 2.0.0.
+        // Bump when a saved field changes meaning, and migrate in ExposeData.
+        private const int CurrentSaveSchema = 2;
+
+        private static MapComponent_Stormproof lastComp;
 
         private int wearCursor;
         private WeatherDef lastWeather;
@@ -24,9 +29,38 @@ namespace Stormproof
         private bool lifetimeSeeded;
         private int cleanSinceTick = -1;
         private int longestCleanTicks;
+        private int saveSchemaVersion = CurrentSaveSchema;
 
         public MapComponent_Stormproof(Map map) : base(map)
         {
+        }
+
+        // Map.GetComponent walks every map component; patches on hot paths ask
+        // for the same map over and over, so remember the last answer.
+        public static MapComponent_Stormproof For(Map map)
+        {
+            if (map == null)
+            {
+                return null;
+            }
+            MapComponent_Stormproof last = lastComp;
+            if (last != null && last.map == map)
+            {
+                return last;
+            }
+            last = map.GetComponent<MapComponent_Stormproof>();
+            lastComp = last;
+            return last;
+        }
+
+        public override void MapRemoved()
+        {
+            base.MapRemoved();
+            StormproofRegistry.RemoveMap(map);
+            if (lastComp == this)
+            {
+                lastComp = null;
+            }
         }
 
         public IReadOnlyList<AlmanacEntry> Almanac => almanac;
@@ -77,8 +111,12 @@ namespace Stormproof
         public override void FinalizeInit()
         {
             base.FinalizeInit();
-            lastWeather = map.weatherManager?.curWeather;
-            weatherStartedTick = Find.TickManager.TicksGame;
+            // New map only: a loaded save keeps the open weather entry's real start.
+            if (lastWeather == null)
+            {
+                lastWeather = map.weatherManager?.curWeather;
+                weatherStartedTick = Find.TickManager.TicksGame;
+            }
             if (cleanSinceTick < 0)
             {
                 cleanSinceTick = Find.TickManager.TicksGame;
@@ -334,7 +372,7 @@ namespace Stormproof
                 if (thing.HitPoints > floor)
                 {
                     thing.HitPoints--;
-                    thing.Map.listerBuildingsRepairable.Notify_BuildingTookDamage((Building)thing);
+                    map.listerBuildingsRepairable.Notify_BuildingTookDamage((Building)thing);
                     NoteWear();
                 }
             }
@@ -357,12 +395,12 @@ namespace Stormproof
 
         private static bool IsUnhardenedPowerKit(Thing thing)
         {
-            if (thing.def.defName == "Stormproof_ArmoredConduit"
-                || thing.def.defName == "Stormproof_StormCapacitor")
+            if (thing.def == StormproofDefOf.Stormproof_ArmoredConduit
+                || thing.def == StormproofDefOf.Stormproof_StormCapacitor)
             {
                 return false;
             }
-            if (thing.def.defName == "PowerConduit")
+            if (thing.def == ThingDefOf.PowerConduit)
             {
                 return true;
             }
@@ -377,6 +415,12 @@ namespace Stormproof
         public override void ExposeData()
         {
             base.ExposeData();
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                saveSchemaVersion = CurrentSaveSchema;
+            }
+            // Missing key = a save from before Stormproof 2.
+            Scribe_Values.Look(ref saveSchemaVersion, "stormproofSaveSchema", 1);
             Scribe_Collections.Look(ref almanac, "stormproofAlmanac", LookMode.Deep);
             Scribe_Defs.Look(ref lastWeather, "stormproofAlmanacWeather");
             Scribe_Values.Look(ref weatherStartedTick, "stormproofAlmanacWeatherStart");

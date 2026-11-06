@@ -105,7 +105,7 @@ namespace Stormproof
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             base.PostDeSpawn(map, mode);
-            StormproofRegistry.LoadShedders.Remove(this);
+            StormproofRegistry.LoadShedders.Remove(this, map);
         }
 
         internal float CutoffFraction => cutoffFraction;

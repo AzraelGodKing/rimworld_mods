@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
@@ -21,6 +22,10 @@ namespace Stormproof
 
     public class CompStaticPylon : ThingComp
     {
+        // Filled and emptied inside one TryDrainCapacitors call; nothing it calls
+        // comes back into a pylon.
+        private static readonly List<CompStormCapacitor> banks = new List<CompStormCapacitor>();
+
         private CompPowerTrader powerComp;
         private CompFlickable flickComp;
 
@@ -40,11 +45,22 @@ namespace Stormproof
             flickComp = parent.GetComp<CompFlickable>();
         }
 
-        private float CapacitorCharge =>
-            StormproofRegistry
-                .On(StormproofRegistry.Capacitors, parent.Map)
-                .Where(c => c.Net == powerComp.PowerNet)
-                .Sum(c => c.StoredEnergy);
+        private float CapacitorCharge
+        {
+            get
+            {
+                float sum = 0f;
+                List<CompStormCapacitor> banks = StormproofRegistry.Capacitors.On(parent.Map);
+                for (int i = 0; i < banks.Count; i++)
+                {
+                    if (banks[i].Net == powerComp.PowerNet)
+                    {
+                        sum += banks[i].StoredEnergy;
+                    }
+                }
+                return sum;
+            }
+        }
 
         // Drains `amount` of stored strike energy from capacitor banks on our net.
         // Returns true only if the full amount was available; otherwise drains nothing.
@@ -55,35 +71,28 @@ namespace Stormproof
                 return true;
             }
 
-            var banks = StormproofRegistry
-                .On(StormproofRegistry.Capacitors, parent.Map)
-                .Where(c => c.Net == powerComp.PowerNet)
-                .OrderByDescending(c => c.StoredEnergy)
-                .ToList();
-
-            float available = 0f;
-            foreach (CompStormCapacitor capacitor in banks)
-            {
-                available += capacitor.StoredEnergy;
-                if (available >= amount)
-                {
-                    break;
-                }
-            }
-            if (available < amount)
+            if (CapacitorCharge < amount)
             {
                 return false;
             }
 
-            float remaining = amount;
-            foreach (CompStormCapacitor capacitor in banks)
+            // Fullest bank first; ties keep registry (thing id) order.
+            banks.Clear();
+            List<CompStormCapacitor> all = StormproofRegistry.Capacitors.On(parent.Map);
+            for (int i = 0; i < all.Count; i++)
             {
-                if (remaining <= 0f)
+                if (all[i].Net == powerComp.PowerNet)
                 {
-                    break;
+                    banks.Add(all[i]);
                 }
-                remaining -= capacitor.DrainEnergy(remaining);
             }
+            CapacitorOrder.SortFullestFirst(banks);
+            float remaining = amount;
+            for (int i = 0; i < banks.Count && remaining > 0f; i++)
+            {
+                remaining -= banks[i].DrainEnergy(remaining);
+            }
+            banks.Clear();
             return remaining <= 0.01f;
         }
 

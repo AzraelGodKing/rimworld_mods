@@ -25,6 +25,7 @@ namespace Stormproof
             (CompProperties_FireSuppressor)props;
 
         private bool HighDemand =>
+            StormproofMod.Settings.allowFireSuppressor &&
             parent.Spawned &&
             (HazardProtection.ConditionActive(parent.Map, GameConditionDefOf.Flashstorm) ||
              HazardProtection.ConditionActive(parent.Map, StormproofDefOf.Stormproof_DryLightning));
@@ -84,13 +85,17 @@ namespace Stormproof
                     continue;
                 }
                 fire.Destroy(DestroyMode.Vanish);
-                ledger = ledger ?? map.GetComponent<MapComponent_Stormproof>();
+                ledger = ledger ?? MapComponent_Stormproof.For(map);
                 ledger?.NoteFireSnuffed();
             }
         }
 
         public override string CompInspectStringExtra()
         {
+            if (!StormproofMod.Settings.allowFireSuppressor)
+            {
+                return "Stormproof_DisabledInSettings".Translate();
+            }
             if (!Active)
             {
                 return "Stormproof_OfflineNeedsPower".Translate();

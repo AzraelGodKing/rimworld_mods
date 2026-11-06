@@ -8,5 +8,15 @@ Stormproof 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [*] [b]Weather forecaster[/b] — on 1.7 the weather timer is read directly instead of through reflection. If a game update renames it, forecasts go quiet with one warning.
 [/list]
 
-[i]Build stamp (Player.log): stormproof2-net10[/i]
+[b]Fixed[/b]
+[list]
+[*] [b]Storm caller[/b] — calling a storm during a dry lightning front now breaks the front, so the rain actually comes.
+[*] [b]Ion storm[/b] — the purple sky now shows, and the storm can't hit underground maps.
+[*] [b]Storm spire[/b] — a caught bolt is now drawn on the spire, not where it would have landed.
+[*] [b]Mod settings[/b] — a defender switched off in settings stays at idle power and says so.
+[*] [b]Surge protector[/b] — catches every Zzzt, including the ion storm's and the spire's.
+[*] [b]Almanac[/b] — loading a save no longer resets the current weather's start time, and strikes with no spire count as missed.
+[/list]
+
+[i]Build stamp (Player.log): stormproof2-fixes[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/stormproof.md[/i]

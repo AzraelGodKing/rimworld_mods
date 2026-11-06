@@ -37,7 +37,12 @@ namespace Stormproof
             base.PostSpawnSetup(respawningAfterLoad);
             powerComp = parent.GetComp<CompPowerTrader>();
             flickComp = parent.GetComp<CompFlickable>();
-            lastSeenWeather = parent.Map?.weatherManager.curWeather;
+            // A loaded forecaster keeps its saved weather, so a change during the
+            // save still gets its "lightning incoming" warning.
+            if (!respawningAfterLoad || lastSeenWeather == null)
+            {
+                lastSeenWeather = parent.Map?.weatherManager.curWeather;
+            }
         }
 
         public override void CompTick()
@@ -118,7 +123,7 @@ namespace Stormproof
             {
                 s += "\n" + "Stormproof_WeatherForecaster_AboutToChange".Translate();
             }
-            MapComponent_Stormproof almanac = map.GetComponent<MapComponent_Stormproof>();
+            MapComponent_Stormproof almanac = MapComponent_Stormproof.For(map);
             if (almanac != null && almanac.Almanac.Count > 0
                 && StormproofMod.Settings.enableAlmanac)
             {
@@ -144,7 +149,7 @@ namespace Stormproof
                 icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchReport"),
                 action = () =>
                 {
-                    MapComponent_Stormproof comp = parent.Map.GetComponent<MapComponent_Stormproof>();
+                    MapComponent_Stormproof comp = MapComponent_Stormproof.For(parent.Map);
                     if (comp != null)
                     {
                         Find.WindowStack.Add(new Dialog_Almanac(comp, this));

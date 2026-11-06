@@ -9,40 +9,47 @@ namespace Stormproof
     // one late-game installation hardens the whole colony map.
     public static class HazardProtection
     {
+        // Each defender's Protecting already includes its mod-settings switch.
         public static bool BarrierProtecting(Map map) =>
-            StormproofMod.Settings.allowAtmosphericBarrier
-            && AnyActive(StormproofRegistry.AtmosphericBarriers, map);
+            AnyProtecting(StormproofRegistry.AtmosphericBarriers.On(map));
 
         public static bool ClimateProtecting(Map map) =>
-            StormproofMod.Settings.allowClimateStabilizer
-            && AnyActive(StormproofRegistry.ClimateStabilizers, map);
+            AnyProtecting(StormproofRegistry.ClimateStabilizers.On(map));
 
         public static bool SkyProtecting(Map map) =>
-            StormproofMod.Settings.allowSkyRestorer
-            && AnyActive(StormproofRegistry.SkyRestorers, map);
+            AnyProtecting(StormproofRegistry.SkyRestorers.On(map));
 
         public static bool DroughtProtecting(Map map) =>
-            StormproofMod.Settings.allowDroughtCondenser
-            && AnyActive(StormproofRegistry.DroughtCondensers, map);
+            AnyProtecting(StormproofRegistry.DroughtCondensers.On(map));
 
-        private static bool AnyActive<T>(HashSet<T> set, Map map) where T : ThingComp
+        private static bool AnyProtecting<T>(List<T> defenders) where T : CompHazardDefender
         {
-            if (map == null || set.Count == 0)
+            for (int i = 0; i < defenders.Count; i++)
             {
-                return false;
-            }
-            foreach (T comp in set)
-            {
-                if (comp?.parent == null || !comp.parent.Spawned || comp.parent.Map != map)
-                {
-                    continue;
-                }
-                if (comp is IHazardDefender defender && defender.Protecting)
+                if (defenders[i].Protecting)
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        // Temperature conditions only know their affected maps, not the map
+        // being asked about: one stabilized map is enough to zero the offset.
+        public static float ClimateOffset(GameCondition condition, float offset)
+        {
+            if (offset == 0f || condition == null)
+            {
+                return offset;
+            }
+            foreach (Map map in condition.AffectedMaps)
+            {
+                if (ClimateProtecting(map))
+                {
+                    return 0f;
+                }
+            }
+            return offset;
         }
 
         public static bool ConditionActive(Map map, GameConditionDef def) =>

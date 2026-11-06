@@ -35,7 +35,7 @@
 
   <!-- Storm caller -->
   <Stormproof_StormCaller_Label>Call storm</Stormproof_StormCaller_Label>
-  <Stormproof_StormCaller_Desc>Agitate the ionosphere to summon a rainy thunderstorm over this map. Lightning feeds storm spires and the rain douses fires. Recharges over five days.</Stormproof_StormCaller_Desc>
+  <Stormproof_StormCaller_Desc>Agitate the ionosphere to summon a rainy thunderstorm over this map. Lightning feeds storm spires and the rain douses fires. During a dry lightning front, the call breaks the front first. Recharges over five days.</Stormproof_StormCaller_Desc>
   <Stormproof_StormCaller_NoPower>No power.</Stormproof_StormCaller_NoPower>
   <Stormproof_StormCaller_Discharging>{0} discharges into the sky. A thunderstorm is forming.</Stormproof_StormCaller_Discharging>
   <Stormproof_StormCaller_Charged>Charged: ready to call a storm.</Stormproof_StormCaller_Charged>
@@ -178,5 +178,7 @@
   <Stormproof_Settings_Drought>Drought condenser</Stormproof_Settings_Drought>
   <Stormproof_Settings_SuppressorTip>Off: the building still exists but no longer suppresses its hazard.</Stormproof_Settings_SuppressorTip>
   <Stormproof_Settings_Reset>Reset to defaults</Stormproof_Settings_Reset>
+  <Stormproof_StormCaller_BrokeFront>{0} breaks the dry lightning front. Rain is coming.</Stormproof_StormCaller_BrokeFront>
+  <Stormproof_DisabledInSettings>Disabled in mod settings: idle draw only.</Stormproof_DisabledInSettings>
 
 </LanguageData>

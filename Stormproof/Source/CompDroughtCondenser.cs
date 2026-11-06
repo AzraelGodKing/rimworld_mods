@@ -3,83 +3,37 @@ using Verse;
 
 namespace Stormproof
 {
-    public class CompProperties_DroughtCondenser : CompProperties
+    public class CompProperties_DroughtCondenser : CompProperties_HazardDefender
     {
-        public float activePowerConsumption = 1200f;
-
         public CompProperties_DroughtCondenser()
         {
             compClass = typeof(CompDroughtCondenser);
+            activePowerConsumption = 1200f;
         }
     }
 
-    public class CompDroughtCondenser : ThingComp, IHazardDefender, IHazardPowerRamp
+    public class CompDroughtCondenser : CompHazardDefender
     {
-        private CompPowerTrader powerComp;
-        private CompFlickable flickComp;
-        private CompBreakdownable breakdownComp;
+        // Optional DLC defs are null when the DLC is absent; AnyConditionActive skips nulls.
+        // Built on first use, after DefOfs are bound.
+        private static GameConditionDef[] hazards;
 
-        public CompProperties_DroughtCondenser Props =>
-            (CompProperties_DroughtCondenser)props;
-
-        private bool HazardActive =>
-            parent.Spawned &&
-            HazardProtection.AnyConditionActive(
-                parent.Map,
+        protected override GameConditionDef[] Hazards => hazards ?? (hazards = new[]
+            {
                 StormproofDefOf.Drought,
-                StormproofDefOf.DroughtInitial);
+                StormproofDefOf.DroughtInitial
+            });
 
-        public float ForecastDrawWatts =>
-            HazardActive ? Props.activePowerConsumption : (powerComp?.Props.PowerConsumption ?? 0f);
+        protected override bool AllowedInSettings => StormproofMod.Settings.allowDroughtCondenser;
 
-        public bool Protecting =>
-            HazardActive &&
-            !parent.Destroyed &&
-            (flickComp == null || flickComp.SwitchIsOn) &&
-            (breakdownComp == null || !breakdownComp.BrokenDown) &&
-            powerComp != null &&
-            powerComp.PowerNet != null &&
-            powerComp.PowerNet.CurrentStoredEnergy() > 1f;
+        protected override string StandbyKey => "Stormproof_DroughtCondenser_Standby";
 
-        public override void PostSpawnSetup(bool respawningAfterLoad)
-        {
-            base.PostSpawnSetup(respawningAfterLoad);
-            powerComp = parent.GetComp<CompPowerTrader>();
-            flickComp = parent.GetComp<CompFlickable>();
-            breakdownComp = parent.GetComp<CompBreakdownable>();
-            StormproofRegistry.DroughtCondensers.Add(this);
-        }
+        protected override string ProtectingKey => "Stormproof_DroughtCondenser_Protecting";
 
-        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
-        {
-            base.PostDeSpawn(map, mode);
-            StormproofRegistry.DroughtCondensers.Remove(this);
-        }
+        protected override string DownKey => "Stormproof_DroughtCondenser_Down";
 
-        public override void CompTick()
-        {
-            base.CompTick();
-            if (!parent.IsHashIntervalTick(30) || powerComp == null)
-            {
-                return;
-            }
-            float wanted = HazardActive
-                ? Props.activePowerConsumption
-                : powerComp.Props.PowerConsumption;
-            powerComp.PowerOutput = -wanted;
-        }
+        protected override void Register() => StormproofRegistry.DroughtCondensers.Add(this);
 
-        public override string CompInspectStringExtra()
-        {
-            if (!HazardActive)
-            {
-                return "Stormproof_DroughtCondenser_Standby".Translate(
-                    Props.activePowerConsumption.ToString("F0"));
-            }
-            return Protecting
-                ? "Stormproof_DroughtCondenser_Protecting".Translate(
-                    Props.activePowerConsumption.ToString("F0"))
-                : "Stormproof_DroughtCondenser_Down".Translate();
-        }
+        protected override void Unregister(Map map) => StormproofRegistry.DroughtCondensers.Remove(this, map);
     }
 }

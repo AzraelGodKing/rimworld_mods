@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using AzraelCommon;
 using HarmonyLib;
 using RimWorld;
@@ -33,6 +32,8 @@ namespace Stormproof
 
         public static ResearchProjectDef Stormproof_PerfectGrounding;
         public static ThingDef Stormproof_Fulgurite;
+        public static ThingDef Stormproof_ArmoredConduit;
+        public static ThingDef Stormproof_StormCapacitor;
 
         public static WeatherDef RainyThunderstorm;
         public static WeatherDef DryThunderstorm;
@@ -51,6 +52,7 @@ namespace Stormproof
         public static IncidentDef Stormproof_PolarFront;
         public static IncidentDef Stormproof_ToxicSurge;
         public static IncidentDef Stormproof_DryLightning;
+        public static IncidentDef ShortCircuit;
 
         internal static IncidentDef[] All => new[]
         {
@@ -72,23 +74,84 @@ namespace Stormproof
             SafePatchAll.Apply(new Harmony("azraelgodking.stormproof"), "[Stormproof]");
             StormproofSettings.CaptureOriginalChances();
             StormproofMod.Settings.ApplyIncidentChances();
-            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "stormproof2-net10"));
+            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "stormproof2-fixes"));
         }
     }
 
-    // Central registry of live comps so patches don't have to scan the map.
+    // Live comps by map, so patches never scan a map or another map's comps.
+    // Each map's list is kept sorted by thingIDNumber: the same order on every
+    // machine and every load, so tie-breaks (which spire, which protector)
+    // don't depend on hash order. Buckets are dropped when a map is removed.
+    public sealed class CompRegistry<T> where T : ThingComp
+    {
+        private static readonly List<T> Empty = new List<T>();
+        private readonly Dictionary<Map, List<T>> byMap = new Dictionary<Map, List<T>>();
+
+        public void Add(T comp)
+        {
+            Map map = comp?.parent?.Map;
+            if (map == null)
+            {
+                return;
+            }
+            if (!byMap.TryGetValue(map, out List<T> list))
+            {
+                list = new List<T>();
+                byMap[map] = list;
+            }
+            if (list.Contains(comp))
+            {
+                return;
+            }
+            int id = comp.parent.thingIDNumber;
+            int at = list.Count;
+            while (at > 0 && list[at - 1].parent.thingIDNumber > id)
+            {
+                at--;
+            }
+            list.Insert(at, comp);
+        }
+
+        public void Remove(T comp, Map map)
+        {
+            if (map != null && byMap.TryGetValue(map, out List<T> list))
+            {
+                list.Remove(comp);
+            }
+        }
+
+        // Read-only view; iterate by index. Never null.
+        public List<T> On(Map map)
+        {
+            return map != null && byMap.TryGetValue(map, out List<T> list) ? list : Empty;
+        }
+
+        public void RemoveMap(Map map)
+        {
+            if (map != null)
+            {
+                byMap.Remove(map);
+            }
+        }
+
+        public void Clear()
+        {
+            byMap.Clear();
+        }
+    }
+
     public static class StormproofRegistry
     {
-        public static readonly HashSet<CompSolarShield> Shields = new HashSet<CompSolarShield>();
-        public static readonly HashSet<CompSurgeProtector> SurgeProtectors = new HashSet<CompSurgeProtector>();
-        public static readonly HashSet<CompStormSpire> Spires = new HashSet<CompStormSpire>();
-        public static readonly HashSet<CompEmpDampener> Dampeners = new HashSet<CompEmpDampener>();
-        public static readonly HashSet<CompStormCapacitor> Capacitors = new HashSet<CompStormCapacitor>();
-        public static readonly HashSet<CompAtmosphericBarrier> AtmosphericBarriers = new HashSet<CompAtmosphericBarrier>();
-        public static readonly HashSet<CompClimateStabilizer> ClimateStabilizers = new HashSet<CompClimateStabilizer>();
-        public static readonly HashSet<CompSkyRestorer> SkyRestorers = new HashSet<CompSkyRestorer>();
-        public static readonly HashSet<CompDroughtCondenser> DroughtCondensers = new HashSet<CompDroughtCondenser>();
-        public static readonly HashSet<CompLoadShedder> LoadShedders = new HashSet<CompLoadShedder>();
+        public static readonly CompRegistry<CompSolarShield> Shields = new CompRegistry<CompSolarShield>();
+        public static readonly CompRegistry<CompSurgeProtector> SurgeProtectors = new CompRegistry<CompSurgeProtector>();
+        public static readonly CompRegistry<CompStormSpire> Spires = new CompRegistry<CompStormSpire>();
+        public static readonly CompRegistry<CompEmpDampener> Dampeners = new CompRegistry<CompEmpDampener>();
+        public static readonly CompRegistry<CompStormCapacitor> Capacitors = new CompRegistry<CompStormCapacitor>();
+        public static readonly CompRegistry<CompAtmosphericBarrier> AtmosphericBarriers = new CompRegistry<CompAtmosphericBarrier>();
+        public static readonly CompRegistry<CompClimateStabilizer> ClimateStabilizers = new CompRegistry<CompClimateStabilizer>();
+        public static readonly CompRegistry<CompSkyRestorer> SkyRestorers = new CompRegistry<CompSkyRestorer>();
+        public static readonly CompRegistry<CompDroughtCondenser> DroughtCondensers = new CompRegistry<CompDroughtCondenser>();
+        public static readonly CompRegistry<CompLoadShedder> LoadShedders = new CompRegistry<CompLoadShedder>();
 
         public static void Clear()
         {
@@ -104,9 +167,20 @@ namespace Stormproof
             DroughtCondensers.Clear();
         }
 
-        public static IEnumerable<T> On<T>(HashSet<T> set, Map map) where T : ThingComp
+        // Temporary maps (quests, caravan ambushes) leave without despawning
+        // every building, so drop their buckets wholesale.
+        public static void RemoveMap(Map map)
         {
-            return set.Where(c => c.parent != null && c.parent.Spawned && c.parent.Map == map);
+            LoadShedders.RemoveMap(map);
+            Shields.RemoveMap(map);
+            SurgeProtectors.RemoveMap(map);
+            Spires.RemoveMap(map);
+            Dampeners.RemoveMap(map);
+            Capacitors.RemoveMap(map);
+            AtmosphericBarriers.RemoveMap(map);
+            ClimateStabilizers.RemoveMap(map);
+            SkyRestorers.RemoveMap(map);
+            DroughtCondensers.RemoveMap(map);
         }
     }
 }

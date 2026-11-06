@@ -3,85 +3,39 @@ using Verse;
 
 namespace Stormproof
 {
-    public class CompProperties_AtmosphericBarrier : CompProperties
+    public class CompProperties_AtmosphericBarrier : CompProperties_HazardDefender
     {
-        public float activePowerConsumption = 2000f;
-
         public CompProperties_AtmosphericBarrier()
         {
             compClass = typeof(CompAtmosphericBarrier);
+            activePowerConsumption = 2000f;
         }
     }
 
-    public class CompAtmosphericBarrier : ThingComp, IHazardDefender, IHazardPowerRamp
+    public class CompAtmosphericBarrier : CompHazardDefender
     {
-        private CompPowerTrader powerComp;
-        private CompFlickable flickComp;
-        private CompBreakdownable breakdownComp;
+        // Optional DLC defs are null when the DLC is absent; AnyConditionActive skips nulls.
+        // Built on first use, after DefOfs are bound.
+        private static GameConditionDef[] hazards;
 
-        public CompProperties_AtmosphericBarrier Props =>
-            (CompProperties_AtmosphericBarrier)props;
-
-        private bool HazardActive =>
-            parent.Spawned &&
-            HazardProtection.AnyConditionActive(
-                parent.Map,
+        protected override GameConditionDef[] Hazards => hazards ?? (hazards = new[]
+            {
                 GameConditionDefOf.ToxicFallout,
                 StormproofDefOf.Stormproof_ToxicSurge,
                 StormproofDefOf.NoxiousHaze,
-                StormproofDefOf.VolcanicAsh);
+                StormproofDefOf.VolcanicAsh
+            });
 
-        public float ForecastDrawWatts =>
-            HazardActive ? Props.activePowerConsumption : (powerComp?.Props.PowerConsumption ?? 0f);
+        protected override bool AllowedInSettings => StormproofMod.Settings.allowAtmosphericBarrier;
 
-        public bool Protecting =>
-            HazardActive &&
-            !parent.Destroyed &&
-            (flickComp == null || flickComp.SwitchIsOn) &&
-            (breakdownComp == null || !breakdownComp.BrokenDown) &&
-            powerComp != null &&
-            powerComp.PowerNet != null &&
-            powerComp.PowerNet.CurrentStoredEnergy() > 1f;
+        protected override string StandbyKey => "Stormproof_AtmosphericBarrier_Standby";
 
-        public override void PostSpawnSetup(bool respawningAfterLoad)
-        {
-            base.PostSpawnSetup(respawningAfterLoad);
-            powerComp = parent.GetComp<CompPowerTrader>();
-            flickComp = parent.GetComp<CompFlickable>();
-            breakdownComp = parent.GetComp<CompBreakdownable>();
-            StormproofRegistry.AtmosphericBarriers.Add(this);
-        }
+        protected override string ProtectingKey => "Stormproof_AtmosphericBarrier_Protecting";
 
-        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
-        {
-            base.PostDeSpawn(map, mode);
-            StormproofRegistry.AtmosphericBarriers.Remove(this);
-        }
+        protected override string DownKey => "Stormproof_AtmosphericBarrier_Down";
 
-        public override void CompTick()
-        {
-            base.CompTick();
-            if (!parent.IsHashIntervalTick(30) || powerComp == null)
-            {
-                return;
-            }
-            float wanted = HazardActive
-                ? Props.activePowerConsumption
-                : powerComp.Props.PowerConsumption;
-            powerComp.PowerOutput = -wanted;
-        }
+        protected override void Register() => StormproofRegistry.AtmosphericBarriers.Add(this);
 
-        public override string CompInspectStringExtra()
-        {
-            if (!HazardActive)
-            {
-                return "Stormproof_AtmosphericBarrier_Standby".Translate(
-                    Props.activePowerConsumption.ToString("F0"));
-            }
-            return Protecting
-                ? "Stormproof_AtmosphericBarrier_Protecting".Translate(
-                    Props.activePowerConsumption.ToString("F0"))
-                : "Stormproof_AtmosphericBarrier_Down".Translate();
-        }
+        protected override void Unregister(Map map) => StormproofRegistry.AtmosphericBarriers.Remove(this, map);
     }
 }

@@ -58,7 +58,17 @@ namespace Stormproof
         {
             Map map = parent.Map;
             lastCallTick = Find.TickManager.TicksGame;
-            map.GetComponent<MapComponent_Stormproof>()?.QueueStormCall(Props.stormDurationTicks);
+            // A dry lightning front forces dry weather and blocks rain, so it would
+            // undo the call on the next weather tick. The call breaks the front.
+            GameCondition front = map.gameConditionManager.GetActiveCondition(StormproofDefOf.Stormproof_DryLightning);
+            if (front != null)
+            {
+                front.End();
+                Messages.Message(
+                    "Stormproof_StormCaller_BrokeFront".Translate(parent.LabelShort),
+                    parent, MessageTypeDefOf.PositiveEvent);
+            }
+            MapComponent_Stormproof.For(map)?.QueueStormCall(Props.stormDurationTicks);
             FleckMaker.ThrowLightningGlow(parent.DrawPos, map, 3f);
             Messages.Message(
                 "Stormproof_StormCaller_Discharging".Translate(parent.LabelShort),
