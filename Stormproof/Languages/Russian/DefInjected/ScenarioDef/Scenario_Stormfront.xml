@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Stormproof_Stormfront.label>Штормовой фронт</Stormproof_Stormfront.label>
+  <Stormproof_Stormfront.description>Трое поселенцев окапываются там, где погода никогда не прощает. Стройте укрытия, заземление и снаряжение, которые переживут ионные штормы, тепловые купола и полярные фронты.\n\nБлокирует рассказчика Azrael, если также загружен Homesteader.</Stormproof_Stormfront.description>
+  <Stormproof_Stormfront.scenario.summary>Трое поселенцев под суровой погодой. Исследования Stormproof. Azrael при наличии Homesteader.</Stormproof_Stormfront.scenario.summary>
+  <!-- List items are addressed by their ScenPartDef handle, so the optional
+       Odyssey and Homesteader parts before it can't shift the index. -->
+  <Stormproof_Stormfront.scenario.parts.GameStartDialog.text>Небо уже неправильное.
+
+Молнии ходят по хребтам. Жара прижмёт колонию к земле. Холод украдёт ночь. Если строить кое-как, погода напишет вам конец.
+
+Поднимите стены. Заземлите провода. Переждите фронт.</Stormproof_Stormfront.scenario.parts.GameStartDialog.text>
+
+</LanguageData>

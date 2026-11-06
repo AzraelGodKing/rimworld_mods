@@ -35,6 +35,17 @@ EXPECTED_LANGUAGES = ("ChineseSimplified", "Russian")
 # Mods that may ship English-only. Empty after AZR-134.
 ENGLISH_ONLY_MODS: set[str] = set()
 
+# Mods whose every translatable def field must be injected in every shipped
+# language (not just a matching file). Add a mod once its translations are complete.
+FULL_DEFINJECTED_MODS = ("Stormproof",)
+DEF_TEXT_FIELDS = (
+    "label", "description", "endMessage", "letterLabel", "letterText",
+    "generalTitle", "generalDescription",
+)
+
+# Mods whose own GameConditionDefs must say whether they can run underground.
+ALLOW_UNDERGROUND_MODS = {"Stormproof": "Stormproof_"}
+
 
 def skip_dir(path: Path) -> bool:
     return any(part in SKIP_DIR_NAMES for part in path.parts)
@@ -158,6 +169,88 @@ def check_definjected_parity(mods: list[Path]) -> list[str]:
                 )
     return errors
 
+
+
+def definjected_tags(lang_dir: Path) -> set[str]:
+    tags: set[str] = set()
+    injected = lang_dir / "DefInjected"
+    if not injected.is_dir():
+        return tags
+    for xml in injected.rglob("*.xml"):
+        try:
+            root = ET.parse(xml).getroot()
+        except ET.ParseError:
+            continue
+        for child in list(root):
+            if isinstance(child.tag, str):
+                tags.add(child.tag)
+    return tags
+
+
+def expected_def_keys(mod: Path) -> set[str]:
+    """defName.field keys an injection must cover, read from the mod's own Defs."""
+    keys: set[str] = set()
+    for xml in (mod / "Defs").rglob("*.xml") if (mod / "Defs").is_dir() else []:
+        try:
+            root = ET.parse(xml).getroot()
+        except ET.ParseError:
+            continue
+        for d in list(root):
+            name = d.findtext("defName")
+            if not name:
+                continue
+            for field in DEF_TEXT_FIELDS:
+                if (d.findtext(field) or "").strip():
+                    keys.add(f"{name}.{field}")
+            if d.tag == "ScenarioDef":
+                scen = d.find("scenario")
+                if scen is not None:
+                    if (scen.findtext("summary") or "").strip():
+                        keys.add(f"{name}.scenario.summary")
+                    for part in scen.iter("li"):
+                        handle = part.findtext("def")
+                        if handle and (part.findtext("text") or "").strip():
+                            keys.add(f"{name}.scenario.parts.{handle}.text")
+    return keys
+
+
+def check_definjected_coverage(mods: list[Path]) -> list[str]:
+    errors = []
+    for mod in mods:
+        if mod.name not in FULL_DEFINJECTED_MODS:
+            continue
+        expected = expected_def_keys(mod)
+        for lang in EXPECTED_LANGUAGES:
+            have = definjected_tags(mod / "Languages" / lang)
+            missing = sorted(expected - have)
+            if missing:
+                preview = ", ".join(missing[:10])
+                more = f" (+{len(missing) - 10} more)" if len(missing) > 10 else ""
+                errors.append(
+                    f"DefInjected coverage: {mod.name}/Languages/{lang} missing "
+                    f"{len(missing)} key(s): {preview}{more}"
+                )
+    return errors
+
+
+def check_allow_underground(mods: list[Path]) -> list[str]:
+    errors = []
+    for mod in mods:
+        prefix = ALLOW_UNDERGROUND_MODS.get(mod.name)
+        if not prefix or not (mod / "Defs").is_dir():
+            continue
+        for xml in (mod / "Defs").rglob("*.xml"):
+            try:
+                root = ET.parse(xml).getroot()
+            except ET.ParseError:
+                continue
+            for d in root.iter("GameConditionDef"):
+                name = d.findtext("defName") or ""
+                if name.startswith(prefix) and d.find("allowUnderground") is None:
+                    errors.append(
+                        f"allowUnderground missing: {xml.relative_to(REPO).as_posix()} [{name}]"
+                    )
+    return errors
 
 def check_expected_languages(mods: list[Path]) -> list[str]:
     errors = []
@@ -292,6 +385,8 @@ def main() -> int:
     errors.extend(check_expected_languages(mods))
     errors.extend(check_keyed_parity(mods))
     errors.extend(check_definjected_parity(mods))
+    errors.extend(check_definjected_coverage(mods))
+    errors.extend(check_allow_underground(mods))
     errors.extend(check_texpaths(mods))
     errors.extend(check_changelog_links())
 
