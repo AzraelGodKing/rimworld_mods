@@ -35,7 +35,7 @@
 
   <!-- Storm caller -->
   <Stormproof_StormCaller_Label>Вызвать шторм</Stormproof_StormCaller_Label>
-  <Stormproof_StormCaller_Desc>Возмутите ионосферу, чтобы вызвать дождевую грозу над картой. Молнии питают штормовые шпили, а дождь тушит пожары. Во время сухого грозового фронта вызов сначала разрушает фронт. Перезарядка — пять дней.</Stormproof_StormCaller_Desc>
+  <Stormproof_StormCaller_Desc>Возмутите ионосферу, чтобы вызвать дождевую грозу над картой. Молнии питают штормовые шпили, а дождь тушит пожары. Во время сухого грозового фронта вызов сначала разрушает фронт. Время перезарядки и длительность шторма задаются в настройках мода.</Stormproof_StormCaller_Desc>
   <Stormproof_StormCaller_NoPower>Нет энергии.</Stormproof_StormCaller_NoPower>
   <Stormproof_StormCaller_Discharging>{0} разряжается в небо. Формируется гроза.</Stormproof_StormCaller_Discharging>
   <Stormproof_StormCaller_Charged>Заряжен: готов вызвать шторм.</Stormproof_StormCaller_Charged>
@@ -71,7 +71,7 @@
   <Stormproof_LoadShedder_HoldAuto>Удерж.: авто</Stormproof_LoadShedder_HoldAuto>
   <Stormproof_LoadShedder_HoldRun>Удерж.: вкл</Stormproof_LoadShedder_HoldRun>
   <Stormproof_LoadShedder_HoldShed>Удерж.: откл</Stormproof_LoadShedder_HoldShed>
-  <Stormproof_LoadShedder_HoldDesc>Один клик. Авто — по расписанию. Вкл — подсеть всегда. Откл — всегда разомкнуто. Порог батарей всё равно первый.</Stormproof_LoadShedder_HoldDesc>
+  <Stormproof_LoadShedder_HoldDesc>Один клик. Авто — по расписанию. Умно — как авто, но подключает подсеть, только если метеорологический пульт в питающей сети обещает заряд выше порога на 8 часов вперёд. Вкл — подсеть всегда. Откл — всегда разомкнуто. Порог батарей срабатывает первым.</Stormproof_LoadShedder_HoldDesc>
   <Stormproof_LoadShedder_HourShed>откл</Stormproof_LoadShedder_HourShed>
   <Stormproof_LoadShedder_HourRun>вкл</Stormproof_LoadShedder_HourRun>
   <Stormproof_LoadShedder_ScheduleStatus>Этот час: {0}</Stormproof_LoadShedder_ScheduleStatus>
@@ -180,5 +180,17 @@
   <Stormproof_StormCaller_BrokeFront>{0} разрушает сухой грозовой фронт. Скоро пойдёт дождь.</Stormproof_StormCaller_BrokeFront>
   <Stormproof_DisabledInSettings>Отключено в настройках мода: только холостое потребление.</Stormproof_DisabledInSettings>
   <Stormproof_Brownout_StatPart>Просадка сети ({0}): x{1}</Stormproof_Brownout_StatPart>
+  <Stormproof_Settings_WarnUndefended>Предупреждать о шторме над незащищённой сетью</Stormproof_Settings_WarnUndefended>
+  <Stormproof_Settings_WarnUndefendedTip>Один раз на карту: первая гроза над колонией с электричеством, но без штормового шпиля и ограничителя скачков, покажет напоминание.</Stormproof_Settings_WarnUndefendedTip>
+  <Stormproof_Settings_StormCallerCooldown>Перезарядка вызывателя шторма: {0} дн.</Stormproof_Settings_StormCallerCooldown>
+  <Stormproof_Settings_StormCallerHours>Вызванный шторм длится: {0} ч</Stormproof_Settings_StormCallerHours>
+  <Stormproof_Settings_DampenerMechs>ЭМИ-гаситель также защищает механоидов колонии</Stormproof_Settings_DampenerMechs>
+  <Stormproof_Settings_DampenerMechsTip>Ваши механоиды в поле работающего ЭМИ-гасителя не оглушаются ЭМИ. Вражеские механоиды не защищаются никогда.</Stormproof_Settings_DampenerMechsTip>
+  <Stormproof_UndefendedGrid_Research>Над {0} гроза, а у электросети нет защиты от молний. Изучите защиту от штормов, чтобы строить штормовые шпили и ограничители скачков.</Stormproof_UndefendedGrid_Research>
+  <Stormproof_UndefendedGrid_Build>Над {0} гроза, а у электросети нет защиты от молний. Штормовой шпиль ловит ближайшие разряды; ограничитель скачков поглощает короткие замыкания.</Stormproof_UndefendedGrid_Build>
+  <Stormproof_Almanac_LedgerDefence>Разрядов пилона {0}. Всплесков ЭМИ {1}.</Stormproof_Almanac_LedgerDefence>
+  <Stormproof_Almanac_LifetimeDefence>Итого: разрядов пилона {0}. Всплесков ЭМИ {1}.</Stormproof_Almanac_LifetimeDefence>
+  <Stormproof_LoadShedder_HoldSmart>Удерж.: умно</Stormproof_LoadShedder_HoldSmart>
+  <Stormproof_LoadShedder_SmartHolding>Умное удержание: при подключении сейчас порог сработает через {0}. Остаётся отключено.</Stormproof_LoadShedder_SmartHolding>
 
 </LanguageData>

@@ -8,7 +8,7 @@
   <Stormproof_SurgeProtector.label>ограничитель скачков</Stormproof_SurgeProtector.label>
   <Stormproof_SurgeProtector.description>Тяжёлый шкаф автомата, поглощающий одно короткое замыкание «Zzzt!» и спасающий батареи с кабелями. Поглощение слегка повреждает его и ставит на суточную перезарядку. На карту достаточно одного — но запасной не помешает.</Stormproof_SurgeProtector.description>
   <Stormproof_EmpDampener.label>ЭМИ-гаситель</Stormproof_EmpDampener.label>
-  <Stormproof_EmpDampener.description>Создаёт гасящее поле, защищающее здания колонии в радиусе от ЭМИ-оглушения. Турели продолжают стрелять сквозь залпы ЭМИ-миномётов и гранаты. Не защищает пешек и механоидов — только здания.</Stormproof_EmpDampener.description>
+  <Stormproof_EmpDampener.description>Создаёт гасящее поле, защищающее здания колонии в радиусе от ЭМИ-оглушения. Турели продолжают стрелять сквозь залпы ЭМИ-миномётов и гранаты. Не защищает пешек. С Biotech настройка мода распространяет защиту на ваших механоидов.</Stormproof_EmpDampener.description>
   <Stormproof_ArmoredConduit.label>бронированный кабель</Stormproof_ArmoredConduit.label>
   <Stormproof_ArmoredConduit.description>Силовой кабель в клёпаной стальной оболочке. Негорючий и куда прочнее обычного — проводка для киллбоксов и внешних стен.</Stormproof_ArmoredConduit.description>
   <Stormproof_StormCapacitor.label>банк штормовых конденсаторов</Stormproof_StormCapacitor.label>
@@ -20,7 +20,7 @@
   <Stormproof_FalloutScrubber.label>очиститель осадков</Stormproof_FalloutScrubber.label>
   <Stormproof_FalloutScrubber.description>Промышленный воздушный фильтр, вытягивающий токсины из воздуха закрытой комнаты. Пешки и животные в укрытии медленно сбрасывают токсичное накопление — быстрее, чем тяжёлые осадки его добавляют. На улице бесполезен: открытое небо не очистить.</Stormproof_FalloutScrubber.description>
   <Stormproof_StormCaller.label>вызыватель шторма</Stormproof_StormCaller.label>
-  <Stormproof_StormCaller.description>Ионосферный возмутитель, стреляющий заряженными частицами в верхнюю атмосферу и по команде натягивающий дождевую грозу над картой. Молнии питают штормовые шпили, а дождь тушит пожары. Перезарядка — пять дней: он дополняет сеть, а не заменяет её.</Stormproof_StormCaller.description>
+  <Stormproof_StormCaller.description>Ионосферный возмутитель, стреляющий заряженными частицами в верхнюю атмосферу и по команде натягивающий дождевую грозу над картой. Молнии питают штормовые шпили, а дождь тушит пожары. Перезарядка — пять дней по умолчанию (меняется в настройках мода): он дополняет сеть, а не заменяет её.</Stormproof_StormCaller.description>
   <Stormproof_LoadShedder.label>сбрасыватель нагрузки</Stormproof_LoadShedder.label>
   <Stormproof_LoadShedder.description>Автоматический выключатель. Подключите его между основной сетью и низкоприоритетной подсетью (лампы, развлечения, запасные охладители). Пока батареи стороны питания держат заряд, он передаёт ток как кабель; когда они падают ниже порога, он размыкается и отключает подсеть — морозильник переживает телевизор. Сам подключается снова, когда батареи восстанавливаются. Порог отключения настраивается.</Stormproof_LoadShedder.description>
   <Stormproof_GridMonitor.label>пульт мониторинга сети</Stormproof_GridMonitor.label>

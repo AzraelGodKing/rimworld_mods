@@ -30,6 +30,7 @@ namespace Stormproof
         private int cleanSinceTick = -1;
         private int longestCleanTicks;
         private int saveSchemaVersion = CurrentSaveSchema;
+        private bool warnedUndefended;
 
         // Per-tick answers for HazardProtection; derived state, not saved.
         internal readonly TickMemo barrierMemo = new TickMemo();
@@ -146,6 +147,7 @@ namespace Stormproof
         {
             TickAlmanac();
             TickWear();
+            CheckUndefended();
             DrainPendingStorm();
             if (Find.TickManager.TicksGame % 60 == 0)
             {
@@ -290,6 +292,28 @@ namespace Stormproof
             }
         }
 
+        // Static pylon shocks on raiders (AZR-670).
+        public void NotePylonZap()
+        {
+            AlmanacEntry e = LiveLedger();
+            if (e != null)
+            {
+                e.pylonZaps++;
+                lifetime.pylonZaps++;
+            }
+        }
+
+        // Ion storm EMP bursts that hit this map (AZR-670).
+        public void NoteEmpBurst()
+        {
+            AlmanacEntry e = LiveLedger();
+            if (e != null)
+            {
+                e.empBursts++;
+                lifetime.empBursts++;
+            }
+        }
+
         public void NoteWear()
         {
             AlmanacEntry e = LiveLedger();
@@ -382,6 +406,47 @@ namespace Stormproof
             wearCursor = i;
         }
 
+        // AZR-672: once per map, nudge a powered colony that meets its first
+        // lightning with no storm spire and no surge protector.
+        private void CheckUndefended()
+        {
+            if (warnedUndefended || !StormproofMod.Settings.warnUndefendedGrid
+                || !map.IsHashIntervalTick(250) || !map.IsPlayerHome)
+            {
+                return;
+            }
+            bool lightning = CompWeatherForecaster.BringsLightning(map.weatherManager.curWeather)
+                || HazardProtection.ConditionActive(map, StormproofDefOf.Stormproof_DryLightning);
+            if (!lightning
+                || StormproofRegistry.Spires.On(map).Count > 0
+                || StormproofRegistry.SurgeProtectors.On(map).Count > 0
+                || !HasPoweredColonyBuilding())
+            {
+                return;
+            }
+            warnedUndefended = true;
+            ResearchProjectDef research = StormproofDefOf.Stormproof_StormProtection;
+            string key = research != null && !research.IsFinished
+                ? "Stormproof_UndefendedGrid_Research"
+                : "Stormproof_UndefendedGrid_Build";
+            Messages.Message(key.Translate(map.Parent?.LabelCap ?? map.ToString()),
+                MessageTypeDefOf.CautionInput);
+        }
+
+        private bool HasPoweredColonyBuilding()
+        {
+            List<Building> buildings = map.listerBuildings.allBuildingsColonist;
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                CompPowerTrader power = buildings[i].GetComp<CompPowerTrader>();
+                if (power != null && power.PowerOn && power.PowerOutput < 0f)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private bool Storming()
         {
             WeatherDef weather = map.weatherManager.curWeather;
@@ -438,6 +503,7 @@ namespace Stormproof
             Scribe_Values.Look(ref lifetimeSeeded, "stormproofAlmanacLifetimeSeeded");
             Scribe_Values.Look(ref cleanSinceTick, "stormproofCleanSinceTick", -1);
             Scribe_Values.Look(ref longestCleanTicks, "stormproofLongestCleanTicks");
+            Scribe_Values.Look(ref warnedUndefended, "stormproofWarnedUndefended");
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 if (almanac == null)
@@ -466,13 +532,19 @@ namespace Stormproof
         public int zzztSuffered;
         public int firesSnuffed;
         public int wearHits;
+        public int pylonZaps;
+        public int empBursts;
 
         public bool Any =>
-            strikesCaught + strikesMissed + zzztAbsorbed + zzztSuffered + firesSnuffed + wearHits > 0;
+            strikesCaught + strikesMissed + zzztAbsorbed + zzztSuffered + firesSnuffed + wearHits
+            + pylonZaps + empBursts > 0;
+
+        public bool AnyDefence => pylonZaps + empBursts > 0;
 
         public void SeedFrom(List<AlmanacEntry> entries)
         {
             strikesCaught = strikesMissed = zzztAbsorbed = zzztSuffered = firesSnuffed = wearHits = 0;
+            pylonZaps = empBursts = 0;
             if (entries == null)
             {
                 return;
@@ -490,6 +562,8 @@ namespace Stormproof
                 zzztSuffered += e.zzztSuffered;
                 firesSnuffed += e.firesSnuffed;
                 wearHits += e.wearHits;
+                pylonZaps += e.pylonZaps;
+                empBursts += e.empBursts;
             }
         }
 
@@ -501,6 +575,8 @@ namespace Stormproof
             Scribe_Values.Look(ref zzztSuffered, "zzztSuffered");
             Scribe_Values.Look(ref firesSnuffed, "firesSnuffed");
             Scribe_Values.Look(ref wearHits, "wearHits");
+            Scribe_Values.Look(ref pylonZaps, "pylonZaps");
+            Scribe_Values.Look(ref empBursts, "empBursts");
         }
     }
 
@@ -518,9 +594,13 @@ namespace Stormproof
         public int zzztSuffered;
         public int firesSnuffed;
         public int wearHits;
+        public int pylonZaps;
+        public int empBursts;
 
         public bool HasLedger =>
             strikesCaught + strikesMissed + zzztAbsorbed + zzztSuffered + firesSnuffed + wearHits > 0;
+
+        public bool HasDefenceLedger => pylonZaps + empBursts > 0;
 
         public void ExposeData()
         {
@@ -536,6 +616,8 @@ namespace Stormproof
             Scribe_Values.Look(ref zzztSuffered, "zzztSuffered");
             Scribe_Values.Look(ref firesSnuffed, "firesSnuffed");
             Scribe_Values.Look(ref wearHits, "wearHits");
+            Scribe_Values.Look(ref pylonZaps, "pylonZaps");
+            Scribe_Values.Look(ref empBursts, "empBursts");
         }
     }
 }

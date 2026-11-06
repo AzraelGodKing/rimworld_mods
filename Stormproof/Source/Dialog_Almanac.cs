@@ -29,6 +29,26 @@ namespace Stormproof
 
         public override Vector2 InitialSize => new Vector2(640f, 560f);
 
+        // Shared by the weather forecaster and the grid monitor (AZR-716). The
+        // sparkline needs a forecaster; without one the dialog shows the log only.
+        public static Command_Action OpenGizmo(Map map, CompWeatherForecaster forecaster)
+        {
+            return new Command_Action
+            {
+                defaultLabel = "Stormproof_Almanac_Open".Translate(),
+                defaultDesc = "Stormproof_Almanac_OpenDesc".Translate(),
+                icon = StormproofTex.Almanac,
+                action = () =>
+                {
+                    MapComponent_Stormproof comp = MapComponent_Stormproof.For(map);
+                    if (comp != null)
+                    {
+                        Find.WindowStack.Add(new Dialog_Almanac(comp, forecaster));
+                    }
+                }
+            };
+        }
+
         public override void DoWindowContents(Rect inRect)
         {
             Text.Font = GameFont.Medium;
@@ -57,6 +77,12 @@ namespace Stormproof
                         t.zzztAbsorbed, t.zzztSuffered,
                         t.firesSnuffed, t.wearHits));
                 headerH += 26f;
+                if (t.AnyDefence)
+                {
+                    Widgets.Label(new Rect(inRect.x, inRect.y + 36f + headerH, inRect.width, 24f),
+                        "Stormproof_Almanac_LifetimeDefence".Translate(t.pylonZaps, t.empBursts));
+                    headerH += 26f;
+                }
             }
             if (component.LongestCleanTicks > 0)
             {
@@ -76,7 +102,7 @@ namespace Stormproof
             float viewH = 8f;
             for (int i = 0; i < entries.Count; i++)
             {
-                viewH += entries[i].HasLedger ? 48f : 26f;
+                viewH += EntryHeight(entries[i]) + 2f;
             }
             viewH = Mathf.Max(listRect.height, viewH);
             Rect view = new Rect(0f, 0f, listRect.width - 16f, viewH);
@@ -97,7 +123,7 @@ namespace Stormproof
                         : "Stormproof_Almanac_Ongoing".Translate().ToString();
                     string line = "Stormproof_Almanac_Line".Translate(
                         e.year.ToString(), season, e.label, dur);
-                    float h = e.HasLedger ? 46f : 26f;
+                    float h = EntryHeight(e);
                     Widgets.Label(new Rect(0f, y, view.width, 24f), line);
                     if (e.HasLedger)
                     {
@@ -107,11 +133,19 @@ namespace Stormproof
                                 e.zzztAbsorbed, e.zzztSuffered,
                                 e.firesSnuffed, e.wearHits));
                     }
+                    if (e.HasDefenceLedger)
+                    {
+                        Widgets.Label(new Rect(8f, y + (e.HasLedger ? 44f : 22f), view.width - 8f, 22f),
+                            "Stormproof_Almanac_LedgerDefence".Translate(e.pylonZaps, e.empBursts));
+                    }
                     y += h;
                 }
             }
             Widgets.EndScrollView();
         }
+
+        private static float EntryHeight(AlmanacEntry e) =>
+            26f + (e.HasLedger ? 20f : 0f) + (e.HasDefenceLedger ? 22f : 0f);
 
         private void RefreshCurve()
         {

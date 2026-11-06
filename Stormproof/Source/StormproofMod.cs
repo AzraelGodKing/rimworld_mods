@@ -62,12 +62,21 @@ namespace Stormproof
                 Settings.zzztChanceFactor.ToStringPercent()));
             Settings.zzztChanceFactor = listing.Slider(Settings.zzztChanceFactor, 0f, 3f);
 
+            listing.CheckboxLabeled("Stormproof_Settings_WarnUndefended".Translate(),
+                ref Settings.warnUndefendedGrid, "Stormproof_Settings_WarnUndefendedTip".Translate());
+
             listing.GapLine();
             listing.Label("Stormproof_Settings_Sky".Translate());
             listing.CheckboxLabeled("Stormproof_Settings_Almanac".Translate(),
                 ref Settings.enableAlmanac, "Stormproof_Settings_AlmanacTip".Translate());
             listing.CheckboxLabeled("Stormproof_Settings_Fulgurite".Translate(),
                 ref Settings.enableFulgurite, "Stormproof_Settings_FulguriteTip".Translate());
+            listing.Label("Stormproof_Settings_StormCallerCooldown".Translate(
+                Settings.stormCallerCooldownDays.ToString("F1")));
+            Settings.stormCallerCooldownDays = listing.Slider(Settings.stormCallerCooldownDays, 1f, 15f);
+            listing.Label("Stormproof_Settings_StormCallerHours".Translate(
+                Settings.stormCallerHours.ToString("F0")));
+            Settings.stormCallerHours = listing.Slider(Settings.stormCallerHours, 2f, 24f);
 
             listing.GapLine();
             listing.Label("Stormproof_Settings_Incidents".Translate());
@@ -92,6 +101,11 @@ namespace Stormproof
                 ref Settings.allowFireSuppressor, "Stormproof_Settings_SuppressorTip".Translate());
             listing.CheckboxLabeled("Stormproof_Settings_Drought".Translate(),
                 ref Settings.allowDroughtCondenser, "Stormproof_Settings_SuppressorTip".Translate());
+            if (ModsConfig.BiotechActive)
+            {
+                listing.CheckboxLabeled("Stormproof_Settings_DampenerMechs".Translate(),
+                    ref Settings.dampenerCoversMechs, "Stormproof_Settings_DampenerMechsTip".Translate());
+            }
 
             listing.Gap(10f);
             if (listing.ButtonText("Stormproof_Settings_Reset".Translate(), null, 0.25f))

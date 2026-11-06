@@ -143,20 +143,7 @@ namespace Stormproof
             {
                 yield break;
             }
-            yield return new Command_Action
-            {
-                defaultLabel = "Stormproof_Almanac_Open".Translate(),
-                defaultDesc = "Stormproof_Almanac_OpenDesc".Translate(),
-                icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchReport"),
-                action = () =>
-                {
-                    MapComponent_Stormproof comp = MapComponent_Stormproof.For(parent.Map);
-                    if (comp != null)
-                    {
-                        Find.WindowStack.Add(new Dialog_Almanac(comp, this));
-                    }
-                }
-            };
+            yield return Dialog_Almanac.OpenGizmo(parent.Map, this);
         }
     }
 }

@@ -2,6 +2,14 @@
 [h1]Stormproof — 2.0.0[/h1]
 Stormproof 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and the same save carries over to 1.7.
 
+[b]Added[/b]
+[list]
+[*] [b]Load shedder[/b] — new Smart hold: it only reconnects when the forecast says the grid won't drop back to the cutoff.
+[*] [b]Grid monitor[/b] — opens the almanac too.
+[*] [b]Almanac[/b] — counts static pylon zaps and ion storm EMP bursts.
+[*] [b]Settings[/b] — storm caller recharge and storm length sliders, a one-time warning for an undefended grid in a storm, and (Biotech) EMP dampener cover for your own mechanoids.
+[/list]
+
 [b]Changed[/b]
 [list]
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
@@ -20,5 +28,5 @@ Stormproof 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [*] [b]Almanac[/b] — loading a save no longer resets the current weather's start time, and strikes with no spire count as missed.
 [/list]
 
-[i]Build stamp (Player.log): stormproof2-hotpaths[/i]
+[i]Build stamp (Player.log): stormproof2-gridtools[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/stormproof.md[/i]

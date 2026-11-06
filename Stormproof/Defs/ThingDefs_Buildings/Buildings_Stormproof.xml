@@ -165,7 +165,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_EmpDampener</defName>
     <label>EMP dampener</label>
-    <description>Projects a dampening field that protects colony buildings within range from EMP stuns. Turrets keep firing through EMP mortar barrages and grenade throws. Does not protect pawns or mechanoids - only buildings.</description>
+    <description>Projects a dampening field that protects colony buildings within range from EMP stuns. Turrets keep firing through EMP mortar barrages and grenade throws. Does not protect pawns. With Biotech, a mod setting extends it to your own mechanoids.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Stormproof/Buildings/EmpDampener</texPath>
@@ -480,7 +480,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>Stormproof_StormCaller</defName>
     <label>storm caller</label>
-    <description>An ionospheric agitator that fires charged particles into the upper atmosphere, dragging a rainy thunderstorm over the map on demand. The lightning feeds your storm spires and the rain douses wildfires. Recharges over five days - it supplements a power grid, it doesn't replace one.</description>
+    <description>An ionospheric agitator that fires charged particles into the upper atmosphere, dragging a rainy thunderstorm over the map on demand. The lightning feeds your storm spires and the rain douses wildfires. Recharges over five days by default (see mod settings) - it supplements a power grid, it doesn't replace one.</description>
     <thingClass>Building</thingClass>
     <graphicData>
       <texPath>Stormproof/Buildings/StormCaller</texPath>
@@ -514,10 +514,8 @@
       </li>
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
-      <li Class="Stormproof.CompProperties_StormCaller">
-        <cooldownTicks>300000</cooldownTicks>
-        <stormDurationTicks>30000</stormDurationTicks>
-      </li>
+      <!-- Recharge and storm length: mod settings (5 days / 12 hours by default). -->
+      <li Class="Stormproof.CompProperties_StormCaller" />
     </comps>
     <designationCategory>Power</designationCategory>
     <canOverlapZones>false</canOverlapZones>

@@ -192,7 +192,7 @@ namespace Stormproof
                 {
                     defaultLabel = "Stormproof_StormSpire_CollectFulgurite".Translate(fulguriteReady),
                     defaultDesc = "Stormproof_StormSpire_CollectFulguriteDesc".Translate(),
-                    icon = ContentFinder<Texture2D>.Get("UI/Commands/LaunchReport"),
+                    icon = StormproofTex.Fulgurite,
                     action = CollectFulgurite
                 };
             }

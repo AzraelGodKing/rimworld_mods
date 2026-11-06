@@ -5,14 +5,6 @@ using Verse;
 
 namespace Stormproof
 {
-    [StaticConstructorOnStartup]
-    internal static class LoadShedderTex
-    {
-        public static readonly Texture2D CutoffLower = ContentFinder<Texture2D>.Get("UI/Commands/TempLower");
-        public static readonly Texture2D CutoffRaise = ContentFinder<Texture2D>.Get("UI/Commands/TempRaise");
-        public static readonly Texture2D Schedule = ContentFinder<Texture2D>.Get("UI/Commands/LaunchReport");
-    }
-
     // The breaker building itself only reports whether it currently transmits;
     // all the decision-making lives in CompLoadShedder.
     public class Building_LoadShedder : Building
@@ -66,8 +58,15 @@ namespace Stormproof
         {
             Auto = 0,
             HoldRun = 1,
-            HoldShed = 2
+            HoldShed = 2,
+            // Auto, but only reconnects when the forecast says the supply grid
+            // won't fall back to the cutoff within the forecast window (AZR-671).
+            Smart = 3
         }
+
+        private const int SmartCacheTicks = 250;
+        private int smartCheckedTick = -1;
+        private int smartTicksToCutoff = -1;
 
         public CompProperties_LoadShedder Props => (CompProperties_LoadShedder)props;
 
@@ -136,7 +135,7 @@ namespace Stormproof
         internal bool ProjectClosed(bool wasClosed, float fraction, int hourOfDay)
         {
             return DecideClosed(wasClosed, fraction < cutoffFraction, fraction >= ReconnectFraction,
-                hourOfDay, stormImminent: false);
+                hourOfDay, stormImminent: false, supply: null);
         }
 
         // The grid we watch. Closed: our own net (both sides are one net).
@@ -207,13 +206,15 @@ namespace Stormproof
             bool thresholdShed = fraction < cutoffFraction;
             bool thresholdReconnect = fraction >= ReconnectFraction;
             bool wantClosed = DecideClosed(breakerClosed, thresholdShed, thresholdReconnect,
-                GenLocalDate.HourOfDay(parent.Map), forecastOverride && StormImminent(supply));
+                GenLocalDate.HourOfDay(parent.Map), forecastOverride && StormImminent(supply), supply);
             bool quiet = wantClosed == breakerClosed || (!thresholdShed && !wantClosed);
             SetBreaker(wantClosed, quiet: quiet);
         }
 
+        // supply is null inside a forecast projection: Smart then acts like Auto,
+        // so a projection never starts another projection.
         private bool DecideClosed(bool wasClosed, bool thresholdShed, bool thresholdReconnect,
-            int hourOfDay, bool stormImminent)
+            int hourOfDay, bool stormImminent, PowerNet supply)
         {
             if (thresholdShed)
             {
@@ -237,9 +238,41 @@ namespace Stormproof
             }
             if (!wasClosed)
             {
+                if (thresholdReconnect && holdMode == ShedHoldMode.Smart && supply != null)
+                {
+                    return !SmartKeepsShed(supply);
+                }
                 return thresholdReconnect;
             }
             return true;
+        }
+
+        // Projects the supply grid as if we reconnect now. If it would sink back
+        // under the cutoff inside the forecast window, stay shed. Needs a
+        // weather forecaster on the supply grid; without one, Smart is Auto.
+        private bool SmartKeepsShed(PowerNet supply)
+        {
+            int now = Find.TickManager.TicksGame;
+            if (smartCheckedTick >= 0 && now - smartCheckedTick < SmartCacheTicks)
+            {
+                return smartTicksToCutoff >= 0;
+            }
+            smartCheckedTick = now;
+            smartTicksToCutoff = -1;
+            CompWeatherForecaster forecaster = GridForecastUtility.ForecasterOn(supply);
+            if (forecaster == null)
+            {
+                return false;
+            }
+            BatteryMath.Sum(supply, out float stored, out float capacity);
+            if (capacity <= 0f)
+            {
+                return false;
+            }
+            GridForecast forecast = GridForecastUtility.Project(parent.Map, supply, forecaster,
+                stored, capacity, cutoffFraction, cutoffFraction);
+            smartTicksToCutoff = forecast.TicksToCritical;
+            return smartTicksToCutoff >= 0;
         }
 
         private void RefreshShedSideDraw()
@@ -279,6 +312,11 @@ namespace Stormproof
         // Closed: both sides share one net, so split it by flooding transmitters
         // from each neighbour without crossing this breaker. The side with the
         // most battery capacity is the supply (same rule as SupplyNet).
+        // Three or more sides (AZR-669): when the breaker opens, every non-supply
+        // side drops off the supply grid together, so their draws add up to the
+        // shed draw. Sides joined by conduit elsewhere flood as one side (their
+        // second neighbour finds its transmitters already visited), so a loop is
+        // never counted twice.
         private float ClosedShedSideDraw()
         {
             Map map = parent.Map;
@@ -459,43 +497,74 @@ namespace Stormproof
             {
                 defaultLabel = "Stormproof_LoadShedder_CutoffLowerLabel".Translate(),
                 defaultDesc = "Stormproof_LoadShedder_CutoffLowerDesc".Translate(),
-                icon = LoadShedderTex.CutoffLower,
+                icon = StormproofTex.CutoffLower,
                 action = () => cutoffFraction = Mathf.Max(0.05f, cutoffFraction - 0.05f),
             };
             yield return new Command_Action
             {
                 defaultLabel = "Stormproof_LoadShedder_CutoffRaiseLabel".Translate(),
                 defaultDesc = "Stormproof_LoadShedder_CutoffRaiseDesc".Translate(),
-                icon = LoadShedderTex.CutoffRaise,
+                icon = StormproofTex.CutoffRaise,
                 action = () => cutoffFraction = Mathf.Min(0.45f, cutoffFraction + 0.05f),
             };
             yield return new Command_Action
             {
                 defaultLabel = "Stormproof_LoadShedder_ScheduleLabel".Translate(),
                 defaultDesc = "Stormproof_LoadShedder_ScheduleDesc".Translate(),
-                icon = LoadShedderTex.Schedule,
+                icon = StormproofTex.Schedule,
                 action = () => Find.WindowStack.Add(new Dialog_LoadSchedule(this)),
             };
             yield return new Command_Action
             {
                 defaultLabel = HoldLabel(),
                 defaultDesc = "Stormproof_LoadShedder_HoldDesc".Translate(),
-                icon = LoadShedderTex.CutoffLower,
+                icon = StormproofTex.Hold,
+                defaultIconColor = HoldColor(),
                 action = () =>
                 {
-                    holdMode = holdMode == ShedHoldMode.Auto
-                        ? ShedHoldMode.HoldRun
-                        : holdMode == ShedHoldMode.HoldRun
-                            ? ShedHoldMode.HoldShed
-                            : ShedHoldMode.Auto;
+                    holdMode = NextHold(holdMode);
+                    smartCheckedTick = -1;
                 },
             };
+        }
+
+        // Auto -> Smart -> Run -> Shed -> Auto.
+        private static ShedHoldMode NextHold(ShedHoldMode mode)
+        {
+            switch (mode)
+            {
+                case ShedHoldMode.Auto:
+                    return ShedHoldMode.Smart;
+                case ShedHoldMode.Smart:
+                    return ShedHoldMode.HoldRun;
+                case ShedHoldMode.HoldRun:
+                    return ShedHoldMode.HoldShed;
+                default:
+                    return ShedHoldMode.Auto;
+            }
+        }
+
+        private Color HoldColor()
+        {
+            switch (holdMode)
+            {
+                case ShedHoldMode.Smart:
+                    return new Color(0.55f, 0.85f, 1f);
+                case ShedHoldMode.HoldRun:
+                    return new Color(0.55f, 1f, 0.55f);
+                case ShedHoldMode.HoldShed:
+                    return new Color(1f, 0.5f, 0.45f);
+                default:
+                    return Color.white;
+            }
         }
 
         private string HoldLabel()
         {
             switch (holdMode)
             {
+                case ShedHoldMode.Smart:
+                    return "Stormproof_LoadShedder_HoldSmart".Translate();
                 case ShedHoldMode.HoldRun:
                     return "Stormproof_LoadShedder_HoldRun".Translate();
                 case ShedHoldMode.HoldShed:
@@ -546,6 +615,11 @@ namespace Stormproof
             if (holdMode != ShedHoldMode.Auto)
             {
                 state += "\n" + HoldLabel();
+            }
+            if (holdMode == ShedHoldMode.Smart && !breakerClosed && smartTicksToCutoff >= 0)
+            {
+                state += "\n" + "Stormproof_LoadShedder_SmartHolding".Translate(
+                    smartTicksToCutoff.ToStringTicksToPeriod());
             }
             string brownout = BrownoutUtility.InspectLine(parent);
             if (brownout != null)

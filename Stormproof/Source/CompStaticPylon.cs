@@ -127,6 +127,7 @@ namespace Stormproof
                         DamageDefOf.Burn, Props.damagePerShock, 0.5f, -1f, parent));
                 }
                 PlayStrikeEffects(pawn, map);
+                MapComponent_Stormproof.For(map)?.NotePylonZap();
                 discharged = true;
             }
             if (discharged)
