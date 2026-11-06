@@ -33,6 +33,19 @@ namespace Stormproof
             return new SkyTarget(0.85f, IonSkyColors, 1f, 1f);
         }
 
+        private const int BurstGlowTicks = 120;
+
+        // Visual only: the aurora flares after an EMP burst.
+        private int lastBurstTick = -BurstGlowTicks;
+
+        public override void GameConditionDraw(Map map)
+        {
+            base.GameConditionDraw(map);
+            float burst = 1f - (float)(Find.TickManager.TicksGame - lastBurstTick) / BurstGlowTicks;
+            StormproofVisuals.DrawIonAurora(map, GameConditionUtility.LerpInOutValue(this, TransitionTicks),
+                Mathf.Clamp01(burst));
+        }
+
         public override void GameConditionTick()
         {
             base.GameConditionTick();
@@ -105,6 +118,7 @@ namespace Stormproof
             }
             Building target = empCandidates.RandomElement();
             MapComponent_Stormproof.For(map)?.NoteEmpBurst();
+            lastBurstTick = Find.TickManager.TicksGame;
             GenExplosion.DoExplosion(
                 target.Position, map, EmpBurstRadius, DamageDefOf.EMP, null);
             Messages.Message(

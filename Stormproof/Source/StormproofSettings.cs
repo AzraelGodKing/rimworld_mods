@@ -37,6 +37,11 @@ namespace Stormproof
         // Off by default: the dampener's fantasy is buildings only.
         public bool dampenerCoversMechs = false;
 
+        // Defender fields, spire arcs, capacitor glow and weather overlays (AZR-502/499).
+        public bool visualEffects = true;
+        // Photosensitivity: dimmer effects, no pulsing or flashes.
+        public bool reducedEffects = false;
+
         // Def baseChance as loaded from XML, before any setting scaled it.
         private static readonly Dictionary<IncidentDef, float> OriginalIncidentChance =
             new Dictionary<IncidentDef, float>();
@@ -64,6 +69,8 @@ namespace Stormproof
             Scribe_Values.Look(ref stormCallerHours, "stormCallerHours", 12f);
             Scribe_Values.Look(ref warnUndefendedGrid, "warnUndefendedGrid", true);
             Scribe_Values.Look(ref dampenerCoversMechs, "dampenerCoversMechs", false);
+            Scribe_Values.Look(ref visualEffects, "visualEffects", true);
+            Scribe_Values.Look(ref reducedEffects, "reducedEffects", false);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 // Incident chances are applied by StormproofInit once defs exist.
@@ -94,6 +101,8 @@ namespace Stormproof
             stormCallerHours = 12f;
             warnUndefendedGrid = true;
             dampenerCoversMechs = false;
+            visualEffects = true;
+            reducedEffects = false;
             ApplyIncidentChances();
         }
 
@@ -151,6 +160,8 @@ namespace Stormproof
                 h = (h * 397) ^ stormCallerHours.GetHashCode();
                 h = (h * 397) ^ (warnUndefendedGrid ? 1 : 0);
                 h = (h * 397) ^ (dampenerCoversMechs ? 1 : 0);
+                h = (h * 397) ^ (visualEffects ? 1 : 0);
+                h = (h * 397) ^ (reducedEffects ? 1 : 0);
                 return h;
             }
         }

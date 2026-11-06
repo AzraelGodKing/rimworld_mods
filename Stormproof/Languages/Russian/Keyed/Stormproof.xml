@@ -193,5 +193,10 @@
   <Stormproof_LoadShedder_HoldSmart>Удерж.: умно</Stormproof_LoadShedder_HoldSmart>
   <Stormproof_LoadShedder_SmartHolding>Умное удержание: при подключении сейчас порог сработает через {0}. Остаётся отключено.</Stormproof_LoadShedder_SmartHolding>
   <Stormproof_Settings_AzraelStack>С рассказчиком Azrael, который тоже усиливает выбор этих событий: {0}</Stormproof_Settings_AzraelStack>
+  <Stormproof_Settings_Visuals>Визуальные эффекты</Stormproof_Settings_Visuals>
+  <Stormproof_Settings_VisualEffects>Показывать эффекты Stormproof</Stormproof_Settings_VisualEffects>
+  <Stormproof_Settings_VisualEffectsTip>Поля защитных построек во время работы, дуга штормового шпиля, свечение конденсатора, цветные кольца охвата, а также сияние ионного шторма, марево теплового купола, иней полярного фронта и туман токсичного выброса. Выкл.: постройки и погода выглядят как в ванильной игре.</Stormproof_Settings_VisualEffectsTip>
+  <Stormproof_Settings_ReducedEffects>Пониженная яркость (светочувствительность)</Stormproof_Settings_ReducedEffects>
+  <Stormproof_Settings_ReducedEffectsTip>Более тусклые эффекты без пульсации и вспышек.</Stormproof_Settings_ReducedEffectsTip>
 
 </LanguageData>

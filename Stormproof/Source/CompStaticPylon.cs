@@ -138,8 +138,15 @@ namespace Stormproof
 
         private void PlayStrikeEffects(Pawn pawn, Map map)
         {
-            FleckMaker.ConnectingLine(
-                parent.DrawPos, pawn.DrawPos, FleckDefOf.LineEMP, map, 1.4f);
+            if (StormproofVisuals.Enabled)
+            {
+                StormproofVisuals.AddArc(map, parent.DrawPos, pawn.DrawPos);
+            }
+            else
+            {
+                FleckMaker.ConnectingLine(
+                    parent.DrawPos, pawn.DrawPos, FleckDefOf.LineEMP, map, 1.4f);
+            }
             FleckMaker.ThrowMicroSparks(pawn.DrawPos, map);
             FleckMaker.ThrowLightningGlow(pawn.DrawPos, map, 0.6f);
             Effecter effecter = EffecterDefOf.DisabledByEMP.Spawn();

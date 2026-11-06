@@ -11,10 +11,54 @@ namespace Stormproof
         public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol, Thing thing = null)
         {
             float radius = RadiusOf(def);
-            if (radius > 0.1f)
+            if (radius <= 0.1f)
             {
-                GenDraw.DrawRadiusRing(center, radius);
+                return;
             }
+            // A placed building's ring shows its state: off, ready, or working (AZR-502).
+            if (thing is ThingWithComps built && built.Spawned && StormproofVisuals.Enabled)
+            {
+                GenDraw.DrawRadiusRing(center, radius, RingColor(built));
+                return;
+            }
+            GenDraw.DrawRadiusRing(center, radius);
+        }
+
+        private static Color RingColor(ThingWithComps thing)
+        {
+            CompStormSpire spire = thing.GetComp<CompStormSpire>();
+            if (spire != null)
+            {
+                return CompWeatherForecaster.BringsLightning(thing.Map.weatherManager.curWeather)
+                    ? StormproofVisuals.RingProtecting
+                    : StormproofVisuals.RingIdle;
+            }
+            CompEmpDampener dampener = thing.GetComp<CompEmpDampener>();
+            if (dampener != null)
+            {
+                if (!dampener.Active)
+                {
+                    return StormproofVisuals.RingOff;
+                }
+                return StormproofCompatApi.IonStormActive(thing.Map)
+                    ? StormproofVisuals.RingProtecting
+                    : StormproofVisuals.RingIdle;
+            }
+            CompStaticPylon pylon = thing.GetComp<CompStaticPylon>();
+            if (pylon != null)
+            {
+                return pylon.Active ? StormproofVisuals.RingIdle : StormproofVisuals.RingOff;
+            }
+            CompFireSuppressor suppressor = thing.GetComp<CompFireSuppressor>();
+            if (suppressor != null)
+            {
+                if (!suppressor.Active)
+                {
+                    return StormproofVisuals.RingOff;
+                }
+                return suppressor.HighDemand ? StormproofVisuals.RingProtecting : StormproofVisuals.RingIdle;
+            }
+            return StormproofVisuals.RingIdle;
         }
 
         internal static float RadiusOf(ThingDef def)

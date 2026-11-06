@@ -24,7 +24,7 @@ namespace Stormproof
         public CompProperties_FireSuppressor Props =>
             (CompProperties_FireSuppressor)props;
 
-        private bool HighDemand =>
+        internal bool HighDemand =>
             StormproofMod.Settings.allowFireSuppressor &&
             parent.Spawned &&
             (HazardProtection.ConditionActive(parent.Map, GameConditionDefOf.Flashstorm) ||

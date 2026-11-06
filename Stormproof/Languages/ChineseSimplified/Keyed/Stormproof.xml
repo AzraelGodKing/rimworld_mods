@@ -193,5 +193,10 @@
   <Stormproof_LoadShedder_HoldSmart>保持：智能</Stormproof_LoadShedder_HoldSmart>
   <Stormproof_LoadShedder_SmartHolding>智能保持：现在重新接通将在 {0} 后触及切断阈值。保持切除。</Stormproof_LoadShedder_SmartHolding>
   <Stormproof_Settings_AzraelStack>使用 Azrael 叙事者时（它也会提高这些事件的抽取权重）：{0}</Stormproof_Settings_AzraelStack>
+  <Stormproof_Settings_Visuals>视觉效果</Stormproof_Settings_Visuals>
+  <Stormproof_Settings_VisualEffects>显示 Stormproof 效果</Stormproof_Settings_VisualEffects>
+  <Stormproof_Settings_VisualEffectsTip>防护建筑工作时的力场、风暴尖塔的电弧、电容器辉光、彩色覆盖圈，以及离子风暴极光、热穹顶热霾、极地锋面霜冻和毒气浪涌雾气。关闭后，建筑和天气与原版相同。</Stormproof_Settings_VisualEffectsTip>
+  <Stormproof_Settings_ReducedEffects>降低强度（光敏感）</Stormproof_Settings_ReducedEffects>
+  <Stormproof_Settings_ReducedEffectsTip>效果更暗，不闪烁、不脉动。</Stormproof_Settings_ReducedEffectsTip>
 
 </LanguageData>

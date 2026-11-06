@@ -17,6 +17,9 @@ namespace Stormproof
     {
         private CompPowerTrader powerComp;
 
+        // When this dampener last stopped an EMP, for its field flash. Visual only.
+        public float LastBlockRealtime { get; private set; } = -100f;
+
         public CompProperties_EmpDampener Props => (CompProperties_EmpDampener)props;
 
         public bool Active =>
@@ -42,6 +45,25 @@ namespace Stormproof
             {
                 if (dampeners[i].Covers(t))
                 {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Like Shielded, for a real block: the covering dampener flashes its field.
+        public static bool Block(Thing t)
+        {
+            if (t?.Map == null)
+            {
+                return false;
+            }
+            var dampeners = StormproofRegistry.Dampeners.On(t.Map);
+            for (int i = 0; i < dampeners.Count; i++)
+            {
+                if (dampeners[i].Covers(t))
+                {
+                    dampeners[i].LastBlockRealtime = UnityEngine.Time.realtimeSinceStartup;
                     return true;
                 }
             }

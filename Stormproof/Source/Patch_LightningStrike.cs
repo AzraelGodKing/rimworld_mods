@@ -32,7 +32,16 @@ namespace Stormproof
             }
             CompStormSpire catcher = Catcher(loc, map);
             MapComponent_Stormproof.For(map)?.NoteStrike(caught: catcher != null);
-            return catcher != null ? catcher.parent.Position : loc;
+            if (catcher == null)
+            {
+                return loc;
+            }
+            // Show where the bolt was headed before the spire stole it.
+            if (catcher.parent.Position != loc)
+            {
+                StormproofVisuals.AddArc(map, loc.ToVector3Shifted(), catcher.parent.DrawPos);
+            }
+            return catcher.parent.Position;
         }
 
         // Nearest attracting spire in range; ties go to the lowest thing id.

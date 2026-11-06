@@ -48,7 +48,7 @@
   <!-- ============ Toxic surge ============ -->
   <GameConditionDef>
     <defName>Stormproof_ToxicSurge</defName>
-    <conditionClass>GameCondition_ToxicFallout</conditionClass>
+    <conditionClass>Stormproof.GameCondition_ToxicSurge</conditionClass>
     <label>toxic surge</label>
     <description>A dense chemical plume is dumping toxins faster than ordinary fallout. Outdoor life is poisoned quickly. A powered atmospheric barrier suppresses the poison map-wide; fallout scrubbers still help recover anyone already contaminated.</description>
     <endMessage>The toxic surge has thinned out.</endMessage>
