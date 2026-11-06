@@ -42,8 +42,15 @@ namespace Strata
 
         private static readonly HashSet<Type> ContentLayerTypes = BuildContentLayerTypes();
         private static readonly Dictionary<Type, int> BelowLayerOffsets = BuildBelowLayerOffsets();
+#if !RIMWORLD_1_7
+        // 1.6 has no per-draw render queue, so each (material, queue) gets a copy.
         private static readonly Dictionary<(Material, int), Material> belowMats =
             new Dictionary<(Material, int), Material>();
+#else
+        // 1.7: the hole mask is a map texture drawn by the Strata_BelowMask shader.
+        private static readonly StrataMapTexture maskTexture =
+            new StrataMapTexture(StrataShaders17.BelowMask, Color.black);
+#endif
 
         private static int belowQueueCeiling = -1;
         private static int transformFrame = -1;
@@ -219,11 +226,7 @@ namespace Strata
             int queueBase = Mathf.Max(BelowQueueCeiling - BelowThingsOffset, 1);
             float y = sub.mesh.bounds.center.y;
             int queue = queueBase + Mathf.Clamp((int)(y * 14f), 0, 99);
-            Material mat = BelowMaterialFor(sub.material, queue);
-            if (mat != null)
-            {
-                Graphics.DrawMesh(sub.mesh, BelowMatrix, mat, 0);
-            }
+            DrawBelow(sub.mesh, sub.material, queue);
         }
 
         private static void DrawSections(Map lower, CellRect view)
@@ -269,11 +272,7 @@ namespace Strata
                                 queue += Mathf.Clamp((sub.material.renderQueue - 2000) / 25, 0, 14);
                             }
 
-                            Material mat = BelowMaterialFor(sub.material, queue);
-                            if (mat != null)
-                            {
-                                Graphics.DrawMesh(sub.mesh, BelowMatrix, mat, 0);
-                            }
+                            DrawBelow(sub.mesh, sub.material, queue);
                         }
                     }
                 }
@@ -299,6 +298,27 @@ namespace Strata
                 || frame - maskLastFrame >= MaskRebuildIntervalFrames
                 || lower.uniqueID != maskLastLowerId;
 
+#if RIMWORLD_1_7
+            if (maskTexture.Available)
+            {
+                // maskMesh stays null on this path, so check the texture instead.
+                bool texStale = !maskTexture.HasTexture
+                    || !maskLastRect.Contains(new IntVec3(view.minX, 0, view.minZ))
+                    || !maskLastRect.Contains(new IntVec3(view.maxX, 0, view.maxZ))
+                    || frame - maskLastFrame >= MaskRebuildIntervalFrames
+                    || lower.uniqueID != maskLastLowerId;
+                if (texStale)
+                {
+                    CellRect texRect = view.ExpandedBy(MaskPadCells).ClipInsideMap(sky);
+                    WriteMaskTexture(sky, lower, texRect);
+                    maskLastFrame = frame;
+                    maskLastRect = texRect;
+                    maskLastLowerId = lower.uniqueID;
+                }
+                maskTexture.Draw(sky, MaskAltitude, 0f);
+                return;
+            }
+#endif
             if (needRebuild)
             {
                 CellRect rect = view.ExpandedBy(MaskPadCells).ClipInsideMap(sky);
@@ -378,6 +398,27 @@ namespace Strata
                 return forbidOverlayMat;
             }
         }
+
+#if RIMWORLD_1_7
+        private static void WriteMaskTexture(Map sky, Map lower, CellRect rect)
+        {
+            float dim = Mathf.Clamp(StrataMod.Settings?.belowDim ?? 0.12f, 0f, 0.6f);
+            byte dimAlpha = (byte)(255f * dim);
+            Color32[] pixels = maskTexture.BeginWrite(sky);
+            int width = sky.Size.x;
+            TerrainGrid skyTerrain = sky.terrainGrid;
+            FogGrid lowerFog = lower.fogGrid;
+            foreach (IntVec3 cell in rect)
+            {
+                TerrainDef t = skyTerrain.TerrainAt(cell);
+                if (t == null || !UpperDeckUtility.IsSeeThroughGap(t)) continue;
+                IntVec3 below = SkyToLowerCell(sky, lower, cell);
+                byte alpha = (!below.InBounds(lower) || lowerFog.IsFogged(below)) ? byte.MaxValue : dimAlpha;
+                pixels[cell.z * width + cell.x] = new Color32(0, 0, 0, alpha);
+            }
+            maskTexture.Upload(sky);
+        }
+#endif
 
         private static void EnsureMaskMesh()
         {
@@ -520,15 +561,21 @@ namespace Strata
             }
         }
 
-        private static Material BelowMaterialFor(Material source, int queue)
+        private static void DrawBelow(Mesh mesh, Material source, int queue)
         {
-            if (source == null) return null;
+            if (source == null) return;
+#if RIMWORLD_1_7
+            StrataShaders17.DrawAtQueue(mesh, BelowMatrix, source, queue);
+#else
             var key = (source, queue);
-            if (belowMats.TryGetValue(key, out Material cached)) return cached;
-            if (belowMats.Count > 1024) belowMats.Clear();
-            cached = new Material(source) { renderQueue = queue };
-            belowMats[key] = cached;
-            return cached;
+            if (!belowMats.TryGetValue(key, out Material mat))
+            {
+                if (belowMats.Count > 1024) belowMats.Clear();
+                mat = new Material(source) { renderQueue = queue };
+                belowMats[key] = mat;
+            }
+            Graphics.DrawMesh(mesh, BelowMatrix, mat, 0);
+#endif
         }
 
         private static int BelowQueueCeiling

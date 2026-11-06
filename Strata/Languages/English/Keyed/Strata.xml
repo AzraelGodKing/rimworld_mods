@@ -157,6 +157,10 @@
   <Strata_Settings_DepthDim>Upper-deck depth dim</Strata_Settings_DepthDim>
   <Strata_Settings_DepthDimDesc>When viewing an A+/roof deck, darken the whole screen slightly as a depth mood cue. Separate from see-below, which actually draws the floor under open-sky gaps.</Strata_Settings_DepthDimDesc>
   <Strata_Settings_DepthDimStrength>Depth dim strength: {0}</Strata_Settings_DepthDimStrength>
+  <Strata_Settings_DepthVignette>Depth vignette (1.7)</Strata_Settings_DepthVignette>
+  <Strata_Settings_DepthVignetteDesc>Darkens the screen edges on underground levels, more the deeper the level. RimWorld 1.7 only.</Strata_Settings_DepthVignetteDesc>
+  <Strata_Settings_WaterCaustics>Water caustics (1.7)</Strata_Settings_WaterCaustics>
+  <Strata_Settings_WaterCausticsDesc>Moving light patterns on underground water and flood water. RimWorld 1.7 only.</Strata_Settings_WaterCausticsDesc>
   <Strata_Settings_SeeBelow>See floor below through open sky</Strata_Settings_SeeBelow>
   <Strata_Settings_SeeBelowDesc>On A+ decks, draw the real map underneath through Strata open-sky holes (terrain, weather water, buildings, fog).</Strata_Settings_SeeBelowDesc>
   <Strata_Settings_SeeBelowLive>Live pawns and projectiles below</Strata_Settings_SeeBelowLive>

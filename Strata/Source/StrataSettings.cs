@@ -73,6 +73,10 @@ namespace Strata
         public bool seeBelowLive = true;
         public float belowDim = 0.12f;
         public float belowThingScale = 0.85f;
+#if RIMWORLD_1_7
+        public bool depthVignette = true;
+        public bool waterCaustics = true;
+#endif
         public bool combinedLevelResources = false;
         public bool crossLevelCombatEnabled = true;
         public bool crossLevelAutoEngage = true;
@@ -171,6 +175,10 @@ namespace Strata
             Scribe_Values.Look(ref seeBelowLive, "seeBelowLive", defaultValue: true);
             Scribe_Values.Look(ref belowDim, "belowDim", 0.12f);
             Scribe_Values.Look(ref belowThingScale, "belowThingScale", 0.85f);
+#if RIMWORLD_1_7
+            Scribe_Values.Look(ref depthVignette, "depthVignette", defaultValue: true);
+            Scribe_Values.Look(ref waterCaustics, "waterCaustics", defaultValue: true);
+#endif
             Scribe_Values.Look(ref combinedLevelResources, "combinedLevelResources", defaultValue: false);
             Scribe_Values.Look(ref crossLevelCombatEnabled, "crossLevelCombatEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelAutoEngage, "crossLevelAutoEngage", defaultValue: true);
@@ -690,6 +698,10 @@ namespace Strata
                     "Strata_Settings_DepthDimStrength".Translate(Settings.depthDimStrength.ToStringPercent()),
                     Settings.depthDimStrength, 0f, 1f);
             }
+#if RIMWORLD_1_7
+            Check(listing, "Strata_Settings_DepthVignette", ref Settings.depthVignette, "Strata_Settings_DepthVignetteDesc");
+            Check(listing, "Strata_Settings_WaterCaustics", ref Settings.waterCaustics, "Strata_Settings_WaterCausticsDesc");
+#endif
             Gap(listing);
 
             Header(listing, "Strata_Settings_Interface");

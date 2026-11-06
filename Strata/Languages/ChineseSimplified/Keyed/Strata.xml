@@ -157,6 +157,10 @@
   <Strata_Settings_DepthDim>上层深度暗化</Strata_Settings_DepthDim>
   <Strata_Settings_DepthDimDesc>查看 A+/屋顶甲板时略微压暗整个画面作为深度氛围。与“透过开阔天空看见下层”分开：后者会真正绘制下层。</Strata_Settings_DepthDimDesc>
   <Strata_Settings_DepthDimStrength>暗化强度：{0}</Strata_Settings_DepthDimStrength>
+  <Strata_Settings_DepthVignette>深度暗角（1.7）</Strata_Settings_DepthVignette>
+  <Strata_Settings_DepthVignetteDesc>在地下层压暗屏幕边缘，层越深越暗。仅限 RimWorld 1.7。</Strata_Settings_DepthVignetteDesc>
+  <Strata_Settings_WaterCaustics>水面焦散（1.7）</Strata_Settings_WaterCaustics>
+  <Strata_Settings_WaterCausticsDesc>在地下水体和积水上显示流动的光纹。仅限 RimWorld 1.7。</Strata_Settings_WaterCausticsDesc>
   <Strata_Settings_SeeBelow>透过开阔天空看见下层</Strata_Settings_SeeBelow>
   <Strata_Settings_SeeBelowDesc>在 A+ 甲板上，透过 Strata 开阔天空格绘制下层真实地图（地形、水面、建筑、迷雾）。</Strata_Settings_SeeBelowDesc>
   <Strata_Settings_SeeBelowLive>绘制下层活体与抛射物</Strata_Settings_SeeBelowLive>

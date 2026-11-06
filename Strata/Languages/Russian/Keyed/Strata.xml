@@ -156,6 +156,10 @@
   <Strata_Settings_DepthDim>Затемнение верхних палуб</Strata_Settings_DepthDim>
   <Strata_Settings_DepthDimDesc>При просмотре палубы A+/крыши слегка затемняет весь экран как глубинный акцент. Отдельно от «видеть этаж ниже» — та функция реально рисует карту под открытым небом.</Strata_Settings_DepthDimDesc>
   <Strata_Settings_DepthDimStrength>Сила затемнения: {0}</Strata_Settings_DepthDimStrength>
+  <Strata_Settings_DepthVignette>Виньетка глубины (1.7)</Strata_Settings_DepthVignette>
+  <Strata_Settings_DepthVignetteDesc>Затемняет края экрана на подземных уровнях, тем сильнее, чем глубже уровень. Только RimWorld 1.7.</Strata_Settings_DepthVignetteDesc>
+  <Strata_Settings_WaterCaustics>Блики на воде (1.7)</Strata_Settings_WaterCaustics>
+  <Strata_Settings_WaterCausticsDesc>Движущиеся световые узоры на подземной воде и в затопленных местах. Только RimWorld 1.7.</Strata_Settings_WaterCausticsDesc>
   <Strata_Settings_SeeBelow>Видеть этаж ниже через открытое небо</Strata_Settings_SeeBelow>
   <Strata_Settings_SeeBelowDesc>На палубах A+ рисует настоящую карту снизу через клетки открытого неба Strata (рельеф, вода, здания, туман войны).</Strata_Settings_SeeBelowDesc>
   <Strata_Settings_SeeBelowLive>Живые пешки и снаряды снизу</Strata_Settings_SeeBelowLive>

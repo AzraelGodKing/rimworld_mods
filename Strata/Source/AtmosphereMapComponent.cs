@@ -117,6 +117,11 @@ namespace Strata
         // Color32: 4 bytes a cell instead of 16 for Color.
         private Color32[] overlayColorCache;
         private CellBoolDrawer drawer;
+#if RIMWORLD_1_7
+        // 1.7: smooth, drifting gas overlay drawn by the Strata_GasOverlay shader.
+        private StrataMapTexture gasTexture;
+        private bool gasTextureDirty = true;
+#endif
         private int atmosphereCyclePhase = -1;
         // Latched when a cycle starts. Lite/full and the phase count depend on
         // the viewed map; re-reading them mid-cycle after a floor switch could
@@ -362,6 +367,9 @@ namespace Strata
             FlammableRiskCells.Clear();
             ClearCellDensity();
             drawer?.SetDirty();
+#if RIMWORLD_1_7
+            gasTextureDirty = true;
+#endif
         }
 
         // Dev: instantly fill the room containing a cell with a gas.
@@ -1414,6 +1422,24 @@ namespace Strata
             {
                 return;
             }
+#if RIMWORLD_1_7
+            gasTexture ??= new StrataMapTexture(StrataShaders17.GasOverlay, new Color(1f, 1f, 1f, 0.55f));
+            if (gasTexture.Available)
+            {
+                if (gasTextureDirty || !gasTexture.HasTexture)
+                {
+                    Color32[] pixels = gasTexture.BeginWrite(map);
+                    for (int i = 0; i < pixels.Length; i++)
+                    {
+                        pixels[i] = GetCellExtraColor(i);
+                    }
+                    gasTexture.Upload(map);
+                    gasTextureDirty = false;
+                }
+                gasTexture.Draw(map, AltitudeLayer.MetaOverlays.AltitudeFor(), 1f);
+                return;
+            }
+#endif
             drawer ??= new CellBoolDrawer(this, map.Size.x, map.Size.z, 0.55f);
             drawer.MarkForDraw();
             drawer.CellBoolDrawerUpdate();
@@ -2431,6 +2457,9 @@ namespace Strata
                 overlayColorCache = null;
             }
             drawer?.SetDirty();
+#if RIMWORLD_1_7
+            gasTextureDirty = true;
+#endif
         }
 
         private void RebuildCellDensitySync()

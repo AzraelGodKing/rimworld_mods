@@ -71,6 +71,13 @@ namespace Strata
             {
                 __instance.components.Add(new MapComponent_StrataDeferredGen(__instance));
             }
+#if RIMWORLD_1_7
+            if (StrataMapUtility.IsUnderground(__instance)
+                && __instance.GetComponent<MapComponent_StrataShaderEffects>() == null)
+            {
+                __instance.components.Add(new MapComponent_StrataShaderEffects(__instance));
+            }
+#endif
             if (StrataMapUtility.IsUpperLevel(__instance)
                 && __instance.GetComponent<MapComponent_DepthDim>() == null)
             {

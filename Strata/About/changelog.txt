@@ -1,10 +1,11 @@
-4.0.0
-[h1]Strata - 4.0.0[/h1]
+4.1.0
+[h1]Strata - 4.1.0[/h1]
 
 Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and a Strata save carries over to 1.7.
 
 [b]Added[/b]
 [list]
+[*] [b]New look on RimWorld 1.7[/b] — Strata draws with its own shaders on 1.7. Gas clouds blend smoothly and drift instead of sitting in squares, the holes you look down through have soft edges, underground levels darken at the screen edges the deeper you go, and underground water shimmers with moving light. The depth vignette and water light can be turned off in the Visuals settings. RimWorld 1.6 looks the same as before.
 [*] [b]Built for RimWorld 1.7 on .NET 10[/b] — the 1.7 version of Strata is now built against the 1.7 game files and the new .NET runtime it uses, instead of reusing the 1.6 build. Nothing changes on 1.6.
 [*] [b]Drafted orders across several floors[/b] — when a drafted pawn cannot walk to the spot you clicked, it can now go down, cross more than one linked floor, and come back up a stair that reaches it. Before, only a single floor in between was tried.
 [*] [b]Lost floors[/b] — rarely, a newly dug level from B2 down hides sealed rooms cut long ago by people who dug down before you. Break in to find their remains, their loot, and what killed them: insects still nest in the far rooms. Their diaries tell the story, and the lesson: noise underground draws infestations. Part of "Special levels" in the Levels settings.

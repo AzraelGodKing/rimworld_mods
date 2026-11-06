@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- RimWorld 1.7 only (loaded from the 1.7 folder). The GLSL lives in
+       1.7/Shaders/Strata and is drawn by StrataShaders17 in Strata.dll. -->
+
+  <ShaderDef>
+    <defName>Strata_BelowMask</defName>
+    <shaderProgram>
+      <vertexShaderFileName>StrataOverlay.vert.glsl</vertexShaderFileName>
+      <fragmentShaderFileName>StrataBelowMask.frag.glsl</fragmentShaderFileName>
+      <transparent>true</transparent>
+      <depthWrite>false</depthWrite>
+      <renderQueue>3600</renderQueue>
+    </shaderProgram>
+  </ShaderDef>
+
+  <ShaderDef>
+    <defName>Strata_GasOverlay</defName>
+    <shaderProgram>
+      <vertexShaderFileName>StrataOverlay.vert.glsl</vertexShaderFileName>
+      <fragmentShaderFileName>StrataGasOverlay.frag.glsl</fragmentShaderFileName>
+      <transparent>true</transparent>
+      <depthTest>false</depthTest>
+      <depthWrite>false</depthWrite>
+      <renderQueue>3900</renderQueue>
+    </shaderProgram>
+  </ShaderDef>
+
+  <ShaderDef>
+    <defName>Strata_Caustics</defName>
+    <shaderProgram>
+      <vertexShaderFileName>StrataOverlay.vert.glsl</vertexShaderFileName>
+      <fragmentShaderFileName>StrataCaustics.frag.glsl</fragmentShaderFileName>
+      <blendMode>Additive</blendMode>
+      <depthWrite>false</depthWrite>
+      <renderQueue>2950</renderQueue>
+    </shaderProgram>
+  </ShaderDef>
+
+  <ShaderDef>
+    <defName>Strata_DepthVignette</defName>
+    <shaderProgram>
+      <vertexShaderFileName>StrataOverlay.vert.glsl</vertexShaderFileName>
+      <fragmentShaderFileName>StrataDepthVignette.frag.glsl</fragmentShaderFileName>
+      <transparent>true</transparent>
+      <depthTest>false</depthTest>
+      <depthWrite>false</depthWrite>
+      <renderQueue>4100</renderQueue>
+    </shaderProgram>
+  </ShaderDef>
+</Defs>
