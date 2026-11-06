@@ -43,6 +43,27 @@ namespace Stormproof
         }
     }
 
+    [DefOf]
+    public static class StormproofIncidentDefOf
+    {
+        public static IncidentDef Stormproof_IonStorm;
+        public static IncidentDef Stormproof_HeatDome;
+        public static IncidentDef Stormproof_PolarFront;
+        public static IncidentDef Stormproof_ToxicSurge;
+        public static IncidentDef Stormproof_DryLightning;
+
+        internal static IncidentDef[] All => new[]
+        {
+            Stormproof_IonStorm, Stormproof_HeatDome, Stormproof_PolarFront,
+            Stormproof_ToxicSurge, Stormproof_DryLightning,
+        };
+
+        static StormproofIncidentDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(StormproofIncidentDefOf));
+        }
+    }
+
     [StaticConstructorOnStartup]
     public static class StormproofInit
     {
@@ -50,8 +71,8 @@ namespace Stormproof
         {
             SafePatchAll.Apply(new Harmony("azraelgodking.stormproof"), "[Stormproof]");
             StormproofSettings.CaptureOriginalChances();
-            StormproofMod.Settings?.ApplyIncidentChances();
-            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "forecast-schedule-v1"));
+            StormproofMod.Settings.ApplyIncidentChances();
+            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "stormproof2-net10"));
         }
     }
 

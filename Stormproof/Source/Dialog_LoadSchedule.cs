@@ -36,7 +36,7 @@ namespace Stormproof
             Widgets.Label(new Rect(inRect.x, inRect.y + 34f, inRect.width, 22f),
                 "Stormproof_LoadShedder_ScheduleHint".Translate());
 
-            float brownoutLine = StormproofMod.Settings != null && StormproofMod.Settings.enableBrownout
+            float brownoutLine = StormproofMod.Settings.enableBrownout
                 ? GridForecastUtility.BrownoutStart
                 : 0f;
             float cellW = (inRect.width - 23f) / 24f;

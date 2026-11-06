@@ -114,7 +114,7 @@ namespace Stormproof
 
         public void Notify_Struck()
         {
-            if (StormproofMod.Settings == null || StormproofMod.Settings.enableFulgurite)
+            if (StormproofMod.Settings.enableFulgurite)
             {
                 strikesCaught++;
                 int needed = Props.fulguriteStrikesNeeded <= 0 ? 8 : Props.fulguriteStrikesNeeded;
@@ -216,7 +216,7 @@ namespace Stormproof
 
         private static float ZzztFactor()
         {
-            return StormproofMod.Settings == null ? 1f : StormproofMod.Settings.zzztChanceFactor;
+            return StormproofMod.Settings.zzztChanceFactor;
         }
 
         public override void PostExposeData()
@@ -242,7 +242,7 @@ namespace Stormproof
 
         private string FulguriteLine()
         {
-            if (StormproofMod.Settings != null && !StormproofMod.Settings.enableFulgurite)
+            if (!StormproofMod.Settings.enableFulgurite)
             {
                 return "";
             }

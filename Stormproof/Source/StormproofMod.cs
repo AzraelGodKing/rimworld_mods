@@ -5,7 +5,9 @@ namespace Stormproof
 {
     public class StormproofMod : Mod
     {
-        public static StormproofSettings Settings;
+        // Defaults until the mod constructor loads the saved values, so callers
+        // never need a null check.
+        public static StormproofSettings Settings { get; private set; } = new StormproofSettings();
         private Vector2 settingsScroll;
         private float settingsContentHeight = 2000f;
 
@@ -18,11 +20,6 @@ namespace Stormproof
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            if (Settings == null)
-            {
-                return;
-            }
-
             int before = Settings.ContentFingerprint();
 
             Listing_Standard listing = new Listing_Standard { maxOneColumn = true };

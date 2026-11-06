@@ -39,10 +39,8 @@ Do not implement the other mod's systems here. Name the hook so each side can fa
 
 ## Next
 
-Tracked in the idea pool and Linear:
-
-- [ ] **AZR-109** Nexus `unknown parse failure` on load — not reproduced from these defs; likely packaging / load-order XML poison (same reporter as Homesteader AZR-108)
+Stormproof 2 (RimWorld 1.6 and 1.7 from one source) is tracked in Linear under the "Stormproof 2:" tickets.
 
 ---
 
-[Strata V4](../Strata/V4_ROADMAP.md) · [Homesteader](../Homesteader/ROADMAP.md) · [Nemesis](../Nemesis/ROADMAP.md)
+[Strata](../Strata/API.md) · [Homesteader](../Homesteader/ROADMAP.md) · [Nemesis](../Nemesis/ROADMAP.md)

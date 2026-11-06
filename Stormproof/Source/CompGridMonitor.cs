@@ -50,26 +50,6 @@ namespace Stormproof
             flickComp = parent.GetComp<CompFlickable>();
         }
 
-        private static float StoredEnergy(PowerNet net)
-        {
-            float sum = 0f;
-            for (int i = 0; i < net.batteryComps.Count; i++)
-            {
-                sum += net.batteryComps[i].StoredEnergy;
-            }
-            return sum;
-        }
-
-        private static float StorageCapacity(PowerNet net)
-        {
-            float sum = 0f;
-            for (int i = 0; i < net.batteryComps.Count; i++)
-            {
-                sum += net.batteryComps[i].Props.storedEnergyMax;
-            }
-            return sum;
-        }
-
         public override void CompTick()
         {
             base.CompTick();
@@ -82,12 +62,11 @@ namespace Stormproof
             {
                 return;
             }
-            float capacity = StorageCapacity(net);
+            BatteryMath.Sum(net, out float stored, out float capacity);
             if (capacity <= 0f)
             {
                 return;
             }
-            float stored = StoredEnergy(net);
             float fraction = stored / capacity;
             if (fraction >= Props.rearmFraction)
             {
@@ -183,8 +162,7 @@ namespace Stormproof
             cachedProduction = production;
             cachedConsumption = consumption;
             cachedGainWd = net.CurrentEnergyGainRate();
-            cachedStored = StoredEnergy(net);
-            cachedCapacity = StorageCapacity(net);
+            BatteryMath.Sum(net, out cachedStored, out cachedCapacity);
         }
 
         // A nearly balanced grid divides by ~0; cap before the int cast wraps.

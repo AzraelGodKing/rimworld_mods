@@ -37,7 +37,7 @@ namespace Stormproof
         public int CurrentCleanTicks =>
             cleanSinceTick < 0 ? 0 : Find.TickManager.TicksGame - cleanSinceTick;
 
-        public int LongestCleanTicks => UnityEngine.Mathf.Max(longestCleanTicks, CurrentCleanTicks);
+        public int LongestCleanTicks => System.Math.Max(longestCleanTicks, CurrentCleanTicks);
 
         public void QueueStormCall(int durationTicks)
         {
@@ -90,7 +90,7 @@ namespace Stormproof
             int now = Find.TickManager.TicksGame;
             if (cleanSinceTick >= 0)
             {
-                longestCleanTicks = UnityEngine.Mathf.Max(longestCleanTicks, now - cleanSinceTick);
+                longestCleanTicks = System.Math.Max(longestCleanTicks, now - cleanSinceTick);
             }
             cleanSinceTick = now;
         }
@@ -108,7 +108,7 @@ namespace Stormproof
 
         public float BrownoutFor(PowerNet net)
         {
-            if (net == null || StormproofMod.Settings == null || !StormproofMod.Settings.enableBrownout)
+            if (net == null || !StormproofMod.Settings.enableBrownout)
             {
                 return 0f;
             }
@@ -129,7 +129,7 @@ namespace Stormproof
         {
             brownoutCachedTick = Find.TickManager.TicksGame / 60;
             brownoutByNet.Clear();
-            if (StormproofMod.Settings == null || !StormproofMod.Settings.enableBrownout || map.powerNetManager == null)
+            if (!StormproofMod.Settings.enableBrownout || map.powerNetManager == null)
             {
                 return;
             }
@@ -142,14 +142,7 @@ namespace Stormproof
                 {
                     continue;
                 }
-                float cap = 0f;
-                float stored = 0f;
-                for (int b = 0; b < net.batteryComps.Count; b++)
-                {
-                    CompPowerBattery bat = net.batteryComps[b];
-                    cap += bat.Props.storedEnergyMax;
-                    stored += bat.StoredEnergy;
-                }
+                BatteryMath.Sum(net, out float stored, out float cap);
                 if (cap <= 0f)
                 {
                     continue;
@@ -166,7 +159,7 @@ namespace Stormproof
 
         private void TickAlmanac()
         {
-            if (StormproofMod.Settings == null || !StormproofMod.Settings.enableAlmanac)
+            if (!StormproofMod.Settings.enableAlmanac)
             {
                 return;
             }
@@ -182,7 +175,7 @@ namespace Stormproof
 
         public void NotifyCondition(GameCondition condition, bool started)
         {
-            if (StormproofMod.Settings == null || !StormproofMod.Settings.enableAlmanac || condition?.def == null)
+            if (!StormproofMod.Settings.enableAlmanac || condition?.def == null)
             {
                 return;
             }
@@ -299,7 +292,7 @@ namespace Stormproof
 
         private void TickWear()
         {
-            if (StormproofMod.Settings == null || !StormproofMod.Settings.enableStormWear)
+            if (!StormproofMod.Settings.enableStormWear)
             {
                 return;
             }
@@ -337,7 +330,7 @@ namespace Stormproof
                 {
                     continue;
                 }
-                int floor = UnityEngine.Mathf.Max(1, (int)(thing.MaxHitPoints * 0.15f));
+                int floor = System.Math.Max(1, (int)(thing.MaxHitPoints * 0.15f));
                 if (thing.HitPoints > floor)
                 {
                     thing.HitPoints--;
