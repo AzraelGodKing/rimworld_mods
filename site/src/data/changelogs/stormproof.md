@@ -6,9 +6,9 @@ Detailed notes for **Stormproof** only.
 
 ## [2.0.0]
 
-Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-gridtools`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
+Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-compat`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-492 AZR-493 AZR-494 AZR-495 AZR-497 AZR-498 AZR-500 AZR-501 AZR-505 AZR-667 AZR-668 AZR-669 AZR-670 AZR-671 AZR-672 AZR-713 AZR-715 AZR-716 AZR-717 AZR-718
+AZR-492 AZR-493 AZR-494 AZR-495 AZR-496 AZR-497 AZR-498 AZR-500 AZR-501 AZR-503 AZR-504 AZR-505 AZR-667 AZR-668 AZR-669 AZR-670 AZR-671 AZR-672 AZR-713 AZR-715 AZR-716 AZR-717 AZR-718
 
 ### Added
 - **Smart hold on the load shedder** (AZR-671) — a fourth hold mode after Auto. It works like Auto, but when the charge is back above the reconnect level it runs the grid forecast as if the sub-grid came back now, and stays shed if the supply would fall to the cutoff again within 8 hours. Needs a weather forecaster on the supply grid; without one it acts like Auto. The inspect pane says when and why it is holding. The hold gizmo is tinted per mode.
@@ -18,6 +18,9 @@ AZR-492 AZR-493 AZR-494 AZR-495 AZR-497 AZR-498 AZR-500 AZR-501 AZR-505 AZR-667 
 - **Storm caller settings** (AZR-718) — sliders for recharge (1 to 15 days, default 5) and storm length (2 to 24 hours, default 12). The building no longer has `cooldownTicks` / `stormDurationTicks` in its def.
 - **EMP dampener for mechanoids** (AZR-717) — with Biotech, an opt-in setting lets the dampener shield your own mechanoids from EMP stuns. Enemy mechanoids are never shielded.
 - **Gizmo icons** (AZR-507) — the almanac, fulgurite, schedule and hold gizmos use Stormproof's own art instead of vanilla's launch report and temperature icons.
+- **Compat API v2** (AZR-496): new public `Stormproof.StormproofCompatApi`, `ApiVersion = 2`. Members: `BrownoutFor(Thing)`, `IsEmpProtected(Thing)` (live dampener cover), `MapHasReadySurgeProtector(Map)`, `DampenerRadius`, `StormSurgeIntensity(Map)` (0 to 1 from rain rate, lightning weather and ion storms), `ForecastRemainingTicks(Map)`, `WeatherBringsLightning(Map)`, `IonStormActive(Map)`, and static `IonStormStarted` / `IonStormEnded` events raised from the condition start/end patches (a throwing subscriber is logged once and skipped). The forecaster reads its countdown through the same call. `Common/Sibling/StormproofClient.cs` is the sister-mod client: it binds delegates once and fails open; Strata, Nemesis and Deep Colony link it.
+- **Compatibility matrix** (AZR-504): [`Stormproof/COMPATIBILITY.md`](https://github.com/AzraelGodKing/rimworld_mods/blob/main/Stormproof/COMPATIBILITY.md), linked from `About.xml` and the site's compatibility data. Rows for each sister mod, DLC, Harmony and Multiplayer (not supported); columns for 1.6, 1.7, integration point, fail-open behaviour and last tested.
+- **Azrael storyteller rate** (AZR-504): with the Azrael storyteller loaded, the settings show the combined rate of its pick weights and the incident frequency slider for each Stormproof incident (key `Stormproof_Settings_AzraelStack`). The Stormfront description already matches its behaviour (Azrael lock only with Homesteader), so it is unchanged.
 
 ### Changed
 - **Two builds, one source** (AZR-493) — official 1.6 loads `1.6/Assemblies` (net472, 1.6 refs). 1.7 loads `1.7/Assemblies`, now a .NET 10 build against the 1.7 refs (`Krafs.Rimworld.Ref` 1.7.4998-unstable, Harmony 3.0.0-rc.4).

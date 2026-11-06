@@ -276,41 +276,12 @@ namespace Nemesis
             return best ?? fallback;
         }
 
-        public static bool IsBuildingEmpProtected(Building building)
-        {
-            if (building?.Map == null || !StormproofActive) return false;
-            const float radius = 14.9f;
-            List<Thing> things = building.Map.listerThings.ThingsOfDef(
-                DefDatabase<ThingDef>.GetNamedSilentFail("Stormproof_EmpDampener"));
-            if (things == null || things.Count == 0) return false;
-            for (int i = 0; i < things.Count; i++)
-            {
-                Thing t = things[i];
-                if (t == null || t.Destroyed || !t.Spawned) continue;
-                CompPowerTrader power = t.TryGetComp<CompPowerTrader>();
-                if (power != null && !power.PowerOn) continue;
-                if (t.Position.DistanceTo(building.Position) <= radius)
-                    return true;
-            }
-            return false;
-        }
+        // Live dampener cover (radius and power) through Stormproof's compat API.
+        public static bool IsBuildingEmpProtected(Building building) =>
+            StormproofActive && AzraelCommon.StormproofClient.IsEmpProtected(building);
 
-        public static bool MapHasReadySurgeProtector(Map map)
-        {
-            if (map == null || !StormproofActive) return false;
-            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail("Stormproof_SurgeProtector");
-            if (def == null) return false;
-            List<Thing> things = map.listerThings.ThingsOfDef(def);
-            if (things == null) return false;
-            for (int i = 0; i < things.Count; i++)
-            {
-                Thing t = things[i];
-                if (t == null || t.Destroyed || !t.Spawned) continue;
-                CompPowerTrader power = t.TryGetComp<CompPowerTrader>();
-                if (power == null || power.PowerOn) return true;
-            }
-            return false;
-        }
+        public static bool MapHasReadySurgeProtector(Map map) =>
+            StormproofActive && AzraelCommon.StormproofClient.MapHasReadySurgeProtector(map);
 
         public static string TryFavoriteFoodLabel(Pawn pawn)
         {

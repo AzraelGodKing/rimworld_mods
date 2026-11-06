@@ -5,7 +5,7 @@ namespace Strata
     // Visible in Player.log so we can confirm which assembly RimWorld loaded.
     public static class StrataBuildInfo
     {
-        public const string BuildStamp = "shaders-v1";
+        public const string BuildStamp = "storm-surge-v1";
 
         public static void LogStartup()
         {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace Strata
@@ -34,9 +35,16 @@ namespace Strata
             {
                 return false;
             }
-            var blob = new List<IntVec3> { root };
             int target = Rand.RangeInclusive(MinCells, MaxCells);
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(root, 3.5f, useCenter: false))
+            // A Stormproof storm surge above makes an unpumped seep up to twice as big.
+            if (!FloodUtility.AnyPumpRunning(map))
+            {
+                target = Mathf.RoundToInt(target * (1f + FloodUtility.StormSurgeAbove(map)));
+            }
+            // A bigger blob needs more room than the usual 3.5 cells.
+            float radius = target > MaxCells ? 4.5f : 3.5f;
+            var blob = new List<IntVec3> { root };
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(root, radius, useCenter: false))
             {
                 if (blob.Count >= target)
                 {

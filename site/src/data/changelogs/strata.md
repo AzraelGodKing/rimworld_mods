@@ -1,21 +1,26 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.0.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.0.0 loaded from ... (modified ...); shaders-v1.` via `ModVersionLog.Write`.
+**Version:** `4.0.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.0.0 loaded from ... (modified ...); storm-surge-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `shaders-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `storm-surge-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [4.0.0]
 
-Player-facing version **4.0.0** (`About.xml` `modVersion`). Stamp `shaders-v1`. No save-format change. The shader work was first numbered 4.1.0; it ships together with the rest of Strata 4 as 4.0.0.
+Player-facing version **4.0.0** (`About.xml` `modVersion`). Stamp `storm-surge-v1`. No save-format change. The shader work was first numbered 4.1.0; it ships together with the rest of Strata 4 as 4.0.0.
 
-AZR-468, AZR-469, AZR-470, AZR-458, AZR-484, AZR-467
+AZR-468, AZR-469, AZR-470, AZR-458, AZR-484, AZR-467, AZR-496, AZR-503
 
 ### Added (RimWorld 1.7 only)
 - **Strata shaders:** `1.7/Defs/ShaderDefs/Strata_Shaders.xml` declares `Strata_BelowMask`, `Strata_GasOverlay`, `Strata_Caustics` and `Strata_DepthVignette`. Their GLSL 450 is in `1.7/Shaders/Strata` and follows vanilla 1.7.4998 conventions: `StrataOverlay.vert.glsl` is a copy of vanilla `Transparent.vert.glsl`; material uniforms are in set 2, binding 0 with `@color`/`@default` annotations; `_MainTex` is at set 2, binding 1; the `InstanceTransforms.glsl` include sits behind `INSTANCED`. Every file compiles to SPIR-V with `glslangValidator`, with and without `INSTANCED`. `Source/Render17` (`#if RIMWORLD_1_7`) holds `StrataShaders17` (material from a `ShaderDef`, `_StrataParams` = time / map size / motion, per-draw render queue) and `StrataMapTexture` (one RGBA32 texel per cell, bilinear, one quad over the map, uploaded only when its data changes). If a shader fails to load, Strata logs one warning and falls back to the 1.6 drawing.
 - **See-below** (AZR-468): the lower level's section meshes are drawn with `Graphics.DrawMesh(..., renderQueue)`, so the 1.6 per-(material, queue) copies are gone on 1.7. The hole mask is a map texture drawn by `Strata_BelowMask` (soft bilinear edges) instead of a per-cell quad mesh. It refreshes on the same view and interval rules as before.
 - **Gas overlay** (AZR-469): the per-cell overlay colours (`Color32`) go into a map texture once per atmosphere rebuild, never per frame. `Strata_GasOverlay` samples them bilinearly with a slow, low-frequency drift and a soft density ripple. Colours and the legend are unchanged, and `CellBoolDrawer` stays as the fallback.
 - **Depth effects** (AZR-470): `MapComponent_StrataShaderEffects` on underground levels. It draws a depth vignette (a screen-edge darkening that grows with depth, from 20% to a maximum of 55%) and water caustics (a moving additive light pattern on unfogged water and flood cells, from a mask rescanned every 2500 ticks). Each has a Visuals setting (`depthVignette`, `waterCaustics`, both on by default), and nothing is built while a setting is off.
+
+### Added (with Stormproof 2.0.0)
+- **Storm surge floods** (AZR-503): with Stormproof 2.0.0, its `StormSurgeIntensity` (0 to 1 from surface rain, lightning weather and ion storms) grows seep floods on levels without a running sump pump. A flood seep incident is up to twice as big (up to 28 cells, within 4.5 cells instead of 3.5 when it needs the room), and a flooded level's rise pulse floods up to twice the cells, never fewer than the existing heavy-rain doubling. `FloodUtility.AnyPumpRunning` and `FloodUtility.StormSurgeAbove` are shared by both. Without Stormproof nothing changes.
+- **Shared hazard board** (AZR-503): an underground seismograph also shows the surface weather, how long it holds (from Stormproof's forecast) and the storm surge. Keys `Strata_Seismograph_SurfaceWeather`, `Strata_Seismograph_SurfaceWeatherNow`, `Strata_Seismograph_StormSurge` (EN/RU/CN). Stormproof's forecaster messages are global already, so underground players see them without a mirror.
+- **Stormproof compat API** (AZR-496): the freight-lift brownout reads `StormproofCompatApi.BrownoutFor` through the shared `Common/Sibling/StormproofClient.cs` (delegates bound once, fail-open) instead of finding `MapComponent_Stormproof` by name and reflecting on every call. `Source/StormproofBrownout.cs` is gone.
 
 ### Checked
 - **Transpilers on 1.7** (AZR-458): `Dialog_BeginRitual.CreateRitualRoleAssignments` still reads `FreeColonistsAndPrisonersSpawned` once, and `Designator_Build.ProcessInput` still calls `ListerThings.ThingsOfDef` once (decompiled from the 1.7.4998 rev1299 game DLL).

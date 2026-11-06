@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using AzraelCommon;
 using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
@@ -87,6 +88,7 @@ namespace Strata
             sb.AppendLine("Strata_Seismograph_Tremor".Translate(RiskLabel(s.tremorRisk)));
             sb.AppendLine("Strata_Seismograph_CaveIn".Translate(RiskLabel(s.caveInRisk)));
             sb.Append("Strata_Seismograph_Infestation".Translate(RiskLabel(s.infestationPressure)));
+            AppendSurfaceForecast(sb);
             MapComponent_MiningNoise noise = MapComponent_MiningNoise.For(parent.Map);
             if (noise != null && noise.Noise > 0.5f)
             {
@@ -105,6 +107,33 @@ namespace Strata
                 }
             }
             return sb.ToString();
+        }
+
+        // Shared hazard board: with Stormproof, the surface forecast and storm
+        // surge show here, so an underground colony can see what is coming.
+        private void AppendSurfaceForecast(StringBuilder sb)
+        {
+            Map surface = StrataRockUtility.SurfaceMapFor(parent.Map);
+            if (surface == null || surface == parent.Map || !StormproofClient.Available)
+            {
+                return;
+            }
+            WeatherDef weather = surface.weatherManager.curWeather;
+            if (weather == null)
+            {
+                return;
+            }
+            int remaining = StormproofClient.ForecastRemainingTicks(surface);
+            sb.AppendLine();
+            sb.Append(remaining > 0
+                ? "Strata_Seismograph_SurfaceWeather".Translate(weather.LabelCap, remaining.ToStringTicksToPeriod())
+                : "Strata_Seismograph_SurfaceWeatherNow".Translate(weather.LabelCap));
+            float surge = StormproofClient.StormSurgeIntensity(surface);
+            if (surge >= 0.05f)
+            {
+                sb.AppendLine();
+                sb.Append("Strata_Seismograph_StormSurge".Translate(surge.ToStringPercent()));
+            }
         }
 
         private List<string> OtherLevelLines()

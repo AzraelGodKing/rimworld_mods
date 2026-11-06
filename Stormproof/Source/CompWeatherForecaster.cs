@@ -1,5 +1,4 @@
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace Stormproof
@@ -85,14 +84,7 @@ namespace Stormproof
             return map == null ? 0 : RemainingTicks(map);
         }
 
-        private static int RemainingTicks(Map map)
-        {
-            if (!WeatherDeciderAccess.TryGetDuration(map.weatherDecider, out int duration))
-            {
-                return -1;
-            }
-            return Mathf.Max(0, duration - map.weatherManager.curWeatherAge);
-        }
+        private static int RemainingTicks(Map map) => StormproofCompatApi.ForecastRemainingTicks(map);
 
         public static bool BringsLightning(WeatherDef def)
         {

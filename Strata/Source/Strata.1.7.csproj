@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\Common\Azrael.Common.props" />
+  <ItemGroup>
+    <!-- Stormproof compat client: only the mods that read Stormproof link it. -->
+    <Compile Include="..\..\Common\Sibling\StormproofClient.cs" Link="Common\StormproofClient.cs" />
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <LangVersion>latest</LangVersion>

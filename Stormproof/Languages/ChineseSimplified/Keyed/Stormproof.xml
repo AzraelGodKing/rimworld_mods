@@ -192,5 +192,6 @@
   <Stormproof_Almanac_LifetimeDefence>累计：静电放电塔电击 {0}。EMP 爆发 {1}。</Stormproof_Almanac_LifetimeDefence>
   <Stormproof_LoadShedder_HoldSmart>保持：智能</Stormproof_LoadShedder_HoldSmart>
   <Stormproof_LoadShedder_SmartHolding>智能保持：现在重新接通将在 {0} 后触及切断阈值。保持切除。</Stormproof_LoadShedder_SmartHolding>
+  <Stormproof_Settings_AzraelStack>使用 Azrael 叙事者时（它也会提高这些事件的抽取权重）：{0}</Stormproof_Settings_AzraelStack>
 
 </LanguageData>

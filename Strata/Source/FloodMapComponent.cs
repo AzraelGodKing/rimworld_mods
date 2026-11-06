@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AzraelCommon;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -19,6 +20,26 @@ namespace Strata
             TerrainDef flood = FloodTerrain;
             return terrain != null && flood != null && terrain == flood;
         }
+
+        // A running sump pump keeps the level dry: no seep growth, no storm surge.
+        public static bool AnyPumpRunning(Map map)
+        {
+            List<Thing> pumps = map.listerThings.ThingsOfDef(StrataFloodDefOf.Strata_SumpPump);
+            for (int i = 0; i < pumps.Count; i++)
+            {
+                CompSumpPump pump = pumps[i].TryGetComp<CompSumpPump>();
+                if (pump != null && pump.Active)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Stormproof's storm surge on the surface above (0 to 1): rain, lightning
+        // weather and ion storms push groundwater down. 0 without Stormproof.
+        public static float StormSurgeAbove(Map map) =>
+            StormproofClient.StormSurgeIntensity(StrataRockUtility.SurfaceMapFor(map));
     }
 
     // Tracks seep-flood cells on underground maps; sump pumps drain them.

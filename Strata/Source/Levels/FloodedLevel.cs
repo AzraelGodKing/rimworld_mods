@@ -21,7 +21,8 @@ namespace Strata
 
         public const int DrownIntervalTicks = 250;
 
-        // Cells flooded per rise pulse with no pump running (doubled in heavy rain).
+        // Cells flooded per rise pulse with no pump running (doubled in heavy rain,
+        // up to doubled by a Stormproof storm surge).
         private const int CellsPerRise = 3;
 
         // The seep stops spreading past this many flooded cells.
@@ -120,11 +121,12 @@ namespace Strata
         internal static void TickRise(Map map, MapComponent_StrataLevelKind comp)
         {
             FloodMapComponent flood = map.GetComponent<FloodMapComponent>();
-            if (flood == null || flood.FloodedCount >= MaxFloodCells || AnyPumpRunning(map))
+            if (flood == null || flood.FloodedCount >= MaxFloodCells || FloodUtility.AnyPumpRunning(map))
             {
                 return;
             }
-            int cells = CellsPerRise * (HeavyRainAbove(map) ? 2 : 1);
+            float wet = Mathf.Max(HeavyRainAbove(map) ? 2f : 1f, 1f + FloodUtility.StormSurgeAbove(map));
+            int cells = Mathf.RoundToInt(CellsPerRise * wet);
             IReadOnlyList<IntVec3> lake = comp.LakeCells;
             if (lake.Count == 0)
             {
@@ -164,20 +166,6 @@ namespace Strata
                 }
                 HealthUtility.AdjustSeverity(pawn, drowning, DrownPerPulse);
             }
-        }
-
-        private static bool AnyPumpRunning(Map map)
-        {
-            List<Thing> pumps = map.listerThings.ThingsOfDef(StrataFloodDefOf.Strata_SumpPump);
-            for (int i = 0; i < pumps.Count; i++)
-            {
-                CompSumpPump pump = pumps[i].TryGetComp<CompSumpPump>();
-                if (pump != null && pump.Active)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         // Rain on the surface soaks down to the lake (storm mods included).
