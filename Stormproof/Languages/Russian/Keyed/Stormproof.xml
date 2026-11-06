@@ -179,5 +179,6 @@
   <Stormproof_Settings_Reset>Сбросить</Stormproof_Settings_Reset>
   <Stormproof_StormCaller_BrokeFront>{0} разрушает сухой грозовой фронт. Скоро пойдёт дождь.</Stormproof_StormCaller_BrokeFront>
   <Stormproof_DisabledInSettings>Отключено в настройках мода: только холостое потребление.</Stormproof_DisabledInSettings>
+  <Stormproof_Brownout_StatPart>Просадка сети ({0}): x{1}</Stormproof_Brownout_StatPart>
 
 </LanguageData>

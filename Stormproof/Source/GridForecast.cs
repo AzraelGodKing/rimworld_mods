@@ -27,7 +27,6 @@ namespace Stormproof
         internal const int CurveSteps = HorizonTicks / StepTicks;
         internal const float BrownoutStart = 0.40f;
         private const float AfterWeatherSkyMul = 0.9f;
-        private const float BrownoutDrawCut = 0.40f;
 
         private struct ShedderSim
         {
@@ -93,19 +92,20 @@ namespace Stormproof
             // Per call, not static: Project runs from ticks and from open dialogs.
             List<ShedderSim> shedders = CollectShedders(map, net);
             long ticksAbs = Find.TickManager.TicksAbs;
+            float[] sun = SunCurve(map);
             float longitude = Find.WorldGrid.LongLatOf(map.Tile).x;
 
             for (int elapsed = 0; elapsed < HorizonTicks; elapsed += StepTicks)
             {
                 bool holds = forecast != null && elapsed < result.WeatherRemaining;
-                float sky = ProjectedSky(map, elapsed, holds, weatherMul);
+                float sky = Mathf.Clamp01(sun[elapsed / StepTicks] * (holds ? weatherMul : AfterWeatherSkyMul));
                 float wind = holds ? windFrac : windFrac * 0.55f;
                 float startFrac = energy / capacity;
                 float shedDelta = shedders == null
                     ? 0f
                     : StepShedders(shedders, startFrac, GenDate.HourOfDay(ticksAbs + elapsed, longitude));
                 float brownout = BrownoutAt(startFrac, severity);
-                float draw = Mathf.Max(0f, nameplateDraw + shedDelta) * (1f - BrownoutDrawCut * brownout);
+                float draw = Mathf.Max(0f, nameplateDraw + shedDelta) * (1f - BrownoutUtility.DrawCut * brownout);
                 float watts = solarMax * sky + windMax * wind + otherProd - draw;
                 energy = Mathf.Clamp(energy + watts * CompPower.WattsToWattDaysPerTick * StepTicks, 0f, capacity);
                 if (energy < nadir)
@@ -348,11 +348,28 @@ namespace Stormproof
             return 1f;
         }
 
-        private static float ProjectedSky(Map map, int ticksFromNow, bool weatherHolds, float weatherMul)
+        // Celestial sun glow for each forecast step, shared by every monitor,
+        // shedder and dialog on the map until the next 250-tick step. Steps are
+        // taken from the start of the current step, at most 250 ticks early.
+        private static float[] SunCurve(Map map)
         {
-            float celestial = GenCelestial.CelestialSunGlow(map, Find.TickManager.TicksAbs + ticksFromNow);
-            float mul = weatherHolds ? weatherMul : AfterWeatherSkyMul;
-            return Mathf.Clamp01(celestial * mul);
+            MapComponent_Stormproof comp = MapComponent_Stormproof.For(map);
+            long step = Find.TickManager.TicksAbs / StepTicks;
+            float[] curve = comp?.sunCurve ?? new float[CurveSteps];
+            if (comp != null && comp.sunCurveStep == step)
+            {
+                return curve;
+            }
+            long start = step * StepTicks;
+            for (int i = 0; i < CurveSteps; i++)
+            {
+                curve[i] = GenCelestial.CelestialSunGlow(map, (int)(start + i * StepTicks));
+            }
+            if (comp != null)
+            {
+                comp.sunCurveStep = step;
+            }
+            return curve;
         }
     }
 }

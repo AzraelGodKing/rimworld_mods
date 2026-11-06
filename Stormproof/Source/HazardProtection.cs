@@ -10,28 +10,46 @@ namespace Stormproof
     public static class HazardProtection
     {
         // Each defender's Protecting already includes its mod-settings switch.
+        // The toxic, plant-growth and temperature patches ask once per cell,
+        // plant or condition, many times a tick. The answer is worked out once
+        // per map per tick and then read from the memo.
         public static bool BarrierProtecting(Map map) =>
-            AnyProtecting(StormproofRegistry.AtmosphericBarriers.On(map));
+            Memo(map, StormproofRegistry.AtmosphericBarriers.On(map), m => m.barrierMemo);
 
         public static bool ClimateProtecting(Map map) =>
-            AnyProtecting(StormproofRegistry.ClimateStabilizers.On(map));
+            Memo(map, StormproofRegistry.ClimateStabilizers.On(map), m => m.climateMemo);
 
         public static bool SkyProtecting(Map map) =>
-            AnyProtecting(StormproofRegistry.SkyRestorers.On(map));
+            Memo(map, StormproofRegistry.SkyRestorers.On(map), m => m.skyMemo);
 
         public static bool DroughtProtecting(Map map) =>
-            AnyProtecting(StormproofRegistry.DroughtCondensers.On(map));
+            Memo(map, StormproofRegistry.DroughtCondensers.On(map), m => m.droughtMemo);
 
-        private static bool AnyProtecting<T>(List<T> defenders) where T : CompHazardDefender
+        private static bool Memo<T>(Map map, List<T> defenders,
+            System.Func<MapComponent_Stormproof, TickMemo> pick) where T : CompHazardDefender
         {
-            for (int i = 0; i < defenders.Count; i++)
+            if (defenders.Count == 0)
             {
-                if (defenders[i].Protecting)
-                {
-                    return true;
-                }
+                return false;
             }
-            return false;
+            MapComponent_Stormproof comp = MapComponent_Stormproof.For(map);
+            TickMemo memo = comp == null ? null : pick(comp);
+            int tick = Find.TickManager.TicksGame;
+            if (memo != null && memo.tick == tick)
+            {
+                return memo.value;
+            }
+            bool any = false;
+            for (int i = 0; i < defenders.Count && !any; i++)
+            {
+                any = defenders[i].Protecting;
+            }
+            if (memo != null)
+            {
+                memo.tick = tick;
+                memo.value = any;
+            }
+            return any;
         }
 
         // Temperature conditions only know their affected maps, not the map
@@ -70,6 +88,13 @@ namespace Stormproof
             }
             return false;
         }
+    }
+
+    // One cached yes/no per map per tick. Derived, never saved.
+    public sealed class TickMemo
+    {
+        public int tick = -1;
+        public bool value;
     }
 
     public interface IHazardDefender

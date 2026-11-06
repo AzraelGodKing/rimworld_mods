@@ -31,6 +31,15 @@ namespace Stormproof
         private int longestCleanTicks;
         private int saveSchemaVersion = CurrentSaveSchema;
 
+        // Per-tick answers for HazardProtection; derived state, not saved.
+        internal readonly TickMemo barrierMemo = new TickMemo();
+        internal readonly TickMemo climateMemo = new TickMemo();
+        internal readonly TickMemo skyMemo = new TickMemo();
+        internal readonly TickMemo droughtMemo = new TickMemo();
+        // GridForecastUtility's shared sun curve; derived, not saved.
+        internal readonly float[] sunCurve = new float[GridForecastUtility.CurveSteps];
+        internal long sunCurveStep = -1;
+
         public MapComponent_Stormproof(Map map) : base(map)
         {
         }
@@ -185,13 +194,7 @@ namespace Stormproof
                 {
                     continue;
                 }
-                float fraction = stored / cap;
-                float raw = 0f;
-                if (fraction < 0.40f)
-                {
-                    raw = (0.40f - fraction) / 0.40f;
-                }
-                brownoutByNet[net] = raw * severity;
+                brownoutByNet[net] = GridForecastUtility.BrownoutAt(stored / cap, severity);
             }
         }
 

@@ -45,10 +45,11 @@ namespace Stormproof
             }
         }
 
-        public override void CompTick()
+        // tickerType Rare: every 250 ticks.
+        public override void CompTickRare()
         {
-            base.CompTick();
-            if (!parent.IsHashIntervalTick(250) || !Active)
+            base.CompTickRare();
+            if (!Active)
             {
                 return;
             }

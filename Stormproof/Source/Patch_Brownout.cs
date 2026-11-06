@@ -8,9 +8,14 @@ namespace Stormproof
 {
     public static class BrownoutUtility
     {
+        // Share of a consumer's draw cut at full brownout (grid forecast models the same).
+        internal const float DrawCut = 0.40f;
+        private const float WorkSpeedCut = 0.55f;
+
         public static float For(Thing thing)
         {
-            if (thing?.Map == null)
+            // Settings first: with brownout off, no lookups at all (AZR-713).
+            if (!StormproofMod.Settings.enableBrownout || thing?.Map == null)
             {
                 return 0f;
             }
@@ -18,10 +23,17 @@ namespace Stormproof
             return comp == null ? 0f : comp.BrownoutFor(thing);
         }
 
-        public static float For(CompPowerTrader trader)
+        public static float For(PowerNet net)
         {
-            return trader?.parent == null ? 0f : For(trader.parent);
+            if (!StormproofMod.Settings.enableBrownout || net == null)
+            {
+                return 0f;
+            }
+            MapComponent_Stormproof comp = MapComponent_Stormproof.For(net.Map);
+            return comp == null ? 0f : comp.BrownoutFor(net);
         }
+
+        internal static float WorkSpeedFactor(float brownout) => 1f - WorkSpeedCut * brownout;
 
         public static string InspectLine(Thing thing)
         {
@@ -34,12 +46,17 @@ namespace Stormproof
         }
     }
 
-    [HarmonyPatch(typeof(CompPowerTrader), "get_PowerOutput")]
-    public static class Patch_Brownout_PowerOutput
+    // Brownout trims what a weak grid's consumers draw. It is applied to the
+    // grid's energy gain, where vanilla's power tick reads it, instead of to
+    // CompPowerTrader.PowerOutput: that getter is tiny enough for the .NET 10
+    // JIT to inline into its callers, which would skip a patch on it silently.
+    // This also costs one lookup per grid per tick instead of one per consumer.
+    [HarmonyPatch(typeof(PowerNet), nameof(PowerNet.CurrentEnergyGainRate))]
+    public static class Patch_Brownout_GainRate
     {
-        public static void Postfix(CompPowerTrader __instance, ref float __result)
+        public static void Postfix(PowerNet __instance, ref float __result)
         {
-            if (__result >= 0f)
+            if (DebugSettings.unlimitedPower)
             {
                 return;
             }
@@ -48,25 +65,48 @@ namespace Stormproof
             {
                 return;
             }
-            __result *= 1f - 0.40f * b;
+            List<CompPowerTrader> comps = __instance.powerComps;
+            float draw = 0f;
+            for (int i = 0; i < comps.Count; i++)
+            {
+                CompPowerTrader trader = comps[i];
+                if (trader.PowerOn && trader.PowerOutput < 0f)
+                {
+                    draw -= trader.PowerOutput;
+                }
+            }
+            __result += draw * BrownoutUtility.DrawCut * b * CompPower.WattsToWattDaysPerTick;
         }
     }
 
-    [HarmonyPatch(typeof(StatExtension), nameof(StatExtension.GetStatValue))]
-    public static class Patch_Brownout_WorkSpeed
+    // Workbench slowdown as a stat part on WorkTableWorkSpeedFactor (added by
+    // Patches/Stormproof_Brownout.xml), so it shows in the stat tooltip and no
+    // global GetStatValue patch is needed.
+    public class StatPart_Brownout : StatPart
     {
-        public static void Postfix(Thing thing, StatDef stat, ref float __result)
+        public override void TransformValue(StatRequest req, ref float val)
         {
-            if (stat != StatDefOf.WorkTableWorkSpeedFactor || thing == null)
+            if (req.HasThing)
             {
-                return;
+                float b = BrownoutUtility.For(req.Thing);
+                if (b > 0f)
+                {
+                    val *= BrownoutUtility.WorkSpeedFactor(b);
+                }
             }
-            float b = BrownoutUtility.For(thing);
-            if (b <= 0f)
+        }
+
+        public override string ExplanationPart(StatRequest req)
+        {
+            if (!req.HasThing)
             {
-                return;
+                return null;
             }
-            __result *= 1f - 0.55f * b;
+            float b = BrownoutUtility.For(req.Thing);
+            return b > 0f
+                ? "Stormproof_Brownout_StatPart".Translate(b.ToStringPercent(),
+                    BrownoutUtility.WorkSpeedFactor(b).ToStringPercent())
+                : null;
         }
     }
 

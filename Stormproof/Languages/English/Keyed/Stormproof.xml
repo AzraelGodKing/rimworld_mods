@@ -180,5 +180,6 @@
   <Stormproof_Settings_Reset>Reset to defaults</Stormproof_Settings_Reset>
   <Stormproof_StormCaller_BrokeFront>{0} breaks the dry lightning front. Rain is coming.</Stormproof_StormCaller_BrokeFront>
   <Stormproof_DisabledInSettings>Disabled in mod settings: idle draw only.</Stormproof_DisabledInSettings>
+  <Stormproof_Brownout_StatPart>Grid brownout ({0}): x{1}</Stormproof_Brownout_StatPart>
 
 </LanguageData>

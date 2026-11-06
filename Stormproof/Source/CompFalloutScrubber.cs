@@ -46,10 +46,11 @@ namespace Stormproof
             flickComp = parent.GetComp<CompFlickable>();
         }
 
-        public override void CompTick()
+        // tickerType Rare: every 250 ticks.
+        public override void CompTickRare()
         {
-            base.CompTick();
-            if (!parent.IsHashIntervalTick(250) || !PoweredOn)
+            base.CompTickRare();
+            if (!PoweredOn)
             {
                 return;
             }
@@ -58,14 +59,16 @@ namespace Stormproof
             {
                 return;
             }
+            // Hediff first: almost no pawn has toxic buildup, and the room
+            // lookup is the costly part.
             foreach (Pawn pawn in parent.Map.mapPawns.AllPawnsSpawned)
             {
-                if (pawn.Dead || pawn.GetRoom() != room)
+                if (pawn.Dead)
                 {
                     continue;
                 }
                 Hediff buildup = pawn.health?.hediffSet?.GetFirstHediffOfDef(HediffDefOf.ToxicBuildup);
-                if (buildup != null)
+                if (buildup != null && pawn.GetRoom() == room)
                 {
                     buildup.Severity -= Props.severityPerRareTick;
                 }

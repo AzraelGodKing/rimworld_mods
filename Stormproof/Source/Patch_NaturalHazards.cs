@@ -76,7 +76,8 @@ namespace Stormproof
     [HarmonyPatch]
     public static class Patch_VolcanicAsh_GiveOrUpdateHediff
     {
-        static bool Prepare() => TargetMethod() != null;
+        static bool Prepare() => OptionalHazardTargets.Available(TargetMethod(), ModsConfig.OdysseyActive,
+            "GameCondition_VolcanicAsh.GiveOrUpdateHediff");
 
         static MethodBase TargetMethod() =>
             OptionalHazardTargets.Method("GameCondition_VolcanicAsh", "GiveOrUpdateHediff");
@@ -88,7 +89,8 @@ namespace Stormproof
     [HarmonyPatch]
     public static class Patch_VolcanicAsh_SkyTarget
     {
-        static bool Prepare() => TargetMethod() != null;
+        static bool Prepare() => OptionalHazardTargets.Available(TargetMethod(), ModsConfig.OdysseyActive,
+            "GameCondition_VolcanicAsh.SkyTarget");
 
         static MethodBase TargetMethod() =>
             OptionalHazardTargets.Method("GameCondition_VolcanicAsh", "SkyTarget");
@@ -100,7 +102,8 @@ namespace Stormproof
     [HarmonyPatch]
     public static class Patch_Plant_GrowthRateFactor_Drought
     {
-        static bool Prepare() => TargetMethod() != null;
+        static bool Prepare() => OptionalHazardTargets.Available(TargetMethod(), ModsConfig.OdysseyActive,
+            "Plant.GrowthRateFactor_Drought");
 
         static MethodBase TargetMethod() =>
             OptionalHazardTargets.PlantGetter("GrowthRateFactor_Drought");
@@ -121,7 +124,8 @@ namespace Stormproof
     [HarmonyPatch]
     public static class Patch_Plant_GrowthRateFactor_NoxiousHaze
     {
-        static bool Prepare() => TargetMethod() != null;
+        static bool Prepare() => OptionalHazardTargets.Available(TargetMethod(), ModsConfig.BiotechActive,
+            "Plant.GrowthRateFactor_NoxiousHaze");
 
         static MethodBase TargetMethod() =>
             OptionalHazardTargets.PlantGetter("GrowthRateFactor_NoxiousHaze");
@@ -141,6 +145,17 @@ namespace Stormproof
 
     internal static class OptionalHazardTargets
     {
+        // A missing target is expected without its DLC. With the DLC active it
+        // means a game update moved the method, so say so once.
+        internal static bool Available(MethodBase target, bool dlcActive, string what)
+        {
+            if (target == null && dlcActive)
+            {
+                Log.Warning("[Stormproof] " + what + " not found although its DLC is active; that protection is off.");
+            }
+            return target != null;
+        }
+
         internal static MethodInfo Method(string typeName, string methodName)
         {
             Type type = AccessTools.TypeByName(typeName) ?? AccessTools.TypeByName("RimWorld." + typeName);
