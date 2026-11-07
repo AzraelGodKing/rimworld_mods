@@ -87,6 +87,11 @@ namespace Azrael.ModChecks
             @"""([A-Za-z][A-Za-z0-9_]*)""\s*\)?\s*\.Translate\s*\(",
             RegexOptions.Compiled);
 
+        // $"Prefix{n}Suffix".Translate(...): checked as a key family (prefix + anything + suffix).
+        static readonly Regex KeyedInterpolated = new Regex(
+            @"\$""([A-Za-z][A-Za-z0-9_]*)\{[^}""]+\}([A-Za-z0-9_]*)""\s*\.Translate\s*\(",
+            RegexOptions.Compiled);
+
         static readonly Regex KeyedConcatPrefix = new Regex(
             @"""([A-Za-z][A-Za-z0-9_]*_)""\s*\+",
             RegexOptions.Compiled);
@@ -469,6 +474,25 @@ namespace Azrael.ModChecks
                             && !HasKeyedPrefixFamily(keys, key))
                             errors.Add("Translate() key missing in English Keyed: " + key
                                 + " (" + Rel(repo, file) + ")");
+                    }
+                    foreach (Match m in KeyedInterpolated.Matches(text))
+                    {
+                        string prefix = m.Groups[1].Value;
+                        string suffix = m.Groups[2].Value;
+                        bool found = false;
+                        foreach (string key in keys)
+                        {
+                            if (key.Length > prefix.Length + suffix.Length
+                                && key.StartsWith(prefix, StringComparison.Ordinal)
+                                && key.EndsWith(suffix, StringComparison.Ordinal))
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found)
+                            errors.Add("Translate() interpolated key family missing in English Keyed: "
+                                + prefix + "{…}" + suffix + " (" + Rel(repo, file) + ")");
                     }
                     foreach (Match m in KeyedConcatPrefix.Matches(text))
                     {
