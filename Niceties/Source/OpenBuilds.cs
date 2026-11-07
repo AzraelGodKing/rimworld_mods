@@ -36,6 +36,7 @@ namespace Niceties
         {
             public int Tick;
             public int MapId;
+            public IntVec3 Anchor;
             public HashSet<IntVec3> Blockers = null!;
             public HashSet<IntVec3> Enclosed = null!;
             public HashSet<IntVec3>? SafeSpots;
@@ -49,11 +50,37 @@ namespace Niceties
             GeometryCache.Clear();
         }
 
+        /// <summary>
+        /// A finished wall only changes flood fills that could reach it. A fill stops at
+        /// <see cref="MaxRegionSize"/> cells, so anything cached on another map or further
+        /// away than that stays valid (AZR-701).
+        /// </summary>
+        internal static void ClearCacheNear(Map map, IntVec3 cell)
+        {
+            int reach = MaxRegionSize + 2;
+            int reachSq = reach * reach;
+            PruneScratch.Clear();
+            foreach (KeyValuePair<int, Geometry> kv in GeometryCache)
+            {
+                if (kv.Value.MapId == map.uniqueID && kv.Value.Anchor.DistanceToSquared(cell) <= reachSq)
+                {
+                    PruneScratch.Add(kv.Key);
+                }
+            }
+
+            for (int i = 0; i < PruneScratch.Count; i++)
+            {
+                GeometryCache.Remove(PruneScratch[i]);
+            }
+
+            PruneScratch.Clear();
+        }
+
         internal static bool Enabled
         {
             get
             {
-                NicetiesSettings settings = NicetiesSim.Settings;
+                NicetiesSimFlags settings = NicetiesSim.Settings;
                 if (!settings.enableLeaveAWayOut)
                 {
                     return false;
@@ -166,6 +193,7 @@ namespace Niceties
             {
                 Tick = tick,
                 MapId = mapId,
+                Anchor = target.Position,
                 Blockers = blockers,
                 Enclosed = ClosedRegion(target.Map, blockers)
             };

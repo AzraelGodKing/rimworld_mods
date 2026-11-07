@@ -6,10 +6,17 @@ Niceties 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting ev
 [list]
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
 [*] [b]Removing Niceties[/b] — the description no longer says it is safe to remove mid-save. Removing it logs a few harmless errors once on the next load.
+[*] [b]Wear any outfit[/b] — no longer edits apparel defs. Colonists can wear any cut with no wrong-gender thought, but raiders, traders and new joiners dress as vanilla again. Tick "Also let generated pawns wear any cut" for the 1.x behaviour.
+[*] [b]Presets[/b] — Soft, Default and Hard only change the knobs under each nicety. They no longer switch back on a nicety you turned off. "Reset to defaults" still resets everything.
+[*] [b]Well-kept weapons removed[/b] — equipped weapons never wear out in vanilla, so the toggle did nothing.
 [/list]
 [b]Fixed[/b]
 [list]
 [*] [b]Throne and altar[/b] — skipped entirely unless both Royalty and Ideology are active, instead of patching rooms that can never matter.
+[*] [b]Melee hunting[/b] — the size cap uses the animal's real size, so young animals are judged by their own size, not the adult's. The reference animal label follows a language change.
+[*] [b]Colonist bar[/b] — a map whose only colonists are in cryptosleep keeps its slot instead of leaving a gap. The "+N in cryptosleep" note no longer disappears after a resize, stays on screen at large UI scales, and is hidden whenever the bar is.
+[*] [b]Multiplayer[/b] — wear-any-outfit can no longer make a host and a joining player generate different pawns.
+[*] [b]Leave a way out[/b] — finishing a wall only resets the enclose checks near it, not every check on every map.
 [/list]
 
 [i]Build stamp (Player.log): niceties2[/i]

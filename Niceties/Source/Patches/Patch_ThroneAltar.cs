@@ -22,7 +22,7 @@ namespace Niceties
 
         private static void Postfix(ref bool __result)
         {
-            NicetiesSettings settings = NicetiesSim.Settings;
+            NicetiesSimFlags settings = NicetiesSim.Settings;
             if (settings.allowThroneAltars)
             {
                 __result = true;
@@ -42,7 +42,7 @@ namespace Niceties
                 return;
             }
 
-            NicetiesSettings settings = NicetiesSim.Settings;
+            NicetiesSimFlags settings = NicetiesSim.Settings;
             if (!settings.allowThroneAltars)
             {
                 return;

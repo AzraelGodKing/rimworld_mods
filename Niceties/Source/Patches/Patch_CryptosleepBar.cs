@@ -9,37 +9,49 @@ namespace Niceties
 {
     internal static class CryptosleepBar
     {
+        private static readonly List<ColonistBar.Entry> Scratch = new List<ColonistBar.Entry>();
+        private static readonly HashSet<int> VisibleGroups = new HashSet<int>();
+        private static readonly HashSet<int> PlaceholderGroups = new HashSet<int>();
+
         private static bool entriesMissingLogged;
         private static int hiddenCount;
+        private static int lastFilteredCount = -1;
+        private static List<ColonistBar.Entry>? lastFilteredList;
+
+        private static int labelCount = -1;
+        private static LoadedLanguage? labelLanguage;
+        private static string label = "";
+        private static string tooltip = "";
+        private static Vector2 labelSize;
+
+        internal static int HiddenCount => hiddenCount;
 
         internal static void MarkDirty()
         {
             Find.ColonistBar?.MarkColonistsDirty();
         }
 
-        internal static bool ShouldHide(Pawn pawn)
+        /// <summary>
+        /// Runs from a prefix on <c>CalculateDrawLocs</c>, after the entries are filled and
+        /// before the layout reads them (AZR-547). Settings are read once and the list is
+        /// rebuilt in one pass. A map group left with no visible colonist gets the same
+        /// pawn-less entry vanilla uses for an empty map, so the group count the layout was
+        /// given stays right.
+        /// </summary>
+        internal static void FilterEntries(ColonistBar? bar)
         {
-            NicetiesSettings settings = NicetiesSim.Settings;
-            if (pawn == null || !settings.hideCryptosleep)
-            {
-                return false;
-            }
-
-            return pawn.InCryptosleep;
-        }
-
-        internal static void FilterEntries(ColonistBar bar)
-        {
-            hiddenCount = 0;
-            NicetiesSettings settings = NicetiesSim.Settings;
-            if (bar == null || !settings.hideCryptosleep)
+            if (bar == null)
             {
                 return;
             }
 
-            // Prefer the public Entries property over AccessTools.Field("cachedEntries")
-            // so a Ludeon rename fails loudly once instead of silently (AZR-291).
-            List<ColonistBar.Entry> entries = bar.Entries;
+            if (!NicetiesSim.Settings.hideCryptosleep)
+            {
+                hiddenCount = 0;
+                return;
+            }
+
+            List<ColonistBar.Entry>? entries = bar.Entries;
             if (entries == null)
             {
                 if (!entriesMissingLogged)
@@ -51,55 +63,156 @@ namespace Niceties
                 return;
             }
 
-            if (entries.Count == 0)
+            VisibleGroups.Clear();
+            int removed = 0;
+            for (int i = 0; i < entries.Count; i++)
             {
+                if (Hides(entries[i].pawn))
+                {
+                    removed++;
+                }
+                else
+                {
+                    VisibleGroups.Add(entries[i].group);
+                }
+            }
+
+            if (removed == 0)
+            {
+                // A second layout pass over the list we already filtered finds nothing to
+                // remove; keep the count so "+N" does not vanish on a resize.
+                if (!ReferenceEquals(entries, lastFilteredList) || entries.Count != lastFilteredCount)
+                {
+                    hiddenCount = 0;
+                }
+
                 return;
             }
 
-            for (int i = entries.Count - 1; i >= 0; i--)
+            Scratch.Clear();
+            PlaceholderGroups.Clear();
+            for (int i = 0; i < entries.Count; i++)
             {
-                if (ShouldHide(entries[i].pawn))
+                ColonistBar.Entry entry = entries[i];
+                if (!Hides(entry.pawn))
                 {
-                    entries.RemoveAt(i);
-                    hiddenCount++;
+                    Scratch.Add(entry);
+                    continue;
+                }
+
+                if (entry.map != null && !VisibleGroups.Contains(entry.group) && PlaceholderGroups.Add(entry.group))
+                {
+                    entry.pawn = null;
+                    Scratch.Add(entry);
                 }
             }
+
+            entries.Clear();
+            entries.AddRange(Scratch);
+            Scratch.Clear();
+            hiddenCount = removed;
+            lastFilteredList = entries;
+            lastFilteredCount = entries.Count;
+        }
+
+        // ColonistBar.Visible is private. Bound once; if a RimWorld update renames it,
+        // the note simply follows the setting as it did in 1.x.
+        private static readonly System.Func<ColonistBar, bool>? VisibleGetter = BindVisible();
+
+        private static System.Func<ColonistBar, bool>? BindVisible()
+        {
+            System.Reflection.MethodInfo? getter = AccessTools.PropertyGetter(typeof(ColonistBar), "Visible");
+            return getter == null ? null : AccessTools.MethodDelegate<System.Func<ColonistBar, bool>>(getter);
+        }
+
+        private static bool IsVisible(ColonistBar bar)
+        {
+            return VisibleGetter == null || VisibleGetter(bar);
+        }
+
+        private static bool Hides(Pawn? pawn)
+        {
+            return pawn != null && pawn.InCryptosleep;
         }
 
         internal static void DrawHiddenCount(ColonistBar bar)
         {
-            NicetiesSettings local = NicetiesMod.Settings;
-            NicetiesSettings settings = NicetiesSim.Settings;
-            if (hiddenCount <= 0 || bar == null || !local.showCryptosleepCount
-                || !settings.hideCryptosleep)
+            if (hiddenCount <= 0 || !IsVisible(bar) || !NicetiesMod.Settings.showCryptosleepCount
+                || !NicetiesSim.Settings.hideCryptosleep)
             {
                 return;
             }
 
+            GameFont font = Text.Font;
+            TextAnchor anchor = Text.Anchor;
+            Color color = GUI.color;
+            try
+            {
+                Text.Font = GameFont.Tiny;
+                RefreshLabel();
+                Rect rect = LabelRect(bar);
+                if (Event.current.type == EventType.Repaint)
+                {
+                    Text.Anchor = TextAnchor.MiddleLeft;
+                    GUI.color = new Color(0.75f, 0.85f, 1f);
+                    Widgets.Label(rect, label);
+                }
+
+                TooltipHandler.TipRegion(rect, tooltip);
+            }
+            finally
+            {
+                GUI.color = color;
+                Text.Anchor = anchor;
+                Text.Font = font;
+            }
+        }
+
+        private static void RefreshLabel()
+        {
+            if (labelCount == hiddenCount && ReferenceEquals(labelLanguage, LanguageDatabase.activeLanguage))
+            {
+                return;
+            }
+
+            labelCount = hiddenCount;
+            labelLanguage = LanguageDatabase.activeLanguage;
+            label = "Niceties_CryptoHiddenCount".Translate(hiddenCount);
+            tooltip = "Niceties_CryptoHiddenCountTip".Translate();
+            labelSize = Text.CalcSize(label);
+        }
+
+        /// <summary>Right of the last portrait, sized to the text and kept on screen.</summary>
+        private static Rect LabelRect(ColonistBar bar)
+        {
+            float width = labelSize.x + 4f;
             List<Vector2> locs = bar.DrawLocs;
             Vector2 size = bar.Size;
-            Rect rect;
+            float x;
+            float y;
+            float height;
             if (locs != null && locs.Count > 0)
             {
                 Vector2 last = locs[locs.Count - 1];
-                rect = new Rect(last.x + size.x + 6f, last.y, 150f, size.y);
+                x = last.x + size.x + 6f;
+                y = last.y;
+                height = size.y;
             }
             else
             {
-                rect = new Rect(UI.screenWidth / 2f - 75f, 12f, 150f, 24f);
+                x = UI.screenWidth / 2f - width / 2f;
+                y = 12f;
+                height = 24f;
             }
 
-            TextAnchor anchor = Text.Anchor;
-            GameFont font = Text.Font;
-            Color color = GUI.color;
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.MiddleLeft;
-            GUI.color = new Color(0.75f, 0.85f, 1f);
-            Widgets.Label(rect, "Niceties_CryptoHiddenCount".Translate(hiddenCount));
-            GUI.color = color;
-            Text.Anchor = anchor;
-            Text.Font = font;
-            TooltipHandler.TipRegion(rect, "Niceties_CryptoHiddenCountTip".Translate());
+            if (x + width > UI.screenWidth - 4f)
+            {
+                x = UI.screenWidth - 4f - width;
+                y += height;
+                height = labelSize.y + 4f;
+            }
+
+            return new Rect(x < 0f ? 0f : x, y, width, height);
         }
     }
 
@@ -138,8 +251,7 @@ namespace Niceties
     {
         private static void Postfix(bool __result)
         {
-            NicetiesSettings settings = NicetiesSim.Settings;
-            if (__result && settings.hideCryptosleep)
+            if (__result && NicetiesSim.Settings.hideCryptosleep)
             {
                 CryptosleepBar.MarkDirty();
             }
@@ -151,8 +263,7 @@ namespace Niceties
     {
         private static void Postfix()
         {
-            NicetiesSettings settings = NicetiesSim.Settings;
-            if (settings.hideCryptosleep)
+            if (NicetiesSim.Settings.hideCryptosleep)
             {
                 CryptosleepBar.MarkDirty();
             }
