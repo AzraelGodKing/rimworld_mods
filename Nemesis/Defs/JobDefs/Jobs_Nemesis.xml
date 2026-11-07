@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Walk to a comms console, then reply to a nemesis or buy intel (AZR-553). -->
+  <JobDef>
+    <defName>Nemesis_UseCommsConsole</defName>
+    <driverClass>Nemesis.JobDriver_NemesisComms</driverClass>
+    <reportString>calling the nemesis on TargetA.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+
+</Defs>

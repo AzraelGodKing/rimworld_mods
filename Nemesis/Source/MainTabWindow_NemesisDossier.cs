@@ -8,14 +8,16 @@ namespace Nemesis
 {
     public class MainTabWindow_NemesisDossier : MainTabWindow
     {
+        /// <summary>Hunt shown in the dossier; the dev-mode actions use it too.</summary>
+        public static int SelectedHuntId = -1;
+
         private Vector2 scrollPos;
 
-        public override Vector2 RequestedTabSize => new Vector2(620f, 560f);
+        public override Vector2 RequestedTabSize => new Vector2(620f, 580f);
 
         public override void DoWindowContents(Rect inRect)
         {
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            NemesisData data = comp?.Data;
 
             Text.Font = GameFont.Medium;
             Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 32f),
@@ -23,7 +25,8 @@ namespace Nemesis
             Text.Font = GameFont.Small;
 
             float y = inRect.y + 36f;
-            if (data == null || (!data.active && data.truceUntilTick <= 0 && !data.pendingResolution))
+            NemesisData data = PickHunt(comp);
+            if (data == null)
             {
                 Widgets.Label(new Rect(inRect.x, y, inRect.width, 44f),
                     "Nemesis_Dossier_Empty".Translate());
@@ -31,6 +34,8 @@ namespace Nemesis
                 DrawEpitaphs(comp, inRect, ref y);
                 return;
             }
+
+            DrawHuntTabs(comp, inRect, ref y);
 
             if (data.pendingResolution)
             {
@@ -40,7 +45,7 @@ namespace Nemesis
                 y += 52f;
                 if (Widgets.ButtonText(new Rect(inRect.x, y, 240f, 28f),
                         "Nemesis_Dossier_OpenResolution".Translate())
-                    && !comp.TryOpenResolutionDialog())
+                    && !comp.TryOpenResolutionDialog(data))
                     Messages.Message("Nemesis_Dossier_ResolutionUnavailable".Translate(),
                         MessageTypeDefOf.RejectInput, historical: false);
                 y += 36f;
@@ -49,9 +54,20 @@ namespace Nemesis
             }
 
             string name = data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
+            if (!data.active)
+            {
+                // Truce (AZR-704): say so, with the countdown, instead of the live-hunt panel.
+                int left = Mathf.Max(0, data.truceUntilTick - Find.TickManager.TicksGame);
+                Widgets.Label(new Rect(inRect.x, y, inRect.width, 44f),
+                    "Nemesis_Dossier_Truce".Translate(name, left.ToStringTicksToPeriod()));
+                y += 52f;
+                DrawEpitaphs(comp, inRect, ref y);
+                return;
+            }
+
             Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
                 "Nemesis_Dossier_Identity".Translate(
-                    name,
+                    data.ColoredName,
                     data.factionName ?? "—",
                     data.FocusLabelKey.Translate()));
             y += 22f;
@@ -75,19 +91,19 @@ namespace Nemesis
                 "Nemesis_Dossier_Gear".Translate(data.lastGearSeen ?? "—"));
             y += 22f;
             Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
-                "Nemesis_Dossier_Bounty".Translate(comp.bountySilver));
+                "Nemesis_Dossier_Bounty".Translate(data.bountySilver));
             y += 28f;
 
-            if (data.active && (NemesisMod.Settings?.enableInformants ?? true))
+            if (NemesisMod.Settings?.enableInformants ?? true)
             {
                 int cost = NemesisInformants.LeadCost(data);
                 Map map = Find.CurrentMap;
                 if (Widgets.ButtonText(new Rect(inRect.x, y, 200f, 28f),
                         "Nemesis_Dossier_BuyLead".Translate(cost)))
-                    NemesisPlayerCommand.EnqueueBuyLead(map);
+                    NemesisPlayerCommand.BuyLead(data.huntId, map);
                 if (Widgets.ButtonText(new Rect(inRect.x + 210f, y, 200f, 28f),
                         "Nemesis_Dossier_PostBounty".Translate(cost)))
-                    NemesisPlayerCommand.EnqueuePostBounty(map, cost);
+                    NemesisPlayerCommand.PostBounty(data.huntId, map, cost);
                 y += 36f;
             }
 
@@ -119,11 +135,57 @@ namespace Nemesis
             DrawEpitaphs(comp, inRect, ref y);
         }
 
+        /// <summary>The selected engaged hunt, else the first; null when none.</summary>
+        private static NemesisData PickHunt(GameComponent_Nemesis comp)
+        {
+            if (comp == null) return null;
+            NemesisData picked = comp.HuntById(SelectedHuntId);
+            if (picked != null && picked.Engaged) return picked;
+            IReadOnlyList<NemesisData> hunts = comp.Hunts;
+            for (int i = 0; i < hunts.Count; i++)
+            {
+                if (hunts[i].Engaged)
+                {
+                    SelectedHuntId = hunts[i].huntId;
+                    return hunts[i];
+                }
+            }
+            return null;
+        }
+
+        /// <summary>One button per engaged hunt, in its faction's colour. Hidden with a single hunt.</summary>
+        private static void DrawHuntTabs(GameComponent_Nemesis comp, Rect inRect, ref float y)
+        {
+            IReadOnlyList<NemesisData> hunts = comp.Hunts;
+            int engaged = 0;
+            for (int i = 0; i < hunts.Count; i++)
+            {
+                if (hunts[i].Engaged) engaged++;
+            }
+            if (engaged < 2) return;
+
+            float x = inRect.x;
+            const float w = 180f;
+            for (int i = 0; i < hunts.Count; i++)
+            {
+                NemesisData h = hunts[i];
+                if (!h.Engaged) continue;
+                Rect r = new Rect(x, y, w, 26f);
+                bool selected = h.huntId == SelectedHuntId;
+                if (selected)
+                    Widgets.DrawHighlightSelected(r);
+                if (Widgets.ButtonText(r, h.ColoredName, drawBackground: !selected))
+                    SelectedHuntId = h.huntId;
+                x += w + 6f;
+            }
+            y += 32f;
+        }
+
         static void DrawLastKnownTile(NemesisData data, Rect rect)
         {
             string text = "Nemesis_Dossier_Tile".Translate(data.lastKnownTileLabel ?? "—");
-            int tile = data.lastKnownTile;
-            if (tile < 0 || Find.WorldGrid == null || tile >= Find.WorldGrid.TilesCount)
+            PlanetTile tile = data.lastKnownTile;
+            if (!tile.Valid || Find.WorldGrid == null)
             {
                 Widgets.Label(rect, text);
                 return;

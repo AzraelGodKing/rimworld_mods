@@ -14,6 +14,10 @@
   <Nemesis_Settings_WoundedEscape>Шанс при ранении и побеге: {0}%</Nemesis_Settings_WoundedEscape>
   <Nemesis_Settings_TruceDays>Длительность перемирия: {0} дн.</Nemesis_Settings_TruceDays>
   <Nemesis_Settings_MaxEscapes>Побегов до загона: {0}</Nemesis_Settings_MaxEscapes>
+  <Nemesis_Settings_MaxHunts>Одновременных охот: {0}</Nemesis_Settings_MaxHunts>
+  <Nemesis_Settings_MaxHuntsTip>Сколько немезисов могут охотиться на вас одновременно. У каждой враждебной фракции не больше одного.</Nemesis_Settings_MaxHuntsTip>
+  <Nemesis_Settings_HuntCooldown>Дней между новыми охотами: {0}</Nemesis_Settings_HuntCooldown>
+  <Nemesis_Settings_HuntCooldownTip>После начала охоты новая не начнётся столько дней, чтобы один неудачный набег не породил нескольких немезисов.</Nemesis_Settings_HuntCooldownTip>
   <Nemesis_Settings_Pacing>Темп немезиса</Nemesis_Settings_Pacing>
   <Nemesis_Settings_MaxAggression>Максимальная агрессия: {0}%</Nemesis_Settings_MaxAggression>
   <Nemesis_Settings_Escalation>Скорость эскалации: {0} в день</Nemesis_Settings_Escalation>
@@ -64,7 +68,6 @@
   <Nemesis_Taunt_Ion>{0}: «Люблю сухие молнии. Ваша сеть тоже полюбит, {1}».</Nemesis_Taunt_Ion>
 
   <!-- Intro -->
-  <Nemesis_Intro_Title>Появляется немезис</Nemesis_Intro_Title>
   <Nemesis_Intro_KilledAlly>{0} убил кого-то важного.\n\n{1} по имени {2} сделал это личным. Они не перестанут возвращаться, пока {0} не ответит за это — или пока их не возьмут живыми.</Nemesis_Intro_KilledAlly>
   <Nemesis_Intro_Wounded>{0} оставил рану, которая не зажила.\n\n{1} из {2} выжил и помнит, кто это сделал. Они возвращаются.</Nemesis_Intro_Wounded>
   <Nemesis_Intro_Fixation>Кто-то из {0} убил одного из ваших — и для них этого было мало.\n\nУ {1} развилась болезненная одержимость {2}. Они идут — и им никто другой не нужен.</Nemesis_Intro_Fixation>
@@ -73,6 +76,7 @@
   <Nemesis_Intro_Slave>Мятеж рабов нажил не тех врагов.\n\n{0} из {1} решил, что ваша колония должна кровью.</Nemesis_Intro_Slave>
   <Nemesis_Intro_Retaliation>{0} хватит.\n\n{1} получил полномочия заставить вашу колонию заплатить.</Nemesis_Intro_Retaliation>
   <Nemesis_Intro_ColonyDefault>Что-то, что сделала ваша колония, привлекло не то внимание.\n\n{0} из {1} сделал ваше уничтожение личной миссией.</Nemesis_Intro_ColonyDefault>
+  <Nemesis_Intro_TitleNamed>Появляется немезис: {0}</Nemesis_Intro_TitleNamed>
 
   <!-- Letters: harassment -->
   <Nemesis_Letter_CommsTitle>Сообщение с консоли связи</Nemesis_Letter_CommsTitle>
@@ -204,6 +208,7 @@
 
   <Nemesis_Dossier_Title>Досье немезиса</Nemesis_Dossier_Title>
   <Nemesis_Dossier_Empty>Охоты нет. Эпитафии законченных охот остаются здесь.</Nemesis_Dossier_Empty>
+  <Nemesis_Dossier_Truce>С {0} действует перемирие. Охота возобновится через {1}.</Nemesis_Dossier_Truce>
   <Nemesis_Dossier_Identity>{0} из {1} — {2}</Nemesis_Dossier_Identity>
   <Nemesis_Dossier_Target>Фиксация: {0}. Агрессия {1}. Побегов {2}. Капитан {3}.</Nemesis_Dossier_Target>
   <Nemesis_Dossier_Tells>Голос {0}. Оружие {1}. Метка: {2}. Привычка: {3}.</Nemesis_Dossier_Tells>
@@ -229,12 +234,11 @@
   <Nemesis_Intel_False>Наводка была ложью. Стоимость {0} серебра.</Nemesis_Intel_False>
   <Nemesis_Intel_FalseTile>там, где их никогда не было</Nemesis_Intel_FalseTile>
   <Nemesis_Bounty_Posted>Награда теперь {0} серебра.</Nemesis_Bounty_Posted>
-  <Nemesis_Bounty_Cleared>Награда снята.</Nemesis_Bounty_Cleared>
-  <Nemesis_Comms_BuyLead>Купить наводку на немезиса ({0} серебра)</Nemesis_Comms_BuyLead>
-  <Nemesis_Comms_PostBounty>Добавить {0} серебра к награде за немезиса</Nemesis_Comms_PostBounty>
   <Nemesis_Comms_TauntBack>Ответить насмешкой {0}</Nemesis_Comms_TauntBack>
   <Nemesis_Comms_OfferTruce>Предложить перемирие {0}</Nemesis_Comms_OfferTruce>
   <Nemesis_Comms_DemandSurrender>Потребовать сдачи у {0}</Nemesis_Comms_DemandSurrender>
+  <Nemesis_Comms_BuyLeadNamed>Купить наводку на {1} ({0} серебра)</Nemesis_Comms_BuyLeadNamed>
+  <Nemesis_Comms_PostBountyNamed>Добавить {0} серебра к награде за {1}</Nemesis_Comms_PostBountyNamed>
 
   <Nemesis_Dossier_PendingResolution>{0} захвачен — решите его участь.</Nemesis_Dossier_PendingResolution>
   <Nemesis_Dossier_OpenResolution>Открыть диалог решения</Nemesis_Dossier_OpenResolution>

@@ -72,7 +72,7 @@ namespace Nemesis
             if (data.progressionLevel >= 1)
             {
                 Find.LetterStack.ReceiveLetter(
-                    "Nemesis_Letter_ProgressionTitle".Translate(data.nemesisName),
+                    "Nemesis_Letter_ProgressionTitle".Translate(data.ColoredName),
                     "Nemesis_Letter_ProgressionBody".Translate(
                         data.nemesisName,
                         data.progressionLevel,

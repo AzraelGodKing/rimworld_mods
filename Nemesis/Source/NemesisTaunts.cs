@@ -58,7 +58,7 @@ namespace Nemesis
         private static string SoftHomesteaderTaunt(NemesisData data, string name, string target)
         {
             if (!SoftCompat.HomesteaderActive) return null;
-            Pawn victim = GameComponent_Nemesis.Instance?.FindTargetPawn();
+            Pawn victim = GameComponent_Nemesis.Instance?.FindTargetPawn(data);
             string fav = SoftCompat.TryFavoriteFoodLabel(victim);
             if (fav != null)
                 return "Nemesis_Taunt_FavoriteFood".Translate(name, target, fav);

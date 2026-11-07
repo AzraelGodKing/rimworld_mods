@@ -57,6 +57,16 @@ namespace Nemesis
 
             listing.Label("Nemesis_Settings_MaxEscapes".Translate(Settings.maxEscapes));
             Settings.maxEscapes = (int)listing.Slider(Settings.maxEscapes, 1f, 12f);
+            listing.Gap(6f);
+
+            listing.Label("Nemesis_Settings_MaxHunts".Translate(Settings.maxConcurrentHunts),
+                tooltip: "Nemesis_Settings_MaxHuntsTip".Translate());
+            Settings.maxConcurrentHunts = (int)listing.Slider(Settings.maxConcurrentHunts, 1f, 3f);
+            listing.Gap(6f);
+
+            listing.Label("Nemesis_Settings_HuntCooldown".Translate(Settings.huntCooldownDays.ToString("F1")),
+                tooltip: "Nemesis_Settings_HuntCooldownTip".Translate());
+            Settings.huntCooldownDays = Mathf.Round(listing.Slider(Settings.huntCooldownDays, 0f, 30f) * 2f) / 2f;
             listing.Gap(10f);
 
             listing.GapLine();
@@ -163,6 +173,16 @@ namespace Nemesis
             settingsContentHeight = Mathf.Max(listing.MaxColumnHeightSeen + 24f, inRect.height);
             listing.End();
             Widgets.EndScrollView();
+        }
+    }
+
+    /// <summary>Runs after defs load, when other mods' types (Multiplayer) are available.</summary>
+    [StaticConstructorOnStartup]
+    public static class NemesisInit
+    {
+        static NemesisInit()
+        {
+            NemesisMultiplayer.RegisterAll();
         }
     }
 }

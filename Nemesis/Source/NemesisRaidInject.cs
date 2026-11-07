@@ -61,7 +61,7 @@ namespace Nemesis
             NemesisPawnUtil.DetachFromLord(inject);
             NemesisPawnUtil.EnsureNotWorldPawn(inject);
             NemesisPawnUtil.RecoverForReturn(inject);
-            NemesisData data = GameComponent_Nemesis.Instance?.Data;
+            NemesisData data = GameComponent_Nemesis.Instance?.HuntForNemesis(inject);
             if (data != null)
                 NemesisProgression.Apply(inject, data);
             if (inject.Spawned)
