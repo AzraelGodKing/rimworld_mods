@@ -129,7 +129,7 @@ namespace LivingWorld
 
         private static void DrainMarch(Caravan caravan)
         {
-            HediffDef veteran = DefDatabase<HediffDef>.GetNamedSilentFail("LW_Hediff_RoadVeteran");
+            HediffDef veteran = LivingWorldDefOf.LW_Hediff_RoadVeteran;
             List<Pawn> pawns = caravan.PawnsListForReading;
             for (int i = 0; i < pawns.Count; i++)
             {
@@ -140,8 +140,7 @@ namespace LivingWorld
                 }
                 float restHit = 0.12f;
                 float foodHit = 0.05f;
-                if (veteran != null
-                    && pawn.health?.hediffSet?.GetFirstHediffOfDef(veteran) != null)
+                if (pawn.health?.hediffSet?.GetFirstHediffOfDef(veteran) != null)
                 {
                     restHit *= 0.45f;
                     foodHit *= 0.45f;

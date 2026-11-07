@@ -44,6 +44,17 @@ namespace LivingWorld
             return !(loserProtected && loserSettlements <= 1);
         }
 
+        /// <summary>
+        /// Order-independent key for a faction pair: (min id &lt;&lt; 32) | max id.
+        /// PairKey(a, b) == PairKey(b, a).
+        /// </summary>
+        public static long PairKey(int a, int b)
+        {
+            int lo = Math.Min(a, b);
+            int hi = Math.Max(a, b);
+            return ((long)lo << 32) | (uint)hi;
+        }
+
         /// <summary>Starting tone and intensity for a new pair, from vanilla relations.</summary>
         public static void SeedTone(bool hostile, bool allied, out int tone, out int intensity)
         {

@@ -15,6 +15,7 @@ First public release, for RimWorld 1.6 and 1.7. Player-facing version **1.0.0** 
 - **Wars move borders** — settlements no longer change hands at random. A faction only takes a settlement after winning a battle in a hard-fought war, and it takes the loser's settlement closest to its own lands. The Empire and factions in an open quest never lose their last settlement.
 - **Battles favour the strong** — bigger, more prosperous factions win more often, but upsets still happen.
 - **Relations start from vanilla** — factions that are hostile in vanilla start tense and never cool below tension, vanilla allies start allied, and pirates, permanent enemies and hostile factions never form pacts.
+- **Lighter on big worlds** — rumour corrections, letter budgets and the debug queue no longer do work every tick; faction pairs are looked up by key and only rebuilt when factions or settlements change; settlement counts are computed once per tick; the settlement label no longer allocates; way-camp rest checks the cheap conditions first; distance checks are bounded and skip unreachable tiles; caravan routes check reachability before pathing.
 
 ### Fixed
 - **Master switch** — turning Living World off now also stops way-camp founding, the road letter, the road-worn condition and the way-camp rest bonus.

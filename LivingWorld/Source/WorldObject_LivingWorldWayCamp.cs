@@ -8,6 +8,18 @@ namespace LivingWorld
 {
     public class WorldObject_LivingWorldWayCamp : WorldObject
     {
+        public override void PostAdd()
+        {
+            base.PostAdd();
+            LivingWorldWorldObjectIndex.MarkDirty();
+        }
+
+        public override void PostRemove()
+        {
+            base.PostRemove();
+            LivingWorldWorldObjectIndex.MarkDirty();
+        }
+
         public override string GetInspectString()
         {
             string baseStr = base.GetInspectString();
@@ -20,17 +32,7 @@ namespace LivingWorld
     {
         private const int MaxCamps = 10;
 
-        public static bool OnCampTile(PlanetTile tile)
-        {
-            foreach (WorldObject wo in Find.WorldObjects.ObjectsAt(tile))
-            {
-                if (wo is WorldObject_LivingWorldWayCamp)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        public static bool OnCampTile(PlanetTile tile) => LivingWorldWorldObjectIndex.IsCampTile(tile);
 
         public static void TryFoundOn(PlanetTile tile)
         {
@@ -38,25 +40,11 @@ namespace LivingWorld
             {
                 return;
             }
-            int existing = 0;
-            List<WorldObject> all = Find.WorldObjects.AllWorldObjects;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i] is WorldObject_LivingWorldWayCamp)
-                {
-                    existing++;
-                }
-            }
-            if (existing >= MaxCamps)
+            if (LivingWorldWorldObjectIndex.CampCount >= MaxCamps)
             {
                 return;
             }
-            WorldObjectDef def = DefDatabase<WorldObjectDef>.GetNamedSilentFail("LivingWorld_WayCamp");
-            if (def == null)
-            {
-                return;
-            }
-            var camp = (WorldObject_LivingWorldWayCamp)WorldObjectMaker.MakeWorldObject(def);
+            var camp = (WorldObject_LivingWorldWayCamp)WorldObjectMaker.MakeWorldObject(LivingWorldDefOf.LivingWorld_WayCamp);
             camp.Tile = tile;
             camp.SetFaction(Faction.OfPlayer);
             Find.WorldObjects.Add(camp);
@@ -78,12 +66,13 @@ namespace LivingWorld
             {
                 return;
             }
+            // Cheapest checks first: this runs for every pawn's rest need.
             Caravan caravan = pawn.GetCaravan();
-            if (caravan == null || !caravan.IsPlayerControlled)
+            if (caravan == null || !caravan.NightResting || !caravan.IsPlayerControlled)
             {
                 return;
             }
-            if (!LivingWorldWayCamps.OnCampTile(caravan.Tile) || !caravan.NightResting)
+            if (!LivingWorldWayCamps.OnCampTile(caravan.Tile))
             {
                 return;
             }

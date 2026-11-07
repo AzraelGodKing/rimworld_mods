@@ -215,13 +215,7 @@ namespace LivingWorld
                 settlementLabel = "debug front",
             });
 
-            IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail("LivingWorld_Refugees");
-            if (def == null)
-            {
-                Messages.Message("[Living World] LivingWorld_Refugees def missing.", MessageTypeDefOf.RejectInput,
-                    historical: false);
-                return;
-            }
+            IncidentDef def = LivingWorldDefOf.LivingWorld_Refugees;
             IncidentParms parms = StorytellerUtility.DefaultParmsNow(def.category, map);
             parms.forced = true;
             bool ok = def.Worker.TryExecute(parms);

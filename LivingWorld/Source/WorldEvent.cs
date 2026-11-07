@@ -28,6 +28,11 @@ namespace LivingWorld
         public string trueFactionBName;
         public HearChannel channel = HearChannel.Rumour;
 
+        // Not scribed: IsNearby result for the tick it was computed in (channel and
+        // hear rules both ask while publishing).
+        internal int nearbyTick = -1;
+        internal bool nearbyCached;
+
         public void ExposeData()
         {
             Scribe_Values.Look(ref tick, "tick");
@@ -91,22 +96,7 @@ namespace LivingWorld
 
         public Faction FactionB() => FindFaction(factionBId);
 
-        internal static Faction FindFaction(int id)
-        {
-            if (id < 0)
-            {
-                return null;
-            }
-            List<Faction> all = Find.FactionManager.AllFactionsListForReading;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i].loadID == id)
-                {
-                    return all[i];
-                }
-            }
-            return null;
-        }
+        internal static Faction FindFaction(int id) => LivingWorldWorldStats.FactionById(id);
     }
 
     public class SettlementMood : IExposable
@@ -118,9 +108,11 @@ namespace LivingWorld
         public int lastMorphTick;
         public string epithet;
 
-        // Cached " (epithet)" suffix; not scribed (rebuilt lazily).
+        // Cached " (epithet)" suffix and full label; not scribed (rebuilt lazily).
         private string epithetLabelCacheKey;
         private string epithetLabelCache;
+        private string fullLabelBase;
+        private string fullLabel;
 
         public void ExposeData()
         {
@@ -134,6 +126,8 @@ namespace LivingWorld
             {
                 epithetLabelCacheKey = null;
                 epithetLabelCache = null;
+                fullLabelBase = null;
+                fullLabel = null;
             }
         }
 
@@ -144,6 +138,25 @@ namespace LivingWorld
             if (prosperity <= -2) return "LivingWorld_Prosperity_Collapsing";
             if (prosperity == -1) return "LivingWorld_Prosperity_Struggling";
             return "LivingWorld_Prosperity_Stable";
+        }
+
+        /// <summary>
+        /// Settlement.Label with the epithet appended, cached so the label getter
+        /// (called many times per frame on the world map) does not allocate.
+        /// </summary>
+        public string LabelWithEpithet(string baseLabel)
+        {
+            string suffix = EpithetLabelSuffix();
+            if (suffix == null)
+            {
+                return baseLabel;
+            }
+            if (fullLabel == null || baseLabel != fullLabelBase)
+            {
+                fullLabelBase = baseLabel;
+                fullLabel = baseLabel + suffix;
+            }
+            return fullLabel;
         }
 
         /// <summary>Cached translated epithet suffix for Settlement.Label.</summary>
@@ -157,6 +170,7 @@ namespace LivingWorld
             {
                 epithetLabelCacheKey = epithet;
                 epithetLabelCache = " (" + epithet.Translate() + ")";
+                fullLabel = null;
             }
             return epithetLabelCache;
         }

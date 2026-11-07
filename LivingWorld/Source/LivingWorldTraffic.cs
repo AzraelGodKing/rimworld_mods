@@ -13,6 +13,18 @@ namespace LivingWorld
     /// </summary>
     public class WorldObject_LivingWorldTraffic : WorldObject
     {
+        public override void PostAdd()
+        {
+            base.PostAdd();
+            LivingWorldWorldObjectIndex.MarkDirty();
+        }
+
+        public override void PostRemove()
+        {
+            base.PostRemove();
+            LivingWorldWorldObjectIndex.MarkDirty();
+        }
+
         public List<int> route = new List<int>();
         public int routeIndex;
         public int nextHopTick;
@@ -119,15 +131,11 @@ namespace LivingWorld
 
         public static bool TrySpawn(GameComponent_LivingWorld comp)
         {
-            if (comp == null || CountActive() >= MaxActive)
+            if (comp == null || LivingWorldWorldObjectIndex.TrafficCount >= MaxActive)
             {
                 return false;
             }
-            WorldObjectDef def = DefDatabase<WorldObjectDef>.GetNamedSilentFail("LivingWorld_TrafficCaravan");
-            if (def == null)
-            {
-                return false;
-            }
+            WorldObjectDef def = LivingWorldDefOf.LivingWorld_TrafficCaravan;
 
             List<Settlement> eligible = EligibleSettlements();
             if (eligible.Count < 2)
@@ -240,20 +248,6 @@ namespace LivingWorld
             caravan.Destroy();
         }
 
-        private static int CountActive()
-        {
-            int n = 0;
-            List<WorldObject> all = Find.WorldObjects.AllWorldObjects;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i] is WorldObject_LivingWorldTraffic)
-                {
-                    n++;
-                }
-            }
-            return n;
-        }
-
         private static List<Settlement> EligibleSettlements()
         {
             var result = new List<Settlement>();
@@ -307,19 +301,16 @@ namespace LivingWorld
 
         private static bool AtWar(GameComponent_LivingWorld comp, Faction a, Faction b)
         {
-            IReadOnlyList<FactionPairState> pairs = comp.Pairs;
-            for (int i = 0; i < pairs.Count; i++)
-            {
-                if (pairs[i].tone == FactionRelationTone.War && pairs[i].Matches(a, b))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return comp.TryGetPair(a, b)?.tone == FactionRelationTone.War;
         }
 
         private static List<int> TryFindRoute(PlanetTile from, PlanetTile to)
         {
+            // Unreachable targets make the pather flood the planet: check first.
+            if (!Find.WorldReachability.CanReach(from, to))
+            {
+                return null;
+            }
             WorldPath path = null;
             try
             {
