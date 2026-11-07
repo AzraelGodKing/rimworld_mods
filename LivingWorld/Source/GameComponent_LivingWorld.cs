@@ -284,25 +284,12 @@ namespace LivingWorld
 
         private void RefreshBudgets(int now)
         {
-            Quadrum quadrum = GenDate.Quadrum(now, 0);
+            int quadrum = (int)GenDate.Quadrum(now, 0);
             int year = GenDate.Year(now, 0);
-            if (!budgetsInitialized)
-            {
-                budgetsInitialized = true;
-                lastQuadrum = quadrum;
-                lastYear = year;
-                return;
-            }
-            if (quadrum != lastQuadrum)
-            {
-                lastQuadrum = quadrum;
-                lettersThisQuadrum = 0;
-            }
-            if (year != lastYear)
-            {
-                lastYear = year;
-                morphsThisYear = 0;
-            }
+            int last = (int)lastQuadrum;
+            LivingWorldRules.RollBudgets(quadrum, year, ref budgetsInitialized, ref last, ref lastYear,
+                ref lettersThisQuadrum, ref morphsThisYear);
+            lastQuadrum = (Quadrum)last;
         }
 
         /// <summary>Earliest tick a distorted record is due its correction (int.MaxValue if none).</summary>
@@ -391,25 +378,8 @@ namespace LivingWorld
             }
 
             chronicle.Add(ev);
-            int capacity = ChronicleCapacity;
-            int overflow = chronicle.Count - capacity;
-            if (overflow > 0)
-            {
-                for (int i = 0; i < overflow; i++)
-                {
-                    WorldEvent evicted = chronicle[i];
-                    if (evicted != null && evicted.distorted && !evicted.corrected && evicted.correctionTick >= 0)
-                    {
-                        evictedPendingCorrections.Add(evicted);
-                    }
-                }
-                chronicle.RemoveRange(0, overflow);
-                int extra = evictedPendingCorrections.Count - EvictedCorrectionCapacity;
-                if (extra > 0)
-                {
-                    evictedPendingCorrections.RemoveRange(0, extra);
-                }
-            }
+            LivingWorldRules.Evict(chronicle, ChronicleCapacity, evictedPendingCorrections,
+                EvictedCorrectionCapacity, AwaitsCorrection);
 
             if (!sendLetter || LivingWorldMod.Settings == null || !LivingWorldMod.Settings.chronicleEnabled)
             {
@@ -420,6 +390,9 @@ namespace LivingWorld
             LivingWorldLetters.TrySend(ev);
             LivingWorldSignals.Raise(ev);
         }
+
+        private static readonly System.Func<WorldEvent, bool> AwaitsCorrection =
+            e => e.distorted && !e.corrected && e.correctionTick >= 0;
 
         public FactionPairState GetOrCreatePair(Faction a, Faction b)
         {

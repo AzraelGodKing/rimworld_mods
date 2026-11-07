@@ -151,6 +151,9 @@ jobs:
       - name: Date Night logic tests
         run: dotnet test Tests/DateNight.Tests/DateNight.Tests.csproj -c Release --nologo
 
+      - name: Living World logic tests
+        run: dotnet test Tests/LivingWorld.Tests/LivingWorld.Tests.csproj -c Release --nologo
+
       - name: Pack docs/downloads zips (with DLLs)
         if: github.event_name != 'pull_request'
         shell: bash

@@ -112,18 +112,7 @@ namespace LivingWorld
 
         private static void Distort(WorldEvent ev)
         {
-            if (ev.kind == WorldEventKind.DecisiveVictory)
-            {
-                ev.kind = WorldEventKind.Skirmish;
-            }
-            else if (ev.kind == WorldEventKind.Skirmish)
-            {
-                ev.kind = WorldEventKind.DecisiveVictory;
-            }
-            else if (ev.kind == WorldEventKind.OwnershipFlip)
-            {
-                ev.kind = WorldEventKind.Skirmish;
-            }
+            ev.kind = (WorldEventKind)LivingWorldRules.DistortKind((int)ev.kind);
 
             if (!string.IsNullOrEmpty(ev.factionAName) && !string.IsNullOrEmpty(ev.factionBName) && Rand.Bool)
             {

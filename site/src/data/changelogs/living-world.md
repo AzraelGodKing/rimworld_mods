@@ -41,6 +41,9 @@ First public release, for RimWorld 1.6 and 1.7. Player-facing version **1.0.0** 
 - **News letters** point at the place they talk about, and distant news uses its own quiet letter colour instead of the green good-news one.
 - **World-map overlay** (off by default) — a toggle by the world map's overlay buttons, in the World state view and in Mod Options draws territory for factions in a war, tension or alliance, war fronts that pulse faster as wars heat up, refugee routes from pending fallout to your colony, and your caravan trail. It only changes what you see, so each player can switch it on or off in Multiplayer.
 
+### Internal
+- **Logic tests** — `Tests/LivingWorld.Tests` (66 xUnit cases, run in CI) cover battle odds, conquest rules, seeded tone, every tone transition (no alliance for permanent enemies), pair keys, rumour distortion, chronicle eviction, budget rollover and frozen saved enum names. The rules live in `LivingWorld/Source/Pure` with no game types.
+
 Not released yet: Living World stays at 1.0.0 until its first Workshop / Nexus / GitHub release. The 1.1.0–1.2.0 numbers below were internal pre-release bumps that never shipped; their notes are kept as development history.
 
 ### Development history (after formerly 1.2.0)
