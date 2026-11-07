@@ -2,7 +2,7 @@
 
 A collection of RimWorld mods by AzraelGodKing.
 
-Each mod folder has a `mod.json` for the public mod website, except Wave Survival Reforged and NanoHive Reforged (in-repo only). It records the name, version, description, preview, and download links. It is not part of the Workshop zip.
+Each mod folder has a `mod.json` for the public mod website, except Wave Survival Reforged (in-repo only). It records the name, version, description, preview, and download links. It is not part of the Workshop zip.
 
 ## Mods
 
@@ -117,6 +117,13 @@ Small colony comforts: well-kept apparel, throne-room altars, wear any gendered 
 - Site: [niceties](https://azraelgodking.github.io/rimworld_mods/niceties)
 - [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/Niceties.zip)
 
+### NanoHive Reforged
+
+A wall-mounted nanite port that repairs your buildings, items and colonists' gear in range while it has power. Per-hive buttons, a capped repair budget, idle power and soft Multiplayer support. RimWorld 1.6 / 1.7 (no Harmony needed). A faithful-plus rebuild of Nanohive2.
+
+- Site: [nanohive-reforged](https://azraelgodking.github.io/rimworld_mods/nanohive-reforged)
+- [Download zip](https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/NanoHiveReforged.zip)
+
 ## Installation
 
 A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a packaged zip:
@@ -127,7 +134,7 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Niceties** require the **Harmony** mod. **Living World**, **Azrael**, and **Wave Survival Reforged** are in-repo but not release-ready (not in the GitHub Release zips).
+4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Niceties** require the **Harmony** mod. **NanoHive Reforged** does not. **Living World**, **Azrael**, and **Wave Survival Reforged** are in-repo but not release-ready (not in the GitHub Release zips).
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes `1.6/Assemblies/`; the sibling `<Mod>.1.7.csproj` writes `1.7/Assemblies/`. After the eleven builds, `dotnet test Tests/ModChecks/ModChecks.csproj -c Release` checks Harmony string targets, DefOf/defName literals, Scribe parity, Series hub roster, Keyed literals, and def XML fields against the Krafs ref pack (no RimWorld install).
 

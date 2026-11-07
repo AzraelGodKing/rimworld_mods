@@ -8,5 +8,14 @@
     <li>1.6</li>
     <li>1.7</li>
   </supportedVersions>
-  <description>A faithful-plus rebuild of Nanohive2. Repairs nearby friendly buildings, items, and colonist gear while powered. Includes optional settings for repair amount, range override, and gear repair toggles.</description>
+  <url>https://github.com/AzraelGodKing/rimworld_mods/tree/main/NanoHiveReforged</url>
+  <description>A wall-mounted nanite port that repairs your buildings, items and colonists' gear in range while it has power.
+
+NanoHive Reforged 2: every hive has its own buttons (what to repair, radius, repair rate, buildings first, only stored items), a capped repair budget that fixes the most damaged things first, 200 W idle power, a ring that shows the real radius, an inspect pane, a repair shimmer, and soft Multiplayer support. Chinese Simplified and Russian are included.
+
+No Harmony needed. RimWorld 1.6 and 1.7, both on 2.x from the same source. Saves from 1.x keep working, and safe to add mid-save.
+
+A faithful-plus rebuild of the Nanohive2 mod for RimWorld. All credit for the original idea goes to Nanohive2's author.
+
+Full notes: https://azraelgodking.github.io/rimworld_mods/nanohive-reforged</description>
 </ModMetaData>

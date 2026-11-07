@@ -1,0 +1,19 @@
+{
+  "slug": "nanohive-reforged",
+  "name": "NanoHive Reforged",
+  "game": "rimworld",
+  "description": "A wall-mounted nanite port that repairs your buildings, items and colonists' gear in range while it has power. Per-hive buttons, a capped repair budget, idle power and soft Multiplayer support.",
+  "version": "2.0.0",
+  "screenshots": [
+    "About/Preview.png"
+  ],
+  "download": {
+    "file": "NanoHiveReforged.zip",
+    "url": "https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/NanoHiveReforged.zip"
+  },
+  "links": {
+    "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3688108379",
+    "thunderstore": null,
+    "nexus": null
+  }
+}

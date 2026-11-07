@@ -165,6 +165,7 @@ jobs:
           bash scripts/pack_mod.sh DateNight DateNight DateNight docs/downloads
           bash scripts/pack_mod.sh Niceties Niceties Niceties docs/downloads
           bash scripts/pack_mod.sh WaveSurvivalReforged WaveSurvivalReforged WaveSurvivalReforged docs/downloads
+          bash scripts/pack_mod.sh NanoHiveReforged NanoHiveReforged NanoHiveReforged docs/downloads
 
       - name: Upload download zips (artifact)
         if: github.event_name != 'pull_request'
@@ -193,7 +194,7 @@ jobs:
           body: |
             Packaged mod folders with CI-built assemblies for the docs site download buttons.
             Rebuilt on each relevant push to `main` (rolling tag — assets are overwritten).
-            Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, DateNight, Niceties, and WaveSurvivalReforged.
+            Includes Homesteader, Stormproof, Strata, Nemesis, DeepColony, DateNight, Niceties, WaveSurvivalReforged, and NanoHiveReforged.
             Living World and Azrael are in-repo only (not release-ready).
             Immutable copies of the same zips are tagged `downloads-YYYY-MM-DD-<sha7>` (prerelease).
             Shipped Workshop versions use Release & Publish (`Homesteader-v1.0.2`, …). See docs/VERSIONING.md.
@@ -206,6 +207,7 @@ jobs:
             docs/downloads/DateNight.zip
             docs/downloads/Niceties.zip
             docs/downloads/WaveSurvivalReforged.zip
+            docs/downloads/NanoHiveReforged.zip
           make_latest: true
           fail_on_unmatched_files: true
           # Replace assets when the rolling `latest` tag is republished.
@@ -248,6 +250,7 @@ jobs:
             docs/downloads/DateNight.zip
             docs/downloads/Niceties.zip
             docs/downloads/WaveSurvivalReforged.zip
+            docs/downloads/NanoHiveReforged.zip
           prerelease: true
           make_latest: false
           fail_on_unmatched_files: true

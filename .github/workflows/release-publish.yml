@@ -32,6 +32,7 @@ on:
           - datenight
           - wavesurvival
           - niceties
+          - nanohive
       create_github_release:
         description: "Create a versioned GitHub Release (does not replace the rolling latest tag)"
         required: true
