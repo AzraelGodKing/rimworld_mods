@@ -1,10 +1,11 @@
-﻿using Verse;
+#nullable enable
+using Verse;
 
 namespace Azrael
 {
     public class GameComponent_UpdateNews : GameComponent
     {
-        private string lastNewsVersion;
+        private string? lastNewsVersion;
 
         public GameComponent_UpdateNews(Game game)
         {
@@ -29,7 +30,7 @@ namespace Azrael
 
     internal static class UpdateNewsLetter
     {
-        internal static void TrySend(ref string lastAnnouncedVersion)
+        internal static void TrySend(ref string? lastAnnouncedVersion)
         {
             AzraelCommon.UpdateNews.TrySend(
                 ref lastAnnouncedVersion,

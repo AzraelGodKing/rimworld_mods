@@ -1,9 +1,11 @@
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using HarmonyLib;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -21,7 +23,7 @@ namespace Azrael
             public string PackageId;
             public bool Loaded;
             public string Version;
-            public string Stamp;
+            public string? Stamp;
         }
 
         internal struct BridgeRow
@@ -45,35 +47,49 @@ namespace Azrael
             public bool Loaded;
         }
 
-        internal static readonly string[][] Series =
+        internal readonly struct SeriesMod
         {
-            new[] { "Azrael", "azraelgodking.Azrael" },
-            new[] { "Homesteader", "AzraelGodKing.Homesteader" },
-            new[] { "Strata", "AzraelGodKing.Strata" },
-            new[] { "Stormproof", "AzraelGodKing.Stormproof" },
-            new[] { "Nemesis", "AzraelGodKing.Nemesis" },
-            new[] { "Deep Colony", "azraelgodking.DeepColony" },
-            new[] { "Living World", "azraelgodking.livingworld" },
-            new[] { "Date Night", "azraelgodking.DateNight" },
-            new[] { "Niceties", "AzraelGodKing.Niceties" },
+            public readonly string Display;
+            public readonly string PackageId;
+
+            public SeriesMod(string display, string packageId)
+            {
+                Display = display;
+                PackageId = packageId;
+            }
+        }
+
+        internal const string AzraelPackageId = "azraelgodking.Azrael";
+
+        internal static readonly SeriesMod[] Series =
+        {
+            new SeriesMod("Azrael", AzraelPackageId),
+            new SeriesMod("Homesteader", "AzraelGodKing.Homesteader"),
+            new SeriesMod("Strata", "AzraelGodKing.Strata"),
+            new SeriesMod("Stormproof", "AzraelGodKing.Stormproof"),
+            new SeriesMod("Nemesis", "AzraelGodKing.Nemesis"),
+            new SeriesMod("Deep Colony", "azraelgodking.DeepColony"),
+            new SeriesMod("Living World", "azraelgodking.livingworld"),
+            new SeriesMod("Date Night", "azraelgodking.DateNight"),
+            new SeriesMod("Niceties", "AzraelGodKing.Niceties"),
         };
 
         private const string SeriesIdPrefix = "azraelgodking.";
 
         // Standalone leftovers that the Conflicts section already names; not series rows.
-        private static readonly string[] NotSeries =
+        private static readonly HashSet<string> NotSeries = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "AzraelGodKing.Wellspring",
         };
 
         // Hub inventory is static for the session; rebuild once per open (dirty flag).
         private static bool hubDirty = true;
-        private static List<ModRow> cachedMods;
-        private static List<BridgeRow> cachedBridges;
-        private static List<ConflictRow> cachedConflicts;
-        private static List<DlcRow> cachedDlc;
-        private static List<string> cachedFails;
-        private static List<string[]> cachedRoster;
+        private static List<ModRow>? cachedMods;
+        private static List<BridgeRow>? cachedBridges;
+        private static List<ConflictRow>? cachedConflicts;
+        private static List<DlcRow>? cachedDlc;
+        private static List<string>? cachedFails;
+        private static Roster? cachedRoster;
 
         internal static void InvalidateHub()
         {
@@ -105,54 +121,82 @@ namespace Azrael
         internal static List<ModRow> Mods()
         {
             EnsureHub();
-            return cachedMods;
+            return cachedMods!;
         }
 
         internal static List<BridgeRow> Bridges()
         {
             EnsureHub();
-            return cachedBridges;
+            return cachedBridges!;
         }
 
         internal static List<DlcRow> Dlc()
         {
             EnsureHub();
-            return cachedDlc;
+            return cachedDlc!;
         }
 
         internal static List<ConflictRow> Conflicts()
         {
             EnsureHub();
-            return cachedConflicts;
+            return cachedConflicts!;
         }
 
         internal static List<string> HarmonyFailures()
         {
             EnsureHub();
-            return cachedFails;
+            return cachedFails!;
+        }
+
+        /// <summary>Series roster with a case-insensitive packageId index.</summary>
+        private sealed class Roster
+        {
+            internal readonly List<SeriesMod> Mods = new List<SeriesMod>();
+            private readonly Dictionary<string, int> index = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+            internal bool Add(SeriesMod mod)
+            {
+                if (index.ContainsKey(mod.PackageId))
+                {
+                    return false;
+                }
+                index[mod.PackageId] = Mods.Count;
+                Mods.Add(mod);
+                return true;
+            }
+
+            internal int IndexOf(string? packageId)
+            {
+                return packageId != null && index.TryGetValue(packageId, out int i) ? i : -1;
+            }
         }
 
         /// <summary>
         /// Canonical <see cref="Series"/> first (stable order, shows "not loaded" rows),
         /// then any other active azraelgodking.* mod so a new sister mod appears without a hub edit.
         /// </summary>
-        private static List<string[]> BuildRoster()
+        private static Roster BuildRoster()
         {
-            var roster = new List<string[]>(Series);
+            var roster = new Roster();
+            foreach (SeriesMod mod in Series)
+            {
+                roster.Add(mod);
+            }
             try
             {
                 foreach (ModMetaData meta in ModsConfig.ActiveModsInLoadOrder)
                 {
-                    string id = meta?.PackageIdPlayerFacing ?? meta?.PackageId;
-                    if (string.IsNullOrEmpty(id)
+                    string? id = meta?.PackageIdPlayerFacing ?? meta?.PackageId;
+                    if (meta == null
+                        || id == null
+                        || id.Length == 0
                         || !id.StartsWith(SeriesIdPrefix, StringComparison.OrdinalIgnoreCase)
-                        || RosterIndex(roster, id) >= 0
-                        || Array.FindIndex(NotSeries, n => string.Equals(n, id, StringComparison.OrdinalIgnoreCase)) >= 0)
+                        || NotSeries.Contains(id))
                     {
                         continue;
                     }
                     string display = string.IsNullOrEmpty(meta.Name) ? id.Substring(SeriesIdPrefix.Length) : meta.Name;
-                    roster.Add(new[] { display, id });
+                    roster.Add(new SeriesMod(display, id));
                 }
             }
             catch
@@ -162,27 +206,15 @@ namespace Azrael
             return roster;
         }
 
-        private static int RosterIndex(List<string[]> roster, string packageId)
-        {
-            for (int i = 0; i < roster.Count; i++)
-            {
-                if (string.Equals(roster[i][1], packageId, StringComparison.OrdinalIgnoreCase))
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
         private static List<ModRow> BuildMods()
         {
-            List<string[]> roster = cachedRoster ?? BuildRoster();
+            List<SeriesMod> roster = (cachedRoster ?? BuildRoster()).Mods;
             var rows = new List<ModRow>(roster.Count);
-            for (int i = 0; i < roster.Count; i++)
+            foreach (SeriesMod mod in roster)
             {
-                string display = roster[i][0];
-                string packageId = roster[i][1];
-                ModMetaData meta = FindActive(packageId);
+                string display = mod.Display;
+                string packageId = mod.PackageId;
+                ModMetaData? meta = FindActive(packageId);
                 rows.Add(new ModRow
                 {
                     Display = display,
@@ -391,15 +423,7 @@ namespace Azrael
         {
             try
             {
-                Type type = AccessTools.TypeByName("Verse.VersionControl");
-                if (type == null)
-                {
-                    return "(version unread)";
-                }
-
-                PropertyInfo prop = AccessTools.Property(type, "CurrentVersionStringWithRev")
-                    ?? AccessTools.Property(type, "CurrentVersionString");
-                string value = prop?.GetValue(null, null) as string;
+                string value = VersionControl.CurrentVersionStringWithRev;
                 return string.IsNullOrEmpty(value) ? "(version unread)" : value;
             }
             catch
@@ -468,7 +492,7 @@ namespace Azrael
         {
             int azraelIndex = -1;
             int lastSeriesAfter = -1;
-            string lastSeriesName = null;
+            string? lastSeriesName = null;
             List<ModContentPack> running = LoadedModManager.RunningModsListForReading;
             for (int i = 0; i < running.Count; i++)
             {
@@ -506,23 +530,15 @@ namespace Azrael
 
         private static bool IsSeriesPack(ModContentPack pack, out bool isAzrael, out string display)
         {
-            isAzrael = false;
-            display = pack.Name;
-            string id = pack.PackageId;
-            string facing = pack.PackageIdPlayerFacing;
-            List<string[]> roster = cachedRoster ?? BuildRoster();
-            for (int i = 0; i < roster.Count; i++)
+            Roster roster = cachedRoster ?? BuildRoster();
+            int i = roster.IndexOf(pack.PackageId);
+            if (i < 0)
             {
-                string packageId = roster[i][1];
-                if (string.Equals(id, packageId, StringComparison.OrdinalIgnoreCase)
-                    || string.Equals(facing, packageId, StringComparison.OrdinalIgnoreCase))
-                {
-                    display = roster[i][0];
-                    isAzrael = i == 0;
-                    return true;
-                }
+                i = roster.IndexOf(pack.PackageIdPlayerFacing);
             }
-            return false;
+            isAzrael = i == 0;
+            display = i >= 0 ? roster.Mods[i].Display : pack.Name;
+            return i >= 0;
         }
 
         /// <summary>
@@ -590,11 +606,11 @@ namespace Azrael
             });
         }
 
-        private static ModMetaData FindActive(string packageId)
+        private static ModMetaData? FindActive(string packageId)
         {
             try
             {
-                ModMetaData meta = ModLister.GetActiveModWithIdentifier(packageId, ignorePostfix: true);
+                ModMetaData? meta = ModLister.GetActiveModWithIdentifier(packageId, ignorePostfix: true);
                 if (meta != null)
                 {
                     return meta;
@@ -621,7 +637,7 @@ namespace Azrael
             return null;
         }
 
-        private static string VersionOf(ModMetaData meta)
+        private static string VersionOf(ModMetaData? meta)
         {
             if (meta == null)
             {
@@ -707,7 +723,7 @@ namespace Azrael
         /// Series convention: namespace X exposes X.XBuildInfo.BuildStamp (StrataBuildInfo,
         /// DeepColonyBuildInfo, AzraelBuildInfo). Mods without a typed stamp stay blank.
         /// </summary>
-        private static string StampOf(string display)
+        private static string? StampOf(string display)
         {
             string ns = NamespaceFor(display);
             return PublicConst(ns + "." + ns + "BuildInfo", "BuildStamp");
@@ -718,12 +734,12 @@ namespace Azrael
             return (display ?? string.Empty).Replace(" ", string.Empty);
         }
 
-        private static string PublicConst(string typeName, string fieldName)
+        private static string? PublicConst(string typeName, string fieldName)
         {
             try
             {
-                Type type = AccessTools.TypeByName(typeName);
-                FieldInfo field = type == null
+                Type? type = AccessTools.TypeByName(typeName);
+                FieldInfo? field = type == null
                     ? null
                     : AccessTools.Field(type, fieldName);
                 return field?.GetValue(null) as string;

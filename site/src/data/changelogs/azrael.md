@@ -1,25 +1,31 @@
 # Changelog
 
 
-## [Unreleased]
+## [1.0.0]
+
+First public release. One source builds two DLLs: `1.6/Assemblies` for RimWorld 1.6 (.NET Framework 4.7.2) and `1.7/Assemblies` for RimWorld 1.7 (.NET 10). `LoadFolders.xml` picks the right one, so there is no frozen 1.6 build (AZR-586, AZR-595).
+
+Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log.
+
+### Fixed
+- **Copy report RimWorld version** - the report always said "(version unread)" because it looked up the version type in the wrong namespace. It now prints the real version.
+- **Player.log path on 1.7** - the startup line said "loaded from  (modified unknown)" on RimWorld 1.7, which loads mod DLLs from memory. It now names the mod folder (all series mods share this line).
 
 ### Changed
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6. No gameplay change. No `modVersion` bump (Myleek).
-- **Build stamps** — the hub no longer scrapes Player.log for a stamp. Only mods that expose `XBuildInfo.BuildStamp` show one.
+- **Separate 1.6 and 1.7 assemblies.** RimWorld 1.6 loads `1.6/Assemblies`, RimWorld 1.7 loads `1.7/Assemblies` (.NET 10, built against the 1.7 refs).
+- **Released builds** - CI now packs `Azrael.zip` for the site downloads, and Release & Publish accepts Azrael.
+- **Build stamps** - the hub no longer scrapes Player.log for a stamp. Only mods that expose `XBuildInfo.BuildStamp` show one.
 
 ### Internal
+- .NET 10 pass (AZR-601): nullable reference types on every Azrael file with no warnings, a typed series roster with a case-insensitive packageId index, `System.Threading.Lock` in the patch-failure sink on .NET 10, series incident weights keyed by `StorytellerDef` instead of defName strings, switch expressions.
 - Shared `ModPack.ForExecutingAssembly` for the UpdateNews and ModVersionLog pack lookup. No gameplay change.
 - Removed unread `RemovalLine.CanDeconstruct` and the hub probe for nonexistent `Homesteader_HandDugWell` (the well is `Wellspring_HandDugWell`). No gameplay change.
 
-## [1.0.0]
+### Development history (formerly 1.0.0 pre-release)
 
-### Changed
 - **Workshop preview** — `About/Preview.png` is Azrael's own image (the overlook), no longer a copy of Homesteader's.
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `removal-queue-v1`. Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log.
-
-Not released yet: Azrael stays at 1.0.0 until its first Workshop / Nexus / GitHub release. The 1.1.0–1.4.0 numbers below were internal pre-release bumps that never shipped; their notes are kept as development history.
+The 1.1.0–1.4.0 numbers below were internal pre-release bumps that never shipped; their notes are kept as development history.
 
 ### Development history (formerly 1.4.0)
 

@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
@@ -8,7 +9,7 @@ namespace Azrael
 {
     public class IncidentWeight
     {
-        public string incident;
+        public string? incident;
         public float factor = 1f;
     }
 
@@ -18,44 +19,44 @@ namespace Azrael
     /// </summary>
     public class StorytellerIncidentWeightsDef : Def
     {
-        public string storyteller;
+        public string? storyteller;
         public List<IncidentWeight> weights = new List<IncidentWeight>();
     }
 
     public static class StorytellerIncidentWeights
     {
-        private static Dictionary<string, Dictionary<IncidentDef, float>> byStoryteller;
+        // Keyed by def reference: no string hashing on the incident-pick path.
+        private static Dictionary<StorytellerDef, Dictionary<IncidentDef, float>>? byStoryteller;
 
-        public static float FactorFor(StorytellerDef teller, IncidentDef incident)
+        public static float FactorFor(StorytellerDef? teller, IncidentDef? incident)
         {
             if (teller == null || incident == null)
             {
                 return 1f;
             }
-            if (byStoryteller == null)
-            {
-                Build();
-            }
-            if (!byStoryteller.TryGetValue(teller.defName, out Dictionary<IncidentDef, float> table))
-            {
-                return 1f;
-            }
-            return table.TryGetValue(incident, out float factor) ? factor : 1f;
+            byStoryteller ??= Build();
+            return byStoryteller.TryGetValue(teller, out Dictionary<IncidentDef, float>? table)
+                && table.TryGetValue(incident, out float factor)
+                ? factor
+                : 1f;
         }
 
-        private static void Build()
+        private static Dictionary<StorytellerDef, Dictionary<IncidentDef, float>> Build()
         {
-            var built = new Dictionary<string, Dictionary<IncidentDef, float>>();
+            var built = new Dictionary<StorytellerDef, Dictionary<IncidentDef, float>>();
             foreach (StorytellerIncidentWeightsDef def in DefDatabase<StorytellerIncidentWeightsDef>.AllDefsListForReading)
             {
-                if (def.storyteller.NullOrEmpty() || def.weights == null)
+                StorytellerDef? teller = def.storyteller.NullOrEmpty()
+                    ? null
+                    : DefDatabase<StorytellerDef>.GetNamedSilentFail(def.storyteller);
+                if (teller == null || def.weights == null)
                 {
                     continue;
                 }
-                if (!built.TryGetValue(def.storyteller, out Dictionary<IncidentDef, float> table))
+                if (!built.TryGetValue(teller, out Dictionary<IncidentDef, float>? table))
                 {
                     table = new Dictionary<IncidentDef, float>();
-                    built[def.storyteller] = table;
+                    built[teller] = table;
                 }
                 foreach (IncidentWeight w in def.weights)
                 {
@@ -63,14 +64,14 @@ namespace Azrael
                     {
                         continue;
                     }
-                    IncidentDef incident = DefDatabase<IncidentDef>.GetNamedSilentFail(w.incident);
+                    IncidentDef? incident = DefDatabase<IncidentDef>.GetNamedSilentFail(w.incident);
                     if (incident != null)
                     {
                         table[incident] = Mathf.Max(0f, w.factor);
                     }
                 }
             }
-            byStoryteller = built;
+            return built;
         }
     }
 

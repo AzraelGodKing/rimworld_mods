@@ -41,8 +41,9 @@ $mods = @(
     @{ Folder = 'Nemesis'; ZipName = 'Nemesis'; DllName = 'Nemesis' },
     @{ Folder = 'Deep Colony'; ZipName = 'DeepColony'; DllName = 'DeepColony' },
     @{ Folder = 'DateNight'; ZipName = 'DateNight'; DllName = 'DateNight' },
-    @{ Folder = 'Niceties'; ZipName = 'Niceties'; DllName = 'Niceties' }
-    # LivingWorld, Azrael, and Wave Survival Reforged are not release-ready — omit from public zips.
+    @{ Folder = 'Niceties'; ZipName = 'Niceties'; DllName = 'Niceties' },
+    @{ Folder = 'Azrael'; ZipName = 'Azrael'; DllName = 'Azrael' }
+    # LivingWorld and Wave Survival Reforged are not release-ready — omit from public zips.
 )
 
 foreach ($mod in $mods) {

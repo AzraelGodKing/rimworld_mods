@@ -1,3 +1,4 @@
+#nullable enable
 using RimWorld;
 using Verse;
 
@@ -10,7 +11,7 @@ namespace Azrael
     /// </summary>
     public class ScenPart_ForcedStoryteller : ScenPart
     {
-        public StorytellerDef storyteller;
+        public StorytellerDef? storyteller;
 
         public override void ExposeData()
         {

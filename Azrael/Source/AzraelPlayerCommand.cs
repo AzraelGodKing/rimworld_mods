@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -62,7 +63,7 @@ namespace Azrael
             List<Map> maps = Find.Maps;
             for (int m = 0; m < maps.Count; m++)
             {
-                List<Thing> buildings = maps[m]?.listerThings?.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
+                List<Thing>? buildings = maps[m]?.listerThings?.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
                 if (buildings == null)
                 {
                     continue;

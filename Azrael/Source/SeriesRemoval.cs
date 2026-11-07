@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Text;
 using HarmonyLib;
@@ -26,8 +27,8 @@ namespace Azrael
 
     internal class RemovalReport
     {
-        public string Display;
-        public string PackageId;
+        public string Display = "";
+        public string PackageId = "";
         public List<RemovalLine> Lines = new List<RemovalLine>();
         public List<Thing> Deconstructables = new List<Thing>();
         public List<string> Blockers = new List<string>();
@@ -343,52 +344,52 @@ namespace Azrael
 
         private static bool HuntActive()
         {
-            System.Type t = AccessTools.TypeByName("Nemesis.GameComponent_Nemesis");
+            System.Type? t = AccessTools.TypeByName("Nemesis.GameComponent_Nemesis");
             if (t == null || Current.Game == null)
             {
                 return false;
             }
-            object inst = Current.Game.GetComponent(t);
+            object? inst = Current.Game.GetComponent(t);
             if (inst == null)
             {
                 return false;
             }
 
             // Prefer IsEngaged (active hunt OR truce window).
-            object engaged = AccessTools.Property(t, "IsEngaged")?.GetValue(inst);
+            object? engaged = AccessTools.Property(t, "IsEngaged")?.GetValue(inst);
             if (engaged is bool e)
             {
                 return e;
             }
 
-            object data = AccessTools.Field(t, "data")?.GetValue(inst)
+            object? data = AccessTools.Field(t, "data")?.GetValue(inst)
                 ?? AccessTools.Property(t, "Data")?.GetValue(inst);
             if (data == null)
             {
                 return false;
             }
-            object active = AccessTools.Field(data.GetType(), "active")?.GetValue(data);
+            object? active = AccessTools.Field(data.GetType(), "active")?.GetValue(data);
             if (active is bool b && b)
             {
                 return true;
             }
-            object truce = AccessTools.Field(data.GetType(), "truceUntilTick")?.GetValue(data);
+            object? truce = AccessTools.Field(data.GetType(), "truceUntilTick")?.GetValue(data);
             return truce is int tick && tick > 0;
         }
 
         private static bool NemesisWorldPawnParked()
         {
-            System.Type t = AccessTools.TypeByName("Nemesis.GameComponent_Nemesis");
+            System.Type? t = AccessTools.TypeByName("Nemesis.GameComponent_Nemesis");
             if (t == null || Current.Game == null)
             {
                 return false;
             }
-            object inst = Current.Game.GetComponent(t);
+            object? inst = Current.Game.GetComponent(t);
             if (inst == null)
             {
                 return false;
             }
-            object pawn = AccessTools.Method(t, "FindNemesisPawn")?.Invoke(inst, null);
+            object? pawn = AccessTools.Method(t, "FindNemesisPawn")?.Invoke(inst, null);
             return pawn is Pawn p && !p.Destroyed && !p.Dead;
         }
 
@@ -396,18 +397,18 @@ namespace Azrael
         {
             try
             {
-                System.Type t = AccessTools.TypeByName("DeepColony.GameComp_DeepColony");
+                System.Type? t = AccessTools.TypeByName("DeepColony.GameComp_DeepColony");
                 if (t == null || Current.Game == null)
                 {
                     return 0;
                 }
-                object inst = AccessTools.Property(t, "Instance")?.GetValue(null)
+                object? inst = AccessTools.Property(t, "Instance")?.GetValue(null)
                     ?? Current.Game.GetComponent(t);
                 if (inst == null)
                 {
                     return 0;
                 }
-                object letters = AccessTools.Field(t, "familyLetters")?.GetValue(inst);
+                object? letters = AccessTools.Field(t, "familyLetters")?.GetValue(inst);
                 if (letters is System.Collections.ICollection coll)
                 {
                     return coll.Count;
@@ -424,7 +425,7 @@ namespace Azrael
     {
         private readonly RemovalReport report;
         private Vector2 scroll;
-        private string summary;
+        private string? summary;
 
         public override Vector2 InitialSize => new Vector2(640f, 520f);
 
@@ -503,9 +504,8 @@ namespace Azrael
             int sell = 0;
             int attention = 0;
             int safe = 0;
-            for (int i = 0; i < report.Lines.Count; i++)
+            foreach (RemovalLine line in report.Lines)
             {
-                RemovalLine line = report.Lines[i];
                 switch (line.Verdict)
                 {
                     case RemovalVerdict.Deconstruct:
@@ -525,19 +525,12 @@ namespace Azrael
             return "Azrael_Removal_Summary".Translate(deconstruct, sell, attention, safe);
         }
 
-        private static string VerdictLabel(RemovalVerdict v)
+        private static string VerdictLabel(RemovalVerdict v) => v switch
         {
-            switch (v)
-            {
-                case RemovalVerdict.Deconstruct:
-                    return "Azrael_Removal_V_Deconstruct".Translate();
-                case RemovalVerdict.ConsumeOrSell:
-                    return "Azrael_Removal_V_Sell".Translate();
-                case RemovalVerdict.ResolveFirst:
-                    return "Azrael_Removal_V_Resolve".Translate();
-                default:
-                    return "Azrael_Removal_V_Safe".Translate();
-            }
-        }
+            RemovalVerdict.Deconstruct => "Azrael_Removal_V_Deconstruct".Translate(),
+            RemovalVerdict.ConsumeOrSell => "Azrael_Removal_V_Sell".Translate(),
+            RemovalVerdict.ResolveFirst => "Azrael_Removal_V_Resolve".Translate(),
+            _ => "Azrael_Removal_V_Safe".Translate(),
+        };
     }
 }
