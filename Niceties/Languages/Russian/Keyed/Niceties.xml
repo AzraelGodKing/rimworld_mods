@@ -11,7 +11,7 @@
   <Niceties_Settings_PresetHard>Жёсткий</Niceties_Settings_PresetHard>
   <Niceties_Settings_PresetCustom>Свой</Niceties_Settings_PresetCustom>
   <Niceties_Settings_ActivePreset>Активный пресет: {0}</Niceties_Settings_ActivePreset>
-  <Niceties_Settings_PresetsTip>Пресеты меняют только ползунки. Потом отметьте те мелочи, которые вам нужны.</Niceties_Settings_PresetsTip>
+  <Niceties_Settings_PresetsTip>Пресеты меняют только настройки внутри каждого удобства. Какие удобства включены, остаётся как вы выбрали.</Niceties_Settings_PresetsTip>
   <Niceties_Settings_SnapshotDiffers>Это сохранение всё ещё использует старые зашитые настройки, а не параметры ниже.</Niceties_Settings_SnapshotDiffers>
   <Niceties_Settings_SnapshotApply>Применить к этому сохранению</Niceties_Settings_SnapshotApply>
   <Niceties_Settings_SnapshotHost>Мультиплеер: это сохранение работает на зашитых настройках хоста. Ваши изменения здесь действуют в одиночной игре.</Niceties_Settings_SnapshotHost>
@@ -23,13 +23,13 @@
   <Niceties_Settings_CraftingBonusTip>Навык ремесла колониста снижает оставшийся ежедневный износ, до половины на 20 уровне.</Niceties_Settings_CraftingBonusTip>
   <Niceties_Settings_CorpseApparel>То же правило на трупах</Niceties_Settings_CorpseApparel>
   <Niceties_Settings_CorpseApparelTip>Выкл: одежда на мёртвом портится как в ванили. Вкл: правило ухода за надетым всё ещё действует.</Niceties_Settings_CorpseApparelTip>
-  <Niceties_Settings_WeaponCare>Ухоженное экипированное оружие</Niceties_Settings_WeaponCare>
-  <Niceties_Settings_WeaponCareTip>Экипированное оружие использует то же правило ежедневного износа по качеству и ремеслу, что и одежда. По умолчанию выкл. Бой и огонь по-прежнему снимают прочность.</Niceties_Settings_WeaponCareTip>
 
   <Niceties_Settings_ThroneAltar>Алтарь в тронном зале</Niceties_Settings_ThroneAltar>
   <Niceties_Settings_ThroneAltarTip>Требования тронного зала Royalty игнорируют «без алтарей». Трон в комнате оставляет её тронным залом, а не храмом. Нужны Royalty и Ideology.</Niceties_Settings_ThroneAltarTip>
   <Niceties_Settings_WearAny>Носить любой крой</Niceties_Settings_WearAny>
-  <Niceties_Settings_WearAnyTip>Снимает гендерные теги одежды (королевский жилет/корсет, шляпы и моды с тем же полем), чтобы мысль «не тот пол» не срабатывала.</Niceties_Settings_WearAnyTip>
+  <Niceties_Settings_WearAnyTip>Колонисты могут носить одежду любого пола (королевский жилет/корсет, шляпы и одежду модов с той же меткой) без мысли о чужой одежде. Пешки, которых создаёт игра (рейдеры, торговцы, новички), одеваются как в ванили.</Niceties_Settings_WearAnyTip>
+  <Niceties_Settings_WearAnyGenerated>Созданные игрой пешки тоже носят любой крой</Niceties_Settings_WearAnyGenerated>
+  <Niceties_Settings_WearAnyGeneratedTip>Рейдеры, торговцы и другие созданные игрой пешки тоже могут получить одежду любого пола, как в Niceties 1.x. По умолчанию выкл.</Niceties_Settings_WearAnyGeneratedTip>
   <Niceties_Settings_HideCrypto>Скрыть спящих в криптосне из панели</Niceties_Settings_HideCrypto>
   <Niceties_Settings_HideCryptoTip>Колонисты уже в капсуле криптосна не показываются на панели колонистов. Пока их несут к капсуле, они видны.</Niceties_Settings_HideCryptoTip>
   <Niceties_Settings_CryptoCount>Показывать число скрытых в криптосне</Niceties_Settings_CryptoCount>
@@ -59,9 +59,6 @@
   <Niceties_Apparel_NoWear>Ежедневный износ: нет (ухожено).</Niceties_Apparel_NoWear>
   <Niceties_Apparel_VanillaWear>Ежедневный износ: ваниль.</Niceties_Apparel_VanillaWear>
   <Niceties_Apparel_ReducedWear>Ежедневный износ: {0} от ванили.</Niceties_Apparel_ReducedWear>
-  <Niceties_Weapon_NoWear>Ежедневный износ: нет (ухоженное оружие).</Niceties_Weapon_NoWear>
-  <Niceties_Weapon_VanillaWear>Ежедневный износ: ваниль.</Niceties_Weapon_VanillaWear>
-  <Niceties_Weapon_ReducedWear>Ежедневный износ: {0} от ванили.</Niceties_Weapon_ReducedWear>
   <Niceties_Hunt_TooBig>{0} слишком крупный для охоты в ближнем бою.</Niceties_Hunt_TooBig>
   <Niceties_CryptoHiddenCount>+{0} в криптосне</Niceties_CryptoHiddenCount>
   <Niceties_CryptoHiddenCountTip>Колонисты в капсулах криптосна скрыты с панели модом Niceties. Отключается в настройках мода.</Niceties_CryptoHiddenCountTip>

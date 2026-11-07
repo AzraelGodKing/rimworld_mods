@@ -19,7 +19,8 @@ namespace Niceties
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            int before = Settings.ContentFingerprint();
+            NicetiesSimFlags before = Settings.sim;
+            bool beforeCount = Settings.showCryptosleepCount;
 
             Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
             float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
@@ -35,17 +36,17 @@ namespace Niceties
             if (Widgets.ButtonText(new Rect(presetRow.x, presetRow.y, bw, 28f),
                     "Niceties_Settings_PresetSoft".Translate()))
             {
-                Settings.ApplySoft();
+                Settings.ApplyPreset(NicetiesPreset.Soft);
             }
             if (Widgets.ButtonText(new Rect(presetRow.x + bw + 8f, presetRow.y, bw, 28f),
                     "Niceties_Settings_PresetDefault".Translate()))
             {
-                Settings.ResetToDefaults();
+                Settings.ApplyPreset(NicetiesPreset.Default);
             }
             if (Widgets.ButtonText(new Rect(presetRow.x + 2f * (bw + 8f), presetRow.y, bw, 28f),
                     "Niceties_Settings_PresetHard".Translate()))
             {
-                Settings.ApplyHard();
+                Settings.ApplyPreset(NicetiesPreset.Hard);
             }
 
             listing.Gap(4f);
@@ -54,72 +55,75 @@ namespace Niceties
             DrawSaveSnapshotNotice(listing);
 
             DrawFeature(listing, "Niceties_Settings_ApparelCare", "Niceties_Settings_ApparelCareTip",
-                ref Settings.enableApparelCare);
-            if (Settings.enableApparelCare)
+                ref Settings.sim.enableApparelCare);
+            if (Settings.sim.enableApparelCare)
             {
                 listing.CheckboxLabeled("Niceties_Settings_QualityScale".Translate(),
-                    ref Settings.apparelQualityScaling, "Niceties_Settings_QualityScaleTip".Translate());
+                    ref Settings.sim.apparelQualityScaling, "Niceties_Settings_QualityScaleTip".Translate());
                 listing.CheckboxLabeled("Niceties_Settings_CraftingBonus".Translate(),
-                    ref Settings.apparelCraftingBonus, "Niceties_Settings_CraftingBonusTip".Translate());
+                    ref Settings.sim.apparelCraftingBonus, "Niceties_Settings_CraftingBonusTip".Translate());
                 listing.CheckboxLabeled("Niceties_Settings_CorpseApparel".Translate(),
-                    ref Settings.protectCorpseApparel, "Niceties_Settings_CorpseApparelTip".Translate());
-                listing.CheckboxLabeled("Niceties_Settings_WeaponCare".Translate(),
-                    ref Settings.enableWeaponCare, "Niceties_Settings_WeaponCareTip".Translate());
+                    ref Settings.sim.protectCorpseApparel, "Niceties_Settings_CorpseApparelTip".Translate());
             }
 
             DrawFeature(listing, "Niceties_Settings_ThroneAltar", "Niceties_Settings_ThroneAltarTip",
-                ref Settings.allowThroneAltars);
+                ref Settings.sim.allowThroneAltars);
 
             DrawFeature(listing, "Niceties_Settings_WearAny", "Niceties_Settings_WearAnyTip",
-                ref Settings.wearAnyGender);
+                ref Settings.sim.wearAnyGender);
+            if (Settings.sim.wearAnyGender)
+            {
+                listing.CheckboxLabeled("Niceties_Settings_WearAnyGenerated".Translate(),
+                    ref Settings.sim.wearAnyGenderGenerated, "Niceties_Settings_WearAnyGeneratedTip".Translate());
+            }
 
             DrawFeature(listing, "Niceties_Settings_HideCrypto", "Niceties_Settings_HideCryptoTip",
-                ref Settings.hideCryptosleep);
-            if (Settings.hideCryptosleep)
+                ref Settings.sim.hideCryptosleep);
+            if (Settings.sim.hideCryptosleep)
             {
                 listing.CheckboxLabeled("Niceties_Settings_CryptoCount".Translate(),
                     ref Settings.showCryptosleepCount, "Niceties_Settings_CryptoCountTip".Translate());
             }
 
             DrawFeature(listing, "Niceties_Settings_MeleeHunt", "Niceties_Settings_MeleeHuntTip",
-                ref Settings.meleeHunting);
-            if (Settings.meleeHunting)
+                ref Settings.sim.meleeHunting);
+            if (Settings.sim.meleeHunting)
             {
                 listing.CheckboxLabeled("Niceties_Settings_UnarmedHunt".Translate(),
-                    ref Settings.unarmedHunting, "Niceties_Settings_UnarmedHuntTip".Translate());
+                    ref Settings.sim.unarmedHunting, "Niceties_Settings_UnarmedHuntTip".Translate());
                 listing.Label("Niceties_Settings_MeleeSize".Translate(
-                    Settings.meleeHuntMaxBodySize.ToString("F1")));
-                Settings.meleeHuntMaxBodySize = listing.Slider(Settings.meleeHuntMaxBodySize, 0.2f, 8f);
-                string? example = MeleeHunt.ReferenceAnimalLabel(Settings.meleeHuntMaxBodySize);
+                    Settings.sim.meleeHuntMaxBodySize.ToString("F1")));
+                Settings.sim.meleeHuntMaxBodySize = listing.Slider(Settings.sim.meleeHuntMaxBodySize,
+                    NicetiesSettings.MinMeleeCap, NicetiesSettings.MaxMeleeCap);
+                string? example = MeleeHunt.ReferenceAnimalLabel(Settings.sim.meleeHuntMaxBodySize);
                 listing.Label(example != null
                     ? "Niceties_Settings_MeleeSizeExample".Translate(example)
                     : "Niceties_Settings_MeleeSizeTiny".Translate());
             }
 
             DrawFeature(listing, "Niceties_Settings_SharedRooms", "Niceties_Settings_SharedRoomsTip",
-                ref Settings.enableSharedRooms);
-            if (Settings.enableSharedRooms)
+                ref Settings.sim.enableSharedRooms);
+            if (Settings.sim.enableSharedRooms)
             {
                 listing.CheckboxLabeled("Niceties_Settings_SkipDisturbedSleep".Translate(),
-                    ref Settings.skipDisturbedSleepWhenSharing,
+                    ref Settings.sim.skipDisturbedSleepWhenSharing,
                     "Niceties_Settings_SkipDisturbedSleepTip".Translate());
             }
 
             DrawFeature(listing, "Niceties_Settings_LeaveAWayOut", "Niceties_Settings_LeaveAWayOutTip",
-                ref Settings.enableLeaveAWayOut);
+                ref Settings.sim.enableLeaveAWayOut);
 
             listing.GapLine();
             if (listing.ButtonText("Niceties_Settings_Reset".Translate()))
             {
                 Settings.ResetToDefaults();
-                Settings.showCryptosleepCount = true;
             }
 
             settingsContentHeight = Mathf.Max(listing.MaxColumnHeightSeen + 24f, inRect.height);
             listing.End();
             Widgets.EndScrollView();
-            Settings.Clamp();
-            if (Settings.ContentFingerprint() != before)
+            Settings.sim.Clamp();
+            if (Settings.sim != before || Settings.showCryptosleepCount != beforeCount)
             {
                 Settings.Write();
                 NicetiesSim.SyncFromModSettings();
@@ -159,7 +163,6 @@ namespace Niceties
 
         private static void OnFeatureTogglesChanged()
         {
-            ApparelGender.ApplyEffective();
             CryptosleepBar.MarkDirty();
         }
     }

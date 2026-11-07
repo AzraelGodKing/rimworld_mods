@@ -16,11 +16,13 @@ namespace Niceties
 
         private static float cachedCap = -1f;
         private static string? cachedLabel;
+        private static LoadedLanguage? cachedLanguage;
 
         /// <summary>Largest vanilla reference animal at or under the cap, or null if none fit.</summary>
         internal static string? ReferenceAnimalLabel(float cap)
         {
-            if (cap == cachedCap)
+            // Keyed on the language too: def labels change when the player switches (AZR-550).
+            if (cap == cachedCap && ReferenceEquals(cachedLanguage, LanguageDatabase.activeLanguage))
             {
                 return cachedLabel;
             }
@@ -41,19 +43,19 @@ namespace Niceties
             }
 
             cachedCap = cap;
+            cachedLanguage = LanguageDatabase.activeLanguage;
             cachedLabel = best != null ? best.label + " (" + best.race.baseBodySize.ToString("0.##") + ")" : null;
             return cachedLabel;
         }
 
         internal static bool AllowsMelee(Pawn? hunter)
         {
-            NicetiesSettings settings = NicetiesSim.Settings;
-            return settings.meleeHunting && hunter != null;
+            return hunter != null && NicetiesSim.Settings.meleeHunting;
         }
 
         internal static bool AllowsUnarmed()
         {
-            NicetiesSettings settings = NicetiesSim.Settings;
+            NicetiesSimFlags settings = NicetiesSim.Settings;
             return settings.meleeHunting && settings.unarmedHunting;
         }
 
@@ -64,9 +66,8 @@ namespace Niceties
                 return true;
             }
 
-            NicetiesSettings settings = NicetiesSim.Settings;
-            float cap = settings.meleeHuntMaxBodySize;
-            return prey.RaceProps.baseBodySize <= cap;
+            // Real size, so a juvenile is judged by its own size, not the adult's (AZR-550).
+            return prey.BodySize <= NicetiesSim.Settings.meleeHuntMaxBodySize;
         }
 
         internal static bool UsesMeleeForHunt(Pawn hunter)

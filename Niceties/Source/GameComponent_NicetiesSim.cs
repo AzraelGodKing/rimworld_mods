@@ -12,69 +12,116 @@ namespace Niceties
     /// </summary>
     public class GameComponent_NicetiesSim : GameComponent
     {
-        private NicetiesSettings? snapshot;
+        /// <summary>
+        /// 1 = Niceties 1.x (no version key). 2 = Niceties 2.0: adds
+        /// <c>wearAnyGenderGenerated</c> and drops the weapon-care flag (AZR-551).
+        /// </summary>
+        internal const int CurrentSnapshotVersion = 2;
+
+        private static Game? cachedGame;
+        private static GameComponent_NicetiesSim? cached;
+
+        private NicetiesSimFlags snapshot;
+        private bool hasSnapshot;
         private bool loadedFromSave;
+        private int snapshotVersion = CurrentSnapshotVersion;
 
         public GameComponent_NicetiesSim(Game game)
         {
-            // Starting pawns are generated before FinalizeInit; drop the previous game's tags.
-            ApparelGender.Apply(NicetiesMod.Settings.wearAnyGender);
+            // Until FinalizeInit (or a load) fills the snapshot, patches read Mod Options.
+            // On a new game that is the host's own file; a Multiplayer joiner always loads
+            // a save, so starting pawns never depend on a joiner's local options (AZR-653).
+            cachedGame = game;
+            cached = this;
         }
 
-        public NicetiesSettings? Snapshot => snapshot;
+        internal bool HasSnapshot => hasSnapshot;
+
+        internal NicetiesSimFlags Snapshot => snapshot;
 
         public override void ExposeData()
         {
-            if (snapshot == null)
+            if (Scribe.mode == LoadSaveMode.Saving)
             {
-                snapshot = new NicetiesSettings();
+                snapshotVersion = CurrentSnapshotVersion;
             }
 
             if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
                 loadedFromSave = true;
+                snapshot = NicetiesSimFlags.Defaults;
             }
 
-            snapshot.ExposeData();
+            // Missing key = a 1.x save.
+            Scribe_Values.Look(ref snapshotVersion, "nicetiesSnapshotVersion", 1);
+            snapshot.Expose();
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                hasSnapshot = true;
+                UpgradeSnapshot();
+            }
+        }
+
+        /// <summary>
+        /// A 1.x snapshot has no key for the 2.0 fields, so they took their defaults while
+        /// loading. Fixed up here so the next new field has an obvious place to go.
+        /// </summary>
+        private void UpgradeSnapshot()
+        {
+            if (snapshotVersion < 2)
+            {
+                // 1.x cleared apparel gender tags for every pawn, generated ones included.
+                // Keep that for a host-baked Multiplayer save so its generation does not change
+                // under the players; outside Multiplayer FinalizeInit pulls Mod Options anyway.
+                snapshot.wearAnyGenderGenerated = snapshot.wearAnyGender;
+            }
+
+            snapshotVersion = CurrentSnapshotVersion;
         }
 
         public override void FinalizeInit()
         {
-            if (snapshot == null || !loadedFromSave || !NicetiesMultiplayer.InSession)
+            if (!hasSnapshot || !loadedFromSave || !NicetiesMultiplayer.InSession)
             {
                 PullFromModSettings();
             }
 
-            ApparelGender.ApplyEffective();
             CryptosleepBar.MarkDirty();
             OpenBuilds.ClearCache();
         }
 
         public void PullFromModSettings()
         {
-            NicetiesSettings src = NicetiesMod.Settings;
-            if (src == null)
-            {
-                return;
-            }
-
-            if (snapshot == null)
-            {
-                snapshot = new NicetiesSettings();
-            }
-
-            snapshot.CopyFrom(src);
+            NicetiesSimFlags src = NicetiesMod.Settings.sim;
+            src.Clamp();
+            snapshot = src;
+            hasSnapshot = true;
         }
 
         public bool DiffersFromModSettings()
         {
-            NicetiesSettings src = NicetiesMod.Settings;
-            return snapshot != null && src != null && snapshot.SimFingerprint() != src.SimFingerprint();
+            return hasSnapshot && snapshot != NicetiesMod.Settings.sim;
         }
 
+        /// <summary>
+        /// Cached per game. Patches read settings on hot paths, so this avoids a
+        /// <c>Game.GetComponent</c> list scan on every call (AZR-549).
+        /// </summary>
         public static GameComponent_NicetiesSim? Get()
         {
-            return Current.Game?.GetComponent<GameComponent_NicetiesSim>();
+            Game? game = Current.Game;
+            if (game == null)
+            {
+                return null;
+            }
+
+            if (!ReferenceEquals(game, cachedGame))
+            {
+                cachedGame = game;
+                cached = game.GetComponent<GameComponent_NicetiesSim>();
+            }
+
+            return cached;
         }
     }
 
@@ -83,17 +130,12 @@ namespace Niceties
     /// </summary>
     internal static class NicetiesSim
     {
-        internal static NicetiesSettings Settings
+        internal static NicetiesSimFlags Settings
         {
             get
             {
                 GameComponent_NicetiesSim? gc = GameComponent_NicetiesSim.Get();
-                if (gc?.Snapshot != null)
-                {
-                    return gc.Snapshot;
-                }
-
-                return NicetiesMod.Settings;
+                return gc != null && gc.HasSnapshot ? gc.Snapshot : NicetiesMod.Settings.sim;
             }
         }
 

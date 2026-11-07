@@ -11,7 +11,7 @@
   <Niceties_Settings_PresetHard>严苛</Niceties_Settings_PresetHard>
   <Niceties_Settings_PresetCustom>自定义</Niceties_Settings_PresetCustom>
   <Niceties_Settings_ActivePreset>当前预设：{0}</Niceties_Settings_ActivePreset>
-  <Niceties_Settings_PresetsTip>预设只改旋钮。之后再勾选你真正想要的体贴。</Niceties_Settings_PresetsTip>
+  <Niceties_Settings_PresetsTip>预设只改变各便利项下的细项设置。开启哪些便利项保持你的选择不变。</Niceties_Settings_PresetsTip>
   <Niceties_Settings_SnapshotDiffers>此存档仍在使用比下方选项更旧的已存设置。</Niceties_Settings_SnapshotDiffers>
   <Niceties_Settings_SnapshotApply>立即应用到此存档</Niceties_Settings_SnapshotApply>
   <Niceties_Settings_SnapshotHost>多人游戏：此存档使用主机已存的设置。你在这里的修改只影响单人游戏。</Niceties_Settings_SnapshotHost>
@@ -23,13 +23,13 @@
   <Niceties_Settings_CraftingBonusTip>殖民者的制作技能会减少剩余每日损耗，20 级最多减半。</Niceties_Settings_CraftingBonusTip>
   <Niceties_Settings_CorpseApparel>尸体服装沿用同一规则</Niceties_Settings_CorpseApparel>
   <Niceties_Settings_CorpseApparelTip>关：死者身上的服装按原版损耗。开：仍适用穿着保养规则。</Niceties_Settings_CorpseApparelTip>
-  <Niceties_Settings_WeaponCare>妥善保养已装备武器</Niceties_Settings_WeaponCare>
-  <Niceties_Settings_WeaponCareTip>已装备武器沿用与服装相同的品质/制作技能每日损耗规则。默认关闭。战斗和火灾仍会掉耐久。</Niceties_Settings_WeaponCareTip>
 
   <Niceties_Settings_ThroneAltar>王座厅允许祭坛</Niceties_Settings_ThroneAltar>
   <Niceties_Settings_ThroneAltarTip>皇权王座厅要求忽略“无祭坛”。厅内有王座则仍算王座厅而非神殿。需同时启用皇权与思想才能生效。</Niceties_Settings_ThroneAltarTip>
   <Niceties_Settings_WearAny>可穿任何性别剪裁</Niceties_Settings_WearAny>
-  <Niceties_Settings_WearAnyTip>清除服装性别标签（皇家背心/胸衣、帽子，以及使用同一字段的模组），从而不再触发性别不符心情。</Niceties_Settings_WearAnyTip>
+  <Niceties_Settings_WearAnyTip>殖民者可以穿任何性别款式的服装（皇家马甲/束腰、帽子，以及使用同一标签的模组服装），不会产生“穿错性别服装”的想法。游戏生成的角色（袭击者、商人、新加入者）仍按原版着装。</Niceties_Settings_WearAnyTip>
+  <Niceties_Settings_WearAnyGenerated>生成的角色也可穿任意款式</Niceties_Settings_WearAnyGenerated>
+  <Niceties_Settings_WearAnyGeneratedTip>袭击者、商人等生成的角色也可能穿任意性别款式，与 Niceties 1.x 相同。默认关闭。</Niceties_Settings_WearAnyGeneratedTip>
   <Niceties_Settings_HideCrypto>从殖民者栏隐藏冷冻舱中的人</Niceties_Settings_HideCrypto>
   <Niceties_Settings_HideCryptoTip>已在冷冻休眠舱中的殖民者不出现在殖民者栏。被抬向舱室途中仍可见。</Niceties_Settings_HideCryptoTip>
   <Niceties_Settings_CryptoCount>显示隐藏的冷冻休眠人数</Niceties_Settings_CryptoCount>
@@ -59,9 +59,6 @@
   <Niceties_Apparel_NoWear>每日损耗：无（保养良好）。</Niceties_Apparel_NoWear>
   <Niceties_Apparel_VanillaWear>每日损耗：原版。</Niceties_Apparel_VanillaWear>
   <Niceties_Apparel_ReducedWear>每日损耗：原版的 {0}。</Niceties_Apparel_ReducedWear>
-  <Niceties_Weapon_NoWear>每日损耗：无（武器保养良好）。</Niceties_Weapon_NoWear>
-  <Niceties_Weapon_VanillaWear>每日损耗：原版。</Niceties_Weapon_VanillaWear>
-  <Niceties_Weapon_ReducedWear>每日损耗：原版的 {0}。</Niceties_Weapon_ReducedWear>
   <Niceties_Hunt_TooBig>{0} 体型过大，不适合近战狩猎。</Niceties_Hunt_TooBig>
   <Niceties_CryptoHiddenCount>+{0} 冷冻休眠中</Niceties_CryptoHiddenCount>
   <Niceties_CryptoHiddenCountTip>冷冻休眠舱中的殖民者已被 Niceties 从殖民者栏隐藏。可在模组选项中关闭。</Niceties_CryptoHiddenCountTip>

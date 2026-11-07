@@ -64,7 +64,7 @@ namespace Niceties
                 return !OpenBuilds.StepAsideThenRetry(worker, __instance);
             }
 
-            OpenBuilds.ClearCache();
+            OpenBuilds.ClearCacheNear(__instance.Map, __instance.Position);
             return true;
         }
     }

@@ -18,8 +18,6 @@ namespace Niceties
         {
             SafePatchAll.Apply(new Harmony("azraelgodking.niceties"), "[Niceties]");
             SharedRooms.InjectComps();
-            ApparelGender.Capture();
-            ApparelGender.ApplyEffective();
             NicetiesMultiplayer.RegisterSyncMethod(typeof(SharedRooms), nameof(SharedRooms.SetMarkedForBed));
             LongEventHandler.ExecuteWhenFinished(() =>
                 ModVersionLog.Write("[Niceties]", extra: BuildStamp));

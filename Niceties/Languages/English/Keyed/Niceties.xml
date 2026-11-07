@@ -11,7 +11,7 @@
   <Niceties_Settings_PresetHard>Hard</Niceties_Settings_PresetHard>
   <Niceties_Settings_PresetCustom>Custom</Niceties_Settings_PresetCustom>
   <Niceties_Settings_ActivePreset>Active preset: {0}</Niceties_Settings_ActivePreset>
-  <Niceties_Settings_PresetsTip>Presets only change the knobs. After that, tick the niceties you actually want.</Niceties_Settings_PresetsTip>
+  <Niceties_Settings_PresetsTip>Presets only change the knobs under each nicety. Which niceties are on stays as you set it.</Niceties_Settings_PresetsTip>
   <Niceties_Settings_SnapshotDiffers>This save still uses older baked settings than the options below.</Niceties_Settings_SnapshotDiffers>
   <Niceties_Settings_SnapshotApply>Apply to this save now</Niceties_Settings_SnapshotApply>
   <Niceties_Settings_SnapshotHost>Multiplayer: this save runs on the host's baked settings. Your changes here apply to single-player games.</Niceties_Settings_SnapshotHost>
@@ -23,13 +23,13 @@
   <Niceties_Settings_CraftingBonusTip>A pawn's Crafting skill reduces remaining daily wear, up to half at level 20.</Niceties_Settings_CraftingBonusTip>
   <Niceties_Settings_CorpseApparel>Keep the same rule on corpses</Niceties_Settings_CorpseApparel>
   <Niceties_Settings_CorpseApparelTip>Off: apparel on a dead pawn deteriorates as vanilla. On: the worn-care rule still applies.</Niceties_Settings_CorpseApparelTip>
-  <Niceties_Settings_WeaponCare>Well-kept equipped weapons</Niceties_Settings_WeaponCare>
-  <Niceties_Settings_WeaponCareTip>Equipped weapons use the same quality/Crafting daily-wear rule as apparel. Off by default. Combat and fire still damage hit points.</Niceties_Settings_WeaponCareTip>
 
   <Niceties_Settings_ThroneAltar>Allow altars in throne rooms</Niceties_Settings_ThroneAltar>
   <Niceties_Settings_ThroneAltarTip>Royalty throne-room requirements ignore "no altars". A throne in the room keeps it a throne room instead of a temple. Needs Royalty + Ideology to matter.</Niceties_Settings_ThroneAltarTip>
   <Niceties_Settings_WearAny>Wear any gendered cut</Niceties_Settings_WearAny>
-  <Niceties_Settings_WearAnyTip>Clears apparel gender tags (royal vest/corset, hats, and any mod that uses the same field) so the wrong-gender thought does not apply.</Niceties_Settings_WearAnyTip>
+  <Niceties_Settings_WearAnyTip>Colonists may wear any gendered cut (royal vest/corset, hats, and mod apparel that uses the same tag) without the wrong-gender thought. Pawns the game generates (raiders, traders, new joiners) still dress as vanilla.</Niceties_Settings_WearAnyTip>
+  <Niceties_Settings_WearAnyGenerated>Also let generated pawns wear any cut</Niceties_Settings_WearAnyGenerated>
+  <Niceties_Settings_WearAnyGeneratedTip>Raiders, traders and other generated pawns may also be dressed in any gendered cut, like Niceties 1.x did. Off by default.</Niceties_Settings_WearAnyGeneratedTip>
   <Niceties_Settings_HideCrypto>Hide cryptosleep pawns from the bar</Niceties_Settings_HideCrypto>
   <Niceties_Settings_HideCryptoTip>Colonists already in a cryptosleep casket are omitted from the colonist bar. They stay visible while being carried to a casket.</Niceties_Settings_HideCryptoTip>
   <Niceties_Settings_CryptoCount>Show hidden cryptosleep count</Niceties_Settings_CryptoCount>
@@ -59,9 +59,6 @@
   <Niceties_Apparel_NoWear>Daily wear: none (well kept).</Niceties_Apparel_NoWear>
   <Niceties_Apparel_VanillaWear>Daily wear: vanilla.</Niceties_Apparel_VanillaWear>
   <Niceties_Apparel_ReducedWear>Daily wear: {0} of vanilla.</Niceties_Apparel_ReducedWear>
-  <Niceties_Weapon_NoWear>Daily wear: none (well kept weapon).</Niceties_Weapon_NoWear>
-  <Niceties_Weapon_VanillaWear>Daily wear: vanilla.</Niceties_Weapon_VanillaWear>
-  <Niceties_Weapon_ReducedWear>Daily wear: {0} of vanilla.</Niceties_Weapon_ReducedWear>
   <Niceties_Hunt_TooBig>{0} is too large for melee hunting.</Niceties_Hunt_TooBig>
   <Niceties_CryptoHiddenCount>+{0} in cryptosleep</Niceties_CryptoHiddenCount>
   <Niceties_CryptoHiddenCountTip>Colonists in cryptosleep caskets are hidden from the bar by Niceties. Turn this off in Mod Options.</Niceties_CryptoHiddenCountTip>

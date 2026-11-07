@@ -109,7 +109,7 @@ namespace Niceties
 
         internal static bool Enabled()
         {
-            NicetiesSettings settings = NicetiesSim.Settings;
+            NicetiesSimFlags settings = NicetiesSim.Settings;
             return settings.enableSharedRooms;
         }
 
@@ -293,7 +293,7 @@ namespace Niceties
         /// </summary>
         internal static bool ShouldSkipDisturbedSleep(Pawn sleeper, Pawn source)
         {
-            NicetiesSettings settings = NicetiesSim.Settings;
+            NicetiesSimFlags settings = NicetiesSim.Settings;
             if (!Enabled() || !settings.skipDisturbedSleepWhenSharing)
             {
                 return false;

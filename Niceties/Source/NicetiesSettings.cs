@@ -4,50 +4,73 @@ using Verse;
 namespace Niceties
 {
     /// <summary>
-    /// Every nicety has a master bool. Patches must no-op when that bool is off
-    /// so players can mix features. Nested knobs only apply while the master is on.
+    /// Every setting that changes the simulation. A record struct, so copying is an
+    /// assignment and equality covers every field: a new field cannot be missed by
+    /// copy, compare or the save snapshot (AZR-533). Start from <see cref="Defaults"/>,
+    /// never from <c>default</c>, which is all-off.
     /// </summary>
-    public class NicetiesSettings : ModSettings
+    public record struct NicetiesSimFlags
     {
-        public bool enableApparelCare = true;
-        public bool apparelQualityScaling = true;
-        public bool apparelCraftingBonus = true;
-        public bool protectCorpseApparel = false;
-        public bool enableWeaponCare = false;
+        // Master toggles. Patches must no-op when their toggle is off.
+        public bool enableApparelCare;
+        public bool allowThroneAltars;
+        public bool wearAnyGender;
+        public bool hideCryptosleep;
+        public bool meleeHunting;
+        public bool enableSharedRooms;
+        public bool enableLeaveAWayOut;
 
-        public bool allowThroneAltars = true;
+        // Nested knobs. Presets only touch these (AZR-700).
+        public bool apparelQualityScaling;
+        public bool apparelCraftingBonus;
+        public bool protectCorpseApparel;
+        public bool unarmedHunting;
+        public float meleeHuntMaxBodySize;
+        public bool skipDisturbedSleepWhenSharing;
 
-        public bool wearAnyGender = true;
+        // Sub-toggle, not a preset knob: a choice about who the feature reaches.
+        public bool wearAnyGenderGenerated;
 
-        public bool hideCryptosleep = true;
-        public bool showCryptosleepCount = true;
-
-        public bool meleeHunting = true;
-        public bool unarmedHunting = false;
-        public float meleeHuntMaxBodySize = 1.5f;
-
-        public bool enableSharedRooms = true;
-        public bool skipDisturbedSleepWhenSharing = true;
-
-        public bool enableLeaveAWayOut = true;
-
-        public override void ExposeData()
+        public static NicetiesSimFlags Defaults => new NicetiesSimFlags
         {
-            Scribe_Values.Look(ref enableApparelCare, "enableApparelCare", true);
-            Scribe_Values.Look(ref apparelQualityScaling, "apparelQualityScaling", true);
-            Scribe_Values.Look(ref apparelCraftingBonus, "apparelCraftingBonus", true);
-            Scribe_Values.Look(ref protectCorpseApparel, "protectCorpseApparel", false);
-            Scribe_Values.Look(ref enableWeaponCare, "enableWeaponCare", false);
-            Scribe_Values.Look(ref allowThroneAltars, "allowThroneAltars", true);
-            Scribe_Values.Look(ref wearAnyGender, "wearAnyGender", true);
-            Scribe_Values.Look(ref hideCryptosleep, "hideCryptosleep", true);
-            Scribe_Values.Look(ref showCryptosleepCount, "showCryptosleepCount", true);
-            Scribe_Values.Look(ref meleeHunting, "meleeHunting", true);
-            Scribe_Values.Look(ref unarmedHunting, "unarmedHunting", false);
-            Scribe_Values.Look(ref meleeHuntMaxBodySize, "meleeHuntMaxBodySize", 1.5f);
-            Scribe_Values.Look(ref enableSharedRooms, "enableSharedRooms", true);
-            Scribe_Values.Look(ref skipDisturbedSleepWhenSharing, "skipDisturbedSleepWhenSharing", true);
-            Scribe_Values.Look(ref enableLeaveAWayOut, "enableLeaveAWayOut", true);
+            enableApparelCare = true,
+            allowThroneAltars = true,
+            wearAnyGender = true,
+            hideCryptosleep = true,
+            meleeHunting = true,
+            enableSharedRooms = true,
+            enableLeaveAWayOut = true,
+            apparelQualityScaling = true,
+            apparelCraftingBonus = true,
+            protectCorpseApparel = false,
+            wearAnyGenderGenerated = false,
+            unarmedHunting = false,
+            meleeHuntMaxBodySize = NicetiesSettings.DefaultMeleeCap,
+            skipDisturbedSleepWhenSharing = true,
+        };
+
+        /// <summary>
+        /// Scribes with the same keys as 1.x, so old Mod Options files and old save
+        /// snapshots load unchanged. Missing keys take the default.
+        /// </summary>
+        public void Expose()
+        {
+            NicetiesSimFlags d = Defaults;
+            Scribe_Values.Look(ref enableApparelCare, "enableApparelCare", d.enableApparelCare);
+            Scribe_Values.Look(ref apparelQualityScaling, "apparelQualityScaling", d.apparelQualityScaling);
+            Scribe_Values.Look(ref apparelCraftingBonus, "apparelCraftingBonus", d.apparelCraftingBonus);
+            Scribe_Values.Look(ref protectCorpseApparel, "protectCorpseApparel", d.protectCorpseApparel);
+            Scribe_Values.Look(ref allowThroneAltars, "allowThroneAltars", d.allowThroneAltars);
+            Scribe_Values.Look(ref wearAnyGender, "wearAnyGender", d.wearAnyGender);
+            Scribe_Values.Look(ref wearAnyGenderGenerated, "wearAnyGenderGenerated", d.wearAnyGenderGenerated);
+            Scribe_Values.Look(ref hideCryptosleep, "hideCryptosleep", d.hideCryptosleep);
+            Scribe_Values.Look(ref meleeHunting, "meleeHunting", d.meleeHunting);
+            Scribe_Values.Look(ref unarmedHunting, "unarmedHunting", d.unarmedHunting);
+            Scribe_Values.Look(ref meleeHuntMaxBodySize, "meleeHuntMaxBodySize", d.meleeHuntMaxBodySize);
+            Scribe_Values.Look(ref enableSharedRooms, "enableSharedRooms", d.enableSharedRooms);
+            Scribe_Values.Look(ref skipDisturbedSleepWhenSharing, "skipDisturbedSleepWhenSharing",
+                d.skipDisturbedSleepWhenSharing);
+            Scribe_Values.Look(ref enableLeaveAWayOut, "enableLeaveAWayOut", d.enableLeaveAWayOut);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 Clamp();
@@ -56,187 +79,121 @@ namespace Niceties
 
         public void Clamp()
         {
-            meleeHuntMaxBodySize = meleeHuntMaxBodySize < 0.2f
-                ? 0.2f
-                : (meleeHuntMaxBodySize > 8f ? 8f : meleeHuntMaxBodySize);
+            meleeHuntMaxBodySize = meleeHuntMaxBodySize < NicetiesSettings.MinMeleeCap
+                ? NicetiesSettings.MinMeleeCap
+                : (meleeHuntMaxBodySize > NicetiesSettings.MaxMeleeCap ? NicetiesSettings.MaxMeleeCap : meleeHuntMaxBodySize);
         }
 
-        public void CopyFrom(NicetiesSettings other)
+        /// <summary>Copies only the nested knobs of a preset; master toggles stay as they are.</summary>
+        public void ApplyKnobsFrom(NicetiesSimFlags preset)
         {
-            if (other == null)
-            {
-                return;
-            }
-
-            enableApparelCare = other.enableApparelCare;
-            apparelQualityScaling = other.apparelQualityScaling;
-            apparelCraftingBonus = other.apparelCraftingBonus;
-            protectCorpseApparel = other.protectCorpseApparel;
-            enableWeaponCare = other.enableWeaponCare;
-            allowThroneAltars = other.allowThroneAltars;
-            wearAnyGender = other.wearAnyGender;
-            hideCryptosleep = other.hideCryptosleep;
-            showCryptosleepCount = other.showCryptosleepCount;
-            meleeHunting = other.meleeHunting;
-            unarmedHunting = other.unarmedHunting;
-            meleeHuntMaxBodySize = other.meleeHuntMaxBodySize;
-            enableSharedRooms = other.enableSharedRooms;
-            skipDisturbedSleepWhenSharing = other.skipDisturbedSleepWhenSharing;
-            enableLeaveAWayOut = other.enableLeaveAWayOut;
-            Clamp();
+            apparelQualityScaling = preset.apparelQualityScaling;
+            apparelCraftingBonus = preset.apparelCraftingBonus;
+            protectCorpseApparel = preset.protectCorpseApparel;
+            unarmedHunting = preset.unarmedHunting;
+            meleeHuntMaxBodySize = preset.meleeHuntMaxBodySize;
+            skipDisturbedSleepWhenSharing = preset.skipDisturbedSleepWhenSharing;
         }
 
-        public void ApplySoft()
+        public bool KnobsMatch(NicetiesSimFlags preset)
         {
-            ResetToDefaults();
-            apparelQualityScaling = false;
-            apparelCraftingBonus = true;
-            protectCorpseApparel = true;
-            enableWeaponCare = true;
-            unarmedHunting = true;
-            meleeHuntMaxBodySize = 8f;
-        }
-
-        public void ResetToDefaults()
-        {
-            enableApparelCare = true;
-            apparelQualityScaling = true;
-            apparelCraftingBonus = true;
-            protectCorpseApparel = false;
-            enableWeaponCare = false;
-            allowThroneAltars = true;
-            wearAnyGender = true;
-            hideCryptosleep = true;
-            meleeHunting = true;
-            unarmedHunting = false;
-            meleeHuntMaxBodySize = 1.5f;
-            enableSharedRooms = true;
-            skipDisturbedSleepWhenSharing = true;
-            enableLeaveAWayOut = true;
-        }
-
-        public void ApplyHard()
-        {
-            ResetToDefaults();
-            apparelCraftingBonus = false;
-            protectCorpseApparel = false;
-            enableWeaponCare = false;
-            unarmedHunting = false;
-            meleeHuntMaxBodySize = 0.8f;
-        }
-
-        /// <summary>Every saved field; drives Mod Options disk writes.</summary>
-        public int ContentFingerprint()
-        {
-            unchecked
-            {
-                return (SimFingerprint() * 397) ^ (showCryptosleepCount ? 1 : 0);
-            }
-        }
-
-        /// <summary>Fields baked into the save snapshot; excludes UI-only preferences.</summary>
-        public int SimFingerprint()
-        {
-            unchecked
-            {
-                int h = enableApparelCare ? 1 : 0;
-                h = (h * 397) ^ (apparelQualityScaling ? 1 : 0);
-                h = (h * 397) ^ (apparelCraftingBonus ? 1 : 0);
-                h = (h * 397) ^ (protectCorpseApparel ? 1 : 0);
-                h = (h * 397) ^ (enableWeaponCare ? 1 : 0);
-                h = (h * 397) ^ (allowThroneAltars ? 1 : 0);
-                h = (h * 397) ^ (wearAnyGender ? 1 : 0);
-                h = (h * 397) ^ (hideCryptosleep ? 1 : 0);
-                h = (h * 397) ^ (meleeHunting ? 1 : 0);
-                h = (h * 397) ^ (unarmedHunting ? 1 : 0);
-                h = (h * 397) ^ meleeHuntMaxBodySize.GetHashCode();
-                h = (h * 397) ^ (enableSharedRooms ? 1 : 0);
-                h = (h * 397) ^ (skipDisturbedSleepWhenSharing ? 1 : 0);
-                h = (h * 397) ^ (enableLeaveAWayOut ? 1 : 0);
-                return h;
-            }
-        }
-
-        public bool MatchesDefaults()
-        {
-            return enableApparelCare
-                && apparelQualityScaling
-                && apparelCraftingBonus
-                && !protectCorpseApparel
-                && !enableWeaponCare
-                && allowThroneAltars
-                && wearAnyGender
-                && hideCryptosleep
-                && meleeHunting
-                && !unarmedHunting
-                && Approx(meleeHuntMaxBodySize, 1.5f)
-                && enableSharedRooms
-                && skipDisturbedSleepWhenSharing
-                && enableLeaveAWayOut;
-        }
-
-        public bool MatchesSoft()
-        {
-            return enableApparelCare
-                && !apparelQualityScaling
-                && apparelCraftingBonus
-                && protectCorpseApparel
-                && enableWeaponCare
-                && allowThroneAltars
-                && wearAnyGender
-                && hideCryptosleep
-                && meleeHunting
-                && unarmedHunting
-                && Approx(meleeHuntMaxBodySize, 8f)
-                && enableSharedRooms
-                && skipDisturbedSleepWhenSharing
-                && enableLeaveAWayOut;
-        }
-
-        public bool MatchesHard()
-        {
-            return enableApparelCare
-                && apparelQualityScaling
-                && !apparelCraftingBonus
-                && !protectCorpseApparel
-                && !enableWeaponCare
-                && allowThroneAltars
-                && wearAnyGender
-                && hideCryptosleep
-                && meleeHunting
-                && !unarmedHunting
-                && Approx(meleeHuntMaxBodySize, 0.8f)
-                && enableSharedRooms
-                && skipDisturbedSleepWhenSharing
-                && enableLeaveAWayOut;
-        }
-
-        /// <summary>Soft / Default / Hard / Custom for the options label (AZR-293).</summary>
-        public string ActivePresetLabelKey()
-        {
-            Clamp();
-            if (MatchesSoft())
-            {
-                return "Niceties_Settings_PresetSoft";
-            }
-
-            if (MatchesDefaults())
-            {
-                return "Niceties_Settings_PresetDefault";
-            }
-
-            if (MatchesHard())
-            {
-                return "Niceties_Settings_PresetHard";
-            }
-
-            return "Niceties_Settings_PresetCustom";
+            NicetiesSimFlags probe = this;
+            probe.ApplyKnobsFrom(preset);
+            probe.meleeHuntMaxBodySize = meleeHuntMaxBodySize;
+            return probe == this && Approx(meleeHuntMaxBodySize, preset.meleeHuntMaxBodySize);
         }
 
         private static bool Approx(float a, float b)
         {
             float d = a - b;
             return d < 0.001f && d > -0.001f;
+        }
+    }
+
+    public enum NicetiesPreset
+    {
+        Soft,
+        Default,
+        Hard,
+    }
+
+    /// <summary>
+    /// Every nicety has a master bool. Patches must no-op when that bool is off
+    /// so players can mix features. Nested knobs only apply while the master is on.
+    /// </summary>
+    public class NicetiesSettings : ModSettings
+    {
+        public const float DefaultMeleeCap = 1.5f;
+        public const float MinMeleeCap = 0.2f;
+        public const float MaxMeleeCap = 8f;
+
+        public NicetiesSimFlags sim = NicetiesSimFlags.Defaults;
+
+        // UI-only: never baked into the save snapshot.
+        public bool showCryptosleepCount = true;
+
+        public override void ExposeData()
+        {
+            sim.Expose();
+            Scribe_Values.Look(ref showCryptosleepCount, "showCryptosleepCount", true);
+        }
+
+        /// <summary>Knob values for each preset. Master toggles are not part of a preset.</summary>
+        public static NicetiesSimFlags PresetKnobs(NicetiesPreset preset)
+        {
+            NicetiesSimFlags f = NicetiesSimFlags.Defaults;
+            switch (preset)
+            {
+                case NicetiesPreset.Soft:
+                    f.apparelQualityScaling = false;
+                    f.apparelCraftingBonus = true;
+                    f.protectCorpseApparel = true;
+                    f.unarmedHunting = true;
+                    f.meleeHuntMaxBodySize = MaxMeleeCap;
+                    break;
+                case NicetiesPreset.Hard:
+                    f.apparelCraftingBonus = false;
+                    f.protectCorpseApparel = false;
+                    f.unarmedHunting = false;
+                    f.meleeHuntMaxBodySize = 0.8f;
+                    break;
+            }
+
+            return f;
+        }
+
+        public void ApplyPreset(NicetiesPreset preset)
+        {
+            sim.ApplyKnobsFrom(PresetKnobs(preset));
+        }
+
+        /// <summary>The one full reset: every toggle, every knob and the UI preference.</summary>
+        public void ResetToDefaults()
+        {
+            sim = NicetiesSimFlags.Defaults;
+            showCryptosleepCount = true;
+        }
+
+        /// <summary>Soft / Default / Hard / Custom for the options label (AZR-293).</summary>
+        public string ActivePresetLabelKey()
+        {
+            sim.Clamp();
+            if (sim.KnobsMatch(PresetKnobs(NicetiesPreset.Soft)))
+            {
+                return "Niceties_Settings_PresetSoft";
+            }
+
+            if (sim.KnobsMatch(PresetKnobs(NicetiesPreset.Default)))
+            {
+                return "Niceties_Settings_PresetDefault";
+            }
+
+            if (sim.KnobsMatch(PresetKnobs(NicetiesPreset.Hard)))
+            {
+                return "Niceties_Settings_PresetHard";
+            }
+
+            return "Niceties_Settings_PresetCustom";
         }
     }
 }

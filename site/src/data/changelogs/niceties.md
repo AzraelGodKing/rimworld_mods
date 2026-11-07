@@ -6,16 +6,23 @@ Detailed notes for **Niceties** only.
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `niceties2` (`niceties2-net10, 1.7 build` or `niceties2, 1.6 build` in Player.log). Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-509 AZR-518 AZR-531 AZR-654 AZR-699
+AZR-509 AZR-518 AZR-531 AZR-547 AZR-550 AZR-551 AZR-653 AZR-654 AZR-699 AZR-700 AZR-701
 
 ### Changed
 - **RimWorld 1.7 build** (AZR-518, AZR-531) — `Niceties.1.7.csproj` targets `net10.0` against `Krafs.Rimworld.Ref 1.7.4998-unstable` and Harmony 3. Every Niceties file is `#nullable enable` and both builds compile with no nullable warnings. `NicetiesMod.Settings` and `NicetiesSim.Settings` are never null, so the ~25 defensive null checks are gone. The build stamp names the folder.
 - **Removal wording** (AZR-551, AZR-570) — About, ROADMAP: "Safe to add mid-save; removing it logs a few harmless errors once on the next load."
 - **ROADMAP** (AZR-654) — header says 1.6 and 1.7.
+- **Wear any outfit** (AZR-550, AZR-653) — no def edits. Postfix on `ApparelProperties.CorrectGenderForWearing` answers true, and `ThoughtWorker_WrongApparelGender.CurrentStateInternal` returns inactive, while the toggle is on. A `[ThreadStatic]` depth counter around `PawnGenerator.GeneratePawn(PawnGenerationRequest)` (prefix + finalizer) keeps generation vanilla unless the new nested `wearAnyGenderGenerated` is on. Settings are read lazily from the snapshot, so the 1.x constructor-time `ApparelGender.Apply` from local Mod Options (the MP desync) is gone.
+- **Settings model** (AZR-533, AZR-700) — simulation fields live in `record struct NicetiesSimFlags`; copy is assignment and change detection is `==`, replacing the hand-written `CopyFrom` / fingerprints. Mod Options keys are unchanged. Presets apply `ApplyKnobsFrom` (nested knobs only); `ResetToDefaults` is the single full reset and includes `showCryptosleepCount`.
+- **Well-kept weapons removed** (AZR-550) — vanilla only deals daily `Deterioration` to worn apparel, so `enableWeaponCare` and the weapon inspect postfix on `ThingWithComps.GetInspectString` never had an effect. Wear math moved to `Pure/NicetiesRules.DailyWearChance`.
+- **Save snapshot version** (AZR-551) — `nicetiesSnapshotVersion` (missing = 1). A v1 snapshot loaded in Multiplayer keeps 1.x generation (`wearAnyGenderGenerated = wearAnyGender`). Class names and keys are unchanged, so 1.x saves load as-is.
 
 ### Fixed
 - **Throne and altar** (AZR-699) — both patches have `Prepare() => ModsConfig.RoyaltyActive && ModsConfig.IdeologyActive`. The DLC room classes live in `Assembly-CSharp`, so there was no `TypeLoadException` to guard against; the patches just never matter without both DLCs.
 - **Leave-a-way-out tip** — no longer says "original 1.6 code" (EN, CN, RU).
+- **Melee cap** (AZR-550) — compares `prey.BodySize`, not `RaceProps.baseBodySize`. Reference label cache is keyed on the active language.
+- **Colonist bar filter** (AZR-547) — settings read once, one-pass rebuild instead of `RemoveAt` per entry. A map group left with no visible colonist gets vanilla's pawn-less map entry so the group count passed to `CalculateDrawLocs` stays right. A repeat layout pass over the already-filtered list keeps the hidden count. The "+N" label checks `ColonistBar.Visible` (bound once by reflection), sizes with `Text.CalcSize`, clamps to the screen, restores GUI state in `finally`, caches text by count and language and draws only on Repaint.
+- **Leave-a-way-out cache** (AZR-701) — a finished wall drops cached geometry on the same map within `MaxRegionSize + 2` cells only (`ClearCacheNear`), not the whole cache.
 
 ## [1.6.1]
 
