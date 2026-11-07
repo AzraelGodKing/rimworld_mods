@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace DeepColony
         public List<string> unlockedPerkDefNames = new List<string>();
         public bool perkGatesBackfilled;
         public int untreatedTraumaSinceTick = -1;
-        public string lastCounselorName;
+        public string? lastCounselorName;
         public int lastCounselorId = -1;
         public int totalCounselSessions;
         public bool bornInColony;
@@ -68,15 +69,15 @@ namespace DeepColony
         /// <summary>Last tick a touch-starved pawn had trusted contact (-1 = never).</summary>
         public int lastTrustedTouchTick = -1;
 
-        public Pawn mentor;
-        public string mentoredSkillDefName;
-        public string perkBeingTaughtDefName;
+        public Pawn? mentor;
+        public string? mentoredSkillDefName;
+        public string? perkBeingTaughtDefName;
         public int perkTeachProgress;
-        public string familyTraditionSkillDefName;
+        public string? familyTraditionSkillDefName;
 
         /// <summary>Branch being unlearned / learned under a mentor.</summary>
-        public string retrainFromPerkDefName;
-        public string retrainToPerkDefName;
+        public string? retrainFromPerkDefName;
+        public string? retrainToPerkDefName;
         public int retrainProgress;
 
         /// <summary>Named heir thingIDNumber, or -1.</summary>
@@ -92,7 +93,7 @@ namespace DeepColony
         public List<int> pastMentorIds = new List<int>();
 
         /// <summary>The skill two rivals shared when the rivalry formed, and with whom (AZR-666).</summary>
-        public string lastRivalSkillDefName;
+        public string? lastRivalSkillDefName;
         public int lastRivalId = -1;
 
         /// <summary>Peak skill levels for muscle-memory double XP when rusting back up.</summary>
@@ -122,9 +123,9 @@ namespace DeepColony
         public List<string> forgottenPerkDefNames = new List<string>();
 
         /// <summary>Active archetype defName, if any.</summary>
-        public string activeArchetypeDefName;
+        public string? activeArchetypeDefName;
 
-        public Pawn Pawn => parent as Pawn;
+        public Pawn? Pawn => parent as Pawn;
 
         public bool HasPerk(PerkDef perk) =>
             unlockedPerkDefNames.Contains(perk.defName);
@@ -284,7 +285,7 @@ namespace DeepColony
         /// (one "reached the skill for …" per perk). Colonists still announce.
         /// Visitors / guests / raiders stay silent unless the setting is on.
         /// </summary>
-        internal static bool ShouldAnnounceAutoPerk(Pawn pawn)
+        internal static bool ShouldAnnounceAutoPerk(Pawn? pawn)
         {
             if (pawn == null) return false;
             if (pawn.IsColonistPlayerControlled) return true;
@@ -299,7 +300,7 @@ namespace DeepColony
             ApplyPerkHediff(perk);
             if (!announce) return;
             var pawn = Pawn;
-            if (!ShouldAnnounceAutoPerk(pawn)) return;
+            if (pawn == null || !ShouldAnnounceAutoPerk(pawn)) return;
             Messages.Message(
                 "DC_PerkAutoUnlocked".Translate(pawn.LabelShort.Named("PAWN"), perk.LabelCap.Named("PERK")),
                 pawn, MessageTypeDefOf.PositiveEvent, false);
@@ -316,7 +317,7 @@ namespace DeepColony
                 Hediff h = pawn.health.hediffSet.GetFirstHediffOfDef(perk.hediff);
                 if (h != null) pawn.health.RemoveHediff(h);
             }
-            if (announce && ShouldAnnounceAutoPerk(pawn))
+            if (announce && pawn != null && ShouldAnnounceAutoPerk(pawn))
             {
                 Messages.Message(
                     "DC_PerkLapsed".Translate(pawn.LabelShort.Named("PAWN"), perk.LabelCap.Named("PERK")),
@@ -398,8 +399,8 @@ namespace DeepColony
 
         public void RelearnPerk(PerkDef perk)
         {
-            if (!CanRelearn(perk)) return;
             var pawn = Pawn;
+            if (pawn == null || !CanRelearn(perk)) return;
             lastRespecTick = Find.TickManager?.TicksGame ?? 0;
             GrantPerkSilent(perk, false);
             SyncPerksToSkillLevels(announce: false);
@@ -454,7 +455,7 @@ namespace DeepColony
                 pawn, MessageTypeDefOf.NeutralEvent, false);
         }
 
-        public SkillDef GetMentoredSkill()
+        public SkillDef? GetMentoredSkill()
         {
             if (mentoredSkillDefName.NullOrEmpty()) return null;
             return DefDatabase<SkillDef>.GetNamedSilentFail(mentoredSkillDefName);
@@ -547,7 +548,7 @@ namespace DeepColony
                 pastMentorIds.RemoveAt(0);
         }
 
-        public string TeachingLineageInspect()
+        public string? TeachingLineageInspect()
         {
             if (teacherLineage == null || teacherLineage.Count == 0) return null;
             if (teacherLineage.Count == 1)
@@ -571,10 +572,10 @@ namespace DeepColony
             return count;
         }
 
-        public Pawn TryGetLastCounselor()
+        public Pawn? TryGetLastCounselor()
         {
             if (lastCounselorId < 0) return null;
-            Pawn p = PawnIdIndex.Find(lastCounselorId);
+            Pawn? p = PawnIdIndex.Find(lastCounselorId);
             return p != null && p.Spawned ? p : null;
         }
 
@@ -719,11 +720,11 @@ namespace DeepColony
         // seconds of real time so it still updates while paused (AZR-619).
         private const int InspectCacheTicks = 120;
         private const float InspectCacheSeconds = 2f;
-        [Unsaved] private string inspectCache;
+        [Unsaved] private string? inspectCache;
         [Unsaved] private int inspectCacheTick = int.MinValue;
         [Unsaved] private float inspectCacheTime = float.MinValue;
 
-        public override string CompInspectStringExtra()
+        public override string? CompInspectStringExtra()
         {
             int now = Find.TickManager.TicksGame;
             float real = Time.realtimeSinceStartup;
@@ -737,7 +738,7 @@ namespace DeepColony
             return inspectCache;
         }
 
-        private string BuildInspectString()
+        private string? BuildInspectString()
         {
             var pawn = Pawn;
             if (pawn == null || !pawn.IsColonistPlayerControlled) return null;
@@ -749,7 +750,7 @@ namespace DeepColony
             }
             if (DeepColonySettings.Get.enableMentoring && mentor != null)
             {
-                SkillDef focus = GetMentoredSkill();
+                SkillDef? focus = GetMentoredSkill();
                 if (focus != null)
                     parts.Add("DC_InspectMentorSkill".Translate(mentor.LabelShort, focus.LabelCap));
                 else
@@ -769,63 +770,63 @@ namespace DeepColony
             }
             if (DeepColonySettings.Get.enablePerks)
             {
-                string muscle = MuscleMemoryInspect();
-                if (!muscle.NullOrEmpty()) parts.Add(muscle);
+                string? muscle = MuscleMemoryInspect();
+                if (!muscle.NullOrEmpty()) parts.Add(muscle!);
             }
             if (DeepColonySettings.Get.enableMentoring)
             {
-                string lineage = TeachingLineageInspect();
-                if (!lineage.NullOrEmpty()) parts.Add(lineage);
+                string? lineage = TeachingLineageInspect();
+                if (!lineage.NullOrEmpty()) parts.Add(lineage!);
             }
             if (DeepColonySettings.Get.enableTrauma && TraumaUtility.HasAnyTrauma(pawn))
             {
                 parts.Add("DC_InspectTrauma".Translate());
-                string types = TraumaTypesInspect();
-                if (!types.NullOrEmpty()) parts.Add(types);
+                string? types = TraumaTypesInspect();
+                if (!types.NullOrEmpty()) parts.Add(types!);
                 string triggers = TraumaTriggerUtility.InspectLine(pawn);
-                if (!triggers.NullOrEmpty()) parts.Add(triggers);
+                if (!triggers.NullOrEmpty()) parts.Add(triggers!);
                 if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_ToxicRelationship))
                     parts.Add("DC_InspectToxicRelationship".Translate());
-                string history = CounselingHistoryInspect();
-                if (!history.NullOrEmpty()) parts.Add(history);
+                string? history = CounselingHistoryInspect();
+                if (!history.NullOrEmpty()) parts.Add(history!);
             }
             else if (DeepColonySettings.Get.enableTrauma)
             {
-                string history = CounselingHistoryInspect();
-                if (!history.NullOrEmpty()) parts.Add(history);
+                string? history = CounselingHistoryInspect();
+                if (!history.NullOrEmpty()) parts.Add(history!);
             }
             if (DeepColonySettings.Get.enableMentoring)
             {
-                string teach = TeachProgressInspect();
-                if (!teach.NullOrEmpty()) parts.Add(teach);
-                string retrain = RetrainInspect();
-                if (!retrain.NullOrEmpty()) parts.Add(retrain);
+                string? teach = TeachProgressInspect();
+                if (!teach.NullOrEmpty()) parts.Add(teach!);
+                string? retrain = RetrainInspect();
+                if (!retrain.NullOrEmpty()) parts.Add(retrain!);
             }
             string noisy = QuietHoursUtility.InspectLine(pawn);
-            if (!noisy.NullOrEmpty()) parts.Add(noisy);
+            if (!noisy.NullOrEmpty()) parts.Add(noisy!);
             string heir = EstateUtility.InspectHeir(pawn);
-            if (!heir.NullOrEmpty()) parts.Add(heir);
+            if (!heir.NullOrEmpty()) parts.Add(heir!);
             string heirloom = EstateUtility.HeirloomInspect(pawn);
-            if (!heirloom.NullOrEmpty()) parts.Add(heirloom);
+            if (!heirloom.NullOrEmpty()) parts.Add(heirloom!);
             if (DeepColonySettings.Get.enableFactionRep)
             {
-                string envoy = EnvoyInspect();
-                if (!envoy.NullOrEmpty()) parts.Add(envoy);
+                string? envoy = EnvoyInspect();
+                if (!envoy.NullOrEmpty()) parts.Add(envoy!);
             }
             if (DeepColonySettings.Get.enableMentoring)
             {
-                string rival = RivalInspect();
-                if (!rival.NullOrEmpty()) parts.Add(rival);
+                string? rival = RivalInspect();
+                if (!rival.NullOrEmpty()) parts.Add(rival!);
             }
             if (DeepColonySettings.Get.enableInheritance)
             {
-                string gene = GeneVsBloodInspect();
-                if (!gene.NullOrEmpty()) parts.Add(gene);
+                string? gene = GeneVsBloodInspect();
+                if (!gene.NullOrEmpty()) parts.Add(gene!);
             }
             if (DeepColonySettings.Get.enableTrauma)
             {
                 string grudge = GrudgeUtility.InspectString(pawn);
-                if (!grudge.NullOrEmpty()) parts.Add(grudge);
+                if (!grudge.NullOrEmpty()) parts.Add(grudge!);
             }
             if (DeepColonySettings.Get.enableCrossSkillArchetypes
                 && !activeArchetypeDefName.NullOrEmpty())
@@ -837,12 +838,12 @@ namespace DeepColony
             if (DeepColonySettings.Get.enableTouchAverse)
             {
                 string touch = TouchAverseUtility.InspectString(pawn);
-                if (!touch.NullOrEmpty()) parts.Add(touch);
+                if (!touch.NullOrEmpty()) parts.Add(touch!);
             }
             return parts.Count == 0 ? null : string.Join("\n", parts);
         }
 
-        public string CounselingHistoryInspect()
+        public string? CounselingHistoryInspect()
         {
             if (totalCounselSessions <= 0 && lastCounselorName.NullOrEmpty()) return null;
             int best = 0;
@@ -852,20 +853,20 @@ namespace DeepColony
                     if (kv.Value > best) best = kv.Value;
             }
             int need = ConfidantUtility.SessionsToBondFor(Pawn, TryGetLastCounselor());
-            string counselor = lastCounselorName.NullOrEmpty() ? "—" : lastCounselorName;
+            string? counselor = lastCounselorName.NullOrEmpty() ? "—" : lastCounselorName;
             string line = "DC_InspectCounsel".Translate(counselor, totalCounselSessions, best, need);
-            string top = TopCounselorsInspect();
+            string? top = TopCounselorsInspect();
             return top == null ? line : line + "\n" + top;
         }
 
         // Up to three counselors with the most sessions, "Name ×n" (AZR-711).
-        private string TopCounselorsInspect()
+        private string? TopCounselorsInspect()
         {
             if (counselCountsByPawn == null || counselCountsByPawn.Count < 2) return null;
             var named = new List<(string name, int count)>();
             foreach (var kv in counselCountsByPawn)
             {
-                Pawn p = PawnIdIndex.Find(kv.Key);
+                Pawn? p = PawnIdIndex.Find(kv.Key);
                 if (p != null) named.Add((p.LabelShort, kv.Value));
             }
             if (named.Count < 2) return null;
@@ -877,7 +878,7 @@ namespace DeepColony
         }
 
         // Skills climbing back toward their recorded peak learn at double speed (AZR-710).
-        private string MuscleMemoryInspect()
+        private string? MuscleMemoryInspect()
         {
             var pawn = Pawn;
             if (pawn?.skills == null || peakSkillLevels == null || peakSkillLevels.Count == 0) return null;
@@ -893,7 +894,7 @@ namespace DeepColony
             return parts.Count == 0 ? null : "DC_InspectMuscleMemory".Translate(string.Join(", ", parts));
         }
 
-        public string TraumaTypesInspect()
+        public string? TraumaTypesInspect()
         {
             var pawn = Pawn;
             if (pawn?.needs?.mood?.thoughts == null) return null;
@@ -909,7 +910,7 @@ namespace DeepColony
             return "DC_InspectTraumaTypes".Translate(string.Join(", ", labels));
         }
 
-        public string TeachProgressInspect()
+        public string? TeachProgressInspect()
         {
             if (perkTeachProgress <= 0 || perkBeingTaughtDefName.NullOrEmpty()) return null;
             PerkDef perk = DefDatabase<PerkDef>.GetNamedSilentFail(perkBeingTaughtDefName);
@@ -917,7 +918,7 @@ namespace DeepColony
             return "DC_InspectTeachProgress".Translate(name, perkTeachProgress, 3);
         }
 
-        public string RetrainInspect()
+        public string? RetrainInspect()
         {
             if (retrainProgress <= 0 || retrainFromPerkDefName.NullOrEmpty()
                 || retrainToPerkDefName.NullOrEmpty())
@@ -930,18 +931,18 @@ namespace DeepColony
                 MentorshipUtility.RetrainSessionsNeeded);
         }
 
-        public string EnvoyInspect()
+        public string? EnvoyInspect()
         {
             Faction f = FactionEnvoyUtility.GetEnvoyFaction(Pawn);
             if (f == null) return null;
             return "DC_InspectEnvoy".Translate(f.Name);
         }
 
-        public string RivalInspect()
+        public string? RivalInspect()
         {
             Pawn rival = RivalryUtility.FirstLivingRival(Pawn);
             if (rival == null) return null;
-            SkillDef skill = rival.thingIDNumber == lastRivalId && !lastRivalSkillDefName.NullOrEmpty()
+            SkillDef? skill = rival.thingIDNumber == lastRivalId && !lastRivalSkillDefName.NullOrEmpty()
                 ? DefDatabase<SkillDef>.GetNamedSilentFail(lastRivalSkillDefName)
                 : null;
             return skill != null
@@ -958,7 +959,7 @@ namespace DeepColony
                 untreatedTraumaSinceTick = -1;
         }
 
-        public string GeneVsBloodInspect()
+        public string? GeneVsBloodInspect()
         {
             if (familyTraditionSkillDefName.NullOrEmpty()) return null;
             var pawn = Pawn;
@@ -966,7 +967,7 @@ namespace DeepColony
                 return null;
             SkillDef skill = DefDatabase<SkillDef>.GetNamedSilentFail(familyTraditionSkillDefName);
             if (skill == null) return null;
-            SkillRecord rec = pawn.skills?.GetSkill(skill);
+            SkillRecord? rec = pawn.skills?.GetSkill(skill);
             if (rec == null) return null;
             // Flavor only: xenogenes present vs a family tradition skill.
             return "DC_InspectGeneVsBlood".Translate(skill.LabelCap);
@@ -1014,8 +1015,8 @@ namespace DeepColony
             Scribe_Values.Look(ref lastEmptyNestTick, "lastEmptyNestTick", -1);
             Scribe_Values.Look(ref traditionTeachNoted, "traditionTeachNoted", false);
             // Skip empty ID-keyed collections on save to curb XML bloat (AZR-618).
-            Dictionary<int, int> reconcileSave = reconcileCountsByPawn;
-            Dictionary<int, float> comfortSave = touchComfortByPawn;
+            Dictionary<int, int>? reconcileSave = reconcileCountsByPawn;
+            Dictionary<int, float>? comfortSave = touchComfortByPawn;
             if (Scribe.mode == LoadSaveMode.Saving)
             {
                 if (reconcileSave != null && reconcileSave.Count == 0) reconcileSave = null;
@@ -1046,7 +1047,7 @@ namespace DeepColony
             Scribe_Values.Look(ref lastRivalSkillDefName, "lastRivalSkill");
             Scribe_Values.Look(ref lastRivalId, "lastRivalId", -1);
             Scribe_Collections.Look(ref peakSkillLevels, "peakSkillLevels", LookMode.Value, LookMode.Value);
-            Dictionary<int, int> counselSave = counselCountsByPawn;
+            Dictionary<int, int>? counselSave = counselCountsByPawn;
             if (Scribe.mode == LoadSaveMode.Saving
                 && counselSave != null && counselSave.Count == 0)
             {

@@ -1,3 +1,4 @@
+#nullable enable
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -58,7 +59,7 @@ namespace DeepColony.Patches
             if (comp.mentor == null) return;
 
             // Skill-focus: only boost the mentored skill
-            SkillDef focus = comp.GetMentoredSkill();
+            SkillDef? focus = comp.GetMentoredSkill();
             if (focus != null && __instance.def != focus) return;
 
             Pawn mentor = comp.mentor;
@@ -88,7 +89,7 @@ namespace DeepColony.Patches
             // Null when Prefix bailed: direct XP, zero XP, or not a player colonist.
             Comp_DeepColony comp = __state.comp;
             if (comp == null) return;
-            Pawn pawn = comp.Pawn;
+            Pawn? pawn = comp.Pawn;
             int startLevel = __state.level;
 
             if (xp > 0f)

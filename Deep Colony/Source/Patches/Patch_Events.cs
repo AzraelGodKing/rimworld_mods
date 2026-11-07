@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using HarmonyLib;
 using RimWorld;
@@ -23,8 +24,7 @@ namespace DeepColony.Patches
             if (!__result || parms?.faction == null) return;
             if (parms.target is not Map map) return;
             if (map.ParentFaction != Faction.OfPlayer) return;
-            if (__result && parms?.target is Map raidMap)
-                ChildRaidUtility.NotifyRaidStarted(raidMap);
+            ChildRaidUtility.NotifyRaidStarted(map);
             FactionRepUtility.OnRaidFromFaction(parms.faction);
         }
     }
@@ -45,7 +45,7 @@ namespace DeepColony.Patches
         public static void Postfix(bool __result, ref bool actuallyTraded)
         {
             if (!__result || !actuallyTraded) return;
-            Faction faction = TradeSession.trader?.Faction;
+            Faction? faction = TradeSession.trader?.Faction;
             if (faction != null) FactionRepUtility.OnSuccessfulTrade(faction);
         }
     }
@@ -169,7 +169,7 @@ namespace DeepColony.Patches
                         TraumaDef loss = DC_DefOf.DC_Trauma_ViolentLoss;
                         if (loss == null) continue;
 
-                        Faction killerFaction = dinfo.HasValue ? dinfo.Value.Instigator?.Faction : null;
+                        Faction? killerFaction = dinfo.HasValue ? dinfo.Value.Instigator?.Faction : null;
 
                         TraumaDef bereave = DC_DefOf.DC_Trauma_BereavementShock;
                         if (TraumaUtility.HasTrauma(colonist, loss)
@@ -253,7 +253,7 @@ namespace DeepColony.Patches
             FamilyLifeUtility.RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);
         }
 
-        public static Exception Finalizer(SetFactionPatchState __state, Exception __exception)
+        public static Exception? Finalizer(SetFactionPatchState __state, Exception __exception)
         {
             if (__state.suppressGoodwill) FamilyJoinUtility.ExitSuppress();
             return __exception;
@@ -304,7 +304,7 @@ namespace DeepColony.Patches
 
         // AZR-158 / AZR-159 — swallow so the mother is not tick-wedged, then
         // restore a healthy pregnancy instead of ending labor with no baby.
-        public static Exception Finalizer(Exception __exception, Pawn geneticMother, Pawn father)
+        public static Exception? Finalizer(Exception __exception, Pawn geneticMother, Pawn father)
         {
             if (__exception == null || !BirthSafetyNet.Enabled)
             {

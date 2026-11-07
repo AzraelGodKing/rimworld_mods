@@ -1,3 +1,4 @@
+#nullable enable
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -12,7 +13,7 @@ namespace DeepColony.Patches
         {
             if (condition != JobCondition.Succeeded) return;
             if (__instance is not JobDriver_ChatWithPrisoner) return;
-            Pawn prisoner = __instance.job?.targetA.Pawn;
+            Pawn? prisoner = __instance.job?.targetA.Pawn;
             FamilyEchoUtility.NotifyPrisonVisit(__instance.pawn, prisoner);
         }
     }

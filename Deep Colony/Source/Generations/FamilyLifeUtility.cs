@@ -20,7 +20,7 @@ namespace DeepColony
         public static void GameTick()
         {
             if (!Enabled) return;
-            if (!TickPhase.Due(167)) return;
+            if (!TickPhase.Due(TickPhaseOffsets.FamilyLife)) return;
             try
             {
                 RefreshAllLastOfTheLine(announceLast: false, announceContinue: true);

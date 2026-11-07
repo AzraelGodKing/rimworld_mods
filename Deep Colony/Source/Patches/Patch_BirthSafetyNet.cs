@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -145,7 +146,7 @@ namespace DeepColony.Patches
 
         private static PawnKindDef CloneWithoutSkillGates(PawnKindDef source)
         {
-            if (clones.TryGetValue(source, out PawnKindDef cached))
+            if (clones.TryGetValue(source, out PawnKindDef? cached))
             {
                 return cached;
             }
@@ -172,7 +173,7 @@ namespace DeepColony.Patches
         private static readonly Func<object, object> memberwiseClone =
             (Func<object, object>)Delegate.CreateDelegate(
                 typeof(Func<object, object>),
-                typeof(object).GetMethod("MemberwiseClone", BindingFlags.Instance | BindingFlags.NonPublic));
+                typeof(object).GetMethod("MemberwiseClone", BindingFlags.Instance | BindingFlags.NonPublic)!);
 
         private static PawnKindDef ShallowClone(PawnKindDef source)
         {

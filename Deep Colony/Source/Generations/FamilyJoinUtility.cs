@@ -26,7 +26,7 @@ namespace DeepColony
         public static void GameTick()
         {
             if (!DeepColonySettings.Get.enableFamilyJoin) return;
-            if (!TickPhase.Due(417)) return;
+            if (!TickPhase.Due(TickPhaseOffsets.FamilyJoin)) return;
             foreach (Map map in Find.Maps)
             {
                 if (map?.IsPlayerHome != true) continue;

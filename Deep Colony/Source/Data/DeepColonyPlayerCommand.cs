@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -36,8 +37,8 @@ namespace DeepColony
             public Kind kind;
             public int aId;
             public int bId;
-            public string s1;
-            public string s2;
+            public string? s1;
+            public string? s2;
         }
 
         // Static, so it would outlive a save: Reset() runs from the GameComp_DeepColony
@@ -48,7 +49,7 @@ namespace DeepColony
 
         // Public and primitive-only so Multiplayer can sync it. Don't call it from
         // simulation code; it is for player clicks.
-        public static void Submit(byte kind, int aId, int bId, string s1, string s2)
+        public static void Submit(byte kind, int aId, int bId, string? s1, string? s2)
         {
             if (kind > (byte)Kind.RelearnPerk) return;
             queue.Add(new Entry { kind = (Kind)kind, aId = aId, bId = bId, s1 = s1, s2 = s2 });
@@ -170,32 +171,32 @@ namespace DeepColony
                     break;
                 case Kind.Divorce:
                 {
-                    Pawn a = FindPawn(e.aId);
-                    Pawn b = FindPawn(e.bId);
+                    Pawn? a = FindPawn(e.aId);
+                    Pawn? b = FindPawn(e.bId);
                     if (a != null && b != null)
                         DivorceUtility.TryDivorce(a, b);
                     break;
                 }
                 case Kind.SetEnvoy:
                 {
-                    Pawn pawn = FindPawn(e.aId);
-                    Faction faction = FindFaction(e.bId);
+                    Pawn? pawn = FindPawn(e.aId);
+                    Faction? faction = FindFaction(e.bId);
                     if (pawn != null && faction != null)
                         FactionEnvoyUtility.SetEnvoy(pawn, faction);
                     break;
                 }
                 case Kind.ClearEnvoy:
                 {
-                    Pawn pawn = FindPawn(e.aId);
+                    Pawn? pawn = FindPawn(e.aId);
                     if (pawn != null)
                         FactionEnvoyUtility.ClearEnvoy(pawn);
                     break;
                 }
                 case Kind.SetMentor:
                 {
-                    Pawn mentor = FindPawn(e.aId);
-                    Pawn apprentice = FindPawn(e.bId);
-                    SkillDef skill = e.s1.NullOrEmpty()
+                    Pawn? mentor = FindPawn(e.aId);
+                    Pawn? apprentice = FindPawn(e.bId);
+                    SkillDef? skill = e.s1.NullOrEmpty()
                         ? null
                         : DefDatabase<SkillDef>.GetNamedSilentFail(e.s1);
                     if (mentor != null && apprentice != null)
@@ -204,16 +205,16 @@ namespace DeepColony
                 }
                 case Kind.ClearMentor:
                 {
-                    Pawn mentor = FindPawn(e.aId);
-                    Pawn apprentice = FindPawn(e.bId);
+                    Pawn? mentor = FindPawn(e.aId);
+                    Pawn? apprentice = FindPawn(e.bId);
                     if (mentor != null && apprentice != null)
                         MentorshipUtility.ClearMentorRelation(mentor, apprentice);
                     break;
                 }
                 case Kind.BeginRetrain:
                 {
-                    Pawn mentor = FindPawn(e.aId);
-                    Pawn apprentice = FindPawn(e.bId);
+                    Pawn? mentor = FindPawn(e.aId);
+                    Pawn? apprentice = FindPawn(e.bId);
                     PerkDef from = DefDatabase<PerkDef>.GetNamedSilentFail(e.s1);
                     PerkDef to = DefDatabase<PerkDef>.GetNamedSilentFail(e.s2);
                     if (mentor != null && apprentice != null && from != null && to != null)
@@ -222,15 +223,15 @@ namespace DeepColony
                 }
                 case Kind.TributeFaction:
                 {
-                    Faction faction = FindFaction(e.bId);
+                    Faction? faction = FindFaction(e.bId);
                     if (faction != null)
                         TributeUtility.TrySendTribute(faction);
                     break;
                 }
                 case Kind.TributeThing:
                 {
-                    Thing thing = FindThing(e.aId);
-                    Faction faction = FindFaction(e.bId);
+                    Thing? thing = FindThing(e.aId);
+                    Faction? faction = FindFaction(e.bId);
                     if (thing != null && faction != null)
                         TributeUtility.TrySendTributeThing(thing, faction);
                     break;
@@ -242,8 +243,8 @@ namespace DeepColony
                     break;
                 case Kind.SetHeir:
                 {
-                    Pawn owner = FindPawn(e.aId);
-                    Pawn heir = e.bId > 0 ? FindPawn(e.bId) : null;
+                    Pawn? owner = FindPawn(e.aId);
+                    Pawn? heir = e.bId > 0 ? FindPawn(e.bId) : null;
                     if (owner != null && (e.bId <= 0 || heir != null))
                         EstateUtility.SetHeir(owner, heir);
                     break;
@@ -253,8 +254,8 @@ namespace DeepColony
 
         private static void ApplyPerk(Entry e)
         {
-            Comp_DeepColony comp = FindPawn(e.aId)?.TryGetComp<Comp_DeepColony>();
-            PerkDef perk = e.s1.NullOrEmpty() ? null : DefDatabase<PerkDef>.GetNamedSilentFail(e.s1);
+            Comp_DeepColony? comp = FindPawn(e.aId)?.TryGetComp<Comp_DeepColony>();
+            PerkDef? perk = e.s1.NullOrEmpty() ? null : DefDatabase<PerkDef>.GetNamedSilentFail(e.s1);
             if (comp == null || perk == null) return;
             if (e.kind == Kind.SwitchPerk)
                 comp.SwitchToPerk(perk);
@@ -266,8 +267,8 @@ namespace DeepColony
 
         private static void ApplyResumeCodex(int notebookId)
         {
-            Thing notebook = FindThing(notebookId);
-            CompCodexNotebook comp = notebook?.TryGetComp<CompCodexNotebook>();
+            Thing? notebook = FindThing(notebookId);
+            CompCodexNotebook? comp = notebook?.TryGetComp<CompCodexNotebook>();
             if (comp == null) return;
             if (string.IsNullOrEmpty(comp.projectDefName))
             {
@@ -291,8 +292,8 @@ namespace DeepColony
 
         private static void ApplyRecordCodex(int notebookId)
         {
-            Thing notebook = FindThing(notebookId);
-            CompCodexNotebook comp = notebook?.TryGetComp<CompCodexNotebook>();
+            Thing? notebook = FindThing(notebookId);
+            CompCodexNotebook? comp = notebook?.TryGetComp<CompCodexNotebook>();
             if (comp == null) return;
             ResearchProjectDef cur = Find.ResearchManager.GetProject();
             if (cur == null)
@@ -304,12 +305,12 @@ namespace DeepColony
             Messages.Message("DC_Codex_Wrote".Translate(cur.LabelCap), notebook, MessageTypeDefOf.TaskCompletion);
         }
 
-        private static Pawn FindPawn(int id)
+        private static Pawn? FindPawn(int id)
         {
             return PawnIdIndex.Find(id);
         }
 
-        private static Faction FindFaction(int loadId)
+        private static Faction? FindFaction(int loadId)
         {
             if (loadId < 0 || Find.FactionManager == null) return null;
             List<Faction> all = Find.FactionManager.AllFactionsListForReading;
@@ -321,7 +322,7 @@ namespace DeepColony
             return null;
         }
 
-        private static Thing FindThing(int id)
+        private static Thing? FindThing(int id)
         {
             if (id <= 0 || Find.Maps == null) return null;
             for (int i = 0; i < Find.Maps.Count; i++)
@@ -339,7 +340,7 @@ namespace DeepColony
                 {
                     if (p == null) continue;
                     if (p.thingIDNumber == id) return p;
-                    Thing carried = p.carryTracker?.CarriedThing;
+                    Thing? carried = p.carryTracker?.CarriedThing;
                     if (carried != null && carried.thingIDNumber == id) return carried;
                     if (p.inventory?.innerContainer != null)
                     {

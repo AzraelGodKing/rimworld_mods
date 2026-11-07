@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Reflection;
 using HarmonyLib;
@@ -19,7 +20,7 @@ namespace DeepColony
 
         internal static void RegisterAll()
         {
-            MethodInfo register = ResolveRegister();
+            MethodInfo? register = ResolveRegister();
             if (register == null)
             {
                 return;
@@ -27,7 +28,7 @@ namespace DeepColony
             Register(register, typeof(DeepColonyPlayerCommand), nameof(DeepColonyPlayerCommand.Submit));
         }
 
-        private static MethodInfo ResolveRegister()
+        private static MethodInfo? ResolveRegister()
         {
             if (ModLister.GetActiveModWithIdentifier(MultiplayerId, ignorePostfix: true) == null)
             {
@@ -68,7 +69,7 @@ namespace DeepColony
             }
             try
             {
-                register.Invoke(null, new object[] { target, null });
+                register.Invoke(null, new object?[] { target, null });
             }
             catch (Exception e)
             {

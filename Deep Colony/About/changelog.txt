@@ -11,6 +11,7 @@ Deep Colony 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting
 [*] [b]Perks for visitors and raiders[/b] — a new setting. Turn it off to skip perk work when a big raid or caravan arrives. Anyone who joins your colony still gets their perks.
 [*] [b]Nemesis[/b] — when your nemesis kills a colonist, the people who cared about them carry a "hunted" trauma that names the nemesis, and hold a grudge against its faction.
 [*] [b]Compatibility list[/b] — COMPATIBILITY.md in the mod folder lists every supported mod and DLC.
+[*] [b]Deep Roots[/b] scenario is translated into Chinese and Russian.
 [*] [b]Save upgrade[/b] — the first time an older save loads, Deep Colony cleans out entries for pawns that no longer exist. This can't be undone, so keep a backup if you might go back to 1.10.
 [/list]
 [b]Changed[/b]

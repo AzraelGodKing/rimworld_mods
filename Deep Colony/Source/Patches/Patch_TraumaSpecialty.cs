@@ -1,3 +1,4 @@
+#nullable enable
 using RimWorld;
 using Verse;
 
@@ -13,8 +14,8 @@ namespace DeepColony.Patches
         {
             if (victim == null || !victim.IsColonistPlayerControlled) return;
 
-            Faction faction = info.Instigator?.Faction;
-            Pawn instigatorPawn = info.Instigator as Pawn;
+            Faction? faction = info.Instigator?.Faction;
+            Pawn? instigatorPawn = info.Instigator as Pawn;
 
             // B13 — betrayal: hurt by someone they liked / former colonist.
             if (instigatorPawn != null
@@ -52,7 +53,7 @@ namespace DeepColony.Patches
             }
 
             // Combat shock requires a hostile instigator.
-            Thing instigator = info.Instigator;
+            Thing? instigator = info.Instigator;
             if (instigator == null || !instigator.HostileTo(victim)) return;
 
             if (!Rand.Chance(DeepColonySettings.Get.combatShockChance)) return;
@@ -68,7 +69,7 @@ namespace DeepColony.Patches
             if (DC_DefOf.DC_Trauma_Toxic == null) return;
             if (TraumaUtility.HasTrauma(pawn, DC_DefOf.DC_Trauma_Toxic)) return;
 
-            Hediff toxic = pawn.health?.hediffSet?.GetFirstHediffOfDef(HediffDefOf.ToxicBuildup);
+            Hediff? toxic = pawn.health?.hediffSet?.GetFirstHediffOfDef(HediffDefOf.ToxicBuildup);
             if (toxic == null || toxic.Severity < ToxicSeverityThreshold) return;
             if (!Rand.Chance(0.35f)) return;
             TraumaUtility.ApplyTrauma(pawn, DC_DefOf.DC_Trauma_Toxic);
@@ -88,11 +89,11 @@ namespace DeepColony.Patches
             if (info.Def?.defName != null
                 && info.Def.defName.IndexOf("Toxic", System.StringComparison.OrdinalIgnoreCase) >= 0)
                 return true;
-            Hediff toxic = victim.health?.hediffSet?.GetFirstHediffOfDef(HediffDefOf.ToxicBuildup);
+            Hediff? toxic = victim.health?.hediffSet?.GetFirstHediffOfDef(HediffDefOf.ToxicBuildup);
             return toxic != null && toxic.Severity >= 0.4f;
         }
 
-        private static bool IsInsectAttack(Pawn instigator)
+        private static bool IsInsectAttack(Pawn? instigator)
         {
             return instigator?.RaceProps?.Insect == true;
         }

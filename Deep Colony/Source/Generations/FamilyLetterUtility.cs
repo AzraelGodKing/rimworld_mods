@@ -28,7 +28,7 @@ namespace DeepColony
         public static void GameTick()
         {
             if (!DeepColonySettings.Get.enableInheritance) return;
-            if (!TickPhase.Due(334)) return;
+            if (!TickPhase.Due(TickPhaseOffsets.FamilyLetters)) return;
 
             var gc = GameComp_DeepColony.Instance;
             if (gc == null) return;
