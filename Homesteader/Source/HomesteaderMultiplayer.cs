@@ -16,7 +16,7 @@ namespace Homesteader
     {
         /// <summary>Settings window, on close: the save's gameplay settings.</summary>
         public static void SetGameplay(bool spoilageTriage, float allergyFlareIntensity, float favoriteFoodMoodFactor,
-            float coopEggIntervalFactor, bool enableKatsEffect)
+            float coopEggIntervalFactor, bool enableKatsEffect, bool larderMood, bool rainAwareWater, bool beesNeedBloom)
         {
             GameComponent_HomesteaderGameplay? save = GameComponent_HomesteaderGameplay.Instance;
             if (save == null)
@@ -30,6 +30,9 @@ namespace Homesteader
             next.favoriteFoodMoodFactor = favoriteFoodMoodFactor;
             next.coopEggIntervalFactor = coopEggIntervalFactor;
             next.enableKatsEffect = enableKatsEffect;
+            next.larderMood = larderMood;
+            next.rainAwareWater = rainAwareWater;
+            next.beesNeedBloom = beesNeedBloom;
             save.Set(next);
         }
 

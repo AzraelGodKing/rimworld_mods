@@ -31,7 +31,7 @@
       <WoodLog>50</WoodLog>
     </costList>
     <comps>
-      <li Class="CompProperties_Spawner">
+      <li Class="Homesteader.CompProperties_HomesteaderSpawner">
         <thingToSpawn>Homesteader_Honey</thingToSpawn>
         <spawnCount>10</spawnCount>
         <spawnIntervalRange>180000~240000</spawnIntervalRange>
@@ -40,8 +40,10 @@
         <writeTimeLeftToSpawn>true</writeTimeLeftToSpawn>
         <showMessageIfOwned>true</showMessageIfOwned>
         <saveKeysPrefix>honey</saveKeysPrefix>
+        <!-- Bees idle with fewer than four flowering plants nearby (AZR-576). -->
+        <bloomPlantsNeeded>4</bloomPlantsNeeded>
       </li>
-      <li Class="CompProperties_Spawner">
+      <li Class="Homesteader.CompProperties_HomesteaderSpawner">
         <thingToSpawn>Homesteader_Beeswax</thingToSpawn>
         <spawnCount>4</spawnCount>
         <spawnIntervalRange>240000~360000</spawnIntervalRange>
@@ -50,6 +52,7 @@
         <writeTimeLeftToSpawn>false</writeTimeLeftToSpawn>
         <showMessageIfOwned>true</showMessageIfOwned>
         <saveKeysPrefix>beeswax</saveKeysPrefix>
+        <bloomPlantsNeeded>4</bloomPlantsNeeded>
       </li>
     </comps>
     <designationCategory>Production</designationCategory>

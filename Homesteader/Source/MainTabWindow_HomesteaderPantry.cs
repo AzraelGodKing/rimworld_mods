@@ -11,7 +11,22 @@ namespace Homesteader
         private Vector2 stockScroll;
         private Vector2 makeScroll;
         private int page;
-        private PantrySortMode sortMode = PantrySortMode.Count;
+        private static PantrySortMode SortMode
+        {
+            get
+            {
+                int m = HomesteaderMod.Settings.pantrySortMode;
+                return m >= 0 && m <= (int)PantrySortMode.RotSoonest ? (PantrySortMode)m : PantrySortMode.Count;
+            }
+            set
+            {
+                if (HomesteaderMod.Settings.pantrySortMode != (int)value)
+                {
+                    HomesteaderMod.Settings.pantrySortMode = (int)value;
+                    HomesteaderMod.Settings.Write();
+                }
+            }
+        }
         private PantryReport? sortedReport;
         private PantrySortMode sortedMode;
 
@@ -103,18 +118,19 @@ namespace Homesteader
             y += 28f;
             Widgets.Label(new Rect(inRect.x, y, inRect.width - 168f, 22f),
                 "Homesteader_PantryContents".Translate());
-            if (Widgets.ButtonText(new Rect(inRect.xMax - 164f, y, 160f, 22f), SortLabel(sortMode)))
+            if (Widgets.ButtonText(new Rect(inRect.xMax - 164f, y, 160f, 22f), SortLabel(SortMode)))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
                 foreach (PantrySortMode mode in new[] { PantrySortMode.Count, PantrySortMode.Name, PantrySortMode.RotSoonest })
                 {
                     PantrySortMode chosen = mode;
-                    options.Add(new FloatMenuOption(SortLabel(chosen), () => sortMode = chosen));
+                    options.Add(new FloatMenuOption(SortLabel(chosen), () => SortMode = chosen));
                 }
 
                 Find.WindowStack.Add(new FloatMenu(options));
             }
 
+            PantrySortMode sortMode = SortMode;
             if (report != sortedReport || sortMode != sortedMode)
             {
                 PantryUtility.SortKinds(report, sortMode);

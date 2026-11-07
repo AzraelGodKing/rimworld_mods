@@ -40,4 +40,10 @@
   <Homesteader_KatsDirective.stages_0.label>Kats指令</Homesteader_KatsDirective.stages_0.label>
   <Homesteader_KatsDirective.stages_0.description>那广播好像点了名。补水。用药。咀嚼。不知怎的，感觉……清晰了。</Homesteader_KatsDirective.stages_0.description>
 
+  <Homesteader_WellStockedLarder.stages_0.label>储备尚可的食品柜</Homesteader_WellStockedLarder.stages_0.label>
+  <Homesteader_WellStockedLarder.stages_0.description>存下了几种腌藏食物。今年冬天不会挨饿。</Homesteader_WellStockedLarder.stages_0.description>
+  <Homesteader_WellStockedLarder.stages_1.label>储备充足的食品柜</Homesteader_WellStockedLarder.stages_1.label>
+  <Homesteader_WellStockedLarder.stages_1.description>一排排罐子、奶酪和熏肉。家园过得不错。</Homesteader_WellStockedLarder.stages_1.description>
+  <Homesteader_WellStockedLarder.stages_2.label>满溢的食品柜</Homesteader_WellStockedLarder.stages_2.label>
+  <Homesteader_WellStockedLarder.stages_2.description>腌藏食物多到数不清。无论发生什么，我们都准备好了。</Homesteader_WellStockedLarder.stages_2.description>
 </LanguageData>

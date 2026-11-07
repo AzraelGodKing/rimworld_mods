@@ -30,6 +30,15 @@ namespace Homesteader
         /// <summary>When false, Homesteader_KatsEffect never fires (baseChance forced to 0).</summary>
         public bool enableKatsEffect = true;
 
+        /// <summary>Well-stocked larder mood from distinct preserves on the map (HS-A02).</summary>
+        public bool larderMood = true;
+
+        /// <summary>Rain barrels and cisterns fill faster in rain and stop in a drought (HS-A13).</summary>
+        public bool rainAwareWater = true;
+
+        /// <summary>Beehives need flowering plants nearby (HS-A08).</summary>
+        public bool beesNeedBloom = true;
+
         public void ExposeData()
         {
             Scribe_Values.Look(ref spoilageTriage, "spoilageTriage", defaultValue: true);
@@ -37,6 +46,9 @@ namespace Homesteader
             Scribe_Values.Look(ref favoriteFoodMoodFactor, "favoriteFoodMoodFactor", defaultValue: 1f);
             Scribe_Values.Look(ref coopEggIntervalFactor, "coopEggIntervalFactor", defaultValue: 1f);
             Scribe_Values.Look(ref enableKatsEffect, "enableKatsEffect", defaultValue: true);
+            Scribe_Values.Look(ref larderMood, "larderMood", defaultValue: true);
+            Scribe_Values.Look(ref rainAwareWater, "rainAwareWater", defaultValue: true);
+            Scribe_Values.Look(ref beesNeedBloom, "beesNeedBloom", defaultValue: true);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 Clamp();
@@ -61,7 +73,10 @@ namespace Homesteader
                 && allergyFlareIntensity == o.allergyFlareIntensity
                 && favoriteFoodMoodFactor == o.favoriteFoodMoodFactor
                 && coopEggIntervalFactor == o.coopEggIntervalFactor
-                && enableKatsEffect == o.enableKatsEffect;
+                && enableKatsEffect == o.enableKatsEffect
+                && larderMood == o.larderMood
+                && rainAwareWater == o.rainAwareWater
+                && beesNeedBloom == o.beesNeedBloom;
         }
     }
 
@@ -76,6 +91,9 @@ namespace Homesteader
         /// <summary>When false, root cellar / icehouse / springhouse omit the passive-cooling inspect line.</summary>
         public bool showCoolingInspect = true;
 
+        /// <summary>Pantry stock list order, kept between sessions (AZR-696).</summary>
+        public int pantrySortMode = 0;
+
         /// <summary>Defaults for new games and for a pre-2.0 save's first load.</summary>
         public HomesteaderGameplaySettings gameplay = new HomesteaderGameplaySettings();
 
@@ -85,6 +103,7 @@ namespace Homesteader
             Scribe_Values.Look(ref revealAllergies, "revealAllergies", defaultValue: false);
             Scribe_Values.Look(ref useRefreshedTextures, "useRefreshedTextures", defaultValue: false);
             Scribe_Values.Look(ref showCoolingInspect, "showCoolingInspect", defaultValue: true);
+            Scribe_Values.Look(ref pantrySortMode, "pantrySortMode", defaultValue: 0);
             // Same node and keys as 1.x, which kept these flat in the settings file.
             gameplay.ExposeData();
         }
@@ -109,10 +128,16 @@ namespace Homesteader
 
         public override string SettingsCategory() => "Homesteader_SettingsCategory".Translate();
 
+        private Vector2 settingsScroll;
+        private float settingsHeight = 900f;
+
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            // Scrolls so long translations fit at 1280x720.
+            Rect view = new Rect(0f, 0f, inRect.width - 16f, settingsHeight);
+            Widgets.BeginScrollView(inRect, ref settingsScroll, view);
             Listing_Standard listing = new Listing_Standard();
-            listing.Begin(inRect);
+            listing.Begin(view);
 
             GameComponent_HomesteaderGameplay? save = GameComponent_HomesteaderGameplay.Instance;
             HomesteaderGameplaySettings edit;
@@ -151,6 +176,18 @@ namespace Homesteader
                 "Homesteader_SettingsEnableKats".Translate(),
                 ref edit.enableKatsEffect,
                 "Homesteader_SettingsEnableKatsTip".Translate());
+            listing.CheckboxLabeled(
+                "Homesteader_SettingsLarderMood".Translate(),
+                ref edit.larderMood,
+                "Homesteader_SettingsLarderMoodTip".Translate());
+            listing.CheckboxLabeled(
+                "Homesteader_SettingsRainAwareWater".Translate(),
+                ref edit.rainAwareWater,
+                "Homesteader_SettingsRainAwareWaterTip".Translate());
+            listing.CheckboxLabeled(
+                "Homesteader_SettingsBeesNeedBloom".Translate(),
+                ref edit.beesNeedBloom,
+                "Homesteader_SettingsBeesNeedBloomTip".Translate());
             listing.GapLine();
 
             listing.Label("Homesteader_SettingsDisplayHeader".Translate());
@@ -188,7 +225,9 @@ namespace Homesteader
                 listing.Label("Homesteader_SettingsDevModeHint".Translate());
             }
 
+            settingsHeight = listing.CurHeight + 12f;
             listing.End();
+            Widgets.EndScrollView();
             base.DoSettingsWindowContents(inRect);
         }
 
@@ -209,7 +248,10 @@ namespace Homesteader
                         pendingSave.allergyFlareIntensity,
                         pendingSave.favoriteFoodMoodFactor,
                         pendingSave.coopEggIntervalFactor,
-                        pendingSave.enableKatsEffect);
+                        pendingSave.enableKatsEffect,
+                        pendingSave.larderMood,
+                        pendingSave.rainAwareWater,
+                        pendingSave.beesNeedBloom);
                 }
             }
             else

@@ -106,6 +106,30 @@
     </stages>
   </ThoughtDef>
 
+  <!-- Situational: distinct preserves in this map's cellars and pantries (AZR-576). -->
+  <ThoughtDef>
+    <defName>Homesteader_WellStockedLarder</defName>
+    <workerClass>Homesteader.ThoughtWorker_WellStockedLarder</workerClass>
+    <developmentalStageFilter>Child, Adult</developmentalStageFilter>
+    <stages>
+      <li>
+        <label>stocked larder</label>
+        <description>A few kinds of preserves put by. We will not go hungry this winter.</description>
+        <baseMoodEffect>2</baseMoodEffect>
+      </li>
+      <li>
+        <label>well-stocked larder</label>
+        <description>Shelves of jars, cheese and smoked meat. The homestead is doing well.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+      <li>
+        <label>overflowing larder</label>
+        <description>So many kinds of preserves we have lost count. Whatever comes, we are ready.</description>
+        <baseMoodEffect>6</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
   <!-- Situational mood while Homesteader_NearMonument27 is active. -->
   <ThoughtDef>
     <defName>Homesteader_Monument27Mood</defName>

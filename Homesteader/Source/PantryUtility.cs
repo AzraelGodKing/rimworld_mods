@@ -16,6 +16,9 @@ namespace Homesteader
         public float nearestRotDays = -1f;
         public readonly List<KindRow> kinds = new List<KindRow>();
 
+        /// <summary>Distinct preserve kinds found, by defName.</summary>
+        public readonly List<ThingDef> preserveDefs = new List<ThingDef>();
+
         public struct KindRow
         {
             public ThingDef? def;
@@ -69,14 +72,36 @@ namespace Homesteader
         {
             cached = null;
             cachedTick = -99999;
+            byMap.Clear();
         }
 
-        private static PantryReport Scan()
+        // Game-logic snapshots per map (larder mood, festival). Only the game tick
+        // refreshes them (GameComponent_HarvestFestival, every 250 ticks), so UI
+        // reads such as the Needs tab never change what Multiplayer clients compute.
+        private static readonly Dictionary<int, PantryReport> byMap = new Dictionary<int, PantryReport>();
+        private static readonly PantryReport Empty = new PantryReport();
+
+        /// <summary>One map's pantry as of the last refresh (AZR-576, AZR-581).</summary>
+        internal static PantryReport ForMap(Map map)
+        {
+            return byMap.TryGetValue(map.uniqueID, out PantryReport? report) ? report : Empty;
+        }
+
+        /// <summary>Rescans one map. Game tick only.</summary>
+        internal static PantryReport RefreshMap(Map map)
+        {
+            PantryReport report = Scan(map);
+            byMap[map.uniqueID] = report;
+            return report;
+        }
+
+        private static PantryReport Scan(Map? only = null)
         {
             PantryReport report = new PantryReport();
             Dictionary<ThingDef, int> kindCounts = new Dictionary<ThingDef, int>();
             Dictionary<ThingDef, float> kindRot = new Dictionary<ThingDef, float>();
-            HashSet<string> seenPreserveDefs = new HashSet<string>();
+            HashSet<ThingDef> seenPreserveDefs = new HashSet<ThingDef>();
+            Dictionary<ThingDef, float> kindLandrace = new Dictionary<ThingDef, float>();
             int colonists = 0;
 
             if (Verse.Current.ProgramState != ProgramState.Playing || Find.Maps == null)
@@ -86,7 +111,7 @@ namespace Homesteader
 
             foreach (Map map in Find.Maps)
             {
-                if (map?.mapPawns == null)
+                if (map?.mapPawns == null || (only != null && map != only))
                 {
                     continue;
                 }
@@ -112,7 +137,7 @@ namespace Homesteader
 
                         foreach (Thing thing in storage.GetSlotGroup().HeldThings)
                         {
-                            Tally(thing, report, kindCounts, kindRot, seenPreserveDefs);
+                            Tally(thing, report, kindCounts, kindRot, seenPreserveDefs, kindLandrace);
                         }
                     }
                 }
@@ -120,6 +145,8 @@ namespace Homesteader
 
             report.colonistCount = colonists;
             report.preserveKinds = seenPreserveDefs.Count;
+            report.preserveDefs.AddRange(seenPreserveDefs);
+            report.preserveDefs.Sort((a, b) => string.CompareOrdinal(a.defName, b.defName));
             if (colonists > 0)
             {
                 report.daysOfFood = report.nutrition / (colonists * NutritionPerColonistPerDay);
@@ -128,12 +155,20 @@ namespace Homesteader
             foreach (KeyValuePair<ThingDef, int> kv in kindCounts)
             {
                 kindRot.TryGetValue(kv.Key, out float rot);
+                kindLandrace.TryGetValue(kv.Key, out float landrace);
+                string label = kv.Key.LabelCap + "  ×" + kv.Value;
+                if (landrace > 0.001f)
+                {
+                    // The hidden seed-line bonus, made visible in the stock list (AZR-698).
+                    label += "  " + "Homesteader_PantryLandrace".Translate((landrace * 100f).ToString("F0"));
+                }
+
                 report.kinds.Add(new PantryReport.KindRow
                 {
                     def = kv.Key,
                     count = kv.Value,
                     rotProgress = rot,
-                    label = kv.Key.LabelCap + "  ×" + kv.Value
+                    label = label
                 });
             }
 
@@ -171,7 +206,8 @@ namespace Homesteader
             PantryReport report,
             Dictionary<ThingDef, int> kindCounts,
             Dictionary<ThingDef, float> kindRot,
-            HashSet<string> seenPreserveDefs)
+            HashSet<ThingDef> seenPreserveDefs,
+            Dictionary<ThingDef, float> kindLandrace)
         {
             if (thing?.def == null)
             {
@@ -197,7 +233,16 @@ namespace Homesteader
 
             if (preserve)
             {
-                seenPreserveDefs.Add(thing.def.defName);
+                seenPreserveDefs.Add(thing.def);
+            }
+
+            if (HomesteaderHarmony.HasLandrace(thing.def))
+            {
+                float total = thing.TryGetComp<CompLandrace>()?.Total ?? 0f;
+                if (!kindLandrace.TryGetValue(thing.def, out float best) || total > best)
+                {
+                    kindLandrace[thing.def] = total;
+                }
             }
 
             float rotProgress = SpoilageTriage.FreshRotProgress(thing);

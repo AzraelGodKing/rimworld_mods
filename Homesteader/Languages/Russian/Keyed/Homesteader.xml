@@ -110,4 +110,17 @@
   <Homesteader_SettingsGameplayHeaderNewGames>Геймплей (по умолчанию для новых игр). У каждого сохранения своя копия.</Homesteader_SettingsGameplayHeaderNewGames>
   <Homesteader_SettingsDisplayHeader>Отображение (только на этом компьютере)</Homesteader_SettingsDisplayHeader>
   <Homesteader_KatsFallbackRace>человека</Homesteader_KatsFallbackRace>
+  <Homesteader_SettingsLarderMood>Настроение от полной кладовой</Homesteader_SettingsLarderMood>
+  <Homesteader_SettingsLarderMoodTip>Колонисты получают небольшой бонус к настроению, когда в погребах и кладовых их карты хранится 3, 6 или 9 видов заготовок.</Homesteader_SettingsLarderMoodTip>
+  <Homesteader_SettingsRainAwareWater>Сбор воды зависит от дождя</Homesteader_SettingsRainAwareWater>
+  <Homesteader_SettingsRainAwareWaterTip>Дождевые бочки и цистерны наполняются быстрее в дождь и перестают собирать воду во время засухи.</Homesteader_SettingsRainAwareWaterTip>
+  <Homesteader_SettingsBeesNeedBloom>Пчёлам нужны цветы</Homesteader_SettingsBeesNeedBloom>
+  <Homesteader_SettingsBeesNeedBloomTip>Ульи дают мёд и воск, только если рядом не меньше четырёх цветущих культур, трав или декоративных растений в сезон роста.</Homesteader_SettingsBeesNeedBloomTip>
+  <Homesteader_SpawnerDrought>Засуха: собирать нечего.</Homesteader_SpawnerDrought>
+  <Homesteader_SpawnerNoBloom>Рядом ничего не цветёт: пчёлы бездельничают.</Homesteader_SpawnerNoBloom>
+  <Homesteader_SpawnerRain>Дождь наполняет быстрее (скорость {0}).</Homesteader_SpawnerRain>
+  <Homesteader_PantryLandrace>(сорт +{0}%)</Homesteader_PantryLandrace>
+  <Homesteader_HarvestFestivalLetterKinds>На столе: {0}.</Homesteader_HarvestFestivalLetterKinds>
+  <Homesteader_HarvestFestivalLetterFeast>Тыквенный пирог и сидр из кладовой превратили праздник в настоящий пир.</Homesteader_HarvestFestivalLetterFeast>
+  <Homesteader_HarvestFestivalLetterTrader>Слух о празднике разносится. Через несколько дней должен прийти торговый караван.</Homesteader_HarvestFestivalLetterTrader>
 </LanguageData>

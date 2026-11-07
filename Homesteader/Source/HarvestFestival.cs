@@ -22,7 +22,13 @@ namespace Homesteader
 
         public override void GameComponentTick()
         {
-            if (Find.TickManager.TicksGame % CheckIntervalTicks != 0)
+            int now = Find.TickManager.TicksGame;
+            if (now % GenTicks.TickRareInterval == 0)
+            {
+                RefreshPantries();
+            }
+
+            if (now % CheckIntervalTicks != 0)
             {
                 return;
             }
@@ -51,6 +57,92 @@ namespace Homesteader
             {
                 lastFestivalYearByMap = new Dictionary<int, int>();
             }
+        }
+
+        /// <summary>Per-map pantry for the larder mood, only when that mood is on.</summary>
+        private static void RefreshPantries()
+        {
+            if (!HomesteaderGameplay.Active.larderMood)
+            {
+                return;
+            }
+
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (maps[i].IsPlayerHome)
+                {
+                    PantryUtility.RefreshMap(maps[i]);
+                }
+            }
+        }
+
+        internal static int StageFor(int preserveKinds, bool seasonalFood)
+        {
+            int stage = preserveKinds >= 6 ? 2 : preserveKinds >= 3 ? 1 : 0;
+            return seasonalFood && stage < 2 ? stage + 1 : stage;
+        }
+
+        /// <summary>Seasonal food (HS-A01): pumpkin pie or cider on the shelves lifts the festival a step.</summary>
+        private static bool HasSeasonalFood(PantryReport pantry)
+        {
+            for (int i = 0; i < pantry.kinds.Count; i++)
+            {
+                string? defName = pantry.kinds[i].def?.defName;
+                if (defName == "Homesteader_PumpkinPie" || defName == "Homesteader_Cider")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Trade pull (HS-A01): word of the festival brings a trader caravan one to
+        /// three days later, if one can reach the colony by then.
+        /// </summary>
+        private static bool QueueFestivalTrader(Map map)
+        {
+            IncidentDef def = IncidentDefOf.TraderCaravanArrival;
+            if (def == null)
+            {
+                return false;
+            }
+
+            IncidentParms parms = StorytellerUtility.DefaultParmsNow(def.category, map);
+            parms.forced = true;
+            int fireTick = Find.TickManager.TicksGame + Rand.RangeInclusive(GenDate.TicksPerDay, 3 * GenDate.TicksPerDay);
+            return Find.Storyteller.incidentQueue.Add(def, fireTick, parms, retryDurationTicks: GenDate.TicksPerDay);
+        }
+
+        private static string LetterText(PantryReport pantry, string stageLabel, bool feast, bool traderQueued)
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.Append("Homesteader_HarvestFestivalLetterText".Translate(pantry.preserveKinds, stageLabel));
+            if (pantry.preserveDefs.Count > 0)
+            {
+                // Which preserves earned the festival (AZR-682).
+                var names = new List<string>(pantry.preserveDefs.Count);
+                for (int i = 0; i < pantry.preserveDefs.Count; i++)
+                {
+                    names.Add(pantry.preserveDefs[i].label);
+                }
+
+                sb.Append("\n\n").Append("Homesteader_HarvestFestivalLetterKinds".Translate(names.ToCommaList(useAnd: true)));
+            }
+
+            if (feast)
+            {
+                sb.Append("\n\n").Append("Homesteader_HarvestFestivalLetterFeast".Translate());
+            }
+
+            if (traderQueued)
+            {
+                sb.Append("\n\n").Append("Homesteader_HarvestFestivalLetterTrader".Translate());
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>Abandoned or destroyed colonies drop out of the saved list (AZR-680).</summary>
@@ -130,9 +222,11 @@ namespace Homesteader
 
             lastFestivalYearByMap[map.uniqueID] = year;
 
-            PantryUtility.Invalidate();
-            int kinds = PantryUtility.Snapshot().preserveKinds;
-            int stage = kinds >= 6 ? 2 : kinds >= 3 ? 1 : 0;
+            // This map's own pantry only, counted now (AZR-581).
+            PantryReport pantry = PantryUtility.RefreshMap(map);
+            int kinds = pantry.preserveKinds;
+            bool feast = HasSeasonalFood(pantry);
+            int stage = StageFor(kinds, feast);
 
             List<Pawn> colonists = map.mapPawns.FreeColonistsSpawned;
             for (int i = 0; i < colonists.Count; i++)
@@ -141,9 +235,12 @@ namespace Homesteader
                     ThoughtMaker.MakeThought(thought, stage));
             }
 
+            bool traderQueued = QueueFestivalTrader(map);
+
+            // The letter's own "Jump to location" button targets the maypole (AZR-697).
             Find.LetterStack.ReceiveLetter(
                 "Homesteader_HarvestFestivalLetterLabel".Translate(),
-                "Homesteader_HarvestFestivalLetterText".Translate(kinds, thought.stages[stage].label),
+                LetterText(pantry, thought.stages[stage].label, feast, traderQueued),
                 LetterDefOf.PositiveEvent,
                 new LookTargets(maypole));
         }
