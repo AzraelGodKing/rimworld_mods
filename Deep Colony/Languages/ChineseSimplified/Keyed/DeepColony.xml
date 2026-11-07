@@ -263,7 +263,7 @@
   <DC_Compat_Karma_FamilyDefect>家族投诚</DC_Compat_Karma_FamilyDefect>
   <DC_TributeDisabled>贡礼已在模组设置中关闭。</DC_TributeDisabled>
   <DC_TributeNoFaction>未选择派系。</DC_TributeNoFaction>
-  <DC_TributeNoSilver>需要库存中有 200 白银才能送出贡礼。</DC_TributeNoSilver>
+  <DC_TributeNoSilver>需要在你的某个家园地图库存中有 200 白银才能送出贡礼。</DC_TributeNoSilver>
   <DC_TributeNeedGift>需要价值至少 200 白银的贡礼（白银、黄金、翡翠或贵重物品）。</DC_TributeNeedGift>
   <DC_TributeSent>已向 {FACTION} 送出贡礼（−{0} 白银）。</DC_TributeSent>
   <DC_TributeGiftSent>已将 {GIFT} 作为贡礼送给 {FACTION}。</DC_TributeGiftSent>

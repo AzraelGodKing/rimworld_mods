@@ -165,39 +165,18 @@ namespace DeepColony.Patches
             return clone;
         }
 
+        // object.MemberwiseClone copies every field, base-class private ones included and
+        // whatever the runtime type is (AZR-623). The old GetFields walk missed Def's private
+        // fields. The clone keeps the source's defName, index and shortHash on purpose: it is
+        // never registered, and a saved newborn's kindDef must load as the real def.
+        private static readonly Func<object, object> memberwiseClone =
+            (Func<object, object>)Delegate.CreateDelegate(
+                typeof(Func<object, object>),
+                typeof(object).GetMethod("MemberwiseClone", BindingFlags.Instance | BindingFlags.NonPublic));
+
         private static PawnKindDef ShallowClone(PawnKindDef source)
         {
-            Type type = source.GetType();
-            PawnKindDef clone;
-            try
-            {
-                clone = (PawnKindDef)Activator.CreateInstance(type);
-            }
-            catch
-            {
-                clone = new PawnKindDef();
-            }
-
-            FieldInfo[] fields = type.GetFields(
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            for (int i = 0; i < fields.Length; i++)
-            {
-                FieldInfo field = fields[i];
-                if (field.IsLiteral || field.IsStatic)
-                {
-                    continue;
-                }
-                try
-                {
-                    field.SetValue(clone, field.GetValue(source));
-                }
-                catch
-                {
-                    // Skip init-only / mismatched subclass fields.
-                }
-            }
-
-            return clone;
+            return (PawnKindDef)memberwiseClone(source);
         }
     }
 

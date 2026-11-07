@@ -264,7 +264,7 @@
   <DC_Compat_Karma_FamilyDefect>Family defected</DC_Compat_Karma_FamilyDefect>
   <DC_TributeDisabled>Tribute is disabled in mod settings.</DC_TributeDisabled>
   <DC_TributeNoFaction>No faction selected.</DC_TributeNoFaction>
-  <DC_TributeNoSilver>Need 200 silver in stock to send tribute.</DC_TributeNoSilver>
+  <DC_TributeNoSilver>Need 200 silver in stock on one of your home maps to send tribute.</DC_TributeNoSilver>
   <DC_TributeNeedGift>Need a gift worth at least 200 silver (silver, gold, jade, or a valuable item).</DC_TributeNeedGift>
   <DC_TributeSent>Sent tribute to {FACTION} (−{0} silver).</DC_TributeSent>
   <DC_TributeGiftSent>Sent {GIFT} as tribute to {FACTION}.</DC_TributeGiftSent>

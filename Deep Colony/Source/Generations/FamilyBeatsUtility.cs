@@ -10,7 +10,6 @@ namespace DeepColony
     /// </summary>
     public static class FamilyBeatsUtility
     {
-        [System.ThreadStatic]
         private static int executingVictimId = -1;
 
         private const int HomecomingMinAwayTicks = 20000; // ~8 hours

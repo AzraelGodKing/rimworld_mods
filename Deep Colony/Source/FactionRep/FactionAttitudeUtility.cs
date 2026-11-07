@@ -84,7 +84,10 @@ namespace DeepColony
             if (!ConsequencesActive || faction == null) return false;
             FactionAttitude a = GetAttitude(faction);
             if (a == FactionAttitude.Vengeful) return true;
-            if (a == FactionAttitude.Wary) return Rand.Chance(0.35f);
+            // Seeded per faction and day, so the storyteller re-checking the incident
+            // doesn't reroll: a wary faction blocks caravans on about 35% of days.
+            if (a == FactionAttitude.Wary)
+                return Rand.ChanceSeeded(0.35f, Gen.HashCombineInt(faction.loadID, GenDate.DaysPassed));
             return false;
         }
 

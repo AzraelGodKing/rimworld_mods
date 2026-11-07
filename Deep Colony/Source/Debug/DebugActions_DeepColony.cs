@@ -277,11 +277,7 @@ namespace DeepColony
             if (gameComp == null) { Log.Warning("[DeepColony] No GameComp_DeepColony."); return; }
 
             // Temporarily clear the processed flag so it can run again
-            var field = typeof(GameComp_DeepColony)
-                .GetField("inheritanceProcessed",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var set = field?.GetValue(gameComp) as System.Collections.Generic.HashSet<int>;
-            set?.Remove(p.thingIDNumber);
+            gameComp.DebugClearInheritanceProcessed(p);
 
             InheritanceUtility.TryApplyInheritance(p);
             Messages.Message("[DeepColony] Re-ran inheritance check for " + p.LabelShort + ".",
@@ -346,11 +342,7 @@ namespace DeepColony
             var gameComp = GameComp_DeepColony.Instance;
             if (gameComp == null) { Log.Warning("[DeepColony] No GameComp_DeepColony."); return; }
 
-            var field = typeof(GameComp_DeepColony)
-                .GetField("factionDriftBuffer",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var dict = field?.GetValue(gameComp)
-                as System.Collections.Generic.Dictionary<int, float>;
+            var dict = gameComp.DebugFactionDriftBuffer;
 
             if (dict == null || dict.Count == 0)
             {

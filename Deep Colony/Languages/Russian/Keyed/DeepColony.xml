@@ -263,7 +263,7 @@
   <DC_Compat_Karma_FamilyDefect>Семья перешла</DC_Compat_Karma_FamilyDefect>
   <DC_TributeDisabled>Дань отключена в настройках мода.</DC_TributeDisabled>
   <DC_TributeNoFaction>Фракция не выбрана.</DC_TributeNoFaction>
-  <DC_TributeNoSilver>Нужно 200 серебра на складе, чтобы отправить дань.</DC_TributeNoSilver>
+  <DC_TributeNoSilver>Нужно 200 серебра на складе одной из ваших баз, чтобы отправить дань.</DC_TributeNoSilver>
   <DC_TributeNeedGift>Нужен дар стоимостью не меньше 200 серебра (серебро, золото, нефрит или ценная вещь).</DC_TributeNeedGift>
   <DC_TributeSent>Дань отправлена {FACTION} (−{0} серебра).</DC_TributeSent>
   <DC_TributeGiftSent>{GIFT} отправлен(а) как дань {FACTION}.</DC_TributeGiftSent>

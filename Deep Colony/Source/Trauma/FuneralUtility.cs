@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
+using Verse.AI.Group;
 
 namespace DeepColony
 {
@@ -11,6 +12,13 @@ namespace DeepColony
 
         public static void NotifyBodyLaidToRest(Pawn dead, string reasonKey)
         {
+            NotifyBodyLaidToRest(dead, reasonKey, dead?.thingIDNumber ?? 0);
+        }
+
+        // The funeral ritual uses its own key (the bitwise complement of the id), so the
+        // burial that comes first doesn't use up the funeral's ease.
+        private static void NotifyBodyLaidToRest(Pawn dead, string reasonKey, int processedKey)
+        {
             if (!DeepColonySettings.Get.enableTrauma) return;
             if (dead == null || !dead.RaceProps.Humanlike) return;
 
@@ -18,7 +26,7 @@ namespace DeepColony
             if (gc == null) return;
             if (gc.funeralProcessedCorpses == null)
                 gc.funeralProcessedCorpses = new HashSet<int>();
-            if (!gc.funeralProcessedCorpses.Add(dead.thingIDNumber)) return;
+            if (!gc.funeralProcessedCorpses.Add(processedKey)) return;
 
             int easedCount = EaseAllMourners(dead);
             if (easedCount <= 0) return;
@@ -29,11 +37,11 @@ namespace DeepColony
         }
 
         /// <summary>C18 leftover / D03 — Ideology funeral ritual (fail-open; Lord.Cleanup).</summary>
-        public static void NotifyIdeologyRitual(object lordJob)
+        public static void NotifyIdeologyRitual(LordJob lordJob)
         {
             if (!ModsConfig.IdeologyActive) return;
             if (!LooksLikeFuneralRitual(lordJob, out Pawn dead)) return;
-            NotifyBodyLaidToRest(dead, "DC_FuneralRitual");
+            NotifyBodyLaidToRest(dead, "DC_FuneralRitual", ~dead.thingIDNumber);
         }
 
         private static int EaseAllMourners(Pawn dead)
@@ -50,54 +58,30 @@ namespace DeepColony
             return easedCount;
         }
 
-        private static bool LooksLikeFuneralRitual(object lordJob, out Pawn dead)
+        // Typed: Precept.def is a field, so the old GetProperty("def") never matched (AZR-623).
+        // A funeral's target is the grave or sarcophagus holding the corpse.
+        private static bool LooksLikeFuneralRitual(LordJob lordJob, out Pawn dead)
         {
             dead = null;
-            if (lordJob == null) return false;
-            System.Type t = lordJob.GetType();
-            if (t.Name.IndexOf("Ritual", System.StringComparison.OrdinalIgnoreCase) < 0)
-                return false;
+            if (lordJob is not LordJob_Ritual ritualJob) return false;
+            Precept_Ritual ritual = ritualJob.Ritual;
+            if (!IsFuneral(ritual?.def) && !IsFuneral(ritual?.behavior?.def)) return false;
 
-            object ritual = t.GetProperty("Ritual")?.GetValue(lordJob);
-            string defName = null;
-            if (ritual != null)
+            Thing target = ritualJob.selectedTarget.Thing;
+            dead = target switch
             {
-                object def = ritual.GetType().GetProperty("def")?.GetValue(ritual);
-                defName = (def as Def)?.defName;
-                object behavior = ritual.GetType().GetProperty("behaviorDef")?.GetValue(ritual)
-                    ?? ritual.GetType().GetProperty("ritualDef")?.GetValue(ritual);
-                if (defName.NullOrEmpty())
-                    defName = (behavior as Def)?.defName;
-            }
-
-            bool funeral = !defName.NullOrEmpty()
-                && defName.IndexOf("Funeral", System.StringComparison.OrdinalIgnoreCase) >= 0;
-            if (!funeral)
-            {
-                object assignments = t.GetProperty("assignments")?.GetValue(lordJob)
-                    ?? t.GetProperty("ritual")?.GetValue(lordJob);
-                string blob = (ritual?.ToString() ?? "") + (lordJob.ToString() ?? "");
-                funeral = blob.IndexOf("Funeral", System.StringComparison.OrdinalIgnoreCase) >= 0;
-            }
-            if (!funeral) return false;
-
-            dead = t.GetField("corpse")?.GetValue(lordJob) as Pawn
-                ?? (t.GetField("corpse")?.GetValue(lordJob) as Corpse)?.InnerPawn
-                ?? t.GetProperty("Organizer")?.GetValue(lordJob) as Pawn;
-            if (dead == null)
-            {
-                object corpseObj = t.GetProperty("selectedTarget")?.GetValue(lordJob)
-                    ?? t.GetField("selectedTarget")?.GetValue(lordJob);
-                if (corpseObj is Corpse c) dead = c.InnerPawn;
-                else if (corpseObj is Pawn p && p.Dead) dead = p;
-            }
-            if (dead == null)
-            {
-                // Last resort: most recently processed is skipped by HashSet; scan selected ritual pawn.
-                var selected = t.GetProperty("PawnWithMostPresence")?.GetValue(lordJob) as Pawn;
-                if (selected != null && selected.Dead) dead = selected;
-            }
+                Building_CorpseCasket casket => casket.Corpse?.InnerPawn,
+                Corpse corpse => corpse.InnerPawn,
+                Pawn p when p.Dead => p,
+                _ => null
+            };
             return dead != null;
+        }
+
+        private static bool IsFuneral(Def def)
+        {
+            return def?.defName != null
+                && def.defName.IndexOf("Funeral", System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private static bool EaseLoss(Pawn mourner, Pawn dead)
