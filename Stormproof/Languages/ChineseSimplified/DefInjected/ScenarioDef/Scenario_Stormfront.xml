@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Stormproof_Stormfront.label>风暴前线</Stormproof_Stormfront.label>
+  <Stormproof_Stormfront.description>三名定居者在天气从不留情的地方扎下根来。建造能扛过离子风暴、热穹顶和极地锋面的庇护所、接地设施与装备。\n\n若同时加载 Homesteader，将锁定 Azrael 叙事者。</Stormproof_Stormfront.description>
+  <Stormproof_Stormfront.scenario.summary>三名定居者面对恶劣天气。Stormproof 研究。若有 Homesteader 则使用 Azrael。</Stormproof_Stormfront.scenario.summary>
+  <!-- List items are addressed by their ScenPartDef handle, so the optional
+       Odyssey and Homesteader parts before it can't shift the index. -->
+  <Stormproof_Stormfront.scenario.parts.GameStartDialog.text>天色已经不对了。
+
+闪电在山脊上游走。酷热将把殖民地压垮。严寒会偷走夜晚。若你建得马虎，天气就会写下你的结局。
+
+筑起墙壁。为电线接地。熬过这道锋面。</Stormproof_Stormfront.scenario.parts.GameStartDialog.text>
+
+</LanguageData>

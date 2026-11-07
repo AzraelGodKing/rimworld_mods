@@ -8,7 +8,7 @@ Detailed notes for **Stormproof** only.
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-gridtools`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-492 AZR-493 AZR-494 AZR-495 AZR-497 AZR-498 AZR-500 AZR-501 AZR-667 AZR-668 AZR-669 AZR-670 AZR-671 AZR-672 AZR-713 AZR-716 AZR-717 AZR-718
+AZR-492 AZR-493 AZR-494 AZR-495 AZR-497 AZR-498 AZR-500 AZR-501 AZR-505 AZR-667 AZR-668 AZR-669 AZR-670 AZR-671 AZR-672 AZR-713 AZR-715 AZR-716 AZR-717 AZR-718
 
 ### Added
 - **Smart hold on the load shedder** (AZR-671) — a fourth hold mode after Auto. It works like Auto, but when the charge is back above the reconnect level it runs the grid forecast as if the sub-grid came back now, and stays shed if the supply would fall to the cutoff again within 8 hours. Needs a weather forecaster on the supply grid; without one it acts like Auto. The inspect pane says when and why it is holding. The hold gizmo is tinted per mode.
@@ -46,6 +46,8 @@ AZR-492 AZR-493 AZR-494 AZR-495 AZR-497 AZR-498 AZR-500 AZR-501 AZR-667 AZR-668 
 - **Almanac after load** (AZR-498) — the open weather entry keeps its real start time; loading no longer resets it to the load tick.
 - **Weather forecaster after load** (AZR-498) — keeps the weather it last saw, so a change during the save still warns.
 - **Save version** (AZR-498) — maps save `stormproofSaveSchema` (2). Saves without it are treated as version 1; every existing `stormproof*` key is unchanged.
+- **Translations** (AZR-505, AZR-715) — Russian and Chinese now cover the five condition end messages, the research tab's title and description, and the whole Stormfront scenario (name, description, summary, start text). The scenario's start text is addressed by its part's def handle, so the optional Odyssey and Homesteader parts can't shift it.
+- **Translation checks** (AZR-505) — `scripts/validate_mods.py` (run by CI) now fails when a Stormproof def's label, description, end message, letter, research-tab text or scenario text is missing from a shipped language, and when a Stormproof game condition doesn't say whether it can run underground. Well-formed XML, no BOM and Keyed parity were already checked for every folder.
 
 ## [1.7.0]
 

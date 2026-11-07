@@ -26,6 +26,7 @@ Stormproof 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [*] [b]Mod settings[/b] — a defender switched off in settings stays at idle power and says so.
 [*] [b]Surge protector[/b] — catches every Zzzt, including the ion storm's and the spire's.
 [*] [b]Almanac[/b] — loading a save no longer resets the current weather's start time, and strikes with no spire count as missed.
+[*] [b]Translations[/b] — Russian and Chinese now cover condition end messages, the research tab and the Stormfront scenario.
 [/list]
 
 [i]Build stamp (Player.log): stormproof2-gridtools[/i]
