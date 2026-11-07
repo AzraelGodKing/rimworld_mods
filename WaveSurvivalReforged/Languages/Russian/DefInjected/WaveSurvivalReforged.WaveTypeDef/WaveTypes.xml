@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <WSR_Wave_Assault.label>налёт</WSR_Wave_Assault.label>
+  <WSR_Wave_DropPods.label>налёт в капсулах</WSR_Wave_DropPods.label>
+  <WSR_Wave_CenterDrop.label>капсулы прямо в базу</WSR_Wave_CenterDrop.label>
+  <WSR_Wave_Siege.label>осада</WSR_Wave_Siege.label>
+  <WSR_Wave_Sappers.label>сапёры</WSR_Wave_Sappers.label>
+  <WSR_Wave_Breachers.label>взломщики</WSR_Wave_Breachers.label>
+  <WSR_Wave_Manhunters.label>стая людоедов</WSR_Wave_Manhunters.label>
+  <WSR_Wave_AnimalInsanity.label>массовое безумие животных</WSR_Wave_AnimalInsanity.label>
+  <WSR_Wave_Mechanoids.label>механоиды</WSR_Wave_Mechanoids.label>
+  <WSR_Wave_MechCluster.label>кластер механоидов</WSR_Wave_MechCluster.label>
+  <WSR_Wave_Shamblers.label>рой шатунов</WSR_Wave_Shamblers.label>
+  <WSR_Wave_Fleshbeasts.label>плотские твари</WSR_Wave_Fleshbeasts.label>
+  <WSR_Wave_Sightstealers.label>глазокрады</WSR_Wave_Sightstealers.label>
+  <WSR_Boss_Siege.label>великая осада</WSR_Boss_Siege.label>
+  <WSR_Boss_Assault.label>боевой отряд</WSR_Boss_Assault.label>
+  <WSR_Boss_Mechanoids.label>улей механоидов</WSR_Boss_Mechanoids.label>
+  <WSR_Boss_MechCluster.label>крепость механоидов</WSR_Boss_MechCluster.label>
+  <WSR_Boss_Chimeras.label>нападение химер</WSR_Boss_Chimeras.label>
+</LanguageData>

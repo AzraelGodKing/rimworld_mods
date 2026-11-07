@@ -5,13 +5,19 @@
 
   <WSR_WaveTimerLabel>Волна {0}: {1}</WSR_WaveTimerLabel>
   <WSR_WaveTimerExplanation>Волна {0} прибудет через {1}.</WSR_WaveTimerExplanation>
-  <WSR_WaveTimerSpecial>Это особая волна: ждите осаду, сапёров или обезумевших животных.</WSR_WaveTimerSpecial>
+  <WSR_WaveTimerSpecial>Это особая волна: осада, сапёры, взломщики, механоиды или обезумевшие животные.</WSR_WaveTimerSpecial>
 
   <WSR_NeedBeaconLabel>Постройте торговый маяк</WSR_NeedBeaconLabel>
   <WSR_NeedBeaconExplanation>В режиме «Выживание волнами» припасы раз в день доставляются капсулами к вашему орбитальному торговому маяку. Пока маяка нет, припасы не приходят.\n\nПостройте его как можно скорее.</WSR_NeedBeaconExplanation>
 
-  <WSR_WaveArrived>Волна {0} прибыла!</WSR_WaveArrived>
-  <WSR_SpecialWaveArrived>Особая волна {0} прибыла!</WSR_SpecialWaveArrived>
+  <WSR_WaveArrived>Волна {0} прибыла: {1}!</WSR_WaveArrived>
+  <WSR_SpecialWaveArrived>Особая волна {0} прибыла: {1}!</WSR_SpecialWaveArrived>
   <WSR_SupplyDropArrived>Посылка с припасами приземлилась у торгового маяка.</WSR_SupplyDropArrived>
+
+  <WSR_WaveTimerBoss>Это волна босса: в полтора раза сильнее обычной.</WSR_WaveTimerBoss>
+  <WSR_BossWaveArrived>Волна босса {0} прибыла: {1}!</WSR_BossWaveArrived>
+  <WSR_WaveWithFaction>{0} ({1})</WSR_WaveWithFaction>
+  <WSR_WavePostponed>Волна {0} не смогла начаться: никто из врагов не может напасть. Новая попытка через {1}.</WSR_WavePostponed>
+  <WSR_WavePostponedNoHome>Волна {0} ждёт, пока у вас появится домашняя карта. Новая попытка через {1}.</WSR_WavePostponedNoHome>
 
 </LanguageData>

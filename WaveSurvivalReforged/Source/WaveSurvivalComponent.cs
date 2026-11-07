@@ -16,6 +16,8 @@ namespace WaveSurvivalReforged
         private int ticksNextWave = -1;
         private int ticksNextDay = -1;
         private bool dropPending;
+        // Not saved: only stops the postponed message repeating for the same wave.
+        private int postponedWave;
 
         private static List<ThingStuffPair> weaponPool;
 
@@ -33,9 +35,11 @@ namespace WaveSurvivalReforged
 
         public int TicksUntilNextWave => ticksNextWave - Find.TickManager.TicksGame;
 
-        public bool NextWaveIsSpecial => IsSpecial(waveNum);
+        public WavePool NextWavePool => PoolFor(waveNum);
 
         private static WaveSurvivalConfigDef Config => WSR_DefOf.WSR_Config;
+
+        private static float ThreatScale => Find.Storyteller.difficulty.threatScale;
 
         public override void GameComponentTick()
         {
@@ -80,93 +84,171 @@ namespace WaveSurvivalReforged
             started = true;
         }
 
-        private bool IsSpecial(int wave)
+        private static WavePool PoolFor(int wave)
         {
             WaveSurvivalConfigDef cfg = Config;
-            return wave % cfg.specialWaveInterval == 0 && wave >= cfg.specialWaveMinWave;
+            if (cfg.bossWaveInterval > 0 && wave % cfg.bossWaveInterval == 0)
+                return WavePool.Boss;
+            if (wave % cfg.specialWaveInterval == 0 && wave >= cfg.specialWaveMinWave)
+                return WavePool.Special;
+            return WavePool.Normal;
         }
 
         private void RunWave(int now)
         {
-            ticksNextWave = now + Mathf.RoundToInt(Config.daysBetweenWaves * GenDate.TicksPerDay);
+            WaveSurvivalConfigDef cfg = Config;
             Map map = TargetMap();
             if (map == null)
+            {
+                Postpone(now, "WSR_WavePostponedNoHome");
                 return;
+            }
 
-            bool special = IsSpecial(waveNum);
-            Messages.Message(
-                (special ? "WSR_SpecialWaveArrived" : "WSR_WaveArrived").Translate(waveNum),
-                MessageTypeDefOf.ThreatBig);
-            if (!special || !TrySpecialWave(map))
-                StandardWave(map);
+            WavePlan plan = MakePlan(map, waveNum, PoolFor(waveNum));
+            bool ok = plan != null && Execute(plan, map);
+            if (!ok && plan != null && plan.type.pool != WavePool.Normal)
+            {
+                // The planned special wave failed to spawn: a plain raid at full points instead.
+                plan = MakePlan(map, waveNum, WavePool.Normal, allowSplit: false);
+                ok = plan != null && Execute(plan, map);
+            }
+            if (!ok)
+            {
+                plan = ManhunterPlan(map);
+                ok = plan != null && Execute(plan, map);
+            }
+            if (!ok)
+            {
+                Postpone(now, "WSR_WavePostponed");
+                return;
+            }
+
+            Messages.Message(ArrivedKey(plan.type.pool).Translate(waveNum, Describe(plan)), MessageTypeDefOf.ThreatBig);
+            float days = cfg.daysBetweenWaves + (plan.type.pool != WavePool.Normal ? cfg.breatherDays : 0f);
+            ticksNextWave = now + Mathf.RoundToInt(days * GenDate.TicksPerDay);
+            postponedWave = 0;
             waveNum++;
         }
 
-        private float WavePoints(float scale = 1f)
+        private void Postpone(int now, string key)
+        {
+            ticksNextWave = now + Mathf.RoundToInt(Config.postponeHours * GenDate.TicksPerHour);
+            if (postponedWave == waveNum)
+                return;
+            postponedWave = waveNum;
+            int delay = ticksNextWave - now;
+            Messages.Message(key.Translate(waveNum, delay.ToStringTicksToPeriod(allowSeconds: false)),
+                MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
+        private static string ArrivedKey(WavePool pool)
+        {
+            switch (pool)
+            {
+                case WavePool.Boss:
+                    return "WSR_BossWaveArrived";
+                case WavePool.Special:
+                    return "WSR_SpecialWaveArrived";
+                default:
+                    return "WSR_WaveArrived";
+            }
+        }
+
+        internal static string Describe(WavePlan plan)
+        {
+            string label = plan.type.label;
+            return plan.faction == null ? label : (string)"WSR_WaveWithFaction".Translate(label, plan.faction.Name);
+        }
+
+        private float BasePoints(Map map, int wave)
         {
             WaveSurvivalConfigDef cfg = Config;
-            float threatScale = Find.Storyteller.difficulty.threatScale;
-            float points = cfg.startingThreatPoints + (waveNum - 1) * cfg.threatPointIncreasePerWave * threatScale;
-            return Mathf.Max(points * scale, MinRaidPoints);
+            float points = cfg.pointsByWave.Evaluate(wave) * ThreatScale;
+            if (cfg.wealthBlend > 0f)
+                points = Mathf.Lerp(points, StorytellerUtility.DefaultThreatPointsNow(map), cfg.wealthBlend);
+            return points;
         }
 
-        private void StandardWave(Map map)
+        private float PointsFor(WaveTypeDef type, Map map, int wave)
         {
-            if (Rand.Chance(Config.doubleRaidChance))
-            {
-                Raid(map, WavePoints(0.5f), RaidStrategyDefOf.ImmediateAttack);
-                Raid(map, WavePoints(0.5f), RaidStrategyDefOf.ImmediateAttack);
-            }
-            else
-            {
-                Raid(map, WavePoints(), RaidStrategyDefOf.ImmediateAttack);
-            }
+            float points = BasePoints(map, wave) * type.pointsFactor + type.bonusPoints * ThreatScale;
+            return Mathf.Max(points, MinRaidPoints);
         }
 
-        private bool TrySpecialWave(Map map)
+        // Picks a wave type from the pool by weight, then a faction able to carry it out.
+        // A special or boss pool with nothing able to run falls back to the normal pool.
+        private WavePlan MakePlan(Map map, int wave, WavePool pool, bool allowSplit = true)
         {
-            float points = WavePoints();
-            switch (Rand.RangeInclusive(0, 3))
+            var candidates = new List<WaveTypeDef>(WaveTypeDef.InPool(pool, wave));
+            while (candidates.TryRandomElementByWeight(t => t.weight, out WaveTypeDef type))
             {
-                case 0:
-                    return StrategyRaid(map, points + Config.siegeBonusPoints, "Siege");
-                case 1:
-                    return Fire(map, DefDatabase<IncidentDef>.GetNamedSilentFail("AnimalInsanityMass"), points);
-                case 2:
-                    return Fire(map, IncidentDefOf.ManhunterPack, points);
-                default:
-                    return StrategyRaid(map, points + Config.siegeBonusPoints, "ImmediateAttackSappers");
+                candidates.Remove(type);
+                float points = PointsFor(type, map, wave);
+                if (type.kind == WaveKind.Incident)
+                    return new WavePlan(type, null, points, false);
+                if (!TryFindFaction(type, map, points, out Faction faction))
+                    continue;
+                float half = points * 0.5f;
+                bool split = allowSplit && type.canSplit && Rand.Chance(Config.doubleRaidChance)
+                    && half >= MinRaidPoints
+                    && half >= faction.def.MinPointsToGeneratePawnGroup(PawnGroupKindDefOf.Combat);
+                return new WavePlan(type, faction, points, split);
             }
+            return pool == WavePool.Normal ? null : MakePlan(map, wave, WavePool.Normal, allowSplit);
         }
 
-        private static bool Raid(Map map, float points, RaidStrategyDef strategy, Faction faction = null)
+        private WavePlan ManhunterPlan(Map map)
+        {
+            WaveTypeDef type = DefDatabase<WaveTypeDef>.AllDefsListForReading.FirstOrDefault(t =>
+                t.kind == WaveKind.Incident && t.Available && t.Incident == IncidentDefOf.ManhunterPack);
+            return type == null ? null : new WavePlan(type, null, PointsFor(type, map, waveNum), false);
+        }
+
+        private static bool TryFindFaction(WaveTypeDef type, Map map, float points, out Faction faction)
+        {
+            return Find.FactionManager.AllFactionsListForReading
+                .Where(f => CanAttack(f, type, map, points))
+                .TryRandomElement(out faction);
+        }
+
+        internal static bool CanAttack(Faction f, WaveTypeDef type, Map map, float points)
+        {
+            if (f.IsPlayer || f.defeated || f.temporary || !f.HostileTo(Faction.OfPlayer))
+                return false;
+            List<FactionDef> only = type.FactionDefs;
+            if (only != null ? !only.Contains(f.def) : f.Hidden)
+                return false;
+            if (f.def.pawnGroupMakers == null || !f.def.pawnGroupMakers.Any(m => m.kindDef == PawnGroupKindDefOf.Combat))
+                return false;
+            if (points < f.def.MinPointsToGeneratePawnGroup(PawnGroupKindDefOf.Combat))
+                return false;
+            return type.Strategy.Worker.CanUseWith(
+                new IncidentParms { target = map, points = points, faction = f }, PawnGroupKindDefOf.Combat);
+        }
+
+        private static bool Execute(WavePlan plan, Map map)
+        {
+            if (plan.type.kind == WaveKind.Incident)
+                return Fire(map, plan.type.Incident, plan.points);
+            if (!plan.split)
+                return Raid(map, plan.points, plan);
+            bool first = Raid(map, plan.points * 0.5f, plan);
+            bool second = Raid(map, plan.points * 0.5f, plan);
+            return first || second;
+        }
+
+        private static bool Raid(Map map, float points, WavePlan plan)
         {
             var parms = new IncidentParms
             {
                 target = map,
                 points = points,
-                raidStrategy = strategy,
-                faction = faction,
+                faction = plan.faction,
+                raidStrategy = plan.type.Strategy,
+                raidArrivalMode = plan.type.ArrivalMode,
                 forced = true,
             };
             return IncidentDefOf.RaidEnemy.Worker.TryExecute(parms);
-        }
-
-        // Sieges and sappers only work for some factions, so pick one that can do it.
-        private static bool StrategyRaid(Map map, float points, string strategyName)
-        {
-            RaidStrategyDef strategy = DefDatabase<RaidStrategyDef>.GetNamedSilentFail(strategyName);
-            if (strategy == null)
-                return false;
-            IEnumerable<Faction> able = Find.FactionManager.AllFactions.Where(f =>
-                !f.IsPlayer && !f.defeated && !f.Hidden && f.HostileTo(Faction.OfPlayer)
-                && points >= f.def.MinPointsToGeneratePawnGroup(PawnGroupKindDefOf.Combat)
-                && strategy.Worker.CanUseWith(
-                    new IncidentParms { target = map, points = points, faction = f },
-                    PawnGroupKindDefOf.Combat));
-            if (!able.TryRandomElement(out Faction faction))
-                return false;
-            return Raid(map, points, strategy, faction);
         }
 
         private static bool Fire(Map map, IncidentDef incident, float points)
@@ -186,7 +268,16 @@ namespace WaveSurvivalReforged
             dropPending = !TryDropSupplies();
             MaybeWanderer(map);
             if (Rand.Chance(Config.traderChance))
-                Fire(map, IncidentDefOf.OrbitalTraderArrival, 0f);
+                MaybeTrader(map);
+        }
+
+        // Vanilla needs a powered comms console for the trade ship to be any use.
+        private static void MaybeTrader(Map map)
+        {
+            IncidentDef trader = IncidentDefOf.OrbitalTraderArrival;
+            var parms = new IncidentParms { target = map, forced = true };
+            if (trader.Worker.CanFireNow(parms))
+                trader.Worker.TryExecute(parms);
         }
 
         private bool TryDropSupplies()
@@ -256,8 +347,8 @@ namespace WaveSurvivalReforged
                 && !td.weaponTags.NullOrEmpty()
                 && !td.destroyOnDrop
                 && td.tradeability.TraderCanSell()
-                && !(td.comps?.Any(c => c.compClass != null
-                    && (c.compClass.Name == "CompBladelinkWeapon" || c.compClass.Name == "CompUniqueWeapon")) ?? false));
+                && !td.HasComp<CompBladelinkWeapon>()
+                && !td.HasComp<CompUniqueWeapon>());
 
         private static void MaybeWanderer(Map map)
         {

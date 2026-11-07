@@ -5,13 +5,19 @@
 
   <WSR_WaveTimerLabel>第 {0} 波：{1}</WSR_WaveTimerLabel>
   <WSR_WaveTimerExplanation>第 {0} 波将在 {1} 后到来。</WSR_WaveTimerExplanation>
-  <WSR_WaveTimerSpecial>这是一个特殊波次：可能是围攻、工兵，或发狂的动物。</WSR_WaveTimerSpecial>
+  <WSR_WaveTimerSpecial>这是一个特殊波次：可能是围攻、工兵、破墙者、机械体，或发狂的动物。</WSR_WaveTimerSpecial>
 
   <WSR_NeedBeaconLabel>建造贸易信标</WSR_NeedBeaconLabel>
   <WSR_NeedBeaconExplanation>波次生存模式每天通过空投舱把补给投放到你的轨道贸易信标处。在你建好信标之前，不会有补给送达。\n\n请尽快建造一座。</WSR_NeedBeaconExplanation>
 
-  <WSR_WaveArrived>第 {0} 波来袭！</WSR_WaveArrived>
-  <WSR_SpecialWaveArrived>特殊波次第 {0} 波来袭！</WSR_SpecialWaveArrived>
+  <WSR_WaveArrived>第 {0} 波来袭：{1}！</WSR_WaveArrived>
+  <WSR_SpecialWaveArrived>特殊波次第 {0} 波来袭：{1}！</WSR_SpecialWaveArrived>
   <WSR_SupplyDropArrived>一批补给已空投到贸易信标处。</WSR_SupplyDropArrived>
+
+  <WSR_WaveTimerBoss>这是一个首领波次：强度是平常的一倍半。</WSR_WaveTimerBoss>
+  <WSR_BossWaveArrived>首领波次第 {0} 波来袭：{1}！</WSR_BossWaveArrived>
+  <WSR_WaveWithFaction>{0}（{1}）</WSR_WaveWithFaction>
+  <WSR_WavePostponed>第 {0} 波无法开始：没有任何敌对势力能够发动进攻。将在 {1} 后重试。</WSR_WavePostponed>
+  <WSR_WavePostponedNoHome>第 {0} 波正在等待你拥有一张家园地图。将在 {1} 后重试。</WSR_WavePostponedNoHome>
 
 </LanguageData>
