@@ -135,7 +135,7 @@ namespace DateNight
                 return;
             }
 
-            List<Pawn> colonists = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
+            List<Pawn> colonists = DateNightPawns.Colonists;
             if (colonists == null)
             {
                 return;

@@ -117,34 +117,53 @@ namespace DateNight
             }
 
             JobDef def = pawn.CurJobDef;
-            if (def == JoinInBedDef || def == MasturbateDef)
+            if (!SexJobDef.TryGetValue(def, out bool byDef))
+            {
+                string name = def.defName;
+                byDef = def == JoinInBedDef || def == MasturbateDef
+                    || name == "GettinLoved" || name == "GettinLicked" || name == "GettinSucked"
+                    || name == "Quickie" || name == "GettingQuickie";
+                SexJobDef[def] = byDef;
+            }
+            if (byDef)
             {
                 return true;
             }
 
-            string name = def.defName;
-            if (name == "GettinLoved" || name == "GettinLicked" || name == "GettinSucked"
-                || name == "Quickie" || name == "GettingQuickie")
+            Type? driver = pawn.jobs?.curDriver?.GetType();
+            if (driver == null)
             {
-                return true;
+                return false;
             }
-
-            Type? driverType = pawn.jobs?.curDriver?.GetType();
-            while (driverType != null && driverType != typeof(JobDriver))
+            if (!SexDriverType.TryGetValue(driver, out bool byType))
             {
-                string typeName = driverType.Name;
-                if (!string.IsNullOrEmpty(typeName)
-                    && (typeName.IndexOf("Sex", StringComparison.OrdinalIgnoreCase) >= 0
-                        || typeName.IndexOf("Masturbate", StringComparison.OrdinalIgnoreCase) >= 0
-                        || typeName.IndexOf("JoinInBed", StringComparison.OrdinalIgnoreCase) >= 0))
+                byType = IsRjwSexDriver(driver);
+                SexDriverType[driver] = byType;
+            }
+            return byType;
+        }
+
+        // Classified once per def / driver type instead of string-searched per call (AZR-542).
+        private static readonly System.Collections.Generic.Dictionary<JobDef, bool> SexJobDef =
+            new System.Collections.Generic.Dictionary<JobDef, bool>();
+        private static readonly System.Collections.Generic.Dictionary<Type, bool> SexDriverType =
+            new System.Collections.Generic.Dictionary<Type, bool>();
+        private static readonly string[] SexDriverTokens = { "Sex", "Masturbate", "JoinInBed" };
+
+        private static bool IsRjwSexDriver(Type driverType)
+        {
+            Type? t = driverType;
+            while (t != null && t != typeof(JobDriver))
+            {
+                if (DateNightUtility.ContainsAny(t.Name, SexDriverTokens))
                 {
-                    string? ns = driverType.Namespace;
+                    string? ns = t.Namespace;
                     if (ns == "rjw" || (ns != null && ns.StartsWith("rjw.", StringComparison.Ordinal)))
                     {
                         return true;
                     }
                 }
-                driverType = driverType.BaseType;
+                t = t.BaseType;
             }
             return false;
         }

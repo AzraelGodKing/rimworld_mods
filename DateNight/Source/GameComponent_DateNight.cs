@@ -40,6 +40,7 @@ namespace DateNight
 
         private static void ResetAllStaticState()
         {
+            DateNightPawns.Reset();
             DateNightUtility.ClearEphemeral();
             DateNightWindows.Reset();
             DateNightDateUtility.Reset();
@@ -52,7 +53,7 @@ namespace DateNight
 
         private void SeedScheduleFlags()
         {
-            List<Pawn> colonists = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
+            List<Pawn> colonists = DateNightPawns.Colonists;
             if (colonists == null)
             {
                 return;
@@ -118,7 +119,7 @@ namespace DateNight
                 return;
             }
 
-            List<Pawn> colonists = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
+            List<Pawn> colonists = DateNightPawns.Colonists;
             if (colonists == null)
             {
                 return;

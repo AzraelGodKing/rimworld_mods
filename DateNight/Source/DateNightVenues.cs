@@ -304,8 +304,8 @@ namespace DateNight
 
         public static string DebugDescribe(Pawn pawn)
         {
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
-            FavoriteVenue? fav = Get(pawn, partner);
+            Pawn? partner = DateNightPawns.LovePartner(pawn);
+            FavoriteVenue? fav = partner == null ? null : Get(pawn, partner);
             if (fav == null)
             {
                 return "none";

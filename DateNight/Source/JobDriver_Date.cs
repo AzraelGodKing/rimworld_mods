@@ -100,9 +100,12 @@ namespace DateNight
             this.FailOnDespawnedNullOrForbidden(PartnerInd);
             this.FailOn(() => pawn.Drafted);
             this.FailOn(() => PartnerFailedDateJob());
-            this.FailOn(() => DateNightUtility.IsBusyWithRitual(pawn)
-                || DateNightUtility.IsBusyWithRitual(Partner));
-            this.FailOn(() => !DateNightDateUtility.CanDate(pawn, Partner, force: true));
+            // Once a second, not every tick: a ritual or a lost eligibility is not
+            // time-critical, and CanDate walks relations and romance factors (AZR-542).
+            this.FailOn(() => pawn.IsHashIntervalTick(60)
+                && (DateNightUtility.IsBusyWithRitual(pawn)
+                    || DateNightUtility.IsBusyWithRitual(Partner)
+                    || !DateNightDateUtility.CanDate(pawn, Partner, force: true)));
 
             bool fetchesItem = NeedsItemFetch();
             if (fetchesItem)

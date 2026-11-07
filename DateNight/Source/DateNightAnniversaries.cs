@@ -12,6 +12,7 @@ namespace DateNight
     /// </summary>
     public static class DateNightAnniversaries
     {
+        private static readonly HashSet<long> SeenScratch = new HashSet<long>();
         // couple key -> last quadrum-year we already sent the letter for
         private static Dictionary<long, int> lastCelebratedYear = new Dictionary<long, int>();
         // couple key -> year we already applied dated-or-missed outcome
@@ -99,17 +100,18 @@ namespace DateNight
             }
             lastScanDay = day;
 
-            List<Pawn> colonists = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
+            List<Pawn> colonists = DateNightPawns.Colonists;
             if (colonists == null)
             {
                 return;
             }
 
-            var seen = new HashSet<long>();
+            HashSet<long> seen = SeenScratch;
+            seen.Clear();
             for (int i = 0; i < colonists.Count; i++)
             {
                 Pawn pawn = colonists[i];
-                Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+                Pawn? partner = DateNightPawns.LovePartner(pawn);
                 if (partner == null || pawn.thingIDNumber > partner.thingIDNumber)
                 {
                     continue;

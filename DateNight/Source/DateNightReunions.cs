@@ -13,6 +13,7 @@ namespace DateNight
     /// </summary>
     public static class DateNightReunions
     {
+        private static readonly HashSet<long> SeenScratch = new HashSet<long>();
         private const int MinSeparationTicks = GenDate.TicksPerDay * 2;
 
         // couple key -> tick the couple was first seen apart
@@ -36,18 +37,19 @@ namespace DateNight
 
         public static void Tick()
         {
-            List<Pawn> colonists = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
+            List<Pawn> colonists = DateNightPawns.Colonists;
             if (colonists == null)
             {
                 return;
             }
 
             int now = Find.TickManager.TicksGame;
-            var seen = new HashSet<long>();
+            HashSet<long> seen = SeenScratch;
+            seen.Clear();
             for (int i = 0; i < colonists.Count; i++)
             {
                 Pawn pawn = colonists[i];
-                Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+                Pawn? partner = DateNightPawns.LovePartner(pawn);
                 if (partner == null)
                 {
                     continue;
