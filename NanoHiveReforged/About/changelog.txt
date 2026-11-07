@@ -8,6 +8,7 @@ One package for RimWorld 1.6 and 1.7. Saves from 1.x keep working.
 [*] [b]Idle power[/b] — a hive draws 200 W while nothing in range needs repair, and its full 1600 W only while repairing.
 [*] [b]Only stored items[/b] — optional: repair only items in a stockpile or storage that are not forbidden.
 [*] [b]Repair shimmer[/b] — a soft pulsing glow on a hive while it repairs, and a spark that fades on each thing it fixed. Turn it off in the mod settings. It only changes what you see.
+[*] [b]Translations[/b] — Chinese Simplified and Russian.
 [*] [b]Inspect pane[/b] — shows the hive's radius, rate and budget, how many things in range are damaged, and how much it repaired last cycle (or that it is idle or unpowered).
 [*] [b]Multiplayer[/b] — soft support. Hive settings live in the save and every hive button is synced, so players with different mod settings stay in step. No Multiplayer DLL is needed.
 [/list]
@@ -20,6 +21,7 @@ One package for RimWorld 1.6 and 1.7. Saves from 1.x keep working.
 [*] Faster repair cycle: the cells in range are worked out once per hive instead of every cycle, and the cycle no longer allocates memory. It shows up as "NanoHiveReforged.TickRare" in the profiler.
 [*] The settings window no longer writes the settings file every frame while it is open.
 [*] [b]Built for 1.7[/b] — the 1.7 DLL is built against the 1.7 game on .NET 10. The 1.6 DLL is still built for 1.6.
+[*] Mod list icon, a link to the source, and credit to the original Nanohive2.
 [*] Player.log prints the NanoHive version and build on startup, and the Azrael series hub shows it.
 [/list]
 

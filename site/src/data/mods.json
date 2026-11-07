@@ -2,7 +2,7 @@
   "site": {
     "title": "AzraelGodKing — RimWorld Mods",
     "tagline": "RimWorld mods for colonies that farm, harden, dig, remember, make time for each other, and keep the small comforts.",
-    "heroIntro": "Seven mods. One workshop. Open a mod page for details — or jump straight to Steam or zip downloads if you cannot use the Workshop. Every mod ships as a GitHub release zip; extract into your RimWorld Mods folder. All mods need Harmony.",
+    "heroIntro": "Eight mods. One workshop. Open a mod page for details — or jump straight to Steam or zip downloads if you cannot use the Workshop. Every mod ships as a GitHub release zip; extract into your RimWorld Mods folder. All mods except NanoHive Reforged need Harmony.",
     "author": "AzraelGodKing",
     "github": "https://github.com/AzraelGodKing/rimworld_mods"
   },
@@ -795,6 +795,60 @@
         ]
       },
       "changelogPath": "changelogs/niceties.md"
+    },
+    {
+      "id": "nanohive-reforged",
+      "name": "NanoHive Reforged",
+      "publishedFileId": "3688108379",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3688108379",
+      "accent": "#3fa9c9",
+      "preview": "img/NanoHiveReforgedPreview.png",
+      "tagline": "A wall-mounted nanite port that repairs your buildings, items and colonists' gear in range while it has power.",
+      "badges": ["RimWorld 1.6 / 1.7", "No Harmony", "Multiplayer (soft)"],
+      "overview": [
+        "Build a regenerator nanohive into a wall and it quietly repairs everything of yours in range: walls and furniture, items under a roof, and the apparel, weapons and inventory of colonists who walk past.",
+        "NanoHive Reforged 2 gives every hive its own buttons, a capped repair budget that fixes the most damaged things first, idle power when there is nothing to fix, and a ring that shows the real radius. A faithful-plus rebuild of the Nanohive2 mod."
+      ],
+      "featureTabs": [
+        {
+          "id": "repair",
+          "label": "Repair",
+          "features": [
+            { "title": "What it repairs", "body": "Your buildings in range (the hive always repairs itself), items lying under a roof, colonists' apparel and equipment, and items in their inventories. Each one is a button on the hive." },
+            { "title": "Repair budget", "body": "Each repair cycle (about every 4 seconds) every target gets up to the hive's rate, 1 to 10 HP. The hive spends at most 40 times its rate in total, most damaged first, so overlapping hives and huge bases stay predictable." },
+            { "title": "Buildings first", "body": "Optional: spend the budget on buildings before items and gear." },
+            { "title": "Only stored items", "body": "Optional: leave loot and junk alone and repair only items in a stockpile or storage that are not forbidden." }
+          ]
+        },
+        {
+          "id": "hive",
+          "label": "The hive",
+          "features": [
+            { "title": "Per-hive settings", "body": "Radius 1 to 30 and repair rate per hive, saved with the hive. Use as colony default sets what new hives start with; Copy to all hives copies one hive to the whole map." },
+            { "title": "Idle power", "body": "200 W while nothing in range needs repair, the full 1600 W only while repairing." },
+            { "title": "Real radius ring", "body": "The selection ring and the placement ghost show the radius the hive really uses." },
+            { "title": "Inspect pane and shimmer", "body": "The inspect pane shows how many things in range are damaged and how much was repaired last cycle. A soft glow and sparks show the hive at work (can be turned off)." }
+          ]
+        }
+      ],
+      "gallery": [],
+      "goodToKnow": [
+        "No Harmony needed.",
+        "Saves from NanoHive 1.x keep working: your old mod settings become the colony's starting values.",
+        "Soft Multiplayer support: hive settings live in the save and every hive button is synced.",
+        "Chinese Simplified and Russian are included.",
+        "Built from metal only since 2.0.0. Hives already built from wood or stone keep working."
+      ],
+      "compatibility": {
+        "compatibleWith": [
+          { "name": "Multiplayer", "note": "Soft support — hive buttons are synced by reflection" }
+        ],
+        "incompatibleWith": [],
+        "notes": [
+          "Uses only vanilla repair and power APIs, so it works next to other repair mods; overlapping repairers just finish sooner."
+        ]
+      },
+      "changelogPath": "changelogs/nanohive-reforged.md"
     }
   ]
 }
