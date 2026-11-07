@@ -1,3 +1,4 @@
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -7,9 +8,16 @@ namespace LivingWorld
     /// <summary>
     /// Soft trade blackout: factions locked in total war are less likely to send traders.
     /// </summary>
-    [HarmonyPatch(typeof(IncidentWorker_TraderCaravanArrival), "CanFireNowSub")]
+    [HarmonyPatch]
     public static class Patch_TraderCaravan_TradeBlackout
     {
+        // Protected override. DeclaredMethod returns null if the override is gone, so
+        // Harmony fails this class loudly instead of binding to the base IncidentWorker.
+        public static MethodBase TargetMethod()
+        {
+            return AccessTools.DeclaredMethod(typeof(IncidentWorker_TraderCaravanArrival), "CanFireNowSub");
+        }
+
         public static void Postfix(IncidentParms parms, ref bool __result)
         {
             if (!__result)

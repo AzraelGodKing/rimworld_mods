@@ -271,7 +271,7 @@ namespace LivingWorld
         private const int FalloutTicksPerTile = 250;
         private const int FalloutTravelCapTicks = 120000;
 
-        public static Map NearestPlayerHome(int tile)
+        public static Map NearestPlayerHome(PlanetTile tile)
         {
             List<Map> maps = Find.Maps;
             Map best = null;
@@ -283,11 +283,11 @@ namespace LivingWorld
                 {
                     continue;
                 }
-                if (tile < 0)
+                if (!tile.Valid)
                 {
                     return map;
                 }
-                int dist = Find.WorldGrid.TraversalDistanceBetween(map.Tile, tile);
+                int dist = LivingWorldTiles.Distance(map.Tile, tile);
                 if (dist < 0)
                 {
                     continue;
@@ -301,9 +301,9 @@ namespace LivingWorld
             return best ?? Find.AnyPlayerHomeMap;
         }
 
-        private static int FalloutReadyDelay(int tile)
+        private static int FalloutReadyDelay(PlanetTile tile)
         {
-            if (tile < 0)
+            if (!tile.Valid)
             {
                 return FalloutDelayTicks;
             }
@@ -312,7 +312,7 @@ namespace LivingWorld
             {
                 return FalloutDelayTicks;
             }
-            int dist = Find.WorldGrid.TraversalDistanceBetween(home.Tile, tile);
+            int dist = LivingWorldTiles.Distance(home.Tile, tile);
             if (dist < 0)
             {
                 dist = 0;
@@ -347,7 +347,7 @@ namespace LivingWorld
             {
                 // Wait at least ~half a day so the war letter can land first.
                 if (pendingFallout[i].kind == kind
-                    && now - pendingFallout[i].enqueueTick >= FalloutReadyDelay(pendingFallout[i].tile))
+                    && now - pendingFallout[i].enqueueTick >= FalloutReadyDelay(pendingFallout[i].Where))
                 {
                     return i;
                 }
@@ -364,7 +364,7 @@ namespace LivingWorld
             PendingFallout refugeesPending = PeekFallout(FalloutKind.Refugees);
             if (refugeesPending != null)
             {
-                Map map = NearestPlayerHome(refugeesPending.tile);
+                Map map = NearestPlayerHome(refugeesPending.Where);
                 IncidentDef refugees = DefDatabase<IncidentDef>.GetNamedSilentFail("LivingWorld_Refugees");
                 if (map != null && refugees != null)
                 {
@@ -381,7 +381,7 @@ namespace LivingWorld
                 && PeekFallout(FalloutKind.Warband) != null)
             {
                 PendingFallout warbandPending = PeekFallout(FalloutKind.Warband);
-                Map map = NearestPlayerHome(warbandPending.tile);
+                Map map = NearestPlayerHome(warbandPending.Where);
                 IncidentDef warband = DefDatabase<IncidentDef>.GetNamedSilentFail("LivingWorld_Warband");
                 if (map != null && warband != null)
                 {
@@ -403,13 +403,15 @@ namespace LivingWorld
             }
             if (MoodIndex.TryGetValue(settlement.ID, out SettlementMood existing))
             {
-                existing.tile = settlement.Tile;
+                existing.tile = LivingWorldTiles.IdOf(settlement.Tile);
+                existing.tileLayer = LivingWorldTiles.LayerOf(settlement.Tile);
                 return existing;
             }
             var mood = new SettlementMood
             {
                 settlementId = settlement.ID,
-                tile = settlement.Tile,
+                tile = LivingWorldTiles.IdOf(settlement.Tile),
+                tileLayer = LivingWorldTiles.LayerOf(settlement.Tile),
             };
             moods.Add(mood);
             moodIndex[mood.settlementId] = mood;
